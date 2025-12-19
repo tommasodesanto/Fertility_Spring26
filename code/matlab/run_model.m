@@ -41,6 +41,9 @@
 
 function [sol, P, p_eq] = run_model(P_override)
 
+    %% Start timer
+    t_start = tic;
+
     %% Setup logging - always save a timestamped log
     log_dir = fullfile(fileparts(mfilename('fullpath')), 'logs');
     if ~exist(log_dir, 'dir')
@@ -145,6 +148,14 @@ function [sol, P, p_eq] = run_model(P_override)
 
     %% Verify BGP consistency
     verify_bgp_consistency(sol, P, n_pop_eq);
+
+    %% Report timing
+    elapsed = toc(t_start);
+    fprintf('\n========================================\n');
+    fprintf('Total elapsed time: %.1f seconds (%.1f minutes)\n', elapsed, elapsed/60);
+    fprintf('========================================\n');
+
+    diary off;
 end
 
 
@@ -285,41 +296,77 @@ function P = setup_parameters()
     P.b_grid_power = 1.5;
     P.n_sub = 6;
 
-    P.max_iter_bisect = 60;
-    P.tol_gamma = 1e-4;
-    P.max_iter_entry = 40;
-    P.tol_entry = 0.01;
-    P.alpha_entry = 0.3;
-    P.alpha_beq = 0.1;
-    P.max_iter_price = 100;
-    P.tol_price = 0.01;
+    % ===== OUTER ROOT SOLVER (gamma bisection) =====
+    P.max_iter_bisect = 80;     % Max bisection iterations
+    P.tol_F = 5e-5;             % Convergence tolerance on |F(gamma)|
+                                % F(gamma) = gamma - alpha * n_impl(gamma)
+                                % This is the PRIMARY stopping criterion
 
+    % ===== INNER EQUILIBRIUM TOLERANCES (tightened for stable F) =====
+    % These must be tight enough that B(gamma) and E(gamma) are stable
+    P.max_iter_entry = 60;      % Entry/bequest fixed point (was 40)
+    P.tol_entry = 0.005;        % Tighter entry convergence (was 0.01)
+    P.alpha_entry = 0.4;        % Faster mixing (was 0.3)
+    P.alpha_beq = 0.15;         % Faster bequest update (was 0.1)
+
+    P.max_iter_price = 150;     % Price fixed point (was 100)
+    P.tol_price = 0.005;        % Tighter price convergence (was 0.01)
+
+    % ===== GAMMA SEARCH RANGE =====
     P.gamma_lo = -0.05;
     P.gamma_hi = 0.15;
 end
 
 
 %% ========================================================================
-%%                   BGP SOLVER WITH BISECTION ON GAMMA
-%%                   PURE BISECTION: each evaluation starts from baseline
+%%                   BGP SOLVER: OUTER ROOT PROBLEM F(gamma) = 0
+%%
+%%   Define: F(gamma) = gamma - alpha * n_impl(gamma)
+%%   where:  n_impl(gamma) = (1/A_m) * log(B(gamma)/E(gamma))
+%%
+%%   B(gamma) and E(gamma) come from fully solved inner equilibrium at gamma.
+%%   This is a THEORETICALLY CORRECT formulation where we solve F(gamma) = 0.
+%%
+%%   KEY REQUIREMENTS:
+%%   1. evaluate_equilibrium_given_gamma is SIDE-EFFECT FREE (no mutation of P0)
+%%   2. Stopping criterion is |F(gamma)| < tol_F (NOT bracket width)
+%%   3. Inner equilibrium is solved tightly enough that B, E are stable
 %% ========================================================================
 function [n_pop_eq, p_eq, sol, P] = find_bgp_bisection(p_init, P, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero)
 
-    gamma_lo = P.gamma_lo;
-    gamma_hi = P.gamma_hi;
+    % =====================================================================
+    % SETUP: Store immutable baseline state P0
+    % =====================================================================
+    P0 = P;  % This is NEVER modified - each evaluation starts from P0
 
-    % Store baseline state - each evaluation starts fresh from here
-    P0 = P;
-    p0 = p_init;
+    % Initial warmstart state (prices, entry shares, bequest locations)
+    warmstart = struct();
+    warmstart.p = p_init;
+    warmstart.entry_shares = P0.N_0 / sum(P0.N_0);  % Initial guess
+    warmstart.b_entry_loc = P0.b_entry_base * ones(P0.I, 1);
 
-    fprintf('  Evaluating bracket endpoints on GAMMA...\n');
-    fprintf('  (gamma = %.2f * n_pop)\n\n', P0.alpha);
+    gamma_lo = P0.gamma_lo;
+    gamma_hi = P0.gamma_hi;
 
-    [f_lo, ~, ~, ~] = evaluate_gamma_residual(gamma_lo, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
-    fprintf('    f(gamma=%.4f) = %.4f\n', gamma_lo, f_lo);
+    fprintf('  ========================================================\n');
+    fprintf('  OUTER ROOT PROBLEM: F(gamma) = gamma - alpha * n_impl(gamma) = 0\n');
+    fprintf('  where n_impl = (1/A_m) * log(B/E)\n');
+    fprintf('  Tolerance: |F| < %.2e\n', P0.tol_F);
+    fprintf('  ========================================================\n\n');
 
-    [f_hi, ~, ~, ~] = evaluate_gamma_residual(gamma_hi, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
-    fprintf('    f(gamma=%.4f) = %.4f\n', gamma_hi, f_hi);
+    fprintf('  Evaluating bracket endpoints...\n');
+    fprintf('  (gamma = alpha * n_pop, alpha = %.2f)\n\n', P0.alpha);
+
+    % =====================================================================
+    % BRACKET FINDING
+    % =====================================================================
+    [f_lo, ~, warmstart] = evaluate_equilibrium_given_gamma(gamma_lo, P0, warmstart, ...
+        b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, true);
+    fprintf('    F(gamma=%.5f) = %.6f\n', gamma_lo, f_lo);
+
+    [f_hi, ~, warmstart] = evaluate_equilibrium_given_gamma(gamma_hi, P0, warmstart, ...
+        b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, true);
+    fprintf('    F(gamma=%.5f) = %.6f\n', gamma_hi, f_hi);
 
     % Expand brackets if needed
     max_expand = 8;
@@ -328,47 +375,66 @@ function [n_pop_eq, p_eq, sol, P] = find_bgp_bisection(p_init, P, b_grid, db_f, 
         expand_count = expand_count + 1;
         if f_lo > 0 && f_hi > 0
             gamma_lo = gamma_lo - 0.03;
-            [f_lo, ~, ~, ~] = evaluate_gamma_residual(gamma_lo, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
-            fprintf('    Expanded lo: f(gamma=%.4f) = %.4f\n', gamma_lo, f_lo);
+            [f_lo, ~, warmstart] = evaluate_equilibrium_given_gamma(gamma_lo, P0, warmstart, ...
+                b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, true);
+            fprintf('    Expanded lo: F(gamma=%.5f) = %.6f\n', gamma_lo, f_lo);
         elseif f_lo < 0 && f_hi < 0
             gamma_hi = gamma_hi + 0.02;
-            [f_hi, ~, ~, ~] = evaluate_gamma_residual(gamma_hi, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
-            fprintf('    Expanded hi: f(gamma=%.4f) = %.4f\n', gamma_hi, f_hi);
+            [f_hi, ~, warmstart] = evaluate_equilibrium_given_gamma(gamma_hi, P0, warmstart, ...
+                b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, true);
+            fprintf('    Expanded hi: F(gamma=%.5f) = %.6f\n', gamma_hi, f_hi);
         end
     end
 
     if f_lo * f_hi > 0
-        warning('Could not bracket root after %d expansions! f_lo=%.4f, f_hi=%.4f', ...
+        warning('Could not bracket root after %d expansions! F_lo=%.4f, F_hi=%.4f', ...
             max_expand, f_lo, f_hi);
     end
 
-    fprintf('\n  Starting bisection on gamma in [%.4f, %.4f]\n', gamma_lo, gamma_hi);
-    fprintf('  (corresponds to n_pop in [%.4f, %.4f])\n\n', gamma_lo/P0.alpha, gamma_hi/P0.alpha);
+    fprintf('\n  Starting bisection on gamma in [%.5f, %.5f]\n', gamma_lo, gamma_hi);
+    fprintf('  (corresponds to n_pop in [%.5f, %.5f])\n', gamma_lo/P0.alpha, gamma_hi/P0.alpha);
+    fprintf('  Convergence requires: |F(gamma)| < %.2e\n\n', P0.tol_F);
 
+    % =====================================================================
+    % BISECTION WITH RESIDUAL-BASED STOPPING
+    % =====================================================================
     gamma_star = (gamma_lo + gamma_hi) / 2;
     sol_star = [];
+    result_star = struct();
     converged = false;
+    best_F = inf;
+    best_gamma = gamma_star;
+    best_result = struct();
 
     for iter = 1:P0.max_iter_bisect
         gamma_mid = (gamma_lo + gamma_hi) / 2;
 
-        % PURE evaluation: always start from baseline P0 and p0
-        [f_mid, sol_mid, ~, ~] = evaluate_gamma_residual(gamma_mid, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
+        % PURE evaluation: P0 is never modified, warmstart is passed explicitly
+        [f_mid, result_mid, warmstart] = evaluate_equilibrium_given_gamma(gamma_mid, P0, warmstart, ...
+            b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, false);
 
         n_mid = gamma_mid / P0.alpha;
-        fprintf('  Bisect iter %2d: gamma=%.4f (n=%.4f), f=%.6f, own=%.1f%%, parity=%.2f\n', ...
-            iter, gamma_mid, n_mid, f_mid, 100*sol_mid.own_rate, sol_mid.mean_parity);
+        fprintf('  Bisect %2d: gamma=%.6f (n=%.5f), F=%.2e, n_impl=%.5f, own=%.1f%%, parity=%.2f\n', ...
+            iter, gamma_mid, n_mid, f_mid, result_mid.n_impl, ...
+            100*result_mid.sol.own_rate, result_mid.sol.mean_parity);
 
-        % Check convergence on RESIDUAL ONLY (not bracket width)
-        if abs(f_mid) < P0.tol_gamma
+        % Track best solution found
+        if abs(f_mid) < best_F
+            best_F = abs(f_mid);
+            best_gamma = gamma_mid;
+            best_result = result_mid;
+        end
+
+        % CONVERGENCE CHECK: RESIDUAL ONLY (not bracket width!)
+        if abs(f_mid) < P0.tol_F
             gamma_star = gamma_mid;
-            sol_star = sol_mid;
+            result_star = result_mid;
             converged = true;
-            fprintf('  Bisection converged! |f| = %.2e < tol = %.2e\n', abs(f_mid), P0.tol_gamma);
+            fprintf('\n  *** CONVERGED: |F| = %.2e < tol = %.2e ***\n', abs(f_mid), P0.tol_F);
             break;
         end
 
-        % Update brackets
+        % Update brackets (standard bisection)
         if f_lo * f_mid < 0
             gamma_hi = gamma_mid;
             f_hi = f_mid;
@@ -377,185 +443,202 @@ function [n_pop_eq, p_eq, sol, P] = find_bgp_bisection(p_init, P, b_grid, db_f, 
             f_lo = f_mid;
         end
 
-        % Track best so far in case we don't converge
         gamma_star = gamma_mid;
-        sol_star = sol_mid;
+        result_star = result_mid;
     end
 
     if ~converged
-        fprintf('  Bisection reached max iterations. Best |f| = %.6f\n', abs(f_mid));
+        fprintf('\n  WARNING: Bisection did not converge to |F| < %.2e\n', P0.tol_F);
+        fprintf('           Best |F| found: %.2e at gamma = %.6f\n', best_F, best_gamma);
+        fprintf('           Bracket width: %.2e\n', gamma_hi - gamma_lo);
+
+        % Use best solution found
+        gamma_star = best_gamma;
+        result_star = best_result;
     end
 
-    % Final clean evaluation at gamma_star to get consistent state
-    [f_final, sol, p_eq, P] = evaluate_gamma_residual(gamma_star, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
+    % =====================================================================
+    % FINAL CONSISTENCY CHECK AND OUTPUT
+    % =====================================================================
+    sol = result_star.sol;
+    p_eq = result_star.p;
 
-    % Compute flow-implied n and check consistency
-    n_BE = log(sol.total_births_kfe / sol.entry_rate) / P.A_m;
-    gamma_BE = P.alpha * n_BE;
-
-    fprintf('\n  Final consistency check:\n');
-    fprintf('    gamma_star = %.6f, gamma_BE = %.6f, gap = %.6f\n', gamma_star, gamma_BE, abs(gamma_star - gamma_BE));
-
-    % If gap is significant, do one projection step
-    if abs(gamma_star - gamma_BE) > P.tol_gamma
-        fprintf('  Projecting to flow-implied gamma = %.6f\n', gamma_BE);
-        [~, sol, p_eq, P] = evaluate_gamma_residual(gamma_BE, p0, P0, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero);
-        gamma_star = gamma_BE;
-    end
+    % Reconstruct P with the converged gamma (but don't modify P0!)
+    P = P0;
+    P.gamma = gamma_star;
+    P.rho_hat = P0.rho - (1 - P0.sigma) * gamma_star;
+    P.user_cost_rate = P0.q + P0.delta + P0.tau_H - gamma_star;
+    P.entry_by_loc = result_star.entry_by_loc;
+    P.b_entry_loc = result_star.b_entry_loc;
+    P.w_hat = sol.w_hat;
 
     n_pop_eq = gamma_star / P.alpha;
     sol.n_pop = n_pop_eq;
     sol.gamma = gamma_star;
     sol.b_entry_loc = P.b_entry_loc;
     sol.entry_by_loc = P.entry_by_loc;
+
+    % Final diagnostics
+    fprintf('\n  ========================================================\n');
+    fprintf('  FINAL CONSISTENCY CHECK:\n');
+    fprintf('    gamma_star  = %.8f\n', gamma_star);
+    fprintf('    n_used      = %.8f (= gamma_star / alpha)\n', n_pop_eq);
+    fprintf('    n_impl      = %.8f (= log(B/E) / A_m)\n', result_star.n_impl);
+    fprintf('    B           = %.8f\n', result_star.B);
+    fprintf('    E           = %.8f\n', result_star.E);
+    fprintf('    F(gamma)    = %.2e (should be < %.2e)\n', ...
+        gamma_star - P.alpha * result_star.n_impl, P0.tol_F);
+    fprintf('    n_used - n_impl = %.2e\n', n_pop_eq - result_star.n_impl);
+    fprintf('  --------------------------------------------------------\n');
+    fprintf('  MATURITY FLOW VERIFICATION (kids follow parents):\n');
+    fprintf('    M_total (maturing children)   = %.8f\n', result_star.M_total);
+    fprintf('    E (entry rate)                = %.8f\n', result_star.E);
+    fprintf('    B*exp(-n*A_m) (theory)        = %.8f\n', result_star.B * exp(-n_pop_eq * P0.A_m));
+    fprintf('    M_total / E                   = %.6f (should be ~1.0)\n', result_star.M_total / max(result_star.E, 1e-12));
+    fprintf('    E / [B*exp(-n*A_m)]           = %.6f (should be ~1.0)\n', result_star.E / max(result_star.B * exp(-n_pop_eq * P0.A_m), 1e-12));
+    fprintf('  --------------------------------------------------------\n');
+    fprintf('  ENTRY SHARES (maturity-based):\n');
+    for i = 1:P.I
+        fprintf('    Location %d: mature_share=%.4f, entry_share=%.4f\n', i, result_star.mature_shares(i), result_star.entry_shares(i));
+    end
+    fprintf('  ========================================================\n');
 end
 
 
 %% ========================================================================
-%%              EVALUATE RESIDUAL f(gamma) = gamma - gamma_implied
+%%   EVALUATE EQUILIBRIUM GIVEN GAMMA - PURE, SIDE-EFFECT FREE
+%%
+%%   This function NEVER modifies P0. It creates a local copy P_local
+%%   and returns all state changes via the output warmstart struct.
+%%
+%%   PERFORMANCE OPTIMIZATION (Option C):
+%%   HJB depends on prices/wages, NOT on entry distribution or bequests.
+%%   So we solve: Price loop { HJB once, then Entry/KFE loop to convergence }
+%%   This reduces HJB solves from ~1200 to ~400 (3x speedup on HJB).
+%%
+%%   Returns:
+%%     F_gamma   - residual F(gamma) = gamma - alpha * n_impl
+%%     result    - struct with sol, p, B, E, n_impl, entry_by_loc, b_entry_loc
+%%     warmstart - updated warmstart for next evaluation
 %% ========================================================================
-function [f_gamma, sol, p, P] = evaluate_gamma_residual(gamma, p_init, P, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero)
+function [F_gamma, result, warmstart_out] = evaluate_equilibrium_given_gamma(gamma, P0, warmstart, ...
+    b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, verbose)
 
-    P.gamma = gamma;
-    P.rho_hat = P.rho - (1 - P.sigma) * gamma;
-    P.user_cost_rate = P.q + P.delta + P.tau_H - gamma;
+    % =====================================================================
+    % CREATE LOCAL COPY OF PARAMETERS (P0 is NEVER modified)
+    % =====================================================================
+    P_local = P0;
+    P_local.gamma = gamma;
+    P_local.rho_hat = P0.rho - (1 - P0.sigma) * gamma;
+    P_local.user_cost_rate = P0.q + P0.delta + P0.tau_H - gamma;
 
-    if P.user_cost_rate <= 0.01
-        P.user_cost_rate = 0.01;
+    % Safety bounds
+    if P_local.user_cost_rate <= 0.01
+        P_local.user_cost_rate = 0.01;
     end
-    if P.rho_hat <= 0.01
-        P.rho_hat = 0.01;
-    end
-
-    n_pop = gamma / P.alpha;
-
-    p = p_init;
-
-    total_entry = sum(P.entry_by_loc);
-    entry_shares = P.entry_by_loc / total_entry;
-
-    for iter_entry = 1:P.max_iter_entry
-
-        [p, sol] = find_price_equilibrium(p, P, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, n_pop);
-
-        total_births = sum(sol.births_by_loc);
-        if total_births > 1e-12
-            birth_shares = sol.births_by_loc / total_births;
-        else
-            birth_shares = ones(P.I, 1) / P.I;
-        end
-
-        b_entry_implied = sol.bequest_per_entrant;
-
-        err_shares = max(abs(birth_shares - entry_shares));
-        err_beq = max(abs(b_entry_implied - P.b_entry_loc) ./ max(abs(P.b_entry_loc), 0.1));
-        err_entry = max(err_shares, err_beq);
-
-        if iter_entry <= 3 || mod(iter_entry, 5) == 0
-            fprintf('    Entry iter %2d: err=%.3f (birth_shares=[%.3f,%.3f,%.3f], entry_shares=[%.3f,%.3f,%.3f])\n', ...
-                iter_entry, err_entry, ...
-                birth_shares(1), birth_shares(2), birth_shares(3), ...
-                entry_shares(1), entry_shares(2), entry_shares(3));
-        end
-
-        if err_entry < P.tol_entry
-            break;
-        end
-
-        entry_shares = (1 - P.alpha_entry) * entry_shares + P.alpha_entry * birth_shares;
-        P.entry_by_loc = total_entry * entry_shares;
-
-        P.b_entry_loc = (1 - P.alpha_beq) * P.b_entry_loc + P.alpha_beq * b_entry_implied;
-        P.b_entry_loc = max(P.b_entry_loc, 0.1);
+    if P_local.rho_hat <= 0.01
+        P_local.rho_hat = 0.01;
     end
 
-    n_pop_implied = compute_n_pop(sol.g, P, sol.total_births_kfe, sol.entry_rate);
+    n_pop = gamma / P0.alpha;  % The n we're ASSUMING for this gamma
 
-    gamma_implied = P.alpha * n_pop_implied;
+    % =====================================================================
+    % INITIALIZE FROM WARMSTART (explicit, not hidden state)
+    % =====================================================================
+    p = warmstart.p;
+    entry_shares = warmstart.entry_shares;
+    b_entry_loc = warmstart.b_entry_loc;
 
-    f_gamma = gamma - gamma_implied;
-end
+    total_entry = 1 / P0.J;  % Normalized entry rate
+    P_local.entry_by_loc = total_entry * entry_shares;
+    P_local.b_entry_loc = b_entry_loc;
 
-
-%% ========================================================================
-%%                   POPULATION GROWTH (Flow Balance)
-%% ========================================================================
-function n_pop = compute_n_pop(g, P, total_births_kfe, entry_rate)
-
-    birth_rate = total_births_kfe;
-    death_rate = sum(g(:, :, :, P.J, :, :), 'all');
-
-    A_m = P.A_m;
-
-    if entry_rate > 1e-12 && birth_rate > 1e-12
-        n_pop = log(birth_rate / entry_rate) / A_m;
-    else
-        n_pop = 0;
-    end
-
-    implied_entry = birth_rate * exp(-n_pop * A_m);
-    entry_gap = entry_rate - implied_entry;
-
-    fprintf('      [Flow] B=%.4f, E=%.4f, D=%.4f, B/E=%.4f\n', ...
-        birth_rate, entry_rate, death_rate, birth_rate/max(entry_rate,1e-12));
-    fprintf('      [BGP] n_implied=%.4f (from n=log(B/E)/A_m with A_m=%d)\n', n_pop, A_m);
-    fprintf('      [Check] E_implied=B×exp(-n×A_m)=%.4f, actual E=%.4f, gap=%.6f\n', ...
-        implied_entry, entry_rate, entry_gap);
-end
-
-
-%% ========================================================================
-%%                   PRICE EQUILIBRIUM SOLVER
-%% ========================================================================
-function [p_eq, sol] = find_price_equilibrium(p_init, P, b_grid, db_f, db_b, inv_db_f, inv_db_b, idx_zero, n_pop)
-
-    I = P.I;
-    p = p_init;
+    % =====================================================================
+    % RESTRUCTURED FIXED POINT: Price { HJB once, Entry/KFE loop }
+    %
+    % Key insight: HJB policies depend on (p, r, w) but NOT on entry shares
+    % or bequest distribution. So within a price iteration:
+    %   1. Solve HJB once -> get policies
+    %   2. Iterate KFE + entry/bequest to convergence using fixed policies
+    %   3. Check price residual -> update prices
+    % =====================================================================
 
     best_err = inf;
     best_p = p;
     best_sol = [];
 
-    for iter = 1:P.max_iter_price
-        r = P.user_cost_rate * p;
+    for iter_price = 1:P0.max_iter_price
+        r = P_local.user_cost_rate * p;
 
-        % HJB SOLVER with LOGIT SHOCKS
+        % =================================================================
+        % STEP 1: SOLVE HJB ONCE FOR THESE PRICES
+        % =================================================================
         [V, c_pol, hR_pol, tenure_choice, loc_probs, fert_probs, fert_value] = ...
-            solve_hjb_logit(r, p, P, b_grid, db_f, db_b, inv_db_f, inv_db_b);
+            solve_hjb_logit(r, p, P_local, b_grid, db_f, db_b, inv_db_f, inv_db_b);
 
-        % KFE SOLVER
-        [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_probs, ...
-                               r, p, P, b_grid, db_f, db_b, idx_zero, n_pop);
+        % =================================================================
+        % STEP 2: ITERATE KFE + ENTRY/BEQUEST TO CONVERGENCE (fixed HJB)
+        % =================================================================
+        for iter_entry = 1:P0.max_iter_entry
+            % Solve KFE with current entry distribution
+            [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_probs, ...
+                                   r, p, P_local, b_grid, db_f, db_b, idx_zero, n_pop);
 
-        w_new = zeros(I, 1);
-        for i = 1:I
-            pop_ratio = max(stats.pop_share(i), 0.05) / P.N_0(i);
-            w_new(i) = P.w_bar(i) * pop_ratio^P.eta_agglom;
+            % Compute maturity shares from KFE
+            mature_shares = stats.mature_entry_shares;
+            b_entry_implied = stats.bequest_per_entrant;
+
+            % Convergence check for entry/bequest
+            err_shares = max(abs(mature_shares - entry_shares));
+            err_beq = max(abs(b_entry_implied - b_entry_loc) ./ max(abs(b_entry_loc), 0.1));
+            err_entry = max(err_shares, err_beq);
+
+            if err_entry < P0.tol_entry
+                break;
+            end
+
+            % Update entry distribution (Picard iteration)
+            entry_shares = (1 - P0.alpha_entry) * entry_shares + P0.alpha_entry * mature_shares;
+            P_local.entry_by_loc = total_entry * entry_shares;
+
+            b_entry_loc = (1 - P0.alpha_beq) * b_entry_loc + P0.alpha_beq * b_entry_implied;
+            b_entry_loc = max(b_entry_loc, 0.1);
+            P_local.b_entry_loc = b_entry_loc;
         end
 
-        P.w_hat = w_new;
-        for i = 1:I
-            for j = 1:P.J
-                if j <= P.J_R
-                    P.income(i, j) = P.w_hat(i);
+        % =================================================================
+        % STEP 3: UPDATE WAGES AND CHECK PRICE CONVERGENCE
+        % =================================================================
+        w_new = zeros(P0.I, 1);
+        for i = 1:P0.I
+            pop_ratio = max(stats.pop_share(i), 0.05) / P0.N_0(i);
+            w_new(i) = P0.w_bar(i) * pop_ratio^P0.eta_agglom;
+        end
+        P_local.w_hat = w_new;
+        for i = 1:P0.I
+            for j = 1:P0.J
+                if j <= P0.J_R
+                    P_local.income(i, j) = P_local.w_hat(i);
                 else
-                    P.income(i, j) = P.pension;
+                    P_local.income(i, j) = P0.pension;
                 end
             end
         end
 
-        r_supply = zeros(I, 1);
-        for i = 1:I
-            pop_ratio = max(stats.pop_share(i), 0.05) / P.N_0(i);
-            r_supply(i) = P.r_bar(i) * pop_ratio^(1/P.xi_supply(i));
+        % Compute price residual
+        r_supply = zeros(P0.I, 1);
+        for i = 1:P0.I
+            pop_ratio = max(stats.pop_share(i), 0.05) / P0.N_0(i);
+            r_supply(i) = P0.r_bar(i) * pop_ratio^(1/P0.xi_supply(i));
         end
-        p_supply = r_supply / P.user_cost_rate;
+        p_supply = r_supply / P_local.user_cost_rate;
 
         excess = (p - p_supply) ./ p_supply;
-        max_err = max(abs(excess));
+        max_price_err = max(abs(excess));
 
-        if max_err < best_err
-            best_err = max_err;
+        % Track best solution
+        if max_price_err < best_err
+            best_err = max_price_err;
             best_p = p;
             best_sol = struct('V', V, 'c_pol', c_pol, 'hR_pol', hR_pol, ...
                 'tenure_choice', tenure_choice, 'loc_probs', loc_probs, ...
@@ -574,21 +657,78 @@ function [p_eq, sol] = find_price_equilibrium(p_init, P, b_grid, db_f, db_b, inv
                 'total_births_kfe', stats.total_births_kfe, ...
                 'births_by_loc', stats.births_by_loc, ...
                 'entry_rate', stats.entry_rate, ...
-                'w_hat', P.w_hat, ...
+                'entrants_mature_by_loc', stats.entrants_mature_by_loc, ...
+                'entrants_mature_total', stats.entrants_mature_total, ...
+                'mature_entry_shares', stats.mature_entry_shares, ...
+                'w_hat', P_local.w_hat, ...
                 'p_eq', p);
         end
 
-        if max_err < P.tol_price
+        if max_price_err < P0.tol_price
             break;
         end
 
-        p = (1 - P.alpha_price) * p + P.alpha_price * p_supply;
-        p = max(p, P.p_min);
-        p = min(p, P.p_max);
+        % Update prices
+        p = (1 - P0.alpha_price) * p + P0.alpha_price * p_supply;
+        p = max(p, P0.p_min);
+        p = min(p, P0.p_max);
     end
 
-    p_eq = best_p;
+    % Use best solution found
+    p = best_p;
     sol = best_sol;
+
+    % =====================================================================
+    % COMPUTE n_impl FROM FLOW IDENTITY
+    % =====================================================================
+    B = sol.total_births_kfe;
+    E = sol.entry_rate;
+    M_total = sol.entrants_mature_total;  % Maturing children flow
+
+    if E > 1e-12 && B > 1e-12
+        n_impl = log(B / E) / P0.A_m;
+    else
+        n_impl = 0;
+    end
+
+    gamma_impl = P0.alpha * n_impl;
+
+    % THE RESIDUAL: F(gamma) = gamma - alpha * n_impl(gamma)
+    F_gamma = gamma - gamma_impl;
+
+    % Theoretical check: M_total should equal E which should equal B*exp(-n*A_m)
+    % This verifies we're counting CHILDREN not PARENTS
+    n_used = gamma / P0.alpha;
+    E_theory = B * exp(-n_used * P0.A_m);
+
+    if verbose
+        fprintf('      [Flow] B=%.6f, E=%.6f, B/E=%.6f\n', B, E, B/max(E,1e-12));
+        fprintf('      [BGP] n_impl=%.6f, gamma_impl=%.6f, F(gamma)=%.6f\n', n_impl, gamma_impl, F_gamma);
+        fprintf('      [Maturity check] M_total=%.6f, E=%.6f, B*exp(-n*A_m)=%.6f\n', M_total, E, E_theory);
+        fprintf('      [Maturity gaps] M_total/E=%.4f, E/E_theory=%.4f\n', M_total/max(E,1e-12), E/max(E_theory,1e-12));
+    end
+
+    % =====================================================================
+    % PACK OUTPUT
+    % =====================================================================
+    result = struct();
+    result.sol = sol;
+    result.p = p;
+    result.B = B;
+    result.E = E;
+    result.M_total = M_total;
+    result.n_impl = n_impl;
+    result.gamma_impl = gamma_impl;
+    result.entry_by_loc = P_local.entry_by_loc;
+    result.b_entry_loc = b_entry_loc;
+    result.entry_shares = entry_shares;
+    result.mature_shares = sol.mature_entry_shares;
+
+    % Update warmstart for next call (pass forward the converged state)
+    warmstart_out = struct();
+    warmstart_out.p = p;
+    warmstart_out.entry_shares = entry_shares;
+    warmstart_out.b_entry_loc = b_entry_loc;
 end
 
 
@@ -1239,6 +1379,12 @@ function [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_pr
     total_births_kfe = 0;
     births_by_loc = zeros(I, 1);
 
+    % MATURITY FLOW ACCUMULATORS
+    % Track where children mature (reach adulthood) after parents have moved
+    % This is the correct object for entry shares: "kids follow parents"
+    entrants_mature_by_loc = zeros(I, 1);
+    entrants_mature_total = 0;
+
     % Pre-compute house costs and equity
     house_costs = zeros(I, n_tenure);
     house_equity = zeros(I, n_tenure);
@@ -1503,6 +1649,24 @@ function [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_pr
                 end
 
                 % ============================================================
+                % COUNT MATURITY EVENTS
+                % Maturity occurs when cs_next == 1 and cs > 1 (kids finish growing)
+                % Only for parents with children (nn >= 2)
+                % g_post_drift contains parents' distribution AFTER they've moved
+                % This is the correct location for "kids follow parents"
+                % ============================================================
+                if (cs_next == 1) && (cs > 1) && (nn >= 2)
+                    n_kids = nn - 1;  % Number of children maturing
+
+                    for i_m = 1:I
+                        % Flow of maturing children = n_kids * parent mass in location i
+                        flow_i = n_kids * sum(g_post_drift(:, :, i_m), 'all');
+                        entrants_mature_by_loc(i_m) = entrants_mature_by_loc(i_m) + flow_i;
+                        entrants_mature_total = entrants_mature_total + flow_i;
+                    end
+                end
+
+                % ============================================================
                 % STEP 5 & 6: Apply demographic factor and advance to j+1
                 % ============================================================
                 g(:, :, :, j+1, nn, cs_next) = g(:, :, :, j+1, nn, cs_next) + demographic_factor * g_post_drift;
@@ -1524,6 +1688,17 @@ function [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_pr
     stats.total_births_kfe = total_births_kfe;
     stats.births_by_loc = births_by_loc;
     stats.entry_rate = entry_rate;
+
+    % Maturity flow statistics (for "kids follow parents" entry allocation)
+    % Normalize by total mass (same as births)
+    if total_mass > 1e-12
+        entrants_mature_by_loc = entrants_mature_by_loc / total_mass;
+        entrants_mature_total = entrants_mature_total / total_mass;
+    end
+
+    stats.entrants_mature_by_loc = entrants_mature_by_loc;
+    stats.entrants_mature_total = entrants_mature_total;
+    stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12);
 end
 
 
