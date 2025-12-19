@@ -1,0 +1,269 @@
+Log file: /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/matlab/logs/run_model_2025-12-19_16-37-45.log
+
+============================================================
+  SPATIAL LIFECYCLE FERTILITY MODEL - LOGIT SHOCKS
+  J=10 periods, Nb=30 wealth grid points
+  
+  STONE-GEARY PREFERENCES:
+    c_bar(n) = 0.05 + 0.05 * n  (subsistence consumption)
+    h_bar(n) = 0.03 + 0.50*(n>=1) + 0.20*n  (subsistence housing)
+    kappa_h = 0.40  (constant, slope=0)
+    psi(n) = 0.00 * n
+    theta_n = 1.50 (terminal warm-glow)
+  
+  SHOCK STRUCTURE (Type-I EV / Logit):
+    nu_loc = 2.00 (location choice dispersion)
+    nu_fert = 8.00 (fertility choice dispersion)
+  
+  NUMERICAL:
+    u_bar = 8.0 (keeps V > 0)
+============================================================
+
+=== Solving BGP Equilibrium (Bisection) ===
+
+  Evaluating bracket endpoints on GAMMA...
+  (gamma = 0.30 * n_pop)
+
+    Entry iter  1: err=956.096 (birth_shares=[0.510,0.413,0.076], entry_shares=[0.250,0.350,0.400])
+    Entry iter  2: err=17.824 (birth_shares=[0.367,0.374,0.258], entry_shares=[0.328,0.369,0.303])
+    Entry iter  3: err=6.591 (birth_shares=[0.363,0.387,0.250], entry_shares=[0.340,0.371,0.290])
+    Entry iter  5: err=2.515 (birth_shares=[0.343,0.382,0.275], entry_shares=[0.347,0.378,0.275])
+    Entry iter 10: err=0.736 (birth_shares=[0.333,0.383,0.284], entry_shares=[0.336,0.376,0.288])
+    Entry iter 15: err=0.317 (birth_shares=[0.327,0.375,0.298], entry_shares=[0.328,0.378,0.294])
+    Entry iter 20: err=0.157 (birth_shares=[0.328,0.374,0.298], entry_shares=[0.328,0.375,0.298])
+    Entry iter 25: err=0.089 (birth_shares=[0.328,0.372,0.301], entry_shares=[0.328,0.374,0.298])
+    Entry iter 30: err=0.045 (birth_shares=[0.328,0.371,0.301], entry_shares=[0.328,0.372,0.301])
+    Entry iter 35: err=0.024 (birth_shares=[0.328,0.371,0.302], entry_shares=[0.328,0.371,0.301])
+    Entry iter 40: err=0.014 (birth_shares=[0.328,0.371,0.302], entry_shares=[0.328,0.371,0.301])
+      [Flow] B=0.0540, E=0.0422, D=0.1893, B/E=1.2785
+      [BGP] n_implied=0.0819 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.0422, actual E=0.0422, gap=-0.000000
+    f(gamma=-0.0500) = -0.0746
+    Entry iter  1: err=0.999 (birth_shares=[0.327,0.366,0.308], entry_shares=[0.328,0.371,0.302])
+    Entry iter  2: err=0.999 (birth_shares=[0.322,0.368,0.310], entry_shares=[0.327,0.369,0.303])
+    Entry iter  3: err=0.999 (birth_shares=[0.318,0.364,0.318], entry_shares=[0.326,0.369,0.305])
+    Entry iter  5: err=0.999 (birth_shares=[0.293,0.351,0.356], entry_shares=[0.320,0.364,0.316])
+    Entry iter 10: err=0.998 (birth_shares=[0.231,0.244,0.525], entry_shares=[0.283,0.310,0.407])
+    Entry iter 15: err=0.997 (birth_shares=[0.124,0.138,0.738], entry_shares=[0.183,0.208,0.609])
+    Entry iter 20: err=0.995 (birth_shares=[0.099,0.097,0.804], entry_shares=[0.118,0.128,0.754])
+    Entry iter 25: err=0.992 (birth_shares=[0.107,0.106,0.786], entry_shares=[0.100,0.103,0.797])
+    Entry iter 30: err=0.989 (birth_shares=[0.140,0.134,0.726], entry_shares=[0.120,0.118,0.762])
+    Entry iter 35: err=0.982 (birth_shares=[0.199,0.145,0.655], entry_shares=[0.160,0.143,0.697])
+    Entry iter 40: err=0.971 (birth_shares=[0.199,0.181,0.621], entry_shares=[0.216,0.155,0.629])
+      [Flow] B=0.1086, E=0.3961, D=0.0044, B/E=0.2741
+      [BGP] n_implied=-0.4314 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.3961, actual E=0.3961, gap=0.000000
+    f(gamma=0.1500) = 0.2794
+
+  Starting bisection on gamma in [-0.0500, 0.1500]
+  (corresponds to n_pop in [-0.1667, 0.5000])
+
+    Entry iter  1: err=7.725 (birth_shares=[0.304,0.242,0.454], entry_shares=[0.211,0.163,0.627])
+    Entry iter  2: err=2.991 (birth_shares=[0.343,0.251,0.405], entry_shares=[0.239,0.186,0.575])
+    Entry iter  3: err=1.846 (birth_shares=[0.350,0.278,0.372], entry_shares=[0.270,0.206,0.524])
+    Entry iter  5: err=0.751 (birth_shares=[0.461,0.294,0.245], entry_shares=[0.319,0.240,0.441])
+    Entry iter 10: err=0.124 (birth_shares=[0.513,0.330,0.157], entry_shares=[0.441,0.323,0.236])
+    Entry iter 15: err=0.305 (birth_shares=[0.534,0.331,0.135], entry_shares=[0.517,0.327,0.156])
+    Entry iter 20: err=0.257 (birth_shares=[0.516,0.359,0.125], entry_shares=[0.516,0.350,0.133])
+    Entry iter 25: err=0.036 (birth_shares=[0.474,0.337,0.189], entry_shares=[0.498,0.349,0.153])
+    Entry iter 30: err=0.181 (birth_shares=[0.504,0.348,0.148], entry_shares=[0.472,0.333,0.195])
+    Entry iter 35: err=0.099 (birth_shares=[0.513,0.357,0.130], entry_shares=[0.503,0.351,0.146])
+    Entry iter 40: err=0.034 (birth_shares=[0.473,0.335,0.192], entry_shares=[0.494,0.348,0.158])
+      [Flow] B=0.0736, E=0.1893, D=0.0422, B/E=0.3889
+      [BGP] n_implied=-0.3148 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1893, actual E=0.1893, gap=0.000000
+  Bisect iter  1: gamma=0.0500 (n=0.1667), f=0.1444, own=60.2%, parity=0.49
+    Entry iter  1: err=9.384 (birth_shares=[0.500,0.353,0.147], entry_shares=[0.488,0.344,0.168])
+    Entry iter  2: err=4.815 (birth_shares=[0.464,0.375,0.161], entry_shares=[0.491,0.347,0.162])
+    Entry iter  3: err=3.064 (birth_shares=[0.436,0.380,0.183], entry_shares=[0.483,0.355,0.162])
+    Entry iter  5: err=1.512 (birth_shares=[0.412,0.377,0.210], entry_shares=[0.456,0.366,0.178])
+    Entry iter 10: err=0.702 (birth_shares=[0.362,0.362,0.276], entry_shares=[0.394,0.371,0.235])
+    Entry iter 15: err=0.421 (birth_shares=[0.337,0.346,0.317], entry_shares=[0.355,0.356,0.289])
+    Entry iter 20: err=0.266 (birth_shares=[0.325,0.338,0.337], entry_shares=[0.334,0.344,0.322])
+    Entry iter 25: err=0.165 (birth_shares=[0.322,0.334,0.344], entry_shares=[0.325,0.337,0.338])
+    Entry iter 30: err=0.100 (birth_shares=[0.321,0.333,0.345], entry_shares=[0.321,0.334,0.345])
+    Entry iter 35: err=0.057 (birth_shares=[0.321,0.333,0.346], entry_shares=[0.321,0.333,0.345])
+    Entry iter 40: err=0.034 (birth_shares=[0.321,0.332,0.347], entry_shares=[0.321,0.332,0.347])
+      [Flow] B=0.1331, E=0.1000, D=0.1000, B/E=1.3310
+      [BGP] n_implied=0.0953 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1000, actual E=0.1000, gap=0.000000
+  Bisect iter  2: gamma=-0.0000 (n=-0.0000), f=-0.0286, own=90.0%, parity=1.33
+    Entry iter  1: err=0.502 (birth_shares=[0.321,0.335,0.343], entry_shares=[0.321,0.332,0.347])
+    Entry iter  2: err=0.478 (birth_shares=[0.322,0.336,0.342], entry_shares=[0.321,0.333,0.346])
+    Entry iter  3: err=0.453 (birth_shares=[0.324,0.338,0.338], entry_shares=[0.321,0.334,0.345])
+    Entry iter  5: err=0.406 (birth_shares=[0.327,0.340,0.333], entry_shares=[0.323,0.336,0.341])
+    Entry iter 10: err=0.302 (birth_shares=[0.336,0.347,0.317], entry_shares=[0.330,0.343,0.327])
+    Entry iter 15: err=0.221 (birth_shares=[0.345,0.354,0.301], entry_shares=[0.340,0.350,0.310])
+    Entry iter 20: err=0.164 (birth_shares=[0.353,0.361,0.286], entry_shares=[0.349,0.357,0.294])
+    Entry iter 25: err=0.121 (birth_shares=[0.363,0.366,0.271], entry_shares=[0.357,0.363,0.280])
+    Entry iter 30: err=0.089 (birth_shares=[0.367,0.368,0.266], entry_shares=[0.364,0.366,0.270])
+    Entry iter 35: err=0.067 (birth_shares=[0.372,0.367,0.262], entry_shares=[0.369,0.367,0.264])
+    Entry iter 40: err=0.047 (birth_shares=[0.373,0.367,0.260], entry_shares=[0.372,0.367,0.261])
+      [Flow] B=0.1729, E=0.1414, D=0.0668, B/E=1.2227
+      [BGP] n_implied=0.0670 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1414, actual E=0.1414, gap=0.000000
+  Bisect iter  3: gamma=0.0250 (n=0.0833), f=0.0049, own=85.8%, parity=1.31
+    Entry iter  1: err=0.516 (birth_shares=[0.372,0.366,0.261], entry_shares=[0.372,0.367,0.261])
+    Entry iter  2: err=0.412 (birth_shares=[0.365,0.370,0.266], entry_shares=[0.372,0.367,0.261])
+    Entry iter  3: err=0.353 (birth_shares=[0.365,0.365,0.269], entry_shares=[0.370,0.367,0.262])
+    Entry iter  5: err=0.258 (birth_shares=[0.363,0.364,0.273], entry_shares=[0.367,0.366,0.266])
+    Entry iter 10: err=0.165 (birth_shares=[0.352,0.357,0.291], entry_shares=[0.358,0.361,0.282])
+    Entry iter 15: err=0.114 (birth_shares=[0.344,0.352,0.304], entry_shares=[0.349,0.355,0.296])
+    Entry iter 20: err=0.078 (birth_shares=[0.341,0.350,0.309], entry_shares=[0.343,0.352,0.305])
+    Entry iter 25: err=0.052 (birth_shares=[0.337,0.348,0.316], entry_shares=[0.340,0.349,0.311])
+    Entry iter 30: err=0.039 (birth_shares=[0.335,0.347,0.319], entry_shares=[0.336,0.347,0.317])
+    Entry iter 35: err=0.025 (birth_shares=[0.335,0.347,0.318], entry_shares=[0.335,0.347,0.318])
+    Entry iter 40: err=0.015 (birth_shares=[0.335,0.347,0.318], entry_shares=[0.335,0.347,0.318])
+      [Flow] B=0.1514, E=0.1198, D=0.0823, B/E=1.2641
+      [BGP] n_implied=0.0781 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1198, actual E=0.1198, gap=0.000000
+  Bisect iter  4: gamma=0.0125 (n=0.0417), f=-0.0109, own=88.0%, parity=1.31
+    Entry iter  1: err=0.212 (birth_shares=[0.336,0.348,0.316], entry_shares=[0.335,0.347,0.318])
+    Entry iter  2: err=0.194 (birth_shares=[0.336,0.349,0.316], entry_shares=[0.335,0.348,0.317])
+    Entry iter  3: err=0.177 (birth_shares=[0.336,0.349,0.315], entry_shares=[0.335,0.348,0.317])
+    Entry iter  5: err=0.147 (birth_shares=[0.337,0.350,0.314], entry_shares=[0.336,0.348,0.316])
+    Entry iter 10: err=0.086 (birth_shares=[0.341,0.353,0.306], entry_shares=[0.339,0.351,0.310])
+    Entry iter 15: err=0.060 (birth_shares=[0.344,0.355,0.302], entry_shares=[0.342,0.353,0.304])
+    Entry iter 20: err=0.033 (birth_shares=[0.347,0.358,0.295], entry_shares=[0.345,0.355,0.300])
+    Entry iter 25: err=0.026 (birth_shares=[0.348,0.359,0.293], entry_shares=[0.347,0.358,0.295])
+    Entry iter 30: err=0.018 (birth_shares=[0.349,0.360,0.291], entry_shares=[0.348,0.359,0.292])
+    Entry iter 35: err=0.012 (birth_shares=[0.349,0.360,0.291], entry_shares=[0.349,0.360,0.291])
+      [Flow] B=0.1629, E=0.1304, D=0.0743, B/E=1.2492
+      [BGP] n_implied=0.0742 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1304, actual E=0.1304, gap=0.000000
+  Bisect iter  5: gamma=0.0187 (n=0.0625), f=-0.0035, own=87.0%, parity=1.31
+    Entry iter  1: err=0.179 (birth_shares=[0.350,0.360,0.289], entry_shares=[0.349,0.360,0.291])
+    Entry iter  2: err=0.169 (birth_shares=[0.354,0.360,0.286], entry_shares=[0.350,0.360,0.290])
+    Entry iter  3: err=0.154 (birth_shares=[0.354,0.360,0.286], entry_shares=[0.351,0.360,0.289])
+    Entry iter  5: err=0.128 (birth_shares=[0.355,0.359,0.285], entry_shares=[0.353,0.360,0.288])
+    Entry iter 10: err=0.086 (birth_shares=[0.362,0.363,0.275], entry_shares=[0.356,0.361,0.283])
+    Entry iter 15: err=0.058 (birth_shares=[0.364,0.365,0.271], entry_shares=[0.362,0.363,0.274])
+    Entry iter 20: err=0.038 (birth_shares=[0.366,0.365,0.269], entry_shares=[0.365,0.365,0.271])
+    Entry iter 25: err=0.023 (birth_shares=[0.365,0.364,0.271], entry_shares=[0.365,0.364,0.271])
+    Entry iter 30: err=0.013 (birth_shares=[0.365,0.364,0.271], entry_shares=[0.365,0.364,0.271])
+      [Flow] B=0.1718, E=0.1358, D=0.0705, B/E=1.2649
+      [BGP] n_implied=0.0783 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1358, actual E=0.1358, gap=0.000000
+  Bisect iter  6: gamma=0.0219 (n=0.0729), f=-0.0016, own=86.4%, parity=1.34
+    Entry iter  1: err=0.064 (birth_shares=[0.365,0.364,0.271], entry_shares=[0.365,0.364,0.271])
+    Entry iter  2: err=0.058 (birth_shares=[0.364,0.364,0.271], entry_shares=[0.365,0.364,0.271])
+    Entry iter  3: err=0.052 (birth_shares=[0.364,0.364,0.271], entry_shares=[0.365,0.364,0.271])
+    Entry iter  5: err=0.049 (birth_shares=[0.360,0.371,0.268], entry_shares=[0.363,0.366,0.271])
+    Entry iter 10: err=0.025 (birth_shares=[0.368,0.366,0.266], entry_shares=[0.365,0.367,0.267])
+    Entry iter 15: err=0.022 (birth_shares=[0.370,0.365,0.265], entry_shares=[0.369,0.366,0.266])
+    Entry iter 20: err=0.016 (birth_shares=[0.371,0.365,0.264], entry_shares=[0.370,0.365,0.265])
+    Entry iter 25: err=0.011 (birth_shares=[0.371,0.365,0.264], entry_shares=[0.371,0.365,0.264])
+      [Flow] B=0.1695, E=0.1386, D=0.0686, B/E=1.2228
+      [BGP] n_implied=0.0671 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1386, actual E=0.1386, gap=0.000000
+  Bisect iter  7: gamma=0.0234 (n=0.0781), f=0.0033, own=86.1%, parity=1.30
+    Entry iter  1: err=0.050 (birth_shares=[0.371,0.365,0.264], entry_shares=[0.371,0.365,0.264])
+    Entry iter  2: err=0.044 (birth_shares=[0.371,0.365,0.264], entry_shares=[0.371,0.365,0.264])
+    Entry iter  3: err=0.040 (birth_shares=[0.370,0.365,0.264], entry_shares=[0.371,0.365,0.264])
+    Entry iter  5: err=0.032 (birth_shares=[0.370,0.365,0.264], entry_shares=[0.371,0.365,0.264])
+    Entry iter 10: err=0.018 (birth_shares=[0.370,0.365,0.265], entry_shares=[0.370,0.365,0.265])
+    Entry iter 15: err=0.014 (birth_shares=[0.369,0.364,0.266], entry_shares=[0.370,0.365,0.265])
+      [Flow] B=0.1667, E=0.1372, D=0.0695, B/E=1.2151
+      [BGP] n_implied=0.0649 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1372, actual E=0.1372, gap=0.000000
+  Bisect iter  8: gamma=0.0227 (n=0.0755), f=0.0032, own=86.3%, parity=1.29
+    Entry iter  1: err=0.016 (birth_shares=[0.370,0.364,0.266], entry_shares=[0.370,0.365,0.265])
+    Entry iter  2: err=0.014 (birth_shares=[0.370,0.364,0.266], entry_shares=[0.370,0.365,0.266])
+    Entry iter  3: err=0.013 (birth_shares=[0.370,0.364,0.267], entry_shares=[0.370,0.364,0.266])
+    Entry iter  5: err=0.012 (birth_shares=[0.370,0.364,0.267], entry_shares=[0.370,0.364,0.266])
+      [Flow] B=0.1668, E=0.1365, D=0.0700, B/E=1.2220
+      [BGP] n_implied=0.0668 (from n=log(B/E)/A_m with A_m=3)
+      [Check] E_implied=B×exp(-n×A_m)=0.1365, actual E=0.1365, gap=0.000000
+  Bisect iter  9: gamma=0.0223 (n=0.0742), f=0.0022, own=86.3%, parity=1.30
+  Bisection converged!
+
+==================== BGP RESULTS ====================
+Population growth rate n: 0.0729 per period (1.2153% annual)
+Aggregate growth rate gamma: 0.0219 per period (0.3646% annual)
+Mean parity: 1.34
+Ownership rate: 86.4%
+
+Equilibrium prices: [0.404, 0.741, 2.578]
+Equilibrium rents: [0.161, 0.295, 1.025]
+
+*** SPATIAL FERTILITY GRADIENT ***
+  Peripheral: mean_n=1.337, childless=23.1%
+  Secondary: mean_n=1.346, childless=22.8%
+  Superstar: mean_n=1.341, childless=22.9%
+  Gradient (Peripheral - Superstar): -0.004
+
+*** SUBSISTENCE COSTS BY LOCATION (for n=2) ***
+  Peripheral: r=0.161, min_expenditure=0.300 (c_bar=0.15 + r*h_bar=0.150)
+  Secondary: r=0.295, min_expenditure=0.424 (c_bar=0.15 + r*h_bar=0.274)
+  Superstar: r=1.025, min_expenditure=1.104 (c_bar=0.15 + r*h_bar=0.954)
+=====================================================
+
+=== BGP CONSISTENCY VERIFICATION ===
+
+1. Age distribution (should decay at rate exp(-n) = 0.9297):
+   Age   Mass       Ratio(j/j-1)  Expected
+    1    0.1358     1.0000        0.9297
+    2    0.1263     0.9297        0.9297
+    3    0.1174     0.9297        0.9297
+    4    0.1091     0.9297        0.9297
+    5    0.1015     0.9297        0.9297
+    6    0.0943     0.9297        0.9297
+
+2. KEY BGP CHECK: E = B × exp(-n × A_m):
+   Birth rate:     0.171815
+   Entry rate:     0.135838
+   E_implied:      0.138057  (= B × exp(-n × A_m))
+   Gap (E - E_impl): -0.002220 (1.63%)
+   STATUS: *** BGP CONSISTENT ***
+
+3. Implied n from B/E:
+   n from log(B/E)/A_m: 0.078319
+   n used:              0.072917
+   Error: 0.005403
+
+4. Fertility accounting:
+   Mean parity (completed): 1.342
+   Parity distribution: [22.9%, 36.1%, 25.0%, 16.0%]
+   Maturation lag A_m: 3 periods
+
+5. Scale invariance check:
+   Total mass = 1.000000 (should be 1.0)
+
+========================================
+
+ans = 
+
+  struct with fields:
+
+                        V: [6-D double]
+                    c_pol: [6-D double]
+                   hR_pol: [6-D double]
+            tenure_choice: [6-D double]
+                loc_probs: [7-D double]
+               fert_probs: [5-D double]
+               fert_value: [30×4×3×10 double]
+                        g: [6-D double]
+                 own_rate: 0.8641
+                pop_share: [3×1 double]
+               own_by_loc: [3×1 double]
+               own_by_age: [10×1 double]
+              parity_dist: [4×1 double]
+              mean_parity: 1.3416
+       mean_parity_by_loc: [3×1 double]
+    frac_childless_by_loc: [3×1 double]
+      death_wealth_by_loc: [3×1 double]
+        entry_mass_by_loc: [3×1 double]
+      bequest_per_entrant: [3×1 double]
+            own_by_parity: [4×1 double]
+         child_state_dist: [10×5 double]
+              fert_by_age: [10×1 double]
+         total_births_kfe: 0.1718
+            births_by_loc: [3×1 double]
+               entry_rate: 0.1358
+                    w_hat: [3×1 double]
+                     p_eq: [3×1 double]
+                    n_pop: 0.0729
+                    gamma: 0.0219
+              b_entry_loc: [3×1 double]
+             entry_by_loc: [3×1 double]
+
