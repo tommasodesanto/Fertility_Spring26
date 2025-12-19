@@ -1,0 +1,634 @@
+\documentclass[11pt]{article}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{natbib}
+
+\geometry{margin=1in}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\title{Fertility, Housing, and Location Decisions}
+\author{Tommaso De Santo}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+\newpage
+
+\section{Introduction}
+
+\section{Model}
+
+\textbf{Notation for locations.} The set of locations is $\mathcal{I}=\{1,\dots,I\}$; generic locations are indexed by $i,j\in\mathcal{I}$. In any state, the current (origin) location is denoted $i\in\mathcal{I}$ and a candidate destination by $i'\in\mathcal{I}$. Location amenities are $\mathcal{E}_{i'}>0$. Location taste shocks are $\varepsilon^{\,i'}$ with i.i.d.\ Type-I extreme value (Gumbel) distribution. Location choice shares are $\pi^{\,i'}(\cdot)$ and location-stage values are $V^{\,i'}(\cdot)$. The (inverse) scale parameter governing dispersion in location choice is denoted $\nu_{\ell}>0$.
+
+The economy features continuous age $a\in[0,A]$ and calendar time $t$. Shock ages are discrete $\mathcal{A}^s=\{0,1,\dots,A-1\}$. Working ages are $a\in[0,A_R]$; fertility is feasible on $a\in[0,A_f]$; children mature at $A_m$.
+
+\subsection{Preferences}
+
+Let housing services be $\mathbf{h}\equiv \chi\,h + h^R$, where $h$ is owner-occupied stock (adjusted only at shock ages) and $h^R$ is the rental flow (adjustable between shocks). Flow utility is Stone--Geary CRRA in $(c,\mathbf{h})$ with a \emph{single} curvature:
+\[
+u(c,\mathbf{h};n)
+=\frac{\big(c-\bar c(n)\big)^{\,1-\sigma}}{1-\sigma}
++\kappa_h(n)\,\frac{\big(\mathbf{h}-\bar h(n)\big)^{\,1-\sigma}}{1-\sigma},
+\qquad \sigma>0,\ \ \kappa_h'(n)\ge 0,
+\]
+where $\bar c(n)$ and $\bar h(n)$ are subsistence levels that may depend on parity $n$. In applications we allow a fixed ``first-child'' housing jump and per-child housing needs:
+\[
+\bar c(n)=\bar c_0+\bar c_1\,n,\qquad
+\bar h(n)=\bar h_0+\bar h_{\mathrm{jump}}\cdot \mathbb{I}\{n\ge 1\}+\bar h_1\,n.
+\]
+We impose supernumerary lower bounds $c-\bar c(n)\ge c_0>0$ and $\mathbf{h}-\bar h(n)\ge h_0>0$, as well as $h^R\ge 0$.
+
+\subsection{Earnings}
+Households supply labor inelastically when $a\le A_R$ and earn $w_{it}(a,t)$ in location $i$ (specified in the production block below).
+
+\subsection*{Mobility and location choice}
+
+At shock ages, households draw an idiosyncratic taste shock for each destination $i'$, $\varepsilon^{\,i'}$, i.i.d.\ Type-I extreme value. Amenities $\mathcal{E}_{i'}$ and multiplicative moving wedges $\mu_{i i'}\in(0,\infty)$ scale the continuation value in destination $i'$.
+
+Given state $(b,h,i,a,n,a_n,t)$ prior to relocation, moving to $i'$ resets liquid wealth and owner stock to
+\begin{align*}
+  \tilde b_t^{\,i'}(b,h,i) &= b + \mathbb{I}(i'\neq i)\,(1-\psi)\,p_{it}\,h,\\
+  \tilde h_t^{\,i'}(h,i)   &= \mathbb{I}(i'=i)\,h,
+\end{align*}
+i.e., if the household moves it sells the origin house at net proceeds $(1-\psi)p_{it}h$ and arrives as a renter; if it stays it carries the owned stock.
+
+\subsection*{Housing}
+
+Rental sizes $h^R$ lie in $\mathcal{R}\subset\mathbb{R}_+$; owner sizes $h$ lie in $\mathcal{H}\subset\mathbb{R}_+$. Housing services are $\mathbf{h}(h,h^R)=\chi h+h^R$. Owner housing depreciates at rate $\delta$; owners pay a property tax $\tau_H$ on the house value; buying/selling incurs a transaction wedge $\psi\in[0,1)$.
+
+\subsection{Fertility}
+
+At shock ages, agents receive fertility shocks $\varepsilon^n$ (i.i.d.\ Type-I extreme value) and choose parity $n\in\{0,1,2,3\}$. Having children raises housing taste via $\kappa_h(n)$ and changes subsistence needs via $\bar c(n)$ and $\bar h(n)$. For now parity is chosen at a shock and children age deterministically to $A_m$ (we can later allow sequential fertility). The (inverse) scale parameter governing dispersion in fertility choice is denoted $\nu^n>0$.
+
+\subsection{Entrants and local bequest recycling}
+
+Newborns (age $a=0$) enter as renters with $h_0=0$. Their liquid wealth at entry is financed by local bequests. If deaths in $i$ carry $(b,h)$, the bequeathable estate is
+\[
+\mathrm{estate}_i(b,h)=b+(1-\psi)p_{it}h.
+\]
+Let $E_i$ denote the aggregate \emph{estate} flow in $i$ (notation distinct from amenity $\mathcal{E}_i$) and $E_i^0$ the newborn flow in $i$. A fraction $\varphi\in[0,1]$ is redistributed equally to newborns:
+\[
+T_i=\frac{\varphi\,E_i}{\max\{E_i^0,\varepsilon\}},\qquad b_0(i)=b_{\mathrm{entry}}+T_i,
+\]
+with $\varepsilon>0$ small. Budget balance: $\sum_i T_iE_i^0=\varphi\sum_i E_i$. (Utility bequests are separate from financial estates.)
+
+\subsection{Portfolio and savings}
+
+Liquid wealth $b$ earns $q$. Between shock ages, owners cannot rent ($h^R=0$) and renters can adjust $h^R\ge 0$. A collateral constraint must hold after tenure/size choices:
+\[
+b\ge -\phi\,p_{it}h.
+\]
+Between shocks, liquid wealth evolves as
+\[
+\dot{b}= w_{it}(a,t)+ q b -c - r_{it}h^R - (\delta+\tau_H) p_{it}h.
+\]
+At shock ages, $b$ adjusts discretely due to relocation, tenure/size moves, and bequests to children at $A_m$:
+\[
+\tilde b_t^{\,\text{beq}}(b,h,i,n,b^{\mathrm{beq}})=b-n\,b^{\mathrm{beq}}.
+\]
+
+\subsection{Household problem and value functions}
+
+Let the household state be $\Omega=(b,h,i,a,n,a_n,t)$. Between shocks, the HJB is
+\begin{align}
+\rho V_t(\Omega)
+= \max_{c-\bar c(n)\ge c_0,\;h^R\ge 0}\Big\{
+u\!\big(c,\chi h+h^R;n\big)
++ V_b\,\dot b
++ V_a
+\Big\},
+\quad
+\dot b=w_{it}(a,t)+qb-c-r_{it}h^R-(\delta+\tau_H)p_{it}h,
+\end{align}
+with Kuhn--Tucker conditions for $h^R\ge 0$ and $b\ge -\phi p_{it}h$.
+
+At shock ages, the sequence is \emph{fertility $\to$ location $\to$ tenure/size}. We define the three blocks.
+
+\paragraph{Tenure/size stage.}
+Given a chosen destination $i'$, define the value from optimally adjusting $h'$:
+\begin{align}
+  V_t^{H}(b,h,i',a,n,a_n)
+  \;=\; \max_{h'\in \mathcal{H}_t(b,h,i')}\; V_t\!\big(\tilde b_t^{\,H}(b,h,h',i'),\,h',\,i',\,a,\,n,\,a_n,\,t\big),
+\end{align}
+where $\tilde b_t^{\,H}(b,h,h',i')=b+\mathbb{I}(h'\neq h)\,\big[(1-\psi)p_{i't}h-p_{i't}h'\big]$ and
+$\mathcal{H}_t(b,h,i')=\{h'\in\mathcal{H}:\tilde b_t^{\,H}\ge -\phi p_{i't}h'\}$.
+
+\paragraph{Location stage.}
+Define the (systematic) value of choosing destination $i'$ as
+\[
+V_t^{\,i'}(b,h,i,a,n,a_n)
+\;=\;
+V_t^{H}\!\big(\tilde b_t^{\,i'}(b,h,i),\,\tilde h_t^{\,i'}(h,i),\,i',\,a,\,n,\,a_n\big).
+\]
+With i.i.d.\ Type-I extreme value shocks, we model the \emph{choice index} as
+\[
+U_t^{\,i'}(b,h,i,a,n,a_n)
+=\nu_{\ell}\,V_t^{\,i'}(b,h,i,a,n,a_n)+\log\!\big(\mathcal{E}_{i'}\,\mu_{i i'}\big)+\varepsilon^{\,i'}.
+\]
+This yields the logit share and the inclusive value (up to an additive constant):
+\begin{align}
+\pi_t^{\,i'}(b,h,i,a,n,a_n)
+&=\frac{\big(\mathcal{E}_{i'}\,\mu_{i i'}\big)\exp\!\big(\nu_{\ell}V_t^{\,i'}(b,h,i,a,n,a_n)\big)}
+{\sum_{j'\in\mathcal{I}}\big(\mathcal{E}_{j'}\,\mu_{i j'}\big)\exp\!\big(\nu_{\ell}V_t^{\,j'}(b,h,i,a,n,a_n)\big)},\\
+V_t^{I}(b,h,i,a,n,a_n)
+&=\frac{1}{\nu_{\ell}}\log\!\left(\sum_{j'\in\mathcal{I}}\big(\mathcal{E}_{j'}\,\mu_{i j'}\big)\exp\!\big(\nu_{\ell}V_t^{\,j'}(b,h,i,a,n,a_n)\big)\right).
+\end{align}
+In computation on a BGP, the logit kernel is applied to detrended continuation values (equivalently, to levels after dividing by the common trend), which preserves stationarity.
+
+\paragraph{Fertility stage.}
+Given i.i.d.\ Type-I extreme value shocks for parity choices and continuation values $V_t^{I}$,
+\begin{align}
+\pi_t^{\,n'}(b,h,i,a,a_n)
+&=
+\frac{\exp\!\big(\nu^n\,V_t^{I}(b,h,i,a,n',a_n)\big)}
+{\sum_{m\in\{0,1,2,3\}}\exp\!\big(\nu^n\,V_t^{I}(b,h,i,a,m,a_n)\big)},
+\\
+V_t^{n}(b,h,i,a,a_n)
+&=
+\frac{1}{\nu^n}\log\!\left(\sum_{m\in\{0,1,2,3\}}
+\exp\!\big(\nu^n\,V_t^{I}(b,h,i,a,m,a_n)\big)\right).
+\end{align}
+We adopt $V_t^{n}$ as the post-shock value $V_t$ at shock ages.
+
+\subsection{Demography (Euler--Lotka)}
+
+Let survival $\ell(a)$ and age-specific fertility $m(a)$; let $n$ denote the population growth rate. The Euler--Lotka condition is
+\[
+1=\int_0^A e^{-n a}\,\ell(a)\,m(a)\,da
+\quad
+\Big(\text{or } 1=\sum_{a\in\mathcal{A}^s} e^{-n a}\,\ell(a)\,m(a)\Delta a\text{ in discrete shock ages}\Big).
+\]
+With deterministic death at $A$, the stationary age density is uniform iff $n=0$; for $n\neq 0$, $f(a)\propto e^{-n a}\,\ell(a)$.
+
+\subsection{Production (tradeable good and \emph{construction in the main text})}
+
+\paragraph{Tradeable good.} The numeraire is costlessly traded. Competitive firms in $i$ produce
+\[
+Y_{it}=A_i\,Z_i(L_{it})\,L_{it},\qquad Z_i(L_{it})=L_{it}^{\alpha_i},
+\]
+yielding wage $w_{it}=A_i\,L_{it}^{\alpha_i}$.
+
+\paragraph{Residential construction (irreversibility).} Developers transform the numeraire into new floorspace $\Upsilon_{it}$ with technology
+\[
+\Upsilon_{it}=Z^h_{it}\,K_{it},
+\]
+so the unit cost of new floorspace is $1/Z^h_{it}$. Let $H_{it}$ be the city stock of floorspace; it evolves as
+\[
+\dot H_{it}=\Upsilon_{it}-\delta H_{it},\qquad \Upsilon_{it}\ge 0 \quad\text{(irreversibility)}.
+\]
+Perfect competition implies the complementarity (Kuhn--Tucker) system:
+\begin{align}
+p_{it} \;\ge\; \frac{1}{Z^h_{it}},\qquad
+\Upsilon_{it}\;\ge\;0,\qquad
+\bigg(p_{it}-\frac{1}{Z^h_{it}}\bigg)\Upsilon_{it}=0.
+\end{align}
+\emph{Housing market clearing} equates the \emph{flow} of net new demand to construction net of depreciation:
+\begin{align}
+\dot H_{it}
+&= \Upsilon_{it}-\delta H_{it}
+= \frac{d}{dt}\,\Big[\underbrace{H^d_{it}}_{\text{occupied floorspace}}\Big]-\delta H_{it},
+\\
+H^d_{it}
+&=\int\!\!\!\int\!\!\!\int \big(h^R(\Omega)+h\big)\; g_t(\Omega)\; db\,dh\,da,
+\end{align}
+with $g_t$ the cross-sectional density. In steady growth, these conditions pin down $p_{it}$ jointly with $H_{it}$ and $\Upsilon_{it}$. (A computational simplification that replaces the complementarity with an isoelastic static supply is in Appendix~\ref{app:supply_simplification}.)
+
+\section{Equilibrium and Balanced Growth Path}
+
+\subsection{Equilibrium}
+
+Fix fundamentals $\{\sigma,\kappa_h(n),\chi,q,\delta,\tau_H,\phi,\psi,\bar c(\cdot),\bar h(\cdot),\{A_i\},\{Z^h_{it}\}\}$ and the i.i.d.\ extreme-value shock structure with dispersion parameters $\nu_{\ell}$ for locations and $\nu^n$ for fertility. An equilibrium is a collection
+\begin{align*}
+\Big\{ V_t(\Omega),\; \text{policies }(c,h^R)\text{ between shocks},\;
+\text{discrete choice kernels }(\pi^{\,n},\pi^{\,i'},\pi^{\,H}) \text{ at shocks},\;
+g_t(\Omega),\; \{p_{it},r_{it},w_{it},H_{it},\Upsilon_{it}\}_{i\in\mathcal I}\Big\}
+\end{align*}
+such that:
+\begin{enumerate}[label=(E\arabic*)]
+\item \textbf{Household optimality.} Between shocks $V_t$ solves the HJB with borrowing and nonnegativity constraints; at shocks, fertility $\to$ location $\to$ tenure/size decisions are optimal and generate choice probabilities $\pi^{\,n},\pi^{\,i'},\pi^{\,H}$ consistent with extreme-value aggregation.
+\item \textbf{Cross-sectional consistency.} $g_t$ solves the KF between shocks and is updated by the conservative reallocation induced by $(\pi^{\,n},\pi^{\,i'},\pi^{\,H})$ at shock ages.
+\item \textbf{User cost (levels).} Rents and prices satisfy
+\[
+r_{it}=\big(q+\delta+\tau_H-g_{p,it}\big)\,p_{it},
+\qquad
+g_{p,it}\equiv \frac{d}{dt}\log p_{it}.
+\]
+On a BGP with $p_{it}=e^{\gamma t}\hat p_i$, this reduces to $\hat r_i=(q+\delta+\tau_H-\gamma)\,\hat p_i$.
+\item \textbf{Construction and market clearing.} For each $i,t$,
+\[
+p_{it}\ge \frac{1}{Z^h_{it}},\quad \Upsilon_{it}\ge 0,\quad
+\bigg(p_{it}-\frac{1}{Z^h_{it}}\bigg)\Upsilon_{it}=0,\quad
+\dot H_{it}=\Upsilon_{it}-\delta H_{it}=\frac{d}{dt}H^d_{it}-\delta H_{it}.
+\]
+\end{enumerate}
+
+\subsection{Balanced Growth Path (BGP) and hats}
+
+Let hats denote detrended variables, $\hat z=e^{-\gamma t}z$ for $z\in\{b,c,h,h^R,p_i,r_i,w_i,H_i,\Upsilon_i\}$. We take the value scaling
+\[
+V_t(\Omega)=e^{(1-\sigma)\gamma t}\,v(\hat b,\hat h,\hat\Omega),\qquad \hat\Omega=(i,a,n,a_n).
+\]
+
+\paragraph{HJB in hats.} Between shocks,
+\begin{align}
+(\rho-(1-\sigma)\gamma)\,v
+=\max_{\hat c-\bar c(n)\ge c_0,\;\hat h^{\,R}\ge 0}\Big\{
+u(\hat c,\chi\hat h+\hat h^{\,R};n)
++ v_{\hat b}\,\dot{\hat b}
++ v_a
+- \gamma\,\hat h\,v_{\hat h}
+\Big\},
+\quad
+\dot{\hat b}=\hat w_i+(q-\gamma)\hat b-\hat c-\hat r_i \hat h^{\,R}-(\delta+\tau_H)\hat p_i\hat h.
+\end{align}
+
+\paragraph{KF in hats (share normalization).} The stationary KF between shocks is
+\[
+\partial_a\phi+\partial_{\hat b}(\phi\,\dot{\hat b})+\partial_{\hat h}(\phi\,(-\gamma\hat h))=0,
+\]
+with discrete, conservative updates at shock ages using $(\pi^{\,n},\pi^{\,i'},\pi^{\,H})$ in that order.
+We adopt the share normalization
+\[
+g_t(\Omega)=e^{-2\gamma t}\,\phi(\hat b,\hat h,\hat\Omega),
+\]
+so that $\phi$ integrates to one by construction; totals are recovered by multiplying by population when aggregating.
+
+\paragraph{User cost in hats.} $\hat r_i=(q+\delta+\tau_H-\gamma)\hat p_i$.
+
+\paragraph{Construction in hats.} From levels,
+\[
+\dot H_{it}=\Upsilon_{it}-\delta H_{it}.
+\]
+With $\hat H_i=e^{-\gamma t}H_{it}$ and $\hat\Upsilon_i=e^{-\gamma t}\Upsilon_{it}$,
+\[
+\dot{\hat H}_i=0\quad\Longleftrightarrow\quad \hat\Upsilon_i=(\delta-\gamma)\,\hat H_i
+\]
+on a stationary BGP. Combined with the level complementarity $p_{it}\ge 1/Z^h_{it}$, $\Upsilon_{it}\ge 0$, $\big(p_{it}-1/Z^h_{it}\big)\Upsilon_{it}=0$, this pins down prices jointly with stocks at the BGP.
+
+\paragraph{Demand in hats.} $H_i^d=\int(\hat h^R+\hat h)\,\phi\,d\hat b\,d\hat h\,da$ and market clearing requires $\frac{d}{dt}\hat H_i^d=0$ on a strict BGP, which is consistent with $\hat\Upsilon_i=(\delta-\gamma)\hat H_i$.
+
+\subsection*{First-order conditions (interior case, hats)}
+
+With Stone--Geary marginal utilities
+\[
+u_c(\hat c,\mathbf{\hat h};n)=\big(\hat c-\bar c(n)\big)^{-\sigma},
+\qquad
+u_{\mathbf{h}}(\hat c,\mathbf{\hat h};n)=\kappa_h(n)\big(\mathbf{\hat h}-\bar h(n)\big)^{-\sigma},
+\quad \mathbf{\hat h}\equiv \chi\hat h+\hat h^{\,R},
+\]
+the interior between-shock policies in hats satisfy
+\[
+u_c(\hat c,\chi\hat h+\hat h^{\,R};n)=v_{\hat b},\qquad
+\frac{u_{\mathbf{h}}(\hat c,\chi\hat h+\hat h^{\,R};n)}{u_c(\hat c,\chi\hat h+\hat h^{\,R};n)}=\hat r_i.
+\]
+Equivalently,
+\[
+\hat c=\bar c(n)+v_{\hat b}^{-1/\sigma},\qquad
+\chi\hat h+\hat h^{\,R}=\bar h(n)+\Big(\tfrac{\kappa_h(n)}{\hat r_i v_{\hat b}}\Big)^{\!1/\sigma},\qquad
+\hat h^{\,R}=\max\{0,\;(\cdot)-\chi\hat h\}.
+\]
+Kuhn--Tucker inequalities apply at the collateral wall and the rental corner.
+
+\section{Computation}
+
+\subsection{Supply simplification for numerics}\label{app:supply_simplification}
+
+For computation, one may replace the construction complementarity by a static isoelastic \emph{approximation} around the BGP:
+\[
+H_i^s(\hat p_i)=\bar H_i\,\hat p_i^{\eta_i},\qquad \eta_i>0,
+\]
+and close the market with $H_i^d(\hat p_i)=H_i^s(\hat p_i)$. This delivers a stable price-only fixed point. The mapping to the construction block is determined by matching $(\hat p_i,\hat H_i)$ at the targeted BGP and interpreting $\eta_i$ as a local supply elasticity.
+
+\section{Conclusion}
+\pagebreak
+\section{Appendix A: HJB and KFE in levels and hats (clean derivation)}
+\label{app:cleanHJBKFE}
+
+\paragraph{Price convention.} The \emph{tradable numeraire} has a common price $P^T_t\equiv 1$ in all locations. Symbols $p_{it},r_{it}$ denote the \emph{local (non-tradable) housing asset price and rent}, both quoted in the numeraire. Hence $p_{it}$ may differ by $i$; there is no conflict with the law of one price for tradables.
+
+\subsection*{A.1 Levels HJB with explicit time dependence}
+Let the between-shocks state be $\Omega=(b,h,i,a,n,a_n,t)$ with $\dot h=0$ (no owner adjustment between shocks), $\dot a=1$, and liquid wealth drift
+\[
+\dot b=w_{it}(a,t)+q b - c - r_{it} h^R - (\delta+\tau_H)p_{it} h .
+\]
+The correct HJB in levels (non-autonomous environment) is
+\begin{equation}
+\label{eq:HJB_levels}
+\rho V(t,\Omega)
+=\max_{c-\bar c(n)\ge c_0,\;h^R\ge 0}\Big\{
+u\!\big(c,\chi h+h^R;n\big)
++\underbrace{\partial_t V}_{\text{explicit time}}
++ V_b\,\dot b
++ V_a
+\Big\},
+\end{equation}
+with Kuhn–Tucker for $h^R\ge 0$ and the collateral constraint enforced at shocks.
+
+\subsection*{A.2 Detrending and stationary HJB}
+Let hats be $\hat z=e^{-\gamma t}z$ for $z\in\{b,c,h,h^R,w_i,p_i,r_i\}$ and scale values
+\[
+V(t,\Omega)=e^{(1-\sigma)\gamma t}\,v(\hat b,\hat h,i,a,n,a_n).
+\]
+Utility scales as
+\[
+u(e^{\gamma t}\hat c,\;e^{\gamma t}(\chi\hat h+\hat h^{\,R});n)
+=e^{(1-\sigma)\gamma t}\,u(\hat c,\chi\hat h+\hat h^{\,R};n),
+\]
+since $\bar c(n)$ and $\bar h(n)$ are defined in detrended units.
+Using $\partial_t \hat b=-\gamma \hat b$, $\partial_t \hat h=-\gamma \hat h$, and $\dot{\hat b}=(\dot b/e^{\gamma t})-\gamma \hat b$, the chain rule yields
+\[
+\partial_t V
+=e^{(1-\sigma)\gamma t}\!\left[(1-\sigma)\gamma v -\gamma\hat b\,v_{\hat b}-\gamma\hat h\,v_{\hat h}\right].
+\]
+Moreover, $V_b=e^{-\sigma\gamma t}v_{\hat b}$ and $V_a=e^{(1-\sigma)\gamma t}v_a$. Substitute into \eqref{eq:HJB_levels} and divide by $e^{(1-\sigma)\gamma t}$ to obtain the stationary HJB in hats:
+\begin{equation}
+\label{eq:HJB_hats}
+(\rho-(1-\sigma)\gamma)\,v
+=\max_{\hat c-\bar c(n)\ge c_0,\;\hat h^{\,R}\ge 0}\Big\{
+u(\hat c,\chi\hat h+\hat h^{\,R};n)
++ v_{\hat b}\,\dot{\hat b}
++ v_a
+- \gamma\,\hat h\,v_{\hat h}
+\Big\},
+\end{equation}
+with
+\begin{equation}
+\label{eq:bhat_drift}
+\dot{\hat b}
+=\hat w_i+(q-\gamma)\hat b-\hat c-\hat r_i \hat h^{\,R}-(\delta+\tau_H)\hat p_i\hat h.
+\end{equation}
+This matches the interior FOCs:
+\[
+(\hat c-\bar c(n))^{-\sigma}=v_{\hat b},\qquad
+\frac{\kappa_h(n)(\chi\hat h+\hat h^{\,R}-\bar h(n))^{-\sigma}}{(\hat c-\bar c(n))^{-\sigma}}=\hat r_i,
+\]
+i.e.
+\[
+\hat c=\bar c(n)+v_{\hat b}^{-1/\sigma},\ 
+\chi\hat h+\hat h^{\,R}=\bar h(n)+\big(\kappa_h(n)/(\hat r_i v_{\hat b})\big)^{1/\sigma}.
+\]
+
+\subsection*{A.3 KFE in levels and hats}
+Let $g_t(b,h,i,a,n,a_n)$ be the (mass or share) density between shocks. With $\dot h=0$ and $\dot a=1$,
+\begin{equation}
+\label{eq:KFE_levels}
+\partial_t g_t
++ \partial_b\!\big(g_t\,\dot b\big)
++ \partial_a g_t
+= 0,
+\qquad \dot b \text{ as above.}
+\end{equation}
+
+\paragraph{Share normalization (recommended).} Define
+\[
+g_t(\Omega) = e^{-2\gamma t}\,\phi(\hat b,\hat h,i,a,n,a_n),
+\qquad \int\phi=1,
+\]
+so the Jacobian of $(b,h)\mapsto(\hat b,\hat h)$ contributes exactly $e^{-2\gamma t}$. Then \eqref{eq:KFE_levels} is equivalent to the stationary PDE
+\begin{equation}
+\label{eq:KFE_hats_share}
+\partial_a\phi
++\partial_{\hat b}\big(\phi\,\dot{\hat b}\big)
++\partial_{\hat h}\big(\phi\,(-\gamma\hat h)\big)=0,
+\end{equation}
+with $\dot{\hat b}$ from \eqref{eq:bhat_drift}. At shock ages, $\phi$ undergoes a \emph{conservative} reallocation via the jump operator $\mathcal{J}$ implementing the sequence fertility $\to$ location $i\to i'$ $\to$ tenure/size.
+
+\paragraph{Mass normalization (alternative).} If one prefers to keep \emph{levels} in the density,
+\[
+g_t(\Omega)=e^{-(2\gamma+n_t)t}\,\phi(\hat b,\hat h,i,a,n,a_n),
+\]
+with $n_t\equiv \dot N_t/N_t$ the endogenous population growth rate defined in Appendix~\ref{app:flows_equilibrium}. The PDE for $\phi$ is still \eqref{eq:KFE_hats_share}; the only difference is whether population growth sits inside $g_t$ or outside in a separate $N_t$ equation.
+
+\paragraph{Boundary and constraints.} No-flux at the collateral wall and at $h^R=0$ corners; age boundary conditions at $a=0$ and $a=A$ are imposed by the flow equations for entrants and exits (Appendix~\ref{app:flows_equilibrium}); house size $h$ is constant between shocks (hence only the $-\gamma\hat h$ drift in hats).
+
+\bigskip
+\noindent\textit{Verification.} The cancellation of $-\gamma\hat b v_{\hat b}$ between $\partial_t V$ and $V_b\dot b$ terms is exact; the residual $-\gamma \hat h v_{\hat h}$ arises because $\dot h=0$ between shocks. Equation \eqref{eq:KFE_hats_share} follows from the standard change-of-variables formula plus the drift identities above.
+
+\section{Appendix B: Equilibrium via population flows (no Euler--Lotka)}
+\label{app:flows_equilibrium}
+
+\subsection*{B.1 Stocks, flows, and relocation}
+Let $N_i(t)$ be the population in location $i$, and let $\phi_i(\hat b,\hat h,a,n,a_n)$ be the stationary share density (Appendix~\ref{app:cleanHJBKFE}). Define
+\[
+\mathcal{S}_i(t):=\{a\in[0,A]\text{ hitting a shock at }t\},\qquad
+\omega_i(a,t):=\text{mass flow into age }a\text{ in }i \text{ per unit time}.
+\]
+Relocation flows at a shock age $a\in\mathcal{S}_i(t)$ are
+\[
+M_{i\to i'}(t;a)=N_i(t)\,\omega_i(a,t)\!\int\!\pi^{\,i'}(\hat b,\hat h,i,a,n,a_n)\,\phi_{i|a}(\hat b,\hat h,n,a_n)\,d\hat b\,d\hat h\,dn\,da_n,
+\]
+with $\phi_{i|a}$ the cross-section conditional on age $a$. Net relocation obeys $\sum_{i'}M_{i\to i'}=\sum_{j}M_{j\to i}$ by construction of the choice shares and jump operator.
+
+\subsection*{B.2 Births and deaths}
+Let $d(a)$ be the instantaneous death hazard (or deterministic exit at $A$). Let parity choice at age $a$ produce $n'\in\{0,1,2,3\}$ children. Then births in $i$ are
+\[
+B_i(t)=\sum_{a\in\mathcal{S}_i(t)\cap[0,A_f]}
+N_i(t)\,\omega_i(a,t)\!\int\!\Big(\sum_{n'} n'\cdot \pi^{\,n'}(\hat b,\hat h,i,a,a_n)\Big)\,
+\phi_{i|a}(\hat b,\hat h,n,a_n)\,d\hat b\,d\hat h\,dn\,da_n .
+\]
+Deaths are
+\[
+D_i(t)=\int_0^A d(a)\,N_i(t)\,f_i(a,t)\,da,
+\]
+with $f_i(a,t)$ the age density (the $a$-marginal of $\phi_i$).
+
+\subsection*{B.3 Population laws of motion and growth}
+Total population in location $i$ satisfies
+\begin{equation}
+\label{eq:Ni_flow}
+\dot N_i(t)
+=\underbrace{B_i(t)-D_i(t)}_{\text{natural growth}}
++\underbrace{\sum_{j\neq i}M_{j\to i}(t)-\sum_{j\neq i}M_{i\to j}(t)}_{\text{net relocation}}.
+\end{equation}
+Aggregate population $N(t)=\sum_i N_i(t)$ obeys
+\begin{equation}
+\label{eq:N_agg}
+\dot N(t)=B(t)-D(t),\qquad B(t)=\sum_i B_i(t),\quad D(t)=\sum_i D_i(t),
+\end{equation}
+because relocations cancel in the aggregate. The endogenous growth rate is $n_t=\dot N(t)/N(t)$.
+
+\subsection*{B.4 Wages, labor, and housing markets}
+Working-age labor in $i$:
+\[
+L_i(t)=N_i(t)\int_0^{A_R} f_i(a,t)\,da \;\times\; (\text{participation }=1).
+\]
+Firms: $w_{it}=A_i\,L_i^{\alpha_i}$.  
+Local housing demand (occupied floorspace) in hats:
+\[
+\hat H_i^d=\int\!\big(\hat h^{\,R}(\hat b,\hat h,i,a,n,a_n)+\hat h\big)\,\phi_i(\hat b,\hat h,a,n,a_n)\,d\hat b\,d\hat h\,da\,dn\,da_n .
+\]
+Level demand is $H_i^d(t)=N_i(t)\,\hat H_i^d\,e^{\gamma t}$.  
+Construction: either (i) complementarity $p_{it}\ge 1/Z^h_{it}$, $\Upsilon_{it}\ge 0$, $(p_{it}-1/Z^h_{it})\Upsilon_{it}=0$, $\dot H_{it}=\Upsilon_{it}-\delta H_{it}$; or (ii) static isoelastic $H_i^s=\bar H_i\,p_{it}^{\eta_i}$.
+
+\subsection*{B.5 Balanced Growth Path (BGP) without Euler--Lotka}
+A BGP is a tuple $(\gamma,\{\hat w_i,\hat p_i,\hat r_i,\hat H_i,\hat \Upsilon_i\}_{i},\ v,\ \{\phi_i\}_i,\ \{N_i(t)\})$ s.t.:
+\begin{enumerate}[label=(B\arabic*),leftmargin=1.35em]
+\item \textbf{Stationary hats and policies.} HJB \eqref{eq:HJB_hats} holds; \(\{\hat w_i,\hat p_i,\hat r_i\}\) are constant over $t$; $\phi_i$ solves \eqref{eq:KFE_hats_share} with conservative shock updates.
+\item \textbf{Common co-trend.} $w_{it}=e^{\gamma t}\hat w_i$, $p_{it}=e^{\gamma t}\hat p_i$, $r_{it}=e^{\gamma t}\hat r_i$, with user cost $\hat r_i=(q+\delta+\tau_H-\gamma)\hat p_i$.
+\item \textbf{Flow balance.} There exists $n$ such that $N_i(t)=s_i\,N_0\,e^{nt}$ with constant shares $s_i\in[0,1]$ and \eqref{eq:Ni_flow} holds for each $i$. This determines $n$ \emph{from} $B_i,D_i,M_{i\to j}$; Euler–Lotka is not used.
+\item \textbf{Markets.} For each $i$, either (A) complementarity pins $\hat p_i$ jointly with $\hat H_i$, $\hat\Upsilon_i=(\delta-\gamma)\hat H_i$; or (B) static supply clears $\hat H_i^d=\bar H_i\,\hat p_i^{\eta_i}$.
+\item \textbf{Production consistency.} With $L_i(t)=s_i\,e^{nt}\int_0^{A_R}f_i(a)\,da$, wages co-trend at $g_{w,i}=\alpha_i n$. Stationary hats then require $\gamma=g_{w,i}$, hence either $\alpha_i$ common or $n$ chosen so that $\alpha_i n$ is common (we assume common $\alpha$ or equilibrating $A_i$ to ensure a single $\gamma$).
+\end{enumerate}
+Under (A), if construction is active in $i$, $p_{it}=1/Z^h_{it}$ implies $g_{p,i}=-g_{Z^h,i}$; stationary hats require $g_{Z^h,i}=-\gamma$ in all active cities. Under (B), $\hat p_i$ is set by static clearing; stationary hats require parameter combinations guaranteeing $g_p=\gamma$ (see Appendix~\ref{app:prices_BGP}).
+  
+\section{Appendix C: Tradable vs non-tradable prices and BGP conditions}
+\label{app:prices_BGP}
+
+\paragraph{Tradable numeraire.} The price of the tradable is equalized across locations: $P^T_{it}\equiv P^T_t\equiv 1$. All prices in the model are in this numeraire.
+
+\paragraph{Local housing price.} $p_{it}$ is the price of a non-tradable local asset (residential floorspace). Differences in $p_{it}$ across $i$ are consistent with spatial frictions and local supply.
+
+\begin{proposition}[Co-trending condition for a single-$\gamma$ BGP]
+On a BGP with stationary hats, wages and local housing prices must co-trend at rate $\gamma$:
+\[
+g_w=\gamma,\qquad g_p=\gamma.
+\]
+Under construction complementarity, active cities require $g_{Z^h,i}=-\gamma$; under isoelastic supply $H_i^s=\bar H_i p_i^{\eta_i}$ and CRRA curvature $\sigma$, log-linear clearing implies
+\[
+g_p=\frac{n+\gamma}{\eta_i+1/\sigma}.
+\]
+Setting $g_p=\gamma$ gives the restriction $\eta_i=1-1/\sigma+1/\alpha$ (with common $\alpha$ so $\gamma=\alpha n$). If this restriction is violated, prices drift and a strict BGP does not exist (that case should be interpreted as transitional dynamics).
+\end{proposition}
+
+\paragraph{Implication.} There is no contradiction with the law of one price: $P^T$ (tradable) is common; $p_{it}$ (housing) is local. BGP existence requires common \emph{growth} of $p_{it}$ across cities equal to $\gamma$; levels may differ by $i$.
+\section{Appendix D: Stationary Age Distribution on a BGP with \texorpdfstring{$n \neq 0$}{n ≠ 0}}
+\label{app:age_distribution}
+
+\subsection*{D.1 Demographic Accounting}
+
+Let $N(t)$ denote aggregate population and $f(a,t)$ the age density such that $N(t) = \int_0^A f(a,t)\,da$. On a BGP with constant population growth rate $n$, we have $N(t) = N_0 e^{nt}$.
+
+The age density evolves according to the McKendrick--von Foerster equation. With deterministic death at age $A$ (no mortality before $A$):
+\begin{equation}
+\frac{\partial f}{\partial t} + \frac{\partial f}{\partial a} = 0, \quad a \in [0,A).
+\end{equation}
+
+\subsection*{D.2 Stationary Age Structure}
+
+\begin{proposition}[BGP Age Distribution]
+On a BGP with population growth rate $n$, the age density takes the form
+\[
+f(a,t) = e^{nt} \cdot \psi(a), \qquad \psi(a) = \psi(0)\,e^{-na}.
+\]
+The normalized cross-sectional age distribution is
+\begin{equation}
+\label{eq:age_dist}
+\tilde{f}(a) \equiv \frac{f(a,t)}{N(t)} = \frac{n}{1 - e^{-nA}}\,e^{-na}, \quad a \in [0,A].
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Substitute the ansatz $f(a,t) = e^{nt}\psi(a)$ into the PDE:
+\[
+n e^{nt}\psi(a) + e^{nt}\psi'(a) = 0 \implies \psi'(a) = -n\psi(a) \implies \psi(a) = \psi(0)e^{-na}.
+\]
+Normalization requires $\int_0^A \tilde{f}(a)\,da = 1$:
+\[
+\int_0^A C\,e^{-na}\,da = C \cdot \frac{1 - e^{-nA}}{n} = 1 \implies C = \frac{n}{1 - e^{-nA}}.
+\]
+\end{proof}
+
+\begin{remark}[Limiting Cases]
+As $n \to 0$, L'H\^opital's rule gives $\tilde{f}(a) \to 1/A$ (uniform). For $n > 0$ (growing population), young cohorts dominate; for $n < 0$ (shrinking population), old cohorts dominate:
+\[
+\frac{\tilde{f}(A)}{\tilde{f}(0)} = e^{-nA} 
+\begin{cases}
+< 1 & \text{if } n > 0,\\
+= 1 & \text{if } n = 0,\\
+> 1 & \text{if } n < 0.
+\end{cases}
+\]
+\end{remark}
+
+\subsection*{D.3 Implication for the Detrended KFE}
+
+Under the share normalization $g_t(\Omega) = e^{-2\gamma t}\phi(\hat{b},\hat{h},\hat{\Omega})$, the stationary density $\phi$ must embed the $e^{-na}$ age structure. Decompose:
+\[
+\phi(\hat{b},\hat{h},i,a,n,a_n) = \tilde{f}(a) \cdot \phi_{|a}(\hat{b},\hat{h},i,n,a_n \mid a),
+\]
+where $\phi_{|a}$ is the conditional distribution given age $a$.
+
+\paragraph{Implementation.} When propagating mass from age $a$ to $a + \Delta a$ in a discrete-time approximation, apply the demographic correction factor:
+\begin{equation}
+\label{eq:demographic_factor}
+\phi(\cdot, a + \Delta a) = e^{-n\,\Delta a} \cdot \phi^{\text{post-transition}}(\cdot, a),
+\end{equation}
+where $\phi^{\text{post-transition}}$ is the density after within-period drift and discrete choice updates. This ensures the age marginal of $\phi$ matches \eqref{eq:age_dist}.
+
+\paragraph{Normalization.} The total mass under the correct age weighting is
+\[
+\int \phi\,d\hat{b}\,d\hat{h}\,da = 1, \quad \text{where the } a\text{-marginal satisfies } \int_0^A \tilde{f}(a)\,da = 1.
+\]
+In discrete time with $J$ periods of length $\Delta a$:
+\[
+\sum_{j=1}^{J} \text{mass}(j) = 1, \quad \frac{\text{mass}(j)}{\sum_{j'}\text{mass}(j')} \approx \tilde{f}((j-1)\Delta a)\,\Delta a.
+\]
+
+\subsection*{D.4 Numerical Verification}
+
+After solving the KFE, verify that the age marginals match theory:
+\[
+\text{mass}(j) \propto e^{-n(j-1)\Delta a}, \quad j = 1,\ldots,J.
+\]
+Define the diagnostic:
+\[
+\epsilon_{\text{age}} \equiv \max_{j} \left| \frac{\text{mass}(j)}{\sum_{j'}\text{mass}(j')} - \tilde{f}((j-1)\Delta a)\,\Delta a \right|.
+\]
+A well-implemented KFE should achieve $\epsilon_{\text{age}} < 0.01$.
+
+\subsection*{D.5 Timing Convention at Shock Ages}
+
+At shock ages $a \in \mathcal{A}^s$, households make discrete choices. The timing convention must be consistent between the HJB (backward) and KFE (forward).
+
+\paragraph{Convention.} At the beginning of age $a$, the sequence of events is:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Fertility choice} (if $a \in [A_f^{\text{start}}, A_f^{\text{end}}]$ and $n = 0$): draw $\varepsilon^{n'}$ i.i.d.\ Type-I extreme value and choose parity $n' \in \{0,1,2,3\}$.
+    \item \textbf{Location choice}: draw $\varepsilon^{i'}$ i.i.d.\ Type-I extreme value and choose destination $i' \in \mathcal{I}$.
+    \item \textbf{Tenure/size choice}: choose $h' \in \mathcal{H}$.
+    \item \textbf{Within-period flow}: consumption $c$, rental $h^R$, wealth accumulation $\dot{b}$.
+    \item \textbf{Age advancement}: transition to $a + \Delta a$.
+\end{enumerate}
+
+\paragraph{HJB implementation.} Backward induction at age $j$:
+\begin{align*}
+    V^H(b, h, i', j, n, a_n) &= \max_{h' \in \mathcal{H}} V^{\text{flow}}(\tilde{b}^H, h', i', j, n, a_n), \\
+    V^I(b, h, i, j, n, a_n) &= \frac{1}{\nu_{\ell}}\log\!\left( \sum_{i'\in\mathcal I} (\mathcal E_{i'}\mu_{ii'})\exp\big(\nu_{\ell}V^{i'}(b,h,i,j,n,a_n)\big) \right), \\
+    V^{\text{fert}}(b, h, i, j, a_n) &= \frac{1}{\nu^n}\log\!\left( \sum_{n'=0}^{3} \exp\big(\nu^n V^I(b,h,i,j,n',a_n)\big) \right).
+\end{align*}
+For agents with $n = 0$ at fertile ages, the value function is $V(b, h, i, j, 0, a_n) = V^{\text{fert}}(b, h, i, j, a_n)$.
+
+\paragraph{KFE implementation.} Forward iteration at age $j$:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Fertility}: For mass $\phi(b, h, i, j, 0, 1)$ (childless, no kids present), redistribute:
+    \[
+    \phi(b, h, i, j, n', a_n') \mathrel{+}= \pi^{n'}(b, h, i, j) \cdot \phi(b, h, i, j, 0, 1), \quad n' \in \{0,1,2,3\},
+    \]
+    where $a_n' = 0$ if $n' > 0$ (newborn children) and the child state updates accordingly.
+    \item \textbf{Location}: For each $(n, a_n)$, redistribute mass across destinations using $\pi^{i'}(b, h, i, j, n, a_n)$.
+    \item \textbf{Tenure}: Concentrate mass at optimal $h'$ given post-relocation wealth.
+    \item \textbf{Drift}: Solve the KFE for within-period dynamics.
+    \item \textbf{Advance}: $\phi(\cdot, j+1, \cdot) \mathrel{+}= \phi^{\text{post-drift}}(\cdot, j, \cdot)$.
+\end{enumerate}
+
+\begin{remark}[Timing consistency]
+The fertility choice must occur \emph{before} within-period drift in the KFE, matching the HJB where fertility affects the value function at age $j$. If fertility is applied after drift (i.e., to mass at $j+1$), there is a one-period delay in child costs and housing demand, creating an inconsistency between the value function and the cross-sectional distribution.
+\end{remark}
+
+\end{document}
