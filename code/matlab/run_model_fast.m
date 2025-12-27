@@ -610,14 +610,17 @@ function [F_gamma, result, warmstart_out] = evaluate_equilibrium_given_gamma(gam
         total_hjb_time = total_hjb_time + toc(t_hjb);
         hjb_count = hjb_count + 1;
 
+        % OPTIMIZATION: Precompute drift from policy (reused in all KFE calls)
+        [drift_x, drift_y] = precompute_drift_from_policy(c_pol, hR_pol, r, p, P_local, b_grid, inv_db_f, inv_db_b);
+
         % =================================================================
         % STEP 2: ITERATE KFE + ENTRY/BEQUEST TO CONVERGENCE (fixed HJB)
         % =================================================================
         for iter_entry = 1:P0.max_iter_entry
-            % Solve KFE with current entry distribution
+            % Solve KFE with current entry distribution (using precomputed drift)
             t_kfe = tic;
             [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_probs, ...
-                                   r, p, P_local, b_grid, db_f, db_b, idx_zero, n_pop);
+                                   r, p, P_local, b_grid, db_f, db_b, idx_zero, n_pop, drift_x, drift_y);
             total_kfe_time = total_kfe_time + toc(t_kfe);
             kfe_count = kfe_count + 1;
 
@@ -1548,7 +1551,11 @@ end
 %%                    CORRECT TIMING: FERTILITY -> LOCATION -> TENURE -> DRIFT -> ADVANCE
 %% ========================================================================
 function [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_probs, ...
-                                r_hat, p_hat, P, b_grid, db_f, db_b, idx_zero, n_pop)
+                                r_hat, p_hat, P, b_grid, db_f, db_b, idx_zero, n_pop, drift_x, drift_y)
+
+    % Optional: precomputed drift coefficients (drift_x, drift_y)
+    % If provided, skip recomputing drift from c_pol/hR_pol in the inner loop
+    use_precomputed_drift = (nargin >= 15) && ~isempty(drift_x) && ~isempty(drift_y);
 
     % TIMING (for forward iteration at age j):
     %   1. FERTILITY: Apply fertility shock (if in fertile window)
@@ -1802,26 +1809,32 @@ function [g, stats] = solve_kfe(c_pol, hR_pol, tenure_choice, loc_probs, fert_pr
                             continue;
                         end
 
-                        if ten == 1
-                            c_j = c_pol(:, 1, i, j, nn, cs);
-                            hR_j = hR_pol(:, 1, i, j, nn, cs);
-                            mu = y_j + (P.q - P.gamma) * b_grid - c_j - r_hat(i) * hR_j;
-                            b_constraint = 0;
+                        % Use precomputed drift if available, otherwise compute from policy
+                        if use_precomputed_drift
+                            x = drift_x(:, ten, i, j, nn, cs);
+                            y_kfe = drift_y(:, ten, i, j, nn, cs);
                         else
-                            h_size = P.H_own(ten - 1);
-                            c_j = c_pol(:, ten, i, j, nn, cs);
-                            owner_cost = (P.delta + P.tau_H) * p_hat(i) * h_size;
-                            mu = y_j + (P.q - P.gamma) * b_grid - c_j - owner_cost;
-                            b_constraint = -phi_n * p_hat(i) * h_size;
+                            if ten == 1
+                                c_j = c_pol(:, 1, i, j, nn, cs);
+                                hR_j = hR_pol(:, 1, i, j, nn, cs);
+                                mu = y_j + (P.q - P.gamma) * b_grid - c_j - r_hat(i) * hR_j;
+                                b_constraint = 0;
+                            else
+                                h_size = P.H_own(ten - 1);
+                                c_j = c_pol(:, ten, i, j, nn, cs);
+                                owner_cost = (P.delta + P.tau_H) * p_hat(i) * h_size;
+                                mu = y_j + (P.q - P.gamma) * b_grid - c_j - owner_cost;
+                                b_constraint = -phi_n * p_hat(i) * h_size;
+                            end
+
+                            at_constraint = (b_grid <= b_constraint + 1e-6) & (mu < 0);
+                            mu(at_constraint) = 0;
+
+                            x = max(mu, 0) .* inv_db_f;
+                            y_kfe = max(-mu, 0) .* inv_db_b;
+                            x(Nb) = 0;
+                            y_kfe(1) = 0;
                         end
-
-                        at_constraint = (b_grid <= b_constraint + 1e-6) & (mu < 0);
-                        mu(at_constraint) = 0;
-
-                        x = max(mu, 0) .* inv_db_f;
-                        y_kfe = max(-mu, 0) .* inv_db_b;
-                        x(Nb) = 0;
-                        y_kfe(1) = 0;
 
                         diag_vals = -(x + y_kfe);
 
@@ -2094,6 +2107,61 @@ function verify_bgp_consistency(sol, P, n_pop)
     fprintf('   Total mass = %.6f (should be 1.0)\n', total_mass);
 
     fprintf('\n========================================\n');
+end
+
+
+%% ========================================================================
+%%                    PRECOMPUTE DRIFT FROM POLICY
+%% ========================================================================
+function [drift_x, drift_y] = precompute_drift_from_policy(c_pol, hR_pol, r_hat, p_hat, P, b_grid, inv_db_f, inv_db_b)
+    % Precompute drift coefficients from consumption and housing policies
+    % This allows KFE to reuse these rather than recomputing each iteration
+
+    J = P.J;
+    I = P.I;
+    Nb = length(b_grid);
+    n_tenure = 1 + P.n_house;
+    n_parity = P.n_parity;
+    n_child = P.n_child_states;
+
+    drift_x = zeros(Nb, n_tenure, I, J, n_parity, n_child);
+    drift_y = zeros(Nb, n_tenure, I, J, n_parity, n_child);
+
+    for j = 1:J-1
+        for nn = 1:n_parity
+            phi_n = P.phi(nn);
+            for cs = 1:n_child
+                for i = 1:I
+                    y_j = P.income(i, j);
+                    for ten = 1:n_tenure
+                        if ten == 1
+                            c_j = c_pol(:, 1, i, j, nn, cs);
+                            hR_j = hR_pol(:, 1, i, j, nn, cs);
+                            mu = y_j + (P.q - P.gamma) * b_grid - c_j - r_hat(i) * hR_j;
+                            b_constraint = 0;
+                        else
+                            h_size = P.H_own(ten - 1);
+                            c_j = c_pol(:, ten, i, j, nn, cs);
+                            owner_cost = (P.delta + P.tau_H) * p_hat(i) * h_size;
+                            mu = y_j + (P.q - P.gamma) * b_grid - c_j - owner_cost;
+                            b_constraint = -phi_n * p_hat(i) * h_size;
+                        end
+
+                        at_constraint = (b_grid <= b_constraint + 1e-6) & (mu < 0);
+                        mu(at_constraint) = 0;
+
+                        x_val = max(mu, 0) .* inv_db_f;
+                        y_val = max(-mu, 0) .* inv_db_b;
+                        x_val(Nb) = 0;
+                        y_val(1) = 0;
+
+                        drift_x(:, ten, i, j, nn, cs) = x_val;
+                        drift_y(:, ten, i, j, nn, cs) = y_val;
+                    end
+                end
+            end
+        end
+    end
 end
 
 
