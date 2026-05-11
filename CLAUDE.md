@@ -217,6 +217,27 @@ if the live model has changed.
   stronger than the evidence.
 - Use `rg` for code search where available.
 
+## Git And Backup Routine
+
+The current local Git history was restarted on 2026-05-11 and backed up to
+GitHub branch `clean-main-2026-05-11` in
+`tommasodesanto/Fertility_Spring26`. The old local Git metadata is preserved on
+disk under `.git_legacy_2026-05-11_70506af`.
+
+At the start of any substantive session, run `git status -sb`. Before editing a
+tracked document or code file, make sure the status is understood. Do not leave
+important source files untracked.
+
+At the end of any substantive session:
+
+1. Run the relevant verification.
+2. Run `git status -sb` and review the changed paths.
+3. Commit coherent source/documentation changes with a short message.
+4. Run `git push` to update the GitHub backup branch.
+
+Do not force-push or overwrite the old GitHub `main` branch unless the user
+explicitly asks for that after being told it rewrites history.
+
 ## Verification
 
 Before finishing substantive work:
