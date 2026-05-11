@@ -3,11 +3,12 @@
 Current GitHub backup branch:
 
 ```text
-tommasodesanto/Fertility_Spring26:clean-main-2026-05-11
+tommasodesanto/Fertility_Spring26:main
 ```
 
-The local branch `main` tracks that GitHub branch. The old GitHub `main` branch
-has not been overwritten.
+The local branch `main` tracks GitHub `main`. The cleaned repository history was
+put on GitHub `main` on 2026-05-11 after the user requested that the current
+work live on `main`.
 
 An automatic local `launchd` job is installed from:
 
@@ -17,7 +18,7 @@ ops/git-backup/
 
 It runs daily at 23:40 local time. The job stages tracked changes and
 non-ignored active source/documentation files, creates a dated backup commit if
-anything changed, and pushes to `clean-main-2026-05-11`. It refuses to commit
+anything changed, and pushes to `main`. It refuses to commit
 obvious raw/generated file extensions and any staged file larger than 20MB.
 
 Logs are written to:
@@ -62,5 +63,5 @@ If a session only produced generated outputs that should not be versioned, leave
 the repository clean or document the run in the appropriate status file before
 committing.
 
-Do not force-push to the old GitHub `main` branch unless we deliberately decide
-to replace the old remote history.
+Do not force-push GitHub `main` again unless the user explicitly requests a
+history rewrite.

@@ -6,7 +6,7 @@ repository to GitHub once per day.
 The active GitHub backup target is:
 
 ```text
-tommasodesanto/Fertility_Spring26:clean-main-2026-05-11
+tommasodesanto/Fertility_Spring26:main
 ```
 
 The job runs `scripts/run_daily_git_backup.sh` at 23:40 local time. It stages

@@ -8,6 +8,11 @@ generated or archived files. To make future edits recoverable, the repository wa
 restarted locally with a curated initial commit. The old Git metadata was not
 deleted; it was moved aside under `.git_legacy_2026-05-11_70506af`.
 
+The cleaned history is now the active GitHub `main` branch for
+`tommasodesanto/Fertility_Spring26`. During the alignment, the cleaned history
+was first pushed to `clean-main-2026-05-11` as a non-destructive backup branch;
+after user confirmation, `main` was updated to this cleaned history.
+
 The new Git baseline is intended to track:
 
 - project-control files in the root;
