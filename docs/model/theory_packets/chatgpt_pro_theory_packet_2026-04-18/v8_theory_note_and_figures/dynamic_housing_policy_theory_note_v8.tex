@@ -1,0 +1,330 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{lmodern}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue}
+\graphicspath{{v8_figures/}}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\mc}{\mathcal}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\gap}{D}
+\newcommand{\birth}{\mathrm{Birth}}
+\newcommand{\slack}{s}
+\newcommand{\RC}{R_C}
+\newcommand{\RP}{R_P}
+\newcommand{\OC}{O_C}
+\newcommand{\OP}{O_P}
+\newcommand{\rhoP}{\rho_P}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\title{Housing, Fertility, and Location:\ Two Intuition Slides with Model Discipline}
+\author{Theory insert, v8}
+\date{April 18, 2026}
+
+\begin{document}
+\maketitle
+
+\section*{What changed in this version}
+
+This version drops the flow-chart ``punch slide.''  The presentation should instead use two intuition slides:
+\begin{enumerate}[leftmargin=1.4em,itemsep=0.25em]
+\item a real \((b,\rhoP)\) slice showing the joint birth--location margin, where \(b\) is liquid wealth and \(\rhoP=p_P/p_C\) is the peripheral house price relative to the center price; and
+\item a housing-slack slide showing how the actual first-child housing shock maps into a wealth-equivalent housing cost and then into the fertility cutoff.
+\end{enumerate}
+The main correction is conceptual: family-space need \(z\) is no longer the axis of the policy figure.  The first-child housing increment is fixed at
+\begin{equation}
+  z_1 \equiv \bar h(1)-\bar h(0),
+\end{equation}
+and the graph varies real household objects--wealth, relative prices, housing slack, and finance thresholds.  The role of \(z_1\) is to define the size of the child-induced housing shock, not to act as the policy instrument.
+
+\section{Core model objects}
+
+Let \(x\) denote the pre-fertility household state at age \(j\).  It includes liquid wealth \(b\), current location, current tenure or owner rung, completed fertility, and child stage.  Let \(n\in\{0,1\}\) denote the no-birth versus first-birth choice in the deterministic comparison.  After the fertility decision, the household chooses location, tenure, housing services, and savings.
+
+The flow utility block is Stone--Geary CRRA,
+\begin{equation}
+ u(c,h;m)=
+ \frac{\left[(c-\bar c(m))^\alpha(h-\bar h(m))^{1-\alpha}\right]^{1-\sigma}}{1-\sigma}
+ +\psi_{\mathrm{child}}m,
+ \label{eq:utility_v8}
+\end{equation}
+where \(m\) is children at home.  The active-child housing requirement is
+\begin{equation}
+  \bar h(m)=\bar h_0+\bar h_{\mathrm{jump}}\one\{m\ge 1\}+\bar h_n m.
+  \label{eq:hbar_v8}
+\end{equation}
+Renters choose continuous housing subject to a cap, \(h_R\le \bar h_R\).  Owners choose from the discrete ladder \(H_k\), with effective housing services \(\chi H_k\).  A simple branch-level finance threshold for purchasing family-usable rung \(H^F\) in location \(i\) is
+\begin{equation}
+  b \ge b_i^F \equiv (1-\phi_i)p_iH^F-G_i,
+  \label{eq:access_v8}
+\end{equation}
+where \(G_i\) captures purchase support if present.  The full dynamic model has transaction costs, continuation values, and current-tenure dependence; equation \eqref{eq:access_v8} is the clean branch-level threshold shown in the figure.
+
+Let \(a\in\mc A\) index a concrete residential branch: rent center, rent periphery, own center rung \(k\), own periphery rung \(k\).  Let
+\begin{equation}
+  G^n_{j,a}(x;\theta)
+\end{equation}
+be the systematic value of branch \(a\) if the household chooses parity state \(n\).  In the deterministic limit,
+\begin{equation}
+  \mc V_j(x,n;\theta)=\max_{a\in\mc A(x,n;\theta)}G^n_{j,a}(x;\theta).
+\end{equation}
+The first-child birth value gap is
+\begin{equation}
+  \gap_j(x;\theta)=\mc V_j(x,1;\theta)-\mc V_j(x,0;\theta).
+  \label{eq:D_v8}
+\end{equation}
+Birth occurs when \(\gap_j\ge 0\).  With fertility shocks, the probability is a smooth transformation of this same object; the deterministic gap is the sharp margin.
+
+Away from ties in the branch maximum,
+\begin{equation}
+  \gap_{j,\theta}(x;\theta)
+  =G^1_{j,a_1,\theta}(x;\theta)-G^0_{j,a_0,\theta}(x;\theta),
+  \label{eq:branch_exposure_v8}
+\end{equation}
+where \(a_n=\argmax_a G^n_{j,a}(x;\theta)\).  This is the discipline for the entire insert.  Housing policy matters for fertility when it moves the active parent value relative to the active childless value near \(\gap_j=0\).
+
+\section{Intuition slide 1: a real birth--location margin}
+
+\subsection*{Why the vertical axis is \(\rhoP=p_P/p_C\), not an invented index}
+
+The previous figure used either \(z\) or an affordability index; both were problematic for a main policy slide.  The model's spatial tradeoff is not an abstract index.  It is the tradeoff between central amenities and peripheral family space.  The clean real slice is therefore
+\begin{equation}
+  (b,\rhoP), \qquad \rhoP\equiv \frac{p_P}{p_C},
+\end{equation}
+with \(p_C\) and all other primitives held fixed.  Low \(\rhoP\) means the periphery is cheap relative to the center, so it is a strong family-space outside option.  High \(\rhoP\) means the periphery provides little spatial relief.
+
+If rental prices are tied to asset prices by the user-cost relation \(r_i=\iota p_i\), \(\iota=q+\delta+\tau_H\), then \(\rhoP\) is also the relative rental/user-cost price.  If the price-rent mapping is richer in the full equilibrium, the same figure can be interpreted as a partial-equilibrium relative family-housing price slice.
+
+For each relative price \(\rhoP\), define the wealth cutoff \(b_j^*(\rhoP,\xi)\) by
+\begin{equation}
+  \gap_j(b_j^*(\rhoP,\xi),\rhoP,\xi;\theta)=0,
+  \label{eq:rho_cutoff_v8}
+\end{equation}
+where \(\xi\) collects non-wealth states and fixed primitives.
+
+\begin{proposition}[Relative-price birth cutoff]
+Suppose \(\gap_j\) is continuously differentiable in \((b,\rhoP)\), the cutoff \eqref{eq:rho_cutoff_v8} is locally unique, and \(\gap_{j,b}>0\).  Then
+\begin{equation}
+  \frac{\partial b_j^*}{\partial \rhoP}
+  =-
+  \frac{\gap_{j,\rhoP}}{\gap_{j,b}}
+  =-
+  \frac{G^1_{j,a_1,\rhoP}-G^0_{j,a_0,\rhoP}}{\gap_{j,b}}
+  \quad\text{evaluated at } b_j^*(\rhoP,\xi).
+  \label{eq:rho_slope_v8}
+\end{equation}
+Thus relative house prices matter for fertility through active-branch exposure at the birth margin.  If the marginal parent branch uses peripheral family space more intensively than the marginal childless branch, then \(\gap_{j,\rhoP}<0\) and \(\partial b_j^*/\partial\rhoP>0\): a higher relative peripheral price raises the wealth required for birth.
+\end{proposition}
+
+The parent location-switch object in the same plane is
+\begin{equation}
+  S^1_j(b,\rhoP,\xi;\theta)
+  =\mc V^1_{j,P}(b,\rhoP,\xi;\theta)-\mc V^1_{j,C}(b,\rhoP,\xi;\theta),
+  \label{eq:sorting_v8}
+\end{equation}
+where \(\mc V^1_{j,i}=\max_{a\in\mc A_i}G^1_{j,a}\).  The parent sorting switch solves \(S^1_j=0\).  This sorting switch is not the fertility cutoff, but the two can intersect: some households have a child only if the parent branch moves to the periphery.
+
+Finance enters through the owner-access threshold.  With \(p_C\) normalized in the slice,
+\begin{equation}
+  b_P^F(\rhoP,\phi)=(1-\phi_P)p_CH^F\rhoP-G_P,
+  \qquad
+  b_C^F(\phi)=(1-\phi_C)p_CH^F-G_C.
+  \label{eq:finance_slice_v8}
+\end{equation}
+Relaxing finance shifts owner-access thresholds left.  It affects births only where that shift changes the active parent branch or a near-active branch at \(\gap_j=0\).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.99\linewidth]{v8_fig1_birth_location_relative_price.pdf}
+\caption{\textbf{Intuition slide 1.}  The axes are real model objects: liquid wealth \(b\) and the relative peripheral house price \(\rhoP=p_P/p_C\).  The colored curve is the fertility cutoff \(\gap_j=0\); colors identify the active parent branch at the birth margin: rent center \((R_C)\), rent periphery \((R_P)\), own periphery \((O_P)\), or own center \((O_C)\).  The dotted line is the parent center--periphery switch \(S^1_j=0\).  Dashed access lines are finance thresholds, not fertility cutoffs.  The message is that the birth margin and the location/tenure margin are distinct but intersect.}
+\label{fig:intuition1_v8}
+\end{figure}
+
+\paragraph{What this slide says in words.}  A child changes the residential problem.  When the periphery is cheap relative to the center, some households can make parenthood viable by using peripheral family space, often as renters.  When the periphery becomes expensive relative to the center, that spatial escape valve weakens and the wealth cutoff for birth shifts right.  Ownership access matters only if an owner branch is active or close to active at the birth margin.
+
+\section{Intuition slide 2: the child is costly where housing slack is scarce}
+
+The second slide should not vary \(z\) on the horizontal axis.  The model has a fixed first-child housing shock
+\begin{equation}
+  z_1=\bar h(1)-\bar h(0).
+\end{equation}
+The relevant question is how expensive this actual shock is for households with different housing slack and branch constraints.
+
+Define a counterfactual parent value \(\mc V^1_j(x;z,\theta)\), where the child exists but the required housing increment is \(z\) rather than \(z_1\).  The marginal wealth-equivalent shadow cost of extra family-space need is
+\begin{equation}
+  \Omega_j(x;z,\theta)
+  =-
+  \frac{\partial \mc V^1_j(x;z,\theta)/\partial z}
+       {\partial \mc V^1_j(x;z,\theta)/\partial b}.
+  \label{eq:Omega_v8}
+\end{equation}
+The total wealth-equivalent housing cost of the first child is
+\begin{equation}
+  K^H_j(x;\theta)
+  =\int_0^{z_1}\Omega_j(x;z,\theta)\,\dd z.
+  \label{eq:KH_v8}
+\end{equation}
+This is the object the slack picture should show.  The x-axis is housing slack, a household/branch object, not the family-need parameter.
+
+\subsection*{Flow derivation on a fixed branch}
+
+Let current supernumerary consumption be \(q_c=c-\bar c(m)\) and housing slack be
+\begin{equation}
+  \slack_h=h-\bar h(m).
+\end{equation}
+For Stone--Geary utility \eqref{eq:utility_v8}, the marginal rate of substitution between housing and consumption is
+\begin{equation}
+  \frac{u_h}{u_c}
+  =\frac{1-\alpha}{\alpha}\frac{c-\bar c(m)}{h-\bar h(m)}.
+  \label{eq:mrs_v8}
+\end{equation}
+
+For an interior renter in location \(i\), the housing FOC is \(u_h/u_c=r_i\), so the flow wealth-equivalent cost of one extra required housing unit is \(r_i\).  Hence
+\begin{equation}
+  K^{H,R,int}_i=r_i z_1.
+  \label{eq:KH_rent_v8}
+\end{equation}
+This is why flexible renting can make the child housing shock relatively smooth.
+
+For a capped renter or a fixed owner rung, housing services are locally fixed.  Let pre-child slack be
+\begin{equation}
+  \slack^0=h-\bar h(0).
+\end{equation}
+As the family-space requirement rises from \(0\) to \(z_1\), post-shock slack is \(\slack^0-z\).  Holding the branch and current consumption surplus approximately fixed,
+\begin{equation}
+  \Omega(z)\simeq
+  \frac{1-\alpha}{\alpha}\frac{c-\bar c}{\slack^0-z}.
+\end{equation}
+Integrating gives
+\begin{equation}
+  K^{H,fix}(\slack^0;z_1)
+  \simeq
+  A\log\left(\frac{\slack^0}{\slack^0-z_1}\right),
+  \qquad
+  A=\frac{1-\alpha}{\alpha}(c-\bar c).
+  \label{eq:KH_log_v8}
+\end{equation}
+Therefore
+\begin{equation}
+  \frac{\partial K^{H,fix}}{\partial z_1}
+  =\frac{A}{\slack^0-z_1}>0,
+  \qquad
+  \frac{\partial^2 K^{H,fix}}{\partial z_1^2}
+  =\frac{A}{(\slack^0-z_1)^2}>0.
+  \label{eq:convexity_v8}
+\end{equation}
+This is the precise convexity statement.  It is local to a fixed constrained branch.  It does not claim global convexity of the full value function across all active-set switches.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.99\linewidth]{v8_fig2_child_housing_cost_fertility.pdf}
+\caption{\textbf{Intuition slide 2.}  Panel A converts the actual first-child housing increment \(z_1\) into a wealth-equivalent housing cost.  For an interior renter, the cost is approximately \(r_i z_1\).  For capped renters or fixed owner rungs, the cost rises like inverse slack and integrates to the log expression in \eqref{eq:KH_log_v8}.  Panel B connects this cost to fertility: in wealth-equivalent units, birth becomes attractive when non-housing child surplus exceeds the housing cost of the child.  A price, finance, or rental-cap policy shifts fertility by lowering \(K^H\) near the birth cutoff.}
+\label{fig:intuition2_v8}
+\end{figure}
+
+\paragraph{How to speak about the convexity.}  The right statement is not that ``roomier options are convex.''  The right statement is: on a fixed low-slack branch, the wealth-equivalent cost of the child-induced housing requirement is convex in the size of the housing shock and becomes large as post-child slack approaches zero.  Higher-slack branches become attractive because they avoid this inverse-slack cost.  A regime switch occurs when the value saved on the housing-cost side exceeds the extra price, commuting, amenity, or finance cost of the higher-slack branch.
+
+\section{Connecting the housing cost to the birth value gap}
+
+To make the fertility connection exact in wealth-equivalent units, define
+\begin{equation}
+  B^{NH}_j(x;\theta)
+  \equiv
+  \frac{\mc V^1_j(x;0,\theta)-\mc V^0_j(x;\theta)}{\mc V^1_{j,b}(x;z_1,\theta)},
+  \label{eq:BNH_v8}
+\end{equation}
+where \(\mc V^1_j(x;0,\theta)\) is the value of having the child with the child-status effects but without the additional housing requirement.  Also define the finite-difference housing cost
+\begin{equation}
+  K^H_j(x;\theta)
+  \equiv
+  \frac{\mc V^1_j(x;0,\theta)-\mc V^1_j(x;z_1,\theta)}{\mc V^1_{j,b}(x;z_1,\theta)}.
+  \label{eq:KH_finite_v8}
+\end{equation}
+Then, using the same denominator,
+\begin{equation}
+  \frac{\gap_j(x;\theta)}{\mc V^1_{j,b}(x;z_1,\theta)}
+  =B^{NH}_j(x;\theta)-K^H_j(x;\theta).
+  \label{eq:D_cash_decomp_v8}
+\end{equation}
+This identity is the clean version of the second slide.  Birth occurs when the non-housing surplus of the child exceeds the wealth-equivalent housing cost of absorbing the child housing shock.
+
+The decomposition is not meant to say that the model has separable housing and non-housing values.  It is a diagnostic decomposition using a counterfactual family-need path.  All branch choices, continuation values, and active-set switches remain embedded in \(\mc V^1_j\).
+
+\section{Policy effects and the exact local statistic}
+
+The policy-facing object is still \(\gap_{j,\theta}\) at the fertility cutoff.  If the deterministic birth cutoff is \(b_j^*(\xi;\theta)\), with \(\gap_j(b_j^*,\xi;\theta)=0\) and \(\gap_{j,b}>0\), then
+\begin{equation}
+  \frac{\partial b_j^*}{\partial \theta}
+  =-\frac{\gap_{j,\theta}}{\gap_{j,b}}.
+\end{equation}
+For the extensive-margin birth rate,
+\begin{equation}
+  \frac{\partial \birth_j}{\partial \theta}
+  =
+  \int
+  f_j(b_j^*(\xi;\theta),\xi)
+  \frac{\gap_{j,\theta}(b_j^*,\xi;\theta)}{\gap_{j,b}(b_j^*,\xi;\theta)}
+  \,\dd\xi.
+  \label{eq:local_policy_v8}
+\end{equation}
+A policy has a large local fertility effect when many households sit near the cutoff, the policy moves the birth value gap strongly there, and the gap is not too steep in wealth.
+
+The two intuition slides explain the economic content of \(\gap_{j,\theta}\):
+\begin{itemize}[leftmargin=1.45em,itemsep=0.28em]
+\item A lower relative peripheral price \(\rhoP\) lowers the housing cost of the child for marginal parents using peripheral family space.
+\item A rental-cap expansion lowers \(K^H\) for capped renter parents, but has little local effect for interior renters below the cap.
+\item Looser finance shifts owner-access thresholds left.  It affects births when ownership is active or near-active at \(\gap_j=0\); otherwise families may have the child as renters.
+\item Owner-ladder policy matters when it changes the post-child slack of an active or near-active owner branch.  A smaller starter rung is not necessarily pro-fertility if it is not family-usable.
+\item Location policy matters because the parent branch and childless branch can load differently on center amenities, peripheral prices, and moving costs.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.92\linewidth]{v8_fig3_backup_local_statistic.pdf}
+\caption{\textbf{Backup technical slide.}  The exact local statistic is density at the fertility cutoff, weighted by policy bite and divided by the wealth slope.  This is useful as a technical backup after the two intuition slides, but it should not replace them.}
+\label{fig:backup_local_v8}
+\end{figure}
+
+\section{Where the ``middle band'' fits}
+
+The middle band is not a primitive fertility object.  It can be useful only under specific overlap conditions.  Let \(\mc B^F\) be the set of states where family-usable ownership is feasible in one location but not another, or where a finance policy changes owner access:
+\begin{equation}
+  \mc B^F(\xi)=\{b: b_P^F(\xi)\le b < b_C^F(\xi)\}
+  \quad\text{or a related access interval.}
+\end{equation}
+This band is fertility-relevant only if
+\begin{equation}
+  b_j^*(\xi;\theta)\in \mc B^F(\xi)
+\end{equation}
+and an owner branch is active or near-active for the parent value.  If the marginal parents are renters, then middle-band ownership mass is not the local fertility statistic.  The statistic is still \eqref{eq:local_policy_v8}.
+
+\section*{Figure status}
+
+\begin{tabularx}{\linewidth}{@{}L{0.23\linewidth}Y L{0.19\linewidth}@{}}
+\toprule
+Figure & What is structurally meaningful & Status \\
+\midrule
+Intuition slide 1 & Axes are real model objects \((b,\rhoP)\); the proposition for \(\partial b^*/\partial\rhoP\) is exact on smooth cutoff segments.  The displayed regions and branch labels are schematic. & Schematic local slice \\
+Intuition slide 2 & The inverse-slack and log-cost formulas follow from Stone--Geary MRS on a fixed constrained branch.  Panel B is a schematic wealth-equivalent mapping to the fertility cutoff. & Mechanism figure \\
+Backup local statistic & Formula is the exact deterministic local effect under a unique cutoff.  Plot is schematic. & Technical backup \\
+\bottomrule
+\end{tabularx}
+
+\end{document}

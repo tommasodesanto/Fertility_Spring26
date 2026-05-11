@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python port of the DT center-periphery lifecycle model — architecture</title>
+<style>
+  :root {
+    --fg: #1a1a1a;
+    --muted: #555;
+    --bg: #fafaf7;
+    --accent: #2b5780;
+    --code-bg: #f0eee8;
+    --rule: #ddd9d0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    margin: 0;
+  }
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  nav {
+    background: #f3f0ea;
+    border-right: 1px solid var(--rule);
+    padding: 22px 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    font-size: 13px;
+  }
+  nav h2 { font-size: 12px; text-transform: uppercase; color: var(--muted); margin-top: 18px; margin-bottom: 6px; letter-spacing: 0.05em; }
+  nav h2:first-child { margin-top: 0; }
+  nav a { display: block; color: var(--accent); text-decoration: none; padding: 3px 0; }
+  nav a:hover { text-decoration: underline; }
+  main { padding: 36px 56px 80px; max-width: 920px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 21px; margin-top: 36px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+  h3 { font-size: 17px; margin-top: 24px; color: var(--accent); }
+  p, ul, ol { max-width: 75ch; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 13px; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 4px; overflow-x: auto; font-size: 12.5px; line-height: 1.45; }
+  pre code { background: transparent; padding: 0; }
+  .muted { color: var(--muted); }
+  table { border-collapse: collapse; margin: 10px 0; font-size: 13.5px; }
+  th, td { border: 1px solid var(--rule); padding: 5px 10px; text-align: left; vertical-align: top; }
+  th { background: #ece8df; }
+  .lead { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
+  .callout { background: #fff8e3; border-left: 3px solid #c8961f; padding: 10px 14px; margin: 14px 0; border-radius: 2px; }
+  .figure-box { border: 1px solid var(--rule); padding: 14px; border-radius: 4px; background: #fff; margin: 14px 0; font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 12.5px; }
+  .small { font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h2>Overview</h2>
+  <a href="#overview">What this is</a>
+  <a href="#dataflow">Data flow</a>
+  <a href="#layout">File layout</a>
+
+  <h2>Economics</h2>
+  <a href="#model">Model & state</a>
+  <a href="#bellman">Bellman recursion</a>
+  <a href="#tenure">Tenure choice</a>
+  <a href="#location">Location & fertility</a>
+  <a href="#bequest">Bequest & terminal</a>
+
+  <h2>Solver</h2>
+  <a href="#backward">Backward induction</a>
+  <a href="#howard">Howard iteration</a>
+  <a href="#forward">Forward distribution</a>
+  <a href="#geloop">GE loop</a>
+
+  <h2>Performance</h2>
+  <a href="#kernels">Numba kernels</a>
+  <a href="#parallel">Parallelism</a>
+  <a href="#speed">Speed reference</a>
+
+  <h2>Calibration</h2>
+  <a href="#smm">SMM objective</a>
+  <a href="#inversion">Geography inversion</a>
+
+  <h2>Reference</h2>
+  <a href="#files">File-by-file</a>
+  <a href="#gotchas">Gotchas</a>
+</nav>
+
+<main>
+
+<h1>Python port of the DT center-periphery lifecycle model</h1>
+<p class="lead">A guided tour of the code in <code>april_26_discrete_time/python_port/dt_cp_model/</code>: what each module does, how the solver flows from a theta vector to moments, and where the speed comes from. This document is a companion to the source — it doesn't duplicate the code, it explains the structure and the non-obvious choices.</p>
+
+<h2 id="overview">What this is</h2>
+
+<p>This package is a Python re-implementation of the live MATLAB calibration engine in <code>april_26_discrete_time/run_model_cp_dt.m</code>. The MATLAB code remains the reference; the Python port matches it numerically (max abs moment diff <code>~0.005</code> at <code>setup="fast"</code>, <code>~0.003</code> at <code>setup="benchmark"</code>) and runs <code>~3x</code> faster on the calibration grid because the inner loops are compiled with Numba and partly parallelized.</p>
+
+<p>Conceptually the model is a <strong>discrete-time finite-horizon lifecycle</strong> with:</p>
+<ul>
+  <li><strong>Two locations</strong> (Center vs Periphery; <code>I = 2</code>) with separate prices and rents.</li>
+  <li><strong>Tenure choice</strong> across <code>nt = 1 + n_house</code> options: rent at index 0, plus <code>n_house</code> owner-housing rungs of fixed size <code>H_own[k]</code>.</li>
+  <li><strong>One-shot completed-fertility</strong> over fertile ages: when fertility shocks resolve, all children are conceived together and then mature stochastically.</li>
+  <li><strong>Spatial mobility</strong>: a Type-1 EV logit each period over destination locations.</li>
+  <li><strong>Equilibrium</strong>: housing markets clear by location through the iterative price + entry-share update.</li>
+</ul>
+
+<h2 id="dataflow">Data flow</h2>
+
+<p>The canonical entry point is</p>
+<pre><code>from dt_cp_model import solve_theta
+sol, P, p_eq = solve_theta(theta, setup_mode="benchmark")
+</code></pre>
+<p>which threads through this pipeline:</p>
+
+<div class="figure-box">
+theta (np.array, length 13)
+   │
+   │  apply_theta(P_base, theta, names)
+   ▼
+P  (SimpleNamespace of model parameters)
+   │
+   │  run_model_cp_dt(P)
+   │      │
+   │      │  loop over GE iterations:
+   │      │     solve_bellman_full / solve_bellman_eval
+   │      │     forward_distribution (fast_stats=True)
+   │      │     update prices p, entry shares e
+   │      │
+   │      ▼  on accept:
+   │      forward_distribution (fast_stats=False)  →  full event-study moments
+   ▼
+sol (SimpleNamespace) — V, c_pol, hR_pol, bp_pol, tenure_choice,
+                       loc_probs, fert_probs, fert_value, g, summary stats
+P_out, p_eq
+</div>
+
+<p>The <strong>SMM objective</strong> at <code>objective.py</code> is a thin wrapper: it calls the same path, then computes a weighted distance between the moments in <code>sol</code> and the live calibration targets.</p>
+
+<h2 id="layout">File layout</h2>
+
+<table>
+  <tr><th>file</th><th>role</th></tr>
+  <tr><td><code>__init__.py</code></td><td>Re-exports <code>solve_theta</code>.</td></tr>
+  <tr><td><code>evaluate.py</code></td><td>The canonical <code>theta → solve → (sol, P, p_eq)</code> entry.</td></tr>
+  <tr><td><code>theta.py</code></td><td>The 13-parameter <code>theta</code> vector: names, bounds, validation, and <code>apply_theta(P, theta, names)</code>.</td></tr>
+  <tr><td><code>parameters.py</code></td><td>Setup modes (<code>"fast"</code>, <code>"benchmark"</code>), <code>P_base</code>, calibration targets and weights, geography spec.</td></tr>
+  <tr><td><code>solver.py</code></td><td>The model itself: backward induction, forward distribution, statistics, GE loop.</td></tr>
+  <tr><td><code>kernels.py</code></td><td>Numba <code>@njit</code> kernels for the hot inner blocks. Most are <code>parallel=True</code> with <code>prange(nc)</code>.</td></tr>
+  <tr><td><code>objective.py</code></td><td>SMM loss wrapper, optional geography-inversion loop over <code>(E_C, r_bar_C)</code>.</td></tr>
+  <tr><td><code>utils.py</code></td><td>Wealth grid, linear interpolation, F-order reshapes, weighted quantiles.</td></tr>
+  <tr><td><code>cli.py</code></td><td>Reproducible benchmarks: <code>solve-theta</code>, <code>benchmark</code>, <code>objective</code> commands.</td></tr>
+</table>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="model">Model and state space</h2>
+
+<p>The household state at age <code>j</code> is a 5-tuple <code>(b, ten, i, n, cs)</code>:</p>
+
+<table>
+  <tr><th>dim</th><th>name</th><th>size</th><th>meaning</th></tr>
+  <tr><td><code>b</code></td><td>liquid wealth</td><td><code>Nb = 60 (fast) / 80 (benchmark)</code></td><td>4-segment grid built in <code>utils.make_grid</code>; spans <code>[b_min, b_max]</code> with denser nodes near zero.</td></tr>
+  <tr><td><code>ten</code></td><td>tenure</td><td><code>nt = 1 + n_house</code></td><td><code>0 = renter</code>, <code>1..nt-1 = owner of size H_own[ten-1]</code>.</td></tr>
+  <tr><td><code>i</code></td><td>location</td><td><code>I = 2</code></td><td>Periphery (<code>i=0</code>), Center (<code>i=1</code>).</td></tr>
+  <tr><td><code>j</code></td><td>age</td><td><code>J = 60</code></td><td>Age <code>j+18</code> in years; retirement at <code>j ≥ J_R</code>.</td></tr>
+  <tr><td><code>n</code></td><td>parity</td><td><code>npar = 4</code></td><td>Number of children ever born (one-shot completed fertility).</td></tr>
+  <tr><td><code>cs</code></td><td>child stage</td><td><code>ncs = n_child_stages + 3</code></td><td>Encodes how old the cohort of children is. <code>cs = 0</code> means no children. Higher <code>cs</code> means matured; transitions follow <code>P.Pi_child</code>.</td></tr>
+</table>
+
+<p>Per-period choices:</p>
+<ul>
+  <li><strong>Savings</strong> <code>b'</code> — continuous, solved via 1D golden-section search per cell.</li>
+  <li><strong>Tenure</strong> <code>tn ∈ {0, ..., nt-1}</code> — discrete argmax over conditional values.</li>
+  <li><strong>Location</strong> <code>i' ∈ {1, ..., I}</code> — Type-1 EV logit with temperature <code>kappa_loc</code>.</li>
+  <li><strong>Fertility</strong> at fertile ages <code>j ∈ [A_f_start, A_f_end]</code>, parity <code>n' ∈ {0,...,npar-1}</code> — Type-1 EV logit with temperature <code>kappa_fert</code>. One-shot: once you pick <code>n'</code>, fertility is over.</li>
+</ul>
+
+<p>Renters consume Cobb-Douglas in <code>(c, h)</code> with weight <code>alpha</code> on consumption; owners consume <code>c</code> and get fixed housing services <code>chi * H_own[ten-1]</code>. Both add a child commitment floor <code>(c̄ + ψ·n,  h̄ + h̄_n·n + h̄_jump·𝟙[n≥1])</code>. Period utility is CRRA with curvature <code>sigma</code>.</p>
+
+<h2 id="bellman">Bellman recursion</h2>
+
+<p>The recursion runs backward in age. At age <code>j</code> the period value is built in four stages, each implemented in <code>solve_bellman_core</code>:</p>
+
+<ol>
+  <li><strong>Conditional savings + tenure-conditional value</strong> (per <code>i</code>, per <code>ten</code>):
+    <ul>
+      <li>Renter (<code>ten=0</code>): pick <code>b'</code> by golden-section to maximize <code>u(c, h) + β · 𝔼V(b', ...)</code>, with the renter housing cap <code>h ≤ hR_max</code> binding when desired <code>h</code> would exceed it.</li>
+      <li>Owner (<code>ten≥1</code>): pick <code>b'</code> with the budget <code>R·b + y - oc - c̄ - b' = c</code>, where <code>oc = (δ + τ_H) · p · H_own[ten-1]</code> and housing services <code>h = chi · H_own[ten-1]</code> are deterministic.</li>
+    </ul>
+    Result: <code>Vd[b, ten, i, n, cs]</code>, the value of being in tenure <code>ten</code> at this age before the tenure choice.
+  </li>
+  <li><strong>Tenure choice</strong>: for each origin tenure <code>to</code>, take the discrete max over destination tenures <code>tn</code>. Three economic branches — (i) stay or sell-and-rent (<code>tn = 0</code>), (ii) buy on entry from renting with optional birth grants (<code>to = 0, tn ≥ 1</code>), (iii) sell-and-rebuy (<code>to ≥ 1, tn ≠ to</code>). Infeasibility (below down-payment <code>(1-φ)·hcost</code> or below borrowing limit <code>-φ·hcost</code>) gets <code>-1e10</code>. Result: <code>VH[b, to, id, n, cs]</code>, <code>tcj[...]</code>.</li>
+  <li><strong>Location logit</strong>: for each origin location <code>io</code> and origin tenure <code>to</code>, compute the value of moving to each destination <code>id</code>. If <code>id ≠ io</code>, we sell and reset to renter at <code>id</code> with sale proceeds <code>heq[io, to] = (1-ψ)·p[io]·H_own[to-1]</code>. Apply <code>logsumexp</code> with temperature <code>kappa_loc</code> and <code>E_loc</code> + move-cost shifters. Result: <code>VI[b, to, io, n, cs]</code>, <code>loc_probs[...]</code>.</li>
+  <li><strong>Fertility logit</strong>, fertile ages only: at <code>n=0, cs=0</code>, build a value vector across parity choices and <code>logsumexp</code> with temperature <code>kappa_fert</code>. Non-fertile cells: just copy <code>VI</code> into <code>V[..., j, ...]</code>.</li>
+</ol>
+
+<h3 id="tenure">Tenure choice details</h3>
+
+<p>Three move types with non-trivial wealth bookkeeping:</p>
+
+<table>
+  <tr><th>case</th><th>net wealth at b'</th><th>feasibility</th></tr>
+  <tr><td><code>to = tn</code> (stay)</td><td><code>b</code> directly</td><td>none extra</td></tr>
+  <tr><td><code>to = 0, tn ≥ 1</code> (buy)</td><td><code>b - hcost</code> (or <code>b - hcost + grant</code>)</td><td><code>b ≥ (1-φ)·hcost</code> and <code>b - hcost ≥ -φ·hcost</code></td></tr>
+  <tr><td><code>to ≥ 1, tn = 0</code> (sell-and-rent)</td><td><code>b + heq</code> (clamped to ≥ 0)</td><td>none extra</td></tr>
+  <tr><td><code>to ≥ 1, tn ≠ to, tn ≥ 1</code> (move-and-rebuy)</td><td><code>b + heq - hcost</code></td><td><code>b + heq ≥ (1-φ)·hcost</code></td></tr>
+</table>
+
+<p>Two optional birth-related provisions: <code>birth_dp[n, cs, to, tn]</code> (a parity-conditioned down-payment waiver that allows the borrowing constraint to bind instead of the dp threshold) and <code>birth_entry_grant[i, tn, n, cs]</code> (a wealth gift that shifts the savings interpolation point). Both are zero in the live calibration.</p>
+
+<h3 id="location">Location and fertility logits</h3>
+
+<p>Mobility: Type-1 EV with utility <code>V_id + E_loc[id] - move_cost</code>, scaled by <code>1/kappa_loc</code>, then <code>logsumexp</code>. The closed-form value-of-options is <code>kappa_loc · ls</code>, the conditional probabilities are <code>exp((·) - ls)/Σ(·)</code>. Implemented in stable form (subtract the max before exponentiating) in <code>kernels.location_logit_kernel</code>.</p>
+
+<p>Fertility, at fertile ages from a state with <code>n=0, cs=0</code>: a logit over <code>n' ∈ {0, ..., npar-1}</code>, where the value of choosing <code>n' ≥ 1</code> uses the post-state <code>(n', cs=1)</code>. <code>kappa_fert</code> is the temperature.</p>
+
+<h3 id="bequest">Bequest and terminal</h3>
+
+<p>At <code>j = J - 1</code> the continuation value is the bequest function</p>
+<pre><code>V_bq(b, ten, i, n) = θ_0(n) · ((b + p[i]·H_own[ten-1] + θ_1) ^ (1-σ) - 1) / (1-σ)</code></pre>
+<p>with <code>θ_0(n) = 1 + θ_n · n</code>. Lifetime housing is liquidated at the local price.</p>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="backward">Backward induction (the <code>j</code> loop)</h2>
+
+<p>Implemented in <code>solver.solve_bellman_core</code>. For each age <code>j</code> from <code>J-1</code> down to <code>0</code>:</p>
+
+<pre><code>for j in range(J - 1, -1, -1):
+    Vc = apply_child_aging(V[..., j+1, ...] or V_bq)   # advance child-state
+    for i in range(I):
+        if eval_mode:
+            renter block (kernel)    # plug in stored bp, no optimization
+            owner blocks (kernel) for ten in 1..nt-1
+        else:
+            renter block (kernel)    # full Bellman: golden-section
+            owner blocks (kernel) for ten in 1..nt-1
+
+    VH, tcj = tenure_choice_kernel(Vd, ...)
+    VI, lpj = location_logit_kernel(VH, ...)
+    if in_fert: fertility logit
+    V[..., j, ...] = ...   # write back
+</code></pre>
+
+<p>The four kernels here are each a Numba <code>@njit(parallel=True)</code> function with <code>prange(nc)</code> over the flattened <code>(n, cs)</code> column index. Each <code>c</code> writes to a disjoint output cell, so no synchronization is needed.</p>
+
+<div class="callout">
+<strong>F-order convention.</strong> The <code>(n, cs)</code> pair is flattened to a 1-D column index <code>c = n + npar·cs</code> (parity varies fastest) before entering kernels, to match the MATLAB column-major reference. <code>utils.flat_nc</code> and <code>utils.unflat_nc</code> do the reshape.
+</div>
+
+<h2 id="howard">Howard policy iteration</h2>
+
+<p>Solving the Bellman from scratch every GE iteration is wasteful — once we have a sensible savings policy <code>bp_pol</code>, the next GE step's Bellman is well-approximated by re-evaluating utility at <code>bp_pol</code> instead of re-running golden-section. <code>run_model_cp_dt</code> implements this:</p>
+
+<pre><code>do_full = force_full or it ≤ 3 or stored_bp is None
+       or (it % howard_freq == 0)
+       or stall_count ≥ 2
+
+if do_full:
+    full Bellman, store bp
+else:
+    eval Bellman, plug in stored bp
+</code></pre>
+
+<p>The eval branch is much cheaper: each <code>(b, c)</code> cell does one continuation-value interpolation and one closed-form CD utility evaluation, instead of golden-section. The two paths share the same post-Bellman pipeline (tenure, location, fertility), so savings are concentrated in the inner loops, which is exactly what the <code>eval_*_block_kernel</code> kernels target.</p>
+
+<h2 id="forward">Forward distribution</h2>
+
+<p>Two paths, in <code>solver.forward_distribution</code>:</p>
+<ul>
+  <li><strong>Fast-stat</strong> (compiled, <code>kernels.forward_distribution_fast_kernel</code>) — propagates only what the GE loop needs (population shares, housing demand, total births, mature entrants). Used inside every equilibrium iteration.</li>
+  <li><strong>Full-stat</strong> (Python) — recomputes event-study housing moments (<code>housing_increment_0to1_eventstudy_t3</code>, <code>1to2_proxy_t3</code>) at the accepted equilibrium only. These need extra mass tracking by birth-event time and aren't worth doing inside the GE iteration.</li>
+</ul>
+
+<p>Each step of the forward pass advances one age:</p>
+<ol>
+  <li>Fertility: at fertile ages, multiply mass at <code>(n=0, cs=0)</code> by <code>fert_probs</code> and split into <code>(n', cs=1)</code> bins.</li>
+  <li>Location: each cell splits across <code>id ∈ {1..I}</code> by <code>loc_probs</code>. Movers inherit the renter state and have wealth <code>b' = clip(b + heq[io, to], b_grid)</code>.</li>
+  <li>Tenure: <code>tn = tcj[b, to, id, n, cs]</code> deterministically (already an argmax).</li>
+  <li>Savings: deposit mass on the two grid-neighbors of <code>bp_pol</code> with linear weights.</li>
+  <li>Child aging: matrix-multiply by <code>P.Pi_child[:, :, n]</code>.</li>
+</ol>
+
+<h2 id="geloop">GE loop</h2>
+
+<p>Implemented in <code>solver.run_model_cp_dt</code>. State variables: housing prices <code>p ∈ ℝ^I</code>, entry shares <code>e ∈ ℝ^I</code> (sum to 1). Each iteration:</p>
+
+<ol>
+  <li>Compute <code>r = user_cost_rate · p</code>.</li>
+  <li>Solve Bellman (full or eval, see Howard).</li>
+  <li>Forward distribution (fast-stat).</li>
+  <li>Update <code>p</code> from housing-market clearing: excess demand drives prices up. Clamp updates to <code>[lambda_price_min, lambda_price_max]</code>.</li>
+  <li>Update entry shares from observed mature entrants by location, with floor and damping.</li>
+  <li>Compute equilibrium error (price + entry-share residual). If small enough, accept.</li>
+</ol>
+
+<p>The exit ladder is <strong>tiered</strong>:</p>
+<ul>
+  <li>Hard convergence: <code>err < tol_eq</code>.</li>
+  <li>Near-converged: <code>it &gt; 10</code> and <code>best_err ≤ tol_eq</code> (best across iterations, not necessarily current).</li>
+  <li>Soft-accept: <code>it &gt; 25</code> and <code>best_err &lt; 10·tol_eq</code>.</li>
+  <li>Cap: <code>it &gt; 50</code> and <code>best_err &lt; 0.02</code>.</li>
+</ul>
+
+<p>The reason for the soft tiers: small-grid models with discrete tenure choice can oscillate around tenure thresholds rather than converge, so a strict <code>err &lt; tol_eq</code> exit isn't always achievable. This matches the live MATLAB solver.</p>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="kernels">Numba kernels</h2>
+
+<p><code>kernels.py</code> holds the compiled inner loops. The kernels split into three groups:</p>
+
+<h3>Bellman block kernels</h3>
+
+<table>
+  <tr><th>kernel</th><th>used by</th><th>shape of work</th></tr>
+  <tr><td><code>full_renter_block_kernel</code></td><td>full Bellman, renter</td><td>per <code>(i, j)</code>, loops <code>(c, b)</code> with golden-section + CD post-search</td></tr>
+  <tr><td><code>full_owner_block_kernel</code></td><td>full Bellman, owner</td><td>per <code>(i, j, ten)</code>, loops <code>(c, b)</code> with golden-section</td></tr>
+  <tr><td><code>eval_renter_block_kernel</code></td><td>Howard eval, renter</td><td>per <code>(i, j)</code>, loops <code>(c, b)</code> with closed-form CD evaluation</td></tr>
+  <tr><td><code>eval_owner_block_kernel</code></td><td>Howard eval, owner</td><td>per <code>(i, j, ten)</code>, loops <code>(c, b)</code> with closed-form owner evaluation</td></tr>
+</table>
+
+<p>All four are <code>@njit(cache=True, parallel=True)</code> with <code>for c in prange(nc)</code>. Race-free because each iteration writes <code>(*, c)</code> only.</p>
+
+<h3>Post-Bellman per-<code>j</code> kernels</h3>
+
+<table>
+  <tr><th>kernel</th><th>role</th></tr>
+  <tr><td><code>tenure_choice_kernel</code></td><td>Discrete max over <code>tn</code> with feasibility masking; produces <code>VH</code> and <code>tcj</code>.</td></tr>
+  <tr><td><code>location_logit_kernel</code></td><td>Stable <code>logsumexp</code> across destination locations; produces <code>VI</code> and <code>lpj</code>.</td></tr>
+</table>
+
+<p>These are <code>@njit(cache=True)</code> (not parallel — outer loops are tiny, <code>I·nt = 8-10</code>).</p>
+
+<h3>Forward-distribution kernel</h3>
+
+<p><code>forward_distribution_fast_kernel</code> drives one full forward pass. It dispatches into <code>_advance_mass_component</code> for the per-cell tenure→savings→aging step. Single-threaded because the mass updates are accumulating writes (<code>g[...] += ...</code>) which would race; we deliberately keep a sequential scatter pattern.</p>
+
+<h3>Tiny utility kernels</h3>
+
+<ul>
+  <li><code>interp_scalar</code>, <code>_interp_with_clip</code> — 1D linear interpolation with bounds clipping (binary search).</li>
+  <li><code>interp_cols_kernel</code>, <code>interp_cols_preidx_kernel</code> — column-wise interpolation; the preidx variant uses cached <code>(idx, wt)</code>.</li>
+  <li><code>scatter_vec_kernel</code>, <code>scatter_cols_kernel</code>, <code>scatter_cols_sameidx_kernel</code> — mass-preserving scatter-add for the (less hot) full-stat distribution path.</li>
+  <li><code>eval_renter_scalar</code>, <code>eval_owner_scalar</code> — per-<code>b'</code> period-utility-plus-continuation evaluators called inside the golden-section loops.</li>
+</ul>
+
+<h2 id="parallel">Parallelism</h2>
+
+<p>The four block kernels parallelize over the flat column index <code>c</code>, which has <code>nc = npar·ncs = 24-28</code> elements. Each iteration of the <code>c</code> loop touches its own slice of the output arrays (<code>Vo[:, c]</code>, <code>bp_out[:, c]</code>, etc.), so adding <code>parallel=True</code> + <code>prange</code> is safe without atomics or barriers.</p>
+
+<p>Why we don't get ideal scaling on an 8-core machine:</p>
+<ul>
+  <li><code>prange(24)</code> divides poorly across 8 threads (3 columns each, then thread-spawn / join overhead).</li>
+  <li>The eval-mode kernels do little compute per <code>(b, c)</code> cell — the closed-form CD evaluation is ~10 FLOPs. Memory bandwidth, not compute, is the ceiling.</li>
+  <li>The tenure-choice and location-logit kernels are still single-threaded.</li>
+  <li>The <code>forward_distribution</code> path is single-threaded.</li>
+  <li>The GE loop itself is sequential.</li>
+</ul>
+
+<p>Realised gain on this 8-core laptop: about <strong>1.35x</strong> on top of the serial port, measured at <code>setup="benchmark"</code> direct-theta. CPU usage averages 165–170% of wall during a run.</p>
+
+<h2 id="speed">Speed reference</h2>
+
+<table>
+  <tr><th>configuration</th><th>direct-theta x0, real grid</th></tr>
+  <tr><td>MATLAB <code>setup="benchmark"</code></td><td><code>152.0s</code></td></tr>
+  <tr><td>Python serial (no Numba block kernels)</td><td><code>~120s</code></td></tr>
+  <tr><td>Python with eval/full kernels (no parallelism)</td><td><code>73.4s</code></td></tr>
+  <tr><td><strong>Python with parallel block kernels</strong></td><td><strong><code>54.4s</code></strong></td></tr>
+</table>
+
+<p>Per-call breakdown at the final configuration (warm cache):</p>
+<ul>
+  <li>Full Bellman: <code>1.14s</code> per call (<code>~8.5x</code> faster than MATLAB's <code>9.76s</code>).</li>
+  <li>Eval Bellman: <code>0.97s</code> per call (slightly slower than MATLAB's <code>0.79s</code>; less work per cell makes parallelism overhead matter more).</li>
+  <li>Distribution: <code>0.47s</code> per call (~<code>1.4x</code> faster than MATLAB's <code>0.67s</code>).</li>
+</ul>
+
+<p>Parity with MATLAB: max abs moment diff <code>0.00282</code> at the real grid, <code>0.00547</code> at the small grid. Parity vs prior Python: <code>~10⁻¹⁵</code> (bit-exact up to FP rounding).</p>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="smm">SMM objective</h2>
+
+<p><code>objective.smm_objective_dt</code> wraps the model path:</p>
+
+<pre><code>theta → apply_theta(P_base) → run_model_cp_dt → moments → weighted SSE
+</code></pre>
+
+<p>Targets and weights live in <code>parameters.build_calibration_setup</code>. The objective handles three concerns:</p>
+
+<ol>
+  <li>Bounds checking on theta. Out-of-bounds returns <code>1e6</code>.</li>
+  <li>Optional geography inversion (see below).</li>
+  <li>Aggregation of model-vs-target deviations: <code>loss = Σ_t weights[t] · ((model[t] - target[t]) / |target[t]|)²</code>, plus an optional inversion penalty.</li>
+</ol>
+
+<h2 id="inversion">Geography inversion</h2>
+
+<p>The two location-supply wedges <code>E_loc[Center]</code> and <code>r_bar[Center]</code> are not directly identified by individual moments — they map onto observed center population share and rent ratio. The inversion loop, when enabled, adjusts these two scalars to hit those two aggregate targets:</p>
+
+<pre><code>for inv_iter in 1..max_iter:
+    solve model at current (E_C, r_bar_C)
+    if |pop_share_C - target| and |rent_ratio - target| are small enough: break
+    E_C       += kappa_loc · speed · log(target_odds / model_odds)
+    r_bar_C   *= (rent_ratio_target / model_rent_ratio) ^ speed
+</code></pre>
+
+<p>This is an "outer loop around the GE loop". For pure model exploration (e.g. the gradient-descent script in <code>tools/gradient_descent.py</code>) the inversion is skipped and <code>(E_C, r_bar_C)</code> are taken as exogenous, which gets you a single-pass evaluation and a much smoother objective.</p>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="files">File-by-file reference</h2>
+
+<h3><code>evaluate.py</code></h3>
+<p>Holds the canonical entry point.</p>
+<pre><code>def solve_theta(theta, setup_mode="fast", max_iter_eq=None, verbose=False)
+</code></pre>
+<p>Builds <code>P_base</code> via <code>build_calibration_setup(setup_mode)</code>, applies <code>theta</code> with <code>apply_theta</code>, optionally overrides <code>max_iter_eq</code>, and returns <code>run_model_cp_dt(P)</code>. Nothing else here — the SMM path uses the same chain.</p>
+
+<h3><code>theta.py</code></h3>
+<p>Defines the parameter vector convention. <code>PARAM_NAMES</code> lists 13 names in order; <code>theta_bounds(theta)</code> returns box bounds; <code>apply_theta(P, theta, names)</code> writes the values into <code>P</code> and recomputes derived quantities (e.g. <code>rho</code>). The SMM and direct-theta paths both go through this function.</p>
+
+<h3><code>parameters.py</code></h3>
+<p>Three responsibilities:</p>
+<ul>
+  <li><code>setup_parameters()</code> — defaults for one fixed setup.</li>
+  <li><code>build_calibration_setup(setup_mode)</code> — returns a struct with <code>P_base</code>, <code>names</code>, <code>x0</code>, <code>targets</code>, <code>weights</code>, <code>inversion_targets</code>. Two modes: <code>"fast"</code> (Nb=60, lower tolerance) and <code>"benchmark"</code> (Nb=80, the calibration grid).</li>
+  <li>Helpers for child-state transitions (<code>make_child_transition_matrix_with_matured</code>) and theta application internals.</li>
+</ul>
+
+<h3><code>solver.py</code></h3>
+<p>The big file (~1800 lines). Public functions:</p>
+<ul>
+  <li><code>run_model_cp_dt(P, verbose)</code> — GE loop, returns <code>(sol, P_out, p_eq)</code>.</li>
+  <li><code>solve_bellman_full(r, p, P, b_grid, SD)</code> — one full backward induction.</li>
+  <li><code>solve_bellman_eval(stored_bp, r, p, P, b_grid, SD)</code> — Howard evaluation.</li>
+  <li><code>forward_distribution(bp, hR, tc, lp, fp, r, p, P, b_grid, SD, fast_stats)</code> — one forward pass.</li>
+  <li><code>extract_moments_from_dist(g, P, b_grid, ...)</code> — population, ownership, fertility, housing summaries.</li>
+</ul>
+<p>Internal: <code>solve_bellman_core</code> is the shared backward induction with a flag for full vs eval mode. <code>apply_child_aging</code> is one matmul per parity (BLAS, fast).</p>
+
+<h3><code>kernels.py</code></h3>
+<p>See the <a href="#kernels">Numba kernels</a> section.</p>
+
+<h3><code>objective.py</code></h3>
+<p>SMM wrapper. Used by <code>cli.py</code>'s <code>objective</code> command and by the gradient-descent driver.</p>
+
+<h3><code>utils.py</code></h3>
+<p>Numerical primitives: <code>make_grid</code>, <code>interp_indices</code>, <code>interp_vector</code>, <code>interp_on_grid</code>, <code>interp_cols</code>, <code>scatter_redistribute</code>, <code>logsumexp</code>, <code>flat_nc</code> / <code>unflat_nc</code>, <code>weighted_quantile</code>.</p>
+
+<h3><code>cli.py</code></h3>
+<p>Three subcommands:</p>
+<ul>
+  <li><code>solve-theta --setup &lt;mode&gt; --theta &lt;x0|csv&gt;</code> — direct-theta solve, writes JSON.</li>
+  <li><code>benchmark --setup &lt;mode&gt; --max-iter-eq &lt;N&gt; [--force-full]</code> — timing benchmark.</li>
+  <li><code>objective</code> — SMM loss at <code>x0</code>.</li>
+</ul>
+
+<hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
+
+<h2 id="gotchas">Gotchas</h2>
+
+<ul>
+  <li><strong><code>phi</code> is the financed share, not the down payment.</strong> So the down-payment threshold is <code>(1 - phi) · hcost</code> and the borrowing limit is <code>-phi · hcost</code>. Easy to flip.</li>
+  <li><strong>F-order flattening.</strong> The flat column index <code>c</code> obeys <code>c = n + npar · cs</code> (parity varies fastest). All <code>flat_nc</code> / <code>unflat_nc</code> reshapes use <code>order="F"</code>.</li>
+  <li><strong>Soft equilibrium accept</strong> is intentional. <code>err &lt; tol_eq</code> isn't always reachable on small grids with discrete tenure choice; the tiered exit ladder mirrors the MATLAB reference and prevents wasted iterations.</li>
+  <li><strong>Howard eval reuses <code>bp_pol</code> from the most recent full Bellman.</strong> If you change anything that invalidates that policy (e.g. different price <code>p</code> in the same call), the eval pass will give wrong answers. <code>run_model_cp_dt</code> guards against this by always doing the first 3 GE iterations as full Bellman.</li>
+  <li><strong><code>setup="fast"</code> is for parity tests, not calibration.</strong> All calibration speed numbers should be at <code>setup="benchmark"</code>. The <code>~10x</code>-vs-MATLAB speedup that earlier benchmark JSONs report was at the small grid; the real-grid number is <code>~3x</code>.</li>
+  <li><strong>Numba caches.</strong> Each kernel signature compiles once and stores the compiled object under <code>dt_cp_model/__pycache__</code>. Touching the kernel source invalidates the cache and the next call recompiles (~5–10 seconds per kernel). The <code>parallel=True</code> form has its own cached binary separate from the serial form.</li>
+  <li><strong>Bridge benchmark theta lives in <code>tools/check_bridge_fit.py</code> and <code>tools/gradient_descent.py</code>.</strong> If the live calibration anchor changes, those constants need to be re-extracted from the saved <code>.mat</code> file; there's no automatic link.</li>
+</ul>
+
+</main>
+</div>
+</body>
+</html>

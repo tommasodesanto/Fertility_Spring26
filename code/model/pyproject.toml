@@ -1,0 +1,12 @@
+[project]
+name = "dt-cp-model"
+version = "0.1.0"
+description = "Python port of the April 2026 discrete-time center-periphery fertility/housing model"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+accel = ["numba==0.58.1"]
+
+[tool.dt_cp_model]
+reference = "../run_model_cp_dt.m"

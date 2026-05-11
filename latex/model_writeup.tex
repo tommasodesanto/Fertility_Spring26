@@ -1,0 +1,520 @@
+% !TEX root = model_writeup.tex
+\documentclass[11pt]{article}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[authoryear]{natbib}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\geometry{margin=1in}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ind}{\mathbb{I}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Nset}{\mathcal N}
+\newcommand{\Iset}{\mathcal I}
+\newcommand{\Dset}{\mathcal D}
+
+\title{Fertility and Housing Tenure Choice:\\Model Writeup}
+\author{Tommaso De Santo}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+
+\section{Model}
+
+The model combines three standard objects. The first is a lifecycle fertility problem in the spirit of the quantitative fertility literature, where children are chosen by households and affect both resources and continuation values \citep{sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019}. The second is a housing-tenure problem with collateral constraints and discrete owner-occupied housing, following the housing-macro tradition \citep{hendersonModelHousingTenure1983,sommerEquilibriumEffectFundamentals2013,sommerImplicationsUSTax2018}. The third is a Rosen--Roback spatial block: households sort across locations with different amenities and housing prices, and housing supply determines how demand pressure translates into prices \citep{rosenWageBasedIndexes1979,robackWagesRentsQuality1982}. The housing structure is heavily inspired by \citet{greaneyDynamicUrbanEconomics2025}.
+
+Children require space; space is more expensive in central locations; and tenure constraints matter for the timing and location of family formation.
+
+\subsection{Environment}
+
+Time is discrete. Households enter adult life at age $a=1$, retire after age $J_R$, and die at the end of age $J$. At a point in time the city is described by a level distribution $g$ over household states. Its adult mass is
+\begin{equation*}
+    S=\int dg(x).
+\end{equation*}
+This mass is an equilibrium object. When useful, I write $g=S\mu$ with $\int d\mu=1$, but the distribution that clears markets is $g$, not $\mu$.
+
+There are two residential locations,
+\begin{equation*}
+    \Iset=\{P,C\},
+\end{equation*}
+where $P$ denotes the periphery and $C$ denotes the center. Location $i$ has amenity $\mathcal E_i$, wage $w_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The center is the high-amenity, high-price location in the benchmark.
+
+The individual state at the beginning of a period is
+\begin{equation*}
+    x=(b,d,i,a,n,s).
+\end{equation*}
+Here $b\in\mathcal B\subset\R$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to
+\begin{equation*}
+    d\in\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}.
+\end{equation*}
+$R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder. Renters choose rental space continuously up to a cap $\bar h^R$.
+
+\subsection{Preferences}
+
+Let $m(n,s)$ be the number of dependent children living at home. Flow utility is Stone--Geary over nondurable consumption and housing services, wrapped in CRRA:
+\begin{equation}
+u(c,\mathbf h;n,s)
+=
+\frac{
+\left[
+\left(c-\bar c(n,s)\right)^\alpha
+\left(\mathbf h-\bar h(n,s)\right)^{1-\alpha}
+\right]^{1-\sigma}
+}{1-\sigma}
++\psi_{\mathrm{child}}m(n,s),
+\label{eq:flow_utility}
+\end{equation}
+where $\alpha\in(0,1)$ and $\sigma>1$. The subsistence terms are
+\begin{equation*}
+\begin{aligned}
+\bar c(n,s)
+    &=\bar c_0+\bar c_n m(n,s),\\
+\bar h(n,s)
+    &=\bar h_0
+      +\ind\{m(n,s)\geq 1\}\bar h_{\mathrm{jump}}
+      +\bar h_n m(n,s).
+\end{aligned}
+\end{equation*}
+The first child raises required housing discretely. Additional children raise required housing linearly. This is the main channel in the paper: children are costly partly because they require housing space, and the price of that space depends on location.
+
+Housing services differ by tenure. A renter choosing rental space $h^R$ receives $\mathbf h=h^R$. An owner of house size $H_k$ receives $\mathbf h=\chi H_k$, with $\chi>1$. The parameter $\chi$ captures the service premium of owner-occupied housing. In market clearing, owners demand $H_k$ physical room-equivalent units, not $\chi H_k$.
+
+At death, households receive warm-glow bequest utility. Bequeathable wealth is
+\begin{equation*}
+    \widetilde b =
+    \begin{cases}
+    b, & d=R,\\
+    b+p_iH_k, & d=O_k.
+    \end{cases}
+\end{equation*}
+The bequest term is
+\begin{equation}
+\mathcal B(\widetilde b,n)
+=
+\theta_0(1+\theta_n n)
+\frac{(\theta_1+\max\{\widetilde b,0\})^{1-\sigma}}{1-\sigma}.
+\label{eq:bequest}
+\end{equation}
+Completed fertility affects bequests even after children leave the household. This allows parenthood to matter for late-life saving and ownership, not only for years with dependent children.
+
+\subsection{Income and Assets}
+
+Workers supply labor inelastically. Labor income in location $i$ at age $a$ is
+\begin{equation*}
+    y_{ia}=(1-\tau_{\mathrm{pay}})w_i e_a,
+    \qquad a\leq J_R,
+\end{equation*}
+where $e_a$ is a deterministic age-income profile. Retired households receive
+\begin{equation*}
+    y_{ia}=p^{\mathrm{ret}},
+    \qquad a>J_R.
+\end{equation*}
+The pension benefit is determined in equilibrium by the pay-as-you-go government budget.
+
+Liquid wealth earns gross return $R=1+q$. A renter cannot borrow:
+\begin{equation*}
+    b'\geq 0.
+\end{equation*}
+An owner can borrow against the house:
+\begin{equation}
+    b'\geq -\phi p_iH_k.
+    \label{eq:collateral}
+\end{equation}
+Here $\phi$ is the financed share of house value. The required down payment is therefore $(1-\phi)p_iH_k$.
+
+\subsection{Housing and Budgets}
+
+Let $p_i$ be the purchase price of one physical unit of housing in location $i$. The user-cost rate is
+\begin{equation*}
+    ucr=q+\delta+\tau_H,
+\end{equation*}
+and the rental price is
+\begin{equation*}
+    r_i=ucr\cdot p_i.
+\end{equation*}
+This ties rental and owner user costs to a common local housing price. The calibration disciplines the center--periphery rent ratio directly.
+
+A renter chooses $c$, $h^R$, and $b'$ subject to
+\begin{equation*}
+    c+r_i h^R+b'=Rb+y_{ia},
+    \qquad
+    0\leq h^R\leq \bar h^R,
+    \qquad
+    b'\geq 0.
+\end{equation*}
+An owner of house $H_k$ chooses $c$ and $b'$ subject to
+\begin{equation*}
+    c+(\delta+\tau_H)p_iH_k+b'=Rb+y_{ia},
+    \qquad
+    b'\geq -\phi p_iH_k.
+\end{equation*}
+Mortgage debt is negative liquid wealth, so mortgage interest is already embedded in $Rb$. Owners pay maintenance and property taxes directly.
+
+Housing adjustment is costly. Selling a house in location $i$ yields net proceeds
+\begin{equation*}
+    (1-\psi)p_iH_k.
+\end{equation*}
+A moving owner sells the origin house before choosing tenure in the destination. A stayer can keep the current house, sell and rent, or move to another owner rung if the budget and collateral constraints allow it.
+
+\subsection{Fertility and Child Aging}
+
+Fertility is a one-shot completed-fertility choice. During the fertile window,
+\begin{equation*}
+    a\in\{A_f^{\mathrm{start}},\ldots,A_f^{\mathrm{end}}\},
+\end{equation*}
+a childless household chooses
+\begin{equation*}
+    n'\in\Nset\equiv\{0,1,\ldots,\bar n\}.
+\end{equation*}
+Once $n'>0$ is chosen, completed fertility is fixed. Children are born together and age together through $K$ child stages. This is not a sequential parity-progression model. A model object that looks like a second-child housing response should therefore be interpreted as an additional-child housing-demand moment, not as a second-birth hazard.
+
+Let $s=0$ denote no children and $s=1,\ldots,K$ denote dependent child stages. After the last dependent stage, children mature and leave the household. Child aging follows
+\begin{equation*}
+    \Pi^c(s'|s,n).
+\end{equation*}
+In the benchmark implementation, dependent childhood lasts about 18 years. While children are at home, $m(n,s)=n$. After maturity, $m(n,s)=0$, so the consumption and housing floors return to their baseline levels, while completed fertility remains payoff-relevant through the bequest motive.
+
+\subsection{Household Problem}
+
+Within the period, the order of decisions is fertility, location, tenure and house size, and then consumption, rental size, and savings. The computation solves the problem backward in the reverse order. Let the terminal value be
+\begin{equation*}
+    V_{J+1}(b,d,i,n,s)=\mathcal B(\widetilde b,n),
+\end{equation*}
+and define the continuation value after child aging by
+\begin{equation*}
+    \bar V_{a+1}(b',d',i',n,s)
+    =
+    \sum_{s'}\Pi^c(s'|s,n)V_{a+1}(b',d',i',n,s').
+\end{equation*}
+
+Conditional on being a renter in location $i$, the household value is
+\begin{equation}
+\begin{aligned}
+V^R_a(b,i,n,s)
+=
+\max_{c,h^R,b'}\quad
+&u(c,h^R;n,s)
++\beta \bar V_{a+1}(b',R,i,n,s)\\
+\text{s.t.}\quad
+&c+r_i h^R+b'=Rb+y_{ia},\\
+&0\leq h^R\leq \bar h^R,\qquad b'\geq 0.
+\end{aligned}
+\label{eq:renter_problem}
+\end{equation}
+Conditional on owning house $H_k$ in location $i$, the value is
+\begin{equation}
+\begin{aligned}
+V^{O_k}_a(b,i,n,s)
+=
+\max_{c,b'}\quad
+&u(c,\chi H_k;n,s)
++\beta \bar V_{a+1}(b',O_k,i,n,s)\\
+\text{s.t.}\quad
+&c+(\delta+\tau_H)p_iH_k+b'=Rb+y_{ia},\\
+&b'\geq -\phi p_iH_k.
+\end{aligned}
+\label{eq:owner_problem}
+\end{equation}
+The tenure value in a destination location is the maximum over renting and all feasible owner rungs:
+\begin{equation}
+    V^T_a(b,i,n,s)
+    =
+    \max\{V^R_a(b,i,n,s),V^{O_1}_a(b,i,n,s),\ldots,V^{O_{N_H}}_a(b,i,n,s)\}.
+    \label{eq:tenure_value}
+\end{equation}
+
+Location choice has additive Type-I extreme-value shocks with scale $\kappa_\ell$. A household currently in location $i$ evaluates destination $j$ using
+\begin{equation*}
+    \widetilde V^L_a(j|x)
+    =
+    V^T_a(T_{ij}(b,d),j,n,s)
+    +\mathcal E_j-\mu_{ij},
+\end{equation*}
+where $T_{ij}(b,d)$ is liquid wealth after any house sale and transaction cost. The term $\mu_{ij}$ is the moving wedge. The destination probabilities are
+\begin{equation}
+    \pi^L_a(j|x)
+    =
+    \frac{
+    \exp\left(\widetilde V^L_a(j|x)/\kappa_\ell\right)
+    }{
+    \sum_{m\in\Iset}
+    \exp\left(\widetilde V^L_a(m|x)/\kappa_\ell\right)
+    },
+    \label{eq:loc_probs}
+\end{equation}
+and the location value is
+\begin{equation}
+    V^L_a(x)
+    =
+    \kappa_\ell
+    \log
+    \sum_{m\in\Iset}
+    \exp\left(\widetilde V^L_a(m|x)/\kappa_\ell\right).
+    \label{eq:loc_iv}
+\end{equation}
+
+Fertility choice has additive Type-I extreme-value shocks with scale $\kappa_f$. This shock is part of the household fertility problem, not part of the population-entry closure below. If a household is childless and in the fertile window, it compares $n'\in\Nset$. Let $s(n')=0$ if $n'=0$ and $s(n')=1$ if $n'>0$. The value of choosing completed fertility $n'$ is
+\begin{equation*}
+    x(n')=(b,d,i,a,n',s(n')),
+    \qquad
+    \widetilde V^F_a(n'|x)
+    =
+    V^L_a(x(n')).
+\end{equation*}
+Fertility probabilities are
+\begin{equation}
+    \pi^F_a(n'|x)
+    =
+    \frac{
+    \exp\left(\widetilde V^F_a(n'|x)/\kappa_f\right)
+    }{
+    \sum_{m\in\Nset}
+    \exp\left(\widetilde V^F_a(m|x)/\kappa_f\right)
+    },
+    \label{eq:fert_probs}
+\end{equation}
+and the full household value is
+\begin{equation}
+    V_a(x)
+    =
+    \kappa_f
+    \log
+    \sum_{m\in\Nset}
+    \exp\left(\widetilde V^F_a(m|x)/\kappa_f\right).
+    \label{eq:fert_iv}
+\end{equation}
+Outside the fertility window, or after fertility has already been chosen, this stage is degenerate and $V_a(x)=V^L_a(x)$.
+
+\subsection{Entry, Outside Option, and City Size}
+
+The city is stationary, but its population level is an equilibrium object. Let $g$ denote the level distribution of adult households. Total adult population is
+\begin{equation*}
+    S=\int dg.
+\end{equation*}
+For some calculations it is useful to write
+\begin{equation*}
+    g=S\mu,
+    \qquad
+    \int d\mu=1,
+\end{equation*}
+where $\mu$ is the composition of the city. The normalization is only a change of variables. Markets clear using $g$, not $\mu$.
+
+Young-adult entry is governed by an outside option. At each date there is an exogenous flow $M\geq0$ of outside-born potential young adults. In addition, a fraction $\lambda_B\geq0$ of mature city-born children enters the potential-entrant pool. Let $B(g)$ be the flow of city-born children who mature into young adulthood:
+\begin{equation}
+    B(g)
+    =
+    \int
+    n\,\Pr(s'\in\mathcal S^{\mathrm{mature}}|s,n)
+    \,dg(b,d,i,a,n,s).
+    \label{eq:local_mature_flow}
+\end{equation}
+The mass of potential entrants is
+\begin{equation}
+    Q(g)=M+\lambda_B B(g).
+    \label{eq:potential_entry_pool}
+\end{equation}
+
+A potential entrant compares the value of the modeled city with an outside option. The value of entering location $i$ is
+\begin{equation*}
+    W_i^E(p)=V_1(b^E,R,i,0,0;p),
+\end{equation*}
+where entrants begin as childless renters with liquid wealth $b^E$. Let $W^E(p)$ be the city entry value index, for example $W^E(p)=\max_i W_i^E(p)$. The outside option has value $\bar W^E$. The total entry rate is a reduced-form supply schedule,
+\begin{equation}
+    q^E(p)=\Lambda\left(W^E(p)-\bar W^E\right),
+    \qquad
+    \Lambda:\R\to[0,1],
+    \qquad
+    \Lambda'\geq0.
+    \label{eq:entry_rule}
+\end{equation}
+No extreme-value shock is needed for this margin. A step function is the homogeneous deterministic case; a smooth $\Lambda$ can be interpreted as heterogeneity in outside ties or reservation values.
+
+Conditional on entering the city, potential entrants are assigned across locations according to shares $\omega_i^E(p)$, with $\omega_i^E(p)\geq0$ and $\sum_i\omega_i^E(p)=1$. These shares can be fixed or computed from the same within-city location choice rule for a new entrant. Entry into location $i$ is
+\begin{equation}
+    E_i(g;p)=Q(g)q^E(p)\omega_i^E(p).
+    \label{eq:entry_mass}
+\end{equation}
+
+This is the population closure. It is not a balanced-growth model. The outside economy is a stationary reservoir: it supplies potential entrants and absorbs those who do not enter the city. If housing prices rise, city values fall and $q^E(p)$ declines. If fertility rises, more city-born children enter the future potential-entrant pool. The outside option determines how much of that potential flow is retained by the city.
+
+The same object can be written in scale form. Let $E_0(p)$ be the young-adult entry flow required to reproduce one unit of the stationary city composition, and let $B_0(p)$ be the mature city-born child flow per unit of city scale. Then
+\begin{equation*}
+    E(g)=S E_0(p),
+    \qquad
+    B(g)=S B_0(p).
+\end{equation*}
+Stationarity and the outside option imply
+\begin{equation}
+    S E_0(p)
+    =
+    q^E(p)\left[M+\lambda_B S B_0(p)\right].
+    \label{eq:outside_scale}
+\end{equation}
+When the denominator is positive, the stationary city scale is
+\begin{equation}
+    S(p)
+    =
+    \frac{q^E(p)M}
+    {E_0(p)-q^E(p)\lambda_B B_0(p)}.
+    \label{eq:outside_scale_solution}
+\end{equation}
+The finite-scale condition is
+\begin{equation*}
+    E_0(p)>q^E(p)\lambda_B B_0(p).
+\end{equation*}
+If this fails, the modeled city cannot have a finite stationary level under the maintained outside option. Economically, fertility and retention are too strong relative to the replacement flow and outside absorption.
+
+The baseline level still needs units. One can choose $M$ or $\bar W^E$ so that the baseline equilibrium has a convenient scale, for example $S=1$. This is only a normalization of units. In counterfactuals, $M$, $\lambda_B$, $\bar W^E$, $\Lambda$, and the rule for $\omega^E$ are held fixed, so changes in fertility, prices, and household policies can change $S$.
+
+\subsection{Housing Supply and Market Clearing}
+
+Housing supply in location $i$ is
+\begin{equation}
+    H_i^S(r_i)
+    =
+    H_{0i} r_i^{\eta_i}.
+    \label{eq:housing_supply}
+\end{equation}
+The scale $H_{0i}$ captures reduced-form land costs, regulation, and other supply-side wedges. The elasticity $\eta_i$ governs the construction response. Thus the supply side has only a level parameter and an elasticity in each location.
+
+Aggregate physical housing demand is
+\begin{equation}
+H_i^D(g)
+=
+\int
+\left[
+\ind\{d=R,i(x)=i\}h^R(x)
++
+\sum_{k=1}^{N_H}
+\ind\{d=O_k,i(x)=i\}H_k
+\right]dg(x).
+\label{eq:housing_demand}
+\end{equation}
+If $g=S\mu$, this is
+\begin{equation*}
+    H_i^D(g)=S\widehat H_i^D(\mu).
+\end{equation*}
+This distinction is central. Normalizing the composition $\mu$ is harmless. Clearing housing markets with $\widehat H_i^D$ alone would instead impose a fixed-mass city. In the benchmark closure, prices solve
+\begin{equation}
+    S(p)\widehat H_i^D(p)
+    =
+    H_{0i}\left[(q+\delta+\tau_H)p_i\right]^{\eta_i},
+    \qquad i\in\Iset.
+    \label{eq:scaled_market_clearing}
+\end{equation}
+Fertility therefore affects housing prices through two margins. It changes per-household housing demand, $\widehat H_i^D(p)$, because children require space and affect tenure and location choices. It also changes scale, $S(p)$, because higher fertility raises the flow of mature city-born children entering the potential-entrant pool. With upward-sloping housing supply, both margins feed into equilibrium prices.
+
+\section{Stationary Equilibrium}
+
+The equilibrium is stationary in prices, policies, and the level distribution of adult households. It is not stationary because population has been normalized away. It is stationary because entry, aging, fertility, location choice, tenure choice, savings, and death reproduce the same level distribution every period.
+
+\begin{definition}[Stationary equilibrium]
+Given primitives
+\begin{equation*}
+\begin{aligned}
+\Omega=\{&
+q,\beta,\sigma,\alpha,\bar c_0,\bar c_n,
+\bar h_0,\bar h_{\mathrm{jump}},\bar h_n,
+\psi_{\mathrm{child}},
+\theta_0,\theta_n,\theta_1,\\
+&
+\chi,\phi,\psi,\delta,\tau_H,\tau_{\mathrm{pay}},
+\mathcal E_i,w_i,e_a,\mu_{ii'},H_{0i},\eta_i,
+M,\lambda_B,\bar W^E,\Lambda,\{\omega_i^E(\cdot)\}_{i\in\Iset}
+\}_{i,i'\in\Iset},
+\end{aligned}
+\end{equation*}
+a stationary equilibrium is a collection
+\begin{equation*}
+\begin{aligned}
+\mathcal E^\ast=\big(&
+\{p_i,r_i\}_{i\in\Iset},p^{\mathrm{ret}},
+\{V_a,V^R_a,V^T_a,V^L_a,\widetilde V^L_a,\widetilde V^F_a\}_{a},
+\{V^{O_k}_a\}_{a,k},
+\{c,h^R,b',d',i',n'\},\\
+&\{\pi^L,\pi^F,q^E,\omega^E\},
+g,
+\{E_i,H_i^D,H_i^S\}_{i\in\Iset}
+\big)
+\end{aligned}
+\end{equation*}
+such that:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Household optimization.} Given prices, amenities, and moving wedges, value functions solve the household problem in \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure choice \eqref{eq:tenure_value}, location probabilities \eqref{eq:loc_probs}, fertility probabilities \eqref{eq:fert_probs}, and terminal bequest utility \eqref{eq:bequest}. The policies $c$, $h^R$, $b'$, $d'$, $i'$, and $n'$ are associated optimal policies.
+
+    \item \textbf{Entry and outside option.} The mature city-born child flow $B(g)$ is given by \eqref{eq:local_mature_flow}. The potential entrant pool is $Q(g)=M+\lambda_B B(g)$. The city entry rate satisfies \eqref{eq:entry_rule}, conditional entrant location shares are $\omega^E(p)$, and entry masses satisfy
+    \begin{equation*}
+        E_i(g;p)=Q(g)q^E(p)\omega_i^E(p),\qquad i\in\Iset.
+    \end{equation*}
+    The outside mass is $Q(g)(1-q^E(p))$.
+
+    \item \textbf{Stationary distribution.} The level distribution $g$ over $(b,d,i,a,n,s)$ is invariant under the household policies, fertility and location probabilities, child aging, deterministic aging, death at age $J$, and the entry masses $\{E_i(g;p)\}_{i\in\Iset}$. If $\Gamma$ denotes the one-period forward operator,
+    \begin{equation*}
+        g=\Gamma(g;p,\{E_i(g;p)\}_{i\in\Iset}).
+    \end{equation*}
+    Total adult population is
+    \begin{equation*}
+        S=\int dg(x),
+    \end{equation*}
+    and is an equilibrium outcome.
+
+    \item \textbf{Housing markets.} In every location,
+    \begin{equation*}
+        H_i^D(g)=H_i^S(r_i),
+        \qquad
+        r_i=(q+\delta+\tau_H)p_i.
+    \end{equation*}
+
+    \item \textbf{Government budget.} Payroll-tax revenue finances pension benefits:
+    \begin{equation*}
+        \tau_{\mathrm{pay}}\sum_i\sum_{a\leq J_R}w_i e_a\,g_i(a)
+        =
+        p^{\mathrm{ret}}\sum_i\sum_{a>J_R}g_i(a).
+    \end{equation*}
+\end{enumerate}
+\end{definition}
+
+\section{Population Closure: Alternatives}
+
+The population closure is the part of the model where there are several defensible choices. The rest of the model can be the same, but the interpretation of counterfactuals changes.
+
+\paragraph{Fixed adult mass.}
+The simplest closure is to set $\int dg=1$ and keep adult population fixed. This is common in lifecycle fertility models and in partial-equilibrium fertility exercises. In that case fertility changes the composition of households, not the number of households. Housing demand changes because parents want more space, because they sort differently, and because tenure choices change. It does not change because the city becomes larger. This is close in spirit to models that take the adult demographic envelope as given, such as the location-fertility structure in \citet{morenoMaldonadoSantamariaDelayed2024}, and to cost-of-living fertility exercises at given prices such as \citet{karabarbounisNordFertilityChoicesCost2025}. It is clean, but it is too weak if the question is whether fertility can affect aggregate city housing demand through population size.
+
+\paragraph{Reduced-form renewal valve.}
+A second possibility is to ignore entry values and keep only demographic accounting:
+\begin{equation*}
+    S E_0(p)=M+\rho S B_0(p),
+    \qquad
+    S=\frac{M}{E_0(p)-\rho B_0(p)}.
+\end{equation*}
+This has the virtue of being transparent. The city receives an outside flow $M$ and retains a fixed fraction $\rho$ of mature city-born children. It gives a stationary finite scale without a growth path. It also lets fertility affect aggregate housing demand through $S$. The cost is that the retention rate is purely mechanical: city attractiveness affects fertility and housing choices, but it does not directly affect the share of potential entrants who enter the city.
+
+\paragraph{Outside-option entry.}
+The benchmark in this note uses the outside-option version. It keeps the same stationary accounting logic, but makes city entry depend on the value of entering the city relative to an outside economy:
+\begin{equation*}
+    S E_0(p)
+    =
+    q^E(p)\left[M+\lambda_B S B_0(p)\right].
+\end{equation*}
+This is still not a growth model. It solves for a stationary level $S$. The difference is that housing prices discipline city size through entry values. If fertility raises the flow of mature city-born children, the potential entrant pool rises. But if the larger city pushes up housing prices, entry values fall and the outside option absorbs more of the potential flow. For the present application, this closure gives a scale channel without forcing the paper to become a theory of city growth.
+
+\paragraph{Full demographic city growth.}
+The most structural alternative is a sequence model in which births today become adult households in future periods, the age distribution evolves over calendar time, and housing markets clear along the transition. This is the natural object for a paper about city growth and fertility dynamics, and it is the direction taken by \citet{coeurdacierCombesGobillonOswaldFertility2023}. It is also much more demanding. One must take a stand on the whole path of age masses, migration flows, survival, and housing supply over time. That is not the object here. The current paper studies a stationary city and the interaction of fertility, housing demand, tenure, and sorting within that city.
+
+\bibliographystyle{apalike}
+\bibliography{main_bib,lit_review_extra}
+
+\end{document}

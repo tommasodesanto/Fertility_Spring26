@@ -1,0 +1,638 @@
+\documentclass[11pt]{article}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{placeins}  % for \FloatBarrier
+
+\geometry{margin=1in}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% Keep floats within the section they belong to
+\makeatletter
+\AtBeginDocument{%
+  \expandafter\renewcommand\expandafter\subsection\expandafter
+    {\expandafter\FloatBarrier\subsection}%
+  \expandafter\renewcommand\expandafter\section\expandafter
+    {\expandafter\FloatBarrier\section}%
+}
+\makeatother
+
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ind}{\mathbb{I}}
+
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+
+\title{Fertility, Housing, and Spatial Sorting:\\Discrete-Time Implementation and Calibration Status}
+\author{Tommaso De Santo}
+\date{April 2026 --- Working Draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document serves three purposes. First, it lays out the discrete-time formulation of the center--periphery lifecycle model with endogenous fertility, housing tenure choice, and spatial sorting. Second, it describes the numerical algorithm and its computational architecture. Third, it records the current April 2026 calibration design under the live MMS broad-core geography and summarizes the current fast-mode exploratory frontier as of April 9, 2026. The calibration section is the operative note for the live target system, while the results section reports the best confirmed exploratory candidates currently available for slide preparation and discussion.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%% =====================================================================
+\section{Model}
+%% =====================================================================
+
+Time is discrete. Adult life lasts $J$ periods (ages $a=0,1,\ldots,J-1$), retirement starts at $J_R$, death is deterministic at $J$. Total adult population is normalized.
+
+\subsection{Environment}
+
+Two residential locations, $\mathcal I = \{C,P\}$ (center and periphery). Each location has:
+\begin{itemize}[leftmargin=*]
+	\item amenity level $\mathcal{E}_{i'} > 0$;
+	\item bilateral moving costs $\mu_{ii'} \ge 0$, with $\mu_{ii}=0$;
+	\item housing supply schedule $(H_{0,i},\bar r_i,\eta_i)$.
+\end{itemize}
+Wages are common: $w_C = w_P = w$. Sorting is driven entirely by rents, amenities, and moving frictions.
+
+\subsection{Preferences}
+
+Let $m=m(n^*,s)$ denote the number of children currently at home, where $n^*$ is completed fertility and $s$ is the child-stage state. Flow utility is Cobb--Douglas Stone--Geary wrapped in CRRA:
+\begin{equation}\label{eq:flow_utility}
+u(c,\mathbf h;m)
+= \frac{\Big[\big(c-\bar c(m)\big)^\alpha \big(\mathbf h-\bar h(m)\big)^{1-\alpha}\Big]^{1-\sigma}}{1-\sigma}
+\;+\; \psi_{\text{child}} \cdot m,
+\qquad \sigma > 1.
+\end{equation}
+Subsistence requirements:
+\begin{align}
+\bar c(m) &= \bar c_0 + \bar c_1 m, \label{eq:cbar}\\
+\bar h(m) &= \bar h_0 + \bar h_{\mathrm{jump}} \ind\{m \ge 1\} + \bar h_1 m. \label{eq:hbar}
+\end{align}
+Housing services combine ownership and rental:
+\begin{equation}
+\mathbf h \equiv \chi h + h^R, \qquad \chi > 1.
+\end{equation}
+Terminal bequest:
+\begin{equation}\label{eq:bequest}
+\mathcal B(\widetilde b,n^*) = \theta_0 \big(1+\theta_n n^*\big)\,\frac{(\theta_1+\widetilde b)^{1-\sigma}}{1-\sigma},
+\qquad
+\widetilde b \equiv b + p_i h.
+\end{equation}
+
+\subsection{Housing}
+
+Housing is measured in room-equivalent units. Renters choose $h^R \in [0, \bar h^R]$ continuously. Owners occupy a discrete house size $h \in \{H_1,\ldots,H_{N_H}\}$. The April 2026 benchmark uses a DUE-style segmented housing ladder with $N_H = 6$ owner points equally spaced between 4 and 11 rooms and a rental cap $\bar h^R = 8$. User cost:
+\begin{equation}
+r_i^{\mathrm{own}} = (q+\delta+\tau_H)\,p_i.
+\end{equation}
+Collateral constraint:
+\begin{equation}
+b \geq -\phi\, p_i\, h.
+\end{equation}
+
+\subsection{Budget Constraints}
+
+\paragraph{Renters.}
+\begin{equation}
+b' = R\,b + y(a) - c - r_i\,h^R, \qquad b' \geq 0.
+\end{equation}
+
+\paragraph{Owners.}
+\begin{equation}
+b' = R\,b + y(a) - c - (\delta+\tau_H)\,p_i\,h, \qquad b' \geq -\phi\,p_i\,h,
+\end{equation}
+where $R = 1+q$ and income follows
+\begin{equation}
+y(a) = \begin{cases}(1-\tau_{\mathrm{pay}})w & a \leq J_R,\\ \beta_{\text{pension}} & a > J_R.\end{cases}
+\end{equation}
+
+\subsection{Fertility and Child Aging}
+
+Fertility decisions are made within $[A_f^{\text{start}}, A_f^{\text{end}}]$. Only childless households choose completed fertility once, $n^* \in \{0,1,\ldots,\bar n\}$. After that one-shot choice, $n^*$ is fixed and children pass through $K$ development stages before maturity. State:
+\[
+s \in \{0,1,\ldots,K,M_1,M_2\},
+\]
+where $M_k$ denotes ``children have matured and left, with completed fertility $n^*=k$.'' Child aging follows a Markov chain $\Pi_{\text{child}}$ with stage-specific durations. Child flow utility and child subsistence costs depend on $m(n^*,s)$ and therefore disappear once the household reaches a matured state.
+
+\subsection{Discrete Choices}
+
+At each age, backward induction follows:
+\[
+\text{Fertility} \longrightarrow \text{Location} \longrightarrow \text{Tenure} \longrightarrow \text{Savings}.
+\]
+
+The live residential block uses additive DUE-style EV1 shocks. For a candidate fertility choice $n'$, destination-specific systematic utility is
+\begin{equation}
+\widetilde V_j(i' \mid x,n')
+=
+V_j^{T}(x;i',n') + \mathcal E_{i'} - \mu_{ii'}.
+\end{equation}
+Location and fertility use logit shocks with scale $\kappa_n$ and $\kappa_\ell$:
+\begin{align}
+\pi_j^{L}(i' \mid x,n') &= \frac{\exp(\widetilde V_j(i' \mid x,n')/\kappa_\ell)}{\sum_{\ell \in \{C,P\}} \exp(\widetilde V_j(\ell \mid x,n')/\kappa_\ell)}, &
+V_j^{L}(x,n') &= \kappa_\ell \ln \sum_{\ell \in \{C,P\}} \exp(\widetilde V_j(\ell \mid x,n')/\kappa_\ell),\\
+\pi_j^{F}(n' \mid x) &= \frac{\exp(V_j^{L}(x,n')/\kappa_n)}{\sum_{m \in \mathcal N(x)} \exp(V_j^{L}(x,m)/\kappa_n)}, &
+V_j(x) &= \kappa_n \ln \sum_{m \in \mathcal N(x)} \exp(V_j^{L}(x,m)/\kappa_n).
+\end{align}
+Tenure is a deterministic maximum over renting vs.\ each owner size.
+
+\subsection{Housing Supply and Equilibrium}
+
+Supply is isoelastic:
+\begin{equation}
+H_i^s(r_i) = H_{0,i}\left(\frac{r_i}{\bar r_i}\right)^{\eta_i}.
+\end{equation}
+Equilibrium prices clear both housing markets:
+\begin{equation}
+H_i^d = H_i^s(r_i), \quad r_i = (q+\delta+\tau_H)\,p_i, \qquad i \in \{C,P\}.
+\end{equation}
+Entry shares into each location are pinned by matured-child flows in the stationary distribution.
+
+\clearpage
+%% =====================================================================
+\section{Numerical Algorithm}
+\label{sec:algorithm}
+%% =====================================================================
+
+\subsection{Overview}
+
+The model is solved by iterating on equilibrium prices $(p_C, p_P)$ and entry shares $(s_C, s_P)$. Each iteration consists of:
+\begin{enumerate}
+	\item \textbf{Backward induction}: solve the Bellman equation from $j=J$ to $j=1$.
+	\item \textbf{Forward distribution}: propagate the population from $j=1$ to $j=J$.
+	\item \textbf{Price update}: compute excess housing demand, update prices via damped iteration.
+\end{enumerate}
+Howard improvement alternates between \emph{full} Bellman solves (grid search over savings) and \emph{evaluation} steps (recompute values at fixed policies). Typically 8 full + 18 evaluation calls across 26 equilibrium iterations.
+
+\subsection{Bellman Equation}
+
+States: wealth $b$ on an 80-point grid, tenure $\tau \in \{\text{rent}, H_1,\ldots,H_{N_H}\}$, location $i \in \{C,P\}$, age $j$, fertility $n$, child state $s$. With the benchmark $N_H = 6$ ladder, the state count is $80 \times 7 \times 2 \times 60 \times 4 \times 7$.
+
+\paragraph{Savings optimization.} For each $(i,\tau,j)$, the savings choice is a one-dimensional maximization over $b'$:
+\begin{equation}
+V(b,\tau,i,j,n,s) = \max_{b'} \Big\{ u\big(c(b,b'),\mathbf h(b,b')\big) + \beta\,\bar V(b',\tau,i,j+1,n,s') \Big\},
+\end{equation}
+where $s'$ follows the child aging transition. We solve this column-by-column (one 80-point vector per $(n,s)$ pair) using the vectorized golden section method of Midrigan (2023), with the continuation value $\bar V(\cdot)$ represented as a \texttt{griddedInterpolant} object. Each golden section converges in $\sim$17 iterations with tolerance $10^{-3}$.
+
+\paragraph{Key implementation detail.} Constructing the interpolant \emph{once} per column and calling it as $\bar V(b')$ avoids the overhead of manual index lookup inside the optimization loop. On 80-point vectors ($\sim$640 bytes), temporaries fit in L1 cache. This architecture reduces the full Bellman solve from $\sim$5.1s to $\sim$3.3s per call. The current implementation uses linear interpolation. Higher-order methods (cubic spline, \texttt{pchip}) are available as a parameter but require recalibration, since the interpolation method affects the effective curvature of the continuation value and therefore the optimal policies.
+
+\paragraph{Howard improvement.} The evaluation step reuses stored savings policies $b'^*$ and recomputes values via a single pass: utility at $(b, b'^*)$ plus $\beta\,\bar V(b'^*)$. This costs $\sim$0.3s per call vs.\ $\sim$3.3s for a full solve.
+
+\subsection{Forward Distribution}
+
+Population $g(b,\tau,i,j,n,s)$ is advanced age-by-age:
+\begin{enumerate}
+	\item \textbf{Fertility}: split childless mass into family-size groups using $\pi^{n'}$.
+	\item \textbf{Location}: redistribute mass across locations using $\pi^{i'}$.
+	\item \textbf{Tenure}: redistribute across tenure states using deterministic choice.
+	\item \textbf{Savings advance}: redistribute mass to $b'$ grid points using linear weights from \texttt{accumarray}.
+	\item \textbf{Child aging}: advance child states via $\Pi_{\text{child}}$.
+\end{enumerate}
+
+\subsection{Equilibrium Iteration}
+
+Prices are updated via adaptive damped iteration:
+\begin{equation}
+p_i^{(k+1)} = p_i^{(k)} + \lambda_p^{(k)} \big(p_i^{\text{target}} - p_i^{(k)}\big), \qquad
+p_i^{\text{target}} = \frac{\bar r_i}{\text{ucr}} \left(\frac{H_i^d}{H_{0,i}}\right)^{1/\eta_i},
+\end{equation}
+where $\text{ucr} = q + \delta + \tau_H$. Damping coefficients $\lambda_p^{(k)}$ adapt: they decay when sign-flipping and grow otherwise. Convergence is declared at $\max(|p^{\text{target}} - p|/|p|, |s^{\text{target}} - s|) < 5 \times 10^{-4}$.
+
+\paragraph{Timing.} A typical solve takes $\sim$37 seconds (8 full Bellman at 3.3s + 18 evaluation at 0.3s + 26 distributions at 0.17s + overhead). The continuous-time reference solver runs in $\sim$18s using Thomas-algorithm upwind schemes.
+
+\clearpage
+%% =====================================================================
+\section{Calibration}
+\label{sec:calibration}
+%% =====================================================================
+
+\subsection{Strategy}
+
+The benchmark calibration now follows a three-block structure.
+
+\paragraph{Block A: external.} Parameters fixed outside the optimizer from the literature, institutional inputs, lifecycle design, or normalization choices.
+
+\paragraph{Block B: inversion.} At each optimizer evaluation, solve for $(\mathcal E_C, \bar r_C)$ to match the live MMS center population share and the center--periphery unit-rent ratio.
+
+\paragraph{Block C: internal SMM.} Search over 13 behavioral parameters by minimizing a weighted loss over the targeted moments:
+\begin{equation}
+\mathcal{L}(\theta) = \sum_{m=1}^{M} w_m \left(\frac{\hat m(\theta) - m^{\text{data}}}{m^{\text{data}}}\right)^2.
+\end{equation}
+The key structural change relative to the earlier draft is that the bequest block is now separated into a level parameter $\theta_0$ and a fertility shifter $\theta_n$, while the housing block is rescaled to room-equivalent units and retains DUE-style tenure segmentation.
+
+\subsection{Externally Calibrated Parameters}
+
+Table~\ref{tab:external} collects parameters fixed in the benchmark. The empirical geography is the live MMS broad-core CBD-based definition: the tract core contains the closest 30\% of metro population, PUMAs with core share at least 50\% are classified as center, PUMAs with core share below 10\% are classified as periphery, and the intermediate ring is absorbed into center for the binary benchmark.
+
+\begin{table}[!htbp]
+\centering
+\caption{Externally calibrated parameters}
+\label{tab:external}
+\begin{tabular}{llll}
+\toprule
+Parameter & Symbol & Value & Source/Rationale \\
+\midrule
+CRRA coefficient & $\sigma$ & 2.0 & Standard \\
+Consumption share & $\alpha$ & 0.70 & Davis \& Ortalo-Magn\'e (2011) \\
+Base consumption subsistence & $\bar c_0$ & 0.10 & Normalization \\
+Base housing subsistence & $\bar h_0$ & 4.0 & Childless baseline housing need in rooms \\
+Risk-free rate & $q$ & 0.04 & Standard \\
+Depreciation & $\delta$ & 0.02 & Standard \\
+Property tax rate & $\tau_H$ & 0.01 & U.S.\ average \\
+Transaction cost & $\psi$ & 0.06 & 6\% of house value \\
+LTV ratio & $\phi$ & 0.80 & 20\% down payment \\
+Payroll tax & $\tau_{\text{pay}}$ & 0.179 & FICA + state \\
+Bequest shift & $\theta_1$ & 0.01 & Fixed De Nardi-style shift \\
+Owner house sizes & $(H_1,\ldots,H_6)$ & $\text{linspace}(4,11,6)$ & DUE-style segmented owner ladder in rooms \\
+Max rental size & $\bar h^R$ & 8.0 & Large-rental cap, below owner support \\
+Supply scale & $(H_{0,P}, H_{0,C})$ & $(6.2, 5.3)$ & Room-scale supply anchors \\
+Supply elasticity & $(\eta_P, \eta_C)$ & $(2.0, 0.8)$ & Saiz (2010) \\
+Reference rent & $\bar r_P$ fixed, $\bar r_C$ inverted & $(0.04, \cdot)$ & Block B inversion target \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Internally Calibrated Parameters}
+
+Table~\ref{tab:internal} lists the 13 parameters searched in Block~C. The last column reports the moment that is expected to be most informative at the next benchmark run.
+
+\begin{table}[!htbp]
+\centering
+\caption{Internally calibrated parameters for the April 2026 benchmark}
+\label{tab:internal}
+\begin{tabular}{llcc}
+\toprule
+Parameter & Symbol & Bounds & Primary Target \\
+\midrule
+Discount factor & $\beta$ & $[0.90, 0.99]$ & Young liquid W/I, prime-age ownership \\
+Entry wealth & $b_0$ & $[0.00, 1.00]$ & Young liquid W/I, prime-age ownership \\
+Child flow utility & $\psi_{\text{child}}$ & $[0.02, 0.12]$ & TFR \\
+Housing jump (1st child) & $\bar h_{\text{jump}}$ & $[0.20, 2.50]$ & Childlessness, housing incr.\ $0 \to 1$ \\
+Housing per additional child & $\bar h_n$ & $[0.10, 1.00]$ & Housing incr.\ $1 \to 2$, fertility gradient \\
+Non-housing child cost & $\bar c_n$ & $[0.05, 0.25]$ & PP $1 \to 2$ \\
+Fertility precision & $\kappa_n$ & $[2.0, 8.0]$ & Age first birth \\
+Ownership premium & $\chi$ & $[1.01, 1.10]$ & Prime-age ownership level and gaps \\
+Location precision & $\kappa_\ell$ & $[0.5, 4.0]$ & Center shares by family status \\
+Moving cost & $\mu_{\text{move}}$ & $[0.00, 10.00]$ & Center--periphery switching \\
+Bequest intensity & $\theta_0$ & $[0.10, 1.50]$ & Ownership at ages 65--75 \\
+Bequest fertility shifter & $\theta_n$ & $[0.00, 0.75]$ & Old-age parent--childless ownership gap \\
+Baseline housing subsistence & $\bar h_0$ & $[1.50, 4.50]$ & Childless baseline housing need \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Target Moments and Model Fit}
+
+Table~\ref{tab:moments} records the live target system. The full benchmark six-house SMM has not yet delivered an acceptable final calibration under this system, but the fast-mode local searches discussed below are already being scored against these same hard targets. All center--periphery moments use the live MMS broad-core geography, and the rent inversion target uses renter rent per room rather than gross monthly rent.
+
+\begin{table}[!htbp]
+\centering
+\caption{Benchmark target moments for the next calibration run}
+\label{tab:moments}
+\begin{tabular}{lcccl}
+\toprule
+Moment & Target & Weight & Status & Source \\
+\midrule
+\multicolumn{5}{l}{\emph{Block B inversion}} \\
+Center population share & 0.450 & --- & live benchmark & MMS broad-core summary \\
+Center / periphery unit-rent ratio & 1.14 & --- & rebuilt benchmark & ACS renter rent / rooms, ages 22--55 \\[0.3em]
+\multicolumn{5}{l}{\emph{Fertility}} \\
+TFR & 1.70 & 12 & fixed benchmark & CDC / NVSS \\
+Ever-childless rate & 0.15 & 12 & fixed benchmark & CPS fertility \\
+Mean age at first birth & 26.0 & 12 & fixed benchmark & NVSS \\
+Fertility gradient $P-C$ & 0.133 & 10 & rebuilt benchmark & MMS ACS rebuild \\[0.3em]
+\multicolumn{5}{l}{\emph{Tenure, housing, and wealth}} \\
+Ownership rate, ages 30--55 & 0.627 & 12 & rebuilt benchmark & MMS ACS rebuild \\
+Ownership gradient $P-C$, ages 30--55 & 0.170 & 12 & rebuilt benchmark & MMS ACS rebuild \\
+New-parent minus non-parent ownership gap, ages 30--55 & 0.110 & 10 & rebuilt benchmark & MMS ACS rebuild \\
+Housing incr.\ $0 \to 1$ child & 0.664 & 8 & regenerated baseline $+3$ PSID coefficient & first-birth rooms event study \\
+Housing incr.\ $1 \to 2$ children & 0.566 & 8 & baseline $+3$ PSID coefficient & second-birth event study with stay-at-one-child controls \\
+Young liquid wealth / income & 0.60 & 12 & fixed benchmark & SCF 25--35 \\
+Parity progression $1 \to 2$ & diagnostic only & 0 & removed from hard loss on 2026-04-08 & March PSID second-birth work disciplines housing, not this fertility moment \\[0.3em]
+\multicolumn{5}{l}{\emph{Sorting, mobility, and bequests}} \\
+Center share of non-parents & 0.494 & 8 & live benchmark & MMS location by parent status \\
+Center share of new parents & 0.416 & 8 & live benchmark & MMS location by parent status \\
+Center--periphery switch rate, ages 22--45 & 0.032 & 8 & rebuilt benchmark & MMS mover rebuild \\
+Ownership rate, ages 65--75 & 0.863 & 10 & PSID benchmark & PSID completed fertility sample \\
+Parent--childless ownership gap, ages 65--75 & 0.070 & 10 & PSID benchmark & PSID completed fertility sample \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Notes on interpretation.}
+The new benchmark differs from the earlier draft in five ways. First, it uses the live MMS broad-core geography rather than principal-city or strict-downtown splits. Second, the rent inversion target is the center--periphery ratio of renter rent per room rather than gross rent bills; gross rents are nearly flat across the two locations once middle-ring PUMAs are absorbed into the core. Third, the bequest block separates the overall intensity parameter $\theta_0$ from the fertility shifter $\theta_n$; $\theta_1$ is fixed at a small De Nardi-style shift. Fourth, the housing ladder is now in room-equivalent units, with a segmented rental market designed to match the empirical scarcity of very large rentals rather than to force immediate tenure switching at small house sizes. Fifth, parity progression $1 \to 2$ is no longer in the hard SMM loss: the housing block is now disciplined by the regenerated first-birth rooms event study and the second-birth event study with stay-at-one-child controls. Because fertility is one-shot in the current model, the two housing moments are also mapped differently on the model side: $H_{01}$ is a genuine birth-cohort $+3$ housing response, while $H_{12}$ is an additional-child $+3$ proxy rather than a literal sequential second-birth event. A last-treated-control second-birth robustness estimate is about 0.704 rooms at $+3$, but the live target remains the stay-at-one baseline.
+
+\paragraph{Empirical slide block.}
+For the live seminar deck, the empirical section now restores the fuller PSID event-study sequence: the common event-study equation, homeownership around first birth, moving-for-size responses, first-birth rooms, second-birth rooms, and mover-versus-non-mover income trajectories. The point of that block is to document directly that childbirth activates a family-space margin, not merely a generic mobility response. That empirical mechanism is the one carried into the model.
+
+\clearpage
+%% =====================================================================
+\section{Model Results and Policy Functions}
+\label{sec:results}
+%% =====================================================================
+
+This section reports the current fast-mode exploratory frontier under the live April 2026 target system. These are not final benchmark calibrations: the benchmark six-house / 80-point-wealth SMM has not yet produced an economically acceptable final fit. But these are the right quantitative objects for slide preparation because they use the live MMS broad-core geography, the room-scale housing block, and the current hard target set with parity progression $1 \to 2$ removed from the loss.
+
+\subsection{Current Confirmed Frontier}
+
+Table~\ref{tab:current_frontier} reports the leading fast-mode GE-confirmed candidates currently on disk. The ranking uses the live hard target set from Table~\ref{tab:moments} plus the inversion penalty on center share and the rent-per-room ratio. The table therefore summarizes the best quantitative status note currently available, even though these runs still use the exploratory fast mode rather than the full benchmark state space.
+
+\begin{table}[!htbp]
+\centering
+\caption{Current fast-mode confirmed frontier under the live target system}
+\label{tab:current_frontier}
+\small
+\begin{tabular}{lccccccccc}
+\toprule
+Candidate & Total loss & Own 30--55 & Own gap & $H_{01}$ & $H_{12}$ & Old own & TFR & Childless & MAFB \\
+\midrule
+\texttt{psi120\_h135} & 72.88 & 0.612 & 0.018 & 0.201 & 0.359 & 0.826 & 1.690 & 0.206 & 29.31 \\
+\texttt{x0\_fast} & 73.06 & 0.545 & -0.037 & 0.191 & 0.236 & 0.698 & 1.741 & 0.191 & 28.88 \\
+\texttt{psi120\_h150} & 86.55 & 0.639 & 0.043 & 0.248 & 0.421 & 0.832 & 1.623 & 0.236 & 29.61 \\
+\texttt{psi120\_h165\_cbar010\_hn100} & 86.59 & 0.664 & 0.067 & 0.288 & 0.639 & 0.839 & 1.721 & 0.212 & 29.64 \\
+\bottomrule
+\end{tabular}
+
+\medskip
+{\footnotesize Notes: Own gap denotes the new-parent minus non-parent ownership gap at ages 30--55. $H_{01}$ and $H_{12}$ denote the model housing increments from 0 to 1 child and from 1 to 2 children. MAFB is mean age at first birth. These values come from the completed smoke frontier summary, not from the aborted wide overnight run.}
+\end{table}
+
+\paragraph{Reading the table.} The ranking is informative. Under the full current fast score, the best confirmed region is not the late-night family-space point \texttt{psi120\_h165\_cbar010\_hn100}, but rather \texttt{psi120\_h135}. That point gets TFR and the prime-age ownership level into the right ballpark. However, it still misses the family housing response and the family ownership gap by a wide margin. By contrast, \texttt{psi120\_h165\_cbar010\_hn100} does much better on the second-child housing increment, but only by worsening timing, childlessness, and several non-housing moments.
+
+\paragraph{Common systematic misses.} All currently confirmed fast candidates share three important failures. First, age at first birth remains too late, clustered near 29--30 rather than 26. Second, young liquid wealth to income remains too high, near 1.0 rather than 0.60. Third, the inversion block is still not where it needs to be in fast mode: the rent ratio remains around 1.32--1.34 rather than the target 1.14, even when the center population share is close.
+
+\begin{figure}[!htbp]
+\centering
+\IfFileExists{../output/model/overnight_fast_frontier_smoke_frontier_min_moments.png}{%
+\includegraphics[width=\textwidth]{../output/model/overnight_fast_frontier_smoke_frontier_min_moments.png}%
+}{%
+\fbox{\begin{minipage}{0.9\textwidth}\centering Frontier moment plot not available in the current output bundle.\end{minipage}}%
+}
+\caption{Current fast-mode frontier versus targets. The figure compares the leading confirmed candidates on the live hard moments. The main quantitative message is that no single point yet gets fertility, family housing, ownership composition, and timing right simultaneously.}
+\label{fig:current_frontier_moments}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\IfFileExists{../output/model/overnight_fast_frontier_smoke_frontier_min_tradeoffs.png}{%
+\includegraphics[width=\textwidth]{../output/model/overnight_fast_frontier_smoke_frontier_min_tradeoffs.png}%
+}{%
+\fbox{\begin{minipage}{0.9\textwidth}\centering Frontier tradeoff plot not available in the current output bundle.\end{minipage}}%
+}
+\caption{Current fast-mode tradeoffs. The frontier is not the old pre-MMS $\chi$--$\beta$ table anymore. The binding tradeoff is between fertility / timing / location fit on one side and family-space / tenure fit on the other.}
+\label{fig:current_frontier_tradeoffs}
+\end{figure}
+
+\subsection{Current Benchmark Cleanup Diagnostic Point}
+
+The fast frontier is useful for direction, but it is not the object to show when the goal is to understand the economic mechanisms in detail. For that purpose, the working benchmark diagnostic point is now the cleanup survivor \texttt{b940\_psi120\_cb100\_mu040}. This point comes from holding the stronger family-space block fixed at $(\beta,\psi_{\text{child}},\bar h_{\text{jump}},\bar h_n,\chi)=(0.940,0.120,2.30,1.00,1.09)$ and then moving only the softer cleanup levers $(\bar c_n,\mu_{\text{move}})$. Relative to the earlier benchmark regions, it lowers wealth and keeps $H_{01}$ close to target while preserving the hard constraints TFR $< 2$ and old-age parent--childless gap $> 0$. The improvement is meaningful but still incomplete: $H_{12}$ remains too low, ownership is still weak, and new parents remain too peripheral.
+
+\begin{table}[!htbp]
+\centering
+\caption{Current benchmark cleanup diagnostic point}
+\label{tab:admissible_benchmark_point}
+\small
+\begin{tabular}{lccc}
+\toprule
+Moment & Model & Target & Gap \\
+\midrule
+TFR & 1.481 & 1.700 & -0.219 \\
+Childless rate & 0.313 & 0.150 & +0.163 \\
+Mean age first birth & 30.91 & 26.00 & +4.91 \\
+Ownership rate 30--55 & 0.494 & 0.627 & -0.133 \\
+Ownership gradient 30--55 & 0.414 & 0.170 & +0.244 \\
+Own gap: new parents$-$nonparents & 0.534 & 0.110 & +0.424 \\
+$H_{01}$ & 0.622 & 0.664 & -0.042 \\
+$H_{12}$ & 0.420 & 0.566 & -0.146 \\
+Young liquid wealth / income & 1.077 & 0.600 & +0.477 \\
+Center share new parents & 0.216 & 0.416 & -0.200 \\
+Old-age ownership rate & 0.723 & 0.863 & -0.140 \\
+Old-age parent$-$childless gap & 0.252 & 0.070 & +0.182 \\
+\bottomrule
+\end{tabular}
+
+\medskip
+{\footnotesize Notes: This benchmark point clears the two hard presentation constraints: $\text{TFR}<2$ and old-age parent--childless gap $>0$. Housing targets now use the regenerated first-birth baseline $H_{01}=0.664$ and the stay-at-one-child second-birth baseline $H_{12}=0.566$. On the model side, however, $H_{01}$ is measured as a genuine birth-cohort $+3$ response while $H_{12}$ is only an additional-child $+3$ proxy under one-shot fertility. Relative to the earlier benchmark regions, this cleanup point keeps $H_{01}$ close to target and lowers wealth, but it still leaves $H_{12}$ too low, ownership too weak, and parent centrality too peripheral.}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag_scorecard.png}
+\caption{Scorecard for the current benchmark-confirmed feasible diagnostic point. The top panels report model-minus-target gaps and parameter positions within bounds. The text panel lists the same moments numerically and records whether the two hard constraints are satisfied.}
+\label{fig:current_candidate_scorecard}
+\end{figure}
+
+\paragraph{How to read the diagnostic battery.} The live April 20 seminar anchor is now \texttt{bench\_b940\_psi120\_cb100\_mu040}. The full benchmark battery is generated by \texttt{build\_april20\_seminar\_materials.m} and written to \texttt{output/figures\_current\_candidate/}. The older \texttt{diag*.png} figures are still useful for debugging and appendix material, but the seminar battery is organized around the mechanisms that matter for the talk: housing policy functions, tenure thresholds, fertility incentives, and the decomposition behind the $H01$ / $H12$ wedge.
+
+\subsection{Seminar Figure Battery}
+
+To make the note usable for the live deck, I replace the earlier diagnostics-only sequence with a smaller set of presentation figures taken directly from the current benchmark anchor.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar01_spatial_equilibrium.png}
+\caption{Benchmark anchor overview. The figure combines the equilibrium price wedge, the main targeted housing and tenure moments, the geography anchors, and the location split in ownership and fertility. Relative to target, the benchmark keeps $H01$ near target but still has low $H12$, low ownership, a high rent ratio, and parent centrality that is too weak.}
+\label{fig:seminar_spatial_equilibrium}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar02_lifecycle_sorting.png}
+\caption{Lifecycle and spatial sorting at the benchmark anchor. The top row shows ownership by location, family-size composition, and fertility timing; the bottom row shows where families live, liquid wealth, and ownership by completed fertility. The benchmark is operational and economically coherent, but timing remains late and families remain too peripheral.}
+\label{fig:seminar_lifecycle_sorting}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar03_housing_policy.png}
+\caption{Housing policy functions by parity, wealth, and current tenure at age 32. The figure shows realized housing services after the discrete tenure choice has been applied. The first child shifts households sharply onto the owner ladder; by the time households reach two-plus states, much of the extensive housing adjustment has already happened.}
+\label{fig:seminar_housing_policy}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar04_savings_tenure.png}
+\caption{Savings and tenure thresholds at age 32. The top row reports renter savings policies, while the bottom row reports the owner rung selected from the renter state. The key point is that parity mainly changes when the ownership ladder becomes attractive, rather than opening a large new rental margin.}
+\label{fig:seminar_savings_tenure}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar05_fertility_state.png}
+\caption{Fertility policy by housing state. The figure compares the probability of first birth for current renters and current owners, by wealth, location, and age. Ownership per se is not the missing margin in this benchmark region; fertility incentives are smooth and only weakly separated across the renter / owner split.}
+\label{fig:seminar_fertility_state}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar06_h01_h12_mechanism.png}
+\caption{Why $H01$ is close while $H12$ remains low. The benchmark almost matches the first-birth $+3$ housing response but undershoots the second-birth proxy. The right-hand panels show the mechanism: ownership and peripheral sorting move sharply at first birth, so by the second child households are already on the owner ladder and already less central. The remaining adjustment is mostly within-owner upsizing, which is too small to reach the live $H12$ target.}
+\label{fig:seminar_h01_h12_mechanism}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar11_owner_ladder_thresholds.png}
+\caption{Owner ladder versus family-space thresholds in the live benchmark. The raw owner ladder runs from 4 to 11 rooms, with rental housing capped at 8 rooms. In effective owner services, $\chi H_k$, the first child threshold already sits around the middle of the owner ladder, while the second-child threshold sits closer to the upper-middle rungs. This figure is useful because it separates two issues: the owner stock itself is not obviously implausible, but the calibrated family-space requirement may be sitting high relative to the rungs that are easy to access.}
+\label{fig:seminar_owner_ladder_thresholds}
+\end{figure}
+
+\subsection{Current Economic Reading}
+
+Three points now look especially clear.
+\begin{enumerate}[leftmargin=*]
+	\item \textbf{First birth is the active discrete margin.} The housing policy and tenure-threshold figures show that the first child is where households move from capped renter allocations into the owner ladder. That is why the model can get $H01$ reasonably close to target even though aggregate ownership is still too low.
+
+	\item \textbf{The $H12$ miss is not a pure rental-cap story.} By the time households reach two-plus states, they are already much more likely to own and already much more likely to be in the periphery. The second child therefore loads mainly on within-owner upsizing rather than on another large discrete shift in tenure or location. That is the clean benchmark explanation for why $H12$ remains below the live target.
+
+	\item \textbf{The calibration issue may be the level of required family space, not the existence of an owner ladder.} The ladder-threshold figure shows that the bottom owner rungs are below the effective first- and second-child housing thresholds. That is exactly why the new starter-home access counterfactuals are exact nulls: they make it easier to buy the wrong units. For the next calibration pass, we should discipline both the rung sizes and the child housing-need schedule more tightly with external data on occupied rooms / bedrooms by tenure and family status.
+
+	\item \textbf{The benchmark already isolates a sharp mechanism.} The model generates the correct qualitative sorting pattern and the right first-birth housing response. The remaining quantitative issue is how to add family space without making fertility too late, new parents too peripheral, or the second-child housing response too large.
+\end{enumerate}
+
+External data suggest that the owner-renter size gap itself is not implausible, but they also suggest that we should be more careful about where the family-space threshold sits on the ladder. In the 2024 ACS, the median owner-occupied unit is in the 6-room category while the median renter-occupied unit is in the 4-room category; in bedrooms, the owner median is 3 while the renter median is 2. This makes the raw owner-renter size gap in the benchmark broadly plausible. At the same time, Census room counts include kitchens and living rooms in addition to bedrooms, so a 7--8 room family unit is not automatically enormous in the data. The calibration risk is therefore not that the owner ladder is absurdly large on its own, but that the model's child housing-need schedule may be asking households to clear the family-space threshold too aggressively and too early. For the next pass, a better empirical discipline is to map the model's rung sizes and fertility thresholds to occupied rooms / bedrooms by tenure and child status, and to use housing-market references that define family-oriented units as roughly two, and ideally three, bedrooms rather than simply ``ownership'' in the abstract.
+
+\subsection{Counterfactual Block}
+
+The first paper-facing counterfactual block now contains four general-equilibrium exercises run directly from the live anchor:
+\begin{enumerate}[leftmargin=*]
+	\item a lower down-payment requirement, from 20\% to 10\%;
+	\item a zero-down-payment experiment, with $\phi=1$ at every parity;
+	\item a 15\% outward shift in housing supply in both locations; and
+	\item a 30\% outward shift in center housing supply only, as a ``family space in the core'' margin.
+\end{enumerate}
+
+\begin{table}[!htbp]
+\centering
+\caption{Counterfactual summary from the live benchmark anchor}
+\label{tab:seminar_counterfactuals}
+\input{../output/model/figures/seminar_counterfactual_table.tex}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar07_cf_access.png}
+\caption{Counterfactual 1: easier ownership access. Universal down-payment waivers are exact nulls at the current benchmark anchor: prices, ownership, fertility, and parent sorting are unchanged to three decimals. A modest parent-targeted waiver moves the birth-related housing response a little and raises TFR slightly, while a full parent waiver mainly front-loads housing adjustment into the first birth without delivering a fertility gain. The birth-triggered ownership grant is close to neutral.}
+\label{fig:seminar_cf_access}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar08_cf_supply.png}
+\caption{Counterfactuals 2 and 3: more family space and family space in the core. The broad supply expansion raises TFR from 1.48 to 1.73 and ownership from 0.49 to 0.65, while producing a much larger later-parity housing adjustment than in the benchmark. The center-only supply expansion raises new-parent centrality more, from 0.216 to 0.270, while still delivering a sizable fertility increase.}
+\label{fig:seminar_cf_supply}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar09_cf_summary.png}
+\caption{Counterfactual summary. Across the access and supply exercises, the dominant result is that supply margins matter much more than ownership-access relief at this benchmark point. Moderate parent-targeted access relief moves housing behavior a little, but the large fertility responses come from creating more family space. The relevant distinction is which supply margin does so through broad family-space creation versus through central family-space creation and parent re-sorting.}
+\label{fig:seminar_cf_summary}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures/diagnostics/seminar10_cf_targeted_access.png}
+\caption{Targeted starter-home access. Restricting the waiver to the bottom owner rungs, including center-only versions and same-birth-state versions, is an exact null at the current benchmark anchor. In this calibration, cheaper access to the very bottom of the owner ladder does not relax the family-space margin that drives fertility and housing adjustment.}
+\label{fig:seminar_cf_targeted_access}
+\end{figure}
+
+\paragraph{Counterfactual reading.} The policy block now gives a sharper ownership-versus-space comparison. Universal collateral relief is irrelevant here: lowering the down payment to 10\% or even 0\% for everyone leaves the benchmark moments unchanged. Once the waiver is targeted to parent states, however, the model does respond. A modest parent-targeted waiver raises TFR from 1.481 to 1.489, lifts $H_{01}$ from 0.622 to 0.637, and lifts $H_{12}$ from 0.420 to 0.430, while leaving prime-age ownership slightly lower. A full parent waiver leaves completed fertility essentially flat; instead, it induces a very large first-birth housing response, $H_{01}=1.049$, and a much smaller second-birth response, $H_{12}=0.158$, which means the policy mostly pulls housing adjustment forward rather than generating more births. The birth-triggered ownership grant is also close to neutral. The new targeted access exercises sharpen that diagnosis further. If the waiver is restricted to starter homes only, or to starter homes in the center only, the result is again an exact null. That does not reject the idea that buying matters. It says something more specific about the current structure: the relevant margin is not ownership as a label, and not access to the very bottom of the ownership ladder, but access to owner-occupied housing that actually delivers meaningful family space. In the current benchmark, the first-child housing need is large enough that the bottom rungs do not buy the object that moves fertility. By contrast, supply-side family-space counterfactuals are powerful. They raise ownership, raise fertility materially, and amplify housing adjustment at child arrival. The broad supply experiment works mainly by relaxing family-space scarcity everywhere. The center-only supply experiment is particularly useful for the seminar because it is the cleanest way to raise parent centrality while also lifting fertility. The live question is therefore how to design a buying-oriented policy that effectively opens access to genuinely family-sized owner units, rather than merely making entry into the smallest owner units cheaper.
+
+
+\clearpage
+%% =====================================================================
+\section{Current Frontier Interpretation}
+\label{sec:tradeoff}
+%% =====================================================================
+
+The active frontier is no longer the old pre-MMS $\chi$--$\beta$ exercise from the earlier draft. Under the live April 2026 target system, the central tradeoff is broader: the same parameter changes that improve family-space moments also shift fertility timing, childlessness, young wealth accumulation, and parent location shares.
+
+\paragraph{The current tension.} The frontier now runs between:
+\begin{enumerate}[leftmargin=*]
+	\item \textbf{fertility / timing / sorting fit}, represented by \texttt{psi120\_h135}; and
+	\item \textbf{family housing / tenure fit}, represented by \texttt{psi120\_h165\_cbar010\_hn100}.
+\end{enumerate}
+The intermediate point \texttt{psi120\_h150} sits between them but is not uniformly superior to either endpoint.
+
+\paragraph{Economic interpretation.} Increasing the housing pressure from children---through a higher first-child housing jump and a lower additional-child consumption offset---does exactly what it should mechanically: it raises $H_{01}$, raises $H_{12}$, and lifts the family ownership gap. But it also makes family formation more expensive, which delays fertility, raises childlessness, and weakens the location fit for new parents. This is the economically meaningful tradeoff currently visible in the model.
+
+\paragraph{Why the late-night family-space candidate fell in the ranking.} The late-night exploratory work focused heavily on the family housing block, which is why \texttt{psi120\_h165\_cbar010\_hn100} looked attractive. Once the full fast score is used, however, the broader penalty from late fertility timing, weak parent location fit, and high young wealth-to-income dominates the gain in $H_{12}$. That is why the full current ranking puts \texttt{psi120\_h135} slightly ahead.
+
+\clearpage
+%% =====================================================================
+\section{Discussion and Next Steps}
+\label{sec:discussion}
+%% =====================================================================
+
+\paragraph{What the model gets right already.} The current specification does not merely generate the qualitative sorting pattern; it now produces a genuine quantitative frontier. Geography is close to target, TFR can be brought near 1.70, the family housing response can be made substantial, and the old-age ownership moments can be brought near target. Those are not trivial achievements given the live MMS geography, the room-scale housing normalization, and the bequest redesign.
+
+\paragraph{What still fails systematically.} Across the current frontier, five moments remain persistently difficult: mean age at first birth, young liquid wealth to income, the ownership gradient, the first-child housing increment, and the center share of new parents. These are the moments most likely to govern the next refinement stage.
+
+\paragraph{Immediate next steps.}
+\begin{enumerate}
+	\item \textbf{Use this note, not \texttt{temp\_draft}, for slides.} The old \texttt{temp\_draft} document is stale. The present note is now the closest thing to a live model-and-calibration document.
+
+	\item \textbf{Run narrower daytime searches.} The failed wide overnight search showed that broad PE sweeps are too expensive and too memory-heavy. The right strategy is a narrow local search around \texttt{psi120\_h135}, \texttt{x0\_fast}, and \texttt{psi120\_h150}, with incremental on-disk checkpoints.
+
+	\item \textbf{Keep the economics fixed while improving search reliability.} The next infrastructure change should not alter the model. It should only make search safer: compact PE checkpoints, best-so-far snapshots, and visible heartbeat files.
+
+	\item \textbf{Revisit the family-space block through targeted comparisons.} The current frontier already says where the model bends. The next task is not blind PSO, but identifying which specific margin can improve family housing and parent sorting without making fertility later and rarer.
+\end{enumerate}
+
+\clearpage
+\appendix
+%% =====================================================================
+\section{Additional Equilibrium Diagnostics}
+\label{app:extra_diagnostics}
+%% =====================================================================
+
+This appendix collects supplementary diagnostics used to assess where equilibrium mass actually sits, how active the housing ladder is, and whether key margins are operative in the stationary distribution. All figures in this appendix are generated from the current benchmark-confirmed feasible diagnostic point discussed in Section~\ref{sec:results}. They remain useful for mechanism interpretation and debugging, but they should be read as supporting evidence for the current working benchmark rather than as final calibration proof.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag13_realized_housing_eq.png}
+\caption{Realized housing services over age and wealth, with stationary-mass contours. Each panel reports the equilibrium allocation actually consumed by a given household type, averaging over tenure outcomes with the stationary distribution. The contours indicate where the mass is concentrated.}
+\label{fig:app_realized_housing}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag14_tenure_mass_overlay.png}
+\caption{Tenure choice maps with renter-mass contours. The background colors show the optimal tenure choice from the renter state, while the contour lines mark where stationary renter mass is concentrated. This distinguishes large policy regions from regions that are economically irrelevant because almost no households visit them.}
+\label{fig:app_tenure_mass}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag15_tenure_shares_age.png}
+\caption{Tenure shares by age and location. The figure reports the stationary share of households in each tenure state at each age, separately for the periphery and center. It shows how intensively the housing ladder is used over the lifecycle in each location.}
+\label{fig:app_tenure_shares}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag16_renter_cap_share.png}
+\caption{Share of renter mass at the rental cap. For each location and family type, the plot reports the fraction of renters whose housing demand is exactly at the maximum rental unit $\bar h^R$. This is a direct diagnostic of whether the rental housing margin is active.}
+\label{fig:app_renter_cap}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../output/model/figures_current_candidate/diag17_move_out_rate.png}
+\caption{Move-out rates by age and parent status. The figure reports the average probability of moving out of the current location at each age, separately for childless households and parents, weighting by the stationary distribution. This complements the stay-probability policy plots in the main text with a distribution-weighted equilibrium object.}
+\label{fig:app_move_out}
+\end{figure}
+
+\end{document}

@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.82in]{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{hyperref}
+
+\title{Fertility Slice Diagnostics: Data and Current Model}
+\author{}
+\date{Built May 8, 2026}
+
+\begin{document}
+\maketitle
+
+\noindent This note isolates fertility moments by age, location, tenure, income, and wealth. It uses the current Python direct-geometry benchmark, job 37, evaluation 1425, with the renewal-valve stationary closure. The cluster-record loss is 8.128 and the final equilibrium error is 0.0030.
+
+\medskip
+\noindent The objects are deliberately separated. MMS moments are current-household fertility objects: whether an adult currently has children in the household, by age, location, and tenure. PSID moments are completed or late-life fertility objects: parenthood by 45, childlessness by 45, and children observed at ages 43--50, by young-adult income or wealth. The model analog is exact for location, tenure, and age in the sense that it averages the stationary distribution over the same state variables. For income, the comparison is intentionally diagnostic because the current model has deterministic lifecycle income and no persistent within-age income distribution.
+
+\begin{table}[H]
+\centering
+\caption{Fertility moments in the live benchmark calibration.}
+\begin{tabular}{lrr}
+\toprule
+Moment & Target & Model \\
+\midrule
+TFR & 1.700 & 1.898 \\
+Childless rate & 0.150 & 0.145 \\
+Mean age first birth & 26.000 & 33.535 \\
+TFR periphery minus center & 0.133 & 0.119 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_age_location.pdf}}
+\caption{Fertility by age and location. Data are MMS shares with children in the household; model is the stationary current-parent share.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_location.pdf}}
+\caption{Fertility by location. Left panel uses reconstructed MMS TFR targets and the model TFR-equivalent completed fertility at age 45. Right panel uses current parenthood for adults up to age 45.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.96\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_tenure.pdf}}
+\caption{Fertility by tenure. Data use MMS current parenthood by owner/renter status; model uses the stationary current-parent share over ages 22--45.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_income.pdf}}
+\caption{Fertility by income. PSID bins use young-adult family income. The model line is the age-45 current-income bin. Because model income has no within-age idiosyncratic dispersion, all age-45 mass falls in one rank bin; this is a failure of the current model as an income-distribution diagnostic, not a substantive income-gradient result.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_wealth.pdf}}
+\caption{Fertility by wealth. PSID bins use young-adult total net worth. The model uses sale-net wealth at age 45. Completed children in the model are reported in TFR-equivalent units, $2n$.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{\detokenize{../output/model/fertility_slice_diagnosis_current/report_figures/fertility_by_wealth_within_tenure.pdf}}
+\caption{Childlessness by wealth within tenure. The PSID classification follows young renters by later ownership status; the model classification is current tenure at age 45, so this is an imperfect but useful tenure--wealth diagnostic.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Selected slice gaps. Shares are in levels, not percent.}
+\begin{tabular}{llrrr}
+\toprule
+Slice & Statistic & Data & Model & Gap \\
+\midrule
+Location current parent & Center & 0.397 & 0.357 & -0.039 \\
+Location current parent & Periphery & 0.495 & 0.382 & -0.113 \\
+Tenure current parent & Renter & 0.395 & 0.285 & -0.110 \\
+Tenure current parent & Owner & 0.498 & 0.566 & 0.068 \\
+Income parent Q5 & parent\_by\_45 & 0.750 & 0.855 & 0.105 \\
+Wealth parent & Q1 & 0.753 & 0.998 & 0.244 \\
+Wealth parent & Q5 & 0.700 & 0.620 & -0.080 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section*{Diagnosis}
+
+\noindent The model gets the broad sign of the location fertility gradient: periphery fertility is above center fertility. It still misses timing: the target mean age at first birth is 26.0 and the model is 33.5, so the age profile is too delayed.
+
+\medskip
+\noindent The tenure facts are sharper. In MMS data, current parenthood is higher among owners than renters, and this holds in both center and periphery cells. The model reproduces that ordering, but it overshoots owner parenthood and undershoots renter parenthood.
+
+\medskip
+\noindent The income comparison should not be oversold. The PSID income gradient is a within-cohort distributional fact. The current model has only deterministic lifecycle income. Pooling ages would mechanically create an income-fertility pattern through age composition; the clean age-45 plot shows the right limitation: there is no model income distribution to compare with PSID income quintiles.
+
+\medskip
+\noindent The wealth comparison is the most informative cross-sectional distributional cut. In the PSID, parenthood rises mildly through the middle of young-adult wealth and falls at the top. In the model, age-45 sale-net wealth produces a much steeper negative fertility gradient at the top, so wealth and tenure selection are doing too much work relative to the data.
+
+\end{document}

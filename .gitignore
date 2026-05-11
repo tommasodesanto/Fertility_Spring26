@@ -1,0 +1,105 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+.claude/settings.json
+
+# Environment
+.env
+.env.local
+*.Rhistory
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+**/__pycache__/
+
+# Build outputs
+dist/
+build/
+*.pyc
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.synctex(busy)
+Rplots.pdf
+
+# Local generated state
+.mplconfig/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local reference PDFs/text extracts not suitable for the repository.
+DUE.txt
+*.zip
+docs/model/theory_packets/**/*.pptx
+
+# Large/generated project outputs. Keep scripts and compact summaries in git;
+# regenerate heavy outputs when needed.
+output/
+logs/
+code/cluster/results*/
+code/model/.venv/
+code/model/benchmarks/figures/
+code/model/benchmarks/*.png
+code/model/benchmarks/*.pdf
+code/data/**/raw/
+code/data/**/raw_data/
+code/data/**/data/
+code/data/**/data_*/
+code/data/**/analysis_output*/
+code/data/**/calibration_targets_output/
+code/data/**/processed_data/
+code/data/**/extract_definitions/
+code/data/**/PUMA_Level/analysis_output/
+code/data/**/Spatial_Aggregate_Analysis/data_raw/
+code/data/**/output/
+code/data/**/output_*/
+!code/data/mms_center_periphery/output/
+!code/data/mms_center_periphery/output/*.csv
+!code/data/mms_center_periphery/output/*.md
+!code/data/mms_center_periphery/output/*.png
+code/data/**/*.dta
+code/data/**/*.rds
+code/data/**/*.dat
+code/data/**/*.dat.gz
+code/data/**/*.xml
+code/data/**/*.zip
+code/data/**/*.pkg
+code/data/**/*.xlsx
+code/data/**/*.png
+code/data/**/*.pdf
+code/data/**/*.html
+code/data/**/cluster_run_output/
+
+# Archives are kept on disk but not committed by default.
+calibration_archive/
+latex/archive/
+docs/archive/
+
+# Preserve old git metadata locally when doing a fresh alignment.
+.git_legacy_*/
+
+# Raw agent/chat transcript drops for nightly memory refresh
+memory
+memory/transcripts/*
+!memory/transcripts/.gitkeep
+
+# Nightly automation logs
+memory/automation/*
+!memory/automation/.gitkeep
+memory/automation/logs/*
+!memory/automation/logs/.gitkeep

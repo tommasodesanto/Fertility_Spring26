@@ -1,0 +1,95 @@
+{
+    "folders": [
+        {
+            "name": "code",
+            "path": "code"
+        },
+        {
+            "name": "latex",
+            "path": "latex"
+        },
+        {
+            "name": "docs",
+            "path": "docs"
+        }
+    ],
+    "settings": {
+        "files.watcherExclude": {
+            "**/output/model/**": true,
+            "**/calibration_archive/model_history_2026-05-07/archive_exploratory_2026-04-13/**": true,
+            "**/calibration_archive/model_history_2026-05-07/archive_exploratory_2026-04-16/**": true,
+            "**/code/cluster/results_*/**": true,
+            "**/latex/aux/**": true
+        },
+        "search.exclude": {
+            "**/output/model/**": true,
+            "**/calibration_archive/model_history_2026-05-07/archive_exploratory_2026-04-13/**": true,
+            "**/calibration_archive/model_history_2026-05-07/archive_exploratory_2026-04-16/**": true,
+            "**/code/cluster/results_*/**": true,
+            "**/latex/aux/**": true
+        },
+        "latex-workshop.latex.outDir": "%DIR%",
+        "latex-workshop.latex.watch.files.ignore": [
+            "**/*.aux",
+            "**/*.bbl",
+            "**/*.bcf",
+            "**/*.blg",
+            "**/*.fdb_latexmk",
+            "**/*.fls",
+            "**/*.lof",
+            "**/*.log",
+            "**/*.lot",
+            "**/*.nav",
+            "**/*.out",
+            "**/*.snm",
+            "**/*.synctex.gz",
+            "**/*.toc",
+            "**/aux/**"
+        ],
+        "latex-workshop.latex.tools": [
+            {
+                "name": "pdflatex",
+                "command": "pdflatex",
+                "args": [
+                    "-synctex=1",
+                    "-interaction=nonstopmode",
+                    "-file-line-error",
+                    "-output-directory=%OUTDIR%",
+                    "%DOC%"
+                ]
+            },
+            {
+                "name": "bibtex",
+                "command": "bibtex",
+                "args": [
+                    "%OUTDIR%/%DOCFILE%"
+                ]
+            }
+        ],
+        "latex-workshop.latex.recipes": [
+            {
+                "name": "pdflatex",
+                "tools": [
+                    "pdflatex"
+                ]
+            },
+            {
+                "name": "pdflatex x2",
+                "tools": [
+                    "pdflatex",
+                    "pdflatex"
+                ]
+            },
+            {
+                "name": "pdflatex -> bibtex -> pdflatex x2",
+                "tools": [
+                    "pdflatex",
+                    "bibtex",
+                    "pdflatex",
+                    "pdflatex"
+                ]
+            }
+        ],
+        "latex-workshop.view.pdf.viewer": "tab"
+    }
+}

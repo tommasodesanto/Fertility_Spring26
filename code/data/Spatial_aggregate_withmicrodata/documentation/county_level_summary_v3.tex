@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{rotating}
+\usepackage{longtable}
+\usepackage{lscape}
+
+\title{Comprehensive County-Level Fertility Analysis (V3 - Restored)}
+\author{Gemini AI Assistant}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report presents a comprehensive analysis of fertility patterns at the county level, using restored and updated methodologies. It examines the relationship between housing costs (both Price-to-Income and Rent-to-Income ratios) and various fertility outcomes, controlling for demographic and economic factors. The analysis is divided into three main tracks: an aggregate-level panel data analysis, an individual-level analysis using microdata with contextual county variables, and a limited migration analysis. This version restores the full time-varying effects analysis and introduces a "horse race" comparison between contextual and individual-level housing cost burdens.
+\end{abstract}
+
+\section{Aggregate County-Level Analysis}
+
+This section explores the relationship between county-level housing costs and fertility metrics using a panel dataset of US counties.
+
+\subsection{Panel Regressions}
+Table \ref{tab:county_panel_regressions} presents the results from fixed-effects panel regressions. These models estimate the association between housing cost metrics (PTI and RTI) and fertility outcomes, controlling for county and year fixed effects, as well as a suite of economic and demographic variables. Due to the number of models presented, the table is displayed in landscape format for readability.
+
+\begin{sidewaystable}[htbp]
+  \centering
+  \captionof{table}{Aggregate County Panel Regression Models of Fertility and Housing Costs}
+  \label{tab:county_panel_regressions}
+  \input{../analysis_output_county_restored/tables/agg_panel_regressions.tex}
+\end{sidewaystable}
+
+
+\subsection{Time-Varying Effects}
+Figure \ref{fig:agg_time_varying_combined} illustrates the time-varying association between county-level housing costs and fertility outcomes. The coefficients are derived from yearly cross-sectional regressions. The combined plot shows the overall trend, while the subsequent figures provide a detailed view for each outcome-metric pair.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../analysis_output_county_restored/AGG_05_time_varying_coefficients_combined.png}
+  \caption{Time-Varying Effects at the County-Level (Combined)}
+  \label{fig:agg_time_varying_combined}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/AGG_05_individual_plots/AGG_05_fertility_rate_vs_county_pti.png}
+        \caption{Fertility Rate vs. County PTI}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/AGG_05_individual_plots/AGG_05_fertility_rate_vs_county_rti.png}
+        \caption{Fertility Rate vs. County RTI}
+    \end{subfigure}
+    \caption{Time-Varying Effects: Fertility Rate}
+    \label{fig:time_varying_fert_rate}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/AGG_05_individual_plots/AGG_05_mean_age_first_birth_vs_county_pti.png}
+        \caption{Mean Age at First Birth vs. County PTI}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/AGG_05_individual_plots/AGG_05_mean_age_first_birth_vs_county_rti.png}
+        \caption{Mean Age at First Birth vs. County RTI}
+    \end{subfigure}
+    \caption{Time-Varying Effects: Mean Age at First Birth}
+    \label{fig:time_varying_age_first_birth}
+\end{figure}
+
+
+\section{Individual-Level Analysis}
+
+This section uses individual microdata to analyze how county-level context and individual-level circumstances relate to the probability of a woman having had a recent birth.
+
+\subsection{Contextual Effects of County Housing Costs}
+Table \ref{tab:indiv_county_logit_contextual} shows the results of logit models predicting recent motherhood based on the housing cost ratios of the county of residence.
+
+\input{../analysis_output_county_restored/tables/indiv_contextual_logit_models.tex}
+
+\subsection{"Horse Race": Contextual vs. Individual Housing Burden}
+To disentangle the effects of local market conditions from personal financial strain, we run a "horse race" analysis. Tables \ref{tab:indiv_pti_comparison} and \ref{tab:indiv_rti_comparison} compare models using only county-level housing metrics, only individual-level metrics, and both simultaneously.
+
+\input{../analysis_output_county_restored/tables/indiv_new_pti_comparison_models.tex}
+\input{../analysis_output_county_restored/tables/indiv_new_rti_comparison_models.tex}
+
+\subsection{Heterogeneous Effects of Individual Housing Burden}
+We explore whether the impact of individual housing burden on fertility varies across different age groups. Table \ref{tab:indiv_new_interactions_individual} presents the interaction models, and Figures \ref{fig:mfx_indiv_pti_by_age} and \ref{fig:mfx_indiv_rti_by_age} visualize the marginal effects.
+
+\input{../analysis_output_county_restored/tables/indiv_new_interaction_models_individual_burden.tex}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{../analysis_output_county_restored/IND_NEW_03b_mfx_indiv_pti_by_age.png}
+  \caption{Marginal Effect of Individual PTI on Fertility by Age Group (Homeowners)}
+  \label{fig:mfx_indiv_pti_by_age}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{../analysis_output_county_restored/IND_NEW_03d_mfx_indiv_rti_by_age.png}
+  \caption{Marginal Effect of Individual RTI on Fertility by Age Group (Renters)}
+  \label{fig:mfx_indiv_rti_by_age}
+\end{figure}
+
+\subsection{Time-Varying Effects on Individual Fertility}
+Figure \ref{fig:indiv_time_varying} shows how the estimated effect of county-level housing costs on individual fertility probability has changed over time.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../analysis_output_county_restored/IND_06_time_varying_coefficients.png}
+  \caption{Time-Varying Effects on Individual Fertility Probability}
+  \label{fig:indiv_time_varying}
+\end{figure}
+
+
+\section{Migration Analysis}
+This final section provides a limited analysis of relocation, predicted by the housing cost metrics of the \textit{current} county of residence.
+
+\subsection{Descriptive Visuals}
+Figures \ref{fig:mig_agg_plot} and \ref{fig:mig_indiv_plot} show the unconditional relationship between housing costs, education, and relocation rates.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/MIG_01_agg_relocation_vs_pti.png}
+        \caption{County Relocation Rate vs. PTI}
+        \label{fig:mig_agg_plot}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{../analysis_output_county_restored/MIG_02_indiv_relocation_by_educ.png}
+        \caption{Relocation Rate by Education}
+        \label{fig:mig_indiv_plot}
+    \end{subfigure}
+    \caption{Migration Descriptive Plots}
+    \label{fig:mig_plots}
+\end{figure}
+
+
+\subsection{Regression Models of Relocation}
+Table \ref{tab:county_migration_models} presents logit models predicting an individual's relocation status based on the housing costs in their current county. Finally, Table \ref{tab:mig_final_county_vs_indiv} provides a comparative analysis for renters, contrasting the predictive power of county-level RTI versus individual-level RTI for both the general female population and new mothers.
+
+\input{../analysis_output_county_restored/tables/mig_county_migration_models.tex}
+\input{../analysis_output_county_restored/tables/mig_final_county_vs_individual_models.tex}
+
+
+\end{document} 
