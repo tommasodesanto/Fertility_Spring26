@@ -76,7 +76,7 @@ where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption
 \end{equation*}
 Here $\bar c_0$ and $\bar h_0$ are baseline needs for a childless household. The parameter $\bar c_n$ is the per-child consumption requirement. The parameter $\bar h_{\mathrm{jump}}$ is the fixed housing requirement associated with having any dependent child, while $\bar h_n$ is the additional housing requirement per dependent child. The first child therefore raises required housing discretely; additional children raise required housing linearly. This is the main channel in the paper: children are costly partly because they require housing space, and the price of that space depends on location.
 
-Housing services differ by tenure. A renter choosing rental space $h^R$ receives $\mathbf h=h^R$. An owner of house size $H_k$ receives $\mathbf h=\chi H_k$, with $\chi>1$. The parameter $\chi$ captures the service premium of owner-occupied housing. In market clearing, however, owners demand the physical quantity $H_k$, not the service quantity $\chi H_k$.
+Housing services differ by tenure. A renter choosing rental space $h^R$ receives $\mathbf h=h^R$. An owner of house size $H_k$ receives the service flow $h^O_k\equiv\chi H_k$, with $\chi>1$. The parameter $\chi$ captures the service premium of owner-occupied housing. In market clearing, however, owners demand the physical quantity $H_k$, not the service quantity $h^O_k$.
 
 At death, households receive warm-glow bequest utility. Let $\psi\in[0,1)$ denote the proportional transaction cost paid when owner-occupied housing is liquidated. Bequeathable wealth is
 \begin{equation*}
@@ -209,7 +209,7 @@ Conditional on owning house $H_k$ in location $i$, the value is
 V^{O_k}_a(b,i,n,s)
 =
 \max_{c,b'}\quad
-&u(c,\chi H_k;n,s)
+&u(c,h^O_k;n,s)
 +\beta \bar V_{a+1}(b',O_k,i,n,s)\\
 \text{s.t.}\quad
 &c+\delta p_iH_k+b'=\mathcal R b+y_a,\\
