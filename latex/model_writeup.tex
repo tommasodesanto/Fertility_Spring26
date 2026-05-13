@@ -76,7 +76,11 @@ where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption
 \end{equation*}
 Here $\bar c_0$ and $\bar h_0$ are baseline needs for a childless household. The parameter $\bar c_n$ is the per-child consumption requirement. The parameter $\bar h_{\mathrm{jump}}$ is the fixed housing requirement associated with having any dependent child, while $\bar h_n$ is the additional housing requirement per dependent child. The first child therefore raises required housing discretely; additional children raise required housing linearly. This is the main channel in the paper: children are costly partly because they require housing space, and the price of that space depends on location.
 
-Housing services differ by tenure. A renter choosing rental space $h^R$ receives $\mathbf h=h^R$. An owner of house size $H_k$ receives the service flow $h^O_k\equiv\chi H_k$, with $\chi>1$. The parameter $\chi$ captures the service premium of owner-occupied housing. In market clearing, however, owners demand the physical quantity $H_k$, not the service quantity $h^O_k$.
+Housing services differ by tenure. Following the DUE notation, let
+\begin{equation*}
+    \mathbf h(h^O,h^R)=\chi h^O+h^R
+\end{equation*}
+be the housing services entering utility. Renters have $h^O=0$ and choose $h^R$. Owners of rung $k$ have $h^O=H_k$ and $h^R=0$. The parameter $\chi>1$ captures the service premium of owner-occupied housing. In market clearing, however, owners demand the physical quantity $H_k$, not the service quantity $\chi H_k$.
 
 At death, households receive warm-glow bequest utility. Let $\psi\in[0,1)$ denote the proportional transaction cost paid when owner-occupied housing is liquidated. Bequeathable wealth is
 \begin{equation*}
@@ -195,7 +199,7 @@ Conditional on being a renter in location $i$, the household value is
 V^R_a(b,i,n,s)
 =
 \max_{c,h^R,b'}\quad
-&u(c,h^R;n,s)
+&u(c,\mathbf h(0,h^R);n,s)
 +\beta \bar V_{a+1}(b',R,i,n,s)\\
 \text{s.t.}\quad
 &c+r_i h^R+b'=\mathcal R b+y_a,\\
@@ -209,7 +213,7 @@ Conditional on owning house $H_k$ in location $i$, the value is
 V^{O_k}_a(b,i,n,s)
 =
 \max_{c,b'}\quad
-&u(c,h^O_k;n,s)
+&u(c,\mathbf h(H_k,0);n,s)
 +\beta \bar V_{a+1}(b',O_k,i,n,s)\\
 \text{s.t.}\quad
 &c+\delta p_iH_k+b'=\mathcal R b+y_a,\\
