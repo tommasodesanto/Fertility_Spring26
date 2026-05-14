@@ -506,6 +506,14 @@ g,
 \end{equation*}
 such that:
 \begin{enumerate}[leftmargin=*]
+    \item \textbf{Household optimization.} Given prices, amenities, and moving wedges, value functions solve the household problem in \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure choice \eqref{eq:tenure_value}, location probabilities \eqref{eq:loc_probs}, fertility probabilities \eqref{eq:fert_probs}, and terminal bequest utility \eqref{eq:bequest}. The policies $c$, $h^R$, $b'$, $d'$, $i'$, and $n'$ are associated optimal policies.
+
+    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(g)$. The potential entrant pool is $Q(g)=M+B(g)$. Entry probabilities satisfy \eqref{eq:entry_rule}, the city entry rate is $q^E(p)=1-\pi_0^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
+    \begin{equation*}
+        E_i(g;p)=Q(g)q^E(p)\omega_i^E(p),\qquad i\in\Iset.
+    \end{equation*}
+    The outside mass is $Q(g)(1-q^E(p))$.
+
     \item \textbf{Firms and labor market.} The common wage satisfies $w=A$. Aggregate efficiency labor supply is
     \begin{equation*}
         L^s(g)=\int \ind\{a\leq J_R\}e_a\,dg(x),
@@ -515,21 +523,6 @@ such that:
         L=L^s(g).
     \end{equation*}
     Output is $Y=A L$.
-
-    \item \textbf{Household optimization.} Given prices, amenities, and moving wedges, value functions solve the household problem in \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure choice \eqref{eq:tenure_value}, location probabilities \eqref{eq:loc_probs}, fertility probabilities \eqref{eq:fert_probs}, and terminal bequest utility \eqref{eq:bequest}. The policies $c$, $h^R$, $b'$, $d'$, $i'$, and $n'$ are associated optimal policies.
-
-    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(g)$. The potential entrant pool is $Q(g)=M+B(g)$. Entry probabilities satisfy \eqref{eq:entry_rule}, the city entry rate is $q^E(p)=1-\pi_0^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
-    \begin{equation*}
-        E_i(g;p)=Q(g)q^E(p)\omega_i^E(p),\qquad i\in\Iset.
-    \end{equation*}
-    The outside mass is $Q(g)(1-q^E(p))$.
-
-    \item \textbf{Stationary distribution.} The level distribution $g$ over $(b,d,i,a,n,s)$ is stationary. Starting from $g$, the equilibrium policies, fertility and location probabilities, child aging, deterministic aging, death at age $J$, and the entry masses $\{E_i(g;p)\}_{i\in\Iset}$ reproduce the same level distribution in the following period. Entrants enter at age one as childless renters with liquid wealth $b^E$ and location masses $\{E_i(g;p)\}_{i\in\Iset}$.
-    Total adult population is
-    \begin{equation*}
-        S=\int dg(x),
-    \end{equation*}
-    and is an equilibrium outcome.
 
     \item \textbf{Housing markets and user cost.} In every location,
     \begin{equation*}
@@ -545,6 +538,24 @@ such that:
         p^{\mathrm{ret}}\sum_i\sum_{a>J_R}g_i(a).
     \end{equation*}
     Here $g_i(a)$ is the marginal mass of households of age $a$ living in location $i$.
+
+    \item \textbf{Stationary distribution.} Let $\mathcal Z$ denote the adult state space and let $\mathcal P(\mathcal A\mid x)$ be the one-period transition probability from state $x$ into the measurable set $\mathcal A\subseteq\mathcal Z$, induced by the optimal policies, fertility and location probabilities, child aging, deterministic aging, and death. Entrants enter at
+    \begin{equation*}
+        x_i^E=(b^E,R,i,1,0,0).
+    \end{equation*}
+    The level distribution is stationary if, for every measurable set $\mathcal A\subseteq\mathcal Z$,
+    \begin{equation}
+        g^+(\mathcal A)
+        \equiv
+        \int_{\mathcal Z}\mathcal P(\mathcal A\mid x)\,dg(x)
+        +
+        \sum_{i\in\Iset}
+        E_i(g;p)\ind\{x_i^E\in\mathcal A\}
+        =
+        g(\mathcal A).
+        \label{eq:stationary_distribution}
+    \end{equation}
+    Total adult population is $S=\int_{\mathcal Z}dg(x)$ and is an equilibrium outcome.
 \end{enumerate}
 \end{definition}
 
