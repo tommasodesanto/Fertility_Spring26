@@ -524,11 +524,15 @@ such that:
     \end{equation*}
     Here $g_i(a)$ is the marginal mass of households of age $a$ living in location $i$.
 
-    \item \textbf{Stationary distribution.} The distribution $g$ is consistent with individual decisions and entry. Starting from $g$, the optimal policies, fertility and location probabilities, child aging, deterministic aging, death, and entrant masses $\{E_i(g;p)\}_{i\in\Iset}$ generate the same distribution next period:
+    \item \textbf{Stationary distribution.} The distribution $g$ is the level distribution of adult households living in the modeled city. For any measurable set $\mathcal A$ of adult states,
     \begin{equation*}
-        g'=\mathcal T(g)=g.
+        g'(\mathcal A)
+        =
+        \int \mathcal P(\mathcal A\mid x;p)\,dg(x)
+        +
+        \sum_{i\in\Iset}E_i(g;p)\ind\{x_i^E\in\mathcal A\},
     \end{equation*}
-    Entrants enter at $x_i^E=(b^E,R,i,1,0,0)$. Total adult population is $S=\int dg(x)$ and is an equilibrium outcome.
+    where $\mathcal P(\cdot\mid x;p)$ is the transition induced by optimal policies, fertility and location probabilities, child aging, deterministic aging, and death for incumbent households. Death puts no mass on the next-period adult city state space. Mature city-born children enter the adult city distribution only through the entry masses $\{E_i(g;p)\}_{i\in\Iset}$; the remaining potential entrants choose the outside economy and are not part of $g'$. Stationarity requires $g'=g$. Entrants enter at $x_i^E=(b^E,R,i,1,0,0)$. Total adult population is $S=\int dg(x)$ and is an equilibrium outcome.
 \end{enumerate}
 \end{definition}
 
