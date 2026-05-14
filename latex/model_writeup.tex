@@ -274,67 +274,65 @@ The tenure value in destination $j$ is
 \end{equation}
 Here $V^{d'}_a=V^R_a$ if $d'=R$ and $V^{d'}_a=V^{O_k}_a$ if $d'=O_k$.
 
-Location choice has additive Type-I extreme-value shocks with scale $\kappa_\ell$. The parameter $\kappa_\ell$ governs the amount of residual dispersion in location choices; as $\kappa_\ell$ goes to zero, location choice converges to a deterministic maximum. A household currently in location $i$ evaluates destination $j$ using
+Location choice has additive Type-I extreme-value shocks with scale $\kappa_\ell$. The parameter $\kappa_\ell$ governs the amount of residual dispersion in location choices; as $\kappa_\ell$ goes to zero, location choice converges to a deterministic maximum. The argument $\cdot$ collects current state variables held fixed at the choice stage. A household currently in location $i$ evaluates destination $j$ using
 \begin{equation*}
-    \widetilde V^L_a(j|x)
+    \widetilde V^L_a(j\mid\cdot)
     =
     V^T_a(b,d,i;j,n,s)
     +\xi_j-\zeta_{ij},
 \end{equation*}
 where $\zeta_{ij}$ is the bilateral moving wedge, with $\zeta_{ii}$ normalized to zero. The destination probabilities are
 \begin{equation}
-    \pi^L_a(j|x)
+    \pi^L_a(j\mid\cdot)
     =
     \frac{
-    \exp\left(\widetilde V^L_a(j|x)/\kappa_\ell\right)
+    \exp\left(\widetilde V^L_a(j\mid\cdot)/\kappa_\ell\right)
     }{
     \sum_{m\in\Iset}
-    \exp\left(\widetilde V^L_a(m|x)/\kappa_\ell\right)
+    \exp\left(\widetilde V^L_a(m\mid\cdot)/\kappa_\ell\right)
     },
     \label{eq:loc_probs}
 \end{equation}
 and the location value is
 \begin{equation}
-    V^L_a(x)
+    V^L_a(b,d,i,n,s)
     =
     \kappa_\ell
     \log
     \sum_{m\in\Iset}
-    \exp\left(\widetilde V^L_a(m|x)/\kappa_\ell\right).
+    \exp\left(\widetilde V^L_a(m\mid\cdot)/\kappa_\ell\right).
     \label{eq:loc_iv}
 \end{equation}
 
 Childless households in the fertile window face a stopping problem with additive Type-I extreme-value shocks with scale $\kappa_f$. The option $n'=0$ means delaying fertility for one period. A positive option $n'>0$ fixes completed fertility permanently. This shock is part of the household fertility problem, not part of the population-entry closure below. Let $s(n')=0$ if $n'=0$ and $s(n')=1$ if $n'>0$. The value of choosing option $n'\in\Nset$ is
 \begin{equation*}
-    x(n')=(b,d,i,a,n',s(n')),
-    \qquad
-    \widetilde V^F_a(n'|x)
+    \widetilde V^F_a(n'\mid\cdot)
     =
-    V^L_a(x(n')).
+    V^L_a(b,d,i,n',s(n')).
 \end{equation*}
 Fertility probabilities are
 \begin{equation}
-    \pi^F_a(n'|x)
+    \pi^F_a(n'\mid\cdot)
     =
     \frac{
-    \exp\left(\widetilde V^F_a(n'|x)/\kappa_f\right)
+    \exp\left(\widetilde V^F_a(n'\mid\cdot)/\kappa_f\right)
     }{
     \sum_{m\in\Nset}
-    \exp\left(\widetilde V^F_a(m|x)/\kappa_f\right)
+    \exp\left(\widetilde V^F_a(m\mid\cdot)/\kappa_f\right)
     },
     \label{eq:fert_probs}
 \end{equation}
 and the full household value is
 \begin{equation}
-    V_a(x)
+    V_a(b,d,i,n,s)
     =
     \kappa_f
     \log
     \sum_{m\in\Nset}
-    \exp\left(\widetilde V^F_a(m|x)/\kappa_f\right).
+    \exp\left(\widetilde V^F_a(m\mid\cdot)/\kappa_f\right).
     \label{eq:fert_iv}
 \end{equation}
-Outside the fertility window, or after fertility has already been chosen, this stage is degenerate and $V_a(x)=V^L_a(x)$.
+Outside the fertility window, or after fertility has already been chosen, this stage is degenerate and $V_a(b,d,i,n,s)=V^L_a(b,d,i,n,s)$.
 
 \subsection{Entry, Outside Option, and City Size}
 With endogenous fertility, stationarity requires specifying how city-born children become adult potential entrants and how the mass of adult households is pinned down. The benchmark closure keeps the city stationary while allowing its scale to be an equilibrium object.
