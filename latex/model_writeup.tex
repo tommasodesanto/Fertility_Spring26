@@ -35,22 +35,22 @@
 
 The model is a discrete-time lifecycle economy with endogenous fertility, housing tenure choice, and spatial sorting. Households save, choose where to live, decide whether to rent or own, and choose fertility. Children enter preferences and resources through consumption and housing requirements. Housing is local, supplied upward sloping in each location, and costly to access because of down-payment and moving frictions. The mechanism is that children require space, space is more expensive in central locations, and tenure constraints affect family formation over the lifecycle.
 
-The environment combines three standard ingredients. The fertility block follows quantitative lifecycle models in which children are chosen by households and affect both current resources and continuation values \citep{sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019}. The tenure block follows housing-macro models with collateral constraints and discrete owner-occupied housing \citep{hendersonModelHousingTenure1983,sommerEquilibriumEffectFundamentals2013,sommerImplicationsUSTax2018}. The spatial block is Rosen--Roback: households sort across locations with different amenities and prices, and local housing supply determines how demand pressure maps into prices \citep{rosenWageBasedIndexes1979,robackWagesRentsQuality1982}. The housing structure borrows heavily from \citet{greaneyDynamicUrbanEconomics2025}.
+The environment combines three standard ingredients. The fertility block follows quantitative lifecycle models in which children are chosen by households and affect both current resources and continuation values \citep{sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019}. The tenure block follows housing-macro models with collateral constraints and discrete owner-occupied housing \citep{hendersonModelHousingTenure1983,sommerEquilibriumEffectFundamentals2013,sommerImplicationsUSTax2018}. The spatial block is Rosen--Roback: households sort across locations with different amenities and prices, and local housing supply determines how demand pressure maps into prices \citep{rosenWageBasedIndexes1979,robackWagesRentsQuality1982}. The housing block follows the dynamic urban housing structure in \citet{greaneyDynamicUrbanEconomics2025}.
 
 \subsection{Environment}
 
-Time is discrete. Households enter adult life at age $a=1$, retire after age $J_R$ \footnote{I might consider simplifying the lifecycle structure to just some stages, to improve computational efficiency. The next step is, indeed, clearly determining what are the empirical targets for the model, and so whether I want to match very well lifecycle profiles or not.}, and die at the end of age $J$. At a point in time the city is described by a level distribution $g$ over household states. Its adult mass is
+Time is discrete. Households enter adult life at age $a=1$, retire after age $J_R$, and die at the end of age $J$. At a point in time the city is described by a level distribution $g$ over household states. Its adult mass is
 \begin{equation*}
     S=\int dg(x).
 \end{equation*}
-This mass is an equilibrium object. Write $g=S\mu$ with $\int d\mu=1$.\footnote{More on this later. I understand this is the main `technical' issue that emerged in the seminar. It is not fully solved. At the end of this document there is a discussion of the things. I hope to get feedback on this.}
+This mass is an equilibrium object. Write $g=S\mu$ with $\int d\mu=1$.
 
 There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i=(q+\delta)p_i$, where $q$ is the net interest rate and $\delta$ is depreciation or maintenance. Location $i$ also has amenity $\xi_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\xi_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark.
 
-The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder \footnote{This makes housing more lumpy and makes the model computationally lighter, but might be amended. Some further thinking is required on the housing market structure.}. Renters choose rental space continuously up to a cap $\bar h^R$, which is the largest rental unit available in the model.
+The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder, while renters choose rental space continuously up to a cap $\bar h^R$.
 
 \subsection{Preferences}
-Let $m(n,s)$ be the number of dependent children living at home \footnote{Some notation improvement is probably required, but in any case, the presence of both $m$ and $n$ allows us to distinguish children ever had with children currently at home. which affects the utility.}. Flow utility is Stone--Geary over nondurable consumption and housing services, wrapped in CRRA:
+Let $m(n,s)$ be the number of dependent children living at home. Completed fertility $n$ and current dependents $m(n,s)$ differ because children eventually leave the household. Flow utility is Stone--Geary over nondurable consumption and housing services, wrapped in CRRA:
 \begin{equation}
 u(c,\mathbf h;n,s)
 =
@@ -63,7 +63,7 @@ u(c,\mathbf h;n,s)
 +\psi_{\mathrm{child}}m(n,s),
 \label{eq:flow_utility}
 \end{equation}
-where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption-housing aggregator, $\sigma>1$ is curvature, and $\psi_{\mathrm{child}}$ is the flow value of each dependent child.\footnote{The position of the $\psi_{\mathrm{child}}$ term determines how the child benefit relates to income, so it requires some further thought.} The Stone--Geary terms $\bar c(n,s)$ and $\bar h(n,s)$ are minimum consumption and housing needs:
+where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption-housing aggregator, $\sigma>1$ is curvature, and $\psi_{\mathrm{child}}$ is the flow value of each dependent child.\footnote{The benchmark treats the child-flow term as additively separable. Alternative specifications could let child utility interact directly with household resources.} The Stone--Geary terms $\bar c(n,s)$ and $\bar h(n,s)$ are minimum consumption and housing needs:
 \begin{equation*}
 \begin{aligned}
 \bar c(n,s)
@@ -76,7 +76,7 @@ where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption
 \end{equation*}
 Here $\bar c_0$ and $\bar h_0$ are baseline needs for a childless household. The parameter $\bar c_n$ is the per-child consumption requirement. The parameter $\bar h_{\mathrm{jump}}$ is the fixed housing requirement associated with having any dependent child, while $\bar h_n$ is the additional housing requirement per dependent child. The first child therefore raises required housing discretely; additional children raise required housing linearly. The local price of space is then part of the cost of children.
 
-Housing services differ by tenure. Following the DUE notation, let
+Housing services differ by tenure. Let
 \begin{equation*}
     \mathbf h(h^O,h^R)=\chi h^O+h^R
 \end{equation*}
@@ -134,7 +134,7 @@ At origination, a buyer of house $H_k$ in location $i$ must satisfy
     b\geq -\phi p_iH_k,
     \label{eq:collateral}
 \end{equation}
-where $b$ denotes liquid wealth immediately after the purchase. Here $\phi$ is the financed share of house value. The required down payment is therefore $(1-\phi)p_iH_k$. Following \citet{greaneyDynamicUrbanEconomics2025}, a homeowner who keeps the current house is not forced to delever after a price change. If current liquid wealth is below the origination bound, however, the household cannot increase debt. In discrete time, this continuation borrowing limit is
+where $b$ denotes liquid wealth immediately after the purchase. Here $\phi$ is the financed share of house value. The required down payment is therefore $(1-\phi)p_iH_k$. As in \citet{greaneyDynamicUrbanEconomics2025}, a homeowner who keeps the current house is not forced to delever after a price change. If current liquid wealth is below the origination bound, however, the household cannot increase debt. In discrete time, this continuation borrowing limit is
 \begin{equation*}
     b'\geq \underline b_i^O(b,H_k)
     \equiv
@@ -177,7 +177,7 @@ Let $s=0$ denote no children and $s=1,\ldots,K$ denote dependent child stages. A
 \begin{equation*}
     \Pi^c(s'|s,n).
 \end{equation*}
-The matrix $\Pi^c$ is the transition matrix over child-age states, conditional on completed fertility. In the benchmark implementation, dependent childhood lasts about 18 years. While children are at home, $m(n,s)=n$. After maturity, $m(n,s)=0$, so the consumption and housing floors return to their baseline levels, while completed fertility remains payoff-relevant through the bequest motive. Let
+The matrix $\Pi^c$ is the transition matrix over child-age states, conditional on completed fertility. In the benchmark parameterization, dependent childhood lasts about 18 years. While children are at home, $m(n,s)=n$. After maturity, $m(n,s)=0$, so the consumption and housing floors return to their baseline levels, while completed fertility remains payoff-relevant through the bequest motive. Let
 \begin{equation*}
     \lambda_M(s,n)
     =
@@ -195,7 +195,7 @@ Mature city-born children are measured in entrant-household equivalents and are 
 
 \subsection{Household Problem}
 
-Within the period, the order of decisions is fertility, location, tenure and house size, and then consumption, rental size, and savings. It is convenient to write the problem backward in the reverse order. The discount factor is $\beta$. Let the terminal value be
+Within the period, the order of decisions is fertility, location, tenure and house size, and then consumption, rental size, and savings. The recursion is written backward in the reverse order. The discount factor is $\beta$. Let the terminal value be
 \begin{equation*}
     V_{J+1}(b,d,i,n,s)=\mathcal B(\widetilde b,n),
 \end{equation*}
@@ -345,7 +345,7 @@ Let $g$ denote the level distribution of adult households, and let
 \begin{equation*}
     S=\int dg.
 \end{equation*}
-I write this distribution as
+Write this distribution as
 \begin{equation*}
     g=S\mu,
     \qquad
@@ -425,7 +425,7 @@ then the stationary city scale is
     S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
     \label{eq:stationary_scale_solution}
 \end{equation}
-The denominator is the net replacement gap. If condition \eqref{eq:finite_scale_condition} fails, the maintained stationary closure does not admit a finite city.\footnote{This condition is evaluated at equilibrium prices. If fertility raises the mature city-born flow $B_0(p)$, the implied scale pressure raises housing demand and therefore housing prices. Higher prices reduce entry values and lower $q^E(p)$, and can also reduce fertility and $B_0(p)$ through the household problem. The outside option is the margin that makes this a stationary finite-city closure rather than a balanced-growth model. Quantitatively, the gap $E_0(p)-q^E(p)B_0(p)$, or equivalently the ratio $q^E(p)B_0(p)/E_0(p)$, is a useful diagnostic for how close the city is to the autoreproduction frontier.} Fertility affects housing prices because this population level is solved inside market clearing. Given prices $p$, household policies determine $\mu(p)$, $\widehat H_i^D(p)$, and the mature city-born flow; the closure determines $S(p)$; and housing markets clear in levels:
+The denominator is the net replacement gap. If condition \eqref{eq:finite_scale_condition} fails, the maintained stationary closure does not admit a finite city.\footnote{This condition is evaluated at equilibrium prices. If fertility raises the mature city-born flow $B_0(p)$, the implied scale pressure raises housing demand and therefore housing prices. Higher prices reduce entry values and lower $q^E(p)$, and can also reduce fertility and $B_0(p)$ through the household problem. The outside option is the margin that makes this a stationary finite-city closure rather than a balanced-growth model. Quantitatively, the gap $E_0(p)-q^E(p)B_0(p)$, or equivalently the ratio $q^E(p)B_0(p)/E_0(p)$, measures proximity to the autoreproduction frontier.} Fertility affects housing prices because this population level is solved inside market clearing. Given prices $p$, household policies determine $\mu(p)$, $\widehat H_i^D(p)$, and the mature city-born flow; the closure determines $S(p)$; and housing markets clear in levels:
 \begin{equation*}
     S(p)\widehat H_i^D(p)=H_i^S(r_i).
 \end{equation*}
