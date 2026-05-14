@@ -359,8 +359,8 @@ A potential entrant enters the modeled city only if the city is sufficiently att
 \begin{equation*}
     W_i^E(p)=V_1(b^E,R,i,0,0;p),
 \end{equation*}
-where entrants begin as childless renters with liquid wealth $b^E$. The value $W_i^E(p)$ is computed from the household problem at prices $p$. The outside value $\bar W^E$ is exogenous. Potential entrants draw idiosyncratic Type-I extreme-value tastes over the modeled locations and the outside economy, with scale parameter $\kappa_E$. These entry shocks are distinct from the incumbent location shocks governed by $\kappa_\ell$: $\kappa_E$ governs the city-versus-outside margin, while $\kappa_\ell$ governs re-sorting across locations inside the modeled city. The unconditional probability of entering location $i$ is
-\begin{equation}
+where entrants begin as childless renters with liquid wealth $b^E$. The value $W_i^E(p)$ is computed from the household problem at prices $p$. The outside value $\bar W^E$ is exogenous. Potential entrants draw idiosyncratic Type-I extreme-value tastes over the modeled locations and the outside economy, with scale parameter $\kappa_E$.\footnote{These entry shocks are distinct from the incumbent location shocks governed by $\kappa_\ell$: $\kappa_E$ governs the city-versus-outside margin, while $\kappa_\ell$ governs re-sorting across locations inside the modeled city. The unconditional probability of entering location $i$ is
+\[
     \pi_i^E(p)
     =
     \frac{
@@ -369,11 +369,10 @@ where entrants begin as childless renters with liquid wealth $b^E$. The value $W
     \exp\left(\bar W^E/\kappa_E\right)
     +
     \sum_{m\in\Iset}\exp\left(W_m^E(p)/\kappa_E\right)
-    }.
-    \label{eq:entry_rule}
-\end{equation}
-The outside probability is
-\begin{equation*}
+    },
+\]
+and the outside probability is
+\[
     \pi_0^E(p)
     =
     \frac{
@@ -383,7 +382,8 @@ The outside probability is
     +
     \sum_{m\in\Iset}\exp\left(W_m^E(p)/\kappa_E\right)
     }.
-\end{equation*}
+\]
+}
 The total city-entry probability and conditional entrant location shares are
 \begin{equation*}
     q^E(p)=1-\pi_0^E(p)=\sum_{i\in\Iset}\pi_i^E(p),
@@ -493,7 +493,7 @@ such that:
 \begin{enumerate}[leftmargin=*]
     \item \textbf{Household optimization.} Given prices, amenities, and moving wedges, value functions solve the household problem in \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure choice \eqref{eq:tenure_value}, location probabilities \eqref{eq:loc_probs}, fertility probabilities \eqref{eq:fert_probs}, and terminal bequest utility \eqref{eq:bequest}. The policies $c$, $h^R$, $b'$, $d'$, $i'$, and $n'$ are associated optimal policies.
 
-    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(g)$. The potential entrant pool is $Q(g)=M+B(g)$. Entry probabilities satisfy \eqref{eq:entry_rule}, the city entry rate is $q^E(p)=1-\pi_0^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
+    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(g)$. The potential entrant pool is $Q(g)=M+B(g)$. Entry probabilities are $\{\pi_i^E(p)\}_{i\in\Iset}$ and $\pi_0^E(p)$, the city entry rate is $q^E(p)=1-\pi_0^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
     \begin{equation*}
         E_i(g;p)=Q(g)q^E(p)\omega_i^E(p),\qquad i\in\Iset.
     \end{equation*}
