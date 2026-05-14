@@ -215,6 +215,11 @@ if the live model has changed.
   and event-time definitions. If any of these change, document the change.
 - For LaTeX, keep notation consistent with the model and avoid claims that are
   stronger than the evidence.
+- For paper-facing document edits, make the minimal required change. Do not
+  rewrite surrounding prose, opening lines, footnotes, comments, or author notes
+  while modifying a separate section. Preserve existing wording unless the user
+  explicitly asks for a rewrite; if a note or footnote seems obsolete, flag it
+  instead of deleting or rewriting it.
 - Use `rg` for code search where available.
 
 ## Git And Backup Routine
