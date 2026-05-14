@@ -45,7 +45,7 @@ Time is discrete. Households enter adult life at age $a=1$, retire after age $J_
 \end{equation*}
 This mass is an equilibrium object. Write $g=S\mu$ with $\int d\mu=1$.\footnote{More on this later. I understand this is the main `technical' issue that emerged in the seminar. It is not fully solved. At the end of this document there is a discussion of the things. I hope to get feedback on this.}
 
-There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i=(q+\delta)p_i$, where $q$ is the net interest rate and $\delta$ is depreciation or maintenance. Location $i$ also has amenity $\mathcal A_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\mathcal A_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark.
+There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i=(q+\delta)p_i$, where $q$ is the net interest rate and $\delta$ is depreciation or maintenance. Location $i$ also has amenity $\xi_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\xi_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark.
 
 The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder \footnote{This makes housing more lumpy and makes the model computationally lighter, but might be amended. Some further thinking is required on the housing market structure.}. Renters choose rental space continuously up to a cap $\bar h^R$, which is the largest rental unit available in the model.
 
@@ -282,7 +282,7 @@ Location choice has additive Type-I extreme-value shocks with scale $\kappa_\ell
     \widetilde V^L_a(j|x)
     =
     V^T_a(b,d,i;j,n,s)
-    +\mathcal A_j-\zeta_{ij},
+    +\xi_j-\zeta_{ij},
 \end{equation*}
 where $\zeta_{ij}$ is the bilateral moving wedge, with $\zeta_{ii}$ normalized to zero. The destination probabilities are
 \begin{equation}
@@ -485,7 +485,7 @@ q,\beta,\sigma,\alpha,\bar c_0,\bar c_n,
 \theta_0,\theta_n,\theta_1,\\
 &
 \chi,\phi,\psi,\delta,\tau_{\mathrm{pay}},
-\mathcal A_i,A,e_a,\zeta_{ii'},H_{0i},\eta_i,
+\xi_i,A,e_a,\zeta_{ii'},H_{0i},\eta_i,
 A_f^{\mathrm{start}},A_f^{\mathrm{end}},\bar n,\Pi^c,
 M,\bar W^E,\kappa_E
 \}_{i,i'\in\Iset},
