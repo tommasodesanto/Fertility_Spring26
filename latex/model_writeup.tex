@@ -230,7 +230,7 @@ V^{O_k}_a(b,i,n,s)
 \end{aligned}
 \label{eq:owner_problem}
 \end{equation}
-The housing-adjustment problem follows the same accounting as in \citet{greaneyDynamicUrbanEconomics2025}. Let $H(d)=0$ if $d=R$ and $H(d)=H_k$ if $d=O_k$. If a household in state $(b,d,i)$ chooses residence $j$, its liquid wealth and owner-occupied house after the residence choice are
+Define $H(R)=0$ and $H(O_k)=H_k$. After choosing destination $j$, a household with state $(b,d,i)$ carries liquid wealth and owner-occupied housing
 \begin{equation*}
     \widetilde b^R(b,d,i;j)
     =
@@ -240,7 +240,7 @@ The housing-adjustment problem follows the same accounting as in \citet{greaneyD
     =
     \ind\{j=i\}H(d).
 \end{equation*}
-A moving homeowner sells the origin house and pays the transaction cost. A household that remains in the same location carries its owner-occupied house into the housing-adjustment stage. If it then chooses tenure $d'$ in location $j$, liquid wealth becomes
+If it then chooses tenure $d'$ in destination $j$, liquid wealth is
 \begin{equation}
     \widetilde b^H(b,d,i;j,d')
     =
@@ -263,7 +263,8 @@ d'\in\Dset:
 \underline b_j(d')
 \right\},
 \end{equation*}
-where $\underline b_j(R)=0$ and $\underline b_j(O_k)=-\phi p_jH_k$. The tenure value in destination $j$ is
+where $\underline b_j(R)=0$ and $\underline b_j(O_k)=-\phi p_jH_k$.
+The tenure value in destination $j$ is
 \begin{equation}
     V^T_a(b,d,i;j,n,s)
     =
