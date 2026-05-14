@@ -524,23 +524,11 @@ such that:
     \end{equation*}
     Here $g_i(a)$ is the marginal mass of households of age $a$ living in location $i$.
 
-    \item \textbf{Stationary distribution.} Let $\mathcal Z$ denote the adult state space and let $\mathcal P(\mathcal A\mid x)$ be the one-period transition probability from state $x$ into the measurable set $\mathcal A\subseteq\mathcal Z$, induced by the optimal policies, fertility and location probabilities, child aging, deterministic aging, and death. Entrants enter at
+    \item \textbf{Stationary distribution.} The distribution $g$ is consistent with individual decisions and entry. Starting from $g$, the optimal policies, fertility and location probabilities, child aging, deterministic aging, death, and entrant masses $\{E_i(g;p)\}_{i\in\Iset}$ generate the same distribution next period:
     \begin{equation*}
-        x_i^E=(b^E,R,i,1,0,0).
+        g'=\mathcal T(g)=g.
     \end{equation*}
-    The level distribution is stationary if, for every measurable set $\mathcal A\subseteq\mathcal Z$,
-    \begin{equation}
-        g^+(\mathcal A)
-        \equiv
-        \int_{\mathcal Z}\mathcal P(\mathcal A\mid x)\,dg(x)
-        +
-        \sum_{i\in\Iset}
-        E_i(g;p)\ind\{x_i^E\in\mathcal A\}
-        =
-        g(\mathcal A).
-        \label{eq:stationary_distribution}
-    \end{equation}
-    Total adult population is $S=\int_{\mathcal Z}dg(x)$ and is an equilibrium outcome.
+    Entrants enter at $x_i^E=(b^E,R,i,1,0,0)$. Total adult population is $S=\int dg(x)$ and is an equilibrium outcome.
 \end{enumerate}
 \end{definition}
 
