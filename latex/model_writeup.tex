@@ -45,7 +45,7 @@ Time is discrete. Households enter adult life at age $a=1$, retire after age $J_
 \end{equation*}
 This mass is an equilibrium object. Write $g=S\mu$ with $\int d\mu=1$.
 
-There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i=(q+\delta)p_i$, where $q$ is the net interest rate and $\delta$ is depreciation or maintenance. Location $i$ also has amenity $\xi_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\xi_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark.
+There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i$. Location $i$ also has amenity $\xi_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\xi_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark. In equilibrium, rents and house prices satisfy the user-cost condition below.
 
 The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder, while renters choose rental space continuously up to a cap $\bar h^R$.
 
@@ -143,7 +143,7 @@ where $b$ denotes liquid wealth immediately after the purchase. Here $\phi$ is t
 
 \subsection{Housing and Budgets}
 
-Given $r_i=(q+\delta)p_i$, a renter chooses $c$, $h^R$, and $b'$ subject to
+Given rental price $r_i$, a renter chooses $c$, $h^R$, and $b'$ subject to
 \begin{equation*}
     c+r_i h^R+b'=R_b b+y_a,
     \qquad
@@ -460,7 +460,7 @@ If $g=S\mu$, this is
 \begin{equation*}
     H_i^D(g)=S\widehat H_i^D(\mu).
 \end{equation*}
-Normalizing the composition $\mu$ is only a change of variables. Clearing housing markets with $\widehat H_i^D$ alone would instead impose a fixed-mass city. In the benchmark closure, prices solve
+Normalizing the composition $\mu$ is only a change of variables. Clearing housing markets with $\widehat H_i^D$ alone would instead impose a fixed-mass city. In the benchmark closure, rents clear housing markets:
 \begin{equation}
     S(p)\widehat H_i^D(p)
     =
@@ -468,7 +468,11 @@ Normalizing the composition $\mu$ is only a change of variables. Clearing housin
     \qquad i\in\Iset.
     \label{eq:scaled_market_clearing}
 \end{equation}
-Fertility affects housing prices through two margins. It changes per-household housing demand, $\widehat H_i^D(p)$, because children require space and affect tenure and location choices. It also changes scale, $S(p)$, because higher fertility raises the flow of mature city-born children entering the potential-entrant pool. With upward-sloping housing supply, both margins feed into equilibrium prices.
+House prices satisfy the user-cost relation
+\begin{equation*}
+    r_i=(q+\delta)p_i.
+\end{equation*}
+Fertility affects rents and house prices through two margins. It changes per-household housing demand, $\widehat H_i^D(p)$, because children require space and affect tenure and location choices. It also changes scale, $S(p)$, because higher fertility raises the flow of mature city-born children entering the potential-entrant pool. With upward-sloping housing supply, both margins feed into equilibrium rents, and the user-cost condition maps rents into house prices.
 
 \section{Stationary Equilibrium}
 
@@ -532,7 +536,7 @@ such that:
     \end{equation*}
     and is an equilibrium outcome.
 
-    \item \textbf{Housing markets.} In every location,
+    \item \textbf{Housing markets and user cost.} In every location,
     \begin{equation*}
         H_i^D(g)=H_i^S(r_i),
         \qquad
