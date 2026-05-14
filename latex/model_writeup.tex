@@ -39,14 +39,14 @@ The environment combines three standard ingredients. The fertility block follows
 
 \subsection{Environment}
 
-Time is discrete. Households enter adult life at age $a=1$, retire after age $J_R$, and die at the end of age $J$.
+Time is discrete. Households enter adult life at age $a=1$, retire after age $J_R$\footnote{I might consider simplifying the lifecycle structure to just some stages, to improve computational efficiency. The next step is, indeed, clearly determining what are the empirical targets for the model, and so whether I want to match very well lifecycle profiles or not.}, and die at the end of age $J$.
 
 There are two residential locations, $\Iset=\{P,C\}$, where $P$ denotes the periphery and $C$ denotes the center. A unit of housing in location $i$ has purchase price $p_i$ and rental price $r_i$. Location $i$ also has amenity $\xi_i$, housing supply scale $H_{0i}$, and housing supply elasticity $\eta_i$. The amenity $\xi_i$ enters the location choice value, $H_{0i}$ shifts the level of local housing supply, and $\eta_i$ governs the slope of that supply curve. The center is the high-amenity, high-price location in the benchmark.
 
-The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder, while renters choose rental space continuously up to a cap $\bar h^R$.
+The individual state at the beginning of a period is $x=(b,d,i,a,n,s)$. Here $b$ is liquid wealth, $d$ is tenure, $i$ is current location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Tenure belongs to $\Dset\equiv\{R,O_1,\ldots,O_{N_H}\}$. $R$ denotes renting. $O_k$ denotes ownership of a house with physical size $H_k$, where $H_1<\cdots<H_{N_H}$. Owners choose from this discrete ladder\footnote{This makes housing more lumpy and makes the model computationally lighter, but might be amended. Some further thinking is required on the housing market structure.}, while renters choose rental space continuously up to a cap $\bar h^R$.
 
 \subsection{Preferences}
-Let $m(n,s)$ be the number of dependent children living at home. Completed fertility $n$ and current dependents $m(n,s)$ differ because children eventually leave the household. Flow utility is Stone--Geary over nondurable consumption and housing services, wrapped in CRRA:
+Let $m(n,s)$ be the number of dependent children living at home\footnote{Some notation improvement is probably required, but in any case, the presence of both $m$ and $n$ allows us to distinguish children ever had with children currently at home. which affects the utility.}. Completed fertility $n$ and current dependents $m(n,s)$ differ because children eventually leave the household. Flow utility is Stone--Geary over nondurable consumption and housing services, wrapped in CRRA:
 \begin{equation}
 u(c,\mathbf h;n,s)
 =
@@ -59,7 +59,7 @@ u(c,\mathbf h;n,s)
 +\psi_{\mathrm{child}}m(n,s),
 \label{eq:flow_utility}
 \end{equation}
-where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption-housing aggregator, $\sigma>1$ is curvature, and $\psi_{\mathrm{child}}$ is the flow value of each dependent child.\footnote{The benchmark treats the child-flow term as additively separable. Alternative specifications could let child utility interact directly with household resources.} The Stone--Geary terms $\bar c(n,s)$ and $\bar h(n,s)$ are minimum consumption and housing needs:
+where $\alpha\in(0,1)$ is the expenditure-share parameter inside the consumption-housing aggregator, $\sigma>1$ is curvature, and $\psi_{\mathrm{child}}$ is the flow value of each dependent child.\footnote{The position of the $\psi_{\mathrm{child}}$ term determines how the child benefit relates to income, so it requires some further thought.} The Stone--Geary terms $\bar c(n,s)$ and $\bar h(n,s)$ are minimum consumption and housing needs:
 \begin{equation*}
 \begin{aligned}
 \bar c(n,s)
@@ -340,7 +340,7 @@ Let $g$ denote the level distribution of adult households, and let
 \begin{equation*}
     S=\int dg.
 \end{equation*}
-Write this distribution as
+Write this distribution as\footnote{More on this later. I understand this is the main `technical' issue that emerged in the seminar. It is not fully solved. At the end of this document there is a discussion of the things. I hope to get feedback on this.}
 \begin{equation*}
     g=S\mu,
     \qquad
