@@ -32,6 +32,16 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
 ```
 
+The full-equilibrium figure driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python plot_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+```
+
+It writes the equilibrium and sorting figure set to
+`figures_v4_hank_z_ge/`.
+
 The borrowing-wedge validation diagnostic is:
 
 ```bash
