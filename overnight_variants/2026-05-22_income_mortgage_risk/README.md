@@ -173,3 +173,18 @@ un-recalibrated moments are economically poor. See
 `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure.csv`,
 `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_closure.csv`, and
 `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_trace.csv`.
+
+## V5 Speed Audit
+
+`run_v5_speed_audit.py` measures the benchmark-normalized V5 closure without
+overwriting the accepted V5 result files. The fixed-iteration audit writes
+`speed_audit_v5_benchmark_normalized.csv`,
+`speed_audit_v5_benchmark_normalized.json`, and
+`REPORT_V5_SPEED_AUDIT.md`. A separate same-process warm accepted reference
+writes `speed_audit_v5_warm_accepted.csv/json`.
+
+The audit shows that the cold `Nb=30`, `Nz=7` accepted solve took `620.13`
+seconds, while the same accepted solve after a same-process warm-up took
+`200.82` seconds. The warm solve is still too slow for calibration: the
+remaining cost is split across the full HANK-\(z\) Bellman loop, HANK-\(z\)
+forward distribution, and the final full-statistics pass.

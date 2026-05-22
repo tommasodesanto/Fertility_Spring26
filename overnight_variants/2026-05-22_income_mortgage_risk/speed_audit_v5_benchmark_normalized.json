@@ -1,0 +1,933 @@
+[
+  {
+    "nb": 30,
+    "nz": 3,
+    "max_iter_eq": 4,
+    "iterations_completed": 4,
+    "accepted": false,
+    "convergence_reason": "max_iter",
+    "best_eq_error": 0.028414149415651287,
+    "final_eq_error": 0.028414149415651287,
+    "elapsed_sec": 22.839672951988177,
+    "bellman_sec": 4.854453831037972,
+    "distribution_sec": 3.0050619039684534,
+    "residual_final_stats_overhead_sec": 14.980157216981752,
+    "bellman_sec_per_iter": 1.213613457759493,
+    "distribution_sec_per_iter": 0.7512654759921134,
+    "elapsed_sec_per_iter": 5.709918237997044,
+    "p_P": 0.5042193480320423,
+    "p_C": 0.6070882036558146,
+    "scale_factor": 0.9999999999999998,
+    "city_entry_prob_total": 0.9,
+    "outside_entry_prob": 0.1,
+    "outside_entry_flow": 0.004725132326101045,
+    "tfr_trace_final": 1.6891214895226985,
+    "own_rate": 0.5245009283387309,
+    "rho_z": 0.95,
+    "sigma_z": 0.35,
+    "kappa_entry": 1000000.0,
+    "target_q": 0.9,
+    "timings": {
+      "bellman_hank_z": 4.854453831037972,
+      "distribution_hank_z": 3.0050619039684534,
+      "n_full": 4,
+      "n_dist": 4,
+      "best_eq_error": 0.028414149415651287,
+      "best_eq_iter": 4,
+      "final_eq_error": 0.028414149415651287,
+      "iterations_completed": 4,
+      "accepted": false,
+      "strict_converged": false,
+      "convergence_reason": "max_iter",
+      "population_closure": "outside_option_benchmark_normalized",
+      "runtime_category": "expensive"
+    },
+    "ge_trace": [
+      {
+        "iter": 1,
+        "p": [
+          0.49766052026004093,
+          0.5884774596399392
+        ],
+        "entry_shares": [
+          0.5,
+          0.5
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.11929630459676904,
+        "err_e": 6.872709951144529e-07,
+        "err": 0.11929630459676904,
+        "own_rate": 0.5380702901345993,
+        "TFR": 1.705750095693689,
+        "pop_share": [
+          0.5739535079802414,
+          0.4260464920197585
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.0045882028585158465,
+        "scale_denominator": 0.004129382572664264,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 2,
+        "p": [
+          0.4988601216795969,
+          0.5960699342354225
+        ],
+        "entry_shares": [
+          0.5000000743283581,
+          0.49999992567164186
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.05602767038337019,
+        "err_e": 6.461115921729821e-07,
+        "err": 0.05602767038337019,
+        "own_rate": 0.52706040327943,
+        "TFR": 1.7025309893063685,
+        "pop_share": [
+          0.5885051892402071,
+          0.4114948107597932
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.004614670198812999,
+        "scale_denominator": 0.004153203178931699,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 3,
+        "p": [
+          0.5011777908635875,
+          0.6033025753704736
+        ],
+        "entry_shares": [
+          0.5000001806877554,
+          0.49999981931224463
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.034497682565978814,
+        "err_e": 5.707025975687507e-07,
+        "err": 0.034497682565978814,
+        "own_rate": 0.52708059858677,
+        "TFR": 1.6960486387510834,
+        "pop_share": [
+          0.5988143096733752,
+          0.40118569032662516
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.0046681265970159366,
+        "scale_denominator": 0.004201313937314344,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 4,
+        "p": [
+          0.5042193480320423,
+          0.6070882036558146
+        ],
+        "entry_shares": [
+          0.5000002947124482,
+          0.49999970528755183
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.028414149415651287,
+        "err_e": 4.7267482078394707e-07,
+        "err": 0.028414149415651287,
+        "own_rate": 0.5245009283436206,
+        "TFR": 1.6891214895982731,
+        "pop_share": [
+          0.6010547409656013,
+          0.3989452590343989
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.1,
+        "outside_entry_flow": 0.004725132325236319,
+        "scale_denominator": 0.004252619092712687,
+        "scale_residual": 0.0
+      }
+    ],
+    "P_population_closure": "outside_option_benchmark_normalized"
+  },
+  {
+    "nb": 30,
+    "nz": 5,
+    "max_iter_eq": 4,
+    "iterations_completed": 4,
+    "accepted": false,
+    "convergence_reason": "max_iter",
+    "best_eq_error": 0.02851633240124803,
+    "final_eq_error": 0.02851633240124803,
+    "elapsed_sec": 73.32014759699814,
+    "bellman_sec": 10.910911337996367,
+    "distribution_sec": 5.70656308796606,
+    "residual_final_stats_overhead_sec": 56.70267317103571,
+    "bellman_sec_per_iter": 2.727727834499092,
+    "distribution_sec_per_iter": 1.426640771991515,
+    "elapsed_sec_per_iter": 18.330036899249535,
+    "p_P": 0.5037404276517636,
+    "p_C": 0.6086864309080119,
+    "scale_factor": 1.0000000000000004,
+    "city_entry_prob_total": 0.8999999999999999,
+    "outside_entry_prob": 0.09999999999999998,
+    "outside_entry_flow": 0.005642173411148843,
+    "tfr_trace_final": 1.5777088413931393,
+    "own_rate": 0.5367067662401253,
+    "rho_z": 0.95,
+    "sigma_z": 0.35,
+    "kappa_entry": 1000000.0,
+    "target_q": 0.9,
+    "timings": {
+      "bellman_hank_z": 10.910911337996367,
+      "distribution_hank_z": 5.70656308796606,
+      "n_full": 4,
+      "n_dist": 4,
+      "best_eq_error": 0.02851633240124803,
+      "best_eq_iter": 4,
+      "final_eq_error": 0.02851633240124803,
+      "iterations_completed": 4,
+      "accepted": false,
+      "strict_converged": false,
+      "convergence_reason": "max_iter",
+      "population_closure": "outside_option_benchmark_normalized",
+      "runtime_category": "project-scale"
+    },
+    "ge_trace": [
+      {
+        "iter": 1,
+        "p": [
+          0.49766052026004093,
+          0.5884774596399392
+        ],
+        "entry_shares": [
+          0.5,
+          0.5
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.13703828276642901,
+        "err_e": 6.208295735277147e-07,
+        "err": 0.13703828276642901,
+        "own_rate": 0.5367868875235554,
+        "TFR": 1.596128792174605,
+        "pop_share": [
+          0.5684248110213882,
+          0.4315751889786115
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.005490711129035836,
+        "scale_denominator": 0.004941640016132254,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 2,
+        "p": [
+          0.4986272754314236,
+          0.5971991018067239
+        ],
+        "entry_shares": [
+          0.5000000671427184,
+          0.4999999328572816
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.05878990425765604,
+        "err_e": 6.116035720649116e-07,
+        "err": 0.05878990425765604,
+        "own_rate": 0.534581710384284,
+        "TFR": 1.592775442229239,
+        "pop_share": [
+          0.5858821453829592,
+          0.41411785461704076
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.005518147650436638,
+        "scale_denominator": 0.004966332885392975,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 3,
+        "p": [
+          0.5007546308970551,
+          0.6051449276234848
+        ],
+        "entry_shares": [
+          0.500000166333859,
+          0.499999833666141
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.03506816912220989,
+        "err_e": 5.586502165866314e-07,
+        "err": 0.03506816912220989,
+        "own_rate": 0.5399910701886657,
+        "TFR": 1.587705856653253,
+        "pop_share": [
+          0.5988176797661954,
+          0.40118232023380446
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.1,
+        "outside_entry_flow": 0.005560025264276378,
+        "scale_denominator": 0.0050040227378487425,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 4,
+        "p": [
+          0.5037404276517636,
+          0.6086864309080119
+        ],
+        "entry_shares": [
+          0.5000002757039828,
+          0.49999972429601724
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.02851633240124803,
+        "err_e": 4.5346770782828116e-07,
+        "err": 0.02851633240124803,
+        "own_rate": 0.5367067662489315,
+        "TFR": 1.577708841541488,
+        "pop_share": [
+          0.6002239185609507,
+          0.3997760814390491
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999998,
+        "outside_entry_flow": 0.005642173409469353,
+        "scale_denominator": 0.005077956068522418,
+        "scale_residual": 0.0
+      }
+    ],
+    "P_population_closure": "outside_option_benchmark_normalized"
+  },
+  {
+    "nb": 30,
+    "nz": 7,
+    "max_iter_eq": 4,
+    "iterations_completed": 4,
+    "accepted": false,
+    "convergence_reason": "max_iter",
+    "best_eq_error": 0.05919081102883539,
+    "final_eq_error": 0.05919081102883539,
+    "elapsed_sec": 142.36020717700012,
+    "bellman_sec": 23.05843567699776,
+    "distribution_sec": 10.713438934995793,
+    "residual_final_stats_overhead_sec": 108.58833256500657,
+    "bellman_sec_per_iter": 5.76460891924944,
+    "distribution_sec_per_iter": 2.678359733748948,
+    "elapsed_sec_per_iter": 35.59005179425003,
+    "p_P": 0.5059507776275485,
+    "p_C": 0.6061112947086088,
+    "scale_factor": 1.0000000000000002,
+    "city_entry_prob_total": 0.8999999999999999,
+    "outside_entry_prob": 0.09999999999999996,
+    "outside_entry_flow": 0.005591411437854556,
+    "tfr_trace_final": 1.5853394219337922,
+    "own_rate": 0.564126732985,
+    "rho_z": 0.95,
+    "sigma_z": 0.35,
+    "kappa_entry": 1000000.0,
+    "target_q": 0.9,
+    "timings": {
+      "bellman_hank_z": 23.05843567699776,
+      "distribution_hank_z": 10.713438934995793,
+      "n_full": 4,
+      "n_dist": 4,
+      "best_eq_error": 0.05919081102883539,
+      "best_eq_iter": 4,
+      "final_eq_error": 0.05919081102883539,
+      "iterations_completed": 4,
+      "accepted": false,
+      "strict_converged": false,
+      "convergence_reason": "max_iter",
+      "population_closure": "outside_option_benchmark_normalized",
+      "runtime_category": "project-scale"
+    },
+    "ge_trace": [
+      {
+        "iter": 1,
+        "p": [
+          0.49766052026004093,
+          0.5884774596399392
+        ],
+        "entry_shares": [
+          0.5,
+          0.5
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.15349055139560827,
+        "err_e": 6.31658181815542e-07,
+        "err": 0.15349055139560827,
+        "own_rate": 0.5158713688781599,
+        "TFR": 1.4978940710566346,
+        "pop_share": [
+          0.5638166915244067,
+          0.436183308475593
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.10000000000000002,
+        "outside_entry_flow": 0.006317780521398697,
+        "scale_denominator": 0.005686002469258827,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 2,
+        "p": [
+          0.4986193612651924,
+          0.5982461873139181
+        ],
+        "entry_shares": [
+          0.5000000683138324,
+          0.49999993168616763
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.06957609215544912,
+        "err_e": 6.240840628723987e-07,
+        "err": 0.06957609215544912,
+        "own_rate": 0.5092557253452505,
+        "TFR": 1.4931457047369256,
+        "pop_share": [
+          0.5828998021179579,
+          0.4171001978820421
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999998,
+        "outside_entry_flow": 0.006356665600650492,
+        "scale_denominator": 0.005720999040585444,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 3,
+        "p": [
+          0.5008373568798926,
+          0.6074020837289797
+        ],
+        "entry_shares": [
+          0.5000001694370171,
+          0.49999983056298297
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.08721663008439019,
+        "err_e": 1.5800175174329745e-06,
+        "err": 0.08721663008439019,
+        "own_rate": 0.5430125687992,
+        "TFR": 1.5981288958103808,
+        "pop_share": [
+          0.6380572071716343,
+          0.3619427928283654
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999996,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.0054864873683589666,
+        "scale_denominator": 0.004937838631523068,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 4,
+        "p": [
+          0.5059507776275485,
+          0.6061112947086088
+        ],
+        "entry_shares": [
+          0.5000003968769017,
+          0.4999996031230983
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.05919081102883539,
+        "err_e": 1.3346122411661554e-06,
+        "err": 0.05919081102883539,
+        "own_rate": 0.5641267329976882,
+        "TFR": 1.585339422164687,
+        "pop_share": [
+          0.6290910013777052,
+          0.370908998622294
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999996,
+        "outside_entry_flow": 0.005591411435109795,
+        "scale_denominator": 0.005032270291598815,
+        "scale_residual": 0.0
+      }
+    ],
+    "P_population_closure": "outside_option_benchmark_normalized"
+  },
+  {
+    "nb": 20,
+    "nz": 7,
+    "max_iter_eq": 4,
+    "iterations_completed": 4,
+    "accepted": false,
+    "convergence_reason": "max_iter",
+    "best_eq_error": 0.05094445693974195,
+    "final_eq_error": 0.05094445693974195,
+    "elapsed_sec": 108.5667817920039,
+    "bellman_sec": 14.968464584992034,
+    "distribution_sec": 6.675173686991911,
+    "residual_final_stats_overhead_sec": 86.92314352001995,
+    "bellman_sec_per_iter": 3.7421161462480086,
+    "distribution_sec_per_iter": 1.6687934217479778,
+    "elapsed_sec_per_iter": 27.141695448000974,
+    "p_P": 0.5064631958762751,
+    "p_C": 0.6066610351166581,
+    "scale_factor": 0.9999999999999991,
+    "city_entry_prob_total": 0.8999999999999999,
+    "outside_entry_prob": 0.09999999999999996,
+    "outside_entry_flow": 0.005986872992955031,
+    "tfr_trace_final": 1.5374737852602254,
+    "own_rate": 0.4196634877938106,
+    "rho_z": 0.95,
+    "sigma_z": 0.35,
+    "kappa_entry": 1000000.0,
+    "target_q": 0.9,
+    "timings": {
+      "bellman_hank_z": 14.968464584992034,
+      "distribution_hank_z": 6.675173686991911,
+      "n_full": 4,
+      "n_dist": 4,
+      "best_eq_error": 0.05094445693974195,
+      "best_eq_iter": 4,
+      "final_eq_error": 0.05094445693974195,
+      "iterations_completed": 4,
+      "accepted": false,
+      "strict_converged": false,
+      "convergence_reason": "max_iter",
+      "population_closure": "outside_option_benchmark_normalized",
+      "runtime_category": "project-scale"
+    },
+    "ge_trace": [
+      {
+        "iter": 1,
+        "p": [
+          0.49766052026004093,
+          0.5884774596399392
+        ],
+        "entry_shares": [
+          0.5,
+          0.5
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.1570919125995692,
+        "err_e": 6.29250635542089e-07,
+        "err": 0.1570919125995692,
+        "own_rate": 0.41666436123196193,
+        "TFR": 1.434851767417386,
+        "pop_share": [
+          0.5632019031521172,
+          0.4367980968478826
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999996,
+        "outside_entry_flow": 0.006837930979501099,
+        "scale_denominator": 0.006154137881550989,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 2,
+        "p": [
+          0.49867442099467574,
+          0.5984753917602977
+        ],
+        "entry_shares": [
+          0.5000000680534562,
+          0.49999993194654374
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.07134557786082163,
+        "err_e": 6.231782772037064e-07,
+        "err": 0.07134557786082163,
+        "own_rate": 0.4019248379649098,
+        "TFR": 1.4306233612533674,
+        "pop_share": [
+          0.5831170748858439,
+          0.41688292511415626
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999998,
+        "outside_entry_flow": 0.006872569127270814,
+        "scale_denominator": 0.006185312214543732,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 3,
+        "p": [
+          0.5010383181872493,
+          0.607857066260756
+        ],
+        "entry_shares": [
+          0.500000168955285,
+          0.499999831044715
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.08662971796266099,
+        "err_e": 1.6128853486119255e-06,
+        "err": 0.08662971796266099,
+        "own_rate": 0.42172034309727896,
+        "TFR": 1.5536031589488826,
+        "pop_share": [
+          0.63976379102245,
+          0.36023620897755
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999996,
+        "outside_entry_flow": 0.005854410978495057,
+        "scale_denominator": 0.00526896988064555,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 4,
+        "p": [
+          0.5064631958762751,
+          0.6066610351166581
+        ],
+        "entry_shares": [
+          0.5000004000652732,
+          0.49999959993472676
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.05094445693974195,
+        "err_e": 1.3629923742430883e-06,
+        "err": 0.05094445693974195,
+        "own_rate": 0.4196634878161156,
+        "TFR": 1.5374737855149614,
+        "pop_share": [
+          0.6282523465775913,
+          0.37174765342240895
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999996,
+        "outside_entry_flow": 0.005986872989864257,
+        "scale_denominator": 0.005388185690877831,
+        "scale_residual": 0.0
+      }
+    ],
+    "P_population_closure": "outside_option_benchmark_normalized"
+  },
+  {
+    "nb": 30,
+    "nz": 7,
+    "max_iter_eq": 8,
+    "iterations_completed": 8,
+    "accepted": false,
+    "convergence_reason": "max_iter",
+    "best_eq_error": 0.007179848244255053,
+    "final_eq_error": 0.020600692699680213,
+    "elapsed_sec": 164.44314417199348,
+    "bellman_sec": 38.952985226060264,
+    "distribution_sec": 18.05892806002521,
+    "residual_final_stats_overhead_sec": 107.43123088590801,
+    "bellman_sec_per_iter": 4.869123153257533,
+    "distribution_sec_per_iter": 2.257366007503151,
+    "elapsed_sec_per_iter": 20.555393021499185,
+    "p_P": 0.5172773502935657,
+    "p_C": 0.5983151502751612,
+    "scale_factor": 0.9999999999999993,
+    "city_entry_prob_total": 0.9,
+    "outside_entry_prob": 0.09999999999999999,
+    "outside_entry_flow": 0.005740473614216191,
+    "tfr_trace_final": 1.5669675514383519,
+    "own_rate": 0.5497237716730738,
+    "rho_z": 0.95,
+    "sigma_z": 0.35,
+    "kappa_entry": 1000000.0,
+    "target_q": 0.9,
+    "timings": {
+      "bellman_hank_z": 38.952985226060264,
+      "distribution_hank_z": 18.05892806002521,
+      "n_full": 8,
+      "n_dist": 8,
+      "best_eq_error": 0.007179848244255053,
+      "best_eq_iter": 7,
+      "final_eq_error": 0.020600692699680213,
+      "iterations_completed": 8,
+      "accepted": false,
+      "strict_converged": false,
+      "convergence_reason": "max_iter",
+      "population_closure": "outside_option_benchmark_normalized",
+      "runtime_category": "project-scale"
+    },
+    "ge_trace": [
+      {
+        "iter": 1,
+        "p": [
+          0.49766052026004093,
+          0.5884774596399392
+        ],
+        "entry_shares": [
+          0.5,
+          0.5
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.15349055139560827,
+        "err_e": 6.31658181815542e-07,
+        "err": 0.15349055139560827,
+        "own_rate": 0.5158713688781599,
+        "TFR": 1.4978940710566346,
+        "pop_share": [
+          0.5638166915244067,
+          0.436183308475593
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999998,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.10000000000000002,
+        "outside_entry_flow": 0.006317780521398697,
+        "scale_denominator": 0.005686002469258827,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 2,
+        "p": [
+          0.4986193612651924,
+          0.5982461873139181
+        ],
+        "entry_shares": [
+          0.5000000683138324,
+          0.49999993168616763
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.06957609215544912,
+        "err_e": 6.240840628723987e-07,
+        "err": 0.06957609215544912,
+        "own_rate": 0.5092557253452505,
+        "TFR": 1.4931457047369256,
+        "pop_share": [
+          0.5828998021179579,
+          0.4171001978820421
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999998,
+        "outside_entry_flow": 0.006356665600650492,
+        "scale_denominator": 0.005720999040585444,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 3,
+        "p": [
+          0.5008373568798926,
+          0.6074020837289797
+        ],
+        "entry_shares": [
+          0.5000001694370171,
+          0.49999983056298297
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.08721663008439019,
+        "err_e": 1.5800175174329745e-06,
+        "err": 0.08721663008439019,
+        "own_rate": 0.5430125687992,
+        "TFR": 1.5981288958103808,
+        "pop_share": [
+          0.6380572071716343,
+          0.3619427928283654
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999996,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.0054864873683589666,
+        "scale_denominator": 0.004937838631523068,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 4,
+        "p": [
+          0.5059507776275485,
+          0.6061112947086088
+        ],
+        "entry_shares": [
+          0.5000003968769017,
+          0.4999996031230983
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.05919081102883539,
+        "err_e": 1.3346122411661554e-06,
+        "err": 0.05919081102883539,
+        "own_rate": 0.5641267329976882,
+        "TFR": 1.585339422164687,
+        "pop_share": [
+          0.6290910013777052,
+          0.370908998622294
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999996,
+        "outside_entry_flow": 0.005591411435109795,
+        "scale_denominator": 0.005032270291598815,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 5,
+        "p": [
+          0.511060810972431,
+          0.6025582278555235
+        ],
+        "entry_shares": [
+          0.5000006569530864,
+          0.4999993430469137
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.020113224032870036,
+        "err_e": 1.047671152443197e-06,
+        "err": 0.020113224032870036,
+        "own_rate": 0.5509427172500184,
+        "TFR": 1.5738902311852887,
+        "pop_share": [
+          0.6134633294066038,
+          0.3865366705933965
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.8999999999999999,
+        "outside_entry_prob": 0.09999999999999998,
+        "outside_entry_flow": 0.005684939816415819,
+        "scale_denominator": 0.005116445834774235,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 6,
+        "p": [
+          0.5145780206287954,
+          0.6005333128533874
+        ],
+        "entry_shares": [
+          0.5000008998081648,
+          0.49999910019183524
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.023117443646839635,
+        "err_e": 1.0663755394269003e-06,
+        "err": 0.023117443646839635,
+        "own_rate": 0.5525234142820578,
+        "TFR": 1.573226414497428,
+        "pop_share": [
+          0.6229595095018939,
+          0.37704049049810634
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000009,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9000000000000001,
+        "outside_entry_prob": 0.10000000000000002,
+        "outside_entry_flow": 0.005689223729241029,
+        "scale_denominator": 0.005120301356316928,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 7,
+        "p": [
+          0.5172773502935657,
+          0.5983151502751612
+        ],
+        "entry_shares": [
+          0.500001134052072,
+          0.499998865947928
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.007179848244255053,
+        "err_e": 8.397804713289325e-07,
+        "err": 0.007179848244255053,
+        "own_rate": 0.5497237716869061,
+        "TFR": 1.56696755168747,
+        "pop_share": [
+          0.6144253153440187,
+          0.38557468465598127
+        ],
+        "mode": "Fz",
+        "scale_factor": 1.0000000000000002,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.09999999999999999,
+        "outside_entry_flow": 0.0057404736110934895,
+        "scale_denominator": 0.005166426249984141,
+        "scale_residual": 0.0
+      },
+      {
+        "iter": 8,
+        "p": [
+          0.5187470484103871,
+          0.597568637294381
+        ],
+        "entry_shares": [
+          0.5000013358932306,
+          0.4999986641067694
+        ],
+        "entry_total": 0.016666666666666666,
+        "err_p": 0.020600692699680213,
+        "err_e": 6.364803436520461e-07,
+        "err": 0.020600692699680213,
+        "own_rate": 0.5501966694322079,
+        "TFR": 1.5640592168250964,
+        "pop_share": [
+          0.6104611993193927,
+          0.38953880068060714
+        ],
+        "mode": "Fz",
+        "scale_factor": 0.9999999999999991,
+        "implied_total_population": 1.0,
+        "city_entry_prob_total": 0.9,
+        "outside_entry_prob": 0.1,
+        "outside_entry_flow": 0.005764238043126115,
+        "scale_denominator": 0.005187814238813503,
+        "scale_residual": 0.0
+      }
+    ],
+    "P_population_closure": "outside_option_benchmark_normalized"
+  }
+]
