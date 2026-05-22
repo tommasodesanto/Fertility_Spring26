@@ -1,0 +1,77 @@
+{
+  "ok": true,
+  "elapsed_sec": 108.558200614003,
+  "loss": 45.92348434008846,
+  "moments": {
+    "location_inv_err": 0.0,
+    "location_inv_err_pop": 0.0,
+    "location_inv_err_rent": 0.0,
+    "location_inv_converged": 1.0,
+    "tfr": 1.8575582050087749,
+    "childless_rate": 0.18142881096380292,
+    "mean_age_first_birth": 34.31750502727348,
+    "tfr_gradient": 0.08666140055213822,
+    "parity_progression_1to2": 0.12469322967541321,
+    "own_rate": 0.6385969140684754,
+    "own_rate_2534": 0.15683740846178912,
+    "own_rate_3544": 0.5929776030001882,
+    "own_gradient": -0.06640366008576315,
+    "own_family_gap": 0.15357057744426783,
+    "prime_childless_renter_median_rooms": 6.179698026835858,
+    "prime_childless_owner_median_rooms": 6.8,
+    "housing_increment_0to1": 0.4146893273359442,
+    "housing_increment_0to1_onechild": 0.42867609902296966,
+    "housing_increment_1to2": 0.4019090522894464,
+    "housing_increment_0to2plus": 0.31650663970891024,
+    "young_liquid_wealth_to_income": 0.9354520893731497,
+    "center_share_nonparents": 0.3749552018149068,
+    "center_share_newparents": 0.37167134876661506,
+    "migration_rate": 0.03461372095322004,
+    "old_age_own_rate": 0.7718935840300015,
+    "old_age_parent_childless_gap": 0.004152660304284295,
+    "owner_neg_liquid_share_2545": 0.8469537025552016,
+    "inv_E_C": 0.11127541027064872,
+    "inv_r_bar_C": 0.0719341870623939,
+    "inv_pop_C": 0.43307063339978097,
+    "inv_rent_ratio": 1.1864944758780187,
+    "inv_err_pop": 0.0,
+    "inv_err_rent": 0.0,
+    "inv_max_error": 0.0,
+    "inv_pop_share_C": 0.43307063339978097,
+    "inv_rent_ratio_C_over_P": 1.1864944758780187
+  },
+  "p_eq": [
+    0.505855651256028,
+    0.6001949358069548
+  ],
+  "z_grid": [
+    -0.28,
+    0.0,
+    0.28
+  ],
+  "stationary_z": [
+    0.3333333333333333,
+    0.3333333333333333,
+    0.3333333333333333
+  ],
+  "timings": {
+    "bellman_hank_z": 26.068111221000436,
+    "distribution_hank_z": 68.13481050195696,
+    "n_full": 15,
+    "n_dist": 15,
+    "best_eq_error": 0.00016729205461566663,
+    "best_eq_iter": 15,
+    "final_eq_error": 0.00016729205461566663,
+    "iterations_completed": 15,
+    "accepted": true,
+    "strict_converged": true,
+    "convergence_reason": "strict_tol",
+    "population_closure": "renewal_valve_calibrated",
+    "runtime_category": "expensive"
+  },
+  "summary": {
+    "grid_step": 3.5,
+    "near_threshold_band": 0.642857142857143,
+    "owner_bp_near_floor_share": 0.08861343177549015
+  }
+}

@@ -83,6 +83,14 @@ the copied GE loop. It should be coded as one new state \(z\) first. Do not add
 recalibrating the HANK-z economy and disciplining transitions, not expanding the
 state space again.
 
+Follow-up borrowing-wedge diagnostics reinforce that recommendation. With the
+existing \(\phi\)-based down-payment and borrowing-floor wedge, high-\(z\)
+renters buy much more often than low-\(z\) renters, 0.091 versus 0.015, and are
+more often feasible for the starter down payment, 0.590 versus 0.336. Low-\(z\)
+owners are more likely to sit near the borrowing floor, 0.089 versus 0.029.
+This means the current model already has a meaningful mortgage-like
+collateral/liquidity channel once \(z\) is structural.
+
 Do not merge the developer branch into live code yet. The corrected full-GE
 prototype is useful and no longer fails mechanically, but it does not solve the
 room target problem: prime childless renter median rooms are 6.500 against a
@@ -129,4 +137,11 @@ Branch 2 full GE developer supply:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_developer_missing_middle
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_v3_ge.py --quiet --nb 30 --iterations 12 --price-damp 0.25 --entry-damp 0.25
+```
+
+Branch 1 borrowing-wedge diagnostic:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_hank_z_borrowing_wedge_diagnostics.py --quiet --nb 30 --nz 3 --max-iter-eq 35
 ```

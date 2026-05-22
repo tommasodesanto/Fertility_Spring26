@@ -32,6 +32,13 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
 ```
 
+The borrowing-wedge validation diagnostic is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_hank_z_borrowing_wedge_diagnostics.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+```
+
 ## Implemented Objects
 
 - Earnings grid \(z\in\{-0.28,0,0.28\}\) with a symmetric persistent Markov
@@ -96,3 +103,21 @@ iterations and took 85.56 seconds. See `REPORT_V4_HANK_Z_GE.md`,
 `results_income_mortgage_risk_v4_hank_z_ge.csv`,
 `diagnostics_income_mortgage_risk_v4_hank_z_ge.csv`, and
 `diagnostics_income_mortgage_risk_v4_hank_z_ge_trace.csv`.
+
+## Borrowing-Wedge Diagnostic
+
+`run_hank_z_borrowing_wedge_diagnostics.py` reruns the V4 HANK-\(z\) GE
+prototype and asks whether the existing \(\phi\)-based down-payment and
+borrowing-floor wedge is active. It does not add a mortgage/default account.
+
+The `Nb=30`, `Nz=3` diagnostic accepted at the same strict GE tolerance as V4.
+High-\(z\) renters have a renter-to-owner purchase share of 0.091 versus 0.015
+for low-\(z\) renters, and starter down-payment feasibility is 0.590 versus
+0.336. Low-\(z\) owners have more mass close to the borrowing floor, 0.089
+versus 0.029 for high-\(z\). This validates that the existing collateral and
+liquidity wedge is being used. It is not a default or refinancing diagnostic.
+
+See `REPORT_HANK_Z_BORROWING_WEDGE.md`,
+`results_hank_z_borrowing_wedge.csv`,
+`diagnostics_hank_z_borrowing_wedge.csv`, and
+`hank_z_borrowing_wedge.log`.
