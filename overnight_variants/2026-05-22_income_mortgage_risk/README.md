@@ -146,10 +146,15 @@ See `REPORT_HANK_Z_BORROWING_WEDGE.md`,
 ## Fifth-Pass V5 HANK-z Outside-Option Closure
 
 `run_income_mortgage_risk_v5_hank_z_outside_closure.py` switches the HANK-\(z\)
-GE loop to the paper-facing outside-option scale closure. It first solves a
-baseline HANK-\(z\) equilibrium, calibrates the outside value and residual
-outside-born flow \(M\) so the baseline has \(S=1\), and then solves the
-`accounting_scale_prices` equilibrium:
+GE loop to the paper-facing outside-option scale closure. The benchmark now
+imposes the \(S=1\) normalization directly inside the copied GE loop. At each
+candidate composition it computes \(E_0(p)\) and \(B_0(p)\), calibrates
+\(\bar W^E\) to the target \(q^E\) at current entry values, and sets
+\[
+M=E_0(p)/q^E(p)-B_0(p).
+\]
+The reported final \(M\) and outside value are the objects to hold fixed in
+counterfactuals, where the fixed-\(M\) scale equation is
 \[
 S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
 \]
@@ -159,9 +164,10 @@ The accepted `Nb=30`, `Nz=7` run uses \(\rho_z=0.95\), unconditional
 \(\kappa_E\) is required because the outside option compares lifetime-utility
 levels; reusing the incumbent location scale \(\kappa_\ell\) made the outside
 probability jump to zero or one and destabilized the price loop. The accepted
-run uses an outer normalization pass and converged at strict tolerance with
-final scale \(S=0.999997\), but remains yellow because the un-recalibrated
-moments are economically poor. See
+run no longer uses an outer normalization pass; it converged at strict
+tolerance with final scale \(S=1\), \(q^E=0.9\), outside probability `0.1`,
+and residual outside-born flow \(M=0.00578025\). It remains yellow because the
+un-recalibrated moments are economically poor. See
 `REPORT_V5_HANK_Z_OUTSIDE_CLOSURE.md`,
 `results_income_mortgage_risk_v5_hank_z_outside_closure.csv`,
 `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure.csv`,

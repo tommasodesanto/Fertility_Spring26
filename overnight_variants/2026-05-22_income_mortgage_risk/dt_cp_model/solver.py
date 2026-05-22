@@ -46,6 +46,10 @@ from .utils import (
 
 OUTSIDE_OPTION_CLOSURES = {"outside_option", "outside_option_local_births", "local_births_outside", "open_city"}
 ACCOUNTING_SCALE_PRICE_CLOSURES = {"accounting_scale_prices", "scaled_housing", "scaled_housing_accounting"}
+BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES = {
+    "outside_option_benchmark_normalized",
+    "benchmark_outside_option_normalized",
+}
 RENEWAL_VALVE_FIXED_CLOSURES = {"renewal_valve", "renewal_scale", "demographic_valve"}
 RENEWAL_VALVE_CALIBRATED_CLOSURES = {
     "renewal_valve_calibrated",
@@ -61,7 +65,12 @@ def uses_outside_option_closure(P: SimpleNamespace) -> bool:
 
 
 def uses_accounting_scale_price_closure(P: SimpleNamespace) -> bool:
-    return str(getattr(P, "population_closure", "normalized")).lower() in ACCOUNTING_SCALE_PRICE_CLOSURES
+    mode = str(getattr(P, "population_closure", "normalized")).lower()
+    return mode in ACCOUNTING_SCALE_PRICE_CLOSURES or mode in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
+
+
+def uses_benchmark_normalized_outside_closure(P: SimpleNamespace) -> bool:
+    return str(getattr(P, "population_closure", "normalized")).lower() in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
 
 
 def uses_renewal_valve_closure(P: SimpleNamespace) -> bool:
@@ -272,6 +281,131 @@ def accounting_population_scale(
         scale_factor=float(scale_factor),
         reference_total_population=float(getattr(sol, "total_mass", np.nan)),
         implied_total_population=float(getattr(sol, "total_mass", np.nan) * scale_factor),
+        reference_housing_demand=base_hd,
+        implied_housing_demand=base_hd * scale_factor,
+    )
+
+
+def benchmark_normalized_outside_population_scale(
+    sol: SimpleNamespace,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    *,
+    target_total_population: float | None = None,
+    target_city_entry_prob: float | None = None,
+    calibrate_outside_value_to_q: bool | None = None,
+) -> SimpleNamespace:
+    """Benchmark outside-option closure with the baseline scale normalized.
+
+    The paper closure is ``S E_0(p) = q^E(p)[M + S B_0(p)]``. In the benchmark
+    steady state, ``S`` is a normalization. This helper therefore computes the
+    residual outside-born flow at the current candidate composition,
+
+        M = S * (E_0(p) / q^E(p) - B_0(p)),
+
+    and returns unit-scale housing demand. The final ``M`` and outside value
+    are the objects to hold fixed in counterfactuals.
+    """
+
+    ref_pop = max(float(getattr(sol, "total_mass", getattr(P, "N_target", 1.0))), 1e-14)
+    entry_flow = max(float(getattr(sol, "entry_rate", getattr(P, "E_total", 0.0))), 0.0)
+    mature_flow = max(float(getattr(sol, "entrants_mature_total", 0.0)), 0.0)
+    entry_per_scale = entry_flow / ref_pop
+    mature_per_scale = mature_flow / ref_pop
+    local_weight = max(float(getattr(P, "local_birth_entry_weight", 1.0)), 0.0)
+    target_pop = (
+        float(target_total_population)
+        if target_total_population is not None
+        else float(getattr(P, "outside_benchmark_target_total_population", getattr(P, "N_target", ref_pop)))
+    )
+    target_pop = max(target_pop, 1e-14)
+
+    entry_values = entry_values_by_location(sol.V, b_grid, P)
+    kappa = max(float(getattr(P, "kappa_entry", getattr(P, "kappa_loc", 1.0))), 1e-10)
+    do_q_calibration = (
+        bool(calibrate_outside_value_to_q)
+        if calibrate_outside_value_to_q is not None
+        else bool(getattr(P, "calibrate_outside_value_to_entry_prob", False))
+    )
+    target_q = (
+        float(target_city_entry_prob)
+        if target_city_entry_prob is not None
+        else float(getattr(P, "target_city_entry_prob", getattr(P, "outside_target_city_entry_prob", np.nan)))
+    )
+    if do_q_calibration:
+        if not np.isfinite(target_q):
+            raise ValueError("calibrate_outside_value_to_entry_prob=True requires target_city_entry_prob")
+        target_q = float(np.clip(target_q, 1e-10, 1.0 - 1e-10))
+        outside_value = calibrate_outside_value_for_entry_total(entry_values, 1.0, target_q, kappa)
+        calibrated_outside_value = True
+    else:
+        outside_value = float(getattr(P, "outside_value", 0.0))
+        calibrated_outside_value = bool(getattr(P, "outside_value_is_calibrated", False))
+
+    city_probs, outside_prob = city_entry_probabilities(entry_values, outside_value, kappa)
+    city_prob_total = float(np.sum(city_probs))
+    denominator = entry_per_scale - city_prob_total * local_weight * mature_per_scale
+    outside_flow = target_pop * (entry_per_scale / max(city_prob_total, 1e-14) - local_weight * mature_per_scale)
+    finite_stationary_scale = city_prob_total > 1e-12 and denominator > 1e-12 and outside_flow >= 0.0
+
+    if finite_stationary_scale:
+        implied_total_population = target_pop
+        scale_factor = implied_total_population / ref_pop
+        implied_entry_total = implied_total_population * entry_per_scale
+        implied_mature_cityborn_flow = implied_total_population * mature_per_scale
+        potential_mass = outside_flow + local_weight * implied_mature_cityborn_flow
+        implied_entry_by_loc = potential_mass * city_probs
+        implied_outside_entry_mass = potential_mass * outside_prob
+        stationary_residual = implied_entry_total - city_prob_total * potential_mass
+        relative_residual = abs(stationary_residual) / max(
+            abs(implied_entry_total), abs(city_prob_total * potential_mass), 1e-14
+        )
+        conditional_entry_shares = city_probs / max(city_prob_total, 1e-14)
+    else:
+        implied_total_population = np.inf
+        scale_factor = np.inf
+        implied_entry_total = np.inf
+        implied_mature_cityborn_flow = np.inf
+        potential_mass = np.inf
+        implied_entry_by_loc = np.full_like(city_probs, np.inf)
+        implied_outside_entry_mass = np.inf
+        stationary_residual = np.nan
+        relative_residual = np.nan
+        conditional_entry_shares = np.full_like(city_probs, np.nan)
+
+    base_hd = np.asarray(getattr(sol, "housing_demand", np.zeros(P.I)), dtype=float) * housing_demand_normalizer(P)
+    return SimpleNamespace(
+        finite_stationary_scale=bool(finite_stationary_scale),
+        benchmark_normalized=True,
+        outside_value=float(outside_value),
+        calibrated_outside_value=bool(calibrated_outside_value),
+        target_city_entry_prob=(float(target_q) if np.isfinite(target_q) else np.nan),
+        outside_entry_flow=float(outside_flow),
+        local_birth_entry_weight=float(local_weight),
+        kappa_entry=float(kappa),
+        entry_values=entry_values,
+        city_entry_prob=city_probs,
+        conditional_entry_shares=conditional_entry_shares,
+        outside_entry_prob=float(outside_prob),
+        city_entry_prob_total=city_prob_total,
+        reference_total_population=float(ref_pop),
+        target_total_population=float(target_pop),
+        reference_entry_total=float(entry_flow),
+        reference_mature_cityborn_flow=float(mature_flow),
+        entry_per_unit_scale=float(entry_per_scale),
+        mature_cityborn_per_unit_scale=float(mature_per_scale),
+        mature_cityborn_per_entry=float(mature_flow / max(entry_flow, 1e-14)),
+        denominator=float(denominator),
+        stationary_entry_residual=float(stationary_residual),
+        stationary_scale_residual=float(stationary_residual),
+        stationary_entry_relative_residual=float(relative_residual),
+        implied_entry_total=float(implied_entry_total),
+        implied_entry_by_loc=implied_entry_by_loc,
+        implied_potential_entrant_mass=float(potential_mass),
+        implied_outside_entry_mass=float(implied_outside_entry_mass),
+        implied_mature_cityborn_flow=float(implied_mature_cityborn_flow),
+        scale_factor=float(scale_factor),
+        implied_total_population=float(implied_total_population),
         reference_housing_demand=base_hd,
         implied_housing_demand=base_hd * scale_factor,
     )
@@ -523,9 +657,11 @@ def solve_equilibrium(
     p = np.asarray(p_init, dtype=float).reshape(-1)
     entry_closure = uses_outside_option_closure(P)
     renewal_closure = uses_renewal_valve_closure(P)
+    benchmark_norm_closure = uses_benchmark_normalized_outside_closure(P)
     scale_price_closure = uses_accounting_scale_price_closure(P) or renewal_closure
     if scale_price_closure and not (
         renewal_closure
+        or benchmark_norm_closure
         or
         bool(getattr(P, "outside_value_is_calibrated", False))
         or bool(getattr(P, "allow_uncalibrated_outside_value", False))
@@ -625,7 +761,9 @@ def solve_equilibrium(
                 total_mass=stats.total_mass,
                 housing_demand=stats.housing_demand,
             )
-            if renewal_closure:
+            if benchmark_norm_closure:
+                scale_info = benchmark_normalized_outside_population_scale(scale_state, P, b_grid)
+            elif renewal_closure:
                 scale_info = renewal_population_scale(scale_state, P, b_grid)
             else:
                 scale_info = accounting_population_scale(scale_state, P, b_grid)
@@ -652,7 +790,9 @@ def solve_equilibrium(
             entry_info = {
                 "entry_values": getattr(scale_info, "entry_values", np.full(P.I, np.nan)),
                 "city_entry_prob": getattr(scale_info, "city_entry_prob", np.full(P.I, np.nan)),
+                "city_entry_prob_total": getattr(scale_info, "city_entry_prob_total", np.nan),
                 "outside_entry_prob": getattr(scale_info, "outside_entry_prob", np.nan),
+                "outside_entry_flow": getattr(scale_info, "outside_entry_flow", np.nan),
                 "potential_entrant_mass": getattr(scale_info, "implied_potential_entrant_mass", np.nan),
                 "outside_entry_mass": getattr(scale_info, "implied_outside_entry_mass", np.nan),
                 "mature_cityborn_flow": scale_info.reference_mature_cityborn_flow,
@@ -708,7 +848,9 @@ def solve_equilibrium(
             if scale_price_closure:
                 ge_trace[-1]["scale_factor"] = float(entry_info.get("scale_factor", np.nan))
                 ge_trace[-1]["implied_total_population"] = float(entry_info.get("implied_total_population", np.nan))
+                ge_trace[-1]["city_entry_prob_total"] = float(entry_info.get("city_entry_prob_total", np.nan))
                 ge_trace[-1]["outside_entry_prob"] = float(entry_info.get("outside_entry_prob", np.nan))
+                ge_trace[-1]["outside_entry_flow"] = float(entry_info.get("outside_entry_flow", np.nan))
                 if scale_info is not None:
                     ge_trace[-1]["scale_denominator"] = float(scale_info.denominator)
                     ge_trace[-1]["scale_residual"] = float(scale_info.stationary_entry_residual)
@@ -871,7 +1013,12 @@ def solve_equilibrium(
         "population_closure": str(getattr(P, "population_closure", "normalized")),
     }
     if scale_price_closure:
-        sol.accounting_scale = renewal_population_scale(sol, P, b_grid) if renewal_closure else accounting_population_scale(sol, P, b_grid)
+        if benchmark_norm_closure:
+            sol.accounting_scale = benchmark_normalized_outside_population_scale(sol, P, b_grid)
+        elif renewal_closure:
+            sol.accounting_scale = renewal_population_scale(sol, P, b_grid)
+        else:
+            sol.accounting_scale = accounting_population_scale(sol, P, b_grid)
     if collect_trace:
         sol.ge_trace = ge_trace
     return sol, P, p_eq
@@ -2860,9 +3007,11 @@ def solve_equilibrium_hank_z(
     p = np.asarray(p_init, dtype=float).reshape(-1)
     entry_closure = uses_outside_option_closure(P)
     renewal_closure = uses_renewal_valve_closure(P)
+    benchmark_norm_closure = uses_benchmark_normalized_outside_closure(P)
     scale_price_closure = uses_accounting_scale_price_closure(P) or renewal_closure
     if scale_price_closure and not (
         renewal_closure
+        or benchmark_norm_closure
         or bool(getattr(P, "outside_value_is_calibrated", False))
         or bool(getattr(P, "allow_uncalibrated_outside_value", False))
     ):
@@ -2941,7 +3090,12 @@ def solve_equilibrium_hank_z(
                 total_mass=stats.total_mass,
                 housing_demand=stats.housing_demand,
             )
-            scale_info = renewal_population_scale(scale_state, P, b_grid) if renewal_closure else accounting_population_scale(scale_state, P, b_grid)
+            if benchmark_norm_closure:
+                scale_info = benchmark_normalized_outside_population_scale(scale_state, P, b_grid)
+            elif renewal_closure:
+                scale_info = renewal_population_scale(scale_state, P, b_grid)
+            else:
+                scale_info = accounting_population_scale(scale_state, P, b_grid)
             Hd = np.asarray(scale_info.implied_housing_demand, dtype=float)
             if not scale_info.finite_stationary_scale or not np.all(np.isfinite(Hd)):
                 Hd = stats.housing_demand
@@ -2965,7 +3119,9 @@ def solve_equilibrium_hank_z(
             entry_info = {
                 "entry_values": getattr(scale_info, "entry_values", np.full(P.I, np.nan)),
                 "city_entry_prob": getattr(scale_info, "city_entry_prob", np.full(P.I, np.nan)),
+                "city_entry_prob_total": getattr(scale_info, "city_entry_prob_total", np.nan),
                 "outside_entry_prob": getattr(scale_info, "outside_entry_prob", np.nan),
+                "outside_entry_flow": getattr(scale_info, "outside_entry_flow", np.nan),
                 "potential_entrant_mass": getattr(scale_info, "implied_potential_entrant_mass", np.nan),
                 "outside_entry_mass": getattr(scale_info, "implied_outside_entry_mass", np.nan),
                 "mature_cityborn_flow": scale_info.reference_mature_cityborn_flow,
@@ -3017,7 +3173,9 @@ def solve_equilibrium_hank_z(
             if scale_price_closure:
                 ge_trace[-1]["scale_factor"] = float(entry_info.get("scale_factor", np.nan))
                 ge_trace[-1]["implied_total_population"] = float(entry_info.get("implied_total_population", np.nan))
+                ge_trace[-1]["city_entry_prob_total"] = float(entry_info.get("city_entry_prob_total", np.nan))
                 ge_trace[-1]["outside_entry_prob"] = float(entry_info.get("outside_entry_prob", np.nan))
+                ge_trace[-1]["outside_entry_flow"] = float(entry_info.get("outside_entry_flow", np.nan))
                 if scale_info is not None:
                     ge_trace[-1]["scale_denominator"] = float(scale_info.denominator)
                     ge_trace[-1]["scale_residual"] = float(scale_info.stationary_entry_residual)
@@ -3188,7 +3346,12 @@ def solve_equilibrium_hank_z(
         "runtime_category": "expensive" if nz <= 3 and len(b_grid) <= 40 else "project-scale",
     }
     if scale_price_closure:
-        sol.accounting_scale = renewal_population_scale(sol, P, b_grid) if renewal_closure else accounting_population_scale(sol, P, b_grid)
+        if benchmark_norm_closure:
+            sol.accounting_scale = benchmark_normalized_outside_population_scale(sol, P, b_grid)
+        elif renewal_closure:
+            sol.accounting_scale = renewal_population_scale(sol, P, b_grid)
+        else:
+            sol.accounting_scale = accounting_population_scale(sol, P, b_grid)
     if collect_trace:
         sol.ge_trace = ge_trace
     return sol, P, p_eq

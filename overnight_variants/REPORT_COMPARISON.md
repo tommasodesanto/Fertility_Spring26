@@ -9,7 +9,9 @@ mortgage branch. `run_income_mortgage_risk_v5_hank_z_outside_closure.py` puts
 one finite idiosyncratic earnings state \(z\) directly into the copied Bellman
 arrays, policy arrays, fertility/location probabilities, tenure choices, and
 forward distribution, then solves the copied price and entry fixed point under
-the paper-facing outside-option scale closure. The current serious grid is
+the paper-facing outside-option scale closure. The V5 benchmark now imposes
+the \(S=1\) normalization inside the GE loop and records the final \(M\) and
+outside value as the counterfactual objects. The current serious grid is
 Rouwenhorst \(N_z=7\), \(\rho_z=0.95\), unconditional
 \(\sigma_z=0.35\). The mortgage-account object \(\mu\) is not structural in
 this decision run. The 2026-05-22 engineering pass added a compiled
@@ -34,14 +36,14 @@ coarse smoke outputs, not full recalibrations.
 | `childless_rate` | 0.150 | 0.145 | 0.181 | 0.351 | 0.148 |
 | `mean_age_first_birth` | 26.000 | 33.535 | 34.318 | 35.279 | 33.698 |
 | `tfr_gradient` | 0.133 | 0.119 | 0.087 | -0.194 | 0.110 |
-| `own_rate` | 0.627 | 0.643 | 0.639 | 0.608 | 0.578 |
-| `own_gradient` | 0.170 | 0.139 | -0.066 | -0.127 | 0.018 |
-| `own_family_gap` | 0.110 | 0.114 | 0.154 | 0.354 | 0.070 |
+| `own_rate` | 0.627 | 0.643 | 0.639 | 0.609 | 0.578 |
+| `own_gradient` | 0.170 | 0.139 | -0.066 | -0.129 | 0.018 |
+| `own_family_gap` | 0.110 | 0.114 | 0.154 | 0.353 | 0.070 |
 | `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 6.180 | 6.001 | 6.500 |
 | `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.800 | 6.800 | 8.200 |
-| `housing_increment_0to1` | 0.664 | 0.441 | 0.415 | 0.589 | 0.418 |
-| `housing_increment_1to2` | 0.566 | 0.192 | 0.402 | 1.494 | 0.252 |
-| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.935 | 1.873 | 0.815 |
+| `housing_increment_0to1` | 0.664 | 0.441 | 0.415 | 0.588 | 0.418 |
+| `housing_increment_1to2` | 0.566 | 0.192 | 0.402 | 1.489 | 0.252 |
+| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.935 | 1.866 | 0.815 |
 | `center_share_nonparents` | 0.494 | 0.405 | 0.375 | 0.233 | 0.412 |
 | `center_share_newparents` | 0.416 | 0.382 | 0.372 | 0.371 | 0.394 |
 | `migration_rate` | 0.032 | 0.035 | 0.035 | 0.033 | 0.035 |
@@ -65,7 +67,7 @@ coarse smoke outputs, not full recalibrations.
 | \(\mu\) states | 0 | 0 | 0 |
 | price dimensions | \(p_i\), 2 prices | \(p_i\), 2 prices | \(p_{iq}\), 6 prices |
 | rent dimensions | scalar user cost by \(i\) | scalar user cost by \(i\) | \(r_{iq}\), 6 rents |
-| closure / fixed-point loop | renewal-valve prices plus entry | outside-option scale closure, scalar prices plus entry | all type prices plus entry |
+| closure / fixed-point loop | renewal-valve prices plus entry | benchmark-normalized outside-option closure, scalar prices plus entry | all type prices plus entry |
 | accepted GE run | live benchmark | yes, strict tolerance | yes, coarse type-price tolerance |
 | cost category | benchmark reference | project-scale | expensive |
 
@@ -110,17 +112,19 @@ ladder before another solver merge.
 
 - Branch 1 fixed closure issue: the first outside-option attempt reused
   \(\kappa_\ell\) for the entry/outside margin. That made \(q^E\) jump to
-  zero or one because entry values are lifetime-utility objects. The accepted
-  V5 run uses a separate \(\kappa_E=10^6\) and an outer normalization pass,
-  keeping \(q^E=0.9\) and final scale \(S=0.999997\).
+  zero or one because entry values are lifetime-utility objects. The later V5
+  run used a separate \(\kappa_E=10^6\) but still imposed \(S\simeq1\) through
+  an outer re-solve. The current V5 run imposes the benchmark normalization
+  directly inside the GE loop, with \(S=1\), \(q^E=0.9\), outside probability
+  \(0.1\), and \(M=0.00578025\).
 - Branch 1 fixed income-grid issue: the Rouwenhorst transition was correct,
   but the stationary-distribution helper initially clipped a signed eigenvector
   and returned uniform weights. It now uses power iteration and reports the
   correct binomial stationary weights.
 - Branch 1 remaining failure mode: the \(z\) state is economically active and
-  the closure works, but the ownership gradient is \(-0.127\) versus target
+  the closure works, but the ownership gradient is \(-0.129\) versus target
   \(0.170\), the fertility gradient is \(-0.194\) versus target \(0.133\),
-  and young liquid wealth/income is 1.873 versus target 0.600. This is a
+  and young liquid wealth/income is 1.866 versus target 0.600. This is a
   recalibration and transition-discipline problem.
 - Branch 1 implementation boundary: \(\mu\) is deliberately absent from the GE
   decision run. The earlier \(\mu\) work remains diagnostic and should not be

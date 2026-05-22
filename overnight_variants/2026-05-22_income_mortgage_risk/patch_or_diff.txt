@@ -81,9 +81,10 @@ Outside-option closure and serious income grid added on 2026-05-22
   - Defaults to `Nz=7`, `rho_z=0.95`, `sigma_z=0.35`.
 - `run_income_mortgage_risk_v5_hank_z_outside_closure.py`
   - New driver for the paper-facing outside-option closure.
-  - Solves a baseline HANK-\(z\) equilibrium, calibrates \(q^E\), \(\bar W^E\),
-    and the residual outside-born flow \(M\) so baseline scale is unchanged,
-    then runs the `accounting_scale_prices` GE loop.
+  - Imposes the benchmark \(S=1\) normalization directly inside the copied GE
+    loop. At each candidate composition it calibrates \(q^E\) / \(\bar W^E\)
+    and sets \(M=E_0(p)/q^E(p)-B_0(p)\). The final \(M\) and outside value are
+    the objects to hold fixed in counterfactuals.
   - Writes closure diagnostics, trace, target/model moment table, JSON log, and
     report.
 
@@ -93,14 +94,15 @@ V5 validation
   `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --normalization-passes 2 --scale-target-tol 1e-5 --tol-eq 5e-4`
 - accepted: `True`
 - convergence reason: `strict_tol`
-- iterations: `13`
-- final equilibrium error: `0.0003982321513865683`
-- outer normalization passes: `2`
-- final scale factor: `0.9999974729005937`
+- iterations: `17`
+- final equilibrium error: `0.00022218249381993278`
+- outer normalization passes: `0`
+- final scale factor: `1.0000000000000009`
 - final city-entry probability: `0.9`
 - outside probability: `0.1`
-- elapsed seconds: `817.50`
-- SMM loss: `312.11223861006204`
+- residual outside-born flow \(M\): `0.005780247614275978`
+- elapsed seconds: `620.13`
+- SMM loss: `311.4039737325341`
 - verdict: yellow. The closure works numerically, but the un-recalibrated
   HANK-\(z\) economics break several core moments: fertility is too low and too
   late, the fertility and ownership gradients flip sign, and liquid wealth is
