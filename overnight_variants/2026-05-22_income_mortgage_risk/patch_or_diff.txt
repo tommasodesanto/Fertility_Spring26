@@ -90,16 +90,17 @@ Outside-option closure and serious income grid added on 2026-05-22
 V5 validation
 -------------
 - Command:
-  `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4`
+  `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --normalization-passes 2 --scale-target-tol 1e-5 --tol-eq 5e-4`
 - accepted: `True`
 - convergence reason: `strict_tol`
 - iterations: `13`
 - final equilibrium error: `0.0003982321513865683`
-- final scale factor: `1.0002268971160209`
-- final city-entry probability: `0.900080860860641`
-- outside probability: `0.09991913913935903`
-- elapsed seconds: `461.12`
-- SMM loss: `312.11023509025733`
+- outer normalization passes: `2`
+- final scale factor: `0.9999974729005937`
+- final city-entry probability: `0.9`
+- outside probability: `0.1`
+- elapsed seconds: `817.50`
+- SMM loss: `312.11223861006204`
 - verdict: yellow. The closure works numerically, but the un-recalibrated
   HANK-\(z\) economics break several core moments: fertility is too low and too
   late, the fertility and ownership gradients flip sign, and liquid wealth is

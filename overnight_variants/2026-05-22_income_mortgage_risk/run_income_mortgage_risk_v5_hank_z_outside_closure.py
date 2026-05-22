@@ -185,6 +185,10 @@ def write_closure_diagnostics(path: Path, closure0: SimpleNamespace, sol: Simple
     rows: list[dict[str, object]] = []
     scale0 = closure0.baseline_accounting_scale
     scale = getattr(sol, "accounting_scale", None)
+    for rec in getattr(closure0, "normalization_history", []):
+        for key, value in rec.items():
+            if key != "pass":
+                rows.append({"stage": f"normalization_pass_{rec['pass']}", "name": key, "value": value})
     for name in [
         "target_city_entry_prob",
         "outside_value",
@@ -309,6 +313,10 @@ and then sets \(M\) residually so the baseline scale is unchanged.
 - elapsed seconds: `{elapsed:.2f}`
 - SMM loss against live targets: `{loss:.6g}`
 
+## Normalization Passes
+
+{normalization_history_table(getattr(closure0, "normalization_history", []))}
+
 ## Moment Table
 
 | Moment | Target | Benchmark | V5 outside closure |
@@ -338,6 +346,27 @@ stationary weights for \(N_z={len(hz.z_grid)}\), not uniform smoke weights.
     path.write_text(text)
 
 
+def normalization_history_table(history: list[dict[str, object]]) -> str:
+    if not history:
+        return "No outer normalization history was recorded."
+    rows = [
+        "| Pass | \(S\) | \(q^E\) | outside prob. | \(M\) | GE error |",
+        "|---:|---:|---:|---:|---:|---:|",
+    ]
+    for rec in history:
+        rows.append(
+            "| {pass_id} | {scale:.6g} | {q:.6g} | {outside:.6g} | {m:.6g} | {err:.6g} |".format(
+                pass_id=int(rec.get("pass", 0)),
+                scale=float(rec.get("scale_factor", np.nan)),
+                q=float(rec.get("city_entry_prob_total", np.nan)),
+                outside=float(rec.get("outside_entry_prob", np.nan)),
+                m=float(rec.get("outside_entry_flow", np.nan)),
+                err=float(rec.get("best_eq_error", np.nan)),
+            )
+        )
+    return "\n".join(rows)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--nb", type=int, default=30)
@@ -350,6 +379,8 @@ def main() -> None:
     parser.add_argument("--baseline-max-iter-eq", type=int, default=35)
     parser.add_argument("--max-iter-eq", type=int, default=45)
     parser.add_argument("--tol-eq", type=float, default=5e-4)
+    parser.add_argument("--normalization-passes", type=int, default=2)
+    parser.add_argument("--scale-target-tol", type=float, default=1e-5)
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
 
@@ -382,26 +413,70 @@ def main() -> None:
         if not closure0.finite_calibration:
             raise RuntimeError("outside-option baseline normalization produced a nonfinite scale")
 
-        P, _, _ = prepare_parameters(args.nb, args.max_iter_eq, args.tol_eq)
-        P.population_closure = "accounting_scale_prices"
-        P.outside_value = float(closure0.outside_value)
-        P.outside_value_is_calibrated = True
-        P.allow_uncalibrated_outside_value = False
-        P.outside_entry_flow = float(closure0.outside_entry_flow)
-        P.kappa_entry = float(closure0.kappa_entry)
-        P.local_birth_entry_weight = float(closure0.local_birth_entry_weight)
-        P.entry_shares = np.asarray(P0_out.entry_shares, dtype=float).copy()
-        P.entry_by_loc = float(P.E_total) * P.entry_shares
-        b_grid = make_grid(P)
-        sol, P_out, p_eq = solve_equilibrium_hank_z(
-            p0,
-            P,
-            b_grid,
-            nz=args.nz,
-            rho_z=args.rho_z,
-            sigma_z=args.sigma_z,
-            verbose=not args.quiet,
-        )
+        outside_value = float(closure0.outside_value)
+        outside_entry_flow = float(closure0.outside_entry_flow)
+        entry_shares0 = np.asarray(P0_out.entry_shares, dtype=float).copy()
+        p_start = np.asarray(p0, dtype=float).copy()
+        normalization_history: list[dict[str, object]] = []
+        sol = P_out = p_eq = b_grid = None
+        n_passes = max(1, int(args.normalization_passes))
+        for norm_pass in range(1, n_passes + 1):
+            P, _, _ = prepare_parameters(args.nb, args.max_iter_eq, args.tol_eq)
+            P.population_closure = "accounting_scale_prices"
+            P.outside_value = float(outside_value)
+            P.outside_value_is_calibrated = True
+            P.allow_uncalibrated_outside_value = False
+            P.outside_entry_flow = float(outside_entry_flow)
+            P.kappa_entry = float(closure0.kappa_entry)
+            P.local_birth_entry_weight = float(closure0.local_birth_entry_weight)
+            P.entry_shares = np.asarray(entry_shares0, dtype=float).copy()
+            P.entry_by_loc = float(P.E_total) * P.entry_shares
+            b_grid = make_grid(P)
+            sol, P_out, p_eq = solve_equilibrium_hank_z(
+                p_start,
+                P,
+                b_grid,
+                nz=args.nz,
+                rho_z=args.rho_z,
+                sigma_z=args.sigma_z,
+                verbose=not args.quiet,
+            )
+            scale = getattr(sol, "accounting_scale", None)
+            normalization_history.append(
+                {
+                    "pass": norm_pass,
+                    "outside_value": float(outside_value),
+                    "outside_entry_flow": float(outside_entry_flow),
+                    "scale_factor": float(getattr(scale, "scale_factor", np.nan)),
+                    "city_entry_prob_total": float(getattr(scale, "city_entry_prob_total", np.nan)),
+                    "outside_entry_prob": float(getattr(scale, "outside_entry_prob", np.nan)),
+                    "p_P": float(p_eq[0]),
+                    "p_C": float(p_eq[1]),
+                    "best_eq_error": float(sol.timings.get("best_eq_error", np.nan)),
+                }
+            )
+            final_scale_error = abs(float(getattr(scale, "scale_factor", np.nan)) - 1.0)
+            final_q_error = abs(float(getattr(scale, "city_entry_prob_total", np.nan)) - args.target_city_entry_prob)
+            if norm_pass >= n_passes or (
+                final_scale_error <= float(args.scale_target_tol)
+                and final_q_error <= float(args.scale_target_tol)
+            ):
+                break
+            proposal = calibrate_outside_scale_closure(
+                sol,
+                P_out,
+                b_grid,
+                target_city_entry_prob=args.target_city_entry_prob,
+                kappa_entry=kappa_entry,
+                local_birth_entry_weight=args.local_birth_entry_weight,
+                target_total_population=float(getattr(P_out, "N_target", 1.0)),
+            )
+            outside_value = float(proposal.outside_value)
+            outside_entry_flow = float(proposal.outside_entry_flow)
+            entry_shares0 = np.asarray(getattr(scale, "conditional_entry_shares", P_out.entry_shares), dtype=float).copy()
+            p_start = np.asarray(p_eq, dtype=float).copy()
+        closure0.normalization_history = normalization_history
+        assert sol is not None and P_out is not None and p_eq is not None and b_grid is not None
 
         moments_ns = extract_moments(sol, P_out, p_eq, 0.0, 0.0, 0.0, True)
         moments_ns.inv_pop_share_C = float(sol.pop_share[1])

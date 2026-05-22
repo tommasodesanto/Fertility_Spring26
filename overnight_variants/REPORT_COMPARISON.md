@@ -111,8 +111,8 @@ ladder before another solver merge.
 - Branch 1 fixed closure issue: the first outside-option attempt reused
   \(\kappa_\ell\) for the entry/outside margin. That made \(q^E\) jump to
   zero or one because entry values are lifetime-utility objects. The accepted
-  V5 run uses a separate \(\kappa_E=10^6\), keeps \(q^E=0.90008\), and has
-  final scale \(S=1.00023\).
+  V5 run uses a separate \(\kappa_E=10^6\) and an outer normalization pass,
+  keeping \(q^E=0.9\) and final scale \(S=0.999997\).
 - Branch 1 fixed income-grid issue: the Rouwenhorst transition was correct,
   but the stationary-distribution helper initially clipped a signed eigenvector
   and returned uniform weights. It now uses power iteration and reports the
@@ -146,7 +146,7 @@ Branch 1 full GE HANK-z:
 
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
-/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --normalization-passes 2 --scale-target-tol 1e-5 --tol-eq 5e-4
 ```
 
 Branch 2 full GE developer supply:

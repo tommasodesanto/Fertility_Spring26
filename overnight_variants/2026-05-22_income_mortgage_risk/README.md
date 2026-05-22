@@ -36,7 +36,7 @@ The outside-option closure HANK earnings-risk driver is:
 
 ```bash
 cd overnight_variants/2026-05-22_income_mortgage_risk
-/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --normalization-passes 2 --scale-target-tol 1e-5 --tol-eq 5e-4
 ```
 
 The full-equilibrium figure driver is:
@@ -159,8 +159,9 @@ The accepted `Nb=30`, `Nz=7` run uses \(\rho_z=0.95\), unconditional
 \(\kappa_E\) is required because the outside option compares lifetime-utility
 levels; reusing the incumbent location scale \(\kappa_\ell\) made the outside
 probability jump to zero or one and destabilized the price loop. The accepted
-run converged at strict tolerance with final scale \(S=1.00023\), but remains
-yellow because the un-recalibrated moments are economically poor. See
+run uses an outer normalization pass and converged at strict tolerance with
+final scale \(S=0.999997\), but remains yellow because the un-recalibrated
+moments are economically poor. See
 `REPORT_V5_HANK_Z_OUTSIDE_CLOSURE.md`,
 `results_income_mortgage_risk_v5_hank_z_outside_closure.csv`,
 `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure.csv`,

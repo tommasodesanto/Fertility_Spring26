@@ -33,18 +33,25 @@ and then sets \(M\) residually so the baseline scale is unchanged.
 - accepted: `True`
 - strict converged: `True`
 - convergence reason: `strict_tol`
-- iterations completed: `13`
-- best equilibrium error: `0.000398232`
-- final equilibrium error: `0.000398232`
+- iterations completed: `1`
+- best equilibrium error: `0.00025096`
+- final equilibrium error: `0.00025096`
 - prices: `[0.5195429758079918, 0.6004917838706963]`
 - \(z\) states: `7`
 - \(b\) states: `30`
-- final scale factor \(S\): `1.00023`
-- final city-entry probability \(q^E\): `0.900081`
-- final outside probability: `0.0999191`
+- final scale factor \(S\): `0.999997`
+- final city-entry probability \(q^E\): `0.9`
+- final outside probability: `0.1`
 - finite scale: `True`
-- elapsed seconds: `461.12`
-- SMM loss against live targets: `312.11`
+- elapsed seconds: `817.50`
+- SMM loss against live targets: `312.112`
+
+## Normalization Passes
+
+| Pass | \(S\) | \(q^E\) | outside prob. | \(M\) | GE error |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 1.00023 | 0.900081 | 0.0999191 | 0.00578028 | 0.000398232 |
+| 2 | 0.999997 | 0.9 | 0.1 | 0.00578063 | 0.00025096 |
 
 ## Moment Table
 
@@ -86,6 +93,6 @@ The entry margin needs its own scale \(\kappa_E\). Using the incumbent
 within-city location scale \(\kappa_\ell\) made the outside probability jump to
 zero or one because entry values are lifetime-utility objects with very large
 levels. The accepted run therefore uses an explicitly supplied
-\(\kappa_E=1e+06\). The Rouwenhorst grid also requires the true stationary
-Markov distribution; this script now reports the binomial stationary weights for
-\(N_z=7\), not uniform smoke weights.
+\(\kappa_E=1e+06\). The Rouwenhorst grid also requires the
+true stationary Markov distribution; this script now reports the binomial
+stationary weights for \(N_z=7\), not uniform smoke weights.
