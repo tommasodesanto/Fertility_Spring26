@@ -2494,13 +2494,21 @@ def income_mortgage_risk_spec(P: SimpleNamespace | None = None) -> SimpleNamespa
 def stationary_markov_dist(Pi: np.ndarray) -> np.ndarray:
     """Stationary distribution for a small row-stochastic transition matrix."""
 
-    vals, vecs = np.linalg.eig(Pi.T)
-    idx = int(np.argmin(np.abs(vals - 1.0)))
-    dist = np.real(vecs[:, idx])
+    Pi = np.asarray(Pi, dtype=float)
+    n = Pi.shape[0]
+    dist = np.ones(n, dtype=float) / n
+    for _ in range(10000):
+        nxt = dist @ Pi
+        if float(np.max(np.abs(nxt - dist))) < 1e-14:
+            dist = nxt
+            break
+        dist = nxt
     dist = np.maximum(dist, 0.0)
-    if float(np.sum(dist)) <= 1e-14:
-        dist = np.ones(Pi.shape[0])
-    return dist / float(np.sum(dist))
+    total = float(np.sum(dist))
+    if total <= 1e-14:
+        dist = np.ones(n, dtype=float)
+        total = float(n)
+    return dist / total
 
 
 def attach_income_mortgage_risk_diagnostics(
@@ -2689,38 +2697,41 @@ def attach_income_mortgage_risk_diagnostics(
 # ---------------------------------------------------------------------------
 
 
-def hank_income_risk_process(nz: int = 3, rho_z: float = 0.82, sigma_z: float = 0.28) -> SimpleNamespace:
-    """Small symmetric finite-state earnings process for the HANK smoke test."""
+def rouwenhorst_markov(n: int, rho: float, sigma: float) -> tuple[np.ndarray, np.ndarray]:
+    """Rouwenhorst discretization for a persistent mean-zero log-earnings state.
 
-    if nz == 3:
-        z_grid = np.array([-sigma_z, 0.0, sigma_z], dtype=float)
-        Pi_z = np.array(
-            [
-                [rho_z, 1.0 - rho_z - 0.02, 0.02],
-                [(1.0 - rho_z) / 2.0, rho_z, (1.0 - rho_z) / 2.0],
-                [0.02, 1.0 - rho_z - 0.02, rho_z],
-            ],
-            dtype=float,
-        )
-    elif nz == 5:
-        z_grid = np.linspace(-2.0 * sigma_z, 2.0 * sigma_z, 5)
-        stay = min(max(rho_z, 0.55), 0.92)
-        near = (1.0 - stay) * 0.42
-        far = (1.0 - stay) * 0.08
-        Pi_z = np.zeros((5, 5), dtype=float)
-        for i in range(5):
-            for j in range(5):
-                dist = abs(i - j)
-                if dist == 0:
-                    Pi_z[i, j] = stay
-                elif dist == 1:
-                    Pi_z[i, j] = near
-                elif dist == 2:
-                    Pi_z[i, j] = far
-            Pi_z[i, :] = Pi_z[i, :] / np.sum(Pi_z[i, :])
-    else:
-        raise ValueError("hank_income_risk_process currently supports nz=3 or nz=5.")
-    Pi_z = Pi_z / Pi_z.sum(axis=1, keepdims=True)
+    ``sigma`` is interpreted as the unconditional standard deviation of the
+    continuous AR(1) state. This is the conventional HANK-style use here: the
+    number of states can be raised without changing the target cross-sectional
+    dispersion of log earnings.
+    """
+
+    n = int(n)
+    if n < 2:
+        raise ValueError("Rouwenhorst discretization requires at least two states.")
+    rho = float(np.clip(rho, -0.999, 0.999))
+    sigma = max(float(sigma), 1e-12)
+    p = (1.0 + rho) / 2.0
+    q = p
+    Pi = np.array([[p, 1.0 - p], [1.0 - q, q]], dtype=float)
+    for m in range(3, n + 1):
+        Pi_old = Pi
+        Pi = np.zeros((m, m), dtype=float)
+        Pi[:-1, :-1] += p * Pi_old
+        Pi[:-1, 1:] += (1.0 - p) * Pi_old
+        Pi[1:, :-1] += (1.0 - q) * Pi_old
+        Pi[1:, 1:] += q * Pi_old
+        Pi[1:-1, :] *= 0.5
+    Pi = Pi / Pi.sum(axis=1, keepdims=True)
+    width = sigma * math.sqrt(n - 1)
+    z_grid = np.linspace(-width, width, n)
+    return z_grid, Pi
+
+
+def hank_income_risk_process(nz: int = 7, rho_z: float = 0.95, sigma_z: float = 0.35) -> SimpleNamespace:
+    """Classic finite-state HANK earnings process."""
+
+    z_grid, Pi_z = rouwenhorst_markov(nz, rho_z, sigma_z)
     return SimpleNamespace(z_grid=z_grid, Pi_z=Pi_z, stationary=stationary_markov_dist(Pi_z))
 
 
@@ -3006,6 +3017,10 @@ def solve_equilibrium_hank_z(
             if scale_price_closure:
                 ge_trace[-1]["scale_factor"] = float(entry_info.get("scale_factor", np.nan))
                 ge_trace[-1]["implied_total_population"] = float(entry_info.get("implied_total_population", np.nan))
+                ge_trace[-1]["outside_entry_prob"] = float(entry_info.get("outside_entry_prob", np.nan))
+                if scale_info is not None:
+                    ge_trace[-1]["scale_denominator"] = float(scale_info.denominator)
+                    ge_trace[-1]["scale_residual"] = float(scale_info.stationary_entry_residual)
 
         if ov < best_err:
             best_err = ov

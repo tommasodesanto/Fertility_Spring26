@@ -29,7 +29,14 @@ The full-equilibrium HANK earnings-risk driver is:
 
 ```bash
 cd overnight_variants/2026-05-22_income_mortgage_risk
-/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 7 --max-iter-eq 35
+```
+
+The outside-option closure HANK earnings-risk driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4
 ```
 
 The full-equilibrium figure driver is:
@@ -51,8 +58,9 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 
 ## Implemented Objects
 
-- Earnings grid \(z\in\{-0.28,0,0.28\}\) with a symmetric persistent Markov
-  matrix.
+- Earnings grid \(z\) as a true discrete state. The current HANK pass uses a
+  Rouwenhorst approximation with configurable `Nz`, persistence `rho_z`, and
+  unconditional log-earnings dispersion `sigma_z`.
 - Mortgage-account grid \(\mu\) with five encoded states:
   no mortgage/good credit, no mortgage/bad credit, active low/good, active
   high/good, and active low/bad.
@@ -63,11 +71,11 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 
 ## Important Limitation
 
-The overnight implementation does not yet put \(z\) and \(\mu\) inside the
-Bellman recursion. The household policies are still solved on the baseline
-state \(x=(b,d,i,a,n,s)\). The augmented objects are diagnostic smoke-test
-accounting and should not be treated as an accepted structural HANK/mortgage
-implementation.
+The first overnight implementation did not put \(z\) and \(\mu\) inside the
+Bellman recursion. V3 and later correct this for \(z\): the HANK earnings
+state is now structural in values, policies, and the forward distribution.
+The mortgage-account state \(\mu\) remains diagnostic only and should not be
+treated as an accepted structural default/mortgage implementation.
 
 The generated `REPORT.md` states this explicitly and gives the branch verdict.
 
@@ -134,3 +142,27 @@ See `REPORT_HANK_Z_BORROWING_WEDGE.md`,
 `results_hank_z_borrowing_wedge.csv`,
 `diagnostics_hank_z_borrowing_wedge.csv`, and
 `hank_z_borrowing_wedge.log`.
+
+## Fifth-Pass V5 HANK-z Outside-Option Closure
+
+`run_income_mortgage_risk_v5_hank_z_outside_closure.py` switches the HANK-\(z\)
+GE loop to the paper-facing outside-option scale closure. It first solves a
+baseline HANK-\(z\) equilibrium, calibrates the outside value and residual
+outside-born flow \(M\) so the baseline has \(S=1\), and then solves the
+`accounting_scale_prices` equilibrium:
+\[
+S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
+\]
+
+The accepted `Nb=30`, `Nz=7` run uses \(\rho_z=0.95\), unconditional
+\(\sigma_z=0.35\), and a separate entry scale \(\kappa_E=10^6\). A separate
+\(\kappa_E\) is required because the outside option compares lifetime-utility
+levels; reusing the incumbent location scale \(\kappa_\ell\) made the outside
+probability jump to zero or one and destabilized the price loop. The accepted
+run converged at strict tolerance with final scale \(S=1.00023\), but remains
+yellow because the un-recalibrated moments are economically poor. See
+`REPORT_V5_HANK_Z_OUTSIDE_CLOSURE.md`,
+`results_income_mortgage_risk_v5_hank_z_outside_closure.csv`,
+`diagnostics_income_mortgage_risk_v5_hank_z_outside_closure.csv`,
+`diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_closure.csv`, and
+`diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_trace.csv`.

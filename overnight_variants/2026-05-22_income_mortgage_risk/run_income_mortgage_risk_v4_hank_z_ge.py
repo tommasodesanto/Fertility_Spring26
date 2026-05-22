@@ -176,9 +176,9 @@ extra state-space cost.
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--nb", type=int, default=30)
-    parser.add_argument("--nz", type=int, default=3, choices=[3, 5])
-    parser.add_argument("--rho-z", type=float, default=0.82)
-    parser.add_argument("--sigma-z", type=float, default=0.28)
+    parser.add_argument("--nz", type=int, default=7)
+    parser.add_argument("--rho-z", type=float, default=0.95)
+    parser.add_argument("--sigma-z", type=float, default=0.35)
     parser.add_argument("--max-iter-eq", type=int, default=35)
     parser.add_argument("--tol-eq", type=float, default=5e-4)
     parser.add_argument("--quiet", action="store_true")

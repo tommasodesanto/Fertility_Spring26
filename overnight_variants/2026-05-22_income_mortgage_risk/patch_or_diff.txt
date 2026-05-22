@@ -63,3 +63,54 @@ Current deliverables
 - `diagnostics_income_mortgage_risk_v4_hank_z_ge_trace.csv`
 - `REPORT_V4_HANK_Z_GE.md`
 - `income_mortgage_risk_v4_hank_z_ge.log`
+
+Outside-option closure and serious income grid added on 2026-05-22
+------------------------------------------------------------------
+- `dt_cp_model/solver.py`
+  - Replaces the ad hoc `Nz=3/5` income process with a generic Rouwenhorst
+    Markov approximation.
+  - Interprets `sigma_z` as the unconditional standard deviation of log
+    earnings.
+  - Fixes the small Markov-chain stationary-distribution helper to use power
+    iteration. The old eigenvector/clipping implementation could incorrectly
+    return uniform weights for the Rouwenhorst chain.
+  - Adds outside-option scale diagnostics to the HANK-\(z\) GE trace.
+- `run_income_mortgage_risk_v3_hank_z.py`
+  - Defaults to `Nz=7`, `rho_z=0.95`, `sigma_z=0.35`.
+- `run_income_mortgage_risk_v4_hank_z_ge.py`
+  - Defaults to `Nz=7`, `rho_z=0.95`, `sigma_z=0.35`.
+- `run_income_mortgage_risk_v5_hank_z_outside_closure.py`
+  - New driver for the paper-facing outside-option closure.
+  - Solves a baseline HANK-\(z\) equilibrium, calibrates \(q^E\), \(\bar W^E\),
+    and the residual outside-born flow \(M\) so baseline scale is unchanged,
+    then runs the `accounting_scale_prices` GE loop.
+  - Writes closure diagnostics, trace, target/model moment table, JSON log, and
+    report.
+
+V5 validation
+-------------
+- Command:
+  `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4`
+- accepted: `True`
+- convergence reason: `strict_tol`
+- iterations: `13`
+- final equilibrium error: `0.0003982321513865683`
+- final scale factor: `1.0002268971160209`
+- final city-entry probability: `0.900080860860641`
+- outside probability: `0.09991913913935903`
+- elapsed seconds: `461.12`
+- SMM loss: `312.11023509025733`
+- verdict: yellow. The closure works numerically, but the un-recalibrated
+  HANK-\(z\) economics break several core moments: fertility is too low and too
+  late, the fertility and ownership gradients flip sign, and liquid wealth is
+  too high.
+
+Additional current deliverables
+-------------------------------
+- `run_income_mortgage_risk_v5_hank_z_outside_closure.py`
+- `results_income_mortgage_risk_v5_hank_z_outside_closure.csv`
+- `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure.csv`
+- `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_closure.csv`
+- `diagnostics_income_mortgage_risk_v5_hank_z_outside_closure_trace.csv`
+- `REPORT_V5_HANK_Z_OUTSIDE_CLOSURE.md`
+- `income_mortgage_risk_v5_hank_z_outside_closure.log`

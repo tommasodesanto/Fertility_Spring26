@@ -5,15 +5,16 @@ Date: 2026-05-22
 ## Implemented Scope
 
 Test 1 is now the standard HANK-style income-risk branch, not a two-new-state
-mortgage branch. `run_income_mortgage_risk_v4_hank_z_ge.py` puts one finite
-idiosyncratic earnings state \(z\) directly into the copied Bellman arrays,
-policy arrays, fertility/location probabilities, tenure choices, and forward
-distribution, then solves the copied price and entry fixed point. The state is
-\((b,d,i,a,n,s,z)\), with \(N_z=3\). The mortgage-account object \(\mu\) is not
-structural in this decision run. The 2026-05-22 engineering pass added a
-compiled HANK-\(z\) forward-distribution kernel for the GE loop; this preserves
-the V4 moments to numerical tolerance and keeps the final full-statistics pass
-for reporting.
+mortgage branch. `run_income_mortgage_risk_v5_hank_z_outside_closure.py` puts
+one finite idiosyncratic earnings state \(z\) directly into the copied Bellman
+arrays, policy arrays, fertility/location probabilities, tenure choices, and
+forward distribution, then solves the copied price and entry fixed point under
+the paper-facing outside-option scale closure. The current serious grid is
+Rouwenhorst \(N_z=7\), \(\rho_z=0.95\), unconditional
+\(\sigma_z=0.35\). The mortgage-account object \(\mu\) is not structural in
+this decision run. The 2026-05-22 engineering pass added a compiled
+HANK-\(z\) forward-distribution kernel for the GE loop; the final
+full-statistics pass is retained for reporting.
 
 Test 2 is now a full type-price developer GE prototype. `run_developer_missing_middle_v3_ge.py`
 updates all six \(p_{iq}\) and \(r_{iq}\) objects for \(i\in\{C,P\}\) and
@@ -27,31 +28,31 @@ thresholds but are not used for discrete shutdown.
 Current benchmark values are from `CALIBRATION_STATUS.md`. Variant values are
 coarse smoke outputs, not full recalibrations.
 
-| Moment | Target | Current Benchmark | HANK-z V4 GE | Developer V3 GE |
-|---|---:|---:|---:|---:|
-| `tfr` | 1.700 | 1.898 | 1.858 | 1.899 |
-| `childless_rate` | 0.150 | 0.145 | 0.181 | 0.148 |
-| `mean_age_first_birth` | 26.000 | 33.535 | 34.318 | 33.698 |
-| `tfr_gradient` | 0.133 | 0.119 | 0.087 | 0.110 |
-| `own_rate` | 0.627 | 0.643 | 0.639 | 0.578 |
-| `own_gradient` | 0.170 | 0.139 | -0.066 | 0.018 |
-| `own_family_gap` | 0.110 | 0.114 | 0.154 | 0.070 |
-| `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 6.180 | 6.500 |
-| `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.800 | 8.200 |
-| `housing_increment_0to1` | 0.664 | 0.441 | 0.415 | 0.418 |
-| `housing_increment_1to2` | 0.566 | 0.192 | 0.402 | 0.252 |
-| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.935 | 0.815 |
-| `center_share_nonparents` | 0.494 | 0.405 | 0.375 | 0.412 |
-| `center_share_newparents` | 0.416 | 0.382 | 0.372 | 0.394 |
-| `migration_rate` | 0.032 | 0.035 | 0.035 | 0.035 |
-| `old_age_own_rate` | 0.863 | 0.947 | 0.772 | 0.767 |
-| `old_age_parent_childless_gap` | 0.070 | 0.062 | 0.004 | -0.044 |
-| `inv_pop_share_C` | 0.450 | 0.441 | 0.433 | 0.447 |
-| `inv_rent_ratio_C_over_P` | 1.140 | 1.182 | 1.186 | 1.178 |
+| Moment | Target | Current Benchmark | HANK-z V4 GE | HANK-z V5 Outside | Developer V3 GE |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.700 | 1.898 | 1.858 | 1.562 | 1.899 |
+| `childless_rate` | 0.150 | 0.145 | 0.181 | 0.351 | 0.148 |
+| `mean_age_first_birth` | 26.000 | 33.535 | 34.318 | 35.279 | 33.698 |
+| `tfr_gradient` | 0.133 | 0.119 | 0.087 | -0.194 | 0.110 |
+| `own_rate` | 0.627 | 0.643 | 0.639 | 0.608 | 0.578 |
+| `own_gradient` | 0.170 | 0.139 | -0.066 | -0.127 | 0.018 |
+| `own_family_gap` | 0.110 | 0.114 | 0.154 | 0.354 | 0.070 |
+| `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 6.180 | 6.001 | 6.500 |
+| `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.800 | 6.800 | 8.200 |
+| `housing_increment_0to1` | 0.664 | 0.441 | 0.415 | 0.589 | 0.418 |
+| `housing_increment_1to2` | 0.566 | 0.192 | 0.402 | 1.494 | 0.252 |
+| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.935 | 1.873 | 0.815 |
+| `center_share_nonparents` | 0.494 | 0.405 | 0.375 | 0.233 | 0.412 |
+| `center_share_newparents` | 0.416 | 0.382 | 0.372 | 0.371 | 0.394 |
+| `migration_rate` | 0.032 | 0.035 | 0.035 | 0.033 | 0.035 |
+| `old_age_own_rate` | 0.863 | 0.947 | 0.772 | 0.753 | 0.767 |
+| `old_age_parent_childless_gap` | 0.070 | 0.062 | 0.004 | 0.263 | -0.044 |
+| `inv_pop_share_C` | 0.450 | 0.441 | 0.433 | 0.385 | 0.447 |
+| `inv_rent_ratio_C_over_P` | 1.140 | 1.182 | 1.186 | 1.156 | 1.178 |
 
 ## Dimensions And Loops
 
-| Object | Current Benchmark | HANK-z V4 GE | Developer V3 GE |
+| Object | Current Benchmark | HANK-z V5 Outside | Developer V3 GE |
 |---|---:|---:|---:|
 | household state | \((b,d,i,a,n,s)\) | \((b,d,i,a,n,s,z)\) | \((b,d,i,a,n,s)\) |
 | \(b\) states | 80 | 30 | 30 |
@@ -60,30 +61,32 @@ coarse smoke outputs, not full recalibrations.
 | ages | 60 | 60 | 60 |
 | fertility states | 4 | 4 | 4 |
 | child-age states | 7 | 7 | 7 |
-| \(z\) states | 0 | 3 | 0 |
+| \(z\) states | 0 | 7 | 0 |
 | \(\mu\) states | 0 | 0 | 0 |
 | price dimensions | \(p_i\), 2 prices | \(p_i\), 2 prices | \(p_{iq}\), 6 prices |
 | rent dimensions | scalar user cost by \(i\) | scalar user cost by \(i\) | \(r_{iq}\), 6 rents |
-| fixed-point loop | scalar prices plus entry | scalar prices plus entry | all type prices plus entry |
+| closure / fixed-point loop | renewal-valve prices plus entry | outside-option scale closure, scalar prices plus entry | all type prices plus entry |
 | accepted GE run | live benchmark | yes, strict tolerance | yes, coarse type-price tolerance |
-| cost category | benchmark reference | expensive, with compiled \(z\)-distribution GE loop | expensive |
+| cost category | benchmark reference | project-scale | expensive |
 
 ## Verdicts
 
 | Branch | Verdict | Reason |
 |---|---|---|
-| Branch 1: HANK-z income risk | yellow | Full GE clears with a real Markov \(z\) state and non-degenerate risk diagnostics, but the ownership gradient flips sign and young liquid wealth overshoots sharply. |
+| Branch 1: HANK-z income risk | yellow | Full GE clears with a real Rouwenhorst \(z\) state and the outside-option closure, but the un-recalibrated moments are not acceptable: gradients flip sign, fertility is too low/late, and young liquid wealth overshoots sharply. |
 | Branch 2: developer missing-middle supply | yellow | Full type-price GE clears after the realized-rent fix and middle demand is non-degenerate, but the room screen does not improve, \(H01\) falls, and the ownership gradient is nearly flat. |
 
 ## Recommendation
 
-Recommendation: **promote Branch 1 to the live implementation first**.
+Recommendation: **code Branch 1 first, but only as a controlled live branch with
+immediate recalibration diagnostics**.
 
 The HANK-z branch is the cleaner next live branch because it is the canonical
-one-state income-risk extension the user asked for, and it already clears in
-the copied GE loop. When moving it out of `overnight_variants/`, carry over
-exactly one new state \(z\) first. Do not add \(\mu\) in the same live branch;
-the current evidence says the next problem is
+one-state income-risk extension the user asked for, it uses a standard
+Rouwenhorst process, and it now clears in the copied GE loop under the
+paper-facing outside-option closure. When moving it out of
+`overnight_variants/`, carry over exactly one new state \(z\) first. Do not add
+\(\mu\) in the same live branch; the current evidence says the next problem is
 recalibrating the HANK-z economy and disciplining transitions, not expanding the
 state space again.
 
@@ -105,10 +108,20 @@ ladder before another solver merge.
 
 ## Failure Modes
 
-- Branch 1 failure mode: the \(z\) state is economically active, but the
-  ownership gradient is \(-0.066\) versus target \(0.170\), and young liquid
-  wealth/income is 0.935 versus target 0.600. This is a recalibration and
-  transition-discipline problem.
+- Branch 1 fixed closure issue: the first outside-option attempt reused
+  \(\kappa_\ell\) for the entry/outside margin. That made \(q^E\) jump to
+  zero or one because entry values are lifetime-utility objects. The accepted
+  V5 run uses a separate \(\kappa_E=10^6\), keeps \(q^E=0.90008\), and has
+  final scale \(S=1.00023\).
+- Branch 1 fixed income-grid issue: the Rouwenhorst transition was correct,
+  but the stationary-distribution helper initially clipped a signed eigenvector
+  and returned uniform weights. It now uses power iteration and reports the
+  correct binomial stationary weights.
+- Branch 1 remaining failure mode: the \(z\) state is economically active and
+  the closure works, but the ownership gradient is \(-0.127\) versus target
+  \(0.170\), the fertility gradient is \(-0.194\) versus target \(0.133\),
+  and young liquid wealth/income is 1.873 versus target 0.600. This is a
+  recalibration and transition-discipline problem.
 - Branch 1 implementation boundary: \(\mu\) is deliberately absent from the GE
   decision run. The earlier \(\mu\) work remains diagnostic and should not be
   interpreted as a solved mortgage/default account.
@@ -133,7 +146,7 @@ Branch 1 full GE HANK-z:
 
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
-/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --tol-eq 5e-4
 ```
 
 Branch 2 full GE developer supply:
