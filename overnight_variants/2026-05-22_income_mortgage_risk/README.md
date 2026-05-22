@@ -25,6 +25,13 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v3_hank_z.py --quiet --nb 30 --nz 3
 ```
 
+The full-equilibrium HANK earnings-risk driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+```
+
 ## Implemented Objects
 
 - Earnings grid \(z\in\{-0.28,0,0.28\}\) with a symmetric persistent Markov
@@ -78,3 +85,14 @@ prototype at copied benchmark prices, and \(\mu\) is not yet structural. Adding
 amortization, sale, and default. See `REPORT_V3_HANK_Z.md`,
 `results_income_mortgage_risk_v3_hank_z.csv`, and
 `diagnostics_income_mortgage_risk_v3_hank_z.csv`.
+
+## Fourth-Pass V4 HANK-z Full Equilibrium
+
+`run_income_mortgage_risk_v4_hank_z_ge.py` runs the same structural \(z\)-state
+household problem inside the copied equilibrium price/entry loop. This
+supersedes the V3 fixed-price result as the relevant Branch 1 smoke evidence.
+On the coarse `Nb=30`, `Nz=3` run, it accepted at strict tolerance in 15
+iterations and took 85.56 seconds. See `REPORT_V4_HANK_Z_GE.md`,
+`results_income_mortgage_risk_v4_hank_z_ge.csv`,
+`diagnostics_income_mortgage_risk_v4_hank_z_ge.csv`, and
+`diagnostics_income_mortgage_risk_v4_hank_z_ge_trace.csv`.

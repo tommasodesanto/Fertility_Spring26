@@ -2833,6 +2833,351 @@ def solve_partial_equilibrium_hank_z(
     return sol, P, p_eq
 
 
+def solve_equilibrium_hank_z(
+    p_init: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    *,
+    nz: int = 3,
+    rho_z: float = 0.82,
+    sigma_z: float = 0.28,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    """Full price/entry equilibrium loop for the structural z-state prototype."""
+
+    p = np.asarray(p_init, dtype=float).reshape(-1)
+    entry_closure = uses_outside_option_closure(P)
+    renewal_closure = uses_renewal_valve_closure(P)
+    scale_price_closure = uses_accounting_scale_price_closure(P) or renewal_closure
+    if scale_price_closure and not (
+        renewal_closure
+        or bool(getattr(P, "outside_value_is_calibrated", False))
+        or bool(getattr(P, "allow_uncalibrated_outside_value", False))
+    ):
+        raise ValueError("HANK-z GE requires a calibrated outside value or renewal valve when using scale-price closure.")
+
+    if entry_closure:
+        entry_by_loc = np.maximum(np.asarray(P.entry_by_loc, dtype=float).reshape(-1), 0.0)
+        if entry_by_loc.size != P.I or np.sum(entry_by_loc) <= 0:
+            entry_shares0 = np.maximum(np.asarray(P.entry_shares, dtype=float).reshape(-1), 0.0)
+            entry_shares0 = entry_shares0 / entry_shares0.sum() if entry_shares0.sum() > 0 else np.ones(P.I) / P.I
+            entry_by_loc = float(getattr(P, "E_total", 1 / P.J)) * entry_shares0
+        entry_shares, E_total = set_entry_masses(P, entry_by_loc)
+    else:
+        entry_shares = np.maximum(np.asarray(P.entry_shares, dtype=float).reshape(-1), 0.0)
+        entry_shares = entry_shares / entry_shares.sum() if entry_shares.sum() > 0 else np.ones(P.I) / P.I
+        E_total = P.E_total
+        P.entry_shares = entry_shares
+        P.entry_by_loc = E_total * entry_shares
+        entry_by_loc = P.entry_by_loc.copy()
+
+    lam = P.lambda_eq
+    lp_damp = lam * np.ones(P.I)
+    le_damp = lam * np.ones(P.I)
+    dp_prev = np.zeros(P.I)
+    de_prev = np.zeros(P.I)
+    pts = p.copy()
+    ets = entry_by_loc.copy() if entry_closure else entry_shares.copy()
+    best_err = np.inf
+    best_p = p.copy()
+    best_entry = entry_by_loc.copy() if entry_closure else entry_shares.copy()
+    best_snap: dict[str, Any] = {}
+    best_iter = 0
+    prev_err = np.inf
+    stall_count = 0
+    accepted = False
+    strict_converged = False
+    accepted_reason = "max_iter"
+    iterations_completed = 0
+    final_eq_error = np.nan
+    t_full = 0.0
+    t_dist = 0.0
+    n_full = 0
+    n_dist = 0
+
+    SD = precompute_shared(P, b_grid)
+    zspec = hank_income_risk_process(nz=nz, rho_z=rho_z, sigma_z=sigma_z)
+    collect_trace = bool(getattr(P, "collect_ge_trace", False))
+    ge_trace: list[dict] | None = [] if collect_trace else None
+
+    if verbose:
+        print(f"  HANK-z GE: lam={lam:.2f}, tol={P.tol_eq:.1e}, Nz={nz}")
+
+    for it in range(1, P.max_iter_eq + 1):
+        r = P.user_cost_rate * p
+        P.eq_iter = it
+        t0 = time.perf_counter()
+        V, c_pol, hR_pol, bp_pol, tc, lp_j, fp, fv, _ = solve_bellman_full_hank_z(r, p, P, b_grid, SD, zspec)
+        t_full += time.perf_counter() - t0
+        n_full += 1
+
+        t0 = time.perf_counter()
+        g_z, stats, collapsed = forward_distribution_hank_z(
+            bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, zspec, fast_stats=True
+        )
+        t_dist += time.perf_counter() - t0
+        n_dist += 1
+        V_entry = np.tensordot(V, zspec.stationary, axes=([-1], [0]))
+
+        scale_info = None
+        if scale_price_closure:
+            scale_state = SimpleNamespace(
+                V=V_entry,
+                entry_rate=stats.entry_rate,
+                entrants_mature_by_loc=stats.entrants_mature_by_loc,
+                entrants_mature_total=stats.entrants_mature_total,
+                total_mass=stats.total_mass,
+                housing_demand=stats.housing_demand,
+            )
+            scale_info = renewal_population_scale(scale_state, P, b_grid) if renewal_closure else accounting_population_scale(scale_state, P, b_grid)
+            Hd = np.asarray(scale_info.implied_housing_demand, dtype=float)
+            if not scale_info.finite_stationary_scale or not np.all(np.isfinite(Hd)):
+                Hd = stats.housing_demand
+        else:
+            Hd = stats.housing_demand
+
+        p_target = np.zeros(P.I)
+        for i in range(P.I):
+            hd = max(Hd[i], P.housing_demand_floor_for_supply)
+            p_target[i] = P.r_bar[i] * (hd / P.H0[i]) ** (1 / P.xi_supply[i]) / P.user_cost_rate
+
+        if entry_closure:
+            entry_target, entry_info = outside_option_entry_target(V_entry, b_grid, stats, P)
+        elif scale_price_closure and scale_info is not None and scale_info.finite_stationary_scale:
+            if renewal_closure:
+                entry_target = np.asarray(scale_info.conditional_entry_shares, dtype=float)
+            else:
+                entry_level_target = np.asarray(scale_info.implied_entry_by_loc, dtype=float)
+                et_sum = float(np.sum(entry_level_target))
+                entry_target = entry_level_target / et_sum if et_sum > 1e-14 else stats.mature_entry_shares.copy()
+            entry_info = {
+                "entry_values": getattr(scale_info, "entry_values", np.full(P.I, np.nan)),
+                "city_entry_prob": getattr(scale_info, "city_entry_prob", np.full(P.I, np.nan)),
+                "outside_entry_prob": getattr(scale_info, "outside_entry_prob", np.nan),
+                "potential_entrant_mass": getattr(scale_info, "implied_potential_entrant_mass", np.nan),
+                "outside_entry_mass": getattr(scale_info, "implied_outside_entry_mass", np.nan),
+                "mature_cityborn_flow": scale_info.reference_mature_cityborn_flow,
+                "scale_factor": scale_info.scale_factor,
+                "implied_total_population": scale_info.implied_total_population,
+            }
+        else:
+            entry_target = stats.mature_entry_shares.copy()
+            entry_info = {}
+
+        if P.adaptive_price_damping:
+            fw = P.target_filter_weight
+            pts = fw * p_target + (1 - fw) * pts
+            if entry_closure and str(getattr(P, "entry_level_update", "log")).lower() == "log":
+                floor = max(float(getattr(P, "entry_mass_floor", 1e-12)), 1e-14)
+                ets = np.exp(fw * np.log(np.maximum(entry_target, floor)) + (1 - fw) * np.log(np.maximum(ets, floor)))
+            else:
+                ets = fw * entry_target + (1 - fw) * ets
+            pt = pts
+            et = ets
+        else:
+            pt = p_target
+            et = entry_target
+
+        err_p = float(np.max(np.abs(p_target - p) / np.maximum(np.abs(p), 1e-6)))
+        if entry_closure:
+            floor = max(float(getattr(P, "entry_mass_floor", 1e-12)), 1e-14)
+            err_e = float(np.max(np.abs(np.log(np.maximum(entry_target, floor)) - np.log(np.maximum(entry_by_loc, floor)))))
+        else:
+            err_e = float(np.max(np.abs(entry_target - entry_shares)))
+        ov = max(err_p, err_e)
+        iterations_completed = it
+        final_eq_error = ov
+
+        if collect_trace:
+            ge_trace.append({
+                "iter": int(it),
+                "p": p.tolist(),
+                "entry_shares": entry_shares.tolist(),
+                "entry_total": float(E_total),
+                "err_p": float(err_p),
+                "err_e": float(err_e),
+                "err": float(ov),
+                "own_rate": float(stats.own_rate),
+                "TFR": float(2 * stats.mean_parity),
+                "pop_share": stats.pop_share.tolist() if hasattr(stats.pop_share, "tolist") else list(stats.pop_share),
+                "mode": "Fz",
+            })
+            if scale_price_closure:
+                ge_trace[-1]["scale_factor"] = float(entry_info.get("scale_factor", np.nan))
+                ge_trace[-1]["implied_total_population"] = float(entry_info.get("implied_total_population", np.nan))
+
+        if ov < best_err:
+            best_err = ov
+            best_iter = it
+            best_p = p.copy()
+            best_entry = entry_by_loc.copy() if entry_closure else entry_shares.copy()
+            best_snap = {
+                "V": V,
+                "V_entry": V_entry,
+                "c_pol": c_pol,
+                "hR_pol": hR_pol,
+                "bp_pol": bp_pol,
+                "tc": tc,
+                "lp_j": lp_j,
+                "fp": fp,
+                "fv": fv,
+                "g_z": g_z,
+                "collapsed": collapsed,
+                "r": r.copy(),
+                "p": p.copy(),
+            }
+
+        if verbose:
+            print(
+                f"  Fz{it:3d}: ep={err_p:.4f} ee={err_e:.4f} "
+                f"own={100 * stats.own_rate:.1f}% TFR={2 * stats.mean_parity:.2f} "
+                f"pop=[{stats.pop_share[0]:.2f},{stats.pop_share[1]:.2f}]"
+            )
+
+        if ov < P.tol_eq:
+            accepted_reason = "strict_tol"
+            accepted = True
+            strict_converged = True
+            break
+        if it > 10 and best_err <= P.tol_eq:
+            accepted_reason = "best_within_tol"
+            accepted = True
+            strict_converged = True
+            break
+        if it > 25 and best_err < 10 * P.tol_eq:
+            accepted_reason = "soft_tol_10x"
+            accepted = True
+            break
+        if it > 50 and best_err < 0.02:
+            accepted_reason = "capped_best_err"
+            accepted = True
+            break
+
+        stall_count = stall_count + 1 if ov >= prev_err * 0.999 else 0
+        prev_err = ov
+
+        if P.adaptive_price_damping:
+            dp = pt - p
+            entry_state = entry_by_loc if entry_closure else entry_shares
+            if entry_closure and str(getattr(P, "entry_level_update", "log")).lower() == "log":
+                floor = max(float(getattr(P, "entry_mass_floor", 1e-12)), 1e-14)
+                max_step = max(float(getattr(P, "entry_log_step_max", 1.0)), 1e-6)
+                de = np.log(np.maximum(et, floor)) - np.log(np.maximum(entry_state, floor))
+                de = np.clip(de, -max_step, max_step)
+            else:
+                de = et - entry_state
+            fp_mask = (np.abs(dp_prev) > 1e-12) & (np.sign(dp) != np.sign(dp_prev))
+            fe_mask = (np.abs(de_prev) > 1e-12) & (np.sign(de) != np.sign(de_prev))
+            lp_damp[fp_mask] = np.maximum(P.lambda_price_min, P.adaptive_damping_decay * lp_damp[fp_mask])
+            lp_damp[~fp_mask] = np.minimum(P.lambda_price_max, P.adaptive_damping_grow * lp_damp[~fp_mask])
+            le_damp[fe_mask] = np.maximum(P.lambda_entry_min, P.adaptive_damping_decay * le_damp[fe_mask])
+            le_damp[~fe_mask] = np.minimum(P.lambda_entry_max, P.adaptive_damping_grow * le_damp[~fe_mask])
+            if fp_mask.sum() + fe_mask.sum() >= 2 * P.I:
+                lp_damp = np.maximum(P.lambda_price_min, P.cycle_guard_factor * lp_damp)
+                le_damp = np.maximum(P.lambda_entry_min, P.cycle_guard_factor * le_damp)
+            if it > 15 and ov > 1.05 * best_err:
+                lp_damp = np.maximum(P.lambda_price_min, 0.9 * lp_damp)
+                le_damp = np.maximum(P.lambda_entry_min, 0.9 * le_damp)
+            p = p + lp_damp * dp
+            if entry_closure:
+                if str(getattr(P, "entry_level_update", "log")).lower() == "log":
+                    floor = max(float(getattr(P, "entry_mass_floor", 1e-12)), 1e-14)
+                    entry_by_loc = np.exp(np.log(np.maximum(entry_by_loc, floor)) + le_damp * de)
+                else:
+                    entry_by_loc = entry_by_loc + le_damp * de
+            else:
+                entry_shares = entry_shares + le_damp * de
+            dp_prev = dp
+            de_prev = de
+        else:
+            p = p + lam * (pt - p)
+            if entry_closure:
+                entry_by_loc = entry_by_loc + lam * (et - entry_by_loc)
+            else:
+                entry_shares = entry_shares + lam * (et - entry_shares)
+
+        if P.enforce_price_bounds:
+            p = np.clip(p, P.p_min, P.p_max)
+        if entry_closure:
+            entry_by_loc = np.maximum(entry_by_loc, 0.0)
+            if P.enforce_entry_share_floor:
+                entry_floor = max(float(getattr(P, "entry_mass_floor", 0.0)), 0.0)
+                if entry_floor > 0:
+                    entry_by_loc = np.maximum(entry_by_loc, entry_floor)
+            entry_shares, E_total = set_entry_masses(P, entry_by_loc)
+        else:
+            if P.enforce_entry_share_floor:
+                entry_shares = np.maximum(entry_shares, P.entry_share_floor)
+            entry_shares = np.maximum(entry_shares, 0.0)
+            entry_shares = entry_shares / entry_shares.sum() if entry_shares.sum() > 0 else np.ones(P.I) / P.I
+            P.entry_shares = entry_shares
+            P.entry_by_loc = E_total * entry_shares
+            entry_by_loc = P.entry_by_loc.copy()
+
+    if entry_closure:
+        entry_shares, E_total = set_entry_masses(P, best_entry)
+    else:
+        P.entry_shares = best_entry
+        P.entry_by_loc = E_total * best_entry
+    p_eq = best_p
+    S = best_snap
+    g_z, full_stats, collapsed = forward_distribution_hank_z(
+        S["bp_pol"], S["hR_pol"], S["tc"], S["lp_j"], S["fp"], S["r"], S["p"], P, b_grid, SD, zspec, fast_stats=False
+    )
+    V_entry = np.tensordot(S["V"], zspec.stationary, axes=([-1], [0]))
+    sol = pack_solution(
+        V_entry,
+        collapsed["c_pol"],
+        collapsed["hR_pol"],
+        collapsed["bp_pol"],
+        collapsed["tenure_choice"],
+        collapsed["loc_probs"],
+        collapsed["fert_probs"],
+        collapsed["fert_value"],
+        collapsed["g"],
+        full_stats,
+        P.w_hat,
+        S["p"],
+    )
+    sol.hank_z = SimpleNamespace(
+        structural_bellman_augmented=True,
+        full_equilibrium=True,
+        z_grid=zspec.z_grid,
+        Pi_z=zspec.Pi_z,
+        stationary_z=zspec.stationary,
+        V_z=S["V"],
+        c_pol_z=S["c_pol"],
+        hR_pol_z=S["hR_pol"],
+        bp_pol_z=S["bp_pol"],
+        tenure_choice_z=S["tc"],
+        loc_probs_z=S["lp_j"],
+        fert_probs_z=S["fp"],
+        fert_value_z=S["fv"],
+        g_z=g_z,
+        diagnostics=compute_hank_z_diagnostics(g_z, S["hR_pol"], S["fp"], P, b_grid, zspec),
+    )
+    sol.timings = {
+        "bellman_hank_z": t_full,
+        "distribution_hank_z": t_dist,
+        "n_full": n_full,
+        "n_dist": n_dist,
+        "best_eq_error": best_err,
+        "best_eq_iter": best_iter,
+        "final_eq_error": final_eq_error,
+        "iterations_completed": iterations_completed,
+        "accepted": accepted,
+        "strict_converged": strict_converged,
+        "convergence_reason": accepted_reason,
+        "population_closure": str(getattr(P, "population_closure", "normalized")),
+        "runtime_category": "expensive" if nz <= 3 and len(b_grid) <= 40 else "project-scale",
+    }
+    if scale_price_closure:
+        sol.accounting_scale = renewal_population_scale(sol, P, b_grid) if renewal_closure else accounting_population_scale(sol, P, b_grid)
+    if collect_trace:
+        sol.ge_trace = ge_trace
+    return sol, P, p_eq
+
+
 def solve_bellman_full_hank_z(
     r_hat: np.ndarray,
     p_hat: np.ndarray,
@@ -3137,6 +3482,7 @@ def forward_distribution_hank_z(
     b_grid: np.ndarray,
     SD: SimpleNamespace,
     zspec: SimpleNamespace,
+    fast_stats: bool = False,
 ) -> tuple[np.ndarray, SimpleNamespace, dict[str, np.ndarray]]:
     """Forward mass transition with the Markov earnings state."""
 
@@ -3210,6 +3556,7 @@ def forward_distribution_hank_z(
     addchild_es3_two_plus_sum = addchild_es3_two_plus_mass = 0.0
     onechild_es3_pre_sum = onechild_es3_post_sum = onechild_es3_mass = 0.0
     twoplus_es3_pre_sum = twoplus_es3_post_sum = twoplus_es3_mass = 0.0
+    compute_event_stats = not fast_stats
 
     for j in range(J - 1):
         if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
@@ -3230,7 +3577,7 @@ def forward_distribution_hank_z(
 
                 birth_mass = np.sum(mbp[:, :, :, 1:], axis=3)
                 birth_mass_total = float(np.sum(birth_mass))
-                if birth_mass_total > 1e-12 and (j + event_horizon) < J:
+                if compute_event_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
                     pre_h = mean_housing_childless_weighted_z(birth_mass, j, hR_pol, P, iz)
                     birth_cohort = np.zeros((Nb, nt, I, npar, ncs, Nz))
                     birth_cohort[:, :, :, 1:, 1, iz] = mbp[:, :, :, 1:]
@@ -3379,7 +3726,10 @@ def forward_distribution_hank_z(
         entrants_mature_total *= sc
 
     collapsed = collapse_hank_z_for_statistics(g, bp_pol, hR_pol, tenure_choice, loc_probs, fert_probs, p_hat, P, b_grid)
-    stats = compute_statistics(collapsed["g"], collapsed["fert_probs"], collapsed["loc_probs"], P, b_grid, p_hat, collapsed["hR_pol"])
+    if fast_stats:
+        stats = compute_eq_stats(collapsed["g"], P, b_grid, p_hat, collapsed["hR_pol"])
+    else:
+        stats = compute_statistics(collapsed["g"], collapsed["fert_probs"], collapsed["loc_probs"], P, b_grid, p_hat, collapsed["hR_pol"])
     stats.total_births_kfe = total_births
     stats.births_by_loc = births_by_loc
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
@@ -3387,20 +3737,26 @@ def forward_distribution_hank_z(
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
-    stats.housing_increment_0to1_eventstudy_t3 = (
-        birth_es3_post_sum / birth_es3_mass - birth_es3_pre_sum / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
-    )
-    stats.housing_increment_1to2_proxy_t3 = (
-        addchild_es3_two_plus_sum / addchild_es3_two_plus_mass - addchild_es3_one_sum / addchild_es3_one_mass
-        if addchild_es3_one_mass > 1e-12 and addchild_es3_two_plus_mass > 1e-12
-        else 0.0
-    )
-    stats.housing_increment_0to1_onechild_eventstudy_t3 = (
-        onechild_es3_post_sum / onechild_es3_mass - onechild_es3_pre_sum / onechild_es3_mass if onechild_es3_mass > 1e-12 else 0.0
-    )
-    stats.housing_increment_0to2plus_eventstudy_t3 = (
-        twoplus_es3_post_sum / twoplus_es3_mass - twoplus_es3_pre_sum / twoplus_es3_mass if twoplus_es3_mass > 1e-12 else 0.0
-    )
+    if compute_event_stats:
+        stats.housing_increment_0to1_eventstudy_t3 = (
+            birth_es3_post_sum / birth_es3_mass - birth_es3_pre_sum / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
+        )
+        stats.housing_increment_1to2_proxy_t3 = (
+            addchild_es3_two_plus_sum / addchild_es3_two_plus_mass - addchild_es3_one_sum / addchild_es3_one_mass
+            if addchild_es3_one_mass > 1e-12 and addchild_es3_two_plus_mass > 1e-12
+            else 0.0
+        )
+        stats.housing_increment_0to1_onechild_eventstudy_t3 = (
+            onechild_es3_post_sum / onechild_es3_mass - onechild_es3_pre_sum / onechild_es3_mass if onechild_es3_mass > 1e-12 else 0.0
+        )
+        stats.housing_increment_0to2plus_eventstudy_t3 = (
+            twoplus_es3_post_sum / twoplus_es3_mass - twoplus_es3_pre_sum / twoplus_es3_mass if twoplus_es3_mass > 1e-12 else 0.0
+        )
+    else:
+        stats.housing_increment_0to1_eventstudy_t3 = 0.0
+        stats.housing_increment_1to2_proxy_t3 = 0.0
+        stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
+        stats.housing_increment_0to2plus_eventstudy_t3 = 0.0
     stats.housing_event_horizon = event_horizon
     stats.hank_z_distribution_time = time.perf_counter() - t0
     return g, stats, collapsed

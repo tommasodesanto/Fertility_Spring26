@@ -154,14 +154,51 @@ distribution transition is non-degenerate. It is not green because the solve is
 fixed-price PE, \(\mu\) is not yet structural, the ownership gradient flips
 sign, and young liquid wealth overshoots the target.
 
+## Fourth Pass: Full Equilibrium HANK-z
+
+The V3 fixed-price shortcut was then superseded by
+`run_income_mortgage_risk_v4_hank_z_ge.py`, which runs the structural
+\((b,d,i,a,n,s,z)\) household problem inside the copied equilibrium price and
+entry loop. This is the relevant Branch 1 smoke test. On `Nb=30`, `Nz=3`, the
+loop accepted at strict tolerance in 15 iterations with final error
+\(1.67\times10^{-4}\). Runtime was 85.56 seconds, so the cost category is
+expensive for a coarse prototype.
+
+| Moment | Target | Current Benchmark | HANK-z V4 GE |
+|---|---:|---:|---:|
+| `tfr` | 1.700 | 1.898 | 1.858 |
+| `childless_rate` | 0.150 | 0.145 | 0.181 |
+| `mean_age_first_birth` | 26.000 | 33.535 | 34.318 |
+| `tfr_gradient` | 0.133 | 0.119 | 0.087 |
+| `own_rate` | 0.627 | 0.643 | 0.639 |
+| `own_gradient` | 0.170 | 0.139 | -0.066 |
+| `own_family_gap` | 0.110 | 0.114 | 0.154 |
+| `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 6.180 |
+| `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.800 |
+| `housing_increment_0to1` | 0.664 | 0.441 | 0.415 |
+| `housing_increment_1to2` | 0.566 | 0.192 | 0.402 |
+| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.935 |
+| `center_share_nonparents` | 0.494 | 0.405 | 0.375 |
+| `center_share_newparents` | 0.416 | 0.382 | 0.372 |
+| `migration_rate` | 0.032 | 0.035 | 0.035 |
+| `old_age_own_rate` | 0.863 | 0.947 | 0.772 |
+| `old_age_parent_childless_gap` | 0.070 | 0.062 | 0.004 |
+| `inv_pop_share_C` | 0.450 | 0.441 | 0.433 |
+| `inv_rent_ratio_C_over_P` | 1.140 | 1.182 | 1.186 |
+
+V4 verdict: **yellow**. The equilibrium object exists and clears on the coarse
+grid, so Branch 1 should be understood as one new state \(z\), not a two-state
+\((z,\mu)\) jump. It is not green because the ownership gradient flips sign,
+young liquid wealth overshoots sharply, and the model is not recalibrated.
+
 ## Recommendation
 
-For the income-risk branch, discard V1/V2 as decision evidence and use V3 as
+For the income-risk branch, discard V1/V2 as decision evidence and use V4 as
 the Branch 1 starting point. If the next model branch is meant to support
 income-risk claims, code the HANK-z core first: value functions, policies, and
-the forward distribution over \((b,d,i,a,n,s,z)\), then add \(\mu\) as a second
-finite state with tenure-dependent account transitions. Do not live-merge a
-scenario-mixture version.
+the forward distribution over \((b,d,i,a,n,s,z)\). Do not add \(\mu\) in the
+same live branch. A compact mortgage-account state should be a separate later
+decision after the HANK-z model is stable.
 
 For the supply branch, do another diagnostic before live coding. The corrected
 type map gives a stable price system without destroying ownership, but the room
@@ -182,6 +219,10 @@ live solver merge.
 - Test 1 V3 remaining failure mode: \(z\) is now structural, but the solve is
   fixed-price PE and \(\mu\) is still absent. The HANK-z block creates strong
   precautionary wealth accumulation and flips the prime-age ownership gradient.
+- Test 1 V4 remaining failure mode: full equilibrium clears, but the
+  prime-age ownership gradient still flips and young liquid wealth overshoots.
+  This points to recalibration and transition-discipline work, not to adding
+  another state immediately.
 - Test 2 V1 failure mode: the two-type map treated too much of the owner ladder
   as middle housing, so middle prices became high enough to wipe out ownership.
 - Test 2 V2 remaining failure mode: the corrected \(S/M/L\) type clearing is
@@ -228,4 +269,11 @@ Test 1 V3 HANK-z:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v3_hank_z.py --quiet --nb 30 --nz 3
+```
+
+Test 1 V4 HANK-z full equilibrium:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v4_hank_z_ge.py --quiet --nb 30 --nz 3 --max-iter-eq 35
 ```
