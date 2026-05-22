@@ -18,6 +18,13 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v2_scenarios.py --quiet --nb 40
 ```
 
+The third-pass HANK earnings-risk driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v3_hank_z.py --quiet --nb 30 --nz 3
+```
+
 ## Implemented Objects
 
 - Earnings grid \(z\in\{-0.28,0,0.28\}\) with a symmetric persistent Markov
@@ -53,3 +60,21 @@ This still is not a full structural implementation because there is no single
 Bellman recursion over \((b,d,i,a,n,s,z,\mu)\). See `REPORT_V2.md`,
 `results_income_mortgage_risk_v2.csv`, and
 `diagnostics_income_mortgage_risk_v2.csv`.
+
+## Third-Pass V3 HANK-z
+
+`run_income_mortgage_risk_v3_hank_z.py` implements the standard HANK-style
+idiosyncratic earnings process as a true state. The copied solver carries
+value functions, policies, fertility probabilities, location probabilities,
+tenure choices, and the forward distribution over \((b,d,i,a,n,s,z)\). The
+earnings state follows the finite Markov chain reported in
+`diagnostics_income_mortgage_risk_v3_hank_z.csv`, and continuation values
+average over \(\Pi_z\) after child aging.
+
+This is the correction to the earlier Branch 1 mistake: \(z\) is no longer a
+post-solve label or a scenario loop. The output remains a partial-equilibrium
+prototype at copied benchmark prices, and \(\mu\) is not yet structural. Adding
+\(\mu\) requires tenure-dependent account transitions for purchase,
+amortization, sale, and default. See `REPORT_V3_HANK_Z.md`,
+`results_income_mortgage_risk_v3_hank_z.csv`, and
+`diagnostics_income_mortgage_risk_v3_hank_z.csv`.

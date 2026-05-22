@@ -114,19 +114,60 @@ Second-pass verdicts:
 | Income risk + mortgage account | yellow | \(z\) and \(\mu\) now affect solved choices in scenario economies; spreads are large enough to matter, but aggregate childlessness, geography, and old-age ownership gaps deteriorate. |
 | Developer missing-middle supply | yellow | Type clearing is now numerically stable and ownership no longer collapses; still not green because owner rooms worsen and \(H01\) falls. |
 
+## Third Pass: Structural HANK-z
+
+After the user correction that Branch 1 should use the standard HANK object, I
+added `run_income_mortgage_risk_v3_hank_z.py`. This pass puts the finite
+idiosyncratic earnings state \(z\) directly in the copied Bellman arrays,
+policy arrays, fertility and location probabilities, tenure choices, and
+forward distribution. The household state is \((b,d,i,a,n,s,z)\), with
+working-age income \(y_{ia}(z)=(1-\tau_{pay})w_i e_a\exp(z)\). Continuation
+values average over \(\Pi_z\) after child aging. This is fixed-price PE at
+copied benchmark prices, not a full GE calibration, and the mortgage account
+\(\mu\) remains the next structural layer.
+
+| Moment | Target | Current Benchmark | HANK-z V3 |
+|---|---:|---:|---:|
+| `tfr` | 1.700 | 1.898 | 1.880 |
+| `childless_rate` | 0.150 | 0.145 | 0.175 |
+| `mean_age_first_birth` | 26.000 | 33.535 | 34.257 |
+| `tfr_gradient` | 0.133 | 0.119 | 0.085 |
+| `own_rate` | 0.627 | 0.643 | 0.645 |
+| `own_gradient` | 0.170 | 0.139 | -0.079 |
+| `own_family_gap` | 0.110 | 0.114 | 0.160 |
+| `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 6.238 |
+| `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.800 |
+| `housing_increment_0to1` | 0.664 | 0.441 | 0.412 |
+| `housing_increment_1to2` | 0.566 | 0.192 | 0.401 |
+| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.929 |
+| `center_share_nonparents` | 0.494 | 0.405 | 0.393 |
+| `center_share_newparents` | 0.416 | 0.382 | 0.388 |
+| `migration_rate` | 0.032 | 0.035 | 0.035 |
+| `old_age_own_rate` | 0.863 | 0.947 | 0.803 |
+| `old_age_parent_childless_gap` | 0.070 | 0.062 | 0.006 |
+| `inv_pop_share_C` | 0.450 | 0.441 | 0.446 |
+| `inv_rent_ratio_C_over_P` | 1.140 | 1.182 | 1.182 |
+
+V3 verdict: **yellow**. The implementation direction is now correct: \(z\) is
+a real Markov state, ownership varies meaningfully across \(z\), and the
+distribution transition is non-degenerate. It is not green because the solve is
+fixed-price PE, \(\mu\) is not yet structural, the ownership gradient flips
+sign, and young liquid wealth overshoots the target.
+
 ## Recommendation
 
-Do another diagnostic before coding either branch into the live model. The
-second pass makes Branch 2 the better next diagnostic target, not because it is
-ready, but because the corrected type map gives a stable price system without
-destroying ownership. The next Branch 2 diagnostic should vary the type
-boundaries and supply calibration against ACS room-bin targets before any live
-solver merge.
+For the income-risk branch, discard V1/V2 as decision evidence and use V3 as
+the Branch 1 starting point. If the next model branch is meant to support
+income-risk claims, code the HANK-z core first: value functions, policies, and
+the forward distribution over \((b,d,i,a,n,s,z)\), then add \(\mu\) as a second
+finite state with tenure-dependent account transitions. Do not live-merge a
+scenario-mixture version.
 
-Do not code Branch 1 into the live model from the scenario mixture. The margins
-have bite, but the scenario mixture is not a coherent stationary model and it
-breaks too many core moments. Branch 1 should proceed only as an explicit
-state-space expansion over \(z\) and \(\mu\).
+For the supply branch, do another diagnostic before live coding. The corrected
+type map gives a stable price system without destroying ownership, but the room
+screen still does not move cleanly. The next Branch 2 diagnostic should vary
+type boundaries and supply calibration against ACS room-bin targets before any
+live solver merge.
 
 ## Failure Modes
 
@@ -138,6 +179,9 @@ state-space expansion over \(z\) and \(\mu\).
   wedges now move choices, but only through separate scenario solves. The
   output is not a coherent joint distribution over \((z,\mu)\), and it breaks
   childlessness, geography, and the old-age parent-childless ownership gap.
+- Test 1 V3 remaining failure mode: \(z\) is now structural, but the solve is
+  fixed-price PE and \(\mu\) is still absent. The HANK-z block creates strong
+  precautionary wealth accumulation and flips the prime-age ownership gradient.
 - Test 2 V1 failure mode: the two-type map treated too much of the owner ladder
   as middle housing, so middle prices became high enough to wipe out ownership.
 - Test 2 V2 remaining failure mode: the corrected \(S/M/L\) type clearing is
@@ -177,4 +221,11 @@ Test 2 V2:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_developer_missing_middle
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_v2.py --quiet --iterations 5 --nb 50
+```
+
+Test 1 V3 HANK-z:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v3_hank_z.py --quiet --nb 30 --nz 3
 ```
