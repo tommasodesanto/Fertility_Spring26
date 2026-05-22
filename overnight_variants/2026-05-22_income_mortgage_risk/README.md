@@ -99,7 +99,10 @@ amortization, sale, and default. See `REPORT_V3_HANK_Z.md`,
 household problem inside the copied equilibrium price/entry loop. This
 supersedes the V3 fixed-price result as the relevant Branch 1 smoke evidence.
 On the coarse `Nb=30`, `Nz=3` run, it accepted at strict tolerance in 15
-iterations and took 85.56 seconds. See `REPORT_V4_HANK_Z_GE.md`,
+iterations and runs in the expensive-but-workable range after the 2026-05-22
+compiled HANK-\(z\) forward-pass fix. The solver still reports the qualitative
+cost category as expensive because this is a new state dimension and the final
+full-statistics pass is intentionally retained. See `REPORT_V4_HANK_Z_GE.md`,
 `results_income_mortgage_risk_v4_hank_z_ge.csv`,
 `diagnostics_income_mortgage_risk_v4_hank_z_ge.csv`, and
 `diagnostics_income_mortgage_risk_v4_hank_z_ge_trace.csv`.

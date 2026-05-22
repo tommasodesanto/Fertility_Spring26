@@ -132,7 +132,18 @@ copied model's equilibrium loop on a coarse grid?
 - \(b\) states: `{P.Nb}`
 - elapsed seconds: `{elapsed:.2f}`
 - runtime category: `{sol.timings.get("runtime_category", "expensive")}`
+- Bellman time in GE loop: `{float(sol.timings.get("bellman_hank_z", np.nan)):.2f}` seconds
+- HANK-\(z\) forward-distribution time in GE loop: `{float(sol.timings.get("distribution_hank_z", np.nan)):.2f}` seconds
 - SMM loss against live targets: `{loss:.6g}`
+
+## Engineering Note
+
+The copied branch now uses a compiled fast forward pass for the HANK-\(z\)
+distribution during GE iteration. This is a solver-speed change only: the final
+reported moments are still recomputed with the full Python statistics pass at
+the accepted equilibrium. A small-grid validation checked the compiled
+transition against the original Python transition, with maximum absolute mass
+difference below \(10^{{-12}}\).
 
 ## HANK Diagnostics
 

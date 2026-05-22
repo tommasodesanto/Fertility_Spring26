@@ -24,12 +24,23 @@ copied model's equilibrium loop on a coarse grid?
 - best equilibrium error: `0.000167292`
 - best iteration: `15`
 - final equilibrium error: `0.000167292`
-- prices: `[0.505855651256028, 0.6001949358069548]`
+- prices: `[0.50585565125708, 0.6001949358088138]`
 - \(z\) states: `3`
 - \(b\) states: `30`
-- elapsed seconds: `85.56`
+- elapsed seconds: `48.17`
 - runtime category: `expensive`
+- Bellman time in GE loop: `18.46` seconds
+- HANK-\(z\) forward-distribution time in GE loop: `10.74` seconds
 - SMM loss against live targets: `45.9235`
+
+## Engineering Note
+
+The copied branch now uses a compiled fast forward pass for the HANK-\(z\)
+distribution during GE iteration. This is a solver-speed change only: the final
+reported moments are still recomputed with the full Python statistics pass at
+the accepted equilibrium. A small-grid validation checked the compiled
+transition against the original Python transition, with maximum absolute mass
+difference below \(10^{-12}\).
 
 ## HANK Diagnostics
 

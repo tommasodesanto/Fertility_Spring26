@@ -475,6 +475,259 @@ def forward_distribution_fast_kernel(
     return g, total_births, births_by_loc, entrants_mature_by_loc, entrants_mature_total
 
 
+@njit(cache=True)
+def _advance_mass_component_z(
+    g,
+    mass,
+    b_loc,
+    ten_loc,
+    loc,
+    j,
+    nn,
+    cs,
+    iz,
+    tenure_choice,
+    bp_idx,
+    bp_wt,
+    tmx_idx,
+    tmx_wt,
+    Pi_child,
+    Pi_z,
+    K,
+    ncs,
+    Nz,
+    use_stochastic_aging,
+):
+    # HANK-z analogue of _advance_mass_component: tenure choice -> savings
+    # interpolation -> child aging -> Markov earnings transition.
+    if mass == 0.0:
+        return 0.0
+
+    tn = tenure_choice[b_loc, ten_loc, loc, j, nn, cs, iz]
+    kt = tmx_idx[loc, ten_loc, tn, nn, cs, b_loc]
+    wt = tmx_wt[loc, ten_loc, tn, nn, cs, b_loc]
+    entrant_units = 0.0
+
+    for ot in range(2):
+        if ot == 0:
+            b_t = kt
+            mt = (1.0 - wt) * mass
+        else:
+            b_t = kt + 1
+            mt = wt * mass
+        if mt == 0.0:
+            continue
+
+        ks = bp_idx[b_t, tn, loc, j, nn, cs, iz]
+        ws = bp_wt[b_t, tn, loc, j, nn, cs, iz]
+        for os in range(2):
+            if os == 0:
+                b_s = ks
+                ms = (1.0 - ws) * mt
+            else:
+                b_s = ks + 1
+                ms = ws * mt
+            if ms == 0.0:
+                continue
+
+            if use_stochastic_aging:
+                if cs == K and nn >= 1:
+                    if nn == 1:
+                        entrant_units += nn * Pi_child[cs, K + 1, nn] * ms
+                    else:
+                        entrant_units += nn * Pi_child[cs, K + 2, nn] * ms
+                for csn in range(ncs):
+                    pa = Pi_child[cs, csn, nn]
+                    if pa != 0.0:
+                        mz = pa * ms
+                        for izp in range(Nz):
+                            pz = Pi_z[iz, izp]
+                            if pz != 0.0:
+                                g[b_s, tn, loc, j + 1, nn, csn, izp] += pz * mz
+            else:
+                if cs == 0:
+                    csn = 0
+                elif cs >= K + 1:
+                    csn = cs
+                elif cs < K:
+                    csn = cs + 1
+                else:
+                    if nn == 0:
+                        csn = 0
+                    elif nn == 1:
+                        csn = K + 1
+                    else:
+                        csn = K + 2
+                if cs == K and csn >= K + 1 and nn >= 1:
+                    entrant_units += nn * ms
+                for izp in range(Nz):
+                    pz = Pi_z[iz, izp]
+                    if pz != 0.0:
+                        g[b_s, tn, loc, j + 1, nn, csn, izp] += pz * ms
+
+    return entrant_units
+
+
+@njit(cache=True)
+def forward_distribution_hank_z_fast_kernel(
+    entry_by_loc,
+    stationary_z,
+    fert_probs,
+    loc_probs,
+    tenure_choice,
+    bp_idx,
+    bp_wt,
+    lmm_idx,
+    lmm_wt,
+    tmx_idx,
+    tmx_wt,
+    Pi_child,
+    Pi_z,
+    Nb,
+    nt,
+    I,
+    J,
+    npar,
+    ncs,
+    Nz,
+    entry_idx,
+    A_f_start,
+    A_f_end,
+    K,
+    use_stochastic_aging,
+):
+    # Fast-stat forward pass for the structural HANK-z prototype. This is used
+    # inside the GE fixed point; full event moments are recomputed in Python at
+    # the final accepted equilibrium.
+    g = np.zeros((Nb, nt, I, J, npar, ncs, Nz))
+    births_by_loc = np.zeros(I)
+    entrants_mature_by_loc = np.zeros(I)
+    total_births = 0.0
+    entrants_mature_total = 0.0
+
+    for i in range(I):
+        for iz in range(Nz):
+            g[entry_idx, 0, i, 0, 0, 0, iz] = entry_by_loc[i] * stationary_z[iz]
+
+    for j in range(J - 1):
+        age_idx = j + 1
+        if age_idx >= A_f_start and age_idx <= A_f_end:
+            for b in range(Nb):
+                for ten in range(nt):
+                    for loc0 in range(I):
+                        for iz in range(Nz):
+                            m = g[b, ten, loc0, j, 0, 0, iz]
+                            if m == 0.0:
+                                continue
+                            p0 = fert_probs[b, ten, loc0, j, 0, iz]
+                            g[b, ten, loc0, j, 0, 0, iz] = m * p0
+                            eb = 0.0
+                            for nn_birth in range(1, npar):
+                                pn = fert_probs[b, ten, loc0, j, nn_birth, iz]
+                                mn = m * pn
+                                if mn != 0.0:
+                                    g[b, ten, loc0, j, nn_birth, 1, iz] += mn
+                                eb += nn_birth * pn
+                            total_births += m * eb
+                            births_by_loc[loc0] += m * eb
+
+        for b in range(Nb):
+            for ten in range(nt):
+                for io in range(I):
+                    for nn in range(npar):
+                        for cs in range(ncs):
+                            for iz in range(Nz):
+                                m = g[b, ten, io, j, nn, cs, iz]
+                                if m == 0.0:
+                                    continue
+                                for loc in range(I):
+                                    pl = loc_probs[b, ten, io, loc, j, nn, cs, iz]
+                                    if pl == 0.0:
+                                        continue
+                                    ml = m * pl
+                                    if loc == io:
+                                        ent = _advance_mass_component_z(
+                                            g,
+                                            ml,
+                                            b,
+                                            ten,
+                                            loc,
+                                            j,
+                                            nn,
+                                            cs,
+                                            iz,
+                                            tenure_choice,
+                                            bp_idx,
+                                            bp_wt,
+                                            tmx_idx,
+                                            tmx_wt,
+                                            Pi_child,
+                                            Pi_z,
+                                            K,
+                                            ncs,
+                                            Nz,
+                                            use_stochastic_aging,
+                                        )
+                                        if ent != 0.0:
+                                            entrants_mature_by_loc[loc] += ent
+                                            entrants_mature_total += ent
+                                    else:
+                                        kl = lmm_idx[io, ten, b]
+                                        wl = lmm_wt[io, ten, b]
+                                        ent = _advance_mass_component_z(
+                                            g,
+                                            (1.0 - wl) * ml,
+                                            kl,
+                                            0,
+                                            loc,
+                                            j,
+                                            nn,
+                                            cs,
+                                            iz,
+                                            tenure_choice,
+                                            bp_idx,
+                                            bp_wt,
+                                            tmx_idx,
+                                            tmx_wt,
+                                            Pi_child,
+                                            Pi_z,
+                                            K,
+                                            ncs,
+                                            Nz,
+                                            use_stochastic_aging,
+                                        )
+                                        if ent != 0.0:
+                                            entrants_mature_by_loc[loc] += ent
+                                            entrants_mature_total += ent
+                                        ent = _advance_mass_component_z(
+                                            g,
+                                            wl * ml,
+                                            kl + 1,
+                                            0,
+                                            loc,
+                                            j,
+                                            nn,
+                                            cs,
+                                            iz,
+                                            tenure_choice,
+                                            bp_idx,
+                                            bp_wt,
+                                            tmx_idx,
+                                            tmx_wt,
+                                            Pi_child,
+                                            Pi_z,
+                                            K,
+                                            ncs,
+                                            Nz,
+                                            use_stochastic_aging,
+                                        )
+                                        if ent != 0.0:
+                                            entrants_mature_by_loc[loc] += ent
+                                            entrants_mature_total += ent
+
+    return g, total_births, births_by_loc, entrants_mature_by_loc, entrants_mature_total
+
+
 @njit(cache=True, parallel=True)
 def eval_renter_block_kernel(
     Rv1d,

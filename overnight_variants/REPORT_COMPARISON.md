@@ -10,7 +10,10 @@ idiosyncratic earnings state \(z\) directly into the copied Bellman arrays,
 policy arrays, fertility/location probabilities, tenure choices, and forward
 distribution, then solves the copied price and entry fixed point. The state is
 \((b,d,i,a,n,s,z)\), with \(N_z=3\). The mortgage-account object \(\mu\) is not
-structural in this decision run.
+structural in this decision run. The 2026-05-22 engineering pass added a
+compiled HANK-\(z\) forward-distribution kernel for the GE loop; this preserves
+the V4 moments to numerical tolerance and keeps the final full-statistics pass
+for reporting.
 
 Test 2 is now a full type-price developer GE prototype. `run_developer_missing_middle_v3_ge.py`
 updates all six \(p_{iq}\) and \(r_{iq}\) objects for \(i\in\{C,P\}\) and
@@ -63,7 +66,7 @@ coarse smoke outputs, not full recalibrations.
 | rent dimensions | scalar user cost by \(i\) | scalar user cost by \(i\) | \(r_{iq}\), 6 rents |
 | fixed-point loop | scalar prices plus entry | scalar prices plus entry | all type prices plus entry |
 | accepted GE run | live benchmark | yes, strict tolerance | yes, coarse type-price tolerance |
-| cost category | benchmark reference | expensive | expensive |
+| cost category | benchmark reference | expensive, with compiled \(z\)-distribution GE loop | expensive |
 
 ## Verdicts
 
@@ -74,12 +77,13 @@ coarse smoke outputs, not full recalibrations.
 
 ## Recommendation
 
-Recommendation: **code Branch 1 first**.
+Recommendation: **promote Branch 1 to the live implementation first**.
 
 The HANK-z branch is the cleaner next live branch because it is the canonical
 one-state income-risk extension the user asked for, and it already clears in
-the copied GE loop. It should be coded as one new state \(z\) first. Do not add
-\(\mu\) in the same live branch; the current evidence says the next problem is
+the copied GE loop. When moving it out of `overnight_variants/`, carry over
+exactly one new state \(z\) first. Do not add \(\mu\) in the same live branch;
+the current evidence says the next problem is
 recalibrating the HANK-z economy and disciplining transitions, not expanding the
 state space again.
 

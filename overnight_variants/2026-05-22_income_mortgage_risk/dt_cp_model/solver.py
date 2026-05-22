@@ -16,6 +16,7 @@ from .kernels import (
     eval_renter_block_kernel,
     full_owner_block_kernel,
     full_renter_block_kernel,
+    forward_distribution_hank_z_fast_kernel,
     golden_owner_kernel,
     golden_renter_kernel,
     forward_distribution_fast_kernel,
@@ -3549,6 +3550,62 @@ def forward_distribution_hank_z(
     csm2 = K + 2
     ust = bool(P.use_stochastic_aging and hasattr(P, "Pi_child"))
     Pia = P.Pi_child if ust else None
+
+    if fast_stats and NUMBA_AVAILABLE and bool(getattr(P, "use_compiled_hank_z_forward_distribution", True)):
+        bp_idx, bp_wt = interp_indices(b_grid, np.clip(bp_pol, bmin, bmax))
+        pia_arg = np.asarray(Pia if Pia is not None else np.zeros((ncs, ncs, npar)), dtype=float)
+        g, total_births, births_by_loc, entrants_mature_by_loc, entrants_mature_total = forward_distribution_hank_z_fast_kernel(
+            np.asarray(P.entry_by_loc, dtype=float),
+            np.asarray(zspec.stationary, dtype=float),
+            fert_probs,
+            loc_probs,
+            tenure_choice.astype(np.int64, copy=False),
+            bp_idx,
+            bp_wt,
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            pia_arg,
+            np.asarray(zspec.Pi_z, dtype=float),
+            Nb,
+            nt,
+            I,
+            J,
+            npar,
+            ncs,
+            Nz,
+            ie,
+            int(P.A_f_start),
+            int(P.A_f_end),
+            int(K),
+            bool(ust),
+        )
+        tm = float(np.sum(g))
+        if tm > 1e-12 and normalize_population_mass(P):
+            sc = P.N_target / tm
+            g *= sc
+            total_births *= sc
+            births_by_loc *= sc
+            entrants_mature_by_loc *= sc
+            entrants_mature_total *= sc
+
+        collapsed = collapse_hank_z_for_statistics(g, bp_pol, hR_pol, tenure_choice, loc_probs, fert_probs, p_hat, P, b_grid)
+        stats = compute_eq_stats(collapsed["g"], P, b_grid, p_hat, collapsed["hR_pol"])
+        stats.total_births_kfe = total_births
+        stats.births_by_loc = births_by_loc
+        stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
+        stats.total_mass = float(np.sum(g))
+        stats.entrants_mature_by_loc = entrants_mature_by_loc
+        stats.entrants_mature_total = entrants_mature_total
+        stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+        stats.housing_increment_0to1_eventstudy_t3 = 0.0
+        stats.housing_increment_1to2_proxy_t3 = 0.0
+        stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
+        stats.housing_increment_0to2plus_eventstudy_t3 = 0.0
+        stats.housing_event_horizon = 3
+        stats.hank_z_distribution_time = time.perf_counter() - t0
+        return g, stats, collapsed
 
     event_horizon = 3
     birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
