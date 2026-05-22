@@ -16,6 +16,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.backends.backend_pdf import PdfPages
 
 from dt_cp_model.parameters import apply_overrides, finalize_location_choice_spec, setup_parameters
 from dt_cp_model.solver import make_grid, solve_equilibrium_hank_z
@@ -521,6 +522,10 @@ Generated from the isolated full-equilibrium HANK-\(z\) prototype.
 
 {bullets}
 
+## PDF
+
+- `{log_summary.get("pdf", "HANK_Z_GE_FIGURE_PACKET.pdf")}`
+
 ## Notes
 
 These figures use the copied prototype only. The structural state is
@@ -530,6 +535,49 @@ full-GE figure set.
     path = out_dir / "README_FIGURES.md"
     path.write_text(text)
     return path
+
+
+def write_pdf_packet(out_dir: Path, images: list[Path], log_summary: dict) -> Path:
+    """Compile the PNG figure set into a single PDF packet."""
+
+    pdf_path = out_dir / "HANK_Z_GE_FIGURE_PACKET.pdf"
+    with PdfPages(pdf_path) as pdf:
+        fig = plt.figure(figsize=(11, 8.5))
+        ax = fig.add_subplot(111)
+        ax.axis("off")
+        lines = [
+            "HANK-z Full-Equilibrium Prototype",
+            "",
+            "Isolated overnight branch figure packet",
+            "",
+            f"accepted: {log_summary.get('accepted')}",
+            f"strict converged: {log_summary.get('strict_converged')}",
+            f"iterations: {log_summary.get('iterations_completed')}",
+            f"final GE error: {log_summary.get('final_eq_error'):.6g}",
+            f"plot solve seconds: {log_summary.get('plot_elapsed_sec'):.2f}",
+            f"b states: {log_summary.get('Nb')}",
+            f"z states: {log_summary.get('Nz')}",
+            "",
+            "Structural state in this prototype:",
+            r"$(b,d,i,a,n,s,z)$",
+            "",
+            r"The mortgage-account state $\mu$ is not active in this full-GE packet.",
+        ]
+        ax.text(0.08, 0.90, "\n".join(lines), va="top", ha="left", fontsize=15)
+        pdf.savefig(fig, bbox_inches="tight")
+        plt.close(fig)
+
+        for image_path in images:
+            img = plt.imread(image_path)
+            fig = plt.figure(figsize=(11, 8.5))
+            ax = fig.add_subplot(111)
+            ax.imshow(img)
+            ax.axis("off")
+            ax.set_title(image_path.stem.replace("_", " "), fontsize=13, pad=12)
+            pdf.savefig(fig, bbox_inches="tight")
+            plt.close(fig)
+
+    return pdf_path
 
 
 def main() -> None:
@@ -575,11 +623,14 @@ def main() -> None:
         "plot_data": str(data_path.name),
         "images": [img.name for img in images],
     }
+    pdf_path = write_pdf_packet(out_dir, images, summary)
+    summary["pdf"] = pdf_path.name
     (out_dir / "plot_run_summary.json").write_text(json.dumps(summary, indent=2))
     index_path = write_index(out_dir, images, summary)
 
     if not args.quiet:
         print(f"Wrote {len(images)} figures to {out_dir}")
+        print(f"Wrote PDF packet to {pdf_path}")
         print(f"Wrote plot data to {data_path}")
         print(f"Wrote figure index to {index_path}")
 

@@ -8,7 +8,7 @@ Generated from the isolated full-equilibrium HANK-\(z\) prototype.
 - strict converged: `True`
 - iterations: `15`
 - final equilibrium error: `0.00016729205456001122`
-- elapsed seconds for plot solve: `43.64`
+- elapsed seconds for plot solve: `44.74`
 - \(b\) states: `30`
 - \(z\) states: `3`
 
@@ -23,6 +23,10 @@ Generated from the isolated full-equilibrium HANK-\(z\) prototype.
 - `06_tenure_rung_sorting_by_z.png`
 - `07_fertility_by_z_and_wealth.png`
 - `08_aggregate_sorting_by_z.png`
+
+## PDF
+
+- `HANK_Z_GE_FIGURE_PACKET.pdf`
 
 ## Notes
 
