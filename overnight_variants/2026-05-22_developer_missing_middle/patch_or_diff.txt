@@ -1,0 +1,288 @@
+diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_variants/2026-05-22_developer_missing_middle/dt_cp_model/solver.py
+--- code/model/dt_cp_model/solver.py	2026-05-13 11:56:16
++++ overnight_variants/2026-05-22_developer_missing_middle/dt_cp_model/solver.py	2026-05-22 00:22:46
+@@ -921,6 +921,13 @@
+         cb_flat=c_bar.reshape(1, nc, order="F"),
+         hb_flat=h_bar.reshape(1, nc, order="F"),
+         psi_flat=psi_v.reshape(1, nc, order="F"),
++        developer_rent_type_flat=np.array(
++            [
++                developer_rental_type_from_need(P, hb)
++                for hb in h_bar.reshape(-1, order="F")
++            ],
++            dtype=np.int64,
++        ),
+         nc=nc,
+         b=b_grid.reshape(-1, 1),
+         bp=b_grid.reshape(1, -1),
+@@ -1018,10 +1025,11 @@
+     for i in range(I):
+         for ten in range(1, nt):
+             hs = P.H_own[ten - 1]
+-            hcost[i, ten] = p_hat[i] * hs
+-            heq[i, ten] = (1 - P.psi) * p_hat[i] * hs
++            p_unit = developer_owner_price(P, p_hat, i, ten)
++            hcost[i, ten] = p_unit * hs
++            heq[i, ten] = (1 - P.psi) * p_unit * hs
+             hsrv[i, ten] = P.chi * hs
+-            ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs
++            ocst[i, ten] = (P.delta + P.tau_H) * p_unit * hs
+             for nn in range(npar):
+                 for cs in range(ncs):
+                     # phi is the financed share, so the down-payment
+@@ -1096,12 +1104,13 @@
+                         alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                     )
+                 else:
+-                    Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
+-                    aoms = alpha * oms
+-                    d_nc = SD.cb_flat + ri * SD.hb_flat
+-                    cap_nc = ri * (hRmax - SD.hb_flat) / (1 - alpha)
++                    ri_cols = developer_rent_by_flat_type(P, r_hat, i, SD.developer_rent_type_flat)
++                    d_nc = SD.cb_flat + ri_cols.reshape(1, -1) * SD.hb_flat
++                    cap_nc = ri_cols.reshape(1, -1) * (hRmax - SD.hb_flat) / (1 - alpha)
+                     bp_prev_r = flat_nc(bd[:, 0, i, :, :], Nb, nc) if j < J - 1 else None
+                     for c in range(nc):
++                        ri_c = float(ri_cols[c])
++                        Kr = (alpha**alpha * ((1 - alpha) / ri_c) ** (1 - alpha)) ** oms
+                         Vbar = Vcr[:, c]
+                         dc = d_nc[0, c]
+                         pc = SD.psi_flat[0, c]
+@@ -1118,21 +1127,21 @@
+                             hi = np.maximum(hi, lo)
+                         if NUMBA_AVAILABLE:
+                             bp, val = golden_renter_kernel(
+-                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
++                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, ri_c, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
+                             )
+                         else:
+                             bp, val = golden_renter(
+-                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
++                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri_c, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
+                             )
+                         bp_nc[:, c] = bp
+                         Vo_nc[:, c] = val
+ 
+                     surplus_nc = Rv - d_nc - bp_nc
+                     ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
+-                    ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
++                    ht_nc = (1 - alpha) / ri_cols.reshape(1, -1) * np.maximum(surplus_nc, 1e-10)
+                     cm = (SD.hb_flat + ht_nc) > hRmax
+                     if np.any(cm):
+-                        ct_cap = np.maximum(Rv - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
++                        ct_cap = np.maximum(Rv - SD.cb_flat - ri_cols.reshape(1, -1) * hRmax - bp_nc, 1e-10)
+                         hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
+                         ct_nc[cm] = ct_cap[cm]
+                         ht_nc[cm] = hcap[cm]
+@@ -1216,22 +1225,23 @@
+                         Vcbp = interp_cols_kernel(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
+                     else:
+                         Vcbp = interp_cols(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
+-                    Kr_ev = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
+-                    d_nc = SD.cb_flat + ri * SD.hb_flat
+-                    cap_nc_ev = ri * (P.hR_max - SD.hb_flat) / (1 - alpha)
++                    ri_cols = developer_rent_by_flat_type(P, r_hat, i, SD.developer_rent_type_flat)
++                    Kr_ev = (alpha**alpha * ((1 - alpha) / ri_cols.reshape(1, -1)) ** (1 - alpha)) ** oms
++                    d_nc = SD.cb_flat + ri_cols.reshape(1, -1) * SD.hb_flat
++                    cap_nc_ev = ri_cols.reshape(1, -1) * (P.hR_max - SD.hb_flat) / (1 - alpha)
+                     surplus_nc = Rv - d_nc - bpv
+                     ss = np.maximum(surplus_nc, 1e-10)
+                     Vo_nc = Kr_ev * ss**oms / oms + SD.psi_flat + beta * Vcbp
+                     cm = surplus_nc > cap_nc_ev
+                     if np.any(cm):
+-                        ct_cap = np.maximum(Rv - SD.cb_flat - ri * P.hR_max - bpv, 1e-10)
++                        ct_cap = np.maximum(Rv - SD.cb_flat - ri_cols.reshape(1, -1) * P.hR_max - bpv, 1e-10)
+                         ht_cap_v = np.tile(np.maximum(P.hR_max - SD.hb_flat, 1e-10), (Nb, 1))
+                         comp_cap = ct_cap**alpha * ht_cap_v ** (1 - alpha)
+                         u_cap = comp_cap**oms / oms + SD.psi_flat
+                         Vo_nc[cm] = u_cap[cm] + beta * Vcbp[cm]
+                     Vo_nc[surplus_nc <= 1e-10] = -1e10
+                     ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
+-                    ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
++                    ht_nc = (1 - alpha) / ri_cols.reshape(1, -1) * np.maximum(surplus_nc, 1e-10)
+                     if np.any(cm):
+                         ct_nc[cm] = ct_cap[cm]
+                         ht_nc[cm] = ht_cap_v[cm]
+@@ -1479,8 +1489,9 @@
+     for i in range(I):
+         for ten in range(1, nt):
+             hs = P.H_own[ten - 1]
+-            hc[i, ten] = p_hat[i] * hs
+-            he[i, ten] = (1 - P.psi) * p_hat[i] * hs
++            p_unit = developer_owner_price(P, p_hat, i, ten)
++            hc[i, ten] = p_unit * hs
++            he[i, ten] = (1 - P.psi) * p_unit * hs
+ 
+     phi_choice = SD.phi_choice
+     use_lin = str(P.kfe_wealth_interp).lower() == "linear"
+@@ -1903,7 +1914,7 @@
+     for jj in range(asw, aew + 1):
+         for i in range(I):
+             for ten in range(nt):
+-                heq = (1 - P.psi) * ph[i] * P.H_own[ten - 1] if ten > 0 else 0.0
++                heq = (1 - P.psi) * developer_owner_price(P, ph, i, ten) * P.H_own[ten - 1] if ten > 0 else 0.0
+                 for nn in range(npar):
+                     for cs in range(ncs):
+                         gs = g[:, ten, i, jj, nn, cs]
+@@ -2425,6 +2436,161 @@
+         return bg
+     bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
+     return bg
++
++
++def uses_developer_supply(P: SimpleNamespace) -> bool:
++    return bool(getattr(P, "developer_supply", False))
++
++
++def developer_type_count(P: SimpleNamespace) -> int:
++    return int(getattr(P, "developer_n_types", 2))
++
++
++def developer_middle_type(P: SimpleNamespace) -> int:
++    return min(1, developer_type_count(P) - 1)
++
++
++def developer_type_names(P: SimpleNamespace) -> list[str]:
++    names = list(getattr(P, "developer_type_names", ["S", "M"]))
++    return names[: developer_type_count(P)]
++
++
++def developer_owner_type(P: SimpleNamespace, ten: int) -> int:
++    if ten <= 0:
++        return 0
++    h = float(P.H_own[ten - 1])
++    middle_min = float(getattr(P, "developer_middle_min", 5.0))
++    if developer_type_count(P) <= 1:
++        return 0
++    return developer_middle_type(P) if h >= middle_min else 0
++
++
++def developer_rental_type_from_need(P: SimpleNamespace, h_need: float) -> int:
++    if not uses_developer_supply(P) or developer_type_count(P) <= 1:
++        return 0
++    middle_min = float(getattr(P, "developer_middle_min", 5.0))
++    return developer_middle_type(P) if float(h_need) >= middle_min else 0
++
++
++def developer_rental_type_from_size(P: SimpleNamespace, h_size: float) -> int:
++    if not uses_developer_supply(P) or developer_type_count(P) <= 1:
++        return 0
++    middle_min = float(getattr(P, "developer_middle_min", 5.0))
++    return developer_middle_type(P) if float(h_size) >= middle_min else 0
++
++
++def developer_price_matrix(P: SimpleNamespace, p_hat: np.ndarray) -> np.ndarray:
++    p_hat = np.asarray(p_hat, dtype=float).reshape(-1)
++    Q = developer_type_count(P)
++    if uses_developer_supply(P) and hasattr(P, "developer_p_iq"):
++        mat = np.asarray(P.developer_p_iq, dtype=float)
++        if mat.shape == (P.I, Q):
++            return mat
++    return np.tile(p_hat.reshape(P.I, 1), (1, Q))
++
++
++def developer_rent_matrix(P: SimpleNamespace, r_hat: np.ndarray) -> np.ndarray:
++    r_hat = np.asarray(r_hat, dtype=float).reshape(-1)
++    Q = developer_type_count(P)
++    if uses_developer_supply(P) and hasattr(P, "developer_r_iq"):
++        mat = np.asarray(P.developer_r_iq, dtype=float)
++        if mat.shape == (P.I, Q):
++            return mat
++    return np.tile(r_hat.reshape(P.I, 1), (1, Q))
++
++
++def developer_owner_price(P: SimpleNamespace, p_hat: np.ndarray, i: int, ten: int) -> float:
++    if ten <= 0:
++        return 0.0
++    q = developer_owner_type(P, ten)
++    return float(developer_price_matrix(P, p_hat)[i, q])
++
++
++def developer_rent_by_flat_type(P: SimpleNamespace, r_hat: np.ndarray, i: int, q_flat: np.ndarray) -> np.ndarray:
++    rents = developer_rent_matrix(P, r_hat)
++    q_flat = np.asarray(q_flat, dtype=np.int64)
++    q_flat = np.clip(q_flat, 0, rents.shape[1] - 1)
++    return rents[i, q_flat]
++
++
++def developer_supply_from_rent(P: SimpleNamespace, r_iq: np.ndarray) -> np.ndarray:
++    r_iq = np.asarray(r_iq, dtype=float)
++    tau = np.asarray(getattr(P, "developer_tau_iq", np.zeros_like(r_iq)), dtype=float)
++    nu = np.asarray(getattr(P, "developer_nu_iq", np.ones_like(r_iq)), dtype=float)
++    eta = np.asarray(getattr(P, "developer_eta_iq", np.ones_like(r_iq)), dtype=float)
++    active = r_iq > tau
++    out = np.zeros_like(r_iq, dtype=float)
++    out[active] = ((r_iq[active] - tau[active]) / np.maximum(nu[active], 1e-12)) ** eta[active]
++    return out
++
++
++def developer_inverse_supply_rent(P: SimpleNamespace, demand_iq: np.ndarray) -> np.ndarray:
++    demand_iq = np.maximum(np.asarray(demand_iq, dtype=float), 1e-10)
++    tau = np.asarray(getattr(P, "developer_tau_iq", np.zeros_like(demand_iq)), dtype=float)
++    nu = np.asarray(getattr(P, "developer_nu_iq", np.ones_like(demand_iq)), dtype=float)
++    eta = np.asarray(getattr(P, "developer_eta_iq", np.ones_like(demand_iq)), dtype=float)
++    return tau + nu * demand_iq ** (1.0 / np.maximum(eta, 1e-12))
++
++
++def developer_entry_threshold_rent(P: SimpleNamespace) -> np.ndarray:
++    tau = np.asarray(getattr(P, "developer_tau_iq", np.zeros((P.I, developer_type_count(P)))), dtype=float)
++    nu = np.asarray(getattr(P, "developer_nu_iq", np.ones_like(tau)), dtype=float)
++    eta = np.asarray(getattr(P, "developer_eta_iq", np.ones_like(tau)), dtype=float)
++    F = np.asarray(getattr(P, "developer_F_iq", np.zeros_like(tau)), dtype=float)
++    return tau + ((1.0 + eta) * F * np.maximum(nu, 1e-12) ** eta) ** (1.0 / (1.0 + eta))
++
++
++def compute_developer_type_diagnostics(
++    sol: SimpleNamespace,
++    P: SimpleNamespace,
++    p_iq: np.ndarray,
++    r_iq: np.ndarray,
++) -> SimpleNamespace:
++    """Demand, supply, and room-screen diagnostics for the developer prototype."""
++
++    g = np.asarray(sol.g, dtype=float)
++    hR = np.asarray(sol.hR_pol, dtype=float)
++    Nb, nt, I, J, npar, ncs = g.shape
++    Q = developer_type_count(P)
++    demand = np.zeros((I, Q))
++    renter_mass_type = np.zeros((I, Q))
++    owner_mass_type = np.zeros((I, Q))
++    for i in range(I):
++        for j in range(J):
++            for nn in range(npar):
++                for cs in range(ncs):
++                    gr = g[:, 0, i, j, nn, cs]
++                    hr = hR[:, 0, i, j, nn, cs]
++                    for ib in range(Nb):
++                        mass = float(gr[ib])
++                        if mass <= 1e-15:
++                            continue
++                        q = developer_rental_type_from_size(P, float(hr[ib]))
++                        demand[i, q] += mass * float(hr[ib])
++                        renter_mass_type[i, q] += mass
++                    for ten in range(1, nt):
++                        mass = float(np.sum(g[:, ten, i, j, nn, cs]))
++                        if mass <= 1e-15:
++                            continue
++                        q = developer_owner_type(P, ten)
++                        demand[i, q] += mass * float(P.H_own[ten - 1])
++                        owner_mass_type[i, q] += mass
++    supply = developer_supply_from_rent(P, r_iq)
++    entry_threshold = developer_entry_threshold_rent(P)
++    names = developer_type_names(P)
++    return SimpleNamespace(
++        type_names=names,
++        demand_iq=demand,
++        supply_iq=supply,
++        excess_iq=demand - supply,
++        p_iq=np.asarray(p_iq, dtype=float),
++        r_iq=np.asarray(r_iq, dtype=float),
++        entry_threshold_r_iq=entry_threshold,
++        renter_mass_type=renter_mass_type,
++        owner_mass_type=owner_mass_type,
++        middle_stock_share=supply[:, developer_middle_type(P)] / np.maximum(np.sum(supply, axis=1), 1e-12),
++        middle_demand_share=demand[:, developer_middle_type(P)] / np.maximum(np.sum(demand, axis=1), 1e-12),
++    )
+ 
+ 
+ def current_child_bin_dt(nn, cs, dep_last):
