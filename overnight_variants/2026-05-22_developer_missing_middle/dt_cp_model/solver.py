@@ -2460,23 +2460,34 @@ def developer_owner_type(P: SimpleNamespace, ten: int) -> int:
         return 0
     h = float(P.H_own[ten - 1])
     middle_min = float(getattr(P, "developer_middle_min", 5.0))
+    middle_max = float(getattr(P, "developer_middle_max", np.inf))
     if developer_type_count(P) <= 1:
         return 0
-    return developer_middle_type(P) if h >= middle_min else 0
+    if developer_type_count(P) >= 3 and h > middle_max:
+        return 2
+    return developer_middle_type(P) if h >= middle_min and h <= middle_max else 0
 
 
 def developer_rental_type_from_need(P: SimpleNamespace, h_need: float) -> int:
     if not uses_developer_supply(P) or developer_type_count(P) <= 1:
         return 0
     middle_min = float(getattr(P, "developer_middle_min", 5.0))
-    return developer_middle_type(P) if float(h_need) >= middle_min else 0
+    middle_max = float(getattr(P, "developer_middle_max", np.inf))
+    h = float(h_need)
+    if developer_type_count(P) >= 3 and h > middle_max:
+        return 2
+    return developer_middle_type(P) if h >= middle_min and h <= middle_max else 0
 
 
 def developer_rental_type_from_size(P: SimpleNamespace, h_size: float) -> int:
     if not uses_developer_supply(P) or developer_type_count(P) <= 1:
         return 0
     middle_min = float(getattr(P, "developer_middle_min", 5.0))
-    return developer_middle_type(P) if float(h_size) >= middle_min else 0
+    middle_max = float(getattr(P, "developer_middle_max", np.inf))
+    h = float(h_size)
+    if developer_type_count(P) >= 3 and h > middle_max:
+        return 2
+    return developer_middle_type(P) if h >= middle_min and h <= middle_max else 0
 
 
 def developer_price_matrix(P: SimpleNamespace, p_hat: np.ndarray) -> np.ndarray:

@@ -11,6 +11,13 @@ cd overnight_variants/2026-05-22_developer_missing_middle
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_smoke.py --quiet
 ```
 
+The second-pass driver is:
+
+```bash
+cd overnight_variants/2026-05-22_developer_missing_middle
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_v2.py --quiet --iterations 5 --nb 50
+```
+
 ## Implemented Objects
 
 - Two unit types:
@@ -38,3 +45,15 @@ to shut down a type during this first clearing loop.
 This is a partial test by design. `REPORT.md` states whether the partial
 type-clearing loop stabilized and whether the room-screen diagnostics moved in
 the right direction.
+
+## Second-Pass V2
+
+V1 failed partly because every owner rung above 5 rooms was priced as middle
+housing. V2 adds a third large-unit type and bounds the middle type to the
+5--6.5 room interval. It also first measures scalar-price baseline demand by
+type, then calibrates \(\nu_{iq}\) so the type supply curve passes through that
+baseline demand at the initial price. This avoids treating an arbitrary initial
+stock split as the missing-middle wedge.
+
+V2 is documented in `REPORT_V2.md`, `results_developer_missing_middle_v2.csv`,
+and `diagnostics_developer_missing_middle_v2.csv`.

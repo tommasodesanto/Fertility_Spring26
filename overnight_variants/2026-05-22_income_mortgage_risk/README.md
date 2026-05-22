@@ -11,6 +11,13 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_smoke.py --quiet
 ```
 
+The second-pass scenario driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v2_scenarios.py --quiet --nb 40
+```
+
 ## Implemented Objects
 
 - Earnings grid \(z\in\{-0.28,0,0.28\}\) with a symmetric persistent Markov
@@ -32,3 +39,17 @@ accounting and should not be treated as an accepted structural HANK/mortgage
 implementation.
 
 The generated `REPORT.md` states this explicitly and gives the branch verdict.
+
+## Second-Pass V2
+
+`run_income_mortgage_risk_v2_scenarios.py` improves on V1 by making the new
+objects affect solved choices in a finite set of partial-equilibrium scenarios.
+The script solves 15 economies: 3 earnings states times 5 mortgage-account
+states. Earnings scale \(y_a(z)\), bad credit lowers the financed share
+\(\phi_g\), and active mortgage accounts add a compact owner-payment wedge
+\(\rho_g m\).
+
+This still is not a full structural implementation because there is no single
+Bellman recursion over \((b,d,i,a,n,s,z,\mu)\). See `REPORT_V2.md`,
+`results_income_mortgage_risk_v2.csv`, and
+`diagnostics_income_mortgage_risk_v2.csv`.

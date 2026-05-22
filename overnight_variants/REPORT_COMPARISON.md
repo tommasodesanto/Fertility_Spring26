@@ -69,30 +69,80 @@ values are smoke-test outputs and are not globally recalibrated.
 | Income risk + mortgage account | yellow | Copied benchmark equilibrium solved and diagnostic \(z,\mu\) distributions are non-degenerate, but the new states are not yet structural. Default hazards are essentially inactive. |
 | Developer missing-middle supply | red | Partial middle-price loop stabilized, but ordinary prices were pinned, type excess remained large, the room screen did not improve, and ownership collapsed. |
 
+## Second Pass
+
+After the first pass failed, I added second-pass drivers rather than overwriting
+the original evidence.
+
+Test 1 V2 (`run_income_mortgage_risk_v2_scenarios.py`) solves 15
+partial-equilibrium scenario economies. In those solves \(z\) scales earnings,
+bad credit changes \(\phi_g\), and active mortgage accounts add the compact
+owner-payment wedge \(\rho_gm\). This is still not a joint stationary
+distribution over \((z,\mu)\), but the new objects now enter choices.
+
+Test 2 V2 (`run_developer_missing_middle_v2.py`) fixes the main mechanical
+error in V1. It uses three types, \(S/M/L\), with \(M\) bounded to the 5--6.5
+room interval, and it calibrates type-specific supply curves to pass through
+baseline scalar-price type demand before moving \(M\) and \(L\) prices.
+
+| Moment | Target | Current Benchmark | Income/Mortgage V2 | Developer V2 |
+|---|---:|---:|---:|---:|
+| `tfr` | 1.700 | 1.898 | 1.532 | 1.956 |
+| `childless_rate` | 0.150 | 0.145 | 0.388 | 0.128 |
+| `mean_age_first_birth` | 26.000 | 33.535 | 34.333 | 33.353 |
+| `tfr_gradient` | 0.133 | 0.119 | 0.144 | 0.119 |
+| `own_rate` | 0.627 | 0.643 | 0.531 | 0.606 |
+| `own_gradient` | 0.170 | 0.139 | 0.101 | 0.025 |
+| `own_family_gap` | 0.110 | 0.114 | 0.177 | 0.062 |
+| `prime_childless_renter_median_rooms` | 4.000 | 6.365 | 5.972 | 6.232 |
+| `prime_childless_owner_median_rooms` | 6.000 | 6.800 | 6.870 | 8.200 |
+| `housing_increment_0to1` | 0.664 | 0.441 | 0.505 | 0.382 |
+| `housing_increment_1to2` | 0.566 | 0.192 | 0.228 | 0.259 |
+| `young_liquid_wealth_to_income` | 0.600 | 0.527 | 0.443 | 0.560 |
+| `center_share_nonparents` | 0.494 | 0.405 | 0.340 | 0.421 |
+| `center_share_newparents` | 0.416 | 0.382 | 0.293 | 0.399 |
+| `migration_rate` | 0.032 | 0.035 | 0.031 | 0.034 |
+| `old_age_own_rate` | 0.863 | 0.947 | 0.845 | 0.778 |
+| `old_age_parent_childless_gap` | 0.070 | 0.062 | -0.058 | -0.050 |
+| `inv_pop_share_C` | 0.450 | 0.441 | 0.373 | 0.442 |
+| `inv_rent_ratio_C_over_P` | 1.140 | 1.182 | 1.182 | 1.182 |
+
+Second-pass verdicts:
+
+| Branch | V2 Verdict | Reason |
+|---|---|---|
+| Income risk + mortgage account | yellow | \(z\) and \(\mu\) now affect solved choices in scenario economies; spreads are large enough to matter, but aggregate childlessness, geography, and old-age ownership gaps deteriorate. |
+| Developer missing-middle supply | yellow | Type clearing is now numerically stable and ownership no longer collapses; still not green because owner rooms worsen and \(H01\) falls. |
+
 ## Recommendation
 
-Do another diagnostic before coding either branch into the live model. If one
-branch must be prioritized after this, Branch 2 is still the more relevant
-economic direction because it targets the live room-distribution failure, but
-the prototype shows the full type-price GE loop and renter pricing need to be
-designed more carefully before production work. Do not code Branch 1 first
-unless the next prototype actually expands the Bellman and distribution arrays
-over \(z\) and \(\mu\).
+Do another diagnostic before coding either branch into the live model. The
+second pass makes Branch 2 the better next diagnostic target, not because it is
+ready, but because the corrected type map gives a stable price system without
+destroying ownership. The next Branch 2 diagnostic should vary the type
+boundaries and supply calibration against ACS room-bin targets before any live
+solver merge.
+
+Do not code Branch 1 into the live model from the scenario mixture. The margins
+have bite, but the scenario mixture is not a coherent stationary model and it
+breaks too many core moments. Branch 1 should proceed only as an explicit
+state-space expansion over \(z\) and \(\mu\).
 
 ## Failure Modes
 
-- Test 1 failure mode: \(z\) and \(\mu\) are bookkeeping diagnostics, not state
-  variables in household optimization. The default/bad-credit margin is mostly
-  inactive, with maximum diagnostic default hazard around \(4.15\times10^{-4}\).
-- Test 1 economic warning: the smoke solve moves old-age ownership and the
-  old-age parent-childless gap noticeably relative to the status table even
-  before structural risk is active, so this branch needs strict target checks.
-- Test 2 failure mode: middle prices became high enough to wipe out ownership
-  in the partial PE allocation.
-- Test 2 market-clearing warning: ordinary demand was nearly zero while ordinary
-  supply stayed pinned, so the reported type wedge is not an equilibrium wedge.
-- Test 2 mechanism warning: the H2/starter-family margin is not alive in the
-  smoke output; new-parent feasible-but-rent share is essentially one.
+- Test 1 V1 failure mode: \(z\) and \(\mu\) were bookkeeping diagnostics, not
+  state variables in household optimization. The default/bad-credit margin was
+  essentially inactive, with maximum diagnostic default hazard around
+  \(4.15\times10^{-4}\).
+- Test 1 V2 remaining failure mode: \(z\), credit status, and mortgage-payment
+  wedges now move choices, but only through separate scenario solves. The
+  output is not a coherent joint distribution over \((z,\mu)\), and it breaks
+  childlessness, geography, and the old-age parent-childless ownership gap.
+- Test 2 V1 failure mode: the two-type map treated too much of the owner ladder
+  as middle housing, so middle prices became high enough to wipe out ownership.
+- Test 2 V2 remaining failure mode: the corrected \(S/M/L\) type clearing is
+  numerically stable, but ordinary prices remain pinned, owner rooms move away
+  from the target, and \(H01\) falls relative to the current benchmark.
 
 ## Files Outside `overnight_variants/`
 
@@ -113,4 +163,18 @@ Test 2:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_developer_missing_middle
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_smoke.py --quiet --iterations 4 --nb 40
+```
+
+Test 1 V2:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v2_scenarios.py --quiet --nb 40
+```
+
+Test 2 V2:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_developer_missing_middle
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_developer_missing_middle_v2.py --quiet --iterations 5 --nb 50
 ```
