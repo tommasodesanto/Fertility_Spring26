@@ -1,6 +1,5 @@
-diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_variants/2026-05-22_developer_missing_middle/dt_cp_model/solver.py
 --- code/model/dt_cp_model/solver.py	2026-05-13 11:56:16
-+++ overnight_variants/2026-05-22_developer_missing_middle/dt_cp_model/solver.py	2026-05-22 00:33:52
++++ overnight_variants/2026-05-22_developer_missing_middle/dt_cp_model/solver.py	2026-05-22 09:16:01
 @@ -921,6 +921,13 @@
          cb_flat=c_bar.reshape(1, nc, order="F"),
          hb_flat=h_bar.reshape(1, nc, order="F"),
@@ -30,9 +29,47 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
              for nn in range(npar):
                  for cs in range(ncs):
                      # phi is the financed share, so the down-payment
-@@ -1096,12 +1104,13 @@
+@@ -1061,6 +1069,8 @@
+     bd = np.zeros_like(Vd)
+     Vo_nc = np.zeros((Nb, nc))
+     bp_nc = np.zeros((Nb, nc))
++    co_nc = np.zeros((Nb, nc))
++    ho_nc = np.zeros((Nb, nc))
+
+     gs_tol = 1e-3
+     gs_alpha1 = (3 - math.sqrt(5)) / 2
+@@ -1095,13 +1105,42 @@
+                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                          alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
                      )
++                elif uses_developer_exact_renter_types(P):
++                    bp_prev_r = flat_nc(bd[:, 0, i, :, :], Nb, nc) if j < J - 1 else None
++                    rents_i = developer_rent_matrix(P, r_hat)[i, :]
++                    for c in range(nc):
++                        bp, val, ct, ht = golden_renter_piecewise_types(
++                            b_grid,
++                            Rv[:, 0],
++                            Vcr[:, c],
++                            bp_prev_r[:, c] if bp_prev_r is not None else None,
++                            SD.cb_flat[0, c],
++                            SD.hb_flat[0, c],
++                            SD.psi_flat[0, c],
++                            rents_i,
++                            P,
++                            alpha,
++                            oms,
++                            beta,
++                            gs_alpha1,
++                            gs_alpha2,
++                            gs_tol,
++                        )
++                        bp_nc[:, c] = bp
++                        Vo_nc[:, c] = val
++                        co_nc[:, c] = SD.cb_flat[0, c] + np.maximum(ct, P.c_min)
++                        ho_nc[:, c] = SD.hb_flat[0, c] + np.maximum(ht, 0.01)
++                    bad = Vo_nc <= -1e9
++                    co_nc[bad] = P.c_bar_0 + P.c_min
++                    ho_nc[bad] = P.h_bar_0 + 0.01
                  else:
 -                    Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
 -                    aoms = alpha * oms
@@ -48,7 +85,7 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
                          Vbar = Vcr[:, c]
                          dc = d_nc[0, c]
                          pc = SD.psi_flat[0, c]
-@@ -1118,21 +1127,21 @@
+@@ -1118,21 +1157,21 @@
                              hi = np.maximum(hi, lo)
                          if NUMBA_AVAILABLE:
                              bp, val = golden_renter_kernel(
@@ -62,7 +99,7 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
                              )
                          bp_nc[:, c] = bp
                          Vo_nc[:, c] = val
- 
+
                      surplus_nc = Rv - d_nc - bp_nc
                      ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
 -                    ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
@@ -74,7 +111,44 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
                          hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
                          ct_nc[cm] = ct_cap[cm]
                          ht_nc[cm] = hcap[cm]
-@@ -1216,22 +1225,23 @@
+@@ -1207,6 +1246,36 @@
+                         Rv1d, bpv, Vcr_nc, idx_nc, wt_nc, cb_v, hb_v, psi_v_flat,
+                         ri, P.hR_max, P.c_min, P.c_bar_0, P.h_bar_0, alpha, oms, beta,
+                     )
++                elif uses_developer_exact_renter_types(P):
++                    if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
++                        idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc)
++                        wt_nc = flat_nc(stored_wt[:, 0, i, j, :, :], Nb, nc)
++                        Vcbp = interp_cols_preidx_kernel(Vcr_nc, idx_nc, wt_nc)
++                    elif NUMBA_AVAILABLE:
++                        Vcbp = interp_cols_kernel(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
++                    else:
++                        Vcbp = interp_cols(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
++                    rents_i = developer_rent_matrix(P, r_hat)[i, :]
++                    for c in range(nc):
++                        val, ct, ht = eval_renter_piecewise_types_at_bp(
++                            bpv[:, c],
++                            Rv[:, 0],
++                            Vcbp[:, c],
++                            SD.cb_flat[0, c],
++                            SD.hb_flat[0, c],
++                            SD.psi_flat[0, c],
++                            rents_i,
++                            P,
++                            alpha,
++                            oms,
++                            beta,
++                        )
++                        Vo_nc[:, c] = val
++                        co_nc[:, c] = SD.cb_flat[0, c] + np.maximum(ct, P.c_min)
++                        ho_nc[:, c] = SD.hb_flat[0, c] + np.maximum(ht, 0.01)
++                    bad = Vo_nc <= -1e9
++                    co_nc[bad] = P.c_bar_0 + P.c_min
++                    ho_nc[bad] = P.h_bar_0 + 0.01
+                 else:
+                     if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
+                         idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc)
+@@ -1216,22 +1285,23 @@
                          Vcbp = interp_cols_kernel(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
                      else:
                          Vcbp = interp_cols(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
@@ -103,7 +177,206 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
                      if np.any(cm):
                          ct_nc[cm] = ct_cap[cm]
                          ht_nc[cm] = ht_cap_v[cm]
-@@ -1479,8 +1489,9 @@
+@@ -1411,9 +1481,198 @@
+         ct = np.maximum(Rv[cm] - cb_c - ri * hRmax - bp[cm], 1e-10)
+         f[cm] = (ct**alpha * ht_cap_c ** (1 - alpha)) ** oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp[cm])
+     f[surplus <= 1e-10] = -1e10
++    return f
++
++
++def developer_renter_intervals(P: SimpleNamespace, rents_i: np.ndarray) -> list[tuple[float, float, float]]:
++    rents = np.asarray(rents_i, dtype=float).reshape(-1)
++    hmax = float(P.hR_max)
++    if len(rents) <= 1:
++        return [(float(rents[0]), 0.0, hmax)]
++    middle_min = float(getattr(P, "developer_middle_min", 5.0))
++    middle_max = float(getattr(P, "developer_middle_max", hmax))
++    if len(rents) == 2:
++        return [(float(rents[0]), 0.0, min(middle_min, hmax)), (float(rents[1]), min(middle_min, hmax), hmax)]
++    return [
++        (float(rents[0]), 0.0, min(middle_min, hmax)),
++        (float(rents[1]), min(middle_min, hmax), min(middle_max, hmax)),
++        (float(rents[2]), min(middle_max, hmax), hmax),
++    ]
++
++
++def eval_renter_interval(
++    bp,
++    Rv,
++    Vbar,
++    b_grid,
++    cb_c,
++    hb_c,
++    pc,
++    ri,
++    ht_lo,
++    ht_hi,
++    alpha,
++    oms,
++    beta,
++):
++    surplus = Rv - cb_c - ri * hb_c - bp
++    ht_unc = (1.0 - alpha) / ri * surplus
++    ht = np.minimum(np.maximum(ht_unc, ht_lo), ht_hi)
++    ct = Rv - cb_c - ri * (hb_c + ht) - bp
++    comp = np.maximum(ct, 1e-10) ** alpha * np.maximum(ht, 1e-10) ** (1.0 - alpha)
++    f = comp**oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp)
++    f[(ct <= 1e-10) | (ht_hi <= ht_lo)] = -1e10
+     return f
++
++
++def renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo, ht_hi, alpha):
++    surplus = Rv - cb_c - ri * hb_c - bp
++    ht_unc = (1.0 - alpha) / ri * surplus
++    ht = np.minimum(np.maximum(ht_unc, ht_lo), ht_hi)
++    ct = Rv - cb_c - ri * (hb_c + ht) - bp
++    return ct, ht
++
++
++def golden_renter_interval(
++    lo,
++    hi,
++    Rv,
++    Vbar,
++    b_grid,
++    cb_c,
++    hb_c,
++    pc,
++    ri,
++    ht_lo,
++    ht_hi,
++    alpha,
++    oms,
++    beta,
++    a1,
++    a2,
++    tol,
++):
++    d = hi - lo
++    x1 = lo + a1 * d
++    x2 = lo + a2 * d
++    f1 = eval_renter_interval(x1, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
++    f2 = eval_renter_interval(x2, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
++    d = a1 * a2 * d
++    while np.any(d > tol):
++        bt = f2 >= f1
++        xe = np.where(bt, x2 + d, x1 - d)
++        fe = eval_renter_interval(xe, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
++        x1n = np.where(bt, x2, xe)
++        f1n = np.where(bt, f2, fe)
++        x2n = np.where(bt, xe, x1)
++        f2n = np.where(bt, fe, f1)
++        d = d * a2
++        x1, x2, f1, f2 = x1n, x2n, f1n, f2n
++    use_x2 = f2 >= f1
++    bp = np.where(use_x2, x2, x1)
++    val = np.where(use_x2, f2, f1)
++    ct, ht = renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo, ht_hi, alpha)
++    return bp, val, ct, ht
++
++
++def golden_renter_piecewise_types(
++    b_grid,
++    Rv,
++    Vbar,
++    bp_prev,
++    cb_c,
++    hb_c,
++    pc,
++    rents_i,
++    P,
++    alpha,
++    oms,
++    beta,
++    a1,
++    a2,
++    tol,
++):
++    Nb = len(b_grid)
++    best_val = -1e10 * np.ones(Nb)
++    best_bp = np.maximum(np.zeros(Nb), b_grid[0])
++    best_ct = np.full(Nb, 1e-10)
++    best_ht = np.full(Nb, 1e-10)
++    for ri, h_lo, h_hi in developer_renter_intervals(P, rents_i):
++        ht_lo = max(0.0, h_lo - float(hb_c))
++        ht_hi = min(float(P.hR_max) - float(hb_c), h_hi - float(hb_c))
++        if ht_hi <= max(ht_lo, 1e-10):
++            continue
++        ht_lo_eval = max(ht_lo, 1e-10)
++        lo = np.maximum(np.zeros(Nb), b_grid[0])
++        hi = Rv - cb_c - ri * (hb_c + ht_lo_eval) - 1e-6
++        if bp_prev is not None:
++            lo = np.maximum(lo, bp_prev - 2.0)
++            hi = np.minimum(hi, bp_prev + 2.0)
++            lo = np.maximum(lo, 0.0)
++        hi = np.maximum(hi, lo)
++        bp, val, ct, ht = golden_renter_interval(
++            lo,
++            hi,
++            Rv,
++            Vbar,
++            b_grid,
++            cb_c,
++            hb_c,
++            pc,
++            ri,
++            ht_lo_eval,
++            ht_hi,
++            alpha,
++            oms,
++            beta,
++            a1,
++            a2,
++            tol,
++        )
++        feasible = ct > 1e-10
++        val = np.where(feasible, val, -1e10)
++        improve = val > best_val
++        best_val[improve] = val[improve]
++        best_bp[improve] = bp[improve]
++        best_ct[improve] = ct[improve]
++        best_ht[improve] = ht[improve]
++    return best_bp, best_val, best_ct, best_ht
+
+
++def eval_renter_piecewise_types_at_bp(
++    bp,
++    Rv,
++    continuation,
++    cb_c,
++    hb_c,
++    pc,
++    rents_i,
++    P,
++    alpha,
++    oms,
++    beta,
++):
++    Nb = len(bp)
++    best_val = -1e10 * np.ones(Nb)
++    best_ct = np.full(Nb, 1e-10)
++    best_ht = np.full(Nb, 1e-10)
++    for ri, h_lo, h_hi in developer_renter_intervals(P, rents_i):
++        ht_lo = max(0.0, h_lo - float(hb_c))
++        ht_hi = min(float(P.hR_max) - float(hb_c), h_hi - float(hb_c))
++        if ht_hi <= max(ht_lo, 1e-10):
++            continue
++        ht_lo_eval = max(ht_lo, 1e-10)
++        ct, ht = renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo_eval, ht_hi, alpha)
++        comp = np.maximum(ct, 1e-10) ** alpha * np.maximum(ht, 1e-10) ** (1.0 - alpha)
++        val = comp**oms / oms + pc + beta * continuation
++        val = np.where(ct > 1e-10, val, -1e10)
++        improve = val > best_val
++        best_val[improve] = val[improve]
++        best_ct[improve] = ct[improve]
++        best_ht[improve] = ht[improve]
++    return best_val, best_ct, best_ht
++
++
+ def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, a1, a2, tol):
+     d = hi - lo
+     x1 = lo + a1 * d
+@@ -1479,8 +1738,9 @@
      for i in range(I):
          for ten in range(1, nt):
              hs = P.H_own[ten - 1]
@@ -112,10 +385,10 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
 +            p_unit = developer_owner_price(P, p_hat, i, ten)
 +            hc[i, ten] = p_unit * hs
 +            he[i, ten] = (1 - P.psi) * p_unit * hs
- 
+
      phi_choice = SD.phi_choice
      use_lin = str(P.kfe_wealth_interp).lower() == "linear"
-@@ -1903,7 +1914,7 @@
+@@ -1903,7 +2163,7 @@
      for jj in range(asw, aew + 1):
          for i in range(I):
              for ten in range(nt):
@@ -124,7 +397,7 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
                  for nn in range(npar):
                      for cs in range(ncs):
                          gs = g[:, ten, i, jj, nn, cs]
-@@ -2425,6 +2436,172 @@
+@@ -2425,8 +2685,178 @@
          return bg
      bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
      return bg
@@ -134,10 +407,14 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
 +    return bool(getattr(P, "developer_supply", False))
 +
 +
++def uses_developer_exact_renter_types(P: SimpleNamespace) -> bool:
++    return uses_developer_supply(P) and bool(getattr(P, "developer_exact_renter_types", False))
++
++
 +def developer_type_count(P: SimpleNamespace) -> int:
 +    return int(getattr(P, "developer_n_types", 2))
-+
-+
+
+
 +def developer_middle_type(P: SimpleNamespace) -> int:
 +    return min(1, developer_type_count(P) - 1)
 +
@@ -294,6 +571,8 @@ diff -ru --exclude=__pycache__ code/model/dt_cp_model/solver.py overnight_varian
 +        middle_stock_share=supply[:, developer_middle_type(P)] / np.maximum(np.sum(supply, axis=1), 1e-12),
 +        middle_demand_share=demand[:, developer_middle_type(P)] / np.maximum(np.sum(demand, axis=1), 1e-12),
 +    )
- 
- 
++
++
  def current_child_bin_dt(nn, cs, dep_last):
+     if cs == 0 or cs > dep_last:
+         return 2

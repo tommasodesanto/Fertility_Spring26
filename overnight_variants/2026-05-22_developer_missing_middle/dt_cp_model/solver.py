@@ -1069,6 +1069,8 @@ def solve_bellman_core(
     bd = np.zeros_like(Vd)
     Vo_nc = np.zeros((Nb, nc))
     bp_nc = np.zeros((Nb, nc))
+    co_nc = np.zeros((Nb, nc))
+    ho_nc = np.zeros((Nb, nc))
 
     gs_tol = 1e-3
     gs_alpha1 = (3 - math.sqrt(5)) / 2
@@ -1103,6 +1105,34 @@ def solve_bellman_core(
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                         alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
                     )
+                elif uses_developer_exact_renter_types(P):
+                    bp_prev_r = flat_nc(bd[:, 0, i, :, :], Nb, nc) if j < J - 1 else None
+                    rents_i = developer_rent_matrix(P, r_hat)[i, :]
+                    for c in range(nc):
+                        bp, val, ct, ht = golden_renter_piecewise_types(
+                            b_grid,
+                            Rv[:, 0],
+                            Vcr[:, c],
+                            bp_prev_r[:, c] if bp_prev_r is not None else None,
+                            SD.cb_flat[0, c],
+                            SD.hb_flat[0, c],
+                            SD.psi_flat[0, c],
+                            rents_i,
+                            P,
+                            alpha,
+                            oms,
+                            beta,
+                            gs_alpha1,
+                            gs_alpha2,
+                            gs_tol,
+                        )
+                        bp_nc[:, c] = bp
+                        Vo_nc[:, c] = val
+                        co_nc[:, c] = SD.cb_flat[0, c] + np.maximum(ct, P.c_min)
+                        ho_nc[:, c] = SD.hb_flat[0, c] + np.maximum(ht, 0.01)
+                    bad = Vo_nc <= -1e9
+                    co_nc[bad] = P.c_bar_0 + P.c_min
+                    ho_nc[bad] = P.h_bar_0 + 0.01
                 else:
                     ri_cols = developer_rent_by_flat_type(P, r_hat, i, SD.developer_rent_type_flat)
                     d_nc = SD.cb_flat + ri_cols.reshape(1, -1) * SD.hb_flat
@@ -1216,6 +1246,36 @@ def solve_bellman_core(
                         Rv1d, bpv, Vcr_nc, idx_nc, wt_nc, cb_v, hb_v, psi_v_flat,
                         ri, P.hR_max, P.c_min, P.c_bar_0, P.h_bar_0, alpha, oms, beta,
                     )
+                elif uses_developer_exact_renter_types(P):
+                    if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
+                        idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc)
+                        wt_nc = flat_nc(stored_wt[:, 0, i, j, :, :], Nb, nc)
+                        Vcbp = interp_cols_preidx_kernel(Vcr_nc, idx_nc, wt_nc)
+                    elif NUMBA_AVAILABLE:
+                        Vcbp = interp_cols_kernel(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
+                    else:
+                        Vcbp = interp_cols(b_grid, Vcr_nc, np.clip(bpv, b_lo, b_hi))
+                    rents_i = developer_rent_matrix(P, r_hat)[i, :]
+                    for c in range(nc):
+                        val, ct, ht = eval_renter_piecewise_types_at_bp(
+                            bpv[:, c],
+                            Rv[:, 0],
+                            Vcbp[:, c],
+                            SD.cb_flat[0, c],
+                            SD.hb_flat[0, c],
+                            SD.psi_flat[0, c],
+                            rents_i,
+                            P,
+                            alpha,
+                            oms,
+                            beta,
+                        )
+                        Vo_nc[:, c] = val
+                        co_nc[:, c] = SD.cb_flat[0, c] + np.maximum(ct, P.c_min)
+                        ho_nc[:, c] = SD.hb_flat[0, c] + np.maximum(ht, 0.01)
+                    bad = Vo_nc <= -1e9
+                    co_nc[bad] = P.c_bar_0 + P.c_min
+                    ho_nc[bad] = P.h_bar_0 + 0.01
                 else:
                     if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
                         idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc)
@@ -1422,6 +1482,195 @@ def eval_renter(bp, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr,
         f[cm] = (ct**alpha * ht_cap_c ** (1 - alpha)) ** oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp[cm])
     f[surplus <= 1e-10] = -1e10
     return f
+
+
+def developer_renter_intervals(P: SimpleNamespace, rents_i: np.ndarray) -> list[tuple[float, float, float]]:
+    rents = np.asarray(rents_i, dtype=float).reshape(-1)
+    hmax = float(P.hR_max)
+    if len(rents) <= 1:
+        return [(float(rents[0]), 0.0, hmax)]
+    middle_min = float(getattr(P, "developer_middle_min", 5.0))
+    middle_max = float(getattr(P, "developer_middle_max", hmax))
+    if len(rents) == 2:
+        return [(float(rents[0]), 0.0, min(middle_min, hmax)), (float(rents[1]), min(middle_min, hmax), hmax)]
+    return [
+        (float(rents[0]), 0.0, min(middle_min, hmax)),
+        (float(rents[1]), min(middle_min, hmax), min(middle_max, hmax)),
+        (float(rents[2]), min(middle_max, hmax), hmax),
+    ]
+
+
+def eval_renter_interval(
+    bp,
+    Rv,
+    Vbar,
+    b_grid,
+    cb_c,
+    hb_c,
+    pc,
+    ri,
+    ht_lo,
+    ht_hi,
+    alpha,
+    oms,
+    beta,
+):
+    surplus = Rv - cb_c - ri * hb_c - bp
+    ht_unc = (1.0 - alpha) / ri * surplus
+    ht = np.minimum(np.maximum(ht_unc, ht_lo), ht_hi)
+    ct = Rv - cb_c - ri * (hb_c + ht) - bp
+    comp = np.maximum(ct, 1e-10) ** alpha * np.maximum(ht, 1e-10) ** (1.0 - alpha)
+    f = comp**oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp)
+    f[(ct <= 1e-10) | (ht_hi <= ht_lo)] = -1e10
+    return f
+
+
+def renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo, ht_hi, alpha):
+    surplus = Rv - cb_c - ri * hb_c - bp
+    ht_unc = (1.0 - alpha) / ri * surplus
+    ht = np.minimum(np.maximum(ht_unc, ht_lo), ht_hi)
+    ct = Rv - cb_c - ri * (hb_c + ht) - bp
+    return ct, ht
+
+
+def golden_renter_interval(
+    lo,
+    hi,
+    Rv,
+    Vbar,
+    b_grid,
+    cb_c,
+    hb_c,
+    pc,
+    ri,
+    ht_lo,
+    ht_hi,
+    alpha,
+    oms,
+    beta,
+    a1,
+    a2,
+    tol,
+):
+    d = hi - lo
+    x1 = lo + a1 * d
+    x2 = lo + a2 * d
+    f1 = eval_renter_interval(x1, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
+    f2 = eval_renter_interval(x2, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
+    d = a1 * a2 * d
+    while np.any(d > tol):
+        bt = f2 >= f1
+        xe = np.where(bt, x2 + d, x1 - d)
+        fe = eval_renter_interval(xe, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, ht_lo, ht_hi, alpha, oms, beta)
+        x1n = np.where(bt, x2, xe)
+        f1n = np.where(bt, f2, fe)
+        x2n = np.where(bt, xe, x1)
+        f2n = np.where(bt, fe, f1)
+        d = d * a2
+        x1, x2, f1, f2 = x1n, x2n, f1n, f2n
+    use_x2 = f2 >= f1
+    bp = np.where(use_x2, x2, x1)
+    val = np.where(use_x2, f2, f1)
+    ct, ht = renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo, ht_hi, alpha)
+    return bp, val, ct, ht
+
+
+def golden_renter_piecewise_types(
+    b_grid,
+    Rv,
+    Vbar,
+    bp_prev,
+    cb_c,
+    hb_c,
+    pc,
+    rents_i,
+    P,
+    alpha,
+    oms,
+    beta,
+    a1,
+    a2,
+    tol,
+):
+    Nb = len(b_grid)
+    best_val = -1e10 * np.ones(Nb)
+    best_bp = np.maximum(np.zeros(Nb), b_grid[0])
+    best_ct = np.full(Nb, 1e-10)
+    best_ht = np.full(Nb, 1e-10)
+    for ri, h_lo, h_hi in developer_renter_intervals(P, rents_i):
+        ht_lo = max(0.0, h_lo - float(hb_c))
+        ht_hi = min(float(P.hR_max) - float(hb_c), h_hi - float(hb_c))
+        if ht_hi <= max(ht_lo, 1e-10):
+            continue
+        ht_lo_eval = max(ht_lo, 1e-10)
+        lo = np.maximum(np.zeros(Nb), b_grid[0])
+        hi = Rv - cb_c - ri * (hb_c + ht_lo_eval) - 1e-6
+        if bp_prev is not None:
+            lo = np.maximum(lo, bp_prev - 2.0)
+            hi = np.minimum(hi, bp_prev + 2.0)
+            lo = np.maximum(lo, 0.0)
+        hi = np.maximum(hi, lo)
+        bp, val, ct, ht = golden_renter_interval(
+            lo,
+            hi,
+            Rv,
+            Vbar,
+            b_grid,
+            cb_c,
+            hb_c,
+            pc,
+            ri,
+            ht_lo_eval,
+            ht_hi,
+            alpha,
+            oms,
+            beta,
+            a1,
+            a2,
+            tol,
+        )
+        feasible = ct > 1e-10
+        val = np.where(feasible, val, -1e10)
+        improve = val > best_val
+        best_val[improve] = val[improve]
+        best_bp[improve] = bp[improve]
+        best_ct[improve] = ct[improve]
+        best_ht[improve] = ht[improve]
+    return best_bp, best_val, best_ct, best_ht
+
+
+def eval_renter_piecewise_types_at_bp(
+    bp,
+    Rv,
+    continuation,
+    cb_c,
+    hb_c,
+    pc,
+    rents_i,
+    P,
+    alpha,
+    oms,
+    beta,
+):
+    Nb = len(bp)
+    best_val = -1e10 * np.ones(Nb)
+    best_ct = np.full(Nb, 1e-10)
+    best_ht = np.full(Nb, 1e-10)
+    for ri, h_lo, h_hi in developer_renter_intervals(P, rents_i):
+        ht_lo = max(0.0, h_lo - float(hb_c))
+        ht_hi = min(float(P.hR_max) - float(hb_c), h_hi - float(hb_c))
+        if ht_hi <= max(ht_lo, 1e-10):
+            continue
+        ht_lo_eval = max(ht_lo, 1e-10)
+        ct, ht = renter_interval_policy(bp, Rv, cb_c, hb_c, ri, ht_lo_eval, ht_hi, alpha)
+        comp = np.maximum(ct, 1e-10) ** alpha * np.maximum(ht, 1e-10) ** (1.0 - alpha)
+        val = comp**oms / oms + pc + beta * continuation
+        val = np.where(ct > 1e-10, val, -1e10)
+        improve = val > best_val
+        best_val[improve] = val[improve]
+        best_ct[improve] = ct[improve]
+        best_ht[improve] = ht[improve]
+    return best_val, best_ct, best_ht
 
 
 def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, a1, a2, tol):
@@ -2440,6 +2689,10 @@ def get_birth_entry_grant_tensor(P):
 
 def uses_developer_supply(P: SimpleNamespace) -> bool:
     return bool(getattr(P, "developer_supply", False))
+
+
+def uses_developer_exact_renter_types(P: SimpleNamespace) -> bool:
+    return uses_developer_supply(P) and bool(getattr(P, "developer_exact_renter_types", False))
 
 
 def developer_type_count(P: SimpleNamespace) -> int:
