@@ -79,7 +79,7 @@ tenure, and structure. Buying is empirically central: parenthood is strongly
 associated with ownership, and family-sized units are often accessed through a
 different ownership bundle rather than through a same-location rental upgrade.
 
-## Fact 3: Parents Are Less Central Where Central Family Space Is Scarce
+## Fact 3: Parents And Fertility Are Less Central Where Central Family Space Is Scarce
 
 Status: newly stronger, but still descriptive.
 
@@ -88,6 +88,11 @@ Updated source:
 
 New output:
 `code/data/mms_center_periphery/output_family_size_supply/acs_childless_parent_gap_vs_stock_scarcity.png`
+
+Fertility-gap outputs:
+
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png`
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_gap_vs_bedroom_stock_scarcity.png`
 
 Define the parent centrality gap as
 
@@ -118,16 +123,22 @@ Current result:
   0.1467, SE 0.0256.
 - Bedroom-bin regression slope of \(G_m\) on the 3+ bedroom price premium:
   -0.0029, SE 0.0688.
+- Recent-birth fertility gap is defined as the periphery-minus-center recent
+  birth rate. Its slope on 3+ bedroom stock scarcity is 0.0105, SE 0.0036.
+- Mean-own-children gap is defined as periphery minus center mean own children.
+  Its slope on 3+ bedroom stock scarcity is 0.2954, SE 0.0623.
 
 Interpretation:
 
 This is the strongest current bridge from Couillard to the paper. It says
 parents are less central in exactly the metros where the central stock is most
-tilted away from family-capable units. The price-premium evidence is weaker,
+tilted away from family-capable units. The fertility-gradient version says the
+same central family-space scarcity measure predicts more peripheral recent
+births and more peripheral children. The price-premium evidence is weaker,
 especially in the bedroom construction, which may reflect rent measurement,
 selection into observed rental units, or the fact that family-space access is
 often resolved through buying rather than renting. The evidence is not causal,
-because family types and housing supply are jointly determined.
+because family types, fertility, and housing supply are jointly determined.
 
 ## Supply-Side Content
 
@@ -186,6 +197,8 @@ The current facts support the paper spine:
 2. Family-sized housing is the relevant physical object.
 3. Parents are less central where central family-capable stock is relatively
    scarce, in both room and bedroom versions.
+4. Recent births and mean own children are also more peripheral where central
+   3+ bedroom stock is relatively scarce.
 
 The current facts do not yet identify the causal supply channel. The next
 step is not more calibration. It is to measure whether family-capable stock is

@@ -144,6 +144,11 @@
       scarcity, SE 0.0256.
     </div>
     <div class="metric">
+      <strong>0.0105</strong>
+      Bedroom-bin slope of the periphery-minus-center recent-birth gap on
+      3+ bedroom stock scarcity, SE 0.0036.
+    </div>
+    <div class="metric">
       <strong>0.991</strong>
       Parent-minus-childless bedroom gap in the young ACS/MMS sample.
     </div>
@@ -204,12 +209,14 @@
     </figcaption>
   </figure>
 
-  <h2>3. Parents Are Less Central Where Central Family Space Is Scarce</h2>
+  <h2>3. Parents And Fertility Are Less Central Where Central Family Space Is Scarce</h2>
   <p>
     Define the parent centrality gap as childless center share minus parent
     center share within a metro. Define central family-space stock scarcity as
     the central small/family stock ratio relative to the periphery. This is the
-    main immediate empirical bridge from Couillard to the paper.
+    main immediate empirical bridge from Couillard to the paper. The fertility
+    counterpart uses periphery minus center fertility by metro, so positive
+    values mean fertility is more peripheral.
   </p>
 
   <figure>
@@ -226,6 +233,24 @@
     <figcaption>
       Room-bin evidence. The same fact appears when family-capable units are
       defined as 5+ rooms. Weighted slope: 0.2112, SE 0.0251.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png" alt="Recent-birth gap versus 3+ bedroom stock scarcity">
+    <figcaption>
+      Recent-birth evidence. Metros where central 3+ bedroom stock is
+      relatively scarce have a larger periphery-minus-center recent-birth gap.
+      Weighted slope: 0.0105, SE 0.0036.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_gap_vs_bedroom_stock_scarcity.png" alt="Mean own children gap versus 3+ bedroom stock scarcity">
+    <figcaption>
+      Children-stock evidence. The periphery-minus-center gap in mean own
+      children is also larger where central 3+ bedroom stock is relatively
+      scarce. Weighted slope: 0.2954, SE 0.0623.
     </figcaption>
   </figure>
 
@@ -287,7 +312,7 @@
   <ul>
     <li>Fact 1: births raise housing demand in the PSID no-location packet.</li>
     <li>Fact 2: central housing is more small-unit tilted than peripheral housing.</li>
-    <li>Fact 3: parents are less central where central family-capable stock is relatively scarce.</li>
+    <li>Fact 3: parents and fertility are less central where central family-capable stock is relatively scarce.</li>
     <li>Fact 4: ownership is empirically central, but as an access technology rather than the primitive mechanism.</li>
     <li>Missing: causal supply evidence and location-specific PSID dynamics.</li>
   </ul>

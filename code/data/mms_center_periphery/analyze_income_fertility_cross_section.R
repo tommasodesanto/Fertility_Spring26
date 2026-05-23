@@ -64,6 +64,15 @@ coef_table <- function(model, model_name) {
     transmute(model = model_name, term, estimate, se, t_stat, p_value)
 }
 
+lm_coef_table <- function(model, model_name) {
+  ct <- as.data.frame(summary(model)$coefficients)
+  ct$term <- rownames(ct)
+  rownames(ct) <- NULL
+  names(ct) <- c("estimate", "se", "t_stat", "p_value", "term")
+  ct %>%
+    transmute(model = model_name, term, estimate, se, t_stat, p_value)
+}
+
 decompose_gap <- function(data, outcome) {
   cells <- data %>%
     filter(!is.na(.data[[outcome]]), !is.na(income_quintile), mms_location %in% c("center", "periphery")) %>%
@@ -399,6 +408,89 @@ gap_decomposition <- bind_rows(
   decompose_gap(df, "mean_children_household")
 )
 
+metro_fertility <- df %>%
+  group_by(met2013, cbsatitle, mms_location) %>%
+  summarise(
+    weight = sum(perwt, na.rm = TRUE),
+    recent_birth_rate = weighted_mean_safe(if_else(fertyr_observed, recent_birth, NA_integer_), perwt),
+    parent_u18_rate = weighted_mean_safe(has_child_u18, perwt),
+    childless_rate = weighted_mean_safe(childless_in_household, perwt),
+    mean_nchild = weighted_mean_safe(mean_children_household, perwt),
+    mean_rooms = weighted_mean_safe(rooms_clean, perwt),
+    owner_rate = weighted_mean_safe(owner, perwt),
+    .groups = "drop"
+  ) %>%
+  pivot_wider(
+    names_from = mms_location,
+    values_from = c(weight, recent_birth_rate, parent_u18_rate, childless_rate, mean_nchild, mean_rooms, owner_rate)
+  ) %>%
+  mutate(
+    analysis_weight = coalesce(weight_center, 0) + coalesce(weight_periphery, 0),
+    periphery_center_recent_birth_gap = recent_birth_rate_periphery - recent_birth_rate_center,
+    periphery_center_parent_u18_gap = parent_u18_rate_periphery - parent_u18_rate_center,
+    periphery_center_mean_nchild_gap = mean_nchild_periphery - mean_nchild_center,
+    periphery_center_childless_gap = childless_rate_periphery - childless_rate_center,
+    periphery_center_rooms_gap = mean_rooms_periphery - mean_rooms_center,
+    periphery_center_owner_gap = owner_rate_periphery - owner_rate_center
+  )
+
+bedroom_supply_path <- file.path(script_dir, "output_couillard_bedroom_supply", "acs_bedroom_premia_by_metro.csv")
+metro_fertility_supply <- tibble()
+fertility_supply_regression_table <- tibble(
+  model = character(),
+  term = character(),
+  estimate = numeric(),
+  se = numeric(),
+  t_stat = numeric(),
+  p_value = numeric()
+)
+
+if (file.exists(bedroom_supply_path)) {
+  bedroom_supply <- read_csv(bedroom_supply_path, show_col_types = FALSE) %>%
+    select(
+      met2013,
+      bedroom_family_stock_scarcity,
+      bedroom_family_price_premium,
+      family_stock_share_center,
+      center_stock_weight
+    )
+
+  metro_fertility_supply <- metro_fertility %>%
+    left_join(bedroom_supply, by = "met2013") %>%
+    filter(
+      analysis_weight > 0,
+      !is.na(bedroom_family_stock_scarcity),
+      !is.na(bedroom_family_price_premium),
+      !is.na(family_stock_share_center),
+      !is.na(periphery_center_recent_birth_gap),
+      !is.na(periphery_center_mean_nchild_gap)
+    )
+
+  recent_birth_gap_model <- lm(
+    periphery_center_recent_birth_gap ~ bedroom_family_stock_scarcity + bedroom_family_price_premium + family_stock_share_center,
+    data = metro_fertility_supply,
+    weights = analysis_weight
+  )
+
+  mean_nchild_gap_model <- lm(
+    periphery_center_mean_nchild_gap ~ bedroom_family_stock_scarcity + bedroom_family_price_premium + family_stock_share_center,
+    data = metro_fertility_supply,
+    weights = analysis_weight
+  )
+
+  parent_u18_gap_model <- lm(
+    periphery_center_parent_u18_gap ~ bedroom_family_stock_scarcity + bedroom_family_price_premium + family_stock_share_center,
+    data = metro_fertility_supply,
+    weights = analysis_weight
+  )
+
+  fertility_supply_regression_table <- bind_rows(
+    lm_coef_table(recent_birth_gap_model, "recent_birth_gap_supply"),
+    lm_coef_table(mean_nchild_gap_model, "mean_nchild_gap_supply"),
+    lm_coef_table(parent_u18_gap_model, "parent_u18_gap_supply")
+  )
+}
+
 reg_data <- df %>%
   filter(fertyr_observed, owner_label %in% c("owner", "renter")) %>%
   mutate(
@@ -447,6 +539,11 @@ write_csv(parity_income_distribution, file.path(out_dir, "acs_income_distributio
 write_csv(income_composition_by_location_parent, file.path(out_dir, "acs_income_composition_by_location_parent.csv"))
 write_csv(gap_decomposition, file.path(out_dir, "acs_center_periphery_fertility_income_decomposition.csv"))
 write_csv(regression_table, file.path(out_dir, "acs_income_fertility_regressions.csv"))
+write_csv(metro_fertility, file.path(out_dir, "acs_fertility_gaps_by_metro.csv"))
+if (nrow(metro_fertility_supply) > 0) {
+  write_csv(metro_fertility_supply, file.path(out_dir, "acs_fertility_gaps_by_metro_with_bedroom_supply.csv"))
+  write_csv(fertility_supply_regression_table, file.path(out_dir, "acs_fertility_supply_gap_regressions.csv"))
+}
 
 p_recent <- ggplot(fertility_by_income, aes(x = income_quintile, y = recent_birth_rate)) +
   geom_line(linewidth = 0.8, color = "#2C5F8A") +
@@ -488,8 +585,49 @@ ggsave(file.path(out_dir, "acs_parent_childless_by_income.png"), p_parent, width
 ggsave(file.path(out_dir, "acs_parent_by_income_location.png"), p_loc, width = 7.5, height = 4.5, dpi = 180)
 ggsave(file.path(out_dir, "acs_income_distribution_birth_childless.png"), p_dist, width = 7.5, height = 4.5, dpi = 180)
 
+if (nrow(metro_fertility_supply) > 0) {
+  p_birth_gap_supply <- ggplot(metro_fertility_supply, aes(x = bedroom_family_stock_scarcity, y = periphery_center_recent_birth_gap)) +
+    geom_hline(yintercept = 0, linewidth = 0.3, color = "gray70") +
+    geom_vline(xintercept = 0, linewidth = 0.3, color = "gray70") +
+    geom_point(aes(size = analysis_weight), alpha = 0.55, color = "#2C5F8A") +
+    geom_smooth(aes(weight = analysis_weight), method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
+    scale_size_continuous(guide = "none") +
+    scale_y_continuous(labels = percent_format(accuracy = 0.1)) +
+    labs(
+      x = "Central 0-1/3+ bedroom stock ratio relative to periphery",
+      y = "Periphery minus center recent birth rate",
+      title = "Recent-Birth Gap and 3+ Bedroom Stock Scarcity"
+    ) +
+    theme_minimal(base_size = 12)
+
+  p_nchild_gap_supply <- ggplot(metro_fertility_supply, aes(x = bedroom_family_stock_scarcity, y = periphery_center_mean_nchild_gap)) +
+    geom_hline(yintercept = 0, linewidth = 0.3, color = "gray70") +
+    geom_vline(xintercept = 0, linewidth = 0.3, color = "gray70") +
+    geom_point(aes(size = analysis_weight), alpha = 0.55, color = "#2C5F8A") +
+    geom_smooth(aes(weight = analysis_weight), method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
+    scale_size_continuous(guide = "none") +
+    scale_y_continuous(labels = label_number(accuracy = 0.01)) +
+    labs(
+      x = "Central 0-1/3+ bedroom stock ratio relative to periphery",
+      y = "Periphery minus center mean own children",
+      title = "Children Gap and 3+ Bedroom Stock Scarcity"
+    ) +
+    theme_minimal(base_size = 12)
+
+  ggsave(file.path(out_dir, "acs_recent_birth_gap_vs_bedroom_stock_scarcity.png"), p_birth_gap_supply, width = 7.5, height = 4.5, dpi = 180)
+  ggsave(file.path(out_dir, "acs_mean_children_gap_vs_bedroom_stock_scarcity.png"), p_nchild_gap_supply, width = 7.5, height = 4.5, dpi = 180)
+}
+
 get_coef_line <- function(model_name, term_name) {
   row <- regression_table %>% filter(model == model_name, term == term_name)
+  if (nrow(row) == 0) {
+    return("not estimated")
+  }
+  sprintf("%.4f (SE %.4f, p=%.3g)", row$estimate[1], row$se[1], row$p_value[1])
+}
+
+get_supply_coef_line <- function(model_name, term_name) {
+  row <- fertility_supply_regression_table %>% filter(model == model_name, term == term_name)
   if (nrow(row) == 0) {
     return("not estimated")
   }
@@ -506,6 +644,28 @@ childless_dist <- income_distribution_by_fertility %>%
   arrange(income_quintile)
 decomp_recent <- gap_decomposition %>% filter(outcome == "recent_birth")
 decomp_parent <- gap_decomposition %>% filter(outcome == "has_child_u18")
+
+fertility_supply_lines <- if (nrow(metro_fertility_supply) > 0) {
+  c(
+    "",
+    "## Family-Space Scarcity And Fertility Gaps",
+    "",
+    "- Fertility gaps are periphery minus center by metro, so positive values mean fertility is more peripheral.",
+    sprintf("- Recent-birth gap slope on 3+ bedroom stock scarcity: `%s`.",
+            get_supply_coef_line("recent_birth_gap_supply", "bedroom_family_stock_scarcity")),
+    sprintf("- Mean-own-children gap slope on 3+ bedroom stock scarcity: `%s`.",
+            get_supply_coef_line("mean_nchild_gap_supply", "bedroom_family_stock_scarcity")),
+    sprintf("- Parent-with-child-under-18 gap slope on 3+ bedroom stock scarcity: `%s`.",
+            get_supply_coef_line("parent_u18_gap_supply", "bedroom_family_stock_scarcity"))
+  )
+} else {
+  c(
+    "",
+    "## Family-Space Scarcity And Fertility Gaps",
+    "",
+    sprintf("- Not estimated because `%s` was not found. Run `analyze_couillard_bedroom_supply_panel.R` first.", bedroom_supply_path)
+  )
+}
 
 md <- c(
   "# ACS/MMS Income-Fertility Cross-Section",
@@ -537,6 +697,7 @@ md <- c(
           decomp_recent$center_minus_periphery[1], decomp_recent$within_income_component[1], decomp_recent$income_composition_component[1]),
   sprintf("- Center-minus-periphery parent-with-child-under-18 gap: `%.4f`; within-income component `%.4f`; income-composition component `%.4f`.",
           decomp_parent$center_minus_periphery[1], decomp_parent$within_income_component[1], decomp_parent$income_composition_component[1]),
+  fertility_supply_lines,
   "",
   "## Regression Reads",
   "",
@@ -557,7 +718,10 @@ md <- c(
   "- `acs_income_composition_by_location_parent.csv`",
   "- `acs_center_periphery_fertility_income_decomposition.csv`",
   "- `acs_income_fertility_regressions.csv`",
-  "- PNG figures for recent births, parenthood/childlessness, location gradients, and income distributions.",
+  "- `acs_fertility_gaps_by_metro.csv`",
+  "- `acs_fertility_gaps_by_metro_with_bedroom_supply.csv`, when bedroom-supply outputs are available.",
+  "- `acs_fertility_supply_gap_regressions.csv`, when bedroom-supply outputs are available.",
+  "- PNG figures for recent births, parenthood/childlessness, location gradients, income distributions, and fertility gaps by bedroom stock scarcity.",
   "",
   "## Interpretation Guardrails",
   "",

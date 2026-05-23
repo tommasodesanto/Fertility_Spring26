@@ -58,3 +58,5 @@ Outputs:
 - `output_income_fertility_cross_section/ACS_MMS_INCOME_FERTILITY_CROSS_SECTION.md`
 - `output_income_fertility_cross_section/acs_fertility_by_income_quintile.csv`
 - `output_income_fertility_cross_section/acs_center_periphery_fertility_income_decomposition.csv`
+- `output_income_fertility_cross_section/acs_fertility_gaps_by_metro_with_bedroom_supply.csv`
+- `output_income_fertility_cross_section/acs_fertility_supply_gap_regressions.csv`
