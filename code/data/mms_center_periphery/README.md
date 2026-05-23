@@ -25,6 +25,7 @@ Files:
 - `compute_mms_descriptives.R`: applies the lookup to `extract27.dta` and recomputes core validation facts
 - `build_migpuma_origin_bridge.R`: uses the official IPUMS PUMA/MIGPUMA relationship files plus the PUMA lookup to build origin MMS shares by `(MIGPLAC1, MIGPUMA1, CBSA)`
 - `analyze_mms_fertility_moves.R`: rebuilds the fertility/location and new-parent move facts under the MMS geography using `extract27` plus the filtered `extract28` origin supplement
+- `analyze_family_size_supply_menu.R`: builds a fast ACS/MMS family-size housing menu and sorting packet by center/periphery, room-size bin, tenure, parent status, and income proxy
 
 Outputs:
 - `data/migpuma_mms_origin_bridge.csv`
@@ -45,3 +46,7 @@ Outputs:
 - `output/mms_origin_transition_summary.csv`
 - `output/mms_origin_regressions.csv`
 - `output/mms_fertility_moves_summary.md`
+- `output_family_size_supply/ACS_MMS_FAMILY_SIZE_SUPPLY_PACKET.md`
+- `output_family_size_supply/acs_family_size_premia_by_metro.csv`
+- `output_family_size_supply/acs_parent_centrality_by_metro.csv`
+- `output_family_size_supply/acs_family_size_regressions.csv`

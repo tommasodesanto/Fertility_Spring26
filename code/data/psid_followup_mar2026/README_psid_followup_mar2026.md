@@ -15,6 +15,7 @@ No existing project files were overwritten.
 - `wealth_regressions_v1.do`
 - `twins_and_gender_iv_v1.do`
 - `secondborn_gender_design_v1.do`
+- `compile_no_location_family_space_packet.py`
 - `output/` (generated artifacts and logs)
 
 ## Exact Replication Target
@@ -132,6 +133,22 @@ From `wealth_tercile_outcomes_v1.csv`:
 - Moving rates are lower in the top wealth tercile, consistent with some households crossing to ownership without relying as much on relocation.
 
 These are descriptive/first-pass estimates and should be tightened with cleaner cohort restrictions and robustness checks before being treated as final evidence.
+
+## No-Location Family-Space Packet (May 23, 2026)
+
+`compile_no_location_family_space_packet.py` compiles existing PSID outputs and
+a fresh split of the saved pre-birth-renter event sample without using
+location-specific PSID. It writes:
+
+- `output/no_location_family_space_packet_20260523/PSID_NO_LOCATION_FAMILY_SPACE_PACKET.md`
+- `output/no_location_family_space_packet_20260523/psid_birth_rooms_event_summary.csv`
+- `output/no_location_family_space_packet_20260523/psid_prebirth_renter_outcomes_by_income_tercile.csv`
+- `output/no_location_family_space_packet_20260523/psid_prebirth_renter_outcomes_by_rooms_slack.csv`
+
+The packet documents birth-related room responses, moved-for-size windows,
+pre-birth renter heterogeneity by income and room slack, and the existing
+non-monotone wealth-parenthood fact. It does not identify center-to-periphery
+moves or metro family-size-premium effects.
 
 ## First-Pass Twins/Gender Findings
 
