@@ -88,9 +88,10 @@ is that family-capable units are unevenly located in the stock menu:
 | Owner households with children in 0-2 bedroom units | 1.8 million |
 
 This makes tenure useful, but not as the only story. Tenure is diagnostic: it
-tells us whether family-capable units are accessible as rental housing, or
-whether access to family-sized space requires moving into the owner/detached
-bundle.
+tells us whether family-capable units are accessed by buying, renting, or
+moving into different structure types. The point is not that the missing object
+must be rental housing. The point is that the child-contingent family-space
+margin is often mediated by a purchase/ownership transition.
 
 ## Economic Interpretation
 
@@ -119,33 +120,45 @@ The synthesis is:
 3. AHS shows that 3+ bedroom units exist in large absolute numbers, but are
    disproportionately located in owner and detached segments.
 4. Therefore the "missing middle" should be framed as missing accessible
-   family-capable units: 2-3 bedroom attached/multifamily/rental units, not
-   simply the absence of any large housing units.
+   family-capable units: units that young households can reach through buying,
+   renting, or moving within the metro, not simply the absence of any large
+   housing units.
 
 For our paper, the best empirical bridge is:
 
 > Couillard shows that the fertility-relevant price is the price of
 > family-sized housing. We show that the fertility-relevant supply object is
 > not total housing and not even total 3+ bedroom housing, but the availability
-> of family-capable units in the rental and moderate-density parts of the
-> housing menu.
+> of family-capable units across the owner/renter and detached/moderate-density
+> access margins.
 
 ## What To Build Next
 
-The next empirical figures should put these two objects side by side:
+The ACS/MMS bedroom packet now puts the Couillard size object next to the
+within-metro sorting object:
+
+- `code/data/mms_center_periphery/output_couillard_bedroom_supply/ACS_MMS_COUILLARD_BEDROOM_SUPPLY_PACKET.md`
+- `code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_menu_center_periphery.png`
+- `code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_parent_gap_vs_stock_scarcity.png`
+
+The next empirical figures should sharpen these objects rather than just
+replicate them:
 
 1. Couillard-style bedroom rent gradients by metro or tract: 1-bedroom versus
-   3+ bedroom rents.
-2. AHS/ACS stock counts by bedroom bin: absolute number of 0-1, 2, 3, and
-   4+ bedroom units.
-3. AHS accessible-family-stock counts: 3+ bedroom rentals and 2-3 bedroom
-   attached/multifamily rentals.
+   3+ bedroom rents, preferably from Census summary tables or finer geography
+   because the ACS/IPUMS renter-price premium is flat in the current pass.
+2. AHS/ACS stock-growth counts by bedroom bin: absolute number of 0-1, 2, 3,
+   and 4+ bedroom units by vintage or construction period.
+3. AHS accessible-family-stock counts: 3+ bedroom owner/renter units and
+   2-3 bedroom attached/multifamily units.
 4. A metro scatter: 3+ bedroom rent gradient on the vertical axis and
-   family-sized rental scarcity on the horizontal axis.
+   family-sized stock scarcity on the horizontal axis.
 5. A child-status stock-use figure: households with children by bedroom count
    and tenure, especially the count of renter households with children in
    0-2 bedroom units.
 
 Those objects are more aligned with Couillard than a generic tenure story.
-Tenure matters because it reveals the access technology for family space, not
-because ownership is the primitive fertility mechanism.
+Tenure matters because it reveals the access technology for family space.
+Ownership is central if the data show that buying is the main route into
+family-sized housing; it should not be imposed as the primitive mechanism before
+the stock, price, and event-study facts are read together.

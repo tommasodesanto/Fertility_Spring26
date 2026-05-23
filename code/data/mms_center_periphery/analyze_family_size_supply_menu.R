@@ -299,6 +299,25 @@ central_supply <- cell_stock %>%
     .groups = "drop"
   )
 
+location_supply <- cell_stock %>%
+  filter(tenure %in% c("owner", "renter")) %>%
+  group_by(met2013, cbsatitle, mms_location) %>%
+  summarise(
+    stock_s = sum(if_else(size_bin == "S_1_4", hh_weight, 0), na.rm = TRUE),
+    stock_m = sum(if_else(size_bin == "M_5_6", hh_weight, 0), na.rm = TRUE),
+    stock_l = sum(if_else(size_bin == "L_7plus", hh_weight, 0), na.rm = TRUE),
+    stock_family = stock_m + stock_l,
+    stock_total = stock_s + stock_family,
+    family_stock_share = stock_family / stock_total,
+    small_to_family_ratio = stock_s / stock_family,
+    .groups = "drop"
+  ) %>%
+  select(met2013, cbsatitle, mms_location, stock_s, stock_m, stock_l, stock_family, stock_total, family_stock_share, small_to_family_ratio) %>%
+  pivot_wider(
+    names_from = mms_location,
+    values_from = c(stock_s, stock_m, stock_l, stock_family, stock_total, family_stock_share, small_to_family_ratio)
+  )
+
 metro_premia <- metro_base %>%
   left_join(price_cell("center", "S_1_4", "center_s"), by = c("met2013", "cbsatitle")) %>%
   left_join(price_cell("periphery", "S_1_4", "periphery_s"), by = c("met2013", "cbsatitle")) %>%
@@ -307,6 +326,7 @@ metro_premia <- metro_base %>%
   left_join(price_cell("center", "L_7plus", "center_l"), by = c("met2013", "cbsatitle")) %>%
   left_join(price_cell("periphery", "L_7plus", "periphery_l"), by = c("met2013", "cbsatitle")) %>%
   left_join(central_supply, by = c("met2013", "cbsatitle")) %>%
+  left_join(location_supply, by = c("met2013", "cbsatitle")) %>%
   mutate(
     log_center_small = log(center_s_median_rent),
     log_periphery_small = log(periphery_s_median_rent),
@@ -328,6 +348,8 @@ metro_premia <- metro_base %>%
     central_m_units_rental_share = center_renter_m / center_m_total,
     central_family_stock_share = (center_stock_m + center_stock_l) /
       (center_stock_s + center_stock_m + center_stock_l),
+    family_space_central_scarcity = log(small_to_family_ratio_center) - log(small_to_family_ratio_periphery),
+    family_space_central_access = family_stock_share_center - family_stock_share_periphery,
     center_stock_weight = center_stock_s + center_stock_m + center_stock_l
   )
 
@@ -362,6 +384,7 @@ parent_centrality_metro <- df %>%
   ) %>%
   mutate(
     parent_center_gap = center_share_parent_u18 - center_share_childless,
+    childless_parent_center_gap = center_share_childless - center_share_parent_u18,
     parent_owner_gap = owner_share_parent_u18 - owner_share_childless,
     parent_rooms_gap = mean_rooms_parent_u18 - mean_rooms_childless,
     analysis_weight = coalesce(hh_weight_parent_u18, 0) + coalesce(hh_weight_childless, 0)
@@ -377,6 +400,8 @@ parent_centrality_metro <- df %>%
         central_family_rental_share_of_rentals,
         central_m_units_rental_share,
         central_family_stock_share,
+        family_space_central_scarcity,
+        family_space_central_access,
         center_stock_weight
       ),
     by = "met2013"
@@ -422,12 +447,19 @@ metro_reg_data <- parent_centrality_metro %>%
   filter(
     !is.na(parent_center_gap),
     !is.na(family_size_central_premium_m),
+    !is.na(family_space_central_scarcity),
     !is.na(central_m_rental_share_of_rentals),
     analysis_weight > 0
   )
 
 metro_gap_model <- lm(
   parent_center_gap ~ family_size_central_premium_m + central_m_rental_share_of_rentals + central_family_stock_share,
+  data = metro_reg_data,
+  weights = analysis_weight
+)
+
+metro_access_model <- lm(
+  childless_parent_center_gap ~ family_space_central_scarcity + family_size_central_premium_m + central_family_stock_share,
   data = metro_reg_data,
   weights = analysis_weight
 )
@@ -444,13 +476,20 @@ names(metro_gap_table) <- c("estimate", "se", "t_stat", "p_value", "term")
 metro_gap_table <- metro_gap_table %>%
   transmute(model = "metro_parent_center_gap", term, estimate, se, t_stat, p_value)
 
+metro_access_table <- as.data.frame(summary(metro_access_model)$coefficients)
+metro_access_table$term <- rownames(metro_access_table)
+rownames(metro_access_table) <- NULL
+names(metro_access_table) <- c("estimate", "se", "t_stat", "p_value", "term")
+metro_access_table <- metro_access_table %>%
+  transmute(model = "metro_childless_parent_gap_access", term, estimate, se, t_stat, p_value)
+
 write_csv(cell_stock, file.path(out_dir, "acs_family_size_supply_cells.csv"))
 write_csv(location_size_summary, file.path(out_dir, "acs_location_size_tenure_summary.csv"))
 write_csv(renter_price_cells, file.path(out_dir, "acs_renter_price_cells.csv"))
 write_csv(metro_premia, file.path(out_dir, "acs_family_size_premia_by_metro.csv"))
 write_csv(parent_sorting, file.path(out_dir, "acs_parent_income_sorting_summary.csv"))
 write_csv(parent_centrality_metro, file.path(out_dir, "acs_parent_centrality_by_metro.csv"))
-write_csv(bind_rows(regression_table, metro_gap_table), file.path(out_dir, "acs_family_size_regressions.csv"))
+write_csv(bind_rows(regression_table, metro_gap_table, metro_access_table), file.path(out_dir, "acs_family_size_regressions.csv"))
 
 location_plot_data <- location_size_summary %>%
   group_by(mms_location, size_bin) %>%
@@ -465,11 +504,11 @@ p_stock <- ggplot(location_plot_data, aes(x = mms_location, y = share, fill = si
   labs(x = "", y = "Share of housing units", fill = "Rooms", title = "Housing Menu by Center/Periphery") +
   theme_minimal(base_size = 12)
 
-p_gap <- ggplot(metro_reg_data, aes(x = family_size_central_premium_m, y = parent_center_gap, size = analysis_weight)) +
+p_gap <- ggplot(metro_reg_data, aes(x = family_size_central_premium_m, y = parent_center_gap)) +
   geom_hline(yintercept = 0, linewidth = 0.3, color = "gray70") +
   geom_vline(xintercept = 0, linewidth = 0.3, color = "gray70") +
-  geom_point(alpha = 0.55, color = "#2C5F8A") +
-  geom_smooth(method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
+  geom_point(aes(size = analysis_weight), alpha = 0.55, color = "#2C5F8A") +
+  geom_smooth(aes(weight = analysis_weight), method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
   scale_size_continuous(guide = "none") +
   scale_x_continuous(labels = label_number(accuracy = 0.01)) +
   scale_y_continuous(labels = percent_format(accuracy = 1)) +
@@ -499,6 +538,39 @@ ggsave(file.path(out_dir, "acs_family_size_stock_menu.png"), p_stock, width = 7.
 ggsave(file.path(out_dir, "acs_parent_gap_vs_family_premium.png"), p_gap, width = 7.5, height = 4.5, dpi = 180)
 ggsave(file.path(out_dir, "acs_center_sorting_by_parent_income.png"), p_sort, width = 7.5, height = 4.5, dpi = 180)
 
+p_access_stock <- ggplot(metro_reg_data, aes(x = family_space_central_scarcity, y = childless_parent_center_gap)) +
+  geom_hline(yintercept = 0, linewidth = 0.3, color = "gray70") +
+  geom_vline(xintercept = 0, linewidth = 0.3, color = "gray70") +
+  geom_point(aes(size = analysis_weight), alpha = 0.55, color = "#2C5F8A") +
+  geom_smooth(aes(weight = analysis_weight), method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
+  scale_size_continuous(guide = "none") +
+  scale_x_continuous(labels = label_number(accuracy = 0.01)) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(
+    x = "Central small/family stock ratio relative to periphery",
+    y = "Childless minus parent center share",
+    title = "Parent Centrality Gap and Family-Space Stock Scarcity"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_access_price <- ggplot(metro_reg_data, aes(x = family_size_central_premium_m, y = childless_parent_center_gap)) +
+  geom_hline(yintercept = 0, linewidth = 0.3, color = "gray70") +
+  geom_vline(xintercept = 0, linewidth = 0.3, color = "gray70") +
+  geom_point(aes(size = analysis_weight), alpha = 0.55, color = "#2C5F8A") +
+  geom_smooth(aes(weight = analysis_weight), method = "lm", se = FALSE, color = "#9A3B3B", linewidth = 0.8) +
+  scale_size_continuous(guide = "none") +
+  scale_x_continuous(labels = label_number(accuracy = 0.01)) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(
+    x = "Central family-size rent premium, M vs S",
+    y = "Childless minus parent center share",
+    title = "Parent Centrality Gap and Family-Space Price Premium"
+  ) +
+  theme_minimal(base_size = 12)
+
+ggsave(file.path(out_dir, "acs_childless_parent_gap_vs_stock_scarcity.png"), p_access_stock, width = 7.5, height = 4.5, dpi = 180)
+ggsave(file.path(out_dir, "acs_childless_parent_gap_vs_price_premium.png"), p_access_price, width = 7.5, height = 4.5, dpi = 180)
+
 aggregate_size <- location_plot_data %>%
   mutate(label = paste0(mms_location, "_", size_bin)) %>%
   select(label, share) %>%
@@ -524,7 +596,7 @@ gap_summary <- parent_centrality_metro %>%
     weighted_parent_rooms_gap = weighted_mean_safe(parent_rooms_gap, analysis_weight)
   )
 
-coef_lookup <- bind_rows(regression_table, metro_gap_table)
+coef_lookup <- bind_rows(regression_table, metro_gap_table, metro_access_table)
 get_coef_line <- function(model_name, term_name) {
   row <- coef_lookup %>% filter(model == model_name, term == term_name)
   if (nrow(row) == 0) {
@@ -555,6 +627,7 @@ md <- c(
   sprintf("- Weighted mean central M rental share among central rentals: `%.3f`.", premium_summary$weighted_mean_central_m_rental_share[1]),
   sprintf("- Weighted mean central family-capable rental share among central rentals: `%.3f`.", premium_summary$weighted_mean_central_family_rental_share[1]),
   sprintf("- Weighted parent-minus-childless center-share gap across metros: `%.3f`.", gap_summary$weighted_parent_center_gap[1]),
+  sprintf("- Weighted childless-minus-parent center-share gap across metros: `%.3f`.", -gap_summary$weighted_parent_center_gap[1]),
   sprintf("- Weighted parent-minus-childless rooms gap across metros: `%.3f` rooms.", gap_summary$weighted_parent_rooms_gap[1]),
   "",
   "## Regression Reads",
@@ -565,16 +638,18 @@ md <- c(
   sprintf("- Household-level parent x income x family-size premium interaction: `%s`.", get_coef_line("household_center_family_premium", "any_parent:log_hhincome_std:family_size_central_premium_m")),
   sprintf("- Metro parent centrality gap slope on family-size premium: `%s`.", get_coef_line("metro_parent_center_gap", "family_size_central_premium_m")),
   sprintf("- Metro parent centrality gap slope on central M rental share: `%s`.", get_coef_line("metro_parent_center_gap", "central_m_rental_share_of_rentals")),
+  sprintf("- Metro childless-minus-parent gap slope on central family-space stock scarcity: `%s`.", get_coef_line("metro_childless_parent_gap_access", "family_space_central_scarcity")),
+  sprintf("- Metro childless-minus-parent gap slope on family-size price premium: `%s`.", get_coef_line("metro_childless_parent_gap_access", "family_size_central_premium_m")),
   "",
   "## Outputs",
   "",
   "- `acs_family_size_supply_cells.csv`: metro x location x size x tenure stock and rent cells.",
   "- `acs_location_size_tenure_summary.csv`: aggregate center/periphery housing menu.",
-  "- `acs_family_size_premia_by_metro.csv`: family-size central premia and rental-scarcity measures.",
+  "- `acs_family_size_premia_by_metro.csv`: family-size central premia, central/periphery family-stock shares, and stock-scarcity measures.",
   "- `acs_parent_income_sorting_summary.csv`: parent/childless center sorting by income tercile.",
   "- `acs_parent_centrality_by_metro.csv`: metro parent centrality gaps and joined supply measures.",
   "- `acs_family_size_regressions.csv`: household and metro regression coefficients.",
-  "- PNG figures for the housing menu, parent gap vs premium, and center sorting by parent/income.",
+  "- PNG figures for the housing menu, parent gap vs premium, center sorting by parent/income, and the childless-parent gap versus stock scarcity and price premium.",
   "",
   "## Interpretation Guardrails",
   "",

@@ -8,6 +8,7 @@ Current notes kept here:
 - `LIVE_HOUSING_SIZE_AUDIT.md`
 - `INCOME_WEALTH_FERTILITY_ROADMAP.md`
 - `COUILLARD_AHS_FAMILY_UNIT_SUPPLY_NOTE_2026-05-23.md`
+- `FAMILY_SPACE_EMPIRICAL_SPINE_STATUS_2026-05-23.md`
 - `DISTRIBUTIONAL_EMPIRICS_SCOPE_MEMO_2026-05-08.pdf`
 - `../../latex/distributional_empirics_report.pdf`
 - `../../latex/fertility_slice_diagnosis_report.pdf`
