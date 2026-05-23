@@ -39,6 +39,17 @@ Same-process warm accepted run after a `30x7x4` warm-up:
 - Bellman seconds per GE iteration: `4.69`
 - forward seconds per GE iteration: `2.14`
 
+Standalone `30x5` accepted plotting run:
+
+- elapsed seconds for solve plus figure packet: `83.10`
+- iterations completed: `12`
+- convergence reason: `strict_tol`
+- Bellman seconds: `28.69`
+- forward-distribution seconds: `14.25`
+- residual final-stat / plotting / overhead seconds: `40.17`
+- Bellman seconds per GE iteration: `2.39`
+- forward seconds per GE iteration: `1.19`
+
 ## Read
 
 The runtime problem is not the benchmark normalization arithmetic itself.

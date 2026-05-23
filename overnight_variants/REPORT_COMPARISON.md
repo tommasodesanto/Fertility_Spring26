@@ -71,6 +71,22 @@ coarse smoke outputs, not full recalibrations.
 | accepted GE run | live benchmark | yes, strict tolerance | yes, coarse type-price tolerance |
 | cost category | benchmark reference | project-scale | expensive |
 
+## V5 Nz=5 Plotting Run
+
+For equilibrium plots and near-term iteration, the isolated V5 branch now also
+has a separate `Nb=30`, `Nz=5` benchmark-normalized outside-closure run. This
+is the cheaper exploratory grid, not the serious `Nz=7` validation grid. It
+accepted at strict tolerance in 12 GE iterations with final GE error
+`3.46432e-4`, prices `[0.511963, 0.612469]`, \(S=1\), \(q^E=0.9\), outside
+probability `0.1`, residual outside-born flow \(M=0.00580643\), and outside
+value `-1504137.922586`. The full solve plus plot packet took `83.10` seconds.
+
+The moment failures remain qualitatively the same as the `Nz=7` V5 run:
+fertility is low and late, fertility and ownership gradients have the wrong
+sign, and the old-age ownership/wealth objects are still off target. The
+`Nz=5` packet is useful for reading equilibrium mechanics and sorting pictures;
+the `Nz=7` run should remain the validation check before any substantive claim.
+
 ## Verdicts
 
 | Branch | Verdict | Reason |
@@ -165,4 +181,11 @@ Branch 1 borrowing-wedge diagnostic:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_hank_z_borrowing_wedge_diagnostics.py --quiet --nb 30 --nz 3 --max-iter-eq 35
+```
+
+Branch 1 V5 `Nz=5` equilibrium plots:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python plot_income_mortgage_risk_v5_hank_z_outside_closure_nz5.py --quiet --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 60 --tol-eq 5e-4
 ```

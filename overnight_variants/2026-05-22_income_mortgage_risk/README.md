@@ -39,6 +39,16 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_income_mortgage_risk_v5_hank_z_outside_closure.py --quiet --nb 30 --nz 7 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --baseline-max-iter-eq 35 --max-iter-eq 60 --normalization-passes 2 --scale-target-tol 1e-5 --tol-eq 5e-4
 ```
 
+The V5 `Nz=5` exploratory equilibrium and figure driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python plot_income_mortgage_risk_v5_hank_z_outside_closure_nz5.py --quiet --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 60 --tol-eq 5e-4
+```
+
+It writes separate `Nz=5` results, diagnostics, report, log, and figures so the
+accepted `Nz=7` validation files are not overwritten.
+
 The full-equilibrium figure driver is:
 
 ```bash
@@ -188,3 +198,18 @@ seconds, while the same accepted solve after a same-process warm-up took
 `200.82` seconds. The warm solve is still too slow for calibration: the
 remaining cost is split across the full HANK-\(z\) Bellman loop, HANK-\(z\)
 forward distribution, and the final full-statistics pass.
+
+## V5 Nz=5 Equilibrium Figures
+
+`plot_income_mortgage_risk_v5_hank_z_outside_closure_nz5.py` reruns the V5
+benchmark-normalized outside-option closure at `Nb=30`, `Nz=5`, \(\rho_z=0.95\),
+unconditional \(\sigma_z=0.35\), and \(\kappa_E=10^6\). It accepted at strict
+GE tolerance in 12 iterations with final GE error `3.46432e-4`. The full solve
+and plot packet build took `83.10` seconds. The final benchmark normalization
+objects are \(S=1\), \(q^E=0.9\), outside probability `0.1`, residual
+outside-born flow \(M=0.00580643\), and outside value `-1504137.922586`.
+
+The figure packet is
+`figures_v5_hank_z_outside_closure_nz5/HANK_Z_OUTSIDE_CLOSURE_NZ5_FIGURE_PACKET.pdf`.
+The run-specific report is `REPORT_V5_HANK_Z_OUTSIDE_CLOSURE_NZ5.md`; moment
+values are in `results_income_mortgage_risk_v5_hank_z_outside_closure_nz5.csv`.
