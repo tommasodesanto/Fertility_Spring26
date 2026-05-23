@@ -70,6 +70,17 @@ For an overnight laptop run, use the `nohup caffeinate` command in
 `REPORT_V5_NZ5_GLOBAL_SEARCH_PLAN.md` so the process survives the terminal and
 prevents sleep.
 
+The post-search research/numerical assessment is:
+
+```text
+RESEARCH_ASSESSMENT_HANK_Z_BRANCH.md
+```
+
+It argues that the branch is mechanically encouraging but not yet an
+economically admissible calibration; the next step should be targeted
+cross-sectional diagnostics before any further global search or structural
+\(\mu\) state.
+
 The full-equilibrium figure driver is:
 
 ```bash
