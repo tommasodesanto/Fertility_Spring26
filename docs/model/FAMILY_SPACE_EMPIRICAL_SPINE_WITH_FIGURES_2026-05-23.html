@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Space and the Urban Fertility Gradient: Figure Read</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #5f6b7a;
+      --rule: #d9dee7;
+      --panel: #f7f9fc;
+      --accent: #8b2f2f;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+      line-height: 1.5;
+    }
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 34px 0 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      font-size: 22px;
+    }
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 17px;
+    }
+    p {
+      margin: 8px 0;
+    }
+    .dek {
+      max-width: 840px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .callout {
+      margin: 24px 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 14px 0;
+    }
+    .metric {
+      padding: 14px 16px;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+    }
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.2;
+      color: var(--accent);
+    }
+    figure {
+      margin: 22px 0 30px;
+      padding: 14px;
+      border: 1px solid var(--rule);
+      background: #ffffff;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #eef1f5;
+    }
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.95em;
+      background: #f0f3f8;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    ul {
+      padding-left: 22px;
+    }
+    a {
+      color: #1d4f91;
+    }
+    @media (max-width: 760px) {
+      main {
+        padding: 28px 16px 56px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Family Space and the Urban Fertility Gradient</h1>
+  <p class="dek">
+    A figure read of the current ACS/MMS and AHS evidence. The organizing
+    object is family-space access: buying, renting, and moving are access
+    technologies, not primitive mechanisms by themselves.
+  </p>
+
+  <div class="callout">
+    <p>
+      The current evidence is strongest on the physical housing menu. Parents
+      are less central in metros where the center is more tilted toward small
+      units relative to family-capable units. The current renter-price premium
+      evidence is weaker, especially in the bedroom construction.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="metric">
+      <strong>0.139</strong>
+      Childless-minus-parent center-share gap in ACS/MMS.
+    </div>
+    <div class="metric">
+      <strong>0.1467</strong>
+      Bedroom-bin slope of the parent centrality gap on 3+ bedroom stock
+      scarcity, SE 0.0256.
+    </div>
+    <div class="metric">
+      <strong>0.991</strong>
+      Parent-minus-childless bedroom gap in the young ACS/MMS sample.
+    </div>
+    <div class="metric">
+      <strong>21.2 pp</strong>
+      Parent-minus-childless ownership gap in the young ACS/MMS sample.
+    </div>
+  </div>
+
+  <h2>1. The Aggregate Unit Menu</h2>
+  <p>
+    Couillard makes unit size central: fertility is more connected to the cost
+    of family-sized units than to generic housing costs. The AHS snapshot adds
+    a stock-menu fact. The United States has many 3+ bedroom units, so the
+    claim cannot be that family-sized units literally do not exist. The sharper
+    claim is that access depends on tenure, structure, and location.
+  </p>
+
+  <figure>
+    <img src="../../code/data/ahs_supply_snapshot/output_ahs_family_unit_menu_national/ahs_absolute_bedroom_counts_by_tenure.png" alt="AHS absolute bedroom counts by tenure">
+    <figcaption>
+      AHS 2023 stock counts by bedroom and tenure. The large-family stock is
+      heavily owner-weighted, which is why buying can be a central access
+      margin without being the primitive theory.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="../../code/data/ahs_supply_snapshot/output_ahs_family_unit_menu_national/ahs_family_sized_units_by_structure_tenure.png" alt="AHS family-sized units by structure and tenure">
+    <figcaption>
+      Family-sized units by structure and tenure. This is the national menu
+      behind the access problem: family space is bundled with structure type
+      and ownership more than with a simple same-location rental upgrade.
+    </figcaption>
+  </figure>
+
+  <h2>2. The Within-Metro Unit Menu</h2>
+  <p>
+    The ACS/MMS bedroom packet uses Couillard-style bins: 0-1, 2, and 3+
+    bedrooms. The central stock is less family-sized than the periphery. This
+    is the visual counterpart to the stock-scarcity measure used in the metro
+    scatter below.
+  </p>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_menu_center_periphery.png" alt="ACS MMS bedroom menu by center and periphery">
+    <figcaption>
+      Bedroom menu by center/periphery. The center is more tilted toward small
+      units and less tilted toward 3+ bedroom family-capable units.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_family_size_supply/acs_family_size_stock_menu.png" alt="ACS MMS room menu by center and periphery">
+    <figcaption>
+      Room-bin version of the same object. The room-bin packet defines small
+      as 1-4 rooms and family-capable as 5+ rooms.
+    </figcaption>
+  </figure>
+
+  <h2>3. Parents Are Less Central Where Central Family Space Is Scarce</h2>
+  <p>
+    Define the parent centrality gap as childless center share minus parent
+    center share within a metro. Define central family-space stock scarcity as
+    the central small/family stock ratio relative to the periphery. This is the
+    main immediate empirical bridge from Couillard to the paper.
+  </p>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_parent_gap_vs_stock_scarcity.png" alt="Parent centrality gap versus 3+ bedroom stock scarcity">
+    <figcaption>
+      Bedroom-bin evidence. Metros where the center is more tilted toward
+      0-1 bedroom units relative to 3+ bedroom units have larger parent
+      centrality gaps. Weighted slope: 0.1467, SE 0.0256.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_family_size_supply/acs_childless_parent_gap_vs_stock_scarcity.png" alt="Parent centrality gap versus room-bin family-space stock scarcity">
+    <figcaption>
+      Room-bin evidence. The same fact appears when family-capable units are
+      defined as 5+ rooms. Weighted slope: 0.2112, SE 0.0251.
+    </figcaption>
+  </figure>
+
+  <h2>4. Price Premia Are Weaker In This Pass</h2>
+  <p>
+    The current ACS/IPUMS renter-price construction does not yet give a clean
+    Couillard-style rent-gradient result. In the bedroom packet, the parent
+    centrality gap is basically flat in the central 3+ bedroom rent premium.
+    This does not kill the mechanism, but it changes the empirical diagnosis:
+    the current evidence is more about the physical access menu than about a
+    clean positive observed rental premium.
+  </p>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_parent_gap_vs_price_premium.png" alt="Parent centrality gap versus 3+ bedroom price premium">
+    <figcaption>
+      Bedroom rent-premium scatter. Weighted slope: -0.0029, SE 0.0688. The
+      flat line may reflect rent measurement, selection into observed rental
+      units, or the fact that many households access family space by buying.
+    </figcaption>
+  </figure>
+
+  <h2>5. What We Know About Supply Response</h2>
+  <p>
+    The first descriptive stock-growth exercise compares early 2012-2014 to
+    late 2021-2023. It does not identify a causal supply elasticity. It is best
+    read as a placeholder that says the next empirical work needs construction,
+    vintage, land constraints, or zoning/regulation shifters.
+  </p>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_supply_response.png" alt="Descriptive supply response of central 3+ bedroom stock share">
+    <figcaption>
+      Descriptive central 3+ bedroom stock-share change. The average central
+      3+ bedroom stock share falls by 0.029, and the supply-response slopes
+      are not statistically meaningful in this pass.
+    </figcaption>
+  </figure>
+
+  <h2>6. Income And Sorting Context</h2>
+  <p>
+    The income cross-section is useful, but it should not be the headline. The
+    paper needs income because family-space access depends on resources and
+    because high-income childless households sort centrally. The central object
+    remains family-space access, with income shaping who can buy, rent, stay,
+    or move.
+  </p>
+
+  <figure>
+    <img src="../../code/data/mms_center_periphery/output_family_size_supply/acs_center_sorting_by_parent_income.png" alt="Center sorting by parenthood and income">
+    <figcaption>
+      Center sorting by parenthood and income tercile. This is a composition
+      diagnostic: it helps separate central childlessness from within-type
+      family-space constraints.
+    </figcaption>
+  </figure>
+
+  <h2>Bottom Line</h2>
+  <ul>
+    <li>Fact 1: births raise housing demand in the PSID no-location packet.</li>
+    <li>Fact 2: central housing is more small-unit tilted than peripheral housing.</li>
+    <li>Fact 3: parents are less central where central family-capable stock is relatively scarce.</li>
+    <li>Fact 4: ownership is empirically central, but as an access technology rather than the primitive mechanism.</li>
+    <li>Missing: causal supply evidence and location-specific PSID dynamics.</li>
+  </ul>
+
+  <h2>Companion Files</h2>
+  <ul>
+    <li><code>docs/model/FAMILY_SPACE_EMPIRICAL_SPINE_STATUS_2026-05-23.md</code></li>
+    <li><code>docs/model/COUILLARD_AHS_FAMILY_UNIT_SUPPLY_NOTE_2026-05-23.md</code></li>
+    <li><code>code/data/mms_center_periphery/output_couillard_bedroom_supply/ACS_MMS_COUILLARD_BEDROOM_SUPPLY_PACKET.md</code></li>
+    <li><code>code/data/mms_center_periphery/output_family_size_supply/ACS_MMS_FAMILY_SIZE_SUPPLY_PACKET.md</code></li>
+  </ul>
+</main>
+</body>
+</html>
