@@ -29,6 +29,8 @@ Key output packets:
 
 - `output_ahs_family_unit_menu_national/AHS_2023_FAMILY_UNIT_MENU.md`
 - `output_ahs_family_unit_menu_metro/AHS_2023_FAMILY_UNIT_MENU.md`
+- `output_ahs_family_unit_menu_national/AHS_2023_FAMILY_UNIT_FIGURE_PACKET.pdf`
+- `output_ahs_family_unit_menu_metro/AHS_2023_FAMILY_UNIT_FIGURE_PACKET.pdf`
 
 The main constructed objects are:
 

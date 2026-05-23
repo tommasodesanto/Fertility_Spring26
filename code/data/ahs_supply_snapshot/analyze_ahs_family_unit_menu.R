@@ -379,10 +379,69 @@ write_csv(occupied_by_kids_and_bedrooms, file.path(out_dir, "ahs_occupied_by_kid
 write_csv(children_space_mismatch, file.path(out_dir, "ahs_children_space_mismatch.csv"))
 write_csv(metro_menu, file.path(out_dir, "ahs_metro_family_unit_menu.csv"))
 
+bedroom_levels <- c("0-1 bedrooms", "2 bedrooms", "3 bedrooms", "4+ bedrooms")
+room_levels <- c("S: <=4 rooms", "M: 5-6 rooms", "L: 7+ rooms")
+
+plot_stock_bedroom <- stock_by_bedroom %>%
+  mutate(bedroom_bin = factor(bedroom_bin, levels = bedroom_levels))
+
+p0 <- ggplot(plot_stock_bedroom, aes(x = bedroom_bin, y = share)) +
+  geom_col(fill = "#4c78a8") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Share of housing units", title = "AHS 2023 physical bedroom menu") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+ggsave(file.path(out_dir, "ahs_bedroom_menu_overall.png"), p0, width = 7.2, height = 4.2, dpi = 180)
+
+plot_stock_rooms <- hh %>%
+  group_by(room_bin) %>%
+  summarise(units = sum(weight, na.rm = TRUE), .groups = "drop") %>%
+  mutate(
+    share = units / sum(units, na.rm = TRUE),
+    room_bin = factor(room_bin, levels = room_levels)
+  )
+
+p_rooms <- ggplot(plot_stock_rooms, aes(x = room_bin, y = share)) +
+  geom_col(fill = "#54a24b") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Share of housing units", title = "AHS 2023 room-size menu") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+ggsave(file.path(out_dir, "ahs_room_menu_overall.png"), p_rooms, width = 7.2, height = 4.2, dpi = 180)
+
+plot_structure_bedroom <- hh %>%
+  group_by(structure, bedroom_bin) %>%
+  summarise(units = sum(weight, na.rm = TRUE), .groups = "drop") %>%
+  mutate(
+    share_total = units / sum(units, na.rm = TRUE),
+    bedroom_bin = factor(bedroom_bin, levels = bedroom_levels)
+  ) %>%
+  group_by(structure) %>%
+  mutate(structure_units = sum(units, na.rm = TRUE)) %>%
+  ungroup() %>%
+  mutate(structure = reorder(structure, structure_units))
+
+p_structure_bedroom <- ggplot(plot_structure_bedroom, aes(x = share_total, y = structure, fill = bedroom_bin)) +
+  geom_col() +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  scale_fill_manual(values = c(
+    "0-1 bedrooms" = "#4c78a8",
+    "2 bedrooms" = "#72b7b2",
+    "3 bedrooms" = "#f58518",
+    "4+ bedrooms" = "#e45756"
+  )) +
+  labs(x = "Share of all housing units", y = NULL, fill = NULL, title = "Physical stock by structure and bedrooms") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank(), legend.position = "bottom")
+
+ggsave(file.path(out_dir, "ahs_structure_by_bedroom_share.png"), p_structure_bedroom, width = 7.8, height = 4.8, dpi = 180)
+
 plot_bedroom <- stock_by_bedroom_tenure %>%
   filter(tenure %in% c("owner", "renter", "vacant")) %>%
   mutate(
-    bedroom_bin = factor(bedroom_bin, levels = c("0-1 bedrooms", "2 bedrooms", "3 bedrooms", "4+ bedrooms")),
+    bedroom_bin = factor(bedroom_bin, levels = bedroom_levels),
     tenure = factor(tenure, levels = c("renter", "owner", "vacant"))
   )
 
@@ -395,6 +454,35 @@ p1 <- ggplot(plot_bedroom, aes(x = bedroom_bin, y = share_within_tenure, fill = 
   theme(panel.grid.minor = element_blank(), legend.position = "bottom")
 
 ggsave(file.path(out_dir, "ahs_bedroom_menu_by_tenure.png"), p1, width = 7.5, height = 4.5, dpi = 180)
+
+plot_kids_bedroom <- occupied_by_kids_and_bedrooms %>%
+  mutate(
+    bedroom_bin = factor(bedroom_bin, levels = bedroom_levels),
+    child_status = if_else(any_kids, "Household has children", "No children in household")
+  )
+
+p_kids <- ggplot(plot_kids_bedroom, aes(x = bedroom_bin, y = share_within_kid_status, fill = child_status)) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  scale_fill_manual(values = c("Household has children" = "#e45756", "No children in household" = "#4c78a8")) +
+  labs(x = NULL, y = "Share within household type", fill = NULL, title = "Bedroom consumption by child status") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank(), legend.position = "bottom")
+
+ggsave(file.path(out_dir, "ahs_bedroom_menu_by_children.png"), p_kids, width = 7.5, height = 4.5, dpi = 180)
+
+plot_rent_gradient <- renter_price_by_bedroom %>%
+  mutate(bedroom_bin = factor(bedroom_bin, levels = bedroom_levels))
+
+p_rent <- ggplot(plot_rent_gradient, aes(x = bedroom_bin, y = median_rent, group = 1)) +
+  geom_line(color = "#b279a2", linewidth = 0.8) +
+  geom_point(color = "#b279a2", size = 2.5) +
+  scale_y_continuous(labels = dollar_format(accuracy = 1)) +
+  labs(x = NULL, y = "Weighted median monthly rent", title = "Rental price gradient by bedroom count") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank())
+
+ggsave(file.path(out_dir, "ahs_rent_gradient_by_bedroom.png"), p_rent, width = 7.2, height = 4.2, dpi = 180)
 
 plot_structure <- family_sized_composition %>%
   filter(tenure %in% c("owner", "renter")) %>%
@@ -425,6 +513,19 @@ if (nrow(top_scarce) > 0) {
 
   ggsave(file.path(out_dir, "ahs_family_rental_scarcity_metros.png"), p3, width = 7.5, height = 4.8, dpi = 180)
 }
+
+pdf(file.path(out_dir, "AHS_2023_FAMILY_UNIT_FIGURE_PACKET.pdf"), width = 8, height = 5)
+print(p0)
+print(p_rooms)
+print(p_structure_bedroom)
+print(p1)
+print(p_kids)
+print(p_rent)
+print(p2)
+if (exists("p3")) {
+  print(p3)
+}
+dev.off()
 
 fmt_pct <- function(x) percent(x, accuracy = 0.1)
 fmt_num <- function(x) comma(x, accuracy = 1)
@@ -513,7 +614,7 @@ md <- c(
   "- `ahs_occupied_by_kids_and_bedrooms.csv`",
   "- `ahs_children_space_mismatch.csv`",
   "- `ahs_metro_family_unit_menu.csv`",
-  "- PNG figures for bedroom menu, 3+ bedroom structure/tenure, and selected metro family-rental scarcity.",
+  "- PNG figures and `AHS_2023_FAMILY_UNIT_FIGURE_PACKET.pdf` for the physical bedroom/room menu, structure, tenure, child-status consumption, rent gradient, and selected metro family-rental scarcity.",
   "",
   "## Interpretation",
   "",
