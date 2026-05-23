@@ -26,6 +26,7 @@ Files:
 - `build_migpuma_origin_bridge.R`: uses the official IPUMS PUMA/MIGPUMA relationship files plus the PUMA lookup to build origin MMS shares by `(MIGPLAC1, MIGPUMA1, CBSA)`
 - `analyze_mms_fertility_moves.R`: rebuilds the fertility/location and new-parent move facts under the MMS geography using `extract27` plus the filtered `extract28` origin supplement
 - `analyze_family_size_supply_menu.R`: builds a fast ACS/MMS family-size housing menu and sorting packet by center/periphery, room-size bin, tenure, parent status, and income proxy
+- `analyze_income_fertility_cross_section.R`: builds an ACS/MMS cross-section of recent births, parenthood, childlessness, parity, income ranks, and center/periphery decomposition by income
 
 Outputs:
 - `data/migpuma_mms_origin_bridge.csv`
@@ -50,3 +51,6 @@ Outputs:
 - `output_family_size_supply/acs_family_size_premia_by_metro.csv`
 - `output_family_size_supply/acs_parent_centrality_by_metro.csv`
 - `output_family_size_supply/acs_family_size_regressions.csv`
+- `output_income_fertility_cross_section/ACS_MMS_INCOME_FERTILITY_CROSS_SECTION.md`
+- `output_income_fertility_cross_section/acs_fertility_by_income_quintile.csv`
+- `output_income_fertility_cross_section/acs_center_periphery_fertility_income_decomposition.csv`
