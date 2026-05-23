@@ -59,6 +59,17 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 It writes small one-at-a-time and targeted-combination calibration probes
 without overwriting the accepted V5 files.
 
+The V5 `Nz=5` parallel global search driver is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_v5_nz5_global_search.py --run-tag v5_nz5_global_test --results-dir global_search_v5_nz5 --workers 8 --budget-sec 28800 --max-evals 1000000 --seed 20260523 --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 35 --tol-eq 5e-4 --global-prob 0.75
+```
+
+For an overnight laptop run, use the `nohup caffeinate` command in
+`REPORT_V5_NZ5_GLOBAL_SEARCH_PLAN.md` so the process survives the terminal and
+prevents sleep.
+
 The full-equilibrium figure driver is:
 
 ```bash
@@ -240,3 +251,17 @@ fertility gradient remains wrong-signed, and young liquid wealth worsens. See
 `REPORT_V5_NZ5_DIRECTIONAL_CALIBRATION.md`,
 `v5_nz5_directional_calibration.csv`, and
 `v5_nz5_directional_calibration_round2.csv`.
+
+## V5 Nz=5 Parallel Global Search
+
+`run_v5_nz5_global_search.py` runs a true global randomized search over 19
+parameters, including the original structural calibration parameters,
+geography shifters, `alpha_cons`, `phi`, `hR_max`, and `h_own_max`. The
+objective is the full 19-moment weighted SMM loss plus GE/scale penalties. It
+parallelizes candidates across worker processes and writes every completed
+evaluation to `evaluations.jsonl` and `evaluations.csv`, with continuously
+updated `best.json`, `best_summary.md`, `latest.json`, `status.json`, and
+`heartbeat.txt`.
+
+The intended 8-core laptop command uses 8 workers with one numerical thread per
+worker for 8 hours. See `REPORT_V5_NZ5_GLOBAL_SEARCH_PLAN.md`.

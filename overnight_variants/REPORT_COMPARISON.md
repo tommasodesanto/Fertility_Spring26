@@ -106,6 +106,18 @@ next serious Branch 1 search should include a housing-share/room-demand
 parameter such as \(\alpha_c\), keep \(\kappa_f\) and \(\phi\), and treat
 geography separately.
 
+## V5 Nz=5 Global Search
+
+The isolated V5 branch now has a parallel global search driver,
+`run_v5_nz5_global_search.py`. It searches 19 parameters, including the
+original structural calibration block, geography shifters, \(\alpha_c\),
+\(\phi\), `hR_max`, and `h_own_max`. The objective is the full 19-moment
+weighted SMM loss plus penalties for non-converged GE or invalid outside-option
+scale accounting. The intended laptop run uses 8 worker processes for 8 hours
+with one numerical thread per worker. It checkpoints every completed evaluation
+to `evaluations.jsonl`, `evaluations.csv`, `latest.json`, `best.json`,
+`best_summary.md`, `status.json`, and `heartbeat.txt`.
+
 ## Verdicts
 
 | Branch | Verdict | Reason |
