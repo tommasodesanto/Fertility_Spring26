@@ -91,6 +91,8 @@ New output:
 
 Fertility-gap outputs:
 
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_faceted_vs_bedroom_stock_scarcity.png`
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_by_bedroom_scarcity_quartile.png`
 - `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_vs_bedroom_stock_scarcity.png`
 - `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_levels_vs_bedroom_stock_scarcity.png`
 - `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png`
@@ -131,6 +133,12 @@ Current result:
   in the periphery.
 - Overall mean own children are 0.957 in the center and 1.149 in the
   periphery.
+- Center recent-birth level slope on 3+ bedroom stock scarcity is -0.0058,
+  SE 0.0034, p=0.092.
+- Periphery recent-birth level slope on 3+ bedroom stock scarcity is 0.0028,
+  SE 0.0031, p=0.367.
+- Metro-total recent-birth level slope on 3+ bedroom stock scarcity is
+  -0.0007, SE 0.0028, p=0.800.
 - Recent-birth fertility gap is defined as the periphery-minus-center recent
   birth rate. Its slope on 3+ bedroom stock scarcity is 0.0105, SE 0.0036.
 - Mean-own-children gap is defined as periphery minus center mean own children.
@@ -142,7 +150,10 @@ This is the strongest current bridge from Couillard to the paper. It says
 parents are less central in exactly the metros where the central stock is most
 tilted away from family-capable units. The fertility-gradient version says the
 same central family-space scarcity measure predicts more peripheral recent
-births and more peripheral children. The price-premium evidence is weaker,
+births and more peripheral children. The level version is more nuanced:
+center fertility is lower where central family-space scarcity is high, but the
+metro-total fertility rate is not robustly lower in this cross-section. The
+price-premium evidence is weaker,
 especially in the bedroom construction, which may reflect rent measurement,
 selection into observed rental units, or the fact that family-space access is
 often resolved through buying rather than renting. The evidence is not causal,
