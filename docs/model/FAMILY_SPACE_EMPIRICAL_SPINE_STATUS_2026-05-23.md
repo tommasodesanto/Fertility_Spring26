@@ -91,6 +91,8 @@ New output:
 
 Fertility-gap outputs:
 
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_vs_bedroom_stock_scarcity.png`
+- `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_levels_vs_bedroom_stock_scarcity.png`
 - `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png`
 - `code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_gap_vs_bedroom_stock_scarcity.png`
 
@@ -123,6 +125,12 @@ Current result:
   0.1467, SE 0.0256.
 - Bedroom-bin regression slope of \(G_m\) on the 3+ bedroom price premium:
   -0.0029, SE 0.0688.
+- Overall recent-birth rates are 0.063 in the center and 0.068 in the
+  periphery.
+- Overall parent-with-child-under-18 rates are 0.451 in the center and 0.543
+  in the periphery.
+- Overall mean own children are 0.957 in the center and 1.149 in the
+  periphery.
 - Recent-birth fertility gap is defined as the periphery-minus-center recent
   birth rate. Its slope on 3+ bedroom stock scarcity is 0.0105, SE 0.0036.
 - Mean-own-children gap is defined as periphery minus center mean own children.
