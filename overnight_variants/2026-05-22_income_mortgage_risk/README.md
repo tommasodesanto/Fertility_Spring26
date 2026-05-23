@@ -49,6 +49,16 @@ cd overnight_variants/2026-05-22_income_mortgage_risk
 It writes separate `Nz=5` results, diagnostics, report, log, and figures so the
 accepted `Nz=7` validation files are not overwritten.
 
+The V5 `Nz=5` directional calibration audit is:
+
+```bash
+cd overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_v5_nz5_directional_calibration.py --quiet --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 35 --tol-eq 5e-4
+```
+
+It writes small one-at-a-time and targeted-combination calibration probes
+without overwriting the accepted V5 files.
+
 The full-equilibrium figure driver is:
 
 ```bash
@@ -213,3 +223,20 @@ The figure packet is
 `figures_v5_hank_z_outside_closure_nz5/HANK_Z_OUTSIDE_CLOSURE_NZ5_FIGURE_PACKET.pdf`.
 The run-specific report is `REPORT_V5_HANK_Z_OUTSIDE_CLOSURE_NZ5.md`; moment
 values are in `results_income_mortgage_risk_v5_hank_z_outside_closure_nz5.csv`.
+
+## V5 Nz=5 Directional Calibration
+
+`run_v5_nz5_directional_calibration.py` probes whether the bad V5 HANK-\(z\)
+moments move under small parameter changes before running a full optimizer.
+The best probe so far is `alpha_high_fertility_mid_finance`, which sets
+`alpha_cons=0.80`, `kappa_fert=4.0`, and `phi=0.90`. It accepted strict GE in
+16 iterations, took `107.73` seconds, and cut the `Nz=5` loss from `311.30` to
+`166.72`, improving 16 of 19 target gaps.
+
+This is promising but not calibrated: TFR moves near target, ownership becomes
+positive-gradient, room moments improve, and geography improves modestly, but
+first-birth timing is still far too late, childlessness is still too high, the
+fertility gradient remains wrong-signed, and young liquid wealth worsens. See
+`REPORT_V5_NZ5_DIRECTIONAL_CALIBRATION.md`,
+`v5_nz5_directional_calibration.csv`, and
+`v5_nz5_directional_calibration_round2.csv`.

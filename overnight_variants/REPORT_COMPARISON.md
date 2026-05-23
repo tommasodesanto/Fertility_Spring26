@@ -87,6 +87,25 @@ sign, and the old-age ownership/wealth objects are still off target. The
 `Nz=5` packet is useful for reading equilibrium mechanics and sorting pictures;
 the `Nz=7` run should remain the validation check before any substantive claim.
 
+## V5 Nz=5 Directional Calibration
+
+A small `Nz=5` directional calibration audit shows the HANK-\(z\) prototype is
+not mechanically stuck. The best probe sets \(\alpha_c=0.80\),
+\(\kappa_f=4.0\), and \(\phi=0.90\). It accepted strict GE in 16 iterations
+and cuts the `Nz=5` loss from `311.30` to `166.72`, improving 16 of 19 target
+gaps. The key movements are encouraging: TFR rises from `1.558` to `1.673`,
+ownership rises from `0.575` to `0.644`, the ownership gradient moves from
+`-0.082` to `0.046`, the family ownership gap falls from `0.383` to `0.184`,
+renter rooms fall from `5.767` to `5.092`, and the center share rises from
+`0.409` to `0.431`.
+
+This is still not a calibration. First-birth age remains around `34.45`,
+childlessness remains `0.310`, the fertility gradient is still wrong-signed at
+`-0.251`, and young liquid wealth worsens to `1.322`. The audit suggests the
+next serious Branch 1 search should include a housing-share/room-demand
+parameter such as \(\alpha_c\), keep \(\kappa_f\) and \(\phi\), and treat
+geography separately.
+
 ## Verdicts
 
 | Branch | Verdict | Reason |
@@ -188,4 +207,11 @@ Branch 1 V5 `Nz=5` equilibrium plots:
 ```bash
 cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
 /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python plot_income_mortgage_risk_v5_hank_z_outside_closure_nz5.py --quiet --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 60 --tol-eq 5e-4
+```
+
+Branch 1 V5 `Nz=5` directional calibration probes:
+
+```bash
+cd /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/overnight_variants/2026-05-22_income_mortgage_risk
+/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python run_v5_nz5_directional_calibration.py --quiet --nb 30 --nz 5 --rho-z 0.95 --sigma-z 0.35 --kappa-entry 1000000 --max-iter-eq 35 --tol-eq 5e-4
 ```
