@@ -41,6 +41,8 @@ The main constructed objects are:
   multifamily, or 5-19 unit multifamily structures.
 - Family-sized rental scarcity: `1 - Pr(3+ bedrooms | rental stock)` within
   metro.
+- Absolute stock counts: `ahs_absolute_unit_counts.csv`, reported in units and
+  millions of units.
 
 The purpose is descriptive. These tables identify whether the family-capable
 stock is bundled with detached ownership, rental tenure, or moderate

@@ -339,6 +339,51 @@ children_space_mismatch <- hh %>%
     .groups = "drop"
   )
 
+absolute_counts <- tibble(
+  measure = c(
+    "all_housing_units",
+    "occupied_units",
+    "all_0_1_bedroom_units",
+    "all_2_bedroom_units",
+    "all_3_bedroom_units",
+    "all_4plus_bedroom_units",
+    "all_3plus_bedroom_units",
+    "owner_3plus_bedroom_units",
+    "renter_3plus_bedroom_units",
+    "vacant_3plus_bedroom_units",
+    "missing_middle_proxy_units",
+    "owner_missing_middle_proxy_units",
+    "renter_missing_middle_proxy_units",
+    "renter_households_with_children",
+    "renter_households_with_children_0_2_bedrooms",
+    "owner_households_with_children",
+    "owner_households_with_children_0_2_bedrooms"
+  ),
+  units = c(
+    sum(hh$weight, na.rm = TRUE),
+    sum(hh$weight[hh$occupied], na.rm = TRUE),
+    sum(hh$weight[hh$bedroom_bin == "0-1 bedrooms"], na.rm = TRUE),
+    sum(hh$weight[hh$bedroom_bin == "2 bedrooms"], na.rm = TRUE),
+    sum(hh$weight[hh$bedroom_bin == "3 bedrooms"], na.rm = TRUE),
+    sum(hh$weight[hh$bedroom_bin == "4+ bedrooms"], na.rm = TRUE),
+    sum(hh$weight[hh$family_sized], na.rm = TRUE),
+    sum(hh$weight[hh$family_sized & hh$tenure == "owner"], na.rm = TRUE),
+    sum(hh$weight[hh$family_sized & hh$tenure == "renter"], na.rm = TRUE),
+    sum(hh$weight[hh$family_sized & hh$tenure == "vacant"], na.rm = TRUE),
+    sum(hh$weight[hh$missing_middle_unit], na.rm = TRUE),
+    sum(hh$weight[hh$missing_middle_unit & hh$tenure == "owner"], na.rm = TRUE),
+    sum(hh$weight[hh$missing_middle_unit & hh$tenure == "renter"], na.rm = TRUE),
+    sum(hh$weight[hh$occupied & hh$tenure == "renter" & hh$any_kids], na.rm = TRUE),
+    sum(hh$weight[hh$occupied & hh$tenure == "renter" & hh$any_kids & hh$bedrooms <= 2], na.rm = TRUE),
+    sum(hh$weight[hh$occupied & hh$tenure == "owner" & hh$any_kids], na.rm = TRUE),
+    sum(hh$weight[hh$occupied & hh$tenure == "owner" & hh$any_kids & hh$bedrooms <= 2], na.rm = TRUE)
+  )
+) %>%
+  mutate(
+    units_millions = units / 1e6,
+    share_all_units = units / sum(hh$weight, na.rm = TRUE)
+  )
+
 metro_menu <- tibble()
 if (any(!is.na(hh$cbsa_code) & !(hh$cbsa_code %in% c("99998", "99999")))) {
   metro_menu <- hh %>%
@@ -377,6 +422,7 @@ write_csv(renter_price_by_bedroom, file.path(out_dir, "ahs_renter_price_by_bedro
 write_csv(renter_price_by_bedroom_structure, file.path(out_dir, "ahs_renter_price_by_bedroom_structure.csv"))
 write_csv(occupied_by_kids_and_bedrooms, file.path(out_dir, "ahs_occupied_by_kids_and_bedrooms.csv"))
 write_csv(children_space_mismatch, file.path(out_dir, "ahs_children_space_mismatch.csv"))
+write_csv(absolute_counts, file.path(out_dir, "ahs_absolute_unit_counts.csv"))
 write_csv(metro_menu, file.path(out_dir, "ahs_metro_family_unit_menu.csv"))
 
 bedroom_levels <- c("0-1 bedrooms", "2 bedrooms", "3 bedrooms", "4+ bedrooms")
@@ -455,6 +501,23 @@ p1 <- ggplot(plot_bedroom, aes(x = bedroom_bin, y = share_within_tenure, fill = 
 
 ggsave(file.path(out_dir, "ahs_bedroom_menu_by_tenure.png"), p1, width = 7.5, height = 4.5, dpi = 180)
 
+plot_abs_tenure <- stock_by_bedroom_tenure %>%
+  filter(tenure %in% c("owner", "renter", "vacant")) %>%
+  mutate(
+    bedroom_bin = factor(bedroom_bin, levels = bedroom_levels),
+    tenure = factor(tenure, levels = c("renter", "owner", "vacant")),
+    units_millions = units / 1e6
+  )
+
+p_abs_tenure <- ggplot(plot_abs_tenure, aes(x = bedroom_bin, y = units_millions, fill = tenure)) +
+  geom_col() +
+  scale_fill_manual(values = c(renter = "#4c78a8", owner = "#f58518", vacant = "#54a24b")) +
+  labs(x = NULL, y = "Millions of housing units", fill = NULL, title = "Absolute bedroom counts by tenure") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.minor = element_blank(), legend.position = "bottom")
+
+ggsave(file.path(out_dir, "ahs_absolute_bedroom_counts_by_tenure.png"), p_abs_tenure, width = 7.5, height = 4.5, dpi = 180)
+
 plot_kids_bedroom <- occupied_by_kids_and_bedrooms %>%
   mutate(
     bedroom_bin = factor(bedroom_bin, levels = bedroom_levels),
@@ -519,6 +582,7 @@ print(p0)
 print(p_rooms)
 print(p_structure_bedroom)
 print(p1)
+print(p_abs_tenure)
 print(p_kids)
 print(p_rent)
 print(p2)
@@ -530,6 +594,7 @@ dev.off()
 fmt_pct <- function(x) percent(x, accuracy = 0.1)
 fmt_num <- function(x) comma(x, accuracy = 1)
 fmt_dol <- function(x) dollar(x, accuracy = 1)
+fmt_mil <- function(x) sprintf("%.1f million", x / 1e6)
 
 renter_bed <- stock_by_bedroom_tenure %>% filter(tenure == "renter")
 owner_bed <- stock_by_bedroom_tenure %>% filter(tenure == "owner")
@@ -546,6 +611,10 @@ rent_3 <- renter_price_by_bedroom %>% filter(bedroom_bin == "3 bedrooms") %>% pu
 
 mm_renter_share <- missing_middle_by_tenure %>% filter(tenure == "renter") %>% pull(missing_middle_share)
 mm_owner_share <- missing_middle_by_tenure %>% filter(tenure == "owner") %>% pull(missing_middle_share)
+
+count_value <- function(measure_name) {
+  absolute_counts %>% filter(measure == measure_name) %>% pull(units)
+}
 
 scarce_lines <- "- Metro table not available in this AHS sample."
 if (nrow(metro_menu) > 0) {
@@ -584,6 +653,30 @@ md <- c(
   sprintf("- Missing-middle proxy units: `%s` of all units.", fmt_pct(missing_middle_units / overall_units)),
   sprintf("- Missing-middle share within rentals: `%s`; within owners: `%s`.", fmt_pct(mm_renter_share), fmt_pct(mm_owner_share)),
   "",
+  "## Absolute Counts",
+  "",
+  sprintf("- Bedroom counts: 0-1 bedrooms `%s`; 2 bedrooms `%s`; 3 bedrooms `%s`; 4+ bedrooms `%s`.",
+    fmt_mil(count_value("all_0_1_bedroom_units")),
+    fmt_mil(count_value("all_2_bedroom_units")),
+    fmt_mil(count_value("all_3_bedroom_units")),
+    fmt_mil(count_value("all_4plus_bedroom_units"))
+  ),
+  sprintf("- 3+ bedroom stock: `%s` total; `%s` owner; `%s` renter; `%s` vacant.",
+    fmt_mil(count_value("all_3plus_bedroom_units")),
+    fmt_mil(count_value("owner_3plus_bedroom_units")),
+    fmt_mil(count_value("renter_3plus_bedroom_units")),
+    fmt_mil(count_value("vacant_3plus_bedroom_units"))
+  ),
+  sprintf("- Missing-middle proxy stock: `%s` total; `%s` owner; `%s` renter.",
+    fmt_mil(count_value("missing_middle_proxy_units")),
+    fmt_mil(count_value("owner_missing_middle_proxy_units")),
+    fmt_mil(count_value("renter_missing_middle_proxy_units"))
+  ),
+  sprintf("- Households with children in 0-2 bedroom units: `%s` renters; `%s` owners.",
+    fmt_mil(count_value("renter_households_with_children_0_2_bedrooms")),
+    fmt_mil(count_value("owner_households_with_children_0_2_bedrooms"))
+  ),
+  "",
   "## Tenure Contrast",
   "",
   sprintf("- Rental stock share with 0-1 bedrooms: `%s`.", fmt_pct(renter_small_share)),
@@ -613,6 +706,7 @@ md <- c(
   "- `ahs_renter_price_by_bedroom_structure.csv`",
   "- `ahs_occupied_by_kids_and_bedrooms.csv`",
   "- `ahs_children_space_mismatch.csv`",
+  "- `ahs_absolute_unit_counts.csv`",
   "- `ahs_metro_family_unit_menu.csv`",
   "- PNG figures and `AHS_2023_FAMILY_UNIT_FIGURE_PACKET.pdf` for the physical bedroom/room menu, structure, tenure, child-status consumption, rent gradient, and selected metro family-rental scarcity.",
   "",
