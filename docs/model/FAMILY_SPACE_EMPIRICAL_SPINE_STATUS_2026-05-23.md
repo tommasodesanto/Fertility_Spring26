@@ -230,7 +230,7 @@ Status: available as an alternate geography, not a replacement for the default
 MMS sample.
 
 Source:
-`docs/model/FAMILY_SPACE_EMPIRICAL_SPINE_TOP100_WITH_FIGURES_2026-05-23.html`
+`docs/model/family_space_empirical_packet_2026-05-24/sample_comparison.html`
 
 Build rule:
 
