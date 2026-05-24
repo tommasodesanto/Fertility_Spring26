@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Space Sample Comparison</title>
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #5f6b7a;
+      --rule: #d9dee7;
+      --panel: #f7f9fc;
+      --accent: #8b2f2f;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.5;
+    }
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 24px 72px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 34px 0 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      font-size: 22px;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    p {
+      margin: 8px 0;
+    }
+    .dek {
+      max-width: 920px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .callout {
+      margin: 24px 0;
+      padding: 16px 18px;
+      border-left: 4px solid var(--accent);
+      background: var(--panel);
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin: 14px 0 22px;
+    }
+    .metric {
+      padding: 14px 16px;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+    }
+    .metric strong {
+      display: block;
+      font-size: 23px;
+      line-height: 1.2;
+      color: var(--accent);
+    }
+    .pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      align-items: start;
+      margin: 16px 0 26px;
+    }
+    figure {
+      margin: 0;
+      padding: 14px;
+      border: 1px solid var(--rule);
+      background: #fff;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid #eef1f5;
+    }
+    figcaption {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 22px;
+      font-size: 14px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--rule);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: var(--panel);
+      font-weight: 600;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.95em;
+      background: #f0f3f8;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    @media (max-width: 900px) {
+      main {
+        padding: 28px 16px 56px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .metrics, .pair {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Family Space Sample Comparison</h1>
+  <p class="dek">
+    Side-by-side figures for the original MMS large-metro sample and the
+    expanded top-100-c25 sample. The purpose is to see whether the graphical
+    evidence changes when the center/periphery classification is expanded.
+  </p>
+
+  <div class="callout">
+    <p>
+      The visual result is stable: central family-space scarcity predicts
+      larger parent and fertility gaps between periphery and center. The
+      expanded sample still does not show a robust metro-wide fertility decline.
+    </p>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <strong>42</strong>
+      Original MMS fertility-supply metros.
+    </div>
+    <div class="metric">
+      <strong>80</strong>
+      Expanded top-100-c25 fertility-supply metros.
+    </div>
+    <div class="metric">
+      <strong>0.0105 / 0.0077</strong>
+      Recent-birth gap slopes, original and expanded.
+    </div>
+    <div class="metric">
+      <strong>-0.0007 / 0.0014</strong>
+      Metro-total recent-birth level slopes, original and expanded.
+    </div>
+  </div>
+
+  <h2>Sample Definitions</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Sample</th>
+        <th>Geography Rule</th>
+        <th>Final N</th>
+        <th>Interpretive Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Original MMS</td>
+        <td>Regions with 2000 population at least 1,000,000; center PUMA cutoff 50%.</td>
+        <td>42 metros in fertility-supply regressions.</td>
+        <td>Cleaner center definition in the largest metros.</td>
+      </tr>
+      <tr>
+        <td>Expanded top-100-c25</td>
+        <td>Top 100 CBD regions by 2000 population; center PUMA cutoff 25%.</td>
+        <td>80 metros in fertility-supply regressions.</td>
+        <td>Broader coverage, but noisier center definition in smaller metros.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Housing Menu</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_menu_center_periphery.png" alt="Original MMS bedroom menu by center and periphery">
+      <figcaption>Bedroom menu by center/periphery in the original large-metro sample.</figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply_top100_c25/acs_bedroom_menu_center_periphery.png" alt="Expanded top-100 bedroom menu by center and periphery">
+      <figcaption>Bedroom menu by center/periphery in the expanded sample.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Parent Sorting</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply/acs_bedroom_parent_gap_vs_stock_scarcity.png" alt="Original parent centrality gap versus stock scarcity">
+      <figcaption>
+        Childless-minus-parent center-share gap versus central 3+ bedroom stock
+        scarcity. Slope 0.1467, SE 0.0256.
+      </figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_couillard_bedroom_supply_top100_c25/acs_bedroom_parent_gap_vs_stock_scarcity.png" alt="Expanded parent centrality gap versus stock scarcity">
+      <figcaption>
+        The relationship is smaller but remains strong. Slope 0.0903,
+        SE 0.0192.
+      </figcaption>
+    </figure>
+  </div>
+
+  <h2>Actual Recent-Birth Levels</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_faceted_vs_bedroom_stock_scarcity.png" alt="Original recent-birth levels versus stock scarcity">
+      <figcaption>
+        Center slope -0.0058, SE 0.0034; metro-total slope -0.0007,
+        SE 0.0028.
+      </figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section_top100_c25/acs_recent_birth_levels_faceted_vs_bedroom_stock_scarcity.png" alt="Expanded recent-birth levels versus stock scarcity">
+      <figcaption>
+        Center slope -0.0031, SE 0.0026; metro-total slope 0.0014,
+        SE 0.0017.
+      </figcaption>
+    </figure>
+  </div>
+
+  <h2>Binned Recent-Birth Levels</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_levels_by_bedroom_scarcity_quartile.png" alt="Original recent-birth levels by scarcity quartile">
+      <figcaption>
+        Actual recent-birth rates by family-space scarcity quartile.
+      </figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section_top100_c25/acs_recent_birth_levels_by_bedroom_scarcity_quartile.png" alt="Expanded recent-birth levels by scarcity quartile">
+      <figcaption>
+        Same binned object in the broader sample.
+      </figcaption>
+    </figure>
+  </div>
+
+  <h2>Recent-Birth Gaps</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png" alt="Original recent-birth gap versus stock scarcity">
+      <figcaption>
+        Periphery-minus-center recent-birth gap. Slope 0.0105, SE 0.0036.
+      </figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section_top100_c25/acs_recent_birth_gap_vs_bedroom_stock_scarcity.png" alt="Expanded recent-birth gap versus stock scarcity">
+      <figcaption>
+        Periphery-minus-center recent-birth gap. Slope 0.0077, SE 0.0027.
+      </figcaption>
+    </figure>
+  </div>
+
+  <h2>Mean-Children Gaps</h2>
+  <div class="pair">
+    <figure>
+      <h3>Original MMS, N=42</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section/acs_mean_children_gap_vs_bedroom_stock_scarcity.png" alt="Original mean-children gap versus stock scarcity">
+      <figcaption>
+        Periphery-minus-center mean own children. Slope 0.2954, SE 0.0623.
+      </figcaption>
+    </figure>
+    <figure>
+      <h3>Expanded top-100-c25, N=80</h3>
+      <img src="../../code/data/mms_center_periphery/output_income_fertility_cross_section_top100_c25/acs_mean_children_gap_vs_bedroom_stock_scarcity.png" alt="Expanded mean-children gap versus stock scarcity">
+      <figcaption>
+        Periphery-minus-center mean own children. Slope 0.2389, SE 0.0577.
+      </figcaption>
+    </figure>
+  </div>
+
+  <h2>Reading</h2>
+  <p>
+    The graphs say the same thing in both samples. The robust object is not a
+    metro-wide decline in recent-birth rates. It is the spatial incidence:
+    where central family-sized stock is relatively scarce, parents and births
+    are more tilted toward the periphery.
+  </p>
+</main>
+</body>
+</html>

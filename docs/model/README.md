@@ -11,6 +11,7 @@ Current notes kept here:
 - `FAMILY_SPACE_EMPIRICAL_SPINE_STATUS_2026-05-23.md`
 - `FAMILY_SPACE_EMPIRICAL_SPINE_WITH_FIGURES_2026-05-23.html`
 - `FAMILY_SPACE_EMPIRICAL_SPINE_TOP100_WITH_FIGURES_2026-05-23.html`
+- `FAMILY_SPACE_SAMPLE_COMPARISON_WITH_FIGURES_2026-05-24.html`
 - `DISTRIBUTIONAL_EMPIRICS_SCOPE_MEMO_2026-05-08.pdf`
 - `../../latex/distributional_empirics_report.pdf`
 - `../../latex/fertility_slice_diagnosis_report.pdf`
