@@ -452,7 +452,8 @@ metro_fertility <- df %>%
     periphery_center_owner_gap = owner_rate_periphery - owner_rate_center
   )
 
-bedroom_supply_path <- file.path(script_dir, "output_couillard_bedroom_supply", "acs_bedroom_premia_by_metro.csv")
+bedroom_supply_dir <- Sys.getenv("COUILLARD_BEDROOM_OUTPUT_DIR", "output_couillard_bedroom_supply")
+bedroom_supply_path <- file.path(script_dir, bedroom_supply_dir, "acs_bedroom_premia_by_metro.csv")
 metro_fertility_supply <- tibble()
 fertility_level_supply <- tibble()
 fertility_supply_regression_table <- tibble(

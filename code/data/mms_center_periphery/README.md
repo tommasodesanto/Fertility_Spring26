@@ -13,6 +13,10 @@ Baseline design:
   - `middle` otherwise
 - Downstream summaries can optionally absorb `middle` into `center` with `MMS_INCLUDE_MIDDLE_IN_CENTER=1`.
 - Keep only metros where downtown-classified PUMAs capture at least 50% of downtown tract population.
+- Set `MMS_TOP_N_REGIONS` to build an alternate sample with the top `N` CBD
+  regions by 2000 population instead of the default `MMS_REGION_POP_CUTOFF`.
+- The expanded top-100 diagnostic uses `MMS_TOP_N_REGIONS=100`,
+  `MMS_CENTER_PUMA_CORE_SHARE=0.25`, and `MMS_DATA_SUFFIX=_top100_c25`.
 
 Important implementation note:
 - The original paper maps downtown tracts into PUMAs using more detailed geographic overlaps.
@@ -36,6 +40,8 @@ Outputs:
 - `data/tract2000_mms_flags.csv.gz`
 - `data/puma_mms_lookup_2010.csv`
 - `data/puma_mms_lookup_2020.csv`
+- `data_top100_c25/puma_mms_lookup_2010.csv` (ignored generated alternate)
+- `data_top100_c25/puma_mms_lookup_2020.csv` (ignored generated alternate)
 - `data/city_coverage.csv`
 - `output/mms_location_summary.csv`
 - `output/mms_tenure_parent_summary.csv`
@@ -55,6 +61,7 @@ Outputs:
 - `output_couillard_bedroom_supply/ACS_MMS_COUILLARD_BEDROOM_SUPPLY_PACKET.md`
 - `output_couillard_bedroom_supply/acs_bedroom_premia_by_metro.csv`
 - `output_couillard_bedroom_supply/acs_bedroom_early_late_supply_response.csv`
+- `output_couillard_bedroom_supply_top100_c25/ACS_MMS_COUILLARD_BEDROOM_SUPPLY_PACKET.md` (ignored generated alternate)
 - `output_income_fertility_cross_section/ACS_MMS_INCOME_FERTILITY_CROSS_SECTION.md`
 - `output_income_fertility_cross_section/acs_fertility_by_income_quintile.csv`
 - `output_income_fertility_cross_section/acs_fertility_by_location_overall.csv`
@@ -63,3 +70,4 @@ Outputs:
 - `output_income_fertility_cross_section/acs_fertility_levels_by_metro_with_bedroom_supply.csv`
 - `output_income_fertility_cross_section/acs_fertility_supply_gap_regressions.csv`
 - `output_income_fertility_cross_section/acs_fertility_supply_level_regressions.csv`
+- `output_income_fertility_cross_section_top100_c25/ACS_MMS_INCOME_FERTILITY_CROSS_SECTION.md` (ignored generated alternate)

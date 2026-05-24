@@ -83,9 +83,22 @@ region_pop <- tracts %>%
   group_by(region_all, cbdname) %>%
   summarise(region_pop2000 = sum(pop2000), .groups = "drop")
 
+top_n_regions_env <- Sys.getenv("MMS_TOP_N_REGIONS", "")
+top_n_regions <- suppressWarnings(as.integer(top_n_regions_env))
 region_pop_cutoff <- as.numeric(Sys.getenv("MMS_REGION_POP_CUTOFF", "1e6"))
-large_regions <- region_pop %>%
-  filter(region_pop2000 >= region_pop_cutoff)
+
+if (top_n_regions_env != "" && (!is.finite(top_n_regions) || top_n_regions <= 0)) {
+  stop("MMS_TOP_N_REGIONS must be a positive integer when set.")
+}
+
+large_regions <- if (top_n_regions_env != "") {
+  region_pop %>%
+    arrange(desc(region_pop2000), region_all) %>%
+    slice_head(n = top_n_regions)
+} else {
+  region_pop %>%
+    filter(region_pop2000 >= region_pop_cutoff)
+}
 
 tracts <- tracts %>%
   semi_join(large_regions, by = c("region_all", "cbdname"))
@@ -315,6 +328,12 @@ summary_lines <- c(
   sprintf("Core tract population target share: %.2f", core_pop_share),
   sprintf("Center PUMA cutoff on core share: %.2f", center_puma_cutoff),
   sprintf("Periphery PUMA cutoff on core share: %.2f", periphery_puma_cutoff),
+  sprintf("Region selection rule: %s",
+          if (top_n_regions_env != "") {
+            sprintf("top %d by 2000 region population", top_n_regions)
+          } else {
+            sprintf("region_pop2000 >= %.0f", region_pop_cutoff)
+          }),
   sprintf("Large regions kept before PUMA coverage screen: %d", nrow(region_pop)),
   sprintf("Cities passing downtown-coverage screen: %d", nrow(filter(city_coverage, keep_city))),
   sprintf("2000 tract centroid coordinate match rate: %.1f%%", 100 * coord_match_rate),

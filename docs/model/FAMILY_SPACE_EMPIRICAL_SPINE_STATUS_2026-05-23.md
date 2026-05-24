@@ -223,3 +223,43 @@ The current facts do not yet identify the causal supply channel. The next
 step is not more calibration. It is to measure whether family-capable stock is
 slow to respond in constrained metros, and whether buying is the main observed
 access technology when households move into family-sized space.
+
+## Expanded Top-100 Check
+
+Status: available as an alternate geography, not a replacement for the default
+MMS sample.
+
+Source:
+`docs/model/FAMILY_SPACE_EMPIRICAL_SPINE_TOP100_WITH_FIGURES_2026-05-23.html`
+
+Build rule:
+
+- `MMS_TOP_N_REGIONS=100`
+- `MMS_CENTER_PUMA_CORE_SHARE=0.25`
+- Output lookup: `code/data/mms_center_periphery/data_top100_c25/`
+
+Why the 25 percent center-PUMA cutoff matters:
+
+The original 50 percent center-PUMA cutoff is too strict for many smaller
+metros because PUMAs are geographically coarse. With the top-100 region
+selection and the original 50 percent cutoff, only 55 CBD regions pass the
+downtown-coverage screen. With the 25 percent cutoff, 96 CBD regions pass,
+mapping to 86 CBSAs in the lookup and 80 metros in the final fertility-supply
+regressions.
+
+Expanded-sample results:
+
+- Parent centrality gap slope on 3+ bedroom stock scarcity: 0.0903, SE 0.0192.
+- Recent-birth gap slope on 3+ bedroom stock scarcity: 0.0077, SE 0.0027.
+- Mean-own-children gap slope on 3+ bedroom stock scarcity: 0.2389, SE 0.0577.
+- Center recent-birth level slope on 3+ bedroom stock scarcity: -0.0031,
+  SE 0.0026, p=0.242.
+- Metro-total recent-birth level slope on 3+ bedroom stock scarcity: 0.0014,
+  SE 0.0017, p=0.430.
+
+Interpretation:
+
+The expanded sample supports the same spatial-incidence conclusion as the
+default large-metro sample: central family-space scarcity predicts a larger
+parent and fertility gap between periphery and center. It still does not show a
+robust metro-wide fertility decline in cross-section.
