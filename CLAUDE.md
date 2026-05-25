@@ -167,6 +167,27 @@ Think about identification when working with calibration or empirical targets:
 which variation identifies each parameter, which moments are informative, and
 which parameters are likely substitutable.
 
+## Model Solution Diagnostics
+
+Every model solution or equilibrium run should produce an easily accessible
+visual diagnostic packet before or alongside tables. A solution is not fully
+inspectable if it only writes CSVs, losses, or scalar moments.
+
+- Provide one simple command or function that regenerates the full diagnostic
+  packet for the active solution.
+- Plot policy functions over the relevant state spaces, including wealth,
+  age, fertility/child states, location, tenure or housing product, and any
+  active market-choice dimensions.
+- Plot prices in all relevant markets and submarkets.
+- Plot quantities, demand, supply, market residuals, and capacity/resource use
+  in all relevant markets and submarkets.
+- Plot the spatial distribution of households, choices, and market quantities
+  whenever location is a state or choice.
+- Include boundary-state plots for poorest, richest, youngest, oldest, renter,
+  owner, parent, nonparent, and high-child states when those margins exist.
+- Tables are useful supporting artifacts, but visual diagnostics are the first
+  object to inspect because they reveal the full equilibrium shape.
+
 ## Terminology
 
 Maintain precise terminology:
