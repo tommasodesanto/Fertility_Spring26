@@ -115,11 +115,11 @@ where $e_a$ is the deterministic age-efficiency profile and $\tau_{\mathrm{pay}}
 \end{equation*}
 The pension benefit is determined in equilibrium by the pay-as-you-go government budget.
 
-Given the level distribution $g$, aggregate efficiency labor supply is
+Given the level distribution $G$, aggregate efficiency labor supply is
 \begin{equation*}
-    L^s(g)=\int \ind\{a\leq J_R\}e_a\,dg(x).
+    L^s(G)=\int \ind\{a\leq J_R\}e_a\,dG(x).
 \end{equation*}
-In equilibrium firms hire this labor supply, so $L=L^s(g)$ and output is $Y=A L$.
+In equilibrium firms hire this labor supply, so $L=L^s(G)$ and output is $Y=A L$.
 
 Liquid wealth earns exogeneous gross return $R_b\equiv 1+q$. A renter cannot borrow:
 \begin{equation*}
@@ -171,13 +171,13 @@ The choice $n'=0$ means no birth in the current period. A positive choice $n'>0$
 
 Let $s=0$ denote no dependent children and $s=1,\ldots,K$ denote dependent child stages. At the moment of a positive fertility choice, the household moves into state $s=1$. After that, child aging is stochastic but sequential. For $s<K$, children either remain in stage $s$ or move to stage $s+1$. At stage $K$, they either remain dependent or mature and leave the household, in which case the household returns to $s=0$. No other child-age transitions have positive probability. The matrix $\Pi^c$ collects these transition probabilities. In the parameterization, dependent childhood lasts about 18 years. While children are at home, $m(n,s)=n$. After maturity, $m(n,s)=0$, so the consumption and housing floors return to their baseline levels, while completed fertility remains relevant through the bequest motive. The mature city-born flow is
 \begin{equation}
-    B(g)
+    B(G)
     =
     \int
-    n\Pi^c(0\mid K,n)\ind\{s=K\}dg(x).
+    n\Pi^c(0\mid K,n)\ind\{s=K\}dG(x).
     \label{eq:mature_cityborn_flow}
 \end{equation}
-Mature city-born  are potential entrants; the outside option determines whether they enter the modeled city.
+Mature city-born children are potential entrants; the outside option determines whether they enter the modeled city.
 
 \subsection{Household Problem}
 
@@ -325,30 +325,16 @@ and the full household value is
 Outside the fertility window, or after fertility has already been chosen, this stage is degenerate and $V_a(b,d,i,n,s)=V^L_a(b,d,i,n,s)$.
 
 \subsection{Entry, Outside Option, and City Size}
-With endogenous fertility, stationarity requires specifying how city-born children become adult potential entrants and how the mass of adult households is pinned down. The benchmark closure keeps the city stationary while allowing its scale to be an equilibrium object.
-Let $g$ denote the level distribution of adult households, and let
-\begin{equation*}
-    S=\int dg.
-\end{equation*}
-Write this distribution as\footnote{More on this later. I understand this is the main `technical' issue that emerged in the seminar. It is not fully solved. At the end of this document there is a discussion of the things. I hope to get feedback on this.}
-\begin{equation*}
-    g=S\mu,
-    \qquad
-    \int d\mu=1,
-\end{equation*}
-where $\mu$ is the composition of the city.
+Endogenous fertility changes the flow of children who mature into adult households. The model therefore needs a rule for which potential young adults enter the modeled city and a rule for the scale of the city. The benchmark rule is an outside-option entry problem for potential entrants.
 
-Each period the pool of potential young-adult entrants is the sum of an exogenous outside-born flow $M\geq0$ and the mature city-born flow $B(g)$:
-\begin{equation}
-    Q(g)=M+B(g).
-    \label{eq:potential_entry_pool}
-\end{equation}
-The value of entering location $i$ is
+At the beginning of adult life, a potential entrant is either a mature city-born child or an outside-origin potential immigrant. If the entrant chooses modeled location $i\in\Iset$, she begins adult life as a childless renter with liquid wealth $b^E$:
 \begin{equation*}
-    W_i^E(p)=V_1(b^E,R,i,0,0;p),
+    x_i^E=(b^E,R,i,1,0,0),
+    \qquad
+    W_i^E(p)=V_1(b^E,R,i,1,0,0;p).
 \end{equation*}
-where entrants begin as childless renters with liquid wealth $b^E$. The outside value $\bar W^E$ is exogenous. Potential entrants draw Type-I extreme-value tastes over the modeled locations and the outside economy, with scale parameter $\kappa_E$.\footnote{These entry shocks are distinct from the incumbent location shocks governed by $\kappa_\ell$: $\kappa_E$ governs the city-versus-outside margin, while $\kappa_\ell$ governs re-sorting across locations inside the modeled city. The unconditional probability of entering location $i$ is
-\[
+The entrant can instead choose the outside economy, which has value $\bar W^E$. Potential entrants draw Type-I extreme-value tastes over the modeled locations and the outside economy, with scale parameter $\kappa_E$. The unconditional probability of entering modeled location $i$ is
+\begin{equation}
     \pi_i^E(p)
     =
     \frac{
@@ -358,10 +344,12 @@ where entrants begin as childless renters with liquid wealth $b^E$. The outside 
     +
     \sum_{m\in\Iset}\exp\left(W_m^E(p)/\kappa_E\right)
     },
-\]
-and the outside probability is
-\[
-    \pi_0^E(p)
+    \qquad i\in\Iset,
+    \label{eq:entry_location_probs}
+\end{equation}
+and the probability of choosing the outside economy is
+\begin{equation}
+    \pi_{\mathrm{out}}^E(p)
     =
     \frac{
     \exp\left(\bar W^E/\kappa_E\right)
@@ -370,28 +358,48 @@ and the outside probability is
     +
     \sum_{m\in\Iset}\exp\left(W_m^E(p)/\kappa_E\right)
     }.
-\]
-}
-The total city-entry probability and conditional entrant location shares are
+    \label{eq:entry_outside_prob}
+\end{equation}
+The total probability of entering the modeled city is
+\begin{equation}
+    q^E(p)
+    =
+    \sum_{i\in\Iset}\pi_i^E(p)
+    =
+    1-\pi_{\mathrm{out}}^E(p).
+    \label{eq:metro_entry_prob}
+\end{equation}
+Thus $\pi_i^E(p)$ determines where entrants go inside the modeled city, while $q^E(p)$ determines how many potential entrants enter the city at all. The entry shocks governed by $\kappa_E$ are distinct from the incumbent location shocks governed by $\kappa_\ell$.
+
+Let $G$ denote the level distribution of adult households in the modeled city, and let
 \begin{equation*}
-    q^E(p)=1-\pi_0^E(p)=\sum_{i\in\Iset}\pi_i^E(p),
-    \qquad
-    \omega_i^E(p)=\frac{\pi_i^E(p)}{q^E(p)}.
+    S=\int dG.
 \end{equation*}
+Write the level distribution as
+\begin{equation*}
+    G=Sg,
+    \qquad
+    \int dg=1,
+\end{equation*}
+where $g$ is the normalized composition of the city. This convention separates shares from levels: $g$ gives the composition of adult households, $S$ gives total adult mass, and $G=Sg$ gives actual masses.
+
+Each period the pool of potential young-adult entrants is the sum of an exogenous outside-born flow $M\geq0$ and the mature city-born flow $B(G)$:
+\begin{equation}
+    Q(G)=M+B(G).
+    \label{eq:potential_entry_pool}
+\end{equation}
 Entry into location $i$ is
 \begin{equation}
-    E_i(g;p)=Q(g)\pi_i^E(p)
-    =
-    Q(g)q^E(p)\omega_i^E(p).
+    E_i(G;p)=Q(G)\pi_i^E(p).
     \label{eq:entry_mass}
 \end{equation}
-The remaining mass $Q(g)(1-q^E(p))$ stays in the outside economy.
+The remaining mass $Q(G)\pi_{\mathrm{out}}^E(p)=Q(G)(1-q^E(p))$ stays in the outside economy.
 
-For a candidate price vector $p$, household policies imply a stationary composition $\mu(p)$. Let
+For a candidate price vector $p$, household policies imply a normalized stationary composition $g(p)$. Let
 \begin{equation*}
-    E_0(p)=\int \ind\{a=1\}d\mu(p)
+    E_0(p)=\int \ind\{a=1\}dg(p)
 \end{equation*}
-be the young-adult entry flow required to reproduce one unit of that composition, and let $B_0(p)=B(\mu(p))$ be the mature city-born flow per unit of city scale. The city scale is pinned down by the stationarity condition
+be the replacement inflow of young adults required to reproduce one unit of the stationary composition. With deterministic death at the end of the lifecycle, this is also the per-unit mass of adults exiting through death in stationarity. Let $B_0(p)=B(g(p))$ be the mature city-born flow per unit of city scale. The scalar scale condition equates required young-adult replacement to actual city entry:
 \begin{equation}
     S E_0(p)
     =
@@ -408,13 +416,13 @@ then the stationary city scale is
     S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
     \label{eq:stationary_scale_solution}
 \end{equation}
-The denominator is the net replacement gap. If condition \eqref{eq:finite_scale_condition} fails, the maintained stationary closure does not admit a finite city.\footnote{However this will hold endogeneously, as long as the outside option is not too unattractive. If the outside option is very attractive, then $q^E(p)$ is close to zero and the replacement gap is negative. In that case, the city cannot reproduce its composition even with zero outside-born flow, so stationarity requires an infinite city. But if not, as fertility increases, house prices will go up, the city will become less attractive, and so stationarity will hold.}
+The denominator is the net replacement gap. If condition \eqref{eq:finite_scale_condition} fails, each unit of city scale produces enough city-entering mature children to weakly cover its own replacement requirement, and the maintained stationary closure does not admit a finite city scale.
 
-The baseline uses the normalization $S=1$. Given the baseline objects $E_0^\ast$, $B_0^\ast$, and $q^{E,\ast}$, the outside-born flow is set residually from \eqref{eq:stationary_scale}:
+The baseline uses the normalization $S^\ast=1$. The normalized benchmark solution implies $E_0^\ast$ and $B_0^\ast$. The outside value $\bar W^E$ is chosen to generate the benchmark city-entry probability $q^{E,\ast}$. Given those objects, the outside-born potential entrant mass is set residually from \eqref{eq:stationary_scale}:
 \begin{equation*}
     M=\frac{E_0^\ast}{q^{E,\ast}}-B_0^\ast.
 \end{equation*}
-Thus the benchmark is close to a fixed-mass normalization. The difference is that, in counterfactuals, $M$ and $\bar W^E$ are held fixed and \eqref{eq:stationary_scale_solution} determines the new scale $S(p)$.
+Thus $E_0^\ast$, $B_0^\ast$, and $q^{E,\ast}$ are not three independent free objects: the first two come from the normalized benchmark composition, the third pins down the outside margin, and $M$ is residual. In counterfactuals, $M$, $\bar W^E$, and $\kappa_E$ are held fixed, while \eqref{eq:stationary_scale_solution} determines the new scale $S(p)$. Location-specific stationarity is handled by the vector of entry masses $\{E_i(G;p)\}_{i\in\Iset}$ in \eqref{eq:entry_mass}; the scalar equation only pins down total city scale.
 
 \subsection{Housing Supply and Market Clearing}
 
@@ -437,7 +445,7 @@ H_i^D
 +
 \sum_{k=1}^{N_H}
 \ind\{\ell=i,d=O_k\}H_k
-\right]dg(b,d,\ell,a,n,s),
+\right]dG(b,d,\ell,a,n,s),
 \label{eq:housing_demand}
 \end{equation}
 House prices satisfy the user-cost relation
@@ -447,7 +455,7 @@ House prices satisfy the user-cost relation
 
 \section{Stationary Equilibrium}
 
-The equilibrium is stationary in prices, policies, and the level distribution of adult households. Stationarity is imposed on $g$, not only on the normalized composition $\mu$. Entry, aging, fertility, location choice, tenure choice, savings, and death reproduce the same level distribution every period.
+The equilibrium is stationary in prices, policies, and the level distribution of adult households. The level distribution is denoted by $G$; its total mass is $S=\int dG$, and its normalized composition is $g=G/S$. Entry, aging, fertility, location choice, tenure choice, savings, and death reproduce the same level distribution every period.
 
 \begin{definition}[Stationary equilibrium]
 A stationary equilibrium is a collection
@@ -458,8 +466,8 @@ A stationary equilibrium is a collection
 \{V_a,V^R_a,V^T_a,V^L_a,\widetilde V^L_a,\widetilde V^F_a\}_{a},
 \{V^{O_k}_a\}_{a,k},
 \{c,h^R,b',d',i',n'\},\\
-&\{\pi^L,\pi^F,\pi^E,\pi_0^E,q^E,\omega^E\},
-g,
+&\{\pi^L,\pi^F,\pi^E,\pi_{\mathrm{out}}^E,q^E\},
+G,S,g,
 \{E_i,H_i^D,H_i^S\}_{i\in\Iset}
 \big)
 \end{aligned}
@@ -468,19 +476,19 @@ such that:
 \begin{enumerate}[leftmargin=*]
     \item \textbf{Household optimization.} Given prices, amenities, and moving wedges, value functions solve the household problem in \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure choice \eqref{eq:tenure_value}, location probabilities \eqref{eq:loc_probs}, fertility probabilities \eqref{eq:fert_probs}, and terminal bequest utility \eqref{eq:bequest}. The policies $c$, $h^R$, $b'$, $d'$, $i'$, and $n'$ are associated optimal policies.
 
-    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(g)$. The potential entrant pool is $Q(g)=M+B(g)$. Entry probabilities are $\{\pi_i^E(p)\}_{i\in\Iset}$ and $\pi_0^E(p)$, the city entry rate is $q^E(p)=1-\pi_0^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
+    \item \textbf{Entry and outside option.} The child-aging matrix implies a mature city-born flow $B(G)$. The potential entrant pool is $Q(G)=M+B(G)$. Entry probabilities are $\{\pi_i^E(p)\}_{i\in\Iset}$ and $\pi_{\mathrm{out}}^E(p)$, the city entry rate is $q^E(p)=1-\pi_{\mathrm{out}}^E(p)=\sum_i\pi_i^E(p)$, and entry masses satisfy
     \begin{equation*}
-        E_i(g;p)=Q(g)q^E(p)\omega_i^E(p),\qquad i\in\Iset.
+        E_i(G;p)=Q(G)\pi_i^E(p),\qquad i\in\Iset.
     \end{equation*}
-    The outside mass is $Q(g)(1-q^E(p))$.
+    The outside mass is $Q(G)(1-q^E(p))$.
 
     \item \textbf{Firms and labor market.} The common wage satisfies $w=A$. Aggregate efficiency labor supply is
     \begin{equation*}
-        L^s(g)=\int \ind\{a\leq J_R\}e_a\,dg(x),
+        L^s(G)=\int \ind\{a\leq J_R\}e_a\,dG(x),
     \end{equation*}
     and the labor market clears:
     \begin{equation*}
-        L=L^s(g).
+        L=L^s(G).
     \end{equation*}
     Output is $Y=A L$.
 
@@ -495,26 +503,26 @@ such that:
     \begin{equation*}
         \tau_{\mathrm{pay}} w L
         =
-        p^{\mathrm{ret}}\sum_i\sum_{a>J_R}g_i(a).
+        p^{\mathrm{ret}}\sum_i\sum_{a>J_R}G_i(a).
     \end{equation*}
-    Here $g_i(a)$ is the marginal mass of households of age $a$ living in location $i$.
+    Here $G_i(a)$ is the marginal mass of households of age $a$ living in location $i$.
 
-    \item \textbf{Stationary distribution.} The distribution $g$ is the level distribution of adult households living in the modeled city. For any measurable set $\mathcal A$ of adult states,
+    \item \textbf{Stationary distribution.} The distribution $G$ is the level distribution of adult households living in the modeled city. For any measurable set $\mathcal A$ of adult states,
     \begin{equation*}
-        g'(\mathcal A)
+        G'(\mathcal A)
         =
-        \int \mathcal P(\mathcal A\mid x;p)\,dg(x)
+        \int \mathcal P(\mathcal A\mid x;p)\,dG(x)
         +
-        \sum_{i\in\Iset}E_i(g;p)\ind\{x_i^E\in\mathcal A\},
+        \sum_{i\in\Iset}E_i(G;p)\ind\{x_i^E\in\mathcal A\},
     \end{equation*}
-    where $\mathcal P(\cdot\mid x;p)$ is the transition induced by optimal policies, fertility and location probabilities, child aging, deterministic aging, and death for incumbent households. Death puts no mass on the next-period adult city state space. Mature city-born children enter the adult city distribution only through the entry masses $\{E_i(g;p)\}_{i\in\Iset}$; the remaining potential entrants choose the outside economy and are not part of $g'$. Stationarity requires $g'=g$. Entrants enter at $x_i^E=(b^E,R,i,1,0,0)$. Total adult population is $S=\int dg(x)$ and is an equilibrium outcome.
+    where $\mathcal P(\cdot\mid x;p)$ is the transition induced by optimal policies, fertility and location probabilities, child aging, deterministic aging, and death for incumbent households. Death puts no mass on the next-period adult city state space. Mature city-born children enter the adult city distribution only through the entry masses $\{E_i(G;p)\}_{i\in\Iset}$; the remaining potential entrants choose the outside economy and are not part of $G'$. Stationarity requires $G'=G$. Entrants enter at $x_i^E=(b^E,R,i,1,0,0)$. Total adult population is $S=\int dG(x)$ and is an equilibrium outcome.
 \end{enumerate}
 \end{definition}
 
 \section{Population Closure: Alternatives}
 The proposed solution above, with an outside option entry, does not achieve much more than a pure normalization. The main gain is that we can get a scale effect in counterfactuals. I did not fully get how to get a scale effect in the steady state. Here i briefly sum up the alternatives and thoughts.
 \paragraph{Fixed adult mass.}
-The simplest closure (as presented in April) has $\int dg=1$ and keeps adult population fixed. Fertility then changes the composition of households, but not the mass of households in the city. Housing demand changes because parents want more space, sort differently, and choose tenure differently. It does not change because the city becomes larger. This is close in spirit to exercises that take the adult demographic envelope or prices as given, including \citet{morenoMaldonadoSantamariaDelayed2024} and \citet{karabarbounisNordFertilityChoicesCost2025}. The advantage is tractability; the cost is that the scale channel is shut down.
+The simplest closure (as presented in April) has $S=1$ and keeps adult population fixed. Fertility then changes the composition of households, but not the mass of households in the city. Housing demand changes because parents want more space, sort differently, and choose tenure differently. It does not change because the city becomes larger. This is close in spirit to exercises that take the adult demographic envelope or prices as given, including \citet{morenoMaldonadoSantamariaDelayed2024} and \citet{karabarbounisNordFertilityChoicesCost2025}. The advantage is tractability; the cost is that the scale channel is shut down.
 
 \paragraph{Outside-option entry.}
 The benchmark uses the outside-option version. It keeps the same stationary accounting logic, but makes city entry depend on the value of entering the city relative to an outside economy:
@@ -539,6 +547,32 @@ The most structural alternative is a sequence model in which births today become
 
 \paragraph{Why not BGP?}
 One suggestion made in the talk was to just have a BGP. The way I see it, this is not the correct thing to do. First, with the spatial dimension it creates numerous problems, discussed in the January committee meeting. But aside from that, BGP trades off here one simplification with another: it would allow objects to respond endogeneously to scale, but at the cost of 'normalizing' the population dynamics. That is, in a BGP, the population distribution follows a travelling wave, so everything stays constant in the age distribution (so if today there is twice the amount of 35 year olds as 50 year olds, the same is tomorrow, even if the absolute number is lower or higher). In a BGP with TFR=1.7, for example, with one couple having less then two kids, the population would be shrinking at a constant rate, with the age masses constant. This is also counterfactual: today, we have negative TFR, but positive population growth, due to past fertility rates. The only way to actually match this is with the solution in the paragraph below, full demographic city growth, which is a much more complex object. So, if one wants to avoid that, it seems to me like I need to choose what kind of normalization I want. I might definitely be missing something here, so I am happy to discuss this further.
+
+\appendix
+\section{Outside-Option Entry Algorithm}
+
+This appendix restates the benchmark closure as an algorithm. The key distinction is that the benchmark uses the outside margin to normalize the level of the economy, while counterfactuals hold the outside environment fixed and allow city scale to move.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Solve the normalized benchmark.} For a candidate parameter vector and benchmark prices, solve the household problem and the stationary normalized composition $g^\ast$ with $\int dg^\ast=1$.
+
+    \item \textbf{Compute per-unit demographic flows.} From $g^\ast$, compute the replacement inflow $E_0^\ast$ and the mature city-born flow $B_0^\ast=B(g^\ast)$. These are per unit of city scale, not aggregate masses.
+
+    \item \textbf{Choose the outside value.} Given entry values $\{W_i^E(p^\ast)\}_{i\in\Iset}$, choose $\bar W^E$ so that the model matches the benchmark city-entry probability $q^{E,\ast}$. Equivalently, this pins down the benchmark outside margin.
+
+    \item \textbf{Set the outside-origin potential entrant mass.} Normalize benchmark city scale to $S^\ast=1$ and set
+    \begin{equation*}
+        M=\frac{E_0^\ast}{q^{E,\ast}}-B_0^\ast.
+    \end{equation*}
+    Thus $M$ is residual: it is the outside-origin potential entrant mass required to make the normalized benchmark stationary.
+
+    \item \textbf{Run counterfactuals.} Hold $M$, $\bar W^E$, and $\kappa_E$ fixed. For each counterfactual price vector $p$, recompute household behavior, $E_0(p)$, $B_0(p)$, and $q^E(p)$, and set city scale using
+    \begin{equation*}
+        S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
+    \end{equation*}
+\end{enumerate}
+
+The scalar equation determines total scale. The vector of entry probabilities $\{\pi_i^E(p)\}_{i\in\Iset}$ determines how entrant mass is allocated across locations, which is required for location-specific stationarity.
 \bibliographystyle{apalike}
 \bibliography{main_bib,lit_review_extra}
 

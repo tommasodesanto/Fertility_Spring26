@@ -1,0 +1,1448 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing,overlay-beamer-styles,shapes.geometric,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{appendixnumberbeamer}
+
+\setbeamercovered{transparent=5}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{block title}{fg=black,bg=white!80!black}
+\setbeamercolor{block body}{fg=black,bg=white!97!black}
+\linespread{1.2}
+\newcommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\definecolor{citecolor}{RGB}{110,110,165}
+\newcommand{\cit}[1]{{\color{citecolor}#1}}
+
+\title{Fertility and Housing Tenure Choice}
+\author{Tommaso De Santo}
+\institute{Macroeconomics Student Lunch}
+\date{05/29/2026}
+
+\begin{document}
+
+{
+\setbeamertemplate{footline}{}
+\maketitle
+}
+
+\begin{frame}{Housing and Fertility}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{../../Latex/newsweek.png}\hspace{-1em}%
+\includegraphics[width=0.45\textwidth]{../../Latex/housingwire.png}\\[-0.8em]
+\includegraphics[width=0.45\textwidth]{../../Latex/vox.png}\hspace{-1em}%
+\includegraphics[width=0.45\textwidth]{../../Latex/cityjournal.png}
+\includegraphics[width=0.8\textwidth]{../../Latex/times.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Housing, Fertility, and Tenure Choice}
+\textbf{Housing costs affect fertility}---but tenure and wealth matter
+\begin{itemize}
+  \item Owners have more kids when house prices or housing wealth rise; renters do not \cit{(Dettling \& Kearney 2014)}, and big units matter \cit{(Couillard 2025)}
+\end{itemize}
+\medskip
+Children increase how big of a house you need. This has implications for:
+\begin{itemize}
+  \item Owning: tenure segmentation
+  \item Location: housing cost differs geographically
+  \item Wealth: borrowing constraints, bequests
+\end{itemize}
+\vfill
+Physical space is key. How much does it affect fertility?\\
+What kind of housing policy is good for natality?\\
+\hspace{2em} $\rightarrow\;$ focus on space constraints and tenure choice
+\end{frame}
+
+\begin{frame}{This Paper}
+Need a structural model where tenure, location, and fertility are joint.
+Today:
+\vfill
+\alert{Model:} lifecycle model of fertility, location, tenure, and saving
+\begin{itemize}
+  \vfill \item Childbirth is a discrete shock to housing need
+  \vfill \item Housing markets with borrowing constraints, tenure choice, transaction costs
+  \vfill \item Location and tenure respond to family-space need
+\end{itemize}
+
+\vfill
+\alert{Empirics:} document facts about fertility, housing, and moving
+\begin{itemize}
+  \vfill \item ACS: parents less central; re-sort toward periphery within metros
+  \vfill \item PSID: first birth raises ownership, rooms, and moves for space
+\end{itemize}
+
+\vfill
+\alert{Goal:} write a model disciplining these interactions, think about policy.
+\end{frame}
+
+\section{Model}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Model}}
+\end{frame}
+
+\begin{frame}{Environment}
+\begin{itemize}
+  \item Two locations: \textbf{center} $(C)$ and \textbf{periphery} $(P)$ within a metro area
+  \begin{itemize}
+    \item Center has an amenity premium but less elastic housing supply
+    \item Common wages; sorting driven by amenities, housing costs, and moving frictions
+  \end{itemize}
+  \item Adult age $a \in \{0,1,\ldots,J\}$; deterministic aging and death
+  \begin{itemize}
+    \item Working age $a \in [0, J_R)$; fertile window $a \in [J_f^{\mathrm{start}}, J_f^{\mathrm{end}}]$
+    \item Children do not work; they depend on their parents
+  \end{itemize}
+  \item Households choose:
+  \begin{itemize}
+    \item \textbf{Fertility}: $n^* \in \{0,1,\ldots,\bar n\}$, subject to EV shocks
+    \item \textbf{Location}: center or periphery each period (with moving costs and EV shocks)
+    \item \textbf{Tenure}: rent or buy a discrete house size $H_k$ on a housing ladder
+    \item \textbf{Saving}: liquid wealth $b$ with collateral borrowing for owners
+  \end{itemize}
+  \item Children age stochastically through life stages; housing need depends on children
+  \item Benchmark city scale is normalized to 1; counterfactual city size responds to entry from city-born and outside-origin young adults
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Preferences}
+\small
+$n^*$: completed fertility (chosen once); $s$: child-aging stage (stochastic); $m = m(n^*,s)$: children currently at home.
+
+\medskip
+\textbf{Flow utility.} Over consumption and housing services:
+\[
+u(c,\mathbf h;m)
+= \frac{\Big[\big(c-\bar c(m)\big)^\alpha \big(\mathbf h-\bar h(m)\big)^{1-\alpha}\Big]^{1-\sigma}}{1-\sigma}
++ \psi_{\mathrm{child}}\,m.
+\]
+
+\textbf{Subsistence requirements.} Depend on family size:
+\[
+\bar c(m)=\bar c_0+\bar c_1 m,
+\qquad
+\bar h(m)=\bar h_0+\underbrace{\bar h_{\mathrm{jump}}\mathbf{1}\{m\geq 1\}}_{\text{first-child housing margin}}+\bar h_1 m.
+\]
+
+\textbf{Housing services.} Households either rent or own; owners get a service premium:
+\[
+\mathbf h = \underbrace{\mathbf{1}\{\text{own}\}\,\chi\, h}_{\text{owner services}} + \underbrace{\mathbf{1}\{\text{rent}\}\,h^R}_{\text{renter services}}, \quad \chi > 1.
+\]
+
+\begin{itemize}
+  \item Child costs disappear after children mature.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Bequests}
+\small
+Terminal utility at death:
+\[
+\mathcal B(\widetilde b,n^*)= \theta_0\big(1+\theta_n n^*\big)\frac{(\theta_1+\widetilde b)^{1-\sigma}}{1-\sigma},
+\qquad
+\widetilde b=b+(1-\psi)p_i h.
+\]
+\begin{itemize}
+  \vfill \item $\theta_0$ governs overall bequest motive (saving level).
+  \vfill \item $\theta_n$ governs the parent--childless saving differential.
+  \vfill \item Total bequeathable wealth $\widetilde b$ includes housing equity net of the transaction cost for owners.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Housing, Tenure, and Budget Constraints}
+\small
+Renters choose housing continuously:
+\[
+h^R \in [0,\bar h^R].
+\]
+Owners choose a discrete house size:
+\[
+h \in \{H_1,\ldots,H_{N_H}\}.
+\]
+
+\medskip
+\textbf{Renters}
+\[
+b' = Rb + y(a) - c - r_i h^R,
+\qquad b' \geq 0.
+\]
+
+\textbf{Owners}
+\[
+b' = Rb + y(a) - c - (\delta+\tau_H)p_i h'
++ \underbrace{\mathbf{1}\{\text{sell}\}(1-\psi)p_i h}_{\text{sale proceeds}}
+- \underbrace{\mathbf{1}\{\text{buy}\}\,p_i h'}_{\text{purchase cost}},
+\qquad b' \geq -\phi p_i h'.
+\]
+
+\medskip
+\begin{itemize}
+  \item \textbf{Tenure segmentation}: renters access housing up to $\bar h^R$; owner sizes start at $H_1 > \bar h^R$.
+  \item Movers and newly matured children arrive as renters, then re-choose tenure and size.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fertility and Child Aging}
+\begin{itemize}
+  \item Fertility choices are made only in the fertile window $a \in [J_f^{\mathrm{start}},J_f^{\mathrm{end}}]$.
+  \item One-shot fertility: can have multiple kids, but choose only once:
+  \[
+  n^* \in \{0,1,\ldots,\bar n\}.
+  \]
+  \item After birth, children age through stages $s$ (think toddler $\to$ child $\to$ teen $\to$ adult):
+  \begin{itemize}
+    \item Aging is \textbf{sequential}: each stage transitions only to the next one, with random arrival
+    \item All $n^*$ children of a parent age \textbf{together} as a single cohort - $s$ is shared.
+  \end{itemize}
+  \item While children are at home ($s < $ matured), they raise housing need $\bar h(m)$ and consumption cost $\bar c(m)$.
+  \item Once matured, child costs shut off and children enter the economy at age $a=0$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Firms and Earnings}
+\small
+\begin{itemize}
+  \item Competitive firms produce with labor:
+  \[
+  Y = A L, \qquad w = A.
+  \]
+  \item \textbf{Common wages} across locations: sorting driven entirely by amenities and housing costs.
+  \item Age-dependent earnings:
+  \[
+  y(a) = \begin{cases} (1-\tau_{\mathrm{pay}})\,w(a) & a < J_R \\ \bar{b} & a \geq J_R \end{cases}
+  \]
+  \item Retirees receive a stationary pay-as-you-go pension $\bar b$ financed by payroll taxes.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Housing Supply and Price Mapping}
+\small
+Housing supply in each location:
+\[
+H_i^s(r_i) = \bar r_i r_i^{\eta_i},
+\qquad i \in \{C,P\}.
+\]
+\begin{itemize}
+  \item Less elastic center supply makes family space more expensive in the core.
+  \item House prices map into user costs through
+  \[
+  r_i = (R+\delta+\tau_H)p_i.
+  \]
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Entry Environment}
+\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\begin{itemize}\setlength\itemsep{7pt}
+  \item \textbf{Potential entrants.} At the beginning of adult life, potential
+  entrants are maturing children raised in the modeled metro and a mass $M$ of
+  outside-origin potential immigrants.
+
+  \item \textbf{Choice.} Each potential entrant chooses where to start adult
+  life:
+  \[
+  \{C,P,E\}.
+  \]
+  Entering location $i\in\{C,P\}$ gives value $W_i^E(p)$ and the outside
+  economy gives value $\bar W^E$.
+
+  \item \textbf{Entry probabilities.} With extreme-value entry tastes,
+  \[
+  \pi_C^E(p)+\pi_P^E(p)+\pi_{\mathrm{out}}^E(p)=1,
+  \qquad
+  q^E(p)=\pi_C^E(p)+\pi_P^E(p)=1-\pi_{\mathrm{out}}^E(p).
+  \]
+  The benchmark chooses $\bar W^E$ to match the outside margin, then holds it
+  fixed in counterfactuals.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Entry and City Scale}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{enumerate}\setlength\itemsep{4pt}
+  \item Let $g(p)$ be the normalized stationary composition and let $S$ be
+  total adult mass, so the level distribution is $G(p)=Sg(p)$.
+  \item Per unit of city scale, stationarity requires replacement inflow
+  $E_0(p)$ of young adults; equivalently, this replaces adults who exit.
+  \item Per unit of city scale, households also produce $B_0(p)$ mature
+  city-born potential entrants.
+  \item At city scale $S$, the potential entrant pool is $M+SB_0(p)$.
+  \item Since only fraction $q^E(p)$ chooses the modeled metro, stationarity
+  requires
+  \[
+  S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
+  \]
+  \item Hence counterfactual city scale is
+  \[
+  S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
+  \]
+\end{enumerate}
+
+{\scriptsize
+\textbf{Benchmark.} Set $S^*=1$. The normalized benchmark implies
+$E_0^*$ and $B_0^*$; the outside value pins down $q^{E,*}$; then $M$ is chosen
+residually. In counterfactuals, hold $(M,\bar W^E,\kappa_E)$ fixed.
+}
+\end{frame}
+
+\begin{frame}[t]{%
+\only<1>{The Household's Problem}%
+\only<2>{The Household's Problem: Housing and Saving}%
+\only<3>{The Household's Problem: Location Choice}%
+\only<4>{The Household's Problem: Fertility Choice}%
+}
+% ---------- FLOW DIAGRAM ----------
+\vspace{0.3em}
+\centering
+\scalebox{0.85}{%
+\begin{tikzpicture}[
+  node distance=7mm and 10mm, >=Latex,
+  see/.style={
+    ellipse, draw, fill=yellow!20,
+    minimum height=1.3em, minimum width=1.8cm,
+    inner sep=2pt, align=center, font=\normalsize
+  },
+  choose/.style={
+    rectangle, draw, fill=green!15, rounded corners=2pt,
+    minimum height=1.5em, minimum width=1cm,
+    inner sep=2pt, align=center, font=\normalsize
+  },
+  line/.style={-Latex, semithick, draw=black!75}
+]
+\node (fertS) [see,    alt=<4>{draw=red, ultra thick}{}] {see $\varepsilon^f$};
+\node (fertD) [choose, right=of fertS, alt=<4>{draw=red, ultra thick}{}] {choose $n^*$\\($\pi^f$, $V^f$)};
+\node (locS)  [see,    right=of fertD, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^\ell$};
+\node (locD)  [choose, right=of locS,  alt=<3>{draw=red, ultra thick}{}] {choose $i'$\\($\pi^\ell$, $V^L$)};
+\node (houseD)[choose, right=of locD,  alt=<2>{draw=red, ultra thick}{}] {choose $d', b'$\\($V^H$)};
+
+\draw[line] (fertS) -- (fertD);
+\draw[line] (fertD) -- (locS);
+\draw[line] (locS)  -- (locD);
+\draw[line] (locD)  -- (houseD);
+\end{tikzpicture}%
+}
+
+\vspace{0.6em}
+\raggedright
+% ---------- EQUATIONS: one per overlay ----------
+\setlength{\abovedisplayskip}{6pt}\setlength{\belowdisplayskip}{6pt}
+
+\only<1>{%
+\small
+The full household state is
+\[
+x=(b,d,i,a,n^*,s).
+\]
+\vspace{-0.5em}
+\begin{itemize}\setlength\itemsep{2pt}
+  \item $b$: liquid wealth; $d$: tenure; $i$: location; $a$: age.
+  \item $n^*$: completed fertility; $s$: child-aging stage.
+\end{itemize}
+
+\medskip
+Choices nest as: \textbf{fertility} $\rightarrow$ \textbf{location} $\rightarrow$ \textbf{housing / saving}.
+}
+
+\only<2>{%
+{\footnotesize
+	Given $(b,d,i,a,n^*\!,s)$, jointly choose housing and next assets:
+\[
+V^H(b,d,i,a,n^*\!,s)
+\;=\;
+\max_{d',\,b'}
+\Big\{
+u\big(c,\mathbf h(d');m(n^*\!,s)\big)
++ \beta \,\mathbb E_{s'}\!\left[V(b',d',i,a+1,n^*\!,s')\right]
+\Big\}
+\]
+\vspace{-0.4em}
+Let $H(R)=0$ and $H(O_k)=H_k$. Feasible branches:
+\begin{itemize}\setlength\itemsep{2pt}
+  \item \textbf{Rent:} $d'=R$, $\mathbf h(d') = h^R \in [0,\bar h^R]$,
+  \[
+  c + b' + r_i h^R = Rb + y(a) + \mathbf{1}\{d\neq R\}(1-\psi)p_i H(d),
+  \qquad b' \geq 0.
+  \]
+  \item \textbf{Own:} $d'=O_k$, $\mathbf h(d') = \chi H_k$,
+  \[
+  c + b' + (\delta+\tau_H)p_i H_k
+  = Rb + y(a) + \mathbf{1}\{d'\neq d\}\big[(1-\psi)p_i H(d) - p_iH_k\big],
+  \qquad b' \geq -\phi p_i H_k.
+  \]
+\end{itemize}
+Movers arrive here as renters before choosing $d',b'$.}
+}
+
+\only<3>{%
+{\footnotesize
+Draw Gumbel shocks; choose center or periphery:
+\[
+V^{L}(b,d,i,a,n^*\!,s)
+\;=\;
+\kappa_{\ell}
+\ln
+\sum_{i' \in \{C,P\}}
+\exp\!\left(\frac{V^H(\widetilde b(i'),\widetilde d(i'),i',a,n^*\!,s)+ E^R_{i'}- \mu_{ii'}}{\kappa_{\ell}}\right)
+\]
+
+\vfill
+\begin{itemize}
+  \item $(\widetilde b(i'),\widetilde d(i'))$: wealth and tenure after choosing destination $i'$.
+  \item $E^R_{i'}$: amenity; $\mu_{ii'}$: moving cost; $\kappa_\ell$: taste dispersion.
+\end{itemize}
+\vspace{-0.3em}
+Choice probabilities:
+\[
+\pi_{i'}^{\ell}(b,d,i,a,n^*\!,s)
+=
+\frac{\exp\!\left(\frac{V^H(\widetilde b(i'),\widetilde d(i'),i',a,n^*\!,s)+ E^R_{i'}- \mu_{ii'}}{\kappa_{\ell}}\right)}
+{\sum_{i''}\exp\!\left(\frac{V^H(\widetilde b(i''),\widetilde d(i''),i'',a,n^*\!,s)+ E^R_{i''}- \mu_{ii''}}{\kappa_{\ell}}\right)}.
+\]
+}
+}
+
+\only<4>{%
+Childless households in the fertile window choose completed fertility once:
+\[
+V(b,d,i,a,0,0)
+\;=\;
+\kappa_n
+\ln
+\sum_{n' \in \mathcal N}
+\exp\!\left(\frac{V^{L}(b,d,i,a,n',s(n'))}{\kappa_n}\right)
+\]
+
+\vspace{0.4em}
+Choice probabilities:
+\[
+\pi_{n'}^{f}(b,d,i,a,0,0)
+=
+\frac{\exp\!\left(\frac{V^{L}(b,d,i,a,n',s(n'))}{\kappa_n}\right)}
+{\sum_{n''}\exp\!\left(\frac{V^{L}(b,d,i,a,n'',s(n''))}{\kappa_n}\right)}.
+\]
+}
+\end{frame}
+
+
+
+% ==================================================================
+% Theory block: Lemma 2 (sorting), Lemma 3 (constrained squeeze),
+% Summary. Proofs and corollaries in the appendix.
+% ==================================================================
+
+% ----- Body slide 1: Sorting + Elasticity (merged) -----
+\begin{frame}{Sorting and Housing-Demand Elasticity}
+\label{slide1-main}
+
+\footnotesize
+
+$\mathcal E_C > \mathcal E_P$ (amenity); $r_C > r_P$ (rents); $M = Rb + y - b'$ (expenditure budget);\\ $\bar h(n)$ housing requirement with $n$ children, $\bar h(1) > \bar h(0)$. Ignoring moving costs and Gumbel
+
+\vspace{0.3em}
+\textbf{Sorting.}
+\begin{itemize}\setlength\itemsep{1pt}
+  \item Higher $\bar h$ $\Rightarrow$ larger rent bill in $C$ $\Rightarrow$ preference for $C$ falls.
+  \item Single crossing: for each $M$, unique threshold $\hat h(M)$ s.t.\ $\bar h < \hat h \Rightarrow C$,\; $\bar h > \hat h \Rightarrow P$.
+  \item $\hat h$ rises with $M$ (richer households absorb high $r_C$).
+  \item Since $\bar h(1) > \bar h(0)$: parents sort weakly peripheral.
+  \begin{itemize}\scriptsize
+    \item Parent share falls with local rent.
+    \item First birth triggers moves to lower-$r$ areas.
+  \end{itemize}
+\end{itemize}
+
+\vspace{0.2em}
+\textbf{Elasticity.}\;
+Housing demand for uncapped renter splits into committed $+$ discretionary:
+\vspace{-0.5em}
+\[
+h^\ast(n) = \underbrace{\alpha\,\bar h(n)}_{\text{committed}} + \underbrace{\tfrac{(1-\alpha)(M-\bar c)}{r}}_{\text{discretionary}}.
+\]
+\vspace{-0.8em}
+  \begin{itemize}\scriptsize
+    \item Parents less income-elastic on intensive margin; less responsive to rent.
+    \item Kids raise the probability of owning.
+  \end{itemize}
+
+\end{frame}
+
+% ----- Body slide 2: Cross-metro sorting strength -----
+\begin{frame}{Sorting and rents}
+\label{slide2-main}
+
+\setbeamerfont{block title}{size=\footnotesize}
+\footnotesize
+\begin{itemize}
+\item In this static derivation, let $\mathcal V_i(n;M)$ be indirect utility
+for a renter with $n$ children in location $i$.
+\item $\Delta\mathcal V(n;M)\equiv \mathcal V_C(n;M)-\mathcal V_P(n;M)$
+\item Sorting wedge: $\mathcal W(M)\equiv\Delta\mathcal V(0;M)-\Delta\mathcal V(1;M)>0$
+\item If the rent gap $r_C - r_P$ widens, the parent-childless gap in location preferences $\mathcal W$ widens:
+\[
+\left.\frac{\partial \mathcal W}{\partial r_C}\right|_{r_P} > 0.
+\]
+\end{itemize}
+
+
+
+
+\begin{itemize}\setlength\itemsep{-1pt}
+  \item Across cities: the parent-childless center-share gap rises with the local center-periphery rent gap.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Constrained Squeeze \; \hyperlink{app:lem3-cev}{\beamerbutton{derivation}}}
+\label{lem3-main}
+
+\footnotesize
+
+Capped renters and owners on a fixed rung cannot adjust housing. How costly is a child on a home that barely fits one?
+
+\vspace{0.2em}
+Consumption-equivalent variation, holding housing fixed:
+\vspace{-0.4em}
+\[
+u(c + \mathrm{CEV},\; h,\; 1) \;=\; u(c,\; h,\; 0).
+\]
+\vspace{-0.6em}
+	Pre-birth slack $s^0 = h - \bar h(0)$ and extra required space
+	$\Delta\bar h=\bar h(1)-\bar h(0)$.
+
+\vspace{0.2em}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm, height=4.6cm,
+	  xlabel={\footnotesize normalized slack $s^0/\Delta\bar h$},
+  ylabel={\footnotesize CEV},
+  xmin=1.05, xmax=5.0, ymin=0, ymax=2.0,
+  samples=300, domain=1.06:5.0,
+  grid=both, grid style={gray!12},
+  tick label style={font=\scriptsize}, label style={font=\footnotesize}
+]
+  \addplot[ultra thick, red!80!black] {(x/(x-1))^(3/7)-1};
+	  \draw[gray, dashed, thick] (axis cs:1.0,0) -- (axis cs:1.0,2.0)
+	    node[above, font=\scriptsize] {$s^0 = \Delta\bar h$};
+\end{axis}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Summary}
+
+\small
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item A model of fertility, location, tenure, and saving with child-driven housing need shocks
+  \item Children raise housing need, with implications for tenure and location choice
+  \item The sorting wedge between parents and childless rises with the local rent gap.
+  \item The closer a household is to being space-constrained, the more costly a child is 
+  \item Some predictions:
+    \begin{itemize}\setlength\itemsep{-2pt}
+      \item Parents sort peripheral, are less housing-elastic, and are more likely to own.
+      \item Sorting strengthens with the local rent gap.
+    \end{itemize}
+The data can help:
+\begin{itemize}
+  \item Improve our understanding of housing and fertility
+  \item Validate the predictions
+  \item Inform our quantification
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\section{Empirics}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Empirics}}
+\end{frame}
+
+\begin{frame}{Data}
+\begin{itemize}
+  \item \textbf{American Community Survey (ACS) 1-year estimates:}
+  \begin{itemize}
+    \item Annual survey data collected by the U.S.\ Census Bureau
+    \item Geographic detail up to PUMA level
+    \item Demographic characteristics, socioeconomic indicators, and housing information
+  \end{itemize}
+  \vfill
+  \item \textbf{Panel Study of Income Dynamics (PSID):}
+  \begin{itemize}
+    \item Longitudinal household survey initiated in 1968 (24{,}000 households in 2021)
+    \item Follows original sample families and their descendants across generations
+    \item Rich demographics, income and wealth information
+    \item Just got the geocoded data, so I can track location and moves at the zip level: next time!
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Parenthood and Location \; \hyperlink{geography_def}{\beamerbutton{Geography}}}
+\label{cross_section_body}
+\footnotesize\textit{Model: parents sort to the periphery}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+\includegraphics[width=\linewidth,trim=0 0 0 11mm,clip]{../code/data/mms_center_periphery/output_middle_center/mms_location_by_parent.png}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+\includegraphics[width=\linewidth,trim=0 0 0 11mm,clip]{../code/data/mms_center_periphery/output_middle_center/mms_age_fertility_gradient.png}
+\end{column}
+\end{columns}
+
+\medskip
+\begin{itemize}
+  \item Non-parents are more concentrated in the center than new parents: 0.494 vs.\ 0.416.
+  \item More parents outside the center
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{From Movers: Parents Re-Sort Within Metro Areas \; \hyperlink{mover_regressions}{\beamerbutton{Regressions}} \hyperlink{app:within_moves}{\beamerbutton{Within moves}}}
+\label{movers_body}
+{\footnotesize\textit{Model: parents sort to the periphery; childbirth triggers moves to lower-$r$ areas.}}
+\centering
+\includegraphics[width=0.65\linewidth,trim=0 0 0 11mm,clip]{../code/data/mms_center_periphery/output_middle_center/mms_within_cbsa_origin_destination_allparent.png}
+
+\smallskip
+\begin{itemize}
+  \item Among within-metro movers, parents are less likely to choose center destinations and more likely to choose peripheral destinations.
+\end{itemize}
+\vfill
+\scriptsize Baseline center shares: 49.4\% for non-parents, 41.6\% for new parents. Owner rates: 49\% vs.\ 59\%.
+\end{frame}
+
+\begin{frame}{Sorting Strength and the Local Rent Gap \; \hyperlink{acs_crossmetro_reg}{\beamerbutton{Regression}} \hyperlink{acs_elasticity_body}{\beamerbutton{Elasticity}} \hyperlink{app:sorting_stock}{\beamerbutton{Stock}}}
+\label{acs_sorting_body}
+\footnotesize
+\textit{Model: parent share falls with local rent; $\partial\mathcal W/\partial r_C > 0$.}
+\centering
+\includegraphics[width=0.62\linewidth]{../output/model/acs_supporting_facts_v1/acs_cross_metro_dest_gap_movers_only.png}
+
+\vspace{-0.4em}
+\begin{center}
+\scriptsize Y-axis: non-parent minus new-parent center destination share among within-metro movers (pp). Base destination shares: 52.4\% for non-parents, 41.5\% for new parents.
+\end{center}
+\vspace{-0.4em}
+\begin{itemize}
+  \item The sorting gap among movers more than doubles from Q1 to Q4.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Using the PSID: Event-Study Design}
+\small
+For household $i$, let $E_i$ denote the year of childbirth. For any housing outcome $Y_{it}$, estimate
+\[
+Y_{it}
+=
+\sum_{k=-5,k\neq -2}^{10} \alpha_k \mathbf{1}\{t-E_i = k\}
++ \zeta_i + \tau_t + \gamma_{a(i,t)} + \delta X_{it} + \varepsilon_{it}.
+\]
+\begin{itemize}
+  \item $\zeta_i$, $\tau_t$, and $\gamma_{a(i,t)}$ are household, calendar-year, and age fixed effects.
+  \item The omitted period is $k=-2$, so each $\alpha_k$ is relative to two years before birth.
+  \item I use the same design for homeownership, moving-for-size, and rooms.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{PSID: Childbirth Raises Moves for Space \; \hyperlink{psid_reasons_questionnaire}{\beamerbutton{Reasons}} \hyperlink{psid_ev_housing_reasons}{\beamerbutton{By Category}} \hyperlink{psid_mv_s_noidfe}{\beamerbutton{No IDFE}}}
+\label{psid_moves_body}
+
+{\small $\hat\alpha_k$: change in probability of moving for reason $Y$, relative to $k=-2$.}
+
+\smallskip
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+{\footnotesize $Y = \mathbf{1}\{\text{moved for expansion of housing}\}$}
+
+\smallskip
+\includegraphics[width=\linewidth]{../../Outputs/Graphs/mv_s_f_c_y_all.png}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+{\footnotesize $Y = \mathbf{1}\{\text{moved for neighborhood quality}\}$}
+
+\smallskip
+\includegraphics[width=\linewidth]{../../Outputs/Graphs/mv_n_f_c_y_all.png}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize
+\begin{itemize}
+  \item The probability of moving for housing size rises around first birth.
+  \item By contrast, moves for neighborhood quality do not rise in the same way.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{PSID: Ownership and Housing Size Around First Birth \; \hyperlink{psid_own_noidfe}{\beamerbutton{Own: No IDFE}} \hyperlink{psid_rooms_noidfe}{\beamerbutton{Rooms: No IDFE}}}
+\label{psid_own_body}
+\label{psid_rooms_body}
+{\footnotesize\textit{Model: $\bar h(1) > \bar h(0)$; kids raise ownership.}}
+
+{\small $\hat\alpha_k$: change relative to $k=-2$.}
+
+\smallskip
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\centering
+{\footnotesize $Y_{it} = \mathbf{1}\{\text{owner}\}_{it}$}
+
+\smallskip
+\includegraphics[width=\linewidth]{../../Outputs/Graphs/own_f_c_y_all.png}
+\end{column}
+\begin{column}{0.48\textwidth}
+\centering
+{\footnotesize $Y_{it} = \text{number of rooms}_{it}$}
+
+\smallskip
+\includegraphics[width=\linewidth]{../../Outputs/Graphs/rooms_f_c_y_all.png}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize
+\begin{itemize}
+  \item Homeownership rises sharply after first birth; rooms expand by about 0.66 at $k=+3$.
+\end{itemize}
+\scriptsize Pre-birth mean: 6.0 rooms.
+\end{frame}
+
+
+\section{Quantification}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Quantification}}
+\end{frame}
+
+\begin{frame}{Externally Calibrated Parameters}
+\small
+\renewcommand{\arraystretch}{0.95}
+\centering
+\begin{tabular}{llclc}
+\toprule
+& \textbf{Param} & \textbf{Description} & \textbf{Value} & \textbf{Source} \\
+\midrule
+\textit{Pref.} & $\sigma$ & Risk aversion & 2.0 & -- \\
+& $\alpha$ & Consumption weight & 0.70 & BLS CEX \\
+& $\bar c_0$ & Consumption floor & 0.10 & Poverty line \\
+\midrule
+\textit{Fin.} & $r$ & Interest rate & 0.04 & -- \\
+& $\delta$ & Depreciation & 0.02 & Greaney et al.\ (2024) \\
+& $\tau_H$ & Property tax & 0.01 & US average \\
+& $\phi$ & LTV limit & 0.80 & 20\% down payment \\
+& $\psi$ & Transaction cost & 0.06 & Greaney et al.\ (2024) \\
+\midrule
+\textit{Life} & $J$, $J_R$ & Lifespan, retirement & 60, 47 & Ages 18--77, ret.\ 65 \\
+& $\tau_{\text{pay}}$ & Payroll tax & 0.179 & Greaney et al.\ (2024) \\
+\midrule
+\textit{Housing} & $\eta_P$, $\eta_C$ & Supply elasticities & 2.0, 0.8 & Saiz (2010) \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Internally Calibrated Parameters \; \hyperlink{app:calibration_strategy}{\beamerbutton{Strategy}}}
+\footnotesize
+\renewcommand{\arraystretch}{0.85}
+\centering
+\begin{tabular}{llc}
+\toprule
+\textbf{Param} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$\mathcal{E}_C$ & Center amenity & 0.30 \\
+$\bar r_C$ & Center rent anchor & 0.09 \\
+$\beta$ & Discount factor & 0.935 \\
+$b_0$ & Entry wealth & 0.122 \\
+$\chi$ & Owner utility premium & 1.047 \\
+$\psi_{\text{child}}$ & Flow utility of children & 0.067 \\
+$\kappa_f$ & Fertility Gumbel scale & 2.33 \\
+$\bar h_0$ & Baseline housing need & 2.52 \\
+$\bar h_{\text{jump}}$ & Housing jump (1st child) & 0.622 \\
+$\bar h_n$ & Add'l child housing cost & 0.909 \\
+$\bar c_n$ & Add'l child cons.\ cost & 0.092 \\
+$\kappa_\ell$ & Location Gumbel scale & 1.50 \\
+$\mu_{\text{move}}$ & Moving cost & 5.00 \\
+$\theta_0$ & Bequest shifter & 0.530 \\
+$\theta_n$ & Bequest parent premium & 0.250 \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Calibration Targets}
+\small\fontsize{8.5}{10}\selectfont
+\centering
+\renewcommand{\arraystretch}{0.80}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+& \textbf{Moment} & \textbf{Target} & \textbf{Model} \\
+\midrule
+\textit{Fertility} & TFR & 1.70 & 1.66 \\
+& Ever childless & 0.15 & 0.21 \\
+& Age at first birth & 26.0 & 34.8 \\
+& Fertility gradient $P{-}C$ & 0.133 & 0.168 \\
+\midrule
+\textit{Housing} & Ownership, ages 30--55 & 0.627 & 0.751 \\
+& Ownership gradient $P{-}C$ & 0.170 & 0.185 \\
+& $H_{01}$ (PSID, rooms) & 0.664 & 0.323 \\
+& $H_{12}$ (PSID, rooms) & 0.566 & 0.299 \\
+& Parent ownership gap & 0.110 & 0.184 \\
+\midrule
+\textit{Saving} & Liq.\ wealth / income & 0.60 & 0.460 \\
+\midrule
+\textit{Location} & Center population share & 0.450 & 0.454 \\
+& Rent/room ratio $C/P$ & 1.14 & 1.154 \\
+& Center share, non-parents & 0.494 & 0.418 \\
+& Center share, new parents & 0.416 & 0.392 \\
+& C--P switching rate & 0.032 & 0.027 \\
+\midrule
+\textit{Bequest} & Ownership, ages 65--75 & 0.863 & 0.850 \\
+& Parent--childless own gap & 0.070 & 0.052 \\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\begin{frame}{Lifecycle Fit \; \hyperlink{app:housing_fit}{\beamerbutton{Housing Fit}}}
+\label{slide:lifecycle_fit}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/figures/benchmark_lifecycle_compare.png}
+\end{frame}
+
+\begin{frame}{Equilibrium}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/figures/market_equilibrium.png}
+\end{frame}
+
+\begin{frame}{Housing Choice Map in the Fertile Window}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/figures/housing_choice_heatmap.png}
+\end{frame}
+
+
+\begin{frame}{Conclusion}
+\begin{itemize}
+  \item A model of fertility with realistic housing and lifecycle
+  \item Trying to capture the many implications that children's impact on housing demand has
+  \item Aim is policy:
+  \begin{itemize}
+    \item Suppose we want to increase fertility
+    \item How can housing help? What costs?
+  \end{itemize}
+  \item More work is needed:
+  \begin{itemize}
+    \item Theory: important to understand the role of constraints and sorting incentives. Can we say something about policy design?
+    \item Empirically: use new geocoded data to track location and moves
+    \item Quantification: use the model to evaluate policies that target housing to parents, and understand the channels
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Thank You}}
+\end{frame}
+
+\appendix
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Appendix: Theory Details, PSID Details, and Robustness}}
+\end{frame}
+
+
+\begin{frame}[t]{Appendix: Outside-Option Entry Algorithm}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{enumerate}\setlength\itemsep{5pt}
+  \item \textbf{Solve normalized benchmark.} Set $S^*=1$ and solve for the
+  benchmark composition $g^*$ and prices $p^*$.
+  \item \textbf{Compute per-unit flows.} The benchmark composition implies
+  $E_0^*$, the replacement inflow of young adults, and $B_0^*$, the mature
+  city-born potential entrant flow.
+  \item \textbf{Choose outside value.} Choose $\bar W^E$ so entry values
+  $\{W_i^E(p^*)\}_{i\in\{C,P\}}$ imply the target city-entry probability
+  $q^{E,*}$.
+  \item \textbf{Set outside-origin flow.} With $S^*=1$,
+  \[
+  M=\frac{E_0^*}{q^{E,*}}-B_0^*.
+  \]
+  \item \textbf{Counterfactuals.} Hold $(M,\bar W^E,\kappa_E)$ fixed and let
+  $q^E(p)$ and $S(p)$ respond.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[t]{Appendix: Aggregate vs. Location Stationarity}
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{itemize}\setlength\itemsep{7pt}
+  \item The scalar equation pins down total city scale:
+  \[
+  S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
+  \]
+  \item Location-specific entry masses use the unconditional option
+  probabilities:
+  \[
+  E_i(G;p)=\left[M+S B_0(p)\right]\pi_i^E(p),
+  \qquad i\in\{C,P\}.
+  \]
+  \item Thus $q^E(p)$ answers \emph{how many} potential entrants enter the
+  modeled metro, while $\pi_C^E(p)$ and $\pi_P^E(p)$ answer \emph{where} they
+  enter inside the metro.
+  \item The distribution recursion uses the vector $(E_C,E_P)$, so aggregate
+  stationarity alone is not the whole equilibrium object.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Calibration Strategy}
+\label{app:calibration_strategy}
+\footnotesize
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\textbf{Externally set}
+\begin{itemize}\setlength\itemsep{-1pt}
+  \item Lifecycle structure, taxes, interest rate
+  \item Collateral ($\phi=0.80$), transaction cost ($\psi=0.06$)
+  \item Housing ladder and supply elasticities
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{Internally calibrated (SMM)}
+\begin{itemize}\setlength\itemsep{-1pt}
+  \item 15 parameters: 2 inverted (amenity, rent anchor) + 13 searched
+  \item Fertility, tenure, mobility, saving, bequests
+  \item 17 target moments from ACS and PSID
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\begin{itemize}\setlength\itemsep{-1pt}
+  \item Five owner sizes at $\{5.2, 5.85, 6.55, 7.55, 9.0\}$ rooms; rental cap at 4.8 rooms.
+  \item Bequests parameterized by $(\theta_0,\theta_n)$ with fixed $\theta_1=0.01$.
+\end{itemize}
+\end{frame}
+
+% ==================================================================
+% Appendix slides for the simple-spatial theory block
+% ==================================================================
+
+% ----- Appendix setup: utility, demands, indirect utility -----
+\begin{frame}{Appendix: Setup --- Utility, Demands, Indirect Utility \; \hyperlink{slide1-main}{\beamerbutton{back}}}
+\label{app:setup}
+\small
+
+Common preliminaries for the derivations that follow.
+
+\vspace{0.4em}
+\textbf{Utility} (CRRA over Cobb--Douglas Stone--Geary):
+\vspace{-0.4em}
+\[
+u(c,h;m) = \frac{\bigl[(c-\bar c(m))^\alpha(h-\bar h(m))^{1-\alpha}\bigr]^{1-\sigma}}{1-\sigma}.
+\]
+
+\vspace{0.2em}
+\textbf{Interior demands} ($\sigma$-invariant). With $M$ household resources, rent $r_i$ in location $i$, and $\tilde M_i(\bar h) = M - \bar c - r_i\bar h$:
+\vspace{-0.4em}
+\[
+c^\ast - \bar c = \alpha\,\tilde M_i,
+\qquad
+h^\ast - \bar h = (1-\alpha)\,\tilde M_i / r_i.
+\]
+
+\vspace{0.2em}
+\textbf{Indirect utility with amenity $\mathcal E_i$:}
+\vspace{-0.4em}
+\[
+\mathcal V_i(\bar h; M) = \frac{Z^\ast(\bar h; M, r_i)^{1-\sigma}}{1-\sigma} + \mathcal E_i,
+\quad
+Z^\ast = \alpha^\alpha(1-\alpha)^{1-\alpha}\,\tilde M_i\,r_i^{-(1-\alpha)}.
+\]
+\end{frame}
+
+\begin{frame}{Appendix: Sorting Derivation \; \hyperlink{slide1-main}{\beamerbutton{back}}}
+\label{app:sorting}
+\small
+
+For $r_C > r_P$, $\mathcal E_C > \mathcal E_P$, define
+$\Delta\mathcal V(\bar h;M)=\mathcal V_C(\bar h;M)-\mathcal V_P(\bar h;M)$.
+
+\vspace{0.4em}
+\textbf{Derivative.} With $\gamma \equiv \alpha + \sigma(1-\alpha) > 0$ and
+$\kappa \equiv \alpha^\alpha (1-\alpha)^{1-\alpha}$,
+\[
+\frac{d\,\Delta\mathcal V}{d\bar h}
+= -\,\kappa^{1-\sigma}\!\left[\frac{r_C^{\gamma}}{\tilde M_C^{\sigma}}
+  - \frac{r_P^{\gamma}}{\tilde M_P^{\sigma}}\right] < 0.
+\]
+
+\vspace{0.3em}
+\textbf{Sign.} $r_C > r_P$ implies $r_C^\gamma > r_P^\gamma$;
+$\tilde M_C < \tilde M_P$ implies $\tilde M_C^{-\sigma} > \tilde M_P^{-\sigma}$.
+Both factors favour $C$, so the bracket is strictly positive and the
+derivative is strictly negative.
+
+\vspace{0.4em}
+\textbf{Threshold.} Since $\Delta\mathcal V$ is continuous and strictly
+decreasing in $\bar h$, the equation $\Delta\mathcal V(\hat h;M) = 0$
+has at most one solution. Existence on a non-degenerate interval
+follows from $\Delta\mathcal V(0;M)>0$ (amenity-positive) and
+$\Delta\mathcal V(\bar h;M)\to-\infty$
+as $\bar h \uparrow (M-\bar c)/r_C$ (infeasibility in $C$). Unique
+threshold $\hat h(M)$.
+
+\vspace{0.4em}
+\textbf{Parent--childless ordering.} $\bar h(1) > \bar h(0)$ and $\Delta\mathcal V$
+strictly decreasing $\Rightarrow$ parents weakly prefer the periphery,
+strictly when $\bar h(0) < \hat h(M) < \bar h(1)$.
+\end{frame}
+
+\begin{frame}{Appendix: Elasticity-Attenuation Derivation \; \hyperlink{slide1-main}{\beamerbutton{back}}}
+\label{app:elasticity}
+\footnotesize
+
+\textbf{Simplified demand} (interior renter at rent $r$; assume $\bar c(0)=\bar c(1)=\bar c$ so that only the housing requirement varies with the number of children):
+\[
+h^\ast(n) = \alpha\,\bar h(n) + (1-\alpha)\,\frac{M-\bar c}{r}.
+\]
+
+\vspace{0.4em}
+\textbf{Elasticities.}
+\[
+e_M(n) = \frac{\partial \log h^\ast}{\partial \log M}
+= \frac{(1-\alpha)(M-\bar c)}{r\,h^\ast(n)},
+\qquad
+e_r(n) = \frac{\partial \log h^\ast}{\partial \log r}
+= -\,\frac{(1-\alpha)(M-\bar c)}{r\,h^\ast(n)}.
+\]
+
+\vspace{0.4em}
+\textbf{Attenuation.} $h^\ast(n)$ is strictly increasing in $\bar h(n)$
+(coefficient $\alpha > 0$); the numerator is independent of $\bar h(n)$.
+Hence both $e_M(n)$ and $|e_r(n)|$ are strictly decreasing in
+$\bar h(n)$. Since $\bar h(1) > \bar h(0)$:
+\[
+e_M(1) < e_M(0),
+\qquad
+|e_r(1)| < |e_r(0)|.
+\]
+
+\vspace{0.4em}
+\textbf{Limits.} As $\bar h \to 0$, both elasticities $\to \mp 1$
+(Cobb--Douglas benchmark). As $\bar h \to (M-\bar c)/r$ (feasibility
+boundary), both $\to 0$ (pure subsistence).
+
+\vspace{0.4em}
+\textbf{Identification.} The gap $e_M(0) - e_M(1) > 0$ pins down
+	$\Delta\bar h = \bar h(1) - \bar h(0)$ given $\alpha$, $M-\bar c$, and $r$.
+\end{frame}
+
+\begin{frame}{Appendix: Cross-Metro Sorting-Wedge Derivation \; \hyperlink{slide2-main}{\beamerbutton{back}}}
+\label{app:wealth}
+\footnotesize
+
+Indirect utility on an interior renter branch in location $i$ with $n$ children ($\sigma=1$ for transparency; signs go through for any $\sigma > 0$):
+\[
+\mathcal V_i(n;M) = \log \tilde M_i^n - (1-\alpha)\log r_i + \mathcal E_i,
+\quad
+\tilde M_i^n = M - \bar c(n) - r_i \bar h(n).
+\]
+
+\vspace{0.4em}
+\textbf{Sorting wedge.} Define
+$\Delta\mathcal V(n;M)=\mathcal V_C(n;M)-\mathcal V_P(n;M)$ and
+$\mathcal W(M)\equiv\Delta\mathcal V(0;M)-\Delta\mathcal V(1;M)$:
+\[
+\mathcal W(M) = \log\frac{\tilde M_C^0\,\tilde M_P^1}{\tilde M_C^1\,\tilde M_P^0}.
+\]
+
+\vspace{0.4em}
+\textbf{Comparative statics in rents.} Using $\partial \tilde M_i^n/\partial r_i = -\bar h(n)$,
+\[
+\frac{\partial \mathcal W}{\partial r_C}
+= \frac{\delta_h(M-\bar c(0)) + \bar h(0)\,\delta_c}{\tilde M_C^1\,\tilde M_C^0} > 0,
+\qquad
+\frac{\partial \mathcal W}{\partial r_P}
+= -\frac{\delta_h(M-\bar c(0)) + \bar h(0)\,\delta_c}{\tilde M_P^1\,\tilde M_P^0} < 0.
+\]
+Numerators positive by interior feasibility ($M > \bar c(0)$) plus $\delta_c, \delta_h, \bar h(0) > 0$; denominators positive on the interior renter branch.
+
+\vspace{0.4em}
+\textbf{Reading.} Raising the centre rent (or lowering the periphery rent) widens the parent--childless sorting wedge: the cross-metro elasticity of sorting strength to the local rent gap is strictly positive. Same algebraic structure carries through for capped renters (replace $\tilde M_i^n$ with $\check M_i^n = M - r_i \bar h_R - \bar c(n)$).
+\end{frame}
+
+\begin{frame}{Appendix: Constrained-Squeeze CEV Derivation \; \hyperlink{lem3-main}{\beamerbutton{back}}}
+\label{app:lem3-cev}
+\small
+
+	CEV solves $u(c,h,0) = u(c+\mathrm{CEV}, h, 1)$: housing quantity is
+	held fixed at $h$, and the post-child surplus shrinks via
+	$\bar h(n)$ from $s^0 = h - \bar h(0)$ to
+	$s^0-\Delta\bar h = h - \bar h(1)$.
+Under Stone--Geary
+$u = [(c-\bar c(n))^\alpha(h-\bar h(n))^{1-\alpha}]^{1-\sigma}/(1-\sigma)$
+and $\bar c(0) = \bar c(1) = \bar c$, equating utilities:
+\[
+(c - \bar c)^\alpha\, (s^0)^{1-\alpha}
+	= (c + \mathrm{CEV} - \bar c)^\alpha\, (s^0-\Delta\bar h)^{1-\alpha}.
+\]
+Rearrange:
+\[
+\frac{c + \mathrm{CEV} - \bar c}{c - \bar c}
+	= \left(\frac{s^0}{s^0-\Delta\bar h}\right)^{\!(1-\alpha)/\alpha}
+	\;\Longrightarrow\;
+	\mathrm{CEV} = (c - \bar c)\!\left[\!\left(\tfrac{s^0}{s^0-\Delta\bar h}\right)^{\!(1-\alpha)/\alpha}\!\!-1\right].
+\]
+
+\end{frame}
+
+\begin{frame}{Ownership Is the Binding Constraint on Fertility \; \hyperlink{transition_bar}{\beamerbutton{Aggregate Gap}}}
+\label{within_wealth_gap_body}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../code/data/psid_followup_mar2026/output/fertility_wealth_v1/within_wealth_gap_v9.png}
+\end{column}
+\begin{column}{0.40\textwidth}
+\small
+Sample: PSID renters at ages 25--30, pre-first-birth, followed to age 45 ($N=1{,}127$).
+\medskip
+\begin{itemize}
+  \item At \textbf{every} wealth quintile, renters who transition to ownership by 35 are 20--35 pp less likely to remain childless by 45.
+  \item The gap does not shrink with wealth: even wealthy renters who do not buy remain ${\sim}55\%$ childless.
+  \item Mediation regression: wealth has \textbf{zero} direct effect on fertility ($p=0.92$); the entire effect runs through ownership ($\beta=0.32$, $p<0.001$).
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize Quintiles of net worth / income at 25--30. Tenure transition: modal tenure at 31--35. Childlessness by age 45 from reported first-birth year.
+\end{frame}
+
+\begin{frame}{Wealth and Fertility: Two Channels}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../code/data/psid_followup_mar2026/output/fertility_wealth_v1/lpoly_parenthood_v12.png}
+\end{column}
+\begin{column}{0.40\textwidth}
+\small
+The unconditional wealth--fertility relationship is \textbf{hump-shaped}:
+\medskip
+\begin{itemize}
+  \item \textbf{Rising part} (NW $<$ \$80k): more wealth $\Rightarrow$ can clear down payment $\Rightarrow$ access family-sized housing $\Rightarrow$ have children. The \emph{resource/housing channel}.
+  \item \textbf{Falling part} (NW $>$ \$80k): wealthier young adults are disproportionately high human capital and career-invested. The \emph{opportunity cost channel}.
+\end{itemize}
+
+\medskip
+The non-monotonicity is why we need a structural model: the housing channel cannot be read off the raw data.
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize PSID 1984--2019, all young adults at 25--30. Local linear smooth (Epanechnikov kernel, bw = \$25k). Trimmed at p2/p98.
+\end{frame}
+
+\begin{frame}{Aggregate Ownership Transition Gap \; \hyperlink{within_wealth_gap_body}{\beamerbutton{Back}}}
+\label{transition_bar}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../code/data/psid_followup_mar2026/output/fertility_wealth_v1/childless_by_transition_v7_bar.png}
+\end{column}
+\begin{column}{0.40\textwidth}
+\small
+Among renters at 25--30 who have not yet had a first child:
+\medskip
+\begin{itemize}
+  \item Those who transition to ownership by 35: \textbf{28\%} childless at 45.
+  \item Those who stay renters through 35: \textbf{60\%} childless at 45.
+  \item A \textbf{32 pp} extensive-margin gap---larger than any within-tenure wealth effect.
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize Tenure status averaged over ages 25--30 (renter) and 31--35 (transition outcome). Childlessness measured by 45 using reported age at first birth.
+\end{frame}
+
+\begin{frame}{PSID: Housing Also Expands After Second Birth \; \hyperlink{psid_rooms_body}{\beamerbutton{Back}}}
+\centering
+\includegraphics[width=0.78\textwidth,height=0.76\textheight,keepaspectratio]{../code/data/psid_followup_mar2026/output/sa_rooms_second_birth_with_onechild_controls_v1/rooms_s_c_y_all.png}
+
+\medskip
+\footnotesize Baseline second-birth event study with stay-at-one-child controls: the $+3$ coefficient is about \textbf{0.57 rooms}.
+\end{frame}
+
+\begin{frame}{PSID: Income Trajectories, Movers vs Non-Movers \; \hyperlink{psid_income_noidfe}{\beamerbutton{No IDFE}}}
+\label{psid_income_body}
+\centering
+\includegraphics[width=0.78\textwidth,height=0.76\textheight,keepaspectratio]{../../Outputs/Graphs/log_INCFAMFRmvr_vsn_mvr_f_c_y.png}
+\end{frame}
+
+\begin{frame}{Defining Center and Periphery Within Large Metros \; \hyperlink{cross_section_body}{\beamerbutton{Back}}}
+\label{geography_def}
+\centering
+\includegraphics[width=0.85\textwidth,height=0.78\textheight,keepaspectratio]{../code/data/mms_center_periphery/output_middle_center/mms_location_profiles.png}
+
+\medskip
+\footnotesize
+Sample: U.S.\ metros with 2000 population $>1$M (51 metros). Core $=$ tracts containing the closest 30\% of metro population to the CBD. A PUMA is classified as center if at least 10\% of its population lives in core tracts. Center pop share: 45.0\%.
+\end{frame}
+
+\begin{frame}{Most Adjustment Is Within Metros \; \hyperlink{movers_body}{\beamerbutton{Back}}}
+\label{app:within_moves}
+\centering
+\includegraphics[width=0.75\linewidth,trim=0 0 0 11mm,clip]{../code/data/mms_center_periphery/output_middle_center/mms_grouped_4way_decomposition_allparent.png}
+
+\medskip
+\begin{itemize}
+  \item Most adjustment happens \textbf{within} metros rather than across metros.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Mover Regressions: Parent vs.\ Non-Parent \; \hyperlink{movers_body}{\beamerbutton{Back}}}
+\label{mover_regressions}
+\begin{table}[htbp]\centering
+\scriptsize
+\begin{tabular}{l*{2}{c}}
+\toprule
+ & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} \\
+Outcome (pp) & New Parent & Any Parent \\
+\midrule
+Across-CBSA move                        & $-4.56\sym{***}$ & $-5.17\sym{***}$ \\
+                                        & $(0.78)$ & $(0.54)$ \\
+Center destination $\mid$ within-CBSA   & $-11.21\sym{***}$ & $-11.44\sym{***}$ \\
+                                        & $(0.66)$ & $(0.53)$ \\
+Within CBSA $\to$ Center                & $-6.77\sym{***}$ & $-6.79\sym{***}$ \\
+                                        & $(0.77)$ & $(0.65)$ \\
+Within CBSA $\to$ Periphery             & $11.33\sym{***}$ & $11.95\sym{***}$ \\
+                                        & $(0.49)$ & $(0.30)$ \\
+Center dest.\ $\mid$ center origin      & $-9.69\sym{***}$ & $-8.91\sym{***}$ \\
+                                        & $(0.81)$ & $(0.53)$ \\
+Center dest.\ $\mid$ periphery origin   & $-10.71\sym{***}$ & $-11.32\sym{***}$ \\
+                                        & $(0.51)$ & $(0.47)$ \\
+\midrule
+Age and year FE                         & Yes & Yes \\
+Sex and race controls                   & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{-0.8em}
+\begin{flushleft}\tiny
+\textit{Notes.} OLS on ACS 2012--2023 within-metro movers, ages 22--45, weighted by \texttt{perwt}. Coefficients in percentage points. Column (1) uses a \emph{new-parent} indicator (eldest child $<4$); column (2) uses an \emph{any-parent} indicator. Standard errors in parentheses. \sym{*}~$p<0.10$, \sym{**}~$p<0.05$, \sym{***}~$p<0.01$.
+\end{flushleft}
+\end{frame}
+
+\begin{frame}{Cross-Metro Sorting Regression \; \hyperlink{acs_sorting_body}{\beamerbutton{Back}}}
+\label{acs_crossmetro_reg}
+\begin{table}[htbp]\centering
+\scriptsize
+\begin{tabular}{lcc}
+\toprule
+Dependent gap (pp) & Slope on log rent gap & Metros \\
+\midrule
+Center-share gap & $6.23$ & $42$ \\
+                 & $(5.19)$ &  \\
+Center-destination gap $\mid$ within-CBSA movers & $23.53\sym{***}$ & $42$ \\
+                 & $(6.18)$ &  \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{-0.7em}
+\begin{flushleft}\tiny
+\textit{Notes.} Unit of observation is the metro. Each dependent variable is the non-parent minus new-parent gap in percentage points. Regressor is the local log center--periphery rent-per-room gap. Each regression is weighted by its corresponding metro sample size. \sym{***}~$p<0.01$.
+\end{flushleft}
+\end{frame}
+
+\begin{frame}{Housing Demand Elasticity Among Renters \; \hyperlink{acs_sorting_body}{\beamerbutton{Back}} \hyperlink{acs_elasticity_reg}{\beamerbutton{Regression}}}
+\label{acs_elasticity_body}
+\footnotesize
+\textit{Model: parents less income-elastic in housing ($\bar h(1) > \bar h(0)$).}
+\centering
+\includegraphics[width=0.60\linewidth]{../output/model/acs_supporting_facts_v1/acs_renter_rooms_elasticity_bars_v1.png}
+
+\vspace{-0.2em}
+\begin{center}
+\scriptsize Mean rooms among renters: 4.20 for childless households, 4.92 for parents.
+\end{center}
+\vspace{-0.2em}
+\begin{itemize}
+  \item Parent renters start from a larger space baseline, but rooms rise less with income: elasticity 0.102 for parents versus 0.129 for childless renters.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Renter Housing-Demand Elasticity \; \hyperlink{acs_elasticity_body}{\beamerbutton{Back}}}
+\label{acs_elasticity_reg}
+\begin{table}[htbp]\centering
+\scriptsize
+\begin{tabular}{lccc}
+\toprule
+Outcome & Childless slope & Parent interaction & Parent slope \\
+\midrule
+Log rooms & $0.129\sym{***}$ & $-0.027\sym{***}$ & $0.102\sym{***}$ \\
+          & $(0.001)$ & $(0.001)$ & $(0.001)$ \\
+\midrule
+Metro FE & Yes & Yes & Yes \\
+Age and year FE & Yes & Yes & Yes \\
+Sex and race controls & Yes & Yes & Yes \\
+Observations & \multicolumn{3}{c}{$3{,}024{,}081$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{-0.7em}
+\begin{flushleft}\tiny
+\textit{Notes.} OLS on ACS renters, ages 22--45, 2012--2023, weighted by \texttt{perwt}. Specification is $\log(\text{rooms})$ on $\log(\text{income})$, parent status, and the interaction, with metro, age, and year fixed effects plus sex and race controls. Standard errors in parentheses. \sym{***}~$p<0.01$.
+\end{flushleft}
+\end{frame}
+
+\begin{frame}{Potential Reasons to Move in the PSID Questionnaire \; \hyperlink{psid_moves_body}{\beamerbutton{Back}}}
+\label{psid_reasons_questionnaire}
+\footnotesize
+Movers are asked: ``What is the main reason you moved?''. Categories:
+\begin{itemize}
+  \item \textbf{Purposive productive:} take another job; transfer; stopped going to school.
+  \item \textbf{Nearer to work.}
+  \item \textbf{Purposive consumptive --- expansion of housing:} more space; higher rent; better place.
+  \item \textbf{Purposive consumptive --- contraction of housing:} less space; less rent.
+  \item \textbf{Purposive consumptive --- other house-related:} get own home; got married; physical condition of prior unit.
+  \item \textbf{Purposive consumptive --- neighborhood:} better neighborhood; schooling; closer to friends/relatives.
+  \item \textbf{Involuntary:} housing unit coming down; armed services; health; divorce; forced retirement.
+  \item \textbf{Ambiguous or mixed:} save money, neighbors moved away, retiring.
+  \item Became homeless or no longer homeless; COVID-19; evicted / foreclosed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Distribution of Reasons to Move Among Non-Parents}
+\footnotesize This tabulates values only for non-parents (both ``never'' and ``not yet'').
+\begin{figure}
+\includegraphics[width=0.82\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/noIDFE/reasonstomovesummarynonparents_pct.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Event Studies: Housing and Location Reasons \; \hyperlink{psid_moves_body}{\beamerbutton{Back}}}
+\label{psid_ev_housing_reasons}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_s_f_c_y_all.png}\\
+\tiny Expansion of housing
+\end{center}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_h_f_c_y_all.png}\\
+\tiny Other house-related
+\end{center}
+\column{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_d_f_c_y_all.png}\\
+\tiny Contraction of housing
+\end{center}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_n_f_c_y_all.png}\\
+\tiny Neighborhood
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Event Studies: Work and Involuntary Reasons}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_j_f_c_y_all.png}\\
+\tiny Productive reasons
+\end{center}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_i_f_c_y_all.png}\\
+\tiny Involuntary reasons
+\end{center}
+\column{0.5\textwidth}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_c_f_c_y_all.png}\\
+\tiny To get nearer to work
+\end{center}
+\begin{center}
+\includegraphics[width=0.95\columnwidth,height=3.2cm,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_e_f_c_y_all.png}\\
+\tiny Was evicted
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Event Studies: Other Reasons}
+\begin{center}
+\includegraphics[width=0.8\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/idiot/mv_o_f_c_y_all.png}\\
+\scriptsize Mixed or other reasons
+\end{center}
+\end{frame}
+
+\begin{frame}{No Individual FE: Reasons to Move (Expansion of Housing) \; \hyperlink{psid_moves_body}{\beamerbutton{Back}}}
+\label{psid_mv_s_noidfe}
+\begin{figure}
+\includegraphics[width=0.8\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/noIDFE/mv_s_f_c_y_all.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{No Individual FE: Number of Rooms Around First Birth \; \hyperlink{psid_rooms_body}{\beamerbutton{Back}}}
+\label{psid_rooms_noidfe}
+\begin{figure}
+\includegraphics[width=0.8\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/noIDFE/rooms_f_c_y_all.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{No Individual FE: Family Income Around First Birth \; \hyperlink{psid_income_body}{\beamerbutton{Back}}}
+\label{psid_income_noidfe}
+\begin{figure}
+\includegraphics[width=0.8\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/noIDFE/log_INCFAMFRmvr_vsn_mvr_f_c_y.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{No Individual FE: Homeownership Around First Birth \; \hyperlink{psid_own_body}{\beamerbutton{Back}}}
+\label{psid_own_noidfe}
+\begin{figure}
+\includegraphics[width=0.8\textwidth,height=0.82\textheight,keepaspectratio]{../../Outputs/Graphs/newtests/noIDFE/own_f_c_y_all.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Housing Size Fit: Model vs Data \; \hyperlink{slide:lifecycle_fit}{\beamerbutton{Back}}}
+\label{app:housing_fit}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/figures/housing_size_fit.png}
+\end{frame}
+
+\begin{frame}{Sorting Strength: Residents (Stock) \; \hyperlink{acs_sorting_body}{\beamerbutton{Back}}}
+\label{app:sorting_stock}
+\footnotesize
+\textit{Model: parent share falls with local rent; $\partial\mathcal W/\partial r_C > 0$.}
+\centering
+\includegraphics[width=0.62\linewidth]{../output/model/acs_supporting_facts_v1/acs_cross_metro_dest_gap_stock_only.png}
+
+\vspace{-0.4em}
+\begin{center}
+\scriptsize Y-axis: non-parent minus new-parent center share among all residents (pp). Base: 49.4\% for non-parents, 41.6\% for new parents.
+\end{center}
+\vspace{-0.4em}
+\begin{itemize}
+  \item Stock-based sorting gap also rises with the rent gap, but the gradient is flatter than among movers.
+\end{itemize}
+\end{frame}
+
+\end{document}

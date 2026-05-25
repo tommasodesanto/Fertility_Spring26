@@ -6,6 +6,8 @@ Active documents:
 - `main_note.tex` / `main_note.pdf`: larger paper-style writeup.
 - `april_20_project_presentation.tex` / `april_20_project_presentation.pdf`:
   recent slide deck.
+- `may_29_project_presentation.tex` / `may_29_project_presentation.pdf`:
+  current presentation deck.
 - `distributional_empirics_report.tex` /
   `distributional_empirics_report.pdf`: data-vs-model distributional discipline
   report.
