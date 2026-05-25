@@ -397,9 +397,23 @@ The remaining mass $Q(G)\pi_{\mathrm{out}}^E(p)=Q(G)(1-q^E(p))$ stays in the out
 
 For a candidate price vector $p$, household policies imply a normalized stationary composition $g(p)$. Let
 \begin{equation*}
-    E_0(p)=\int \ind\{a=1\}dg(p)
+    E_{0i}(p)
 \end{equation*}
-be the replacement inflow of young adults required to reproduce one unit of the stationary composition. With deterministic death at the end of the lifecycle, this is also the per-unit mass of adults exiting through death in stationarity. Let $B_0(p)=B(g(p))$ be the mature city-born flow per unit of city scale. The scalar scale condition equates required young-adult replacement to actual city entry:
+be the replacement inflow of young adults into location $i$ required to reproduce one unit of the stationary composition. These are the age-one masses at the entry states $\{x_i^E\}_{i\in\Iset}$. Let
+\begin{equation*}
+    E_0(p)=\sum_{i\in\Iset}E_{0i}(p)
+    =
+    \int \ind\{a=1\}dg(p)
+\end{equation*}
+be the aggregate replacement inflow of young adults required to reproduce one unit of the stationary composition. With deterministic death at the end of the lifecycle, this is also the per-unit mass of adults exiting through death in stationarity. Let $B_0(p)=B(g(p))$ be the mature city-born flow per unit of city scale. Full entry stationarity requires one equation for each location:
+\begin{equation}
+    S E_{0i}(p)
+    =
+    \left[M+S B_0(p)\right]\pi_i^E(p),
+    \qquad i\in\Iset.
+    \label{eq:location_entry_stationarity}
+\end{equation}
+Summing \eqref{eq:location_entry_stationarity} over locations gives the scalar scale condition:
 \begin{equation}
     S E_0(p)
     =
@@ -549,14 +563,14 @@ The most structural alternative is a sequence model in which births today become
 One suggestion made in the talk was to just have a BGP. The way I see it, this is not the correct thing to do. First, with the spatial dimension it creates numerous problems, discussed in the January committee meeting. But aside from that, BGP trades off here one simplification with another: it would allow objects to respond endogeneously to scale, but at the cost of 'normalizing' the population dynamics. That is, in a BGP, the population distribution follows a travelling wave, so everything stays constant in the age distribution (so if today there is twice the amount of 35 year olds as 50 year olds, the same is tomorrow, even if the absolute number is lower or higher). In a BGP with TFR=1.7, for example, with one couple having less then two kids, the population would be shrinking at a constant rate, with the age masses constant. This is also counterfactual: today, we have negative TFR, but positive population growth, due to past fertility rates. The only way to actually match this is with the solution in the paragraph below, full demographic city growth, which is a much more complex object. So, if one wants to avoid that, it seems to me like I need to choose what kind of normalization I want. I might definitely be missing something here, so I am happy to discuss this further.
 
 \appendix
-\section{Outside-Option Entry Algorithm}
+\section{Outside-Option Entry Accounting}
 
-This appendix restates the benchmark closure as an algorithm. The key distinction is that the benchmark uses the outside margin to normalize the level of the economy, while counterfactuals hold the outside environment fixed and allow city scale to move.
+This appendix restates how the entry environment pins down the benchmark accounting. The key distinction is that the benchmark uses the outside margin to normalize the level of the economy, while counterfactuals hold the outside environment fixed and allow city scale to move.
 
 \begin{enumerate}[leftmargin=*]
     \item \textbf{Solve the normalized benchmark.} For a candidate parameter vector and benchmark prices, solve the household problem and the stationary normalized composition $g^\ast$ with $\int dg^\ast=1$.
 
-    \item \textbf{Compute per-unit demographic flows.} From $g^\ast$, compute the replacement inflow $E_0^\ast$ and the mature city-born flow $B_0^\ast=B(g^\ast)$. These are per unit of city scale, not aggregate masses.
+    \item \textbf{Compute per-unit demographic flows.} From $g^\ast$, compute the replacement inflow by location, $\{E_{0i}^\ast\}_{i\in\Iset}$, the aggregate replacement inflow $E_0^\ast=\sum_iE_{0i}^\ast$, and the mature city-born flow $B_0^\ast=B(g^\ast)$. These are per unit of city scale, not aggregate masses.
 
     \item \textbf{Choose the outside value.} Given entry values $\{W_i^E(p^\ast)\}_{i\in\Iset}$, choose $\bar W^E$ so that the model matches the benchmark city-entry probability $q^{E,\ast}$. Equivalently, this pins down the benchmark outside margin.
 
@@ -564,7 +578,7 @@ This appendix restates the benchmark closure as an algorithm. The key distinctio
     \begin{equation*}
         M=\frac{E_0^\ast}{q^{E,\ast}}-B_0^\ast.
     \end{equation*}
-    Thus $M$ is residual: it is the outside-origin potential entrant mass required to make the normalized benchmark stationary.
+    Thus $M$ is residual: it is the outside-origin potential entrant mass required to make the normalized benchmark stationary. Location stationarity additionally requires $E_{0i}^\ast=(M+B_0^\ast)\pi_i^E(p^\ast)$ for each $i$ when $S^\ast=1$.
 
     \item \textbf{Run counterfactuals.} Hold $M$, $\bar W^E$, and $\kappa_E$ fixed. For each counterfactual price vector $p$, recompute household behavior, $E_0(p)$, $B_0(p)$, and $q^E(p)$, and set city scale using
     \begin{equation*}
@@ -572,7 +586,7 @@ This appendix restates the benchmark closure as an algorithm. The key distinctio
     \end{equation*}
 \end{enumerate}
 
-The scalar equation determines total scale. The vector of entry probabilities $\{\pi_i^E(p)\}_{i\in\Iset}$ determines how entrant mass is allocated across locations, which is required for location-specific stationarity.
+The scalar equation determines total scale only after the location distribution is reproduced. The vector of entry probabilities $\{\pi_i^E(p)\}_{i\in\Iset}$ determines how entrant mass is allocated across locations, which is required for location-specific stationarity.
 \bibliographystyle{apalike}
 \bibliography{main_bib,lit_review_extra}
 

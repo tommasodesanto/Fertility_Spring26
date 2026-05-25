@@ -247,60 +247,87 @@ H_i^s(r_i) = \bar r_i r_i^{\eta_i},
 \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Entry Environment}
+\begin{frame}[t]{Young-Adult Entry: Environment}
 \small
 \setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
-\begin{itemize}\setlength\itemsep{7pt}
-  \item \textbf{Potential entrants.} At the beginning of adult life, potential
-  entrants are maturing children raised in the modeled metro and a mass $M$ of
-  outside-origin potential immigrants.
+\begin{itemize}\setlength\itemsep{8pt}
+  \item Incumbent households live in the center or periphery, choose housing,
+  savings, location, and fertility, and their children age inside the household.
 
-  \item \textbf{Choice.} Each potential entrant chooses where to start adult
-  life:
+  \item When children mature, they become city-born potential young adults. At
+  city scale $S$, their flow is
   \[
-  \{C,P,E\}.
+  S B_0(p).
   \]
-  Entering location $i\in\{C,P\}$ gives value $W_i^E(p)$ and the outside
-  economy gives value $\bar W^E$.
 
-  \item \textbf{Entry probabilities.} With extreme-value entry tastes,
+  \item Each period there is also an outside-origin pool of potential young
+  adults, with mass $M$.
+
+  \item Both pools face the same entry choice:
   \[
-  \pi_C^E(p)+\pi_P^E(p)+\pi_{\mathrm{out}}^E(p)=1,
-  \qquad
-  q^E(p)=\pi_C^E(p)+\pi_P^E(p)=1-\pi_{\mathrm{out}}^E(p).
+  C \quad\text{(center)},\qquad
+  P \quad\text{(periphery)},\qquad
+  E \quad\text{(outside economy)}.
   \]
-  The benchmark chooses $\bar W^E$ to match the outside margin, then holds it
-  fixed in counterfactuals.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Entry and City Scale}
+\begin{frame}[t]{Young-Adult Entry: Choice}
+\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\begin{itemize}\setlength\itemsep{5pt}
+  \item If a potential entrant chooses modeled location $i\in\{C,P\}$, she
+  starts adult life as a childless renter:
+  \[
+  x_i^E=(b^E,R,i,1,0,0),
+  \qquad
+  W_i^E(p)=V_1(x_i^E;p).
+  \]
+
+  \item Choosing the outside economy gives value $\bar W^E$ and leaves the
+  agent outside the modeled metro.
+
+  \item Entry tastes generate unconditional option probabilities
+  \[
+  \pi_C^E(p)+\pi_P^E(p)+\pi_{\mathrm{out}}^E(p)=1.
+  \]
+  The probability of entering the modeled metro is
+  \[
+  q^E(p)=\pi_C^E(p)+\pi_P^E(p)=1-\pi_{\mathrm{out}}^E(p).
+  \]
+
+  \item In the benchmark, $\bar W^E$ disciplines the outside margin; in
+  counterfactuals, the outside environment is held fixed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Stationarity by Location}
 \footnotesize
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{enumerate}\setlength\itemsep{4pt}
-  \item Let $g(p)$ be the normalized stationary composition and let $S$ be
-  total adult mass, so the level distribution is $G(p)=Sg(p)$.
-  \item Per unit of city scale, stationarity requires replacement inflow
-  $E_0(p)$ of young adults; equivalently, this replaces adults who exit.
-  \item Per unit of city scale, households also produce $B_0(p)$ mature
-  city-born potential entrants.
-  \item At city scale $S$, the potential entrant pool is $M+SB_0(p)$.
-  \item Since only fraction $q^E(p)$ chooses the modeled metro, stationarity
-  requires
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Let $g(p)$ be the normalized stationary composition and let
+  $G(p)=Sg(p)$ be the level distribution.
+
+  \item Let $E_{0i}(p)$ be the per-unit mass of age-one households that must
+  enter location $i$ to reproduce the stationary composition:
   \[
-  S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
+  E_0(p)=E_{0C}(p)+E_{0P}(p).
   \]
-  \item Hence counterfactual city scale is
+
+  \item At scale $S$, the potential entrant pool is $M+SB_0(p)$. Full
+  stationarity requires one condition for each modeled location:
   \[
+  S E_{0i}(p)=\left[M+S B_0(p)\right]\pi_i^E(p),
+  \qquad i\in\{C,P\}.
+  \]
+
+  \item Summing the two location equations gives the aggregate scale condition:
+  \[
+  S E_0(p)=q^E(p)\left[M+S B_0(p)\right],
+  \qquad
   S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
   \]
-\end{enumerate}
-
-{\scriptsize
-\textbf{Benchmark.} Set $S^*=1$. The normalized benchmark implies
-$E_0^*$ and $B_0^*$; the outside value pins down $q^{E,*}$; then $M$ is chosen
-residually. In counterfactuals, hold $(M,\bar W^E,\kappa_E)$ fixed.
-}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{%
@@ -871,46 +898,59 @@ $\theta_n$ & Bequest parent premium & 0.250 \\
 \end{frame}
 
 
-\begin{frame}[t]{Appendix: Outside-Option Entry Algorithm}
+\begin{frame}[t]{Appendix: Benchmark Entry Accounting}
 \footnotesize
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{enumerate}\setlength\itemsep{5pt}
-  \item \textbf{Solve normalized benchmark.} Set $S^*=1$ and solve for the
-  benchmark composition $g^*$ and prices $p^*$.
-  \item \textbf{Compute per-unit flows.} The benchmark composition implies
-  $E_0^*$, the replacement inflow of young adults, and $B_0^*$, the mature
-  city-born potential entrant flow.
-  \item \textbf{Choose outside value.} Choose $\bar W^E$ so entry values
-  $\{W_i^E(p^*)\}_{i\in\{C,P\}}$ imply the target city-entry probability
-  $q^{E,*}$.
-  \item \textbf{Set outside-origin flow.} With $S^*=1$,
+\begin{itemize}\setlength\itemsep{6pt}
+  \item Normalize benchmark city scale to $S^*=1$.
+
+  \item The benchmark composition implies the replacement inflow of young adults
+  by location, $E_{0C}^*$ and $E_{0P}^*$, and the total
+  $E_0^*=E_{0C}^*+E_{0P}^*$.
+
+  \item The benchmark composition also implies $B_0^*$, the mature city-born
+  potential entrant flow per unit of city scale.
+
+  \item The outside value $\bar W^E$ is disciplined by the benchmark outside
+  margin:
+  \[
+  q^{E,*}=\pi_C^E(p^*)+\pi_P^E(p^*).
+  \]
+
+  \item The outside-origin potential entrant mass is then the residual that
+  makes the normalized benchmark stationary:
   \[
   M=\frac{E_0^*}{q^{E,*}}-B_0^*.
   \]
-  \item \textbf{Counterfactuals.} Hold $(M,\bar W^E,\kappa_E)$ fixed and let
-  $q^E(p)$ and $S(p)$ respond.
-\end{enumerate}
+
+  \item In counterfactuals, $(M,\bar W^E,\kappa_E)$ stay fixed while household
+  values, entry probabilities, and city scale respond.
+\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Appendix: Aggregate vs. Location Stationarity}
+\begin{frame}[t]{Appendix: Distributional Stationarity}
 \footnotesize
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{itemize}\setlength\itemsep{7pt}
-  \item The scalar equation pins down total city scale:
+\begin{itemize}\setlength\itemsep{6pt}
+  \item The stationary distribution is over the full household state, including
+  location:
   \[
-  S E_0(p)=q^E(p)\left[M+S B_0(p)\right].
+  G'(\mathcal A)
+  =
+  \int \mathcal P(\mathcal A\mid x;p)\,dG(x)
+  +
+  \sum_{i\in\{C,P\}}E_i(G;p)\mathbf{1}\{x_i^E\in\mathcal A\}.
   \]
-  \item Location-specific entry masses use the unconditional option
-  probabilities:
+
+  \item Location-specific entrant masses are
   \[
   E_i(G;p)=\left[M+S B_0(p)\right]\pi_i^E(p),
   \qquad i\in\{C,P\}.
   \]
-  \item Thus $q^E(p)$ answers \emph{how many} potential entrants enter the
-  modeled metro, while $\pi_C^E(p)$ and $\pi_P^E(p)$ answer \emph{where} they
-  enter inside the metro.
-  \item The distribution recursion uses the vector $(E_C,E_P)$, so aggregate
-  stationarity alone is not the whole equilibrium object.
+
+  \item The scalar equation for $S$ is only the sum of the two entry-location
+  equations. The equilibrium still has to reproduce the location distribution
+  inside $G$.
 \end{itemize}
 \end{frame}
 
