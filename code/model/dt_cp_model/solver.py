@@ -22,6 +22,8 @@ from .kernels import (
     interp_cols_kernel,
     interp_cols_preidx_kernel,
     location_logit_kernel,
+    product_action_block_kernel,
+    product_choice_kernel,
     scatter_cols_kernel,
     scatter_cols_sameidx_kernel,
     scatter_vec_kernel,
@@ -45,6 +47,10 @@ from .utils import (
 
 OUTSIDE_OPTION_CLOSURES = {"outside_option", "outside_option_local_births", "local_births_outside", "open_city"}
 ACCOUNTING_SCALE_PRICE_CLOSURES = {"accounting_scale_prices", "scaled_housing", "scaled_housing_accounting"}
+BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES = {
+    "outside_option_benchmark_normalized",
+    "benchmark_outside_option_normalized",
+}
 RENEWAL_VALVE_FIXED_CLOSURES = {"renewal_valve", "renewal_scale", "demographic_valve"}
 RENEWAL_VALVE_CALIBRATED_CLOSURES = {
     "renewal_valve_calibrated",
@@ -60,7 +66,12 @@ def uses_outside_option_closure(P: SimpleNamespace) -> bool:
 
 
 def uses_accounting_scale_price_closure(P: SimpleNamespace) -> bool:
-    return str(getattr(P, "population_closure", "normalized")).lower() in ACCOUNTING_SCALE_PRICE_CLOSURES
+    mode = str(getattr(P, "population_closure", "normalized")).lower()
+    return mode in ACCOUNTING_SCALE_PRICE_CLOSURES or mode in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
+
+
+def uses_benchmark_normalized_outside_closure(P: SimpleNamespace) -> bool:
+    return str(getattr(P, "population_closure", "normalized")).lower() in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
 
 
 def uses_renewal_valve_closure(P: SimpleNamespace) -> bool:
@@ -87,9 +98,10 @@ def housing_demand_normalizer(P: SimpleNamespace) -> float:
 def entry_values_by_location(V: np.ndarray, b_grid: np.ndarray, P: SimpleNamespace) -> np.ndarray:
     bg = np.asarray(b_grid, dtype=float).reshape(-1)
     b_entry = float(np.clip(getattr(P, "b_entry_fixed", 0.0), bg[0], bg[-1]))
+    h_entry = int(getattr(P, "housing_entry_product", 0)) if bool(getattr(P, "housing_product_market", False)) else 0
     entry_values = np.empty(P.I)
     for i in range(P.I):
-        entry_values[i] = np.interp(b_entry, bg, V[:, 0, i, 0, 0, 0])
+        entry_values[i] = np.interp(b_entry, bg, V[:, h_entry, i, 0, 0, 0])
     return entry_values
 
 
@@ -271,6 +283,131 @@ def accounting_population_scale(
         scale_factor=float(scale_factor),
         reference_total_population=float(getattr(sol, "total_mass", np.nan)),
         implied_total_population=float(getattr(sol, "total_mass", np.nan) * scale_factor),
+        reference_housing_demand=base_hd,
+        implied_housing_demand=base_hd * scale_factor,
+    )
+
+
+def benchmark_normalized_outside_population_scale(
+    sol: SimpleNamespace,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    *,
+    target_total_population: float | None = None,
+    target_city_entry_prob: float | None = None,
+    calibrate_outside_value_to_q: bool | None = None,
+) -> SimpleNamespace:
+    """Benchmark outside-option closure with baseline scale normalized.
+
+    The paper closure is S E0(p) = qE(p) [M + S B0(p)]. In the benchmark
+    steady state, S is a normalization. This helper computes the residual
+    outside-born flow at the candidate composition,
+
+        M = S * (E0(p) / qE(p) - B0(p)),
+
+    and returns unit-scale housing demand. The final M and outside value are
+    the objects to hold fixed in counterfactuals.
+    """
+
+    ref_pop = max(float(getattr(sol, "total_mass", getattr(P, "N_target", 1.0))), 1e-14)
+    entry_flow = max(float(getattr(sol, "entry_rate", getattr(P, "E_total", 0.0))), 0.0)
+    mature_flow = max(float(getattr(sol, "entrants_mature_total", 0.0)), 0.0)
+    entry_per_scale = entry_flow / ref_pop
+    mature_per_scale = mature_flow / ref_pop
+    local_weight = max(float(getattr(P, "local_birth_entry_weight", 1.0)), 0.0)
+    target_pop = (
+        float(target_total_population)
+        if target_total_population is not None
+        else float(getattr(P, "outside_benchmark_target_total_population", getattr(P, "N_target", ref_pop)))
+    )
+    target_pop = max(target_pop, 1e-14)
+
+    entry_values = entry_values_by_location(sol.V, b_grid, P)
+    kappa = max(float(getattr(P, "kappa_entry", getattr(P, "kappa_loc", 1.0))), 1e-10)
+    do_q_calibration = (
+        bool(calibrate_outside_value_to_q)
+        if calibrate_outside_value_to_q is not None
+        else bool(getattr(P, "calibrate_outside_value_to_entry_prob", False))
+    )
+    target_q = (
+        float(target_city_entry_prob)
+        if target_city_entry_prob is not None
+        else float(getattr(P, "target_city_entry_prob", getattr(P, "outside_target_city_entry_prob", np.nan)))
+    )
+    if do_q_calibration:
+        if not np.isfinite(target_q):
+            raise ValueError("calibrate_outside_value_to_entry_prob=True requires target_city_entry_prob")
+        target_q = float(np.clip(target_q, 1e-10, 1.0 - 1e-10))
+        outside_value = calibrate_outside_value_for_entry_total(entry_values, 1.0, target_q, kappa)
+        calibrated_outside_value = True
+    else:
+        outside_value = float(getattr(P, "outside_value", 0.0))
+        calibrated_outside_value = bool(getattr(P, "outside_value_is_calibrated", False))
+
+    city_probs, outside_prob = city_entry_probabilities(entry_values, outside_value, kappa)
+    city_prob_total = float(np.sum(city_probs))
+    denominator = entry_per_scale - city_prob_total * local_weight * mature_per_scale
+    outside_flow = target_pop * (entry_per_scale / max(city_prob_total, 1e-14) - local_weight * mature_per_scale)
+    finite_stationary_scale = city_prob_total > 1e-12 and denominator > 1e-12 and outside_flow >= 0.0
+
+    if finite_stationary_scale:
+        implied_total_population = target_pop
+        scale_factor = implied_total_population / ref_pop
+        implied_entry_total = implied_total_population * entry_per_scale
+        implied_mature_cityborn_flow = implied_total_population * mature_per_scale
+        potential_mass = outside_flow + local_weight * implied_mature_cityborn_flow
+        implied_entry_by_loc = potential_mass * city_probs
+        implied_outside_entry_mass = potential_mass * outside_prob
+        stationary_residual = implied_entry_total - city_prob_total * potential_mass
+        relative_residual = abs(stationary_residual) / max(
+            abs(implied_entry_total), abs(city_prob_total * potential_mass), 1e-14
+        )
+        conditional_entry_shares = city_probs / max(city_prob_total, 1e-14)
+    else:
+        implied_total_population = np.inf
+        scale_factor = np.inf
+        implied_entry_total = np.inf
+        implied_mature_cityborn_flow = np.inf
+        potential_mass = np.inf
+        implied_entry_by_loc = np.full_like(city_probs, np.inf)
+        implied_outside_entry_mass = np.inf
+        stationary_residual = np.nan
+        relative_residual = np.nan
+        conditional_entry_shares = np.full_like(city_probs, np.nan)
+
+    base_hd = np.asarray(getattr(sol, "housing_demand", np.zeros(P.I)), dtype=float) * housing_demand_normalizer(P)
+    return SimpleNamespace(
+        finite_stationary_scale=bool(finite_stationary_scale),
+        benchmark_normalized=True,
+        outside_value=float(outside_value),
+        calibrated_outside_value=bool(calibrated_outside_value),
+        target_city_entry_prob=(float(target_q) if np.isfinite(target_q) else np.nan),
+        outside_entry_flow=float(outside_flow),
+        local_birth_entry_weight=float(local_weight),
+        kappa_entry=float(kappa),
+        entry_values=entry_values,
+        city_entry_prob=city_probs,
+        conditional_entry_shares=conditional_entry_shares,
+        outside_entry_prob=float(outside_prob),
+        city_entry_prob_total=city_prob_total,
+        reference_total_population=float(ref_pop),
+        target_total_population=float(target_pop),
+        reference_entry_total=float(entry_flow),
+        reference_mature_cityborn_flow=float(mature_flow),
+        entry_per_unit_scale=float(entry_per_scale),
+        mature_cityborn_per_unit_scale=float(mature_per_scale),
+        mature_cityborn_per_entry=float(mature_flow / max(entry_flow, 1e-14)),
+        denominator=float(denominator),
+        stationary_entry_residual=float(stationary_residual),
+        stationary_scale_residual=float(stationary_residual),
+        stationary_entry_relative_residual=float(relative_residual),
+        implied_entry_total=float(implied_entry_total),
+        implied_entry_by_loc=implied_entry_by_loc,
+        implied_potential_entrant_mass=float(potential_mass),
+        implied_outside_entry_mass=float(implied_outside_entry_mass),
+        implied_mature_cityborn_flow=float(implied_mature_cityborn_flow),
+        scale_factor=float(scale_factor),
+        implied_total_population=float(implied_total_population),
         reference_housing_demand=base_hd,
         implied_housing_demand=base_hd * scale_factor,
     )
@@ -461,28 +598,32 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
         print("=" * 60)
 
     b_grid = make_grid(P)
-    p_init = P.r_bar / P.user_cost_rate
-    if hasattr(P, "p_init_override") and P.p_init_override is not None:
-        p_init = np.asarray(P.p_init_override, dtype=float).reshape(-1)
-
-    solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
-    do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
-    if do_pe:
-        sol, P, p_eq = solve_partial_equilibrium_dt(
-            np.asarray(P.p_fixed, dtype=float).reshape(-1),
-            np.asarray(P.w_fixed, dtype=float).reshape(-1),
-            np.asarray(P.entry_shares_fixed, dtype=float).reshape(-1),
-            P,
-            b_grid,
-            verbose=verbose,
-        )
+    if bool(getattr(P, "housing_product_market", False)):
+        sol, P, p_eq = solve_housing_product_equilibrium(P, b_grid, verbose=verbose)
     else:
-        sol, P, p_eq = solve_equilibrium(p_init, P, b_grid, verbose=verbose)
+        p_init = P.r_bar / P.user_cost_rate
+        if hasattr(P, "p_init_override") and P.p_init_override is not None:
+            p_init = np.asarray(P.p_init_override, dtype=float).reshape(-1)
+
+        solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
+        do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
+        if do_pe:
+            sol, P, p_eq = solve_partial_equilibrium_dt(
+                np.asarray(P.p_fixed, dtype=float).reshape(-1),
+                np.asarray(P.w_fixed, dtype=float).reshape(-1),
+                np.asarray(P.entry_shares_fixed, dtype=float).reshape(-1),
+                P,
+                b_grid,
+                verbose=verbose,
+            )
+        else:
+            sol, P, p_eq = solve_equilibrium(p_init, P, b_grid, verbose=verbose)
 
     if verbose:
         elapsed = time.perf_counter() - t_start
         print("\n" + "=" * 20 + " RESULTS " + "=" * 20)
-        print(f"TFR={2 * sol.mean_parity:.2f}, Own={100 * sol.own_rate:.1f}%, Prices=[{p_eq[0]:.3f},{p_eq[1]:.3f}]")
+        price_label = "Lambda" if bool(getattr(P, "housing_product_market", False)) else "Prices"
+        print(f"TFR={2 * sol.mean_parity:.2f}, Own={100 * sol.own_rate:.1f}%, {price_label}=[{p_eq[0]:.3f},{p_eq[1]:.3f}]")
         print(
             f"Pop=[{sol.pop_share[0]:.2f},{sol.pop_share[1]:.2f}], "
             f"Gradient={sol.mean_parity_by_loc[0] - sol.mean_parity_by_loc[1]:.3f}"
@@ -516,15 +657,1136 @@ def solve_partial_equilibrium_dt(
     return sol, P, p_eq
 
 
+def build_housing_prices(P: SimpleNamespace, Lambda: np.ndarray | list[float] | tuple[float, float]) -> SimpleNamespace:
+    """Construct product prices for the competitive housing-product branch.
+
+    Location order follows the active model convention: index 0 is periphery
+    and index 1 is center. The named parameters are still stored as C/P
+    fields to keep the economic object explicit.
+    """
+
+    lam = np.asarray(Lambda, dtype=float).reshape(-1)
+    if lam.size != P.I:
+        raise ValueError("Lambda must have length P.I in model location order [P, C]")
+    lam = np.maximum(lam, float(getattr(P, "Lambda_lower", 0.0)))
+
+    size = np.asarray(P.housing_size, dtype=float).reshape(-1)
+    tenure = np.asarray(P.housing_tenure, dtype=int).reshape(-1)
+    land = np.asarray(P.housing_land_input, dtype=float).reshape(-1)
+    H = size.size
+    construction_cost = np.zeros((P.I, H))
+    construction_cost[0, :] = np.asarray(P.housing_base_cost_P, dtype=float).reshape(-1)
+    construction_cost[1, :] = np.asarray(P.housing_base_cost_C, dtype=float).reshape(-1)
+
+    P_asset = construction_cost + lam[:, None] * land[None, :]
+    kappa_R = np.array([float(P.kappa_R_P), float(P.kappa_R_C)])
+    kappa_O = np.array([float(P.kappa_O_P), float(P.kappa_O_C)])
+    rent = kappa_R[:, None] * P_asset
+    usercost_O = kappa_O[:, None] * P_asset
+    owner_mask = tenure == 1
+    renter_mask = tenure == 0
+    housing_cost = np.where(owner_mask[None, :], usercost_O, rent)
+    phi_loc = np.asarray(getattr(P, "housing_product_phi", np.ones(P.I) * 0.8), dtype=float).reshape(-1)
+    if phi_loc.size == 1:
+        phi_loc = float(phi_loc[0]) * np.ones(P.I)
+    if phi_loc.size != P.I:
+        raise ValueError("housing_product_phi must be scalar or length P.I")
+    downpayment_threshold = (1.0 - phi_loc[:, None]) * P_asset
+    downpayment_threshold[:, renter_mask] = 0.0
+    effective_service = np.where(owner_mask, float(P.chi) * size, size)
+
+    arrays = [P_asset, rent, usercost_O, housing_cost, downpayment_threshold, effective_service]
+    if any(not np.all(np.isfinite(x)) for x in arrays):
+        raise ValueError("nonfinite housing-product price object")
+    if np.any(P_asset <= 0) or np.any(rent <= 0) or np.any(usercost_O <= 0) or np.any(housing_cost <= 0):
+        raise ValueError("housing-product prices, rents, and user costs must be positive")
+    if np.any(downpayment_threshold[:, owner_mask] < 0):
+        raise ValueError("owner down-payment thresholds must be nonnegative")
+
+    return SimpleNamespace(
+        Lambda=lam,
+        P_asset=P_asset,
+        rent=rent,
+        usercost_O=usercost_O,
+        housing_cost=housing_cost,
+        downpayment_threshold=downpayment_threshold,
+        effective_service=effective_service,
+        construction_cost=construction_cost,
+        tenure=tenure,
+        owner_mask=owner_mask,
+        renter_mask=renter_mask,
+        size=size,
+        land_input=land,
+    )
+
+
+def solve_housing_product_equilibrium(
+    P: SimpleNamespace, b_grid: np.ndarray, verbose: bool = True
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    Lambda = np.array([float(P.Lambda_init_P), float(P.Lambda_init_C)], dtype=float)
+    lower = float(getattr(P, "Lambda_lower", 0.0))
+    upper = float(getattr(P, "Lambda_upper", 8.0))
+    Lambda = np.clip(Lambda, lower, upper)
+    capacity = np.array([float(P.Abar_P), float(P.Abar_C)], dtype=float)
+    tol = float(getattr(P, "capacity_tol", 2e-3))
+    max_iter = int(getattr(P, "capacity_max_iter", 25))
+    step = float(getattr(P, "capacity_lambda_step", 0.35))
+
+    best_err = np.inf
+    best: tuple[SimpleNamespace, SimpleNamespace, np.ndarray, SimpleNamespace] | None = None
+    trace: list[dict[str, Any]] = []
+    prev_err = np.inf
+    t_start = time.perf_counter()
+
+    for it in range(1, max_iter + 1):
+        P.eq_iter = it
+        prices = build_housing_prices(P, Lambda)
+        sol, stats = solve_housing_product_once(P, b_grid, prices)
+        residual = np.asarray(stats.capacity_residual, dtype=float)
+        err = float(np.max(np.abs(residual)))
+        trace.append(
+            {
+                "iter": it,
+                "Lambda_P": float(Lambda[0]),
+                "Lambda_C": float(Lambda[1]),
+                "capacity_residual_P": float(residual[0]),
+                "capacity_residual_C": float(residual[1]),
+                "max_capacity_residual": err,
+                "own_rate": float(stats.own_rate),
+                "TFR": float(2 * stats.mean_parity),
+            }
+        )
+        if err < best_err:
+            best_err = err
+            best = (sol, stats, Lambda.copy(), prices)
+        if verbose:
+            print(
+                f"  HPM {it:2d}: Lambda=[{Lambda[0]:.3f},{Lambda[1]:.3f}] "
+                f"Z=[{residual[0]:+.4f},{residual[1]:+.4f}] "
+                f"own={100 * stats.own_rate:.1f}% TFR={2 * stats.mean_parity:.2f}"
+            )
+        if err < tol:
+            break
+        if it > 1 and err > 1.05 * prev_err:
+            step = max(0.05, 0.60 * step)
+        prev_err = err
+        scaled_residual = residual / np.maximum(capacity, 1e-8)
+        Lambda = np.clip(Lambda + step * scaled_residual, lower, upper)
+
+    if best is None:
+        raise RuntimeError("housing-product market solver did not produce a finite candidate")
+
+    sol, stats, Lambda_best, prices_best = best
+    sol.housing_product_market = True
+    sol.housing_prices = prices_best
+    sol.product_market_trace = trace
+    sol.product_market_converged = bool(best_err < tol)
+    sol.product_market_status = "strict_tol" if best_err < tol else "capacity_not_converged"
+    sol.product_market_warning = _housing_product_bound_warning(P, Lambda_best, stats.capacity_residual)
+    sol.timings = {
+        "housing_product_market": True,
+        "capacity_iterations": len(trace),
+        "capacity_converged": bool(best_err < tol),
+        "capacity_best_error": float(best_err),
+        "capacity_tol": float(tol),
+        "accepted": bool(best_err < tol),
+        "strict_converged": bool(best_err < tol),
+        "convergence_reason": sol.product_market_status,
+        "population_closure": str(getattr(P, "population_closure", "normalized")),
+        "elapsed_sec": float(time.perf_counter() - t_start),
+    }
+    sol.product_price_table = housing_product_price_records(P, prices_best)
+    sol.product_demand_table = housing_product_demand_records(P, stats, prices_best)
+    sol.capacity_table = housing_product_capacity_records(P, stats, Lambda_best)
+    _attach_product_market_diagnostics(sol, P, prices_best, stats)
+
+    if not sol.product_market_converged and verbose:
+        print(
+            "  [HPM warning] capacity did not converge: "
+            f"best max |Z|={best_err:.4g}, Lambda=[{Lambda_best[0]:.4g},{Lambda_best[1]:.4g}]"
+        )
+    if sol.product_market_warning and verbose:
+        print(f"  [HPM warning] {sol.product_market_warning}")
+    return sol, P, Lambda_best
+
+
+def solve_housing_product_once(
+    P: SimpleNamespace, b_grid: np.ndarray, prices: SimpleNamespace
+) -> tuple[SimpleNamespace, SimpleNamespace]:
+    SD = precompute_shared_product(P, b_grid)
+    t0 = time.perf_counter()
+    V, c_pol, room_pol, bp_pol, policy_i, policy_h, fp, fv = solve_bellman_product(prices, P, b_grid, SD)
+    bellman_time = time.perf_counter() - t0
+    t1 = time.perf_counter()
+    g, stats = forward_distribution_product(bp_pol, policy_i, policy_h, fp, P, b_grid, SD)
+    dist_time = time.perf_counter() - t1
+    _fill_product_market_stats(stats, g, bp_pol, policy_i, policy_h, fp, P, b_grid, prices)
+    sol = pack_product_solution(V, c_pol, room_pol, bp_pol, policy_i, policy_h, fp, fv, g, stats, P.w_hat, prices.Lambda, prices)
+    sol.timings = {"bellman_full": bellman_time, "distribution": dist_time}
+    return sol, stats
+
+
+def precompute_shared_product(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace:
+    nc = P.n_parity * P.n_child_states
+    K = P.n_child_stages
+    csm1 = K + 1
+    c_bar = np.zeros((P.n_parity, P.n_child_states))
+    h_bar = np.zeros((P.n_parity, P.n_child_states))
+    psi_v = np.zeros((P.n_parity, P.n_child_states))
+    for nn in range(P.n_parity):
+        nk = nn
+        for cs in range(P.n_child_states):
+            kp = (cs >= 1) and (cs < csm1)
+            if kp:
+                c_bar[nn, cs] = P.c_bar_0 + P.c_bar_n * nk
+                if str(P.child_housing_spec).lower() == "linear_only":
+                    h_bar[nn, cs] = P.h_bar_0 + P.h_bar_n * nk
+                else:
+                    h_bar[nn, cs] = P.h_bar_0 + P.h_bar_jump + P.h_bar_n * nk
+                psi_v[nn, cs] = P.psi_child * nk
+            else:
+                c_bar[nn, cs] = P.c_bar_0
+                h_bar[nn, cs] = P.h_bar_0
+    return SimpleNamespace(
+        c_bar=c_bar,
+        h_bar=h_bar,
+        psi_v=psi_v,
+        cb_flat=c_bar.reshape(1, nc, order="F"),
+        hb_flat=h_bar.reshape(1, nc, order="F"),
+        psi_flat=psi_v.reshape(1, nc, order="F"),
+        nc=nc,
+        b=b_grid.reshape(-1, 1),
+        bp=b_grid.reshape(1, -1),
+    )
+
+
+def solve_bellman_product(
+    prices: SimpleNamespace, P: SimpleNamespace, b_grid: np.ndarray, SD: SimpleNamespace
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    t0 = time.perf_counter()
+    J = P.J
+    I = P.I
+    H = int(P.n_housing_products)
+    Nb = len(b_grid)
+    npar = P.n_parity
+    ncs = P.n_child_states
+    nc = SD.nc
+    beta = P.beta
+    Rg = P.R_gross
+    alpha = P.alpha_cons
+    sigma = P.sigma
+    oms = 1.0 - sigma
+    b = b_grid.reshape(-1, 1)
+    b_lo = b_grid[0]
+    b_hi = b_grid[-1]
+    cb_v = np.ascontiguousarray(SD.cb_flat.reshape(-1))
+    hb_v = np.ascontiguousarray(SD.hb_flat.reshape(-1))
+    psi_v_flat = np.ascontiguousarray(SD.psi_flat.reshape(-1))
+    use_product_kernel = NUMBA_AVAILABLE and bool(getattr(P, "use_product_market_kernel", True))
+
+    V = np.zeros((Nb, H, I, J, npar, ncs))
+    c_pol = np.zeros_like(V)
+    room_pol = np.zeros_like(V)
+    bp_pol = np.zeros_like(V)
+    policy_i = np.zeros((Nb, H, I, J, npar, ncs), dtype=np.int16)
+    policy_h = np.zeros((Nb, H, I, J, npar, ncs), dtype=np.int16)
+    fert_probs = np.zeros((Nb, H, I, J, npar))
+    fert_value = np.zeros((Nb, H, I, J))
+
+    Vbq = np.zeros((Nb, H, I, npar, ncs))
+    for h0 in range(H):
+        for i in range(I):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    nk = get_completed_fertility(nn, cs, P)
+                    Vbq[:, h0, i, nn, cs] = bequest_utility_vec(b_grid, nk, P)
+
+    penalty = _housing_product_switch_penalties(P, prices)
+    action_val = np.empty((Nb, I, H, npar, ncs))
+    action_bp = np.empty((Nb, I, H, npar, ncs))
+    action_c = np.empty((Nb, I, H, npar, ncs))
+    gs_tol = 1e-3
+    gs_alpha1 = (3 - math.sqrt(5)) / 2
+    gs_alpha2 = (math.sqrt(5) - 1) / 2
+
+    for j in range(J - 1, -1, -1):
+        in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
+        Vnr = Vbq if j == J - 1 else V[:, :, :, j + 1, :, :]
+        Vc = apply_child_aging(Vnr, P, Nb, H, I, npar, ncs)
+
+        for id_ in range(I):
+            yj = P.income[id_, j]
+            resources = Rg * b + yj
+            Rv1d = np.ascontiguousarray(resources[:, 0])
+            for hp in range(H):
+                hc = float(prices.housing_cost[id_, hp])
+                qh = float(prices.effective_service[hp])
+                owner = bool(prices.owner_mask[hp])
+                dp = float(prices.downpayment_threshold[id_, hp])
+                Vnext = flat_nc(Vc[:, hp, id_, :, :], Nb, nc)
+                if use_product_kernel:
+                    val_nc, bp_nc, cons_nc = product_action_block_kernel(
+                        Rv1d,
+                        Vnext,
+                        b_grid,
+                        cb_v,
+                        hb_v,
+                        psi_v_flat,
+                        hc,
+                        qh,
+                        dp,
+                        1 if owner else 0,
+                        P.c_min,
+                        alpha,
+                        oms,
+                        sigma,
+                        beta,
+                        gs_alpha1,
+                        gs_alpha2,
+                        gs_tol,
+                    )
+                    action_val[:, id_, hp, :, :] = unflat_nc(val_nc, Nb, npar, ncs)
+                    action_bp[:, id_, hp, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
+                    action_c[:, id_, hp, :, :] = unflat_nc(cons_nc, Nb, npar, ncs)
+                else:
+                    for cidx in range(nc):
+                        nn = cidx % npar
+                        cs = cidx // npar
+                        Vbar = Vc[:, hp, id_, nn, cs]
+                        bp, val, cons = optimize_savings_fixed_product(
+                            resources[:, 0],
+                            Vbar,
+                            b_grid,
+                            hc,
+                            qh,
+                            SD.c_bar[nn, cs],
+                            SD.h_bar[nn, cs],
+                            SD.psi_v[nn, cs],
+                            P.c_min,
+                            alpha,
+                            oms,
+                            sigma,
+                            beta,
+                        )
+                        if owner:
+                            infeas = b_grid < dp
+                            val[infeas] = -1e10
+                        action_val[:, id_, hp, nn, cs] = val
+                        action_bp[:, id_, hp, nn, cs] = bp
+                        action_c[:, id_, hp, nn, cs] = cons
+
+        if use_product_kernel:
+            best_val, best_bp, best_c, best_i, best_h = product_choice_kernel(
+                action_val, action_bp, action_c, np.asarray(P.E_loc, dtype=float), penalty
+            )
+        else:
+            best_val = np.full((Nb, H, I, npar, ncs), -1e10)
+            best_bp = np.full_like(best_val, b_lo)
+            best_c = np.full_like(best_val, P.c_bar_0 + P.c_min)
+            best_i = np.zeros((Nb, H, I, npar, ncs), dtype=np.int16)
+            best_h = np.zeros((Nb, H, I, npar, ncs), dtype=np.int16)
+
+            for io in range(I):
+                for h0 in range(H):
+                    for id_ in range(I):
+                        loc_bonus = float(P.E_loc[id_])
+                        for hp in range(H):
+                            for nn in range(npar):
+                                for cs in range(ncs):
+                                    cand = action_val[:, id_, hp, nn, cs] + loc_bonus - penalty[io, h0, id_, hp, nn, cs]
+                                    take = cand > best_val[:, h0, io, nn, cs]
+                                    if np.any(take):
+                                        best_val[take, h0, io, nn, cs] = cand[take]
+                                        best_bp[take, h0, io, nn, cs] = action_bp[take, id_, hp, nn, cs]
+                                        best_c[take, h0, io, nn, cs] = action_c[take, id_, hp, nn, cs]
+                                        best_i[take, h0, io, nn, cs] = id_
+                                        best_h[take, h0, io, nn, cs] = hp
+
+        c_pol[:, :, :, j, :, :] = best_c
+        bp_pol[:, :, :, j, :, :] = best_bp
+        policy_i[:, :, :, j, :, :] = best_i
+        policy_h[:, :, :, j, :, :] = best_h
+        room_pol[:, :, :, j, :, :] = prices.size[best_h]
+
+        if in_fert:
+            Vfa = np.zeros((Nb, H, I, npar))
+            Vfa[:, :, :, 0] = best_val[:, :, :, 0, 0]
+            for nn in range(1, npar):
+                Vfa[:, :, :, nn] = best_val[:, :, :, nn, 1]
+            lf = Vfa / P.kappa_fert
+            ls, pr = logsumexp(lf, axis=3)
+            fert_probs[:, :, :, j, :] = pr
+            fert_value[:, :, :, j] = P.kappa_fert * ls
+            V[:, :, :, j, 0, 0] = fert_value[:, :, :, j]
+            V[:, :, :, j, 1:, :] = best_val[:, :, :, 1:, :]
+            V[:, :, :, j, 0, 1:] = best_val[:, :, :, 0, 1:]
+        else:
+            V[:, :, :, j, :, :] = best_val
+
+    return V, c_pol, room_pol, bp_pol, policy_i, policy_h, fert_probs, fert_value
+
+
+def optimize_savings_fixed_product(
+    resources: np.ndarray,
+    Vbar: np.ndarray,
+    b_grid: np.ndarray,
+    housing_cost: float,
+    q_service: float,
+    c_bar: float,
+    h_bar: float,
+    psi_flow: float,
+    c_min: float,
+    alpha: float,
+    oms: float,
+    sigma: float,
+    beta: float,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    q_gap = float(q_service - h_bar)
+    lo = np.full_like(resources, b_grid[0], dtype=float)
+    hi = np.minimum(b_grid[-1], resources - housing_cost - c_bar - c_min)
+    feasible = (hi >= lo) & np.isfinite(hi) & (q_gap > 1e-10)
+    bp_out = lo.copy()
+    val_out = np.full_like(resources, -1e10, dtype=float)
+    c_out = np.maximum(resources - housing_cost - bp_out, c_bar + c_min)
+    if not np.any(feasible):
+        return bp_out, val_out, c_out
+    x1 = lo + (3 - math.sqrt(5)) / 2 * (hi - lo)
+    x2 = lo + (math.sqrt(5) - 1) / 2 * (hi - lo)
+    x1[~feasible] = lo[~feasible]
+    x2[~feasible] = lo[~feasible]
+    f1 = eval_fixed_product_utility(x1, resources, Vbar, b_grid, housing_cost, q_gap, c_bar, psi_flow, alpha, oms, sigma, beta)
+    f2 = eval_fixed_product_utility(x2, resources, Vbar, b_grid, housing_cost, q_gap, c_bar, psi_flow, alpha, oms, sigma, beta)
+    d = (3 - math.sqrt(5)) / 2 * (math.sqrt(5) - 1) / 2 * (hi - lo)
+    tol = 1e-3
+    while np.any(d[feasible] > tol):
+        take_high = f2 >= f1
+        xe = np.where(take_high, x2 + d, x1 - d)
+        fe = eval_fixed_product_utility(xe, resources, Vbar, b_grid, housing_cost, q_gap, c_bar, psi_flow, alpha, oms, sigma, beta)
+        x1n = np.where(take_high, x2, xe)
+        f1n = np.where(take_high, f2, fe)
+        x2n = np.where(take_high, xe, x1)
+        f2n = np.where(take_high, fe, f1)
+        d = d * (math.sqrt(5) - 1) / 2
+        x1, x2, f1, f2 = x1n, x2n, f1n, f2n
+    choose_x2 = f2 >= f1
+    bp = np.where(choose_x2, x2, x1)
+    val = np.maximum(f1, f2)
+    bp_out[feasible] = bp[feasible]
+    val_out[feasible] = val[feasible]
+    c_out[feasible] = resources[feasible] - housing_cost - bp_out[feasible]
+    return bp_out, val_out, c_out
+
+
+def eval_fixed_product_utility(
+    bp: np.ndarray,
+    resources: np.ndarray,
+    Vbar: np.ndarray,
+    b_grid: np.ndarray,
+    housing_cost: float,
+    q_gap: float,
+    c_bar: float,
+    psi_flow: float,
+    alpha: float,
+    oms: float,
+    sigma: float,
+    beta: float,
+) -> np.ndarray:
+    c_gap = resources - housing_cost - bp - c_bar
+    val = np.full_like(resources, -1e10, dtype=float)
+    ok = (c_gap > 1e-10) & (q_gap > 1e-10)
+    if not np.any(ok):
+        return val
+    comp = c_gap[ok] ** alpha * q_gap ** (1.0 - alpha)
+    if abs(sigma - 1.0) < 1e-8:
+        flow = np.log(np.maximum(comp, 1e-12)) + psi_flow
+    else:
+        flow = comp ** oms / oms + psi_flow
+    val[ok] = flow + beta * interp_vector(b_grid, Vbar, np.clip(bp[ok], b_grid[0], b_grid[-1]))
+    return val
+
+
+def _housing_product_switch_penalties(P: SimpleNamespace, prices: SimpleNamespace) -> np.ndarray:
+    I = P.I
+    H = int(P.n_housing_products)
+    npar = P.n_parity
+    ncs = P.n_child_states
+    out = np.zeros((I, H, I, H, npar, ncs))
+    switch_cost = float(getattr(P, "housing_product_switch_utility_cost", 0.0))
+    tenure_switch_cost = float(getattr(P, "housing_product_tenure_switch_utility_cost", 0.0))
+    dep_last = P.n_child_stages
+    for io in range(I):
+        for h0 in range(H):
+            for id_ in range(I):
+                for hp in range(H):
+                    for nn in range(npar):
+                        for cs in range(ncs):
+                            if id_ == io:
+                                move = float(getattr(P, "mu_stay", 0.0))
+                            else:
+                                has_children = current_child_bin_dt(nn, cs, dep_last) != 2
+                                move = float(getattr(P, "mu_move_parent", P.mu_move) if has_children else P.mu_move)
+                            sw = switch_cost if hp != h0 else 0.0
+                            tsw = tenure_switch_cost if prices.tenure[hp] != prices.tenure[h0] else 0.0
+                            out[io, h0, id_, hp, nn, cs] = move + sw + tsw
+    return out
+
+
+def forward_distribution_product(
+    bp_pol: np.ndarray,
+    policy_i: np.ndarray,
+    policy_h: np.ndarray,
+    fert_probs: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    SD: SimpleNamespace,
+) -> tuple[np.ndarray, SimpleNamespace]:
+    J = P.J
+    I = P.I
+    H = int(P.n_housing_products)
+    Nb = len(b_grid)
+    npar = P.n_parity
+    ncs = P.n_child_states
+    K = P.n_child_stages
+    csm1 = K + 1
+    csm2 = K + 2
+    bmin = b_grid[0]
+    bmax = b_grid[-1]
+    g = np.zeros((Nb, H, I, J, npar, ncs))
+    ie = int(np.argmax(b_grid >= P.b_entry_fixed)) if np.any(b_grid >= P.b_entry_fixed) else 0
+    h_entry = int(getattr(P, "housing_entry_product", 0))
+    for i in range(I):
+        g[ie, h_entry, i, 0, 0, 0] = P.entry_by_loc[i]
+
+    total_births = 0.0
+    births_by_loc = np.zeros(I)
+    entrants_mature_by_loc = np.zeros(I)
+    entrants_mature_total = 0.0
+    ust = bool(P.use_stochastic_aging and hasattr(P, "Pi_child"))
+    Pia = P.Pi_child if ust else None
+
+    for j in range(J - 1):
+        if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
+            gc = g[:, :, :, j, 0, 0]
+            pa = fert_probs[:, :, :, j, :]
+            pv = np.arange(npar).reshape(1, 1, 1, npar)
+            ba_j = gc * np.sum(pa * pv, axis=3)
+            total_births += float(np.sum(ba_j))
+            for i in range(I):
+                births_by_loc[i] += float(np.sum(ba_j[:, :, i]))
+            mbp = gc[:, :, :, None] * pa
+            gpf = np.zeros((Nb, H, I, npar, ncs))
+            gpf[:, :, :, 0, 0] = mbp[:, :, :, 0]
+            gpf[:, :, :, 1:, 1] = mbp[:, :, :, 1:]
+            g[:, :, :, j, 0, 0] = 0.0
+            g[:, :, :, j, :, :] += gpf
+
+        gps = np.zeros((Nb, H, I, npar, ncs))
+        for io in range(I):
+            for h0 in range(H):
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        mass = g[:, h0, io, j, nn, cs]
+                        if float(np.sum(mass)) < 1e-15:
+                            continue
+                        dest_i = policy_i[:, h0, io, j, nn, cs]
+                        dest_h = policy_h[:, h0, io, j, nn, cs]
+                        bp = np.clip(bp_pol[:, h0, io, j, nn, cs], bmin, bmax)
+                        idx, wt = interp_indices(b_grid, bp)
+                        for id_ in range(I):
+                            for hp in range(H):
+                                mk = (dest_i == id_) & (dest_h == hp)
+                                if not np.any(mk):
+                                    continue
+                                moved = np.zeros(Nb)
+                                moved[mk] = mass[mk]
+                                gps[:, hp, id_, nn, cs] += scatter_redistribute(idx, wt, moved, Nb)
+
+        for nn in range(npar):
+            for cs in range(ncs):
+                gp = gps[:, :, :, nn, cs]
+                if ust:
+                    Pi = Pia[:, :, nn]
+                    if cs == K and nn >= 1:
+                        pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
+                        if pm > 0:
+                            nk = nn
+                            for im in range(I):
+                                fi = nk * pm * float(np.sum(gp[:, :, im]))
+                                entrants_mature_by_loc[im] += fi
+                                entrants_mature_total += fi
+                    for csn in range(ncs):
+                        wt = Pi[cs, csn]
+                        if wt > 0:
+                            g[:, :, :, j + 1, nn, csn] += wt * gp
+                else:
+                    if cs == 0:
+                        csn = 0
+                    elif cs >= csm1:
+                        csn = cs
+                    elif cs < K:
+                        csn = cs + 1
+                    else:
+                        csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
+                    if cs == K and csn >= csm1 and nn >= 1:
+                        nk = nn
+                        for im in range(I):
+                            fi = nk * float(np.sum(gp[:, :, im]))
+                            entrants_mature_by_loc[im] += fi
+                            entrants_mature_total += fi
+                    g[:, :, :, j + 1, nn, csn] += gp
+
+    tm = float(np.sum(g))
+    if tm > 1e-12 and normalize_population_mass(P):
+        sc = P.N_target / tm
+        g *= sc
+        total_births *= sc
+        births_by_loc *= sc
+        entrants_mature_by_loc *= sc
+        entrants_mature_total *= sc
+
+    stats = SimpleNamespace()
+    stats.total_births_kfe = total_births
+    stats.births_by_loc = births_by_loc
+    stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :]))
+    stats.total_mass = float(np.sum(g))
+    stats.entrants_mature_by_loc = entrants_mature_by_loc
+    stats.entrants_mature_total = entrants_mature_total
+    stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+    return g, stats
+
+
+def aggregate_product_policy_demand(
+    g: np.ndarray, policy_i: np.ndarray, policy_h: np.ndarray, P: SimpleNamespace
+) -> np.ndarray:
+    I = P.I
+    H = int(P.n_housing_products)
+    D = np.zeros((I, H))
+    for io in range(I):
+        for h0 in range(H):
+            for j in range(P.J):
+                for nn in range(P.n_parity):
+                    for cs in range(P.n_child_states):
+                        mass = g[:, h0, io, j, nn, cs]
+                        if float(np.sum(mass)) < 1e-15:
+                            continue
+                        dest_i = policy_i[:, h0, io, j, nn, cs]
+                        dest_h = policy_h[:, h0, io, j, nn, cs]
+                        for id_ in range(I):
+                            for hp in range(H):
+                                mk = (dest_i == id_) & (dest_h == hp)
+                                if np.any(mk):
+                                    D[id_, hp] += float(np.sum(mass[mk]))
+    return D
+
+
+def _fill_product_market_stats(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    bp_pol: np.ndarray,
+    policy_i: np.ndarray,
+    policy_h: np.ndarray,
+    fert_probs: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    prices: SimpleNamespace,
+) -> None:
+    J = P.J
+    I = P.I
+    H = int(P.n_housing_products)
+    npar = P.n_parity
+    ncs = P.n_child_states
+    tm = float(np.sum(g))
+    owner_mask = np.asarray(prices.owner_mask, dtype=bool)
+    renter_mask = np.asarray(prices.renter_mask, dtype=bool)
+    size = np.asarray(prices.size, dtype=float)
+    land = np.asarray(prices.land_input, dtype=float)
+
+    stats.own_rate = float(np.sum(g[:, owner_mask, :, :, :, :]) / max(tm, 1e-12))
+    stats.pop_share = np.zeros(I)
+    stats.own_by_loc = np.zeros(I)
+    for i in range(I):
+        gi = g[:, :, i, :, :, :]
+        pi = float(np.sum(gi))
+        stats.pop_share[i] = pi / max(tm, 1e-12)
+        stats.own_by_loc[i] = float(np.sum(gi[:, owner_mask, :, :, :]) / max(pi, 1e-12))
+
+    D = aggregate_product_policy_demand(g, policy_i, policy_h, P)
+    stats.product_demand = D
+    stats.product_supply = D.copy()
+    stats.product_market_identity_residual = stats.product_supply - stats.product_demand
+    stats.capacity_use_by_product = D * land[None, :]
+    stats.total_capacity_use = np.sum(stats.capacity_use_by_product, axis=1)
+    stats.Abar = np.array([float(P.Abar_P), float(P.Abar_C)])
+    stats.capacity_residual = stats.total_capacity_use - stats.Abar
+    stats.max_capacity_residual = float(np.max(np.abs(stats.capacity_residual)))
+    stats.housing_demand = (D @ size) / housing_demand_normalizer(P)
+    stats.product_demand_share = D / max(float(np.sum(D)), 1e-12)
+    renter_room_demand = np.sum(D[:, renter_mask] * size[renter_mask][None, :], axis=1)
+    renter_rent_bill = np.sum(D[:, renter_mask] * prices.rent[:, renter_mask], axis=1)
+    stats.product_unit_rent_by_loc = renter_rent_bill / np.maximum(renter_room_demand, 1e-12)
+    owner_room_demand = np.sum(D[:, owner_mask] * size[owner_mask][None, :], axis=1)
+    owner_usercost_bill = np.sum(D[:, owner_mask] * prices.usercost_O[:, owner_mask], axis=1)
+    stats.product_unit_owner_usercost_by_loc = owner_usercost_bill / np.maximum(owner_room_demand, 1e-12)
+
+    stats.worker_mass_by_loc = np.array([np.sum(g[:, :, i, : P.J_R, :, :]) for i in range(I)])
+    stats.retiree_mass_by_loc = np.array([np.sum(g[:, :, i, P.J_R :, :, :]) for i in range(I)])
+    stats.worker_mass_total = float(np.sum(stats.worker_mass_by_loc))
+    stats.retiree_mass_total = float(np.sum(stats.retiree_mass_by_loc))
+    stats.parity_dist = np.zeros(npar)
+    mp = float(np.sum(g[:, :, :, P.A_f_end :, :, :]))
+    for nn in range(npar):
+        stats.parity_dist[nn] = np.sum(g[:, :, :, P.A_f_end :, nn, :]) / max(mp, 1e-12)
+    stats.mean_parity = float(np.sum(np.arange(npar) * stats.parity_dist))
+    stats.mean_parity_by_loc = np.zeros(I)
+    stats.frac_childless_by_loc = np.zeros(I)
+    for i in range(I):
+        mip = float(np.sum(g[:, :, i, P.A_f_end :, :, :]))
+        if mip > 1e-12:
+            stats.mean_parity_by_loc[i] = sum(nn * np.sum(g[:, :, i, P.A_f_end :, nn, :]) / mip for nn in range(npar))
+            stats.frac_childless_by_loc[i] = np.sum(g[:, :, i, P.A_f_end :, 0, :]) / mip
+
+    stats.own_by_age = np.zeros(J)
+    for jj in range(J):
+        gj = g[:, :, :, jj, :, :]
+        mj = float(np.sum(gj))
+        if mj > 1e-12:
+            stats.own_by_age[jj] = np.sum(gj[:, owner_mask, :, :, :]) / mj
+
+    a22s = max(0, round(22 - P.age_start))
+    a25s = max(0, round(25 - P.age_start))
+    a34e = min(J - 1, round(34 - P.age_start))
+    a35s = max(0, round(35 - P.age_start))
+    a44e = min(J - 1, round(44 - P.age_start))
+    a45e = min(J - 1, round(45 - P.age_start))
+    a30s = max(0, round(30 - P.age_start))
+    a55e = min(J - 1, round(55 - P.age_start))
+    a65s = max(0, round(65 - P.age_start))
+    a75e = min(J - 1, round(75 - P.age_start))
+    asw = max(0, round(45 - P.age_start))
+    aew = min(J - 1, round(55 - P.age_start))
+    aye = min(J - 1, round(35 - P.age_start))
+    newparent_cs = list(range(1, min(P.n_child_stages + 1, 3)))
+
+    ti = sum(P.income[i, 0] * stats.worker_mass_by_loc[i] for i in range(I))
+    tmw = float(np.sum(stats.worker_mass_by_loc))
+    mean_income = ti / max(tmw, 1e-12)
+    tw = tm4 = 0.0
+    for jj in range(asw, aew + 1):
+        for i in range(I):
+            for h in range(H):
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        gs = g[:, h, i, jj, nn, cs]
+                        tw += float(np.sum(gs * bg))
+                        tm4 += float(np.sum(gs))
+    stats.mean_wealth_4555 = tw / max(tm4, 1e-12)
+    stats.mean_income = mean_income
+    stats.wealth_to_income = stats.mean_wealth_4555 / max(mean_income, 1e-12)
+    stats.entry_mass_by_loc = np.array([np.sum(g[:, :, i, 0, :, :]) for i in range(I)])
+    append_pension_budget_stats(stats, g, P)
+
+    tmv = tas = tmv2 = tas2 = 0.0
+    for j in range(J - 1):
+        age = P.age_start + j
+        for io in range(I):
+            for h0 in range(H):
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        gs = g[:, h0, io, j, nn, cs]
+                        mh = float(np.sum(gs))
+                        if mh < 1e-15:
+                            continue
+                        moved = policy_i[:, h0, io, j, nn, cs] != io
+                        tmv += float(np.sum(gs[moved]))
+                        tas += mh
+                        if 22 <= age <= 45:
+                            tmv2 += float(np.sum(gs[moved]))
+                            tas2 += mh
+    stats.migration_rate = tmv / max(tas, 1e-12)
+    stats.migration_rate_2245 = tmv2 / max(tas2, 1e-12)
+
+    tl = tml = 0.0
+    for jj in range(asw, aew + 1):
+        block = g[:, :, :, jj, :, :]
+        tl += float(np.sum(block * bg[:, None, None, None, None]))
+        tml += float(np.sum(block))
+    stats.liquid_wealth_4555 = tl / max(tml, 1e-12)
+    stats.liquid_wealth_to_income = stats.liquid_wealth_4555 / max(mean_income, 1e-12)
+
+    young_block = g[:, :, :, a25s : aye + 1, :, :]
+    yt = float(np.sum(young_block))
+    yo = float(np.sum(young_block[:, owner_mask, :, :, :, :]))
+    stats.young_own_rate = yo / max(yt, 1e-12)
+    ylw = yinc = ycm = 0.0
+    for jj in range(a25s, aye + 1):
+        for i in range(I):
+            for h in range(H):
+                if owner_mask[h]:
+                    continue
+                gs = g[:, h, i, jj, 0, 0]
+                mh = float(np.sum(gs))
+                if mh < 1e-15:
+                    continue
+                ylw += float(np.sum(gs * bg))
+                yinc += P.income[i, jj] * mh
+                ycm += mh
+    stats.young_liquid_wealth = ylw / max(ycm, 1e-12)
+    stats.young_childless_renter_income = yinc / max(ycm, 1e-12)
+    stats.young_liquid_wealth_to_income = ylw / max(yinc, 1e-12)
+
+    tba = tfb = 0.0
+    for j in range(P.A_f_start - 1, P.A_f_end):
+        ra = P.age_start + j * P.da
+        for i in range(I):
+            for h in range(H):
+                gs = g[:, h, i, j, 0, 0]
+                nz = gs > 1e-15
+                if not np.any(nz):
+                    continue
+                pb = 1 - fert_probs[nz, h, i, j, 0]
+                wb = float(np.sum(gs[nz] * pb))
+                tba += ra * wb
+                tfb += wb
+    stats.mean_age_first_birth = tba / max(tfb, 1e-12)
+    mg1 = float(np.sum(g[:, :, :, P.A_f_end :, 1:, :]))
+    stats.parity_progression_1to2 = float(np.sum(g[:, :, :, P.A_f_end :, 2:, :]) / max(mg1, 1e-12))
+
+    ic = 1
+    mcy = float(np.sum(g[:, :, ic, a25s : aye + 1, 0, :]))
+    mct = float(np.sum(g[:, :, :, a25s : aye + 1, 0, :]))
+    stats.center_share_childless_young = mcy / max(mct, 1e-12)
+    stats.center_share_parents = float(np.sum(g[:, :, ic, :, 1:, :]) / max(np.sum(g[:, :, :, :, 1:, :]), 1e-12))
+    mpo = float(np.sum(g[:, owner_mask, :, :, 1:, :]))
+    mpa = float(np.sum(g[:, :, :, :, 1:, :]))
+    stats.own_rate_parents = mpo / max(mpa, 1e-12)
+    mco = float(np.sum(g[:, owner_mask, :, :, 0, :]))
+    mca = float(np.sum(g[:, :, :, :, 0, :]))
+    stats.own_rate_childless = mco / max(mca, 1e-12)
+    stats.own_family_gap = stats.own_rate_parents - stats.own_rate_childless
+
+    prime_mass = float(np.sum(g[:, :, :, a30s : a55e + 1, :, :]))
+    prime_owner = float(np.sum(g[:, owner_mask, :, a30s : a55e + 1, :, :]))
+    stats.own_rate_3055 = prime_owner / max(prime_mass, 1e-12)
+    early_mass = float(np.sum(g[:, :, :, a25s : a34e + 1, :, :]))
+    early_owner = float(np.sum(g[:, owner_mask, :, a25s : a34e + 1, :, :]))
+    stats.own_rate_2534 = early_owner / max(early_mass, 1e-12)
+    mid_mass = float(np.sum(g[:, :, :, a35s : a44e + 1, :, :]))
+    mid_owner = float(np.sum(g[:, owner_mask, :, a35s : a44e + 1, :, :]))
+    stats.own_rate_3544 = mid_owner / max(mid_mass, 1e-12)
+    prime_mass_p = float(np.sum(g[:, :, 0, a30s : a55e + 1, :, :]))
+    prime_mass_c = float(np.sum(g[:, :, 1, a30s : a55e + 1, :, :]))
+    prime_owner_p = float(np.sum(g[:, owner_mask, 0, a30s : a55e + 1, :, :]))
+    prime_owner_c = float(np.sum(g[:, owner_mask, 1, a30s : a55e + 1, :, :]))
+    stats.own_gradient_3055 = prime_owner_p / max(prime_mass_p, 1e-12) - prime_owner_c / max(prime_mass_c, 1e-12)
+    nonparent_mass_2245 = float(np.sum(g[:, :, :, a22s : a45e + 1, 0, 0]))
+    stats.center_share_nonparents_2245 = float(
+        np.sum(g[:, :, 1, a22s : a45e + 1, 0, 0]) / max(nonparent_mass_2245, 1e-12)
+    )
+    nonparent_mass_3055 = float(np.sum(g[:, :, :, a30s : a55e + 1, 0, 0]))
+    nonparent_owner_3055 = float(np.sum(g[:, owner_mask, :, a30s : a55e + 1, 0, 0]))
+    stats.own_rate_nonparents_3055 = nonparent_owner_3055 / max(nonparent_mass_3055, 1e-12)
+    if not newparent_cs:
+        stats.center_share_newparents_2245 = 0.0
+        stats.own_rate_newparents_3055 = 0.0
+    else:
+        newparent_block_2245 = g[:, :, :, a22s : a45e + 1, 1:, :][..., newparent_cs]
+        newparent_center_2245 = g[:, :, 1, a22s : a45e + 1, 1:, :][..., newparent_cs]
+        newparent_mass_2245 = float(np.sum(newparent_block_2245))
+        stats.center_share_newparents_2245 = float(
+            np.sum(newparent_center_2245) / max(newparent_mass_2245, 1e-12)
+        )
+        newparent_block_3055 = g[:, :, :, a30s : a55e + 1, 1:, :][..., newparent_cs]
+        newparent_owner_block_3055 = g[:, owner_mask, :, a30s : a55e + 1, 1:, :][..., newparent_cs]
+        newparent_mass_3055 = float(np.sum(newparent_block_3055))
+        newparent_owner_3055 = float(np.sum(newparent_owner_block_3055))
+        stats.own_rate_newparents_3055 = newparent_owner_3055 / max(newparent_mass_3055, 1e-12)
+    stats.own_gap_newparent_nonparent_3055 = stats.own_rate_newparents_3055 - stats.own_rate_nonparents_3055
+
+    old_mass = float(np.sum(g[:, :, :, a65s : a75e + 1, :, :]))
+    old_owner = float(np.sum(g[:, owner_mask, :, a65s : a75e + 1, :, :]))
+    stats.old_age_own_rate_6575 = old_owner / max(old_mass, 1e-12)
+    old_parent_mass = float(np.sum(g[:, :, :, a65s : a75e + 1, 1:, :]))
+    old_parent_owner = float(np.sum(g[:, owner_mask, :, a65s : a75e + 1, 1:, :]))
+    old_childless_mass = float(np.sum(g[:, :, :, a65s : a75e + 1, 0, 0]))
+    old_childless_owner = float(np.sum(g[:, owner_mask, :, a65s : a75e + 1, 0, 0]))
+    stats.old_age_own_rate_parents_6575 = old_parent_owner / max(old_parent_mass, 1e-12)
+    stats.old_age_own_rate_childless_6575 = old_childless_owner / max(old_childless_mass, 1e-12)
+    stats.old_age_parent_childless_gap_6575 = stats.old_age_own_rate_parents_6575 - stats.old_age_own_rate_childless_6575
+    owner_mass_2545 = float(np.sum(g[:, owner_mask, :, a25s : a45e + 1, :, :]))
+    stats.owner_neg_liquid_share_2545 = float(np.sum(g[bg < 0][:, owner_mask, :, a25s : a45e + 1, :, :]) / max(owner_mass_2545, 1e-12))
+    owner_mass_2534 = float(np.sum(g[:, owner_mask, :, a25s : a34e + 1, :, :]))
+    stats.owner_neg_liquid_share_2534 = float(np.sum(g[bg < 0][:, owner_mask, :, a25s : a34e + 1, :, :]) / max(owner_mass_2534, 1e-12))
+
+    dep_last = P.n_child_stages
+    renter_vals: list[np.ndarray] = []
+    renter_wts: list[np.ndarray] = []
+    owner_vals: list[np.ndarray] = []
+    owner_wts: list[np.ndarray] = []
+    for j in range(a25s, a45e + 1):
+        for i in range(I):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    if current_child_bin_dt(nn, cs, dep_last) != 2:
+                        continue
+                    for h in range(H):
+                        gh = g[:, h, i, j, nn, cs]
+                        keep = gh > 0
+                        if not np.any(keep):
+                            continue
+                        if renter_mask[h]:
+                            renter_vals.append(size[h] * np.ones(np.count_nonzero(keep)))
+                            renter_wts.append(gh[keep])
+                        else:
+                            owner_vals.append(size[h] * np.ones(np.count_nonzero(keep)))
+                            owner_wts.append(gh[keep])
+    stats.prime_childless_renter_median_rooms = weighted_median_from_cells(renter_vals, renter_wts)
+    stats.prime_childless_owner_median_rooms = weighted_median_from_cells(owner_vals, owner_wts)
+    stats.prime_age_renter_room_distribution = room_distribution_records(g, P, prices, a25s, a45e, renter=True)
+    stats.prime_age_owner_room_distribution = room_distribution_records(g, P, prices, a25s, a45e, renter=False)
+
+    stats.mean_housing_by_parity = np.zeros(npar)
+    for nn in range(npar):
+        th = mn = 0.0
+        for i in range(I):
+            for h in range(H):
+                for j in range(J):
+                    for cs in range(ncs):
+                        gs = g[:, h, i, j, nn, cs]
+                        mh = float(np.sum(gs))
+                        th += mh * size[h]
+                        mn += mh
+        stats.mean_housing_by_parity[nn] = th / max(mn, 1e-12)
+    stats.housing_increment_1to2 = (
+        stats.mean_housing_by_parity[2] - stats.mean_housing_by_parity[1] if npar >= 3 else 0.0
+    )
+    stats.housing_increment_0to1_eventstudy_t3 = (
+        stats.mean_housing_by_parity[1] - stats.mean_housing_by_parity[0] if npar >= 2 else 0.0
+    )
+    stats.housing_increment_1to2_proxy_t3 = stats.housing_increment_1to2
+    stats.housing_increment_0to1_onechild_eventstudy_t3 = stats.housing_increment_0to1_eventstudy_t3
+    stats.housing_increment_0to2plus_eventstudy_t3 = (
+        stats.mean_housing_by_parity[2] - stats.mean_housing_by_parity[0] if npar >= 3 else 0.0
+    )
+    stats.housing_event_horizon = 3
+    stats.product_group_shares = product_group_share_records(g, P, prices)
+
+
+def pack_product_solution(V, c, rooms, bp, policy_i, policy_h, fp, fv, g, st, w, Lambda, prices) -> SimpleNamespace:
+    policy_tenure = prices.tenure[policy_h]
+    policy_size = prices.size[policy_h]
+    policy_service = prices.effective_service[policy_h]
+    sol = SimpleNamespace(
+        V=V,
+        c_pol=c,
+        hR_pol=rooms,
+        bp_pol=bp,
+        tenure_choice=policy_h,
+        policy_i_prime=policy_i,
+        policy_h_prime=policy_h,
+        policy_tenure_prime=policy_tenure,
+        policy_size_prime=policy_size,
+        policy_physical_rooms=policy_size,
+        policy_effective_services=policy_service,
+        loc_probs=np.empty((0,)),
+        fert_probs=fp,
+        fert_value=fv,
+        g=g,
+        w_hat=w,
+        p_eq=Lambda,
+        Lambda=Lambda,
+        housing_prices=prices,
+    )
+    for key, value in vars(st).items():
+        setattr(sol, key, value)
+    return sol
+
+
+def _attach_product_market_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, prices: SimpleNamespace, stats: SimpleNamespace) -> None:
+    checks = {}
+    checks["positive_asset_prices"] = bool(np.all(np.isfinite(prices.P_asset)) and np.all(prices.P_asset > 0))
+    checks["positive_rent_usercost"] = bool(
+        np.all(np.isfinite(prices.rent)) and np.all(prices.rent > 0)
+        and np.all(np.isfinite(prices.usercost_O)) and np.all(prices.usercost_O > 0)
+    )
+    checks["finite_owner_downpayments"] = bool(np.all(np.isfinite(prices.downpayment_threshold[:, prices.owner_mask])))
+    owner_violation_mass = owner_downpayment_violation_mass(sol.g, sol.policy_i_prime, sol.policy_h_prime, P, prices)
+    checks["owner_downpayment_feasible"] = bool(owner_violation_mass <= 1e-10)
+    demand_mass = float(np.sum(stats.product_demand))
+    checks["demand_sums_to_population_mass"] = bool(abs(demand_mass - float(np.sum(sol.g))) <= 1e-6 * max(1.0, float(np.sum(sol.g))))
+    checks["capacity_residual_within_tol"] = bool(stats.max_capacity_residual < float(getattr(P, "capacity_tol", 2e-3)))
+    checks["product_market_identity"] = bool(np.max(np.abs(stats.product_market_identity_residual)) <= 1e-12)
+    checks["lambda_inside_bounds"] = not bool(_housing_product_bound_warning(P, sol.Lambda, stats.capacity_residual))
+    sol.product_market_checks = checks
+    sol.owner_downpayment_violation_mass = float(owner_violation_mass)
+    sol.max_product_market_identity_residual = float(np.max(np.abs(stats.product_market_identity_residual)))
+
+
+def owner_downpayment_violation_mass(
+    g: np.ndarray, policy_i: np.ndarray, policy_h: np.ndarray, P: SimpleNamespace, prices: SimpleNamespace
+) -> float:
+    total = 0.0
+    bg = make_grid(P)
+    H = int(P.n_housing_products)
+    for io in range(P.I):
+        for h0 in range(H):
+            for j in range(P.J):
+                for nn in range(P.n_parity):
+                    for cs in range(P.n_child_states):
+                        mass = g[:, h0, io, j, nn, cs]
+                        if float(np.sum(mass)) < 1e-15:
+                            continue
+                        dest_i = policy_i[:, h0, io, j, nn, cs]
+                        dest_h = policy_h[:, h0, io, j, nn, cs]
+                        for id_ in range(P.I):
+                            for hp in range(H):
+                                if not prices.owner_mask[hp]:
+                                    continue
+                                mk = (dest_i == id_) & (dest_h == hp)
+                                if np.any(mk):
+                                    bad = bg < prices.downpayment_threshold[id_, hp]
+                                    total += float(np.sum(mass[mk & bad]))
+    return total
+
+
+def _housing_product_bound_warning(P: SimpleNamespace, Lambda: np.ndarray, residual: np.ndarray) -> str:
+    lower = float(getattr(P, "Lambda_lower", 0.0))
+    upper = float(getattr(P, "Lambda_upper", 8.0))
+    msgs = []
+    labels = ["P", "C"]
+    for i, label in enumerate(labels):
+        if Lambda[i] <= lower + 1e-10 and residual[i] < -float(getattr(P, "capacity_tol", 2e-3)):
+            msgs.append(f"Lambda_{label} at lower bound with excess capacity")
+        if Lambda[i] >= upper - 1e-10 and residual[i] > float(getattr(P, "capacity_tol", 2e-3)):
+            msgs.append(f"Lambda_{label} at upper bound with excess demand")
+    return "; ".join(msgs)
+
+
+def housing_product_price_records(P: SimpleNamespace, prices: SimpleNamespace) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    labels = ["P", "C"]
+    for i, loc in enumerate(labels):
+        for h in range(int(P.n_housing_products)):
+            owner = bool(prices.owner_mask[h])
+            records.append(
+                {
+                    "location": loc,
+                    "location_index": i,
+                    "h": h,
+                    "tenure": "O" if owner else "R",
+                    "size_h": float(prices.size[h]),
+                    "effective_service_h": float(prices.effective_service[h]),
+                    "land_input_h": float(prices.land_input[h]),
+                    "construction_cost": float(prices.construction_cost[i, h]),
+                    "P_asset": float(prices.P_asset[i, h]),
+                    "rent": float(prices.rent[i, h]) if not owner else np.nan,
+                    "usercost_O": float(prices.usercost_O[i, h]) if owner else np.nan,
+                    "downpayment_threshold": float(prices.downpayment_threshold[i, h]) if owner else np.nan,
+                }
+            )
+    return records
+
+
+def housing_product_demand_records(P: SimpleNamespace, stats: SimpleNamespace, prices: SimpleNamespace) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    labels = ["P", "C"]
+    for i, loc in enumerate(labels):
+        for h in range(int(P.n_housing_products)):
+            owner = bool(prices.owner_mask[h])
+            records.append(
+                {
+                    "location": loc,
+                    "location_index": i,
+                    "h": h,
+                    "tenure": "O" if owner else "R",
+                    "size_h": float(prices.size[h]),
+                    "effective_service_h": float(prices.effective_service[h]),
+                    "land_input_h": float(prices.land_input[h]),
+                    "demand": float(stats.product_demand[i, h]),
+                    "supply": float(stats.product_supply[i, h]),
+                    "capacity_use": float(stats.capacity_use_by_product[i, h]),
+                    "identity_residual": float(stats.product_market_identity_residual[i, h]),
+                }
+            )
+    return records
+
+
+def housing_product_capacity_records(P: SimpleNamespace, stats: SimpleNamespace, Lambda: np.ndarray) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    labels = ["P", "C"]
+    for i, loc in enumerate(labels):
+        records.append(
+            {
+                "location": loc,
+                "location_index": i,
+                "Lambda": float(Lambda[i]),
+                "Abar": float(stats.Abar[i]),
+                "total_capacity_use": float(stats.total_capacity_use[i]),
+                "capacity_residual": float(stats.capacity_residual[i]),
+            }
+        )
+    return records
+
+
+def room_distribution_records(g: np.ndarray, P: SimpleNamespace, prices: SimpleNamespace, age_start: int, age_end: int, renter: bool) -> list[dict[str, float]]:
+    mask = prices.renter_mask if renter else prices.owner_mask
+    records: list[dict[str, float]] = []
+    total = float(np.sum(g[:, mask, :, age_start : age_end + 1, :, :]))
+    for h in np.where(mask)[0]:
+        mass = float(np.sum(g[:, h, :, age_start : age_end + 1, :, :]))
+        records.append({"size_h": float(prices.size[h]), "share": mass / max(total, 1e-12), "mass": mass})
+    return records
+
+
+def product_group_share_records(g: np.ndarray, P: SimpleNamespace, prices: SimpleNamespace) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    groups = {
+        "all": np.ones((P.n_parity, P.n_child_states), dtype=bool),
+        "parents": np.pad(np.ones((P.n_parity - 1, P.n_child_states), dtype=bool), ((1, 0), (0, 0))),
+        "nonparents": np.pad(np.ones((1, 1), dtype=bool), ((0, P.n_parity - 1), (0, P.n_child_states - 1))),
+    }
+    if P.n_child_states > 1:
+        newparent = np.zeros((P.n_parity, P.n_child_states), dtype=bool)
+        newparent[1:, 1 : min(P.n_child_stages + 1, 3)] = True
+        groups["newparents"] = newparent
+    for group, mask_nc in groups.items():
+        group_mass = 0.0
+        mass_ih = np.zeros((P.I, int(P.n_housing_products)))
+        for nn in range(P.n_parity):
+            for cs in range(P.n_child_states):
+                if not mask_nc[nn, cs]:
+                    continue
+                block = g[:, :, :, :, nn, cs]
+                group_mass += float(np.sum(block))
+                for i in range(P.I):
+                    for h in range(int(P.n_housing_products)):
+                        mass_ih[i, h] += float(np.sum(block[:, h, i, :]))
+        for i, loc in enumerate(["P", "C"]):
+            for h in range(int(P.n_housing_products)):
+                records.append(
+                    {
+                        "group": group,
+                        "location": loc,
+                        "h": h,
+                        "tenure": "O" if prices.owner_mask[h] else "R",
+                        "size_h": float(prices.size[h]),
+                        "share": float(mass_ih[i, h] / max(group_mass, 1e-12)),
+                        "mass": float(mass_ih[i, h]),
+                    }
+                )
+    return records
+
+
 def solve_equilibrium(
     p_init: np.ndarray, P: SimpleNamespace, b_grid: np.ndarray, verbose: bool = True
 ) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
     p = np.asarray(p_init, dtype=float).reshape(-1)
     entry_closure = uses_outside_option_closure(P)
     renewal_closure = uses_renewal_valve_closure(P)
+    benchmark_norm_closure = uses_benchmark_normalized_outside_closure(P)
     scale_price_closure = uses_accounting_scale_price_closure(P) or renewal_closure
     if scale_price_closure and not (
         renewal_closure
+        or benchmark_norm_closure
         or
         bool(getattr(P, "outside_value_is_calibrated", False))
         or bool(getattr(P, "allow_uncalibrated_outside_value", False))
@@ -624,7 +1886,9 @@ def solve_equilibrium(
                 total_mass=stats.total_mass,
                 housing_demand=stats.housing_demand,
             )
-            if renewal_closure:
+            if benchmark_norm_closure:
+                scale_info = benchmark_normalized_outside_population_scale(scale_state, P, b_grid)
+            elif renewal_closure:
                 scale_info = renewal_population_scale(scale_state, P, b_grid)
             else:
                 scale_info = accounting_population_scale(scale_state, P, b_grid)
@@ -651,7 +1915,9 @@ def solve_equilibrium(
             entry_info = {
                 "entry_values": getattr(scale_info, "entry_values", np.full(P.I, np.nan)),
                 "city_entry_prob": getattr(scale_info, "city_entry_prob", np.full(P.I, np.nan)),
+                "city_entry_prob_total": getattr(scale_info, "city_entry_prob_total", np.nan),
                 "outside_entry_prob": getattr(scale_info, "outside_entry_prob", np.nan),
+                "outside_entry_flow": getattr(scale_info, "outside_entry_flow", np.nan),
                 "potential_entrant_mass": getattr(scale_info, "implied_potential_entrant_mass", np.nan),
                 "outside_entry_mass": getattr(scale_info, "implied_outside_entry_mass", np.nan),
                 "mature_cityborn_flow": scale_info.reference_mature_cityborn_flow,
@@ -707,7 +1973,9 @@ def solve_equilibrium(
             if scale_price_closure:
                 ge_trace[-1]["scale_factor"] = float(entry_info.get("scale_factor", np.nan))
                 ge_trace[-1]["implied_total_population"] = float(entry_info.get("implied_total_population", np.nan))
+                ge_trace[-1]["city_entry_prob_total"] = float(entry_info.get("city_entry_prob_total", np.nan))
                 ge_trace[-1]["outside_entry_prob"] = float(entry_info.get("outside_entry_prob", np.nan))
+                ge_trace[-1]["outside_entry_flow"] = float(entry_info.get("outside_entry_flow", np.nan))
                 if scale_info is not None:
                     ge_trace[-1]["scale_denominator"] = float(scale_info.denominator)
                     ge_trace[-1]["scale_residual"] = float(scale_info.stationary_entry_residual)
@@ -870,7 +2138,12 @@ def solve_equilibrium(
         "population_closure": str(getattr(P, "population_closure", "normalized")),
     }
     if scale_price_closure:
-        sol.accounting_scale = renewal_population_scale(sol, P, b_grid) if renewal_closure else accounting_population_scale(sol, P, b_grid)
+        if benchmark_norm_closure:
+            sol.accounting_scale = benchmark_normalized_outside_population_scale(sol, P, b_grid)
+        elif renewal_closure:
+            sol.accounting_scale = renewal_population_scale(sol, P, b_grid)
+        else:
+            sol.accounting_scale = accounting_population_scale(sol, P, b_grid)
     if collect_trace:
         sol.ge_trace = ge_trace
     return sol, P, p_eq
@@ -1034,7 +2307,7 @@ def solve_bellman_core(
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
         for ten in range(nt):
-            hv = p_hat[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+            hv = heq[i, ten]
             for nn in range(npar):
                 for cs in range(ncs):
                     nk = get_completed_fertility(nn, cs, P)

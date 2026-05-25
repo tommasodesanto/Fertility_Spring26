@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a direct no-inversion renewal-valve calibration job.
+"""Run a direct no-inversion outside-option calibration job.
 
 Each invocation is one sequential optimizer worker. On the cluster we launch an
 array of independent workers with different seeds and collect the best JSON
@@ -42,7 +42,11 @@ def main() -> None:
         outside_value_x0=args.outside_value_x0,
         outside_flow_x0=args.outside_flow_x0,
         renewal_retention=args.renewal_retention,
+        target_city_entry_prob=args.target_city_entry_prob,
+        kappa_entry=args.kappa_entry,
+        housing_product_market=args.housing_product_market,
     )
+    apply_run_overrides(setup, args)
     lb, ub = apply_bound_profile(setup, args.bound_profile)
     seed = int(args.seed_base + 1009 * args.job_id)
     rng = np.random.default_rng(seed)
@@ -70,7 +74,13 @@ def main() -> None:
         "outside_value_x0": args.outside_value_x0,
         "outside_flow_x0": args.outside_flow_x0,
         "renewal_retention": args.renewal_retention,
+        "target_city_entry_prob": args.target_city_entry_prob,
+        "kappa_entry": args.kappa_entry,
+        "housing_product_market": args.housing_product_market,
+        "hR_max": float(setup.P_base.hR_max),
+        "H_own": [float(x) for x in np.asarray(setup.P_base.H_own).reshape(-1)],
         "eq_penalty_weight": args.eq_penalty_weight,
+        "max_tfr": args.max_tfr,
         "theta_names": setup.names,
         "lb": lb.tolist(),
         "ub": ub.tolist(),
@@ -93,7 +103,7 @@ def main() -> None:
     n_eval = count_jsonl(eval_path) if args.resume and eval_path.exists() else 0
     no_improve = 0
 
-    print_header(args, job_dir, seed, lb, ub)
+    print_header(args, job_dir, seed, lb, ub, setup)
 
     while n_eval < args.max_evals:
         elapsed = time.perf_counter() - t_start
@@ -107,6 +117,7 @@ def main() -> None:
             max_iter_eq=args.max_iter_eq,
             force_full=args.force_full,
             eq_penalty_weight=args.eq_penalty_weight,
+            max_tfr=args.max_tfr,
             verbose=args.verbose_solver,
         )
         n_eval += 1
@@ -163,7 +174,7 @@ def main() -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Direct no-inversion renewal-valve calibration worker.")
+    parser = argparse.ArgumentParser(description="Direct no-inversion outside-option calibration worker.")
     parser.add_argument("--job-id", type=int, default=int(os.environ.get("SLURM_ARRAY_TASK_ID", "1")))
     parser.add_argument("--run-tag", default=os.environ.get("DT_DIRECT_RUN_TAG", time.strftime("direct_geo_%Y%m%d_%H%M%S")))
     parser.add_argument("--setup", choices=["fast", "benchmark"], default=os.environ.get("DT_DIRECT_SETUP", "benchmark"))
@@ -176,8 +187,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--geo-weight", type=float, default=float(os.environ.get("DT_DIRECT_GEO_WEIGHT", "100")))
     parser.add_argument(
         "--population-closure",
-        choices=["renewal_valve_calibrated", "renewal_valve", "accounting_scale_prices", "outside_option", "normalized"],
-        default=os.environ.get("DT_DIRECT_POPULATION_CLOSURE", "renewal_valve_calibrated"),
+        choices=[
+            "renewal_valve_calibrated",
+            "renewal_valve",
+            "accounting_scale_prices",
+            "outside_option_benchmark_normalized",
+            "outside_option",
+            "normalized",
+        ],
+        default=os.environ.get("DT_DIRECT_POPULATION_CLOSURE", "outside_option_benchmark_normalized"),
     )
     parser.add_argument("--scale-target", type=float, default=float(os.environ.get("DT_DIRECT_SCALE_TARGET", "1.0")))
     parser.add_argument("--scale-weight", type=float, default=float(os.environ.get("DT_DIRECT_SCALE_WEIGHT", "100")))
@@ -196,7 +214,46 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=float(os.environ.get("DT_DIRECT_RENEWAL_RETENTION", "1.0")),
     )
+    parser.add_argument(
+        "--target-city-entry-prob",
+        type=float,
+        default=float(os.environ.get("DT_DIRECT_TARGET_CITY_ENTRY_PROB", "0.89")),
+    )
+    parser.add_argument(
+        "--kappa-entry",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_KAPPA_ENTRY"])
+            if "DT_DIRECT_KAPPA_ENTRY" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument(
+        "--housing-product-market",
+        action="store_true",
+        default=os.environ.get("DT_DIRECT_HOUSING_PRODUCT_MARKET", "0").lower() in ("1", "true", "yes"),
+    )
+    parser.add_argument(
+        "--h-own-min",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_H_OWN_MIN"])
+            if "DT_DIRECT_H_OWN_MIN" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument("--hR-max", default=os.environ.get("DT_DIRECT_HR_MAX"))
     parser.add_argument("--eq-penalty-weight", type=float, default=float(os.environ.get("DT_DIRECT_EQ_PENALTY_WEIGHT", "0")))
+    parser.add_argument(
+        "--max-tfr",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_MAX_TFR"])
+            if "DT_DIRECT_MAX_TFR" in os.environ
+            else None
+        ),
+        help="Optional hard cap: candidates with TFR >= this value receive loss 1e6.",
+    )
     parser.add_argument("--initial-scale", type=float, default=float(os.environ.get("DT_DIRECT_INITIAL_SCALE", "0.18")))
     parser.add_argument("--min-scale", type=float, default=float(os.environ.get("DT_DIRECT_MIN_SCALE", "0.015")))
     parser.add_argument("--global-prob", type=float, default=float(os.environ.get("DT_DIRECT_GLOBAL_PROB", "0.12")))
@@ -211,6 +268,29 @@ def parse_args() -> argparse.Namespace:
     if args.max_iter_eq <= 0:
         args.max_iter_eq = None
     return args
+
+
+def apply_run_overrides(setup: DirectCalibrationSetup, args: argparse.Namespace) -> None:
+    if args.h_own_min is not None:
+        current = np.asarray(setup.P_base.H_own, dtype=float).reshape(-1)
+        h_min = float(args.h_own_min)
+        h_max = float(np.max(current))
+        if not np.isfinite(h_min) or h_min < 0 or h_min >= h_max:
+            raise ValueError(f"Invalid owner-grid minimum override: {args.h_own_min}")
+        setup.P_base.H_own = np.linspace(h_min, h_max, len(current))
+        setup.P_base.n_house = len(current)
+        setup.P_base.h_own_min = h_min
+        setup.P_base.h_own_max = h_max
+    if args.hR_max is None or str(args.hR_max).strip() == "":
+        return
+    raw = str(args.hR_max).strip().lower()
+    if raw in ("owner_max", "max_owner", "h_own_max", "common", "due_common"):
+        hR_max = float(np.max(np.asarray(setup.P_base.H_own, dtype=float)))
+    else:
+        hR_max = float(raw)
+    if not np.isfinite(hR_max) or hR_max <= 0:
+        raise ValueError(f"Invalid hR_max override: {args.hR_max}")
+    setup.P_base.hR_max = hR_max
 
 
 def apply_bound_profile(setup: DirectCalibrationSetup, profile: str) -> tuple[np.ndarray, np.ndarray]:
@@ -351,18 +431,29 @@ def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace,
     }
 
 
-def print_header(args: argparse.Namespace, job_dir: Path, seed: int, lb: np.ndarray, ub: np.ndarray) -> None:
+def print_header(
+    args: argparse.Namespace,
+    job_dir: Path,
+    seed: int,
+    lb: np.ndarray,
+    ub: np.ndarray,
+    setup: DirectCalibrationSetup,
+) -> None:
     print("=" * 72)
-    print("Direct no-inversion renewal-valve Python calibration")
+    print("Direct no-inversion outside-option Python calibration")
     print(f"job_id={args.job_id} run_tag={args.run_tag} seed={seed}")
     print(
         f"setup={args.setup} bounds={args.bound_profile} "
         f"closure={args.population_closure} max_iter_eq={args.max_iter_eq}"
     )
-    if args.population_closure == "renewal_valve_calibrated":
+    if args.population_closure in ("renewal_valve_calibrated", "outside_option_benchmark_normalized"):
         print(f"scale_target={args.scale_target} imposed mechanically; scale_weight inactive")
     else:
         print(f"scale_target={args.scale_target} scale_weight={args.scale_weight}")
+    print(f"target_city_entry_prob={args.target_city_entry_prob} kappa_entry={args.kappa_entry}")
+    print(f"housing_product_market={args.housing_product_market}")
+    print(f"hR_max={setup.P_base.hR_max} H_own={np.asarray(setup.P_base.H_own).tolist()}")
+    print(f"max_tfr={args.max_tfr}")
     print(f"renewal_retention={args.renewal_retention}")
     print(f"budget_sec={args.budget_sec:.0f} max_evals={args.max_evals} job_dir={job_dir}")
     print(f"dim={len(lb)}")

@@ -5,10 +5,10 @@ center amenity and center rent shifter as ordinary calibrated parameters. The
 geography moments therefore enter the same SMM loss as the fertility, tenure,
 housing, wealth, and migration moments.
 
-The current model also uses the renewal-valve population closure: an exogenous
-outside-born entry flow and a fixed retained share of mature city-born children
-pin a finite stationary city scale. The benchmark size target normalizes the
-baseline city to one; it does not normalize counterfactual equilibria.
+The current model uses the benchmark-normalized outside-option population
+closure. The benchmark size target normalizes the baseline city to one, while
+the outside-born entry flow and outside value are accounting objects to hold
+fixed in counterfactuals.
 """
 
 from __future__ import annotations
@@ -39,6 +39,10 @@ RENEWAL_FLOW_LB = 1e-4
 RENEWAL_FLOW_UB = 0.080
 DEFAULT_RENEWAL_FLOW_X0 = 0.003
 POPULATION_SCALE_CLOSURES = {"accounting_scale_prices", "scaled_housing", "scaled_housing_accounting"}
+BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES = {
+    "outside_option_benchmark_normalized",
+    "benchmark_outside_option_normalized",
+}
 RENEWAL_VALVE_FIXED_CLOSURES = {"renewal_valve", "renewal_scale", "demographic_valve"}
 RENEWAL_VALVE_CALIBRATED_CLOSURES = {
     "renewal_valve_calibrated",
@@ -49,6 +53,7 @@ RENEWAL_VALVE_CALIBRATED_CLOSURES = {
 RENEWAL_VALVE_CLOSURES = RENEWAL_VALVE_FIXED_CLOSURES | RENEWAL_VALVE_CALIBRATED_CLOSURES
 OPEN_CITY_CLOSURES = (
     POPULATION_SCALE_CLOSURES
+    | BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
     | RENEWAL_VALVE_CLOSURES
     | {"outside_option", "outside_option_local_births", "local_births_outside", "open_city"}
 )
@@ -87,12 +92,15 @@ class DirectObjectiveResult:
 def build_direct_calibration_setup(
     setup_mode: str = "benchmark",
     geo_weight: float = 100.0,
-    population_closure: str = "renewal_valve_calibrated",
+    population_closure: str = "outside_option_benchmark_normalized",
     scale_target: float = 1.0,
     scale_weight: float = 100.0,
     outside_value_x0: float | None = None,
     outside_flow_x0: float | None = None,
     renewal_retention: float = 1.0,
+    target_city_entry_prob: float = 0.89,
+    kappa_entry: float | None = None,
+    housing_product_market: bool = False,
 ) -> DirectCalibrationSetup:
     """Build the direct-geometry counterpart of ``build_calibration_setup``.
 
@@ -123,12 +131,20 @@ def build_direct_calibration_setup(
     ``outside_value``
         The value of the outside option. Kept for diagnostics, not the default
         benchmark closure.
+
+    Under the benchmark-normalized outside-option closure, no scale parameter is
+    estimated. The outside value is recalibrated at the benchmark to hit a
+    target city-entry probability, and the outside-born flow is computed
+    residually from ``S E_0 = q^E [M + S B_0]``. The baseline ``q^E`` is the
+    rounded value implied by the external outside-origin entrant-share
+    normalization and the previous near-calibrated ``B_0/E_0``.
     """
 
     base = build_calibration_setup(setup_mode)
+    base.P_base.housing_product_market = bool(housing_product_market)
     targets = dict(base.targets)
     weights = dict(base.weights)
-    closure = str(population_closure or "renewal_valve").lower()
+    closure = str(population_closure or "outside_option_benchmark_normalized").lower()
 
     targets["inv_pop_share_C"] = float(base.inversion_targets["pop_share_C"])
     targets["inv_rent_ratio_C_over_P"] = float(base.inversion_targets["rent_ratio"])
@@ -172,6 +188,13 @@ def build_direct_calibration_setup(
         base.P_base.outside_value = float(x0_parts[-1][0])
         base.P_base.outside_value_is_calibrated = True
         base.P_base.allow_uncalibrated_outside_value = False
+    elif closure in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES:
+        base.P_base.population_closure = closure
+        base.P_base.outside_benchmark_target_total_population = float(scale_target)
+        base.P_base.target_city_entry_prob = float(target_city_entry_prob)
+        base.P_base.calibrate_outside_value_to_entry_prob = True
+        if kappa_entry is not None:
+            base.P_base.kappa_entry = float(kappa_entry)
     elif closure in OPEN_CITY_CLOSURES:
         base.P_base.population_closure = closure
     else:
@@ -201,6 +224,7 @@ def evaluate_direct_theta(
     max_iter_eq: int | None = None,
     force_full: bool = False,
     eq_penalty_weight: float = 0.0,
+    max_tfr: float | None = None,
     verbose: bool = False,
 ) -> DirectObjectiveResult:
     """Evaluate one no-inversion SMM objective point."""
@@ -239,7 +263,10 @@ def evaluate_direct_theta(
     except Exception as exc:  # pragma: no cover - exercised by cluster jobs
         return _failed_result(theta_arr, t0, repr(exc))
 
-    rent_ratio = float((P_out.user_cost_rate * p_eq[1]) / (P_out.user_cost_rate * p_eq[0]))
+    if bool(getattr(P_out, "housing_product_market", False)) and hasattr(sol, "product_unit_rent_by_loc"):
+        rent_ratio = float(sol.product_unit_rent_by_loc[1] / max(sol.product_unit_rent_by_loc[0], 1e-12))
+    else:
+        rent_ratio = float((P_out.user_cost_rate * p_eq[1]) / (P_out.user_cost_rate * p_eq[0]))
     moments_ns = extract_moments(sol, P_out, p_eq, 0.0, 0.0, 0.0, True)
     moments_ns.inv_pop_share_C = float(sol.pop_share[1])
     moments_ns.inv_rent_ratio_C_over_P = rent_ratio
@@ -252,10 +279,14 @@ def evaluate_direct_theta(
     if RENEWAL_FLOW_NAME in theta_dict:
         moments_ns.outside_entry_flow = float(P_out.outside_entry_flow)
         moments_ns.renewal_retention = float(getattr(P_out, "renewal_retention", np.nan))
+    if bool(getattr(P_out, "housing_product_market", False)):
+        moments_ns.Lambda_P = float(np.asarray(p_eq).reshape(-1)[0])
+        moments_ns.Lambda_C = float(np.asarray(p_eq).reshape(-1)[1])
+        moments_ns.max_capacity_residual = float(getattr(sol, "max_capacity_residual", np.nan))
     _attach_population_scale_moments(moments_ns, sol, P_out)
 
     moments = _namespace_to_float_dict(moments_ns)
-    if setup.population_closure in RENEWAL_VALVE_CLOSURES:
+    if setup.population_closure in (RENEWAL_VALVE_CLOSURES | BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES):
         scale = getattr(sol, "accounting_scale", None)
         scale_error = _renewal_scale_error(scale)
         if scale_error is not None:
@@ -271,6 +302,11 @@ def evaluate_direct_theta(
             excess = max(0.0, best_eq_error - 0.02)
             loss += float(eq_penalty_weight) * (excess / 0.02) ** 2
         else:
+            loss = 1e6
+
+    if max_tfr is not None:
+        tfr_val = float(moments.get("tfr", np.nan))
+        if (not np.isfinite(tfr_val)) or tfr_val >= float(max_tfr):
             loss = 1e6
 
     if not np.isfinite(loss):

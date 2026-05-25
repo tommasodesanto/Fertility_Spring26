@@ -165,8 +165,18 @@ def extract_moments(
     moments.inv_E_C = P_out.E_loc[1]
     moments.inv_r_bar_C = P_out.r_bar[1]
     moments.inv_pop_C = sol.pop_share[1]
-    moments.inv_rent_ratio = (P_out.user_cost_rate * p_eq[1]) / (P_out.user_cost_rate * p_eq[0])
+    if bool(getattr(P_out, "housing_product_market", False)) and hasattr(sol, "product_unit_rent_by_loc"):
+        moments.inv_rent_ratio = sol.product_unit_rent_by_loc[1] / max(sol.product_unit_rent_by_loc[0], 1e-12)
+    else:
+        moments.inv_rent_ratio = (P_out.user_cost_rate * p_eq[1]) / (P_out.user_cost_rate * p_eq[0])
     moments.inv_err_pop = err_pop
     moments.inv_err_rent = err_rent
     moments.inv_max_error = inv_err
+    moments.H01 = moments.housing_increment_0to1
+    moments.H12 = moments.housing_increment_1to2
+    moments.owner_rate = moments.own_rate
+    if bool(getattr(P_out, "housing_product_market", False)):
+        moments.max_capacity_residual = float(getattr(sol, "max_capacity_residual", np.nan))
+        moments.Lambda_P = float(np.asarray(p_eq).reshape(-1)[0])
+        moments.Lambda_C = float(np.asarray(p_eq).reshape(-1)[1])
     return moments

@@ -967,3 +967,153 @@ def eval_owner_block_kernel(
             ct_eff = ct if ct > c_min else c_min
             co[b, c] = cbc + ct_eff
     return Vo, co
+
+
+@njit(cache=True)
+def eval_fixed_product_scalar(bp, Rv, current_a, Vbar, bg, housing_cost, q_service, downpayment, owner_flag, cb, hb, psi_v, c_min, alpha, oms, sigma, beta):
+    if owner_flag == 1 and current_a < downpayment:
+        return -1e10
+    c_gap = Rv - housing_cost - bp - cb
+    q_gap = q_service - hb
+    if c_gap <= 1e-10 or q_gap <= 1e-10:
+        return -1e10
+    comp = (c_gap ** alpha) * (q_gap ** (1.0 - alpha))
+    if abs(sigma - 1.0) < 1e-8:
+        flow = np.log(comp) + psi_v
+    else:
+        flow = (comp ** oms) / oms + psi_v
+    return flow + beta * interp_scalar(bg, Vbar, bp)
+
+
+@njit(cache=True, parallel=True)
+def product_action_block_kernel(
+    Rv1d,
+    V,
+    b_grid,
+    cb,
+    hb,
+    psi_v,
+    housing_cost,
+    q_service,
+    downpayment,
+    owner_flag,
+    c_min,
+    alpha,
+    oms,
+    sigma,
+    beta,
+    gs_alpha1,
+    gs_alpha2,
+    gs_tol,
+):
+    Nb, nc = V.shape
+    Vo = np.empty((Nb, nc))
+    bp_out = np.empty((Nb, nc))
+    co = np.empty((Nb, nc))
+    bmin = b_grid[0]
+    bmax = b_grid[b_grid.size - 1]
+    for c in prange(nc):
+        cbc = cb[c]
+        hbc = hb[c]
+        psic = psi_v[c]
+        q_gap = q_service - hbc
+        for b in range(Nb):
+            current_a = b_grid[b]
+            Rvb = Rv1d[b]
+            hi = Rvb - housing_cost - cbc - c_min
+            if hi > bmax:
+                hi = bmax
+            lo = bmin
+            if hi < lo or q_gap <= 1e-10 or (owner_flag == 1 and current_a < downpayment):
+                Vo[b, c] = -1e10
+                bp_out[b, c] = lo
+                co[b, c] = cbc + c_min
+                continue
+            d = hi - lo
+            x1 = lo + gs_alpha1 * d
+            x2 = lo + gs_alpha2 * d
+            f1 = eval_fixed_product_scalar(
+                x1, Rvb, current_a, V[:, c], b_grid, housing_cost, q_service, downpayment, owner_flag,
+                cbc, hbc, psic, c_min, alpha, oms, sigma, beta
+            )
+            f2 = eval_fixed_product_scalar(
+                x2, Rvb, current_a, V[:, c], b_grid, housing_cost, q_service, downpayment, owner_flag,
+                cbc, hbc, psic, c_min, alpha, oms, sigma, beta
+            )
+            d = gs_alpha1 * gs_alpha2 * d
+            while d > gs_tol:
+                if f2 >= f1:
+                    xe = x2 + d
+                    fe = eval_fixed_product_scalar(
+                        xe, Rvb, current_a, V[:, c], b_grid, housing_cost, q_service, downpayment, owner_flag,
+                        cbc, hbc, psic, c_min, alpha, oms, sigma, beta
+                    )
+                    x1 = x2
+                    f1 = f2
+                    x2 = xe
+                    f2 = fe
+                else:
+                    xe = x1 - d
+                    fe = eval_fixed_product_scalar(
+                        xe, Rvb, current_a, V[:, c], b_grid, housing_cost, q_service, downpayment, owner_flag,
+                        cbc, hbc, psic, c_min, alpha, oms, sigma, beta
+                    )
+                    x2 = x1
+                    f2 = f1
+                    x1 = xe
+                    f1 = fe
+                d = d * gs_alpha2
+            if f2 >= f1:
+                bp_best = x2
+                v_best = f2
+            else:
+                bp_best = x1
+                v_best = f1
+            bp_out[b, c] = bp_best
+            Vo[b, c] = v_best
+            c_raw = Rvb - housing_cost - bp_best
+            c_floor = cbc + c_min
+            co[b, c] = c_raw if c_raw > c_floor else c_floor
+    return Vo, bp_out, co
+
+
+@njit(cache=True, parallel=True)
+def product_choice_kernel(action_val, action_bp, action_c, E_loc, penalty):
+    Nb, I, H, npar, ncs = action_val.shape
+    best_val = np.empty((Nb, H, I, npar, ncs))
+    best_bp = np.empty((Nb, H, I, npar, ncs))
+    best_c = np.empty((Nb, H, I, npar, ncs))
+    best_i = np.empty((Nb, H, I, npar, ncs), dtype=np.int16)
+    best_h = np.empty((Nb, H, I, npar, ncs), dtype=np.int16)
+    total = Nb * H * I * npar * ncs
+    for idx in prange(total):
+        tmp0 = idx
+        cs = tmp0 % ncs
+        tmp1 = tmp0 // ncs
+        nn = tmp1 % npar
+        tmp2 = tmp1 // npar
+        io = tmp2 % I
+        tmp3 = tmp2 // I
+        h0 = tmp3 % H
+        b = tmp3 // H
+        bv = -1e300
+        bi = 0
+        bh = 0
+        bbp = 0.0
+        bc = 0.0
+        for idd in range(I):
+            loc_bonus = E_loc[idd]
+            for hp in range(H):
+                cand = action_val[b, idd, hp, nn, cs] + loc_bonus - penalty[io, h0, idd, hp, nn, cs]
+                if cand > bv:
+                    bv = cand
+                    bi = idd
+                    bh = hp
+                    bbp = action_bp[b, idd, hp, nn, cs]
+                    bc = action_c[b, idd, hp, nn, cs]
+        best_val[b, h0, io, nn, cs] = bv
+        best_bp[b, h0, io, nn, cs] = bbp
+        best_c[b, h0, io, nn, cs] = bc
+        best_i[b, h0, io, nn, cs] = bi
+        best_h[b, h0, io, nn, cs] = bh
+    return best_val, best_bp, best_c, best_i, best_h

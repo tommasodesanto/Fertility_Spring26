@@ -1,5 +1,5 @@
 #!/bin/bash
-# Direct no-inversion renewal-valve Python calibration on Torch.
+# Direct no-inversion outside-option Python calibration on Torch.
 # Submit from:
 #   $SCRATCH/projects/Fertility_Spring26/code/cluster
 #
@@ -36,15 +36,20 @@ export DT_DIRECT_RESULTS_DIR="${DT_DIRECT_RESULTS_DIR:-${SCRIPT_DIR}/results_pyt
 export DT_DIRECT_BUDGET_SEC="${DT_DIRECT_BUDGET_SEC:-13500}"
 export DT_DIRECT_MAX_EVALS="${DT_DIRECT_MAX_EVALS:-1000000}"
 export DT_DIRECT_GEO_WEIGHT="${DT_DIRECT_GEO_WEIGHT:-100}"
-export DT_DIRECT_POPULATION_CLOSURE="${DT_DIRECT_POPULATION_CLOSURE:-renewal_valve_calibrated}"
+export DT_DIRECT_POPULATION_CLOSURE="${DT_DIRECT_POPULATION_CLOSURE:-outside_option_benchmark_normalized}"
 export DT_DIRECT_SCALE_TARGET="${DT_DIRECT_SCALE_TARGET:-1.0}"
 export DT_DIRECT_SCALE_WEIGHT="${DT_DIRECT_SCALE_WEIGHT:-100}"
 export DT_DIRECT_OUTSIDE_VALUE_X0="${DT_DIRECT_OUTSIDE_VALUE_X0:--41.95}"
 export DT_DIRECT_OUTSIDE_FLOW_X0="${DT_DIRECT_OUTSIDE_FLOW_X0:-0.003}"
 export DT_DIRECT_RENEWAL_RETENTION="${DT_DIRECT_RENEWAL_RETENTION:-1.0}"
+export DT_DIRECT_TARGET_CITY_ENTRY_PROB="${DT_DIRECT_TARGET_CITY_ENTRY_PROB:-0.89}"
+export DT_DIRECT_H_OWN_MIN="${DT_DIRECT_H_OWN_MIN:-}"
+export DT_DIRECT_HR_MAX="${DT_DIRECT_HR_MAX:-}"
 export DT_DIRECT_EQ_PENALTY_WEIGHT="${DT_DIRECT_EQ_PENALTY_WEIGHT:-0}"
+export DT_DIRECT_MAX_TFR="${DT_DIRECT_MAX_TFR:-}"
 export DT_DIRECT_MAX_ITER_EQ="${DT_DIRECT_MAX_ITER_EQ:-0}"
 export DT_DIRECT_LOG_EVERY="${DT_DIRECT_LOG_EVERY:-5}"
+export DT_DIRECT_HOUSING_PRODUCT_MARKET="${DT_DIRECT_HOUSING_PRODUCT_MARKET:-0}"
 
 mkdir -p "${DT_DIRECT_RESULTS_DIR}"
 
@@ -70,7 +75,7 @@ export OPENBLAS_NUM_THREADS=1
 mkdir -p "${NUMBA_CACHE_DIR}"
 
 echo "============================================"
-echo "Direct no-inversion renewal-valve Python calibration"
+echo "Direct no-inversion outside-option Python calibration"
 echo "Job ID: ${SLURM_JOB_ID:-local}"
 echo "Array Task ID: ${SLURM_ARRAY_TASK_ID:-1}"
 echo "Node: ${SLURM_NODELIST:-local}"
@@ -80,12 +85,17 @@ echo "Python: ${PYTHON_BIN}"
 echo "Run tag: ${DT_DIRECT_RUN_TAG}"
 echo "Results: ${DT_DIRECT_RESULTS_DIR}"
 echo "Setup: ${DT_DIRECT_SETUP} | bounds: ${DT_DIRECT_BOUNDS} | closure: ${DT_DIRECT_POPULATION_CLOSURE}"
-if [ "${DT_DIRECT_POPULATION_CLOSURE}" = "renewal_valve_calibrated" ]; then
+if [ "${DT_DIRECT_POPULATION_CLOSURE}" = "renewal_valve_calibrated" ] || [ "${DT_DIRECT_POPULATION_CLOSURE}" = "outside_option_benchmark_normalized" ]; then
     echo "Scale target: ${DT_DIRECT_SCALE_TARGET} imposed mechanically | scale weight inactive"
 else
     echo "Scale target: ${DT_DIRECT_SCALE_TARGET} | scale weight: ${DT_DIRECT_SCALE_WEIGHT}"
 fi
 echo "Outside value x0: ${DT_DIRECT_OUTSIDE_VALUE_X0} | outside flow x0: ${DT_DIRECT_OUTSIDE_FLOW_X0} | renewal rho: ${DT_DIRECT_RENEWAL_RETENTION}"
+echo "Target city-entry probability: ${DT_DIRECT_TARGET_CITY_ENTRY_PROB} | kappa entry: ${DT_DIRECT_KAPPA_ENTRY:-default}"
+echo "Owner housing min override: ${DT_DIRECT_H_OWN_MIN:-default}"
+echo "Rental housing max override: ${DT_DIRECT_HR_MAX:-default}"
+echo "Housing product market: ${DT_DIRECT_HOUSING_PRODUCT_MARKET}"
+echo "Max TFR cap: ${DT_DIRECT_MAX_TFR:-none}"
 echo "Budget: ${DT_DIRECT_BUDGET_SEC}s | max evals: ${DT_DIRECT_MAX_EVALS}"
 echo "Started: $(date)"
 echo "============================================"
@@ -123,13 +133,29 @@ ARGS=(
     --outside-value-x0 "${DT_DIRECT_OUTSIDE_VALUE_X0}"
     --outside-flow-x0 "${DT_DIRECT_OUTSIDE_FLOW_X0}"
     --renewal-retention "${DT_DIRECT_RENEWAL_RETENTION}"
+    --target-city-entry-prob "${DT_DIRECT_TARGET_CITY_ENTRY_PROB}"
     --eq-penalty-weight "${DT_DIRECT_EQ_PENALTY_WEIGHT}"
     --log-every "${DT_DIRECT_LOG_EVERY}"
     --resume
 )
 
+if [ -n "${DT_DIRECT_MAX_TFR}" ]; then
+    ARGS+=(--max-tfr "${DT_DIRECT_MAX_TFR}")
+fi
 if [ "${DT_DIRECT_MAX_ITER_EQ}" != "0" ]; then
     ARGS+=(--max-iter-eq "${DT_DIRECT_MAX_ITER_EQ}")
+fi
+if [ -n "${DT_DIRECT_KAPPA_ENTRY:-}" ]; then
+    ARGS+=(--kappa-entry "${DT_DIRECT_KAPPA_ENTRY}")
+fi
+if [ -n "${DT_DIRECT_H_OWN_MIN}" ]; then
+    ARGS+=(--h-own-min "${DT_DIRECT_H_OWN_MIN}")
+fi
+if [ -n "${DT_DIRECT_HR_MAX}" ]; then
+    ARGS+=(--hR-max "${DT_DIRECT_HR_MAX}")
+fi
+if [ "${DT_DIRECT_HOUSING_PRODUCT_MARKET}" = "1" ] || [ "${DT_DIRECT_HOUSING_PRODUCT_MARKET}" = "true" ] || [ "${DT_DIRECT_HOUSING_PRODUCT_MARKET}" = "TRUE" ]; then
+    ARGS+=(--housing-product-market)
 fi
 
 "${PYTHON_BIN}" "${ARGS[@]}"

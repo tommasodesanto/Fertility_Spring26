@@ -87,6 +87,7 @@ def setup_parameters() -> SimpleNamespace:
     P.H_own = np.linspace(P.h_own_min, P.h_own_max, P.n_house)
     P.hR_max = 8.0
     P.I = 2
+    P = finalize_housing_product_market(P)
     P.w_hat = np.array([1.0, 1.0])
     P.E_loc = np.array([0.0, 0.30])
     P.income_age_breaks = np.array([18.0, 25.0, 35.0, 45.0, 55.0])
@@ -101,7 +102,7 @@ def setup_parameters() -> SimpleNamespace:
     P.N_target = 1.0
     P.E_total = 1 / P.J
     P.entry_by_loc = P.E_total * P.entry_shares
-    P.population_closure = "normalized"
+    P.population_closure = "outside_option_benchmark_normalized"
     P.normalize_population_mass = True
     P.outside_entry_flow = P.E_total
     P.outside_entry_shares = P.entry_shares.copy()
@@ -113,6 +114,10 @@ def setup_parameters() -> SimpleNamespace:
     P.outside_value_is_calibrated = False
     P.allow_uncalibrated_outside_value = False
     P.kappa_entry = P.kappa_loc
+    P.target_outside_origin_entry_share = 0.169
+    P.target_city_entry_prob = 0.89
+    P.calibrate_outside_value_to_entry_prob = True
+    P.outside_benchmark_target_total_population = P.N_target
     P.entry_level_update = "log"
     P.entry_log_step_max = 1.0
     P.entry_mass_floor = 1e-12
@@ -231,6 +236,7 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
     P_base.H0 = np.array([5.27, 4.505])
     P_base.E_loc = np.array([0.0, 0.30])
     P_base.I = len(P_base.E_loc)
+    P_base = finalize_housing_product_market(P_base)
     P_base.r_bar = np.array([0.04, 0.09])
     P_base.mu_stay = 0.0
     P_base.location_choice_form = "additive_due"
@@ -248,6 +254,11 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
     P_base.max_iter_eq = 200
     P_base.tol_eq = 5e-4
     P_base.setup_mode = setup_mode
+    P_base.population_closure = "outside_option_benchmark_normalized"
+    P_base.outside_benchmark_target_total_population = 1.0
+    P_base.target_outside_origin_entry_share = 0.169
+    P_base.target_city_entry_prob = 0.89
+    P_base.calibrate_outside_value_to_entry_prob = True
 
     if setup_mode in ("benchmark", "full"):
         pass
@@ -351,6 +362,7 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.r_bar = np.asarray(P.r_bar, dtype=float)
     if "H0" in od:
         P.H0 = np.asarray(P.H0, dtype=float)
+    P = finalize_housing_product_market(P)
 
     P.user_cost_rate = P.q + P.delta + P.tau_H
     P.R_gross = 1 + P.q
@@ -399,6 +411,102 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.entry_shares = entry / P.E_total if P.E_total > 0 else np.ones(P.I) / P.I
     else:
         P.entry_by_loc = P.E_total * P.entry_shares
+    return P
+
+
+def finalize_housing_product_market(P: SimpleNamespace) -> SimpleNamespace:
+    """Attach and validate inactive defaults for the housing-product branch."""
+
+    I = int(getattr(P, "I", 2))
+    if not hasattr(P, "housing_product_market"):
+        P.housing_product_market = False
+
+    default_rent_sizes = np.array([4.0, 5.0, 6.0, 7.0])
+    default_own_sizes = np.array([5.0, 6.0, 7.5, 9.0])
+    default_size = np.concatenate([default_rent_sizes, default_own_sizes])
+    default_tenure = np.concatenate(
+        [np.zeros(default_rent_sizes.size, dtype=int), np.ones(default_own_sizes.size, dtype=int)]
+    )
+
+    if not hasattr(P, "housing_size"):
+        P.housing_size = default_size
+    if not hasattr(P, "housing_tenure"):
+        P.housing_tenure = default_tenure
+    P.housing_size = np.asarray(P.housing_size, dtype=float).reshape(-1)
+    P.housing_tenure = np.asarray(P.housing_tenure).reshape(-1)
+    if P.housing_tenure.dtype.kind in {"U", "S", "O"}:
+        P.housing_tenure = np.array([1 if str(x).upper().startswith("O") else 0 for x in P.housing_tenure], dtype=int)
+    else:
+        P.housing_tenure = P.housing_tenure.astype(int)
+    if P.housing_size.size != P.housing_tenure.size:
+        raise ValueError("housing_size and housing_tenure must have the same length")
+    if not np.all(np.isfinite(P.housing_size)) or np.any(P.housing_size <= 0):
+        raise ValueError("housing_size must be finite and strictly positive")
+    if not np.all(np.isin(P.housing_tenure, [0, 1])):
+        raise ValueError("housing_tenure must encode renters as 0/R and owners as 1/O")
+
+    H = int(P.housing_size.size)
+    P.n_housing_products = H
+    if not hasattr(P, "housing_land_input"):
+        P.housing_land_input = P.housing_size / 6.0
+    if not hasattr(P, "housing_base_cost_P"):
+        P.housing_base_cost_P = 0.56 * P.housing_size
+    if not hasattr(P, "housing_base_cost_C"):
+        P.housing_base_cost_C = 0.70 * P.housing_size
+    P.housing_land_input = np.asarray(P.housing_land_input, dtype=float).reshape(-1)
+    P.housing_base_cost_P = np.asarray(P.housing_base_cost_P, dtype=float).reshape(-1)
+    P.housing_base_cost_C = np.asarray(P.housing_base_cost_C, dtype=float).reshape(-1)
+    for name in ("housing_land_input", "housing_base_cost_P", "housing_base_cost_C"):
+        arr = np.asarray(getattr(P, name), dtype=float).reshape(-1)
+        if arr.size != H:
+            raise ValueError(f"{name} must have length n_housing_products")
+        if not np.all(np.isfinite(arr)) or np.any(arr <= 0):
+            raise ValueError(f"{name} must be finite and strictly positive")
+        setattr(P, name, arr)
+
+    if not hasattr(P, "kappa_R_C"):
+        P.kappa_R_C = 0.090
+    if not hasattr(P, "kappa_R_P"):
+        P.kappa_R_P = 0.070
+    if not hasattr(P, "kappa_O_C"):
+        P.kappa_O_C = getattr(P, "q", 0.04) + getattr(P, "delta", 0.02) + getattr(P, "tau_H", 0.01)
+    if not hasattr(P, "kappa_O_P"):
+        P.kappa_O_P = getattr(P, "q", 0.04) + getattr(P, "delta", 0.02) + getattr(P, "tau_H", 0.01)
+    if not hasattr(P, "Abar_C"):
+        P.Abar_C = 0.478
+    if not hasattr(P, "Abar_P"):
+        P.Abar_P = 0.57
+    if not hasattr(P, "Lambda_init_C"):
+        P.Lambda_init_C = 0.10
+    if not hasattr(P, "Lambda_init_P"):
+        P.Lambda_init_P = 0.10
+    if not hasattr(P, "Lambda_lower"):
+        P.Lambda_lower = 0.0
+    if not hasattr(P, "Lambda_upper"):
+        P.Lambda_upper = 8.0
+    if not hasattr(P, "capacity_tol"):
+        P.capacity_tol = 2e-3
+    if not hasattr(P, "capacity_max_iter"):
+        P.capacity_max_iter = 25
+    if not hasattr(P, "capacity_lambda_step"):
+        P.capacity_lambda_step = 0.35
+    if not hasattr(P, "housing_product_switch_utility_cost"):
+        P.housing_product_switch_utility_cost = 0.0
+    if not hasattr(P, "housing_product_tenure_switch_utility_cost"):
+        P.housing_product_tenure_switch_utility_cost = 0.0
+    if not hasattr(P, "housing_product_phi"):
+        P.housing_product_phi = 0.80 * np.ones(I)
+    P.housing_product_phi = np.asarray(P.housing_product_phi, dtype=float).reshape(-1)
+    if P.housing_product_phi.size == 1:
+        P.housing_product_phi = float(P.housing_product_phi[0]) * np.ones(I)
+    if P.housing_product_phi.size != I:
+        raise ValueError("housing_product_phi must be scalar or have length P.I")
+    if not hasattr(P, "housing_entry_product"):
+        renter_idx = np.where(P.housing_tenure == 0)[0]
+        P.housing_entry_product = int(renter_idx[np.argmin(P.housing_size[renter_idx])]) if renter_idx.size else 0
+    P.housing_entry_product = int(P.housing_entry_product)
+    if P.housing_entry_product < 0 or P.housing_entry_product >= H:
+        raise ValueError("housing_entry_product must be a valid housing product index")
     return P
 
 

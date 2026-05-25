@@ -32,6 +32,7 @@ Useful commands:
 .venv/bin/python -m dt_cp_model.cli accounting-scale --setup fast --max-iter-eq 120 --quiet
 .venv/bin/python -m dt_cp_model.cli scaled-equilibrium --setup fast --baseline-max-iter-eq 120 --max-iter-eq 80 --quiet
 .venv/bin/python -m dt_cp_model.cli scaled-equilibrium --setup fast --baseline-max-iter-eq 1 --max-iter-eq 80 --outside-value -35.98609192692343 --force-full --quiet
+.venv/bin/python tools/smoke_housing_product_market.py --quiet
 ```
 
 The intended model boundary is:
@@ -47,18 +48,27 @@ application path, not a separate interpretation of `theta`.
 
 ## Population Closure
 
-The live calibration uses the renewal-valve closure:
-`P.population_closure = "renewal_valve_calibrated"`.
+The live calibration uses the benchmark-normalized outside-option closure:
+`P.population_closure = "outside_option_benchmark_normalized"`.
 
 In the benchmark, the model solves for a normalized stationary distribution and
-sets the outside entry flow mechanically so that benchmark scale is \(S=1\):
+sets the outside-born entry flow mechanically so that benchmark scale is
+\(S=1\):
 \[
-S E_0(p)=M+\rho S B_0(p), \qquad M=E_0(p)-\rho B_0(p).
+S E_0(p)=q^E(p)\left[M+S B_0(p)\right],
+\qquad
+M=\frac{E_0(p)}{q^E(p)}-B_0(p).
 \]
+The empirical normalization is the outside-origin entrant share
+\(s^{E,\mathrm{out}}\), not \(q^E\) itself. Baseline uses
+\(s^{E,\mathrm{out}}=0.169\), from ACS cumulative across-CBSA arrivals over
+ages 18--22 in the MMS metro sample. The code's \(q^E\) value is the implied
+city-entry probability, rounded to \(0.89\) before the new benchmark fit and to
+be recomputed at the best fit.
 
-Counterfactuals should hold the benchmark \(M\), \(\rho\), and outside entrant
-composition fixed, then let the implied stationary scale move with prices and
-fertility. The older `normalized`, `outside_option`, and
+Counterfactuals should hold the benchmark \(M\), \(\bar W^E\), and entrant
+taste scale fixed, then let the implied stationary scale move with prices and
+fertility. The older `normalized`, `renewal_valve`, and
 `accounting_scale_prices` closures remain in code for diagnostics and
 comparison, but they are not the current benchmark calibration closure.
 
