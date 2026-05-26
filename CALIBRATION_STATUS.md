@@ -94,6 +94,31 @@ cap:
 
 ## Latest Cluster Search
 
+Active household-head ownership / small-owner-ladder outside-option search:
+
+- Slurm job: `9662249`
+- Run tag: `py_direct_outside_headown_smallown_global_4h_20260526`
+- Results directory:
+  `/scratch/td2248/projects/Fertility_Spring26/code/cluster/results_python_direct_geometry_py_direct_outside_headown_smallown_global_4h_20260526`
+- Purpose: first broad recalibration after correcting ownership targets to
+  household heads/reference persons and allowing small owner units while
+  preserving the renter cap.
+- setup: `benchmark`
+- bounds: `global`
+- workers: `40` on Torch `cpu_short`, submitted as `1-40%32`
+- internal worker budget: `13,500` seconds; Slurm wall time `03:55:00`
+- population closure: `outside_option_benchmark_normalized`
+- owner ladder: `H_own=[2.0,4.0,6.0,8.0,9.5,11.0]`
+- renter cap: `hR_max=8.0`
+- Pre-launch checks:
+  - local one-evaluation direct-worker smoke completed
+  - `check_population_closure.py` passed
+  - Torch two-worker Slurm smoke job `9662202` completed and wrote
+    `config.json`, `evaluations.jsonl`, `best.json`, and `status.json`
+- Initial production check: `32` worker directories wrote configs/status/best
+  records within the first minute; tasks `33--40` were pending on the array
+  concurrency limit.
+
 Corrected DUE-common-support diagnostic pulse:
 
 - Slurm job: `9546318`
