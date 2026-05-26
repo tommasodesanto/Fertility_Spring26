@@ -2,6 +2,7 @@
 
 suppressPackageStartupMessages({
   library(data.table)
+  library(ggplot2)
   library(haven)
 })
 
@@ -326,6 +327,68 @@ fwrite(all_windows, file.path(out_dir, "ownership_window_targets_all_sources.csv
 fwrite(all_profiles, file.path(out_dir, "ownership_age_profiles_all_sources.csv"))
 fwrite(head_equivalence, file.path(out_dir, "acs_head_equivalence_diagnostic.csv"))
 
+plot_profiles <- all_profiles[
+  (source == "ACS" & sample %in% c("all_persons_perwt", "household_heads_hhwt_due_housing")) |
+    (source == "PSID" & sample %in% c("reference_person_iw_2012_2019", "reference_person_iw_1984_2019"))
+]
+plot_profiles[, series := fcase(
+  source == "ACS" & sample == "all_persons_perwt",
+  "ACS all persons",
+  source == "ACS" & sample == "household_heads_hhwt_due_housing",
+  "ACS household heads",
+  source == "PSID" & sample == "reference_person_iw_2012_2019",
+  "PSID ref. person, 2012-2019",
+  source == "PSID" & sample == "reference_person_iw_1984_2019",
+  "PSID ref. person, 1984-2019",
+  default = NA_character_
+)]
+plot_profiles <- plot_profiles[!is.na(series)]
+plot_profiles[, series := factor(
+  series,
+  levels = c(
+    "ACS all persons",
+    "ACS household heads",
+    "PSID ref. person, 2012-2019",
+    "PSID ref. person, 1984-2019"
+  )
+)]
+
+lifecycle_plot <- ggplot(plot_profiles, aes(x = age, y = owner_rate, color = series, linetype = series)) +
+  geom_line(linewidth = 0.9) +
+  scale_y_continuous(
+    limits = c(0, 1),
+    breaks = seq(0, 1, 0.1),
+    labels = function(x) sprintf("%d%%", round(100 * x))
+  ) +
+  scale_x_continuous(breaks = seq(20, 85, 5), limits = c(20, 84)) +
+  scale_color_manual(values = c(
+    "ACS all persons" = "#8C2D04",
+    "ACS household heads" = "#08519C",
+    "PSID ref. person, 2012-2019" = "#238B45",
+    "PSID ref. person, 1984-2019" = "#636363"
+  )) +
+  scale_linetype_manual(values = c(
+    "ACS all persons" = "solid",
+    "ACS household heads" = "solid",
+    "PSID ref. person, 2012-2019" = "dashed",
+    "PSID ref. person, 1984-2019" = "dotted"
+  )) +
+  labs(
+    x = "Age",
+    y = "Homeownership rate",
+    color = NULL,
+    linetype = NULL
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(10, 14, 8, 10)
+  )
+
+ggsave(file.path(out_dir, "ownership_lifecycle_acs_psid.png"), lifecycle_plot, width = 8.5, height = 5.2, dpi = 300)
+ggsave(file.path(out_dir, "ownership_lifecycle_acs_psid.pdf"), lifecycle_plot, width = 8.5, height = 5.2)
+
 param_path <- file.path(repo_root, "code/model/dt_cp_model/parameters.py")
 current_targets <- data.table(
   moment = c(
@@ -521,7 +584,9 @@ md <- c(
   "- `acs_ownership_age_profiles.csv`",
   "- `psid_ownership_window_targets.csv`",
   "- `psid_ownership_age_profiles.csv`",
-  "- `acs_head_equivalence_diagnostic.csv`"
+  "- `acs_head_equivalence_diagnostic.csv`",
+  "- `ownership_lifecycle_acs_psid.png`",
+  "- `ownership_lifecycle_acs_psid.pdf`"
 )
 writeLines(md, md_path)
 

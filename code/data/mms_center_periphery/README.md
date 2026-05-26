@@ -57,6 +57,7 @@ Outputs:
 - `output/mms_fertility_moves_summary.md`
 - `output_family_size_supply/ACS_MMS_FAMILY_SIZE_SUPPLY_PACKET.md`
 - `output_ownership_audit/ACS_MMS_OWNERSHIP_TARGET_AUDIT.md`
+- `output_ownership_audit/ownership_lifecycle_acs_psid.png`
 - `output_family_size_supply/acs_family_size_premia_by_metro.csv`
 - `output_family_size_supply/acs_parent_centrality_by_metro.csv`
 - `output_family_size_supply/acs_family_size_regressions.csv`
