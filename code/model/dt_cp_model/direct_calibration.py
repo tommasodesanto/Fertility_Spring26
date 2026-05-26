@@ -5,10 +5,10 @@ center amenity and center rent shifter as ordinary calibrated parameters. The
 geography moments therefore enter the same SMM loss as the fertility, tenure,
 housing, wealth, and migration moments.
 
-The current model also uses the renewal-valve population closure: an exogenous
-outside-born entry flow and a fixed retained share of mature city-born children
-pin a finite stationary city scale. The benchmark size target normalizes the
-baseline city to one; it does not normalize counterfactual equilibria.
+The current model uses the benchmark-normalized outside-option population
+closure. Potential young adults choose between the modeled locations and an
+outside economy; the benchmark size target normalizes the baseline city to one,
+while the residual outside-origin pool is held fixed in counterfactuals.
 """
 
 from __future__ import annotations
@@ -39,6 +39,10 @@ RENEWAL_FLOW_LB = 1e-4
 RENEWAL_FLOW_UB = 0.080
 DEFAULT_RENEWAL_FLOW_X0 = 0.003
 POPULATION_SCALE_CLOSURES = {"accounting_scale_prices", "scaled_housing", "scaled_housing_accounting"}
+BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES = {
+    "outside_option_benchmark_normalized",
+    "benchmark_outside_option_normalized",
+}
 RENEWAL_VALVE_FIXED_CLOSURES = {"renewal_valve", "renewal_scale", "demographic_valve"}
 RENEWAL_VALVE_CALIBRATED_CLOSURES = {
     "renewal_valve_calibrated",
@@ -49,6 +53,7 @@ RENEWAL_VALVE_CALIBRATED_CLOSURES = {
 RENEWAL_VALVE_CLOSURES = RENEWAL_VALVE_FIXED_CLOSURES | RENEWAL_VALVE_CALIBRATED_CLOSURES
 OPEN_CITY_CLOSURES = (
     POPULATION_SCALE_CLOSURES
+    | BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES
     | RENEWAL_VALVE_CLOSURES
     | {"outside_option", "outside_option_local_births", "local_births_outside", "open_city"}
 )
@@ -87,7 +92,7 @@ class DirectObjectiveResult:
 def build_direct_calibration_setup(
     setup_mode: str = "benchmark",
     geo_weight: float = 100.0,
-    population_closure: str = "renewal_valve_calibrated",
+    population_closure: str = "outside_option_benchmark_normalized",
     scale_target: float = 1.0,
     scale_weight: float = 100.0,
     outside_value_x0: float | None = None,
@@ -105,11 +110,13 @@ def build_direct_calibration_setup(
         Center housing supply rent shifter, with periphery left at the live
         baseline value.
 
-    Under the default calibrated renewal-valve closure, no population-scale
-    parameter is estimated. The outside-born flow is computed mechanically from
-    the benchmark normalized distribution:
+    Under the default benchmark-normalized outside-option closure, no
+    population-scale parameter is estimated. The outside value is chosen to
+    hit the target city-entry probability, and the outside-born potential
+    entrant flow is computed mechanically from the benchmark normalized
+    distribution:
 
-    ``M = S^* [E_0 - rho B_0]``.
+    ``M = S^* [E_0 / q^E - B_0]``.
 
     Under the fixed renewal-valve closure, the final parameter is:
 
@@ -128,7 +135,7 @@ def build_direct_calibration_setup(
     base = build_calibration_setup(setup_mode)
     targets = dict(base.targets)
     weights = dict(base.weights)
-    closure = str(population_closure or "renewal_valve").lower()
+    closure = str(population_closure or "outside_option_benchmark_normalized").lower()
 
     targets["inv_pop_share_C"] = float(base.inversion_targets["pop_share_C"])
     targets["inv_rent_ratio_C_over_P"] = float(base.inversion_targets["rent_ratio"])
@@ -147,7 +154,12 @@ def build_direct_calibration_setup(
         targets["implied_total_population"] = float(scale_target)
         weights["implied_total_population"] = float(scale_weight)
 
-    if closure in RENEWAL_VALVE_CALIBRATED_CLOSURES:
+    if closure in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES:
+        base.P_base.population_closure = closure
+        base.P_base.target_city_entry_prob = float(getattr(base.P_base, "target_city_entry_prob", 0.89))
+        base.P_base.calibrate_outside_value_to_entry_prob = True
+        base.P_base.outside_benchmark_target_total_population = float(scale_target)
+    elif closure in RENEWAL_VALVE_CALIBRATED_CLOSURES:
         base.P_base.population_closure = closure
         base.P_base.renewal_calibrate_outside_flow = True
         base.P_base.renewal_target_total_population = float(scale_target)
@@ -255,9 +267,9 @@ def evaluate_direct_theta(
     _attach_population_scale_moments(moments_ns, sol, P_out)
 
     moments = _namespace_to_float_dict(moments_ns)
-    if setup.population_closure in RENEWAL_VALVE_CLOSURES:
+    if setup.population_closure in RENEWAL_VALVE_CLOSURES or setup.population_closure in BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES:
         scale = getattr(sol, "accounting_scale", None)
-        scale_error = _renewal_scale_error(scale)
+        scale_error = _population_scale_error(scale)
         if scale_error is not None:
             return _failed_result(theta_arr, t0, scale_error)
 
@@ -325,8 +337,8 @@ def _failed_result(theta: np.ndarray, t0: float, error: str) -> DirectObjectiveR
     )
 
 
-def _renewal_scale_error(scale: Any) -> str | None:
-    """Return a failure reason when the renewal valve has no finite scale."""
+def _population_scale_error(scale: Any) -> str | None:
+    """Return a failure reason when the population closure has no finite scale."""
 
     if scale is None:
         return "renewal scale diagnostics missing"
@@ -345,7 +357,7 @@ def _renewal_scale_error(scale: Any) -> str | None:
         or not np.isfinite(scale_factor)
     ):
         return (
-            "invalid renewal scale: "
+            "invalid population scale: "
             f"finite={finite_flag}, denominator={denominator:.6g}, "
             f"outside_entry_flow={outside_flow:.6g}, "
             f"implied_total_population={implied_population:.6g}, "

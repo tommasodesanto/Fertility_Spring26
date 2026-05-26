@@ -19,8 +19,14 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from dt_cp_model.direct_calibration import build_direct_calibration_setup
 from dt_cp_model.parameters import build_calibration_setup
-from dt_cp_model.solver import accounting_population_scale, renewal_population_scale, run_model_cp_dt
+from dt_cp_model.solver import (
+    accounting_population_scale,
+    benchmark_normalized_outside_population_scale,
+    renewal_population_scale,
+    run_model_cp_dt,
+)
 from dt_cp_model.utils import make_grid
 
 
@@ -41,7 +47,9 @@ SCALAR_KEYS = [
 
 
 def main() -> None:
-    sol, P, p_eq = solve_one_iter_fast()
+    check_live_defaults_use_outside_option()
+
+    sol, P, p_eq = solve_one_iter_fast(population_closure="normalized")
     report = compact_report(sol, p_eq)
     check_default_path_unchanged(report)
 
@@ -54,25 +62,53 @@ def main() -> None:
     check_scale_residuals(baseline_renewal, label="baseline renewal scale")
     assert_close(baseline_renewal.scale_factor, 1.0, 1e-10, "calibrated baseline renewal scale")
 
+    baseline_outside = benchmark_normalized_outside_population_scale(
+        sol,
+        P,
+        b_grid,
+        target_city_entry_prob=0.89,
+        calibrate_outside_value_to_q=True,
+    )
+    check_scale_residuals(baseline_outside, label="baseline outside-option normalized scale")
+    assert_close(baseline_outside.scale_factor, 1.0, 1e-10, "baseline outside-option normalized scale")
+    assert_close(baseline_outside.city_entry_prob_total, 0.89, 1e-10, "baseline outside-option city entry probability")
+
     check_uncalibrated_scaled_closure_rejected()
     check_fertility_scale_sensitivity(baseline_scale)
     check_renewal_fertility_scale_sensitivity(baseline_renewal)
     check_scaled_housing_smoke(baseline_scale)
     check_renewal_scaled_housing_smoke(baseline_renewal)
+    check_benchmark_normalized_outside_smoke()
 
     print("population closure checks passed")
     print(f"  calibrated outside_value = {baseline_scale.outside_value:.12g}")
+    print(f"  benchmark outside_value = {baseline_outside.outside_value:.12g}")
     print(f"  mature children per entrant = {baseline_scale.mature_cityborn_per_entry:.12g}")
 
 
-def solve_one_iter_fast(psi_child: float | None = None) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+def solve_one_iter_fast(
+    psi_child: float | None = None,
+    population_closure: str | None = "normalized",
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
     setup = build_calibration_setup("fast")
     P = setup.P_base
     P.max_iter_eq = 1
     P.force_full_bellman = True
+    if population_closure is not None:
+        P.population_closure = population_closure
     if psi_child is not None:
         P.psi_child = float(psi_child)
     return run_model_cp_dt(P, verbose=False)
+
+
+def check_live_defaults_use_outside_option() -> None:
+    setup = build_calibration_setup("fast")
+    if getattr(setup.P_base, "population_closure", None) != "outside_option_benchmark_normalized":
+        raise AssertionError("build_calibration_setup no longer defaults to the outside-option closure")
+    direct_setup = build_direct_calibration_setup("fast")
+    if direct_setup.population_closure != "outside_option_benchmark_normalized":
+        raise AssertionError("build_direct_calibration_setup no longer defaults to the outside-option closure")
+    print("  live defaults use outside_option_benchmark_normalized")
 
 
 def compact_report(sol: SimpleNamespace, p_eq: np.ndarray) -> dict[str, object]:
@@ -246,6 +282,35 @@ def check_renewal_scaled_housing_smoke(baseline_scale: SimpleNamespace) -> None:
     print(
         "  renewal scaled-housing smoke finite: "
         f"scale={sol.accounting_scale.scale_factor:.6g}, "
+        f"reason={timings.get('convergence_reason')}"
+    )
+
+
+def check_benchmark_normalized_outside_smoke() -> None:
+    setup = build_calibration_setup("fast")
+    P = setup.P_base
+    P.max_iter_eq = 3
+    P.force_full_bellman = True
+    P.population_closure = "outside_option_benchmark_normalized"
+    P.target_city_entry_prob = 0.89
+    P.calibrate_outside_value_to_entry_prob = True
+    P.outside_benchmark_target_total_population = float(getattr(P, "N_target", 1.0))
+    P.collect_ge_trace = True
+    sol, _, _ = run_model_cp_dt(P, verbose=False)
+    if not hasattr(sol, "accounting_scale"):
+        raise AssertionError("benchmark-normalized outside smoke did not attach accounting_scale")
+    check_scale_residuals(sol.accounting_scale, label="benchmark-normalized outside smoke")
+    assert_close(sol.accounting_scale.scale_factor, 1.0, 1e-10, "benchmark-normalized outside smoke scale")
+    assert_close(sol.accounting_scale.city_entry_prob_total, 0.89, 1e-10, "benchmark-normalized outside smoke q")
+    timings = getattr(sol, "timings", {})
+    if timings.get("population_closure") != "outside_option_benchmark_normalized":
+        raise AssertionError("benchmark-normalized outside smoke did not report the expected closure")
+    iterations = int(timings.get("iterations_completed", 0))
+    if iterations < 1 or iterations > 3:
+        raise AssertionError(f"benchmark-normalized outside smoke iteration count changed: {timings}")
+    print(
+        "  benchmark-normalized outside smoke finite: "
+        f"M={sol.accounting_scale.outside_entry_flow:.6g}, "
         f"reason={timings.get('convergence_reason')}"
     )
 

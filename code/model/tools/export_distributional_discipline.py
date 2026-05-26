@@ -82,9 +82,8 @@ def solve_record(record: dict, *, max_iter_eq: int | None, verbose: bool):
     setup = build_direct_calibration_setup(
         setup_mode="benchmark",
         geo_weight=100.0,
-        population_closure="renewal_valve_calibrated",
+        population_closure="outside_option_benchmark_normalized",
         scale_target=1.0,
-        renewal_retention=float(record.get("moments", {}).get("renewal_retention", 1.0)),
     )
     theta = np.asarray(record["theta"], dtype=float)
     theta_dict = {name: float(value) for name, value in zip(setup.names, theta)}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a direct no-inversion renewal-valve calibration job.
+"""Run a direct no-inversion open-city calibration job.
 
 Each invocation is one sequential optimizer worker. On the cluster we launch an
 array of independent workers with different seeds and collect the best JSON
@@ -163,7 +163,7 @@ def main() -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Direct no-inversion renewal-valve calibration worker.")
+    parser = argparse.ArgumentParser(description="Direct no-inversion open-city calibration worker.")
     parser.add_argument("--job-id", type=int, default=int(os.environ.get("SLURM_ARRAY_TASK_ID", "1")))
     parser.add_argument("--run-tag", default=os.environ.get("DT_DIRECT_RUN_TAG", time.strftime("direct_geo_%Y%m%d_%H%M%S")))
     parser.add_argument("--setup", choices=["fast", "benchmark"], default=os.environ.get("DT_DIRECT_SETUP", "benchmark"))
@@ -176,8 +176,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--geo-weight", type=float, default=float(os.environ.get("DT_DIRECT_GEO_WEIGHT", "100")))
     parser.add_argument(
         "--population-closure",
-        choices=["renewal_valve_calibrated", "renewal_valve", "accounting_scale_prices", "outside_option", "normalized"],
-        default=os.environ.get("DT_DIRECT_POPULATION_CLOSURE", "renewal_valve_calibrated"),
+        choices=[
+            "outside_option_benchmark_normalized",
+            "renewal_valve_calibrated",
+            "renewal_valve",
+            "accounting_scale_prices",
+            "outside_option",
+            "normalized",
+        ],
+        default=os.environ.get("DT_DIRECT_POPULATION_CLOSURE", "outside_option_benchmark_normalized"),
     )
     parser.add_argument("--scale-target", type=float, default=float(os.environ.get("DT_DIRECT_SCALE_TARGET", "1.0")))
     parser.add_argument("--scale-weight", type=float, default=float(os.environ.get("DT_DIRECT_SCALE_WEIGHT", "100")))
@@ -353,13 +360,15 @@ def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace,
 
 def print_header(args: argparse.Namespace, job_dir: Path, seed: int, lb: np.ndarray, ub: np.ndarray) -> None:
     print("=" * 72)
-    print("Direct no-inversion renewal-valve Python calibration")
+    print("Direct no-inversion open-city Python calibration")
     print(f"job_id={args.job_id} run_tag={args.run_tag} seed={seed}")
     print(
         f"setup={args.setup} bounds={args.bound_profile} "
         f"closure={args.population_closure} max_iter_eq={args.max_iter_eq}"
     )
-    if args.population_closure == "renewal_valve_calibrated":
+    if args.population_closure == "outside_option_benchmark_normalized":
+        print(f"scale_target={args.scale_target} imposed mechanically by benchmark outside-option accounting")
+    elif args.population_closure == "renewal_valve_calibrated":
         print(f"scale_target={args.scale_target} imposed mechanically; scale_weight inactive")
     else:
         print(f"scale_target={args.scale_target} scale_weight={args.scale_weight}")

@@ -82,9 +82,9 @@ def setup_parameters() -> SimpleNamespace:
     P.birth_entry_grant_owner_rungs = np.array([], dtype=int)
 
     P.n_house = 6
-    P.h_own_min = 4.0
-    P.h_own_max = 11.0
-    P.H_own = np.linspace(P.h_own_min, P.h_own_max, P.n_house)
+    P.h_own_min = 2.0
+    P.H_own = np.array([2.0, 4.0, 6.0, 8.0, 9.5, 11.0])
+    P.h_own_max = P.H_own[-1]
     P.hR_max = 8.0
     P.I = 2
     P.w_hat = np.array([1.0, 1.0])
@@ -167,9 +167,10 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
         "childless_rate": 0.15,
         "mean_age_first_birth": 26.0,
         "tfr_gradient": 0.133,
-        "own_rate": 0.627,
-        "own_gradient": 0.170,
-        "own_family_gap": 0.110,
+        "own_rate": 0.57547241,
+        "own_gradient": 0.18604893,
+        "own_family_gap": 0.16766167,
+        "own_lifecycle_slope": 0.42309487,
         "prime_childless_renter_median_rooms": 4.0,
         "prime_childless_owner_median_rooms": 6.0,
         "housing_increment_0to1": 0.66443467,
@@ -178,7 +179,7 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
         "center_share_nonparents": 0.494,
         "center_share_newparents": 0.416,
         "migration_rate": 0.032,
-        "old_age_own_rate": 0.863,
+        "old_age_own_rate": 0.76426097,
         "old_age_parent_childless_gap": 0.070,
     }
     weights = {
@@ -189,6 +190,7 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
         "own_rate": 12.0,
         "own_gradient": 12.0,
         "own_family_gap": 10.0,
+        "own_lifecycle_slope": 10.0,
         "prime_childless_renter_median_rooms": 10.0,
         "prime_childless_owner_median_rooms": 10.0,
         "housing_increment_0to1": 8.0,
@@ -237,9 +239,9 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
     P_base.n_parity = 4
     P_base.phi = 0.80 * np.ones(P_base.n_parity)
     P_base.n_house = 6
-    P_base.H_own = np.linspace(4.0, 11.0, P_base.n_house)
-    P_base.h_own_min = 4.0
-    P_base.h_own_max = 11.0
+    P_base.H_own = np.array([2.0, 4.0, 6.0, 8.0, 9.5, 11.0])
+    P_base.h_own_min = P_base.H_own[0]
+    P_base.h_own_max = P_base.H_own[-1]
     P_base.hR_max = 8.0
     P_base.Nb = 80
     P_base.b_min = -35.0
@@ -248,12 +250,16 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
     P_base.max_iter_eq = 200
     P_base.tol_eq = 5e-4
     P_base.setup_mode = setup_mode
+    P_base.population_closure = "outside_option_benchmark_normalized"
+    P_base.target_city_entry_prob = 0.89
+    P_base.calibrate_outside_value_to_entry_prob = True
+    P_base.outside_benchmark_target_total_population = 1.0
 
     if setup_mode in ("benchmark", "full"):
         pass
     elif setup_mode in ("fast", "fast_explore", "explore"):
         P_base.n_house = 4
-        P_base.H_own = np.array([4.0, 6.0, 8.5, 11.0])
+        P_base.H_own = np.array([2.0, 4.0, 6.0, 11.0])
         P_base.h_own_min = P_base.H_own[0]
         P_base.h_own_max = P_base.H_own[-1]
         P_base.Nb = 60

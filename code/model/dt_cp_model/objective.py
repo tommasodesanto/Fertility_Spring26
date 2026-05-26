@@ -145,6 +145,7 @@ def extract_moments(
     moments.own_rate_3544 = getattr(sol, "own_rate_3544", np.nan)
     moments.own_gradient = sol.own_gradient_3055
     moments.own_family_gap = sol.own_gap_newparent_nonparent_3055
+    moments.own_lifecycle_slope = sol.old_age_own_rate_6575 - moments.own_rate_2534
     moments.prime_childless_renter_median_rooms = sol.prime_childless_renter_median_rooms
     moments.prime_childless_owner_median_rooms = sol.prime_childless_owner_median_rooms
     moments.housing_increment_0to1 = getattr(

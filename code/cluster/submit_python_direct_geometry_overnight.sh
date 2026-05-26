@@ -1,5 +1,5 @@
 #!/bin/bash
-# Direct no-inversion renewal-valve Python calibration on Torch.
+# Direct no-inversion open-city Python calibration on Torch.
 # Submit from:
 #   $SCRATCH/projects/Fertility_Spring26/code/cluster
 #
@@ -36,7 +36,7 @@ export DT_DIRECT_RESULTS_DIR="${DT_DIRECT_RESULTS_DIR:-${SCRIPT_DIR}/results_pyt
 export DT_DIRECT_BUDGET_SEC="${DT_DIRECT_BUDGET_SEC:-13500}"
 export DT_DIRECT_MAX_EVALS="${DT_DIRECT_MAX_EVALS:-1000000}"
 export DT_DIRECT_GEO_WEIGHT="${DT_DIRECT_GEO_WEIGHT:-100}"
-export DT_DIRECT_POPULATION_CLOSURE="${DT_DIRECT_POPULATION_CLOSURE:-renewal_valve_calibrated}"
+export DT_DIRECT_POPULATION_CLOSURE="${DT_DIRECT_POPULATION_CLOSURE:-outside_option_benchmark_normalized}"
 export DT_DIRECT_SCALE_TARGET="${DT_DIRECT_SCALE_TARGET:-1.0}"
 export DT_DIRECT_SCALE_WEIGHT="${DT_DIRECT_SCALE_WEIGHT:-100}"
 export DT_DIRECT_OUTSIDE_VALUE_X0="${DT_DIRECT_OUTSIDE_VALUE_X0:--41.95}"
@@ -70,7 +70,7 @@ export OPENBLAS_NUM_THREADS=1
 mkdir -p "${NUMBA_CACHE_DIR}"
 
 echo "============================================"
-echo "Direct no-inversion renewal-valve Python calibration"
+echo "Direct no-inversion Python calibration"
 echo "Job ID: ${SLURM_JOB_ID:-local}"
 echo "Array Task ID: ${SLURM_ARRAY_TASK_ID:-1}"
 echo "Node: ${SLURM_NODELIST:-local}"
@@ -80,7 +80,9 @@ echo "Python: ${PYTHON_BIN}"
 echo "Run tag: ${DT_DIRECT_RUN_TAG}"
 echo "Results: ${DT_DIRECT_RESULTS_DIR}"
 echo "Setup: ${DT_DIRECT_SETUP} | bounds: ${DT_DIRECT_BOUNDS} | closure: ${DT_DIRECT_POPULATION_CLOSURE}"
-if [ "${DT_DIRECT_POPULATION_CLOSURE}" = "renewal_valve_calibrated" ]; then
+if [ "${DT_DIRECT_POPULATION_CLOSURE}" = "outside_option_benchmark_normalized" ]; then
+    echo "Scale target: ${DT_DIRECT_SCALE_TARGET} imposed mechanically by benchmark outside-option accounting"
+elif [ "${DT_DIRECT_POPULATION_CLOSURE}" = "renewal_valve_calibrated" ]; then
     echo "Scale target: ${DT_DIRECT_SCALE_TARGET} imposed mechanically | scale weight inactive"
 else
     echo "Scale target: ${DT_DIRECT_SCALE_TARGET} | scale weight: ${DT_DIRECT_SCALE_WEIGHT}"
