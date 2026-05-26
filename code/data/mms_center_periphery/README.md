@@ -30,6 +30,7 @@ Files:
 - `build_migpuma_origin_bridge.R`: uses the official IPUMS PUMA/MIGPUMA relationship files plus the PUMA lookup to build origin MMS shares by `(MIGPLAC1, MIGPUMA1, CBSA)`
 - `analyze_mms_fertility_moves.R`: rebuilds the fertility/location and new-parent move facts under the MMS geography using `extract27` plus the filtered `extract28` origin supplement
 - `analyze_family_size_supply_menu.R`: builds a fast ACS/MMS family-size housing menu and sorting packet by center/periphery, room-size bin, tenure, parent status, and income proxy
+- `audit_ownership_targets.R`: compares person-level ACS ownership targets with household-head ACS ownership targets and PSID reference-person checks
 - `analyze_couillard_bedroom_supply_panel.R`: builds a Couillard-style ACS/MMS bedroom supply packet by center/periphery, tenure, parent status, price premium, and descriptive early/late stock response
 - `analyze_income_fertility_cross_section.R`: builds an ACS/MMS cross-section of recent births, parenthood, childlessness, parity, income ranks, and center/periphery decomposition by income
 
@@ -55,6 +56,7 @@ Outputs:
 - `output/mms_origin_regressions.csv`
 - `output/mms_fertility_moves_summary.md`
 - `output_family_size_supply/ACS_MMS_FAMILY_SIZE_SUPPLY_PACKET.md`
+- `output_ownership_audit/ACS_MMS_OWNERSHIP_TARGET_AUDIT.md`
 - `output_family_size_supply/acs_family_size_premia_by_metro.csv`
 - `output_family_size_supply/acs_parent_centrality_by_metro.csv`
 - `output_family_size_supply/acs_family_size_regressions.csv`
