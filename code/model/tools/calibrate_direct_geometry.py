@@ -42,6 +42,7 @@ def main() -> None:
         outside_value_x0=args.outside_value_x0,
         outside_flow_x0=args.outside_flow_x0,
         renewal_retention=args.renewal_retention,
+        hR_max=args.hR_max,
     )
     lb, ub = apply_bound_profile(setup, args.bound_profile)
     seed = int(args.seed_base + 1009 * args.job_id)
@@ -70,6 +71,7 @@ def main() -> None:
         "outside_value_x0": args.outside_value_x0,
         "outside_flow_x0": args.outside_flow_x0,
         "renewal_retention": args.renewal_retention,
+        "hR_max": args.hR_max,
         "eq_penalty_weight": args.eq_penalty_weight,
         "theta_names": setup.names,
         "lb": lb.tolist(),
@@ -202,6 +204,11 @@ def parse_args() -> argparse.Namespace:
         "--renewal-retention",
         type=float,
         default=float(os.environ.get("DT_DIRECT_RENEWAL_RETENTION", "1.0")),
+    )
+    parser.add_argument(
+        "--hR-max",
+        type=float,
+        default=float(os.environ["DT_DIRECT_HR_MAX"]) if "DT_DIRECT_HR_MAX" in os.environ else None,
     )
     parser.add_argument("--eq-penalty-weight", type=float, default=float(os.environ.get("DT_DIRECT_EQ_PENALTY_WEIGHT", "0")))
     parser.add_argument("--initial-scale", type=float, default=float(os.environ.get("DT_DIRECT_INITIAL_SCALE", "0.18")))

@@ -118,6 +118,34 @@ Active household-head ownership / small-owner-ladder outside-option search:
 - Initial production check: `32` worker directories wrote configs/status/best
   records within the first minute; tasks `33--40` were pending on the array
   concurrency limit.
+- On 2026-05-26 evening, while this run was still active, the array throttle
+  was lowered to `24` and the eight weakest active workers by current best loss
+  were canceled to free CPU slots for the `hR_max=6` diagnostic below. Their
+  partial JSON outputs remain in the results directory.
+
+Parallel renter-cap diagnostic:
+
+- Slurm smoke job: `9664816`
+- Slurm diagnostic job: `9664883`
+- Run tag: `py_direct_outside_headown_smallown_hr6_30m_20260526`
+- Results directory:
+  `/scratch/td2248/projects/Fertility_Spring26/code/cluster/results_python_direct_geometry_py_direct_outside_headown_smallown_hr6_30m_20260526`
+- Purpose: test whether lowering only the renter cap from `hR_max=8.0` to
+  `hR_max=6.0` helps the childless-renter room moment and prime-age ownership
+  without treating it as a benchmark change.
+- setup: `benchmark`
+- bounds: `global`
+- requested workers: `16` on Torch `cpu_short`, submitted as `1-16%16`
+- active split at launch: `24` running workers remain on the `hR_max=8`
+  production run and `8` workers started on the `hR_max=6` diagnostic; tasks
+  `9--16` were pending on the user CPU limit.
+- internal worker budget: `1,800` seconds; Slurm wall time `00:40:00`
+- population closure: `outside_option_benchmark_normalized`
+- owner ladder unchanged:
+  `H_own=[2.0,4.0,6.0,8.0,9.5,11.0]`
+- renter cap override: `hR_max=6.0`
+- Smoke job `9664816` completed and verified written configs with
+  `hR_max=6.0`.
 
 Corrected DUE-common-support diagnostic pulse:
 

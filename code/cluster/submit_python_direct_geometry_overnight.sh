@@ -88,6 +88,9 @@ else
     echo "Scale target: ${DT_DIRECT_SCALE_TARGET} | scale weight: ${DT_DIRECT_SCALE_WEIGHT}"
 fi
 echo "Outside value x0: ${DT_DIRECT_OUTSIDE_VALUE_X0} | outside flow x0: ${DT_DIRECT_OUTSIDE_FLOW_X0} | renewal rho: ${DT_DIRECT_RENEWAL_RETENTION}"
+if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
+    echo "Renter cap override hR_max: ${DT_DIRECT_HR_MAX}"
+fi
 echo "Budget: ${DT_DIRECT_BUDGET_SEC}s | max evals: ${DT_DIRECT_MAX_EVALS}"
 echo "Started: $(date)"
 echo "============================================"
@@ -129,6 +132,10 @@ ARGS=(
     --log-every "${DT_DIRECT_LOG_EVERY}"
     --resume
 )
+
+if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
+    ARGS+=(--hR-max "${DT_DIRECT_HR_MAX}")
+fi
 
 if [ "${DT_DIRECT_MAX_ITER_EQ}" != "0" ]; then
     ARGS+=(--max-iter-eq "${DT_DIRECT_MAX_ITER_EQ}")

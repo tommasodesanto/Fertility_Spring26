@@ -98,6 +98,7 @@ def build_direct_calibration_setup(
     outside_value_x0: float | None = None,
     outside_flow_x0: float | None = None,
     renewal_retention: float = 1.0,
+    hR_max: float | None = None,
 ) -> DirectCalibrationSetup:
     """Build the direct-geometry counterpart of ``build_calibration_setup``.
 
@@ -133,6 +134,8 @@ def build_direct_calibration_setup(
     """
 
     base = build_calibration_setup(setup_mode)
+    if hR_max is not None:
+        base.P_base.hR_max = float(hR_max)
     targets = dict(base.targets)
     weights = dict(base.weights)
     closure = str(population_closure or "outside_option_benchmark_normalized").lower()
