@@ -122,6 +122,14 @@ Active household-head ownership / small-owner-ladder outside-option search:
   was lowered to `24` and the eight weakest active workers by current best loss
   were canceled to free CPU slots for the `hR_max=6` diagnostic below. Their
   partial JSON outputs remain in the results directory.
+- Snapshot used for the current fit note, pulled at `2026-05-26 22:45 EDT`:
+  worker `29`, evaluation `440`, loss `19.662`, \(TFR=1.772\),
+  ownership `0.313`, childless-renter median rooms `5.974`, center share
+  `0.449`, and rent ratio `1.064`. The run was still active when this
+  snapshot was pulled.
+- Current fit note:
+  `latex/current_fit_slide_diagnostics_20260526.pdf`; generated source is
+  `code/model/tools/make_direct_fit_slide_note.py`.
 
 Parallel renter-cap diagnostic:
 
@@ -146,6 +154,14 @@ Parallel renter-cap diagnostic:
 - renter cap override: `hR_max=6.0`
 - Smoke job `9664816` completed and verified written configs with
   `hR_max=6.0`.
+- Final collection succeeded with `16` worker directories. Best diagnostic
+  point: worker `12`, evaluation `59`, loss `55.106`, \(TFR=1.931\),
+  ownership `0.629`, childless-renter median rooms `6.000`, old-age ownership
+  `0.985`, center share `0.413`, and rent ratio `1.033`.
+- Read: `hR_max=6` mechanically binds the childless-renter room moment but
+  looks too distortionary relative to the live `hR_max=8` search: ownership is
+  pushed high, late-life ownership is nearly universal, and the lifecycle
+  ownership slope is too steep.
 
 Corrected DUE-common-support diagnostic pulse:
 
