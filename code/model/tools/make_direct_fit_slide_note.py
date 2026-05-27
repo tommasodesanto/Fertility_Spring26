@@ -184,7 +184,7 @@ def plot_benchmark_lifecycle_compare(sol, P, b_grid: np.ndarray, out_path: Path)
 
     ax = axes[0]
     ax.plot(age_vec, 100 * own_by_age, "-", color=STYLE["model_blue"], linewidth=2.8, label="Model")
-    ax.plot(data["own_age"], 100 * data["own"], "--", color=STYLE["data_red"], linewidth=2.4, label="Data (MMS)")
+    ax.plot(data["own_age"], 100 * data["own"], "--", color=STYLE["data_red"], linewidth=2.4, label=data["own_legend"])
     ax.set_xlabel("Age")
     ax.set_ylabel("Ownership rate (%)")
     ax.set_title("Ownership")
@@ -388,20 +388,35 @@ def load_lifecycle_data() -> dict[str, np.ndarray | str]:
     if not mms_path.exists():
         mms_path = ROOT / "code/data/mms_center_periphery/output/mms_age_profiles.csv"
     fert_path = ROOT / "code/data/mms_center_periphery/output/mms_age_fertility_profiles.csv"
+    own_path = ROOT / "code/data/mms_center_periphery/output_ownership_audit/acs_ownership_age_profiles.csv"
 
     mms_rows = read_csv_rows(mms_path)
     fert_rows = read_csv_rows(fert_path)
+    own_rows = [
+        row
+        for row in read_csv_rows(own_path)
+        if row.get("source") == "ACS"
+        and row.get("sample") == "household_heads_hhwt_due_housing"
+        and row.get("owner_rate", "") != ""
+    ]
+    if not own_rows:
+        raise ValueError(f"No ACS household-head DUE ownership lifecycle rows found in {own_path}")
     child_col = "has_child_u18_rate" if "has_child_u18_rate" in mms_rows[0] else "has_children_rate"
     child_label = "Share with child under 18" if child_col == "has_child_u18_rate" else "Share with children"
     child_legend = "Data child-under-18 share" if child_col == "has_child_u18_rate" else "Data has-children rate"
 
-    own_age, own = collapse_age_profile(mms_rows, "age", "pop_weight", "owner_rate")
+    own_age = np.asarray([float(row["age"]) for row in own_rows], dtype=float)
+    own = np.asarray([float(row["owner_rate"]) for row in own_rows], dtype=float)
+    own_order = np.argsort(own_age)
+    own_age = own_age[own_order]
+    own = own[own_order]
     rooms_age, rooms = collapse_age_profile(mms_rows, "age", "pop_weight", "mean_rooms")
     children_age, children = collapse_age_profile(mms_rows, "age", "pop_weight", child_col)
     fert_age, newparent = collapse_age_profile(fert_rows, "age", "weighted_n", "newparent_rate")
     return {
         "own_age": own_age,
         "own": own,
+        "own_legend": "Data (ACS heads, DUE)",
         "rooms_age": rooms_age,
         "rooms": rooms,
         "children_age": children_age,
