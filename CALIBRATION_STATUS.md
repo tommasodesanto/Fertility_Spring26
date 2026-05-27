@@ -202,6 +202,21 @@ Micro-local checkpoint, `2026-05-27 07:09 EDT`:
 - Status: micro-local refinement improved the `hR_max=6.0` best and was left
   running.
 
+Morning checkpoint, `2026-05-27 08:10 EDT`:
+
+- best `hR_max=8.0`: run
+  `py_direct_reduced_targets_hR8_incumbent_default_overnight_20260527`,
+  worker `10`, evaluation `289`, loss `9.323`, \(TFR=1.700\), ownership
+  `0.358`, center share `0.456`, rent ratio `1.076`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_microbest_overnight_20260527`, worker `3`,
+  evaluation `131`, loss `14.743`, \(TFR=1.997\), ownership `0.612`,
+  center share `0.477`, rent ratio `1.131`
+- The hR8 default/tight and hR6 default incumbent arrays finished cleanly.
+  The hR6 micro-local job `9676802` was still running.
+- Current best JSON records were mirrored locally under
+  `output/model/reduced_target_overnight_20260527/records/`.
+
 Launch settings:
 
 - setup: `benchmark`
