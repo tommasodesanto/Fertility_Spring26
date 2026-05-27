@@ -148,6 +148,19 @@ run without improving the incumbents. The replacement tight local arrays use
 `DT_DIRECT_MIN_SCALE=0.003`, `DT_DIRECT_SHRINK=0.60`, and
 `DT_DIRECT_STALL_WINDOW=6`.
 
+Two-hour checkpoint, `2026-05-27 02:35 EDT`:
+
+- best `hR_max=8.0`: run
+  `py_direct_reduced_targets_hR8_incumbent_tight_overnight_20260527`,
+  worker `7`, evaluation `295`, loss `10.697`, \(TFR=1.734\), ownership
+  `0.337`, center share `0.467`, rent ratio `1.087`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_incumbent_default_overnight_20260527`,
+  worker `3`, evaluation `274`, loss `15.474`, \(TFR=1.930\), ownership
+  `0.622`, center share `0.432`, rent ratio `1.180`
+- Status: both incumbent-local specifications improved relative to the saved
+  incumbents, so the default and tight incumbent arrays were left running.
+
 Launch settings:
 
 - setup: `benchmark`
