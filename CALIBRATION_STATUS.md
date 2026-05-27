@@ -123,6 +123,24 @@ specification:
 | `hR_max=6.0` diagnostic | default proposal mix | `py_direct_reduced_targets_hR6_default_overnight_20260527` | `9670121`, then `9670122` |
 | `hR_max=6.0` diagnostic | global-heavy proposal mix | `py_direct_reduced_targets_hR6_globalheavy_overnight_20260527` | `9670123`, then `9670124` |
 
+Update after launch: the first 8 tasks from each cold-start first wave were
+left running. The pending cold-start tasks `9--16` and second waves were
+canceled after confirming that the saved incumbents were much better under the
+reduced target system than the generic seed-bank starts. Incumbent losses
+computed from saved moments under the reduced target system:
+
+- `hR_max=8.0` incumbent: `16.097`
+- `hR_max=6.0` incumbent: `35.230`
+
+Additional incumbent-seeded arrays:
+
+| Room spec | Regime | Run tag | Slurm job |
+|---|---|---|---|
+| `hR_max=8.0` baseline | default proposal mix | `py_direct_reduced_targets_hR8_incumbent_default_overnight_20260527` | `9670313` |
+| `hR_max=8.0` baseline | global-heavy proposal mix | `py_direct_reduced_targets_hR8_incumbent_globalheavy_overnight_20260527` | `9670314` |
+| `hR_max=6.0` diagnostic | default proposal mix | `py_direct_reduced_targets_hR6_incumbent_default_overnight_20260527` | `9670315` |
+| `hR_max=6.0` diagnostic | global-heavy proposal mix | `py_direct_reduced_targets_hR6_incumbent_globalheavy_overnight_20260527` | `9670316` |
+
 Launch settings:
 
 - setup: `benchmark`
