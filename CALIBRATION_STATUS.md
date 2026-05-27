@@ -79,9 +79,12 @@ Current ownership targets in `parameters.py`:
 | `own_rate` | `0.575` | ACS/MMS heads, ages 30--55, DUE housing restrictions |
 | `own_gradient` | `0.186` | ACS/MMS heads, ages 30--55, periphery minus center |
 | `own_family_gap` | `0.168` | ACS/MMS heads, ages 30--55, new parents minus childless |
-| `own_lifecycle_slope` | `0.423` | ACS/MMS heads, ages 65--75 minus ages 25--34 |
 | `old_age_own_rate` | `0.764` | ACS/MMS heads, ages 65--75, DUE housing restrictions |
 | `old_age_parent_childless_gap` | `0.070` | PSID completed-children target; ACS co-resident `NCHILD` is not the right object |
+
+The lifecycle ownership slope, ages 65--75 minus ages 25--34, and the
+prime-age childless renter/owner median room levels are diagnostic only. They
+are reported when available but are not hard SMM targets.
 
 Tenure segmentation now allows small owner units while preserving the renter
 cap:
@@ -317,9 +320,6 @@ direct-geometry targets disciplined by the geometry-weight block.
 | `own_rate` | `0.575` | `0.643` |
 | `own_gradient` | `0.186` | `0.139` |
 | `own_family_gap` | `0.168` | `0.114` |
-| `own_lifecycle_slope` | `0.423` | not reported |
-| `prime_childless_renter_median_rooms` | `4.000` | `6.365` |
-| `prime_childless_owner_median_rooms` | `6.000` | `6.800` |
 | `housing_increment_0to1` | `0.664` | `0.441` |
 | `housing_increment_1to2` | `0.566` | `0.192` |
 | `young_liquid_wealth_to_income` | `0.600` | `0.527` |
