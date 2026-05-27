@@ -174,6 +174,24 @@ Second checkpoint, `2026-05-27 04:36 EDT`:
 - First-wave tasks finished for the incumbent arrays; tasks `9--16` started
   and were left running.
 
+Third checkpoint, `2026-05-27 06:37 EDT`:
+
+- best `hR_max=8.0`: run
+  `py_direct_reduced_targets_hR8_incumbent_default_overnight_20260527`,
+  worker `10`, evaluation `289`, loss `9.323`, \(TFR=1.700\), ownership
+  `0.358`, center share `0.456`, rent ratio `1.076`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_incumbent_default_overnight_20260527`,
+  worker `14`, evaluation `268`, loss `15.329`, \(TFR=2.075\), ownership
+  `0.606`, center share `0.483`, rent ratio `1.144`
+- Because `hR_max=6.0` had largely flattened and the tight run was worse,
+  `9670413` was canceled and replaced with a micro-local refinement seeded
+  from the live `hR_max=6.0` best: run
+  `py_direct_reduced_targets_hR6_microbest_overnight_20260527`, Slurm job
+  `9676802`, with `DT_DIRECT_GLOBAL_PROB=0.00`,
+  `DT_DIRECT_INITIAL_SCALE=0.015`, `DT_DIRECT_MIN_SCALE=0.0008`,
+  `DT_DIRECT_SHRINK=0.50`, and `DT_DIRECT_STALL_WINDOW=4`.
+
 Launch settings:
 
 - setup: `benchmark`
