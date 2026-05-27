@@ -95,6 +95,61 @@ cap:
   `H_own = [2.0, 4.0, 6.0, 11.0]`
 - renter cap remains `hR_max = 8.0`
 
+## Current Overnight Reduced-Target Runs
+
+Launched: `2026-05-27 00:13 EDT`
+
+Purpose: recalibrate after dropping the lifecycle ownership slope and
+prime-age childless renter/owner median room levels from the hard SMM target
+system. Local `main` and Torch scratch active calibration files were checksum
+matched at commit `27c87f3`.
+
+Verified target counts before launch:
+
+- base targets: `15`
+- direct targets: `17`, including `inv_pop_share_C` and
+  `inv_rent_ratio_C_over_P`
+- direct parameters: `15`
+
+The current Python worker has one optimizer family, a seeded random/global plus
+local adaptive proposal search. To get algorithmic variation without changing
+model code, the overnight launch uses two proposal regimes per room
+specification:
+
+| Room spec | Regime | Run tag | Slurm waves |
+|---|---|---|---|
+| `hR_max=8.0` baseline | default proposal mix | `py_direct_reduced_targets_hR8_default_overnight_20260527` | `9670117`, then `9670118` |
+| `hR_max=8.0` baseline | global-heavy proposal mix | `py_direct_reduced_targets_hR8_globalheavy_overnight_20260527` | `9670119`, then `9670120` |
+| `hR_max=6.0` diagnostic | default proposal mix | `py_direct_reduced_targets_hR6_default_overnight_20260527` | `9670121`, then `9670122` |
+| `hR_max=6.0` diagnostic | global-heavy proposal mix | `py_direct_reduced_targets_hR6_globalheavy_overnight_20260527` | `9670123`, then `9670124` |
+
+Launch settings:
+
+- setup: `benchmark`
+- bounds: `global`
+- closure: `outside_option_benchmark_normalized`
+- geography weight: `100`
+- array size: `1-16%8` per run, four first-wave arrays active together
+- chained waves: second wave submitted with `afterany` dependency on the first
+  wave and the same run tag, so workers resume through existing `best.json` and
+  `evaluations.jsonl`
+- per-worker budget: `13,500` seconds per wave; Slurm wall time `03:55:00`
+- default proposal: `DT_DIRECT_GLOBAL_PROB=0.12`,
+  `DT_DIRECT_INITIAL_SCALE=0.18`
+- global-heavy proposal: `DT_DIRECT_GLOBAL_PROB=0.30`,
+  `DT_DIRECT_INITIAL_SCALE=0.30`
+
+Pre-launch checks:
+
+- local and Torch target-count checks both returned `15` base targets,
+  `17` direct targets, and `15` direct parameters
+- active model and cluster launcher checksums matched between local `main` and
+  Torch scratch
+- one-evaluation Slurm smoke jobs completed for both room specs:
+  `py_direct_reduced_targets_hR8_smoke_20260527` and
+  `py_direct_reduced_targets_hR6_smoke_20260527`
+- the obsolete old-target array `9662249` was canceled before launch
+
 ## Latest Cluster Search
 
 Active household-head ownership / small-owner-ladder outside-option search:
