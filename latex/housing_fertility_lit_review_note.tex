@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{array}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true, linkcolor=blue!50!black, citecolor=blue!50!black, urlcolor=blue!50!black}
+\setlength{\parskip}{0.4em}
+
+\title{Housing, Credit, and Fertility:\\ A Lit-Review Note to Position the Project}
+\author{}
+\date{Built May 26, 2026}
+
+\begin{document}
+\maketitle
+
+\noindent This note positions the project within the housing--fertility literature. The goal is not encyclopedic coverage but a clean map of who has done what, where the project sits, and what is new. Four strands organize the field. We share elements with each but sit at their intersection.
+
+\section{The macro puzzle that motivates the field}
+
+Kearney, Levine, and Pardue (2022, \emph{JEP}) document that US birth rates fluctuated around 65--70 per 1{,}000 women aged 15--44 from 1980 to 2007 and then fell about 20\% by 2020, with no recovery. Their detailed examination of demographic subgroups, state-year economic and policy factors, and international comparisons concludes that \emph{no single channel} explains the decline. They explicitly call the post-2007 puzzle ``multifaceted'' and not reducible to labor market conditions, contraception, or specific policies. This is the macro fact that motivates structural work: if the decline cannot be read off reduced-form regressions, the field needs models that quantify competing channels.
+
+Couillard (2025) reports that US average rents rose 149\% between 1990 and 2020 while the TFR fell from 2.08 to 1.60, motivating the housing-cost channel specifically. Our project sits squarely in the structural-quantification camp, with housing as the central friction.
+
+\section{Strand 1 --- Credit and mortgage shocks $\to$ fertility}
+
+Two recent papers establish causally that household mortgage and credit conditions affect fertility. These are the closest reduced-form precedents to the mechanism our model imposes.
+
+\paragraph{Hacamo (2021, RFS), ``The Babies of Mortgage Market Deregulation.''}
+Exploits state-by-time variation in the implementation of the Interstate Banking and Branching Efficiency Act of 1994 (four sub-provisions states could deregulate at different times). Identification is the staggered easing of mortgage credit supply at the state-cohort level. The headline result: young households ``fully exposed'' to deregulation are \textbf{6 pp more likely both to purchase a home and to have a child} --- a single joint indicator $\mathbf{1}\{\mathrm{buy} \cap \mathrm{birth}\}$. Crucially, Hacamo runs supplemental tests that \textbf{reject income growth and housing-wealth-growth as the channel} and identify ``access to space'' --- larger family-sized units --- as the operative mechanism. This is precisely the chain our model writes down: credit $\to$ DP cleared $\to$ ownership $\to$ family-sized unit $\to$ child.
+
+\paragraph{Cumming and Dettling (2024, \emph{ReStud}), ``Monetary Policy and Birth Rates.''}
+Two complementary designs. (i) In the UK, staggered eligibility for adjustable-rate mortgage resets after the 2008 Bank of England policy-rate cut --- the timing of pass-through is pre-determined by the borrower's initial fixed-rate window, exogenous to fertility intent. (ii) In the US (PSID), ARM vs FRM borrowers experiencing the FFR cut: ARM borrowers got automatic payment cuts, FRMs did not. Headline: each 1 pp drop in the UK policy rate raised birth rates by 2.6\% among fully-eligible groups; an IV that scales by induced disposable-income changes implies a 0.86\% increase in births per 1\% income gain. Effects are concentrated among more liquidity- and credit-constrained households. The active margin is monthly mortgage payments (DTI / cash flow), not down payments (LTV).
+
+\paragraph{What these two buy us.}
+Hacamo establishes the credit-supply $\to$ joint-margin chain causally. CD establishes the monetary cash-flow $\to$ birth chain causally. Both are reduced-form; \emph{neither} writes a structural model. Both leave the structural-quantification question --- ``how much of the cross-section and the level of TFR does this channel explain?'' --- open. They also work on adjacent but distinct margins: Hacamo at the renter $\to$ owner transition (the DP-side); CD at the already-owner cash-flow margin (the payment-side). Our model integrates both via the collateral constraint $b \geq (1-\phi) p_i H_k$ plus user-cost payments. Our contribution relative to this strand is structural quantification of the channel both papers identify reduced-form.
+
+\paragraph{Adjacent.}
+van~Doornik, Fazio, Ramadorai, and Skrastins (2025) study Brazilian household credit reforms and fertility; cited by Couillard and worth a forward look. Bhutta and Ringo style FHA-takeup analyses are another adjacent set.
+
+\section{Strand 2 --- House prices, unit size, and fertility}
+
+This is the older empirical strand on housing prices and fertility outcomes. The key facts and the new structural paper (Couillard) live here.
+
+\paragraph{Dettling and Kearney (2014, \emph{JPubE}), ``House prices and birth rates.''}
+MSA-level house-price variation 1997--2006 with Saiz-style supply-elasticity instruments. A \$10k increase in house prices implies a \textbf{5\% increase in births for owners and a 2.4\% decrease for non-owners}. Net effect at the mean US homeownership rate is +0.8\%. The owner-renter sign reversal --- owners get a positive wealth effect, renters get a negative cost effect --- is the central fact. Their interpretation requires both a wealth channel (for owners) and a cost channel (for renters), which is exactly what tenure choice + collateral constraint generates structurally.
+
+\paragraph{Lovenheim and Mumford (2013, \emph{ReStat}), ``Family Wealth Shocks and Fertility.''}
+PSID 1985--2007, housing wealth changes among owners as the wealth shock. A \$100k increase in housing wealth implies a \textbf{16--18\% increase in $P(\text{child})$ for owners} and \textbf{no detectable effect for renters}. The asymmetry sharpens the Dettling-Kearney point: ownership is the binding tenure condition for the wealth channel to operate. Our model rationalizes this: only owners can extract equity (relax their liquid-asset position) for a fertility-relevant durable purchase; renters cannot.
+
+\paragraph{Couillard (2025), ``Build, Baby, Build.''}
+The most directly competitive structural paper. A dynamic structural model of joint housing-fertility choice in US Census data, residential location $\times$ number of bedrooms $\times$ household formation $\times$ fertility, estimated with IO micro-moment techniques (Petrin 2002; Berry et al.\ 2004). The mechanism is Beckerian quantity-quality: large families are more cost-sensitive over housing, so rising housing costs deter the marginal birth. Counterfactual: rising rents since 1990 account for \textbf{11\% fewer children} and \textbf{51\% of the 2000s-vs-2010s TFR decline}; a supply shift favoring large 3+ bedroom units delivers \textbf{2.3$\times$ more births} than an equal-cost shift toward small units.
+
+Couillard is the structural paper closest to ours but differs in three important ways. First, his housing margin is \textbf{rental cost by unit size}, not the LTV / down-payment constraint --- his model has no tenure choice and no credit constraint. Second, his spatial dimension is residential neighborhood $\times$ bedrooms within metros, not a center-periphery distinction across metros. Third, his counterfactual lever is \textbf{supply of large units}, while ours can flex both the supply side and the credit/DP side.
+
+\paragraph{Other reduced-form papers in this strand} (most cited by Couillard's literature review): Clark (2012), Clark and Ferrer (2019), Pan and Yang (2022), Daysal et al.\ (2021), Atalay et al.\ (2021), Liu and Zhang (2024), Simon and Tamura (2009), Dettling and Kearney (2025). All use cross-MSA price variation; all face the geographic-selection critique Couillard flags.
+
+\section{Strand 3 --- Structural housing-macro models without fertility}
+
+The supply-side reference for our housing block.
+
+\paragraph{Greaney, Parkhomenko, Van Nieuwerburgh (2025), ``Dynamic Urban Economics'' (DUE).}
+Mixed-time spatial-housing-macro model, calibrated to the San Francisco Bay Area (55 locations $=$ 3{,}025 location pairs). Forward-looking households, costly migration, tenure choice, collateral constraint, housing transaction costs, idiosyncratic income risk. Solves a stationary equilibrium in 20 seconds on a laptop despite the large state space. \textbf{No fertility.} Externally calibrated values include $\phi = 0.8$ (``standard value''), $\delta = 0.011$, $\psi = 0.06$, $\tau_{\text{pay}} = 0.179$, $\gamma = 2$. Our housing block closely follows DUE; we lift their parameter conventions for $\phi$, $\psi$, $\tau_{\text{pay}}$ and add fertility on top, reducing to 2 locations (center, periphery).
+
+\paragraph{Sommer, Sullivan, Verbrugge (2013); Sommer and Sullivan (2018).}
+Equilibrium effect of fundamentals on house prices; implications of US tax policy. Both use $\phi = 0.80$. Both have tenure choice but no fertility. The literature anchor for the calibrated LTV cap.
+
+\paragraph{Davis and Van Nieuwerburgh (2015), \emph{Handbook of Regional and Urban Economics}.}
+Survey chapter on housing, finance, and the macroeconomy. The natural starting reference for housing-macro modeling choices.
+
+\paragraph{What this strand contributes.}
+The technical template for the housing block --- discrete owner-occupied housing, continuous rental, collateral constraint, transaction costs, lifecycle savings. None of these papers has fertility. Our project plugs fertility into a DUE-style frame and asks how the housing-credit machinery shapes births.
+
+\section{Strand 4 --- Quantitative fertility models without housing}
+
+The opposite reference set: structural fertility models lacking the housing dimension.
+
+\paragraph{Sommer (2016, \emph{JME}), ``Fertility choice with idiosyncratic uninsurable earnings risk.''}
+Aiyagari-Bewley-Huggett framework augmented with sequential fertility decisions and age-dependent infertility risk. Headline: the rise in US labor income risk from the 1970s to the 1990s accounts for \textbf{about half the decline in completed fertility} and a significant share of the postponement of first birth. Mechanism: children are durable, irreversible commitments; precautionary motives delay them when earnings risk rises; delay translates into fewer total births because of biological constraints. \textbf{No housing.} This is the closest structural precedent on the fertility side; our fertility block is a discrete-time analog with housing added.
+
+\paragraph{Doepke and Kindermann (2019, \emph{AER}), ``Bargaining over Babies.''}
+Quantitative model of household bargaining over fertility, with mothers and fathers disagreeing about the cost of children. Calibrated to OECD fertility-preference data. Implies that fertility responds strongly to policies that shift the burden of child care toward fathers. \textbf{No housing.} Our model abstracts from intra-household bargaining but cites this as the canonical structural fertility paper outside the housing literature.
+
+\paragraph{Becker (1960); Becker and Lewis (1973); Becker (1981).}
+The foundational quantity-quality framework. Couillard leans on it directly. Our model implicitly inherits it through the discrete housing-size choice and the family-size cost structure.
+
+\section{Where we sit}
+
+\begin{table}[H]
+\centering
+\small
+\caption{Map of nearby papers and what each has vs.\ what we have.}
+\begin{tabular}{p{0.30\textwidth}p{0.32\textwidth}p{0.32\textwidth}}
+\toprule
+Paper & Has & Lacks (vs.\ our project) \\
+\midrule
+Hacamo (2021)
+ & Causal credit $\to$ joint(buy, child) chain; mechanism = access to space
+ & No structural model; no spatial dimension; no calibration of the constraint \\
+Cumming \& Dettling (2024)
+ & Causal mortgage-payment $\to$ births chain
+ & Owners only; no DP margin; no structural housing model \\
+Couillard (2025)
+ & Structural housing-fertility, rent prices, unit size, large-vs-small supply policy
+ & No tenure choice; no DP / LTV constraint; no owner-occupied stock dynamics; no center-periphery sorting \\
+DUE (Greaney et al.\ 2025)
+ & Spatial housing-macro framework, tenure, $\phi=0.8$, transitions
+ & No fertility \\
+Sommer (2016)
+ & Structural fertility with earnings risk and infertility
+ & No housing \\
+Dettling \& Kearney (2014); Lovenheim \& Mumford (2013)
+ & Owner-renter asymmetry in fertility response to house prices and housing wealth
+ & Reduced form; no structural integration \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The single sentence that positions us.}
+Our project is the first structural model that unifies (i) the collateral constraint with discrete owner-occupied housing, (ii) tenure choice, (iii) family-sized owner units that interact with parity, (iv) center-periphery spatial sorting within metros, and (v) lifecycle fertility, disciplined by PSID and ACS moments, to quantify how housing constraints shape births through both the down-payment margin (renter $\to$ owner) and the family-space margin (which owner unit is reachable).
+
+\paragraph{What each strand buys us in the pitch.}
+\begin{itemize}
+\item \textbf{Strand 1 (Hacamo, CD)} -- causal validation of the chain we model; cite as the reduced-form precedents whose effects our structural model rationalizes and quantifies.
+\item \textbf{Strand 2 (Dettling-Kearney, Lovenheim-Mumford, Couillard)} -- empirical owner-renter asymmetry our model must match; structural competitor to position against (Couillard).
+\item \textbf{Strand 3 (DUE, SSV)} -- housing-block template; literature anchor for $\phi = 0.80$ and other externally calibrated parameters.
+\item \textbf{Strand 4 (Sommer 2016, Doepke-Kindermann)} -- fertility-side template; cite as the structural precedents whose framework we extend by adding housing.
+\end{itemize}
+
+\section{Three things to decide before writing the lit-review section}
+
+\begin{enumerate}
+\item \textbf{How sharply to position vs.\ Couillard.} His paper is the most likely to come up as ``why is your paper different?'' The cleanest framing is: ``Couillard quantifies the cost-of-space channel with rental prices and unit size; we add the tenure margin and the collateral constraint, which deliver the owner-renter asymmetry that Dettling-Kearney and Lovenheim-Mumford document empirically but that Couillard's rent-only framework cannot generate.'' Worth pressure-testing before the pitch.
+\item \textbf{Whether to cite Hacamo and CD as primary precedents or as adjacent.} If primary, the pitch's identification section frames our work as ``structural quantification of the mechanism they identify reduced-form,'' which is strong. If adjacent, we lean more on our own PSID evidence (Object B, the joint-margin descriptive). Recommend primary.
+\item \textbf{Whether to add a layer of new causal evidence in PSID} (bequest event study, discussed earlier). With Hacamo and CD as published causal precedents, our identification burden in the pitch is lighter --- descriptive PSID objects (B, $A^*$) suffice if positioned right.
+\end{enumerate}
+
+\paragraph{Files to update.}
+\begin{itemize}
+\item \texttt{latex/main\_bib.bib} -- add Hacamo (2021), Couillard (2025), Kearney--Levine--Pardue (2022), van~Doornik et al.\ (2025); confirm Sommer (2016) and DUE are present (they are).
+\item \texttt{latex/model\_writeup.tex} -- expand the related-literature paragraph to four strands as above; one paragraph each.
+\item \texttt{latex/may\_29\_project\_presentation.tex} -- add a one-slide ``Where we sit'' summary built from the table above.
+\end{itemize}
+
+\end{document}

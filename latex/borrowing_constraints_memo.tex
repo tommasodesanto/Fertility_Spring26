@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  framesep=4pt,
+  xleftmargin=4pt,
+  xrightmargin=4pt,
+  backgroundcolor=\color{black!3},
+}
+
+\title{Two PSID Objects on the Down-Payment Constraint}
+\author{}
+\date{Built May 26, 2026}
+
+\begin{document}
+\maketitle
+
+\noindent This note documents two PSID empirical objects that together discipline the collateral constraint in the model and provide reduced-form evidence that the constraint matters for fertility. The model object is
+\[
+b_t \;\geq\; (1-\phi)\, p_i\, H_k,
+\]
+with calibrated $\phi = 0.80$, so 20\% of the price of an owned home in liquid wealth. Ownership in the model unlocks family-size housing services $\bar h(1) > \bar h(0)$. The model therefore predicts (i) actual first-time buyers cluster at or below the 20\% threshold, and (ii) renters whose liquid wealth falls short of the implied down payment for a typical owned home are disproportionately childless. The two objects below test these two predictions.
+
+\section{Object A: Bunching at the Collateral Frontier}
+
+\subsection*{Construction}
+
+For each PSID head observed in $1984$--$2019$, identify the first survey year in which the head is an owner ($\texttt{HOMEOWN} = 1$) and was previously observed as a renter ($\texttt{HOMEOWN} = 2$). Require $\texttt{YEARMOVED\_} \in [t-2, t]$ so reported value and mortgage are at or near origination. The down-payment share at first purchase is
+\[
+\frac{\mathrm{DP}}{P} \;=\; 1 \;-\; \frac{\texttt{HOMEMORTOTR}_t}{\texttt{HOMEVALUER}_t}.
+\]
+Cash buyers ($\texttt{HOMEMORTOTR} = 0$) are 17.9\% of the sample and are shown separately. The headline density is plotted conditional on having a mortgage so the cash spike at $\mathrm{DP}/P = 1$ does not visually distract from the bunching story.
+
+\subsection*{Result}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{\detokenize{../code/data/psid_followup_mar2026/output/dp_at_first_purchase_v1/dp_share_density_nocash_v1.png}}
+\caption{Kernel density of the down-payment share at first home purchase, PSID first-time buyers with a mortgage, $1984$--$2019$. Dotted lines mark $3.5\%$ (FHA), $5\%$, and $10\%$ conventional floors; the dashed red line is the $20\%$ GSE conforming threshold (the calibrated $1-\phi$).}
+\label{fig:dp_density}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Down-payment share at first purchase, mortgaged buyers.}
+\begin{tabular}{lr}
+\toprule
+Statistic & Value \\
+\midrule
+First-time mortgaged buyers ($N$) & $252$ \\
+Median $\mathrm{DP}/P$ & $0.16$ \\
+Share with $\mathrm{DP}/P \leq 0.035$ (FHA) & $0.241$ \\
+Share with $\mathrm{DP}/P \leq 0.05$            & $0.282$ \\
+Share with $\mathrm{DP}/P \leq 0.10$            & $0.378$ \\
+Share with $\mathrm{DP}/P \leq 0.20$ (GSE)      & $\mathbf{0.566}$ \\
+Cash buyers (separate)                          & $0.179$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent The density is monotone decreasing from $0$ to $0.20$ with a visible step right at the $20\%$ GSE line and a thin right tail. The bunching is not a $2008$--$2010$ crisis artifact: the share at or below $20\%$ is $47\%$ in $1995$--$2004$, $43\%$ in $2005$--$2010$, and $50\%$ in $2011$--$2019$ (raw shares including cash buyers; the mortgaged-only versions are higher).
+
+\subsection*{What Object A buys}
+
+Direct, model-free evidence that real first-time buyers operate at the collateral frontier the model writes down. The DP constraint is where the modal mortgaged first-time buyer lands.
+
+\section{Object B: DP Shortfall Predicts Childlessness}
+
+\subsection*{Construction}
+
+Build a per-year target home price as the median value among observed first-time PSID buyers in the same year-bin (Table~\ref{tab:p_target}). For each PSID head observed as a renter at ages $25$--$30$, define
+\[
+\text{shortfall}_{it} \;=\; \mathbf{1}\!\left\{ b_{it} \;<\; 0.20 \cdot P^{\mathrm{target}}_{t} \right\},
+\]
+where $b_{it} = \texttt{NETWORTH2R}$ (PSID net worth excluding home equity). Collapse to one observation per ID (mean over the $25$--$30$ window), keep observations followed to age $45$, and compare childlessness by $45$ across shortfall status within income tercile.
+
+\begin{table}[H]
+\centering
+\caption{Target home price $P^{\mathrm{target}}_t$ by year-bin (PSID first-time buyer median home value, real).}
+\label{tab:p_target}
+\begin{tabular}{lrr}
+\toprule
+Year bin & $P^{\mathrm{target}}$ (real \$) & First-time buyers \\
+\midrule
+$1995$--$2004$ & $179{,}300$ & $95$ \\
+$2005$--$2010$ & $188{,}844$ & $128$ \\
+$2011$--$2019$ & $218{,}775$ & $169$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Result}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{\detokenize{../code/data/psid_followup_mar2026/output/dp_shortfall_v1/childless_by_shortfall_inc_tercile_v1.png}}
+\caption{Share childless by 45 among PSID renters at ages $25$--$30$, split by DP-shortfall status within income tercile.}
+\label{fig:shortfall_bars}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Childlessness by $45$ by shortfall status and income tercile (PSID renters at $25$--$30$).}
+\begin{tabular}{lrrrrr}
+\toprule
+Income tercile & DP sufficient & $N$ & DP shortfall & $N$ & Gap \\
+\midrule
+Bottom & $0.227$ & $19$    & $0.250$ & $1{,}237$ & $+2.3$ pp \\
+Middle & $0.145$ & $37$    & $0.274$ & $864$     & $+\mathbf{12.9}$ pp \\
+Top    & $0.103$ & $59$    & $0.230$ & $758$     & $+\mathbf{12.7}$ pp \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{OLS of childless-by-$45$ on DP shortfall and controls. PSID renters at $25$--$30$, pre-first-birth, $N = 2{,}961$. PSID weights, robust SEs.}
+\begin{tabular}{lrrr}
+\toprule
+Specification & $\hat\beta_{\text{shortfall}}$ & SE & $p$ \\
+\midrule
+Shortfall ($20\%$)                          & $0.115$ & $0.039$ & $0.003$ \\
+Shortfall ($20\%$) $+$ $\log$ income        & $0.116$ & $0.040$ & $0.003$ \\
+Shortfall ($20\%$) $+$ $\log$ income $+$ $\log$ NW & $0.122$ & $0.041$ & $0.003$ \\
+Strict shortfall ($10\%$) $+$ $\log$ income & $0.068$ & $0.036$ & $0.063$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent DP-shortfall renters are about $12$ pp more childless by $45$, controlling for log income and log net worth. The $10\%$ strict threshold is weaker, consistent with $20\%$ being the binding margin in both this object and the calibrated $\phi$.
+
+\subsection*{What Object B buys}
+
+Direct reduced-form evidence that the constraint matters for fertility, not just for tenure. The threshold is sharper than raw wealth because it varies with both wealth and prices (the threshold $0.20 \cdot P^{\mathrm{target}}_t$ moves over time), and the within-income split nets out the income channel.
+
+\section{Why Both Together Make the Case}
+
+Object~A alone says the constraint binds for buyers; a critic can respond that non-buyers stay renters for reasons unrelated to fertility. Object~B alone says renters with little wealth have fewer kids; a critic can respond that the result is just income or wealth. Together, the \emph{same} $20\%$ threshold that buyers bunch at also separates childless from parent renters within income tercile. Two complementary moments of the same distribution, both consistent with the calibrated $\phi$.
+
+\section{Draft Pitch Frames}
+
+These are drafts to paste into \texttt{latex/may\_29\_project\_presentation.tex}. Style matches the existing PSID frames around lines $1188$ and $1235$. Adjust hyperref targets if needed.
+
+\subsection*{Frame 1: Bunching at the collateral frontier}
+
+\begin{lstlisting}[language={}]
+\begin{frame}{Buyers Bunch at the 20\% Down-Payment Constraint}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../code/data/psid_followup_mar2026/output/dp_at_first_purchase_v1/dp_share_density_nocash_v1.png}
+\end{column}
+\begin{column}{0.40\textwidth}
+\small
+PSID first-time buyers with a mortgage, $1984$--$2019$ ($N=252$).
+\medskip
+\begin{itemize}
+  \item $\mathrm{DP}/P = 1 - \text{mortgage}/\text{value}$ at first owner-year.
+  \item Density is monotone from $0$ to $0.20$ with a visible step at the GSE $20\%$ line.
+  \item $\mathbf{57\%}$ of mortgaged buyers put down $\leq 20\%$; $38\%$ put down $\leq 10\%$.
+  \item Stable across $1995$--$2004$, $2005$--$2010$, $2011$--$2019$: not a crisis artifact.
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize The calibrated $\phi = 0.80$ matches the threshold the modal mortgaged first-time buyer hits in the data.
+\end{frame}
+\end{lstlisting}
+
+\subsection*{Frame 2: Down-payment shortfall predicts childlessness}
+
+\begin{lstlisting}[language={}]
+\begin{frame}{Renters Below the Down-Payment Frontier Stay Childless}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../code/data/psid_followup_mar2026/output/dp_shortfall_v1/childless_by_shortfall_inc_tercile_v1.png}
+\end{column}
+\begin{column}{0.40\textwidth}
+\small
+PSID renters at $25$--$30$, pre-first-birth, $N=2{,}961$.
+\medskip
+\begin{itemize}
+  \item Shortfall $=$ liquid wealth $< 0.20 \times$ median first-time-buyer home value in that year-bin.
+  \item Within \emph{every} income tercile, shortfall renters are more childless by $45$.
+  \item Mid- and top-income terciles: gap is $\mathbf{\approx 13}$ pp.
+  \item Regression coefficient $0.122$ (SE $0.041$, $p=0.003$), controlling for $\log$ income and $\log$ net worth.
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\footnotesize The 20\% threshold is the same number that buyers bunch at and the same number the model calibrates as $1 - \phi$.
+\end{frame}
+\end{lstlisting}
+
+\section{Caveats}
+
+\begin{itemize}
+  \item \textbf{Sample sizes}: PSID is small. Object~A has $N = 252$ mortgaged first-time buyers, Object~B has $N = 2{,}961$ pre-birth renters followed to $45$. Within bottom income tercile, the DP-sufficient comparison group in B has only $N = 19$, so that row should be read as descriptive only.
+  \item \textbf{Origination proxy}: $\mathrm{DP}/P$ is computed from current $\texttt{HOMEVALUER}$ and current $\texttt{HOMEMORTOTR}$ at the first surveyed owner-year, with $\texttt{YEARMOVED\_} \in [t-2, t]$. Some drift from true origination is unavoidable. House-price appreciation post-purchase biases reported $\mathrm{DP}/P$ \emph{up}, so the bunching headline is conservative.
+  \item \textbf{Gifts and transfers}: A buyer financed by a family gift looks like a high-DP buyer; this also biases the bunching estimate down. The true share at the collateral floor is plausibly higher than reported.
+  \item \textbf{Target price in B}: uses national year-bin median first-time-buyer value. A state- or metro-level analog would tighten the threshold; the PSID shelf has $\texttt{STATEFIPS\_}$ but not MSA. State-level version is straightforward as a robustness pass.
+  \item \textbf{Outright cash buyers} are $17.9\%$ of A's sample. They are excluded from the headline density and reported separately; the all-buyers density and summary are still saved as $\texttt{dp\_share\_density\_v1.png}$ and $\texttt{dp\_share\_bunching\_summary\_v1.csv}$.
+\end{itemize}
+
+\section{Code and Artifacts}
+
+\begin{itemize}
+  \item Do-files:
+  \texttt{code/data/psid\_followup\_mar2026/dp\_at\_first\_purchase\_v1.do} (Object~A),
+  \texttt{code/data/psid\_followup\_mar2026/dp\_shortfall\_v1.do} (Object~B).
+  \item Outputs:
+  \texttt{code/data/psid\_followup\_mar2026/output/dp\_at\_first\_purchase\_v1/} and
+  \texttt{code/data/psid\_followup\_mar2026/output/dp\_shortfall\_v1/}.
+\end{itemize}
+
+\end{document}

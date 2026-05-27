@@ -1,0 +1,715 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage[authoryear,round]{natbib}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\E}{\mathbb E}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Iset}{\mathcal I}
+\newcommand{\Dset}{\mathcal D}
+\newcommand{\Zset}{\mathcal Z}
+\newcommand{\Mset}{\mathcal M}
+\newcommand{\Hset}{\mathcal H}
+\newcommand{\Qset}{\mathcal Q}
+\newcommand{\ind}{\mathbf 1}
+
+\title{Two Candidate Extensions to the Discrete-Time Lifecycle Model:\\
+Risk, Mortgage Access, and Developer Supply}
+\author{}
+\date{May 2026}
+
+\begin{document}
+\maketitle
+
+\section{Executive summary}
+
+This memo revises the earlier three-branch design into two more ambitious branches. Branch 1 adds serious idiosyncratic earnings risk and a minimal defaultable mortgage-account structure. It adds exactly two new state dimensions beyond the baseline state $x=(b,d,i,a,n,s)$ in \texttt{model\_writeup.tex}: an earnings state $z$ and a mortgage-account state $\mu$. The sharp empirical question is whether uninsurable labor-income risk and mortgage fragility jointly delay fertility and alter access to family space, rather than whether deterministic permanent types sort across space. The branch operationalizes a missing-insurance / credit-market wedge and connects directly to the limitation in \texttt{INCOME\_WEALTH\_FERTILITY\_ROADMAP.md}: the current model has deterministic age-income profiles and no idiosyncratic earnings states. Verdict: \textbf{yellow-green}. It is substantially more expensive than permanent types, but it is the right optimistic version if the goal is a true HANK-style lifecycle model with credit-risk content.
+
+Branch 2 replaces scalar isoelastic location supply with a developer problem for unit types, especially family-capable middle units. The baseline $H_i^S(r_i)=H_{0i}r_i^{\eta_i}$ can shift aggregate housing supply but cannot say why $5$--$6$ room family-capable units are scarce while small rentals and large owner units coexist. The proposed block has competitive real-estate developers choose construction of ordinary, middle, and large units subject to type-specific construction costs, land/regulatory wedges, and fixed entry costs. The sharp empirical question is whether ACS room-bin rents and stocks identify a missing-middle wedge that scalar supply cannot reproduce. This branch operationalizes the zoning / family-space supply wedge. Verdict: \textbf{green}. It is the most direct path from the current room-distribution failure in \texttt{LIVE\_HOUSING\_SIZE\_AUDIT.md} to a structural extension.
+
+The recommended ordering is not either-or. The overnight coding tests should prototype both branches in isolated subfolders, but the main code commitment should prioritize Branch 2 if the developer block can clear markets and improve the room screen without destabilizing the solver. Branch 1 should proceed if the local prototype can solve with a small earnings grid and a finite mortgage-account state without collapsing the current fertility and tenure moments. Branch 1 is optional for the supply-wedge paper but necessary for serious income-risk and credit-access claims. Branch 2 is necessary for any credible claim that the paper identifies the shadow price of family-sized space rather than merely a tenure preference or down-payment artifact.
+
+\section{Branch 1: idiosyncratic income risk and minimal defaultable mortgage access}
+
+\subsection{Motivation and target moment}
+
+The current paper-facing model in \texttt{model\_writeup.tex} has deterministic age-efficiency income and no earnings shocks. The roadmap file \texttt{INCOME\_WEALTH\_FERTILITY\_ROADMAP.md} says this is not just a technical simplification: the model cannot speak cleanly to fertility by income conditional on wealth, tenure, location, and age. It also says that the current Stone-Geary housing-needs block can mechanically generate wealth gradients in fertility even if all households share the same income process. That is exactly the discipline problem a HANK-style extension addresses. The model should not ask only whether a household has enough wealth to clear a family-space floor. It should ask whether uncertain labor income makes family-space commitments, owner entry, and mortgage payments risky.
+
+The relevant empirical patterns are standard but directly tied to this model. In incomplete-market lifecycle models, uninsurable income risk generates precautionary saving and changes the timing of durable commitments \citep{huggett1993,aiyagari1994,krusellSmith1998,kaplanViolanteWeidner2014,kaplanMollViolante2018}. In fertility applications, \citet{sommer2016} shows that earnings risk can delay and reduce fertility because children are persistent commitments rather than reversible consumption goods. In housing finance, \citet{campbellCocco2015}, \citet{corbaeQuintin2015}, \citet{favilukisLudvigsonVanNieuwerburgh2017}, and \citet{kaplanMitmanViolante2020} show that mortgage leverage, income risk, and default options are jointly relevant for household housing decisions. The point for this project is not to become a mortgage-contract paper. It is to let labor-income risk interact with the family-space margin and with a realistic owner-entry/account-status margin.
+
+The calibration targets in \texttt{CALIBRATION\_STATUS.md} suggest where this branch could help. The model misses mean age at first birth badly, with model $33.535$ against target $26.000$. It also misses young liquid wealth-to-income, $0.527$ against target $0.600$, and old-age ownership, $0.947$ against target $0.863$. Idiosyncratic risk can raise precautionary wealth and delay births; a defaultable mortgage-account block can lower excessive late-life ownership by making owner debt and bad credit histories matter. This branch does not directly fix the childless renter room miss, $6.365$ against target $4.000$, or the compressed room distribution documented in \texttt{LIVE\_HOUSING\_SIZE\_AUDIT.md}. Those are supply and housing-menu problems, not income-risk problems.
+
+The target empirical moment for this branch is a joint PSID object: first-birth hazard and completed fertility by liquid-wealth bin, income-risk proxy, tenure, and pre-birth housing slack. A weaker ACS/CPS version can use income volatility proxies and current children in household, but PSID is the primary data source because this branch is about histories, risk, and timing.
+
+\subsection{Model specification}
+
+The baseline state is $x=(b,d,i,a,n,s)$, where $b$ is liquid wealth, $d$ is tenure, $i$ is location, $a$ is age, $n$ is completed fertility, and $s$ is the child-age state. Branch 1 changes the state to
+\begin{equation}
+    x^1=(b,d,i,a,n,s,z,\mu).
+\end{equation}
+The earnings state $z\in\Zset=\{z_1,\ldots,z_{N_z}\}$ follows a finite Markov transition matrix $\Pi_z(z'\mid z)$. The preferred production implementation uses $N_z=5$ for the real test and $N_z=3$ for the overnight smoke test. Earnings are
+\begin{equation}
+    y_a(z)=
+    \begin{cases}
+    (1-\tau_{\mathrm{pay}})w e_a \exp(z), & a\leq J_R,\\
+    p^{\mathrm{ret}}(z), & a>J_R.
+    \end{cases}
+    \label{eq:income-risk}
+\end{equation}
+The baseline deterministic-income model is the special case $z=0$ with probability one.
+
+The second new state is the mortgage-account state $\mu\in\Mset$. It is one discrete state dimension, but each element encodes the information needed for a minimal mortgage/default block:
+\begin{equation}
+    \mu=(m,g),
+\end{equation}
+where $m\in\{0,m_1,\ldots,m_{N_m}\}$ is the outstanding mortgage balance and $g\in\{G,B\}$ is good or bad credit status. Renters can have $\mu=(0,G)$ or $\mu=(0,B)$; owners can have $m>0$ or $m=0$. This is intentionally not a rich FRM/ARM/refinancing/default-term-structure model. It is a compact account-status state that permits mortgage payments, amortization, default, and temporary post-default credit impairment.
+
+Mortgage payments are summarized by
+\begin{equation}
+    P^m(\mu)=
+    \begin{cases}
+    0, & m=0,\\
+    \varrho_g m, & m>0,
+    \end{cases}
+    \qquad \varrho_B\geq \varrho_G,
+    \label{eq:mortgage-payment}
+\end{equation}
+and deterministic amortization maps a performing mortgage account to
+\begin{equation}
+    \mu^A=\mathcal A(\mu)=( (1-\alpha_m)m, g),
+    \qquad \alpha_m\in(0,1].
+    \label{eq:amortization}
+\end{equation}
+A default maps the account to a bad-credit renter state,
+\begin{equation}
+    \mu^D=(0,B),
+    \label{eq:default-account}
+\end{equation}
+and bad credit recovers according to a discrete transition probability
+\begin{equation}
+    \Pr(g'=G\mid g=B)=\pi_G,\qquad \Pr(g'=B\mid g=B)=1-\pi_G.
+    \label{eq:credit-recovery}
+\end{equation}
+
+The within-period timing changes. At the beginning of the period, the household observes $(b,d,i,a,n,s,z,\mu)$. If it is an owner with $m>0$, it first chooses whether to perform or default. After that account decision, it chooses fertility, location, tenure/owner rung or rental size, consumption, and savings. Next period, the child-age state, earnings state, and mortgage-account state evolve through their discrete transition operators.
+
+The renter Bellman equation becomes
+\begin{equation}
+\begin{aligned}
+V^R_a(b,i,n,s,z,\mu)=
+\max_{c,h^R,b'}\quad
+&u(c,\mathbf h(0,h^R);n,s)
++\beta \sum_{z'}\Pi_z(z'\mid z)
+\sum_{s'}\Pi^c(s'\mid s,n)
+V_{a+1}(b',R,i,n,s',z',\mu')\\
+\text{s.t.}\quad
+&c+r_i h^R+b'=R_b b+y_a(z),\\
+&0\leq h^R\leq \bar h^R,\qquad b'\geq \underline b_R(g),
+\end{aligned}
+\label{eq:renter-risk}
+\end{equation}
+where $\mu'$ is $(0,G)$ or $(0,B)$ according to \eqref{eq:credit-recovery} and $\underline b_R(g)$ permits the code to impose tighter borrowing or qualification for bad-credit renters if desired. The baseline \texttt{eq:renter\_problem} is recovered by setting $z=0$, $\mu=(0,G)$, $\underline b_R(G)=0$, and removing the expectation over $z'$.
+
+For an owner in rung $H_k$, the value is the maximum of a performing value and a default value:
+\begin{equation}
+    V^{O_k}_a(b,i,n,s,z,\mu)=
+    \max\left\{
+    V^{K_k}_a(b,i,n,s,z,\mu),
+    V^{D_k}_a(b,i,n,s,z,\mu)
+    \right\}.
+    \label{eq:owner-max-default}
+\end{equation}
+The performing value is
+\begin{equation}
+\begin{aligned}
+V^{K_k}_a(b,i,n,s,z,\mu)=
+\max_{c,b'}\quad
+&u(c,\mathbf h(H_k,0);n,s)
++\beta \sum_{z'}\Pi_z(z'\mid z)
+\sum_{s'}\Pi^c(s'\mid s,n)
+V_{a+1}(b',O_k,i,n,s',z',\mathcal A(\mu))\\
+\text{s.t.}\quad
+&c+\delta p_iH_k+P^m(\mu)+b'=R_b b+y_a(z),\\
+&b'\geq \underline b_O(g).
+\end{aligned}
+\label{eq:owner-keep}
+\end{equation}
+The default value is
+\begin{equation}
+\begin{aligned}
+V^{D_k}_a(b,i,n,s,z,\mu)=
+\max_{c,h^R,b'}\quad
+&u(c,\mathbf h(0,h^R);n,s)-\xi_D(g)
++\beta \sum_{z'}\Pi_z(z'\mid z)
+\sum_{s'}\Pi^c(s'\mid s,n)
+V_{a+1}(b',R,i,n,s',z',(0,B))\\
+\text{s.t.}\quad
+&c+r_i h^R+b'=R_b b+y_a(z),\\
+&0\leq h^R\leq \bar h^R,\qquad b'\geq \underline b_R(B).
+\end{aligned}
+\label{eq:owner-default}
+\end{equation}
+The default equation is deliberately simple: the household loses the owner package and enters the renter state with bad credit. It does not model foreclosure delays, deficiency judgments, refinancing, recourse laws, or mortgage-duration choice.
+
+At owner purchase, the baseline financed-share parameter $\phi$ is displaced by a credit-status-specific origination rule:
+\begin{equation}
+    m'=\phi_g p_jH_k,\qquad
+    \mathrm{down}_{g,jk}=(1-\phi_g)p_jH_k,
+    \qquad \phi_G\geq \phi_B.
+    \label{eq:origination}
+\end{equation}
+The tenure-adjustment value from location $i$ to $j$ is computed as in \texttt{model\_writeup.tex}, except that purchase of $H_k$ now requires paying the down payment in \eqref{eq:origination} and sets $\mu'=(m',g)$ rather than folding all mortgage debt into negative $b$. Sale of an existing owner unit nets out outstanding balance:
+\begin{equation}
+    \mathrm{sale}_{ik}(\mu)=(1-\psi)p_iH_k-m.
+    \label{eq:sale-net-of-debt}
+\end{equation}
+If $\mathrm{sale}_{ik}(\mu)<0$, the household can sell only by defaulting or by covering the negative equity with liquid wealth. This is the minimal way to make default risk economically meaningful without adding a full mortgage-contract state space.
+
+\subsection{Algebra and minimal analytical results}
+
+The first analytical result is the standard precautionary-saving effect. Suppress housing and fertility notation for clarity and consider an interior liquid-savings choice. The Euler equation is
+\begin{equation}
+    u_c(c_a)=
+    \beta R_b
+    \sum_{z'}\Pi_z(z'\mid z)
+    u_c(c_{a+1}(z')).
+    \label{eq:euler-risk}
+\end{equation}
+Let $c_{a+1}(z')=\bar c_{a+1}+\varepsilon_{z'}$, with $\sum_{z'}\Pi_z(z'\mid z)\varepsilon_{z'}=0$. A second-order expansion gives
+\begin{equation}
+    \E_z[u_c(c_{a+1})]
+    \simeq
+    u_c(\bar c_{a+1})
+    +\frac{1}{2}u_{ccc}(\bar c_{a+1})\operatorname{Var}_z(c_{a+1}).
+    \label{eq:prudence-expansion}
+\end{equation}
+Under CRRA or Stone-Geary CRRA preferences, $u_{ccc}>0$ on the feasible set. Hence an increase in future income risk raises expected future marginal utility. To restore \eqref{eq:euler-risk}, current marginal utility must rise, so current consumption falls and liquid saving rises:
+\begin{equation}
+    \frac{\partial b'_a}{\partial \operatorname{Var}_z(y_{a+1})}>0
+    \quad\text{locally, away from kinks.}
+    \label{eq:precautionary-saving}
+\end{equation}
+This is the branch's HANK content. The model will no longer match young wealth only through deterministic lifecycle saving and tenure sorting.
+
+The second result links income risk to fertility timing. Let $B$ denote the birth option and $0$ the delay option. Let the birth option require extra current resources $\Delta_a(i,d,n,s)>0$ through child consumption and housing needs, so that, holding the same current cash on hand,
+\begin{equation}
+    b'_B=b'_0-\Delta_a.
+\end{equation}
+The continuation-value cost of the birth option is
+\begin{equation}
+    \mathcal L_a(\Delta_a,z,\mu)
+    =
+    \beta\sum_{z'}\Pi_z(z'\mid z)
+    \left[
+    V_{a+1}(b'_0,n,s,z',\mu')
+    -
+    V_{a+1}(b'_0-\Delta_a,n+1,s,z',\mu')
+    \right].
+    \label{eq:birth-liquidity-cost}
+\end{equation}
+A Taylor expansion around $b'_0$ gives
+\begin{equation}
+    \mathcal L_a
+    \simeq
+    \beta\Delta_a
+    \sum_{z'}\Pi_z(z'\mid z)V_b(b'_0,n,s,z',\mu')
+    -\frac{\beta\Delta_a^2}{2}
+    \sum_{z'}\Pi_z(z'\mid z)V_{bb}(b'_0,n,s,z',\mu').
+    \label{eq:birth-cost-expansion}
+\end{equation}
+Because income risk raises the expected marginal value of liquid wealth in \eqref{eq:prudence-expansion}, it raises the first term in \eqref{eq:birth-cost-expansion}. In the fertility logit, the birth-to-delay log odds contain
+\begin{equation}
+    \log\frac{\pi_a(B\mid x^1)}{\pi_a(0\mid x^1)}
+    =
+    \frac{\mathcal V_a(B\mid x^1)-\mathcal V_a(0\mid x^1)}{\kappa_f},
+    \label{eq:fertility-log-odds-risk}
+\end{equation}
+so higher income risk lowers birth odds whenever the birth option tightens liquid resources:
+\begin{equation}
+    \frac{\partial}{\partial \operatorname{Var}_z(y_{a+1})}
+    \log\frac{\pi_a(B\mid x^1)}{\pi_a(0\mid x^1)}
+    <0
+    \quad\text{if}\quad
+    \Delta_a>0
+    \ \text{and}\ 
+    \frac{\partial \E_z V_b}{\partial \operatorname{Var}_z(y_{a+1})}>0.
+    \label{eq:risk-delays-birth}
+\end{equation}
+This is the exact sense in which the branch can repair late first births: it makes delaying fertility an insurance and liquidity choice, not only a deterministic wealth-accumulation outcome.
+
+The third result is the default cutoff. Define the local keep-minus-default value for an owner in rung $H_k$:
+\begin{equation}
+    \Delta^{K-D}_{ak}(x^1)=V^{K_k}_a(b,i,n,s,z,\mu)-V^{D_k}_a(b,i,n,s,z,\mu).
+\end{equation}
+Around a reference state, write the value of keeping as the owner-service premium $\Omega_{ik}(n,s)$ plus the liquid value of net home equity after sale and payment, less the default penalty:
+\begin{equation}
+    \Delta^{K-D}_{ak}
+    \simeq
+    \Omega_{ik}(n,s)
+    +\lambda_a(x^1)\left[(1-\psi)p_iH_k-m-P^m(\mu)\right]
+    -\xi_D(g),
+    \label{eq:default-linearized}
+\end{equation}
+where $\lambda_a(x^1)$ is the marginal value of liquid resources. Default is optimal when $\Delta^{K-D}_{ak}<0$, or
+\begin{equation}
+    (1-\psi)p_iH_k-m-P^m(\mu)
+    <
+    \frac{\xi_D(g)-\Omega_{ik}(n,s)}{\lambda_a(x^1)}.
+    \label{eq:default-cutoff}
+\end{equation}
+The left side is a net-equity-and-payment object. The right side is lower when the owner package is valuable and higher when default penalties are large. This cutoff is useful because it says what the overnight test must report: not just default rates, but the mass near \eqref{eq:default-cutoff}, by fertility state and location.
+
+\subsection{Identification and calibration targets}
+
+\begin{table}[!ht]
+\centering
+\caption{Branch 1 parameters and target moments}
+\begin{tabular}{p{0.18\textwidth}p{0.25\textwidth}p{0.30\textwidth}p{0.19\textwidth}}
+\toprule
+Parameter & Economic role & Candidate moment & Source and access \\
+\midrule
+$\Pi_z$, $\sigma_z$, persistence & Earnings risk and persistence & PSID household income transition matrix by age; variance of log income growth & PSID public; CPS/ACS for cross-sectional validation \\
+$N_z$ & Earnings-state resolution & Approximation accuracy for income distribution and wealth distribution & Internal numerical diagnostic \\
+$\phi_G,\phi_B$ & Credit-status-specific financed share & LTV distribution for young first-time buyers by income and credit proxy & HMDA public; credit scores restricted \\
+$\varrho_G,\varrho_B$ & Mortgage payment rate / spread & Mortgage payment-to-income distribution by approval status & HMDA public for coarse objects; lender/credit data restricted \\
+$\alpha_m$ & Amortization speed & Balance decline by years since purchase & PSID/SCF public; credit data restricted for precision \\
+$\xi_D(G),\xi_D(B)$ & Utility and financial cost of default & Default incidence and post-default homeownership delay & PSID public coarse; credit bureau restricted \\
+$\pi_G$ & Credit recovery probability & Time from default/denial to owner re-entry & PSID public coarse; credit bureau/HMDA restricted \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The first acceptance target is not default rates. It is whether the model can jointly match young liquid wealth, first-birth timing, and ownership without destroying the existing center/periphery and room-increment targets. The data bridge should use PSID for income histories, wealth, fertility timing, and ownership transitions. HMDA is useful for mortgage approval and LTV distributions but cannot by itself identify fertility timing.
+
+\subsection{State-space and computational impact}
+
+The state vector changes from
+\begin{equation}
+    x=(b,d,i,a,n,s)
+\end{equation}
+to
+\begin{equation}
+    x^1=(b,d,i,a,n,s,z,\mu).
+\end{equation}
+Two new state dimensions enter. The choice space changes because owners choose whether to default before the ordinary fertility/location/tenure/savings sequence. Owner purchase also chooses or inherits a mortgage-account state through \eqref{eq:origination}; this can be implemented as a deterministic account assignment rather than a continuous mortgage-choice menu.
+
+The distribution update remains fully discrete:
+\begin{equation}
+    g_{a+1}(x^{1\prime})
+    =
+    \sum_{x^1}
+    \mathcal P(x^{1\prime}\mid x^1;p)
+    g_a(x^1),
+    \label{eq:branch1-distribution}
+\end{equation}
+where $\mathcal P$ combines policy choices, logit shocks, $\Pi_z$, child-aging transitions, and the mortgage-account transition. There is no continuous-time object and no generator. Computational cost is \emph{project-scale} if coded at full resolution, but \emph{moderate-to-expensive} for an overnight smoke test with $N_z=3$ and a coarse $\mu$ grid. No new housing-market fixed point is required unless Branch 1 is combined with Branch 2.
+
+\subsection{Red team}
+
+\begin{table}[!ht]
+\centering
+\caption{Branch 1 red-team objections and committed responses}
+\begin{tabular}{p{0.40\textwidth}p{0.50\textwidth}}
+\toprule
+Objection & Committed response \\
+\midrule
+This is no longer a small extension; it risks becoming a HANK mortgage paper. & Keep the mortgage block minimal: no refinancing, no contract duration menu, no ARM/FRM, no term-structure shocks. The purpose is to discipline family-space commitments under income risk. \\
+The credit channel could still be empty because \texttt{LIVE\_HOUSING\_SIZE\_AUDIT.md} finds that many new-parent renters can afford $H_2$ and still rent. & Accept this for pure LTV relief. The new branch is not pure LTV relief; it asks whether income risk and account fragility change the value of crossing into ownership and holding family space over time. The overnight report must show mass near the default and account-status cutoffs, not just purchase feasibility. \\
+The extra states may repair moments by adding numerical flexibility rather than economics. & Require distributional validation: income risk must improve young wealth, fertility-by-income/wealth bins, and mortgage-account diagnostics simultaneously. If it improves first-birth age while breaking wealth or tenure distributions, reject it. \\
+Default is hard to identify without credit bureau data. & The first implementation treats default as a robustness/state-space device. Public PSID/SCF/HMDA moments can discipline broad account-status behavior; restricted data are needed only for final calibration of credit penalties and recovery. \\
+Income risk may delay births further, worsening the already late first-birth moment. & This is possible. The optimistic case is that risk plus mortgage-account access reshapes wealth accumulation and owner entry, not only delay. The test must report first-birth timing, not just solve success. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Verdict and bridge to data}
+
+Verdict: \textbf{yellow-green}. This is the correct optimistic version of the income/credit branch because it adds genuine idiosyncratic risk and a compact defaultable account state, rather than a cosmetic permanent type. It is upgraded if a coarse-grid prototype solves and improves young wealth, first-birth timing, and tenure dynamics without destroying the room screen. It is downgraded if the default margin is never used, if the model only delays fertility further, or if the state space makes calibration infeasible.
+
+The identifying moment is the PSID first-birth hazard by income-volatility bin, liquid-wealth bin, tenure, and pre-birth housing slack. The falsifying moment is no fertility or housing transition difference between high-risk and low-risk households after conditioning on current income, liquid wealth, tenure, and location.
+
+\section{Branch 2: developer supply and the missing middle}
+
+\subsection{Motivation and target moment}
+
+The scalar baseline supply equation,
+\begin{equation}
+    H_i^S(r_i)=H_{0i}r_i^{\eta_i},
+\end{equation}
+is useful for a first spatial-equilibrium model, but it cannot represent a shortage of one unit type. It shifts the total quantity of housing in location $i$ as a function of one rent $r_i$. It cannot say that developers find small apartments profitable, large owner homes feasible, but family-capable middle units difficult because of land assembly, parking minimums, lot-size restrictions, or local approval costs.
+
+This is exactly where the current benchmark is weakest. \texttt{CALIBRATION\_STATUS.md} reports childless renter median rooms $6.365$ against target $4.000$, first-birth housing increment $0.441$ against target $0.664$, and second-child increment $0.192$ against target $0.566$. \texttt{LIVE\_HOUSING\_SIZE\_AUDIT.md} reports the sharper room-bin failure: in the MMS large-metro comparison, prime-age renters are $65.1\%$ in $\leq4$ rooms in ACS but only $1.9\%$ in the model, while the model piles $98.1\%$ at $5$ rooms. The same audit says the relevant empirical boundary is around $5$--$6$ rooms, not $8$ rooms, and that cap-only segmentation does not work. A developer block is a natural way to make that boundary structural.
+
+The supply literature gives discipline but not a plug-in calibration. \citet{saiz2010} shows that geography and regulation shape housing supply elasticities. \citet{baumSnowHan2024} emphasize within-metro heterogeneity in supply responses. \citet{hsiehMoretti2019} show that housing supply restrictions can create spatial misallocation, although this paper should not import their cross-city productivity mechanism because the current model has common wages across center and periphery. \citet{couillard2025} is closest in mechanism because the relevant object is family-sized housing supply and fertility. The current branch takes the idea that large or family-capable unit supply can matter for fertility, but it identifies the wedge from this project's ACS/PSID room and fertility moments rather than importing a policy elasticity.
+
+The target moment is a type-specific supply object: the stock, rent per room, and occupancy of $5$--$6$ room units by center/periphery, tenure, and children. The branch should be interpreted only after the ACS room-distribution screen is imposed. It can be coded before the screen is fully passed, but it cannot be sold before the model stops using the wrong parts of the room support.
+
+\subsection{Model specification}
+
+Let unit type be $q\in\Qset=\{S,M,L\}$, where $S$ denotes small/ordinary units, $M$ denotes missing-middle family-capable units, and $L$ denotes large units. The middle type is the focus:
+\begin{equation}
+    \Hset_M=[\underline H_M,\overline H_M],
+\end{equation}
+with the first implementation centered on the empirical $5$--$6$ room boundary. Owner rung $H_k$ maps to a type $q(k)$. Rental services $h^R$ map to a type $q(h^R)$.
+
+The household equations displace scalar prices with type-specific prices. The renter problem becomes
+\begin{equation}
+\begin{aligned}
+V^R_a(b,i,n,s)=
+\max_{c,h^R,b'}\quad
+&u(c,\mathbf h(0,h^R);n,s)
++\beta \bar V_{a+1}(b',R,i,n,s)\\
+\text{s.t.}\quad
+&c+r_{i,q(h^R)}h^R+b'=R_b b+y_a,\\
+&0\leq h^R\leq \bar h^R,\qquad b'\geq0.
+\end{aligned}
+\label{eq:developer-renter}
+\end{equation}
+The owner problem becomes
+\begin{equation}
+\begin{aligned}
+V^{O_k}_a(b,i,n,s)=
+\max_{c,b'}\quad
+&u(c,\mathbf h(H_k,0);n,s)
++\beta \bar V_{a+1}(b',O_k,i,n,s)\\
+\text{s.t.}\quad
+&c+\delta p_{i,q(k)}H_k+b'=R_b b+y_a,\\
+&b'\geq \min\{b,-\phi p_{i,q(k)}H_k\}.
+\end{aligned}
+\label{eq:developer-owner}
+\end{equation}
+All tenure-adjustment accounting in \texttt{model\_writeup.tex} is modified by replacing $p_i$ and $r_i$ with $p_{iq}$ and $r_{iq}$ at the relevant unit type. The household state remains $x=(b,d,i,a,n,s)$.
+
+The new object is the developer problem. Developers in location $i$ and type $q$ construct stock $S_{iq}$ at cost
+\begin{equation}
+    C_{iq}(S_{iq})
+    =
+    F_{iq}\ind\{S_{iq}>0\}
+    +\tau_{iq}S_{iq}
+    +\frac{\nu_{iq}}{1+1/\eta_{iq}}S_{iq}^{1+1/\eta_{iq}},
+    \qquad
+    F_{iq},\tau_{iq},\nu_{iq},\eta_{iq}>0.
+    \label{eq:developer-cost}
+\end{equation}
+This reduced-form construction function nests land, approval, and structures costs. The fixed cost $F_{iq}$ captures discrete approval and project-activation costs. The linear wedge $\tau_{iq}$ captures per-unit regulatory, parking, or conversion costs. The convex term captures rising marginal construction or land-assembly costs. A primitive version can rationalize \eqref{eq:developer-cost} from
+\begin{equation}
+    S_{iq}=A_{iq}K_{iq}^{\alpha_q}L_{iq}^{1-\alpha_q},
+    \label{eq:primitive-construction}
+\end{equation}
+with local land scarcity and type-specific regulatory requirements folded into $(F_{iq},\tau_{iq},\nu_{iq},\eta_{iq})$. The overnight code should implement \eqref{eq:developer-cost}, not the full land-allocation problem.
+
+Competitive developers choose $S_{iq}$ to solve
+\begin{equation}
+    \max_{S_{iq}\geq0}\quad r_{iq}S_{iq}-C_{iq}(S_{iq}).
+    \label{eq:developer-profit}
+\end{equation}
+For active types, the first-order condition is
+\begin{equation}
+    r_{iq}=\tau_{iq}+\nu_{iq}S_{iq}^{1/\eta_{iq}}.
+    \label{eq:developer-foc}
+\end{equation}
+The corresponding supply function is
+\begin{equation}
+    S_{iq}(r_{iq})=
+    \left(\frac{r_{iq}-\tau_{iq}}{\nu_{iq}}\right)^{\eta_{iq}}
+    \quad\text{if active and } r_{iq}>\tau_{iq}.
+    \label{eq:developer-supply}
+\end{equation}
+The purchase price $p_{iq}$ is linked to rent by the user-cost relation
+\begin{equation}
+    r_{iq}=(q_b+\delta)p_{iq},
+    \label{eq:user-cost-developer}
+\end{equation}
+unless the code already uses a different price-rent convention.
+
+Housing-market clearing holds by location and type:
+\begin{equation}
+    H^D_{iq}(p,r;g)=S_{iq}(r_{iq}),
+    \qquad i\in\{P,C\},\quad q\in\{S,M,L\}.
+    \label{eq:type-clearing}
+\end{equation}
+Demand is
+\begin{equation}
+\begin{aligned}
+H^D_{iq}
+=
+\int
+\Big[
+&\ind\{i(x)=i,d(x)=R,q(h^R(x))=q\}h^R(x)\\
+&+
+\sum_k \ind\{i(x)=i,d(x)=O_k,q(k)=q\}H_k
+\Big]dg(x).
+\end{aligned}
+\label{eq:type-demand}
+\end{equation}
+The scalar baseline is recovered with one type, $F_{iq}=0$, $\tau_{iq}=0$, and common $(\nu_i,\eta_i)$.
+
+\subsection{Algebra and minimal analytical results}
+
+The developer block gives a sharp missing-middle cutoff. For an active type, variable profit gross of the fixed cost is
+\begin{equation}
+\begin{aligned}
+\Pi^{\mathrm{var}}_{iq}(r)
+&=(r-\tau_{iq})S_{iq}
+-\frac{\nu_{iq}}{1+1/\eta_{iq}}S_{iq}^{1+1/\eta_{iq}}\\
+&=\frac{1}{1+\eta_{iq}}
+(r-\tau_{iq})^{1+\eta_{iq}}\nu_{iq}^{-\eta_{iq}},
+\end{aligned}
+\label{eq:developer-variable-profit}
+\end{equation}
+where the second line substitutes \eqref{eq:developer-supply}. Entry requires $\Pi^{\mathrm{var}}_{iq}(r)\geq F_{iq}$, so the activation threshold is
+\begin{equation}
+    r_{iq}\geq
+    r^*_{iq}
+    =
+    \tau_{iq}
+    +
+    \left[(1+\eta_{iq})F_{iq}\nu_{iq}^{\eta_{iq}}\right]^{1/(1+\eta_{iq})}.
+    \label{eq:developer-entry-threshold}
+\end{equation}
+This is the missing-middle mechanism. If $F_{iM}$ or $\tau_{iM}$ is high, middle units require a higher rent before developers supply them. Small apartments and large houses can be active while middle units are scarce.
+
+The family-space cost wedge is then explicit. Let $\bar h_0$ be the childless housing floor and $\bar h_F$ the family floor, with $\bar h_F\in\Hset_M$. A renter crossing from ordinary to middle units faces
+\begin{equation}
+    \Delta C^F_i
+    =
+    r_{iM}\bar h_F-r_{iS}\bar h_0
+    =
+    r_{iS}(\bar h_F-\bar h_0)
+    +(r_{iM}-r_{iS})\bar h_F.
+    \label{eq:developer-family-cost}
+\end{equation}
+The scalar baseline imposes $r_{iM}=r_{iS}=r_i$, eliminating the second term. The missing-middle wedge is therefore
+\begin{equation}
+    \Omega^M_i=(r_{iM}-r_{iS})\bar h_F.
+    \label{eq:developer-middle-wedge}
+\end{equation}
+This wedge is not equivalent to changing $\eta_i$ in the scalar model. A scalar $\eta_i$ changes the aggregate rent faced by all housing sizes in location $i$. It cannot raise the family-capable middle price relative to the childless small-unit price while holding the small-unit room distribution fixed.
+
+The comparative static with respect to the regulatory wedge is direct. For active middle supply,
+\begin{equation}
+    \frac{\partial r_{iM}}{\partial \tau_{iM}}=1,
+    \qquad
+    \frac{\partial \Omega^M_i}{\partial \tau_{iM}}=\bar h_F.
+    \label{eq:regulatory-wedge-static}
+\end{equation}
+For the fixed cost, the entry threshold satisfies
+\begin{equation}
+    \frac{\partial r^*_{iM}}{\partial F_{iM}}
+    =
+    \left[(1+\eta_{iM})\nu_{iM}^{\eta_{iM}}\right]^{1/(1+\eta_{iM})}
+    \frac{1}{1+\eta_{iM}}F_{iM}^{-\eta_{iM}/(1+\eta_{iM})}>0.
+    \label{eq:fixed-cost-static}
+\end{equation}
+This is why the developer interpretation is stronger than a relabeled isoelastic supply curve: it generates both a relative price wedge and a discrete activation margin for family-capable middle units.
+
+\subsection{Identification and calibration targets}
+
+\begin{table}[!ht]
+\centering
+\caption{Branch 2 parameters and target moments}
+\begin{tabular}{p{0.18\textwidth}p{0.25\textwidth}p{0.30\textwidth}p{0.19\textwidth}}
+\toprule
+Parameter & Economic role & Candidate moment & Source and access \\
+\midrule
+$\underline H_M,\overline H_M$ & Boundary for family-capable middle units & ACS room bins around $5$ and $6$ rooms by tenure and children & ACS PUMS public \\
+$F_{iM}$ & Fixed approval/project cost for middle units & Presence of low middle-unit stock despite high rent per room & ACS public; permits/zoning public; local regulation data optional \\
+$\tau_{iM}$ & Per-unit regulatory or construction wedge & Rent-per-room premium of $5$--$6$ room units relative to small units & ACS public; proprietary listings optional \\
+$\nu_{iq}$ & Construction cost scale & Level of type-specific stock by location & ACS public; permits public \\
+$\eta_{iq}$ & Type-specific supply elasticity & Change in unit-type stock with rent/price growth & ACS/permits public panel; proprietary price data optional \\
+$q(k)$ & Owner-rung type assignment & Owner room distribution and lower/middle rung mass & ACS public; internal model diagnostics \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The public-data version is viable. ACS PUMS can discipline stocks, rooms, tenure, children, and location under the MMS geography. Building permits can provide construction validation but will be imperfect for room-specific unit type. Proprietary listing or assessor data would help but are not necessary for the overnight prototype.
+
+\subsection{State-space and computational impact}
+
+The household state remains
+\begin{equation}
+    x=(b,d,i,a,n,s).
+\end{equation}
+No new household state dimension enters. The choice space changes because rental services and owner rungs now map into unit types with type-specific prices. The equilibrium price vector expands from one price per location to a price per location and unit type:
+\begin{equation}
+    p=\{p_{iq}:i\in\{P,C\},q\in\{S,M,L\}\}.
+\end{equation}
+A new fixed-point loop enters because each type/location market must clear. Computational cost is \emph{expensive} but not project-scale. The Bellman state space is unchanged; the difficulty is the larger price vector and possible discontinuities at unit-type boundaries.
+
+\subsection{Red team}
+
+\begin{table}[!ht]
+\centering
+\caption{Branch 2 red-team objections and committed responses}
+\begin{tabular}{p{0.40\textwidth}p{0.50\textwidth}}
+\toprule
+Objection & Committed response \\
+\midrule
+The developer wedge may be observationally equivalent to changing $\chi$, $\psi$, $H_0$, or $\eta_i$. & Identify it only with type-specific room-bin stocks and rent-per-room premia. Aggregate ownership, aggregate rent, or aggregate fertility cannot identify $F_{iM}$ or $\tau_{iM}$. \\
+The current benchmark fails the room screen, so the developer block could hide a bad household-side calibration. & The branch must report the ACS room screen first. It is not accepted unless childless renter rooms, childless owner rooms, and lower/middle rung mass improve. \\
+A fixed cost for middle units is too reduced-form to be a real developer problem. & The full primitive construction function is \eqref{eq:primitive-construction}; the code uses the reduced form \eqref{eq:developer-cost} because the first implementation should test the economics before adding land allocation. \\
+Type-specific supply may make price iteration unstable. & Start with two types, ordinary and middle, if three types fail. Keep the middle boundary fixed overnight. Do not jointly search boundaries, fixed costs, and all behavioral parameters in the first test. \\
+The ACS $5$--$6$ room boundary may be a measurement artifact rather than a construction type. & The falsifying test is rent-per-room and occupancy. If $5$--$6$ rooms do not carry a distinct price or occupancy pattern by parent status and location, the developer wedge is downgraded. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Verdict and bridge to data}
+
+Verdict: \textbf{green}. This branch directly addresses the current housing-size audit and gives the paper a structural supply wedge rather than a scalar supply shifter. It is upgraded if the prototype clears type-specific markets and improves the ACS room screen without breaking fertility and ownership moments. It is downgraded if the price vector is unstable or if all improvements can be replicated by retuning $\bar h_0$, $\chi$, and the owner ladder under scalar supply.
+
+The identifying moment is the ACS rent-per-room premium and stock share for $5$--$6$ room units by center/periphery, tenure, and children. The falsifying moment is no residual middle-unit premium or scarcity after conditioning on location, tenure, income, and household composition.
+
+\section{Cross-branch interactions}
+
+Branches 1 and 2 are complementary, not substitutes. Branch 2 creates the family-space price wedge in the housing market. Branch 1 determines how households with different income-risk histories, liquid buffers, and mortgage-account states respond to that wedge. If the paper is framed as identifying the shadow price of family space, Branch 2 is the more necessary extension. If the paper claims that credit and risk determine who can access family space, Branch 1 becomes necessary.
+
+Branch 1 without Branch 2 can still be valuable because it repairs the deterministic-income limitation and introduces serious precautionary saving. But it risks becoming a risk-and-mortgage model in which family space remains poorly measured. Branch 2 without Branch 1 can still deliver the supply-wedge paper because it keeps the household state small and targets the current room-distribution failure. The best long-run architecture is Branch 2 first, then Branch 1 if PSID income-risk moments show that household risk materially changes fertility timing and housing transitions.
+
+\section{Recommended path forward}
+
+The overnight task should not try to recalibrate the full model globally. It should create two isolated prototypes. Prototype 1 adds $z$ and $\mu$, solves on a small earnings and mortgage-account grid, and reports whether the model remains numerically coherent and whether the risk/default margins are used. Prototype 2 adds developer supply with ordinary and middle unit types, solves type-specific market clearing, and reports whether the room distribution and lower/middle owner-rung mass move in the right direction.
+
+The next code commitment should go to Branch 2 if the developer prototype clears markets and improves the room screen. Branch 1 should be committed only if the small-grid prototype generates meaningful precautionary saving and mortgage-account diagnostics without simply pushing first birth later.
+
+\section*{Notation table}
+
+\begin{longtable}{p{0.20\textwidth}p{0.72\textwidth}}
+\toprule
+Symbol & Meaning \\
+\midrule
+$z\in\Zset$ & Idiosyncratic earnings state. \\
+$\Pi_z(z'\mid z)$ & Discrete earnings transition matrix. \\
+$\mu=(m,g)\in\Mset$ & Mortgage-account state: outstanding balance $m$ and credit status $g$. \\
+$g\in\{G,B\}$ & Good or bad credit status. \\
+$P^m(\mu)$ & Mortgage payment implied by account state $\mu$. \\
+$\alpha_m$ & Amortization rate. \\
+$\xi_D(g)$ & Default cost for credit status $g$. \\
+$\phi_g$ & Financed share available to credit status $g$. \\
+$q\in\{S,M,L\}$ & Unit type: small/ordinary, middle, large. \\
+$\Hset_M$ & Room interval defining missing-middle family-capable units. \\
+$S_{iq}$ & Developer-supplied stock of type $q$ in location $i$. \\
+$F_{iq}$ & Fixed entry or approval cost for developers. \\
+$\tau_{iq}$ & Linear per-unit regulatory/construction wedge. \\
+$\nu_{iq}$ & Convex construction-cost scale. \\
+$\eta_{iq}$ & Type-specific supply elasticity parameter. \\
+$\Omega_i^M$ & Missing-middle family-space wedge. \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{99}
+
+\bibitem[Aiyagari(1994)]{aiyagari1994}
+Aiyagari, S. Rao. 1994.
+Uninsured Idiosyncratic Risk and Aggregate Saving.
+\emph{Quarterly Journal of Economics} 109(3): 659--684.
+
+\bibitem[Baum-Snow and Han(2024)]{baumSnowHan2024}
+Baum-Snow, Nathaniel, and Lu Han. 2024.
+The Microgeography of Housing Supply.
+\emph{Journal of Political Economy} 132(6): 1897--1946.
+
+\bibitem[Campbell and Cocco(2015)]{campbellCocco2015}
+Campbell, John Y., and Joao F. Cocco. 2015.
+A Model of Mortgage Default.
+\emph{Journal of Finance} 70(4): 1495--1554.
+
+\bibitem[Corbae and Quintin(2015)]{corbaeQuintin2015}
+Corbae, Dean, and Erwan Quintin. 2015.
+Leverage and the Foreclosure Crisis.
+\emph{Journal of Political Economy} 123(1): 1--65.
+
+\bibitem[Couillard(2025)]{couillard2025}
+Couillard, Benjamin K. 2025.
+Build, Baby, Build: How Housing Shapes Fertility.
+Working paper, University of Toronto.
+
+\bibitem[Doepke and Kindermann(2019)]{doepkeKindermann2019}
+Doepke, Matthias, and Fabian Kindermann. 2019.
+Bargaining over Babies: Theory, Evidence, and Policy Implications.
+\emph{American Economic Review} 109(9): 3264--3306.
+
+\bibitem[Favilukis, Ludvigson, and Van Nieuwerburgh(2017)]{favilukisLudvigsonVanNieuwerburgh2017}
+Favilukis, Jack, Sydney C. Ludvigson, and Stijn Van Nieuwerburgh. 2017.
+The Macroeconomic Effects of Housing Wealth, Housing Finance, and Limited Risk Sharing in General Equilibrium.
+\emph{Journal of Political Economy} 125(1): 140--223.
+
+\bibitem[Hsieh and Moretti(2019)]{hsiehMoretti2019}
+Hsieh, Chang-Tai, and Enrico Moretti. 2019.
+Housing Constraints and Spatial Misallocation.
+\emph{American Economic Journal: Macroeconomics} 11(2): 1--39.
+
+\bibitem[Huggett(1993)]{huggett1993}
+Huggett, Mark. 1993.
+The Risk-Free Rate in Heterogeneous-Agent Incomplete-Insurance Economies.
+\emph{Journal of Economic Dynamics and Control} 17(5--6): 953--969.
+
+\bibitem[Jones, Schoonbroodt, and Tertilt(2010)]{jonesSchoonbroodtTertilt2010}
+Jones, Larry E., Alice Schoonbroodt, and Michele Tertilt. 2010.
+Fertility Theories: Can They Explain the Negative Fertility-Income Relationship?
+In \emph{Demography and the Economy}, edited by John B. Shoven. University of Chicago Press.
+
+\bibitem[Kaplan, Mitman, and Violante(2020)]{kaplanMitmanViolante2020}
+Kaplan, Greg, Kurt Mitman, and Giovanni L. Violante. 2020.
+The Housing Boom and Bust: Model Meets Evidence.
+\emph{Journal of Political Economy} 128(9): 3285--3345.
+
+\bibitem[Kaplan, Moll, and Violante(2018)]{kaplanMollViolante2018}
+Kaplan, Greg, Benjamin Moll, and Giovanni L. Violante. 2018.
+Monetary Policy According to HANK.
+\emph{American Economic Review} 108(3): 697--743.
+
+\bibitem[Kaplan, Violante, and Weidner(2014)]{kaplanViolanteWeidner2014}
+Kaplan, Greg, Giovanni L. Violante, and Justin Weidner. 2014.
+The Wealthy Hand-to-Mouth.
+\emph{Brookings Papers on Economic Activity} Spring: 77--138.
+
+\bibitem[Krugman(1991)]{krugman1991}
+Krugman, Paul. 1991.
+Increasing Returns and Economic Geography.
+\emph{Journal of Political Economy} 99(3): 483--499.
+
+\bibitem[Krusell and Smith(1998)]{krusellSmith1998}
+Krusell, Per, and Anthony A. Smith Jr. 1998.
+Income and Wealth Heterogeneity in the Macroeconomy.
+\emph{Journal of Political Economy} 106(5): 867--896.
+
+\bibitem[Roback(1982)]{roback1982}
+Roback, Jennifer. 1982.
+Wages, Rents, and the Quality of Life.
+\emph{Journal of Political Economy} 90(6): 1257--1278.
+
+\bibitem[Romer(1990)]{romer1990}
+Romer, Paul M. 1990.
+Endogenous Technological Change.
+\emph{Journal of Political Economy} 98(5): S71--S102.
+
+\bibitem[Rosen(1979)]{rosen1979}
+Rosen, Sherwin. 1979.
+Wage-Based Indexes of Urban Quality of Life.
+In \emph{Current Issues in Urban Economics}, edited by Peter Mieszkowski and Mahlon Straszheim. Johns Hopkins University Press.
+
+\bibitem[Saiz(2010)]{saiz2010}
+Saiz, Albert. 2010.
+The Geographic Determinants of Housing Supply.
+\emph{Quarterly Journal of Economics} 125(3): 1253--1296.
+
+\bibitem[Sommer(2016)]{sommer2016}
+Sommer, Kamila. 2016.
+Fertility Choice in a Life Cycle Model with Idiosyncratic Uninsurable Earnings Risk.
+\emph{Journal of Monetary Economics} 83: 27--42.
+
+\end{thebibliography}
+
+\end{document}
