@@ -787,6 +787,7 @@ def full_owner_block_kernel(
     bf_v,           # (nc,) — bmo[i, ten, nn, cs] flattened in F order
     oc,
     hsv,
+    owner_h_bar_scale,
     c_min,
     alpha,
     oms,
@@ -808,7 +809,7 @@ def full_owner_block_kernel(
         hbc = hb_v[c]
         psic = psi_v[c]
         bf = bf_v[c]
-        ht_c = hsv - hbc
+        ht_c = hsv - owner_h_bar_scale * hbc
         if ht_c < 1e-10:
             ht_c = 1e-10
         Ko_c = ht_c ** one_minus_alpha_oms
@@ -933,6 +934,7 @@ def eval_owner_block_kernel(
     psi_v,
     oc,
     hsv,
+    owner_h_bar_scale,
     c_min,
     alpha,
     oms,
@@ -948,7 +950,7 @@ def eval_owner_block_kernel(
         cbc = cb[c]
         hbc = hb[c]
         psic = psi_v[c]
-        ht_c = hsv - hbc
+        ht_c = hsv - owner_h_bar_scale * hbc
         if ht_c < 1e-10:
             ht_c = 1e-10
         Ko = ht_c ** one_minus_alpha_oms

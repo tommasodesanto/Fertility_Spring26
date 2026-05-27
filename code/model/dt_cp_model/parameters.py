@@ -50,6 +50,7 @@ def setup_parameters() -> SimpleNamespace:
     P.h_bar_jump = 0.75
     P.h_bar_n = 0.60
     P.child_housing_spec = "jump_plus_linear"
+    P.owner_h_bar_scale = 1.0
     P.kappa_h_base = 0.40
     P.kappa_h_slope = 0.0
     P.psi_child = 0.07
@@ -212,6 +213,7 @@ def build_calibration_setup(setup_mode: str = "benchmark") -> SimpleNamespace:
     P_base.c_bar_0 = 0.10
     P_base.h_bar_0 = 4.0
     P_base.h_bar_jump = 0.75
+    P_base.owner_h_bar_scale = 1.0
     P_base.q = 0.04
     P_base.delta = 0.02
     P_base.tau_H = 0.01
