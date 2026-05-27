@@ -218,8 +218,8 @@ P_out, p_eq
 <h3 id="bequest">Bequest and terminal</h3>
 
 <p>At <code>j = J - 1</code> the continuation value is the bequest function</p>
-<pre><code>V_bq(b, ten, i, n) = θ_0(n) · ((b + p[i]·H_own[ten-1] + θ_1) ^ (1-σ) - 1) / (1-σ)</code></pre>
-<p>with <code>θ_0(n) = 1 + θ_n · n</code>. Lifetime housing is liquidated at the local price.</p>
+<pre><code>V_bq(b, ten, i, n) = θ_0(n) · ((b + (1-ψ)·p[i]·H_own[ten-1] + θ_1) ^ (1-σ) - 1) / (1-σ)</code></pre>
+<p>with <code>θ_0(n) = 1 + θ_n · n</code>. Lifetime housing is liquidated net of the transaction cost.</p>
 
 <hr style="margin: 40px 0; border: none; border-top: 1px solid var(--rule);">
 

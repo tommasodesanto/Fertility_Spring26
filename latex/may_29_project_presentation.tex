@@ -109,7 +109,7 @@ Today:
   \end{itemize}
   \item Households choose:
   \begin{itemize}
-    \item \textbf{Fertility}: $n^* \in \{0,1,\ldots,\bar n\}$, subject to EV shocks
+    \item \textbf{Fertility}: $n' \in \{0,1,\ldots,\bar n\}$, subject to EV shocks
     \item \textbf{Location}: center or periphery each period (with moving costs and EV shocks)
     \item \textbf{Tenure}: rent or buy a discrete house size $H_k$ on a housing ladder
     \item \textbf{Saving}: liquid wealth $b$ with collateral borrowing for owners
@@ -121,7 +121,7 @@ Today:
 
 \begin{frame}{Preferences}
 \small
-$n^*$: completed fertility (chosen once); $s$: child-aging stage (stochastic); $m = m(n^*,s)$: children currently at home.
+$n$: fertility; $s$: child-aging stage (stochastic); $m = m(n,s)$: children currently at home.
 
 \medskip
 \textbf{Flow utility.} Over consumption and housing services:
@@ -152,7 +152,7 @@ u(c,\mathbf h;m)
 \small
 Terminal utility at death:
 \[
-\mathcal B(\widetilde b,n^*)= \theta_0\big(1+\theta_n n^*\big)\frac{(\theta_1+\widetilde b)^{1-\sigma}}{1-\sigma},
+\mathcal B(\widetilde b,n)= \theta_0\big(1+\theta_n n\big)\frac{(\theta_1+\widetilde b)^{1-\sigma}}{1-\sigma},
 \qquad
 \widetilde b=b+(1-\psi)p_i h.
 \]
@@ -201,12 +201,12 @@ b' = Rb + y(a) - c - (\delta+\tau_H)p_i h'
   \item Fertility choices are made only in the fertile window $a \in [J_f^{\mathrm{start}},J_f^{\mathrm{end}}]$.
   \item One-shot fertility: can have multiple kids, but choose only once:
   \[
-  n^* \in \{0,1,\ldots,\bar n\}.
+  n' \in \{0,1,\ldots,\bar n\}.
   \]
   \item After birth, children age through stages $s$ (think toddler $\to$ child $\to$ teen $\to$ adult):
   \begin{itemize}
     \item Aging is \textbf{sequential}: each stage transitions only to the next one, with random arrival
-    \item All $n^*$ children of a parent age \textbf{together} as a single cohort - $s$ is shared.
+    \item All $n'$ children of a parent age \textbf{together} as a single cohort - $s$ is shared.
   \end{itemize}
   \item While children are at home ($s < $ matured), they raise housing need $\bar h(m)$ and consumption cost $\bar c(m)$.
   \item Once matured, child costs shut off and children enter the economy at age $a=0$.
@@ -257,7 +257,7 @@ H_i^s(r_i) = \bar r_i r_i^{\eta_i},
   \item When children mature, they become city-born potential young adults. At
   city scale $S$, their flow is
   \[
-  S B_0(p).
+  S B_0.
   \]
 
   \item Each period there is also an outside-origin pool of potential young
@@ -273,59 +273,64 @@ H_i^s(r_i) = \bar r_i r_i^{\eta_i},
 \end{frame}
 
 \begin{frame}[t]{Young-Adult Entry: Choice}
-\small
-\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
-\begin{itemize}\setlength\itemsep{5pt}
-  \item If a potential entrant chooses modeled location $i\in\{C,P\}$, she
-  starts adult life as a childless renter:
+\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\begin{itemize}\setlength\itemsep{3pt}
+  \item Potential entrants are outside-origin young adults plus maturing
+  city-born children:
   \[
-  x_i^E=(b^E,R,i,1,0,0),
+  M + S B_0.
+  \]
+
+  \item Each potential entrant draws entry tastes and chooses center,
+  periphery, or the outside economy.
+
+  \item Entering modeled location $i\in\{C,P\}$ means starting adult life as a
+  childless renter, $x_i^E=(b^E,R,i,1,0,0)$, with value $W_i^E$. The outside
+  economy gives value $\bar W^E$.
+
+  \item These values imply probabilities:
+  \[
+  \pi_C^E+\pi_P^E+\pi_{\mathrm{out}}^E=1,
   \qquad
-  W_i^E(p)=V_1(x_i^E;p).
+  q^E=\pi_C^E+\pi_P^E=1-\pi_{\mathrm{out}}^E.
   \]
 
-  \item Choosing the outside economy gives value $\bar W^E$ and leaves the
-  agent outside the modeled metro.
-
-  \item Entry tastes generate unconditional option probabilities
+  \item The potential entrant mass is then allocated as
   \[
-  \pi_C^E(p)+\pi_P^E(p)+\pi_{\mathrm{out}}^E(p)=1.
+  E_i=(M+S B_0)\pi_i^E,\quad i\in\{C,P\},
+  \qquad
+  E_C+E_P=(M+S B_0)q^E.
   \]
-  The probability of entering the modeled metro is
-  \[
-  q^E(p)=\pi_C^E(p)+\pi_P^E(p)=1-\pi_{\mathrm{out}}^E(p).
-  \]
-
-  \item In the benchmark, $\bar W^E$ disciplines the outside margin; in
-  counterfactuals, the outside environment is held fixed.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Stationarity by Location}
+\begin{frame}[t]{Stationarity by Location \; \hyperlink{app:entry_accounting}{\beamerbutton{Accounting}}}
+\label{slide:entry_stationarity}
 \footnotesize
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 \begin{itemize}\setlength\itemsep{6pt}
-  \item Let $g(p)$ be the normalized stationary composition and let
-  $G(p)=Sg(p)$ be the level distribution.
+  \item Let $g$ be the normalized stationary composition. At city scale $S$,
+  level masses are given by $Sg$.
 
-  \item Let $E_{0i}(p)$ be the per-unit mass of age-one households that must
+  \item Let $E_{0i}$ be the per-unit mass of age-one households that must
   enter location $i$ to reproduce the stationary composition:
   \[
-  E_0(p)=E_{0C}(p)+E_{0P}(p).
+  E_0=E_{0C}+E_{0P}.
   \]
 
-  \item At scale $S$, the potential entrant pool is $M+SB_0(p)$. Full
+  \item At scale $S$, the potential entrant pool is $M+S B_0$. Full
   stationarity requires one condition for each modeled location:
   \[
-  S E_{0i}(p)=\left[M+S B_0(p)\right]\pi_i^E(p),
+  S E_{0i}=\left[M+S B_0\right]\pi_i^E,
   \qquad i\in\{C,P\}.
   \]
 
   \item Summing the two location equations gives the aggregate scale condition:
   \[
-  S E_0(p)=q^E(p)\left[M+S B_0(p)\right],
+  S E_0=q^E\left[M+S B_0\right],
   \qquad
-  S(p)=\frac{q^E(p)M}{E_0(p)-q^E(p)B_0(p)}.
+  S=\frac{q^E M}{E_0-q^E B_0}.
   \]
 \end{itemize}
 \end{frame}
@@ -355,116 +360,134 @@ H_i^s(r_i) = \bar r_i r_i^{\eta_i},
   line/.style={-Latex, semithick, draw=black!75}
 ]
 \node (fertS) [see,    alt=<4>{draw=red, ultra thick}{}] {see $\varepsilon^f$};
-\node (fertD) [choose, right=of fertS, alt=<4>{draw=red, ultra thick}{}] {choose $n^*$\\($\pi^f$, $V^f$)};
-\node (locS)  [see,    right=of fertD, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^\ell$};
-\node (locD)  [choose, right=of locS,  alt=<3>{draw=red, ultra thick}{}] {choose $i'$\\($\pi^\ell$, $V^L$)};
-\node (houseD)[choose, right=of locD,  alt=<2>{draw=red, ultra thick}{}] {choose $d', b'$\\($V^H$)};
+\node (fertD) [choose, right=of fertS, alt=<4>{draw=red, ultra thick}{}] {choose $n'$\\($\pi^f$, $V^f$)};
+\node (locS)  [see,    right=of fertD, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^i$};
+\node (locD)  [choose, right=of locS,  alt=<2-3>{draw=red, ultra thick}{}] {choose $i',d',b'$\\($\pi^i$, $V^H_{i'}$)};
 
 \draw[line] (fertS) -- (fertD);
 \draw[line] (fertD) -- (locS);
 \draw[line] (locS)  -- (locD);
-\draw[line] (locD)  -- (houseD);
 \end{tikzpicture}%
 }
 
-\vspace{0.6em}
+\vspace{0.35em}
 \raggedright
 % ---------- EQUATIONS: one per overlay ----------
-\setlength{\abovedisplayskip}{6pt}\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 
 \only<1>{%
 \small
 The full household state is
 \[
-x=(b,d,i,a,n^*,s).
+x=(b,d,i,a,n,s).
 \]
 \vspace{-0.5em}
 \begin{itemize}\setlength\itemsep{2pt}
   \item $b$: liquid wealth; $d$: tenure; $i$: location; $a$: age.
-  \item $n^*$: completed fertility; $s$: child-aging stage.
+  \item $n$: fertility; $s$: child-aging stage.
+  \item After the fertility choice, $n'$ is the period's fertility state; if no birth, $n'=n$.
 \end{itemize}
 
 \medskip
-Choices nest as: \textbf{fertility} $\rightarrow$ \textbf{location} $\rightarrow$ \textbf{housing / saving}.
+Within the period: choose $n'$ and then choose a destination--housing--saving bundle $(i',d',b')$.
 }
 
 \only<2>{%
 {\footnotesize
-	Given $(b,d,i,a,n^*\!,s)$, jointly choose housing and next assets:
+	For each candidate destination $i'$, the household chooses tenure and next assets:
 \[
-V^H(b,d,i,a,n^*\!,s)
+V^H_{i'}(b,d,i,a,n',s)
 \;=\;
 \max_{d',\,b'}
 \Big\{
-u\big(c,\mathbf h(d');m(n^*\!,s)\big)
-+ \beta \,\mathbb E_{s'}\!\left[V(b',d',i,a+1,n^*\!,s')\right]
+u\big(c,\mathbf h(d');m(n',s)\big)
++ \beta \,\mathbb E_{s'}\!\left[V(b',d',i',a+1,n',s')\right]
 \Big\}
 \]
-\vspace{-0.4em}
-Let $H(R)=0$ and $H(O_k)=H_k$. Feasible branches:
-\begin{itemize}\setlength\itemsep{2pt}
+\vspace{-0.6em}
+Let $H(R)=0$, $H(O_k)=H_k$, and $\tau=\mathbf{1}\{(i',d')\neq(i,d)\}$. Feasible branches:
+\begin{itemize}\setlength\itemsep{1pt}
   \item \textbf{Rent:} $d'=R$, $\mathbf h(d') = h^R \in [0,\bar h^R]$,
   \[
-  c + b' + r_i h^R = Rb + y(a) + \mathbf{1}\{d\neq R\}(1-\psi)p_i H(d),
-  \qquad b' \geq 0.
+  \begin{aligned}
+  c + b' + r_{i'} h^R
+  &= Rb + y(a)
+  + \mathbf{1}\{d\neq R\}(1-\psi)p_i H(d),\\
+  b' &\geq 0.
+  \end{aligned}
   \]
   \item \textbf{Own:} $d'=O_k$, $\mathbf h(d') = \chi H_k$,
   \[
-  c + b' + (\delta+\tau_H)p_i H_k
-  = Rb + y(a) + \mathbf{1}\{d'\neq d\}\big[(1-\psi)p_i H(d) - p_iH_k\big],
-  \qquad b' \geq -\phi p_i H_k.
+  \begin{aligned}
+  c + b' + (\delta+\tau_H)p_{i'} H_k
+  + \tau p_{i'}H_k
+  &= Rb + y(a)
+  + \tau\mathbf{1}\{d\neq R\}(1-\psi)p_iH(d),\\
+  b' &\geq -\phi p_{i'} H_k.
+  \end{aligned}
   \]
 \end{itemize}
-Movers arrive here as renters before choosing $d',b'$.}
+}
 }
 
 \only<3>{%
-{\footnotesize
-Draw Gumbel shocks; choose center or periphery:
+{\scriptsize
+After fertility choice $n'$, draw destination taste shocks
+$\varepsilon^i_{i'}$ and choose a destination. Let
 \[
-V^{L}(b,d,i,a,n^*\!,s)
-\;=\;
-\kappa_{\ell}
-\ln
-\sum_{i' \in \{C,P\}}
-\exp\!\left(\frac{V^H(\widetilde b(i'),\widetilde d(i'),i',a,n^*\!,s)+ E^R_{i'}- \mu_{ii'}}{\kappa_{\ell}}\right)
+\widetilde V_{i'}=V^H_{i'}(b,d,i,a,n',s)+E^R_{i'}-\mu_{ii'}.
 \]
-
-\vfill
-\begin{itemize}
-  \item $(\widetilde b(i'),\widetilde d(i'))$: wealth and tenure after choosing destination $i'$.
-  \item $E^R_{i'}$: amenity; $\mu_{ii'}$: moving cost; $\kappa_\ell$: taste dispersion.
+The location object is the expected maximum over those shocks:
+\[
+\begin{aligned}
+V^{i}(b,d,i,a,n',s)
+&\equiv
+\mathbb E_{\varepsilon^i}\max_{i'\in\{C,P\}}
+\left\{\widetilde V_{i'}+\varepsilon^i_{i'}\right\}\\
+&\propto
+\kappa_i\ln\sum_{i'\in\{C,P\}}
+\exp\!\left(\frac{\widetilde V_{i'}}{\kappa_i}\right).
+\end{aligned}
+\]
+\vspace{-0.5em}
+\begin{itemize}\setlength\itemsep{1pt}
+  \item $V^H_{i'}$ maximizes over $d'$ and $b'$ in destination $i'$.
 \end{itemize}
-\vspace{-0.3em}
+\vspace{-0.4em}
 Choice probabilities:
 \[
-\pi_{i'}^{\ell}(b,d,i,a,n^*\!,s)
+\pi_{i'}^{i}(b,d,i,a,n',s)
 =
-\frac{\exp\!\left(\frac{V^H(\widetilde b(i'),\widetilde d(i'),i',a,n^*\!,s)+ E^R_{i'}- \mu_{ii'}}{\kappa_{\ell}}\right)}
-{\sum_{i''}\exp\!\left(\frac{V^H(\widetilde b(i''),\widetilde d(i''),i'',a,n^*\!,s)+ E^R_{i''}- \mu_{ii''}}{\kappa_{\ell}}\right)}.
+\frac{\exp\!\left(\widetilde V_{i'}/\kappa_i\right)}
+{\sum_{j\in\{C,P\}}\exp\!\left(\widetilde V_j/\kappa_i\right)}.
 \]
 }
 }
 
 \only<4>{%
-Childless households in the fertile window choose completed fertility once:
+{\scriptsize
+Childless households in the fertile window choose fertility once:
 \[
+\begin{aligned}
 V(b,d,i,a,0,0)
-\;=\;
-\kappa_n
-\ln
-\sum_{n' \in \mathcal N}
-\exp\!\left(\frac{V^{L}(b,d,i,a,n',s(n'))}{\kappa_n}\right)
+&\equiv
+\mathbb E_{\varepsilon^f}\max_{n'\in\mathcal N}
+\left\{V^{i}(b,d,i,a,n',s(n'))+\varepsilon^f_{n'}\right\}\\
+&\propto
+\kappa_n\ln\sum_{n' \in \mathcal N}
+\exp\!\left(\frac{V^{i}(b,d,i,a,n',s(n'))}{\kappa_n}\right).
+\end{aligned}
 \]
 
-\vspace{0.4em}
+\vspace{0.1em}
 Choice probabilities:
 \[
 \pi_{n'}^{f}(b,d,i,a,0,0)
 =
-\frac{\exp\!\left(\frac{V^{L}(b,d,i,a,n',s(n'))}{\kappa_n}\right)}
-{\sum_{n''}\exp\!\left(\frac{V^{L}(b,d,i,a,n'',s(n''))}{\kappa_n}\right)}.
+\frac{\exp\!\left(\frac{V^{i}(b,d,i,a,n',s(n'))}{\kappa_n}\right)}
+{\sum_{n''}\exp\!\left(\frac{V^{i}(b,d,i,a,n'',s(n''))}{\kappa_n}\right)}.
 \]
+}
 }
 \end{frame}
 
@@ -683,10 +706,10 @@ For household $i$, let $E_i$ denote the year of childbirth. For any housing outc
 Y_{it}
 =
 \sum_{k=-5,k\neq -2}^{10} \alpha_k \mathbf{1}\{t-E_i = k\}
-+ \zeta_i + \tau_t + \gamma_{a(i,t)} + \delta X_{it} + \varepsilon_{it}.
++ \zeta_i + \tau_t + \delta X_{it} + \varepsilon_{it}.
 \]
 \begin{itemize}
-  \item $\zeta_i$, $\tau_t$, and $\gamma_{a(i,t)}$ are household, calendar-year, and age fixed effects.
+  \item $\zeta_i$ and $\tau_t$ are household and calendar-year fixed effects.
   \item The omitted period is $k=-2$, so each $\alpha_k$ is relative to two years before birth.
   \item I use the same design for homeownership, moving-for-size, and rooms.
 \end{itemize}
@@ -809,7 +832,7 @@ $\bar h_0$ & Baseline housing need & 2.52 \\
 $\bar h_{\text{jump}}$ & Housing jump (1st child) & 0.622 \\
 $\bar h_n$ & Add'l child housing cost & 0.909 \\
 $\bar c_n$ & Add'l child cons.\ cost & 0.092 \\
-$\kappa_\ell$ & Location Gumbel scale & 1.50 \\
+$\kappa_i$ & Location-choice Gumbel scale & 1.50 \\
 $\mu_{\text{move}}$ & Moving cost & 5.00 \\
 $\theta_0$ & Bequest shifter & 0.530 \\
 $\theta_n$ & Bequest parent premium & 0.250 \\
@@ -898,59 +921,62 @@ $\theta_n$ & Bequest parent premium & 0.250 \\
 \end{frame}
 
 
-\begin{frame}[t]{Appendix: Benchmark Entry Accounting}
-\footnotesize
-\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-\begin{itemize}\setlength\itemsep{6pt}
-  \item Normalize benchmark city scale to $S^*=1$.
+\begin{frame}[t]{Appendix: Entry Accounting Algorithm \; \hyperlink{slide:entry_stationarity}{\beamerbutton{Back}}}
+\label{app:entry_accounting}
+\scriptsize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+\begin{enumerate}\setlength\itemsep{4pt}
+  \item Solve the benchmark in normalized units: $S^*=1$. The normalized
+  composition gives $E_{0C}^*$, $E_{0P}^*$, $E_0^*=E_{0C}^*+E_{0P}^*$, and $B_0^*$.
 
-  \item The benchmark composition implies the replacement inflow of young adults
-  by location, $E_{0C}^*$ and $E_{0P}^*$, and the total
-  $E_0^*=E_{0C}^*+E_{0P}^*$.
-
-  \item The benchmark composition also implies $B_0^*$, the mature city-born
-  potential entrant flow per unit of city scale.
-
-  \item The outside value $\bar W^E$ is disciplined by the benchmark outside
-  margin:
+  \item Pick the benchmark outside margin. Choose $\bar W^E$ so that entry
+  probabilities satisfy
   \[
-  q^{E,*}=\pi_C^E(p^*)+\pi_P^E(p^*).
+  q^{E,*}=\pi_C^{E,*}+\pi_P^{E,*}.
   \]
 
-  \item The outside-origin potential entrant mass is then the residual that
-  makes the normalized benchmark stationary:
+  \item Use the aggregate stationarity equation at $S^*=1$ to recover the
+  outside-origin potential entrant mass:
   \[
   M=\frac{E_0^*}{q^{E,*}}-B_0^*.
   \]
 
-  \item In counterfactuals, $(M,\bar W^E,\kappa_E)$ stay fixed while household
-  values, entry probabilities, and city scale respond.
-\end{itemize}
+  \item The solve must also reproduce entry by location:
+  \[
+  S E_{0i}=\left[M+S B_0\right]\pi_i^E,\qquad i\in\{C,P\}.
+  \]
+  The scalar equation for $S$ is the sum of these two conditions.
+
+  \item In counterfactuals, keep $(M,\bar W^E,\kappa_E)$ fixed. Recompute
+  household values, $E_0$, $B_0$, and $q^E$, then set
+  \[
+  S=\frac{q^E M}{E_0-q^E B_0},
+  \qquad
+  E_i=\left[M+S B_0\right]\pi_i^E.
+  \]
+\end{enumerate}
 \end{frame}
 
 \begin{frame}[t]{Appendix: Distributional Stationarity}
 \footnotesize
 \setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 \begin{itemize}\setlength\itemsep{6pt}
-  \item The stationary distribution is over the full household state, including
-  location:
-  \[
-  G'(\mathcal A)
-  =
-  \int \mathcal P(\mathcal A\mid x;p)\,dG(x)
-  +
-  \sum_{i\in\{C,P\}}E_i(G;p)\mathbf{1}\{x_i^E\in\mathcal A\}.
-  \]
+  \item The stationary object is the normalized composition $g$ together with
+  city scale $S$. The level mass of any household state is $Sg$.
+
+  \item Incumbent households transition through policies, fertility, location
+  choice, aging, and death.
 
   \item Location-specific entrant masses are
   \[
-  E_i(G;p)=\left[M+S B_0(p)\right]\pi_i^E(p),
+  E_i=\left[M+S B_0\right]\pi_i^E,
   \qquad i\in\{C,P\}.
   \]
+  These entrants are placed at the entrant states $x_i^E$.
 
   \item The scalar equation for $S$ is only the sum of the two entry-location
   equations. The equilibrium still has to reproduce the location distribution
-  inside $G$.
+  inside $g$.
 \end{itemize}
 \end{frame}
 

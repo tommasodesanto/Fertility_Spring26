@@ -430,8 +430,8 @@
   </div>
 
   <h3 id="bequest">2.7 Bequest and terminal value</h3>
-  <p>At the terminal age $j = J - 1$ the continuation value is the bequest function — lifetime housing is liquidated at the local price:</p>
-  $$V_{\mathrm{bq}}(b, \mathrm{ten}, i, n) = \theta_0(n) \cdot \frac{(b + p_i\, H_{\mathrm{own}}[\mathrm{ten}-1] + \theta_1)^{1-\sigma} - 1}{1-\sigma}, \qquad \theta_0(n) = 1 + \theta_n \cdot n.$$
+  <p>At the terminal age $j = J - 1$ the continuation value is the bequest function — lifetime housing is liquidated net of the transaction cost:</p>
+  $$V_{\mathrm{bq}}(b, \mathrm{ten}, i, n) = \theta_0(n) \cdot \frac{(b + (1-\psi)p_i\, H_{\mathrm{own}}[\mathrm{ten}-1] + \theta_1)^{1-\sigma} - 1}{1-\sigma}, \qquad \theta_0(n) = 1 + \theta_n \cdot n.$$
   <p>The luxury-bequest term $\theta_1 \geq 0$ shifts the curvature near zero (De Nardi 2004). $\theta_n$ controls how much extra parents save for children — empirically calibrated to the ownership gap between parents and non-parents at retirement.</p>
 </section>
 
