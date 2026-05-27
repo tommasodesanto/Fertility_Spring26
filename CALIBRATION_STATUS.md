@@ -192,6 +192,16 @@ Third checkpoint, `2026-05-27 06:37 EDT`:
   `DT_DIRECT_INITIAL_SCALE=0.015`, `DT_DIRECT_MIN_SCALE=0.0008`,
   `DT_DIRECT_SHRINK=0.50`, and `DT_DIRECT_STALL_WINDOW=4`.
 
+Micro-local checkpoint, `2026-05-27 07:09 EDT`:
+
+- best `hR_max=8.0` unchanged from the third checkpoint: loss `9.323`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_microbest_overnight_20260527`, worker `3`,
+  evaluation `51`, loss `14.747`, \(TFR=1.995\), ownership `0.611`,
+  center share `0.477`, rent ratio `1.131`
+- Status: micro-local refinement improved the `hR_max=6.0` best and was left
+  running.
+
 Launch settings:
 
 - setup: `benchmark`
