@@ -137,9 +137,16 @@ Additional incumbent-seeded arrays:
 | Room spec | Regime | Run tag | Slurm job |
 |---|---|---|---|
 | `hR_max=8.0` baseline | default proposal mix | `py_direct_reduced_targets_hR8_incumbent_default_overnight_20260527` | `9670313` |
-| `hR_max=8.0` baseline | global-heavy proposal mix | `py_direct_reduced_targets_hR8_incumbent_globalheavy_overnight_20260527` | `9670314` |
 | `hR_max=6.0` diagnostic | default proposal mix | `py_direct_reduced_targets_hR6_incumbent_default_overnight_20260527` | `9670315` |
-| `hR_max=6.0` diagnostic | global-heavy proposal mix | `py_direct_reduced_targets_hR6_incumbent_globalheavy_overnight_20260527` | `9670316` |
+| `hR_max=8.0` baseline | tight local proposal mix | `py_direct_reduced_targets_hR8_incumbent_tight_overnight_20260527` | `9670412` |
+| `hR_max=6.0` diagnostic | tight local proposal mix | `py_direct_reduced_targets_hR6_incumbent_tight_overnight_20260527` | `9670413` |
+
+The first global-heavy incumbent arrays, `9670314` and `9670316`, were canceled
+after the default/global-heavy starts accumulated roughly 60 evaluations per
+run without improving the incumbents. The replacement tight local arrays use
+`DT_DIRECT_GLOBAL_PROB=0.02`, `DT_DIRECT_INITIAL_SCALE=0.05`,
+`DT_DIRECT_MIN_SCALE=0.003`, `DT_DIRECT_SHRINK=0.60`, and
+`DT_DIRECT_STALL_WINDOW=6`.
 
 Launch settings:
 
