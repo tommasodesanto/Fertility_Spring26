@@ -29,6 +29,7 @@ Useful commands:
 .venv/bin/python tools/compare_benchmarks.py benchmarks/fast_ge_iter1.json benchmarks/matlab_fast_ge_iter1.json
 .venv/bin/python tools/compare_benchmarks.py benchmarks/solve_theta_x0_fast_compiled_forward.json benchmarks/matlab_solve_theta_x0_fast.json
 .venv/bin/python tools/check_population_closure.py
+.venv/bin/python tools/export_room_pattern_diagnostics.py --case hR8=../../output/model/reduced_target_overnight_20260527/records/hR8_default_best.json,8.0 --case hR6=../../output/model/reduced_target_overnight_20260527/records/hR6_micro_best.json,6.0
 .venv/bin/python -m dt_cp_model.cli accounting-scale --setup fast --max-iter-eq 120 --quiet
 .venv/bin/python -m dt_cp_model.cli scaled-equilibrium --setup fast --baseline-max-iter-eq 120 --max-iter-eq 80 --quiet
 .venv/bin/python -m dt_cp_model.cli scaled-equilibrium --setup fast --baseline-max-iter-eq 1 --max-iter-eq 80 --outside-value -35.98609192692343 --force-full --quiet
