@@ -33,6 +33,8 @@ from dt_cp_model.direct_calibration import (  # noqa: E402
 
 def main() -> None:
     args = parse_args()
+    weight_overrides = parse_weight_overrides(args.weight_overrides)
+    H_own = parse_float_list(args.H_own)
     setup = build_direct_calibration_setup(
         args.setup,
         geo_weight=args.geo_weight,
@@ -43,6 +45,11 @@ def main() -> None:
         outside_flow_x0=args.outside_flow_x0,
         renewal_retention=args.renewal_retention,
         hR_max=args.hR_max,
+        owner_h_bar_scale=args.owner_h_bar_scale,
+        weight_overrides=weight_overrides,
+        parent_dp_waiver=args.parent_dp_waiver,
+        parent_dp_waiver_phi=args.parent_dp_waiver_phi,
+        H_own=H_own,
     )
     lb, ub = apply_bound_profile(setup, args.bound_profile)
     seed = int(args.seed_base + 1009 * args.job_id)
@@ -72,6 +79,11 @@ def main() -> None:
         "outside_flow_x0": args.outside_flow_x0,
         "renewal_retention": args.renewal_retention,
         "hR_max": args.hR_max,
+        "owner_h_bar_scale": args.owner_h_bar_scale,
+        "weight_overrides": weight_overrides,
+        "parent_dp_waiver": args.parent_dp_waiver,
+        "parent_dp_waiver_phi": args.parent_dp_waiver_phi,
+        "H_own": H_own,
         "eq_penalty_weight": args.eq_penalty_weight,
         "theta_names": setup.names,
         "lb": lb.tolist(),
@@ -210,6 +222,31 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=float(os.environ["DT_DIRECT_HR_MAX"]) if "DT_DIRECT_HR_MAX" in os.environ else None,
     )
+    parser.add_argument(
+        "--owner-h-bar-scale",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_OWNER_H_BAR_SCALE"])
+            if "DT_DIRECT_OWNER_H_BAR_SCALE" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument("--weight-overrides", default=os.environ.get("DT_DIRECT_WEIGHT_OVERRIDES", ""))
+    parser.add_argument(
+        "--parent-dp-waiver",
+        action=argparse.BooleanOptionalAction,
+        default=parse_optional_bool(os.environ.get("DT_DIRECT_PARENT_DP_WAIVER")),
+    )
+    parser.add_argument(
+        "--parent-dp-waiver-phi",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_PARENT_DP_WAIVER_PHI"])
+            if "DT_DIRECT_PARENT_DP_WAIVER_PHI" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument("--H-own", default=os.environ.get("DT_DIRECT_H_OWN", ""))
     parser.add_argument("--eq-penalty-weight", type=float, default=float(os.environ.get("DT_DIRECT_EQ_PENALTY_WEIGHT", "0")))
     parser.add_argument("--initial-scale", type=float, default=float(os.environ.get("DT_DIRECT_INITIAL_SCALE", "0.18")))
     parser.add_argument("--min-scale", type=float, default=float(os.environ.get("DT_DIRECT_MIN_SCALE", "0.015")))
@@ -225,6 +262,37 @@ def parse_args() -> argparse.Namespace:
     if args.max_iter_eq <= 0:
         args.max_iter_eq = None
     return args
+
+
+def parse_weight_overrides(raw: str | None) -> dict[str, float]:
+    overrides: dict[str, float] = {}
+    if not raw:
+        return overrides
+    for part in str(raw).split(","):
+        if not part.strip():
+            continue
+        if "=" not in part:
+            raise ValueError(f"weight override must be key=value, got {part!r}")
+        key, value = part.split("=", 1)
+        overrides[key.strip()] = float(value)
+    return overrides
+
+
+def parse_optional_bool(raw: str | None) -> bool | None:
+    if raw is None or raw == "":
+        return None
+    value = raw.strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True
+    if value in {"0", "false", "no", "off"}:
+        return False
+    raise ValueError(f"cannot parse boolean value {raw!r}")
+
+
+def parse_float_list(raw: str | None) -> list[float] | None:
+    if not raw:
+        return None
+    return [float(part.strip()) for part in str(raw).split(",") if part.strip()]
 
 
 def apply_bound_profile(setup: DirectCalibrationSetup, profile: str) -> tuple[np.ndarray, np.ndarray]:

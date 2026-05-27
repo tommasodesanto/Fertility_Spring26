@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-05-26 18:10 EDT`
+Updated: `2026-05-27 17:01 EDT`
 
 This is the single live calibration and model-status note for the current
 discrete-time center-periphery fertility model. Historical MATLAB status notes,
@@ -227,6 +227,46 @@ Live pull, `2026-05-27 08:59 EDT`:
   center share `0.478`, rent ratio `1.132`
 - New summary fit note:
   `latex/current_fit_reduced_target_diagnostics_20260527.pdf`
+
+Afternoon fast pulses, `2026-05-27`:
+
+- Results and comparison table:
+  `output/model/fast_calibration_pulses_20260527/summary.csv`
+- Best default hR8 pulse record:
+  `output/model/fast_calibration_pulses_20260527/records/hR8_standard_best.json`
+- Best diagnostic high-owner/old-age record:
+  `output/model/fast_calibration_pulses_20260527/records/hR8_chiowner_best.json`
+- Best owner-ladder support diagnostic:
+  `output/model/fast_calibration_pulses_20260527/records/Hown_lowtop_best.json`
+
+Main results:
+
+| Case | Loss | TFR | Own | Old-own | Old gap | Pop C | Rent ratio |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| hR8 morning | `9.323` | `1.700` | `0.358` | `0.510` | `0.072` | `0.456` | `1.076` |
+| hR8 standard swarm | `8.860` | `1.688` | `0.363` | `0.510` | `0.074` | `0.466` | `1.086` |
+| Hown low-top exact | `8.854` | `1.688` | `0.363` | `0.511` | `0.073` | `0.466` | `1.086` |
+| hR8 chi-owner | `11.806` | `1.755` | `0.413` | `0.738` | `0.066` | `0.449` | `1.120` |
+| hR7 | `99.602` | `1.705` | `0.537` | `0.735` | `-0.119` | `0.485` | `1.037` |
+| hR6 final | `14.716` | `1.983` | `0.614` | `0.999` | `-0.001` | `0.477` | `1.131` |
+
+Read:
+
+- A short hR8 incumbent-local swarm improved the default hR8 loss from
+  `9.323` to `8.860`, but did not repair ownership; prime-age ownership
+  remains around `0.36` and old-age ownership around `0.51`.
+- hR6 and hR7 can force ownership mechanically, but they break gradients,
+  parent-childless gaps, and/or fertility. They are diagnostics, not current
+  benchmark candidates.
+- Raising the effective owner-housing margin through the chi-owner basin can
+  bring old-age ownership close to target (`0.738` vs `0.764`) and preserves
+  the old-age parent-childless gap, but it raises TFR and still leaves
+  prime-age ownership too low.
+- Finer owner ladders around the 6--8 room range do not by themselves fix the
+  room collapse. The low-top ladder gives a tiny objective improvement but
+  leaves the median owner room choice at `8.0`.
+- Parent down-payment waiver diagnostics did not repair the hR7/hR8 tradeoff;
+  they should remain diagnostic unless given a structural interpretation.
 
 Launch settings:
 

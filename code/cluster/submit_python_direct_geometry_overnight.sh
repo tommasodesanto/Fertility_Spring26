@@ -91,6 +91,18 @@ echo "Outside value x0: ${DT_DIRECT_OUTSIDE_VALUE_X0} | outside flow x0: ${DT_DI
 if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
     echo "Renter cap override hR_max: ${DT_DIRECT_HR_MAX}"
 fi
+if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
+    echo "Owner h_bar scale override: ${DT_DIRECT_OWNER_H_BAR_SCALE}"
+fi
+if [ -n "${DT_DIRECT_WEIGHT_OVERRIDES:-}" ]; then
+    echo "Weight overrides: ${DT_DIRECT_WEIGHT_OVERRIDES}"
+fi
+if [ -n "${DT_DIRECT_PARENT_DP_WAIVER:-}" ]; then
+    echo "Parent DP waiver: ${DT_DIRECT_PARENT_DP_WAIVER} | phi: ${DT_DIRECT_PARENT_DP_WAIVER_PHI:-default}"
+fi
+if [ -n "${DT_DIRECT_H_OWN:-}" ]; then
+    echo "Owner ladder override H_own: ${DT_DIRECT_H_OWN}"
+fi
 echo "Budget: ${DT_DIRECT_BUDGET_SEC}s | max evals: ${DT_DIRECT_MAX_EVALS}"
 echo "Started: $(date)"
 echo "============================================"
@@ -135,6 +147,30 @@ ARGS=(
 
 if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
     ARGS+=(--hR-max "${DT_DIRECT_HR_MAX}")
+fi
+
+if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
+    ARGS+=(--owner-h-bar-scale "${DT_DIRECT_OWNER_H_BAR_SCALE}")
+fi
+
+if [ -n "${DT_DIRECT_WEIGHT_OVERRIDES:-}" ]; then
+    ARGS+=(--weight-overrides "${DT_DIRECT_WEIGHT_OVERRIDES}")
+fi
+
+if [ -n "${DT_DIRECT_PARENT_DP_WAIVER:-}" ]; then
+    if [ "${DT_DIRECT_PARENT_DP_WAIVER}" = "1" ] || [ "${DT_DIRECT_PARENT_DP_WAIVER}" = "true" ] || [ "${DT_DIRECT_PARENT_DP_WAIVER}" = "yes" ]; then
+        ARGS+=(--parent-dp-waiver)
+    else
+        ARGS+=(--no-parent-dp-waiver)
+    fi
+fi
+
+if [ -n "${DT_DIRECT_PARENT_DP_WAIVER_PHI:-}" ]; then
+    ARGS+=(--parent-dp-waiver-phi "${DT_DIRECT_PARENT_DP_WAIVER_PHI}")
+fi
+
+if [ -n "${DT_DIRECT_H_OWN:-}" ]; then
+    ARGS+=(--H-own "${DT_DIRECT_H_OWN}")
 fi
 
 if [ "${DT_DIRECT_MAX_ITER_EQ}" != "0" ]; then

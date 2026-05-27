@@ -99,6 +99,11 @@ def build_direct_calibration_setup(
     outside_flow_x0: float | None = None,
     renewal_retention: float = 1.0,
     hR_max: float | None = None,
+    owner_h_bar_scale: float | None = None,
+    weight_overrides: Mapping[str, float] | None = None,
+    parent_dp_waiver: bool | None = None,
+    parent_dp_waiver_phi: float | None = None,
+    H_own: Sequence[float] | None = None,
 ) -> DirectCalibrationSetup:
     """Build the direct-geometry counterpart of ``build_calibration_setup``.
 
@@ -136,8 +141,26 @@ def build_direct_calibration_setup(
     base = build_calibration_setup(setup_mode)
     if hR_max is not None:
         base.P_base.hR_max = float(hR_max)
+    if owner_h_bar_scale is not None:
+        base.P_base.owner_h_bar_scale = float(owner_h_bar_scale)
+    if parent_dp_waiver is not None:
+        base.P_base.parent_dp_waiver = bool(parent_dp_waiver)
+    if parent_dp_waiver_phi is not None:
+        base.P_base.parent_dp_waiver_phi = float(parent_dp_waiver_phi)
+    if H_own is not None:
+        ladder = np.asarray(H_own, dtype=float).reshape(-1)
+        if ladder.size == 0 or np.any(~np.isfinite(ladder)) or np.any(np.diff(ladder) <= 0):
+            raise ValueError("H_own override must be a strictly increasing finite sequence")
+        base.P_base.H_own = ladder
+        base.P_base.n_house = int(ladder.size)
+        base.P_base.h_own_min = float(ladder[0])
+        base.P_base.h_own_max = float(ladder[-1])
     targets = dict(base.targets)
     weights = dict(base.weights)
+    if weight_overrides:
+        for key, value in weight_overrides.items():
+            if key in targets:
+                weights[key] = float(value)
     closure = str(population_closure or "outside_option_benchmark_normalized").lower()
 
     targets["inv_pop_share_C"] = float(base.inversion_targets["pop_share_C"])
