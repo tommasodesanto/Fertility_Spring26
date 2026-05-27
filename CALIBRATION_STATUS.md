@@ -161,6 +161,19 @@ Two-hour checkpoint, `2026-05-27 02:35 EDT`:
 - Status: both incumbent-local specifications improved relative to the saved
   incumbents, so the default and tight incumbent arrays were left running.
 
+Second checkpoint, `2026-05-27 04:36 EDT`:
+
+- best `hR_max=8.0`: run
+  `py_direct_reduced_targets_hR8_incumbent_default_overnight_20260527`,
+  worker `3`, evaluation `444`, loss `9.907`, \(TFR=1.662\), ownership
+  `0.334`, center share `0.457`, rent ratio `1.066`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_incumbent_default_overnight_20260527`,
+  worker `3`, evaluation `433`, loss `15.392`, \(TFR=1.959\), ownership
+  `0.623`, center share `0.434`, rent ratio `1.181`
+- First-wave tasks finished for the incumbent arrays; tasks `9--16` started
+  and were left running.
+
 Launch settings:
 
 - setup: `benchmark`
