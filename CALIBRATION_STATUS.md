@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-05-27 17:01 EDT`
+Updated: `2026-05-27 17:51 EDT`
 
 This is the single live calibration and model-status note for the current
 discrete-time center-periphery fertility model. Historical MATLAB status notes,
@@ -267,6 +267,37 @@ Read:
   leaves the median owner room choice at `8.0`.
 - Parent down-payment waiver diagnostics did not repair the hR7/hR8 tradeoff;
   they should remain diagnostic unless given a structural interpretation.
+
+Rush continuation, `2026-05-27 17:30--17:51 EDT`:
+
+- Results:
+  `output/model/rush_calibration_20260527/summary.csv`
+- Best high-ownership candidate:
+  `output/model/rush_calibration_20260527/records/hR8_chiowner_fertgrid_local.json`
+- Best lower-TFR high-ownership candidate:
+  `output/model/rush_calibration_20260527/records/hR8_chiowner_tradegrid2_local.json`
+
+| Case | Loss | TFR | Own | Old-own | Old gap | Pop C | Rent ratio |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| hR8 low-loss continue | `8.860` | `1.688` | `0.363` | `0.510` | `0.074` | `0.466` | `1.086` |
+| hR8 chi-owner fertgrid local | `10.588` | `1.748` | `0.420` | `0.748` | `0.076` | `0.471` | `1.151` |
+| hR8 chi-owner tradegrid local | `10.846` | `1.729` | `0.427` | `0.745` | `0.073` | `0.468` | `1.147` |
+| hR8 expanded-fertility exact | `18.444` | `1.761` | `0.417` | `0.752` | `0.039` | `0.468` | `1.147` |
+
+Read:
+
+- The chi-owner basin can fit the old-age ownership block much better than the
+  low-loss hR8 basin. The best rush candidate hits old-age ownership
+  `0.748` versus target `0.764` and old-age parent-childless gap `0.076`
+  versus target `0.070`.
+- Prime-age ownership remains too low (`0.420--0.427` versus target `0.575`),
+  and TFR remains above target (`1.729--1.748` versus `1.700`).
+- Expanding fertility-cost bounds (`psi_child`, `c_bar_n`, `kappa_fert`) did
+  not immediately improve the fit; exact high-cost probes worsened the loss.
+  The high-owner basin is not simply blocked by the old fertility-cost bounds.
+- The current practical choice is between the low-loss hR8 benchmark
+  (`8.860`, bad ownership lifecycle) and the chi-owner diagnostic benchmark
+  (`10.588`, much better lifecycle ownership but worse TFR/housing increments).
 
 Launch settings:
 

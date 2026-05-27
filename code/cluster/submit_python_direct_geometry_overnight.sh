@@ -103,6 +103,9 @@ fi
 if [ -n "${DT_DIRECT_H_OWN:-}" ]; then
     echo "Owner ladder override H_own: ${DT_DIRECT_H_OWN}"
 fi
+if [ -n "${DT_DIRECT_BOUND_OVERRIDES:-}" ]; then
+    echo "Bound overrides: ${DT_DIRECT_BOUND_OVERRIDES}"
+fi
 echo "Budget: ${DT_DIRECT_BUDGET_SEC}s | max evals: ${DT_DIRECT_MAX_EVALS}"
 echo "Started: $(date)"
 echo "============================================"
@@ -171,6 +174,10 @@ fi
 
 if [ -n "${DT_DIRECT_H_OWN:-}" ]; then
     ARGS+=(--H-own "${DT_DIRECT_H_OWN}")
+fi
+
+if [ -n "${DT_DIRECT_BOUND_OVERRIDES:-}" ]; then
+    ARGS+=(--bound-overrides "${DT_DIRECT_BOUND_OVERRIDES}")
 fi
 
 if [ "${DT_DIRECT_MAX_ITER_EQ}" != "0" ]; then

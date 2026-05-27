@@ -52,6 +52,9 @@ def main() -> None:
         H_own=H_own,
     )
     lb, ub = apply_bound_profile(setup, args.bound_profile)
+    apply_bound_overrides(lb, ub, setup.names, args.bound_overrides)
+    setup.lb = lb.copy()
+    setup.ub = ub.copy()
     seed = int(args.seed_base + 1009 * args.job_id)
     rng = np.random.default_rng(seed)
 
@@ -88,6 +91,7 @@ def main() -> None:
         "theta_names": setup.names,
         "lb": lb.tolist(),
         "ub": ub.tolist(),
+        "bound_overrides": args.bound_overrides,
         "x0": setup.x0.tolist(),
     }
     write_json(config_path, config)
@@ -247,6 +251,7 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--H-own", default=os.environ.get("DT_DIRECT_H_OWN", ""))
+    parser.add_argument("--bound-overrides", default=os.environ.get("DT_DIRECT_BOUND_OVERRIDES", ""))
     parser.add_argument("--eq-penalty-weight", type=float, default=float(os.environ.get("DT_DIRECT_EQ_PENALTY_WEIGHT", "0")))
     parser.add_argument("--initial-scale", type=float, default=float(os.environ.get("DT_DIRECT_INITIAL_SCALE", "0.18")))
     parser.add_argument("--min-scale", type=float, default=float(os.environ.get("DT_DIRECT_MIN_SCALE", "0.015")))
@@ -293,6 +298,29 @@ def parse_float_list(raw: str | None) -> list[float] | None:
     if not raw:
         return None
     return [float(part.strip()) for part in str(raw).split(",") if part.strip()]
+
+
+def apply_bound_overrides(lb: np.ndarray, ub: np.ndarray, names: list[str], raw: str | None) -> None:
+    if not raw:
+        return
+    index = {name: idx for idx, name in enumerate(names)}
+    for part in str(raw).split(","):
+        if not part.strip():
+            continue
+        if "=" not in part or ":" not in part:
+            raise ValueError(f"bound override must be key=lo:hi, got {part!r}")
+        key, value = part.split("=", 1)
+        lo_raw, hi_raw = value.split(":", 1)
+        key = key.strip()
+        if key not in index:
+            raise ValueError(f"unknown bound override parameter {key!r}")
+        idx = index[key]
+        lo = float(lo_raw)
+        hi = float(hi_raw)
+        if not np.isfinite(lo) or not np.isfinite(hi) or lo > hi:
+            raise ValueError(f"invalid bounds for {key!r}: {lo}:{hi}")
+        lb[idx] = lo
+        ub[idx] = hi
 
 
 def apply_bound_profile(setup: DirectCalibrationSetup, profile: str) -> tuple[np.ndarray, np.ndarray]:
