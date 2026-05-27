@@ -1,0 +1,72 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\title{Reduced-Target Overnight Fit Diagnostics}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Source Runs}
+\begin{itemize}
+\item \textbf{hR8\_reduced\_best}: loss 9.323, job 10, eval 289, $h_R^{\max}=8.0$.
+\item \textbf{hR6\_diagnostic\_best}: loss 14.730, job 3, eval 306, $h_R^{\max}=6.0$.
+\end{itemize}
+\section*{Moment Table}
+\begin{table}[H]\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Moment & Target & hR8\_reduced\_best & hR6\_diagnostic\_best \\
+\midrule
+TFR & 1.700 & 1.700 & 1.988 \\
+Childless & 0.150 & 0.151 & 0.162 \\
+Age first birth & 26.000 & 33.875 & 33.736 \\
+Ownership & 0.575 & 0.358 & 0.613 \\
+Ownership gradient & 0.186 & 0.154 & 0.198 \\
+Family ownership gap & 0.168 & 0.137 & 0.189 \\
+Rooms, 0 to 1 child & 0.664 & 0.848 & 0.603 \\
+Rooms, 1 to 2 children & 0.566 & -0.089 & 0.387 \\
+Old-age ownership & 0.764 & 0.510 & 0.999 \\
+Old parent-childless gap & 0.070 & 0.072 & -0.001 \\
+Center share & 0.450 & 0.456 & 0.478 \\
+Rent ratio C/P & 1.140 & 1.076 & 1.132 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\section*{Slide Figure Bundle}
+\subsection*{hR8\_reduced\_best}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR8_reduced_best/benchmark_lifecycle_compare.png}
+\caption{Lifecycle fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR8_reduced_best/market_equilibrium.png}
+\caption{Market equilibrium}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR8_reduced_best/housing_choice_heatmap.png}
+\caption{Housing choice heatmap}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR8_reduced_best/housing_size_fit.png}
+\caption{Appendix housing-size fit}
+\end{figure}
+\subsection*{hR6\_diagnostic\_best}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR6_diagnostic_best/benchmark_lifecycle_compare.png}
+\caption{Lifecycle fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR6_diagnostic_best/market_equilibrium.png}
+\caption{Market equilibrium}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR6_diagnostic_best/housing_choice_heatmap.png}
+\caption{Housing choice heatmap}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/reduced_target_fit_note_20260527/hR6_diagnostic_best/housing_size_fit.png}
+\caption{Appendix housing-size fit}
+\end{figure}
+\end{document}

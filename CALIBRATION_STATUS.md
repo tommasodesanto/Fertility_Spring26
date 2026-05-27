@@ -217,6 +217,17 @@ Morning checkpoint, `2026-05-27 08:10 EDT`:
 - Current best JSON records were mirrored locally under
   `output/model/reduced_target_overnight_20260527/records/`.
 
+Live pull, `2026-05-27 08:59 EDT`:
+
+- best `hR_max=8.0` unchanged: loss `9.323`, \(TFR=1.700\), ownership
+  `0.358`, center share `0.456`, rent ratio `1.076`
+- best `hR_max=6.0`: run
+  `py_direct_reduced_targets_hR6_microbest_overnight_20260527`, worker `3`,
+  evaluation `306`, loss `14.730`, \(TFR=1.988\), ownership `0.613`,
+  center share `0.478`, rent ratio `1.132`
+- New summary fit note:
+  `latex/current_fit_reduced_target_diagnostics_20260527.pdf`
+
 Launch settings:
 
 - setup: `benchmark`
