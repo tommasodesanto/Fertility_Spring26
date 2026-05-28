@@ -45,18 +45,26 @@ TARGET_ROWS = [
     ("tfr", "TFR"),
     ("childless_rate", "Childless"),
     ("mean_age_first_birth", "Age first birth"),
+    ("tfr_gradient", "TFR gradient"),
     ("own_rate", "Ownership"),
     ("own_gradient", "Ownership gradient"),
     ("own_family_gap", "Family ownership gap"),
-    ("own_lifecycle_slope", "Lifecycle ownership slope"),
-    ("prime_childless_renter_median_rooms", "Childless renter rooms"),
-    ("prime_childless_owner_median_rooms", "Childless owner rooms"),
     ("housing_increment_0to1", "Rooms, 0 to 1 child"),
     ("housing_increment_1to2", "Rooms, 1 to 2 children"),
+    ("young_liquid_wealth_to_income", "Young liquid wealth/income"),
+    ("center_share_nonparents", "Center share, nonparents"),
+    ("center_share_newparents", "Center share, new parents"),
+    ("migration_rate", "Migration rate"),
     ("old_age_own_rate", "Old-age ownership"),
     ("old_age_parent_childless_gap", "Old parent-childless gap"),
     ("inv_pop_share_C", "Center share"),
     ("inv_rent_ratio_C_over_P", "Rent ratio C/P"),
+    ("owner25_45_rooms_le6_share", "Prime owner rooms <=6"),
+    ("owner25_45_rooms_7to8_share", "Prime owner rooms 7-8"),
+    ("owner25_45_rooms_ge9_share", "Prime owner rooms >=9"),
+    ("prime_childless_renter_median_rooms", "Childless renter rooms"),
+    ("prime_childless_owner_median_rooms", "Childless owner rooms"),
+    ("own_lifecycle_slope", "Lifecycle ownership slope"),
 ]
 
 ROOM_BINS = ["<=4", "5", "6", "7-8", "9-10", "11+"]
@@ -127,6 +135,8 @@ def build_case(
     owner_size_cost_ref = record.get("owner_size_cost_ref")
     owner_size_cost_power = record.get("owner_size_cost_power")
     tenure_choice_kappa = record.get("tenure_choice_kappa")
+    weight_overrides = record.get("weight_overrides") or None
+    extra_targets = record.get("extra_targets") or None
     setup = build_direct_calibration_setup(
         "benchmark",
         geo_weight=100.0,
@@ -139,6 +149,8 @@ def build_case(
         owner_size_cost_ref=owner_size_cost_ref,
         owner_size_cost_power=owner_size_cost_power,
         tenure_choice_kappa=tenure_choice_kappa,
+        weight_overrides=weight_overrides,
+        extra_targets=extra_targets,
         H_own=H_own,
     )
     moments = dict(record.get("moments", {}))
@@ -160,7 +172,7 @@ def build_case(
         plot_market_equilibrium(sol, P, p_eq, setup, outdir / "market_equilibrium.png", label)
         plot_housing_choice_heatmap(sol, P, b_grid, outdir / "housing_choice_heatmap.png", label)
         plot_housing_size_fit(sol, P, b_grid, setup, moments, outdir / "housing_size_fit.png", label)
-    write_case_summary(outdir / "target_comparison.csv", setup.targets, moments, label)
+    write_case_summary(outdir / "target_comparison.csv", setup.targets, setup.weights, moments, label)
 
     return {
         "label": label,
@@ -170,6 +182,7 @@ def build_case(
         "H_own": H_own,
         "record": record,
         "targets": setup.targets,
+        "weights": setup.weights,
         "moments": moments,
         "prices": [float(x) for x in np.asarray(record.get("p_eq", [])).reshape(-1)],
     }
@@ -745,16 +758,74 @@ def weighted_quantile(x, w, q: float) -> float:
     return float(x[np.searchsorted(cw, q * cw[-1], side="left")])
 
 
-def write_case_summary(path: Path, targets: dict, moments: dict, label: str) -> None:
+def write_case_summary(path: Path, targets: dict, weights: dict, moments: dict, label: str) -> None:
     with path.open("w", newline="") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["case", "moment", "target", "model", "diff"])
+        writer.writerow(["case", "moment", "target", "weight", "model", "diff"])
         for key, _ in TARGET_ROWS:
             if key not in targets:
                 continue
             target = float(targets[key])
+            weight = float(weights.get(key, np.nan))
             model = float(moments.get(key, np.nan))
-            writer.writerow([label, key, target, model, model - target])
+            writer.writerow([label, key, target, weight, model, model - target])
+
+
+PARAMETER_ORDER = [
+    "beta",
+    "b_entry_fixed",
+    "psi_child",
+    "h_bar_jump",
+    "h_bar_n",
+    "c_bar_n",
+    "kappa_fert",
+    "chi",
+    "kappa_loc",
+    "mu_move",
+    "theta0",
+    "theta_n",
+    "h_bar_0",
+    "E_C",
+    "r_bar_C",
+    "tenure_choice_kappa",
+    "owner_h_bar_scale",
+    "owner_size_cost",
+    "owner_size_cost_ref",
+    "owner_size_cost_power",
+    "hR_max",
+    "p_P",
+    "p_C",
+]
+
+
+def parameter_keys(cases: list[dict]) -> list[str]:
+    seen = set()
+    out = []
+    for key in PARAMETER_ORDER:
+        if any(np.isfinite(parameter_value(case, key)) for case in cases):
+            out.append(key)
+            seen.add(key)
+    for case in cases:
+        for key in sorted((case["record"].get("parameters") or {}).keys()):
+            if key not in seen:
+                out.append(key)
+                seen.add(key)
+    return out
+
+
+def parameter_value(case: dict, key: str) -> float:
+    rec = case["record"]
+    params = rec.get("parameters") or {}
+    if key in params:
+        return float(params[key])
+    if key == "hR_max":
+        return float(case["hR_max"])
+    if key == "p_P":
+        return float(case["prices"][0]) if len(case["prices"]) > 0 else float("nan")
+    if key == "p_C":
+        return float(case["prices"][1]) if len(case["prices"]) > 1 else float("nan")
+    value = rec.get(key)
+    return float(value) if value is not None else float("nan")
 
 
 def write_note(note_tex: Path, outdir: Path, cases: list[dict]) -> None:
@@ -764,15 +835,17 @@ def write_note(note_tex: Path, outdir: Path, cases: list[dict]) -> None:
     for key, name in TARGET_ROWS:
         vals = []
         target = None
+        weight = np.nan
         for case in cases:
             if key in case["targets"]:
                 target = float(case["targets"][key])
+                weight = float(case["weights"].get(key, np.nan))
                 vals.append(float(case["moments"].get(key, np.nan)))
             else:
                 vals.append(np.nan)
         if target is None:
             continue
-        rows.append((name, target, vals))
+        rows.append((key, name, target, weight, vals))
 
     lines = [
         r"\documentclass[11pt]{article}",
@@ -792,23 +865,49 @@ def write_note(note_tex: Path, outdir: Path, cases: list[dict]) -> None:
         rec = case["record"]
         lines.append(
             rf"\item \textbf{{{latex_escape(case['label'])}}}: loss {float(rec['loss']):.3f}, "
-            rf"job {rec.get('job_id')}, eval {rec.get('eval_id')}, $h_R^{{\max}}={case['hR_max']:.1f}$."
+            rf"job {rec.get('job_id')}, eval {rec.get('eval_id')}, $h_R^{{\max}}={case['hR_max']:.1f}$, "
+            rf"$\kappa^T={float(rec.get('tenure_choice_kappa', np.nan)):.3f}$, "
+            rf"owner size cost {float(rec.get('owner_size_cost') or 0.0):.4f}."
         )
+        if rec.get("H_own"):
+            ladder = ", ".join(f"{float(x):.2g}" for x in rec["H_own"])
+            lines.append(rf"\item Owner ladder: $\left[{latex_escape(ladder)}\right]$.")
     lines.extend(
         [
             r"\end{itemize}",
-            r"\section*{Moment Table}",
+            r"\section*{Parameters}",
             r"\begin{table}[H]\centering\small",
-            r"\begin{tabular}{l" + "r" * (2 + len(cases)) + r"}",
+            r"\begin{tabular}{l" + "r" * len(cases) + r"}",
             r"\toprule",
-            "Moment & Target & " + " & ".join(latex_escape(c["label"]) for c in cases) + r" \\",
+            "Parameter & " + " & ".join(latex_escape(c["label"]) for c in cases) + r" \\",
             r"\midrule",
         ]
     )
-    for name, target, vals in rows:
+    for key in parameter_keys(cases):
+        vals = [parameter_value(case, key) for case in cases]
+        lines.append(
+            latex_escape(key)
+            + " & "
+            + " & ".join("NA" if not np.isfinite(v) else f"{v:.5g}" for v in vals)
+            + r" \\"
+        )
+    lines.extend(
+        [
+            r"\bottomrule",
+            r"\end{tabular}",
+            r"\end{table}",
+            r"\section*{Moment Table}",
+            r"\begin{table}[H]\centering\small",
+            r"\begin{tabular}{l" + "r" * (3 + len(cases)) + r"}",
+            r"\toprule",
+            "Moment & Target & Weight & " + " & ".join(latex_escape(c["label"]) for c in cases) + r" \\",
+            r"\midrule",
+        ]
+    )
+    for key, name, target, weight, vals in rows:
         lines.append(
             latex_escape(name)
-            + f" & {target:.3f} & "
+            + f" & {target:.3f} & {weight:.1f} & "
             + " & ".join("NA" if not np.isfinite(v) else f"{v:.3f}" for v in vals)
             + r" \\"
         )
