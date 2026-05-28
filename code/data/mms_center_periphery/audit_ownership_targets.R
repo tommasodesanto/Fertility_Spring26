@@ -130,6 +130,16 @@ age_profile <- function(dt, sample_name, source_name) {
   ), by = age][order(source, sample, age)]
 }
 
+age_location_profile <- function(dt, sample_name, source_name) {
+  dt[age >= 20 & age <= 84, .(
+    source = source_name,
+    sample = sample_name,
+    n_records = .N,
+    weight_sum = sum(weight, na.rm = TRUE),
+    owner_rate = weighted_mean_safe(owner, weight)
+  ), by = .(age, mms_location)][order(source, sample, mms_location, age)]
+}
+
 append_metric <- function(rows, moment, label, table, sample_name, value_col, out_col) {
   val <- table[sample == sample_name & window == label, get(value_col)]
   if (length(val) == 0) {
@@ -260,6 +270,12 @@ acs_profiles <- rbindlist(list(
   age_profile(acs_head_due, "household_heads_hhwt_due_housing", "ACS")
 ), fill = TRUE)
 
+acs_location_profiles <- rbindlist(list(
+  age_location_profile(acs_person, "all_persons_perwt", "ACS"),
+  age_location_profile(acs_head_all, "household_heads_hhwt_all_housing", "ACS"),
+  age_location_profile(acs_head_due, "household_heads_hhwt_due_housing", "ACS")
+), fill = TRUE)
+
 message("Loading PSID shelf for ownership cross-check...")
 psid_path <- "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
 psid_raw <- as.data.table(read_dta(
@@ -321,6 +337,7 @@ all_profiles <- rbindlist(list(acs_profiles, psid_profiles), fill = TRUE)
 
 fwrite(acs_windows, file.path(out_dir, "acs_ownership_window_targets.csv"))
 fwrite(acs_profiles, file.path(out_dir, "acs_ownership_age_profiles.csv"))
+fwrite(acs_location_profiles, file.path(out_dir, "acs_ownership_age_location_profiles.csv"))
 fwrite(psid_windows, file.path(out_dir, "psid_ownership_window_targets.csv"))
 fwrite(psid_profiles, file.path(out_dir, "psid_ownership_age_profiles.csv"))
 fwrite(all_windows, file.path(out_dir, "ownership_window_targets_all_sources.csv"))
@@ -582,6 +599,7 @@ md <- c(
   "- `ownership_target_comparison.csv`",
   "- `acs_ownership_window_targets.csv`",
   "- `acs_ownership_age_profiles.csv`",
+  "- `acs_ownership_age_location_profiles.csv`",
   "- `psid_ownership_window_targets.csv`",
   "- `psid_ownership_age_profiles.csv`",
   "- `acs_head_equivalence_diagnostic.csv`",
