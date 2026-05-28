@@ -94,8 +94,20 @@ fi
 if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
     echo "Owner h_bar scale override: ${DT_DIRECT_OWNER_H_BAR_SCALE}"
 fi
+if [ -n "${DT_DIRECT_OWNER_SIZE_COST:-}" ]; then
+    echo "Owner size cost: ${DT_DIRECT_OWNER_SIZE_COST} | ref: ${DT_DIRECT_OWNER_SIZE_COST_REF:-default} | power: ${DT_DIRECT_OWNER_SIZE_COST_POWER:-default}"
+fi
+if [ -n "${DT_DIRECT_TENURE_CHOICE_KAPPA:-}" ]; then
+    echo "Tenure/product choice kappa: ${DT_DIRECT_TENURE_CHOICE_KAPPA}"
+fi
 if [ -n "${DT_DIRECT_WEIGHT_OVERRIDES:-}" ]; then
     echo "Weight overrides: ${DT_DIRECT_WEIGHT_OVERRIDES}"
+fi
+if [ -n "${DT_DIRECT_EXTRA_TARGETS:-}" ]; then
+    echo "Extra targets: ${DT_DIRECT_EXTRA_TARGETS}"
+fi
+if [ -n "${DT_DIRECT_WARM_START_JSON:-}" ]; then
+    echo "Warm start JSON: ${DT_DIRECT_WARM_START_JSON}"
 fi
 if [ -n "${DT_DIRECT_PARENT_DP_WAIVER:-}" ]; then
     echo "Parent DP waiver: ${DT_DIRECT_PARENT_DP_WAIVER} | phi: ${DT_DIRECT_PARENT_DP_WAIVER_PHI:-default}"
@@ -156,8 +168,32 @@ if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
     ARGS+=(--owner-h-bar-scale "${DT_DIRECT_OWNER_H_BAR_SCALE}")
 fi
 
+if [ -n "${DT_DIRECT_OWNER_SIZE_COST:-}" ]; then
+    ARGS+=(--owner-size-cost "${DT_DIRECT_OWNER_SIZE_COST}")
+fi
+
+if [ -n "${DT_DIRECT_OWNER_SIZE_COST_REF:-}" ]; then
+    ARGS+=(--owner-size-cost-ref "${DT_DIRECT_OWNER_SIZE_COST_REF}")
+fi
+
+if [ -n "${DT_DIRECT_OWNER_SIZE_COST_POWER:-}" ]; then
+    ARGS+=(--owner-size-cost-power "${DT_DIRECT_OWNER_SIZE_COST_POWER}")
+fi
+
+if [ -n "${DT_DIRECT_TENURE_CHOICE_KAPPA:-}" ]; then
+    ARGS+=(--tenure-choice-kappa "${DT_DIRECT_TENURE_CHOICE_KAPPA}")
+fi
+
 if [ -n "${DT_DIRECT_WEIGHT_OVERRIDES:-}" ]; then
     ARGS+=(--weight-overrides "${DT_DIRECT_WEIGHT_OVERRIDES}")
+fi
+
+if [ -n "${DT_DIRECT_EXTRA_TARGETS:-}" ]; then
+    ARGS+=(--extra-targets "${DT_DIRECT_EXTRA_TARGETS}")
+fi
+
+if [ -n "${DT_DIRECT_WARM_START_JSON:-}" ]; then
+    ARGS+=(--warm-start-json "${DT_DIRECT_WARM_START_JSON}")
 fi
 
 if [ -n "${DT_DIRECT_PARENT_DP_WAIVER:-}" ]; then

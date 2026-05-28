@@ -54,7 +54,7 @@ def main() -> None:
         "--case",
         action="append",
         required=True,
-        help="Case spec LABEL=path/to/best.json,hR_max",
+        help="Case spec LABEL=path/to/best.json,hR_max[,H1;H2;...]",
     )
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     args = parser.parse_args()
@@ -70,9 +70,9 @@ def main() -> None:
     all_event_rows: list[dict] = []
 
     for spec in args.case:
-        label, record_path, hR_max = parse_case(spec)
+        label, record_path, hR_max, H_own = parse_case(spec)
         print(f"Solving {label}: {record_path} with hR_max={hR_max:g}", flush=True)
-        record, sol, P, p_eq, b_grid = solve_record(record_path, hR_max)
+        record, sol, P, p_eq, b_grid = solve_record(record_path, hR_max, H_own)
         fresh = extract_moments(sol, P, p_eq, 0.0, 0.0, 0.0, True)
 
         case_out = args.outdir / label
@@ -112,16 +112,30 @@ def main() -> None:
     print(f"Wrote diagnostics to {args.outdir}", flush=True)
 
 
-def parse_case(spec: str) -> tuple[str, Path, float]:
+def parse_case(spec: str) -> tuple[str, Path, float, list[float] | None]:
     if "=" not in spec:
-        raise ValueError(f"Case must be LABEL=path,hR_max, got {spec!r}")
+        raise ValueError(f"Case must be LABEL=path,hR_max[,H1;H2;...], got {spec!r}")
     label, rhs = spec.split("=", 1)
-    path_str, hr_str = rhs.rsplit(",", 1)
-    return label, Path(path_str), float(hr_str)
+    parts = rhs.split(",", 2)
+    if len(parts) not in (2, 3):
+        raise ValueError(f"Case must be LABEL=path,hR_max[,H1;H2;...], got {spec!r}")
+    H_own = None
+    if len(parts) == 3 and parts[2].strip():
+        H_own = [float(x) for x in parts[2].split(";") if x.strip()]
+    return label, Path(parts[0]), float(parts[1]), H_own
 
 
-def solve_record(record_path: Path, hR_max: float) -> tuple[dict, SimpleNamespace, SimpleNamespace, np.ndarray, np.ndarray]:
+def solve_record(
+    record_path: Path,
+    hR_max: float,
+    H_own: list[float] | None,
+) -> tuple[dict, SimpleNamespace, SimpleNamespace, np.ndarray, np.ndarray]:
     record = json.loads(record_path.read_text())
+    owner_h_bar_scale = record.get("owner_h_bar_scale")
+    owner_size_cost = record.get("owner_size_cost")
+    owner_size_cost_ref = record.get("owner_size_cost_ref")
+    owner_size_cost_power = record.get("owner_size_cost_power")
+    tenure_choice_kappa = record.get("tenure_choice_kappa")
     setup = build_direct_calibration_setup(
         "benchmark",
         geo_weight=100.0,
@@ -129,6 +143,12 @@ def solve_record(record_path: Path, hR_max: float) -> tuple[dict, SimpleNamespac
         scale_target=1.0,
         scale_weight=100.0,
         hR_max=hR_max,
+        owner_h_bar_scale=owner_h_bar_scale,
+        owner_size_cost=owner_size_cost,
+        owner_size_cost_ref=owner_size_cost_ref,
+        owner_size_cost_power=owner_size_cost_power,
+        tenure_choice_kappa=tenure_choice_kappa,
+        H_own=H_own,
     )
     theta = np.asarray(record["theta"], dtype=float)
     theta_dict = {name: float(value) for name, value in zip(setup.names, theta)}

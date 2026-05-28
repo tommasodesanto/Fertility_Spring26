@@ -100,7 +100,12 @@ def build_direct_calibration_setup(
     renewal_retention: float = 1.0,
     hR_max: float | None = None,
     owner_h_bar_scale: float | None = None,
+    owner_size_cost: float | None = None,
+    owner_size_cost_ref: float | None = None,
+    owner_size_cost_power: float | None = None,
+    tenure_choice_kappa: float | None = None,
     weight_overrides: Mapping[str, float] | None = None,
+    extra_targets: Mapping[str, tuple[float, float]] | None = None,
     parent_dp_waiver: bool | None = None,
     parent_dp_waiver_phi: float | None = None,
     H_own: Sequence[float] | None = None,
@@ -143,6 +148,14 @@ def build_direct_calibration_setup(
         base.P_base.hR_max = float(hR_max)
     if owner_h_bar_scale is not None:
         base.P_base.owner_h_bar_scale = float(owner_h_bar_scale)
+    if owner_size_cost is not None:
+        base.P_base.owner_size_cost = float(owner_size_cost)
+    if owner_size_cost_ref is not None:
+        base.P_base.owner_size_cost_ref = float(owner_size_cost_ref)
+    if owner_size_cost_power is not None:
+        base.P_base.owner_size_cost_power = float(owner_size_cost_power)
+    if tenure_choice_kappa is not None:
+        base.P_base.tenure_choice_kappa = float(tenure_choice_kappa)
     if parent_dp_waiver is not None:
         base.P_base.parent_dp_waiver = bool(parent_dp_waiver)
     if parent_dp_waiver_phi is not None:
@@ -161,6 +174,10 @@ def build_direct_calibration_setup(
         for key, value in weight_overrides.items():
             if key in targets:
                 weights[key] = float(value)
+    if extra_targets:
+        for key, (target, weight) in extra_targets.items():
+            targets[str(key)] = float(target)
+            weights[str(key)] = float(weight)
     closure = str(population_closure or "outside_option_benchmark_normalized").lower()
 
     targets["inv_pop_share_C"] = float(base.inversion_targets["pop_share_C"])

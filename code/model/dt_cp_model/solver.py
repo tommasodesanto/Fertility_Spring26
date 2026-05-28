@@ -667,9 +667,11 @@ def solve_partial_equilibrium_dt(
     P.eq_iter = 1
     r = P.user_cost_rate * p_eq
     SD = precompute_shared(P, b_grid)
-    V, c_pol, hR_pol, bp_pol, tc, lp_j, fp, fv, timings = solve_bellman_full(r, p_eq, P, b_grid, SD)
-    g, stats = forward_distribution(bp_pol, hR_pol, tc, lp_j, fp, r, p_eq, P, b_grid, SD, fast_stats=False)
-    sol = pack_solution(V, c_pol, hR_pol, bp_pol, tc, lp_j, fp, fv, g, stats, P.w_hat, p_eq)
+    V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, timings = solve_bellman_full(r, p_eq, P, b_grid, SD)
+    g, stats = forward_distribution(
+        bp_pol, hR_pol, tc, lp_j, fp, r, p_eq, P, b_grid, SD, fast_stats=False, tenure_probs=tp
+    )
+    sol = pack_solution(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p_eq)
     sol.timings = {"bellman_full": timings["bellman"], "distribution": timings.get("distribution", 0.0)}
     return sol, P, p_eq
 
@@ -755,7 +757,7 @@ def solve_equilibrium(
 
         if do_full:
             t0 = time.perf_counter()
-            V, c_pol, hR_pol, bp_pol, tc, lp_j, fp, fv, _ = solve_bellman_full(r, p, P, b_grid, SD)
+            V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, _ = solve_bellman_full(r, p, P, b_grid, SD)
             t_full += time.perf_counter() - t0
             n_full += 1
             stored_bp = bp_pol.copy()
@@ -763,13 +765,15 @@ def solve_equilibrium(
             mode = "F"
         else:
             t0 = time.perf_counter()
-            V, c_pol, hR_pol, bp_pol, tc, lp_j, fp, fv, _ = solve_bellman_eval(stored_bp, r, p, P, b_grid, SD)
+            V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, _ = solve_bellman_eval(stored_bp, r, p, P, b_grid, SD)
             t_eval += time.perf_counter() - t0
             n_eval += 1
             mode = "E"
 
         t0 = time.perf_counter()
-        g, stats = forward_distribution(bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=True)
+        g, stats = forward_distribution(
+            bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=True, tenure_probs=tp
+        )
         t_dist += time.perf_counter() - t0
         n_dist += 1
 
@@ -885,6 +889,7 @@ def solve_equilibrium(
                 "hR_pol": hR_pol,
                 "bp_pol": bp_pol,
                 "tc": tc,
+                "tp": tp,
                 "lp_j": lp_j,
                 "fp": fp,
                 "fv": fv,
@@ -1012,9 +1017,34 @@ def solve_equilibrium(
 
     S = best_snap
     _, full_stats = forward_distribution(
-        S["bp_pol"], S["hR_pol"], S["tc"], S["lp_j"], S["fp"], S["r"], S["p"], P, b_grid, SD, fast_stats=False
+        S["bp_pol"],
+        S["hR_pol"],
+        S["tc"],
+        S["lp_j"],
+        S["fp"],
+        S["r"],
+        S["p"],
+        P,
+        b_grid,
+        SD,
+        fast_stats=False,
+        tenure_probs=S.get("tp"),
     )
-    sol = pack_solution(S["V"], S["c_pol"], S["hR_pol"], S["bp_pol"], S["tc"], S["lp_j"], S["fp"], S["fv"], S["g"], full_stats, P.w_hat, S["p"])
+    sol = pack_solution(
+        S["V"],
+        S["c_pol"],
+        S["hR_pol"],
+        S["bp_pol"],
+        S["tc"],
+        S.get("tp"),
+        S["lp_j"],
+        S["fp"],
+        S["fv"],
+        S["g"],
+        full_stats,
+        P.w_hat,
+        S["p"],
+    )
     sol.timings = {
         "bellman_full": t_full,
         "bellman_eval": t_eval,
@@ -1145,6 +1175,11 @@ def solve_bellman_core(
     alpha = P.alpha_cons
     oms = 1.0 - sigma
     owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
+    owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
+    owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
+    owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
+    tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
+    use_tenure_logit = tenure_choice_kappa > 0.0
     b = b_grid.reshape(-1, 1)
     col_offset = Nb * np.arange(nc)
     b_lo = b_grid[0]
@@ -1171,6 +1206,11 @@ def solve_bellman_core(
     hR_pol = np.zeros_like(V)
     bp_pol = np.ones_like(V)
     tenure_choice = np.zeros((Nb, nt, I, J, npar, ncs), dtype=np.int16)
+    tenure_probs = (
+        np.zeros((Nb, nt, I, J, npar, ncs, nt), dtype=np.float32)
+        if use_tenure_logit
+        else None
+    )
     loc_probs = np.zeros((Nb, nt, I, I, J, npar, ncs))
     fert_probs = np.zeros((Nb, nt, I, J, npar))
     fert_value = np.zeros((Nb, nt, I, J))
@@ -1189,7 +1229,8 @@ def solve_bellman_core(
             hcost[i, ten] = p_hat[i] * hs
             heq[i, ten] = (1 - P.psi) * p_hat[i] * hs
             hsrv[i, ten] = P.chi * hs
-            ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs
+            extra_size_cost = owner_size_cost * p_hat[i] * max(hs - owner_size_cost_ref, 0.0) ** owner_size_cost_power
+            ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs + extra_size_cost
             for nn in range(npar):
                 for cs in range(ncs):
                     # phi is the financed share, so the down-payment
@@ -1448,7 +1489,7 @@ def solve_bellman_core(
         hR_pol[:, :, :, j, :, :] = hd
         bp_pol[:, :, :, j, :, :] = bd
 
-        if NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+        if (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
             VH, tcj = tenure_choice_kernel(
                 Vd, b_grid, heq, hcost, dp_arr, bmo, SD.birth_dp, birth_entry_grant
             )
@@ -1502,7 +1543,12 @@ def solve_bellman_core(
                                     Vrs[inf_m, nn, cs] = -1e10
                             Vopt[:, :, :, tn] = Vrs
                     tc = np.argmax(Vopt, axis=3)
-                    VH[:, to, id_, :, :] = np.max(Vopt, axis=3)
+                    if use_tenure_logit:
+                        ls, pr = logsumexp(Vopt / tenure_choice_kappa, axis=3)
+                        VH[:, to, id_, :, :] = tenure_choice_kappa * ls
+                        tenure_probs[:, to, id_, j, :, :, :] = pr.astype(np.float32)
+                    else:
+                        VH[:, to, id_, :, :] = np.max(Vopt, axis=3)
                     tcj[:, to, id_, :, :] = tc
         tenure_choice[:, :, :, j, :, :] = tcj
 
@@ -1547,7 +1593,18 @@ def solve_bellman_core(
         else:
             V[:, :, :, j, :, :] = VI
 
-    return V, c_pol, hR_pol, bp_pol, tenure_choice, loc_probs, fert_probs, fert_value, {"bellman": time.perf_counter() - t0}
+    return (
+        V,
+        c_pol,
+        hR_pol,
+        bp_pol,
+        tenure_choice,
+        tenure_probs,
+        loc_probs,
+        fert_probs,
+        fert_value,
+        {"bellman": time.perf_counter() - t0},
+    )
 
 
 def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol):
@@ -1622,6 +1679,7 @@ def forward_distribution(
     b_grid: np.ndarray,
     SD: SimpleNamespace,
     fast_stats: bool = False,
+    tenure_probs: np.ndarray | None = None,
 ) -> tuple[np.ndarray, SimpleNamespace]:
     J = P.J
     I = P.I
@@ -1687,7 +1745,12 @@ def forward_distribution(
     ust = bool(P.use_stochastic_aging and hasattr(P, "Pi_child"))
     Pia = P.Pi_child if ust else None
 
-    if fast_stats and NUMBA_AVAILABLE and bool(getattr(P, "use_compiled_forward_distribution", True)):
+    if (
+        tenure_probs is None
+        and fast_stats
+        and NUMBA_AVAILABLE
+        and bool(getattr(P, "use_compiled_forward_distribution", True))
+    ):
         bp_idx, bp_wt = interp_indices(b_grid, np.clip(bp_pol, bmin, bmax))
         pia_arg = np.asarray(Pia if Pia is not None else np.zeros((ncs, ncs, npar)), dtype=float)
         g, total_births, births_by_loc, entrants_mature_by_loc, entrants_mature_total = forward_distribution_fast_kernel(
@@ -1775,6 +1838,7 @@ def forward_distribution(
                     event_horizon,
                     loc_probs,
                     tenure_choice,
+                    tenure_probs,
                     bp_pol,
                     P,
                     b_grid,
@@ -1849,12 +1913,16 @@ def forward_distribution(
                     gs = gpl[:, to, id_, nn, :]
                     if np.sum(gs) < 1e-15:
                         continue
-                    tcs = tenure_choice[:, to, id_, j, nn, :]
                     for tn in range(nt):
-                        mk = tcs == tn
-                        if not np.any(mk):
-                            continue
-                        mt = gs * mk
+                        if tenure_probs is None:
+                            tcs = tenure_choice[:, to, id_, j, nn, :]
+                            mk = tcs == tn
+                            if not np.any(mk):
+                                continue
+                            mt = gs * mk
+                        else:
+                            pr = tenure_probs[:, to, id_, j, nn, :, tn]
+                            mt = gs * pr
                         if np.sum(mt) < 1e-15:
                             continue
                         rd = np.zeros((Nb, ncs))
@@ -2252,6 +2320,82 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                             owner_wts.append(go[ko])
     stats.prime_childless_renter_median_rooms = weighted_median_from_cells(renter_vals, renter_wts)
     stats.prime_childless_owner_median_rooms = weighted_median_from_cells(owner_vals, owner_wts)
+    owner_all_mass_2545 = 0.0
+    owner_le6_mass_2545 = 0.0
+    owner_7to8_mass_2545 = 0.0
+    owner_ge9_mass_2545 = 0.0
+    renter_cap_mass_2545_all = 0.0
+    renter_cap_mass_2545_child0 = 0.0
+    renter_cap_mass_2545_child1 = 0.0
+    renter_mass_2545_all = 0.0
+    renter_mass_2545_child0 = 0.0
+    renter_mass_2545_child1 = 0.0
+    renter_rooms_2545_child0 = 0.0
+    renter_rooms_2545_child1 = 0.0
+    owner_mass_2545_child0 = 0.0
+    owner_mass_2545_child1 = 0.0
+    owner_rooms_2545_child0 = 0.0
+    owner_rooms_2545_child1 = 0.0
+    owner_rung_mass_2545 = np.zeros(P.n_house)
+    for j in range(a25s, a45e + 1):
+        for i in range(I):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    child_bin = current_child_bin_dt(nn, cs, dep_last)
+                    gr = g[:, 0, i, j, nn, cs]
+                    hr = hR[:, 0, i, j, nn, cs]
+                    kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+                    if np.any(kr):
+                        wr = gr[kr]
+                        rr = hr[kr]
+                        mass = float(np.sum(wr))
+                        cap_mass = float(np.sum(wr[rr >= float(P.hR_max) - 1e-8]))
+                        renter_mass_2545_all += mass
+                        renter_cap_mass_2545_all += cap_mass
+                        if child_bin == 2:
+                            renter_mass_2545_child0 += mass
+                            renter_cap_mass_2545_child0 += cap_mass
+                            renter_rooms_2545_child0 += float(np.sum(wr * rr))
+                        elif child_bin == 3:
+                            renter_mass_2545_child1 += mass
+                            renter_cap_mass_2545_child1 += cap_mass
+                            renter_rooms_2545_child1 += float(np.sum(wr * rr))
+                    for ten in range(1, nt):
+                        go = g[:, ten, i, j, nn, cs]
+                        mo = float(np.sum(go))
+                        if mo <= 1e-15:
+                            continue
+                        rooms = float(P.H_own[ten - 1])
+                        owner_all_mass_2545 += mo
+                        owner_rung_mass_2545[ten - 1] += mo
+                        if rooms <= 6.0 + 1e-8:
+                            owner_le6_mass_2545 += mo
+                        elif rooms <= 8.0 + 1e-8:
+                            owner_7to8_mass_2545 += mo
+                        else:
+                            owner_ge9_mass_2545 += mo
+                        if child_bin == 2:
+                            owner_mass_2545_child0 += mo
+                            owner_rooms_2545_child0 += mo * rooms
+                        elif child_bin == 3:
+                            owner_mass_2545_child1 += mo
+                            owner_rooms_2545_child1 += mo * rooms
+    for rung in range(P.n_house):
+        setattr(
+            stats,
+            f"owner25_45_rung{rung + 1}_share",
+            float(owner_rung_mass_2545[rung] / max(owner_all_mass_2545, 1e-12)),
+        )
+    stats.owner25_45_rooms_le6_share = float(owner_le6_mass_2545 / max(owner_all_mass_2545, 1e-12))
+    stats.owner25_45_rooms_7to8_share = float(owner_7to8_mass_2545 / max(owner_all_mass_2545, 1e-12))
+    stats.owner25_45_rooms_ge9_share = float(owner_ge9_mass_2545 / max(owner_all_mass_2545, 1e-12))
+    stats.renter25_45_all_cap_share = float(renter_cap_mass_2545_all / max(renter_mass_2545_all, 1e-12))
+    stats.renter25_45_current0_cap_share = float(renter_cap_mass_2545_child0 / max(renter_mass_2545_child0, 1e-12))
+    stats.renter25_45_current1_cap_share = float(renter_cap_mass_2545_child1 / max(renter_mass_2545_child1, 1e-12))
+    stats.renter25_45_current0_mean_rooms = float(renter_rooms_2545_child0 / max(renter_mass_2545_child0, 1e-12))
+    stats.renter25_45_current1_mean_rooms = float(renter_rooms_2545_child1 / max(renter_mass_2545_child1, 1e-12))
+    stats.owner25_45_current0_mean_rooms = float(owner_rooms_2545_child0 / max(owner_mass_2545_child0, 1e-12))
+    stats.owner25_45_current1_mean_rooms = float(owner_rooms_2545_child1 / max(owner_mass_2545_child1, 1e-12))
     stats.mean_housing_by_parity = np.zeros(npar)
     for nn in range(npar):
         th = mn = 0.0
@@ -2296,6 +2440,7 @@ def advance_cohort_horizon(
     horizon,
     loc_probs,
     tenure_choice,
+    tenure_probs,
     bp_pol,
     P,
     b_grid,
@@ -2313,12 +2458,42 @@ def advance_cohort_horizon(
         if age_idx >= P.J - 1:
             break
         g_out = advance_cohort_one_period(
-            g_out, age_idx, loc_probs, tenure_choice, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt, tmx_idx, tmx_wt, ust, Pia
+            g_out,
+            age_idx,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            bp_pol,
+            P,
+            b_grid,
+            SD,
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            ust,
+            Pia,
         )
     return g_out
 
 
-def advance_cohort_one_period(gj, j, loc_probs, tenure_choice, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt, tmx_idx, tmx_wt, ust, Pia):
+def advance_cohort_one_period(
+    gj,
+    j,
+    loc_probs,
+    tenure_choice,
+    tenure_probs,
+    bp_pol,
+    P,
+    b_grid,
+    SD,
+    lmm_idx,
+    lmm_wt,
+    tmx_idx,
+    tmx_wt,
+    ust,
+    Pia,
+):
     Nb = len(b_grid)
     nt = 1 + P.n_house
     I = P.I
@@ -2357,12 +2532,16 @@ def advance_cohort_one_period(gj, j, loc_probs, tenure_choice, bp_pol, P, b_grid
                 gs = gpl[:, to, id_, nn, :]
                 if np.sum(gs) < 1e-15:
                     continue
-                tcs = tenure_choice[:, to, id_, j, nn, :]
                 for tn in range(nt):
-                    mk = tcs == tn
-                    if not np.any(mk):
-                        continue
-                    mt = gs * mk
+                    if tenure_probs is None:
+                        tcs = tenure_choice[:, to, id_, j, nn, :]
+                        mk = tcs == tn
+                        if not np.any(mk):
+                            continue
+                        mt = gs * mk
+                    else:
+                        pr = tenure_probs[:, to, id_, j, nn, :, tn]
+                        mt = gs * pr
                     if np.sum(mt) < 1e-15:
                         continue
                     rd = np.zeros((Nb, ncs))
@@ -2473,13 +2652,14 @@ def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs):
     return Vc
 
 
-def pack_solution(V, c, h, bp, tc, lp, fp, fv, g, st: SimpleNamespace, w, p) -> SimpleNamespace:
+def pack_solution(V, c, h, bp, tc, tp, lp, fp, fv, g, st: SimpleNamespace, w, p) -> SimpleNamespace:
     sol = SimpleNamespace(
         V=V,
         c_pol=c,
         hR_pol=h,
         bp_pol=bp,
         tenure_choice=tc,
+        tenure_probs=tp,
         loc_probs=lp,
         fert_probs=fp,
         fert_value=fv,

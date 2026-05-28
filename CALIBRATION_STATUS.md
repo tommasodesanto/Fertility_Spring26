@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-05-27 17:51 EDT`
+Updated: `2026-05-27 18:19 EDT`
 
 This is the single live calibration and model-status note for the current
 discrete-time center-periphery fertility model. Historical MATLAB status notes,
@@ -298,6 +298,95 @@ Read:
 - The current practical choice is between the low-loss hR8 benchmark
   (`8.860`, bad ownership lifecycle) and the chi-owner diagnostic benchmark
   (`10.588`, much better lifecycle ownership but worse TFR/housing increments).
+
+Room-discipline rush, `2026-05-27 18:00 EDT`:
+
+- Code hook added for diagnostic-only extra targets:
+  `DT_DIRECT_EXTRA_TARGETS="moment=target:weight,..."`.
+- Code hook added for warm-start records:
+  `DT_DIRECT_WARM_START_JSON=/path/to/best.json`.
+- Warm starts now fail loudly if outside the active bounds; an initial
+  `scout`-bound launch clipped the current best records and was canceled.
+- Active room-discipline branches use `bounds=global`, `hR_max=8.0`, and soft
+  room-median targets:
+  `prime_childless_renter_median_rooms=4.0`,
+  `prime_childless_owner_median_rooms=6.0`.
+
+Active Torch jobs:
+
+| Job | Run tag | Workers | Purpose |
+|---|---|---:|---|
+| `9720451` | `py_direct_roomsoft_hR8_lowloss_global_20260527_rush` | `8` active after pruning | soft room targets from low-loss hR8 |
+| `9720452` | `py_direct_roomsoft_hR8_chiowner_global_20260527_rush` | `8` active after pruning | soft room targets from chi-owner hR8 |
+| `9720595` | `py_direct_roomsoft_denseH_chiowner_global_20260527_rush` | `8` | dense owner ladder diagnostic, `H_own=[2,4,5.5,7,8.5,10]` |
+| `9722184` | `py_direct_roomhard_noh12_chiowner_global_20260527_rush` | `8` | high room-target weights, diagnostic `housing_increment_1to2` weight `0.5` |
+
+First checkpoints:
+
+| Branch | Evals | Best loss | TFR | Own | Old-own | Renter med. | Owner med. | Read |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| low-loss soft | `312` | `11.120` | `1.687` | `0.364` | `0.511` | `6.093` | `8.000` | soft room targets barely move the low-loss basin |
+| chi-owner soft | `286` | `12.512` | `1.746` | `0.420` | `0.750` | `5.896` | `8.000` | good old-age block, owner median still stuck at `8` |
+| dense owner ladder | `176` | `30.939` | `1.764` | `0.324` | `0.819` | `6.029` | `7.000` | support can lower owner median, but at large objective cost |
+| high room weights | `32` | `14.325` | `1.748` | `0.420` | `0.748` | `5.880` | `8.000` | first eval only; waiting for local proposals |
+
+Current read:
+
+- Aggregate housing demand discipline is not enough to discipline room
+  heterogeneity. The price/shifter block can match aggregate demand and rents
+  while the deterministic housing choice still bunches owner households on
+  high rungs.
+- Reintroducing room medians as soft targets has so far added loss without
+  moving the owner median off `8.0` in the benchmark ladder.
+- A denser owner ladder can mechanically move the owner median to `7.0`, but
+  the current branch damages ownership and housing-response moments badly.
+- Low-housing-need seed probes were canceled after poor first checks: they
+  reduced renter rooms slightly but kept owner median at `8.0` and worsened
+  fertility, geography, and ownership gradients.
+
+Room-distribution sprint update, `2026-05-27 20:20 EDT`:
+
+- Added diagnostic room-distribution moments:
+  `owner25_45_rooms_le6_share`, `owner25_45_rooms_7to8_share`,
+  `owner25_45_rooms_ge9_share`, renter cap shares, and renter/owner mean rooms
+  by current-child state.
+- Added a default-off owner-size wedge:
+  `owner_size_cost * p_i * max(H_own - owner_size_cost_ref,0)^owner_size_cost_power`.
+- Added a default-off diagnostic tenure/product logit:
+  `tenure_choice_kappa`. It smooths the discrete choice over rent plus owner
+  rungs. Conditional renter housing remains the continuous FOC object; the
+  logit does not discretize renter rooms.
+- Hard-argmax room-weight/lower-needs searches were launched widely on Torch.
+  At peak, `240` short-partition workers were running under the effective
+  per-user CPU cap. Current best room-diagnostic hard-argmax candidates still
+  show a bad tradeoff:
+  - `py_direct_roomwedge_hbarscale085_c012_20260527_rush`: loss `59.710`,
+    \(TFR=2.018\), own `0.764`, old-own `0.997`,
+    owner bins `<=6=0.613`, `7-8=0.387`, `>=9=0.000`,
+    \(pop_C=0.276\).
+  - `py_direct_widenet_H_ladder_midtail_20260527`: loss `63.888`,
+    \(TFR=1.771\), own `0.435`, old-own `0.934`,
+    owner bins `<=6=0.020`, `7-8=0.847`, `>=9=0.133`.
+- Local capped-GE diagnostics with `tenure_choice_kappa` are encouraging:
+
+| `tenure_choice_kappa` | Loss | TFR | Own | Old-own | Owner `<=6` | Owner `7-8` | Owner `>=9` |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| `0.03` | `62.819` | `1.759` | `0.640` | `0.875` | `0.000` | `0.999` | `0.001` |
+| `0.08` | `40.388` | `1.760` | `0.603` | `0.823` | `0.012` | `0.982` | `0.006` |
+| `0.15` | `33.503` | `1.747` | `0.553` | `0.688` | `0.143` | `0.822` | `0.035` |
+| `0.25` | `62.367` | `1.728` | `0.532` | `0.655` | `0.389` | `0.492` | `0.119` |
+| `0.35` | `72.811` | `1.690` | `0.568` | `0.680` | `0.472` | `0.419` | `0.109` |
+| `0.50` | `78.242` | `1.634` | `0.621` | `0.713` | `0.534` | `0.360` | `0.106` |
+
+- These local diagnostics used `max_iter_eq=10`, `owner_h_bar_scale=0.90`,
+  `owner_size_cost=0.006`, `H_own=[2,4,5.5,7,8.5,10]`, and the chi-owner
+  warm start. Treat levels as directional until full GE runs are collected.
+  The key result is that a small dispersion parameter can create real room
+  heterogeneity without collapsing TFR immediately.
+- Torch SSH authentication stopped accepting noninteractive commands after
+  the wide hard-argmax launch (`BatchMode` returns permission denied). The
+  dispersion code is compiled locally but has not yet been synced/launched on
+  Torch. Refresh SSH/Kerberos before launching the next cluster wave.
 
 Launch settings:
 

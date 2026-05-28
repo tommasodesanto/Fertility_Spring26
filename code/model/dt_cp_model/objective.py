@@ -148,6 +148,25 @@ def extract_moments(
     moments.own_lifecycle_slope = sol.old_age_own_rate_6575 - moments.own_rate_2534
     moments.prime_childless_renter_median_rooms = sol.prime_childless_renter_median_rooms
     moments.prime_childless_owner_median_rooms = sol.prime_childless_owner_median_rooms
+    for name in (
+        "owner25_45_rung1_share",
+        "owner25_45_rung2_share",
+        "owner25_45_rung3_share",
+        "owner25_45_rung4_share",
+        "owner25_45_rung5_share",
+        "owner25_45_rung6_share",
+        "owner25_45_rooms_le6_share",
+        "owner25_45_rooms_7to8_share",
+        "owner25_45_rooms_ge9_share",
+        "renter25_45_all_cap_share",
+        "renter25_45_current0_cap_share",
+        "renter25_45_current1_cap_share",
+        "renter25_45_current0_mean_rooms",
+        "renter25_45_current1_mean_rooms",
+        "owner25_45_current0_mean_rooms",
+        "owner25_45_current1_mean_rooms",
+    ):
+        setattr(moments, name, getattr(sol, name, np.nan))
     moments.housing_increment_0to1 = getattr(
         sol,
         "housing_increment_0to1_eventstudy_t3",

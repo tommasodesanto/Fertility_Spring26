@@ -34,6 +34,7 @@ from dt_cp_model.direct_calibration import (  # noqa: E402
 def main() -> None:
     args = parse_args()
     weight_overrides = parse_weight_overrides(args.weight_overrides)
+    extra_targets = parse_extra_targets(args.extra_targets)
     H_own = parse_float_list(args.H_own)
     setup = build_direct_calibration_setup(
         args.setup,
@@ -46,7 +47,12 @@ def main() -> None:
         renewal_retention=args.renewal_retention,
         hR_max=args.hR_max,
         owner_h_bar_scale=args.owner_h_bar_scale,
+        owner_size_cost=args.owner_size_cost,
+        owner_size_cost_ref=args.owner_size_cost_ref,
+        owner_size_cost_power=args.owner_size_cost_power,
+        tenure_choice_kappa=args.tenure_choice_kappa,
         weight_overrides=weight_overrides,
+        extra_targets=extra_targets,
         parent_dp_waiver=args.parent_dp_waiver,
         parent_dp_waiver_phi=args.parent_dp_waiver_phi,
         H_own=H_own,
@@ -83,7 +89,12 @@ def main() -> None:
         "renewal_retention": args.renewal_retention,
         "hR_max": args.hR_max,
         "owner_h_bar_scale": args.owner_h_bar_scale,
+        "owner_size_cost": args.owner_size_cost,
+        "owner_size_cost_ref": args.owner_size_cost_ref,
+        "owner_size_cost_power": args.owner_size_cost_power,
+        "tenure_choice_kappa": args.tenure_choice_kappa,
         "weight_overrides": weight_overrides,
+        "extra_targets": extra_targets,
         "parent_dp_waiver": args.parent_dp_waiver,
         "parent_dp_waiver_phi": args.parent_dp_waiver_phi,
         "H_own": H_own,
@@ -92,6 +103,7 @@ def main() -> None:
         "lb": lb.tolist(),
         "ub": ub.tolist(),
         "bound_overrides": args.bound_overrides,
+        "warm_start_json": args.warm_start_json,
         "x0": setup.x0.tolist(),
     }
     write_json(config_path, config)
@@ -106,7 +118,8 @@ def main() -> None:
     best_theta = np.array(best_record["theta"], dtype=float) if best_record else None
     best_loss = float(best_record["loss"]) if best_record else math.inf
     sigma = args.initial_scale * (ub - lb)
-    seed_bank = build_seed_bank(setup, lb, ub, args.job_id)
+    warm_starts = load_warm_start_thetas(args.warm_start_json, setup.names, lb, ub)
+    seed_bank = build_seed_bank(setup, lb, ub, args.job_id, warm_starts=warm_starts)
     t_start = time.perf_counter()
     n_eval = count_jsonl(eval_path) if args.resume and eval_path.exists() else 0
     no_improve = 0
@@ -235,6 +248,42 @@ def parse_args() -> argparse.Namespace:
             else None
         ),
     )
+    parser.add_argument(
+        "--owner-size-cost",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_OWNER_SIZE_COST"])
+            if "DT_DIRECT_OWNER_SIZE_COST" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument(
+        "--owner-size-cost-ref",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_OWNER_SIZE_COST_REF"])
+            if "DT_DIRECT_OWNER_SIZE_COST_REF" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument(
+        "--owner-size-cost-power",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_OWNER_SIZE_COST_POWER"])
+            if "DT_DIRECT_OWNER_SIZE_COST_POWER" in os.environ
+            else None
+        ),
+    )
+    parser.add_argument(
+        "--tenure-choice-kappa",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_TENURE_CHOICE_KAPPA"])
+            if "DT_DIRECT_TENURE_CHOICE_KAPPA" in os.environ
+            else None
+        ),
+    )
     parser.add_argument("--weight-overrides", default=os.environ.get("DT_DIRECT_WEIGHT_OVERRIDES", ""))
     parser.add_argument(
         "--parent-dp-waiver",
@@ -252,6 +301,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--H-own", default=os.environ.get("DT_DIRECT_H_OWN", ""))
     parser.add_argument("--bound-overrides", default=os.environ.get("DT_DIRECT_BOUND_OVERRIDES", ""))
+    parser.add_argument("--extra-targets", default=os.environ.get("DT_DIRECT_EXTRA_TARGETS", ""))
+    parser.add_argument("--warm-start-json", default=os.environ.get("DT_DIRECT_WARM_START_JSON", ""))
     parser.add_argument("--eq-penalty-weight", type=float, default=float(os.environ.get("DT_DIRECT_EQ_PENALTY_WEIGHT", "0")))
     parser.add_argument("--initial-scale", type=float, default=float(os.environ.get("DT_DIRECT_INITIAL_SCALE", "0.18")))
     parser.add_argument("--min-scale", type=float, default=float(os.environ.get("DT_DIRECT_MIN_SCALE", "0.015")))
@@ -281,6 +332,26 @@ def parse_weight_overrides(raw: str | None) -> dict[str, float]:
         key, value = part.split("=", 1)
         overrides[key.strip()] = float(value)
     return overrides
+
+
+def parse_extra_targets(raw: str | None) -> dict[str, tuple[float, float]]:
+    targets: dict[str, tuple[float, float]] = {}
+    if not raw:
+        return targets
+    for part in str(raw).split(","):
+        if not part.strip():
+            continue
+        if "=" not in part or ":" not in part:
+            raise ValueError(f"extra target must be key=target:weight, got {part!r}")
+        key, value = part.split("=", 1)
+        target_raw, weight_raw = value.split(":", 1)
+        key = key.strip()
+        target = float(target_raw)
+        weight = float(weight_raw)
+        if not key or not np.isfinite(target) or not np.isfinite(weight) or weight < 0:
+            raise ValueError(f"invalid extra target {part!r}")
+        targets[key] = (target, weight)
+    return targets
 
 
 def parse_optional_bool(raw: str | None) -> bool | None:
@@ -321,6 +392,47 @@ def apply_bound_overrides(lb: np.ndarray, ub: np.ndarray, names: list[str], raw:
             raise ValueError(f"invalid bounds for {key!r}: {lo}:{hi}")
         lb[idx] = lo
         ub[idx] = hi
+
+
+def load_warm_start_thetas(
+    raw: str | None,
+    names: list[str],
+    lb: np.ndarray,
+    ub: np.ndarray,
+) -> list[np.ndarray]:
+    if not raw:
+        return []
+    out: list[np.ndarray] = []
+    for part in str(raw).split(","):
+        path_raw = part.strip()
+        if not path_raw:
+            continue
+        record = json.loads(Path(path_raw).expanduser().read_text())
+        theta = theta_from_record(record, names)
+        bad = np.where((theta < lb - 1e-10) | (theta > ub + 1e-10) | ~np.isfinite(theta))[0]
+        if bad.size:
+            details = ", ".join(
+                f"{names[idx]}={theta[idx]:.6g} outside [{lb[idx]:.6g}, {ub[idx]:.6g}]"
+                for idx in bad[:5]
+            )
+            if bad.size > 5:
+                details += f", ... ({bad.size} total)"
+            raise ValueError(f"warm-start record is outside active bounds: {details}")
+        out.append(theta.copy())
+    return out
+
+
+def theta_from_record(record: dict[str, Any], names: list[str]) -> np.ndarray:
+    theta_raw = record.get("theta")
+    if isinstance(theta_raw, list) and len(theta_raw) == len(names):
+        return np.asarray(theta_raw, dtype=float)
+    params = record.get("parameters")
+    if isinstance(params, dict):
+        missing = [name for name in names if name not in params]
+        if missing:
+            raise ValueError(f"warm-start record is missing parameters: {missing}")
+        return np.asarray([params[name] for name in names], dtype=float)
+    raise ValueError("warm-start record must contain theta or parameters")
 
 
 def apply_bound_profile(setup: DirectCalibrationSetup, profile: str) -> tuple[np.ndarray, np.ndarray]:
@@ -380,7 +492,13 @@ def apply_bound_profile(setup: DirectCalibrationSetup, profile: str) -> tuple[np
     return lb, ub
 
 
-def build_seed_bank(setup: DirectCalibrationSetup, lb: np.ndarray, ub: np.ndarray, job_id: int) -> list[np.ndarray]:
+def build_seed_bank(
+    setup: DirectCalibrationSetup,
+    lb: np.ndarray,
+    ub: np.ndarray,
+    job_id: int,
+    warm_starts: list[np.ndarray] | None = None,
+) -> list[np.ndarray]:
     base = setup.x0.copy()
     names = {name: idx for idx, name in enumerate(setup.names)}
 
@@ -391,7 +509,7 @@ def build_seed_bank(setup: DirectCalibrationSetup, lb: np.ndarray, ub: np.ndarra
                 theta[names[key]] = float(value)
         return np.clip(theta, lb, ub)
 
-    seeds = [
+    seeds = list(warm_starts or []) + [
         seed(),
         seed(beta=0.940, psi_child=0.120, h_bar_jump=2.30, h_bar_n=1.00, c_bar_n=0.10, chi=1.09, kappa_loc=1.50, mu_move=0.04, outside_value=-42.0, outside_entry_flow=0.003),
         seed(beta=0.940, psi_child=0.115, h_bar_jump=2.30, h_bar_n=1.00, c_bar_n=0.10, chi=1.08, kappa_loc=1.50, mu_move=0.04, E_C=0.45, r_bar_C=0.08, outside_value=-45.0, outside_entry_flow=0.004),
@@ -453,6 +571,15 @@ def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace,
         "converged": bool(result.converged),
         "error": result.error,
         "solve_elapsed_sec": float(result.elapsed_sec),
+        "hR_max": args.hR_max,
+        "owner_h_bar_scale": args.owner_h_bar_scale,
+        "owner_size_cost": args.owner_size_cost,
+        "owner_size_cost_ref": args.owner_size_cost_ref,
+        "owner_size_cost_power": args.owner_size_cost_power,
+        "tenure_choice_kappa": args.tenure_choice_kappa,
+        "H_own": parse_float_list(args.H_own),
+        "extra_targets": parse_extra_targets(args.extra_targets),
+        "weight_overrides": parse_weight_overrides(args.weight_overrides),
         "theta": [float(x) for x in result.theta],
         "parameters": direct_theta_record(result.theta, setup.names),
         "moments": result.moments,
@@ -476,6 +603,17 @@ def print_header(args: argparse.Namespace, job_dir: Path, seed: int, lb: np.ndar
     else:
         print(f"scale_target={args.scale_target} scale_weight={args.scale_weight}")
     print(f"renewal_retention={args.renewal_retention}")
+    if args.extra_targets:
+        print(f"extra_targets={args.extra_targets}")
+    if args.warm_start_json:
+        print(f"warm_start_json={args.warm_start_json}")
+    if args.owner_size_cost is not None:
+        print(
+            f"owner_size_cost={args.owner_size_cost} "
+            f"ref={args.owner_size_cost_ref} power={args.owner_size_cost_power}"
+        )
+    if args.tenure_choice_kappa is not None:
+        print(f"tenure_choice_kappa={args.tenure_choice_kappa}")
     print(f"budget_sec={args.budget_sec:.0f} max_evals={args.max_evals} job_dir={job_dir}")
     print(f"dim={len(lb)}")
     print("=" * 72, flush=True)
