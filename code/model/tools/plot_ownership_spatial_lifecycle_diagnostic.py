@@ -48,6 +48,9 @@ DEFAULT_RECORD = ROOT / "output/model/three_fit_diagnostics_20260528/records/ren
 DEFAULT_MODEL_CSV = DEFAULT_CASE_DIR / "tables/ownership_by_age.csv"
 DEFAULT_ACS_AGE_CSV = ROOT / "code/data/mms_center_periphery/output_ownership_audit/acs_ownership_age_profiles.csv"
 DEFAULT_ACS_LOC_CSV = ROOT / "code/data/mms_center_periphery/output_ownership_audit/acs_ownership_age_location_profiles.csv"
+DEFAULT_ACS_VALUE_CSV = (
+    ROOT / "code/data/mms_center_periphery/output_housing_value_validation/acs_home_value_age_location_profiles.csv"
+)
 DEFAULT_MMS_AGE_CSV = ROOT / "code/data/mms_center_periphery/output/mms_age_profiles_full.csv"
 DEFAULT_OUTDIR = DEFAULT_CASE_DIR / "figures"
 ACS_SAMPLE = "household_heads_hhwt_due_housing"
@@ -122,10 +125,48 @@ def read_mms_children_location(path: Path) -> dict[str, dict[int, float]]:
     return dict(out)
 
 
+def read_acs_home_value_location(path: Path) -> dict[str, dict[int, float]]:
+    out: dict[str, dict[int, float]] = defaultdict(dict)
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Missing {path}. Run: Rscript code/data/mms_center_periphery/validate_acs_home_value_scf.R"
+        )
+    with path.open(newline="") as handle:
+        for row in csv.DictReader(handle):
+            if row.get("source") != "ACS" or row.get("sample") != ACS_SAMPLE:
+                continue
+            loc = row.get("mms_location")
+            if loc not in {"center", "periphery"}:
+                continue
+            value = row.get("mean_owner_occupied_value")
+            if value in (None, ""):
+                continue
+            out[loc][int(float(row["age"]))] = float(value)
+    return dict(out)
+
+
 def series_xy(values: dict[int, float], age_min: int, age_max: int) -> tuple[np.ndarray, np.ndarray]:
     ages = np.array(sorted(age for age in values if age_min <= age <= age_max), dtype=float)
     vals = np.array([values[int(age)] for age in ages], dtype=float)
     return ages, vals
+
+
+def indexed_series_xy(
+    values: dict[int, float],
+    age_min: int,
+    age_max: int,
+    norm_min: int = 30,
+    norm_max: int = 55,
+) -> tuple[np.ndarray, np.ndarray]:
+    ages, vals = series_xy(values, age_min, age_max)
+    norm_vals = np.array(
+        [value for age, value in values.items() if norm_min <= age <= norm_max and np.isfinite(value)],
+        dtype=float,
+    )
+    denom = float(np.mean(norm_vals)) if norm_vals.size else np.nan
+    if not np.isfinite(denom) or abs(denom) < 1e-12:
+        return ages, np.full_like(vals, np.nan, dtype=float)
+    return ages, 100.0 * vals / denom
 
 
 def location_gap(values: dict[str, dict[int, float]], age_min: int, age_max: int) -> dict[int, float]:
@@ -194,6 +235,7 @@ def compute_model_spatial_lifecycle(record_path: Path) -> dict[str, dict[str, di
     out: dict[str, dict[str, dict[int, float]]] = {
         "ownership": defaultdict(dict),
         "networth": defaultdict(dict),
+        "housing_value": defaultdict(dict),
         "children": defaultdict(dict),
     }
 
@@ -204,6 +246,7 @@ def compute_model_spatial_lifecycle(record_path: Path) -> dict[str, dict[str, di
             own_mass = float(np.sum(sol.g[:, 1:, loc, jj, :, :]))
             child_mass = 0.0
             wealth_sum = 0.0
+            housing_value_sum = 0.0
             for nn in range(P.n_parity):
                 for cs in range(P.n_child_states):
                     if current_children(nn, cs, P) > 0:
@@ -216,9 +259,11 @@ def compute_model_spatial_lifecycle(record_path: Path) -> dict[str, dict[str, di
                             continue
                         house_value = float(sol.p_eq[loc]) * float(P.H_own[ten - 1])
                         wealth_sum += float(np.sum(owner * (b_grid + house_value)))
+                        housing_value_sum += float(np.sum(owner * house_value))
             out["ownership"][loc_name][age] = own_mass / max(mass, 1e-12)
             out["children"][loc_name][age] = child_mass / max(mass, 1e-12)
             out["networth"][loc_name][age] = wealth_sum / max(mass, 1e-12)
+            out["housing_value"][loc_name][age] = housing_value_sum / max(mass, 1e-12)
     return {key: dict(value) for key, value in out.items()}
 
 
@@ -280,6 +325,7 @@ def plot_spatial(
 def plot_spatial_lifecycle_panel(
     model: dict[str, dict[str, dict[int, float]]],
     acs_ownership: dict[str, dict[int, float]],
+    acs_home_value: dict[str, dict[int, float]],
     data_children: dict[str, dict[int, float]],
     outbase: Path,
     age_min: int,
@@ -288,7 +334,7 @@ def plot_spatial_lifecycle_panel(
     fig, axes = plt.subplots(3, 2, figsize=(12.8, 10.2), sharex=True)
     row_specs = [
         ("ownership", "Ownership rate (%)"),
-        ("networth", "Mean net worth\nmodel units: b or b+p_iH"),
+        ("housing_value", "Owner-occupied housing\nvalue index, ages 30-55=100"),
         ("children", "Share with child under 18 (%)"),
     ]
     locs = ["center", "periphery"]
@@ -298,15 +344,23 @@ def plot_spatial_lifecycle_panel(
         for row, (metric, ylabel) in enumerate(row_specs):
             ax = axes[row, col]
             ax.axvspan(30, 55, color=COLORS["band"], alpha=0.12, linewidth=0)
-            ages, vals = series_xy(model[metric][loc], age_min, age_max)
-            scale = 100.0 if metric in {"ownership", "children"} else 1.0
-            ax.plot(ages, scale * vals, color=COLORS["model"], linewidth=2.4, label="Model")
 
             if metric == "ownership":
+                ages, vals = series_xy(model[metric][loc], age_min, age_max)
+                ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.4, label="Model")
                 ages, vals = series_xy(acs_ownership[loc], age_min, age_max)
                 ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS heads")
                 ax.set_ylim(0, 100)
+            elif metric == "housing_value":
+                ages, vals = indexed_series_xy(model[metric][loc], age_min, age_max)
+                ax.plot(ages, vals, color=COLORS["model"], linewidth=2.4, label="Model")
+                ages, vals = indexed_series_xy(acs_home_value[loc], age_min, age_max)
+                ax.plot(ages, vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS VALUEH")
+                ax.axhline(100, color="#555555", linewidth=0.8, alpha=0.7)
+                ax.set_ylim(0, 220)
             elif metric == "children":
+                ages, vals = series_xy(model[metric][loc], age_min, age_max)
+                ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.4, label="Model")
                 ages, vals = series_xy(data_children[loc], age_min, age_max)
                 ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS adults")
                 ax.set_ylim(0, 75)
@@ -334,6 +388,7 @@ def write_panel_csv(
     case: str,
     model: dict[str, dict[str, dict[int, float]]],
     acs_ownership: dict[str, dict[int, float]],
+    acs_home_value: dict[str, dict[int, float]],
     data_children: dict[str, dict[int, float]],
 ) -> None:
     rows = []
@@ -356,6 +411,17 @@ def write_panel_csv(
                 "case": "",
                 "metric": "ownership",
                 "sample": ACS_SAMPLE,
+                "location": loc,
+                "age": age,
+                "value": value,
+            })
+    for loc, values in acs_home_value.items():
+        for age, value in sorted(values.items()):
+            rows.append({
+                "source": "ACS",
+                "case": "",
+                "metric": "housing_value",
+                "sample": "household_heads_hhwt_due_housing_mean_owner_occupied_value",
                 "location": loc,
                 "age": age,
                 "value": value,
@@ -448,6 +514,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-csv", type=Path, default=DEFAULT_MODEL_CSV)
     parser.add_argument("--acs-age-csv", type=Path, default=DEFAULT_ACS_AGE_CSV)
     parser.add_argument("--acs-location-csv", type=Path, default=DEFAULT_ACS_LOC_CSV)
+    parser.add_argument("--acs-home-value-csv", type=Path, default=DEFAULT_ACS_VALUE_CSV)
     parser.add_argument("--mms-age-csv", type=Path, default=DEFAULT_MMS_AGE_CSV)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--age-min", type=int, default=20)
@@ -461,6 +528,7 @@ def main() -> None:
     model = read_model(args.model_csv)
     acs_overall = read_acs_overall(args.acs_age_csv)
     acs_loc = read_acs_location(args.acs_location_csv)
+    acs_home_value = read_acs_home_value_location(args.acs_home_value_csv)
     data_children = read_mms_children_location(args.mms_age_csv)
 
     plot_overall(
@@ -481,6 +549,7 @@ def main() -> None:
     plot_spatial_lifecycle_panel(
         panel_model,
         acs_loc,
+        acs_home_value,
         data_children,
         args.outdir / "spatial_lifecycle_3x2_model_vs_data",
         args.age_min,
@@ -491,6 +560,7 @@ def main() -> None:
         args.case,
         panel_model,
         acs_loc,
+        acs_home_value,
         data_children,
     )
     write_combined_csv(

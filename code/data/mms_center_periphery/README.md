@@ -31,6 +31,7 @@ Files:
 - `analyze_mms_fertility_moves.R`: rebuilds the fertility/location and new-parent move facts under the MMS geography using `extract27` plus the filtered `extract28` origin supplement
 - `analyze_family_size_supply_menu.R`: builds a fast ACS/MMS family-size housing menu and sorting packet by center/periphery, room-size bin, tenure, parent status, and income proxy
 - `audit_ownership_targets.R`: compares person-level ACS ownership targets with household-head ACS ownership targets and PSID reference-person checks
+- `validate_acs_home_value_scf.R`: builds ACS/MMS household-head `VALUEH` lifecycle profiles and validates the national ACS home-value object against the public 2022 SCF summary extract
 - `analyze_couillard_bedroom_supply_panel.R`: builds a Couillard-style ACS/MMS bedroom supply packet by center/periphery, tenure, parent status, price premium, and descriptive early/late stock response
 - `analyze_income_fertility_cross_section.R`: builds an ACS/MMS cross-section of recent births, parenthood, childlessness, parity, income ranks, and center/periphery decomposition by income
 
@@ -58,6 +59,9 @@ Outputs:
 - `output_family_size_supply/ACS_MMS_FAMILY_SIZE_SUPPLY_PACKET.md`
 - `output_ownership_audit/ACS_MMS_OWNERSHIP_TARGET_AUDIT.md`
 - `output_ownership_audit/ownership_lifecycle_acs_psid.png`
+- `output_housing_value_validation/ACS_SCF_HOME_VALUE_VALIDATION.md`
+- `output_housing_value_validation/acs_home_value_age_location_profiles.csv`
+- `output_housing_value_validation/acs_scf_home_value_validation.png`
 - `output_family_size_supply/acs_family_size_premia_by_metro.csv`
 - `output_family_size_supply/acs_parent_centrality_by_metro.csv`
 - `output_family_size_supply/acs_family_size_regressions.csv`
