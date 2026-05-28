@@ -125,6 +125,25 @@ def read_mms_children_location(path: Path) -> dict[str, dict[int, float]]:
     return dict(out)
 
 
+def read_mms_children_overall(path: Path) -> dict[int, float]:
+    numer: dict[int, float] = defaultdict(float)
+    denom: dict[int, float] = defaultdict(float)
+    with path.open(newline="") as handle:
+        for row in csv.DictReader(handle):
+            loc = row.get("mms_location")
+            if loc not in {"center", "periphery"}:
+                continue
+            value = row.get("has_child_u18_rate") or row.get("has_children_rate")
+            weight = row.get("pop_weight")
+            if value in (None, "") or weight in (None, ""):
+                continue
+            age = int(float(row["age"]))
+            w = float(weight)
+            numer[age] += w * float(value)
+            denom[age] += w
+    return {age: numer[age] / denom[age] for age in sorted(numer) if denom[age] > 0}
+
+
 def read_acs_home_value_location(path: Path) -> dict[str, dict[int, float]]:
     out: dict[str, dict[int, float]] = defaultdict(dict)
     if not path.exists():
@@ -239,27 +258,35 @@ def compute_model_spatial_lifecycle(record_path: Path) -> dict[str, dict[str, di
         "children": defaultdict(dict),
     }
 
-    for loc_name, loc in LOC_INDEX.items():
+    loc_specs = {
+        "periphery": [LOC_INDEX["periphery"]],
+        "center": [LOC_INDEX["center"]],
+        "all": [LOC_INDEX["periphery"], LOC_INDEX["center"]],
+    }
+    for loc_name, locs in loc_specs.items():
         for jj in range(P.J):
             age = int(P.age_start + jj)
-            mass = float(np.sum(sol.g[:, :, loc, jj, :, :]))
-            own_mass = float(np.sum(sol.g[:, 1:, loc, jj, :, :]))
+            mass = 0.0
+            own_mass = 0.0
             child_mass = 0.0
             wealth_sum = 0.0
             housing_value_sum = 0.0
-            for nn in range(P.n_parity):
-                for cs in range(P.n_child_states):
-                    if current_children(nn, cs, P) > 0:
-                        child_mass += float(np.sum(sol.g[:, :, loc, jj, nn, cs]))
-                    renter = sol.g[:, 0, loc, jj, nn, cs]
-                    wealth_sum += float(np.sum(renter * b_grid))
-                    for ten in range(1, 1 + P.n_house):
-                        owner = sol.g[:, ten, loc, jj, nn, cs]
-                        if float(np.sum(owner)) <= 1e-15:
-                            continue
-                        house_value = float(sol.p_eq[loc]) * float(P.H_own[ten - 1])
-                        wealth_sum += float(np.sum(owner * (b_grid + house_value)))
-                        housing_value_sum += float(np.sum(owner * house_value))
+            for loc in locs:
+                mass += float(np.sum(sol.g[:, :, loc, jj, :, :]))
+                own_mass += float(np.sum(sol.g[:, 1:, loc, jj, :, :]))
+                for nn in range(P.n_parity):
+                    for cs in range(P.n_child_states):
+                        if current_children(nn, cs, P) > 0:
+                            child_mass += float(np.sum(sol.g[:, :, loc, jj, nn, cs]))
+                        renter = sol.g[:, 0, loc, jj, nn, cs]
+                        wealth_sum += float(np.sum(renter * b_grid))
+                        for ten in range(1, 1 + P.n_house):
+                            owner = sol.g[:, ten, loc, jj, nn, cs]
+                            if float(np.sum(owner)) <= 1e-15:
+                                continue
+                            house_value = float(sol.p_eq[loc]) * float(P.H_own[ten - 1])
+                            wealth_sum += float(np.sum(owner * (b_grid + house_value)))
+                            housing_value_sum += float(np.sum(owner * house_value))
             out["ownership"][loc_name][age] = own_mass / max(mass, 1e-12)
             out["children"][loc_name][age] = child_mass / max(mass, 1e-12)
             out["networth"][loc_name][age] = wealth_sum / max(mass, 1e-12)
@@ -316,6 +343,62 @@ def plot_spatial(
 
     axes[0].legend(frameon=False, loc="upper left")
     fig.suptitle("Spatial Ownership Lifecycle", fontsize=14, fontweight="bold")
+    fig.tight_layout()
+    fig.savefig(outbase.with_suffix(".png"), dpi=220, bbox_inches="tight")
+    fig.savefig(outbase.with_suffix(".pdf"), bbox_inches="tight")
+    plt.close(fig)
+
+
+def plot_aggregate_full_wealth_panel(
+    model: dict[str, dict[str, dict[int, float]]],
+    acs_ownership: dict[int, float],
+    data_children: dict[int, float],
+    outbase: Path,
+    age_min: int,
+    age_max: int,
+) -> None:
+    fig, axes = plt.subplots(1, 3, figsize=(13.8, 4.4), sharex=True)
+    rows = [
+        ("ownership", "Ownership", "Ownership rate (%)"),
+        ("networth", "Full wealth", "Mean full wealth\nmodel units"),
+        ("children", "Children at home", "Share with child under 18 (%)"),
+    ]
+    for ax, (metric, title, ylabel) in zip(axes, rows):
+        ax.axvspan(30, 55, color=COLORS["band"], alpha=0.12, linewidth=0)
+        ax.set_title(title)
+        if metric == "ownership":
+            ages, vals = series_xy(model[metric]["all"], age_min, age_max)
+            ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.4, label="Model")
+            ages, vals = series_xy(acs_ownership, age_min, age_max)
+            ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS heads")
+            ax.set_ylim(0, 100)
+            ax.legend(frameon=False, loc="upper left")
+        elif metric == "networth":
+            ages, vals = series_xy(model[metric]["all"], age_min, age_max)
+            ax.plot(ages, vals, color=COLORS["model"], linewidth=2.4, label="Model")
+            ax.text(
+                0.98,
+                0.90,
+                "model only: renters b;\nowners b+p_iH",
+                transform=ax.transAxes,
+                ha="right",
+                va="top",
+                color="#555555",
+                fontsize=9,
+            )
+        else:
+            ages, vals = series_xy(model[metric]["all"], age_min, age_max)
+            ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.4, label="Model")
+            ages, vals = series_xy(data_children, age_min, age_max)
+            ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS adults")
+            ax.set_ylim(0, 75)
+
+        ax.set_ylabel(ylabel)
+        ax.set_xlabel("Age")
+        ax.grid(True, color=COLORS["grid"], alpha=0.55, linewidth=0.7)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
     fig.tight_layout()
     fig.savefig(outbase.with_suffix(".png"), dpi=220, bbox_inches="tight")
     fig.savefig(outbase.with_suffix(".pdf"), bbox_inches="tight")
@@ -447,6 +530,51 @@ def write_panel_csv(
         writer.writerows(rows)
 
 
+def write_aggregate_full_wealth_csv(
+    path: Path,
+    case: str,
+    model: dict[str, dict[str, dict[int, float]]],
+    acs_ownership: dict[int, float],
+    data_children: dict[int, float],
+) -> None:
+    rows = []
+    for metric in ["ownership", "networth", "children"]:
+        for age, value in sorted(model[metric]["all"].items()):
+            rows.append({
+                "source": "model",
+                "case": case,
+                "metric": metric,
+                "sample": "",
+                "age": age,
+                "value": value,
+            })
+    for age, value in sorted(acs_ownership.items()):
+        rows.append({
+            "source": "ACS",
+            "case": "",
+            "metric": "ownership",
+            "sample": ACS_SAMPLE,
+            "age": age,
+            "value": value,
+        })
+    for age, value in sorted(data_children.items()):
+        rows.append({
+            "source": "ACS",
+            "case": "",
+            "metric": "children",
+            "sample": "all_adults_mms_age_profiles_full_center_periphery_weighted",
+            "age": age,
+            "value": value,
+        })
+    with path.open("w", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["source", "case", "metric", "sample", "age", "value"],
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
+
 def write_combined_csv(
     path: Path,
     case: str,
@@ -530,6 +658,7 @@ def main() -> None:
     acs_loc = read_acs_location(args.acs_location_csv)
     acs_home_value = read_acs_home_value_location(args.acs_home_value_csv)
     data_children = read_mms_children_location(args.mms_age_csv)
+    data_children_all = read_mms_children_overall(args.mms_age_csv)
 
     plot_overall(
         model,
@@ -555,6 +684,14 @@ def main() -> None:
         args.age_min,
         args.age_max,
     )
+    plot_aggregate_full_wealth_panel(
+        panel_model,
+        acs_overall,
+        data_children_all,
+        args.outdir / "aggregate_lifecycle_full_wealth",
+        args.age_min,
+        args.age_max,
+    )
     write_panel_csv(
         args.outdir / "spatial_lifecycle_3x2_model_vs_data.csv",
         args.case,
@@ -562,6 +699,13 @@ def main() -> None:
         acs_loc,
         acs_home_value,
         data_children,
+    )
+    write_aggregate_full_wealth_csv(
+        args.outdir / "aggregate_lifecycle_full_wealth.csv",
+        args.case,
+        panel_model,
+        acs_overall,
+        data_children_all,
     )
     write_combined_csv(
         args.outdir / "ownership_lifecycle_spatial_model_vs_data.csv",
