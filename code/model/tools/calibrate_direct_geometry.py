@@ -46,6 +46,7 @@ def main() -> None:
         outside_flow_x0=args.outside_flow_x0,
         renewal_retention=args.renewal_retention,
         hR_max=args.hR_max,
+        alpha_cons=args.alpha_cons,
         owner_h_bar_scale=args.owner_h_bar_scale,
         owner_size_cost=args.owner_size_cost,
         owner_size_cost_ref=args.owner_size_cost_ref,
@@ -88,6 +89,7 @@ def main() -> None:
         "outside_flow_x0": args.outside_flow_x0,
         "renewal_retention": args.renewal_retention,
         "hR_max": args.hR_max,
+        "alpha_cons": args.alpha_cons,
         "owner_h_bar_scale": args.owner_h_bar_scale,
         "owner_size_cost": args.owner_size_cost,
         "owner_size_cost_ref": args.owner_size_cost_ref,
@@ -238,6 +240,15 @@ def parse_args() -> argparse.Namespace:
         "--hR-max",
         type=float,
         default=float(os.environ["DT_DIRECT_HR_MAX"]) if "DT_DIRECT_HR_MAX" in os.environ else None,
+    )
+    parser.add_argument(
+        "--alpha-cons",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_ALPHA_CONS"])
+            if "DT_DIRECT_ALPHA_CONS" in os.environ
+            else None
+        ),
     )
     parser.add_argument(
         "--owner-h-bar-scale",
@@ -572,6 +583,7 @@ def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace,
         "error": result.error,
         "solve_elapsed_sec": float(result.elapsed_sec),
         "hR_max": args.hR_max,
+        "alpha_cons": args.alpha_cons,
         "owner_h_bar_scale": args.owner_h_bar_scale,
         "owner_size_cost": args.owner_size_cost,
         "owner_size_cost_ref": args.owner_size_cost_ref,
@@ -605,6 +617,8 @@ def print_header(args: argparse.Namespace, job_dir: Path, seed: int, lb: np.ndar
     print(f"renewal_retention={args.renewal_retention}")
     if args.extra_targets:
         print(f"extra_targets={args.extra_targets}")
+    if args.alpha_cons is not None:
+        print(f"alpha_cons={args.alpha_cons}")
     if args.warm_start_json:
         print(f"warm_start_json={args.warm_start_json}")
     if args.owner_size_cost is not None:

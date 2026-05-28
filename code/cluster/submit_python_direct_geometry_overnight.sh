@@ -91,6 +91,9 @@ echo "Outside value x0: ${DT_DIRECT_OUTSIDE_VALUE_X0} | outside flow x0: ${DT_DI
 if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
     echo "Renter cap override hR_max: ${DT_DIRECT_HR_MAX}"
 fi
+if [ -n "${DT_DIRECT_ALPHA_CONS:-}" ]; then
+    echo "Consumption share override alpha_cons: ${DT_DIRECT_ALPHA_CONS}"
+fi
 if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
     echo "Owner h_bar scale override: ${DT_DIRECT_OWNER_H_BAR_SCALE}"
 fi
@@ -162,6 +165,10 @@ ARGS=(
 
 if [ -n "${DT_DIRECT_HR_MAX:-}" ]; then
     ARGS+=(--hR-max "${DT_DIRECT_HR_MAX}")
+fi
+
+if [ -n "${DT_DIRECT_ALPHA_CONS:-}" ]; then
+    ARGS+=(--alpha-cons "${DT_DIRECT_ALPHA_CONS}")
 fi
 
 if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then

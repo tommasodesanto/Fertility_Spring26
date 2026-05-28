@@ -93,6 +93,7 @@ def main() -> None:
         scale_target=1.0,
         scale_weight=100.0,
         hR_max=args.hR_max,
+        alpha_cons=record.get("alpha_cons"),
         owner_h_bar_scale=record.get("owner_h_bar_scale"),
         owner_size_cost=record.get("owner_size_cost"),
         owner_size_cost_ref=record.get("owner_size_cost_ref"),
@@ -140,6 +141,7 @@ def parameter_rows(record: dict, hR_max: float) -> list[dict]:
     params = record.get("parameters") or {}
     rows = [{"parameter": key, "value": float(params[key])} for key in PARAMETER_ORDER if key in params]
     controls = {
+        "alpha_cons": record.get("alpha_cons"),
         "tenure_choice_kappa": record.get("tenure_choice_kappa"),
         "owner_h_bar_scale": record.get("owner_h_bar_scale"),
         "owner_size_cost": record.get("owner_size_cost"),

@@ -135,6 +135,7 @@ def build_case(
     owner_size_cost_ref = record.get("owner_size_cost_ref")
     owner_size_cost_power = record.get("owner_size_cost_power")
     tenure_choice_kappa = record.get("tenure_choice_kappa")
+    alpha_cons = record.get("alpha_cons")
     weight_overrides = record.get("weight_overrides") or None
     extra_targets = record.get("extra_targets") or None
     setup = build_direct_calibration_setup(
@@ -144,6 +145,7 @@ def build_case(
         scale_target=1.0,
         scale_weight=100.0,
         hR_max=hr_max,
+        alpha_cons=alpha_cons,
         owner_h_bar_scale=owner_h_bar_scale,
         owner_size_cost=owner_size_cost,
         owner_size_cost_ref=owner_size_cost_ref,
@@ -787,6 +789,7 @@ PARAMETER_ORDER = [
     "h_bar_0",
     "E_C",
     "r_bar_C",
+    "alpha_cons",
     "tenure_choice_kappa",
     "owner_h_bar_scale",
     "owner_size_cost",

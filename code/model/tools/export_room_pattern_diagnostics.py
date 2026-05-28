@@ -136,6 +136,7 @@ def solve_record(
     owner_size_cost_ref = record.get("owner_size_cost_ref")
     owner_size_cost_power = record.get("owner_size_cost_power")
     tenure_choice_kappa = record.get("tenure_choice_kappa")
+    alpha_cons = record.get("alpha_cons")
     setup = build_direct_calibration_setup(
         "benchmark",
         geo_weight=100.0,
@@ -143,6 +144,7 @@ def solve_record(
         scale_target=1.0,
         scale_weight=100.0,
         hR_max=hR_max,
+        alpha_cons=alpha_cons,
         owner_h_bar_scale=owner_h_bar_scale,
         owner_size_cost=owner_size_cost,
         owner_size_cost_ref=owner_size_cost_ref,

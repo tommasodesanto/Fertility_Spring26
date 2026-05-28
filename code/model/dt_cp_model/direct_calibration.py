@@ -99,6 +99,7 @@ def build_direct_calibration_setup(
     outside_flow_x0: float | None = None,
     renewal_retention: float = 1.0,
     hR_max: float | None = None,
+    alpha_cons: float | None = None,
     owner_h_bar_scale: float | None = None,
     owner_size_cost: float | None = None,
     owner_size_cost_ref: float | None = None,
@@ -146,6 +147,8 @@ def build_direct_calibration_setup(
     base = build_calibration_setup(setup_mode)
     if hR_max is not None:
         base.P_base.hR_max = float(hR_max)
+    if alpha_cons is not None:
+        base.P_base.alpha_cons = float(alpha_cons)
     if owner_h_bar_scale is not None:
         base.P_base.owner_h_bar_scale = float(owner_h_bar_scale)
     if owner_size_cost is not None:
