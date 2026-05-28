@@ -306,7 +306,8 @@ def plot_room_distribution_full(sol, P, b_grid: np.ndarray, path: Path) -> None:
                 if row["age_window"] == "25_45" and row["tenure"] == tenure and row["child_bin"] == child_bin
             ]
             by_bin = {row["bin"]: row for row in panel}
-            labels = [b for b in ROOM_BINS if b in by_bin]
+            support_bins = ROOM_BINS if tenure == "Owner" else ["<=4", "5", "6", "7-8"]
+            labels = [b for b in support_bins if b in by_bin]
             x = np.arange(len(labels))
             width = 0.36
             ax.bar(x - width / 2, [by_bin[b]["share_acs"] for b in labels], width, color="#c7cbd1", label="ACS")
@@ -346,15 +347,25 @@ def plot_model_room_distribution_from_rows(rows: list[dict], path: Path) -> None
                 if not matches:
                     continue
                 row = matches[0]
-                vals = [
-                    float(row["share_rooms_le4"]),
-                    float(row["share_rooms_5"]),
-                    float(row["share_rooms_6"]),
-                    float(row["share_rooms_7_8"]),
-                    float(row["share_rooms_9_10"]),
-                    float(row["share_rooms_11plus"]),
-                ]
-                ax.plot(ROOM_BINS, vals, marker="o", label=child_bin, color=color)
+                if tenure == "renter":
+                    labels = ["<=4", "5", "6", "7-8"]
+                    vals = [
+                        float(row["share_rooms_le4"]),
+                        float(row["share_rooms_5"]),
+                        float(row["share_rooms_6"]),
+                        float(row["share_rooms_7_8"]),
+                    ]
+                else:
+                    labels = ROOM_BINS
+                    vals = [
+                        float(row["share_rooms_le4"]),
+                        float(row["share_rooms_5"]),
+                        float(row["share_rooms_6"]),
+                        float(row["share_rooms_7_8"]),
+                        float(row["share_rooms_9_10"]),
+                        float(row["share_rooms_11plus"]),
+                    ]
+                ax.plot(labels, vals, marker="o", label=child_bin, color=color)
             ax.set_title(f"{tenure.title()}, {concept.replace('_', ' ')}")
             ax.grid(True, axis="y", alpha=0.25)
             if c == 0:
