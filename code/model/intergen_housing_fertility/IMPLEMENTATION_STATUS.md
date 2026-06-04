@@ -56,8 +56,10 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `SIMPLIFICATION`: first pass may retain the existing one-shot completed
   fertility architecture from `dt_cp_model` rather than implementing sequential
   parity hazards immediately.
-- `SIMPLIFICATION`: first pass uses deterministic discrete-choice maximization
-  rather than extreme-value taste shocks/logit smoothing.
+- `INTENDED`: first pass uses extreme-value smoothing over discrete
+  tenure/fertility alternatives. This keeps aggregate owner demand continuous
+  enough for market clearing and matches the existing model's use of smoothed
+  discrete choices.
 - `NOT IMPLEMENTED`: mortgage coupon, remaining maturity, and debt duration
   states \((\iota,m^d)\).
 - `NOT IMPLEMENTED`: inheritance receipt state \(B\) and estate-transmission
@@ -103,7 +105,13 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `NOT IMPLEMENTED`: competitive landlord sector and rental-market clearing by
   size. This is not a Coven/Fonseca mechanism; it is only a closure device if
   renters choose from the same physical size-specific stock as owners.
-- `NOT IMPLEMENTED`: endogenous construction by size.
+- `SIMPLIFICATION`: first pass uses a static upward-sloping owner supply curve
+  by size,
+  \[
+  H_k^S(q_k)=\bar H_k(q_k/q_{k0})^{\eta_k}.
+  \]
+  This is not a transition construction block and does not yet track durable
+  investment \(I_{k,t}\).
 
 ### Old Retention and Lock-In
 
@@ -142,17 +150,23 @@ produce diagnostics for a stripped-down version of the full blueprint.
 
 - `INTENDED`: solve for national housing prices or user costs that clear owner
   housing demand by size in the first pass.
-- `INTENDED`: first-pass owner supplies are measured in service units per
-  normalized adult in the lifecycle cross-section; owner demand is normalized
-  by total lifecycle mass before comparing to supply.
+- `SIMPLIFICATION`: current smoke/default GE clears aggregate owner housing
+  services with one common user-cost shifter across size rungs. Size-specific
+  excess demand is diagnostic. This avoids over-interpreting a coarse
+  three-rung menu as three fully separate physical submarkets before the richer
+  supply block is implemented.
+- `INTENDED`: first-pass owner supply and demand are measured in service units
+  per normalized adult in the lifecycle cross-section; owner demand is
+  normalized by total lifecycle mass before comparing to supply.
 - `SIMPLIFICATION`: rental prices are exogenous or tied mechanically to owner
   user costs in the first pass, with no rental stock clearing.
 - `SIMPLIFICATION`: the lifecycle distribution is normalized by entrant mass
   and does not yet feed fertility choices back into cohort size or entry.
-- `SIMPLIFICATION`: because first-pass tenure/size choices are deterministic
-  and discrete, exact size-by-size market clearing may fail for some supplies.
-  The price solver reports convergence status and returns the best price
-  iterate found by the excess-demand criterion.
+- `INTENDED`: price iteration reports the best excess-demand metric even when
+  it converges, so failures are visible rather than hidden.
+- `INTENDED`: first-pass GE uses dependency-free price search routines. The
+  default is aggregate bisection over a common owner user-cost shifter;
+  by-size coordinate search remains available for diagnostics.
 - `NOT IMPLEMENTED`: full size-specific rental/owner stock decomposition
   \(H_k^O+H_k^R=H_k\).
 - `NOT IMPLEMENTED`: transition dynamics.

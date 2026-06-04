@@ -19,7 +19,6 @@ Run from `code/model`:
 .venv/bin/python -m intergen_housing_fertility.cli diagnostics --mode smoke --fixed-prices --outdir ../../output/model/intergen_housing_fertility_smoke_fixed --quiet
 ```
 
-The `solve` command reports whether owner-size market clearing converged. With
-the first-pass deterministic size choice it may return the best price iterate
-rather than an exact clearing vector; this is recorded in
-`IMPLEMENTATION_STATUS.md`.
+The `solve` command currently clears aggregate owner housing services using a
+common owner user-cost shifter and reports size-specific excess demand as a
+diagnostic. This is recorded in `IMPLEMENTATION_STATUS.md`.

@@ -43,6 +43,7 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
     P.sigma = 1.0
     P.alpha_h = 0.36
     P.beta_n = 0.515
+    P.kappa_choice = 0.10
     P.c_min = 1e-5
     P.h_need_base = 1.05
     P.h_need_child = 0.70
@@ -77,10 +78,12 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
     P.owner_h = np.array([2.2, 3.8, 5.8])
     # Service units per normalized adult in the lifecycle cross-section.
     P.owner_supply = np.array([0.45, 1.15, 0.55])
+    P.owner_supply_elasticity = np.array([1.0, 1.0, 1.0])
     P.renter_h = 2.1
     P.rent_user_cost = 0.078
 
     P.owner_user_cost = np.array([0.055, 0.062, 0.070])
+    P.owner_user_cost_ref = P.owner_user_cost.copy()
     P.delta = 0.02
     P.tau_property = 0.012
     P.phi_ltv = 0.80
@@ -96,6 +99,10 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
     P.max_iter_eq = 60
     P.tol_eq = 5e-4
     P.price_damping = 0.15
+    P.price_solver = "coordinate"
+    P.price_clearing_mode = "aggregate"
+    P.price_search_initial_step = 0.35
+    P.price_search_shrink = 0.55
     P.price_min = 0.025
     P.price_max = 0.25
 
@@ -110,9 +117,10 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
         P.z_grid = np.array([0.80, 1.20])
         P.z_dist = np.array([0.55, 0.45])
         P.Pi_z = np.array([[0.86, 0.14], [0.14, 0.86]], dtype=float)
-        P.max_iter_eq = 8
+        P.max_iter_eq = 24
         P.tol_eq = 2e-3
         P.price_damping = 0.10
+        P.kappa_choice = 0.10
 
     return finalize_parameters(P)
 
@@ -125,7 +133,9 @@ def finalize_parameters(P: SimpleNamespace) -> SimpleNamespace:
     P.Pi_z = P.Pi_z / P.Pi_z.sum(axis=1, keepdims=True)
     P.owner_h = np.asarray(P.owner_h, dtype=float)
     P.owner_supply = np.asarray(P.owner_supply, dtype=float)
+    P.owner_supply_elasticity = np.asarray(P.owner_supply_elasticity, dtype=float)
     P.owner_user_cost = np.asarray(P.owner_user_cost, dtype=float)
+    P.owner_user_cost_ref = np.asarray(P.owner_user_cost_ref, dtype=float)
     P.n_child_options = np.asarray(P.n_child_options, dtype=int)
     P.K = len(P.owner_h)
     P.Nt = P.K + 1

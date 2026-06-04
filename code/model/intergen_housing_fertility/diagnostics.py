@@ -90,5 +90,7 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict:
         "owner_demand_by_size": sol.owner_demand_by_size,
         "owner_supply": sol.owner_supply,
         "owner_excess_by_size": sol.owner_excess_by_size,
+        "aggregate_owner_demand": sol.aggregate_owner_demand,
+        "aggregate_owner_supply": sol.aggregate_owner_supply,
+        "aggregate_owner_excess": sol.aggregate_owner_excess,
     }
-
