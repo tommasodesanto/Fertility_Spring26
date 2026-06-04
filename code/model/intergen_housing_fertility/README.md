@@ -16,9 +16,12 @@ Run from `code/model`:
 ```bash
 .venv/bin/python -m intergen_housing_fertility.cli smoke --quiet
 .venv/bin/python -m intergen_housing_fertility.cli solve --mode smoke --max-iter-eq 20 --quiet
+.venv/bin/python -m intergen_housing_fertility.cli solve --mode smoke --clearing-mode by-size --max-iter-eq 40 --quiet
 .venv/bin/python -m intergen_housing_fertility.cli diagnostics --mode smoke --fixed-prices --outdir ../../output/model/intergen_housing_fertility_smoke_fixed --quiet
 ```
 
-The `solve` command currently clears aggregate owner housing services using a
-common owner user-cost shifter and reports size-specific excess demand as a
-diagnostic. This is recorded in `IMPLEMENTATION_STATUS.md`.
+The `solve` command currently clears aggregate physical housing services using
+a common owner user-cost shifter and reports size-specific excess demand as a
+diagnostic unless `--clearing-mode by-size` is passed. Renters and owners choose
+from the same size ladder; landlords hold the residual non-owner-occupied stock.
+This is recorded in `IMPLEMENTATION_STATUS.md`.

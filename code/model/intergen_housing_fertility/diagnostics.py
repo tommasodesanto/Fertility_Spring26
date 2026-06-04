@@ -50,14 +50,27 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
     x = np.arange(P.K)
     fig, ax = plt.subplots(figsize=(7, 4))
     width = 0.38
-    ax.bar(x - width / 2, sol.owner_demand_by_size, width, label="demand")
-    ax.bar(x + width / 2, sol.owner_supply, width, label="supply")
+    ax.bar(x - width / 2, sol.housing_demand_by_size, width, label="occupancy")
+    ax.bar(x + width / 2, sol.housing_supply, width, label="stock")
     ax.set_xticks(x, labels)
     ax.set_ylabel("service units per adult")
-    ax.set_title("Owner housing market by size")
+    ax.set_title("Housing market by size")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(outdir / "owner_market_by_size.png", dpi=180)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    width = 0.26
+    ax.bar(x - width, sol.owner_demand_by_size, width, label="owners")
+    ax.bar(x, sol.rental_demand_by_size, width, label="renters")
+    ax.bar(x + width, sol.landlord_supply_by_size, width, label="landlords")
+    ax.set_xticks(x, labels)
+    ax.set_ylabel("service units per adult")
+    ax.set_title("Tenure decomposition by size")
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(outdir / "tenure_market_by_size.png", dpi=180)
     plt.close(fig)
 
     fig, ax1 = plt.subplots(figsize=(7, 4))
@@ -88,9 +101,16 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict:
         "owner_user_cost": sol.owner_user_cost,
         "owner_asset_price": sol.owner_asset_price,
         "owner_demand_by_size": sol.owner_demand_by_size,
-        "owner_supply": sol.owner_supply,
-        "owner_excess_by_size": sol.owner_excess_by_size,
+        "rental_demand_by_size": sol.rental_demand_by_size,
+        "landlord_supply_by_size": sol.landlord_supply_by_size,
+        "housing_demand_by_size": sol.housing_demand_by_size,
+        "housing_supply": sol.housing_supply,
+        "housing_excess_by_size": sol.housing_excess_by_size,
         "aggregate_owner_demand": sol.aggregate_owner_demand,
-        "aggregate_owner_supply": sol.aggregate_owner_supply,
-        "aggregate_owner_excess": sol.aggregate_owner_excess,
+        "aggregate_rental_demand": sol.aggregate_rental_demand,
+        "aggregate_landlord_supply": sol.aggregate_landlord_supply,
+        "aggregate_rental_excess": sol.aggregate_rental_excess,
+        "aggregate_housing_demand": sol.aggregate_housing_demand,
+        "aggregate_housing_supply": sol.aggregate_housing_supply,
+        "aggregate_housing_excess": sol.aggregate_housing_excess,
     }

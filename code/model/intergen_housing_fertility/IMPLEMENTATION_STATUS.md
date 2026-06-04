@@ -84,6 +84,8 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `INTENDED`: no location choice and no location-specific prices.
 - `INTENDED`: national housing sizes \(k\), with size-specific owner prices
   \(P_k\).
+- `INTENDED`: renters and owners choose from the same size ladder in the
+  current code, with renter tenure indices followed by owner tenure indices.
 - `INTENDED`: owner purchase constrained by
   \[
   d'\le \phi P_k h_k,
@@ -100,11 +102,20 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `SIMPLIFICATION`: LTV and payment-to-income constraints apply when a renter
   buys or an owner changes size. Incumbent owners who keep the same size are
   not forced to requalify each period.
-- `SIMPLIFICATION`: first pass treats renters as having an exogenous rental
-  option or rental size cap. Rental stock does not clear.
-- `NOT IMPLEMENTED`: competitive landlord sector and rental-market clearing by
-  size. This is not a Coven/Fonseca mechanism; it is only a closure device if
-  renters choose from the same physical size-specific stock as owners.
+- `INTENDED`: first pass includes a competitive landlord residual by size:
+  landlords hold the non-owner-occupied stock and rent it to tenants.
+- `SIMPLIFICATION`: landlord zero profit is imposed mechanically by tying
+  rental user costs to owner user costs,
+  \[
+  R_k=(1+\upsilon^R)q_k+\iota^R,
+  \]
+  rather than solving a separate landlord portfolio problem.
+- `SIMPLIFICATION`: the default rental markup \(\upsilon^R\) is a first-pass
+  ownership-margin device. It is not calibrated and should be replaced by a
+  rent/landlord-cost target or a richer tenure block before quantitative
+  claims.
+- `SIMPLIFICATION`: landlords do not have balance sheets, taxes, default risk,
+  or financing constraints in the first pass.
 - `SIMPLIFICATION`: first pass uses a static upward-sloping owner supply curve
   by size,
   \[
@@ -148,18 +159,24 @@ produce diagnostics for a stripped-down version of the full blueprint.
 
 ### Equilibrium
 
-- `INTENDED`: solve for national housing prices or user costs that clear owner
-  housing demand by size in the first pass.
-- `SIMPLIFICATION`: current smoke/default GE clears aggregate owner housing
-  services with one common user-cost shifter across size rungs. Size-specific
-  excess demand is diagnostic. This avoids over-interpreting a coarse
-  three-rung menu as three fully separate physical submarkets before the richer
-  supply block is implemented.
+- `INTENDED`: solve for national housing prices or user costs that clear total
+  physical occupancy by size,
+  \[
+  H^O_k(q)+H^R_k(q)=H_k^S(q).
+  \]
+- `SIMPLIFICATION`: current smoke/default GE clears aggregate housing services
+  with one common user-cost shifter across size rungs. Size-specific excess
+  demand is diagnostic unless the `by-size` clearing mode is requested.
+  This avoids over-interpreting a coarse three-rung menu as three fully
+  separate physical submarkets before the richer supply block is implemented.
 - `INTENDED`: first-pass owner supply and demand are measured in service units
   per normalized adult in the lifecycle cross-section; owner demand is
   normalized by total lifecycle mass before comparing to supply.
-- `SIMPLIFICATION`: rental prices are exogenous or tied mechanically to owner
-  user costs in the first pass, with no rental stock clearing.
+- `INTENDED`: first-pass owner, renter, landlord, and total stock quantities
+  are measured in service units per normalized adult in the lifecycle
+  cross-section.
+- `SIMPLIFICATION`: rental prices are tied mechanically to owner user costs in
+  the first pass.
 - `SIMPLIFICATION`: the lifecycle distribution is normalized by entrant mass
   and does not yet feed fertility choices back into cohort size or entry.
 - `INTENDED`: price iteration reports the best excess-demand metric even when
@@ -167,8 +184,19 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `INTENDED`: first-pass GE uses dependency-free price search routines. The
   default is aggregate bisection over a common owner user-cost shifter;
   by-size coordinate search remains available for diagnostics.
-- `NOT IMPLEMENTED`: full size-specific rental/owner stock decomposition
-  \(H_k^O+H_k^R=H_k\).
+- `INTENDED`: the by-size coordinate search minimizes the sum of squared
+  relative excess demands and reports the maximum relative excess demand
+  separately. This is a numerical device for the discontinuous discrete
+  housing-size menu, not a calibrated error structure.
+- `DIAGNOSTIC ONLY`: in the current smoke model, short by-size searches improve
+  but do not reliably clear all size markets. The default aggregate-clearing
+  solution is the maintained smoke equilibrium until the supply and tenure
+  blocks are refined.
+- `DIAGNOSTIC ONLY`: with renters and owners on the same size ladder, smoke
+  solves are slower than the earlier owner-only scaffold. Treat long by-size
+  price searches as diagnostics, not routine smoke tests.
+- `INTENDED`: full size-specific rental/owner stock decomposition
+  \(H_k^O+H_k^R=H_k\) is now represented in the static equilibrium accounting.
 - `NOT IMPLEMENTED`: transition dynamics.
 
 ### Calibration
@@ -201,5 +229,5 @@ produce diagnostics for a stripped-down version of the full blueprint.
   rental amount. Current recommendation: choose the smaller code change that
   preserves the current model's renter logic.
 - Whether first-pass owner price clearing should use fixed supply by size or a
-  simple upward-sloping supply curve. Current recommendation: fixed supply by
-  size for the smoke model, then add supply elasticity.
+  simple upward-sloping supply curve. Current implementation: simple
+  upward-sloping supply by size.

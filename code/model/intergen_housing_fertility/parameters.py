@@ -74,13 +74,14 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
 
     P.n_child_options = np.array([0, 1, 2])
 
-    # Tenure index 0 is renter. Owner indices 1..K correspond to owner sizes.
+    # The first K tenure indices are renters by size. The last K are owners.
     P.owner_h = np.array([2.2, 3.8, 5.8])
-    # Service units per normalized adult in the lifecycle cross-section.
-    P.owner_supply = np.array([0.45, 1.15, 0.55])
-    P.owner_supply_elasticity = np.array([1.0, 1.0, 1.0])
-    P.renter_h = 2.1
-    P.rent_user_cost = 0.078
+    P.renter_h = P.owner_h.copy()
+    # Physical service units per normalized adult in the lifecycle cross-section.
+    P.housing_supply = np.array([0.80, 2.00, 0.85])
+    P.housing_supply_elasticity = np.array([1.0, 1.0, 1.0])
+    P.rent_user_cost_markup = 1.60
+    P.rental_management_cost = 0.00
 
     P.owner_user_cost = np.array([0.055, 0.062, 0.070])
     P.owner_user_cost_ref = P.owner_user_cost.copy()
@@ -101,7 +102,7 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
     P.price_damping = 0.15
     P.price_solver = "coordinate"
     P.price_clearing_mode = "aggregate"
-    P.price_search_initial_step = 0.35
+    P.price_search_initial_step = 0.08
     P.price_search_shrink = 0.55
     P.price_min = 0.025
     P.price_max = 0.25
@@ -132,13 +133,32 @@ def finalize_parameters(P: SimpleNamespace) -> SimpleNamespace:
     P.Pi_z = np.asarray(P.Pi_z, dtype=float)
     P.Pi_z = P.Pi_z / P.Pi_z.sum(axis=1, keepdims=True)
     P.owner_h = np.asarray(P.owner_h, dtype=float)
-    P.owner_supply = np.asarray(P.owner_supply, dtype=float)
-    P.owner_supply_elasticity = np.asarray(P.owner_supply_elasticity, dtype=float)
+    P.renter_h = np.asarray(P.renter_h, dtype=float)
+    if P.renter_h.ndim == 0:
+        P.renter_h = np.full_like(P.owner_h, float(P.renter_h))
+    if not hasattr(P, "housing_supply"):
+        if hasattr(P, "owner_supply"):
+            P.housing_supply = np.asarray(P.owner_supply, dtype=float)
+        else:
+            raise ValueError("housing_supply must be provided.")
+    P.housing_supply = np.asarray(P.housing_supply, dtype=float)
+    if not hasattr(P, "housing_supply_elasticity"):
+        if hasattr(P, "owner_supply_elasticity"):
+            P.housing_supply_elasticity = np.asarray(P.owner_supply_elasticity, dtype=float)
+        else:
+            P.housing_supply_elasticity = np.ones_like(P.housing_supply)
+    P.housing_supply_elasticity = np.asarray(P.housing_supply_elasticity, dtype=float)
     P.owner_user_cost = np.asarray(P.owner_user_cost, dtype=float)
     P.owner_user_cost_ref = np.asarray(P.owner_user_cost_ref, dtype=float)
     P.n_child_options = np.asarray(P.n_child_options, dtype=int)
     P.K = len(P.owner_h)
-    P.Nt = P.K + 1
+    if len(P.renter_h) != P.K:
+        raise ValueError("renter_h and owner_h must have the same length.")
+    if len(P.housing_supply) != P.K:
+        raise ValueError("housing_supply and owner_h must have the same length.")
+    if len(P.housing_supply_elasticity) != P.K:
+        raise ValueError("housing_supply_elasticity and owner_h must have the same length.")
+    P.Nt = 2 * P.K
     P.Nn = len(P.n_child_options)
     P.rho_property = P.r + P.delta + P.tau_property
     P.fertility_choice_index = int(np.clip(P.fertility_choice_age - P.age_start, 0, P.J - 1))

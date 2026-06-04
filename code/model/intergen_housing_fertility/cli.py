@@ -21,12 +21,16 @@ def main() -> None:
     ge = sub.add_parser("solve", help="Run owner-size price iteration")
     ge.add_argument("--mode", choices=["smoke", "benchmark"], default="smoke")
     ge.add_argument("--max-iter-eq", type=int, default=None)
+    ge.add_argument("--clearing-mode", choices=["aggregate", "by-size"], default=None)
+    ge.add_argument("--price-solver", choices=["coordinate", "tatonnement"], default=None)
     ge.add_argument("--quiet", action="store_true")
     ge.add_argument("--json", type=Path, default=None)
 
     diag = sub.add_parser("diagnostics", help="Solve and write a diagnostic packet")
     diag.add_argument("--mode", choices=["smoke", "benchmark"], default="smoke")
     diag.add_argument("--max-iter-eq", type=int, default=20)
+    diag.add_argument("--clearing-mode", choices=["aggregate", "by-size"], default=None)
+    diag.add_argument("--price-solver", choices=["coordinate", "tatonnement"], default=None)
     diag.add_argument("--fixed-prices", action="store_true")
     diag.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_smoke"))
     diag.add_argument("--quiet", action="store_true")
@@ -39,10 +43,18 @@ def main() -> None:
         overrides = {}
         if args.max_iter_eq is not None:
             overrides["max_iter_eq"] = args.max_iter_eq
+        if args.clearing_mode is not None:
+            overrides["price_clearing_mode"] = args.clearing_mode
+        if args.price_solver is not None:
+            overrides["price_solver"] = args.price_solver
         sol, P = solve_model(overrides, mode=args.mode, solve_prices=True, verbose=not args.quiet)
         report = summarize(sol, P, solve_prices=True)
     elif args.cmd == "diagnostics":
         overrides = {"max_iter_eq": args.max_iter_eq}
+        if args.clearing_mode is not None:
+            overrides["price_clearing_mode"] = args.clearing_mode
+        if args.price_solver is not None:
+            overrides["price_solver"] = args.price_solver
         sol, P = solve_model(overrides, mode=args.mode, solve_prices=not args.fixed_prices, verbose=not args.quiet)
         write_diagnostics(sol, P, args.outdir)
         report = summarize(sol, P, solve_prices=not args.fixed_prices)
@@ -66,11 +78,18 @@ def summarize(sol, P, *, solve_prices: bool) -> dict:
         "owner_user_cost": sol.owner_user_cost,
         "owner_asset_price": sol.owner_asset_price,
         "owner_demand_by_size": sol.owner_demand_by_size,
-        "owner_supply": sol.owner_supply,
-        "owner_excess_by_size": sol.owner_excess_by_size,
+        "rental_demand_by_size": sol.rental_demand_by_size,
+        "landlord_supply_by_size": sol.landlord_supply_by_size,
+        "housing_demand_by_size": sol.housing_demand_by_size,
+        "housing_supply": sol.housing_supply,
+        "housing_excess_by_size": sol.housing_excess_by_size,
         "aggregate_owner_demand": sol.aggregate_owner_demand,
-        "aggregate_owner_supply": sol.aggregate_owner_supply,
-        "aggregate_owner_excess": sol.aggregate_owner_excess,
+        "aggregate_rental_demand": sol.aggregate_rental_demand,
+        "aggregate_landlord_supply": sol.aggregate_landlord_supply,
+        "aggregate_rental_excess": sol.aggregate_rental_excess,
+        "aggregate_housing_demand": sol.aggregate_housing_demand,
+        "aggregate_housing_supply": sol.aggregate_housing_supply,
+        "aggregate_housing_excess": sol.aggregate_housing_excess,
         "own_rate": sol.own_rate,
         "young_owner_rate": sol.young_owner_rate,
         "old_owner_rate": sol.old_owner_rate,
