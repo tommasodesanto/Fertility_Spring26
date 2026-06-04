@@ -74,23 +74,21 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
 
     P.n_child_options = np.array([0, 1, 2])
 
-    # The first K tenure indices are renters by size. The last K are owners.
-    P.owner_h = np.array([2.2, 3.8, 5.8])
-    P.renter_h = P.owner_h.copy()
+    # Tenure index 0 is renter. Owner indices 1..K correspond to owner housing types.
+    # The Coven-style first pass uses K=1: one scarce family-home asset.
+    P.owner_h = np.array([3.8])
+    P.renter_h = 2.2
     # Physical service units per normalized adult in the lifecycle cross-section.
-    P.housing_supply = np.array([0.80, 2.00, 0.85])
-    P.housing_supply_elasticity = np.array([1.0, 1.0, 1.0])
-    P.rent_user_cost_markup = 1.60
-    P.rental_management_cost = 0.00
+    P.housing_supply = np.array([1.34])
+    P.housing_supply_elasticity = np.array([1.0])
+    P.rent_user_cost = 0.082
 
-    P.owner_user_cost = np.array([0.055, 0.062, 0.070])
+    P.owner_user_cost = np.array([0.062])
     P.owner_user_cost_ref = P.owner_user_cost.copy()
     P.delta = 0.02
     P.tau_property = 0.012
     P.phi_ltv = 0.80
     P.psi_pti = 0.28
-    P.mortgage_rate = 0.045
-    P.mortgage_maturity = 30
 
     P.buyer_transaction_cost = 0.00
     P.owner_move_cost = 0.035
@@ -158,7 +156,7 @@ def finalize_parameters(P: SimpleNamespace) -> SimpleNamespace:
         raise ValueError("housing_supply and owner_h must have the same length.")
     if len(P.housing_supply_elasticity) != P.K:
         raise ValueError("housing_supply_elasticity and owner_h must have the same length.")
-    P.Nt = 2 * P.K
+    P.Nt = P.K + 1
     P.Nn = len(P.n_child_options)
     P.rho_property = P.r + P.delta + P.tau_property
     P.fertility_choice_index = int(np.clip(P.fertility_choice_age - P.age_start, 0, P.J - 1))

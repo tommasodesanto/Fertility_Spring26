@@ -35,21 +35,6 @@ def interpolate_age_profile(P: SimpleNamespace) -> np.ndarray:
     return np.interp(ages, P.income_age_breaks, P.income_age_values)
 
 
-def mortgage_payment(principal: float, rate: float, maturity: int) -> float:
-    """Fixed annual mortgage payment."""
-
-    principal = float(principal)
-    rate = float(rate)
-    maturity = int(maturity)
-    if principal <= 0.0:
-        return 0.0
-    if maturity <= 0:
-        return np.inf
-    if abs(rate) < 1e-12:
-        return principal / maturity
-    return principal * rate / (1.0 - (1.0 + rate) ** (-maturity))
-
-
 def housing_need(P: SimpleNamespace, children: int) -> float:
     return float(P.h_need_base + P.h_need_child * children)
 

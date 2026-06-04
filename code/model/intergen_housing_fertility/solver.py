@@ -9,7 +9,7 @@ from typing import Iterable
 import numpy as np
 
 from .parameters import apply_overrides, setup_parameters
-from .utils import child_goods_cost, housing_need, make_asset_grid, mortgage_payment, interpolate_age_profile
+from .utils import child_goods_cost, housing_need, make_asset_grid, interpolate_age_profile
 
 
 NEG_INF = -1.0e18
@@ -53,8 +53,8 @@ def solve_model(
     sol.owner_asset_price = asset_prices(P, q)
     sol.elapsed_sec = time.perf_counter() - t0
     sol.price_trace = trace
-    by_size_rel = sol.housing_excess_by_size / np.maximum(sol.housing_supply, 1e-10)
-    aggregate_rel = sol.aggregate_housing_excess / max(sol.aggregate_housing_supply, 1e-10)
+    by_size_rel = sol.owner_excess_by_size / np.maximum(sol.housing_supply, 1e-10)
+    aggregate_rel = sol.aggregate_owner_excess / max(sol.aggregate_housing_supply, 1e-10)
     sol.best_market_metric = float(best_metric) if solve_prices else float(abs(aggregate_rel))
     sol.best_max_abs_rel_excess = float(np.max(np.abs(by_size_rel)))
     sol.converged = (not solve_prices) or (sol.best_market_metric < float(P.tol_eq))
@@ -63,7 +63,7 @@ def solve_model(
 
 def price_residual(P: SimpleNamespace, q: np.ndarray) -> tuple[SimpleNamespace, np.ndarray, float]:
     sol = solve_fixed_prices(P, q)
-    excess = sol.housing_excess_by_size
+    excess = sol.owner_excess_by_size
     rel = excess / np.maximum(sol.housing_supply, 1e-10)
     return sol, rel, float(np.max(np.abs(rel)))
 
@@ -77,7 +77,7 @@ def size_market_objective(P: SimpleNamespace, q: np.ndarray) -> tuple[SimpleName
 def aggregate_price_residual(P: SimpleNamespace, q: np.ndarray) -> tuple[SimpleNamespace, float, float]:
     sol = solve_fixed_prices(P, q)
     supply = max(float(np.sum(sol.housing_supply)), 1e-10)
-    excess = float(np.sum(sol.housing_demand_by_size) - np.sum(sol.housing_supply))
+    excess = float(np.sum(sol.owner_demand_by_size) - np.sum(sol.housing_supply))
     rel = excess / supply
     return sol, rel, abs(rel)
 
@@ -99,9 +99,8 @@ def trace_record(
         "owner_user_cost": q.copy(),
         "owner_demand_by_size": sol.owner_demand_by_size.copy(),
         "rental_demand_by_size": sol.rental_demand_by_size.copy(),
-        "housing_demand_by_size": sol.housing_demand_by_size.copy(),
         "housing_supply": sol.housing_supply.copy(),
-        "aggregate_housing_demand": float(np.sum(sol.housing_demand_by_size)),
+        "aggregate_owner_demand": float(np.sum(sol.owner_demand_by_size)),
         "aggregate_housing_supply": float(np.sum(sol.housing_supply)),
     }
 
@@ -340,12 +339,8 @@ def asset_prices(P: SimpleNamespace, q_owner: np.ndarray) -> np.ndarray:
     return np.asarray(q_owner, dtype=float) / float(P.rho_property)
 
 
-def rental_user_costs(P: SimpleNamespace, q_owner: np.ndarray) -> np.ndarray:
-    return float(P.rent_user_cost_markup) * np.asarray(q_owner, dtype=float) + float(P.rental_management_cost)
-
-
 def is_owner(P: SimpleNamespace, ten: int) -> bool:
-    return int(ten) >= int(P.K)
+    return int(ten) > 0
 
 
 def is_renter(P: SimpleNamespace, ten: int) -> bool:
@@ -354,12 +349,13 @@ def is_renter(P: SimpleNamespace, ten: int) -> bool:
 
 def tenure_size_index(P: SimpleNamespace, ten: int) -> int:
     ten = int(ten)
-    return ten - int(P.K) if is_owner(P, ten) else ten
+    return ten - 1 if is_owner(P, ten) else 0
 
 
 def tenure_housing(P: SimpleNamespace, ten: int) -> float:
-    k = tenure_size_index(P, ten)
-    return float(P.owner_h[k] if is_owner(P, ten) else P.renter_h[k])
+    if is_renter(P, ten):
+        return float(P.renter_h[0])
+    return float(P.owner_h[tenure_size_index(P, ten)])
 
 
 def housing_supply_at(P: SimpleNamespace, q_owner: np.ndarray) -> np.ndarray:
@@ -400,15 +396,14 @@ def tenure_feasible(
     down_payment = (1.0 - float(P.phi_ltv)) * asset_value
     if max(float(b), 0.0) + 1e-12 < down_payment:
         return False
-    debt = float(P.phi_ltv) * asset_value
-    payment = mortgage_payment(debt, float(P.mortgage_rate), int(P.mortgage_maturity))
-    return payment <= float(P.psi_pti) * max(float(income), 1e-12) + 1e-12
+    flow_payment = float(q_owner[k] * P.owner_h[k])
+    return flow_payment <= float(P.psi_pti) * max(float(income), 1e-12) + 1e-12
 
 
 def housing_flow_cost(P: SimpleNamespace, ten: int, q_owner: np.ndarray) -> float:
-    k = tenure_size_index(P, ten)
     if is_renter(P, ten):
-        return float(rental_user_costs(P, q_owner)[k] * P.renter_h[k])
+        return float(P.rent_user_cost * P.renter_h[0])
+    k = tenure_size_index(P, ten)
     return float(q_owner[k] * P.owner_h[k])
 
 
@@ -499,19 +494,15 @@ def compute_stats(
 ) -> SimpleNamespace:
     total = float(dist.sum())
     owner_mass_by_size_raw = np.zeros(P.K)
-    renter_mass_by_size_raw = np.zeros(P.K)
+    renter_mass_raw = float(dist[:, :, :, :, 0].sum())
     for k in range(P.K):
-        renter_mass_by_size_raw[k] = float(dist[:, :, :, :, k].sum())
-        owner_mass_by_size_raw[k] = float(dist[:, :, :, :, P.K + k].sum())
+        owner_mass_by_size_raw[k] = float(dist[:, :, :, :, k + 1].sum())
     owner_mass_by_size = owner_mass_by_size_raw / max(total, 1e-12)
-    renter_mass_by_size = renter_mass_by_size_raw / max(total, 1e-12)
+    renter_mass = renter_mass_raw / max(total, 1e-12)
     owner_demand_by_size = owner_mass_by_size * P.owner_h
-    rental_demand_by_size = renter_mass_by_size * P.renter_h
-    housing_demand_by_size = owner_demand_by_size + rental_demand_by_size
+    rental_demand_by_size = np.array([renter_mass * P.renter_h[0]])
     housing_supply = housing_supply_at(P, q_owner)
-    landlord_supply_by_size = housing_supply - owner_demand_by_size
-    rental_excess_by_size = rental_demand_by_size - landlord_supply_by_size
-    housing_excess_by_size = housing_demand_by_size - housing_supply
+    owner_excess_by_size = owner_demand_by_size - housing_supply
     owner_mass = float(owner_mass_by_size_raw.sum())
 
     age_mass = dist.sum(axis=(1, 2, 3, 4))
@@ -521,7 +512,7 @@ def compute_stats(
         m = age_mass[a]
         if m <= 0.0:
             continue
-        own_by_age[a] = dist[a, :, :, :, P.K:].sum() / m
+        own_by_age[a] = dist[a, :, :, :, 1:].sum() / m
         child_sum = 0.0
         for in_idx, n in enumerate(P.n_child_options):
             child_sum += n * dist[a, :, :, in_idx, :].sum()
@@ -542,11 +533,11 @@ def compute_stats(
 
     old = np.arange(P.old_retention_index, P.J)
     old_mass = float(age_mass[old].sum()) if len(old) else 0.0
-    old_owner_rate = float(dist[old, :, :, :, P.K:].sum() / old_mass) if old_mass > 0 else np.nan
+    old_owner_rate = float(dist[old, :, :, :, 1:].sum() / old_mass) if old_mass > 0 else np.nan
 
     young = np.arange(max(0, P.fertility_choice_index - 5), min(P.J, P.fertility_choice_index + 10))
     young_mass = float(age_mass[young].sum()) if len(young) else 0.0
-    young_owner_rate = float(dist[young, :, :, :, P.K:].sum() / young_mass) if young_mass > 0 else np.nan
+    young_owner_rate = float(dist[young, :, :, :, 1:].sum() / young_mass) if young_mass > 0 else np.nan
 
     return SimpleNamespace(
         total_mass=total,
@@ -556,21 +547,15 @@ def compute_stats(
         young_owner_rate=young_owner_rate,
         old_owner_rate=old_owner_rate,
         owner_mass_by_size=owner_mass_by_size,
-        renter_mass_by_size=renter_mass_by_size,
+        renter_mass=renter_mass,
         owner_demand_by_size=owner_demand_by_size,
         rental_demand_by_size=rental_demand_by_size,
-        housing_demand_by_size=housing_demand_by_size,
         housing_supply=housing_supply.copy(),
-        landlord_supply_by_size=landlord_supply_by_size,
-        rental_excess_by_size=rental_excess_by_size,
-        housing_excess_by_size=housing_excess_by_size,
+        owner_excess_by_size=owner_excess_by_size,
         aggregate_owner_demand=float(np.sum(owner_demand_by_size)),
         aggregate_rental_demand=float(np.sum(rental_demand_by_size)),
-        aggregate_landlord_supply=float(np.sum(landlord_supply_by_size)),
-        aggregate_rental_excess=float(np.sum(rental_excess_by_size)),
-        aggregate_housing_demand=float(np.sum(housing_demand_by_size)),
         aggregate_housing_supply=float(np.sum(housing_supply)),
-        aggregate_housing_excess=float(np.sum(housing_excess_by_size)),
+        aggregate_owner_excess=float(np.sum(owner_excess_by_size)),
         own_by_age=own_by_age,
         children_by_age=children_by_age,
         q_owner=np.asarray(q_owner, dtype=float).copy(),

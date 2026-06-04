@@ -46,31 +46,27 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
     fig.savefig(outdir / "children_by_age.png", dpi=180)
     plt.close(fig)
 
-    labels = [f"H{k + 1}" for k in range(P.K)]
+    labels = ["family home"] if P.K == 1 else [f"H{k + 1}" for k in range(P.K)]
     x = np.arange(P.K)
     fig, ax = plt.subplots(figsize=(7, 4))
     width = 0.38
-    ax.bar(x - width / 2, sol.housing_demand_by_size, width, label="occupancy")
+    ax.bar(x - width / 2, sol.owner_demand_by_size, width, label="owner demand")
     ax.bar(x + width / 2, sol.housing_supply, width, label="stock")
     ax.set_xticks(x, labels)
     ax.set_ylabel("service units per adult")
-    ax.set_title("Housing market by size")
+    ax.set_title("Scarce owner stock")
     ax.legend(frameon=False)
     fig.tight_layout()
-    fig.savefig(outdir / "owner_market_by_size.png", dpi=180)
+    fig.savefig(outdir / "owner_market.png", dpi=180)
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(7, 4))
-    width = 0.26
-    ax.bar(x - width, sol.owner_demand_by_size, width, label="owners")
-    ax.bar(x, sol.rental_demand_by_size, width, label="renters")
-    ax.bar(x + width, sol.landlord_supply_by_size, width, label="landlords")
-    ax.set_xticks(x, labels)
+    ax.bar([0, 1], [float(sol.rental_demand_by_size[0]), float(sol.aggregate_owner_demand)])
+    ax.set_xticks([0, 1], ["renters", "owners"])
     ax.set_ylabel("service units per adult")
-    ax.set_title("Tenure decomposition by size")
-    ax.legend(frameon=False)
+    ax.set_title("Tenure services")
     fig.tight_layout()
-    fig.savefig(outdir / "tenure_market_by_size.png", dpi=180)
+    fig.savefig(outdir / "tenure_services.png", dpi=180)
     plt.close(fig)
 
     fig, ax1 = plt.subplots(figsize=(7, 4))
@@ -80,11 +76,11 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
     ax2 = ax1.twinx()
     ax2.plot(x, sol.owner_asset_price, marker="s", lw=2.0, color="tab:orange", label="asset price")
     ax2.set_ylabel("asset price")
-    ax1.set_title("Owner prices by size")
+    ax1.set_title("Owner price")
     lines = ax1.get_lines() + ax2.get_lines()
     ax1.legend(lines, [line.get_label() for line in lines], frameon=False)
     fig.tight_layout()
-    fig.savefig(outdir / "owner_prices_by_size.png", dpi=180)
+    fig.savefig(outdir / "owner_prices.png", dpi=180)
     plt.close(fig)
 
 
@@ -102,15 +98,10 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict:
         "owner_asset_price": sol.owner_asset_price,
         "owner_demand_by_size": sol.owner_demand_by_size,
         "rental_demand_by_size": sol.rental_demand_by_size,
-        "landlord_supply_by_size": sol.landlord_supply_by_size,
-        "housing_demand_by_size": sol.housing_demand_by_size,
         "housing_supply": sol.housing_supply,
-        "housing_excess_by_size": sol.housing_excess_by_size,
+        "owner_excess_by_size": sol.owner_excess_by_size,
         "aggregate_owner_demand": sol.aggregate_owner_demand,
         "aggregate_rental_demand": sol.aggregate_rental_demand,
-        "aggregate_landlord_supply": sol.aggregate_landlord_supply,
-        "aggregate_rental_excess": sol.aggregate_rental_excess,
-        "aggregate_housing_demand": sol.aggregate_housing_demand,
         "aggregate_housing_supply": sol.aggregate_housing_supply,
-        "aggregate_housing_excess": sol.aggregate_housing_excess,
+        "aggregate_owner_excess": sol.aggregate_owner_excess,
     }
