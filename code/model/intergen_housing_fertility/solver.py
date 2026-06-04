@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import math
 import time
 from types import SimpleNamespace
@@ -85,6 +86,20 @@ def normalize_population_mass(P: SimpleNamespace) -> bool:
     if uses_outside_option_closure(P):
         return False
     return bool(getattr(P, "normalize_population_mass", True))
+
+
+def uses_income_types(P: SimpleNamespace) -> bool:
+    return bool(getattr(P, "use_income_types", False)) and len(np.atleast_1d(getattr(P, "z_grid", [1.0]))) > 1
+
+
+def income_type_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
+    z = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    weights = np.asarray(getattr(P, "z_weights", np.ones(len(z))), dtype=float).reshape(-1)
+    if weights.size != z.size:
+        weights = np.ones(z.size)
+    weights = np.maximum(weights, 0.0)
+    weights = weights / weights.sum() if weights.sum() > 0 else np.ones(z.size) / max(z.size, 1)
+    return z, weights
 
 
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
@@ -624,7 +639,17 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
 
     solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
     do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
-    if do_pe:
+    if uses_income_types(P):
+        if do_pe:
+            sol, P, p_eq = solve_income_type_partial_equilibrium(
+                np.asarray(P.p_fixed, dtype=float).reshape(-1),
+                P,
+                b_grid,
+                verbose=verbose,
+            )
+        else:
+            sol, P, p_eq = solve_income_type_equilibrium(p_init, P, b_grid, verbose=verbose)
+    elif do_pe:
         sol, P, p_eq = solve_partial_equilibrium_dt(
             np.asarray(P.p_fixed, dtype=float).reshape(-1),
             np.asarray(P.w_fixed, dtype=float).reshape(-1),
@@ -644,6 +669,211 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
         print(f"Pop mass={getattr(sol, 'total_mass', np.nan):.3f}, Housing demand={np.sum(sol.housing_demand):.3f}")
         print(f"Total: {elapsed:.1f} sec")
     return sol, P, p_eq
+
+
+def make_income_type_params(P: SimpleNamespace, z_value: float, z_weight: float) -> SimpleNamespace:
+    Pz = copy.deepcopy(P)
+    Pz.use_income_types = False
+    Pz.Nz = 1
+    Pz.z_grid = np.array([float(z_value)])
+    Pz.z_weights = np.array([1.0])
+    Pz.income_type_z = float(z_value)
+    Pz.income_type_weight = float(z_weight)
+    Pz.N_target = float(getattr(P, "N_target", 1.0)) * float(z_weight)
+    Pz.w_hat = np.asarray(P.w_hat, dtype=float).reshape(-1) * float(z_value)
+    Pz.entry_shares = np.asarray(P.entry_shares, dtype=float).reshape(-1).copy()
+    Pz.entry_by_loc = float(getattr(Pz, "E_total", 1.0 / Pz.J)) * Pz.entry_shares
+    Pz = apply_overrides(Pz, {"w_hat": Pz.w_hat, "entry_shares": Pz.entry_shares})
+    Pz.N_target = float(getattr(P, "N_target", 1.0)) * float(z_weight)
+    Pz.income_type_z = float(z_value)
+    Pz.income_type_weight = float(z_weight)
+    return Pz
+
+
+def solve_income_type_partial_equilibrium(
+    p_fixed: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    z_grid, z_weights = income_type_values(P)
+    type_solutions = []
+    for z_value, z_weight in zip(z_grid, z_weights):
+        Pz = make_income_type_params(P, float(z_value), float(z_weight))
+        sol_z, _, _ = solve_partial_equilibrium_dt(
+            p_fixed,
+            Pz.w_hat,
+            Pz.entry_shares,
+            Pz,
+            b_grid,
+            verbose=False,
+        )
+        type_solutions.append(sol_z)
+    sol = aggregate_income_type_solutions(type_solutions, z_grid, z_weights, P, p_fixed)
+    sol.timings = {
+        "income_type_solves": len(type_solutions),
+        "bellman_full": float(sum(getattr(s, "timings", {}).get("bellman_full", 0.0) for s in type_solutions)),
+        "distribution": float(sum(getattr(s, "timings", {}).get("distribution", 0.0) for s in type_solutions)),
+    }
+    return sol, P, p_fixed
+
+
+def solve_income_type_equilibrium(
+    p_init: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    p = np.asarray(p_init, dtype=float).reshape(-1)
+    z_grid, z_weights = income_type_values(P)
+    lam = float(getattr(P, "lambda_eq", 0.30))
+    best_err = np.inf
+    best_p = p.copy()
+    best_solutions: list[SimpleNamespace] = []
+    t_solve = 0.0
+    final_err = np.nan
+
+    if verbose:
+        z_text = ", ".join(f"{z:.2f}:{w:.2f}" for z, w in zip(z_grid, z_weights))
+        print(f"  Income types: {z_text}")
+
+    for it in range(1, int(P.max_iter_eq) + 1):
+        type_solutions = []
+        t0 = time.perf_counter()
+        for z_value, z_weight in zip(z_grid, z_weights):
+            Pz = make_income_type_params(P, float(z_value), float(z_weight))
+            sol_z, _, _ = solve_partial_equilibrium_dt(
+                p,
+                Pz.w_hat,
+                Pz.entry_shares,
+                Pz,
+                b_grid,
+                verbose=False,
+            )
+            type_solutions.append(sol_z)
+        t_solve += time.perf_counter() - t0
+        sol_it = aggregate_income_type_solutions(type_solutions, z_grid, z_weights, P, p)
+        Hd = np.asarray(sol_it.housing_demand, dtype=float).reshape(-1)
+        p_target = np.zeros(P.I)
+        for i in range(P.I):
+            hd = max(float(Hd[i]), float(P.housing_demand_floor_for_supply))
+            p_target[i] = P.r_bar[i] * (hd / P.H0[i]) ** (1.0 / P.xi_supply[i]) / P.user_cost_rate
+        err = float(np.max(np.abs(p_target - p) / np.maximum(np.abs(p), 1e-6)))
+        final_err = err
+        if err < best_err:
+            best_err = err
+            best_p = p.copy()
+            best_solutions = type_solutions
+        if verbose:
+            print(
+                f"  Z{it:3d}: ep={err:.4f} own={100 * sol_it.own_rate:.1f}% "
+                f"TFR={2 * sol_it.mean_parity:.2f} p={','.join(f'{x:.3f}' for x in p)}"
+            )
+        if err < P.tol_eq:
+            break
+        p = p + lam * (p_target - p)
+        if bool(getattr(P, "enforce_price_bounds", True)):
+            p = np.clip(p, P.p_min, P.p_max)
+
+    sol = aggregate_income_type_solutions(best_solutions, z_grid, z_weights, P, best_p)
+    sol.timings = {
+        "income_type_solves": int(len(z_grid)),
+        "iterations_completed": int(it),
+        "best_eq_error": float(best_err),
+        "final_eq_error": float(final_err),
+        "accepted": bool(best_err < P.tol_eq),
+        "strict_converged": bool(best_err < P.tol_eq),
+        "convergence_reason": "strict_tol" if best_err < P.tol_eq else "max_iter",
+        "income_type_solve_time": float(t_solve),
+    }
+    sol.converged = bool(best_err < P.tol_eq)
+    return sol, P, best_p
+
+
+def aggregate_income_type_solutions(
+    type_solutions: list[SimpleNamespace],
+    z_grid: np.ndarray,
+    z_weights: np.ndarray,
+    P: SimpleNamespace,
+    p: np.ndarray,
+) -> SimpleNamespace:
+    if not type_solutions:
+        raise ValueError("No income-type solutions to aggregate.")
+    total_mass = sum(float(getattr(s, "total_mass", 0.0)) for s in type_solutions)
+    total_mass = max(total_mass, 1e-12)
+    weights = np.array([float(getattr(s, "total_mass", 0.0)) / total_mass for s in type_solutions])
+    g_total = sum(s.g for s in type_solutions)
+
+    sol = SimpleNamespace(
+        type_solutions=type_solutions,
+        type_values=np.asarray(z_grid, dtype=float).copy(),
+        type_weights=np.asarray(z_weights, dtype=float).copy(),
+        g=g_total,
+        p_eq=np.asarray(p, dtype=float).reshape(-1),
+        owner_asset_price=np.asarray(p, dtype=float).reshape(-1),
+        owner_user_cost=P.user_cost_rate * np.asarray(p, dtype=float).reshape(-1),
+    )
+    sol.V = type_solutions[0].V
+    sol.c_pol = type_solutions[0].c_pol
+    sol.hR_pol = type_solutions[0].hR_pol
+    sol.bp_pol = type_solutions[0].bp_pol
+    sol.tenure_choice = type_solutions[0].tenure_choice
+    sol.tenure_probs = getattr(type_solutions[0], "tenure_probs", None)
+    sol.loc_probs = type_solutions[0].loc_probs
+    sol.fert_probs = type_solutions[0].fert_probs
+    sol.fert_value = type_solutions[0].fert_value
+
+    for name in ("housing_demand", "pop_share", "own_by_age", "fert_by_age", "parity_dist", "own_by_parity", "mean_housing_by_parity"):
+        vals = [np.asarray(getattr(s, name), dtype=float) for s in type_solutions if hasattr(s, name)]
+        if vals:
+            setattr(sol, name, sum(w * v for w, v in zip(weights, vals)))
+
+    scalar_names = [
+        "own_rate",
+        "mean_parity",
+        "young_own_rate",
+        "old_age_own_rate_6575",
+        "old_age_own_rate_parents_6575",
+        "old_age_own_rate_childless_6575",
+        "old_age_parent_childless_gap_6575",
+        "mean_age_first_birth",
+        "wealth_to_income",
+        "liquid_wealth_to_income",
+        "young_liquid_wealth_to_income",
+        "own_rate_parents",
+        "own_rate_childless",
+        "own_family_gap",
+        "housing_increment_1to2",
+    ]
+    for name in scalar_names:
+        vals = np.array([float(getattr(s, name, np.nan)) for s in type_solutions])
+        finite = np.isfinite(vals)
+        setattr(sol, name, float(np.sum(weights[finite] * vals[finite]) / max(np.sum(weights[finite]), 1e-12)) if np.any(finite) else np.nan)
+
+    sol.total_mass = float(total_mass)
+    sol.owner_demand_by_size = sum(weights[k] * np.asarray(type_solutions[k].owner_demand_by_size) for k in range(len(type_solutions)))
+    sol.rental_demand_by_market = sum(weights[k] * np.asarray(type_solutions[k].rental_demand_by_market) for k in range(len(type_solutions)))
+    sol.owner_demand_by_market = sum(weights[k] * np.asarray(type_solutions[k].owner_demand_by_market) for k in range(len(type_solutions)))
+    sol.rental_demand_by_size = sol.rental_demand_by_market.copy()
+    sol.housing_supply = P.H0 * (sol.owner_user_cost / P.r_bar) ** P.xi_supply
+    sol.aggregate_rental_demand = float(np.sum(sol.rental_demand_by_market))
+    sol.aggregate_owner_demand = float(np.sum(sol.owner_demand_by_market))
+    sol.aggregate_housing_demand = float(sol.aggregate_rental_demand + sol.aggregate_owner_demand)
+    sol.aggregate_housing_supply = float(np.sum(sol.housing_supply))
+    sol.aggregate_housing_excess = float(sol.aggregate_housing_demand - sol.aggregate_housing_supply)
+    sol.best_max_abs_rel_excess = float(
+        np.max(np.abs((sol.rental_demand_by_market + sol.owner_demand_by_market - sol.housing_supply) / np.maximum(sol.housing_supply, 1e-12)))
+    )
+    sol.best_market_metric = sol.best_max_abs_rel_excess
+    sol.converged = bool(sol.best_max_abs_rel_excess <= getattr(P, "tol_eq", 1e-4))
+    sol.young_owner_rate = float(getattr(sol, "young_own_rate", np.nan))
+    sol.old_owner_rate = float(getattr(sol, "old_age_own_rate_6575", np.nan))
+    sol.mean_completed_fertility = float(getattr(sol, "mean_parity", np.nan))
+    sol.childless_rate = float(sol.parity_dist[0]) if hasattr(sol, "parity_dist") and len(sol.parity_dist) else np.nan
+    sol.own_rate_by_income_type = np.array([float(getattr(s, "own_rate", np.nan)) for s in type_solutions])
+    sol.mean_fertility_by_income_type = np.array([float(getattr(s, "mean_parity", np.nan)) for s in type_solutions])
+    sol.housing_demand_by_income_type = np.array([np.asarray(getattr(s, "housing_demand", np.zeros(P.I)), dtype=float) for s in type_solutions])
+    return sol
 
 
 def solve_partial_equilibrium_dt(

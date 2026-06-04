@@ -100,6 +100,10 @@ def setup_parameters() -> SimpleNamespace:
     P.E_loc = np.array([0.0])
     P.income_age_breaks = np.array([22.0, 26.0, 34.0, 46.0, 58.0])
     P.income_age_values = np.array([0.650, 0.850, 1.000, 0.985, 0.935])
+    P.use_income_types = True
+    P.z_grid = np.array([0.70, 1.00, 1.40])
+    P.z_weights = np.array([0.30, 0.40, 0.30])
+    P.income_type_transition = "permanent"
     P.mu_stay = 0.0
     P.mu_move = 5.0
     P.mu_move_parent = 5.0
@@ -243,6 +247,20 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.r_bar = np.asarray(P.r_bar, dtype=float)
     if "H0" in od:
         P.H0 = np.asarray(P.H0, dtype=float)
+    if "z_grid" in od:
+        P.z_grid = np.asarray(P.z_grid, dtype=float).reshape(-1)
+    if "z_weights" in od:
+        zw = np.asarray(P.z_weights, dtype=float).reshape(-1)
+        zw = np.maximum(zw, 0.0)
+        P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones_like(zw) / max(zw.size, 1)
+    if hasattr(P, "z_grid"):
+        P.z_grid = np.asarray(P.z_grid, dtype=float).reshape(-1)
+        if not hasattr(P, "z_weights") or len(np.atleast_1d(P.z_weights)) != len(P.z_grid):
+            P.z_weights = np.ones(len(P.z_grid)) / max(len(P.z_grid), 1)
+        else:
+            zw = np.maximum(np.asarray(P.z_weights, dtype=float).reshape(-1), 0.0)
+            P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones(len(P.z_grid)) / max(len(P.z_grid), 1)
+        P.Nz = len(P.z_grid)
 
     P.user_cost_rate = P.q + P.delta + P.tau_H
     P.R_gross = 1 + P.q

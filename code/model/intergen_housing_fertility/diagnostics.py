@@ -90,6 +90,27 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
     fig.savefig(outdir / "housing_prices.png", dpi=180)
     plt.close(fig)
 
+    if hasattr(sol, "type_values"):
+        z = np.asarray(sol.type_values, dtype=float)
+        x = np.arange(len(z))
+        width = 0.35
+        fig, ax1 = plt.subplots(figsize=(7, 4))
+        ax1.bar(x - width / 2, getattr(sol, "own_rate_by_income_type", np.zeros_like(z)), width, label="ownership")
+        ax1.set_ylabel("ownership rate")
+        ax1.set_ylim(0.0, 1.05)
+        ax1.set_xticks(x, [f"{v:g}" for v in z])
+        ax1.set_xlabel("income type")
+        ax2 = ax1.twinx()
+        ax2.bar(x + width / 2, getattr(sol, "mean_fertility_by_income_type", np.zeros_like(z)), width, color="tab:green", label="children")
+        ax2.set_ylabel("mean completed children")
+        h1, l1 = ax1.get_legend_handles_labels()
+        h2, l2 = ax2.get_legend_handles_labels()
+        ax1.legend(h1 + h2, l1 + l2, frameon=False)
+        ax1.set_title("Outcomes by income type")
+        fig.tight_layout()
+        fig.savefig(outdir / "income_type_outcomes.png", dpi=180)
+        plt.close(fig)
+
 
 def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:
     return {
@@ -97,12 +118,17 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:
         "period_years": getattr(P, "period_years", P.da),
         "n_child_stages": P.n_child_stages,
         "markets": P.I,
+        "income_types": getattr(sol, "type_values", getattr(P, "z_grid", np.array([1.0]))),
+        "income_type_weights": getattr(sol, "type_weights", getattr(P, "z_weights", np.array([1.0]))),
         "pti_constraint": bool(getattr(P, "use_pti_constraint", False)),
         "best_max_abs_rel_excess": float(getattr(sol, "best_max_abs_rel_excess", np.nan)),
         "own_rate": float(sol.own_rate),
         "young_owner_rate": float(getattr(sol, "young_owner_rate", np.nan)),
         "old_owner_rate": float(getattr(sol, "old_owner_rate", np.nan)),
         "mean_completed_fertility": float(getattr(sol, "mean_completed_fertility", np.nan)),
+        "own_rate_by_income_type": getattr(sol, "own_rate_by_income_type", np.array([])),
+        "mean_fertility_by_income_type": getattr(sol, "mean_fertility_by_income_type", np.array([])),
+        "housing_demand_by_income_type": getattr(sol, "housing_demand_by_income_type", np.array([])),
         "childless_rate": float(getattr(sol, "childless_rate", np.nan)),
         "mean_age_first_birth": float(getattr(sol, "mean_age_first_birth", np.nan)),
         "owner_user_cost": sol.owner_user_cost,

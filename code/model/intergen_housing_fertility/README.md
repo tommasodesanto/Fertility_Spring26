@@ -14,9 +14,10 @@ Run from `code/model`:
 ```
 
 The current pass uses one aggregate housing-services market, a 4-year decision
-period, one dependent-child stage, lifecycle income by age, owner housing rungs,
-continuous renter housing, down-payment constraints, transaction/sale wedges,
-and a payment-to-income screen for new owner choices. It is not calibrated.
+period, one dependent-child stage, permanent income/productivity types, lifecycle
+income by age, owner housing rungs, continuous renter housing, down-payment
+constraints, transaction/sale wedges, and a payment-to-income screen for new
+owner choices. It is not calibrated.
 
 `IMPLEMENTATION_STATUS.md` is the live implementation record. Any future
 simplification or deferred object should be added there in the same edit as the

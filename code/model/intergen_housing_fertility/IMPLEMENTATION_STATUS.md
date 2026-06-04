@@ -42,6 +42,12 @@ quantitative model.
   Incumbent owners who keep the same owner rung do not requalify each period.
 - `INTENDED`: lifecycle income profile \(y_a\) enters the budget and the
   payment-to-income screen.
+- `INTENDED`: permanent cross-sectional income/productivity types \(z\). The
+  default grid is `z_grid=[0.70, 1.00, 1.40]` with weights
+  `z_weights=[0.30, 0.40, 0.30]`. Each type solves the same household problem
+  at common housing prices; aggregate housing demand is the type-weighted sum.
+  Income is \(y_{a,z}=z y_a\), and the same type-scaled income enters the
+  budget and payment-to-income screen.
 - `INTENDED`: 4-year decision periods. Defaults are `age_start=22`, `J=16`,
   `J_R=11`, so agents enter at 22, retire around 66, and die after the last
   age-82 decision period.
@@ -53,10 +59,9 @@ quantitative model.
 
 ## Simplifications
 
-- `SIMPLIFICATION`: no idiosyncratic income/productivity state \(z\) yet.
-  Current income heterogeneity is only lifecycle income by age. Adding a
-  Coven-style \(z\) process is a real state-space extension and has not been
-  done in this pass.
+- `SIMPLIFICATION`: the income type is permanent. There is no stochastic
+  income transition matrix yet, so this is cross-sectional income heterogeneity
+  rather than lifecycle income risk.
 - `SIMPLIFICATION`: fertility remains the workhorse one-shot completed-family
   choice for childless fertile households. It is not a sequential parity hazard.
 - `SIMPLIFICATION`: the model uses a collateral-constrained user-cost shortcut:
@@ -77,7 +82,7 @@ quantitative model.
 
 - `NOT IMPLEMENTED`: calibration, SMM objective, counterfactual tables, and
   parameter search.
-- `NOT IMPLEMENTED`: idiosyncratic income process \(z_t\) with transition
+- `NOT IMPLEMENTED`: stochastic income process \(z_t\) with transition
   probabilities.
 - `NOT IMPLEMENTED`: estate-tax counterfactuals, inheritance kernels, bequest
   principal adding-up, and estate-revenue rebates.
