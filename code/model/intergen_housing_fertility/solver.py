@@ -92,6 +92,11 @@ def uses_income_types(P: SimpleNamespace) -> bool:
     return bool(getattr(P, "use_income_types", False)) and len(np.atleast_1d(getattr(P, "z_grid", [1.0]))) > 1
 
 
+def uses_markov_income(P: SimpleNamespace) -> bool:
+    transition = str(getattr(P, "income_type_transition", "permanent")).lower()
+    return uses_income_types(P) and transition in {"markov", "stochastic", "persistent"}
+
+
 def income_type_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
     z = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
     weights = np.asarray(getattr(P, "z_weights", np.ones(len(z))), dtype=float).reshape(-1)
@@ -100,6 +105,28 @@ def income_type_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
     weights = np.maximum(weights, 0.0)
     weights = weights / weights.sum() if weights.sum() > 0 else np.ones(z.size) / max(z.size, 1)
     return z, weights
+
+
+def income_transition_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    z, weights = income_type_values(P)
+    Pi = np.asarray(getattr(P, "Pi_z", np.eye(len(z))), dtype=float)
+    if Pi.shape != (len(z), len(z)):
+        Pi = np.eye(len(z))
+    Pi = np.maximum(Pi, 0.0)
+    row_sum = Pi.sum(axis=1)
+    for row in range(Pi.shape[0]):
+        if row_sum[row] > 0:
+            Pi[row, :] /= row_sum[row]
+        else:
+            Pi[row, :] = weights
+    return z, weights, Pi
+
+
+def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float:
+    y = float(P.income[i, j])
+    if j < int(getattr(P, "J_R", P.J)):
+        return y * float(z_value)
+    return y
 
 
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
@@ -639,7 +666,17 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
 
     solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
     do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
-    if uses_income_types(P):
+    if uses_markov_income(P):
+        if do_pe:
+            sol, P, p_eq = solve_markov_income_partial_equilibrium(
+                np.asarray(P.p_fixed, dtype=float).reshape(-1),
+                P,
+                b_grid,
+                verbose=verbose,
+            )
+        else:
+            sol, P, p_eq = solve_markov_income_equilibrium(p_init, P, b_grid, verbose=verbose)
+    elif uses_income_types(P):
         if do_pe:
             sol, P, p_eq = solve_income_type_partial_equilibrium(
                 np.asarray(P.p_fixed, dtype=float).reshape(-1),
@@ -669,6 +706,126 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
         print(f"Pop mass={getattr(sol, 'total_mass', np.nan):.3f}, Housing demand={np.sum(sol.housing_demand):.3f}")
         print(f"Total: {elapsed:.1f} sec")
     return sol, P, p_eq
+
+
+def solve_markov_income_partial_equilibrium(
+    p_fixed: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    p_eq = np.asarray(p_fixed, dtype=float).reshape(-1).copy()
+    P.eq_iter = 1
+    sol = solve_markov_income_at_prices(p_eq, P, b_grid, verbose=False)
+    if verbose:
+        print(
+            f"  Markov income PE: own={100 * sol.own_rate:.1f}% "
+            f"TFR={2 * sol.mean_parity:.2f} p={','.join(f'{x:.3f}' for x in p_eq)}"
+        )
+    return sol, P, p_eq
+
+
+def solve_markov_income_equilibrium(
+    p_init: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    p = np.asarray(p_init, dtype=float).reshape(-1)
+    z_grid, z_weights, Pi_z = income_transition_values(P)
+    lam = float(getattr(P, "lambda_eq", 0.30))
+    best_err = np.inf
+    best_p = p.copy()
+    best_sol: SimpleNamespace | None = None
+    t_solve = 0.0
+    final_err = np.nan
+    iterations_completed = 0
+
+    if verbose:
+        z_text = ", ".join(f"{z:.2f}:{w:.2f}" for z, w in zip(z_grid, z_weights))
+        print(f"  Markov income states: {z_text}")
+        print(f"  Markov transition rows: {np.array2string(Pi_z, precision=3)}")
+
+    for it in range(1, int(P.max_iter_eq) + 1):
+        P.eq_iter = it
+        t0 = time.perf_counter()
+        sol_it = solve_markov_income_at_prices(p, P, b_grid, verbose=False)
+        t_solve += time.perf_counter() - t0
+        Hd = np.asarray(sol_it.housing_demand, dtype=float).reshape(-1)
+        p_target = np.zeros(P.I)
+        for i in range(P.I):
+            hd = max(float(Hd[i]), float(P.housing_demand_floor_for_supply))
+            p_target[i] = P.r_bar[i] * (hd / P.H0[i]) ** (1.0 / P.xi_supply[i]) / P.user_cost_rate
+        err = float(np.max(np.abs(p_target - p) / np.maximum(np.abs(p), 1e-6)))
+        final_err = err
+        iterations_completed = it
+        if err < best_err:
+            best_err = err
+            best_p = p.copy()
+            best_sol = sol_it
+        if verbose:
+            print(
+                f"  ZM{it:3d}: ep={err:.4f} own={100 * sol_it.own_rate:.1f}% "
+                f"TFR={2 * sol_it.mean_parity:.2f} p={','.join(f'{x:.3f}' for x in p)}"
+            )
+        if err < P.tol_eq:
+            break
+        p = p + lam * (p_target - p)
+        if bool(getattr(P, "enforce_price_bounds", True)):
+            p = np.clip(p, P.p_min, P.p_max)
+
+    if best_sol is None:
+        best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False)
+    best_sol.timings = {
+        **getattr(best_sol, "timings", {}),
+        "income_process": "markov",
+        "iterations_completed": int(iterations_completed),
+        "best_eq_error": float(best_err),
+        "final_eq_error": float(final_err),
+        "accepted": bool(best_err < P.tol_eq),
+        "strict_converged": bool(best_err < P.tol_eq),
+        "convergence_reason": "strict_tol" if best_err < P.tol_eq else "max_iter",
+        "markov_income_solve_time": float(t_solve),
+    }
+    best_sol.converged = bool(best_err < P.tol_eq)
+    return best_sol, P, best_p
+
+
+def solve_markov_income_at_prices(
+    p_eq: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = False,
+) -> SimpleNamespace:
+    p = np.asarray(p_eq, dtype=float).reshape(-1).copy()
+    r = P.user_cost_rate * p
+    SD = precompute_shared(P, b_grid)
+    t0 = time.perf_counter()
+    V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, btime = solve_bellman_full_markov_income(
+        r, p, P, b_grid, SD
+    )
+    t_bellman = time.perf_counter() - t0
+    t0 = time.perf_counter()
+    g, stats = forward_distribution_markov_income(
+        bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, tenure_probs=tp
+    )
+    t_dist = time.perf_counter() - t0
+    sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
+    sol.timings = {
+        "bellman_full": float(btime.get("bellman", t_bellman)),
+        "distribution": float(t_dist),
+        "n_full": 1,
+        "n_eval": 0,
+        "n_dist": 1,
+        "income_process": "markov",
+        "bellman_mode": "full_only",
+    }
+    if verbose:
+        print(
+            f"  Markov income fixed-price solve: own={100 * sol.own_rate:.1f}% "
+            f"TFR={2 * sol.mean_parity:.2f}"
+        )
+    return sol
 
 
 def make_income_type_params(P: SimpleNamespace, z_value: float, z_weight: float) -> SimpleNamespace:
@@ -1370,6 +1527,350 @@ def solve_bellman_eval(
     stored_bp: np.ndarray, r_hat: np.ndarray, p_hat: np.ndarray, P: SimpleNamespace, b_grid: np.ndarray, SD: SimpleNamespace
 ):
     return solve_bellman_core(r_hat, p_hat, P, b_grid, SD, stored_bp=stored_bp, eval_mode=True)
+
+
+def solve_bellman_full_markov_income(
+    r_hat: np.ndarray,
+    p_hat: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    SD: SimpleNamespace,
+):
+    t0 = time.perf_counter()
+    J = P.J
+    I = P.I
+    Nb = len(b_grid)
+    nh = P.n_house
+    nt = 1 + nh
+    npar = P.n_parity
+    ncs = P.n_child_states
+    nc = SD.nc
+    z_grid, z_weights, Pi_z = income_transition_values(P)
+    Nz = len(z_grid)
+    beta = P.beta
+    Rg = P.R_gross
+    sigma = P.sigma
+    alpha = P.alpha_cons
+    oms = 1.0 - sigma
+    owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
+    owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
+    owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
+    owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
+    tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
+    use_tenure_logit = tenure_choice_kappa > 0.0
+    b = b_grid.reshape(-1, 1)
+    use_full_kernel = NUMBA_AVAILABLE and bool(getattr(P, "use_full_kernel", True))
+    cb_v = np.ascontiguousarray(SD.cb_flat.reshape(-1))
+    hb_v = np.ascontiguousarray(SD.hb_flat.reshape(-1))
+    psi_v_flat = np.ascontiguousarray(SD.psi_flat.reshape(-1))
+
+    V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
+    c_pol = np.zeros_like(V)
+    hR_pol = np.zeros_like(V)
+    bp_pol = np.ones_like(V)
+    tenure_choice = np.zeros((Nb, nt, I, J, Nz, npar, ncs), dtype=np.int16)
+    tenure_probs = (
+        np.zeros((Nb, nt, I, J, Nz, npar, ncs, nt), dtype=np.float32)
+        if use_tenure_logit
+        else None
+    )
+    loc_probs = np.zeros((Nb, nt, I, I, J, Nz, npar, ncs))
+    fert_probs = np.zeros((Nb, nt, I, J, Nz, npar))
+    fert_value = np.zeros((Nb, nt, I, J, Nz))
+
+    phi_choice = SD.phi_choice
+    birth_entry_grant = SD.birth_entry_grant
+    hcost = np.zeros((I, nt))
+    heq = np.zeros((I, nt))
+    dp_arr = np.zeros((I, nt, npar, ncs))
+    bmo = np.zeros((I, nt, npar, ncs))
+    pti_payment = np.zeros((I, nt, npar, ncs))
+    hsrv = np.zeros((I, nt))
+    ocst = np.zeros((I, nt))
+    for i in range(I):
+        for ten in range(1, nt):
+            hs = P.H_own[ten - 1]
+            hcost[i, ten] = p_hat[i] * hs
+            heq[i, ten] = (1 - P.psi) * p_hat[i] * hs
+            hsrv[i, ten] = P.chi * hs
+            extra_size_cost = owner_size_cost * p_hat[i] * max(hs - owner_size_cost_ref, 0.0) ** owner_size_cost_power
+            ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs + extra_size_cost
+            for nn in range(npar):
+                for cs in range(ncs):
+                    phi_ncs = phi_choice[i, ten, nn, cs]
+                    dp_arr[i, ten, nn, cs] = (1 - phi_ncs) * hcost[i, ten]
+                    bmo[i, ten, nn, cs] = -phi_ncs * hcost[i, ten]
+                    pti_payment[i, ten, nn, cs] = (P.q * phi_ncs + P.tau_H) * hcost[i, ten]
+
+    Vbq = np.zeros((Nb, nt, I, npar, ncs))
+    for i in range(I):
+        for ten in range(nt):
+            hv = p_hat[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+            for nn in range(npar):
+                for cs in range(ncs):
+                    nk = get_completed_fertility(nn, cs, P)
+                    Vbq[:, ten, i, nn, cs] = bequest_utility_vec(b_grid + hv, nk, P)
+
+    loc_shift = np.zeros((I, I))
+    for io in range(I):
+        for id_ in range(I):
+            move_cost = P.mu_stay if id_ == io else P.mu_move
+            loc_shift[io, id_] = P.E_loc[id_] - move_cost
+
+    iidx = np.zeros((Nb, I, nt), dtype=np.int64)
+    iwt = np.zeros((Nb, I, nt))
+    for io in range(I):
+        for to in range(nt):
+            ba = np.clip(b_grid + heq[io, to], b_grid[0], b_grid[-1])
+            idx, wt = interp_indices(b_grid, ba)
+            iidx[:, io, to] = idx
+            iwt[:, io, to] = wt
+
+    gs_tol = 1e-3
+    gs_alpha1 = (3 - math.sqrt(5)) / 2
+    gs_alpha2 = (math.sqrt(5) - 1) / 2
+
+    for j in range(J - 1, -1, -1):
+        in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
+        for zz, z_value in enumerate(z_grid):
+            if j == J - 1:
+                Vnr = Vbq
+            else:
+                Vnr = np.zeros((Nb, nt, I, npar, ncs))
+                for znext in range(Nz):
+                    Vnr += Pi_z[zz, znext] * V[:, :, :, j + 1, znext, :, :]
+            Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
+            Vd = np.zeros((Nb, nt, I, npar, ncs))
+            cd = np.zeros_like(Vd)
+            hd = np.zeros_like(Vd)
+            bd = np.zeros_like(Vd)
+            Vo_nc = np.zeros((Nb, nc))
+            bp_nc = np.zeros((Nb, nc))
+
+            for i in range(I):
+                yj = income_at_state(P, i, j, float(z_value))
+                ri = r_hat[i]
+                Rv = Rg * b + yj
+                hRmax = P.hR_max
+                Vcr = flat_nc(Vc[:, 0, i, :, :], Nb, nc)
+                Rv1d_full = np.ascontiguousarray(Rv[:, 0])
+                if use_full_kernel:
+                    bp_prev_r = np.zeros((Nb, nc))
+                    has_prev_r = 0
+                    Vo_nc, bp_nc, co_nc, ho_nc = full_renter_block_kernel(
+                        Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
+                        cb_v, hb_v, psi_v_flat,
+                        ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
+                        alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                    )
+                else:
+                    Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
+                    d_nc = SD.cb_flat + ri * SD.hb_flat
+                    cap_nc = ri * (hRmax - SD.hb_flat) / (1 - alpha)
+                    for c in range(nc):
+                        Vbar = Vcr[:, c]
+                        dc = d_nc[0, c]
+                        pc = SD.psi_flat[0, c]
+                        cc = cap_nc[0, c]
+                        cb_c = SD.cb_flat[0, c]
+                        hb_c = SD.hb_flat[0, c]
+                        ht_cap_c = max(hRmax - hb_c, 1e-10)
+                        lo = np.maximum(np.zeros(Nb), b_grid[0])
+                        hi = np.maximum((Rv[:, 0] - dc - 1e-6), 0.0)
+                        bp, val = golden_renter(
+                            lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
+                            ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
+                            gs_alpha1, gs_alpha2, gs_tol,
+                        )
+                        bp_nc[:, c] = bp
+                        Vo_nc[:, c] = val
+                    surplus_nc = Rv - d_nc - bp_nc
+                    ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
+                    ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
+                    cm = (SD.hb_flat + ht_nc) > hRmax
+                    if np.any(cm):
+                        ct_cap = np.maximum(Rv - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
+                        hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
+                        ct_nc[cm] = ct_cap[cm]
+                        ht_nc[cm] = hcap[cm]
+                    co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
+                    ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
+                    bad = surplus_nc <= 1e-10
+                    co_nc[bad] = P.c_bar_0 + P.c_min
+                    ho_nc[bad] = P.h_bar_0 + 0.01
+                Vd[:, 0, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
+                bd[:, 0, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
+                cd[:, 0, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
+                hd[:, 0, i, :, :] = unflat_nc(ho_nc, Nb, npar, ncs)
+
+                for ten in range(1, nt):
+                    oc = ocst[i, ten]
+                    hsv = hsrv[i, ten]
+                    Vco = flat_nc(Vc[:, ten, i, :, :], Nb, nc)
+                    if use_full_kernel:
+                        bf_v = np.ascontiguousarray(bmo[i, ten, :, :].reshape(-1, order="F"))
+                        bp_prev_o = np.zeros((Nb, nc))
+                        has_prev_o = 0
+                        Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
+                            Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+                            cb_v, hb_v, psi_v_flat, bf_v,
+                            oc, hsv, owner_h_bar_scale, P.c_min,
+                            alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                        )
+                    else:
+                        for c in range(nc):
+                            Vbar = Vco[:, c]
+                            cb_c = SD.cb_flat[0, c]
+                            pc = SD.psi_flat[0, c]
+                            ht_c = max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
+                            Ko_c = ht_c ** ((1 - alpha) * oms)
+                            nn_c_1 = math.ceil((c + 1) / ncs)
+                            cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
+                            bf_c = bmo[i, ten, nn_c_1 - 1, cs_c_1 - 1]
+                            lo = np.maximum(bf_c, b_grid[0]) * np.ones(Nb)
+                            hi = np.maximum(Rv[:, 0] - oc - cb_c - 1e-6, lo)
+                            bp, val = golden_owner(
+                                lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc,
+                                Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                            )
+                            bp_nc[:, c] = bp
+                            Vo_nc[:, c] = val
+                        co_nc = SD.cb_flat + np.maximum(Rv - oc - SD.cb_flat - bp_nc, P.c_min)
+                    Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
+                    bd[:, ten, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
+                    cd[:, ten, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
+
+            c_pol[:, :, :, j, zz, :, :] = cd
+            hR_pol[:, :, :, j, zz, :, :] = hd
+            bp_pol[:, :, :, j, zz, :, :] = bd
+
+            dp_choice = dp_arr
+            if bool(getattr(P, "use_pti_constraint", False)):
+                dp_choice = dp_arr.copy()
+                pti_limit = max(float(getattr(P, "pti_limit", 1.0)), 0.0)
+                big_dp = max(float(b_grid[-1]) + 10.0 * np.max(np.maximum(hcost, 1.0)), 1e8)
+                for i in range(I):
+                    yj = income_at_state(P, i, j, float(z_value))
+                    failed = pti_payment[i] > pti_limit * yj
+                    failed[0, :, :] = False
+                    dp_choice[i, failed] = big_dp
+
+            if (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+                VH, tcj = tenure_choice_kernel(
+                    Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant
+                )
+            else:
+                VH = np.zeros((Nb, nt, I, npar, ncs))
+                tcj = np.zeros((Nb, nt, I, npar, ncs), dtype=np.int16)
+                for id_ in range(I):
+                    for to in range(nt):
+                        sp = heq[id_, to] if to > 0 else 0.0
+                        Vopt = np.zeros((Nb, npar, ncs, nt))
+                        if to == 0:
+                            Vopt[:, :, :, 0] = Vd[:, 0, id_, :, :]
+                        else:
+                            ba = np.maximum(b_grid + sp, 0.0)
+                            Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
+                        for tn in range(1, nt):
+                            hc = hcost[id_, tn]
+                            Vow = Vd[:, tn, id_, :, :]
+                            if to == tn:
+                                Vopt[:, :, :, tn] = Vow
+                            elif to == 0:
+                                bab = b_grid - hc
+                                Vb = interp_on_grid(b_grid, Vow, bab)
+                                for nn in range(npar):
+                                    for cs in range(ncs):
+                                        dpn = dp_choice[id_, tn, nn, cs]
+                                        bmn = bmo[id_, tn, nn, cs]
+                                        if SD.birth_dp[nn, cs, to, tn]:
+                                            bag = np.maximum(bab, bmn)
+                                            Vb[:, nn, cs] = interp_vector(b_grid, Vow[:, nn, cs], bag)
+                                        elif birth_entry_grant[id_, tn, nn, cs] > 0:
+                                            gfix = birth_entry_grant[id_, tn, nn, cs]
+                                            babg = bab + gfix
+                                            Vg = interp_vector(b_grid, Vow[:, nn, cs], babg)
+                                            inf_m = ((b_grid + gfix) < dpn) | (babg < bmn)
+                                            Vg[inf_m] = -1e10
+                                            Vb[:, nn, cs] = Vg
+                                        else:
+                                            inf_m = (b_grid < dpn) | (bab < bmn)
+                                            Vb[inf_m, nn, cs] = -1e10
+                                Vopt[:, :, :, tn] = Vb
+                            else:
+                                bar = b_grid + sp - hc
+                                Vrs = interp_on_grid(b_grid, Vow, bar)
+                                for nn in range(npar):
+                                    for cs in range(ncs):
+                                        dpn = dp_choice[id_, tn, nn, cs]
+                                        bmn = bmo[id_, tn, nn, cs]
+                                        dpc = dpn - sp
+                                        inf_m = (b_grid < dpc) | (bar < bmn)
+                                        Vrs[inf_m, nn, cs] = -1e10
+                                Vopt[:, :, :, tn] = Vrs
+                        tc = np.argmax(Vopt, axis=3)
+                        if use_tenure_logit:
+                            ls, pr = logsumexp(Vopt / tenure_choice_kappa, axis=3)
+                            VH[:, to, id_, :, :] = tenure_choice_kappa * ls
+                            tenure_probs[:, to, id_, j, zz, :, :, :] = pr.astype(np.float32)
+                        else:
+                            VH[:, to, id_, :, :] = np.max(Vopt, axis=3)
+                        tcj[:, to, id_, :, :] = tc
+            tenure_choice[:, :, :, j, zz, :, :] = tcj
+
+            kl = P.kappa_loc
+            if NUMBA_AVAILABLE and bool(getattr(P, "use_loc_kernel", True)):
+                VI, lpj = location_logit_kernel(VH, iidx, iwt, loc_shift, kl)
+            else:
+                VI = np.zeros((Nb, nt, I, npar, ncs))
+                lpj = np.zeros((Nb, nt, I, I, npar, ncs))
+                for io in range(I):
+                    for to in range(nt):
+                        Va = np.zeros((Nb, I, npar, ncs))
+                        Va[:, io, :, :] = VH[:, to, io, :, :]
+                        idx = iidx[:, io, to]
+                        wt = iwt[:, io, to]
+                        for id_ in range(I):
+                            if id_ == io:
+                                continue
+                            Vdst = VH[:, 0, id_, :, :]
+                            Va[:, id_, :, :] = (1 - wt)[:, None, None] * Vdst[idx, :, :] + wt[:, None, None] * Vdst[idx + 1, :, :]
+                        la = Va.copy()
+                        for id_ in range(I):
+                            la[:, id_, :, :] += loc_shift[io, id_]
+                        la = la / kl
+                        ls, pr = logsumexp(la, axis=1)
+                        VI[:, to, io, :, :] = kl * ls
+                        lpj[:, to, io, :, :, :] = pr
+            loc_probs[:, :, :, :, j, zz, :, :] = lpj
+
+            if in_fert:
+                Vfa = np.zeros((Nb, nt, I, npar))
+                Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
+                for nn in range(1, npar):
+                    Vfa[:, :, :, nn] = VI[:, :, :, nn, 1]
+                lf = Vfa / P.kappa_fert
+                ls, pr = logsumexp(lf, axis=3)
+                fert_probs[:, :, :, j, zz, :] = pr
+                fert_value[:, :, :, j, zz] = P.kappa_fert * ls
+                V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
+                V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
+                V[:, :, :, j, zz, 0, 1:] = VI[:, :, :, 0, 1:]
+            else:
+                V[:, :, :, j, zz, :, :] = VI
+
+    return (
+        V,
+        c_pol,
+        hR_pol,
+        bp_pol,
+        tenure_choice,
+        tenure_probs,
+        loc_probs,
+        fert_probs,
+        fert_value,
+        {"bellman": time.perf_counter() - t0},
+    )
 
 
 def solve_bellman_core(
@@ -2259,6 +2760,336 @@ def forward_distribution(
     return g, stats
 
 
+def forward_distribution_markov_income(
+    bp_pol: np.ndarray,
+    hR_pol: np.ndarray,
+    tenure_choice: np.ndarray,
+    loc_probs: np.ndarray,
+    fert_probs: np.ndarray,
+    r_hat: np.ndarray,
+    p_hat: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    SD: SimpleNamespace,
+    tenure_probs: np.ndarray | None = None,
+) -> tuple[np.ndarray, SimpleNamespace]:
+    J = P.J
+    I = P.I
+    Nb = len(b_grid)
+    nt = 1 + P.n_house
+    npar = P.n_parity
+    ncs = P.n_child_states
+    nc = SD.nc
+    z_grid, z_weights, Pi_z = income_transition_values(P)
+    Nz = len(z_grid)
+    use_compiled_scatter = NUMBA_AVAILABLE and bool(getattr(P, "use_numba_scatter", False))
+    bmin = b_grid[0]
+    bmax = b_grid[-1]
+    g = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
+    ie = int(np.argmax(b_grid >= P.b_entry_fixed)) if np.any(b_grid >= P.b_entry_fixed) else 0
+    for i in range(I):
+        for zz in range(Nz):
+            g[ie, 0, i, 0, zz, 0, 0] = P.entry_by_loc[i] * z_weights[zz]
+    total_births = 0.0
+    births_by_loc = np.zeros(I)
+    entrants_mature_by_loc = np.zeros(I)
+    entrants_mature_total = 0.0
+
+    hc = np.zeros((I, nt))
+    he = np.zeros((I, nt))
+    for i in range(I):
+        for ten in range(1, nt):
+            hs = P.H_own[ten - 1]
+            hc[i, ten] = p_hat[i] * hs
+            he[i, ten] = (1 - P.psi) * p_hat[i] * hs
+
+    phi_choice = SD.phi_choice
+    lmm_idx = np.zeros((I, nt, Nb), dtype=np.int64)
+    lmm_wt = np.zeros((I, nt, Nb))
+    for io in range(I):
+        for to in range(nt):
+            ba = np.clip(b_grid + he[io, to], bmin, bmax)
+            lmm_idx[io, to, :], lmm_wt[io, to, :] = interp_indices(b_grid, ba)
+
+    tmx_idx = np.zeros((I, nt, nt, npar, ncs, Nb), dtype=np.int64)
+    tmx_wt = np.zeros((I, nt, nt, npar, ncs, Nb))
+    for nn in range(npar):
+        for cs in range(ncs):
+            for id_ in range(I):
+                for to in range(nt):
+                    sp = he[id_, to]
+                    for tn in range(nt):
+                        pn = phi_choice[id_, tn, nn, cs] if tn > 0 else 1.0
+                        if tn == to:
+                            bf = b_grid.copy()
+                        elif to == 0 and tn > 0:
+                            bf = np.clip(np.maximum(b_grid - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
+                        elif to > 0 and tn == 0:
+                            bf = np.clip(np.maximum(b_grid + sp, 0.0), bmin, bmax)
+                        else:
+                            bf = np.clip(np.maximum(b_grid + sp - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
+                        tmx_idx[id_, to, tn, nn, cs, :], tmx_wt[id_, to, tn, nn, cs, :] = interp_indices(b_grid, bf)
+
+    K = P.n_child_stages
+    csm1 = K + 1
+    csm2 = K + 2
+    ust = bool(P.use_stochastic_aging and hasattr(P, "Pi_child"))
+    Pia = P.Pi_child if ust else None
+
+    for j in range(J - 1):
+        if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
+            for zz in range(Nz):
+                gc = g[:, :, :, j, zz, 0, 0]
+                pa = fert_probs[:, :, :, j, zz, :]
+                pv = np.arange(npar).reshape(1, 1, 1, npar)
+                ba_j = gc * np.sum(pa * pv, axis=3)
+                total_births += float(np.sum(ba_j))
+                for i in range(I):
+                    births_by_loc[i] += float(np.sum(ba_j[:, :, i]))
+                mbp = gc[:, :, :, None] * pa
+                gpf = np.zeros((Nb, nt, I, npar, ncs))
+                gpf[:, :, :, 0, 0] = mbp[:, :, :, 0]
+                gpf[:, :, :, 1:, 1] = mbp[:, :, :, 1:]
+                g[:, :, :, j, zz, 0, 0] = 0.0
+                g[:, :, :, j, zz, :, :] += gpf
+
+        gj = g[:, :, :, j, :, :, :]
+        gpl = np.zeros((Nb, nt, I, Nz, npar, ncs))
+        for zz in range(Nz):
+            for io in range(I):
+                for to in range(nt):
+                    go = flat_nc(gj[:, to, io, zz, :, :], Nb, nc)
+                    if np.sum(go) < 1e-15:
+                        continue
+                    po = np.reshape(loc_probs[:, to, io, :, j, zz, :, :], (Nb, I, nc), order="F")
+                    sp = po[:, io, :]
+                    gpl[:, to, io, zz, :, :] += unflat_nc(go * sp, Nb, npar, ncs)
+                    idx = lmm_idx[io, to, :]
+                    wt = lmm_wt[io, to, :]
+                    for id_ in range(I):
+                        if id_ == io:
+                            continue
+                        mp = go * po[:, id_, :]
+                        if use_compiled_scatter:
+                            moved = scatter_cols_sameidx_kernel(idx, wt, mp, Nb)
+                        else:
+                            moved = scatter_redistribute_cols_sameidx(idx, wt, mp, Nb)
+                        gpl[:, 0, id_, zz, :, :] += unflat_nc(moved, Nb, npar, ncs)
+
+        gpt = np.zeros((Nb, nt, I, Nz, npar, ncs))
+        for zz in range(Nz):
+            for nn in range(npar):
+                for id_ in range(I):
+                    for to in range(nt):
+                        gs = gpl[:, to, id_, zz, nn, :]
+                        if np.sum(gs) < 1e-15:
+                            continue
+                        for tn in range(nt):
+                            if tenure_probs is None:
+                                tcs = tenure_choice[:, to, id_, j, zz, nn, :]
+                                mk = tcs == tn
+                                if not np.any(mk):
+                                    continue
+                                mt = gs * mk
+                            else:
+                                pr = tenure_probs[:, to, id_, j, zz, nn, :, tn]
+                                mt = gs * pr
+                            if np.sum(mt) < 1e-15:
+                                continue
+                            rd = np.zeros((Nb, ncs))
+                            for cs in range(ncs):
+                                idx = tmx_idx[id_, to, tn, nn, cs, :]
+                                wt = tmx_wt[id_, to, tn, nn, cs, :]
+                                if use_compiled_scatter:
+                                    rd[:, cs] = scatter_vec_kernel(idx, wt, mt[:, cs], Nb)
+                                else:
+                                    rd[:, cs] = scatter_redistribute(idx, wt, mt[:, cs], Nb)
+                            gpt[:, tn, id_, zz, nn, :] += rd
+
+        gps = np.zeros((Nb, nt, I, Nz, npar, ncs))
+        for zz in range(Nz):
+            for i in range(I):
+                for ten in range(nt):
+                    gf = flat_nc(gpt[:, ten, i, zz, :, :], Nb, nc)
+                    bpv = flat_nc(bp_pol[:, ten, i, j, zz, :, :], Nb, nc)
+                    bpc = np.clip(bpv, bmin, bmax)
+                    idx, wt = interp_indices(b_grid, bpc)
+                    if use_compiled_scatter:
+                        g_new = scatter_cols_kernel(idx, wt, gf, Nb)
+                    else:
+                        g_new = scatter_redistribute_cols(idx, wt, gf, Nb)
+                    gps[:, ten, i, zz, :, :] = unflat_nc(g_new, Nb, npar, ncs)
+
+        for zz in range(Nz):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    gp = gps[:, :, :, zz, nn, cs]
+                    if ust:
+                        Pi = Pia[:, :, nn]
+                        if cs == K and nn >= 1:
+                            pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
+                            if pm > 0:
+                                nk = nn
+                                for im in range(I):
+                                    fi = nk * pm * float(np.sum(gp[:, :, im]))
+                                    entrants_mature_by_loc[im] += fi
+                                    entrants_mature_total += fi
+                        for csn in range(ncs):
+                            wt_child = Pi[cs, csn]
+                            if wt_child > 0:
+                                for zn in range(Nz):
+                                    g[:, :, :, j + 1, zn, nn, csn] += Pi_z[zz, zn] * wt_child * gp
+                    else:
+                        if cs == 0:
+                            csn = 0
+                        elif cs >= csm1:
+                            csn = cs
+                        elif cs < K:
+                            csn = cs + 1
+                        else:
+                            csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
+                        if cs == K and csn >= csm1 and nn >= 1:
+                            nk = nn
+                            for im in range(I):
+                                fi = nk * float(np.sum(gp[:, :, im]))
+                                entrants_mature_by_loc[im] += fi
+                                entrants_mature_total += fi
+                        for zn in range(Nz):
+                            g[:, :, :, j + 1, zn, nn, csn] += Pi_z[zz, zn] * gp
+
+    tm = float(np.sum(g))
+    if tm > 1e-12 and normalize_population_mass(P):
+        sc = P.N_target / tm
+        g *= sc
+        total_births *= sc
+        births_by_loc *= sc
+        entrants_mature_by_loc *= sc
+        entrants_mature_total *= sc
+
+    stats = compute_markov_statistics(g, fert_probs, loc_probs, P, b_grid, p_hat, hR_pol)
+    stats.total_births_kfe = total_births
+    stats.births_by_loc = births_by_loc
+    stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
+    stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
+    stats.total_mass = float(np.sum(g))
+    stats.entrants_mature_by_loc = entrants_mature_by_loc
+    stats.entrants_mature_total = entrants_mature_total
+    stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+    stats.housing_increment_0to1_eventstudy_t3 = 0.0
+    stats.housing_increment_1to2_proxy_t3 = 0.0
+    stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
+    stats.housing_increment_0to2plus_eventstudy_t3 = 0.0
+    stats.housing_event_horizon = 3
+    return g, stats
+
+
+def collapse_markov_policy(policy: np.ndarray, g: np.ndarray, z_weights: np.ndarray) -> np.ndarray:
+    fallback = np.tensordot(policy, z_weights, axes=([4], [0]))
+    den = np.sum(g, axis=4)
+    num = np.sum(policy * g, axis=4)
+    out = fallback.copy()
+    mask = den > 1e-15
+    out[mask] = num[mask] / den[mask]
+    return out
+
+
+def collapse_markov_fertility_probs(fp: np.ndarray, g: np.ndarray, z_weights: np.ndarray) -> np.ndarray:
+    fallback = np.tensordot(fp, z_weights, axes=([4], [0]))
+    mass = g[:, :, :, :, :, 0, 0]
+    den = np.sum(mass, axis=4)
+    num = np.sum(fp * mass[:, :, :, :, :, None], axis=4)
+    out = fallback.copy()
+    mask = den > 1e-15
+    out[mask, :] = num[mask, :] / den[mask, None]
+    return out
+
+
+def collapse_markov_location_probs(lp: np.ndarray, g: np.ndarray, z_weights: np.ndarray) -> np.ndarray:
+    fallback = np.tensordot(lp, z_weights, axes=([5], [0]))
+    mass = g[:, :, :, None, :, :, :, :]
+    den = np.sum(mass, axis=5)
+    num = np.sum(lp * mass, axis=5)
+    return np.divide(num, den, out=fallback.copy(), where=den > 1e-15)
+
+
+def compute_markov_statistics(
+    g: np.ndarray,
+    fp: np.ndarray,
+    lp: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+    hR: np.ndarray,
+) -> SimpleNamespace:
+    z_grid, z_weights, Pi_z = income_transition_values(P)
+    g_total = np.sum(g, axis=4)
+    hR_total = collapse_markov_policy(hR, g, z_weights)
+    fp_total = collapse_markov_fertility_probs(fp, g, z_weights)
+    lp_total = collapse_markov_location_probs(lp, g, z_weights)
+    stats = compute_statistics(g_total, fp_total, lp_total, P, bg, ph, hR_total)
+    Nz = len(z_grid)
+    nt = 1 + P.n_house
+    stats.income_state_mass = np.zeros(Nz)
+    stats.own_rate_by_income_type = np.zeros(Nz)
+    stats.mean_fertility_by_income_type = np.zeros(Nz)
+    stats.housing_demand_by_income_type = np.zeros((Nz, P.I))
+    for zz in range(Nz):
+        gz = g[:, :, :, :, zz, :, :]
+        mz = float(np.sum(gz))
+        stats.income_state_mass[zz] = mz
+        stats.own_rate_by_income_type[zz] = float(np.sum(gz[:, 1:, :, :, :, :]) / max(mz, 1e-12))
+        mp = float(np.sum(g[:, :, :, P.A_f_end :, zz, :, :]))
+        if mp > 1e-12:
+            mean_n = 0.0
+            for nn in range(P.n_parity):
+                mean_n += nn * float(np.sum(g[:, :, :, P.A_f_end :, zz, nn, :])) / mp
+            stats.mean_fertility_by_income_type[zz] = mean_n
+        for i in range(P.I):
+            Hd = 0.0
+            for j in range(P.J):
+                for nn in range(P.n_parity):
+                    for cs in range(P.n_child_states):
+                        Hd += float(np.sum(g[:, 0, i, j, zz, nn, cs] * hR[:, 0, i, j, zz, nn, cs]))
+                        for ten in range(1, nt):
+                            Hd += float(np.sum(g[:, ten, i, j, zz, nn, cs]) * P.H_own[ten - 1])
+            stats.housing_demand_by_income_type[zz, i] = Hd / max(housing_demand_normalizer(P), 1e-12)
+
+    worker_income = worker_mass = 0.0
+    young_income = young_mass = young_liquid = 0.0
+    payroll_tax_revenue = 0.0
+    period_scale = float(getattr(P, "period_years", getattr(P, "da", 1.0))) if bool(getattr(P, "scale_flows_to_period", False)) else 1.0
+    a25s = age_to_index(P, 25)
+    aye = age_to_index(P, 35)
+    for j in range(P.J):
+        for i in range(P.I):
+            for zz, z_value in enumerate(z_grid):
+                yj = income_at_state(P, i, j, float(z_value))
+                mass = float(np.sum(g[:, :, i, j, zz, :, :]))
+                if j < P.J_R:
+                    worker_income += yj * mass
+                    worker_mass += mass
+                    payroll_tax_revenue += period_scale * P.tau_pay * P.w_hat[i] * P.income_age_profile[j] * float(z_value) * mass
+                if a25s <= j <= aye:
+                    gm = g[:, 0, i, j, zz, 0, 0]
+                    mh = float(np.sum(gm))
+                    if mh > 1e-15:
+                        young_income += yj * mh
+                        young_mass += mh
+                        young_liquid += float(np.sum(gm * bg))
+    stats.mean_income = worker_income / max(worker_mass, 1e-12)
+    stats.young_childless_renter_income = young_income / max(young_mass, 1e-12)
+    stats.young_liquid_wealth = young_liquid / max(young_mass, 1e-12)
+    stats.young_liquid_wealth_to_income = young_liquid / max(young_income, 1e-12)
+    stats.wealth_to_income = getattr(stats, "mean_wealth_4555", 0.0) / max(stats.mean_income, 1e-12)
+    stats.liquid_wealth_to_income = getattr(stats, "liquid_wealth_4555", 0.0) / max(stats.mean_income, 1e-12)
+    stats.payroll_tax_revenue = payroll_tax_revenue
+    stats.pension_outlays = P.pension * stats.retiree_mass_total
+    stats.pension_budget_residual = stats.payroll_tax_revenue - stats.pension_outlays
+    stats.implied_balanced_pension = stats.payroll_tax_revenue / max(stats.retiree_mass_total, 1e-12)
+    stats.income_transition = Pi_z.copy()
+    return stats
+
+
 def compute_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:
     J = P.J
     I = P.I
@@ -2902,6 +3733,85 @@ def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs):
                     csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
                 Vc[:, :, :, nn, cs] = Vn[:, :, :, nn, csn]
     return Vc
+
+
+def pack_solution_markov_income(
+    V,
+    c,
+    h,
+    bp,
+    tc,
+    tp,
+    lp,
+    fp,
+    fv,
+    g,
+    st: SimpleNamespace,
+    w,
+    p,
+    P: SimpleNamespace,
+) -> SimpleNamespace:
+    z_grid, z_weights, Pi_z = income_transition_values(P)
+    sol = SimpleNamespace(
+        V=V,
+        c_pol=c,
+        hR_pol=h,
+        bp_pol=bp,
+        tenure_choice=tc,
+        tenure_probs=tp,
+        loc_probs=lp,
+        fert_probs=fp,
+        fert_value=fv,
+        g=g,
+        g_collapsed=np.sum(g, axis=4),
+        w_hat=w,
+        p_eq=p,
+        type_values=z_grid.copy(),
+        type_weights=z_weights.copy(),
+        income_transition=Pi_z.copy(),
+    )
+    for key, value in vars(st).items():
+        setattr(sol, key, value)
+    norm = housing_demand_normalizer(P)
+    owner_by_size = np.zeros(P.n_house)
+    renter_by_market = np.zeros(P.I)
+    owner_by_market = np.zeros(P.I)
+    for i in range(P.I):
+        renter_by_market[i] = float(np.sum(g[:, 0, i, :, :, :, :] * h[:, 0, i, :, :, :, :])) / max(norm, 1e-12)
+        for ten in range(1, 1 + P.n_house):
+            demand = float(np.sum(g[:, ten, i, :, :, :, :])) * float(P.H_own[ten - 1]) / max(norm, 1e-12)
+            owner_by_size[ten - 1] += demand
+            owner_by_market[i] += demand
+    user_cost = P.user_cost_rate * np.asarray(p, dtype=float).reshape(-1)
+    supply = P.H0 * (user_cost / P.r_bar) ** P.xi_supply
+    sol.owner_user_cost = user_cost
+    sol.owner_asset_price = np.asarray(p, dtype=float).reshape(-1)
+    sol.rental_demand_by_market = renter_by_market
+    sol.owner_demand_by_market = owner_by_market
+    sol.owner_demand_by_size = owner_by_size
+    sol.rental_demand_by_size = renter_by_market.copy()
+    sol.housing_supply = supply
+    sol.aggregate_rental_demand = float(np.sum(renter_by_market))
+    sol.aggregate_owner_demand = float(np.sum(owner_by_market))
+    sol.aggregate_housing_demand = float(sol.aggregate_rental_demand + sol.aggregate_owner_demand)
+    sol.aggregate_housing_supply = float(np.sum(supply))
+    sol.aggregate_housing_excess = float(sol.aggregate_housing_demand - sol.aggregate_housing_supply)
+    sol.best_max_abs_rel_excess = float(
+        np.max(np.abs((renter_by_market + owner_by_market - supply) / np.maximum(supply, 1e-12)))
+    )
+    sol.best_market_metric = sol.best_max_abs_rel_excess
+    sol.converged = bool(sol.best_max_abs_rel_excess <= getattr(P, "tol_eq", 1e-4))
+    sol.young_owner_rate = float(getattr(sol, "young_own_rate", np.nan))
+    sol.old_owner_rate = float(getattr(sol, "old_age_own_rate_6575", np.nan))
+    sol.mean_completed_fertility = float(getattr(sol, "mean_parity", np.nan))
+    sol.childless_rate = float(getattr(sol, "parity_dist", np.array([np.nan]))[0])
+    if not hasattr(sol, "own_rate_by_income_type"):
+        sol.own_rate_by_income_type = np.full(len(z_grid), np.nan)
+    if not hasattr(sol, "mean_fertility_by_income_type"):
+        sol.mean_fertility_by_income_type = np.full(len(z_grid), np.nan)
+    if not hasattr(sol, "housing_demand_by_income_type"):
+        sol.housing_demand_by_income_type = np.full((len(z_grid), P.I), np.nan)
+    return sol
 
 
 def pack_solution(V, c, h, bp, tc, tp, lp, fp, fv, g, st: SimpleNamespace, w, p, P: SimpleNamespace) -> SimpleNamespace:

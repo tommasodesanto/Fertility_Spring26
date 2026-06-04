@@ -99,16 +99,16 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
         ax1.set_ylabel("ownership rate")
         ax1.set_ylim(0.0, 1.05)
         ax1.set_xticks(x, [f"{v:g}" for v in z])
-        ax1.set_xlabel("income type")
+        ax1.set_xlabel("income state")
         ax2 = ax1.twinx()
         ax2.bar(x + width / 2, getattr(sol, "mean_fertility_by_income_type", np.zeros_like(z)), width, color="tab:green", label="children")
         ax2.set_ylabel("mean completed children")
         h1, l1 = ax1.get_legend_handles_labels()
         h2, l2 = ax2.get_legend_handles_labels()
         ax1.legend(h1 + h2, l1 + l2, frameon=False)
-        ax1.set_title("Outcomes by income type")
+        ax1.set_title("Outcomes by income state")
         fig.tight_layout()
-        fig.savefig(outdir / "income_type_outcomes.png", dpi=180)
+        fig.savefig(outdir / "income_state_outcomes.png", dpi=180)
         plt.close(fig)
 
 
@@ -118,6 +118,10 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:
         "period_years": getattr(P, "period_years", P.da),
         "n_child_stages": P.n_child_stages,
         "markets": P.I,
+        "income_process": str(getattr(P, "income_type_transition", "none")),
+        "income_states": getattr(sol, "type_values", getattr(P, "z_grid", np.array([1.0]))),
+        "income_state_weights": getattr(sol, "type_weights", getattr(P, "z_weights", np.array([1.0]))),
+        "income_transition": getattr(sol, "income_transition", getattr(P, "Pi_z", np.eye(1))),
         "income_types": getattr(sol, "type_values", getattr(P, "z_grid", np.array([1.0]))),
         "income_type_weights": getattr(sol, "type_weights", getattr(P, "z_weights", np.array([1.0]))),
         "pti_constraint": bool(getattr(P, "use_pti_constraint", False)),

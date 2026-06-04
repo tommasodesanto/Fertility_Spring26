@@ -14,7 +14,7 @@ Run from `code/model`:
 ```
 
 The current pass uses one aggregate housing-services market, a 4-year decision
-period, one dependent-child stage, permanent income/productivity types, lifecycle
+period, one dependent-child stage, a persistent Markov income state, lifecycle
 income by age, owner housing rungs, continuous renter housing, down-payment
 constraints, transaction/sale wedges, and a payment-to-income screen for new
 owner choices. It is not calibrated.

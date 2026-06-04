@@ -42,12 +42,15 @@ quantitative model.
   Incumbent owners who keep the same owner rung do not requalify each period.
 - `INTENDED`: lifecycle income profile \(y_a\) enters the budget and the
   payment-to-income screen.
-- `INTENDED`: permanent cross-sectional income/productivity types \(z\). The
-  default grid is `z_grid=[0.70, 1.00, 1.40]` with weights
-  `z_weights=[0.30, 0.40, 0.30]`. Each type solves the same household problem
-  at common housing prices; aggregate housing demand is the type-weighted sum.
-  Income is \(y_{a,z}=z y_a\), and the same type-scaled income enters the
-  budget and payment-to-income screen.
+- `INTENDED`: persistent Markov income/productivity state \(z_t\). The default
+  grid is `z_grid=[0.70, 1.00, 1.30]` with stationary entry weights
+  `z_weights=[0.30, 0.40, 0.30]`. The transition matrix is
+  `Pi_z = rho_z I + (1-rho_z) z_weights`, with default
+  `rho_z=0.85`. The Bellman equation takes expectations over
+  \(z_{t+1}\sim\Pi_z(z_{t+1}\mid z_t)\), and the discrete-time forward
+  distribution propagates mass across \(z_{t+1}\) with the same matrix.
+  Working-age income is \(y_{a,z}=z y_a\), and the same type-scaled income
+  enters the budget and payment-to-income screen.
 - `INTENDED`: 4-year decision periods. Defaults are `age_start=22`, `J=16`,
   `J_R=11`, so agents enter at 22, retire around 66, and die after the last
   age-82 decision period.
@@ -59,9 +62,15 @@ quantitative model.
 
 ## Simplifications
 
-- `SIMPLIFICATION`: the income type is permanent. There is no stochastic
-  income transition matrix yet, so this is cross-sectional income heterogeneity
-  rather than lifecycle income risk.
+- `SIMPLIFICATION`: the Markov income grid and transition probabilities are
+  smoke-test defaults, not a calibrated discretization of an estimated earnings
+  process.
+- `SIMPLIFICATION`: retirement income is the common pension flow. It is not
+  currently indexed to the household's realized income history or current
+  \(z_t\).
+- `SIMPLIFICATION`: the Markov-income path currently uses full Bellman solves
+  in each price iteration. Howard policy-evaluation acceleration is still
+  available only in the non-Markov inherited path.
 - `SIMPLIFICATION`: fertility remains the workhorse one-shot completed-family
   choice for childless fertile households. It is not a sequential parity hazard.
 - `SIMPLIFICATION`: the model uses a collateral-constrained user-cost shortcut:
@@ -82,8 +91,6 @@ quantitative model.
 
 - `NOT IMPLEMENTED`: calibration, SMM objective, counterfactual tables, and
   parameter search.
-- `NOT IMPLEMENTED`: stochastic income process \(z_t\) with transition
-  probabilities.
 - `NOT IMPLEMENTED`: estate-tax counterfactuals, inheritance kernels, bequest
   principal adding-up, and estate-revenue rebates.
 - `NOT IMPLEMENTED`: mortgage-rate lock-in from coupon gaps.

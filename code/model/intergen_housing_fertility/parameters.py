@@ -101,9 +101,11 @@ def setup_parameters() -> SimpleNamespace:
     P.income_age_breaks = np.array([22.0, 26.0, 34.0, 46.0, 58.0])
     P.income_age_values = np.array([0.650, 0.850, 1.000, 0.985, 0.935])
     P.use_income_types = True
-    P.z_grid = np.array([0.70, 1.00, 1.40])
+    P.z_grid = np.array([0.70, 1.00, 1.30])
     P.z_weights = np.array([0.30, 0.40, 0.30])
-    P.income_type_transition = "permanent"
+    P.income_type_transition = "markov"
+    P.income_shock_persistence = 0.85
+    P.Pi_z = make_persistent_transition_matrix(P.z_weights, P.income_shock_persistence)
     P.mu_stay = 0.0
     P.mu_move = 5.0
     P.mu_move_parent = 5.0
@@ -253,6 +255,8 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         zw = np.asarray(P.z_weights, dtype=float).reshape(-1)
         zw = np.maximum(zw, 0.0)
         P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones_like(zw) / max(zw.size, 1)
+    if "Pi_z" in od:
+        P.Pi_z = np.asarray(P.Pi_z, dtype=float)
     if hasattr(P, "z_grid"):
         P.z_grid = np.asarray(P.z_grid, dtype=float).reshape(-1)
         if not hasattr(P, "z_weights") or len(np.atleast_1d(P.z_weights)) != len(P.z_grid):
@@ -261,6 +265,11 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
             zw = np.maximum(np.asarray(P.z_weights, dtype=float).reshape(-1), 0.0)
             P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones(len(P.z_grid)) / max(len(P.z_grid), 1)
         P.Nz = len(P.z_grid)
+        if not hasattr(P, "Pi_z") or np.asarray(P.Pi_z).shape != (P.Nz, P.Nz):
+            rho_z = float(getattr(P, "income_shock_persistence", 0.85))
+            P.Pi_z = make_persistent_transition_matrix(P.z_weights, rho_z)
+        else:
+            P.Pi_z = normalize_transition_matrix(P.Pi_z, P.z_weights)
 
     P.user_cost_rate = P.q + P.delta + P.tau_H
     P.R_gross = 1 + P.q
@@ -419,6 +428,31 @@ def make_child_transition_matrix_with_matured(stage_durations: np.ndarray, n_par
         Pi[K + 2, K + 2] = 1.0
         Pa[:, :, nn] = Pi
     return Pa
+
+
+def make_persistent_transition_matrix(stationary_weights: np.ndarray, persistence: float) -> np.ndarray:
+    weights = np.asarray(stationary_weights, dtype=float).reshape(-1)
+    weights = np.maximum(weights, 0.0)
+    weights = weights / weights.sum() if weights.sum() > 0 else np.ones(weights.size) / max(weights.size, 1)
+    rho = float(np.clip(persistence, 0.0, 0.999))
+    return rho * np.eye(weights.size) + (1.0 - rho) * weights.reshape(1, -1)
+
+
+def normalize_transition_matrix(Pi_z: np.ndarray, fallback_weights: np.ndarray) -> np.ndarray:
+    Pi = np.asarray(Pi_z, dtype=float)
+    if Pi.ndim != 2 or Pi.shape[0] != Pi.shape[1]:
+        return make_persistent_transition_matrix(fallback_weights, 0.85)
+    Pi = np.maximum(Pi, 0.0)
+    row_sum = Pi.sum(axis=1)
+    fallback = np.asarray(fallback_weights, dtype=float).reshape(-1)
+    fallback = np.maximum(fallback, 0.0)
+    fallback = fallback / fallback.sum() if fallback.sum() > 0 else np.ones(Pi.shape[0]) / Pi.shape[0]
+    for row in range(Pi.shape[0]):
+        if row_sum[row] > 0:
+            Pi[row, :] /= row_sum[row]
+        else:
+            Pi[row, :] = fallback
+    return Pi
 
 
 def _coerce_value(value: Any) -> Any:
