@@ -1,6 +1,6 @@
-"""No-geography intergenerational housing/fertility model package."""
+"""Intergenerational housing/fertility model package."""
 
 from .parameters import setup_parameters
-from .solver import solve_model
+from .solver import run_model_cp_dt
 
-__all__ = ["setup_parameters", "solve_model"]
+__all__ = ["setup_parameters", "run_model_cp_dt"]
