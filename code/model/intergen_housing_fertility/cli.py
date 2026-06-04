@@ -10,6 +10,7 @@ from typing import Any
 
 import numpy as np
 
+from .calibration import run_small_calibration
 from .diagnostics import write_diagnostics
 from .solver import run_model_cp_dt
 
@@ -43,7 +44,29 @@ def main() -> None:
     diag.add_argument("--quiet", action="store_true")
     diag.add_argument("--json", type=Path, default=None)
 
+    cal = sub.add_parser("calibrate-small", help="Run a small diagnostic local calibration")
+    cal.add_argument("--cases", type=int, default=24)
+    cal.add_argument("--seed", type=int, default=1234)
+    cal.add_argument("--J", type=int, default=12)
+    cal.add_argument("--Nb", type=int, default=40)
+    cal.add_argument("--n-house", type=int, default=4)
+    cal.add_argument("--max-iter-eq", type=int, default=35)
+    cal.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_small_calibration"))
+
     args = parser.parse_args()
+    if args.cmd == "calibrate-small":
+        summary = run_small_calibration(
+            args.outdir,
+            n_cases=int(args.cases),
+            seed=int(args.seed),
+            J=int(args.J),
+            Nb=int(args.Nb),
+            n_house=int(args.n_house),
+            max_iter_eq=int(args.max_iter_eq),
+        )
+        print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
+        return
+
     if args.cmd == "smoke":
         overrides = smoke_overrides(args)
     elif args.cmd == "solve":

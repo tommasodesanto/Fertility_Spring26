@@ -27,6 +27,7 @@ from .kernels import (
     scatter_cols_sameidx_kernel,
     scatter_vec_kernel,
     tenure_choice_kernel,
+    tenure_logit_kernel,
 )
 from .utils import (
     flat_nc,
@@ -1858,7 +1859,12 @@ def solve_bellman_full_markov_income(
                     failed[0, :, :] = False
                     dp_choice[i, failed] = big_dp
 
-            if (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+            if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+                VH, tcj, prj = tenure_logit_kernel(
+                    Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
+                )
+                tenure_probs[:, :, :, j, zz, :, :, :] = prj
+            elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
                 VH, tcj = tenure_choice_kernel(
                     Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant
                 )
@@ -2334,7 +2340,12 @@ def solve_bellman_core(
                 failed[0, :, :] = False
                 dp_choice[i, failed] = big_dp
 
-        if (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+        if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+            VH, tcj, prj = tenure_logit_kernel(
+                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
+            )
+            tenure_probs[:, :, :, j, :, :, :] = prj
+        elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
             VH, tcj = tenure_choice_kernel(
                 Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant
             )

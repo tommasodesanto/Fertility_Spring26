@@ -97,8 +97,8 @@ quantitative model.
 
 ## Not Implemented
 
-- `NOT IMPLEMENTED`: calibration, SMM objective, counterfactual tables, and
-  parameter search.
+- `NOT IMPLEMENTED`: formal calibration, SMM objective, counterfactual tables,
+  and parameter search.
 - `NOT IMPLEMENTED`: estate-tax counterfactuals, inheritance kernels, bequest
   principal adding-up, and estate-revenue rebates.
 - `NOT IMPLEMENTED`: mortgage-rate lock-in from coupon gaps.
@@ -125,8 +125,29 @@ cd code/model && .venv/bin/python -m intergen_housing_fertility.cli diagnostics 
 
 Current diagnostic packets include aggregate lifecycle moments, market-clearing
 plots, relative housing-market residual plots, outcome bars by income state,
-and childless-renter policy functions at two fertile-window ages. The policy
-plots show consumption, post-tenure housing services, expected fertility, and
-owner-entry policy over liquid wealth with separate lines for each \(z_t\).
+age profiles by income state, childless-renter wealth distributions at selected
+ages, and childless-renter policy functions at two fertile-window ages. The
+policy plots show consumption, post-tenure housing services, expected
+fertility, and owner-entry policy over liquid wealth with separate lines for
+each \(z_t\).
 Policy plots mask value-function states below \(-10^9\), since logit
 probabilities at all-infeasible grid points are not economically meaningful.
+
+## Diagnostic Calibration
+
+- `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
+  runs a small local random search against provisional moments for ownership,
+  young ownership, old ownership, fertility, and childlessness. This is a
+  scaffold-inspection tool, not the paper calibration.
+- `DIAGNOSTIC ONLY`: 2026-06-04 local run
+  `output/model/intergen_housing_fertility_small_calibration/` used
+  `J=12`, `Nb=40`, four owner rungs, and 24 checkpointed cases. Best case:
+  market residual \(3.37\times 10^{-5}\), ownership `0.686`, young ownership
+  `0.255`, old ownership `0.995`, completed fertility `0.847`, childless rate
+  `0.298`. The associated plot packet is
+  `output/model/intergen_housing_fertility_small_calibration_best_diagnostics/`.
+- `DIAGNOSTIC ONLY`: a targeted 24-case probe around higher entry wealth and
+  looser rental caps did not improve the diagnostic loss. Current evidence is
+  that the owner/renter block creates a sharp tradeoff: lowering the rental cap
+  can generate young ownership, but it tends to push old ownership too high and
+  depress fertility.

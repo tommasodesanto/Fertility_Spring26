@@ -140,7 +140,114 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
         fig.savefig(outdir / "income_state_outcomes.png", dpi=180)
         plt.close(fig)
 
+    write_distribution_diagnostics(sol, P, outdir, plt, ages)
     write_policy_diagnostics(sol, P, outdir, plt)
+
+
+def write_distribution_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path, plt: Any, ages: np.ndarray) -> None:
+    if not hasattr(sol, "g") or not hasattr(sol, "b_grid"):
+        return
+    g = np.asarray(sol.g)
+    if g.ndim < 7:
+        return
+    b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
+    z_grid = np.asarray(getattr(sol, "type_values", getattr(P, "z_grid", np.array([1.0]))), dtype=float).reshape(-1)
+    if len(z_grid) != g.shape[4]:
+        return
+
+    own_age_z = np.full((P.J, len(z_grid)), np.nan)
+    wealth_age_z = np.full((P.J, len(z_grid)), np.nan)
+    housing_age_z = np.full((P.J, len(z_grid)), np.nan)
+    fert_age_z = np.full((P.J, len(z_grid)), np.nan)
+    for j in range(P.J):
+        for zz in range(len(z_grid)):
+            gjz = g[:, :, :, j, zz, :, :]
+            mass = float(np.sum(gjz))
+            if mass <= 1e-14:
+                continue
+            own_age_z[j, zz] = float(np.sum(gjz[:, 1:, :, :, :]) / mass)
+            wealth_age_z[j, zz] = weighted_liquid_wealth(gjz, b_grid)
+            housing_age_z[j, zz] = mean_housing_for_distribution(gjz, sol, P, j, zz)
+            if P.A_f_start - 1 <= j <= P.A_f_end and hasattr(sol, "fert_probs"):
+                childless = g[:, :, :, j, zz, 0, 0]
+                cmass = float(np.sum(childless))
+                if cmass > 1e-14:
+                    probs = np.asarray(sol.fert_probs)[:, :, :, j, zz, :]
+                    fert_age_z[j, zz] = float(np.sum(childless * (probs @ np.arange(P.n_parity))) / cmass)
+
+    plot_age_by_income_state(outdir, plt, ages, z_grid, own_age_z, "ownership rate", "Ownership by age and income state", "ownership_by_age_income_state.png", ylim=(0.0, 1.05))
+    plot_age_by_income_state(outdir, plt, ages, z_grid, wealth_age_z, "mean liquid wealth", "Liquid wealth by age and income state", "liquid_wealth_by_age_income_state.png")
+    plot_age_by_income_state(outdir, plt, ages, z_grid, housing_age_z, "mean housing services", "Housing by age and income state", "housing_by_age_income_state.png")
+    plot_age_by_income_state(outdir, plt, ages, z_grid, fert_age_z, "expected children", "Fertility policy by age and income state", "fertility_policy_by_age_income_state.png")
+
+    ages_to_plot = np.asarray(getattr(P, "diagnostic_policy_ages", np.array([30.0, 42.0])), dtype=float).reshape(-1)
+    for age in ages_to_plot:
+        j = age_to_index(P, float(age))
+        fig, ax = plt.subplots(figsize=(7, 4))
+        for zz, z_value in enumerate(z_grid):
+            mass = g[:, 0, 0, j, zz, 0, 0]
+            if float(np.sum(mass)) <= 1e-14:
+                continue
+            ax.plot(b_grid, mass / max(float(np.sum(mass)), 1e-14), lw=1.8, label=f"z={z_value:g}")
+        ax.set_xlabel("liquid wealth")
+        ax.set_ylabel("share within state")
+        ax.set_title(f"Childless-renter wealth distribution at age {P.age_start + j * P.da:g}")
+        ax.legend(frameon=False)
+        ax.grid(alpha=0.2)
+        fig.tight_layout()
+        fig.savefig(outdir / f"wealth_dist_childless_renter_age{int(round(P.age_start + j * P.da))}.png", dpi=180)
+        plt.close(fig)
+
+
+def weighted_liquid_wealth(g_age_z: np.ndarray, b_grid: np.ndarray) -> float:
+    mass_b = np.sum(g_age_z, axis=(1, 2, 3, 4))
+    total = float(np.sum(mass_b))
+    return float(np.sum(mass_b * b_grid) / max(total, 1e-14))
+
+
+def mean_housing_for_distribution(g_age_z: np.ndarray, sol: SimpleNamespace, P: SimpleNamespace, j: int, zz: int) -> float:
+    nt = 1 + P.n_house
+    total_h = 0.0
+    total_m = 0.0
+    for ten in range(nt):
+        for nn in range(P.n_parity):
+            for cs in range(P.n_child_states):
+                mass = g_age_z[:, ten, :, nn, cs]
+                mh = float(np.sum(mass))
+                if mh <= 1e-15:
+                    continue
+                if ten == 0:
+                    total_h += float(np.sum(mass[:, 0] * sol.hR_pol[:, ten, 0, j, zz, nn, cs]))
+                else:
+                    total_h += mh * float(P.H_own[ten - 1])
+                total_m += mh
+    return total_h / max(total_m, 1e-14)
+
+
+def plot_age_by_income_state(
+    outdir: Path,
+    plt: Any,
+    ages: np.ndarray,
+    z_grid: np.ndarray,
+    values: np.ndarray,
+    ylabel: str,
+    title: str,
+    filename: str,
+    ylim: tuple[float, float] | None = None,
+) -> None:
+    fig, ax = plt.subplots(figsize=(7, 4))
+    for zz, z_value in enumerate(z_grid):
+        ax.plot(ages, values[:, zz], lw=1.8, label=f"z={z_value:g}")
+    ax.set_xlabel("age")
+    ax.set_ylabel(ylabel)
+    if ylim is not None:
+        ax.set_ylim(*ylim)
+    ax.set_title(title)
+    ax.legend(frameon=False)
+    ax.grid(alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(outdir / filename, dpi=180)
+    plt.close(fig)
 
 
 def write_policy_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path, plt: Any) -> None:
