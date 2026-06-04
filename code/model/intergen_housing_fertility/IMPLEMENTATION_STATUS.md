@@ -56,6 +56,8 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - `SIMPLIFICATION`: first pass may retain the existing one-shot completed
   fertility architecture from `dt_cp_model` rather than implementing sequential
   parity hazards immediately.
+- `SIMPLIFICATION`: first pass uses deterministic discrete-choice maximization
+  rather than extreme-value taste shocks/logit smoothing.
 - `NOT IMPLEMENTED`: mortgage coupon, remaining maturity, and debt duration
   states \((\iota,m^d)\).
 - `NOT IMPLEMENTED`: inheritance receipt state \(B\) and estate-transmission
@@ -88,6 +90,14 @@ produce diagnostics for a stripped-down version of the full blueprint.
   \]
 - `INTENDED`: property-tax capitalization affects owner asset prices through
   the user-cost relation.
+- `SIMPLIFICATION`: the first pass uses the compact draft's
+  collateral-constrained user-cost representation. Owner choices pay a flow
+  user cost, while asset prices enter the down-payment and payment-to-income
+  constraints. The code does not yet track mortgage balances, home equity, or
+  amortization.
+- `SIMPLIFICATION`: LTV and payment-to-income constraints apply when a renter
+  buys or an owner changes size. Incumbent owners who keep the same size are
+  not forced to requalify each period.
 - `SIMPLIFICATION`: first pass treats renters as having an exogenous rental
   option or rental size cap. Rental stock does not clear.
 - `NOT IMPLEMENTED`: competitive landlord sector and rental-market clearing by
@@ -101,6 +111,9 @@ produce diagnostics for a stripped-down version of the full blueprint.
   wedge.
 - `SIMPLIFICATION`: first pass uses a reduced-form age-dependent sale or
   downsizing cost.
+- `SIMPLIFICATION`: the first-pass old-retention wedge is a private
+  resource-equivalent adjustment cost in the household budget. It has no fiscal
+  or lender counterpart yet.
 - `NOT IMPLEMENTED`: present-value mortgage lock-in from coupon gaps.
 - `NOT IMPLEMENTED`: explicit lender-side accounting for coupon lock-in.
 
@@ -110,6 +123,9 @@ produce diagnostics for a stripped-down version of the full blueprint.
   housing needs.
 - `SIMPLIFICATION`: first pass may use the existing discrete completed-fertility
   choice architecture to preserve solver continuity.
+- `SIMPLIFICATION`: first pass lets fertility be chosen once at a fixed fertile
+  age. Children then remain as a completed-fertility state; there is no
+  child-age vector or period-by-period birth hazard.
 - `NOT IMPLEMENTED`: sequential birth hazards and child-age vector.
 - `DIAGNOSTIC ONLY`: parity progression or second-birth hazard moments are not
   equilibrium targets unless the sequential fertility state is implemented.
@@ -126,8 +142,17 @@ produce diagnostics for a stripped-down version of the full blueprint.
 
 - `INTENDED`: solve for national housing prices or user costs that clear owner
   housing demand by size in the first pass.
+- `INTENDED`: first-pass owner supplies are measured in service units per
+  normalized adult in the lifecycle cross-section; owner demand is normalized
+  by total lifecycle mass before comparing to supply.
 - `SIMPLIFICATION`: rental prices are exogenous or tied mechanically to owner
   user costs in the first pass, with no rental stock clearing.
+- `SIMPLIFICATION`: the lifecycle distribution is normalized by entrant mass
+  and does not yet feed fertility choices back into cohort size or entry.
+- `SIMPLIFICATION`: because first-pass tenure/size choices are deterministic
+  and discrete, exact size-by-size market clearing may fail for some supplies.
+  The price solver reports convergence status and returns the best price
+  iterate found by the excess-demand criterion.
 - `NOT IMPLEMENTED`: full size-specific rental/owner stock decomposition
   \(H_k^O+H_k^R=H_k\).
 - `NOT IMPLEMENTED`: transition dynamics.
@@ -164,4 +189,3 @@ produce diagnostics for a stripped-down version of the full blueprint.
 - Whether first-pass owner price clearing should use fixed supply by size or a
   simple upward-sloping supply curve. Current recommendation: fixed supply by
   size for the smoke model, then add supply elasticity.
-
