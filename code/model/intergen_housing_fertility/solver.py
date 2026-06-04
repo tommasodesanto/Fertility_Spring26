@@ -776,19 +776,121 @@ def solve_markov_income_equilibrium(
 
     if best_sol is None:
         best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False)
+    scalar_refine_info: dict[str, Any] = {"used": False}
+    if P.I == 1 and bool(getattr(P, "scalar_market_refine", True)):
+        best_sol, best_p, best_err, scalar_refine_info = refine_one_market_markov_income(
+            best_p,
+            best_sol,
+            best_err,
+            P,
+            b_grid,
+            verbose=verbose,
+        )
     best_sol.timings = {
         **getattr(best_sol, "timings", {}),
         "income_process": "markov",
         "iterations_completed": int(iterations_completed),
         "best_eq_error": float(best_err),
-        "final_eq_error": float(final_err),
+        "damped_final_eq_error": float(final_err),
+        "final_eq_error": float(best_err),
         "accepted": bool(best_err < P.tol_eq),
         "strict_converged": bool(best_err < P.tol_eq),
         "convergence_reason": "strict_tol" if best_err < P.tol_eq else "max_iter",
         "markov_income_solve_time": float(t_solve),
+        "scalar_market_refine": scalar_refine_info,
     }
     best_sol.converged = bool(best_err < P.tol_eq)
     return best_sol, P, best_p
+
+
+def refine_one_market_markov_income(
+    best_p: np.ndarray,
+    best_sol: SimpleNamespace,
+    best_err: float,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    verbose: bool = True,
+) -> tuple[SimpleNamespace, np.ndarray, float, dict[str, Any]]:
+    p0 = float(np.asarray(best_p, dtype=float).reshape(-1)[0])
+    p_min = float(getattr(P, "p_min", 1e-4))
+    p_max = float(getattr(P, "p_max", 100.0))
+    expand = max(float(getattr(P, "scalar_market_refine_expand", 1.5)), 1.05)
+    max_expand = 8
+    max_iter = max(1, int(getattr(P, "scalar_market_refine_iter", 24)))
+    tol = float(getattr(P, "tol_eq", 1e-4))
+
+    def eval_price(price: float) -> tuple[float, float, SimpleNamespace]:
+        sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False)
+        demand = float(np.asarray(sol.housing_demand).reshape(-1)[0])
+        supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
+        excess = demand - supply
+        metric = abs(excess) / max(abs(supply), 1e-12)
+        return excess, metric, sol
+
+    best_excess = float(np.asarray(best_sol.housing_demand).reshape(-1)[0] - np.asarray(best_sol.housing_supply).reshape(-1)[0])
+    best_metric = float(best_err)
+    best_price = p0
+    sol_best = best_sol
+
+    lo = max(p_min, p0 / expand)
+    hi = min(p_max, p0 * expand)
+    ex_lo, metric_lo, sol_lo = eval_price(lo)
+    ex_hi, metric_hi, sol_hi = eval_price(hi)
+    for price, excess, metric, sol in ((lo, ex_lo, metric_lo, sol_lo), (hi, ex_hi, metric_hi, sol_hi)):
+        if metric < best_metric:
+            best_price, best_excess, best_metric, sol_best = price, excess, metric, sol
+
+    expansions = 0
+    while ex_lo * ex_hi > 0 and expansions < max_expand:
+        expansions += 1
+        lo = max(p_min, lo / expand)
+        hi = min(p_max, hi * expand)
+        ex_lo, metric_lo, sol_lo = eval_price(lo)
+        ex_hi, metric_hi, sol_hi = eval_price(hi)
+        for price, excess, metric, sol in ((lo, ex_lo, metric_lo, sol_lo), (hi, ex_hi, metric_hi, sol_hi)):
+            if metric < best_metric:
+                best_price, best_excess, best_metric, sol_best = price, excess, metric, sol
+        if lo <= p_min and hi >= p_max:
+            break
+
+    info: dict[str, Any] = {
+        "used": True,
+        "bracket_found": bool(ex_lo * ex_hi <= 0),
+        "initial_price": p0,
+        "best_price": float(best_price),
+        "best_metric": float(best_metric),
+        "best_excess": float(best_excess),
+        "expansions": int(expansions),
+        "iterations": 0,
+    }
+
+    if ex_lo * ex_hi > 0:
+        if verbose:
+            print(f"  Scalar refine: no bracket; best residual={best_metric:.3e}")
+        return sol_best, np.array([best_price]), best_metric, info
+
+    left, right = lo, hi
+    f_left, f_right = ex_lo, ex_hi
+    for k in range(1, max_iter + 1):
+        mid = 0.5 * (left + right)
+        ex_mid, metric_mid, sol_mid = eval_price(mid)
+        if metric_mid < best_metric:
+            best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
+        if metric_mid < tol:
+            info["iterations"] = int(k)
+            break
+        if f_left * ex_mid <= 0:
+            right, f_right = mid, ex_mid
+        else:
+            left, f_left = mid, ex_mid
+        info["iterations"] = int(k)
+
+    info["best_price"] = float(best_price)
+    info["best_metric"] = float(best_metric)
+    info["best_excess"] = float(best_excess)
+    if verbose:
+        print(f"  Scalar refine: residual={best_metric:.3e} p={best_price:.4f}")
+    return sol_best, np.array([best_price]), best_metric, info
 
 
 def solve_markov_income_at_prices(
@@ -811,6 +913,7 @@ def solve_markov_income_at_prices(
     )
     t_dist = time.perf_counter() - t0
     sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
+    sol.b_grid = np.asarray(b_grid, dtype=float).copy()
     sol.timings = {
         "bellman_full": float(btime.get("bellman", t_bellman)),
         "distribution": float(t_dist),

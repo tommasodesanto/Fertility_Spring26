@@ -56,7 +56,7 @@ def setup_parameters() -> SimpleNamespace:
     P.owner_size_cost = 0.0
     P.owner_size_cost_ref = 6.0
     P.owner_size_cost_power = 2.0
-    P.tenure_choice_kappa = 0.0
+    P.tenure_choice_kappa = 0.01
     P.kappa_h_base = 0.40
     P.kappa_h_slope = 0.0
     P.psi_child = 0.07
@@ -154,6 +154,9 @@ def setup_parameters() -> SimpleNamespace:
     P.max_iter_eq = 200
     P.tol_eq = 1e-4
     P.lambda_eq = 0.30
+    P.scalar_market_refine = True
+    P.scalar_market_refine_iter = 24
+    P.scalar_market_refine_expand = 1.5
     P.adaptive_price_damping = True
     P.lambda_price_min = 0.005
     P.lambda_price_max = 0.35

@@ -50,9 +50,38 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
     ax.bar([0, 1], [float(sol.aggregate_housing_demand), float(sol.aggregate_housing_supply)])
     ax.set_xticks([0, 1], ["demand", "supply"])
     ax.set_ylabel("service units per adult")
-    ax.set_title("Housing-services clearing")
+    rel_excess = float(getattr(sol, "best_max_abs_rel_excess", np.nan))
+    ax.set_title(f"Housing-services clearing, max rel. residual={rel_excess:.2e}")
     fig.tight_layout()
     fig.savefig(outdir / "housing_market.png", dpi=180)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    markets = np.arange(P.I)
+    demand = np.asarray(getattr(sol, "housing_demand", np.zeros(P.I)), dtype=float).reshape(-1)
+    supply = np.asarray(getattr(sol, "housing_supply", np.zeros(P.I)), dtype=float).reshape(-1)
+    width = 0.35
+    ax.bar(markets - width / 2, demand, width, label="demand")
+    ax.bar(markets + width / 2, supply, width, label="supply")
+    ax.set_xticks(markets, [str(i + 1) for i in markets])
+    ax.set_xlabel("housing-services market")
+    ax.set_ylabel("service units per adult")
+    ax.legend(frameon=False)
+    ax.set_title("Housing market by market")
+    fig.tight_layout()
+    fig.savefig(outdir / "market_clearing_by_market.png", dpi=180)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    residual = (demand - supply) / np.maximum(supply, 1e-12)
+    ax.axhline(0.0, color="0.25", lw=1.0)
+    ax.bar(markets, residual, color="tab:red")
+    ax.set_xticks(markets, [str(i + 1) for i in markets])
+    ax.set_xlabel("housing-services market")
+    ax.set_ylabel("(demand - supply) / supply")
+    ax.set_title("Housing market relative residual")
+    fig.tight_layout()
+    fig.savefig(outdir / "market_clearing_residuals.png", dpi=180)
     plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(7, 4))
@@ -110,6 +139,103 @@ def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) ->
         fig.tight_layout()
         fig.savefig(outdir / "income_state_outcomes.png", dpi=180)
         plt.close(fig)
+
+    write_policy_diagnostics(sol, P, outdir, plt)
+
+
+def write_policy_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path, plt: Any) -> None:
+    if not hasattr(sol, "b_grid"):
+        return
+    if not hasattr(sol, "c_pol") or not hasattr(sol, "hR_pol") or not hasattr(sol, "fert_probs"):
+        return
+    b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
+    z_grid = np.asarray(getattr(sol, "type_values", getattr(P, "z_grid", np.array([1.0]))), dtype=float).reshape(-1)
+    Nz = len(z_grid)
+    if np.asarray(sol.c_pol).ndim < 7 or Nz <= 0:
+        return
+
+    ages_to_plot = getattr(P, "diagnostic_policy_ages", np.array([30.0, 42.0]))
+    ages_to_plot = np.asarray(ages_to_plot, dtype=float).reshape(-1)
+    for age in ages_to_plot:
+        j = age_to_index(P, float(age))
+        if j < 0 or j >= P.J:
+            continue
+        plot_policy_childless_renter(sol, P, outdir, plt, b_grid, z_grid, j)
+
+
+def age_to_index(P: SimpleNamespace, age: float) -> int:
+    idx = int(round((float(age) - float(P.age_start)) / max(float(P.da), 1e-12)))
+    return int(np.clip(idx, 0, P.J - 1))
+
+
+def plot_policy_childless_renter(
+    sol: SimpleNamespace,
+    P: SimpleNamespace,
+    outdir: Path,
+    plt: Any,
+    b_grid: np.ndarray,
+    z_grid: np.ndarray,
+    j: int,
+) -> None:
+    i = 0
+    ten = 0
+    nn = 0
+    cs = 0
+    age = float(P.age_start + j * P.da)
+    nvec = np.arange(P.n_parity)
+    c_pol = np.asarray(sol.c_pol)
+    hR_pol = np.asarray(sol.hR_pol)
+    tc = np.asarray(sol.tenure_choice)
+    fp = np.asarray(sol.fert_probs)
+    tp = getattr(sol, "tenure_probs", None)
+    V = np.asarray(getattr(sol, "V", np.empty_like(c_pol)))
+
+    fig, axes = plt.subplots(2, 2, figsize=(10, 7), sharex=True)
+    axes = axes.ravel()
+    for zz, z_value in enumerate(z_grid):
+        label = f"z={z_value:g}"
+        c_line = c_pol[:, ten, i, j, zz, nn, cs]
+        tchoice = tc[:, ten, i, j, zz, nn, cs]
+        h_line = np.where(
+            tchoice <= 0,
+            hR_pol[:, ten, i, j, zz, nn, cs],
+            np.asarray(P.H_own, dtype=float)[np.maximum(tchoice - 1, 0)],
+        )
+        fertility_line = fp[:, ten, i, j, zz, :] @ nvec
+        if tp is None:
+            owner_line = (tchoice > 0).astype(float)
+        else:
+            owner_line = np.sum(tp[:, ten, i, j, zz, nn, cs, 1:], axis=1)
+
+        valid = V[:, ten, i, j, zz, nn, cs] > -1e9
+        c_line = np.where(valid, c_line, np.nan)
+        h_line = np.where(valid, h_line, np.nan)
+        fertility_line = np.where(valid, fertility_line, np.nan)
+        owner_line = np.where(valid, owner_line, np.nan)
+
+        axes[0].plot(b_grid, c_line, lw=1.8, label=label)
+        axes[1].plot(b_grid, h_line, lw=1.8, label=label)
+        axes[2].plot(b_grid, fertility_line, lw=1.8, label=label)
+        axes[3].plot(b_grid, owner_line, lw=1.8, label=label)
+
+    axes[0].set_ylabel("consumption")
+    axes[0].set_title("Consumption")
+    axes[1].set_ylabel("housing services")
+    axes[1].set_title("Housing after tenure choice")
+    axes[2].set_ylabel("expected children")
+    axes[2].set_xlabel("liquid wealth")
+    axes[2].set_title("Fertility choice")
+    axes[3].set_ylabel("probability")
+    axes[3].set_xlabel("liquid wealth")
+    axes[3].set_ylim(-0.05, 1.05)
+    axes[3].set_title("Owner-entry policy")
+    for ax in axes:
+        ax.grid(alpha=0.2)
+    axes[0].legend(frameon=False, ncols=max(1, min(3, len(z_grid))))
+    fig.suptitle(f"Childless renter policies at age {age:g}", y=0.995)
+    fig.tight_layout()
+    fig.savefig(outdir / f"policy_childless_renter_age{int(round(age))}.png", dpi=180)
+    plt.close(fig)
 
 
 def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:

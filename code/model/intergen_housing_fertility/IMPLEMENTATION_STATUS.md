@@ -31,6 +31,10 @@ quantitative model.
   \]
 - `INTENDED`: renter housing is continuous up to `hR_max`; owner housing is a
   discrete rung choice on `H_own`.
+- `INTENDED`: tenure/rung choices include a small Type-I-EV taste-shock
+  smoothing term, `tenure_choice_kappa=0.01`. This is the model's current
+  discrete-choice smoothing device and is also needed for reliable market
+  clearing with discrete owner rungs.
 - `INTENDED`: owner adjustment includes transaction/sale wedges and the
   workhorse down-payment constraint. In this code, `phi` is the financed share,
   so the down-payment threshold is \((1-\phi)Ph\).
@@ -65,6 +69,10 @@ quantitative model.
 - `SIMPLIFICATION`: the Markov income grid and transition probabilities are
   smoke-test defaults, not a calibrated discretization of an estimated earnings
   process.
+- `SIMPLIFICATION`: `tenure_choice_kappa=0.01` is not calibrated. With
+  deterministic tenure/rung choices, the one-market price solver can bracket
+  housing excess but still stop at a small residual because aggregate demand
+  jumps at tenure thresholds.
 - `SIMPLIFICATION`: retirement income is the common pension flow. It is not
   currently indexed to the household's realized income history or current
   \(z_t\).
@@ -112,3 +120,13 @@ For model inspection, also run:
 ```bash
 cd code/model && .venv/bin/python -m intergen_housing_fertility.cli diagnostics --fixed-prices --quiet
 ```
+
+## Diagnostic Packet
+
+Current diagnostic packets include aggregate lifecycle moments, market-clearing
+plots, relative housing-market residual plots, outcome bars by income state,
+and childless-renter policy functions at two fertile-window ages. The policy
+plots show consumption, post-tenure housing services, expected fertility, and
+owner-entry policy over liquid wealth with separate lines for each \(z_t\).
+Policy plots mask value-function states below \(-10^9\), since logit
+probabilities at all-infeasible grid points are not economically meaningful.
