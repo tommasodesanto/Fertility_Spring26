@@ -11,7 +11,7 @@ current calibrated center/periphery implementation remains intact.
 The first-pass mechanism is:
 
 \[
-\text{old retention / lock-in} \rightarrow \text{scarce family homes}
+\text{old retention / lock-in} \rightarrow \text{scarce housing services}
 \rightarrow \text{young finance constraint} \rightarrow \text{lower fertility}.
 \]
 
@@ -37,17 +37,61 @@ Do not leave a shortcut in code with only a local comment. Put it here as well.
 
 The first pass is runnable model code, not a calibrated quantitative result.
 
+## Coven Alignment
+
+This is the implementation map used for the current code. The source model is
+Coven, Golder, Gupta, and Ndiaye, "Property Taxes and Housing Allocation Under
+Financial Constraints," Section 3.
+
+- `INTENDED`: copy the tenure menu structure conceptually. Households choose
+  between renting, buying/adjusting, or keeping owned housing. The current code
+  represents this with a single tenure/quantity index.
+- `INTENDED`: copy the rental-price logic. Rents are not a separate market
+  price. They are pinned by the user-cost relation
+  \[
+  R=(r+\delta+\tau^p)P=q
+  \]
+  after setting expected capital gains to zero in the stationary first pass.
+- `INTENDED`: copy aggregate housing clearing. Total renter plus owner housing
+  services clear against
+  \[
+  H^S(P)=cP^\eta.
+  \]
+  There is no separate landlord state and no rental-stock-by-size clearing
+  condition in the current target.
+- `INTENDED`: copy the owned-housing minimum-size idea. The owner grid starts
+  at \(h^O_{\min}>h^R_{\min}\). Renters may choose smaller housing quantities.
+- `INTENDED`: copy the homeownership utility term. Coven includes an ownership
+  benefit \(\Xi^O\). The no-geography code has one scalar
+  `owner_utility_bonus`, normalized relative to renter tenure.
+- `INTENDED`: copy the financial-friction channels. New owner choices face
+  down-payment and payment-to-income screens.
+- `SIMPLIFICATION`: renters and buyers choose from short discrete housing
+  quantity grids. Coven's renter and adjuster housing choice is continuous.
+- `SIMPLIFICATION`: the code has no purchase-price balance-sheet accounting,
+  mortgage debt state, amortization, or capital-gains tax. It uses a
+  collateral-constrained user-cost shortcut: \(q h\) enters the flow budget and
+  \((1-\phi)P h^O\le b\) enters the ownership feasibility screen.
+- `SIMPLIFICATION`: the payment-to-income screen is \(q h^O\le \psi y\), not
+  Coven's amortized mortgage-payment plus property-tax condition.
+- `NOT IMPLEMENTED`: two-region location choice, migration costs, regional tax
+  systems, bequests, estate taxation, capital-gains taxation, and transition
+  dynamics.
+
 ### State Variables
 
 - `INTENDED`: age \(a\).
 - `INTENDED`: idiosyncratic income/productivity \(z\).
 - `INTENDED`: liquid assets \(b\).
-- `INTENDED`: tenure \(o\in\{R,O\}\).
+- `INTENDED`: tenure/quantity \(o\). Indices \(0,\ldots,N_R-1\) are renter
+  quantities and indices \(N_R,\ldots,N_R+K-1\) are owner quantities.
 - `INTENDED`: completed children \(n\).
-- `SIMPLIFICATION`: there is one scarce family-home asset \(h_O\), not a
-  housing-size ladder.
-- `SIMPLIFICATION`: renter housing \(h_R\) is an outside rental service. It is
-  not part of the scarce family-home stock.
+- `INTENDED`: renter and owner housing choices use separate quantity grids,
+  \(h^R\in\mathcal H^R\) and \(h^O\in\mathcal H^O\), with the owner grid
+  starting at a larger minimum size.
+- `SIMPLIFICATION`: the grids are small and discrete. Coven's model has a
+  continuous housing quantity choice; this first pass approximates it with a
+  short quantity ladder.
 - `SIMPLIFICATION`: fertility is a one-shot completed-fertility choice at one
   fertile age. There is no child-age vector or sequential birth hazard yet.
 - `INTENDED`: first pass uses extreme-value smoothing over discrete tenure and
@@ -66,30 +110,39 @@ The first pass is runnable model code, not a calibrated quantitative result.
 
 ### Housing and Finance
 
-- `INTENDED`: one national family-home asset with flow user cost \(q\) and
-  asset price
+- `INTENDED`: one aggregate housing-services market with flow user cost \(q\)
+  and asset price
   \[
   P=\frac{q}{r+\delta+\tau^p}.
   \]
+- `INTENDED`: renters and owners pay the same per-unit user cost \(q\) for
+  housing services. This is the no-arbitrage rent/user-cost condition in the
+  Coven-style block.
+- `INTENDED`: owners receive a utility term \(\Xi^O\), implemented as
+  `owner_utility_bonus`. This is not a hidden tuning device: Coven has this
+  object, and it is needed because owners face extra constraints and adjustment
+  costs.
 - `INTENDED`: owner purchase is constrained by a down-payment condition,
   \[
-  (1-\phi)Ph_O \le b,
+  (1-\phi)Ph^O \le b,
   \]
   where \(\phi\) is the financed share.
 - `INTENDED`: owner purchase also has a flow affordability screen,
   \[
-  qh_O \le \psi y(a,z).
+  qh^O \le \psi y(a,z).
   \]
+- `SIMPLIFICATION`: the household budget uses the flow user cost \(qh\), while
+  the down-payment requirement enters only as a liquidity constraint. The code
+  does not subtract the down payment from liquid wealth and then carry housing
+  equity as a separate state. This is a collateral-constrained user-cost
+  shortcut.
 - `SIMPLIFICATION`: there is no mortgage balance, coupon, amortization,
   refinancing, or mortgage-duration state in the first pass.
 - `SIMPLIFICATION`: incumbent owners who keep the same tenure do not requalify
   for the down-payment and flow affordability screens each period.
-- `SIMPLIFICATION`: renters consume the outside service \(h_R\) at exogenous
-  user cost \(R^R\). Since renters do not use the scarce family-home stock,
-  there is no rental-market clearing condition in the first pass.
-- `NOT IMPLEMENTED`: if future code lets renters occupy the scarce family-home
-  stock, then the model must add an explicit rental-stock clearing block. That
-  block is deliberately absent from the current Coven-style scaffold.
+- `INTENDED`: rental quantities are part of aggregate housing demand. There is
+  no separate rental-stock state because the supply side provides aggregate
+  housing services, as in the simple Coven-style supply block.
 
 ### Old Retention and Lock-In
 
@@ -105,8 +158,8 @@ The first pass is runnable model code, not a calibrated quantitative result.
 
 ### Fertility
 
-- `INTENDED`: fertility responds to the difference between \(h_R\) and \(h_O\)
-  and to the finance constraints that restrict access to \(h_O\).
+- `INTENDED`: fertility responds to household housing quantity \(h(o)\) and to
+  the finance constraints that restrict access to larger owner quantities.
 - `SIMPLIFICATION`: fertility is discrete in code even though the compact theory
   uses continuous \(n\) for clean first-order conditions.
 - `DIAGNOSTIC ONLY`: parity progression or second-birth hazard moments are not
@@ -121,20 +174,20 @@ The first pass is runnable model code, not a calibrated quantitative result.
 
 ### Equilibrium
 
-- `INTENDED`: solve one scalar family-home market-clearing condition,
+- `INTENDED`: solve one scalar housing-services market-clearing condition,
   \[
-  H^O(q)=H^S(q).
+  H^R(q)+H^O(q)=H^S(P(q)).
   \]
-- `SIMPLIFICATION`: first pass uses a static upward-sloping family-home supply,
+- `INTENDED`: first pass uses a static upward-sloping housing supply,
   \[
-  H^S(q)=\bar H(q/q_0)^\eta.
+  H^S(P)=cP^\eta.
   \]
-  This is not a construction or transition block.
-- `SIMPLIFICATION`: the default stock normalization \(\bar H=1.34\) is
-  chosen to avoid placing the scalar market exactly on a coarse-grid tenure
-  threshold. It is not a calibrated housing stock.
-- `INTENDED`: owner demand and supply are measured in service units per
-  normalized adult in the lifecycle cross-section.
+  This follows Coven's simple competitive supply convention. It is not a
+  dynamic construction or transition block.
+- `SIMPLIFICATION`: the default supply shifter \(c=3.40\) is a smoke-test
+  normalization. It is not a calibrated housing stock or supply estimate.
+- `INTENDED`: renter demand, owner demand, and supply are measured in service
+  units per normalized adult in the lifecycle cross-section.
 - `SIMPLIFICATION`: the lifecycle distribution is normalized by entrant mass
   and does not yet feed fertility choices back into cohort size or entry.
 - `INTENDED`: price iteration reports the excess-demand metric even when it
@@ -150,22 +203,20 @@ The first pass is runnable model code, not a calibrated quantitative result.
 ## Current Coding Plan
 
 1. Keep the state as \((a,z,b,n,o)\).
-2. Keep one scarce family-home asset \(h_O\) and one renter outside option
-   \(h_R\).
+2. Use renter and owner quantity grids with one aggregate housing-services
+   price.
 3. Use property-tax capitalization in \(P=q/(r+\delta+\tau^p)\).
 4. Use down-payment and flow affordability constraints, with no amortized
    mortgage object.
 5. Use a reduced-form old-retention wedge.
 6. Solve fixed-price smoke tests before any price iteration.
-7. Solve one scalar family-home market-clearing condition.
-8. Produce diagnostics for ownership by age, fertility by age, scarce-stock
-   clearing, tenure services, and prices.
+7. Solve one scalar housing-services market-clearing condition.
+8. Produce diagnostics for ownership by age, fertility by age, aggregate
+   housing clearing, tenure services, quantity demand, and prices.
 
 ## Open Decisions
 
 - Whether to move from one-shot completed fertility to sequential hazards.
   Current recommendation: keep one-shot for the first runnable version.
-- Whether to make \(h_R\) endogenous. Current recommendation: keep it exogenous
-  until the single-home ownership channel is stable.
 - Whether to add bequests before calibration. Current recommendation: defer
   until the Coven-style baseline solves robustly.

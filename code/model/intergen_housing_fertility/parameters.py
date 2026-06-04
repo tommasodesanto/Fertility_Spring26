@@ -43,6 +43,7 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
     P.sigma = 1.0
     P.alpha_h = 0.36
     P.beta_n = 0.515
+    P.owner_utility_bonus = 0.45
     P.kappa_choice = 0.10
     P.c_min = 1e-5
     P.h_need_base = 1.05
@@ -74,14 +75,12 @@ def setup_parameters(mode: str = "benchmark") -> SimpleNamespace:
 
     P.n_child_options = np.array([0, 1, 2])
 
-    # Tenure index 0 is renter. Owner indices 1..K correspond to owner housing types.
-    # The Coven-style first pass uses K=1: one scarce family-home asset.
-    P.owner_h = np.array([3.8])
-    P.renter_h = 2.2
-    # Physical service units per normalized adult in the lifecycle cross-section.
-    P.housing_supply = np.array([1.34])
-    P.housing_supply_elasticity = np.array([1.0])
-    P.rent_user_cost = 0.082
+    # Tenure indices 0..Nr-1 are renters; Nr..Nr+K-1 are owners.
+    # One aggregate housing market clears total renter plus owner demand.
+    P.renter_h = np.array([1.8, 3.0, 4.5, 6.0])
+    P.owner_h = np.array([3.0, 4.5, 6.0])
+    P.housing_supply_shifter = 3.40
+    P.housing_supply_elasticity = 1.0
 
     P.owner_user_cost = np.array([0.062])
     P.owner_user_cost_ref = P.owner_user_cost.copy()
@@ -133,30 +132,29 @@ def finalize_parameters(P: SimpleNamespace) -> SimpleNamespace:
     P.owner_h = np.asarray(P.owner_h, dtype=float)
     P.renter_h = np.asarray(P.renter_h, dtype=float)
     if P.renter_h.ndim == 0:
-        P.renter_h = np.full_like(P.owner_h, float(P.renter_h))
-    if not hasattr(P, "housing_supply"):
-        if hasattr(P, "owner_supply"):
-            P.housing_supply = np.asarray(P.owner_supply, dtype=float)
+        P.renter_h = np.array([float(P.renter_h)])
+    if not hasattr(P, "housing_supply_shifter"):
+        if hasattr(P, "housing_supply"):
+            p_ref = float(np.asarray(P.owner_user_cost_ref, dtype=float)[0]) / float(P.r + P.delta + P.tau_property)
+            eta_ref = float(np.asarray(P.housing_supply_elasticity, dtype=float).ravel()[0])
+            P.housing_supply_shifter = float(np.asarray(P.housing_supply, dtype=float).ravel()[0]) / max(p_ref, 1e-12) ** eta_ref
         else:
-            raise ValueError("housing_supply must be provided.")
-    P.housing_supply = np.asarray(P.housing_supply, dtype=float)
+            raise ValueError("housing_supply_shifter must be provided.")
     if not hasattr(P, "housing_supply_elasticity"):
         if hasattr(P, "owner_supply_elasticity"):
-            P.housing_supply_elasticity = np.asarray(P.owner_supply_elasticity, dtype=float)
+            P.housing_supply_elasticity = float(np.asarray(P.owner_supply_elasticity, dtype=float).ravel()[0])
         else:
-            P.housing_supply_elasticity = np.ones_like(P.housing_supply)
-    P.housing_supply_elasticity = np.asarray(P.housing_supply_elasticity, dtype=float)
+            P.housing_supply_elasticity = 1.0
+    P.housing_supply_shifter = float(P.housing_supply_shifter)
+    P.housing_supply_elasticity = float(np.asarray(P.housing_supply_elasticity, dtype=float).ravel()[0])
     P.owner_user_cost = np.asarray(P.owner_user_cost, dtype=float)
     P.owner_user_cost_ref = np.asarray(P.owner_user_cost_ref, dtype=float)
     P.n_child_options = np.asarray(P.n_child_options, dtype=int)
+    P.Nr = len(P.renter_h)
     P.K = len(P.owner_h)
-    if len(P.renter_h) != P.K:
-        raise ValueError("renter_h and owner_h must have the same length.")
-    if len(P.housing_supply) != P.K:
-        raise ValueError("housing_supply and owner_h must have the same length.")
-    if len(P.housing_supply_elasticity) != P.K:
-        raise ValueError("housing_supply_elasticity and owner_h must have the same length.")
-    P.Nt = P.K + 1
+    if len(P.owner_user_cost) != 1:
+        raise ValueError("The current Coven-style scaffold uses one aggregate housing price.")
+    P.Nt = P.Nr + P.K
     P.Nn = len(P.n_child_options)
     P.rho_property = P.r + P.delta + P.tau_property
     P.fertility_choice_index = int(np.clip(P.fertility_choice_age - P.age_start, 0, P.J - 1))
