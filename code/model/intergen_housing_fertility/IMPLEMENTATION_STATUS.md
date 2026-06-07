@@ -177,6 +177,16 @@ probabilities at all-infeasible grid points are not economically meaningful.
   `stage_durations=[4.5]`, expected child-at-home duration `18` years,
   household mean parity `0.699`, reported `tfr=1.399`, and market residual
   \(8.09\times 10^{-5}\).
+- `DIAGNOSTIC ONLY`: 2026-06-07 Torch smoke job `10574606`, run tag
+  `intergen_old_nonlocation_age_tfr_smoke_20260607`, completed a 2-case array
+  with the corrected age and `tfr` accounting. It wrote `metadata.json`,
+  `cases.jsonl`, `best.json`, and `summary.json` under
+  `/scratch/td2248/projects/Fertility_Spring26/code/cluster/results_intergen_housing_fertility_intergen_old_nonlocation_age_tfr_smoke_20260607/`.
+- `DIAGNOSTIC ONLY`: 2026-06-07 Torch overnight screening job `10574658`, run
+  tag `intergen_old_nonlocation_age_tfr_overnight_20260607`, was launched with
+  `64` tasks, `48` cases per task, `J=16`, `Nb=70`, `n_house=6`,
+  `max_iter_eq=60`, and target set `old_nonlocation`. This is an overnight
+  diagnostic random search, not a formal production calibration.
 - `DIAGNOSTIC ONLY`: 2026-06-05 Torch run
   `intergen_old_nonlocation_20260605` used the new one-market code and the
   old non-location target subset. It completed `48` tasks and `2,304` valid
