@@ -717,7 +717,7 @@ def solve_markov_income_partial_equilibrium(
 ) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
     p_eq = np.asarray(p_fixed, dtype=float).reshape(-1).copy()
     P.eq_iter = 1
-    sol = solve_markov_income_at_prices(p_eq, P, b_grid, verbose=False)
+    sol = solve_markov_income_at_prices(p_eq, P, b_grid, verbose=False, fast_stats=False)
     if verbose:
         print(
             f"  Markov income PE: own={100 * sol.own_rate:.1f}% "
@@ -750,7 +750,7 @@ def solve_markov_income_equilibrium(
     for it in range(1, int(P.max_iter_eq) + 1):
         P.eq_iter = it
         t0 = time.perf_counter()
-        sol_it = solve_markov_income_at_prices(p, P, b_grid, verbose=False)
+        sol_it = solve_markov_income_at_prices(p, P, b_grid, verbose=False, fast_stats=True)
         t_solve += time.perf_counter() - t0
         Hd = np.asarray(sol_it.housing_demand, dtype=float).reshape(-1)
         p_target = np.zeros(P.I)
@@ -776,7 +776,7 @@ def solve_markov_income_equilibrium(
             p = np.clip(p, P.p_min, P.p_max)
 
     if best_sol is None:
-        best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False)
+        best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=True)
     scalar_refine_info: dict[str, Any] = {"used": False}
     if P.I == 1 and bool(getattr(P, "scalar_market_refine", True)):
         best_sol, best_p, best_err, scalar_refine_info = refine_one_market_markov_income(
@@ -787,6 +787,7 @@ def solve_markov_income_equilibrium(
             b_grid,
             verbose=verbose,
         )
+    best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False)
     best_sol.timings = {
         **getattr(best_sol, "timings", {}),
         "income_process": "markov",
@@ -821,7 +822,7 @@ def refine_one_market_markov_income(
     tol = float(getattr(P, "tol_eq", 1e-4))
 
     def eval_price(price: float) -> tuple[float, float, SimpleNamespace]:
-        sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False)
+        sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False, fast_stats=True)
         demand = float(np.asarray(sol.housing_demand).reshape(-1)[0])
         supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
         excess = demand - supply
@@ -899,6 +900,7 @@ def solve_markov_income_at_prices(
     P: SimpleNamespace,
     b_grid: np.ndarray,
     verbose: bool = False,
+    fast_stats: bool = False,
 ) -> SimpleNamespace:
     p = np.asarray(p_eq, dtype=float).reshape(-1).copy()
     r = P.user_cost_rate * p
@@ -910,7 +912,7 @@ def solve_markov_income_at_prices(
     t_bellman = time.perf_counter() - t0
     t0 = time.perf_counter()
     g, stats = forward_distribution_markov_income(
-        bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, tenure_probs=tp
+        bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
     )
     t_dist = time.perf_counter() - t0
     sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
@@ -2555,6 +2557,12 @@ def forward_distribution(
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
     entrants_mature_total = 0.0
+    event_horizon = 3
+    birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
+    addchild_es3_one_sum = addchild_es3_one_mass = 0.0
+    addchild_es3_two_plus_sum = addchild_es3_two_plus_mass = 0.0
+    onechild_es3_pre_sum = onechild_es3_post_sum = onechild_es3_mass = 0.0
+    twoplus_es3_pre_sum = twoplus_es3_post_sum = twoplus_es3_mass = 0.0
 
     hc = np.zeros((I, nt))
     he = np.zeros((I, nt))
@@ -2885,6 +2893,7 @@ def forward_distribution_markov_income(
     P: SimpleNamespace,
     b_grid: np.ndarray,
     SD: SimpleNamespace,
+    fast_stats: bool = False,
     tenure_probs: np.ndarray | None = None,
 ) -> tuple[np.ndarray, SimpleNamespace]:
     J = P.J
@@ -2908,6 +2917,12 @@ def forward_distribution_markov_income(
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
     entrants_mature_total = 0.0
+    event_horizon = 3
+    birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
+    addchild_es3_one_sum = addchild_es3_one_mass = 0.0
+    addchild_es3_two_plus_sum = addchild_es3_two_plus_mass = 0.0
+    onechild_es3_pre_sum = onechild_es3_post_sum = onechild_es3_mass = 0.0
+    twoplus_es3_pre_sum = twoplus_es3_post_sum = twoplus_es3_mass = 0.0
 
     hc = np.zeros((I, nt))
     he = np.zeros((I, nt))
@@ -2966,6 +2981,79 @@ def forward_distribution_markov_income(
                 gpf[:, :, :, 1:, 1] = mbp[:, :, :, 1:]
                 g[:, :, :, j, zz, 0, 0] = 0.0
                 g[:, :, :, j, zz, :, :] += gpf
+
+                birth_mass = np.sum(mbp[:, :, :, 1:], axis=3)
+                birth_mass_total = float(np.sum(birth_mass))
+                if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
+                    birth_weight = np.zeros((Nb, nt, I, Nz))
+                    birth_weight[:, :, :, zz] = birth_mass
+                    pre_h = mean_housing_childless_weighted_markov(birth_weight, j, hR_pol, P)
+                    birth_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+                    birth_cohort[:, :, :, zz, 1:, 1] = mbp[:, :, :, 1:]
+                    birth_cohort = advance_cohort_horizon_markov_income(
+                        birth_cohort,
+                        j,
+                        event_horizon,
+                        loc_probs,
+                        tenure_choice,
+                        tenure_probs,
+                        bp_pol,
+                        P,
+                        b_grid,
+                        SD,
+                        lmm_idx,
+                        lmm_wt,
+                        tmx_idx,
+                        tmx_wt,
+                        ust,
+                        Pia,
+                        Pi_z,
+                    )
+                    post_h = mean_housing_distribution_markov(birth_cohort, j + event_horizon, hR_pol, P)
+                    birth_es3_pre_sum += birth_mass_total * pre_h
+                    birth_es3_post_sum += birth_mass_total * post_h
+                    birth_es3_mass += birth_mass_total
+
+                    one_child = np.zeros_like(birth_cohort)
+                    one_child[:, :, :, :, 1, :] = birth_cohort[:, :, :, :, 1, :]
+                    one_mass = float(np.sum(one_child))
+                    if one_mass > 1e-12:
+                        one_child_birth_mass = mbp[:, :, :, 1]
+                        one_child_birth_mass_total = float(np.sum(one_child_birth_mass))
+                        addchild_es3_one_sum += one_mass * mean_housing_distribution_markov(
+                            one_child, j + event_horizon, hR_pol, P
+                        )
+                        addchild_es3_one_mass += one_mass
+                        if one_child_birth_mass_total > 1e-12:
+                            one_weight = np.zeros((Nb, nt, I, Nz))
+                            one_weight[:, :, :, zz] = one_child_birth_mass
+                            one_pre = mean_housing_childless_weighted_markov(one_weight, j, hR_pol, P)
+                            onechild_es3_pre_sum += one_child_birth_mass_total * one_pre
+                            onechild_es3_post_sum += one_mass * mean_housing_distribution_markov(
+                                one_child, j + event_horizon, hR_pol, P
+                            )
+                            onechild_es3_mass += one_child_birth_mass_total
+
+                    if npar >= 3:
+                        two_plus_birth_mass = np.sum(mbp[:, :, :, 2:], axis=3)
+                        two_plus_birth_mass_total = float(np.sum(two_plus_birth_mass))
+                        two_plus = np.zeros_like(birth_cohort)
+                        two_plus[:, :, :, :, 2:, :] = birth_cohort[:, :, :, :, 2:, :]
+                        two_plus_mass = float(np.sum(two_plus))
+                        if two_plus_mass > 1e-12:
+                            addchild_es3_two_plus_sum += two_plus_mass * mean_housing_distribution_markov(
+                                two_plus, j + event_horizon, hR_pol, P
+                            )
+                            addchild_es3_two_plus_mass += two_plus_mass
+                            if two_plus_birth_mass_total > 1e-12:
+                                two_weight = np.zeros((Nb, nt, I, Nz))
+                                two_weight[:, :, :, zz] = two_plus_birth_mass
+                                two_pre = mean_housing_childless_weighted_markov(two_weight, j, hR_pol, P)
+                                twoplus_es3_pre_sum += two_plus_birth_mass_total * two_pre
+                                twoplus_es3_post_sum += two_plus_mass * mean_housing_distribution_markov(
+                                    two_plus, j + event_horizon, hR_pol, P
+                                )
+                                twoplus_es3_mass += two_plus_birth_mass_total
 
         gj = g[:, :, :, j, :, :, :]
         gpl = np.zeros((Nb, nt, I, Nz, npar, ncs))
@@ -3089,11 +3177,25 @@ def forward_distribution_markov_income(
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
-    stats.housing_increment_0to1_eventstudy_t3 = 0.0
-    stats.housing_increment_1to2_proxy_t3 = 0.0
-    stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
-    stats.housing_increment_0to2plus_eventstudy_t3 = 0.0
-    stats.housing_event_horizon = 3
+    stats.housing_increment_0to1_eventstudy_t3 = (
+        birth_es3_post_sum / birth_es3_mass - birth_es3_pre_sum / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
+    )
+    stats.housing_increment_1to2_proxy_t3 = (
+        addchild_es3_two_plus_sum / addchild_es3_two_plus_mass - addchild_es3_one_sum / addchild_es3_one_mass
+        if addchild_es3_one_mass > 1e-12 and addchild_es3_two_plus_mass > 1e-12
+        else 0.0
+    )
+    stats.housing_increment_0to1_onechild_eventstudy_t3 = (
+        onechild_es3_post_sum / onechild_es3_mass - onechild_es3_pre_sum / onechild_es3_mass
+        if onechild_es3_mass > 1e-12
+        else 0.0
+    )
+    stats.housing_increment_0to2plus_eventstudy_t3 = (
+        twoplus_es3_post_sum / twoplus_es3_mass - twoplus_es3_pre_sum / twoplus_es3_mass
+        if twoplus_es3_mass > 1e-12
+        else 0.0
+    )
+    stats.housing_event_horizon = event_horizon
     return g, stats
 
 
@@ -3124,6 +3226,210 @@ def collapse_markov_location_probs(lp: np.ndarray, g: np.ndarray, z_weights: np.
     den = np.sum(mass, axis=5)
     num = np.sum(lp * mass, axis=5)
     return np.divide(num, den, out=fallback.copy(), where=den > 1e-15)
+
+
+def advance_cohort_horizon_markov_income(
+    g_in,
+    start_age,
+    horizon,
+    loc_probs,
+    tenure_choice,
+    tenure_probs,
+    bp_pol,
+    P,
+    b_grid,
+    SD,
+    lmm_idx,
+    lmm_wt,
+    tmx_idx,
+    tmx_wt,
+    ust,
+    Pia,
+    Pi_z,
+):
+    g_out = g_in
+    for step in range(1, horizon + 1):
+        age_idx = start_age + step - 1
+        if age_idx >= P.J - 1:
+            break
+        g_out = advance_cohort_one_period_markov_income(
+            g_out,
+            age_idx,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            bp_pol,
+            P,
+            b_grid,
+            SD,
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            ust,
+            Pia,
+            Pi_z,
+        )
+    return g_out
+
+
+def advance_cohort_one_period_markov_income(
+    gj,
+    j,
+    loc_probs,
+    tenure_choice,
+    tenure_probs,
+    bp_pol,
+    P,
+    b_grid,
+    SD,
+    lmm_idx,
+    lmm_wt,
+    tmx_idx,
+    tmx_wt,
+    ust,
+    Pia,
+    Pi_z,
+):
+    Nb = len(b_grid)
+    nt = 1 + P.n_house
+    I = P.I
+    Nz = gj.shape[3]
+    npar = P.n_parity
+    ncs = P.n_child_states
+    nc = SD.nc
+    use_compiled_scatter = NUMBA_AVAILABLE and bool(getattr(P, "use_numba_scatter", False))
+    K = P.n_child_stages
+    csm1 = K + 1
+    csm2 = K + 2
+
+    gpl = np.zeros((Nb, nt, I, Nz, npar, ncs))
+    for zz in range(Nz):
+        for io in range(I):
+            for to in range(nt):
+                go = flat_nc(gj[:, to, io, zz, :, :], Nb, nc)
+                if np.sum(go) < 1e-15:
+                    continue
+                po = np.reshape(loc_probs[:, to, io, :, j, zz, :, :], (Nb, I, nc), order="F")
+                sp = po[:, io, :]
+                gpl[:, to, io, zz, :, :] += unflat_nc(go * sp, Nb, npar, ncs)
+                idx = lmm_idx[io, to, :]
+                wt = lmm_wt[io, to, :]
+                for id_ in range(I):
+                    if id_ == io:
+                        continue
+                    mp = go * po[:, id_, :]
+                    if use_compiled_scatter:
+                        moved = scatter_cols_sameidx_kernel(idx, wt, mp, Nb)
+                    else:
+                        moved = scatter_redistribute_cols_sameidx(idx, wt, mp, Nb)
+                    gpl[:, 0, id_, zz, :, :] += unflat_nc(moved, Nb, npar, ncs)
+
+    gpt = np.zeros((Nb, nt, I, Nz, npar, ncs))
+    for zz in range(Nz):
+        for nn in range(npar):
+            for id_ in range(I):
+                for to in range(nt):
+                    gs = gpl[:, to, id_, zz, nn, :]
+                    if np.sum(gs) < 1e-15:
+                        continue
+                    for tn in range(nt):
+                        if tenure_probs is None:
+                            tcs = tenure_choice[:, to, id_, j, zz, nn, :]
+                            mk = tcs == tn
+                            if not np.any(mk):
+                                continue
+                            mt = gs * mk
+                        else:
+                            pr = tenure_probs[:, to, id_, j, zz, nn, :, tn]
+                            mt = gs * pr
+                        if np.sum(mt) < 1e-15:
+                            continue
+                        rd = np.zeros((Nb, ncs))
+                        for cs in range(ncs):
+                            idx = tmx_idx[id_, to, tn, nn, cs, :]
+                            wt = tmx_wt[id_, to, tn, nn, cs, :]
+                            if use_compiled_scatter:
+                                rd[:, cs] = scatter_vec_kernel(idx, wt, mt[:, cs], Nb)
+                            else:
+                                rd[:, cs] = scatter_redistribute(idx, wt, mt[:, cs], Nb)
+                        gpt[:, tn, id_, zz, nn, :] += rd
+
+    gps = np.zeros((Nb, nt, I, Nz, npar, ncs))
+    for zz in range(Nz):
+        for i in range(I):
+            for ten in range(nt):
+                gf = flat_nc(gpt[:, ten, i, zz, :, :], Nb, nc)
+                bpv = flat_nc(bp_pol[:, ten, i, j, zz, :, :], Nb, nc)
+                idx, wt = interp_indices(b_grid, np.clip(bpv, b_grid[0], b_grid[-1]))
+                if use_compiled_scatter:
+                    g_new = scatter_cols_kernel(idx, wt, gf, Nb)
+                else:
+                    g_new = scatter_redistribute_cols(idx, wt, gf, Nb)
+                gps[:, ten, i, zz, :, :] = unflat_nc(g_new, Nb, npar, ncs)
+
+    g_next = np.zeros_like(gj)
+    for zz in range(Nz):
+        for nn in range(npar):
+            for cs in range(ncs):
+                gp = gps[:, :, :, zz, nn, cs]
+                if ust:
+                    Pi = Pia[:, :, nn]
+                    for csn in range(ncs):
+                        wt_child = Pi[cs, csn]
+                        if wt_child > 0:
+                            for zn in range(Nz):
+                                g_next[:, :, :, zn, nn, csn] += Pi_z[zz, zn] * wt_child * gp
+                else:
+                    if cs == 0:
+                        csn = 0
+                    elif cs >= csm1:
+                        csn = cs
+                    elif cs < K:
+                        csn = cs + 1
+                    else:
+                        csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
+                    for zn in range(Nz):
+                        g_next[:, :, :, zn, nn, csn] += Pi_z[zz, zn] * gp
+    return g_next
+
+
+def mean_housing_childless_weighted_markov(weight_dist, j, hR_pol, P):
+    Nb, nt, I, Nz = weight_dist.shape
+    th = mn = 0.0
+    for zz in range(Nz):
+        for i in range(I):
+            for ten in range(nt):
+                gs = weight_dist[:, ten, i, zz]
+                mh = float(np.sum(gs))
+                if mh < 1e-15:
+                    continue
+                if ten == 0:
+                    th += float(np.sum(gs * hR_pol[:, ten, i, j, zz, 0, 0]))
+                else:
+                    th += mh * P.H_own[ten - 1]
+                mn += mh
+    return th / max(mn, 1e-12)
+
+
+def mean_housing_distribution_markov(g_dist, j, hR_pol, P):
+    Nb, nt, I, Nz, npar, ncs = g_dist.shape
+    th = mn = 0.0
+    for zz in range(Nz):
+        for nn in range(npar):
+            for cs in range(ncs):
+                for i in range(I):
+                    for ten in range(nt):
+                        gs = g_dist[:, ten, i, zz, nn, cs]
+                        mh = float(np.sum(gs))
+                        if mh < 1e-15:
+                            continue
+                        if ten == 0:
+                            th += float(np.sum(gs * hR_pol[:, ten, i, j, zz, nn, cs]))
+                        else:
+                            th += mh * P.H_own[ten - 1]
+                        mn += mh
+    return th / max(mn, 1e-12)
 
 
 def compute_markov_statistics(

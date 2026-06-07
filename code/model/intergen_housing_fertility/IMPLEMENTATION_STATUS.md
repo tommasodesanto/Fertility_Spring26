@@ -1,6 +1,6 @@
 # Implementation Status: Intergenerational Housing Fertility
 
-Updated: 2026-06-04
+Updated: 2026-06-07
 
 ## Rule
 
@@ -55,14 +55,23 @@ quantitative model.
   distribution propagates mass across \(z_{t+1}\) with the same matrix.
   Working-age income is \(y_{a,z}=z y_a\), and the same type-scaled income
   enters the budget and payment-to-income screen.
-- `INTENDED`: 4-year decision periods. Defaults are `age_start=22`, `J=16`,
-  `J_R=11`, so agents enter at 22, retire around 66, and die after the last
-  age-82 decision period.
-- `INTENDED`: one dependent-child stage, `stage_durations=[1.0]`. Since a model
-  period is 4 years, this means one 4-year child-at-home stage.
+- `INTENDED`: 4-year decision periods. Defaults are `period_years=4`,
+  `age_start=22`, `J=16`, and `J_R=11`, so agents enter at age 22, first retire
+  at age 66, and die after the last age-82 decision period.
+- `INTENDED`: one dependent-child state with stochastic age-out duration
+  `stage_durations=[A_m/period_years]=[4.5]`. With `A_m=18`, this gives an
+  expected child-at-home duration of 18 years, so child maturation into the
+  adult entrant pool is mapped to the 4-year decision period rather than
+  happening after one period.
 - `INTENDED`: period-unit flows. Discounting, interest, depreciation, property
   tax, income, child goods costs, and minimum consumption are scaled to the
   4-year decision period in the default parameter file.
+- `INTENDED`: fertility accounting follows the old workhorse convention.
+  `mean_completed_fertility` is the household/unitary-agent mean parity; the
+  reported and targeted TFR moment is `tfr = 2 * mean_completed_fertility`.
+  This factor-of-two conversion is not a demographic transition change; it is
+  the project convention for mapping unitary household parity into the
+  paper-facing fertility scale.
 
 ## Simplifications
 
@@ -79,8 +88,17 @@ quantitative model.
 - `SIMPLIFICATION`: the Markov-income path currently uses full Bellman solves
   in each price iteration. Howard policy-evaluation acceleration is still
   available only in the non-Markov inherited path.
+- `INTENDED`: the active Markov-income forward path computes the old
+  event-study housing response statistics by propagating birth cohorts under
+  the same tenure, savings, child-aging, and income-transition rules used by
+  the main forward distribution. The price iteration skips these event
+  statistics and recomputes them once at the accepted price.
 - `SIMPLIFICATION`: fertility remains the workhorse one-shot completed-family
   choice for childless fertile households. It is not a sequential parity hazard.
+- `SIMPLIFICATION`: the single dependent-child state is not age-resolved.
+  Maturation is geometric with mean 18 years, not deterministic child ages
+  \(0,\ldots,17\). This keeps the state space small while preserving the
+  adult-maturation timing implied by 4-year periods.
 - `SIMPLIFICATION`: the model uses a collateral-constrained user-cost shortcut:
   \(qh\) enters the flow budget and \((1-\phi)Ph\le b\) enters the new-owner
   feasibility screen. The down payment is not subtracted as a separate asset
@@ -97,8 +115,8 @@ quantitative model.
 
 ## Not Implemented
 
-- `NOT IMPLEMENTED`: formal calibration, SMM objective, counterfactual tables,
-  and parameter search.
+- `NOT IMPLEMENTED`: formal calibration, counterfactual tables, and production
+  parameter search. The current random-search tool is diagnostic only.
 - `NOT IMPLEMENTED`: estate-tax counterfactuals, inheritance kernels, bequest
   principal adding-up, and estate-revenue rebates.
 - `NOT IMPLEMENTED`: mortgage-rate lock-in from coupon gaps.
@@ -136,9 +154,54 @@ probabilities at all-infeasible grid points are not economically meaningful.
 ## Diagnostic Calibration
 
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
-  runs a small local random search against provisional moments for ownership,
-  young ownership, old ownership, fertility, and childlessness. This is a
-  scaffold-inspection tool, not the paper calibration.
+  runs a checkpointed random search. Its default target set is
+  `old_nonlocation`, which uses the old workhorse targets that remain defined
+  in the one-market code: TFR, childlessness, mean age at first birth,
+  ownership, family ownership gap, child-linked housing increments, young
+  liquid wealth relative to income, old-age ownership, and old
+  parent-childless ownership gap. It explicitly excludes the old targets that
+  require multiple markets: gradients, center/periphery shares, migration, and
+  inversion targets.
+- `DIAGNOSTIC ONLY`: the legacy `core` target set is retained only for quick
+  smoke calibration of ownership, young ownership, old ownership, completed
+  fertility, and childlessness. It is not the requested old-target objective.
+- `DIAGNOSTIC ONLY`: 2026-06-07 fixed the old-target `tfr` extractor to use
+  the workhorse convention `tfr = 2 * mean_completed_fertility`. Earlier
+  2026-06-05 and 2026-06-06 one-market diagnostic losses evaluated `tfr` on the
+  raw household-parity scale and are therefore not comparable as objective
+  values. Their market-clearing and event-statistic smoke information remains
+  useful.
+- `DIAGNOSTIC ONLY`: 2026-06-07 local one-case objective smoke
+  `output/model/intergen_housing_fertility_age_mapping_smoke/calibrate_one_case/`
+  verifies the corrected age and fertility accounting: `period_years=4`,
+  `stage_durations=[4.5]`, expected child-at-home duration `18` years,
+  household mean parity `0.699`, reported `tfr=1.399`, and market residual
+  \(8.09\times 10^{-5}\).
+- `DIAGNOSTIC ONLY`: 2026-06-05 Torch run
+  `intergen_old_nonlocation_20260605` used the new one-market code and the
+  old non-location target subset. It completed `48` tasks and `2,304` valid
+  cases. The scalar best had loss `119.007`, but it is not economically useful:
+  TFR `0.117`, childlessness `0.891`, ownership `0.937`, and old ownership
+  `1.000`. Across all cases, both child-linked housing increment diagnostics
+  were exactly zero because the active Markov-income statistics path did not
+  compute those event-study moments yet.
+- `DIAGNOSTIC ONLY`: 2026-06-06 local smoke
+  `output/model/intergen_housing_fertility_old_nonlocation_smoke_after_eventstats_fast/`
+  verifies that the Markov-income event-study statistics are no longer
+  mechanical zeros. Baseline smoke moments include
+  `housing_increment_0to1=-0.201` and `housing_increment_1to2=0.044`.
+- `DIAGNOSTIC ONLY`: 2026-06-06 Torch run
+  `intergen_old_nonlocation_eventstats_20260606` used the new one-market code
+  and the old non-location target subset after patching the Markov-income
+  event-study statistics. It completed `48` tasks and `2,304` valid cases.
+  Scalar best loss was `145.253`, but the scalar-best point remains an
+  economically poor corner: TFR `0.117`, childlessness `0.891`, ownership
+  `0.937`, old ownership `1.000`, `housing_increment_0to1=2.610`, and
+  `housing_increment_1to2=0.308`. The best more interpretable cases still have
+  late births, weak family ownership gaps, and poor old-age parent-childless
+  gaps. The next step is to inspect policy functions and tighten/search around
+  economically admissible regions rather than treating the scalar best as a
+  candidate calibration.
 - `DIAGNOSTIC ONLY`: 2026-06-04 local run
   `output/model/intergen_housing_fertility_small_calibration/` used
   `J=12`, `Nb=40`, four owner rungs, and 24 checkpointed cases. Best case:

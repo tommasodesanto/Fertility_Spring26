@@ -35,7 +35,7 @@ def setup_parameters() -> SimpleNamespace:
     P.A_m = 18
     P.n_parity = 3
     P.use_stochastic_aging = True
-    P.stage_durations = np.array([1.0])
+    P.stage_durations = np.array([P.A_m / P.period_years])
     P.n_child_stages = len(P.stage_durations)
     P.n_child_states = P.n_child_stages + 3
     P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
@@ -206,6 +206,8 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.period_years = float(P.period_years)
         if "da" not in od:
             P.da = P.period_years
+    if "A_m" in od and "stage_durations" not in od:
+        P.stage_durations = np.array([float(P.A_m) / max(float(P.period_years), 1e-12)])
     if "stage_durations" in od:
         P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
         if np.any(P.stage_durations <= 0):
@@ -273,6 +275,16 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
             P.Pi_z = make_persistent_transition_matrix(P.z_weights, rho_z)
         else:
             P.Pi_z = normalize_transition_matrix(P.Pi_z, P.z_weights)
+
+    if "stage_durations" not in od and hasattr(P, "A_m"):
+        P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
+        if P.stage_durations.size == 1:
+            target_child_periods = float(P.A_m) / max(float(P.period_years), 1e-12)
+            if not np.isclose(P.stage_durations[0], target_child_periods):
+                P.stage_durations = np.array([target_child_periods])
+                P.n_child_stages = len(P.stage_durations)
+                P.n_child_states = P.n_child_stages + 3
+                P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
 
     P.user_cost_rate = P.q + P.delta + P.tau_H
     P.R_gross = 1 + P.q

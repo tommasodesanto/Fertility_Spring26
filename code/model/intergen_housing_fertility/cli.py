@@ -15,6 +15,14 @@ from .diagnostics import write_diagnostics
 from .solver import run_model_cp_dt
 
 
+PERIOD_YEARS = 4.0
+AGE_START = 22.0
+FERTILITY_START_AGE = 26.0
+FERTILITY_END_AGE = 42.0
+RETIREMENT_AGE = 66.0
+CHILD_MATURITY_AGE = 18.0
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Intergenerational housing/fertility model tools")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -51,6 +59,7 @@ def main() -> None:
     cal.add_argument("--Nb", type=int, default=40)
     cal.add_argument("--n-house", type=int, default=4)
     cal.add_argument("--max-iter-eq", type=int, default=35)
+    cal.add_argument("--target-set", choices=["core", "old_nonlocation"], default="old_nonlocation")
     cal.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_small_calibration"))
 
     args = parser.parse_args()
@@ -63,6 +72,7 @@ def main() -> None:
             Nb=int(args.Nb),
             n_house=int(args.n_house),
             max_iter_eq=int(args.max_iter_eq),
+            target_set=str(args.target_set),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
         return
@@ -106,7 +116,6 @@ def one_market_overrides(extra: dict[str, Any] | None = None) -> dict[str, Any]:
         "r_bar": np.array([0.16]),
         "H0": np.array([4.0]),
         "eta_supply": np.array([1.0]),
-        "stage_durations": np.array([1.0]),
         "use_pti_constraint": True,
         "pti_limit": 0.30,
     }
@@ -118,13 +127,12 @@ def one_market_overrides(extra: dict[str, Any] | None = None) -> dict[str, Any]:
 def smoke_overrides(args: argparse.Namespace) -> dict[str, Any]:
     j = int(args.J)
     n_house = int(args.n_house)
+    lifecycle = lifecycle_overrides(j)
     return one_market_overrides(
         {
+            **lifecycle,
             "J": j,
-            "J_R": max(2, min(j - 2, 6)),
             "entry_by_loc": np.array([1.0 / j]),
-            "A_f_start": 2,
-            "A_f_end": min(4, j),
             "Nb": int(args.Nb),
             "n_house": n_house,
             "H_own": np.linspace(2.0, 8.0, n_house),
@@ -142,12 +150,11 @@ def smoke_overrides(args: argparse.Namespace) -> dict[str, Any]:
 def run_size_overrides(args: argparse.Namespace) -> dict[str, Any]:
     j = int(args.J)
     n_house = int(args.n_house)
+    lifecycle = lifecycle_overrides(j)
     return {
+        **lifecycle,
         "J": j,
-        "J_R": max(2, min(j - 2, 11)),
         "entry_by_loc": np.array([1.0 / j]),
-        "A_f_start": 2,
-        "A_f_end": min(6, j),
         "Nb": int(args.Nb),
         "n_house": n_house,
         "H_own": np.linspace(2.0, 11.0, n_house),
@@ -155,11 +162,39 @@ def run_size_overrides(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def lifecycle_overrides(J: int) -> dict[str, Any]:
+    j = int(J)
+    fertile_start = age_to_period_number(FERTILITY_START_AGE)
+    fertile_end = age_to_period_number(FERTILITY_END_AGE)
+    retirement_idx = int(round((RETIREMENT_AGE - AGE_START) / PERIOD_YEARS))
+    return {
+        "period_years": PERIOD_YEARS,
+        "da": PERIOD_YEARS,
+        "age_start": AGE_START,
+        "A_m": CHILD_MATURITY_AGE,
+        "stage_durations": np.array([CHILD_MATURITY_AGE / PERIOD_YEARS]),
+        "J_R": max(2, min(j - 1, retirement_idx)),
+        "A_f_start": max(1, min(j, fertile_start)),
+        "A_f_end": max(1, min(j, fertile_end)),
+    }
+
+
+def age_to_period_number(age: float) -> int:
+    return int(round((float(age) - AGE_START) / PERIOD_YEARS)) + 1
+
+
 def summarize_solution(sol, P, p_eq, elapsed: float) -> dict[str, Any]:
     return {
         "elapsed_sec": elapsed,
         "J": P.J,
         "period_years": getattr(P, "period_years", P.da),
+        "age_start": getattr(P, "age_start", np.nan),
+        "retirement_age": getattr(P, "age_start", np.nan) + getattr(P, "J_R", np.nan) * getattr(P, "da", np.nan),
+        "fertility_start_age": getattr(P, "age_start", np.nan) + (getattr(P, "A_f_start", np.nan) - 1) * getattr(P, "da", np.nan),
+        "fertility_end_age": getattr(P, "age_start", np.nan) + (getattr(P, "A_f_end", np.nan) - 1) * getattr(P, "da", np.nan),
+        "child_maturity_age": getattr(P, "A_m", np.nan),
+        "stage_durations": getattr(P, "stage_durations", np.array([])),
+        "expected_child_years": np.asarray(getattr(P, "stage_durations", np.array([np.nan])), dtype=float) * getattr(P, "period_years", getattr(P, "da", np.nan)),
         "n_child_stages": P.n_child_stages,
         "markets": P.I,
         "income_process": str(getattr(P, "income_type_transition", "none")),
@@ -181,7 +216,9 @@ def summarize_solution(sol, P, p_eq, elapsed: float) -> dict[str, Any]:
         "own_rate": sol.own_rate,
         "young_owner_rate": sol.young_owner_rate,
         "old_owner_rate": sol.old_owner_rate,
+        "tfr": 2.0 * sol.mean_completed_fertility,
         "mean_completed_fertility": sol.mean_completed_fertility,
+        "tfr_by_income_type": 2.0 * getattr(sol, "mean_fertility_by_income_type", np.array([])),
         "own_rate_by_income_type": getattr(sol, "own_rate_by_income_type", np.array([])),
         "mean_fertility_by_income_type": getattr(sol, "mean_fertility_by_income_type", np.array([])),
         "housing_demand_by_income_type": getattr(sol, "housing_demand_by_income_type", np.array([])),
