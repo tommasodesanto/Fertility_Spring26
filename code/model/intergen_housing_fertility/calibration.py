@@ -262,7 +262,8 @@ def extract_moments(sol: Any) -> dict[str, float]:
     household_parity = float(getattr(sol, "mean_completed_fertility", np.nan))
     return {
         "tfr": 2.0 * household_parity,
-        "own_rate": float(getattr(sol, "own_rate", np.nan)),
+        "own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
+        "aggregate_own_rate": float(getattr(sol, "own_rate", np.nan)),
         "young_owner_rate": float(getattr(sol, "young_owner_rate", np.nan)),
         "old_owner_rate": float(getattr(sol, "old_owner_rate", np.nan)),
         "old_age_own_rate": float(getattr(sol, "old_age_own_rate_6575", np.nan)),

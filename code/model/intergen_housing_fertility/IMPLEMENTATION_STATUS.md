@@ -201,6 +201,15 @@ probabilities at all-infeasible grid points are not economically meaningful.
   childlessness `0.269`, ownership `0.735`, old ownership `0.867`, family gap
   `0.529`, and first-birth age `32.18`; it is more interpretable but still far
   from the age-at-first-birth and wealth targets.
+- `DIAGNOSTIC ONLY`: 2026-06-08 audit found and fixed a target-mapping bug in
+  `calibration.py`: the old workhorse maps target `own_rate` to prime-age
+  ownership `own_rate_3055`, but the one-market diagnostic extractor had been
+  using aggregate ownership. The extractor now stores target `own_rate` from
+  `own_rate_3055` and saves aggregate ownership separately as
+  `aggregate_own_rate`. Re-ranking the completed Torch records with this fix
+  does not rescue the scalar best; the dominant failure remains the
+  first-birth-age target under the one-shot fertility architecture. Full audit:
+  `docs/model/intergen_housing_fertility_audit_20260608.md`.
 - `DIAGNOSTIC ONLY`: 2026-06-05 Torch run
   `intergen_old_nonlocation_20260605` used the new one-market code and the
   old non-location target subset. It completed `48` tasks and `2,304` valid
