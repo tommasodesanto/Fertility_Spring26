@@ -187,6 +187,20 @@ probabilities at all-infeasible grid points are not economically meaningful.
   `64` tasks, `48` cases per task, `J=16`, `Nb=70`, `n_house=6`,
   `max_iter_eq=60`, and target set `old_nonlocation`. This is an overnight
   diagnostic random search, not a formal production calibration.
+- `DIAGNOSTIC ONLY`: 2026-06-08 status for job `10574658`: all `64` tasks
+  finished and all `3,072` cases produced valid records. `2,868` cases cleared
+  the market to residual \(\le 5\times 10^{-3}\), and `2,650` cleared to
+  residual \(\le 10^{-4}\). The scalar-best converged case has loss `286.451`,
+  residual \(4.57\times 10^{-5}\), `tfr=3.548`, childlessness `0.003`,
+  ownership `0.937`, old ownership `1.000`, family ownership gap essentially
+  zero, and first-birth age `30.48`. This is not an economically usable
+  calibration point; the random search is still pulled toward a high-fertility,
+  high-ownership corner. The best basic-filter candidate with
+  `1.4<=tfr<=2.0`, `0.05<=childlessness<=0.30`, `0.40<=ownership<=0.75`, and
+  `0.55<=old ownership<=0.90` has loss `480.752`, `tfr=1.962`,
+  childlessness `0.269`, ownership `0.735`, old ownership `0.867`, family gap
+  `0.529`, and first-birth age `32.18`; it is more interpretable but still far
+  from the age-at-first-birth and wealth targets.
 - `DIAGNOSTIC ONLY`: 2026-06-05 Torch run
   `intergen_old_nonlocation_20260605` used the new one-market code and the
   old non-location target subset. It completed `48` tasks and `2,304` valid
