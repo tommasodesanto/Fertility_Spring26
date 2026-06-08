@@ -214,6 +214,15 @@ probabilities at all-infeasible grid points are not economically meaningful.
   (`0.24`), prime-age childless renter median rooms (`4.0`), and prime-age
   childless owner median rooms (`6.0`). These added moments are reactivated
   candidate targets, not a finalized empirical target system.
+- `DIAGNOSTIC ONLY`: 2026-06-08 prepared
+  `code/cluster/submit_intergen_housing_fertility_twohour_panel.sh` for a
+  two-hour Torch panel test of `candidate_no_timing_v0`. The launcher uses one
+  worker per array task, a 115-minute internal panel budget inside a 2:10 SLURM
+  walltime, `J=16`, `Nb=60`, five income states, six owner rungs, and no
+  diagnostic packets during the timed run. Task 1 includes deterministic anchor
+  cases; other tasks use `--random-only` to avoid repeating those anchors.
+  Collect outputs with
+  `python tools/collect_intergen_panel_results.py --results-dir <RESULTS_DIR>`.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined

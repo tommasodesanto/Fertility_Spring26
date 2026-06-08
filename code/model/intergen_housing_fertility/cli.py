@@ -86,6 +86,7 @@ def main() -> None:
     panel.add_argument("--minutes", type=float, default=30.0)
     panel.add_argument("--diagnostic-best", type=int, default=3)
     panel.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
+    panel.add_argument("--random-only", action="store_true", help="Skip deterministic anchor cases in local-panel draws")
     panel.add_argument("--quiet", action="store_true")
     panel.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_panel"))
 
@@ -131,6 +132,7 @@ def main() -> None:
             minutes=float(args.minutes),
             diagnostic_best=int(args.diagnostic_best),
             target_set=str(args.target_set),
+            include_anchors=not bool(args.random_only),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))

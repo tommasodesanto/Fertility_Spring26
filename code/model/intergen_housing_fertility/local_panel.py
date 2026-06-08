@@ -47,6 +47,7 @@ def run_local_panel(
     income_states: int = 5,
     diagnostic_best: int = 3,
     target_set: str = "candidate_no_timing_v0",
+    include_anchors: bool = True,
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run a bounded multicore diagnostic panel.
@@ -70,11 +71,12 @@ def run_local_panel(
 
     rank_targets, rank_weights = get_target_set(target_set)
     income = income_process_overrides(income_states)
-    candidates = local_panel_candidates(n_cases, seed)
+    candidates = local_panel_candidates(n_cases, seed, include_anchors=include_anchors)
     meta = {
         "status": "bounded_multicore_diagnostic_not_formal_calibration",
         "n_cases_requested": int(n_cases),
         "seed": int(seed),
+        "include_anchors": bool(include_anchors),
         "J": int(J),
         "Nb": int(Nb),
         "n_house": int(n_house),
@@ -294,14 +296,16 @@ def run_local_panel_case(
     }
 
 
-def local_panel_candidates(n_cases: int, seed: int) -> list[dict[str, Any]]:
-    anchors = [
-        keep_internal_candidate(candidate)
-        for candidate in informed_smoke_candidates()
-        if str(candidate["label"]) != "baseline"
-    ]
-    candidates: list[dict[str, Any]] = [{"label": "baseline", "theta": {}}]
-    candidates.extend(anchors)
+def local_panel_candidates(n_cases: int, seed: int, *, include_anchors: bool = True) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    if include_anchors:
+        anchors = [
+            keep_internal_candidate(candidate)
+            for candidate in informed_smoke_candidates()
+            if str(candidate["label"]) != "baseline"
+        ]
+        candidates.append({"label": "baseline", "theta": {}})
+        candidates.extend(anchors)
     rng = np.random.default_rng(seed)
     while len(candidates) < int(n_cases):
         idx = len(candidates)
