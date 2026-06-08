@@ -13,7 +13,7 @@ SNAPSHOT_TAG="${1:-$(date +%Y%m%d_%H%M%S)}"
 SNAPSHOT_DIR="${SCRIPT_DIR}/shutdown_snapshots/${SNAPSHOT_TAG}"
 mkdir -p "${SNAPSHOT_DIR}"
 
-JOB_IDS="${INTERGEN_SHUTDOWN_JOB_IDS:-10626531 10626676 10628379 10628390 10628391 10628618}"
+JOB_IDS="${INTERGEN_SHUTDOWN_JOB_IDS:-10626531 10626676 10628379 10628390 10628391 10628618 10628837}"
 
 if command -v module >/dev/null 2>&1; then
     module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || module load python/3.12 2>/dev/null || module load python/3.11 2>/dev/null || true
@@ -145,6 +145,7 @@ tar -czf "${TAR_PATH}" \
     logs/slurm_ihf_2hr_10628390_*.out logs/slurm_ihf_2hr_10628390_*.err \
     logs/slurm_ihf_2hr_10628391_*.out logs/slurm_ihf_2hr_10628391_*.err \
     logs/slurm_ihf_2hr_10628618_*.out logs/slurm_ihf_2hr_10628618_*.err \
+    logs/slurm_ihf_2hr_10628837_*.out logs/slurm_ihf_2hr_10628837_*.err \
     2> "${SNAPSHOT_DIR}/tar_warnings.log" || true
 
 echo "Tarball: ${TAR_PATH}" | tee -a "${SNAPSHOT_DIR}/snapshot.log"
