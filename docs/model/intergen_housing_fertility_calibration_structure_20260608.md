@@ -45,74 +45,111 @@ model. The economically active one-market ingredients are:
 
 ## Parameter Inventory
 
-The current random-search driver varies 19 knobs:
+The code inventory is larger than the economic parameter vector. The active
+`setup_parameters()` function defines 145 default `P` fields. Most are derived
+objects, state-space choices, market normalizations, inherited one-market
+degenerate fields, or numerical controls. The diagnostic random-search driver
+currently varies 19 keys:
 
-| Parameter | Current status | Calibration status |
+\[
+\{\alpha,\phi,b_0,\psi^{PTI},\bar c_n,\chi,\kappa_n,\psi,
+\psi_{\mathrm{child}},\theta_0,\theta_n,\theta_1,\bar h_{\mathrm{jump}},
+\bar h_n,h_R^{\max},s_h,\omega_h,h_h^{ref},H_0\}.
+\]
+
+That 19-key list is not the production parameter vector. The production vector
+must be built from the economic blocks below.
+
+### Intertemporal Saving
+
+| Parameter | Current code name | Production treatment |
 |---|---|---|
-| `alpha_cons` | Structural preference | Should be externally fixed or tied to a housing-expenditure/share target before calibration |
-| `phi` | Finance constraint, financed share | Prefer externally fixed from LTV/down-payment evidence unless a credit-access moment is added |
-| `b_entry_fixed` | Entrant liquid wealth | Candidate internal parameter |
-| `pti_limit` | Finance constraint | Prefer externally fixed from underwriting/payment evidence unless a PTI/denial/share-constrained moment is added |
-| `c_bar_n` | Child goods cost slope | Candidate internal parameter |
-| `chi` | Owner housing-service premium | Candidate internal parameter |
-| `kappa_fert` | Fertility logit scale | Candidate internal parameter, but not enough by itself to identify timing |
-| `psi` | Sale/transaction haircut in retained owner equity | Meaningful but should be externally fixed unless targeting turnover/down-sizing |
-| `psi_child` | Child utility shifter | Candidate internal parameter |
-| `theta0` | Bequest intensity | Candidate internal parameter |
-| `theta_n` | Bequest child shifter | Candidate internal parameter |
-| `theta1` | Bequest shift | Externally fixed normalization, not a target-calibrated parameter in this scaffold |
-| `h_bar_jump` | First-child housing need jump | Candidate internal parameter |
-| `h_bar_n` | Additional-child housing need slope | Candidate internal parameter |
-| `hR_max` | Renter menu cap | Menu/market normalization unless disciplined by renter size distribution |
-| `owner_h_bar_scale` | Owner effective subsistence scale | Menu/utility normalization unless separately disciplined |
-| `owner_size_cost` | Extra large-owner-unit cost | Menu/supply device unless disciplined by owner size distribution |
-| `owner_size_cost_ref` | Reference size for owner size cost | Menu/supply device, not structural without a size-distribution target |
-| `H0` | Aggregate housing supply shifter | Market normalization, not a household preference parameter |
+| Discount factor | `beta` | Internally calibrated if the gross return `R_gross=1+q` is fixed externally. Fixing both \(R\) and \(\beta\) while targeting wealth removes the saving lever. |
+| Gross return / period interest | `R_gross`, `q` | Externally fixed or policy-specified. If `q` is internally calibrated, then `beta` must not be treated as separately free without a second saving/return moment. |
+| Curvature | `sigma` | Can be externally fixed if the project is not targeting risk/precautionary-saving gradients. If income-risk moments become central, it needs a clear moment or sensitivity band. |
+| Entrant liquid wealth | `b_entry_fixed` | Internally calibrated or replaced by an externally estimated entry-wealth distribution. With a single entry wealth scalar, it is naturally tied to young liquid wealth and early owner entry. |
 
-This is already the core failure: 19 varied knobs are being scored against 10
-hard moments, and several varied knobs are normalizations or menu devices.
+### Stone-Geary Consumption-Housing Preferences
 
-Additional economically meaningful parameters currently fixed:
-
-| Parameter | Role | Recommended treatment |
+| Parameter | Current code name | Production treatment |
 |---|---|---|
-| `beta` | Saving, wealth accumulation, tenure timing | Either externally fixed or internally calibrated to young liquid wealth and ownership age profile |
-| `sigma` | CRRA curvature | Externally fixed |
-| `c_bar_0` | Baseline childless consumption need | Fixed normalization unless a baseline consumption/poverty object is added |
-| `h_bar_0` | Baseline childless housing need | Fixed or calibrated only if childless housing-size targets are hard moments |
-| `q`, `delta`, `tau_H` | Interest, depreciation, property tax | Externally fixed for benchmark; policy experiments can move `tau_H` |
-| `income_age_breaks`, `income_age_values` | Lifecycle income profile | Externally estimated |
-| `z_grid`, `z_weights`, `income_shock_persistence`, `Pi_z` | Markov income process | Externally estimated before production |
-| `tau_pay`, `pension_mode`, `pension` | Retirement income system | Externally fixed/accounting closure |
-| `tenure_choice_kappa` | Type-I-EV smoothing over tenure/rungs | Numerical smoothing; keep fixed and report sensitivity |
+| Cobb-Douglas housing share away from subsistence | `alpha_cons` | Internally calibrated if housing expenditure shares are targets. Fixing it is not coherent when Stone-Geary subsistence terms prevent shares from matching by construction. |
+| Baseline consumption commitment | `c_bar_0` | Normalization only if a separate consumption floor is imposed and documented. Otherwise internally calibrated jointly with expenditure-share/consumption feasibility moments. |
+| Baseline housing need | `h_bar_0` | Internally calibrated if childless housing services or housing expenditure shares are targets. |
+| Child goods cost slope | `c_bar_n` | Internally calibrated to fertility composition and childlessness, jointly with child utility. |
+| First-child housing jump | `h_bar_jump` | Internally calibrated to the \(0\to1\) housing response. |
+| Additional-child housing slope | `h_bar_n` | Internally calibrated to the \(1\to2\) housing response and intensive fertility. |
+| Owner service premium | `chi` | Internally calibrated to ownership and owner/renter service wedges. |
+| Owner subsistence scale | `owner_h_bar_scale` | Not a primitive structural parameter unless the owner/renter service mapping is explicitly modeled. Treat as a fixed menu/measurement conversion or discipline it with owner-size distribution moments. |
 
-Lifecycle and state-space parameters are model-design choices, not calibration
-parameters: `period_years`, `J`, `age_start`, `J_R`, `A_f_start`, `A_f_end`,
-`A_m`, `stage_durations`, `n_parity`, `use_stochastic_aging`,
-`n_child_stages`, and `n_child_states`.
+The Stone-Geary block requires at least one direct housing expenditure/share
+moment. Without it, \(\alpha\), \(\bar c_0\), and \(\bar h_0\) are weakly
+separated from each other.
 
-Market/menu parameters are normalizations unless matched to distributional
-housing targets: `H_own`, `n_house`, `h_own_min`, `h_own_max`, `hR_max`,
-`H0`, `r_bar`, `eta_supply`, `xi_supply`, `w_hat`, `N_0`, `N_target`,
-`entry_by_loc`, and `entry_shares`.
+### Fertility Preferences And Timing
 
-Inherited one-market-degenerate parameters should not be calibrated in the new
-one-market setup: `kappa_loc`, `eps_loc`, `E_loc`, `mu_stay`, `mu_move`,
+| Parameter | Current code name | Production treatment |
+|---|---|---|
+| Child utility shifter | `psi_child` | Internally calibrated to completed fertility/TFR. |
+| Fertility logit scale | `kappa_fert` | Internally calibrated to parity dispersion and childlessness. It should not be the only first-birth-timing parameter. |
+| Age timing shifter | not implemented | Required if a first-birth timing target remains hard. This can be a compact age shifter \(\lambda_a\) or an age-specific child-cost schedule. |
+| Fertility window and child duration | `A_f_start`, `A_f_end`, `A_m`, `stage_durations` | Model-design/biological timing inputs. Do not tune them to fit the calibration objective without changing the model statement. |
+
+### Housing Finance And Transaction Frictions
+
+| Parameter | Current code name | Production treatment |
+|---|---|---|
+| Financed share | `phi` | First-stage external from LTV/down-payment evidence, or internally calibrated only with direct credit moments. It is not identified by fertility/ownership moments alone. |
+| Payment-to-income limit | `pti_limit` | Same: first-stage external or internally calibrated with PTI/denial/bind-rate moments. |
+| Transaction/sale haircut | `psi` | First-stage external from transaction costs or internally calibrated with turnover/downsizing/tenure-duration moments. |
+| Property tax | `tau_H` | Externally fixed for the benchmark and moved in policy experiments. |
+| Depreciation | `delta` | Externally fixed. |
+| Payment formula | `use_pti_constraint`, current simplified formula | Model specification. If Coven-style amortized payments are implemented, the parameter map changes. |
+
+### Bequests And Old Retention
+
+| Parameter | Current code name | Production treatment |
+|---|---|---|
+| Bequest intensity | `theta0` | Internally calibrated to old-age ownership/wealth. |
+| Child shifter in bequest utility | `theta_n` | Internally calibrated to old parent-childless ownership/wealth gaps. |
+| Bequest utility shift | `theta1` | Normalization/curvature support. Fix unless separately identified. |
+| Old retention wedge | not cleanly implemented | Required if incumbent retention is a central mechanism. Calibrate with old-owner large-home retention, downsizing, or turnover moments. |
+
+### Income And Retirement
+
+| Parameter | Current code name | Production treatment |
+|---|---|---|
+| Lifecycle income profile | `income_age_breaks`, `income_age_values` | First-stage external estimate. |
+| Persistent income states | `z_grid`, `z_weights`, `income_shock_persistence`, `Pi_z` | First-stage external estimate from income moments. They should not be chosen by the fertility/housing SMM unless those income moments are included. |
+| Payroll tax and pension closure | `tau_pay`, `pension_mode`, `pension` | External/accounting closure. |
+
+### Housing Market, Menu, And Normalizations
+
+| Parameter | Current code name | Production treatment |
+|---|---|---|
+| Aggregate supply level | `H0` | Market normalization or calibrated market-clearing shifter tied to a price/rent/quantity level. It is not a household preference parameter. |
+| Rent/user-cost anchor | `r_bar` | Normalization paired with `H0` and price units. |
+| Supply elasticity | `eta_supply`, `xi_supply` | External supply estimate or calibrated only with a supply elasticity/quantity response target. |
+| Owner rung menu | `H_own`, `n_house` | Measurement/menu choice based on room-unit support. Do not search it as a preference parameter. |
+| Renter cap | `hR_max` | Measurement/menu choice or calibrated only with renter-size distribution moments. |
+| Large owner unit cost | `owner_size_cost`, `owner_size_cost_ref`, `owner_size_cost_power` | Menu/supply device. Include only if owner-size distribution moments are in the target system. |
+
+### Not Production Economic Parameters
+
+Inherited one-market-degenerate fields should not enter the new production
+calibration: `kappa_loc`, `eps_loc`, `E_loc`, `mu_stay`, `mu_move`,
 `mu_move_parent`, `mu_age_decay`, `location_choice_form`, `kappa_entry`,
 `outside_value`, `outside_entry_flow`, `outside_entry_shares`,
 `local_birth_entry_weight`, `renewal_retention`,
-`renewal_calibrate_outside_flow`, and related population-closure fields. They
-remain in code because the scaffold starts from the old workhorse architecture.
+`renewal_calibrate_outside_flow`, and related population-closure fields.
 
-Disabled policy toggles are not production parameters unless the corresponding
-policy experiment is implemented and documented: `parent_dp_waiver`,
-`parent_dp_waiver_phi`, `birth_dp_grant`, `birth_entry_grant`,
-`birth_entry_grant_amount`, and their location/rung filters.
+Policy toggles should enter only when the policy is part of the model:
+`parent_dp_waiver`, `parent_dp_waiver_phi`, `birth_dp_grant`,
+`birth_entry_grant`, `birth_entry_grant_amount`, and their filters.
 
-Numerical parameters should never enter the economic calibration vector:
-`Nb`, `b_min`, `b_max`, `b_grid_power`, `max_iter_eq`, `tol_eq`,
-`lambda_eq`, scalar price-refinement controls, adaptive damping controls,
-price bounds, entry floors, interpolation flags, and kernel flags.
+Pure numerical controls are not economic calibration parameters: grids,
+iteration limits, tolerances, damping controls, price bounds, interpolation
+flags, and kernel flags.
 
 ## Current Hard Moment List
 
@@ -190,27 +227,47 @@ Moments that should be built before production:
 
 ## Parameter Count
 
-The current diagnostic screen fails the counting rule:
+The current diagnostic screen fails before any moment-counting exercise:
 
 \[
-19 \text{ varied knobs} > 10 \text{ hard moments}.
+19 \text{ varied knobs} \ne \text{production economic parameter vector}.
 \]
 
-After removing menu normalizations and externally fixed objects, a disciplined
-production calibration can be at or below 10 internal parameters. If the
-first-birth timing target remains hard, one missing timing parameter must be
-added; otherwise the model is trying to fit timing through housing and finance
-parameters that are supposed to identify other mechanisms.
+The production count depends on first-stage decisions:
+
+- If \(R\), income process, finance limits, supply elasticity, housing menu,
+  and bequest shift are externally/first-stage fixed, the implemented internal
+  vector is roughly
+  \[
+  \{\beta,\alpha,b_0,\bar c_0,\bar c_n,\bar h_0,
+  \bar h_{\mathrm{jump}},\bar h_n,\psi_{\mathrm{child}},\kappa_n,
+  \chi,\theta_0,\theta_n\},
+  \]
+  which is 13 parameters.
+- If one Stone-Geary baseline term is imposed as a normalization rather than
+  calibrated, this falls to 12.
+- If first-birth timing remains a hard target, one timing parameter must be
+  added, taking the count to 13-14.
+- If `phi`, `pti_limit`, or `psi` are internally calibrated, add one parameter
+  and one direct credit/turnover moment for each. They should not be identified
+  only from fertility and ownership.
+- If `H0` or `r_bar` is used to match a price/rent level, treat it as a
+  separate market-normalization equation, not as a household preference
+  parameter.
 
 ## Identification Map
 
-A disciplined one-market map should look like this:
+A disciplined map starts from the parameters:
 
 | Parameter | Primary moment | Secondary moments/checks |
 |---|---|---|
+| `beta` | liquid wealth / saving profile | tenure timing; cannot be fixed jointly with \(R\) if wealth is targeted |
+| `alpha_cons` | housing expenditure share | housing services by age/tenure |
 | `b_entry_fixed` | `young_liquid_wealth_to_income` | young ownership and owner-entry thresholds |
-| `psi_child` | `tfr` | childlessness |
+| `c_bar_0` | baseline consumption/housing expenditure feasibility | consumption floor diagnostics |
+| `h_bar_0` | childless housing services | childless renter/owner size distribution |
 | `c_bar_n` | `childless_rate` and completed fertility mix | TFR and young consumption feasibility |
+| `psi_child` | `tfr` | childlessness |
 | `kappa_fert` | parity dispersion / childlessness | timing only weakly, not as the sole timing margin |
 | new timing shifter, not implemented | first-birth timing object | age profile of first births |
 | `h_bar_jump` | `housing_increment_0to1` | family ownership gap |
@@ -218,15 +275,18 @@ A disciplined one-market map should look like this:
 | `chi` | `own_rate_3055` | family ownership gap and owner/renter housing services |
 | `theta0` | `old_age_own_rate` | lifecycle ownership slope |
 | `theta_n` | `old_age_parent_childless_gap` | parent-childless wealth and old housing retention |
+| `phi`, if internal | LTV/down-payment/bind-rate moment | ownership and fertility responses |
+| `pti_limit`, if internal | PTI/bind-rate or denial moment | owner entry by income |
+| `psi`, if internal | turnover/downsizing/tenure-duration moment | old retention and owner mobility |
 
 Finance parameters should be handled deliberately:
 
-- If `phi` and `pti_limit` are externally fixed, the current 10 moments can
-  discipline the 10-parameter vector above once the timing shifter exists.
+- If `phi` and `pti_limit` are first-stage/external, they do not enter the
+  internal production vector.
 - If either `phi` or `pti_limit` is internally calibrated, add at least one
-  direct credit moment per added parameter and remove or externally fix a
-  different parameter. Otherwise the financial constraint is not separately
-  identified from entry wealth, discounting, or the ownership premium.
+  direct credit moment per added parameter. Otherwise the financial constraint
+  is not separately identified from entry wealth, discounting, or the ownership
+  premium.
 
 ## First-Birth-Age Target
 
@@ -264,34 +324,42 @@ Production options:
    fertility shifter or child-cost schedule. Do not force the target through
    housing preferences, down-payment constraints, or bequests.
 
-## Smallest Disciplined Production Vector
+## Production Internal Vector
 
-Under the current 10 hard moments, the smallest coherent production vector is:
+Given the current simplified one-market model, the production baseline should
+start from the parameter vector
 
 \[
-\Theta =
-\{b_0,\psi_{\mathrm{child}},\bar c_n,\kappa_n,
-\lambda_a,\bar h_{\mathrm{jump}},\bar h_n,\chi,\theta_0,\theta_n\},
+\Theta_{\mathrm{base}} =
+\{\beta,\alpha,b_0,\bar c_0,\bar c_n,\bar h_0,
+\bar h_{\mathrm{jump}},\bar h_n,\psi_{\mathrm{child}},\kappa_n,
+\chi,\theta_0,\theta_n,\lambda_a\},
 \]
 
-where \(\lambda_a\) is a new age-specific timing shifter or compact schedule
-that is not implemented yet.
+where \(\lambda_a\) is a required timing object if first-birth timing is a hard
+target. This is a 14-parameter vector if \(\bar c_0\) is calibrated. If
+\(\bar c_0\) is imposed as a normalization, the vector is 13 parameters.
 
-Externally fix for this first production calibration:
+First-stage or externally set objects:
 
-- `beta`, `alpha_cons`, `sigma`;
-- `q`, `delta`, `tau_H`;
-- `phi`, `pti_limit`;
-- income process and lifecycle income profile;
-- `H_own`, `hR_max`, `H0`, `r_bar`, `eta_supply`;
+- \(R\)/`q`, `delta`, and benchmark `tau_H`;
+- `sigma`, unless risk/precautionary-saving gradients are targeted;
+- income profile and Markov income process;
 - `theta1`;
-- `tenure_choice_kappa`;
-- all numerical solver controls.
+- supply elasticity and housing menu, unless size/supply moments are added;
+- numerical solver controls.
 
-If the project wants to calibrate `phi` or `pti_limit` internally, the target
-system must add direct credit moments first. In that case the production vector
-should not grow silently; it should replace a weaker internal parameter or add
-the corresponding moment.
+Conditional internal additions:
+
+- Add `phi` only with direct down-payment/LTV/bind-rate moments.
+- Add `pti_limit` only with direct PTI/bind-rate/denial moments.
+- Add `psi` only with turnover/downsizing/tenure-duration moments.
+- Add an old-retention wedge only after implementing it cleanly and adding an
+  old-home retention or downsizing moment.
+
+This is the production logic: write down the internal parameter vector first,
+then add at least as many moments as the vector requires, with the moments tied
+to the corresponding mechanisms.
 
 ## Next Required Steps
 
