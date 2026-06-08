@@ -153,6 +153,12 @@ probabilities at all-infeasible grid points are not economically meaningful.
 
 ## Diagnostic Calibration
 
+- `DIAGNOSTIC ONLY`: 2026-06-08 calibration-structure ledger:
+  `docs/model/intergen_housing_fertility_calibration_structure_20260608.md`.
+  The note classifies the current parameter inventory, target list, missing
+  multi-market moments, replacement non-location moments, and the smallest
+  disciplined production calibration vector. Read it before launching another
+  calibration search.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined
