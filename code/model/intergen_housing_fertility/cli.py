@@ -12,6 +12,7 @@ import numpy as np
 
 from .calibration import run_informed_smoke, run_small_calibration
 from .diagnostics import write_diagnostics
+from .local_panel import run_local_panel
 from .solver import run_model_cp_dt
 
 
@@ -73,6 +74,20 @@ def main() -> None:
     informed.add_argument("--quiet", action="store_true")
     informed.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_informed_smoke"))
 
+    panel = sub.add_parser("local-panel", help="Run a bounded multicore local diagnostic panel")
+    panel.add_argument("--cases", type=int, default=144)
+    panel.add_argument("--seed", type=int, default=20260608)
+    panel.add_argument("--J", type=int, default=16)
+    panel.add_argument("--Nb", type=int, default=60)
+    panel.add_argument("--income-states", type=int, default=5)
+    panel.add_argument("--n-house", type=int, default=6)
+    panel.add_argument("--max-iter-eq", type=int, default=25)
+    panel.add_argument("--workers", type=int, default=6)
+    panel.add_argument("--minutes", type=float, default=30.0)
+    panel.add_argument("--diagnostic-best", type=int, default=3)
+    panel.add_argument("--quiet", action="store_true")
+    panel.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_panel"))
+
     args = parser.parse_args()
     if args.cmd == "calibrate-small":
         summary = run_small_calibration(
@@ -97,6 +112,23 @@ def main() -> None:
             labels=[x.strip() for x in str(args.labels).split(",") if x.strip()],
             case_limit=args.case_limit,
             fixed_price=args.fixed_price,
+            progress=not bool(args.quiet),
+        )
+        print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
+        return
+    if args.cmd == "local-panel":
+        summary = run_local_panel(
+            args.outdir,
+            n_cases=int(args.cases),
+            seed=int(args.seed),
+            J=int(args.J),
+            Nb=int(args.Nb),
+            income_states=int(args.income_states),
+            n_house=int(args.n_house),
+            max_iter_eq=int(args.max_iter_eq),
+            workers=int(args.workers),
+            minutes=float(args.minutes),
+            diagnostic_best=int(args.diagnostic_best),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))

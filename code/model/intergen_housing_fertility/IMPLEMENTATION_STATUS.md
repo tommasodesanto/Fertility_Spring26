@@ -185,6 +185,27 @@ probabilities at all-infeasible grid points are not economically meaningful.
   `chi` hits prime-age ownership locally but drives old ownership near one and
   collapses the old parent-childless gap. Treat these as directional smoke
   evidence, not candidate calibrations.
+- `DIAGNOSTIC ONLY`: 2026-06-08 added
+  `python -m intergen_housing_fertility.cli local-panel`, a bounded multicore
+  diagnostic panel. It varies only the implemented internal economic
+  parameters in the current parameter ledger, keeps finance/supply/menu inputs
+  fixed, ranks cases excluding `mean_age_first_birth`, checkpoints
+  `cases.jsonl`, writes panel plots, and re-solves the best cases for the
+  diagnostic packet. The first run
+  `output/model/intergen_housing_fertility_local_panel_nb60_nz5_20260608/`
+  used `Nb=60`, five Markov income states, six worker processes, and a
+  30-minute submission budget. It completed `142` cases. The no-age-rank best
+  (`case=33`) improves TFR and childlessness but is not a candidate
+  calibration: `tfr=1.839`, childlessness `0.207`, prime-age ownership
+  `0.747`, family ownership gap `0.377`, young liquid wealth/income `0.310`,
+  old ownership `0.993`, old parent-childless gap `0.010`, \(H_{01}=0.641\),
+  \(H_{12}=0.312\), and first-birth age `33.73`. The best full-loss cases
+  are pulled toward very high fertility (`tfr` above `2.6`) and very low
+  childlessness, confirming that the timing target is changing the search
+  region rather than simply adding a harmless extra moment. Policy plots for
+  the top records show sharp ownership transitions and nonmonotone
+  childless-renter owner-entry policies; audit the tenure/finance block before
+  treating these points as production calibration candidates.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined
