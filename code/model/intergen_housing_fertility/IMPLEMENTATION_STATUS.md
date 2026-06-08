@@ -206,6 +206,14 @@ probabilities at all-infeasible grid points are not economically meaningful.
   the top records show sharp ownership transitions and nonmonotone
   childless-renter owner-entry policies; audit the tenure/finance block before
   treating these points as production calibration candidates.
+- `DIAGNOSTIC ONLY`: 2026-06-08 added the target set
+  `candidate_no_timing_v0` for a documented 13-moment trial. It excludes
+  `mean_age_first_birth`, keeps parity composition diagnostic under the current
+  `tfr = 2 * mean_completed_fertility` convention, and adds candidate targets
+  for midlife liquid wealth/income (`1.20`), aggregate housing user-cost share
+  (`0.24`), prime-age childless renter median rooms (`4.0`), and prime-age
+  childless owner median rooms (`6.0`). These added moments are reactivated
+  candidate targets, not a finalized empirical target system.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined

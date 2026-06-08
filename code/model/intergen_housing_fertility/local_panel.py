@@ -19,6 +19,7 @@ from .calibration import (
     base_overrides,
     diagnostic_loss,
     extract_moments,
+    get_target_set,
     informed_smoke_candidates,
     jsonable,
 )
@@ -45,6 +46,7 @@ def run_local_panel(
     minutes: float = 30.0,
     income_states: int = 5,
     diagnostic_best: int = 3,
+    target_set: str = "candidate_no_timing_v0",
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run a bounded multicore diagnostic panel.
@@ -66,7 +68,7 @@ def run_local_panel(
     os.environ["MKL_NUM_THREADS"] = "1"
     os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
-    rank_targets, rank_weights = ranking_targets_without_age()
+    rank_targets, rank_weights = get_target_set(target_set)
     income = income_process_overrides(income_states)
     candidates = local_panel_candidates(n_cases, seed)
     meta = {
@@ -83,6 +85,7 @@ def run_local_panel(
         "z_grid": jsonable(income["z_grid"]),
         "z_weights": jsonable(income["z_weights"]),
         "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
         "full_old_targets": OLD_NONLOCATION_TARGETS,
@@ -118,7 +121,12 @@ def run_local_panel(
             "theta1",
             "tenure_choice_kappa",
         ],
-        "ranking_note": "mean_age_first_birth excluded from rank loss; reported separately.",
+        "ranking_note": (
+            "candidate_no_timing_v0 excludes mean_age_first_birth, keeps parity composition diagnostic, "
+            "and adds candidate targets for midlife liquid wealth/income, housing user-cost share, "
+            "and childless renter/owner median rooms. This ledger is a documented trial target set, "
+            "not a finalized empirical target system."
+        ),
     }
     (outdir / "metadata.json").write_text(json.dumps(meta, indent=2, sort_keys=True))
 
@@ -381,9 +389,9 @@ def income_process_overrides(income_states: int) -> dict[str, Any]:
 
 
 def ranking_targets_without_age() -> tuple[dict[str, float], dict[str, float]]:
-    targets = {k: v for k, v in OLD_NONLOCATION_TARGETS.items() if k != "mean_age_first_birth"}
-    weights = {k: v for k, v in OLD_NONLOCATION_WEIGHTS.items() if k != "mean_age_first_birth"}
-    return targets, weights
+    """Backward-compatible alias for the old no-timing diagnostic target set."""
+
+    return get_target_set("old_nonlocation_no_timing")
 
 
 def is_better_record(record: dict[str, Any], best: dict[str, Any] | None) -> bool:
@@ -415,6 +423,9 @@ def write_panel_summary_tables(outdir: Path, records: list[dict[str, Any]], targ
             row[f"{name}_target"] = targets[name]
             row[f"{name}_gap"] = none_safe_sub(moments.get(name), targets[name])
         row["mean_age_first_birth"] = moments.get("mean_age_first_birth")
+        row["parity_share_0"] = moments.get("parity_share_0")
+        row["parity_share_1"] = moments.get("parity_share_1")
+        row["parity_share_2plus"] = moments.get("parity_share_2plus")
         row["young_liquid_wealth_to_income"] = moments.get("young_liquid_wealth_to_income")
         rows.append(row)
     write_csv(outdir / "ranked_cases.csv", rows)

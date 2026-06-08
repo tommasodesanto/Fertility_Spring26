@@ -44,6 +44,20 @@ OLD_NONLOCATION_TARGETS = {
 }
 
 
+OLD_NONLOCATION_NO_TIMING_TARGETS = {
+    k: v for k, v in OLD_NONLOCATION_TARGETS.items() if k != "mean_age_first_birth"
+}
+
+
+CANDIDATE_NO_TIMING_V0_TARGETS = {
+    **OLD_NONLOCATION_NO_TIMING_TARGETS,
+    "liquid_wealth_to_income": 1.20,
+    "housing_user_cost_share": 0.24,
+    "prime_childless_renter_median_rooms": 4.0,
+    "prime_childless_owner_median_rooms": 6.0,
+}
+
+
 CORE_WEIGHTS = {
     "own_rate": 8.0,
     "young_owner_rate": 8.0,
@@ -67,9 +81,25 @@ OLD_NONLOCATION_WEIGHTS = {
 }
 
 
+OLD_NONLOCATION_NO_TIMING_WEIGHTS = {
+    k: v for k, v in OLD_NONLOCATION_WEIGHTS.items() if k != "mean_age_first_birth"
+}
+
+
+CANDIDATE_NO_TIMING_V0_WEIGHTS = {
+    **OLD_NONLOCATION_NO_TIMING_WEIGHTS,
+    "liquid_wealth_to_income": 12.0,
+    "housing_user_cost_share": 250.0,
+    "prime_childless_renter_median_rooms": 10.0,
+    "prime_childless_owner_median_rooms": 10.0,
+}
+
+
 TARGET_SETS = {
     "core": (CORE_TARGETS, CORE_WEIGHTS),
     "old_nonlocation": (OLD_NONLOCATION_TARGETS, OLD_NONLOCATION_WEIGHTS),
+    "old_nonlocation_no_timing": (OLD_NONLOCATION_NO_TIMING_TARGETS, OLD_NONLOCATION_NO_TIMING_WEIGHTS),
+    "candidate_no_timing_v0": (CANDIDATE_NO_TIMING_V0_TARGETS, CANDIDATE_NO_TIMING_V0_WEIGHTS),
 }
 
 
@@ -129,7 +159,7 @@ def run_small_calibration(
         t0 = time.perf_counter()
         try:
             sol, P, p_eq = run_model_cp_dt(overrides, verbose=False)
-            moments = extract_moments(sol)
+            moments = extract_moments(sol, P)
             loss = diagnostic_loss(moments, targets=targets, weights=weights)
             status = "ok"
             err = float(getattr(sol, "best_max_abs_rel_excess", np.nan))

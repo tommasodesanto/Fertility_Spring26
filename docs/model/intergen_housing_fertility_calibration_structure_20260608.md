@@ -361,6 +361,57 @@ This is the production logic: write down the internal parameter vector first,
 then add at least as many moments as the vector requires, with the moments tied
 to the corresponding mechanisms.
 
+## Candidate No-Timing Trial Ledger
+
+After the June 8 calibration discussion, the code defines a documented trial
+target set named `candidate_no_timing_v0`. This is not a finalized empirical
+target system. It is a disciplined trial ledger for learning how the simplified
+one-market model behaves when the badly mapped first-birth-age target is removed
+from the objective.
+
+The internal parameter vector for this trial is
+\[
+\Theta_{\mathrm{no\ timing}} =
+\{\beta,\alpha,b_0,\bar c_0,\bar c_n,\bar h_0,
+\bar h_{\mathrm{jump}},\bar h_n,\psi_{\mathrm{child}},\kappa_n,
+\chi,\theta_0,\theta_n\},
+\]
+which has 13 parameters. The 13 target moments are:
+
+| Moment | Target | Status / source note |
+|---|---:|---|
+| `tfr` | 1.700 | existing old-target carryover |
+| `childless_rate` | 0.150 | existing old-target carryover |
+| `own_rate` | 0.57547241 | prime-age ownership, existing carryover |
+| `own_family_gap` | 0.16766167 | new-parent minus non-parent ownership, existing carryover |
+| `housing_increment_0to1` | 0.66443467 | first-child housing response, existing carryover |
+| `housing_increment_1to2` | 0.56581378 | additional-child housing response proxy, existing carryover |
+| `young_liquid_wealth_to_income` | 0.600 | selected young-balance-sheet target |
+| `old_age_own_rate` | 0.76426097 | existing current one-market code target |
+| `old_age_parent_childless_gap` | 0.070 | existing PSID completed-fertility old-age gap |
+| `liquid_wealth_to_income` | 1.200 | archived SCF 45--55 liquid wealth/income target; candidate reactivation |
+| `housing_user_cost_share` | 0.240 | archived alpha-share target; candidate reactivation |
+| `prime_childless_renter_median_rooms` | 4.000 | archived room-size target; candidate reactivation |
+| `prime_childless_owner_median_rooms` | 6.000 | archived room-size target; candidate reactivation |
+
+The extra four moments are deliberately labeled as candidate reactivations,
+because their empirical construction has not been re-audited for the new
+one-market project. They are suitable for a documented diagnostic run, not for
+claiming final production calibration.
+
+Parity composition is kept diagnostic in this trial. Under the project
+reporting convention
+\[
+TFR = 2E[n],
+\]
+the targets \(TFR=1.70\) and \(\Pr(n=0)=0.15\) imply \(E[n]=0.85\) and
+\(\Pr(n>0)=0.85\). Since the smallest positive model family size is \(n=1\),
+those two targets already imply zero mass on \(n\ge2\) if both are hit exactly.
+Therefore a positive `parity_share_2plus` hard target is mechanically
+inconsistent unless the fertility measurement convention or fertility state is
+changed. The code still reports `parity_share_0`, `parity_share_1`, and
+`parity_share_2plus` ex post.
+
 ## Next Required Steps
 
 1. Decide the canonical empirical target file for the new one-market project.

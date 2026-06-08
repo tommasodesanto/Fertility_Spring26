@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from .calibration import run_informed_smoke, run_small_calibration
+from .calibration import TARGET_SETS, run_informed_smoke, run_small_calibration
 from .diagnostics import write_diagnostics
 from .local_panel import run_local_panel
 from .solver import run_model_cp_dt
@@ -60,7 +60,7 @@ def main() -> None:
     cal.add_argument("--Nb", type=int, default=40)
     cal.add_argument("--n-house", type=int, default=4)
     cal.add_argument("--max-iter-eq", type=int, default=35)
-    cal.add_argument("--target-set", choices=["core", "old_nonlocation"], default="old_nonlocation")
+    cal.add_argument("--target-set", choices=sorted(TARGET_SETS), default="old_nonlocation")
     cal.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_small_calibration"))
 
     informed = sub.add_parser("informed-smoke", help="Run a deterministic parameter-led smoke panel")
@@ -85,6 +85,7 @@ def main() -> None:
     panel.add_argument("--workers", type=int, default=6)
     panel.add_argument("--minutes", type=float, default=30.0)
     panel.add_argument("--diagnostic-best", type=int, default=3)
+    panel.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
     panel.add_argument("--quiet", action="store_true")
     panel.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_panel"))
 
@@ -129,6 +130,7 @@ def main() -> None:
             workers=int(args.workers),
             minutes=float(args.minutes),
             diagnostic_best=int(args.diagnostic_best),
+            target_set=str(args.target_set),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
