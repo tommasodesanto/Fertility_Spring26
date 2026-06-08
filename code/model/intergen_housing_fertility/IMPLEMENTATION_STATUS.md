@@ -159,6 +159,29 @@ probabilities at all-infeasible grid points are not economically meaningful.
   multi-market moments, replacement non-location moments, and the smallest
   disciplined production calibration vector. Read it before launching another
   calibration search.
+- `DIAGNOSTIC ONLY`: 2026-06-08 added
+  `python -m intergen_housing_fertility.cli informed-smoke`, a deterministic
+  parameter-led smoke panel. It varies internal economic blocks
+  (`beta`, `alpha_cons`, `b_entry_fixed`, Stone-Geary terms, child costs,
+  fertility taste/scale, housing needs, `chi`, and bequest terms), while
+  keeping finance, supply, and menu objects fixed. It supports `--labels`,
+  `--case-limit`, and `--fixed-price` so short local panels are recoverable.
+- `DIAGNOSTIC ONLY`: 2026-06-08 informed-smoke records:
+  `output/model/intergen_housing_fertility_informed_smoke_20260608/` contains
+  three GE records before the interactive run was stopped for runtime;
+  `output/model/intergen_housing_fertility_informed_smoke_fixedprice_20260608/`
+  contains the six-case fixed-price sensitivity panel. The GE baseline has
+  `tfr=1.430`, childlessness `0.381`, first-birth age `34.70`,
+  prime-age ownership `0.312`, young liquid wealth/income `0.192`,
+  old-age ownership `0.792`, old parent-childless gap `0.262`,
+  \(H_{01}=0.604\), and \(H_{12}=0.227\). Patient `beta` raises wealth and
+  ownership but did not clear tightly in the short GE panel; impatient `beta`
+  clears and lowers wealth/ownership. In the fixed-price panel, higher
+  `alpha`-housing-share/Stone-Geary pressure raises fertility and the
+  first-child housing response but does not clear at the fixed price; higher
+  `chi` hits prime-age ownership locally but drives old ownership near one and
+  collapses the old parent-childless gap. Treat these as directional smoke
+  evidence, not candidate calibrations.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined

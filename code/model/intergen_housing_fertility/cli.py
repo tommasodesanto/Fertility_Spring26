@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from .calibration import run_small_calibration
+from .calibration import run_informed_smoke, run_small_calibration
 from .diagnostics import write_diagnostics
 from .solver import run_model_cp_dt
 
@@ -62,6 +62,17 @@ def main() -> None:
     cal.add_argument("--target-set", choices=["core", "old_nonlocation"], default="old_nonlocation")
     cal.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_small_calibration"))
 
+    informed = sub.add_parser("informed-smoke", help="Run a deterministic parameter-led smoke panel")
+    informed.add_argument("--J", type=int, default=16)
+    informed.add_argument("--Nb", type=int, default=40)
+    informed.add_argument("--n-house", type=int, default=6)
+    informed.add_argument("--max-iter-eq", type=int, default=25)
+    informed.add_argument("--labels", type=str, default="")
+    informed.add_argument("--case-limit", type=int, default=None)
+    informed.add_argument("--fixed-price", type=float, default=None)
+    informed.add_argument("--quiet", action="store_true")
+    informed.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_informed_smoke"))
+
     args = parser.parse_args()
     if args.cmd == "calibrate-small":
         summary = run_small_calibration(
@@ -73,6 +84,20 @@ def main() -> None:
             n_house=int(args.n_house),
             max_iter_eq=int(args.max_iter_eq),
             target_set=str(args.target_set),
+        )
+        print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
+        return
+    if args.cmd == "informed-smoke":
+        summary = run_informed_smoke(
+            args.outdir,
+            J=int(args.J),
+            Nb=int(args.Nb),
+            n_house=int(args.n_house),
+            max_iter_eq=int(args.max_iter_eq),
+            labels=[x.strip() for x in str(args.labels).split(",") if x.strip()],
+            case_limit=args.case_limit,
+            fixed_price=args.fixed_price,
+            progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
         return

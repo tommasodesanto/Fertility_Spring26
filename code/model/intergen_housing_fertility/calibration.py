@@ -176,6 +176,211 @@ def run_small_calibration(
     return summary
 
 
+def run_informed_smoke(
+    outdir: Path,
+    *,
+    J: int = 16,
+    Nb: int = 40,
+    n_house: int = 6,
+    max_iter_eq: int = 25,
+    labels: list[str] | None = None,
+    case_limit: int | None = None,
+    fixed_price: float | None = None,
+    progress: bool = True,
+) -> dict[str, Any]:
+    """Run a deterministic production-parameter smoke panel.
+
+    This is a parameter-led smoke check, not a formal calibration. It varies
+    economically meaningful internal blocks around the current scaffold and
+    keeps finance, supply, and menu objects fixed at their benchmark inputs.
+    """
+
+    targets, weights = get_target_set("old_nonlocation")
+    rank_targets = {k: v for k, v in targets.items() if k != "mean_age_first_birth"}
+    rank_weights = {k: v for k, v in weights.items() if k != "mean_age_first_birth"}
+    outdir.mkdir(parents=True, exist_ok=True)
+    cases_path = outdir / "cases.jsonl"
+    best_path = outdir / "best.json"
+    base = base_overrides(J=J, Nb=Nb, n_house=n_house, max_iter_eq=max_iter_eq)
+    if fixed_price is not None:
+        base.update(
+            {
+                "solve_mode": "pe",
+                "p_fixed": np.array([float(fixed_price)]),
+                "w_fixed": np.array([1.0]),
+                "entry_shares_fixed": np.array([1.0]),
+            }
+        )
+    candidates = informed_smoke_candidates()
+    if labels:
+        wanted = {str(label) for label in labels}
+        candidates = [candidate for candidate in candidates if str(candidate["label"]) in wanted]
+        missing = sorted(wanted - {str(candidate["label"]) for candidate in candidates})
+        if missing:
+            raise ValueError(f"Unknown informed-smoke labels: {missing}")
+    if case_limit is not None:
+        candidates = candidates[: max(0, int(case_limit))]
+    meta = {
+        "status": "deterministic_informed_smoke_not_formal_calibration",
+        "case_count": len(candidates),
+        "labels": [str(candidate["label"]) for candidate in candidates],
+        "fixed_price": None if fixed_price is None else float(fixed_price),
+        "J": int(J),
+        "Nb": int(Nb),
+        "n_house": int(n_house),
+        "max_iter_eq": int(max_iter_eq),
+        "fixed_external_or_first_stage": [
+            "q",
+            "delta",
+            "tau_H",
+            "phi",
+            "pti_limit",
+            "psi",
+            "income_age_profile",
+            "z_process",
+            "H_own",
+            "hR_max",
+            "H0",
+            "r_bar",
+            "eta_supply",
+            "theta1",
+        ],
+        "varied_blocks": [
+            "beta",
+            "alpha_cons",
+            "b_entry_fixed",
+            "c_bar_0",
+            "c_bar_n",
+            "h_bar_0",
+            "h_bar_jump",
+            "h_bar_n",
+            "psi_child",
+            "kappa_fert",
+            "chi",
+            "theta0",
+            "theta_n",
+        ],
+        "missing_internal_parameter": "lambda_a_first_birth_timing_shifter",
+        "ranking_loss": "old_nonlocation_excluding_mean_age_first_birth",
+        "targets": targets,
+        "weights": weights,
+        "ranking_targets": rank_targets,
+        "ranking_weights": rank_weights,
+    }
+    (outdir / "metadata.json").write_text(json.dumps(meta, indent=2, sort_keys=True))
+    cases_path.write_text("")
+    best: dict[str, Any] | None = None
+    start = time.perf_counter()
+    for idx, candidate in enumerate(candidates):
+        label = str(candidate["label"])
+        theta = dict(candidate["theta"])
+        overrides = {**base, **theta}
+        t0 = time.perf_counter()
+        try:
+            sol, P, p_eq = run_model_cp_dt(overrides, verbose=False)
+            moments = extract_moments(sol, P)
+            full_loss = diagnostic_loss(moments, targets=targets, weights=weights)
+            rank_loss = diagnostic_loss(moments, targets=rank_targets, weights=rank_weights)
+            status = "ok"
+            err = float(getattr(sol, "best_max_abs_rel_excess", np.nan))
+            timings = getattr(sol, "timings", {})
+        except Exception as exc:  # noqa: BLE001 - smoke panel should checkpoint failures.
+            moments = {}
+            full_loss = math.inf
+            rank_loss = math.inf
+            status = f"failed: {type(exc).__name__}: {exc}"
+            p_eq = np.array([np.nan])
+            err = math.inf
+            timings = {}
+        elapsed = time.perf_counter() - t0
+        record = {
+            "case": int(idx),
+            "label": label,
+            "status": status,
+            "rank_loss": float(rank_loss),
+            "full_old_nonlocation_loss": float(full_loss),
+            "theta": jsonable(theta),
+            "moments": jsonable(moments),
+            "p_eq": jsonable(p_eq),
+            "market_residual": float(err),
+            "elapsed_sec": float(elapsed),
+            "timings": jsonable(timings),
+        }
+        with cases_path.open("a") as fh:
+            fh.write(json.dumps(record, sort_keys=True) + "\n")
+        if best is None or record["rank_loss"] < best["rank_loss"]:
+            best = record
+            best_path.write_text(json.dumps(best, indent=2, sort_keys=True))
+        if progress:
+            print(
+                f"case {idx + 1}/{len(candidates)} {label}: "
+                f"rank={record['rank_loss']:.4g}, full={record['full_old_nonlocation_loss']:.4g}, "
+                f"resid={record['market_residual']:.2e}, elapsed={elapsed:.1f}s",
+                flush=True,
+            )
+
+    summary = {
+        "best": best,
+        "elapsed_sec": float(time.perf_counter() - start),
+        "metadata": meta,
+    }
+    (outdir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True))
+    return summary
+
+
+def informed_smoke_candidates() -> list[dict[str, Any]]:
+    beta_hi = 0.98**PERIOD_YEARS
+    beta_lo = 0.94**PERIOD_YEARS
+    return [
+        {"label": "baseline", "theta": {}},
+        {"label": "patient_beta", "theta": {"beta": beta_hi}},
+        {"label": "impatient_beta", "theta": {"beta": beta_lo}},
+        {
+            "label": "more_housing_share",
+            "theta": {"alpha_cons": 0.60, "h_bar_0": 3.5, "c_bar_0": 0.08 * PERIOD_YEARS},
+        },
+        {
+            "label": "less_housing_share",
+            "theta": {"alpha_cons": 0.78, "h_bar_0": 4.5, "c_bar_0": 0.12 * PERIOD_YEARS},
+        },
+        {
+            "label": "higher_family_space_need",
+            "theta": {"h_bar_jump": 1.10, "h_bar_n": 0.90, "h_bar_0": 3.6},
+        },
+        {
+            "label": "lower_child_cost_higher_taste",
+            "theta": {"c_bar_n": 0.32, "psi_child": 0.10, "kappa_fert": 5.5},
+        },
+        {
+            "label": "higher_child_cost_lower_taste",
+            "theta": {"c_bar_n": 0.72, "psi_child": 0.045, "kappa_fert": 4.0},
+        },
+        {"label": "higher_owner_premium", "theta": {"chi": 1.30}},
+        {
+            "label": "stronger_bequest_parent_tilt",
+            "theta": {"theta0": 0.80, "theta_n": 0.45},
+        },
+        {
+            "label": "combined_internal_push",
+            "theta": {
+                "beta": beta_hi,
+                "alpha_cons": 0.62,
+                "b_entry_fixed": 2.0,
+                "c_bar_0": 0.08 * PERIOD_YEARS,
+                "c_bar_n": 0.40,
+                "h_bar_0": 3.5,
+                "h_bar_jump": 1.00,
+                "h_bar_n": 0.80,
+                "psi_child": 0.09,
+                "kappa_fert": 5.5,
+                "chi": 1.25,
+                "theta0": 0.75,
+                "theta_n": 0.40,
+            },
+        },
+    ]
+
+
 def base_overrides(*, J: int, Nb: int, n_house: int, max_iter_eq: int) -> dict[str, Any]:
     lifecycle = lifecycle_overrides(J)
     return {
@@ -258,8 +463,11 @@ def draw_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:
     }
 
 
-def extract_moments(sol: Any) -> dict[str, float]:
+def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
     household_parity = float(getattr(sol, "mean_completed_fertility", np.nan))
+    parity = np.asarray(getattr(sol, "parity_dist", np.array([np.nan])), dtype=float).reshape(-1)
+    renter_rooms = float(getattr(sol, "prime_childless_renter_median_rooms", np.nan))
+    owner_rooms = float(getattr(sol, "prime_childless_owner_median_rooms", np.nan))
     return {
         "tfr": 2.0 * household_parity,
         "own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
@@ -286,10 +494,43 @@ def extract_moments(sol: Any) -> dict[str, float]:
             getattr(sol, "housing_increment_1to2_proxy_t3", getattr(sol, "housing_increment_1to2", np.nan))
         ),
         "young_liquid_wealth_to_income": float(getattr(sol, "young_liquid_wealth_to_income", np.nan)),
+        "liquid_wealth_to_income": float(getattr(sol, "liquid_wealth_to_income", np.nan)),
+        "wealth_to_income": float(getattr(sol, "wealth_to_income", np.nan)),
+        "parity_share_0": float(parity[0]) if parity.size > 0 else np.nan,
+        "parity_share_1": float(parity[1]) if parity.size > 1 else np.nan,
+        "parity_share_2plus": float(np.sum(parity[2:])) if parity.size > 2 else np.nan,
+        "prime_childless_renter_median_rooms": renter_rooms,
+        "prime_childless_owner_median_rooms": owner_rooms,
+        "prime_childless_owner_minus_renter_rooms": owner_rooms - renter_rooms,
+        "housing_user_cost_share": housing_user_cost_share(sol, P),
         "renter25_45_all_cap_share": float(getattr(sol, "renter25_45_all_cap_share", np.nan)),
         "owner_neg_liquid_share_2534": float(getattr(sol, "owner_neg_liquid_share_2534", np.nan)),
         "market_residual": float(getattr(sol, "best_max_abs_rel_excess", np.nan)),
     }
+
+
+def housing_user_cost_share(sol: Any, P: Any | None) -> float:
+    if P is None or not hasattr(sol, "g") or not hasattr(sol, "hR_pol"):
+        return np.nan
+    g = np.asarray(sol.g, dtype=float)
+    hR = np.asarray(sol.hR_pol, dtype=float)
+    user_cost = np.asarray(getattr(sol, "owner_user_cost", np.nan), dtype=float).reshape(-1)
+    if g.ndim != 7 or hR.shape != g.shape or user_cost.size != int(P.I):
+        return np.nan
+    z_grid = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    total_income = 0.0
+    total_housing = 0.0
+    for i in range(P.I):
+        for j in range(P.J):
+            for zz, z_value in enumerate(z_grid):
+                yj = float(P.income[i, j]) * (float(z_value) if j < int(P.J_R) else 1.0)
+                mass_ijz = float(np.sum(g[:, :, i, j, zz, :, :]))
+                total_income += yj * mass_ijz
+                total_housing += float(np.sum(g[:, 0, i, j, zz, :, :] * hR[:, 0, i, j, zz, :, :])) * user_cost[i]
+                for ten in range(1, 1 + int(P.n_house)):
+                    mass = float(np.sum(g[:, ten, i, j, zz, :, :]))
+                    total_housing += mass * user_cost[i] * float(P.H_own[ten - 1])
+    return float(total_housing / max(total_income, 1e-12))
 
 
 def get_target_set(target_set: str) -> tuple[dict[str, float], dict[str, float]]:
