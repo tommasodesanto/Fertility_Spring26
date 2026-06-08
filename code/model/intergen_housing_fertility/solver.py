@@ -915,7 +915,10 @@ def solve_markov_income_at_prices(
         bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
     )
     t_dist = time.perf_counter() - t0
-    sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
+    if fast_stats:
+        sol = pack_fast_solution_markov_income(stats, p, P)
+    else:
+        sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
     sol.b_grid = np.asarray(b_grid, dtype=float).copy()
     sol.timings = {
         "bellman_full": float(btime.get("bellman", t_bellman)),
@@ -3168,7 +3171,10 @@ def forward_distribution_markov_income(
         entrants_mature_by_loc *= sc
         entrants_mature_total *= sc
 
-    stats = compute_markov_statistics(g, fert_probs, loc_probs, P, b_grid, p_hat, hR_pol)
+    if fast_stats:
+        stats = compute_markov_eq_stats(g, P, b_grid, p_hat, hR_pol)
+    else:
+        stats = compute_markov_statistics(g, fert_probs, loc_probs, P, b_grid, p_hat, hR_pol)
     stats.total_births_kfe = total_births
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
@@ -3507,6 +3513,34 @@ def compute_markov_statistics(
     stats.pension_budget_residual = stats.payroll_tax_revenue - stats.pension_outlays
     stats.implied_balanced_pension = stats.payroll_tax_revenue / max(stats.retiree_mass_total, 1e-12)
     stats.income_transition = Pi_z.copy()
+    return stats
+
+
+def compute_markov_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:
+    """Minimal Markov-income statistics needed for price clearing."""
+
+    _ = bg, ph
+    nt = 1 + P.n_house
+    npar = P.n_parity
+    tm = float(np.sum(g))
+    stats = SimpleNamespace()
+    stats.own_rate = float(np.sum(g[:, 1:, :, :, :, :, :]) / max(tm, 1e-12))
+    stats.pop_share = np.zeros(P.I)
+    stats.housing_demand = np.zeros(P.I)
+    norm = housing_demand_normalizer(P)
+    for i in range(P.I):
+        gi = g[:, :, i, :, :, :, :]
+        stats.pop_share[i] = float(np.sum(gi)) / max(tm, 1e-12)
+        renter_demand = float(np.sum(gi[:, 0, :, :, :, :] * hR[:, 0, i, :, :, :, :]))
+        owner_demand = 0.0
+        for ten in range(1, nt):
+            owner_demand += float(np.sum(gi[:, ten, :, :, :, :])) * float(P.H_own[ten - 1])
+        stats.housing_demand[i] = (renter_demand + owner_demand) / max(norm, 1e-12)
+    mp = float(np.sum(g[:, :, :, P.A_f_end :, :, :, :]))
+    stats.parity_dist = np.zeros(npar)
+    for nn in range(npar):
+        stats.parity_dist[nn] = np.sum(g[:, :, :, P.A_f_end :, :, nn, :]) / max(mp, 1e-12)
+    stats.mean_parity = float(np.sum(np.arange(npar) * stats.parity_dist))
     return stats
 
 
@@ -4231,6 +4265,31 @@ def pack_solution_markov_income(
         sol.mean_fertility_by_income_type = np.full(len(z_grid), np.nan)
     if not hasattr(sol, "housing_demand_by_income_type"):
         sol.housing_demand_by_income_type = np.full((len(z_grid), P.I), np.nan)
+    return sol
+
+
+def pack_fast_solution_markov_income(st: SimpleNamespace, p: np.ndarray, P: SimpleNamespace) -> SimpleNamespace:
+    p_vec = np.asarray(p, dtype=float).reshape(-1)
+    user_cost = P.user_cost_rate * p_vec
+    supply = P.H0 * (user_cost / P.r_bar) ** P.xi_supply
+    demand = np.asarray(st.housing_demand, dtype=float).reshape(-1)
+    sol = SimpleNamespace()
+    for key, value in vars(st).items():
+        setattr(sol, key, value)
+    sol.p_eq = p_vec
+    sol.owner_user_cost = user_cost
+    sol.owner_asset_price = p_vec
+    sol.housing_supply = supply
+    sol.aggregate_housing_demand = float(np.sum(demand))
+    sol.aggregate_housing_supply = float(np.sum(supply))
+    sol.aggregate_housing_excess = float(sol.aggregate_housing_demand - sol.aggregate_housing_supply)
+    sol.best_max_abs_rel_excess = float(
+        np.max(np.abs((demand - supply) / np.maximum(supply, 1e-12)))
+    )
+    sol.best_market_metric = sol.best_max_abs_rel_excess
+    sol.converged = bool(sol.best_max_abs_rel_excess <= getattr(P, "tol_eq", 1e-4))
+    sol.mean_completed_fertility = float(getattr(sol, "mean_parity", np.nan))
+    sol.childless_rate = float(getattr(sol, "parity_dist", np.array([np.nan]))[0])
     return sol
 
 

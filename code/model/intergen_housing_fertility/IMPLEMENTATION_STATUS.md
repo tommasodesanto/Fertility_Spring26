@@ -1,6 +1,6 @@
 # Implementation Status: Intergenerational Housing Fertility
 
-Updated: 2026-06-07
+Updated: 2026-06-08
 
 ## Rule
 
@@ -91,8 +91,11 @@ quantitative model.
 - `INTENDED`: the active Markov-income forward path computes the old
   event-study housing response statistics by propagating birth cohorts under
   the same tenure, savings, child-aging, and income-transition rules used by
-  the main forward distribution. The price iteration skips these event
-  statistics and recomputes them once at the accepted price.
+  the main forward distribution. During price iteration, the code solves the
+  same Bellman problem and propagates the same full distribution, but computes
+  only the market-clearing statistics needed to update price. Full reporting
+  moments, including event-study housing responses, are recomputed once at the
+  accepted price.
 - `SIMPLIFICATION`: fertility remains the workhorse one-shot completed-family
   choice for childless fertile households. It is not a sequential parity hazard.
 - `SIMPLIFICATION`: the single dependent-child state is not age-resolved.
