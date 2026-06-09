@@ -13,7 +13,7 @@ SNAPSHOT_TAG="${1:-$(date +%Y%m%d_%H%M%S)}"
 SNAPSHOT_DIR="${SCRIPT_DIR}/shutdown_snapshots/${SNAPSHOT_TAG}"
 mkdir -p "${SNAPSHOT_DIR}"
 
-JOB_IDS="${INTERGEN_SHUTDOWN_JOB_IDS:-10626531 10626676 10628379 10628390 10628391 10628618 10628837 10628930 10628931 10655751}"
+JOB_IDS="${INTERGEN_SHUTDOWN_JOB_IDS:-10626531 10626676 10628379 10628390 10628391 10628618 10628837 10628930 10628931 10655751 10656272}"
 
 if command -v module >/dev/null 2>&1; then
     module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || module load python/3.12 2>/dev/null || module load python/3.11 2>/dev/null || true
@@ -35,7 +35,8 @@ mapfile -t RUN_DIRS < <(
     find "${SCRIPT_DIR}" -maxdepth 1 -type d \
         \( -name 'results_intergen_housing_fertility_intergen_candidate_no_timing_v0_twohour_20260608' \
         -o -name 'results_intergen_housing_fertility_intergen_candidate_no_timing_v0_overnight*_3g_20260608' \
-        -o -name 'results_intergen_housing_fertility_intergen_candidate_no_timing_v0_burst*_3g_20260608' \) \
+        -o -name 'results_intergen_housing_fertility_intergen_candidate_no_timing_v0_burst*_3g_20260608' \
+        -o -name 'results_intergen_housing_fertility_intergen_candidate_no_timing_v0_globalde*_3g_20260609' \) \
         | sort
 )
 

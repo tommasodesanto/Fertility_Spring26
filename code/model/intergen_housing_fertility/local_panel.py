@@ -32,6 +32,22 @@ DEFAULT_INCOME_GRID_5 = np.array([0.60, 0.80, 1.00, 1.20, 1.40])
 DEFAULT_INCOME_WEIGHTS_5 = np.array([0.10, 0.20, 0.40, 0.20, 0.10])
 DEFAULT_RHO_Z = 0.85
 
+GLOBAL_DE_BOUNDS = [
+    ("beta_annual", 0.920, 0.990),
+    ("alpha_cons", 0.500, 0.860),
+    ("b_entry_fixed", -4.000, 8.000),
+    ("c_bar_0", 0.040 * PERIOD_YEARS, 0.220 * PERIOD_YEARS),
+    ("c_bar_n", 0.100, 1.100),
+    ("h_bar_0", 2.000, 5.500),
+    ("h_bar_jump", 0.100, 1.800),
+    ("h_bar_n", 0.050, 1.500),
+    ("psi_child", 0.010, 0.220),
+    ("kappa_fert", 2.000, 9.000),
+    ("chi", 0.600, 1.800),
+    ("theta0", 0.000, 1.500),
+    ("theta_n", 0.000, 1.000),
+]
+
 
 def run_local_panel(
     outdir: Path,
@@ -238,6 +254,204 @@ def run_local_panel(
     return summary
 
 
+def run_global_de_panel(
+    outdir: Path,
+    *,
+    max_evals: int = 240,
+    seed: int = 20260609,
+    J: int = 16,
+    Nb: int = 60,
+    n_house: int = 6,
+    max_iter_eq: int = 25,
+    minutes: float = 115.0,
+    income_states: int = 5,
+    pop_size: int = 20,
+    mutation: float = 0.85,
+    crossover: float = 0.70,
+    target_set: str = "candidate_no_timing_v0",
+    progress: bool = True,
+) -> dict[str, Any]:
+    """Run an independent differential-evolution global search panel.
+
+    Each array task runs a full restart from broad bounds over the 13-parameter
+    internal calibration vector. This changes the search algorithm only; it
+    uses the same model solution and ranking target system as `run_local_panel`.
+    """
+
+    outdir.mkdir(parents=True, exist_ok=True)
+    cases_path = outdir / "cases.jsonl"
+    best_path = outdir / "best.json"
+    cases_path.write_text("")
+
+    os.environ["NUMBA_NUM_THREADS"] = "1"
+    os.environ["OMP_NUM_THREADS"] = "1"
+    os.environ["MKL_NUM_THREADS"] = "1"
+    os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
+    rng = np.random.default_rng(seed)
+    rank_targets, rank_weights = get_target_set(target_set)
+    income = income_process_overrides(income_states)
+    dim = len(GLOBAL_DE_BOUNDS)
+    pop_size = max(4, int(pop_size))
+    max_evals = max(1, int(max_evals))
+    mutation = float(mutation)
+    crossover = min(max(float(crossover), 0.0), 1.0)
+
+    meta = {
+        "status": "global_de_panel_not_formal_calibration",
+        "algorithm": "independent_latin_hypercube_plus_differential_evolution_rand_1_bin",
+        "seed": int(seed),
+        "max_evals_requested": int(max_evals),
+        "pop_size": int(pop_size),
+        "mutation": float(mutation),
+        "crossover": float(crossover),
+        "J": int(J),
+        "Nb": int(Nb),
+        "n_house": int(n_house),
+        "max_iter_eq": int(max_iter_eq),
+        "minutes_budget": float(minutes),
+        "income_states": int(income_states),
+        "z_grid": jsonable(income["z_grid"]),
+        "z_weights": jsonable(income["z_weights"]),
+        "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "rank_target_set": str(target_set),
+        "rank_targets": rank_targets,
+        "rank_weights": rank_weights,
+        "bounds": [
+            {"name": name, "lower": float(lo), "upper": float(hi)}
+            for name, lo, hi in GLOBAL_DE_BOUNDS
+        ],
+        "bounds_note": (
+            "beta_annual is transformed to the four-year beta used by the model; "
+            "all other bounds are on model-period parameters."
+        ),
+    }
+    (outdir / "metadata.json").write_text(json.dumps(meta, indent=2, sort_keys=True))
+
+    start = time.perf_counter()
+    deadline = start + max(1.0, float(minutes) * 60.0)
+    pop = latin_hypercube(rng, pop_size, dim)
+    pop_loss = np.full(pop_size, math.inf)
+    pop_records: list[dict[str, Any] | None] = [None] * pop_size
+    records: list[dict[str, Any]] = []
+    best: dict[str, Any] | None = None
+    eval_idx = 0
+    generation = 0
+
+    def evaluate(unit: np.ndarray, label: str, origin: dict[str, Any]) -> dict[str, Any]:
+        nonlocal eval_idx, best
+        theta = theta_from_global_unit(unit)
+        record = run_local_panel_case(
+            eval_idx,
+            {"label": label, "theta": theta},
+            J,
+            Nb,
+            n_house,
+            max_iter_eq,
+            income,
+            rank_targets,
+            rank_weights,
+        )
+        record["algorithm"] = "global_de"
+        record["origin"] = jsonable(origin)
+        record["unit_vector"] = jsonable(unit)
+        append_jsonl(cases_path, record)
+        records.append(record)
+        if is_better_record(record, best):
+            best = record
+            best_path.write_text(json.dumps(jsonable(best), indent=2, sort_keys=True))
+        if progress:
+            best_loss = float(best["rank_loss"]) if best is not None else math.inf
+            elapsed = time.perf_counter() - start
+            print(
+                f"eval {eval_idx + 1}/{max_evals} {label}: "
+                f"rank={float(record.get('rank_loss', math.inf)):.4g}, "
+                f"full={float(record.get('full_old_nonlocation_loss', math.inf)):.4g}, "
+                f"resid={float(record.get('market_residual', math.inf)):.2e}, "
+                f"case_sec={float(record.get('elapsed_sec', math.nan)):.1f}, "
+                f"best={best_loss:.4g}, elapsed={elapsed / 60:.1f}m",
+                flush=True,
+            )
+        eval_idx += 1
+        return record
+
+    for i in range(pop_size):
+        if eval_idx >= max_evals or time.perf_counter() >= deadline:
+            break
+        record = evaluate(pop[i], f"init_{i:03d}", {"phase": "latin_hypercube", "slot": i})
+        pop_loss[i] = float(record.get("rank_loss", math.inf))
+        pop_records[i] = record
+
+    while eval_idx < max_evals and time.perf_counter() < deadline:
+        order = np.arange(pop_size)
+        rng.shuffle(order)
+        for i in order:
+            if eval_idx >= max_evals or time.perf_counter() >= deadline:
+                break
+            choices = [j for j in range(pop_size) if j != int(i)]
+            if len(choices) < 3:
+                break
+            r1, r2, r3 = rng.choice(choices, size=3, replace=False)
+            mutant = pop[r1] + mutation * (pop[r2] - pop[r3])
+            out_of_bounds = (mutant < 0.0) | (mutant > 1.0) | ~np.isfinite(mutant)
+            if np.any(out_of_bounds):
+                mutant = mutant.copy()
+                mutant[out_of_bounds] = rng.random(int(np.sum(out_of_bounds)))
+            trial = pop[i].copy()
+            mask = rng.random(dim) < crossover
+            mask[rng.integers(0, dim)] = True
+            trial[mask] = np.clip(mutant[mask], 0.0, 1.0)
+            record = evaluate(
+                trial,
+                f"de_g{generation:03d}_i{int(i):03d}",
+                {
+                    "phase": "differential_evolution_rand_1_bin",
+                    "generation": int(generation),
+                    "slot": int(i),
+                    "base": int(r1),
+                    "diff_a": int(r2),
+                    "diff_b": int(r3),
+                },
+            )
+            trial_loss = float(record.get("rank_loss", math.inf))
+            if trial_loss <= pop_loss[i]:
+                pop[i] = trial
+                pop_loss[i] = trial_loss
+                pop_records[i] = record
+
+        generation += 1
+        if eval_idx < max_evals and time.perf_counter() < deadline and generation % 3 == 0:
+            worst = int(np.argmax(pop_loss))
+            immigrant = rng.random(dim)
+            record = evaluate(
+                immigrant,
+                f"immigrant_g{generation:03d}_i{worst:03d}",
+                {"phase": "random_immigrant", "generation": int(generation), "slot": worst},
+            )
+            immigrant_loss = float(record.get("rank_loss", math.inf))
+            if immigrant_loss <= pop_loss[worst]:
+                pop[worst] = immigrant
+                pop_loss[worst] = immigrant_loss
+                pop_records[worst] = record
+
+    records_sorted = sorted(records, key=lambda r: float(r.get("rank_loss", math.inf)))
+    summary = {
+        "best": records_sorted[0] if records_sorted else None,
+        "top_records": records_sorted[: min(10, len(records_sorted))],
+        "elapsed_sec": float(time.perf_counter() - start),
+        "n_cases_completed": int(len(records)),
+        "n_cases_submitted": int(eval_idx),
+        "stopped_by_time_budget": bool(eval_idx < max_evals),
+        "generations_completed": int(generation),
+        "final_population_losses": jsonable(pop_loss),
+        "metadata": meta,
+    }
+    (outdir / "summary.json").write_text(json.dumps(jsonable(summary), indent=2, sort_keys=True))
+    write_panel_summary_tables(outdir, records_sorted, rank_targets)
+    write_panel_plots(outdir, records_sorted, rank_targets)
+    return summary
+
+
 def init_panel_worker() -> None:
     try:
         from numba import set_num_threads
@@ -311,6 +525,26 @@ def local_panel_candidates(n_cases: int, seed: int, *, include_anchors: bool = T
         idx = len(candidates)
         candidates.append({"label": f"draw_{idx:04d}", "theta": draw_internal_candidate(rng, idx)})
     return candidates[: int(n_cases)]
+
+
+def latin_hypercube(rng: np.random.Generator, n: int, dim: int) -> np.ndarray:
+    out = np.empty((int(n), int(dim)))
+    for j in range(int(dim)):
+        out[:, j] = (np.arange(int(n)) + rng.random(int(n))) / float(n)
+        rng.shuffle(out[:, j])
+    return out
+
+
+def theta_from_global_unit(unit: np.ndarray) -> dict[str, float]:
+    unit = np.asarray(unit, dtype=float)
+    theta: dict[str, float] = {}
+    for u, (name, lo, hi) in zip(unit, GLOBAL_DE_BOUNDS):
+        value = float(lo + np.clip(u, 0.0, 1.0) * (hi - lo))
+        if name == "beta_annual":
+            theta["beta"] = value**PERIOD_YEARS
+        else:
+            theta[name] = value
+    return theta
 
 
 def keep_internal_candidate(candidate: dict[str, Any]) -> dict[str, Any]:

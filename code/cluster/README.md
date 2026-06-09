@@ -4,6 +4,7 @@ Active launchers:
 
 - `submit_python_direct_geometry_overnight.sh`
 - `submit_intergen_housing_fertility_twohour_panel.sh`
+- `submit_intergen_housing_fertility_global_de.sh`
 
 Two-hour one-market intergen panel test:
 
@@ -18,6 +19,23 @@ This runs `intergen_housing_fertility.cli local-panel` with
 owner rungs, one worker per task, and a 115-minute internal budget inside a
 2:10 SLURM walltime. Task 1 includes the deterministic anchor cases; other
 tasks use random draws only.
+
+Two-hour one-market global-DE panel:
+
+```bash
+cd $SCRATCH/projects/Fertility_Spring26/code/cluster
+INTERGEN_RUN_TAG=intergen_candidate_no_timing_v0_globalde_3g_20260609 \
+INTERGEN_GLOBAL_EVALS_PER_TASK=320 \
+INTERGEN_GLOBAL_POP_SIZE=24 \
+sbatch --array=1-64%64 --time=2:05:00 --mem=3G \
+  submit_intergen_housing_fertility_global_de.sh
+```
+
+This runs `intergen_housing_fertility.cli global-de-panel`: independent
+Latin-hypercube restarts followed by differential-evolution proposals over the
+same 13 economic parameters used by `candidate_no_timing_v0`. It uses the same
+model solution, grid, income-state count, target set, and checkpoint format as
+the two-hour panel launcher; only the parameter proposal algorithm changes.
 
 After the tasks finish:
 

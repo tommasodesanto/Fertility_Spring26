@@ -223,6 +223,14 @@ probabilities at all-infeasible grid points are not economically meaningful.
   cases; other tasks use `--random-only` to avoid repeating those anchors.
   Collect outputs with
   `python tools/collect_intergen_panel_results.py --results-dir <RESULTS_DIR>`.
+- `DIAGNOSTIC ONLY`: 2026-06-09 added
+  `code/cluster/submit_intergen_housing_fertility_global_de.sh` and
+  `python -m intergen_housing_fertility.cli global-de-panel`. This is a
+  different global proposal algorithm, not a different model: each array task
+  starts from broad Latin-hypercube bounds over the same 13 internal economic
+  parameters and then applies differential-evolution proposals. It keeps
+  `target_set=candidate_no_timing_v0`, `J=16`, `Nb=60`, five income states,
+  six owner rungs, and the same checkpointed `cases.jsonl` output format.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined

@@ -12,7 +12,7 @@ import numpy as np
 
 from .calibration import TARGET_SETS, run_informed_smoke, run_small_calibration
 from .diagnostics import write_diagnostics
-from .local_panel import run_local_panel
+from .local_panel import run_global_de_panel, run_local_panel
 from .solver import run_model_cp_dt
 
 
@@ -90,6 +90,22 @@ def main() -> None:
     panel.add_argument("--quiet", action="store_true")
     panel.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_panel"))
 
+    global_de = sub.add_parser("global-de-panel", help="Run a bounded differential-evolution global panel")
+    global_de.add_argument("--max-evals", type=int, default=240)
+    global_de.add_argument("--seed", type=int, default=20260609)
+    global_de.add_argument("--J", type=int, default=16)
+    global_de.add_argument("--Nb", type=int, default=60)
+    global_de.add_argument("--income-states", type=int, default=5)
+    global_de.add_argument("--n-house", type=int, default=6)
+    global_de.add_argument("--max-iter-eq", type=int, default=25)
+    global_de.add_argument("--minutes", type=float, default=115.0)
+    global_de.add_argument("--pop-size", type=int, default=20)
+    global_de.add_argument("--mutation", type=float, default=0.85)
+    global_de.add_argument("--crossover", type=float, default=0.70)
+    global_de.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
+    global_de.add_argument("--quiet", action="store_true")
+    global_de.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_global_de"))
+
     args = parser.parse_args()
     if args.cmd == "calibrate-small":
         summary = run_small_calibration(
@@ -133,6 +149,25 @@ def main() -> None:
             diagnostic_best=int(args.diagnostic_best),
             target_set=str(args.target_set),
             include_anchors=not bool(args.random_only),
+            progress=not bool(args.quiet),
+        )
+        print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
+        return
+    if args.cmd == "global-de-panel":
+        summary = run_global_de_panel(
+            args.outdir,
+            max_evals=int(args.max_evals),
+            seed=int(args.seed),
+            J=int(args.J),
+            Nb=int(args.Nb),
+            income_states=int(args.income_states),
+            n_house=int(args.n_house),
+            max_iter_eq=int(args.max_iter_eq),
+            minutes=float(args.minutes),
+            pop_size=int(args.pop_size),
+            mutation=float(args.mutation),
+            crossover=float(args.crossover),
+            target_set=str(args.target_set),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
