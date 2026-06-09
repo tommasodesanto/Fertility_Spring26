@@ -1,6 +1,6 @@
 # Implementation Status: Intergenerational Housing Fertility
 
-Updated: 2026-06-08
+Updated: 2026-06-09
 
 ## Rule
 
@@ -115,13 +115,20 @@ quantitative model.
 - `SIMPLIFICATION`: old retention currently comes only through the inherited
   workhorse owner state, transaction/sale wedge, and bequest utility. A clean
   policy-created old-retention wedge is not yet implemented.
+- `DIAGNOSTIC ONLY`: `estate_tax_rate` and `estate_tax_exemption` implement a
+  narrow terminal bequest-tax wedge by reducing positive terminal resources
+  before evaluating bequest utility. This is useful for proof-of-concept
+  comparisons, but it is not a full estate-tax reform: there is no government
+  budget, no rebate, no inheritance-transfer kernel, and no bequest-principal
+  adding-up.
 
 ## Not Implemented
 
 - `NOT IMPLEMENTED`: formal calibration, counterfactual tables, and production
   parameter search. The current random-search tool is diagnostic only.
-- `NOT IMPLEMENTED`: estate-tax counterfactuals, inheritance kernels, bequest
-  principal adding-up, and estate-revenue rebates.
+- `NOT IMPLEMENTED`: full estate-tax counterfactuals with inheritance kernels,
+  bequest-principal adding-up, and estate-revenue rebates. The implemented
+  terminal bequest-tax wedge is diagnostic only.
 - `NOT IMPLEMENTED`: mortgage-rate lock-in from coupon gaps.
 - `NOT IMPLEMENTED`: transition dynamics.
 - `NOT IMPLEMENTED`: landlord balance sheets by house size. The current model
@@ -238,6 +245,14 @@ probabilities at all-infeasible grid points are not economically meaningful.
   owner-entry policies remain highly nonmonotone, lifecycle ownership is
   wrong, and the temporary `linspace(2,10,6)` owner ladder materially
   contaminates the owner-room fit.
+- `DIAGNOSTIC ONLY`: 2026-06-09 added
+  `code/model/tools/run_intergen_policy_poc.py`, a fixed-theta policy
+  comparison runner from the final global-DE toy best. The default cases are
+  baseline, parent-targeted credit relief with `parent_dp_waiver_phi=0.95`,
+  a property-tax increase from 1 percent to 2 percent annually with prices
+  re-cleared, and a 30 percent terminal bequest-tax wedge. Output is in
+  `output/model/intergen_policy_poc_20260609/`; the summary note is
+  `docs/model/intergen_policy_poc_20260609.md`.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined

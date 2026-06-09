@@ -4358,7 +4358,11 @@ def get_completed_fertility(nn: int, cs: int, P: SimpleNamespace) -> int:
 
 
 def bequest_utility_vec(b, nk, P):
-    b = np.maximum(b, 0.0)
+    b_gross = np.maximum(b, 0.0)
+    estate_tax_rate = min(max(float(getattr(P, "estate_tax_rate", 0.0)), 0.0), 0.999)
+    estate_tax_exemption = max(float(getattr(P, "estate_tax_exemption", 0.0)), 0.0)
+    taxable = np.maximum(b_gross - estate_tax_exemption, 0.0)
+    b = np.maximum(b_gross - estate_tax_rate * taxable, 0.0)
     scale = P.theta0 * max(1 + P.theta_n * nk, 0)
     if abs(P.sigma - 1) < 1e-6:
         return scale * np.log(P.theta1 + b)

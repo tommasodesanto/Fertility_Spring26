@@ -63,6 +63,8 @@ def setup_parameters() -> SimpleNamespace:
     P.theta0 = 0.53
     P.theta_n = 0.25
     P.theta1 = 0.01
+    P.estate_tax_rate = 0.0
+    P.estate_tax_exemption = 0.0
     P.u_bar = 0.0
     P.b_entry_fixed = 0.0
     P.beta = 0.96 ** P.period_years
