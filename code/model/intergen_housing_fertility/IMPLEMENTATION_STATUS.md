@@ -253,6 +253,15 @@ probabilities at all-infeasible grid points are not economically meaningful.
   re-cleared, and a 30 percent terminal bequest-tax wedge. Output is in
   `output/model/intergen_policy_poc_20260609/`; the summary note is
   `docs/model/intergen_policy_poc_20260609.md`.
+- `DIAGNOSTIC ONLY`: 2026-06-09 added
+  `code/model/tools/audit_intergen_parent_credit_margin.py`, a treated-margin
+  audit for the weak fertility response to parent-targeted credit relief. It
+  evaluates feasibility and policy responses on baseline fertile childless
+  renter states. Main finding: the first-child family-rung PTI screen is slack
+  and LTV relief expands down-payment feasibility, but owner-entry and
+  fertility probabilities barely move at the final toy theta. Output is in
+  `output/model/intergen_parent_credit_margin_audit_20260609/`; the summary
+  note is `docs/model/intergen_parent_credit_margin_audit_20260609.md`.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined
