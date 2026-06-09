@@ -231,6 +231,13 @@ probabilities at all-infeasible grid points are not economically meaningful.
   parameters and then applies differential-evolution proposals. It keeps
   `target_set=candidate_no_timing_v0`, `J=16`, `Nb=60`, five income states,
   six owner rungs, and the same checkpointed `cases.jsonl` output format.
+- `DIAGNOSTIC ONLY`: 2026-06-09 final-best pathology audit:
+  `docs/model/intergen_housing_fertility_pathology_audit_20260609.md`.
+  It re-solves the final global-DE best under `Nb=60/120` and two owner-ladder
+  choices. Main finding: the final best is not a production calibration;
+  owner-entry policies remain highly nonmonotone, lifecycle ownership is
+  wrong, and the temporary `linspace(2,10,6)` owner ladder materially
+  contaminates the owner-room fit.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined
