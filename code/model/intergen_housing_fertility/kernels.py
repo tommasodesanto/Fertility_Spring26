@@ -86,6 +86,8 @@ def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_c
         while d > tol:
             if f2 >= f1:
                 xe = x2 + d
+                if xe > hik:
+                    xe = hik
                 fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
                 x1 = x2
                 f1 = f2
@@ -93,6 +95,8 @@ def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_c
                 f2 = fe
             else:
                 xe = x1 - d
+                if xe < lok:
+                    xe = lok
                 fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
                 x2 = x1
                 f2 = f1
@@ -133,6 +137,8 @@ def golden_owner_kernel(lo, hi, Rv, Vbar, bg, oc, cb_c, pc, Ko_c, alpha, oms, be
         while d > tol:
             if f2 >= f1:
                 xe = x2 + d
+                if xe > hik:
+                    xe = hik
                 fe = eval_owner_scalar(xe, Rv[k], Vbar, bg, oc, cb_c, pc, Ko_c, alpha, oms, beta)
                 x1 = x2
                 f1 = f2
@@ -140,6 +146,8 @@ def golden_owner_kernel(lo, hi, Rv, Vbar, bg, oc, cb_c, pc, Ko_c, alpha, oms, be
                 f2 = fe
             else:
                 xe = x1 - d
+                if xe < lok:
+                    xe = lok
                 fe = eval_owner_scalar(xe, Rv[k], Vbar, bg, oc, cb_c, pc, Ko_c, alpha, oms, beta)
                 x2 = x1
                 f2 = f1
@@ -819,6 +827,8 @@ def full_renter_block_kernel(
             while d > gs_tol:
                 if f2 >= f1:
                     xe = x2 + d
+                    if xe > hi:
+                        xe = hi
                     fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, alpha, oms, beta)
                     x1 = x2
                     f1 = f2
@@ -826,6 +836,8 @@ def full_renter_block_kernel(
                     f2 = fe
                 else:
                     xe = x1 - d
+                    if xe < lo:
+                        xe = lo
                     fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, alpha, oms, beta)
                     x2 = x1
                     f2 = f1
@@ -932,6 +944,8 @@ def full_owner_block_kernel(
             while d > gs_tol:
                 if f2 >= f1:
                     xe = x2 + d
+                    if xe > hi:
+                        xe = hi
                     fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, alpha, oms, beta)
                     x1 = x2
                     f1 = f2
@@ -939,6 +953,8 @@ def full_owner_block_kernel(
                     f2 = fe
                 else:
                     xe = x1 - d
+                    if xe < lo:
+                        xe = lo
                     fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, alpha, oms, beta)
                     x2 = x1
                     f2 = f1

@@ -747,10 +747,11 @@ def solve_markov_income_equilibrium(
         print(f"  Markov income states: {z_text}")
         print(f"  Markov transition rows: {np.array2string(Pi_z, precision=3)}")
 
+    SD_shared = precompute_shared(P, b_grid)
     for it in range(1, int(P.max_iter_eq) + 1):
         P.eq_iter = it
         t0 = time.perf_counter()
-        sol_it = solve_markov_income_at_prices(p, P, b_grid, verbose=False, fast_stats=True)
+        sol_it = solve_markov_income_at_prices(p, P, b_grid, verbose=False, fast_stats=True, SD=SD_shared)
         t_solve += time.perf_counter() - t0
         Hd = np.asarray(sol_it.housing_demand, dtype=float).reshape(-1)
         p_target = np.zeros(P.I)
@@ -776,7 +777,7 @@ def solve_markov_income_equilibrium(
             p = np.clip(p, P.p_min, P.p_max)
 
     if best_sol is None:
-        best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=True)
+        best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=True, SD=SD_shared)
     scalar_refine_info: dict[str, Any] = {"used": False}
     if P.I == 1 and bool(getattr(P, "scalar_market_refine", True)):
         best_sol, best_p, best_err, scalar_refine_info = refine_one_market_markov_income(
@@ -786,8 +787,9 @@ def solve_markov_income_equilibrium(
             P,
             b_grid,
             verbose=verbose,
+            SD=SD_shared,
         )
-    best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False)
+    best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False, SD=SD_shared)
     best_sol.timings = {
         **getattr(best_sol, "timings", {}),
         "income_process": "markov",
@@ -812,17 +814,18 @@ def refine_one_market_markov_income(
     P: SimpleNamespace,
     b_grid: np.ndarray,
     verbose: bool = True,
+    SD: SimpleNamespace | None = None,
 ) -> tuple[SimpleNamespace, np.ndarray, float, dict[str, Any]]:
     p0 = float(np.asarray(best_p, dtype=float).reshape(-1)[0])
     p_min = float(getattr(P, "p_min", 1e-4))
     p_max = float(getattr(P, "p_max", 100.0))
     expand = max(float(getattr(P, "scalar_market_refine_expand", 1.5)), 1.05)
-    max_expand = 8
+    max_expand = max(0, int(getattr(P, "scalar_market_refine_max_expand", 8)))
     max_iter = max(1, int(getattr(P, "scalar_market_refine_iter", 24)))
     tol = float(getattr(P, "tol_eq", 1e-4))
 
     def eval_price(price: float) -> tuple[float, float, SimpleNamespace]:
-        sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False, fast_stats=True)
+        sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False, fast_stats=True, SD=SD)
         demand = float(np.asarray(sol.housing_demand).reshape(-1)[0])
         supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
         excess = demand - supply
@@ -857,6 +860,7 @@ def refine_one_market_markov_income(
 
     info: dict[str, Any] = {
         "used": True,
+        "method": str(getattr(P, "scalar_market_refine_method", "brent")).lower(),
         "bracket_found": bool(ex_lo * ex_hi <= 0),
         "initial_price": p0,
         "best_price": float(best_price),
@@ -871,21 +875,83 @@ def refine_one_market_markov_income(
             print(f"  Scalar refine: no bracket; best residual={best_metric:.3e}")
         return sol_best, np.array([best_price]), best_metric, info
 
-    left, right = lo, hi
-    f_left, f_right = ex_lo, ex_hi
-    for k in range(1, max_iter + 1):
-        mid = 0.5 * (left + right)
-        ex_mid, metric_mid, sol_mid = eval_price(mid)
-        if metric_mid < best_metric:
-            best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
-        if metric_mid < tol:
+    method = info["method"]
+    if method == "brent":
+        a, b_pt, fa, fb = lo, hi, ex_lo, ex_hi
+        if abs(fa) < abs(fb):
+            a, b_pt, fa, fb = b_pt, a, fb, fa
+        c_pt, fc = a, fa
+        mflag = True
+        d_old = 0.0
+        for k in range(1, max_iter + 1):
+            if fa != fc and fb != fc:
+                mid = (
+                    a * fb * fc / ((fa - fb) * (fa - fc))
+                    + b_pt * fa * fc / ((fb - fa) * (fb - fc))
+                    + c_pt * fa * fb / ((fc - fa) * (fc - fb))
+                )
+            else:
+                mid = b_pt - fb * (b_pt - a) / (fb - fa)
+            lo_gate = min((3.0 * a + b_pt) / 4.0, b_pt)
+            hi_gate = max((3.0 * a + b_pt) / 4.0, b_pt)
+            use_bisect = (
+                not (lo_gate < mid < hi_gate)
+                or (mflag and abs(mid - b_pt) >= abs(b_pt - c_pt) / 2.0)
+                or (not mflag and abs(mid - b_pt) >= abs(c_pt - d_old) / 2.0)
+                or (mflag and abs(b_pt - c_pt) < 1e-12)
+                or (not mflag and abs(c_pt - d_old) < 1e-12)
+            )
+            if use_bisect:
+                mid = 0.5 * (a + b_pt)
+                mflag = True
+            else:
+                mflag = False
+            ex_mid, metric_mid, sol_mid = eval_price(mid)
+            if metric_mid < best_metric:
+                best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
             info["iterations"] = int(k)
-            break
-        if f_left * ex_mid <= 0:
-            right, f_right = mid, ex_mid
-        else:
-            left, f_left = mid, ex_mid
-        info["iterations"] = int(k)
+            if metric_mid < tol:
+                break
+            d_old = c_pt
+            c_pt, fc = b_pt, fb
+            if fa * ex_mid < 0:
+                b_pt, fb = mid, ex_mid
+            else:
+                a, fa = mid, ex_mid
+            if abs(fa) < abs(fb):
+                a, b_pt, fa, fb = b_pt, a, fb, fa
+    else:
+        left, right = lo, hi
+        f_left, f_right = ex_lo, ex_hi
+        side = 0
+        for k in range(1, max_iter + 1):
+            if method == "illinois":
+                denom = f_right - f_left
+                if abs(denom) > 1e-300:
+                    mid = right - f_right * (right - left) / denom
+                else:
+                    mid = 0.5 * (left + right)
+                if not (left < mid < right):
+                    mid = 0.5 * (left + right)
+            else:
+                mid = 0.5 * (left + right)
+            ex_mid, metric_mid, sol_mid = eval_price(mid)
+            if metric_mid < best_metric:
+                best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
+            if metric_mid < tol:
+                info["iterations"] = int(k)
+                break
+            if f_left * ex_mid <= 0:
+                right, f_right = mid, ex_mid
+                if method == "illinois" and side == -1:
+                    f_left *= 0.5
+                side = -1
+            else:
+                left, f_left = mid, ex_mid
+                if method == "illinois" and side == 1:
+                    f_right *= 0.5
+                side = 1
+            info["iterations"] = int(k)
 
     info["best_price"] = float(best_price)
     info["best_metric"] = float(best_metric)
@@ -901,10 +967,12 @@ def solve_markov_income_at_prices(
     b_grid: np.ndarray,
     verbose: bool = False,
     fast_stats: bool = False,
+    SD: SimpleNamespace | None = None,
 ) -> SimpleNamespace:
     p = np.asarray(p_eq, dtype=float).reshape(-1).copy()
     r = P.user_cost_rate * p
-    SD = precompute_shared(P, b_grid)
+    if SD is None:
+        SD = precompute_shared(P, b_grid)
     t0 = time.perf_counter()
     V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, btime = solve_bellman_full_markov_income(
         r, p, P, b_grid, SD
@@ -2477,7 +2545,7 @@ def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, h
     d = a1 * a2 * d
     while np.any(d > tol):
         bt = f2 >= f1
-        xe = np.where(bt, x2 + d, x1 - d)
+        xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
         fe = eval_renter(xe, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
         x1n = np.where(bt, x2, xe)
         f1n = np.where(bt, f2, fe)
@@ -2509,7 +2577,7 @@ def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta,
     d = a1 * a2 * d
     while np.any(d > tol):
         bt = f2 >= f1
-        xe = np.where(bt, x2 + d, x1 - d)
+        xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
         fe = eval_owner(xe, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta)
         x1n = np.where(bt, x2, xe)
         f1n = np.where(bt, f2, fe)

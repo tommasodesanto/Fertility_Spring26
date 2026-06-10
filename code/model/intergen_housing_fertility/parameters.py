@@ -157,8 +157,10 @@ def setup_parameters() -> SimpleNamespace:
     P.tol_eq = 1e-4
     P.lambda_eq = 0.30
     P.scalar_market_refine = True
+    P.scalar_market_refine_method = "brent"
     P.scalar_market_refine_iter = 24
     P.scalar_market_refine_expand = 1.5
+    P.scalar_market_refine_max_expand = 8
     P.adaptive_price_damping = True
     P.lambda_price_min = 0.005
     P.lambda_price_max = 0.35

@@ -432,7 +432,9 @@ def base_overrides(*, J: int, Nb: int, n_house: int, max_iter_eq: int) -> dict[s
         "tol_eq": 1e-4,
         "use_pti_constraint": True,
         "scalar_market_refine": True,
+        "scalar_market_refine_method": "brent",
         "scalar_market_refine_iter": 16,
+        "scalar_market_refine_max_expand": 8,
     }
 
 

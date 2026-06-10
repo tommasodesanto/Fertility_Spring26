@@ -1,6 +1,34 @@
 # Calibration Status
 
-Updated: `2026-05-27 18:19 EDT`
+Updated: `2026-06-10 12:50 CEST`
+
+## June 2026 Intergenerational Toy Strand
+
+A separate one-market intergenerational housing-fertility strand is active under
+`code/model/intergen_housing_fertility/`. It is the current workhorse for the
+compact analytical/toy-model exercises and diagnostic policy proof-of-concept
+runs, but it is **not** yet a production quantitative calibration.
+
+Current reference diagnostic point: global-DE toy best from
+`output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
+label `de_g008_i011`, stored loss `11.503191936648555` under the default
+one-market owner ladder. The June 10 verified fixed-stack replication with
+kernel clamps, Brent scalar refinement, and `max_iter_eq=3` gives loss
+`11.601065514992962`, market residual `5.219e-05`, and zero material borrowing
+floor violations. This point still has serious lifecycle ownership pathologies
+and should not be presented as a calibrated benchmark.
+
+For the intergen strand, use:
+
+- package: `code/model/intergen_housing_fertility/`
+- venv: `code/model/.venv/bin/python`
+- proof-of-concept runner: `code/model/tools/run_intergen_policy_poc.py`
+- parent-credit margin audit: `code/model/tools/audit_intergen_parent_credit_margin.py`
+- pathology audit: `code/model/tools/audit_intergen_final_best_pathologies.py`
+
+The older center-periphery `dt_cp_model` calibration status below remains
+historical/live for that strand, but it is not sufficient orientation for the
+June 2026 intergenerational toy-model work.
 
 This is the single live calibration and model-status note for the current
 discrete-time center-periphery fertility model. Historical MATLAB status notes,
