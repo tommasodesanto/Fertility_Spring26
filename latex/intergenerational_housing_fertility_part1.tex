@@ -531,12 +531,12 @@ The renter analog has the same closed form and is feasible only if $h_i^u\le\bar
 
 \section{Efficiency}
 
-The efficiency question is whether the competitive allocation that clears the floorspace market also solves the planner's allocation problem. Market clearing alone is not enough. In equilibrium, the price makes aggregate demand equal the stock. Efficiency requires, in addition, that the households who hold the marginal units of space are the households whose marginal values match its scarcity cost.
+The efficiency question is whether the competitive allocation that clears the floorspace market also solves the planner's allocation problem. Market clearing alone is not enough. In equilibrium, the price makes aggregate demand equal the stock. Efficiency requires, in addition, that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs.
 
 \begin{proposition}[Planner-equilibrium comparison, local]
-Consider an interior competitive equilibrium and a planner with the same preferences, housing stock, and tenure size menus. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation satisfies the planner's conditional no-reallocation condition only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
+Consider an interior competitive equilibrium and a planner with the same preferences, housing stock, and tenure size menus. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
 
-Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good units, of relaxing young owner $i$'s financial implementation constraints enough to permit one more unit of owner floorspace. In the pure-finance case, $r_i^F=0$. For a young owner whose owner menu is slack and whose financial constraints bind, and for an old incumbent at an interior retained-housing choice, the planner's marginal surplus from increasing the young owner's space by one unit and reducing the old incumbent's retained space by one unit is
+Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good units, of relaxing young owner $i$'s financial implementation constraints enough to permit one more unit of owner floorspace. If the planner can directly reassign existing floorspace and relieve financing without using real resources, then $r_i^F=0$; if it must operate through costly financing instruments, $r_i^F$ prices those real costs. For a young owner whose owner menu is slack and whose financial constraints bind, and for an old incumbent at an interior retained-housing choice, the planner's marginal surplus from increasing the young owner's space by one unit and reducing the old incumbent's retained space by one unit is
 \[
 \left(q+\zeta_i^{O,F}-r_i^F\right)
 -
@@ -544,7 +544,7 @@ Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good unit
 =
 \zeta_i^{O,F}+L_j^\tau(q,\tau^p)-r_i^F.
 \]
-Thus, in the zero-real-cost finance case, any such pair with $\zeta_i^{O,F}+L_j^\tau(q,\tau^p)>0$ violates the planner's local no-reallocation condition. More generally, a positive young financial access gap is inefficient whenever it can be relaxed at marginal real cost below the value gap relative to the marginal source of space, and a positive old incumbent-tax-discount gap is inefficient whenever the released space has a feasible recipient whose marginal value exceeds the old incumbent's true marginal value.
+Thus, in the zero-real-cost finance case, any such pair with $\zeta_i^{O,F}+L_j^\tau(q,\tau^p)>0$ prevents the competitive allocation from solving the planner's conditional allocation problem. More generally, a positive young financial access gap is inefficient whenever it can be relaxed at marginal real cost below the value gap relative to the marginal source of space, and a positive old incumbent-tax-discount gap is inefficient whenever the released space has a feasible recipient whose marginal value exceeds the old incumbent's true marginal value.
 
 Conversely, if the financial implementation gaps are zero for all relevant young owners and $L_j^\tau(q,\tau^p)=0$ for old incumbents at interior retention choices, then, conditional on entry, tenure assignments, and real menu constraints, the competitive allocation satisfies the planner's conditional housing and fertility first-order conditions for suitable Pareto weights.
 \end{proposition}
@@ -566,7 +566,7 @@ Subtracting gives
 \[
 \zeta_i^{O,F}+L_j^\tau(q,\tau^p)-r_i^F.
 \]
-A positive value is a feasible first-order improvement, so the competitive allocation cannot satisfy the planner's conditional no-reallocation condition.
+A positive value is a feasible first-order improvement: transfer goods to hold each household at its pre-variation utility, and the residual $\left[\zeta_i^{O,F}+L_j^\tau(q,\tau^p)-r_i^F\right]\dd h$ is available as surplus. Therefore the competitive allocation cannot solve the planner's conditional allocation problem.
 
 If all implementation-relevant financial gaps and incumbent-tax-discount gaps are zero, the competitive marginal values of all households away from real menu corners coincide with the common market user cost $q$. Real menu corners are respected by both the competitive economy and the constrained planner. With $\nu_i^g=0$, the competitive fertility condition then matches the planner's fertility condition evaluated at the same scarcity price, and Pareto weights can be chosen to support the competitive consumption allocation.
 \end{proof}
@@ -713,7 +713,7 @@ If the planner directly values births through $\mathcal G_i(n_i)$, the interior 
 =
 \chi_i+\kappa Q^{P}.
 \]
-A positive $\nu_i^g$ is a separate fertility motive. Holding consumption, segment scarcity costs, and any remaining access constraints fixed, it raises desired fertility. In the full equilibrium, aggregate fertility also depends on prices, consumption, tenure assignments, and entry.
+A positive $\nu_i^g$ is a separate fertility motive. Holding consumption, the scarcity price of space, and any remaining access constraints fixed, it raises desired fertility. In the full equilibrium, aggregate fertility also depends on prices, consumption, tenure assignments, and entry.
 
 Let
 \[
