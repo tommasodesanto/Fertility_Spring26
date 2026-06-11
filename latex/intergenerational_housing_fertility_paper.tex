@@ -65,7 +65,7 @@ The second result is an efficiency comparison. Market clearing is not allocative
 
 The third result is a policy decomposition. For a small housing policy, the fixed-price fertility effect is the mass of constrained households, times the policy's pass-through to the binding component of their cap, times their fertility response, plus an entry margin, plus a tenure-switching margin. The decomposition disciplines policy debates in two ways. Pass-through is to the \emph{binding} component: a subsidy aimed at a slack constraint moves nothing, so a down-payment grant does nothing for a household pinned by the rental menu, and a rental-size reform does nothing for a household pinned by collateral. And under a natural benchmark in which children use consumption and space in the same proportions as their parents, the fertility response is proportional to the same access gap $\zeta$ that measures misallocation---one statistic identifies both who is harmed and whose fertility responds. The switching margin, which exists because tenure is a discrete choice, is exactly zero in the baseline where both tenures price space at the same user cost, and is signed by which tenure is the expensive way to occupy space once tenure-cost wedges are introduced.
 
-The second half of the paper takes the framework to a quantitative lifecycle model. Households live through sixteen four-year periods, face persistent income risk, choose completed fertility with a childlessness margin, climb a discrete ladder of owner units or rent continuously below a size cap, and face the same financing constraints as in the analytical model---a financed-share limit on purchases and a payment-to-income screen---plus transaction costs on owner adjustment. All housing services clear in one market against an upward-sloping supply curve, the extension the analytical model defers, with the user cost tied to the asset price by the same no-arbitrage condition. The model is calibrated to U.S. lifecycle tenure, fertility, wealth, and housing moments, and it hosts three policy experiments suggested by the theory: a parent-targeted relaxation of the down-payment constraint, a revenue-recycled increase in the property tax that lowers the asset price young buyers must collateralize, and a bequest-tax wedge that operates on the intergenerational transmission of down payments. The quantitative section reports the model, the calibration design, preliminary diagnostics at the current search point, and proof-of-concept versions of these experiments; production estimation is in progress, and the section is explicit about which results are diagnostic.
+The second half of the paper takes the framework to a quantitative lifecycle model. Households live an annual lifecycle with mortality and persistent income risk; births arrive sequentially subject to a parity limit and children age through the household; dwellings come in sizes that renters and owners both occupy; purchases are financed by amortizing mortgages under loan-to-value and payment-to-income constraints; owners face transaction costs and mortgage-rate lock-in; estates pass to heirs through an inheritance kernel under an estate tax; and construction supplies each size at increasing marginal cost, with rents tied to prices by the same user-cost condition as in the analytical model. The model hosts the policy experiments the theory suggests: parent-targeted credit relief, property-tax reform that lowers the asset price young buyers must collateralize, and estate-tax changes that operate on the intergenerational transmission of down payments. The quantitative section states the model in full, the calibration design, the current implementation and its preliminary diagnostics, and proof-of-concept versions of the experiments; production estimation is in progress, and the section is explicit about which results are diagnostic.
 
 \subsection{Related literature}
 \label{sec:literature}
@@ -1093,36 +1093,257 @@ Consider a rental-menu policy with $\mathcal P_i^R(z)\ge0$ and $\mathcal P_i^O(z
 \section{A quantitative lifecycle model}
 \label{sec:quant}
 
-The analytical model isolates the mechanism at the cost of two-period lives, a single child input, and a fixed stock. The quantitative model restores the lifecycle: births have a timing, down payments are saved for, income is risky, owner housing comes in discrete sizes, and old households decide period by period how long to keep a large house. The one-market discipline is retained: all housing services clear at one price, and rents are tied to the asset price by the same user-cost condition as in Section~\ref{sec:model}. This section presents the environment, the mapping between the quantitative objects and the analytical ones, the calibration design, and the policy experiments. Estimation is in progress; the section states explicitly which objects are calibrated, which are externally set, and which results are diagnostic.
+The analytical model isolates the mechanism at the cost of two-period lives, a single child input, and a fixed stock. The quantitative model restores what that compression set aside: births have a timing, down payments are saved for out of risky income, owner housing comes in sizes financed by amortizing mortgages, old households decide year by year whether to keep a large house, estates reach heirs, and construction responds to prices. The analytical objects keep their roles. The effective family-housing cap of Section~\ref{sec:model} becomes the largest size reachable under the loan-to-value and payment-to-income constraints; the access gap $\zeta$ is readable from model bundles exactly as Section~\ref{sec:efficiency} reads it from data; the tenure-switching margin of Section~\ref{sec:fertility} is the renter-to-owner transition around births; and the old side's retention margin is carried by transaction costs, mortgage lock-in, and, as a policy instrument, the protected-assessment discount $L^\tau$. This section states the model in full, then the calibration design, the current implementation with its preliminary diagnostics, and the policy experiments. Estimation is in progress, and the diagnostic status of every number is stated where it appears.
 
-\subsection{Environment}
-\label{sec:quant_env}
+\subsection{Timing, demographics, and the state space}
 
-\textbf{Demographics and timing.} Time is discrete with four-year decision periods. A household enters at age 22, works through age 65, retires at 66, and exits after the decision period at age 82, for sixteen periods of life. Children live at home in a single dependent-child stage and mature into the adult entrant pool stochastically, with an expected duration at home of eighteen years matched to the four-year period length.
+The quantitative model embeds the mechanism in a finite-life overlapping-generations economy with income risk, tenure and house-size choice, mortgages, bequests, sequential fertility, and increasing housing supply. It remains non-spatial. Time is annual. Households live from age $a=1$ to $A$. Survival is $\pi_a$. Fertility is possible for $a\in\mathcal F$. The household chooses a birth indicator
+\begin{equation}
+f_t\in\{0,1\},\qquad n_{t+1}=n_t+f_t\le\bar n.
+\label{eq:birth_indicator_quant}
+\end{equation}
+Children are tracked by a child-age vector $g_t=(g_{0,t},\ldots,g_{S_c,t})$ with law of motion
+\begin{equation}
+g_{t+1}=(f_t,g_{0,t},\ldots,g_{S_c-1,t}),
+\qquad m(g_t)=\sum_{s=0}^{S_c}g_{s,t}.
+\label{eq:child_aging_quant}
+\end{equation}
+Fertility timing is therefore a sequence of parity hazards rather than a one-shot completed-family choice.
 
-\textbf{Preferences and fertility.} Period utility is logarithmic over adult residual consumption and housing services with Stone--Geary child requirements: each child at home claims a consumption floor and a housing-services requirement, the quantitative counterparts of $(\chi,\kappa)$. Childless households in the fertile window choose completed fertility once, over discrete family sizes including zero, subject to Type-I extreme-value taste shocks; unlike the analytical model, childlessness is a real margin. Household parity maps to the demographic total fertility scale by the standard factor of two. Households value terminal wealth through a warm-glow bequest function.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.90\textwidth]{fig3_olg_timeline.png}
+\caption{Quantitative non-spatial OLG timing. Households move through income risk, sequential births, housing adjustment, mortgage choices, aging, death, and bequest transmission.}
+\label{fig:olg_timeline}
+\end{figure}
 
-\textbf{Income.} Labor income is a lifecycle age profile scaled by a persistent Markov productivity state ($z\in\{0.70,1.00,1.30\}$ in the default discretization, with persistence $0.85$). A payroll tax of $17.9$ percent funds a common pension in retirement.
+The individual state is
+\begin{equation}
+s_t=(a,z,b,o,k,d,m^d,\iota,n,g,B),
+\label{eq:state_quant}
+\end{equation}
+where $a$ is age, $z$ is idiosyncratic productivity, $b$ is liquid assets, $o\in\{R,O\}$ is tenure, $k\in\KK$ is occupied housing size, $d$ is mortgage debt, $m^d$ is remaining mortgage maturity, $\iota$ is the incumbent coupon, $n$ is completed fertility, $g$ is the child-age vector, and $B$ is inherited liquid wealth.
 
-\textbf{Housing and tenure.} Renters choose housing services continuously up to a rental size cap of $8$ room-equivalents. Owners choose among discrete rungs $\{2,4,6,8,9.5,11\}$; the two largest rungs exceed the rental cap, so family-sized space is owner-concentrated exactly as in the analytical menus. Owner adjustment incurs transaction and sale wedges. Tenure and rung choices carry a small Type-I extreme-value smoothing term, which is also needed for reliable market clearing with discrete rungs.
+The key convention is
+\begin{equation}
+\KK=\{S,M,L\}.
+\end{equation}
+The size $k$ produces housing services for both renters and owners. Tenure $o$ determines whether the household pays rent or owns. Renters have $d=0$, $m^d=0$, and no incumbent coupon, but they still choose $k$ and consume $h_k$ services.
 
-\textbf{Financing.} A buyer finances at most a share $\phi=0.80$ of the purchase, so the down payment $(1-\phi)Ph$ is paid out of liquid assets. New purchases also face a payment-to-income screen on the interest-plus-property-tax payment. Incumbent owners who keep their rung do not requalify, so a household that bought when young can carry a house its current income would not finance---a financing-side source of incumbent retention.
+Income is
+\begin{equation}
+y_t(a,z)=W_t e_a z,
+\qquad z'\sim\Pi_z(\cdot\mid z).
+\label{eq:income_quant}
+\end{equation}
 
-\textbf{Market clearing and prices.} All occupied housing services clear in one market. The user cost and the asset price obey $q=(r+\delta+\tau^p)P$ with $r=4$ percent, $\delta=2$ percent, and $\tau^p=1$ percent annually. Aggregate demand clears against an upward-sloping supply curve $H^S=H_0(q/\bar q)^{\eta}$, the supply extension that the analytical model defers to a footnote.
+\begin{table}[H]
+\centering
+\caption{Quantitative state variables and units}
+\small
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Object & Meaning \\
+\midrule
+$a,z,b$ & Age, idiosyncratic productivity, liquid assets \\
+$o\in\{R,O\}$ & Tenure: rent or own \\
+$k\in\KK=\{S,M,L\}$ & Occupied housing size for both renters and owners \\
+$h_k$ & Service units delivered by one size-$k$ dwelling \\
+$d,m^d,\iota$ & Mortgage balance, remaining maturity, incumbent coupon \\
+$n,g$ & Completed fertility and child-age vector \\
+$B$ & Inherited liquid wealth \\
+$P_{k,t}$ & Asset price per service unit of size-$k$ housing \\
+$R_{k,t}$ & Rental/user cost per service unit of size-$k$ housing \\
+$H_{k,t},I_{k,t}$ & Stock and construction of service units of size $k$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-\textbf{Government.} The property tax and the payroll-pension system close through the public budget. A terminal bequest-tax wedge is implemented for the estate-tax experiment; it currently has no revenue rebate or inheritance kernel and is used for diagnostics only.
+\subsection{Preferences and housing services}
 
-\subsection{From the analytical model to the lifecycle model}
-\label{sec:quant_mapping}
+Housing slack is
+\begin{equation}
+s(k,g)=h_k-\kappa m(g).
+\end{equation}
+Period utility is
+\begin{equation}
+u(c,k,n,g)=\frac{\left[c^{1-\alpha_h}s(k,g)^{\alpha_h}\right]^{1-\sigma_u}-1}{1-\sigma_u}+\varphi_n v(n),
+\label{eq:period_utility_quant}
+\end{equation}
+with the log limit when $\sigma_u=1$. The non-housing child cost is
+\begin{equation}
+\chi_t(a,z,g)=\chi_0m(g)+\xi y_t(a,z)m(g).
+\label{eq:child_cost_quant}
+\end{equation}
 
-The analytical objects have direct quantitative counterparts. The effective family-housing cap is the largest owner rung reachable under the down-payment constraint and the payment screen, or the rental cap for households that do not buy; the access gap $\zeta$ is readable from model bundles in exactly the way Section~\ref{sec:efficiency} reads it from data. The tenure-switching margin of Section~\ref{sec:fertility} is the renter-to-owner transition around births, and its empirical counterparts---the event-study housing responses to the first and second child---are calibration targets rather than untargeted predictions. The old side currently generates retention through transaction wedges, the bequest motive, and the no-requalification rule; the protected-assessment discount $L^\tau$ is designed as a policy instrument on top of this block, and in the present implementation the property-tax experiment operates through the capitalization channel, in which a higher $\tau^p$ lowers the asset price at a given user cost and so relaxes the down-payment requirement. The intergenerational loop runs through bequests: terminal wealth is valued by the warm glow and, in the full design, feeds the pledgeable resources of heirs subject to the adding-up restriction of Section~\ref{sec:model}; the inheritance kernel is not yet implemented, and the estate-tax experiment below should be read accordingly.
+\subsection{Tenure, mortgages, and lock-in}
+
+A renter of size $k'$ pays $R_{k',t}h_{k'}$ and chooses $d'=0$. An owner who buys size $k'$ pays $P_{k',t}h_{k'}$ and can borrow $d'$. Since $P_{k,t}$ is a price per service unit, $P_{k,t}h_k$ is the asset price of a size-$k$ dwelling. A rental availability restriction $k'\le\bar k^R$ for renters nests the rental menu of Section~\ref{sec:model}; the implemented version below imposes it, and the unrestricted case lets financing alone concentrate family-sized space among owners. New owner mortgages satisfy
+\begin{align}
+d'&\le \phi P_{k',t}h_{k'},\label{eq:ltv_quant}\\
+\mathcal P(d',R_t^m,m_0)&\le \psi y_t(a,z),\label{eq:pti_quant}
+\end{align}
+where $m_0$ is origination maturity. The fixed annual mortgage payment is
+\begin{equation}
+\mathcal P(d,R,m)=d\frac{R}{1-(1+R)^{-m}},
+\label{eq:mortgage_payment}
+\end{equation}
+with zero-rate limit $d/m$.
+
+An incumbent owner keeping the same house keeps the old coupon $\iota$. Moving or refinancing replaces it with $R_t^m$. The present-value lock-in cost of losing a below-market coupon is
+\begin{equation}
+\mathcal L_t^m(d,\iota,m^d;R_t^m)=\max\left\{\sum_{s=1}^{m^d}\frac{\mathcal P(d,R_t^m,m^d)-\mathcal P(d,\iota,m^d)}{(1+r_t)^s},0\right\}.
+\label{eq:pv_lockin_quant}
+\end{equation}
+Adjustment cost is
+\begin{equation}
+\Phi_t(k,d,m^d,\iota)=\lambda_s P_{k,t}h_k+\mathcal L_t^m(d,\iota,m^d;R_t^m).
+\label{eq:adjustment_quant}
+\end{equation}
+The real resource cost is $\lambda_sP_{k,t}h_k$. The coupon term is a borrower-lender transfer unless mortgage investors are outside the economy.
+
+The budget is written compactly as
+\begin{equation}
+c+b'+\mathcal X_t(o',k',d',m^{d\prime},\iota'\mid o,k,d,m^d,\iota)+\chi_t(a,z,g')=y_t(a,z)+(1+r_t)b+T_t(s),
+\label{eq:budget_quant}
+\end{equation}
+where $\mathcal X_t$ is evaluated by tenure branch: renters pay rent; owner stayers pay mortgage payments, maintenance, and property taxes; movers sell, repay debt, forfeit the coupon value, pay transaction costs, buy, and choose new debt, maturity, and coupon; sellers liquidate equity and rent.
+
+\subsection{Bequests, estate taxation, and transfers}
+
+At death, the estate is
+\begin{equation}
+E_t(s)=\max\{b+\1\{o=O\}(P_{k,t}h_k-d),0\}.
+\end{equation}
+Estate-tax revenue is
+\begin{equation}
+\mathcal R_t^b=\tau_t^b\int E_t(s)\,\dd D_t(s),
+\label{eq:estate_tax_revenue_quant}
+\end{equation}
+where $D_t$ is the decedent distribution. After-tax estates are assigned to heirs using a kernel $\Gamma_t(s^h\mid s^d)$:
+\begin{equation}
+B_{t+1}(s^h)=\int (1-\tau_t^b)E_t(s^d)\Gamma_t(s^h\mid s^d)\,\dd D_t(s^d).
+\label{eq:inheritance_kernel_quant}
+\end{equation}
+A family-linked kernel assigns estates to actual descendants; an anonymous kernel draws heirs from the aggregate estate distribution. Estate-tax revenue is rebated according to $T_t^b(s)$ satisfying
+\begin{equation}
+\int T_t^b(s)\,\dd\mu_t(s)=\mathcal R_t^b
+\label{eq:estate_rebate_quant}
+\end{equation}
+when the reform is revenue-neutral. A repeal counterfactual must specify both $\Gamma_t$ and $T_t^b$.
+
+Old households may also have true warm-glow bequest utility
+\begin{equation}
+\mathcal B(E_t)=\theta_B\frac{\left[(1-\tau_t^b)E_t+\underline b\right]^{1-\sigma_B}}{1-\sigma_B}.
+\label{eq:warm_glow_quant}
+\end{equation}
+This is not an inefficiency. The planner counts \eqref{eq:warm_glow_quant}. It is distinct from policy-created retention wedges.
+
+\subsection{Housing supply and units}
+
+For each size $k\in\KK$, $H_{k,t}$ is measured in service units. A size-$k$ dwelling delivers $h_k$ services. The stock law is
+\begin{equation}
+H_{k,t+1}=(1-\delta_k)H_{k,t}+I_{k,t},
+\label{eq:stock_law_quant}
+\end{equation}
+where $I_{k,t}$ is construction in service units. Developers have cost
+\begin{equation}
+C_{k,t}(I)=\frac{\varkappa_k}{1+\eta_k}\left(\frac{I}{Z_{k,t}}\right)^{1+\eta_k}Z_{k,t},
+\qquad \eta_k>0.
+\label{eq:construction_quant}
+\end{equation}
+Competitive construction implies
+\begin{equation}
+P_{k,t}=C'_{k,t}(I_{k,t})=\varkappa_k\left(\frac{I_{k,t}}{Z_{k,t}}\right)^{\eta_k}.
+\label{eq:developer_foc_quant}
+\end{equation}
+The rental/user cost satisfies
+\begin{equation}
+R_{k,t}=(r_t+\delta_k+\tau_t^p)P_{k,t}-\E_t(P_{k,t+1}-P_{k,t}).
+\label{eq:user_cost_quant}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{fig4_supply_transition.png}
+\caption{Supply expansion in the quantitative model. A rise in $Z_{M,t}$ or $Z_{L,t}$ increases construction of family-capable housing and reduces user costs along the transition.}
+\label{fig:supply_transition}
+\end{figure}
+
+\subsection{Household dynamic program}
+
+Let $V_t(s)$ be the household value. With $n'=n+f_t$ and $g'$ determined by \eqref{eq:child_aging_quant},
+\begin{equation}
+V_t(s)=\max_{c,b',o',k',d',m^{d\prime},\iota',f_t}\left\{u(c,k',n',g')+\beta\pi_a\E[V_{t+1}(s')\mid s,\text{choices}]+\beta(1-\pi_a)\mathcal B(E_t(s'))\right\}
+\label{eq:bellman_quant}
+\end{equation}
+subject to \eqref{eq:budget_quant}, \eqref{eq:ltv_quant}--\eqref{eq:pti_quant}, income transitions, child aging, tenure feasibility, mortgage amortization, bequest transmission, and nonnegativity constraints. The next state is
+\begin{equation}
+s'=(a+1,z',b',o',k',d',m^{d\prime},\iota',n',g',B').
+\end{equation}
+
+\subsection{Recursive competitive equilibrium}
+
+Let $\mu_t$ be the distribution over states. A recursive competitive equilibrium is a sequence of prices $\{P_{k,t},R_{k,t},R_t^m,r_t\}$, taxes and transfers, construction $\{I_{k,t}\}$, policies, and distributions $\{\mu_t\}$ such that:
+\begin{enumerate}
+\item Households solve \eqref{eq:bellman_quant}.
+\item The distribution evolves under policies, survival, income shocks, sequential births, child aging, deaths, bequests, and inheritance transitions.
+\item Housing markets clear by size in service units:
+\begin{equation}
+\int \1\{k_t(s)=k\}h_k\,\dd\mu_t(s)=H_{k,t},\qquad k\in\KK.
+\label{eq:housing_clearing_quant}
+\end{equation}
+\item Stocks evolve by \eqref{eq:stock_law_quant} and construction satisfies \eqref{eq:developer_foc_quant}.
+\item The government and policy-wedge accounts clear:
+\begin{equation}
+\tau_t^p\sum_{k\in\KK}P_{k,t}H_{k,t}+\mathcal R_t^b+\mathcal R_t^{other}=\int T_t(s)\,\dd\mu_t(s)+G_t+\mathcal C_t^L,
+\label{eq:government_budget_quant}
+\end{equation}
+where $\mathcal C_t^L$ is the fiscal, lender, or tax-expenditure cost of any explicit policy-created retention wedge. If lock-in is purely a private mortgage-contract transfer, set $\mathcal C_t^L=0$ and book the offset on the lender side.
+\item Mortgage and bond markets clear, or $r_t$ and $R_t^m$ are taken from an external credit market with an exogenous spread.
+\end{enumerate}
+
+\subsection{Planner and welfare}
+
+The planner uses the same technology. Goods feasibility includes construction:
+\begin{equation}
+\int c_t(s)\,\dd\mu_t(s)+\sum_{k\in\KK}C_{k,t}(I_{k,t})+\text{child costs}+\text{maintenance}=Y_t.
+\end{equation}
+Let $Q_{k,t}$ be the planner's shadow value of one service unit of size $k$ in place, and let $MV_{k,t}$ be the distribution-weighted marginal service value across its occupants. Optimal construction and the shadow value satisfy
+\begin{equation}
+C'_{k,t}(I_{k,t})=\beta_t\E_t Q_{k,t+1},
+\qquad
+Q_{k,t}=MV_{k,t}+\beta_t(1-\delta_k)\E_tQ_{k,t+1},
+\label{eq:planner_supply_quant}
+\end{equation}
+with the same build-to-serve timing as the stock law.
+The planner counts true warm-glow bequest utility. It does not count policy-created retention wedges as social benefits unless they reflect true preferences or real resource costs.
 
 \subsection{Calibration design}
 \label{sec:quant_calib}
 
-Externally set parameters are the period structure, the interest, depreciation, and property-tax rates, the financed share $\phi=0.80$, the payroll rate, the owner ladder, the rental cap, and the income-process discretization. The internal parameter vector---discounting, the consumption--housing share, the Stone--Geary floors, the child goods cost and per-child housing requirement, the fertility taste scale, entry wealth, and the bequest strength and curvature---is disciplined by the moments in Table~\ref{tab:targets}.
+Table~\ref{tab:blocks} lists the parameter blocks and the variation that disciplines each; Table~\ref{tab:targets} lists the current empirical target set. The finance, supply, and demographic blocks are set externally or estimated outside the model; the preference, child-cost, and bequest blocks are disciplined jointly by the targeted moments.
 
-\begin{table}[t]
+\begin{table}[H]
+\centering
+\caption{Parameter blocks to calibrate}
+\label{tab:blocks}
+\small
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\toprule
+Block & Parameters & Main targets \\
+\midrule
+Preferences & $\beta,\sigma_u,\alpha_h,\varphi_n,\kappa,\chi_0,\xi$ & wealth profile, tenure by age, housing by children, completed fertility, age-specific births \\
+Income & $e_a,\Pi_z,W_t$ & age-income profile, dispersion, persistence \\
+Credit & $\phi,\psi,R_t^m-r_t$ & origination LTVs, payment-to-income ratios, mortgage spreads \\
+Lock-in & $\lambda_s,\mathcal L^m$ & mobility responses to rate gaps, refinancing, downsizing hazards \\
+Supply & $\varkappa_k,\eta_k,Z_{k,t},\delta_k$ & construction by size, price-rent ratios, supply elasticities \\
+Bequests & $\tau^b,\Gamma_t,T_t^b,\theta_B$ & estate sizes, inheritances, rebate incidence \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
 \centering
 \caption{Calibration targets}
 \label{tab:targets}
@@ -1149,6 +1370,11 @@ Median rooms, childless renters / owners & 4.0 / 6.0 & AHS \\
 \end{table}
 
 The identification logic follows the model's margins. The fertility taste scale and the child goods cost separate the level of fertility from the childlessness margin. The per-child housing requirement is disciplined by the event-study housing responses around births, which measure how much space a child commands. The bequest strength governs old-age ownership and the old parent--childless gap, the two moments that encode how long family-sized space stays with incumbents. Discounting and the Stone--Geary floors govern the wealth ratios, and through them the age at which the down-payment constraint stops binding; the ladder and menu primitives govern the room medians and the cross-sectional ownership profile.
+
+\subsection{Implementation status and preliminary diagnostics}
+\label{sec:quant_impl}
+
+The implemented first pass simplifies the model above along named dimensions, recorded in the code's implementation ledger. Decision periods are four years rather than annual, with entry at 22, retirement at 66, and exit after the decision period at 82. Fertility is a one-shot completed-family choice for childless fertile households rather than a sequential hazard, with a single dependent-child stage that matures stochastically with an eighteen-year mean. Owner housing is a six-rung ladder and rental housing is continuous below a size cap, so the rental menu is imposed; all housing services clear in one aggregate market against the supply curve, with size-specific clearing the next implementation step. Mortgages are a collateral-constrained shortcut: the financed share is capped at $\phi=0.80$, the down payment is paid from liquid assets, the payment-to-income screen applies to new purchases only, and there is no coupon state, so rate lock-in is absent while transaction-cost lock-in and the no-requalification margin are active. Bequests are valued by a warm glow scaled by completed fertility; the inheritance kernel and the estate-tax rebate are not yet implemented. Tenure and size choices carry a small extreme-value smoothing term, which discrete rungs require for reliable market clearing. Income is a lifecycle profile scaled by a persistent three-state productivity process, with a payroll-funded common pension in retirement.
 
 Estimation status is reported plainly. The model solves and clears the market to residuals near $5\times10^{-5}$, and global search panels over the internal vector run on a cluster with checkpointed records. The best point found so far is a diagnostic point, not a production calibration, and Table~\ref{tab:fit} reports it against the targets so the distance is visible rather than summarized. Two failures dominate. Prime-age ownership is $0.22$ against a target of $0.575$: the model's households buy too late, which Figure~\ref{fig:own_age} shows directly---ownership is near zero through the fertile window and catches up only after age 45, so the old-age moments come out roughly right while the access margin the paper is about is far too tight. And first births arrive near age 34 against 26 in the data, the known strain that a one-shot completed-fertility choice puts on timing. Figure~\ref{fig:policies30} shows the policies underneath: consumption and fertility behave, but the owner-entry probability is not monotone in wealth at low asset levels, a pathology of the current point. The policy experiments below are correspondingly proof-of-concept runs at this point, included because their design and qualitative behavior, not their magnitudes, are the current content.
 
@@ -1196,7 +1422,7 @@ Mean age at first birth (diagnostic) & 26.0 & 34.2 \\
 \subsection{Policy experiments}
 \label{sec:quant_policy}
 
-Three experiments map directly to terms of the decomposition in Section~\ref{sec:fertility}.
+In the full model, policies are transitions, and each should be reported as a simulation decomposition: direct household effects at fixed prices, price effects with markets cleared, supply effects with construction responding, distribution effects from fertility, aging, deaths, and bequests, and the full transition path. The current implementation reports stationary comparisons with prices re-cleared. Three experiments map directly to terms of the decomposition in Section~\ref{sec:fertility}.
 
 \textbf{Parent-targeted credit relief.} The financed share rises from $0.80$ to $0.95$ for first-child buyers, a pass-through to the collateral component of the effective cap for a treated set chosen on the fertility margin itself. In the decomposition, the experiment activates $\mathcal P_i^O>0$ exactly where the entry and intensive terms are evaluated.
 
@@ -1234,12 +1460,18 @@ Ownership, ages 65--75 & 0.783 & 0.793 & 0.783 & 0.789 \\
 
 The smallness of the credit-relief response is itself informative, because the decomposition explains it. An audit of the treated margin shows that the payment screen is slack at the relevant family-sized rung and that the relief does expand down-payment feasibility---yet owner entry and fertility barely move. In the language of Section~\ref{sec:fertility}, exposure and pass-through are positive but the response term is small at this point: the treated households' access gaps are too small for relief to bind on behavior. The lesson carries to estimation: the experiments' magnitudes are governed by the measured access gaps of the treated set, which is precisely the statistic the calibration targets discipline through the ownership gaps and event-study responses. At a point that matches prime-age ownership of $0.575$ rather than $0.22$, the constrained set, and with it the response to credit relief, will look different.
 
+\subsection{Limitations and next steps}
+\label{sec:quant_limits}
+
+The model deliberately drops space. This buys clarity and computational tractability but removes local labor markets, amenities, school quality, and spatial substitution. Housing supply is national and size-specific, not local. Fertility is continuous in the analytical model and sequential discrete in the quantitative model. The mortgage lock-in term is written as a present-value object, but implementation must track amortization, refinancing, and remaining maturity. Bequests are represented with a parsimonious kernel; real estate taxation in data includes estate taxes, capital-gains taxation, basis step-up, inter vivos transfers, and institutional details.
+
+The next step is not to add space back. The next step is to discipline the non-spatial margins: young liquidity constraints, payment-to-income constraints, old lock-in and downsizing elasticities, construction elasticity of family-capable units, inheritance incidence, and the fertility response to housing access.
 \section{Conclusion}
 \label{sec:conclusion}
 
 The paper's premise is that children are priced partly in space, and that the price of space facing a young family is set less by the posted rent than by the institutions that govern access to family-sized units: the size composition of the rental stock, down payments, payment-to-income limits, and the property-tax treatment of incumbents. In a stationary overlapping-generations economy with one floorspace market, those institutions collapse into one effective family-housing cap per household, a binding cap raises the price of a child by the household's own shadow value of space, and the equilibrium can clear the market while leaving the stock misallocated between constrained young buyers and protected old incumbents. The misallocation comes with measurement attached: the young side's gap is the housing--consumption tradeoff in excess of the rent, readable from bundles, and the old side's gap is the difference between market and protected tax liabilities, readable from assessment records. The fertility effect of a housing policy is then an auditable product---exposure, pass-through to the binding constraint, response, entry, and a switching term that vanishes at tenure-cost parity.
 
-The quantitative agenda is laid out and partly built: a lifecycle model with the same one-market discipline, financing constraints, and owner ladder, calibrated to U.S. tenure, fertility, and wealth moments, hosting credit-relief, property-tax, and estate-tax experiments. Completing it requires the production calibration, the protected-assessment instrument on the old side, the inheritance kernel with its adding-up restriction on the estate-tax side, and transition dynamics; each is a bounded step within the framework rather than a change to it.
+The quantitative agenda is laid out and partly built: a lifecycle model with size-specific housing markets, mortgage financing under loan-to-value and payment-to-income constraints, lock-in, and an inheritance kernel, calibrated to U.S. tenure, fertility, and wealth moments and hosting credit-relief, property-tax, and estate-tax experiments. Completing it requires the production calibration, the move from the implemented one-market scaffold to size-specific clearing, the protected-assessment instrument on the old side, the inheritance kernel with its adding-up restriction, and transition dynamics; each is a bounded step within the framework rather than a change to it.
 
 \appendix
 
