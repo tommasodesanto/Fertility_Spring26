@@ -461,8 +461,24 @@ Holding prices, tenure choices, and active sets fixed ($\mathcal B_m$ = entrant 
 \medskip
 \begin{alertblock}{What this formula deliberately leaves out}
 \footnotesize
-Price and construction responses, fiscal costs $\Xi^\Pi$, active-set changes --- and \textbf{tenure switching}, which is first order when types sit near the indifference boundary $W_i^R=W_i^O$ and fertility jumps across branches. The formula is the fixed-tenure component; the quantitative model evaluates the switching margin.
+Price and construction responses, fiscal costs $\Xi^\Pi$, and active-set changes are general-equilibrium questions. \textbf{Tenure switching} is not: it is first order at fixed prices, and the next slide signs it.
 \end{alertblock}
+\end{frame}
+
+% ============================================================
+\begin{frame}{Tenure switching: the fertility jump rides the price gap}
+\small
+Tenure is discrete, so switchers' bundles---and fertility---\textbf{jump} at the boundary $W_i^R=W_i^O$. The size of this margin is quantitative; its sign is theory.
+
+\begin{block}{At indifference between a cheap branch ($q^A$) and an expensive one ($q^B>q^A$)}
+The cheap branch's cap binds, and the expensive branch holds more housing, more slack space, less consumption. If children are at least as space-intensive as their parents' bundle ($\chi\le\kappa q^A/\alpha$), it also has \textbf{more children}: the only reason to pay more per unit of space is to get more space, and the space brings the children.
+\end{block}
+
+\begin{itemize}\setlength{\itemsep}{0.3em}
+  \item \textbf{$q^O>q^R$:} switchers into ownership \emph{upsize}, $n_O>n_R$ --- switching term $\ge0$: the fixed-tenure formula is a \textcolor{okgreen}{\textbf{lower bound}} for owner-access policies.
+  \item \textbf{$q^O=q^R$:} no jump --- the formula is \emph{exact}. Price segmentation is what makes switching first order.
+  \item \textbf{$q^O<q^R$:} switchers \emph{downsize} into cheap owned units, $n_O<n_R$ --- switching term $\le0$: an \textcolor{gapred}{\textbf{upper bound}}. Which case applies is one number: benchmark owner user cost vs.\ rent per unit.
+\end{itemize}
 \end{frame}
 
 % ============================================================
@@ -498,7 +514,7 @@ Price and construction responses, fiscal costs $\Xi^\Pi$, active-set changes ---
 \begin{enumerate}\setlength{\itemsep}{0.9em}
   \item \textbf{Family-housing access is a fertility margin.} Children are priced at the household's own shadow value of space: $\beta c_i/n_i=\chi_i+\kappa(q^m+\zeta_i^m)$. If the child bundle is not more goods-intensive than the adult's ($\chi_i\le\kappa q^m/\alpha$), relaxing a binding cap raises fertility.
   \item \textbf{Two measurable gaps separate equilibrium from the planner:} the young financial access gap $\zeta_i^{O,F}$ and the old assessment advantage $L_j^\tau$. Moving one marginal unit of owner space from a protected incumbent to a constrained young family is worth $\zeta_i^{O,F}+L_j^\tau$. The young mechanism stands without the old one.
-  \item \textbf{Policy works only through the binding component of $H_i^m$.} Local effect $=$ exposure $\times$ pass-through $\times$ response $+$ entry; under equal scaling $\Psi_i^m\propto\zeta_i^m$, so the policies that raise births most are the ones aimed at the largest access gaps.
+  \item \textbf{Policy works only through the binding component of $H_i^m$.} Local effect $=$ exposure $\times$ pass-through $\times$ response $+$ entry; under equal scaling $\Psi_i^m\propto\zeta_i^m$, so the policies that raise births most are the ones aimed at the largest access gaps. Tenure switching reinforces owner-access policies when ownership is the expensive family-space segment, and vanishes at price parity.
 \end{enumerate}
 \end{frame}
 
