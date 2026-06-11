@@ -43,10 +43,10 @@
 \maketitle
 
 \begin{abstract}
-Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied segment of the housing market, while buying owner housing requires a down payment and debt-service capacity that many young households do not have. This note develops a compact theory of that friction. Young households decide whether to enter a housing market, choose between renting and owning, and choose how many children to have; children require both consumption goods and housing space. Old households are incumbent owners deciding how much of their housing to keep. The model delivers three results. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single object, an effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the competitive equilibrium clears both housing markets and is still inefficient whenever young households are priced out of owner housing by financing constraints while old incumbents are held in place by property-tax assessment discounts; the two gaps are measurable from observed bundles. Third, the fertility effect of a housing policy reduces to a transparent formula: the mass of constrained households, times the policy's pass-through to their cap, times their fertility response, plus an entry margin and a signed tenure-switching margin.
+Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied segment of the housing market, while buying owner housing requires a down payment and debt-service capacity that many young households do not have. This note develops a compact theory of that friction. Young households decide whether to enter a housing market, choose between renting and owning, and choose how many children to have; children require both consumption goods and housing space. Old households are incumbent owners deciding how much of their housing to keep. The model delivers three results. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single object, an effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the competitive equilibrium clears the housing market and is still inefficient whenever young households are priced out of owner housing by financing constraints while old incumbents are held in place by property-tax assessment discounts; the two gaps are measurable from observed bundles. Third, the fertility effect of a housing policy reduces to a transparent formula: the mass of constrained households, times the policy's pass-through to their cap, times their fertility response, plus an entry margin and a tenure-switching margin that vanishes at tenure-cost parity and is otherwise signed.
 \end{abstract}
 
-The argument runs from the economy to the policy formula in a fixed order: the two housing segments and their supply, the household problems, equilibrium, the planner, and then fertility and policy. Two features carry the economics. The first is that children require housing space, so anything that rations family-sized space is, in equilibrium, a tax on children. The second is that family-sized space is rationed by different instruments in the two tenures: by the size composition of the rental stock on one side, and by down-payment and payment-to-income requirements on the other. The old-side force---incumbent property-tax discounts that make staying cheap relative to selling---amplifies the scarcity but is not needed for any of the young-side results.
+The argument runs from the economy to the policy formula in a fixed order: the environment, the household problems, equilibrium, the planner, and then fertility and policy. The market structure follows \citet{coven2024}: tenure shapes which size menus and financing constraints a household faces, while all floorspace clears in a single market; supply margins are deferred to an extension. Two features carry the economics. The first is that children require housing space, so anything that rations family-sized space is, in equilibrium, a tax on children. The second is that family-sized space is rationed by different instruments in the two tenures: by the size composition of the rental stock on one side, and by down-payment and payment-to-income requirements on the other. The old-side force---incumbent property-tax discounts that make staying cheap relative to selling---amplifies the scarcity but is not needed for any of the young-side results.
 
 \clearpage
 \tableofcontents
@@ -58,108 +58,76 @@ The argument runs from the economy to the policy formula in a fixed order: the t
 
 \section{Environment}
 
-The economy is populated by two overlapping generations of households, young and old. Young households are potential parents. They decide whether to enter the modeled housing market and, conditional on entry, choose tenure, housing, consumption, and fertility. Old households are incumbent owners. They are no longer fertile and choose how much of their current owner housing to keep, how much to consume, and how much to leave as bequests.
-
-There is one consumption good and two housing segments. A household can rent housing services in the rental segment, denoted $R$, or occupy housing in the owner segment, denoted $O$. The two segments differ in the size menus they provide. Let
+\textbf{Agents.} The economy is populated by two overlapping generations of households. There is a mass $\bar M>0$ of potential young households, indexed by $i$ and heterogeneous in type
 \[
-\HH^R=\{h:0<h\le \bar h^R\},
-\qquad
-\HH^O=\{h:0<h\le \bar h^O\},
+i=(y_i,a_i,B_i)\sim G_Y,
 \]
-with
-\[
-0<\bar h^R<\bar h^O.
-\]
-The caps are the model's representation of a fact about housing stocks rather than about prices: large family-sized units exist mainly in the owner segment, so a household that wants substantially more space than $\bar h^R$ must buy it. Housing services are divisible within each segment, and $\bar h^R$, $\bar h^O$ are individual occupancy caps, not aggregate stocks; the aggregate stocks are determined below by inherited supply and construction.
+where $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is gross inheritance exposure. Young households are potential parents: they decide whether to enter the housing market and, inside it, how to live and how many children to have. Old households are incumbent owners, indexed by $j$ and distributed according to $F_O$, with nonhousing resources $m_j>0$ and a housing endowment $H_j^0>0$. They are past fertility and decide how much of their housing to keep.
 
-A renter pays flow rental cost $q^R h$. An owner pays flow user cost $q^O h$ and faces owner asset price $P^O$. The owner asset price is
-\begin{equation}
-P^O=\frac{q^O}{\rho_p},
-\qquad
-\rho_p=r+\delta^O+\tau^p,
-\label{eq:compact_owner_price}
-\end{equation}
-where $r$ is the interest rate, $\delta^O$ is owner-housing depreciation, and $\tau^p$ is a recurring property tax. For a fixed owner user cost $q^O$, a higher $\tau^p$ lowers the asset price and hence lowers the down payment required to buy a given amount of owner housing.
-
-Let $\bar H^R$ and $\bar H^O$ denote inherited rental and owner-segment stocks. New net construction in segment $m\in\{R,O\}$ is $I^m\ge0$, so total segment stocks are
-\begin{equation}
-H^m=\bar H^m+I^m,
-\qquad m\in\{R,O\}.
-\label{eq:compact_segment_stocks}
-\end{equation}
-Inherited owner-segment stock is consistent with old owner endowments. Let $H_{\mathrm{pass}}^O\ge0$ be owner-segment stock held by passive owners. Then
-\[
-\int H_j^0\,\dd F_O(j)+H_{\mathrm{pass}}^O=\bar H^O.
-\]
-The inherited rental stock is held by passive landlords. Passive housing income and fiscal accounts are rebated lump-sum according to the transfer rule.
-
-Construction uses the consumption good. Costs are
-\[
-\Phi^m(I^m;Z^m),
-\qquad
-\Phi_I^m(I^m;Z^m)>0,
-\qquad
-\Phi_{II}^m(I^m;Z^m)>0,
-\qquad m\in\{R,O\},
-\]
-where $Z^m$ shifts the ease of construction in segment $m$. Competitive construction implies, for interior construction,
-\begin{equation}
-q^R=\Phi_I^R(I^R;Z^R),
-\qquad
-q^O=\Phi_I^O(I^O;Z^O).
-\label{eq:compact_construction_focs}
-\end{equation}
-Housing payments are transfers across households, old owners, passive landlords, and fiscal accounts, and lump-sum rebates from these accounts are included in disposable resources. The only real resource cost of housing in the model is construction: expanding a segment costs $\Phi^m$, while reallocating the existing stock costs nothing. Units are chosen so that $q^m$ is both the flow user cost and the marginal resource cost of one unit of segment-$m$ services; the asset price $P^O$ in \eqref{eq:compact_owner_price} then only converts the owner flow cost into the purchase price that matters for down payments.\footnote{This flow normalization is substantive, not cosmetic. If construction costs were instead measured in asset units, competitive supply would satisfy $P^O=\Phi_I^O(I^O;Z^O)$, the private flow price $q^O=(r+\delta^O+\tau^p)\Phi_I^O$ would exceed the social flow cost $(r+\delta^O)\Phi_I^O$, and the property tax would distort owner construction. Under the flow normalization the property tax is purely capitalized into $P^O$: it relaxes down-payment constraints and creates incumbent assessment discounts, but it does not act as an excise tax on owner housing supply.}
-
-Let
-\[
-x=1-\tau^b
-\]
-denote the after-tax bequest share. The rule assigning estate-tax revenue or rebates is part of fiscal policy.
-The compact model keeps the bequest loop reduced form: old bequest expenditure is a current resource use, while young inheritance exposure $B_i$ is a primitive of the young type distribution. Thus the estate tax affects young pledgeable resources through $A_i(x)$, but it does not introduce an additional old-side bequest incentive in this compact version.
-
-\section{Young households}
-
-There is a mass $\bar M>0$ of potential young households. A potential young household has type
-\[
-i=(y_i,a_i,B_i),
-\]
-drawn from $G_Y$. Here $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is gross inheritance exposure. Effective liquid wealth for purchase constraints is
-\[
-A_i(x)=a_i+xB_i+T_i^b(x),
-\]
-where $T_i^b(x)$ is the estate-tax rebate or transfer assigned to type $i$.
-Wealth plays one role in the model: it backs a down payment. $A_i(x)$ enters the purchase constraints below but not the flow budget, so inheritances and the estate tax move a household's access to owner housing rather than its current consumption. This is the natural assignment for a young household whose wealth is small relative to lifetime income but decisive for mortgage qualification.
-
-Children require consumption and housing services. Let $C_i$ denote total nonhousing consumption expenditure. If a young household has fertility $n_i>0$, the adult residual consumption and housing services are
+\textbf{Preferences.} Children require both consumption goods and housing space: each child claims $\chi_i>0$ units of the consumption good and $\kappa>0$ units of housing services, and parents consume the residuals
 \[
 c_i=C_i-\chi_i n_i>0,
 \qquad
 s_i=h_i-\kappa n_i>0,
 \]
-where $\chi_i>0$ is the consumption requirement per child and $\kappa>0$ is the housing requirement per child. Preferences over total nonhousing consumption have the Stone--Geary form
-\[
-U_i^Y(C_i,h_i,n_i)
-=
-\log(C_i-\chi_i n_i)+\alpha\log(h_i-\kappa n_i)+\beta\log n_i,
-\qquad
-\alpha,\beta>0.
-\]
-Equivalently, using adult residual consumption $c_i=C_i-\chi_i n_i$, the branch problems below use the residual utility
+where $C_i$ is total nonhousing expenditure, $h_i$ is occupied housing, and $n_i$ is fertility. Young preferences are
 \[
 u_i^Y(c_i,h_i,n_i)=
-\log c_i+\alpha\log(h_i-\kappa n_i)+\beta\log n_i
+\log c_i+\alpha\log(h_i-\kappa n_i)+\beta\log n_i,
+\qquad \alpha,\beta>0.
 \]
-and put the child consumption requirement in the budget. The child-input structure is the engine of everything that follows: one more child means less space and less consumption left for the parents, so children compete with their parents for the same house and the same budget. Substituting $h_i=s_i+\kappa n_i$ into a branch budget with user cost $q^m$ makes the point in prices,
+One more child means less space and less consumption left for the parents: children compete with their parents for the same house and the same budget, and this is the engine of everything that follows. Substituting $h_i=s_i+\kappa n_i$ into a budget at housing user cost $q$ makes the point in prices,
 \[
-c_i+q^m s_i+\left(\chi_i+\kappa q^m\right)n_i=y_i:
+c_i+q s_i+\left(\chi_i+\kappa q\right)n_i=y_i:
 \]
-the full price of a child is its consumption requirement plus the market value of the space it occupies. When access constraints bind, the space component will be valued above the market price, and that is how housing scarcity reaches fertility. A useful benchmark is equal scaling, $\chi_i=\kappa q^m/\alpha$, under which one child uses consumption and housing in the same proportions as the adult residual Cobb--Douglas bundle in that branch.
-Because $\beta\log n_i$ implies $n_i>0$ for every entered household, the compact model studies the intensive margin of completed fertility, not childlessness.
+the full price of a child is its consumption requirement plus the market value of the space it occupies. When access to space is constrained, the space component will carry a premium, and that is how housing reaches fertility. A useful benchmark is equal scaling, $\chi_i=\kappa q/\alpha$, under which one child uses consumption and housing in the same proportions as the adult residual Cobb--Douglas bundle. Because $\beta\log n_i$ rules out $n_i=0$, every entered household has positive completed fertility: the model studies the intensive margin, not childlessness.
 
-Conditional on entry, household $i$ chooses tenure. The renter branch is
+Old preferences are
+\[
+u_j^O(c_j^O,h_j^O,e_j)
+=
+\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j),
+\qquad
+\gamma>0,
+\]
+over consumption, retained housing, and warm-glow bequest expenditure $e_j\ge0$, with $\mathcal B_j$ increasing and concave, possibly zero.
+
+\textbf{Housing.} There is a fixed aggregate stock $\bar H$ of divisible floorspace, measured in units of housing services. A household occupies floorspace in one of two tenure modes: renting, denoted $R$, or owning, denoted $O$. The modes offer different size menus,
+\[
+\HH^R=\{h:0<h\le \bar h^R\},
+\qquad
+\HH^O=\{h:0<h\le \bar h^O\},
+\qquad
+0<\bar h^R<\bar h^O.
+\]
+The caps represent a fact about housing stocks rather than prices: large family-sized units exist mainly as owner-occupied homes, so a household that wants substantially more space than $\bar h^R$ must buy it.\footnote{\citet{coven2024} encode the same fact as a minimum size for owned homes, with rentals available in any size; we cap rental size instead. Both formulations make family-sized space owner-concentrated; ours keeps the renter problem interior at the bottom.}
+
+All floorspace trades in a single market, as in \citet{coven2024}. The asset price of a unit of floorspace is $P$, and a no-arbitrage user-cost condition ties the rental rate to the price:
 \begin{equation}
-W_i^R(q^R)
+q=\rho_p P,
+\qquad
+\rho_p=r+\delta^O+\tau^p,
+\label{eq:compact_owner_price}
+\end{equation}
+where $r$ is the interest rate, $\delta^O$ is depreciation, and $\tau^p$ is a recurring property tax. Renters and owner-occupiers therefore face the same per-unit flow cost $q$; tenure matters through the size menus and through financing, not through the per-unit price of space. Note for later that, given $q$, a higher property tax lowers the asset price $P$ and hence the down payment needed to buy a given amount of space. Old owners hold part of the stock, $\int H_j^0\,\dd F_O(j)+H_{\mathrm{pass}}\le\bar H$, with the remainder $H_{\mathrm{pass}}\ge0$ held by passive landlords; housing payments are transfers across households, landlords, and fiscal accounts, closed by lump-sum rebates, and reallocating the existing stock costs no real resources.\footnote{Two supply extensions are deliberately left out of the baseline and developed later: a price-elastic aggregate supply curve as in \citet{coven2024}, and tenure-specific stocks with separate construction margins, under which the rental and owner user costs diverge endogenously. The local results below survive with $q$ replaced by the relevant tenure-specific user cost.}
+
+\textbf{Financing.} Buying floorspace requires financing. A young buyer can finance at most a share $\phi\in(0,1)$ of the purchase and faces a payment-to-income limit $\psi\in(0,1)$ on housing outlays. Pledgeable resources for the down payment are
+\[
+A_i(x)=a_i+xB_i+T_i^b(x),
+\qquad
+x=1-\tau^b,
+\]
+where $\tau^b$ is an estate tax and $T_i^b(x)$ is the estate-tax rebate assigned to type $i$. Wealth plays one role in the model: it backs a down payment. $A_i(x)$ enters the purchase constraints below but not the flow budget, so inheritances and the estate tax move a household's access to owner housing rather than its current consumption. The bequest loop is kept in reduced form: old bequest expenditure is a current resource use, while young inheritance exposure $B_i$ is a primitive of $G_Y$.
+
+\textbf{Property-tax assessments.} Market property-tax liability per unit of floorspace is $\tau^p P$. Old incumbents may instead be taxed on a protected assessment of their current house, $\tilde\tau_j\tilde P_j$ per unit, with the difference defining an incumbent discount introduced in Section 3.
+
+\textbf{Entry.} A potential young household can enter the housing market or take an outside option with value $\bar W^E$; entry is subject to Type-I extreme-value taste shocks with scale $\kappa_E>0$.
+
+\section{The young household's problem}
+
+Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho_p$ as given, chooses a tenure mode, and solves the corresponding problem. Writing utility over adult residual consumption, with the child consumption requirement in the budget, the renter problem is
+\begin{equation}
+W_i^R(q)
 =
 \max_{c_i,h_i,n_i}
 \left\{
@@ -169,7 +137,7 @@ W_i^R(q^R)
 \end{equation}
 subject to
 \begin{align}
-c_i+q^R h_i+\chi_i n_i&=y_i,
+c_i+q h_i+\chi_i n_i&=y_i,
 \label{eq:compact_renter_budget}\\
 h_i&\in\HH^R,
 \label{eq:compact_renter_menu}\\
@@ -177,9 +145,9 @@ h_i-\kappa n_i&>0.
 \notag
 \end{align}
 
-The owner branch is
+The owner problem has the same objective and budget but adds the financing constraints:
 \begin{equation}
-W_i^O(q^O,P^O,x)
+W_i^O(q,x)
 =
 \max_{c_i,h_i,n_i}
 \left\{
@@ -189,89 +157,74 @@ W_i^O(q^O,P^O,x)
 \end{equation}
 subject to
 \begin{align}
-c_i+q^O h_i+\chi_i n_i&=y_i,
+c_i+q h_i+\chi_i n_i&=y_i,
 \label{eq:compact_owner_budget_young}\\
-(1-\phi)P^O h_i&\le A_i(x),
-\qquad
-\phi\in(0,1),
+(1-\phi)P h_i&\le A_i(x),
 \label{eq:compact_owner_dp}\\
-q^O h_i&\le \psi y_i,
-\qquad
-\psi\in(0,1),
+q h_i&\le \psi y_i,
 \label{eq:compact_owner_pti}\\
 h_i&\in\HH^O,
 \notag\\
 h_i-\kappa n_i&>0.
 \notag
 \end{align}
-Using $P^O=q^O/\rho_p$, owner housing is bounded above by
+Using $P=q/\rho_p$, owner housing is bounded above by
 \[
 h_i\le
-H_i^O(q^O,\tau^p,x)
+H_i^O(q,\tau^p,x)
 =
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q^O},
-\frac{\psi y_i}{q^O}
+\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{\psi y_i}{q}
 \right\}.
 \]
-The renter analog is $H_i^R=\bar h^R$. We call $H_i^m$ the effective family-housing cap in branch $m$. The cap is the model's central reduced object, and it is built from primitives only: the size composition of the segment ($\bar h^m$), the household's pledgeable wealth relative to the required down-payment share ($A_i$, $1-\phi$), and its income relative to the payment limit ($\psi y_i$). A renter is capped by the stock; a would-be owner is capped by whichever of menu, collateral, or debt service is shortest. Every access friction in the model operates through $H_i^m$, and a policy matters for fertility only insofar as it moves the binding component of this cap.
+The renter analog is $H_i^R=\bar h^R$. We call $H_i^m$ the effective family-housing cap in mode $m$. The cap is the model's central reduced object, and it is built from primitives only: the size composition of the stock ($\bar h^m$), the household's pledgeable wealth relative to the required down-payment share ($A_i$, $1-\phi$), and its income relative to the payment limit ($\psi y_i$). A renter is capped by the stock; a would-be buyer is capped by whichever of menu, collateral, or debt service is shortest. Every access friction in the model operates through $H_i^m$, and a policy matters for fertility only insofar as it moves the binding component of this cap.
 
 The inside value of entry is
 \begin{equation}
-W_i^Y(q^R,q^O,P^O,x)
+W_i^Y(q,x)
 =
-\max\{W_i^R(q^R),W_i^O(q^O,P^O,x)\}.
+\max\{W_i^R(q),W_i^O(q,x)\}.
 \label{eq:compact_tenure_value}
 \end{equation}
-Let $o_i\in\{R,O\}$ denote an optimal tenure.\footnote{The hard cap in \eqref{eq:compact_renter_menu} is the simplest representation of size segmentation. A smooth alternative lets renters pay $R(h)=q^R h+\varrho(h)$ with $\varrho_h(h)\ge0$ for large units, so that large rentals exist but at a premium; every marginal condition below goes through with $q^R$ replaced by $R_h(h)$.}
+Let $o_i\in\{R,O\}$ denote an optimal tenure.\footnote{The hard cap in \eqref{eq:compact_renter_menu} is the simplest representation of size segmentation. A smooth alternative lets renters pay $R(h)=q h+\varrho(h)$ with $\varrho_h(h)\ge0$ for large units, so that large rentals exist but at a premium; every marginal condition below goes through with $q$ replaced by $R_h(h)$. Such a premium is also one natural source of a rent--own gap in per-unit costs, which Section 9 studies.}
 
-\section{Old households}
+\section{The old household's problem}
 
-Old households are indexed by $j$ and distributed according to $F_O$. An old household has income $m_j>0$, initial owner housing $H_j^0$, and a warm-glow bequest utility function $\mathcal B_j$, possibly equal to zero.
-
-Old household $j$ chooses consumption $c_j^O$, how much current owner housing to keep, $h_j^O$, and bequest expenditure $e_j\ge0$. Preferences are
+The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses a simple incumbent tax discount. Old owner $j$ pays property taxes on a protected assessment if she stays in her current house; the same unit taxed at current market value would carry tax cost $\tau^pP$ per unit, against the protected cost $\tilde\tau_j\tilde P_j$. The difference is the per-unit tax discount from staying put:
 \[
-u_j^O(c_j^O,h_j^O,e_j)
+L_j^\tau(q,\tau^p)
 =
-\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j),
+\tau^pP-\tilde\tau_j\tilde P_j,
 \qquad
-\gamma>0.
+0\le L_j^\tau(q,\tau^p)<q.
 \]
-
-The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses a simple incumbent tax discount. Old owner $j$ pays property taxes on a protected assessment if she stays in her current house. The same unit taxed at current market value would carry tax cost $\tau^pP^O$. The protected tax cost is $\tilde\tau_j\tilde P_j$. The difference is the per-unit tax discount from staying put:
-\[
-L_j^\tau(q^O,\tau^p)
-=
-\tau^pP^O-\tilde\tau_j\tilde P_j
-\ge0.
-\]
-Assume
-\[
-0\le L_j^\tau(q^O,\tau^p)<q^O.
-\]
-Thus old owner $j$ feels a private carrying cost $q^O-L_j^\tau$ per unit of housing that she keeps. Her budget is
+Old household $j$ chooses consumption, how much of her current housing to keep, and bequest expenditure, with the preferences of Section 1:
 \begin{equation}
+\max_{c_j^O,\,h_j^O,\,e_j}\;
+u_j^O(c_j^O,h_j^O,e_j)
+\quad\text{subject to}\quad
 c_j^O+e_j+
-\left[q^O-L_j^\tau(q^O,\tau^p)\right]h_j^O
+\left[q-L_j^\tau(q,\tau^p)\right]h_j^O
 =
-m_j+q^O H_j^0,
+m_j+q H_j^0,
 \qquad
 0\le h_j^O\le H_j^0.
 \label{eq:compact_old_budget}
 \end{equation}
-The budget makes the retention margin transparent: releasing a unit of housing earns its full market value $q^O$, while keeping it costs only $q^O-L_j^\tau$. The discount is a subsidy to staying put. It is not a preference, not old utility, and not a real resource saving---it is a tax rule attached to the incumbent's current house, and the planner below counts true old housing utility and true warm-glow bequest utility but does not count the discount as a social benefit. An old household that keeps a large house because she values it is using housing efficiently; an old household that keeps it because reassessment would be expensive is not.
+The budget makes the retention margin transparent: releasing a unit of housing earns its full market value $q$, while keeping it costs only $q-L_j^\tau$. The discount is a subsidy to staying put. It is not a preference, not old utility, and not a real resource saving---it is a tax rule attached to the incumbent's current house, and the planner below counts true old housing utility and true warm-glow bequest utility but does not count the discount as a social benefit. An old household that keeps a large house because she values it is using housing efficiently; an old household that keeps it because reassessment would be expensive is not.
 
 \section{Entry}
 
-A potential young household can enter the modeled housing market or take an outside option. The outside value is $\bar W^E$. Entry is subject to Type-I extreme-value taste shocks with scale $\kappa_E>0$. The probability that type $i$ enters is
+With the entry technology of Section 1, the probability that type $i$ enters the housing market is
 \begin{equation}
-\pi_i^E(q^R,q^O,P^O,x)
+\pi_i^E(q,x)
 =
 \frac{
-\exp\{W_i^Y(q^R,q^O,P^O,x)/\kappa_E\}
+\exp\{W_i^Y(q,x)/\kappa_E\}
 }{
-\exp\{W_i^Y(q^R,q^O,P^O,x)/\kappa_E\}
+\exp\{W_i^Y(q,x)/\kappa_E\}
 +
 \exp\{\bar W^E/\kappa_E\}
 }.
@@ -279,58 +232,46 @@ A potential young household can enter the modeled housing market or take an outs
 \end{equation}
 The endogenous measure of young entrants is
 \[
-\dd F_Y^E(i;q^R,q^O,P^O,x)
+\dd F_Y^E(i;q,x)
 =
-\bar M\,\pi_i^E(q^R,q^O,P^O,x)\,\dd G_Y(i).
+\bar M\,\pi_i^E(q,x)\,\dd G_Y(i).
 \]
 The limit $\kappa_E\downarrow0$ gives deterministic entry. Conditional on entry, the household chooses tenure according to \eqref{eq:compact_tenure_value}.
 
 \section{Competitive equilibrium}
 
-The equilibrium object is aggregate market clearing. Households take prices as given, choose tenure and housing, and their choices aggregate into segment demands; construction and inherited stocks determine segment supplies. There is no pairwise assignment of old units to young households: a price in each segment equates total demand to total supply, and nothing in that condition asks whether the marginal family-sized unit is held by the household that values it most. That question is deferred to the efficiency analysis below.
+The equilibrium object is aggregate market clearing. Households take the user cost as given, choose tenure and housing, and their choices aggregate into demand for floorspace; the stock is fixed. There is no pairwise assignment of old units to young households: one price equates total demand to the stock, and nothing in that condition asks whether the marginal family-sized unit is held by the household that values it most. That question is deferred to the efficiency analysis below.
 
-Given policies $(\tau^p,x)$, construction shifters $(Z^R,Z^O)$, inherited stocks $(\bar H^R,\bar H^O)$, and transfer rules, aggregate rental demand at candidate prices is
+Given policies $(\tau^p,x)$, the stock $\bar H$, and transfer rules, aggregate floorspace demand at a candidate user cost $q$ adds renters, young owners, and old incumbents:
 \[
-H^{R,D}
+H^{D}(q,x)
 =
-\bar M\int \pi_i^E\1\{o_i=R\}h_i^R\,\dd G_Y(i),
-\]
-and aggregate owner-segment demand is
-\[
-H^{O,D}
-=
-\bar M\int \pi_i^E\1\{o_i=O\}h_i^O\,\dd G_Y(i)
+\bar M\int \pi_i^E
+\left[
+\1\{o_i=R\}h_i^R+\1\{o_i=O\}h_i^O
+\right]\dd G_Y(i)
 +
 \int h_j^O\,\dd F_O(j).
 \]
-The corresponding segment supplies are
-\[
-H^{R,S}=\bar H^R+I^R,
-\qquad
-H^{O,S}=\bar H^O+I^O,
-\]
-with construction governed by the marginal cost conditions in \eqref{eq:compact_construction_focs}.
+Tenure determines which menu and which financing constraints apply to a household, not which market it buys space in: all of this demand falls on the same stock.
 
 \begin{definition}[Competitive equilibrium]
-Given $(\tau^p,x,Z^R,Z^O,\bar H^R,\bar H^O)$, a competitive equilibrium consists of user costs $(q^R,q^O)$, owner asset price $P^O$, construction $(I^R,I^O)$, segment stocks $(H^R,H^O)$, young branch allocations, tenure choices, entry probabilities, old allocations, and fiscal transfers such that:
+Given $(\tau^p,x,\bar H)$, a competitive equilibrium consists of a user cost $q$, an asset price $P$, young branch allocations, tenure choices, entry probabilities, old allocations, and fiscal transfers such that:
 \begin{enumerate}
 \item conditional on entry, young households solve \eqref{eq:compact_renter_problem} and \eqref{eq:compact_owner_problem_young}, then choose tenure by \eqref{eq:compact_tenure_value};
 \item old households solve \eqref{eq:compact_old_budget};
 \item entry is given by \eqref{eq:compact_entry_prob};
-\item the owner asset price satisfies \eqref{eq:compact_owner_price};
-\item segment stocks satisfy \eqref{eq:compact_segment_stocks} and competitive construction satisfies \eqref{eq:compact_construction_focs};
-\item aggregate rental and owner-segment markets clear,
-\begin{align}
-H^{R,D}&=H^{R,S}=\bar H^R+I^R,
-\label{eq:compact_rental_clearing}\\
-H^{O,D}&=H^{O,S}=\bar H^O+I^O;
-\label{eq:compact_owner_clearing}
-\end{align}
+\item the asset price satisfies the no-arbitrage condition \eqref{eq:compact_owner_price};
+\item the floorspace market clears,
+\begin{equation}
+H^{D}(q,x)=\bar H;
+\label{eq:compact_floorspace_clearing}
+\end{equation}
 \item passive housing-income, property-tax, estate-tax, and policy-instrument accounts are closed by lump-sum transfers.
 \end{enumerate}
 \end{definition}
 
-Let $\Xi^\Pi\ge0$ denote real resource costs of policy instruments. The transfer rule is chosen so that, after summing household budgets and using \eqref{eq:compact_rental_clearing}--\eqref{eq:compact_owner_clearing}, the aggregate goods constraint is
+Let $\Xi^\Pi\ge0$ denote real resource costs of policy instruments. The transfer rule is chosen so that, after summing household budgets and using \eqref{eq:compact_floorspace_clearing}, the aggregate goods constraint is
 \begin{align*}
 &\bar M\int
 \pi_i^E
@@ -343,11 +284,10 @@ Let $\Xi^\Pi\ge0$ denote real resource costs of policy instruments. The transfer
 &\qquad
 +
 \int(c_j^O+e_j-m_j)\,\dd F_O(j)
-+
-\Phi^R(I^R;Z^R)+\Phi^O(I^O;Z^O)+\Xi^\Pi
++\Xi^\Pi
 \le0.
 \end{align*}
-Housing quantities are disciplined separately by segment feasibility. The goods constraint charges only net construction costs, and the old endowment term $q^O H_j^0$ is a claim on the inherited owner stock rather than new output.
+Housing quantities are disciplined separately by floorspace feasibility: housing payments are transfers that net out against rebates, and the old endowment term $q H_j^0$ is a claim on the existing stock rather than new output. Housing in this baseline is a pure allocation problem.
 
 Aggregate fertility is
 \[
@@ -361,7 +301,7 @@ N
 
 \section{Constrained planner}
 
-The planner exists to answer one question: which of the constraints young families face are real scarcity, and which are financing arrangements that a different institutional design could undo? To make that distinction meaningful, the planner is given the economy's real limits and denied nothing else. It has the same preferences, type distributions, entry technology, inherited segment stocks, construction technologies, and rental-owner size menus as the competitive economy. The planner chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and bequests, net construction, and policy instruments. The planner respects segment feasibility and the rental and owner menus.
+The planner exists to answer one question: which of the constraints young families face are real scarcity, and which are financing arrangements that a different institutional design could undo? To make that distinction meaningful, the planner is given the economy's real limits and denied nothing else. It has the same preferences, type distributions, entry technology, housing stock, and tenure size menus as the competitive economy. The planner chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and bequests, and policy instruments. The planner respects floorspace feasibility and the rental and owner menus.
 
 The planner counts true old housing utility and true warm-glow bequest utility. It does not count $L_j^\tau$ as utility or as a resource saving. The planner also cannot relax a down-payment or payment-to-income constraint merely with a notional transfer unless that transfer, payment subsidy, credit guarantee, or contract intervention is in the feasible instrument set and its real cost is included in $\Xi^\Pi$.
 
@@ -409,23 +349,23 @@ The planner solves
 \omega_j^O u_j^O(c_j^O,h_j^O,e_j)\,\dd F_O(j)
 \label{eq:compact_planner_problem}
 \end{align}
-subject to segment feasibility,
-\begin{align*}
-\bar M\int \pi_i^P\1\{o_i^P=R\}h_i\,\dd G_Y(i)&\le \bar H^R+I^R,
-\\
-\bar M\int \pi_i^P\1\{o_i^P=O\}h_i\,\dd G_Y(i)+\int h_j^O\,\dd F_O(j)&\le \bar H^O+I^O,
-\end{align*}
+subject to floorspace feasibility,
+\[
+\bar M\int \pi_i^P
+\left[\1\{o_i^P=R\}+\1\{o_i^P=O\}\right]h_i\,\dd G_Y(i)
++\int h_j^O\,\dd F_O(j)\le \bar H,
+\]
 menu feasibility,
 \[
 h_i\in\HH^R\text{ if }o_i^P=R,
 \qquad
 h_i\in\HH^O\text{ if }o_i^P=O,
 \]
-financial implementation, and goods feasibility. If the planner assigns type $i$ to the owner segment and does not use an instrument that relaxes owner financial access for that type, then the assignment must also satisfy
+financial implementation, and goods feasibility. If the planner assigns type $i$ to the owner mode and does not use an instrument that relaxes owner financial access for that type, then the assignment must also satisfy
 \[
-(1-\phi)P^O h_i\le A_i(x),
+(1-\phi)P h_i\le A_i(x),
 \qquad
-q^O h_i\le \psi y_i.
+q h_i\le \psi y_i.
 \]
 If a down-payment subsidy, credit guarantee, payment subsidy, or contract intervention relaxes these constraints, the instrument must be feasible and its real resource cost is included in $\Xi^\Pi$. Goods feasibility is
 \begin{align*}
@@ -436,31 +376,24 @@ If a down-payment subsidy, credit guarantee, payment subsidy, or contract interv
 &\qquad
 +
 \int(c_j^O+e_j-m_j)\,\dd F_O(j)
-+
-\Phi^R(I^R;Z^R)+\Phi^O(I^O;Z^O)+\Xi^\Pi
++\Xi^\Pi
 \le0.
 \end{align*}
 
-Let $\Lambda$ be the multiplier on goods feasibility. Let $\Lambda Q^R$ and $\Lambda Q^O$ be the multipliers on rental and owner segment feasibility. For a fixed tenure assignment and active set, and away from menu corners, an interior planner allocation satisfies
+Let $\Lambda$ be the multiplier on goods feasibility and $\Lambda Q$ the multiplier on floorspace feasibility, so that $Q$ is the planner's scarcity price of space in consumption goods. For a fixed tenure assignment and active set, and away from menu corners, an interior planner allocation satisfies
 \begin{align*}
-\frac{u^Y_{h,i}}{u^Y_{c,i}}&=Q^R
-&&\text{for renter assignments},
+\frac{u^Y_{h,i}}{u^Y_{c,i}}&=Q
+&&\text{for young households},
 \\
-\frac{u^Y_{h,i}}{u^Y_{c,i}}&=Q^O
-&&\text{for young owner assignments},
-\\
-\frac{u^O_{h,j}}{u^O_{c,j}}&=Q^O
+\frac{u^O_{h,j}}{u^O_{c,j}}&=Q
 &&\text{for old owner housing},
 \\
-Q^R&=\Phi_I^R(I^R;Z^R),
-\\
-Q^O&=\Phi_I^O(I^O;Z^O),
-\\
-\frac{\beta c_i}{n_i}+\nu_i^g&=\chi_i+\kappa Q^{o_i^P},
+\frac{\beta c_i}{n_i}+\nu_i^g&=\chi_i+\kappa Q,
 \\
 \frac{\mathcal B_j'(e_j)}{u^O_{c,j}}&=1
 \qquad \text{if }e_j>0.
 \end{align*}
+The planner equalizes every household's housing-consumption tradeoff to the common scarcity price of space, prices children at $\chi_i+\kappa Q$, and respects the bequest motive.
 The term $\nu_i^g$ is the goods-equivalent social value of a marginal birth beyond parental utility. If $\mathcal G_i\equiv0$, then $\nu_i^g=0$.
 Endogenous logit entry affects the levels of the first-order conditions through a common factor, but that factor cancels from the housing-consumption and fertility ratios displayed here.
 
@@ -472,7 +405,7 @@ For a renter, let $\lambda_i^R$ be the multiplier on \eqref{eq:compact_renter_bu
 \begin{align}
 \frac{1}{c_i^R}&=\lambda_i^R,
 \notag\\
-\frac{\alpha}{h_i^R-\kappa n_i^R}&=\lambda_i^R q^R+\theta_i^R,
+\frac{\alpha}{h_i^R-\kappa n_i^R}&=\lambda_i^R q+\theta_i^R,
 \notag\\
 \frac{\beta}{n_i^R}&=\lambda_i^R\chi_i+\frac{\alpha\kappa}{h_i^R-\kappa n_i^R}.
 \label{eq:compact_renter_foc_n}
@@ -485,10 +418,10 @@ MV_i^R
 =
 \frac{\alpha c_i^R}{h_i^R-\kappa n_i^R}
 =
-q^R+\zeta_i^R.
+q+\zeta_i^R.
 \label{eq:compact_renter_mv}
 \end{equation}
-A renter against the size cap values one more unit of space above the rent it would command, and the gap is not an abstract multiplier: it is computable from the observed bundle as $\zeta_i^R=\alpha c_i^R/s_i^R-q^R$, the household's housing-to-consumption tradeoff in excess of the market rent. An unconstrained renter has $\zeta_i^R=0$.
+A renter against the size cap values one more unit of space above the rent it would command, and the gap is not an abstract multiplier: it is computable from the observed bundle as $\zeta_i^R=\alpha c_i^R/s_i^R-q$, the household's housing-to-consumption tradeoff in excess of the market rent. An unconstrained renter has $\zeta_i^R=0$.
 
 For a young owner, let $\lambda_i^O$ be the multiplier on \eqref{eq:compact_owner_budget_young}, $\mu_i\ge0$ the multiplier on the down-payment constraint \eqref{eq:compact_owner_dp}, $\eta_i\ge0$ the multiplier on the payment-to-income constraint \eqref{eq:compact_owner_pti}, and $\theta_i^O\ge0$ the multiplier on the owner menu cap $h_i\le\bar h^O$. At an interior allocation with respect to consumption and fertility,
 \begin{align}
@@ -496,9 +429,9 @@ For a young owner, let $\lambda_i^O$ be the multiplier on \eqref{eq:compact_owne
 \notag\\
 \frac{\alpha}{h_i^O-\kappa n_i^O}
 &=
-\lambda_i^O q^O+
-\mu_i(1-\phi)P^O+
-\eta_i q^O+
+\lambda_i^O q+
+\mu_i(1-\phi)P+
+\eta_i q+
 \theta_i^O,
 \notag\\
 \frac{\beta}{n_i^O}
@@ -510,13 +443,13 @@ The same conversion for the owner collects the three access constraints, each pr
 \[
 \zeta_i^O
 =
-\underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P^O+
-\frac{\eta_i}{\lambda_i^O}q^O}_{\zeta_i^{O,F}\text{, financial component}}
+\underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P+
+\frac{\eta_i}{\lambda_i^O}q}_{\zeta_i^{O,F}\text{, financial component}}
 +
 \underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{owner-menu component}}
 \ge0.
 \]
-The first term is the collateral margin: it is positive when the household's pledgeable wealth $A_i(x)$ cannot cover the down payment $(1-\phi)P^O$ on a larger unit. The second is the debt-service margin: positive when the payment limit $\psi y_i$ binds. The third is the owner-segment size menu. If the owner menu cap does not bind, then $\theta_i^O=0$ and $\zeta_i^O=\zeta_i^{O,F}$: the household is constrained by finance, not by the stock. The young owner's marginal value of owner housing is
+The first term is the collateral margin: it is positive when the household's pledgeable wealth $A_i(x)$ cannot cover the down payment $(1-\phi)P$ on a larger unit. The second is the debt-service margin: positive when the payment limit $\psi y_i$ binds. The third is the owner size menu. If the owner menu cap does not bind, then $\theta_i^O=0$ and $\zeta_i^O=\zeta_i^{O,F}$: the household is constrained by finance, not by the stock. The young owner's marginal value of owner housing is
 \begin{equation}
 MV_i^O
 \equiv
@@ -524,7 +457,7 @@ MV_i^O
 =
 \frac{\alpha c_i^O}{h_i^O-\kappa n_i^O}
 =
-q^O+\zeta_i^O.
+q+\zeta_i^O.
 \label{eq:compact_owner_mv}
 \end{equation}
 
@@ -536,7 +469,7 @@ MV_j^O
 =
 \frac{\gamma c_j^O}{h_j^O}
 =
-q^O-L_j^\tau(q^O,\tau^p).
+q-L_j^\tau(q,\tau^p).
 \label{eq:compact_old_mv}
 \end{equation}
 The old owner's valuation sits \emph{below} the market price by exactly the tax discount: she keeps marginal space that she values at less than the market would pay for it, because staying is subsidized. If bequests are interior, then
@@ -552,13 +485,13 @@ Fix an entered young household and its optimal tenure branch. If the household r
 \[
 \frac{\beta c_i^R}{n_i^R}
 =
-\chi_i+\kappa(q^R+\zeta_i^R).
+\chi_i+\kappa(q+\zeta_i^R).
 \]
 If the household owns, then
 \[
 \frac{\beta c_i^O}{n_i^O}
 =
-\chi_i+\kappa(q^O+\zeta_i^O).
+\chi_i+\kappa(q+\zeta_i^O).
 \]
 Thus rental size limits and owner access constraints enter fertility through the housing services required per child.
 \end{proposition}
@@ -567,52 +500,52 @@ Thus rental size limits and owner access constraints enter fertility through the
 For renters, multiply \eqref{eq:compact_renter_foc_n} by $1/\lambda_i^R=c_i^R$ and use \eqref{eq:compact_renter_mv}. For owners, multiply \eqref{eq:compact_owner_foc_n} by $1/\lambda_i^O=c_i^O$ and use \eqref{eq:compact_owner_mv}.
 \end{proof}
 
-The proposition says that a child's space requirement is priced at the household's \emph{own} shadow value of space, not at the market price. Recall from Section 2 that the full price of a child in an unconstrained branch is $\chi_i+\kappa q^m$. For a constrained household it is $\chi_i+\kappa(q^m+\zeta_i^m)$: children become more expensive exactly where family-sized space is hard to reach, even with market prices unchanged. This is the entire transmission channel from housing institutions to fertility, and it runs through one number per household.
+The proposition says that a child's space requirement is priced at the household's \emph{own} shadow value of space, not at the market price. Recall from Section 1 that the full price of a child in an unconstrained branch is $\chi_i+\kappa q$. For a constrained household it is $\chi_i+\kappa(q+\zeta_i^m)$: children become more expensive exactly where family-sized space is hard to reach, even with market prices unchanged. This is the entire transmission channel from housing institutions to fertility, and it runs through one number per household.
 
 If no access or menu constraint binds in the relevant tenure branch, the corresponding access value is zero. For example, an unconstrained young owner satisfies
 \begin{align*}
 c_i^u&=\frac{y_i}{1+\alpha+\beta},
 \\
-n_i^u&=\frac{\beta y_i}{(1+\alpha+\beta)(\chi_i+\kappa q^O)},
+n_i^u&=\frac{\beta y_i}{(1+\alpha+\beta)(\chi_i+\kappa q)},
 \\
-h_i^u&=\frac{\alpha y_i}{(1+\alpha+\beta)q^O}
+h_i^u&=\frac{\alpha y_i}{(1+\alpha+\beta)q}
 +
-\kappa\frac{\beta y_i}{(1+\alpha+\beta)(\chi_i+\kappa q^O)}.
+\kappa\frac{\beta y_i}{(1+\alpha+\beta)(\chi_i+\kappa q)}.
 \end{align*}
-The renter analog replaces $q^O$ by $q^R$ and is feasible only if $h_i^u\le\bar h^R$.
+The renter analog has the same closed form and is feasible only if $h_i^u\le\bar h^R$.
 
 \section{Efficiency}
 
-The efficiency question is whether the competitive allocation that clears the aggregate housing markets also solves the planner's allocation problem. Market clearing alone is not enough. In equilibrium, prices make aggregate rental and owner-segment demand equal aggregate supply. Efficiency requires, in addition, that the households who receive the marginal housing units are the households whose marginal values match the social marginal cost of those units.
+The efficiency question is whether the competitive allocation that clears the floorspace market also solves the planner's allocation problem. Market clearing alone is not enough. In equilibrium, the price makes aggregate demand equal the stock. Efficiency requires, in addition, that the households who hold the marginal units of space are the households whose marginal values match its scarcity cost.
 
 \begin{proposition}[Planner-equilibrium comparison]
-Consider an interior competitive equilibrium and a planner with the same preferences, construction technologies, inherited segment stocks, and rental-owner size menus. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Suppose also that down-payment and payment-to-income constraints are private implementation constraints that the planner can relax with financing instruments whose marginal real resource cost is zero at the allocation. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation satisfies the planner's conditional housing, fertility, and construction first-order conditions only if the financial access gap is zero for entered young owners,
+Consider an interior competitive equilibrium and a planner with the same preferences, housing stock, and tenure size menus. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Suppose also that down-payment and payment-to-income constraints are private implementation constraints that the planner can relax with financing instruments whose marginal real resource cost is zero at the allocation. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation satisfies the planner's conditional housing and fertility first-order conditions only if the financial access gap is zero for entered young owners,
 \[
 \zeta_i^{O,F}=0,
 \]
 and the old incumbent-tax-discount gap is zero,
 \[
-L_j^\tau(q^O,\tau^p)=0
+L_j^\tau(q,\tau^p)=0
 \]
 for old owners at an interior choice of current housing to keep.
 When these conditions fail, the competitive allocation differs from the planner's allocation in the following directions:
 \[
-MV_i^O=q^O+\zeta_i^{O,F}>q^O=Q^O
+MV_i^O=q+\zeta_i^{O,F}>q=Q
 \]
 for a young owner constrained by down-payment or payment-to-income requirements that the planner can relax with feasible instruments, and
 \[
-MV_j^O=q^O-L_j^\tau(q^O,\tau^p)<q^O=Q^O
+MV_j^O=q-L_j^\tau(q,\tau^p)<q=Q
 \]
-for an old owner whose current house carries an incumbent tax discount. Conversely, if these implementation-relevant gaps are zero for all relevant households, then, conditional on entry, tenure assignments, and real menu constraints, the competitive allocation satisfies the planner's conditional housing, fertility, and construction first-order conditions for suitable Pareto weights.
+for an old owner whose current house carries an incumbent tax discount. Conversely, if these implementation-relevant gaps are zero for all relevant households, then, conditional on entry, tenure assignments, and real menu constraints, the competitive allocation satisfies the planner's conditional housing and fertility first-order conditions for suitable Pareto weights.
 \end{proposition}
 
 \begin{proof}
-Aggregate market clearing and competitive construction imply $Q^R=q^R=\Phi_I^R(I^R;Z^R)$ and $Q^O=q^O=\Phi_I^O(I^O;Z^O)$ at an interior allocation. The planner's conditional housing rules therefore require young renters away from rental-menu corners to satisfy $MV_i^R=q^R$, young owners away from owner-menu corners to satisfy $MV_i^O=q^O$, and old owners to satisfy $MV_j^O=q^O$. The competitive marginal conditions are \eqref{eq:compact_renter_mv}, \eqref{eq:compact_owner_mv}, and \eqref{eq:compact_old_mv}. Comparing these conditions gives the gaps above. The fertility conditions follow from the housing requirement per child: when the relevant access gap is zero and $\nu_i^g=0$, the competitive fertility rules coincide with the planner's rules. Pareto weights can then be chosen to support the competitive consumption allocation. If an implementation-relevant gap is nonzero for a household with positive weight at an interior choice, the competitive allocation violates a necessary planner first-order condition.
+Evaluated at the equilibrium allocation, the planner's scarcity price of space equals the market user cost, $Q=q$: any household with an interior housing margin and no binding access or menu constraint sets its housing-consumption tradeoff to $q$ in equilibrium and to $Q$ under the planner's rules, and such households exist generically at an interior equilibrium. The planner's conditional housing rules then require young renters away from rental-menu corners to satisfy $MV_i^R=q$, young owners away from owner-menu corners to satisfy $MV_i^O=q$, and old owners to satisfy $MV_j^O=q$. The competitive marginal conditions are \eqref{eq:compact_renter_mv}, \eqref{eq:compact_owner_mv}, and \eqref{eq:compact_old_mv}. Comparing these conditions gives the gaps above. The fertility conditions follow from the housing requirement per child: when the relevant access gap is zero and $\nu_i^g=0$, the competitive fertility rules coincide with the planner's rules. Pareto weights can then be chosen to support the competitive consumption allocation. If an implementation-relevant gap is nonzero for a household with positive weight at an interior choice, the competitive allocation violates a necessary planner first-order condition.
 \end{proof}
 
 If relaxing private financial constraints has positive marginal real resource cost, the relevant planner condition compares $\zeta_i^{O,F}$ with that cost rather than with zero. The proposition does not characterize the efficiency of the entry or tenure-assignment margins themselves; those margins are held fixed.
 
-The picture behind the proposition is a two-sided misallocation of the same units. On one side, a young household that cannot post a larger down payment values the marginal unit of owner space at $q^O+\zeta_i^{O,F}$, above its social cost; the owner segment clears, yet she cannot buy more of it. On the other side, an old incumbent whose current house carries a tax discount keeps the marginal unit while valuing it at $q^O-L_j^\tau$, below its social cost. Moving one unit from the second household to the first would raise welfare by $\zeta_i^{O,F}+L_j^\tau$, measured in consumption goods, and both pieces are recoverable from observed behavior: the young gap from bundles, via $\zeta_i^{O,F}=\alpha c_i^O/s_i^O-q^O$ when the menu cap is slack, and the old gap from assessment records, via market and protected tax liabilities. The old-side force amplifies the misallocation but is not needed for it: the young-access gap is positive whenever purchase constraints bind, with or without assessment protection.
+The picture behind the proposition is a two-sided misallocation of the same units. On one side, a young household that cannot post a larger down payment values the marginal unit of space at $q+\zeta_i^{O,F}$, above its social cost; the market clears, yet she cannot buy more of it. On the other side, an old incumbent whose current house carries a tax discount keeps the marginal unit while valuing it at $q-L_j^\tau$, below its social cost. Moving one unit from the second household to the first would raise welfare by $\zeta_i^{O,F}+L_j^\tau$, measured in consumption goods, and both pieces are recoverable from observed behavior: the young gap from bundles, via $\zeta_i^{O,F}=\alpha c_i^O/s_i^O-q$ when the menu cap is slack, and the old gap from assessment records, via market and protected tax liabilities. The old-side force amplifies the misallocation but is not needed for it: the young-access gap is positive whenever purchase constraints bind, with or without assessment protection.
 
 Two clarifications keep the result honest. First, old occupancy is not inefficient by itself. An old household that keeps a large house because she values it, or because she intends to leave it, is using housing efficiently; those motives are inside $u_j^O$ and the planner counts them. The inefficiency is only the part of retention supported by the tax discount. Second, not every binding constraint is an inefficiency. The size menus are real features of the housing stock: when a renter is pinned at $\bar h^R$, the planner---facing the same stock---is pinned with her, and the multiplier on the menu is the shadow value of a real constraint, not a market failure. Changing the menus requires construction, conversion, or reassignment instruments, whose resource costs belong in $\Xi^\Pi$. Down-payment and payment-to-income limits are different in kind: they are financing arrangements, and whether they are inefficiencies turns precisely on whether the planner's instrument set can reach them. That conditionality is the content of the proposition, not a qualification of it.
 
@@ -620,13 +553,13 @@ Two clarifications keep the result honest. First, old occupancy is not inefficie
 
 The fertility implication does not require a planner who directly values births. It follows from the private household problem. Children require consumption and housing services, so a constraint on family-capable housing can change fertility even when fertility enters only parental utility.
 
-It is useful to separate a branch-level comparative static from the equilibrium comparison. Fix a tenure branch and suppress the type index. Let $q$ be the branch user cost and let $H$ be the effective upper bound on occupied housing in that branch. For renters, $H=\bar h^R$. For young owners,
+It is useful to separate a branch-level comparative static from the equilibrium comparison. Fix a tenure branch and suppress the type index. Let $H$ be the effective upper bound on occupied housing in that branch; the user cost is $q$. For renters, $H=\bar h^R$. For young owners,
 \[
 H=
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q^O},
-\frac{\psi y_i}{q^O}
+\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{\psi y_i}{q}
 \right\}.
 \]
 Holding $(y,\chi,q,\alpha,\beta,\kappa)$ fixed, the branch problem is
@@ -713,27 +646,27 @@ This branch result maps into the model's access margins. A relaxation of the ren
 \[
 \frac{\partial H}{\partial A_i}
 =
-\frac{\rho_p}{(1-\phi)q^O}>0.
+\frac{\rho_p}{(1-\phi)q}>0.
 \]
 If the payment-to-income constraint is the unique binding component, then
 \[
 \frac{\partial H}{\partial \psi}
 =
-\frac{y_i}{q^O}>0.
+\frac{y_i}{q}>0.
 \]
 The derivative above signs the fertility response to these primitive cap relaxations locally, holding tenure, prices, income, and child costs fixed.
 
-The competitive-equilibrium/planner comparison is a different statement because prices, construction, consumption, tenure assignments, and entry can all change. In the competitive equilibrium, an entered young household in branch $m$ satisfies
+The competitive-equilibrium/planner comparison is a different statement because prices, consumption, tenure assignments, and entry can all change. In the competitive equilibrium, an entered young household in branch $m$ satisfies
 \[
 \frac{\beta c_i^{CE,m}}{n_i^{CE,m}}
 =
-\chi_i+\kappa(q^{CE,m}+\zeta_i^{CE,m}).
+\chi_i+\kappa(q^{CE}+\zeta_i^{CE,m}).
 \]
 A fertility-neutral planner has no direct social birth payoff. If the planner allocation for the same type and branch is interior with respect to any remaining access constraint, then
 \[
 \frac{\beta c_i^{P,m}}{n_i^{P,m}}
 =
-\chi_i+\kappa Q^{P,m}.
+\chi_i+\kappa Q^{P}.
 \]
 Hence
 \[
@@ -741,8 +674,8 @@ n_i^{P,m}>n_i^{CE,m}
 \quad\Longleftrightarrow\quad
 \frac{c_i^{P,m}}{c_i^{CE,m}}
 >
-\frac{\chi_i+\kappa Q^{P,m}}
-{\chi_i+\kappa(q^{CE,m}+\zeta_i^{CE,m})}.
+\frac{\chi_i+\kappa Q^{P}}
+{\chi_i+\kappa(q^{CE}+\zeta_i^{CE,m})}.
 \]
 Thus a fertility-neutral planner does not mechanically deliver higher fertility merely because the competitive allocation has a positive access value. The branch-level result gives a primitive sufficient condition for a signed fertility response when a policy or planner locally raises a type's effective housing cap holding the branch primitives fixed.
 
@@ -750,7 +683,7 @@ If the planner directly values births through $\mathcal G_i(n_i)$, the interior 
 \[
 \frac{\beta c_i^P}{n_i^P}+\nu_i^g
 =
-\chi_i+\kappa Q^{P,m}.
+\chi_i+\kappa Q^{P}.
 \]
 A positive $\nu_i^g$ is a separate fertility motive. Holding consumption, segment scarcity costs, and any remaining access constraints fixed, it raises desired fertility. In the full equilibrium, aggregate fertility also depends on prices, consumption, tenure assignments, and entry.
 
@@ -802,15 +735,15 @@ H_i^O
 =
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q^O},
-\frac{\psi y_i}{q^O}
+\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{\psi y_i}{q}
 \right\}.
 \]
 Let $m\in\{R,O\}$ denote the active tenure branch and let $\mathcal B_m(z)$ be the set of types for whom branch $m$ is uniquely active and $H_i^m(z)$ is the unique binding family-housing cap. Define the policy pass-through to the effective cap by
 \[
 P_i^m(z)=\frac{\partial H_i^m}{\partial z}.
 \]
-The pass-through encodes the second question above. Because the cap is a minimum, a policy that improves a slack component does nothing: a subsidy to units below the binding size does not relax a binding down-payment constraint, and a down-payment grant does nothing for a renter pinned by the rental menu. If a policy does not relax the binding component of $H_i^m$, then $P_i^m(z)=0$ for this family-space-cap mechanism. Policies that operate primarily through prices $q^m$ are a different exercise; they are outside this fixed-price formula, not evaluated by it.
+The pass-through encodes the second question above. Because the cap is a minimum, a policy that improves a slack component does nothing: a subsidy to units below the binding size does not relax a binding down-payment constraint, and a down-payment grant does nothing for a renter pinned by the rental menu. If a policy does not relax the binding component of $H_i^m$, then $P_i^m(z)=0$ for this family-space-cap mechanism. Policies that operate primarily through the price $q$ are a different exercise; they are outside this fixed-price formula, not evaluated by it.
 
 For capped types, the fixed-branch fertility response is
 \[
@@ -819,7 +752,7 @@ For capped types, the fixed-branch fertility response is
 \frac{
 \frac{\alpha\kappa}{(s_i^m)^2}
 -
-\frac{\chi_i q^m}{(c_i^m)^2}
+\frac{\chi_i q}{(c_i^m)^2}
 }{
 \frac{\beta}{(n_i^m)^2}
 +
@@ -828,7 +761,7 @@ For capped types, the fixed-branch fertility response is
 \frac{\alpha\kappa^2}{(s_i^m)^2}
 }.
 \]
-If $\chi_i\le \kappa q^m/\alpha$ and the cap binds strictly, then $\Psi_i^m>0$. The boundary case $\chi_i=\kappa q^m/\alpha$ is exact equal scaling.
+If $\chi_i\le \kappa q/\alpha$ and the cap binds strictly, then $\Psi_i^m>0$. The boundary case $\chi_i=\kappa q/\alpha$ is exact equal scaling.
 
 Let
 \[
@@ -860,7 +793,7 @@ where $\bar n_i^E=0$ under the baseline outside-option normalization. The first 
 Under equal scaling, the formula tightens further: the two margins are driven by one observable object.
 
 \begin{corollary}[Equal scaling and access gaps]
-Suppose $\chi_i=\kappa q^m/\alpha$ and the effective cap binds strictly. Then
+Suppose $\chi_i=\kappa q/\alpha$ and the effective cap binds strictly. Then
 \[
 \Psi_i^m
 =
@@ -871,7 +804,7 @@ Suppose $\chi_i=\kappa q^m/\alpha$ and the effective cap binds strictly. Then
 \Omega_i^m
 =
 \frac{
-\frac{\alpha}{s_i^m}+\frac{q^m}{c_i^m}
+\frac{\alpha}{s_i^m}+\frac{q}{c_i^m}
 }{
 \frac{\beta}{(n_i^m)^2}
 +
@@ -889,16 +822,16 @@ Under exact equal scaling, the numerator of $\Psi_i^m$ is
 \[
 \frac{\alpha\kappa}{(s_i^m)^2}
 -
-\frac{\chi_i q^m}{(c_i^m)^2}
+\frac{\chi_i q}{(c_i^m)^2}
 =
 \frac{\kappa}{\alpha}
-\left(\frac{\alpha}{s_i^m}-\frac{q^m}{c_i^m}\right)
-\left(\frac{\alpha}{s_i^m}+\frac{q^m}{c_i^m}\right).
+\left(\frac{\alpha}{s_i^m}-\frac{q}{c_i^m}\right)
+\left(\frac{\alpha}{s_i^m}+\frac{q}{c_i^m}\right).
 \]
-At a binding cap, $\alpha c_i^m/s_i^m=q^m+\zeta_i^m$, so the first parenthesis equals $\zeta_i^m/c_i^m$. Dividing by the positive denominator gives the expression above.
+At a binding cap, $\alpha c_i^m/s_i^m=q+\zeta_i^m$, so the first parenthesis equals $\zeta_i^m/c_i^m$. Dividing by the positive denominator gives the expression above.
 \end{proof}
 
-Thus the fixed-branch effect is exposure to a binding family-space constraint, times pass-through to the effective cap, times the fertility response, plus the induced entry response. The decomposition also holds tenure assignments fixed. With deterministic tenure choice, a policy that changes $W_i^O-W_i^R$ moves the indifference boundary $W_i^O=W_i^R$. If the type distribution has density near that boundary and fertility differs across branches, this tenure-switching margin is first order. The formula above is therefore the fixed-tenure component of the local fertility effect. The next subsection characterizes this margin. A full general-equilibrium policy experiment also changes prices, construction, active sets, old housing choices, fiscal transfers, and possibly the resource cost $\Xi^\Pi$.
+Thus the fixed-branch effect is exposure to a binding family-space constraint, times pass-through to the effective cap, times the fertility response, plus the induced entry response. The decomposition also holds tenure assignments fixed. With deterministic tenure choice, a policy that changes $W_i^O-W_i^R$ moves the indifference boundary $W_i^O=W_i^R$. If the type distribution has density near that boundary and fertility differs across branches, this tenure-switching margin is first order. The formula above is therefore the fixed-tenure component of the local fertility effect. The next subsection characterizes this margin. A full general-equilibrium policy experiment also changes the price, active sets, old housing choices, fiscal transfers, and possibly the resource cost $\Xi^\Pi$.
 
 \subsection{Tenure switching at the boundary}
 
@@ -906,9 +839,9 @@ Tenure switching is not a price or general-equilibrium effect. It is already pre
 \[
 W_i^Y=\max\{W_i^R,W_i^O\}.
 \]
-A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and their fertility---jump. How \emph{many} households sit near the boundary is a quantitative question about the type distribution. Which \emph{way} their fertility jumps is a theory question, and the answer turns out to depend on a single feature of the equilibrium: which tenure is the more expensive way to occupy a unit of space. The rent/own labels themselves are irrelevant, so we state the result for a cheap branch and an expensive branch and read the tenure cases off afterwards.
+A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. In the baseline, no-arbitrage makes them price it identically, $q^R=q^O=q$, and we show below that the jump is then exactly zero: the local policy formula of the previous subsection is complete. Tenure-cost wedges---a rental premium for large units as in the smooth menu formulation, landlord operating costs, tenure-specific tax treatment---reopen a gap between the per-unit costs of renting and owning, and then the jump is signed by which tenure is the expensive way to occupy space. We state the result for a cheap branch and an expensive branch, covering every case at once.
 
-Fix prices and suppress the type index. Let $A$ denote the cheaper branch and $B$ the more expensive branch, with
+Fix prices and suppress the type index. Let $A$ denote the cheaper branch and $B$ the more expensive branch, with tenure-mode user costs
 \[
 q^A<q^B.
 \]
@@ -1004,7 +937,7 @@ Thus $G_Y$ is strictly increasing in $X$ along a level set. Since $h_B>h_A$, we 
 
 The economics of the proposition fits in one sentence: at indifference, the only reason to pay more per unit of space is to get more space, so the marginal switcher into the expensive branch always trades consumption for room---and when children are at least as space-intensive as their parents' own bundle ($\chi\le\kappa q^A/\alpha$, the same condition as above, evaluated at the lower user cost), the extra room carries extra children.
 
-The rent-own cases now read off directly. If $q^O>q^R$, ownership is the expensive family-space branch, and an indifferent switcher into ownership upsizes and has $n_O>n_R$. If $q^O<q^R$, renting is the expensive branch and the inequality reverses: the marginal switcher into ownership moves to a cheaper, smaller unit, and $n_R>n_O$ under the analogous condition at the lower owner user cost. If $q^O=q^R$, the branches differ only through their effective caps, and an indifferent household has the same allocation in both: either both caps are slack, or the caps coincide at the binding allocation. Then $n_O=n_R$, there is no discrete jump at the boundary, and the fixed-tenure formula of the previous subsection is the complete fixed-price answer. Price segmentation between the tenures is what makes tenure switching a first-order margin at all.
+The rent-own cases now read off directly, with tenure-mode user costs $q^R$ and $q^O$ that may include wedges on top of the common floorspace cost $q$. \emph{Baseline ($q^O=q^R=q$):} the modes differ only through their effective caps, and an indifferent household has the same allocation in both---either both caps are slack, or the caps coincide at the binding allocation. Then $n_O=n_R$, there is no discrete jump at the boundary, and the fixed-tenure formula of the previous subsection is the complete fixed-price answer. \emph{Owning dearer ($q^O>q^R$):} ownership is the expensive family-space mode, and an indifferent switcher into ownership upsizes and has $n_O>n_R$. \emph{Renting dearer ($q^O<q^R$, for example a large-unit rental premium):} the inequality reverses; the marginal switcher into ownership moves to a cheaper, smaller unit, and $n_R>n_O$ under the analogous condition at the lower owner user cost. A cost wedge between the tenures is what makes tenure switching a first-order margin at all.
 
 This fixed-price accounting result is not a welfare result or a general-equilibrium comparative static. Let types live in a smooth finite-dimensional type space with continuous density $g(i)$, and suppose there are no mass points at the tenure boundary. Let
 \[
@@ -1035,12 +968,12 @@ where $\dd S(i)$ is surface measure on the indifference boundary. For cap-shifti
 
 \begin{corollary}[Owner-access policies]
 \label{cor:switch_owner_access}
-Consider an owner-access policy with $P_i^O(z)\ge0$ and $P_i^R(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonnegative, so the fixed-tenure owner-access formula is a lower bound for this fixed-price fertility channel. If $q^O=q^R$, the switching component is zero. If $q^O<q^R$, the switching component is nonpositive.
+Consider an owner-access policy with $P_i^O(z)\ge0$ and $P_i^R(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonnegative, so the fixed-tenure owner-access formula is a lower bound for this fixed-price fertility channel. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonpositive.
 \end{corollary}
 
 \begin{corollary}[Rental-menu policies]
 \label{cor:switch_rental_menu}
-Consider a rental-menu policy with $P_i^R(z)\ge0$ and $P_i^O(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonpositive: relaxing the rental cap raises fertility for constrained renters who remain renters, but it can also pull marginal owners back into renting. If $q^O=q^R$, the switching component is zero. If $q^O<q^R$, the switching component is nonnegative.
+Consider a rental-menu policy with $P_i^R(z)\ge0$ and $P_i^O(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonpositive: relaxing the rental cap raises fertility for constrained renters who remain renters, but it can also pull marginal owners back into renting. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonnegative.
 \end{corollary}
 
 \clearpage
@@ -1054,8 +987,8 @@ Barro, Robert J., and Gary S. Becker. 1988. ``A Reformulation of the Economic Th
 \bibitem[Barro and Becker(1989)]{barro1989}
 Barro, Robert J., and Gary S. Becker. 1989. ``Fertility Choice in a Model of Economic Growth.'' \emph{Econometrica} 57(2): 481--501.
 
-\bibitem[Coven et al.(2024)]{coven2024}
-Coven, Joshua, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye. 2024. ``Property Taxes and Housing Allocation Under Financial Constraints.'' Working paper / CESifo Working Paper No. 11203.
+\bibitem[Coven et al.(2025)]{coven2024}
+Coven, Joshua, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye. 2025. ``Property Taxes and Housing Allocation Under Financial Constraints.'' Working paper, June 2025. Earlier version: CESifo Working Paper No. 11203, 2024.
 
 \bibitem[Diamond(1965)]{diamond1965}
 Diamond, Peter A. 1965. ``National Debt in a Neoclassical Growth Model.'' \emph{American Economic Review} 55(5): 1126--1150.
