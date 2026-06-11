@@ -234,6 +234,9 @@ if the live model has changed.
   and saved diagnostics for nontrivial runs.
 - For empirical code, preserve sample definitions, weights, geography mappings,
   and event-time definitions. If any of these change, document the change.
+- For paper-facing writing (model sections, abstracts, slides), follow the style
+  guide at `docs/style/econ_writing_style_guide.md`: environment-first structure,
+  primitives before derived objects, one sentence of economics around every display.
 - For LaTeX, keep notation consistent with the model and avoid claims that are
   stronger than the evidence.
 - For paper-facing document edits, make the minimal required change. Do not
