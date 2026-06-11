@@ -1,0 +1,516 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{appendixnumberbeamer}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{block title}{fg=black,bg=white!82!black}
+\setbeamercolor{block body}{fg=black,bg=white!97!black}
+\setbeamercolor{alerted text}{fg=blue!55!black}
+\linespread{1.12}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\HH}{\mathcal H}
+\newcommand{\Mbar}{\bar M}
+
+\title{Intergenerational Housing Allocation and Fertility}
+\subtitle{Part I: Compact Analytical Model}
+\author{Tommaso De Santo}
+\date{June 2026}
+
+\begin{document}
+
+% --------------------------------------------------------------------
+\begin{frame}[plain,noframenumbering]
+\titlepage
+\vspace{-0.8em}
+\begin{center}
+\small
+Question: when does limited access to family-capable housing reduce fertility, and when is policy effective?
+\end{center}
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{1. Primitives and Timing}
+\small
+\textbf{Households.}
+A mass \(\Mbar\) of potential young households has type \(i\), drawn from \(G_Y\). A type carries income \(y_i\), pledgeable wealth \(a_i\), inheritance exposure \(B_i\), and child consumption cost \(\chi_i\). Old incumbent owners are indexed by \(j\), drawn from \(F_O\).
+
+\medskip
+\textbf{Timing for young households.}
+\begin{enumerate}
+  \item Decide whether to enter the modeled housing market.
+  \item Conditional on entry, solve renter and owner branch problems.
+  \item Choose tenure \(o_i\in\{R,O\}\), housing \(h_i\), residual adult consumption \(c_i\), and fertility \(n_i\).
+\end{enumerate}
+
+\medskip
+\textbf{Child inputs.}
+\[
+c_i=C_i-\chi_i n_i,\qquad s_i=h_i-\kappa n_i,
+\]
+\[
+u_i^Y(c_i,h_i,n_i)
+=
+\log c_i+\alpha\log(h_i-\kappa n_i)+\beta\log n_i.
+\]
+\(\alpha\) is the adult housing-services weight, \(\beta\) is the fertility weight, and \(\kappa\) is housing services per child.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{2. Housing Segments, Prices, and Supply}
+\footnotesize
+\textbf{Two housing segments.}
+\[
+\HH^R=\{h:0<h\le \bar h^R\},\qquad
+\HH^O=\{h:0<h\le \bar h^O\},\qquad
+0<\bar h^R<\bar h^O.
+\]
+\(\bar h^m\) is an individual occupancy cap. Aggregate stock is \(H^m\).
+
+\smallskip
+\textbf{Stocks and construction.}
+\[
+H^m=\bar H^m+I^m,\qquad
+q^m=\Phi_I^m(I^m;Z^m),\qquad m\in\{R,O\}.
+\]
+\(\bar H^m\) is inherited stock, \(I^m\) is net construction, \(\Phi^m\) is the flow resource cost, and \(Z^m\) shifts construction ease.
+
+\smallskip
+\textbf{Owner stock accounting.}
+\[
+\int H_j^0\,\dd F_O(j)+H_{\mathrm{pass}}^O=\bar H^O.
+\]
+Old owners enter with endowments \(H_j^0\); remaining owner stock is held by a passive account.
+
+\smallskip
+\textbf{Owner price.}
+\[
+P^O=\frac{q^O}{r+\delta^O+\tau^p}.
+\]
+\(q^O\) is the flow user cost; \(P^O\) is the asset price used in down-payment constraints. \(r\) is the interest rate, \(\delta^O\) depreciation, and \(\tau^p\) the property-tax rate.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{3. Young Household Problem}
+\small
+\textbf{Pledgeable resources.}
+\[
+x=1-\tau^b,\qquad A_i(x)=a_i+xB_i+T_i^b(x).
+\]
+\(A_i(x)\) enters purchase constraints, not the flow budget.
+
+\medskip
+\textbf{Renter branch.}
+\[
+W_i^R(q^R)=\max_{c,h,n} u_i^Y(c,h,n)
+\]
+\[
+c+q^R h+\chi_i n=y_i,\qquad h\le \bar h^R,\qquad h-\kappa n>0.
+\]
+
+\medskip
+\textbf{Owner branch.}
+\[
+W_i^O(q^O,P^O,x)=\max_{c,h,n} u_i^Y(c,h,n)
+\]
+\[
+c+q^O h+\chi_i n=y_i,\quad
+h\le \bar h^O,\quad
+(1-\phi)P^O h\le A_i(x),\quad
+q^O h\le \psi y_i.
+\]
+\(\phi\) is the financed share; \(\psi\) is the payment-to-income limit.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{4. Tenure, Entry, and Old Owners}
+\footnotesize
+\textbf{Tenure choice conditional on entry.}
+\[
+W_i^Y(q^R,q^O,P^O,x)=\max\{W_i^R(q^R),W_i^O(q^O,P^O,x)\}.
+\]
+
+\smallskip
+\textbf{Logit entry.}
+\[
+\pi_i^E
+=
+\frac{\exp\{W_i^Y/\kappa_E\}}
+{\exp\{W_i^Y/\kappa_E\}+\exp\{\bar W^E/\kappa_E\}}.
+\]
+\(\bar W^E\) is the outside option and \(\kappa_E\) is the entry taste-shock scale.
+
+\smallskip
+\textbf{Old incumbent owners.}
+Old owner \(j\) enters with owner housing endowment \(H_j^0\). If she keeps the current house, she pays tax on a protected assessment. The per-unit tax discount from staying put is
+\[
+L_j^\tau=\tau^pP^O-\tilde \tau_j\tilde P_j\ge0.
+\]
+Here \(\tau^pP^O\) is the tax cost at current market value and \(\tilde\tau_j\tilde P_j\) is the protected tax cost. Old owner \(j\) chooses how much current housing to keep, consumption, and bequest expenditure:
+\[
+\max_{c,h,e} u_j^O(c,h)+\mathcal B_j(e)
+\quad\text{s.t.}\quad
+c+e+(q^O-L_j^\tau)h=m_j+q^O H_j^0,\qquad 0\le h\le H_j^0.
+\]
+\(m_j\) is nonhousing resources. She feels carrying cost \(q^O-L_j^\tau\):
+\[
+MV_j^O=q^O-L_j^\tau.
+\]
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{5. Competitive Equilibrium}
+\footnotesize
+Given policies and stocks, an equilibrium is
+\[
+\left(q^R,q^O,P^O,I^R,I^O,\{\pi_i^E,o_i,c_i,h_i,n_i\}_i,\{c_j^O,h_j^O,e_j\}_j\right)
+\]
+such that:
+
+\smallskip
+\textbf{1. Household optimization.}
+Young households solve renter and owner branches, choose tenure by \(W_i^Y=\max\{W_i^R,W_i^O\}\), and enter with probability \(\pi_i^E\). Old owners choose consumption, bequests, and how much current housing to keep.
+
+\smallskip
+\textbf{2. Construction and asset pricing.}
+\[
+q^R=\Phi_I^R(I^R;Z^R),\qquad
+q^O=\Phi_I^O(I^O;Z^O),\qquad
+P^O=\frac{q^O}{r+\delta^O+\tau^p}.
+\]
+
+\smallskip
+\textbf{3. Segment clearing.}
+\[
+\Mbar\int \pi_i^E\1\{o_i=R\}h_i^R\,\dd G_Y(i)=\bar H^R+I^R,
+\]
+\[
+\Mbar\int \pi_i^E\1\{o_i=O\}h_i^O\,\dd G_Y(i)+\int h_j^O\,\dd F_O(j)=\bar H^O+I^O.
+\]
+
+\smallskip
+\textbf{4. Accounts.}
+Fiscal revenues, passive housing income, and policy-account costs are rebated through the transfer rules already embedded in \(A_i(x)\), \(y_i\), and old resources.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{6. Planner Problem}
+\footnotesize
+\textbf{Choices.}
+The planner chooses tenure assignments \(o_i^P\), young allocations \((c_i,h_i,n_i)\), entry values \(\pi_i^P\), old allocations \((c_j^O,h_j^O,e_j)\), construction \((I^R,I^O)\), and policy instruments.
+
+\smallskip
+\textbf{Segment feasibility.}
+\[
+\Mbar\int \pi_i^P\1\{o_i^P=R\}h_i\,\dd G_Y(i)\le \bar H^R+I^R,
+\]
+\[
+\Mbar\int \pi_i^P\1\{o_i^P=O\}h_i\,\dd G_Y(i)+\int h_j^O\,\dd F_O(j)\le \bar H^O+I^O.
+\]
+
+\smallskip
+\textbf{Goods feasibility.}
+\[
+\Mbar\int \pi_i^P(c_i+\chi_i n_i-y_i)\,\dd G_Y(i)
++\int(c_j^O+e_j-m_j)\,\dd F_O(j)
++\Phi^R+\Phi^O+\Xi^\Pi\le0.
+\]
+
+\smallskip
+\textbf{Implementation.}
+Menus \(h_i\in\HH^m\) are real constraints. Down-payment and payment-to-income constraints remain unless the planner uses feasible instruments whose resource costs enter \(\Xi^\Pi\).
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{7. Planner Marginal Conditions}
+\footnotesize
+\textbf{Segment shadow prices.}
+Let \(\Lambda Q^R\) and \(\Lambda Q^O\) be the multipliers on rental and owner segment feasibility; \(\Lambda\) is the goods multiplier.
+
+\smallskip
+\textbf{Interior allocation rules away from real menu corners.}
+\[
+\frac{u_{h,i}^Y}{u_{c,i}^Y}=Q^R
+\quad\text{for renter assignments},
+\qquad
+\frac{u_{h,i}^Y}{u_{c,i}^Y}=Q^O
+\quad\text{for young owner assignments},
+\]
+\[
+\frac{u_{h,j}^O}{u_{c,j}^O}=Q^O
+\quad\text{for old owner housing},
+\qquad
+Q^m=\Phi_I^m(I^m;Z^m).
+\]
+
+\smallskip
+\textbf{Fertility rule.}
+\[
+\frac{\beta c_i}{n_i}+\nu_i^g=\chi_i+\kappa Q^{o_i^P}.
+\]
+\(\nu_i^g\) is the goods-equivalent social value of births beyond parental utility; in the fertility-neutral planner, \(\nu_i^g=0\).
+
+\smallskip
+\textbf{Connection to CE prices.}
+At an interior competitive allocation with construction and segment clearing,
+\[
+Q^R=q^R,\qquad Q^O=q^O.
+\]
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{8. Where the CE Differs from the Planner}
+\footnotesize
+\textbf{Young owner financial constraints.}
+If down-payment or payment-to-income constraints bind, the competitive owner margin is
+\[
+MV_i^O=q^O+\zeta_i^{O,F},
+\qquad
+\zeta_i^{O,F}
+=
+\frac{\mu_i}{\lambda_i^O}(1-\phi)P^O
++
+\frac{\eta_i}{\lambda_i^O}q^O.
+\]
+\[
+\underbrace{MV_i^O}_{\text{young private value}}
+-
+\underbrace{Q^O}_{\text{planner scarcity cost}}
+=
+\underbrace{\zeta_i^{O,F}}_{\text{financial access gap}}
+\qquad (Q^O=q^O).
+\]
+\(\lambda_i^O\) is the owner budget multiplier; \(\mu_i\) and \(\eta_i\) are down-payment and payment-to-income multipliers.
+
+\smallskip
+\textbf{Old owners: incumbent tax discount.}
+\[
+MV_j^O=q^O-L_j^\tau,
+\qquad
+\underbrace{Q^O}_{\text{planner scarcity cost}}
+-
+\underbrace{MV_j^O}_{\text{old private value}}
+=
+\underbrace{L_j^\tau}_{\text{tax discount from staying put}}.
+\]
+
+\smallskip
+\textbf{Efficiency statement.}
+With zero marginal resource cost of relaxing DP/PTI, positive \(\zeta_i^{O,F}\) or \(L_j^\tau\) violates the planner's marginal conditions. With positive instrument cost, compare the gap to that cost.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{9. Fertility Effect of a Family-Space Cap}
+\footnotesize
+\textbf{Effective cap in each branch.}
+\[
+H_i^R=\bar h^R,\qquad
+H_i^O=\min\left\{
+\bar h^O,\,
+\frac{A_i(x)\rho_p}{(1-\phi)q^O},\,
+\frac{\psi y_i}{q^O}
+\right\},
+\qquad
+\rho_p=r+\delta^O+\tau^p.
+\]
+
+\smallskip
+\textbf{Within-branch response.}
+For a fixed tenure branch with user cost \(q\), effective cap \(H\), and residual consumption and housing \((c,s)\),
+\[
+\Psi_i^m
+\equiv
+\frac{\partial n_i^m}{\partial H_i^m}
+=
+\frac{\alpha\kappa/s^2-\chi_i q^m/c^2}
+{\beta/n^2+\chi_i^2/c^2+\alpha\kappa^2/s^2}.
+\]
+
+\smallskip
+\textbf{Sign.}
+If the child input bundle is not more consumption-intensive than the adult residual bundle,
+\[
+\chi_i\le \frac{\kappa q^m}{\alpha},
+\]
+then relaxing a strictly binding family-housing cap raises fertility within the fixed branch.
+\end{frame}
+
+% --------------------------------------------------------------------
+\begin{frame}{10. Local Policy Decomposition}
+\scriptsize
+\textbf{Objects.}
+For policy \(z\), let \(P_i^m=\partial H_i^m/\partial z\), \(\Theta_i^m=\lambda_i^m\zeta_i^m\), and \(\mathcal B_m\) be types whose chosen branch \(m\) has a binding effective cap.
+
+\smallskip
+\textbf{Fixed-price, fixed-tenure, fixed-active-set formula.}
+\[
+\begin{aligned}
+\left.\frac{\dd N}{\dd z}\right|_{q,o,\mathcal A}
+&=
+\Mbar\sum_m\int_{\mathcal B_m}
+\underbrace{\pi_i^E}_{\substack{\text{entered}\\ \text{mass}}}
+\underbrace{\Psi_i^m}_{\substack{\text{fertility}\\ \text{response}}}
+\underbrace{P_i^m}_{\substack{\text{policy pass-through}\\ \text{to }H_i^m}}
+\,\dd G_Y(i)
+\\
+&\quad+
+\Mbar\sum_m\int_{\mathcal B_m}
+\underbrace{(n_i^m-\bar n_i^E)}_{\substack{\text{births relative}\\ \text{to outside option}}}
+\underbrace{\frac{\pi_i^E(1-\pi_i^E)}{\kappa_E}}_{\substack{\text{entry}\\ \text{sensitivity}}}
+\underbrace{\Theta_i^m}_{\substack{\text{utility gain}\\ \text{from }H_i^m}}
+\underbrace{P_i^m}_{\substack{\text{policy pass-through}\\ \text{to }H_i^m}}
+\,\dd G_Y(i).
+\end{aligned}
+\]
+
+\smallskip
+\textbf{Reading it.}
+The first line is the intensive fertility response of already-entered constrained households. The second line is the entry response. Tenure switching, price feedback, construction responses, and resource costs \(\Xi^\Pi\) are outside this local formula.
+\end{frame}
+
+% --------------------------------------------------------------------
+\appendix
+
+\begin{frame}{Appendix: Branch Derivative}
+\small
+If \(0<H<h^u\), then \(h(H)=H\) and
+\[
+c(H)=y-qH-\chi n(H),
+\qquad
+s(H)=H-\kappa n(H).
+\]
+The constrained fertility condition is
+\[
+F(n,H)\equiv
+\frac{\beta}{n}
+-
+\frac{\chi}{c(H)}
+-
+\frac{\alpha\kappa}{s(H)}
+=0.
+\]
+\[
+F_n
+=
+-
+\left[
+\frac{\beta}{n^2}
++
+\frac{\chi^2}{c^2}
++
+\frac{\alpha\kappa^2}{s^2}
+\right]<0,
+\qquad
+F_H
+=
+\frac{\alpha\kappa}{s^2}
+-
+\frac{\chi q}{c^2}.
+\]
+\[
+\frac{\dd n}{\dd H}
+=
+-\frac{F_H}{F_n}
+=
+\frac{
+\frac{\alpha\kappa}{s^2}
+-
+\frac{\chi q}{c^2}
+}{
+\frac{\beta}{n^2}
++
+\frac{\chi^2}{c^2}
++
+\frac{\alpha\kappa^2}{s^2}
+}.
+\]
+\end{frame}
+
+\begin{frame}{Appendix: Equal Scaling and Access Gaps}
+\small
+At a binding cap, the household marginal value of housing is
+\[
+\frac{u_h}{u_c}
+=
+\frac{\alpha c_i^m}{s_i^m}
+=q^m+\zeta_i^m.
+\]
+Under exact equal scaling, \(\chi_i=\kappa q^m/\alpha\). The numerator of \(\Psi_i^m\) is
+\[
+\frac{\alpha\kappa}{(s_i^m)^2}
+-
+\frac{\chi_i q^m}{(c_i^m)^2}
+=
+\frac{\kappa}{\alpha}
+\left(
+\frac{\alpha}{s_i^m}-\frac{q^m}{c_i^m}
+\right)
+\left(
+\frac{\alpha}{s_i^m}+\frac{q^m}{c_i^m}
+\right).
+\]
+Since
+\[
+\frac{\alpha}{s_i^m}-\frac{q^m}{c_i^m}
+=
+\frac{\zeta_i^m}{c_i^m},
+\]
+\[
+\Psi_i^m
+=
+\frac{\kappa}{\alpha}
+\frac{\zeta_i^m}{c_i^m}
+\Omega_i^m,
+\qquad
+\Omega_i^m>0.
+\]
+\end{frame}
+
+\begin{frame}{Appendix: Planner Comparison}
+\small
+At an interior competitive allocation with construction,
+\[
+Q^R=q^R=\Phi_I^R(I^R;Z^R),
+\qquad
+Q^O=q^O=\Phi_I^O(I^O;Z^O).
+\]
+Planner housing rules require
+\[
+MV_i^R=q^R,
+\qquad
+MV_i^O=q^O,
+\qquad
+MV_j^O=q^O.
+\]
+Competitive marginal values are
+\[
+MV_i^R=q^R+\zeta_i^R,
+\qquad
+MV_i^O=q^O+\zeta_i^O,
+\qquad
+MV_j^O=q^O-L_j^\tau.
+\]
+\medskip
+When real menu corners are common to households and planner, the implementation-relevant young gap is the financial component:
+\[
+\zeta_i^{O,F}
+=
+\frac{\mu_i}{\lambda_i^O}(1-\phi)P^O
++
+\frac{\eta_i}{\lambda_i^O}q^O.
+\]
+If financial constraints are relaxable at zero marginal real resource cost, \(\zeta_i^{O,F}>0\) violates the planner's marginal condition.
+\end{frame}
+
+\end{document}
