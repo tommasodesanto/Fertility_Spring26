@@ -12,6 +12,8 @@
 \usepackage[round]{natbib}
 \usepackage{microtype}
 
+\graphicspath{{figures/}}
+
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{0.45em}
@@ -41,7 +43,7 @@
 \maketitle
 
 \begin{abstract}
-\noindent Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied stock, and buying owner housing requires a down payment and debt-service capacity that many young households do not have. This paper builds a stationary overlapping-generations model in which tenure governs the size menu and the financing constraints a household faces, while all floorspace clears in one market. Three results follow. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the stationary equilibrium clears the housing market and still misallocates the existing stock whenever financing constraints price young families out of owner housing while property-tax assessment discounts hold old incumbents in place; both gaps are measurable, one from household bundles and one from assessment records. Third, the fertility effect of a housing policy reduces to constrained exposure, pass-through to the binding cap, the household fertility response, an entry margin, and a tenure-switching margin that vanishes at tenure-cost parity and is otherwise signed. A quantitative lifecycle version maps the framework to U.S. tenure, fertility, and wealth moments and is used to design credit-relief, property-tax, and estate-tax experiments.
+\noindent Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied stock, and buying owner housing requires a down payment and debt-service capacity that many young households do not have. This paper builds a stationary overlapping-generations model in which tenure governs the size menu and the financing constraints a household faces, while all floorspace clears in one market. Three results follow. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the stationary equilibrium clears the housing market and still misallocates the existing stock whenever financing constraints price young families out of owner housing while property-tax assessment discounts hold old incumbents in place; both gaps are measurable, one from household bundles and one from assessment records. Third, the fertility effect of a housing policy reduces to constrained exposure, pass-through to the binding cap, the household fertility response, an entry margin, and a tenure-switching margin that vanishes at tenure-cost parity and is otherwise signed. A quantitative lifecycle version maps the framework to U.S. tenure, fertility, and wealth moments and is used to run proof-of-concept credit-relief, property-tax, and estate-tax experiments; the property-tax experiment reproduces the capitalization channel through which higher rates lower the asset price and relax down-payment constraints.
 \end{abstract}
 
 \vspace{0.5em}
@@ -63,7 +65,7 @@ The second result is an efficiency comparison. Market clearing is not allocative
 
 The third result is a policy decomposition. For a small housing policy, the fixed-price fertility effect is the mass of constrained households, times the policy's pass-through to the binding component of their cap, times their fertility response, plus an entry margin, plus a tenure-switching margin. The decomposition disciplines policy debates in two ways. Pass-through is to the \emph{binding} component: a subsidy aimed at a slack constraint moves nothing, so a down-payment grant does nothing for a household pinned by the rental menu, and a rental-size reform does nothing for a household pinned by collateral. And under a natural benchmark in which children use consumption and space in the same proportions as their parents, the fertility response is proportional to the same access gap $\zeta$ that measures misallocation---one statistic identifies both who is harmed and whose fertility responds. The switching margin, which exists because tenure is a discrete choice, is exactly zero in the baseline where both tenures price space at the same user cost, and is signed by which tenure is the expensive way to occupy space once tenure-cost wedges are introduced.
 
-The second half of the paper takes the framework to a quantitative lifecycle model. Households live through sixteen four-year periods, face persistent income risk, choose completed fertility with a childlessness margin, climb a discrete ladder of owner units or rent continuously below a size cap, and face the same financing constraints as in the analytical model---a financed-share limit on purchases and a payment-to-income screen---plus transaction costs on owner adjustment. All housing services clear in one market against an upward-sloping supply curve, the extension the analytical model defers, with the user cost tied to the asset price by the same no-arbitrage condition. The model is calibrated to U.S. lifecycle tenure, fertility, wealth, and housing moments, and it hosts three policy experiments suggested by the theory: a parent-targeted relaxation of the down-payment constraint, a revenue-recycled increase in the property tax that lowers the asset price young buyers must collateralize, and a bequest-tax wedge that operates on the intergenerational transmission of down payments. The quantitative section reports the model, the calibration design, and proof-of-concept versions of these experiments; production estimation is in progress, and the section is explicit about which results are diagnostic.
+The second half of the paper takes the framework to a quantitative lifecycle model. Households live through sixteen four-year periods, face persistent income risk, choose completed fertility with a childlessness margin, climb a discrete ladder of owner units or rent continuously below a size cap, and face the same financing constraints as in the analytical model---a financed-share limit on purchases and a payment-to-income screen---plus transaction costs on owner adjustment. All housing services clear in one market against an upward-sloping supply curve, the extension the analytical model defers, with the user cost tied to the asset price by the same no-arbitrage condition. The model is calibrated to U.S. lifecycle tenure, fertility, wealth, and housing moments, and it hosts three policy experiments suggested by the theory: a parent-targeted relaxation of the down-payment constraint, a revenue-recycled increase in the property tax that lowers the asset price young buyers must collateralize, and a bequest-tax wedge that operates on the intergenerational transmission of down payments. The quantitative section reports the model, the calibration design, preliminary diagnostics at the current search point, and proof-of-concept versions of these experiments; production estimation is in progress, and the section is explicit about which results are diagnostic.
 
 \subsection{Related literature}
 \label{sec:literature}
@@ -1148,7 +1150,48 @@ Median rooms, childless renters / owners & 4.0 / 6.0 & AHS \\
 
 The identification logic follows the model's margins. The fertility taste scale and the child goods cost separate the level of fertility from the childlessness margin. The per-child housing requirement is disciplined by the event-study housing responses around births, which measure how much space a child commands. The bequest strength governs old-age ownership and the old parent--childless gap, the two moments that encode how long family-sized space stays with incumbents. Discounting and the Stone--Geary floors govern the wealth ratios, and through them the age at which the down-payment constraint stops binding; the ladder and menu primitives govern the room medians and the cross-sectional ownership profile.
 
-Estimation status is reported plainly. The model solves and clears the market to residuals near $5\times10^{-5}$, and global search panels over the internal vector run on a cluster with checkpointed records. The best points found so far are not a production calibration: lifecycle ownership profiles remain distorted and owner-entry policies are not yet monotone in wealth at those points, so this draft reports no model-versus-target moment table. The policy experiments below are correspondingly proof-of-concept runs at a diagnostic parameter vector, included because their design, not their magnitude, is the current content.
+Estimation status is reported plainly. The model solves and clears the market to residuals near $5\times10^{-5}$, and global search panels over the internal vector run on a cluster with checkpointed records. The best point found so far is a diagnostic point, not a production calibration, and Table~\ref{tab:fit} reports it against the targets so the distance is visible rather than summarized. Two failures dominate. Prime-age ownership is $0.22$ against a target of $0.575$: the model's households buy too late, which Figure~\ref{fig:own_age} shows directly---ownership is near zero through the fertile window and catches up only after age 45, so the old-age moments come out roughly right while the access margin the paper is about is far too tight. And first births arrive near age 34 against 26 in the data, the known strain that a one-shot completed-fertility choice puts on timing. Figure~\ref{fig:policies30} shows the policies underneath: consumption and fertility behave, but the owner-entry probability is not monotone in wealth at low asset levels, a pathology of the current point. The policy experiments below are correspondingly proof-of-concept runs at this point, included because their design and qualitative behavior, not their magnitudes, are the current content.
+
+\begin{table}[t]
+\centering
+\caption{Targets and model moments at the diagnostic point}
+\label{tab:fit}
+\begin{tabular}{lcc}
+\toprule
+Moment & Target & Model \\
+\midrule
+Total fertility rate & 1.70 & 1.66 \\
+Childlessness rate & 0.15 & 0.24 \\
+Ownership rate, heads 30--55 & 0.575 & 0.22 \\
+Ownership gap, new parents vs.\ childless & 0.168 & 0.08 \\
+Housing response to first birth (rooms) & 0.664 & 0.78 \\
+Housing response to second birth (rooms) & 0.566 & 0.50 \\
+Young liquid wealth to income & 0.60 & 0.46 \\
+Midlife liquid wealth to income & 1.20 & 1.10 \\
+Ownership rate, ages 65--75 & 0.764 & 0.78 \\
+Old parent--childless ownership gap & 0.070 & 0.067 \\
+Housing user-cost expenditure share & 0.24 & 0.33 \\
+Median rooms, childless renters / owners & 4.0 / 6.0 & 3.7 / 5.2 \\
+Mean age at first birth (diagnostic) & 26.0 & 34.2 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{0.92\textwidth}{\footnotesize The model column is the best point of the global search panels (market residual $3.8\times10^{-5}$), shown to document distance to target. It is a diagnostic point, not a calibrated benchmark; the dominant failures are prime-age ownership and birth timing.}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.74\textwidth]{quant_ownership_by_age.png}
+\caption{Lifecycle ownership at the diagnostic point. The shaded band is the fertile window. Ownership is near zero through the window and catches up after age 45; the data targets are $0.575$ at ages 30--55 and $0.764$ at ages 65--75. The profile documents the current point's failure on the access margin; it is not a calibrated fit.}
+\label{fig:own_age}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{quant_policies_age30.png}
+\caption{Childless-renter policies at age 30 over liquid wealth, by income state, at the diagnostic point. Fertility rises with wealth where family-sized space becomes reachable, which is the access mechanism; the nonmonotone owner-entry policy at low wealth is a known pathology of this point.}
+\label{fig:policies30}
+\end{figure}
 
 \subsection{Policy experiments}
 \label{sec:quant_policy}
@@ -1161,7 +1204,35 @@ Three experiments map directly to terms of the decomposition in Section~\ref{sec
 
 \textbf{A bequest-tax wedge.} A $30$ percent wedge on terminal bequeathed resources operates, in the analytical model, on the pledgeable inheritances of heirs and hence on the collateral component of their caps. In the current implementation the wedge is terminal-only, with no inheritance kernel or rebate, so the run checks the machinery rather than measuring incidence.
 
-One diagnostic finding is worth reporting because the decomposition explains it. At the diagnostic parameter vector, an audit of the treated margin under parent-targeted credit relief shows that the payment screen is slack at the relevant family-sized rung and that the relief does expand down-payment feasibility---yet owner entry and fertility barely move. In the language of Section~\ref{sec:fertility}, exposure and pass-through are positive but the response term is small at that vector: the treated households' access gaps are too small for relief to bind on behavior. The lesson carries to estimation: the experiments' magnitudes will be governed by the measured access gaps of the treated set, which is precisely the statistic the calibration targets discipline through the ownership gaps and event-study responses.
+Table~\ref{tab:policy} reports the experiments at the diagnostic point, and Figure~\ref{fig:policy_prices} shows the price side. The property-tax experiment is the cleanest check on the machinery: doubling the annual rate lowers the asset price by twelve percent while the user cost barely moves, because no-arbitrage reprices the asset rather than the flow, and prime-age ownership rises by about one percentage point as down payments fall. The direction and the order of magnitude of the price response match the California experiment in \citet{coven2024}. Parent-targeted credit relief raises the total fertility rate from $1.660$ to $1.677$ and prime-age ownership by half a percentage point. The estate-tax wedge moves almost nothing, as it should at this stage: the inheritance kernel that would carry it to heirs' down payments is not yet implemented, so its only live channel is the terminal bequest margin.
+
+\begin{table}[t]
+\centering
+\caption{Policy experiments at the diagnostic point}
+\label{tab:policy}
+\begin{tabular}{lcccc}
+\toprule
+ & Baseline & Credit relief & Property tax $+1$pp & Estate tax 30\% \\
+\midrule
+Asset price $P$ & 0.635 & 0.635 & 0.557 & 0.634 \\
+Total fertility rate & 1.660 & 1.677 & 1.663 & 1.661 \\
+Childlessness rate & 0.238 & 0.236 & 0.239 & 0.238 \\
+Ownership, heads 30--55 & 0.222 & 0.227 & 0.233 & 0.224 \\
+Ownership, ages 65--75 & 0.783 & 0.793 & 0.783 & 0.789 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{0.92\textwidth}{\footnotesize Proof-of-concept runs at the diagnostic point of Table~\ref{tab:fit}; prices re-clear in every case. Credit relief raises the financed share to $0.95$ for first-child buyers; the property tax rises from $1$ to $2$ percent annually; the estate tax is a terminal bequest wedge with no inheritance kernel. Magnitudes are diagnostic, not calibrated.}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{quant_policy_prices.png}
+\caption{Asset price and flow user cost across the policy experiments at the diagnostic point. Doubling the property tax lowers the asset price by twelve percent while no-arbitrage holds the user cost nearly fixed; the lower price relaxes every down-payment constraint.}
+\label{fig:policy_prices}
+\end{figure}
+
+The smallness of the credit-relief response is itself informative, because the decomposition explains it. An audit of the treated margin shows that the payment screen is slack at the relevant family-sized rung and that the relief does expand down-payment feasibility---yet owner entry and fertility barely move. In the language of Section~\ref{sec:fertility}, exposure and pass-through are positive but the response term is small at this point: the treated households' access gaps are too small for relief to bind on behavior. The lesson carries to estimation: the experiments' magnitudes are governed by the measured access gaps of the treated set, which is precisely the statistic the calibration targets discipline through the ownership gaps and event-study responses. At a point that matches prime-age ownership of $0.575$ rather than $0.22$, the constrained set, and with it the response to credit relief, will look different.
 
 \section{Conclusion}
 \label{sec:conclusion}
