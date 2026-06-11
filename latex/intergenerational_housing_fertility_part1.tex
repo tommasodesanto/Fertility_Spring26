@@ -43,7 +43,7 @@
 \maketitle
 
 \begin{abstract}
-Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied segment of the housing market, while buying owner housing requires a down payment and debt-service capacity that many young households do not have. This note develops a compact theory of that friction. Young households decide whether to enter a housing market, choose between renting and owning, and choose how many children to have; children require both consumption goods and housing space. Old households are incumbent owners deciding how much of their housing to keep. The model delivers three results. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single object, an effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the competitive equilibrium clears the housing market and is still inefficient whenever young households are priced out of owner housing by financing constraints while old incumbents are held in place by property-tax assessment discounts; the two gaps are measurable from observed bundles. Third, a housing policy changes aggregate fertility through constrained exposure, pass-through to the binding cap, the household fertility response, entry, and tenure switching.
+Children take up space, and the space they take up is scarce in a particular way: family-sized units are concentrated in the owner-occupied segment of the housing market, while buying owner housing requires a down payment and debt-service capacity that many young households do not have. This note develops a compact stationary two-period OLG theory of that friction. Each period, young households decide whether to enter a housing market, choose between renting and owning, and choose how many children to have; births, together with outside renewal, generate the next young cohort. Young owners become next period's old incumbents, who decide how much of their carried housing to keep before exiting. The model delivers three results. First, every constraint on family-sized space---rental size menus, down payments, payment-to-income limits---collapses into a single object, an effective family-housing cap, and a binding cap raises the price of a child through the space the child requires. Second, the stationary competitive equilibrium clears the housing market and is still inefficient whenever young households are priced out of owner housing by financing constraints while old incumbents are held in place by property-tax assessment discounts; the two gaps are measurable from observed bundles. Third, a housing policy changes aggregate fertility through constrained exposure, pass-through to the binding cap, the household fertility response, entry, and tenure switching.
 \end{abstract}
 
 The market structure follows \citet{coven2024}: tenure shapes which size menus and financing constraints a household faces, while all floorspace clears in a single market; supply margins are deferred to an extension. Children require housing space, so anything that rations family-sized space raises the private price of children. Family-sized space is rationed by tenure: by the size composition of the rental stock on one side, and by down-payment and payment-to-income requirements on the other. The old-side force---incumbent property-tax discounts that make staying cheap relative to selling---amplifies the scarcity but is not needed for any of the young-side results.
@@ -58,11 +58,17 @@ The market structure follows \citet{coven2024}: tenure shapes which size menus a
 
 \section{Environment}
 
-\textbf{Agents.} The economy is populated by two overlapping generations of households. There is a mass $\bar M>0$ of potential young households, indexed by $i$ and heterogeneous in type
+\textbf{Agents and calendar.} Time is discrete. At the start of period $t$, a mass $M_t>0$ of potential young households is drawn from a distribution $G_{Y,t}$ over types
 \[
-i=(y_i,a_i,B_i)\sim G_Y,
+i=(y_i,a_i,B_i),
 \]
-where $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is gross inheritance exposure. Young households are potential parents: they decide whether to enter the housing market and, inside it, how to live and how many children to have. Old households are incumbent owners, indexed by $j$ and distributed according to $F_O$, with nonhousing resources $m_j>0$ and a housing endowment $H_j^0>0$. They are past fertility and decide how much of their housing to keep.
+where $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is gross inheritance exposure. A potential young household decides whether to enter the housing market. Conditional on entry, it chooses tenure, occupied housing, and fertility. Births by the current young cohort, plus outside renewal, generate the mass and type distribution of next period's potential young. Young owners become next period's old incumbents. Young renters and nonentrants do not enter the old-retention block; they are outside the modeled incumbent-owner margin. Let $\bar M$ denote the stationary value of $M_t$ when the demographic law below is time invariant.
+
+Old incumbents are last period's young owners. They enter old age with state
+\[
+j=(m_j,H_j^0,\tilde P_j,\tilde\tau_j,\mathcal B_j)\sim F_{O,t},
+\]
+where $m_j>0$ is nonhousing resources, $H_j^0>0$ is the housing carried into old age, and $(\tilde P_j,\tilde\tau_j)$ are protected-assessment objects attached to that carried house. Old households choose how much housing to retain and how much bequest expenditure to make, then exit. In a stationary equilibrium, $G_{Y,t}=G_Y$ and $F_{O,t}=F_O$ are reproduced by the transition laws below.
 
 \textbf{Preferences.} Children require both consumption goods and housing space: each child claims $\chi_i>0$ units of the consumption good and $\kappa>0$ units of housing services, and parents consume the residuals
 \[
@@ -100,16 +106,14 @@ over consumption, retained housing, and warm-glow bequest expenditure $e_j\ge0$,
 \qquad
 0<\bar h^R<\bar h^O.
 \]
-The caps represent a fact about housing stocks rather than prices: large family-sized units exist mainly as owner-occupied homes, so a household that wants substantially more space than $\bar h^R$ must buy it.\footnote{\citet{coven2024} encode the same fact as a minimum size for owned homes, with rentals available in any size; we cap rental size instead. Both formulations make family-sized space owner-concentrated; ours keeps the renter problem interior at the bottom.} In this compact one-stock economy, $\bar h^R$ and $\bar h^O$ are individual occupancy menus, not aggregate rental and owner stocks to be cleared separately. They summarize tenure-specific access to dwelling sizes while all occupied floorspace is drawn from the same aggregate stock $\bar H$. A richer unit-size model would replace these reduced-form menus with an explicit distribution of dwelling sizes.
-
-All floorspace trades in a single market, as in \citet{coven2024}. The asset price of a unit of floorspace is $P$, and a no-arbitrage user-cost condition ties the rental rate to the price:
+The caps represent the fact that large family-sized units exist mainly as owner-occupied homes, so a household that wants substantially more space than $\bar h^R$ must buy it. All occupied floorspace trades in one market. The asset price of a unit of floorspace is $P$, and a no-arbitrage user-cost condition ties the rental rate to the price:
 \begin{equation}
-q=\rho_p P,
+q=\rho P,
 \qquad
-\rho_p=r+\delta^O+\tau^p,
+\rho=r+\delta+\tau^p,
 \label{eq:compact_owner_price}
 \end{equation}
-where $r$ is the interest rate, $\delta^O$ is depreciation, and $\tau^p$ is a recurring property tax. Renters and owner-occupiers therefore face the same per-unit flow cost $q$; tenure matters through the size menus and through financing, not through the per-unit price of space. Note for later that, given $q$, a higher property tax lowers the asset price $P$ and hence the down payment needed to buy a given amount of space. Old owners initially hold part of the stock, and the residual stock is held by passive landlords:
+where $r$ is the interest rate, $\delta$ is depreciation, and $\tau^p$ is a recurring property tax. Renters and owner-occupiers therefore face the same per-unit flow cost $q$; tenure matters through the size menus and through financing, not through the per-unit price of space. Given $q$, a higher property tax lowers the asset price $P$ and hence the down payment needed to buy a given amount of space. At the start of a stationary period, old incumbents carry into old age the houses generated by previous young owner choices, and passive landlords hold the residual stock:
 \[
 H_{\mathrm{pass}}
 =
@@ -123,15 +127,88 @@ A_i(x)=a_i+xB_i+T_i^b(x),
 \qquad
 x=1-\tau^b,
 \]
-where $\tau^b$ is an estate tax and $T_i^b(x)$ is the estate-tax rebate assigned to type $i$. Wealth plays one role in the model: it backs a down payment. $A_i(x)$ enters the purchase constraints below but not the flow budget, so inheritances and the estate tax move a household's access to owner housing rather than its current consumption. The bequest loop is kept in reduced form: old bequest expenditure is a current resource use, while young inheritance exposure $B_i$ is a primitive of $G_Y$.
+where $\tau^b$ is an estate tax and $T_i^b(x)$ is the estate-tax rebate assigned to type $i$. Wealth plays one role in the model: it backs a down payment. $A_i(x)$ enters the purchase constraints below but not the flow budget, so inheritances and the estate tax move a household's access to owner housing rather than its current consumption. In a stationary equilibrium, the distribution of $B_i$ is generated by old bequest expenditure and estate-tax rules through the young-type transition below.
 
-\textbf{Property-tax assessments.} Market property-tax liability per unit of floorspace is $\tau^p P$. Old incumbents may instead be taxed on a protected assessment of their current house, $\tilde\tau_j\tilde P_j$ per unit, with the difference defining an incumbent discount introduced in Section 3.
+\textbf{Property-tax assessments.} Market property-tax liability per unit of floorspace is $\tau^p P$. A stationary assessment rule maps young owners into old protected assessments. In the baseline representation, the old-incumbent transition draws a protected-base factor $b_{j'}^\tau\in[0,1]$ and sets
+\[
+\tilde\tau_{j'}\tilde P_{j'}
+=
+b_{j'}^\tau\tau^pP.
+\]
+A value $b_{j'}^\tau<1$ gives an assessment discount even in a steady state with constant $P$; the discount comes from the policy rule, not from a hidden historical price path. Equivalently, the stationary kernel for $(\tilde P_j,\tilde\tau_j)$ pins down the protected tax base carried by old incumbents.
+
+\textbf{Demography and transitions.} The period timing is: potential young types are drawn; young households decide whether to enter; entrants choose tenure, housing, and fertility; old incumbents choose retained housing and bequest expenditure; old households exit; births and outside renewal form the next potential-young cohort; current young owners become next period's old incumbents. Let
+\[
+\Gamma_O(\dd j'\mid i,h,n;q,\tau^p)
+\]
+be the old-incumbent transition for a current young owner of type $i$ who buys $h$ and has fertility $n$. It generates
+\[
+j'=(m_{j'},H_{j'}^0,\tilde P_{j'},\tilde\tau_{j'},\mathcal B_{j'}).
+\]
+The baseline deterministic housing component is $H_{j'}^0=h$. The remaining components summarize income in old age, the warm-glow bequest schedule, and the stationary protected-assessment rule. Young renters and nonentrants receive zero mass under $\Gamma_O$ because they are not modeled as future incumbent owners. Given current young choices, the next old-incumbent measure satisfies
+\begin{equation}
+F_{O,t+1}(A)
+=
+M_t\int
+\pi_{i,t}^E\1\{o_{i,t}=O\}
+\Gamma_O(A\mid i,h_{i,t}^O,n_{i,t}^O;q_t,\tau_t^p)\,
+\dd G_{Y,t}(i)
+\label{eq:compact_old_transition}
+\end{equation}
+for every measurable set $A$ of old states. In stationarity, this measure equals $F_O$.
+
+Let
+\begin{equation}
+n_{i,t}^{Y}
+=
+\1\{o_{i,t}=R\}n_{i,t}^R+
+\1\{o_{i,t}=O\}n_{i,t}^O
+\label{eq:compact_inside_fertility}
+\end{equation}
+denote fertility in the chosen inside branch, and let $\bar n_i^E\ge0$ denote fertility in the outside option. The baseline formulas set $\bar n_i^E=0$, but the demographic law allows outside fertility or inflow to renew the population.
+
+Young type $i'=(y_{i'},a_{i'},B_{i'})$ is generated by fertility, old bequests, and outside renewal. Let
+\[
+\Gamma_Y(\dd i'\mid i,m,n,F_O,e;\Upsilon),
+\qquad m\in\{R,O,E\},
+\]
+be the young-type kernel for a birth associated with current type $i$, branch $m$, fertility $n$, old bequest policy $e$, and renewal law $\Upsilon$. The kernel maps old bequest expenditure and estate-tax rules into gross inheritance exposure $B_{i'}$ and supplies the noninheritance components of young types. Let $R_t\ge0$ be the mass of outside births or inflows with type law $\Upsilon$. The next young cohort satisfies, for every measurable set $A$ of young types,
+\begin{align}
+M_{t+1}G_{Y,t+1}(A)
+&=
+M_t\int
+\Big[
+\pi_{i,t}^E n_{i,t}^{Y}
+\Gamma_Y(A\mid i,o_{i,t},n_{i,t}^{Y},F_{O,t},e_t;\Upsilon)
+\notag\\
+&\qquad
++(1-\pi_{i,t}^E)\bar n_i^E
+\Gamma_Y(A\mid i,E,\bar n_i^E,F_{O,t},e_t;\Upsilon)
+\Big]\dd G_{Y,t}(i)
++
+R_t\Upsilon(A).
+\label{eq:compact_young_transition}
+\end{align}
+Setting $A$ equal to the whole young type space gives the cohort-mass law:
+\begin{equation}
+M_{t+1}
+=
+M_t\int
+\left[
+\pi_{i,t}^E n_{i,t}^{Y}
++(1-\pi_{i,t}^E)\bar n_i^E
+\right]
+\dd G_{Y,t}(i)
++R_t.
+\label{eq:compact_cohort_mass_law}
+\end{equation}
+In a stationary equilibrium, $M_t=\bar M$, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, and $R_t=\bar R$. If $\bar R=0$, stationarity requires average births per potential young household to be one.
 
 \textbf{Entry.} A potential young household can enter the housing market or take an outside option with value $\bar W^E$; entry is subject to Type-I extreme-value taste shocks with scale $\kappa_E>0$.
 
 \section{The young household's problem}
 
-Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho_p$ as given, chooses a tenure mode, and solves the corresponding problem. Writing utility over adult residual consumption, with the child consumption requirement in the budget, the renter problem is
+Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho$ as given, chooses a tenure mode, and solves the corresponding problem. Writing utility over adult residual consumption, with the child consumption requirement in the budget, the renter problem is
 \begin{equation}
 W_i^R(q)
 =
@@ -174,14 +251,14 @@ h_i&\in\HH^O,
 h_i-\kappa n_i&>0.
 \notag
 \end{align}
-Using $P=q/\rho_p$, owner housing is bounded above by
+Using $P=q/\rho$, owner housing is bounded above by
 \[
 h_i\le
 H_i^O(q,\tau^p,x)
 =
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{A_i(x)\rho}{(1-\phi)q},
 \frac{\psi y_i}{q}
 \right\}.
 \]
@@ -198,7 +275,7 @@ Let $o_i\in\{R,O\}$ denote an optimal tenure.\footnote{The hard cap in \eqref{eq
 
 \section{The old household's problem}
 
-The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses a simple incumbent tax discount. Old owner $j$ pays property taxes on a protected assessment if she stays in her current house; the same unit taxed at current market value would carry tax cost $\tau^pP$ per unit, against the protected cost $\tilde\tau_j\tilde P_j$. The difference is the per-unit tax discount from staying put:
+The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses the stationary assessment rule from the environment. Old incumbent $j$ is last period's young owner, enters with carried housing $H_j^0$, and pays property taxes on a protected assessment if she stays in her current house. The same unit taxed at current market value would carry tax cost $\tau^pP$ per unit, against the protected cost $\tilde\tau_j\tilde P_j$. The difference is the per-unit tax discount from staying put:
 \[
 L_j^\tau(q,\tau^p)
 =
@@ -206,7 +283,7 @@ L_j^\tau(q,\tau^p)
 \qquad
 0\le L_j^\tau(q,\tau^p)<q.
 \]
-Old household $j$ chooses consumption, how much of her current housing to keep, and bequest expenditure, with the preferences of Section 1:
+Under the protected-base representation, $\tilde\tau_j\tilde P_j=b_j^\tau\tau^pP$ and $L_j^\tau=(1-b_j^\tau)\tau^pP$. Old household $j$ chooses consumption, how much of her carried housing to keep, and bequest expenditure, with the preferences of Section 1:
 \begin{equation}
 \max_{c_j^O,\,h_j^O,\,e_j}\;
 u_j^O(c_j^O,h_j^O,e_j)
@@ -246,11 +323,11 @@ The limit $\kappa_E\downarrow0$ gives deterministic entry. Conditional on entry,
 
 \section{Competitive equilibrium}
 
-The equilibrium object is aggregate market clearing. Households take the user cost as given, choose tenure and housing, and their choices aggregate into demand for floorspace; the stock is fixed. There is no pairwise assignment of old units to young households: one price equates total demand to the stock, and nothing in that condition asks whether the marginal family-sized unit is held by the household that values it most. That question is deferred to the efficiency analysis below.
+A stationary equilibrium clears one aggregate floorspace market and closes the old-incumbent, young-type, and cohort-mass fixed points. Households take the user cost as given, choose tenure and housing, and their choices aggregate into demand for the fixed stock. There is no pairwise assignment of old units to young households: one price equates total demand to the stock, and nothing in that condition asks whether the marginal family-sized unit is held by the household that values it most. That question is deferred to the efficiency analysis below.
 
-Given policies $(\tau^p,x)$, the stock $\bar H$, and transfer rules, aggregate floorspace demand at a candidate user cost $q$ adds renters, young owners, and old incumbents:
+Given policies $(\tau^p,x)$, the stock $\bar H$, stationary young distribution $G_Y$, stationary old-incumbent measure $F_O$, and transfer rules, aggregate floorspace demand at a candidate user cost $q$ adds renters, young owners, and old incumbents:
 \[
-H^{D}(q,\tau^p,x)
+H^{D}(q,\tau^p,x;G_Y,F_O)
 =
 \bar M\int \pi_i^E
 \left[
@@ -261,19 +338,58 @@ H^{D}(q,\tau^p,x)
 \]
 Tenure determines which menu and which financing constraints apply to a household, not which market it buys space in: all of this demand falls on the same stock.
 
-\begin{definition}[Competitive equilibrium]
-Given $(\tau^p,x,\bar H)$, a competitive equilibrium consists of a user cost $q$, an asset price $P$, young branch allocations, tenure choices, entry probabilities, old allocations, and fiscal transfers such that:
+\begin{definition}[Stationary competitive equilibrium]
+Given $(\tau^p,x,\bar H)$, transition laws $(\Gamma_O,\Gamma_Y)$, and a stationary renewal law $(\bar R,\Upsilon)$, a stationary competitive equilibrium consists of a stationary cohort mass $\bar M>0$, a user cost $q$, an asset price $P$, a stationary young distribution $G_Y$, a stationary old-incumbent measure $F_O$, young branch allocations, tenure choices, entry probabilities, old allocations, fiscal transfers, and the stationary policy kernels for inheritance exposure and assessments such that:
 \begin{enumerate}
 \item conditional on entry, young households solve \eqref{eq:compact_renter_problem} and \eqref{eq:compact_owner_problem_young}, then choose tenure by \eqref{eq:compact_tenure_value};
-\item old households solve \eqref{eq:compact_old_budget};
+\item old incumbents solve \eqref{eq:compact_old_budget};
 \item entry is given by \eqref{eq:compact_entry_prob};
 \item the asset price satisfies the no-arbitrage condition \eqref{eq:compact_owner_price};
-\item the floorspace market clears,
+\item the single floorspace market clears,
 \begin{equation}
-H^{D}(q,\tau^p,x)=\bar H;
+H^{D}(q,\tau^p,x;G_Y,F_O)=\bar H;
 \label{eq:compact_floorspace_clearing}
 \end{equation}
-\item passive housing-income, property-tax, estate-tax, and policy-instrument accounts are closed by lump-sum transfers.
+\item passive housing-income, property-tax, estate-tax, and policy-instrument accounts are closed by lump-sum transfers;
+\item the old-incumbent measure is stationary: for every measurable set $A$ of old states,
+\begin{equation}
+F_O(A)
+=
+\bar M\int
+\pi_i^E\1\{o_i=O\}
+\Gamma_O(A\mid i,h_i^O,n_i^O;q,\tau^p)\,
+\dd G_Y(i);
+\label{eq:compact_old_stationarity}
+\end{equation}
+\item the young cohort is stationary: for every measurable set $A$ of young types,
+\begin{align}
+\bar M G_Y(A)
+&=
+\bar M\int
+\Big[
+\pi_i^E n_i^{Y}
+\Gamma_Y(A\mid i,o_i,n_i^{Y},F_O,e;\Upsilon)
+\notag\\
+&\qquad
++(1-\pi_i^E)\bar n_i^E
+\Gamma_Y(A\mid i,E,\bar n_i^E,F_O,e;\Upsilon)
+\Big]\dd G_Y(i)
++
+\bar R\Upsilon(A),
+\label{eq:compact_young_stationarity}
+\end{align}
+where $e$ is the old bequest-expenditure policy. Taking $A$ to be the whole young type space gives the stationary cohort-balance condition
+\begin{equation}
+\bar M
+=
+\bar M\int
+\left[
+\pi_i^E n_i^{Y}+(1-\pi_i^E)\bar n_i^E
+\right]\dd G_Y(i)
++
+\bar R.
+\label{eq:compact_cohort_stationarity}
+\end{equation}
 \end{enumerate}
 \end{definition}
 
@@ -293,21 +409,25 @@ Let $\Xi^\Pi\ge0$ denote real resource costs of policy instruments. The transfer
 +\Xi^\Pi
 \le0.
 \end{align*}
-Housing quantities are disciplined separately by floorspace feasibility: housing payments are transfers that net out against rebates, and the old endowment term $q H_j^0$ is a claim on the existing stock rather than new output. Housing in this baseline is a pure allocation problem.
+Housing quantities are disciplined separately by floorspace feasibility: housing payments are transfers that net out against rebates, and the old carried-housing term $q H_j^0$ is a claim on the existing stock rather than new output. Housing in this baseline is a pure allocation problem.
 
-Aggregate fertility is
+Aggregate births generated by the potential-young cohort are
 \[
 N
 =
-\bar M\int \pi_i^E
+\bar M\int
 \left[
-\1\{o_i=R\}n_i^R+\1\{o_i=O\}n_i^O
-\right]\dd G_Y(i).
+\pi_i^E n_i^Y+(1-\pi_i^E)\bar n_i^E
+\right]
+\dd G_Y(i).
 \]
+In a stationary demographic equilibrium, $N+\bar R=\bar M$. Under the baseline outside-option normalization $\bar n_i^E=0$, $N=\bar M\int\pi_i^E n_i^Y\,\dd G_Y(i)$.
 
 \section{Constrained planner}
 
-The planner exists to answer one question: which of the constraints young families face are real scarcity, and which are financing arrangements that a different institutional design could undo? To make that distinction meaningful, the planner is given the economy's real limits and denied nothing else. It has the same preferences, type distributions, entry technology, housing stock, and tenure size menus as the competitive economy. The planner chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and bequests, and policy instruments. The planner respects floorspace feasibility and the rental and owner menus.
+The planner comparison is evaluated at a stationary competitive equilibrium. For the local variations below, the stationary cohort mass $\bar M$, young distribution $G_Y$, old-incumbent measure $F_O$, transition laws $(\Gamma_O,\Gamma_Y)$, outside-renewal mass $\bar R$, and assessment rule are held fixed at the instant of the variation. The question is which constraints young families face as real scarcity and which are financing arrangements that a different institutional design could undo.
+
+The planner has the same preferences, stationary young distribution, old-incumbent measure, entry technology, housing stock, and tenure size menus as the competitive economy. It chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and bequests, and policy instruments for the current stationary cross-section. The planner respects floorspace feasibility and the rental and owner menus.
 
 The planner counts true old housing utility and true warm-glow bequest utility. It does not count $L_j^\tau$ as utility or as a resource saving. Financial constraints are implementation constraints rather than aggregate resource constraints. The planner cannot relax a down-payment or payment-to-income constraint merely with a notional transfer unless that transfer, payment subsidy, credit guarantee, or contract intervention is in the feasible instrument set and its real cost is included in $\Xi^\Pi$.
 
@@ -531,10 +651,10 @@ The renter analog has the same closed form and is feasible only if $h_i^u\le\bar
 
 \section{Efficiency}
 
-The efficiency question is whether the competitive allocation that clears the floorspace market also solves the planner's allocation problem. Market clearing alone is not enough. In equilibrium, the price makes aggregate demand equal the stock. Efficiency requires, in addition, that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs.
+At a stationary competitive equilibrium, the price makes aggregate demand equal the fixed stock. Market clearing alone is not enough for efficiency. Conditional on the stationary cross-section and transition margins, efficiency also requires that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs.
 
 \begin{proposition}[Planner-equilibrium comparison, local]
-Consider an interior competitive equilibrium and a planner with the same preferences, housing stock, and tenure size menus. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
+Consider an interior stationary competitive equilibrium and a planner with the same preferences, housing stock, tenure size menus, stationary young distribution, old-incumbent measure, and transition laws held fixed at the instant of the variation. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
 
 Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good units, of relaxing young owner $i$'s financial implementation constraints enough to permit one more unit of owner floorspace. If the planner can directly reassign existing floorspace and relieve financing without using real resources, then $r_i^F=0$; if it must operate through costly financing instruments, $r_i^F$ prices those real costs. For a young owner whose owner menu is slack and whose financial constraints bind, and for an old incumbent at an interior retained-housing choice, the planner's marginal surplus from increasing the young owner's space by one unit and reducing the old incumbent's retained space by one unit is
 \[
@@ -550,7 +670,7 @@ Conversely, if the financial implementation gaps are zero for all relevant young
 \end{proposition}
 
 \begin{proof}
-The result is a direct marginal-variation comparison that preserves aggregate floorspace feasibility. Increase household $a$'s occupied floorspace by $\dd h$ and reduce household $b$'s occupied floorspace by the same $\dd h$, holding entry, tenure assignments, active real menus, and fertility fixed at the instant of the variation. The goods-equivalent first-order welfare effect is
+The result is a direct marginal-variation comparison that preserves aggregate floorspace feasibility. Increase household $a$'s occupied floorspace by $\dd h$ and reduce household $b$'s occupied floorspace by the same $\dd h$, holding entry, tenure assignments, active real menus, fertility, and stationary transition margins fixed at the instant of the variation. The goods-equivalent first-order welfare effect is
 \[
 \left(MV_a-\text{marginal real implementation cost for }a\right)-MV_b.
 \]
@@ -571,7 +691,7 @@ A positive value is a feasible first-order improvement: transfer goods to hold e
 If all implementation-relevant financial gaps and incumbent-tax-discount gaps are zero, the competitive marginal values of all households away from real menu corners coincide with the common market user cost $q$. Real menu corners are respected by both the competitive economy and the constrained planner. With $\nu_i^g=0$, the competitive fertility condition then matches the planner's fertility condition evaluated at the same scarcity price, and Pareto weights can be chosen to support the competitive consumption allocation.
 \end{proof}
 
-The proposition does not characterize the efficiency of the entry or tenure-assignment margins themselves; those margins are held fixed. It also does not say that every cap is a market failure: real menus remain real constraints, while financial gaps matter only to the extent that an implementable instrument can reach them at a low enough real resource cost.
+The proposition does not characterize the efficiency of the entry, tenure-assignment, or intergenerational transition margins themselves; those margins are held fixed. It also does not say that every cap is a market failure: real menus remain real constraints, while financial gaps matter only to the extent that an implementable instrument can reach them at a low enough real resource cost.
 
 The misallocation has two sides. A young household that cannot post a larger down payment values the marginal unit of space at $q+\zeta_i^{O,F}$, above the market value of that space; the market clears, yet she cannot buy more of it. An old incumbent whose current house carries a tax discount keeps the marginal unit while valuing it at $q-L_j^\tau$, below the market value of that space. Moving one unit from the second household to the first would raise welfare by $\zeta_i^{O,F}+L_j^\tau-r_i^F$, measured in consumption goods; in the pure-finance case this is $\zeta_i^{O,F}+L_j^\tau$. Both pieces are recoverable from observed behavior: the young gap from bundles, via $\zeta_i^{O,F}=\alpha c_i^O/s_i^O-q$ when the menu cap is slack, and the old gap from assessment records, via market and protected tax liabilities. The old-side force amplifies the misallocation but is not needed for it: the young-access gap is positive whenever purchase constraints bind, with or without assessment protection.
 
@@ -586,7 +706,7 @@ Fix a tenure branch and suppress the type index. Let $H$ be the effective upper 
 H=
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{A_i(x)\rho}{(1-\phi)q},
 \frac{\psi y_i}{q}
 \right\}.
 \]
@@ -674,7 +794,7 @@ This branch result maps into the model's access margins. A relaxation of the ren
 \[
 \frac{\partial H}{\partial A_i}
 =
-\frac{\rho_p}{(1-\phi)q}>0.
+\frac{\rho}{(1-\phi)q}>0.
 \]
 If the payment-to-income constraint is the unique binding component, then
 \[
@@ -715,17 +835,13 @@ If the planner directly values births through $\mathcal G_i(n_i)$, the interior 
 \]
 A positive $\nu_i^g$ is a separate fertility motive. Holding consumption, the scarcity price of space, and any remaining access constraints fixed, it raises desired fertility. In the full equilibrium, aggregate fertility also depends on prices, consumption, tenure assignments, and entry.
 
-Let
-\[
-n_i^Y=\1\{o_i=R\}n_i^R+\1\{o_i=O\}n_i^O
-\]
-denote fertility in the chosen inside branch. The baseline notation normalizes fertility in the outside option to zero, so aggregate fertility among modeled entrants is
+Recall that $n_i^Y$ denotes fertility in the chosen inside branch. The baseline notation normalizes fertility in the outside option to zero, so births generated by the potential-young cohort are
 \[
 N
 =
 \bar M\int \pi_i^E n_i^Y\,\dd G_Y(i).
 \]
-If the outside option has fertility $\bar n_i^E$, then aggregate fertility is instead
+If the outside option has fertility $\bar n_i^E$, then cohort births are instead
 \[
 N
 =
@@ -734,7 +850,7 @@ N
 \pi_i^E n_i^Y+(1-\pi_i^E)\bar n_i^E
 \right]\dd G_Y(i),
 \]
-and every entry-margin term below replaces $n_i^Y$ by $n_i^Y-\bar n_i^E$.
+and every entry-margin term below replaces $n_i^Y$ by $n_i^Y-\bar n_i^E$. In the stationary demographic equilibrium, this birth mass and outside renewal satisfy $N+\bar R=\bar M$; the local comparisons below hold $(\bar M,G_Y,F_O,\bar R)$ fixed.
 Across two allocations,
 \[
 N^P-N^{CE}
@@ -763,7 +879,7 @@ H_i^O
 =
 \min\left\{
 \bar h^O,
-\frac{A_i(x)\rho_p}{(1-\phi)q},
+\frac{A_i(x)\rho}{(1-\phi)q},
 \frac{\psi y_i}{q}
 \right\}.
 \]
