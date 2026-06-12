@@ -528,6 +528,27 @@ The planner equalizes every household's housing-consumption tradeoff to the comm
 The term $\nu_i^g$ is the goods-equivalent social value of a marginal birth beyond parental utility. If $\mathcal G_i\equiv0$, then $\nu_i^g=0$.
 Endogenous logit entry affects the levels of the first-order conditions through a common factor, but that factor cancels from the housing-consumption and fertility ratios displayed here.
 
+Conditional on the entry measure and tenure assignment, the planner's interior allocation solves in one line. With $\mathcal G_i\equiv0$ and log warm glow $\mathcal B(e)=b\log e$,
+\[
+c_i-\chi n_i=\frac{\omega_i^Y}{\Lambda},
+\qquad
+h_i-\kappa n_i=\frac{\alpha\,\omega_i^Y}{\Lambda Q},
+\qquad
+n_i=\frac{\vartheta\,\omega_i^Y}{\Lambda(\chi+\kappa Q)},
+\]
+\[
+c_j^O=\frac{\omega_j^O}{\Lambda},
+\qquad
+h_j^O=\frac{\gamma\,\omega_j^O}{\Lambda Q},
+\qquad
+e_j=\frac{b\,\omega_j^O}{\Lambda},
+\]
+with $(\Lambda,Q)$ pinned by goods and floorspace feasibility. The weights are not innocent: $\omega$ scales each household's consumption and space together, so any statement about who gets more space under the planner than in equilibrium depends on the weights chosen. What no weight can touch is the ratio: every planner household satisfies
+\[
+\frac{h_i-\kappa n_i}{c_i-\chi n_i}=\frac{\alpha}{Q},
+\]
+common across households under any $\omega$, while the equilibrium disperses the same ratio to $\alpha/(q^m+\zeta_i^m)$ across constrained young households and, for old incumbents, $\gamma/(q-\ell_j)$ against the planner's $\gamma/Q$. Dispersed ratios cannot be matched by any choice of weights. The local test of Section 8 is this violation stated constructively: between a high-ratio and a low-ratio household, goods are on the table.
+
 \section{Equilibrium policies}
 
 How tightly a constraint binds can be read off the household's own bundle. A household that is free to adjust equates her marginal value of housing space to the price of space. A household pinned by a size menu or a financing requirement values space above its price, and the distance between the two is the constraint's bite, measured in consumption goods.
@@ -694,7 +715,7 @@ The renter analog has the same closed form and is feasible only if $h_i^u\le\bar
 
 \section{Efficiency}
 
-At a stationary competitive equilibrium, the price makes aggregate demand equal the fixed stock. Market clearing alone is not enough for efficiency. Conditional on the stationary cross-section and transition margins, efficiency also requires that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs. The test below is compensated: reallocate a unit, hold every household at its prior utility with lump-sum transfers, and ask whether goods are left over. A positive residual is a Pareto improvement under any welfare weights.
+At a stationary competitive equilibrium, the price makes aggregate demand equal the fixed stock. Market clearing alone is not enough for efficiency. Conditional on the stationary cross-section and transition margins, efficiency also requires that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs. The test below is compensated: reallocate a unit, hold every household at its prior utility with lump-sum transfers, and ask whether goods are left over. A positive residual is a Pareto improvement under any welfare weights---it restates Section 6's ratio violation constructively, harvesting the dispersion that no weight choice can reconcile.
 
 \begin{proposition}[Planner-equilibrium comparison, local]
 Consider an interior stationary competitive equilibrium and a planner with the same preferences, housing stock, tenure size menus, stationary young distribution, old measures, and transition laws held fixed at the instant of the variation. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
