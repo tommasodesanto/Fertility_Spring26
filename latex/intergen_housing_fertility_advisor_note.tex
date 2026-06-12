@@ -27,17 +27,17 @@ Children require space, and family-sized space is the part of the housing market
 
 \section{Environment}
 
-The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and inheritance exposure. It decides whether to enter the housing market; inside, it chooses a tenure, a house size, and completed fertility. Old households are of two kinds: old incumbents, last period's young owners, who choose how much of their house to keep and then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Throughout I study a stationary equilibrium, in which the cross-section reproduces itself.
+The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and the bequest received at entry. It decides whether to enter the housing market; inside, it chooses a tenure, a house size, and completed fertility. Old households are of two kinds: old incumbents, last period's young owners, who choose how much of their house to keep and then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$, and newborns inherit the estates of the old who exit as they arrive.
 
-\textbf{Preferences.} Each child claims $\chi$ units of consumption and $\kappa$ units of space, and parents consume the residuals $c_i=C_i-\chi n_i$ and $s_i=h_i-\kappa n_i$:
+\textbf{Preferences.} Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
 \[
-u_i^Y=\log c_i+\alpha\log(h_i-\kappa n_i)+\beta\log n_i .
+u_i^Y=\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\beta\log n_i .
 \]
-Substituting $h_i=s_i+\kappa n_i$ into a budget at user cost $q$ gives
+Rearranging a budget at user cost $q$ shows what a child costs,
 \[
-c_i+q s_i+(\chi+\kappa q)\,n_i=y_i :
+(c_i-\chi n_i)+q\,(h_i-\kappa n_i)+(\chi+\kappa q)\,n_i=y_i :
 \]
-the full price of a child is its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old incumbents have $u_j^O=\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j)$ over consumption, retained housing, and warm-glow bequest expenditure.
+its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old households have $u_j^O=\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j)$ over consumption, housing, and warm-glow bequest expenditure $e_j$, with $\mathcal B_j$ increasing and concave, possibly zero.
 
 \textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace. Renting and owning are occupancy modes with different size menus,
 \[
@@ -47,7 +47,7 @@ h\le\bar h^O \text{ (own)},
 \qquad
 \bar h^R<\bar h^O ,
 \]
-which encode that family-sized units exist mainly as owner-occupied homes. All floorspace trades in one market, as in \citet{coven2024}: the asset price is $P$, and no-arbitrage ties the rental rate to it,
+Family-sized houses are mostly available to buy, not to rent. All floorspace trades in one market: the asset price is $P$, and no-arbitrage ties the rental rate to it,
 \[
 q=\rho P,
 \qquad
@@ -55,22 +55,20 @@ q=\rho P,
 \]
 Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house.
 
-\textbf{Financing.} A buyer finances at most a share $\phi$ of the purchase, so the down payment is $(1-\phi)Ph$, paid from pledgeable wealth $A_i(x)=a_i+xB_i+T_i^b(x)$ with $x=1-\tau^b$; housing payments may not exceed $\psi y_i$.
+\textbf{Financing.} A buyer finances at most a share $\phi$ of the purchase, so the down payment is $(1-\phi)Ph$, paid from pledgeable wealth $A_i(x)=a_i+xB_i+T_i^b(x)$ with $x=1-\tau^b$, where $\tau^b$ is the estate tax, $T_i^b(x)$ the estate-tax rebate assigned to type $i$, and $B_i$ the bequest received at entry; housing payments may not exceed $\psi y_i$. Wealth, own or inherited, plays one role: it backs the down payment and never enters the flow budget. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so the only price determined inside the model is $q$.
 
-\textbf{Capital-gains taxation.} A sale during life realizes the seller's accrued gain, taxed above an exclusion. A house held until death passes with a stepped-up basis, and the gain is never taxed. For an old incumbent the difference is a levy $\ell_j\ge0$ per unit sold while alive, zero below the exclusion.
-
-\textbf{Entry.} Entering is compared with an outside value $\bar W^E$ under extreme-value shocks of scale $\kappa_E$, which gives a logit entry probability $\pi_i^E$.
+\textbf{Capital-gains taxation.} A sale during life realizes the seller's accrued gain, taxed above an exclusion. A house held until death passes with a stepped-up basis, and the gain is never taxed. For an old incumbent the difference is a levy $\ell_j\ge0$ per unit sold while alive, zero below the exclusion.\footnote{With a constant aggregate price, gains reflect idiosyncratic appreciation, carried as a stationary cross-section. The alternative is trend price growth with expected appreciation in the user cost; the child requirements make preferences non-homothetic, so the model does not detrend cleanly.}
 
 \section{Households}
 
 Conditional on entry, the owner problem is
 \[
 W_i^O=\max_{c_i,h_i,n_i}\;
-\log c_i+\alpha\log(h_i-\kappa n_i)+\beta\log n_i
+\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\beta\log n_i
 \]
 subject to
 \[
-c_i+q h_i+\chi n_i=y_i,
+c_i+q h_i=y_i,
 \qquad
 (1-\phi)P h_i\le A_i(x),
 \qquad
@@ -78,15 +76,19 @@ q h_i\le\psi y_i,
 \qquad
 h_i\le\bar h^O .
 \]
-The renter problem is the same without the financing constraints and with $h_i\le\bar h^R$. Using $P=q/\rho$, owner housing is bounded by
+The maximization also respects $c_i-\chi n_i>0$ and $h_i-\kappa n_i>0$. The renter problem is the same without the financing constraints and with $h_i\le\bar h^R$; $W_i^R$ is its value. Using $P=q/\rho$, owner housing is bounded by
 \[
 H_i^O=\min\left\{\bar h^O,\;\frac{A_i(x)\,\rho}{(1-\phi)\,q},\;\frac{\psi y_i}{q}\right\},
 \qquad
 H_i^R=\bar h^R .
 \]
-$H_i^m$ is the effective family-housing cap: a renter is capped by the stock, a buyer by whichever of menu, collateral, or debt service is shortest. Tenure is $W_i^Y=\max\{W_i^R,W_i^O\}$.
+$H_i^m$ is the effective family-housing cap: a renter is capped by the stock, a buyer by whichever of menu, collateral, or debt service is shortest. Tenure is $W_i^Y=\max\{W_i^R,W_i^O\}$. Entry compares the inside value with an outside option $\bar W^E$ under extreme-value shocks of scale $\kappa_E$:
+\[
+\pi_i^E=\frac{\exp\{W_i^Y/\kappa_E\}}{\exp\{W_i^Y/\kappa_E\}+\exp\{\bar W^E/\kappa_E\}}
+\]
+is the probability that household $i$ enters.
 
-The old incumbent enters with housing $H_j^0$ and an accrued gain. Each unit faces one choice: sell now and pay the tax, or keep it until death, when the tax is forgiven. She solves
+The old incumbent enters with nonhousing resources $m_j$, housing $H_j^0$, and an accrued gain. Each unit faces one choice: sell now and pay the tax, or keep it until death, when the tax is forgiven. She solves
 \[
 \max_{c_j^O,\,h_j^O,\,e_j}\;u_j^O
 \quad\text{s.t.}\quad
@@ -100,23 +102,24 @@ Selling a unit nets $q-\ell_j$. The forgiveness at death is a subsidy to staying
 
 Aggregate demand adds young households, old incumbents, and old renters, and the single market clears:
 \[
-\bar M\int\pi_i^E\,h_i\,\dd G_Y(i)+\int h_j^O\,\dd F_O(j)+\int h_j^O\,\dd F_R(j)=\bar H .
+\bar M\int\pi_i^E\,h_i\,\dd G_Y(i)+\int h_j^O\,\dd F_O(j)+\int h_j^O\,\dd F_R(j)=\bar H ,
 \]
-A stationary equilibrium is a user cost $q$ (and $P=q/\rho$) such that households optimize, the market clears, fiscal accounts close with lump-sum transfers, next period's old households are this period's young entrants, owners as incumbents and renters as old renters, and births plus the renewal inflow keep the cohort at $\bar M$. Nothing in the clearing condition asks whether the marginal family-sized unit is held by the household that values it most; that is the next section's question.
+where $F_O$ and $F_R$ are the measures of old incumbents and old renters.
+A stationary equilibrium is a user cost $q$ (and $P=q/\rho$) such that households optimize, the market clears, fiscal and credit accounts close with lump-sum transfers, next period's old households are this period's young entrants, owners as incumbents and renters as old renters, and births plus the renewal inflow keep the cohort at $\bar M$. Nothing in the clearing condition asks whether the marginal family-sized unit is held by the household that values it most; that is the next section's question.
 
 \section{Constraint gaps, read off bundles}
 
-How much a constraint binds can be read off the household's own bundle. At an interior choice, a household's marginal value of space is $\alpha c/s$. For a renter,
+How much a constraint binds can be read off the household's own bundle. At an interior choice, a household's marginal value of space is $u_h/u_c=\alpha(c-\chi n)/(h-\kappa n)$. For a renter,
 \[
-MV_i^R=\frac{\alpha c_i^R}{s_i^R}=q+\zeta_i^R,
+MV_i^R=\frac{\alpha\,(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}=q+\zeta_i^R,
 \]
-so $\zeta_i^R=\alpha c_i^R/s_i^R-q\ge0$ measures the bite of the rental menu in goods. For a young owner the same gap collects the three access constraints,
+so $\zeta_i^R\ge0$ measures the bite of the rental menu in goods, computable from the bundle. For a young owner the same gap collects the three access constraints,
 \[
 \zeta_i^O=\underbrace{\tfrac{\mu_i}{\lambda_i}(1-\phi)P+\tfrac{\eta_i}{\lambda_i}q}_{\zeta_i^{O,F}\text{, financing}}+\underbrace{\tfrac{\theta_i}{\lambda_i}}_{\text{menu}},
 \qquad
 MV_i^O=q+\zeta_i^O ,
 \]
-and when the owner menu is slack the bundle identifies the financing part alone, $\zeta_i^{O,F}=\alpha c_i^O/s_i^O-q$. For an old incumbent at an interior retention choice,
+where $\lambda_i$ is the marginal utility of income and $\mu_i$, $\eta_i$, $\theta_i$ are the multipliers on the down-payment, payment-to-income, and owner-menu constraints; when the owner menu is slack, the bundle identifies the financing part alone, $\zeta_i^{O,F}=\alpha(c_i^O-\chi n_i^O)/(h_i^O-\kappa n_i^O)-q$. For an old incumbent at an interior retention choice,
 \[
 MV_j^O=\frac{\gamma c_j^O}{h_j^O}=q-\ell_j :
 \]
@@ -124,7 +127,7 @@ she keeps marginal space she values below what the market would pay, because sel
 
 The gaps price children. Multiplying the fertility first-order condition by consumption gives, in either tenure,
 \[
-\frac{\beta c_i^m}{n_i^m}=\chi+\kappa\,(q+\zeta_i^m) .
+\frac{\beta\,(c_i^m-\chi n_i^m)}{n_i^m}=\chi+\kappa\,(q+\zeta_i^m) .
 \]
 A child's space requirement is priced at the household's own shadow value of space. Children get more expensive exactly where family-sized space is hard to reach, with market prices unchanged.
 
@@ -144,7 +147,7 @@ The proof is one variation: move $\dd h$ between the two households, hold each a
 
 \textbf{A worked example.} A two-type stationary economy puts numbers on every object. Normalize $q=1$ and set $\rho=0.25$, so $P=4$. The young household has $y=1$, $a=0.20$, $B_i=0$, $\alpha=0.5$, $\beta=0.4$, $\kappa=0.3$, equal-scaling $\chi=0.6$; financing is $\phi=0.80$, $\psi=0.30$; menus are $\bar h^R=0.15$, $\bar h^O=1$. The old incumbent has $m=0.2$, $H^0=0.25$, $\gamma=0.5$, no bequest motive, levy $\ell=0.2$. The stock $\bar H=5/12$ is chosen so $q=1$ clears the market; entry is deterministic, and the renewal inflow $\bar R=1-n^\ast$ sustains the cohort.
 
-The young household buys: the owner cap $H^O=\min\{1,\,0.25,\,0.30\}=0.25$ is the collateral component and beats the rental menu. The cap binds (the unconstrained optimum is $h^u=1/3$), and the fertility condition gives $n^\ast=0.223$, $c=0.616$, $s=0.183$, so the bundle reveals $\zeta^{O,F}=\alpha c/s-q=0.68$. The incumbent's released units net $q-\ell=0.8$, so her wealth is $0.40$ and she keeps $h^O=1/6$, valuing retained space at $0.80$; her released $1/12$ plus the passive stock $1/6$ house the young buyer. Moving one unit from her to the young household frees $\zeta^{O,F}+\ell=0.88$ in goods; the cap derivative below is $\dd n/\dd H=0.28$; and a down-payment grant passes through at $\rho/((1-\phi)q)=1.25$, so $0.01$ of pledgeable wealth buys $0.0125$ units of space and $0.0035$ children. Figure~\ref{fig:example} draws the two sides.
+The young household buys: the owner cap $H^O=\min\{1,\,0.25,\,0.30\}=0.25$ is the collateral component and beats the rental menu. The cap binds (the unconstrained optimum is $h^u=1/3$), and the fertility condition gives $n^\ast=0.223$, with adult consumption $c-\chi n=0.616$ and adult space $h-\kappa n=0.183$, so the bundle reveals $\zeta^{O,F}=\alpha(c-\chi n)/(h-\kappa n)-q=0.68$. The incumbent's released units net $q-\ell=0.8$, so her wealth is $0.40$ and she keeps $h^O=1/6$, valuing retained space at $0.80$; her released $1/12$ plus the passive stock $1/6$ house the young buyer. Moving one unit from her to the young household frees $\zeta^{O,F}+\ell=0.88$ in goods; the cap derivative below is $\dd n/\dd H=0.28$; and a down-payment grant passes through at $\rho/((1-\phi)q)=1.25$, so $0.01$ of pledgeable wealth buys $0.0125$ units of space and $0.0035$ children. Figure~\ref{fig:example} draws the two sides.
 
 \begin{figure}[t]
 \centering
@@ -155,12 +158,12 @@ The young household buys: the owner cap $H^O=\min\{1,\,0.25,\,0.30\}=0.25$ is th
 
 \section{Fertility and policy}
 
-Fix a tenure branch and let $H$ be the effective cap. When the cap binds, fertility solves $\beta/n=\chi/c+\alpha\kappa/s$ with $c=y-qH-\chi n$ and $s=H-\kappa n$, and
+Fix a tenure branch and let $H$ be the effective cap. When the cap binds, fertility solves $\beta/n=\chi/(y-qH-\chi n)+\alpha\kappa/(H-\kappa n)$, and
 \[
 \frac{\dd n}{\dd H}
 =
-\frac{\dfrac{\alpha\kappa}{s^2}-\dfrac{\chi q}{c^2}}
-{\dfrac{\beta}{n^2}+\dfrac{\chi^2}{c^2}+\dfrac{\alpha\kappa^2}{s^2}} ,
+\frac{\dfrac{\alpha\kappa}{(H-\kappa n)^2}-\dfrac{\chi q}{(y-qH-\chi n)^2}}
+{\dfrac{\beta}{n^2}+\dfrac{\chi^2}{(y-qH-\chi n)^2}+\dfrac{\alpha\kappa^2}{(H-\kappa n)^2}} ,
 \]
 which is positive for every binding cap if and only if $\chi\le\kappa q/\alpha$: relaxing access raises fertility whenever children are at least as space-intensive as their parents' own bundle.
 
@@ -172,18 +175,12 @@ At fixed prices, a small policy $z$ moves aggregate fertility through the constr
 \left[\pi_i^E\,\Psi_i^m+n_i^m\,\frac{\pi_i^E(1-\pi_i^E)}{\kappa_E}\,\Theta_i^m\right]
 \mathcal P_i^m(z)\,\dd G_Y(i),
 \]
-where $\mathcal E_m(z)$ is the set of households whose cap binds in branch $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/c_i^m$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental menu. Under equal scaling, $\Psi_i^m$ is proportional to $\zeta_i^m/c_i^m$, so the same gap that measures misallocation predicts whose fertility responds.
+where $\mathcal E_m(z)$ is the set of households whose cap binds in branch $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental menu. Under equal scaling, $\Psi_i^m$ is proportional to $\zeta_i^m/(c_i^m-\chi n_i^m)$, so the same gap that measures misallocation predicts whose fertility responds.
 
 Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the tenure boundary. In the baseline both tenures price space at the same $q$, an indifferent household has the same allocation in both, and the switching jump is exactly zero, so the formula above is complete. With a tenure-cost wedge the jump is signed by which tenure is the expensive way to occupy space: when owning is dearer, the marginal switcher into ownership upsizes and has more children. The long version of the note states and proves this, together with the stationary demographic closure and the full equilibrium definition.
 
 Two notation conventions to keep in mind against the quantitative model: there $M$ denoted the outside entry flow, while here $\bar M$ is the total potential-young mass and $\bar R$ the renewal inflow; and the per-child consumption requirement $\chi$ is common across households.
 
 Two extensions are in progress. A quantitative lifecycle version (mortgages, income risk, an owner ladder, elastic supply) prices the same wedges in U.S. data; and the two gaps invite direct measurement, $\zeta$ from consumption-and-space bundles and $\ell$ from deeds, basis, and the exclusion.
-
-\begin{thebibliography}{9}
-\small
-\bibitem[Coven et al.(2025)]{coven2024}
-Coven, Joshua, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye. 2025. ``Property Taxes and Housing Allocation Under Financial Constraints.'' Working paper.
-\end{thebibliography}
 
 \end{document}
