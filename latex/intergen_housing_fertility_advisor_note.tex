@@ -27,7 +27,7 @@
 
 \section{Environment}
 
-The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and the gross bequest assigned at entry, taxed on receipt. It decides whether to enter the housing market; inside, it chooses a tenure, a house size, completed fertility, and savings for old age. Old households are of two kinds: old incumbents, last period's young owners, with states $j=(a_j,H_j^0,\ell_j,\mathcal B_j)$---financial wealth, carried housing, the capital-gains levy defined below, and a bequest motive---who choose how much of their house to keep and how large an estate to leave, then exit; and old renters, last period's young renter entrants, with states $(a_j,\mathcal B_j)$, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$, and newborns inherit the estates of the old who exit as they arrive.
+The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and the gross bequest assigned at entry, taxed on receipt. It decides whether to enter the housing market; inside, it chooses a tenure, a house size, completed fertility, and savings for old age. Old households, indexed by $j$ as young households are by $i$, are of two kinds: old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$, and newborns inherit the estates of the old who exit as they arrive.
 
 \textbf{Preferences.} Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
 \[
@@ -37,7 +37,7 @@ Rearranging a budget at user cost $q$ shows what a child costs,
 \[
 (c_i-\chi n_i)+q\,(h_i-\kappa n_i)+(\chi+\kappa q)\,n_i=c_i+q h_i :
 \]
-its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old households have $u_j^O=\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j)$ over consumption, housing, and the estate $e_j\ge0$ they leave at exit, valued through a warm-glow function $\mathcal B_j$, increasing and concave, possibly zero, and itself part of the old type: bequest motives are heterogeneous. The exiting cohort's estates are what the arriving cohort inherits as the $B_{i'}$. A young household also values its own old age: its objective adds $\vartheta\,\E\,u_{j'}^O$, evaluated at the old-age choices it will make, with discount factor $\vartheta\in(0,1]$.
+its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old households have $u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j)$ over consumption, housing, and the estate $e_j\ge0$ they leave at exit, valued through a warm-glow function $\mathcal B$, increasing and concave, possibly zero, and common to all old households. The exiting cohort's estates are what the arriving cohort inherits as the $B_{i'}$. A young household also values its own old age: its objective adds $\vartheta\,\E\,u^O$, evaluated at the old-age choices it will make, with discount factor $\vartheta\in(0,1]$.
 
 \textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace. Renting and owning are occupancy modes with different size menus,
 \[
@@ -94,7 +94,7 @@ is the probability that household $i$ enters.
 
 The old incumbent enters with financial wealth $a_j$, housing $H_j^0$, and an accrued gain, summarized by the levy $\ell_j$ of Section 1. Each unit faces one choice: sell now and pay the tax, or keep it until death, when the tax is forgiven. She solves
 \[
-V_j^O=\max_{c_j^O,\,h_j^O,\,e_j}\;u_j^O
+V_j^O=\max_{c_j^O,\,h_j^O,\,e_j}\;u^O
 \quad\text{s.t.}\quad
 c_j^O+e_j+q\,h_j^O=a_j+qH_j^0-\ell_j\,(H_j^0-h_j^O),
 \qquad
@@ -107,13 +107,13 @@ Wealth crosses the period boundary through the household's own saving. An old re
 \frac{1}{c_i-\chi n_i}=\vartheta(1+r)\,\E\!\left[\frac{1}{c_{j'}^O}\right]
 \qquad\text{when }a_i'>0,
 \]
-which under logarithmic old utility (warm glow $b_j\log e$ included), interior old choices, and anticipated repricing degenerate at zero collapses to a savings rule:
+which under logarithmic old utility (warm glow $b\log e$ included), interior old choices, and anticipated repricing degenerate at zero collapses to a savings rule:
 \[
 a_i'=k\,(c_i-\chi n_i),
 \qquad
-k=\vartheta\left(1+\gamma+\E\,b_{j'}\right),
+k=\vartheta\left(1+\gamma+b\right),
 \]
-with the return canceling under log utility and $k$ taken common across households. The savings load $k$ is old age's claim on each unit of adult consumption: a unit of it commits $1+k$ units of resources, one spent now and $k$ carried.
+with the return canceling under log utility. The savings load $k$ is old age's claim on each unit of adult consumption: a unit of it commits $1+k$ units of resources, one spent now and $k$ carried.
 
 \section{Equilibrium}
 
@@ -162,14 +162,12 @@ The competitive allocation solves the planner's conditional problem only if no f
 
 The proof is one variation: move $\dd h$ between the two households, hold each at its prior utility with lump-sum transfers, and the residual $(\zeta_i^{O,F}+\ell_j-r_i^F)\,\dd h$ in goods is left over, a Pareto improvement under any welfare weights. Two cautions. Real menus are not market failures: a planner facing the same stock is pinned with the renter at $\bar h^R$. And a positive financing gap is an inefficiency only when an instrument can reach it at real cost below the value gap.
 
-\textbf{A worked example.} A two-type stationary economy puts numbers on every object. Normalize $q=1$ and set $\rho=0.25$, so $P=4$. The young household has $y=1$, $a=0.20$, $B_i=0$, $\alpha=0.5$, $\beta=0.4$, $\kappa=0.3$, equal-scaling $\chi=0.6$; financing is $\phi=0.80$, $\psi=0.30$; menus are $\bar h^R=0.15$, $\bar h^O=1$; the discount factor is $\vartheta=0.2164$, so the savings load is $k=\vartheta(1+\gamma)=0.325$, and the buyer anticipates no repricing. The old incumbent has $a_j=0.2$, $H^0=0.25$, $\gamma=0.5$, no bequest motive, levy $\ell=0.2$. The stock $\bar H=5/12$ is chosen so $q=1$ clears the market; entry is deterministic, and the renewal inflow $\bar R=1-n^\ast$ sustains the cohort.
-
-The young household buys: the owner cap $H^O=\min\{1,\,0.25,\,0.30\}=0.25$ is the collateral component and beats the rental menu. The cap binds (the unconstrained optimum is $h^u=0.342$). The budget is $c+qh+a'=y+a=1.20$, and the savings rule gives $a'=k(c-\chi n)=0.20$: the buyer carries exactly her initial wealth. The fertility condition gives $n^\ast=0.223$, with adult consumption $c-\chi n=0.616$ and adult space $h-\kappa n=0.183$; the bundle reveals $\zeta^{O,F}=\alpha(c-\chi n)/(h-\kappa n)-q=0.68$. The incumbent's released units net $q-\ell=0.8$, so her liquidation wealth is $a_j+(q-\ell)H^0=0.40$ and she keeps $h^O=1/6$, valuing retained space at $0.80$; her released $1/12$ plus the passive stock $1/6$ house the young buyer. Moving one unit from her to the young household frees $\zeta^{O,F}+\ell=0.88$ in goods; the cap derivative below is $\dd n/\dd H=0.33$; and a down-payment grant passes through at $\rho/((1-\phi)q)=1.25$, so $0.01$ of wealth buys $0.0125$ units of cap, adding $0.0041$ children through access and another $0.0012$ through the budget. Figure~\ref{fig:example} draws the two sides.
+\textbf{A worked example.} Figure~\ref{fig:example} draws both sides of the misallocation in a solved stationary case: $q=1$, a young buyer whose down payment caps her at $h=0.25$ against an unconstrained optimum of $0.342$, and an incumbent whose levy $\ell=0.2$ holds her at $h^O=1/6$. The buyer's bundle reveals $\zeta^{O,F}=0.68$, so moving one unit of space from the incumbent to her frees $\zeta^{O,F}+\ell=0.88$ in goods. The right panel turns the cap into births: at the equilibrium cap $\dd n/\dd H=0.33$, so a $0.01$ wealth grant, passing through to the cap at $1.25$, adds $0.0041$ children through access and another $0.0012$ through the budget.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.96\textwidth]{example_misallocation.pdf}
-\caption{The worked example. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\ell=0.80$; moving one unit frees $0.88$ in goods. Right: completed fertility against the effective cap; at the equilibrium cap the slope is $\dd n/\dd H=0.33$, and the cap stops binding at $h^u=0.34$.}
+\caption{The worked example. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\ell=0.80$; moving one unit frees $0.88$ in goods. Right: completed fertility against the effective cap; at the equilibrium cap the slope is $\dd n/\dd H=0.33$, and the cap stops binding at $h^u=0.34$. Parameters: $y=1$, $a=0.20$, $B=0$, $\alpha=0.5$, $\beta=0.4$, $\kappa=0.3$, $\chi=0.6$, $\phi=0.8$, $\psi=0.3$, $\rho=0.25$, $\bar h^R=0.15$, $\bar h^O=1$, $\gamma=0.5$, $b=0$, $\vartheta=0.2164$ (so $k=0.325$); incumbent $a_j=0.2$, $H^0=0.25$, $\ell=0.2$; the stock $\bar H=5/12$ clears at $q=1$, and renewal $\bar R=1-n^\ast$ sustains the cohort.}
 \label{fig:example}
 \end{figure}
 
@@ -195,9 +193,5 @@ At fixed prices, a small policy $z$ moves aggregate fertility through the constr
 where $\mathcal E_m(z)$ is the set of households whose cap binds in branch $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental menu. A transfer of spendable resources also moves fertility through the budget at a fixed cap; the formula isolates the access channel. At $\chi=(1+k)\kappa q/\alpha$, equal scaling at lifetime prices, $\Psi_i^m$ is proportional to $\zeta_i^m/(c_i^m-\chi n_i^m)$, so the same gap that measures misallocation predicts whose fertility responds.
 
 Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the tenure boundary. In the baseline both tenures price space at the same $q$ and old-age prospects do not depend on tenure, so an indifferent household has the same allocation in both, the switching jump is exactly zero, and the formula above is complete. With a tenure-cost wedge the jump is signed by which tenure is the expensive way to occupy space: when owning is dearer, the marginal switcher into ownership upsizes and, under the same space-intensive-child condition as above, has more children. The long version of the note states and proves this, together with the stationary demographic closure and the full equilibrium definition.
-
-Two notation conventions to keep in mind against the quantitative model: there $M$ denoted the outside entry flow, while here $\bar M$ is the total potential-young mass and $\bar R$ the renewal inflow; and the per-child consumption requirement $\chi$ is common across households.
-
-Two extensions are in progress. A quantitative lifecycle version (mortgages, income risk, an owner ladder, elastic supply) prices the same wedges in U.S. data; and the two gaps invite direct measurement, $\zeta$ from consumption-and-space bundles and $\ell$ from deeds, basis, and the exclusion.
 
 \end{document}
