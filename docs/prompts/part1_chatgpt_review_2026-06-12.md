@@ -1,0 +1,29 @@
+# Review prompt — Part I analytical note (2026-06-12, savings revision)
+
+Paste everything below the line into ChatGPT Pro, attaching:
+`intergenerational_housing_fertility_part1.tex` (+ PDF) and
+`intergen_housing_fertility_advisor_note.tex` (+ PDF).
+
+---
+
+You are refereeing a compact analytical model for a quantitative-macro / urban economics paper: a stationary two-period OLG model of housing misallocation and fertility. Two files are attached. `intergenerational_housing_fertility_part1` (~25 pp.) is canonical; `intergen_housing_fertility_advisor_note` (6 pp.) is a compressed mirror that must stay consistent with it. Review the math line by line with the rigor of a top-five referee. Derive, don't pattern-match.
+
+**What just changed (review these hardest).** A young consumption–savings margin was added to a previously static young problem:
+
+1. Young problem, per tenure mode $m\in\{R,O\}$: choose $(c,h,n,a')$, budget $c+qh+a'=y_i+A_i(x)$, $a'\ge0$, continuation $\vartheta\,\mathbb E[V^O_{j'}]$; financing constraints gated by $\mathbf 1\{m=O\}$. The down payment is still capped by initial wealth $A_i(x)$ (posted at purchase, before income accrues). Check the merged problem, the $-\infty$ convention, and that every downstream reference to the old two-problem formulation was updated.
+2. Intergenerational books, displayed as a restriction on the kernel $\Gamma_O$: $a_{j'}+qH^0_{j'}=(1+r)a'+g_{j'}h$ for owners, $a_{j'}=(1+r)a'$ for renters, where $g_{j'}$ is idiosyncratic unit repricing and $\ell_{j'}$ = gains-tax rate × $g_{j'}$ above an exclusion. Check there is no double-counting of housing wealth between the young budget (user cost $q$) and the old budget ($qH^0$ resources), given these books.
+3. Assumption "repricing neutral at purchase": $\mathbb E[(g_{j'}-\ell_{j'})/c^O_{j'}]=0$. Claim: under it the owner's housing FOC carries no continuation term, so the access gap is still computable from bundles as $\zeta=\alpha(c-\chi n)/(h-\kappa n)-q$. Verify by differentiating the Lagrangian with the books substituted in (envelope on $V^O$: $\partial V^O/\partial a_j=1/c^O$, $\partial V^O/\partial H^0=(q-\ell)/c^O$).
+4. Euler equation $1/(c-\chi n)\ge\vartheta(1+r)\mathbb E[1/c^O_{j'}]$ and the closed-form savings rule $a'=k_i(c-\chi n)$ with $k_i=\vartheta(1+\gamma+\mathbb E[b_{j'}\mid i])$ under logarithmic warm glow $\mathcal B_j(e)=b_j\log e$ and repricing degenerate at zero. Verify the rule (note $r$ should cancel) and that the stated hypotheses (interior old choices, degenerate repricing) are exactly what the derivation needs.
+5. $(1+k)$ deformations downstream, all of which should reduce to the old formulas at $k=0$: the concentrated branch problem (weight $1+k$ on $\log(c-\chi n)$, budget $(1+k)(c-\chi n)+\chi n+qh=w$, $w=y+A$); $\mathrm dn/\mathrm dH$; the sign threshold $\chi\le(1+k)\kappa q/\alpha$; the "lifetime equal scaling" point $\chi=(1+k)\kappa q/\alpha$ at which $\Psi_i^m\propto\zeta_i^m$ (check the factorization in the corollary proof); the tenure-switching proof with $\Phi(X,Y)=(1+k)\log X+\alpha\log Y+\beta\log(X+Y)$, the ray $Y=\alpha X/(1+k)$, and the level-set positivity computation.
+6. Worked example with $q=1$, $\rho=0.25$, $y=1$, $a=0.20$, $B=0$, $\alpha=0.5$, $\beta=0.4$, $\kappa=0.3$, $\chi=0.6$, $\phi=0.8$, $\psi=0.3$, $\bar h^R=0.15$, $\bar h^O=1$, $\vartheta=0.216$ ($k=0.325$), incumbent $a_j=0.2$, $H^0=0.25$, $\gamma=0.5$, $\ell=0.2$. Recompute: cap $0.25$, $n^\ast=0.223$, $c-\chi n=0.616$, $\zeta^{O,F}=0.68$, $a'=0.20$, incumbent keeps $1/6$ at $MV=0.8$, surplus $0.88$, $\mathrm dn/\mathrm dH=0.33$, $h^u=0.342$, grant $0.01\to+0.0041$ (access) $+0.0012$ (budget). Use the budget $c+qh+a'=y+a=1.20$.
+7. Goods feasibility now reads $\int\pi^E(c+a'-y-A(x))\,\mathrm dG_Y+\int(c^O+e-a_j)\,\mathrm d(F_O+F_R)+\Xi^\Pi\le0$, with bequests, estate-tax rebates, and the net return $r\int a'$ closed by the transitions and the passive financial sector. Check the accounting, including against the bequest adding-up restriction on $\Gamma_Y$.
+8. The planner now explicitly holds savings fixed ("within-period reallocation given the intergenerational wealth transition"). Check that the efficiency proposition and its proof are unaffected by the savings margin and that holding savings fixed is stated wherever needed.
+
+**Settled design decisions — do not propose reverting these.**
+- Planner first-order conditions: logit-entry terms enter through a common factor that cancels from the displayed ratios. This was re-derived twice; do not resubmit "these are conditional FOCs / entry terms are missing."
+- No balanced growth path. Gains are idiosyncratic repricing; the stationarity of the levy cross-section vs. zero anticipated repricing in the example is acknowledged in the text, not a discovery.
+- Tenure choice is a deterministic argmax (no smoothing), $\phi=0.80$ is fixed, and notation uses explicit composites $(c-\chi n)$, $(h-\kappa n)$ — no residual symbols.
+- Single floorspace market with $q^R=q^O=q$ in the baseline; supply margins are deferred extensions.
+- Entry/tenure-assignment/transition margins are outside the planner comparison by design; existence/uniqueness of the demographic fixed point is deliberately not claimed.
+
+**Deliverables.** Numbered findings, each with: location (section + display or sentence), severity (must-fix / optional / wrong-as-stated-by-me-the-reviewer-if-unsure), the math or the exact wording problem, and a minimal proposed fix. Separate lists for (a) mathematical errors, (b) undefined or colliding notation, (c) claims stronger than what is proved, (d) internal inconsistencies between the two documents, (e) prose that reads as padded or machine-generated. Do not rewrite sections wholesale; do not restate the model back at me; do not comment on the deferred quantitative sections.
