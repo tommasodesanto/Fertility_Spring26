@@ -189,32 +189,34 @@ the left side is $u_h/u_c$, her marginal rate of substitution between space and 
 \qquad
 \zeta_i^O=\underbrace{\frac{\mu_i}{\lambda_i}(1-\phi)P}_{\zeta_i^{O,F}\text{, down payment}}+\underbrace{\frac{\theta_i}{\lambda_i}}_{\text{size limit}} :
 \]
-her marginal value of space exceeds her effective price by the bite of whichever access constraints bind---the down payment ($\mu_i$) or the owner size limit ($\theta_i$). When the size limit is slack, the bundle identifies the financing bite alone: $\zeta_i^{O,F}$ is the observed ratio minus $q^O$. For an old incumbent at an interior retention choice,
+her marginal value of space exceeds her effective price by the bite of whichever access constraints bind---the down payment ($\mu_i$) or the owner size limit ($\theta_i$). When the size limit is slack, the bundle identifies the financing bite alone ($F$ for financing): $\zeta_i^{O,F}$ is the observed ratio minus $q^O$. For an old incumbent at an interior retention choice,
 \[
 \frac{\gamma c_j^O}{h_j^O}=q-\bar\ell :
 \]
 she keeps marginal space she values below what the market would pay, because selling it would realize the taxable gain. Old renters carry no such wedge: their marginal value is $q$.
 
-Multiplying the fertility first-order condition by consumption gives, in either tenure,
+The solved policies give the level of fertility; the first-order condition behind them shows where housing enters it. Dividing that condition by the marginal utility of consumption prices the marginal child in goods: in either tenure,
 \[
-\frac{\vartheta\,(c_i^m-\chi n_i^m)}{n_i^m}=\chi+\kappa\,(q^m+\zeta_i^m),
+\underbrace{\frac{\vartheta\,(c_i^m-\chi n_i^m)}{n_i^m}}_{\text{willingness to pay for a marginal child}}
+=\underbrace{\chi+\kappa\,(q^m+\zeta_i^m)}_{\text{full price of a child}} .
 \]
-with $q^m$ the mode's effective price.
-A child's space requirement is priced at the household's own shadow value of space. Children get more expensive exactly where family-sized space is hard to reach, with market prices unchanged.
+A child's space requirement is priced at the household's own shadow value of space, so a binding access constraint acts as a tax of $\kappa\,\zeta_i^m$ per child. Children get more expensive exactly where family-sized space is hard to reach, with market prices unchanged.
 
 \section{Efficiency}
 This section is very preliminary, and serves as an illustration of what one can do with the wedges. 
-The planner faces the economy's real constraints and nothing else: the stock, the size limits, goods feasibility, and the domain conditions. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy. Let $r_i^F\ge0$ be the marginal real cost of implementing one more unit of owner space for a financing-constrained household: zero if the planner can reassign directly, positive if it must work through costly instruments, infinite if the constraint is a primitive nothing relaxes.
+The planner faces the economy's real constraints and nothing else: the stock, the size limits, goods feasibility, and the domain conditions. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy.
 
 \begin{proposition}
-Hold the stationary cross-section, entry, tenure assignments, and savings fixed. The planner's surplus from moving one unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraints bind is
+Hold the stationary cross-section, entry, tenure assignments, and savings fixed; the variation below resizes two owner-occupied houses and converts no tenures. The planner's surplus from moving one unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraints bind is
 \[
-\left(q^O+\zeta_i^{O,F}-r_i^F\right)-\left(q-\bar\ell\right)=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell-r_i^F .
+\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell .
 \]
 The competitive allocation solves the planner's conditional problem only if no feasible pair has positive surplus. Conversely, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
 \end{proposition}
 
-\textbf{The two margins in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. On the left, the buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$; moving one unit between them frees $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods. On the right, completed fertility rises with the cap at rate $\dd n/\dd H$ until the cap stops binding at $h^u$.
+The buyer's marginal value is her effective price plus her gap: what she would pay for one more unit. The incumbent's is the net-of-tax sale price: what releasing one more unit nets her. In the difference the market price cancels, and the two tax terms that remain are transfers the planner recovers, not resource costs. If the move must be implemented through costly financing instruments rather than direct reassignment, their marginal real cost subtracts from this surplus; if the down-payment constraint is a primitive nothing relaxes, the gap is not recoverable. The long version carries this implementation cost explicitly.
+
+\textbf{The two margins in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. On the left, the buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over. On the right, completed fertility rises with the cap at rate $\dd n/\dd H$ until the cap stops binding at $h^u$.
 
 \begin{figure}[t]
 \centering
@@ -244,7 +246,7 @@ At fixed prices, a small policy $z$ moves aggregate fertility through the constr
 \]
 where $\mathcal E_m(z)$ is the set of households whose cap binds in mode $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental size limit. A transfer of spendable resources also moves fertility through the budget at a fixed cap; the formula isolates the access channel. At $\chi=(1+k)\kappa q^m/\alpha$, equal scaling at lifetime prices, $\Psi_i^m$ is proportional to $\zeta_i^m/(c_i^m-\chi n_i^m)$, so the same gap that measures misallocation predicts whose fertility responds.
 
-Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the tenure boundary. With no gains tax both tenures price space at the same $q$, an indifferent household has the same allocation in both, and the switching jump is exactly zero. With the tax, owning is the dear way to occupy space, and it also hands the owner mode a constant old-age subsidy---occupying retained space at $q-\bar\ell$---that shifts who sits at the boundary without moving any bundle. The long version prices the tension: the switcher into ownership upsizes when the wedge dominates the subsidy in resources, and she has more children when the space force dominates the subsidy's level shift; at the example's parameters both hold with room, and the boundary household upsizes from $0.15$ to $0.20$ and adds $0.007$ children. The long version of the note states and proves this, together with the stationary demographic closure and the full equilibrium definition.
+Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the rent--own boundary. Without the gains tax the crossing is invisible: both modes price space at the same $q$, the household indifferent between them holds the same bundle in both, and the switching jump is exactly zero. The tax breaks this in two opposing ways. Owning is now the dear way to occupy space, $q^O>q$; and owning carries a constant old-age subsidy---retained space occupied at $q-\bar\ell$---whose value does not depend on the size of the house. A household indifferent between the modes is trading the fixed subsidy against the dearer space, so her two bundles cannot coincide, and crossing the boundary jumps her house size and her fertility. The long version states and proves the exact conditions that sign the two jumps; at the example's parameters the switcher into ownership upsizes from $0.15$ to $0.20$ and adds $0.007$ children. The stationary demographic closure and the full equilibrium definition are also in the long version.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
