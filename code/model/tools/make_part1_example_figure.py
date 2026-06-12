@@ -85,8 +85,7 @@ axL.annotate("", xy=(0.205, q-ell), xytext=(0.205, q+zeta),
              arrowprops=dict(arrowstyle="<->", color="#555555", lw=1.2))
 axL.plot([1/6, 0.205], [q-ell, q-ell], color="#555555", lw=0.6, ls=":")
 axL.plot([0.205, 0.25], [q+zeta, q+zeta], color="#555555", lw=0.6, ls=":")
-axL.text(0.198, 1.30, "moving one unit of space\nfrees " + r"$\zeta^{O,F}+\bar{\ell}/(1+r)+\ell$",
-         fontsize=9, ha="right", va="center", color="#444444")
+
 
 axL.set_xlabel("floorspace")
 axL.set_ylabel("marginal value of space (goods)")
