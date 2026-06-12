@@ -203,7 +203,7 @@ M_t\int
 +R_t.
 \label{eq:compact_cohort_mass_law}
 \end{equation}
-In a stationary equilibrium, $M_t=\bar M$, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, and $R_t=\bar R$. If $\bar R=0$, stationarity requires average births per potential young household to be one. If $\bar R>0$, it requires average births below one, with the shortfall covered by renewal.
+In a stationary equilibrium, $M_t=\bar M$, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, $F_{R,t}=F_R$, and $R_t=\bar R$. If $\bar R=0$, stationarity requires average births per potential young household to be one. If $\bar R>0$, it requires average births below one, with the shortfall covered by renewal.
 
 \textbf{Entry.} A potential young household can enter the housing market or take an outside option with lifetime value $\bar W^E$; entry is subject to Type-I extreme-value taste shocks with scale $\kappa_E>0$.
 
@@ -422,9 +422,9 @@ In a stationary demographic equilibrium, $N+\bar R=\bar M$. Under the baseline o
 
 \section{Constrained planner}
 
-The planner comparison is evaluated at a stationary competitive equilibrium. For the local variations below, the stationary cohort mass $\bar M$, young distribution $G_Y$, old-incumbent measure $F_O$, transition laws $(\Gamma_O,\Gamma_R,\Gamma_Y)$, renewal inflow $\bar R$, and tax rules are held fixed at the instant of the variation. The question is which constraints young families face as real scarcity and which are financing arrangements that a different institutional design could undo.
+The planner comparison is evaluated at a stationary competitive equilibrium. For the local variations below, the stationary cohort mass $\bar M$, young distribution $G_Y$, old measures $F_O$ and $F_R$, transition laws $(\Gamma_O,\Gamma_R,\Gamma_Y)$, renewal inflow $\bar R$, and tax rules are held fixed at the instant of the variation. The question is which constraints young families face as real scarcity and which are financing arrangements that a different institutional design could undo.
 
-The planner has the same preferences, stationary young distribution, old-incumbent measure, entry technology, housing stock, and tenure size menus as the competitive economy. It chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and estates, and policy instruments for the current stationary cross-section. It does not move the savings margin: young savings $a_i'$, and the old wealth they generate, are held at their equilibrium values, so the comparison is within-period reallocation given the intergenerational wealth transition. The planner respects floorspace feasibility and the rental and owner menus.
+The planner has the same preferences, stationary young distribution, old measures $F_O$ and $F_R$, entry technology, housing stock, and tenure size menus as the competitive economy. It chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and estates, and policy instruments for the current stationary cross-section. It does not move the savings margin: young savings $a_i'$, and the old wealth they generate, are held at their equilibrium values, so the comparison is within-period reallocation given the intergenerational wealth transition. The planner respects floorspace feasibility and the rental and owner menus.
 
 The planner faces the economy's real constraints and nothing else: the floorspace stock, the tenure size menus, goods feasibility, and the domain conditions below. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy; when an allocation must be implemented through market purchases, Section 8 prices the required instruments by their marginal real cost. The planner counts true old housing utility and true warm-glow bequest utility; it does not count the avoided gains tax $\ell_j$, which is a transfer.
 
@@ -670,7 +670,7 @@ The renter analog has the same closed form and is feasible only if $h_i^u\le\bar
 At a stationary competitive equilibrium, the price makes aggregate demand equal the fixed stock. Market clearing alone is not enough for efficiency. Conditional on the stationary cross-section and transition margins, efficiency also requires that no feasible reassignment would move marginal space toward households who value it more, net of implementation costs. The test below is compensated: reallocate a unit, hold every household at its prior utility with lump-sum transfers, and ask whether goods are left over. A positive residual is a Pareto improvement under any welfare weights.
 
 \begin{proposition}[Planner-equilibrium comparison, local]
-Consider an interior stationary competitive equilibrium and a planner with the same preferences, housing stock, tenure size menus, stationary young distribution, old-incumbent measure, and transition laws held fixed at the instant of the variation. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
+Consider an interior stationary competitive equilibrium and a planner with the same preferences, housing stock, tenure size menus, stationary young distribution, old measures, and transition laws held fixed at the instant of the variation. Suppose policy accounts are resource-neutral and the planner has no social birth payoff, so $\nu_i^g=0$. Conditional on the equilibrium entry measure and tenure assignments, and away from real menu corners, the competitive allocation solves the planner's conditional allocation problem only if no feasible marginal reallocation of existing floorspace has positive goods-equivalent surplus.
 
 Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good units, of relaxing young owner $i$'s financial implementation constraints enough to permit one more unit of owner floorspace. If the planner can directly reassign existing floorspace and relieve financing without using real resources, then $r_i^F=0$; if it must operate through costly financing instruments, $r_i^F$ prices those real costs; and if the constraint stands for an enforcement primitive no instrument relaxes, the variation is infeasible, the limit $r_i^F=\infty$. For a young owner whose owner menu is slack and whose financial constraints bind, and for an old incumbent at an interior retained-housing choice, the planner's marginal surplus from increasing the young owner's space by one unit and reducing the old incumbent's retained space by one unit is
 \[
@@ -876,7 +876,7 @@ N
 \pi_i^E n_i^Y+(1-\pi_i^E)\bar n_i^E
 \right]\dd G_Y(i),
 \]
-and every entry-margin term below replaces $n_i^Y$ by $n_i^Y-\bar n_i^E$. In the stationary demographic equilibrium, this birth mass and the renewal inflow satisfy $N+\bar R=\bar M$; the local comparisons below hold $(\bar M,G_Y,F_O,\bar R)$ fixed and do not by themselves trace the new stationary demographic fixed point after a policy change.
+and every entry-margin term below replaces $n_i^Y$ by $n_i^Y-\bar n_i^E$. In the stationary demographic equilibrium, this birth mass and the renewal inflow satisfy $N+\bar R=\bar M$; the local comparisons below hold $(\bar M,G_Y,F_O,F_R,\bar R)$ fixed and do not by themselves trace the new stationary demographic fixed point after a policy change.
 Across two allocations,
 \[
 N^P-N^{CE}
@@ -1005,7 +1005,7 @@ Thus the fixed-branch effect is exposure to a binding family-space constraint, t
 
 \subsection{Tenure switching at the boundary}
 
-In this subsection $q^R$ and $q^O$ are tenure-mode user costs that may include wedges around the common baseline cost; the baseline has $q^R=q^O=q$. The results cover branches that differ only in the per-unit user cost and the effective housing cap; tenure-specific amenities, moving costs, or taste shifters require a separate calculation.
+In this subsection $q^R$ and $q^O$ are tenure-mode user costs that may include wedges around the common baseline cost; the baseline has $q^R=q^O=q$. The results cover branches that differ only in the per-unit user cost and the effective housing cap; tenure-specific amenities, moving costs, taste shifters, or tenure-dependent old-age draws require a separate calculation.
 
 Tenure switching is not a price or general-equilibrium effect. It is already present in the fixed-price model because tenure is chosen by
 \[
@@ -1013,7 +1013,7 @@ W_i^Y=\max\{W_i^R,W_i^O\}.
 \]
 A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. In the baseline, no-arbitrage makes them price it identically, $q^R=q^O=q$, and we show below that the jump is then exactly zero: the local policy formula of the previous subsection is complete. Tenure-cost wedges---a rental premium for large units as in the smooth menu formulation, landlord operating costs, tenure-specific tax treatment---reopen a gap between the per-unit costs of renting and owning, and then the jump is signed by which tenure is the expensive way to occupy space.
 
-The branch problems include savings. Concentrating the rule $a'=k(c-\chi n)$ as above turns each branch into the static problem with consumption weight $1+k$, and the proof below carries the weight through. The level-set argument also uses that the concentrated continuation adds the same constant in both modes; under the savings rule this holds when induced old-age choices are interior in both, since the continuation is then $(1+\gamma+\E b_{j'})\log\big((1+r)a'\big)$ plus a draw constant common to the two modes.
+The branch problems include savings. Concentrating the rule $a'=k(c-\chi n)$ as above turns each branch into the static problem with consumption weight $1+k$, and the proof below carries the weight through. The level-set argument also uses that the two modes share the savings load $k$ and the continuation constant. Under the savings rule this holds when induced old-age choices are interior in both modes and the old-age draw distribution, including the warm-glow coefficient $b_{j'}$, does not vary with tenure: the continuation is then $(1+\gamma+\E b_{j'})\log\big((1+r)a'\big)$ plus a constant common to the two modes. A tenure-dependent draw would shift both the weight and the constant and requires redoing the comparison.
 
 Fix prices and suppress the type index. Let $A$ denote the cheaper branch and $B$ the more expensive branch, with tenure-mode user costs
 \[
