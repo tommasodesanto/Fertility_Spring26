@@ -109,13 +109,13 @@ In a stationary equilibrium the inequality is implied by market clearing: the pr
 
 \textbf{Financing.} Buying floorspace requires financing. A young buyer can finance at most a share $\phi\in(0,1)$ of the purchase; the rest, the down payment $(1-\phi)Ph$, is cash at closing, posted from wealth in hand: the mortgage is what lenders advance against the house, and they advance nothing against future income, so $a_i$ caps what a buyer can put down. Wealth is otherwise fungible. It enters the young budget below alongside income and finances consumption and saving; buying assets is not expenditure, so the posted equity remains part of the household's wealth. Inheritances therefore move both access to owner housing and lifetime resources. Households save: a young household carries $a_i'\ge0$ into old age at the exogenous gross return $1+r$, and cannot borrow unsecured against old age. A renter, with no asset to pledge, therefore cannot borrow at all; a buyer's only debt is the financed share $\phi$ of the purchase. Entry wealth is assigned from the exiting old's estates by the young-type transition below. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so no domestic capital-market clearing condition is imposed, and the only price determined inside the model is $q$.
 
-\textbf{Capital-gains taxation.} The model carries two taxes: the property tax $\tau^p$ inside the user cost, and the capital-gains tax, whose treatment of death is the old-side institution at the center of the model. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars, once that difference exceeds an exclusion. Dying instead passes the house with a stepped-up basis---the heir's purchase price is reset to the current value---so the gain is never taxed. For an old incumbent the difference between the two disposal routes is a per-unit tax $\ell_j\ge0$ on housing sold while alive.
+\textbf{Capital-gains taxation.} The model carries two taxes: the property tax $\tau^p$ inside the user cost, and the capital-gains tax, whose treatment of death is the old-side institution at the center of the model. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars. Dying instead passes the house with a stepped-up basis---the heir's purchase price is reset to the current value---so the gain is never taxed. For an old incumbent the difference between the two disposal routes is a per-unit tax $\bar\ell$ on housing sold while alive.
 
 Where do gains come from when the real price never moves? From inflation. Dollar prices and incomes all grow at rate $\varpi>0$, so relative prices and real choices are unaffected; but the tax form compares dollars from different dates, and a house bought one period ago shows a paper gain even though its real value is unchanged. The tax on that paper gain is real,
 \[
 \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}
 \]
-per unit sold, and this is the model's only contact with inflation: budgets, prices, and child requirements are real, and the exclusion is held fixed in real terms. So $\ell_j=\bar\ell$ for an old incumbent whose gain clears the exclusion and $\ell_j=0$ below it; the exclusion is a dollar amount, so large holdings clear it and small ones do not, and we write $h^E$ for the size at which a holding's gain meets it. Everything is deterministic: a buyer knows the tax her future self will face, and Section 7 prices that anticipation. An estate tax, by contrast, would fall on the transfer in any form and leave the retention margin undistorted; the gains tax distorts it precisely because death forgives it. Estate-tax instruments live in the quantitative model.\footnote{Assessment protection of the Proposition 13 type, under which incumbents are taxed on below-market assessed values until they move, generates the same per-unit retention wedge.}
+per unit sold, and this is the model's only contact with inflation: budgets, prices, and child requirements are real. Every cohort carries the same gain, so every incumbent's unit bears $\bar\ell$ if sold while alive.\footnote{The statutory exclusion, which exempts gains below a dollar threshold, is an institutional detail we suppress; with it, small holdings escape the tax and lock-in sorts by size.} Everything is deterministic: a buyer knows the tax her future self will face, and Section 7 prices that anticipation. An estate tax, by contrast, would fall on the transfer in any form and leave the retention margin undistorted; the gains tax distorts it precisely because death forgives it. Estate-tax instruments live in the quantitative model.\footnote{Assessment protection of the Proposition 13 type, under which incumbents are taxed on below-market assessed values until they move, generates the same per-unit retention wedge.}
 
 \textbf{Demography and transitions.} The period timing is: potential young types are drawn; young households decide whether to enter; entrants choose tenure, housing, fertility, and savings; old incumbents choose consumption, retained housing, and estates; old households exit; births and the renewal inflow form the next potential-young cohort; current young owners become next period's old incumbents. Let
 \[
@@ -125,7 +125,7 @@ be the old-incumbent transition for a current young owner of type $i$ who buys $
 \[
 a_{j'}=(1+r)\,a'-q\,H_{j'}^0,
 \]
-so that total old wealth $a_{j'}+qH_{j'}^0$ is exactly the savings' return---the nominal gain is not real wealth; and the tax state, $\ell_{j'}=\bar\ell$ if the inflation gain on $H_{j'}^0$ clears the exclusion and zero otherwise. Housing wealth is in per-period goods units: the old live one more period, so a carried unit is worth one period of services $q$ to its holder, and the shell that outlives her recirculates through the stock. The asset price $P$ appears only in the down-payment requirement. Mortgage balances from youth are netted inside $a_{j'}$: a household that carried a mortgage has lower financial wealth and the same total. The draw does not condition on fertility: estates go to the arriving cohort, not to own children, so the model has no old-age-support motive for births. Young renter entrants map into old-renter states through a parallel kernel $\Gamma_R(\dd j'\mid i,a')$, which assigns $a_{j'}=(1+r)\,a'$; nonentrants receive zero mass under both kernels. Old-renter states follow the same law as \eqref{eq:compact_old_transition} with $\Gamma_R$ and the renter indicator. Given current young choices, the next old-incumbent measure satisfies
+so that total old wealth $a_{j'}+qH_{j'}^0$ is exactly the savings' return---the nominal gain is not real wealth. Housing wealth is in per-period goods units: the old live one more period, so a carried unit is worth one period of services $q$ to its holder, and the shell that outlives her recirculates through the stock. The asset price $P$ appears only in the down-payment requirement. Mortgage balances from youth are netted inside $a_{j'}$: a household that carried a mortgage has lower financial wealth and the same total. The draw does not condition on fertility: estates go to the arriving cohort, not to own children, so the model has no old-age-support motive for births. Young renter entrants map into old-renter states through a parallel kernel $\Gamma_R(\dd j'\mid i,a')$, which assigns $a_{j'}=(1+r)\,a'$; nonentrants receive zero mass under both kernels. Old-renter states follow the same law as \eqref{eq:compact_old_transition} with $\Gamma_R$ and the renter indicator. Given current young choices, the next old-incumbent measure satisfies
 \begin{equation}
 F_{O,t+1}(A)
 =
@@ -205,7 +205,7 @@ W_i^m(q,\tau^p)
 \max_{c_i,h_i,n_i,a_i'}
 \Big\{&
 \log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i\\
-&+\beta\big[\1\{m=R\}\,V^R(a_{j'})+\1\{m=O\}\,V^O(a_{j'},h_i,\ell_{j'})\big]
+&+\beta\big[\1\{m=R\}\,V^R(a_{j'})+\1\{m=O\}\,V^O(a_{j'},h_i)\big]
 \Big\}
 \end{aligned}
 \label{eq:compact_young_problem}
@@ -222,18 +222,12 @@ a_{j'}&=(1+r)\,a_i'-\1\{m=O\}\,q h_i,
 \label{eq:compact_perceived_transition}\\
 \1\{m=O\}\,(1-\phi)P h_i&\le a_i,
 \label{eq:compact_owner_dp}\\
-\ell_{j'}&=\bar\ell\;\1\{m=O\}\,\1\{h_i\ge h^E\},
-\notag\\
 c_i-\chi n_i&>0,
 \qquad
 h_i-\kappa n_i>0.
 \notag
 \end{align}
-$V^O$ and $V^R$ are the old-age values defined in the next section, evaluated at the state the household generates. Nothing here is random: the household knows the old state her choices produce. The budget is the same in both modes---space costs $q$ per unit either way, wealth is spendable either way, savings earn $1+r$ either way---so tenure matters through the size limit and the two owner financing requirements, not through the market price of space. Rearranged, the budget prices a child:
-\[
-(c_i-\chi n_i)+q\,(h_i-\kappa n_i)+\left(\chi+\kappa q\right)n_i+a_i'=y_i+a_i:
-\]
-the full price of a child is its consumption requirement plus the market value of the space it occupies, and when access to space is constrained the space component carries a premium. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which one child uses consumption and housing in the same proportions as its parents.
+$V^O$ and $V^R$ are the old-age values defined in the next section, evaluated at the state the household generates. Nothing here is random: the household knows the old state her choices produce. The budget is the same in both modes---space costs $q$ per unit either way, wealth is spendable either way, savings earn $1+r$ either way---so tenure matters through the size limit and the two owner financing requirements, not through the market price of space. Children have a market price. Each child claims $\chi$ goods and $\kappa$ units of space, and space rents at $q$, so providing for a child costs $\chi+\kappa q$ per period; the budget splits into the adults' own consumption and space, the children's cost, and savings. When access to space is constrained, the space part of a child's cost is valued above $q$---Section 7 makes this exact. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$: the child splits her cost between space and goods in the proportion $\kappa q/\chi=\alpha$, the same proportion in which her parents split their own spending.
 
 Using $P=q/\rho$, owner housing is bounded above by
 \[
@@ -258,10 +252,10 @@ Let $o_i\in\{R,O\}$ denote an optimal tenure.\footnote{The hard rental cap $\bar
 
 \section{The old household's problem}
 
-The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses the capital-gains institution from the environment. On old-household objects ($V^O$, $V^R$, $u^O$, $c_j^O$) the superscripts mark the old stage and its tenure; the index $j$ separates old households from young ones. Old incumbent $j$ is last period's young owner and enters with financial wealth $a_j$ (negative when a mortgage balance remains), carried housing $H_j^0$, and an accrued gain on it. Old households have no income: resources are returned savings and, for incumbents, the carried house. Each unit she holds faces one choice: sell it now and pay the gains tax, or keep it until death, when the basis steps up and the tax is forgiven. $\ell_j$ is the tax per unit that selling triggers: $\bar\ell$ when her gain clears the exclusion, zero below.\footnote{The statutory tax is triggered by the sale of the discrete dwelling; with divisible floorspace the per-unit tax is its smooth counterpart. Discreteness concentrates the same wedge at the downsizing margin and strengthens retention.} She chooses consumption, retained housing, and her estate, with the preferences of Section 1:
+The baseline young-access mechanism below does not require any old-side force. When the old side is active, the compact model uses the capital-gains institution from the environment. On old-household objects ($V^O$, $V^R$, $u^O$, $c_j^O$) the superscripts mark the old stage and its tenure; the index $j$ separates old households from young ones. Old incumbent $j$ is last period's young owner and enters with financial wealth $a_j$ (negative when a mortgage balance remains), carried housing $H_j^0$, and an accrued gain on it. Old households have no income: resources are returned savings and, for incumbents, the carried house. Each unit she holds faces one choice: sell it now and pay the gains tax, or keep it until death, when the basis steps up and the tax is forgiven. Selling triggers the tax $\bar\ell$ per unit.\footnote{The statutory tax is triggered by the sale of the discrete dwelling; with divisible floorspace the per-unit tax is its smooth counterpart. Discreteness concentrates the same wedge at the downsizing margin and strengthens retention.} She chooses consumption, retained housing, and her estate, with the preferences of Section 1:
 \begin{equation}
 \begin{aligned}
-V^O(a_j,H_j^0,\ell_j)
+V^O(a_j,H_j^0)
 &=
 \max_{c_j^O,\,h_j^O,\,e_j}\;
 u^O(c_j^O,h_j^O,e_j)
@@ -269,13 +263,13 @@ u^O(c_j^O,h_j^O,e_j)
 &\text{subject to}\quad
 c_j^O+e_j+q\,h_j^O
 =
-a_j+q H_j^0-\ell_j(H_j^0-h_j^O),
+a_j+q H_j^0-\bar\ell\,(H_j^0-h_j^O),
 \qquad
 0\le h_j^O\le H_j^0.
 \end{aligned}
 \label{eq:compact_old_budget}
 \end{equation}
-Releasing a unit of housing nets $q-\ell_j$, its market value less the tax the sale realizes, while the market values the released space at $q$. The forgiveness at death is a subsidy to staying put: a tax rule attached to the disposal route, not a preference and not a real resource saving. The planner below counts true old housing utility and true warm-glow bequest utility but does not count the avoided tax as a social benefit. An old household that keeps a large house because she values it is using housing efficiently; an old household that keeps it because selling would realize a taxable gain is not.
+Releasing a unit of housing nets $q-\bar\ell$, its market value less the tax the sale realizes, while the market values the released space at $q$. The forgiveness at death is a subsidy to staying put: a tax rule attached to the disposal route, not a preference and not a real resource saving. The planner below counts true old housing utility and true warm-glow bequest utility but does not count the avoided tax as a social benefit. An old household that keeps a large house because she values it is using housing efficiently; an old household that keeps it because selling would realize a taxable gain is not.
 
 An old renter carries no housing and no tax: her wealth is her returned savings, $a_j=(1+r)a_i'$, positive because zero savings would leave her nothing to consume. With the same preferences she solves
 \begin{equation}
@@ -288,7 +282,7 @@ c_j^O+e_j+q\,h_j^O=a_j,
 0<h_j^O\le\bar h^R,
 \label{eq:compact_oldrenter_budget}
 \end{equation}
-and at an interior choice $\gamma c_j^O/h_j^O=q$: old rental demand adds to market clearing but carries no wedge.\footnote{\citet{coven2024} model this lock-in channel in lifecycle form and evaluate a rate reduction. The tax $\ell_j$ prices the same margin statically, and also prices the opposite reform: taxing accrued gains at every transfer, including bequest, removes the step-up and shrinks $\ell_j$ to the value of tax deferral.}
+and at an interior choice $\gamma c_j^O/h_j^O=q$: old rental demand adds to market clearing but carries no wedge.\footnote{\citet{coven2024} model this lock-in channel in lifecycle form and evaluate a rate reduction. The tax $\bar\ell$ prices the same margin statically, and also prices the opposite reform: taxing accrued gains at every transfer, including bequest, removes the step-up and shrinks $\bar\ell$ to the value of tax deferral.}
 
 \section{Entry}
 
@@ -424,7 +418,7 @@ The planner comparison is evaluated at a stationary competitive equilibrium. For
 
 The planner has the same preferences, stationary young distribution, old measures $F_O$ and $F_R$, entry technology, housing stock, and tenure size limits as the competitive economy. It chooses entry-relevant inside allocations, tenure assignments, young consumption, housing and fertility, old consumption, housing and estates, and policy instruments for the current stationary cross-section. It does not move the savings margin: young savings $a_i'$, and the old wealth they generate, are held at their equilibrium values, so the comparison is within-period reallocation given the intergenerational wealth transition. The planner respects floorspace feasibility and the rental and owner size limits.
 
-The planner faces the economy's real constraints and nothing else: the floorspace stock, the tenure size limits, goods feasibility, and the domain conditions below. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy; when an allocation must be implemented through market purchases, Section 8 prices the required instruments by their marginal real cost. The planner counts true old housing utility and true warm-glow bequest utility; it does not count the avoided gains tax $\ell_j$, which is a transfer.
+The planner faces the economy's real constraints and nothing else: the floorspace stock, the tenure size limits, goods feasibility, and the domain conditions below. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy; when an allocation must be implemented through market purchases, Section 8 prices the required instruments by their marginal real cost. The planner counts true old housing utility and true warm-glow bequest utility; it does not count the avoided gains tax $\bar\ell$, which is a transfer.
 
 Let $\omega_i^Y>0$ and $\omega_j^O>0$ be Pareto weights. Let $\mathcal G_i(n_i)$ denote an optional social payoff from births beyond parental utility. The fertility-neutral planner has $\mathcal G_i\equiv0$.
 
@@ -540,7 +534,7 @@ with $(\Lambda,Q)$ pinned by goods and floorspace feasibility. The weights are n
 \[
 \frac{h_i-\kappa n_i}{c_i-\chi n_i}=\frac{\alpha}{Q},
 \]
-common across households under any $\omega$, while the equilibrium disperses the same ratio to $\alpha/(q^m+\zeta_i^m)$ across constrained young households and, for old incumbents, $\gamma/(q-\ell_j)$ against the planner's $\gamma/Q$. Dispersed ratios cannot be matched by any choice of weights. The local test of Section 8 is this violation stated constructively: between a high-ratio and a low-ratio household, goods are on the table.
+common across households under any $\omega$, while the equilibrium disperses the same ratio to $\alpha/(q^m+\zeta_i^m)$ across constrained young households and, for old incumbents, $\gamma/(q-\bar\ell)$ against the planner's $\gamma/Q$. Dispersed ratios cannot be matched by any choice of weights. The local test of Section 8 is this violation stated constructively: between a high-ratio and a low-ratio household, goods are on the table.
 
 \section{Equilibrium policies}
 
@@ -580,22 +574,20 @@ A renter against the size cap values one more unit of space above the rent it wo
 
 \begin{assumption}[Regularity at the old margin]
 \label{ass:carry_neutral}
-(i) The household's induced old retention choice is interior, $h_{j'}^O<H_{j'}^0$. (ii) Types at the size threshold where the inflation gain meets the exclusion have zero mass.
+The household's induced old retention choice is interior, $h_{j'}^O<H_{j'}^0$.
 \end{assumption}
 
-Anticipation is a price here, not a friction to assume away. Buying one more unit raises anticipated old wealth by its housing value and costs that value today; above the exclusion it also commits the household to the tax $\bar\ell$ on the marginal unit her old self sells. By the envelope condition $\partial V^O/\partial H^0=(q-\ell)/c^O$, which part (i) keeps smooth, the continuation contributes $-\beta\bar\ell/c_{j'}^O$ to the buyer's housing condition, and the saving condition converts it into goods:
+Anticipation is a price here, not a friction to assume away. Buying one more unit raises anticipated old wealth by its housing value and costs that value today; it also commits the household to the tax $\bar\ell$ on the marginal unit her old self sells. By the envelope condition $\partial V^O/\partial H^0=(q-\bar\ell)/c^O$, which the assumption keeps smooth, the continuation contributes $-\beta\bar\ell/c_{j'}^O$ to the buyer's housing condition, and the saving condition converts it into goods:
 \[
 \frac{\beta\,\bar\ell\,(c_i-\chi n_i)}{c_{j'}^O}=\frac{\bar\ell}{1+r}.
 \]
-A buyer above the exclusion therefore pays an effective price
+A buyer therefore pays an effective price
 \[
-q^O\equiv q+\frac{\ell_{j'}}{1+r},
-\qquad
-\ell_{j'}\in\{0,\bar\ell\},
+q^O\equiv q+\frac{\bar\ell}{1+r},
 \]
-per unit of space---the market price plus her own discounted lock-in tax---while a renter, or a buyer below the exclusion, pays $q$. The tax acts twice: ex post it locks in the current old, and ex ante it taxes ownership of family-sized space.
+per unit of space---the market price plus her own discounted lock-in tax---while a renter pays $q$. The tax acts twice: ex post it locks in the current old, and ex ante it taxes ownership of family-sized space.
 
-For a young owner ($m=O$) above the exclusion, at an interior allocation with respect to consumption and fertility,
+For a young owner ($m=O$), at an interior allocation with respect to consumption and fertility,
 \begin{align}
 \frac{1}{c_i^O-\chi n_i^O}&=\lambda_i^O,
 \notag\\
@@ -611,7 +603,7 @@ For a young owner ($m=O$) above the exclusion, at an interior allocation with re
 \frac{\chi}{c_i^O-\chi n_i^O}+\frac{\alpha\kappa}{h_i^O-\kappa n_i^O}.
 \label{eq:compact_owner_foc_n}
 \end{align}
-Below the exclusion the anticipated-tax term is absent. The same conversion for the owner collects the access constraints, each priced by the primitive that generates it:
+The same conversion for the owner collects the access constraints, each priced by the primitive that generates it:
 \[
 \zeta_i^O
 =
@@ -645,10 +637,10 @@ Both tenure modes share the saving margin
 \end{equation}
 the first-order condition for saving, with $c_{j'}^O$ old consumption at the generated state: both old problems have envelope $\partial V/\partial a_j=1/c_j^O$, carried savings pay $1+r$, and $\xi_i>0$ exactly when the household would like to borrow against old age and cannot. In the benchmark it pins savings in closed form. With logarithmic warm glow, $\mathcal B(e)=b\log e$ with $b\ge0$, old consumption at interior choices is proportional to liquidation wealth, and the condition collapses to the savings rule
 \begin{equation}
-a_i'=\beta\left(1+\gamma+b\right)(c_i-\chi n_i)+\frac{\ell_{j'}\,h_i}{1+r},
+a_i'=\beta\left(1+\gamma+b\right)(c_i-\chi n_i)+\1\{m=O\}\,\frac{\bar\ell\,h_i}{1+r},
 \label{eq:compact_savings_rule}
 \end{equation}
-with $\gamma$ the old housing weight, $b$ the warm-glow weight, and $\ell_{j'}=0$ for renters and below-exclusion buyers. In the first term the gross return drops out, the usual log cancellation; the second is the discounted future tax bill, which the household saves in advance: anticipating the lock-in tax is itself a savings motive. The savings load $k\equiv\beta(1+\gamma+b)$ is old age's claim on each unit of adult consumption; the comparative statics of Section 9 use it as shorthand.
+with $\gamma$ the old housing weight and $b$ the warm-glow weight; renters drop the second term. In the first term the gross return drops out, the usual log cancellation; the second is the discounted future tax bill, which the household saves in advance: anticipating the lock-in tax is itself a savings motive. The savings load $k\equiv\beta(1+\gamma+b)$ is old age's claim on each unit of adult consumption; the comparative statics of Section 9 use it as shorthand.
 
 For an old owner at an interior choice of current housing to keep,
 \begin{equation}
@@ -656,7 +648,7 @@ For an old owner at an interior choice of current housing to keep,
 =
 \frac{\gamma c_j^O}{h_j^O}
 =
-q-\ell_j.
+q-\bar\ell.
 \label{eq:compact_old_mv}
 \end{equation}
 The old owner's valuation sits \emph{below} the market price by exactly the tax: she keeps marginal space she values at less than the market would pay, because selling it would realize the taxable gain. If bequests are interior, then
@@ -678,7 +670,7 @@ If the household owns, then
 =
 \chi+\kappa(q^O+\zeta_i^O),
 \]
-with $q^O=q+\ell_{j'}/(1+r)$ the buyer's effective price.
+with $q^O=q+\bar\ell/(1+r)$ the buyer's effective price.
 Thus rental size limits and owner access constraints enter fertility through the housing services required per child.
 \end{proposition}
 
@@ -692,7 +684,7 @@ If no access or size limit constraint binds in the relevant tenure case, the cor
 \begin{align*}
 c_i^u-\chi n_i^u&=\frac{y_i+a_i}{1+\alpha+\vartheta+k},
 \qquad
-a_i^{\prime u}=k\,(c_i^u-\chi n_i^u)+\frac{\ell_{j'}h_i^u}{1+r},
+a_i^{\prime u}=k\,(c_i^u-\chi n_i^u)+\1\{m=O\}\,\frac{\bar\ell\,h_i^u}{1+r},
 \\
 n_i^u&=\frac{\vartheta\,(y_i+a_i)}{(1+\alpha+\vartheta+k)(\chi+\kappa q^O)},
 \\
@@ -713,14 +705,14 @@ Let $r_i^F\ge0$ denote the marginal real resource cost, in consumption-good unit
 \[
 \left(q^O+\zeta_i^{O,F}-r_i^F\right)
 -
-\left(q-\ell_j\right)
+\left(q-\bar\ell\right)
 =
-\zeta_i^{O,F}+\frac{\ell_{j'}}{1+r}+\ell_j-r_i^F.
+\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell-r_i^F.
 \]
 The buyer's anticipated tax is a transfer, like the incumbent's realized one, so it belongs in the recoverable surplus.
-Thus, in the zero-real-cost finance case, any such pair with $\zeta_i^{O,F}+\ell_{j'}/(1+r)+\ell_j>0$ prevents the competitive allocation from solving the planner's conditional allocation problem. More generally, a positive young financial access gap is inefficient whenever it can be relaxed at marginal real cost below the value gap relative to the marginal source of space, and a positive retention tax $\ell_j$ marks an inefficiency whenever the released space has a feasible recipient whose marginal value exceeds the old incumbent's true marginal value.
+Thus, in the zero-real-cost finance case, any such pair with $\zeta_i^{O,F}+\bar\ell/(1+r)+\bar\ell>0$ prevents the competitive allocation from solving the planner's conditional allocation problem. More generally, a positive young financial access gap is inefficient whenever it can be relaxed at marginal real cost below the value gap relative to the marginal source of space, and a positive retention tax $\bar\ell$ marks an inefficiency whenever the released space has a feasible recipient whose marginal value exceeds the old incumbent's true marginal value.
 
-Conversely, if the financial implementation gaps are zero for all relevant young owners and $\ell_j=0$ for old incumbents at interior retention choices, then, conditional on entry, tenure assignments, savings, and real size limit constraints, the competitive allocation satisfies the planner's conditional housing and fertility first-order conditions for suitable Pareto weights.
+Conversely, if the financial implementation gaps are zero for all relevant young owners and $\bar\ell=0$ for old incumbents at interior retention choices, then, conditional on entry, tenure assignments, savings, and real size limit constraints, the competitive allocation satisfies the planner's conditional housing and fertility first-order conditions for suitable Pareto weights.
 \end{proposition}
 
 \begin{proof}
@@ -732,33 +724,33 @@ For a young owner with a slack owner size limit and binding financial implementa
 \[
 \frac{u^Y_{h,i}}{u^Y_{c,i}}=q^O+\zeta_i^{O,F}.
 \]
-If relaxing those constraints has marginal real resource cost $r_i^F$, the net marginal value of assigning one more unit of space to that owner is $q^O+\zeta_i^{O,F}-r_i^F$, and the anticipated-tax component $\ell_{j'}/(1+r)$ of $q^O$ is a transfer the planner recovers. For an old incumbent at an interior retention choice,
+If relaxing those constraints has marginal real resource cost $r_i^F$, the net marginal value of assigning one more unit of space to that owner is $q^O+\zeta_i^{O,F}-r_i^F$, and the anticipated-tax component $\bar\ell/(1+r)$ of $q^O$ is a transfer the planner recovers. For an old incumbent at an interior retention choice,
 \[
-\frac{u^O_{h,j}}{u^O_{c,j}}=q-\ell_j.
+\frac{u^O_{h,j}}{u^O_{c,j}}=q-\bar\ell.
 \]
 Subtracting gives
 \[
-\zeta_i^{O,F}+\frac{\ell_{j'}}{1+r}+\ell_j-r_i^F.
+\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell-r_i^F.
 \]
-A positive value is a feasible first-order improvement: transfer goods to hold each household at its pre-variation utility, and the residual $\left[\zeta_i^{O,F}+\ell_j-r_i^F\right]\dd h$ is available as surplus. Therefore the competitive allocation cannot solve the planner's conditional allocation problem.
+A positive value is a feasible first-order improvement: transfer goods to hold each household at its pre-variation utility, and the residual $\left[\zeta_i^{O,F}+\bar\ell-r_i^F\right]\dd h$ is available as surplus. Therefore the competitive allocation cannot solve the planner's conditional allocation problem.
 
 If all implementation-relevant financial gaps and retention taxes are zero, the competitive marginal values of all households away from real size-limit corners coincide with the common market user cost $q$. Real size-limit corners are respected by both the competitive economy and the constrained planner. With $\nu_i^g=0$, the competitive fertility condition then matches the planner's fertility condition evaluated at the same scarcity price, and Pareto weights can be chosen to support the competitive consumption allocation.
 \end{proof}
 
 The proposition does not characterize the efficiency of the entry, tenure-assignment, or intergenerational transition margins themselves; those margins are held fixed. It also does not say that every cap is a market failure: real size limits remain real constraints, while financial gaps matter only to the extent that an implementable instrument can reach them at a low enough real resource cost.
 
-The misallocation has two sides. A young household that cannot post a larger down payment values the marginal unit of space at $q^O+\zeta_i^{O,F}$, above the market value of that space; the market clears, yet she cannot buy more of it. An old incumbent sitting on a taxable gain keeps the marginal unit while valuing it at $q-\ell_j$, below the market value of that space. Moving one unit from the second household to the first would raise welfare by $\zeta_i^{O,F}+\ell_j-r_i^F$, measured in consumption goods; in the pure-finance case this is $\zeta_i^{O,F}+\ell_j$. Both pieces are computable from data given the preference parameters: the young gap from bundles, via $\zeta_i^{O,F}=\alpha(c_i^O-\chi n_i^O)/(h_i^O-\kappa n_i^O)-q-\ell_{j'}/(1+r)$ when the size cap is slack---the bundle gap over market rent net of the known tax term--- and the old gap from deeds and the tax schedule, via the purchase basis, the current value, the exclusion, and the rate. The old-side force amplifies the misallocation but is not needed for it: the young-access gap is positive whenever a purchase constraint binds with positive shadow value, with or without the gains tax.
+The misallocation has two sides. A young household that cannot post a larger down payment values the marginal unit of space at $q^O+\zeta_i^{O,F}$, above the market value of that space; the market clears, yet she cannot buy more of it. An old incumbent sitting on a taxable gain keeps the marginal unit while valuing it at $q-\bar\ell$, below the market value of that space. Moving one unit from the second household to the first would raise welfare by $\zeta_i^{O,F}+\bar\ell/(1+r)+\bar\ell-r_i^F$, measured in consumption goods; in the pure-finance case the $r_i^F$ term drops. Both pieces are computable from data given the preference parameters: the young gap from bundles, via $\zeta_i^{O,F}=\alpha(c_i^O-\chi n_i^O)/(h_i^O-\kappa n_i^O)-q-\bar\ell/(1+r)$ when the size cap is slack---the bundle gap over market rent net of the known tax term--- and the old gap from deeds and the tax schedule, via the purchase basis, the current value, and the rate. The old-side force amplifies the misallocation but is not needed for it: the young-access gap is positive whenever a purchase constraint binds with positive shadow value, with or without the gains tax.
 
 Two qualifications matter. First, old occupancy is not inefficient by itself. An old household that keeps a large house because she values it, or because she intends to leave it, is using housing efficiently; those motives are inside $u^O$ and the planner counts them. The inefficiency is only the part of retention supported by the forgiveness at death. Second, not every binding constraint is an inefficiency. The size limits are real features of the housing stock: when a renter is pinned at $\bar h^R$, the planner---facing the same stock---is pinned with her, and the multiplier on the size limit is the shadow value of a real constraint, not a market failure. Changing the size limits requires construction, conversion, or reassignment instruments, whose resource costs belong in $\Xi^\Pi$. Down-payment requirements are financing arrangements; their efficiency cost depends on whether feasible instruments can reach them.
 
-\textbf{A worked example.} A two-type stationary economy puts numbers on every object above. Normalize $q=1$ and set $\rho=0.25$, so $P=4$. The young household has $y=1$, $a=0.20$, $\alpha=0.5$, $\vartheta=0.4$, $\kappa=0.3$, and the equal-scaling child cost $\chi=\kappa q/\alpha=0.6$; financing is $\phi=0.80$; the size limits are $\bar h^R=0.15$ and $\bar h^O=1$. The gains tax is $\bar\ell=0.2$ per unit, with the exclusion below the example's sizes, so buyers anticipate it; the period return is $r=0.35$, so the anticipated-tax wedge is $\bar\ell/(1+r)=0.148$ and the buyer's effective price is $q^O=1.148$; the discount factor is $\beta=0.1763$, so with $\gamma=0.5$ and no bequest motive the savings load is $k=\beta(1+\gamma)=0.264$. The old incumbent has $a_j=0.2$, carried housing $H^0=0.25$, and tax $\ell=\bar\ell=0.2$. The stock $\bar H=5/12$ is chosen so that $q=1$ is the market-clearing user cost; entry is deterministic with the inside value above the outside option, and the renewal inflow $\bar R=1-n^\ast$ sustains the unit cohort.
+\textbf{A worked example.} A two-type stationary economy puts numbers on every object above. Normalize $q=1$ and set $\rho=0.25$, so $P=4$. The young household has $y=1$, $a=0.20$, $\alpha=0.5$, $\vartheta=0.4$, $\kappa=0.3$, and the equal-scaling child cost $\chi=\kappa q/\alpha=0.6$; financing is $\phi=0.80$; the size limits are $\bar h^R=0.15$ and $\bar h^O=1$. The gains tax is $\bar\ell=0.2$ per unit; the period return is $r=0.35$, so the anticipated-tax wedge is $\bar\ell/(1+r)=0.148$ and the buyer's effective price is $q^O=1.148$; the discount factor is $\beta=0.1763$, so with $\gamma=0.5$ and no bequest motive the savings load is $k=\beta(1+\gamma)=0.264$. The old incumbent has $a_j=0.2$ and carried housing $H^0=0.25$. The stock $\bar H=5/12$ is chosen so that $q=1$ is the market-clearing user cost; entry is deterministic with the inside value above the outside option, and the renewal inflow $\bar R=1-n^\ast$ sustains the unit cohort.
 
-The young household buys. Both tenures price space at $q$, so the case with the larger cap wins: the owner cap is $H^O=\min\{1,\,a\rho/((1-\phi)q)\}=\min\{1,\,0.25\}=0.25$, the collateral component, against the rental size limit $0.15$. The cap binds---the unconstrained optimum is $h^u=0.312$---so $h=0.25$. The budget is $c+qh+a'=y+a=1.20$; the savings rule gives $a'=k(c-\chi n)+\bar\ell h/(1+r)=0.163+0.037=0.20$, so the buyer carries exactly her initial wealth, and the fertility condition gives $n^\ast=0.223$, with adult consumption $c-\chi n=0.616$ and adult space $h-\kappa n=0.183$. The bundle reveals a gap of $\alpha(c-\chi n)/(h-\kappa n)-q=0.68$ over market rent: $0.148$ of it is her own discounted future tax, and the rest, $\zeta^{O,F}=0.53$, is financing---she would pay above her effective price for one more unit of space and cannot post the down payment to get it. The incumbent's released units net $q-\ell$, so her liquidation wealth is $a_j+(q-\ell)H^0=0.40$ and she keeps $h^O=1/6$ at the interior solution of $\gamma c_j^O/h_j^O=q-\ell$, valuing retained space at $0.80$; her released $1/12$ plus the passive stock $1/6$ house the young buyer, and the market clears at $\bar H=5/12$. The next old cohort carries the young owner's purchase, $0.25$, and her savings return $(1+r)a'$, so the stock recirculates; the incumbent's wealth and tax stand in for her cohort's realized repricing, which the buyer does not anticipate. Figure~\ref{fig:worked_example} draws the two sides.
+The young household buys. Both tenures price space at $q$, so the case with the larger cap wins: the owner cap is $H^O=\min\{1,\,a\rho/((1-\phi)q)\}=\min\{1,\,0.25\}=0.25$, the collateral component, against the rental size limit $0.15$. The cap binds---the unconstrained optimum is $h^u=0.312$---so $h=0.25$. The budget is $c+qh+a'=y+a=1.20$; the savings rule gives $a'=k(c-\chi n)+\bar\ell h/(1+r)=0.163+0.037=0.20$, so the buyer carries exactly her initial wealth, and the fertility condition gives $n^\ast=0.223$, with adult consumption $c-\chi n=0.616$ and adult space $h-\kappa n=0.183$. The bundle reveals a gap of $\alpha(c-\chi n)/(h-\kappa n)-q=0.68$ over market rent: $0.148$ of it is her own discounted future tax, and the rest, $\zeta^{O,F}=0.53$, is financing---she would pay above her effective price for one more unit of space and cannot post the down payment to get it. The incumbent's released units net $q-\bar\ell$, so her liquidation wealth is $a_j+(q-\bar\ell)H^0=0.40$ and she keeps $h^O=1/6$ at the interior solution of $\gamma c_j^O/h_j^O=q-\bar\ell$, valuing retained space at $0.80$; her released $1/12$ plus the passive stock $1/6$ house the young buyer, and the market clears at $\bar H=5/12$. The next old cohort carries the young owner's purchase, $0.25$, and her savings return $(1+r)a'$, so the stock recirculates; the incumbent's wealth and tax stand in for her cohort's realized repricing, which the buyer does not anticipate. Figure~\ref{fig:worked_example} draws the two sides.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.97\textwidth]{example_misallocation.pdf}
-\caption{The worked example. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q^O+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\ell=0.80$; moving one unit from her to the buyer frees $0.88$ in goods. Right: completed fertility against the effective cap. At the equilibrium cap the slope is $\dd n/\dd H=0.30$, and the cap stops binding at $h^u=0.31$.}
+\caption{The worked example. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q^O+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\bar\ell=0.80$; moving one unit from her to the buyer frees $0.88$ in goods. Right: completed fertility against the effective cap. At the equilibrium cap the slope is $\dd n/\dd H=0.30$, and the cap stops binding at $h^u=0.31$.}
 \label{fig:worked_example}
 \end{figure}
 
@@ -776,7 +768,7 @@ H=
 \frac{a_i\rho}{(1-\phi)q}
 \right\}.
 \]
-Holding $(w,\chi,q^m,\alpha,\vartheta,\kappa,k)$ fixed, where $w\equiv y+a$ is lifetime resources and $q^m$ is the case's effective price of space---$q$ for renters and below-exclusion buyers, $q+\bar\ell/(1+r)$ for buyers above the exclusion---the case problem adds savings to the bundle choice. Concentrating the savings rule $a'=k(c-\chi n)+\ell_{j'}h/(1+r)$ into the objective and the budget reduces it to
+Holding $(w,\chi,q^m,\alpha,\vartheta,\kappa,k)$ fixed, where $w\equiv y+a$ is lifetime resources and $q^m$ is the case's effective price of space---$q$ for renters, $q+\bar\ell/(1+r)$ for buyers---the case problem adds savings to the bundle choice. Concentrating the savings rule into the objective and the budget reduces it to
 \[
 \max_{c,h,n}
 \left\{
@@ -793,7 +785,7 @@ c-\chi n>0,
 \qquad
 h-\kappa n>0:
 \]
-the static problem with consumption weight $1+k$, resources $w$, and the case price $q^m$. Each unit of adult consumption commits $1+k$ units of resources, one spent now and $k$ carried for old age; each unit of owner space above the exclusion commits its market cost now plus the discounted tax, saved in advance.
+the static problem with consumption weight $1+k$, resources $w$, and the case price $q^m$. Each unit of adult consumption commits $1+k$ units of resources, one spent now and $k$ carried for old age; each unit of owner space commits its market cost now plus the discounted tax, saved in advance.
 The unconstrained case allocation is
 \[
 c^u-\chi n^u=\frac{w}{1+\alpha+\vartheta+k},
@@ -1036,19 +1028,19 @@ Thus the fixed-case effect is exposure to a binding family-space constraint, tim
 
 \subsection{Tenure switching at the boundary}
 
-In this subsection $q^R$ and $q^O$ are tenure-mode effective user costs. The model now generates its own wedge: a buyer above the exclusion pays $q^O=q+\bar\ell/(1+r)$ per unit while a renter pays $q^R=q$; below the exclusion the modes price space identically. The anticipated tax also adds a constant to the owner case's continuation---a locked-in old household occupies space at $q-\bar\ell$, an old-age subsidy worth $\beta\gamma\log\big(q/(q-\bar\ell)\big)$ in value terms---which shifts tenure choice without moving any bundle. The proposition below carries all three case differences---effective price, cap, and continuation constant---explicitly; tenure-specific amenities, moving costs, or taste shifters still require a separate calculation.
+In this subsection $q^R$ and $q^O$ are tenure-mode effective user costs. The model now generates its own wedge: a buyer pays $q^O=q+\bar\ell/(1+r)$ per unit while a renter pays $q^R=q$; with no gains tax the modes price space identically. The anticipated tax also adds a constant to the owner case's continuation---a locked-in old household occupies space at $q-\bar\ell$, an old-age subsidy worth $\beta\gamma\log\big(q/(q-\bar\ell)\big)$ in value terms---which shifts tenure choice without moving any bundle. The proposition below carries all three case differences---effective price, cap, and continuation constant---explicitly; tenure-specific amenities, moving costs, or taste shifters still require a separate calculation.
 
 Tenure switching is not a price or general-equilibrium effect. It is already present in the fixed-price model because tenure is chosen by
 \[
 W_i^Y=\max\{W_i^R,W_i^O\}.
 \]
-A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. Below the exclusion they price it identically and the jump is exactly zero: there, the local policy formula of the previous subsection is complete. Above the exclusion the anticipated tax makes owning the expensive way to occupy space, and the jump is signed accordingly; further wedges---a rental premium for large units as in the smooth-cap formulation, landlord operating costs---move the gap the same way or against it.
+A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. With $\bar\ell=0$ they price it identically and the jump is exactly zero: the local policy formula of the previous subsection is then complete. With the tax, owning is the expensive way to occupy space, and the jump is signed accordingly; further wedges---a rental premium for large units as in the smooth-cap formulation, landlord operating costs---move the gap the same way or against it.
 
 The case problems include savings. Concentrating the rule as above turns each case into the static problem with consumption weight $1+k$ and case price $q^m$, plus a case constant: with common old preferences and interior old choices, the owner case's continuation exceeds the renter's by
 \[
 \Delta=\beta\gamma\log\frac{q}{q-\bar\ell}>0
 \]
-above the exclusion---the old-age subsidy of occupying retained space at $q-\bar\ell$---and the constants coincide below it. The constant moves tenure choice without moving any bundle, so the proposition carries it explicitly: write $K^A$ and $K^B$ for the case constants and $\Delta=K^B-K^A\ge0$.
+---the old-age subsidy of occupying retained space at $q-\bar\ell$---and the constants coincide when $\bar\ell=0$. The constant moves tenure choice without moving any bundle, so the proposition carries it explicitly: write $K^A$ and $K^B$ for the case constants and $\Delta=K^B-K^A\ge0$.
 
 Fix prices and suppress the type index. Let $A$ denote the cheaper case and $B$ the more expensive case, with tenure-mode user costs
 \[
@@ -1163,7 +1155,7 @@ and under $\chi\le(1+k)\kappa q^A/\alpha$ both optima lie strictly in the region
 
 At indifference there are now two reasons to pay more per unit of space: to get more space, and to buy the dear case's better old age. The conditions price that second temptation: the wedge must dominate the subsidy in resources for the switcher to upsize, and the fertility jump nets the within-case space force against the subsidy's level shift. At the example's parameters the conditions hold with room to spare---price dominance by a factor of four---and the boundary household upsizes from $0.15$ to $0.20$ and adds $0.007$ children.
 
-The rent-own cases now read off directly, with the effective user costs $q^R=q$ and $q^O=q+\ell_{j'}/(1+r)$. \emph{Below the exclusion ($q^O=q^R=q$):} the modes differ only through their effective caps, and an indifferent household has the same allocation in both---either both caps are slack, or the caps coincide at the binding allocation. Then $n_O=n_R$, there is no discrete jump at the boundary, and the fixed-tenure formula of the previous subsection is the complete fixed-price answer. \emph{Above the exclusion ($q^O>q^R$):} ownership is the expensive family-space mode, and an indifferent switcher into ownership upsizes and has $n_O>n_R$; this is the model's own configuration for family-sized purchases. \emph{Renting dearer ($q^O<q^R$, for example a large-unit rental premium):} the inequality reverses; the marginal switcher into ownership moves to a cheaper, smaller unit, and $n_R>n_O$ under the analogous condition at the lower owner user cost. A cost wedge between the tenures is what makes tenure switching a first-order fertility-jump margin.
+The rent-own cases now read off directly, with the effective user costs $q^R=q$ and $q^O=q+\bar\ell/(1+r)$. \emph{No gains tax ($\bar\ell=0$, so $q^O=q^R=q$):} the modes differ only through their effective caps, and an indifferent household has the same allocation in both---either both caps are slack, or the caps coincide at the binding allocation. Then $n_O=n_R$, there is no discrete jump at the boundary, and the fixed-tenure formula of the previous subsection is the complete fixed-price answer. \emph{With the tax ($q^O>q^R$):} ownership is the expensive family-space mode, and an indifferent switcher into ownership upsizes and has $n_O>n_R$; this is the model's own configuration for family-sized purchases. \emph{Renting dearer ($q^O<q^R$, for example a large-unit rental premium):} the inequality reverses; the marginal switcher into ownership moves to a cheaper, smaller unit, and $n_R>n_O$ under the analogous condition at the lower owner user cost. A cost wedge between the tenures is what makes tenure switching a first-order fertility-jump margin.
 
 The switching formula is fixed-price accounting, not a welfare result or a general-equilibrium comparative static. Let types live in a smooth finite-dimensional type space with continuous density $f(i)$, and suppose there are no mass points at the tenure boundary. Let
 \[

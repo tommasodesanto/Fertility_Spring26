@@ -74,7 +74,7 @@ axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, qO),
 axL.text(0.256, 1.42, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
 axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
              arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
-axL.text(0.13, 0.86, r"$\ell$", color=RED, fontsize=11)
+axL.text(0.125, 0.86, r"$\bar{\ell}$", color=RED, fontsize=11)
 axL.plot([0.25,0.25],[0.55,q],color=BLUE,lw=0.6,ls=":",alpha=0.5)
 axL.plot([1/6,1/6],[0.55,q-ell],color=RED,lw=0.6,ls=":",alpha=0.5)
 axL.text(0.25, 0.50, r"$h_i$", color=BLUE, ha="center", fontsize=11)
