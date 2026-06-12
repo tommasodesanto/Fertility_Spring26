@@ -6,13 +6,17 @@ import matplotlib.pyplot as plt
 alpha, beta, kappa, chi, q = 0.5, 0.4, 0.3, 0.6, 1.0
 y, a, gamma, ell = 1.0, 0.20, 0.5, 0.2
 w = y + a            # lifetime resources
-k = a / 0.6161538027919038   # vartheta(1+gamma); set so a' = a at H=0.25
+r_per = 0.35                  # period return
+carry = ell/(1+r_per)         # anticipated tax wedge
+qO = q + carry                # buyer effective price (above exclusion)
+# k chosen so the bundle at H=0.25 reproduces hatc=0.61615, n=0.22308
+k = (w - qO*0.25 - chi*0.22307628850648113)/0.6161538027919038 - 1.0
 
 def solve_constrained(H):
     # budget (1+k)hatc + chi n = w - qH ; FOC beta/n = chi/hatc + alpha*kappa/(H-kappa n)
     lo, hi = 1e-9, H/kappa - 1e-9
     def f(n):
-        hatc = (w - q*H - chi*n)/(1.0+k)
+        hatc = (w - qO*H - chi*n)/(1.0+k)
         if hatc <= 0: return -1e9
         return beta/n - chi/hatc - alpha*kappa/(H - kappa*n)
     for _ in range(200):
@@ -20,20 +24,20 @@ def solve_constrained(H):
         if f(mid) > 0: lo = mid
         else: hi = mid
     n = 0.5*(lo+hi)
-    hatc = (w - q*H - chi*n)/(1.0+k)
+    hatc = (w - qO*H - chi*n)/(1.0+k)
     return hatc, n
 
 D = 1 + alpha + beta + k
 hatc_u = w / D
-n_u = beta * w / (D * (chi + kappa*q))
-h_u = alpha * w / (D * q) + kappa * n_u
+n_u = beta * w / (D * (chi + kappa*qO))
+h_u = alpha * w / (D * qO) + kappa * n_u
 
 # exact equilibrium point
 hatc_e, n_e = solve_constrained(0.25)
 s_e = 0.25 - kappa*n_e
 zeta = alpha*hatc_e/s_e - q
 # slope at 0.25
-num = alpha*kappa/s_e**2 - chi*q/((1+k)*hatc_e**2)
+num = alpha*kappa/s_e**2 - chi*qO/((1+k)*hatc_e**2)
 den = beta/n_e**2 + alpha*kappa**2/s_e**2 + chi**2/((1+k)*hatc_e**2)
 slope = num/den
 print(f"check: n={n_e:.4f} hatc={hatc_e:.4f} zeta={zeta:.4f} slope={slope:.4f} h_u={h_u:.4f} n_u={n_u:.4f}")
@@ -59,13 +63,15 @@ axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="old incumbent")
 
 axL.axhline(q, color=GRAY, lw=1.0, ls=":")
 axL.text(0.395, q+0.03, "$q=1$", color=GRAY, ha="right", fontsize=10)
+axL.axhline(qO, color=BLUE, lw=0.8, ls=":", alpha=0.6)
+axL.text(0.395, qO+0.03, "$q^O=1.148$", color=BLUE, ha="right", fontsize=9, alpha=0.8)
 
 axL.plot([0.25], [q+zeta], "o", color=BLUE, ms=6)
 axL.plot([1/6], [q-ell], "o", color=RED, ms=6)
 
 axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, q),
              arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
-axL.text(0.256, 1.30, r"$\zeta^{O,F}=0.68$", color=BLUE, fontsize=10)
+axL.text(0.256, 1.30, r"gap $=0.68$", color=BLUE, fontsize=10)
 axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
              arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
 axL.text(0.105, 0.86, r"$\ell=0.2$", color=RED, fontsize=10)
@@ -91,12 +97,12 @@ for H in Hs:
 axR.plot(Hs, ns, color=BLUE, lw=2.2)
 axR.plot([0.25], [n_e], "o", color=BLUE, ms=6)
 axR.axvline(h_u, color=GRAY, lw=1.0, ls=":")
-axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u=0.34$", rotation=90,
+axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u=0.31$", rotation=90,
          color=GRAY, fontsize=9, va="bottom")
 
 dx = 0.045
 axR.plot([0.25-dx, 0.25+dx], [n_e-slope*dx, n_e+slope*dx], color=RED, lw=1.6, ls="-")
-axR.text(0.252, n_e-0.012, r"$\dd n/\dd H=0.33$".replace(r"\dd","d"), color=RED, fontsize=10)
+axR.text(0.252, n_e-0.012, r"$dn/dH=0.30$", color=RED, fontsize=10)
 
 axR.set_xlabel("effective family-housing cap $H$")
 axR.set_ylabel("completed fertility $n(H)$")
