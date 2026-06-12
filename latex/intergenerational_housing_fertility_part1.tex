@@ -209,13 +209,15 @@ In a stationary equilibrium, $M_t=\bar M$, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, $F_{R,t
 
 Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho$ as given and chooses a tenure mode $m\in\{R,O\}$, a bundle, and savings. The two modes share one objective and one budget; they differ in the size menu and in whether the financing constraints apply. For $m\in\{R,O\}$,
 \begin{equation}
+\begin{aligned}
 W_i^m(q,\tau^p,x)
 =
 \max_{c_i,h_i,n_i,a_i'}
-\left\{
-\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i
-+\beta\big[\1\{m=R\}\,V^R(a_{j'})+\1\{m=O\}\,V^O(a_{j'},h_i,\ell_{i'})\big]
-\right\}
+\Big\{&
+\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i\\
+&+\beta\big[\1\{m=R\}\,V^R(a_{j'})+\1\{m=O\}\,V^O(a_{j'},h_i,\ell_{i'})\big]
+\Big\}
+\end{aligned}
 \label{eq:compact_young_problem}
 \end{equation}
 subject to
