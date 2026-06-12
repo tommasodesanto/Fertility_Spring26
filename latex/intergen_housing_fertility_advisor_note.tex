@@ -27,7 +27,7 @@
 
 \section{Environment}
 
-The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and the gross bequest assigned at entry, taxed on receipt. It decides whether to enter the housing market; inside, it chooses a tenure, a house size, completed fertility, and savings for old age. Old households, indexed by $j$ as young households are by $i$, are of two kinds: old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$, and newborns inherit the estates of the old who exit as they arrive.
+The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i,B_i)$: income, liquid wealth, and the gross bequest assigned at entry, taxed on receipt. She decides whether to enter the housing market; inside, she chooses a tenure, a house size, completed fertility, and savings for old age. Old households, indexed by $j$ as young households are by $i$, are of two kinds: old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$, and newborns inherit the estates of the old who exit as they arrive.
 
 \textbf{Preferences.} Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
 \[
@@ -37,7 +37,7 @@ Rearranging a budget at user cost $q$ shows what a child costs,
 \[
 (c_i-\chi n_i)+q\,(h_i-\kappa n_i)+(\chi+\kappa q)\,n_i=c_i+q h_i :
 \]
-its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old households have $u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j)$ over consumption, housing, and the estate $e_j\ge0$ they leave at exit, valued through a warm-glow function $\mathcal B$, increasing and concave, possibly zero, and common to all old households. The exiting cohort's estates are what the arriving cohort inherits as the $B_{i'}$. A young household also values its own old age: its objective adds $\vartheta\,\E\,u^O$, evaluated at the old-age choices it will make, with discount factor $\vartheta\in(0,1]$.
+its consumption requirement plus the market value of the space it occupies. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which a child uses consumption and space in the same proportions as its parents. Old households have $u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j)$ over consumption, housing, and the estate $e_j\ge0$ they leave at exit, valued through a warm-glow function $\mathcal B$, increasing and concave, possibly zero, and common to all old households. The exiting cohort's estates are what the arriving cohort inherits as the $B_{i'}$. A young household also values her own old age: her objective adds $\vartheta\,\E\,u^O$, evaluated at the old-age choices she will make, with discount factor $\vartheta\in(0,1]$.
 
 \textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace. Renting and owning are occupancy modes with different size menus,
 \[
@@ -53,9 +53,9 @@ q=\rho P,
 \qquad
 \rho=r+\delta+\tau^p .
 \]
-Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house.
+Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house. Lowercase $h$ is an occupancy choice; capital $H$ marks housing quantities not chosen today: the stock, the caps, carried housing.
 
-\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so the down payment is $(1-\phi)Ph$, posted at purchase from wealth in hand, $A_i(x)=a_i+xB_i+T_i^b(x)$ with $x=1-\tau^b$, where $\tau^b$ is the estate tax, $T_i^b(x)$ the estate-tax rebate assigned to type $i$, and $B_i$ the assigned bequest; housing payments may not exceed $\psi y_i$, with $\psi\in(0,1)$. The down payment is capped by wealth because income arrives only over the period. Wealth is otherwise fungible: it enters the budget alongside income, and buying assets is not expenditure, so the posted equity remains the household's. Households save: a young household carries $a_i'\ge0$ into old age at the exogenous gross return $1+r$, with no unsecured borrowing against old age. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so the only price determined inside the model is $q$.
+\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so the down payment is $(1-\phi)Ph$, posted at purchase from wealth in hand, $A_i(x)=a_i+xB_i+T_i^b(x)$ with $x=1-\tau^b$, where $\tau^b$ is the estate tax, $T_i^b(x)$ the estate-tax rebate assigned to type $i$, and $B_i$ the assigned bequest; housing payments may not exceed $\psi y_i$, with $\psi\in(0,1)$. The down payment is capped by wealth because income arrives only over the period. Wealth is otherwise fungible: it enters the budget alongside income, and buying assets is not expenditure, so the posted equity remains the household's. Households save: a young household carries $a_i'\ge0$ into old age at the exogenous gross return $1+r$, with no unsecured borrowing against old age; a renter, with no asset to pledge, therefore cannot borrow at all. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so the only price determined inside the model is $q$.
 
 \textbf{Capital-gains taxation.} A sale during life realizes the seller's accrued gain, taxed above an exclusion. A house held until death passes with a stepped-up basis, and the gain is never taxed. For an old incumbent the difference is a levy $\ell_j\ge0$ per unit sold while alive: the gains-tax rate times her accrued per-unit gain, zero below the exclusion. With a constant aggregate price, accrued gains are idiosyncratic repricing of particular units. The buyer treats this repricing as neutral at purchase in marginal-utility-weighted terms, $\E[(g_{j'}-\ell_{j'})/c_{j'}^O]=0$, so anticipating the levy does not distort buying; the levy matters ex post, on the realized old cross-section.
 
@@ -124,21 +124,28 @@ Aggregate demand adds young households, old incumbents, and old renters, and the
 where $F_O$ and $F_R$ are the measures of old incumbents and old renters.
 A stationary equilibrium is a user cost $q$ (and $P=q/\rho$) such that households optimize, the market clears, fiscal and credit accounts close with lump-sum transfers, next period's old households are this period's young entrants, owners as incumbents and renters as old renters, and births plus the renewal inflow keep the cohort at $\bar M$. Nothing in the clearing condition asks whether the marginal family-sized unit is held by the household that values it most; that is the next section's question.
 
-\section{Constraint gaps, read off bundles}
+\section{Marginal conditions}
 
-How much a constraint binds can be read off the household's own bundle. At an interior choice, a household's marginal value of space is $u_h/u_c=\alpha(c-\chi n)/(h-\kappa n)$. For a renter,
+How much a constraint binds can be read off the household's own bundle. The branch problem's Lagrangian is
 \[
-MV_i^R=\frac{\alpha\,(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}=q+\zeta_i^R,
+\begin{aligned}
+\mathcal L=\;&u_i^Y+\vartheta\,\E\,V_{j'}^O+\lambda_i\big(y_i+A_i(x)-c_i-qh_i-a_i'\big)\\
+&+\mu_i\big(A_i(x)-(1-\phi)Ph_i\big)+\eta_i\big(\psi y_i-qh_i\big)+\theta_i\big(\bar h^m-h_i\big),
+\end{aligned}
+\]
+with $\mu_i=\eta_i=0$ in the rental mode and the savings bound $a_i'\ge0$ carried by the Euler complementarity; every condition below is a derivative of $\mathcal L$. At an interior choice, a household's marginal value of space is $u_h/u_c=\alpha(c-\chi n)/(h-\kappa n)$. For a renter,
+\[
+\frac{\alpha\,(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}=q+\zeta_i^R,
 \]
 so $\zeta_i^R\ge0$ measures the bite of the rental menu in goods, computable from the bundle. For a young owner the same gap collects the three access constraints,
 \[
 \zeta_i^O=\underbrace{\tfrac{\mu_i}{\lambda_i}(1-\phi)P+\tfrac{\eta_i}{\lambda_i}q}_{\zeta_i^{O,F}\text{, financing}}+\underbrace{\tfrac{\theta_i}{\lambda_i}}_{\text{menu}},
 \qquad
-MV_i^O=q+\zeta_i^O ,
+\frac{\alpha\,(c_i^O-\chi n_i^O)}{h_i^O-\kappa n_i^O}=q+\zeta_i^O ,
 \]
-where $\lambda_i$ is the marginal utility of resources and $\mu_i$, $\eta_i$, $\theta_i$ are the multipliers on the down-payment, payment-to-income, and owner-menu constraints; when the owner menu is slack, the bundle identifies the financing part alone, $\zeta_i^{O,F}=\alpha(c_i^O-\chi n_i^O)/(h_i^O-\kappa n_i^O)-q$. For an old incumbent at an interior retention choice,
+where $\lambda_i$ is the marginal utility of resources; when the owner menu is slack, the bundle identifies the financing part alone, $\zeta_i^{O,F}=\alpha(c_i^O-\chi n_i^O)/(h_i^O-\kappa n_i^O)-q$. For an old incumbent at an interior retention choice,
 \[
-MV_j^O=\frac{\gamma c_j^O}{h_j^O}=q-\ell_j :
+\frac{\gamma c_j^O}{h_j^O}=q-\ell_j :
 \]
 she keeps marginal space she values below what the market would pay, because selling it would realize the taxable gain. Old renters carry no such wedge: their marginal value is $q$.
 

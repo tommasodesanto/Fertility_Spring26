@@ -49,13 +49,13 @@ for H in hs:
     hc, n = solve_constrained(H)
     mv_y.append(alpha*hc/(H - kappa*n))
 mv_y = np.array(mv_y)
-axL.plot(hs, mv_y, color=BLUE, lw=2.2, label="young buyer $MV(h)$")
+axL.plot(hs, mv_y, color=BLUE, lw=2.2, label="young buyer")
 
 ho = np.linspace(0.06, 0.42, 200)
 W_liq = a + (q-ell)*0.25     # 0.40
 cO = W_liq - (q-ell)*ho
 mv_o = gamma*cO/ho
-axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="incumbent $MV(h^O)$")
+axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="old incumbent")
 
 axL.axhline(q, color=GRAY, lw=1.0, ls=":")
 axL.text(0.395, q+0.03, "$q=1$", color=GRAY, ha="right", fontsize=10)
