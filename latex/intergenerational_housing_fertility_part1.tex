@@ -62,7 +62,7 @@ The market structure follows \citet{coven2024}: tenure shapes which size menus a
 \[
 i=(y_i,a_i,B_i),
 \]
-where $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is the gross bequest assigned at entry, taxed at rate $\tau^b$ on receipt. She decides whether to enter the housing market and, inside, chooses tenure, occupied housing, fertility, and savings. Old households, indexed by $j$ as young households are by $i$, come in two groups. Old incumbents are last period's young owners: each enters old age with financial wealth, the house she bought when young, and a possible accrued capital gain; she chooses consumption, how much housing to retain, and how large an estate to leave, then exits. Old renters are last period's young renter entrants; they rent in old age, carry no housing and no gain, and exit. Nonentrants live outside the modeled market in both periods.
+where $y_i>0$ is disposable nonhousing income, $a_i\ge0$ is liquid wealth, and $B_i\ge0$ is the bequest she receives at entry, recorded before tax; it is kept separate from $a_i$ only because the estate tax falls on bequests. She decides whether to enter the housing market and, inside, chooses tenure, occupied housing, fertility, and savings. Old households, indexed by $j$, come in two groups. Old incumbents are last period's young owners: each enters old age with financial wealth, the house she bought when young, and a possible accrued capital gain; she chooses consumption, how much housing to retain, and how large an estate to leave, then exits. Old renters are last period's young renter entrants; they rent in old age, carry no housing and no gain, and exit. Nonentrants live outside the modeled market in both periods.
 
 \textbf{Masses.} Time is discrete. At the start of period $t$ a mass $M_t>0$ of potential young households is drawn from a distribution $G_{Y,t}$ over types. Next period's potential young are the maturing children of the current cohort plus a renewal inflow of mass $R_t$; entry then determines how many of them participate in the housing market. The period-$t$ measures of old incumbents and old renters are $F_{O,t}$ and $F_{R,t}$. Let $\bar M$ denote the stationary cohort mass. In a stationary equilibrium, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, and $F_{R,t}=F_R$ are reproduced by the transition laws below.
 
@@ -72,11 +72,7 @@ u_i^Y(c_i,h_i,n_i)=
 \log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i,
 \qquad \alpha,\vartheta>0.
 \]
-One more child means less space and less consumption left for the parents: children compete with their parents for the same house and the same budget. Rearranging spending on consumption and housing at user cost $q$ shows the price of that competition,
-\[
-(c_i-\chi n_i)+q\,(h_i-\kappa n_i)+\left(\chi+\kappa q\right)n_i=c_i+q h_i:
-\]
-the full price of a child is its consumption requirement plus the market value of the space it occupies. When access to space is constrained, the space component carries a premium. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which one child uses consumption and housing in the same proportions as its parents. Because $\vartheta\log n_i$ rules out $n_i=0$, every entered household has positive completed fertility: the model studies the intensive margin, not childlessness.
+One more child means less space and less consumption left for the parents: children compete with their parents for the same house and the same budget. Because $\vartheta\log n_i$ rules out $n_i=0$, every entered household has positive completed fertility: the model studies the intensive margin, not childlessness.
 
 Old preferences are
 \[
@@ -111,7 +107,7 @@ H_{\mathrm{pass}}
 \]
 In a stationary equilibrium the inequality is implied by market clearing: the previous cohort's owner purchases cannot exceed the stock. Housing payments are transfers across households, landlords, and fiscal accounts, closed by lump-sum rebates, and reallocating the existing stock costs no real resources.\footnote{Two supply extensions are deliberately left out of the baseline and developed later: a price-elastic aggregate supply curve as in \citet{coven2024}, and tenure-specific stocks with separate construction margins, under which the rental and owner user costs diverge endogenously. The local results below survive with $q$ replaced by the relevant tenure-specific user cost.}
 
-\textbf{Financing.} Buying floorspace requires financing. A young buyer can finance at most a share $\phi\in(0,1)$ of the purchase and faces a payment-to-income limit $\psi\in(0,1)$ on housing outlays. Pledgeable resources for the down payment are
+\textbf{Financing.} Buying floorspace requires financing. A young buyer can finance at most a share $\phi\in(0,1)$ of the purchase and faces the lender's payment-to-income test: housing outlays may not exceed the share $\psi\in(0,1)$ of income. Pledgeable resources for the down payment are
 \[
 A_i(x)=a_i+xB_i+T_i^b(x),
 \qquad
@@ -119,13 +115,13 @@ x=1-\tau^b,
 \]
 where $\tau^b$ is an estate tax and $T_i^b(x)$ is the estate-tax rebate assigned to type $i$. The down payment is posted at purchase, at the start of the period, out of wealth in hand: income accrues over the period, so $A_i(x)$ caps what a buyer can put down. Wealth is otherwise fungible. It enters the young budget below alongside income and finances consumption and saving; buying assets is not expenditure, so the posted equity remains part of the household's wealth. Inheritances and the estate tax therefore move both access to owner housing and lifetime resources. Households save: a young household carries $a_i'\ge0$ into old age at the exogenous gross return $1+r$, and cannot borrow unsecured against old age. A renter, with no asset to pledge, therefore cannot borrow at all; a buyer's only debt is the financed share $\phi$ of the purchase. Newborn households inherit the estates of the old who exit as they arrive: $B_i$ is assigned from old estates by the young-type transition below, and the estate tax falls on these transfers. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so no domestic capital-market clearing condition is imposed, and the only price determined inside the model is $q$.
 
-\textbf{Capital-gains taxation.} A housing sale during life realizes the seller's accrued capital gain, taxed at rate $\tau^g$ above an exclusion. Housing held until death passes to heirs with a stepped-up basis, and the gain is never taxed. For an old incumbent the difference between the two disposal routes is a per-unit tax $\ell_j\ge0$ on housing sold while alive.
+\textbf{Capital-gains taxation.} The model carries three taxes: the property tax $\tau^p$ inside the user cost, the estate tax $\tau^b$ on transfers to the next cohort, and the capital-gains tax, whose treatment of death is the old-side institution at the center of the model. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars, once that difference exceeds an exclusion. Dying instead passes the house with a stepped-up basis---the heir's purchase price is reset to the current value---so the gain is never taxed. For an old incumbent the difference between the two disposal routes is a per-unit tax $\ell_j\ge0$ on housing sold while alive.
 
-Where the gains come from is a modeling device, and worth stating plainly. The model is real and stationary; the tax code computes gains in dollars. Let all prices and incomes carry steady inflation $\varpi>0$ with every relative price constant. A unit bought one period ago then shows the same nominal gain for every cohort---its real value never moved---and selling it triggers the real tax
+Where do gains come from when the real price never moves? From inflation. Dollar prices and incomes all grow at rate $\varpi>0$, so relative prices and real choices are unaffected; but the tax form compares dollars from different dates, and a house bought one period ago shows a paper gain even though its real value is unchanged. The tax on that paper gain is real,
 \[
 \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}
 \]
-per unit: the inflation gain, taxed at sale, in today's goods. Inflation enters the model nowhere else; budgets, prices, and child requirements are real, and the exclusion is held fixed in real terms. So $\ell_j=\bar\ell$ for an old incumbent whose gain clears the exclusion and $\ell_j=0$ below it, and because the exclusion is a level, who is locked in is decided by size: larger holdings clear it. The gain is deterministic, so a buyer knows the tax her future self will face; Section 7 prices that anticipation.\footnote{Assessment protection of the Proposition 13 type, under which incumbents are taxed on below-market assessed values until they move, generates the same per-unit retention wedge.}
+per unit sold, and this is the model's only contact with inflation: budgets, prices, and child requirements are real, and the exclusion is held fixed in real terms. So $\ell_j=\bar\ell$ for an old incumbent whose gain clears the exclusion and $\ell_j=0$ below it; the exclusion is a dollar amount, so large holdings clear it and small ones do not. Everything is deterministic: a buyer knows the tax her future self will face, and Section 7 prices that anticipation.\footnote{Assessment protection of the Proposition 13 type, under which incumbents are taxed on below-market assessed values until they move, generates the same per-unit retention wedge.}
 
 \textbf{Demography and transitions.} The period timing is: potential young types are drawn; young households decide whether to enter; entrants choose tenure, housing, fertility, and savings; old incumbents choose consumption, retained housing, and estates; old households exit; births and the renewal inflow form the next potential-young cohort; current young owners become next period's old incumbents. Let
 \[
@@ -207,7 +203,7 @@ In a stationary equilibrium, $M_t=\bar M$, $G_{Y,t}=G_Y$, $F_{O,t}=F_O$, $F_{R,t
 
 \section{The young household's problem}
 
-Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho$ as given and chooses a tenure mode $m\in\{R,O\}$, a bundle, and savings. The two modes share one objective and one budget; they differ in the size menu and in whether the financing constraints apply. For $m\in\{R,O\}$,
+Conditional on entry, household $i$ takes the user cost $q$ and the asset price $P=q/\rho$ as given and chooses a tenure mode $m\in\{R,O\}$, a bundle, and savings. For $m\in\{R,O\}$,
 \begin{equation}
 \begin{aligned}
 W_i^m(q,\tau^p,x)
@@ -239,7 +235,11 @@ c_i-\chi n_i&>0,
 h_i-\kappa n_i>0.
 \notag
 \end{align}
-$V^O$ and $V^R$ are the old-age values defined in the next section, evaluated at the state the household generates; $\ell_{i'}=\bar\ell$ if $h_i$ clears the exclusion and zero below. Nothing here is random: the household knows the old state her choices produce. The budget is the same in both modes---space costs $q$ per unit either way, wealth is spendable either way, savings earn $1+r$ either way---so tenure matters through the menu and the two owner financing requirements, not through prices.
+$V^O$ and $V^R$ are the old-age values defined in the next section, evaluated at the state the household generates; $\ell_{i'}=\bar\ell$ if $h_i$ clears the exclusion and zero below. Nothing here is random: the household knows the old state her choices produce. The budget is the same in both modes---space costs $q$ per unit either way, wealth is spendable either way, savings earn $1+r$ either way---so tenure matters through the menu and the two owner financing requirements, not through the market price of space. Rearranged, the budget prices a child:
+\[
+(c_i-\chi n_i)+q\,(h_i-\kappa n_i)+\left(\chi+\kappa q\right)n_i+a_i'=y_i+A_i(x):
+\]
+the full price of a child is its consumption requirement plus the market value of the space it occupies, and when access to space is constrained the space component carries a premium. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$, under which one child uses consumption and housing in the same proportions as its parents.
 
 Using $P=q/\rho$, owner housing is bounded above by
 \[
