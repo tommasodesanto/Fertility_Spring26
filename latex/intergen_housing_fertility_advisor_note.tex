@@ -23,22 +23,21 @@
 
 \begin{document}
 \maketitle
-
-This note sets up a two-period model in which children require space, family-sized space sits behind a down payment, and the existing stock is held by older households whom the tax code pays to keep it. It defines the environment, solves the household problems, and derives the three objects the project runs on: the effective family-housing cap that prices children, the misallocation surplus between constrained buyers and locked-in incumbents, and the fixed-price fertility effect of housing policy. A longer companion document contains the proofs and the full equilibrium treatment.
+I set up a simplified version of the model. There are two type of agents, young and old, children require space, and a combination of a down payment friction and a tax friction generates intergenerational misallocation which impacts fertility. Results are preliminary, and proofs are omitted. The model draws inspiration from COVEN ADD CITE. In this simplified version, fertility is continuous.
 
 \section{Environment}
 
-The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i)$: income and wealth at entry, the wealth inclusive of what she inherited, net of the estate tax---newborns inherit the estates of the old who exit as they arrive. She decides whether to enter the housing market; inside, she chooses a tenure, a house size, completed fertility, and savings for old age. Old households, indexed by $j$, are of two kinds: old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit; and old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to $G_Y$.
+The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i)$: income and wealth at entry. Wealth is inherited from the previous old generation\footnote{Distributed randomly, without a tie to bequests and inheritants. It can be distributed unequally, however.}. A household decides whether to enter the economy; inside, she chooses a tenure (rent or own), a house size, completed fertility, and savings for old age. Old households, indexed by $j$, are of two kinds. Old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit. The other type is old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to exogeneous $G_Y$.
 
 \textbf{Preferences.} Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
 \[
 u_i^Y=\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i .
 \]
-Old households value consumption, housing, and the estate $e_j\ge0$ they leave at exit:
+Old households value consumption, housing, and the bequest $e_j\ge0$ they leave at exit:
 \[
 u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j),
 \]
-with $\mathcal B$ a warm-glow function, increasing and concave, possibly zero, common to all old households. The exiting cohort's estates are what the arriving cohort inherits. A young household also values her own old age: her objective adds $\beta\,u^O$, evaluated at the old-age choices she will make, with discount factor $\beta\in(0,1]$.
+with $\mathcal B$ a warm-glow function, increasing and concave, possibly zero, common to all old households. The exiting cohort's estates are what the arriving cohort inherits. 
 
 \textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace. Renting and owning are occupancy modes with different size menus,
 \[
@@ -56,19 +55,19 @@ q=\rho P,
 \]
 Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house. Lowercase $h$ is an occupancy choice; capital $H$ marks housing quantities not chosen today: the stock, the caps, carried housing.
 
-\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of wealth in hand: income arrives only over the period, so $a_i$ caps what she can put down. Lenders also apply a payment-to-income test: housing payments may not exceed the share $\psi\in(0,1)$ of income. Wealth is otherwise fungible: it enters the budget alongside income, and buying assets is not expenditure, so the posted equity remains the household's. Households save: a young household carries $a_i'\ge0$ into old age at the exogenous gross return $1+r$, with no unsecured borrowing against old age; a renter, with no asset to pledge, therefore cannot borrow at all. The interest rate $r$ is exogenous: households borrow and lend with a passive financial sector, so the only price determined inside the model is $q$.
+\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of her liquiid wealth. Lenders also apply a payment-to-income test: housing payments may not exceed the share $\psi\in(0,1)$ of income. Households can save in an exogeneously provided bond, but renters cannot borrow. The interest rate $r$ is exogenous.
 
-\textbf{Taxes.} Three taxes appear: the property tax $\tau^p$, part of the user cost above; the estate tax $\tau^b$, collected when estates pass to the next cohort; and the capital-gains tax, the old-side institution at the center of the model. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars, once that difference exceeds an exclusion. Dying instead passes the house with a stepped-up basis---the heir's purchase price is reset to the current value---so the gain is never taxed.
+\textbf{Taxes.} Three taxes appear: the property tax $\tau^p$, part of the user cost above; the estate tax $\tau^b$, collected when estates pass to the next cohort; and the capital-gains tax. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars, once that difference exceeds an exclusion. Dying instead passes the house with a stepped-up basis - the heir's purchase price is reset to the current value -so the gain is never taxed\footnote{This was the essence of the point suggested by Simon. I will go a bit deeper into it in the next weeks, but it is one of the two key margins (the other being financial constraints). The idea is then: agents have an incentive to hold on to the house, because this way neither they nor their heirs pay taxes.}.
 
 Where do gains come from when the real price never moves? From inflation. Dollar prices and incomes all grow at rate $\varpi$, so relative prices and real choices are unaffected; but the tax form compares dollars from different dates, and a house bought one period ago shows a paper gain even though its real value is unchanged. The tax on that paper gain is real,
 \[
 \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}
 \]
-per unit sold, and this is the model's only contact with inflation. An old incumbent's tax state is $\ell_j=\bar\ell$ if her gain clears the exclusion and zero if not; the exclusion is a dollar amount, so large holdings clear it and small ones do not. Everything is deterministic: a buyer knows the tax her future self will face.
+per unit sold, and this is the model's only contact with inflation. An old incumbent's tax state is $\ell_j=\bar\ell$ if her gain clears the exclusion and zero if not; the exclusion is a dollar amount, so large holdings clear it and small ones do not. Everything is deterministic: a buyer knows the tax her future self will face \footnote{So I am resorting to a trick here to have a capital gain in a stationary model. COVEN ET AL have a real growth term there, but they don't have my problem with fertility. More thought is required on this.}.
 
 \section{Households}
 
-Conditional on entry, household $i$ chooses a tenure mode $m\in\{R,O\}$, a bundle, and savings. For $m\in\{R,O\}$,
+Conditional on entry, household $i$ chooses a tenure mode $m\in\{R,O\}$, housing, fertility, consumption and savings. For $m\in\{R,O\}$,
 \[
 \begin{aligned}
 W_i^m=\max_{c_i,h_i,n_i,a_i'}\;&
