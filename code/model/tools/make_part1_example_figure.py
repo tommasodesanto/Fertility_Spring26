@@ -62,26 +62,31 @@ mv_o = gamma*cO/ho
 axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="old incumbent")
 
 axL.axhline(q, color=GRAY, lw=1.0, ls=":")
-axL.text(0.395, q+0.03, "$q=1$", color=GRAY, ha="right", fontsize=10)
+axL.text(0.395, q-0.09, "$q$", color=GRAY, ha="right", fontsize=11)
 axL.axhline(qO, color=BLUE, lw=0.8, ls=":", alpha=0.6)
-axL.text(0.395, qO+0.03, "$q^O=1.148$", color=BLUE, ha="right", fontsize=9, alpha=0.8)
+axL.text(0.395, qO+0.03, "$q^O$", color=BLUE, ha="right", fontsize=11, alpha=0.8)
 
 axL.plot([0.25], [q+zeta], "o", color=BLUE, ms=6)
 axL.plot([1/6], [q-ell], "o", color=RED, ms=6)
 
-axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, q),
+axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, qO),
              arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
-axL.text(0.256, 1.30, r"gap $=0.68$", color=BLUE, fontsize=10)
+axL.text(0.256, 1.38, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
 axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
              arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
-axL.text(0.105, 0.86, r"$\ell=0.2$", color=RED, fontsize=10)
+axL.text(0.13, 0.86, r"$\ell$", color=RED, fontsize=11)
+axL.plot([0.25,0.25],[0.55,q],color=BLUE,lw=0.6,ls=":",alpha=0.5)
+axL.plot([1/6,1/6],[0.55,q-ell],color=RED,lw=0.6,ls=":",alpha=0.5)
+axL.text(0.25, 0.50, r"$h_i$", color=BLUE, ha="center", fontsize=11)
+axL.text(1/6, 0.50, r"$h_j^O$", color=RED, ha="center", fontsize=11)
 
-axL.text(0.205, 1.86, "move one unit:\nsurplus $0.88$", fontsize=9.5, ha="center",
+axL.text(0.195, 1.86, "move one unit:\n" + r"$\zeta^{O,F}+\bar{\ell}/(1+r)+\ell$", fontsize=9.5, ha="center",
          bbox=dict(boxstyle="round,pad=0.3", fc="#f5f0e6", ec="#b8a268", lw=0.8))
 
 axL.set_xlabel("floorspace")
 axL.set_ylabel("marginal value of space (goods)")
-axL.set_xlim(0.05, 0.41); axL.set_ylim(0.55, 2.15)
+axL.set_xlim(0.05, 0.41); axL.set_ylim(0.42, 2.15)
+axL.set_xticks([]); axL.set_yticks([])
 axL.legend(frameon=False, fontsize=9.5, loc="upper right")
 axL.set_title("Two-sided misallocation", fontsize=11)
 
@@ -97,16 +102,19 @@ for H in Hs:
 axR.plot(Hs, ns, color=BLUE, lw=2.2)
 axR.plot([0.25], [n_e], "o", color=BLUE, ms=6)
 axR.axvline(h_u, color=GRAY, lw=1.0, ls=":")
-axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u=0.31$", rotation=90,
+axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u$", rotation=90,
          color=GRAY, fontsize=9, va="bottom")
+axR.plot([0.25,0.25],[0.14,n_e],color=BLUE,lw=0.6,ls=":",alpha=0.5)
+axR.text(0.25, 0.142, r"$H$", color=BLUE, ha="center", fontsize=11)
 
 dx = 0.045
 axR.plot([0.25-dx, 0.25+dx], [n_e-slope*dx, n_e+slope*dx], color=RED, lw=1.6, ls="-")
-axR.text(0.252, n_e-0.012, r"$dn/dH=0.30$", color=RED, fontsize=10)
+axR.text(0.255, n_e-0.014, r"slope $\mathrm{d}n/\mathrm{d}H$", color=RED, fontsize=10)
 
 axR.set_xlabel("effective family-housing cap $H$")
 axR.set_ylabel("completed fertility $n(H)$")
 axR.set_xlim(0.10, 0.40); axR.set_ylim(0.14, 0.26)
+axR.set_xticks([]); axR.set_yticks([])
 axR.set_title("Fertility against the cap", fontsize=11)
 
 for ax in (axL, axR):
