@@ -528,7 +528,7 @@ The planner equalizes every household's housing-consumption tradeoff to the comm
 The term $\nu_i^g$ is the goods-equivalent social value of a marginal birth beyond parental utility. If $\mathcal G_i\equiv0$, then $\nu_i^g=0$.
 Endogenous logit entry affects the levels of the first-order conditions through a common factor, but that factor cancels from the housing-consumption and fertility ratios displayed here.
 
-\section{Marginal conditions in equilibrium}
+\section{Equilibrium policies}
 
 How tightly a constraint binds can be read off the household's own bundle. A household that is free to adjust equates her marginal value of housing space to the price of space. A household pinned by a size menu or a financing requirement values space above its price, and the distance between the two is the constraint's bite, measured in consumption goods.
 
@@ -538,10 +538,11 @@ Every condition below is a derivative of one Lagrangian. For mode $m$,
 ={}&\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i
 +\beta\,V_{j'}\\
 &+\lambda_i^m\big(y_i+A_i(x)-c_i-q h_i-a_i'\big)
-+\theta_i^m\big(\bar h^m-h_i\big)\\
++\theta_i^m\big(\bar h^m-h_i\big)
++\xi_i\,a_i'\\
 &+\1\{m=O\}\Big[\mu_i\big(A_i(x)-(1-\phi)P h_i\big)+\eta_i\big(\psi y_i-q h_i\big)\Big],
 \end{align*}
-with $\lambda_i^m$ on the budget \eqref{eq:compact_young_budget}, $\theta_i^m\ge0$ on the size menu, and $\mu_i\ge0$ and $\eta_i\ge0$ on the down-payment \eqref{eq:compact_owner_dp} and payment-to-income \eqref{eq:compact_owner_pti} constraints, active only for buyers. The generated old state \eqref{eq:compact_perceived_transition} is substituted into $V_{j'}$; the savings bound $a_i'\ge0$ appears as the complementarity attached to the saving condition \eqref{eq:compact_euler} below, and the domain conditions hold strictly at any optimum.
+with $\lambda_i^m$ on the budget \eqref{eq:compact_young_budget}, $\theta_i^m\ge0$ on the size menu, and $\mu_i\ge0$ and $\eta_i\ge0$ on the down-payment \eqref{eq:compact_owner_dp} and payment-to-income \eqref{eq:compact_owner_pti} constraints, active only for buyers. The generated old state \eqref{eq:compact_perceived_transition} is substituted into $V_{j'}$, and $\xi_i\ge0$ is the multiplier on the no-borrowing bound $a_i'\ge0$---for a renter, the constraint that she cannot borrow at all; a buyer's only debt is the mortgage. The domain conditions hold strictly at any optimum.
 
 For a renter ($m=R$), at an interior allocation with respect to consumption and fertility,
 \begin{align}
@@ -620,13 +621,17 @@ q^O+\zeta_i^O.
 Both tenure modes share the saving margin
 \begin{equation}
 \frac{1}{c_i-\chi n_i}
-\;\ge\;
+=
 \beta(1+r)\,
-\frac{1}{c_{j'}^O},
-\qquad\text{with equality if }a_i'>0,
+\frac{1}{c_{j'}^O}
++\xi_i,
+\qquad
+\xi_i\ge0,
+\qquad
+\xi_i\,a_i'=0,
 \label{eq:compact_euler}
 \end{equation}
-the first-order condition for saving, with $c_{j'}^O$ old consumption at the generated state: both old problems have envelope $\partial V/\partial a_j=1/c_j^O$, and carried savings pay $1+r$. In the benchmark it pins savings in closed form. With logarithmic warm glow, $\mathcal B(e)=b\log e$ with $b\ge0$, old consumption at interior choices is proportional to liquidation wealth, and the condition collapses to the savings rule
+the first-order condition for saving, with $c_{j'}^O$ old consumption at the generated state: both old problems have envelope $\partial V/\partial a_j=1/c_j^O$, carried savings pay $1+r$, and $\xi_i>0$ exactly when the household would like to borrow against old age and cannot. In the benchmark it pins savings in closed form. With logarithmic warm glow, $\mathcal B(e)=b\log e$ with $b\ge0$, old consumption at interior choices is proportional to liquidation wealth, and the condition collapses to the savings rule
 \begin{equation}
 a_i'=k\,(c_i-\chi n_i)+\frac{\ell_{i'}\,h_i}{1+r},
 \qquad

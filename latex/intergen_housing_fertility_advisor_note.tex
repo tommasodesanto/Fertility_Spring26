@@ -140,23 +140,24 @@ Aggregate demand adds young households, old incumbents, and old renters, and the
 where $F_O$ and $F_R$ are the measures of old incumbents and old renters.
 A stationary equilibrium is a user cost $q$ (and $P=q/\rho$) such that households optimize, the market clears, fiscal and credit accounts close with lump-sum transfers, next period's old households are this period's young entrants, owners as incumbents and renters as old renters, and births plus the renewal inflow keep the cohort at $\bar M$. Nothing in the clearing condition asks whether the marginal family-sized unit is held by the household that values it most; that is the next section's question.
 
-\section{Marginal conditions}
+\section{Equilibrium policies}
 
 How much a constraint binds can be read off the household's own bundle. The branch problem's Lagrangian is
 \[
 \begin{aligned}
 \mathcal L=\;&u_i^Y+\beta\,V_{j'}+\lambda_i\big(y_i+a_i-c_i-qh_i-a_i'\big)\\
-&+\mu_i\big(a_i-(1-\phi)Ph_i\big)+\eta_i\big(\psi y_i-qh_i\big)+\theta_i\big(\bar h^m-h_i\big),
+&+\mu_i\big(a_i-(1-\phi)Ph_i\big)+\eta_i\big(\psi y_i-qh_i\big)+\theta_i\big(\bar h^m-h_i\big)+\xi_i\,a_i',
 \end{aligned}
 \]
-with $\mu_i=\eta_i=0$ in the rental mode and the savings bound $a_i'\ge0$ carried by the complementarity below; every condition in this section is a derivative of $\mathcal L$.
+with $\mu_i=\eta_i=0$ in the rental mode and $\xi_i\ge0$ the multiplier on the no-borrowing bound $a_i'\ge0$---for a renter, the constraint that she cannot borrow at all; every condition in this section is a derivative of $\mathcal L$.
 
 The first-order condition for saving sets the marginal value of resources today against the return tomorrow:
 \[
-\frac{1}{c_i-\chi n_i}=\beta(1+r)\,\frac{1}{c_{j'}^O}
-\qquad\text{when }a_i'>0,
+\frac{1}{c_i-\chi n_i}=\beta(1+r)\,\frac{1}{c_{j'}^O}+\xi_i,
+\qquad
+\xi_i\,a_i'=0,
 \]
-which under logarithmic old utility (warm glow $b\log e$ included) and interior old choices collapses to a savings rule:
+which for savers ($\xi_i=0$), under logarithmic old utility (warm glow $b\log e$ included) and interior old choices, collapses to a savings rule:
 \[
 a_i'=k\,(c_i-\chi n_i)+\frac{\ell_{i'}\,h_i}{1+r},
 \qquad
