@@ -1026,7 +1026,7 @@ Thus the fixed-branch effect is exposure to a binding family-space constraint, t
 
 \subsection{Tenure switching at the boundary}
 
-In this subsection $q^R$ and $q^O$ are tenure-mode effective user costs. The model now generates its own wedge: a buyer above the exclusion pays $q^O=q+\bar\ell/(1+r)$ per unit while a renter pays $q^R=q$; below the exclusion the modes price space identically. The anticipated tax also adds a constant to the owner branch's continuation---a locked-in old household occupies space at $q-\bar\ell$, an old-age subsidy worth $\vartheta\gamma\log\big(q/(q-\bar\ell)\big)$ in value terms---which shifts tenure choice without moving any bundle. The proposition below covers branches that differ only in the effective price and the cap, so it applies directly where the continuation constants coincide and, above the exclusion, after netting the known constant from the indifference condition; tenure-specific amenities, moving costs, or taste shifters still require a separate calculation.
+In this subsection $q^R$ and $q^O$ are tenure-mode effective user costs. The model now generates its own wedge: a buyer above the exclusion pays $q^O=q+\bar\ell/(1+r)$ per unit while a renter pays $q^R=q$; below the exclusion the modes price space identically. The anticipated tax also adds a constant to the owner branch's continuation---a locked-in old household occupies space at $q-\bar\ell$, an old-age subsidy worth $\vartheta\gamma\log\big(q/(q-\bar\ell)\big)$ in value terms---which shifts tenure choice without moving any bundle. The proposition below carries all three branch differences---effective price, cap, and continuation constant---explicitly; tenure-specific amenities, moving costs, or taste shifters still require a separate calculation.
 
 Tenure switching is not a price or general-equilibrium effect. It is already present in the fixed-price model because tenure is chosen by
 \[
@@ -1034,7 +1034,11 @@ W_i^Y=\max\{W_i^R,W_i^O\}.
 \]
 A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. Below the exclusion they price it identically and the jump is exactly zero: there, the local policy formula of the previous subsection is complete. Above the exclusion the anticipated tax makes owning the expensive way to occupy space, and the jump is signed accordingly; further wedges---a rental premium for large units as in the smooth menu formulation, landlord operating costs---move the gap the same way or against it.
 
-The branch problems include savings. Concentrating the rule $a'=k(c-\chi n)$ as above turns each branch into the static problem with consumption weight $1+k$, and the proof below carries the weight through. The level-set argument also uses that the two modes share the savings load $k$ and the continuation constant; with common old preferences and the savings rule, this holds when induced old-age choices are interior in both modes, since the continuation is then $(1+\gamma+b)\log\big((1+r)a'\big)$ plus a constant common to the two modes.
+The branch problems include savings. Concentrating the rule as above turns each branch into the static problem with consumption weight $1+k$ and branch price $q^m$, plus a branch constant: with common old preferences and interior old choices, the owner branch's continuation exceeds the renter's by
+\[
+\Delta=\vartheta\gamma\log\frac{q}{q-\bar\ell}>0
+\]
+above the exclusion---the old-age subsidy of occupying retained space at $q-\bar\ell$---and the constants coincide below it. The constant moves tenure choice without moving any bundle, so the proposition carries it explicitly: write $K^A$ and $K^B$ for the branch constants and $\Delta=K^B-K^A\ge0$.
 
 Fix prices and suppress the type index. Let $A$ denote the cheaper branch and $B$ the more expensive branch, with tenure-mode user costs
 \[
@@ -1044,31 +1048,42 @@ Let $(c_m,h_m,n_m)$ denote the branch-$m$ optimum, $m\in\{A,B\}$. Let $\zeta^m$ 
 
 \begin{proposition}[Fertility at a tenure switch]
 \label{prop:tenure_switch_fertility}
-Suppose $q^A<q^B$ and the household is indifferent across the two branches, $W^A=W^B$. Then the cheaper branch's effective cap binds with positive value, and the switcher into the expensive branch trades consumption for space:
+Suppose $q^A<q^B$, the branch continuations differ by $\Delta=K^B-K^A\ge0$, and the household is indifferent, $W^A=W^B$, so the dear branch runs a static-value deficit of exactly $\Delta$. Then:
+\begin{enumerate}[label=(\roman*)]
+\item if the price gap dominates the constant,
 \[
-h_B>h_A,
-\qquad
-h_B-\kappa n_B>h_A-\kappa n_A,
-\qquad
-c_B-\chi n_B<c_A-\chi n_A.
+\alpha\log\frac{q^B}{q^A}+\beta\log\frac{\chi+\kappa q^B}{\chi+\kappa q^A}>\Delta,
 \]
-If, in addition,
+the cheaper branch's effective cap binds with positive value, $h_A=H^A$ and $\zeta^A>0$;
+\item if moreover the wedge dominates the constant in resources,
 \[
-\chi\le (1+k)\,\frac{\kappa q^A}{\alpha},
+(q^B-q^A)\,h_B>\Delta\,(c_A-\chi n_A),
 \]
-then $n_B>n_A$.
+the switcher upsizes and trades consumption for space: $h_B>h_A$ and $c_B-\chi n_B<c_A-\chi n_A$;
+\item if in addition $\chi\le(1+k)\kappa q^A/\alpha$, then $n_B>n_A$ and $h_B-\kappa n_B>h_A-\kappa n_A$ whenever the within-set force exceeds the level shift, the inequality displayed in the proof; with $\Delta=0$ the conditions in (i) and (ii) hold automatically, the level shift vanishes, and all conclusions reduce to the earlier ones.
+\end{enumerate}
 \end{proposition}
 
 \begin{proof}
-The cheaper branch cap must bind with a positive multiplier. If $\zeta^A=0$, branch $A$ attains the unconstrained value at price $q^A$. Unconstrained value is strictly decreasing in the user cost, and branch $B$ has value at most its unconstrained value. Hence
+Write $W^m=\tilde W^m+K^m$ up to common terms, where $\tilde W^m$ is the concentrated static value at price $q^m$ and cap $H^m$; indifference is $\tilde W^A-\tilde W^B=\Delta$.
+
+(i) If $\zeta^A=0$, branch $A$ attains the unconstrained static value, and the closed forms give
 \[
-W^B\le W^B_{\mathrm{unc}}(q^B)<W^A_{\mathrm{unc}}(q^A)=W^A,
+\tilde W_{\mathrm{unc}}(q^A)-\tilde W_{\mathrm{unc}}(q^B)
+=
+\alpha\log\frac{q^B}{q^A}+\beta\log\frac{\chi+\kappa q^B}{\chi+\kappa q^A}.
 \]
-contradicting indifference. Thus $h_A=H^A$ and $\zeta^A>0$.
+Since $\tilde W^B\le\tilde W_{\mathrm{unc}}(q^B)$, the deficit would satisfy $\Delta\ge\tilde W_{\mathrm{unc}}(q^A)-\tilde W_{\mathrm{unc}}(q^B)$, contradicting price dominance. Thus $h_A=H^A$ and $\zeta^A>0$.
 
-Next, $h_B>h_A$. If instead $h_B\le h_A$, the branch-$B$ allocation would be feasible in branch $A$. At the lower user cost $q^A$, branch $A$ could choose the same housing and fertility with strictly higher consumption, contradicting $W^A=W^B$.
+(ii) Suppose $h_B\le h_A$. The branch-$B$ bundle is then feasible in branch $A$ and costs $(q^B-q^A)h_B$ less. The static value is concave in resources with marginal utility $1/(c_A-\chi n_A)$ at $w$, so
+\[
+\Delta=\tilde W^A-\tilde W^B
+\ge
+\frac{(q^B-q^A)\,h_B}{c_A-\chi n_A},
+\]
+contradicting wedge dominance. Thus $h_B>h_A$.
 
-It remains to order the bundles and sign fertility. Every branch optimum satisfies
+Every branch optimum satisfies
 \[
 \frac{\beta}{n}=\frac{\chi}{c-\chi n}+\frac{\alpha\kappa}{h-\kappa n}.
 \]
@@ -1079,13 +1094,16 @@ X=\frac{\chi}{c-\chi n},
 Y=\frac{\alpha\kappa}{h-\kappa n}.
 \]
 $X$ is large when adult consumption is squeezed, $Y$ when adult space is squeezed.\footnote{Capital $X$ and $Y$ are local to this proof and unrelated to the bequest share $x$ and income $y_i$.}
-Then $n=\beta/(X+Y)$, and branch utility can be written as $K-\Phi(X,Y)$, where $K$ is a type constant and
+Then $n=\beta/(X+Y)$, and branch utility can be written as $K^m-\Phi(X,Y)$ up to a common type constant, where
 \[
 \Phi(X,Y)=(1+k)\log X+\alpha\log Y+\beta\log(X+Y).
 \]
-Tenure indifference puts both branch optima on one level set, $\Phi(X_A,Y_A)=\Phi(X_B,Y_B)$.
+Indifference places the two optima on level sets that differ by the constant:
+\[
+\Phi(X_B,Y_B)=\Phi(X_A,Y_A)+\Delta.
+\]
 
-The bundle ordering uses no condition on $\chi$. Since $\Phi_X>0$ and $\Phi_Y>0$, the level set is a strictly decreasing graph $Y=\varphi(X)$. Occupied housing pins down the position along it: at any branch optimum,
+Occupied housing pins down the position along a level set: at any branch optimum,
 \[
 h
 =
@@ -1110,15 +1128,17 @@ and
 \frac{\alpha\beta X}{Y^2T^2}
 >0,
 \]
-so $\Phi_Y$ is strictly increasing in $X$ along the level set. Since $h_B>h_A$, we have $X_B>X_A$, and because the graph is decreasing, $Y_B<Y_A$. Hence $c_B-\chi n_B=\chi/X_B<c_A-\chi n_A$ and $h_B-\kappa n_B=\alpha\kappa/Y_B>h_A-\kappa n_A$.
+so on every level set $\Phi_Y$ is strictly increasing in $X$; and at fixed $X$, moving to a higher level set raises $Y$ and, since $\Phi_{YY}<0$, lowers $\Phi_Y$. Hence $h_B>h_A$ forces $X_B>X_A$, and $c_B-\chi n_B=\chi/X_B<\chi/X_A=c_A-\chi n_A$.
 
-Fertility is ordered by where the two optima sit relative to the ray $Y=\alpha X/(1+k)$. Along a level set of $\Phi$,
+(iii) Write $T(X;\varphi)$ for $X+Y$ along the level set $\Phi=\varphi$, and decompose along the path that runs from $(X_A,Y_A)$ along $\Phi_A$ to $X_B$, then up to $\Phi_A+\Delta$ at fixed $X_B$:
 \[
-\operatorname{sign}\left[\frac{\dd(X+Y)}{\dd X}\right]
+T_B-T_A
 =
-\operatorname{sign}\big(\alpha X-(1+k)Y\big),
+\underbrace{\int_{\Phi_A}^{\Phi_A+\Delta}\frac{\dd\varphi}{\Phi_Y(X_B,\cdot)}}_{\text{level shift}\ \ge0}
+\;-\;
+\underbrace{\int_{X_A}^{X_B}\frac{\Phi_X-\Phi_Y}{\Phi_Y}\bigg|_{\Phi_A}\,\dd X}_{\text{within-set force}}.
 \]
-and the ray crosses each level set once: the level set is a decreasing graph, while along the ray $Y=\alpha X/(1+k)$ the value $\Phi=(1+k+\alpha+\beta)\log X+\text{constant}$ is strictly increasing in $X$. Hence fertility $n=\beta/(X+Y)$ is single-peaked along an indifference curve, rising as the allocation moves toward the ray from the region $(1+k)Y>\alpha X$; the peak sits where the adults' lifetime-priced bundle has the same proportions as the child's, $(h-\kappa n)/(c-\chi n)=(1+k)\kappa/\chi$. At a branch optimum,
+The within-set integrand is positive exactly where $(1+k)Y>\alpha X$, the region above the ray $Y=\alpha X/(1+k)$, which crosses each level set once: the level set is a decreasing graph, while along the ray $\Phi=(1+k+\alpha+\beta)\log X+\text{constant}$ is strictly increasing in $X$. At a branch optimum,
 \[
 \frac{\alpha\,(c_m-\chi n_m)}{h_m-\kappa n_m}=q^m+\zeta^m,
 \qquad
@@ -1126,12 +1146,12 @@ and the ray crosses each level set once: the level set is a decreasing graph, wh
 \qquad\text{so}\qquad
 \frac{Y_m}{X_m}
 =
-\frac{\kappa(q^m+\zeta^m)}{\chi}.
+\frac{\kappa(q^m+\zeta^m)}{\chi},
 \]
-Under $\chi\le(1+k)\kappa q^A/\alpha$, both optima lie strictly in the region $(1+k)Y>\alpha X$: branch $A$ because $\zeta^A>0$, and branch $B$ because $q^B>q^A$. On that region $X+Y$ falls as $X$ rises toward the ray, so $X_B+Y_B<X_A+Y_A$ and $n_B=\beta/(X_B+Y_B)>\beta/(X_A+Y_A)=n_A$.
+and under $\chi\le(1+k)\kappa q^A/\alpha$ both optima lie strictly in the region: branch $A$ because $\zeta^A>0$, branch $B$ because $q^B>q^A$. Then $n_B=\beta/T_B>\beta/T_A=n_A$ if and only if the within-set force exceeds the level shift. When it does, $T_B<T_A$ together with $X_B>X_A$ gives $Y_B<Y_A$, hence $h_B-\kappa n_B=\alpha\kappa/Y_B>h_A-\kappa n_A$. With $\Delta=0$ the level shift vanishes, the path stays in the region between the two optima, and the inequality always holds.
 \end{proof}
 
-At indifference, the only reason to pay more per unit of space is to get more space, so the marginal switcher into the expensive branch always trades consumption for room. When children are at least as space-intensive as their parents' own lifetime-priced bundle ($\chi\le(1+k)\kappa q^A/\alpha$, the same condition as above, evaluated at the lower user cost), the extra room carries extra children.
+At indifference there are now two reasons to pay more per unit of space: to get more space, and to buy the dear branch's better old age. The conditions price that second temptation: the wedge must dominate the subsidy in resources for the switcher to upsize, and the fertility jump nets the within-branch space force against the subsidy's level shift. At the example's parameters the conditions hold with room to spare---price dominance by a factor of four---and the boundary household upsizes from $0.15$ to $0.20$ and adds $0.007$ children.
 
 The rent-own cases now read off directly, with the effective user costs $q^R=q$ and $q^O=q+\ell_{i'}/(1+r)$. \emph{Below the exclusion ($q^O=q^R=q$):} the modes differ only through their effective caps, and an indifferent household has the same allocation in both---either both caps are slack, or the caps coincide at the binding allocation. Then $n_O=n_R$, there is no discrete jump at the boundary, and the fixed-tenure formula of the previous subsection is the complete fixed-price answer. \emph{Above the exclusion ($q^O>q^R$):} ownership is the expensive family-space mode, and an indifferent switcher into ownership upsizes and has $n_O>n_R$; this is the model's own configuration for family-sized purchases. \emph{Renting dearer ($q^O<q^R$, for example a large-unit rental premium):} the inequality reverses; the marginal switcher into ownership moves to a cheaper, smaller unit, and $n_R>n_O$ under the analogous condition at the lower owner user cost. A cost wedge between the tenures is what makes tenure switching a first-order fertility-jump margin.
 
@@ -1164,12 +1184,12 @@ where $\dd S(i)$ is surface measure on the indifference boundary. For cap-shifti
 
 \begin{corollary}[Owner-access policies]
 \label{cor:switch_owner_access}
-Consider an owner-access policy with $\mathcal P_i^O(z)\ge0$ and $\mathcal P_i^R(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonnegative, so the fixed-tenure owner-access formula is a lower bound for this fixed-price fertility channel. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonpositive.
+Consider an owner-access policy with $\mathcal P_i^O(z)\ge0$ and $\mathcal P_i^R(z)=0$. Suppose the conditions of Proposition~\ref{prop:tenure_switch_fertility}, including part (iii)'s inequality, hold for almost every type on $\mathcal I(z)$. If $q^O>q^R$, the switching component is nonnegative, so the fixed-tenure owner-access formula is a lower bound for this fixed-price fertility channel. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonpositive.
 \end{corollary}
 
 \begin{corollary}[Rental-menu policies]
 \label{cor:switch_rental_menu}
-Consider a rental-menu policy with $\mathcal P_i^R(z)\ge0$ and $\mathcal P_i^O(z)=0$. Suppose the condition in Proposition~\ref{prop:tenure_switch_fertility} holds for almost every type on $\mathcal I(z)$, evaluated at the lower user cost. If $q^O>q^R$, the switching component is nonpositive: relaxing the rental cap raises fertility for constrained renters who remain renters, but it can also pull marginal owners back into renting. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonnegative.
+Consider a rental-menu policy with $\mathcal P_i^R(z)\ge0$ and $\mathcal P_i^O(z)=0$. Suppose the conditions of Proposition~\ref{prop:tenure_switch_fertility}, including part (iii)'s inequality, hold for almost every type on $\mathcal I(z)$. If $q^O>q^R$, the switching component is nonpositive: relaxing the rental cap raises fertility for constrained renters who remain renters, but it can also pull marginal owners back into renting. If $q^O=q^R$ (the baseline), the switching component is zero. If $q^O<q^R$, the switching component is nonnegative.
 \end{corollary}
 
 \clearpage
