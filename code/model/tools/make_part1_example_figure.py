@@ -71,7 +71,7 @@ axL.plot([1/6], [q-ell], "o", color=RED, ms=6)
 
 axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, qO),
              arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
-axL.text(0.256, 1.38, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
+axL.text(0.256, 1.42, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
 axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
              arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
 axL.text(0.13, 0.86, r"$\ell$", color=RED, fontsize=11)
@@ -80,15 +80,20 @@ axL.plot([1/6,1/6],[0.55,q-ell],color=RED,lw=0.6,ls=":",alpha=0.5)
 axL.text(0.25, 0.50, r"$h_i$", color=BLUE, ha="center", fontsize=11)
 axL.text(1/6, 0.50, r"$h_j^O$", color=RED, ha="center", fontsize=11)
 
-axL.text(0.195, 1.86, "move one unit:\n" + r"$\zeta^{O,F}+\bar{\ell}/(1+r)+\ell$", fontsize=9.5, ha="center",
-         bbox=dict(boxstyle="round,pad=0.3", fc="#f5f0e6", ec="#b8a268", lw=0.8))
+# reallocation surplus: the vertical distance between the two valuations
+axL.annotate("", xy=(0.205, q-ell), xytext=(0.205, q+zeta),
+             arrowprops=dict(arrowstyle="<->", color="#555555", lw=1.2))
+axL.plot([1/6, 0.205], [q-ell, q-ell], color="#555555", lw=0.6, ls=":")
+axL.plot([0.205, 0.25], [q+zeta, q+zeta], color="#555555", lw=0.6, ls=":")
+axL.text(0.198, 1.30, "moving one unit of space\nfrees " + r"$\zeta^{O,F}+\bar{\ell}/(1+r)+\ell$",
+         fontsize=9, ha="right", va="center", color="#444444")
 
 axL.set_xlabel("floorspace")
 axL.set_ylabel("marginal value of space (goods)")
 axL.set_xlim(0.05, 0.41); axL.set_ylim(0.42, 2.15)
 axL.set_xticks([]); axL.set_yticks([])
 axL.legend(frameon=False, fontsize=9.5, loc="upper right")
-axL.set_title("Two-sided misallocation", fontsize=11)
+axL.set_title("Misallocation", fontsize=11)
 
 # ---- right: n(H) ----
 Hs = np.linspace(0.10, 0.40, 300)
