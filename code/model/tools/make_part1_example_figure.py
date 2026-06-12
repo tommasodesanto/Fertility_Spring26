@@ -44,87 +44,107 @@ print(f"check: n={n_e:.4f} hatc={hatc_e:.4f} zeta={zeta:.4f} slope={slope:.4f} h
 
 BLUE, RED, GRAY = "#2b5d8a", "#b03a3a", "#666666"
 
+
+def draw_left(axL, title=True):
+    # ---- marginal values ----
+    hs = np.linspace(0.16, 0.40, 200)
+    mv_y = []
+    for H in hs:
+        hc, n = solve_constrained(H)
+        mv_y.append(alpha*hc/(H - kappa*n))
+    mv_y = np.array(mv_y)
+    axL.plot(hs, mv_y, color=BLUE, lw=2.2, label="young buyer")
+
+    ho = np.linspace(0.06, 0.42, 200)
+    W_liq = a + (q-ell)*0.25     # 0.40
+    cO = W_liq - (q-ell)*ho
+    mv_o = gamma*cO/ho
+    axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="old incumbent")
+
+    axL.axhline(q, color=GRAY, lw=1.0, ls=":")
+    axL.text(0.395, q-0.09, "$q$", color=GRAY, ha="right", fontsize=11)
+    axL.axhline(qO, color=BLUE, lw=0.8, ls=":", alpha=0.6)
+    axL.text(0.395, qO+0.03, "$q^O$", color=BLUE, ha="right", fontsize=11, alpha=0.8)
+
+    axL.plot([0.25], [q+zeta], "o", color=BLUE, ms=6)
+    axL.plot([1/6], [q-ell], "o", color=RED, ms=6)
+
+    axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, qO),
+                 arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
+    axL.text(0.256, 1.42, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
+    axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
+                 arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
+    axL.text(0.125, 0.86, r"$\bar{\ell}$", color=RED, fontsize=11)
+    axL.plot([0.25,0.25],[0.55,q],color=BLUE,lw=0.6,ls=":",alpha=0.5)
+    axL.plot([1/6,1/6],[0.55,q-ell],color=RED,lw=0.6,ls=":",alpha=0.5)
+    axL.text(0.25, 0.50, r"$h_i$", color=BLUE, ha="center", fontsize=11)
+    axL.text(1/6, 0.50, r"$h_j^O$", color=RED, ha="center", fontsize=11)
+
+    # reallocation surplus: the vertical distance between the two valuations
+    axL.annotate("", xy=(0.205, q-ell), xytext=(0.205, q+zeta),
+                 arrowprops=dict(arrowstyle="<->", color="#555555", lw=1.2))
+    axL.plot([1/6, 0.205], [q-ell, q-ell], color="#555555", lw=0.6, ls=":")
+    axL.plot([0.205, 0.25], [q+zeta, q+zeta], color="#555555", lw=0.6, ls=":")
+
+    axL.set_xlabel("floorspace")
+    axL.set_ylabel("marginal value of space (goods)")
+    axL.set_xlim(0.05, 0.41); axL.set_ylim(0.42, 2.15)
+    axL.set_xticks([]); axL.set_yticks([])
+    axL.legend(frameon=False, fontsize=9.5, loc="upper right")
+    if title:
+        axL.set_title("Misallocation", fontsize=11)
+    axL.spines["top"].set_visible(False); axL.spines["right"].set_visible(False)
+
+
+def draw_right(axR, title=True):
+    # ---- n(H) ----
+    Hs = np.linspace(0.10, 0.40, 300)
+    ns = []
+    for H in Hs:
+        if H < h_u:
+            _, n = solve_constrained(H)
+        else:
+            n = n_u
+        ns.append(n)
+    axR.plot(Hs, ns, color=BLUE, lw=2.2)
+    axR.plot([0.25], [n_e], "o", color=BLUE, ms=6)
+    axR.axvline(h_u, color=GRAY, lw=1.0, ls=":")
+    axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u$", rotation=90,
+             color=GRAY, fontsize=9, va="bottom")
+    axR.plot([0.25,0.25],[0.14,n_e],color=BLUE,lw=0.6,ls=":",alpha=0.5)
+    axR.text(0.25, 0.142, r"$H$", color=BLUE, ha="center", fontsize=11)
+
+    dx = 0.045
+    axR.plot([0.25-dx, 0.25+dx], [n_e-slope*dx, n_e+slope*dx], color=RED, lw=1.6, ls="-")
+    axR.text(0.255, n_e-0.014, r"slope $\mathrm{d}n/\mathrm{d}H$", color=RED, fontsize=10)
+
+    axR.set_xlabel("effective family-housing cap $H$")
+    axR.set_ylabel("completed fertility $n(H)$")
+    axR.set_xlim(0.10, 0.40); axR.set_ylim(0.14, 0.26)
+    axR.set_xticks([]); axR.set_yticks([])
+    if title:
+        axR.set_title("Fertility against the cap", fontsize=11)
+    axR.spines["top"].set_visible(False); axR.spines["right"].set_visible(False)
+
+
+OUT = "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/figures/"
+
+# combined two-panel figure (used by part1)
 fig, (axL, axR) = plt.subplots(1, 2, figsize=(10.6, 4.1))
-
-# ---- left: marginal values ----
-hs = np.linspace(0.16, 0.40, 200)
-mv_y = []
-for H in hs:
-    hc, n = solve_constrained(H)
-    mv_y.append(alpha*hc/(H - kappa*n))
-mv_y = np.array(mv_y)
-axL.plot(hs, mv_y, color=BLUE, lw=2.2, label="young buyer")
-
-ho = np.linspace(0.06, 0.42, 200)
-W_liq = a + (q-ell)*0.25     # 0.40
-cO = W_liq - (q-ell)*ho
-mv_o = gamma*cO/ho
-axL.plot(ho, mv_o, color=RED, lw=2.2, ls="--", label="old incumbent")
-
-axL.axhline(q, color=GRAY, lw=1.0, ls=":")
-axL.text(0.395, q-0.09, "$q$", color=GRAY, ha="right", fontsize=11)
-axL.axhline(qO, color=BLUE, lw=0.8, ls=":", alpha=0.6)
-axL.text(0.395, qO+0.03, "$q^O$", color=BLUE, ha="right", fontsize=11, alpha=0.8)
-
-axL.plot([0.25], [q+zeta], "o", color=BLUE, ms=6)
-axL.plot([1/6], [q-ell], "o", color=RED, ms=6)
-
-axL.annotate("", xy=(0.25, q+zeta), xytext=(0.25, qO),
-             arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
-axL.text(0.256, 1.42, r"$\zeta^{O,F}$", color=BLUE, fontsize=11)
-axL.annotate("", xy=(1/6, q-ell), xytext=(1/6, q),
-             arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
-axL.text(0.125, 0.86, r"$\bar{\ell}$", color=RED, fontsize=11)
-axL.plot([0.25,0.25],[0.55,q],color=BLUE,lw=0.6,ls=":",alpha=0.5)
-axL.plot([1/6,1/6],[0.55,q-ell],color=RED,lw=0.6,ls=":",alpha=0.5)
-axL.text(0.25, 0.50, r"$h_i$", color=BLUE, ha="center", fontsize=11)
-axL.text(1/6, 0.50, r"$h_j^O$", color=RED, ha="center", fontsize=11)
-
-# reallocation surplus: the vertical distance between the two valuations
-axL.annotate("", xy=(0.205, q-ell), xytext=(0.205, q+zeta),
-             arrowprops=dict(arrowstyle="<->", color="#555555", lw=1.2))
-axL.plot([1/6, 0.205], [q-ell, q-ell], color="#555555", lw=0.6, ls=":")
-axL.plot([0.205, 0.25], [q+zeta, q+zeta], color="#555555", lw=0.6, ls=":")
-
-
-axL.set_xlabel("floorspace")
-axL.set_ylabel("marginal value of space (goods)")
-axL.set_xlim(0.05, 0.41); axL.set_ylim(0.42, 2.15)
-axL.set_xticks([]); axL.set_yticks([])
-axL.legend(frameon=False, fontsize=9.5, loc="upper right")
-axL.set_title("Misallocation", fontsize=11)
-
-# ---- right: n(H) ----
-Hs = np.linspace(0.10, 0.40, 300)
-ns = []
-for H in Hs:
-    if H < h_u:
-        _, n = solve_constrained(H)
-    else:
-        n = n_u
-    ns.append(n)
-axR.plot(Hs, ns, color=BLUE, lw=2.2)
-axR.plot([0.25], [n_e], "o", color=BLUE, ms=6)
-axR.axvline(h_u, color=GRAY, lw=1.0, ls=":")
-axR.text(h_u+0.004, 0.165, r"cap stops binding: $h^u$", rotation=90,
-         color=GRAY, fontsize=9, va="bottom")
-axR.plot([0.25,0.25],[0.14,n_e],color=BLUE,lw=0.6,ls=":",alpha=0.5)
-axR.text(0.25, 0.142, r"$H$", color=BLUE, ha="center", fontsize=11)
-
-dx = 0.045
-axR.plot([0.25-dx, 0.25+dx], [n_e-slope*dx, n_e+slope*dx], color=RED, lw=1.6, ls="-")
-axR.text(0.255, n_e-0.014, r"slope $\mathrm{d}n/\mathrm{d}H$", color=RED, fontsize=10)
-
-axR.set_xlabel("effective family-housing cap $H$")
-axR.set_ylabel("completed fertility $n(H)$")
-axR.set_xlim(0.10, 0.40); axR.set_ylim(0.14, 0.26)
-axR.set_xticks([]); axR.set_yticks([])
-axR.set_title("Fertility against the cap", fontsize=11)
-
-for ax in (axL, axR):
-    ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
-
+draw_left(axL); draw_right(axR)
 fig.tight_layout()
-out = "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/figures/example_misallocation.pdf"
-fig.savefig(out, bbox_inches="tight")
-print("saved", out)
+fig.savefig(OUT + "example_misallocation.pdf", bbox_inches="tight")
+print("saved", OUT + "example_misallocation.pdf")
+
+# standalone panels (used by the advisor note); captions carry the titles
+figL, axL1 = plt.subplots(figsize=(5.3, 4.1))
+draw_left(axL1, title=False)
+figL.tight_layout()
+figL.savefig(OUT + "example_misallocation_only.pdf", bbox_inches="tight")
+print("saved", OUT + "example_misallocation_only.pdf")
+
+figR, axR1 = plt.subplots(figsize=(5.3, 4.1))
+draw_right(axR1, title=False)
+figR.tight_layout()
+figR.savefig(OUT + "example_fertility_cap.pdf", bbox_inches="tight")
+print("saved", OUT + "example_fertility_cap.pdf")

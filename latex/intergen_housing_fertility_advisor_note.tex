@@ -216,25 +216,32 @@ Every term is nonnegative and the first is positive, so one such pair is enough:
 
 The buyer's marginal value is her effective price plus her gap: what she would pay for one more unit. The incumbent's is the net-of-tax sale price: what releasing one more unit nets her. In the difference the market price cancels, and the two tax terms that remain are transfers the planner recovers, not resource costs. If the move must be implemented through costly financing instruments rather than direct reassignment, their marginal real cost subtracts from this surplus; if the down-payment constraint is a primitive nothing relaxes, the gap is not recoverable. The long version carries this implementation cost explicitly.
 
-\textbf{The two margins in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. On the left, the buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over. On the right, completed fertility rises with the cap at rate $\dd n/\dd H$ until the cap stops binding at $h^u$.
+\textbf{The misallocation in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. The buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over.
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.96\textwidth]{example_misallocation.pdf}
-\caption{Misallocation and the fertility margin. Left: the collateral-capped buyer values marginal space at $q^O+\zeta^{O,F}$, above the market price; the locked-in incumbent values it at $q-\bar\ell$, below; the distance between the two points is the recoverable surplus. Right: completed fertility against the effective family-housing cap, with slope $\dd n/\dd H$ at the equilibrium cap; the cap stops binding at $h^u$.}
+\includegraphics[width=0.58\textwidth]{example_misallocation_only.pdf}
+\caption{Misallocation. The collateral-capped buyer values marginal space at $q^O+\zeta^{O,F}$, above the market price; the locked-in incumbent values it at $q-\bar\ell$, below; the distance between the two points is the recoverable surplus.}
 \label{fig:example}
 \end{figure}
 
 \section{Fertility and policy}
 
-Fix a tenure mode, let $H$ be the effective cap, write $w=y+a$ for lifetime resources, and let $q^m$ be the mode's effective price. Concentrating the savings rule into the budget, a binding cap makes fertility solve $\vartheta/n=(1+k)\chi/(w-q^mH-\chi n)+\alpha\kappa/(H-\kappa n)$, and
+Fix a tenure mode and a household whose cap binds, so that her housing is pinned at the effective family-housing cap of Section~2: the rental size limit for a renter, the shorter of the owner size limit and the collateral bound for a buyer. Write $H$ for the level of that cap, $w=y+a$ for lifetime resources, and $q^m$ for the mode's effective price. The experiment is to relax the cap by a unit of space and watch completed fertility. Concentrating the savings rule into the budget, fertility at the cap solves $\vartheta/n=(1+k)\chi/(w-q^mH-\chi n)+\alpha\kappa/(H-\kappa n)$; differentiating with respect to the cap level,
 \[
 \frac{\dd n}{\dd H}
 =
 \frac{\dfrac{\alpha\kappa}{(H-\kappa n)^2}-\dfrac{(1+k)\,\chi q^m}{(w-q^mH-\chi n)^2}}
 {\dfrac{\vartheta}{n^2}+\dfrac{(1+k)\,\chi^2}{(w-q^mH-\chi n)^2}+\dfrac{\alpha\kappa^2}{(H-\kappa n)^2}} ,
 \]
-which is positive for every binding cap if and only if $\chi\le(1+k)\,\kappa q^m/\alpha$: relaxing access raises fertility whenever the child's consumption requirement does not exceed its space requirement priced at the lifetime cost of adult consumption. The savings margin loosens the condition because forced housing spending now crowds out saving alongside consumption.
+which is positive for every binding cap if and only if $\chi\le(1+k)\,\kappa q^m/\alpha$: relaxing access raises fertility whenever the child's consumption requirement does not exceed its space requirement priced at the lifetime cost of adult consumption. The savings margin loosens the condition because forced housing spending now crowds out saving alongside consumption. Figure~\ref{fig:fertcap} draws the relation: fertility rises along the binding cap at rate $\dd n/\dd H$ and flattens at $h^u$, where the cap stops binding.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.58\textwidth]{example_fertility_cap.pdf}
+\caption{The fertility margin. Completed fertility against the effective family-housing cap, from the same solved case as Figure~\ref{fig:example}; the slope at the equilibrium cap is $\dd n/\dd H$, and the cap stops binding at $h^u$.}
+\label{fig:fertcap}
+\end{figure}
 
 Now imagine a policy that relaxes the cap. The cap has concrete components, so the policy does too: a down-payment grant raises the collateral component $a_i\rho/((1-\phi)q)$ of the owner cap, looser financing raises it through $\phi$, and allowing larger rental units---converted from the existing stock, not built---raises $\bar h^R$. None of these adds floorspace: the stock is fixed, so the policy widens access to existing space rather than increasing supply. Then, at fixed prices, a small policy $z$ moves aggregate fertility through the constrained:
 \[
