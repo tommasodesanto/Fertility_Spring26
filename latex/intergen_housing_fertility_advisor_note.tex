@@ -175,7 +175,7 @@ n_i=\frac{\vartheta\,w_i}{(1+\alpha+\vartheta+k)(\chi+\kappa q^m)},
 \qquad
 h_i=\frac{\alpha\,w_i}{(1+\alpha+\vartheta+k)\,q^m}+\kappa n_i,
 \]
-and savings follow the rule. When the cap binds, $h_i=H_i^m$, fertility solves the condition displayed in the last section, and the budget gives the rest.
+
 
 Dividing the housing derivative of $\mathcal L$ by the consumption derivative, $\lambda_i=1/(c_i-\chi n_i)$, prices every multiplier in goods. For a renter this gives
 \[
@@ -211,12 +211,12 @@ Hold the stationary cross-section, entry, tenure assignments, and savings fixed;
 \[
 \underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell\,>\,0 .
 \]
-Every term is nonnegative and the first is positive, so one such pair is enough: the competitive allocation does not solve the planner's conditional problem. Conversely, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
+If any constraint holds, the competitive allocation does not solve the planner's conditional problem. Conversely, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
 \end{proposition}
 
 The buyer's marginal value is her effective price plus her gap: what she would pay for one more unit. The incumbent's is the net-of-tax sale price: what releasing one more unit nets her. In the difference the market price cancels, and the two tax terms that remain are transfers the planner recovers, not resource costs. If the move must be implemented through costly financing instruments rather than direct reassignment, their marginal real cost subtracts from this surplus; if the down-payment constraint is a primitive nothing relaxes, the gap is not recoverable. The long version carries this implementation cost explicitly.
 
-\textbf{The misallocation in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. The buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over.
+Figure~\ref{fig:example} draws a solved stationary case as theory. The buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over.
 
 \begin{figure}[!htb]
 \centering
@@ -227,7 +227,7 @@ The buyer's marginal value is her effective price plus her gap: what she would p
 
 \section{Fertility and policy}
 
-Fix a tenure mode and a household whose cap binds, so that her housing is pinned at the effective family-housing cap of Section~2: the rental size limit for a renter, the shorter of the owner size limit and the collateral bound for a buyer. Write $H$ for the level of that cap, $w=y+a$ for lifetime resources, and $q^m$ for the mode's effective price. The experiment is to relax the cap by a unit of space and watch completed fertility. Concentrating the savings rule into the budget, fertility at the cap solves $\vartheta/n=(1+k)\chi/(w-q^mH-\chi n)+\alpha\kappa/(H-\kappa n)$; differentiating with respect to the cap level,
+Fix a tenure mode and a household whose cap binds, so that her housing is pinned at the effective family-housing cap of Section~2: the rental size limit for a renter, the shorter of the owner size limit and the collateral bound for a buyer. Write $H$ for the level of that cap, $w=y+a$ for lifetime resources, and $q^m$ for the mode's effective price. We relax the cap by a unit of space and study fertility. Concentrating the savings rule into the budget, fertility at the cap solves $\vartheta/n=(1+k)\chi/(w-q^mH-\chi n)+\alpha\kappa/(H-\kappa n)$; differentiating with respect to the cap level,
 \[
 \frac{\dd n}{\dd H}
 =
@@ -243,7 +243,7 @@ which is positive for every binding cap if and only if $\chi\le(1+k)\,\kappa q^m
 \label{fig:fertcap}
 \end{figure}
 
-Now imagine a policy aimed at fertility through housing. The access channel runs through the cap, and the cap says where a policy can push: a down-payment grant raises $a_i$, financial deregulation raises $\phi$, and either loosens the collateral bound $a_i\rho/((1-\phi)q)$; making family-sized units available to rent raises $\bar h^R$. None of this is construction: the stock $\bar H$ is unchanged, and the policy changes who can occupy how much of it. At fixed prices, a small policy $z$ then moves aggregate fertility through the constrained:
+One can decompose the effect of a (fertility-neutral) policy on fertility.\footnote{That is, I am not imposing here a planner solving for an explicit desired level of fertility and studying the housing channel to achieve it. Here, I am just looking at a planner who relaxes housing contraint (to ease the misallocation in Part 5) and observing that that can have a fertility impact.} The access channel runs through the cap, and the cap says where a policy can be effective: a down-payment grant raises $a_i$, financial deregulation raises $\phi$, and either loosens the collateral bound $a_i\rho/((1-\phi)q)$; making family-sized units available to rent raises $\bar h^R$. None of this is construction: the stock $\bar H$ is unchanged, and the policy changes who can occupy how much of it. At fixed prices, a small policy $z$ then moves aggregate fertility through the constrained:
 \[
 \left.\frac{\dd N}{\dd z}\right|_{q}
 =
@@ -251,9 +251,9 @@ Now imagine a policy aimed at fertility through housing. The access channel runs
 \left[\pi_i^E\,\Psi_i^m+n_i^m\,\frac{\pi_i^E(1-\pi_i^E)}{\kappa_E}\,\Theta_i^m\right]
 \mathcal P_i^m(z)\,\dd G_Y(i),
 \]
-where $\mathcal E_m(z)$ is the set of households whose cap binds in mode $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental size limit. A transfer of spendable resources also moves fertility through the budget at a fixed cap; the formula isolates the access channel. At $\chi=(1+k)\kappa q^m/\alpha$, equal scaling at lifetime prices, $\Psi_i^m$ is proportional to $\zeta_i^m/(c_i^m-\chi n_i^m)$, so the same gap that measures misallocation predicts whose fertility responds.
+where $\mathcal E_m(z)$ is the set of households whose cap binds in mode $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental size limit. . At $\chi=(1+k)\kappa q^m/\alpha$, equal scaling at lifetime prices, $\Psi_i^m$ is proportional to $\zeta_i^m/(c_i^m-\chi n_i^m)$, so the same gap that measures misallocation predicts whose fertility responds.
 
-Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the rent--own boundary. The gains tax makes that crossing non-trivial---owning is the dear way to occupy space per unit, yet carries a constant old-age subsidy from retention---and I defer its full treatment to the long version, together with the stationary demographic closure and the full equilibrium definition.
+Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the rent--own boundary. The gains tax makes that crossing non-trivial. This is also explored in the forthcoming extended version.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
