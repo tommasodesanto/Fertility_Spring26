@@ -207,18 +207,18 @@ This section is very preliminary, and serves as an illustration of what one can 
 The planner faces the economy's real constraints and nothing else: the stock, the size limits, goods feasibility, and the domain conditions. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy.
 
 \begin{proposition}
-Hold the stationary cross-section, entry, tenure assignments, and savings fixed; the variation below resizes two owner-occupied houses and converts no tenures. The planner's surplus from moving one unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraints bind is
+Hold the stationary cross-section, entry, tenure assignments, and savings fixed; the variation below resizes two owner-occupied houses and converts no tenures. The planner's surplus from moving one unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraint binds ($\zeta_i^{O,F}>0$) is
 \[
-\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell .
+\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell\,>\,0 .
 \]
-The competitive allocation solves the planner's conditional problem only if no feasible pair has positive surplus. Conversely, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
+Every term is nonnegative and the first is positive, so one such pair is enough: the competitive allocation does not solve the planner's conditional problem. Conversely, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
 \end{proposition}
 
 The buyer's marginal value is her effective price plus her gap: what she would pay for one more unit. The incumbent's is the net-of-tax sale price: what releasing one more unit nets her. In the difference the market price cancels, and the two tax terms that remain are transfers the planner recovers, not resource costs. If the move must be implemented through costly financing instruments rather than direct reassignment, their marginal real cost subtracts from this surplus; if the down-payment constraint is a primitive nothing relaxes, the gap is not recoverable. The long version carries this implementation cost explicitly.
 
 \textbf{The two margins in one picture.} Figure~\ref{fig:example} draws a solved stationary case as theory. On the left, the buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell$ in goods is left over. On the right, completed fertility rises with the cap at rate $\dd n/\dd H$ until the cap stops binding at $h^u$.
 
-\begin{figure}[t]
+\begin{figure}[!htb]
 \centering
 \includegraphics[width=0.96\textwidth]{example_misallocation.pdf}
 \caption{Misallocation and the fertility margin. Left: the collateral-capped buyer values marginal space at $q^O+\zeta^{O,F}$, above the market price; the locked-in incumbent values it at $q-\bar\ell$, below; the distance between the two points is the recoverable surplus. Right: completed fertility against the effective family-housing cap, with slope $\dd n/\dd H$ at the equilibrium cap; the cap stops binding at $h^u$.}
