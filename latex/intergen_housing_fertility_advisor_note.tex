@@ -42,7 +42,7 @@ u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j),
 \]
 with $\mathcal B$ a warm-glow function, increasing and concave, possibly zero, common to all old households. The exiting cohort's estates are what the arriving cohort inherits. 
 
-\textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace, held by old incumbents and by passive absentee landlords: buyers purchase from either, renters occupy landlord space, and rents and sale proceeds are transfers. Renting and owning are occupancy modes with different size limits, the largest sizes available to rent and to own,
+\textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace, held by old incumbents and by passive absentee landlords: buyers purchase from either, renters occupy landlord space, and rents and sale proceeds are transfers.\footnote{There is no construction: the model allocates a fixed stock. This is also why the equilibrium is stationary---the demographic laws let population grow, but a fixed stock cannot support constant prices under growth; the supply margin lives in the quantitative model.} Renting and owning are occupancy modes with different size limits, the largest sizes available to rent and to own,
 \[
 h\le\bar h^R \text{ (rent)},
 \qquad
@@ -89,11 +89,11 @@ a_i'\ge0,
 \[
 \mathbf 1\{m=O\}\,(1-\phi)P h_i\le a_i .
 \]
-Children have a market price: each child claims $\chi$ goods and $\kappa$ units of space, and space rents at $q$, so providing for a child costs $\chi+\kappa q$ per period. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$: the child splits her cost between space and goods in the proportion $\kappa q/\chi=\alpha$, the same proportion in which her parents split their own spending.
+Financial wealth carried into old age is $a_{j'}=(1+r)\,a_i'-\mathbf 1\{m=O\}\,q h_i$: real wealth is conserved, the nominal gain is not wealth. Children have a market price: each child claims $\chi$ goods and $\kappa$ units of space, and space rents at $q$, so providing for a child costs $\chi+\kappa q$ per period. A useful benchmark is equal scaling, $\chi=\kappa q/\alpha$: the child splits her cost between space and goods in the proportion $\kappa q/\chi=\alpha$, the same proportion in which her parents split their own spending.
 
 
 
-The old incumbent enters with financial wealth $a_j$, housing $H_j^0$, and an accrued gain; old households have no income. She faces a choice with respect to her housing: sell now and pay the tax, or keep it until death, when the tax is forgiven. She solves
+The old incumbent enters with financial wealth $a_j$, housing $H_j^0$, and an accrued gain; old households have no income. She faces a choice with respect to her housing: sell now and pay the tax, or keep it until death, when the tax is forgiven.\footnote{With an indivisible house the choice is all-or-nothing: a strict keeper escapes the bill entirely, lock-in concentrates into a notch at the downsizing margin, and pre-saving becomes plan-contingent. The divisible model is the smooth counterpart.} She solves
 \[
 \begin{aligned}
 V^O(a_j,H_j^0)
@@ -105,7 +105,7 @@ c_j^O+e_j+q\,h_j^O=a_j+qH_j^0-\bar\ell\,(H_j^0-h_j^O),
 0\le h_j^O\le H_j^0 .
 \end{aligned}
 \]
-Selling a unit nets $q-\bar\ell$; Hence the stepping base system acts as a subsidy to locking in. An old renter has no carried housing and no tax:
+Selling a unit nets $q-\bar\ell$; hence the stepping base system acts as a subsidy to locking in. An old renter has no carried housing and no tax:
 \[
 V^R(a_j)
 =\max_{c_j^O,\,h_j^O,\,e_j}\;u^O(c_j^O,h_j^O,e_j)
@@ -165,7 +165,7 @@ which for savers ($\xi_i=0$), under logarithmic old utility (warm glow $b\log e$
 \[
 a_i'=\beta\left(1+\gamma+b\right)(c_i-\chi n_i)+\mathbf 1\{m=O\}\,\frac{\bar\ell\,h_i}{1+r},
 \]
-with $\gamma$ the old housing weight and $b$ the warm-glow weight: the household saves old age's claim on adult consumption- $k\equiv\beta(1+\gamma+b)$ -plus her discounted future tax bill, so anticipating the lock-in tax is itself a savings motive. By the same conversion, a buyer pays an effective price $q^O=q+\bar\ell/(1+r)$ per unit of space---the market price plus her own discounted lock-in tax---while a renter pays $q$; write $q^m$ for the case's effective price. A unit of adult consumption commits $1+k$ units of resources, one spent now and $k$ carried.
+with $\gamma$ the old housing weight and $b$ the warm-glow weight: the household saves old age's claim on adult consumption- $k\equiv\beta(1+\gamma+b)$ -plus her discounted future tax bill, so anticipating the lock-in tax is itself a savings motive. The bill is certain rather than contingent on selling: at an interior retention choice a kept unit costs its forgone net-of-tax sale value, so the tax lowers the old budget by $\bar\ell h_i$ whatever the keep--sell split; keeping changes what the budget is spent on, not its size. Only a household that would keep everything regardless escapes, the corner the interiority assumption excludes. By the same conversion, a buyer pays an effective price $q^O=q+\bar\ell/(1+r)$ per unit of space---the market price plus her own discounted lock-in tax---while a renter pays $q$; write $q^m$ for the case's effective price. A unit of adult consumption commits $1+k$ units of resources, one spent now and $k$ carried.
 
 When no cap binds, the allocation follows in one line: with lifetime resources $w_i=y_i+a_i$,
 \[
