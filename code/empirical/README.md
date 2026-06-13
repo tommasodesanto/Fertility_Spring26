@@ -14,9 +14,6 @@ to live in the top-level calibration surface.
   ACS supporting regressions and plots that feed empirical notes and side facts.
 - `roundup/`
   PSID / empirical-roundup scripts and compilers.
-- `token_billing_quality/`
-  Public Chatbot Arena proof of concept for the mini-paper on usage-based LLM
-  billing, quality, and real usage inflation.
 
 ### Historical Calibration Plotting
 

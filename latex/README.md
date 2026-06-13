@@ -18,9 +18,6 @@ Active documents:
   `intergenerational_housing_fertility_v4.pdf`: revised full non-spatial
   intergenerational housing-fertility draft with a cleaned compact analytical
   model and the quantitative blueprint retained from v3.
-- `token_billing_quality_minipaper.tex` /
-  `token_billing_quality_minipaper.pdf`: two-page mini-paper on token billing,
-  product quality, and avoidable real usage inflation.
 
 Build/support files:
 
