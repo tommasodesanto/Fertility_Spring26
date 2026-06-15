@@ -36,6 +36,17 @@ Pre-audit copies are in `latex/archive/part1_june15_pre_audit/`. A ChatGPT Pro a
 - Added the short-note nonhousing-estate sentence, baseline outside-fertility normalization, access-only grant caveat, and precise normalized-gap policy ranking.
 - Made the figure script robust to a flat copied bundle: it searches upward for `latex/figures` and otherwise writes to `Path.cwd()/figures`.
 
+## Final June 15 Cleanup
+
+- Corrected the competitive-equilibrium/planner fertility comparison to use the mode effective price \(q^{CE,m}\): \(q^{CE,R}=q^{CE}\) and, under Assumption 1, \(q^{CE,O}=q^{CE}+\bar\ell/(1+r)\). This avoids silently dropping the owner anticipated-tax wedge.
+- Changed the Stone--Geary equal-scaling discussion in Section 9 to the mode-price condition \(\chi=\kappa q^m/\alpha\), while preserving the earlier market-price benchmark as the renter/no-tax version.
+- Made Proposition 3 part (iii) self-contained by displaying the within-level-set versus level-shift inequality in the proposition statement.
+- Added fixed-\(\bar\ell\) qualifications to the property-tax capitalization channel: if \(\bar\ell=\tau^gP\varpi/(1+\varpi)\) moves with \(P\), the same policy also changes \(q^O\) and the old-retention wedge.
+- Removed the short note's unconditional \(>0\) from the surplus display; positive surplus now holds iff the real implementation cost is below the value gap.
+- Tightened the short-note policy derivative to the fixed-price, fixed-tenure, fixed-active-set object \(\left.\dd N/\dd z\right|_{q,o,\mathcal A}\), and aligned the tenure-switching closing sentence with Part 1.
+- Set the figure script's savings load from the displayed paper parameters, `beta_disc = 0.1763` and `k = beta_disc * (1.0 + gamma)`, leaving the printed numerical check as validation rather than reverse engineering.
+- Verification after this pass regenerated the three example figures, recompiled Part 1 and the short note with `latexmk -pdf -interaction=nonstopmode -halt-on-error`, and found no Overfull boxes, Underfull boxes, undefined references, citation warnings, or rerun-needed warnings. The only warning-pattern log hits are the `rerunfilecheck` package-identification lines.
+
 ## Preserved or deferred
 
 - Part 1 still keeps the full \(r_i^F\) trichotomy, the full switching proposition/proof/numbers, and the efficiency proof.

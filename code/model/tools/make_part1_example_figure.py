@@ -6,12 +6,12 @@ from pathlib import Path
 
 alpha, vartheta, kappa, chi, q = 0.5, 0.4, 0.3, 0.6, 1.0
 y, a, gamma, ell = 1.0, 0.20, 0.5, 0.2
+beta_disc = 0.1763
 w = y + a            # lifetime resources
 r_per = 0.35                  # period return
 carry = ell/(1+r_per)         # anticipated tax wedge
 qO = q + carry                # buyer effective price (above exclusion)
-# k chosen so the bundle at H=0.25 reproduces hatc=0.61615, n=0.22308
-k = (w - qO*0.25 - chi*0.22307628850648113)/0.6161538027919038 - 1.0
+k = beta_disc * (1.0 + gamma)
 
 def solve_constrained(H):
     # Owner example: (1+k)hatc + chi n = w - qO*H.

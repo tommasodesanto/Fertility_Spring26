@@ -642,7 +642,7 @@ the first-order condition for saving, with $c_{j'}^O$ old consumption at the gen
 a_i'=\beta\left(1+\gamma+b\right)(c_i-\chi n_i)+\1\{m=O\}\,\frac{\bar\ell\,h_i}{1+r},
 \label{eq:compact_savings_rule}
 \end{equation}
-with $\gamma$ the old housing weight and $b$ the warm-glow weight; renters drop the second term. In the first term the gross return drops out, the usual log cancellation; the second is the discounted future tax bill, which the household saves in advance: anticipating the lock-in tax is itself a savings motive. The bill is certain rather than contingent on selling: at an interior retention choice a kept unit costs its forgone net-of-tax sale value, so the tax lowers the old budget by $\bar\ell h_i$ whatever the keep--sell split; keeping changes what the budget is spent on, not its size. Only a household that would keep the whole house no matter what escapes the bill; Assumption~\ref{ass:carry_neutral}'s interior retention rules her out. The savings load $k\equiv\beta(1+\gamma+b)$ is old age's claim on each unit of adult consumption; the comparative statics of Section 9 use it as shorthand.
+with $\gamma$ the old housing weight and $b$ the warm-glow weight; renters drop the second term. In the first term the gross return drops out, the usual log cancellation; the second is the discounted future tax bill, which the household saves in advance: anticipating the lock-in tax is itself a savings motive. In the interior divisible formulation, the tax is equivalent to a certain wealth cost $\bar\ell h_i$ at the generated old state; statutory payments still occur only on sold units. At an interior retention choice a kept unit costs its forgone net-of-tax sale value, so the tax lowers the old budget by $\bar\ell h_i$ whatever the keep--sell split; keeping changes what the budget is spent on, not its size. Only a household that would keep the whole house no matter what escapes the bill; Assumption~\ref{ass:carry_neutral}'s interior retention rules her out. The savings load $k\equiv\beta(1+\gamma+b)$ is old age's claim on each unit of adult consumption; the comparative statics of Section 9 use it as shorthand.
 
 For an old owner at an interior choice of current housing to keep,
 \begin{equation}
@@ -673,7 +673,7 @@ Thus rental size limits and owner access constraints enter fertility through the
 For renters, multiply \eqref{eq:compact_renter_foc_n} by $1/\lambda_i^R=c_i^R-\chi n_i^R$ and use \eqref{eq:compact_renter_mv}. For owners, multiply \eqref{eq:compact_owner_foc_n} by $1/\lambda_i^O=c_i^O-\chi n_i^O$ and use \eqref{eq:compact_owner_mv}.
 \end{proof}
 
-A child's space requirement is priced at the household's \emph{own} shadow value of space, not at the market price. In an unconstrained mode, the full price of a child is $\chi+\kappa q^m$. For a constrained household it is $\chi+\kappa(q^m+\zeta_i^m)$, so a binding access constraint acts as a tax of $\kappa\zeta_i^m$ per child. Children become more expensive exactly where family-sized space is hard to reach, even with market prices unchanged. Two limits anchor the framework: as $H_i^m\to\infty$ every household pays the unconstrained child price $\chi+\kappa q^m$, and with $\kappa=0$ children claim no space and the price reduces to the standard child-goods cost $\chi$. On the financing side, when the collateral component binds, $\partial H_i^O/\partial\tau^p=a_i/((1-\phi)q)>0$: a higher property tax lowers the asset price at a given user cost and relaxes the down payment, the capitalization channel of \citet{coven2024}.
+A child's space requirement is priced at the household's \emph{own} shadow value of space, not at the market price. In an unconstrained mode, the full price of a child is $\chi+\kappa q^m$. For a constrained household it is $\chi+\kappa(q^m+\zeta_i^m)$, so a binding access constraint acts as a tax of $\kappa\zeta_i^m$ per child. Children become more expensive exactly where family-sized space is hard to reach, even with market prices unchanged. Two limits anchor the framework: as $H_i^m\to\infty$ every household pays the unconstrained child price $\chi+\kappa q^m$, and with $\kappa=0$ children claim no space and the price reduces to the standard child-goods cost $\chi$. On the financing side, when the collateral component binds, $\partial H_i^O/\partial\tau^p=a_i/((1-\phi)q)>0$: a higher property tax lowers the asset price at a given user cost and relaxes the down payment, the capitalization channel of \citet{coven2024}. This derivative isolates the down-payment capitalization channel holding $\bar\ell$ fixed; if $\bar\ell=\tau^gP\varpi/(1+\varpi)$ moves with $P$, the policy also changes $q^O$ and the old retention wedge.
 
 If no access or size limit constraint binds in the relevant tenure mode, the corresponding access value is zero. For example, an unconstrained young owner satisfies
 \begin{align*}
@@ -753,11 +753,11 @@ The young household buys. At the purchase/flow level both modes face $q$; after 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.97\textwidth]{example_misallocation.pdf}
-\caption{The worked local allocation. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q^O+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\bar\ell=0.80$; moving one unit from her to the buyer frees $0.88$ in goods. Right: completed fertility against the effective cap. At the cap the slope is $\dd n/\dd H=0.30$, and the cap stops binding at $h^u=0.31$.}
+\caption{The worked local allocation. Left: marginal value of space. The collateral-capped young owner sits at $h=0.25$ valuing space at $q^O+\zeta^{O,F}=1.68$; the incumbent retains $h^O=1/6$ valuing it at $q-\bar\ell=0.80$; moving a marginal unit from her to the buyer frees $0.88$ in goods. Right: completed fertility against the effective cap. At the cap the slope is $\dd n/\dd H=0.30$, and the cap stops binding at $h^u=0.31$.}
 \label{fig:worked_example}
 \end{figure}
 
-Every object can be read off this one allocation. The left panel is a compensated trade: pay the incumbent for one unit at her marginal value, $q-\bar\ell=0.80$; charge the buyer at hers, $q^O+\zeta^{O,F}=1.68$; both households are exactly as well off, and the residual $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell=0.88$ is left in goods. The cap derivative is $\dd n/\dd H=0.30$; and a down-payment grant passes through at $\partial H^O/\partial a_i=\rho/((1-\phi)q)=1.25$, so a wealth transfer of $0.01$ raises the cap by $0.0125$ and completed fertility by $0.0038$ through access, plus $0.0012$ through the budget now that wealth is spendable, $0.0050$ in all. The gap, the tax, and the responses are read off the bundle, the tax schedule, and the financing terms.
+Every object can be read off this one allocation. The left panel is a compensated trade: pay the incumbent for a marginal unit at her marginal value, $q-\bar\ell=0.80$; charge the buyer at hers, $q^O+\zeta^{O,F}=1.68$; both households are exactly as well off, and the residual $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell=0.88$ is left in goods. The cap derivative is $\dd n/\dd H=0.30$; and a down-payment grant passes through at $\partial H^O/\partial a_i=\rho/((1-\phi)q)=1.25$, so a wealth transfer of $0.01$ raises the cap by $0.0125$ and completed fertility by $0.0038$ through access, plus $0.0012$ through the budget now that wealth is spendable, $0.0050$ in all. The gap, the tax, and the responses are read off the bundle, the tax schedule, and the financing terms.
 
 \section{Fertility and entry}
 
@@ -838,11 +838,11 @@ This condition has a direct Stone--Geary interpretation. At an unconstrained int
 \]
 unchanged by the savings margin and evaluated at the mode price. The child input bundle has the same housing-to-consumption expenditure ratio as the adults' own bundle when
 \[
-\frac{q\kappa}{\chi}=\alpha,
+\frac{q^m\kappa}{\chi}=\alpha,
 \qquad\text{equivalently}\qquad
-\chi=\frac{\kappa q}{\alpha},
+\chi=\frac{\kappa q^m}{\alpha},
 \]
-the equal-scaling benchmark. With savings, the threshold for the fertility response sits above it: fertility is strictly increasing in every binding cap relaxation if and only if
+the equal-scaling benchmark at mode prices. The earlier market-price benchmark, $\chi=\kappa q/\alpha$, is the renter or no-tax version; for owners with $q^m=q^O$ it is distinct from lifetime equal scaling. With savings, the threshold for the fertility response sits above it: fertility is strictly increasing in every binding cap relaxation if and only if
 \[
 \chi\le (1+k)\,\frac{\kappa q^m}{\alpha},
 \]
@@ -857,11 +857,11 @@ This result maps into the model's access margins. A relaxation of the rental siz
 
 The derivative above signs the fertility response to these primitive cap relaxations locally, holding tenure, prices, income, and child costs fixed.
 
-The competitive-equilibrium/planner comparison is a different statement because prices, consumption, tenure assignments, and entry can all change. In the competitive equilibrium, an entered young household in mode $m$ satisfies
+The competitive-equilibrium/planner comparison is a different statement because prices, consumption, tenure assignments, and entry can all change. In the competitive equilibrium, an entered young household in mode $m$ satisfies, with $q^{CE,R}=q^{CE}$ and $q^{CE,O}=q^{CE}+\bar\ell/(1+r)$ under Assumption~\ref{ass:carry_neutral},
 \[
 \frac{\vartheta\,(c_i^{CE,m}-\chi n_i^{CE,m})}{n_i^{CE,m}}
 =
-\chi+\kappa(q^{CE}+\zeta_i^{CE,m}).
+\chi+\kappa(q^{CE,m}+\zeta_i^{CE,m}).
 \]
 A fertility-neutral planner has no direct social birth payoff. If the planner allocation for the same type and mode is interior with respect to any remaining access constraint, then
 \[
@@ -876,7 +876,7 @@ n_i^{P,m}>n_i^{CE,m}
 \frac{c_i^{P,m}-\chi n_i^{P,m}}{c_i^{CE,m}-\chi n_i^{CE,m}}
 >
 \frac{\chi+\kappa Q^{P}}
-{\chi+\kappa(q^{CE}+\zeta_i^{CE,m})}.
+{\chi+\kappa(q^{CE,m}+\zeta_i^{CE,m})}.
 \]
 Thus a fertility-neutral planner does not mechanically deliver higher fertility merely because the competitive allocation has a positive access value. The mode-level result gives a primitive sufficient condition for a signed fertility response when a policy or planner locally raises a type's effective housing cap holding the case primitives fixed.
 
@@ -941,7 +941,7 @@ Let $m\in\{R,O\}$ denote the active tenure mode and let $\mathcal E_m(z)$ be the
 \[
 \mathcal P_i^m(z)=\frac{\partial H_i^m}{\partial z}.
 \]
-Because the cap is a minimum, a policy that improves a slack component does nothing: a subsidy to units below the binding size does not relax a binding down-payment constraint, and a down-payment grant does nothing for a renter pinned by the rental size limit. If a policy does not relax the binding component of $H_i^m$, then $\mathcal P_i^m(z)=0$ for this family-space-cap mechanism. Policies that operate primarily through the price $q$ are a different exercise; they are outside this fixed-price formula, not evaluated by it. A transfer of spendable resources also moves fertility through the budget at a fixed cap; the decomposition isolates the access channel, and an instrument that both relaxes the cap and transfers resources adds the standard income term.
+Because the cap is a minimum, a policy that improves a slack component does nothing: a subsidy to units below the binding size does not relax a binding down-payment constraint, and a down-payment grant does nothing for a renter pinned by the rental size limit. If a policy does not relax the binding component of $H_i^m$, then $\mathcal P_i^m(z)=0$ for this family-space-cap mechanism. Policies that operate primarily through the price $q$ are a different exercise; they are outside this fixed-price formula, not evaluated by it. A property-tax capitalization exercise likewise isolates the down-payment channel only if $\bar\ell$ is held fixed; if $\bar\ell=\tau^gP\varpi/(1+\varpi)$ moves with $P$, the policy also changes $q^O$ and the old retention wedge. A transfer of spendable resources also moves fertility through the budget at a fixed cap; the decomposition isolates the access channel, and an instrument that both relaxes the cap and transfers resources adds the standard income term.
 
 For capped types, the fixed-mode fertility response is
 \[
@@ -1041,7 +1041,7 @@ Tenure switching is not a price or general-equilibrium effect. It is already pre
 \[
 W_i^Y=\max\{W_i^R,W_i^O\}.
 \]
-A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. With $\bar\ell=0$ they price it identically and the jump is exactly zero: the local policy formula of the previous subsection is then complete. With the tax, owning is the expensive way to occupy space, and the jump is signed accordingly; further wedges---a rental premium for large units as in the smooth-cap formulation, landlord operating costs---move the gap the same way or against it.
+A policy that raises the owner value relative to the renter value moves households near the boundary $W_i^O=W_i^R$ from renting to owning, and because tenure is a discrete choice, the switchers' bundles---and possibly their fertility---jump. Whether they jump depends on a single feature of the environment: whether the two tenures price a unit of space differently. With $\bar\ell=0$ they price it identically and the jump is exactly zero: the local policy formula of the previous subsection is then complete. With the tax, ownership is the expensive way to occupy space; the proposition gives conditions under which the boundary jump is signed. Further wedges---a rental premium for large units as in the smooth-cap formulation, landlord operating costs---move the gap the same way or against it.
 
 The mode problems include savings. Concentrating the rule as above turns each mode into the static problem with consumption weight $1+k$ and mode price $q^m$, plus a mode constant: with common old preferences and interior old choices, the owner mode's continuation exceeds the renter's by
 \[
@@ -1069,7 +1069,15 @@ the cheaper mode's effective cap binds with positive value, $h_A=H^A$ and $\zeta
 (q^B-q^A)\,h_B>\Delta\,(c_A-\chi n_A),
 \]
 the switcher upsizes and trades consumption for space: $h_B>h_A$ and $c_B-\chi n_B<c_A-\chi n_A$;
-\item if in addition $\chi\le(1+k)\kappa q^A/\alpha$, then $n_B>n_A$ and $h_B-\kappa n_B>h_A-\kappa n_A$ whenever the within-set force exceeds the level shift, the inequality displayed in the proof; with $\Delta=0$ the conditions in (i) and (ii) hold automatically, the level shift vanishes, and all conclusions reduce to the earlier ones.
+\item if in addition $\chi\le(1+k)\kappa q^A/\alpha$, then $n_B>n_A$ and $h_B-\kappa n_B>h_A-\kappa n_A$ whenever, with $X,Y,\Phi$ defined in the proof below,
+\[
+\int_{X_A}^{X_B}
+\frac{\Phi_X-\Phi_Y}{\Phi_Y}\bigg|_{\Phi_A}\,\dd X
+>
+\int_{\Phi_A}^{\Phi_A+\Delta}
+\frac{\dd\varphi}{\Phi_Y(X_B,\cdot)}.
+\]
+With $\Delta=0$ the conditions in (i) and (ii) hold automatically, the level shift vanishes, and all conclusions reduce to the earlier ones.
 \end{enumerate}
 \end{proposition}
 
@@ -1198,7 +1206,7 @@ Consider an owner-access policy with $\mathcal P_i^O(z)\ge0$ and $\mathcal P_i^R
 \end{corollary}
 
 \begin{corollary}[Rental-size limit policies]
-\label{cor:switch_rental_size limit}
+\label{cor:switch_rental_size_limit}
 Consider a rental-size limit policy with $\mathcal P_i^R(z)\ge0$ and $\mathcal P_i^O(z)=0$. Suppose the conditions of Proposition~\ref{prop:tenure_switch_fertility}, including part (iii)'s inequality, hold for almost every type on $\mathcal I(z)$. If $q^O>q^R$, the switching component is nonpositive: relaxing the rental cap raises fertility for constrained renters who remain renters, but it can also pull marginal owners back into renting. If $q^O=q^R$ (the no-tax/no-tenure-price-wedge benchmark), the switching component is zero. If $q^O<q^R$, the sign is not pinned by this proposition unless the alternative environment satisfies its dear-mode-constant condition.
 \end{corollary}
 

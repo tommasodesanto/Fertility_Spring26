@@ -26,7 +26,7 @@
 
 \begin{document}
 \maketitle
-This note presents a simplified version of the model. There are two types of agents, young and old, children require space, and a combination of a down payment friction and a tax friction generates intergenerational misallocation which impacts fertility. Proofs are omitted. The model draws inspiration from \citet{coven2024}. In this simplified version, fertility is continuous.
+This note presents a compact analytical version of the model. There are two types of agents, young and old, children require space, and a combination of a down payment friction and a tax friction generates intergenerational misallocation which impacts fertility. The model draws inspiration from \citet{coven2024}. Fertility is continuous.
 
 \section{Environment}
 
@@ -58,7 +58,7 @@ q=\rho P,
 \]
 The renter pays $q$ as rent; the owner pays it as mortgage interest, property tax, depreciation, and the forgone return on her equity---different payments, equal per-unit value by arbitrage. Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house.
 
-\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of her liquid wealth. Households can save in an exogenously provided bond, but renters cannot borrow. The interest rate $r$ is exogenous.
+\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of her liquid wealth. Households can save in an exogenously provided bond, but renters cannot borrow. The interest rate $r$ is exogenous. As in Part 1, the down-payment inequality is an access/collateral test; posted equity is not a separate goods expenditure in the young budget, and mortgage debt and home equity net out in the old state.
 
 \textbf{Taxes.} Two taxes appear: the property tax $\tau^p$, part of the user cost above, and the capital-gains tax. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars. Dying instead passes the house with a stepped-up basis - the heir's purchase price is reset to the current value -so the gain is never taxed\footnote{The simplification isolates the disposal-route asymmetry: sale realizes the gain, death forgives it. Institutional exclusions and basis rules can be added around this margin.}.
 
@@ -93,7 +93,7 @@ Financial wealth carried into old age is $a_{j'}=(1+r)\,a_i'-\mathbf 1\{m=O\}\,q
 
 
 
-The old incumbent enters with financial wealth $a_j$, housing $H_j^0$, and an accrued gain; old households have no income. She faces a choice with respect to her housing: sell now and pay the tax, or keep it until death, when the tax is forgiven.\footnote{In the more realistic model we will have indivisible housing, so this will look different. With an indivisible house the choice is all-or-nothing: a strict keeper escapes the bill entirely, lock-in concentrates into a notch at the downsizing margin, and pre-saving becomes plan-contingent.} She solves
+The old incumbent enters with financial wealth $a_j$, housing $H_j^0$, and an accrued gain; old households have no income. She faces a choice with respect to her housing: sell now and pay the tax, or keep it until death, when the tax is forgiven.\footnote{With indivisible housing, the keep--sell choice becomes all-or-nothing: a strict keeper escapes the bill entirely, lock-in concentrates into a notch at the downsizing margin, and pre-saving becomes plan-contingent.} She solves
 \[
 \begin{aligned}
 V^O(a_j,H_j^0)
@@ -207,16 +207,17 @@ This section gives a local compensated wedge illustration.
 The planner faces the economy's real constraints and nothing else: the stock, the size limits, goods feasibility, and the domain conditions. It does not face household budgets, since allocations are supported by lump-sum transfers, and it does not face the financing inequalities, which restrict market purchases rather than occupancy.
 
 \begin{proposition}
-Hold the stationary cross-section, entry, tenure assignments, and savings fixed; the variation below resizes two owner-occupied houses and converts no tenures. Let $r_i^F\ge0$ be the marginal real implementation cost of relaxing the buyer's financing constraint. The planner's surplus from moving one unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraint binds ($\zeta_i^{O,F}>0$) is
+Hold the stationary cross-section, entry, tenure assignments, and savings fixed; the variation below resizes two owner-occupied houses and converts no tenures. Let $r_i^F\ge0$ be the marginal real implementation cost of relaxing the buyer's financing constraint. The planner's surplus from moving a marginal unit of space from an old incumbent at an interior retention choice to a young owner whose owner size limit is slack and whose financing constraint binds ($\zeta_i^{O,F}>0$) is
 \[
-\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-r_i^F-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell-r_i^F\,>\,0 .
+\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}-r_i^F-\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}=\zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell-r_i^F .
 \]
-In the zero-real-cost direct reassignment case, $r_i^F=0$. More generally, positive surplus requires a feasible marginal reallocation, away from real size-limit corners, with financial implementation cost below the value gap. Conversely, conditional on fixed entry, tenure assignments, savings, and active real size-limit constraints, if all financing gaps and levies are zero, the allocation satisfies the planner's conditional first-order conditions.
+This surplus is positive if and only if $r_i^F<\zeta_i^{O,F}+\bar\ell/(1+r)+\bar\ell$.
+In the zero-real-cost direct reassignment case, $r_i^F=0$. More generally, positive surplus requires a feasible marginal reallocation, away from real size-limit corners, with financial implementation cost below the value gap. Conversely, conditional on fixed entry, tenure assignments, savings, and active real size-limit constraints, if all relevant young financial implementation gaps are zero and $\bar\ell=0$ for old incumbents at interior retention choices, the allocation satisfies the planner's conditional first-order conditions.
 \end{proposition}
 
 The buyer's marginal value is her effective price plus her gap: what she would pay for one more unit. The incumbent's is the net-of-tax sale price: what releasing one more unit nets her. In the difference the market price cancels, and the two tax terms that remain are not resource costs and can offset transfers in the compensated allocation. If the move must be implemented through costly financing instruments rather than direct reassignment, their marginal real cost subtracts from this surplus; if the down-payment constraint is a primitive nothing relaxes, the gap is not recoverable.
 
-Figure~\ref{fig:example} draws a worked local allocation as theory. The buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for one unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell-r_i^F$ in goods is left over, with $r_i^F=0$ in the direct reassignment case drawn.
+Figure~\ref{fig:example} draws a worked local allocation as theory. The buyer's marginal value of space falls along her constrained path and sits above her effective price by the financing gap $\zeta^{O,F}$ at her cap, while the incumbent's sits below the market price by her tax $\bar\ell$. Pay the incumbent for a marginal unit at her value, $q-\bar\ell$; charge the buyer at hers, $q^O+\zeta^{O,F}$: both are exactly as well off as before, and $\zeta^{O,F}+\bar\ell/(1+r)+\bar\ell-r_i^F$ in goods is left over, with $r_i^F=0$ in the direct reassignment case drawn.
 
 \begin{figure}[!htb]
 \centering
@@ -245,7 +246,7 @@ which is positive for every binding cap if and only if $\chi\le(1+k)\,\kappa q^m
 
 One can decompose the effect of a fertility-neutral policy on fertility.\footnote{The exercise is fertility-neutral: the planner relaxes housing constraints to study misallocation, and the fertility effect is a by-product.} The access channel runs through the cap, and the cap says where a policy can be effective: a down-payment grant raises $a_i$, financial deregulation raises $\phi$, and either loosens the collateral bound $a_i\rho/((1-\phi)q)$; making family-sized units available to rent raises $\bar h^R$. Holding $\bar H$ fixed, raising $\bar h^R$ should be read as reclassifying, converting, or reallocating existing units into rental access, with any real conversion cost included in $\Xi^\Pi$; the policy changes who can occupy how much of the existing stock. For grants that also raise spendable wealth, the formula below is only the access-channel component; the direct resource effect through $w=y+a$ must be added separately. Under the baseline normalization $\bar n_i^E=0$, at fixed prices, a small policy $z$ then moves aggregate fertility through the constrained:
 \[
-\left.\frac{\dd N}{\dd z}\right|_{q}
+\left.\frac{\dd N}{\dd z}\right|_{q,o,\mathcal A}
 =
 \bar M\sum_{m}\int_{\mathcal E_m(z)}
 \left[\pi_i^E\,\Psi_i^m+n_i^m\,\frac{\pi_i^E(1-\pi_i^E)}{\kappa_E}\,\Theta_i^m\right]
@@ -253,7 +254,7 @@ One can decompose the effect of a fertility-neutral policy on fertility.\footnot
 \]
 where $\mathcal E_m(z)$ is the set of households whose cap binds in mode $m$, $\mathcal P_i^m=\partial H_i^m/\partial z$ is the pass-through of the policy to the binding component of the cap, $\Psi_i^m=\dd n/\dd H$ is the fertility response, and $\Theta_i^m=\partial W_i^m/\partial H_i^m=\lambda_i^m\zeta_i^m=\zeta_i^m/(c_i^m-\chi n_i^m)$ drives the entry term. A policy aimed at a slack constraint moves nothing: a down-payment grant does nothing for a household pinned by the rental size limit. At $\chi=(1+k)\kappa q^m/\alpha$, equal scaling at lifetime prices, holding exposure, pass-through, entry probabilities, outside fertility, and $\Omega_i^m$ fixed, the normalized gap $\zeta_i^m/(c_i^m-\chi n_i^m)$ predicts the larger birth response.
 
-Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the rent--own boundary. The gains tax makes that crossing non-trivial. This is also explored in the forthcoming extended version.
+Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also moves households across the rent--own boundary. The gains tax makes that crossing non-trivial. Part 1 characterizes this boundary term explicitly; the quantitative extension will carry it into policy experiments.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
