@@ -47,6 +47,13 @@ Pre-audit copies are in `latex/archive/part1_june15_pre_audit/`. A ChatGPT Pro a
 - Set the figure script's savings load from the displayed paper parameters, `beta_disc = 0.1763` and `k = beta_disc * (1.0 + gamma)`, leaving the printed numerical check as validation rather than reverse engineering.
 - Verification after this pass regenerated the three example figures, recompiled Part 1 and the short note with `latexmk -pdf -interaction=nonstopmode -halt-on-error`, and found no Overfull boxes, Underfull boxes, undefined references, citation warnings, or rerun-needed warnings. The only warning-pattern log hits are the `rerunfilecheck` package-identification lines.
 
+## Stale-Upload Follow-Up
+
+- Tightened the Section 1 housing paragraph in Part 1: the capital-gains tax directly shifts old incumbents' retention margin and, when anticipated by interior savers, enters young owners' effective price \(q^O\).
+- Made the short-note down-payment clarification explicit that the financing inequality is not a separate goods expenditure, posted equity remains part of wealth, and mortgage debt and home equity net out in the old state.
+- Removed the remaining first-person phrasing in the short-note statutory-exclusion footnote.
+- Recompiled both PDFs and verified the generated Part 1 PDF text contains the corrected \(q^{CE,m}\) fertility comparison and no stale "jump is signed accordingly" prose.
+
 ## Preserved or deferred
 
 - Part 1 still keeps the full \(r_i^F\) trichotomy, the full switching proposition/proof/numbers, and the efficiency proof.
