@@ -26,11 +26,21 @@ Pre-audit copies are in `latex/archive/part1_june15_pre_audit/`. A ChatGPT Pro a
 - Replaced “baseline” for \(q^O=q^R\) with “no-tax/no-tenure-price-wedge benchmark.”
 - Cleaned the figure script notation: the fertility weight is `vartheta`, the total bundle gap is `gap_over_q`, the financing component is `zeta_OF`, and output paths are repo-relative.
 
+## Follow-up Audit Patch
+
+- Strengthened the old/saving regularity condition: the text now imposes \(0\le\bar\ell<q\), positive old liquidation wealth, \(0<h^O_{j'}<H^0_{j'}\), interior saving, and interior old-stage choices wherever old-renter FOCs or the switching constant are used.
+- Added the balance-sheet clarification that the down-payment inequality is a collateral/access test, not a second goods expenditure: home equity and mortgage debt net out in \(a_{j'}=(1+r)a_i'-qH^0_{j'}\).
+- Split the log warm-glow case from the no-bequest case: \(b>0\) uses \(\mathcal B(e)=b\log e\) with an interior bequest margin; \(b=0\) uses \(\mathcal B\equiv0\) and allows \(e=0\).
+- Restricted the \(q^O<q^R\) tenure-switching discussion and corollaries: those signs are not implied unless the alternative environment also satisfies the proposition's dear-mode-constant condition, or a separate lemma allows \(\Delta<0\).
+- Recovered and documented the switching-boundary calculation behind the \(0.007\) fertility jump: \(w=0.75304\), \(H^A=0.15\), \(H^B=0.20\), \(q^A=1\), \(q^B=1.14815\), \(k=0.26445\), \(\Delta=0.01967\), \(n_A=0.14025\), \(n_B=0.14769\).
+- Added the short-note nonhousing-estate sentence, baseline outside-fertility normalization, access-only grant caveat, and precise normalized-gap policy ranking.
+- Made the figure script robust to a flat copied bundle: it searches upward for `latex/figures` and otherwise writes to `Path.cwd()/figures`.
+
 ## Preserved or deferred
 
 - Part 1 still keeps the full \(r_i^F\) trichotomy, the full switching proposition/proof/numbers, and the efficiency proof.
 - Part 1 still uses the combined figure `example_misallocation.pdf`; the short note still uses two standalone panels. No decision was made to split Part 1's figure.
-- The switching-boundary numbers are retained, but the text now says they are a separate boundary calculation, not the worked allocation above. The exact boundary type parameters still need to be documented if those numbers are to be fully reproducible.
+- The switching-boundary numbers are retained and now documented in a Part 1 footnote. They are a separate boundary calculation, not the worked local allocation above.
 - The old-incumbent state / intergenerational-books explanation remains a deeper exposition item, not solved by this pass.
 - The stale full-paper file `latex/intergenerational_housing_fertility_paper.tex` and slide decks still need a separate sync. They likely carry the pre-inflation gains framing, old notation, no savings margin, and no \(q^m\).
 - The quantitative model still needs a mapping pass from theory frictions to code wedges: capital-gains/step-up, estate-to-entry adding-up, PTI or debt-service constraints, old retention, and fertility timing remain the main alignment gaps.

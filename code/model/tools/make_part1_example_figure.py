@@ -14,7 +14,8 @@ qO = q + carry                # buyer effective price (above exclusion)
 k = (w - qO*0.25 - chi*0.22307628850648113)/0.6161538027919038 - 1.0
 
 def solve_constrained(H):
-    # budget (1+k)hatc + chi n = w - qH ; FOC vartheta/n = chi/hatc + alpha*kappa/(H-kappa n)
+    # Owner example: (1+k)hatc + chi n = w - qO*H.
+    # FOC: vartheta/n = chi/hatc + alpha*kappa/(H-kappa*n).
     lo, hi = 1e-9, H/kappa - 1e-9
     def f(n):
         hatc = (w - qO*H - chi*n)/(1.0+k)
@@ -133,7 +134,15 @@ def draw_right(axR, title=True):
     axR.spines["top"].set_visible(False); axR.spines["right"].set_visible(False)
 
 
-OUT = Path(__file__).resolve().parents[3] / "latex" / "figures"
+def find_output_dir():
+    for parent in [Path(__file__).resolve().parent, *Path(__file__).resolve().parents]:
+        candidate = parent / "latex" / "figures"
+        if candidate.exists():
+            return candidate
+    return Path.cwd() / "figures"
+
+
+OUT = find_output_dir()
 OUT.mkdir(parents=True, exist_ok=True)
 
 # combined two-panel figure (used by part1)
