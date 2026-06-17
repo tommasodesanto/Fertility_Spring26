@@ -18,6 +18,21 @@ kernel clamps, Brent scalar refinement, and `max_iter_eq=3` gives loss
 floor violations. This point still has serious lifecycle ownership pathologies
 and should not be presented as a calibrated benchmark.
 
+June 17 exploratory cluster pulses use the same one-market/no-location
+intergenerational strand with Markov income shocks, `J=16`, `Nb=60`,
+`income_states=5`, `n_house=5`, and `max_iter_eq=3`. The default
+`candidate_no_timing_v0` pulse fixed the owner-median room rung but selected a
+low-ownership basin: best loss `13.631`, ownership `0.125`, family ownership
+gap `0.023`, old-age ownership `0.623`, TFR `1.556`. A follow-up
+`candidate_no_timing_ownheavy_v1` pulse raises ownership-related weights as a
+basin-finding diagnostic, not a final SMM objective. It completed `960` cases
+with `954` finite records and zero Slurm stderr; best recorded rank loss
+`11.755`, ownership `0.441`, family ownership gap `0.122`, old-age ownership
+`0.954`, TFR `1.590`, childless rate `0.272`, and housing user-cost share
+`0.420`. Interpretation: the low-ownership failure is partly objective-ranking,
+but the current basin still overstates old-age ownership and housing costs and
+does not yet deliver a production quantitative calibration.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`

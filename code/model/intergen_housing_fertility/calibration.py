@@ -95,11 +95,30 @@ CANDIDATE_NO_TIMING_V0_WEIGHTS = {
 }
 
 
+CANDIDATE_NO_TIMING_OWNHEAVY_V1_WEIGHTS = {
+    **CANDIDATE_NO_TIMING_V0_WEIGHTS,
+    "own_rate": 120.0,
+    "own_family_gap": 50.0,
+    "old_age_own_rate": 80.0,
+    "old_age_parent_childless_gap": 20.0,
+    "housing_user_cost_share": 120.0,
+    "liquid_wealth_to_income": 8.0,
+    "young_liquid_wealth_to_income": 8.0,
+    "housing_increment_0to1": 6.0,
+    "prime_childless_renter_median_rooms": 5.0,
+    "prime_childless_owner_median_rooms": 5.0,
+}
+
+
 TARGET_SETS = {
     "core": (CORE_TARGETS, CORE_WEIGHTS),
     "old_nonlocation": (OLD_NONLOCATION_TARGETS, OLD_NONLOCATION_WEIGHTS),
     "old_nonlocation_no_timing": (OLD_NONLOCATION_NO_TIMING_TARGETS, OLD_NONLOCATION_NO_TIMING_WEIGHTS),
     "candidate_no_timing_v0": (CANDIDATE_NO_TIMING_V0_TARGETS, CANDIDATE_NO_TIMING_V0_WEIGHTS),
+    "candidate_no_timing_ownheavy_v1": (
+        CANDIDATE_NO_TIMING_V0_TARGETS,
+        CANDIDATE_NO_TIMING_OWNHEAVY_V1_WEIGHTS,
+    ),
 }
 
 
