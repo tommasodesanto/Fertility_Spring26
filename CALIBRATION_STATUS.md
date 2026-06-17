@@ -33,6 +33,22 @@ with `954` finite records and zero Slurm stderr; best recorded rank loss
 but the current basin still overstates old-age ownership and housing costs and
 does not yet deliver a production quantitative calibration.
 
+The same day, a two-hour `candidate_no_timing_refinement_v1` pulse restored
+stronger penalties on housing user-cost share, old-age ownership, fertility,
+wealth, and housing increments while keeping ownership pressure high. Slurm job
+`11026855` completed `7,901` cases, with `7,882` finite records and zero stderr
+bytes. The best recorded rank loss was `20.790`, with TFR `1.642`, childless
+rate `0.285`, ownership `0.391`, family ownership gap `0.170`, old-age
+ownership `0.920`, old-age parent-childless gap `0.071`, housing user-cost
+share `0.368`, and owner median rooms `6.0`. Frontier slices point to a target
+or measurement mismatch in the one-market toy: no finite candidate in the run
+jointly had ownership above `0.50`, old-age ownership below `0.85`, and housing
+user-cost share below `0.32`; candidates with owner median rooms equal to `6`
+typically carry too-high housing costs and old-age ownership. Do not launch
+longer blind searches on this exact target bundle before auditing moment
+definitions and deciding which moments are hard targets for this simplified
+strand.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
