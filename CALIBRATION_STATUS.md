@@ -1,15 +1,16 @@
 # Calibration Status
 
-Updated: `2026-06-10 12:50 CEST`
+Updated: `2026-06-18 15:00 EDT`
 
-## June 2026 Intergenerational Toy Strand
+## June 2026 One-Market Intergenerational Strand
 
 A separate one-market intergenerational housing-fertility strand is active under
-`code/model/intergen_housing_fertility/`. It is the current workhorse for the
-compact analytical/toy-model exercises and diagnostic policy proof-of-concept
-runs, but it is **not** yet a production quantitative calibration.
+`code/model/intergen_housing_fertility/`. It is the current no-location
+quantitative model for the June 2026 intergenerational strand: simplified
+relative to the older spatial center-periphery model by dropping location. It
+is **not** yet a final production calibration.
 
-Current reference diagnostic point: global-DE toy best from
+Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
 label `de_g008_i011`, stored loss `11.503191936648555` under the default
 one-market owner ladder. The June 10 verified fixed-stack replication with
@@ -41,7 +42,7 @@ bytes. The best recorded rank loss was `20.790`, with TFR `1.642`, childless
 rate `0.285`, ownership `0.391`, family ownership gap `0.170`, old-age
 ownership `0.920`, old-age parent-childless gap `0.071`, housing user-cost
 share `0.368`, and owner median rooms `6.0`. Frontier slices point to a target
-or measurement mismatch in the one-market toy: no finite candidate in the run
+or measurement mismatch in the one-market model: no finite candidate in the run
 jointly had ownership above `0.50`, old-age ownership below `0.85`, and housing
 user-cost share below `0.32`; candidates with owner median rooms equal to `6`
 typically carry too-high housing costs and old-age ownership. Do not launch
@@ -82,10 +83,11 @@ found a candidate with ownership above `0.50`, housing user-cost share below
 found even one candidate with ownership above `0.50`, old-age ownership below
 `0.85`, and housing user-cost share below `0.32`, but that candidate had
 TFR `2.851`, negative family ownership gap, negative second-child housing
-increment, and owner median rooms `4`. Interpretation: the one-market toy can
+increment, and owner median rooms `4`. Interpretation: the one-market model can
 match the basic fertility/tenure/room block when old-age and cost-share moments
 are demoted, but the measured cost-share, old-age ownership, and owner-room
-targets are not jointly coherent as hard targets for this scaffold. This
+targets are not jointly coherent as hard targets without further measurement
+or mechanism audits. This
 demotion was diagnostic only: any formal SMM target revision must preserve
 identification by replacing unreachable moments with moments that discipline
 the same parameter blocks, or by fixing the affected parameters externally.
@@ -100,11 +102,12 @@ For the intergen strand, use:
 
 The older center-periphery `dt_cp_model` calibration status below remains
 historical/live for that strand, but it is not sufficient orientation for the
-June 2026 intergenerational toy-model work.
+June 2026 one-market intergenerational work.
 
-This is the single live calibration and model-status note for the current
-discrete-time center-periphery fertility model. Historical MATLAB status notes,
-handoffs, and planning memos have been archived; use them only as background.
+The remaining sections below preserve the older discrete-time center-periphery
+status history. Historical MATLAB status notes, handoffs, and planning memos
+have been archived; use them only as background unless a future session
+explicitly returns to that spatial strand.
 
 ## Active Codebase
 
