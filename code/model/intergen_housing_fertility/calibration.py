@@ -58,6 +58,23 @@ CANDIDATE_NO_TIMING_V0_TARGETS = {
 }
 
 
+CANDIDATE_REPLACEMENT_V1_TARGETS = {
+    "tfr": 1.70,
+    "childless_rate": 0.15,
+    "own_rate": 0.57547241,
+    "own_family_gap": 0.16766167,
+    "housing_increment_0to1": 0.66443467,
+    "housing_increment_1to2": 0.48803143,
+    "young_liquid_wealth_to_income": 0.17922556,
+    "old_nonhousing_wealth_to_income_6575": 6.41854289,
+    "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 1.00744952,
+    "prime30_55_childless_renter_mean_rooms": 3.80528810,
+    "prime30_55_childless_owner_mean_rooms": 6.22404983,
+    "prime30_55_childless_renter_share_rooms_ge6": 0.13765221,
+    "prime30_55_childless_owner_share_rooms_ge6": 0.59613112,
+}
+
+
 CORE_FEASIBILITY_V1_TARGETS = {
     k: CANDIDATE_NO_TIMING_V0_TARGETS[k]
     for k in [
@@ -139,6 +156,23 @@ CANDIDATE_NO_TIMING_V0_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_V1_WEIGHTS = {
+    "tfr": 20.0,
+    "childless_rate": 20.0,
+    "own_rate": 100.0,
+    "own_family_gap": 45.0,
+    "housing_increment_0to1": 14.0,
+    "housing_increment_1to2": 8.0,
+    "young_liquid_wealth_to_income": 12.0,
+    "old_nonhousing_wealth_to_income_6575": 0.8,
+    "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 2.0,
+    "prime30_55_childless_renter_mean_rooms": 6.0,
+    "prime30_55_childless_owner_mean_rooms": 6.0,
+    "prime30_55_childless_renter_share_rooms_ge6": 25.0,
+    "prime30_55_childless_owner_share_rooms_ge6": 25.0,
+}
+
+
 CORE_FEASIBILITY_V1_WEIGHTS = {
     "tfr": 20.0,
     "childless_rate": 20.0,
@@ -215,6 +249,7 @@ TARGET_SETS = {
     "old_nonlocation": (OLD_NONLOCATION_TARGETS, OLD_NONLOCATION_WEIGHTS),
     "old_nonlocation_no_timing": (OLD_NONLOCATION_NO_TIMING_TARGETS, OLD_NONLOCATION_NO_TIMING_WEIGHTS),
     "candidate_no_timing_v0": (CANDIDATE_NO_TIMING_V0_TARGETS, CANDIDATE_NO_TIMING_V0_WEIGHTS),
+    "candidate_replacement_v1": (CANDIDATE_REPLACEMENT_V1_TARGETS, CANDIDATE_REPLACEMENT_V1_WEIGHTS),
     "candidate_no_timing_core_feasibility_v1": (
         CORE_FEASIBILITY_V1_TARGETS,
         CORE_FEASIBILITY_V1_WEIGHTS,
@@ -659,6 +694,14 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         ),
         "old_age_parent_childless_gap_6575": float(getattr(sol, "old_age_parent_childless_gap_6575", np.nan)),
         "old_age_parent_childless_gap": float(getattr(sol, "old_age_parent_childless_gap_6575", np.nan)),
+        "old_nonhousing_wealth_to_income_6575": float(getattr(sol, "old_nonhousing_wealth_to_income_6575", np.nan)),
+        "old_total_wealth_to_income_6575": float(getattr(sol, "old_total_wealth_to_income_6575", np.nan)),
+        "old_parent_childless_nonhousing_wealth_to_income_gap_6575": float(
+            getattr(sol, "old_parent_childless_nonhousing_wealth_to_income_gap_6575", np.nan)
+        ),
+        "old_parent_childless_total_wealth_to_income_gap_6575": float(
+            getattr(sol, "old_parent_childless_total_wealth_to_income_gap_6575", np.nan)
+        ),
         "mean_age_first_birth": float(getattr(sol, "mean_age_first_birth", np.nan)),
         "housing_increment_0to1": float(getattr(sol, "housing_increment_0to1_eventstudy_t3", np.nan)),
         "housing_increment_1to2": float(
@@ -673,6 +716,24 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "prime_childless_renter_median_rooms": renter_rooms,
         "prime_childless_owner_median_rooms": owner_rooms,
         "prime_childless_owner_minus_renter_rooms": owner_rooms - renter_rooms,
+        "prime30_55_childless_renter_mean_rooms": float(
+            getattr(sol, "prime30_55_childless_renter_mean_rooms", np.nan)
+        ),
+        "prime30_55_childless_owner_mean_rooms": float(
+            getattr(sol, "prime30_55_childless_owner_mean_rooms", np.nan)
+        ),
+        "prime30_55_childless_owner_minus_renter_mean_rooms": float(
+            getattr(sol, "prime30_55_childless_owner_minus_renter_mean_rooms", np.nan)
+        ),
+        "prime30_55_childless_renter_share_rooms_ge6": float(
+            getattr(sol, "prime30_55_childless_renter_share_rooms_ge6", np.nan)
+        ),
+        "prime30_55_childless_owner_share_rooms_ge6": float(
+            getattr(sol, "prime30_55_childless_owner_share_rooms_ge6", np.nan)
+        ),
+        "prime30_55_parent_owner_minus_renter_mean_rooms": float(
+            getattr(sol, "prime30_55_parent_owner_minus_renter_mean_rooms", np.nan)
+        ),
         "housing_user_cost_share": housing_user_cost_share(sol, P),
         "renter25_45_all_cap_share": float(getattr(sol, "renter25_45_all_cap_share", np.nan)),
         "owner_neg_liquid_share_2534": float(getattr(sol, "owner_neg_liquid_share_2534", np.nan)),

@@ -3894,6 +3894,47 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     stats.old_age_own_rate_parents_6575 = old_parent_owner / max(old_parent_mass, 1e-12)
     stats.old_age_own_rate_childless_6575 = old_childless_owner / max(old_childless_mass, 1e-12)
     stats.old_age_parent_childless_gap_6575 = stats.old_age_own_rate_parents_6575 - stats.old_age_own_rate_childless_6575
+    old_nonhousing_wealth = old_income = 0.0
+    old_parent_nonhousing_wealth = old_parent_income = 0.0
+    old_childless_nonhousing_wealth = old_childless_income = 0.0
+    old_total_wealth = old_parent_total_wealth = old_childless_total_wealth = 0.0
+    for jj in range(a65s, a75e + 1):
+        for i in range(I):
+            yj = float(P.income[i, jj])
+            for ten in range(nt):
+                home_equity = (1 - P.psi) * ph[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        gs = g[:, ten, i, jj, nn, cs]
+                        mass = float(np.sum(gs))
+                        if mass < 1e-15:
+                            continue
+                        fin = float(np.sum(gs * bg))
+                        total = fin + mass * home_equity
+                        income = yj * mass
+                        old_nonhousing_wealth += fin
+                        old_total_wealth += total
+                        old_income += income
+                        if nn > 0:
+                            old_parent_nonhousing_wealth += fin
+                            old_parent_total_wealth += total
+                            old_parent_income += income
+                        elif cs == 0:
+                            old_childless_nonhousing_wealth += fin
+                            old_childless_total_wealth += total
+                            old_childless_income += income
+    stats.old_nonhousing_wealth_to_income_6575 = old_nonhousing_wealth / max(old_income, 1e-12)
+    stats.old_total_wealth_to_income_6575 = old_total_wealth / max(old_income, 1e-12)
+    parent_nonhousing_ratio = old_parent_nonhousing_wealth / max(old_parent_income, 1e-12)
+    childless_nonhousing_ratio = old_childless_nonhousing_wealth / max(old_childless_income, 1e-12)
+    parent_total_ratio = old_parent_total_wealth / max(old_parent_income, 1e-12)
+    childless_total_ratio = old_childless_total_wealth / max(old_childless_income, 1e-12)
+    stats.old_parent_nonhousing_wealth_to_income_6575 = parent_nonhousing_ratio
+    stats.old_childless_nonhousing_wealth_to_income_6575 = childless_nonhousing_ratio
+    stats.old_parent_childless_nonhousing_wealth_to_income_gap_6575 = parent_nonhousing_ratio - childless_nonhousing_ratio
+    stats.old_parent_total_wealth_to_income_6575 = parent_total_ratio
+    stats.old_childless_total_wealth_to_income_6575 = childless_total_ratio
+    stats.old_parent_childless_total_wealth_to_income_gap_6575 = parent_total_ratio - childless_total_ratio
     owner_mass_2545 = float(np.sum(g[:, 1:, :, a25s : a45e + 1, :, :]))
     stats.owner_neg_liquid_share_2545 = float(np.sum(g[bg < 0, 1:, :, a25s : a45e + 1, :, :]) / max(owner_mass_2545, 1e-12))
     owner_mass_2534 = float(np.sum(g[:, 1:, :, a25s : a34e + 1, :, :]))
@@ -3924,6 +3965,67 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                             owner_wts.append(go[ko])
     stats.prime_childless_renter_median_rooms = weighted_median_from_cells(renter_vals, renter_wts)
     stats.prime_childless_owner_median_rooms = weighted_median_from_cells(owner_vals, owner_wts)
+    renter_mass_3055_childless = 0.0
+    renter_rooms_3055_childless = 0.0
+    renter_rooms_ge6_3055_childless = 0.0
+    owner_mass_3055_childless = 0.0
+    owner_rooms_3055_childless = 0.0
+    owner_rooms_ge6_3055_childless = 0.0
+    owner_mass_3055_parent = 0.0
+    owner_rooms_3055_parent = 0.0
+    renter_mass_3055_parent = 0.0
+    renter_rooms_3055_parent = 0.0
+    for j in range(a30s, a55e + 1):
+        for i in range(I):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    child_bin = current_child_bin_dt(nn, cs, dep_last)
+                    gr = g[:, 0, i, j, nn, cs]
+                    hr = hR[:, 0, i, j, nn, cs]
+                    kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+                    if np.any(kr):
+                        wr = gr[kr]
+                        rr = hr[kr]
+                        mass = float(np.sum(wr))
+                        if child_bin == 2:
+                            renter_mass_3055_childless += mass
+                            renter_rooms_3055_childless += float(np.sum(wr * rr))
+                            renter_rooms_ge6_3055_childless += float(np.sum(wr[rr >= 6.0 - 1e-8]))
+                        elif child_bin > 2:
+                            renter_mass_3055_parent += mass
+                            renter_rooms_3055_parent += float(np.sum(wr * rr))
+                    for ten in range(1, nt):
+                        go = g[:, ten, i, j, nn, cs]
+                        mo = float(np.sum(go))
+                        if mo <= 1e-15:
+                            continue
+                        rooms = float(P.H_own[ten - 1])
+                        if child_bin == 2:
+                            owner_mass_3055_childless += mo
+                            owner_rooms_3055_childless += mo * rooms
+                            if rooms >= 6.0 - 1e-8:
+                                owner_rooms_ge6_3055_childless += mo
+                        elif child_bin > 2:
+                            owner_mass_3055_parent += mo
+                            owner_rooms_3055_parent += mo * rooms
+    stats.prime30_55_childless_renter_mean_rooms = (
+        renter_rooms_3055_childless / max(renter_mass_3055_childless, 1e-12)
+    )
+    stats.prime30_55_childless_owner_mean_rooms = (
+        owner_rooms_3055_childless / max(owner_mass_3055_childless, 1e-12)
+    )
+    stats.prime30_55_childless_owner_minus_renter_mean_rooms = (
+        stats.prime30_55_childless_owner_mean_rooms - stats.prime30_55_childless_renter_mean_rooms
+    )
+    stats.prime30_55_childless_renter_share_rooms_ge6 = (
+        renter_rooms_ge6_3055_childless / max(renter_mass_3055_childless, 1e-12)
+    )
+    stats.prime30_55_childless_owner_share_rooms_ge6 = (
+        owner_rooms_ge6_3055_childless / max(owner_mass_3055_childless, 1e-12)
+    )
+    parent_owner_mean = owner_rooms_3055_parent / max(owner_mass_3055_parent, 1e-12)
+    parent_renter_mean = renter_rooms_3055_parent / max(renter_mass_3055_parent, 1e-12)
+    stats.prime30_55_parent_owner_minus_renter_mean_rooms = parent_owner_mean - parent_renter_mean
     owner_all_mass_2545 = 0.0
     owner_le6_mass_2545 = 0.0
     owner_7to8_mass_2545 = 0.0

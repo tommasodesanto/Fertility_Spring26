@@ -129,6 +129,21 @@ parent-minus-childless nonhousing net-worth-to-income mean gap of `1.007`, and
 an old-age parent-minus-childless ownership gap of `0.083`. These values are
 not final SMM targets until the data-target audit is complete.
 
+A 72-case local panel using `candidate_replacement_v1` was run on June 18; see
+`docs/model/intergen_candidate_replacement_v1_panel_20260618.md`. The panel
+completed all submitted cases with `J=16`, `Nb=60`, `income_states=5`,
+`n_house=5`, and `max_iter_eq=3`. Best rank loss improved from baseline
+`48.883` to `34.009`, but the economic fit is not acceptable as a benchmark:
+the best case has TFR `1.952` versus target `1.700`, childlessness `0.230`
+versus `0.150`, ownership `0.750` versus `0.575`, old nonhousing
+wealth-to-income `2.214` versus `6.419`, parent-childless old nonhousing wealth
+gap `0.268` versus `1.007`, childless renter mean rooms `4.621` versus
+`3.805`, and childless owner mean rooms `5.273` versus `6.224`. High-old-wealth
+candidates exist but collapse ownership, while high-owner-room candidates also
+put renters into too much space. Treat `candidate_replacement_v1` as a
+diagnostic target set until the old-wealth data object and owner-renter room
+separation mechanism are re-audited.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
