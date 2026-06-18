@@ -49,6 +49,22 @@ longer blind searches on this exact target bundle before auditing moment
 definitions and deciding which moments are hard targets for this simplified
 strand.
 
+Overnight on June 17, an intergen frontier ensemble was launched to separate
+target-definition failures from weighting failures. The ensemble uses four
+diagnostic target sets added to `calibration.py`: core feasibility
+(`candidate_no_timing_core_feasibility_v1`), cost test
+(`candidate_no_timing_cost_test_v1`), old-age test
+(`candidate_no_timing_oldage_test_v1`), and room-cost test
+(`candidate_no_timing_roomcost_test_v1`). Each target set runs four chained
+two-hour `cpu_short` waves, with `J=16`, `Nb=60`, `income_states=5`,
+`n_house=5`, `max_iter_eq=3`, `pop_size=32`, and `INTERGEN_MINUTES=115`.
+Slurm chains are: core `11038977 -> 11038978 -> 11038986 -> 11038987`; cost
+`11038988 -> 11038989 -> 11038990 -> 11038991`; old-age
+`11038992 -> 11038993 -> 11038995 -> 11038996`; room-cost
+`11038997 -> 11038998 -> 11038999 -> 11039000`. Result tags are
+`intergen_overnight_<label>_w<wave>_20260617`. The morning readout should
+compare feasible frontier slices across target sets, not just the scalar best.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`

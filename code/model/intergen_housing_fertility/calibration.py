@@ -58,6 +58,50 @@ CANDIDATE_NO_TIMING_V0_TARGETS = {
 }
 
 
+CORE_FEASIBILITY_V1_TARGETS = {
+    k: CANDIDATE_NO_TIMING_V0_TARGETS[k]
+    for k in [
+        "tfr",
+        "childless_rate",
+        "own_rate",
+        "own_family_gap",
+        "housing_increment_0to1",
+        "housing_increment_1to2",
+        "prime_childless_renter_median_rooms",
+        "prime_childless_owner_median_rooms",
+    ]
+}
+
+
+COST_TEST_V1_TARGETS = {
+    **CORE_FEASIBILITY_V1_TARGETS,
+    "housing_user_cost_share": CANDIDATE_NO_TIMING_V0_TARGETS["housing_user_cost_share"],
+}
+
+
+OLDAGE_TEST_V1_TARGETS = {
+    **CORE_FEASIBILITY_V1_TARGETS,
+    "old_age_own_rate": CANDIDATE_NO_TIMING_V0_TARGETS["old_age_own_rate"],
+    "old_age_parent_childless_gap": CANDIDATE_NO_TIMING_V0_TARGETS["old_age_parent_childless_gap"],
+}
+
+
+ROOMCOST_TEST_V1_TARGETS = {
+    k: CANDIDATE_NO_TIMING_V0_TARGETS[k]
+    for k in [
+        "tfr",
+        "childless_rate",
+        "own_rate",
+        "own_family_gap",
+        "old_age_own_rate",
+        "old_age_parent_childless_gap",
+        "housing_user_cost_share",
+        "housing_increment_0to1",
+        "housing_increment_1to2",
+    ]
+}
+
+
 CORE_WEIGHTS = {
     "own_rate": 8.0,
     "young_owner_rate": 8.0,
@@ -92,6 +136,44 @@ CANDIDATE_NO_TIMING_V0_WEIGHTS = {
     "housing_user_cost_share": 250.0,
     "prime_childless_renter_median_rooms": 10.0,
     "prime_childless_owner_median_rooms": 10.0,
+}
+
+
+CORE_FEASIBILITY_V1_WEIGHTS = {
+    "tfr": 20.0,
+    "childless_rate": 20.0,
+    "own_rate": 90.0,
+    "own_family_gap": 45.0,
+    "housing_increment_0to1": 14.0,
+    "housing_increment_1to2": 8.0,
+    "prime_childless_renter_median_rooms": 8.0,
+    "prime_childless_owner_median_rooms": 8.0,
+}
+
+
+COST_TEST_V1_WEIGHTS = {
+    **CORE_FEASIBILITY_V1_WEIGHTS,
+    "housing_user_cost_share": 320.0,
+}
+
+
+OLDAGE_TEST_V1_WEIGHTS = {
+    **CORE_FEASIBILITY_V1_WEIGHTS,
+    "old_age_own_rate": 160.0,
+    "old_age_parent_childless_gap": 40.0,
+}
+
+
+ROOMCOST_TEST_V1_WEIGHTS = {
+    "tfr": 20.0,
+    "childless_rate": 20.0,
+    "own_rate": 100.0,
+    "own_family_gap": 45.0,
+    "old_age_own_rate": 160.0,
+    "old_age_parent_childless_gap": 40.0,
+    "housing_user_cost_share": 320.0,
+    "housing_increment_0to1": 14.0,
+    "housing_increment_1to2": 8.0,
 }
 
 
@@ -133,6 +215,22 @@ TARGET_SETS = {
     "old_nonlocation": (OLD_NONLOCATION_TARGETS, OLD_NONLOCATION_WEIGHTS),
     "old_nonlocation_no_timing": (OLD_NONLOCATION_NO_TIMING_TARGETS, OLD_NONLOCATION_NO_TIMING_WEIGHTS),
     "candidate_no_timing_v0": (CANDIDATE_NO_TIMING_V0_TARGETS, CANDIDATE_NO_TIMING_V0_WEIGHTS),
+    "candidate_no_timing_core_feasibility_v1": (
+        CORE_FEASIBILITY_V1_TARGETS,
+        CORE_FEASIBILITY_V1_WEIGHTS,
+    ),
+    "candidate_no_timing_cost_test_v1": (
+        COST_TEST_V1_TARGETS,
+        COST_TEST_V1_WEIGHTS,
+    ),
+    "candidate_no_timing_oldage_test_v1": (
+        OLDAGE_TEST_V1_TARGETS,
+        OLDAGE_TEST_V1_WEIGHTS,
+    ),
+    "candidate_no_timing_roomcost_test_v1": (
+        ROOMCOST_TEST_V1_TARGETS,
+        ROOMCOST_TEST_V1_WEIGHTS,
+    ),
     "candidate_no_timing_ownheavy_v1": (
         CANDIDATE_NO_TIMING_V0_TARGETS,
         CANDIDATE_NO_TIMING_OWNHEAVY_V1_WEIGHTS,
