@@ -65,3 +65,10 @@ they are not the main calibration unit unless the model unit is changed.
 The next objective is measurement discipline, not fitting a new objective
 quickly. A replacement target system is not valid until the data audit and
 identification audit both pass.
+
+## Extracted Values
+
+Candidate replacement values were extracted later the same day and summarized
+in `docs/model/intergen_candidate_replacement_targets_20260618.md`. Those
+values remain candidate targets only; they do not supersede the audit
+requirements above.

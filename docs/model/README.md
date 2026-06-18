@@ -12,6 +12,8 @@ Current notes kept here:
 - `family_space_empirical_packet_2026-05-24/`
 - June 2026 one-market intergen notes, including
   `intergen_one_market_identification_ledger_20260618.md`,
+  `intergen_candidate_replacement_targets_20260618.md`,
+  `intergen_candidate_replacement_targets_20260618.csv`,
   `intergen_sensitivity_jacobian_audit_20260618.md`, and
   `intergen_replacement_moment_data_map_20260618.md`
 - `DISTRIBUTIONAL_EMPIRICS_SCOPE_MEMO_2026-05-08.pdf`

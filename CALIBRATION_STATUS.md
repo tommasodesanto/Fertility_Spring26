@@ -118,6 +118,17 @@ wealth definition, timing, and formula must be checked against the model object.
 For old-age bequest moments, the recommended primary object is nonhousing or
 liquid wealth; total net worth is a robustness check.
 
+Candidate replacement values have now been extracted and summarized in
+`docs/model/intergen_candidate_replacement_targets_20260618.md`. The key ACS
+candidate values are childless owner mean rooms `6.224`, childless renter mean
+rooms `3.805`, owner-renter room gap `2.419`, owner share with at least six
+rooms `0.596`, renter share with at least six rooms `0.138`, and childless
+renter median rent-to-income `0.240`. The key PSID old-age candidate values are
+old nonhousing net worth to income `6.419` by mean and `2.230` by median, a
+parent-minus-childless nonhousing net-worth-to-income mean gap of `1.007`, and
+an old-age parent-minus-childless ownership gap of `0.083`. These values are
+not final SMM targets until the data-target audit is complete.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
