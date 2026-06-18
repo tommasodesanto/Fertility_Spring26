@@ -75,6 +75,27 @@ CANDIDATE_REPLACEMENT_V1_TARGETS = {
 }
 
 
+CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS = {
+    **{k: v for k, v in CANDIDATE_REPLACEMENT_V1_TARGETS.items() if k != "old_nonhousing_wealth_to_income_6575"},
+    "old_nonhousing_wealth_to_income_median_6575": 2.23046078,
+}
+
+
+CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_V1_TARGETS.items()
+        if k
+        not in {
+            "old_nonhousing_wealth_to_income_6575",
+            "old_parent_childless_nonhousing_wealth_to_income_gap_6575",
+        }
+    },
+    "old_total_wealth_to_income_median_6575": 5.26375360,
+    "old_parent_childless_total_wealth_to_income_gap_6575": 1.28413467,
+}
+
+
 CORE_FEASIBILITY_V1_TARGETS = {
     k: CANDIDATE_NO_TIMING_V0_TARGETS[k]
     for k in [
@@ -173,6 +194,27 @@ CANDIDATE_REPLACEMENT_V1_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS = {
+    **{k: v for k, v in CANDIDATE_REPLACEMENT_V1_WEIGHTS.items() if k != "old_nonhousing_wealth_to_income_6575"},
+    "old_nonhousing_wealth_to_income_median_6575": 0.8,
+}
+
+
+CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_V1_WEIGHTS.items()
+        if k
+        not in {
+            "old_nonhousing_wealth_to_income_6575",
+            "old_parent_childless_nonhousing_wealth_to_income_gap_6575",
+        }
+    },
+    "old_total_wealth_to_income_median_6575": 0.8,
+    "old_parent_childless_total_wealth_to_income_gap_6575": 2.0,
+}
+
+
 CORE_FEASIBILITY_V1_WEIGHTS = {
     "tfr": 20.0,
     "childless_rate": 20.0,
@@ -250,6 +292,14 @@ TARGET_SETS = {
     "old_nonlocation_no_timing": (OLD_NONLOCATION_NO_TIMING_TARGETS, OLD_NONLOCATION_NO_TIMING_WEIGHTS),
     "candidate_no_timing_v0": (CANDIDATE_NO_TIMING_V0_TARGETS, CANDIDATE_NO_TIMING_V0_WEIGHTS),
     "candidate_replacement_v1": (CANDIDATE_REPLACEMENT_V1_TARGETS, CANDIDATE_REPLACEMENT_V1_WEIGHTS),
+    "candidate_replacement_nh_median_v1": (
+        CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS,
+    ),
+    "candidate_replacement_total_median_v1": (
+        CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS,
+    ),
     "candidate_no_timing_core_feasibility_v1": (
         CORE_FEASIBILITY_V1_TARGETS,
         CORE_FEASIBILITY_V1_WEIGHTS,
@@ -696,11 +746,23 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "old_age_parent_childless_gap": float(getattr(sol, "old_age_parent_childless_gap_6575", np.nan)),
         "old_nonhousing_wealth_to_income_6575": float(getattr(sol, "old_nonhousing_wealth_to_income_6575", np.nan)),
         "old_total_wealth_to_income_6575": float(getattr(sol, "old_total_wealth_to_income_6575", np.nan)),
+        "old_nonhousing_wealth_to_income_median_6575": float(
+            getattr(sol, "old_nonhousing_wealth_to_income_median_6575", np.nan)
+        ),
+        "old_total_wealth_to_income_median_6575": float(
+            getattr(sol, "old_total_wealth_to_income_median_6575", np.nan)
+        ),
         "old_parent_childless_nonhousing_wealth_to_income_gap_6575": float(
             getattr(sol, "old_parent_childless_nonhousing_wealth_to_income_gap_6575", np.nan)
         ),
         "old_parent_childless_total_wealth_to_income_gap_6575": float(
             getattr(sol, "old_parent_childless_total_wealth_to_income_gap_6575", np.nan)
+        ),
+        "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575": float(
+            getattr(sol, "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575", np.nan)
+        ),
+        "old_parent_childless_total_wealth_to_income_median_gap_6575": float(
+            getattr(sol, "old_parent_childless_total_wealth_to_income_median_gap_6575", np.nan)
         ),
         "mean_age_first_birth": float(getattr(sol, "mean_age_first_birth", np.nan)),
         "housing_increment_0to1": float(getattr(sol, "housing_increment_0to1_eventstudy_t3", np.nan)),

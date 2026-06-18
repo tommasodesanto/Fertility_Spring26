@@ -3898,6 +3898,18 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     old_parent_nonhousing_wealth = old_parent_income = 0.0
     old_childless_nonhousing_wealth = old_childless_income = 0.0
     old_total_wealth = old_parent_total_wealth = old_childless_total_wealth = 0.0
+    old_nonhousing_ratio_vals: list[np.ndarray] = []
+    old_nonhousing_ratio_wts: list[np.ndarray] = []
+    old_total_ratio_vals: list[np.ndarray] = []
+    old_total_ratio_wts: list[np.ndarray] = []
+    old_parent_nonhousing_ratio_vals: list[np.ndarray] = []
+    old_parent_nonhousing_ratio_wts: list[np.ndarray] = []
+    old_childless_nonhousing_ratio_vals: list[np.ndarray] = []
+    old_childless_nonhousing_ratio_wts: list[np.ndarray] = []
+    old_parent_total_ratio_vals: list[np.ndarray] = []
+    old_parent_total_ratio_wts: list[np.ndarray] = []
+    old_childless_total_ratio_vals: list[np.ndarray] = []
+    old_childless_total_ratio_wts: list[np.ndarray] = []
     for jj in range(a65s, a75e + 1):
         for i in range(I):
             yj = float(P.income[i, jj])
@@ -3915,14 +3927,33 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                         old_nonhousing_wealth += fin
                         old_total_wealth += total
                         old_income += income
+                        positive = gs > 0
+                        if np.any(positive) and yj > 0:
+                            wts = gs[positive]
+                            nonhousing_ratio = bg[positive] / yj
+                            total_ratio = (bg[positive] + home_equity) / yj
+                            old_nonhousing_ratio_vals.append(nonhousing_ratio)
+                            old_nonhousing_ratio_wts.append(wts)
+                            old_total_ratio_vals.append(total_ratio)
+                            old_total_ratio_wts.append(wts)
                         if nn > 0:
                             old_parent_nonhousing_wealth += fin
                             old_parent_total_wealth += total
                             old_parent_income += income
+                            if np.any(positive) and yj > 0:
+                                old_parent_nonhousing_ratio_vals.append(nonhousing_ratio)
+                                old_parent_nonhousing_ratio_wts.append(wts)
+                                old_parent_total_ratio_vals.append(total_ratio)
+                                old_parent_total_ratio_wts.append(wts)
                         elif cs == 0:
                             old_childless_nonhousing_wealth += fin
                             old_childless_total_wealth += total
                             old_childless_income += income
+                            if np.any(positive) and yj > 0:
+                                old_childless_nonhousing_ratio_vals.append(nonhousing_ratio)
+                                old_childless_nonhousing_ratio_wts.append(wts)
+                                old_childless_total_ratio_vals.append(total_ratio)
+                                old_childless_total_ratio_wts.append(wts)
     stats.old_nonhousing_wealth_to_income_6575 = old_nonhousing_wealth / max(old_income, 1e-12)
     stats.old_total_wealth_to_income_6575 = old_total_wealth / max(old_income, 1e-12)
     parent_nonhousing_ratio = old_parent_nonhousing_wealth / max(old_parent_income, 1e-12)
@@ -3935,6 +3966,28 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     stats.old_parent_total_wealth_to_income_6575 = parent_total_ratio
     stats.old_childless_total_wealth_to_income_6575 = childless_total_ratio
     stats.old_parent_childless_total_wealth_to_income_gap_6575 = parent_total_ratio - childless_total_ratio
+    stats.old_nonhousing_wealth_to_income_median_6575 = weighted_median_from_cells(
+        old_nonhousing_ratio_vals, old_nonhousing_ratio_wts
+    )
+    stats.old_total_wealth_to_income_median_6575 = weighted_median_from_cells(old_total_ratio_vals, old_total_ratio_wts)
+    old_parent_nonhousing_median = weighted_median_from_cells(
+        old_parent_nonhousing_ratio_vals, old_parent_nonhousing_ratio_wts
+    )
+    old_childless_nonhousing_median = weighted_median_from_cells(
+        old_childless_nonhousing_ratio_vals, old_childless_nonhousing_ratio_wts
+    )
+    old_parent_total_median = weighted_median_from_cells(old_parent_total_ratio_vals, old_parent_total_ratio_wts)
+    old_childless_total_median = weighted_median_from_cells(old_childless_total_ratio_vals, old_childless_total_ratio_wts)
+    stats.old_parent_nonhousing_wealth_to_income_median_6575 = old_parent_nonhousing_median
+    stats.old_childless_nonhousing_wealth_to_income_median_6575 = old_childless_nonhousing_median
+    stats.old_parent_childless_nonhousing_wealth_to_income_median_gap_6575 = (
+        old_parent_nonhousing_median - old_childless_nonhousing_median
+    )
+    stats.old_parent_total_wealth_to_income_median_6575 = old_parent_total_median
+    stats.old_childless_total_wealth_to_income_median_6575 = old_childless_total_median
+    stats.old_parent_childless_total_wealth_to_income_median_gap_6575 = (
+        old_parent_total_median - old_childless_total_median
+    )
     owner_mass_2545 = float(np.sum(g[:, 1:, :, a25s : a45e + 1, :, :]))
     stats.owner_neg_liquid_share_2545 = float(np.sum(g[bg < 0, 1:, :, a25s : a45e + 1, :, :]) / max(owner_mass_2545, 1e-12))
     owner_mass_2534 = float(np.sum(g[:, 1:, :, a25s : a34e + 1, :, :]))

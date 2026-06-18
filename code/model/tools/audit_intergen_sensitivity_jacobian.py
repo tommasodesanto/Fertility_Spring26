@@ -84,6 +84,12 @@ def main() -> None:
     parser.add_argument("--frontier-root", type=Path, default=DEFAULT_FRONTIER_ROOT)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--point-label", action="append", choices=all_point_labels(), help="Frontier family to audit; repeatable")
+    parser.add_argument(
+        "--point-json",
+        action="append",
+        default=[],
+        help="Explicit saved record to audit; use LABEL=PATH or PATH. Repeatable.",
+    )
     parser.add_argument("--target-set", default=TARGET_SET)
     parser.add_argument("--rel-step", type=float, default=0.01)
     parser.add_argument("--min-step", type=float, default=1e-4)
@@ -101,7 +107,7 @@ def main() -> None:
     os.environ.setdefault("MKL_NUM_THREADS", "1")
     os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 
-    point_labels = tuple(args.point_label) if args.point_label else DEFAULT_POINT_LABELS
+    point_labels = tuple(args.point_label) if args.point_label else (() if args.point_json else DEFAULT_POINT_LABELS)
     if int(args.max_points) > 0:
         point_labels = point_labels[: int(args.max_points)]
 
@@ -116,6 +122,7 @@ def main() -> None:
         "frontier_root": str(args.frontier_root),
         "outdir": str(outdir),
         "point_labels": list(point_labels),
+        "point_json": list(args.point_json),
         "target_set": str(args.target_set),
         "target_moments": target_moments,
         "parameters": PARAMETERS,
@@ -131,6 +138,7 @@ def main() -> None:
     write_json(outdir / "audit_config.json", config)
 
     points = [load_frontier_best(args.frontier_root, label) for label in point_labels]
+    points.extend(load_point_json(spec, default_target_set=args.target_set) for spec in args.point_json)
     write_json(outdir / "source_points.json", {"points": points})
 
     all_baseline_rows: list[dict[str, Any]] = []
@@ -630,6 +638,35 @@ def load_frontier_best(frontier_root: Path, point_label: str) -> dict[str, Any]:
         "source_label": best.get("label"),
         "theta": {k: float(v) for k, v in dict(best["theta"]).items() if k in PARAMETERS},
         "source_moments": dict(best.get("moments", {})),
+    }
+
+
+def load_point_json(spec: str, *, default_target_set: str) -> dict[str, Any]:
+    if "=" in spec:
+        label, path_text = spec.split("=", 1)
+        point_label = label.strip()
+        path = Path(path_text).expanduser()
+    else:
+        path = Path(spec).expanduser()
+        point_label = path.stem
+    if not point_label:
+        raise ValueError(f"Empty point label in --point-json {spec!r}")
+    if not path.exists():
+        raise FileNotFoundError(path)
+    obj = json.loads(path.read_text())
+    record = dict(obj.get("best") or obj)
+    theta = dict(record.get("theta") or {})
+    if not theta:
+        raise ValueError(f"No theta found in {path}")
+    return {
+        "point_label": point_label,
+        "source_target_set": record.get("source_target_set", default_target_set),
+        "source_rank_loss": float(record.get("rank_loss", math.nan)),
+        "source_path": str(path),
+        "source_case": record.get("case"),
+        "source_label": record.get("label"),
+        "theta": {k: float(v) for k, v in theta.items() if k in PARAMETERS},
+        "source_moments": dict(record.get("moments", {})),
     }
 
 
