@@ -130,6 +130,27 @@ When reporting any calibration result, include the relevant target values next
 to the model moments. Do not report only losses or model moments when the target
 system is available.
 
+Identification discipline for SMM:
+
+- Never underidentify an SMM calibration. A calibration with \(x\) free
+  parameters needs at least \(x\) informative moments or explicitly stated
+  external restrictions. If the hard target count falls below the number of
+  free parameters, report the calibration as underidentified rather than
+  proceeding silently.
+- Do not respond to an unreachable target by simply dropping or demoting it.
+  First ask: (1) are we sure the target is unreachable rather than a coding,
+  measurement, objective, or search-design failure; (2) if the code is correct,
+  what economic mechanism in the model makes the target unreachable; and
+  (3) what replacement moment or variation identifies the same parameter block.
+- Any proposal to remove, demote, or reweight a calibration target must name
+  the affected parameters and the replacement identifying moments. If no
+  replacement moment exists, either fix the affected parameter externally,
+  change the model, or explicitly state that the target system is
+  underidentified.
+- Diagnostic frontier runs may temporarily vary target subsets to locate a
+  failure, but they are not calibrated SMM specifications unless the resulting
+  target system preserves identification.
+
 ## Long-Run Search Safety
 
 For calibration sweeps, overnight searches, cluster jobs, or any run expected to

@@ -85,7 +85,10 @@ TFR `2.851`, negative family ownership gap, negative second-child housing
 increment, and owner median rooms `4`. Interpretation: the one-market toy can
 match the basic fertility/tenure/room block when old-age and cost-share moments
 are demoted, but the measured cost-share, old-age ownership, and owner-room
-targets are not jointly coherent as hard targets for this scaffold.
+targets are not jointly coherent as hard targets for this scaffold. This
+demotion was diagnostic only: any formal SMM target revision must preserve
+identification by replacing unreachable moments with moments that discipline
+the same parameter blocks, or by fixing the affected parameters externally.
 
 For the intergen strand, use:
 
