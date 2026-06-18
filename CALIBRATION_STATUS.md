@@ -106,6 +106,18 @@ weak or non-smooth identifying objects. Replace them with identification-
 preserving moments or fix the affected parameters externally before calling a
 new target system a production SMM calibration.
 
+Replacement-moment data map, June 18:
+`docs/model/intergen_replacement_moment_data_map_20260618.md` records the
+recommended empirical direction: ACS/MMS household heads are the primary source
+for housing, tenure, rooms, and renter cost moments; AHS is a robustness/stock
+source; PSID is the source for old-age wealth, completed-fertility, lifecycle
+wealth, and down-payment/access moments. All proposed replacement targets still
+need a data re-audit before entering the SMM objective. In particular, source
+files, sample restrictions, weights, household unit, room/bedroom convention,
+wealth definition, timing, and formula must be checked against the model object.
+For old-age bequest moments, the recommended primary object is nonhousing or
+liquid wealth; total net worth is a robustness check.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
