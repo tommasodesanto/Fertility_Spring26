@@ -15,6 +15,7 @@ Current notes kept here:
   `intergen_candidate_replacement_targets_20260618.md`,
   `intergen_candidate_replacement_targets_20260618.csv`,
   `intergen_candidate_replacement_v1_panel_20260618.md`,
+  `intergen_replacement_cluster_wave_20260618.md`,
   `intergen_sensitivity_jacobian_audit_20260618.md`, and
   `intergen_replacement_moment_data_map_20260618.md`
 - `DISTRIBUTIONAL_EMPIRICS_SCOPE_MEMO_2026-05-08.pdf`

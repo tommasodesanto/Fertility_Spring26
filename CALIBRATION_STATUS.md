@@ -144,6 +144,18 @@ put renters into too much space. Treat `candidate_replacement_v1` as a
 diagnostic target set until the old-wealth data object and owner-renter room
 separation mechanism are re-audited.
 
+Follow-up cluster wave, launched June 18 at 15:25 EDT: see
+`docs/model/intergen_replacement_cluster_wave_20260618.md`. Three 8-task
+global-DE arrays are running on Torch: `11095203` for `candidate_replacement_v1`
+(old nonhousing mean), `11095204` for `candidate_replacement_nh_median_v1`
+(old nonhousing median matched to a model median statistic), and `11095205` for
+`candidate_replacement_total_median_v1` (old total-wealth median plus total
+parent-childless wealth gap). A separate Jacobian job, `11095206`, audits the
+current best replacement point and the high-old-wealth/low-ownership basin under
+`candidate_replacement_v1`. These runs preserve 13 target moments for 13 varied
+internal parameters; they are a diagnostic comparison, not a production
+calibration.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
