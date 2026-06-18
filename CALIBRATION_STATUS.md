@@ -65,6 +65,28 @@ Slurm chains are: core `11038977 -> 11038978 -> 11038986 -> 11038987`; cost
 `intergen_overnight_<label>_w<wave>_20260617`. The morning readout should
 compare feasible frontier slices across target sets, not just the scalar best.
 
+Morning June 18 readout: all overnight chains completed with zero stderr bytes
+and exit code `0:0` in `sacct`. Across the four target sets, the core
+feasibility problem is easy relative to the full hard target bundle: best core
+loss `2.033`, with TFR `1.888`, childless `0.173`, ownership `0.487`, family
+ownership gap `0.224`, housing increments `0.843/0.599`, renter median rooms
+`4.04`, and owner median rooms `6.0`. Adding the cost target gives best loss
+`7.264` but still leaves housing user-cost share at `0.359`. Adding old-age
+targets gives best loss `4.800`, ownership `0.503`, old-age ownership `0.894`,
+old-age parent-childless gap `0.113`, but housing user-cost share rises to
+`0.504`. Dropping room medians and keeping cost plus old-age targets gives best
+loss `5.895`, ownership `0.550`, housing user-cost share `0.272`, but owner
+median rooms collapse to `4`. The frontier diagnostic is sharp: no target set
+found a candidate with ownership above `0.50`, housing user-cost share below
+`0.32`, and owner median rooms equal to `6`; and only the core-feasibility run
+found even one candidate with ownership above `0.50`, old-age ownership below
+`0.85`, and housing user-cost share below `0.32`, but that candidate had
+TFR `2.851`, negative family ownership gap, negative second-child housing
+increment, and owner median rooms `4`. Interpretation: the one-market toy can
+match the basic fertility/tenure/room block when old-age and cost-share moments
+are demoted, but the measured cost-share, old-age ownership, and owner-room
+targets are not jointly coherent as hard targets for this scaffold.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
