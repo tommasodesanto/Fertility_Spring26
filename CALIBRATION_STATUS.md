@@ -92,6 +92,20 @@ demotion was diagnostic only: any formal SMM target revision must preserve
 identification by replacing unreachable moments with moments that discipline
 the same parameter blocks, or by fixing the affected parameters externally.
 
+Sensitivity/Jacobian audit, June 18: `code/model/tools/audit_intergen_sensitivity_jacobian.py`
+was run on Torch as Slurm job `11077696` using the best
+`core_feasibility_v1` and `roomcost_test_v1` frontier points. All 54
+finite-difference solves completed successfully; outputs were pulled to
+`output/model/intergen_sensitivity_jacobian_20260618/` and summarized in
+`docs/model/intergen_sensitivity_jacobian_audit_20260618.md`. The core point
+has full local rank 13 but is badly conditioned, with condition number
+`2.69e4`; the room-cost point has rank 12 because the owner-median-room target
+is locally flat. Interpretation: the target count is formally adequate, but
+owner median rooms, old-age ownership, and aggregate housing user-cost share are
+weak or non-smooth identifying objects. Replace them with identification-
+preserving moments or fix the affected parameters externally before calling a
+new target system a production SMM calibration.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
