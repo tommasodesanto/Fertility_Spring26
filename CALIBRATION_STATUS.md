@@ -156,6 +156,25 @@ current best replacement point and the high-old-wealth/low-ownership basin under
 internal parameters; they are a diagnostic comparison, not a production
 calibration.
 
+Readout from the same cluster wave: all jobs completed with exit code `0:0` and
+the collected results are under
+`output/model/cluster_pulls/intergen_replacement_cluster_wave_20260618/`.
+The old-nonhousing-mean target set improved from local-panel loss `34.009` to
+`26.553`, but still misses old nonhousing mean wealth badly (`2.590` versus
+`6.419`) and has a small owner-renter room gap (`0.581`). The old-nonhousing
+median variant has much better scalar loss, `9.093`, with ownership `0.509`,
+TFR `1.882`, childlessness `0.248`, childless renter rooms `4.052`, childless
+owner rooms `5.556`, and old nonhousing median wealth `1.601` versus target
+`2.230`. The total-wealth median variant has loss `13.430`, matches old total
+median wealth (`5.364` versus `5.264`) and produces a larger room gap, but
+pushes ownership down to `0.393` and first-birth room growth up to `1.334`.
+No run produced a convincing joint fit of moderate ownership, old wealth, and a
+large owner-renter room gap. The Jacobian audit is full rank but ill-conditioned
+at the high-ownership basin (rank `13`, condition `9.41e3`) and rank deficient
+at the high-old-wealth basin (rank `12`, condition `4.46e8`). Old nonhousing
+wealth loads primarily on `beta`, not `theta0`; the current old-wealth targets
+therefore do not cleanly identify the intended bequest block.
+
 For the intergen strand, use:
 
 - package: `code/model/intergen_housing_fertility/`
