@@ -737,3 +737,33 @@ ownership is still too high and young ownership is still nearly empty. The
 fixed screens are unchanged: no `joint_core` candidate, no fertility-ok soft
 joint candidate, and the best young-ownership/old-exit candidate still has a
 negative owner-renter room gap.
+
+### 2026-06-19 11:59 EDT Young/Old/Fertility Frontier Improves
+
+Wave 1 remained healthy. The first eight tasks in each array had completed
+with exit code `0:0`; the remaining Wave 1 tasks were running. Wave 2 broad
+and Wave 3 tight remained pending on the intended dependencies. No nonzero
+stderr files were visible.
+
+Finite records reached `28,499` across Wave 1. Scalar bests were essentially
+unchanged:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 9,489 | 14.778 | 1.786 | 0.254 | 0.023 | 0.936 | 1.105 | 4.515 | 5.620 | 2.517 |
+| `young_old_own` | 9,217 | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 4.957 | 5.495 | 2.517 |
+| `young_old_roomgap` | 9,793 | 28.854 | 1.686 | 0.280 | 0.037 | 0.963 | 1.711 | 4.175 | 5.886 | 1.830 |
+
+The useful movement was in the decomposition screen that keeps young ownership,
+old exit, and fertility in range while ignoring the room-gap restriction:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Young ownership + old exit + fertility, no room-gap restriction | `young_old_own` | 35.068 | 1.695 | 0.260 | 0.228 | 0.727 | 0.417 | 5.657 | 6.074 | 2.745 |
+
+This improves the previous best in that screen, but it does not solve the
+joint frontier. The candidate preserves fertility and lowers old ownership
+while keeping some young ownership, but renters are too large and the
+owner-renter room gap remains far below the ACS gap. The missing object remains
+the joint allocation with young access, old exit, and owner-renter space
+separation.
