@@ -260,6 +260,39 @@ satisfies the relaxed screen:
 \text{owner-renter room gap}\ge 1.5.
 \]
 
+### 2026-06-19 10:55 EDT User Departure Baseline
+
+The three arrays were still healthy when the user left for the three-day
+campaign. First-batch tasks remained active, one `young_old_roomgap` task had
+completed, and `young_old_roomgap` task `9` had started. All visible stderr
+files were still zero bytes. The hourly heartbeat automation is active with
+`72` hourly checks.
+
+Current scalar-best points:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 5,243 | 15.961 | 1.853 | 0.261 | 0.000 | 0.853 | 1.470 | 4.449 | 5.919 | 2.517 |
+| `young_old_own` | 4,785 | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 4.957 | 5.495 | 2.517 |
+| `young_old_roomgap` | 5,228 | 34.920 | 1.853 | 0.246 | 0.144 | 0.956 | 1.507 | 4.108 | 5.615 | 1.373 |
+
+Current constrained-frontier points:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Old ownership `<=0.85` | `old_retention` | 18.949 | 1.900 | 0.196 | 0.008 | 0.753 | 0.977 | 4.742 | 5.719 |
+| Old `<=0.85`, young `>=0.25` | `old_retention` | 47.253 | 0.926 | 0.541 | 0.316 | 0.847 | 0.070 | 5.264 | 5.334 |
+| Room gap `>=2` | `young_old_roomgap` | 51.042 | 1.603 | 0.329 | 0.000 | 0.651 | 2.123 | 4.702 | 6.825 |
+| Owner rooms `>=6`, renter rooms `<=4` | `young_old_roomgap` | 146.721 | 1.372 | 0.349 | 0.000 | 0.001 | 2.264 | 3.822 | 6.087 |
+| Joint softer: old `<=0.88`, young `>=0.20`, gap `>=1.0` | `young_old_roomgap` | 71.021 | 2.850 | 0.041 | 0.249 | 0.676 | 1.100 | 4.474 | 5.574 |
+
+The economic interpretation is unchanged but sharper. The model can reduce old
+ownership, can generate owner-renter room separation, and can produce some
+young ownership. It has not yet produced those three margins together with
+credible fertility and old-wealth moments. The immediate next action is to let
+Wave 1 finish and then launch a bounded Wave 2 that targets the joint frontier,
+not a blind scalar-loss continuation.
+
 This reinforces the current mechanism read: the model can move each component
 in isolation, but the searched parameter region has not yet produced young
 access, old exit, and owner-renter space separation together.
