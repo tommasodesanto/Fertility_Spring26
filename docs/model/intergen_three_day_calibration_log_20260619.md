@@ -339,6 +339,22 @@ This reinforces the current mechanism read: the model can move each component
 in isolation, but the searched parameter region has not yet produced young
 access, old exit, and owner-renter space separation together.
 
+### 2026-06-19 11:06 EDT Monitor Pulse
+
+Wave 1 remained active and healthy. Several long first-batch tasks were still
+running near the `90` minute mark, and some second-batch tasks remained pending
+behind the array throttle. Visible stderr files were all zero bytes, so no
+recovery action was needed and no Wave 2 was launched.
+
+The only substantive movement was in the `young_old_roomgap` low-old-ownership
+frontier. Among candidates with old ownership below `0.85`, the best point
+improved to loss `38.022`, old ownership `0.829`, and room gap `1.599`.
+This is informative but still not a joint fit: young ownership is only `0.012`,
+TFR is `1.477`, childlessness is `0.311`, and the old nonhousing wealth median
+is `2.059`. The result reinforces the same mechanism diagnosis: the model can
+combine lower old ownership and more room separation, but it does so by nearly
+emptying the young-owner pipeline and weakening fertility.
+
 ### 2026-06-19 10:25 EDT Frontier Check
 
 The same first-batch tasks were still running after about 51 minutes; second
