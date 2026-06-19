@@ -81,6 +81,23 @@ CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS = {
 }
 
 
+CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_V1_TARGETS = {
+    **CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS,
+    "old_minus_young_owner_rate_6575_2534": 0.42309487,
+}
+
+
+CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_OWNGAP_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS.items()
+        if k != "old_parent_childless_nonhousing_wealth_to_income_gap_6575"
+    },
+    "old_age_parent_childless_gap": 0.08254406,
+    "old_minus_young_owner_rate_6575_2534": 0.42309487,
+}
+
+
 CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS = {
     **{
         k: v
@@ -93,6 +110,12 @@ CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS = {
     },
     "old_total_wealth_to_income_median_6575": 5.26375360,
     "old_parent_childless_total_wealth_to_income_gap_6575": 1.28413467,
+}
+
+
+CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_TARGETS = {
+    **CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS,
+    "old_minus_young_owner_rate_6575_2534": 0.42309487,
 }
 
 
@@ -200,6 +223,29 @@ CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_V1_WEIGHTS = {
+    **CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS,
+    "old_minus_young_owner_rate_6575_2534": 80.0,
+}
+
+
+CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_SOFT_V1_WEIGHTS = {
+    **CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS,
+    "old_minus_young_owner_rate_6575_2534": 30.0,
+}
+
+
+CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_OWNGAP_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS.items()
+        if k != "old_parent_childless_nonhousing_wealth_to_income_gap_6575"
+    },
+    "old_age_parent_childless_gap": 40.0,
+    "old_minus_young_owner_rate_6575_2534": 80.0,
+}
+
+
 CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS = {
     **{
         k: v
@@ -212,6 +258,12 @@ CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS = {
     },
     "old_total_wealth_to_income_median_6575": 0.8,
     "old_parent_childless_total_wealth_to_income_gap_6575": 2.0,
+}
+
+
+CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_WEIGHTS = {
+    **CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS,
+    "old_minus_young_owner_rate_6575_2534": 80.0,
 }
 
 
@@ -296,9 +348,25 @@ TARGET_SETS = {
         CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS,
         CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS,
     ),
+    "candidate_replacement_due_lifecycle_v1": (
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_V1_WEIGHTS,
+    ),
+    "candidate_replacement_due_lifecycle_soft_v1": (
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_SOFT_V1_WEIGHTS,
+    ),
+    "candidate_replacement_due_lifecycle_owngap_v1": (
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_OWNGAP_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_DUE_LIFECYCLE_OWNGAP_V1_WEIGHTS,
+    ),
     "candidate_replacement_total_median_v1": (
         CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS,
         CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS,
+    ),
+    "candidate_replacement_total_due_lifecycle_v1": (
+        CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_WEIGHTS,
     ),
     "candidate_no_timing_core_feasibility_v1": (
         CORE_FEASIBILITY_V1_TARGETS,
@@ -724,17 +792,20 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
     parity = np.asarray(getattr(sol, "parity_dist", np.array([np.nan])), dtype=float).reshape(-1)
     renter_rooms = float(getattr(sol, "prime_childless_renter_median_rooms", np.nan))
     owner_rooms = float(getattr(sol, "prime_childless_owner_median_rooms", np.nan))
+    own_rate_2534 = float(getattr(sol, "own_rate_2534", np.nan))
+    old_age_own_rate = float(getattr(sol, "old_age_own_rate_6575", np.nan))
     return {
         "tfr": 2.0 * household_parity,
         "own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
         "aggregate_own_rate": float(getattr(sol, "own_rate", np.nan)),
         "young_owner_rate": float(getattr(sol, "young_owner_rate", np.nan)),
         "old_owner_rate": float(getattr(sol, "old_owner_rate", np.nan)),
-        "old_age_own_rate": float(getattr(sol, "old_age_own_rate_6575", np.nan)),
+        "old_age_own_rate": old_age_own_rate,
         "mean_completed_fertility": household_parity,
         "childless_rate": float(getattr(sol, "childless_rate", np.nan)),
         "own_rate_3055": float(getattr(sol, "own_rate_3055", np.nan)),
-        "own_rate_2534": float(getattr(sol, "own_rate_2534", np.nan)),
+        "own_rate_2534": own_rate_2534,
+        "old_minus_young_owner_rate_6575_2534": old_age_own_rate - own_rate_2534,
         "own_rate_3544": float(getattr(sol, "own_rate_3544", np.nan)),
         "own_rate_nonparents_3055": float(getattr(sol, "own_rate_nonparents_3055", np.nan)),
         "own_rate_newparents_3055": float(getattr(sol, "own_rate_newparents_3055", np.nan)),
