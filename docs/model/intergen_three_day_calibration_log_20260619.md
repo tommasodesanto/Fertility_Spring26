@@ -655,3 +655,38 @@ maintaining owner-renter space separation.
    renters too large relative to ACS room targets.
 4. Parent-childless old wealth gaps remain below target, so \(\theta_n\) is
    still weakly identified by current old wealth moments.
+
+### 2026-06-19 11:40 EDT Three-Day Campaign Commitment
+
+The user authorized a three-day unattended diagnostic campaign with hourly
+check-ins. The rules are unchanged: do not alter main model/solver code, do
+not delete outputs, and do not weaken the target system without recording the
+replacement moment or external restriction that preserves identification.
+
+Wave 1 remained healthy. Tasks `1--8` for all three arrays had completed with
+exit code `0:0`; tasks `9--16` were running. Wave 2 broad and Wave 3 tight
+were still pending on their intended dependencies. No nonzero stderr files were
+visible.
+
+Best scalar points:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 8,265 | 14.778 | 1.786 | 0.254 | 0.023 | 0.936 | 1.105 | 4.515 | 5.620 | 2.517 |
+| `young_old_own` | 7,923 | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 4.957 | 5.495 | 2.517 |
+| `young_old_roomgap` | 8,487 | 31.956 | 1.598 | 0.316 | 0.004 | 0.952 | 1.760 | 3.949 | 5.709 | 1.830 |
+
+Best diagnostic decomposition points:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention` | 25.588 | 1.815 | 0.279 | 0.000 | 0.779 | 1.757 | 4.739 | 6.496 | 1.601 |
+| Young ownership + old exit + fertility, no room-gap restriction | `young_old_own` | 41.633 | 1.983 | 0.245 | 0.462 | 0.771 | -0.221 | 5.883 | 5.662 | 2.517 |
+
+Current interpretation: the scalar best is not the economic best. The best
+economic evidence is the two-corner decomposition above. The model can combine
+fertility, low old ownership, and room separation only by emptying young
+ownership. It can combine young ownership and low old ownership only by
+collapsing the owner-renter room gap. The main campaign question is whether
+Wave 2/3 can find the missing joint allocation or whether this is a structural
+mechanism/target mismatch.
