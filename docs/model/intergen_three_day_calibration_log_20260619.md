@@ -690,3 +690,31 @@ ownership. It can combine young ownership and low old ownership only by
 collapsing the owner-renter room gap. The main campaign question is whether
 Wave 2/3 can find the missing joint allocation or whether this is a structural
 mechanism/target mismatch.
+
+### 2026-06-19 11:48 EDT No-Young Frontier Improves
+
+Wave 1 remained healthy in its second batch. Wave 2 broad and Wave 3 tight were
+still pending on the intended dependencies. No nonzero stderr files or Slurm
+failures were visible.
+
+Finite records reached `26,212` across the three Wave 1 target sets. Scalar
+bests remained unchanged:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 8,754 | 14.778 | 1.786 | 0.254 | 0.023 | 0.936 | 1.105 |
+| `young_old_own` | 8,435 | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 |
+| `young_old_roomgap` | 9,023 | 31.956 | 1.598 | 0.316 | 0.004 | 0.952 | 1.760 |
+
+The useful frontier movement was in the decomposition screen that ignores young
+ownership:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention` | 18.472 | 1.798 | 0.286 | 0.000 | 0.831 | 1.904 | 4.682 | 6.586 | 1.830 |
+
+This is a genuine improvement over the previous no-young frontier loss of
+`25.588`: the model now finds plausible fertility, lower old ownership, and a
+larger owner-renter room gap together. But young ownership remains effectively
+zero, so the central joint failure is unchanged. The missing allocation is
+still young access plus old exit plus owner-renter space separation.
