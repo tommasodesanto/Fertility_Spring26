@@ -124,6 +124,33 @@ separation. That is stronger evidence for a joint mechanism/target tension than
 for a simple weighting failure, though the wave is still too young for a final
 claim.
 
+### 2026-06-19 09:45 EDT Partial Update
+
+The first batch of tasks was still active after about 11 minutes; tasks `9--16`
+had not yet started. The `old_retention` target set found a much better scalar
+partial point, but the mechanism is not yet acceptable:
+
+| Run | Finite cases | Best partial loss | TFR | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 811 | 18.389 | 1.665 | 0.002 | 0.889 | 1.323 | 2.974 |
+| `young_old_own` | 716 | 30.401 | 1.872 | 0.039 | 0.959 | 0.854 | 0.458 |
+| `young_old_roomgap` | 753 | 40.182 | 1.959 | 0.213 | 0.955 | 1.405 | 0.915 |
+
+This improves the scalar objective for `old_retention`, and old ownership falls
+from the previous best around `0.96` to `0.889`. But young ownership is almost
+zero, while the target is `0.341`; the model is again lowering old ownership by
+nearly emptying the young owner pipeline. Frontier restrictions confirm the
+tradeoff: requiring old ownership below `0.85` and young ownership above `0.25`
+leaves only three `old_retention` candidates so far, with the best at high loss
+`47.253`, TFR `0.926`, childlessness `0.541`, and room gap `0.070`.
+
+Current mechanism note: separate old-retention pressure is useful, but the
+model still has trouble combining (i) young access, (ii) lower old retention,
+and (iii) owner-renter room separation. The next full readout should inspect
+whether later DE generations can repair this, or whether the next wave needs a
+diagnostic that conditions on young access while varying old-retention
+mechanisms.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
