@@ -244,6 +244,26 @@ Current decision: let Wave 1 complete before launching another array. The next
 wave should target this joint frontier directly rather than simply increase
 scalar search budget on a generic objective.
 
+### 2026-06-19 10:23 EDT Health Check
+
+The same first-batch tasks were still running normally after about 49 minutes.
+All visible stderr files were zero bytes. The case counts increased to
+`3,196`, `2,856`, and `3,150` finite records across `old_retention`,
+`young_old_own`, and `young_old_roomgap`, respectively.
+
+There was no meaningful improvement in the joint frontier. No current candidate
+satisfies the relaxed screen:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+This reinforces the current mechanism read: the model can move each component
+in isolation, but the searched parameter region has not yet produced young
+access, old exit, and owner-renter space separation together.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
