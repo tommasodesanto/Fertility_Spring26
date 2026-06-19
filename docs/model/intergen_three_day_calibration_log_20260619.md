@@ -321,6 +321,25 @@ the room gap. The softer joint screen remains empty.
 Decision unchanged: no overlapping launch while Wave 1 is healthy and still in
 its first batch.
 
+### 2026-06-19 10:30 EDT Room-Gap Frontier Improvement
+
+The first-batch tasks were still running after about 57 minutes. The
+`young_old_roomgap` target set found a materially better high-room-gap frontier
+point:
+
+| Screen | Loss | Own 25--34 | Old own | Room gap | TFR | Childless | Renter rooms | Owner rooms |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `roomgap >= 2` | 51.041 | 0.000 | 0.651 | 2.123 | 1.603 | 0.329 | 4.702 | 6.825 |
+
+This point is useful because it separates two problems. The model can generate
+large owner-renter room separation and low old ownership at the same time, but
+only by emptying the young-owner pipeline. The best point with both young
+ownership above `0.25` and old ownership below `0.85` still has a room gap of
+only `0.447`. The joint and softer joint screens remain empty.
+
+Decision unchanged: no overlapping launch. Wait for the second batch before
+designing the next wave.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
