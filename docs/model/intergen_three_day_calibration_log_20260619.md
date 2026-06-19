@@ -361,6 +361,31 @@ old exit, and owner-renter space separation.
 Decision unchanged: no overlapping launch while the first batch is still
 healthy.
 
+### 2026-06-19 10:38 EDT Health And Best-So-Far
+
+The first-batch tasks were still running after about 65 minutes. Tasks
+`9--16` remained pending behind the `%8` array throttle, and all visible stderr
+files were still zero bytes. Finite cases reached `4,237`, `3,773`, and
+`4,198` for `old_retention`, `young_old_own`, and `young_old_roomgap`.
+
+The current scalar best by each objective is:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 17.267 | 1.859 | 0.237 | 0.025 | 0.979 | 1.103 | 1.830 |
+| `young_old_own` | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 2.516 |
+| `young_old_roomgap` | 34.919 | 1.853 | 0.246 | 0.144 | 0.956 | 1.507 | 1.373 |
+
+The `young_old_roomgap` scalar best improved relative to the prior partial
+readout, but the economic frontier is still not solved. A single softer joint
+candidate now exists in `young_old_roomgap`, with young ownership `0.249`, old
+ownership `0.676`, and room gap `1.100`, but it has TFR `2.850`,
+childlessness `0.041`, old nonhousing median wealth `0.229`, and high loss
+`71.021`. The strict joint screen remains empty.
+
+Decision unchanged: let Wave 1 finish. The next wave should be designed around
+the joint frontier, not around the scalar best alone.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
