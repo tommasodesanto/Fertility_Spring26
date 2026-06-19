@@ -546,6 +546,23 @@ second-child housing growth negative. Do not launch an overlapping wave while
 Wave 1 is healthy; the next wave should start only after the current arrays
 clear.
 
+### 2026-06-19 11:17 EDT High-Room-Gap Frontier Move
+
+Wave 1 was still running cleanly, with no visible stderr failures. The scalar
+best points did not change, and the strict joint screen remained empty. The
+only material movement was in the `young_old_own` high-room-gap frontier:
+
+| Screen | Loss | Own 25--34 | Old own | Room gap | TFR | Childless | Renter rooms | Owner rooms |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `roomgap >= 2` | 72.170 | 0.000 | 0.645 | 2.001 | 0.999 | 0.528 | 5.213 | 7.213 |
+
+This improves the previous high-room-gap frontier under the `young_old_own`
+objective, but it reinforces the same mechanism diagnosis. The model can
+generate owner-renter room separation and low old ownership only by emptying
+the young-owner pipeline and missing fertility badly. No current candidate
+combines young ownership, old exit, room separation, and fertility in the
+targeted range.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
