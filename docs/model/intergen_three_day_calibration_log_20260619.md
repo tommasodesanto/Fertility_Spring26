@@ -302,6 +302,25 @@ about `2.419`. The relaxed and softer joint screens remain empty.
 
 Decision unchanged: do not launch overlapping jobs. Let Wave 1 finish.
 
+### 2026-06-19 10:28 EDT Scalar/Mechanism Divergence
+
+The first-batch tasks were still running after about 55 minutes, with the second
+batch pending. Stderr files remained zero bytes. The `old_retention` target set
+found a slightly better scalar point:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 17.267 | 1.859 | 0.237 | 0.025 | 0.979 | 1.103 | 1.830 |
+
+This lowers the scalar loss but worsens the old-retention mechanism: old
+ownership rises further above target, while young ownership remains almost
+empty. The best low-old-ownership frontier point in `old_retention` remains
+young-ownership-zero, and the best young-and-old ownership point still erases
+the room gap. The softer joint screen remains empty.
+
+Decision unchanged: no overlapping launch while Wave 1 is healthy and still in
+its first batch.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
