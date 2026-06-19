@@ -847,3 +847,46 @@ empty:
 The earlier decomposition also remains: fertility plus old exit plus room
 separation still comes with essentially zero young ownership, while young
 ownership plus old exit and fertility still collapses the room gap.
+
+### 2026-06-19 19:25 EDT Wave 2 Complete, Wave 3 Started
+
+Wave 2 broad completed cleanly. All `72` Wave 2 array tasks exited with code
+`0:0`, and no nonzero stderr files were visible. Wave 3 tight started its
+first batch of tasks across the same three identified target sets.
+
+The complete Wave 2 record contains `62,270` finite cases. It did not solve the
+joint allocation problem. The best scalar point remained the old-retention
+Wave 2 candidate:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w2` | 14.197 | 1.643 | 0.357 | 0.029 | 0.922 | 1.097 | 4.650 | 5.746 | 1.830 | 0.833 |
+
+The strict joint screen remained empty even after the complete broad search:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The complete Wave 2 decomposition confirms the same two corners:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w2` | 27.898 | 1.684 | 0.300 | 0.000 | 0.777 | 1.652 | 4.955 | 6.607 | 0.401 |
+| Young ownership + old exit + fertility, no room-gap restriction | `old_retention_w2` | 36.703 | 1.779 | 0.207 | 0.213 | 0.829 | 0.526 | 5.563 | 6.089 | -0.207 |
+| Young ownership + old exit, no fertility/gap restriction | `old_retention_w2` | 38.596 | 1.485 | 0.307 | 0.285 | 0.836 | 0.426 | 5.394 | 5.820 | -0.134 |
+
+The first Wave 3 partial read had only `6,078` finite cases, so it is too early
+to interpret tightly. Its best scalar point was `old_retention_w3` with loss
+`19.319`, TFR `1.905`, young ownership `0.010`, old ownership `0.877`, and
+room gap `1.191`. It did not yet improve the strict or soft joint screens.
+
+Current interpretation: Wave 2's broad search materially increased coverage,
+but it reinforced the same mechanism failure rather than finding a hidden
+joint basin. The model finds old exit and room separation only by emptying
+young ownership, and it finds young ownership plus old exit only with large
+renters and a small or negative owner-renter room gap. Let Wave 3 tight finish
+before deciding whether the next step is a new identified 13-moment
+experimental target system or a written mechanism diagnosis.
