@@ -320,6 +320,21 @@ ownership below `0.88`, young ownership above `0.20`, and room gap above `1.0`.
 The current evidence says the search can find each margin separately, but not
 the joint lifecycle-tenure-space-fertility object.
 
+### 2026-06-19 11:00 EDT Monitor-Only Pulse
+
+Wave 1 was still running cleanly, with replacement tasks beginning in the
+second batch and all visible stderr files at zero bytes. No new wave was
+launched.
+
+The `old_retention` and `young_old_own` scalar bests were unchanged from the
+previous pulse. The useful new movement was in `young_old_roomgap`: among
+candidates with old ownership below `0.85`, the best point improved to loss
+`41.961`, old ownership `0.850`, and room gap `1.819`. The miss remains large:
+young ownership is `0.000`, TFR is only `1.353`, childlessness is `0.356`, and
+the old parent-childless nonhousing wealth gap is negative. This is not yet a
+joint solution; it is another example of improving old exit and room separation
+by emptying young ownership and damaging fertility.
+
 This reinforces the current mechanism read: the model can move each component
 in isolation, but the searched parameter region has not yet produced young
 access, old exit, and owner-renter space separation together.
