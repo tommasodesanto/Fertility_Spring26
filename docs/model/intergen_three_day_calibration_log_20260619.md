@@ -386,6 +386,37 @@ childlessness `0.041`, old nonhousing median wealth `0.229`, and high loss
 Decision unchanged: let Wave 1 finish. The next wave should be designed around
 the joint frontier, not around the scalar best alone.
 
+### 2026-06-19 10:43 EDT Old-Retention Scalar And Frontier Move
+
+The first-batch tasks were still running after about 69 minutes, with tasks
+`9--16` pending behind the `%8` throttle and all visible stderr files still at
+zero bytes. Finite records reached `4,516`, `4,071`, and `4,496` for
+`old_retention`, `young_old_own`, and `young_old_roomgap`.
+
+The `old_retention` target set found a better scalar point:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 15.961 | 1.853 | 0.261 | 0.000 | 0.853 | 1.470 | 2.516 |
+
+It also improved the best low-old-ownership frontier:
+
+| Screen | Loss | Own 25--34 | Old own | Room gap | TFR | Childless | Renter rooms | Owner rooms |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old <= .85` | 20.085 | 0.000 | 0.813 | 1.066 | 1.513 | 0.308 | 4.693 | 5.759 |
+
+The movement is informative but still not a solved fit. The scalar-best point
+now nearly reaches the old-ownership target, but it does so with effectively no
+young ownership. The low-old-ownership frontier similarly lowers old ownership
+while missing fertility and leaving the young-owner pipeline empty. The best
+point with both young ownership above `0.25` and old ownership below `0.85`
+still has a near-zero room gap, and the strict joint screen remains empty.
+
+Decision unchanged: continue Wave 1 rather than launching an overlapping
+search. The next wave should condition more directly on preserving young access
+while forcing old exit and room separation, or it should diagnose why that
+frontier is infeasible in the current mechanism.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
