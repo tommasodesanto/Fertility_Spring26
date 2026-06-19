@@ -264,6 +264,26 @@ This reinforces the current mechanism read: the model can move each component
 in isolation, but the searched parameter region has not yet produced young
 access, old exit, and owner-renter space separation together.
 
+### 2026-06-19 10:25 EDT Frontier Check
+
+The same first-batch tasks were still running after about 51 minutes; second
+batch tasks remained pending behind the `%8` array throttle and stderr files
+were still zero bytes. Finite records reached `3,311`, `2,968`, and `3,272`.
+
+Best scalar points were unchanged. A softer joint screen was also empty:
+
+\[
+\text{old ownership}\le 0.88,\qquad
+\text{young ownership}\ge 0.20,\qquad
+\text{owner-renter room gap}\ge 1.0.
+\]
+
+Decision: do not launch an overlapping wave. Wave 1 remains healthy and has not
+yet reached the second batch. The next useful action is to let the current
+arrays roll forward, then reassess whether the completed frontier calls for a
+longer search on an existing identified target set or a new 13-moment
+diagnostic variant.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
