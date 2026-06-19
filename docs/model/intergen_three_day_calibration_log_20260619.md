@@ -718,3 +718,22 @@ This is a genuine improvement over the previous no-young frontier loss of
 larger owner-renter room gap together. But young ownership remains effectively
 zero, so the central joint failure is unchanged. The missing allocation is
 still young access plus old exit plus owner-renter space separation.
+
+### 2026-06-19 11:53 EDT Room-Gap Scalar Improves, Joint Failure Persists
+
+Wave 1 was still healthy in its second batch, with Wave 2 and Wave 3 pending on
+the intended dependencies. No stderr or Slurm failures were visible.
+
+Finite records reached `27,160` across Wave 1. The `young_old_roomgap` scalar
+best improved from loss `31.956` to `28.854`:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `young_old_roomgap` | 9,348 | 28.854 | 1.686 | 0.280 | 0.037 | 0.963 | 1.711 | 4.175 | 5.886 | 1.830 |
+
+This is a scalar improvement, not a solution to the main mechanism failure.
+The improved point has plausible fertility and a moderate room gap, but old
+ownership is still too high and young ownership is still nearly empty. The
+fixed screens are unchanged: no `joint_core` candidate, no fertility-ok soft
+joint candidate, and the best young-ownership/old-exit candidate still has a
+negative owner-renter room gap.
