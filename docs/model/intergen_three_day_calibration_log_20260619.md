@@ -625,6 +625,26 @@ nonhousing wealth is too low. The missing object is still the joint
 young-access/old-exit/space-separation allocation, not a single isolated
 moment.
 
+### 2026-06-19 11:33 EDT Decomposition Frontier Tightens
+
+Wave 1 was still in its second batch. Wave 2 and Wave 3 remained pending on
+the intended dependencies, and no nonzero stderr files were visible. The scalar
+best points did not move, but one decomposition frontier improved sharply.
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention` | 25.588 | 1.815 | 0.279 | 0.000 | 0.779 | 1.757 | 4.739 | 6.496 | 1.601 |
+| Young ownership + old exit, no room-gap restriction | `young_old_own` | 41.633 | 1.983 | 0.245 | 0.462 | 0.771 | -0.221 | 5.883 | 5.662 | 2.516 |
+
+The first row is a real improvement relative to the previous decomposition
+screen: the model can now jointly hit plausible fertility, low old ownership,
+and meaningful room separation. But it does so with zero young ownership. The
+second row shows the opposite corner: young ownership and low old ownership can
+coexist, but fertility is high and the owner-renter room gap turns negative.
+This is stronger evidence that the missing margin is not merely old exit or
+space separation in isolation; it is preserving the young-owner pipeline while
+maintaining owner-renter space separation.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
