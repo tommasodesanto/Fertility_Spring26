@@ -98,6 +98,32 @@ owner-renter room gap does not by itself fix the lifecycle ownership slope.
 Keep monitoring to distinguish a search-stage artifact from a genuine old
 retention/downsizing mechanism failure.
 
+### 2026-06-19 09:40 EDT Frontier Slice
+
+The arrays were still running normally, but the growing JSONL files made a more
+useful partial frontier possible. The best scalar points were:
+
+| Run | Finite cases | Best partial loss | TFR | Own 25--34 | Old own | Room gap |
+|---|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 680 | 26.297 | 1.722 | 0.046 | 0.961 | 0.333 |
+| `young_old_own` | 605 | 30.401 | 1.872 | 0.039 | 0.959 | 0.854 |
+| `young_old_roomgap` | 630 | 40.182 | 1.959 | 0.213 | 0.955 | 1.405 |
+
+The frontier slices sharpen the mechanism. Low-old-ownership points do exist:
+`old_retention` finds old ownership `0.772`, `young_old_own` finds `0.755`,
+and `young_old_roomgap` finds `0.742`. But those points generally have almost
+zero young ownership, poor fertility, or weak room separation. Requiring
+young ownership above `0.25` and old ownership below `0.85` leaves only a
+handful of high-loss candidates, and the best such candidates either collapse
+the room gap or fertility. No partial run yet has a candidate with owner mean
+rooms at least `6` and renter mean rooms at most `4`.
+
+Current interpretation: the model can mechanically reduce old ownership, but
+not yet while also preserving young access, fertility, and owner-renter space
+separation. That is stronger evidence for a joint mechanism/target tension than
+for a simple weighting failure, though the wave is still too young for a final
+claim.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
