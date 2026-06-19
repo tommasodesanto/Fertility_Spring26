@@ -172,6 +172,23 @@ old ownership `0.001`, TFR `1.372`, and high loss `146.721`. This is evidence
 that room separation can be forced only by leaving the tenure distribution
 economically empty, not yet by a plausible owner-renter allocation.
 
+### 2026-06-19 10:16 EDT Partial Frontier
+
+The first batch of tasks was still running normally after about 42 minutes.
+Scalar-best points remained economically weak, but the constrained frontier
+moved in an informative direction. In the `young_old_roomgap` run, the best
+candidate satisfying old ownership below `0.85` and young ownership above
+`0.25` improved to loss `100.158`, with young ownership `0.435` and old
+ownership `0.778`. That point is not a good fit: TFR is `1.511`,
+childlessness is `0.327`, and the owner-renter room gap is only `0.447`.
+
+Interpretation: the model can now find points with plausible young access and
+lower old retention, but those points erase the owner-renter space separation.
+This is the converse of the high-room-gap frontier, which achieves room
+separation only in near-zero-ownership corners. The live failure is therefore
+the joint interaction between tenure timing and space separation, not just a
+failure to find either margin separately.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
