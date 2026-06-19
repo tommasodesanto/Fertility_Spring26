@@ -806,3 +806,44 @@ preserve old exit and room separation empty the young-owner pipeline; points
 with young ownership and old exit produce large renters and little or no
 owner-renter room separation. Let Wave 2 finish and then compare it with Wave 3
 tight before launching a new experimental target system.
+
+### 2026-06-19 16:22 EDT Wave 2 Soft-Joint Frontier Moves
+
+Wave 2 broad remained healthy. Tasks `1--8` had completed with exit code
+`0:0`; tasks `9--16` were running; tasks `17--24` were pending behind the
+array throttle. Wave 3 tight remained pending on the intended Wave 2
+dependency. No nonzero stderr files were visible.
+
+The aggregate record reached `67,688` finite cases: `33,600` from completed
+Wave 1 and `34,088` partial cases from Wave 2. The scalar best remained
+Wave 2's `old_retention` point at loss `14.197`, still with almost no young
+ownership:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w2` | 14.197 | 1.643 | 0.357 | 0.029 | 0.922 | 1.097 | 4.650 | 5.746 | 1.830 | 0.833 |
+
+Wave 2 did, however, improve the relaxed joint frontier. The best candidate
+with old ownership below `0.88`, young ownership above `0.20`, and an
+owner-renter room gap above `1.0` moved from Wave 1's loss `71.021` to
+Wave 2's loss `51.180`:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `young_old_own_w2` | 51.180 | 2.559 | 0.100 | 0.201 | 0.852 | 1.019 | 5.194 | 6.213 | 3.432 | -0.449 |
+
+This is useful frontier information, not a satisfactory fit. The candidate is
+just inside the soft ownership/room screen, but it generates too many births,
+too little childlessness, renters that are far too large, and a wrong-signed
+old parent-childless nonhousing-wealth gap. The stricter joint screen remains
+empty:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The earlier decomposition also remains: fertility plus old exit plus room
+separation still comes with essentially zero young ownership, while young
+ownership plus old exit and fertility still collapses the room gap.
