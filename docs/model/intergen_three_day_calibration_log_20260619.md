@@ -563,6 +563,46 @@ the young-owner pipeline and missing fertility badly. No current candidate
 combines young ownership, old exit, room separation, and fertility in the
 targeted range.
 
+### 2026-06-19 11:25 EDT Three-Day Chain Setup
+
+Wave 1 was still healthy when the next chain was queued. Remaining Wave 1 tasks
+were running with zero visible stderr failures and no nonzero Slurm exit codes.
+The partial finite-record counts were `7,274`, `6,869`, and `7,400` for
+`old_retention`, `young_old_own`, and `young_old_roomgap`, respectively.
+
+Current scalar-best points:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 7,274 | 14.778 | 1.786 | 0.254 | 0.023 | 0.936 | 1.105 | 4.515 | 5.620 | 2.516 |
+| `young_old_own` | 6,869 | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 4.957 | 5.495 | 2.516 |
+| `young_old_roomgap` | 7,400 | 31.956 | 1.598 | 0.316 | 0.004 | 0.952 | 1.760 | 3.949 | 5.709 | 1.830 |
+
+Current frontier screens:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Old ownership `<=0.85` | `old_retention` | 18.949 | 1.900 | 0.196 | 0.008 | 0.753 | 0.977 | 4.742 | 5.719 |
+| Old `<=0.85`, young `>=0.25` | `old_retention` | 47.253 | 0.926 | 0.541 | 0.316 | 0.847 | 0.070 | 5.264 | 5.334 |
+| Room gap `>=2` | `young_old_roomgap` | 51.042 | 1.603 | 0.329 | 0.000 | 0.651 | 2.123 | 4.702 | 6.825 |
+| Owner rooms `>=6`, renter rooms `<=4` | `young_old_roomgap` | 146.721 | 1.372 | 0.349 | 0.000 | 0.001 | 2.264 | 3.822 | 6.087 |
+| Joint softer: old `<=0.88`, young `>=0.20`, gap `>=1.0` | `young_old_roomgap` | 71.021 | 2.850 | 0.041 | 0.249 | 0.676 | 1.100 | 4.474 | 5.574 |
+
+Decision: do not change the repository model or target code. Queue two
+dependent follow-up waves that preserve the same 13-moment identified target
+systems but vary differential-evolution search pressure.
+
+| Wave | Slurm jobs | Dependency | Target sets | Search pressure |
+|---|---|---|---|---|
+| Wave 2 broad | `11146362`, `11146363`, `11146364` | after Wave 1 jobs `11136888`, `11136889`, `11136890` | old retention, young/old ownership, young/old/room-gap | 24 tasks each, `%8`, `pop_size=40`, mutation `1.05`, crossover `0.80`, 1,100 requested evals/task, 115 minute budget |
+| Wave 3 tight | `11146365`, `11146366`, `11146367` | after Wave 2 jobs | same three target sets | 24 tasks each, `%8`, `pop_size=24`, mutation `0.55`, crossover `0.95`, 1,100 requested evals/task, 115 minute budget |
+
+The purpose is to separate search-depth and search-geometry failures from an
+economic impossibility result. If these waves still cannot produce even a
+relaxed joint candidate with young ownership, old exit, and room separation,
+the next move should be either a scratch-only experimental 13-moment target
+variant or a written mechanism diagnosis, not another blind scalar-loss run.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
