@@ -12,6 +12,37 @@ Date started: 2026-06-19
   underidentified.
 - Record large misses as mechanism evidence, not just search failures.
 
+## Three-Day Campaign Plan
+
+The campaign is a bounded diagnostic search, not a production calibration. Each
+active SMM specification must preserve at least one informative target for each
+of the 13 varied internal parameters:
+
+\[
+\{\beta,\alpha,b_0,\bar c_0,\bar c_n,\bar h_0,\bar h_{\mathrm{jump}},
+\bar h_n,\psi_{\mathrm{child}},\kappa_n,\chi,\theta_0,\theta_n\}.
+\]
+
+The monitor should use the current wave first, then decide whether the next
+wave should be a longer search on an existing identified target set or a new
+13-moment diagnostic variant. A moment can be moved only if the log records
+which parameter block it was identifying and what replacement moment carries
+that identification. Do not treat frontier slices with fewer than 13 hard
+moments as calibrated SMM specifications.
+
+The leading mechanism question is whether the one-market model can jointly
+deliver:
+
+1. young ownership near the ACS/PUMS target,
+2. old ownership below the current high-retention basin,
+3. owner-renter room separation near the ACS room gap,
+4. fertility and childlessness near their completed-fertility targets, and
+5. old-age nonhousing wealth and parent-childless old-wealth gaps near PSID.
+
+If a wave cannot improve that joint frontier, record why in economic terms:
+search failure, target-measurement mismatch, weak identification, or a missing
+model mechanism.
+
 ## Overnight DUE-Lifecycle Suite
 
 Scratch root:
@@ -188,6 +219,30 @@ This is the converse of the high-room-gap frontier, which achieves room
 separation only in near-zero-ownership corners. The live failure is therefore
 the joint interaction between tenure timing and space separation, not just a
 failure to find either margin separately.
+
+### 2026-06-19 10:20 EDT Partial Frontier
+
+The first batch of tasks was still running after about 46 minutes; tasks
+`9--16` remained pending behind the array throttle. No Slurm failure was visible
+in `squeue` or `sacct`.
+
+| Run | Finite cases | Best partial loss | TFR | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 2,984 | 17.600 | 1.995 | 0.011 | 0.960 | 1.073 | 2.059 |
+| `young_old_own` | 2,662 | 26.373 | 1.846 | 0.024 | 0.969 | 1.084 | 1.601 |
+| `young_old_roomgap` | 2,939 | 38.021 | 1.480 | 0.009 | 0.953 | 1.683 | 1.830 |
+
+The best constrained frontier points are still economically far from target.
+The best `old_retention` point with old ownership below `0.85` has old
+ownership `0.818` and room gap `1.531`, but young ownership is zero and
+childlessness is `0.348`. The best point with both old ownership below `0.85`
+and young ownership above `0.25` remains high loss: in `young_old_roomgap`,
+young ownership is `0.435` and old ownership is `0.778`, but the room gap is
+only `0.447`, TFR is `1.511`, and childlessness is `0.327`.
+
+Current decision: let Wave 1 complete before launching another array. The next
+wave should target this joint frontier directly rather than simply increase
+scalar search budget on a generic objective.
 
 ## Failure Modes To Track
 
