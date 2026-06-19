@@ -508,6 +508,44 @@ search. The next wave should condition more directly on preserving young access
 while forcing old exit and room separation, or it should diagnose why that
 frontier is infeasible in the current mechanism.
 
+### 2026-06-19 11:12 EDT Second-Batch Monitor
+
+Wave 1 remained healthy. The first eight `old_retention` tasks completed with
+exit code `0:0`; its second batch was running. The `young_old_own` and
+`young_old_roomgap` arrays still had late first-batch tasks running and a few
+second-batch tasks pending behind the `%8` throttle. All visible stderr files
+were still zero bytes.
+
+The current scalar best by each objective was:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 14.778 | 1.786 | 0.254 | 0.023 | 0.936 | 1.105 | 2.516 |
+| `young_old_own` | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 2.516 |
+| `young_old_roomgap` | 31.956 | 1.598 | 0.316 | 0.004 | 0.952 | 1.760 | 1.830 |
+
+The `young_old_roomgap` scalar fit improved from the earlier `34.919` point,
+mostly by moving the renter room level closer to target and raising the room
+gap. It is still not an economic solution: young ownership is essentially zero,
+old ownership is still far above target, and childlessness is too high.
+
+The constrained frontier still shows the same mechanism tension. Points with
+low old ownership exist; points with large owner-renter room gaps exist; and
+points with positive young ownership and low old ownership exist. But no run
+yet has a candidate satisfying the strict joint screen
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5,
+\]
+
+and no candidate satisfies the softer fertility-ok joint screen. The only
+softer joint candidate remains high-fertility and low-childlessness, with
+second-child housing growth negative. Do not launch an overlapping wave while
+Wave 1 is healthy; the next wave should start only after the current arrays
+clear.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
