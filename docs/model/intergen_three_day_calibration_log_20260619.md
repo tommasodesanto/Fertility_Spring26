@@ -603,6 +603,28 @@ relaxed joint candidate with young ownership, old exit, and room separation,
 the next move should be either a scratch-only experimental 13-moment target
 variant or a written mechanism diagnosis, not another blind scalar-loss run.
 
+### 2026-06-19 11:29 EDT Decomposition Screens
+
+Wave 1 was still running normally, with all visible stderr files at zero bytes.
+Wave 2 and Wave 3 remained pending behind the intended Slurm dependencies.
+Finite-record counts rose to `7,544`, `7,148`, and `7,691`.
+
+The scalar bests and strict joint screens were essentially unchanged. Two
+additional decomposition screens are more informative:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `young_old_roomgap` | 43.148 | 1.758 | 0.275 | 0.000 | 0.730 | 1.553 | 4.812 | 6.366 | 2.288 |
+| Young ownership + old exit + fertility, no room-gap restriction | `old_retention` | 43.466 | 1.605 | 0.284 | 0.233 | 0.813 | 0.587 | 5.516 | 6.103 | 0.458 |
+
+This separates the failure into two corners. The model can combine fertility,
+low old ownership, and some owner-renter room separation, but only by nearly
+emptying young ownership. It can also combine young ownership, low old
+ownership, and fertility, but the owner-renter room gap collapses and old
+nonhousing wealth is too low. The missing object is still the joint
+young-access/old-exit/space-separation allocation, not a single isolated
+moment.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
