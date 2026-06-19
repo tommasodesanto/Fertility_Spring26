@@ -284,6 +284,24 @@ arrays roll forward, then reassess whether the completed frontier calls for a
 longer search on an existing identified target set or a new 13-moment
 diagnostic variant.
 
+### 2026-06-19 10:27 EDT Partial Improvement
+
+The first-batch tasks were still healthy after about 53 minutes. Finite records
+reached `3,431`, `3,073`, and `3,391`. The `young_old_own` target set found a
+new scalar-best point:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `young_old_own` | 22.653 | 1.835 | 0.269 | 0.136 | 0.900 | 0.538 | 2.516 |
+
+This is a genuine improvement in the tenure-timing direction relative to the
+previous `young_old_own` scalar best, but it does not solve the joint problem.
+Old ownership remains too high, young ownership is still below the ACS target
+of about `0.341`, and owner-renter room separation is far below the ACS gap of
+about `2.419`. The relaxed and softer joint screens remain empty.
+
+Decision unchanged: do not launch overlapping jobs. Let Wave 1 finish.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
