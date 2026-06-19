@@ -293,6 +293,33 @@ credible fertility and old-wealth moments. The immediate next action is to let
 Wave 1 finish and then launch a bounded Wave 2 that targets the joint frontier,
 not a blind scalar-loss continuation.
 
+### 2026-06-19 10:58 EDT Pulse
+
+Wave 1 remained healthy. Several first-batch tasks had completed and replacement
+tasks had started; visible stderr files were still zero bytes. Because the
+arrays were still running, no Wave 2 was launched.
+
+The `old_retention` scalar best improved to loss `14.778`, with TFR `1.786`,
+childlessness `0.254`, aggregate ownership `0.510`, young ownership `0.023`,
+old ownership `0.936`, and owner-renter room gap `1.105`. This is a better
+scalar point but not a better economic point: young ownership remains nearly
+empty, and old ownership remains too high.
+
+The constrained frontier was essentially unchanged:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Old ownership `<=0.85` | `old_retention` | 18.949 | 1.900 | 0.196 | 0.008 | 0.753 | 0.977 | 4.742 | 5.719 |
+| Old `<=0.85`, young `>=0.25` | `old_retention` | 47.253 | 0.926 | 0.541 | 0.316 | 0.847 | 0.070 | 5.264 | 5.334 |
+| Room gap `>=2` | `young_old_roomgap` | 51.042 | 1.603 | 0.329 | 0.000 | 0.651 | 2.123 | 4.702 | 6.825 |
+| Joint softer: old `<=0.88`, young `>=0.20`, gap `>=1.0` | `young_old_roomgap` | 71.021 | 2.850 | 0.041 | 0.249 | 0.676 | 1.100 | 4.474 | 5.574 |
+
+Adding a fertility screen makes the tension sharper: there is still no
+candidate satisfying TFR in `[1.55,1.90]`, childlessness below `0.28`, old
+ownership below `0.88`, young ownership above `0.20`, and room gap above `1.0`.
+The current evidence says the search can find each margin separately, but not
+the joint lifecycle-tenure-space-fertility object.
+
 This reinforces the current mechanism read: the model can move each component
 in isolation, but the searched parameter region has not yet produced young
 access, old exit, and owner-renter space separation together.
