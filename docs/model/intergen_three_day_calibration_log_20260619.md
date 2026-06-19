@@ -151,6 +151,27 @@ whether later DE generations can repair this, or whether the next wave needs a
 diagnostic that conditions on young access while varying old-retention
 mechanisms.
 
+### 2026-06-19 10:01 EDT Partial Frontier
+
+The first batch of tasks was still active after about 28 minutes, with
+tasks `9--16` pending behind the `%8` array throttle. All arrays were healthy
+in `squeue`/`sacct`.
+
+| Run | Finite cases | Best partial loss | TFR | Own 25--34 | Old own | Room gap | Old NH median |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention` | 1,817 | 17.600 | 1.995 | 0.011 | 0.960 | 1.073 | 2.059 |
+| `young_old_own` | 1,623 | 26.373 | 1.846 | 0.024 | 0.969 | 1.084 | 1.601 |
+| `young_old_roomgap` | 1,767 | 40.182 | 1.959 | 0.213 | 0.955 | 1.405 | 0.915 |
+
+The economically useful frontier did not improve in the scalar-best points.
+The best `old_retention` point now fits some fertility and old-wealth objects
+better, but it still has almost no young ownership. The room-gap run found one
+candidate with owner mean rooms above `6` and renter mean rooms below `4`
+(`6.087` versus `3.822`), but that candidate has young ownership `0.000`,
+old ownership `0.001`, TFR `1.372`, and high loss `146.721`. This is evidence
+that room separation can be forced only by leaving the tenure distribution
+economically empty, not yet by a plausible owner-renter allocation.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
