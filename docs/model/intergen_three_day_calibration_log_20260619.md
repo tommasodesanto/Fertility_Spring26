@@ -340,6 +340,27 @@ only `0.447`. The joint and softer joint screens remain empty.
 Decision unchanged: no overlapping launch. Wait for the second batch before
 designing the next wave.
 
+### 2026-06-19 10:33 EDT Low-Old-Ownership Frontier Improvement
+
+The first-batch tasks were still running after about 60 minutes; the second
+batch remained pending behind the array throttle and stderr files were still
+zero bytes. The `old_retention` target set improved its best low-old-ownership
+frontier point:
+
+| Screen | Loss | Own 25--34 | Old own | Room gap | TFR | Childless | Renter rooms | Owner rooms |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old <= .85` | 20.937 | 0.000 | 0.843 | 0.945 | 1.931 | 0.238 | 4.953 | 5.898 |
+
+This is useful but not enough. It shows the search can lower old ownership
+without destroying fertility, but it does so by eliminating young ownership and
+with a room gap still far below the ACS target. The best point with both young
+ownership above `0.25` and old ownership below `0.85` still has a near-zero
+room gap. The live failure remains the three-way interaction among young access,
+old exit, and owner-renter space separation.
+
+Decision unchanged: no overlapping launch while the first batch is still
+healthy.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
