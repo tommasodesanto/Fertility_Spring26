@@ -767,3 +767,42 @@ while keeping some young ownership, but renters are too large and the
 owner-renter room gap remains far below the ACS gap. The missing object remains
 the joint allocation with young access, old exit, and owner-renter space
 separation.
+
+### 2026-06-19 15:21 EDT Wave 1 Complete, Wave 2 Broad Running
+
+Wave 1 completed cleanly: all `48` array tasks across the old-retention,
+young/old-ownership, and young/old/room-gap target sets exited with code `0:0`.
+Wave 2 broad was running its second batch of tasks, with tasks `17--24` pending
+behind the array throttle. Wave 3 tight remained pending on the intended Wave 2
+dependency. No nonzero stderr files were visible.
+
+The complete Wave 1 record has `33,600` finite cases. Wave 2 already had
+`23,046` partial finite cases. The best scalar point moved from Wave 1's
+`14.778` to a partial Wave 2 loss of `14.197`, but the economic miss did not
+change:
+
+| Run | Cases | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w2` | 7,707 | 14.197 | 1.643 | 0.357 | 0.029 | 0.922 | 1.097 | 4.650 | 5.746 | 1.830 | 0.833 |
+
+This is a scalar improvement, not a better calibration. It lowers the loss by
+raising the parent-childless old nonhousing wealth gap and keeping second-child
+housing growth close to target, but it leaves young ownership almost empty,
+old ownership too high, childlessness too high, and the owner-renter room gap
+far below the ACS target.
+
+The constrained frontier remained split:
+
+| Screen | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Joint core: old `<=0.85`, young `>=0.25`, gap `>=1.5` | none | -- | -- | -- | -- | -- | -- | -- | -- |
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w1` | 18.472 | 1.798 | 0.286 | 0.000 | 0.831 | 1.904 | 4.682 | 6.586 |
+| Young ownership + old exit + fertility, no room-gap restriction | `young_old_own_w1` | 35.068 | 1.695 | 0.260 | 0.228 | 0.727 | 0.417 | 5.657 | 6.074 |
+| Wave 2 young + old, no fertility/gap restriction | `old_retention_w2` | 38.596 | 1.485 | 0.307 | 0.285 | 0.836 | 0.426 | 5.394 | 5.820 |
+
+Current interpretation: the broader Wave 2 search is not merely stuck at the
+Wave 1 scalar point, but the frontier geometry is unchanged. Points that
+preserve old exit and room separation empty the young-owner pipeline; points
+with young ownership and old exit produce large renters and little or no
+owner-renter room separation. Let Wave 2 finish and then compare it with Wave 3
+tight before launching a new experimental target system.
