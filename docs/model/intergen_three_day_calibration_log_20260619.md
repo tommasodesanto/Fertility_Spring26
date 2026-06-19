@@ -79,6 +79,25 @@ All three arrays started and produced finite initial losses. Each uses
 `n_house=5`, `max_iter_eq=3`, `700` max evaluations per task, and a `115`
 minute task budget.
 
+### 2026-06-19 09:38 EDT Partial Readout
+
+The three arrays were running normally at the first hourly check: tasks `1--8`
+active for each array and tasks `9--16` pending behind the `%8` throttle. This
+is an early partial readout, mostly initial population records, so it should not
+be interpreted as the final frontier.
+
+| Run | Finite cases | Best partial loss | Key warning |
+|---|---:|---:|---|
+| `old_retention` | 268 | 27.277 | Old ownership still `0.965` against target `0.764` |
+| `young_old_own` | 242 | 30.401 | Young ownership `0.039` and old ownership `0.959` both miss badly |
+| `young_old_roomgap` | 256 | 40.182 | Room gap improves to `1.405`, but target is `2.419` and old ownership remains `0.955` |
+
+The early mechanism signal is the same as the overnight readout: ownership
+among the old remains very high even when directly targeted, and increasing the
+owner-renter room gap does not by itself fix the lifecycle ownership slope.
+Keep monitoring to distinguish a search-stage artifact from a genuine old
+retention/downsizing mechanism failure.
+
 ## Failure Modes To Track
 
 1. Old ownership remains too high even when \(\theta_0\) is low or old
