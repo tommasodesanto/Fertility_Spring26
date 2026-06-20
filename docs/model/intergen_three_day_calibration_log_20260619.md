@@ -970,3 +970,56 @@ Interpretation: Wave 3 is usefully lowering the objective, so it should be
 left running. But the new best point does not change the mechanism diagnosis:
 the current target geometry still has not found a candidate with old exit,
 young ownership, and owner-renter room separation at the same time.
+
+### 2026-06-19 22:25 EDT Wave 3 Partial Frontier Softens, Not Solved
+
+Wave 3 is still running normally. Tasks `9--16` are active at roughly
+`1:37` elapsed, tasks `17--24` are still queued behind the array throttle, and
+no nonzero stderr files are visible.
+
+The partial record has grown to `38,813` finite Wave 3 cases and `134,683`
+finite cases across Waves 1--3. The scalar best improved again:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 11.717 | 1.908 | 0.227 | 0.004 | 0.912 | 1.363 | 4.482 | 5.845 | 2.517 | 0.327 |
+
+The new scalar best is numerically close to the earlier reference diagnostic
+loss range, but it is still an ownership-corner point: young ownership is nearly
+zero and old-age ownership remains high.
+
+One new soft joint candidate appears under the looser screen
+\[
+1.55\le \mathrm{TFR}\le 1.9,\quad
+\mathrm{childless}\le 0.28,\quad
+\mathrm{old\ own}\le 0.88,\quad
+\mathrm{own}_{25--34}\ge 0.20,\quad
+\mathrm{room\ gap}\ge 1.0.
+\]
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 24.434 | 1.750 | 0.247 | 0.214 | 0.869 | 1.036 | 4.482 | 5.518 | 2.974 | -0.008 |
+
+This is progress relative to the earlier soft frontier, but it is not a
+solution. The strict joint screen remains empty:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The main tradeoff remains:
+
+| Screen | Best Wave 3 run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w3` | 15.014 | 1.697 | 0.280 | 0.000 | 0.842 | 1.656 | 4.447 | 6.102 | 0.107 |
+| Young ownership + old exit + fertility, no room-gap restriction | `young_old_own_w3` | 26.971 | 1.630 | 0.288 | 0.207 | 0.838 | 0.796 | 4.793 | 5.589 | 0.031 |
+| Young ownership + old exit, no fertility/gap restriction | `old_retention_w3` | 25.450 | 1.947 | 0.213 | 0.326 | 0.849 | 0.396 | 5.253 | 5.650 | 0.082 |
+
+Interpretation: Wave 3 is not merely repeating the first batch; it has found a
+softer compromise. But the compromise still gets there by compressing the
+owner-renter room gap and producing an almost zero parent-childless old wealth
+gap. Continue the current arrays; do not launch a new diagnostic wave while
+tasks are still active.
