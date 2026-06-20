@@ -931,3 +931,42 @@ does so by staying in the same corner: poor young access, high old retention,
 and insufficient owner-renter space separation. This is useful evidence
 against a pure search-depth explanation. Continue Wave 3 before launching a
 new target variant.
+
+### 2026-06-19 21:27 EDT Wave 3 Continues; Scalar Best Moves Again
+
+Wave 3 remains healthy. Tasks `1--8` have completed for each of the three tight
+target sets, tasks `9--16` are running, and tasks `17--24` are queued behind the
+array throttle. Completed tasks report exit code `0:0`, and no nonzero stderr
+files are visible.
+
+The partial Wave 3 record now contains `28,041` finite cases. The scalar best
+moved again:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 12.197 | 1.846 | 0.268 | 0.030 | 0.898 | 1.349 | 4.451 | 5.800 | 2.288 | 0.362 |
+
+This improves the scalar score but still fails the economic joint allocation
+screen. Young ownership remains essentially absent, old-age ownership remains
+too high, and the owner-renter room gap is below the target.
+
+The strict joint screen remains empty:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The current Wave 3 frontier still splits into the same two corners:
+
+| Screen | Best Wave 3 run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w3` | 18.086 | 1.828 | 0.259 | 0.000 | 0.849 | 1.582 | 4.760 | 6.342 | 0.205 |
+| Young ownership + old exit + fertility, no room-gap restriction | `old_retention_w3` | 38.014 | 1.705 | 0.264 | 0.346 | 0.824 | 0.442 | 5.035 | 5.477 | -0.362 |
+| Young ownership + old exit, no fertility/gap restriction | `old_retention_w3` | 28.682 | 1.512 | 0.359 | 0.543 | 0.848 | 0.174 | 5.294 | 5.468 | 0.435 |
+
+Interpretation: Wave 3 is usefully lowering the objective, so it should be
+left running. But the new best point does not change the mechanism diagnosis:
+the current target geometry still has not found a candidate with old exit,
+young ownership, and owner-renter room separation at the same time.
