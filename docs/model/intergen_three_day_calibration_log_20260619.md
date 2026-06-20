@@ -890,3 +890,44 @@ young ownership, and it finds young ownership plus old exit only with large
 renters and a small or negative owner-renter room gap. Let Wave 3 tight finish
 before deciding whether the next step is a new identified 13-moment
 experimental target system or a written mechanism diagnosis.
+
+### 2026-06-19 20:25 EDT Wave 3 Scalar Best Improves, Frontier Unchanged
+
+Wave 3 tight was running normally in its first batch. Tasks `1--8` were active
+for each of the three target sets, with tasks `9--24` pending behind the array
+throttle. No nonzero stderr files were visible.
+
+The partial Wave 3 record reached `16,828` finite cases. It produced a new
+global scalar best, but not an economically better joint allocation:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 12.795 | 1.744 | 0.282 | 0.019 | 0.919 | 1.391 | 4.498 | 5.889 | 2.288 | 0.381 |
+
+This point improves the scalar loss because it balances several targeted
+margins better than the prior scalar best, including old median nonhousing
+wealth and the room gap. But it leaves young ownership essentially empty, old
+ownership too high, childlessness too high, and the owner-renter room gap well
+below the ACS target.
+
+The strict joint screen is still empty:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The partial Wave 3 decompositions continue to show the same tradeoff:
+
+| Screen | Best Wave 3 run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w3` | 22.189 | 1.873 | 0.255 | 0.001 | 0.846 | 1.798 | 4.493 | 6.290 | 0.362 |
+| Young ownership + old exit + fertility, no room-gap restriction | `old_retention_w3` | 42.748 | 1.780 | 0.241 | 0.546 | 0.827 | -0.052 | 5.404 | 5.352 | 0.121 |
+| Young ownership + old exit, no fertility/gap restriction | `old_retention_w3` | 28.682 | 1.512 | 0.359 | 0.543 | 0.848 | 0.174 | 5.294 | 5.468 | 0.435 |
+
+Interpretation: the tight search can lower the scalar objective, but so far it
+does so by staying in the same corner: poor young access, high old retention,
+and insufficient owner-renter space separation. This is useful evidence
+against a pure search-depth explanation. Continue Wave 3 before launching a
+new target variant.
