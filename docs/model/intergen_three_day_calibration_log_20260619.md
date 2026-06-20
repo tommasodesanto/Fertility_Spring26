@@ -1023,3 +1023,48 @@ softer compromise. But the compromise still gets there by compressing the
 owner-renter room gap and producing an almost zero parent-childless old wealth
 gap. Continue the current arrays; do not launch a new diagnostic wave while
 tasks are still active.
+
+### 2026-06-19 23:25 EDT Wave 3 Final Batch Running; Strict Screen Still Empty
+
+Wave 3 is in its final batch. Tasks `1--16` have completed for each array with
+exit code `0:0`; tasks `17--24` are running at roughly `42` minutes elapsed.
+No nonzero stderr files are visible.
+
+The partial record has reached `49,559` finite Wave 3 cases and `145,429`
+finite cases across Waves 1--3. The scalar best is now close to the earlier
+reference diagnostic range:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 11.578 | 1.736 | 0.287 | 0.006 | 0.908 | 1.389 | 4.430 | 5.819 | 2.059 | 0.168 |
+
+This is a better scalar score, but it remains an ownership-corner point: young
+ownership is essentially zero, old-age ownership is too high, and the
+owner-renter room gap is still below the empirical gap.
+
+The strict joint screen remains empty:
+
+\[
+\text{old ownership}\le 0.85,\qquad
+\text{young ownership}\ge 0.25,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The soft joint candidate from the previous pulse still exists, but no better
+soft candidate has replaced it. It has TFR `1.750`, childlessness `0.247`, young
+ownership `0.214`, old ownership `0.869`, room gap `1.036`, and old
+parent-childless nonhousing wealth gap `-0.008`.
+
+The partial decomposition remains:
+
+| Screen | Best Wave 3 run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Fertility + old exit + room gap, no young-ownership restriction | `old_retention_w3` | 15.014 | 1.697 | 0.280 | 0.000 | 0.842 | 1.656 | 4.447 | 6.102 | 0.107 |
+| Young ownership + old exit + fertility, no room-gap restriction | `young_old_own_w3` | 26.971 | 1.630 | 0.288 | 0.207 | 0.838 | 0.796 | 4.793 | 5.589 | 0.031 |
+| Young ownership + old exit, no fertility/gap restriction | `old_retention_w3` | 25.450 | 1.947 | 0.213 | 0.326 | 0.849 | 0.396 | 5.253 | 5.650 | 0.082 |
+
+Interpretation: the search is still productive in scalar terms, but it is not
+yet weakening the core mechanism failure. The current model/target geometry can
+approach the scalar benchmark by giving up young ownership, or it can get young
+ownership plus old exit by compressing the owner-renter room gap. Let the final
+Wave 3 batch complete before designing a next bounded diagnostic wave.
