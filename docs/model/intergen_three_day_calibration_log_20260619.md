@@ -1068,3 +1068,67 @@ yet weakening the core mechanism failure. The current model/target geometry can
 approach the scalar benchmark by giving up young ownership, or it can get young
 ownership plus old exit by compressing the owner-renter room gap. Let the final
 Wave 3 batch complete before designing a next bounded diagnostic wave.
+
+### 2026-06-21 Final Wave 1--3 Readout After Auth Recovery
+
+Torch access was restored on June 21. All nine Wave 1--3 arrays completed with
+Slurm exit code `0:0`, and all visible stderr files for jobs `11136888`,
+`11136889`, `11136890`, `11146362`, `11146363`, `11146364`, `11146365`,
+`11146366`, and `11146367` were zero bytes. The completed campaign produced
+`158,405` finite candidate records.
+
+Finite cases by run:
+
+| Run | Cases |
+|---|---:|
+| `old_retention_w1` | 11,200 |
+| `young_old_own_w1` | 11,200 |
+| `young_old_roomgap_w1` | 11,200 |
+| `old_retention_w2` | 20,662 |
+| `young_old_own_w2` | 20,348 |
+| `young_old_roomgap_w2` | 21,260 |
+| `old_retention_w3` | 20,979 |
+| `young_old_own_w3` | 20,624 |
+| `young_old_roomgap_w3` | 20,932 |
+
+The final scalar best is the same point seen in the partial final-batch pulse:
+
+| Run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `old_retention_w3` | 11.578 | 1.736 | 0.287 | 0.006 | 0.908 | 1.389 | 4.430 | 5.819 | 2.059 | 0.168 |
+
+This is not an economic solution. It gets a good scalar score by nearly
+emptying the young-owner pipeline. The completed strict joint screen remains
+empty:
+
+\[
+\text{own}_{25--34}\ge 0.25,\qquad
+\text{old ownership}\le 0.85,\qquad
+\text{owner-renter room gap}\ge 1.5.
+\]
+
+The best completed frontier screens are:
+
+| Screen | Count | Best run | Loss | TFR | Childless | Own 25--34 | Old own | Room gap | Renter rooms | Owner rooms | Old NH med | Old NH gap |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Old ownership `<=0.85` | 42,564 | `old_retention_w3` | 14.135 | 1.688 | 0.285 | 0.055 | 0.845 | 1.309 | 4.622 | 5.931 | 2.288 | -0.072 |
+| Young `>=0.25`, old `<=0.85` | 509 | `old_retention_w3` | 25.450 | 1.947 | 0.213 | 0.326 | 0.849 | 0.396 | 5.253 | 5.650 | 2.745 | 0.082 |
+| Soft joint: young `>=0.20`, old `<=0.88`, gap `>=1.0` | 8 | `old_retention_w3` | 24.434 | 1.750 | 0.247 | 0.214 | 0.869 | 1.036 | 4.482 | 5.518 | 2.974 | -0.008 |
+| Fertility-ok soft joint | 3 | `old_retention_w3` | 24.434 | 1.750 | 0.247 | 0.214 | 0.869 | 1.036 | 4.482 | 5.518 | 2.974 | -0.008 |
+| Fertility + old exit + room gap, no young restriction | 1,794 | `old_retention_w3` | 14.609 | 1.880 | 0.241 | 0.001 | 0.874 | 1.579 | 4.485 | 6.064 | 2.517 | 0.198 |
+| Young ownership + old exit + fertility, no room-gap restriction | 297 | `young_old_own_w3` | 16.522 | 1.888 | 0.245 | 0.223 | 0.867 | 0.807 | 4.847 | 5.654 | 2.288 | 0.299 |
+| Young ownership + room gap + fertility, no old restriction | 645 | `young_old_own_w3` | 24.339 | 1.693 | 0.271 | 0.209 | 0.946 | 1.045 | 4.289 | 5.334 | 2.059 | 0.305 |
+| Room gap `>=2` | 4,576 | `old_retention_w3` | 13.673 | 1.808 | 0.300 | 0.000 | 0.879 | 2.015 | 4.252 | 6.267 | 2.517 | 0.350 |
+
+Final mechanism read: the completed Wave 1--3 campaign does not solve the
+joint target system. The model can generate old exit plus room separation, but
+then young ownership is essentially zero. It can generate young ownership plus
+old exit and tolerable fertility, but then the owner-renter room gap collapses.
+It can generate young ownership plus a positive room gap and tolerable
+fertility, but then old ownership remains too high. The soft joint candidates
+are real progress, but they still have a room gap near one room rather than the
+ACS target gap and essentially no parent-childless old nonhousing wealth gap.
+
+Do not interpret this as permission to drop targets. Any formal next target
+revision must preserve identification: the current evidence says which
+moments/blocks are in tension, not that they can be removed.
