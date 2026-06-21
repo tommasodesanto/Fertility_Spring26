@@ -1132,3 +1132,36 @@ ACS target gap and essentially no parent-childless old nonhousing wealth gap.
 Do not interpret this as permission to drop targets. Any formal next target
 revision must preserve identification: the current evidence says which
 moments/blocks are in tension, not that they can be removed.
+
+### 2026-06-21 Frontier Jacobian Audit Launched
+
+After the completed Wave 1--3 frontier showed persistent three-way tension, a
+bounded local identification audit was launched on Torch. This is not a new
+calibration search: it holds the 13-parameter vector fixed by target-set point
+and computes finite-difference derivatives of the active target moments around
+selected frontier candidates.
+
+The selected points are stored under
+`/scratch/td2248/projects/Fertility_Spring26_20260617_fast/code/cluster/audit_points_20260621_frontier/`.
+They cover the scalar old-retention best, the soft joint compromise, the old
+exit plus room-gap/no-young-ownership corner, the young-ownership plus old-exit
+/no-room-gap corner, the young-ownership plus room-gap/no-old-exit corner, and
+the room-gap target set's scalar best.
+
+Six one-point Jacobian jobs were submitted, each with `J=16`, `Nb=60`,
+`income_states=5`, `n_house=5`, `max_iter_eq=3`, relative step `0.01`, and
+27 solves per point (`1+2*13`). The total audit is 162 solves, parallelized
+across independent `cpu_short` jobs:
+
+| Job | Point | Target set |
+|---:|---|---|
+| `11384924` | `scalar_best_old_retention_w3` | `candidate_replacement_old_retention_v1` |
+| `11384925` | `soft_joint_old_retention_w3` | `candidate_replacement_old_retention_v1` |
+| `11384926` | `old_gap_no_young_old_retention_w3` | `candidate_replacement_old_retention_v1` |
+| `11384927` | `young_old_no_gap_young_old_own_w3` | `candidate_replacement_young_old_own_v1` |
+| `11384928` | `young_gap_no_old_young_old_own_w3` | `candidate_replacement_young_old_own_v1` |
+| `11384929` | `roomgap_scalar_young_old_roomgap_w3` | `candidate_replacement_young_old_roomgap_v1` |
+
+Initial queue check: all six jobs were running, and all six Slurm stderr files
+were zero bytes. Outputs will be written under
+`/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_frontier_jacobian_20260621_*`.
