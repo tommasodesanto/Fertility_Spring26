@@ -1165,3 +1165,48 @@ across independent `cpu_short` jobs:
 Initial queue check: all six jobs were running, and all six Slurm stderr files
 were zero bytes. Outputs will be written under
 `/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_frontier_jacobian_20260621_*`.
+
+### 2026-06-22 Frontier Jacobian Audit Completion
+
+All six frontier Jacobian jobs completed on Torch with Slurm exit code `0:0`;
+all six stderr files were zero bytes. Runtime was short, between about three
+and five minutes per one-point job. The outputs are under
+`/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_frontier_jacobian_20260621_*`.
+
+The local rank result is encouraging mechanically: all six selected frontier
+points have scaled rank `13` for the 13-parameter internal vector. Condition
+numbers range from about `494` at the scalar old-retention best to about
+`2,517` at the old-exit plus room-gap/no-young-ownership point:
+
+| Point | Loss | Rank | Condition | TFR | Childless | Young own | Old own | Room gap | Old NH med | Old NH gap |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `scalar_best_old_retention_w3` | 11.578 | 13 | 494 | 1.736 | 0.287 | 0.006 | 0.908 | 1.389 | 2.059 | 0.168 |
+| `old_gap_no_young_old_retention_w3` | 13.673 | 13 | 2,517 | 1.808 | 0.300 | 0.000 | 0.879 | 2.015 | 2.516 | 0.350 |
+| `young_old_no_gap_young_old_own_w3` | 16.522 | 13 | 1,849 | 1.888 | 0.245 | 0.223 | 0.866 | 0.807 | 2.288 | 0.299 |
+| `young_gap_no_old_young_old_own_w3` | 24.339 | 13 | 1,433 | 1.693 | 0.271 | 0.209 | 0.946 | 1.045 | 2.059 | 0.305 |
+| `soft_joint_old_retention_w3` | 24.434 | 13 | 957 | 1.750 | 0.247 | 0.214 | 0.869 | 1.036 | 2.974 | -0.008 |
+| `roomgap_scalar_young_old_roomgap_w3` | 24.662 | 13 | 868 | 1.623 | 0.337 | 0.008 | 0.906 | 1.867 | 2.516 | 0.392 |
+
+The economic interpretation is less encouraging. The finite differences point
+to a common lever conflict, especially around `chi`. Near the two
+young-ownership frontier points, an audit-scale increase in `chi` strongly
+raises young ownership, but it also raises old-age ownership and lowers the
+owner-renter room gap by reducing owner rooms. Moving `chi` in the direction
+that improves room separation and old exit therefore pushes young ownership
+the wrong way. The same pattern appears at the room-gap point: using `chi` to
+raise young ownership damages the already-tight old-ownership and room-gap
+margins.
+
+The old nonhousing median wealth moment remains mostly a `beta` object in
+these local derivatives, not a clean bequest-parameter object. The
+parent-childless old nonhousing wealth gap moves with `chi`, `alpha_cons`,
+`c_bar_n`, and `beta` as much as or more than with `theta_n` at several
+frontier points. This confirms the earlier identification warning: the current
+old-wealth moments preserve target count and local rank, but they do not cleanly
+isolate the intended bequest block.
+
+Conclusion: the frontier audit does not justify dropping moments. It says the
+current 13-moment systems are locally identified by rank, but the model's
+available internal levers create a sharp economic tradeoff between young
+ownership, owner-renter room separation, and old-age ownership. The next step
+should be targeted mechanism tests, not another blind global search.
