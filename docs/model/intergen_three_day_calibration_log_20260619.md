@@ -1254,3 +1254,60 @@ for `1,056` total GE solves. The stack is `J=16`, `Nb=60`, `income_states=5`,
 `n_house=5`, and `max_iter_eq=3`. Initial queue check showed all six tasks
 running and all six Slurm stderr files at zero bytes. Outputs are under
 `/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_mechanism_grid_20260622/`.
+
+### 2026-06-22 Mechanism Grid Completion
+
+Array job `11483261` completed cleanly: all six tasks exited `0:0`, all six
+Slurm stderr files were zero bytes, and all `1,056` planned cases were written.
+Task runtimes were between about `15.6` and `27.0` minutes. The completion
+confirms that the local search stack and checkpointing are healthy.
+
+The result is informative but not a solution. No case passed the strict joint
+screen:
+
+\[
+\text{own}_{25--34}\ge 0.25,\qquad
+\text{old ownership}\le 0.85,\qquad
+\text{owner-renter room gap}\ge 1.50,
+\]
+with fertility and childlessness in bounds. Four cases passed the softer
+diagnostic screen, two of which are nontrivial improvements over the baseline
+soft point.
+
+The best overall joint-distance cases were:
+
+| Point | Block | Case | TFR | Childless | Young own | Old own | Room gap | Old NH gap | Note |
+|---|---|---|---:|---:|---:|---:|---:|---:|---|
+| `young_gap_no_old_young_old_own_w3` | rental cap + lower `chi` + access | `hR4.0_chi0.85_b2` | 1.577 | 0.350 | 0.319 | 0.856 | 2.308 | -0.042 | Allocation close, childlessness too high and old own slightly high |
+| `young_gap_no_old_young_old_own_w3` | rental cap + lower `chi` + access | `hR4.0_chi0.85_b4` | 1.783 | 0.339 | 0.251 | 0.870 | 2.516 | -0.256 | Young and gap work, old own and childlessness fail |
+| `young_old_no_gap_young_old_own_w3` | rental cap + lower `chi` + access | `hR4.0_chi0.85_b2` | 1.878 | 0.179 | 0.211 | 0.868 | 2.521 | -0.571 | Soft pass, but young own and old own miss strict |
+| `soft_joint_old_retention_w3` | rental cap + finance | `hR5.0_b0_phi0.95` | 1.853 | 0.231 | 0.196 | 0.861 | 1.499 | 0.079 | Almost hits room gap, misses young and old by small amounts |
+| `soft_joint_old_retention_w3` | rental cap + finance | `hR5.5_b0_phi0.95` | 1.822 | 0.235 | 0.366 | 0.856 | 1.093 | 0.071 | Soft pass; young access works but room gap still low |
+
+The lowest scalar source-target loss came from the scalar old-retention point
+with `phi=0.90`: loss `9.386`, TFR `1.743`, childlessness `0.285`, young
+ownership `0.006`, old ownership `0.862`, and room gap `1.363`. This improves
+the scalar objective but leaves the young-owner pipeline essentially empty, so
+it is not an economic fix.
+
+Mechanism read:
+
+- Pure `chi` movement is not enough. Lowering `chi` can restore room separation
+  and old exit, but it kills young ownership. Raising `chi` does the opposite.
+- Pure finance/access improves scalar fit in some old-retention basins but does
+  not by itself restore young ownership in the low-young-owner points.
+- The only near-joint improvements use a tighter rental cap together with
+  access relief and, in some cases, lower `chi`. That points to the rental
+  access/space-separation margin as the most promising next diagnostic lever.
+- The bequest-side gap remains weak: the near-joint cases often have an old
+  parent-childless nonhousing wealth gap near zero or negative. The old-wealth
+  target still does not cleanly discipline the intended bequest block.
+
+Next diagnostic should focus narrowly around the promising rental-cap/access
+region, especially \(h_R^{\max}\in[3.8,4.6]\), `chi` around `0.85--0.95` of
+the young-ownership frontier values, and entry/finance access sufficient to
+keep young ownership above `0.25`. That follow-up should also vary fertility
+and bequest parameters locally (`c_bar_n`, `psi_child`, `kappa_fert`,
+`theta_n`) to see whether the high-childlessness and weak-old-wealth-gap
+failures can be repaired without losing the allocation improvement. This is
+still diagnostic; it does not change the formal target system or drop moments.
