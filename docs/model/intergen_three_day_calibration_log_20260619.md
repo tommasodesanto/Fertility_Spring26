@@ -1210,3 +1210,47 @@ current 13-moment systems are locally identified by rank, but the model's
 available internal levers create a sharp economic tradeoff between young
 ownership, owner-renter room separation, and old-age ownership. The next step
 should be targeted mechanism tests, not another blind global search.
+
+### 2026-06-22 Mechanism Grid Audit Launched
+
+To test whether the frontier failure is a local search issue or a structural
+lever conflict, a targeted mechanism grid was added in
+`code/model/tools/audit_intergen_mechanism_grid.py` with Slurm launcher
+`code/cluster/submit_intergen_mechanism_grid.sh`. This is diagnostic only, not
+a new SMM calibration. It preserves the frontier point's 13 internal
+parameters as the starting point, then evaluates deterministic local
+perturbation blocks:
+
+- `chi` rays, to test the owner/renter service-wedge direction directly.
+- entry-wealth and mortgage-access rays, using `b_entry_fixed`, `phi`, and
+  `pti_limit`.
+- compensated `chi`/access grids, asking whether lower `chi` can restore room
+  separation and old exit while finance/access restores young ownership.
+- rental-cap/access grids, asking whether lowering renter access can produce
+  owner-renter room separation without relying only on `chi`.
+
+The screen is not scalar-loss-only. Each case records the source target-set
+loss and a joint allocation screen:
+
+\[
+\text{own}_{25--34}\ge 0.25,\qquad
+\text{old ownership}\le 0.85,\qquad
+\text{owner-renter room gap}\ge 1.50,
+\]
+with fertility bounded by \(1.55\le \mathrm{TFR}\le 1.90\) and childlessness
+at most `0.30`. A softer diagnostic screen uses young ownership `>=0.20`, old
+ownership `<=0.88`, and room gap `>=1.00`.
+
+The exact loop was smoke-tested first as Slurm job `11483243`, capped at three
+cases for `scalar_best_old_retention_w3`. It completed with exit `0:0`, zero
+stderr, and wrote `cases.jsonl`, `latest_case.json`, `best_by_rank_loss.json`,
+`best_by_joint_distance.json`, and `cases_summary.csv`. The smoke cases already
+confirmed the local derivative read: lowering `chi` improves room separation
+and old exit but sets young ownership to zero.
+
+The full mechanism grid was then launched as array job `11483261` with tasks
+`0--5`, one frontier point per task. Each point has `176` deterministic cases,
+for `1,056` total GE solves. The stack is `J=16`, `Nb=60`, `income_states=5`,
+`n_house=5`, and `max_iter_eq=3`. Initial queue check showed all six tasks
+running and all six Slurm stderr files at zero bytes. Outputs are under
+`/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_mechanism_grid_20260622/`.
