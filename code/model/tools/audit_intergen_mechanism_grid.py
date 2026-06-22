@@ -109,6 +109,9 @@ def main() -> None:
     parser.add_argument("--max-iter-eq", type=int, default=3)
     parser.add_argument("--income-states", type=int, default=5)
     parser.add_argument("--max-cases", type=int, default=0, help="Smoke-test cap; 0 runs all generated cases")
+    parser.add_argument("--candidate-mode", choices=["mechanism", "repair"], default="mechanism")
+    parser.add_argument("--case-slices", type=int, default=1, help="Split deterministic candidates into this many slices")
+    parser.add_argument("--case-slice-index", type=int, default=0, help="Run this zero-based candidate slice")
     args = parser.parse_args()
 
     os.environ.setdefault("NUMBA_NUM_THREADS", "1")
@@ -129,6 +132,9 @@ def main() -> None:
             "n_house": args.n_house,
             "max_iter_eq": args.max_iter_eq,
             "income_states": args.income_states,
+            "candidate_mode": args.candidate_mode,
+            "case_slices": args.case_slices,
+            "case_slice_index": args.case_slice_index,
             "strict_screen": STRICT_SCREEN,
             "soft_screen": SOFT_SCREEN,
         },
@@ -192,7 +198,12 @@ def run_point(point: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
         **income,
     }
 
-    candidates = generate_candidates(point["theta"])
+    all_candidates = generate_candidates(point["theta"], mode=args.candidate_mode)
+    case_slices = max(1, int(args.case_slices))
+    case_slice_index = int(args.case_slice_index)
+    if case_slice_index < 0 or case_slice_index >= case_slices:
+        raise ValueError(f"case-slice-index must be in [0,{case_slices - 1}], got {case_slice_index}")
+    candidates = all_candidates[case_slice_index::case_slices]
     if args.max_cases > 0:
         candidates = candidates[: int(args.max_cases)]
 
@@ -202,12 +213,16 @@ def run_point(point: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
         "run_target_set": target_set,
         "source_rank_loss": point.get("source_rank_loss"),
         "source_path": point.get("source_path"),
+        "n_cases_total_before_slicing": len(all_candidates),
         "n_cases": len(candidates),
+        "case_slices": case_slices,
+        "case_slice_index": case_slice_index,
         "J": args.J,
         "Nb": args.Nb,
         "n_house": args.n_house,
         "max_iter_eq": args.max_iter_eq,
         "income_states": args.income_states,
+        "candidate_mode": args.candidate_mode,
         "strict_screen": STRICT_SCREEN,
         "soft_screen": SOFT_SCREEN,
         "targets": targets,
@@ -268,7 +283,15 @@ def run_point(point: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
     return summary
 
 
-def generate_candidates(base_theta: dict[str, float]) -> list[dict[str, Any]]:
+def generate_candidates(base_theta: dict[str, float], *, mode: str = "mechanism") -> list[dict[str, Any]]:
+    if mode == "mechanism":
+        return generate_mechanism_candidates(base_theta)
+    if mode == "repair":
+        return generate_repair_candidates(base_theta)
+    raise ValueError(f"Unknown candidate mode {mode!r}")
+
+
+def generate_mechanism_candidates(base_theta: dict[str, float]) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
     seen: set[str] = set()
 
@@ -332,6 +355,62 @@ def generate_candidates(base_theta: dict[str, float]) -> list[dict[str, Any]]:
                         "b_entry_fixed": base_theta["b_entry_fixed"] + delta,
                     },
                 )
+
+    return candidates
+
+
+def generate_repair_candidates(base_theta: dict[str, float]) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    seen: set[str] = set()
+
+    def add(block: str, label: str, overrides: dict[str, Any]) -> None:
+        theta = bounded_theta({**base_theta, **overrides})
+        key = json.dumps(jsonable(theta), sort_keys=True)
+        if key in seen:
+            return
+        seen.add(key)
+        candidates.append({"block": block, "label": label, "theta": theta})
+
+    add("baseline", "baseline", {})
+
+    fertility_blocks = [
+        ("base", {}),
+        (
+            "fert",
+            {
+                "c_bar_n": base_theta["c_bar_n"] * 0.90,
+                "psi_child": base_theta["psi_child"] * 1.10,
+                "kappa_fert": base_theta["kappa_fert"] * 0.90,
+            },
+        ),
+        ("theta", {"theta_n": base_theta["theta_n"] + 0.25}),
+        (
+            "fert_theta",
+            {
+                "c_bar_n": base_theta["c_bar_n"] * 0.90,
+                "psi_child": base_theta["psi_child"] * 1.10,
+                "kappa_fert": base_theta["kappa_fert"] * 0.90,
+                "theta_n": base_theta["theta_n"] + 0.25,
+            },
+        ),
+    ]
+
+    for hR in [3.8, 4.0, 4.2, 4.4, 4.6]:
+        for chi_mult in [0.82, 0.86, 0.90, 0.94]:
+            for delta in [1.5, 2.5, 3.5]:
+                for phi in [0.80, 0.90, 0.95]:
+                    core = {
+                        "hR_max": hR,
+                        "chi": base_theta["chi"] * chi_mult,
+                        "b_entry_fixed": base_theta["b_entry_fixed"] + delta,
+                        "phi": phi,
+                    }
+                    for suffix, repair in fertility_blocks:
+                        add(
+                            "focused_repair",
+                            f"hR{hR:.1f}_chi{chi_mult:.2f}_b{delta:g}_phi{phi:.2f}_{suffix}",
+                            {**core, **repair},
+                        )
 
     return candidates
 

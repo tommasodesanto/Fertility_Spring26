@@ -1311,3 +1311,60 @@ and bequest parameters locally (`c_bar_n`, `psi_child`, `kappa_fert`,
 `theta_n`) to see whether the high-childlessness and weak-old-wealth-gap
 failures can be repaired without losing the allocation improvement. This is
 still diagnostic; it does not change the formal target system or drop moments.
+
+### 2026-06-22 Focused Repair Grid Completion
+
+The focused repair grid was launched as Slurm array `11487399` with run tag
+`intergen_mechanism_repair_grid_20260622`. It used the three most relevant
+frontier points from the mechanism-grid readout and evaluated `721` deterministic
+candidate perturbations per point, split into two slices per point. The grid was
+diagnostic only: it did not change the target system and did not drop moments.
+
+The array completed cleanly. All six tasks exited `0:0`, all six Slurm stderr
+files were zero bytes, and all `2,163` planned cases were written. Task runtimes
+were `42:08`, `42:55`, `43:11`, `46:49`, `57:37`, and `1:10:47`. Aggregate
+readouts were written on Torch under
+`/scratch/td2248/projects/Fertility_Spring26_20260617_fast/output/model/intergen_mechanism_repair_grid_20260622/aggregate_repair_readout.{txt,json}`.
+
+The headline result is no strict pass and `52` soft passes. The best joint-screen
+case was:
+
+| Point | Case | TFR | Childless | Young own | Old own | Renter rooms | Owner rooms | Gap | Old NH median | Old NH gap |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `young_gap_no_old_young_old_own_w3` | `hR4.2_chi0.82_b3.5_phi0.90_fert` | 1.675 | 0.194 | 0.232 | 0.844 | 4.192 | 6.247 | 2.055 | 3.203 | -0.582 |
+
+This is a real mechanism improvement relative to the broad grid: a tight rental
+cap, lower `chi`, and entry/finance access can jointly produce a sizeable
+owner-renter room gap and bring old ownership below the strict-screen cutoff.
+But it is not a calibrated fit. Young ownership remains below the strict screen
+(`0.232` versus cutoff `0.25` and target `0.341`), old ownership is still above
+the target (`0.844` versus `0.764`), old nonhousing median wealth is high
+(`3.203` versus `2.230`), and the parent-childless old nonhousing wealth gap is
+wrong-signed (`-0.582` versus `1.007`).
+
+The lowest scalar source-target loss remains the unchanged baseline for the
+`young_old_no_gap_young_old_own_w3` point: loss `16.522`, TFR `1.888`,
+childlessness `0.245`, young ownership `0.223`, old ownership `0.866`, and room
+gap `0.807`. The best repair cases by scalar loss improve the room gap, but
+still miss young ownership, old ownership, and the old-wealth composition
+margin.
+
+Positive old-wealth-gap cases exist, so the sign is not mechanically impossible.
+However, the best cases with a positive old parent-childless nonhousing wealth
+gap, young ownership at least `0.20`, old ownership below `0.88`, and room gap
+above `1.50` have childlessness around `0.34--0.36`, outside even the soft
+screen. A representative case is `hR4.0_chi0.90_b1.5_phi0.80_fert`: TFR
+`1.630`, childlessness `0.351`, young ownership `0.312`, old ownership `0.859`,
+room gap `2.252`, and old NH gap `0.051`.
+
+Interpretation: the focused repair grid confirms that the rental-access/entry
+region is the right place to search if the objective is to repair the
+young-access and room-separation block. It also confirms a remaining mechanism
+tension, not a license to drop targets. In the current model, the region that
+gets the housing/tenure allocation close tends to produce a negative old
+parent-childless wealth gap; the region that makes the old-wealth gap positive
+tends to produce too much childlessness and still too much old ownership. The
+next step should be a targeted identification discussion for the old-wealth and
+fertility-composition block: either verify that the PSID old-wealth-gap target is
+measured correctly for the model object, or add/reweight replacement moments that
+identify the same bequest/fertility block without underidentifying the SMM.
