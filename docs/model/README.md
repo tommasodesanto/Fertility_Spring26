@@ -11,6 +11,7 @@ Current notes kept here:
 - `FAMILY_SPACE_EMPIRICAL_SPINE_STATUS_2026-05-23.md`
 - `family_space_empirical_packet_2026-05-24/`
 - June 2026 one-market intergen notes, including
+  `intergen_code_sota_index_20260622.md`,
   `intergen_one_market_identification_ledger_20260618.md`,
   `intergen_candidate_replacement_targets_20260618.md`,
   `intergen_candidate_replacement_targets_20260618.csv`,
