@@ -46,6 +46,6 @@ code change.
 driver for the June 2026 one-market strand. It reads a saved theta, re-solves
 the active intergen model, and writes standard diagnostics, target-fit tables,
 room-bin/rung shares, simple and full first-look policies/market panels, a
-standalone first-look wealth-density plot, owner-entry thresholds, and optional
-policy proof-of-concept cases under
+standalone aggregate wealth-density plot with childless/parent and renter/owner
+splits, owner-entry thresholds, and optional policy proof-of-concept cases under
 `output/model/intergen_mechanics_packet_YYYYMMDD/`.
