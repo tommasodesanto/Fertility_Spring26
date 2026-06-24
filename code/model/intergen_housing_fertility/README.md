@@ -5,7 +5,16 @@ intergenerational housing allocation and fertility project. It starts from the
 active workhorse lifecycle code under `code/model/dt_cp_model/`, but keeps that
 code path unchanged.
 
-Run from `code/model`:
+For the simplest current-model run, open and run:
+
+```bash
+code/model/run_intergen_model.py
+```
+
+That file lists the current source theta, target set, grid, and output folder
+at the top.
+
+Run from `code/model` when using the package CLI directly:
 
 ```bash
 .venv/bin/python -m intergen_housing_fertility.cli smoke --quiet
