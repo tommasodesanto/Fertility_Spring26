@@ -321,7 +321,18 @@ def write_core_outputs(
     first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
     write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
     write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
-    plot_first_look(first_look_policy_rows, first_look_market_rows, outdir / "first_look_policies_markets.png")
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
+        outdir / "first_look_policies_markets.png",
+        mode="simple",
+    )
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
+        outdir / "first_look_policies_markets_full.png",
+        mode="full",
+    )
 
     threshold_rows = owner_entry_threshold_rows(sol, P)
     write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
@@ -582,6 +593,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
     tenure_probs = None if tenure_probs is None else np.asarray(tenure_probs, dtype=float)
     fert_probs = np.asarray(sol.fert_probs, dtype=float)
     valid_source = np.asarray(getattr(sol, "V", np.empty_like(c_pol)), dtype=float)
+    g = np.asarray(getattr(sol, "g", np.zeros(0)), dtype=float)
     nvec = np.arange(int(P.n_parity), dtype=float)
     policy_rows: list[dict[str, Any]] = []
     for age in ages:
@@ -589,6 +601,8 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
         actual_age = float(P.age_start + j * P.da)
         for zz in z_indices:
             z_value = float(z_grid[zz]) if zz < len(z_grid) else float(zz)
+            mass_line = childless_renter_mass_line(g, len(b_grid), j, zz)
+            slice_mass = float(np.nansum(mass_line))
             for bb, wealth in enumerate(b_grid):
                 if not is_valid_policy_point(valid_source, bb, j, zz):
                     continue
@@ -600,6 +614,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                     else float(np.asarray(P.H_own, dtype=float)[max(0, min(tchoice - 1, int(P.n_house) - 1))])
                 )
                 owner_prob = owner_probability_from_tenure_probs(tenure_probs, bb, j, zz, tchoice)
+                ergodic_mass = maybe_float(mass_line[bb]) if bb < len(mass_line) else math.nan
                 policy_rows.append(
                     {
                         "initial_state": "childless_renter",
@@ -614,6 +629,12 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                         "owner_entry_probability": owner_prob,
                         "housing_services_after_tenure": housing,
                         "expected_children": fertility_expectation(fert_probs, bb, j, zz, nvec),
+                        "ergodic_mass": ergodic_mass,
+                        "mass_within_age_z_childless_renter": (
+                            ergodic_mass / slice_mass
+                            if math.isfinite(ergodic_mass) and slice_mass > 1e-14
+                            else math.nan
+                        ),
                     }
                 )
 
@@ -706,6 +727,15 @@ def fertility_expectation(fert_probs: np.ndarray, bb: int, j: int, zz: int, nvec
     probs = np.asarray(probs, dtype=float).reshape(-1)
     n = min(len(probs), len(nvec))
     return float(np.dot(probs[:n], nvec[:n])) if n else math.nan
+
+
+def childless_renter_mass_line(g: np.ndarray, nb: int, j: int, zz: int) -> np.ndarray:
+    if g.ndim != 7:
+        return np.full(nb, math.nan)
+    try:
+        return np.asarray(g[:, 0, 0, j, zz, 0, 0], dtype=float).reshape(-1)
+    except IndexError:
+        return np.full(nb, math.nan)
 
 
 def owner_probability_from_tenure_probs(
@@ -854,7 +884,13 @@ def policy_record(
     }
 
 
-def plot_first_look(policy_rows: list[dict[str, Any]], market_rows: list[dict[str, Any]], path: Path) -> None:
+def plot_first_look(
+    policy_rows: list[dict[str, Any]],
+    market_rows: list[dict[str, Any]],
+    path: Path,
+    *,
+    mode: str,
+) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -862,8 +898,9 @@ def plot_first_look(policy_rows: list[dict[str, Any]], market_rows: list[dict[st
 
     if not policy_rows and not market_rows:
         return
-    ages = sorted({float(r["age"]) for r in policy_rows})
-    z_values = sorted({float(r["z"]) for r in policy_rows})
+    plot_rows = select_first_look_policy_rows(policy_rows, mode=mode)
+    ages = sorted({float(r["age"]) for r in plot_rows})
+    z_values = sorted({float(r["z"]) for r in plot_rows})
     colors = plt.cm.viridis(np.linspace(0.12, 0.88, max(len(z_values), 1)))
     color_for_z = {z: colors[i] for i, z in enumerate(z_values)}
     age_styles = ["-", "--", ":"]
@@ -873,13 +910,13 @@ def plot_first_look(policy_rows: list[dict[str, Any]], market_rows: list[dict[st
     ax_c, ax_h, ax_m, ax_f = axes.ravel()
     policy_specs = [
         (ax_c, "consumption", "Consumption policy", "consumption"),
-        (ax_h, "housing_services_after_tenure", "Housing after tenure choice", "housing services"),
         (ax_f, "expected_children", "Fertility policy", "expected children"),
     ]
     for ax, key, title, ylabel in policy_specs:
+        add_mass_background(ax, plot_rows)
         for z in z_values:
             for age in ages:
-                panel = [r for r in policy_rows if float(r["z"]) == z and float(r["age"]) == age]
+                panel = [r for r in plot_rows if float(r["z"]) == z and float(r["age"]) == age]
                 panel.sort(key=lambda r: float(r["liquid_wealth"]))
                 if not panel:
                     continue
@@ -896,14 +933,108 @@ def plot_first_look(policy_rows: list[dict[str, Any]], market_rows: list[dict[st
         ax.set_ylabel(ylabel)
         ax.grid(alpha=0.2)
 
+    plot_housing_by_tenure(ax_h, plot_rows, z_values, ages, color_for_z, style_for_age)
     plot_market_panel(ax_m, market_rows)
     handles, labels = ax_c.get_legend_handles_labels()
     if handles:
         fig.legend(handles, labels, loc="lower center", ncols=min(3, len(labels)), frameon=False, fontsize=8)
-    fig.suptitle("First-look model mechanics: policies and housing-market equilibrium", y=0.985)
+    mode_label = "simple" if mode == "simple" else "full"
+    fig.suptitle(
+        f"First-look model mechanics ({mode_label}): policies and housing-market equilibrium",
+        y=0.985,
+    )
     fig.tight_layout(rect=(0.0, 0.07, 1.0, 0.96))
     fig.savefig(path, dpi=180)
     plt.close(fig)
+
+
+def select_first_look_policy_rows(rows: list[dict[str, Any]], *, mode: str) -> list[dict[str, Any]]:
+    if mode != "simple":
+        return rows
+    ages = sorted({float(r["age"]) for r in rows})
+    z_values = sorted({float(r["z"]) for r in rows})
+    keep_ages = set(ages if len(ages) <= 2 else [ages[0], ages[-1]])
+    keep_z = set(z_values if len(z_values) <= 2 else [z_values[0], z_values[-1]])
+    return [r for r in rows if float(r["age"]) in keep_ages and float(r["z"]) in keep_z]
+
+
+def add_mass_background(ax: Any, rows: list[dict[str, Any]]) -> None:
+    mass_by_wealth: dict[float, float] = {}
+    for row in rows:
+        wealth = maybe_float(row.get("liquid_wealth"))
+        mass = maybe_float(row.get("ergodic_mass"))
+        if not (math.isfinite(wealth) and math.isfinite(mass) and mass > 0):
+            continue
+        mass_by_wealth[wealth] = mass_by_wealth.get(wealth, 0.0) + mass
+    total_mass = float(sum(mass_by_wealth.values()))
+    if total_mass <= 1e-14:
+        return
+    xs = np.asarray(sorted(mass_by_wealth), dtype=float)
+    ys = np.asarray([mass_by_wealth[x] / total_mass for x in xs], dtype=float)
+    if xs.size > 1:
+        diffs = np.diff(xs)
+        width = 0.8 * float(np.nanmin(diffs[diffs > 0])) if np.any(diffs > 0) else 0.8
+    else:
+        width = 0.8
+    ax2 = ax.twinx()
+    ax2.bar(xs, ys, width=width, color="0.2", alpha=0.09, align="center", zorder=0)
+    ax2.set_ylim(0.0, max(float(np.nanmax(ys)) * 4.0, 1e-12))
+    ax2.set_yticks([])
+    ax2.spines["right"].set_visible(False)
+    ax2.spines["top"].set_visible(False)
+    ax.set_zorder(ax2.get_zorder() + 1)
+    ax.patch.set_visible(False)
+
+
+def plot_housing_by_tenure(
+    ax: Any,
+    rows: list[dict[str, Any]],
+    z_values: list[float],
+    ages: list[float],
+    color_for_z: dict[float, Any],
+    style_for_age: dict[float, str],
+) -> None:
+    add_mass_background(ax, rows)
+    for z in z_values:
+        for age in ages:
+            panel = [r for r in rows if float(r["z"]) == z and float(r["age"]) == age]
+            panel.sort(key=lambda r: float(r["liquid_wealth"]))
+            if not panel:
+                continue
+            xs = [float(r["liquid_wealth"]) for r in panel]
+            renter_y = [
+                maybe_float(r["housing_services_after_tenure"]) if str(r.get("chosen_tenure")) == "renter" else math.nan
+                for r in panel
+            ]
+            owner_y = [
+                maybe_float(r["housing_services_after_tenure"]) if str(r.get("chosen_tenure")) == "owner" else math.nan
+                for r in panel
+            ]
+            ax.plot(xs, renter_y, color=color_for_z[z], linestyle=style_for_age[age], lw=1.8, alpha=0.9)
+            ax.plot(
+                xs,
+                owner_y,
+                color=color_for_z[z],
+                linestyle=style_for_age[age],
+                lw=1.8,
+                marker="o",
+                ms=2.4,
+                alpha=0.9,
+            )
+    ax.set_title("Housing by tenure choice")
+    ax.set_xlabel("liquid wealth")
+    ax.set_ylabel("housing services")
+    ax.grid(alpha=0.2)
+    ax.text(
+        0.02,
+        0.98,
+        "grey bars: ergodic mass\nline: renter choice\ncircle: owner choice",
+        transform=ax.transAxes,
+        va="top",
+        ha="left",
+        fontsize=8,
+        bbox={"facecolor": "white", "edgecolor": "0.85", "alpha": 0.85, "pad": 3},
+    )
 
 
 def plot_market_panel(ax: Any, rows: list[dict[str, Any]]) -> None:
@@ -1079,6 +1210,7 @@ def write_contact_sheet(outdir: Path) -> None:
 
     candidates = [
         outdir / "first_look_policies_markets.png",
+        outdir / "first_look_policies_markets_full.png",
         outdir / "diagnostics/ownership_by_age.png",
         outdir / "diagnostics/policy_childless_renter_age30.png",
         outdir / "diagnostics/policy_childless_renter_age42.png",
@@ -1145,8 +1277,9 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
-            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for childless-renter initial-state policy lines and equilibrium market prices/quantities. The housing panel is after tenure choice, so it can show renter housing or owner rungs. Supply is omitted from the market bars when clearing is tight and shown only if the residual exceeds 1e-3.",
-            "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panel, including chosen tenure and house-price/user-cost accounting.",
+            "- `first_look_policies_markets.png`: simpler 2-by-2 inspection panel using two income states and two ages. The policy panels include grey bars for ergodic mass in the plotted childless-renter state slice.",
+            "- `first_look_policies_markets_full.png`: fuller version with all selected income states and ages.",
+            "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panels, including chosen tenure, ergodic mass, and house-price/user-cost accounting.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
             "- `owner_rung_shares_prime30_55_childless.csv` and `.png`: owner rung concentration among prime-age childless owners.",

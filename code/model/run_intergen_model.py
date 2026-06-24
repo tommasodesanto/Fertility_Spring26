@@ -111,7 +111,8 @@ def main() -> None:
     print(f"Visual summary: {contact_sheet}")
     print(
         "Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, "
-        "room_bin_fit, first_look_policy_lines, first_look_market_summary"
+        "room_bin_fit, first_look_path, first_look_full_path, "
+        "first_look_policy_lines, first_look_market_summary"
     )
 
 
@@ -130,12 +131,13 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     """Expose the main run artifacts as globals for Spyder's Variable Explorer."""
     global output_folder, readme_path, contact_sheet_path
     global solution_summary, moments, target_fit, age_profiles, room_bin_fit
-    global first_look_path, first_look_policy_lines, first_look_market_summary
+    global first_look_path, first_look_full_path, first_look_policy_lines, first_look_market_summary
 
     output_folder = outdir
     readme_path = outdir / "README.md"
     contact_sheet_path = outdir / "contact_sheet.png"
     first_look_path = outdir / "first_look_policies_markets.png"
+    first_look_full_path = outdir / "first_look_policies_markets_full.png"
     solution_summary = read_json(outdir / "solution_summary.json")
     moments = read_json(outdir / "moments.json")
     target_fit = read_csv_table(outdir / "target_fit.csv")
