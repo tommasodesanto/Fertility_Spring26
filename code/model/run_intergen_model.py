@@ -11,9 +11,11 @@ results." It is diagnostic, not a production calibration search.
 
 from __future__ import annotations
 
+import datetime as dt
 import os
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -46,6 +48,8 @@ RUN_POLICY_CASES = False
 
 
 def main() -> None:
+    run_start = time.perf_counter()
+    start_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     repo_root = Path(__file__).resolve().parents[2]
     model_dir = Path(__file__).resolve().parent
     venv_python = model_dir / ".venv/bin/python"
@@ -82,6 +86,7 @@ def main() -> None:
         cmd.append("--run-policy-cases")
 
     print("Running current one-market intergen model", flush=True)
+    print(f"Started: {start_stamp}", flush=True)
     print(f"Source theta: {repo_root / SOURCE_RECORD}", flush=True)
     print(f"Output folder: {repo_root / OUTPUT_FOLDER}", flush=True)
     print(f"Target set: {TARGET_SET}", flush=True)
@@ -94,12 +99,27 @@ def main() -> None:
 
     subprocess.run(cmd, cwd=str(model_dir), check=True)
 
+    elapsed = time.perf_counter() - run_start
+    end_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     readme = repo_root / OUTPUT_FOLDER / "README.md"
     contact_sheet = repo_root / OUTPUT_FOLDER / "contact_sheet.png"
     print()
     print("Done.")
+    print(f"Finished: {end_stamp}")
+    print(f"Total runtime: {format_elapsed(elapsed)}")
     print(f"Start with: {readme}")
     print(f"Visual summary: {contact_sheet}")
+
+
+def format_elapsed(seconds: float) -> str:
+    total = int(round(seconds))
+    hours, rem = divmod(total, 3600)
+    minutes, secs = divmod(rem, 60)
+    if hours:
+        return f"{hours}h {minutes}m {secs}s"
+    if minutes:
+        return f"{minutes}m {secs}s"
+    return f"{secs}s"
 
 
 if __name__ == "__main__":
