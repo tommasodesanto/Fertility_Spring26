@@ -577,6 +577,8 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
     c_pol = np.asarray(sol.c_pol, dtype=float)
     hR_pol = np.asarray(sol.hR_pol, dtype=float)
     tenure_choice = np.asarray(sol.tenure_choice)
+    tenure_probs = getattr(sol, "tenure_probs", None)
+    tenure_probs = None if tenure_probs is None else np.asarray(tenure_probs, dtype=float)
     fert_probs = np.asarray(sol.fert_probs, dtype=float)
     valid_source = np.asarray(getattr(sol, "V", np.empty_like(c_pol)), dtype=float)
     nvec = np.arange(int(P.n_parity), dtype=float)
@@ -590,18 +592,25 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 if not is_valid_policy_point(valid_source, bb, j, zz):
                     continue
                 tchoice = int(tenure_choice[bb, 0, 0, j, zz, 0, 0])
+                renter_housing = float(hR_pol[bb, 0, 0, j, zz, 0, 0])
                 housing = (
-                    float(hR_pol[bb, 0, 0, j, zz, 0, 0])
+                    renter_housing
                     if tchoice <= 0
                     else float(np.asarray(P.H_own, dtype=float)[max(0, min(tchoice - 1, int(P.n_house) - 1))])
                 )
+                owner_prob = owner_probability_from_tenure_probs(tenure_probs, bb, j, zz, tchoice)
                 policy_rows.append(
                     {
+                        "initial_state": "childless_renter",
                         "age": actual_age,
                         "z_index": int(zz),
                         "z": z_value,
                         "liquid_wealth": float(wealth),
                         "consumption": float(c_pol[bb, 0, 0, j, zz, 0, 0]),
+                        "renter_housing_policy": renter_housing,
+                        "chosen_tenure_index": int(tchoice),
+                        "chosen_tenure": "renter" if tchoice <= 0 else "owner",
+                        "owner_entry_probability": owner_prob,
                         "housing_services_after_tenure": housing,
                         "expected_children": fertility_expectation(fert_probs, bb, j, zz, nvec),
                     }
@@ -630,6 +639,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 "owner_demand": owner,
                 "total_demand": total,
                 "supply": maybe_vector_value(supply, i),
+                "house_price": maybe_vector_value(asset_price, i),
                 "asset_price": maybe_vector_value(asset_price, i),
                 "flow_rent_or_user_cost": maybe_vector_value(owner_user_cost, i),
                 "user_cost_rate": user_cost_rate,
@@ -695,6 +705,23 @@ def fertility_expectation(fert_probs: np.ndarray, bb: int, j: int, zz: int, nvec
     probs = np.asarray(probs, dtype=float).reshape(-1)
     n = min(len(probs), len(nvec))
     return float(np.dot(probs[:n], nvec[:n])) if n else math.nan
+
+
+def owner_probability_from_tenure_probs(
+    tenure_probs: np.ndarray | None,
+    bb: int,
+    j: int,
+    zz: int,
+    tenure_choice: int,
+) -> float:
+    if tenure_probs is None:
+        return float(tenure_choice > 0)
+    if tenure_probs.ndim < 8:
+        return math.nan
+    try:
+        return float(np.sum(tenure_probs[bb, 0, 0, j, zz, 0, 0, 1:]))
+    except IndexError:
+        return math.nan
 
 
 def maybe_vector_value(values: np.ndarray, index: int) -> float:
@@ -890,8 +917,9 @@ def plot_market_panel(ax: Any, rows: list[dict[str, Any]]) -> None:
     supply = np.asarray([maybe_float(r["supply"]) for r in rows], dtype=float)
     residual = (total - supply) / np.maximum(supply, 1e-12)
     max_residual = float(np.nanmax(np.abs(residual))) if residual.size else math.nan
-    ax.bar(markets, rental, 0.45, label="renter demand", color="tab:blue", alpha=0.85)
-    ax.bar(markets, owner, 0.45, bottom=rental, label="owner demand", color="tab:orange", alpha=0.85)
+    width = 0.32
+    ax.bar(markets - width / 2, rental, width, label="renter demand", color="tab:blue", alpha=0.85)
+    ax.bar(markets + width / 2, owner, width, label="owner demand", color="tab:orange", alpha=0.85)
     if math.isfinite(max_residual) and max_residual > 1e-3:
         ax.scatter(markets, supply, marker="x", s=70, color="0.15", label="supply")
     ax.set_xticks(markets, [str(int(r["market"])) for r in rows])
@@ -901,9 +929,9 @@ def plot_market_panel(ax: Any, rows: list[dict[str, Any]]) -> None:
     ax.grid(axis="y", alpha=0.2)
 
     ax2 = ax.twinx()
-    asset = np.asarray([maybe_float(r["asset_price"]) for r in rows], dtype=float)
+    asset = np.asarray([maybe_float(r.get("house_price", r["asset_price"])) for r in rows], dtype=float)
     rent = np.asarray([maybe_float(r["flow_rent_or_user_cost"]) for r in rows], dtype=float)
-    ax2.plot(markets, asset, color="tab:red", marker="o", lw=1.8, label="asset price")
+    ax2.plot(markets, asset, color="tab:red", marker="o", lw=1.8, label="house price")
     ax2.plot(markets, rent, color="tab:green", marker="s", lw=1.8, label="flow rent/user cost")
     ax2.set_ylabel("price")
     h1, l1 = ax.get_legend_handles_labels()
@@ -1116,8 +1144,8 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
-            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for consumption, housing, equilibrium market prices/quantities, and fertility policy lines. Supply is omitted from the market bars when clearing is tight and shown only if the residual exceeds 1e-3.",
-            "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panel.",
+            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for childless-renter initial-state policy lines and equilibrium market prices/quantities. The housing panel is after tenure choice, so it can show renter housing or owner rungs. Supply is omitted from the market bars when clearing is tight and shown only if the residual exceeds 1e-3.",
+            "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panel, including chosen tenure and house-price/user-cost accounting.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
             "- `owner_rung_shares_prime30_55_childless.csv` and `.png`: owner rung concentration among prime-age childless owners.",
