@@ -53,6 +53,10 @@ RUN_POLICY_CASES = False
 # plots and CSV diagnostics from that saved solution object without solving.
 REFRESH_PLOTS_FROM_SAVED_SOLUTION = False
 
+# Keep cache refreshes interactive: update first-look CSVs/plots, but do not
+# spend time rebuilding the larger diagnostics folder or contact sheet.
+FAST_REFRESH_FROM_SAVED_SOLUTION = True
+
 
 def main() -> None:
     run_start = time.perf_counter()
@@ -89,6 +93,8 @@ def main() -> None:
         cmd.append("--run-policy-cases")
     if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
         cmd.append("--refresh-plots-from-cache")
+        if FAST_REFRESH_FROM_SAVED_SOLUTION:
+            cmd.extend(["--skip-standard-diagnostics", "--skip-contact-sheet", "--quick-first-look-only"])
 
     if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
         print("Refreshing current one-market intergen graphs from saved solution", flush=True)
@@ -105,6 +111,7 @@ def main() -> None:
     )
     print(f"max_iter_eq={MAX_ITER_EQ}", flush=True)
     print(f"refresh_plots_from_saved_solution={REFRESH_PLOTS_FROM_SAVED_SOLUTION}", flush=True)
+    print(f"fast_refresh_from_saved_solution={FAST_REFRESH_FROM_SAVED_SOLUTION}", flush=True)
     if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
         print(f"Saved solution cache: {repo_root / OUTPUT_FOLDER / 'solution_cache.pkl'}", flush=True)
     else:
@@ -130,6 +137,7 @@ def main() -> None:
     print(
         "Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, "
         "room_bin_fit, first_look_path, first_look_full_path, first_look_density_path, "
+        "first_look_total_wealth_path, first_look_total_wealth_density_path, "
         "solution_cache_path, first_look_policy_lines, first_look_market_summary"
     )
 
@@ -197,6 +205,9 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     global solution_cache_path
     global solution_summary, moments, target_fit, age_profiles, room_bin_fit
     global first_look_path, first_look_full_path, first_look_density_path
+    global first_look_total_wealth_path, first_look_total_wealth_full_path
+    global first_look_total_wealth_density_path, first_look_total_wealth_density
+    global total_wealth_grid_coverage
     global first_look_policy_lines, first_look_market_summary
 
     output_folder = outdir
@@ -206,6 +217,9 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     first_look_path = outdir / "first_look_policies_markets.png"
     first_look_full_path = outdir / "first_look_policies_markets_full.png"
     first_look_density_path = outdir / "first_look_wealth_density.png"
+    first_look_total_wealth_path = outdir / "first_look_policies_markets_total_wealth.png"
+    first_look_total_wealth_full_path = outdir / "first_look_policies_markets_total_wealth_full.png"
+    first_look_total_wealth_density_path = outdir / "first_look_total_wealth_density.png"
     solution_summary = read_json(outdir / "solution_summary.json")
     moments = read_json(outdir / "moments.json")
     target_fit = read_csv_table(outdir / "target_fit.csv")
@@ -213,6 +227,8 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     room_bin_fit = read_csv_table(outdir / "room_bin_fit_prime30_55_childless.csv")
     first_look_policy_lines = read_csv_table(outdir / "first_look_policy_lines.csv")
     first_look_market_summary = read_csv_table(outdir / "first_look_market_summary.csv")
+    first_look_total_wealth_density = read_csv_table(outdir / "first_look_total_wealth_density.csv")
+    total_wealth_grid_coverage = read_csv_table(outdir / "total_wealth_grid_coverage.csv")
 
 
 def print_solver_timing_summary(summary: dict, *, cached: bool = False) -> None:

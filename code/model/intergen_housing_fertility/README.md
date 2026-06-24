@@ -17,15 +17,19 @@ at the top.
 In Spyder, open `code/model/run_intergen_model.py` and press Run. The file runs
 the model through `code/model/.venv/bin/python` without replacing the Spyder
 kernel, then loads `solution_summary`, `moments`, `target_fit`, `age_profiles`,
-`room_bin_fit`, `first_look_density_path`, `solution_cache_path`,
-`first_look_policy_lines`, and `first_look_market_summary` for inspection in
-the Variable Explorer.
+`room_bin_fit`, `first_look_density_path`, `first_look_total_wealth_path`,
+`first_look_total_wealth_density_path`, `solution_cache_path`,
+`first_look_policy_lines`, `first_look_market_summary`, and the total-wealth
+density/support tables for inspection in the Variable Explorer.
 The runner also prints macOS `CPU_Speed_Limit` before and after the solve. If a
 slow run has a low speed limit, the same model path is being throttled by the
 laptop rather than taking a different equilibrium path.
 After one successful solve, set `REFRESH_PLOTS_FROM_SAVED_SOLUTION = True` in
 the runner to rebuild the graph packet from `solution_cache.pkl` without
-solving the model again.
+solving the model again. Leave `FAST_REFRESH_FROM_SAVED_SOLUTION = True` for
+quick first-look plot iteration; it skips the larger standard-diagnostic,
+contact-sheet, age-profile, room-bin, rung, and threshold-plot rebuilds while
+still refreshing the first-look plots and CSVs.
 
 Run from `code/model` when using the package CLI directly:
 
@@ -49,9 +53,11 @@ code change.
 `tools/build_intergen_mechanics_packet.py` is a non-production inspection
 driver for the June 2026 one-market strand. It reads a saved theta, re-solves
 the active intergen model, and writes standard diagnostics, target-fit tables,
-room-bin/rung shares, simple and full first-look policies/market panels, a
-standalone aggregate wealth-density plot with childless/parent and renter/owner
-splits, liquid-wealth grid-coverage diagnostics, owner-rung diagnostics,
-owner-entry thresholds, a local solved-object cache, and optional policy
+room-bin/rung shares, simple and full first-look policies/market panels, the
+same first-look policy panels against total wealth after the chosen tenure
+branch, standalone aggregate liquid-wealth and total-wealth density plots with
+childless/parent and renter/owner splits, wealth-support coverage diagnostics,
+owner-rung diagnostics, owner-entry thresholds, a local solved-object cache, and
+optional policy
 proof-of-concept cases under
 `output/model/intergen_mechanics_packet_YYYYMMDD/`.

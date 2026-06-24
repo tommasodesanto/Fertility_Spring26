@@ -89,7 +89,15 @@ def main() -> None:
         )
         if not args.skip_standard_diagnostics:
             write_diagnostics(baseline["sol"], baseline["P"], outdir / "diagnostics")
-        write_core_outputs(outdir, baseline, source, targets, weights)
+        write_core_outputs(
+            outdir,
+            baseline,
+            source,
+            targets,
+            weights,
+            include_contact_sheet=not args.skip_contact_sheet,
+            quick_first_look_only=bool(args.quick_first_look_only),
+        )
         write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
         print(
             f"Refreshed intergen mechanics packet from {cache_path} "
@@ -136,7 +144,15 @@ def main() -> None:
     if not args.skip_standard_diagnostics:
         write_diagnostics(baseline["sol"], baseline["P"], outdir / "diagnostics")
 
-    write_core_outputs(outdir, baseline, source, targets, weights)
+    write_core_outputs(
+        outdir,
+        baseline,
+        source,
+        targets,
+        weights,
+        include_contact_sheet=not args.skip_contact_sheet,
+        quick_first_look_only=bool(args.quick_first_look_only),
+    )
     if args.run_policy_cases:
         policy_records = write_policy_cases(
             outdir / "policy_cases",
@@ -199,6 +215,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--H-own", default=None, help="Comma-separated owner ladder, e.g. 2,4,6,8,10.")
     parser.add_argument("--max-iter-eq", type=int, default=10)
     parser.add_argument("--skip-standard-diagnostics", action="store_true")
+    parser.add_argument("--skip-contact-sheet", action="store_true")
+    parser.add_argument("--quick-first-look-only", action="store_true")
     parser.add_argument(
         "--refresh-plots-from-cache",
         action="store_true",
@@ -424,6 +442,9 @@ def write_core_outputs(
     source: dict[str, Any],
     targets: dict[str, float],
     weights: dict[str, float],
+    *,
+    include_contact_sheet: bool = True,
+    quick_first_look_only: bool = False,
 ) -> None:
     sol = baseline["sol"]
     P = baseline["P"]
@@ -450,34 +471,40 @@ def write_core_outputs(
     write_csv(outdir / "target_fit.csv", target_rows)
     write_markdown_table(outdir / "target_fit.md", target_rows, "Target Fit")
 
-    room_rows, room_fit_rows = room_bin_outputs(sol, P)
-    write_csv(outdir / "room_bin_shares_prime30_55_childless.csv", room_rows)
-    write_csv(outdir / "room_bin_fit_prime30_55_childless.csv", room_fit_rows)
-    plot_room_bins(room_fit_rows, outdir / "room_bin_shares_prime30_55_childless.png")
+    if not quick_first_look_only:
+        room_rows, room_fit_rows = room_bin_outputs(sol, P)
+        write_csv(outdir / "room_bin_shares_prime30_55_childless.csv", room_rows)
+        write_csv(outdir / "room_bin_fit_prime30_55_childless.csv", room_fit_rows)
+        plot_room_bins(room_fit_rows, outdir / "room_bin_shares_prime30_55_childless.png")
 
-    rung_rows = owner_rung_rows(sol, P)
-    write_csv(outdir / "owner_rung_shares_prime30_55_childless.csv", rung_rows)
-    plot_owner_rungs(
-        rung_rows,
-        outdir / "owner_rung_shares_prime30_55_childless.png",
-        ylabel="share of prime-age childless owners",
-    )
-    all_owner_rung_rows = owner_rung_rows_all(sol, P)
-    write_csv(outdir / "owner_rung_shares_all_owners.csv", all_owner_rung_rows)
-    plot_owner_rungs(all_owner_rung_rows, outdir / "owner_rung_shares_all_owners.png", ylabel="share of all owners")
+        rung_rows = owner_rung_rows(sol, P)
+        write_csv(outdir / "owner_rung_shares_prime30_55_childless.csv", rung_rows)
+        plot_owner_rungs(
+            rung_rows,
+            outdir / "owner_rung_shares_prime30_55_childless.png",
+            ylabel="share of prime-age childless owners",
+        )
+        all_owner_rung_rows = owner_rung_rows_all(sol, P)
+        write_csv(outdir / "owner_rung_shares_all_owners.csv", all_owner_rung_rows)
+        plot_owner_rungs(all_owner_rung_rows, outdir / "owner_rung_shares_all_owners.png", ylabel="share of all owners")
 
-    age_rows = age_profile_rows(sol, P)
-    write_csv(outdir / "age_profiles.csv", age_rows)
-    plot_age_profiles(age_rows, outdir / "age_profiles.png")
+        age_rows = age_profile_rows(sol, P)
+        write_csv(outdir / "age_profiles.csv", age_rows)
+        plot_age_profiles(age_rows, outdir / "age_profiles.png")
 
     first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
-    first_look_density_rows = wealth_density_rows(sol, P)
+    first_look_density_rows = wealth_density_rows(sol, P, wealth_measure="liquid")
+    first_look_total_wealth_density_rows = wealth_density_rows(sol, P, wealth_measure="total")
     wealth_grid_rows = wealth_grid_coverage_rows(first_look_density_rows)
+    total_wealth_grid_rows = wealth_grid_coverage_rows(first_look_total_wealth_density_rows)
     policy_xlim = density_xlim_from_rows(first_look_density_rows)
+    total_wealth_policy_xlim = density_xlim_from_rows(first_look_total_wealth_density_rows)
     write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
     write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
     write_csv(outdir / "first_look_wealth_density.csv", first_look_density_rows)
+    write_csv(outdir / "first_look_total_wealth_density.csv", first_look_total_wealth_density_rows)
     write_csv(outdir / "wealth_grid_coverage.csv", wealth_grid_rows)
+    write_csv(outdir / "total_wealth_grid_coverage.csv", total_wealth_grid_rows)
     plot_first_look(
         first_look_policy_rows,
         first_look_market_rows,
@@ -492,7 +519,39 @@ def write_core_outputs(
         mode="full",
         xlim=policy_xlim,
     )
-    plot_first_look_wealth_density(first_look_density_rows, outdir / "first_look_wealth_density.png")
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
+        outdir / "first_look_policies_markets_total_wealth.png",
+        mode="simple",
+        xlim=total_wealth_policy_xlim,
+        wealth_key="total_wealth_after_tenure",
+        wealth_label="total wealth after chosen tenure",
+    )
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
+        outdir / "first_look_policies_markets_total_wealth_full.png",
+        mode="full",
+        xlim=total_wealth_policy_xlim,
+        wealth_key="total_wealth_after_tenure",
+        wealth_label="total wealth after chosen tenure",
+    )
+    plot_first_look_wealth_density(
+        first_look_density_rows,
+        outdir / "first_look_wealth_density.png",
+        wealth_label="liquid wealth b",
+        title="Ergodic mass over the occupied liquid-wealth grid",
+    )
+    plot_first_look_wealth_density(
+        first_look_total_wealth_density_rows,
+        outdir / "first_look_total_wealth_density.png",
+        wealth_label="total wealth = b + liquidated housing value",
+        title="Ergodic mass over occupied total wealth",
+    )
+
+    if quick_first_look_only:
+        return
 
     threshold_rows = owner_entry_threshold_rows(sol, P)
     write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
@@ -501,7 +560,8 @@ def write_core_outputs(
     policy_rows = owner_entry_policy_rows(sol, P, ages=(30.0, 42.0))
     write_csv(outdir / "owner_entry_policy_childless_renter_age30_42.csv", policy_rows)
 
-    write_contact_sheet(outdir)
+    if include_contact_sheet:
+        write_contact_sheet(outdir)
 
 
 def target_fit_rows(
@@ -778,6 +838,8 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
     valid_source = np.asarray(getattr(sol, "V", np.empty_like(c_pol)), dtype=float)
     g = np.asarray(getattr(sol, "g", np.zeros(0)), dtype=float)
     nvec = np.arange(int(P.n_parity), dtype=float)
+    asset_price = owner_asset_price_vector(sol, P)
+    liquidation_discount = 1.0 - float(getattr(P, "psi", 0.0))
     policy_rows: list[dict[str, Any]] = []
     for age in ages:
         j = age_to_index_for_packet(P, float(age))
@@ -798,6 +860,12 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 )
                 owner_prob = owner_probability_from_tenure_probs(tenure_probs, bb, j, zz, tchoice)
                 ergodic_mass = maybe_float(mass_line[bb]) if bb < len(mass_line) else math.nan
+                liquidated_value_after_tenure = liquidated_housing_value(P, asset_price, tchoice, 0)
+                total_wealth_after_tenure = (
+                    float(wealth + liquidated_value_after_tenure)
+                    if math.isfinite(liquidated_value_after_tenure)
+                    else math.nan
+                )
                 policy_rows.append(
                     {
                         "initial_state": "childless_renter",
@@ -805,6 +873,10 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                         "z_index": int(zz),
                         "z": z_value,
                         "liquid_wealth": float(wealth),
+                        "total_wealth_before_choice": float(wealth),
+                        "total_wealth_after_tenure": total_wealth_after_tenure,
+                        "liquidated_housing_value_after_tenure": liquidated_value_after_tenure,
+                        "liquidated_housing_discount_1_minus_psi": liquidation_discount,
                         "consumption": float(c_pol[bb, 0, 0, j, zz, 0, 0]),
                         "renter_housing_policy": renter_housing,
                         "chosen_tenure_index": int(tchoice),
@@ -823,7 +895,6 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
 
     markets = np.arange(int(P.I))
     owner_user_cost = np.asarray(getattr(sol, "owner_user_cost", np.full(P.I, np.nan)), dtype=float).reshape(-1)
-    asset_price = np.asarray(getattr(sol, "owner_asset_price", getattr(sol, "p_eq", np.full(P.I, np.nan))), dtype=float).reshape(-1)
     rental_demand = np.asarray(getattr(sol, "rental_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
     owner_demand = np.asarray(getattr(sol, "owner_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
     supply = np.asarray(getattr(sol, "housing_supply", np.full(P.I, np.nan)), dtype=float).reshape(-1)
@@ -943,6 +1014,29 @@ def maybe_vector_value(values: np.ndarray, index: int) -> float:
     if index >= len(arr):
         return math.nan
     return maybe_float(arr[index])
+
+
+def owner_asset_price_vector(sol: Any, P: Any) -> np.ndarray:
+    fallback = np.full(int(getattr(P, "I", 1)), math.nan)
+    values = getattr(sol, "owner_asset_price", getattr(sol, "p_eq", fallback))
+    arr = np.asarray(values, dtype=float).reshape(-1)
+    return arr if arr.size else fallback
+
+
+def liquidated_housing_value(P: Any, asset_price: np.ndarray, tenure_index: int, market_index: int = 0) -> float:
+    if int(tenure_index) <= 0:
+        return 0.0
+    h_own = np.asarray(getattr(P, "H_own", []), dtype=float).reshape(-1)
+    if h_own.size == 0:
+        return math.nan
+    house_idx = int(np.clip(int(tenure_index) - 1, 0, h_own.size - 1))
+    price = maybe_vector_value(asset_price, market_index)
+    if not math.isfinite(price) and asset_price.size:
+        price = maybe_vector_value(asset_price, 0)
+    if not math.isfinite(price):
+        return math.nan
+    liquidation_discount = 1.0 - float(getattr(P, "psi", 0.0))
+    return float(liquidation_discount * price * h_own[house_idx])
 
 
 def first_threshold(line: np.ndarray, cutoff: float) -> float:
@@ -1074,6 +1168,8 @@ def plot_first_look(
     *,
     mode: str,
     xlim: tuple[float, float] | None = None,
+    wealth_key: str = "liquid_wealth",
+    wealth_label: str = "liquid wealth",
 ) -> None:
     import matplotlib
 
@@ -1100,12 +1196,12 @@ def plot_first_look(
         for z in z_values:
             for age in ages:
                 panel = [r for r in plot_rows if float(r["z"]) == z and float(r["age"]) == age]
-                panel.sort(key=lambda r: float(r["liquid_wealth"]))
-                panel = filter_rows_to_xlim(panel, xlim)
+                panel.sort(key=lambda r: maybe_float(r.get(wealth_key)))
+                panel = filter_rows_to_xlim(panel, xlim, wealth_key=wealth_key)
                 if not panel:
                     continue
                 ax.plot(
-                    [float(r["liquid_wealth"]) for r in panel],
+                    [maybe_float(r.get(wealth_key)) for r in panel],
                     [maybe_float(r[key]) for r in panel],
                     color=color_for_z[z],
                     linestyle=style_for_age[age],
@@ -1113,13 +1209,23 @@ def plot_first_look(
                     label=f"z={z:g}, age={age:g}",
                 )
         ax.set_title(title)
-        ax.set_xlabel("liquid wealth")
+        ax.set_xlabel(wealth_label)
         ax.set_ylabel(ylabel)
         ax.grid(alpha=0.2)
         if xlim is not None:
             ax.set_xlim(*xlim)
 
-    plot_housing_by_tenure(ax_h, plot_rows, z_values, ages, color_for_z, style_for_age, xlim=xlim)
+    plot_housing_by_tenure(
+        ax_h,
+        plot_rows,
+        z_values,
+        ages,
+        color_for_z,
+        style_for_age,
+        xlim=xlim,
+        wealth_key=wealth_key,
+        wealth_label=wealth_label,
+    )
     if xlim is not None:
         ax_h.set_xlim(*xlim)
     plot_market_panel(ax_m, market_rows)
@@ -1128,7 +1234,7 @@ def plot_first_look(
         fig.legend(handles, labels, loc="lower center", ncols=min(3, len(labels)), frameon=False, fontsize=8)
     mode_label = "simple" if mode == "simple" else "full"
     fig.suptitle(
-        f"First-look model mechanics ({mode_label}): policies and housing-market equilibrium",
+        f"First-look model mechanics ({mode_label}, x-axis: {wealth_label}): policies and housing-market equilibrium",
         y=0.985,
     )
     fig.tight_layout(rect=(0.0, 0.07, 1.0, 0.96))
@@ -1136,11 +1242,16 @@ def plot_first_look(
     plt.close(fig)
 
 
-def filter_rows_to_xlim(rows: list[dict[str, Any]], xlim: tuple[float, float] | None) -> list[dict[str, Any]]:
+def filter_rows_to_xlim(
+    rows: list[dict[str, Any]],
+    xlim: tuple[float, float] | None,
+    *,
+    wealth_key: str = "liquid_wealth",
+) -> list[dict[str, Any]]:
     if xlim is None:
         return rows
     lo, hi = xlim
-    return [r for r in rows if lo <= maybe_float(r.get("liquid_wealth")) <= hi]
+    return [r for r in rows if lo <= maybe_float(r.get(wealth_key)) <= hi]
 
 
 def select_first_look_policy_rows(rows: list[dict[str, Any]], *, mode: str) -> list[dict[str, Any]]:
@@ -1153,42 +1264,76 @@ def select_first_look_policy_rows(rows: list[dict[str, Any]], *, mode: str) -> l
     return [r for r in rows if float(r["age"]) in keep_ages and float(r["z"]) in keep_z]
 
 
-def wealth_density_rows(sol: Any, P: Any) -> list[dict[str, Any]]:
+def wealth_density_rows(sol: Any, P: Any, *, wealth_measure: str = "liquid") -> list[dict[str, Any]]:
     g = np.asarray(getattr(sol, "g", np.zeros(0)), dtype=float)
     b_grid = np.asarray(getattr(sol, "b_grid", np.arange(g.shape[0] if g.ndim else 0)), dtype=float).reshape(-1)
     if g.ndim != 7 or g.shape[0] != len(b_grid):
         return []
     total_mass = float(np.sum(g))
+    asset_price = owner_asset_price_vector(sol, P)
+    measure = "total_wealth_net_liquidation" if wealth_measure == "total" else "liquid_wealth"
     group_specs = [
-        ("all", "all", "all", g),
-        ("childless_renter", "childless", "renter", g[:, 0:1, :, :, :, 0:1, :]),
-        ("childless_owner", "childless", "owner", g[:, 1:, :, :, :, 0:1, :]),
-        ("parent_renter", "parent", "renter", g[:, 0:1, :, :, :, 1:, :]),
-        ("parent_owner", "parent", "owner", g[:, 1:, :, :, :, 1:, :]),
+        ("all", "all", "all", range(g.shape[1]), slice(None)),
+        ("childless_renter", "childless", "renter", range(0, min(g.shape[1], 1)), slice(0, 1)),
+        ("childless_owner", "childless", "owner", range(1, g.shape[1]), slice(0, 1)),
+        ("parent_renter", "parent", "renter", range(0, min(g.shape[1], 1)), slice(1, g.shape[5])),
+        ("parent_owner", "parent", "owner", range(1, g.shape[1]), slice(1, g.shape[5])),
     ]
     out: list[dict[str, Any]] = []
-    for group, parent_status, tenure_status, arr in group_specs:
-        mass_by_b = np.sum(arr, axis=tuple(range(1, arr.ndim))) if arr.size else np.zeros_like(b_grid)
-        group_mass = float(np.sum(mass_by_b))
-        for wealth, mass_value in zip(b_grid, mass_by_b):
+    for group, parent_status, tenure_status, tenure_indices, parity_slice in group_specs:
+        mass_by_wealth: dict[float, float] = {}
+        for ten in tenure_indices:
+            for market in range(g.shape[2]):
+                arr = g[:, ten, market, :, :, parity_slice, :]
+                mass_by_b = np.sum(arr, axis=tuple(range(1, arr.ndim))) if arr.size else np.zeros_like(b_grid)
+                housing_shift = (
+                    liquidated_housing_value(P, asset_price, int(ten), int(market))
+                    if wealth_measure == "total"
+                    else 0.0
+                )
+                if not math.isfinite(housing_shift):
+                    continue
+                wealth_values = b_grid + housing_shift
+                for wealth, mass_value in zip(wealth_values, mass_by_b):
+                    wealth_key = float(np.round(float(wealth), 12))
+                    mass_by_wealth[wealth_key] = mass_by_wealth.get(wealth_key, 0.0) + float(mass_value)
+        group_mass = float(sum(mass_by_wealth.values()))
+        for wealth, mass_value in sorted(mass_by_wealth.items()):
             mass = float(mass_value)
             out.append(
                 {
+                    "wealth_measure": measure,
                     "group": group,
                     "parent_status": parent_status,
                     "tenure_status": tenure_status,
-                    "liquid_wealth": float(wealth),
+                    "wealth": float(wealth),
+                    "liquid_wealth": float(wealth) if measure == "liquid_wealth" else math.nan,
+                    "total_wealth": float(wealth) if measure != "liquid_wealth" else math.nan,
                     "ergodic_mass": mass,
                     "population_share": float(mass / total_mass) if total_mass > 1e-14 else math.nan,
                     "within_group_share": float(mass / group_mass) if group_mass > 1e-14 else math.nan,
                     "group_population_share": float(group_mass / total_mass) if total_mass > 1e-14 else math.nan,
                     "total_population_mass": total_mass,
+                    "liquidated_housing_discount_1_minus_psi": 1.0 - float(getattr(P, "psi", 0.0)),
                 }
             )
     return out
 
 
-def plot_first_look_wealth_density(rows: list[dict[str, Any]], path: Path) -> None:
+def row_wealth(row: dict[str, Any]) -> float:
+    wealth = maybe_float(row.get("wealth"))
+    if math.isfinite(wealth):
+        return wealth
+    return maybe_float(row.get("liquid_wealth"))
+
+
+def plot_first_look_wealth_density(
+    rows: list[dict[str, Any]],
+    path: Path,
+    *,
+    wealth_label: str,
+    title: str,
+) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -1196,10 +1341,10 @@ def plot_first_look_wealth_density(rows: list[dict[str, Any]], path: Path) -> No
 
     if not rows:
         return
-    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=lambda r: float(r["liquid_wealth"]))
+    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=row_wealth)
     if not aggregate:
         return
-    xs = np.asarray([maybe_float(r["liquid_wealth"]) for r in aggregate], dtype=float)
+    xs = np.asarray([row_wealth(r) for r in aggregate], dtype=float)
     ys = np.asarray([maybe_float(r["population_share"]) for r in aggregate], dtype=float)
     valid = np.isfinite(xs) & np.isfinite(ys)
     if not np.any(valid):
@@ -1241,7 +1386,7 @@ def plot_first_look_wealth_density(rows: list[dict[str, Any]], path: Path) -> No
     ax_parent.legend(frameon=False, fontsize=8)
 
     for ax in axes:
-        ax.set_xlabel("liquid wealth b")
+        ax.set_xlabel(wealth_label)
         ax.grid(axis="y", alpha=0.2)
     y_max = max(float(np.nanmax(ys)) * 1.15, 1e-12)
     for arr in [renter, owner, childless, parents]:
@@ -1253,7 +1398,7 @@ def plot_first_look_wealth_density(rows: list[dict[str, Any]], path: Path) -> No
     if xlim is not None:
         for ax in axes:
             ax.set_xlim(*xlim)
-    fig.suptitle("Ergodic mass over the occupied liquid-wealth grid", y=0.98)
+    fig.suptitle(title, y=0.98)
     fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.93))
     fig.savefig(path, dpi=180)
     plt.close(fig)
@@ -1265,7 +1410,7 @@ def density_series(rows: list[dict[str, Any]], xs: np.ndarray, groups: list[str]
     for row in rows:
         if str(row.get("group")) not in keep:
             continue
-        wealth = maybe_float(row.get("liquid_wealth"))
+        wealth = row_wealth(row)
         share = maybe_float(row.get("population_share"))
         if math.isfinite(wealth) and math.isfinite(share):
             values[float(wealth)] = values.get(float(wealth), 0.0) + share
@@ -1273,10 +1418,10 @@ def density_series(rows: list[dict[str, Any]], xs: np.ndarray, groups: list[str]
 
 
 def density_xlim_from_rows(rows: list[dict[str, Any]]) -> tuple[float, float] | None:
-    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=lambda r: maybe_float(r["liquid_wealth"]))
+    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=row_wealth)
     if not aggregate:
         return None
-    xs = np.asarray([maybe_float(r["liquid_wealth"]) for r in aggregate], dtype=float)
+    xs = np.asarray([row_wealth(r) for r in aggregate], dtype=float)
     ys = np.asarray([maybe_float(r["population_share"]) for r in aggregate], dtype=float)
     return density_plot_xlim(xs, ys)
 
@@ -1300,10 +1445,10 @@ def density_plot_xlim(xs: np.ndarray, ys: np.ndarray) -> tuple[float, float] | N
 
 
 def wealth_grid_coverage_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=lambda r: maybe_float(r["liquid_wealth"]))
+    aggregate = sorted([r for r in rows if str(r.get("group")) == "all"], key=row_wealth)
     if not aggregate:
         return []
-    xs = np.asarray([maybe_float(r["liquid_wealth"]) for r in aggregate], dtype=float)
+    xs = np.asarray([row_wealth(r) for r in aggregate], dtype=float)
     ys = np.asarray([maybe_float(r["population_share"]) for r in aggregate], dtype=float)
     valid = np.isfinite(xs) & np.isfinite(ys)
     xs = xs[valid]
@@ -1313,11 +1458,13 @@ def wealth_grid_coverage_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]
     n_grid = int(xs.size)
     grid_min = float(np.nanmin(xs)) if xs.size else math.nan
     grid_max = float(np.nanmax(xs)) if xs.size else math.nan
+    wealth_measure = str(aggregate[0].get("wealth_measure", "liquid_wealth"))
     for threshold in [1e-7, 1e-6, 1e-5, 1e-4, 1e-3]:
         keep = ys > threshold
         support = xs[keep]
         out.append(
             {
+                "wealth_measure": wealth_measure,
                 "diagnostic": "per_gridpoint_mass_cutoff",
                 "cutoff_population_share": float(threshold),
                 "grid_points": n_grid,
@@ -1331,16 +1478,17 @@ def wealth_grid_coverage_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]
             }
         )
     intervals = [
-        ("negative_b", -math.inf, 0.0),
-        ("b_0_to_6", 0.0, 6.0),
-        ("b_6_to_10", 6.0, 10.0),
-        ("b_ge_10", 10.0, math.inf),
+        ("negative_b" if wealth_measure == "liquid_wealth" else "negative_total_wealth", -math.inf, 0.0),
+        ("b_0_to_6" if wealth_measure == "liquid_wealth" else "total_wealth_0_to_6", 0.0, 6.0),
+        ("b_6_to_10" if wealth_measure == "liquid_wealth" else "total_wealth_6_to_10", 6.0, 10.0),
+        ("b_ge_10" if wealth_measure == "liquid_wealth" else "total_wealth_ge_10", 10.0, math.inf),
     ]
     for name, lo, hi in intervals:
         keep = (xs >= lo) & (xs < hi)
         occupied = keep & (ys > 0.0)
         out.append(
             {
+                "wealth_measure": wealth_measure,
                 "diagnostic": name,
                 "cutoff_population_share": math.nan,
                 "grid_points": n_grid,
@@ -1364,15 +1512,17 @@ def plot_housing_by_tenure(
     color_for_z: dict[float, Any],
     style_for_age: dict[float, str],
     xlim: tuple[float, float] | None = None,
+    wealth_key: str = "liquid_wealth",
+    wealth_label: str = "liquid wealth",
 ) -> None:
     for z in z_values:
         for age in ages:
             panel = [r for r in rows if float(r["z"]) == z and float(r["age"]) == age]
-            panel.sort(key=lambda r: float(r["liquid_wealth"]))
-            panel = filter_rows_to_xlim(panel, xlim)
+            panel.sort(key=lambda r: maybe_float(r.get(wealth_key)))
+            panel = filter_rows_to_xlim(panel, xlim, wealth_key=wealth_key)
             if not panel:
                 continue
-            xs = [float(r["liquid_wealth"]) for r in panel]
+            xs = [maybe_float(r.get(wealth_key)) for r in panel]
             renter_y = [
                 maybe_float(r["housing_services_after_tenure"]) if str(r.get("chosen_tenure")) == "renter" else math.nan
                 for r in panel
@@ -1393,7 +1543,7 @@ def plot_housing_by_tenure(
                 alpha=0.9,
             )
     ax.set_title("Housing by tenure choice")
-    ax.set_xlabel("liquid wealth")
+    ax.set_xlabel(wealth_label)
     ax.set_ylabel("housing services")
     ax.grid(alpha=0.2)
     ax.text(
@@ -1582,7 +1732,10 @@ def write_contact_sheet(outdir: Path) -> None:
     candidates = [
         outdir / "first_look_policies_markets.png",
         outdir / "first_look_wealth_density.png",
+        outdir / "first_look_policies_markets_total_wealth.png",
+        outdir / "first_look_total_wealth_density.png",
         outdir / "first_look_policies_markets_full.png",
+        outdir / "first_look_policies_markets_total_wealth_full.png",
         outdir / "diagnostics/ownership_by_age.png",
         outdir / "diagnostics/policy_childless_renter_age30.png",
         outdir / "diagnostics/policy_childless_renter_age42.png",
@@ -1652,8 +1805,11 @@ def write_readme(
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
             "- `first_look_policies_markets.png`: simpler 2-by-2 inspection panel using two income states and two ages.",
             "- `first_look_policies_markets_full.png`: fuller version with all selected income states and ages.",
+            "- `first_look_policies_markets_total_wealth.png` and `_full.png`: same first-look policy panels with the policy x-axis set to liquid wealth plus net liquidated housing value after the chosen tenure branch.",
             "- `first_look_wealth_density.png` and `.csv`: aggregate ergodic mass over liquid wealth `b`, plus non-stacked renter/owner and childless/parent density panels.",
+            "- `first_look_total_wealth_density.png` and `.csv`: same density diagnostics over total wealth `b + (1 - psi) p H` for owners and `b` for renters.",
             "- `wealth_grid_coverage.csv`: how much of the liquid-wealth grid is economically occupied under several mass thresholds.",
+            "- `total_wealth_grid_coverage.csv`: occupied support under the total-wealth definition.",
             "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panels, including chosen tenure, ergodic mass, and house-price/user-cost accounting.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
