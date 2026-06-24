@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>June 2026 Intergen Housing-Fertility Model Guide</title>
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --panel: #ffffff;
+      --ink: #1d2428;
+      --muted: #667176;
+      --line: #d9dedb;
+      --green: #1f7a59;
+      --blue: #2f5f98;
+      --red: #a8463d;
+      --yellow: #8a6b1f;
+      --shadow: 0 10px 24px rgba(29, 36, 40, 0.08);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre, .mono { font-family: var(--mono); }
+    code {
+      background: #eef1ef;
+      padding: 0.12rem 0.32rem;
+      border-radius: 4px;
+      font-size: 0.92em;
+    }
+    pre {
+      background: #172126;
+      color: #eef8f2;
+      padding: 1rem;
+      border-radius: 7px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+    .shell { color: #d8efe3; }
+
+    header {
+      background: #152227;
+      color: #f7fbf8;
+      border-bottom: 6px solid var(--green);
+    }
+    .hero {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 1.5rem;
+    }
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9fc8b5;
+      margin-bottom: 0.6rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: 0;
+      max-width: 980px;
+    }
+    .subtitle {
+      max-width: 900px;
+      color: #d4ded8;
+      font-size: 1.06rem;
+      margin: 1rem 0 0;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.4rem;
+    }
+    .hero-stat {
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 7px;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.05);
+    }
+    .hero-stat b { display: block; color: #fff; font-size: 1rem; }
+    .hero-stat span { color: #bfd0c7; font-size: 0.86rem; }
+
+    .layout {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 1rem;
+      padding: 1rem 1.25rem 3rem;
+    }
+    nav {
+      position: sticky;
+      top: 0.75rem;
+      align-self: start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 0.75rem;
+      max-height: calc(100vh - 1.5rem);
+      overflow: auto;
+    }
+    nav .nav-title {
+      font-weight: 700;
+      margin: 0.25rem 0 0.6rem;
+    }
+    nav a {
+      display: block;
+      padding: 0.42rem 0.5rem;
+      border-radius: 5px;
+      color: var(--ink);
+      font-size: 0.94rem;
+    }
+    nav a:hover { background: #eef1ef; text-decoration: none; }
+
+    main { min-width: 0; }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    h2 {
+      margin: 0 0 0.8rem;
+      font-size: 1.45rem;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 1.1rem 0 0.45rem;
+      font-size: 1.05rem;
+    }
+    p { margin: 0.55rem 0; }
+    ul { margin-top: 0.4rem; padding-left: 1.2rem; }
+    li { margin: 0.25rem 0; }
+
+    .callout {
+      border-left: 4px solid var(--blue);
+      background: #eef4fa;
+      padding: 0.75rem 0.9rem;
+      border-radius: 6px;
+      margin: 0.75rem 0;
+    }
+    .callout.warn {
+      border-left-color: var(--yellow);
+      background: #fbf5df;
+    }
+    .callout.danger {
+      border-left-color: var(--red);
+      background: #fbebe9;
+    }
+    .callout.good {
+      border-left-color: var(--green);
+      background: #eaf6f0;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0 0 1rem;
+    }
+    .tab-button, .small-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font: inherit;
+    }
+    .tab-button.active {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      margin: 0.6rem 0;
+      background: #fff;
+    }
+    summary {
+      cursor: pointer;
+      padding: 0.75rem 0.85rem;
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    details[open] summary { border-bottom: 1px solid var(--line); }
+    .detail-body { padding: 0.2rem 0.85rem 0.85rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 0.85rem;
+      background: #fff;
+    }
+    .card h3 { margin-top: 0; }
+    .muted { color: var(--muted); }
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 0.16rem 0.45rem;
+      font-size: 0.76rem;
+      background: #e9eeeb;
+      color: #344044;
+      margin: 0.1rem 0.15rem 0.1rem 0;
+      white-space: nowrap;
+    }
+    .tag.green { background: #dff2e9; color: #13573c; }
+    .tag.red { background: #f7dfdc; color: #7a2b24; }
+    .tag.blue { background: #e3edf8; color: #244f80; }
+    .tag.yellow { background: #f6edcd; color: #6d5213; }
+
+    .search-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    input[type="search"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 0.65rem 0.75rem;
+      font: inherit;
+      background: #fff;
+    }
+    .module-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .module-card.hidden { display: none; }
+    .path {
+      display: block;
+      color: var(--blue);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      word-break: break-all;
+      margin-bottom: 0.45rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.7rem 0;
+      font-size: 0.92rem;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 0.55rem 0.45rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #f0f3f1; font-weight: 700; }
+    td.num { text-align: right; font-family: var(--mono); }
+
+    .flow-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcfb;
+      padding: 0.75rem;
+    }
+    svg text {
+      font-family: var(--sans);
+      fill: var(--ink);
+      font-size: 13px;
+    }
+    .node { fill: #fff; stroke: #9cafb1; stroke-width: 1.4; }
+    .node.run { fill: #eaf6f0; stroke: #1f7a59; }
+    .node.out { fill: #eef4fa; stroke: #2f5f98; }
+    .node.warn { fill: #fbf5df; stroke: #8a6b1f; }
+    .arrow { stroke: #6e7a7f; stroke-width: 1.7; marker-end: url(#arrow); fill: none; }
+
+    .math {
+      background: #f8faf8;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 0.75rem;
+      margin: 0.6rem 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+    }
+    .math .label {
+      display: block;
+      font-family: var(--sans);
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; max-height: none; }
+      .hero-grid, .grid, .grid.three, .module-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="eyebrow">Diagnostic guide generated 2026-06-24</div>
+      <h1>Active June 2026 One-Market Intergenerational Housing-Fertility Model</h1>
+      <p class="subtitle">
+        A self-contained browser guide to the one-file runner, diagnostic packet, code architecture,
+        and high-level mathematics of the current no-location intergenerational model. This guide
+        describes the active diagnostic workflow; it does not certify the model as a production SMM calibration.
+      </p>
+      <div class="hero-grid">
+        <div class="hero-stat"><b>Entry point</b><span>code/model/run_intergen_model.py</span></div>
+        <div class="hero-stat"><b>Model package</b><span>code/model/intergen_housing_fertility/</span></div>
+        <div class="hero-stat"><b>Output packet</b><span>output/model/intergen_model_run_current/</span></div>
+        <div class="hero-stat"><b>Status</b><span>diagnostic, not production calibration</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav aria-label="Guide navigation">
+      <div class="nav-title">Guide</div>
+      <a href="#quickstart">Quick Start</a>
+      <a href="#graphs">Where The Graphs Are</a>
+      <a href="#interactive">Interactive Map</a>
+      <a href="#workflow">Run Workflow</a>
+      <a href="#architecture">Code Architecture</a>
+      <a href="#math">Math Objects</a>
+      <a href="#outputs">Outputs And Results</a>
+      <a href="#gotchas">Warnings And Gotchas</a>
+      <a href="#sources">Grounding Sources</a>
+    </nav>
+
+    <main>
+      <section id="quickstart">
+        <h2>Quick Start</h2>
+        <div class="callout good">
+          Open <code>code/model/run_intergen_model.py</code> and run that one file. In Terminal,
+          the equivalent command is:
+        </div>
+        <pre><span class="shell">python code/model/run_intergen_model.py</span></pre>
+        <p>
+          The runner is designed for the question: "run the model and show me the current results."
+          It solves the saved current diagnostic theta, writes a diagnostic mechanics packet, prints a
+          start/end timer, and then loads the main output tables into global variables for Spyder.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Current Hard-Coded Run Settings</h3>
+            <table>
+              <tr><th>Setting</th><th>Value</th></tr>
+              <tr><td>Source theta</td><td><code>output/model/intergen_room_distribution_current_best_20260623/summary.json</code></td></tr>
+              <tr><td>Output folder</td><td><code>output/model/intergen_model_run_current</code></td></tr>
+              <tr><td>Target set</td><td><code>candidate_replacement_young_old_roomgap_v1</code></td></tr>
+              <tr><td>Lifecycle periods</td><td><code>J = 16</code></td></tr>
+              <tr><td>Wealth grid</td><td><code>Nb = 60</code></td></tr>
+              <tr><td>Income states</td><td><code>Nz = 5</code></td></tr>
+              <tr><td>Owner ladder</td><td><code>H_own = [2, 4, 6, 8, 10]</code></td></tr>
+              <tr><td>Renter cap</td><td><code>hR_max = 8.0</code></td></tr>
+              <tr><td>Equilibrium iterations</td><td><code>max_iter_eq = 10</code></td></tr>
+              <tr><td>Policy cases</td><td><code>RUN_POLICY_CASES = False</code></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Spyder Variable Explorer</h3>
+            <p>After the file finishes, the runner exposes these globals for inspection:</p>
+            <p>
+              <span class="tag green">solution_summary</span>
+              <span class="tag green">moments</span>
+              <span class="tag green">target_fit</span>
+              <span class="tag green">age_profiles</span>
+              <span class="tag green">room_bin_fit</span>
+              <span class="tag blue">output_folder</span>
+              <span class="tag blue">readme_path</span>
+              <span class="tag blue">contact_sheet_path</span>
+            </p>
+            <p>
+              The Spyder-safe design keeps Spyder's kernel alive and calls
+              <code>code/model/.venv/bin/python</code> in a subprocess for the actual solve.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="graphs">
+        <h2>Where The Graphs Are</h2>
+        <p>
+          The one-file run writes graphs and tables under
+          <code>output/model/intergen_model_run_current/</code>. Start with the contact sheet, then open
+          individual diagnostics as needed.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Start Here</h3>
+            <ul>
+              <li><code>output/model/intergen_model_run_current/contact_sheet.png</code>: quick visual index.</li>
+              <li><code>output/model/intergen_model_run_current/README.md</code>: human-readable packet summary.</li>
+              <li><code>output/model/intergen_model_run_current/target_fit.md</code>: target/model/gap table.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Graph Packet</h3>
+            <ul>
+              <li><code>age_profiles.png</code>: lifecycle ownership, fertility, housing, wealth.</li>
+              <li><code>room_bin_shares_prime30_55_childless.png</code>: model vs ACS room-bin shares.</li>
+              <li><code>owner_rung_shares_prime30_55_childless.png</code>: owner ladder concentration.</li>
+              <li><code>owner_entry_thresholds.png</code>: owner-entry thresholds by age/income state.</li>
+              <li><code>diagnostics/*.png</code>: standard model diagnostics and policy-function slices.</li>
+            </ul>
+          </div>
+        </div>
+        <details open>
+          <summary>Individual files currently written by the runner</summary>
+          <div class="detail-body">
+            <table>
+              <tr><th>File</th><th>What to inspect</th></tr>
+              <tr><td><code>diagnostics/housing_market.png</code></td><td>Housing demand, supply, and market level.</td></tr>
+              <tr><td><code>diagnostics/housing_prices.png</code></td><td>Equilibrium housing asset/user-cost prices.</td></tr>
+              <tr><td><code>diagnostics/market_clearing_by_market.png</code></td><td>Demand and supply by market. Here there is only one market.</td></tr>
+              <tr><td><code>diagnostics/market_clearing_residuals.png</code></td><td>Relative excess demand residuals.</td></tr>
+              <tr><td><code>diagnostics/ownership_by_age.png</code></td><td>Lifecycle ownership profile.</td></tr>
+              <tr><td><code>diagnostics/ownership_by_age_income_state.png</code></td><td>Lifecycle ownership by Markov income state.</td></tr>
+              <tr><td><code>diagnostics/housing_by_age_income_state.png</code></td><td>Housing services by age and income state.</td></tr>
+              <tr><td><code>diagnostics/liquid_wealth_by_age_income_state.png</code></td><td>Liquid wealth profiles by income state.</td></tr>
+              <tr><td><code>diagnostics/fertility_by_age.png</code></td><td>Fertility by age.</td></tr>
+              <tr><td><code>diagnostics/fertility_policy_by_age_income_state.png</code></td><td>Expected fertility policy by age/income state.</td></tr>
+              <tr><td><code>diagnostics/income_state_outcomes.png</code></td><td>Outcome bars by income state.</td></tr>
+              <tr><td><code>diagnostics/owner_rungs.png</code></td><td>Owner demand by discrete owner rung.</td></tr>
+              <tr><td><code>diagnostics/tenure_services.png</code></td><td>Renter vs owner housing-services use.</td></tr>
+              <tr><td><code>diagnostics/policy_childless_renter_age30.png</code></td><td>Age-30 childless-renter policy functions over liquid wealth.</td></tr>
+              <tr><td><code>diagnostics/policy_childless_renter_age42.png</code></td><td>Age-42 childless-renter policy functions over liquid wealth.</td></tr>
+              <tr><td><code>diagnostics/wealth_dist_childless_renter_age30.png</code></td><td>Wealth distribution for age-30 childless renters.</td></tr>
+              <tr><td><code>diagnostics/wealth_dist_childless_renter_age42.png</code></td><td>Wealth distribution for age-42 childless renters.</td></tr>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section id="interactive">
+        <h2>Interactive Map</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab-button active" data-tab="tab-flow" type="button">Flow</button>
+          <button class="tab-button" data-tab="tab-files" type="button">Files</button>
+          <button class="tab-button" data-tab="tab-math" type="button">Math</button>
+          <button class="tab-button" data-tab="tab-check" type="button">Checklist</button>
+        </div>
+
+        <div id="tab-flow" class="tab-panel active">
+          <div class="flow-wrap">
+            <svg width="1040" height="520" viewBox="0 0 1040 520" role="img" aria-label="Run and data flow diagram">
+              <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#6e7a7f"></path>
+                </marker>
+              </defs>
+              <rect class="node run" x="30" y="40" width="210" height="74" rx="8"></rect>
+              <text x="50" y="70">run_intergen_model.py</text>
+              <text x="50" y="92">one-file runner</text>
+
+              <rect class="node" x="300" y="28" width="220" height="98" rx="8"></rect>
+              <text x="320" y="58">build_intergen_mechanics_packet.py</text>
+              <text x="320" y="80">loads theta, grid, targets</text>
+              <text x="320" y="102">calls solver and diagnostics</text>
+
+              <rect class="node" x="590" y="28" width="185" height="98" rx="8"></rect>
+              <text x="610" y="58">calibration.py</text>
+              <text x="610" y="80">base_overrides</text>
+              <text x="610" y="102">target set, moments, loss</text>
+
+              <rect class="node" x="825" y="40" width="185" height="74" rx="8"></rect>
+              <text x="845" y="70">summary.json</text>
+              <text x="845" y="92">current theta source</text>
+
+              <rect class="node" x="300" y="180" width="220" height="98" rx="8"></rect>
+              <text x="320" y="210">solver.py</text>
+              <text x="320" y="232">run_model_cp_dt</text>
+              <text x="320" y="254">GE price clearing</text>
+
+              <rect class="node" x="590" y="180" width="185" height="98" rx="8"></rect>
+              <text x="610" y="210">parameters.py</text>
+              <text x="610" y="232">defaults, overrides</text>
+              <text x="610" y="254">grids and primitives</text>
+
+              <rect class="node" x="825" y="180" width="185" height="98" rx="8"></rect>
+              <text x="845" y="210">kernels.py</text>
+              <text x="845" y="232">Numba value/transition</text>
+              <text x="845" y="254">helper kernels</text>
+
+              <rect class="node out" x="300" y="340" width="220" height="116" rx="8"></rect>
+              <text x="320" y="370">output/model/</text>
+              <text x="320" y="392">solution_summary.json</text>
+              <text x="320" y="414">target_fit.csv/md</text>
+              <text x="320" y="436">contact_sheet.png</text>
+
+              <rect class="node out" x="590" y="340" width="185" height="116" rx="8"></rect>
+              <text x="610" y="370">diagnostics.py</text>
+              <text x="610" y="392">standard PNG packet</text>
+              <text x="610" y="414">policies, markets, age</text>
+              <text x="610" y="436">summary.json</text>
+
+              <rect class="node warn" x="825" y="340" width="185" height="116" rx="8"></rect>
+              <text x="845" y="370">Interpretation</text>
+              <text x="845" y="392">diagnostic point only</text>
+              <text x="845" y="414">not production SMM</text>
+              <text x="845" y="436">inspect mechanisms</text>
+
+              <path class="arrow" d="M240 77 H300"></path>
+              <path class="arrow" d="M520 77 H590"></path>
+              <path class="arrow" d="M775 77 H825"></path>
+              <path class="arrow" d="M410 126 V180"></path>
+              <path class="arrow" d="M520 229 H590"></path>
+              <path class="arrow" d="M775 229 H825"></path>
+              <path class="arrow" d="M410 278 V340"></path>
+              <path class="arrow" d="M520 398 H590"></path>
+              <path class="arrow" d="M775 398 H825"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div id="tab-files" class="tab-panel">
+          <p>Use the search box in the architecture section to filter modules and terms.</p>
+          <p class="muted">Primary path: runner -> packet builder -> calibration helpers -> solver/parameters/kernels -> diagnostics/output.</p>
+        </div>
+
+        <div id="tab-math" class="tab-panel">
+          <p>
+            The model is solved numerically over a discretized state space. Compact equations in this guide
+            are schematic summaries of the implemented Bellman and equilibrium objects, not a substitute for
+            line-by-line verification in <code>solver.py</code>.
+          </p>
+        </div>
+
+        <div id="tab-check" class="tab-panel">
+          <ul>
+            <li>Run <code>python code/model/run_intergen_model.py</code>.</li>
+            <li>Open <code>output/model/intergen_model_run_current/contact_sheet.png</code>.</li>
+            <li>Read <code>target_fit.md</code> with targets next to model moments.</li>
+            <li>Inspect lifecycle ownership, room-bin fit, owner-rung concentration, and owner-entry policies.</li>
+            <li>Do not call the current point a production calibration.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="workflow">
+        <h2>Run Workflow</h2>
+        <details open>
+          <summary>1. The one-file runner</summary>
+          <div class="detail-body">
+            <p>
+              <code>run_intergen_model.py</code> is deliberately short and legible. Its top constants define the
+              source record, output folder, target set, grid, equilibrium iteration cap, and whether to run optional
+              proof-of-concept policy cases. It then builds a subprocess command against
+              <code>tools/build_intergen_mechanics_packet.py</code>.
+            </p>
+            <p>
+              The runner prints the start time, source theta path, output folder, target set, Python interpreter,
+              grid, and <code>max_iter_eq</code>. At completion it prints a runtime and the first files to open.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>2. The mechanics packet builder</summary>
+          <div class="detail-body">
+            <p>
+              <code>build_intergen_mechanics_packet.py</code> loads theta from JSON or CSV, resolves the grid,
+              fetches targets and weights with <code>get_target_set</code>, solves the model with
+              <code>run_model_cp_dt</code>, extracts moments, computes the diagnostic loss, and writes plots/tables.
+            </p>
+            <p>
+              The default source is the June 23 saved current/balanced diagnostic theta:
+              <code>output/model/intergen_room_distribution_current_best_20260623/summary.json</code>.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>3. The active target set</summary>
+          <div class="detail-body">
+            <p>
+              The one-file runner uses <code>candidate_replacement_young_old_roomgap_v1</code>. In
+              <code>calibration.py</code>, this target set extends the candidate replacement system with young
+              ownership, old ownership/retention objects, and the childless owner-renter mean room gap.
+            </p>
+            <table>
+              <tr><th>Target moment</th><th>Target value</th></tr>
+              <tr><td><code>tfr</code></td><td class="num">1.70</td></tr>
+              <tr><td><code>childless_rate</code></td><td class="num">0.15</td></tr>
+              <tr><td><code>own_rate</code></td><td class="num">0.57547241</td></tr>
+              <tr><td><code>own_family_gap</code></td><td class="num">0.16766167</td></tr>
+              <tr><td><code>housing_increment_0to1</code></td><td class="num">0.66443467</td></tr>
+              <tr><td><code>housing_increment_1to2</code></td><td class="num">0.48803143</td></tr>
+              <tr><td><code>young_liquid_wealth_to_income</code></td><td class="num">0.17922556</td></tr>
+              <tr><td><code>old_nonhousing_wealth_to_income_median_6575</code></td><td class="num">2.23046078</td></tr>
+              <tr><td><code>old_parent_childless_nonhousing_wealth_to_income_gap_6575</code></td><td class="num">1.00744952</td></tr>
+              <tr><td><code>prime30_55_childless_renter_mean_rooms</code></td><td class="num">3.80528810</td></tr>
+              <tr><td><code>prime30_55_childless_owner_mean_rooms</code></td><td class="num">6.22404983</td></tr>
+              <tr><td><code>prime30_55_childless_renter_share_rooms_ge6</code></td><td class="num">0.13765221</td></tr>
+              <tr><td><code>prime30_55_childless_owner_share_rooms_ge6</code></td><td class="num">0.59613112</td></tr>
+              <tr><td><code>old_age_own_rate</code></td><td class="num">0.76426097</td></tr>
+              <tr><td><code>old_age_parent_childless_gap</code></td><td class="num">0.08254406</td></tr>
+              <tr><td><code>own_rate_2534</code></td><td class="num">0.34116609</td></tr>
+              <tr><td><code>prime30_55_childless_owner_minus_renter_mean_rooms</code></td><td class="num">2.41876173</td></tr>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section id="architecture">
+        <h2>Code Architecture</h2>
+        <div class="search-row">
+          <input id="moduleSearch" type="search" placeholder="Search modules, functions, concepts, outputs...">
+          <button class="small-button" id="clearSearch" type="button">Clear</button>
+        </div>
+        <div class="module-list" id="moduleList">
+          <div class="card module-card" data-search="runner one file spyder subprocess timer source theta output target grid run_intergen_model">
+            <span class="path">code/model/run_intergen_model.py</span>
+            <h3>One-File Runner</h3>
+            <p>Owns the user-facing run workflow. Lists current settings at the top, calls the packet builder in the model venv, prints timing, and loads Spyder globals.</p>
+            <p><span class="tag green">main</span><span class="tag">format_elapsed</span><span class="tag">load_outputs_for_spyder</span></p>
+          </div>
+          <div class="card module-card" data-search="mechanics packet output diagnostics target fit room bins owner rung thresholds policy cases">
+            <span class="path">code/model/tools/build_intergen_mechanics_packet.py</span>
+            <h3>Diagnostic Packet Builder</h3>
+            <p>Loads a saved theta, resolves grid overrides, solves the model, writes target-fit tables, room-bin plots, lifecycle profiles, entry thresholds, contact sheet, and optional policy cases.</p>
+            <p><span class="tag green">solve_candidate</span><span class="tag">write_core_outputs</span><span class="tag">write_policy_cases</span></p>
+          </div>
+          <div class="card module-card" data-search="parameters primitives lifecycle income grids child states housing finance pti downpayment supply defaults overrides">
+            <span class="path">code/model/intergen_housing_fertility/parameters.py</span>
+            <h3>Parameters And Primitives</h3>
+            <p>Defines default parameters, lifecycle timing, income process defaults, housing ladder, finance constraints, supply shifter, grids, and override logic.</p>
+            <p><span class="tag">setup_parameters</span><span class="tag">apply_overrides</span><span class="tag">make_child_transition_matrix</span></p>
+          </div>
+          <div class="card module-card" data-search="solver equilibrium bellman price clearing markov income forward distribution moments statistics">
+            <span class="path">code/model/intergen_housing_fertility/solver.py</span>
+            <h3>Solver</h3>
+            <p>Owns the numerical model: parameter setup, GE/PE routing, one-market price refinement, Bellman solution, forward distribution, and moment/statistic construction.</p>
+            <p><span class="tag green">run_model_cp_dt</span><span class="tag">solve_markov_income_equilibrium</span><span class="tag">solve_bellman_full_markov_income</span></p>
+          </div>
+          <div class="card module-card" data-search="calibration targets weights loss moments base overrides theta local panel diagnostic smm">
+            <span class="path">code/model/intergen_housing_fertility/calibration.py</span>
+            <h3>Targets, Overrides, Loss</h3>
+            <p>Defines target systems, base one-market overrides, candidate draws, moment extraction, housing user-cost share, and diagnostic squared-error loss.</p>
+            <p><span class="tag">base_overrides</span><span class="tag">extract_moments</span><span class="tag">get_target_set</span><span class="tag">diagnostic_loss</span></p>
+          </div>
+          <div class="card module-card" data-search="diagnostics plots png summary policy functions markets ownership fertility wealth age income state">
+            <span class="path">code/model/intergen_housing_fertility/diagnostics.py</span>
+            <h3>Diagnostic Plots</h3>
+            <p>Writes standard PNG diagnostics and JSON summary: market clearing, prices, ownership, fertility, wealth, housing, income-state outcomes, and childless-renter policy slices.</p>
+            <p><span class="tag">write_diagnostics</span><span class="tag">write_policy_diagnostics</span><span class="tag">plot_policy_childless_renter</span></p>
+          </div>
+          <div class="card module-card" data-search="kernels numba bellman interpolation distribution tenure logit renter owner performance">
+            <span class="path">code/model/intergen_housing_fertility/kernels.py</span>
+            <h3>Numerical Kernels</h3>
+            <p>Numba-oriented kernels for interpolation, renter/owner value blocks, tenure logit, location logit, and fast forward distribution.</p>
+            <p><span class="tag">full_renter_block_kernel</span><span class="tag">full_owner_block_kernel</span><span class="tag">forward_distribution_fast_kernel</span></p>
+          </div>
+          <div class="card module-card" data-search="utils interpolation grid quantile weighted median namespace scatter logsumexp">
+            <span class="path">code/model/intergen_housing_fertility/utils.py</span>
+            <h3>Shared Utilities</h3>
+            <p>Grid construction, interpolation helpers, weighted quantiles, redistribution/scatter helpers, and log-sum-exp.</p>
+            <p><span class="tag">make_grid</span><span class="tag">interp_on_grid</span><span class="tag">weighted_quantile</span></p>
+          </div>
+          <div class="card module-card" data-search="cli smoke solve diagnostics local panel global de command line">
+            <span class="path">code/model/intergen_housing_fertility/cli.py</span>
+            <h3>Package CLI</h3>
+            <p>Direct command-line interface for smoke solves, diagnostics, local panels, and global DE panels. The one-file runner is the preferred current-model entry point for routine inspection.</p>
+            <p><span class="tag">smoke</span><span class="tag">solve</span><span class="tag">diagnostics</span><span class="tag">global-de-panel</span></p>
+          </div>
+          <div class="card module-card" data-search="local panel cluster diagnostic search differential evolution candidates income process overrides">
+            <span class="path">code/model/intergen_housing_fertility/local_panel.py</span>
+            <h3>Diagnostic Search Tools</h3>
+            <p>Local and global-DE diagnostic search machinery, income-state override construction, checkpointing, and panel plots. Not the one-file run path unless launching search experiments.</p>
+            <p><span class="tag yellow">diagnostic only</span><span class="tag">income_process_overrides</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section id="math">
+        <h2>Math Objects</h2>
+        <div class="callout warn">
+          Equations below are high-level and schematic. The implemented model is a discretized Bellman problem with
+          Markov income, child-state transitions, Type-I-EV smoothing over discrete choices, and numerical interpolation.
+          Use the code for exact feasibility screens and transition order.
+        </div>
+        <details open>
+          <summary>State space and timing</summary>
+          <div class="detail-body">
+            <p>
+              A household state can be summarized schematically as
+              <code>s = (b, ten, i, j, z, n, c_s)</code>, where <code>b</code> is liquid wealth,
+              <code>ten</code> is current tenure/rung, <code>i</code> is market/location. In the active strand
+              <code>I=1</code>, so location is mechanically present but economically degenerate. <code>j</code>
+              is age period, <code>z</code> is Markov income state, <code>n</code> is completed fertility/parity,
+              and <code>c_s</code> is child stage.
+            </p>
+            <div class="math">
+              <span class="label">Lifecycle</span>
+              Decision periods are four years: age 22, 26, ..., 82, with <code>J=16</code>. Fertility choices are available over the configured fertile window, roughly ages 26 to 42.
+            </div>
+          </div>
+        </details>
+        <details>
+          <summary>Preferences and household problem</summary>
+          <div class="detail-body">
+            <p>
+              The exact utility terms are implemented in the Bellman code and kernels. At a high level, the per-period
+              payoff trades off consumption, housing services, fertility/child states, tenure frictions, and bequest motives.
+            </p>
+            <div class="math">
+              <span class="label">Schematic Bellman</span>
+              V_j(s) = max over savings, housing/tenure, fertility, and market choices of
+              u(c, h; n, c_s) + fertility terms + discrete-choice smoothing + beta E[V_{j+1}(s') | s, choices].
+            </div>
+            <p>
+              Fertility remains a one-shot completed-family choice for childless fertile households. It is not a sequential
+              second-birth hazard model. The reported <code>tfr</code> uses the project convention
+              <code>tfr = 2 * mean_completed_fertility</code>.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Housing and tenure</summary>
+          <div class="detail-body">
+            <p>
+              Renters choose continuous housing services up to <code>hR_max</code>. Owners choose from the discrete ladder
+              <code>H_own</code>. Active current run: <code>[2, 4, 6, 8, 10]</code>.
+            </p>
+            <div class="math">
+              <span class="label">Renter object, schematic</span>
+              h_R in [0, hR_max], with flow housing cost proportional to the user cost/rent object.
+            </div>
+            <div class="math">
+              <span class="label">Owner object, schematic</span>
+              h_O in H_own, owner flow cost includes depreciation/property-tax style costs and a financed-share constraint.
+            </div>
+            <p>
+              The down-payment screen uses <code>phi</code> as the financed share. Therefore the down-payment threshold is
+              <code>(1 - phi) P h</code>, not <code>phi P h</code>.
+            </p>
+            <p>
+              New owner choices also face a payment-to-income screen. In the current implementation this blocks purchases
+              or adjustments when the simplified interest-plus-tax payment exceeds <code>pti_limit * y</code>. Incumbent
+              owners keeping the same rung do not requalify each period.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Income, children, and transitions</summary>
+          <div class="detail-body">
+            <p>
+              The active one-file runner uses five Markov income states through
+              <code>income_process_overrides(5)</code>. Income is age-specific and multiplied by the current income state
+              during working ages; retirement income is the common pension flow in the current simplification.
+            </p>
+            <div class="math">
+              <span class="label">Markov income</span>
+              z' ~ Pi_z(z' | z), and y_{j,z} = z * y_j for working-age states.
+            </div>
+            <p>
+              Children age through a single dependent-child stage with geometric maturation calibrated to an expected
+              18-year child-at-home duration under four-year decision periods.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Market clearing and pricing</summary>
+          <div class="detail-body">
+            <p>
+              The active strand has one aggregate housing-services market. The code clears housing demand against an
+              upward-sloping supply curve and uses a user-cost relationship in stationarity.
+            </p>
+            <div class="math">
+              <span class="label">User cost relation</span>
+              q = (r + delta + tau^p) P.
+            </div>
+            <div class="math">
+              <span class="label">Supply relation</span>
+              H^S(P) = H0 * (q / q_bar)^eta. The implemented one-market update computes a target price from current aggregate housing demand and supply primitives.
+            </div>
+            <p>
+              In <code>solve_markov_income_equilibrium</code>, the code iterates prices, tracks the best market residual,
+              and then applies a scalar one-market refinement when enabled.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Objective and diagnostic moments</summary>
+          <div class="detail-body">
+            <p>
+              The packet computes a diagnostic squared-error loss over the active target set:
+            </p>
+            <div class="math">
+              <span class="label">Diagnostic loss</span>
+              L(theta) = sum_m w_m [moment_m(theta) - target_m]^2, plus a penalty if the market residual is missing or too large.
+            </div>
+            <p>
+              This is used for ranking/diagnosis. The current run is not a production SMM calibration, and results should
+              be interpreted as mechanism diagnostics.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <section id="outputs">
+        <h2>Outputs And Current Run Results</h2>
+        <div class="grid three">
+          <div class="card">
+            <h3>Current Packet Summary</h3>
+            <p><span class="tag blue">rank_loss 42.6508</span></p>
+            <p><span class="tag green">market residual 9.93e-05</span></p>
+            <p><span class="tag">elapsed_sec 54.86 in saved summary</span></p>
+          </div>
+          <div class="card">
+            <h3>Headline Fit</h3>
+            <p>The generated README reports TFR near target and ownership close to target, but childlessness, old-age ownership, and childless owner-renter room separation remain important misses.</p>
+          </div>
+          <div class="card">
+            <h3>Current Interpretation</h3>
+            <p>Use this packet to inspect mechanisms, not to report final calibrated quantitative results.</p>
+          </div>
+        </div>
+        <details open>
+          <summary>Packet file meanings</summary>
+          <div class="detail-body">
+            <table>
+              <tr><th>Artifact</th><th>Purpose</th></tr>
+              <tr><td><code>metadata.json</code></td><td>Run metadata, source record, target set, weights, grid.</td></tr>
+              <tr><td><code>solution_summary.json</code></td><td>Theta, prices, loss, residual, elapsed seconds, model moments.</td></tr>
+              <tr><td><code>moments.json</code></td><td>Extracted model moment dictionary.</td></tr>
+              <tr><td><code>target_fit.csv/md</code></td><td>Target, model, gap, weight, and loss contribution for each active moment.</td></tr>
+              <tr><td><code>room_bin_fit_prime30_55_childless.csv</code></td><td>Model vs ACS room-bin shares for prime-age childless renters/owners.</td></tr>
+              <tr><td><code>owner_entry_policy_childless_renter_age30_42.csv</code></td><td>Owner-entry policy lines over liquid wealth for selected ages.</td></tr>
+              <tr><td><code>diagnostics/summary.json</code></td><td>Standard diagnostic summary from <code>diagnostics.py</code>.</td></tr>
+            </table>
+          </div>
+        </details>
+      </section>
+
+      <section id="gotchas">
+        <h2>Warnings And Gotchas</h2>
+        <div class="callout danger">
+          The active one-market intergenerational strand is current for this June 2026 no-location model, but it is not a final production calibration.
+        </div>
+        <ul>
+          <li>Do not compare losses across different target systems, geographies, room-unit normalizations, or objective definitions without verifying comparability.</li>
+          <li>Do not launch blind long global searches from this guide. The status notes warn that the one-market model has target-definition and mechanism tensions that need diagnosis.</li>
+          <li>Never underidentify SMM: if a hard target is removed, replace the identifying information, fix the parameter externally, or state underidentification.</li>
+          <li><code>parity_progression_1to2</code> should remain diagnostic-only unless the active fertility architecture and empirical measurement are changed consistently.</li>
+          <li>The second-birth housing response target disciplines housing demand, not a sequential second-birth fertility hazard.</li>
+          <li><code>phi</code> is the financed share. The down-payment threshold uses <code>(1 - phi)</code>.</li>
+          <li>Conditional renter policies are not the same as realized active housing after the tenure choice.</li>
+          <li>The current model drops location. Do not describe this guide as the older center-periphery spatial model.</li>
+          <li>The implemented estate-tax and policy cases are diagnostic proof-of-concept objects, not full policy reforms.</li>
+          <li>When discussing results, include target values next to model moments, not just loss values.</li>
+        </ul>
+      </section>
+
+      <section id="sources">
+        <h2>Grounding Sources</h2>
+        <p>This guide was grounded in the following active files and outputs:</p>
+        <ul>
+          <li><code>memory/AGENT_MEMORY.md</code></li>
+          <li><code>memory/daily/2026-06-24.md</code></li>
+          <li><code>CALIBRATION_STATUS.md</code></li>
+          <li><code>code/model/run_intergen_model.py</code></li>
+          <li><code>code/model/tools/build_intergen_mechanics_packet.py</code></li>
+          <li><code>code/model/intergen_housing_fertility/README.md</code></li>
+          <li><code>code/model/intergen_housing_fertility/IMPLEMENTATION_STATUS.md</code></li>
+          <li><code>code/model/intergen_housing_fertility/{parameters.py, solver.py, calibration.py, diagnostics.py, kernels.py, utils.py, cli.py, local_panel.py}</code></li>
+          <li><code>output/model/intergen_model_run_current/README.md</code></li>
+          <li><code>output/model/intergen_model_run_current/{metadata.json, solution_summary.json}</code></li>
+        </ul>
+        <p class="footer-note">
+          Last updated for the active June 24, 2026 one-file diagnostic workflow. If the runner constants,
+          target set, or model package changes, regenerate or revise this guide.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const buttons = Array.from(document.querySelectorAll(".tab-button"));
+      const panels = Array.from(document.querySelectorAll(".tab-panel"));
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.getAttribute("data-tab");
+          buttons.forEach((b) => b.classList.toggle("active", b === button));
+          panels.forEach((p) => p.classList.toggle("active", p.id === id));
+        });
+      });
+
+      const input = document.getElementById("moduleSearch");
+      const clear = document.getElementById("clearSearch");
+      const cards = Array.from(document.querySelectorAll(".module-card"));
+      function applySearch() {
+        const term = (input.value || "").trim().toLowerCase();
+        cards.forEach((card) => {
+          const haystack = (card.textContent + " " + (card.getAttribute("data-search") || "")).toLowerCase();
+          card.classList.toggle("hidden", term && !haystack.includes(term));
+        });
+      }
+      input.addEventListener("input", applySearch);
+      clear.addEventListener("click", () => {
+        input.value = "";
+        applySearch();
+        input.focus();
+      });
+    })();
+  </script>
+</body>
+</html>
