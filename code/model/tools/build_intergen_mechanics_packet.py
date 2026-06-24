@@ -319,8 +319,10 @@ def write_core_outputs(
     plot_age_profiles(age_rows, outdir / "age_profiles.png")
 
     first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
+    first_look_density_rows = wealth_density_rows(first_look_policy_rows, mode="simple")
     write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
     write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
+    write_csv(outdir / "first_look_wealth_density.csv", first_look_density_rows)
     plot_first_look(
         first_look_policy_rows,
         first_look_market_rows,
@@ -333,6 +335,7 @@ def write_core_outputs(
         outdir / "first_look_policies_markets_full.png",
         mode="full",
     )
+    plot_first_look_wealth_density(first_look_density_rows, outdir / "first_look_wealth_density.png")
 
     threshold_rows = owner_entry_threshold_rows(sol, P)
     write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
@@ -913,7 +916,6 @@ def plot_first_look(
         (ax_f, "expected_children", "Fertility policy", "expected children"),
     ]
     for ax, key, title, ylabel in policy_specs:
-        add_mass_background(ax, plot_rows)
         for z in z_values:
             for age in ages:
                 panel = [r for r in plot_rows if float(r["z"]) == z and float(r["age"]) == age]
@@ -958,32 +960,71 @@ def select_first_look_policy_rows(rows: list[dict[str, Any]], *, mode: str) -> l
     return [r for r in rows if float(r["age"]) in keep_ages and float(r["z"]) in keep_z]
 
 
-def add_mass_background(ax: Any, rows: list[dict[str, Any]]) -> None:
+def wealth_density_rows(rows: list[dict[str, Any]], *, mode: str) -> list[dict[str, Any]]:
+    selected = select_first_look_policy_rows(rows, mode=mode)
     mass_by_wealth: dict[float, float] = {}
-    for row in rows:
+    for row in selected:
         wealth = maybe_float(row.get("liquid_wealth"))
         mass = maybe_float(row.get("ergodic_mass"))
         if not (math.isfinite(wealth) and math.isfinite(mass) and mass > 0):
             continue
         mass_by_wealth[wealth] = mass_by_wealth.get(wealth, 0.0) + mass
     total_mass = float(sum(mass_by_wealth.values()))
-    if total_mass <= 1e-14:
+    out: list[dict[str, Any]] = []
+    for wealth in sorted(mass_by_wealth):
+        mass = float(mass_by_wealth[wealth])
+        out.append(
+            {
+                "mode": mode,
+                "initial_state": "childless_renter",
+                "liquid_wealth": float(wealth),
+                "ergodic_mass": mass,
+                "density_share": float(mass / total_mass) if total_mass > 1e-14 else math.nan,
+                "selected_state_slices": len(
+                    {
+                        (float(r["age"]), float(r["z"]))
+                        for r in selected
+                        if math.isclose(maybe_float(r.get("liquid_wealth")), wealth, rel_tol=0.0, abs_tol=1e-10)
+                    }
+                ),
+            }
+        )
+    return out
+
+
+def plot_first_look_wealth_density(rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    if not rows:
         return
-    xs = np.asarray(sorted(mass_by_wealth), dtype=float)
-    ys = np.asarray([mass_by_wealth[x] / total_mass for x in xs], dtype=float)
+    rows = sorted(rows, key=lambda r: float(r["liquid_wealth"]))
+    xs = np.asarray([maybe_float(r["liquid_wealth"]) for r in rows], dtype=float)
+    ys = np.asarray([maybe_float(r["density_share"]) for r in rows], dtype=float)
+    valid = np.isfinite(xs) & np.isfinite(ys)
+    if not np.any(valid):
+        return
+    xs = xs[valid]
+    ys = ys[valid]
     if xs.size > 1:
-        diffs = np.diff(xs)
+        diffs = np.diff(np.sort(xs))
         width = 0.8 * float(np.nanmin(diffs[diffs > 0])) if np.any(diffs > 0) else 0.8
     else:
         width = 0.8
-    ax2 = ax.twinx()
-    ax2.bar(xs, ys, width=width, color="0.2", alpha=0.09, align="center", zorder=0)
-    ax2.set_ylim(0.0, max(float(np.nanmax(ys)) * 4.0, 1e-12))
-    ax2.set_yticks([])
-    ax2.spines["right"].set_visible(False)
-    ax2.spines["top"].set_visible(False)
-    ax.set_zorder(ax2.get_zorder() + 1)
-    ax.patch.set_visible(False)
+
+    fig, ax = plt.subplots(figsize=(9.0, 4.8))
+    ax.bar(xs, ys, width=width, color="0.25", alpha=0.82, align="center")
+    ax.plot(xs, ys, color="0.05", lw=1.6)
+    ax.set_xlabel("liquid wealth b")
+    ax.set_ylabel("share of selected childless-renter mass")
+    ax.set_title("Ergodic mass over liquid wealth for plotted policy states")
+    ax.grid(axis="y", alpha=0.2)
+    ax.set_ylim(0.0, max(float(np.nanmax(ys)) * 1.15, 1e-12))
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
 
 
 def plot_housing_by_tenure(
@@ -994,7 +1035,6 @@ def plot_housing_by_tenure(
     color_for_z: dict[float, Any],
     style_for_age: dict[float, str],
 ) -> None:
-    add_mass_background(ax, rows)
     for z in z_values:
         for age in ages:
             panel = [r for r in rows if float(r["z"]) == z and float(r["age"]) == age]
@@ -1028,7 +1068,7 @@ def plot_housing_by_tenure(
     ax.text(
         0.02,
         0.98,
-        "grey bars: ergodic mass\nline: renter choice\ncircle: owner choice",
+        "line: chosen renter\ncircle: chosen owner",
         transform=ax.transAxes,
         va="top",
         ha="left",
@@ -1210,6 +1250,7 @@ def write_contact_sheet(outdir: Path) -> None:
 
     candidates = [
         outdir / "first_look_policies_markets.png",
+        outdir / "first_look_wealth_density.png",
         outdir / "first_look_policies_markets_full.png",
         outdir / "diagnostics/ownership_by_age.png",
         outdir / "diagnostics/policy_childless_renter_age30.png",
@@ -1277,8 +1318,9 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
-            "- `first_look_policies_markets.png`: simpler 2-by-2 inspection panel using two income states and two ages. The policy panels include grey bars for ergodic mass in the plotted childless-renter state slice.",
+            "- `first_look_policies_markets.png`: simpler 2-by-2 inspection panel using two income states and two ages.",
             "- `first_look_policies_markets_full.png`: fuller version with all selected income states and ages.",
+            "- `first_look_wealth_density.png` and `.csv`: ergodic mass over liquid wealth `b` for the childless-renter state slices shown in the simpler first-look panel.",
             "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panels, including chosen tenure, ergodic mass, and house-price/user-cost accounting.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
