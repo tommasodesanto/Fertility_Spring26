@@ -613,6 +613,11 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
     rental_demand = np.asarray(getattr(sol, "rental_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
     owner_demand = np.asarray(getattr(sol, "owner_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
     supply = np.asarray(getattr(sol, "housing_supply", np.full(P.I, np.nan)), dtype=float).reshape(-1)
+    user_cost_rate = float(getattr(P, "user_cost_rate", math.nan))
+    q_rate = float(getattr(P, "q", math.nan))
+    depreciation = float(getattr(P, "delta", math.nan))
+    property_tax = float(getattr(P, "tau_H", math.nan))
+    rent_normalizer = np.asarray(getattr(P, "r_bar", np.full(P.I, np.nan)), dtype=float).reshape(-1)
     market_rows: list[dict[str, Any]] = []
     for i in markets:
         rental = maybe_vector_value(rental_demand, i)
@@ -627,6 +632,11 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 "supply": maybe_vector_value(supply, i),
                 "asset_price": maybe_vector_value(asset_price, i),
                 "flow_rent_or_user_cost": maybe_vector_value(owner_user_cost, i),
+                "user_cost_rate": user_cost_rate,
+                "interest_rate_q": q_rate,
+                "depreciation_delta": depreciation,
+                "property_tax_tau_H": property_tax,
+                "rent_normalizer_r_bar": maybe_vector_value(rent_normalizer, i),
             }
         )
     return policy_rows, market_rows
@@ -874,17 +884,20 @@ def plot_market_panel(ax: Any, rows: list[dict[str, Any]]) -> None:
         return
     rows = sorted(rows, key=lambda r: int(r["market"]))
     markets = np.arange(len(rows))
-    width = 0.24
     rental = np.asarray([maybe_float(r["rental_demand"]) for r in rows], dtype=float)
     owner = np.asarray([maybe_float(r["owner_demand"]) for r in rows], dtype=float)
+    total = rental + owner
     supply = np.asarray([maybe_float(r["supply"]) for r in rows], dtype=float)
-    ax.bar(markets - width, rental, width, label="renter demand", color="tab:blue", alpha=0.85)
-    ax.bar(markets, owner, width, label="owner demand", color="tab:orange", alpha=0.85)
-    ax.bar(markets + width, supply, width, label="supply", color="tab:gray", alpha=0.75)
+    residual = (total - supply) / np.maximum(supply, 1e-12)
+    max_residual = float(np.nanmax(np.abs(residual))) if residual.size else math.nan
+    ax.bar(markets, rental, 0.45, label="renter demand", color="tab:blue", alpha=0.85)
+    ax.bar(markets, owner, 0.45, bottom=rental, label="owner demand", color="tab:orange", alpha=0.85)
+    if math.isfinite(max_residual) and max_residual > 1e-3:
+        ax.scatter(markets, supply, marker="x", s=70, color="0.15", label="supply")
     ax.set_xticks(markets, [str(int(r["market"])) for r in rows])
     ax.set_xlabel("housing-services market")
-    ax.set_ylabel("quantity")
-    ax.set_title("Equilibrium prices, rents, and quantities")
+    ax.set_ylabel("quantity demanded")
+    ax.set_title(f"Equilibrium prices, rents, and quantities (max residual={max_residual:.1e})")
     ax.grid(axis="y", alpha=0.2)
 
     ax2 = ax.twinx()
@@ -1103,7 +1116,7 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
-            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for consumption, housing, equilibrium market prices/quantities, and fertility policy lines.",
+            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for consumption, housing, equilibrium market prices/quantities, and fertility policy lines. Supply is omitted from the market bars when clearing is tight and shown only if the residual exceeds 1e-3.",
             "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panel.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
