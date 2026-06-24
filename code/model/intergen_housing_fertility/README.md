@@ -14,6 +14,11 @@ code/model/run_intergen_model.py
 That file lists the current source theta, target set, grid, and output folder
 at the top.
 
+In Spyder, open `code/model/run_intergen_model.py` and press Run. The file runs
+the model through `code/model/.venv/bin/python` without replacing the Spyder
+kernel, then loads `solution_summary`, `moments`, `target_fit`, `age_profiles`,
+and `room_bin_fit` for inspection in the Variable Explorer.
+
 Run from `code/model` when using the package CLI directly:
 
 ```bash

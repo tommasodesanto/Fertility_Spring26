@@ -12,7 +12,8 @@ results." It is diagnostic, not a production calibration search.
 from __future__ import annotations
 
 import datetime as dt
-import os
+import csv
+import json
 import subprocess
 import sys
 import time
@@ -53,15 +54,11 @@ def main() -> None:
     repo_root = Path(__file__).resolve().parents[2]
     model_dir = Path(__file__).resolve().parent
     venv_python = model_dir / ".venv/bin/python"
-
-    # If this file is launched from VS Code, PyCharm, Finder, or another
-    # generic Python, rerun it inside the project venv so imports are stable.
-    if venv_python.exists() and Path(sys.executable).resolve() != venv_python.resolve():
-        os.execv(str(venv_python), [str(venv_python), str(Path(__file__).resolve())])
+    packet_python = venv_python if venv_python.exists() else Path(sys.executable)
 
     packet_tool = model_dir / "tools/build_intergen_mechanics_packet.py"
     cmd = [
-        sys.executable,
+        str(packet_python),
         str(packet_tool),
         "--source",
         str(repo_root / SOURCE_RECORD),
@@ -90,6 +87,7 @@ def main() -> None:
     print(f"Source theta: {repo_root / SOURCE_RECORD}", flush=True)
     print(f"Output folder: {repo_root / OUTPUT_FOLDER}", flush=True)
     print(f"Target set: {TARGET_SET}", flush=True)
+    print(f"Python used for solve: {packet_python}", flush=True)
     print(
         f"Grid: J={J}, Nb={NB}, Nz={INCOME_STATES}, H_own=[{OWNER_LADDER}], hR_max={RENTER_MAX_ROOMS}",
         flush=True,
@@ -99,6 +97,7 @@ def main() -> None:
 
     subprocess.run(cmd, cwd=str(model_dir), check=True)
 
+    load_outputs_for_spyder(repo_root / OUTPUT_FOLDER)
     elapsed = time.perf_counter() - run_start
     end_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     readme = repo_root / OUTPUT_FOLDER / "README.md"
@@ -109,6 +108,7 @@ def main() -> None:
     print(f"Total runtime: {format_elapsed(elapsed)}")
     print(f"Start with: {readme}")
     print(f"Visual summary: {contact_sheet}")
+    print("Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, room_bin_fit")
 
 
 def format_elapsed(seconds: float) -> str:
@@ -120,6 +120,36 @@ def format_elapsed(seconds: float) -> str:
     if minutes:
         return f"{minutes}m {secs}s"
     return f"{secs}s"
+
+
+def load_outputs_for_spyder(outdir: Path) -> None:
+    """Expose the main run artifacts as globals for Spyder's Variable Explorer."""
+    global output_folder, readme_path, contact_sheet_path
+    global solution_summary, moments, target_fit, age_profiles, room_bin_fit
+
+    output_folder = outdir
+    readme_path = outdir / "README.md"
+    contact_sheet_path = outdir / "contact_sheet.png"
+    solution_summary = read_json(outdir / "solution_summary.json")
+    moments = read_json(outdir / "moments.json")
+    target_fit = read_csv_table(outdir / "target_fit.csv")
+    age_profiles = read_csv_table(outdir / "age_profiles.csv")
+    room_bin_fit = read_csv_table(outdir / "room_bin_fit_prime30_55_childless.csv")
+
+
+def read_json(path: Path):
+    with path.open() as fh:
+        return json.load(fh)
+
+
+def read_csv_table(path: Path):
+    try:
+        import pandas as pd
+
+        return pd.read_csv(path)
+    except Exception:
+        with path.open(newline="") as fh:
+            return list(csv.DictReader(fh))
 
 
 if __name__ == "__main__":
