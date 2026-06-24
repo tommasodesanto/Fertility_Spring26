@@ -19,6 +19,9 @@ the model through `code/model/.venv/bin/python` without replacing the Spyder
 kernel, then loads `solution_summary`, `moments`, `target_fit`, `age_profiles`,
 `room_bin_fit`, `first_look_density_path`, `first_look_policy_lines`, and
 `first_look_market_summary` for inspection in the Variable Explorer.
+The runner also prints macOS `CPU_Speed_Limit` before and after the solve. If a
+slow run has a low speed limit, the same model path is being throttled by the
+laptop rather than taking a different equilibrium path.
 
 Run from `code/model` when using the package CLI directly:
 

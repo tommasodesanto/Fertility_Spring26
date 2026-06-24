@@ -14,6 +14,7 @@ from __future__ import annotations
 import datetime as dt
 import csv
 import json
+import os
 import subprocess
 import sys
 import time
@@ -93,12 +94,14 @@ def main() -> None:
         flush=True,
     )
     print(f"max_iter_eq={MAX_ITER_EQ}", flush=True)
+    print_runtime_diagnostics("Before solve")
     print(flush=True)
 
     subprocess.run(cmd, cwd=str(model_dir), check=True)
 
     load_outputs_for_spyder(repo_root / OUTPUT_FOLDER)
     print_solver_timing_summary(solution_summary)
+    print_runtime_diagnostics("After solve")
     elapsed = time.perf_counter() - run_start
     end_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     readme = repo_root / OUTPUT_FOLDER / "README.md"
@@ -114,6 +117,52 @@ def main() -> None:
         "room_bin_fit, first_look_path, first_look_full_path, first_look_density_path, "
         "first_look_policy_lines, first_look_market_summary"
     )
+
+
+def print_runtime_diagnostics(label: str) -> None:
+    print()
+    print(f"{label} runtime diagnostics:")
+    print(f"  CPU power: {mac_cpu_power_status()}")
+    print(f"  Thread env: {thread_environment_summary()}")
+
+
+def mac_cpu_power_status() -> str:
+    """Return compact macOS CPU power limits when available."""
+    try:
+        proc = subprocess.run(
+            ["pmset", "-g", "therm"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (FileNotFoundError, subprocess.SubprocessError):
+        return "not available"
+    text = (proc.stdout or proc.stderr or "").splitlines()
+    values: dict[str, str] = {}
+    for line in text:
+        if "=" not in line or "CPU_" not in line:
+            continue
+        name, value = line.split("=", 1)
+        values[name.strip()] = value.strip()
+    if not values:
+        return "not available"
+    pieces = []
+    for key in ["CPU_Speed_Limit", "CPU_Scheduler_Limit", "CPU_Available_CPUs"]:
+        if key in values:
+            pieces.append(f"{key}={values[key]}")
+    return ", ".join(pieces) if pieces else "not available"
+
+
+def thread_environment_summary() -> str:
+    keys = [
+        "NUMBA_NUM_THREADS",
+        "MKL_NUM_THREADS",
+        "OMP_NUM_THREADS",
+        "OPENBLAS_NUM_THREADS",
+        "VECLIB_MAXIMUM_THREADS",
+    ]
+    return ", ".join(f"{key}={os.environ.get(key, 'unset')}" for key in keys)
 
 
 def format_elapsed(seconds: float) -> str:
