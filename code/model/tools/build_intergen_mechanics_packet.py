@@ -317,6 +317,11 @@ def write_core_outputs(
     write_csv(outdir / "age_profiles.csv", age_rows)
     plot_age_profiles(age_rows, outdir / "age_profiles.png")
 
+    first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
+    write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
+    write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
+    plot_first_look(first_look_policy_rows, first_look_market_rows, outdir / "first_look_policies_markets.png")
+
     threshold_rows = owner_entry_threshold_rows(sol, P)
     write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
     plot_owner_entry_thresholds(threshold_rows, outdir / "owner_entry_thresholds.png")
@@ -564,6 +569,131 @@ def owner_entry_line(sol: Any, P: Any, j: int, zz: int) -> np.ndarray:
     return np.column_stack([b_grid, probs])
 
 
+def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    ages = selected_policy_ages(P)
+    z_indices = selected_income_indices(sol, P)
+    z_grid = np.asarray(getattr(sol, "type_values", getattr(P, "z_grid", [1.0])), dtype=float).reshape(-1)
+    b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
+    c_pol = np.asarray(sol.c_pol, dtype=float)
+    hR_pol = np.asarray(sol.hR_pol, dtype=float)
+    tenure_choice = np.asarray(sol.tenure_choice)
+    fert_probs = np.asarray(sol.fert_probs, dtype=float)
+    valid_source = np.asarray(getattr(sol, "V", np.empty_like(c_pol)), dtype=float)
+    nvec = np.arange(int(P.n_parity), dtype=float)
+    policy_rows: list[dict[str, Any]] = []
+    for age in ages:
+        j = age_to_index_for_packet(P, float(age))
+        actual_age = float(P.age_start + j * P.da)
+        for zz in z_indices:
+            z_value = float(z_grid[zz]) if zz < len(z_grid) else float(zz)
+            for bb, wealth in enumerate(b_grid):
+                if not is_valid_policy_point(valid_source, bb, j, zz):
+                    continue
+                tchoice = int(tenure_choice[bb, 0, 0, j, zz, 0, 0])
+                housing = (
+                    float(hR_pol[bb, 0, 0, j, zz, 0, 0])
+                    if tchoice <= 0
+                    else float(np.asarray(P.H_own, dtype=float)[max(0, min(tchoice - 1, int(P.n_house) - 1))])
+                )
+                policy_rows.append(
+                    {
+                        "age": actual_age,
+                        "z_index": int(zz),
+                        "z": z_value,
+                        "liquid_wealth": float(wealth),
+                        "consumption": float(c_pol[bb, 0, 0, j, zz, 0, 0]),
+                        "housing_services_after_tenure": housing,
+                        "expected_children": fertility_expectation(fert_probs, bb, j, zz, nvec),
+                    }
+                )
+
+    markets = np.arange(int(P.I))
+    owner_user_cost = np.asarray(getattr(sol, "owner_user_cost", np.full(P.I, np.nan)), dtype=float).reshape(-1)
+    asset_price = np.asarray(getattr(sol, "owner_asset_price", getattr(sol, "p_eq", np.full(P.I, np.nan))), dtype=float).reshape(-1)
+    rental_demand = np.asarray(getattr(sol, "rental_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
+    owner_demand = np.asarray(getattr(sol, "owner_demand_by_market", np.zeros(P.I)), dtype=float).reshape(-1)
+    supply = np.asarray(getattr(sol, "housing_supply", np.full(P.I, np.nan)), dtype=float).reshape(-1)
+    market_rows: list[dict[str, Any]] = []
+    for i in markets:
+        rental = maybe_vector_value(rental_demand, i)
+        owner = maybe_vector_value(owner_demand, i)
+        total = rental + owner if math.isfinite(rental) and math.isfinite(owner) else math.nan
+        market_rows.append(
+            {
+                "market": int(i + 1),
+                "rental_demand": rental,
+                "owner_demand": owner,
+                "total_demand": total,
+                "supply": maybe_vector_value(supply, i),
+                "asset_price": maybe_vector_value(asset_price, i),
+                "flow_rent_or_user_cost": maybe_vector_value(owner_user_cost, i),
+            }
+        )
+    return policy_rows, market_rows
+
+
+def selected_policy_ages(P: Any) -> list[float]:
+    ages = np.asarray(P.age_start + np.arange(P.J) * P.da, dtype=float)
+    fertile_start = float(P.age_start + (int(P.A_f_start) - 1) * P.da)
+    fertile_end = float(P.age_start + int(P.A_f_end) * P.da)
+    requested = np.array(
+        [
+            fertile_start,
+            0.5 * (fertile_start + fertile_end),
+            fertile_end,
+        ],
+        dtype=float,
+    )
+    out: list[float] = []
+    for age in requested:
+        actual = float(ages[np.argmin(np.abs(ages - age))])
+        if actual not in out:
+            out.append(actual)
+    return out
+
+
+def selected_income_indices(sol: Any, P: Any) -> list[int]:
+    z_grid = np.asarray(getattr(sol, "type_values", getattr(P, "z_grid", [1.0])), dtype=float).reshape(-1)
+    if len(z_grid) <= 3:
+        return list(range(len(z_grid)))
+    return sorted({0, len(z_grid) // 2, len(z_grid) - 1})
+
+
+def age_to_index_for_packet(P: Any, age: float) -> int:
+    idx = int(round((float(age) - float(P.age_start)) / max(float(P.da), 1e-12)))
+    return int(np.clip(idx, 0, int(P.J) - 1))
+
+
+def is_valid_policy_point(values: np.ndarray, bb: int, j: int, zz: int) -> bool:
+    if values.ndim < 7:
+        return True
+    try:
+        return bool(values[bb, 0, 0, j, zz, 0, 0] > -1e9)
+    except IndexError:
+        return True
+
+
+def fertility_expectation(fert_probs: np.ndarray, bb: int, j: int, zz: int, nvec: np.ndarray) -> float:
+    if fert_probs.ndim == 8:
+        probs = fert_probs[bb, 0, 0, j, zz, 0, 0, :]
+    elif fert_probs.ndim == 6:
+        probs = fert_probs[bb, 0, 0, j, zz, :]
+    elif fert_probs.ndim == 5:
+        probs = fert_probs[bb, 0, 0, j, :]
+    else:
+        return math.nan
+    probs = np.asarray(probs, dtype=float).reshape(-1)
+    n = min(len(probs), len(nvec))
+    return float(np.dot(probs[:n], nvec[:n])) if n else math.nan
+
+
+def maybe_vector_value(values: np.ndarray, index: int) -> float:
+    arr = np.asarray(values, dtype=float).reshape(-1)
+    if index >= len(arr):
+        return math.nan
+    return maybe_float(arr[index])
+
+
 def first_threshold(line: np.ndarray, cutoff: float) -> float:
     if line.size == 0:
         return math.nan
@@ -684,6 +814,88 @@ def policy_record(
             if math.isfinite(maybe_float(moments.get(k))) and math.isfinite(maybe_float(baseline_moments.get(k)))
         },
     }
+
+
+def plot_first_look(policy_rows: list[dict[str, Any]], market_rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    if not policy_rows and not market_rows:
+        return
+    ages = sorted({float(r["age"]) for r in policy_rows})
+    z_values = sorted({float(r["z"]) for r in policy_rows})
+    colors = plt.cm.viridis(np.linspace(0.12, 0.88, max(len(z_values), 1)))
+    color_for_z = {z: colors[i] for i, z in enumerate(z_values)}
+    age_styles = ["-", "--", ":"]
+    style_for_age = {age: age_styles[i % len(age_styles)] for i, age in enumerate(ages)}
+
+    fig, axes = plt.subplots(2, 2, figsize=(13.0, 8.8))
+    ax_c, ax_h, ax_m, ax_f = axes.ravel()
+    policy_specs = [
+        (ax_c, "consumption", "Consumption policy", "consumption"),
+        (ax_h, "housing_services_after_tenure", "Housing after tenure choice", "housing services"),
+        (ax_f, "expected_children", "Fertility policy", "expected children"),
+    ]
+    for ax, key, title, ylabel in policy_specs:
+        for z in z_values:
+            for age in ages:
+                panel = [r for r in policy_rows if float(r["z"]) == z and float(r["age"]) == age]
+                panel.sort(key=lambda r: float(r["liquid_wealth"]))
+                if not panel:
+                    continue
+                ax.plot(
+                    [float(r["liquid_wealth"]) for r in panel],
+                    [maybe_float(r[key]) for r in panel],
+                    color=color_for_z[z],
+                    linestyle=style_for_age[age],
+                    lw=1.7,
+                    label=f"z={z:g}, age={age:g}",
+                )
+        ax.set_title(title)
+        ax.set_xlabel("liquid wealth")
+        ax.set_ylabel(ylabel)
+        ax.grid(alpha=0.2)
+
+    plot_market_panel(ax_m, market_rows)
+    handles, labels = ax_c.get_legend_handles_labels()
+    if handles:
+        fig.legend(handles, labels, loc="lower center", ncols=min(3, len(labels)), frameon=False, fontsize=8)
+    fig.suptitle("First-look model mechanics: policies and housing-market equilibrium", y=0.985)
+    fig.tight_layout(rect=(0.0, 0.07, 1.0, 0.96))
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def plot_market_panel(ax: Any, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        ax.axis("off")
+        return
+    rows = sorted(rows, key=lambda r: int(r["market"]))
+    markets = np.arange(len(rows))
+    width = 0.24
+    rental = np.asarray([maybe_float(r["rental_demand"]) for r in rows], dtype=float)
+    owner = np.asarray([maybe_float(r["owner_demand"]) for r in rows], dtype=float)
+    supply = np.asarray([maybe_float(r["supply"]) for r in rows], dtype=float)
+    ax.bar(markets - width, rental, width, label="renter demand", color="tab:blue", alpha=0.85)
+    ax.bar(markets, owner, width, label="owner demand", color="tab:orange", alpha=0.85)
+    ax.bar(markets + width, supply, width, label="supply", color="tab:gray", alpha=0.75)
+    ax.set_xticks(markets, [str(int(r["market"])) for r in rows])
+    ax.set_xlabel("housing-services market")
+    ax.set_ylabel("quantity")
+    ax.set_title("Equilibrium prices, rents, and quantities")
+    ax.grid(axis="y", alpha=0.2)
+
+    ax2 = ax.twinx()
+    asset = np.asarray([maybe_float(r["asset_price"]) for r in rows], dtype=float)
+    rent = np.asarray([maybe_float(r["flow_rent_or_user_cost"]) for r in rows], dtype=float)
+    ax2.plot(markets, asset, color="tab:red", marker="o", lw=1.8, label="asset price")
+    ax2.plot(markets, rent, color="tab:green", marker="s", lw=1.8, label="flow rent/user cost")
+    ax2.set_ylabel("price")
+    h1, l1 = ax.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=8, loc="upper left")
 
 
 def plot_room_bins(rows: list[dict[str, Any]], path: Path) -> None:
@@ -824,6 +1036,7 @@ def write_contact_sheet(outdir: Path) -> None:
     import matplotlib.pyplot as plt
 
     candidates = [
+        outdir / "first_look_policies_markets.png",
         outdir / "diagnostics/ownership_by_age.png",
         outdir / "diagnostics/policy_childless_renter_age30.png",
         outdir / "diagnostics/policy_childless_renter_age42.png",
@@ -890,6 +1103,8 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
+            "- `first_look_policies_markets.png`: 2-by-2 inspection panel for consumption, housing, equilibrium market prices/quantities, and fertility policy lines.",
+            "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panel.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
             "- `owner_rung_shares_prime30_55_childless.csv` and `.png`: owner rung concentration among prime-age childless owners.",
