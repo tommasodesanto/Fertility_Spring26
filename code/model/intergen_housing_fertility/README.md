@@ -11,6 +11,7 @@ Run from `code/model`:
 .venv/bin/python -m intergen_housing_fertility.cli smoke --quiet
 .venv/bin/python -m intergen_housing_fertility.cli solve --max-iter-eq 20 --quiet
 .venv/bin/python -m intergen_housing_fertility.cli diagnostics --fixed-prices --outdir ../../output/model/intergen_housing_fertility_smoke_fixed --quiet
+.venv/bin/python tools/build_intergen_mechanics_packet.py --max-iter-eq 10
 ```
 
 The current pass uses one aggregate housing-services market, a 4-year decision
@@ -22,3 +23,9 @@ owner choices. It is not calibrated.
 `IMPLEMENTATION_STATUS.md` is the live implementation record. Any future
 simplification or deferred object should be added there in the same edit as the
 code change.
+
+`tools/build_intergen_mechanics_packet.py` is a non-production inspection
+driver for the June 2026 one-market strand. It reads a saved theta, re-solves
+the active intergen model, and writes standard diagnostics, target-fit tables,
+room-bin/rung shares, owner-entry thresholds, and optional policy proof-of-
+concept cases under `output/model/intergen_mechanics_packet_YYYYMMDD/`.

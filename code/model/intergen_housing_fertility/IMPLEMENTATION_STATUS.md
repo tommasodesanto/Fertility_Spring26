@@ -1,6 +1,6 @@
 # Implementation Status: Intergenerational Housing Fertility
 
-Updated: 2026-06-09
+Updated: 2026-06-24
 
 ## Rule
 
@@ -262,6 +262,15 @@ probabilities at all-infeasible grid points are not economically meaningful.
   fertility probabilities barely move at the final toy theta. Output is in
   `output/model/intergen_parent_credit_margin_audit_20260609/`; the summary
   note is `docs/model/intergen_parent_credit_margin_audit_20260609.md`.
+- `DIAGNOSTIC ONLY`: 2026-06-24 added
+  `code/model/tools/build_intergen_mechanics_packet.py`, a non-production
+  mechanics packet builder for saved intergen theta records. It preserves the
+  active model logic, re-solves the one-market Markov-income model, and writes
+  standard diagnostics, full target/model/gap tables, prime-age childless
+  room-bin and owner-rung shares, lifecycle profiles, childless-renter
+  owner-entry threshold tables, and optional fixed-theta policy proof-of-
+  concept cases. Policy cases from this tool are mechanism diagnostics, not
+  quantitative policy estimates.
 - `DIAGNOSTIC ONLY`: `python -m intergen_housing_fertility.cli calibrate-small`
   runs a checkpointed random search. Its default target set is
   `old_nonlocation`, which uses the old workhorse targets that remain defined
