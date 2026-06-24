@@ -293,6 +293,7 @@ def write_core_outputs(
             "rank_loss": baseline["rank_loss"],
             "market_residual": baseline["market_residual"],
             "elapsed_sec": baseline["elapsed_sec"],
+            "solver_timings": jsonable(getattr(sol, "timings", {})),
             "H_own": np.asarray(P.H_own, dtype=float),
             "hR_max": float(P.hR_max),
             "moments": moments,

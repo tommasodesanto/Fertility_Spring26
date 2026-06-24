@@ -98,6 +98,7 @@ def main() -> None:
     subprocess.run(cmd, cwd=str(model_dir), check=True)
 
     load_outputs_for_spyder(repo_root / OUTPUT_FOLDER)
+    print_solver_timing_summary(solution_summary)
     elapsed = time.perf_counter() - run_start
     end_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     readme = repo_root / OUTPUT_FOLDER / "README.md"
@@ -142,6 +143,27 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     room_bin_fit = read_csv_table(outdir / "room_bin_fit_prime30_55_childless.csv")
     first_look_policy_lines = read_csv_table(outdir / "first_look_policy_lines.csv")
     first_look_market_summary = read_csv_table(outdir / "first_look_market_summary.csv")
+
+
+def print_solver_timing_summary(summary: dict) -> None:
+    timings = summary.get("solver_timings") if isinstance(summary, dict) else None
+    if not isinstance(timings, dict) or not timings:
+        return
+    refine = timings.get("scalar_market_refine")
+    print()
+    print(f"Solve runtime: {format_elapsed(float(summary.get('elapsed_sec', 0.0)))}")
+    print(f"Equilibrium iterations: {timings.get('iterations_completed')}")
+    if isinstance(refine, dict) and refine.get("used"):
+        print(
+            "Scalar price refinement: "
+            f"{refine.get('iterations')} iterations, "
+            f"{refine.get('price_evaluations')} price evaluations, "
+            f"{format_elapsed(float(refine.get('price_evaluation_time_sec', 0.0)))}"
+        )
+    if "markov_income_solve_time" in timings:
+        print(f"Damped-loop solve time: {format_elapsed(float(timings['markov_income_solve_time']))}")
+    if "distribution" in timings:
+        print(f"Final distribution/statistics time: {format_elapsed(float(timings['distribution']))}")
 
 
 def read_json(path: Path):

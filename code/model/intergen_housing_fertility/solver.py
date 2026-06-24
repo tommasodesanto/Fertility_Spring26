@@ -823,9 +823,15 @@ def refine_one_market_markov_income(
     max_expand = max(0, int(getattr(P, "scalar_market_refine_max_expand", 8)))
     max_iter = max(1, int(getattr(P, "scalar_market_refine_iter", 24)))
     tol = float(getattr(P, "tol_eq", 1e-4))
+    eval_count = 0
+    eval_time = 0.0
 
     def eval_price(price: float) -> tuple[float, float, SimpleNamespace]:
+        nonlocal eval_count, eval_time
+        t_eval = time.perf_counter()
         sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False, fast_stats=True, SD=SD)
+        eval_time += time.perf_counter() - t_eval
+        eval_count += 1
         demand = float(np.asarray(sol.housing_demand).reshape(-1)[0])
         supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
         excess = demand - supply
@@ -868,6 +874,8 @@ def refine_one_market_markov_income(
         "best_excess": float(best_excess),
         "expansions": int(expansions),
         "iterations": 0,
+        "price_evaluations": int(eval_count),
+        "price_evaluation_time_sec": float(eval_time),
     }
 
     if ex_lo * ex_hi > 0:
@@ -910,6 +918,8 @@ def refine_one_market_markov_income(
             if metric_mid < best_metric:
                 best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
             info["iterations"] = int(k)
+            info["price_evaluations"] = int(eval_count)
+            info["price_evaluation_time_sec"] = float(eval_time)
             if metric_mid < tol:
                 break
             d_old = c_pt
@@ -938,6 +948,8 @@ def refine_one_market_markov_income(
             ex_mid, metric_mid, sol_mid = eval_price(mid)
             if metric_mid < best_metric:
                 best_price, best_excess, best_metric, sol_best = mid, ex_mid, metric_mid, sol_mid
+            info["price_evaluations"] = int(eval_count)
+            info["price_evaluation_time_sec"] = float(eval_time)
             if metric_mid < tol:
                 info["iterations"] = int(k)
                 break
@@ -956,6 +968,8 @@ def refine_one_market_markov_income(
     info["best_price"] = float(best_price)
     info["best_metric"] = float(best_metric)
     info["best_excess"] = float(best_excess)
+    info["price_evaluations"] = int(eval_count)
+    info["price_evaluation_time_sec"] = float(eval_time)
     if verbose:
         print(f"  Scalar refine: residual={best_metric:.3e} p={best_price:.4f}")
     return sol_best, np.array([best_price]), best_metric, info
