@@ -15,6 +15,7 @@ import datetime as dt
 import gzip
 import json
 import math
+import pickle
 import sys
 import time
 from pathlib import Path
@@ -41,6 +42,7 @@ from intergen_housing_fertility.solver import run_model_cp_dt  # noqa: E402
 
 DEFAULT_SOURCE = ROOT / "output/model/intergen_room_distribution_current_best_20260623/summary.json"
 DEFAULT_TARGET_SET = "candidate_replacement_young_old_roomgap_v1"
+SOLUTION_CACHE_NAME = "solution_cache.pkl"
 
 ROOM_BIN_DATA_SOURCE = (
     "ACS/IPUMS extract27 household heads, 2012-2023, matched MMS metro sample; "
@@ -62,24 +64,52 @@ TENURE_ORDER = ["renter", "owner"]
 
 def main() -> None:
     args = parse_args()
-    source = load_source_record(args.source, row=int(args.source_row))
-    grid = resolve_grid(args, source)
     outdir = args.outdir or default_outdir()
     outdir.mkdir(parents=True, exist_ok=True)
+    cache_path = solution_cache_path(args, outdir)
 
     targets, weights = get_target_set(args.target_set)
-    write_json(
-        outdir / "metadata.json",
-        {
-            "status": "diagnostic_only_not_production_policy_or_calibration",
-            "source": source["source_meta"],
-            "target_set": args.target_set,
-            "targets": targets,
-            "weights": weights,
-            "grid": grid,
-            "policy_cases_requested": bool(args.run_policy_cases),
-            "room_bin_data_source": ROOM_BIN_DATA_SOURCE,
-        },
+    policy_records: list[dict[str, Any]] = []
+
+    if args.refresh_plots_from_cache:
+        cache_payload, baseline, source, grid = load_solution_cache(cache_path)
+        if cache_payload.get("target_set") == args.target_set:
+            targets = dict(cache_payload.get("targets", targets))
+            weights = dict(cache_payload.get("weights", weights))
+        write_packet_metadata(
+            outdir,
+            source=source,
+            target_set=args.target_set,
+            targets=targets,
+            weights=weights,
+            grid=grid,
+            args=args,
+            cache_path=cache_path,
+            refreshed_from_cache=True,
+        )
+        if not args.skip_standard_diagnostics:
+            write_diagnostics(baseline["sol"], baseline["P"], outdir / "diagnostics")
+        write_core_outputs(outdir, baseline, source, targets, weights)
+        write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
+        print(
+            f"Refreshed intergen mechanics packet from {cache_path} "
+            f"(loss={baseline['rank_loss']:.6g}, residual={baseline['market_residual']:.2e})",
+            flush=True,
+        )
+        return
+
+    source = load_source_record(args.source, row=int(args.source_row))
+    grid = resolve_grid(args, source)
+    write_packet_metadata(
+        outdir,
+        source=source,
+        target_set=args.target_set,
+        targets=targets,
+        weights=weights,
+        grid=grid,
+        args=args,
+        cache_path=cache_path,
+        refreshed_from_cache=False,
     )
 
     baseline = solve_candidate(
@@ -90,6 +120,16 @@ def main() -> None:
         weights=weights,
         label="baseline",
     )
+    if not args.no_save_solution_cache:
+        write_solution_cache(
+            cache_path,
+            baseline=baseline,
+            source=source,
+            target_set=args.target_set,
+            targets=targets,
+            weights=weights,
+            grid=grid,
+        )
     baseline_dir = outdir / "baseline"
     baseline_dir.mkdir(parents=True, exist_ok=True)
 
@@ -97,7 +137,6 @@ def main() -> None:
         write_diagnostics(baseline["sol"], baseline["P"], outdir / "diagnostics")
 
     write_core_outputs(outdir, baseline, source, targets, weights)
-    policy_records: list[dict[str, Any]] = []
     if args.run_policy_cases:
         policy_records = write_policy_cases(
             outdir / "policy_cases",
@@ -117,6 +156,35 @@ def main() -> None:
     )
 
 
+def write_packet_metadata(
+    outdir: Path,
+    *,
+    source: dict[str, Any],
+    target_set: str,
+    targets: dict[str, float],
+    weights: dict[str, float],
+    grid: dict[str, Any],
+    args: argparse.Namespace,
+    cache_path: Path,
+    refreshed_from_cache: bool,
+) -> None:
+    write_json(
+        outdir / "metadata.json",
+        {
+            "status": "diagnostic_only_not_production_policy_or_calibration",
+            "source": source["source_meta"],
+            "target_set": target_set,
+            "targets": targets,
+            "weights": weights,
+            "grid": grid,
+            "policy_cases_requested": bool(args.run_policy_cases),
+            "solution_cache": str(cache_path),
+            "refreshed_from_solution_cache": bool(refreshed_from_cache),
+            "room_bin_data_source": ROOM_BIN_DATA_SOURCE,
+        },
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
@@ -131,6 +199,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--H-own", default=None, help="Comma-separated owner ladder, e.g. 2,4,6,8,10.")
     parser.add_argument("--max-iter-eq", type=int, default=10)
     parser.add_argument("--skip-standard-diagnostics", action="store_true")
+    parser.add_argument(
+        "--refresh-plots-from-cache",
+        action="store_true",
+        help=f"Skip the model solve and rebuild plots/tables from {SOLUTION_CACHE_NAME}.",
+    )
+    parser.add_argument(
+        "--solution-cache",
+        type=Path,
+        default=None,
+        help=f"Path for the local solved-object cache. Defaults to OUTDIR/{SOLUTION_CACHE_NAME}.",
+    )
+    parser.add_argument(
+        "--no-save-solution-cache",
+        action="store_true",
+        help="Do not write the local solved-object pickle after solving.",
+    )
     parser.add_argument("--run-policy-cases", action="store_true")
     parser.add_argument("--policy-diagnostics", action="store_true")
     return parser.parse_args()
@@ -139,6 +223,10 @@ def parse_args() -> argparse.Namespace:
 def default_outdir() -> Path:
     stamp = dt.date.today().strftime("%Y%m%d")
     return ROOT / "output/model" / f"intergen_mechanics_packet_{stamp}"
+
+
+def solution_cache_path(args: argparse.Namespace, outdir: Path) -> Path:
+    return args.solution_cache if args.solution_cache is not None else outdir / SOLUTION_CACHE_NAME
 
 
 def load_source_record(path: Path, *, row: int) -> dict[str, Any]:
@@ -271,6 +359,63 @@ def solve_candidate(
         "elapsed_sec": float(elapsed),
         "overrides": overrides,
     }
+
+
+def write_solution_cache(
+    path: Path,
+    *,
+    baseline: dict[str, Any],
+    source: dict[str, Any],
+    target_set: str,
+    targets: dict[str, float],
+    weights: dict[str, float],
+    grid: dict[str, Any],
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "status": "local_diagnostic_pickle_only_load_if_trusted",
+        "created_at": dt.datetime.now().isoformat(timespec="seconds"),
+        "source_meta": source["source_meta"],
+        "theta": source["theta"],
+        "target_set": target_set,
+        "targets": dict(targets),
+        "weights": dict(weights),
+        "grid": dict(grid),
+        "baseline": {
+            "label": baseline["label"],
+            "sol": baseline["sol"],
+            "P": baseline["P"],
+            "p_eq": np.asarray(baseline["p_eq"], dtype=float).reshape(-1),
+            "moments": dict(baseline["moments"]),
+            "rank_loss": float(baseline["rank_loss"]),
+            "market_residual": float(baseline["market_residual"]),
+            "elapsed_sec": float(baseline["elapsed_sec"]),
+            "overrides": dict(baseline["overrides"]),
+        },
+    }
+    with path.open("wb") as fh:
+        pickle.dump(payload, fh, protocol=pickle.HIGHEST_PROTOCOL)
+
+
+def load_solution_cache(path: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
+    if not path.exists():
+        raise FileNotFoundError(f"solution cache not found: {path}")
+    with path.open("rb") as fh:
+        payload = pickle.load(fh)
+    if not isinstance(payload, dict) or not isinstance(payload.get("baseline"), dict):
+        raise ValueError(f"solution cache has unexpected format: {path}")
+    baseline = dict(payload["baseline"])
+    baseline["p_eq"] = np.asarray(baseline["p_eq"], dtype=float).reshape(-1)
+    source = {
+        "theta": dict(payload.get("theta", {})),
+        "source_meta": {
+            **dict(payload.get("source_meta", {})),
+            "solution_cache": str(path),
+            "format": "solution_cache_pickle",
+        },
+    }
+    grid = dict(payload.get("grid", {}))
+    return payload, baseline, source, grid
 
 
 def write_core_outputs(
@@ -1383,6 +1528,7 @@ def write_readme(
             "- `age_profiles.csv` and `.png`: lifecycle ownership, fertility, housing, and liquid wealth profiles.",
             "- `owner_entry_thresholds.csv` and `.png`: childless-renter owner-entry probability thresholds by age and income state.",
             "- `owner_entry_policy_childless_renter_age30_42.csv`: owner-entry probability lines used for age-30 and age-42 inspection.",
+            "- `solution_cache.pkl`: local trusted Python pickle with the solved `sol`, `P`, and `p_eq` objects. Use `--refresh-plots-from-cache` to rebuild figures and CSVs from it without re-solving.",
             "- `contact_sheet.png`: quick visual index when standard diagnostics are enabled.",
         ]
     )

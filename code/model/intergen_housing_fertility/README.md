@@ -17,11 +17,15 @@ at the top.
 In Spyder, open `code/model/run_intergen_model.py` and press Run. The file runs
 the model through `code/model/.venv/bin/python` without replacing the Spyder
 kernel, then loads `solution_summary`, `moments`, `target_fit`, `age_profiles`,
-`room_bin_fit`, `first_look_density_path`, `first_look_policy_lines`, and
-`first_look_market_summary` for inspection in the Variable Explorer.
+`room_bin_fit`, `first_look_density_path`, `solution_cache_path`,
+`first_look_policy_lines`, and `first_look_market_summary` for inspection in
+the Variable Explorer.
 The runner also prints macOS `CPU_Speed_Limit` before and after the solve. If a
 slow run has a low speed limit, the same model path is being throttled by the
 laptop rather than taking a different equilibrium path.
+After one successful solve, set `REFRESH_PLOTS_FROM_SAVED_SOLUTION = True` in
+the runner to rebuild the graph packet from `solution_cache.pkl` without
+solving the model again.
 
 Run from `code/model` when using the package CLI directly:
 
@@ -47,5 +51,6 @@ driver for the June 2026 one-market strand. It reads a saved theta, re-solves
 the active intergen model, and writes standard diagnostics, target-fit tables,
 room-bin/rung shares, simple and full first-look policies/market panels, a
 standalone aggregate wealth-density plot with childless/parent and renter/owner
-splits, owner-entry thresholds, and optional policy proof-of-concept cases under
+splits, owner-entry thresholds, a local solved-object cache, and optional policy
+proof-of-concept cases under
 `output/model/intergen_mechanics_packet_YYYYMMDD/`.

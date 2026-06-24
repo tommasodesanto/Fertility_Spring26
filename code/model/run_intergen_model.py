@@ -48,6 +48,11 @@ MAX_ITER_EQ = 10
 # baseline, parent LTV relief, property tax increase, and estate tax wedge.
 RUN_POLICY_CASES = False
 
+# Set this to True after at least one successful solve has written
+# output/model/intergen_model_run_current/solution_cache.pkl. It rebuilds all
+# plots and CSV diagnostics from that saved solution object without solving.
+REFRESH_PLOTS_FROM_SAVED_SOLUTION = False
+
 
 def main() -> None:
     run_start = time.perf_counter()
@@ -82,8 +87,13 @@ def main() -> None:
     ]
     if RUN_POLICY_CASES:
         cmd.append("--run-policy-cases")
+    if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
+        cmd.append("--refresh-plots-from-cache")
 
-    print("Running current one-market intergen model", flush=True)
+    if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
+        print("Refreshing current one-market intergen graphs from saved solution", flush=True)
+    else:
+        print("Running current one-market intergen model", flush=True)
     print(f"Started: {start_stamp}", flush=True)
     print(f"Source theta: {repo_root / SOURCE_RECORD}", flush=True)
     print(f"Output folder: {repo_root / OUTPUT_FOLDER}", flush=True)
@@ -94,14 +104,19 @@ def main() -> None:
         flush=True,
     )
     print(f"max_iter_eq={MAX_ITER_EQ}", flush=True)
-    print_runtime_diagnostics("Before solve")
+    print(f"refresh_plots_from_saved_solution={REFRESH_PLOTS_FROM_SAVED_SOLUTION}", flush=True)
+    if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
+        print(f"Saved solution cache: {repo_root / OUTPUT_FOLDER / 'solution_cache.pkl'}", flush=True)
+    else:
+        print_runtime_diagnostics("Before solve")
     print(flush=True)
 
     subprocess.run(cmd, cwd=str(model_dir), check=True)
 
     load_outputs_for_spyder(repo_root / OUTPUT_FOLDER)
-    print_solver_timing_summary(solution_summary)
-    print_runtime_diagnostics("After solve")
+    print_solver_timing_summary(solution_summary, cached=REFRESH_PLOTS_FROM_SAVED_SOLUTION)
+    if not REFRESH_PLOTS_FROM_SAVED_SOLUTION:
+        print_runtime_diagnostics("After solve")
     elapsed = time.perf_counter() - run_start
     end_stamp = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     readme = repo_root / OUTPUT_FOLDER / "README.md"
@@ -115,7 +130,7 @@ def main() -> None:
     print(
         "Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, "
         "room_bin_fit, first_look_path, first_look_full_path, first_look_density_path, "
-        "first_look_policy_lines, first_look_market_summary"
+        "solution_cache_path, first_look_policy_lines, first_look_market_summary"
     )
 
 
@@ -179,6 +194,7 @@ def format_elapsed(seconds: float) -> str:
 def load_outputs_for_spyder(outdir: Path) -> None:
     """Expose the main run artifacts as globals for Spyder's Variable Explorer."""
     global output_folder, readme_path, contact_sheet_path
+    global solution_cache_path
     global solution_summary, moments, target_fit, age_profiles, room_bin_fit
     global first_look_path, first_look_full_path, first_look_density_path
     global first_look_policy_lines, first_look_market_summary
@@ -186,6 +202,7 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     output_folder = outdir
     readme_path = outdir / "README.md"
     contact_sheet_path = outdir / "contact_sheet.png"
+    solution_cache_path = outdir / "solution_cache.pkl"
     first_look_path = outdir / "first_look_policies_markets.png"
     first_look_full_path = outdir / "first_look_policies_markets_full.png"
     first_look_density_path = outdir / "first_look_wealth_density.png"
@@ -198,13 +215,14 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     first_look_market_summary = read_csv_table(outdir / "first_look_market_summary.csv")
 
 
-def print_solver_timing_summary(summary: dict) -> None:
+def print_solver_timing_summary(summary: dict, *, cached: bool = False) -> None:
     timings = summary.get("solver_timings") if isinstance(summary, dict) else None
     if not isinstance(timings, dict) or not timings:
         return
     refine = timings.get("scalar_market_refine")
     print()
-    print(f"Solve runtime: {format_elapsed(float(summary.get('elapsed_sec', 0.0)))}")
+    label = "Cached solve runtime" if cached else "Solve runtime"
+    print(f"{label}: {format_elapsed(float(summary.get('elapsed_sec', 0.0)))}")
     print(f"Equilibrium iterations: {timings.get('iterations_completed')}")
     if isinstance(refine, dict) and refine.get("used"):
         print(
