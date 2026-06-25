@@ -498,7 +498,11 @@ def write_core_outputs(
     wealth_grid_rows = wealth_grid_coverage_rows(first_look_density_rows)
     total_wealth_grid_rows = wealth_grid_coverage_rows(first_look_total_wealth_density_rows)
     policy_xlim = density_xlim_from_rows(first_look_density_rows)
-    total_wealth_policy_xlim = density_xlim_from_rows(first_look_total_wealth_density_rows)
+    total_wealth_policy_xlim = policy_xlim_from_rows(
+        first_look_policy_rows,
+        wealth_key="total_wealth_after_tenure",
+        base_xlim=policy_xlim,
+    )
     write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
     write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
     write_csv(outdir / "first_look_wealth_density.csv", first_look_density_rows)
@@ -831,6 +835,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
     b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
     c_pol = np.asarray(sol.c_pol, dtype=float)
     hR_pol = np.asarray(sol.hR_pol, dtype=float)
+    bp_pol = np.asarray(sol.bp_pol, dtype=float)
     tenure_choice = np.asarray(sol.tenure_choice)
     tenure_probs = getattr(sol, "tenure_probs", None)
     tenure_probs = None if tenure_probs is None else np.asarray(tenure_probs, dtype=float)
@@ -852,9 +857,18 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 if not is_valid_policy_point(valid_source, bb, j, zz):
                     continue
                 tchoice = int(tenure_choice[bb, 0, 0, j, zz, 0, 0])
-                renter_housing = float(hR_pol[bb, 0, 0, j, zz, 0, 0])
+                branch_wealth = modal_branch_wealth_from_childless_renter(float(wealth), tchoice, P, asset_price)
+                branch_wealth_clipped = float(np.clip(branch_wealth, b_grid[0], b_grid[-1]))
+                consumption = interp_policy_scalar(b_grid, c_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth)
+                next_liquid_wealth = interp_policy_scalar(b_grid, bp_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth)
+                renter_housing_if_renter = interp_policy_scalar(b_grid, hR_pol[:, 0, 0, j, zz, 0, 0], float(wealth))
+                chosen_renter_housing = (
+                    interp_policy_scalar(b_grid, hR_pol[:, 0, 0, j, zz, 0, 0], branch_wealth)
+                    if tchoice <= 0
+                    else math.nan
+                )
                 housing = (
-                    renter_housing
+                    chosen_renter_housing
                     if tchoice <= 0
                     else float(np.asarray(P.H_own, dtype=float)[max(0, min(tchoice - 1, int(P.n_house) - 1))])
                 )
@@ -862,7 +876,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 ergodic_mass = maybe_float(mass_line[bb]) if bb < len(mass_line) else math.nan
                 liquidated_value_after_tenure = liquidated_housing_value(P, asset_price, tchoice, 0)
                 total_wealth_after_tenure = (
-                    float(wealth + liquidated_value_after_tenure)
+                    float(branch_wealth + liquidated_value_after_tenure)
                     if math.isfinite(liquidated_value_after_tenure)
                     else math.nan
                 )
@@ -875,10 +889,14 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                         "liquid_wealth": float(wealth),
                         "total_wealth_before_choice": float(wealth),
                         "total_wealth_after_tenure": total_wealth_after_tenure,
+                        "branch_liquid_wealth_after_transaction": branch_wealth,
+                        "branch_liquid_wealth_clipped_to_grid": branch_wealth_clipped,
                         "liquidated_housing_value_after_tenure": liquidated_value_after_tenure,
                         "liquidated_housing_discount_1_minus_psi": liquidation_discount,
-                        "consumption": float(c_pol[bb, 0, 0, j, zz, 0, 0]),
-                        "renter_housing_policy": renter_housing,
+                        "consumption": consumption,
+                        "next_liquid_wealth": next_liquid_wealth,
+                        "renter_housing_policy": renter_housing_if_renter,
+                        "chosen_renter_housing": chosen_renter_housing,
                         "chosen_tenure_index": int(tchoice),
                         "chosen_tenure": "renter" if tchoice <= 0 else "owner",
                         "owner_entry_probability": owner_prob,
@@ -931,7 +949,7 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
 def selected_policy_ages(P: Any) -> list[float]:
     ages = np.asarray(P.age_start + np.arange(P.J) * P.da, dtype=float)
     fertile_start = float(P.age_start + (int(P.A_f_start) - 1) * P.da)
-    fertile_end = float(P.age_start + int(P.A_f_end) * P.da)
+    fertile_end = float(P.age_start + (int(P.A_f_end) - 1) * P.da)
     requested = np.array(
         [
             fertile_start,
@@ -1016,6 +1034,15 @@ def maybe_vector_value(values: np.ndarray, index: int) -> float:
     return maybe_float(arr[index])
 
 
+def interp_policy_scalar(grid: np.ndarray, values: np.ndarray, query: float) -> float:
+    x = np.asarray(grid, dtype=float).reshape(-1)
+    y = np.asarray(values, dtype=float).reshape(-1)
+    if x.size == 0 or y.size != x.size or not math.isfinite(query):
+        return math.nan
+    q = float(np.clip(query, x[0], x[-1]))
+    return float(np.interp(q, x, y))
+
+
 def owner_asset_price_vector(sol: Any, P: Any) -> np.ndarray:
     fallback = np.full(int(getattr(P, "I", 1)), math.nan)
     values = getattr(sol, "owner_asset_price", getattr(sol, "p_eq", fallback))
@@ -1037,6 +1064,24 @@ def liquidated_housing_value(P: Any, asset_price: np.ndarray, tenure_index: int,
         return math.nan
     liquidation_discount = 1.0 - float(getattr(P, "psi", 0.0))
     return float(liquidation_discount * price * h_own[house_idx])
+
+
+def modal_branch_wealth_from_childless_renter(
+    liquid_wealth: float,
+    tenure_index: int,
+    P: Any,
+    asset_price: np.ndarray,
+) -> float:
+    if int(tenure_index) <= 0:
+        return float(liquid_wealth)
+    h_own = np.asarray(getattr(P, "H_own", []), dtype=float).reshape(-1)
+    if h_own.size == 0:
+        return math.nan
+    house_idx = int(np.clip(int(tenure_index) - 1, 0, h_own.size - 1))
+    price = maybe_vector_value(asset_price, 0)
+    if not math.isfinite(price):
+        return math.nan
+    return float(liquid_wealth - price * h_own[house_idx])
 
 
 def first_threshold(line: np.ndarray, cutoff: float) -> float:
@@ -1424,6 +1469,28 @@ def density_xlim_from_rows(rows: list[dict[str, Any]]) -> tuple[float, float] | 
     xs = np.asarray([row_wealth(r) for r in aggregate], dtype=float)
     ys = np.asarray([maybe_float(r["population_share"]) for r in aggregate], dtype=float)
     return density_plot_xlim(xs, ys)
+
+
+def policy_xlim_from_rows(
+    rows: list[dict[str, Any]],
+    *,
+    wealth_key: str,
+    base_xlim: tuple[float, float] | None = None,
+) -> tuple[float, float] | None:
+    vals: list[float] = []
+    for row in rows:
+        base_x = maybe_float(row.get("liquid_wealth"))
+        if base_xlim is not None and not (base_xlim[0] <= base_x <= base_xlim[1]):
+            continue
+        x = maybe_float(row.get(wealth_key))
+        if math.isfinite(x):
+            vals.append(x)
+    if not vals:
+        return base_xlim
+    lo = float(np.nanmin(vals))
+    hi = float(np.nanmax(vals))
+    pad = max(0.5, 0.06 * max(hi - lo, 1.0))
+    return lo - pad, hi + pad
 
 
 def density_plot_xlim(xs: np.ndarray, ys: np.ndarray) -> tuple[float, float] | None:
