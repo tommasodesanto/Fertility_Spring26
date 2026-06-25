@@ -3506,6 +3506,73 @@ def mean_housing_distribution_markov(g_dist, j, hR_pol, P):
     return th / max(mn, 1e-12)
 
 
+def markov_renter_room_moments(g: np.ndarray, hR: np.ndarray, P: SimpleNamespace) -> dict:
+    """Renter room threshold/median moments on the FULL income-resolved state.
+
+    `compute_statistics` operates on the income-collapsed renter policy
+    `hR_total = E_z[h_R]`. That is correct for linear moments (means, mass
+    shares over discrete owner rungs) but WRONG for nonlinear operators on the
+    continuous renter policy, because for a policy that varies across income
+    states within a (b, j, n, cs) cell,
+        E_z[1{h_R >= t}] != 1{E_z[h_R] >= t}  and
+        median_z(h_R)    != median(E_z[h_R]).
+    These threshold/median moments must be evaluated state-by-income, then
+    mass-aggregated. Means are unaffected, so the cross-tenure mean room gap
+    (and any mean-based target) is identical under either path.
+    """
+    Nb, nt, I, J, Nz, npar, ncs = g.shape
+    dep_last = P.n_child_stages
+    a25s, a45e = age_to_index(P, 25), age_to_index(P, 45)
+    a30s, a55e = age_to_index(P, 30), age_to_index(P, 55)
+    hRmax = float(P.hR_max)
+    ge6_num = ge6_den = 0.0
+    cap_all_num = cap_all_den = 0.0
+    cap_c0_num = cap_c0_den = 0.0
+    cap_c1_num = cap_c1_den = 0.0
+    med_vals: list[np.ndarray] = []
+    med_wts: list[np.ndarray] = []
+    for j in range(J):
+        in_3055 = a30s <= j <= a55e
+        in_2545 = a25s <= j <= a45e
+        if not (in_3055 or in_2545):
+            continue
+        for i in range(I):
+            for zz in range(Nz):
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        cb = current_child_bin_dt(nn, cs, dep_last)
+                        gr = g[:, 0, i, j, zz, nn, cs]
+                        hr = hR[:, 0, i, j, zz, nn, cs]
+                        kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+                        if not np.any(kr):
+                            continue
+                        wr = gr[kr]
+                        rr = hr[kr]
+                        m = float(np.sum(wr))
+                        if in_3055 and cb == 2:
+                            ge6_den += m
+                            ge6_num += float(np.sum(wr[rr >= 6.0 - 1e-8]))
+                        if in_2545:
+                            cap = float(np.sum(wr[rr >= hRmax - 1e-8]))
+                            cap_all_den += m
+                            cap_all_num += cap
+                            if cb == 2:
+                                cap_c0_den += m
+                                cap_c0_num += cap
+                                med_vals.append(rr)
+                                med_wts.append(wr)
+                            elif cb == 3:
+                                cap_c1_den += m
+                                cap_c1_num += cap
+    return {
+        "prime30_55_childless_renter_share_rooms_ge6": ge6_num / max(ge6_den, 1e-12),
+        "prime_childless_renter_median_rooms": weighted_median_from_cells(med_vals, med_wts),
+        "renter25_45_all_cap_share": cap_all_num / max(cap_all_den, 1e-12),
+        "renter25_45_current0_cap_share": cap_c0_num / max(cap_c0_den, 1e-12),
+        "renter25_45_current1_cap_share": cap_c1_num / max(cap_c1_den, 1e-12),
+    }
+
+
 def compute_markov_statistics(
     g: np.ndarray,
     fp: np.ndarray,
@@ -3521,6 +3588,12 @@ def compute_markov_statistics(
     fp_total = collapse_markov_fertility_probs(fp, g, z_weights)
     lp_total = collapse_markov_location_probs(lp, g, z_weights)
     stats = compute_statistics(g_total, fp_total, lp_total, P, bg, ph, hR_total)
+    # Correct the nonlinear renter room moments: compute_statistics applied the
+    # >=6 / cap-threshold indicators and the renter median to the income-collapsed
+    # renter policy, which understates threshold shares (Jensen on a nonlinear
+    # operator). Recompute them on the full income-resolved distribution.
+    for _name, _val in markov_renter_room_moments(g, hR, P).items():
+        setattr(stats, _name, _val)
     Nz = len(z_grid)
     nt = 1 + P.n_house
     stats.income_state_mass = np.zeros(Nz)
