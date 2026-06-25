@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-25 14:15 EDT`
+Updated: `2026-06-25 14:34 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -17,12 +17,12 @@ housing services after physical family-space needs, not a multiplier that
 reduces the physical room floor.
 
 June 25 tenure-segmentation correction: the live diagnostic convention now caps
-renter housing at `hR_max=5.0` while keeping the owner ladder
-`H_own=[2,4,6,8,10]`. This restores the intended product-support separation:
-renters can choose continuous housing up to a modest cap, but 6+ room
-family-sized housing is primarily an owner segment. Treat pre-correction
-diagnostic plots with `hR_max=8.0` as useful pathology evidence, not as the
-current model convention.
+renter housing at `hR_max=6.0` while keeping the owner ladder
+`H_own=[2,4,6,8,10]`. This keeps strong product-support separation while
+allowing renters to reach the first large-room threshold; the upper 8/10-room
+family-sized rungs remain owner-only in this diagnostic convention. Treat
+pre-correction diagnostic plots with `hR_max=8.0` as useful pathology evidence,
+not as the current model convention.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,

@@ -31,8 +31,8 @@ quantitative model.
   \]
 - `INTENDED`: renter housing is continuous up to `hR_max`; owner housing is a
   discrete rung choice on `H_own`. The live June 25 diagnostic convention uses
-  `hR_max=5.0` with `H_own=[2,4,6,8,10]`, so the large 6+ room segment is not
-  directly available to renters.
+  `hR_max=6.0` with `H_own=[2,4,6,8,10]`, so renters can reach the first
+  family-sized threshold but not the upper 8/10-room owner rungs.
 - `INTENDED`: tenure/rung choices include a small Type-I-EV taste-shock
   smoothing term, `tenure_choice_kappa=0.01`. This is the model's current
   discrete-choice smoothing device and is also needed for reliable market

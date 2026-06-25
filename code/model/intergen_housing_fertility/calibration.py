@@ -770,7 +770,7 @@ def base_overrides(*, J: int, Nb: int, n_house: int, max_iter_eq: int) -> dict[s
         "Nb": int(Nb),
         "n_house": int(n_house),
         "H_own": np.linspace(2.0, 10.0, int(n_house)),
-        "hR_max": 5.0,
+        "hR_max": 6.0,
         "max_iter_eq": int(max_iter_eq),
         "tol_eq": 1e-4,
         "use_pti_constraint": False,

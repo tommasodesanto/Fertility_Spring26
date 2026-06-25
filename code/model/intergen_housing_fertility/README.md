@@ -44,10 +44,10 @@ The current pass uses one aggregate housing-services market, a 4-year decision
 period, one dependent-child stage, a persistent Markov income state, lifecycle
 income by age, owner housing rungs, continuous renter housing, down-payment
 constraints, and transaction/sale wedges. The live diagnostic convention caps
-renter housing at `hR_max=5.0` while the owner ladder remains
-`H_own=[2,4,6,8,10]`; this restores the intended tenure/product segmentation in
-which 6+ room family-sized housing is primarily an owner segment rather than a
-renter substitute. A payment-to-income screen exists as an optional diagnostic
+renter housing at `hR_max=6.0` while the owner ladder remains
+`H_own=[2,4,6,8,10]`; this keeps strong tenure/product segmentation while
+allowing a thin first large-rental margin and reserving the upper 8/10-room
+rungs for owners. A payment-to-income screen exists as an optional diagnostic
 switch, but the default model leaves it off and uses the collateral/down-payment
 constraint as the active finance restriction. It is not calibrated.
 
