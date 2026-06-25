@@ -138,8 +138,10 @@ def main() -> None:
     print(
         "Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, "
         "tenure_by_age, tenure_by_age_path, room_bin_fit, first_look_path, "
+        "first_look_on_path_path, "
         "first_look_full_path, first_look_density_path, "
-        "first_look_total_wealth_path, first_look_total_wealth_density_path, "
+        "first_look_total_wealth_path, first_look_total_wealth_on_path_path, "
+        "first_look_total_wealth_density_path, "
         "solution_cache_path, first_look_policy_lines, first_look_market_summary"
     )
 
@@ -208,7 +210,9 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     global solution_summary, moments, target_fit, age_profiles, tenure_by_age, room_bin_fit
     global tenure_by_age_path
     global first_look_path, first_look_full_path, first_look_density_path
+    global first_look_on_path_path
     global first_look_total_wealth_path, first_look_total_wealth_full_path
+    global first_look_total_wealth_on_path_path
     global first_look_total_wealth_density_path, first_look_total_wealth_density
     global total_wealth_grid_coverage
     global first_look_policy_lines, first_look_market_summary
@@ -218,9 +222,11 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     contact_sheet_path = outdir / "contact_sheet.png"
     solution_cache_path = outdir / "solution_cache.pkl"
     first_look_path = outdir / "first_look_policies_markets.png"
+    first_look_on_path_path = outdir / "first_look_policies_markets_on_path.png"
     first_look_full_path = outdir / "first_look_policies_markets_full.png"
     first_look_density_path = outdir / "first_look_wealth_density.png"
     first_look_total_wealth_path = outdir / "first_look_policies_markets_total_wealth.png"
+    first_look_total_wealth_on_path_path = outdir / "first_look_policies_markets_total_wealth_on_path.png"
     first_look_total_wealth_full_path = outdir / "first_look_policies_markets_total_wealth_full.png"
     first_look_total_wealth_density_path = outdir / "first_look_total_wealth_density.png"
     tenure_by_age_path = outdir / "tenure_by_age.png"

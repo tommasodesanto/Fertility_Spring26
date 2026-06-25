@@ -503,7 +503,7 @@ def write_core_outputs(
     policy_xlim = density_xlim_from_rows(first_look_density_rows)
     total_wealth_policy_xlim = policy_xlim_from_rows(
         first_look_policy_rows,
-        wealth_key="total_wealth_after_tenure",
+        wealth_key="expected_total_wealth_after_tenure",
         base_xlim=policy_xlim,
     )
     write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
@@ -522,6 +522,14 @@ def write_core_outputs(
     plot_first_look(
         first_look_policy_rows,
         first_look_market_rows,
+        outdir / "first_look_policies_markets_on_path.png",
+        mode="simple",
+        xlim=policy_xlim,
+        mass_filter_min=1e-10,
+    )
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
         outdir / "first_look_policies_markets_full.png",
         mode="full",
         xlim=policy_xlim,
@@ -532,8 +540,18 @@ def write_core_outputs(
         outdir / "first_look_policies_markets_total_wealth.png",
         mode="simple",
         xlim=total_wealth_policy_xlim,
-        wealth_key="total_wealth_after_tenure",
-        wealth_label="total wealth after chosen tenure",
+        wealth_key="expected_total_wealth_after_tenure",
+        wealth_label="expected total wealth after tenure choice",
+    )
+    plot_first_look(
+        first_look_policy_rows,
+        first_look_market_rows,
+        outdir / "first_look_policies_markets_total_wealth_on_path.png",
+        mode="simple",
+        xlim=total_wealth_policy_xlim,
+        wealth_key="expected_total_wealth_after_tenure",
+        wealth_label="expected total wealth after tenure choice",
+        mass_filter_min=1e-10,
     )
     plot_first_look(
         first_look_policy_rows,
@@ -541,8 +559,8 @@ def write_core_outputs(
         outdir / "first_look_policies_markets_total_wealth_full.png",
         mode="full",
         xlim=total_wealth_policy_xlim,
-        wealth_key="total_wealth_after_tenure",
-        wealth_label="total wealth after chosen tenure",
+        wealth_key="expected_total_wealth_after_tenure",
+        wealth_label="expected total wealth after tenure choice",
     )
     plot_first_look_wealth_density(
         first_look_density_rows,
@@ -887,8 +905,10 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                 tchoice = int(tenure_choice[bb, 0, 0, j, zz, 0, 0])
                 branch_wealth = modal_branch_wealth_from_childless_renter(float(wealth), tchoice, P, asset_price)
                 branch_wealth_clipped = float(np.clip(branch_wealth, b_grid[0], b_grid[-1]))
-                consumption = interp_policy_scalar(b_grid, c_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth)
-                next_liquid_wealth = interp_policy_scalar(b_grid, bp_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth)
+                modal_consumption = interp_policy_scalar(b_grid, c_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth)
+                modal_next_liquid_wealth = interp_policy_scalar(
+                    b_grid, bp_pol[:, tchoice, 0, j, zz, 0, 0], branch_wealth
+                )
                 renter_housing_if_renter = interp_policy_scalar(b_grid, hR_pol[:, 0, 0, j, zz, 0, 0], float(wealth))
                 chosen_renter_housing = (
                     interp_policy_scalar(b_grid, hR_pol[:, 0, 0, j, zz, 0, 0], branch_wealth)
@@ -908,6 +928,20 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                     if math.isfinite(liquidated_value_after_tenure)
                     else math.nan
                 )
+                expected = expected_childless_renter_tenure_policy(
+                    b_grid=b_grid,
+                    c_pol=c_pol,
+                    hR_pol=hR_pol,
+                    bp_pol=bp_pol,
+                    tenure_probs=tenure_probs,
+                    bb=bb,
+                    j=j,
+                    zz=zz,
+                    modal_tenure=tchoice,
+                    liquid_wealth=float(wealth),
+                    P=P,
+                    asset_price=asset_price,
+                )
                 policy_rows.append(
                     {
                         "initial_state": "childless_renter",
@@ -919,16 +953,23 @@ def first_look_rows(sol: Any, P: Any) -> tuple[list[dict[str, Any]], list[dict[s
                         "total_wealth_after_tenure": total_wealth_after_tenure,
                         "branch_liquid_wealth_after_transaction": branch_wealth,
                         "branch_liquid_wealth_clipped_to_grid": branch_wealth_clipped,
+                        "expected_branch_liquid_wealth_after_transaction": expected["branch_liquid_wealth"],
+                        "expected_branch_liquid_wealth_clipped_to_grid": expected["branch_liquid_wealth_clipped"],
                         "liquidated_housing_value_after_tenure": liquidated_value_after_tenure,
+                        "expected_liquidated_housing_value_after_tenure": expected["liquidated_housing_value"],
                         "liquidated_housing_discount_1_minus_psi": liquidation_discount,
-                        "consumption": consumption,
-                        "next_liquid_wealth": next_liquid_wealth,
+                        "consumption": expected["consumption"],
+                        "next_liquid_wealth": expected["next_liquid_wealth"],
+                        "modal_consumption": modal_consumption,
+                        "modal_next_liquid_wealth": modal_next_liquid_wealth,
                         "renter_housing_policy": renter_housing_if_renter,
                         "chosen_renter_housing": chosen_renter_housing,
                         "chosen_tenure_index": int(tchoice),
                         "chosen_tenure": "renter" if tchoice <= 0 else "owner",
                         "owner_entry_probability": owner_prob,
-                        "housing_services_after_tenure": housing,
+                        "housing_services_after_tenure": expected["housing_services"],
+                        "modal_housing_services_after_tenure": housing,
+                        "expected_total_wealth_after_tenure": expected["total_wealth"],
                         "expected_children": fertility_expectation(fert_probs, bb, j, zz, nvec),
                         "ergodic_mass": ergodic_mass,
                         "mass_within_age_z_childless_renter": (
@@ -1053,6 +1094,92 @@ def owner_probability_from_tenure_probs(
         return float(np.sum(tenure_probs[bb, 0, 0, j, zz, 0, 0, 1:]))
     except IndexError:
         return math.nan
+
+
+def tenure_probability_vector(
+    tenure_probs: np.ndarray | None,
+    bb: int,
+    j: int,
+    zz: int,
+    modal_tenure: int,
+    nt: int,
+) -> np.ndarray:
+    if tenure_probs is None or tenure_probs.ndim < 8:
+        probs = np.zeros(nt, dtype=float)
+        probs[int(np.clip(modal_tenure, 0, nt - 1))] = 1.0
+        return probs
+    try:
+        probs = np.asarray(tenure_probs[bb, 0, 0, j, zz, 0, 0, :nt], dtype=float).reshape(-1)
+    except IndexError:
+        probs = np.zeros(nt, dtype=float)
+        probs[int(np.clip(modal_tenure, 0, nt - 1))] = 1.0
+        return probs
+    total = float(np.nansum(probs))
+    if not math.isfinite(total) or total <= 0.0:
+        out = np.zeros(nt, dtype=float)
+        out[int(np.clip(modal_tenure, 0, nt - 1))] = 1.0
+        return out
+    return probs / total
+
+
+def expected_childless_renter_tenure_policy(
+    *,
+    b_grid: np.ndarray,
+    c_pol: np.ndarray,
+    hR_pol: np.ndarray,
+    bp_pol: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    bb: int,
+    j: int,
+    zz: int,
+    modal_tenure: int,
+    liquid_wealth: float,
+    P: Any,
+    asset_price: np.ndarray,
+) -> dict[str, float]:
+    nt = 1 + int(getattr(P, "n_house", 0))
+    probs = tenure_probability_vector(tenure_probs, bb, j, zz, modal_tenure, nt)
+    h_own = np.asarray(getattr(P, "H_own", []), dtype=float).reshape(-1)
+    totals = {
+        "consumption": 0.0,
+        "next_liquid_wealth": 0.0,
+        "housing_services": 0.0,
+        "branch_liquid_wealth": 0.0,
+        "branch_liquid_wealth_clipped": 0.0,
+        "liquidated_housing_value": 0.0,
+        "total_wealth": 0.0,
+    }
+    weight = 0.0
+    for tn, prob in enumerate(probs):
+        p = float(prob)
+        if p <= 1e-14 or not math.isfinite(p):
+            continue
+        branch_wealth = modal_branch_wealth_from_childless_renter(liquid_wealth, tn, P, asset_price)
+        if not math.isfinite(branch_wealth):
+            continue
+        clipped = float(np.clip(branch_wealth, b_grid[0], b_grid[-1]))
+        c_val = interp_policy_scalar(b_grid, c_pol[:, tn, 0, j, zz, 0, 0], branch_wealth)
+        bp_val = interp_policy_scalar(b_grid, bp_pol[:, tn, 0, j, zz, 0, 0], branch_wealth)
+        if tn <= 0:
+            h_val = interp_policy_scalar(b_grid, hR_pol[:, 0, 0, j, zz, 0, 0], branch_wealth)
+        elif tn - 1 < h_own.size:
+            h_val = float(h_own[tn - 1])
+        else:
+            h_val = math.nan
+        liq_val = liquidated_housing_value(P, asset_price, tn, 0)
+        if not all(math.isfinite(x) for x in [c_val, bp_val, h_val, liq_val]):
+            continue
+        totals["consumption"] += p * c_val
+        totals["next_liquid_wealth"] += p * bp_val
+        totals["housing_services"] += p * h_val
+        totals["branch_liquid_wealth"] += p * branch_wealth
+        totals["branch_liquid_wealth_clipped"] += p * clipped
+        totals["liquidated_housing_value"] += p * liq_val
+        totals["total_wealth"] += p * (branch_wealth + liq_val)
+        weight += p
+    if weight <= 0.0:
+        return {key: math.nan for key in totals}
+    return {key: value / weight for key, value in totals.items()}
 
 
 def maybe_vector_value(values: np.ndarray, index: int) -> float:
@@ -1243,6 +1370,7 @@ def plot_first_look(
     xlim: tuple[float, float] | None = None,
     wealth_key: str = "liquid_wealth",
     wealth_label: str = "liquid wealth",
+    mass_filter_min: float | None = None,
 ) -> None:
     import matplotlib
 
@@ -1270,7 +1398,12 @@ def plot_first_look(
             for age in ages:
                 panel = [r for r in plot_rows if float(r["z"]) == z and float(r["age"]) == age]
                 panel.sort(key=lambda r: maybe_float(r.get(wealth_key)))
-                panel = filter_rows_to_xlim(panel, xlim, wealth_key=wealth_key)
+                panel = filter_policy_plot_rows(
+                    panel,
+                    xlim,
+                    wealth_key=wealth_key,
+                    mass_filter_min=mass_filter_min,
+                )
                 if not panel:
                     continue
                 ax.plot(
@@ -1298,6 +1431,7 @@ def plot_first_look(
         xlim=xlim,
         wealth_key=wealth_key,
         wealth_label=wealth_label,
+        mass_filter_min=mass_filter_min,
     )
     if xlim is not None:
         ax_h.set_xlim(*xlim)
@@ -1313,6 +1447,24 @@ def plot_first_look(
     fig.tight_layout(rect=(0.0, 0.07, 1.0, 0.96))
     fig.savefig(path, dpi=180)
     plt.close(fig)
+
+
+def filter_policy_plot_rows(
+    rows: list[dict[str, Any]],
+    xlim: tuple[float, float] | None,
+    *,
+    wealth_key: str = "liquid_wealth",
+    mass_filter_min: float | None = None,
+) -> list[dict[str, Any]]:
+    filtered = filter_rows_to_xlim(rows, xlim, wealth_key=wealth_key)
+    if mass_filter_min is None:
+        return filtered
+    return [
+        r
+        for r in filtered
+        if maybe_float(r.get("ergodic_mass")) > float(mass_filter_min)
+        or maybe_float(r.get("mass_within_age_z_childless_renter")) > float(mass_filter_min)
+    ]
 
 
 def filter_rows_to_xlim(
@@ -1609,42 +1761,40 @@ def plot_housing_by_tenure(
     xlim: tuple[float, float] | None = None,
     wealth_key: str = "liquid_wealth",
     wealth_label: str = "liquid wealth",
+    mass_filter_min: float | None = None,
 ) -> None:
     for z in z_values:
         for age in ages:
             panel = [r for r in rows if float(r["z"]) == z and float(r["age"]) == age]
             panel.sort(key=lambda r: maybe_float(r.get(wealth_key)))
-            panel = filter_rows_to_xlim(panel, xlim, wealth_key=wealth_key)
+            panel = filter_policy_plot_rows(
+                panel,
+                xlim,
+                wealth_key=wealth_key,
+                mass_filter_min=mass_filter_min,
+            )
             if not panel:
                 continue
             xs = [maybe_float(r.get(wealth_key)) for r in panel]
-            renter_y = [
-                maybe_float(r["housing_services_after_tenure"]) if str(r.get("chosen_tenure")) == "renter" else math.nan
-                for r in panel
-            ]
-            owner_y = [
-                maybe_float(r["housing_services_after_tenure"]) if str(r.get("chosen_tenure")) == "owner" else math.nan
-                for r in panel
-            ]
-            ax.plot(xs, renter_y, color=color_for_z[z], linestyle=style_for_age[age], lw=1.8, alpha=0.9)
-            ax.plot(
-                xs,
-                owner_y,
-                color=color_for_z[z],
-                linestyle=style_for_age[age],
-                lw=1.8,
-                marker="o",
-                ms=2.4,
-                alpha=0.9,
-            )
-    ax.set_title("Housing by tenure choice")
+            ys = [maybe_float(r["housing_services_after_tenure"]) for r in panel]
+            ax.plot(xs, ys, color=color_for_z[z], linestyle=style_for_age[age], lw=1.8, alpha=0.9)
+            owner_points = [r for r in panel if str(r.get("chosen_tenure")) == "owner"]
+            if owner_points:
+                ax.scatter(
+                    [maybe_float(r.get(wealth_key)) for r in owner_points],
+                    [maybe_float(r["housing_services_after_tenure"]) for r in owner_points],
+                    color=color_for_z[z],
+                    s=10,
+                    alpha=0.9,
+                )
+    ax.set_title("Expected housing by tenure choice")
     ax.set_xlabel(wealth_label)
     ax.set_ylabel("housing services")
     ax.grid(alpha=0.2)
     ax.text(
         0.02,
         0.98,
-        "line: chosen renter\ncircle: chosen owner",
+        "line: expected over tenure shocks\nmarker: modal owner branch",
         transform=ax.transAxes,
         va="top",
         ha="left",
@@ -1854,8 +2004,10 @@ def write_contact_sheet(outdir: Path) -> None:
     import matplotlib.pyplot as plt
 
     candidates = [
+        outdir / "first_look_policies_markets_on_path.png",
         outdir / "first_look_policies_markets.png",
         outdir / "first_look_wealth_density.png",
+        outdir / "first_look_policies_markets_total_wealth_on_path.png",
         outdir / "first_look_policies_markets_total_wealth.png",
         outdir / "first_look_total_wealth_density.png",
         outdir / "first_look_policies_markets_full.png",
@@ -1928,9 +2080,11 @@ def write_readme(
             "## Files",
             "",
             "- `diagnostics/`: standard plots from `intergen_housing_fertility.diagnostics.write_diagnostics`.",
-            "- `first_look_policies_markets.png`: simpler 2-by-2 inspection panel using two income states and two ages.",
+            "- `first_look_policies_markets_on_path.png`: simpler 2-by-2 inspection panel using tenure-probability expected policies and dropping zero-mass points in each displayed childless-renter age/income slice.",
+            "- `first_look_policies_markets.png`: same simple panel on the displayed wealth support without the on-path mass filter; use it for numerical grid inspection, not first-pass economics.",
             "- `first_look_policies_markets_full.png`: fuller version with all selected income states and ages.",
-            "- `first_look_policies_markets_total_wealth.png` and `_full.png`: same first-look policy panels with the policy x-axis set to liquid wealth plus net liquidated housing value after the chosen tenure branch.",
+            "- `first_look_policies_markets_total_wealth_on_path.png`: on-path first-look panel against expected total wealth after tenure choice.",
+            "- `first_look_policies_markets_total_wealth.png` and `_full.png`: same first-look policy panels with the policy x-axis set to expected liquid wealth plus net liquidated housing value after tenure choice.",
             "- `first_look_wealth_density.png` and `.csv`: aggregate ergodic mass over liquid wealth `b`, plus non-stacked renter/owner and childless/parent density panels.",
             "- `first_look_total_wealth_density.png` and `.csv`: same density diagnostics over total wealth `b + (1 - psi) p H` for owners and `b` for renters.",
             "- `wealth_grid_coverage.csv`: how much of the liquid-wealth grid is economically occupied under several mass thresholds.",
