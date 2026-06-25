@@ -38,6 +38,7 @@ from intergen_housing_fertility.calibration import (  # noqa: E402
 from intergen_housing_fertility.diagnostics import write_diagnostics  # noqa: E402
 from intergen_housing_fertility.local_panel import income_process_overrides  # noqa: E402
 from intergen_housing_fertility.solver import run_model_cp_dt  # noqa: E402
+from intergen_housing_fertility.solver import precompute_shared  # noqa: E402
 
 
 DEFAULT_SOURCE = ROOT / "output/model/intergen_room_distribution_current_best_20260623/summary.json"
@@ -573,6 +574,20 @@ def write_core_outputs(
         outdir / "first_look_total_wealth_density.png",
         wealth_label="total wealth = b + liquidated housing value",
         title="Ergodic mass over occupied total wealth",
+    )
+    det_policy_rows = ergodic_deterministic_policy_rows(sol, P)
+    write_csv(outdir / "ergodic_deterministic_policy_states.csv", det_policy_rows)
+    plot_ergodic_deterministic_policy_slices(
+        det_policy_rows,
+        outdir / "ergodic_deterministic_policy_slices.png",
+    )
+    plot_ergodic_deterministic_policy_top_slice(
+        det_policy_rows,
+        outdir / "ergodic_deterministic_policy_top_slice.png",
+    )
+    plot_ergodic_deterministic_policy_bins(
+        det_policy_rows,
+        outdir / "ergodic_deterministic_policy_bins.png",
     )
 
     if quick_first_look_only:
@@ -1247,6 +1262,327 @@ def first_threshold(line: np.ndarray, cutoff: float) -> float:
     if not np.any(hit):
         return math.nan
     return float(line[np.argmax(hit), 0])
+
+
+def ergodic_deterministic_policy_rows(sol: Any, P: Any, *, mass_min: float = 1e-12) -> list[dict[str, Any]]:
+    g = np.asarray(getattr(sol, "g", np.zeros(0)), dtype=float)
+    if g.ndim != 7:
+        return []
+    b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
+    c_pol = np.asarray(sol.c_pol, dtype=float)
+    hR_pol = np.asarray(sol.hR_pol, dtype=float)
+    bp_pol = np.asarray(sol.bp_pol, dtype=float)
+    tenure_choice = np.asarray(sol.tenure_choice)
+    fert_probs = np.asarray(sol.fert_probs, dtype=float)
+    price = owner_asset_price_vector(sol, P)
+    h_own = np.asarray(P.H_own, dtype=float).reshape(-1)
+    z_grid = np.asarray(getattr(sol, "type_values", getattr(P, "z_grid", [1.0])), dtype=float).reshape(-1)
+    age_grid = np.asarray(float(P.age_start) + np.arange(int(P.J)) * float(P.da), dtype=float)
+    shared = precompute_shared(P, b_grid)
+    total_mass = float(np.sum(g))
+    rows: list[dict[str, Any]] = []
+    nz = np.argwhere(g > float(mass_min))
+    for bb, to, i, j, zz, nn, cs in nz:
+        mass = float(g[bb, to, i, j, zz, nn, cs])
+        b = float(b_grid[bb])
+        tn = int(tenure_choice[bb, to, i, j, zz, nn, cs])
+        bw = deterministic_branch_wealth(
+            b=b,
+            origin_tenure=int(to),
+            target_tenure=tn,
+            market=int(i),
+            parity=int(nn),
+            child_state=int(cs),
+            P=P,
+            price=price,
+            shared=shared,
+        )
+        c_val = interp_policy_scalar(b_grid, c_pol[:, tn, i, j, zz, nn, cs], bw)
+        bp_val = interp_policy_scalar(b_grid, bp_pol[:, tn, i, j, zz, nn, cs], bw)
+        if tn <= 0:
+            h_val = interp_policy_scalar(b_grid, hR_pol[:, 0, i, j, zz, nn, cs], bw)
+            target_rooms = 0.0
+            target_label = "renter"
+        else:
+            target_rooms = float(h_own[tn - 1])
+            h_val = target_rooms
+            target_label = f"owner_{target_rooms:g}"
+        fert_choice, expected_children = deterministic_fertility_choice(fert_probs, bb, to, i, j, zz, nn)
+        completed_children = completed_children_for_packet(P, int(nn), int(cs))
+        current_rooms = 0.0 if to <= 0 else float(h_own[to - 1])
+        rows.append(
+            {
+                "age": float(age_grid[j]),
+                "age_index": int(j),
+                "z_index": int(zz),
+                "z": float(z_grid[zz]) if zz < z_grid.size else float(zz),
+                "current_tenure_index": int(to),
+                "current_tenure": "renter" if to <= 0 else f"owner_{current_rooms:g}",
+                "current_tenure_rooms": current_rooms,
+                "parity_state": int(nn),
+                "child_state": int(cs),
+                "completed_children": int(completed_children),
+                "liquid_wealth": b,
+                "ergodic_mass": mass,
+                "population_share": mass / total_mass if total_mass > 1e-14 else math.nan,
+                "target_tenure_index": tn,
+                "target_tenure": target_label,
+                "target_tenure_rooms": target_rooms,
+                "deterministic_owner_choice": float(tn > 0),
+                "branch_liquid_wealth_after_transaction": bw,
+                "consumption_policy": c_val,
+                "next_liquid_wealth_policy": bp_val,
+                "housing_services_policy": h_val,
+                "deterministic_fertility_choice": fert_choice,
+                "expected_children_probability_weighted": expected_children,
+            }
+        )
+    return rows
+
+
+def deterministic_branch_wealth(
+    *,
+    b: float,
+    origin_tenure: int,
+    target_tenure: int,
+    market: int,
+    parity: int,
+    child_state: int,
+    P: Any,
+    price: np.ndarray,
+    shared: Any,
+) -> float:
+    to = int(origin_tenure)
+    tn = int(target_tenure)
+    if tn == to:
+        return float(b)
+    p = maybe_vector_value(price, int(market))
+    if not math.isfinite(p):
+        return math.nan
+    h_own = np.asarray(P.H_own, dtype=float).reshape(-1)
+    sale = 0.0 if to <= 0 else (1.0 - float(P.psi)) * p * float(h_own[to - 1])
+    if tn <= 0:
+        return float(max(b + sale, 0.0))
+    hcost = p * float(h_own[tn - 1])
+    if to <= 0:
+        branch = float(b - hcost)
+        if bool(shared.birth_dp[parity, child_state, to, tn]):
+            phi = float(shared.phi_choice[market, tn, parity, child_state])
+            branch = max(branch, -phi * hcost)
+        else:
+            grant = float(shared.birth_entry_grant[market, tn, parity, child_state])
+            if grant > 0.0:
+                branch += grant
+        return branch
+    return float(b + sale - hcost)
+
+
+def deterministic_fertility_choice(
+    fert_probs: np.ndarray,
+    bb: int,
+    to: int,
+    i: int,
+    j: int,
+    zz: int,
+    nn: int,
+) -> tuple[float, float]:
+    try:
+        if fert_probs.ndim == 6:
+            probs = np.asarray(fert_probs[bb, to, i, j, zz, :], dtype=float).reshape(-1)
+        else:
+            probs = np.asarray(fert_probs[bb, to, i, j, zz, nn, :], dtype=float).reshape(-1)
+    except IndexError:
+        return math.nan, math.nan
+    if probs.size == 0 or not np.any(np.isfinite(probs)):
+        return math.nan, math.nan
+    probs = np.nan_to_num(probs, nan=0.0, posinf=0.0, neginf=0.0)
+    total = float(np.sum(probs))
+    if total > 0.0:
+        probs = probs / total
+    grid = np.arange(probs.size, dtype=float)
+    return float(np.argmax(probs)), float(np.dot(probs, grid))
+
+
+def completed_children_for_packet(P: Any, nn: int, cs: int) -> int:
+    k = int(getattr(P, "n_child_stages", 1))
+    if cs == 0:
+        return 0
+    if cs == k + 1:
+        return 1
+    if cs == k + 2:
+        return 2
+    return int(nn)
+
+
+def plot_ergodic_deterministic_policy_slices(rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    selected = selected_childless_renter_policy_slices(rows, max_slices=4)
+    if not selected:
+        return
+    fig, axes = plt.subplots(2, 2, figsize=(13.0, 8.4), sharex=True)
+    specs = [
+        (axes[0, 0], "consumption_policy", "Consumption", "consumption"),
+        (axes[0, 1], "housing_services_policy", "Housing services", "housing services"),
+        (axes[1, 0], "target_tenure_rooms", "Deterministic tenure/product", "0=renter, owner rooms"),
+        (axes[1, 1], "deterministic_fertility_choice", "Deterministic fertility choice", "children"),
+    ]
+    colors = plt.cm.viridis(np.linspace(0.12, 0.88, len(selected)))
+    for color, ((age, z), panel) in zip(colors, selected):
+        panel = sorted(panel, key=lambda r: maybe_float(r["liquid_wealth"]))
+        x = [maybe_float(r["liquid_wealth"]) for r in panel]
+        mass = sum(maybe_float(r["population_share"]) for r in panel)
+        label = f"age={age:g}, z={z:g}, mass={100.0 * mass:.2f}%"
+        for ax, key, _, _ in specs:
+            ax.plot(x, [maybe_float(r[key]) for r in panel], marker="o", ms=3.0, lw=1.8, color=color, label=label)
+    for ax, _, title, ylabel in specs:
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+        ax.grid(alpha=0.2)
+    for ax in axes[1, :]:
+        ax.set_xlabel("liquid wealth b")
+    handles, labels = axes[0, 0].get_legend_handles_labels()
+    if handles:
+        fig.legend(handles, labels, loc="lower center", ncols=2, frameon=False, fontsize=8)
+    fig.suptitle("Deterministic argmax policies on common occupied childless-renter states", y=0.985)
+    fig.tight_layout(rect=(0.0, 0.08, 1.0, 0.95))
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def plot_ergodic_deterministic_policy_top_slice(rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    selected = selected_childless_renter_policy_slices(rows, max_slices=12)
+    if not selected:
+        return
+    key, panel = max(
+        selected,
+        key=lambda item: (len(item[1]) >= 8, sum(maybe_float(r["ergodic_mass"]) for r in item[1])),
+    )
+    panel = sorted(panel, key=lambda r: maybe_float(r["liquid_wealth"]))
+    fig, axes = plt.subplots(2, 2, figsize=(11.5, 7.8), sharex=True)
+    specs = [
+        (axes[0, 0], "consumption_policy", "Consumption", "consumption"),
+        (axes[0, 1], "housing_services_policy", "Housing services", "housing services"),
+        (axes[1, 0], "target_tenure_rooms", "Deterministic tenure/product", "0=renter, owner rooms"),
+        (axes[1, 1], "deterministic_fertility_choice", "Deterministic fertility choice", "children"),
+    ]
+    x = [maybe_float(r["liquid_wealth"]) for r in panel]
+    for ax, field, title, ylabel in specs:
+        ax.plot(x, [maybe_float(r[field]) for r in panel], color="tab:blue", marker="o", ms=3.5, lw=1.8)
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+        ax.grid(alpha=0.2)
+    for ax in axes[1, :]:
+        ax.set_xlabel("liquid wealth b")
+    mass = sum(maybe_float(r["population_share"]) for r in panel)
+    age, z = key
+    fig.suptitle(
+        f"Deterministic argmax policy for one common occupied state: childless renter, age={age:g}, z={z:g}, mass={100.0 * mass:.2f}%",
+        y=0.985,
+    )
+    fig.tight_layout(rect=(0.0, 0.03, 1.0, 0.93))
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def selected_childless_renter_policy_slices(
+    rows: list[dict[str, Any]],
+    *,
+    max_slices: int,
+) -> list[tuple[tuple[float, float], list[dict[str, Any]]]]:
+    groups: dict[tuple[float, float], list[dict[str, Any]]] = {}
+    for row in rows:
+        if int(row["current_tenure_index"]) != 0:
+            continue
+        if int(row["completed_children"]) != 0 or int(row["child_state"]) != 0:
+            continue
+        key = (float(row["age"]), float(row["z"]))
+        groups.setdefault(key, []).append(row)
+    ranked = []
+    for key, panel in groups.items():
+        if len(panel) < 3:
+            continue
+        mass = sum(maybe_float(r["ergodic_mass"]) for r in panel)
+        ranked.append((mass, key, panel))
+    ranked.sort(reverse=True, key=lambda x: x[0])
+    return [(key, panel) for _, key, panel in ranked[:max_slices]]
+
+
+def plot_ergodic_deterministic_policy_bins(rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    binned = deterministic_policy_by_liquid_wealth(rows)
+    if not binned:
+        return
+    x = np.asarray([r["liquid_wealth"] for r in binned], dtype=float)
+    fig, axes = plt.subplots(2, 2, figsize=(13.0, 8.4), sharex=True)
+    specs = [
+        (axes[0, 0], "population_share", "Ergodic mass", "population share"),
+        (axes[0, 1], "mean_consumption", "Mass-weighted consumption", "consumption"),
+        (axes[1, 0], "mean_housing_services", "Mass-weighted housing", "housing services"),
+        (axes[1, 1], "owner_choice_share", "Argmax owner choice share", "share"),
+    ]
+    for ax, key, title, ylabel in specs:
+        ax.plot(x, [maybe_float(r[key]) for r in binned], marker="o", ms=2.5, lw=1.6)
+        ax.set_title(title)
+        ax.set_ylabel(ylabel)
+        ax.grid(alpha=0.2)
+    for ax in axes[1, :]:
+        ax.set_xlabel("liquid wealth b")
+    fig.suptitle("Mass-weighted deterministic argmax policies over all occupied states", y=0.985)
+    fig.tight_layout(rect=(0.0, 0.03, 1.0, 0.95))
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def deterministic_policy_by_liquid_wealth(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_b: dict[float, list[dict[str, Any]]] = {}
+    for row in rows:
+        by_b.setdefault(float(row["liquid_wealth"]), []).append(row)
+    out: list[dict[str, Any]] = []
+    total_mass = sum(maybe_float(r["ergodic_mass"]) for r in rows)
+    for b, panel in sorted(by_b.items()):
+        mass = sum(maybe_float(r["ergodic_mass"]) for r in panel)
+        if mass <= 0.0:
+            continue
+        out.append(
+            {
+                "liquid_wealth": float(b),
+                "population_share": mass / total_mass if total_mass > 1e-14 else math.nan,
+                "mean_consumption": weighted_row_mean(panel, "consumption_policy", mass),
+                "mean_housing_services": weighted_row_mean(panel, "housing_services_policy", mass),
+                "owner_choice_share": weighted_row_mean(panel, "deterministic_owner_choice", mass),
+                "mean_deterministic_fertility_choice": weighted_row_mean(
+                    panel, "deterministic_fertility_choice", mass
+                ),
+            }
+        )
+    return out
+
+
+def weighted_row_mean(rows: list[dict[str, Any]], key: str, mass: float) -> float:
+    if mass <= 0.0:
+        return math.nan
+    total = 0.0
+    used_mass = 0.0
+    for row in rows:
+        value = maybe_float(row.get(key))
+        weight = maybe_float(row.get("ergodic_mass"))
+        if math.isfinite(value) and math.isfinite(weight) and weight > 0.0:
+            total += weight * value
+            used_mass += weight
+    return total / used_mass if used_mass > 0.0 else math.nan
 
 
 def write_policy_cases(
@@ -2004,6 +2340,9 @@ def write_contact_sheet(outdir: Path) -> None:
     import matplotlib.pyplot as plt
 
     candidates = [
+        outdir / "ergodic_deterministic_policy_top_slice.png",
+        outdir / "ergodic_deterministic_policy_slices.png",
+        outdir / "ergodic_deterministic_policy_bins.png",
         outdir / "first_look_policies_markets_on_path.png",
         outdir / "first_look_policies_markets.png",
         outdir / "first_look_wealth_density.png",
@@ -2090,6 +2429,10 @@ def write_readme(
             "- `wealth_grid_coverage.csv`: how much of the liquid-wealth grid is economically occupied under several mass thresholds.",
             "- `total_wealth_grid_coverage.csv`: occupied support under the total-wealth definition.",
             "- `first_look_policy_lines.csv` and `first_look_market_summary.csv`: source data for the first-look panels, including chosen tenure, ergodic mass, and house-price/user-cost accounting.",
+            "- `ergodic_deterministic_policy_states.csv`: deterministic argmax policy rows for every occupied state in the stationary distribution.",
+            "- `ergodic_deterministic_policy_top_slice.png`: one literal deterministic policy function for a common occupied childless-renter state.",
+            "- `ergodic_deterministic_policy_slices.png`: readable deterministic policy slices for the most common occupied childless-renter age/income cells.",
+            "- `ergodic_deterministic_policy_bins.png`: mass-weighted deterministic policies over all occupied states by liquid wealth.",
             "- `target_fit.csv` and `target_fit.md`: full target/model/gap table with loss contributions.",
             "- `room_bin_fit_prime30_55_childless.csv` and `room_bin_shares_prime30_55_childless.png`: model versus ACS room-bin shares.",
             "- `owner_rung_shares_all_owners.csv` and `.png`: realized owner mass across the full owner room ladder.",

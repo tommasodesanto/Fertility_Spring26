@@ -142,6 +142,9 @@ def main() -> None:
         "first_look_full_path, first_look_density_path, "
         "first_look_total_wealth_path, first_look_total_wealth_on_path_path, "
         "first_look_total_wealth_density_path, "
+        "ergodic_deterministic_policy_top_slice_path, "
+        "ergodic_deterministic_policy_slices_path, "
+        "ergodic_deterministic_policy_bins_path, "
         "solution_cache_path, first_look_policy_lines, first_look_market_summary"
     )
 
@@ -215,6 +218,8 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     global first_look_total_wealth_on_path_path
     global first_look_total_wealth_density_path, first_look_total_wealth_density
     global total_wealth_grid_coverage
+    global ergodic_deterministic_policy_top_slice_path
+    global ergodic_deterministic_policy_slices_path, ergodic_deterministic_policy_bins_path
     global first_look_policy_lines, first_look_market_summary
 
     output_folder = outdir
@@ -229,6 +234,9 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     first_look_total_wealth_on_path_path = outdir / "first_look_policies_markets_total_wealth_on_path.png"
     first_look_total_wealth_full_path = outdir / "first_look_policies_markets_total_wealth_full.png"
     first_look_total_wealth_density_path = outdir / "first_look_total_wealth_density.png"
+    ergodic_deterministic_policy_top_slice_path = outdir / "ergodic_deterministic_policy_top_slice.png"
+    ergodic_deterministic_policy_slices_path = outdir / "ergodic_deterministic_policy_slices.png"
+    ergodic_deterministic_policy_bins_path = outdir / "ergodic_deterministic_policy_bins.png"
     tenure_by_age_path = outdir / "tenure_by_age.png"
     solution_summary = read_json(outdir / "solution_summary.json")
     moments = read_json(outdir / "moments.json")
