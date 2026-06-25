@@ -491,6 +491,9 @@ def write_core_outputs(
         age_rows = age_profile_rows(sol, P)
         write_csv(outdir / "age_profiles.csv", age_rows)
         plot_age_profiles(age_rows, outdir / "age_profiles.png")
+        tenure_age_rows = tenure_by_age_rows(sol, P)
+        write_csv(outdir / "tenure_by_age.csv", tenure_age_rows)
+        plot_tenure_by_age(tenure_age_rows, outdir / "tenure_by_age.png")
 
     first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
     first_look_density_rows = wealth_density_rows(sol, P, wealth_measure="liquid")
@@ -743,6 +746,31 @@ def age_profile_rows(sol: Any, P: Any) -> list[dict[str, Any]]:
                 "fertility": float(np.asarray(getattr(sol, "fert_by_age", np.zeros(P.J)), dtype=float)[j]),
                 "mean_housing_services": mean_housing_at_age(sol, P, j),
                 "mean_liquid_wealth": mean_wealth,
+                "mass": mass,
+            }
+        )
+    return rows
+
+
+def tenure_by_age_rows(sol: Any, P: Any) -> list[dict[str, Any]]:
+    g = np.asarray(sol.g, dtype=float)
+    ages = np.asarray(P.age_start + np.arange(P.J) * P.da, dtype=float)
+    own_by_age = np.asarray(getattr(sol, "own_by_age", np.zeros(P.J)), dtype=float).reshape(-1)
+    rows: list[dict[str, Any]] = []
+    for j, age in enumerate(ages):
+        gj = g[:, :, :, j, :, :, :] if g.ndim == 7 else np.asarray([])
+        mass = float(np.sum(gj)) if g.ndim == 7 else math.nan
+        owner_mass = float(np.sum(g[:, 1:, :, j, :, :, :])) if g.ndim == 7 else math.nan
+        renter_mass = float(np.sum(g[:, 0, :, j, :, :, :])) if g.ndim == 7 else math.nan
+        owner_share = float(own_by_age[j]) if j < own_by_age.size else owner_mass / max(mass, 1e-14)
+        renter_share = float(renter_mass / max(mass, 1e-14)) if np.isfinite(mass) else 1.0 - owner_share
+        rows.append(
+            {
+                "age": float(age),
+                "renter_share": renter_share,
+                "owner_share": owner_share,
+                "renter_mass": renter_mass,
+                "owner_mass": owner_mass,
                 "mass": mass,
             }
         )
@@ -1730,6 +1758,35 @@ def plot_age_profiles(rows: list[dict[str, Any]], path: Path) -> None:
     plt.close(fig)
 
 
+def plot_tenure_by_age(rows: list[dict[str, Any]], path: Path) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    ages = np.asarray([float(r["age"]) for r in rows])
+    owner = np.asarray([float(r["owner_share"]) for r in rows])
+    renter = np.asarray([float(r["renter_share"]) for r in rows])
+    young_mask = (ages >= 25.0) & (ages <= 34.0)
+    old_mask = (ages >= 65.0) & (ages <= 75.0)
+    young_owner = float(np.mean(owner[young_mask])) if np.any(young_mask) else math.nan
+    old_owner = float(np.mean(owner[old_mask])) if np.any(old_mask) else math.nan
+
+    fig, ax = plt.subplots(figsize=(8.5, 4.8))
+    ax.axvspan(25.0, 34.0, color="0.92", label="young target ages 25-34")
+    ax.plot(ages, owner, marker="o", lw=2.2, color="#4C78A8", label="owners")
+    ax.plot(ages, renter, marker="s", lw=2.0, color="#F58518", label="renters")
+    ax.set_xlabel("age")
+    ax.set_ylabel("population share")
+    ax.set_ylim(0.0, 1.03)
+    ax.set_title(f"Tenure by age: young owner share={young_owner:.3f}, old owner share={old_owner:.3f}")
+    ax.grid(axis="y", alpha=0.25)
+    ax.legend(frameon=False, loc="center right")
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
 def plot_owner_entry_thresholds(rows: list[dict[str, Any]], path: Path) -> None:
     import matplotlib
 
@@ -1803,6 +1860,7 @@ def write_contact_sheet(outdir: Path) -> None:
         outdir / "first_look_total_wealth_density.png",
         outdir / "first_look_policies_markets_full.png",
         outdir / "first_look_policies_markets_total_wealth_full.png",
+        outdir / "tenure_by_age.png",
         outdir / "diagnostics/ownership_by_age.png",
         outdir / "diagnostics/policy_childless_renter_age30.png",
         outdir / "diagnostics/policy_childless_renter_age42.png",
@@ -1883,6 +1941,7 @@ def write_readme(
             "- `owner_rung_shares_all_owners.csv` and `.png`: realized owner mass across the full owner room ladder.",
             "- `owner_rung_shares_prime30_55_childless.csv` and `.png`: owner rung concentration among prime-age childless owners.",
             "- `age_profiles.csv` and `.png`: lifecycle ownership, fertility, housing, and liquid wealth profiles.",
+            "- `tenure_by_age.csv` and `.png`: simple renter/owner population shares by age.",
             "- `owner_entry_thresholds.csv` and `.png`: childless-renter owner-entry probability thresholds by age and income state.",
             "- `owner_entry_policy_childless_renter_age30_42.csv`: owner-entry probability lines used for age-30 and age-42 inspection.",
             "- `solution_cache.pkl`: local trusted Python pickle with the solved `sol`, `P`, and `p_eq` objects. Use `--refresh-plots-from-cache` to rebuild figures and CSVs from it without re-solving.",

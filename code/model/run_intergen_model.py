@@ -137,7 +137,8 @@ def main() -> None:
     print(f"Visual summary: {contact_sheet}")
     print(
         "Loaded Spyder variables: solution_summary, moments, target_fit, age_profiles, "
-        "room_bin_fit, first_look_path, first_look_full_path, first_look_density_path, "
+        "tenure_by_age, tenure_by_age_path, room_bin_fit, first_look_path, "
+        "first_look_full_path, first_look_density_path, "
         "first_look_total_wealth_path, first_look_total_wealth_density_path, "
         "solution_cache_path, first_look_policy_lines, first_look_market_summary"
     )
@@ -204,7 +205,8 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     """Expose the main run artifacts as globals for Spyder's Variable Explorer."""
     global output_folder, readme_path, contact_sheet_path
     global solution_cache_path
-    global solution_summary, moments, target_fit, age_profiles, room_bin_fit
+    global solution_summary, moments, target_fit, age_profiles, tenure_by_age, room_bin_fit
+    global tenure_by_age_path
     global first_look_path, first_look_full_path, first_look_density_path
     global first_look_total_wealth_path, first_look_total_wealth_full_path
     global first_look_total_wealth_density_path, first_look_total_wealth_density
@@ -221,10 +223,12 @@ def load_outputs_for_spyder(outdir: Path) -> None:
     first_look_total_wealth_path = outdir / "first_look_policies_markets_total_wealth.png"
     first_look_total_wealth_full_path = outdir / "first_look_policies_markets_total_wealth_full.png"
     first_look_total_wealth_density_path = outdir / "first_look_total_wealth_density.png"
+    tenure_by_age_path = outdir / "tenure_by_age.png"
     solution_summary = read_json(outdir / "solution_summary.json")
     moments = read_json(outdir / "moments.json")
     target_fit = read_csv_table(outdir / "target_fit.csv")
     age_profiles = read_csv_table(outdir / "age_profiles.csv")
+    tenure_by_age = read_csv_table(outdir / "tenure_by_age.csv")
     room_bin_fit = read_csv_table(outdir / "room_bin_fit_prime30_55_childless.csv")
     first_look_policy_lines = read_csv_table(outdir / "first_look_policy_lines.csv")
     first_look_market_summary = read_csv_table(outdir / "first_look_market_summary.csv")
