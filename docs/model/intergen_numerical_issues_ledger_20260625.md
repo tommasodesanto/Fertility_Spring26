@@ -209,3 +209,53 @@ Recommended first move: run the fixed-price grid-refinement diagnostic. It
 does not change primitives, does not launch a calibration search, and directly
 resolves whether the same-renter policy dips are economically stable or
 grid-amplified.
+
+## Parallel Diagnostic Sprint Results
+
+The parallel diagnostic sprint is summarized in
+`docs/model/intergen_parallel_debug_synthesis_20260625.md`. The underlying
+diagnostic outputs are under
+`output/model/intergen_parallel_audits_20260625/`.
+
+Main updates:
+
+- Young ownership is primarily a value-ranking failure, not a static
+  down-payment-feasibility failure. Owner rungs are usually feasible for young
+  childless renter-origin mass, but renting dominates in branch value.
+- Old ownership is near-absorbing same-rung ownership. Among old owners,
+  roughly `0.976` stay on the same owner rung next period, while only `0.002`
+  sell to rent and `0.004` owner-downsize.
+- Same-renter \(c,h\) dips are not just a coarse-wealth-grid artifact. Fixed
+  price refinement through `Nb=240` reduces the flagged age-30 dip but does not
+  eliminate dips in high-mass slices. \(b'(b)\) remains monotone.
+- The renter \(h_R\ge 6\) moment has a likely definition problem in the Markov
+  income extractor. Full 7D cached distribution mass gives weak
+  \(h_R\ge6\) around `0.124`, close to the `0.138` target, while the saved
+  implemented moment reports `0.013` after income-state policy collapse.
+- The owner ladder has no clean starter-owner product: 2 rooms is utility-dead,
+  4 rooms is a weak/floor rung for family states, and 6 rooms is effectively
+  the first robust owner product. But starter-rung probes alone do not fix
+  young ownership.
+- Bequest utility has a confirmed child-level penalty under the current
+  \(\sigma=2\) CRRA form, and terminal bequests use gross \(b+pH\) rather than
+  net liquidation value \(b+(1-\psi)pH\).
+- Accounting and KFE invariants are mostly clean, but the wealth grid is
+  overwide and purchase/down-payment cliffs are reachable near occupied mass.
+- Tenure smoothing affects choices as a real logit mixture, but local market
+  clearing at the saved price does not mechanically depend on smoothing:
+  hard-argmax \( \kappa_t=0 \) nearly clears locally.
+- Fertility accounting is internally consistent as one-shot completed family
+  size with `tfr = 2 * mean_completed_fertility`; the main risk is terminology
+  that invites a sequential hazard interpretation.
+
+Updated first moves:
+
+1. Audit and, if needed, fix the renter large-room moment definition before
+   changing primitives or re-running calibration.
+2. Inspect the renter Bellman/intratemporal kink regions behind persistent
+   same-renter \(c,h\) dips.
+3. Decompose young owner value gaps and old owner retention as separate
+   mechanism failures.
+4. Only then test structural changes: young-entry transfer or rent wedge,
+   old-age exit/downsize shock, large-rental price wedge, bequest
+   normalization, and starter-owner menu redesign.
