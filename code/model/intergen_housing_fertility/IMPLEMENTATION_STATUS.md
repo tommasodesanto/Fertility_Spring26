@@ -38,14 +38,19 @@ quantitative model.
 - `INTENDED`: owner adjustment includes transaction/sale wedges and the
   workhorse down-payment constraint. In this code, `phi` is the financed share,
   so the down-payment threshold is \((1-\phi)Ph\).
-- `INTENDED`: new owner choices face a payment-to-income screen. The current
-  implementation blocks new purchases/adjustments when
+- `INTENDED`: the default model does not impose a payment-to-income screen:
+  `use_pti_constraint=False`. If that optional screen is manually enabled, new
+  owner purchases/adjustments must satisfy the simple payment test
   \[
-  (q_{\text{int}}\phi+\tau^p)Ph > \psi^{PTI} y_a.
+  q_{\text{int}}D+\tau^p Ph \le \psi^{PTI} y_a,
   \]
-  Incumbent owners who keep the same owner rung do not requalify each period.
-- `INTENDED`: lifecycle income profile \(y_a\) enters the budget and the
-  payment-to-income screen.
+  where \(D=\max\{Ph-\text{cash},0\}\) is actual transaction debt, not the
+  maximum allowed LTV debt \(\phi Ph\). Equivalently, the code raises the
+  required cash threshold only when the PTI-implied minimum cash exceeds the
+  collateral down payment \((1-\phi)Ph\). Incumbent owners who keep the same
+  owner rung do not requalify each period.
+- `INTENDED`: lifecycle income profile \(y_a\) enters the budget and, only if
+  manually enabled, the optional payment-to-income screen.
 - `INTENDED`: persistent Markov income/productivity state \(z_t\). The default
   grid is `z_grid=[0.70, 1.00, 1.30]` with stationary entry weights
   `z_weights=[0.30, 0.40, 0.30]`. The transition matrix is
@@ -54,7 +59,7 @@ quantitative model.
   \(z_{t+1}\sim\Pi_z(z_{t+1}\mid z_t)\), and the discrete-time forward
   distribution propagates mass across \(z_{t+1}\) with the same matrix.
   Working-age income is \(y_{a,z}=z y_a\), and the same type-scaled income
-  enters the budget and payment-to-income screen.
+  enters the budget and the optional payment-to-income screen when enabled.
 - `INTENDED`: 4-year decision periods. Defaults are `period_years=4`,
   `age_start=22`, `J=16`, and `J_R=11`, so agents enter at age 22, first retire
   at age 66, and die after the last age-82 decision period.
@@ -108,8 +113,9 @@ quantitative model.
   purchase and housing equity is not a separate continuous state.
 - `SIMPLIFICATION`: no mortgage coupon, amortization, maturity, refinancing, or
   present-value mortgage lock-in state.
-- `SIMPLIFICATION`: the payment-to-income screen uses a simple interest-plus-tax
-  payment. It is not yet Coven's full amortized mortgage payment formula.
+- `SIMPLIFICATION`: if enabled, the optional payment-to-income screen uses a
+  simple interest-plus-tax payment. It is not Coven's full amortized mortgage
+  payment formula.
 - `SIMPLIFICATION`: the housing supply shifter `H0` and rent anchor `r_bar` are
   smoke-test normalizations, not calibrated targets.
 - `SIMPLIFICATION`: old retention currently comes only through the inherited

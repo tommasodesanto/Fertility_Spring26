@@ -13,12 +13,14 @@ not a calibration plan.
    \(b-pH+(1-\psi)pH=b-\psi pH\), not \(b+(1-\psi)pH\).
 3. Non-fertile ages should not be plotted as zero fertility probabilities.
    Fertility probabilities are meaningful only in the active fertility window.
-4. The PTI screen currently uses maximum financed debt, roughly
-   \((q\phi+\tau_H)pH\), rather than actual mortgage debt after the transaction.
-   This may mechanically exclude upper owner rungs even for cash-rich households.
+4. The PTI screen was not part of the main model idea. As of the June 24
+   patch, the active defaults turn it off. If manually enabled, the code should
+   use actual transaction debt \(D=\max\{pH-\text{cash},0\}\), not maximum LTV
+   debt \(\phi pH\), so cash-rich households can relax the screen.
 5. Owner ladder support is mechanically thin. Given current family-space floors,
-   \(\chi\), and PTI, 2-room and 10-room rungs are likely unavailable or
-   unattractive by construction.
+   \(\chi\), and housing-service/price primitives, 2-room and 10-room rungs may
+   still be unavailable or unattractive by construction even after turning PTI
+   off.
 6. The bequest utility level effect needs audit. With \(\sigma=2\), multiplying
    negative CRRA bequest utility by child-dependent weight can penalize children
    at fixed estate and generate sharp wealth-fertility thresholds.
@@ -40,6 +42,6 @@ not a calibration plan.
 1. Fix and inspect composed first-look policy plots.
 2. Add accounting/invariant diagnostics for budget residuals, probability sums,
    mass conservation, value monotonicity, and branch feasibility.
-3. Run partial-equilibrium ablations for PTI, bequest normalization, owner
-   service scaling, renter cap, and dense owner ladder.
+3. Run partial-equilibrium ablations for bequest normalization, owner service
+   scaling, renter cap, dense owner ladder, and optional actual-debt PTI.
 4. Only then return to calibration target design.

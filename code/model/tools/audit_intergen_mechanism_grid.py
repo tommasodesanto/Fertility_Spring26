@@ -313,7 +313,11 @@ def generate_mechanism_candidates(base_theta: dict[str, float]) -> list[dict[str
     for phi in [0.85, 0.90, 0.95, 0.98]:
         add("finance_phi_only", f"phi_{phi:.2f}", {"phi": phi})
     for pti in [0.45, 0.60]:
-        add("finance_pti_only", f"pti_{pti:.2f}", {"pti_limit": pti})
+        add(
+            "finance_pti_only",
+            f"pti_on_{pti:.2f}",
+            {"use_pti_constraint": True, "pti_limit": pti},
+        )
 
     for chi_mult in [0.75, 0.85, 0.95, 1.00]:
         for delta in [0.0, 2.0, 4.0, 6.0]:
@@ -321,11 +325,12 @@ def generate_mechanism_candidates(base_theta: dict[str, float]) -> list[dict[str
                 for pti in [0.30, 0.45]:
                     add(
                         "chi_access_compensation",
-                        f"chi{chi_mult:.2f}_b{delta:g}_phi{phi:.2f}_pti{pti:.2f}",
+                        f"chi{chi_mult:.2f}_b{delta:g}_phi{phi:.2f}_pti_on_{pti:.2f}",
                         {
                             "chi": base_theta["chi"] * chi_mult,
                             "b_entry_fixed": base_theta["b_entry_fixed"] + delta,
                             "phi": phi,
+                            "use_pti_constraint": True,
                             "pti_limit": pti,
                         },
                     )
@@ -547,7 +552,17 @@ def case_csv_row(record: dict[str, Any]) -> dict[str, Any]:
     }
     row.update({key: m.get(key, math.nan) for key in KEY_MOMENTS})
     theta = record["theta"]
-    for key in ["chi", "b_entry_fixed", "phi", "pti_limit", "hR_max", "alpha_cons", "c_bar_n", "h_bar_0"]:
+    for key in [
+        "chi",
+        "b_entry_fixed",
+        "phi",
+        "use_pti_constraint",
+        "pti_limit",
+        "hR_max",
+        "alpha_cons",
+        "c_bar_n",
+        "h_bar_0",
+    ]:
         row[f"theta_{key}"] = theta.get(key, math.nan)
     return row
 

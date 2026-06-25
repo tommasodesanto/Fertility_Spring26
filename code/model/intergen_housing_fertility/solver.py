@@ -1775,7 +1775,6 @@ def solve_bellman_full_markov_income(
     heq = np.zeros((I, nt))
     dp_arr = np.zeros((I, nt, npar, ncs))
     bmo = np.zeros((I, nt, npar, ncs))
-    pti_payment = np.zeros((I, nt, npar, ncs))
     hsrv = np.zeros((I, nt))
     ocst = np.zeros((I, nt))
     for i in range(I):
@@ -1791,7 +1790,6 @@ def solve_bellman_full_markov_income(
                     phi_ncs = phi_choice[i, ten, nn, cs]
                     dp_arr[i, ten, nn, cs] = (1 - phi_ncs) * hcost[i, ten]
                     bmo[i, ten, nn, cs] = -phi_ncs * hcost[i, ten]
-                    pti_payment[i, ten, nn, cs] = (P.q * phi_ncs + P.tau_H) * hcost[i, ten]
 
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
@@ -1937,14 +1935,8 @@ def solve_bellman_full_markov_income(
 
             dp_choice = dp_arr
             if bool(getattr(P, "use_pti_constraint", False)):
-                dp_choice = dp_arr.copy()
-                pti_limit = max(float(getattr(P, "pti_limit", 1.0)), 0.0)
-                big_dp = max(float(b_grid[-1]) + 10.0 * np.max(np.maximum(hcost, 1.0)), 1e8)
-                for i in range(I):
-                    yj = income_at_state(P, i, j, float(z_value))
-                    failed = pti_payment[i] > pti_limit * yj
-                    failed[0, :, :] = False
-                    dp_choice[i, failed] = big_dp
+                income_j = np.array([income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float)
+                dp_choice = pti_adjusted_downpayment(dp_arr, hcost, income_j, P, b_grid)
 
             if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
                 VH, tcj, prj = tenure_logit_kernel(
@@ -2147,7 +2139,6 @@ def solve_bellman_core(
     heq = np.zeros((I, nt))
     dp_arr = np.zeros((I, nt, npar, ncs))
     bmo = np.zeros((I, nt, npar, ncs))
-    pti_payment = np.zeros((I, nt, npar, ncs))
     hsrv = np.zeros((I, nt))
     ocst = np.zeros((I, nt))
     for i in range(I):
@@ -2166,7 +2157,6 @@ def solve_bellman_core(
                     phi_ncs = phi_choice[i, ten, nn, cs]
                     dp_arr[i, ten, nn, cs] = (1 - phi_ncs) * hcost[i, ten]
                     bmo[i, ten, nn, cs] = -phi_ncs * hcost[i, ten]
-                    pti_payment[i, ten, nn, cs] = (P.q * phi_ncs + P.tau_H) * hcost[i, ten]
 
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
@@ -2419,13 +2409,7 @@ def solve_bellman_core(
 
         dp_choice = dp_arr
         if bool(getattr(P, "use_pti_constraint", False)):
-            dp_choice = dp_arr.copy()
-            pti_limit = max(float(getattr(P, "pti_limit", 1.0)), 0.0)
-            big_dp = max(float(b_grid[-1]) + 10.0 * np.max(np.maximum(hcost, 1.0)), 1e8)
-            for i in range(I):
-                failed = pti_payment[i] > pti_limit * P.income[i, j]
-                failed[0, :, :] = False
-                dp_choice[i, failed] = big_dp
+            dp_choice = pti_adjusted_downpayment(dp_arr, hcost, P.income[:, j], P, b_grid)
 
         if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
             VH, tcj, prj = tenure_logit_kernel(
@@ -4604,6 +4588,36 @@ def bequest_utility_vec(b, nk, P):
     if abs(P.sigma - 1) < 1e-6:
         return scale * np.log(P.theta1 + b)
     return scale * (P.theta1 + b) ** (1 - P.sigma) / (1 - P.sigma)
+
+
+def pti_adjusted_downpayment(dp_arr, hcost, income, P, b_grid):
+    """Optional underwriting screen based on actual transaction debt.
+
+    The core collateral constraint is `dp_arr`: cash available before purchase
+    must cover `(1 - phi) * pH`, and branch liquid wealth may not fall below
+    `-phi * pH`. If PTI is enabled, use actual transaction debt
+    `D=max(pH-cash, 0)`, not the maximum allowed LTV debt, so extra cash can
+    relax the payment screen.
+    """
+    out = np.array(dp_arr, dtype=float, copy=True)
+    pti_limit = max(float(getattr(P, "pti_limit", 1.0)), 0.0)
+    q = max(float(getattr(P, "q", 0.0)), 0.0)
+    tau_h = max(float(getattr(P, "tau_H", 0.0)), 0.0)
+    incomes = np.asarray(income, dtype=float).reshape(-1)
+    big_dp = max(float(b_grid[-1]) + 10.0 * np.max(np.maximum(hcost, 1.0)), 1e8)
+    for i in range(out.shape[0]):
+        y = float(incomes[i]) if i < incomes.size and np.isfinite(incomes[i]) else 0.0
+        for ten in range(1, out.shape[1]):
+            house_cost = float(hcost[i, ten])
+            tax_payment = tau_h * house_cost
+            allowed_debt_payment = pti_limit * y - tax_payment
+            if allowed_debt_payment < 0.0:
+                out[i, ten, :, :] = big_dp
+            elif q > 1e-12:
+                max_debt_pti = allowed_debt_payment / q
+                min_cash_pti = house_cost - max_debt_pti
+                out[i, ten, :, :] = np.maximum(out[i, ten, :, :], min_cash_pti)
+    return out
 
 
 def has_birth_dp_grant(P, nn, cs, to, tn):

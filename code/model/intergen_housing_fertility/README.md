@@ -43,8 +43,10 @@ Run from `code/model` when using the package CLI directly:
 The current pass uses one aggregate housing-services market, a 4-year decision
 period, one dependent-child stage, a persistent Markov income state, lifecycle
 income by age, owner housing rungs, continuous renter housing, down-payment
-constraints, transaction/sale wedges, and a payment-to-income screen for new
-owner choices. It is not calibrated.
+constraints, and transaction/sale wedges. A payment-to-income screen exists as
+an optional diagnostic switch, but the default model leaves it off and uses the
+collateral/down-payment constraint as the active finance restriction. It is not
+calibrated.
 
 `IMPLEMENTATION_STATUS.md` is the live implementation record. Any future
 simplification or deferred object should be added there in the same edit as the

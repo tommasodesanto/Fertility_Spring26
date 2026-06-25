@@ -772,7 +772,7 @@ def base_overrides(*, J: int, Nb: int, n_house: int, max_iter_eq: int) -> dict[s
         "H_own": np.linspace(2.0, 10.0, int(n_house)),
         "max_iter_eq": int(max_iter_eq),
         "tol_eq": 1e-4,
-        "use_pti_constraint": True,
+        "use_pti_constraint": False,
         "scalar_market_refine": True,
         "scalar_market_refine_method": "brent",
         "scalar_market_refine_iter": 16,
@@ -810,7 +810,7 @@ def draw_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:
     if idx == 2:
         return {"hR_max": 5.0}
     if idx == 3:
-        return {"b_entry_fixed": 5.0, "phi": np.array([0.95, 0.95, 0.95]), "pti_limit": 0.45}
+        return {"b_entry_fixed": 5.0, "phi": np.array([0.95, 0.95, 0.95])}
     if idx == 4:
         return {"hR_max": 4.0, "H0": np.array([3.0])}
     phi = rng.uniform(0.82, 0.97)
@@ -818,7 +818,6 @@ def draw_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:
         "alpha_cons": rng.uniform(0.62, 0.82),
         "phi": np.array([phi, phi, phi]),
         "b_entry_fixed": rng.uniform(0.0, 7.0),
-        "pti_limit": rng.uniform(0.28, 0.65),
         "c_bar_n": rng.uniform(0.24, 0.72),
         "chi": rng.uniform(0.75, 1.50),
         "kappa_fert": rng.uniform(3.0, 7.0),

@@ -78,7 +78,7 @@ def setup_parameters() -> SimpleNamespace:
     P.chi = 1.10
     P.psi = 0.06
     P.phi = 0.80 * np.ones(P.n_parity)
-    P.use_pti_constraint = True
+    P.use_pti_constraint = False
     P.pti_limit = 0.30
     P.parent_dp_waiver = False
     P.parent_dp_waiver_phi = 1.0

@@ -768,9 +768,10 @@
               <code>(1 - phi) P h</code>, not <code>phi P h</code>.
             </p>
             <p>
-              New owner choices also face a payment-to-income screen. In the current implementation this blocks purchases
-              or adjustments when the simplified interest-plus-tax payment exceeds <code>pti_limit * y</code>. Incumbent
-              owners keeping the same rung do not requalify each period.
+              The default model leaves the payment-to-income screen off. If manually enabled, it blocks purchases or
+              adjustments only when the simplified interest-plus-tax payment on actual transaction debt exceeds
+              <code>pti_limit * y</code>; cash-rich households can relax that screen by borrowing less. Incumbent owners
+              keeping the same rung do not requalify each period.
             </p>
           </div>
         </details>

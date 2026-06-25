@@ -212,7 +212,7 @@ def one_market_overrides(extra: dict[str, Any] | None = None) -> dict[str, Any]:
         "r_bar": np.array([0.16]),
         "H0": np.array([4.0]),
         "eta_supply": np.array([1.0]),
-        "use_pti_constraint": True,
+        "use_pti_constraint": False,
         "pti_limit": 0.30,
     }
     if extra:
