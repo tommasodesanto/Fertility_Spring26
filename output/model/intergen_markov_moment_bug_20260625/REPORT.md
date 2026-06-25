@@ -49,11 +49,17 @@ they are also correct. Only **nonlinear-in-renter-policy** moments break.
 | `renter25_45_current1_cap_share` | diagnostic | 0.021 | **0.621** | one-child renters press hard on the cap |
 
 Unaffected (verified identical): renter mean rooms 4.455, owner mean rooms
-6.835, and the **active-target** `owner_minus_renter_mean_rooms` gap 2.380.
-So the **current** diagnostic point's loss (target set
-`candidate_replacement_young_old_roomgap_v1`, which weights only the mean gap)
-was **not** corrupted. The bug is a landmine for any room-share/median-targeting
-set and for the reported target-fit tables.
+6.835, and the mean room gap 2.380 (all linear).
+
+Active-set impact (corrected after regenerating target_fit.csv): the active set
+`candidate_replacement_young_old_roomgap_v1` DOES weight
+`prime30_55_childless_renter_share_rooms_ge6` (weight 25); the renter median and
+the three cap shares are diagnostic (unweighted). So the active loss WAS
+corrupted, but modestly and favorably: regenerating with the fix moves the loss
+from 38.44 to **38.05** (the corrected renter≥6 share 0.124 is a near-hit vs
+target 0.138, contributing 0.004, instead of the buggy 0.013 gross miss
+contributing ~0.39). The bug is a larger landmine for room-median / cap-share
+targeting sets, which are not in the active loss.
 
 ## 4. Fix
 
