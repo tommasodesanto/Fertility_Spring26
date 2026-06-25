@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-24 23:00 EDT`
+Updated: `2026-06-25 12:25 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -15,6 +15,14 @@ June 24 code-audit fixes changed the live mechanics before any new calibration:
 debt, and `chi` is now an owner utility/service premium on residual owner
 housing services after physical family-space needs, not a multiplier that
 reduces the physical room floor.
+
+June 25 tenure-segmentation correction: the live diagnostic convention now caps
+renter housing at `hR_max=5.0` while keeping the owner ladder
+`H_own=[2,4,6,8,10]`. This restores the intended product-support separation:
+renters can choose continuous housing up to a modest cap, but 6+ room
+family-sized housing is primarily an owner segment. Treat pre-correction
+diagnostic plots with `hR_max=8.0` as useful pathology evidence, not as the
+current model convention.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,

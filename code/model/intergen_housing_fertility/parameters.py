@@ -96,7 +96,7 @@ def setup_parameters() -> SimpleNamespace:
     P.h_own_min = 2.0
     P.H_own = np.array([2.0, 4.0, 6.0, 8.0, 9.5, 11.0])
     P.h_own_max = P.H_own[-1]
-    P.hR_max = 8.0
+    P.hR_max = 5.0
     P.I = 1
     P.w_hat = np.array([1.0])
     P.E_loc = np.array([0.0])

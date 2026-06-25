@@ -34,14 +34,14 @@ OUTPUT_FOLDER = "output/model/intergen_model_run_current"
 # Active target set used for target/model/gap tables.
 TARGET_SET = "candidate_replacement_young_old_roomgap_v1"
 
-# Main model grid. The saved source record already contains the current owner
-# ladder H_own=[2,4,6,8,10], hR_max=8, J=16, Nb=60, and Nz=5. These are listed
-# here so the run is legible when you open this file.
+# Main model grid. Keep the rental cap below the family-size owner rungs: the
+# intended segmentation is not only extra owner rungs, but a smaller rental
+# support and a larger owner support.
 J = 16
 NB = 60
 INCOME_STATES = 5
 OWNER_LADDER = "2,4,6,8,10"
-RENTER_MAX_ROOMS = 8.0
+RENTER_MAX_ROOMS = 5.0
 MAX_ITER_EQ = 10
 
 # Turn this on only when you want the diagnostic policy proof-of-concept cases:
