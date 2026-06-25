@@ -1744,6 +1744,7 @@ def solve_bellman_full_markov_income(
     alpha = P.alpha_cons
     oms = 1.0 - sigma
     owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
+    owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
     owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
@@ -1782,7 +1783,7 @@ def solve_bellman_full_markov_income(
             hs = P.H_own[ten - 1]
             hcost[i, ten] = p_hat[i] * hs
             heq[i, ten] = (1 - P.psi) * p_hat[i] * hs
-            hsrv[i, ten] = P.chi * hs
+            hsrv[i, ten] = hs
             extra_size_cost = owner_size_cost * p_hat[i] * max(hs - owner_size_cost_ref, 0.0) ** owner_size_cost_power
             ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs + extra_size_cost
             for nn in range(npar):
@@ -1903,7 +1904,7 @@ def solve_bellman_full_markov_income(
                         Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
                             Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
                             cb_v, hb_v, psi_v_flat, bf_v,
-                            oc, hsv, owner_h_bar_scale, P.c_min,
+                            oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
                         )
                     else:
@@ -1911,7 +1912,7 @@ def solve_bellman_full_markov_income(
                             Vbar = Vco[:, c]
                             cb_c = SD.cb_flat[0, c]
                             pc = SD.psi_flat[0, c]
-                            ht_c = max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
+                            ht_c = owner_service_premium * max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
                             Ko_c = ht_c ** ((1 - alpha) * oms)
                             nn_c_1 = math.ceil((c + 1) / ncs)
                             cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
@@ -2093,6 +2094,7 @@ def solve_bellman_core(
     alpha = P.alpha_cons
     oms = 1.0 - sigma
     owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
+    owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
     owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
@@ -2146,7 +2148,7 @@ def solve_bellman_core(
             hs = P.H_own[ten - 1]
             hcost[i, ten] = p_hat[i] * hs
             heq[i, ten] = (1 - P.psi) * p_hat[i] * hs
-            hsrv[i, ten] = P.chi * hs
+            hsrv[i, ten] = hs
             extra_size_cost = owner_size_cost * p_hat[i] * max(hs - owner_size_cost_ref, 0.0) ** owner_size_cost_power
             ocst[i, ten] = (P.delta + P.tau_H) * p_hat[i] * hs + extra_size_cost
             for nn in range(npar):
@@ -2288,7 +2290,7 @@ def solve_bellman_core(
                         Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
                             Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
                             cb_v, hb_v, psi_v_flat, bf_v,
-                            oc, hsv, owner_h_bar_scale, P.c_min,
+                            oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
                         )
                     else:
@@ -2297,7 +2299,7 @@ def solve_bellman_core(
                             Vbar = Vco[:, c]
                             cb_c = SD.cb_flat[0, c]
                             pc = SD.psi_flat[0, c]
-                            ht_c = max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
+                            ht_c = owner_service_premium * max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
                             Ko_c = ht_c ** ((1 - alpha) * oms)
                             nn_c_1 = math.ceil((c + 1) / ncs)
                             cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
@@ -2382,7 +2384,7 @@ def solve_bellman_core(
                         wt_nc_o = flat_nc(stored_wt[:, ten, i, j, :, :], Nb, nc)
                         Vo_nc, co_nc = eval_owner_block_kernel(
                             Rv1d, bpv_o, Vco_nc, idx_nc_o, wt_nc_o, cb_v, hb_v, psi_v_flat,
-                            oc, hsv, owner_h_bar_scale, P.c_min, alpha, oms, beta,
+                            oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min, alpha, oms, beta,
                         )
                     else:
                         if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
@@ -2394,7 +2396,7 @@ def solve_bellman_core(
                         else:
                             Vcbpo = interp_cols(b_grid, Vco_nc, np.clip(bpv_o, b_lo, b_hi))
                         ct_o = np.maximum(Rv - oc - SD.cb_flat - bpv_o, 1e-10)
-                        ht_o = np.maximum(hsv - owner_h_bar_scale * SD.hb_flat, 1e-10)
+                        ht_o = owner_service_premium * np.maximum(hsv - owner_h_bar_scale * SD.hb_flat, 1e-10)
                         Ko_ev = ht_o ** ((1 - alpha) * oms)
                         Vo_nc = Ko_ev * ct_o ** (alpha * oms) / oms + SD.psi_flat + beta * Vcbpo
                         Vo_nc[ct_o <= 1e-10] = -1e10

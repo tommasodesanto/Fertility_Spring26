@@ -890,6 +890,7 @@ def full_owner_block_kernel(
     oc,
     hsv,
     owner_h_bar_scale,
+    owner_service_premium,
     c_min,
     alpha,
     oms,
@@ -914,6 +915,7 @@ def full_owner_block_kernel(
         ht_c = hsv - owner_h_bar_scale * hbc
         if ht_c < 1e-10:
             ht_c = 1e-10
+        ht_c = owner_service_premium * ht_c
         Ko_c = ht_c ** one_minus_alpha_oms
         for b in range(Nb):
             Rvb = Rv1d[b]
@@ -1041,6 +1043,7 @@ def eval_owner_block_kernel(
     oc,
     hsv,
     owner_h_bar_scale,
+    owner_service_premium,
     c_min,
     alpha,
     oms,
@@ -1059,6 +1062,7 @@ def eval_owner_block_kernel(
         ht_c = hsv - owner_h_bar_scale * hbc
         if ht_c < 1e-10:
             ht_c = 1e-10
+        ht_c = owner_service_premium * ht_c
         Ko = ht_c ** one_minus_alpha_oms
         for b in range(Nb):
             bp = bpv_o[b, c]

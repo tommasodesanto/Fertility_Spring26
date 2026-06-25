@@ -17,10 +17,11 @@ not a calibration plan.
    patch, the active defaults turn it off. If manually enabled, the code should
    use actual transaction debt \(D=\max\{pH-\text{cash},0\}\), not maximum LTV
    debt \(\phi pH\), so cash-rich households can relax the screen.
-5. Owner ladder support is mechanically thin. Given current family-space floors,
-   \(\chi\), and housing-service/price primitives, 2-room and 10-room rungs may
-   still be unavailable or unattractive by construction even after turning PTI
-   off.
+5. Owner ladder support is mechanically thin. Given current family-space floors
+   and housing-service/price primitives, 2-room and 10-room rungs may still be
+   unavailable or unattractive by construction even after turning PTI off. As of
+   the June 24 follow-up patch, \(\chi\) no longer relaxes the physical
+   family-space floor; it scales only residual owner services after the floor.
 6. The bequest utility level effect needs audit. With \(\sigma=2\), multiplying
    negative CRRA bequest utility by child-dependent weight can penalize children
    at fixed estate and generate sharp wealth-fertility thresholds.

@@ -38,6 +38,12 @@ quantitative model.
 - `INTENDED`: owner adjustment includes transaction/sale wedges and the
   workhorse down-payment constraint. In this code, `phi` is the financed share,
   so the down-payment threshold is \((1-\phi)Ph\).
+- `INTENDED`: `chi` is the reduced-form owner utility/service premium from the
+  May 29 quantitative slides. It scales residual owner housing services after
+  the family-space requirement is subtracted, \(\chi[H-\bar h(n,cs)]\), rather
+  than making owner physical rooms count as \(\chi H\) before the floor. Thus
+  ownership is more attractive in utility, but the family-space floor is still
+  measured in physical rooms.
 - `INTENDED`: the default model does not impose a payment-to-income screen:
   `use_pti_constraint=False`. If that optional screen is manually enabled, new
   owner purchases/adjustments must satisfy the simple payment test

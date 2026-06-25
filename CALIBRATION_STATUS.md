@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-18 15:00 EDT`
+Updated: `2026-06-24 23:00 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -9,6 +9,12 @@ A separate one-market intergenerational housing-fertility strand is active under
 quantitative model for the June 2026 intergenerational strand: simplified
 relative to the older spatial center-periphery model by dropping location. It
 is **not** yet a final production calibration.
+
+June 24 code-audit fixes changed the live mechanics before any new calibration:
+`use_pti_constraint=False` by default, optional PTI uses actual transaction
+debt, and `chi` is now an owner utility/service premium on residual owner
+housing services after physical family-space needs, not a multiplier that
+reduces the physical room floor.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
