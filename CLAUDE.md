@@ -126,9 +126,14 @@ historical or pre-revision results. Never compare losses across target systems,
 geographies, room-unit normalizations, or objective definitions unless you have
 verified they are comparable.
 
-When reporting any calibration result, include the relevant target values next
-to the model moments. Do not report only losses or model moments when the target
-system is available.
+When reporting any calibration result, include the full target-fit table for the
+active target system: every target moment, target value, model moment, gap,
+weight, and loss contribution. Do not report only selected moments, only losses,
+or only model moments when the target system is available. Also report every
+estimated/free parameter with its estimate, search bound or external restriction,
+and whether the estimate is near a bound. If a concise chat answer is needed,
+lead with the scalar loss and a short interpretation, then link to or include
+the complete tables rather than omitting them.
 
 Identification discipline for SMM:
 

@@ -107,7 +107,11 @@ wrote
 with re-solved rank loss `17.071` and market residual `6.31e-06`. Shortlist
 comparison artifacts are
 `output/model/intergen_fixedstats_overnight_review_20260626/shortlist_comparison.md`
-and `shortlist_key_moments.png`. Main readout: aggregate ownership and the
+and `shortlist_key_moments.png`. The complete calibration report with every
+target moment, target value, model moment, weight, loss contribution, and all
+estimated parameters with search bounds is
+`output/model/intergen_fixedstats_overnight_review_20260626/best_complete_calibration_report.md`.
+Main readout: aggregate ownership and the
 first-child housing response improved materially, but the old-age ownership
 absorbing-margin problem remains (`old_age_own_rate≈0.978` vs target `0.764`),
 young ownership is still too low (`own_rate_2534≈0.124`--`0.127` in the
