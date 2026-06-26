@@ -201,6 +201,11 @@ inspectable if it only writes CSVs, losses, or scalar moments.
 
 - Provide one simple command or function that regenerates the full diagnostic
   packet for the active solution.
+- Keep the agreed diagnostic graph set stable across calibration readouts. Do
+  not redesign, rename, swap, or add ad hoc alternative plots when reporting a
+  new calibration unless the user explicitly asks for a graph change. If a new
+  diagnostic view is useful, label it as supplemental and keep the standard set
+  intact.
 - Plot policy functions over the relevant state spaces, including wealth,
   age, fertility/child states, location, tenure or housing product, and any
   active market-choice dimensions.
