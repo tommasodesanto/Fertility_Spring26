@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-26 14:25 EDT`
+Updated: `2026-06-26 15:23 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -188,6 +188,34 @@ Monitor with:
 `code/model` with:
 `python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_intergen_roomgap14_kappa_globalde_smoke1h_20260626`
 and the analogous panel result directory.
+
+June 26 15:23 EDT solver-accuracy diagnostics launch. Two read-only tools were
+added and pushed to `main`: `code/model/tools/audit_intergen_solver_accuracy.py`
+and `code/model/tools/audit_intergen_savings_globality.py` (latest launch
+commit `3a8d531`, full SHA
+`3a8d531a4e870bd9323d739c1f8f57fc8b330e01`). The Torch scratch snapshot at
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib` was refreshed from
+that commit; `SYNC_COMMIT_DIAGNOSTICS.txt` records the full SHA. Diagnostic
+inputs copied to
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/output/model/intergen_solver_accuracy_inputs_20260626/`:
+`de_w3_task10_de_g044_i022_best.json` and
+`best_de_g044_i022_solution_cache.pkl`. Remote compile/import preflight passed.
+This is separate from the 14-moment smoke calibration above. Three `cpu_short`
+jobs were launched in parallel, all running at status-write time:
+grid convergence `11868769`, equilibrium/equivalence `11868770`, and
+savings-globality `11868771`. Output root:
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/output/model/intergen_solver_accuracy_20260626/`.
+The grid job writes fixed-price and full-GE `Nb ∈ {60,120,240}` target/moment
+drift tables and solution caches. The equilibrium/equivalence job writes
+`max_iter_eq`/`scalar_market_refine` sensitivity, interior-renter Euler
+residuals, shape/KFE checks, Python-vs-Numba small-grid array differences,
+fast-stats-vs-full differences, and fixed-price linear-vs-monotone-cubic
+differences. The savings job writes all-branch dense-grid `b'` globality checks
+from the saved cache, separating raw branch failures from KFE-relevant failures
+using `mass × tenure_probability`. Monitor with
+`squeue -j 11868769,11868770,11868771`; logs are
+`code/cluster/logs/slurm_ihf_acc_grid_<job>.out`,
+`slurm_ihf_acc_eq_<job>.out`, and `slurm_ihf_acc_save_<job>.out`.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
