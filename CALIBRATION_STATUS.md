@@ -122,6 +122,25 @@ diagnostics in the packet show small market residuals and no obvious blank or
 exploding policy object; the remaining failures look economic/discrete-choice
 rather than an immediate numerical crash.
 
+June 26 housing-grid / smoothing audit. The dedicated audit note is
+`docs/model/intergen_housing_smoothing_audit_20260626.md`. Two read-only tools
+were added: `code/model/tools/audit_intergen_active_tenure_values.py` and
+`code/model/tools/run_intergen_kappa_smoothing_audit.py`. The active tenure
+value-gap diagnostic exactly recovers stored tenure probabilities from saved
+policies and next-period values (max error `2.65e-08` on the dense-grid GE
+cache). Findings: mid-wealth wiggles around `b≈4.2` are genuine close tenure
+and owner-rung margins (`rent` vs `H4`, and `H8` vs `H6` for parents), but the
+large high-mass consumption drop at `b_entry_fixed≈0.146514` is not a simple
+owner/renter near-indifference issue; owner branches are infeasible or far below
+the renter value at the near-zero states. A dense-grid fixed-theta kappa sweep
+over `tenure_choice_kappa ∈ {0,0.005,0.01,0.02,0.05}` shows that smoother
+tenure choice does not remove the entry-node drop: the drop stays near `-0.34`
+through `kappa=0.02` and is still `-0.308` at `kappa=0.05`. At `kappa=0.05`,
+economics move materially (old-age ownership about `0.900`, renter large-room
+share about `0.111`, owner large-room share about `0.636`), so it is not a
+harmless numerical smoothing fix. Next housing audit should focus on liquid-grid
+placement and the entry/liquid wealth atom before changing fertility mechanics.
+
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
 label `de_g008_i011`, stored loss `11.503191936648555` under the default
