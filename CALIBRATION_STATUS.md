@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-26 14:19 EDT`
+Updated: `2026-06-26 14:25 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -156,6 +156,38 @@ the old diagnostic-only moments `prime30_55_childless_owner_mean_rooms`,
 `prime30_55_childless_renter_share_rooms_ge6`, and
 `old_age_parent_childless_gap`. The target count is now exactly 14 against the
 14-parameter search vector including `tenure_choice_kappa`.
+
+June 26 14:25 EDT one-hour Torch smoke calibration launch. Local `main` was
+pushed at commit `20eacf9` (`Add intergen roomgap 14 moment target set`), and
+the plain scratch snapshot at
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib` was refreshed from
+`git archive HEAD`; `SYNC_COMMIT.txt` records full SHA
+`20eacf9c2c4db7ce2d77402b23ea1592f7e18ccb`. Remote compile passed after the
+snapshot refresh, and the remote target check returned 14 parameters / 14
+moments / no weight mismatch for `candidate_replacement_roomgap_14moment_v1`.
+Warm-start file:
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/output/model/intergen_room_distribution_current_best_20260623/summary.json`
+(top-level `theta`; missing `tenure_choice_kappa` defaults to `0.01`).
+Two exact-loop Slurm preflights completed cleanly with empty stderr:
+global-DE job `11863502` and local-panel job `11863503`, each one seeded
+full-grid evaluation, rank loss `27.60915015410047`, market residual
+`4.289731608961121e-05`. The actual smoke is a small 4+4 split, not a formal
+production calibration: four global-DE array tasks and four local/random-panel
+array tasks, each with `INTERGEN_MINUTES=55`, target set
+`candidate_replacement_roomgap_14moment_v1`, `J=16`, `Nb=60`,
+`income_states=5`, `INTERGEN_N_HOUSE=5`, `max_iter_eq=10`,
+`interp_method=linear` default, `use_pti_constraint=False`, and
+`tenure_choice_kappa` searched over `[0.000, 0.080]`. Slurm jobs:
+global-DE `11865125`, local-panel `11865127`; both arrays were running and had
+written per-task metadata at status-write time. Result roots:
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_roomgap14_kappa_globalde_smoke1h_20260626/`
+and
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_roomgap14_kappa_panel_smoke1h_20260626/`.
+Monitor with:
+`squeue -j 11865125,11865127`. Collect each branch after completion from
+`code/model` with:
+`python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_intergen_roomgap14_kappa_globalde_smoke1h_20260626`
+and the analogous panel result directory.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
