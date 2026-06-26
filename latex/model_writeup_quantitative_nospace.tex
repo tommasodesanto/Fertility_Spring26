@@ -1,0 +1,601 @@
+% !TEX root = model_writeup_quantitative_nospace.tex
+\documentclass[11pt]{article}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage[authoryear]{natbib}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\geometry{margin=1in}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\ind}{\mathbb{I}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Nset}{\mathcal N}
+\newcommand{\Dset}{\mathcal D}
+\newcommand{\Zset}{\mathcal Z}
+\newcommand{\Sset}{\mathcal S}
+\newcommand{\Oset}{\mathcal O}
+\newcommand{\Tg}{\mathcal T^g}
+\newcommand{\Bcal}{\mathcal B}
+
+\title{Fertility and Housing Tenure Choice:\\Quantitative One-Market Model Writeup}
+\author{Tommaso De Santo}
+\date{June 2026}
+
+\begin{document}
+\maketitle
+
+\section{Model}
+
+This version rewrites the May 2026 model as a non-spatial quantitative
+lifecycle economy. The May draft had residential locations, local amenities,
+bilateral moving wedges, and location-specific housing supply. The current
+model removes that spatial layer. There is one housing-services market, one
+purchase price, and one rental user cost. What remains is the channel that is
+central for the quantitative exercise: children require goods and housing
+space, family-suitable housing is easier to access through ownership than
+through renting, and the ownership margin is shaped by down-payment constraints,
+transaction costs, bequest motives, and tax incentives to retain housing.
+
+The object is a stationary overlapping-generations economy. Adult population
+mass is normalized in the benchmark, so fertility changes the composition of
+households and their housing demand rather than mechanically changing aggregate
+city scale. This normalization keeps the quantitative model focused on the
+family-housing margin. A separate population-scale closure can be added later,
+but it is not needed to define the current equilibrium.
+
+The model combines endogenous fertility in a lifecycle problem
+\citep{sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019} with
+housing tenure choice, collateral constraints, and owner-occupied housing
+\citep{hendersonModelHousingTenure1983,sommerEquilibriumEffectFundamentals2013,sommerImplicationsUSTax2018}.
+Relative to the May draft, the Rosen--Roback spatial layer is removed: there
+are no local amenities, no bilateral moving wedges, and no location-specific
+housing markets in the baseline quantitative economy.
+
+\subsection{Environment}
+
+\textbf{Agents.}
+Households live for ages $a=1,\ldots,J$. They work until age $J_R$ and are
+retired afterward. At the beginning of a period, the core individual state is
+\begin{equation}
+    x=(b,z,d,a,n,s).
+    \label{eq:state}
+\end{equation}
+Here $b$ is liquid wealth, $z\in\Zset$ is idiosyncratic labor productivity,
+$d\in\Dset$ is tenure and housing position, $a$ is age, $n$ is completed
+fertility, and $s\in\Sset$ is the child-at-home state. The tenure set is
+\begin{equation*}
+    \Dset=\{R,O_1,\ldots,O_K\}.
+\end{equation*}
+$R$ denotes renting. $O_k$ denotes ownership of a house with physical size
+$H_k$, where $H_1<\cdots<H_K$. Renters choose rental space continuously up to a
+cap $\bar h^R$, while owners choose from the discrete ladder $\{H_k\}_{k=1}^K$.
+The ladder is the reduced-form way the quantitative model captures the fact
+that large family-suitable units are disproportionately owner-occupied.
+
+When the capital-gains module is active, the owner state is augmented by a tax
+basis $B^p$. The baseline implementation can be recovered by setting the
+capital-gains tax rate to zero, in which case $B^p$ drops out of the household
+problem.
+
+\textbf{Income.}
+Working-age households receive after-tax labor income
+\begin{equation*}
+    y_a(z)=(1-\tau^{\mathrm{pay}})w e_a z,
+    \qquad a\leq J_R,
+\end{equation*}
+where $e_a$ is the deterministic lifecycle efficiency profile and $z$ follows
+the Markov transition matrix $\Pi^z(z'|z)$. Retired households receive pension
+income $p^{\mathrm{ret}}_a$. The quantitative model treats the income process
+as a calibrated household primitive rather than as the source of a spatial
+wage gradient.
+
+\textbf{Preferences.}
+Let $m(n,s)$ be the number of dependent children currently living at home.
+Completed fertility $n$ and current dependents $m(n,s)$ differ because children
+eventually leave the household. Child-related goods and housing needs are
+\begin{equation}
+\begin{aligned}
+\bar c(n,s)
+    &= \bar c_0+\bar c_n m(n,s),\\
+\bar h(n,s)
+    &= \bar h_0
+       +\ind\{m(n,s)\geq 1\}\bar h_{\mathrm{jump}}
+       +\bar h_n m(n,s).
+\end{aligned}
+\label{eq:child_needs}
+\end{equation}
+The first child can therefore create a discrete housing-space requirement, and
+additional children raise required space linearly.
+
+The flow utility aggregator is Stone--Geary over nondurable consumption and
+housing services:
+\begin{equation}
+u(c,\widetilde h;n,s)
+=
+\frac{
+\left[
+\left(c-\bar c(n,s)\right)^\alpha
+\widetilde h^{\,1-\alpha}
+\right]^{1-\sigma}
+}{1-\sigma}
+\psi_{\mathrm{child}}m(n,s),
+\label{eq:flow_utility}
+\end{equation}
+with utility equal to $-\infty$ if consumption or housing services fall below
+the required levels. The object $\widetilde h$ is residual housing service
+after child space needs. For renters and owners,
+\begin{equation}
+\widetilde h =
+\begin{cases}
+h^R-\bar h(n,s), & d=R,\\
+\chi\left[H_k-\bar h(n,s)\right], & d=O_k.
+\end{cases}
+\label{eq:effective_housing_services}
+\end{equation}
+The parameter $\chi$ is an owner-occupancy service premium applied to residual
+owner housing services. In market clearing, owner demand is the physical
+quantity $H_k$, not the service quantity $\chi H_k$.
+
+The key fertility mechanism is already visible in \eqref{eq:flow_utility} and
+\eqref{eq:effective_housing_services}. Children do not only require goods.
+They also absorb scarce housing space. If a household is constrained by the
+rental cap, the ownership menu, or the down-payment requirement, the relevant
+price of a child is the household's shadow value of space, not only the market
+rent.
+
+\textbf{Bequests.}
+At death, households receive warm-glow bequest utility. Let $W^B$ denote
+bequeathable wealth after any liquidation costs and taxes. Bequest utility is
+\begin{equation}
+\Bcal(W^B,n)
+=
+\theta_0(1+\theta_n n)
+\frac{
+\left(\theta_1+\max\{W^B,0\}\right)^{1-\sigma}
+-\theta_1^{1-\sigma}
+}{1-\sigma}.
+\label{eq:bequest}
+\end{equation}
+The parameter $\theta_0$ governs the overall bequest motive, $\theta_n$ lets
+completed fertility scale the bequest motive, and $\theta_1$ controls curvature
+near zero wealth.
+
+\textbf{Housing market.}
+There is one aggregate housing-services market. The rental user cost is $q$ and
+the asset price of housing is $P$. They satisfy
+\begin{equation}
+    q=(r+\delta+\tau^p)P,
+    \label{eq:user_cost}
+\end{equation}
+where $r$ is the risk-free interest rate, $\delta$ is maintenance/depreciation,
+and $\tau^p$ is the recurrent property-tax rate. Aggregate housing supply is
+upward sloping:
+\begin{equation}
+    H^S(q)=H_0\left(\frac{q}{\bar q}\right)^\eta.
+    \label{eq:housing_supply}
+\end{equation}
+The scale $H_0$ fixes the benchmark level of housing services and $\eta$
+governs the construction response.
+
+\textbf{Financing and tenure institutions.}
+Liquid wealth earns gross return $R=1+r$. Renters cannot borrow. A household
+that originates an owner position $O_k$ can finance at most share $\phi$ of the
+house value. Equivalently, the required down payment is
+\begin{equation}
+    (1-\phi)PH_k.
+    \label{eq:down_payment}
+\end{equation}
+The parameter $\phi$ is the financed share, so a larger $\phi$ relaxes the
+ownership constraint.
+
+Selling a house is costly. If a household sells a house of size $H_k$, sale
+proceeds before capital-gains taxes are
+\begin{equation*}
+    (1-\psi^s)PH_k,
+\end{equation*}
+where $\psi^s$ is the proportional sale or transaction wedge. A household that
+keeps its current house is not forced to satisfy a new origination constraint
+after a price change. This distinction matters for old owners: the model can
+generate retention because selling is costly, because current owners already
+hold large units, and because tax rules can make holding more attractive than
+realizing gains.
+
+\textbf{Capital gains and step-up basis.}
+The capital-gains block is modular. Let $B^p$ be the tax basis attached to an
+owner-occupied house and let $\bar g$ be the exempt gain. If the house is sold
+during life, the tax liability is
+\begin{equation}
+    \Tg(PH_k,B^p)
+    =
+    \tau^g\max\{PH_k-B^p-\bar g,0\}.
+    \label{eq:capital_gains_tax}
+\end{equation}
+Sale proceeds net of transaction costs and capital-gains taxes are therefore
+\begin{equation}
+    \Omega(H_k,B^p)
+    =
+    (1-\psi^s)PH_k-\Tg(PH_k,B^p).
+    \label{eq:sale_proceeds}
+\end{equation}
+Under step-up basis, accrued gains are not taxed at death. The tax basis for
+heirs is reset to the market value of the inherited house. This creates a
+retention incentive for older owners with large unrealized gains: selling
+converts the gain into a current tax liability, while holding until death can
+forgive that liability. Setting $\tau^g=0$ or $B^p=PH_k$ collapses this block to
+the current no-capital-gains baseline.
+
+\subsection{Household Problem}
+
+Within a period, the household first faces the fertility choice if eligible,
+then chooses tenure and housing position, and finally chooses consumption,
+rental space, and saving. The order is useful because fertility changes
+housing needs before the household chooses whether to rent, keep an existing
+home, or buy a different owner rung.
+
+\textbf{Housing adjustment.}
+Let $H(R)=0$ and $H(O_k)=H_k$. Given current tenure $d$ and next tenure $d'$,
+post-adjustment liquid wealth is
+\begin{equation}
+\widetilde b(b,d,d')
+=
+b
++\ind\{d\in\Oset,\ d'\neq d\}\Omega(H(d),B^p)
+-\ind\{d'\in\Oset,\ d'\neq d\}PH(d'),
+\label{eq:adjusted_wealth}
+\end{equation}
+where $\Oset=\{O_1,\ldots,O_K\}$. If the capital-gains block is inactive, the
+argument $B^p$ is suppressed and $\Omega(H(d),B^p)=(1-\psi^s)PH(d)$.
+
+The feasible next-tenure set is
+\begin{equation}
+\Dset(b,d)
+=
+\left\{
+d'\in\Dset:
+\widetilde b(b,d,d')\geq \underline b(d'|b,d)
+\right\}.
+\label{eq:feasible_tenure}
+\end{equation}
+For renters and new owner positions,
+\begin{equation*}
+\underline b(R|b,d)=0,
+\qquad
+\underline b(O_k|b,d)=-\phi PH_k.
+\end{equation*}
+For an incumbent owner who keeps the same house, the lower bound is
+\begin{equation}
+    \underline b(O_k|b,O_k)=\min\{b,-\phi PH_k\}.
+    \label{eq:incumbent_ltv}
+\end{equation}
+Thus existing owners are not forced to delever mechanically when prices move,
+but households that buy or upsize must satisfy the origination down-payment
+constraint.
+
+\textbf{Branch values.}
+Let $V_{a+1}$ be next period's value. The continuation value after income risk
+and child aging is
+\begin{equation}
+\bar V_{a+1}(b',d',z,n,s)
+=
+\sum_{z'\in\Zset}\sum_{s'\in\Sset}
+\Pi^z(z'|z)\Pi^c(s'|s,n)
+V_{a+1}(b',z',d',a+1,n,s').
+\label{eq:continuation}
+\end{equation}
+At the terminal date, $V_{J+1}(b,z,d,J+1,n,s)=\Bcal(W^B,n)$.
+
+Conditional on choosing to rent, the household solves
+\begin{equation}
+\begin{aligned}
+V^R_a(\widetilde b,z,n,s)
+=
+\max_{c,h^R,b'}\quad
+&u(c,h^R-\bar h(n,s);n,s)
++\beta \bar V_{a+1}(b',R,z,n,s)\\
+\text{s.t.}\quad
+&c+q h^R+b'=R\widetilde b+y_a(z),\\
+&0\leq h^R\leq \bar h^R,\qquad b'\geq 0.
+\end{aligned}
+\label{eq:renter_problem}
+\end{equation}
+The rental cap is a primitive family-housing access margin: when it binds, the
+household's marginal value of space can exceed the market rent.
+
+Conditional on owning rung $O_k$, the household solves
+\begin{equation}
+\begin{aligned}
+V^{O_k}_a(\widetilde b,z,n,s)
+=
+\max_{c,b'}\quad
+&u\!\left(c,\chi[H_k-\bar h(n,s)];n,s\right)
++\beta \bar V_{a+1}(b',O_k,z,n,s)\\
+\text{s.t.}\quad
+&c+(\delta+\tau^p)PH_k+b'=R\widetilde b+y_a(z),\\
+&b'\geq \underline b^+ (O_k).
+\end{aligned}
+\label{eq:owner_problem}
+\end{equation}
+The lower bound $\underline b^+(O_k)$ is the continuation borrowing limit
+associated with the owner position. The owner pays recurrent property taxes and
+maintenance through the service cost $(\delta+\tau^p)PH_k$.
+
+\textbf{Tenure and house-size choice.}
+For each feasible next tenure $d'$, define the deterministic branch value
+\begin{equation}
+\widetilde V^T_a(d'|b,z,d,n,s)
+=
+\begin{cases}
+V^R_a(\widetilde b(b,d,R),z,n,s), & d'=R,\\
+V^{O_k}_a(\widetilde b(b,d,O_k),z,n,s), & d'=O_k.
+\end{cases}
+\label{eq:tenure_branch_value}
+\end{equation}
+Tenure and owner-rung choices are smoothed with Type-I extreme-value shocks of
+scale $\kappa_T$. The probability of choosing $d'$ is
+\begin{equation}
+\pi^T_a(d'|b,z,d,n,s)
+=
+\frac{
+\exp\left(\widetilde V^T_a(d'|b,z,d,n,s)/\kappa_T\right)
+}{
+\sum_{\hat d\in\Dset(b,d)}
+\exp\left(\widetilde V^T_a(\hat d|b,z,d,n,s)/\kappa_T\right)
+},
+\label{eq:tenure_probs}
+\end{equation}
+and the inclusive tenure value is
+\begin{equation}
+V^T_a(b,z,d,n,s)
+=
+\kappa_T
+\log
+\sum_{\hat d\in\Dset(b,d)}
+\exp\left(\widetilde V^T_a(\hat d|b,z,d,n,s)/\kappa_T\right).
+\label{eq:tenure_iv}
+\end{equation}
+As $\kappa_T$ approaches zero, tenure choice converges to the deterministic
+maximum. With positive $\kappa_T$, the model allows small residual dispersion in
+tenure and size choices.
+
+\textbf{Fertility.}
+During the fertile window
+\begin{equation*}
+    a\in\{A_f^{\mathrm{start}},\ldots,A_f^{\mathrm{end}}\},
+\end{equation*}
+a childless household chooses $n'\in\Nset=\{0,1,\ldots,\bar n\}$. The option
+$n'=0$ means no birth in the current period. A positive option fixes completed
+fertility forever and moves the household into the first dependent-child state.
+Let
+\begin{equation*}
+    s(n')=
+    \begin{cases}
+    0, & n'=0,\\
+    1, & n'>0.
+    \end{cases}
+\end{equation*}
+The value of fertility option $n'$ is
+\begin{equation}
+\widetilde V^F_a(n'|b,z,d)
+=
+V^T_a(b,z,d,n',s(n')).
+\label{eq:fert_branch_value}
+\end{equation}
+Fertility choices are smoothed with Type-I extreme-value shocks of scale
+$\kappa_F$:
+\begin{equation}
+\pi^F_a(n'|b,z,d)
+=
+\frac{
+\exp\left(\widetilde V^F_a(n'|b,z,d)/\kappa_F\right)
+}{
+\sum_{\hat n\in\Nset}
+\exp\left(\widetilde V^F_a(\hat n|b,z,d)/\kappa_F\right)
+}.
+\label{eq:fert_probs}
+\end{equation}
+The household value at a childless fertile state is
+\begin{equation}
+V_a(b,z,d,a,0,0)
+=
+\kappa_F
+\log
+\sum_{\hat n\in\Nset}
+\exp\left(\widetilde V^F_a(\hat n|b,z,d)/\kappa_F\right).
+\label{eq:fert_iv}
+\end{equation}
+Outside the fertile window, and after a positive fertility choice has already
+been made, fertility is degenerate and $V_a(b,z,d,a,n,s)=V^T_a(b,z,d,n,s)$.
+
+This block should be interpreted as a completed-family choice in the current
+quantitative model. It is not a sequential second-birth hazard model. The
+sequential parity version is a natural extension, but it requires a larger
+fertility state space and different empirical moments.
+
+\subsection{Stationary Equilibrium}
+
+The equilibrium is stationary in prices, household policies, and the normalized
+distribution of adult households. The aggregate adult mass is normalized to one.
+This normalization means the model clears the housing market for a stationary
+composition, not for an endogenous city size.
+
+\begin{definition}[Stationary equilibrium]
+A stationary equilibrium is a collection
+\begin{equation*}
+\begin{aligned}
+\mathcal X^\ast=\big(&P,q,
+\{V_a,V^R_a,V^{O_k}_a,V^T_a,\widetilde V^T_a,\widetilde V^F_a\}_{a,k},
+\{c,h^R,b',d',n'\},\\
+&\{\pi^T,\pi^F\},
+g,H^D,H^S
+\big)
+\end{aligned}
+\end{equation*}
+such that:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Household optimization.} Given prices, taxes, and the income
+    process, value functions solve the household problem in
+    \eqref{eq:renter_problem}--\eqref{eq:owner_problem}, with tenure probabilities
+    \eqref{eq:tenure_probs}, fertility probabilities \eqref{eq:fert_probs}, and
+    terminal bequest utility \eqref{eq:bequest}. Policies for consumption, rental
+    space, saving, tenure, owner rung, and fertility are associated optimal
+    policies.
+
+    \item \textbf{Stationary distribution.} The normalized adult distribution
+    $g$ is invariant under the transition induced by optimal policies, tenure
+    and fertility probabilities, the income transition, child aging, deterministic
+    aging, and death. Adult mass is normalized:
+    \begin{equation*}
+        \int dg(x)=1.
+    \end{equation*}
+    New adult households enter at the initial age with the benchmark distribution
+    over income, assets, tenure, fertility, and child state.
+
+    \item \textbf{Housing demand.} Aggregate physical housing demand is
+    \begin{equation}
+    H^D
+    =
+    \int
+    \left[
+    \ind\{d=R\}h^R(x)
+    +
+    \sum_{k=1}^K\ind\{d=O_k\}H_k
+    \right]dg(x).
+    \label{eq:housing_demand}
+    \end{equation}
+    Housing demand counts physical space. It does not multiply owner-occupied
+    units by the service premium $\chi$.
+
+    \item \textbf{Housing market clearing and user cost.} The aggregate housing
+    market clears:
+    \begin{equation}
+        H^D=H^S(q),
+        \qquad
+        q=(r+\delta+\tau^p)P.
+        \label{eq:market_clearing}
+    \end{equation}
+
+    \item \textbf{Government accounting.} Payroll taxes finance the pension
+    profile if the pension block is closed inside the model. Property taxes and
+    capital-gains taxes are rebated or absorbed by the government according to
+    the counterfactual experiment. When the capital-gains module is inactive,
+    $\tau^g=0$ and the tax basis state is irrelevant.
+\end{enumerate}
+\end{definition}
+
+\section{Quantitative Content}
+
+The quantitative model is designed to connect housing access to fertility
+through a small number of observable margins. The calibration should discipline
+the object that appears in the mechanism: the shadow price of family-suitable
+housing faced by young households.
+
+\subsection{Moment Blocks}
+
+The paper-facing calibration table should be organized around parameter blocks,
+not around the order in which the code computes moments:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Fertility.} Completed fertility, total fertility, and
+    childlessness discipline the net value of children, the curvature of the
+    fertility choice, and the child cost parameters.
+
+    \item \textbf{Lifecycle tenure.} Ownership by age and old-age ownership
+    discipline down-payment constraints, transaction costs, and the bequest or
+    retention motives.
+
+    \item \textbf{Family housing demand.} Housing-size changes around children,
+    rooms or housing services by child status, and the renter-owner size gap
+    discipline $\bar h_{\mathrm{jump}}$, $\bar h_n$, the renter cap $\bar h^R$,
+    and the owner size ladder.
+
+    \item \textbf{Market clearing and supply.} The level of housing services and
+    the user cost identify the supply scale $H_0$ and the price response
+    governed by $\eta$.
+
+    \item \textbf{Wealth and bequests.} Assets by age, housing wealth at old
+    ages, and bequest-related moments discipline the warm-glow bequest
+    parameters and the strength of retention at the end of life.
+\end{enumerate}
+
+This organization keeps the calibration tied to the economics. Fertility
+moments alone do not identify the housing block. Housing-size moments alone do
+not identify the value of children. Old-age ownership is informative about
+retention only once the transaction, tax, and bequest channels are stated
+explicitly.
+
+\subsection{Counterfactuals}
+
+The natural counterfactuals change one primitive access margin at a time:
+\begin{enumerate}[leftmargin=*]
+    \item relax the down-payment constraint by increasing $\phi$;
+    \item expand rental access to family-sized housing by increasing $\bar h^R$;
+    \item reduce transaction or sale wedges $\psi^s$;
+    \item remove or change capital-gains taxation and step-up basis;
+    \item increase housing supply elasticity $\eta$ or the supply scale $H_0$;
+    \item change child-related housing needs $\bar h_{\mathrm{jump}}$ and
+    $\bar h_n$ to measure the importance of the space requirement itself.
+\end{enumerate}
+
+These experiments should be interpreted as general-equilibrium exercises in the
+one housing market. They change prices through \eqref{eq:market_clearing}, but
+they do not include migration, spatial sorting, or city-scale feedbacks.
+
+\section{Relation to the May Spatial Draft}
+
+The May model had two locations, local amenities, local housing supply, and an
+outside-option entry system for city size. Those objects are deliberately absent
+from the current quantitative model. The mechanism is now national or
+one-market rather than spatial: the relevant scarcity is access to family-sized
+housing services, especially through the tenure system, not the allocation of
+families across center and periphery.
+
+The substantive elements retained from the May draft are the lifecycle problem,
+the renter-owner distinction, the owner size ladder, the rental-size cap, the
+down-payment constraint, child housing needs, bequest motives, and housing
+market clearing. The main new element relative to the May presentation is the
+capital-gains and step-up-basis module. That module is useful because it creates
+a direct old-owner retention wedge: an older household with large unrealized
+gains may hold a large house even when its current housing need is low, because
+selling triggers taxes that can be avoided by holding until death.
+
+The current draft should therefore not claim that old occupancy is inefficient
+by itself. A large house occupied by an old owner is inefficient only relative
+to a stated friction or policy wedge: transaction costs, capital-gains taxes,
+step-up basis, property-tax preferences, or a missing market that prevents young
+families from accessing equivalent space. The quantitative task is to measure
+how much those wedges raise young households' shadow value of family housing
+and how much that shadow value depresses fertility.
+
+\appendix
+\section{Optional Population Closure}
+
+The benchmark normalization fixes adult mass at one. If the paper later needs a
+scale channel, the least disruptive extension is a renewal equation for young
+adult entry. Let $E_0$ be the mass of new adult entrants required to reproduce
+one unit of the stationary age distribution, and let $B_0$ be the mature-child
+flow produced by one unit of adult mass. With outside-born potential entrant
+flow $M$ and retention probability $\rho$, stationary scale would satisfy
+\begin{equation}
+    S E_0 = M+\rho S B_0,
+    \qquad
+    S=\frac{M}{E_0-\rho B_0}.
+    \label{eq:renewal_scale}
+\end{equation}
+This adds a scale response to fertility without reintroducing locations. It is
+not part of the baseline quantitative model because the current calibration
+targets the composition of households and housing choices, not city population
+growth.
+
+\bibliographystyle{apalike}
+\bibliography{main_bib,lit_review_extra}
+
+\end{document}
