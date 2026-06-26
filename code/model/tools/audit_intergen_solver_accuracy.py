@@ -566,14 +566,17 @@ def run_implementation_equivalence(
         ),
     ]
     rows = []
-    ref = cases[0]
-    for case in cases:
+    pairs = [
+        (cases[1], cases[0], "python_kernel_minus_numba_kernel"),
+        (cases[3], cases[2], "monotone_cubic_minus_linear_fixed_price"),
+    ]
+    for case, ref, comparison in pairs:
         for moment in sorted(set(ref["moments"]) | set(case["moments"])):
             a = float(ref["moments"].get(moment, np.nan))
             b = float(case["moments"].get(moment, np.nan))
             rows.append(
                 {
-                    "comparison": f"{case['label']}_minus_{ref['label']}",
+                    "comparison": comparison,
                     "case": case["label"],
                     "reference": ref["label"],
                     "moment": moment,
@@ -582,6 +585,7 @@ def run_implementation_equivalence(
                     "difference": b - a if np.isfinite(a) and np.isfinite(b) else np.nan,
                 }
             )
+        rows.extend(array_comparison_rows(case["sol"], ref["sol"], case["label"], ref["label"], comparison))
     # Fast-stats vs full at one fixed price and one small-grid parameterization.
     full_case = cases[2]
     P = full_case["P"]
@@ -606,7 +610,44 @@ def run_implementation_equivalence(
                 "difference": b - a if np.isfinite(a) and np.isfinite(b) else np.nan,
             }
         )
+    rows.extend(array_comparison_rows(fast, full, "small_fixed_linear_fast_stats", "small_fixed_linear_full_stats", "fast_stats_minus_full_stats"))
     return rows
+
+
+def array_comparison_rows(case_sol: Any, ref_sol: Any, case_label: str, ref_label: str, comparison: str) -> list[dict[str, Any]]:
+    out = []
+    for name in ("V", "c_pol", "hR_pol", "bp_pol", "tenure_choice", "tenure_probs", "loc_probs", "fert_probs", "g"):
+        if not hasattr(case_sol, name) or not hasattr(ref_sol, name):
+            continue
+        a = getattr(case_sol, name)
+        b = getattr(ref_sol, name)
+        if a is None or b is None:
+            continue
+        aa = np.asarray(a)
+        bb = np.asarray(b)
+        row = {
+            "comparison": comparison,
+            "case": case_label,
+            "reference": ref_label,
+            "metric_type": "array_max_abs_difference",
+            "object": name,
+            "case_shape": str(tuple(aa.shape)),
+            "reference_shape": str(tuple(bb.shape)),
+        }
+        if aa.shape == bb.shape and aa.size:
+            diff = np.asarray(aa, dtype=float) - np.asarray(bb, dtype=float)
+            finite = np.isfinite(diff)
+            row.update(
+                {
+                    "max_abs_difference": float(np.nanmax(np.abs(diff))) if np.any(finite) else np.nan,
+                    "mean_abs_difference": float(np.nanmean(np.abs(diff))) if np.any(finite) else np.nan,
+                    "n_different_gt_1e-8": int(np.sum(np.abs(diff[finite]) > 1e-8)) if np.any(finite) else 0,
+                }
+            )
+        else:
+            row.update({"max_abs_difference": np.nan, "mean_abs_difference": np.nan, "n_different_gt_1e-8": np.nan})
+        out.append(row)
+    return out
 
 
 def resolve_fixed_price(args: argparse.Namespace, source: dict[str, Any]) -> float:
