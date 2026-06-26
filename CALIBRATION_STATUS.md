@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-25 21:23 EDT`
+Updated: `2026-06-26 10:04 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -89,6 +89,34 @@ under `code/cluster/logs/slurm_ihf_de_<job>_<task>.out` and
 `code/cluster/logs/slurm_ihf_2hr_<job>_<task>.out`. Collect after completion
 from the scratch copy with:
 `python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_<RUN_TAG>`.
+
+June 26 morning completion/readout. The full three-wave Torch chain completed
+cleanly: jobs `11810145`--`11810150` all exited `0:0`, Slurm stderr files were
+empty, and `squeue` showed no remaining tasks. The useful branch was global-DE;
+the seeded local-panel branch never beat the warm start. Best saved global-DE
+record: `de_g044_i022` from wave 3 task 10,
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_fixedstats_seeded_globalde_12h_mem4_w3_20260625/task_10/best.json`,
+saved rank loss `16.9807648`, market residual `5.43e-05`. A local reproducible
+inspection folder was created at
+`output/model/intergen_fixedstats_overnight_review_20260626/`. Re-solving the
+best candidate through `tools/build_intergen_mechanics_packet.py` with the live
+fixed-stats grid (`J=16`, `Nb=60`, 5 Markov income states,
+`H_own=[2,4,6,8,10]`, `hR_max=6.0`, `max_iter_eq=10`, `interp_method=linear`)
+wrote
+`output/model/intergen_fixedstats_overnight_review_20260626/best_de_g044_i022_packet/`
+with re-solved rank loss `17.071` and market residual `6.31e-06`. Shortlist
+comparison artifacts are
+`output/model/intergen_fixedstats_overnight_review_20260626/shortlist_comparison.md`
+and `shortlist_key_moments.png`. Main readout: aggregate ownership and the
+first-child housing response improved materially, but the old-age ownership
+absorbing-margin problem remains (`old_age_own_rate≈0.978` vs target `0.764`),
+young ownership is still too low (`own_rate_2534≈0.124`--`0.127` in the
+re-solve/best record vs `0.341`), `housing_increment_1to2` is too low
+(`≈0.16` vs `0.488`), renter large-room share is too low (`≈0.054` vs `0.138`),
+and owner large-room share remains too high (`≈0.737` vs `0.596`). Visual
+diagnostics in the packet show small market residuals and no obvious blank or
+exploding policy object; the remaining failures look economic/discrete-choice
+rather than an immediate numerical crash.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
