@@ -3000,8 +3000,17 @@ def forward_distribution_markov_income(
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
     entrants_mature_total = 0.0
-    event_horizon = 3
+    # Event-study horizon (in 4-year periods) for the birth housing response.
+    # The PSID target is a CONTROLLED room response ~3 years post-birth, which in
+    # a 4-year-period model lands inside the birth period itself, so the default
+    # is horizon 0 (NOT 3 periods / 12 years, which would mostly capture
+    # lifecycle drift). housing_increment_0to1 is reported as a
+    # difference-in-differences: birth cohort minus a no-birth control cohort
+    # (at horizon 0 the control is the pre-birth state, so it reduces to the
+    # contemporaneous floor jump). Set housing_event_horizon>0 to look further out.
+    event_horizon = int(getattr(P, "housing_event_horizon", 0))
     birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
+    birth_es3_control_post_sum = 0.0
     addchild_es3_one_sum = addchild_es3_one_mass = 0.0
     addchild_es3_two_plus_sum = addchild_es3_two_plus_mass = 0.0
     onechild_es3_pre_sum = onechild_es3_post_sum = onechild_es3_mass = 0.0
@@ -3093,8 +3102,21 @@ def forward_distribution_markov_income(
                         Pi_z,
                     )
                     post_h = mean_housing_distribution_markov(birth_cohort, j + event_horizon, hR_pol, P)
+                    # No-birth control: the same pre-birth households (same
+                    # wealth/tenure mass) propagated childless over the same
+                    # horizon. Differencing post_h against this nets out the
+                    # common lifecycle housing drift, leaving the birth effect.
+                    control_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+                    control_cohort[:, :, :, zz, 0, 0] = birth_mass
+                    control_cohort = advance_cohort_horizon_markov_income(
+                        control_cohort, j, event_horizon, loc_probs, tenure_choice,
+                        tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
+                        tmx_idx, tmx_wt, ust, Pia, Pi_z,
+                    )
+                    control_post_h = mean_housing_distribution_markov(control_cohort, j + event_horizon, hR_pol, P)
                     birth_es3_pre_sum += birth_mass_total * pre_h
                     birth_es3_post_sum += birth_mass_total * post_h
+                    birth_es3_control_post_sum += birth_mass_total * control_post_h
                     birth_es3_mass += birth_mass_total
 
                     one_child = np.zeros_like(birth_cohort)
@@ -3264,7 +3286,7 @@ def forward_distribution_markov_income(
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
     stats.housing_increment_0to1_eventstudy_t3 = (
-        birth_es3_post_sum / birth_es3_mass - birth_es3_pre_sum / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
+        (birth_es3_post_sum - birth_es3_control_post_sum) / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
     )
     stats.housing_increment_1to2_proxy_t3 = (
         addchild_es3_two_plus_sum / addchild_es3_two_plus_mass - addchild_es3_one_sum / addchild_es3_one_mass
