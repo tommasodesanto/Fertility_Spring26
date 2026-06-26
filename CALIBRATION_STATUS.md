@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-26 15:23 EDT`
+Updated: `2026-06-26 18:53 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -254,6 +254,44 @@ test), so PCHIP remains a sensitivity experiment rather than a default. Interior
 renter Euler residuals were computed only for classified smooth states; they
 are not yet a clean accuracy certificate and should be treated as a flag for
 better branch-specific residual construction.
+
+June 26 18:53 EDT TFR-equivalent 1.92 target smoke launch. A new target-set
+variant was added and pushed on `main` at commit `a9c7e59`
+(`Add intergen tfr192 target variant`):
+`candidate_replacement_roomgap_14moment_tfr192_v1`. It is identical to
+`candidate_replacement_roomgap_14moment_v1` except that the fertility target is
+`tfr=1.92` instead of `1.70`; the old target set is unchanged. This is a
+diagnostic target experiment motivated by the distinction between period TFR and
+stationary completed fertility in the one-shot model. The target count remains
+14 against the 14-parameter search vector, with no target/weight mismatch. Local
+one-case smoke passed on the live grid. The Torch scratch copy at
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib` was refreshed from
+full SHA `a9c7e5953fc2b242f3576028a44d05d7d3fd64dd`; the scratch marker is
+`SYNC_COMMIT_TFR192.txt`. Seed theta is the current fixed-stats overnight best:
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/output/model/intergen_tfr192_inputs_20260626/seed_de_g044_i022_best.json`
+(copied from
+`output/model/intergen_fixedstats_overnight_review_20260626/candidates/de_w3_task10_de_g044_i022_best.json`).
+Remote target/import/compile checks passed under the cluster Anaconda Python.
+Two exact-loop Slurm preflights also passed with empty stderr: global-DE job
+`11881021` and local-panel job `11881022`, each one full-grid seeded evaluation
+with rank loss `15.9486492`, market residual `5.43e-05`,
+`TFR-equiv=1.86681`, and childlessness `0.23218`. The actual run is a small 4+4
+split, not a production calibration: global-DE job `11881031` and local-panel
+job `11881032`, each with `INTERGEN_MINUTES=55`, target set
+`candidate_replacement_roomgap_14moment_tfr192_v1`, `J=16`, `Nb=60`,
+`income_states=5`, `INTERGEN_N_HOUSE=5`, `max_iter_eq=10`,
+`interp_method=linear` default, `use_pti_constraint=False`, and
+`tenure_choice_kappa` searched over `[0.000,0.080]`. Result roots:
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_tfr192_globalde_smoke1h_20260626/`
+and
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_tfr192_panel_smoke1h_20260626/`.
+Monitor with `squeue -j 11881031,11881032`. After completion, collect from
+`code/model` with
+`python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_intergen_tfr192_globalde_smoke1h_20260626`
+and the analogous panel directory. Next step is to re-solve the best TFR-1.92
+candidate through `tools/build_intergen_mechanics_packet.py --run-policy-cases`
+and compare fertility/completed-fertility deltas, not losses, against the old
+baseline policy packet.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
