@@ -141,6 +141,17 @@ share about `0.111`, owner large-room share about `0.636`), so it is not a
 harmless numerical smoothing fix. Next housing audit should focus on liquid-grid
 placement and the entry/liquid wealth atom before changing fertility mechanics.
 
+June 26 calibration-plumbing update after the smoothing audit:
+`tenure_choice_kappa` is now part of the local/global calibration search vector
+in `code/model/intergen_housing_fertility/local_panel.py`, with bounds
+`[0.000, 0.080]` and a backward-compatible warm-start default of `0.01` for
+older seed theta files. The active roomgap target set already includes
+ownership levels and gradients (`own_rate`, `own_rate_2534`,
+`old_age_own_rate`, and `own_family_gap`), so no duplicate ownership-level
+target was added in code. Future runs using this plumbing are 14-parameter
+searches against the existing 17-target roomgap system unless a new audited
+ownership-dispersion target is explicitly added.
+
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
 label `de_g008_i011`, stored loss `11.503191936648555` under the default

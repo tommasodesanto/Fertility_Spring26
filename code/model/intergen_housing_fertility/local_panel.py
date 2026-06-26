@@ -31,6 +31,7 @@ from .solver import run_model_cp_dt
 DEFAULT_INCOME_GRID_5 = np.array([0.60, 0.80, 1.00, 1.20, 1.40])
 DEFAULT_INCOME_WEIGHTS_5 = np.array([0.10, 0.20, 0.40, 0.20, 0.10])
 DEFAULT_RHO_Z = 0.85
+DEFAULT_TENURE_CHOICE_KAPPA = 0.01
 
 GLOBAL_DE_BOUNDS = [
     ("beta_annual", 0.920, 0.990),
@@ -43,6 +44,7 @@ GLOBAL_DE_BOUNDS = [
     ("h_bar_n", 0.050, 1.500),
     ("psi_child", 0.010, 0.220),
     ("kappa_fert", 2.000, 9.000),
+    ("tenure_choice_kappa", 0.000, 0.080),
     ("chi", 0.600, 1.800),
     ("theta0", 0.000, 1.500),
     ("theta_n", 0.000, 1.000),
@@ -127,6 +129,7 @@ def run_local_panel(
             "h_bar_n",
             "psi_child",
             "kappa_fert",
+            "tenure_choice_kappa",
             "chi",
             "theta0",
             "theta_n",
@@ -145,7 +148,6 @@ def run_local_panel(
             "r_bar",
             "eta_supply",
             "theta1",
-            "tenure_choice_kappa",
         ],
         "ranking_note": (
             "candidate_no_timing_v0 excludes mean_age_first_birth, keeps parity composition diagnostic, "
@@ -282,7 +284,7 @@ def run_global_de_panel(
 ) -> dict[str, Any]:
     """Run an independent differential-evolution global search panel.
 
-    Each array task runs a full restart from broad bounds over the 13-parameter
+    Each array task runs a full restart from broad bounds over the 14-parameter
     internal calibration vector. This changes the search algorithm only; it
     uses the same model solution and ranking target system as `run_local_panel`.
     """
@@ -578,8 +580,12 @@ def global_unit_from_theta(theta: dict[str, Any] | None) -> np.ndarray | None:
     for idx, (name, lo, hi) in enumerate(GLOBAL_DE_BOUNDS):
         source_name = "beta" if name == "beta_annual" else name
         if source_name not in theta:
-            return None
-        value = float(theta[source_name])
+            if source_name == "tenure_choice_kappa":
+                value = DEFAULT_TENURE_CHOICE_KAPPA
+            else:
+                return None
+        else:
+            value = float(theta[source_name])
         if name == "beta_annual":
             value = value ** (1.0 / PERIOD_YEARS)
         unit[idx] = (value - float(lo)) / max(float(hi - lo), 1e-12)
@@ -598,6 +604,7 @@ def keep_internal_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
         "h_bar_n",
         "psi_child",
         "kappa_fert",
+        "tenure_choice_kappa",
         "chi",
         "theta0",
         "theta_n",
@@ -642,6 +649,7 @@ def draw_internal_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any
         "h_bar_n": rng.uniform(0.30, 1.10),
         "psi_child": rng.uniform(psi_child_lo, psi_child_hi),
         "kappa_fert": rng.uniform(3.5, 7.5),
+        "tenure_choice_kappa": rng.uniform(0.0, 0.06),
         "chi": rng.uniform(0.90, 1.35),
         "theta0": rng.uniform(0.20, 1.10),
         "theta_n": rng.uniform(0.00, 0.65),
