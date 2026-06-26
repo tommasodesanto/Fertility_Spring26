@@ -217,6 +217,44 @@ using `mass × tenure_probability`. Monitor with
 `code/cluster/logs/slurm_ihf_acc_grid_<job>.out`,
 `slurm_ihf_acc_eq_<job>.out`, and `slurm_ihf_acc_save_<job>.out`.
 
+June 26 solver-accuracy diagnostics completion/readout. Jobs `11868769`,
+`11868770`, and `11868771` all completed `0:0` with empty stderr, and outputs
+were pulled locally to
+`output/model/intergen_solver_accuracy_20260626/`. Main grid finding: increasing
+`Nb` from 60 to 240 at the fixed source theta materially changes target moments.
+Fixed-price loss falls `16.4486 -> 14.7749`; GE loss falls
+`16.4486 -> 14.8566`. Fixed-price and GE drifts are very similar, so the
+dominant measured error here is household/grid approximation rather than
+price-feedback error. Key GE moment drifts from `Nb=60` to `Nb=240`: young
+ownership `0.127 -> 0.192`, aggregate ownership `0.589 -> 0.617`, renter mean
+rooms `3.888 -> 3.811`, young liquid wealth/income `0.405 -> 0.330`, TFR
+`1.867 -> 1.895`, and `housing_increment_1to2` `0.158 -> 0.080`. The old-age
+ownership pathology barely moves (`0.978 -> 0.977`), so that remains economic /
+structural rather than a coarse-grid artifact. Equilibrium-quality check:
+with scalar refinement on, `max_iter_eq ∈ {3,5,10,25}` gives small residuals
+(`3.4e-06` to `5.4e-05`). With scalar refinement off, low iteration budgets
+fail (`0.1265` residual at 3, `0.0331` at 5, both triggering the +100 penalty);
+by 10 iterations the damped loop reaches `7.0e-05`. This confirms the audit:
+the live one-market run is fine with Brent on, but low-iteration/no-refinement
+runs are not production-safe. Savings-globality check: 1,287 feasible branch
+rows, 297 raw dense-grid gaps above `5e-3`, but only 23 KFE-relevant failures
+after weighting by `mass × tenure_probability`; weighted p95 gap is `0.00309`
+overall, `0.00040` for renter branches, `0.0212` for `own_H4`, `0.00406` for
+`own_H6`, and near zero for the upper owner rungs. Huge unweighted gaps mostly
+come from zero-weight / penalty-cliff branches and should be read as a mask/
+reporting hazard, not as mass-relevant optimizer failure. Shape/KFE checks:
+total mass is conserved, grid-edge mass is zero, income/child transition row
+sums are clean, but an approximate same-tenure continuation check finds small
+positive mass near `-1e10` penalty interpolation (`~2e-4` at `Nb=60`, falling to
+`~6e-7` at `Nb=240`). Python-vs-Numba small-grid moments are close
+(e.g. ownership diff `-1.5e-4`, TFR diff `-3.3e-5`), while fixed-price
+monotone-cubic interpolation moves some moments nontrivially
+(`housing_increment_1to2 -0.041`, owner-renter room gap `-0.066` in the small
+test), so PCHIP remains a sensitivity experiment rather than a default. Interior
+renter Euler residuals were computed only for classified smooth states; they
+are not yet a clean accuracy certificate and should be treated as a flag for
+better branch-specific residual construction.
+
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
 label `de_g008_i011`, stored loss `11.503191936648555` under the default
