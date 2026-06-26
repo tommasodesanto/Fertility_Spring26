@@ -21,6 +21,8 @@ Current notes kept here:
   `intergen_replacement_moment_data_map_20260618.md`
 - June 26 housing-first debugging plan:
   `intergen_housing_block_audit_plan_20260626.md`
+- June 26 housing-block audit results:
+  `intergen_housing_block_audit_results_20260626.md`
 - `DISTRIBUTIONAL_EMPIRICS_SCOPE_MEMO_2026-05-08.pdf`
 - `../../latex/distributional_empirics_report.pdf`
 - `../../latex/fertility_slice_diagnosis_report.pdf`
