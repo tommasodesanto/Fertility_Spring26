@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-25 (late) EDT`
+Updated: `2026-06-25 21:23 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -50,6 +50,45 @@ owner large-room share, and young liquid wealth. IMPORTANT: any prior cluster
 run or incumbent that weighted renter room-share/median or `housing_increment`
 was optimizing against corrupted moments and must be re-scored with the fixed
 stats before reuse.
+
+June 25 21:20 EDT calibration launch on Torch. Local `main` was pulled
+(`git pull --ff-only`, already up to date), then a clean committed scratch copy
+was created at
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib` from commit
+`47e5542` (`Seed intergen calibration from warm-start theta`). The required
+fix commits are in the scratch history: `7219f64`, `8f97ed6`, `8ade95f`.
+Warm-start file copied to
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/output/model/intergen_room_distribution_current_best_20260623/summary.json`.
+Remote verification passed:
+`PYTHONPATH=$PWD python -m compileall -q intergen_housing_fertility tools/build_intergen_mechanics_packet.py tools/collect_intergen_panel_results.py`
+and
+`PYTHONPATH=$PWD python -m intergen_housing_fertility.cli smoke --quiet`.
+Exact Slurm preflight also passed on `cpu_short`: global-DE job `11810090`
+and local-panel job `11810091`, each one full-grid/full-target warm-start
+evaluation, both exit `0:0`, stderr empty, corrected loss `29.8504933`,
+market residual `4.29e-05`. A single 12-hour CPU job was rejected by Torch
+(`partition 'cpu_short' is not valid for this job`; same for `cpu_prem`), so
+the run was launched as three dependent `03:55:00` waves. An initial 6G-per-task
+chain (`11810113`--`11810118`) was canceled after Torch admitted only 20 tasks
+because of `QOSMaxMemoryPerUser`; the final chain uses 4G per task and the
+first wave is running all 24 concurrent tasks (12 global-DE array tasks plus 12
+seeded local-panel array tasks). Target/grid:
+`candidate_replacement_young_old_roomgap_v1`,
+`J=16`, `Nb=60`, `income_states=5`, `INTERGEN_N_HOUSE=5` (therefore
+`H_own=[2,4,6,8,10]` under `base_overrides`), `hR_max=6.0`,
+`max_iter_eq=10`, `interp_method=linear` default, `use_pti_constraint=False`.
+Global-DE jobs: `11810145 -> 11810147 -> 11810149`; local-panel jobs:
+`11810146 -> 11810148 -> 11810150`. First wave was running at status-write
+time; waves 2 and 3 are dependency-held. Result roots are:
+`code/cluster/results_intergen_housing_fertility_intergen_fixedstats_seeded_globalde_12h_mem4_w1_20260625/`,
+`..._globalde_12h_mem4_w2_20260625/`, `..._globalde_12h_mem4_w3_20260625/`,
+`..._panel_12h_mem4_w1_20260625/`, `..._panel_12h_mem4_w2_20260625/`, and
+`..._panel_12h_mem4_w3_20260625/` under the scratch copy. Monitor with
+`squeue -j 11810145,11810146,11810147,11810148,11810149,11810150` and logs
+under `code/cluster/logs/slurm_ihf_de_<job>_<task>.out` and
+`code/cluster/logs/slurm_ihf_2hr_<job>_<task>.out`. Collect after completion
+from the scratch copy with:
+`python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_<RUN_TAG>`.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,
