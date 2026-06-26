@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-25 14:34 EDT`
+Updated: `2026-06-25 (late) EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -23,6 +23,33 @@ allowing renters to reach the first large-room threshold; the upper 8/10-room
 family-sized rungs remain owner-only in this diagnostic convention. Treat
 pre-correction diagnostic plots with `hR_max=8.0` as useful pathology evidence,
 not as the current model convention.
+
+June 25 (late) audit + measurement fixes. A code/diagnostics audit found and
+fixed three issues in the live model; all committed to `main`
+(`7219f64`, `8f97ed6`, `8ade95f`). Full handoff:
+`docs/model/intergen_calibration_handoff_20260625.md`.
+(1) `compute_markov_statistics` collapsed the income dimension before applying
+nonlinear (threshold/median) operators to the renter policy (Jensen error), so
+`prime30_55_childless_renter_share_rooms_ge6` read `0.013` instead of the true
+`0.124` (≈ target `0.138`); the renter median and cap shares were also corrupted.
+Fixed via `markov_renter_room_moments`. (2) `housing_increment_0to1` was a raw
+12-year (3-period) post−pre window with no control, reading `1.467` (mostly
+lifecycle drift) vs target `0.664`; redefined as a controlled difference-in-
+differences (birth cohort minus no-birth control) at a configurable
+`housing_event_horizon` (default `0` = birth period ≈ 3 years), now `0.477`.
+(3) added a configurable wealth grid and a real `interp_method` switch
+(`linear` default / `monotone_cubic`); the default solve is unchanged. The
+"childless" room moments were checked and are NOT a bug (model `current_child_bin_dt`
+matches the ACS `ni==0` "childless-in-household" definition), so
+`owner_share_rooms_ge6` (`0.964` vs `0.596`) is a genuine economic miss, not
+measurement. After the fixes, the current diagnostic point's aggregate loss is
+`29.85` (down from `38.05`; verified re-solve, residual `1.5e-5`). The dominant
+remaining misses are all economic: young ownership (`own_rate_2534≈0` vs `0.341`),
+aggregate ownership (`0.371` vs `0.575`), old-age ownership (`0.916` vs `0.764`),
+owner large-room share, and young liquid wealth. IMPORTANT: any prior cluster
+run or incumbent that weighted renter room-share/median or `housing_increment`
+was optimizing against corrupted moments and must be re-scored with the fixed
+stats before reuse.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,

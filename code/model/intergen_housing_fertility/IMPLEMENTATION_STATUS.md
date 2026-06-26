@@ -1,6 +1,28 @@
 # Implementation Status: Intergenerational Housing Fertility
 
-Updated: 2026-06-24
+Updated: 2026-06-25
+
+## 2026-06-25 audit fixes (committed to `main`)
+
+- `INTENDED` (fix, `7219f64`): `compute_markov_statistics` recomputes renter
+  threshold/median room moments on the full income-resolved distribution
+  (`markov_renter_room_moments`). The previous income-collapse-then-threshold was
+  a Jensen error: renter share rooms>=6 read `0.013` vs the true `0.124`.
+- `INTENDED` (fix, `8ade95f`): `housing_increment_0to1/1to2` are a controlled
+  difference-in-differences (birth cohort minus a no-birth control cohort) at a
+  configurable `housing_event_horizon` (default `0` = birth period ≈ 3 years),
+  not a raw 12-year (3-period) post−pre window. 0to1 moved `1.467` -> `0.477`
+  (target `0.664`). Markov path only; the non-Markov path is unchanged.
+- `INTENDED` (`8f97ed6`): `make_grid` is configurable (bounds + dense-core/buffer
+  fractions; defaults reproduce the prior grid); `interp_method` is a real switch
+  (`linear` default / `monotone_cubic` PCHIP applied to the savings continuation,
+  Python-path only; forward distribution stays linear). Lab tool:
+  `code/model/tools/grid_interp_lab.py`. Default solve unchanged.
+- `NOT A BUG` (verified): the "childless" room moments use no-children-in-household
+  (`current_child_bin_dt`), matching the ACS `ni==0` target; the owner large-room
+  overshoot is economic, not measurement.
+- `NOT IMPLEMENTED` (flag): the `H=2` owner rung has net service <=0 even childless
+  and is floored to `1e-10` (dormant, ~`1e-7` mass); a feasibility mask is cleaner.
 
 ## Rule
 
