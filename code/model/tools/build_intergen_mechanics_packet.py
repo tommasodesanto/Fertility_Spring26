@@ -215,6 +215,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hR-max", type=float, default=None)
     parser.add_argument("--H-own", default=None, help="Comma-separated owner ladder, e.g. 2,4,6,8,10.")
     parser.add_argument("--max-iter-eq", type=int, default=10)
+    # Grid geometry: dense-core + sparse-buffer controls (None => model defaults).
+    parser.add_argument("--b-min", type=float, default=None, help="Liquid-wealth grid lower bound (default -35).")
+    parser.add_argument("--b-max", type=float, default=None, help="Liquid-wealth grid upper bound (default 100).")
+    parser.add_argument("--b-core-lo", type=float, default=None, help="Dense-core lower edge (default -3).")
+    parser.add_argument("--b-core-hi", type=float, default=None, help="Dense-core upper edge (default 6).")
+    parser.add_argument("--b-mid-hi", type=float, default=None, help="Mid-band upper edge (default 20).")
+    parser.add_argument("--b-frac-low", type=float, default=None, help="Node fraction in the lower tail (default 0.15).")
+    parser.add_argument("--b-frac-core", type=float, default=None, help="Node fraction in the dense core (default 0.45).")
+    parser.add_argument("--b-frac-mid", type=float, default=None, help="Node fraction in the mid band (default 0.15).")
+    parser.add_argument("--interp-method", default=None, choices=["linear", "monotone_cubic"],
+                        help="Value-function interpolation for the savings continuation (default linear).")
     parser.add_argument("--skip-standard-diagnostics", action="store_true")
     parser.add_argument("--skip-contact-sheet", action="store_true")
     parser.add_argument("--quick-first-look-only", action="store_true")
@@ -327,6 +338,16 @@ def resolve_grid(args: argparse.Namespace, source: dict[str, Any]) -> dict[str, 
         "H_own": h_own,
         "hR_max": float(args.hR_max if args.hR_max is not None else source_grid.get("hR_max", 8.0)),
         "max_iter_eq": int(args.max_iter_eq),
+        # Optional grid-geometry / interpolation overrides (None => use defaults).
+        "b_min": args.b_min,
+        "b_max": args.b_max,
+        "b_core_lo": args.b_core_lo,
+        "b_core_hi": args.b_core_hi,
+        "b_mid_hi": args.b_mid_hi,
+        "b_frac_low": args.b_frac_low,
+        "b_frac_core": args.b_frac_core,
+        "b_frac_mid": args.b_frac_mid,
+        "interp_method": args.interp_method,
     }
 
 
@@ -362,6 +383,10 @@ def solve_candidate(
     if grid.get("H_own") is not None:
         overrides["H_own"] = np.asarray(grid["H_own"], dtype=float)
         overrides["n_house"] = len(overrides["H_own"])
+    for _gk in ("b_min", "b_max", "b_core_lo", "b_core_hi", "b_mid_hi",
+                "b_frac_low", "b_frac_core", "b_frac_mid", "interp_method"):
+        if grid.get(_gk) is not None:
+            overrides[_gk] = grid[_gk]
     t0 = time.perf_counter()
     sol, P, p_eq = run_model_cp_dt(overrides, verbose=False)
     elapsed = time.perf_counter() - t0

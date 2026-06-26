@@ -8,20 +8,116 @@ import numpy as np
 
 
 def make_grid(P: SimpleNamespace) -> np.ndarray:
+    """Four-segment liquid-wealth grid: optional sparse lower tail, a dense
+    linear core, an optional linear mid band, and a power-spaced upper buffer.
+
+    Configurable via P (defaults reproduce the original [-35,-3,6,20,100] grid):
+      b_min, b_max, b_grid_power      : overall bounds and upper-buffer curvature
+      b_core_lo, b_core_hi, b_mid_hi  : segment boundaries (defaults -3, 6, 20)
+      b_frac_low, b_frac_core, b_frac_mid : node fractions for the first three
+        segments (defaults 0.15, 0.45, 0.15); the upper buffer gets the rest.
+    Set b_frac_low/b_frac_mid to 0 (and b_core_lo=b_min / b_mid_hi=b_core_hi) to
+    collapse to a dense core + sparse buffer. The grid always pins nodes exactly
+    at 0 and at b_entry_fixed.
+    """
     Nb = int(P.Nb)
-    N1 = round(Nb * 0.15)
-    N2 = round(Nb * 0.45)
-    N3 = round(Nb * 0.15)
+    core_lo = float(getattr(P, "b_core_lo", -3.0))
+    core_hi = float(getattr(P, "b_core_hi", 6.0))
+    mid_hi = float(getattr(P, "b_mid_hi", 20.0))
+    f_low = float(getattr(P, "b_frac_low", 0.15))
+    f_core = float(getattr(P, "b_frac_core", 0.45))
+    f_mid = float(getattr(P, "b_frac_mid", 0.15))
+    N1 = round(Nb * f_low)
+    N2 = round(Nb * f_core)
+    N3 = round(Nb * f_mid)
     N4 = Nb - N1 - N2 - N3
-    s1 = np.linspace(P.b_min, -3.0, N1 + 1)[:-1]
-    s2 = np.linspace(-3.0, 6.0, N2 + 1)[:-1]
-    s3 = np.linspace(6.0, 20.0, N3 + 1)[:-1]
-    u4 = np.linspace(0.0, 1.0, N4 + 1)[1:]
-    s4 = 20.0 + (P.b_max - 20.0) * (u4 ** P.b_grid_power)
-    b_grid = np.concatenate([s1, s2, s3, s4]).astype(float)
+    segs = []
+    if N1 > 0 and core_lo > P.b_min:
+        segs.append(np.linspace(P.b_min, core_lo, N1 + 1)[:-1])
+    else:
+        N2 += N1
+    if N2 > 0:
+        segs.append(np.linspace(core_lo, core_hi, N2 + 1)[:-1])
+    if N3 > 0 and mid_hi > core_hi:
+        segs.append(np.linspace(core_hi, mid_hi, N3 + 1)[:-1])
+    else:
+        N4 += N3
+        mid_hi = core_hi
+    if N4 > 0 and P.b_max > mid_hi:
+        u4 = np.linspace(0.0, 1.0, N4 + 1)[1:]
+        segs.append(mid_hi + (P.b_max - mid_hi) * (u4 ** P.b_grid_power))
+    b_grid = np.concatenate(segs).astype(float)
+    b_grid = np.unique(b_grid)  # safety: sorted + dedup at segment seams
     b_grid[np.argmin(np.abs(b_grid))] = 0.0
     b_grid[np.argmin(np.abs(b_grid - P.b_entry_fixed))] = P.b_entry_fixed
     return b_grid
+
+
+def _pchip_slopes(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+    """Fritsch-Carlson monotone cubic Hermite node derivatives (== SciPy pchip)."""
+    n = x.size
+    h = np.diff(x)
+    delta = np.diff(y) / h
+    d = np.zeros(n)
+    if n > 2:
+        prod = delta[:-1] * delta[1:]
+        w1 = 2.0 * h[1:] + h[:-1]
+        w2 = h[1:] + 2.0 * h[:-1]
+        with np.errstate(divide="ignore", invalid="ignore"):
+            harm = (w1 + w2) / (w1 / delta[:-1] + w2 / delta[1:])
+        d[1:-1] = np.where(prod > 0.0, harm, 0.0)
+
+    def _edge(h0, h1, m0, m1):
+        dd = ((2.0 * h0 + h1) * m0 - h0 * m1) / (h0 + h1)
+        if np.sign(dd) != np.sign(m0):
+            dd = 0.0
+        elif (np.sign(m0) != np.sign(m1)) and (abs(dd) > 3.0 * abs(m0)):
+            dd = 3.0 * m0
+        return dd
+
+    if n == 2:
+        d[0] = d[1] = delta[0]
+    else:
+        d[0] = _edge(h[0], h[1], delta[0], delta[1])
+        d[-1] = _edge(h[-1], h[-2], delta[-1], delta[-2])
+    return d
+
+
+def make_value_interp(bg: np.ndarray, V: np.ndarray, method: str = "linear"):
+    """Return a callable f(bq)->interpolated V along axis 0, by `method`.
+
+    `linear` is the lottery interpolation used everywhere else (and what the
+    compiled kernels use). `monotone_cubic` is a shape-preserving PCHIP
+    (Fritsch-Carlson) Hermite spline -- no overshoot, preserves monotonicity, so
+    it cannot create the spurious convex kinks that a natural cubic spline does.
+    Intended for the Bellman continuation value only; the forward distribution
+    stays linear for mass conservation. Pure NumPy, no SciPy dependency.
+    """
+    m = str(method or "linear").lower()
+    if m in ("linear", "lin"):
+        return lambda bq: interp_vector(bg, V, bq)
+    if m in ("monotone_cubic", "pchip", "cubic"):
+        bg = np.asarray(bg, dtype=float)
+        y = np.asarray(V, dtype=float)
+        d = _pchip_slopes(bg, y)
+        h = np.diff(bg)
+        lo, hi = float(bg[0]), float(bg[-1])
+
+        def _f(bq):
+            x = np.clip(np.asarray(bq, dtype=float), lo, hi)
+            idx = np.clip(np.searchsorted(bg, x, side="right") - 1, 0, bg.size - 2)
+            hk = h[idx]
+            t = (x - bg[idx]) / hk
+            t2 = t * t
+            t3 = t2 * t
+            h00 = 2.0 * t3 - 3.0 * t2 + 1.0
+            h10 = t3 - 2.0 * t2 + t
+            h01 = -2.0 * t3 + 3.0 * t2
+            h11 = t3 - t2
+            return h00 * y[idx] + h10 * hk * d[idx] + h01 * y[idx + 1] + h11 * hk * d[idx + 1]
+
+        return _f
+    raise ValueError(f"unknown interp method: {method!r}")
 
 
 def interp_indices(bg: np.ndarray, bq: np.ndarray) -> tuple[np.ndarray, np.ndarray]:

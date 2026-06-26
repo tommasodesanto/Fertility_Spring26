@@ -37,6 +37,7 @@ from .utils import (
     interp_vector,
     logsumexp,
     make_grid,
+    make_value_interp,
     scatter_redistribute,
     scatter_redistribute_cols,
     scatter_redistribute_cols_sameidx,
@@ -1751,7 +1752,10 @@ def solve_bellman_full_markov_income(
     tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
     use_tenure_logit = tenure_choice_kappa > 0.0
     b = b_grid.reshape(-1, 1)
-    use_full_kernel = NUMBA_AVAILABLE and bool(getattr(P, "use_full_kernel", True))
+    interp_method = str(getattr(P, "interp_method", "linear")).lower()
+    # Non-linear value interpolation only exists in the Python eval path, so a
+    # non-linear interp method routes off the compiled full-Bellman kernel.
+    use_full_kernel = NUMBA_AVAILABLE and bool(getattr(P, "use_full_kernel", True)) and interp_method == "linear"
     cb_v = np.ascontiguousarray(SD.cb_flat.reshape(-1))
     hb_v = np.ascontiguousarray(SD.hb_flat.reshape(-1))
     psi_v_flat = np.ascontiguousarray(SD.psi_flat.reshape(-1))
@@ -1870,7 +1874,7 @@ def solve_bellman_full_markov_income(
                         bp, val = golden_renter(
                             lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
                             ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
-                            gs_alpha1, gs_alpha2, gs_tol,
+                            gs_alpha1, gs_alpha2, gs_tol, interp_method,
                         )
                         bp_nc[:, c] = bp
                         Vo_nc[:, c] = val
@@ -1921,7 +1925,7 @@ def solve_bellman_full_markov_income(
                             hi = np.maximum(Rv[:, 0] - oc - cb_c - 1e-6, lo)
                             bp, val = golden_owner(
                                 lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc,
-                                Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                                Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method,
                             )
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
@@ -2194,6 +2198,8 @@ def solve_bellman_core(
     gs_tol = 1e-3
     gs_alpha1 = (3 - math.sqrt(5)) / 2
     gs_alpha2 = (math.sqrt(5) - 1) / 2
+    interp_method = str(getattr(P, "interp_method", "linear")).lower()
+    use_value_kernel = NUMBA_AVAILABLE and interp_method == "linear"
 
     for j in range(J - 1, -1, -1):
         in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
@@ -2245,13 +2251,13 @@ def solve_bellman_core(
                             hi = np.minimum(hi, bp_prev_r[:, c] + 2.0)
                             lo = np.maximum(lo, 0.0)
                             hi = np.maximum(hi, lo)
-                        if NUMBA_AVAILABLE:
+                        if use_value_kernel:
                             bp, val = golden_renter_kernel(
                                 lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
                             )
                         else:
                             bp, val = golden_renter(
-                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
+                                lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method
                             )
                         bp_nc[:, c] = bp
                         Vo_nc[:, c] = val
@@ -2311,13 +2317,13 @@ def solve_bellman_core(
                                 hi = np.minimum(hi, bp_prev_o[:, c] + 2.0)
                                 lo = np.maximum(lo, bf_c)
                                 hi = np.maximum(hi, lo)
-                            if NUMBA_AVAILABLE:
+                            if use_value_kernel:
                                 bp, val = golden_owner_kernel(
                                     lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
                                 )
                             else:
                                 bp, val = golden_owner(
-                                    lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol
+                                    lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method
                                 )
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
@@ -2536,17 +2542,18 @@ def solve_bellman_core(
     )
 
 
-def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol):
+def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, method="linear"):
+    vinterp = make_value_interp(b_grid, Vbar, method)
     d = hi - lo
     x1 = lo + a1 * d
     x2 = lo + a2 * d
-    f1 = eval_renter(x1, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
-    f2 = eval_renter(x2, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
+    f1 = eval_renter(x1, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, vinterp)
+    f2 = eval_renter(x2, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, vinterp)
     d = a1 * a2 * d
     while np.any(d > tol):
         bt = f2 >= f1
         xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
-        fe = eval_renter(xe, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta)
+        fe = eval_renter(xe, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, vinterp)
         x1n = np.where(bt, x2, xe)
         f1n = np.where(bt, f2, fe)
         x2n = np.where(bt, xe, x1)
@@ -2557,28 +2564,31 @@ def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, h
     return np.where(bt, x2, x1), np.maximum(f1, f2)
 
 
-def eval_renter(bp, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta):
+def eval_renter(bp, Rv, Vbar, b_grid, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, vinterp=None):
+    if vinterp is None:
+        vinterp = make_value_interp(b_grid, Vbar, "linear")
     surplus = Rv - dc - bp
-    f = Kr * np.maximum(surplus, 1e-10) ** oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp)
+    f = Kr * np.maximum(surplus, 1e-10) ** oms / oms + pc + beta * vinterp(bp)
     cm = surplus > cc
     if np.any(cm):
         ct = np.maximum(Rv[cm] - cb_c - ri * hRmax - bp[cm], 1e-10)
-        f[cm] = (ct**alpha * ht_cap_c ** (1 - alpha)) ** oms / oms + pc + beta * interp_vector(b_grid, Vbar, bp[cm])
+        f[cm] = (ct**alpha * ht_cap_c ** (1 - alpha)) ** oms / oms + pc + beta * vinterp(bp[cm])
     f[surplus <= 1e-10] = -1e10
     return f
 
 
-def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, a1, a2, tol):
+def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, a1, a2, tol, method="linear"):
+    vinterp = make_value_interp(b_grid, Vbar, method)
     d = hi - lo
     x1 = lo + a1 * d
     x2 = lo + a2 * d
-    f1 = eval_owner(x1, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta)
-    f2 = eval_owner(x2, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta)
+    f1 = eval_owner(x1, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinterp)
+    f2 = eval_owner(x2, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinterp)
     d = a1 * a2 * d
     while np.any(d > tol):
         bt = f2 >= f1
         xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
-        fe = eval_owner(xe, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta)
+        fe = eval_owner(xe, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinterp)
         x1n = np.where(bt, x2, xe)
         f1n = np.where(bt, f2, fe)
         x2n = np.where(bt, xe, x1)
@@ -2589,9 +2599,11 @@ def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta,
     return np.where(bt, x2, x1), np.maximum(f1, f2)
 
 
-def eval_owner(bp, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta):
+def eval_owner(bp, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinterp=None):
+    if vinterp is None:
+        vinterp = make_value_interp(b_grid, Vbar, "linear")
     ct = np.maximum(Rv - oc - cb_c - bp, 1e-10)
-    f = Ko_c * ct ** (alpha * oms) / oms + pc + beta * interp_vector(b_grid, Vbar, bp)
+    f = Ko_c * ct ** (alpha * oms) / oms + pc + beta * vinterp(bp)
     f[ct <= 1e-10] = -1e10
     return f
 
