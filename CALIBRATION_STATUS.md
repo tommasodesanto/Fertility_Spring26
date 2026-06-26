@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-26 10:04 EDT`
+Updated: `2026-06-26 14:19 EDT`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -145,12 +145,17 @@ June 26 calibration-plumbing update after the smoothing audit:
 `tenure_choice_kappa` is now part of the local/global calibration search vector
 in `code/model/intergen_housing_fertility/local_panel.py`, with bounds
 `[0.000, 0.080]` and a backward-compatible warm-start default of `0.01` for
-older seed theta files. The active roomgap target set already includes
-ownership levels and gradients (`own_rate`, `own_rate_2534`,
-`old_age_own_rate`, and `own_family_gap`), so no duplicate ownership-level
-target was added in code. Future runs using this plumbing are 14-parameter
-searches against the existing 17-target roomgap system unless a new audited
-ownership-dispersion target is explicitly added.
+older seed theta files. A new explicit 14-hard-moment target set was added as
+`candidate_replacement_roomgap_14moment_v1` in
+`code/model/intergen_housing_fertility/calibration.py`. It implements the
+June 23 14-moment roomgap rescore convention: keep the replacement wealth,
+fertility, ownership, and room moments; keep `own_rate`, `own_rate_2534`,
+`old_age_own_rate`, and `own_family_gap`; replace separate owner/renter room
+levels with `prime30_55_childless_owner_minus_renter_mean_rooms`; and demote
+the old diagnostic-only moments `prime30_55_childless_owner_mean_rooms`,
+`prime30_55_childless_renter_share_rooms_ge6`, and
+`old_age_parent_childless_gap`. The target count is now exactly 14 against the
+14-parameter search vector including `tenure_choice_kappa`.
 
 Current reference diagnostic point: global-DE diagnostic best from
 `output/model/intergen_globalde_final_best_diagnostics/source_record.json`,

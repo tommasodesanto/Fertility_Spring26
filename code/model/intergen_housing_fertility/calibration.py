@@ -117,6 +117,22 @@ CANDIDATE_REPLACEMENT_YOUNG_OLD_ROOMGAP_V1_TARGETS = {
 }
 
 
+CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_TARGETS.items()
+        if k
+        not in {
+            "prime30_55_childless_owner_mean_rooms",
+            "prime30_55_childless_renter_share_rooms_ge6",
+        }
+    },
+    "prime30_55_childless_owner_minus_renter_mean_rooms": 2.41876173,
+    "old_age_own_rate": 0.76426097,
+    "own_rate_2534": 0.34116609,
+}
+
+
 CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS = {
     **{
         k: v
@@ -284,6 +300,22 @@ CANDIDATE_REPLACEMENT_YOUNG_OLD_ROOMGAP_V1_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_NH_MEDIAN_V1_WEIGHTS.items()
+        if k
+        not in {
+            "prime30_55_childless_owner_mean_rooms",
+            "prime30_55_childless_renter_share_rooms_ge6",
+        }
+    },
+    "prime30_55_childless_owner_minus_renter_mean_rooms": 12.0,
+    "old_age_own_rate": 160.0,
+    "own_rate_2534": 80.0,
+}
+
+
 CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_WEIGHTS = {
     **{
         k: v
@@ -409,6 +441,10 @@ TARGET_SETS = {
     "candidate_replacement_young_old_roomgap_v1": (
         CANDIDATE_REPLACEMENT_YOUNG_OLD_ROOMGAP_V1_TARGETS,
         CANDIDATE_REPLACEMENT_YOUNG_OLD_ROOMGAP_V1_WEIGHTS,
+    ),
+    "candidate_replacement_roomgap_14moment_v1": (
+        CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS,
     ),
     "candidate_replacement_total_median_v1": (
         CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS,
