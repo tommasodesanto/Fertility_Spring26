@@ -64,6 +64,7 @@ def run_local_panel(
     diagnostic_best: int = 3,
     target_set: str = "candidate_no_timing_v0",
     include_anchors: bool = True,
+    seed_theta: dict[str, Any] | None = None,
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run a bounded multicore diagnostic panel.
@@ -87,7 +88,13 @@ def run_local_panel(
 
     rank_targets, rank_weights = get_target_set(target_set)
     income = income_process_overrides(income_states)
-    candidates = local_panel_candidates(n_cases, seed, include_anchors=include_anchors)
+    seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
+    candidates = local_panel_candidates(
+        n_cases,
+        seed,
+        include_anchors=include_anchors,
+        seed_theta=seed_theta_clean,
+    )
     meta = {
         "status": "bounded_multicore_diagnostic_not_formal_calibration",
         "n_cases_requested": int(n_cases),
@@ -106,6 +113,7 @@ def run_local_panel(
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
+        "seed_theta": jsonable(seed_theta_clean),
         "full_old_targets": OLD_NONLOCATION_TARGETS,
         "full_old_weights": OLD_NONLOCATION_WEIGHTS,
         "varied_internal_parameters": [
@@ -269,6 +277,7 @@ def run_global_de_panel(
     mutation: float = 0.85,
     crossover: float = 0.70,
     target_set: str = "candidate_no_timing_v0",
+    seed_theta: dict[str, Any] | None = None,
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run an independent differential-evolution global search panel.
@@ -292,6 +301,7 @@ def run_global_de_panel(
     rank_targets, rank_weights = get_target_set(target_set)
     income = income_process_overrides(income_states)
     dim = len(GLOBAL_DE_BOUNDS)
+    seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
     pop_size = max(4, int(pop_size))
     max_evals = max(1, int(max_evals))
     mutation = float(mutation)
@@ -317,6 +327,7 @@ def run_global_de_panel(
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
+        "seed_theta": jsonable(seed_theta_clean),
         "bounds": [
             {"name": name, "lower": float(lo), "upper": float(hi)}
             for name, lo, hi in GLOBAL_DE_BOUNDS
@@ -331,6 +342,9 @@ def run_global_de_panel(
     start = time.perf_counter()
     deadline = start + max(1.0, float(minutes) * 60.0)
     pop = latin_hypercube(rng, pop_size, dim)
+    seeded_unit = global_unit_from_theta(seed_theta_clean) if seed_theta_clean is not None else None
+    if seeded_unit is not None:
+        pop[0] = seeded_unit
     pop_loss = np.full(pop_size, math.inf)
     pop_records: list[dict[str, Any] | None] = [None] * pop_size
     records: list[dict[str, Any]] = []
@@ -378,7 +392,9 @@ def run_global_de_panel(
     for i in range(pop_size):
         if eval_idx >= max_evals or time.perf_counter() >= deadline:
             break
-        record = evaluate(pop[i], f"init_{i:03d}", {"phase": "latin_hypercube", "slot": i})
+        label = "warm_start" if i == 0 and seeded_unit is not None else f"init_{i:03d}"
+        phase = "seed_theta" if i == 0 and seeded_unit is not None else "latin_hypercube"
+        record = evaluate(pop[i], label, {"phase": phase, "slot": i})
         pop_loss[i] = float(record.get("rank_loss", math.inf))
         pop_records[i] = record
 
@@ -510,8 +526,16 @@ def run_local_panel_case(
     }
 
 
-def local_panel_candidates(n_cases: int, seed: int, *, include_anchors: bool = True) -> list[dict[str, Any]]:
+def local_panel_candidates(
+    n_cases: int,
+    seed: int,
+    *,
+    include_anchors: bool = True,
+    seed_theta: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     candidates: list[dict[str, Any]] = []
+    if seed_theta is not None:
+        candidates.append({"label": "warm_start", "theta": dict(seed_theta)})
     if include_anchors:
         anchors = [
             keep_internal_candidate(candidate)
@@ -547,6 +571,21 @@ def theta_from_global_unit(unit: np.ndarray) -> dict[str, float]:
     return theta
 
 
+def global_unit_from_theta(theta: dict[str, Any] | None) -> np.ndarray | None:
+    if theta is None:
+        return None
+    unit = np.full(len(GLOBAL_DE_BOUNDS), np.nan)
+    for idx, (name, lo, hi) in enumerate(GLOBAL_DE_BOUNDS):
+        source_name = "beta" if name == "beta_annual" else name
+        if source_name not in theta:
+            return None
+        value = float(theta[source_name])
+        if name == "beta_annual":
+            value = value ** (1.0 / PERIOD_YEARS)
+        unit[idx] = (value - float(lo)) / max(float(hi - lo), 1e-12)
+    return np.clip(unit, 0.0, 1.0)
+
+
 def keep_internal_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
     allowed = {
         "beta",
@@ -565,6 +604,12 @@ def keep_internal_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
     }
     theta = {k: v for k, v in dict(candidate["theta"]).items() if k in allowed}
     return {"label": str(candidate["label"]), "theta": theta}
+
+
+def keep_internal_theta(theta: dict[str, Any] | None) -> dict[str, Any] | None:
+    if theta is None:
+        return None
+    return keep_internal_candidate({"label": "seed_theta", "theta": theta})["theta"]
 
 
 def draw_internal_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:

@@ -35,6 +35,7 @@ export INTERGEN_CASES_PER_TASK="${INTERGEN_CASES_PER_TASK:-180}"
 export INTERGEN_MINUTES="${INTERGEN_MINUTES:-115}"
 export INTERGEN_WORKERS="${INTERGEN_WORKERS:-1}"
 export INTERGEN_SEED_BASE="${INTERGEN_SEED_BASE:-2026060800}"
+export INTERGEN_SEED_THETA_JSON="${INTERGEN_SEED_THETA_JSON:-}"
 export INTERGEN_J="${INTERGEN_J:-16}"
 export INTERGEN_NB="${INTERGEN_NB:-60}"
 export INTERGEN_INCOME_STATES="${INTERGEN_INCOME_STATES:-5}"
@@ -72,6 +73,9 @@ EXTRA_ARGS=()
 if [ "${TASK_ID}" != "1" ]; then
     EXTRA_ARGS+=(--random-only)
 fi
+if [ -n "${INTERGEN_SEED_THETA_JSON}" ]; then
+    EXTRA_ARGS+=(--seed-theta-json "${INTERGEN_SEED_THETA_JSON}")
+fi
 
 echo "============================================"
 echo "Intergenerational housing-fertility two-hour panel test"
@@ -86,6 +90,7 @@ echo "Task outdir: ${TASK_OUTDIR}"
 echo "Target set: ${INTERGEN_TARGET_SET}"
 echo "cases=${INTERGEN_CASES_PER_TASK} minutes=${INTERGEN_MINUTES} workers=${INTERGEN_WORKERS}"
 echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
+echo "seed_theta_json=${INTERGEN_SEED_THETA_JSON:-none}"
 echo "extra_args=${EXTRA_ARGS[*]:-none}"
 echo "Started: $(date)"
 echo "============================================"

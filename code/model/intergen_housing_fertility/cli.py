@@ -87,6 +87,7 @@ def main() -> None:
     panel.add_argument("--diagnostic-best", type=int, default=3)
     panel.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
     panel.add_argument("--random-only", action="store_true", help="Skip deterministic anchor cases in local-panel draws")
+    panel.add_argument("--seed-theta-json", type=Path, default=None, help="JSON file with a top-level theta object to seed the panel.")
     panel.add_argument("--quiet", action="store_true")
     panel.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_panel"))
 
@@ -103,6 +104,7 @@ def main() -> None:
     global_de.add_argument("--mutation", type=float, default=0.85)
     global_de.add_argument("--crossover", type=float, default=0.70)
     global_de.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
+    global_de.add_argument("--seed-theta-json", type=Path, default=None, help="JSON file with a top-level theta object to seed the DE population.")
     global_de.add_argument("--quiet", action="store_true")
     global_de.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_global_de"))
 
@@ -149,6 +151,7 @@ def main() -> None:
             diagnostic_best=int(args.diagnostic_best),
             target_set=str(args.target_set),
             include_anchors=not bool(args.random_only),
+            seed_theta=load_seed_theta(args.seed_theta_json),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
@@ -168,6 +171,7 @@ def main() -> None:
             mutation=float(args.mutation),
             crossover=float(args.crossover),
             target_set=str(args.target_set),
+            seed_theta=load_seed_theta(args.seed_theta_json),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
@@ -218,6 +222,17 @@ def one_market_overrides(extra: dict[str, Any] | None = None) -> dict[str, Any]:
     if extra:
         overrides.update(extra)
     return overrides
+
+
+def load_seed_theta(path: Path | None) -> dict[str, Any] | None:
+    if path is None:
+        return None
+    with Path(path).open("r", encoding="utf-8") as fh:
+        payload = json.load(fh)
+    theta = payload.get("theta", payload)
+    if not isinstance(theta, dict):
+        raise ValueError(f"{path} does not contain a theta object")
+    return dict(theta)
 
 
 def smoke_overrides(args: argparse.Namespace) -> dict[str, Any]:

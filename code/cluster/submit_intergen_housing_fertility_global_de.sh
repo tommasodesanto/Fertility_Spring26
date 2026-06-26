@@ -33,6 +33,7 @@ export INTERGEN_GLOBAL_POP_SIZE="${INTERGEN_GLOBAL_POP_SIZE:-22}"
 export INTERGEN_GLOBAL_MUTATION="${INTERGEN_GLOBAL_MUTATION:-0.85}"
 export INTERGEN_GLOBAL_CROSSOVER="${INTERGEN_GLOBAL_CROSSOVER:-0.70}"
 export INTERGEN_SEED_BASE="${INTERGEN_SEED_BASE:-2026060900}"
+export INTERGEN_SEED_THETA_JSON="${INTERGEN_SEED_THETA_JSON:-}"
 export INTERGEN_J="${INTERGEN_J:-16}"
 export INTERGEN_NB="${INTERGEN_NB:-60}"
 export INTERGEN_INCOME_STATES="${INTERGEN_INCOME_STATES:-5}"
@@ -79,10 +80,15 @@ echo "Target set: ${INTERGEN_TARGET_SET}"
 echo "max_evals=${INTERGEN_GLOBAL_EVALS_PER_TASK} minutes=${INTERGEN_MINUTES} pop_size=${INTERGEN_GLOBAL_POP_SIZE}"
 echo "mutation=${INTERGEN_GLOBAL_MUTATION} crossover=${INTERGEN_GLOBAL_CROSSOVER}"
 echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
+echo "seed_theta_json=${INTERGEN_SEED_THETA_JSON:-none}"
 echo "Started: $(date)"
 echo "============================================"
 
 cd "${MODEL_DIR}"
+EXTRA_ARGS=()
+if [ -n "${INTERGEN_SEED_THETA_JSON}" ]; then
+    EXTRA_ARGS+=(--seed-theta-json "${INTERGEN_SEED_THETA_JSON}")
+fi
 "${PYTHON_BIN}" -m intergen_housing_fertility.cli global-de-panel \
     --max-evals "${INTERGEN_GLOBAL_EVALS_PER_TASK}" \
     --seed "${SEED}" \
@@ -96,7 +102,8 @@ cd "${MODEL_DIR}"
     --mutation "${INTERGEN_GLOBAL_MUTATION}" \
     --crossover "${INTERGEN_GLOBAL_CROSSOVER}" \
     --target-set "${INTERGEN_TARGET_SET}" \
-    --outdir "${TASK_OUTDIR}"
+    --outdir "${TASK_OUTDIR}" \
+    "${EXTRA_ARGS[@]}"
 
 echo "Finished: $(date)"
 echo "Done: ${TASK_OUTDIR}"
