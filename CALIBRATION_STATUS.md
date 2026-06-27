@@ -27,6 +27,13 @@ The companion audit is
 `output/model/intergen_current_review/wealth_units_audit/README.md`, and the
 issue ledger is
 `docs/model/intergen_housing_block_audit_plan_20260626.md`.
+The broader active-target object audit is
+`docs/model/intergen_target_object_audit.md`. It flags the same denominator
+problem for the old-age nonhousing wealth-to-income moments and records that
+room/ownership targets are mostly clean measurement objects, while `tfr` should
+be read as completed-fertility-equivalent and `housing_increment_1to2` as an
+additional-child housing-demand proxy rather than a sequential second-birth
+hazard.
 
 June 24 code-audit fixes changed the live mechanics before any new calibration:
 `use_pti_constraint=False` by default, optional PTI uses actual transaction
