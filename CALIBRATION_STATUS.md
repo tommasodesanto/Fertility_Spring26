@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-06-26 21:34 EDT`
+Updated: `2026-06-27`
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -9,6 +9,24 @@ A separate one-market intergenerational housing-fertility strand is active under
 quantitative model for the June 2026 intergenerational strand: simplified
 relative to the older spatial center-periphery model by dropping location. It
 is **not** yet a final production calibration.
+
+June 27 wealth-unit update. The live solver now reports explicit annual-gross
+liquid-wealth moments for young households:
+`young_all_liquid_wealth_to_annual_gross_income_2530`,
+`young_childless_liquid_wealth_to_annual_gross_income_2535`, and
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535`, each with a
+weighted median and sample mass. These are diagnostics for the wealth-target
+audit and are exposed through `calibration.extract_moments`; the active target
+sets have **not** yet been changed. The current review packet shows the old
+`young_liquid_wealth_to_income` statistic is a 4-year period after-tax-income
+ratio (`0.353` at `output/model/intergen_current_review/quick/`), while the
+annual-gross young-childless-renter object is about `1.10`, compared with the
+PSID candidate mean `0.179`. Conclusion: do not tune entry wealth or interpret
+the old wealth-target loss until the target sample and denominator are chosen.
+The companion audit is
+`output/model/intergen_current_review/wealth_units_audit/README.md`, and the
+issue ledger is
+`docs/model/intergen_housing_block_audit_plan_20260626.md`.
 
 June 24 code-audit fixes changed the live mechanics before any new calibration:
 `use_pti_constraint=False` by default, optional PTI uses actual transaction

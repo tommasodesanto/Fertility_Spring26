@@ -3730,6 +3730,83 @@ def markov_renter_room_moments(g: np.ndarray, hR: np.ndarray, P: SimpleNamespace
     }
 
 
+def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray, P: SimpleNamespace, bg: np.ndarray) -> None:
+    """Add wealth/income moments with annual gross-income denominators.
+
+    Core model accounting uses 4-year period after-tax income. The empirical
+    PSID entry-wealth summaries are annual-income ratios, so these moments make
+    the denominator explicit and avoid comparing annual data to period-income
+    model statistics.
+    """
+    g_arr = np.asarray(g, dtype=float)
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    if g_arr.ndim == 6:
+        g7 = g_arr[:, :, :, :, None, :, :]
+        z_values = np.array([1.0])
+    elif g_arr.ndim == 7:
+        g7 = g_arr
+        z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    else:
+        return
+
+    period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
+    tau = float(getattr(P, "tau_pay", 0.0))
+    dep_last = int(getattr(P, "n_child_stages", 1))
+
+    def annual_gross_income(i: int, j: int, zz: int) -> float:
+        z_value = float(z_values[zz]) if zz < len(z_values) else 1.0
+        period_income = income_at_state(P, i, j, z_value)
+        annual_aftertax = period_income / max(period_years, 1e-12)
+        if j < int(getattr(P, "J_R", P.J)):
+            return annual_aftertax / max(1.0 - tau, 1e-12)
+        return annual_aftertax
+
+    def sample_stats(age_lo: float, age_hi: float, *, childless_only: bool, renter_only: bool) -> tuple[float, float, float]:
+        vals: list[np.ndarray] = []
+        wts: list[np.ndarray] = []
+        total_ratio = total_mass = 0.0
+        for j in range(age_to_index(P, age_lo), age_to_index(P, age_hi) + 1):
+            for i in range(P.I):
+                for zz in range(g7.shape[4]):
+                    y = annual_gross_income(i, j, zz)
+                    if y <= 0:
+                        continue
+                    for nn in range(P.n_parity):
+                        for cs in range(P.n_child_states):
+                            if childless_only and current_child_bin_dt(nn, cs, dep_last) != 2:
+                                continue
+                            tenures = [0] if renter_only else range(g7.shape[1])
+                            for ten in tenures:
+                                mass = g7[:, ten, i, j, zz, nn, cs]
+                                if not np.any(mass > 0):
+                                    continue
+                                ratio = bg_arr / y
+                                total_ratio += float(np.sum(mass * ratio))
+                                total_mass += float(np.sum(mass))
+                                positive = mass > 0
+                                vals.append(ratio[positive])
+                                wts.append(mass[positive])
+        mean = total_ratio / max(total_mass, 1e-12)
+        median = weighted_median_from_cells(vals, wts)
+        return mean, median, total_mass
+
+    samples = {
+        "young_all_liquid_wealth_to_annual_gross_income_2530": sample_stats(
+            25.0, 30.0, childless_only=False, renter_only=False
+        ),
+        "young_childless_liquid_wealth_to_annual_gross_income_2535": sample_stats(
+            25.0, 35.0, childless_only=True, renter_only=False
+        ),
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": sample_stats(
+            25.0, 35.0, childless_only=True, renter_only=True
+        ),
+    }
+    for name, (mean, median, mass) in samples.items():
+        setattr(stats, name, mean)
+        setattr(stats, f"{name}_median", median)
+        setattr(stats, f"{name}_mass", mass)
+
+
 def compute_markov_statistics(
     g: np.ndarray,
     fp: np.ndarray,
@@ -3751,6 +3828,7 @@ def compute_markov_statistics(
     # operator). Recompute them on the full income-resolved distribution.
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
+    add_annual_gross_liquid_wealth_moments(stats, g, P, bg)
     Nz = len(z_grid)
     nt = 1 + P.n_house
     stats.income_state_mass = np.zeros(Nz)
@@ -4405,6 +4483,7 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     stats.housing_increment_1to2 = (
         stats.mean_housing_by_parity[2] - stats.mean_housing_by_parity[1] if npar >= 3 else 0.0
     )
+    add_annual_gross_liquid_wealth_moments(stats, g, P, bg)
     return stats
 
 

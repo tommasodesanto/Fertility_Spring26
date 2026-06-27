@@ -939,6 +939,24 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "young_liquid_wealth_to_income": float(getattr(sol, "young_liquid_wealth_to_income", np.nan)),
         "liquid_wealth_to_income": float(getattr(sol, "liquid_wealth_to_income", np.nan)),
         "wealth_to_income": float(getattr(sol, "wealth_to_income", np.nan)),
+        "young_all_liquid_wealth_to_annual_gross_income_2530": float(
+            getattr(sol, "young_all_liquid_wealth_to_annual_gross_income_2530", np.nan)
+        ),
+        "young_all_liquid_wealth_to_annual_gross_income_2530_median": float(
+            getattr(sol, "young_all_liquid_wealth_to_annual_gross_income_2530_median", np.nan)
+        ),
+        "young_childless_liquid_wealth_to_annual_gross_income_2535": float(
+            getattr(sol, "young_childless_liquid_wealth_to_annual_gross_income_2535", np.nan)
+        ),
+        "young_childless_liquid_wealth_to_annual_gross_income_2535_median": float(
+            getattr(sol, "young_childless_liquid_wealth_to_annual_gross_income_2535_median", np.nan)
+        ),
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": float(
+            getattr(sol, "young_childless_renter_liquid_wealth_to_annual_gross_income_2535", np.nan)
+        ),
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": float(
+            getattr(sol, "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median", np.nan)
+        ),
         "parity_share_0": float(parity[0]) if parity.size > 0 else np.nan,
         "parity_share_1": float(parity[1]) if parity.size > 1 else np.nan,
         "parity_share_2plus": float(np.sum(parity[2:])) if parity.size > 2 else np.nan,
