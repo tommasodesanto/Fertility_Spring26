@@ -160,6 +160,127 @@ CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_TARGETS = {
 }
 
 
+# Non-behavioral target-object ledger. Keep this near the target values so
+# calibration changes document the model statistic, empirical object, and known
+# measurement caveats in the same edit.
+TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
+    "tfr": {
+        "model": "2 * mean_completed_fertility among post-fertility ages.",
+        "data": "Completed-fertility-equivalent target, not a period TFR flow.",
+        "status": "target-choice",
+        "issue": "The label is legacy shorthand; reports should call this completed-fertility-equivalent.",
+    },
+    "childless_rate": {
+        "model": "parity_dist[0], measured after the fertility window.",
+        "data": "Completed childlessness / ever-childless object.",
+        "status": "needs-source-pin",
+        "issue": "Do not substitute ACS no-child-in-household for completed childlessness.",
+    },
+    "own_rate": {
+        "model": "own_rate_3055: owner mass divided by total mass, ages 30-55.",
+        "data": "ACS household heads, DUE-housing sample, ages 30-55.",
+        "status": "clean",
+        "issue": "Earlier aggregate-owner mapping was fixed; keep own_rate mapped to own_rate_3055.",
+    },
+    "own_family_gap": {
+        "model": "own_gap_newparent_nonparent_3055: new-parent ownership minus nonparent ownership, ages 30-55.",
+        "data": "ACS household heads, DUE-housing sample, new-parent minus no-child household ownership, ages 30-55.",
+        "status": "mostly-clean",
+        "issue": "Data no-child household and model nonparent/never-parent states are close but not identical.",
+    },
+    "housing_increment_0to1": {
+        "model": "housing_increment_0to1_eventstudy_t3: birth cohort minus no-birth control, default horizon 0 in 4-year periods.",
+        "data": "PSID first-birth rooms event-study, about 3 years post-birth.",
+        "status": "clean-after-fix",
+        "issue": "June 25 fix removed the old raw 12-year lifecycle-drift window.",
+    },
+    "housing_increment_1to2": {
+        "model": "housing_increment_1to2_proxy_t3: two-plus-child birth-state housing minus one-child birth-state housing.",
+        "data": "PSID quick second-birth room change, post-3.",
+        "status": "proxy",
+        "issue": "This is an additional-child housing-demand target, not a sequential second-birth hazard.",
+    },
+    "young_liquid_wealth_to_income": {
+        "model": "young childless renter liquid wealth divided by 4-year period after-tax income.",
+        "data": "PSID young childless renter NETWORTH2R / INCFAMR, annual family-income denominator.",
+        "status": "measurement-error",
+        "issue": "Replace in serious target sets with an explicit annual-income statistic such as young_childless_renter_liquid_wealth_to_annual_gross_income_2535.",
+    },
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": {
+        "model": "young childless renter liquid wealth divided by annual gross-normalized income, ages 25-35.",
+        "data": "PSID young childless renter NETWORTH2R / INCFAMR, ages 25-35.",
+        "status": "candidate-replacement",
+        "issue": "Mean target can use 0.17922556; median should be re-extracted as weighted before hard targeting.",
+    },
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": {
+        "model": "weighted median of young childless renter liquid wealth over annual gross-normalized income, ages 25-35.",
+        "data": "PSID median of young childless renter NETWORTH2R / INCFAMR, ages 25-35.",
+        "status": "candidate-replacement",
+        "issue": "Existing PSID median was unweighted; re-extract weighted median before hard targeting.",
+    },
+    "old_parent_childless_nonhousing_wealth_to_income_gap_6575": {
+        "model": "parent minus childless ratio-of-sums: nonhousing wealth divided by model period income, ages 65-75.",
+        "data": "PSID parent minus childless mean nonhousing net worth / annual income, ages 65-75.",
+        "status": "needs-fix",
+        "issue": "Period-vs-annual denominator and ratio-of-sums vs mean-of-ratios are not identical.",
+    },
+    "old_nonhousing_wealth_to_income_median_6575": {
+        "model": "weighted median of nonhousing wealth divided by model period income, ages 65-75.",
+        "data": "PSID weighted median nonhousing net worth / annual income, ages 65-75.",
+        "status": "needs-fix",
+        "issue": "Model statistic should divide by annual income or the target should be converted consistently.",
+    },
+    "prime30_55_childless_renter_mean_rooms": {
+        "model": "mass-weighted mean realized renter housing services for childless-in-household ages 30-55.",
+        "data": "ACS household heads, childless renters, mean ROOMS, ages 30-55.",
+        "status": "clean",
+        "issue": "Means are not affected by the Markov nonlinear-threshold bug.",
+    },
+    "prime30_55_childless_owner_mean_rooms": {
+        "model": "mass-weighted mean owner housing rung for childless-in-household ages 30-55.",
+        "data": "ACS household heads, childless owners, mean ROOMS, ages 30-55.",
+        "status": "diagnostic-or-demoted",
+        "issue": "Correlated with the owner-renter mean gap; not in the active 14-moment roomgap target.",
+    },
+    "prime30_55_childless_renter_share_rooms_ge6": {
+        "model": "renter mass share with h_R >= 6 for childless-in-household ages 30-55.",
+        "data": "ACS household heads, childless renters, share ROOMS >= 6, ages 30-55.",
+        "status": "clean-after-fix",
+        "issue": "Must be computed before income-state policy collapse; fixed by markov_renter_room_moments.",
+    },
+    "prime30_55_childless_owner_share_rooms_ge6": {
+        "model": "owner mass share with owner rung H >= 6 for childless-in-household ages 30-55.",
+        "data": "ACS household heads, childless owners, share ROOMS >= 6, ages 30-55.",
+        "status": "clean",
+        "issue": "If missed, treat as economics/product-menu problem, not measurement.",
+    },
+    "prime30_55_childless_owner_minus_renter_mean_rooms": {
+        "model": "childless owner mean housing services minus childless renter mean housing services, ages 30-55.",
+        "data": "ACS household heads, childless owner-renter mean ROOMS gap, ages 30-55.",
+        "status": "clean",
+        "issue": "Preferred smooth room-segmentation target in the active 14-moment roomgap system.",
+    },
+    "old_age_own_rate": {
+        "model": "old_age_own_rate_6575: owner mass divided by total mass, ages 65-75.",
+        "data": "ACS household heads, DUE-housing sample, ownership ages 65-75.",
+        "status": "clean",
+        "issue": "Current mismatch is structural/economic, not an obvious measurement bug.",
+    },
+    "old_age_parent_childless_gap": {
+        "model": "old_age_parent_childless_gap_6575: parent old ownership minus childless old ownership.",
+        "data": "PSID/ACS old parent-minus-childless ownership gap, ages 65-75 depending on target variant.",
+        "status": "demoted-or-variant",
+        "issue": "Not in active 14-moment roomgap target; source/sample must be pinned before reuse.",
+    },
+    "own_rate_2534": {
+        "model": "owner mass divided by total mass, ages 25-34.",
+        "data": "ACS household heads, DUE-housing sample, ownership ages 25-34.",
+        "status": "clean",
+        "issue": "Clean measurement object; current miss is economic/value-ranking or grid/product mapping.",
+    },
+}
+
+
 CORE_FEASIBILITY_V1_TARGETS = {
     k: CANDIDATE_NO_TIMING_V0_TARGETS[k]
     for k in [
@@ -1018,6 +1139,25 @@ def get_target_set(target_set: str) -> tuple[dict[str, float], dict[str, float]]
         raise ValueError(f"Unknown target_set {target_set!r}; choose from {sorted(TARGET_SETS)}")
     targets, weights = TARGET_SETS[key]
     return dict(targets), dict(weights)
+
+
+def get_target_moment_objects(target_set: str | None = None) -> dict[str, dict[str, str]]:
+    """Return documented model/data objects for target moments.
+
+    This helper is deliberately non-behavioral: it does not affect the loss or
+    target values. It keeps the measurement ledger available to calibration
+    reports and future target revisions.
+    """
+    if target_set is None:
+        return {name: dict(meta) for name, meta in TARGET_MOMENT_OBJECTS.items()}
+    targets, _ = get_target_set(target_set)
+    missing = {
+        "model": "undocumented",
+        "data": "undocumented",
+        "status": "needs-documentation",
+        "issue": "Add this moment to TARGET_MOMENT_OBJECTS before treating the target set as production.",
+    }
+    return {name: dict(TARGET_MOMENT_OBJECTS.get(name, missing)) for name in targets}
 
 
 def diagnostic_loss(
