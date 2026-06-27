@@ -267,3 +267,41 @@ packet. This is the fastest way to answer whether the weird graphs are mostly:
 4. old-owner retention;
 5. or a real but ugly economic threshold-saving object.
 
+## Current Issue Ledger: 2026-06-27
+
+This ledger separates three objects that should not be mixed:
+
+1. **Numerical pathology:** a feature created by grid support, interpolation,
+   masks, or KFE injection.
+2. **Economic miss:** a model mechanism that is coherent but empirically wrong.
+3. **Calibration fit:** the weighted SMM loss under the current target system.
+
+For the next audit cycle, judge each issue by its own diagnostic object. Do not
+use SMM loss as the primary criterion unless the issue is explicitly a
+calibration-fit issue.
+
+| Priority | Issue | Pathology Or Miss | Current Evidence | Correct Validation Object | Candidate Fix |
+|---|---|---|---|---|---|
+| `1` | Entrant liquid-wealth atom | Mostly closure/numerical support, with an economic point-mass assumption underneath. | The current point-entry run has a large atom near \(b_{entry}=0.1465\). A diagnostic five-node entry spread moves entrants across \([-0.667,-0.333,0.1465,0.333,0.667]\) with mean preserved at \(0.1465\), and the single spike becomes a wider near-zero cluster. | Model-vs-data liquid-wealth distributions by age, tenure, and parent status; atom-origin heatmap by age/income/tenure/parity; not the SMM loss. | Keep point-entry as the old baseline switch, but treat five-node or empirical-entry \(G_0(b\mid z)\) as the next closure candidate. Validate against PSID/SCF/SIPP liquid-wealth distributions before recalibration. |
+| `2` | Total-wealth jaggedness | Partly mechanical from discrete owner rungs; possibly amplified by coarse owner menu/grid. | Total wealth \(W=b+(1-\psi)pH\) remains sawtoothed even after entry spreading because each owner rung shifts the liquid grid by a different equity amount. | Total-wealth densities conditional on owner rung \(H\), then smoothed aggregate; rung transition matrices by age/parity. | Do not smooth the plot alone. Test denser owner ladders or adjacent-rung lotteries only after conditional-rung diagnostics show artificial bunching. |
+| `3` | Poor grid occupancy and threshold sensitivity | Numerical support problem. | Much of the liquid grid is unused, while mass and purchase thresholds sit in the near-zero/dense region. Prior `Nb=60 -> 240` diagnostics moved young ownership and other moments materially. | Fixed-price nested-grid convergence for densities, affected mass, \(E[c\mid b]\), \(E[b'\mid b]\), and owner-entry probabilities. | Redesign the grid around occupied support and pin economic thresholds: \(0\), entry support, \((1-\phi)pH\), relaxed thresholds, and \(-\phi pH\). |
+| `4` | Young ownership too low and old ownership too high | Economic lifecycle miss, not primarily the entry atom. | Entry spreading raises young ownership, but old ownership remains near absorbing. Earlier grid diagnostics showed old ownership barely moves with `Nb`. | Young owner feasibility/value-gap tables; old-owner transition decomposition into same rung, downsize, upsize, sell-to-rent. | Separate young access from old retention: starter-owner mapping, rental premium/supply, old-age maintenance/downsizing/health/liquidity mechanism, or net-equity bequest convention. |
+| `5` | Tenure/product segmentation is hand-built | Economic measurement/model-object miss. | Current hard renter cap \(h_R^{max}=6\) and owner ladder \(\{2,4,6,8,10\}\) are convenient but not yet disciplined by the empirical joint distribution. | ACS/AHS tables for \(F_R(h)\), \(F_O(h)\), \(\Pr(O\mid h)\), rent gradients by size, owner value gradients by size, and old-owner retained-size distributions. | Replace pure hand segmentation with either empirically chosen owner rungs plus overlapping renter support, or a soft rental-size premium/availability wedge. |
+| `6` | Parent-credit counterfactuals have tiny fertility effects | Mechanism/affected-mass issue, not a calibration-loss issue. | Model affected-mass tables suggested raw threshold mass can exist while birth-weighted and owner-entry-weighted mass is tiny. | Sufficient-stat table: raw, birth-weighted, space-constrained, owner-entry-weighted, and \(\Psi\)-weighted affected mass; PSID liquid assets plus ACS/AHS housing thresholds. | Do not infer policy failure from \(\Delta\)TFR alone. First measure whether the empirical susceptible mass exists and whether the model places parent-margin households there. |
+| `7` | Housing event responses are weak or unstable | Economic transition miss, possibly product/tenure mapping. | The one-child-to-two-plus housing increment remains small in current runs; entry spreading helped it slightly but did not solve it. | Birth-cohort transition tables: pre-birth tenure/rung, post-birth tenure/rung, housing services change, and wealth state, weighted by birth probability. | Fix only after tenure/product mapping is disciplined. Candidate mechanisms include better family-sized rental scarcity, starter-owner/family-owner ladder, or child-dependent moving/adjustment costs. |
+| `8` | Infeasible cliffs and masks | Numerical hygiene issue. | Diagnostics found small positive mass near \(-10^{10}\) continuation interpolation, shrinking with finer grids. Owner residual service floors remain a bad precedent. | Occupied-branch mask audit and Bellman residuals weighted by stationary mass. | Replace penalty values/floors with explicit feasibility masks where feasible; verify moment invariance before using as a production change. |
+
+### Recommended Order
+
+1. Validate the entry-wealth distribution against data: model and data liquid
+   wealth by age and tenure, including near-zero and negative mass.
+2. Run the atom-origin heatmap in the model: \(b\) bins by age, faceted by
+   tenure/parity/income, for point-entry and five-node entry.
+3. Diagnose total wealth by owner rung before changing owner products.
+4. Run fixed-price nested-grid diagnostics with threshold-pinned grids.
+5. Only then choose the economic redesign: empirical entry distribution,
+   tenure/product mapping, and old-owner retention mechanism.
+
+The five-node entry spread should therefore be recorded as **progress on Issue
+1 only**. It does not solve Issues 2--8, and it should not be judged primarily
+by its current calibration loss.

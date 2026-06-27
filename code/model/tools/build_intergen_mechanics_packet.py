@@ -16,6 +16,7 @@ import gzip
 import json
 import math
 import pickle
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -66,6 +67,8 @@ TENURE_ORDER = ["renter", "owner"]
 def main() -> None:
     args = parse_args()
     outdir = args.outdir or default_outdir()
+    if args.clean_outdir and outdir.exists():
+        shutil.rmtree(outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     cache_path = solution_cache_path(args, outdir)
 
@@ -98,6 +101,7 @@ def main() -> None:
             weights,
             include_contact_sheet=not args.skip_contact_sheet,
             quick_first_look_only=bool(args.quick_first_look_only),
+            write_csv_sidecars=not args.no_csv,
         )
         write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
         print(
@@ -153,6 +157,7 @@ def main() -> None:
         weights,
         include_contact_sheet=not args.skip_contact_sheet,
         quick_first_look_only=bool(args.quick_first_look_only),
+        write_csv_sidecars=not args.no_csv,
     )
     if args.run_policy_cases:
         policy_records = write_policy_cases(
@@ -226,9 +231,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--b-frac-mid", type=float, default=None, help="Node fraction in the mid band (default 0.15).")
     parser.add_argument("--interp-method", default=None, choices=["linear", "monotone_cubic"],
                         help="Value-function interpolation for the savings continuation (default linear).")
+    parser.add_argument(
+        "--entry-wealth-spread-nodes",
+        type=int,
+        default=None,
+        help="Diagnostic entrant-wealth distribution width. Default leaves the model's point-mass entry closure.",
+    )
     parser.add_argument("--skip-standard-diagnostics", action="store_true")
     parser.add_argument("--skip-contact-sheet", action="store_true")
     parser.add_argument("--quick-first-look-only", action="store_true")
+    parser.add_argument(
+        "--no-csv",
+        action="store_true",
+        help="Skip CSV sidecars for plot source data; keep JSON/Markdown summaries and figures.",
+    )
+    parser.add_argument(
+        "--clean-outdir",
+        action="store_true",
+        help="Delete OUTDIR before writing, useful for the stable current quick-review folder.",
+    )
     parser.add_argument(
         "--refresh-plots-from-cache",
         action="store_true",
@@ -251,8 +272,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def default_outdir() -> Path:
-    stamp = dt.date.today().strftime("%Y%m%d")
-    return ROOT / "output/model" / f"intergen_mechanics_packet_{stamp}"
+    return ROOT / "output/model/intergen_mechanics_packet_current"
 
 
 def solution_cache_path(args: argparse.Namespace, outdir: Path) -> Path:
@@ -348,6 +368,7 @@ def resolve_grid(args: argparse.Namespace, source: dict[str, Any]) -> dict[str, 
         "b_frac_core": args.b_frac_core,
         "b_frac_mid": args.b_frac_mid,
         "interp_method": args.interp_method,
+        "entry_wealth_spread_nodes": args.entry_wealth_spread_nodes,
     }
 
 
@@ -384,7 +405,8 @@ def solve_candidate(
         overrides["H_own"] = np.asarray(grid["H_own"], dtype=float)
         overrides["n_house"] = len(overrides["H_own"])
     for _gk in ("b_min", "b_max", "b_core_lo", "b_core_hi", "b_mid_hi",
-                "b_frac_low", "b_frac_core", "b_frac_mid", "interp_method"):
+                "b_frac_low", "b_frac_core", "b_frac_mid", "interp_method",
+                "entry_wealth_spread_nodes"):
         if grid.get(_gk) is not None:
             overrides[_gk] = grid[_gk]
     t0 = time.perf_counter()
@@ -471,6 +493,7 @@ def write_core_outputs(
     *,
     include_contact_sheet: bool = True,
     quick_first_look_only: bool = False,
+    write_csv_sidecars: bool = True,
 ) -> None:
     sol = baseline["sol"]
     P = baseline["P"]
@@ -488,37 +511,50 @@ def write_core_outputs(
             "solver_timings": jsonable(getattr(sol, "timings", {})),
             "H_own": np.asarray(P.H_own, dtype=float),
             "hR_max": float(P.hR_max),
+            "entry_wealth_distribution": {
+                "spread_nodes": int(getattr(P, "entry_wealth_spread_nodes", 1)),
+                "grid_values": jsonable(getattr(sol, "entry_wealth_grid_values", np.array([]))),
+                "weights": jsonable(getattr(sol, "entry_wealth_grid_weights", np.array([]))),
+                "mean": maybe_float(getattr(sol, "entry_wealth_grid_mean", np.nan)),
+                "target_b_entry_fixed": float(getattr(P, "b_entry_fixed", np.nan)),
+            },
             "moments": moments,
         },
     )
     write_json(outdir / "moments.json", moments)
 
     target_rows = target_fit_rows(moments, targets, weights)
-    write_csv(outdir / "target_fit.csv", target_rows)
+    if write_csv_sidecars:
+        write_csv(outdir / "target_fit.csv", target_rows)
     write_markdown_table(outdir / "target_fit.md", target_rows, "Target Fit")
 
     if not quick_first_look_only:
         room_rows, room_fit_rows = room_bin_outputs(sol, P)
-        write_csv(outdir / "room_bin_shares_prime30_55_childless.csv", room_rows)
-        write_csv(outdir / "room_bin_fit_prime30_55_childless.csv", room_fit_rows)
+        if write_csv_sidecars:
+            write_csv(outdir / "room_bin_shares_prime30_55_childless.csv", room_rows)
+            write_csv(outdir / "room_bin_fit_prime30_55_childless.csv", room_fit_rows)
         plot_room_bins(room_fit_rows, outdir / "room_bin_shares_prime30_55_childless.png")
 
         rung_rows = owner_rung_rows(sol, P)
-        write_csv(outdir / "owner_rung_shares_prime30_55_childless.csv", rung_rows)
+        if write_csv_sidecars:
+            write_csv(outdir / "owner_rung_shares_prime30_55_childless.csv", rung_rows)
         plot_owner_rungs(
             rung_rows,
             outdir / "owner_rung_shares_prime30_55_childless.png",
             ylabel="share of prime-age childless owners",
         )
         all_owner_rung_rows = owner_rung_rows_all(sol, P)
-        write_csv(outdir / "owner_rung_shares_all_owners.csv", all_owner_rung_rows)
+        if write_csv_sidecars:
+            write_csv(outdir / "owner_rung_shares_all_owners.csv", all_owner_rung_rows)
         plot_owner_rungs(all_owner_rung_rows, outdir / "owner_rung_shares_all_owners.png", ylabel="share of all owners")
 
         age_rows = age_profile_rows(sol, P)
-        write_csv(outdir / "age_profiles.csv", age_rows)
+        if write_csv_sidecars:
+            write_csv(outdir / "age_profiles.csv", age_rows)
         plot_age_profiles(age_rows, outdir / "age_profiles.png")
         tenure_age_rows = tenure_by_age_rows(sol, P)
-        write_csv(outdir / "tenure_by_age.csv", tenure_age_rows)
+        if write_csv_sidecars:
+            write_csv(outdir / "tenure_by_age.csv", tenure_age_rows)
         plot_tenure_by_age(tenure_age_rows, outdir / "tenure_by_age.png")
 
     first_look_policy_rows, first_look_market_rows = first_look_rows(sol, P)
@@ -532,34 +568,37 @@ def write_core_outputs(
         wealth_key="expected_total_wealth_after_tenure",
         base_xlim=policy_xlim,
     )
-    write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
-    write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
-    write_csv(outdir / "first_look_wealth_density.csv", first_look_density_rows)
-    write_csv(outdir / "first_look_total_wealth_density.csv", first_look_total_wealth_density_rows)
-    write_csv(outdir / "wealth_grid_coverage.csv", wealth_grid_rows)
-    write_csv(outdir / "total_wealth_grid_coverage.csv", total_wealth_grid_rows)
+    if write_csv_sidecars:
+        write_csv(outdir / "first_look_policy_lines.csv", first_look_policy_rows)
+        write_csv(outdir / "first_look_market_summary.csv", first_look_market_rows)
+        write_csv(outdir / "first_look_wealth_density.csv", first_look_density_rows)
+        write_csv(outdir / "first_look_total_wealth_density.csv", first_look_total_wealth_density_rows)
+        write_csv(outdir / "wealth_grid_coverage.csv", wealth_grid_rows)
+        write_csv(outdir / "total_wealth_grid_coverage.csv", total_wealth_grid_rows)
     plot_first_look(
         first_look_policy_rows,
         first_look_market_rows,
         outdir / "first_look_policies_markets.png",
         mode="simple",
         xlim=policy_xlim,
+        fast=quick_first_look_only,
     )
-    plot_first_look(
-        first_look_policy_rows,
-        first_look_market_rows,
-        outdir / "first_look_policies_markets_on_path.png",
-        mode="simple",
-        xlim=policy_xlim,
-        mass_filter_min=1e-10,
-    )
-    plot_first_look(
-        first_look_policy_rows,
-        first_look_market_rows,
-        outdir / "first_look_policies_markets_full.png",
-        mode="full",
-        xlim=policy_xlim,
-    )
+    if not quick_first_look_only:
+        plot_first_look(
+            first_look_policy_rows,
+            first_look_market_rows,
+            outdir / "first_look_policies_markets_on_path.png",
+            mode="simple",
+            xlim=policy_xlim,
+            mass_filter_min=1e-10,
+        )
+        plot_first_look(
+            first_look_policy_rows,
+            first_look_market_rows,
+            outdir / "first_look_policies_markets_full.png",
+            mode="full",
+            xlim=policy_xlim,
+        )
     plot_first_look(
         first_look_policy_rows,
         first_look_market_rows,
@@ -568,40 +607,48 @@ def write_core_outputs(
         xlim=total_wealth_policy_xlim,
         wealth_key="expected_total_wealth_after_tenure",
         wealth_label="expected total wealth after tenure choice",
+        fast=quick_first_look_only,
     )
-    plot_first_look(
-        first_look_policy_rows,
-        first_look_market_rows,
-        outdir / "first_look_policies_markets_total_wealth_on_path.png",
-        mode="simple",
-        xlim=total_wealth_policy_xlim,
-        wealth_key="expected_total_wealth_after_tenure",
-        wealth_label="expected total wealth after tenure choice",
-        mass_filter_min=1e-10,
-    )
-    plot_first_look(
-        first_look_policy_rows,
-        first_look_market_rows,
-        outdir / "first_look_policies_markets_total_wealth_full.png",
-        mode="full",
-        xlim=total_wealth_policy_xlim,
-        wealth_key="expected_total_wealth_after_tenure",
-        wealth_label="expected total wealth after tenure choice",
-    )
+    if not quick_first_look_only:
+        plot_first_look(
+            first_look_policy_rows,
+            first_look_market_rows,
+            outdir / "first_look_policies_markets_total_wealth_on_path.png",
+            mode="simple",
+            xlim=total_wealth_policy_xlim,
+            wealth_key="expected_total_wealth_after_tenure",
+            wealth_label="expected total wealth after tenure choice",
+            mass_filter_min=1e-10,
+        )
+        plot_first_look(
+            first_look_policy_rows,
+            first_look_market_rows,
+            outdir / "first_look_policies_markets_total_wealth_full.png",
+            mode="full",
+            xlim=total_wealth_policy_xlim,
+            wealth_key="expected_total_wealth_after_tenure",
+            wealth_label="expected total wealth after tenure choice",
+        )
     plot_first_look_wealth_density(
         first_look_density_rows,
         outdir / "first_look_wealth_density.png",
         wealth_label="liquid wealth b",
         title="Ergodic mass over the occupied liquid-wealth grid",
+        fast=quick_first_look_only,
     )
     plot_first_look_wealth_density(
         first_look_total_wealth_density_rows,
         outdir / "first_look_total_wealth_density.png",
         wealth_label="total wealth = b + liquidated housing value",
         title="Ergodic mass over occupied total wealth",
+        fast=quick_first_look_only,
     )
+    if quick_first_look_only:
+        return
+
     det_policy_rows = ergodic_deterministic_policy_rows(sol, P)
-    write_csv(outdir / "ergodic_deterministic_policy_states.csv", det_policy_rows)
+    if write_csv_sidecars:
+        write_csv(outdir / "ergodic_deterministic_policy_states.csv", det_policy_rows)
     plot_ergodic_deterministic_policy_slices(
         det_policy_rows,
         outdir / "ergodic_deterministic_policy_slices.png",
@@ -615,15 +662,14 @@ def write_core_outputs(
         outdir / "ergodic_deterministic_policy_bins.png",
     )
 
-    if quick_first_look_only:
-        return
-
     threshold_rows = owner_entry_threshold_rows(sol, P)
-    write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
+    if write_csv_sidecars:
+        write_csv(outdir / "owner_entry_thresholds.csv", threshold_rows)
     plot_owner_entry_thresholds(threshold_rows, outdir / "owner_entry_thresholds.png")
 
     policy_rows = owner_entry_policy_rows(sol, P, ages=(30.0, 42.0))
-    write_csv(outdir / "owner_entry_policy_childless_renter_age30_42.csv", policy_rows)
+    if write_csv_sidecars:
+        write_csv(outdir / "owner_entry_policy_childless_renter_age30_42.csv", policy_rows)
 
     if include_contact_sheet:
         write_contact_sheet(outdir)
@@ -1732,6 +1778,7 @@ def plot_first_look(
     wealth_key: str = "liquid_wealth",
     wealth_label: str = "liquid wealth",
     mass_filter_min: float | None = None,
+    fast: bool = False,
 ) -> None:
     import matplotlib
 
@@ -1748,7 +1795,7 @@ def plot_first_look(
     age_styles = ["-", "--", ":"]
     style_for_age = {age: age_styles[i % len(age_styles)] for i, age in enumerate(ages)}
 
-    fig, axes = plt.subplots(2, 2, figsize=(13.0, 8.8))
+    fig, axes = plt.subplots(2, 2, figsize=(11.0, 7.2) if fast else (13.0, 8.8))
     ax_c, ax_h, ax_m, ax_f = axes.ravel()
     policy_specs = [
         (ax_c, "consumption", "Consumption policy", "consumption"),
@@ -1806,7 +1853,7 @@ def plot_first_look(
         y=0.985,
     )
     fig.tight_layout(rect=(0.0, 0.07, 1.0, 0.96))
-    fig.savefig(path, dpi=180)
+    fig.savefig(path, dpi=110 if fast else 180)
     plt.close(fig)
 
 
@@ -1919,6 +1966,7 @@ def plot_first_look_wealth_density(
     *,
     wealth_label: str,
     title: str,
+    fast: bool = False,
 ) -> None:
     import matplotlib
 
@@ -1943,7 +1991,7 @@ def plot_first_look_wealth_density(
     else:
         width = 0.8
 
-    fig, axes = plt.subplots(1, 3, figsize=(14.5, 4.4), sharex=True, sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(11.5, 3.6) if fast else (14.5, 4.4), sharex=True, sharey=True)
     ax_all, ax_tenure, ax_parent = axes
 
     ax_all.bar(xs, ys, width=width, color="0.35", alpha=0.82, align="center")
@@ -1986,7 +2034,7 @@ def plot_first_look_wealth_density(
             ax.set_xlim(*xlim)
     fig.suptitle(title, y=0.98)
     fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.93))
-    fig.savefig(path, dpi=180)
+    fig.savefig(path, dpi=110 if fast else 180)
     plt.close(fig)
 
 

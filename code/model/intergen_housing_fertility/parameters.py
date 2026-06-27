@@ -67,6 +67,7 @@ def setup_parameters() -> SimpleNamespace:
     P.estate_tax_exemption = 0.0
     P.u_bar = 0.0
     P.b_entry_fixed = 0.0
+    P.entry_wealth_spread_nodes = 1
     P.beta = 0.96 ** P.period_years
     P.rho = 1 / P.beta - 1
     P.gamma = 0.0

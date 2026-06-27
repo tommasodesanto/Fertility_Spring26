@@ -137,13 +137,130 @@ def housing_demand_normalizer(P: SimpleNamespace) -> float:
     return 1.0
 
 
+def entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
+    """Grid-node distribution for entrant liquid wealth.
+
+    The default is the historical point-mass injection at the first grid node
+    weakly above ``b_entry_fixed``. If ``entry_wealth_spread_nodes`` is larger
+    than one, entrants are distributed over the nearest grid nodes with weights
+    exponentially tilted to preserve mean wealth at ``b_entry_fixed``.
+    """
+    bg = np.asarray(b_grid, dtype=float).reshape(-1)
+    if bg.size == 0:
+        raise ValueError("b_grid must contain at least one node")
+    b_entry = float(np.clip(getattr(P, "b_entry_fixed", 0.0), bg[0], bg[-1]))
+    spread_nodes = max(int(getattr(P, "entry_wealth_spread_nodes", 1)), 1)
+    if spread_nodes <= 1 or bg.size == 1:
+        idx = int(np.argmax(bg >= b_entry)) if np.any(bg >= b_entry) else int(bg.size - 1)
+        return np.array([idx], dtype=np.int64), np.array([1.0], dtype=float)
+
+    n_nodes = min(spread_nodes, int(bg.size))
+    nearest = np.argsort(np.abs(bg - b_entry), kind="mergesort")[:n_nodes]
+    idx = np.sort(nearest).astype(np.int64)
+    x = bg[idx]
+    if b_entry <= x[0] + 1e-12:
+        wt = np.zeros_like(x, dtype=float)
+        wt[0] = 1.0
+        return idx, wt
+    if b_entry >= x[-1] - 1e-12:
+        wt = np.zeros_like(x, dtype=float)
+        wt[-1] = 1.0
+        return idx, wt
+
+    scale = max(float(x[-1] - x[0]), 1e-12)
+    x_scaled = (x - b_entry) / scale
+
+    def tilted(lam: float) -> tuple[np.ndarray, float]:
+        z = np.clip(lam * x_scaled, -700.0, 700.0)
+        z = z - float(np.max(z))
+        wt0 = np.exp(z)
+        wt0 = wt0 / float(np.sum(wt0))
+        return wt0, float(np.sum(wt0 * x))
+
+    lo = -1.0
+    hi = 1.0
+    _, mlo = tilted(lo)
+    _, mhi = tilted(hi)
+    for _ in range(80):
+        if mlo <= b_entry <= mhi:
+            break
+        if mlo > b_entry:
+            hi = lo
+            lo *= 2.0
+            _, mlo = tilted(lo)
+        elif mhi < b_entry:
+            lo = hi
+            hi *= 2.0
+            _, mhi = tilted(hi)
+
+    wt = np.ones_like(x, dtype=float) / float(x.size)
+    for _ in range(80):
+        mid = 0.5 * (lo + hi)
+        wt_mid, mean_mid = tilted(mid)
+        wt = wt_mid
+        if mean_mid < b_entry:
+            lo = mid
+        else:
+            hi = mid
+    wt = wt / float(np.sum(wt))
+    return idx, wt
+
+
+def _entry_value_on_nodes(V: np.ndarray, idx: np.ndarray, i: int, P: SimpleNamespace) -> np.ndarray:
+    arr = np.asarray(V, dtype=float)
+    if arr.ndim == 6:
+        return arr[idx, 0, i, 0, 0, 0]
+    if arr.ndim == 7:
+        _, z_weights, _ = income_transition_values(P)
+        vals = np.zeros(idx.size, dtype=float)
+        for zz, wz in enumerate(z_weights):
+            vals += float(wz) * arr[idx, 0, i, 0, zz, 0, 0]
+        return vals
+    raise ValueError(f"unsupported value-function dimension for entry values: {arr.ndim}")
+
+
 def entry_values_by_location(V: np.ndarray, b_grid: np.ndarray, P: SimpleNamespace) -> np.ndarray:
     bg = np.asarray(b_grid, dtype=float).reshape(-1)
     b_entry = float(np.clip(getattr(P, "b_entry_fixed", 0.0), bg[0], bg[-1]))
+    spread_nodes = max(int(getattr(P, "entry_wealth_spread_nodes", 1)), 1)
     entry_values = np.empty(P.I)
+    if spread_nodes > 1:
+        idx, wt = entry_wealth_grid_weights(bg, P)
+        for i in range(P.I):
+            entry_values[i] = float(np.sum(wt * _entry_value_on_nodes(V, idx, i, P)))
+        return entry_values
+
     for i in range(P.I):
-        entry_values[i] = np.interp(b_entry, bg, V[:, 0, i, 0, 0, 0])
+        arr = np.asarray(V, dtype=float)
+        if arr.ndim == 6:
+            entry_values[i] = np.interp(b_entry, bg, arr[:, 0, i, 0, 0, 0])
+        elif arr.ndim == 7:
+            _, z_weights, _ = income_transition_values(P)
+            val = 0.0
+            for zz, wz in enumerate(z_weights):
+                val += float(wz) * float(np.interp(b_entry, bg, arr[:, 0, i, 0, zz, 0, 0]))
+            entry_values[i] = val
+        else:
+            raise ValueError(f"unsupported value-function dimension for entry values: {arr.ndim}")
     return entry_values
+
+
+def attach_entry_wealth_stats(
+    stats: SimpleNamespace,
+    b_grid: np.ndarray,
+    entry_idx: np.ndarray,
+    entry_wt: np.ndarray,
+    P: SimpleNamespace,
+) -> SimpleNamespace:
+    x = np.asarray(b_grid, dtype=float).reshape(-1)[np.asarray(entry_idx, dtype=np.int64)]
+    wt = np.asarray(entry_wt, dtype=float).reshape(-1)
+    stats.entry_wealth_spread_nodes = int(getattr(P, "entry_wealth_spread_nodes", 1))
+    stats.entry_wealth_grid_indices = np.asarray(entry_idx, dtype=np.int64).copy()
+    stats.entry_wealth_grid_values = x.copy()
+    stats.entry_wealth_grid_weights = wt.copy()
+    stats.entry_wealth_grid_mean = float(np.sum(x * wt))
+    stats.entry_wealth_target = float(np.clip(getattr(P, "b_entry_fixed", 0.0), x[0], x[-1])) if x.size else np.nan
+    return stats
 
 
 def outside_option_entry_target(
@@ -2633,9 +2750,10 @@ def forward_distribution(
     bmin = b_grid[0]
     bmax = b_grid[-1]
     g = np.zeros((Nb, nt, I, J, npar, ncs))
-    ie = int(np.argmax(b_grid >= P.b_entry_fixed)) if np.any(b_grid >= P.b_entry_fixed) else 0
+    entry_idx, entry_wt = entry_wealth_grid_weights(b_grid, P)
     for i in range(I):
-        g[ie, 0, i, 0, 0, 0] = P.entry_by_loc[i]
+        for kk, ww in zip(entry_idx, entry_wt):
+            g[int(kk), 0, i, 0, 0, 0] += float(ww) * P.entry_by_loc[i]
     total_births = 0.0
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
@@ -2697,6 +2815,7 @@ def forward_distribution(
         and fast_stats
         and NUMBA_AVAILABLE
         and bool(getattr(P, "use_compiled_forward_distribution", True))
+        and entry_idx.size == 1
     ):
         bp_idx, bp_wt = interp_indices(b_grid, np.clip(bp_pol, bmin, bmax))
         pia_arg = np.asarray(Pia if Pia is not None else np.zeros((ncs, ncs, npar)), dtype=float)
@@ -2718,7 +2837,7 @@ def forward_distribution(
             J,
             npar,
             ncs,
-            ie,
+            int(entry_idx[0]),
             int(P.A_f_start),
             int(P.A_f_end),
             int(K),
@@ -2742,6 +2861,7 @@ def forward_distribution(
         stats.entrants_mature_by_loc = entrants_mature_by_loc
         stats.entrants_mature_total = entrants_mature_total
         stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+        attach_entry_wealth_stats(stats, b_grid, entry_idx, entry_wt, P)
         stats.housing_increment_0to1_eventstudy_t3 = 0.0
         stats.housing_increment_1to2_proxy_t3 = 0.0
         stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
@@ -2947,6 +3067,7 @@ def forward_distribution(
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+    attach_entry_wealth_stats(stats, b_grid, entry_idx, entry_wt, P)
     stats.housing_increment_0to1_eventstudy_t3 = (
         birth_es3_post_sum / birth_es3_mass - birth_es3_pre_sum / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
     )
@@ -2992,10 +3113,11 @@ def forward_distribution_markov_income(
     bmin = b_grid[0]
     bmax = b_grid[-1]
     g = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
-    ie = int(np.argmax(b_grid >= P.b_entry_fixed)) if np.any(b_grid >= P.b_entry_fixed) else 0
+    entry_idx, entry_wt = entry_wealth_grid_weights(b_grid, P)
     for i in range(I):
         for zz in range(Nz):
-            g[ie, 0, i, 0, zz, 0, 0] = P.entry_by_loc[i] * z_weights[zz]
+            for kk, ww in zip(entry_idx, entry_wt):
+                g[int(kk), 0, i, 0, zz, 0, 0] += float(ww) * P.entry_by_loc[i] * z_weights[zz]
     total_births = 0.0
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
@@ -3285,6 +3407,7 @@ def forward_distribution_markov_income(
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+    attach_entry_wealth_stats(stats, b_grid, entry_idx, entry_wt, P)
     stats.housing_increment_0to1_eventstudy_t3 = (
         (birth_es3_post_sum - birth_es3_control_post_sum) / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
     )
