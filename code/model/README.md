@@ -88,6 +88,14 @@ PYTHONPATH=$PWD .venv/bin/python tools/audit_intergen_entry_atom.py \
   --outdir ../../output/model/intergen_current_review/atom_audit
 ```
 
+To audit wealth/income denominator conventions and the price/rent scale before
+changing wealth targets:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python tools/audit_intergen_wealth_units.py \
+  --outdir ../../output/model/intergen_current_review/wealth_units_audit
+```
+
 The intended model boundary is:
 
 ```python
