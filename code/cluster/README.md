@@ -6,6 +6,28 @@ Active launchers:
 - `submit_intergen_housing_fertility_twohour_panel.sh`
 - `submit_intergen_housing_fertility_global_de.sh`
 
+## Standard interface: `torch.sh`
+
+Prefer `code/cluster/torch.sh` for the routine workflow — auth probe, smoke,
+submit, logs, health, collect. It runs locally over `ssh torch`, encodes the
+`torch_pr_570_general` account rule and the remote working dir, and refuses to
+work around a failed login. Full procedure:
+`docs/workflow/delegation_and_cluster_playbook.md`.
+
+```bash
+code/cluster/torch.sh status
+code/cluster/torch.sh smoke   intergen-de smoke_$(date +%Y%m%d)
+code/cluster/torch.sh submit  intergen-de <run_tag> --array=1-40%40 --time=3:00:00
+code/cluster/torch.sh health  intergen-de <run_tag>
+code/cluster/torch.sh collect intergen-de <run_tag>
+```
+
+Families: `intergen-twohour`, `intergen-de`, `intergen-polish` (needs
+`INTERGEN_SEED_THETA_JSON`), `direct`. Use `TORCH_REMOTE_DIR` to target a dated
+snapshot named by `CALIBRATION_STATUS.md`; `TORCH_DRYRUN=1` previews a command
+without running it. The raw `sbatch` / collector commands below still work and
+are the reference when a run needs options `torch.sh` does not cover.
+
 Two-hour one-market intergen panel test:
 
 ```bash

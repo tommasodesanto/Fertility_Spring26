@@ -175,6 +175,36 @@ take more than 30 minutes:
 Do not launch long searches just to "see what happens." The search design must
 be stated and recoverable.
 
+## Delegation And Cost Discipline
+
+Default to routing work to the cheapest agent that can do it well, even when the
+lead model is Opus 4.8 or Fable. Spend the lead's budget on economics,
+identification, calibration judgment, specification, and final review; send
+volume and independent passes to cheaper, faster agents. The full routing table
+and the Torch cluster and Codex procedures live in
+`docs/workflow/delegation_and_cluster_playbook.md`.
+
+Default routing:
+
+- Codebase search and grounding: read-only `Explore` agents, in parallel.
+- Heavy or independent coding, second-opinion diagnosis, and stuck-point rescue:
+  Codex (GPT-5.4) via the `codex:rescue` skill.
+- Bulk mechanical edits, log scraping, table building, and many independent
+  tasks: Haiku, Sonnet, or Fable subagents via a model override.
+- Any run expected to exceed ~30 minutes, calibration sweeps, and grid or DE
+  searches: the Torch cluster via `code/cluster/torch.sh`, smoke-tested first
+  (see Long-Run Search Safety).
+- Model-critical numerics — the SMM objective, the solver, the discrete-time
+  down-payment `(1 - phi)` threshold, the KFE, and target measurement — stay
+  with the lead, or a delegated diff to that code is verified line by line
+  against the mathematical specification before it is trusted. This is where
+  this repository's past bugs originated.
+
+Balanced routing, not blind delegation: the lead never hands off identification
+or calibration judgment, and never accepts a delegated calibration conclusion
+without checking the target-fit table and identification against the standards
+above. Verify delegated output before reporting it as done.
+
 ## Economic And Numerical Standards
 
 Use the following checks when results look wrong or surprising:
