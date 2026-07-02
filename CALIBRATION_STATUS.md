@@ -1,6 +1,40 @@
 # Calibration Status
 
-Updated: `2026-07-02` (evening: wealth-moment + entry-margin mission)
+Updated: `2026-07-02` (late evening: ultracode audit + calibration program)
+
+## July 2 late evening: code audit, econometric review, frontier runs (ultracode session)
+
+Full session record: `output/model/fable_size_mapping_audit_20260701/`
+(CODE_AUDIT_REPORT.md, CALIBRATION_ECONOMETRIC_REVIEW.md, updated ledger
+D7/D8, HANDOFF). Headlines only: (1) a 35-agent adversarially-verified
+code audit found 18 correctness findings — most importantly a MEASUREMENT
+tier on active targets (tenure/room stats measure the pre-choice state,
+~4y-young effective windows; the "65-75" windows drop 65 and add 75-77 on
+the w=160 moment; TFR is matched under parity top-coding at 2, reviving
+the March parity-2 arithmetic constraint and contaminating the parity-gap
+moments; own_family_gap measures ALL parents, not new parents;
+housing_increment_0to1 excludes the purchase margin; three target values
+lack in-repo provenance) — none applied, all ledger-gated; (2) the
+econometric review shows the ad hoc weights give the young-wealth moment
+the LOWEST effective influence of all 14 (0.1%; four moments carry 83%),
+5-6 of 13 parameters sit at silent bounds, and the loss has a ~5e-4
+equilibrium-acceptance noise floor; (3) four cluster runs (48 tasks,
+jobs 12307288/89 on the June snapshot, 12307458/60 on the NEW
+`Fertility_Spring26_20260703_wealthfork_frontier` snapshot) are in
+flight: R1 seeded+unseeded DE insurance under the current objective, R2
+young-wealth mean→weighted-median frontier (0.09996729, influence-
+preserving weight 38.6), R3 relaxed-bounds frontier (beta≥0.90, chi≤1.40,
+c_bar_0≤2.0, psi_child≤0.70, h_bar_0≥0.50) — ALWAYS set
+INTERGEN_N_HOUSE=5 (submit default 6 is a different menu; caught by
+smoke); (4) a safe efficiency pack is committed in the COPY (bitwise-
+identical regression at Nb=60; big speedups specced, not applied);
+(5) D7 fork evidence complete: the July tax-alone zero-crossing was
+partly a wealth-grid artifact (Nb=240: ~3% mass/one node just under the
+family dp); transfers act as near-substitutes for the tax at the
+affordability margin; candidate re-target moments built (liquid
+0.203/0.043; SCF-2022 era fact 1.14/0.385); lambda (birth-cohort
+retention) evidence: 0.60-0.75, which shrinks the phase9b scale
+multiplier 1.88→~1.49.
 
 ## July 2 evening: entry/scale margin + young-wealth diagnosis (no model change; D7/D8 parked)
 
