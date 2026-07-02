@@ -1,6 +1,61 @@
 # Calibration Status
 
-Updated: `2026-06-27`
+Updated: `2026-07-02`
+
+## July 2 marginal-mass + rental-cap program (no model change; decisions parked)
+
+The July-2 mission (isolated copy; deliverables in
+`output/model/fable_size_mapping_audit_20260701/`, mirrored in the copy's
+`mission_docs_mirror/`) completed both deliverables. MARGINAL_MASS_MAP.md:
+the "68% cap-pinned" fertility-derivative concentration reproduces exactly
+(0.6806), is robust to `kappa_fert` (not a logit artifact), and is governed
+by the cap-to-floor distance (0.836 at `hR_max=5.5` to 0.219 at 8.0), the
+jump-floor geometry (`linear_only` collapses it to 0.27), and the
+young-wealth overshoot (0.39 at the data-consistent young-wealth theta);
+the susceptible mass is the lowest income type at the top of the renter
+wealth distribution, ages 34-42; exact cohort-weight reconciliation puts
+56-62% of the PE cap-relief TFR response on childless renters and 37-40%
+on childless OWNERS (switch-to-rental option — exposure is tenure-wide).
+SOFT_CAP_DESIGN_MEMO.md: within-cell ACS regression (filters replicated
+verbatim from the family-size-supply builder; 1.28M renter heads) finds a
+ZERO marginal rent premium above family size (m_hat 0.09, insignificant;
+no bunching) — family-sized rental scarcity is availability, not price;
+verified literature (DUE cap = 1.32 x owner-grid min external; KMV 2020
+estimates the cap inside the calibration; Halket-Pignatti screening
+microfoundation). Menu recalibration chains CLOSED: menu_dense converged
+at 6.763 (above the canonical 6.0015; same floor geometry), menu_linonly
+10.143 with `h_bar_n`/`chi` still bound-pinned and the parity-gap ordering
+still inverted (data 1.80 vs 0.83) — the linear spec is structurally
+rejected by the existing target pair. All decisions (D1-D6, esp. D3 cap
+formalization and D5 estimating `hR_max` with the 0.1377 renter rooms>=6
+moment) are PREPARED, NOT TAKEN, in the mission folder's
+DECISIONS_LEDGER.md.
+
+## July 1 size-mapping audit (fixed theta, no change to active model code)
+
+A full support/measurement/cost-unit audit of the one-market model ran in the
+isolated copy `~/Desktop/Projects/Fertility/Fertility_Spring26_fable_size_mapping_audit_20260701`
+(baseline reproduced exactly: loss `6.0014895774`, `p=0.6759498581`). Final
+report: `docs/model/fable_size_mapping_diagnosis_20260701.md`; full evidence in
+`output/model/fable_size_mapping_audit_20260701/`. Verdict (decision rule B):
+property tax always delivers `dp<0` (−12.2%/−21.9%, mechanical via the
+rental-rate supply curve), `dYoungOwn>0`, and `dTFR>0` (~+0.02, via cheaper
+birth-state ownership options at all fertile ages), but NEVER
+`dPr(H>=6 | fertility-marginal young)>0` under any owner support, measurement
+map, or cost-unit deformation — young buyers always take the cheapest rung,
+which is below the parity-1 floor (4.52 at the current best theta). The
+July-1 lambda-deformation "revival" was (i) the anchor-2 normalization, i.e.
+an unfunded large-home subsidy, and (ii) biased by a Bellman-only hook
+implementation: `owner_price_multiplier_by_rung` and the old-owner sale wedge
+never entered the forward distribution or wealth statistics (TFR bias up to
+0.19); the prior sale-wedge failure is therefore unreliable evidence, and a
+consistency patch lives in the audit copy (commit `6c89ea2`). The renter cap
+is the strongest structural fertility lever (hR_max 6→8: baseline TFR
++0.071) but is load-bearing for the family-ownership fit (own_family_gap
+0.296→0.035). Recommended next step: a funded young(-renter)-targeted rebate
+object (threshold accounting: it bridges the H=6 down-payment gap for ~30% of
+the fertility-marginal band), implemented symmetrically in Bellman+KFE; not
+segmentation, not sequential fertility, no blind recalibration.
 
 ## June 2026 One-Market Intergenerational Strand
 
@@ -10,19 +65,316 @@ quantitative model for the June 2026 intergenerational strand: simplified
 relative to the older spatial center-periphery model by dropping location. It
 is **not** yet a final production calibration.
 
+June 30 morning checkpoint. The beta-and-chi-capped strict fixed-income chain
+has improved again. As of the morning scan, wave 3 (`12043716`) is still
+running, so this is the best-so-far across the completed strict run, completed
+overnight waves 1--2, and the current wave-3 checkpoints. Current best:
+
+- Loss: `6.0014895774`.
+- Market residual: `8.60e-05`.
+- Equilibrium price: `p = 0.6759498581`.
+- Result JSON:
+  `/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/code/cluster/results_intergen_housing_fertility_intergen_fixed_income_beta_chicap_localpolish_overnight_w3_20260629/task_10/best.json`.
+- Algorithm label/case: `local_polish_pattern`, `pattern_i000_d07_p`, case
+  `23`.
+
+Full current target table:
+
+| Moment | Target | Model | Gap | Weight | Contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.969671 | 0.051671 | 20.000000 | 0.053398 |
+| `childless_rate` | 0.188000 | 0.257704 | 0.069704 | 20.000000 | 0.097173 |
+| `own_rate` | 0.575472 | 0.524712 | -0.050761 | 100.000000 | 0.257666 |
+| `own_family_gap` | 0.167662 | 0.296228 | 0.128566 | 45.000000 | 0.743817 |
+| `housing_increment_0to1` | 0.664435 | 0.572957 | -0.091477 | 14.000000 | 0.117153 |
+| `old_parent_childless_nonhousing_wealth_to_income_gap_6575` | 1.007450 | 0.746537 | -0.260913 | 2.000000 | 0.136151 |
+| `prime30_55_childless_renter_mean_rooms` | 3.805288 | 3.668796 | -0.136492 | 6.000000 | 0.111781 |
+| `prime30_55_childless_owner_share_rooms_ge6` | 0.596131 | 0.607019 | 0.010888 | 25.000000 | 0.002964 |
+| `old_nonhousing_wealth_to_income_median_6575` | 2.230461 | 2.002945 | -0.227516 | 0.800000 | 0.041411 |
+| `young_childless_renter_liquid_wealth_to_annual_gross_income_2535` | 0.179226 | 0.350023 | 0.170798 | 12.000000 | 0.350061 |
+| `prime30_55_childless_owner_minus_renter_mean_rooms` | 2.418762 | 2.165314 | -0.253447 | 12.000000 | 0.770826 |
+| `old_age_own_rate` | 0.764261 | 0.874370 | 0.110109 | 160.000000 | 1.939852 |
+| `own_rate_2534` | 0.341166 | 0.214583 | -0.126583 | 80.000000 | 1.281860 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.257373 | -0.110327 | 8.000000 | 0.097376 |
+
+Full current free-parameter table. The JSON stores `theta.beta` as the
+four-year-period discount factor; the table reports the annualized value used
+for the search bound, with the period value in the note.
+
+| Parameter | Lower | Estimate | Upper | Flag |
+|---|---:|---:|---:|---|
+| `beta_annual` | 0.940000 | 0.940020 | 0.995000 | near lower; `theta.beta=0.780816` |
+| `alpha_cons` | 0.400000 | 0.619019 | 0.950000 |  |
+| `c_bar_0` | 0.080000 | 1.279999 | 1.280000 | near upper |
+| `c_bar_n` | 0.050000 | 0.093973 | 1.500000 |  |
+| `h_bar_0` | 1.000000 | 1.000998 | 6.000000 | near lower |
+| `h_bar_jump` | 0.050000 | 2.151760 | 2.500000 |  |
+| `h_bar_n` | 0.020000 | 1.367641 | 2.000000 |  |
+| `psi_child` | 0.000000 | 0.350000 | 0.350000 | near upper |
+| `kappa_fert` | 1.000000 | 1.026725 | 12.000000 |  |
+| `tenure_choice_kappa` | 0.000000 | 0.000001 | 0.120000 | near lower |
+| `chi` | 0.400000 | 1.148915 | 1.150000 | near upper |
+| `theta0` | 0.000000 | 0.000467 | 2.000000 | near lower |
+| `theta_n` | 0.000000 | 0.897232 | 1.500000 |  |
+
+After this readout, wave 3 (`12043716`) was cancelled at user request to save
+compute. Three short diagnostic experiments were launched from the same
+best-so-far seed:
+
+- Coordinate-probe / local pattern diagnostic: Slurm `12061934`, run tag
+  `intergen_beta_chicap_coordprobe_20260630`, one task, `30` eval cap,
+  initial/min normalized step `0.01`. Purpose: check local directions around
+  the best point rather than keep polishing blindly.
+- Seeded global-DE population probe: Slurm `12061935`, run tag
+  `intergen_beta_chicap_globalde_probe_20260630`, `12` tasks, `140` eval cap
+  per task, population `18`, normal
+  `candidate_replacement_post_audit_v1` objective. Purpose: test whether a
+  different population algorithm can escape the stale local basin.
+- Hard young-wealth-lock global-DE probe: Slurm `12061936`, run tag
+  `intergen_beta_chicap_youngwealthlock_globalde_20260630`, `12` tasks,
+  `140` eval cap per task, population `18`. This uses the same target values
+  and strict beta/chi bounds but overrides
+  `young_childless_renter_liquid_wealth_to_annual_gross_income_2535` weight
+  from `12` to `12000` at runtime. Purpose: ask whether the model can match
+  young childless renter liquid wealth at almost any cost to the rest of the
+  objective.
+
+These three diagnostics completed cleanly (`0:0`). The coordinate probe
+(`12061934`) and normal seeded global-DE population probe (`12061935`) did not
+beat the current seed; their best is still the same loss `6.0014895774` with
+young childless renter wealth `0.350023` versus target `0.179226`. The hard
+young-wealth-lock probe (`12061936`) found a best stress-objective candidate at
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/code/cluster/results_intergen_housing_fertility_intergen_beta_chicap_youngwealthlock_globalde_20260630/task_5/best.json`.
+It reduces young childless renter wealth to `0.219795`, much closer to the
+target, but at normal-objective loss `46.1513` and stress-objective loss
+`65.8817`. The tradeoff is severe: `tfr=2.5167`, childless rate `0.0741`,
+childless renter rooms `4.7890`, childless owner-renter room gap `1.0401`,
+old ownership `0.9441`, and young ownership `0.1925`. Interpretation: under
+the current strict beta/chi bounds and product/entry setup, matching young
+wealth is feasible only by breaking the rest of the calibration badly.
+
+Policy diagnostic on the hard young-wealth-lock candidate. To test whether a
+candidate with more mass near the young-wealth target generates stronger
+fertility responses, fixed-theta policy packets were run from the stress best.
+Scratch outputs:
+
+- Standard LTV-95 and other policy packet:
+  `/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/output/model/policy_youngwealthlock_20260630/`.
+- Extreme credit packet:
+  `/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/output/model/policy_youngwealthlock_extreme_credit_20260630/`.
+- Local summary CSV copies:
+  `output/model/policy_youngwealthlock_20260630/policy_summary_ltv95_and_other.csv`
+  and
+  `output/model/policy_youngwealthlock_20260630/policy_summary_extreme_credit.csv`.
+
+Baseline stress candidate has `tfr=2.516689`, childlessness `0.074067`,
+ownership `0.481139`, young ownership `0.192549`, and young childless renter
+wealth `0.219795`. LTV-95 credit relief raises ownership strongly but does not
+raise fertility: new-parent/all-parent LTV-95 gives `tfr=2.512969`
+(`-0.003720`) and ownership `0.551347` (`+0.070209`); universal LTV-95 gives
+`tfr=2.506412` (`-0.010277`) and ownership `0.667498` (`+0.186359`). Full
+parent down-payment removal (`parent_ltv100`) gives only `tfr=2.524488`
+(`+0.007799`) while ownership rises to `0.595606` (`+0.114468`) and young
+ownership to `0.348645` (`+0.156095`). Universal full down-payment removal
+lowers fertility to `2.505615` (`-0.011074`) while ownership rises to
+`0.772863` (`+0.291724`). Interpretation: even in the stress candidate,
+credit policies mainly move tenure/ownership; the fertility response is tiny
+and not robustly positive.
+
+June 29 beta-and-chi-capped overnight chain launch. The active strict
+fixed-income calibration array `12041214` is still running, but has already
+improved to a current best loss `6.1271523` at
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/code/cluster/results_intergen_housing_fertility_intergen_fixed_income_beta_chicap_localpolish_3h_20260629/task_10/best.json`.
+That current best has residual `4.40e-05`, `beta_annual=0.94`,
+`chi=1.1490`, and `tenure_choice_kappa=0.0`; both substantive constraints are
+binding. The full current target table before the overnight chain begins is:
+
+| Moment | Target | Model | Gap | Weight | Contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.981515 | 0.063515 | 20.000000 | 0.080684 |
+| `childless_rate` | 0.188000 | 0.254918 | 0.066918 | 20.000000 | 0.089561 |
+| `own_rate` | 0.575472 | 0.528112 | -0.047360 | 100.000000 | 0.224297 |
+| `own_family_gap` | 0.167662 | 0.305278 | 0.137616 | 45.000000 | 0.852222 |
+| `housing_increment_0to1` | 0.664435 | 0.580835 | -0.083600 | 14.000000 | 0.097845 |
+| `old_parent_childless_nonhousing_wealth_to_income_gap_6575` | 1.007450 | 0.661651 | -0.345799 | 2.000000 | 0.239154 |
+| `prime30_55_childless_renter_mean_rooms` | 3.805288 | 3.659281 | -0.146007 | 6.000000 | 0.127908 |
+| `prime30_55_childless_owner_share_rooms_ge6` | 0.596131 | 0.604409 | 0.008278 | 25.000000 | 0.001713 |
+| `old_nonhousing_wealth_to_income_median_6575` | 2.230461 | 2.002945 | -0.227516 | 0.800000 | 0.041411 |
+| `young_childless_renter_liquid_wealth_to_annual_gross_income_2535` | 0.179226 | 0.352275 | 0.173050 | 12.000000 | 0.359354 |
+| `prime30_55_childless_owner_minus_renter_mean_rooms` | 2.418762 | 2.175818 | -0.242944 | 12.000000 | 0.708262 |
+| `old_age_own_rate` | 0.764261 | 0.874196 | 0.109935 | 160.000000 | 1.933703 |
+| `own_rate_2534` | 0.341166 | 0.214499 | -0.126667 | 80.000000 | 1.283572 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.263137 | -0.104562 | 8.000000 | 0.087466 |
+
+The current parameter table is:
+
+| Parameter | Lower | Estimate | Upper | Flag |
+|---|---:|---:|---:|---|
+| `beta_annual` | 0.940000 | 0.940000 | 0.995000 | near lower |
+| `alpha_cons` | 0.400000 | 0.619316 | 0.950000 |  |
+| `c_bar_0` | 0.080000 | 1.280000 | 1.280000 | near upper |
+| `c_bar_n` | 0.050000 | 0.090733 | 1.500000 |  |
+| `h_bar_0` | 1.000000 | 1.000000 | 6.000000 | near lower |
+| `h_bar_jump` | 0.050000 | 2.151170 | 2.500000 |  |
+| `h_bar_n` | 0.020000 | 1.364754 | 2.000000 |  |
+| `psi_child` | 0.000000 | 0.350000 | 0.350000 | near upper |
+| `kappa_fert` | 1.000000 | 1.029219 | 12.000000 | near lower |
+| `tenure_choice_kappa` | 0.000000 | 0.000000 | 0.120000 | near lower |
+| `chi` | 0.400000 | 1.149004 | 1.150000 | near upper |
+| `theta0` | 0.000000 | 0.000000 | 2.000000 | near lower |
+| `theta_n` | 0.000000 | 0.894375 | 1.500000 |  |
+
+An overnight continuation chain was queued to start only after `12041214`
+finishes. A small setup job scans all completed `task_*/best.json` records and
+writes the true best seed before each wave. Jobs:
+setup `12043711` -> wave 1 `12043712` -> setup `12043713` -> wave 2
+`12043714` -> setup `12043715` -> wave 3 `12043716`. Each wave is a
+24-task local-polish array with `03:55:00` Slurm wall time, internal
+`INTERGEN_MINUTES=225`, `INTERGEN_LOCAL_MAX_EVALS=2000`, same strict bounds
+`beta_annual in [0.94,0.995]` and `chi in [0.4,1.15]`, target set
+`candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, five Markov income
+states, `H_own=[2,4,6,8,10]`, `hR_max=6.0`, and `max_iter_eq=10`. Result roots
+are under
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/code/cluster/`
+with run tags
+`intergen_fixed_income_beta_chicap_localpolish_overnight_w{1,2,3}_20260629`.
+Monitor with
+`squeue -j 12041214,12043711,12043712,12043713,12043714,12043715,12043716`.
+
+June 29 fixed-income / beta-and-chi-capped local-polish launch. At user
+request, the fixed-income `chi<=1.15` run `12037478` was cancelled after about
+`2h22m`; partial outputs were preserved. Its best partial candidate before
+cancellation was task `10`, loss `8.5950410`, residual `5.95e-05`,
+`beta_annual=0.9236`, `chi=1.15`, `own_rate_2534=0.1820`, aggregate
+ownership `0.4978`, old ownership `0.8669`, and young childless renter wealth
+`0.4124`. This confirmed that the optimizer was working but still wanted both
+a high owner-service premium and an annual discount factor below an acceptable
+lifecycle range.
+
+A stricter diagnostic run was then staged from the same fixed-income code,
+with search bounds changed to `beta_annual in [0.94,0.995]` and
+`chi in [0.4,1.15]`. The seed is the partial best from the cancelled run,
+clipped to `beta_annual=0.94` and `chi=1.15`:
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/output/model/best_seed_beta_chicap.json`.
+Slurm smoke job `12041178` completed cleanly (`0:0`) with empty stderr and
+strict residual `1.90e-06`; the clipped seed scores loss `14.8929053`.
+
+The full stricter optimizer run is Slurm job `12041214`, array `1-24%24`,
+wall time `03:10:00`, internal budget `INTERGEN_MINUTES=175`, target set
+`candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, five Markov income
+states, `H_own=[2,4,6,8,10]`, `hR_max=6.0`, `max_iter_eq=10`. Launch command
+from the scratch `code/cluster` directory:
+`env INTERGEN_PYTHON=/share/apps/anaconda3/2025.06/bin/python INTERGEN_RUN_TAG=intergen_fixed_income_beta_chicap_localpolish_3h_20260629 INTERGEN_TARGET_SET=candidate_replacement_post_audit_v1 INTERGEN_J=17 INTERGEN_NB=60 INTERGEN_INCOME_STATES=5 INTERGEN_N_HOUSE=5 INTERGEN_MAX_ITER_EQ=10 INTERGEN_MINUTES=175 INTERGEN_LOCAL_MAX_EVALS=1000 INTERGEN_SEED_BASE=2026062970 INTERGEN_SEED_THETA_JSON=/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/output/model/best_seed_beta_chicap.json INTERGEN_LOCAL_MIN_STEP=0.001 sbatch --parsable --array=1-24%24 --time=03:10:00 --mem=4G submit_intergen_housing_fertility_local_polish.sh`.
+Early health check: all 24 tasks running; all tasks wrote `best.json` and
+`cases.jsonl`; after 63 total cases the best was task `11`, loss `12.7981`,
+residual `6.15e-06`, with `beta_annual=0.94` and `chi=1.15` still binding.
+Monitor with `squeue -j 12041214`; result root:
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_beta_chicap_3h/code/cluster/results_intergen_housing_fertility_intergen_fixed_income_beta_chicap_localpolish_3h_20260629/`.
+
+June 29 fixed-income / chi-capped local-polish cluster test. Claude's separate
+workspace model copy at
+`/Users/tommasodesanto/Desktop/intergen_housing_fix_claude_work/code/model/`
+identified and fixed the age-18 income-profile bug, enabled working-age mean
+income-profile normalization, and tightened the default wealth grid. For the
+cluster test, a staged copy was created under
+`tmp/intergen_fixed_income_chicap_model/` and synced to Torch scratch
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_chicap_3h/`.
+The only additional staged search restriction is `chi <= 1.15` in
+`intergen_housing_fertility/local_panel.py`; this is a calibration/search
+restriction, not a deep model change. Slurm smoke job `12037475` completed
+cleanly (`0:0`) with empty stderr and reproduced the constrained seed at loss
+`20.0712674`, strict market residual `2.28e-05`, `chi=1.15`,
+`own_rate_2534=0.0947`, and young childless renter wealth `0.655`.
+
+The full optimizer run is local-polish, not global-DE-only random search:
+Slurm job `12037478`, array `1-24%24`, wall time `03:10:00`, internal budget
+`INTERGEN_MINUTES=175`, `INTERGEN_LOCAL_MAX_EVALS=1000`, target set
+`candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, five Markov income
+states, `H_own=[2,4,6,8,10]`, `hR_max=6.0`, `max_iter_eq=10`, and seed
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_chicap_3h/output/model/best_seed_chicap.json`.
+The exact launch was from the scratch `code/cluster` directory with:
+`env INTERGEN_PYTHON=/share/apps/anaconda3/2025.06/bin/python INTERGEN_RUN_TAG=intergen_fixed_income_chicap_localpolish_3h_20260629 INTERGEN_TARGET_SET=candidate_replacement_post_audit_v1 INTERGEN_J=17 INTERGEN_NB=60 INTERGEN_INCOME_STATES=5 INTERGEN_N_HOUSE=5 INTERGEN_MAX_ITER_EQ=10 INTERGEN_MINUTES=175 INTERGEN_LOCAL_MAX_EVALS=1000 INTERGEN_SEED_BASE=2026062950 INTERGEN_SEED_THETA_JSON=/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_chicap_3h/output/model/best_seed_chicap.json INTERGEN_LOCAL_MIN_STEP=0.001 sbatch --parsable --array=1-24%24 --time=03:10:00 --mem=4G submit_intergen_housing_fertility_local_polish.sh`.
+Early health check: all 24 tasks were running and writing `best.json` and
+`cases.jsonl`; task 1 improved from `20.07` to `18.47` within the first minute,
+and an early cross-task scan found best loss `17.4002` in task 4. Monitor with
+`squeue -j 12037478`; collect from
+`/scratch/td2248/projects/Fertility_Spring26_20260629_fixed_income_chicap_3h/code/cluster/results_intergen_housing_fertility_intergen_fixed_income_chicap_localpolish_3h_20260629/`.
+
+June 29 wide-bound 12-hour search completion. The 24-worker, 3-wave
+wide-bound run on Torch completed cleanly: global-DE jobs
+`11987205 -> 11987207 -> 11987209` and local-polish jobs
+`11987206 -> 11987208 -> 11987210` all exited `0:0`. The final best remained
+the wave-2 local-polish record, not wave 3:
+`/scratch/td2248/projects/Fertility_Spring26_20260628_widebounds_12h/code/cluster/results_intergen_housing_fertility_intergen_age18_widebounds_local_polish_12h_w2_20260628/task_5/best.json`.
+It has algorithm label `local_polish_nelder-mead / nm_shrink_524_08`, target
+set `candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, five Markov income
+states, `H_own=[2,4,6,8,10]`, `hR_max=6.0`, linear interpolation, strict
+market convergence, rank loss `7.070863941410668`, market residual
+`1.0967853758464806e-05`, and price `p=0.6459035095984136`. The local final
+packet is `output/model/intergen_widebounds_final_20260629/packet/`; the pulled
+best is `output/model/intergen_widebounds_final_20260629/best.json`; the exact
+complete readout is
+`output/model/intergen_widebounds_final_20260629/packet/complete_readout.md`.
+The final target fit is:
+
+| Moment | Target | Model | Gap | Weight | Contribution |
+|---|---:|---:|---:|---:|---:|
+| `prime30_55_childless_owner_minus_renter_mean_rooms` | 2.418762 | 1.975764 | -0.442998 | 12.000000 | 2.354961 |
+| `young_childless_renter_liquid_wealth_to_annual_gross_income_2535` | 0.179226 | 0.617265 | 0.438040 | 12.000000 | 2.302544 |
+| `old_age_own_rate` | 0.764261 | 0.860090 | 0.095829 | 160.000000 | 1.469321 |
+| `own_family_gap` | 0.167662 | 0.243257 | 0.075595 | 45.000000 | 0.257159 |
+| `old_nonhousing_wealth_to_income_median_6575` | 2.230461 | 1.666396 | -0.564065 | 0.800000 | 0.254535 |
+| `old_parent_childless_nonhousing_wealth_to_income_gap_6575` | 1.007450 | 0.721238 | -0.286211 | 2.000000 | 0.163834 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.226530 | -0.141169 | 8.000000 | 0.159431 |
+| `tfr` | 1.918000 | 1.881069 | -0.036931 | 20.000000 | 0.027278 |
+| `own_rate_2534` | 0.341166 | 0.359450 | 0.018284 | 80.000000 | 0.026745 |
+| `childless_rate` | 0.188000 | 0.224567 | 0.036567 | 20.000000 | 0.026743 |
+| `housing_increment_0to1` | 0.664435 | 0.628067 | -0.036368 | 14.000000 | 0.018517 |
+| `prime30_55_childless_renter_mean_rooms` | 3.805288 | 3.831950 | 0.026662 | 6.000000 | 0.004265 |
+| `prime30_55_childless_owner_share_rooms_ge6` | 0.596131 | 0.608677 | 0.012546 | 25.000000 | 0.003935 |
+| `own_rate` | 0.575472 | 0.571478 | -0.003995 | 100.000000 | 0.001596 |
+
+The estimated free parameters are:
+
+| Parameter | Lower | Estimate | Upper |
+|---|---:|---:|---:|
+| `beta_annual` | 0.880000 | 0.907737 | 0.995000 |
+| `alpha_cons` | 0.400000 | 0.701129 | 0.950000 |
+| `c_bar_0` | 0.080000 | 0.991115 | 1.280000 |
+| `c_bar_n` | 0.050000 | 0.275608 | 1.500000 |
+| `h_bar_0` | 1.000000 | 1.556840 | 6.000000 |
+| `h_bar_jump` | 0.050000 | 2.157678 | 2.500000 |
+| `h_bar_n` | 0.020000 | 1.133341 | 2.000000 |
+| `psi_child` | 0.000000 | 0.141933 | 0.350000 |
+| `kappa_fert` | 1.000000 | 3.176379 | 12.000000 |
+| `tenure_choice_kappa` | 0.000000 | 0.002677 | 0.120000 |
+| `chi` | 0.400000 | 1.280970 | 2.400000 |
+| `theta0` | 0.000000 | 1.168628 | 2.000000 |
+| `theta_n` | 0.000000 | 0.710935 | 1.500000 |
+
+Read: this is a real improvement over the previous deterministic-kappa best
+(`11.7463`), but it does not solve the housing/wealth mechanism. The fit now
+matches aggregate and young ownership well, but still leaves young
+childless-renter liquid wealth far too high, the childless owner-renter room
+gap too small, and old-age ownership too high. `tenure_choice_kappa` is no
+longer exactly zero, but remains economically close to deterministic tenure
+choice.
+
 June 27 wealth-unit update. The live solver now reports explicit annual-gross
 liquid-wealth moments for young households:
 `young_all_liquid_wealth_to_annual_gross_income_2530`,
 `young_childless_liquid_wealth_to_annual_gross_income_2535`, and
 `young_childless_renter_liquid_wealth_to_annual_gross_income_2535`, each with a
 weighted median and sample mass. These are diagnostics for the wealth-target
-audit and are exposed through `calibration.extract_moments`; the active target
-sets have **not** yet been changed. The current review packet shows the old
+audit and are exposed through `calibration.extract_moments`. The active
+`candidate_replacement_roomgap_14moment_tfr192_v1` target set now uses
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535 = 0.17922556`
+instead of the old period-income statistic. The current review packet shows the old
 `young_liquid_wealth_to_income` statistic is a 4-year period after-tax-income
 ratio (`0.353` at `output/model/intergen_current_review/quick/`), while the
 annual-gross young-childless-renter object is about `1.10`, compared with the
-PSID candidate mean `0.179`. Conclusion: do not tune entry wealth or interpret
-the old wealth-target loss until the target sample and denominator are chosen.
+PSID candidate mean `0.179`. Conclusion: do not interpret historical losses
+that targeted the old wealth statistic as comparable to the active target set.
 The companion audit is
 `output/model/intergen_current_review/wealth_units_audit/README.md`, and the
 issue ledger is
@@ -34,6 +386,355 @@ room/ownership targets are mostly clean measurement objects, while `tfr` should
 be read as completed-fertility-equivalent and `housing_increment_1to2` as an
 additional-child housing-demand proxy rather than a sequential second-birth
 hazard.
+
+June 27 target-system follow-up. The active TFR-1.92 roomgap target set keeps
+14 hard moments but replaces the young wealth key:
+`young_liquid_wealth_to_income` ->
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535`, target
+`0.17922556`, weight `12.0`. With external entry wealth below, the active
+search now has 13 free parameters and 14 hard moments. Historical target sets
+that still contain `young_liquid_wealth_to_income` should be read as old
+diagnostic systems unless revised explicitly.
+
+June 27 entry-wealth closure update. The intergen calibration base overrides now
+use an externally calibrated entrant liquid-wealth distribution rather than
+searching `b_entry_fixed`. The distribution is in annual gross family-income
+units, estimated from the same PSID young childless renter sample used for the
+wealth target: weighted quintile-bin means of `NETWORTH2R / INCFAMR` equal
+`[-2.51940697, -0.07907025, 0.10228762, 0.35287169, 3.03955200]` with
+approximately 20% weight each; weighted mean `0.17922556`, weighted median
+`0.09996729`. Solver mode `entry_wealth_mode="income_ratio_distribution"` maps
+these ratios into model liquid-wealth units using entrant annual gross income by
+location/income state, then linearly scatters the mass over adjacent wealth-grid
+nodes. This keeps counterfactual house-price feedback through prices and
+down-payment thresholds, but does not mechanically index initial assets to house
+prices. The legacy scalar `b_entry_fixed` path remains available, but the active
+local/global intergen search vector drops `b_entry_fixed` and now has 13 free
+parameters.
+
+June 27 20:10 EDT post-audit 3-hour calibration sample launch. After the
+Slack target-object audit closed all 14 moments, a new target set was added as
+`candidate_replacement_post_audit_v1`. It keeps 14 hard moments against the
+13-parameter search vector, changes the fertility block to completed-fertility
+targets (`tfr=1.918`, `childless_rate=0.188`), replaces the old PSID
+`housing_increment_1to2` hard target with the ACS/MMS parent room gap
+`prime30_55_parent_3plus_minus_1to2_mean_rooms=0.36769955881`, keeps the young
+annual-gross renter wealth target, and fixes the old-age nonhousing wealth
+model statistics to annual-income mean/median ratios. Local checks passed:
+target count `14`, weight count `14`, free parameters `13`, compile clean, and
+a one-evaluation local `global-de-panel` completed with strict market
+convergence. A fresh Torch scratch source snapshot was synced to
+`/scratch/td2248/projects/Fertility_Spring26_20260627_postaudit_run` (ignore
+the interrupted partial folder ending in `_postaudit`). Remote target/compile
+checks passed. Slurm preflights also passed with empty stderr: global-DE job
+`11927758`, panel job `11927759`, each one evaluation, both exit `0:0`, loss
+`36.9806095`, market residual `1.41e-05`. The real 12-worker sample is running:
+global-DE job `11927776` and local/random-panel job `11927777`, arrays
+`1-6%6` each, wall time `03:10:00`, internal `INTERGEN_MINUTES=175`,
+`J=16`, `Nb=60`, `income_states=5`, `INTERGEN_N_HOUSE=5`
+(`H_own=[2,4,6,8,10]`), `max_iter_eq=10`, `interp_method=linear`,
+`use_pti_constraint=False`, seeded from the June 26 global-DE best record
+`/scratch/td2248/projects/Fertility_Spring26_20260625_calib/code/cluster/results_intergen_housing_fertility_intergen_fixedstats_seeded_globalde_12h_mem4_w3_20260625/task_10/best.json`.
+Result roots are
+`/scratch/td2248/projects/Fertility_Spring26_20260627_postaudit_run/code/cluster/results_intergen_housing_fertility_intergen_postaudit_globalde_sample3h_20260627/`
+and
+`/scratch/td2248/projects/Fertility_Spring26_20260627_postaudit_run/code/cluster/results_intergen_housing_fertility_intergen_postaudit_panel_sample3h_20260627/`.
+Monitor with `squeue -j 11927776,11927777`. Collect after completion from
+the scratch copy's `code/model` with
+`python tools/collect_intergen_panel_results.py --results-dir ../cluster/results_intergen_housing_fertility_intergen_postaudit_globalde_sample3h_20260627`
+and the analogous panel directory.
+
+June 27 late completion/readout. The post-audit 3-hour sample completed cleanly:
+all global-DE job `11927776` and local/random-panel job `11927777` array tasks
+exited `0:0`, with empty Slurm stderr in the checked tasks. The global-DE
+branch evaluated `5894` successful cases and found the best record
+`de_g045_i011` in task `1`, case `1030`, saved at
+`/scratch/td2248/projects/Fertility_Spring26_20260627_postaudit_run/code/cluster/results_intergen_housing_fertility_intergen_postaudit_globalde_sample3h_20260627/task_1/best.json`.
+The local/random-panel branch evaluated `6553` successful cases but never beat
+the warm start (`36.9806`). The local review folder is
+`output/model/intergen_postaudit_sample3h_review_20260627/`. Re-solving the
+best record with the live `candidate_replacement_post_audit_v1` target set,
+`J=16`, `Nb=60`, `income_states=5`, `H_own=[2,4,6,8,10]`, `hR_max=6.0`,
+`max_iter_eq=10`, and `interp_method=linear` wrote
+`output/model/intergen_postaudit_sample3h_review_20260627/best_globalde_task1_packet/`
+with rank loss `16.2934`, market residual `4.15e-05`, and equilibrium price
+`p=0.694225`. Complete readout files are
+`complete_readout.md`, `best_globalde_task1_packet/target_fit.md`,
+`parameter_bounds.md`, `all_moments.md`, and `shortlist_top10.md` in the local
+review folder. Main unresolved fit issues remain economic rather than a blank
+or crashing solve: the owner-renter room gap is too small, old-age ownership is
+too high, the new high-child parent room gap is too high, aggregate ownership is
+too high, and young childless renter wealth-to-income is too high.
+
+June 27 timing-convention update. The active intergen model timing has been
+changed from adult entry at `age_start=22` with first fertile age `26` to adult
+entry at `age_start=18` with fertile ages `18,22,26,30,34,38,42`. The standard
+live horizon is now `J=17`, preserving terminal age `82`; active CLI,
+local/global panel, cluster wrapper, and solver-audit defaults were updated from
+`J=16` to `J=17`. A small `J=17`, `Nb=30`, one-case informed smoke solved
+cleanly with strict market convergence and residual `9.20e-07`; this is only a
+breakage check, not a calibration result. Target implications: completed
+fertility and completed childlessness can remain the same statistical objects,
+but any first-birth timing target would need to be redefined on the new age
+grid. The externally calibrated entrant-wealth distribution is still sourced
+from young childless renters ages 25--35; with entry now at age 18, that object
+should be re-extracted or explicitly reinterpreted before a serious production
+calibration. A new literal deterministic/modal policy overlay tool was added at
+`code/model/tools/plot_intergen_policy_overlay.py`; for the current June 27
+best cache it wrote the first essential overlay at
+`output/model/intergen_postaudit_sample3h_review_20260627/best_globalde_task1_packet/policy_overlays/deterministic_policy_overlay_age30_lowhigh_renter_ownerH4.png`.
+The same old best theta was also re-solved once under the new `age_start=18`,
+`J=17` timing without recalibration; packet
+`output/model/intergen_postaudit_sample3h_review_20260627/best_globalde_task1_packet_age18_j17_resolve/`
+has loss `30.5741`, residual `9.04e-06`, price `0.705161`, `tfr=2.257`,
+childlessness `0.113`, young ownership `0.581`, aggregate ownership `0.762`,
+and old ownership `0.947`. This is not a valid new benchmark; it only proves
+that the prior `J=16` best is stale once early adult fertility is allowed. Its
+matching overlay is
+`output/model/intergen_postaudit_sample3h_review_20260627/best_globalde_task1_packet_age18_j17_resolve/policy_overlays/deterministic_policy_overlay_age30_lowhigh_renter_ownerH4_age18_j17.png`.
+
+June 28 00:40 EDT age-18/J17 overnight calibration launch. A fresh dirty-source
+scratch snapshot was synced to
+`/scratch/td2248/projects/Fertility_Spring26_20260628_age18_12h`. Remote
+compile and target-count checks passed: `candidate_replacement_post_audit_v1`
+has 14 targets, 14 weights, and the active search has 13 free parameters. The
+remote lifecycle check confirmed `age_start=18`, `J=17`, terminal age `82`, and
+fertile ages `18,22,26,30,34,38,42`. The start point is the stale-but-useful
+June 27 post-audit global-DE record copied to
+`/scratch/td2248/projects/Fertility_Spring26_20260628_age18_12h/output/model/intergen_postaudit_sample3h_review_20260627/best_globalde_task1_best.json`.
+Exact Slurm preflights passed with empty stderr: global-DE job `11940278` and
+local/random-panel job `11940282`, each one seeded full-grid/full-target
+evaluation, both exit `0:0`, loss about `30.574`, market residual
+`2.52e-05`. The full overnight search uses the current hand/documented weights
+rather than optimal SMM weights; optimal weighting is deferred until the target
+covariance/standard-error file is built.
+
+The active 12-hour chain is three dependent `03:55:00` waves on `cpu_short`,
+4G per task, with 24 concurrent tasks in each active wave: 12 global-DE array
+tasks plus 12 seeded local/random-panel array tasks. Common settings:
+`INTERGEN_TARGET_SET=candidate_replacement_post_audit_v1`, `INTERGEN_J=17`,
+`INTERGEN_NB=60`, `INTERGEN_INCOME_STATES=5`, `INTERGEN_N_HOUSE=5`
+(`H_own=[2,4,6,8,10]`), `INTERGEN_MAX_ITER_EQ=10`,
+`INTERGEN_MINUTES=225`, `interp_method=linear`, and
+`use_pti_constraint=False`. Submission command pattern from the scratch
+`code/cluster` directory was:
+`env <common settings> INTERGEN_RUN_TAG=<tag> INTERGEN_GLOBAL_EVALS_PER_TASK=3000 INTERGEN_SEED_BASE=<base> sbatch --parsable --array=1-12%12 --time=03:55:00 --mem=4G submit_intergen_housing_fertility_global_de.sh`
+and analogously
+`env <common settings> INTERGEN_RUN_TAG=<tag> INTERGEN_CASES_PER_TASK=3000 INTERGEN_SEED_BASE=<base> sbatch --parsable --array=1-12%12 --time=03:55:00 --mem=4G submit_intergen_housing_fertility_twohour_panel.sh`,
+with `--dependency=afterok:<previous-wave>` on waves 2 and 3. Global-DE jobs:
+`11940313 -> 11940314 -> 11940315`, seed bases `2026062800`,
+`2026064800`, `2026066800`; local/random-panel jobs:
+`11940316 -> 11940317 -> 11940318`, seed bases `2026072800`,
+`2026074800`, `2026076800`. Result roots under the scratch copy are
+`code/cluster/results_intergen_housing_fertility_intergen_age18_postaudit_globalde_12h_w{1,2,3}_20260628/`
+and
+`code/cluster/results_intergen_housing_fertility_intergen_age18_postaudit_panel_12h_w{1,2,3}_20260628/`.
+Monitor with
+`squeue -j 11940313,11940314,11940315,11940316,11940317,11940318`.
+
+June 28 09:30 EDT search-pipeline correction. The remaining third wave of the
+overnight chain was canceled at user request after about 1h16m of wave-3 wall
+time (`11940315`, `11940318`; waves 1 and 2 had already completed cleanly).
+The cancellation preserved all scratch outputs. The best available candidate at
+the time of cancellation was still the global-DE wave-2 task-5 record
+`de_g050_i021`, not partial wave 3: rank loss `24.7570822`, market residual
+`3.80e-06`, price `0.664626`, `tfr=1.92894`, childlessness `0.20927`,
+young ownership `0.47671`, aggregate ownership `0.67312`, old ownership
+`0.92981`. The local/random-panel branch never beat the warm start, confirming
+that it is not a real local optimizer and should not receive substantial compute
+unless redesigned.
+
+A true local-polish command was added to the active code:
+`python -m intergen_housing_fertility.cli local-polish`. It optimizes in the
+same normalized bounded parameter cube as global-DE, checkpoints every case to
+`cases.jsonl`/`best.json`, and currently supports bounded Nelder-Mead and
+coordinate pattern search. The Slurm wrapper is
+`code/cluster/submit_intergen_housing_fertility_local_polish.sh`. Local compile
+and a tiny low-grid CLI smoke passed. The updated code and best-DE seed were
+synced to the same scratch snapshot; the seed file is
+`/scratch/td2248/projects/Fertility_Spring26_20260628_age18_12h/output/model/intergen_age18_current_best_globalde_20260628.json`.
+Exact Slurm preflight passed with empty stderr: local-polish job `11959255`,
+one task, two full-grid/full-target evaluations, exit `0:0`, reproducing seed
+loss `24.7570822`.
+
+A 2-hour local-polish array is now running as job `11959283`, array `1-12%12`,
+wall time `02:05:00`, internal `INTERGEN_MINUTES=115`, target/grid
+`candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, `income_states=5`,
+`INTERGEN_N_HOUSE=5`, `max_iter_eq=10`, 4G per task. Tasks 1--6 use
+Nelder-Mead with normalized initial steps
+`0.025,0.040,0.060,0.085,0.115,0.150`; tasks 7--12 use coordinate pattern
+search with the same step grid. Monitor with `squeue -j 11959283`. Result root:
+`/scratch/td2248/projects/Fertility_Spring26_20260628_age18_12h/code/cluster/results_intergen_housing_fertility_intergen_age18_postaudit_local_polish_2h_20260628/`.
+Early health check after the first few evaluations shows the polish already
+improving the seed from `24.7570822` to `23.2019100` in task 8
+(`pattern_i000_d10_m`), with `tfr=1.92515`, childlessness `0.20987`, young
+ownership `0.43177`, aggregate ownership `0.64774`, and old ownership
+`0.92031`.
+
+June 28 local-polish completion/readout. Job `11959283` completed cleanly: all
+12 array tasks exited `0:0`. Final best is task 12, label
+`pattern_i014_d12_p`, saved locally at
+`output/model/intergen_age18_local_polish_2h_20260628/best.json`. A clean local
+packet re-solve with `candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`,
+5 income states, `H_own=[2,4,6,8,10]`, `hR_max=6.0`, `max_iter_eq=10`, and
+linear interpolation reproduces rank loss `11.7463453`, market residual
+`7.32e-05`, and price `0.664872`. Full readout with every target row, every
+free parameter/bound, and all extracted model moments:
+`output/model/intergen_age18_local_polish_2h_20260628/packet/complete_readout.md`.
+Classic diagnostic packet:
+`output/model/intergen_age18_local_polish_2h_20260628/packet/`, including
+`contact_sheet.png`, `first_look_policies_markets*.png`, wealth and
+total-wealth densities, age profiles, tenure by age, owner thresholds/rungs,
+room-bin fit, standard diagnostics, and deterministic policy overlay
+`policy_overlays/deterministic_policy_overlay_age30_lowhigh_renter_ownerH4.png`.
+The fit improvement is real, but the optimum sits on several search bounds:
+`beta_annual` lower, `c_bar_0` upper, `h_bar_0` lower, `h_bar_jump` near upper,
+`psi_child` upper, and `tenure_choice_kappa` lower (`0`, deterministic tenure).
+
+June 28 positive-tenure-noise search launch. In response to the bound/corner
+diagnosis, the active search bound for `tenure_choice_kappa` was changed from
+`[0.000,0.080]` to `[0.005,0.080]` in
+`code/model/intergen_housing_fertility/local_panel.py`; this constrains the
+calibration search away from literal deterministic tenure choice but does not
+remove the model's ability to solve explicitly specified `kappa=0` points.
+Local compile and a tiny low-grid local-polish smoke passed. The updated code
+was synced to the existing Torch scratch snapshot
+`/scratch/td2248/projects/Fertility_Spring26_20260628_age18_12h`, along with
+the prior deterministic-corner best seed at
+`output/model/intergen_age18_local_polish_2h_best_20260628.json`. Remote
+compile and target/bounds checks passed: 14 targets, 13 free parameters,
+`tenure_choice_kappa` bound `[0.005,0.080]`. Full-grid Slurm preflights also
+passed with empty stderr: global-DE job `11969650` and local-polish job
+`11969670`, each exit `0:0`; clipping the prior seed to `kappa=0.005` gives
+loss `13.5780780`, residual `2.39e-05`, price `0.663730`, `tfr=1.86778`,
+young ownership `0.36872`, aggregate ownership `0.58986`, old ownership
+`0.87450`, and young childless renter wealth/income `0.64386`.
+
+A hard 4-hour mixed positive-kappa search is now running: global-DE job
+`11969716` and true local-polish job `11969717`, each array `1-12%12`, wall
+time `03:55:00`, 4G per task. Common settings:
+`candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`, `income_states=5`,
+`INTERGEN_N_HOUSE=5`, `max_iter_eq=10`, `INTERGEN_MINUTES=225`, seeded from
+the prior best. Global-DE uses population size `24` and up to `3000`
+evaluations/task; local-polish uses up to `1200` evaluations/task, min step
+`0.002`, and the existing step-grid split between Nelder-Mead and coordinate
+pattern search. Result roots:
+`code/cluster/results_intergen_housing_fertility_intergen_age18_poskappa_globalde_4h_20260628/`
+and
+`code/cluster/results_intergen_housing_fertility_intergen_age18_poskappa_local_polish_4h_20260628/`
+under the same scratch copy. Monitor with
+`squeue -j 11969716,11969717`. Early checkpoint scan after roughly 7--9 cases
+per task already improved the constrained seed from `13.5780780` to
+`13.5070457` in local-polish task 10 (`pattern_i000_d11_m`), with all best
+records respecting `tenure_choice_kappa=0.005`.
+
+June 28 young-wealth frontier diagnostic launch. A diagnostic target set
+`candidate_replacement_post_audit_wealthstress_v1` was added with the same 14
+target values as `candidate_replacement_post_audit_v1`, but with
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535` weight raised
+from `12.0` to `120.0`. This is not a production SMM target set; it is a
+frontier run to learn which moments/parameters break when the optimizer is
+forced to lower young childless renter liquid wealth. Local compile and target
+metadata checks passed: 14 targets, 13 free parameters, wealth weight `120.0`,
+positive `tenure_choice_kappa` bound `[0.005,0.080]`. Remote compile and exact
+Slurm preflight passed with empty stderr: local-polish preflight job `11970841`,
+exit `0:0`; the seed point has wealth-stress loss `36.8937570`, residual
+`2.39e-05`, and young wealth `0.64386`.
+
+The wealth-frontier search is running in parallel with the positive-kappa main
+search. Seed is the current positive-kappa checkpoint best at launch time
+(`loss=13.2051449` under the regular post-audit objective). Jobs:
+global-DE `11970889` (`1-6%6`) and local-polish `11970890` (`1-12%12`), wall
+time `02:05:00`, internal `INTERGEN_MINUTES=115`, target set
+`candidate_replacement_post_audit_wealthstress_v1`, `J=17`, `Nb=60`, 5 income
+states, `INTERGEN_N_HOUSE=5`, `max_iter_eq=10`, 1G per task. Because the
+regular positive-kappa search is still running, this wealth-frontier run may
+partially pend under `QOSMaxCpuPerUserLimit`; at launch all 6 global tasks and
+4 local-polish tasks were running while local-polish tasks 5--12 were pending.
+Monitor with `squeue -j 11970889,11970890`. Result roots:
+`code/cluster/results_intergen_housing_fertility_intergen_age18_wealthstress_globalde_2h_20260628/`
+and
+`code/cluster/results_intergen_housing_fertility_intergen_age18_wealthstress_local_polish_2h_20260628/`
+under the same scratch copy.
+
+June 28 positive-kappa and wealth-frontier completion. Jobs `11969716`,
+`11969717`, `11970889`, and `11970890` all completed cleanly with exit
+`0:0`. The best regular positive-kappa record is local-polish task 12,
+`pattern_i019_d08_p`, with loss `13.1713650`, residual `4.90e-05`, price
+`0.665065`, and `tenure_choice_kappa=0.005`; it does not beat the earlier
+deterministic-kappa local-polish best loss `11.7463453`. The best
+wealth-frontier diagnostic record is local-polish task 9,
+`pattern_i022_d11_m`, with wealth-stress loss `19.9825422`, residual
+`1.25e-03`, price `0.666666`, and `tenure_choice_kappa=0.005`. It lowers
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535` from about
+`0.659` in the regular positive-kappa best to `0.314`, closer to the target
+`0.179`, but worsens the lifecycle/room block. Full side-by-side target and
+parameter tables are saved in
+`output/model/intergen_policy_counterfactuals_current/wealthstress_diagnostic/wealthstress_vs_regular_completion_readout.md`.
+
+June 28 wealth-frontier policy diagnostic. The one-market policy proof-of-
+concept runner now accepts direct `best.json` records plus explicit `J`,
+`n_house`, `income_states`, and `target_set` arguments. A fixed-theta policy
+packet was run from the wealth-frontier best at
+`output/model/intergen_policy_counterfactuals_current/wealthstress_diagnostic/`
+with `J=17`, `Nb=60`, `n_house=5`, 5 income states, and `max_iter_eq=25`.
+Compared with the wealth-frontier baseline, parent-targeted LTV relief to
+`phi=0.95` raises the completed-fertility-equivalent `tfr` by only `0.0059`
+and lowers childlessness by `0.0011`; applying the relief to all parent states
+is numerically identical in this run. Universal `phi=0.95` lowers `tfr` by
+`0.0445` while raising young ownership; `hR_max=5` lowers `tfr` by `0.0464`;
+the property-tax and estate-tax diagnostics have near-zero fertility effects.
+This is not a production policy result, but it confirms that the wealth-frontier
+diagnostic improves the targeted parent-credit effect only modestly.
+
+Follow-up fixed-price check: holding the wealth-frontier GE baseline price fixed
+at `p=0.66666564`, parent-targeted `phi=0.95` raises the completed-fertility-
+equivalent `tfr` by `0.00983` and lowers childlessness by `0.00135`; extending
+eligibility to all parent states is again identical. A fixed-price parent-`phi`
+sweep from `0.80` to `1.00` gives a maximum `tfr` increase of only `0.01153`
+at zero down payment. Output:
+`output/model/intergen_policy_counterfactuals_current/wealthstress_fixed_price_parent_credit/`.
+Conclusion: GE price feedback is not the main reason parent credit has weak
+fertility effects in this candidate; the household-level exposed fertility
+margin is itself thin.
+
+June 28 wide-bound overnight calibration launch. At user request, an additional
+overnight frontier search was launched to see whether the current
+`candidate_replacement_post_audit_v1` target system can improve further before
+redesigning tenure segmentation. This is a search-box experiment, not a model
+equation change. The active global/local search bounds in
+`code/model/intergen_housing_fertility/local_panel.py` were widened from the
+post-audit box to:
+`beta_annual=[0.880,0.995]`, `alpha_cons=[0.400,0.950]`,
+`c_bar_0=[0.080,1.280]`, `c_bar_n=[0.050,1.500]`,
+`h_bar_0=[1.000,6.000]`, `h_bar_jump=[0.050,2.500]`,
+`h_bar_n=[0.020,2.000]`, `psi_child=[0.000,0.350]`,
+`kappa_fert=[1.000,12.000]`, `tenure_choice_kappa=[0.000,0.120]`,
+`chi=[0.400,2.400]`, `theta0=[0.000,2.000]`, and
+`theta_n=[0.000,1.500]`. Local compile passed. A local full-grid two-evaluation
+smoke of `local-polish` from the current deterministic best reproduced loss
+`11.7463453` with residual `7.32e-05`; the first coordinate probe solved
+cleanly. A fresh Torch scratch snapshot was synced to
+`/scratch/td2248/projects/Fertility_Spring26_20260628_widebounds_12h`.
+Remote compile and target checks passed: 14 targets, 14 weights, 13 free
+parameters. Exact Slurm preflights passed with empty stderr: global-DE job
+`11987103` and local-polish job `11987104`, each one full-grid evaluation,
+both exit `0:0`, reproducing the seed loss `11.7463453`.
+
+The full chain is three dependent 3:55 waves on `cpu_short`, 24 concurrent
+tasks per active wave: 12 global-DE plus 12 local-polish. Common settings:
+`INTERGEN_TARGET_SET=candidate_replacement_post_audit_v1`, `J=17`, `Nb=60`,
+5 income states, `INTERGEN_N_HOUSE=5`, `max_iter_eq=10`, and seed theta
+`output/model/intergen_age18_local_polish_2h_20260628/best.json` under the
+scratch copy. Global-DE uses `3000` max evals/task, population size `28`,
+mutation `0.90`, crossover `0.70`, and `INTERGEN_MINUTES=225`. Local-polish
+uses `1200` max evals/task, `INTERGEN_MINUTES=225`, and min step `0.0015`.
+Job chain: global-DE `11987205 -> 11987207 -> 11987209`; local-polish
+`11987206 -> 11987208 -> 11987210`. Result roots under the scratch copy are
+`code/cluster/results_intergen_housing_fertility_intergen_age18_widebounds_globalde_12h_w{1,2,3}_20260628/`
+and
+`code/cluster/results_intergen_housing_fertility_intergen_age18_widebounds_local_polish_12h_w{1,2,3}_20260628/`.
+Monitor with `squeue -j 11987205,11987206,11987207,11987208,11987209,11987210`.
 
 June 24 code-audit fixes changed the live mechanics before any new calibration:
 `use_pti_constraint=False` by default, optional PTI uses actual transaction
