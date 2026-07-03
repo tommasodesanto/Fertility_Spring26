@@ -10,9 +10,10 @@ D7/D8, HANDOFF). Headlines only: (1) a 35-agent adversarially-verified
 code audit found 18 correctness findings — most importantly a MEASUREMENT
 tier on active targets (tenure/room stats measure the pre-choice state,
 ~4y-young effective windows; the "65-75" windows drop 65 and add 75-77 on
-the w=160 moment; TFR is matched under parity top-coding at 2, reviving
-the March parity-2 arithmetic constraint and contaminating the parity-gap
-moments; own_family_gap measures ALL parents, not new parents;
+the w=160 moment; [the parity-top-coding finding was WITHDRAWN 2026-07-03:
+the household-doubling convention (tfr = 2x parity; parity 2 = fertility 4)
+is in the code and covers it — see the lead correction in
+CODE_AUDIT_REPORT.md]; own_family_gap measures ALL parents, not new parents;
 housing_increment_0to1 excludes the purchase margin; three target values
 lack in-repo provenance) — none applied, all ledger-gated; (2) the
 econometric review shows the ad hoc weights give the young-wealth moment
