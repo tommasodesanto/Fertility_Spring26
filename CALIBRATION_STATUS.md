@@ -80,8 +80,10 @@ the "68% cap-pinned" fertility-derivative concentration reproduces exactly
 by the cap-to-floor distance (0.836 at `hR_max=5.5` to 0.219 at 8.0), the
 jump-floor geometry (`linear_only` collapses it to 0.27), and the
 young-wealth overshoot (0.39 at the data-consistent young-wealth theta);
-the susceptible mass is the lowest income type at the top of the renter
-wealth distribution, ages 34-42; exact cohort-weight reconciliation puts
+the susceptible mass sits at the top of the renter wealth distribution,
+ages 34-42, carried by the MIDDLE income types (z=1.0: 52% of derivative
+mass; corrected 2026-07-04 — the July-2 'lowest income type' line misread
+the location column); exact cohort-weight reconciliation puts
 56-62% of the PE cap-relief TFR response on childless renters and 37-40%
 on childless OWNERS (switch-to-rental option — exposure is tenure-wide).
 SOFT_CAP_DESIGN_MEMO.md: within-cell ACS regression (filters replicated
