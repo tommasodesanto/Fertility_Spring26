@@ -2,6 +2,26 @@
 
 Updated: `2026-07-02` (late evening: ultracode audit + calibration program)
 
+## July 4 experimentation day (loop session; decision page delivered)
+
+Full record: output/model/fable_size_mapping_audit_20260701/
+DECISION_PAGE_20260704.md (FINAL). Headlines: the two re-weighted
+calibrations CONVERGED (W-mech 23.6121, W-equal 20.03 under their own
+unit-free objectives; DE sterile); under honest weights the paper-core
+block is fittable — own_family_gap HIT (0.176/0.149 vs 0.168, from
+0.296), own_rate hit, own_rate_2534 half-closed, young wealth 0.28-0.29
+— at the price of old-age ownership (0.92-0.93 vs 0.764; missing exit
+margin, ledger D11) and size segmentation. Mechanism stability: cap-
+pinned concentration survives (0.60-0.63 vs 0.68), capitalization
+identical; the tax->TFR level is the one weight-fragile headline
+(+0.021 -> +0.005) and its disciplining moment (housing_increment_0to1)
+is measurement-broken in both directions (h0 excludes purchases, h1
+uncontrolled — ledger D13). Childlessness is structural with an
+anti-data income gradient (D12). CORRECTION: the July-2 claim that the
+fertility margin is the lowest income type was a column misread — the
+margin is MIDDLE-income renters (z=1.0 carries 52% of derivative mass).
+Ledger D1-D13 prepared; D7/D10-D13 await decisions.
+
 ## July 2 late evening: code audit, econometric review, frontier runs (ultracode session)
 
 Full session record: `output/model/fable_size_mapping_audit_20260701/`
