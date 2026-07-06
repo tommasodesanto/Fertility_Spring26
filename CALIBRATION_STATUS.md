@@ -1,6 +1,58 @@
 # Calibration Status
 
-Updated: `2026-07-02` (late evening: ultracode audit + calibration program)
+Updated: `2026-07-06` (grid-convergence finding; mechanics-first plan; Phase 1 mechanics memo DONE)
+
+## July 6 afternoon: Phase 1 mechanics mission COMPLETE (memo delivered)
+
+All five probes (M1-M5) done at the resolved grid, full runs on torch
+(snapshot Fertility_Spring26_20260706_mechanics; bit-identical smoke vs
+local). Deliverable: output/model/fable_size_mapping_audit_20260701/
+MECHANICS_MEMO_20260706.md (one page per probe + Phase-2 decision sheet).
+Headlines that change interpretation: (1) the ownership jump 0.46->0.75 is
+buying AT the fertility deadline (age 42 = last fertile period; buy region
+expands there; buyers arrive ~10 wealth cells above their dp) — not slow
+saving crossing the constraint, and not bequests (calibrated theta0=4.7e-4);
+(2) the b~0 young-renter mass is impatience, NOT a trap (dp -5% => zero
+saving response below the threshold; relief harvests the near-threshold band
+and the b~0 share GROWS 0.467->0.502); (3) at Nb=120/240 the tax2 dTFR is
++0.004..+0.009 at ALL THREE calibrations — the canonical +0.021 was mostly
+grid noise, so the July-4 "weight fragility" claim dissolves; capitalization
+-12.2% invariant to grid, weights, and ladders; (4) cap-pinned deriv share
+0.734 at 120/240 (grid STRENGTHENED it) and ladder-INVARIANT (0.72-0.73
+across five owner ladders) => the mechanism is renter cap-to-floor geometry;
+D3/D5 (estimate or externally pin hR_max) is the highest-value Phase-2
+decision; (5) the "dead rungs 8/10" premise dissolves — they hold 29% of ALL
+owners (parent stock) and pushing them away costs -0.126 TFR; (6) M5
+childlessness gradient anti-data at 120, structural (D12 unchanged).
+Canonical Nb=120 full target-fit table in the memo (loss 7.4207; worst
+misses: old-age own 0.890 vs 0.764, own_2534 0.196 vs 0.341, family gap
+0.349 vs 0.168; housing_increment_0to1 HITS). ROUTING NOTE (Tommaso,
+standing): real runs go to torch even when minutes-scale locally; local is
+for smokes/analysis only.
+
+## July 6 CRITICAL: the canonical calibration is not grid-converged
+
+The canonical Nb=60 record (loss 6.0014895774) scores 7.43 at Nb=120 and 7.17
+at Nb=240 at the SAME theta — first-order grid convergence; the 6.00 fit was
+partly tuned to grid noise. Distribution/tenure-flow moments drift 3-18% from
+60->120 (ownership-flow moments dominate the loss drift; the median moment is
+grid-discrete but low-weight). Root causes isolated: under-resolved renter mass
+at the borrowing constraint and buy thresholds; a stable +5-12% overstatement
+of the effective down payment (threshold node-snap + the audit's sentinel
+smear); grid redesign at Nb=60 CANNOT fix it (owners live at b<0, old wealth at
+2-6, renters at 0-2 — no 60-node placement covers all; verified by a failed
+dense-band A/B). At Nb=120 grid error ~= data bootstrap SEs; Nb=240 converged.
+Protocol going forward: search at Nb=120, verify at Nb=240. ALL July-5/6
+overnight results (transfer recalib 12.5, plateau retarget 10.7, tax-dTFR
+collapse) are Nb=60-based and therefore diagnostic-direction-only pending
+re-measurement at 120. At the resolved grid the REAL economic misses worsen
+(own_family_gap 0.34 vs 0.17; old-age own 0.90 vs 0.76) while the h0 housing
+increment basically HITS (0.653 vs 0.664 — the Nb=60 "miss" was a grid
+artifact). Live plan: output/model/fable_size_mapping_audit_20260701/
+PLAN_mechanics_first_20260706.md (mechanics at 120 -> model decisions -> ONE
+recalibration at 120 -> verify at 240 -> policy tables). Evidence: COPY
+output/model/{nb_refine_check,grid_redesign_ab,nb240_ref}.json,
+grid_pathology_diag.log, canonical_diag_packet_20260706/.
 
 ## July 4 experimentation day (loop session; decision page delivered)
 
