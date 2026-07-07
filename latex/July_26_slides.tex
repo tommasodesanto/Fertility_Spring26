@@ -17,6 +17,9 @@
 \graphicspath{{assets/}}
 \newcommand{\takeaway}[1]{\vfill{\footnotesize\textbf{Takeaway.} #1}}
 \newcommand{\notfound}[1]{\textbf{[NUMBER NOT FOUND: #1]}}
+\providecommand{\1}{\mathbf 1}
+\providecommand{\HH}{\mathcal H}
+\providecommand{\dd}{\mathrm d}
 
 \title{[PLACEHOLDER: Title TBD]}
 \author{Tommaso De Santo}
@@ -59,137 +62,232 @@
   \end{itemize}
 \end{frame}
 
+% ==================== A SIMPLE MODEL ====================
+\section{A Simple Model}
+
 % 5
-\begin{frame}{Environment}
-  A two-period overlap: young households make family and housing choices, and become the old incumbents who hold the stock. A potential young household enters with income and wealth,
+\begin{frame}{A Simple Model: Demographics and Timing}
+  A stationary two-period overlapping-generations economy. A potential young household enters with a type
   \[
   i=(y_i,a_i),
   \]
-  so who can reach owner housing is set at entry.
+  disposable income $y_i$ and entry wealth $a_i$ inherited from the old who exit as she arrives.
   \begin{itemize}
-    \item Young households choose entry, tenure, how much space to occupy, fertility, and saving.
-    \item Young owners carry their house into old age; young renters reach old age without one.
-    \item Old incumbents choose consumption, how much housing to keep, and what to leave.
+    \item Young households choose whether to enter the market, then tenure, occupied space, number of children, and saving.
+    \item A young owner carries her house into old age and becomes next period's old incumbent; a young renter reaches old age with no house.
+    \item Old households choose consumption, how much housing to keep, and the estate they leave, then exit.
   \end{itemize}
-  Selling triggers the capital-gains tax; dying forgives it through basis step-up. The wedge is
-  \[
-  \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}.
-  \]
+  Entry is a discrete choice against an outside value $\bar W^E$ with taste shocks of scale $\kappa_E$, so who reaches owner housing is set at entry. Births plus a renewal inflow form the next young cohort, and the exiting estates fund its entry wealth.
 \end{frame}
 
 % 6
-\begin{frame}{The Family-Housing Cap}
-  Rental and finance frictions collapse into one cap on family space. The owner cap is the tighter of the owner size limit and down-payment capacity:
+\begin{frame}{Preferences}
+  Children compete with their parents for the same budget and the same house: each child claims $\chi$ units of consumption and $\kappa$ units of space. Over consumption $c_i$, occupied housing $h_i$, and number of children $n_i$, the young household values
   \[
-  h_i\le
-  H_i^O(q,\tau^p)
-  =
-  \min\left\{
-  \bar h^O,
-  \frac{a_i\rho}{(1-\phi)q}
-  \right\}.
+  u_i^Y(c_i,h_i,n_i)=\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i,
+  \qquad \alpha,\vartheta>0.
   \]
-  A renter faces $H_i^R=\bar h^R$, so tenure just maps different primitives into the same cap object.
+  One more child means less space and less consumption left for the adults.
 
-  Substituting the cap into the child-cost condition prices the marginal child:
+  Old households value consumption, retained housing, and a warm-glow estate $e_j$,
   \[
-  \underbrace{\frac{\vartheta\,(c_i^m-\chi n_i^m)}{n_i^m}}_{\text{willingness to pay for a marginal child}}
-  =
-  \underbrace{\chi+\kappa(q^m+\zeta_i^m)}_{\text{full price of a child}} .
+  u^O(c_j^O,h_j^O,e_j)=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j),
   \]
-  A binding cap acts like a per-child tax of $\kappa\zeta_i^m$.
+  and a young household discounts her own old age by $\beta$. Saving carries $a_i'\ge0$ into old age at gross return $1+r$; the savings load $k\equiv\beta(1+\gamma+b)$ is old age's claim on each unit of adult consumption.
 \end{frame}
 
 % 7
-\begin{frame}{Access Gaps}
-  The access gap is the goods value of one more unit of constrained family space. For a renter, the bundle reveals the bite of the cap:
+\begin{frame}{Markets and Technology}
+  One fixed stock $\bar H$ of divisible floorspace, occupied by renting ($R$) or owning ($O$). The segments differ only in the largest size available,
   \[
-  \frac{u^Y_{h,i}}{u^Y_{c,i}}
-  =
-  \frac{\alpha\,(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}
-  =
-  q+\zeta_i^R.
+  \HH^R=\{0<h\le\bar h^R\},\qquad \HH^O=\{0<h\le\bar h^O\},\qquad \bar h^R<\bar h^O,
   \]
-  A renter at the size cap values another unit of space above the rent it commands.
-
-  For an owner, the gap separates finance from the size limit:
+  so family-sized space must be bought, not rented. All space clears in one market, and a no-arbitrage user cost ties the rental rate to the price:
   \[
-  \zeta_i^O
-  =
-  \underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P}_{\zeta_i^{O,F}\text{, down-payment margin}}
-  +
-  \underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{size-limit margin}}
-  \ge0.
+  q=\rho P,\qquad \rho=r+\delta+\tau^p.
   \]
-  Either way $\zeta_i$ is computable from the observed consumption and housing bundle, net of child needs.
+  The renter pays $q$ as rent; the owner pays it as interest, tax, depreciation, and forgone return --- equal per-unit value by arbitrage. Selling a house triggers a capital-gains tax that death forgives through basis step-up, a per-unit wedge on housing sold while alive,
+  \[
+  \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi},
+  \]
+  the only place the model touches inflation.
 \end{frame}
 
 % 8
-\begin{frame}{Where the Cap Binds, Fertility Responds}
-  Under lifetime equal scaling, the fertility response to relaxing the cap is proportional to the same gap that measures access:
+\begin{frame}{The Household Problem, Mode by Mode}
+  Conditional on entry, the household picks a tenure mode $m\in\{R,O\}$ and solves
   \[
-  \Psi_i^m
-  =
-  \frac{\kappa}{\alpha}
-  \frac{\zeta_i^m}{c_i^m-\chi n_i^m}
-  \Omega_i^m,
-  \qquad
-  \Omega_i^m
-  =
-  \frac{
-  \frac{\alpha}{h_i^m-\kappa n_i^m}+\frac{q^m}{c_i^m-\chi n_i^m}
-  }{
-  \frac{\vartheta}{(n_i^m)^2}
-  +
-  \frac{\chi^2}{(1+k)(c_i^m-\chi n_i^m)^2}
-  +
-  \frac{\alpha\kappa^2}{(h_i^m-\kappa n_i^m)^2}
-  }
-  >0.
+  W_i^m=\max_{c_i,h_i,n_i,a_i'}\ u_i^Y(c_i,h_i,n_i)+\beta\big[\1\{m=R\}V^R(a_{j'})+\1\{m=O\}V^O(a_{j'},h_i)\big]
   \]
-  Holding exposure and pass-through fixed, a larger normalized gap means a larger birth response. So the households closest to the cap are the ones whose fertility moves.
+  subject to one budget and, for buyers, two financing tests:
+  \[
+  c_i+q h_i+a_i'=y_i+a_i,\qquad
+  \1\{m=O\}\,(1-\phi)P h_i\le a_i,\qquad a_i'\ge0.
+  \]
+  Space costs $q$ per unit either way, so tenure bites only through the size limit and the down payment $(1-\phi)P h_i$, which wealth in hand must cover. An old incumbent nets $q-\bar\ell$ on each unit she sells, valuing kept space \emph{below} market by the tax she avoids; an old renter's demand is wedge-free.
 \end{frame}
 
 % 9
-\begin{frame}{Why the Stock Is Misallocated}
-  Consider moving one unit from an old incumbent to a financially constrained young owner:
-  \[
-  \begin{aligned}
-  &\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}
-  -\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}
-  \\
-  &\qquad
-  =
-  \zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell
-  >0 .
-  \end{aligned}
-  \]
-  The market price cancels; what is left is the young buyer's financing gap plus the two tax wedges, and it is always positive. The problem is not that the old occupy housing, but that their lock-in sits next to young households with unmet access gaps.
+\begin{frame}{Stationary Competitive Equilibrium}
+  A stationary equilibrium is a user cost $q$, an asset price $P=q/\rho$, young and old allocations, entry probabilities, and stationary measures such that:
+  \begin{itemize}
+    \item young households solve their mode problems and choose tenure $o_i=\arg\max\{W_i^R,W_i^O\}$; old households and entry are optimal;
+    \item the single floorspace market clears,
+    \[
+    H^D(q)=\bar H;
+    \]
+    \item the old-incumbent measure, the young cohort, and the cohort mass reproduce themselves, and fiscal and housing-income accounts close by lump-sum transfers.
+  \end{itemize}
+  One price equates total demand to the fixed stock. Nothing in that condition asks whether the marginal family-sized unit is held by the household that values it most --- that question is the efficiency result below.
 \end{frame}
 
 % 10
-\begin{frame}{Taking the Mechanism to a Lifecycle Model}
-  \begin{itemize}
-    \item Lifecycle: $17$ four-year periods, ages $18$ to $82$.
-    \item Income and children: a $5$-state income process; parity $0$, $1$, $2$ with stochastic child stages.
-    \item Tenure: renting is capped at $6$ rooms; the owner ladder is $\{2,4,6,8,10\}$ rooms.
-    \item Financing and market: the down payment is $(1-\phi)$ with $\phi=0.80$; a single housing market clears $q$ in general equilibrium.
-  \end{itemize}
-  The tie back to the mechanism is the down-payment term: it enters the owner access gap $\zeta_i^{O,F}$ through $(1-\phi)P$.
+\begin{frame}{All Frictions Collapse Into One Cap}
+  Using $P=q/\rho$, owner housing is bounded by the tighter of the size limit and down-payment capacity:
+  \[
+  h_i\le H_i^O(q,\tau^p)=\min\left\{\bar h^O,\ \frac{a_i\rho}{(1-\phi)q}\right\},
+  \qquad H_i^R=\bar h^R.
+  \]
+  Renting, the owner size limit, and finance all reduce to one effective family-housing cap. Substituting it into the fertility first-order condition prices the marginal child:
+  \[
+  \underbrace{\frac{\vartheta\,(c_i^m-\chi n_i^m)}{n_i^m}}_{\text{willingness to pay for a child}}
+  =
+  \underbrace{\chi+\kappa(q^m+\zeta_i^m)}_{\text{full price of a child}} .
+  \]
+  A binding cap acts as a per-child tax of $\kappa\zeta_i^m$: children cost more exactly where family-sized space is hard to reach, with market prices unchanged.
 \end{frame}
 
 % 11
+\begin{frame}{The Access Gap}
+  The access gap $\zeta_i^m$ is the goods value of one more unit of constrained family space, read off the household's own bundle. For a renter at the size limit,
+  \[
+  \frac{u^Y_{h,i}}{u^Y_{c,i}}=\frac{\alpha\,(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}=q+\zeta_i^R,
+  \]
+  so she values space above the rent it commands. For an owner the gap separates finance from the size limit,
+  \[
+  \zeta_i^O=\underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P}_{\zeta_i^{O,F}\text{, down-payment margin}}+\underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{size-limit margin}}\ \ge0.
+  \]
+  Either way $\zeta_i$ is computable from observed consumption and housing, net of child needs: the young gap from bundles, the old wedge from deeds and the tax schedule.
+\end{frame}
+
+% 12
+\begin{frame}{Where the Cap Binds, Fertility Responds}
+  Under equal scaling at lifetime prices, $\chi=(1+k)\kappa q^m/\alpha$, the fertility response to relaxing the cap is proportional to the same gap that measures access:
+  \[
+  \Psi_i^m=\frac{\kappa}{\alpha}\,\frac{\zeta_i^m}{c_i^m-\chi n_i^m}\,\Omega_i^m,
+  \qquad
+  \Omega_i^m=\frac{\dfrac{\alpha}{h_i^m-\kappa n_i^m}+\dfrac{q^m}{c_i^m-\chi n_i^m}}{\dfrac{\vartheta}{(n_i^m)^2}+\dfrac{\chi^2}{(1+k)(c_i^m-\chi n_i^m)^2}+\dfrac{\alpha\kappa^2}{(h_i^m-\kappa n_i^m)^2}}>0.
+  \]
+  Holding exposure and pass-through fixed, a larger normalized gap means a larger birth response. The households closest to the cap are the ones whose fertility moves.
+\end{frame}
+
+% 13
+\begin{frame}{Why the Stock Is Misallocated}
+  Move one unit from an old incumbent to a financially constrained young owner:
+  \[
+  \underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}
+  -\underbrace{\left(q-\bar\ell\right)}_{\text{incumbent's marginal value}}
+  =
+  \zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell>0 .
+  \]
+  The market price cancels. What is left is always positive: the young buyer's financing gap, plus her own anticipated capital-gains tax, plus the incumbent's realized one. The stock clears and is still misallocated --- not because the old occupy housing, but because their tax lock-in sits next to young households with unmet access gaps. The tax wedges are transfers, not resources, so the reallocation is a Pareto improvement.
+\end{frame}
+
+% ==================== THE QUANTITATIVE MODEL ====================
+\section{The Quantitative Model}
+
+% 14
+\begin{frame}{From Two Periods to a Lifecycle}
+  The quantitative model keeps the mechanism and adds a lifecycle. A household enters at age $18$ as a renter and lives $17$ four-year periods to terminal age $82$.
+  \begin{itemize}
+    \item \textbf{Income:} a five-state persistent process $z$, with age-dependent earnings.
+    \item \textbf{Children:} up to two children per household, in a number-of-children and child-stage block $(n,s)$; after a birth, children age stochastically through home stages and eventually leave, at which point their space and goods costs switch off.
+    \item \textbf{Fertility:} completed fertility is chosen once, inside a fertile window (ages $18$ to $42$), subject to taste shocks --- one shot, not a sequential birth hazard.
+  \end{itemize}
+  So the two-period child cost $(\chi,\kappa)$ becomes a lifecycle of family-size-dependent needs that arrive with a birth and expire when children mature.
+\end{frame}
+
+% 15
+\begin{frame}{Housing in the Quantitative Model}
+  Tenure segmentation is the same object, made discrete:
+  \[
+  h^R\in\{0,H_1^R,\dots\}\ \text{capped at }\bar h^R=6\text{ rooms},
+  \qquad
+  h\in\{2,4,6,8,10\}\ \text{rooms (owner ladder)} .
+  \]
+  \begin{itemize}
+    \item The renter cap $\bar h^R=6$ is not estimated: it is the $90$th percentile of rental unit sizes, following Greaney, Parkhomenko, and Van Nieuwerburgh (2025), measured in our own ACS sample.
+    \item Buying rung $H_k$ at price $p$ requires a down payment $(1-\phi)pH_k$ with financed share $\phi=0.80$ --- the same $(1-\phi)$ friction as the theory.
+    \item Owners transact across rungs and pay a transaction cost; a single stock clears at one price $p$ in general equilibrium.
+  \end{itemize}
+  Family-sized rooms ($\ge6$) are still reachable mainly by owning, and still gated by the down payment.
+\end{frame}
+
+% 16
+\begin{frame}{The Household's Period Problem}
+  Each period the household sees income and taste shocks, chooses births while fertile, then chooses tenure, size, and saving. Over a consumption/housing composite with family-size floors,
+  \[
+  u(c,\mathbf h;m)=\frac{\big[(c-\bar c(m))^{\alpha}(\mathbf h-\bar h(m))^{1-\alpha}\big]^{1-\sigma}}{1-\sigma}+\psi\,\1\{\text{child at home}\},
+  \qquad \sigma=2,
+  \]
+  where the floors rise with the number of children $m$,
+  \[
+  \bar c(m)=\bar c_0+\bar c_n\,m,\qquad
+  \bar h(m)=\bar h_0+\underbrace{\bar h_{\text{jump}}\1\{m\ge1\}}_{\text{first-child housing margin}}+\bar h_n\,m,
+  \]
+  and owners enjoy a service premium $\mathbf h=\chi_{o} h$, $\chi_{o}>1$, over renters' $\mathbf h=h^R$ (the subscript keeps this distinct from the theory section's child consumption cost $\chi$).
+  \begin{itemize}
+    \item Resources are income $y(z,a)$ plus wealth; owners pay a flow user cost $(\delta+\tau^p)p$ and a transaction cost on rung changes.
+    \item Buying is gated by the collateral bound $b'\ge-\phi\,p\,h'$, the quantitative down payment.
+  \end{itemize}
+  The floors $\bar c(m),\bar h(m)$ are the quantitative counterpart of the child costs $\chi,\kappa$: a birth raises required goods and, through $\bar h_{\text{jump}}$, required rooms.
+\end{frame}
+
+% 17
+\begin{frame}{Equilibrium and Computation}
+  A stationary recursive competitive equilibrium is value and policy functions, a stationary distribution $\mu$ over states $(b,h,z,n,s,a)$, and a price $p$ such that households optimize, $\mu$ is invariant under the induced transitions, and the single housing market clears:
+  \[
+  \int h\;\dd\mu \;=\; \bar H .
+  \]
+  The equilibrium is solved by backward induction on the lifecycle value functions and a fixed point in the market-clearing price, with entry wealth carried in from the data.\footnote{The value functions are solved on a wealth grid by backward induction over the $17$ periods; the stationary distribution is iterated to a fixed point and the price $p$ is found by bisection on the market residual. The reported fit is searched on a fine wealth grid and verified on a finer one, since a coarse grid tunes to numerical noise.}
+\end{frame}
+
+% 18
+\begin{frame}{What Maps to What}
+  Every theory object has a quantitative counterpart --- these set up the bridge slides.
+  \begin{center}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{0.92\textwidth}{>{\raggedright\arraybackslash}p{0.40\textwidth}>{\raggedright\arraybackslash}X}
+  \toprule
+  simple model & quantitative model\\
+  \midrule
+  user cost $q=\rho P$ & user-cost flow $(\delta+\tau^p)p$ at the single price $p$\\
+  down-payment friction $(1-\phi)P$ & collateral bound $b'\ge-\phi p h'$, $\phi=0.80$\\
+  effective cap $\min\{\bar h^O,\,a_i\rho/((1-\phi)q)\}$ & owner ladder $\{2,4,6,8,10\}$ vs.\ renter cap $6$, against the down payment\\
+  child costs $\chi,\ \kappa$ & consumption floor $\bar c(m)$ and housing floor $\bar h(m)$\\
+  access gap $\zeta_i$ & shadow value of the collateral/size constraint on family space\\
+  capital-gains wedge $\bar\ell$ & transaction cost $\tau$ on owner sales\\
+  \bottomrule
+  \end{tabularx}
+  \end{center}
+  The down payment is the load-bearing bridge: it is $\zeta_i^{O,F}$ in the theory and the $\phi=0.80$ collateral bound in the quantitative model.
+\end{frame}
+
+% ==================== CALIBRATION AND FIT ====================
+\section{Calibration and Fit}
+
+% 13a
 \begin{frame}{Calibration}
   \begin{itemize}
     \item The fit is a $14$-moment SMM table against $13$ estimated parameters.
-    \item Solve on a fine wealth grid, with a finer grid for final verification.\footnote{Search at $N_b=120$ nodes and verify at $N_b=240$; a coarser grid tunes to numerical noise, so the reported fit is checked at the finer resolution.}
-    \item Empirical inputs: room moments from the ACS, and lifecycle wealth and tenure moments from the PSID.
-    \item The rental cap is not estimated. We set $\bar h^R=6$ rooms from an external rule: the $90$th percentile of rental unit sizes, following Greaney, Parkhomenko, and Van Nieuwerburgh (2025), measured in our own ACS sample.
+    \item Empirical inputs: room and ownership moments from the ACS, and lifecycle wealth, tenure, and birth-housing moments from the PSID; entry wealth is the PSID young-childless-renter distribution, carried in rather than estimated.
+    \item Externally fixed: the financed share $\phi=0.80$ and $\sigma=2$.
+    \item The rental cap is not estimated. We set $\bar h^R=6$ rooms from an external rule --- the $90$th percentile of rental unit sizes, following Greaney, Parkhomenko, and Van Nieuwerburgh (2025), measured in our own ACS sample.\footnote{Search at $N_b=120$ wealth nodes and verify at $N_b=240$; a coarser grid tunes to numerical noise, so the reported fit is checked at the finer resolution.}
   \end{itemize}
   The precise statement is that the p90 of renter sizes falls in the $6$-room bin, so the maintained cap is a measured feature of the rental stock, not a free parameter.
 \end{frame}
 
-% 12
+% 13b
 \begin{frame}{The Data Do Not Fight the Cap}
   Re-solving at nearby cap values traces out a shallow valley around the external rule:
   \[
@@ -280,7 +378,7 @@
 % 17
 \begin{frame}{Births Trigger the Purchase at the Deadline}
   \centering
-  \includegraphics[width=0.88\textwidth,height=0.56\textheight,keepaspectratio]{July_26_slides_buy_flow_by_age_parity.png}
+  \includegraphics[width=0.88\textwidth,height=0.56\textheight,keepaspectratio]{July_26_slides_buy_flow_by_age_children.png}
   \begin{itemize}
     \item About $29\%$ of the age-$42$ cohort buys in that single period.
     \item Seven in ten of these buyers are parents, and half have a newborn.
@@ -305,6 +403,9 @@
   \]
   The households with the largest measured access gap hold almost none of the family-sized owner stock. This is the planner-equilibrium comparison, stated as an accounting fact about the calibrated economy.
 \end{frame}
+
+% ==================== POLICY ====================
+\section{Policy}
 
 % 19
 \begin{frame}{A Price Instrument Capitalizes but Barely Moves Births}
