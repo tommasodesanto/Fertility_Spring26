@@ -1,0 +1,120 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.55in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{microtype}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.05}
+
+\begin{document}
+
+\begin{center}
+{\Large Intergenerational Housing-Fertility Calibration Note}\\
+{\normalsize June 23, 2026. Diagnostic status, not a production calibration.}
+\end{center}
+
+\textbf{Active object.}
+The current quantitative object is the one-market, no-location, Markov-income
+intergenerational model in \texttt{code/model/intergen\_housing\_fertility/}.
+The old center-periphery \texttt{dt\_cp\_model} code is not the active
+calibration object for this note. The relevant recent evidence is the full
+global room-gap search and the 14-moment rescore, both documented under
+\texttt{docs/model/}.
+
+\textbf{Parameter vector.}
+The search varies 13 parameters:
+\[
+\theta=\{\beta,\alpha,b_0,\bar c_0,\bar c_n,\bar h_0,
+\bar h_{\mathrm{jump}},\bar h_n,\psi_{\mathrm{child}},
+\kappa_n,\chi,\theta_0,\theta_n\}.
+\]
+Here \(\beta\) controls saving and old wealth, \(\alpha\) the consumption-space
+tradeoff, \(b_0\) entry wealth/access, \((\bar c_0,\bar c_n)\) child consumption
+needs, \((\bar h_0,\bar h_{\mathrm{jump}},\bar h_n)\) housing needs,
+\(\psi_{\mathrm{child}}\) and \(\kappa_n\) fertility level/dispersion,
+\(\chi\) the owner-service premium, and \((\theta_0,\theta_n)\) bequest level
+and fertility scaling.
+
+\textbf{Preferred diagnostic objective.}
+The previous full room-gap target system had 17 hard moments for 13 parameters.
+For interpretation, the cleaner diagnostic objective is 14 hard moments:
+one more moment than parameters. The three demoted moments remain diagnostics,
+not discarded information.
+
+\begin{center}
+\scriptsize
+\begin{tabular}{p{2.65in}rrrrp{1.55in}}
+\toprule
+Moment & Target & Model & Gap & Weight & Role \\
+\midrule
+TFR & 1.700 & 1.764 & 0.064 & 20.0 & Fertility level \\
+Childless rate & 0.150 & 0.276 & 0.126 & 20.0 & Fertility extensive margin \\
+Overall ownership & 0.575 & 0.490 & -0.085 & 100.0 & Tenure level \\
+Parent-child ownership gap & 0.168 & 0.291 & 0.123 & 45.0 & Family tenure wedge \\
+Housing increment \(0\to1\) child & 0.664 & 1.110 & 0.446 & 14.0 & First-child housing demand \\
+Housing increment \(1\to2\) children & 0.488 & 0.331 & -0.157 & 8.0 & Marginal child housing demand \\
+Young liquid wealth/income & 0.179 & 0.593 & 0.414 & 12.0 & Access and saving \\
+Old nonhousing wealth/income median & 2.230 & 2.059 & -0.172 & 0.8 & Lifecycle saving \\
+Old parent-childless NH wealth gap & 1.007 & 0.291 & -0.717 & 2.0 & Bequest/composition \\
+Childless renter mean rooms & 3.805 & 4.560 & 0.755 & 6.0 & Renter space level \\
+Owner-renter room gap, childless & 2.419 & 1.493 & -0.926 & 12.0 & Space separation \\
+Childless owner share rooms \(\ge 6\) & 0.596 & 0.762 & 0.165 & 25.0 & Owner large-home use \\
+Old ownership & 0.764 & 0.877 & 0.113 & 160.0 & Old retention/exit \\
+Young ownership, ages 25--34 & 0.341 & 0.175 & -0.166 & 80.0 & Entry/access \\
+\midrule
+\multicolumn{6}{l}{\textit{Diagnostics, not hard in the 14-moment rescore}}\\
+Childless owner mean rooms & 6.224 & 6.0 & 6.053 & -0.171 & Implied by renter mean plus gap \\
+Childless renter share rooms \(\ge 6\) & 0.138 & 25.0 & 0.100 & -0.038 & Renter large-unit tail \\
+Old parent-childless ownership gap & 0.083 & 40.0 & 0.146 & 0.063 & Old family tenure diagnostic \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Current best fit.}
+The best retained record under both the 17-moment loss and the 14-moment rescore
+is DE wave 4, task 3, case 492. Its 14-moment loss is \(26.530\); its original
+17-moment loss is \(26.903\). Dropping the three diagnostic moments lowers the
+loss level slightly but does not change the selected basin.
+
+\textbf{Identification map.}
+Fertility level and childlessness discipline \(\kappa_n\),
+\(\psi_{\mathrm{child}}\), and child costs. The two child-housing increments
+discipline \(\bar h_{\mathrm{jump}}\) and \(\bar h_n\). Overall ownership,
+young ownership, parent-child ownership gaps, and young liquid wealth discipline
+entry/access and tenure parameters, especially \(b_0,\chi,\alpha,\beta\).
+Renter rooms, the owner-renter room gap, and owner large-home use discipline the
+space-demand and owner-ladder block. Old ownership and old wealth moments
+discipline old retention, saving, and bequests, especially \(\beta,\theta_0\),
+and \(\theta_n\). This is why removing a hard moment requires a replacement
+moment for the same block.
+
+\textbf{Main tension.}
+The model does not need old households to exit ownership in an absolute sense.
+The target is old ownership \(0.764\); the best model gives \(0.877\). At the
+same time, young ownership should be \(0.341\), but the model gives \(0.175\),
+and the owner-renter room gap should be \(2.419\), but the model gives \(1.493\).
+The hard problem is joint: young entry is too low, old retention is too high,
+and owner-renter space separation is too small.
+
+The all-case frontier is sharper than the scalar loss. Among 263,282 retained
+records, zero cases satisfy young ownership \(\ge 0.20\), old ownership
+\(\le 0.90\), and room gap \(\ge 1.50\). Cases with old ownership and room gap
+close to target usually have young ownership near zero. Cases with young
+ownership close to target usually keep old ownership near one and compress the
+room gap. This suggests the current model lacks a separating mechanism between
+young entry, old retention, and large owner space.
+
+\textbf{Next work.}
+The 14-moment objective is cleaner and should be made explicit if it becomes
+the diagnostic benchmark. But rescoring the existing search shows that this
+alone does not fix the frontier. The next useful work is a focused verification
+of the main frontier records, followed by a mechanism audit of tenure/access,
+starter ownership versus large-owner housing, old downsizing/retention, and
+old nonhousing wealth composition. Another blind global search is lower value
+unless it tests a specific mechanism or an explicitly revised target system.
+
+\end{document}

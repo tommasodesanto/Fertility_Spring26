@@ -62,13 +62,13 @@
 % ============================================================
 \begin{frame}{Overview}
 \small
-\textbf{Model.} Young potential parents decide whether to enter a housing market and choose tenure, housing, and completed fertility; children require goods ($\chi_i$) and housing space ($\kappa$) per child. Old incumbents choose how much owner housing to keep. Rental and owner segments offer different size menus ($\bar h^R<\bar h^O$); buying requires a down payment and payment capacity; segment prices clear aggregate markets with construction.
+\textbf{Model.} Young potential parents decide whether to enter a housing market and choose tenure, housing, and completed fertility; children require goods ($\chi_i$) and housing space ($\kappa$) per child. Old incumbents choose how much owner housing to keep. All floorspace clears in one market at user cost $q$; tenure changes the size menu ($\bar h^R<\bar h^O$) and buying adds down-payment and payment-capacity constraints.
 
 \medskip
 \textbf{Three results.}
 \begin{enumerate}\setlength{\itemsep}{0.45em}
   \item All access frictions collapse into one effective family-housing cap $H_i^m$ per household. A binding cap raises the price of a child through the space the child requires.
-  \item Both markets clear, yet the allocation is inefficient when two measurable gaps are open: constrained young owners value space at $q^O+\zeta_i^{O,F}$, tax-protected old incumbents at $q^O-L_j^\tau$.
+  \item The market clears, yet the allocation is inefficient when two measurable gaps are open: constrained young owners value space at $q+\zeta_i^{O,F}$, tax-protected old incumbents at $q-L_j^\tau$.
   \item The fertility effect of a policy is a transparent local formula: exposure $\times$ pass-through to the cap $\times$ fertility response, plus entry, plus a tenure-switching margin whose sign depends on which tenure is the expensive way to occupy space.
 \end{enumerate}
 \end{frame}
@@ -92,9 +92,9 @@ s_i=h_i-\kappa n_i,
 \qquad
 u_i^Y=\log c_i+\alpha\log s_i+\beta\log n_i .
 \]
-Substituting $h=s+\kappa n$ into a branch budget with user cost $q^m$:
+Substituting $h=s+\kappa n$ into the budget at user cost $q$:
 \[
-c_i+q^m s_i+\underbrace{(\chi_i+\kappa q^m)}_{\text{full price of a child}}n_i=y_i .
+c_i+q s_i+\underbrace{(\chi_i+\kappa q)}_{\text{full price of a child}}n_i=y_i .
 \]
 \smallskip
 Unconstrained, a child costs its goods plus its space at the \emph{market} price. Under binding constraints the space term will carry a premium --- that is the transmission channel. ($\beta\log n_i$ rules out $n_i=0$: intensive margin only.)
@@ -115,8 +115,8 @@ H_i^R=\bar h^R,
 \qquad
 H_i^O=\min\Big\{
 \underbrace{\bar h^O}_{\text{menu}},\;
-\underbrace{\tfrac{A_i(x)\,\rho_p}{(1-\phi)\,q^O}}_{\text{down payment}},\;
-\underbrace{\tfrac{\psi y_i}{q^O}}_{\text{payment-to-income}}
+\underbrace{\tfrac{A_i(x)\,\rho_p}{(1-\phi)\,q}}_{\text{down payment}},\;
+\underbrace{\tfrac{\psi y_i}{q}}_{\text{payment-to-income}}
 \Big\},
 \qquad
 \rho_p=r+\delta^O+\tau^p .
@@ -125,7 +125,7 @@ H_i^O=\min\Big\{
 A renter is capped by the stock; a buyer by whichever of menu, collateral, or debt service is shortest. Policy moves fertility only through the \emph{binding} component of $H_i^m$.
 
 \smallskip
-\footnotesize Note: $P^O=q^O/\rho_p$ enters only the down payment, so a higher property tax \emph{relaxes} the collateral constraint.
+\footnotesize Note: $P=q/\rho_p$ enters the down payment, so a higher property tax \emph{relaxes} the collateral constraint for fixed $q$.
 \end{frame}
 
 % ============================================================
@@ -141,29 +141,27 @@ A renter is capped by the stock; a buyer by whichever of menu, collateral, or de
 \[
 \max\;\log c_j^O+\gamma\log h_j^O+\mathcal B_j(e_j)
 \quad\text{s.t.}\quad
-c_j^O+e_j+(q^O-L_j^\tau)h_j^O=m_j+q^OH_j^0,
+c_j^O+e_j+(q-L_j^\tau)h_j^O=m_j+qH_j^0,
 \quad 0\le h_j^O\le H_j^0,
 \]
-where $L_j^\tau=\tau^pP^O-\tilde\tau_j\tilde P_j\ge0$ is the incumbent assessment discount: market tax cost minus protected tax cost.
+where $L_j^\tau=\tau^pP-\tilde\tau_j\tilde P_j\ge0$ is the incumbent assessment discount: market tax cost minus protected tax cost.
 
 \medskip
-Releasing a unit earns $q^O$; keeping it costs $q^O-L_j^\tau$. The discount is a \alert{subsidy to staying put} --- a tax rule, not a preference. Bequests $\mathcal B_j$ are a preference and are respected throughout.
+Releasing a unit earns $q$; keeping it costs $q-L_j^\tau$. The discount is a \alert{subsidy to staying put} --- a tax rule, not a preference. Bequests $\mathcal B_j$ are a preference and are respected throughout.
 \end{frame}
 
 % ============================================================
 \begin{frame}{Competitive equilibrium}
 \small
-Prices $(q^R,q^O)$, asset price $P^O=q^O/\rho_p$, construction $(I^R,I^O)$ such that:
+User cost $q$, asset price $P=q/\rho_p$, and allocations such that:
 \begin{itemize}\setlength{\itemsep}{0.3em}
   \item households optimize: branch problems, tenure choice, logit entry; old retention;
-  \item competitive construction: $q^m=\Phi_I^m(I^m;Z^m)$ (flow units);
-  \item both segments clear in aggregate:
+  \item all floorspace clears in aggregate:
   \[
-  \Mbar\!\int\!\pi_i^E\1\{o_i{=}R\}h_i\,\dd G_Y=\bar H^R+I^R,
-  \qquad
-  \Mbar\!\int\!\pi_i^E\1\{o_i{=}O\}h_i\,\dd G_Y+\!\int\! h_j^O\,\dd F_O=\bar H^O+I^O;
+  \Mbar\!\int\!\pi_i^E\big[\1\{o_i{=}R\}h_i^R+\1\{o_i{=}O\}h_i^O\big]\,\dd G_Y
+  +\!\int\! h_j^O\,\dd F_O=\bar H;
   \]
-  \item housing payments are transfers closed by lump-sum rebates; only construction uses real resources.
+  \item housing payments are transfers closed by lump-sum rebates; the baseline is an allocation problem over a fixed stock.
 \end{itemize}
 \medskip
 Clearing pins aggregates, not assignment: nothing in these conditions asks whether the marginal family-sized unit is held by the household that values it most.
@@ -184,7 +182,7 @@ For owners the gap decomposes by the constraint that generates it:
 =
 \underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P^O}_{\text{collateral}}
 +
-\underbrace{\frac{\eta_i}{\lambda_i^O}q^O}_{\text{debt service}}
+\underbrace{\frac{\eta_i}{\lambda_i^O}q}_{\text{debt service}}
 +
 \underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{menu}}
 \;=\;
@@ -192,7 +190,7 @@ For owners the gap decomposes by the constraint that generates it:
 \]
 \begin{block}{Proposition 1 (fertility condition)}
 \centering
-$\displaystyle \frac{\beta c_i^m}{n_i^m}=\chi_i+\kappa\big(q^m+\zeta_i^m\big)$
+$\displaystyle \frac{\beta c_i^m}{n_i^m}=\chi_i+\kappa\big(q+\zeta_i^m\big)$
 \end{block}
 \smallskip
 A child's space is priced at the household's \emph{own} shadow value of space: children get more expensive exactly where family-sized space is hard to reach, at unchanged market prices.
@@ -201,19 +199,19 @@ A child's space is priced at the household's \emph{own} shadow value of space: c
 % ============================================================
 \begin{frame}{Two gaps separate the equilibrium from the planner}
 \footnotesize
-Planner: same preferences, same menus, same construction technology; financial (DP/PTI) constraints relaxable at zero marginal resource cost; fertility-neutral; entry and tenure assignments held at equilibrium.
+Planner: same preferences, same stock, same menus; financial (DP/PTI) constraints relaxable at zero marginal resource cost; fertility-neutral; entry and tenure assignments held at equilibrium.
 \begin{center}
 \begin{tikzpicture}[x=1cm,y=1cm]
   \draw[axisline] (0,-1.7) -- (0,1.6);
   \node[lab,rotate=90,anchor=south] at (-0.22,0) {goods value of a unit of space};
   \draw[thick,black!70] (0.3,0) -- (12.4,0);
-  \node[lab,anchor=south east] at (12.45,0.09) {$q^O=Q^O$: market price $=$ planner scarcity cost};
+  \node[lab,anchor=south east] at (12.45,0.09) {$q=Q$: market price $=$ planner scarcity cost};
   \fill[gapred] (2.6,1.25) circle (0.09);
-  \node[ebox,fill=softred,anchor=south] at (2.6,1.45) {constrained young owner:\ $MV_i^O=q^O+\zeta_i^{O,F}$};
+  \node[ebox,fill=softred,anchor=south] at (2.6,1.45) {constrained young owner:\ $MV_i^O=q+\zeta_i^{O,F}$};
   \draw[decorate,decoration={brace,amplitude=4pt},thick,gapred] (2.25,0.02) -- (2.25,1.23) node[midway,left=5pt,lab,text=gapred]{$\zeta_i^{O,F}$};
   \draw[black!45,dashed] (2.6,0) -- (2.6,1.25);
   \fill[accent] (7.6,-1.05) circle (0.09);
-  \node[ebox,fill=softblue,anchor=north] at (7.6,-1.25) {protected old owner:\ $MV_j^O=q^O-L_j^\tau$};
+  \node[ebox,fill=softblue,anchor=north] at (7.6,-1.25) {protected old owner:\ $MV_j^O=q-L_j^\tau$};
   \draw[decorate,decoration={brace,amplitude=4pt},thick,accent] (7.95,-1.03) -- (7.95,-0.02) node[midway,right=5pt,lab,text=accent]{$L_j^\tau$};
   \draw[black!45,dashed] (7.6,0) -- (7.6,-1.05);
   \draw[redflow] (7.0,-0.75) to[out=150,in=-30] (3.3,0.95);
@@ -264,7 +262,7 @@ With a binding cap, $h=H$ and
 \begin{itemize}\setlength{\itemsep}{0.35em}
   \item More space lowers the crowding cost of a child; but the household also buys more housing, squeezing consumption.
   \item Fertility rises at every binding cap iff
-  $\chi\le\kappa q^m/\alpha$: children no more goods-intensive than their parents' bundle (one curve per branch).
+  $\chi\le\kappa q/\alpha$: children no more goods-intensive than their parents' bundle.
 \end{itemize}
 \end{column}
 \end{columns}
@@ -282,7 +280,7 @@ Define the within-branch response $\Psi_i^m=\partial n_i^m/\partial H_i^m$ at a 
 \Omega_i^m,
 \qquad
 \Omega_i^m=
-\frac{\dfrac{\alpha}{s_i^m}+\dfrac{q^m}{c_i^m}}
+\frac{\dfrac{\alpha}{s_i^m}+\dfrac{q}{c_i^m}}
 {\dfrac{\beta}{(n_i^m)^2}+\dfrac{\chi_i^2}{(c_i^m)^2}+\dfrac{\alpha\kappa^2}{(s_i^m)^2}}
 >0 .
 \]
@@ -313,14 +311,14 @@ Let $P_i^m(z)=\partial H_i^m/\partial z$ (pass-through to the cap) and $\mathcal
 \begin{itemize}\setlength{\itemsep}{0.35em}
   \item Exposure $\times$ pass-through $\times$ response, plus entry (births net of outside-option fertility $\bar n_i^E$).
   \item The cap is a minimum: a policy that improves a slack component has $P_i^m=0$ --- no effect through this channel. Price-type policies are outside the fixed-price formula.
-  \item Left out: price/construction responses, fiscal costs $\Xi^\Pi$ (general equilibrium) --- and tenure switching, which is first order at fixed prices. Next slide.
+  \item Left out: price responses, active-set changes, fiscal costs $\Xi^\Pi$ --- and tenure switching, which is first order at fixed prices. Next slide.
 \end{itemize}
 \end{frame}
 
 % ============================================================
 \begin{frame}{Tenure switching at the boundary}
 \small
-Tenure is discrete, so switchers' bundles---and fertility---jump at $W_i^R=W_i^O$. The size of the margin is quantitative; the sign is theory.
+Tenure is discrete, so switchers' bundles---and fertility---can jump at $W_i^R=W_i^O$. In the baseline, $q^R=q^O=q$ and the jump is zero. With tenure-cost wedges, the size of the margin is quantitative; the sign is theory.
 
 \begin{block}{Proposition (fertility at a tenure switch)}
 At indifference between a cheap branch ($q^A$) and an expensive branch ($q^B>q^A$): the cheap branch's cap binds, and the expensive branch has more housing, more slack space, less consumption. If $\chi\le\kappa q^A/\alpha$, it also has higher fertility: $n_B>n_A$.
@@ -328,7 +326,7 @@ At indifference between a cheap branch ($q^A$) and an expensive branch ($q^B>q^A
 The only reason to pay more per unit of space is to get more space; space-intensive children come with it. Three rent/own cases:
 \begin{itemize}\setlength{\itemsep}{0.3em}
   \item $q^O>q^R$: switchers into ownership upsize, $n_O>n_R$ --- switching term $\ge0$; the fixed-tenure formula is a \textbf{lower bound} for owner-access policies.
-  \item $q^O=q^R$: allocations continuous at the boundary, no jump --- the formula is \textbf{exact}.
+  \item $q^O=q^R=q$: allocations continuous at the boundary, no jump --- the baseline formula is \textbf{exact}.
   \item $q^O<q^R$: switchers downsize into cheaper owned units, $n_O<n_R$ --- switching term $\le0$; an \textbf{upper bound}. Which case applies is one benchmark number: owner user cost vs.\ rent per unit.
 \end{itemize}
 \end{frame}
@@ -341,8 +339,8 @@ The only reason to pay more per unit of space is to get more space; space-intens
 \textbf{Pass (when the named component binds)}
 \footnotesize
 \begin{itemize}\setlength{\itemsep}{0.35em}
-  \item Down-payment grants, LTV relief ($A_i$, $\phi$): $P_i^O=\rho_p/[(1-\phi)q^O]$ when collateral binds.
-  \item Payment-to-income relaxation ($\psi$): $P_i^O=y_i/q^O$ when debt service binds.
+  \item Down-payment grants, LTV relief ($A_i$, $\phi$): $P_i^O=\rho_p/[(1-\phi)q]$ when collateral binds.
+  \item Payment-to-income relaxation ($\psi$): $P_i^O=y_i/q$ when debt service binds.
   \item Family-sized rental supply or conversion ($\bar h^R$): $P_i^R=1$ for menu-capped renters.
   \item Assessment reform: shrinks $L_j^\tau$, releases old-held space.
 \end{itemize}
@@ -356,7 +354,7 @@ The only reason to pay more per unit of space is to get more space; space-intens
   \item Liquidity to households with slack constraints: pledgeable wealth has no income effect.
 \end{itemize}
 \smallskip
-\textbf{Property tax is two-sided}: the level relaxes young down payments (lower $P^O$); assessment \emph{protection} is what creates old lock-in.
+\textbf{Property tax is two-sided}: the level relaxes young down payments for fixed $q$ (lower $P$); assessment \emph{protection} is what creates old lock-in.
 \end{column}
 \end{columns}
 \end{frame}
@@ -364,9 +362,9 @@ The only reason to pay more per unit of space is to get more space; space-intens
 % ============================================================
 \begin{frame}{Takeaways}
 \begin{enumerate}\setlength{\itemsep}{0.9em}
-  \item \textbf{Family-housing access is a fertility margin.} Children are priced at the household's own shadow value of space, $\beta c_i/n_i=\chi_i+\kappa(q^m+\zeta_i^m)$; under $\chi_i\le\kappa q^m/\alpha$, relaxing a binding cap raises fertility.
+  \item \textbf{Family-housing access is a fertility margin.} Children are priced at the household's own shadow value of space, $\beta c_i/n_i=\chi_i+\kappa(q+\zeta_i^m)$; under $\chi_i\le\kappa q/\alpha$, relaxing a binding cap raises fertility.
   \item \textbf{Two measurable gaps separate equilibrium from the planner}: the young financing gap $\zeta_i^{O,F}$ and the old assessment discount $L_j^\tau$. Reallocating one unit old $\to$ young is worth $\zeta_i^{O,F}+L_j^\tau$. The young mechanism stands without the old one.
-  \item \textbf{Policy works only through the binding component of $H_i^m$.} Local effect $=$ exposure $\times$ pass-through $\times$ response $+$ entry; under equal scaling $\Psi_i^m\propto\zeta_i^m$. Tenure switching reinforces owner-access policies when ownership is the expensive family-space segment, and vanishes at price parity.
+  \item \textbf{Policy works only through the binding component of $H_i^m$.} Local effect $=$ exposure $\times$ pass-through $\times$ response $+$ entry; under equal scaling $\Psi_i^m\propto\zeta_i^m$. Tenure switching vanishes in the one-price baseline and becomes signed only when tenure wedges create $q^O\ne q^R$.
 \end{enumerate}
 \end{frame}
 
@@ -401,15 +399,15 @@ n^u=\frac{\beta y}{(1+\alpha+\beta)(\chi+\kappa q)},
 
 \begin{frame}{Appendix: equal scaling and the access gap}
 \small
-At a binding cap, $\alpha c_i^m/s_i^m=q^m+\zeta_i^m$. Under equal scaling $\chi_i=\kappa q^m/\alpha$, the numerator of $\Psi_i^m$ factors:
+At a binding cap, $\alpha c_i^m/s_i^m=q+\zeta_i^m$. Under equal scaling $\chi_i=\kappa q/\alpha$, the numerator of $\Psi_i^m$ factors:
 \[
-\frac{\alpha\kappa}{(s_i^m)^2}-\frac{\chi_i q^m}{(c_i^m)^2}
+\frac{\alpha\kappa}{(s_i^m)^2}-\frac{\chi_i q}{(c_i^m)^2}
 =
 \frac{\kappa}{\alpha}
-\Big(\frac{\alpha}{s_i^m}-\frac{q^m}{c_i^m}\Big)
-\Big(\frac{\alpha}{s_i^m}+\frac{q^m}{c_i^m}\Big),
+\Big(\frac{\alpha}{s_i^m}-\frac{q}{c_i^m}\Big)
+\Big(\frac{\alpha}{s_i^m}+\frac{q}{c_i^m}\Big),
 \qquad
-\frac{\alpha}{s_i^m}-\frac{q^m}{c_i^m}=\frac{\zeta_i^m}{c_i^m},
+\frac{\alpha}{s_i^m}-\frac{q}{c_i^m}=\frac{\zeta_i^m}{c_i^m},
 \]
 so $\Psi_i^m=\frac{\kappa}{\alpha}\,\frac{\zeta_i^m}{c_i^m}\,\Omega_i^m$ with $\Omega_i^m>0$.
 The envelope value of relaxing the cap is $\Theta_i^m=\partial W_i^m/\partial H_i^m=\lambda_i^m\zeta_i^m$ with $\lambda_i^m=1/c_i^m$, and the logit entry response is $\partial\pi_i^E/\partial W_i^Y=\pi_i^E(1-\pi_i^E)/\kappa_E$.

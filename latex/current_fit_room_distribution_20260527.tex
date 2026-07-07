@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\title{Current Best-Fit Slide Diagnostics}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Source Runs}
+\begin{itemize}
+\item \textbf{hR8\_low\_loss}: loss 8.860, job 19, eval 31, $h_R^{\max}=8.0$.
+\item \textbf{hR8\_chi\_owner}: loss 10.588, job 7, eval 21, $h_R^{\max}=8.0$.
+\item \textbf{denseH\_diag}: loss 58.097, job 2, eval 7, $h_R^{\max}=8.0$.
+\end{itemize}
+\section*{Moment Table}
+\begin{table}[H]\centering\small
+\begin{tabular}{lrrrrr}
+\toprule
+Moment & Target & hR8\_low\_loss & hR8\_chi\_owner & denseH\_diag \\
+\midrule
+TFR & 1.700 & 1.688 & 1.748 & 1.764 \\
+Childless & 0.150 & 0.157 & 0.131 & 0.127 \\
+Age first birth & 26.000 & 33.958 & 33.702 & 33.629 \\
+Ownership & 0.575 & 0.363 & 0.420 & 0.402 \\
+Ownership gradient & 0.186 & 0.152 & 0.165 & -0.130 \\
+Family ownership gap & 0.168 & 0.143 & 0.134 & 0.127 \\
+Rooms, 0 to 1 child & 0.664 & 0.829 & 1.081 & 1.178 \\
+Rooms, 1 to 2 children & 0.566 & -0.096 & -0.221 & -0.378 \\
+Old-age ownership & 0.764 & 0.510 & 0.748 & 0.781 \\
+Old parent-childless gap & 0.070 & 0.074 & 0.076 & 0.003 \\
+Center share & 0.450 & 0.466 & 0.471 & 0.457 \\
+Rent ratio C/P & 1.140 & 1.086 & 1.151 & 1.154 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\section*{Slide Figure Bundle}
+\subsection*{hR8\_low\_loss}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_low_loss/benchmark_lifecycle_compare.png}
+\caption{Lifecycle fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_low_loss/market_equilibrium.png}
+\caption{Market equilibrium}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_low_loss/housing_choice_heatmap.png}
+\caption{Housing choice heatmap}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_low_loss/housing_size_fit.png}
+\caption{Appendix housing-size fit}
+\end{figure}
+\subsection*{hR8\_chi\_owner}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_chi_owner/benchmark_lifecycle_compare.png}
+\caption{Lifecycle fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_chi_owner/market_equilibrium.png}
+\caption{Market equilibrium}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_chi_owner/housing_choice_heatmap.png}
+\caption{Housing choice heatmap}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/hR8_chi_owner/housing_size_fit.png}
+\caption{Appendix housing-size fit}
+\end{figure}
+\subsection*{denseH\_diag}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/denseH_diag/benchmark_lifecycle_compare.png}
+\caption{Lifecycle fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/denseH_diag/market_equilibrium.png}
+\caption{Market equilibrium}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/denseH_diag/housing_choice_heatmap.png}
+\caption{Housing choice heatmap}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.92\textwidth]{../output/model/presentation_ready_20260527/fit_note/denseH_diag/housing_size_fit.png}
+\caption{Appendix housing-size fit}
+\end{figure}
+\end{document}

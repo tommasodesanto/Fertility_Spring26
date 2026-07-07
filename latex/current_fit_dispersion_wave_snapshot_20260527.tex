@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.65in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\title{Quick Dispersion-Wave Fit Snapshot}
+\date{\today}
+\begin{document}
+\maketitle
+\section*{Record}
+\begin{itemize}
+\item Label: \textbf{disp\_k020\_job008\_eval17}.
+\item Source record: \texttt{output/model/dispersion\_wave\_snapshot\_20260527/records/k020\_job008\_eval17\_best.json}.
+\item Run tag: \texttt{py\_direct\_dispersion\_b2\_k020\_s090\_c006\_20260527}; job 8; eval 17; loss 77.581.
+\item $h_R^{\max}=8.0$; tenure/product logit $\kappa^T=0.200$; owner size cost 0.0060.
+\item Owner ladder: [2, 4, 5.5, 7, 8.5, 10].
+\end{itemize}
+\section*{Parameters}
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{lr}
+\toprule
+parameter & value \\
+\midrule
+beta & 0.9654 \\
+b\_entry\_fixed & 0.1458 \\
+psi\_child & 0.1198 \\
+h\_bar\_jump & 1.694 \\
+h\_bar\_n & 0.7141 \\
+c\_bar\_n & 0.2049 \\
+kappa\_fert & 7.995 \\
+chi & 1.09 \\
+kappa\_loc & 2.036 \\
+mu\_move & 7.212 \\
+theta0 & 0.6915 \\
+theta\_n & 0.6799 \\
+h\_bar\_0 & 2.562 \\
+E\_C & 0.1582 \\
+r\_bar\_C & 0.06294 \\
+tenure\_choice\_kappa & 0.2 \\
+owner\_h\_bar\_scale & 0.9 \\
+owner\_size\_cost & 0.006 \\
+hR\_max & 8 \\
+p\_P & 0.4609 \\
+p\_C & 0.5438 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\section*{Targets And Model Moments}
+\begin{table}[H]\centering\scriptsize
+\begin{tabular}{lrrrr}
+\toprule
+label & target & weight & model & diff \\
+\midrule
+TFR & 1.7 & 20 & 1.798 & 0.09758 \\
+Childless & 0.15 & 20 & 0.1263 & -0.02373 \\
+Age first birth & 26 & 12 & 33.61 & 7.61 \\
+TFR gradient & 0.133 & 10 & 0.1384 & 0.0054 \\
+Ownership & 0.5755 & 20 & 0.6242 & 0.04876 \\
+Ownership gradient & 0.186 & 18 & -0.05903 & -0.2451 \\
+Family ownership gap & 0.1677 & 16 & 0.0965 & -0.07116 \\
+Rooms 0->1 & 0.6644 & 8 & 1.276 & 0.6115 \\
+Rooms 1->2 & 0.5658 & 2 & -0.5819 & -1.148 \\
+Young wealth/income & 0.6 & 12 & 0.7193 & 0.1193 \\
+Center nonparents & 0.494 & 8 & 0.4548 & -0.03917 \\
+Center new parents & 0.416 & 8 & 0.438 & 0.02202 \\
+Migration rate & 0.032 & 8 & 0.02502 & -0.006985 \\
+Old ownership & 0.7643 & 16 & 0.7041 & -0.06014 \\
+Old parent gap & 0.07 & 16 & 0.02299 & -0.04701 \\
+Center share & 0.45 & 250 & 0.4863 & 0.03626 \\
+Rent C/P & 1.14 & 250 & 1.18 & 0.03984 \\
+Owner <=6 & 0.5344 & 20 & 0.3509 & -0.1835 \\
+Owner 7-8 & 0.2756 & 20 & 0.4999 & 0.2243 \\
+Owner >=9 & 0.19 & 20 & 0.1492 & -0.04086 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\section*{Plots}
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\textwidth]{../output/model/dispersion_wave_snapshot_20260527/quick_note/key_fit.png}
+\caption{Key moment fit}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\textwidth]{../output/model/dispersion_wave_snapshot_20260527/quick_note/owner_room_bins.png}
+\caption{Room-bin discipline}
+\end{figure}
+\begin{figure}[H]\centering
+\includegraphics[width=0.88\textwidth]{../output/model/dispersion_wave_snapshot_20260527/quick_note/absolute_errors.png}
+\caption{Largest raw moment gaps}
+\end{figure}
+\end{document}
