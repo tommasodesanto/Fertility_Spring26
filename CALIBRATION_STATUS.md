@@ -1,6 +1,24 @@
 # Calibration Status
 
-Updated: `2026-07-06` (grid-convergence finding; mechanics-first plan; Phase 1 mechanics memo DONE)
+Updated: `2026-07-07` (honest Nb=120 baseline; cap profile; numerics fixes verified)
+
+## July 7 morning: honest Nb=120 baseline 6.31; cap profile; numerics program done
+
+Overnight torch program (all healthy): three self-reseeding polish chains at
+Nb=120 took the canonical theta 7.4273 -> 6.3105 at the external cap 6.0
+(same basin, local refinement; DE arm sterile). Cap profile {5.5: 7.69,
+6.0: 6.31, 6.5: 6.24 (still improving), 7.0: 7.15} — shallow valley within
+half a room of the external DUE-rule value (measured at exactly 6.0 in our
+ACS sample, CAP_EXTERNAL_NOTE); both flanks rise sharply so the cap is
+identified. Remaining misses at the honest baseline are the structural
+three: old-age own 0.892 vs 0.764 (contrib 2.63), own_rate_2534 0.226 vs
+0.341 (1.06), young wealth 0.354 vs 0.179 — the D11/D12 stack. Numerics:
+F1+F2 verified (gated, off-path bit-identical; fixed-theta A/B shows the
+old record leaned on the bias -> Phase 3 runs fixes-ON); F3 approved
+verification-only (correct but 33x slow). Morning read:
+output/model/fable_size_mapping_audit_20260701/MORNING_MEMO_20260707.md
+(fit tables, decision stack, Phase-3 spec draft). Prep docs for D11/D12/
+Phase-3 in the same folder. Warm starts: COPY inputs/overnight_20260707/.
 
 ## July 6 afternoon: Phase 1 mechanics mission COMPLETE (memo delivered)
 
