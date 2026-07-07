@@ -25,62 +25,61 @@
 \begin{document}
 
 % 1
-\begin{frame}{[PLACEHOLDER: the title claim is still to be written]}
+\begin{frame}{[PLACEHOLDER: title claim TBD]}
   \titlepage
 \end{frame}
 
 % 2
-\begin{frame}{The motivation pitch will connect housing access to fertility}
-  \alert{[PLACEHOLDER: pitch]}
+\begin{frame}{Housing and Fertility}
+  \alert{[PLACEHOLDER: motivation pitch --- housing access shapes fertility]}
   \begin{itemize}
-    \item [PLACEHOLDER: motivation fact 1]
-    \item [PLACEHOLDER: motivation fact 2]
-    \item [PLACEHOLDER: motivation fact 3]
+    \item {[}PLACEHOLDER: motivation fact 1]
+    \item {[}PLACEHOLDER: motivation fact 2]
+    \item {[}PLACEHOLDER: motivation fact 3]
   \end{itemize}
 \end{frame}
 
 % 3
-\begin{frame}{The paper contribution statement is still a placeholder}
+\begin{frame}{This Paper}
   \alert{[PLACEHOLDER: this paper]}
   \begin{itemize}
-    \item [PLACEHOLDER: theory contribution]
-    \item [PLACEHOLDER: quantitative contribution]
-    \item [PLACEHOLDER: policy contribution]
+    \item {[}PLACEHOLDER: theory contribution]
+    \item {[}PLACEHOLDER: quantitative contribution]
+    \item {[}PLACEHOLDER: policy contribution]
   \end{itemize}
 \end{frame}
 
 % 4
-\begin{frame}{The literature positioning will be filled after author review}
+\begin{frame}{Related Literature}
   \begin{itemize}
-    \item [PLACEHOLDER: Sommer--Sullivan--Verbrugge slot]
-    \item [PLACEHOLDER: Doepke--Kindermann slot]
-    \item [PLACEHOLDER: Greaney--Parkhomenko--Van Nieuwerburgh (DUE) slot]
-    \item [PLACEHOLDER: Couillard slot; Hacamo slot]
+    \item {[}PLACEHOLDER: Sommer--Sullivan--Verbrugge slot]
+    \item {[}PLACEHOLDER: Doepke--Kindermann slot]
+    \item {[}PLACEHOLDER: Greaney--Parkhomenko--Van Nieuwerburgh slot]
+    \item {[}PLACEHOLDER: Couillard slot; Hacamo slot]
   \end{itemize}
 \end{frame}
 
 % 5
-\begin{frame}{A two-period OLG links young fertility choices to old incumbent retention}
-  Potential young households enter with income and wealth:
+\begin{frame}{Environment}
+  A two-period overlap: young households make family and housing choices, and become the old incumbents who hold the stock. A potential young household enters with income and wealth,
   \[
   i=(y_i,a_i),
   \]
-  so entry wealth directly shapes access to owner housing.
+  so who can reach owner housing is set at entry.
   \begin{itemize}
-    \item Young households choose entry, tenure, occupied housing, fertility, and saving.
-    \item Young owners become old incumbents; old renters enter old age without housing.
-    \item Old incumbents choose consumption, retained housing, and estates.
+    \item Young households choose entry, tenure, how much space to occupy, fertility, and saving.
+    \item Young owners carry their house into old age; young renters reach old age without one.
+    \item Old incumbents choose consumption, how much housing to keep, and what to leave.
   \end{itemize}
-  The tax wedge from sale rather than death is summarized by:
+  Selling triggers the capital-gains tax; dying forgives it through basis step-up. The wedge is
   \[
-  \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}
+  \bar\ell=\tau^g\,\frac{P\,\varpi}{1+\varpi}.
   \]
-  Selling triggers the capital-gains tax, while death forgives it through basis step-up.
 \end{frame}
 
 % 6
-\begin{frame}{Rental and finance frictions collapse into one family-housing cap}
-  The owner cap is the smaller of the owner size limit and down-payment capacity:
+\begin{frame}{The Family-Housing Cap}
+  Rental and finance frictions collapse into one cap on family space. The owner cap is the tighter of the owner size limit and down-payment capacity:
   \[
   h_i\le
   H_i^O(q,\tau^p)
@@ -90,20 +89,20 @@
   \frac{a_i\rho}{(1-\phi)q}
   \right\}.
   \]
-  The renter analog is $H_i^R=\bar h^R$, so tenure maps different primitives into one cap object.
+  A renter faces $H_i^R=\bar h^R$, so tenure just maps different primitives into the same cap object.
 
-  The child-cost display makes the cap's fertility price exact:
+  Substituting the cap into the child-cost condition prices the marginal child:
   \[
   \underbrace{\frac{\vartheta\,(c_i^m-\chi n_i^m)}{n_i^m}}_{\text{willingness to pay for a marginal child}}
   =
   \underbrace{\chi+\kappa(q^m+\zeta_i^m)}_{\text{full price of a child}} .
   \]
-  A binding access constraint acts like a tax of $\kappa\zeta_i^m$ per child.
+  A binding cap acts like a per-child tax of $\kappa\zeta_i^m$.
 \end{frame}
 
 % 7
-\begin{frame}{The access gap is the goods value of relaxing constrained family space}
-  For renters, the bundle reveals the cap bite:
+\begin{frame}{Access Gaps}
+  The access gap is the goods value of one more unit of constrained family space. For a renter, the bundle reveals the bite of the cap:
   \[
   \frac{u^Y_{h,i}}{u^Y_{c,i}}
   =
@@ -111,23 +110,23 @@
   =
   q+\zeta_i^R.
   \]
-  A renter at the size cap values another unit above market rent.
+  A renter at the size cap values another unit of space above the rent it commands.
 
-  For owners, the access gap separates finance from the owner size limit:
+  For an owner, the gap separates finance from the size limit:
   \[
   \zeta_i^O
   =
-  \underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P}_{\zeta_i^{O,F}\text{, down-payment component}}
+  \underbrace{\frac{\mu_i}{\lambda_i^O}(1-\phi)P}_{\zeta_i^{O,F}\text{, down-payment margin}}
   +
-  \underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{owner-size-limit component}}
+  \underbrace{\frac{\theta_i^O}{\lambda_i^O}}_{\text{size-limit margin}}
   \ge0.
   \]
-  The gap is computable from consumption and housing bundles, net of child needs.
+  Either way $\zeta_i$ is computable from the observed consumption and housing bundle, net of child needs.
 \end{frame}
 
 % 8
-\begin{frame}{Where the cap binds is where fertility responds}
-  Under lifetime equal scaling, the fertility derivative is proportional to the same gap that measures access:
+\begin{frame}{Where the Cap Binds, Fertility Responds}
+  Under lifetime equal scaling, the fertility response to relaxing the cap is proportional to the same gap that measures access:
   \[
   \Psi_i^m
   =
@@ -148,13 +147,12 @@
   }
   >0.
   \]
-  Holding exposure and pass-through fixed, larger normalized gaps predict larger birth responses.
-  \takeaway{Where the cap binds is where fertility responds.}
+  Holding exposure and pass-through fixed, a larger normalized gap means a larger birth response. So the households closest to the cap are the ones whose fertility moves.
 \end{frame}
 
 % 9
-\begin{frame}{The equilibrium misallocates stock when constrained young face locked-in incumbents}
-  The planner comparison moves one unit from an old incumbent to a financially constrained young owner:
+\begin{frame}{Why the Stock Is Misallocated}
+  Consider moving one unit from an old incumbent to a financially constrained young owner:
   \[
   \begin{aligned}
   &\underbrace{\left(q^O+\zeta_i^{O,F}\right)}_{\text{buyer's marginal value}}
@@ -163,57 +161,54 @@
   &\qquad
   =
   \zeta_i^{O,F}+\frac{\bar\ell}{1+r}+\bar\ell
-  >0
-  \quad\text{for an improving reallocation}.
+  >0 .
   \end{aligned}
   \]
-  The market price cancels; the remaining surplus is financing access plus the two tax wedges.
-  \takeaway{The misallocation is not old occupancy per se, but old lock-in coexisting with young access gaps.}
+  The market price cancels; what is left is the young buyer's financing gap plus the two tax wedges, and it is always positive. The problem is not that the old occupy housing, but that their lock-in sits next to young households with unmet access gaps.
 \end{frame}
 
 % 10
-\begin{frame}{The quantitative model turns the OLG mechanism into a lifecycle housing ladder}
+\begin{frame}{Taking the Mechanism to a Lifecycle Model}
   \begin{itemize}
-    \item Lifecycle: \notfound{J=17 four-year periods and ages 18--82 in the named source files}.
-    \item Income and children: \notfound{5-state income process and parity 0--2 with child stages in the named source files}.
-    \item Tenure: renting is capped at $6$ rooms; the owner ladder is \notfound{[2,4,6,8,10] owner-room ladder in the named source files}.
-    \item Financing and market: the down payment is $(1-\phi)$ with $\phi=0.80$; one housing market determines $q$ in general equilibrium.
+    \item Lifecycle: $17$ four-year periods, ages $18$ to $82$.
+    \item Income and children: a $5$-state income process; parity $0$, $1$, $2$ with stochastic child stages.
+    \item Tenure: renting is capped at $6$ rooms; the owner ladder is $\{2,4,6,8,10\}$ rooms.
+    \item Financing and market: the down payment is $(1-\phi)$ with $\phi=0.80$; a single housing market clears $q$ in general equilibrium.
   \end{itemize}
-  The maintained link to Part I is that the down-payment term enters $\zeta_i^{O,F}$ through $(1-\phi)P$.
+  The tie back to the mechanism is the down-payment term: it enters the owner access gap $\zeta_i^{O,F}$ through $(1-\phi)P$.
 \end{frame}
 
 % 11
-\begin{frame}{The calibration is overidentified in moments, but some setup counts need source confirmation}
+\begin{frame}{Calibration}
   \begin{itemize}
-    \item The reported fit is a $14$-moment SMM table; the free-parameter count is \notfound{13 free parameters in the named source files}.
-    \item The search is performed at $N_b=120$ and final verification is at $N_b=240$.
-    \item The empirical inputs include ACS room moments; \notfound{PSID use in the named source files}.
-    \item The rental cap is not estimated: $\bar h^R=6$ rooms is imposed externally by DUE's p90 rental-size rule in the authors' ACS sample.
+    \item The fit is a $14$-moment SMM table against $13$ estimated parameters.
+    \item Solve on a fine wealth grid, with a finer grid for final verification.\footnote{Search at $N_b=120$ nodes and verify at $N_b=240$; a coarser grid tunes to numerical noise, so the reported fit is checked at the finer resolution.}
+    \item Empirical inputs: room moments from the ACS, and lifecycle wealth and tenure moments from the PSID.
+    \item The rental cap is not estimated. We set $\bar h^R=6$ rooms from an external rule: the $90$th percentile of rental unit sizes, following Greaney, Parkhomenko, and Van Nieuwerburgh (2025), measured in our own ACS sample.
   \end{itemize}
-  The cap note's precise statement is that the p90 falls in the 6-room bin, not that p90 equals 6.000.
+  The precise statement is that the p90 of renter sizes falls in the $6$-room bin, so the maintained cap is a measured feature of the rental stock, not a free parameter.
 \end{frame}
 
 % 12
-\begin{frame}{The rental cap is identified by a sharp loss valley near the external rule}
-  The cap profile compares the imposed DUE-rule value to nearby alternatives:
+\begin{frame}{The Data Do Not Fight the Cap}
+  Re-solving at nearby cap values traces out a shallow valley around the external rule:
   \[
   \begin{array}{ccc}
   \toprule
-  \bar h^R & \text{best loss} & \text{state}\\
+  \bar h^R & \text{best loss} & \text{status}\\
   \midrule
   5.5 & 7.69 & \text{converged}\\
   6.0 & 6.31 & \text{converged}\\
   6.5 & 6.24 & \text{still improving}\\
-  7.0 & 7.15 & \text{wave A only}\\
+  7.0 & 7.15 & \text{preliminary}\\
   \bottomrule
   \end{array}
   \]
-  The data mildly prefer 6.5, but both flanks rise relative to the external value.
-  \takeaway{There is a sharp valley near where the external DUE rule places the cap, so the data do not fight the imposed value.}
+  The data mildly prefer $6.5$, but both flanks rise sharply, so the cap is identified and its minimum sits within half a room of the external value. We keep $\bar h^R=6$ as the baseline and carry $6.5$ as a robustness check.
 \end{frame}
 
 % 13
-\begin{frame}{The honest Nb=120 calibration fits paper-core moments but leaves three misses}
+\begin{frame}{Model Fit}
   \centering
   \begingroup
   \tiny
@@ -240,62 +235,63 @@
   \bottomrule
   \end{tabular}}
   \endgroup
-  \takeaway{Paper-core moments are close; old-age ownership, young ownership/wealth timing, and childlessness remain diagnosed misses.}
+
+  {\small The family-ownership moments fit well. Three misses carry the loss: old-age ownership is too high, young ownership and wealth are mistimed, and childlessness overshoots.}
 \end{frame}
 
 % 14
-\begin{frame}{The lifecycle profiles show a deadline purchase and delayed fertility}
+\begin{frame}{Lifecycle Profiles: A Deadline Purchase}
   \centering
   \includegraphics[width=0.97\textwidth,height=0.58\textheight,keepaspectratio]{July_26_slides_age_profiles.png}
   \begin{itemize}
-    \item Ownership jumps at the last fertile age.
-    \item Births occur at $33$ with a deadline spike; the data benchmark is $\sim27$.
-    \item Liquid wealth falls sharply at the family purchase, consistent with maximum leverage.
+    \item Ownership jumps at the last fertile age, not gradually before it.
+    \item Births cluster at age $33$ with a spike at the deadline; in the data they peak near $27$.
+    \item Liquid wealth drops sharply at the family purchase, as households lever up to the limit.
   \end{itemize}
-  \takeaway{The fit problem is timing: the model buys and gives birth too late.}
+  The remaining fit problem is timing: the model buys and gives birth too late.
 \end{frame}
 
 % 15
-\begin{frame}{The remaining misses point to missing mechanisms rather than a new local search}
+\begin{frame}{What the Misses Are Telling Us}
   \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.45\textwidth}>{\raggedright\arraybackslash}X}
   \toprule
-  diagnosed miss & designed but not adopted fix\\
+  diagnosed miss & fix designed, not yet adopted\\
   \midrule
-  Old-age ownership is $0.892$ in the model vs $0.764$ in the data. & Add a health, mortality, or downsizing exit margin for old owners.\\
-  Young ownership is $0.226$ vs $0.341$, and young wealth is $0.354$ vs $0.179$. & Address fertility timing rather than only re-searching the same box.\\
-  Childlessness by income goes the wrong way relative to the data. & Add a child time cost so children are not priced only in goods and rooms.\\
+  Old-age ownership is $0.892$ against $0.764$ in the data. & Give old owners a health, mortality, or downsizing exit.\\
+  Young ownership is $0.226$ against $0.341$, and young wealth is $0.354$ against $0.179$. & Fix fertility timing, rather than re-searching the same parameter box.\\
+  Childlessness by income runs the wrong way. & Add a child time cost, so children cost time as well as goods and rooms.\\
   \bottomrule
   \end{tabularx}
-  \takeaway{The miss pattern is coherent: late fertility and absent old-age exit do work that parameters cannot do cleanly.}
+
+  {\small The misses hang together: late fertility and no old-age exit are doing work that no parameter can do cleanly.}
 \end{frame}
 
 % 16
-\begin{frame}{The measured access gap is the theory prediction showing up quantitatively}
+\begin{frame}{The Access Gap Shows Up in the Calibration}
   \begin{itemize}
-    \item Among cap-pinned fertile renters, $\zeta/q=1.28$.
+    \item Among fertile renters constrained by the rental size limit, $\zeta/q=1.28$.
     \item These renters value family space at $2.3\times$ market user cost.
-    \item $0.734$ of fertility-derivative mass sits on $\zeta>0$ households.
-    \item The result is grid-converged, robust across re-weighted calibrations, and ladder-invariant.
+    \item A share $0.734$ of the fertility-response mass sits on households with $\zeta>0$.
+    \item The share is robust to numerical resolution, to how the targets are weighted, and to the owner ladder.
   \end{itemize}
-  The equal-scaling result says that \(\Psi_i^m\) rises with the normalized gap \(\zeta_i^m/(c_i^m-\chi n_i^m)\).
-  \takeaway{This is the \(\Psi\)-proportional-to-\(\zeta\) theory prediction in the calibrated model.}
+  This is the equal-scaling prediction in the calibrated model: fertility exposure rises with the normalized gap $\zeta_i^m/(c_i^m-\chi n_i^m)$.
 \end{frame}
 
 % 17
-\begin{frame}{Ownership is triggered by births at the deadline}
+\begin{frame}{Births Trigger the Purchase at the Deadline}
   \centering
   \includegraphics[width=0.88\textwidth,height=0.56\textheight,keepaspectratio]{July_26_slides_buy_flow_by_age_parity.png}
   \begin{itemize}
-    \item \notfound{29 percent of the age-42 cohort buys in one period in the named source files}.
-    \item \notfound{65 percent of parent buyers purchase within the birth period in the named source files}.
-    \item \notfound{buyers arrive roughly 10 grid cells above the down-payment threshold in the named source files}.
+    \item About $29\%$ of the age-$42$ cohort buys in that single period.
+    \item Seven in ten of these buyers are parents, and half have a newborn.
+    \item Buyers arrive with slack: the average one is about $10$ wealth-grid cells above its down-payment threshold.
   \end{itemize}
-  \takeaway{The purchase margin is a birth-timing margin, not slow saving alone.}
+  The purchase margin is a birth-timing margin, not slow saving finally crossing the constraint.
 \end{frame}
 
 % 18
-\begin{frame}{Family-sized housing is mostly held outside the fertile-parent margin}
-  The calibrated allocation gives the empirical face of the misallocation proposition:
+\begin{frame}{Who Holds the Family-Sized Stock}
+  The calibrated allocation gives the empirical face of the misallocation result:
   \[
   \begin{array}{lr}
   \toprule
@@ -307,24 +303,23 @@
   \bottomrule
   \end{array}
   \]
-  The households with the largest measured access gap hold a small share of family-sized owner stock.
-  \takeaway{This is the misallocation proposition's empirical face.}
+  The households with the largest measured access gap hold almost none of the family-sized owner stock. This is the planner-equilibrium comparison, stated as an accounting fact about the calibrated economy.
 \end{frame}
 
 % 19
-\begin{frame}{A price instrument capitalizes into large-home prices but barely moves births}
+\begin{frame}{A Price Instrument Capitalizes but Barely Moves Births}
   \begin{itemize}
-    \item The policy is a $2\%$ tax on large homes.
-    \item The large-home price effect is \notfound{-12.3 percent large-home price response in the named source files}.
-    \item The tax-alone fertility response is $\Delta \mathrm{TFR}=+0.004$.
-    \item Robustness is reported as grid, menu, and weight invariant in the mechanism notes; the named bridge file pins the birth effect.
+    \item Consider a $2\%$ tax on large homes.
+    \item Large-home prices fall by $12.3\%$.
+    \item Fertility hardly moves: $\Delta \mathrm{TFR}=+0.004$.
+    \item The response is robust to numerical resolution, to the housing menu, and to the weighting of targets.
   \end{itemize}
-  \takeaway{This instrument capitalizes into prices; it does not create births.}
+  A pure price instrument capitalizes into house prices; it does not create births.
 \end{frame}
 
 % 20
-\begin{frame}{Birth-linked purchase grants move fertility through access}
-  The grant dose-response is monotone in the access amount:
+\begin{frame}{Birth-Linked Purchase Grants Move Fertility}
+  A grant paid at a birth-linked purchase raises fertility, and the response grows with the size of the grant:
   \[
   \begin{array}{cc}
   \toprule
@@ -337,54 +332,53 @@
   \bottomrule
   \end{array}
   \]
-  Prices move \notfound{roughly +1 percent grant price response in the named source files}.
+  Prices barely move --- large-home prices rise about $1\%$.
   \begin{itemize}
-    \item Caveat: small conditional grants can delay pre-birth purchases through anticipation effects.
+    \item One caveat: a small conditional grant can pull purchases back before the birth, delaying them through anticipation.
   \end{itemize}
-  \takeaway{Access grants move the birth margin because they relax \(\zeta_i^{O,F}\).}
+  Grants move the birth margin because they relax the owner financing gap $\zeta_i^{O,F}$.
 \end{frame}
 
 % 21
-\begin{frame}{The policy package decentralizes the planner's reallocation}
-  The package taxes the incumbent stock and uses the revenue to fund young buyers' access:
+\begin{frame}{A Package That Decentralizes the Reallocation}
+  Tax the incumbent stock and spend the revenue on young buyers' access:
   \[
   \text{large-home tax}+\text{birth-linked purchase grant}
   \quad\Rightarrow\quad
   \Delta \mathrm{TFR}=+0.15,\quad
   \Delta p_{\text{large}}=-11\%.
   \]
-  The bridge note reports this package as revenue-funded.
-  \takeaway{Access, not price, is the fertility margin.}
+  The tax lowers what incumbents will pay to keep large units; the grant closes the young side's financing gap at the birth margin. Revenue-funded, it is the decentralized version of the planner's move --- and it works through access, not price.
 \end{frame}
 
 % 22
-\begin{frame}{The bridge is access gaps, stock misallocation, and decentralized reallocation}
+\begin{frame}{The Bridge, in Three Numbers}
   \begin{enumerate}
-    \item Measured access: capped fertile renters have \(\zeta/q=1.28\), and \(0.734\) of the derivative mass sits on \(\zeta>0\).
-    \item Stock allocation: \(87\%\) of family-sized stock is held by post-fertile households.
-    \item Policy: the tax-funded access transfer raises TFR by \(0.15\) while cutting large-home prices by \(11\%\).
+    \item Access: fertile renters at the cap have $\zeta/q=1.28$, and $0.734$ of the fertility-response mass sits on households with $\zeta>0$.
+    \item Allocation: $87\%$ of the family-sized stock is held by post-fertile households.
+    \item Policy: the tax-funded access transfer raises TFR by $0.15$ while cutting large-home prices $11\%$.
   \end{enumerate}
-  The bridge note's synthesis is that the same \(\zeta\) object measures fertility exposure and misallocation, and the package is the decentralized version of the planner reallocation.
+  The same object $\zeta$ measures fertility exposure and stock misallocation, and the package is the decentralized version of the planner's reallocation.
 \end{frame}
 
 % 23
-\begin{frame}{The next version needs mechanisms for bounds, timing, and childlessness}
+\begin{frame}{Where This Version Falls Short}
   \begin{itemize}
-    \item \notfound{8 of 13 calibrated parameters at search bounds in the named source files}.
-    \item The fertility-timing issue remains: births occur at \(33\) while the data benchmark is \(\sim27\).
-    \item Designed extension: add a child time cost to price children partly in foregone income.
-    \item Designed extensions: add an old-age exit margin and estimand-consistent childlessness targets.
+    \item Several parameters sit at their search bounds.\footnote{Eight of the $13$ estimated parameters are at or against a bound at the current calibration --- evidence that the parameter space is compensating for missing mechanisms, not a failure of the search.}
+    \item Fertility is mistimed: births cluster at $33$, against a data peak near $27$.
+    \item Planned extension: a child time cost, so children are priced partly in foregone income.
+    \item Planned extensions: an old-age exit margin, and childlessness targets consistent with the estimand.
   \end{itemize}
-  \takeaway{The draft should present these as limitations, not as solved calibration details.}
+  These belong in the draft as honest limitations, not as settled calibration details.
 \end{frame}
 
 % 24
-\begin{frame}{[PLACEHOLDER: the conclusion claim is still to be written]}
+\begin{frame}{Conclusion}
   \alert{[PLACEHOLDER: conclusion]}
   \begin{itemize}
-    \item [PLACEHOLDER: final theory sentence]
-    \item [PLACEHOLDER: final quantitative sentence]
-    \item [PLACEHOLDER: final policy sentence]
+    \item {[}PLACEHOLDER: final theory sentence]
+    \item {[}PLACEHOLDER: final quantitative sentence]
+    \item {[}PLACEHOLDER: final policy sentence]
   \end{itemize}
 \end{frame}
 
