@@ -1,6 +1,20 @@
 # Calibration Status
 
-Updated: `2026-07-07` (honest Nb=120 baseline; cap profile; numerics fixes verified)
+Updated: `2026-07-08` (deck v4; fertility-noise verdict; provenance closed)
+
+## July 8 overnight: deck v4; fertility-noise verdict; target provenance closed
+
+Deck v4 (latex/July_26_slides.pdf, 41pp): quantitative model in full from
+code-verified equations; gate caught 4 defaults-vs-config traps incl. the
+substantive one — supply is UNIT-ELASTIC (H0=4, xi=1), not fixed stock.
+Fertility forensics (adversarially verified, CODEX_TASKS 32): kappa_fert is
+the Gumbel noise DENOMINATOR pinned at the SHARP-choice floor; poor types
+p_birth = 0 exactly; economics not bug; inverts the July-7 noise framing and
+links the kappa corner to the Nb-convergence fragility. Target provenance
+CLOSED: tfr 1.918 and childless 0.188 are exact CPS June 2024 cells (Census
+H2/H1, women 40-44). ACS misallocation data column: cut does not exist in
+current extracts; spec in the audit staging folder awaits a go. Morning
+read: output/model/fable_size_mapping_audit_20260701/MORNING_NOTE_20260708.md.
 
 ## July 7 morning: honest Nb=120 baseline 6.31; cap profile; numerics program done
 
