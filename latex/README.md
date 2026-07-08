@@ -18,6 +18,10 @@ Active documents:
   `intergenerational_housing_fertility_v4.pdf`: revised full non-spatial
   intergenerational housing-fertility draft with a cleaned compact analytical
   model and the quantitative blueprint retained from v3.
+- `intergenerational_housing_fertility_paper_draft.tex` /
+  `intergenerational_housing_fertility_paper_draft.pdf`: July 2026 paper draft
+  copied from the June 26 full draft and extended with a front-end literature
+  review.
 
 Build/support files:
 
