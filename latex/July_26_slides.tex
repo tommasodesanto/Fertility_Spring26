@@ -196,63 +196,116 @@
 % ==================== THE QUANTITATIVE MODEL ====================
 \section{The Quantitative Model}
 
-% 14
-\begin{frame}{From Two Periods to a Lifecycle}
-  The quantitative model keeps the mechanism and adds a lifecycle. A household enters at age $18$ as a renter and lives $17$ four-year periods to terminal age $82$.
+% ---- The Quantitative Model divider ----
+\begin{frame}
+  \vfill
+  \begin{center}
+    \Large\textbf{The Quantitative Model}
+  \end{center}
+  \vfill
+\end{frame}
+
+% ---- Environment ----
+\begin{frame}{Environment}
+  A household lives $17$ four-year periods, ages $18$ to $82$; it enters at $18$ as a renter and dies at $82$. Write the child block as $(n,s)$: $n$ is the number of children and $s$ the child-aging stage.
   \begin{itemize}
-    \item \textbf{Income:} a five-state persistent process $z$, with age-dependent earnings.
-    \item \textbf{Children:} up to two children per household, in a number-of-children and child-stage block $(n,s)$; after a birth, children age stochastically through home stages and eventually leave, at which point their space and goods costs switch off.
-    \item \textbf{Fertility:} completed fertility is chosen once, inside a fertile window (ages $18$ to $42$), subject to taste shocks --- one shot, not a sequential birth hazard.
+    \item \textbf{Income:} a five-state persistent process $z\in\{0.6,0.8,1.0,1.2,1.4\}$, with stationary weights $(0.10,0.20,0.40,0.20,0.10)$ and Markov persistence $0.85$ --- and a deterministic age--earnings profile $e_j$.
+    \item \textbf{Children:} up to two children per household. A birth opens one dependent-child stage that exits with hazard $2/9$ each period; when it exits the children leave home and their goods and space costs switch off.
+    \item \textbf{Fertility:} completed fertility is chosen once, inside the fertile window ages $18$ to $42$, subject to taste shocks --- one shot, not a sequential birth hazard.
+    \item \textbf{Choices:} the household picks \textbf{fertility} $\nu\in\{0,1,2\}$ while fertile, then \textbf{tenure} (rent or own), \textbf{size} (a room on the renter or owner menu), and \textbf{saving} $b'$.
   \end{itemize}
   So the two-period child cost $(\chi,\kappa)$ becomes a lifecycle of family-size-dependent needs that arrive with a birth and expire when children mature.
 \end{frame}
 
-% 15
-\begin{frame}{Housing in the Quantitative Model}
-  Tenure segmentation is the same object, made discrete:
+% ---- Preferences ----
+\begin{frame}{Preferences}
+  {\small $n$: number of children; $s$: child-aging stage (stochastic); $m(n,s)=n\,\1\{1\le s\le K_c\}$: children currently at home, $K_c=1$.}
+
+  \textbf{Flow utility.} Over residual consumption and residual housing services $x$:
   \[
-  h^R\in\{0,H_1^R,\dots\}\ \text{capped at }\bar h^R=6\text{ rooms},
+  u(c,x;n,s)=\frac{\big[(c-\bar c(n,s))^{\alpha}\,x^{\,1-\alpha}\big]^{1-\sigma}}{1-\sigma}+\psi_{\mathrm{child}}\,m(n,s),
+  \qquad \sigma=2.
+  \]
+
+  \textbf{Subsistence requirements.} Depend on family size:
+  \[
+  \bar c(n,s)=\bar c_0+\bar c_n\,m(n,s),\qquad
+  \bar h(n,s)=\bar h_0+\underbrace{\bar h_{\mathrm{jump}}\,\1\{1\le s\le K_c\}}_{\text{first-child housing margin}}+\bar h_n\,m(n,s).
+  \]
+
+  \textbf{Housing services.} Renters take $x^R$ capped at $6$ rooms; owners get a service premium $\chi_o>1$:
+  \[
+  \underbrace{x^R=\max\{h^R-\bar h(n,s),\varepsilon\}}_{h^R\le h^R_{\max}=6},
   \qquad
-  h\in\{2,4,6,8,10\}\ \text{rooms (owner ladder)} .
+  \underbrace{x^O=\chi_o\max\{h-\bar h(n,s),\varepsilon\}}_{\chi_o>1}.
+  \]
+  The additive child term is tied to children at home, so it shuts off once the child state matures.
+\end{frame}
+
+% ---- Bequests ----
+\begin{frame}{Bequests}
+  Terminal utility at death, over completed children $N(n,s)$:
+  \[
+  B(b,h,n,s)=\theta_0\max\{1+\theta_n N(n,s),0\}\,\frac{(\theta_1+\tilde b)^{1-\sigma}}{1-\sigma},
+  \qquad
+  \tilde b=\max\{b+\1_{\mathrm{own}}\,p\,h,0\}.
   \]
   \begin{itemize}
-    \item The renter cap $\bar h^R=6$ is not estimated: it is the $90$th percentile of rental unit sizes, following Greaney, Parkhomenko, and Van Nieuwerburgh (2025), measured in our own ACS sample.
-    \item Buying rung $H_k$ at price $p$ requires a down payment $(1-\phi)pH_k$ with financed share $\phi=0.80$ --- the same $(1-\phi)$ friction as the theory.
-    \item Owners transact across rungs and pay a transaction cost; a single stock clears at one price $p$ in general equilibrium.
+    \item $\theta_0$ governs the overall bequest motive (the saving level).
+    \item $\theta_n$ scales the bequest with completed children $N(n,s)$ --- the parent--childless saving differential.
+    \item $\theta_1$ is a shift on bequeathable wealth inside the CRRA term.
   \end{itemize}
-  Family-sized rooms ($\ge6$) are still reachable mainly by owning, and still gated by the down payment.
+  Bequeathable wealth $\tilde b$ uses the \emph{gross} owner housing value $p\,h$; the transaction-net sale value $(1-\psi)p\,h$ enters tenure transitions, not this terminal call.
 \end{frame}
 
-% 16
-\begin{frame}{The Household's Period Problem}
-  Each period the household sees income and taste shocks, chooses births while fertile, then chooses tenure, size, and saving. Over a consumption/housing composite with family-size floors,
+% ---- Housing, Tenure, and Budget Constraints ----
+\begin{frame}{Housing, Tenure, and Budget Constraints}
+  {\small Household chooses a room on the renter or owner menu: $h^R\le h^R_{\max}=6$; $h\in\{2,4,6,8,10\}$ (owner ladder). Family-sized rooms are reachable only through owning.}
+
+  \textbf{Renters ($h=0$).} With rent $r(p)=(q+\delta+\tau_H)p$ and gross return $R=1+q$:
   \[
-  u(c,\mathbf h;m)=\frac{\big[(c-\bar c(m))^{\alpha}(\mathbf h-\bar h(m))^{1-\alpha}\big]^{1-\sigma}}{1-\sigma}+\psi\,\1\{\text{child at home}\},
-  \qquad \sigma=2,
+  b'=Rb+y(j,z)-c-r(p)\,h^R,\qquad b'\ge 0,\qquad h^R\le h^R_{\max}.
   \]
-  where the floors rise with the number of children $m$,
+
+  \textbf{Owners.} Depreciation and property tax are flow costs of the occupied rung; borrowing is collateralized:
   \[
-  \bar c(m)=\bar c_0+\bar c_n\,m,\qquad
-  \bar h(m)=\bar h_0+\underbrace{\bar h_{\text{jump}}\1\{m\ge1\}}_{\text{first-child housing margin}}+\bar h_n\,m,
+  b'=Rb+y(j,z)-c-(\delta+\tau_H)\,p\,h,\qquad b'\ge -\phi\,p\,h,\qquad \phi=0.80.
   \]
-  and owners enjoy a service premium $\mathbf h=\chi_{o} h$, $\chi_{o}>1$, over renters' $\mathbf h=h^R$ (the subscript keeps this distinct from the theory section's child consumption cost $\chi$).
+  \textbf{Tenure transitions.} Purchases subtract the full $p\,h'$; sales credit $(1-\psi)p\,h$; a purchase is feasible only if wealth in hand clears the down payment:
+  \[
+  b^+=
+  \begin{cases}
+  b-p\,h', & R\to O(h'),\\
+  \max\{b+(1-\psi)p\,h,0\}, & O(h)\to R,\\
+  b+(1-\psi)p\,h-p\,h', & O(h)\to O(h'),
+  \end{cases}
+  \qquad
+  b+\1_{\mathrm{own}}(1-\psi)p\,h\ge (1-\phi)p\,h'.
+  \]
   \begin{itemize}
-    \item Resources are income $y(z,a)$ plus wealth; owners pay a flow user cost $(\delta+\tau^p)p$ and a transaction cost on rung changes.
-    \item Buying is gated by the collateral bound $b'\ge-\phi\,p\,h'$, the quantitative down payment.
+    \item $q$: gross bond rate; $\delta$: depreciation; $\tau_H$: property tax; $\psi$: transaction cost; $\phi=0.80$: financed share.
   \end{itemize}
-  The floors $\bar c(m),\bar h(m)$ are the quantitative counterpart of the child costs $\chi,\kappa$: a birth raises required goods and, through $\bar h_{\text{jump}}$, required rooms.
+  Movers and newly matured children arrive as renters, then choose tenure by \mbox{argmax}.\footnote{Tenure is a deterministic $\arg\max$; the logit smoothing scale $\kappa_\tau\approx 8.3\times10^{-7}$ is calibrated to zero.}
 \end{frame}
 
-% 17
-\begin{frame}{Equilibrium and Computation}
-  A stationary recursive competitive equilibrium is value and policy functions, a stationary distribution $\mu$ over states $(b,h,z,n,s,a)$, and a price $p$ such that households optimize, $\mu$ is invariant under the induced transitions, and the single housing market clears:
+% ---- Births and Equilibrium ----
+\begin{frame}{Births and Equilibrium}
+  \textbf{Birth choice.} While fertile the household draws $\nu\in\{0,1,2\}$ from a logit over continuation values, with scale $\kappa_{\mathrm{fert}}$:
   \[
-  \int h\;\dd\mu \;=\; \bar H .
+  \Pr(\nu\mid b,\tau,j,z)=\frac{\exp\{V_{\nu,s_\nu}(b,\tau,j,z)/\kappa_{\mathrm{fert}}\}}{\sum_{\ell=0}^{2}\exp\{V_{\ell,s_\ell}(b,\tau,j,z)/\kappa_{\mathrm{fert}}\}},
+  \qquad
+  \mathrm{TFR}=2\sum_{\nu=0}^{2}\nu\,\Omega_\nu.
   \]
-  The equilibrium is solved by backward induction on the lifecycle value functions and a fixed point in the market-clearing price, with entry wealth carried in from the data.\footnote{The value functions are solved on a wealth grid by backward induction over the $17$ periods; the stationary distribution is iterated to a fixed point and the price $p$ is found by bisection on the market residual. The reported fit is searched on a fine wealth grid and verified on a finer one, since a coarse grid tunes to numerical noise.}
+  The calibrated scale $\kappa_{\mathrm{fert}}$ sits at its \emph{lower} bound: the calibration wants birth choices as sharp as allowed --- near-deterministic --- and the poorest types' birth probability is exactly zero. TFR doubles the per-household expected births because each fertility draw is one adult's contribution.
+
+  \textbf{Market clearing.} One price $p$ equates housing demand to a unit-elastic supply curve:
+  \[
+  H^s(p)=H_0\left(\frac{(q+\delta+\tau_H)\,p}{\bar r}\right)^{\xi},\qquad \xi=1,\qquad H^d(p)=H^s(p).
+  \]
+  The theory section's fixed stock $\bar H$ is the limiting simplification of this ($\xi\to\infty$); the quantitative model clears against the coded unit-elastic supply.
 \end{frame}
 
-% 18
+% ---- What Maps to What ----
 \begin{frame}{What Maps to What}
   Every theory object has a quantitative counterpart --- these set up the bridge slides.
   \begin{center}
@@ -261,16 +314,17 @@
   \toprule
   simple model & quantitative model\\
   \midrule
-  user cost $q=\rho P$ & user-cost flow $(\delta+\tau^p)p$ at the single price $p$\\
+  user cost $q=\rho P$ & user-cost flow $(\delta+\tau_H)p$ at the single price $p$\\
   down-payment friction $(1-\phi)P$ & collateral bound $b'\ge-\phi p h'$, $\phi=0.80$\\
   effective cap $\min\{\bar h^O,\,a_i\rho/((1-\phi)q)\}$ & owner ladder $\{2,4,6,8,10\}$ vs.\ renter cap $6$, against the down payment\\
-  child costs $\chi,\ \kappa$ & consumption floor $\bar c(m)$ and housing floor $\bar h(m)$\\
+  child costs $\chi,\ \kappa$ & consumption floor $\bar c(n,s)$ and housing floor $\bar h(n,s)$\\
   access gap $\zeta_i$ & shadow value of the collateral/size constraint on family space\\
-  capital-gains wedge $\bar\ell$ & transaction cost $\tau$ on owner sales\\
+  capital-gains wedge $\bar\ell$ & transaction cost $\psi$ on owner sales\\
+  fixed stock $\bar H$ & unit-elastic supply $H^s(p)=H_0(r(p)/\bar r)^{\xi}$, $\xi=1$\\
   \bottomrule
   \end{tabularx}
   \end{center}
-  The down payment is the load-bearing bridge: it is $\zeta_i^{O,F}$ in the theory and the $\phi=0.80$ collateral bound in the quantitative model.
+  The down payment is the load-bearing bridge: $\zeta_i^{O,F}$ in the theory and the $\phi=0.80$ collateral bound in the quantitative model. The one place the two differ openly is supply: the theory fixes the stock, the quantitative model clears a unit-elastic supply curve.
 \end{frame}
 
 % ==================== THE MODEL'S SOLUTION ====================
@@ -286,6 +340,18 @@
     \item These are childless-renter slices, so the fertility panel is flat at zero; the birth margin lives at older ages, shown next.
   \end{itemize}
   The collateral bound $b'\ge-\phi p h'$ is not a smooth cost; it is the discrete wealth line at which tenure flips.
+\end{frame}
+
+% S1b --- consumption by tenure over wealth
+\begin{frame}{Consumption by Tenure: Saving Toward the Down Payment}
+  \centering
+  \includegraphics[width=0.90\textwidth,height=0.56\textheight,keepaspectratio]{July_26_slides_eq_consumption_by_tenure.png}
+  \begin{itemize}
+    \item Conditional on tenure, consumption is smooth and increasing in liquid wealth --- the standard CRRA policy within a fixed housing regime.
+    \item The localized dips sit just below the purchase thresholds: households cut consumption to accumulate the next down payment $(1-\phi)ph'$.
+    \item The flat left segment is the consumption floor at the borrowing limit, where the constraint $b'\ge-\phi p h'$ binds and consumption cannot fall further.
+  \end{itemize}
+  The dips are the down payment felt in the consumption policy: saving to clear the collateral bound, not a smooth intertemporal motive.
 \end{frame}
 
 % S2 --- fertility policy by age and income
@@ -548,6 +614,7 @@
 \begin{frame}{Where This Version Falls Short}
   \begin{itemize}
     \item Several parameters sit at their search bounds.\footnote{Eight of the $13$ estimated parameters are at or against a bound at the current calibration --- evidence that the parameter space is compensating for missing mechanisms, not a failure of the search.}
+    \item The fertility taste-shock scale $\kappa_{\mathrm{fert}}$ is at its \emph{lower} bound: birth choice is near-deterministic and the poorest households' birth probability is exactly zero. This strengthens the reading that the child-price structure, not the taste shocks, drives the misses --- and a near-$\arg\max$ birth choice makes the fertility moments numerically sensitive to small changes in the price of family space.
     \item Fertility is mistimed: births cluster at $33$, against a data peak near $27$.
     \item Planned extension: a child time cost, so children are priced partly in foregone income.
     \item Planned extensions: an old-age exit margin, and childlessness targets consistent with the estimand.
