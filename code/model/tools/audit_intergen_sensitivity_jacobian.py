@@ -47,20 +47,13 @@ DEFAULT_OUTDIR = ROOT / "output/model/intergen_sensitivity_jacobian_20260618"
 DEFAULT_POINT_LABELS = ("core_feasibility_v1", "roomcost_test_v1")
 TARGET_SET = "candidate_no_timing_v0"
 
+# The perturbation list is the live search space: derived from
+# GLOBAL_DE_BOUNDS so it cannot drift from the calibration again
+# (the old hardcoded list kept b_entry_fixed after it went external and
+# missed tenure_choice_kappa after it went live).
 PARAMETERS = [
-    "beta",
-    "alpha_cons",
-    "b_entry_fixed",
-    "c_bar_0",
-    "c_bar_n",
-    "h_bar_0",
-    "h_bar_jump",
-    "h_bar_n",
-    "psi_child",
-    "kappa_fert",
-    "chi",
-    "theta0",
-    "theta_n",
+    "beta" if name == "beta_annual" else name
+    for name, _lo, _hi in GLOBAL_DE_BOUNDS
 ]
 
 EXTRA_MOMENTS = [
@@ -93,7 +86,7 @@ def main() -> None:
     parser.add_argument("--target-set", default=TARGET_SET)
     parser.add_argument("--rel-step", type=float, default=0.01)
     parser.add_argument("--min-step", type=float, default=1e-4)
-    parser.add_argument("--J", type=int, default=16)
+    parser.add_argument("--J", type=int, default=17)
     parser.add_argument("--Nb", type=int, default=60)
     parser.add_argument("--n-house", type=int, default=5)
     parser.add_argument("--max-iter-eq", type=int, default=3)
@@ -212,6 +205,11 @@ def run_point_audit(
     t_start = time.perf_counter()
     label = str(point["point_label"])
     theta0 = {k: float(v) for k, v in dict(point["theta"]).items() if k in PARAMETERS}
+    parameters = [p for p in PARAMETERS if p in theta0]
+    if parameters != PARAMETERS:
+        missing = [p for p in PARAMETERS if p not in theta0]
+        print(f"{label}: point theta lacks {missing}; perturbing {len(parameters)} parameters", flush=True)
+    print(f"{label}: perturbation list = {parameters}", flush=True)
     point_dir = outdir / label
     point_dir.mkdir(parents=True, exist_ok=True)
 
@@ -231,7 +229,7 @@ def run_point_audit(
     case_rows = [case_summary_row(label, base_record, parameter="", side="baseline", step=0.0)]
 
     plus_minus: dict[str, dict[str, dict[str, Any]]] = {}
-    for parameter in PARAMETERS:
+    for parameter in parameters:
         plus_theta, minus_theta, step_info = perturbed_thetas(theta0, parameter, args.rel_step, args.min_step)
         plus_minus[parameter] = {}
         for side, theta in [("minus", minus_theta), ("plus", plus_theta)]:
@@ -262,14 +260,15 @@ def run_point_audit(
         plus_minus,
         targets,
         target_moments,
+        parameters,
     )
     write_csv(point_dir / "jacobian_long.csv", jacobian_rows)
     write_json(point_dir / "jacobian_matrix.json", matrix_payload["json"])
 
-    rank_rows, sv_summary = rank_summary(label, matrix_payload["scaled_matrix"], target_moments, PARAMETERS, args.rank_tol)
-    collinearity_rows = column_collinearity_rows(label, matrix_payload["scaled_matrix"], PARAMETERS)
-    moment_top_rows = moment_top_sensitivity_rows(label, matrix_payload["scaled_matrix"], target_moments, PARAMETERS)
-    param_top_rows = parameter_top_moment_rows(label, matrix_payload["scaled_matrix"], target_moments, PARAMETERS)
+    rank_rows, sv_summary = rank_summary(label, matrix_payload["scaled_matrix"], target_moments, parameters, args.rank_tol)
+    collinearity_rows = column_collinearity_rows(label, matrix_payload["scaled_matrix"], parameters)
+    moment_top_rows = moment_top_sensitivity_rows(label, matrix_payload["scaled_matrix"], target_moments, parameters)
+    param_top_rows = parameter_top_moment_rows(label, matrix_payload["scaled_matrix"], target_moments, parameters)
 
     write_csv(point_dir / "scaled_singular_values.csv", rank_rows)
     write_csv(point_dir / "scaled_column_correlations.csv", collinearity_rows)
@@ -387,12 +386,13 @@ def build_jacobian_rows(
     plus_minus: dict[str, dict[str, dict[str, Any]]],
     targets: dict[str, float],
     target_moments: list[str],
+    parameters: list[str],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    raw_matrix = np.full((len(target_moments), len(PARAMETERS)), np.nan)
+    raw_matrix = np.full((len(target_moments), len(parameters)), np.nan)
     scaled_matrix = np.full_like(raw_matrix, np.nan)
     base_moments = dict(base_record["moments"])
-    for j, parameter in enumerate(PARAMETERS):
+    for j, parameter in enumerate(parameters):
         minus = plus_minus[parameter]["minus"]
         plus = plus_minus[parameter]["plus"]
         base_value = float(theta0[parameter])
@@ -438,7 +438,7 @@ def build_jacobian_rows(
         "json": {
             "point_label": label,
             "target_moments": target_moments,
-            "parameters": PARAMETERS,
+            "parameters": parameters,
             "raw_matrix": jsonable(raw_matrix),
             "scaled_matrix": jsonable(scaled_matrix),
         },
