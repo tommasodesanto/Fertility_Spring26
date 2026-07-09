@@ -2,6 +2,21 @@
 
 Updated: `2026-07-09` (kt REJECTED; D11 Jacobian; entry margin at Nb=120; paper draft expanded)
 
+## July 9 early: polish converged; Nb=240 verification surfaces honest drift
+
+Overnight polish (12 chains from the 6.31 point): best 6.2979, theta
+unchanged except theta_n (0.972->0.981, third drift confirmation) — the
+basin is CONVERGED; no further gains from this spec. Nb=240 verification
+of the point (never previously run): loss re-evaluates 6.31 -> 6.84 at
+residual 3e-5 (real grid drift, not under-convergence), concentrated in
+own_family_gap (+0.35 contrib) and old_age_own_rate (+0.27) — both
+structural misses slightly LARGER at the finer grid. Honest cross-grid
+comparison: 6.84 (new point @240) vs 7.17 (old canonical @240) — real but
+smaller improvement than 120-grid numbers suggested. Paper's fit section
+now reports the 240 re-evaluation. Phase-3 hook: search or report at 240.
+Paper also got the humanizing pass (memo register removed; two-critic
+verification). Details: MORNING_MEMO_20260709.md §6.
+
 ## July 8 overnight: D12 kt rejected at the corner; D11 evidence in; entry margin re-measured
 
 D12 TEST VERDICT: the data reject the child time cost — kappa_t = 0 exactly
