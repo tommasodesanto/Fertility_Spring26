@@ -39,8 +39,8 @@
 \newcommand{\Bcal}{\mathcal B}
 \newcommand{\Tcal}{\mathcal T}
 
-\title{Intergenerational Housing Misallocation and Fertility\\[-0.15em]
-\large Compact Theory and Quantitative Lifecycle Model}
+\title{Housing Access and Fertility\\[-0.15em]
+\large Compact Theory and Preliminary Quantitative Results}
 \author{Tommaso De Santo}
 \date{July 2026}
 
@@ -48,20 +48,37 @@
 \maketitle
 
 \begin{abstract}
-Children require goods and housing space. The space requirement matters because
-family-sized housing is harder to access than small rental housing: large units
-are concentrated in ownership, ownership requires down payments, and tax rules
-can induce older owners to retain houses whose marginal value to them is below
-the value to constrained young families. The paper has two parts. Part I gives
-a compact two-period model that isolates the mechanism and delivers
-goods-equivalent wedges for young access constraints, old-owner lock-in, and
-fertility. The compact model also makes clear which aggregate birth effects
-come from completed fertility among entrants, which come from entry into the
-housing market, and which come from tenure switching. Part II embeds the same
-mechanism in a finite-life quantitative lifecycle model with income risk,
-tenure and house-size choice, down-payment constraints, transaction costs,
-bequests, child aging, and a single aggregate housing-services market.
+Children require goods and housing space. Family-sized rentals are limited,
+while access to owner housing requires liquid wealth and borrowing capacity.
+Older households meanwhile hold much of the large-home stock. I study how this
+allocation of space changes the private price of children. A compact
+overlapping-generations model expresses rental limits, down-payment constraints,
+and old-owner retention as goods-equivalent wedges. It separates changes in
+family size among incumbent households from changes due to housing-market entry
+and tenure switching. A finite-life quantitative model adds income risk,
+saving, tenure and house-size choice, transaction costs, bequests, and children
+aging out of the household. The current calibration suggests that access to
+family-sized space is valuable to households near the fertility margin, while
+the timing of purchases is central to the response of births to housing policy.
 \end{abstract}
+
+\subsection*{Status of this draft}
+
+This document is an extended research update rather than a completed paper.
+The compact model has been checked independently, and the results stated below
+include the assumptions needed for the derivations. The quantitative sections
+report a July 9, 2026 calibration snapshot. Two implementation corrections are
+underway: current housing choices must enter several moments contemporaneously,
+and the first age cell must use the intended earnings profile. Both corrections
+affect targeted moments, so the calibration and all counterfactual magnitudes
+remain provisional until the model is re-estimated.
+
+The quantitative environment below follows the specification used to produce
+the snapshot: the owner premium applies to usable housing space, bequest utility
+is not normalized across family-size states, and all owners face the same debt
+floor. The policy exercises are preliminary patterns from an internally
+consistent diagnostic runtime. They will be rerun from the corrected and
+re-estimated baseline.
 
 \section{Introduction}
 
@@ -93,13 +110,10 @@ subsidize staying put. Housing scarcity then shows up not only as a high price
 of space, but also as a mismatch between who occupies family-sized units and
 who values them for fertility.
 
-I develop the argument in two steps. The first part of the paper gives a compact
-two-period model that isolates the mechanism. It expresses the rental space
-constraint, the ownership finance constraint, old-owner lock-in, and the
-fertility distortion as goods-equivalent wedges. The second part embeds the same
-economics in a finite-life quantitative model with income risk, tenure and
-house-size choice, down-payment constraints, transaction costs, bequests, child
-aging, and a single aggregate housing-services market. The model combines
+A compact two-period model expresses the rental space constraint, the ownership
+finance constraint, old-owner lock-in, and the fertility distortion as
+goods-equivalent wedges. I then embed the same economics in a finite-life
+quantitative model. The model combines
 lifecycle fertility choice
 \citep{sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019} with
 housing tenure choice, collateral constraints, and owner-occupied housing
@@ -108,99 +122,74 @@ The compact housing block follows the one-market floorspace logic in
 \citet{coven2024}: all housing services clear in one market, while tenure,
 borrowing, and tax rules determine who can actually occupy family-sized units.
 
+The current quantitative exercise is informative about the mechanism but not
+yet a final estimate of its size. The July snapshot places substantial
+fertility-response weight on households constrained by the rental-size limit,
+and it produces a sharp coincidence of births and purchases near the end of the
+fertile window. It also misses early ownership, young liquid wealth, and
+old-age exit from ownership. The first two misses are affected by the
+implementation corrections described above. I therefore use the current
+calibration to organize the evidence and the next estimation step, not to make
+a settled quantitative claim.
+
 \section{Related Literature}
 
-This paper contributes to three strands of literature.
-
-First, it contributes to work on fertility decline, fertility choice, and the
-housing determinants of fertility. Since
-\citet{beckerEconomicAnalysisFertility1960} and
-\citet{beckerInteractionQuantityQuality1973}, economics has treated children as
-choice variables that enter preferences and require resources. Quantitative
-versions of this approach put that choice into a lifecycle environment with
-income risk, savings, timing, and intrahousehold bargaining
+The paper connects work on fertility choice to work on housing tenure and the
+allocation of large homes. Since \citet{beckerEconomicAnalysisFertility1960}
+and \citet{beckerInteractionQuantityQuality1973}, economics has treated
+children as choice variables that enter preferences and require resources.
+Quantitative versions place that choice in lifecycle environments with income
+risk, saving, timing, and intrahousehold bargaining
 \citep{jonesSchoonbroodtTertilt2010,sommerFertilityChoiceLife2016,doepkeBargainingBabiesTheory2019}.
-Recent work on the U.S. fertility decline emphasizes that falling birth rates
-are hard to explain with a single postponement margin or one obvious period
-shock \citep{kearneyPuzzleFallingUS2022}. The housing literature shows that
-housing prices, housing wealth, and mortgage finance move fertility behavior:
-\citet{dettlingHousePricesBirth2014} find opposite house-price effects for
-owners and nonowners, \citet{lovenheimFamilyWealthShocks2013} find that housing
-wealth raises homeowners' fertility, \citet{cummingMonetaryPolicyBirth2024}
-show that mortgage-rate pass-through affects births through cash flows, and
-\citet{hacamoBabiesMortgageDeregulation2021} finds that mortgage deregulation
-increased home purchases and childbearing for young households. The structural
-housing-fertility literature studies the same broad connection in equilibrium:
-\citet{couillardBuildBabyBuild2025} models joint location, house-size, and
-fertility choice, and shows that the supply of large units matters for
-aggregate fertility.
+Recent work emphasizes that the U.S. fertility decline is difficult to explain
+with one postponement margin or period shock
+\citep{kearneyPuzzleFallingUS2022}.
 
-The object in this paper is closer to completed fertility than to a current
-birth rate, so I separate timing evidence from final-family-size evidence within
-this same strand. \citet{simonTamuraHigherRents2009} use U.S. Census data from
-1940--2000 and find that higher rents per room are associated with lower
-fertility, including in completed-fertility specifications for older
-households. \citet{clarkWomenDelayFamily2012} is an important caution: expensive
-U.S. housing markets delay first births by several years, but do not clearly
-reduce completed fertility. More recent evidence is more favorable to the
-family-size interpretation. \citet{japaridzeSayourHousingAffordability2024}
-link unaffordable homeownership to delayed entry into motherhood and lower
-completed fertility. \citet{dettlingKearneyModernMortgage2025} study the FHA and
-VA mortgage programs and find that low-down-payment, long-term mortgage access
-increased births during the U.S. baby boom; their Census evidence on children
-ever born is consistent with higher completed fertility for groups with access
-to the programs. \citet{vandoornikFazioRamadoraiSkrastinsHousingFertility2025}
-exploit randomized Brazilian housing-credit lotteries and find larger lifetime
-fertility effects when housing access arrives earlier in the childbearing
-years. I use this literature to discipline the distinction between three
-objects: current births, completed fertility among entrants, and births
-generated by a cohort after entry into the housing market is allowed to
-respond.\footnote{The same issue appears in demography and life-course research,
-which documents that fertility, homeownership, dwelling size, and residential
-transitions move together
-\citep{mulderBillariHomeownershipRegimes2010,stromHousingFirstBirths2010,kuluSteeleChildbearingHousingTransitions2013,chudnovskayaHousingContext2019,tocchioniChangingAssociation2021}.
-Demographic accounts of low fertility also emphasize broader changes in family
-formation, marriage, and living arrangements
-\citep{myrskylaNewCohortFertility2013,lesthaegheSecondDemographicTransition2014}.
-I use that evidence as motivation for housing as a family-formation input, while
-the model below treats fertility as an economic choice over the lifecycle.}
+Housing prices, housing wealth, and mortgage finance also move fertility
+behavior. \citet{dettlingHousePricesBirth2014} find opposite house-price
+effects for owners and nonowners, \citet{lovenheimFamilyWealthShocks2013} find
+that housing wealth raises homeowners' fertility, and
+\citet{cummingMonetaryPolicyBirth2024} show that mortgage-rate pass-through
+affects births through cash flow. \citet{hacamoBabiesMortgageDeregulation2021}
+and \citet{dettlingKearneyModernMortgage2025} connect mortgage access to home
+purchases and childbearing. In equilibrium,
+\citet{couillardBuildBabyBuild2025} show that the supply of large units matters
+for aggregate fertility.
 
-Second, the paper contributes to the literature on intergenerational housing
-allocation and lock-in. The closest paper is \citet{coven2024}. Their model
-studies how property taxes, capitalization, and financial constraints allocate
-housing between older homeowners and younger constrained households. This paper
-uses the same core allocation problem: young households may value family-sized
-space but face down-payment constraints, while older incumbents may retain
-housing that would be valuable to younger families. The departure is that I make
-children part of the household problem. Reallocating family-sized space is then
-not only a homeownership or welfare issue; it also changes the price of
-children, completed fertility among entrants, and local births through entry.
+The outcome here is closer to completed fertility than to a current birth
+rate. \citet{simonTamuraHigherRents2009} find that rents per room predict lower
+fertility, including in completed-fertility specifications.
+\citet{clarkWomenDelayFamily2012} provides an important caution: expensive
+housing markets delay first births but do not clearly reduce completed
+fertility. More recent evidence links housing access to both timing and final
+family size
+\citep{japaridzeSayourHousingAffordability2024,dettlingKearneyModernMortgage2025,vandoornikFazioRamadoraiSkrastinsHousingFertility2025}.
+I use this evidence to keep three objects separate: current births, completed
+fertility among incumbent households, and cohort births after housing-market
+entry responds.\footnote{Life-course evidence documents that fertility,
+homeownership, dwelling size, and residential transitions move together
+\citep{mulderBillariHomeownershipRegimes2010,kuluSteeleChildbearingHousingTransitions2013,chudnovskayaHousingContext2019}.
+The model treats those joint transitions as economic choices over the
+lifecycle.}
 
-The lock-in mechanism is also related to work on mortgage lock-in and housing
-ladders. \citet{fonsecaMortgageLockMobilityLabor2023} show that locked-in
-mortgage rates reduce mobility and dampen labor reallocation. In a spatial
-housing-ladder model, \citet{fonsecaLiuMabilleUnlockingMortgage2026} show that
-lock-in reduces moves down the ladder and keeps missing downsizers in larger
-homes, with equilibrium effects on prices and rents. My lock-in force comes
-from transaction costs and the tax treatment of capital gains at death rather
-than from fixed-rate mortgages, but the allocation logic is the same: incumbent
-frictions keep housing with households whose current marginal value of space may
-be low, tightening access for younger households whose family choices are
-space-intensive.
+The closest housing-allocation paper is \citet{coven2024}. Their model studies
+how property taxes, capitalization, and financial constraints allocate housing
+between older homeowners and younger constrained households. I add children to
+that allocation problem. Family-sized space held by an incumbent can then
+change the private price of children for a young household. The retention force
+also relates to mortgage lock-in and housing ladders
+\citep{fonsecaMortgageLockMobilityLabor2023,fonsecaLiuMabilleUnlockingMortgage2026}.
+My baseline quantitative model uses transaction costs rather than fixed-rate
+mortgage lock-in, but the allocation logic is similar.
 
-Third, the paper contributes to structural work on housing, tenure choice, and
-spatial allocation. The housing block builds on models in which tenure,
-collateral constraints, and owner-occupied housing shape household behavior
+The quantitative housing block builds on models in which tenure, collateral
+constraints, and owner-occupied housing shape household behavior
 \citep{hendersonModelHousingTenure1983,sommerEquilibriumEffectFundamentals2013,sommerImplicationsUSTax2018}.
-It also relates to spatial-equilibrium work in which housing supply and local
-prices allocate households across space
+It also relates to spatial work in which housing supply and local prices
+allocate households across markets
 \citep{rosenWageBasedIndexes1979,robackWagesRentsQuality1982,gyourkoSuperstarCities2013,hsiehHousingConstraintsSpatial2019}.
-The compact model keeps one floorspace market and uses sufficient statistics for
-the allocation wedges. The quantitative model then adds lifecycle income risk,
-tenure and house-size choice, children aging out of the household, bequests, and
-housing supply. The aim is to connect the intergenerational allocation margins
-in the housing literature to the fertility objects emphasized in the first
-strand.
+The present model keeps one housing market so that tenure, family size, and the
+allocation of space remain the central margins.
 
 % ==========================================================
 \part{Compact Analytical Model}
@@ -254,8 +243,10 @@ u^O(c_j^O,h_j^O,e_j)
 \label{eq:compact_old_utility}
 \end{equation}
 where $e_j\ge0$ is the estate and $\Bcal$ is increasing and concave, possibly
-identically zero. Bequest motives and true old housing utility are preferences;
-they are not wedges.
+identically zero. Bequest motives and housing utility in old age are
+preferences, not wedges. The closed-form fertility comparison below either
+uses $\Bcal(e)=b\log e$ with an interior bequest or sets $\Bcal\equiv0$; the
+allocation wedge itself does not require that specialization.
 
 \textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace.
 Households occupy floorspace by renting or owning. The two tenure modes have
@@ -283,7 +274,7 @@ property-tax rate. For a given user cost $q$, a higher property tax lowers the
 asset price $P$ and therefore lowers the down payment needed to buy a given
 house.
 
-\textbf{Financing.} A buyer can finance at most share $\phi\in(0,1)$ of the
+\textbf{Financing.} A buyer can finance at most a share $\phi\in(0,1)$ of the
 purchase price. Buying $h$ units therefore requires the cash down payment
 \begin{equation}
     (1-\phi)Ph.
@@ -303,9 +294,9 @@ flow-equivalent tax wedge per unit sold is
     \bar\ell=\tau^g\frac{P\varpi}{1+\varpi},
 \label{eq:compact_gain_wedge}
 \end{equation}
-after normalizing the period conversion factor to one. The wedge is not a
-preference and not a resource cost. It is a private tax liability avoided by
-holding the house until death.
+after normalizing the period conversion factor to one. The wedge is a private
+tax liability avoided by holding the house until death. It is neither a
+preference nor a resource cost.
 
 \section{Households}
 
@@ -336,6 +327,17 @@ h_i&\in\HH^m,\qquad a_i'\ge0,
 c_i-\chi n_i&>0,\qquad h_i-\kappa n_i>0.
 \notag
 \end{align}
+The young household's choices generate the old state. A renter carries bond
+wealth only. An owner carries both the house and the mortgage position:
+\begin{equation}
+a_{j'}=(1+r)a_i'-\1\{m=O\}q h_i,
+\qquad
+H_{j'}^0=\1\{m=O\}h_i.
+\label{eq:compact_young_old_transition}
+\end{equation}
+This transition makes the future tax liability part of the current owner
+choice rather than an exogenous tenure shifter.
+
 Using $P=q/\rho$, the largest owner house feasible for type $i$ is
 \begin{equation}
 H_i^O(q)=
@@ -348,7 +350,7 @@ H_i^R=\bar h^R.
 \end{equation}
 $H_i^m$ is the effective family-housing cap. A renter is capped by the rental
 stock. A buyer is capped by the owner size limit or by collateral, whichever is
-shorter.
+tighter.
 
 An old incumbent enters with financial wealth $a_j$, carried housing $H_j^0$,
 and an accrued gain. She chooses consumption, retained housing, and an estate:
@@ -379,6 +381,20 @@ u^O(c_j^O,h_j^O,e_j)
 c_j^O+e_j+q h_j^O=a_j,\qquad 0<h_j^O\le \bar h^R.
 \label{eq:compact_old_renter_problem}
 \end{equation}
+
+\begin{assumption}[Regularity at the saving and retention margins]
+\label{ass:compact_regularity}
+The gains wedge satisfies $0\le\bar\ell<q$. A generated old owner has positive
+liquidation wealth, saves in youth, and chooses retention in the interior:
+$a_i'>0$, $a_{j'}+(q-\bar\ell)H_{j'}^0>0$, and
+$0<h_{j'}^O<H_{j'}^0$. Whenever an old-renter first-order condition is used,
+that housing choice is also interior.
+\end{assumption}
+
+The assumption keeps the marginal owner price below smooth. At a saving or
+retention corner, the wedge decomposition uses a type-specific continuation
+price rather than the closed form in
+eq.~\eqref{eq:compact_owner_effective_price}.
 
 \section{Entry and Equilibrium}
 
@@ -442,9 +458,9 @@ The compact equilibrium clears the single stock:
 \end{equation}
 Stationarity requires current young owners to become next period's old
 incumbents, current young renters to become old renters, and births plus the
-renewal inflow to reproduce the next young cohort. The transition rules assign
-old estates to entry wealth and are otherwise left general; the local results
-below condition on the stationary cross-section.
+renewal inflow to reproduce the next young cohort. The transition rules map old
+estates into entry wealth. They otherwise remain general, and the local results
+condition on the stationary cross-section.
 
 \section{Equilibrium Wedges}
 
@@ -463,8 +479,8 @@ q+\zeta_i^R,
 A capped renter values one more unit of housing above the rent it would command.
 
 For young owners, anticipation of the future capital-gains liability raises the
-effective price of owning family-sized space. Under interior saving and
-interior old retention,
+effective price of owning family-sized space. Under
+Assumption~\ref{ass:compact_regularity},
 \begin{equation}
 q^O=q+\frac{\bar\ell}{1+r}.
 \label{eq:compact_owner_effective_price}
@@ -540,7 +556,8 @@ planner's conditional allocation problem.
 
 The market price cancels. What remains are the young household's financing gap,
 the buyer's anticipated gains tax, and the old incumbent's realized gains tax.
-The two tax terms are transfers, not resource costs. If implementing the
+The two tax terms are transfers, not resource costs when fiscal revenue is
+returned lump sum. If implementing the
 reassignment requires real cost $r_i^F$ per unit, that cost subtracts from the
 surplus. If the down-payment constraint is a primitive technological
 enforcement constraint and no instrument can relax it, the variation is not
@@ -562,9 +579,17 @@ from a compensated marginal reassignment.}
 \label{fig:compact_misallocation}
 \end{figure}
 
-The same cap determines a fertility response. Fix a tenure mode and a household
-whose housing is pinned at the effective family-housing cap $H$. Concentrating
-the savings rule into the budget, fertility along the binding cap solves
+The same cap also determines fertility. Fix a tenure mode and a household whose
+housing is pinned at the effective family-housing cap $H$. For this comparison,
+suppose saving can be summarized by a constant load $k\ge0$ on residual adult
+consumption:
+\[
+(1+k)(c-\chi n)+\chi n+q^mH=w,
+\qquad w=y+a.
+\]
+The log-bequest case $\Bcal(e)=b\log e$ gives
+$k=\beta(1+\gamma+b)$; with no bequest motive, set $b=0$. After substituting
+this saving rule into the budget, fertility along the binding cap solves
 \[
 \frac{\vartheta}{n}
 =
@@ -572,8 +597,7 @@ the savings rule into the budget, fertility along the binding cap solves
 +
 \frac{\alpha\kappa}{H-\kappa n},
 \]
-where $w=y+a$ and $k$ is the savings load on adult consumption. Differentiating
-with respect to the cap gives
+Differentiating with respect to the cap gives
 \begin{equation}
 \frac{\dd n}{\dd H}
 =
@@ -723,10 +747,11 @@ $\zeta>0$ types.
 
 One pass-through has a closed form that Part II uses. For a
 collateral-capped owner, $H_i^O=a_i\rho/[(1-\phi)q]$ with $\rho=r+\delta+\tau^p$.
-Holding the user cost fixed, a property-tax increase raises $\rho$, lowers the
+Holding the user cost and the old-owner gains wedge fixed, a property-tax
+increase raises $\rho$, lowers the
 asset price $P=q/\rho$, and thereby lowers the down payment per unit of house:
 \begin{equation}
-\left.\frac{\partial H_i^O}{\partial\tau^p}\right|_{q}
+\left.\frac{\partial H_i^O}{\partial\tau^p}\right|_{q,\bar\ell}
 =
 \frac{a_i}{(1-\phi)q}
 >0.
@@ -762,8 +787,9 @@ optima and no mass points at kinks. The tenure-switching component is
 f(i)\,\dd S(i),
 \label{eq:compact_switching_births}
 \end{equation}
-where $f(i)$ is the type density and $\dd S(i)$ is surface measure on the
-indifference set, oriented toward ownership. The total fixed-price effect is
+where $f(i)$ is the type density and $\dd S(i)$ is unsigned surface measure on
+the indifference set. The normal $\nabla_i\Delta_i/\|\nabla_i\Delta_i\|$ is
+oriented toward the owner region $\{i:\Delta_i>0\}$. The total fixed-price effect is
 \begin{equation}
 \left.\frac{\dd N}{\dd z}\right|_q
 =
@@ -780,14 +806,16 @@ allocation is the same in both modes. With a tax wedge, ownership is the more
 expensive way to access family space; the switching term is first order, but
 its sign depends on the fertility jump of boundary households.
 
-The sign of the switching component depends on the instrument. Owner-access
-policies move boundary households toward the mode with the larger cap, so
-their switching births reinforce the intensive margin. Relaxing the rental
-cap works the other way: it makes renting better precisely for households
-near the rent-own boundary, and marginal owners pulled back into renting
-carry the lower owner-mode fertility jump with a negative sign. Rental-side
-instruments therefore carry a nonpositive switching component, a caveat that
-returns in Part II's rental-cap experiments.
+The direction of movement across the tenure boundary does not by itself sign
+the birth response. The integrand also contains $n_i^O-n_i^R$. When ownership
+has the higher effective price, the cheaper tenure is constrained at the
+boundary, the price gap dominates any continuation-value difference, and the
+equal-scaling condition holds, the family-size jump is positive only if the
+within-cap space force also dominates the continuation-value level shift. This
+is the integral condition derived in the full theory note.
+Under those sufficient conditions an owner-access policy has a nonnegative
+switching component, while relaxing the rental cap has a nonpositive one.
+Outside those conditions, either sign is possible.
 
 % ==========================================================
 \part{Quantitative Lifecycle Model}
@@ -810,8 +838,8 @@ x=(b,z,d,a,n,s).
 \label{eq:quant_state}
 \end{equation}
 Here $b$ is liquid wealth, $z\in\Zset$ is idiosyncratic productivity, $d$ is
-tenure and housing position, $a$ is age, $n$ is completed fertility, and $s$ is
-the child-at-home state. Tenure belongs to
+tenure and housing position, $a$ is age, $n$ is an encoded completed-family-size
+state, and $s$ is the child-at-home state. Tenure belongs to
 \begin{equation}
 \Dset=\{R,O_1,\ldots,O_K\}.
 \label{eq:quant_tenure_set}
@@ -836,8 +864,9 @@ housing access, tenure, and lifecycle wealth.
 
 \section{Preferences and Bequests}
 
-Let $m(n,s)$ be the number of dependent children living at home. Completed
-fertility $n$ and current dependents differ because children eventually mature.
+Let $m(n,s)$ be the number of dependent children living at home. Encoded
+completed family size $n$ and current dependents differ because children
+eventually mature.
 Household needs are
 \begin{equation}
 \begin{aligned}
@@ -851,34 +880,34 @@ Household needs are
 The first child can create a discrete housing-space jump; additional dependent
 children raise the required space linearly.
 
-Flow utility is Stone-Geary over consumption and housing services, wrapped in
-CRRA:
+Flow utility is Stone--Geary over consumption and usable housing space, wrapped
+in CRRA. The owner service premium applies after household needs are removed:
 \begin{equation}
-u(c,\mathbf h;n,s)
+u(c,h,d;n,s)
 =
 \frac{
 \left[
-(c-\bar c(n,s))^\alpha
-(\mathbf h-\bar h(n,s))^{1-\alpha}
+(c-\bar c(n,s))^{\alpha_c}
+\mathfrak h(h,d;n,s)^{1-\alpha_c}
 \right]^{1-\sigma}
 }{1-\sigma}
 +\psi_{\mathrm{child}}m(n,s),
 \label{eq:quant_flow_utility}
 \end{equation}
-with utility equal to $-\infty$ when either residual is nonpositive. Housing
-services differ by tenure:
+where
 \begin{equation}
-\mathbf h=
+\mathfrak h(h,d;n,s)=
 \begin{cases}
-h^R, & d=R,\\
-\chi_O H_k, & d=O_k,
+h^R-\bar h(n,s), & d=R,\\
+\chi_O\big[H_k-\bar h(n,s)\big], & d=O_k,
 \end{cases}
 \qquad
 \chi_O>0.
 \label{eq:quant_housing_services}
 \end{equation}
-In market clearing, owners demand the physical quantity $H_k$, not the service
-quantity $\chi_OH_k$.
+Utility is $-\infty$ when residual consumption or usable space is nonpositive.
+In market clearing, an owner demands the physical quantity $H_k$, not the
+preference-scaled quantity $\chi_O[H_k-\bar h(n,s)]$.
 
 At death, households receive warm-glow bequest utility. The house passes to
 the estate at market value: there is no forced sale, no transaction cost,
@@ -890,12 +919,13 @@ plus the gross value of any house held. Bequest utility is
 \theta_0(1+\theta_n n)
 \frac{
 (\theta_1+\max\{W^B,0\})^{1-\sigma}
--\theta_1^{1-\sigma}
 }{1-\sigma}.
 \label{eq:quant_bequest}
 \end{equation}
-The parameter $\theta_n$ lets completed fertility affect the desired estate
-even after children have left the household.
+This utility is not normalized to zero at a zero estate. Because its scale
+depends on $n$, that level is part of the family-size choice. The parameter
+$\theta_n$ lets completed fertility affect the desired estate even after
+children have left the household.
 
 \section{Housing, Finance, and Taxes}
 
@@ -926,25 +956,19 @@ where $R=1+r$. Owners of rung $H_k$ choose $c,b'$ subject to the owner branch
 budget and the borrowing limit described below. Owners pay maintenance and
 property taxes through $(\delta+\tau^p)PH_k$.
 
-At origination, a buyer can finance at most share $\phi$ of house value, so the
+At origination, a buyer can finance at most a share $\phi$ of house value, so the
 required down payment is
 \begin{equation}
     (1-\phi)PH_k.
 \label{eq:quant_dp}
 \end{equation}
-The post-purchase liquid position must satisfy
+Equivalently, adjusted liquid wealth immediately after purchase must satisfy
+$\tilde b\ge-\phi PH_k$. End-of-period saving for every owner, whether a buyer
+or an incumbent, faces the same debt floor:
 \begin{equation}
 b'\ge -\phi P H_k.
 \label{eq:quant_ltv}
 \end{equation}
-An incumbent owner who keeps the same house is not forced to delever after a
-price change:
-\begin{equation}
-b'\ge \min\{b,-\phi P H_k\}.
-\label{eq:quant_incumbent_ltv}
-\end{equation}
-This convention constrains origination but lets incumbency carry state
-dependence.
 
 Housing adjustment is costly. A sale of house $H_k$ incurs the proportional
 transaction cost $\psi^s$, so net sale proceeds are
@@ -984,6 +1008,14 @@ completed fertility forever and moves the household into the first
 dependent-child state. A household that reaches the end of the fertile window
 without a positive choice remains childless.
 
+In the computation, $\Nset=\{0,1,2\}$ and the last state is the open-ended
+highest family-size category. The completed-fertility moment matched to the CPS
+is reported as $2\E[n]$. This household-to-woman conversion is applied only to
+that reported moment. Child needs and bequest utility use the encoded state
+$n$, while the housing-size target maps $n=1$ to the 1--2 group and $n=2$ to
+the 3+ group. The distinction is a unit convention and does not create an
+additional fertility choice.
+
 Let $s=0$ denote no dependent children and let $s=1,\ldots,S_c$ denote
 dependent-child stages. After a positive fertility choice, the household enters
 $s=1$. Children age stochastically through the stages according to $\Pi^c$.
@@ -1014,7 +1046,7 @@ Conditional on renting, the branch value is
 V_a^R(b,z,n,s)
 =
 \max_{c,h^R,b'}\quad
-&u(c,h^R;n,s)+\beta \bar V_{a+1}(b',R,z,n,s)\\
+&u(c,h^R,R;n,s)+\beta \bar V_{a+1}(b',R,z,n,s)\\
 \text{s.t.}\quad
 &c+q h^R+b'=Rb+y(a,z),\\
 &0\le h^R\le\bar h^R,\qquad b'\ge0.
@@ -1027,16 +1059,16 @@ Conditional on owning rung $H_k$ after any adjustment, the branch value is
 V_a^{O_k}(\tilde b,z,n,s)
 =
 \max_{c,b'}\quad
-&u(c,\chi_OH_k;n,s)+\beta \bar V_{a+1}(b',O_k,z,n,s)\\
+&u(c,H_k,O_k;n,s)+\beta \bar V_{a+1}(b',O_k,z,n,s)\\
 \text{s.t.}\quad
 &c+(\delta+\tau^p)PH_k+b'=R\tilde b+y(a,z),\\
-&b'\ge \underline b^O_k.
+&b'\ge -\phi P H_k.
 \end{aligned}
 \label{eq:quant_owner_problem}
 \end{equation}
-The lower bound $\underline b^O_k$ is the origination or incumbent constraint
-in \eqref{eq:quant_ltv}--\eqref{eq:quant_incumbent_ltv}, depending on whether
-the household buys or keeps the current house.
+The debt floor is the same for a buyer and an incumbent. Purchase feasibility
+is screened separately through the down-payment condition before this branch is
+evaluated.
 
 Let $H(R)=0$ and $H(O_k)=H_k$. The liquid wealth available after housing
 adjustment is
@@ -1080,6 +1112,9 @@ V_a^T(x)
 \exp\{\widetilde V_a^T(\hat d|x)/\kappa_T\}.
 \label{eq:quant_tenure_iv}
 \end{equation}
+At the estimated value $\kappa_T=0$, these expressions mean their deterministic
+limit: the branch with the highest value is chosen with probability one, and a
+tie is resolved by the fixed ordering of feasible branches.
 
 For a childless household in the fertile window, the value of fertility option
 $n'$ is
@@ -1100,15 +1135,27 @@ With Type-I extreme-value shocks of scale $\kappa_F$,
 \exp\{\widetilde V_a^F(\hat n|b,z,d)/\kappa_F\}}.
 \label{eq:quant_fert_probs}
 \end{equation}
+The value before the fertility draw is the corresponding inclusive value:
+\begin{equation}
+V_a(b,z,d,0,0)
+=
+\kappa_F\log
+\sum_{\hat n\in\Nset}
+\exp\{\widetilde V_a^F(\hat n|b,z,d)/\kappa_F\}.
+\label{eq:quant_fert_iv}
+\end{equation}
 Outside the fertile window, or after a positive fertility choice, this stage is
 degenerate and $V_a=V_a^T$.
 
 \section{Stationary Equilibrium}
 
-Let $g$ be the stationary distribution of adult households over states. Adult
-mass is normalized to one for the benchmark quantitative exercise:
+Let $g^-$ be the stationary distribution at the beginning of a period, before
+the current fertility, tenure, and housing choices. Applying those choices to
+$g^-$ produces the post-decision distribution $g^+$. Flow utility, current
+housing demand, and age-specific moments are measured with $g^+$; the law of
+motion maps $g^+$ into next period's $g^-$. Adult mass is normalized to one:
 \begin{equation}
-    \int dg(x)=1.
+    \int dg^-(x)=\int dg^+(x)=1.
 \label{eq:quant_mass_norm}
 \end{equation}
 This normalization fixes the demographic envelope and lets fertility change
@@ -1123,16 +1170,16 @@ separately from the fixed-population results.
 
 \begin{definition}[Stationary equilibrium]
 A stationary equilibrium is a user cost and asset price $(q,P)$, value
-functions and policies, tenure and fertility probabilities, a stationary
-distribution $g$, and aggregate housing quantities $(H^D,H^S)$ such that:
+functions and policies, tenure and fertility probabilities, stationary
+distributions $(g^-,g^+)$, and aggregate housing quantities $(H^D,H^S)$ such that:
 \begin{enumerate}
 \item households solve the branch problems
 \eqref{eq:quant_renter_problem}--\eqref{eq:quant_owner_problem}, tenure choice
 is given by \eqref{eq:quant_tenure_probs}, fertility choice is given by
 \eqref{eq:quant_fert_probs}, and terminal utility is \eqref{eq:quant_bequest};
-\item the distribution $g$ is invariant under policies, income transitions,
-fertility shocks, child aging, deterministic aging, death, and entry of new
-adult households;
+\item current fertility and tenure policies map $g^-$ into $g^+$, and the
+income transition, child aging, deterministic aging, death, and entry of new
+adult households map $g^+$ back into $g^-$;
 \item aggregate physical housing demand is
 \begin{equation}
 H^D
@@ -1141,7 +1188,7 @@ H^D
 \left[
 \1\{d=R\}h^R(x)
 +\sum_{k=1}^K\1\{d=O_k\}H_k
-\right]\dd g(x);
+\right]\dd g^+(x);
 \label{eq:quant_hd}
 \end{equation}
 \item the housing market clears and the user-cost relation holds:
@@ -1160,29 +1207,45 @@ counterfactual.
 \section{Computation}
 \label{sec:quant_computation}
 
-The model is solved at an annualized four-year period. Households live $J=17$
-periods from age 18, retire at 66, and the last period in which a birth can
-occur begins at age 42. The wealth grid has $N_b=120$ nodes on $[-35,100]$
-with power spacing concentrated near zero; income takes five persistent
-values $z\in\{0.6,0.8,1.0,1.2,1.4\}$ with per-period persistence $0.85$ and
-invariant weights $(0.1,0.2,0.4,0.2,0.1)$; tenure is renting plus five owner
-rungs; fertility states are $n\in\{0,1,2{+}\}$ with one dependent-child
-stage. Value functions are computed by backward induction: the savings choice
-in each branch problem is solved by golden-section search, accelerated by
-Howard policy iteration; tenure and fertility follow the logit formulas of
-the model section. The stationary distribution follows by forward iteration
-of the exact transition operator, and the equilibrium price by damped
-fixed-point iteration on market clearing with a bracketing refinement on the
-scalar market, to tolerance $10^{-4}$.
+One model period is four years. Period $j=0,\ldots,16$ begins at age
+$18+4j$; the last interval covers ages 82--85. Retirement begins at 66, and
+the last period in which a birth can occur begins at 42. Annual objects are
+converted before solution:
+\[
+R=(1+r_{\mathrm{ann}})^4,
+\quad
+\beta=\beta_{\mathrm{ann}}^4,
+\quad
+\delta=1-(1-\delta_{\mathrm{ann}})^4,
+\quad
+\tau^p=4\tau^p_{\mathrm{ann}}.
+\]
+Income and consumption-flow quantities are expressed in four-year units;
+housing remains in rooms.
+
+The wealth grid has $N_b=120$ nodes on $[-35,100]$ with power spacing near
+zero. Income takes values $z\in\{0.6,0.8,1.0,1.2,1.4\}$ with invariant
+weights $\pi_z=(0.1,0.2,0.4,0.2,0.1)$ and transition matrix
+$\Pi^z=0.85I+0.15\mathbf 1\pi_z'$. One dependent-child stage has an expected
+duration of 18 years, giving a four-year maturity probability of $2/9$.
+Entrants have mass $1/J$ each period. The balanced pension equals payroll-tax
+revenue per retiree in the stationary age distribution.
+
+Value functions are computed by backward induction. Golden-section search
+solves saving in each branch, and Howard iteration accelerates evaluation.
+The stationary distribution follows by forward iteration, while damped
+fixed-point iteration and a scalar bracketing refinement solve the housing
+market. The intended market-residual tolerance is $10^{-4}$; strict rejection
+of candidates above that tolerance is part of the corrected production run.
 
 Because tenure and fertility choices are close to deterministic at the
 calibrated point, moments built on buy thresholds and the borrowing
 constraint move with the wealth grid, and grid resolution matters more
 here than in a standard lifecycle model. An earlier calibration at $N_b=60$
 re-evaluated 18 percent worse at $N_b=120$ at the same parameters; part of
-its fit was grid noise. All searches in this paper therefore run at
-$N_b=120$, and reported points are re-evaluated at $N_b=240$; the fit
-section reports the result of that check.
+its fit was grid noise. The July snapshot was searched at $N_b=120$ and
+re-evaluated at $N_b=240$. The corrected estimation will use the same search
+and verification grids.
 
 \section{Calibration}
 \label{sec:quant_calibration}
@@ -1209,11 +1272,11 @@ Risk aversion $\sigma$ & 2 & standard \\
 Bequest shift $\theta_1$ & 0.01 & near-linear warm glow \\
 Payroll tax $\tau_{\mathrm{pay}}$ & 0.179 & pension balances in the
 stationary distribution \\
-Income profile $e_a$ & rises to 1.0 at 34, declines after 58 & age-earnings
-profile \\
+Income profile $e_a$ & 0.65 at 18, rises to 1.0 at 34, declines after 58 &
+intended profile; age-18 cell under correction \\
 Owner menu $\{H_k\}$ & $\{2,4,6,8,10\}$ rooms & room-count support, ACS \\
 Renter cap $\bar h^R$ & 6.0 rooms & 90th-percentile rental size rule of
-\citet{greaneyDynamicUrbanEconomics2025}, measured in our matched ACS
+\citet{greaneyDynamicUrbanEconomics2025}, measured in the matched ACS
 sample; 6.5 as robustness \\
 Supply $(H_0,\eta)$ & $(4,1)$ & unit-elastic benchmark \\
 Entry wealth & PSID wealth-to-income ratios at age 22--25 & first stage \\
@@ -1233,7 +1296,7 @@ an estimate.
 \subsection{Estimated parameters}
 
 Thirteen parameters are estimated by simulated method of moments: the
-discount factor $\beta$, the consumption share $\alpha$, the adult floors
+discount factor $\beta$, the consumption share $\alpha_c$, the adult floors
 $\bar c_0$ and $\bar h_0$, the child cost parameters $\bar c_n$,
 $\bar h_{\mathrm{jump}}$, $\bar h_n$, and $\psi_{\mathrm{child}}$, the choice
 scales $\kappa_F$ and $\kappa_T$, the owner service multiplier $\chi_O$, and
@@ -1244,7 +1307,7 @@ on a cluster, at $N_b=120$.
 
 \begin{table}[H]
 \centering
-\caption{Estimates, search bounds, and bound status}
+\caption{July 9 estimates, search bounds, and bound status (provisional)}
 \small
 \begin{tabular}{@{}l r c l@{}}
 \toprule
@@ -1252,7 +1315,7 @@ Parameter & Estimate & Bounds & Status \\
 \midrule
 $\beta_{\mathrm{annual}}$ & 0.940 & $[0.940, 0.995]$ & at lower (declared
 restriction) \\
-$\alpha$ & 0.620 & $[0.40, 0.95]$ & interior \\
+$\alpha_c$ & 0.620 & $[0.40, 0.95]$ & interior \\
 $\bar c_0$ & 1.279 & $[0.08, 1.28]$ & at upper \\
 $\bar c_n$ & 0.116 & $[0.05, 1.50]$ & interior \\
 $\bar h_0$ & 1.000 & $[1.0, 6.0]$ & at lower \\
@@ -1268,10 +1331,11 @@ $\theta_n$ & 0.972 & $[0, 1.50]$ & interior \\
 \end{tabular}
 \end{table}
 
-Eight of thirteen parameters sit at or against the search box. The data
-push these parameters to the boundary of the admissible space, and the
-structural misses documented below are the same tension seen from the
-moment side.
+Eight of thirteen parameters sit at or against the search box recorded with
+the July run. This is a feature of the provisional objective, not a final
+identification result. The same production bounds must now be placed in one
+named source profile before the corrected search. The near-zero bequest weight
+also leaves $\theta_n$ weakly identified in local sensitivity calculations.
 
 The two choice scales land at corners with different meanings. The tenure
 scale $\kappa_T$ estimates to zero: the data prefer deterministic tenure
@@ -1296,21 +1360,22 @@ total loss at the reported point is 6.31.
 
 \begin{table}[H]
 \centering
-\caption{Target moments and model fit ($N_b=120$; loss 6.31)}
-\small
+\caption{July 9 target moments and model fit ($N_b=120$; provisional loss 6.31)}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}l r r r r r@{}}
 \toprule
 Moment & Target & Model & Gap & Weight & Contribution \\
 \midrule
 Old-age ownership rate (65--75) & 0.764 & 0.893 & $+0.128$ & 160 & 2.64 \\
 Ownership rate 25--34 & 0.341 & 0.226 & $-0.115$ & 80 & 1.05 \\
-Owner$-$renter mean rooms (childless 30--55) & 2.419 & 2.151 & $-0.268$ & 12
+Owner$-$renter mean rooms (no children at home, 30--55) & 2.419 & 2.151 & $-0.268$ & 12
 & 0.86 \\
 Family ownership gap & 0.168 & 0.298 & $+0.130$ & 45 & 0.77 \\
 Young renter liquid wealth / income (25--35) & 0.179 & 0.353 & $+0.173$ & 12
 & 0.36 \\
 Aggregate ownership rate & 0.575 & 0.531 & $-0.045$ & 100 & 0.20 \\
-Childless renter mean rooms (30--55) & 3.805 & 3.655 & $-0.150$ & 6 & 0.14 \\
+Renter mean rooms (no children at home, 30--55) & 3.805 & 3.655 & $-0.150$ & 6 & 0.14 \\
 Childlessness rate & 0.188 & 0.260 & $+0.072$ & 20 & 0.10 \\
 Rooms gap, 3$+$ vs.\ 1--2 children (30--55) & 0.368 & 0.269 & $-0.099$ & 8 &
 0.08 \\
@@ -1321,97 +1386,59 @@ Housing increment at first birth (rooms) & 0.664 & 0.618 & $-0.046$ & 14 &
 Completed fertility & 1.918 & 1.949 & $+0.031$ & 20 & 0.02 \\
 Old nonhousing wealth / income, median (65--75) & 2.230 & 2.328 & $+0.097$ &
 0.8 & 0.01 \\
-Childless owner share, rooms $\ge6$ & 0.596 & 0.593 & $-0.003$ & 25 & 0.00 \\
+Owner share with rooms $\ge6$ (no children at home) & 0.596 & 0.593 & $-0.003$ & 25 & 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The model matches the fertility level, the size-distribution moments, and
-the housing response to a first birth. Three misses are structural, and each
-has a diagnosis. Old-age ownership is too high: the model keeps 89 percent
+Gaps are rounded for display. Contributions and the reported loss use the
+unrounded model moments. Several tenure and housing rows will change when
+current choices are measured with the post-decision distribution; the
+first-birth housing row also omits the same-period purchase margin in this
+snapshot.
+
+The July snapshot is close to the fertility level and several
+size-distribution moments. Old-age ownership is too high: the model keeps 89 percent
 of 65--75 households in owned housing against 76 percent in the data,
 because nothing in the model pushes an old owner out of her house. There
 are no health shocks and no mortality-linked downsizing, so retention is
-close to absorbing. Ownership at 25--34 is too low (0.23 against 0.34)
-while young renter wealth is too high (0.35 against 0.18); these are two
-faces of one timing failure. Model households delay births toward the
-fertility deadline and buy at the birth, where the data show earlier
-purchases. And childlessness overshoots (0.26 against 0.19), which is what
-pricing children through goods and space floors alone does to the extensive
-margin.
+close to absorbing. Ownership at 25--34 is too low (0.23 against 0.34),
+while young renter wealth is too high (0.35 against 0.18). Both moments are
+directly affected by the pending timing and income-profile corrections, so the
+current gaps do not identify a structural failure on their own. Childlessness
+also overshoots (0.26 against 0.19). That miss remains a substantive feature
+of the current choice structure, but its quantitative size must be reassessed
+at the corrected baseline.
 
 Re-evaluated at $N_b=240$ at the same parameters, the loss rises from 6.31
 to 6.84, and the drift concentrates in the family ownership gap and the
 old-age ownership rate, both of which move further from their targets at
-the finer grid. The table's numbers are therefore, if anything, generous
-to the model on its two main misses, and the diagnosis does not depend on
-the grid.
+the finer grid. This comparison records the numerical drift in the July
+snapshot. The corrected calibration will report the same 120/240 comparison.
 
-\section{The Baseline Equilibrium}
+\section{The July 9 Equilibrium Snapshot}
 \label{sec:quant_baseline}
 
-Before any counterfactual, it is worth seeing what the stationary
-equilibrium looks like. The figures below show policies, tenure, fertility,
-housing, wealth, and market clearing.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_policies.png}
-\caption{Policy functions over wealth by age and family state. Savings and
-housing policies are monotone in wealth; the kinks are the down-payment
-thresholds at the owner rungs.}
-\label{fig:eq_policies}
-\end{figure}
+The lifecycle pattern is descriptive of the provisional snapshot. In
+particular, the plotted ownership stock uses the inherited tenure state and
+therefore records current purchases one period late. The corrected run will
+replace this figure rather than reinterpret it.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{July_26_slides_eq_tenure.png}
-\caption{Tenure over the lifecycle. Ownership rises steeply at the end of
-the fertile window and stays high into old age, the two ends of the
-intergenerational allocation problem.}
+\caption{Ownership over the lifecycle in the July 9 snapshot. The steep rise
+near the end of the fertile window and high old-age ownership are visible, but
+current purchases are recorded one model period late in this version.}
 \label{fig:eq_tenure}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_fertility.png}
-\caption{Birth probabilities by wealth and income state. At the calibrated
-near-deterministic choice scale, low-income types have birth probabilities
-of exactly zero.}
-\label{fig:eq_fertility}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_housing.png}
-\caption{Housing services by age, tenure, and family state. Renters with
-children mass at the rental cap; owners occupy the discrete rungs.}
-\label{fig:eq_housing}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_wealth.png}
-\caption{Wealth accumulation over the lifecycle. Young renters concentrate
-near zero liquid wealth; owners lever into negative liquid positions at
-purchase.}
-\label{fig:eq_wealth}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_market.png}
-\caption{Market clearing. Aggregate demand against the unit-elastic supply
-curve at the equilibrium user cost.}
-\label{fig:eq_market}
-\end{figure}
-
-Renting households with children sit against the rental cap. Family-sized
-space is the scarce object, and it is scarce as availability rather than
-price: within a size cell, the model rent carries no premium. Ownership
-arrives late, in a jump at the end of the fertile window. The next section
-shows that the jump is birth-driven purchasing at the deadline, not gradual
-saving toward a threshold.
+Renting households with children sit against the rental cap, while owners use
+the discrete room ladder. Family-sized space is scarce through availability:
+within a size cell, the model rent carries no separate premium. The snapshot
+also places many young renters near zero liquid wealth. These features remain
+useful diagnostics, but their age profiles and aggregate weights must be
+regenerated after the timing correction.
 
 \section{The Mechanism Quantified}
 \label{sec:quant_mechanism}
@@ -1420,35 +1447,34 @@ Part I's argument runs through one object, the access gap $\zeta$: the
 amount by which a constrained household's marginal valuation of family
 space exceeds its market user cost. Under equal scaling, the corollary to
 Proposition~\ref{prop:local_fertility_stat} says the same gap prices
-misallocation, fertility exposure, and entry. This section measures it in
-the calibrated equilibrium.
+misallocation, fertility exposure, and entry. The July snapshot gives a first
+measurement of that gap.
 
-The gap is large, and it covers most of the fertility margin. Among
+The measured gap is large. Among
 fertile-age renting households pinned at the rental cap, the mean access
 gap is 0.248 goods units, 1.28 times the market user cost, so capped
 renters value a marginal room at 2.3 times what the market charges for it.
 Weighting fertility responses by exposure as in
 Proposition~\ref{prop:local_fertility_stat}, 73 percent of the model's
-fertility-response mass sits on households with $\zeta>0$. The share is
-stable across grid resolutions and across alternative owner menus. What
-generates it is the geometry between the rental cap and the family space
-floor, not the placement of the owner rungs.
+fertility-response mass sits on households with $\zeta>0$. Within the July
+diagnostics, the share is similar across grid resolutions and owner menus.
+Its level remains provisional because the exposure weights will change when
+current housing choices are measured contemporaneously.
 
-Ownership arrives at the fertility deadline. The lifecycle jump in
-Figure~\ref{fig:eq_tenure} is concentrated in the last fertile period: the
-buy region expands exactly when the option value of waiting to have
-children expires, and buyers arrive at the threshold with wealth well
-above the required down payment. Housing access does not gate births by
-forcing households to save toward a distant constraint. It compresses
-births and purchases into a joint decision at the deadline, and this is
-why relaxing the down-payment constraint alone creates few births in the
-counterfactuals below. The binding failure is timing, not exposure.
+The model places many purchases near the fertility deadline. The purchase
+region expands in the last fertile period, when the option value of waiting to
+have children expires. Buyers in this region hold wealth above the required
+down payment. In the current model, housing access therefore does not operate
+only by forcing households to save toward a distant threshold. It also
+compresses births and purchases into a joint decision near the deadline. The
+corrected run will determine how much of this pattern survives contemporaneous
+measurement.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.92\textwidth]{July_26_slides_buy_flow_by_age_children.png}
-\caption{Purchase flows by age and family state. Buying is concentrated at
-the end of the fertile window and is birth-linked.}
+\caption{Purchase flows by age and family size in the July 9 snapshot. Buying
+is concentrated near the end of the fertile window and is birth-linked.}
 \label{fig:buy_flow}
 \end{figure}
 
@@ -1479,25 +1505,18 @@ Held by households with no children at home & 54.9\% & 72.5\% \\
 The concentration is in the data, not only in the model. In the ACS, 72
 percent of the family-sized owner stock is held by post-fertile households
 and 55 percent by households with no children at home. The model
-reproduces the pattern and overstates it, in the directions of its two
-diagnosed misses: late births push fertile-age holdings down, and the
-missing old-age exit margin pushes old holdings up. The households the planner comparison wants
-served, fertile-age with positive access gaps, hold 13 percent of the
-family-sized stock in the model, and two-thirds of fertile-age parents do
-not own family-sized space at all.
+has the same ordering and overstates the concentration among older households.
+Its model column will be recomputed after the timing correction. The data
+column already shows the allocation problem that motivates the model.
 
-The old side of Part I's surplus formula has a direct quantitative
-counterpart in a retention-margin experiment. Imposing a disposal wedge on
-old owners of large homes moves prices by less than one percent and
-completed fertility by less than a hundredth. This is not evidence that
-the old side of the misallocation is small. The calibrated old are at a
-retain-everything corner: with no health, mortality, or downsizing margin,
-essentially no old household is marginal to the wedge, and a tax on a
-margin nobody uses is free. The experiment bounds the planner surplus from
-below. The stock table measures the allocation directly; an old-age exit
-margin is the extension that would let prices reveal its value.
+A preliminary retention experiment moves prices by less than one percent and
+completed fertility by about one hundredth. The result mainly reveals that the
+current old households are close to a retain-everything corner: without a
+health, mortality, or downsizing margin, few of them respond to a disposal
+wedge. I treat this exercise as a runtime pattern, not as an estimate of the
+old side of the allocation wedge.
 
-\section{Policy Counterfactuals}
+\section{Preliminary Policy Patterns}
 \label{sec:quant_policy}
 
 The instruments follow the access margins of the compact model: a holding
@@ -1506,24 +1525,25 @@ eq.~\ref{eq:compact_capitalization_passthrough}), birth-linked down-payment
 grants restricted to family-sized rungs (the financing gap
 $\zeta^{O,F}$), variation in the rental cap $\bar h^R$, a retention wedge
 on old owners, and a revenue-linked package combining the tax and the
-grant. All results in this subsection hold population fixed; prices
-re-clear in every experiment.
+grant. These exercises describe the July diagnostic runtime, not final policy
+estimates. The grant enters both household values and the forward distribution
+in that runtime. Prices re-clear in every fixed-population experiment, but all
+cases will be rerun after re-estimation.
 
-The tax capitalizes but does not create births. A two percent holding tax
-on large units lowers their asset price by 12 percent, and the
-capitalization is invariant to grid resolution, moment weights, and the
-owner menu. Completed fertility rises by only $+0.004$ to $+0.009$. The
-pass-through works exactly as
-eq.~\ref{eq:compact_capitalization_passthrough} says, and down payments do
-fall. But exposed households buy at the fertility deadline with wealth
+The current tax experiment produces capitalization and a small birth response.
+A two percent holding tax on large units lowers their asset price by 12
+percent. Capitalization is similar across the grids, moment weights, and owner
+menus that have been checked, while completed fertility rises by $+0.004$ to
+$+0.009$. As eq.~\ref{eq:compact_capitalization_passthrough} predicts, down
+payments fall. In this snapshot, exposed households buy near the fertility deadline with wealth
 already above the threshold, so cheaper access changes which house they
 buy more than whether they have children.
 
-Grants create births, with a dose--response. A down-payment grant paid at
+The grant runtime produces a dose--response. A down-payment grant paid at
 a birth, restricted to family-sized rungs, raises completed fertility by
 $+0.01$, $+0.13$, $+0.26$, and $+0.49$ at grant sizes 0.1, 0.4, 0.58, and
-1.0, in units of mean annual income. The access instrument works where the
-price instrument does not because it is conditional on the birth itself:
+1.0, in units of mean annual income. In the current solution the access
+instrument has a larger response because it is conditional on the birth itself:
 it closes the financing gap at the moment the household is on its
 fertility margin. The conditioning also distorts. Small grants delay
 pre-birth purchases, since households near a birth wait for the subsidy,
@@ -1531,12 +1551,12 @@ and young ownership falls from 0.23 to 0.09 at the smallest grant. The
 distortion fades at larger grant sizes, but any conditional instrument
 inherits the margin.
 
-The package is the decentralized version of Part I's planner reallocation.
+The combined experiment follows both sides of Part I's reallocation.
 The two percent tax on large homes funds the birth-linked grant; the tax
 lowers incumbents' retention value and the price of large units by 11
 percent, and the grant closes the young side's financing gap at the birth
-margin. At the reported calibration the package raises completed fertility
-by $+0.15$ and is revenue-funded.
+margin. At the July calibration the package raises completed fertility by
+$+0.15$ and is revenue-funded. This magnitude is provisional.
 
 \subsection{The entry and scale margin}
 \label{sec:quant_entry_margin}
@@ -1553,15 +1573,13 @@ is exactly $S=1$. The recovered conventions are documented rather than
 estimated, and the binding one is the assumption that city-born children
 become future entrants one-for-one.
 
-These results are computed at the working grid ($N_b=120$) at the headline
-calibration; the fixed-population column re-solves each case inside the
-same protocol, so the comparison is internal. The grant and package rows
-carry a few-percent price imprecision from the outer loop's fast solves;
-their directions and orders of magnitude are robust.
+These results use $N_b=120$ at the July calibration. The fixed-population
+column re-solves each case inside the same protocol. The grant and package rows
+carry a few-percent price imprecision from the outer loop's fast solves.
 
 \begin{table}[H]
 \centering
-\caption{Counterfactuals with the entry margin on ($N_b=120$)}
+\caption{July 9 policy runtime with the entry margin on ($N_b=120$; provisional)}
 \small
 \begin{tabular}{@{}l r r r r@{}}
 \toprule
@@ -1571,54 +1589,90 @@ Total births \\
 Holding tax 2\% & $+0.004$ & $+0.002$ & 1.003 & $+0.4\%$ \\
 Grant 0.4, rungs $\ge6$ & $+0.119$ & $+0.083$ & 1.038 & $+8.2\%$ \\
 Package (tax $+$ grant) & $+0.162$ & $+0.086$ & 1.040 & $+8.6\%$ \\
-Rental cap 6.5 & $-0.006$ & $-0.009$ & 1.004 & $-0.0\%$ \\
+Rental cap 6.5 & $-0.006$ & $-0.009$ & 1.004 & $\approx0.0\%$ \\
 Retention wedge 0.2 & $+0.006$ & $+0.000$ & 1.007 & $+0.7\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The grant pulls in scale, scale bids up prices, and the capitalization
-nearly triples with entry on; about a third of the fixed-population
-fertility gain is given back, while total births rise by eight percent.
-Per-capita fertility overstates what an access policy does to a place, and
-total births understate what it does per family. The scale response is a
-demographic feedback rather than an entry-elasticity artifact. Across
-policies the entry probability barely moves, and city-born future entrants
-do the work, which is why the results survive changes in the entry
-conventions the data do not pin down: halving the assumed entry
-probability moves the tax's births effect from $+0.40$ to $+0.46$ percent.
-The tax creates almost no births at fixed population and almost none with
-entry on, and the retention wedge, a tax on a downsizing margin the
-calibrated old do not use, is near-neutral everywhere. Whether local birth
-gains count as births created or births relocated is a question of city
-versus national accounting, and any local-policy conclusion has to answer
-it explicitly.
+In the current runtime, the grant raises population scale and the resulting
+price response offsets part of its fixed-population fertility effect. Total
+births nevertheless rise in the grant and package rows. The holding tax and
+retention wedge remain close to neutral. These patterns distinguish per-family
+fertility from births generated in the modeled market. Whether a local birth
+gain represents creation or relocation remains outside the one-market model.
+
+\section{Current Repairs and Re-estimation}
+\label{sec:quant_repairs}
+
+The first repair concerns timing. The Bellman problem gives a household its
+new tenure and house in the current period, but the July distribution code uses
+inherited tenure for market clearing and several moments. The corrected
+operator will form a post-decision distribution for current demand and moments,
+while preserving the next-period distribution for state transitions. The same
+change will add current purchases to the housing response measured at a first
+birth.
+
+The second repair covers the first earnings cell. The intended profile begins
+at 0.65 of peak earnings at age 18, but the uncovered first cell in the July
+runtime remained at one. The new profile will cover every age explicitly.
+Neither correction has yet been re-estimated, and I do not infer the new fit
+from their mechanical directions.
+
+The production run also needs one recorded configuration for the five owner
+rungs, parameter bounds, target definitions, and the 120/240 wealth grids. A
+candidate will be ranked only if it meets the strict market-clearing tolerance.
+The forward-map grant correction used for the July policy runtime will be
+carried into the main package, and the entry and retention drivers will be
+included in the same reproducible path. The quantitative sequence is therefore
+fixed: verify the two timing identities, re-estimate at $N_b=120$, verify at
+$N_b=240$, regenerate the diagnostic packet, and rerun the policy table.
+
+The paper-side specification is already aligned with the estimated object in
+three places. Owner utility applies $\chi_O$ to usable space
+$H_k-\bar h(n,s)$, bequest utility retains its family-size-dependent level, and
+all owners face the same debt floor. Those changes describe the existing
+estimated preferences and finance rule; they are not new mechanisms.
 
 \section{Limitations}
 \label{sec:quant_limitations}
 
-Each of the calibration's weaknesses names a missing margin. Old-age
-ownership is too high because nothing lets an old owner exit; a health or
-downsizing margin is the natural extension. The young ownership-and-wealth
-block fails through fertility timing: in the model, delaying a birth costs
-nothing, so births and purchases pile up at the deadline. The extension
-that would repair this is a mechanism that makes delay itself costly, such
-as fecundity that declines with age. The same mechanism bears on the
-childlessness overshoot, since households that wait and fail add
-involuntary childlessness of the kind goods-and-space child costs cannot
-generate.
+The model remains deliberately incomplete after these repairs. Old-age
+ownership is too high because health, mortality, and other reasons for
+downsizing are absent. Fertility has no age-dependent fecundity, so waiting is
+costless until the final fertile period. Both omissions matter for the timing
+and stock-allocation questions at the center of the paper.
 
-Three further limitations are matters of scope. The computed benchmark
-prices old-owner lock-in through transaction costs only; the
-capital-gains and basis machinery of Part I is specified but not
-computed, so the retention experiment bounds rather than measures that
-wedge. The quantitative supply curve is unit-elastic while the compact
-model's misallocation statement is cast at a fixed stock; how much of the
-tax capitalization result depends on the supply elasticity is an open
-sensitivity, and a near-fixed-stock solve would bound it. And roughly a
-quarter of the entrant wealth distribution injected from the PSID first
-stage sits at states infeasible for the model's consumption floor, which
-interacts with any conclusion about the young wealth block.
+The computed benchmark prices old-owner retention through transaction costs
+only. The capital-gains and basis mechanism of Part I is not in the
+quantitative state space. The supply curve is unit-elastic, while the compact
+misallocation result holds the stock fixed. Finally, the entry exercise relies
+on an externally recovered outside value and on the convention that local
+births become future entrants. The entry table is therefore a decomposition,
+not an estimated migration response.
+
+\section{Conclusion}
+
+Children use housing space, and access to that space differs sharply by
+tenure. A rental-size limit raises the shadow price of room for a constrained
+household. Ownership relaxes the size limit but introduces a down payment.
+Retention frictions can keep large homes with older households whose current
+use of space is low. The compact model places these margins in one
+goods-equivalent access gap and shows how the same gap enters the private price
+of children.
+
+The July quantitative snapshot suggests that this mechanism is active. Many
+households near the fertility margin value additional space above its user
+cost, purchases bunch late in the fertile window, and the data show that older
+households hold most family-sized owner housing. The size of these effects is
+not yet settled. Current tenure timing and the first earnings cell affect
+targeted moments and require a new calibration.
+
+The immediate goal is therefore narrower than a new model extension: align the
+distribution with the household timing, restore the intended income profile,
+freeze one production configuration, and re-estimate. The theory and the data
+fact organize that exercise. The corrected fit and policy table will determine
+how much quantitative weight the mechanism can carry.
 
 \clearpage
 \bibliographystyle{plainnat}
