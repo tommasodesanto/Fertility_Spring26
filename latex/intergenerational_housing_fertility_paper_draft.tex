@@ -428,7 +428,7 @@ Because tenure is a discrete choice, a policy that shifts $W_i^O-W_i^R$ also mov
 \section{Quantitative Lifecycle Model}
 % ==========================================================
 
-\subsection{Purpose and Timing}
+\subsection{Lifecycle and Income}
 
 The quantitative model embeds the same mechanism in a finite-life economy. It
 has the standard lifecycle structure: households age, face income risk, save,
@@ -438,26 +438,8 @@ one asset price. Tenure matters because it changes the size menu, financing
 constraints, transaction costs, and tax exposure.
 
 Time is discrete. Households enter adult life at age $a=1$, retire after age
-$J_R$, and die at the end of age $J$. The individual state at the beginning of a
-period is
-\begin{equation}
-x=(b,z,d,a,n,s).
-\label{eq:quant_state}
-\end{equation}
-Here $b$ is liquid wealth, $z\in\Zset$ is idiosyncratic productivity, $d$ is
-tenure and housing position, $a$ is age, $n$ is an encoded completed-family-size
-state, and $s$ is the child-at-home state. Tenure belongs to
-\begin{equation}
-\Dset=\{R,O_1,\ldots,O_K\}.
-\label{eq:quant_tenure_set}
-\end{equation}
-$R$ denotes renting. $O_k$ denotes ownership of a house with physical size
-$H_k$, where $H_1<\cdots<H_K$. Renters choose housing continuously up to
-$\bar h^R$; owners choose from the discrete ladder. The ladder is the
-quantitative version of the family-housing segmentation in
-Section~\ref{sec:analytical_model}.
-
-Income for working households is
+$J_R$, and die at the end of age $J$. Before retirement, earnings depend on age
+and idiosyncratic productivity $z\in\Zset$:
 \begin{equation}
 y(a,z)=(1-\tau_{\mathrm{pay}})w e_a z,
 \qquad
@@ -551,6 +533,17 @@ H^S(q)=H_0\left(\frac{q}{\bar q}\right)^\eta.
 The fixed-stock compact model is the limiting case $\eta=0$ around the
 benchmark stock.
 
+Households rent or own one of $K$ discrete housing sizes. Write
+\begin{equation}
+\Dset=\{R,O_1,\ldots,O_K\},
+\label{eq:quant_tenure_set}
+\end{equation}
+where $R$ denotes renting and $O_k$ denotes ownership of a house with physical
+size $H_k$, ordered so that $H_1<\cdots<H_K$. Renters choose housing
+continuously up to $\bar h^R$; owners choose from the discrete ladder. The
+ladder is the quantitative version of the family-housing segmentation in
+Section~\ref{sec:analytical_model}.
+
 Renters choose $c,h^R,b'$ subject to
 \begin{equation}
 c+q h^R+b'=R b+y(a,z),
@@ -590,12 +583,12 @@ an owner who sells pays $\psi^s$ per unit of value and faces no tax on
 accrued gains.
 
 The capital-gains treatment of Section~\ref{sec:analytical_model} is specified as an extension and is
-not part of the computed benchmark. Pricing realized gains requires adding a
-tax basis $B^p$ to the owner's state; a sale would then trigger
+not part of the computed benchmark. Pricing realized gains requires tracking a
+tax basis $B^p$ for each owner; a sale would then trigger
 $\Tcal^g(PH_k,B^p)=\tau^g\max\{PH_k-B^p-\bar g,0\}$ with statutory exclusion
 $\bar g$, net proceeds would fall to $\Omega(H_k)-\Tcal^g(PH_k,B^p)$, and
 stepped-up basis at death would forgive the accrued gain. The benchmark
-state vector \eqref{eq:quant_state} deliberately excludes $B^p$: the
+does not track $B^p$: the
 old-owner lock-in wedge $\bar\ell$ is priced analytically in
 Section~\ref{sec:analytical_model}, and the
 counterfactual section instead bounds its quantitative content with a direct
@@ -613,15 +606,15 @@ n'\in\Nset=\{0,1,\ldots,\bar n\}.
 \label{eq:quant_fertility_set}
 \end{equation}
 The option $n'=0$ means no birth in the current period. A positive choice fixes
-completed fertility forever and moves the household into the first
-dependent-child state. A household that reaches the end of the fertile window
+completed fertility forever and moves its children into the first dependent
+stage. A household that reaches the end of the fertile window
 without a positive choice remains childless.
 
-In the computation, $\Nset=\{0,1,2\}$ and the last state is the open-ended
+In the computation, $\Nset=\{0,1,2\}$ and the last element is the open-ended
 highest family-size category. The completed-fertility moment matched to the CPS
 is reported as $2\E[n]$. This household-to-woman conversion is applied only to
-that reported moment. Child needs and bequest utility use the encoded state
-$n$, while the housing-size target maps $n=1$ to the 1--2 group and $n=2$ to
+that reported moment. Child needs and bequest utility use the encoded
+family-size category $n$, while the housing-size target maps $n=1$ to the 1--2 group and $n=2$ to
 the 3+ group. The distinction is a unit convention and does not create an
 additional fertility choice.
 
@@ -637,25 +630,25 @@ Within the period, the household first faces fertility if eligible, then
 chooses tenure and housing position, then chooses consumption, rental housing,
 and saving. Let the continuation value after income risk and child aging be
 \begin{equation}
-\bar V_{a+1}(b',d',z,n,s)
+\bar V(b',z,d',a+1,n,s)
 =
 \sum_{z'}\sum_{s'}
 \Pi^z(z'|z)\Pi^c(s'|s,n)
-V_{a+1}(b',z',d',n,s').
+V(b',z',d',a+1,n,s').
 \label{eq:quant_continuation}
 \end{equation}
 The terminal value is
 \[
-V_{J+1}(b,z,d,n,s)=\Bcal(W^B,n).
+V(b,z,d,J+1,n,s)=\Bcal(W^B,n).
 \]
 
 Conditional on renting, the branch value is
 \begin{equation}
 \begin{aligned}
-V_a^R(b,z,n,s)
+V^R(b,z,R,a,n,s)
 =
 \max_{c,h^R,b'}\quad
-&u(c,h^R,R;n,s)+\beta \bar V_{a+1}(b',R,z,n,s)\\
+&u(c,h^R,R;n,s)+\beta \bar V(b',z,R,a+1,n,s)\\
 \text{s.t.}\quad
 &c+q h^R+b'=Rb+y(a,z),\\
 &0\le h^R\le\bar h^R,\qquad b'\ge0.
@@ -665,10 +658,10 @@ V_a^R(b,z,n,s)
 Conditional on owning rung $H_k$ after any adjustment, the branch value is
 \begin{equation}
 \begin{aligned}
-V_a^{O_k}(\tilde b,z,n,s)
+V^{O_k}(\tilde b,z,O_k,a,n,s)
 =
 \max_{c,b'}\quad
-&u(c,H_k,O_k;n,s)+\beta \bar V_{a+1}(b',O_k,z,n,s)\\
+&u(c,H_k,O_k;n,s)+\beta \bar V(b',z,O_k,a+1,n,s)\\
 \text{s.t.}\quad
 &c+(\delta+\tau^p)PH_k+b'=R\tilde b+y(a,z),\\
 &b'\ge -\phi P H_k.
@@ -694,31 +687,32 @@ household that keeps its position pays nothing.
 
 The tenure branch value for feasible $d'$ is
 \begin{equation}
-\widetilde V_a^T(d'|b,z,d,n,s)
+\widetilde V^T(d'|b,z,d,a,n,s)
 =
 \begin{cases}
-V_a^R(\tilde b(b,d,R),z,n,s), & d'=R,\\
-V_a^{O_k}(\tilde b(b,d,O_k),z,n,s), & d'=O_k.
+V^R(\tilde b(b,d,R),z,R,a,n,s), & d'=R,\\
+V^{O_k}(\tilde b(b,d,O_k),z,O_k,a,n,s), & d'=O_k.
 \end{cases}
 \label{eq:quant_tenure_branch}
 \end{equation}
+An infeasible branch is assigned value $-\infty$.
 Tenure and owner-rung choices have Type-I extreme-value shocks with scale
 $\kappa_T$:
 \begin{equation}
-\pi_a^T(d'|x)
+\pi^T(d'|b,z,d,a,n,s)
 =
-\frac{\exp\{\widetilde V_a^T(d'|x)/\kappa_T\}}
-{\sum_{\hat d\in\Dset(x)}
-\exp\{\widetilde V_a^T(\hat d|x)/\kappa_T\}},
+\frac{\exp\{\widetilde V^T(d'|b,z,d,a,n,s)/\kappa_T\}}
+{\sum_{\hat d\in\Dset}
+\exp\{\widetilde V^T(\hat d|b,z,d,a,n,s)/\kappa_T\}},
 \label{eq:quant_tenure_probs}
 \end{equation}
 and the inclusive tenure value is
 \begin{equation}
-V_a^T(x)
+V^T(b,z,d,a,n,s)
 =
 \kappa_T\log
-\sum_{\hat d\in\Dset(x)}
-\exp\{\widetilde V_a^T(\hat d|x)/\kappa_T\}.
+\sum_{\hat d\in\Dset}
+\exp\{\widetilde V^T(\hat d|b,z,d,a,n,s)/\kappa_T\}.
 \label{eq:quant_tenure_iv}
 \end{equation}
 At the estimated value $\kappa_T=0$, these expressions mean their deterministic
@@ -728,44 +722,45 @@ tie is resolved by the fixed ordering of feasible branches.
 For a childless household in the fertile window, the value of fertility option
 $n'$ is
 \begin{equation}
-\widetilde V_a^F(n'|b,z,d)
+\widetilde V^F(n'|b,z,d,a,0,0)
 =
-V_a^T(b,z,d,n',s(n')),
+V^T(b,z,d,a,n',s(n')),
 \qquad
 s(n')=\1\{n'>0\}.
 \label{eq:quant_fert_branch}
 \end{equation}
 With Type-I extreme-value shocks of scale $\kappa_F$,
 \begin{equation}
-\pi_a^F(n'|b,z,d)
+\pi^F(n'|b,z,d,a,0,0)
 =
-\frac{\exp\{\widetilde V_a^F(n'|b,z,d)/\kappa_F\}}
+\frac{\exp\{\widetilde V^F(n'|b,z,d,a,0,0)/\kappa_F\}}
 {\sum_{\hat n\in\Nset}
-\exp\{\widetilde V_a^F(\hat n|b,z,d)/\kappa_F\}}.
+\exp\{\widetilde V^F(\hat n|b,z,d,a,0,0)/\kappa_F\}}.
 \label{eq:quant_fert_probs}
 \end{equation}
 The value before the fertility draw is the corresponding inclusive value:
 \begin{equation}
-V_a(b,z,d,0,0)
+V(b,z,d,a,0,0)
 =
 \kappa_F\log
 \sum_{\hat n\in\Nset}
-\exp\{\widetilde V_a^F(\hat n|b,z,d)/\kappa_F\}.
+\exp\{\widetilde V^F(\hat n|b,z,d,a,0,0)/\kappa_F\}.
 \label{eq:quant_fert_iv}
 \end{equation}
 Outside the fertile window, or after a positive fertility choice, this stage is
-degenerate and $V_a=V_a^T$.
+degenerate and $V(b,z,d,a,n,s)=V^T(b,z,d,a,n,s)$.
 
 \subsection{Stationary Equilibrium}
 \label{sec:quant_stationary_equilibrium}
 
-Let $g$ denote the stationary composition of adult households over the state
-space $x=(b,z,d,a,n,s)$, normalized to integrate to one. Total adult scale is
-$S$, so the corresponding level measure is $G=Sg$:
+Let $g$ denote the stationary composition of adult households over liquid
+wealth, productivity, housing position, age, family size, and child age,
+$(b,z,d,a,n,s)$, normalized to integrate to one. Total adult scale is $S$, so
+the corresponding level measure is $G=Sg$:
 \begin{equation}
-    \int dg(x)=1,
+    \int dg(b,z,d,a,n,s)=1,
     \qquad
-    \int dG(x)=S.
+    \int dG(b,z,d,a,n,s)=S.
 \label{eq:quant_mass_norm}
 \end{equation}
 The distinction between $g$ and $G$ separates composition from scale: household
@@ -789,20 +784,24 @@ $\mathcal T(g;q,S)$. Stationarity requires
 g=\mathcal T(g;q,S);
 \label{eq:quant_stationary_distribution}
 \end{equation}
-\item per-unit physical housing demand evaluates current tenure and housing
-choices at each state:
+\item per-unit physical housing demand evaluates each household's current
+tenure and housing choices:
 \begin{equation}
+\begin{aligned}
 \widehat H^D(g,q)
-=
+={}&
 \int
-\left[
-\Pi_a(R\mid x)h^R(x)
-+\sum_{k=1}^K\Pi_a(O_k\mid x)H_k
-\right]\dd g(x);
+\Bigg[
+\Pi^T(R\mid b,z,d,a,n,s)\widehat h^R(b,z,d,a,n,s)\\
+&\qquad
++\sum_{k=1}^K\Pi^T(O_k\mid b,z,d,a,n,s)H_k
+\Bigg]\dd g(b,z,d,a,n,s).
+\end{aligned}
 \label{eq:quant_hd}
 \end{equation}
-where $\Pi_a(d'\mid x)$ is the current tenure probability implied by the
-nested family-size and tenure choices;
+where $\Pi^T(d'\mid b,z,d,a,n,s)$ is the current tenure probability and
+$\widehat h^R(b,z,d,a,n,s)$ is expected rental space conditional on renting, both
+after integrating over the nested family-size choice;
 \item let $E_0(g,q)$ be the inflow of young adults required to reproduce one
 unit of the stationary composition, $B_0(g,q)$ the mature locally born flow per
 unit of adult scale, $M$ the outside-origin entrant pool, and $q^E(q)$ the
