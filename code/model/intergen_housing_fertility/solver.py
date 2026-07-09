@@ -137,7 +137,83 @@ def housing_demand_normalizer(P: SimpleNamespace) -> float:
     return 1.0
 
 
-def entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
+ENTRY_WEALTH_INCOME_RATIO_MODES = {
+    "income_ratio",
+    "income_ratio_distribution",
+    "external_income_ratio",
+    "external",
+}
+
+
+def annual_gross_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float:
+    """Annual gross-normalized income in the same units as PSID wealth ratios."""
+    period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
+    tau = float(getattr(P, "tau_pay", 0.0))
+    period_income = income_at_state(P, i, j, z_value)
+    annual_aftertax = period_income / max(period_years, 1e-12)
+    if j < int(getattr(P, "J_R", P.J)):
+        return annual_aftertax / max(1.0 - tau, 1e-12)
+    return annual_aftertax
+
+
+def uses_entry_wealth_income_ratio(P: SimpleNamespace) -> bool:
+    return str(getattr(P, "entry_wealth_mode", "scalar")).lower() in ENTRY_WEALTH_INCOME_RATIO_MODES
+
+
+def entry_wealth_ratio_distribution(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
+    ratios = np.asarray(getattr(P, "entry_wealth_ratio_nodes", []), dtype=float).reshape(-1)
+    weights = np.asarray(getattr(P, "entry_wealth_ratio_weights", []), dtype=float).reshape(-1)
+    if ratios.size == 0:
+        raise ValueError("entry_wealth_mode uses income ratios but entry_wealth_ratio_nodes is empty.")
+    if weights.size == 0:
+        weights = np.ones(ratios.size, dtype=float) / float(ratios.size)
+    if weights.size != ratios.size:
+        raise ValueError("entry_wealth_ratio_weights must have the same length as entry_wealth_ratio_nodes.")
+    weights = np.maximum(weights, 0.0)
+    if float(np.sum(weights)) <= 0.0:
+        weights = np.ones(ratios.size, dtype=float) / float(ratios.size)
+    else:
+        weights = weights / float(np.sum(weights))
+    return ratios, weights
+
+
+def _linear_grid_weights_for_points(
+    b_grid: np.ndarray, points: np.ndarray, weights: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
+    bg = np.asarray(b_grid, dtype=float).reshape(-1)
+    x = np.asarray(points, dtype=float).reshape(-1)
+    w = np.asarray(weights, dtype=float).reshape(-1)
+    if x.size != w.size:
+        raise ValueError("points and weights must have the same length")
+    if bg.size == 0:
+        raise ValueError("b_grid must contain at least one node")
+    mass = np.zeros(bg.size, dtype=float)
+    for val, wt in zip(x, w):
+        if wt <= 0.0 or not np.isfinite(val):
+            continue
+        b = float(np.clip(val, bg[0], bg[-1]))
+        hi = int(np.searchsorted(bg, b, side="left"))
+        if hi <= 0:
+            mass[0] += float(wt)
+        elif hi >= bg.size:
+            mass[-1] += float(wt)
+        elif abs(float(bg[hi]) - b) <= 1e-14:
+            mass[hi] += float(wt)
+        else:
+            lo = hi - 1
+            share_hi = (b - float(bg[lo])) / max(float(bg[hi] - bg[lo]), 1e-12)
+            mass[lo] += float(wt) * (1.0 - share_hi)
+            mass[hi] += float(wt) * share_hi
+    total = float(np.sum(mass))
+    if total <= 0.0:
+        idx = int(np.argmax(bg >= 0.0)) if np.any(bg >= 0.0) else int(bg.size - 1)
+        return np.array([idx], dtype=np.int64), np.array([1.0], dtype=float)
+    idx = np.flatnonzero(mass > 0.0).astype(np.int64)
+    wt = mass[idx] / total
+    return idx, wt
+
+
+def _scalar_entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
     """Grid-node distribution for entrant liquid wealth.
 
     The default is the historical point-mass injection at the first grid node
@@ -206,6 +282,52 @@ def entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[n
     return idx, wt
 
 
+def entry_wealth_grid_weights(
+    b_grid: np.ndarray,
+    P: SimpleNamespace,
+    *,
+    i: int = 0,
+    j: int = 0,
+    z_value: float = 1.0,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Grid-node distribution for entrant liquid wealth.
+
+    In the legacy scalar mode this preserves the historical `b_entry_fixed`
+    injection. In `income_ratio_distribution` mode, entrants draw empirical
+    wealth/income ratios and those ratios are converted to model wealth using
+    annual gross income at the entrant state.
+    """
+    if not uses_entry_wealth_income_ratio(P):
+        return _scalar_entry_wealth_grid_weights(b_grid, P)
+    ratios, weights = entry_wealth_ratio_distribution(P)
+    y_entry = annual_gross_income_at_state(P, int(i), int(j), float(z_value))
+    points = ratios * y_entry
+    return _linear_grid_weights_for_points(b_grid, points, weights)
+
+
+def aggregate_entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
+    """Unconditional entrant wealth distribution over grid nodes for reporting."""
+    if not uses_entry_wealth_income_ratio(P):
+        return entry_wealth_grid_weights(b_grid, P)
+    z_grid, z_weights, _ = income_transition_values(P)
+    entry_by_loc = np.maximum(np.asarray(getattr(P, "entry_by_loc", np.ones(P.I)), dtype=float).reshape(-1), 0.0)
+    if entry_by_loc.size != int(P.I) or float(np.sum(entry_by_loc)) <= 0.0:
+        entry_by_loc = np.ones(int(P.I), dtype=float) / max(int(P.I), 1)
+    else:
+        entry_by_loc = entry_by_loc / float(np.sum(entry_by_loc))
+    bg = np.asarray(b_grid, dtype=float).reshape(-1)
+    mass = np.zeros(bg.size, dtype=float)
+    for i in range(int(P.I)):
+        for zz, wz in enumerate(z_weights):
+            idx, wt = entry_wealth_grid_weights(bg, P, i=i, j=0, z_value=float(z_grid[zz]))
+            mass[idx] += float(entry_by_loc[i]) * float(wz) * wt
+    total = float(np.sum(mass))
+    if total <= 0.0:
+        return entry_wealth_grid_weights(bg, P)
+    idx = np.flatnonzero(mass > 0.0).astype(np.int64)
+    return idx, mass[idx] / total
+
+
 def _entry_value_on_nodes(V: np.ndarray, idx: np.ndarray, i: int, P: SimpleNamespace) -> np.ndarray:
     arr = np.asarray(V, dtype=float)
     if arr.ndim == 6:
@@ -224,6 +346,22 @@ def entry_values_by_location(V: np.ndarray, b_grid: np.ndarray, P: SimpleNamespa
     b_entry = float(np.clip(getattr(P, "b_entry_fixed", 0.0), bg[0], bg[-1]))
     spread_nodes = max(int(getattr(P, "entry_wealth_spread_nodes", 1)), 1)
     entry_values = np.empty(P.I)
+    if uses_entry_wealth_income_ratio(P):
+        arr = np.asarray(V, dtype=float)
+        for i in range(P.I):
+            if arr.ndim == 6:
+                idx, wt = entry_wealth_grid_weights(bg, P, i=i, j=0, z_value=1.0)
+                entry_values[i] = float(np.sum(wt * arr[idx, 0, i, 0, 0, 0]))
+            elif arr.ndim == 7:
+                z_grid, z_weights, _ = income_transition_values(P)
+                val = 0.0
+                for zz, wz in enumerate(z_weights):
+                    idx, wt = entry_wealth_grid_weights(bg, P, i=i, j=0, z_value=float(z_grid[zz]))
+                    val += float(wz) * float(np.sum(wt * arr[idx, 0, i, 0, zz, 0, 0]))
+                entry_values[i] = val
+            else:
+                raise ValueError(f"unsupported value-function dimension for entry values: {arr.ndim}")
+        return entry_values
     if spread_nodes > 1:
         idx, wt = entry_wealth_grid_weights(bg, P)
         for i in range(P.I):
@@ -260,6 +398,15 @@ def attach_entry_wealth_stats(
     stats.entry_wealth_grid_weights = wt.copy()
     stats.entry_wealth_grid_mean = float(np.sum(x * wt))
     stats.entry_wealth_target = float(np.clip(getattr(P, "b_entry_fixed", 0.0), x[0], x[-1])) if x.size else np.nan
+    stats.entry_wealth_mode = str(getattr(P, "entry_wealth_mode", "scalar"))
+    if uses_entry_wealth_income_ratio(P):
+        ratios, ratio_wt = entry_wealth_ratio_distribution(P)
+        stats.entry_wealth_ratio_nodes = ratios.copy()
+        stats.entry_wealth_ratio_weights = ratio_wt.copy()
+        stats.entry_wealth_ratio_mean = float(np.sum(ratios * ratio_wt))
+        stats.entry_wealth_ratio_source = str(getattr(P, "entry_wealth_ratio_source", ""))
+        stats.b_entry_fixed_legacy = float(getattr(P, "b_entry_fixed", np.nan))
+        stats.entry_wealth_target = stats.entry_wealth_grid_mean
     return stats
 
 
@@ -2725,6 +2872,374 @@ def eval_owner(bp, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinte
     return f
 
 
+def build_forward_tenure_transition_maps(
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    hc: np.ndarray,
+    he: np.ndarray,
+    phi_choice: np.ndarray,
+    birth_dp: np.ndarray,
+    birth_entry_grant: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Map pre-transaction wealth into the conditional tenure branch.
+
+    The map mirrors the Bellman tenure-choice accounting. In particular, a
+    fixed birth-linked entry grant is added only when a renter buys, before
+    the owner borrowing floor is applied. With a zero grant this is exactly
+    the historical transaction map.
+    """
+
+    bg = np.asarray(b_grid, dtype=float)
+    bmin = float(bg[0])
+    bmax = float(bg[-1])
+    I, nt = hc.shape
+    npar = phi_choice.shape[2]
+    ncs = phi_choice.shape[3]
+    Nb = bg.size
+    tmx_idx = np.zeros((I, nt, nt, npar, ncs, Nb), dtype=np.int64)
+    tmx_wt = np.zeros((I, nt, nt, npar, ncs, Nb))
+    use_grant = bool(getattr(P, "propagate_birth_entry_grant", True))
+
+    for nn in range(npar):
+        for cs in range(ncs):
+            for id_ in range(I):
+                for to in range(nt):
+                    sale_proceeds = he[id_, to]
+                    for tn in range(nt):
+                        financed_share = phi_choice[id_, tn, nn, cs] if tn > 0 else 1.0
+                        if tn == to:
+                            branch_wealth = bg.copy()
+                        elif to == 0 and tn > 0:
+                            purchase_cost = hc[id_, tn]
+                            # Bellman precedence: the down-payment waiver branch
+                            # wins when both policy hooks are configured.
+                            grant = (
+                                birth_entry_grant[id_, tn, nn, cs]
+                                if use_grant and not birth_dp[nn, cs, to, tn]
+                                else 0.0
+                            )
+                            branch_wealth = np.clip(
+                                np.maximum(bg - purchase_cost + grant, -financed_share * purchase_cost),
+                                bmin,
+                                bmax,
+                            )
+                        elif to > 0 and tn == 0:
+                            branch_wealth = np.clip(np.maximum(bg + sale_proceeds, 0.0), bmin, bmax)
+                        else:
+                            purchase_cost = hc[id_, tn]
+                            branch_wealth = np.clip(
+                                np.maximum(
+                                    bg + sale_proceeds - purchase_cost,
+                                    -financed_share * purchase_cost,
+                                ),
+                                bmin,
+                                bmax,
+                            )
+                        tmx_idx[id_, to, tn, nn, cs, :], tmx_wt[id_, to, tn, nn, cs, :] = interp_indices(
+                            bg, branch_wealth
+                        )
+    return tmx_idx, tmx_wt
+
+
+def realize_current_choices(
+    cohort: np.ndarray,
+    j: int,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+    tmx_idx: np.ndarray,
+    tmx_wt: np.ndarray,
+    *,
+    use_compiled_scatter: bool = False,
+) -> np.ndarray:
+    """Apply location, tenure, and housing transactions without aging.
+
+    ``cohort`` is the age-j mass after any current family-size choice. The
+    returned mass is indexed by realized current location, tenure/rung, and
+    post-transaction liquid wealth. Saving, income, family-stage, and age
+    transitions are deliberately excluded.
+    """
+
+    Nb, nt, I, npar, ncs = cohort.shape
+    nc = npar * ncs
+    after_location = np.zeros_like(cohort)
+    for io in range(I):
+        for to in range(nt):
+            origin = flat_nc(cohort[:, to, io, :, :], Nb, nc)
+            if np.sum(origin) < 1e-15:
+                continue
+            probs = np.reshape(loc_probs[:, to, io, :, j, :, :], (Nb, I, nc), order="F")
+            after_location[:, to, io, :, :] += unflat_nc(origin * probs[:, io, :], Nb, npar, ncs)
+            idx = lmm_idx[io, to, :]
+            wt = lmm_wt[io, to, :]
+            for id_ in range(I):
+                if id_ == io:
+                    continue
+                moved = origin * probs[:, id_, :]
+                if use_compiled_scatter:
+                    moved = scatter_cols_sameidx_kernel(idx, wt, moved, Nb)
+                else:
+                    moved = scatter_redistribute_cols_sameidx(idx, wt, moved, Nb)
+                after_location[:, 0, id_, :, :] += unflat_nc(moved, Nb, npar, ncs)
+
+    realized = np.zeros_like(cohort)
+    for nn in range(npar):
+        for id_ in range(I):
+            for to in range(nt):
+                source = after_location[:, to, id_, nn, :]
+                if np.sum(source) < 1e-15:
+                    continue
+                normalized_probs = None
+                if tenure_probs is not None:
+                    all_probs = np.asarray(tenure_probs[:, to, id_, j, nn, :, :], dtype=float)
+                    prob_sum = np.sum(all_probs, axis=-1)
+                    normalized_probs = np.divide(
+                        all_probs,
+                        prob_sum[:, :, None],
+                        out=np.zeros_like(all_probs),
+                        where=prob_sum[:, :, None] > 0.0,
+                    )
+                for tn in range(nt):
+                    if tenure_probs is None:
+                        selected = tenure_choice[:, to, id_, j, nn, :] == tn
+                        mass = source * selected
+                    else:
+                        mass = source * normalized_probs[:, :, tn]
+                    if np.sum(mass) < 1e-15:
+                        continue
+                    redistributed = np.zeros((Nb, ncs))
+                    for cs in range(ncs):
+                        idx = tmx_idx[id_, to, tn, nn, cs, :]
+                        wt = tmx_wt[id_, to, tn, nn, cs, :]
+                        if use_compiled_scatter:
+                            redistributed[:, cs] = scatter_vec_kernel(idx, wt, mass[:, cs], Nb)
+                        else:
+                            redistributed[:, cs] = scatter_redistribute(idx, wt, mass[:, cs], Nb)
+                    realized[:, tn, id_, nn, :] += redistributed
+    return realized
+
+
+def realize_current_choices_markov_income(
+    cohort: np.ndarray,
+    j: int,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+    tmx_idx: np.ndarray,
+    tmx_wt: np.ndarray,
+    *,
+    use_compiled_scatter: bool = False,
+) -> np.ndarray:
+    """Markov-income counterpart of :func:`realize_current_choices`."""
+
+    Nb, nt, I, Nz, npar, ncs = cohort.shape
+    realized = np.zeros_like(cohort)
+    for zz in range(Nz):
+        realized[:, :, :, zz, :, :] = realize_current_choices(
+            cohort[:, :, :, zz, :, :],
+            j,
+            loc_probs[:, :, :, :, :, zz, :, :],
+            tenure_choice[:, :, :, :, zz, :, :],
+            None if tenure_probs is None else tenure_probs[:, :, :, :, zz, :, :, :],
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            use_compiled_scatter=use_compiled_scatter,
+        )
+    return realized
+
+
+def realize_current_cross_section(
+    g: np.ndarray,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+    tmx_idx: np.ndarray,
+    tmx_wt: np.ndarray,
+    *,
+    use_compiled_scatter: bool = False,
+) -> np.ndarray:
+    """Build the realized current cross-section from beginning-of-period mass."""
+
+    out = np.zeros_like(g)
+    if g.ndim == 6:
+        for j in range(g.shape[3]):
+            out[:, :, :, j, :, :] = realize_current_choices(
+                g[:, :, :, j, :, :],
+                j,
+                loc_probs,
+                tenure_choice,
+                tenure_probs,
+                lmm_idx,
+                lmm_wt,
+                tmx_idx,
+                tmx_wt,
+                use_compiled_scatter=use_compiled_scatter,
+            )
+    elif g.ndim == 7:
+        for j in range(g.shape[3]):
+            out[:, :, :, j, :, :, :] = realize_current_choices_markov_income(
+                g[:, :, :, j, :, :, :],
+                j,
+                loc_probs,
+                tenure_choice,
+                tenure_probs,
+                lmm_idx,
+                lmm_wt,
+                tmx_idx,
+                tmx_wt,
+                use_compiled_scatter=use_compiled_scatter,
+            )
+    else:
+        raise ValueError(f"unsupported distribution rank: {g.ndim}")
+    return out
+
+
+def assign_current_choices_to_beginning_assets(
+    cohort: np.ndarray,
+    j: int,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+) -> np.ndarray:
+    """Assign current location/tenure while preserving beginning-period b.
+
+    This is the survey-timing object used for liquid-wealth moments. It keeps
+    the asset stock observed at the start of the period, but conditions that
+    stock on the location and tenure/rung selected in the current period.
+    Transaction wealth is used to evaluate a mover's tenure policy, yet mass is
+    recorded back at its original b coordinate. No saving or aging occurs.
+    """
+
+    Nb, nt, I, npar, ncs = cohort.shape
+    assigned = np.zeros_like(cohort)
+    for b in range(Nb):
+        for to in range(nt):
+            for io in range(I):
+                for nn in range(npar):
+                    for cs in range(ncs):
+                        mass0 = float(cohort[b, to, io, nn, cs])
+                        if mass0 == 0.0:
+                            continue
+                        for id_ in range(I):
+                            mass_loc = mass0 * float(loc_probs[b, to, io, id_, j, nn, cs])
+                            if mass_loc == 0.0:
+                                continue
+                            if id_ == io:
+                                decision_nodes = ((b, 1.0),)
+                                decision_origin_tenure = to
+                            else:
+                                k = int(lmm_idx[io, to, b])
+                                w = float(lmm_wt[io, to, b])
+                                decision_nodes = ((k, 1.0 - w), (k + 1, w))
+                                decision_origin_tenure = 0
+                            for decision_b, decision_weight in decision_nodes:
+                                if decision_weight == 0.0:
+                                    continue
+                                if tenure_probs is None:
+                                    tn = int(
+                                        tenure_choice[
+                                            decision_b,
+                                            decision_origin_tenure,
+                                            id_,
+                                            j,
+                                            nn,
+                                            cs,
+                                        ]
+                                    )
+                                    assigned[b, tn, id_, nn, cs] += mass_loc * decision_weight
+                                else:
+                                    probs = np.asarray(tenure_probs[
+                                        decision_b,
+                                        decision_origin_tenure,
+                                        id_,
+                                        j,
+                                        nn,
+                                        cs,
+                                        :,
+                                    ], dtype=float)
+                                    prob_sum = float(np.sum(probs))
+                                    if prob_sum > 0.0:
+                                        probs = probs / prob_sum
+                                    for tn in range(nt):
+                                        assigned[b, tn, id_, nn, cs] += (
+                                            mass_loc * decision_weight * float(probs[tn])
+                                        )
+    return assigned
+
+
+def assign_current_choices_to_beginning_assets_markov_income(
+    cohort: np.ndarray,
+    j: int,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+) -> np.ndarray:
+    """Markov-income counterpart of the beginning-asset assignment."""
+
+    assigned = np.zeros_like(cohort)
+    for zz in range(cohort.shape[3]):
+        assigned[:, :, :, zz, :, :] = assign_current_choices_to_beginning_assets(
+            cohort[:, :, :, zz, :, :],
+            j,
+            loc_probs[:, :, :, :, :, zz, :, :],
+            tenure_choice[:, :, :, :, zz, :, :],
+            None if tenure_probs is None else tenure_probs[:, :, :, :, zz, :, :, :],
+            lmm_idx,
+            lmm_wt,
+        )
+    return assigned
+
+
+def assign_current_cross_section_to_beginning_assets(
+    g: np.ndarray,
+    loc_probs: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    lmm_idx: np.ndarray,
+    lmm_wt: np.ndarray,
+) -> np.ndarray:
+    """Apply current choices at every age while retaining inherited b."""
+
+    out = np.zeros_like(g)
+    if g.ndim == 6:
+        for j in range(g.shape[3]):
+            out[:, :, :, j, :, :] = assign_current_choices_to_beginning_assets(
+                g[:, :, :, j, :, :],
+                j,
+                loc_probs,
+                tenure_choice,
+                tenure_probs,
+                lmm_idx,
+                lmm_wt,
+            )
+    elif g.ndim == 7:
+        for j in range(g.shape[3]):
+            out[:, :, :, j, :, :, :] = assign_current_choices_to_beginning_assets_markov_income(
+                g[:, :, :, j, :, :, :],
+                j,
+                loc_probs,
+                tenure_choice,
+                tenure_probs,
+                lmm_idx,
+                lmm_wt,
+            )
+    else:
+        raise ValueError(f"unsupported distribution rank: {g.ndim}")
+    return out
+
+
 def forward_distribution(
     bp_pol: np.ndarray,
     hR_pol: np.ndarray,
@@ -2750,9 +3265,10 @@ def forward_distribution(
     bmin = b_grid[0]
     bmax = b_grid[-1]
     g = np.zeros((Nb, nt, I, J, npar, ncs))
-    entry_idx, entry_wt = entry_wealth_grid_weights(b_grid, P)
+    entry_idx, entry_wt = aggregate_entry_wealth_grid_weights(b_grid, P)
     for i in range(I):
-        for kk, ww in zip(entry_idx, entry_wt):
+        loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=1.0)
+        for kk, ww in zip(loc_entry_idx, loc_entry_wt):
             g[int(kk), 0, i, 0, 0, 0] += float(ww) * P.entry_by_loc[i]
     total_births = 0.0
     births_by_loc = np.zeros(I)
@@ -2785,24 +3301,9 @@ def forward_distribution(
             ba = np.clip(b_grid + he[io, to], bmin, bmax)
             lmm_idx[io, to, :], lmm_wt[io, to, :] = interp_indices(b_grid, ba)
 
-    tmx_idx = np.zeros((I, nt, nt, npar, ncs, Nb), dtype=np.int64)
-    tmx_wt = np.zeros((I, nt, nt, npar, ncs, Nb))
-    for nn in range(npar):
-        for cs in range(ncs):
-            for id_ in range(I):
-                for to in range(nt):
-                    sp = he[id_, to]
-                    for tn in range(nt):
-                        pn = phi_choice[id_, tn, nn, cs] if tn > 0 else 1.0
-                        if tn == to:
-                            bf = b_grid.copy()
-                        elif to == 0 and tn > 0:
-                            bf = np.clip(np.maximum(b_grid - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
-                        elif to > 0 and tn == 0:
-                            bf = np.clip(np.maximum(b_grid + sp, 0.0), bmin, bmax)
-                        else:
-                            bf = np.clip(np.maximum(b_grid + sp - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
-                        tmx_idx[id_, to, tn, nn, cs, :], tmx_wt[id_, to, tn, nn, cs, :] = interp_indices(b_grid, bf)
+    tmx_idx, tmx_wt = build_forward_tenure_transition_maps(
+        P, b_grid, hc, he, phi_choice, SD.birth_dp, SD.birth_entry_grant
+    )
 
     K = P.n_child_stages
     csm1 = K + 1
@@ -2852,7 +3353,25 @@ def forward_distribution(
             entrants_mature_by_loc *= sc
             entrants_mature_total *= sc
 
-        stats = compute_eq_stats(g, P, b_grid, p_hat, hR_pol)
+        g_current = (
+            realize_current_cross_section(
+                g,
+                loc_probs,
+                tenure_choice,
+                tenure_probs,
+                lmm_idx,
+                lmm_wt,
+                tmx_idx,
+                tmx_wt,
+                use_compiled_scatter=use_compiled_scatter,
+            )
+            if bool(getattr(P, "use_postdecision_current_distribution", True))
+            else g
+        )
+        if normalize_population_mass(P):
+            # g_current was constructed after g was normalized above.
+            assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
+        stats = compute_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
         stats.total_births_kfe = total_births
         stats.births_by_loc = births_by_loc
         stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
@@ -2867,7 +3386,13 @@ def forward_distribution(
         stats.housing_increment_0to1_onechild_eventstudy_t3 = 0.0
         stats.housing_increment_0to2plus_eventstudy_t3 = 0.0
         stats.housing_event_horizon = 3
-        return g, stats
+        stats.current_distribution_timing = (
+            "post_housing_choice"
+            if bool(getattr(P, "use_postdecision_current_distribution", True))
+            else "beginning_of_period_legacy"
+        )
+        stats.wealth_moment_timing = "beginning_of_period_asset_stock"
+        return g_current, stats
 
     event_horizon = 3
     compute_event_stats = not fast_stats
@@ -2917,13 +3442,29 @@ def forward_distribution(
                     ust,
                     Pia,
                 )
-                post_h = mean_housing_distribution(birth_cohort, j + event_horizon, hR_pol, P)
+                observed_birth_cohort = (
+                    realize_current_choices(
+                        birth_cohort,
+                        j + event_horizon,
+                        loc_probs,
+                        tenure_choice,
+                        tenure_probs,
+                        lmm_idx,
+                        lmm_wt,
+                        tmx_idx,
+                        tmx_wt,
+                        use_compiled_scatter=use_compiled_scatter,
+                    )
+                    if bool(getattr(P, "use_postdecision_current_distribution", True))
+                    else birth_cohort
+                )
+                post_h = mean_housing_distribution(observed_birth_cohort, j + event_horizon, hR_pol, P)
                 birth_es3_pre_sum += birth_mass_total * pre_h
                 birth_es3_post_sum += birth_mass_total * post_h
                 birth_es3_mass += birth_mass_total
 
-                one_child = np.zeros_like(birth_cohort)
-                one_child[:, :, :, 1, :] = birth_cohort[:, :, :, 1, :]
+                one_child = np.zeros_like(observed_birth_cohort)
+                one_child[:, :, :, 1, :] = observed_birth_cohort[:, :, :, 1, :]
                 one_mass = float(np.sum(one_child))
                 if one_mass > 1e-12:
                     one_child_birth_mass = mbp[:, :, :, 1]
@@ -2939,8 +3480,8 @@ def forward_distribution(
                 if npar >= 3:
                     two_plus_birth_mass = np.sum(mbp[:, :, :, 2:], axis=3)
                     two_plus_birth_mass_total = float(np.sum(two_plus_birth_mass))
-                    two_plus = np.zeros_like(birth_cohort)
-                    two_plus[:, :, :, 2:, :] = birth_cohort[:, :, :, 2:, :]
+                    two_plus = np.zeros_like(observed_birth_cohort)
+                    two_plus[:, :, :, 2:, :] = observed_birth_cohort[:, :, :, 2:, :]
                     two_plus_mass = float(np.sum(two_plus))
                     if two_plus_mass > 1e-12:
                         addchild_es3_two_plus_sum += two_plus_mass * mean_housing_distribution(two_plus, j + event_horizon, hR_pol, P)
@@ -3058,12 +3599,59 @@ def forward_distribution(
         entrants_mature_by_loc *= sc
         entrants_mature_total *= sc
 
-    stats = compute_eq_stats(g, P, b_grid, p_hat, hR_pol) if fast_stats else compute_statistics(g, fert_probs, loc_probs, P, b_grid, p_hat, hR_pol)
+    use_postdecision_current = bool(getattr(P, "use_postdecision_current_distribution", True))
+    g_current = (
+        realize_current_cross_section(
+            g,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            use_compiled_scatter=use_compiled_scatter,
+        )
+        if use_postdecision_current
+        else g
+    )
+    asset_current = (
+        assign_current_cross_section_to_beginning_assets(
+            g,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            lmm_idx,
+            lmm_wt,
+        )
+        if use_postdecision_current and not fast_stats
+        else g
+    )
+    if normalize_population_mass(P):
+        assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
+        if not fast_stats:
+            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
+    stats = (
+        compute_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
+        if fast_stats
+        else compute_statistics(
+            g_current,
+            fert_probs,
+            loc_probs,
+            P,
+            b_grid,
+            p_hat,
+            hR_pol,
+            asset_g=asset_current,
+        )
+    )
     stats.total_births_kfe = total_births
+    if not fast_stats:
+        stats.g_beginning_assets_by_current_choice = asset_current
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :]))
-    stats.total_mass = float(np.sum(g))
+    stats.total_mass = float(np.sum(g_current))
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
@@ -3083,7 +3671,13 @@ def forward_distribution(
         twoplus_es3_post_sum / twoplus_es3_mass - twoplus_es3_pre_sum / twoplus_es3_mass if twoplus_es3_mass > 1e-12 else 0.0
     )
     stats.housing_event_horizon = event_horizon
-    return g, stats
+    stats.current_distribution_timing = (
+        "post_housing_choice"
+        if bool(getattr(P, "use_postdecision_current_distribution", True))
+        else "beginning_of_period_legacy"
+    )
+    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    return g_current, stats
 
 
 def forward_distribution_markov_income(
@@ -3113,10 +3707,11 @@ def forward_distribution_markov_income(
     bmin = b_grid[0]
     bmax = b_grid[-1]
     g = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
-    entry_idx, entry_wt = entry_wealth_grid_weights(b_grid, P)
+    entry_idx, entry_wt = aggregate_entry_wealth_grid_weights(b_grid, P)
     for i in range(I):
         for zz in range(Nz):
-            for kk, ww in zip(entry_idx, entry_wt):
+            loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=float(z_grid[zz]))
+            for kk, ww in zip(loc_entry_idx, loc_entry_wt):
                 g[int(kk), 0, i, 0, zz, 0, 0] += float(ww) * P.entry_by_loc[i] * z_weights[zz]
     total_births = 0.0
     births_by_loc = np.zeros(I)
@@ -3154,24 +3749,9 @@ def forward_distribution_markov_income(
             ba = np.clip(b_grid + he[io, to], bmin, bmax)
             lmm_idx[io, to, :], lmm_wt[io, to, :] = interp_indices(b_grid, ba)
 
-    tmx_idx = np.zeros((I, nt, nt, npar, ncs, Nb), dtype=np.int64)
-    tmx_wt = np.zeros((I, nt, nt, npar, ncs, Nb))
-    for nn in range(npar):
-        for cs in range(ncs):
-            for id_ in range(I):
-                for to in range(nt):
-                    sp = he[id_, to]
-                    for tn in range(nt):
-                        pn = phi_choice[id_, tn, nn, cs] if tn > 0 else 1.0
-                        if tn == to:
-                            bf = b_grid.copy()
-                        elif to == 0 and tn > 0:
-                            bf = np.clip(np.maximum(b_grid - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
-                        elif to > 0 and tn == 0:
-                            bf = np.clip(np.maximum(b_grid + sp, 0.0), bmin, bmax)
-                        else:
-                            bf = np.clip(np.maximum(b_grid + sp - hc[id_, tn], -pn * hc[id_, tn]), bmin, bmax)
-                        tmx_idx[id_, to, tn, nn, cs, :], tmx_wt[id_, to, tn, nn, cs, :] = interp_indices(b_grid, bf)
+    tmx_idx, tmx_wt = build_forward_tenure_transition_maps(
+        P, b_grid, hc, he, phi_choice, SD.birth_dp, SD.birth_entry_grant
+    )
 
     K = P.n_child_stages
     csm1 = K + 1
@@ -3223,7 +3803,25 @@ def forward_distribution_markov_income(
                         Pia,
                         Pi_z,
                     )
-                    post_h = mean_housing_distribution_markov(birth_cohort, j + event_horizon, hR_pol, P)
+                    observed_birth_cohort = (
+                        realize_current_choices_markov_income(
+                            birth_cohort,
+                            j + event_horizon,
+                            loc_probs,
+                            tenure_choice,
+                            tenure_probs,
+                            lmm_idx,
+                            lmm_wt,
+                            tmx_idx,
+                            tmx_wt,
+                            use_compiled_scatter=use_compiled_scatter,
+                        )
+                        if bool(getattr(P, "use_postdecision_current_distribution", True))
+                        else birth_cohort
+                    )
+                    post_h = mean_housing_distribution_markov(
+                        observed_birth_cohort, j + event_horizon, hR_pol, P
+                    )
                     # No-birth control: the same pre-birth households (same
                     # wealth/tenure mass) propagated childless over the same
                     # horizon. Differencing post_h against this nets out the
@@ -3235,14 +3833,32 @@ def forward_distribution_markov_income(
                         tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
                         tmx_idx, tmx_wt, ust, Pia, Pi_z,
                     )
-                    control_post_h = mean_housing_distribution_markov(control_cohort, j + event_horizon, hR_pol, P)
+                    observed_control_cohort = (
+                        realize_current_choices_markov_income(
+                            control_cohort,
+                            j + event_horizon,
+                            loc_probs,
+                            tenure_choice,
+                            tenure_probs,
+                            lmm_idx,
+                            lmm_wt,
+                            tmx_idx,
+                            tmx_wt,
+                            use_compiled_scatter=use_compiled_scatter,
+                        )
+                        if bool(getattr(P, "use_postdecision_current_distribution", True))
+                        else control_cohort
+                    )
+                    control_post_h = mean_housing_distribution_markov(
+                        observed_control_cohort, j + event_horizon, hR_pol, P
+                    )
                     birth_es3_pre_sum += birth_mass_total * pre_h
                     birth_es3_post_sum += birth_mass_total * post_h
                     birth_es3_control_post_sum += birth_mass_total * control_post_h
                     birth_es3_mass += birth_mass_total
 
-                    one_child = np.zeros_like(birth_cohort)
-                    one_child[:, :, :, :, 1, :] = birth_cohort[:, :, :, :, 1, :]
+                    one_child = np.zeros_like(observed_birth_cohort)
+                    one_child[:, :, :, :, 1, :] = observed_birth_cohort[:, :, :, :, 1, :]
                     one_mass = float(np.sum(one_child))
                     if one_mass > 1e-12:
                         one_child_birth_mass = mbp[:, :, :, 1]
@@ -3264,8 +3880,8 @@ def forward_distribution_markov_income(
                     if npar >= 3:
                         two_plus_birth_mass = np.sum(mbp[:, :, :, 2:], axis=3)
                         two_plus_birth_mass_total = float(np.sum(two_plus_birth_mass))
-                        two_plus = np.zeros_like(birth_cohort)
-                        two_plus[:, :, :, :, 2:, :] = birth_cohort[:, :, :, :, 2:, :]
+                        two_plus = np.zeros_like(observed_birth_cohort)
+                        two_plus[:, :, :, :, 2:, :] = observed_birth_cohort[:, :, :, :, 2:, :]
                         two_plus_mass = float(np.sum(two_plus))
                         if two_plus_mass > 1e-12:
                             addchild_es3_two_plus_sum += two_plus_mass * mean_housing_distribution_markov(
@@ -3395,15 +4011,58 @@ def forward_distribution_markov_income(
         entrants_mature_by_loc *= sc
         entrants_mature_total *= sc
 
+    use_postdecision_current = bool(getattr(P, "use_postdecision_current_distribution", True))
+    g_current = (
+        realize_current_cross_section(
+            g,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            lmm_idx,
+            lmm_wt,
+            tmx_idx,
+            tmx_wt,
+            use_compiled_scatter=use_compiled_scatter,
+        )
+        if use_postdecision_current
+        else g
+    )
+    asset_current = (
+        assign_current_cross_section_to_beginning_assets(
+            g,
+            loc_probs,
+            tenure_choice,
+            tenure_probs,
+            lmm_idx,
+            lmm_wt,
+        )
+        if use_postdecision_current and not fast_stats
+        else g
+    )
+    if normalize_population_mass(P):
+        assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
+        if not fast_stats:
+            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     if fast_stats:
-        stats = compute_markov_eq_stats(g, P, b_grid, p_hat, hR_pol)
+        stats = compute_markov_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
     else:
-        stats = compute_markov_statistics(g, fert_probs, loc_probs, P, b_grid, p_hat, hR_pol)
+        stats = compute_markov_statistics(
+            g_current,
+            fert_probs,
+            loc_probs,
+            P,
+            b_grid,
+            p_hat,
+            hR_pol,
+            asset_g=asset_current,
+        )
     stats.total_births_kfe = total_births
+    if not fast_stats:
+        stats.g_beginning_assets_by_current_choice = asset_current
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
-    stats.total_mass = float(np.sum(g))
+    stats.total_mass = float(np.sum(g_current))
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
@@ -3427,7 +4086,13 @@ def forward_distribution_markov_income(
         else 0.0
     )
     stats.housing_event_horizon = event_horizon
-    return g, stats
+    stats.current_distribution_timing = (
+        "post_housing_choice"
+        if bool(getattr(P, "use_postdecision_current_distribution", True))
+        else "beginning_of_period_legacy"
+    )
+    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    return g_current, stats
 
 
 def collapse_markov_policy(policy: np.ndarray, g: np.ndarray, z_weights: np.ndarray) -> np.ndarray:
@@ -3749,17 +4414,7 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
     else:
         return
 
-    period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
-    tau = float(getattr(P, "tau_pay", 0.0))
     dep_last = int(getattr(P, "n_child_stages", 1))
-
-    def annual_gross_income(i: int, j: int, zz: int) -> float:
-        z_value = float(z_values[zz]) if zz < len(z_values) else 1.0
-        period_income = income_at_state(P, i, j, z_value)
-        annual_aftertax = period_income / max(period_years, 1e-12)
-        if j < int(getattr(P, "J_R", P.J)):
-            return annual_aftertax / max(1.0 - tau, 1e-12)
-        return annual_aftertax
 
     def sample_stats(age_lo: float, age_hi: float, *, childless_only: bool, renter_only: bool) -> tuple[float, float, float]:
         vals: list[np.ndarray] = []
@@ -3768,7 +4423,8 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         for j in range(age_to_index(P, age_lo), age_to_index(P, age_hi) + 1):
             for i in range(P.I):
                 for zz in range(g7.shape[4]):
-                    y = annual_gross_income(i, j, zz)
+                    z_value = float(z_values[zz]) if zz < len(z_values) else 1.0
+                    y = annual_gross_income_at_state(P, i, j, z_value)
                     if y <= 0:
                         continue
                     for nn in range(P.n_parity):
@@ -3815,20 +4471,25 @@ def compute_markov_statistics(
     bg: np.ndarray,
     ph: np.ndarray,
     hR: np.ndarray,
+    asset_g: np.ndarray | None = None,
 ) -> SimpleNamespace:
     z_grid, z_weights, Pi_z = income_transition_values(P)
+    asset_dist = g if asset_g is None else np.asarray(asset_g, dtype=float)
+    if asset_dist.shape != g.shape:
+        raise ValueError("asset_g must have the same shape as the realized current distribution")
     g_total = np.sum(g, axis=4)
+    asset_total = np.sum(asset_dist, axis=4)
     hR_total = collapse_markov_policy(hR, g, z_weights)
     fp_total = collapse_markov_fertility_probs(fp, g, z_weights)
     lp_total = collapse_markov_location_probs(lp, g, z_weights)
-    stats = compute_statistics(g_total, fp_total, lp_total, P, bg, ph, hR_total)
+    stats = compute_statistics(g_total, fp_total, lp_total, P, bg, ph, hR_total, asset_g=asset_total)
     # Correct the nonlinear renter room moments: compute_statistics applied the
     # >=6 / cap-threshold indicators and the renter median to the income-collapsed
     # renter policy, which understates threshold shares (Jensen on a nonlinear
     # operator). Recompute them on the full income-resolved distribution.
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
-    add_annual_gross_liquid_wealth_moments(stats, g, P, bg)
+    add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     Nz = len(z_grid)
     nt = 1 + P.n_house
     stats.income_state_mass = np.zeros(Nz)
@@ -3872,7 +4533,7 @@ def compute_markov_statistics(
                     worker_mass += mass
                     payroll_tax_revenue += period_scale * P.tau_pay * P.w_hat[i] * P.income_age_profile[j] * float(z_value) * mass
                 if a25s <= j <= aye:
-                    gm = g[:, 0, i, j, zz, 0, 0]
+                    gm = asset_dist[:, 0, i, j, zz, 0, 0]
                     mh = float(np.sum(gm))
                     if mh > 1e-15:
                         young_income += yj * mh
@@ -3955,13 +4616,25 @@ def age_to_index(P: SimpleNamespace, age: float) -> int:
     return int(np.clip(idx, 0, P.J - 1))
 
 
-def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:
+def compute_statistics(
+    g: np.ndarray,
+    fp: np.ndarray,
+    lp: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+    hR: np.ndarray,
+    asset_g: np.ndarray | None = None,
+) -> SimpleNamespace:
     J = P.J
     I = P.I
     Nb = len(bg)
     nt = 1 + P.n_house
     npar = P.n_parity
     ncs = P.n_child_states
+    asset_dist = g if asset_g is None else np.asarray(asset_g, dtype=float)
+    if asset_dist.shape != g.shape:
+        raise ValueError("asset_g must have the same shape as the realized current distribution")
     tm = float(np.sum(g))
     stats = SimpleNamespace()
     stats.own_rate = float(np.sum(g[:, 1:, :, :, :, :]) / max(tm, 1e-12))
@@ -4051,7 +4724,7 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                 heq = (1 - P.psi) * ph[i] * P.H_own[ten - 1] if ten > 0 else 0.0
                 for nn in range(npar):
                     for cs in range(ncs):
-                        gs = g[:, ten, i, jj, nn, cs]
+                        gs = asset_dist[:, ten, i, jj, nn, cs]
                         tw += float(np.sum(gs * (bg + heq)))
                         tm4 += float(np.sum(gs))
     stats.mean_wealth_4555 = tw / max(tm4, 1e-12)
@@ -4095,7 +4768,7 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
             for ten in range(nt):
                 for nn in range(npar):
                     for cs in range(ncs):
-                        gs = g[:, ten, i, jj, nn, cs]
+                        gs = asset_dist[:, ten, i, jj, nn, cs]
                         tl += float(np.sum(gs * bg))
                         tml += float(np.sum(gs))
     stats.liquid_wealth_4555 = tl / max(tml, 1e-12)
@@ -4109,7 +4782,7 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     ylw = yinc = ycm = 0.0
     for jj in range(a25s, aye + 1):
         for i in range(I):
-            gs = g[:, 0, i, jj, 0, 0]
+            gs = asset_dist[:, 0, i, jj, 0, 0]
             mh = float(np.sum(gs))
             if mh < 1e-15:
                 continue
@@ -4220,12 +4893,12 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     old_childless_total_ratio_wts: list[np.ndarray] = []
     for jj in range(a65s, a75e + 1):
         for i in range(I):
-            yj = float(P.income[i, jj])
+            yj = annual_gross_income_at_state(P, i, jj, 1.0)
             for ten in range(nt):
                 home_equity = (1 - P.psi) * ph[i] * P.H_own[ten - 1] if ten > 0 else 0.0
                 for nn in range(npar):
                     for cs in range(ncs):
-                        gs = g[:, ten, i, jj, nn, cs]
+                        gs = asset_dist[:, ten, i, jj, nn, cs]
                         mass = float(np.sum(gs))
                         if mass < 1e-15:
                             continue
@@ -4262,12 +4935,27 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                                 old_childless_nonhousing_ratio_wts.append(wts)
                                 old_childless_total_ratio_vals.append(total_ratio)
                                 old_childless_total_ratio_wts.append(wts)
-    stats.old_nonhousing_wealth_to_income_6575 = old_nonhousing_wealth / max(old_income, 1e-12)
-    stats.old_total_wealth_to_income_6575 = old_total_wealth / max(old_income, 1e-12)
-    parent_nonhousing_ratio = old_parent_nonhousing_wealth / max(old_parent_income, 1e-12)
-    childless_nonhousing_ratio = old_childless_nonhousing_wealth / max(old_childless_income, 1e-12)
-    parent_total_ratio = old_parent_total_wealth / max(old_parent_income, 1e-12)
-    childless_total_ratio = old_childless_total_wealth / max(old_childless_income, 1e-12)
+    def weighted_mean_from_cells(value_cells: list[np.ndarray], weight_cells: list[np.ndarray]) -> float:
+        numerator = denominator = 0.0
+        for values, weights in zip(value_cells, weight_cells):
+            if values.size == 0 or weights.size == 0:
+                continue
+            numerator += float(np.sum(values * weights))
+            denominator += float(np.sum(weights))
+        return numerator / max(denominator, 1e-12)
+
+    stats.old_nonhousing_wealth_to_income_6575 = weighted_mean_from_cells(
+        old_nonhousing_ratio_vals, old_nonhousing_ratio_wts
+    )
+    stats.old_total_wealth_to_income_6575 = weighted_mean_from_cells(old_total_ratio_vals, old_total_ratio_wts)
+    parent_nonhousing_ratio = weighted_mean_from_cells(
+        old_parent_nonhousing_ratio_vals, old_parent_nonhousing_ratio_wts
+    )
+    childless_nonhousing_ratio = weighted_mean_from_cells(
+        old_childless_nonhousing_ratio_vals, old_childless_nonhousing_ratio_wts
+    )
+    parent_total_ratio = weighted_mean_from_cells(old_parent_total_ratio_vals, old_parent_total_ratio_wts)
+    childless_total_ratio = weighted_mean_from_cells(old_childless_total_ratio_vals, old_childless_total_ratio_wts)
     stats.old_parent_nonhousing_wealth_to_income_6575 = parent_nonhousing_ratio
     stats.old_childless_nonhousing_wealth_to_income_6575 = childless_nonhousing_ratio
     stats.old_parent_childless_nonhousing_wealth_to_income_gap_6575 = parent_nonhousing_ratio - childless_nonhousing_ratio
@@ -4296,10 +4984,14 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     stats.old_parent_childless_total_wealth_to_income_median_gap_6575 = (
         old_parent_total_median - old_childless_total_median
     )
-    owner_mass_2545 = float(np.sum(g[:, 1:, :, a25s : a45e + 1, :, :]))
-    stats.owner_neg_liquid_share_2545 = float(np.sum(g[bg < 0, 1:, :, a25s : a45e + 1, :, :]) / max(owner_mass_2545, 1e-12))
-    owner_mass_2534 = float(np.sum(g[:, 1:, :, a25s : a34e + 1, :, :]))
-    stats.owner_neg_liquid_share_2534 = float(np.sum(g[bg < 0, 1:, :, a25s : a34e + 1, :, :]) / max(owner_mass_2534, 1e-12))
+    owner_mass_2545 = float(np.sum(asset_dist[:, 1:, :, a25s : a45e + 1, :, :]))
+    stats.owner_neg_liquid_share_2545 = float(
+        np.sum(asset_dist[bg < 0, 1:, :, a25s : a45e + 1, :, :]) / max(owner_mass_2545, 1e-12)
+    )
+    owner_mass_2534 = float(np.sum(asset_dist[:, 1:, :, a25s : a34e + 1, :, :]))
+    stats.owner_neg_liquid_share_2534 = float(
+        np.sum(asset_dist[bg < 0, 1:, :, a25s : a34e + 1, :, :]) / max(owner_mass_2534, 1e-12)
+    )
 
     dep_last = P.n_child_stages
     renter_vals: list[np.ndarray] = []
@@ -4336,6 +5028,10 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     owner_rooms_3055_parent = 0.0
     renter_mass_3055_parent = 0.0
     renter_rooms_3055_parent = 0.0
+    parent_low_mass_3055 = 0.0
+    parent_low_rooms_3055 = 0.0
+    parent_high_mass_3055 = 0.0
+    parent_high_rooms_3055 = 0.0
     for j in range(a30s, a55e + 1):
         for i in range(I):
             for nn in range(npar):
@@ -4355,6 +5051,12 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                         elif child_bin > 2:
                             renter_mass_3055_parent += mass
                             renter_rooms_3055_parent += float(np.sum(wr * rr))
+                            if child_bin == 3:
+                                parent_low_mass_3055 += mass
+                                parent_low_rooms_3055 += float(np.sum(wr * rr))
+                            elif child_bin >= 4:
+                                parent_high_mass_3055 += mass
+                                parent_high_rooms_3055 += float(np.sum(wr * rr))
                     for ten in range(1, nt):
                         go = g[:, ten, i, j, nn, cs]
                         mo = float(np.sum(go))
@@ -4369,6 +5071,12 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
                         elif child_bin > 2:
                             owner_mass_3055_parent += mo
                             owner_rooms_3055_parent += mo * rooms
+                            if child_bin == 3:
+                                parent_low_mass_3055 += mo
+                                parent_low_rooms_3055 += mo * rooms
+                            elif child_bin >= 4:
+                                parent_high_mass_3055 += mo
+                                parent_high_rooms_3055 += mo * rooms
     stats.prime30_55_childless_renter_mean_rooms = (
         renter_rooms_3055_childless / max(renter_mass_3055_childless, 1e-12)
     )
@@ -4387,6 +5095,10 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     parent_owner_mean = owner_rooms_3055_parent / max(owner_mass_3055_parent, 1e-12)
     parent_renter_mean = renter_rooms_3055_parent / max(renter_mass_3055_parent, 1e-12)
     stats.prime30_55_parent_owner_minus_renter_mean_rooms = parent_owner_mean - parent_renter_mean
+    stats.prime30_55_parent_3plus_minus_1to2_mean_rooms = (
+        parent_high_rooms_3055 / max(parent_high_mass_3055, 1e-12)
+        - parent_low_rooms_3055 / max(parent_low_mass_3055, 1e-12)
+    )
     owner_all_mass_2545 = 0.0
     owner_le6_mass_2545 = 0.0
     owner_7to8_mass_2545 = 0.0
@@ -4483,7 +5195,7 @@ def compute_statistics(g: np.ndarray, fp: np.ndarray, lp: np.ndarray, P: SimpleN
     stats.housing_increment_1to2 = (
         stats.mean_housing_by_parity[2] - stats.mean_housing_by_parity[1] if npar >= 3 else 0.0
     )
-    add_annual_gross_liquid_wealth_moments(stats, g, P, bg)
+    add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     return stats
 
 

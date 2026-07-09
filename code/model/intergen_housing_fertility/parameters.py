@@ -26,12 +26,12 @@ def clone_ns(obj: SimpleNamespace) -> SimpleNamespace:
 def setup_parameters() -> SimpleNamespace:
     P = SimpleNamespace()
     P.period_years = 4.0
-    P.J = 16
+    P.J = 17
     P.da = P.period_years
-    P.age_start = 22
-    P.J_R = 11
-    P.A_f_start = 2
-    P.A_f_end = 6
+    P.age_start = 18
+    P.J_R = 12
+    P.A_f_start = 1
+    P.A_f_end = 7
     P.A_m = 18
     P.n_parity = 3
     P.use_stochastic_aging = True
@@ -68,6 +68,10 @@ def setup_parameters() -> SimpleNamespace:
     P.u_bar = 0.0
     P.b_entry_fixed = 0.0
     P.entry_wealth_spread_nodes = 1
+    P.entry_wealth_mode = "scalar"
+    P.entry_wealth_ratio_nodes = np.array([], dtype=float)
+    P.entry_wealth_ratio_weights = np.array([], dtype=float)
+    P.entry_wealth_ratio_source = ""
     P.beta = 0.96 ** P.period_years
     P.rho = 1 / P.beta - 1
     P.gamma = 0.0
@@ -92,6 +96,9 @@ def setup_parameters() -> SimpleNamespace:
     P.birth_entry_grant_amount = 0.0
     P.birth_entry_grant_locations = np.array([], dtype=int)
     P.birth_entry_grant_owner_rungs = np.array([], dtype=int)
+    P.propagate_birth_entry_grant = True
+    P.use_postdecision_current_distribution = True
+    P.legacy_entry_income_peak = False
 
     P.n_house = 6
     P.h_own_min = 2.0
@@ -241,6 +248,29 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.phi = np.asarray(P.phi, dtype=float).reshape(-1)
         if P.phi.size == 1:
             P.phi = P.phi.item() * np.ones(P.n_parity)
+    if "entry_wealth_mode" in od:
+        P.entry_wealth_mode = str(P.entry_wealth_mode).lower()
+    if "entry_wealth_ratio_nodes" in od:
+        P.entry_wealth_ratio_nodes = np.asarray(P.entry_wealth_ratio_nodes, dtype=float).reshape(-1)
+    if "entry_wealth_ratio_weights" in od:
+        weights = np.asarray(P.entry_wealth_ratio_weights, dtype=float).reshape(-1)
+        weights = np.maximum(weights, 0.0)
+        P.entry_wealth_ratio_weights = weights / weights.sum() if weights.sum() > 0 else weights
+    if hasattr(P, "entry_wealth_ratio_nodes"):
+        P.entry_wealth_ratio_nodes = np.asarray(P.entry_wealth_ratio_nodes, dtype=float).reshape(-1)
+        if not hasattr(P, "entry_wealth_ratio_weights"):
+            P.entry_wealth_ratio_weights = np.array([], dtype=float)
+        P.entry_wealth_ratio_weights = np.asarray(P.entry_wealth_ratio_weights, dtype=float).reshape(-1)
+        if P.entry_wealth_ratio_weights.size == 0 and P.entry_wealth_ratio_nodes.size > 0:
+            P.entry_wealth_ratio_weights = np.ones(P.entry_wealth_ratio_nodes.size) / P.entry_wealth_ratio_nodes.size
+        if (
+            P.entry_wealth_ratio_nodes.size > 0
+            and P.entry_wealth_ratio_weights.size != P.entry_wealth_ratio_nodes.size
+        ):
+            raise ValueError("entry_wealth_ratio_weights must have the same length as entry_wealth_ratio_nodes.")
+        if P.entry_wealth_ratio_weights.size > 0:
+            weights = np.maximum(P.entry_wealth_ratio_weights, 0.0)
+            P.entry_wealth_ratio_weights = weights / weights.sum() if weights.sum() > 0 else np.ones_like(weights) / weights.size
     if "eta_supply" in od:
         P.eta_supply = np.asarray(P.eta_supply, dtype=float)
         P.xi_supply = P.eta_supply.copy()
@@ -412,9 +442,14 @@ def compute_stationary_worker_income(P: SimpleNamespace, income_profile: np.ndar
 
 
 def get_income_age_profile(P: SimpleNamespace) -> np.ndarray:
-    income_profile = np.ones(P.J)
     age_breaks = np.asarray(getattr(P, "income_age_breaks", [18, 25, 35, 45, 55]), dtype=float)
     age_values = np.asarray(getattr(P, "income_age_values", [0.565, 0.838, 1.0, 0.985, 0.935]), dtype=float)
+    if age_values.size == 0:
+        raise ValueError("income_age_values must contain at least one value")
+    if age_breaks.size != age_values.size:
+        raise ValueError("income_age_breaks and income_age_values must have the same length")
+    initial_value = 1.0 if bool(getattr(P, "legacy_entry_income_peak", False)) else float(age_values[0])
+    income_profile = np.full(P.J, initial_value, dtype=float)
     age_vec = P.age_start + np.arange(P.J) * P.da
     for k, val in enumerate(age_values):
         age_hi = age_breaks[k + 1] if k < len(age_values) - 1 else P.age_start + P.J_R * P.da

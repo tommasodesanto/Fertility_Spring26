@@ -14,8 +14,8 @@ from .solver import run_model_cp_dt
 
 
 PERIOD_YEARS = 4.0
-AGE_START = 22.0
-FERTILITY_START_AGE = 26.0
+AGE_START = 18.0
+FERTILITY_START_AGE = 18.0
 FERTILITY_END_AGE = 42.0
 RETIREMENT_AGE = 66.0
 CHILD_MATURITY_AGE = 18.0
@@ -28,6 +28,32 @@ CORE_TARGETS = {
     "mean_completed_fertility": 0.95,
     "childless_rate": 0.20,
 }
+
+
+PSID_ENTRY_WEALTH_RATIO_NODES_2535 = np.array(
+    [-2.51940697, -0.07907025, 0.10228762, 0.35287169, 3.03955200],
+    dtype=float,
+)
+PSID_ENTRY_WEALTH_RATIO_WEIGHTS_2535 = np.array(
+    [0.2000027, 0.2000966, 0.2000024, 0.1998877, 0.2000107],
+    dtype=float,
+)
+PSID_ENTRY_WEALTH_RATIO_SOURCE_2535 = (
+    "PSID PSIDSHELF_MOBILITY, young childless renters ages 25-35, "
+    "weighted quintile-bin means of NETWORTH2R/INCFAMR; mean 0.17922556, "
+    "weighted median 0.09996729."
+)
+
+
+def external_entry_wealth_overrides() -> dict[str, Any]:
+    """Externally calibrated entrant wealth distribution in annual-income units."""
+    return {
+        "entry_wealth_mode": "income_ratio_distribution",
+        "entry_wealth_ratio_nodes": PSID_ENTRY_WEALTH_RATIO_NODES_2535.copy(),
+        "entry_wealth_ratio_weights": PSID_ENTRY_WEALTH_RATIO_WEIGHTS_2535.copy(),
+        "entry_wealth_ratio_source": PSID_ENTRY_WEALTH_RATIO_SOURCE_2535,
+        "entry_wealth_spread_nodes": 1,
+    }
 
 
 OLD_NONLOCATION_TARGETS = {
@@ -125,8 +151,10 @@ CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS = {
         not in {
             "prime30_55_childless_owner_mean_rooms",
             "prime30_55_childless_renter_share_rooms_ge6",
+            "young_liquid_wealth_to_income",
         }
     },
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.17922556,
     "prime30_55_childless_owner_minus_renter_mean_rooms": 2.41876173,
     "old_age_own_rate": 0.76426097,
     "own_rate_2534": 0.34116609,
@@ -136,6 +164,18 @@ CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS = {
 CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_TFR192_V1_TARGETS = {
     **CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS,
     "tfr": 1.92,
+}
+
+
+CANDIDATE_REPLACEMENT_POST_AUDIT_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_TARGETS.items()
+        if k != "housing_increment_1to2"
+    },
+    "tfr": 1.918,
+    "childless_rate": 0.188,
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
 }
 
 
@@ -200,6 +240,12 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "status": "proxy",
         "issue": "This is an additional-child housing-demand target, not a sequential second-birth hazard.",
     },
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": {
+        "model": "mean realized housing services for high-child current-parent states minus one-child current-parent states, ages 30-55.",
+        "data": "ACS/MMS household heads, ages 30-55, parents with nchild > 2 minus parents with 1 <= nchild <= 2, requiring a child-under-18 signal.",
+        "status": "candidate-replacement",
+        "issue": "Replaces the old PSID second-birth pre/post target in the post-audit target set; maps the coarse model high-child state to the empirical 3+ child bin.",
+    },
     "young_liquid_wealth_to_income": {
         "model": "young childless renter liquid wealth divided by 4-year period after-tax income.",
         "data": "PSID young childless renter NETWORTH2R / INCFAMR, annual family-income denominator.",
@@ -216,7 +262,7 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "model": "weighted median of young childless renter liquid wealth over annual gross-normalized income, ages 25-35.",
         "data": "PSID median of young childless renter NETWORTH2R / INCFAMR, ages 25-35.",
         "status": "candidate-replacement",
-        "issue": "Existing PSID median was unweighted; re-extract weighted median before hard targeting.",
+        "issue": "Weighted PSID median is 0.099967; existing CSV median 0.061550 is unweighted.",
     },
     "old_parent_childless_nonhousing_wealth_to_income_gap_6575": {
         "model": "parent minus childless ratio-of-sums: nonhousing wealth divided by model period income, ages 65-75.",
@@ -435,11 +481,30 @@ CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS = {
         not in {
             "prime30_55_childless_owner_mean_rooms",
             "prime30_55_childless_renter_share_rooms_ge6",
+            "young_liquid_wealth_to_income",
         }
     },
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 12.0,
     "prime30_55_childless_owner_minus_renter_mean_rooms": 12.0,
     "old_age_own_rate": 160.0,
     "own_rate_2534": 80.0,
+}
+
+
+CANDIDATE_REPLACEMENT_POST_AUDIT_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS.items()
+        if k != "housing_increment_1to2"
+    },
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS[
+        "housing_increment_1to2"
+    ],
+}
+
+CANDIDATE_REPLACEMENT_POST_AUDIT_WEALTHSTRESS_V1_WEIGHTS = {
+    **CANDIDATE_REPLACEMENT_POST_AUDIT_V1_WEIGHTS,
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 120.0,
 }
 
 
@@ -576,6 +641,14 @@ TARGET_SETS = {
     "candidate_replacement_roomgap_14moment_tfr192_v1": (
         CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_TFR192_V1_TARGETS,
         CANDIDATE_REPLACEMENT_ROOMGAP_14MOMENT_V1_WEIGHTS,
+    ),
+    "candidate_replacement_post_audit_v1": (
+        CANDIDATE_REPLACEMENT_POST_AUDIT_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_POST_AUDIT_V1_WEIGHTS,
+    ),
+    "candidate_replacement_post_audit_wealthstress_v1": (
+        CANDIDATE_REPLACEMENT_POST_AUDIT_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_POST_AUDIT_WEALTHSTRESS_V1_WEIGHTS,
     ),
     "candidate_replacement_total_median_v1": (
         CANDIDATE_REPLACEMENT_TOTAL_MEDIAN_V1_TARGETS,
@@ -769,6 +842,9 @@ def run_informed_smoke(
         "n_house": int(n_house),
         "max_iter_eq": int(max_iter_eq),
         "fixed_external_or_first_stage": [
+            "entry_wealth_mode",
+            "entry_wealth_ratio_nodes",
+            "entry_wealth_ratio_weights",
             "q",
             "delta",
             "tau_H",
@@ -787,7 +863,6 @@ def run_informed_smoke(
         "varied_blocks": [
             "beta",
             "alpha_cons",
-            "b_entry_fixed",
             "c_bar_0",
             "c_bar_n",
             "h_bar_0",
@@ -904,7 +979,6 @@ def informed_smoke_candidates() -> list[dict[str, Any]]:
             "theta": {
                 "beta": beta_hi,
                 "alpha_cons": 0.62,
-                "b_entry_fixed": 2.0,
                 "c_bar_0": 0.08 * PERIOD_YEARS,
                 "c_bar_n": 0.40,
                 "h_bar_0": 3.5,
@@ -945,6 +1019,7 @@ def base_overrides(*, J: int, Nb: int, n_house: int, max_iter_eq: int) -> dict[s
         "scalar_market_refine_method": "brent",
         "scalar_market_refine_iter": 16,
         "scalar_market_refine_max_expand": 8,
+        **external_entry_wealth_overrides(),
     }
 
 
@@ -978,14 +1053,13 @@ def draw_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:
     if idx == 2:
         return {"hR_max": 5.0}
     if idx == 3:
-        return {"b_entry_fixed": 5.0, "phi": np.array([0.95, 0.95, 0.95])}
+        return {"phi": np.array([0.95, 0.95, 0.95])}
     if idx == 4:
         return {"hR_max": 4.0, "H0": np.array([3.0])}
     phi = rng.uniform(0.82, 0.97)
     return {
         "alpha_cons": rng.uniform(0.62, 0.82),
         "phi": np.array([phi, phi, phi]),
-        "b_entry_fixed": rng.uniform(0.0, 7.0),
         "c_bar_n": rng.uniform(0.24, 0.72),
         "chi": rng.uniform(0.75, 1.50),
         "kappa_fert": rng.uniform(3.0, 7.0),
@@ -1056,6 +1130,9 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "housing_increment_0to1": float(getattr(sol, "housing_increment_0to1_eventstudy_t3", np.nan)),
         "housing_increment_1to2": float(
             getattr(sol, "housing_increment_1to2_proxy_t3", getattr(sol, "housing_increment_1to2", np.nan))
+        ),
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms": float(
+            getattr(sol, "prime30_55_parent_3plus_minus_1to2_mean_rooms", np.nan)
         ),
         "young_liquid_wealth_to_income": float(getattr(sol, "young_liquid_wealth_to_income", np.nan)),
         "liquid_wealth_to_income": float(getattr(sol, "liquid_wealth_to_income", np.nan)),

@@ -12,13 +12,20 @@ import numpy as np
 
 from .calibration import TARGET_SETS, run_informed_smoke, run_small_calibration
 from .diagnostics import write_diagnostics
-from .local_panel import run_global_de_panel, run_local_panel
+from .local_panel import run_global_de_panel, run_local_panel, run_local_polish
+from .production_profile import (
+    PRODUCTION_INCOME_STATES,
+    PRODUCTION_J,
+    PRODUCTION_PROFILE_NAME,
+    PRODUCTION_SEARCH_NB,
+    PRODUCTION_TARGET_SET,
+)
 from .solver import run_model_cp_dt
 
 
 PERIOD_YEARS = 4.0
-AGE_START = 22.0
-FERTILITY_START_AGE = 26.0
+AGE_START = 18.0
+FERTILITY_START_AGE = 18.0
 FERTILITY_END_AGE = 42.0
 RETIREMENT_AGE = 66.0
 CHILD_MATURITY_AGE = 18.0
@@ -37,7 +44,7 @@ def main() -> None:
 
     solve = sub.add_parser("solve", help="Run the one-market housing price iteration")
     solve.add_argument("--max-iter-eq", type=int, default=20)
-    solve.add_argument("--J", type=int, default=16)
+    solve.add_argument("--J", type=int, default=17)
     solve.add_argument("--Nb", type=int, default=60)
     solve.add_argument("--n-house", type=int, default=6)
     solve.add_argument("--quiet", action="store_true")
@@ -46,7 +53,7 @@ def main() -> None:
     diag = sub.add_parser("diagnostics", help="Solve and write a diagnostic packet")
     diag.add_argument("--fixed-prices", action="store_true")
     diag.add_argument("--max-iter-eq", type=int, default=20)
-    diag.add_argument("--J", type=int, default=16)
+    diag.add_argument("--J", type=int, default=17)
     diag.add_argument("--Nb", type=int, default=60)
     diag.add_argument("--n-house", type=int, default=6)
     diag.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_smoke"))
@@ -64,7 +71,7 @@ def main() -> None:
     cal.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_small_calibration"))
 
     informed = sub.add_parser("informed-smoke", help="Run a deterministic parameter-led smoke panel")
-    informed.add_argument("--J", type=int, default=16)
+    informed.add_argument("--J", type=int, default=17)
     informed.add_argument("--Nb", type=int, default=40)
     informed.add_argument("--n-house", type=int, default=6)
     informed.add_argument("--max-iter-eq", type=int, default=25)
@@ -77,7 +84,7 @@ def main() -> None:
     panel = sub.add_parser("local-panel", help="Run a bounded multicore local diagnostic panel")
     panel.add_argument("--cases", type=int, default=144)
     panel.add_argument("--seed", type=int, default=20260608)
-    panel.add_argument("--J", type=int, default=16)
+    panel.add_argument("--J", type=int, default=17)
     panel.add_argument("--Nb", type=int, default=60)
     panel.add_argument("--income-states", type=int, default=5)
     panel.add_argument("--n-house", type=int, default=6)
@@ -94,7 +101,7 @@ def main() -> None:
     global_de = sub.add_parser("global-de-panel", help="Run a bounded differential-evolution global panel")
     global_de.add_argument("--max-evals", type=int, default=240)
     global_de.add_argument("--seed", type=int, default=20260609)
-    global_de.add_argument("--J", type=int, default=16)
+    global_de.add_argument("--J", type=int, default=17)
     global_de.add_argument("--Nb", type=int, default=60)
     global_de.add_argument("--income-states", type=int, default=5)
     global_de.add_argument("--n-house", type=int, default=6)
@@ -107,6 +114,33 @@ def main() -> None:
     global_de.add_argument("--seed-theta-json", type=Path, default=None, help="JSON file with a top-level theta object to seed the DE population.")
     global_de.add_argument("--quiet", action="store_true")
     global_de.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_global_de"))
+
+    polish = sub.add_parser("local-polish", help="Run a true derivative-free local polish around a seed theta")
+    polish.add_argument("--max-evals", type=int, default=240)
+    polish.add_argument("--seed", type=int, default=20260628)
+    polish.add_argument("--J", type=int, default=PRODUCTION_J)
+    polish.add_argument("--Nb", type=int, default=PRODUCTION_SEARCH_NB)
+    polish.add_argument("--income-states", type=int, default=PRODUCTION_INCOME_STATES)
+    polish.add_argument("--n-house", type=int, default=5)
+    polish.add_argument("--max-iter-eq", type=int, default=25)
+    polish.add_argument("--minutes", type=float, default=115.0)
+    polish.add_argument("--target-set", choices=sorted(TARGET_SETS), default=PRODUCTION_TARGET_SET)
+    polish.add_argument("--seed-theta-json", type=Path, required=True, help="JSON file with a top-level theta object to polish.")
+    polish.add_argument("--method", choices=["nelder-mead", "pattern"], default="nelder-mead")
+    polish.add_argument("--initial-step", type=float, default=0.06, help="Initial step in normalized bounded parameter space.")
+    polish.add_argument("--min-step", type=float, default=0.003, help="Minimum step in normalized bounded parameter space.")
+    polish.add_argument("--shrink", type=float, default=0.5)
+    polish.add_argument(
+        "--profile",
+        choices=[PRODUCTION_PROFILE_NAME, "none"],
+        default=PRODUCTION_PROFILE_NAME,
+        help="Named source-controlled model/search profile; use 'none' only for legacy diagnostics.",
+    )
+    polish.add_argument("--fixed-beta-annual", type=float, default=None)
+    polish.add_argument("--fixed-theta-n", type=float, default=None)
+    polish.add_argument("--fixed-chi", type=float, default=None)
+    polish.add_argument("--quiet", action="store_true")
+    polish.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_polish"))
 
     args = parser.parse_args()
     if args.cmd == "calibrate-small":
@@ -172,6 +206,36 @@ def main() -> None:
             crossover=float(args.crossover),
             target_set=str(args.target_set),
             seed_theta=load_seed_theta(args.seed_theta_json),
+            progress=not bool(args.quiet),
+        )
+        print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))
+        return
+    if args.cmd == "local-polish":
+        fixed_theta: dict[str, float] = {}
+        if args.fixed_beta_annual is not None:
+            fixed_theta["beta"] = float(args.fixed_beta_annual) ** PERIOD_YEARS
+        if args.fixed_theta_n is not None:
+            fixed_theta["theta_n"] = float(args.fixed_theta_n)
+        if args.fixed_chi is not None:
+            fixed_theta["chi"] = float(args.fixed_chi)
+        summary = run_local_polish(
+            args.outdir,
+            max_evals=int(args.max_evals),
+            seed=int(args.seed),
+            J=int(args.J),
+            Nb=int(args.Nb),
+            income_states=int(args.income_states),
+            n_house=int(args.n_house),
+            max_iter_eq=int(args.max_iter_eq),
+            minutes=float(args.minutes),
+            target_set=str(args.target_set),
+            seed_theta=load_seed_theta(args.seed_theta_json),
+            method=str(args.method),
+            initial_step=float(args.initial_step),
+            min_step=float(args.min_step),
+            shrink=float(args.shrink),
+            profile_name=None if str(args.profile) == "none" else str(args.profile),
+            fixed_theta=fixed_theta,
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))

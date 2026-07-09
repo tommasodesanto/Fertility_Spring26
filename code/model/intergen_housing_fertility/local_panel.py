@@ -25,6 +25,13 @@ from .calibration import (
 )
 from .diagnostics import write_diagnostics
 from .parameters import make_persistent_transition_matrix
+from .production_profile import (
+    PRODUCTION_PROFILE_NAME,
+    PRODUCTION_SEARCH_BOUNDS,
+    production_profile_metadata,
+    production_profile_overrides,
+    validate_production_profile,
+)
 from .solver import run_model_cp_dt
 
 
@@ -33,22 +40,7 @@ DEFAULT_INCOME_WEIGHTS_5 = np.array([0.10, 0.20, 0.40, 0.20, 0.10])
 DEFAULT_RHO_Z = 0.85
 DEFAULT_TENURE_CHOICE_KAPPA = 0.01
 
-GLOBAL_DE_BOUNDS = [
-    ("beta_annual", 0.920, 0.990),
-    ("alpha_cons", 0.500, 0.860),
-    ("b_entry_fixed", -4.000, 8.000),
-    ("c_bar_0", 0.040 * PERIOD_YEARS, 0.220 * PERIOD_YEARS),
-    ("c_bar_n", 0.100, 1.100),
-    ("h_bar_0", 2.000, 5.500),
-    ("h_bar_jump", 0.100, 1.800),
-    ("h_bar_n", 0.050, 1.500),
-    ("psi_child", 0.010, 0.220),
-    ("kappa_fert", 2.000, 9.000),
-    ("tenure_choice_kappa", 0.000, 0.080),
-    ("chi", 0.600, 1.800),
-    ("theta0", 0.000, 1.500),
-    ("theta_n", 0.000, 1.000),
-]
+GLOBAL_DE_BOUNDS = list(PRODUCTION_SEARCH_BOUNDS)
 
 
 def run_local_panel(
@@ -56,7 +48,7 @@ def run_local_panel(
     *,
     n_cases: int = 144,
     seed: int = 20260608,
-    J: int = 16,
+    J: int = 17,
     Nb: int = 60,
     n_house: int = 6,
     max_iter_eq: int = 25,
@@ -121,7 +113,6 @@ def run_local_panel(
         "varied_internal_parameters": [
             "beta",
             "alpha_cons",
-            "b_entry_fixed",
             "c_bar_0",
             "c_bar_n",
             "h_bar_0",
@@ -135,6 +126,9 @@ def run_local_panel(
             "theta_n",
         ],
         "fixed_external_or_first_stage": [
+            "entry_wealth_mode",
+            "entry_wealth_ratio_nodes",
+            "entry_wealth_ratio_weights",
             "q",
             "delta",
             "tau_H",
@@ -238,10 +232,11 @@ def run_local_panel(
                     )
                 submit_next(executor)
 
-    records_sorted = sorted(records, key=lambda r: float(r.get("rank_loss", math.inf)))
+    records_sorted = sorted(records, key=record_sort_key)
+    converged_records = strict_records(records_sorted)
     summary = {
-        "best": records_sorted[0] if records_sorted else None,
-        "top_records": records_sorted[: min(10, len(records_sorted))],
+        "best": converged_records[0] if converged_records else None,
+        "top_records": converged_records[: min(10, len(converged_records))],
         "elapsed_sec": float(time.perf_counter() - start),
         "n_cases_completed": int(len(records)),
         "n_cases_submitted": int(next_idx),
@@ -251,10 +246,10 @@ def run_local_panel(
     (outdir / "summary.json").write_text(json.dumps(jsonable(summary), indent=2, sort_keys=True))
     write_panel_summary_tables(outdir, records_sorted, rank_targets)
     write_panel_plots(outdir, records_sorted, rank_targets)
-    if diagnostic_best > 0 and records_sorted:
+    if diagnostic_best > 0 and converged_records:
         write_best_case_diagnostics(
             outdir,
-            records_sorted[: int(diagnostic_best)],
+            converged_records[: int(diagnostic_best)],
             J=J,
             Nb=Nb,
             n_house=n_house,
@@ -397,7 +392,7 @@ def run_global_de_panel(
         label = "warm_start" if i == 0 and seeded_unit is not None else f"init_{i:03d}"
         phase = "seed_theta" if i == 0 and seeded_unit is not None else "latin_hypercube"
         record = evaluate(pop[i], label, {"phase": phase, "slot": i})
-        pop_loss[i] = float(record.get("rank_loss", math.inf))
+        pop_loss[i] = record_selection_loss(record)
         pop_records[i] = record
 
     while eval_idx < max_evals and time.perf_counter() < deadline:
@@ -431,7 +426,7 @@ def run_global_de_panel(
                     "diff_b": int(r3),
                 },
             )
-            trial_loss = float(record.get("rank_loss", math.inf))
+            trial_loss = record_selection_loss(record)
             if trial_loss <= pop_loss[i]:
                 pop[i] = trial
                 pop_loss[i] = trial_loss
@@ -446,22 +441,306 @@ def run_global_de_panel(
                 f"immigrant_g{generation:03d}_i{worst:03d}",
                 {"phase": "random_immigrant", "generation": int(generation), "slot": worst},
             )
-            immigrant_loss = float(record.get("rank_loss", math.inf))
+            immigrant_loss = record_selection_loss(record)
             if immigrant_loss <= pop_loss[worst]:
                 pop[worst] = immigrant
                 pop_loss[worst] = immigrant_loss
                 pop_records[worst] = record
 
-    records_sorted = sorted(records, key=lambda r: float(r.get("rank_loss", math.inf)))
+    records_sorted = sorted(records, key=record_sort_key)
+    converged_records = strict_records(records_sorted)
     summary = {
-        "best": records_sorted[0] if records_sorted else None,
-        "top_records": records_sorted[: min(10, len(records_sorted))],
+        "best": converged_records[0] if converged_records else None,
+        "top_records": converged_records[: min(10, len(converged_records))],
         "elapsed_sec": float(time.perf_counter() - start),
         "n_cases_completed": int(len(records)),
         "n_cases_submitted": int(eval_idx),
         "stopped_by_time_budget": bool(eval_idx < max_evals),
         "generations_completed": int(generation),
         "final_population_losses": jsonable(pop_loss),
+        "metadata": meta,
+    }
+    (outdir / "summary.json").write_text(json.dumps(jsonable(summary), indent=2, sort_keys=True))
+    write_panel_summary_tables(outdir, records_sorted, rank_targets)
+    write_panel_plots(outdir, records_sorted, rank_targets)
+    return summary
+
+
+def run_local_polish(
+    outdir: Path,
+    *,
+    max_evals: int = 240,
+    seed: int = 20260628,
+    J: int = 17,
+    Nb: int = 60,
+    n_house: int = 6,
+    max_iter_eq: int = 25,
+    minutes: float = 115.0,
+    income_states: int = 5,
+    target_set: str = "candidate_no_timing_v0",
+    seed_theta: dict[str, Any] | None = None,
+    method: str = "nelder-mead",
+    initial_step: float = 0.06,
+    min_step: float = 0.003,
+    shrink: float = 0.5,
+    profile_name: str | None = None,
+    fixed_theta: dict[str, Any] | None = None,
+    progress: bool = True,
+) -> dict[str, Any]:
+    """Run a true derivative-free local polish around a seed theta.
+
+    The existing `local-panel` routine is a seeded/random panel, not a local
+    optimizer. This routine optimizes in the normalized bounded parameter cube
+    used by the global-DE code and checkpoints every model evaluation.
+    """
+
+    outdir.mkdir(parents=True, exist_ok=True)
+    cases_path = outdir / "cases.jsonl"
+    best_path = outdir / "best.json"
+    cases_path.write_text("")
+
+    os.environ["NUMBA_NUM_THREADS"] = "1"
+    os.environ["OMP_NUM_THREADS"] = "1"
+    os.environ["MKL_NUM_THREADS"] = "1"
+    os.environ["OPENBLAS_NUM_THREADS"] = "1"
+
+    rng = np.random.default_rng(seed)
+    rank_targets, rank_weights = get_target_set(target_set)
+    income = income_process_overrides(income_states)
+    profile_extra_overrides: dict[str, Any] = {}
+    if profile_name is not None:
+        validate_production_profile(
+            profile_name,
+            J=J,
+            Nb=Nb,
+            n_house=n_house,
+            income_states=income_states,
+            target_set=target_set,
+            stage="search",
+        )
+        profile_extra_overrides = production_profile_overrides()
+    fixed_theta_clean = keep_internal_theta(fixed_theta) if fixed_theta is not None else {}
+    fixed_keys = set(fixed_theta_clean or {})
+    search_bounds = [
+        bound
+        for bound in GLOBAL_DE_BOUNDS
+        if ("beta" if bound[0] == "beta_annual" else bound[0]) not in fixed_keys
+    ]
+    seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
+    x0 = global_unit_from_theta(seed_theta_clean, bounds=search_bounds)
+    if x0 is None:
+        raise ValueError("local polish requires a seed theta containing all searched parameters.")
+
+    method = str(method).strip().lower().replace("_", "-")
+    if method not in {"nelder-mead", "pattern"}:
+        raise ValueError(f"unknown local polish method: {method}")
+    max_evals = max(1, int(max_evals))
+    initial_step = min(max(float(initial_step), 1e-5), 0.75)
+    min_step = min(max(float(min_step), 1e-6), initial_step)
+    shrink = min(max(float(shrink), 0.05), 0.95)
+    dim = len(search_bounds)
+
+    meta = {
+        "status": "local_polish_true_derivative_free_optimizer",
+        "algorithm": method,
+        "seed": int(seed),
+        "max_evals_requested": int(max_evals),
+        "J": int(J),
+        "Nb": int(Nb),
+        "n_house": int(n_house),
+        "max_iter_eq": int(max_iter_eq),
+        "minutes_budget": float(minutes),
+        "income_states": int(income_states),
+        "z_grid": jsonable(income["z_grid"]),
+        "z_weights": jsonable(income["z_weights"]),
+        "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "rank_target_set": str(target_set),
+        "rank_targets": rank_targets,
+        "rank_weights": rank_weights,
+        "production_profile": str(profile_name) if profile_name is not None else None,
+        "production_profile_spec": production_profile_metadata() if profile_name is not None else None,
+        "fixed_theta": jsonable(fixed_theta_clean),
+        "seed_theta": jsonable(seed_theta_clean),
+        "initial_unit_vector": jsonable(x0),
+        "initial_step": float(initial_step),
+        "min_step": float(min_step),
+        "shrink": float(shrink),
+        "bounds": [
+            {"name": name, "lower": float(lo), "upper": float(hi)}
+            for name, lo, hi in search_bounds
+        ],
+        "source_controlled_bounds": [
+            {"name": name, "lower": float(lo), "upper": float(hi)}
+            for name, lo, hi in GLOBAL_DE_BOUNDS
+        ],
+        "bounds_note": (
+            "Local polish is performed in the same normalized bounded cube as "
+            "global-DE; beta_annual is transformed to four-year beta."
+        ),
+    }
+    (outdir / "metadata.json").write_text(json.dumps(meta, indent=2, sort_keys=True))
+
+    start = time.perf_counter()
+    deadline = start + max(1.0, float(minutes) * 60.0)
+    records: list[dict[str, Any]] = []
+    best: dict[str, Any] | None = None
+    eval_idx = 0
+
+    def loss_of(record: dict[str, Any]) -> float:
+        return record_selection_loss(record)
+
+    def evaluate(unit: np.ndarray, label: str, origin: dict[str, Any]) -> dict[str, Any]:
+        nonlocal eval_idx, best
+        clipped = np.clip(np.asarray(unit, dtype=float), 0.0, 1.0)
+        theta = theta_from_global_unit(clipped, bounds=search_bounds)
+        theta.update(fixed_theta_clean or {})
+        record = run_local_panel_case(
+            eval_idx,
+            {"label": label, "theta": theta},
+            J,
+            Nb,
+            n_house,
+            max_iter_eq,
+            income,
+            rank_targets,
+            rank_weights,
+            profile_extra_overrides,
+        )
+        record["algorithm"] = f"local_polish_{method}"
+        record["origin"] = jsonable(origin)
+        record["unit_vector"] = jsonable(clipped)
+        append_jsonl(cases_path, record)
+        records.append(record)
+        if is_better_record(record, best):
+            best = record
+            best_path.write_text(json.dumps(jsonable(best), indent=2, sort_keys=True))
+        if progress:
+            best_loss = loss_of(best) if best is not None else math.inf
+            elapsed = time.perf_counter() - start
+            print(
+                f"eval {eval_idx + 1}/{max_evals} {label}: "
+                f"rank={loss_of(record):.4g}, "
+                f"full={float(record.get('full_old_nonlocation_loss', math.inf)):.4g}, "
+                f"resid={float(record.get('market_residual', math.inf)):.2e}, "
+                f"case_sec={float(record.get('elapsed_sec', math.nan)):.1f}, "
+                f"best={best_loss:.4g}, elapsed={elapsed / 60:.1f}m",
+                flush=True,
+            )
+        eval_idx += 1
+        return record
+
+    def can_eval() -> bool:
+        return eval_idx < max_evals and time.perf_counter() < deadline
+
+    if method == "pattern":
+        best_unit = x0.copy()
+        best_record = evaluate(best_unit, "seed", {"phase": "seed"})
+        step = initial_step
+        iteration = 0
+        while can_eval() and step >= min_step:
+            improved = False
+            order = np.arange(dim)
+            rng.shuffle(order)
+            for j in order:
+                if not can_eval():
+                    break
+                candidates: list[tuple[float, np.ndarray, dict[str, Any]]] = [
+                    (loss_of(best_record), best_unit, best_record)
+                ]
+                for direction in (1.0, -1.0):
+                    if not can_eval():
+                        break
+                    trial = best_unit.copy()
+                    trial[int(j)] = np.clip(trial[int(j)] + direction * step, 0.0, 1.0)
+                    rec = evaluate(
+                        trial,
+                        f"pattern_i{iteration:03d}_d{int(j):02d}_{'p' if direction > 0 else 'm'}",
+                        {"phase": "coordinate_probe", "iteration": iteration, "dim": int(j), "step": step, "direction": direction},
+                    )
+                    candidates.append((loss_of(rec), trial, rec))
+                candidates.sort(key=lambda item: item[0])
+                if candidates[0][0] + 1e-10 < loss_of(best_record):
+                    best_unit = candidates[0][1].copy()
+                    best_record = candidates[0][2]
+                    improved = True
+            if not improved:
+                step *= shrink
+            iteration += 1
+    else:
+        simplex: list[tuple[np.ndarray, dict[str, Any]]] = []
+        seed_record = evaluate(x0, "seed", {"phase": "seed"})
+        simplex.append((x0.copy(), seed_record))
+        for j in range(dim):
+            if not can_eval():
+                break
+            step_j = initial_step * (0.75 + 0.5 * rng.random())
+            trial = x0.copy()
+            if trial[j] + step_j <= 1.0:
+                trial[j] += step_j
+            else:
+                trial[j] = max(0.0, trial[j] - step_j)
+            rec = evaluate(trial, f"nm_init_{j:02d}", {"phase": "initial_simplex", "dim": int(j), "step": float(step_j)})
+            simplex.append((trial, rec))
+
+        alpha = 1.0
+        gamma = 2.0
+        rho = 0.5
+        sigma = shrink
+        iteration = 0
+        while can_eval() and len(simplex) >= 2:
+            simplex.sort(key=lambda item: loss_of(item[1]))
+            if len(simplex) < dim + 1 and not can_eval():
+                break
+            n_centroid = max(1, len(simplex) - 1)
+            centroid = np.mean([u for u, _ in simplex[:n_centroid]], axis=0)
+            worst_unit, worst_record = simplex[-1]
+            second_worst_loss = loss_of(simplex[-2][1]) if len(simplex) > 1 else math.inf
+            best_loss = loss_of(simplex[0][1])
+
+            reflected = np.clip(centroid + alpha * (centroid - worst_unit), 0.0, 1.0)
+            reflected_record = evaluate(reflected, f"nm_reflect_{iteration:03d}", {"phase": "reflect", "iteration": iteration})
+            reflected_loss = loss_of(reflected_record)
+
+            if reflected_loss < best_loss and can_eval():
+                expanded = np.clip(centroid + gamma * (reflected - centroid), 0.0, 1.0)
+                expanded_record = evaluate(expanded, f"nm_expand_{iteration:03d}", {"phase": "expand", "iteration": iteration})
+                simplex[-1] = (expanded, expanded_record) if loss_of(expanded_record) < reflected_loss else (reflected, reflected_record)
+            elif reflected_loss < second_worst_loss:
+                simplex[-1] = (reflected, reflected_record)
+            else:
+                if reflected_loss < loss_of(worst_record):
+                    contracted = np.clip(centroid + rho * (reflected - centroid), 0.0, 1.0)
+                    phase = "outside_contract"
+                    threshold = reflected_loss
+                else:
+                    contracted = np.clip(centroid - rho * (centroid - worst_unit), 0.0, 1.0)
+                    phase = "inside_contract"
+                    threshold = loss_of(worst_record)
+                contract_record = evaluate(contracted, f"nm_contract_{iteration:03d}", {"phase": phase, "iteration": iteration}) if can_eval() else worst_record
+                if loss_of(contract_record) < threshold:
+                    simplex[-1] = (contracted, contract_record)
+                else:
+                    best_unit = simplex[0][0].copy()
+                    new_simplex = [simplex[0]]
+                    for k, (unit, _) in enumerate(simplex[1:], start=1):
+                        if not can_eval():
+                            new_simplex.append((unit, simplex[k][1]))
+                            continue
+                        shrunk = np.clip(best_unit + sigma * (unit - best_unit), 0.0, 1.0)
+                        shrunk_record = evaluate(shrunk, f"nm_shrink_{iteration:03d}_{k:02d}", {"phase": "shrink", "iteration": iteration, "slot": k})
+                        new_simplex.append((shrunk, shrunk_record))
+                    simplex = new_simplex
+            iteration += 1
+
+    records_sorted = sorted(records, key=record_sort_key)
+    converged_records = strict_records(records_sorted)
+    summary = {
+        "best": converged_records[0] if converged_records else None,
+        "top_records": converged_records[: min(10, len(converged_records))],
+        "elapsed_sec": float(time.perf_counter() - start),
+        "n_cases_completed": int(len(records)),
+        "n_cases_submitted": int(eval_idx),
+        "stopped_by_time_budget": bool(eval_idx < max_evals),
         "metadata": meta,
     }
     (outdir / "summary.json").write_text(json.dumps(jsonable(summary), indent=2, sort_keys=True))
@@ -489,12 +768,14 @@ def run_local_panel_case(
     income: dict[str, Any],
     rank_targets: dict[str, float],
     rank_weights: dict[str, float],
+    extra_overrides: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     t0 = time.perf_counter()
     theta = dict(candidate["theta"])
     overrides = {
         **base_overrides(J=J, Nb=Nb, n_house=n_house, max_iter_eq=max_iter_eq),
         **income,
+        **(extra_overrides or {}),
         **theta,
     }
     try:
@@ -505,6 +786,13 @@ def run_local_panel_case(
         status = "ok"
         market_residual = float(getattr(sol, "best_max_abs_rel_excess", np.nan))
         timings = getattr(sol, "timings", {})
+        solver_strict = bool(timings.get("strict_converged", getattr(sol, "converged", False)))
+        strict_converged = bool(
+            solver_strict
+            and np.isfinite(market_residual)
+            and market_residual <= float(getattr(P, "tol_eq", 1e-4))
+        )
+        tol_eq = float(getattr(P, "tol_eq", 1e-4))
     except Exception as exc:  # noqa: BLE001 - panel should checkpoint failed parameter vectors.
         moments = {}
         rank_loss = math.inf
@@ -513,6 +801,8 @@ def run_local_panel_case(
         p_eq = np.array([np.nan])
         market_residual = math.inf
         timings = {}
+        strict_converged = False
+        tol_eq = math.nan
     return {
         "case": int(idx),
         "label": str(candidate["label"]),
@@ -523,6 +813,8 @@ def run_local_panel_case(
         "moments": jsonable(moments),
         "p_eq": jsonable(p_eq),
         "market_residual": float(market_residual),
+        "strict_converged": bool(strict_converged),
+        "tol_eq": float(tol_eq),
         "elapsed_sec": float(time.perf_counter() - t0),
         "timings": jsonable(timings),
     }
@@ -561,10 +853,14 @@ def latin_hypercube(rng: np.random.Generator, n: int, dim: int) -> np.ndarray:
     return out
 
 
-def theta_from_global_unit(unit: np.ndarray) -> dict[str, float]:
+def theta_from_global_unit(
+    unit: np.ndarray,
+    bounds: list[tuple[str, float, float]] | tuple[tuple[str, float, float], ...] | None = None,
+) -> dict[str, float]:
     unit = np.asarray(unit, dtype=float)
+    active_bounds = GLOBAL_DE_BOUNDS if bounds is None else list(bounds)
     theta: dict[str, float] = {}
-    for u, (name, lo, hi) in zip(unit, GLOBAL_DE_BOUNDS):
+    for u, (name, lo, hi) in zip(unit, active_bounds):
         value = float(lo + np.clip(u, 0.0, 1.0) * (hi - lo))
         if name == "beta_annual":
             theta["beta"] = value**PERIOD_YEARS
@@ -573,11 +869,15 @@ def theta_from_global_unit(unit: np.ndarray) -> dict[str, float]:
     return theta
 
 
-def global_unit_from_theta(theta: dict[str, Any] | None) -> np.ndarray | None:
+def global_unit_from_theta(
+    theta: dict[str, Any] | None,
+    bounds: list[tuple[str, float, float]] | tuple[tuple[str, float, float], ...] | None = None,
+) -> np.ndarray | None:
     if theta is None:
         return None
-    unit = np.full(len(GLOBAL_DE_BOUNDS), np.nan)
-    for idx, (name, lo, hi) in enumerate(GLOBAL_DE_BOUNDS):
+    active_bounds = GLOBAL_DE_BOUNDS if bounds is None else list(bounds)
+    unit = np.full(len(active_bounds), np.nan)
+    for idx, (name, lo, hi) in enumerate(active_bounds):
         source_name = "beta" if name == "beta_annual" else name
         if source_name not in theta:
             if source_name == "tenure_choice_kappa":
@@ -596,7 +896,6 @@ def keep_internal_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
     allowed = {
         "beta",
         "alpha_cons",
-        "b_entry_fixed",
         "c_bar_0",
         "c_bar_n",
         "h_bar_0",
@@ -641,7 +940,6 @@ def draw_internal_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any
     return {
         "beta": beta_annual**PERIOD_YEARS,
         "alpha_cons": rng.uniform(alpha_lo, alpha_hi),
-        "b_entry_fixed": rng.uniform(-2.0, 6.0),
         "c_bar_0": rng.uniform(0.04, 0.16) * PERIOD_YEARS,
         "c_bar_n": rng.uniform(child_cost_lo, child_cost_hi),
         "h_bar_0": rng.uniform(3.0, 4.8),
@@ -686,9 +984,35 @@ def ranking_targets_without_age() -> tuple[dict[str, float], dict[str, float]]:
 
 
 def is_better_record(record: dict[str, Any], best: dict[str, Any] | None) -> bool:
+    candidate_loss = record_selection_loss(record)
+    if not np.isfinite(candidate_loss):
+        return False
     if best is None:
         return True
-    return float(record.get("rank_loss", math.inf)) < float(best.get("rank_loss", math.inf))
+    return candidate_loss < record_selection_loss(best)
+
+
+def record_is_strictly_converged(record: dict[str, Any]) -> bool:
+    return bool(record.get("strict_converged", False))
+
+
+def record_selection_loss(record: dict[str, Any]) -> float:
+    if not record_is_strictly_converged(record):
+        return math.inf
+    loss = float(record.get("rank_loss", math.inf))
+    return loss if np.isfinite(loss) else math.inf
+
+
+def record_sort_key(record: dict[str, Any]) -> tuple[float, float, int]:
+    return (
+        record_selection_loss(record),
+        float(record.get("rank_loss", math.inf)),
+        int(record.get("case", -1)),
+    )
+
+
+def strict_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [record for record in records if np.isfinite(record_selection_loss(record))]
 
 
 def append_jsonl(path: Path, record: dict[str, Any]) -> None:
@@ -706,6 +1030,7 @@ def write_panel_summary_tables(outdir: Path, records: list[dict[str, Any]], targ
             "rank_loss": record.get("rank_loss"),
             "full_old_nonlocation_loss": record.get("full_old_nonlocation_loss"),
             "market_residual": record.get("market_residual"),
+            "strict_converged": record.get("strict_converged"),
             "elapsed_sec": record.get("elapsed_sec"),
             "p_eq": first_scalar(record.get("p_eq")),
         }
@@ -718,6 +1043,9 @@ def write_panel_summary_tables(outdir: Path, records: list[dict[str, Any]], targ
         row["parity_share_1"] = moments.get("parity_share_1")
         row["parity_share_2plus"] = moments.get("parity_share_2plus")
         row["young_liquid_wealth_to_income"] = moments.get("young_liquid_wealth_to_income")
+        row["young_childless_renter_liquid_wealth_to_annual_gross_income_2535"] = moments.get(
+            "young_childless_renter_liquid_wealth_to_annual_gross_income_2535"
+        )
         rows.append(row)
     write_csv(outdir / "ranked_cases.csv", rows)
 
@@ -732,7 +1060,7 @@ def write_panel_plots(outdir: Path, records: list[dict[str, Any]], targets: dict
 
     figdir = outdir / "figures"
     figdir.mkdir(parents=True, exist_ok=True)
-    ok = [r for r in records if np.isfinite(float(r.get("rank_loss", math.inf)))]
+    ok = strict_records(records)
     if not ok:
         return
     best = ok[0]
@@ -765,7 +1093,13 @@ def plot_tradeoffs(path: Path, records: list[dict[str, Any]], targets: dict[str,
     fig, axes = plt.subplots(2, 2, figsize=(11, 8.5))
     panels = [
         ("tfr", "childless_rate", "TFR vs childlessness"),
-        ("own_rate", "young_liquid_wealth_to_income", "Ownership vs young liquid wealth/income"),
+        (
+            "own_rate",
+            "young_childless_renter_liquid_wealth_to_annual_gross_income_2535"
+            if "young_childless_renter_liquid_wealth_to_annual_gross_income_2535" in targets
+            else "young_liquid_wealth_to_income",
+            "Ownership vs young liquid wealth/income",
+        ),
         ("housing_increment_0to1", "housing_increment_1to2", "Housing increments"),
         ("old_age_own_rate", "old_age_parent_childless_gap", "Old ownership and old parent-childless gap"),
     ]

@@ -17,8 +17,9 @@ def make_grid(P: SimpleNamespace) -> np.ndarray:
       b_frac_low, b_frac_core, b_frac_mid : node fractions for the first three
         segments (defaults 0.15, 0.45, 0.15); the upper buffer gets the rest.
     Set b_frac_low/b_frac_mid to 0 (and b_core_lo=b_min / b_mid_hi=b_core_hi) to
-    collapse to a dense core + sparse buffer. The grid always pins nodes exactly
-    at 0 and at b_entry_fixed.
+        collapse to a dense core + sparse buffer. The grid always pins nodes exactly
+    at 0 and at the legacy scalar b_entry_fixed; external entry distributions
+    are scattered onto the grid by the solver rather than pinned here.
     """
     Nb = int(P.Nb)
     core_lo = float(getattr(P, "b_core_lo", -3.0))
