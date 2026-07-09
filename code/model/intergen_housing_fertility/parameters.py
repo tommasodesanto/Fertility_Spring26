@@ -110,6 +110,7 @@ def setup_parameters() -> SimpleNamespace:
     P.E_loc = np.array([0.0])
     P.income_age_breaks = np.array([22.0, 26.0, 34.0, 46.0, 58.0])
     P.income_age_values = np.array([0.650, 0.850, 1.000, 0.985, 0.935])
+    P.normalize_income_profile = True
     P.use_income_types = True
     P.z_grid = np.array([0.70, 1.00, 1.30])
     P.z_weights = np.array([0.30, 0.40, 0.30])
@@ -157,8 +158,14 @@ def setup_parameters() -> SimpleNamespace:
     P = set_income_given_w_and_pension(P)
 
     P.Nb = 80
-    P.b_min = -35.0
-    P.b_max = 100.0
+    P.b_min = -12.0
+    P.b_max = 30.0
+    P.b_core_lo = -5.0
+    P.b_core_hi = 7.0
+    P.b_mid_hi = 15.0
+    P.b_frac_low = 0.08
+    P.b_frac_core = 0.72
+    P.b_frac_mid = 0.12
     P.b_grid_power = 1.5
     P.n_sub = 1
     P.max_iter_eq = 200
@@ -455,6 +462,11 @@ def get_income_age_profile(P: SimpleNamespace) -> np.ndarray:
         age_hi = age_breaks[k + 1] if k < len(age_values) - 1 else P.age_start + P.J_R * P.da
         mask = (age_vec >= age_breaks[k]) & (age_vec < age_hi)
         income_profile[mask] = val
+    if bool(getattr(P, "normalize_income_profile", True)):
+        jr = int(getattr(P, "J_R", P.J))
+        work_mean = float(np.mean(income_profile[: max(jr, 1)]))
+        if work_mean > 0:
+            income_profile = income_profile / work_mean
     return income_profile
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the production-grid before/after comparison for the July 9 code repair."""
+"""Compare the exact frozen source specification with repaired timing."""
 
 from __future__ import annotations
 
@@ -25,13 +25,16 @@ from intergen_housing_fertility.local_panel import income_process_overrides
 from intergen_housing_fertility.production_profile import (
     PRODUCTION_INCOME_STATES,
     PRODUCTION_J,
+    PRODUCTION_MAX_ITER_EQ,
     PRODUCTION_PROFILE_NAME,
     PRODUCTION_SEARCH_BOUNDS,
     PRODUCTION_SEARCH_NB,
     PRODUCTION_TARGET_SET,
     PRODUCTION_VERIFY_NB,
+    comparison_arm_switches,
     production_profile_metadata,
     production_profile_overrides,
+    validate_frozen_source_theta,
     validate_production_profile,
 )
 from intergen_housing_fertility.solver import run_model_cp_dt
@@ -42,7 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--theta-json", type=Path, required=True)
     parser.add_argument("--outdir", type=Path, required=True)
     parser.add_argument("--grid", choices=["search", "verify"], default="search")
-    parser.add_argument("--max-iter-eq", type=int, default=25)
+    parser.add_argument("--max-iter-eq", type=int, default=PRODUCTION_MAX_ITER_EQ)
     parser.add_argument("--quiet", action="store_true")
     return parser.parse_args()
 
@@ -65,24 +68,13 @@ def run_case(
     weights: dict[str, float],
     verbose: bool,
 ) -> dict[str, Any]:
-    timing_switches = {
-        "before": {
-            "use_postdecision_current_distribution": False,
-            "legacy_entry_income_peak": True,
-            "propagate_birth_entry_grant": False,
-        },
-        "after": {
-            "use_postdecision_current_distribution": True,
-            "legacy_entry_income_peak": False,
-            "propagate_birth_entry_grant": True,
-        },
-    }
+    timing_switches = comparison_arm_switches(label)
     overrides = {
         **base_overrides(J=PRODUCTION_J, Nb=nb, n_house=5, max_iter_eq=max_iter_eq),
         **income_process_overrides(PRODUCTION_INCOME_STATES),
         **production_profile_overrides(),
         **theta,
-        **timing_switches[label],
+        **timing_switches,
     }
     started = time.perf_counter()
     sol, p, prices = run_model_cp_dt(overrides, verbose=verbose)
@@ -113,7 +105,7 @@ def run_case(
     return {
         "label": label,
         "theta": theta,
-        "timing_switches": timing_switches[label],
+        "timing_switches": timing_switches,
         "prices": jsonable(prices),
         "market_residual": residual,
         "strict_converged": strict,
@@ -169,13 +161,15 @@ def main() -> None:
         n_house=5,
         income_states=PRODUCTION_INCOME_STATES,
         target_set=PRODUCTION_TARGET_SET,
+        max_iter_eq=args.max_iter_eq,
         stage=args.grid,
     )
     theta, theta_source = load_theta(args.theta_json)
+    validate_frozen_source_theta(theta)
     targets, weights = get_target_set(PRODUCTION_TARGET_SET)
     args.outdir.mkdir(parents=True, exist_ok=True)
-    before = run_case(
-        "before",
+    frozen_source = run_case(
+        "frozen_source_repro",
         theta,
         nb=nb,
         max_iter_eq=args.max_iter_eq,
@@ -183,8 +177,8 @@ def main() -> None:
         weights=weights,
         verbose=not args.quiet,
     )
-    after = run_case(
-        "after",
+    repaired = run_case(
+        "repaired_timing",
         theta,
         nb=nb,
         max_iter_eq=args.max_iter_eq,
@@ -195,27 +189,27 @@ def main() -> None:
     differences = [
         {
             "moment": name,
-            "before": float(before["moments"].get(name, math.nan)),
-            "after": float(after["moments"].get(name, math.nan)),
-            "after_minus_before": float(after["moments"].get(name, math.nan))
-            - float(before["moments"].get(name, math.nan)),
+            "frozen_source_repro": float(frozen_source["moments"].get(name, math.nan)),
+            "repaired_timing": float(repaired["moments"].get(name, math.nan)),
+            "repaired_minus_frozen": float(repaired["moments"].get(name, math.nan))
+            - float(frozen_source["moments"].get(name, math.nan)),
         }
         for name in targets
     ]
     payload = {
-        "status": "production_grid_before_after_comparison",
+        "status": "frozen_source_vs_repaired_timing_comparison",
         "profile": production_profile_metadata(),
         "grid_stage": args.grid,
         "theta_source_path": str(args.theta_json.resolve()),
         "theta_source_metadata": theta_source,
-        "before": before,
-        "after": after,
+        "frozen_source_repro": frozen_source,
+        "repaired_timing": repaired,
         "differences": differences,
         "parameters": parameter_table(theta),
     }
     (args.outdir / "comparison.json").write_text(json.dumps(jsonable(payload), indent=2, sort_keys=True))
-    write_csv(args.outdir / "target_fit_before.csv", before["target_fit"])
-    write_csv(args.outdir / "target_fit_after.csv", after["target_fit"])
+    write_csv(args.outdir / "target_fit_frozen_source_repro.csv", frozen_source["target_fit"])
+    write_csv(args.outdir / "target_fit_repaired_timing.csv", repaired["target_fit"])
     write_csv(args.outdir / "moment_differences.csv", differences)
     write_csv(args.outdir / "parameter_ledger.csv", payload["parameters"])
     print(json.dumps(jsonable(payload), indent=2, sort_keys=True))

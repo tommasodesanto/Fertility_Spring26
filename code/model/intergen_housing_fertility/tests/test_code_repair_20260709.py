@@ -10,12 +10,23 @@ from intergen_housing_fertility.local_panel import (
     record_sort_key,
     record_selection_loss,
 )
-from intergen_housing_fertility.parameters import get_income_age_profile, setup_parameters
+from intergen_housing_fertility.parameters import (
+    apply_overrides,
+    compute_stationary_worker_income,
+    get_income_age_profile,
+    setup_parameters,
+)
 from intergen_housing_fertility.production_profile import (
+    FROZEN_SOURCE_THETA,
     PRODUCTION_H_OWN,
+    PRODUCTION_MAX_ITER_EQ,
     PRODUCTION_PROFILE_NAME,
     PRODUCTION_SEARCH_BOUNDS,
     PRODUCTION_TARGET_SET,
+    comparison_arm_switches,
+    production_profile_metadata,
+    production_profile_overrides,
+    validate_frozen_source_theta,
     validate_production_profile,
 )
 from intergen_housing_fertility.solver import (
@@ -28,6 +39,7 @@ from intergen_housing_fertility.solver import (
     realize_current_choices_markov_income,
     realize_current_cross_section,
 )
+from intergen_housing_fertility.utils import make_grid
 
 
 def _family_count_attr() -> str:
@@ -105,14 +117,27 @@ def _mapped_values(grid: np.ndarray, idx: np.ndarray, wt: np.ndarray) -> np.ndar
 
 
 class IncomeProfileRegressionTests(unittest.TestCase):
-    def test_pre_first_break_uses_entry_profile_value(self) -> None:
+    def test_working_age_mean_and_entry_value_match_frozen_source(self) -> None:
         p = setup_parameters()
         profile = get_income_age_profile(p)
-        self.assertEqual(float(profile[0]), 0.65)
-        self.assertEqual(float(profile[1]), 0.65)
-        self.assertEqual(float(profile[2]), 0.85)
-        self.assertEqual(float(profile[4]), 1.0)
+        expected = np.array(
+            [
+                0.720554272517321,
+                0.720554272517321,
+                0.942263279445728,
+                0.942263279445728,
+                1.108545034642032,
+            ]
+        )
+        np.testing.assert_allclose(profile[:5], expected, atol=1e-15, rtol=0.0)
+        self.assertAlmostEqual(float(np.mean(profile[: p.J_R])), 1.0, places=15)
+        self.assertAlmostEqual(compute_stationary_worker_income(p, profile), 1.0, places=15)
 
+        p.normalize_income_profile = False
+        raw = get_income_age_profile(p)
+        self.assertEqual(float(raw[0]), 0.65)
+        self.assertEqual(float(raw[1]), 0.65)
+        self.assertEqual(float(raw[2]), 0.85)
         p.legacy_entry_income_peak = True
         legacy = get_income_age_profile(p)
         self.assertEqual(float(legacy[0]), 1.0)
@@ -132,6 +157,7 @@ class SearchSafetyTests(unittest.TestCase):
 
     def test_named_production_profile_is_exact(self) -> None:
         self.assertEqual(PRODUCTION_H_OWN.tolist(), [2.0, 4.0, 6.0, 8.0, 10.0])
+        self.assertEqual(PRODUCTION_MAX_ITER_EQ, 10)
         bounds = {name: (lower, upper) for name, lower, upper in PRODUCTION_SEARCH_BOUNDS}
         self.assertEqual(bounds["beta_annual"], (0.94, 0.995))
         self.assertEqual(bounds["chi"], (0.4, 1.15))
@@ -142,6 +168,7 @@ class SearchSafetyTests(unittest.TestCase):
             n_house=5,
             income_states=5,
             target_set=PRODUCTION_TARGET_SET,
+            max_iter_eq=10,
             stage="search",
         )
         with self.assertRaises(ValueError):
@@ -152,8 +179,90 @@ class SearchSafetyTests(unittest.TestCase):
                 n_house=5,
                 income_states=5,
                 target_set=PRODUCTION_TARGET_SET,
+                max_iter_eq=10,
                 stage="search",
             )
+        with self.assertRaises(ValueError):
+            validate_production_profile(
+                PRODUCTION_PROFILE_NAME,
+                J=17,
+                Nb=120,
+                n_house=5,
+                income_states=5,
+                target_set=PRODUCTION_TARGET_SET,
+                max_iter_eq=25,
+                stage="search",
+            )
+
+    def test_profile_pins_dense_grid_and_runtime_metadata(self) -> None:
+        overrides = production_profile_overrides()
+        expected_grid_fields = {
+            "b_min": -12.0,
+            "b_max": 30.0,
+            "b_core_lo": -5.0,
+            "b_core_hi": 7.0,
+            "b_mid_hi": 15.0,
+            "b_frac_low": 0.08,
+            "b_frac_core": 0.72,
+            "b_frac_mid": 0.12,
+            "b_grid_power": 1.5,
+        }
+        for key, value in expected_grid_fields.items():
+            self.assertEqual(overrides[key], value)
+        self.assertTrue(overrides["normalize_income_profile"])
+        self.assertFalse(overrides["legacy_entry_income_peak"])
+        self.assertEqual(overrides["housing_event_horizon"], 0)
+        self.assertEqual(overrides["max_iter_eq"], 10)
+
+        metadata = production_profile_metadata()
+        self.assertEqual(metadata["runtime_overrides"]["max_iter_eq"], 10)
+        self.assertEqual(metadata["runtime_overrides"]["b_min"], -12.0)
+        self.assertEqual(metadata["runtime_overrides"]["b_max"], 30.0)
+
+        p = apply_overrides(setup_parameters(), {"Nb": 120, **overrides})
+        grid = make_grid(p)
+        self.assertEqual(grid.size, 120)
+        self.assertEqual(float(grid[0]), -12.0)
+        self.assertEqual(float(grid[10]), -5.0)
+        self.assertEqual(float(grid[96]), 7.0)
+        self.assertEqual(float(grid[-1]), 30.0)
+        self.assertTrue(np.any(grid == 0.0))
+
+    def test_exact_frozen_theta_and_comparison_switches(self) -> None:
+        expected_theta = {
+            "alpha_cons": 0.6195578033469402,
+            "beta": 0.7808047585225533,
+            "c_bar_0": 1.2793341787106423,
+            "c_bar_n": 0.11617574349164181,
+            "chi": 1.1496942798885048,
+            "h_bar_0": 1.0,
+            "h_bar_jump": 2.1198232149690575,
+            "h_bar_n": 1.3819945583480897,
+            "kappa_fert": 1.0188742355464353,
+            "psi_child": 0.3490340757304799,
+            "tenure_choice_kappa": 0.0,
+            "theta0": 0.0014981114599317271,
+            "theta_n": 0.9722009696445806,
+        }
+        self.assertEqual(FROZEN_SOURCE_THETA, expected_theta)
+        validate_frozen_source_theta(dict(expected_theta))
+        wrong_theta = dict(expected_theta)
+        wrong_theta["theta_n"] = 0.9811
+        with self.assertRaises(ValueError):
+            validate_frozen_source_theta(wrong_theta)
+
+        frozen = comparison_arm_switches("frozen_source_repro")
+        repaired = comparison_arm_switches("repaired_timing")
+        self.assertFalse(frozen["legacy_entry_income_peak"])
+        self.assertFalse(repaired["legacy_entry_income_peak"])
+        differing = {key for key in frozen if frozen[key] != repaired[key]}
+        self.assertEqual(
+            differing,
+            {
+                "use_postdecision_current_distribution",
+                "propagate_birth_entry_grant",
+            },
+        )
 
 
 class GrantMapRegressionTests(unittest.TestCase):

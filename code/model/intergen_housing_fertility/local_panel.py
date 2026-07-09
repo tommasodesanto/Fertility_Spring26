@@ -26,6 +26,7 @@ from .calibration import (
 from .diagnostics import write_diagnostics
 from .parameters import make_persistent_transition_matrix
 from .production_profile import (
+    PRODUCTION_MAX_ITER_EQ,
     PRODUCTION_PROFILE_NAME,
     PRODUCTION_SEARCH_BOUNDS,
     production_profile_metadata,
@@ -474,7 +475,7 @@ def run_local_polish(
     J: int = 17,
     Nb: int = 60,
     n_house: int = 6,
-    max_iter_eq: int = 25,
+    max_iter_eq: int = PRODUCTION_MAX_ITER_EQ,
     minutes: float = 115.0,
     income_states: int = 5,
     target_set: str = "candidate_no_timing_v0",
@@ -516,6 +517,7 @@ def run_local_polish(
             n_house=n_house,
             income_states=income_states,
             target_set=target_set,
+            max_iter_eq=max_iter_eq,
             stage="search",
         )
         profile_extra_overrides = production_profile_overrides()

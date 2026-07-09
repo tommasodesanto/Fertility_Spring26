@@ -16,6 +16,7 @@ from .local_panel import run_global_de_panel, run_local_panel, run_local_polish
 from .production_profile import (
     PRODUCTION_INCOME_STATES,
     PRODUCTION_J,
+    PRODUCTION_MAX_ITER_EQ,
     PRODUCTION_PROFILE_NAME,
     PRODUCTION_SEARCH_NB,
     PRODUCTION_TARGET_SET,
@@ -122,7 +123,7 @@ def main() -> None:
     polish.add_argument("--Nb", type=int, default=PRODUCTION_SEARCH_NB)
     polish.add_argument("--income-states", type=int, default=PRODUCTION_INCOME_STATES)
     polish.add_argument("--n-house", type=int, default=5)
-    polish.add_argument("--max-iter-eq", type=int, default=25)
+    polish.add_argument("--max-iter-eq", type=int, default=PRODUCTION_MAX_ITER_EQ)
     polish.add_argument("--minutes", type=float, default=115.0)
     polish.add_argument("--target-set", choices=sorted(TARGET_SETS), default=PRODUCTION_TARGET_SET)
     polish.add_argument("--seed-theta-json", type=Path, required=True, help="JSON file with a top-level theta object to polish.")

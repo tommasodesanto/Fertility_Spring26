@@ -11,23 +11,23 @@ def make_grid(P: SimpleNamespace) -> np.ndarray:
     """Four-segment liquid-wealth grid: optional sparse lower tail, a dense
     linear core, an optional linear mid band, and a power-spaced upper buffer.
 
-    Configurable via P (defaults reproduce the original [-35,-3,6,20,100] grid):
+    Configurable via P (defaults reproduce the frozen July dense grid):
       b_min, b_max, b_grid_power      : overall bounds and upper-buffer curvature
-      b_core_lo, b_core_hi, b_mid_hi  : segment boundaries (defaults -3, 6, 20)
+      b_core_lo, b_core_hi, b_mid_hi  : segment boundaries (defaults -5, 7, 15)
       b_frac_low, b_frac_core, b_frac_mid : node fractions for the first three
-        segments (defaults 0.15, 0.45, 0.15); the upper buffer gets the rest.
+        segments (defaults 0.08, 0.72, 0.12); the upper buffer gets the rest.
     Set b_frac_low/b_frac_mid to 0 (and b_core_lo=b_min / b_mid_hi=b_core_hi) to
         collapse to a dense core + sparse buffer. The grid always pins nodes exactly
     at 0 and at the legacy scalar b_entry_fixed; external entry distributions
     are scattered onto the grid by the solver rather than pinned here.
     """
     Nb = int(P.Nb)
-    core_lo = float(getattr(P, "b_core_lo", -3.0))
-    core_hi = float(getattr(P, "b_core_hi", 6.0))
-    mid_hi = float(getattr(P, "b_mid_hi", 20.0))
-    f_low = float(getattr(P, "b_frac_low", 0.15))
-    f_core = float(getattr(P, "b_frac_core", 0.45))
-    f_mid = float(getattr(P, "b_frac_mid", 0.15))
+    core_lo = float(getattr(P, "b_core_lo", -5.0))
+    core_hi = float(getattr(P, "b_core_hi", 7.0))
+    mid_hi = float(getattr(P, "b_mid_hi", 15.0))
+    f_low = float(getattr(P, "b_frac_low", 0.08))
+    f_core = float(getattr(P, "b_frac_core", 0.72))
+    f_mid = float(getattr(P, "b_frac_mid", 0.12))
     N1 = round(Nb * f_low)
     N2 = round(Nb * f_core)
     N3 = round(Nb * f_mid)
