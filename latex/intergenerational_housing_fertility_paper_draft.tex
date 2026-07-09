@@ -715,13 +715,13 @@ mode $m$, and the effective cap binds strictly. Then
 
 Under equal scaling, the normalized access gap $\zeta_i^m/x_i^m$ is
 simultaneously the misallocation wedge of the efficiency proposition, the
-fertility exposure $\Psi_i^m$ up to the positive weight $\omega_i^m$, and the
-entry response $\Theta_i^m$. One observable drives all three margins. This is
-the object the quantitative model measures: Part II reports the distribution
-of $\zeta$ among fertile households and the share of the fertility-response
-mass that sits on $\zeta>0$ types.
+fertility exposure $\Psi_i^m$ up to the positive weight $\omega_i^m$, and
+the entry response $\Theta_i^m$. This is the object the quantitative model
+measures: Part II reports the distribution of $\zeta$ among fertile
+households and the share of the fertility-response mass that sits on
+$\zeta>0$ types.
 
-One policy pass-through is worth displaying because Part II uses it. For a
+One pass-through has a closed form that Part II uses. For a
 collateral-capped owner, $H_i^O=a_i\rho/[(1-\phi)q]$ with $\rho=r+\delta+\tau^p$.
 Holding the user cost fixed, a property-tax increase raises $\rho$, lowers the
 asset price $P=q/\rho$, and thereby lowers the down payment per unit of house:
@@ -732,12 +732,12 @@ asset price $P=q/\rho$, and thereby lowers the down payment per unit of house:
 >0.
 \label{eq:compact_capitalization_passthrough}
 \end{equation}
-A tax on holding housing capitalizes into a cheaper ticket for entering it:
-the collateral cap relaxes by $a_i/[(1-\phi)q]$ units per point of tax, and
-the birth response follows from Proposition~\ref{prop:local_fertility_stat}
-integrated over the collateral-exposed set. Whether the relief creates births
+A property tax, capitalized into the asset price, relaxes the collateral
+cap by $a_i/[(1-\phi)q]$ units per point of tax, and the birth response
+follows from Proposition~\ref{prop:local_fertility_stat} integrated over
+the collateral-exposed set. Whether the relief creates births
 in practice depends on whether exposed households are near their fertility
-margin when the relief arrives; Part II shows that timing, not exposure, is
+margin when the relief arrives. Part II shows that timing, not exposure, is
 the binding failure.
 
 The formula is fixed-tenure accounting. If tenure choice is deterministic and
@@ -1175,14 +1175,14 @@ of the exact transition operator, and the equilibrium price by damped
 fixed-point iteration on market clearing with a bracketing refinement on the
 scalar market, to tolerance $10^{-4}$.
 
-Grid resolution is a substantive issue in this model, not a numerical
-footnote: because tenure and fertility choices are close to deterministic at
-the calibrated point, moments built on buy thresholds and the borrowing
-constraint move with the wealth grid. An earlier calibration at $N_b=60$
-re-evaluated 18 percent worse at $N_b=120$ at the same parameters --- it had
-partly fit grid noise. The protocol used throughout is therefore: search at
-$N_b=120$, verify at $N_b=240$, where the two grids agree to within data
-bootstrap error.
+Because tenure and fertility choices are close to deterministic at the
+calibrated point, moments built on buy thresholds and the borrowing
+constraint move with the wealth grid, and grid resolution matters more
+here than in a standard lifecycle model. An earlier calibration at $N_b=60$
+re-evaluated 18 percent worse at $N_b=120$ at the same parameters; part of
+its fit was grid noise. All searches in this paper therefore run at
+$N_b=120$ and are verified at $N_b=240$, where the two grids agree to
+within data bootstrap error.
 
 \section{Calibration}
 \label{sec:quant_calibration}
@@ -1222,13 +1222,13 @@ Discount floor & $\beta_{\mathrm{annual}}\ge0.94$ & declared restriction \\
 \end{tabularx}
 \end{table}
 
-Two of these deserve comment. The renter cap is the quantitative version of
-the compact model's $\bar h^R$ and is deliberately not estimated: it is
-measured from the size distribution of rental units, and the calibrated
-model's fit is locally flat-to-better within half a room of the measured
-value, so the data cannot distinguish it from 6.5 but both flanks rise
-sharply beyond. The discount floor binds (below), so $\beta$ should be read
-as externally restricted rather than estimated.
+The renter cap is the quantitative version of the compact model's
+$\bar h^R$. I measure it from the size distribution of rental units rather
+than estimate it. The calibrated fit is nearly flat within half a room of
+the measured value and deteriorates beyond, so the data cannot separate
+6.0 from 6.5 but do reject anything further out. The discount floor binds
+in the estimation below, so $\beta$ is in effect a restriction rather than
+an estimate.
 
 \subsection{Estimated parameters}
 
@@ -1268,31 +1268,31 @@ $\theta_n$ & 0.972 & $[0, 1.50]$ & interior \\
 \end{tabular}
 \end{table}
 
-Eight of thirteen parameters sit at or against the search box. This is
-reported as a finding, not smoothed over: the moment system is pulling
-harder than the admissible parameter space allows, which is the quantitative
-signature of the structural misses documented below.
+Eight of thirteen parameters sit at or against the search box. The data
+push these parameters to the boundary of the admissible space, and the
+structural misses documented below are the same tension seen from the
+moment side.
 
-The two choice scales deserve their own paragraph because they land at
-corners with different meanings. The tenure scale $\kappa_T$ estimates to
-zero: the data prefer deterministic tenure choice, and the smoothing device
-is dead weight. The fertility scale $\kappa_F$ estimates to its floor, where
-the birth choice is also near-deterministic --- but there the choice
-structure carries the entire fertility block. At a near-degenerate logit,
-low-income types have birth probabilities of exactly zero, and fertility
-moments inherit sensitivity to the discreteness of the wealth grid; this is
-the economics behind the grid protocol of
-Section~\ref{sec:quant_computation}, and it is an open specification
-question whether taste smoothing belongs in these choices at all.
+The two choice scales land at corners with different meanings. The tenure
+scale $\kappa_T$ estimates to zero: the data prefer deterministic tenure
+choice, and the smoothing device does no work. The fertility scale
+$\kappa_F$ estimates to its floor, where the birth choice is also
+near-deterministic, but there the choice structure carries the entire
+fertility block. At a near-degenerate logit, low-income types have birth
+probabilities of exactly zero, and fertility moments inherit sensitivity to
+the discreteness of the wealth grid. The grid protocol of
+Section~\ref{sec:quant_computation} guards against the discreteness;
+whether taste smoothing belongs in these choices at all is a question the
+estimation cannot settle.
 
 \subsection{Target moments and fit}
 
 The calibration targets fourteen moments: completed fertility and
 childlessness from the CPS (the June 2024 supplement cells for women 40--44),
 tenure and housing-size moments by age and family status from a matched ACS
-metropolitan sample, and wealth moments from the PSID. The full fit is
-reported --- every target, model moment, gap, weight, and loss contribution;
-the total loss at the reported point is 6.31.
+metropolitan sample, and wealth moments from the PSID. The table reports
+every target with its model moment, gap, weight, and loss contribution. The
+total loss at the reported point is 6.31.
 
 \begin{table}[H]
 \centering
@@ -1326,26 +1326,26 @@ Childless owner share, rooms $\ge6$ & 0.596 & 0.593 & $-0.003$ & 25 & 0.00 \\
 \end{tabular}
 \end{table}
 
-The model hits the fertility level, the size-distribution moments, and the
-housing response to a first birth. Three misses are structural, and each has
-a diagnosed mechanism rather than an unexplained residual. First, old-age
-ownership: the model keeps 89 percent of 65--75 households in owned housing
-against 76 percent in the data, because the model has no old-age exit margin
---- no health shocks, no mortality-linked downsizing, and a bequest motive
-that prefers dying in place. Second, the young block: ownership at 25--34 is
-too low (0.23 vs.\ 0.34) while young renter wealth is too high (0.35 vs.\
-0.18), two faces of one timing failure --- model households delay births
-toward the fertility deadline and buy at the birth, where the data show
-earlier purchases. Third, childlessness overshoots (0.26 vs.\ 0.19), the
-extensive-margin cost of pricing children through goods and space floors
-alone.
+The model matches the fertility level, the size-distribution moments, and
+the housing response to a first birth. Three misses are structural, and each
+has a diagnosis. Old-age ownership is too high: the model keeps 89 percent
+of 65--75 households in owned housing against 76 percent in the data,
+because nothing in the model pushes an old owner out of her house. There
+are no health shocks and no mortality-linked downsizing, so retention is
+close to absorbing. Ownership at 25--34 is too low (0.23 against 0.34)
+while young renter wealth is too high (0.35 against 0.18); these are two
+faces of one timing failure. Model households delay births toward the
+fertility deadline and buy at the birth, where the data show earlier
+purchases. And childlessness overshoots (0.26 against 0.19), which is what
+pricing children through goods and space floors alone does to the extensive
+margin.
 
 \section{The Baseline Equilibrium}
 \label{sec:quant_baseline}
 
-The stationary equilibrium is best inspected visually before any
-counterfactual. The figures below are the standard diagnostic set: policies,
-tenure, fertility, housing, wealth, and market clearing.
+Before any counterfactual, it is worth seeing what the stationary
+equilibrium looks like. The figures below show policies, tenure, fertility,
+housing, wealth, and market clearing.
 
 \begin{figure}[H]
 \centering
@@ -1360,7 +1360,7 @@ thresholds at the owner rungs.}
 \centering
 \includegraphics[width=0.92\textwidth]{July_26_slides_eq_tenure.png}
 \caption{Tenure over the lifecycle. Ownership rises steeply at the end of
-the fertile window and stays high into old age --- the two ends of the
+the fertile window and stays high into old age, the two ends of the
 intergenerational allocation problem.}
 \label{fig:eq_tenure}
 \end{figure}
@@ -1399,45 +1399,43 @@ curve at the equilibrium user cost.}
 \label{fig:eq_market}
 \end{figure}
 
-Two features of these figures organize everything that follows. Renting
-households with children sit against the rental cap: family-sized space is
-the scarce object, and it is scarce because of availability, not price ---
-within a size cell the model rent commands no premium. And the tenure
-profile shows ownership arriving late, in a jump at the end of the fertile
-window; the next section shows that jump is birth-driven purchasing at the
-deadline, not gradual saving toward a threshold.
+Renting households with children sit against the rental cap. Family-sized
+space is the scarce object, and it is scarce as availability rather than
+price: within a size cell, the model rent carries no premium. Ownership
+arrives late, in a jump at the end of the fertile window. The next section
+shows that the jump is birth-driven purchasing at the deadline, not gradual
+saving toward a threshold.
 
 \section{The Mechanism Quantified}
 \label{sec:quant_mechanism}
 
-Part I's argument runs through one object: the access gap $\zeta$, the
+Part I's argument runs through one object, the access gap $\zeta$: the
 amount by which a constrained household's marginal valuation of family
-space exceeds its market user cost. The corollary to
-Proposition~\ref{prop:local_fertility_stat} says that under equal scaling
-the same gap prices misallocation, fertility exposure, and entry. This
-section measures it.
+space exceeds its market user cost. Under equal scaling, the corollary to
+Proposition~\ref{prop:local_fertility_stat} says the same gap prices
+misallocation, fertility exposure, and entry. This section measures it in
+the calibrated equilibrium.
 
-\textbf{The access gap is large and covers most of the fertility margin.}
-Among fertile-age renting households pinned at the rental cap, the mean
-access gap is 0.248 goods units, 1.28 times the market user cost: capped
+The gap is large, and it covers most of the fertility margin. Among
+fertile-age renting households pinned at the rental cap, the mean access
+gap is 0.248 goods units, 1.28 times the market user cost, so capped
 renters value a marginal room at 2.3 times what the market charges for it.
 Weighting fertility responses by exposure as in
 Proposition~\ref{prop:local_fertility_stat}, 73 percent of the model's
-fertility-response mass sits on households with $\zeta>0$. That share is
-stable across grid resolutions and across alternative owner menus --- the
-scarcity is generated by the renter-cap-to-family-floor geometry, not by the
-placement of the owner rungs.
+fertility-response mass sits on households with $\zeta>0$. The share is
+stable across grid resolutions and across alternative owner menus. What
+generates it is the geometry between the rental cap and the family space
+floor, not the placement of the owner rungs.
 
-\textbf{Ownership arrives at the fertility deadline.}
-The lifecycle ownership jump (Figure~\ref{fig:eq_tenure}) is concentrated in
-the last fertile period: the buy region expands exactly when the option
-value of waiting to have children expires, and buyers arrive at the
-threshold with wealth well above the required down payment. Housing access
-does not gate births by forcing households to save toward a distant
-constraint; it compresses births and purchases into a joint decision at the
-deadline. This is why relaxing the down-payment constraint alone creates few
-births in the counterfactuals below --- the binding failure is timing, not
-exposure.
+Ownership arrives at the fertility deadline. The lifecycle jump in
+Figure~\ref{fig:eq_tenure} is concentrated in the last fertile period: the
+buy region expands exactly when the option value of waiting to have
+children expires, and buyers arrive at the threshold with wealth well
+above the required down payment. Housing access does not gate births by
+forcing households to save toward a distant constraint. It compresses
+births and purchases into a joint decision at the deadline, and this is
+why relaxing the down-payment constraint alone creates few births in the
+counterfactuals below. The binding failure is timing, not exposure.
 
 \begin{figure}[H]
 \centering
@@ -1447,12 +1445,10 @@ the end of the fertile window and is birth-linked.}
 \label{fig:buy_flow}
 \end{figure}
 
-\textbf{The family-sized stock sits with post-fertile households --- in the
-model and in the data.}
 The compact model's misallocation proposition is an accounting statement
-about who holds family-capable space. The table reports the allocation of
-the owner stock with six or more rooms, in the calibrated equilibrium and in
-the matched ACS sample.
+about who holds family-capable space, and it can be checked against the
+data. The table reports the allocation of the owner stock with six or more
+rooms, in the calibrated equilibrium and in the matched ACS sample.
 
 \begin{table}[H]
 \centering
@@ -1473,27 +1469,26 @@ Held by households with no children at home & 54.9\% & 72.5\% \\
 \end{tabular}
 \end{table}
 
-The concentration is a data fact: 72 percent of the family-sized owner
-stock is held by post-fertile households, 55 percent by households with no
-children at home. The model reproduces the pattern and overstates it in
-exactly the directions of its two diagnosed misses --- late births push
-fertile-age holdings down, and the missing old-age exit margin pushes old
-holdings up. Fertile-age households with positive access gaps --- the
-households the planner comparison wants served --- hold 13 percent of the
+The concentration is in the data, not only in the model. In the ACS, 72
+percent of the family-sized owner stock is held by post-fertile households
+and 55 percent by households with no children at home. The model
+reproduces the pattern and overstates it, in the directions of its two
+diagnosed misses: late births push fertile-age holdings down, and the
+missing old-age exit margin pushes old holdings up. The households the planner comparison wants
+served, fertile-age with positive access gaps, hold 13 percent of the
 family-sized stock in the model, and two-thirds of fertile-age parents do
 not own family-sized space at all.
 
-\textbf{What the retention experiment can and cannot show.}
-The counterpart of the old side of Part I's surplus formula is a direct
-retention-margin experiment: imposing a disposal wedge on old owners of
-large homes moves prices by less than one percent and completed fertility by
-less than a hundredth --- nearly nothing. This is not evidence that the old side of the
-misallocation is small. The calibrated old are at a retain-everything
-corner: with no health, mortality, or downsizing margin, essentially no old
-household is marginal to the wedge, so a tax on a margin nobody uses is
-free. The experiment bounds the planner surplus from below; the stock table
-above is the honest measurement of the allocation, and activating an
-old-age exit margin is the model extension that would let prices reveal it.
+The old side of Part I's surplus formula has a direct quantitative
+counterpart in a retention-margin experiment. Imposing a disposal wedge on
+old owners of large homes moves prices by less than one percent and
+completed fertility by less than a hundredth. This is not evidence that
+the old side of the misallocation is small. The calibrated old are at a
+retain-everything corner: with no health, mortality, or downsizing margin,
+essentially no old household is marginal to the wedge, and a tax on a
+margin nobody uses is free. The experiment bounds the planner surplus from
+below. The stock table measures the allocation directly; an old-age exit
+margin is the extension that would let prices reveal its value.
 
 \section{Policy Counterfactuals}
 \label{sec:quant_policy}
@@ -1507,36 +1502,34 @@ on old owners, and a revenue-linked package combining the tax and the
 grant. All results in this subsection hold population fixed; prices
 re-clear in every experiment.
 
-\textbf{The tax capitalizes but does not create births.} A two percent
-holding tax on large units lowers their asset price by 12 percent ---
-robustly: the capitalization is invariant to grid resolution, moment
-weights, and the owner menu. Completed fertility rises by only
-$+0.004$ to $+0.009$. The pass-through works exactly as
-eq.~\ref{eq:compact_capitalization_passthrough} says --- down payments fall
---- but the mechanism section explains why relief without timing is nearly
-sterile: exposed households buy at the fertility deadline with wealth above
-the threshold, so cheaper access changes which house they buy more than
-whether they have children.
+The tax capitalizes but does not create births. A two percent holding tax
+on large units lowers their asset price by 12 percent, and the
+capitalization is invariant to grid resolution, moment weights, and the
+owner menu. Completed fertility rises by only $+0.004$ to $+0.009$. The
+pass-through works exactly as
+eq.~\ref{eq:compact_capitalization_passthrough} says, and down payments do
+fall. But exposed households buy at the fertility deadline with wealth
+already above the threshold, so cheaper access changes which house they
+buy more than whether they have children.
 
-\textbf{Grants create births, with a dose--response.} A down-payment grant
-paid at a birth, restricted to family-sized rungs, raises completed
-fertility by $+0.01$, $+0.13$, $+0.26$, and $+0.49$ at grant sizes 0.1,
-0.4, 0.58, and 1.0 (in units of mean annual income). The access instrument
-works where the price instrument does not because it is conditional on the
-birth itself: it closes the financing gap at the moment the household is on
-its fertility margin.
+Grants create births, with a dose--response. A down-payment grant paid at
+a birth, restricted to family-sized rungs, raises completed fertility by
+$+0.01$, $+0.13$, $+0.26$, and $+0.49$ at grant sizes 0.1, 0.4, 0.58, and
+1.0, in units of mean annual income. The access instrument works where the
+price instrument does not because it is conditional on the birth itself:
+it closes the financing gap at the moment the household is on its
+fertility margin. The conditioning also distorts. Small grants delay
+pre-birth purchases, since households near a birth wait for the subsidy,
+and young ownership falls from 0.23 to 0.09 at the smallest grant. The
+distortion fades at larger grant sizes, but any conditional instrument
+inherits the margin.
 
-\textbf{One caveat: anticipation.} Small conditional grants delay pre-birth
-purchases --- young ownership falls from 0.23 to 0.09 at the smallest grant
-as households wait for the subsidy --- a real timing distortion that fades
-at larger grant sizes. Any conditional instrument inherits this margin.
-
-\textbf{The package is the decentralized reallocation.} The two percent tax
-on large homes funding the birth-linked grant implements Part I's planner
-transfer through prices: the tax lowers incumbents' retention value and the
-price of large units ($-11$ percent), and the grant closes the young side's
-financing gap at the birth margin. At the honest calibration the package
-raises completed fertility by $+0.15$ and is revenue-funded.
+The package is the decentralized version of Part I's planner reallocation.
+The two percent tax on large homes funds the birth-linked grant; the tax
+lowers incumbents' retention value and the price of large units by 11
+percent, and the grant closes the young side's financing gap at the birth
+margin. At the reported calibration the package raises completed fertility
+by $+0.15$ and is revenue-funded.
 
 \subsection{The entry and scale margin}
 \label{sec:quant_entry_margin}
@@ -1547,12 +1540,11 @@ changes household values, values move the entry probability against the
 outside option and the number of city-born future entrants, the implied
 stationary population scale $S$ multiplies aggregate housing demand, and
 the price re-clears against the supply curve. Households never see $S$
-directly; population size operates through the price of space, as it
-should in a one-market model. The outside value and entry scale are
-recovered at the benchmark so that the baseline is exactly $S=1$; the
-recovered conventions are documented rather than estimated, and the
-local-birth entry weight (city-born children become future entrants
-one-for-one) is the binding one.
+directly; population size operates through the price of space. The outside
+value and entry scale are recovered at the benchmark so that the baseline
+is exactly $S=1$. The recovered conventions are documented rather than
+estimated, and the binding one is the assumption that city-born children
+become future entrants one-for-one.
 
 These results are computed at the working grid ($N_b=120$) at the headline
 calibration; the fixed-population column re-solves each case inside the
@@ -1578,47 +1570,45 @@ Retention wedge 0.2 & $+0.006$ & $+0.000$ & 1.007 & $+0.7\%$ \\
 \end{tabular}
 \end{table}
 
-Three readings. First, attractive policies attract people: the grant pulls
-in scale, which bids up prices --- its capitalization nearly triples with
-entry on --- and gives back about a third of its fixed-population
-fertility gain, while total births rise by eight percent. Per-capita
-fertility overstates what an access policy does to a place; total births
-understate what it does per family. Second, the scale response is a
-demographic feedback, not an entry-elasticity artifact: across policies
-the entry probability barely moves while city-born future entrants do the
-work, which also makes the results robust to the undisciplined entry
-conventions (halving the assumed entry probability moves the tax's births
-effect from $+0.40$ to $+0.46$ percent). Third, the sterile instruments
-stay sterile: the tax creates almost no births at fixed population and
-almost none with entry on, and the retention wedge --- a tax on a
-downsizing margin the calibrated old do not use --- is near-neutral on
-every margin. Whether local birth gains count as births created or births
-relocated is a framing question --- city versus national accounting ---
-that any local-policy conclusion must answer explicitly.
+The grant pulls in scale, scale bids up prices, and the capitalization
+nearly triples with entry on; about a third of the fixed-population
+fertility gain is given back, while total births rise by eight percent.
+Per-capita fertility overstates what an access policy does to a place, and
+total births understate what it does per family. The scale response is a
+demographic feedback rather than an entry-elasticity artifact. Across
+policies the entry probability barely moves, and city-born future entrants
+do the work, which is why the results survive changes in the entry
+conventions the data do not pin down: halving the assumed entry
+probability moves the tax's births effect from $+0.40$ to $+0.46$ percent.
+The tax creates almost no births at fixed population and almost none with
+entry on, and the retention wedge, a tax on a downsizing margin the
+calibrated old do not use, is near-neutral everywhere. Whether local birth
+gains count as births created or births relocated is a question of city
+versus national accounting, and any local-policy conclusion has to answer
+it explicitly.
 
 \section{Limitations}
 \label{sec:quant_limitations}
 
-The calibration's weaknesses are documented alongside its results because
-they are informative about the model, not noise. The three structural
-misses --- old-age ownership with no exit margin, the young
-ownership-and-wealth block driven by fertility timing, and the
-childlessness overshoot from goods-and-space-only child costs --- each
-name a missing margin, and each has a designed extension: an old-age
-health or downsizing margin; a child time cost, which makes the
-opportunity cost of children rise with wages and moves births earlier;
-and the same time cost's effect on the childlessness gradient by income.
-Eight of thirteen estimated parameters at the search box is the same
-message in parameter space.
+Each of the calibration's weaknesses names a missing margin. Old-age
+ownership is too high because nothing lets an old owner exit; a health or
+downsizing margin is the natural extension. The young ownership-and-wealth
+block fails through fertility timing: in the model, delaying a birth costs
+nothing, so births and purchases pile up at the deadline. The extension
+that would repair this is a mechanism that makes delay itself costly, such
+as fecundity that declines with age. The same mechanism bears on the
+childlessness overshoot, since households that wait and fail add
+involuntary childlessness of the kind goods-and-space child costs cannot
+generate.
 
-Three further limitations are honest scoping. The computed benchmark
+Three further limitations are matters of scope. The computed benchmark
 prices old-owner lock-in through transaction costs only; the
 capital-gains and basis machinery of Part I is specified but not
 computed, so the retention experiment bounds rather than measures that
 wedge. The quantitative supply curve is unit-elastic while the compact
 model's misallocation statement is cast at a fixed stock; how much of the
 tax capitalization result depends on the supply elasticity is an open
-sensitivity (a near-fixed-stock solve would bound it). And roughly a
+sensitivity, and a near-fixed-stock solve would bound it. And roughly a
 quarter of the entrant wealth distribution injected from the PSID first
 stage sits at states infeasible for the model's consumption floor, which
 interacts with any conclusion about the young wealth block.
