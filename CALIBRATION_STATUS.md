@@ -1,6 +1,32 @@
 # Calibration Status
 
-Updated: `2026-07-08` (deck v4; fertility-noise verdict; provenance closed)
+Updated: `2026-07-09` (kt REJECTED; D11 Jacobian; entry margin at Nb=120; paper draft expanded)
+
+## July 8 overnight: D12 kt rejected at the corner; D11 evidence in; entry margin re-measured
+
+D12 TEST VERDICT: the data reject the child time cost — kappa_t = 0 exactly
+at the global best (9.5716 from seed 9.7303; all 12 chains; loss MONOTONE
+in kt; ~1,800 positive-kt evals). kt raises AFB/childlessness, lowers young
+ownership, and leaves the z2 profile cell untouched; the small gain came
+from kappa_fert lifting OFF its floor (1.02->1.29) once profile+AFB moments
+were added => the profile miss is the CHOICE STRUCTURE (Q1), not a missing
+cost. Q3 closes with it (timing not fixed => tax battery rerun moot).
+D11 JACOBIAN (crash fixed — stale PARAMETERS list; now derived from
+GLOBAL_DE_BOUNDS; commit fa32e62): old_age_own_rate loads on beta/chi/
+theta0 but ALL are box-pinned in the pulled direction => its 2.63 contrib
+is the shadow price of the missing old-age exit margin; KEEP the target.
+NEW: theta_n locally UNIDENTIFIED (theta0~0 switched bequests off);
+Phase 3 must fix/replace/declare. The 8/13-at-bounds table is one
+beta/c_bar_0/tenure_kappa/chi ridge.
+ENTRY MARGIN at Nb=120 (phase9b rerun, driver --nb patch): grants/package
+ROBUST (births +8.2%/+8.6%, grant capitalization triples with entry on);
+tax sterile everywhere; the Nb=60 wedge headline ("city shrinks 5.3%")
+DISSOLVES (near-neutral) and cap-6.5 births gain -> ~0 (Q5: no policy case
+for 6.5). PAPER: draft reviewed + expanded to full quantitative paper
+(28pp; fit/bounds tables, mechanism, policy incl. Nb=120 entry table);
+ChatGPT-Pro audit package on Desktop. Morning read:
+output/model/fable_size_mapping_audit_20260701/MORNING_MEMO_20260709.md
+(D12/D11 verdict notes, PHASE9B_NB120_NOTE, PAPER_REVIEW in same folder).
 
 ## July 8 overnight: deck v4; fertility-noise verdict; target provenance closed
 
