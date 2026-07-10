@@ -113,6 +113,12 @@ def main() -> None:
     global_de.add_argument("--crossover", type=float, default=0.70)
     global_de.add_argument("--target-set", choices=sorted(TARGET_SETS), default="candidate_no_timing_v0")
     global_de.add_argument("--seed-theta-json", type=Path, default=None, help="JSON file with a top-level theta object to seed the DE population.")
+    global_de.add_argument(
+        "--profile",
+        choices=[PRODUCTION_PROFILE_NAME, "none"],
+        default="none",
+        help="Named source-controlled model/search profile; use 'none' only for legacy diagnostics.",
+    )
     global_de.add_argument("--quiet", action="store_true")
     global_de.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_global_de"))
 
@@ -207,6 +213,7 @@ def main() -> None:
             crossover=float(args.crossover),
             target_set=str(args.target_set),
             seed_theta=load_seed_theta(args.seed_theta_json),
+            profile_name=None if str(args.profile) == "none" else str(args.profile),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))

@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from types import SimpleNamespace
+from unittest.mock import patch
 
 import numpy as np
 
@@ -9,6 +12,7 @@ from intergen_housing_fertility.local_panel import (
     is_better_record,
     record_sort_key,
     record_selection_loss,
+    run_global_de_panel,
 )
 from intergen_housing_fertility.parameters import (
     apply_overrides,
@@ -262,6 +266,76 @@ class SearchSafetyTests(unittest.TestCase):
                 "use_postdecision_current_distribution",
                 "propagate_birth_entry_grant",
             },
+        )
+
+    def test_global_de_applies_named_production_profile(self) -> None:
+        captured_overrides: list[dict[str, object]] = []
+
+        def fake_case(
+            idx: int,
+            candidate: dict[str, object],
+            J: int,
+            Nb: int,
+            n_house: int,
+            max_iter_eq: int,
+            income: dict[str, object],
+            rank_targets: dict[str, float],
+            rank_weights: dict[str, float],
+            extra_overrides: dict[str, object] | None = None,
+        ) -> dict[str, object]:
+            del J, Nb, n_house, max_iter_eq, income, rank_targets, rank_weights
+            captured_overrides.append(dict(extra_overrides or {}))
+            return {
+                "case": idx,
+                "label": candidate["label"],
+                "status": "ok",
+                "rank_loss": 1.0,
+                "full_old_nonlocation_loss": 1.0,
+                "theta": candidate["theta"],
+                "moments": {},
+                "p_eq": [1.0],
+                "market_residual": 1e-6,
+                "strict_converged": True,
+                "tol_eq": 1e-4,
+                "elapsed_sec": 0.0,
+                "timings": {"strict_converged": True},
+            }
+
+        with TemporaryDirectory() as tmpdir:
+            with (
+                patch(
+                    "intergen_housing_fertility.local_panel.run_local_panel_case",
+                    side_effect=fake_case,
+                ),
+                patch("intergen_housing_fertility.local_panel.write_panel_summary_tables"),
+                patch("intergen_housing_fertility.local_panel.write_panel_plots"),
+            ):
+                summary = run_global_de_panel(
+                    Path(tmpdir),
+                    max_evals=1,
+                    seed=20260709,
+                    J=17,
+                    Nb=120,
+                    income_states=5,
+                    n_house=5,
+                    max_iter_eq=10,
+                    minutes=1.0,
+                    pop_size=4,
+                    target_set=PRODUCTION_TARGET_SET,
+                    seed_theta=FROZEN_SOURCE_THETA,
+                    profile_name=PRODUCTION_PROFILE_NAME,
+                    progress=False,
+                )
+
+        self.assertEqual(len(captured_overrides), 1)
+        self.assertTrue(captured_overrides[0]["use_postdecision_current_distribution"])
+        self.assertTrue(captured_overrides[0]["propagate_birth_entry_grant"])
+        metadata = summary["metadata"]
+        self.assertEqual(metadata["production_profile"], PRODUCTION_PROFILE_NAME)
+        self.assertEqual(len(metadata["bounds"]), 13)
+        self.assertEqual(
+            [row["name"] for row in metadata["bounds"]],
+            [row[0] for row in PRODUCTION_SEARCH_BOUNDS],
         )
 
 

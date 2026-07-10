@@ -276,6 +276,7 @@ def run_global_de_panel(
     crossover: float = 0.70,
     target_set: str = "candidate_no_timing_v0",
     seed_theta: dict[str, Any] | None = None,
+    profile_name: str | None = None,
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run an independent differential-evolution global search panel.
@@ -298,6 +299,19 @@ def run_global_de_panel(
     rng = np.random.default_rng(seed)
     rank_targets, rank_weights = get_target_set(target_set)
     income = income_process_overrides(income_states)
+    profile_extra_overrides: dict[str, Any] = {}
+    if profile_name is not None:
+        validate_production_profile(
+            profile_name,
+            J=J,
+            Nb=Nb,
+            n_house=n_house,
+            income_states=income_states,
+            target_set=target_set,
+            max_iter_eq=max_iter_eq,
+            stage="search",
+        )
+        profile_extra_overrides = production_profile_overrides()
     dim = len(GLOBAL_DE_BOUNDS)
     seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
     pop_size = max(4, int(pop_size))
@@ -325,6 +339,8 @@ def run_global_de_panel(
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
+        "production_profile": str(profile_name) if profile_name is not None else None,
+        "production_profile_spec": production_profile_metadata() if profile_name is not None else None,
         "seed_theta": jsonable(seed_theta_clean),
         "bounds": [
             {"name": name, "lower": float(lo), "upper": float(hi)}
@@ -363,6 +379,7 @@ def run_global_de_panel(
             income,
             rank_targets,
             rank_weights,
+            profile_extra_overrides,
         )
         record["algorithm"] = "global_de"
         record["origin"] = jsonable(origin)

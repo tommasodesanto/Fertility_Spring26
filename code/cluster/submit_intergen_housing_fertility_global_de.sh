@@ -25,8 +25,9 @@ MODEL_DIR="$(cd "${SCRIPT_DIR}/../model" && pwd)"
 
 mkdir -p "${SCRIPT_DIR}/logs"
 
-export INTERGEN_RUN_TAG="${INTERGEN_RUN_TAG:-intergen_candidate_no_timing_v0_globalde_$(date +%Y%m%d_%H%M%S)}"
-export INTERGEN_TARGET_SET="${INTERGEN_TARGET_SET:-candidate_no_timing_v0}"
+export INTERGEN_RUN_TAG="${INTERGEN_RUN_TAG:-intergen_july9_repair_globalde_$(date +%Y%m%d_%H%M%S)}"
+export INTERGEN_PROFILE="${INTERGEN_PROFILE:-intergen_july9_repair_v1}"
+export INTERGEN_TARGET_SET="${INTERGEN_TARGET_SET:-candidate_replacement_post_audit_v1}"
 export INTERGEN_GLOBAL_EVALS_PER_TASK="${INTERGEN_GLOBAL_EVALS_PER_TASK:-300}"
 export INTERGEN_MINUTES="${INTERGEN_MINUTES:-115}"
 export INTERGEN_GLOBAL_POP_SIZE="${INTERGEN_GLOBAL_POP_SIZE:-22}"
@@ -34,16 +35,26 @@ export INTERGEN_GLOBAL_MUTATION="${INTERGEN_GLOBAL_MUTATION:-0.85}"
 export INTERGEN_GLOBAL_CROSSOVER="${INTERGEN_GLOBAL_CROSSOVER:-0.70}"
 export INTERGEN_SEED_BASE="${INTERGEN_SEED_BASE:-2026060900}"
 export INTERGEN_SEED_THETA_JSON="${INTERGEN_SEED_THETA_JSON:-}"
-export INTERGEN_J="${INTERGEN_J:-16}"
-export INTERGEN_NB="${INTERGEN_NB:-60}"
+export INTERGEN_PREVIOUS_RESULTS_DIR="${INTERGEN_PREVIOUS_RESULTS_DIR:-}"
+export INTERGEN_J="${INTERGEN_J:-17}"
+export INTERGEN_NB="${INTERGEN_NB:-120}"
 export INTERGEN_INCOME_STATES="${INTERGEN_INCOME_STATES:-5}"
-export INTERGEN_N_HOUSE="${INTERGEN_N_HOUSE:-6}"
-export INTERGEN_MAX_ITER_EQ="${INTERGEN_MAX_ITER_EQ:-25}"
+export INTERGEN_N_HOUSE="${INTERGEN_N_HOUSE:-5}"
+export INTERGEN_MAX_ITER_EQ="${INTERGEN_MAX_ITER_EQ:-10}"
 export INTERGEN_RESULTS_DIR="${INTERGEN_RESULTS_DIR:-${SCRIPT_DIR}/results_intergen_housing_fertility_${INTERGEN_RUN_TAG}}"
 
 TASK_ID="${SLURM_ARRAY_TASK_ID:-1}"
 SEED=$((INTERGEN_SEED_BASE + 1000 * TASK_ID))
 TASK_OUTDIR="${INTERGEN_RESULTS_DIR}/task_${TASK_ID}"
+
+if [ -n "${INTERGEN_PREVIOUS_RESULTS_DIR}" ]; then
+    PREVIOUS_BEST="${INTERGEN_PREVIOUS_RESULTS_DIR}/task_${TASK_ID}/best.json"
+    if [ ! -s "${PREVIOUS_BEST}" ]; then
+        echo "Missing previous-wave strict best: ${PREVIOUS_BEST}" >&2
+        exit 2
+    fi
+    INTERGEN_SEED_THETA_JSON="${PREVIOUS_BEST}"
+fi
 
 if command -v module >/dev/null 2>&1; then
     module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || module load python/3.12 2>/dev/null || module load python/3.11 2>/dev/null || true
@@ -77,6 +88,7 @@ echo "Python: ${PYTHON_BIN}"
 echo "Run tag: ${INTERGEN_RUN_TAG}"
 echo "Task outdir: ${TASK_OUTDIR}"
 echo "Target set: ${INTERGEN_TARGET_SET}"
+echo "Production profile: ${INTERGEN_PROFILE}"
 echo "max_evals=${INTERGEN_GLOBAL_EVALS_PER_TASK} minutes=${INTERGEN_MINUTES} pop_size=${INTERGEN_GLOBAL_POP_SIZE}"
 echo "mutation=${INTERGEN_GLOBAL_MUTATION} crossover=${INTERGEN_GLOBAL_CROSSOVER}"
 echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
@@ -102,6 +114,7 @@ fi
     --mutation "${INTERGEN_GLOBAL_MUTATION}" \
     --crossover "${INTERGEN_GLOBAL_CROSSOVER}" \
     --target-set "${INTERGEN_TARGET_SET}" \
+    --profile "${INTERGEN_PROFILE}" \
     --outdir "${TASK_OUTDIR}" \
     "${EXTRA_ARGS[@]}"
 
