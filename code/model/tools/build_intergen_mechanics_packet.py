@@ -38,7 +38,7 @@ from intergen_housing_fertility.calibration import (  # noqa: E402
 )
 from intergen_housing_fertility.diagnostics import write_diagnostics  # noqa: E402
 from intergen_housing_fertility.local_panel import income_process_overrides  # noqa: E402
-from intergen_housing_fertility.solver import run_model_cp_dt  # noqa: E402
+from intergen_housing_fertility.solver import current_child_bin_dt, run_model_cp_dt  # noqa: E402
 from intergen_housing_fertility.solver import precompute_shared  # noqa: E402
 
 
@@ -536,12 +536,28 @@ def write_core_outputs(
         plot_room_bins(room_fit_rows, outdir / "room_bin_shares_prime30_55_childless.png")
 
         rung_rows = owner_rung_rows(sol, P)
+        rung_share_ge6 = float(sum(float(row["share"]) for row in rung_rows if float(row["rooms"]) >= 6.0))
+        target_share_ge6 = float(getattr(sol, "prime30_55_childless_owner_share_rooms_ge6", np.nan))
+        if np.isfinite(target_share_ge6) and not np.isclose(rung_share_ge6, target_share_ge6, atol=1e-10):
+            raise RuntimeError(
+                "Prime-age childless owner-rung diagnostic does not reproduce the calibrated "
+                f"H>=6 share: diagnostic={rung_share_ge6:.12g}, target={target_share_ge6:.12g}."
+            )
+        write_json(
+            outdir / "owner_rung_summary_prime30_55_childless.json",
+            {
+                "sample": "prime-age 30-55 childless-in-household owners",
+                "share_rooms_ge6": rung_share_ge6,
+                "target_moment_share_rooms_ge6": target_share_ge6,
+            },
+        )
         if write_csv_sidecars:
             write_csv(outdir / "owner_rung_shares_prime30_55_childless.csv", rung_rows)
         plot_owner_rungs(
             rung_rows,
             outdir / "owner_rung_shares_prime30_55_childless.png",
             ylabel="share of prime-age childless owners",
+            annotation=f"share with H >= 6: {rung_share_ge6:.3f}",
         )
         all_owner_rung_rows = owner_rung_rows_all(sol, P)
         if write_csv_sidecars:
@@ -747,20 +763,24 @@ def compute_room_bin_shares(sol: Any, P: Any) -> dict[tuple[str, str], float]:
     age_idx = np.where((ages >= 30.0) & (ages <= 55.0))[0]
     if g.ndim != 7 or hR.shape != g.shape:
         return {key: math.nan for key in bins}
+    dep_last = int(P.n_child_stages)
     for j in age_idx:
         for zz in range(g.shape[4]):
-            renter_mass = g[:, 0, 0, j, zz, 0, 0]
-            renter_h = hR[:, 0, 0, j, zz, 0, 0]
-            for bin_name in ROOM_BIN_ORDER:
-                mass = float(np.sum(renter_mass[room_bin_mask(renter_h, bin_name)]))
-                bins[("renter", bin_name)] += mass
-                totals["renter"] += 0.0
-            totals["renter"] += float(np.sum(renter_mass))
-            for ten in range(1, 1 + int(P.n_house)):
-                owner_mass = float(np.sum(g[:, ten, 0, j, zz, 0, 0]))
-                bin_name = room_bin_name(float(P.H_own[ten - 1]))
-                bins[("owner", bin_name)] += owner_mass
-                totals["owner"] += owner_mass
+            for nn in range(g.shape[5]):
+                for cs in range(g.shape[6]):
+                    if current_child_bin_dt(nn, cs, dep_last) != 2:
+                        continue
+                    renter_mass = g[:, 0, 0, j, zz, nn, cs]
+                    renter_h = hR[:, 0, 0, j, zz, nn, cs]
+                    for bin_name in ROOM_BIN_ORDER:
+                        mass = float(np.sum(renter_mass[room_bin_mask(renter_h, bin_name)]))
+                        bins[("renter", bin_name)] += mass
+                    totals["renter"] += float(np.sum(renter_mass))
+                    for ten in range(1, 1 + int(P.n_house)):
+                        owner_mass = float(np.sum(g[:, ten, 0, j, zz, nn, cs]))
+                        bin_name = room_bin_name(float(P.H_own[ten - 1]))
+                        bins[("owner", bin_name)] += owner_mass
+                        totals["owner"] += owner_mass
     return {
         key: float(value / totals[key[0]]) if totals[key[0]] > 1e-14 else math.nan
         for key, value in bins.items()
@@ -792,10 +812,15 @@ def owner_rung_rows(sol: Any, P: Any) -> list[dict[str, Any]]:
     age_idx = np.where((ages >= 30.0) & (ages <= 55.0))[0]
     masses = np.zeros(int(P.n_house), dtype=float)
     if g.ndim == 7:
+        dep_last = int(P.n_child_stages)
         for j in age_idx:
             for zz in range(g.shape[4]):
-                for ten in range(1, 1 + int(P.n_house)):
-                    masses[ten - 1] += float(np.sum(g[:, ten, 0, j, zz, 0, 0]))
+                for nn in range(g.shape[5]):
+                    for cs in range(g.shape[6]):
+                        if current_child_bin_dt(nn, cs, dep_last) != 2:
+                            continue
+                        for ten in range(1, 1 + int(P.n_house)):
+                            masses[ten - 1] += float(np.sum(g[:, ten, 0, j, zz, nn, cs]))
     total = float(np.sum(masses))
     rows = []
     for idx, rooms in enumerate(np.asarray(P.H_own, dtype=float)):
@@ -2272,7 +2297,13 @@ def plot_room_bins(rows: list[dict[str, Any]], path: Path) -> None:
     plt.close(fig)
 
 
-def plot_owner_rungs(rows: list[dict[str, Any]], path: Path, *, ylabel: str = "share of owners") -> None:
+def plot_owner_rungs(
+    rows: list[dict[str, Any]],
+    path: Path,
+    *,
+    ylabel: str = "share of owners",
+    annotation: str | None = None,
+) -> None:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -2286,6 +2317,8 @@ def plot_owner_rungs(rows: list[dict[str, Any]], path: Path, *, ylabel: str = "s
     ax.set_ylabel(ylabel)
     ax.set_ylim(0.0, 1.0)
     ax.set_title("Owner rung shares")
+    if annotation:
+        ax.text(0.98, 0.95, annotation, ha="right", va="top", transform=ax.transAxes)
     ax.grid(axis="y", alpha=0.2)
     fig.tight_layout()
     fig.savefig(path, dpi=180)
