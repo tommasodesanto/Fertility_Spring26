@@ -1109,33 +1109,68 @@ calibration dates some purchases one period late. Correcting their timing
 changes several tenure and housing moments, including the housing response
 when the first child arrives. Second, holding the parameters fixed and raising
 the number of wealth points from 120 to 240 increases the loss from 6.31 to
-6.84, mainly through the family ownership gap and old-age homeownership. All
-results below use the common $N_b=120$ specification so that they remain
-comparable.
+6.84, mainly through the family ownership gap and old-age homeownership. The
+lifecycle and decision-rule figures below use the preliminary solution computed
+after correcting purchase timing. The remaining quantitative tables and policy
+exercises retain the July 9 values and will be regenerated after re-estimation.
 
+\clearpage
 \section{Lifecycle Housing Patterns}
 \label{sec:quant_baseline}
 
-The July calibration produces a steep rise in homeownership near the
-end of the fertile period and high homeownership at older ages. This timing is
-economically important because the move into ownership occurs when households
-are also making their family-size choices. In the July calculation, however,
-purchases are recorded one model period after the decision, so the exact age
-profile in Figure~\ref{fig:eq_tenure} is provisional.
+Figure~\ref{fig:eq_tenure} reports lifecycle profiles from the preliminary
+solution computed after correcting the timing of current housing choices.
+Homeownership and housing consumption rise together through the years in which
+households form families. Between ages 30 and 42, homeownership rises from 23
+to 71 percent and mean housing consumption rises from 4.3 to 5.7 rooms.
+Expected births are concentrated over the same part of the lifecycle and peak
+shortly before the end of the fertile window.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_eq_tenure.png}
-\caption{Ownership over the lifecycle in the July calibration. The steep rise
-near the end of the fertile window and high old-age ownership are visible, but
-current purchases are recorded one model period late in this version.}
+\includegraphics[width=0.98\textwidth]{quant_lifecycle_equilibrium_repaired_nb120.png}
+\caption{Lifecycle ownership, family formation, and housing consumption in the
+preliminary repaired solution. Panel (a) plots the homeownership rate and the
+young and old data targets. Panel (b) plots expected births per household and
+mean physical housing by age.}
 \label{fig:eq_tenure}
 \end{figure}
 
-Families that rent often choose the largest available rental unit, while owners
-choose among a discrete ladder of house sizes. Many young renters also hold
-little liquid wealth. Together, these patterns show how rental scarcity and
-down-payment constraints can bind at ages when households are forming families.
+This co-movement does not by itself establish that housing causes births. It
+shows that the housing and family-size decisions are concentrated in the same
+lifecycle window, when wealth accumulation lets households move into ownership
+and up the housing ladder. The remaining fit problem is also clear. The rise in
+ownership is too steep: the model has too few young owners and retains too many
+older owners, while births remain too concentrated near the fertility
+deadline. I therefore use these profiles to describe the mechanism rather than
+as a final validation of the calibration.
+
+The decision rules underlying these aggregates are shown in
+Figure~\ref{fig:quant_decision_rules}. The figure considers households that
+enter age 42 as childless renters. Income shifts both rental demand and the
+owned house selected. At a given level of liquid wealth, higher-income
+households generally choose more rooms and a larger expected family size.
+Within an income state, additional wealth expands housing consumption and
+moves households through the discrete owner ladder.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{quant_decision_rules_repaired_nb120.png}
+\caption{Housing and family-size policies at the end of the fertile window.
+Panel (a) reports expected physical rooms after integrating over the current
+family-size choice and the housing choice that follows it. Panel (b) reports
+expected family size. Each line corresponds to a current income state.}
+\label{fig:quant_decision_rules}
+\end{figure}
+
+The full housing schedules reveal heterogeneity that is hidden by a binary
+rent--own indicator. Several income states cross into ownership at the same
+wealth-grid point because they face a common down-payment rule, but they choose
+different rental quantities and different rungs of the owner ladder. Physical
+rooms can also fall locally when a household enters ownership. Such a move can
+still be optimal because ownership changes the utility from usable space, the
+household balance sheet, and continuation values; the number of rooms alone is
+not the household's payoff from owning.
 
 \section{Quantitative Evidence on the Mechanism}
 \label{sec:quant_mechanism}
@@ -1153,23 +1188,6 @@ sensitive to additional housing, I weight them by the response
 $\partial n/\partial H$ derived in Section~\ref{sec:analytical_model}.
 Seventy-three percent of this sensitivity is concentrated among households
 with $\zeta>0$.
-
-The model places many purchases near the fertility deadline. Homeownership
-becomes optimal for a wider range of households in the last fertile period,
-when waiting no longer preserves the option to postpone family formation.
-These buyers hold wealth above the required down payment. Housing constraints
-therefore do more than force households to save toward a distant threshold:
-they make the purchase and family-size decisions occur together near the
-deadline.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.92\textwidth]{July_26_slides_buy_flow_by_age_children.png}
-\caption{Purchase flows by age and family size in the July 9 calibration.
-Purchases concentrate near the end of the fertile window and often coincide
-with a birth.}
-\label{fig:buy_flow}
-\end{figure}
 
 The model is motivated by the allocation of large homes across generations.
 The next table compares who owns homes with at least six rooms in the current
