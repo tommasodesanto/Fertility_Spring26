@@ -23,6 +23,7 @@
 
 \newtheorem{proposition}{Proposition}
 \newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newtheorem{remark}{Remark}
 \newtheorem{assumption}{Assumption}
@@ -202,7 +203,7 @@ allocation of space remain the central margins.
 
 The economy is populated by overlapping generations of young and old households. A young household has type $i=(y_i,a_i)$: income and wealth at entry. Wealth is inherited from the previous old generation\footnote{Distributed randomly, without a tie to bequests and inheritants. It can be distributed unequally, however.}. A household decides whether to enter the economy; inside, she chooses a tenure (rent or own), a house size, completed fertility, and savings for old age. Old households, indexed by $j$, are of two kinds. Old incumbents, last period's young owners, who enter old age with financial wealth, the house they bought, and a possible accrued gain, choose how much of the house to keep and how large an estate to leave, then exit. The other type is old renters, last period's young renter entrants, who rent in old age and carry no wedge. Nonentrants stay outside the market in both periods. Each period a mass $\bar M$ of potential young households enters the pool: the maturing children of the previous cohort plus a renewal inflow. Types are distributed according to an exogenous $G_Y$.
 
-\textbf{Preferences.} Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
+Households have preferences over consumption, housing, and children. Children raise the household's consumption and housing needs: each child claims $\chi>0$ units of consumption and $\kappa>0$ units of space, so with consumption spending $c_i$, housing $h_i$, and fertility $n_i$,
 \[
 u_i^Y=\log(c_i-\chi n_i)+\alpha\log(h_i-\kappa n_i)+\vartheta\log n_i .
 \]
@@ -212,7 +213,7 @@ u^O=\log c_j^O+\gamma\log h_j^O+\mathcal B(e_j),
 \]
 with $\mathcal B$ a warm-glow function, increasing and concave, possibly zero, common to all old households. The exiting cohort's estates are what the arriving cohort inherits.
 
-\textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace, held by old incumbents and by passive absentee landlords: buyers purchase from either, renters occupy landlord space, and rents and sale proceeds are transfers.\footnote{There is no construction: the model allocates a fixed stock. This goes together with the stationary equilibrium focus. More sophisticated supply will follow in the extended model and the quantitative application.} Renting and owning are occupancy modes with different size limits, the largest sizes available to rent and to own,
+There is a fixed stock $\bar H$ of divisible floorspace, held by old incumbents and by passive absentee landlords: buyers purchase from either, renters occupy landlord space, and rents and sale proceeds are transfers.\footnote{There is no construction: the model allocates a fixed stock. This goes together with the stationary equilibrium focus. More sophisticated supply will follow in the extended model and the quantitative application.} Renting and owning are occupancy modes with different size limits, the largest sizes available to rent and to own,
 \[
 h\le\bar h^R \text{ (rent)},
 \qquad
@@ -228,9 +229,9 @@ q=\rho P,
 \]
 The renter pays $q$ as rent; the owner pays it as mortgage interest, property tax, depreciation, and the forgone return on her equity---different payments, equal per-unit value by arbitrage. Given $q$, a higher property tax lowers $P$ and with it the down payment on any given house.
 
-\textbf{Financing.} A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of her liquid wealth. Households can save in an exogenously provided bond, but renters cannot borrow. The interest rate $r$ is exogenous.
+A buyer finances at most a share $\phi\in(0,1)$ of the purchase, so she posts a down payment $(1-\phi)Ph$ at purchase, out of her liquid wealth. Households can save in an exogenously provided bond, but renters cannot borrow. The interest rate $r$ is exogenous.
 
-\textbf{Taxes.} Two taxes appear: the property tax $\tau^p$, part of the user cost above, and the capital-gains tax. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars. Dying instead passes the house with a stepped-up basis - the heir's purchase price is reset to the current value -so the gain is never taxed\footnote{This was the essence of the point suggested by Simon. I will go a bit deeper into it in the next weeks, but it is one of the two key margins (the other being financial constraints). The idea is then: agents have an incentive to hold on to the house, because this way neither they nor their heirs pay taxes.}.
+Two taxes appear: the property tax $\tau^p$, part of the user cost above, and the capital-gains tax. Selling a house triggers a tax: the seller pays the rate $\tau^g$ on the difference between the sale price and what she paid, in dollars. Dying instead passes the house with a stepped-up basis - the heir's purchase price is reset to the current value -so the gain is never taxed\footnote{This was the essence of the point suggested by Simon. I will go a bit deeper into it in the next weeks, but it is one of the two key margins (the other being financial constraints). The idea is then: agents have an incentive to hold on to the house, because this way neither they nor their heirs pay taxes.}.
 
 Where do gains come from when the real price never moves? From inflation. Dollar prices and incomes all grow at rate $\varpi$, so relative prices and real choices are unaffected; but the tax form compares dollars from different dates, and a house bought one period ago shows a paper gain even though its real value is unchanged. The tax on that paper gain is real,
 \[
@@ -531,7 +532,8 @@ H^S(q)=H_0\left(\frac{q}{\bar q}\right)^\eta.
 \label{eq:quant_supply}
 \end{equation}
 The fixed-stock compact model is the limiting case $\eta=0$ around the
-benchmark stock.
+benchmark stock. More generally, $\eta$ determines whether an increase in
+housing demand appears mainly as a higher user cost or as additional housing.
 
 Households rent or own one of $K$ discrete housing sizes. Write
 \begin{equation}
@@ -570,6 +572,9 @@ or an incumbent, faces the same debt floor:
 b'\ge -\phi P H_k.
 \label{eq:quant_ltv}
 \end{equation}
+The down payment governs entry into ownership, while the debt floor governs
+resources after purchase. The distinction matters because a household can be
+able to service an owned home and still lack the liquid wealth needed to buy it.
 
 Housing adjustment is costly. A sale of house $H_k$ incurs the proportional
 transaction cost $\psi^s$, so net sale proceeds are
@@ -670,7 +675,9 @@ V^{O_k}(\tilde b,z,O_k,a,n,s)
 \end{equation}
 The debt floor is the same for a buyer and an incumbent. Purchase feasibility
 is screened separately through the down-payment condition before this branch is
-evaluated.
+evaluated. Renting offers a continuous choice of space but no borrowing;
+ownership offers the larger discrete menu and borrowing against the house, at
+the cost of the initial down payment and future adjustment costs.
 
 Let $H(R)=0$ and $H(O_k)=H_k$. The liquid wealth available after housing
 adjustment is
@@ -749,6 +756,9 @@ V(b,z,d,a,0,0)
 \end{equation}
 Outside the fertile window, or after a positive fertility choice, this stage is
 degenerate and $V(b,z,d,a,n,s)=V^T(b,z,d,a,n,s)$.
+The family-size decision therefore incorporates the housing position chosen in
+the same period. A birth can change current space and tenure immediately, not
+only the household's continuation value.
 
 \subsection{Stationary Equilibrium}
 \label{sec:quant_stationary_equilibrium}
@@ -830,6 +840,12 @@ q=(r+\delta+\tau^p)P;
 specified for the calibration or counterfactual.
 \end{enumerate}
 \end{definition}
+
+Equilibrium links family formation to housing through two margins. Children
+change housing demand within a household, and, when locally born children feed
+the future entrant pool, they also change the scale of the market. Housing
+supply determines how much of either margin is absorbed by quantities rather
+than by the user cost.
 
 The benchmark sets $S=1$ as a normalization; in counterfactuals, $S$ is an
 endogenous equilibrium object. Computationally, for a candidate $q$ we solve
@@ -935,7 +951,7 @@ lifecycle wealth. I first search globally using differential evolution and
 then refine the best candidates with local polish chains, using $N_b=120$
 asset-grid points. With fourteen moments, the system has one overidentifying
 restriction by count, although the local sensitivity matrix is poorly
-conditioned in several parameter blocks.
+conditioned.
 
 \begin{table}[H]
 \centering
@@ -965,16 +981,15 @@ $\theta_n$ & Bequest shifter by number of children & 0.972 \\
 The parameters are disciplined jointly rather than by a one-to-one assignment
 of moments to parameters. The main sources of variation are as follows.
 
-The \emph{savings block} is disciplined by liquid wealth among young renters,
-median nonhousing wealth at ages 65--75, and ownership at ages 25--34 and
-65--75. The discount factor $\beta$ governs asset accumulation over the
-lifecycle. The baseline consumption requirement $\bar c_0$ changes the
-resources available for saving, housing, and children. It is therefore
-identified only indirectly from the joint wealth and tenure profile, and is
-more weakly separated from $\beta$ than the table alone suggests.
+Liquid wealth among young renters, median nonhousing wealth at ages 65--75,
+and ownership at ages 25--34 and 65--75 discipline saving over the lifecycle.
+The discount factor $\beta$ governs asset accumulation, while the baseline
+consumption requirement $\bar c_0$ changes the resources left for saving,
+housing, and children. The two parameters are therefore separated only
+indirectly by the joint wealth and tenure profile.
 
-The \emph{housing-needs block} uses the level and change in rooms across family
-states. Mean renter rooms among childless households primarily discipline
+The housing requirements are disciplined by the level and change in rooms
+across family states. Mean renter rooms among childless households primarily discipline
 $\bar h_0$; the housing response at the first birth disciplines
 $\bar h_{\mathrm{jump}}$; and the room difference between households with
 three or more children and those with one or two children disciplines
@@ -990,13 +1005,13 @@ family ownership gap. The room-distribution moments help distinguish a taste
 for housing services from a taste for ownership, but the separation remains
 local because finance and lifecycle wealth shift the same tenure margins.
 
-The \emph{family-size block} is disciplined by completed fertility and
-childlessness. The per-child consumption cost $\bar c_n$, the utility shifter
-$\psi_{\mathrm{child}}$, and the choice scale $\kappa_F$ all affect these two
-moments and are not cleanly separated by them. Housing responses across family
-states provide additional information because $\bar c_n$ changes the resources
-available for housing, but local sensitivity calculations still find this
-block highly collinear. The tenure scale $\kappa_T$ is disciplined by ownership
+Completed fertility and childlessness jointly discipline the per-child
+consumption cost $\bar c_n$, the utility value of children
+$\psi_{\mathrm{child}}$, and the choice scale $\kappa_F$. These parameters
+change, respectively, the resource cost of children, their utility benefit,
+and the dispersion in household choices. Housing responses provide additional
+information because $\bar c_n$ changes the resources available for housing,
+but the three effects remain difficult to separate locally. The tenure scale $\kappa_T$ is disciplined by ownership
 rates by age and family status. Its estimate of zero says that the targeted
 tenure moments do not call for additional taste smoothing; it should not be
 read as precise interior identification.
