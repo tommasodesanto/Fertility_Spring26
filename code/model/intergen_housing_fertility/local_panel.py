@@ -445,7 +445,7 @@ def run_global_de_panel(
                 },
             )
             trial_loss = record_selection_loss(record)
-            if trial_loss <= pop_loss[i]:
+            if de_candidate_is_acceptable(trial_loss, pop_loss[i]):
                 pop[i] = trial
                 pop_loss[i] = trial_loss
                 pop_records[i] = record
@@ -460,7 +460,7 @@ def run_global_de_panel(
                 {"phase": "random_immigrant", "generation": int(generation), "slot": worst},
             )
             immigrant_loss = record_selection_loss(record)
-            if immigrant_loss <= pop_loss[worst]:
+            if de_candidate_is_acceptable(immigrant_loss, pop_loss[worst]):
                 pop[worst] = immigrant
                 pop_loss[worst] = immigrant_loss
                 pop_records[worst] = record
@@ -1013,6 +1013,12 @@ def is_better_record(record: dict[str, Any], best: dict[str, Any] | None) -> boo
 
 def record_is_strictly_converged(record: dict[str, Any]) -> bool:
     return bool(record.get("strict_converged", False))
+
+
+def de_candidate_is_acceptable(candidate_loss: float, incumbent_loss: float) -> bool:
+    """Require a finite strict-gated loss before updating the DE population."""
+
+    return bool(np.isfinite(candidate_loss) and candidate_loss <= incumbent_loss)
 
 
 def record_selection_loss(record: dict[str, Any]) -> float:

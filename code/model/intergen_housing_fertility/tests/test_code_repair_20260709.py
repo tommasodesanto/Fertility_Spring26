@@ -9,6 +9,7 @@ from unittest.mock import patch
 import numpy as np
 
 from intergen_housing_fertility.local_panel import (
+    de_candidate_is_acceptable,
     is_better_record,
     record_sort_key,
     record_selection_loss,
@@ -158,6 +159,12 @@ class SearchSafetyTests(unittest.TestCase):
         self.assertTrue(np.isinf(record_selection_loss(lower_but_invalid)))
         ranked = sorted([lower_but_invalid, converged, better_converged], key=record_sort_key)
         self.assertEqual([row["case"] for row in ranked], [3, 1, 2])
+
+    def test_de_population_never_accepts_invalid_candidate(self) -> None:
+        self.assertFalse(de_candidate_is_acceptable(np.inf, np.inf))
+        self.assertFalse(de_candidate_is_acceptable(np.inf, 10.0))
+        self.assertTrue(de_candidate_is_acceptable(9.0, 10.0))
+        self.assertTrue(de_candidate_is_acceptable(9.0, np.inf))
 
     def test_named_production_profile_is_exact(self) -> None:
         self.assertEqual(PRODUCTION_H_OWN.tolist(), [2.0, 4.0, 6.0, 8.0, 10.0])
