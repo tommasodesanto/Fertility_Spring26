@@ -1,0 +1,169 @@
+{
+  "defaults": {
+    "q_default": 0.1698585600000002,
+    "delta_default": 0.07763184000000012,
+    "tau_H": 0.04,
+    "user_cost_rate_default": 0.2874904000000003,
+    "R_gross_default": 1.1698585600000002,
+    "r_bar_default": 0.16,
+    "H0_default": 4.0,
+    "eta_supply_default": 1.0,
+    "H_own_default": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      9.5,
+      11.0
+    ],
+    "hR_max_default": 6.0,
+    "phi_default": [
+      0.8,
+      0.8,
+      0.8
+    ],
+    "implied_annual_r_default": 0.040000000000000036,
+    "implied_annual_delta_default": 0.020000000000000018
+  },
+  "combined_spec": {
+    "q_new": 0.08243215999999998,
+    "delta_new": 0.04327930935900004,
+    "user_cost_rate_new": 0.16571146935900002,
+    "R_gross_new": 1.08243216,
+    "q_ratio_default_over_new": 2.060586062527056,
+    "delta_ratio_default_over_new": 1.7937402687285808,
+    "delta4_exact_repr": "0.04327930935900004"
+  },
+  "apply_overrides_check": {
+    "user_cost_rate": 0.16571146935900002,
+    "user_cost_matches_sum": true,
+    "R_gross": 1.08243216,
+    "xi_supply_follows_eta": [
+      1.75
+    ],
+    "H0_scalar_override_shape": [
+      1
+    ],
+    "H0_value": [
+      9.999672059746388
+    ]
+  },
+  "supply_identity_on_records": {
+    "current_repro_exact": {
+      "p_eq": 0.6897624769313723,
+      "H0": 9.999672059746388,
+      "user_cost": 0.11430155356100105,
+      "supply_predicted_from_formula": 5.550946237343271,
+      "rooms_moment": 5.551107552668675,
+      "abs_rel_gap_supply_vs_rooms": 2.906002520645777e-05,
+      "H0_needed_for_target_at_this_price": 10.412244482860723,
+      "rooms_gap_vs_target": -0.22886292927329244
+    },
+    "housing_repro_exact": {
+      "p_eq": 0.7564643263592232,
+      "H0": 8.559672059746388,
+      "user_cost": 0.125354815038653,
+      "supply_predicted_from_formula": 5.584624050265261,
+      "rooms_moment": 5.584992481509961,
+      "abs_rel_gap_supply_vs_rooms": 6.596808248535165e-05,
+      "H0_needed_for_target_at_this_price": 8.859083690349317,
+      "rooms_gap_vs_target": -0.1949780004320063
+    },
+    "current_eq30": {
+      "p_eq": 0.689716823383854,
+      "H0": 9.999672059746388,
+      "user_cost": 0.11429398824456036,
+      "supply_predicted_from_formula": 5.5503032991057974,
+      "rooms_moment": 5.550450779785002,
+      "abs_rel_gap_supply_vs_rooms": 2.6570937218513217e-05,
+      "H0_needed_for_target_at_this_price": 10.413450620571616,
+      "rooms_gap_vs_target": -0.22951970215696615
+    },
+    "current_pinit_lo": {
+      "p_eq": 0.6897334624837803,
+      "H0": 9.999672059746388,
+      "user_cost": 0.11429674553425795,
+      "supply_predicted_from_formula": 5.550537623608602,
+      "rooms_moment": 5.550838179226025,
+      "abs_rel_gap_supply_vs_rooms": 5.41459879964272e-05,
+      "H0_needed_for_target_at_this_price": 10.4130110006997,
+      "rooms_gap_vs_target": -0.22913230271594287
+    }
+  },
+  "tiny_solve_nb32": {
+    "P_q": 0.08243215999999998,
+    "P_delta": 0.04327930935900004,
+    "P_user_cost_rate": 0.16571146935900002,
+    "P_R_gross": 1.08243216,
+    "P_eta_supply": [
+      1.75
+    ],
+    "P_xi_supply": [
+      1.75
+    ],
+    "P_H_own": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "P_hR_max": 6.0,
+    "P_phi": [
+      0.8,
+      0.8,
+      0.8
+    ],
+    "P_r_bar": [
+      0.16
+    ],
+    "P_H0": [
+      9.999672059746388
+    ],
+    "p_eq": 0.6906076012502914,
+    "max_renter_rooms_policy": 6.0,
+    "renter_cap_respected": true,
+    "owner_slice_of_hR_pol_all_zero": true,
+    "owner_debt_floor_checks": {
+      "rung_1_H2": {
+        "debt_floor_-phi_pH": -1.1049721620004662,
+        "min_bp_pol": -1.1049721620004662,
+        "violation": false
+      },
+      "rung_2_H4": {
+        "debt_floor_-phi_pH": -2.2099443240009324,
+        "min_bp_pol": -2.2099443240009324,
+        "violation": false
+      },
+      "rung_3_H6": {
+        "debt_floor_-phi_pH": -3.3149164860013984,
+        "min_bp_pol": -3.3149164860013993,
+        "violation": false
+      },
+      "rung_4_H8": {
+        "debt_floor_-phi_pH": -4.419888648001865,
+        "min_bp_pol": -4.419888648001865,
+        "violation": false
+      },
+      "rung_5_H10": {
+        "debt_floor_-phi_pH": -5.524860810002331,
+        "min_bp_pol": -5.524860810002331,
+        "violation": false
+      }
+    },
+    "rooms_moment": 5.563293888211538,
+    "aggregate_housing_demand": 5.563293888211505,
+    "total_mass": 0.9999999999999941,
+    "rooms_equals_demand_over_mass": true,
+    "aggregate_housing_supply": 5.562853874169185,
+    "supply_formula_recomputed": 5.562853874169185,
+    "supply_matches_formula": true,
+    "market_residual": 7.909861597544298e-05
+  },
+  "silent_default_drift_probe": {
+    "q_without_fixed_spec": 0.1698585600000002,
+    "delta_without_fixed_spec": 0.07763184000000012,
+    "user_cost_rate_without_fixed_spec": 0.2874904000000003,
+    "note": "production_profile_overrides() alone leaves the old 4%/2% annual finance defaults in place"
+  }
+}

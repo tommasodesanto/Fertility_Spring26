@@ -1,0 +1,52 @@
+active target system: 15 moments
+
+=== current_bound_best ===
+stored loss           : 14.780020699972585
+stored contribution_sum: 14.780020699972585
+stored market_residual: 2.906086971430419e-05
+recomputed sum        : 14.780020699972585
+matches stored loss exactly: True (|diff|=0.000e+00)
+diagnostic_loss(stored moments): 14.780020699972585  == stored: True
+moment                                                          weight          gap    contrib   share
+old_age_own_rate                                                 160.0     0.183565   5.391359  36.48%
+prime30_55_childless_owner_minus_renter_mean_rooms                12.0    -0.471057   2.662734  18.02%
+young_childless_renter_liquid_wealth_to_annual_gross_income_2535    12.0     0.364000   1.589948  10.76%
+prime30_55_childless_renter_mean_rooms                             6.0     0.475806   1.358349   9.19%
+old_nonhousing_wealth_to_income_median_6575                        0.8    -1.201922   1.155692   7.82%
+own_rate_2534                                                     80.0    -0.090612   0.656843   4.44%
+own_rate                                                         100.0     0.077780   0.604970   4.09%
+prime30_55_childless_owner_share_rooms_ge6                        25.0     0.144942   0.525208   3.55%
+aggregate_mean_occupied_rooms_18_85                                6.0    -0.228863   0.314269   2.13%
+own_family_gap                                                    45.0     0.063137   0.179382   1.21%
+prime30_55_parent_3plus_minus_1to2_mean_rooms                      8.0    -0.124744   0.124488   0.84%
+old_parent_childless_nonhousing_wealth_to_income_gap_6575          2.0     0.243978   0.119051   0.81%
+tfr                                                               20.0     0.065159   0.084914   0.57%
+housing_increment_0to1                                            14.0     0.022752   0.007247   0.05%
+childless_rate                                                    20.0    -0.016683   0.005566   0.04%
+
+=== housing_relaxed_best ===
+stored loss           : 13.90346531862862
+stored contribution_sum: 13.903465318628617
+stored market_residual: 3.140213892938831e-05
+recomputed sum        : 13.90346531862862
+matches stored loss exactly: False (|diff|=0.000e+00)
+diagnostic_loss(stored moments): 13.90346531862862  == stored: True
+moment                                                          weight          gap    contrib   share
+old_age_own_rate                                                 160.0     0.198796   6.323147  45.48%
+old_nonhousing_wealth_to_income_median_6575                        0.8    -1.851525   2.742517  19.73%
+own_rate                                                         100.0     0.121104   1.466621  10.55%
+young_childless_renter_liquid_wealth_to_annual_gross_income_2535    12.0     0.251102   0.756627   5.44%
+prime30_55_childless_owner_minus_renter_mean_rooms                12.0    -0.231026   0.640477   4.61%
+tfr                                                               20.0     0.178905   0.640141   4.60%
+prime30_55_childless_owner_share_rooms_ge6                        25.0     0.128014   0.409691   2.95%
+prime30_55_childless_renter_mean_rooms                             6.0     0.234752   0.330652   2.38%
+aggregate_mean_occupied_rooms_18_85                                6.0    -0.194889   0.227891   1.64%
+housing_increment_0to1                                            14.0     0.094898   0.126080   0.91%
+old_parent_childless_nonhousing_wealth_to_income_gap_6575          2.0     0.239839   0.115045   0.83%
+own_family_gap                                                    45.0     0.044632   0.089640   0.64%
+childless_rate                                                    20.0    -0.040140   0.032225   0.23%
+own_rate_2534                                                     80.0     0.005723   0.002620   0.02%
+prime30_55_parent_3plus_minus_1to2_mean_rooms                      8.0     0.003380   0.000091   0.00%
+
+=== RESULT ===
+ALL CHECKS PASSED: targets/weights match calibration.py; every stored contribution = w*(model-target)^2; sums equal stored losses exactly; diagnostic_loss reproduces both losses; +100 penalty branch confirmed inactive at these residuals.

@@ -1,0 +1,171 @@
+{
+  "baseline_equals_production_bounds": true,
+  "preference_relaxed": [
+    [
+      "beta_annual",
+      0.94,
+      0.995
+    ],
+    [
+      "alpha_cons",
+      0.4,
+      0.95
+    ],
+    [
+      "c_bar_0",
+      0.04,
+      1.8
+    ],
+    [
+      "c_bar_n",
+      0.05,
+      1.5
+    ],
+    [
+      "h_bar_0",
+      1.0,
+      6.0
+    ],
+    [
+      "h_bar_jump",
+      0.05,
+      2.5
+    ],
+    [
+      "h_bar_n",
+      0.02,
+      2.0
+    ],
+    [
+      "psi_child",
+      0.0,
+      0.6
+    ],
+    [
+      "kappa_fert",
+      0.2,
+      12.0
+    ],
+    [
+      "tenure_choice_kappa",
+      0.0,
+      0.12
+    ],
+    [
+      "chi",
+      0.4,
+      1.15
+    ],
+    [
+      "theta0",
+      0.0,
+      2.0
+    ],
+    [
+      "theta_n",
+      0.0,
+      2.5
+    ]
+  ],
+  "housing_relaxed": [
+    [
+      "beta_annual",
+      0.94,
+      0.995
+    ],
+    [
+      "alpha_cons",
+      0.4,
+      0.95
+    ],
+    [
+      "c_bar_0",
+      0.08,
+      1.28
+    ],
+    [
+      "c_bar_n",
+      0.05,
+      1.5
+    ],
+    [
+      "h_bar_0",
+      0.25,
+      6.0
+    ],
+    [
+      "h_bar_jump",
+      0.05,
+      3.5
+    ],
+    [
+      "h_bar_n",
+      0.02,
+      3.0
+    ],
+    [
+      "psi_child",
+      0.0,
+      0.35
+    ],
+    [
+      "kappa_fert",
+      1.0,
+      12.0
+    ],
+    [
+      "tenure_choice_kappa",
+      0.0,
+      0.12
+    ],
+    [
+      "chi",
+      0.4,
+      1.6
+    ],
+    [
+      "theta0",
+      0.0,
+      2.0
+    ],
+    [
+      "theta_n",
+      0.0,
+      1.5
+    ]
+  ],
+  "out_of_box_seed_silently_clipped": true,
+  "beta_annual_pow4_matches": true,
+  "identical_coordinates": [
+    "beta",
+    "c_bar_0",
+    "c_bar_n",
+    "tenure_choice_kappa",
+    "theta0"
+  ],
+  "coordinate_diffs": {
+    "H0": -1.4399999999999995,
+    "alpha_cons": -0.04400000000000004,
+    "chi": 0.05061662732269978,
+    "h_bar_0": -0.0789531816300848,
+    "h_bar_jump": 0.18685542399999977,
+    "h_bar_n": -0.1584000000000001,
+    "kappa_fert": 0.11404799999999993,
+    "psi_child": 0.01791999999999999,
+    "theta_n": 0.34108876799999976
+  },
+  "step_decomposition": {
+    "H0": "2 x step(0.08)",
+    "kappa_fert": "1 x step(0.010368)",
+    "alpha_cons": "1 x step(0.08)",
+    "psi_child": null,
+    "theta_n": null
+  },
+  "wave2_global_deadline_min": 92.4,
+  "draws_at_37s": 149.83783783783784,
+  "draws_at_74s": 74.91891891891892,
+  "draws_at_150s": 36.96,
+  "jitter_deterministic": true,
+  "jitter_distinct_across_seeds": true,
+  "jitter_zero_returns_seed": true
+}

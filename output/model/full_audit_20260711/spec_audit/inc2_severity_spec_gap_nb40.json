@@ -1,0 +1,226 @@
+{
+  "A_combined_correct": {
+    "market_residual": 3.944958918837378e-05,
+    "moments": {
+      "aggregate_mean_occupied_rooms_18_85": 5.5639084853846335,
+      "childless_rate": 0.25266188193537525,
+      "housing_increment_0to1": 0.5955420883114608,
+      "old_age_own_rate": 0.9515096046731945,
+      "old_nonhousing_wealth_to_income_median_6575": 0.8829384190586277,
+      "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 1.5553117037743749,
+      "own_family_gap": 0.3225263680036468,
+      "own_rate": 0.5851179984235465,
+      "own_rate_2534": 0.16565724312932883,
+      "prime30_55_childless_owner_minus_renter_mean_rooms": 2.013535485774642,
+      "prime30_55_childless_owner_share_rooms_ge6": 0.7542797805019044,
+      "prime30_55_childless_renter_mean_rooms": 4.391407859569617,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.0019587118902881784,
+      "tfr": 1.8454187067068653,
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.7501505172490851
+    },
+    "p_eq": [
+      0.6906668437905444
+    ],
+    "rank_loss": 21.38981281248305,
+    "status": "ok",
+    "strict_converged": true,
+    "wall_seconds": 154.88446227799977
+  },
+  "B_tool_default_current": {
+    "market_residual": 0.0005641736455034103,
+    "moments": {
+      "aggregate_mean_occupied_rooms_18_85": 6.765710753023704,
+      "childless_rate": 0.17885605098536989,
+      "housing_increment_0to1": 0.5541717325807073,
+      "old_age_own_rate": 0.9797163413387076,
+      "old_nonhousing_wealth_to_income_median_6575": 5.698966159378413,
+      "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 2.3745122238212995,
+      "own_family_gap": 0.30524011755386327,
+      "own_rate": 0.7544351447624966,
+      "own_rate_2534": 0.4007710450246843,
+      "prime30_55_childless_owner_minus_renter_mean_rooms": 3.3687084094559996,
+      "prime30_55_childless_owner_share_rooms_ge6": 0.9045679149234401,
+      "prime30_55_childless_renter_mean_rooms": 4.1747374618653685,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.08492218089842751,
+      "tfr": 2.1108592049012045,
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.5609703887068863
+    },
+    "p_eq": [
+      0.37633911263192754
+    ],
+    "rank_loss": 48.28865192333122,
+    "status": "ok",
+    "strict_converged": false,
+    "wall_seconds": 315.62080174199946
+  },
+  "C_cli_bare_rouwenhorst": {
+    "market_residual": 1.4527016709223997e-05,
+    "moments": {
+      "aggregate_mean_occupied_rooms_18_85": 6.734435830756413,
+      "childless_rate": 0.22474838283697512,
+      "housing_increment_0to1": 0.3359953148602553,
+      "old_age_own_rate": 0.9843137768268875,
+      "old_nonhousing_wealth_to_income_median_6575": 8.588582803570286,
+      "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 4.304808755517329,
+      "own_family_gap": 0.10668374050250162,
+      "own_rate": 0.7783323127334589,
+      "own_rate_2534": 0.5362364572992889,
+      "prime30_55_childless_owner_minus_renter_mean_rooms": 4.021921099469122,
+      "prime30_55_childless_owner_share_rooms_ge6": 0.8014956263674349,
+      "prime30_55_childless_renter_mean_rooms": 3.422584156615111,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": -0.5715492179771475,
+      "tfr": 2.145157662053652,
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 1.9041299971149384
+    },
+    "p_eq": [
+      0.3748053558218054
+    ],
+    "rank_loss": 152.73106730690213,
+    "status": "ok",
+    "strict_converged": true,
+    "wall_seconds": 217.59447818399894
+  },
+  "_config": {
+    "J": 17,
+    "Nb": 40,
+    "max_iter_eq": 10
+  },
+  "_fit_table": [
+    {
+      "A_combined_correct": 5.5639084853846335,
+      "B_tool_default_current": 6.765710753023704,
+      "C_cli_bare_rouwenhorst": 6.734435830756413,
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "target": 5.779970481941968,
+      "weight": 6.0
+    },
+    {
+      "A_combined_correct": 0.25266188193537525,
+      "B_tool_default_current": 0.17885605098536989,
+      "C_cli_bare_rouwenhorst": 0.22474838283697512,
+      "moment": "childless_rate",
+      "target": 0.188,
+      "weight": 20.0
+    },
+    {
+      "A_combined_correct": 0.5955420883114608,
+      "B_tool_default_current": 0.5541717325807073,
+      "C_cli_bare_rouwenhorst": 0.3359953148602553,
+      "moment": "housing_increment_0to1",
+      "target": 0.66443467,
+      "weight": 14.0
+    },
+    {
+      "A_combined_correct": 0.9515096046731945,
+      "B_tool_default_current": 0.9797163413387076,
+      "C_cli_bare_rouwenhorst": 0.9843137768268875,
+      "moment": "old_age_own_rate",
+      "target": 0.76426097,
+      "weight": 160.0
+    },
+    {
+      "A_combined_correct": 0.8829384190586277,
+      "B_tool_default_current": 5.698966159378413,
+      "C_cli_bare_rouwenhorst": 8.588582803570286,
+      "moment": "old_nonhousing_wealth_to_income_median_6575",
+      "target": 2.23046078,
+      "weight": 0.8
+    },
+    {
+      "A_combined_correct": 1.5553117037743749,
+      "B_tool_default_current": 2.3745122238212995,
+      "C_cli_bare_rouwenhorst": 4.304808755517329,
+      "moment": "old_parent_childless_nonhousing_wealth_to_income_gap_6575",
+      "target": 1.00744952,
+      "weight": 2.0
+    },
+    {
+      "A_combined_correct": 0.3225263680036468,
+      "B_tool_default_current": 0.30524011755386327,
+      "C_cli_bare_rouwenhorst": 0.10668374050250162,
+      "moment": "own_family_gap",
+      "target": 0.16766167,
+      "weight": 45.0
+    },
+    {
+      "A_combined_correct": 0.5851179984235465,
+      "B_tool_default_current": 0.7544351447624966,
+      "C_cli_bare_rouwenhorst": 0.7783323127334589,
+      "moment": "own_rate",
+      "target": 0.57547241,
+      "weight": 100.0
+    },
+    {
+      "A_combined_correct": 0.16565724312932883,
+      "B_tool_default_current": 0.4007710450246843,
+      "C_cli_bare_rouwenhorst": 0.5362364572992889,
+      "moment": "own_rate_2534",
+      "target": 0.34116609,
+      "weight": 80.0
+    },
+    {
+      "A_combined_correct": 2.013535485774642,
+      "B_tool_default_current": 3.3687084094559996,
+      "C_cli_bare_rouwenhorst": 4.021921099469122,
+      "moment": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "target": 2.41876173,
+      "weight": 12.0
+    },
+    {
+      "A_combined_correct": 0.7542797805019044,
+      "B_tool_default_current": 0.9045679149234401,
+      "C_cli_bare_rouwenhorst": 0.8014956263674349,
+      "moment": "prime30_55_childless_owner_share_rooms_ge6",
+      "target": 0.59613112,
+      "weight": 25.0
+    },
+    {
+      "A_combined_correct": 4.391407859569617,
+      "B_tool_default_current": 4.1747374618653685,
+      "C_cli_bare_rouwenhorst": 3.422584156615111,
+      "moment": "prime30_55_childless_renter_mean_rooms",
+      "target": 3.8052881,
+      "weight": 6.0
+    },
+    {
+      "A_combined_correct": 0.0019587118902881784,
+      "B_tool_default_current": 0.08492218089842751,
+      "C_cli_bare_rouwenhorst": -0.5715492179771475,
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "target": 0.36769955881,
+      "weight": 8.0
+    },
+    {
+      "A_combined_correct": 1.8454187067068653,
+      "B_tool_default_current": 2.1108592049012045,
+      "C_cli_bare_rouwenhorst": 2.145157662053652,
+      "moment": "tfr",
+      "target": 1.918,
+      "weight": 20.0
+    },
+    {
+      "A_combined_correct": 0.7501505172490851,
+      "B_tool_default_current": 0.5609703887068863,
+      "C_cli_bare_rouwenhorst": 1.9041299971149384,
+      "moment": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "target": 0.17922556,
+      "weight": 12.0
+    }
+  ],
+  "_theta": {
+    "H0": 9.999672059746388,
+    "alpha_cons": 0.6731064483929385,
+    "beta": 0.8411423842686492,
+    "c_bar_0": 1.28,
+    "c_bar_n": 0.4559787014242588,
+    "chi": 1.15,
+    "h_bar_0": 1.0,
+    "h_bar_jump": 1.4758939442666474,
+    "h_bar_n": 0.984106767291167,
+    "kappa_fert": 1.8906304000000005,
+    "psi_child": 0.26907999999999993,
+    "tenure_choice_kappa": 0.0,
+    "theta0": 0.1318301350511569,
+    "theta_n": 0.7679202774006243
+  }
+}
