@@ -16,6 +16,8 @@ No existing project files were overwritten.
 - `twins_and_gender_iv_v1.do`
 - `secondborn_gender_design_v1.do`
 - `compile_no_location_family_space_packet.py`
+- `audit_intergen_bequest_family_size_targets.R`
+- `build_intergen_bequest_retention_targets.R`
 - `output/` (generated artifacts and logs)
 
 ## Exact Replication Target
@@ -118,6 +120,17 @@ Run scripts from StataMP in batch mode, for example:
   - Log: `output/secondborn_gender_v1/secondborn_gender_v1.log`
   - First-stage diagnostics: `output/secondborn_gender_v1/secondborn_first_stage_v1.tex`
   - Test-stat export: `output/secondborn_gender_v1/secondborn_design_teststats_v1.csv`
+
+## Intergenerational Bequest Target Audits (July 15, 2026)
+
+`audit_intergen_bequest_family_size_targets.R` repairs the old cross-sectional
+late-life wealth construction. `build_intergen_bequest_retention_targets.R`
+constructs survivor-conditional ten-year wealth changes by completed fertility
+and lagged initial wealth, with a four-year sensitivity. Their self-contained
+result packets are under:
+
+- `output/intergen_bequest_family_size_audit/`
+- `output/intergen_bequest_retention_targets/`
 
 ## First-Pass Wealth Findings (v1)
 
