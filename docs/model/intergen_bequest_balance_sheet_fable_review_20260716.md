@@ -216,7 +216,7 @@ concept.
 | Moment | Status now | Recommendation | Parameter it disciplines | Replacement / restriction |
 |---|---|---|---|---|
 | Median total estate/income, 76–84 (6.5013, SE 0.2320) | hard | **Keep hard** (weight 1/SE²) | \(\theta_0\) (weakly; also housing block) | — |
-| p90/p50 total estate/income, 76–84 (3.4481, SE 0.1325) | hard | **Demote to diagnostic** | was \(\theta_1\) | \(\theta_1=0.25\) external, predeclared 0.50 sensitivity (battery convention). Moment returns only with a tail mechanism *and* a model-consistent empirical counterpart. |
+| p90/p50 total estate/income, 76–84 (3.4481, SE 0.1325) | hard | **Demote to diagnostic** | was \(\theta_1\) | \(\theta_1\) external at the Nakajima–Telyukova (2017, JF) anchor: shifter \(\zeta\approx\$19{,}600\approx\) a quarter of average annual household income \(\Rightarrow \theta_1\approx0.25\) in model units (July-14 spec memo anchor; NT numbers tagged [E] there — verify against the paper before wiring). Sensitivity cell at a De Nardi (2004)-scale shifter (several times average income; exact value verified from the paper), the regime where the frontier's dispersion appears. Moment returns as a hard target only with a tail mechanism *and* a model-consistent empirical counterpart. |
 | 2+ minus 1-child median estate/income gap, 65–75 (0.1011, SE 0.5630) | hard | **Demote to diagnostic** | was \(\theta_n\) | \(\theta_n=0\) external. No replacement moment exists absent a marital state; the alternative is modeling marriage, which this gap alone does not justify. |
 | Old nonhousing (net liquid) median/income, 65–75 (2.2305) | dropped in M3 redesign | **Reinstate as hard target** with fresh person-bootstrap SE and 1/SE² weight | late-life portfolio composition (loads on \(\beta\), \(\alpha_{cons}\), housing block; gates against the all-housing regime) | its person-bootstrap SE must be computed first via the existing R pipeline (minutes of work; same 499-rep design). |
 | 12 established non-estate moments | hard | keep hard, unchanged weights | as before | — |
@@ -238,14 +238,30 @@ dispersion row and the scale-inflated gap row) leave the objective.
   seed into every chain and fail the collector if the free search ends above
   it (the July-15 A3 failure must not recur). Accept a zero outcome as a
   result, not a defeat.
-- \(\theta_1\): **external restriction at 0.25** with a predeclared 0.50
-  sensitivity solve. State plainly in any writeup: with p90/p50 demoted,
-  \(\theta_1\) is not internally identified; this is the honest version of
-  what the July-14 battery already concluded.
-- \(\theta_n\): **external restriction at 0.** The only moment ever proposed
-  for it is statistically zero and composition-driven. If the child margin of
-  bequests becomes a research question, it needs a marital state and a
-  within-stratum moment, not this aggregate.
+- \(\theta_1\): **external restriction at the verified Nakajima–Telyukova
+  (2017, JF) anchor** (\(\gamma=0.43\), \(\zeta\approx\$19{,}600\approx\) a
+  quarter of average annual household income \(\Rightarrow\theta_1\approx
+  0.25\) with the model's average-income normalization of 1.0), with a
+  De Nardi (2004)-scale sensitivity cell (several times average income —
+  verify \(\phi_2\) and units from the paper). Provenance: this is the
+  July-14 spec memo's own anchor (`bequest_specification_memo_20260714.tex`,
+  §(d) and the Option-B1 discussion), which also stated that \(\theta_1\)
+  "must remain an explicitly external scale until a model-specific estate
+  moment is added." M3 was that attempt; the reachability frontier and the
+  \(\theta_1\)/\(\theta_n\) Jacobian collinearity show it failed, so the
+  external anchor stands. NT identify \(\zeta\) from variation this model
+  lacks (medical risk, downsizing, reverse mortgages) — internal estimation
+  here is noise-fitting, not identification. State plainly in any writeup
+  that \(\theta_1\) is externally restricted.
+- \(\theta_n\): **external restriction at 0**, per the child-blind
+  convention of the structural literature (De Nardi 2004; Lockwood 2018;
+  Nakajima–Telyukova 2017; De Nardi–French–Jones–McGee 2025, where children
+  are not even a conditioning variable; Kværner 2023 models the motive
+  child-blind), the classic Hurd (1989, Econometrica) null, Kopczuk–Lupton
+  (2007, REStud — motive *incidence*, not scale), and our own PSID gap of
+  0.101 (SE 0.563), a within-sample replication of that null. If the child
+  margin of bequests becomes a research question, it needs a marital state
+  and a within-stratum moment, not this aggregate.
 - Housekeeping: the chain driver already sets
   `normalize_bequest_utility=True`, but the `parameters.py` default is
   `False`; flip the default (or assert it in the spec) so no future driver
@@ -267,6 +283,14 @@ Torch smoke of the exact loop first — all per the standing contract
 conventions. Precondition (data, minutes): extend
 `audit_intergen_bequest_family_size_targets.R` to bootstrap the 65–75
 nonhousing median SE with the identical person-cluster design.
+
+Second precondition (literature verification, half a day): open Nakajima–
+Telyukova (2017) and De Nardi (2004) and verify \(\gamma\), \(\zeta\), and
+\(\phi_2\) with their exact units from the papers (the July-14 memo tags the
+NT numbers [E], extracted but not re-checked); convert through the model's
+average-income normalization (the pension formula hardcodes mean worker
+income \(=1.0\); confirm against the solved profile) and wire the two
+verified values as the \(\theta_1\) baseline and sensitivity cells.
 
 **Pass (all required):**
 1. Strict, exactly repeated tight winner (bit-identical two solves).
