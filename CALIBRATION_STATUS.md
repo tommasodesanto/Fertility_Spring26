@@ -1,8 +1,36 @@
 # Calibration Status
 
-Updated: `2026-07-17` ~1am (M5 wired, tested, smoke-passed locally; Torch launch blocked on expired login)
+Updated: `2026-07-17` ~1:10am (M5 running on Torch; M6 income-risk feasibility decision memo complete)
 
-## July 17 ~1am: M5 ready to launch; blocked only on Torch credentials
+## July 17 ~1:10am: M6 income-risk feasibility literature decision
+
+The source-verified decision memo is at
+`docs/model/intergen_income_risk_feasibility_decision_memo_20260717.md`.
+Recommendation: combine realistic income risk with an explicit HSZ-style,
+asset-tested residual transfer and close its aggregate budget with an
+endogenous labor-income levy. Measure the policy guarantee independently of
+the Stone--Geary preference minimum; the support inequality between the two is
+an overidentifying model test, not an identity imposed for numerical
+feasibility. Add receipt and outlay moments split by young childless and parent
+households before calibration; if the guarantee or incidence cannot support
+`cbar0` while retaining the active fertility/wealth/tenure targets, the joint
+preference/income-support specification is rejected. Do not use low income
+risk, unexplained truncation, or unsecured credit as the baseline fix.
+
+The literature changes two priors. First, transfer guarantees around 27--31%
+of median household income exist in HSZ and Scholz--Seshadri--Khitatrakun, but
+they are family-size/program-specific bundles, not universal Stone--Geary
+preference floors for young childless renters. Second, the verified 0.16%
+age-22 dead mass does not establish mass welfare participation; incidence and
+outlays must be computed after solving the transfer rule. Sommer--Sullivan's
+annual `(rho,sigma)=(0.90,0.20)` is a literature calibration of pre-tax labor
+productivity, not their own PSID estimate. Boar--Gorea--Midrigan supplies a
+verified post-tax-and-transfer comparison process, but importing its risk
+alone would omit the flexible rent, credit, home production, and homothetic
+preferences that make its household problem feasible. No model or cluster job
+was changed or launched for this literature task.
+
+## July 17 ~1am: M5 launched on Torch after local validation
 
 M5 (income-disciplined recalibration) is fully wired, 68 tests pass, and the
 local exact-loop smoke solves finite end to end. Contract (15 moments / 14
