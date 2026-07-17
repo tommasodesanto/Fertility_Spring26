@@ -25,6 +25,8 @@ if str(ROOT) not in sys.path:
 
 from dt_cp_model.direct_calibration import (  # noqa: E402
     DirectCalibrationSetup,
+    ALPHA_CONS_LB,
+    ALPHA_CONS_UB,
     build_direct_calibration_setup,
     direct_theta_record,
     evaluate_direct_theta,
@@ -35,7 +37,13 @@ def main() -> None:
     args = parse_args()
     weight_overrides = parse_weight_overrides(args.weight_overrides)
     extra_targets = parse_extra_targets(args.extra_targets)
+    if args.housing_share_target is not None:
+        extra_targets["housing_exp_share_usercost_total"] = (
+            float(args.housing_share_target),
+            float(args.housing_share_weight),
+        )
     H_own = parse_float_list(args.H_own)
+    alpha_cons_bounds = parse_bounds_pair(args.alpha_cons_bounds)
     setup = build_direct_calibration_setup(
         args.setup,
         geo_weight=args.geo_weight,
@@ -47,6 +55,8 @@ def main() -> None:
         renewal_retention=args.renewal_retention,
         hR_max=args.hR_max,
         alpha_cons=args.alpha_cons,
+        calibrate_alpha_cons=args.calibrate_alpha_cons,
+        alpha_cons_bounds=alpha_cons_bounds,
         owner_h_bar_scale=args.owner_h_bar_scale,
         owner_size_cost=args.owner_size_cost,
         owner_size_cost_ref=args.owner_size_cost_ref,
@@ -90,6 +100,10 @@ def main() -> None:
         "renewal_retention": args.renewal_retention,
         "hR_max": args.hR_max,
         "alpha_cons": args.alpha_cons,
+        "calibrate_alpha_cons": args.calibrate_alpha_cons,
+        "alpha_cons_bounds": alpha_cons_bounds,
+        "housing_share_target": args.housing_share_target,
+        "housing_share_weight": args.housing_share_weight,
         "owner_h_bar_scale": args.owner_h_bar_scale,
         "owner_size_cost": args.owner_size_cost,
         "owner_size_cost_ref": args.owner_size_cost_ref,
@@ -105,6 +119,8 @@ def main() -> None:
         "lb": lb.tolist(),
         "ub": ub.tolist(),
         "bound_overrides": args.bound_overrides,
+        "targets": {key: float(value) for key, value in setup.targets.items()},
+        "weights": {key: float(value) for key, value in setup.weights.items()},
         "warm_start_json": args.warm_start_json,
         "x0": setup.x0.tolist(),
     }
@@ -181,6 +197,7 @@ def main() -> None:
                 f"[{tag} {n_eval:04d}] loss={result.loss:.6g} solve={result.elapsed_sec:.1f}s "
                 f"TFR={record['moments'].get('tfr', math.nan):.3f} "
                 f"own={record['moments'].get('own_rate', math.nan):.3f} "
+                f"hshare={record['moments'].get('housing_exp_share_usercost_total', math.nan):.3f} "
                 f"N={record['moments'].get('implied_total_population', math.nan):.3f} "
                 f"popC={record['moments'].get('inv_pop_share_C', math.nan):.3f} "
                 f"rr={record['moments'].get('inv_rent_ratio_C_over_P', math.nan):.3f}",
@@ -249,6 +266,33 @@ def parse_args() -> argparse.Namespace:
             if "DT_DIRECT_ALPHA_CONS" in os.environ
             else None
         ),
+    )
+    parser.add_argument(
+        "--calibrate-alpha-cons",
+        action=argparse.BooleanOptionalAction,
+        default=parse_optional_bool(os.environ.get("DT_DIRECT_CALIBRATE_ALPHA_CONS")) or False,
+        help="Include alpha_cons as an explicit calibrated parameter.",
+    )
+    parser.add_argument(
+        "--alpha-cons-bounds",
+        default=os.environ.get("DT_DIRECT_ALPHA_CONS_BOUNDS", f"{ALPHA_CONS_LB}:{ALPHA_CONS_UB}"),
+        help="Bounds for calibrated alpha_cons, formatted lo:hi.",
+    )
+    parser.add_argument(
+        "--housing-share-target",
+        type=float,
+        default=(
+            float(os.environ["DT_DIRECT_HOUSING_SHARE_TARGET"])
+            if "DT_DIRECT_HOUSING_SHARE_TARGET" in os.environ
+            else None
+        ),
+        help="Optional SMM target for aggregate user-cost housing expenditure share.",
+    )
+    parser.add_argument(
+        "--housing-share-weight",
+        type=float,
+        default=float(os.environ.get("DT_DIRECT_HOUSING_SHARE_WEIGHT", "40")),
+        help="Weight on housing_exp_share_usercost_total when --housing-share-target is set.",
     )
     parser.add_argument(
         "--owner-h-bar-scale",
@@ -382,6 +426,19 @@ def parse_float_list(raw: str | None) -> list[float] | None:
     return [float(part.strip()) for part in str(raw).split(",") if part.strip()]
 
 
+def parse_bounds_pair(raw: str | None) -> tuple[float, float] | None:
+    if not raw:
+        return None
+    if ":" not in str(raw):
+        raise ValueError(f"bounds pair must be lo:hi, got {raw!r}")
+    lo_raw, hi_raw = str(raw).split(":", 1)
+    lo = float(lo_raw)
+    hi = float(hi_raw)
+    if not np.isfinite(lo) or not np.isfinite(hi) or lo > hi:
+        raise ValueError(f"invalid bounds pair {raw!r}")
+    return lo, hi
+
+
 def apply_bound_overrides(lb: np.ndarray, ub: np.ndarray, names: list[str], raw: str | None) -> None:
     if not raw:
         return
@@ -439,10 +496,14 @@ def theta_from_record(record: dict[str, Any], names: list[str]) -> np.ndarray:
         return np.asarray(theta_raw, dtype=float)
     params = record.get("parameters")
     if isinstance(params, dict):
-        missing = [name for name in names if name not in params]
+        merged = dict(params)
+        for name in names:
+            if name not in merged and name in record:
+                merged[name] = record[name]
+        missing = [name for name in names if name not in merged]
         if missing:
             raise ValueError(f"warm-start record is missing parameters: {missing}")
-        return np.asarray([params[name] for name in names], dtype=float)
+        return np.asarray([merged[name] for name in names], dtype=float)
     raise ValueError("warm-start record must contain theta or parameters")
 
 
@@ -571,6 +632,14 @@ def reflect_bounds(theta: np.ndarray, lb: np.ndarray, ub: np.ndarray) -> np.ndar
 
 
 def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace, eval_id: int, elapsed: float, improved: bool) -> dict[str, Any]:
+    extra_targets = parse_extra_targets(args.extra_targets)
+    if args.housing_share_target is not None:
+        extra_targets["housing_exp_share_usercost_total"] = (
+            float(args.housing_share_target),
+            float(args.housing_share_weight),
+        )
+    weight_overrides = parse_weight_overrides(args.weight_overrides)
+    parameters = direct_theta_record(result.theta, setup.names)
     return {
         "run_tag": args.run_tag,
         "job_id": args.job_id,
@@ -584,16 +653,30 @@ def make_record(result, setup: DirectCalibrationSetup, args: argparse.Namespace,
         "solve_elapsed_sec": float(result.elapsed_sec),
         "hR_max": args.hR_max,
         "alpha_cons": args.alpha_cons,
+        "alpha_cons_effective": float(parameters.get("alpha_cons", setup.P_base.alpha_cons)),
+        "calibrate_alpha_cons": args.calibrate_alpha_cons,
+        "alpha_cons_bounds": parse_bounds_pair(args.alpha_cons_bounds),
+        "housing_share_target": args.housing_share_target,
+        "housing_share_weight": args.housing_share_weight,
         "owner_h_bar_scale": args.owner_h_bar_scale,
         "owner_size_cost": args.owner_size_cost,
         "owner_size_cost_ref": args.owner_size_cost_ref,
         "owner_size_cost_power": args.owner_size_cost_power,
         "tenure_choice_kappa": args.tenure_choice_kappa,
+        "population_closure": args.population_closure,
+        "parent_dp_waiver": args.parent_dp_waiver,
+        "parent_dp_waiver_phi": args.parent_dp_waiver_phi,
+        "phi": [float(x) for x in np.asarray(setup.P_base.phi, dtype=float).reshape(-1)],
         "H_own": parse_float_list(args.H_own),
-        "extra_targets": parse_extra_targets(args.extra_targets),
-        "weight_overrides": parse_weight_overrides(args.weight_overrides),
+        "extra_targets": {key: [float(value[0]), float(value[1])] for key, value in extra_targets.items()},
+        "weight_overrides": weight_overrides,
+        "targets": {key: float(value) for key, value in setup.targets.items()},
+        "weights": {key: float(value) for key, value in setup.weights.items()},
+        "theta_names": list(setup.names),
+        "lb": [float(x) for x in np.asarray(setup.lb, dtype=float).reshape(-1)],
+        "ub": [float(x) for x in np.asarray(setup.ub, dtype=float).reshape(-1)],
         "theta": [float(x) for x in result.theta],
-        "parameters": direct_theta_record(result.theta, setup.names),
+        "parameters": parameters,
         "moments": result.moments,
         "p_eq": result.p_eq,
         "timings": result.timings,
@@ -617,8 +700,15 @@ def print_header(args: argparse.Namespace, job_dir: Path, seed: int, lb: np.ndar
     print(f"renewal_retention={args.renewal_retention}")
     if args.extra_targets:
         print(f"extra_targets={args.extra_targets}")
+    if args.housing_share_target is not None:
+        print(
+            "housing_exp_share_usercost_total target="
+            f"{args.housing_share_target:.4f} weight={args.housing_share_weight:.3g}"
+        )
     if args.alpha_cons is not None:
         print(f"alpha_cons={args.alpha_cons}")
+    if args.calibrate_alpha_cons:
+        print(f"calibrating alpha_cons within {args.alpha_cons_bounds}")
     if args.warm_start_json:
         print(f"warm_start_json={args.warm_start_json}")
     if args.owner_size_cost is not None:

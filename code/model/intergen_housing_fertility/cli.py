@@ -88,6 +88,9 @@ def main() -> None:
     panel.add_argument("--J", type=int, default=17)
     panel.add_argument("--Nb", type=int, default=60)
     panel.add_argument("--income-states", type=int, default=5)
+    panel.add_argument("--income-process", choices=["current", "rouwenhorst"], default="current")
+    panel.add_argument("--income-annual-rho", type=float, default=0.90)
+    panel.add_argument("--income-innovation-sd", type=float, default=0.20)
     panel.add_argument("--n-house", type=int, default=6)
     panel.add_argument("--max-iter-eq", type=int, default=25)
     panel.add_argument("--workers", type=int, default=6)
@@ -105,6 +108,9 @@ def main() -> None:
     global_de.add_argument("--J", type=int, default=17)
     global_de.add_argument("--Nb", type=int, default=60)
     global_de.add_argument("--income-states", type=int, default=5)
+    global_de.add_argument("--income-process", choices=["current", "rouwenhorst"], default="current")
+    global_de.add_argument("--income-annual-rho", type=float, default=0.90)
+    global_de.add_argument("--income-innovation-sd", type=float, default=0.20)
     global_de.add_argument("--n-house", type=int, default=6)
     global_de.add_argument("--max-iter-eq", type=int, default=25)
     global_de.add_argument("--minutes", type=float, default=115.0)
@@ -128,6 +134,9 @@ def main() -> None:
     polish.add_argument("--J", type=int, default=PRODUCTION_J)
     polish.add_argument("--Nb", type=int, default=PRODUCTION_SEARCH_NB)
     polish.add_argument("--income-states", type=int, default=PRODUCTION_INCOME_STATES)
+    polish.add_argument("--income-process", choices=["current", "rouwenhorst"], default="current")
+    polish.add_argument("--income-annual-rho", type=float, default=0.90)
+    polish.add_argument("--income-innovation-sd", type=float, default=0.20)
     polish.add_argument("--n-house", type=int, default=5)
     polish.add_argument("--max-iter-eq", type=int, default=PRODUCTION_MAX_ITER_EQ)
     polish.add_argument("--minutes", type=float, default=115.0)
@@ -146,6 +155,7 @@ def main() -> None:
     polish.add_argument("--fixed-beta-annual", type=float, default=None)
     polish.add_argument("--fixed-theta-n", type=float, default=None)
     polish.add_argument("--fixed-chi", type=float, default=None)
+    polish.add_argument("--normalize-bequest-utility", action="store_true")
     polish.add_argument("--quiet", action="store_true")
     polish.add_argument("--outdir", type=Path, default=Path("../../output/model/intergen_housing_fertility_local_polish"))
 
@@ -185,6 +195,9 @@ def main() -> None:
             J=int(args.J),
             Nb=int(args.Nb),
             income_states=int(args.income_states),
+            income_process=str(args.income_process),
+            income_annual_rho=float(args.income_annual_rho),
+            income_innovation_sd=float(args.income_innovation_sd),
             n_house=int(args.n_house),
             max_iter_eq=int(args.max_iter_eq),
             workers=int(args.workers),
@@ -205,6 +218,9 @@ def main() -> None:
             J=int(args.J),
             Nb=int(args.Nb),
             income_states=int(args.income_states),
+            income_process=str(args.income_process),
+            income_annual_rho=float(args.income_annual_rho),
+            income_innovation_sd=float(args.income_innovation_sd),
             n_house=int(args.n_house),
             max_iter_eq=int(args.max_iter_eq),
             minutes=float(args.minutes),
@@ -233,6 +249,9 @@ def main() -> None:
             J=int(args.J),
             Nb=int(args.Nb),
             income_states=int(args.income_states),
+            income_process=str(args.income_process),
+            income_annual_rho=float(args.income_annual_rho),
+            income_innovation_sd=float(args.income_innovation_sd),
             n_house=int(args.n_house),
             max_iter_eq=int(args.max_iter_eq),
             minutes=float(args.minutes),
@@ -244,6 +263,7 @@ def main() -> None:
             shrink=float(args.shrink),
             profile_name=None if str(args.profile) == "none" else str(args.profile),
             fixed_theta=fixed_theta,
+            normalize_bequest_utility=bool(args.normalize_bequest_utility),
             progress=not bool(args.quiet),
         )
         print(json.dumps(_jsonable(summary), indent=2, sort_keys=True))

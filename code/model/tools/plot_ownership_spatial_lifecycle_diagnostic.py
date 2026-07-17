@@ -56,8 +56,8 @@ DEFAULT_OUTDIR = DEFAULT_CASE_DIR / "figures"
 ACS_SAMPLE = "household_heads_hhwt_due_housing"
 
 COLORS = {
-    "model": "#1f5fa6",
-    "data": "#a33a3a",
+    "model": "#1c57ab",
+    "data": "#b32e1f",
     "gap": "#3f6f43",
     "grid": "#c8ccd2",
     "band": "#b6bcc5",
@@ -207,6 +207,9 @@ def setup_axis(ax, title: str, age_min: int, age_max: int, ylabel: str = "Owners
 
 
 def build_setup(record: dict):
+    alpha_cons_bounds = record.get("alpha_cons_bounds")
+    if alpha_cons_bounds is not None:
+        alpha_cons_bounds = tuple(float(x) for x in alpha_cons_bounds)
     return build_direct_calibration_setup(
         "benchmark",
         geo_weight=100.0,
@@ -222,6 +225,8 @@ def build_setup(record: dict):
         tenure_choice_kappa=record.get("tenure_choice_kappa"),
         weight_overrides=record.get("weight_overrides") or None,
         extra_targets=record.get("extra_targets") or None,
+        calibrate_alpha_cons=bool(record.get("calibrate_alpha_cons", False)),
+        alpha_cons_bounds=alpha_cons_bounds,
         H_own=record.get("H_own"),
     )
 
@@ -296,8 +301,6 @@ def compute_model_spatial_lifecycle(record_path: Path) -> dict[str, dict[str, di
 
 def plot_overall(model: dict[str, dict[int, float]], acs: dict[int, float], outbase: Path, age_min: int, age_max: int) -> None:
     fig, ax = plt.subplots(figsize=(8.0, 4.8))
-    ax.axvspan(30, 55, color=COLORS["band"], alpha=0.16, linewidth=0, label="Target ages 30-55")
-
     ages, vals = series_xy(model["all"], age_min, age_max)
     ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.7, label="Model")
 
@@ -322,7 +325,6 @@ def plot_spatial(
     fig, axes = plt.subplots(1, 3, figsize=(13.8, 4.5), sharex=False)
     panels = [("center", "Center"), ("periphery", "Periphery")]
     for ax, (loc, title) in zip(axes[:2], panels):
-        ax.axvspan(30, 55, color=COLORS["band"], alpha=0.14, linewidth=0)
         ages, vals = series_xy(model[loc], age_min, age_max)
         ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.5, label="Model")
         ages, vals = series_xy(acs[loc], age_min, age_max)
@@ -337,7 +339,6 @@ def plot_spatial(
     ages, vals = series_xy(d_gap, age_min, age_max)
     ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.2, linestyle="--", label="ACS heads")
     ax.axhline(0, color="#555555", linewidth=0.8)
-    ax.axvspan(30, 55, color=COLORS["band"], alpha=0.14, linewidth=0)
     setup_axis(ax, "Periphery - Center Gap", age_min, age_max, "Ownership gap (pp)")
     ax.set_ylim(-20, 90)
 
@@ -364,7 +365,6 @@ def plot_aggregate_full_wealth_panel(
         ("children", "Children at home", "Share with child under 18 (%)"),
     ]
     for ax, (metric, title, ylabel) in zip(axes, rows):
-        ax.axvspan(30, 55, color=COLORS["band"], alpha=0.12, linewidth=0)
         ax.set_title(title)
         if metric == "ownership":
             ages, vals = series_xy(model[metric]["all"], age_min, age_max)
@@ -417,7 +417,7 @@ def plot_spatial_lifecycle_panel(
     fig, axes = plt.subplots(3, 2, figsize=(12.8, 10.2), sharex=True)
     row_specs = [
         ("ownership", "Ownership rate (%)"),
-        ("housing_value", "Owner-occupied housing\nvalue index, ages 30-55=100"),
+        ("housing_value", "Housing wealth (index, 30-55=100)"),
         ("children", "Share with child under 18 (%)"),
     ]
     locs = ["center", "periphery"]
@@ -426,8 +426,6 @@ def plot_spatial_lifecycle_panel(
         axes[0, col].set_title(LOC_LABEL[loc], fontsize=14, fontweight="bold")
         for row, (metric, ylabel) in enumerate(row_specs):
             ax = axes[row, col]
-            ax.axvspan(30, 55, color=COLORS["band"], alpha=0.12, linewidth=0)
-
             if metric == "ownership":
                 ages, vals = series_xy(model[metric][loc], age_min, age_max)
                 ax.plot(ages, 100 * vals, color=COLORS["model"], linewidth=2.4, label="Model")
@@ -447,11 +445,7 @@ def plot_spatial_lifecycle_panel(
                 ages, vals = series_xy(data_children[loc], age_min, age_max)
                 ax.plot(ages, 100 * vals, color=COLORS["data"], linewidth=2.1, linestyle="--", label="ACS adults")
                 ax.set_ylim(0, 75)
-            else:
-                ax.set_ylabel(ylabel)
-
-            if row != 1:
-                ax.set_ylabel(ylabel)
+            ax.set_ylabel(ylabel)
             ax.grid(True, color=COLORS["grid"], alpha=0.55, linewidth=0.7)
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
@@ -459,7 +453,6 @@ def plot_spatial_lifecycle_panel(
                 ax.set_xlabel("Age")
 
     axes[0, 0].legend(frameon=False, loc="upper left")
-    fig.suptitle("Spatial Lifecycle Diagnostics", fontsize=16, fontweight="bold")
     fig.tight_layout(rect=[0.03, 0.02, 1, 0.97])
     fig.savefig(outbase.with_suffix(".png"), dpi=220, bbox_inches="tight")
     fig.savefig(outbase.with_suffix(".pdf"), bbox_inches="tight")
@@ -647,6 +640,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--age-min", type=int, default=20)
     parser.add_argument("--age-max", type=int, default=55)
+    parser.add_argument(
+        "--lifetime-age-max",
+        type=int,
+        default=None,
+        help="If set above --age-max, also write *_lifetime panels over the longer age range.",
+    )
     return parser.parse_args()
 
 
@@ -692,6 +691,38 @@ def main() -> None:
         args.age_min,
         args.age_max,
     )
+    if args.lifetime_age_max is not None and args.lifetime_age_max > args.age_max:
+        plot_overall(
+            model,
+            acs_overall,
+            args.outdir / "ownership_lifecycle_heads_model_vs_data_lifetime",
+            args.age_min,
+            args.lifetime_age_max,
+        )
+        plot_spatial(
+            model,
+            acs_loc,
+            args.outdir / "ownership_lifecycle_spatial_model_vs_data_lifetime",
+            args.age_min,
+            args.lifetime_age_max,
+        )
+        plot_spatial_lifecycle_panel(
+            panel_model,
+            acs_loc,
+            acs_home_value,
+            data_children,
+            args.outdir / "spatial_lifecycle_3x2_model_vs_data_lifetime",
+            args.age_min,
+            args.lifetime_age_max,
+        )
+        plot_aggregate_full_wealth_panel(
+            panel_model,
+            acs_overall,
+            data_children_all,
+            args.outdir / "aggregate_lifecycle_full_wealth_lifetime",
+            args.age_min,
+            args.lifetime_age_max,
+        )
     write_panel_csv(
         args.outdir / "spatial_lifecycle_3x2_model_vs_data.csv",
         args.case,

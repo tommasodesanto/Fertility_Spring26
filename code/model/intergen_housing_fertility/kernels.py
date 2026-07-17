@@ -361,6 +361,7 @@ def forward_distribution_fast_kernel(
     A_f_end,
     K,
     use_stochastic_aging,
+    survival_probs,
 ):
     # Fast-stat forward pass used during equilibrium iteration. Tracks
     # only price-relevant aggregates (population, births, mature entrants);
@@ -401,7 +402,7 @@ def forward_distribution_fast_kernel(
                 for io in range(I):
                     for nn in range(npar):
                         for cs in range(ncs):
-                            m = g[b, ten, io, j, nn, cs]
+                            m = g[b, ten, io, j, nn, cs] * survival_probs[j]
                             if m == 0.0:
                                 continue
                             for loc in range(I):
@@ -619,8 +620,6 @@ def tenure_choice_kernel(
                             v0 = Vd[b, 0, id_, nn, cs]
                         else:
                             ba = bg_b + sp
-                            if ba < 0.0:
-                                ba = 0.0
                             v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba)
                         if v0 > best_v:
                             best_v = v0
@@ -693,8 +692,6 @@ def tenure_logit_kernel(
                             v0 = Vd[b, 0, id_, nn, cs]
                         else:
                             ba = bg_b + sp
-                            if ba < 0.0:
-                                ba = 0.0
                             v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba)
                         vals[0] = v0
                         if v0 > best_v:
@@ -734,7 +731,8 @@ def tenure_logit_kernel(
                         tcj[b, to, id_, nn, cs] = best_tn
                         if best_v <= -1e9:
                             VH[b, to, id_, nn, cs] = best_v
-                            probs[b, to, id_, nn, cs, best_tn] = 1.0
+                            for tn in range(nt):
+                                probs[b, to, id_, nn, cs, tn] = 0.0
                         else:
                             denom = 0.0
                             for tn in range(nt):
@@ -769,6 +767,8 @@ def full_renter_block_kernel(
     alpha,
     oms,
     beta,
+    s_next,
+    D_next,
     gs_alpha1,
     gs_alpha2,
     gs_tol,
@@ -800,12 +800,16 @@ def full_renter_block_kernel(
         ht_cap_pow = ht_cap_c ** (1.0 - alpha)
         for b in range(Nb):
             Rvb = Rv1d[b]
-            lo = 0.0
+            current_b = b_grid[b]
+            rollover_floor = s_next * (current_b if current_b < 0.0 else 0.0)
+            line_floor = -D_next
+            unsecured_floor = rollover_floor if rollover_floor < line_floor else line_floor
+            lo = unsecured_floor
             if bg0 > lo:
                 lo = bg0
             hi = Rvb - dc - 1e-6
-            if hi < 0.0:
-                hi = 0.0
+            if hi < lo:
+                hi = lo
             if has_prev:
                 lo_prev = bp_prev[b, c] - 2.0
                 if lo_prev > lo:
@@ -813,8 +817,10 @@ def full_renter_block_kernel(
                 hi_prev = bp_prev[b, c] + 2.0
                 if hi_prev < hi:
                     hi = hi_prev
-                if lo < 0.0:
-                    lo = 0.0
+                if lo < unsecured_floor:
+                    lo = unsecured_floor
+                if lo < bg0:
+                    lo = bg0
                 if hi < lo:
                     hi = lo
 
@@ -895,6 +901,8 @@ def full_owner_block_kernel(
     alpha,
     oms,
     beta,
+    s_next,
+    D_next,
     gs_alpha1,
     gs_alpha2,
     gs_tol,
@@ -919,7 +927,14 @@ def full_owner_block_kernel(
         Ko_c = ht_c ** one_minus_alpha_oms
         for b in range(Nb):
             Rvb = Rv1d[b]
-            lo = bf
+            # b already contains secured mortgage debt.  Subtract the current
+            # collateral floor before rolling only the unsecured component.
+            current_unsecured = b_grid[b] - bf
+            rollover_floor = s_next * (current_unsecured if current_unsecured < 0.0 else 0.0)
+            line_floor = -D_next
+            unsecured_floor = rollover_floor if rollover_floor < line_floor else line_floor
+            total_floor = bf + unsecured_floor
+            lo = total_floor
             if bg0 > lo:
                 lo = bg0
             hi = Rvb - oc - cbc - 1e-6
@@ -932,8 +947,10 @@ def full_owner_block_kernel(
                 hi_prev = bp_prev[b, c] + 2.0
                 if hi_prev < hi:
                     hi = hi_prev
-                if lo < bf:
-                    lo = bf
+                if lo < total_floor:
+                    lo = total_floor
+                if lo < bg0:
+                    lo = bg0
                 if hi < lo:
                     hi = lo
 
@@ -998,6 +1015,7 @@ def location_logit_kernel(
                         # Build value-to-go for each destination, then logit
                         # First find max for stable logsumexp
                         m = -1e300
+                        all_dead = True
                         for idd in range(I):
                             if idd == io:
                                 v = VH[b, to, io, nn, cs]
@@ -1005,6 +1023,8 @@ def location_logit_kernel(
                                 k = iidx[b, io, to]
                                 w = iwt[b, io, to]
                                 v = (1.0 - w) * VH[k, 0, idd, nn, cs] + w * VH[k + 1, 0, idd, nn, cs]
+                            if v > -1e9:
+                                all_dead = False
                             v_shift = (v + loc_shift[io, idd]) * inv_kl
                             if v_shift > m:
                                 m = v_shift
@@ -1026,7 +1046,10 @@ def location_logit_kernel(
                         VI[b, to, io, nn, cs] = kappa_loc * ls
                         # normalize probs
                         for idd in range(I):
-                            lpj[b, to, io, idd, nn, cs] = lpj[b, to, io, idd, nn, cs] / se
+                            if all_dead:
+                                lpj[b, to, io, idd, nn, cs] = 0.0
+                            else:
+                                lpj[b, to, io, idd, nn, cs] = lpj[b, to, io, idd, nn, cs] / se
     return VI, lpj
 
 

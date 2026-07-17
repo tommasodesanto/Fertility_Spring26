@@ -175,6 +175,8 @@ def unit_accounting_rows(sol: Any, P: Any, p_eq: np.ndarray) -> list[dict[str, A
     annual_aftertax = period_income / period_years
     annual_gross = annual_aftertax / max(1.0 - tau, 1e-12)
     b_entry = float(getattr(P, "b_entry_fixed", math.nan))
+    entry_ratio_mean = float(getattr(sol, "entry_wealth_ratio_mean", math.nan))
+    entry_grid_mean = float(getattr(sol, "entry_wealth_grid_mean", math.nan))
     return [
         {"object": "period_years", "value": period_years, "interpretation": "years per model decision period"},
         {"object": "scale_flows_to_period", "value": bool(getattr(P, "scale_flows_to_period", False)), "interpretation": "income and flow costs are multiplied by period_years"},
@@ -182,7 +184,10 @@ def unit_accounting_rows(sol: Any, P: Any, p_eq: np.ndarray) -> list[dict[str, A
         {"object": "prime_period_aftertax_income", "value": period_income, "interpretation": "model denominator currently used in many wealth/income stats"},
         {"object": "prime_annual_aftertax_income", "value": annual_aftertax, "interpretation": "period after-tax income divided by period_years"},
         {"object": "prime_annual_gross_income", "value": annual_gross, "interpretation": "annual after-tax income grossed up by 1/(1-tau_pay)"},
-        {"object": "b_entry_fixed", "value": b_entry, "interpretation": "entrant stock wealth in model goods units"},
+        {"object": "entry_wealth_mode", "value": str(getattr(P, "entry_wealth_mode", "scalar")), "interpretation": "entrant wealth closure used by the solver"},
+        {"object": "entry_wealth_ratio_mean", "value": entry_ratio_mean, "interpretation": "mean entrant wealth / annual gross income when using external ratio mode"},
+        {"object": "entry_wealth_grid_mean", "value": entry_grid_mean, "interpretation": "mean entrant liquid wealth in model goods units after grid scattering"},
+        {"object": "b_entry_fixed", "value": b_entry, "interpretation": "legacy scalar entrant stock wealth in model goods units"},
         {"object": "b_entry_over_period_aftertax_income", "value": b_entry / period_income, "interpretation": "entry wealth under current period denominator"},
         {"object": "b_entry_over_annual_aftertax_income", "value": b_entry / annual_aftertax, "interpretation": "entry wealth vs annual after-tax income"},
         {"object": "b_entry_over_annual_gross_income", "value": b_entry / annual_gross, "interpretation": "entry wealth vs annual gross-normalized income"},

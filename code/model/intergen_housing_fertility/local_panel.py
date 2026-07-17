@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import concurrent.futures as cf
+import hashlib
 import json
 import math
 import os
@@ -33,13 +34,15 @@ from .production_profile import (
     production_profile_overrides,
     validate_production_profile,
 )
-from .solver import run_model_cp_dt
+from .solver import InfeasibleThetaError, run_model_cp_dt
 
 
 DEFAULT_INCOME_GRID_5 = np.array([0.60, 0.80, 1.00, 1.20, 1.40])
 DEFAULT_INCOME_WEIGHTS_5 = np.array([0.10, 0.20, 0.40, 0.20, 0.10])
 DEFAULT_RHO_Z = 0.85
 DEFAULT_TENURE_CHOICE_KAPPA = 0.01
+ROUWENHORST_ANNUAL_RHO = 0.90
+ROUWENHORST_ANNUAL_INNOVATION_SD = 0.20
 
 GLOBAL_DE_BOUNDS = list(PRODUCTION_SEARCH_BOUNDS)
 
@@ -56,6 +59,9 @@ def run_local_panel(
     workers: int = 6,
     minutes: float = 30.0,
     income_states: int = 5,
+    income_process: str = "current",
+    income_annual_rho: float = ROUWENHORST_ANNUAL_RHO,
+    income_innovation_sd: float = ROUWENHORST_ANNUAL_INNOVATION_SD,
     diagnostic_best: int = 3,
     target_set: str = "candidate_no_timing_v0",
     include_anchors: bool = True,
@@ -82,7 +88,9 @@ def run_local_panel(
     os.environ["OPENBLAS_NUM_THREADS"] = "1"
 
     rank_targets, rank_weights = get_target_set(target_set)
-    income = income_process_overrides(income_states)
+    income = income_process_overrides(
+        income_states, income_process, income_innovation_sd, income_annual_rho
+    )
     seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
     candidates = local_panel_candidates(
         n_cases,
@@ -102,9 +110,14 @@ def run_local_panel(
         "workers": int(workers),
         "minutes_budget": float(minutes),
         "income_states": int(income_states),
+        "income_process": str(income_process),
+        "income_rho_annual": float(income_annual_rho),
+        "income_innovation_sd_annual": float(income_innovation_sd),
         "z_grid": jsonable(income["z_grid"]),
         "z_weights": jsonable(income["z_weights"]),
-        "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "Pi_z": jsonable(income["Pi_z"]),
+        "income_process_fingerprint": income_process_fingerprint(income),
+        "income_shock_persistence": float(income["income_shock_persistence"]),
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
@@ -271,6 +284,9 @@ def run_global_de_panel(
     max_iter_eq: int = 25,
     minutes: float = 115.0,
     income_states: int = 5,
+    income_process: str = "current",
+    income_annual_rho: float = ROUWENHORST_ANNUAL_RHO,
+    income_innovation_sd: float = ROUWENHORST_ANNUAL_INNOVATION_SD,
     pop_size: int = 20,
     mutation: float = 0.85,
     crossover: float = 0.70,
@@ -281,7 +297,7 @@ def run_global_de_panel(
 ) -> dict[str, Any]:
     """Run an independent differential-evolution global search panel.
 
-    Each array task runs a full restart from broad bounds over the 14-parameter
+    Each array task runs a full restart from broad bounds over the 13-parameter
     internal calibration vector. This changes the search algorithm only; it
     uses the same model solution and ranking target system as `run_local_panel`.
     """
@@ -298,7 +314,9 @@ def run_global_de_panel(
 
     rng = np.random.default_rng(seed)
     rank_targets, rank_weights = get_target_set(target_set)
-    income = income_process_overrides(income_states)
+    income = income_process_overrides(
+        income_states, income_process, income_innovation_sd, income_annual_rho
+    )
     profile_extra_overrides: dict[str, Any] = {}
     if profile_name is not None:
         validate_production_profile(
@@ -333,9 +351,14 @@ def run_global_de_panel(
         "max_iter_eq": int(max_iter_eq),
         "minutes_budget": float(minutes),
         "income_states": int(income_states),
+        "income_process": str(income_process),
+        "income_rho_annual": float(income_annual_rho),
+        "income_innovation_sd_annual": float(income_innovation_sd),
         "z_grid": jsonable(income["z_grid"]),
         "z_weights": jsonable(income["z_weights"]),
-        "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "Pi_z": jsonable(income["Pi_z"]),
+        "income_process_fingerprint": income_process_fingerprint(income),
+        "income_shock_persistence": float(income["income_shock_persistence"]),
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
@@ -495,6 +518,9 @@ def run_local_polish(
     max_iter_eq: int = PRODUCTION_MAX_ITER_EQ,
     minutes: float = 115.0,
     income_states: int = 5,
+    income_process: str = "current",
+    income_annual_rho: float = ROUWENHORST_ANNUAL_RHO,
+    income_innovation_sd: float = ROUWENHORST_ANNUAL_INNOVATION_SD,
     target_set: str = "candidate_no_timing_v0",
     seed_theta: dict[str, Any] | None = None,
     method: str = "nelder-mead",
@@ -503,6 +529,11 @@ def run_local_polish(
     shrink: float = 0.5,
     profile_name: str | None = None,
     fixed_theta: dict[str, Any] | None = None,
+    normalize_bequest_utility: bool = False,
+    additional_search_bounds: list[tuple[str, float, float]] | None = None,
+    additional_targets: dict[str, float] | None = None,
+    additional_weights: dict[str, float] | None = None,
+    fixed_model_overrides: dict[str, Any] | None = None,
     progress: bool = True,
 ) -> dict[str, Any]:
     """Run a true derivative-free local polish around a seed theta.
@@ -524,7 +555,13 @@ def run_local_polish(
 
     rng = np.random.default_rng(seed)
     rank_targets, rank_weights = get_target_set(target_set)
-    income = income_process_overrides(income_states)
+    rank_targets.update(additional_targets or {})
+    rank_weights.update(additional_weights or {})
+    if set(rank_targets) != set(rank_weights):
+        raise ValueError("rank targets and weights must have identical keys")
+    income = income_process_overrides(
+        income_states, income_process, income_innovation_sd, income_annual_rho
+    )
     profile_extra_overrides: dict[str, Any] = {}
     if profile_name is not None:
         validate_production_profile(
@@ -538,14 +575,22 @@ def run_local_polish(
             stage="search",
         )
         profile_extra_overrides = production_profile_overrides()
+    profile_extra_overrides["normalize_bequest_utility"] = bool(normalize_bequest_utility)
+    profile_extra_overrides.update(fixed_model_overrides or {})
     fixed_theta_clean = keep_internal_theta(fixed_theta) if fixed_theta is not None else {}
+    extra_bounds = list(additional_search_bounds or [])
+    extra_keys = {"beta" if name == "beta_annual" else name for name, _, _ in extra_bounds}
+    if fixed_theta is not None:
+        fixed_theta_clean.update({key: fixed_theta[key] for key in extra_keys if key in fixed_theta})
     fixed_keys = set(fixed_theta_clean or {})
     search_bounds = [
         bound
-        for bound in GLOBAL_DE_BOUNDS
+        for bound in [*GLOBAL_DE_BOUNDS, *extra_bounds]
         if ("beta" if bound[0] == "beta_annual" else bound[0]) not in fixed_keys
     ]
     seed_theta_clean = keep_internal_theta(seed_theta) if seed_theta is not None else None
+    if seed_theta_clean is not None and seed_theta is not None:
+        seed_theta_clean.update({key: seed_theta[key] for key in extra_keys if key in seed_theta})
     x0 = global_unit_from_theta(seed_theta_clean, bounds=search_bounds)
     if x0 is None:
         raise ValueError("local polish requires a seed theta containing all searched parameters.")
@@ -570,9 +615,18 @@ def run_local_polish(
         "max_iter_eq": int(max_iter_eq),
         "minutes_budget": float(minutes),
         "income_states": int(income_states),
+        "income_process": str(income_process),
+        "income_rho_annual": float(income_annual_rho),
+        "income_innovation_sd_annual": float(income_innovation_sd),
+        "normalize_bequest_utility": bool(normalize_bequest_utility),
+        "additional_targets": jsonable(additional_targets or {}),
+        "additional_weights": jsonable(additional_weights or {}),
+        "fixed_model_overrides": jsonable(fixed_model_overrides or {}),
         "z_grid": jsonable(income["z_grid"]),
         "z_weights": jsonable(income["z_weights"]),
-        "income_shock_persistence": float(DEFAULT_RHO_Z),
+        "Pi_z": jsonable(income["Pi_z"]),
+        "income_process_fingerprint": income_process_fingerprint(income),
+        "income_shock_persistence": float(income["income_shock_persistence"]),
         "rank_target_set": str(target_set),
         "rank_targets": rank_targets,
         "rank_weights": rank_weights,
@@ -793,8 +847,8 @@ def run_local_panel_case(
     theta = dict(candidate["theta"])
     overrides = {
         **base_overrides(J=J, Nb=Nb, n_house=n_house, max_iter_eq=max_iter_eq),
-        **income,
         **(extra_overrides or {}),
+        **income,
         **theta,
     }
     try:
@@ -812,6 +866,20 @@ def run_local_panel_case(
             and market_residual <= float(getattr(P, "tol_eq", 1e-4))
         )
         tol_eq = float(getattr(P, "tol_eq", 1e-4))
+        feasibility_census: list[dict[str, Any]] = []
+        feasibility_error = ""
+    except InfeasibleThetaError as exc:
+        moments = {}
+        rank_loss = math.inf
+        full_loss = math.inf
+        status = "infeasible_theta"
+        p_eq = np.array([np.nan])
+        market_residual = math.inf
+        timings = {}
+        strict_converged = False
+        tol_eq = math.nan
+        feasibility_census = list(exc.census)
+        feasibility_error = str(exc)
     except Exception as exc:  # noqa: BLE001 - panel should checkpoint failed parameter vectors.
         moments = {}
         rank_loss = math.inf
@@ -822,6 +890,8 @@ def run_local_panel_case(
         timings = {}
         strict_converged = False
         tol_eq = math.nan
+        feasibility_census = []
+        feasibility_error = ""
     return {
         "case": int(idx),
         "label": str(candidate["label"]),
@@ -836,6 +906,9 @@ def run_local_panel_case(
         "tol_eq": float(tol_eq),
         "elapsed_sec": float(time.perf_counter() - t0),
         "timings": jsonable(timings),
+        "income_process_fingerprint": income_process_fingerprint(income),
+        "feasibility_census": jsonable(feasibility_census),
+        "feasibility_error": feasibility_error,
     }
 
 
@@ -973,7 +1046,54 @@ def draw_internal_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any
     }
 
 
-def income_process_overrides(income_states: int) -> dict[str, Any]:
+def income_process_overrides(
+    income_states: int,
+    process: str = "current",
+    annual_innovation_sd: float = ROUWENHORST_ANNUAL_INNOVATION_SD,
+    annual_rho: float = ROUWENHORST_ANNUAL_RHO,
+) -> dict[str, Any]:
+    process_clean = str(process).strip().lower().replace("-", "_")
+    if process_clean in {"rouwenhorst", "rouwenhorst5"}:
+        n = int(income_states)
+        if n < 2:
+            raise ValueError("Rouwenhorst requires at least two income states")
+        rho_annual = float(annual_rho)
+        if not np.isfinite(rho_annual) or not 0.0 < rho_annual < 1.0:
+            raise ValueError("annual Rouwenhorst persistence must lie strictly between zero and one")
+        rho_period = rho_annual**PERIOD_YEARS
+        innovation_sd = float(annual_innovation_sd)
+        if not np.isfinite(innovation_sd) or innovation_sd <= 0.0:
+            raise ValueError("annual Rouwenhorst innovation standard deviation must be positive")
+        sigma_eps_period = innovation_sd * math.sqrt(
+            sum(rho_annual ** (2 * k) for k in range(int(PERIOD_YEARS)))
+        )
+        sigma_log = sigma_eps_period / math.sqrt(1.0 - rho_period**2)
+        p = (1.0 + rho_period) / 2.0
+        Pi_z = np.array([[p, 1.0 - p], [1.0 - p, p]], dtype=float)
+        for size in range(3, n + 1):
+            old = Pi_z
+            Pi_z = np.zeros((size, size), dtype=float)
+            Pi_z[:-1, :-1] += p * old
+            Pi_z[:-1, 1:] += (1.0 - p) * old
+            Pi_z[1:, :-1] += (1.0 - p) * old
+            Pi_z[1:, 1:] += p * old
+            Pi_z[1:-1] *= 0.5
+        Pi_z /= Pi_z.sum(axis=1, keepdims=True)
+        z_weights = np.array([math.comb(n - 1, k) for k in range(n)], dtype=float)
+        z_weights /= float(2 ** (n - 1))
+        log_grid = np.linspace(-sigma_log * math.sqrt(n - 1), sigma_log * math.sqrt(n - 1), n)
+        z_grid = np.exp(log_grid)
+        z_grid /= float(z_weights @ z_grid)
+        return {
+            "use_income_types": True,
+            "income_type_transition": "markov",
+            "z_grid": z_grid,
+            "z_weights": z_weights,
+            "income_shock_persistence": rho_period,
+            "Pi_z": Pi_z,
+        }
+    if process_clean != "current":
+        raise ValueError(f"unknown income process: {process}")
     if int(income_states) == 5:
         z_grid = DEFAULT_INCOME_GRID_5.copy()
         z_weights = DEFAULT_INCOME_WEIGHTS_5.copy()
@@ -994,6 +1114,31 @@ def income_process_overrides(income_states: int) -> dict[str, Any]:
         "income_shock_persistence": DEFAULT_RHO_Z,
         "Pi_z": make_persistent_transition_matrix(z_weights, DEFAULT_RHO_Z),
     }
+
+
+def stationary_distribution(Pi: np.ndarray) -> np.ndarray:
+    """Return the invariant distribution of a finite Markov matrix."""
+
+    matrix = np.asarray(Pi, dtype=float)
+    system = np.vstack((matrix.T - np.eye(matrix.shape[0]), np.ones(matrix.shape[0])))
+    rhs = np.zeros(matrix.shape[0] + 1)
+    rhs[-1] = 1.0
+    weights = np.linalg.lstsq(system, rhs, rcond=None)[0]
+    weights = np.maximum(weights, 0.0)
+    return weights / weights.sum()
+
+
+def income_process_fingerprint(income: dict[str, Any]) -> str:
+    """Return a stable audit fingerprint for the income objects in one solve."""
+
+    payload = {
+        "z_grid": np.asarray(income["z_grid"], dtype=float).round(12).tolist(),
+        "z_weights": np.asarray(income["z_weights"], dtype=float).round(12).tolist(),
+        "Pi_z": np.asarray(income["Pi_z"], dtype=float).round(12).tolist(),
+        "income_shock_persistence": float(income["income_shock_persistence"]),
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def ranking_targets_without_age() -> tuple[dict[str, float], dict[str, float]]:

@@ -88,6 +88,7 @@ summarize_block <- function(block, sample_name, asset_name, asset_col, group_nam
     income_mean = weighted_mean_safe(block$income, block$weight),
     ratio_mean_of_ratios = weighted_mean_safe(ratio[ok_ratio], block$weight[ok_ratio]),
     ratio_median = weighted_quantile_safe(ratio[ok_ratio], block$weight[ok_ratio]),
+    ratio_p90 = weighted_quantile_safe(ratio[ok_ratio], block$weight[ok_ratio], 0.9),
     ratio_of_means = weighted_mean_safe(x[ok_ratio], block$weight[ok_ratio]) /
       weighted_mean_safe(block$income[ok_ratio], block$weight[ok_ratio])
   )
@@ -196,7 +197,7 @@ for (sample_name in sample_names) {
     owner_rate = weighted_mean_safe(own, weight)
   )][, sample := sample_name]
 
-  groups <- c("all", "childless", "parent", "0", "1", "2", "3+")
+  groups <- c("all", "childless", "parent", "0", "1", "2", "2+", "3+")
   for (asset_name in names(assets)) {
     asset_col <- unname(assets[[asset_name]])
     for (group_name in groups) {
@@ -206,12 +207,14 @@ for (sample_name in sample_names) {
         sample[n_children == 0]
       } else if (group_name == "parent") {
         sample[n_children > 0]
+      } else if (group_name == "2+") {
+        sample[n_children >= 2]
       } else {
         sample[fertility_bin == group_name]
       }
       summary_rows[[length(summary_rows) + 1L]] <- summarize_block(
         block, sample_name, asset_name, asset_col, group_name,
-        if (group_name %in% c("0", "1", "2", "3+")) group_name else NA_character_
+        if (group_name %in% c("0", "1", "2", "2+", "3+")) group_name else NA_character_
       )
     }
   }
@@ -306,6 +309,70 @@ setcolorder(
   )
 )
 fwrite(regressions, file.path(outdir, "controlled_fertility_gradients.csv"))
+
+# Minimal internally calibrated bequest target block. The live model has parity
+# states 0, 1, and 2+, so the family-size moment must compare 2+ with 1 rather
+# than 3+ with 2. Total estate wealth includes home equity, matching NETWORTHR.
+bequest_target_values <- function(source) {
+  old <- copy(make_sample(source, "reference_pooled_num_7684"))
+  old[, ratio := total_nw / income]
+  old <- old[is.finite(ratio) & income > 1000]
+  p50 <- weighted_quantile_safe(old$ratio, old$weight, 0.5)
+  p90 <- weighted_quantile_safe(old$ratio, old$weight, 0.9)
+
+  fert <- copy(make_sample(source, "reference_pooled_num_6575"))
+  fert[, ratio := total_nw / income]
+  # Fourth moment: corrected-sample nonhousing wealth/income median at 65-75,
+  # same reference-person pooling and same finite-ratio and income > 1000
+  # filters applied to the nonhousing ratio.
+  fert[, nonhousing_ratio := nonhousing_nw / income]
+  nonhousing_6575 <- fert[is.finite(nonhousing_ratio) & income > 1000]
+  nonhousing_median <- weighted_quantile_safe(
+    nonhousing_6575$nonhousing_ratio, nonhousing_6575$weight, 0.5
+  )
+  fert <- fert[is.finite(ratio) & income > 1000]
+  one <- fert[n_children == 1]
+  two_plus <- fert[n_children >= 2]
+  one_median <- weighted_quantile_safe(one$ratio, one$weight, 0.5)
+  two_plus_median <- weighted_quantile_safe(two_plus$ratio, two_plus$weight, 0.5)
+  c(
+    old_total_estate_wealth_to_annual_income_median_7684 = p50,
+    old_total_estate_wealth_to_annual_income_p90_p50_7684 = p90 / p50,
+    old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575 =
+      two_plus_median - one_median,
+    old_nonhousing_wealth_to_income_median_6575 = nonhousing_median
+  )
+}
+
+target_point <- bequest_target_values(dt)
+bootstrap_reps <- 499L
+set.seed(20260715L)
+bootstrap_ids <- unique(dt[reference_person & age >= 65 & age <= 84, id])
+bootstrap_draws <- matrix(
+  NA_real_, nrow = bootstrap_reps, ncol = length(target_point),
+  dimnames = list(NULL, names(target_point))
+)
+for (bb in seq_len(bootstrap_reps)) {
+  draw <- sample(bootstrap_ids, length(bootstrap_ids), replace = TRUE)
+  freq <- tabulate(match(draw, bootstrap_ids), nbins = length(bootstrap_ids))
+  boot <- copy(dt[reference_person & age >= 65 & age <= 84])
+  boot[, bootstrap_frequency := freq[match(id, bootstrap_ids)]]
+  boot <- boot[bootstrap_frequency > 0]
+  boot[, weight := weight * bootstrap_frequency]
+  bootstrap_draws[bb, ] <- bequest_target_values(boot)
+}
+target_table <- data.table(
+  moment = names(target_point),
+  value = as.numeric(target_point),
+  bootstrap_se = apply(bootstrap_draws, 2L, sd, na.rm = TRUE),
+  bootstrap_p025 = apply(bootstrap_draws, 2L, quantile, 0.025, na.rm = TRUE),
+  bootstrap_p975 = apply(bootstrap_draws, 2L, quantile, 0.975, na.rm = TRUE),
+  bootstrap_reps = bootstrap_reps,
+  status = "candidate_for_model_jacobian"
+)
+fwrite(target_table, file.path(outdir, "bequest_calibration_targets.csv"))
+target_covariance <- as.data.table(cov(bootstrap_draws, use = "pairwise.complete.obs"), keep.rownames = "moment")
+fwrite(target_covariance, file.path(outdir, "bequest_calibration_target_covariance.csv"))
 
 published <- data.table(
   moment = c(
@@ -434,6 +501,8 @@ readme <- c(
   "- `wealth_income_by_fertility.csv`: levels by asset and completed-fertility bin.",
   "- `fertility_wealth_gaps.csv`: parent-childless and within-parent fertility gaps.",
   "- `controlled_fertility_gradients.csv`: composition-adjusted descriptive gradients.",
+  "- `bequest_calibration_targets.csv`: minimal four-moment bequest target block.",
+  "- `bequest_calibration_target_covariance.csv`: person-bootstrap covariance matrix.",
   "- `sample_counts.csv`: sample sizes and basic composition.",
   "- `definition_consistency.csv`: fertility-variable and wealth-identity checks.",
   "- `wealth_income_by_completed_fertility.png`: compact visual comparison."

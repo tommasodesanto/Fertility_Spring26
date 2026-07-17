@@ -94,6 +94,12 @@ fi
 if [ -n "${DT_DIRECT_ALPHA_CONS:-}" ]; then
     echo "Consumption share override alpha_cons: ${DT_DIRECT_ALPHA_CONS}"
 fi
+if [ -n "${DT_DIRECT_CALIBRATE_ALPHA_CONS:-}" ]; then
+    echo "Calibrate alpha_cons: ${DT_DIRECT_CALIBRATE_ALPHA_CONS} | bounds: ${DT_DIRECT_ALPHA_CONS_BOUNDS:-default}"
+fi
+if [ -n "${DT_DIRECT_HOUSING_SHARE_TARGET:-}" ]; then
+    echo "Housing share target: ${DT_DIRECT_HOUSING_SHARE_TARGET} | weight: ${DT_DIRECT_HOUSING_SHARE_WEIGHT:-default}"
+fi
 if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then
     echo "Owner h_bar scale override: ${DT_DIRECT_OWNER_H_BAR_SCALE}"
 fi
@@ -169,6 +175,26 @@ fi
 
 if [ -n "${DT_DIRECT_ALPHA_CONS:-}" ]; then
     ARGS+=(--alpha-cons "${DT_DIRECT_ALPHA_CONS}")
+fi
+
+if [ -n "${DT_DIRECT_CALIBRATE_ALPHA_CONS:-}" ]; then
+    if [ "${DT_DIRECT_CALIBRATE_ALPHA_CONS}" = "1" ] || [ "${DT_DIRECT_CALIBRATE_ALPHA_CONS}" = "true" ] || [ "${DT_DIRECT_CALIBRATE_ALPHA_CONS}" = "yes" ]; then
+        ARGS+=(--calibrate-alpha-cons)
+    else
+        ARGS+=(--no-calibrate-alpha-cons)
+    fi
+fi
+
+if [ -n "${DT_DIRECT_ALPHA_CONS_BOUNDS:-}" ]; then
+    ARGS+=(--alpha-cons-bounds "${DT_DIRECT_ALPHA_CONS_BOUNDS}")
+fi
+
+if [ -n "${DT_DIRECT_HOUSING_SHARE_TARGET:-}" ]; then
+    ARGS+=(--housing-share-target "${DT_DIRECT_HOUSING_SHARE_TARGET}")
+fi
+
+if [ -n "${DT_DIRECT_HOUSING_SHARE_WEIGHT:-}" ]; then
+    ARGS+=(--housing-share-weight "${DT_DIRECT_HOUSING_SHARE_WEIGHT}")
 fi
 
 if [ -n "${DT_DIRECT_OWNER_H_BAR_SCALE:-}" ]; then

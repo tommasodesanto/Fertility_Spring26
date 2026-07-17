@@ -123,21 +123,21 @@ cmd_status() {
 cmd_smoke() {
   local family="${1:?family required}" tag="${2:?tag required}"
   family_meta "$family" || exit 1
-  local pre
+  local pre env_prefix="${TORCH_ENV:-}"
   case "$family" in
     direct)
       pre="DT_DIRECT_RUN_TAG=$tag DT_DIRECT_SETUP=fast DT_DIRECT_MAX_ITER_EQ=4 DT_DIRECT_MAX_EVALS=2 DT_DIRECT_BUDGET_SEC=1800"
-      run_remote "smoke $family $tag" "cd $REMOTE_DIR && $pre sbatch --array=1-2%2 $SCRIPT" ;;
+      run_remote "smoke $family $tag" "cd $REMOTE_DIR && ${env_prefix:+$env_prefix }$pre sbatch --array=1-2%2 $SCRIPT" ;;
     intergen-de)
       pre="INTERGEN_RUN_TAG=$tag INTERGEN_MINUTES=8 INTERGEN_GLOBAL_EVALS_PER_TASK=6 INTERGEN_GLOBAL_POP_SIZE=6"
-      run_remote "smoke $family $tag" "cd $REMOTE_DIR && $pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
+      run_remote "smoke $family $tag" "cd $REMOTE_DIR && ${env_prefix:+$env_prefix }$pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
     intergen-twohour)
       pre="INTERGEN_RUN_TAG=$tag INTERGEN_MINUTES=8 INTERGEN_CASES_PER_TASK=3"
-      run_remote "smoke $family $tag" "cd $REMOTE_DIR && $pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
+      run_remote "smoke $family $tag" "cd $REMOTE_DIR && ${env_prefix:+$env_prefix }$pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
     intergen-polish)
       : "${INTERGEN_SEED_THETA_JSON:?intergen-polish needs INTERGEN_SEED_THETA_JSON (a seed-theta path on Torch)}"
       pre="INTERGEN_RUN_TAG=$tag INTERGEN_MINUTES=8 INTERGEN_LOCAL_MAX_EVALS=4 INTERGEN_SEED_THETA_JSON=$INTERGEN_SEED_THETA_JSON"
-      run_remote "smoke $family $tag" "cd $REMOTE_DIR && $pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
+      run_remote "smoke $family $tag" "cd $REMOTE_DIR && ${env_prefix:+$env_prefix }$pre sbatch --array=1-2%2 --time=00:20:00 $SCRIPT" ;;
   esac
 }
 

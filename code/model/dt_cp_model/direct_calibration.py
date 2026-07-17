@@ -30,6 +30,9 @@ from .theta import apply_theta
 DIRECT_GEOMETRY_NAMES = ["E_C", "r_bar_C"]
 DIRECT_GEOMETRY_LB = np.array([-1.50, 0.010])
 DIRECT_GEOMETRY_UB = np.array([2.50, 0.300])
+ALPHA_CONS_NAME = "alpha_cons"
+ALPHA_CONS_LB = 0.80
+ALPHA_CONS_UB = 0.90
 OUTSIDE_VALUE_NAME = "outside_value"
 OUTSIDE_VALUE_LB = -120.0
 OUTSIDE_VALUE_UB = 20.0
@@ -100,6 +103,8 @@ def build_direct_calibration_setup(
     renewal_retention: float = 1.0,
     hR_max: float | None = None,
     alpha_cons: float | None = None,
+    calibrate_alpha_cons: bool = False,
+    alpha_cons_bounds: tuple[float, float] | None = None,
     owner_h_bar_scale: float | None = None,
     owner_size_cost: float | None = None,
     owner_size_cost_ref: float | None = None,
@@ -195,6 +200,17 @@ def build_direct_calibration_setup(
         np.asarray(base.x0, dtype=float),
         np.array([float(base.P_base.E_loc[1]), float(base.P_base.r_bar[1])]),
     ]
+
+    if calibrate_alpha_cons:
+        lo, hi = alpha_cons_bounds or (ALPHA_CONS_LB, ALPHA_CONS_UB)
+        lo = float(lo)
+        hi = float(hi)
+        if not np.isfinite(lo) or not np.isfinite(hi) or lo > hi:
+            raise ValueError(f"invalid alpha_cons bounds: {lo}:{hi}")
+        names.append(ALPHA_CONS_NAME)
+        lb_parts.append(np.array([lo]))
+        ub_parts.append(np.array([hi]))
+        x0_parts.append(np.array([float(np.clip(base.P_base.alpha_cons, lo, hi))]))
 
     if closure in POPULATION_SCALE_CLOSURES:
         targets["implied_total_population"] = float(scale_target)

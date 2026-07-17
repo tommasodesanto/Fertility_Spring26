@@ -63,6 +63,8 @@ def setup_parameters() -> SimpleNamespace:
     P.theta0 = 0.53
     P.theta_n = 0.25
     P.theta1 = 0.01
+    P.bequest_spec = "linear_child_scale"
+    P.normalize_bequest_utility = False
     P.estate_tax_rate = 0.0
     P.estate_tax_exemption = 0.0
     P.u_bar = 0.0
@@ -72,6 +74,19 @@ def setup_parameters() -> SimpleNamespace:
     P.entry_wealth_ratio_nodes = np.array([], dtype=float)
     P.entry_wealth_ratio_weights = np.array([], dtype=float)
     P.entry_wealth_ratio_source = ""
+    P.lambda_d = 0.0
+    P.debt_taper_start_age = 42.0
+    P.debt_taper_end_age = 62.0
+    P.owner_ltv_taper = False
+    P.owner_ltv_taper_start_age = 66.0
+    P.owner_ltv_taper_end_age = 82.0
+    P.owner_ltv_terminal_share = 0.0
+    # Optional transition survival probabilities.  Entry j is the probability
+    # of reaching age j+1 conditional on being alive at age j.  The production
+    # default is deliberately inert; empirical schedules are supplied as
+    # external overrides by specification tests.
+    P.use_age_survival = False
+    P.survival_probs = np.ones(P.J - 1, dtype=float)
     P.beta = 0.96 ** P.period_years
     P.rho = 1 / P.beta - 1
     P.gamma = 0.0
@@ -117,6 +132,10 @@ def setup_parameters() -> SimpleNamespace:
     P.income_type_transition = "markov"
     P.income_shock_persistence = 0.85
     P.Pi_z = make_persistent_transition_matrix(P.z_weights, P.income_shock_persistence)
+    # Diagnostic-only retirement-income dispersion.  Zero preserves the
+    # production model, where every retiree receives the same pension.  A
+    # positive scale loads the persistent income state into retirement income.
+    P.retirement_income_z_scale = 0.0
     P.mu_stay = 0.0
     P.mu_move = 5.0
     P.mu_move_parent = 5.0
@@ -156,6 +175,7 @@ def setup_parameters() -> SimpleNamespace:
     P.pension = np.nan
     P.pension_by_loc = np.full(P.I, np.nan)
     P = set_income_given_w_and_pension(P)
+    P = build_debt_caps(P)
 
     P.Nb = 80
     P.b_min = -12.0
@@ -247,6 +267,8 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
     if "J" in od:
         P.J = int(P.J)
         P.E_total = 1 / P.J
+        if "survival_probs" not in od:
+            P.survival_probs = np.ones(P.J - 1, dtype=float)
     if "I" in od:
         P.I = int(P.I)
     if "Nb" in od:
@@ -278,6 +300,16 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         if P.entry_wealth_ratio_weights.size > 0:
             weights = np.maximum(P.entry_wealth_ratio_weights, 0.0)
             P.entry_wealth_ratio_weights = weights / weights.sum() if weights.sum() > 0 else np.ones_like(weights) / weights.size
+    for name in (
+        "lambda_d",
+        "debt_taper_start_age",
+        "debt_taper_end_age",
+        "owner_ltv_taper_start_age",
+        "owner_ltv_taper_end_age",
+        "owner_ltv_terminal_share",
+    ):
+        if name in od:
+            setattr(P, name, float(getattr(P, name)))
     if "eta_supply" in od:
         P.eta_supply = np.asarray(P.eta_supply, dtype=float)
         P.xi_supply = P.eta_supply.copy()
@@ -295,7 +327,7 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
     if "r_bar" in od:
         P.r_bar = np.asarray(P.r_bar, dtype=float)
     if "H0" in od:
-        P.H0 = np.asarray(P.H0, dtype=float)
+        P.H0 = np.asarray(P.H0, dtype=float).reshape(-1)
     if "z_grid" in od:
         P.z_grid = np.asarray(P.z_grid, dtype=float).reshape(-1)
     if "z_weights" in od:
@@ -304,6 +336,14 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones_like(zw) / max(zw.size, 1)
     if "Pi_z" in od:
         P.Pi_z = np.asarray(P.Pi_z, dtype=float)
+    if "survival_probs" in od:
+        P.survival_probs = np.asarray(P.survival_probs, dtype=float).reshape(-1)
+    if not hasattr(P, "survival_probs"):
+        P.survival_probs = np.ones(P.J - 1, dtype=float)
+    if P.survival_probs.size != P.J - 1:
+        raise ValueError("survival_probs must have exactly J-1 transition probabilities.")
+    if np.any(~np.isfinite(P.survival_probs)) or np.any((P.survival_probs < 0.0) | (P.survival_probs > 1.0)):
+        raise ValueError("survival_probs must be finite and lie in [0, 1].")
     if hasattr(P, "z_grid"):
         P.z_grid = np.asarray(P.z_grid, dtype=float).reshape(-1)
         if not hasattr(P, "z_weights") or len(np.atleast_1d(P.z_weights)) != len(P.z_grid):
@@ -317,6 +357,12 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
             P.Pi_z = make_persistent_transition_matrix(P.z_weights, rho_z)
         else:
             P.Pi_z = normalize_transition_matrix(P.Pi_z, P.z_weights)
+    P.retirement_income_z_scale = float(getattr(P, "retirement_income_z_scale", 0.0))
+    if not np.isfinite(P.retirement_income_z_scale) or P.retirement_income_z_scale < 0.0:
+        raise ValueError("retirement_income_z_scale must be finite and nonnegative.")
+    retirement_multipliers = 1.0 + P.retirement_income_z_scale * (P.z_grid - 1.0)
+    if np.any(retirement_multipliers <= 0.0):
+        raise ValueError("retirement_income_z_scale implies nonpositive retirement income.")
 
     if "stage_durations" not in od and hasattr(P, "A_m"):
         P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
@@ -375,6 +421,89 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.entry_shares = entry / P.E_total if P.E_total > 0 else np.ones(P.I) / P.I
     else:
         P.entry_by_loc = P.E_total * P.entry_shares
+    P = build_debt_caps(P)
+    return P
+
+
+def unsecured_debt_floor(current_unsecured: Any, s_next: float, D_next: float) -> np.ndarray:
+    """Return the next-period unsecured floor for a current unsecured position."""
+
+    u = np.asarray(current_unsecured, dtype=float)
+    return np.minimum(float(s_next) * np.minimum(u, 0.0), -float(D_next))
+
+
+def build_debt_caps(P: SimpleNamespace) -> SimpleNamespace:
+    """Build the age-tapered unsecured credit line after income overrides.
+
+    ``P.income`` is the same after-tax, per-period income array used by the
+    Bellman equation.  In the Markov-income model it is multiplied by the
+    invariant mean of ``z``; in the separate-type model the type multiplier is
+    already embedded in ``P.income``.  Location means use entrant shares.  The
+    terminal (off-grid) taper and debt-cap entries are defined to be zero.
+    """
+
+    lam = float(getattr(P, "lambda_d", 0.0))
+    start = float(getattr(P, "debt_taper_start_age", 42.0))
+    end = float(getattr(P, "debt_taper_end_age", 62.0))
+    if not np.isfinite(lam) or lam < 0.0:
+        raise ValueError("lambda_d must be finite and weakly non-negative")
+    if not np.isfinite(start) or not np.isfinite(end) or end <= start:
+        raise ValueError("debt_taper_end_age must exceed debt_taper_start_age")
+
+    J = int(P.J)
+    ages = float(P.age_start) + np.arange(J, dtype=float) * float(P.da)
+    taper = np.ones(J, dtype=float)
+    middle = (ages > start) & (ages < end)
+    taper[middle] = (end - ages[middle]) / (end - start)
+    taper[ages >= end] = 0.0
+
+    income = np.asarray(P.income, dtype=float)
+    if income.shape != (int(P.I), J):
+        raise ValueError("P.income must have shape (I, J) before debt caps are built")
+    loc_weights = np.asarray(getattr(P, "entry_shares", np.ones(P.I)), dtype=float).reshape(-1)
+    if loc_weights.size != int(P.I) or float(np.sum(loc_weights)) <= 0.0:
+        loc_weights = np.ones(int(P.I), dtype=float)
+    loc_weights = loc_weights / float(np.sum(loc_weights))
+
+    z_mean = 1.0
+    is_markov_mixture = bool(getattr(P, "use_income_types", False)) and str(
+        getattr(P, "income_type_transition", "")
+    ).lower() in {"markov", "stochastic", "persistent"}
+    if is_markov_mixture:
+        z_grid = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+        z_weights = np.asarray(getattr(P, "z_weights", np.ones(z_grid.size)), dtype=float).reshape(-1)
+        if z_grid.size != z_weights.size or float(np.sum(z_weights)) <= 0.0:
+            raise ValueError("z_grid and z_weights must define a valid income distribution")
+        z_weights = z_weights / float(np.sum(z_weights))
+        z_mean = float(z_weights @ z_grid)
+
+    ybar = np.zeros(J, dtype=float)
+    worker_periods = min(max(int(P.J_R), 0), J)
+    if worker_periods > 0:
+        ybar[:worker_periods] = z_mean * (loc_weights @ income[:, :worker_periods])
+    ybar = np.maximum(ybar, 0.0)
+
+    P.mean_labor_income_by_age = ybar
+    P.debt_taper_weights = np.concatenate((taper, np.array([0.0])))
+    P.debt_caps = np.concatenate((lam * ybar * taper, np.array([0.0])))
+
+    owner_ltv_taper = bool(getattr(P, "owner_ltv_taper", False))
+    owner_start = float(getattr(P, "owner_ltv_taper_start_age", 66.0))
+    owner_end = float(getattr(P, "owner_ltv_taper_end_age", 82.0))
+    owner_terminal = float(getattr(P, "owner_ltv_terminal_share", 0.0))
+    if not np.isfinite(owner_start) or not np.isfinite(owner_end) or owner_end <= owner_start:
+        raise ValueError("owner_ltv_taper_end_age must exceed owner_ltv_taper_start_age")
+    if not np.isfinite(owner_terminal) or not 0.0 <= owner_terminal <= 1.0:
+        raise ValueError("owner_ltv_terminal_share must lie in [0, 1]")
+    owner_ltv = np.ones(J + 1, dtype=float)
+    if owner_ltv_taper:
+        owner_ages = float(P.age_start) + np.arange(J + 1, dtype=float) * float(P.da)
+        middle = (owner_ages > owner_start) & (owner_ages < owner_end)
+        owner_ltv[middle] = 1.0 - (1.0 - owner_terminal) * (
+            (owner_ages[middle] - owner_start) / (owner_end - owner_start)
+        )
+        owner_ltv[owner_ages >= owner_end] = owner_terminal
+    P.owner_ltv_multipliers = owner_ltv
     return P
 
 

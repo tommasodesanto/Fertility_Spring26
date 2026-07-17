@@ -103,7 +103,7 @@ def main() -> None:
     parser.add_argument("--point-dir", type=Path, default=DEFAULT_POINT_DIR)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--target-set", default="", help="Override target set; default uses point source_target_set")
-    parser.add_argument("--J", type=int, default=16)
+    parser.add_argument("--J", type=int, default=17)
     parser.add_argument("--Nb", type=int, default=60)
     parser.add_argument("--n-house", type=int, default=5)
     parser.add_argument("--max-iter-eq", type=int, default=3)

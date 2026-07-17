@@ -13,6 +13,7 @@ import argparse
 import csv
 import datetime as dt
 import gzip
+import importlib
 import json
 import math
 import pickle
@@ -20,14 +21,17 @@ import shutil
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
 MODEL_ROOT = Path(__file__).resolve().parents[1]
-if str(MODEL_ROOT) not in sys.path:
-    sys.path.insert(0, str(MODEL_ROOT))
+TOOLS_ROOT = Path(__file__).resolve().parent
+for import_root in (MODEL_ROOT, TOOLS_ROOT):
+    if str(import_root) not in sys.path:
+        sys.path.insert(0, str(import_root))
 
 from intergen_housing_fertility.calibration import (  # noqa: E402
     base_overrides,
@@ -38,6 +42,10 @@ from intergen_housing_fertility.calibration import (  # noqa: E402
 )
 from intergen_housing_fertility.diagnostics import write_diagnostics  # noqa: E402
 from intergen_housing_fertility.local_panel import income_process_overrides  # noqa: E402
+from intergen_housing_fertility.production_profile import (  # noqa: E402
+    REPAIRED_TIMING_SWITCHES,
+    production_profile_overrides,
+)
 from intergen_housing_fertility.solver import current_child_bin_dt, run_model_cp_dt  # noqa: E402
 from intergen_housing_fertility.solver import precompute_shared  # noqa: E402
 
@@ -73,6 +81,11 @@ def main() -> None:
     cache_path = solution_cache_path(args, outdir)
 
     targets, weights = get_target_set(args.target_set)
+    if args.combined_corrected_spec or args.m4_standard_bequest:
+        targets["aggregate_mean_occupied_rooms_18_85"] = 5.779970481941968
+        weights["aggregate_mean_occupied_rooms_18_85"] = 6.0
+    if args.m4_standard_bequest and args.target_set != "candidate_replacement_bequest_median_composition_v1":
+        raise ValueError("--m4-standard-bequest requires the M4 median-composition target set")
     policy_records: list[dict[str, Any]] = []
 
     if args.refresh_plots_from_cache:
@@ -103,6 +116,8 @@ def main() -> None:
             quick_first_look_only=bool(args.quick_first_look_only),
             write_csv_sidecars=not args.no_csv,
         )
+        if args.write_classic_draft_figures or args.m4_standard_bequest:
+            write_classic_draft_outputs(outdir / "classic_draft", baseline)
         write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
         print(
             f"Refreshed intergen mechanics packet from {cache_path} "
@@ -133,6 +148,14 @@ def main() -> None:
         weights=weights,
         label="baseline",
     )
+    if args.m4_standard_bequest:
+        strict = bool(
+            getattr(baseline["sol"], "timings", {}).get(
+                "strict_converged", getattr(baseline["sol"], "converged", False)
+            )
+        )
+        if not strict or float(baseline["market_residual"]) > float(args.tol_eq):
+            raise RuntimeError("M4 diagnostic packet baseline did not converge to its declared tolerance")
     if not args.no_save_solution_cache:
         write_solution_cache(
             cache_path,
@@ -159,6 +182,8 @@ def main() -> None:
         quick_first_look_only=bool(args.quick_first_look_only),
         write_csv_sidecars=not args.no_csv,
     )
+    if args.write_classic_draft_figures or args.m4_standard_bequest:
+        write_classic_draft_outputs(outdir / "classic_draft", baseline)
     if args.run_policy_cases:
         policy_records = write_policy_cases(
             outdir / "policy_cases",
@@ -168,6 +193,8 @@ def main() -> None:
             targets=targets,
             weights=weights,
             write_case_diagnostics=bool(args.policy_diagnostics),
+            battery=str(args.policy_battery),
+            selected_cases=args.policy_case,
         )
 
     write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
@@ -220,6 +247,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--hR-max", type=float, default=None)
     parser.add_argument("--H-own", default=None, help="Comma-separated owner ladder, e.g. 2,4,6,8,10.")
     parser.add_argument("--max-iter-eq", type=int, default=10)
+    parser.add_argument("--tol-eq", type=float, default=1e-4)
+    parser.add_argument(
+        "--scalar-market-refine-iter",
+        type=int,
+        default=None,
+        help="Optional iteration cap for the one-market scalar root refinement.",
+    )
     # Grid geometry: dense-core + sparse-buffer controls (None => model defaults).
     parser.add_argument("--b-min", type=float, default=None, help="Liquid-wealth grid lower bound (default -35).")
     parser.add_argument("--b-max", type=float, default=None, help="Liquid-wealth grid upper bound (default 100).")
@@ -266,8 +300,41 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Do not write the local solved-object pickle after solving.",
     )
+    parser.add_argument(
+        "--write-classic-draft-figures",
+        action="store_true",
+        help=(
+            "Write the two stable quantitative figures used by the current paper draft. "
+            "This is automatic under --m4-standard-bequest."
+        ),
+    )
     parser.add_argument("--run-policy-cases", action="store_true")
     parser.add_argument("--policy-diagnostics", action="store_true")
+    parser.add_argument(
+        "--policy-battery",
+        choices=("compact", "legacy", "full"),
+        default="compact",
+        help="Policy menu used with --run-policy-cases: compact, legacy grant/LTV/tax, or full mechanism battery.",
+    )
+    parser.add_argument(
+        "--policy-case",
+        action="append",
+        default=None,
+        help="Run only the named policy case(s), plus the common baseline. Repeat as needed.",
+    )
+    parser.add_argument(
+        "--combined-corrected-spec",
+        action="store_true",
+        help="Use the corrected finance, supply, income, timing, and bequest specification.",
+    )
+    parser.add_argument(
+        "--m4-standard-bequest",
+        action="store_true",
+        help=(
+            "Re-solve a collected M4 theta with the exact SSA-survival, "
+            "child-blind normalized warm-glow, and no-LTV-taper contract."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -327,6 +394,11 @@ def extract_theta_from_json(payload: Any) -> dict[str, float]:
         return coerce_theta(payload["theta"])
     if isinstance(payload.get("best"), dict) and isinstance(payload["best"].get("theta"), dict):
         return coerce_theta(payload["best"]["theta"])
+    winners = payload.get("winners")
+    if isinstance(winners, dict):
+        winner_rows = [row for row in winners.values() if isinstance(row, dict)]
+        if len(winner_rows) == 1 and isinstance(winner_rows[0].get("theta"), dict):
+            return coerce_theta(winner_rows[0]["theta"])
     if isinstance(payload.get("source_record"), dict) and isinstance(payload["source_record"].get("theta"), dict):
         return coerce_theta(payload["source_record"]["theta"])
     raise KeyError("could not find theta in JSON source")
@@ -358,6 +430,8 @@ def resolve_grid(args: argparse.Namespace, source: dict[str, Any]) -> dict[str, 
         "H_own": h_own,
         "hR_max": float(args.hR_max if args.hR_max is not None else source_grid.get("hR_max", 8.0)),
         "max_iter_eq": int(args.max_iter_eq),
+        "tol_eq": float(args.tol_eq),
+        "scalar_market_refine_iter": args.scalar_market_refine_iter,
         # Optional grid-geometry / interpolation overrides (None => use defaults).
         "b_min": args.b_min,
         "b_max": args.b_max,
@@ -369,6 +443,8 @@ def resolve_grid(args: argparse.Namespace, source: dict[str, Any]) -> dict[str, 
         "b_frac_mid": args.b_frac_mid,
         "interp_method": args.interp_method,
         "entry_wealth_spread_nodes": args.entry_wealth_spread_nodes,
+        "combined_corrected_spec": bool(args.combined_corrected_spec),
+        "m4_standard_bequest": bool(args.m4_standard_bequest),
     }
 
 
@@ -388,25 +464,72 @@ def solve_candidate(
     weights: dict[str, float],
     label: str,
 ) -> dict[str, Any]:
-    overrides = {
-        **base_overrides(
+    if bool(grid.get("m4_standard_bequest", False)):
+        from tools.run_intergen_bequest_exit_chain import arm_contract, common_overrides
+
+        exact_grid = (int(grid["J"]), int(grid["Nb"]), int(grid["income_states"]), int(grid["n_house"]))
+        if exact_grid != (17, 120, 5, 5):
+            raise ValueError(f"M4 diagnostic packet requires grid (17,120,5,5), got {exact_grid}")
+
+        contract_args = SimpleNamespace(
+            arm="M4",
+            ltv_terminal=0.4,
+            theta1=float(theta["theta1"]),
+            seed_theta0=float(theta["theta0"]),
+            fixed_theta0=None,
             J=int(grid["J"]),
             Nb=int(grid["Nb"]),
-            n_house=int(grid["n_house"]),
             max_iter_eq=int(grid["max_iter_eq"]),
-        ),
-        **income_process_overrides(int(grid["income_states"])),
-        **theta,
-        "hR_max": float(grid["hR_max"]),
-        "diagnostic_policy_ages": np.array([30.0, 42.0]),
-        **extra_overrides,
-    }
+            tol_eq=float(grid["tol_eq"]),
+        )
+        _, fixed, mechanism = arm_contract(contract_args)
+        for name, value in fixed.items():
+            if name in theta and float(theta[name]) != float(value):
+                raise ValueError(f"M4 source theta violates fixed restriction {name}={value}")
+        overrides = {
+            **common_overrides(contract_args, mechanism),
+            **theta,
+            **fixed,
+            "diagnostic_policy_ages": np.array([30.0, 42.0]),
+            **extra_overrides,
+        }
+    else:
+        overrides = {
+            **base_overrides(
+                J=int(grid["J"]),
+                Nb=int(grid["Nb"]),
+                n_house=int(grid["n_house"]),
+                max_iter_eq=int(grid["max_iter_eq"]),
+            ),
+            **(
+                {
+                    **production_profile_overrides(),
+                    **REPAIRED_TIMING_SWITCHES,
+                    **income_process_overrides(
+                        int(grid["income_states"]),
+                        "rouwenhorst",
+                        0.06453733259357768,
+                        0.9601845894041878,
+                    ),
+                    "q": (1.0 + 0.02) ** 4 - 1.0,
+                    "delta": 1.0 - (1.0 - 0.011) ** 4,
+                    "eta_supply": np.array([1.75]),
+                    "normalize_bequest_utility": True,
+                }
+                if bool(grid.get("combined_corrected_spec", False))
+                else income_process_overrides(int(grid["income_states"]))
+            ),
+            **theta,
+            "hR_max": float(grid["hR_max"]),
+            "diagnostic_policy_ages": np.array([30.0, 42.0]),
+            **extra_overrides,
+        }
     if grid.get("H_own") is not None:
         overrides["H_own"] = np.asarray(grid["H_own"], dtype=float)
         overrides["n_house"] = len(overrides["H_own"])
     for _gk in ("b_min", "b_max", "b_core_lo", "b_core_hi", "b_mid_hi",
                 "b_frac_low", "b_frac_core", "b_frac_mid", "interp_method",
-                "entry_wealth_spread_nodes"):
+                "entry_wealth_spread_nodes", "scalar_market_refine_iter"):
         if grid.get(_gk) is not None:
             overrides[_gk] = grid[_gk]
     t0 = time.perf_counter()
@@ -463,9 +586,62 @@ def write_solution_cache(
         pickle.dump(payload, fh, protocol=pickle.HIGHEST_PROTOCOL)
 
 
+def write_classic_draft_outputs(outdir: Path, baseline: dict[str, Any]) -> None:
+    """Write the two paper-draft figures from an already solved baseline."""
+
+    from plot_intergen_draft_figures_from_cache import (  # noqa: PLC0415
+        acs_age_profiles,
+        decision_rule_rows,
+        model_age_profiles,
+        plot_decision_rules,
+        plot_lifecycle,
+        write_rows,
+    )
+
+    started = time.perf_counter()
+    outdir.mkdir(parents=True, exist_ok=True)
+    sol = baseline["sol"]
+    P = baseline["P"]
+    model = model_age_profiles(sol, P)
+    acs = acs_age_profiles(
+        ROOT / "code/data/mms_center_periphery/output/mms_age_profiles_full.csv",
+        ROOT / "code/data/mms_center_periphery/output_ownership_audit/acs_ownership_age_profiles.csv",
+    )
+    decision = decision_rule_rows(sol, P, requested_age=42.0)
+    lifecycle_png = outdir / "quant_lifecycle_equilibrium_repaired_nb120.png"
+    decision_png = outdir / "quant_decision_rules_repaired_nb120.png"
+    write_rows(
+        lifecycle_png.with_suffix(".csv"),
+        [{"source": "model", **row} for row in model]
+        + [{"source": "ACS_2012_2023", **row} for row in acs],
+    )
+    write_rows(decision_png.with_suffix(".csv"), decision)
+    plot_lifecycle(model, acs, lifecycle_png)
+    plot_decision_rules(decision, decision_png, wealth_min=-2.2, wealth_max=7.2)
+    write_json(
+        outdir / "metadata.json",
+        {
+            "status": "paper_draft_figures_from_exact_solved_baseline",
+            "source_solution": "parent mechanics packet baseline",
+            "decision_age": 42.0,
+            "elapsed_sec_excluding_model_solve": time.perf_counter() - started,
+            "figures": [lifecycle_png.name, decision_png.name],
+        },
+    )
+
+
 def load_solution_cache(path: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
     if not path.exists():
         raise FileNotFoundError(f"solution cache not found: {path}")
+    try:
+        importlib.import_module("numpy._core")
+    except ImportError:
+        sys.modules["numpy._core"] = np.core
+        for module in ("multiarray", "numeric", "umath", "_multiarray_umath"):
+            try:
+                sys.modules[f"numpy._core.{module}"] = importlib.import_module(f"numpy.core.{module}")
+            except ImportError:
+                pass
     with path.open("rb") as fh:
         payload = pickle.load(fh)
     if not isinstance(payload, dict) or not isinstance(payload.get("baseline"), dict):
@@ -512,11 +688,16 @@ def write_core_outputs(
             "H_own": np.asarray(P.H_own, dtype=float),
             "hR_max": float(P.hR_max),
             "entry_wealth_distribution": {
+                "mode": str(getattr(P, "entry_wealth_mode", "scalar")),
                 "spread_nodes": int(getattr(P, "entry_wealth_spread_nodes", 1)),
+                "ratio_nodes": jsonable(getattr(sol, "entry_wealth_ratio_nodes", np.array([]))),
+                "ratio_weights": jsonable(getattr(sol, "entry_wealth_ratio_weights", np.array([]))),
+                "ratio_mean": maybe_float(getattr(sol, "entry_wealth_ratio_mean", np.nan)),
+                "ratio_source": str(getattr(sol, "entry_wealth_ratio_source", "")),
                 "grid_values": jsonable(getattr(sol, "entry_wealth_grid_values", np.array([]))),
                 "weights": jsonable(getattr(sol, "entry_wealth_grid_weights", np.array([]))),
                 "mean": maybe_float(getattr(sol, "entry_wealth_grid_mean", np.nan)),
-                "target_b_entry_fixed": float(getattr(P, "b_entry_fixed", np.nan)),
+                "legacy_b_entry_fixed": float(getattr(P, "b_entry_fixed", np.nan)),
             },
             "moments": moments,
         },
@@ -1690,9 +1871,11 @@ def write_policy_cases(
     targets: dict[str, float],
     weights: dict[str, float],
     write_case_diagnostics: bool,
+    battery: str = "compact",
+    selected_cases: list[str] | None = None,
 ) -> list[dict[str, Any]]:
     outdir.mkdir(parents=True, exist_ok=True)
-    cases = [
+    compact_cases = [
         {
             "case": "baseline",
             "label": "Baseline",
@@ -1723,6 +1906,151 @@ def write_policy_cases(
             "overrides": {"estate_tax_rate": 0.30},
         },
     ]
+    legacy_cases = [
+        compact_cases[0],
+        {
+            "case": "parent_ltv100_birth",
+            "label": "New-parent LTV 100%",
+            "note": "Waives the cash down payment for owner choices made in the birth state.",
+            "overrides": {
+                "parent_dp_waiver": True,
+                "parent_dp_waiver_phi": 1.0,
+                "parent_dp_waiver_birth_state_only": True,
+            },
+        },
+        {
+            "case": "universal_ltv95",
+            "label": "Universal LTV 95%",
+            "note": "Raises the financed share to 95 percent for every household and parity state.",
+            "overrides": {"phi": np.array([0.95, 0.95, 0.95])},
+        },
+        {
+            "case": "birth_grant_A0p4_Hge6",
+            "label": "Birth grant, family-size homes",
+            "note": "Pays 0.4 period-income units when a renter buys a home with at least six rooms in the birth state.",
+            "overrides": {
+                "birth_entry_grant": True,
+                "birth_entry_grant_amount": 0.4,
+                "birth_entry_grant_locations": np.array([], dtype=int),
+                "birth_entry_grant_owner_rungs": np.array([3, 4, 5], dtype=int),
+            },
+        },
+        {
+            "case": "property_tax_2pct",
+            "label": "Property tax 2% annual",
+            "note": "Raises the annual property tax from 1 to 2 percent and re-clears the housing market.",
+            "overrides": {"tau_H": 0.02 * 4.0},
+        },
+        {
+            "case": "tax2_grant_A0p4_Hge6",
+            "label": "Property tax plus birth grant",
+            "note": "Combines the 2 percent annual property tax with the family-size birth grant.",
+            "overrides": {
+                "tau_H": 0.02 * 4.0,
+                "birth_entry_grant": True,
+                "birth_entry_grant_amount": 0.4,
+                "birth_entry_grant_locations": np.array([], dtype=int),
+                "birth_entry_grant_owner_rungs": np.array([3, 4, 5], dtype=int),
+            },
+        },
+    ]
+    h0 = float(source["theta"].get("H0", 4.0))
+    grant_common = {
+        "birth_entry_grant": True,
+        "birth_entry_grant_locations": np.array([], dtype=int),
+        "birth_entry_grant_owner_rungs": np.array([3, 4, 5], dtype=int),
+    }
+    full_cases = [
+        compact_cases[0],
+        {
+            "case": "parent_ltv95_birth",
+            "label": "New-parent LTV 95%",
+            "note": "Raises the financed share to 95 percent for owner choices made in the birth state.",
+            "overrides": {
+                "parent_dp_waiver": True,
+                "parent_dp_waiver_phi": 0.95,
+                "parent_dp_waiver_birth_state_only": True,
+            },
+        },
+        *legacy_cases[1:],
+        *[
+            {
+                "case": f"birth_grant_A{str(amount).replace('.', 'p')}_Hge6",
+                "label": f"Birth grant {amount:g}, family-size homes",
+                "note": "Birth-state purchase grant targeted to owner rungs with at least six rooms.",
+                "overrides": {**grant_common, "birth_entry_grant_amount": float(amount)},
+            }
+            for amount in (0.1, 0.2, 0.58, 1.0)
+        ],
+        {
+            "case": "birth_grant_A0p4_all_rungs",
+            "label": "Birth grant 0.4, all owner rungs",
+            "note": "Birth-state purchase grant available for every owner rung.",
+            "overrides": {
+                **grant_common,
+                "birth_entry_grant_amount": 0.4,
+                "birth_entry_grant_owner_rungs": np.array([], dtype=int),
+            },
+        },
+        *[
+            {
+                "case": f"rental_hR{format(cap, 'g').replace('.', 'p')}",
+                "label": f"Rental family-space cap {cap:g}",
+                "note": "Expands the maximum renter housing-services choice at fixed structural theta.",
+                "overrides": {"hR_max": float(cap)},
+            }
+            for cap in (6.5, 7.0, 7.5, 8.0)
+        ],
+        {
+            "case": "supply_H0_plus10",
+            "label": "Housing supply H0 +10%",
+            "note": "Raises the one-market housing-supply normalization by 10 percent.",
+            "overrides": {"H0": np.array([1.10 * h0])},
+        },
+        {
+            "case": "supply_H0_plus20",
+            "label": "Housing supply H0 +20%",
+            "note": "Raises the one-market housing-supply normalization by 20 percent.",
+            "overrides": {"H0": np.array([1.20 * h0])},
+        },
+        {
+            "case": "grant_A0p4_Hge6_supply_plus20",
+            "label": "Birth grant plus H0 +20%",
+            "note": "Combines the family-size birth grant with a 20 percent supply expansion.",
+            "overrides": {**grant_common, "birth_entry_grant_amount": 0.4, "H0": np.array([1.20 * h0])},
+        },
+        {
+            "case": "debt_line_lambda0p2",
+            "label": "Unsecured line lambda=0.2",
+            "note": "Standing unsecured line equal to 0.2 of mean period labor income, tapered to zero by age 62.",
+            "overrides": {"lambda_d": 0.2, "debt_taper_start_age": 42.0, "debt_taper_end_age": 62.0},
+        },
+        {
+            "case": "debt_line_lambda0p4",
+            "label": "Unsecured line lambda=0.4",
+            "note": "Standing unsecured line equal to 0.4 of mean period labor income, tapered to zero by age 62.",
+            "overrides": {"lambda_d": 0.4, "debt_taper_start_age": 42.0, "debt_taper_end_age": 62.0},
+        },
+        {
+            "case": "debt_line0p4_supply_plus20",
+            "label": "Unsecured line plus H0 +20%",
+            "note": "Combines lambda=0.4 unsecured credit with a 20 percent housing-supply expansion.",
+            "overrides": {
+                "lambda_d": 0.4,
+                "debt_taper_start_age": 42.0,
+                "debt_taper_end_age": 62.0,
+                "H0": np.array([1.20 * h0]),
+            },
+        },
+    ]
+    cases = full_cases if battery == "full" else legacy_cases if battery == "legacy" else compact_cases
+    if selected_cases:
+        requested = set(selected_cases)
+        available = {str(case["case"]) for case in cases}
+        unknown = sorted(requested - available)
+        if unknown:
+            raise ValueError(f"unknown {battery} policy case(s): {unknown}; available={sorted(available)}")
+        cases = [case for case in cases if case["case"] == "baseline" or case["case"] in requested]
     records: list[dict[str, Any]] = []
     baseline_moments = dict(baseline["moments"])
     for case in cases:
@@ -1763,6 +2091,9 @@ def policy_record(
     baseline_moments: dict[str, float],
 ) -> dict[str, Any]:
     moments = dict(result["moments"])
+    debt_diagnostics = policy_debt_diagnostics(
+        result["sol"], result["P"], np.asarray(result["p_eq"], dtype=float)
+    )
     key_moments = sorted(
         set(targets)
         | {
@@ -1784,12 +2115,67 @@ def policy_record(
         "p_eq": jsonable(result["p_eq"]),
         "H_own": jsonable(np.asarray(result["P"].H_own, dtype=float)),
         "hR_max": float(result["P"].hR_max),
+        "debt_diagnostics": debt_diagnostics,
         "moments": {k: maybe_float(moments.get(k)) for k in key_moments},
         "delta_from_baseline": {
             k: maybe_float(moments.get(k)) - maybe_float(baseline_moments.get(k))
             for k in key_moments
             if math.isfinite(maybe_float(moments.get(k))) and math.isfinite(maybe_float(baseline_moments.get(k)))
         },
+    }
+
+
+def policy_debt_diagnostics(sol: Any, P: Any, p_eq: np.ndarray) -> dict[str, float]:
+    """Mass checks for the unsecured-debt taper, respecting owner collateral."""
+    g = np.asarray(sol.g, dtype=float)
+    b_grid = np.asarray(sol.b_grid, dtype=float).reshape(-1)
+    if g.ndim != 7 or g.shape[0] != b_grid.size:
+        return {
+            "post_taper_renter_negative_b_mass": math.nan,
+            "post_taper_owner_negative_unsecured_mass": math.nan,
+            "post_taper_total_mass": math.nan,
+        }
+
+    ages = np.asarray(P.age_start + np.arange(P.J) * P.da, dtype=float)
+    taper_end = float(getattr(P, "debt_taper_end_age", 62.0))
+    retired = np.where(ages >= taper_end - 1e-10)[0]
+    price = float(np.asarray(p_eq, dtype=float).reshape(-1)[0])
+    phi = np.asarray(P.phi, dtype=float).reshape(-1)
+    h_own = np.asarray(P.H_own, dtype=float).reshape(-1)
+    tol = 1e-10
+
+    renter_negative = 0.0
+    owner_unsecured_negative = 0.0
+    post_taper_total = 0.0
+    all_age_renter_negative = 0.0
+    all_age_owner_unsecured_negative = 0.0
+    for j in range(g.shape[3]):
+        is_post_taper = j in retired
+        if is_post_taper:
+            post_taper_total += float(np.sum(g[:, :, :, j, :, :, :]))
+        for bb, b in enumerate(b_grid):
+            if b < -tol:
+                mass = float(np.sum(g[bb, 0, :, j, :, :, :]))
+                all_age_renter_negative += mass
+                if is_post_taper:
+                    renter_negative += mass
+            for ten in range(1, min(g.shape[1], 1 + h_own.size)):
+                for nn in range(g.shape[5]):
+                    phi_n = float(phi[min(nn, phi.size - 1)])
+                    unsecured = float(b + phi_n * price * h_own[ten - 1])
+                    if unsecured < -tol:
+                        mass = float(np.sum(g[bb, ten, :, j, :, nn, :]))
+                        all_age_owner_unsecured_negative += mass
+                        if is_post_taper:
+                            owner_unsecured_negative += mass
+
+    return {
+        "taper_end_age": taper_end,
+        "post_taper_renter_negative_b_mass": renter_negative,
+        "post_taper_owner_negative_unsecured_mass": owner_unsecured_negative,
+        "post_taper_total_mass": post_taper_total,
+        "all_age_renter_negative_b_mass": all_age_renter_negative,
+        "all_age_owner_negative_unsecured_mass": all_age_owner_unsecured_negative,
     }
 
 
@@ -2547,6 +2933,7 @@ def write_readme(
             "- `tenure_by_age.csv` and `.png`: simple renter/owner population shares by age.",
             "- `owner_entry_thresholds.csv` and `.png`: childless-renter owner-entry probability thresholds by age and income state.",
             "- `owner_entry_policy_childless_renter_age30_42.csv`: owner-entry probability lines used for age-30 and age-42 inspection.",
+            "- `classic_draft/`: the two stable quantitative figures used by the current paper draft, with CSV sidecars. These are written automatically for an M4 standard-bequest packet.",
             "- `solution_cache.pkl`: local trusted Python pickle with the solved `sol`, `P`, and `p_eq` objects. Use `--refresh-plots-from-cache` to rebuild figures and CSVs from it without re-solving.",
             "- `contact_sheet.png`: quick visual index when standard diagnostics are enabled.",
         ]

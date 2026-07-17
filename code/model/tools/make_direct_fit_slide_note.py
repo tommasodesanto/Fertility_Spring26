@@ -59,6 +59,7 @@ TARGET_ROWS = [
     ("old_age_parent_childless_gap", "Old parent-childless gap"),
     ("inv_pop_share_C", "Center share"),
     ("inv_rent_ratio_C_over_P", "Rent ratio C/P"),
+    ("housing_exp_share_usercost_total", "Housing expenditure share"),
     ("owner25_45_rooms_le6_share", "Prime owner rooms <=6"),
     ("owner25_45_rooms_7to8_share", "Prime owner rooms 7-8"),
     ("owner25_45_rooms_ge9_share", "Prime owner rooms >=9"),
@@ -73,8 +74,8 @@ STYLE = {
     "model_green": (0.28, 0.56, 0.28),
     "model_purple": (0.62, 0.28, 0.55),
     "data_red": (0.70, 0.18, 0.12),
-    "loc_periphery": (0.20, 0.40, 0.80),
-    "loc_center": (0.85, 0.25, 0.10),
+    "loc_periphery": (0.28, 0.55, 0.33),
+    "loc_center": (0.49, 0.36, 0.62),
     "light_gray": (0.82, 0.84, 0.87),
 }
 
@@ -136,6 +137,9 @@ def build_case(
     owner_size_cost_power = record.get("owner_size_cost_power")
     tenure_choice_kappa = record.get("tenure_choice_kappa")
     alpha_cons = record.get("alpha_cons")
+    alpha_cons_bounds = record.get("alpha_cons_bounds")
+    if alpha_cons_bounds is not None:
+        alpha_cons_bounds = tuple(float(x) for x in alpha_cons_bounds)
     weight_overrides = record.get("weight_overrides") or None
     extra_targets = record.get("extra_targets") or None
     setup = build_direct_calibration_setup(
@@ -153,8 +157,14 @@ def build_case(
         tenure_choice_kappa=tenure_choice_kappa,
         weight_overrides=weight_overrides,
         extra_targets=extra_targets,
+        calibrate_alpha_cons=bool(record.get("calibrate_alpha_cons", False)),
+        alpha_cons_bounds=alpha_cons_bounds,
         H_own=H_own,
     )
+    targets = dict(setup.targets)
+    targets.update(record.get("targets") or {})
+    weights = dict(setup.weights)
+    weights.update(record.get("weights") or {})
     moments = dict(record.get("moments", {}))
     figure_names = [
         "benchmark_lifecycle_compare.png",
@@ -174,7 +184,7 @@ def build_case(
         plot_market_equilibrium(sol, P, p_eq, setup, outdir / "market_equilibrium.png", label)
         plot_housing_choice_heatmap(sol, P, b_grid, outdir / "housing_choice_heatmap.png", label)
         plot_housing_size_fit(sol, P, b_grid, setup, moments, outdir / "housing_size_fit.png", label)
-    write_case_summary(outdir / "target_comparison.csv", setup.targets, setup.weights, moments, label)
+    write_case_summary(outdir / "target_comparison.csv", targets, weights, moments, label)
 
     return {
         "label": label,
@@ -183,8 +193,8 @@ def build_case(
         "hR_max": hr_max,
         "H_own": H_own,
         "record": record,
-        "targets": setup.targets,
-        "weights": setup.weights,
+        "targets": targets,
+        "weights": weights,
         "moments": moments,
         "prices": [float(x) for x in np.asarray(record.get("p_eq", [])).reshape(-1)],
     }
@@ -225,7 +235,6 @@ def plot_benchmark_lifecycle_compare(sol, P, b_grid: np.ndarray, out_path: Path)
     own_by_age = np.asarray(getattr(sol, "own_by_age", compute_own_by_age(sol)), dtype=float)
 
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.8))
-    fig.suptitle("Lifecycle: Model vs Data", fontweight="bold", fontsize=16)
 
     ax = axes[0]
     ax.plot(age_vec, 100 * own_by_age, "-", color=STYLE["model_blue"], linewidth=2.8, label="Model")
@@ -237,7 +246,7 @@ def plot_benchmark_lifecycle_compare(sol, P, b_grid: np.ndarray, out_path: Path)
     ax.legend(loc="upper left")
 
     ax = axes[1]
-    ax.plot(age_vec, model_wealth_norm, "-", color=STYLE["model_green"], linewidth=2.8, label="Model net worth")
+    ax.plot(age_vec, model_wealth_norm, "-", color=STYLE["model_blue"], linewidth=2.8, label="Model net worth")
     ax.plot(scf_ages, scf_wealth_norm, "--", color=STYLE["data_red"], linewidth=2.4, label="Data (SCF median)")
     ax.set_xlabel("Age")
     ax.set_ylabel("Normalized wealth")
@@ -249,7 +258,7 @@ def plot_benchmark_lifecycle_compare(sol, P, b_grid: np.ndarray, out_path: Path)
     m_mask = age_vec <= family_age_cap
     d_mask = data["children_age"] <= family_age_cap
     ax = axes[2]
-    ax.plot(age_vec[m_mask], model_children[m_mask], "-", color=STYLE["model_purple"], linewidth=2.8, label="Model children-at-home share")
+    ax.plot(age_vec[m_mask], model_children[m_mask], "-", color=STYLE["model_blue"], linewidth=2.8, label="Model children-at-home share")
     ax.plot(
         data["children_age"][d_mask],
         data["children"][d_mask],
@@ -278,7 +287,6 @@ def plot_market_equilibrium(sol, P, p_eq, setup, out_path: Path, label: str) -> 
     rents = (float(P.q) + float(P.delta) + float(P.tau_H)) * prices
 
     fig, axes = plt.subplots(1, 4, figsize=(14, 4.5))
-    fig.suptitle("Spatial Equilibrium", fontsize=14)
 
     ax = axes[0]
     x = np.arange(2)
@@ -288,7 +296,6 @@ def plot_market_equilibrium(sol, P, p_eq, setup, out_path: Path, label: str) -> 
     ax.set_xticks(x, ["Price p", "Rent r"])
     ax.set_ylabel("Level")
     ax.set_title("Equilibrium Prices")
-    ax.legend(loc="upper right")
     ax.grid(True, axis="y", alpha=0.3)
 
     ax = axes[1]
@@ -302,7 +309,6 @@ def plot_market_equilibrium(sol, P, p_eq, setup, out_path: Path, label: str) -> 
     ax.set_xticks(x, ["Pop share", "Own rate", "Rel. fertility"], rotation=12)
     ax.set_ylabel("Share / Rate")
     ax.set_title("Population & Outcomes")
-    ax.legend(loc="upper right")
     ax.grid(True, axis="y", alpha=0.3)
 
     mean_c, mean_h = mean_consumption_housing_by_loc(sol, P)
@@ -313,7 +319,6 @@ def plot_market_equilibrium(sol, P, p_eq, setup, out_path: Path, label: str) -> 
     ax.set_xticks(x, ["Mean c", "Mean h"])
     ax.set_ylabel("Level")
     ax.set_title("Consumption & Housing")
-    ax.legend(loc="upper right")
     ax.grid(True, axis="y", alpha=0.3)
 
     fert_dist_loc = fertility_distribution_by_loc(sol, P)
@@ -324,10 +329,11 @@ def plot_market_equilibrium(sol, P, p_eq, setup, out_path: Path, label: str) -> 
     ax.set_xlabel("Number of children")
     ax.set_ylabel("Share")
     ax.set_title("Fertility Distribution")
-    ax.legend(loc="upper right")
     ax.grid(True, axis="y", alpha=0.3)
 
-    fig.tight_layout()
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=2, frameon=False, bbox_to_anchor=(0.5, 1.02))
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     fig.savefig(out_path, dpi=150, bbox_inches="tight")
     plt.close(fig)
 

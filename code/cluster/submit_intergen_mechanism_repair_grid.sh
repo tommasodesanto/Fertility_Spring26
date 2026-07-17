@@ -90,7 +90,7 @@ cd "${PROJECT_DIR}"
     --candidate-mode repair \
     --point-json "${POINT_LABEL}=${POINT_JSON}" \
     --outdir "${OUTDIR}" \
-    --J "${INTERGEN_J:-16}" \
+    --J "${INTERGEN_J:-17}" \
     --Nb "${INTERGEN_NB:-60}" \
     --income-states "${INTERGEN_INCOME_STATES:-5}" \
     --n-house "${INTERGEN_N_HOUSE:-5}" \

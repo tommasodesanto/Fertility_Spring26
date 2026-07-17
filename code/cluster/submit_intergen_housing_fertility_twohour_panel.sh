@@ -36,9 +36,12 @@ export INTERGEN_MINUTES="${INTERGEN_MINUTES:-115}"
 export INTERGEN_WORKERS="${INTERGEN_WORKERS:-1}"
 export INTERGEN_SEED_BASE="${INTERGEN_SEED_BASE:-2026060800}"
 export INTERGEN_SEED_THETA_JSON="${INTERGEN_SEED_THETA_JSON:-}"
-export INTERGEN_J="${INTERGEN_J:-16}"
+export INTERGEN_J="${INTERGEN_J:-17}"
 export INTERGEN_NB="${INTERGEN_NB:-60}"
 export INTERGEN_INCOME_STATES="${INTERGEN_INCOME_STATES:-5}"
+export INTERGEN_INCOME_PROCESS="${INTERGEN_INCOME_PROCESS:-current}"
+export INTERGEN_INCOME_ANNUAL_RHO="${INTERGEN_INCOME_ANNUAL_RHO:-0.90}"
+export INTERGEN_INCOME_INNOVATION_SD="${INTERGEN_INCOME_INNOVATION_SD:-0.20}"
 export INTERGEN_N_HOUSE="${INTERGEN_N_HOUSE:-6}"
 export INTERGEN_MAX_ITER_EQ="${INTERGEN_MAX_ITER_EQ:-25}"
 export INTERGEN_DIAGNOSTIC_BEST="${INTERGEN_DIAGNOSTIC_BEST:-0}"
@@ -89,7 +92,7 @@ echo "Run tag: ${INTERGEN_RUN_TAG}"
 echo "Task outdir: ${TASK_OUTDIR}"
 echo "Target set: ${INTERGEN_TARGET_SET}"
 echo "cases=${INTERGEN_CASES_PER_TASK} minutes=${INTERGEN_MINUTES} workers=${INTERGEN_WORKERS}"
-echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
+echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} income_process=${INTERGEN_INCOME_PROCESS} income_annual_rho=${INTERGEN_INCOME_ANNUAL_RHO} income_innovation_sd=${INTERGEN_INCOME_INNOVATION_SD} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
 echo "seed_theta_json=${INTERGEN_SEED_THETA_JSON:-none}"
 echo "extra_args=${EXTRA_ARGS[*]:-none}"
 echo "Started: $(date)"
@@ -102,6 +105,9 @@ cd "${MODEL_DIR}"
     --J "${INTERGEN_J}" \
     --Nb "${INTERGEN_NB}" \
     --income-states "${INTERGEN_INCOME_STATES}" \
+    --income-process "${INTERGEN_INCOME_PROCESS}" \
+    --income-annual-rho "${INTERGEN_INCOME_ANNUAL_RHO}" \
+    --income-innovation-sd "${INTERGEN_INCOME_INNOVATION_SD}" \
     --n-house "${INTERGEN_N_HOUSE}" \
     --max-iter-eq "${INTERGEN_MAX_ITER_EQ}" \
     --workers "${INTERGEN_WORKERS}" \

@@ -52,7 +52,7 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
   --source ../../output/model/intergen_current_review/source_candidate.json \
   --outdir ../../output/model/intergen_current_review/quick \
   --target-set candidate_replacement_roomgap_14moment_tfr192_v1 \
-  --J 16 --Nb 60 --income-states 5 --n-house 5 --hR-max 6.0 \
+  --J 17 --Nb 60 --income-states 5 --n-house 5 --hR-max 6.0 \
   --max-iter-eq 10 --interp-method linear \
   --clean-outdir --no-csv \
   --skip-standard-diagnostics --skip-contact-sheet --quick-first-look-only
@@ -67,7 +67,7 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
   --source ../../output/model/intergen_current_review/source_candidate.json \
   --outdir ../../output/model/intergen_current_review/quick \
   --target-set candidate_replacement_roomgap_14moment_tfr192_v1 \
-  --J 16 --Nb 60 --income-states 5 --n-house 5 --hR-max 6.0 \
+  --J 17 --Nb 60 --income-states 5 --n-house 5 --hR-max 6.0 \
   --max-iter-eq 10 --interp-method linear \
   --solution-cache ../../output/model/intergen_current_review/solution_cache.pkl \
   --refresh-plots-from-cache \
@@ -103,6 +103,160 @@ from dt_cp_model import solve_theta
 
 sol, P, p_eq = solve_theta(theta, setup_mode="fast")
 ```
+
+## Parent-Gated Bequest Calibration Exercise
+
+The bounded bequest experiment profiles the normalized parent-gated luxury
+warm glow, with and without an externally pinned post-retirement owner-LTV
+taper. Production defaults remain unchanged. A local exact-loop smoke is:
+
+```bash
+cd code/model
+PYTHONPATH=$PWD .venv/bin/python tools/run_intergen_bequest_calibration_exercise.py \
+  --smoke \
+  --outdir ../../output/model/intergen_bequest_calibration_exercise_smoke
+```
+
+The production-sized diagnostic uses the verified clean-frontier seed, the
+active 15-moment objective, a 2-by-2 profile in `(theta0, theta1)` under each
+LTV arm, and an optional bounded 11-coordinate polish. It reports the
+late-life decumulation ratio as diagnostic-only because no empirical target
+has yet been approved. Use
+`code/cluster/submit_intergen_bequest_calibration_exercise.sh` for the real run.
+
+The follow-up proper joint calibration uses
+`tools/run_intergen_bequest_exit_chain.py`. Unlike the bounded diagnostic, it
+re-estimates all 11 clean-frontier coordinates in every arm and adds a free
+soft-zero `theta0` in the 12-parameter headline arms. The main array, primary
+winner selector, nuisance-reoptimized profile, and fresh A3 Jacobian use:
+
+```text
+code/cluster/submit_intergen_bequest_exit_battery.sh
+code/cluster/submit_intergen_bequest_exit_selector.sh
+code/cluster/submit_intergen_bequest_exit_profile.sh
+code/cluster/submit_intergen_bequest_exit_jacobian.sh
+```
+
+See `output/model/intergen_bequest_exit_battery_20260714/README.md` for the
+complete identification contract, external variants, acceptance rules, job
+IDs, and budgets.
+
+## Clean Mortality Plus Bequest Test
+
+The follow-up clean specification uses SSA post-retirement survival, no owner-
+LTV taper, and a normalized child-blind warm glow. Arm `M2` in
+`tools/run_intergen_bequest_exit_chain.py` re-estimates the 11 clean-frontier
+parameters plus `theta0`; `theta_n=0`, `tenure_choice_kappa=0`, and
+`theta1=0.25` are external restrictions. The completed mortality-only `M1`
+winner is injected as the exact nested `theta0=0` seed.
+
+Cluster and collection entry points:
+
+```text
+code/cluster/submit_intergen_mortality_bequest_recalibration.sh
+code/model/tools/collect_intergen_mortality_bequest_recalibration.py
+```
+
+The recoverable run contract is
+`output/model/intergen_mortality_bequest_recalibration_20260715/README.md`.
+For the strict M1 identification and leave-one-moment-out audit, use
+`tools/audit_intergen_bequest_exit_jacobian.py --arm M1 --winner-arm M1`; the
+completed contract is
+`output/model/intergen_mortality_identification_20260715/README.md`.
+
+## Standard Internally Calibrated Bequest Block (M4)
+
+Arm `M4` retains the clean SSA-survival specification and normalized
+child-blind De Nardi warm glow but estimates both remaining bequest parameters:
+the 11 clean-frontier coordinates plus `theta0` and `theta1` are disciplined by
+14 moments. The child multiplier `theta_n=0` and deterministic tenure
+`tenure_choice_kappa=0` remain external restrictions. The two late-life wealth
+levels are the age-76--84 median total estate-to-income ratio and the age-65--75
+reference-person median nonhousing-wealth-to-income ratio; estate dispersion
+and the family-size estate gap are diagnostic-only.
+
+Production entry points are:
+
+```text
+code/cluster/submit_intergen_standard_bequest_nested_reference.sh
+code/cluster/submit_intergen_standard_bequest_recalibration.sh
+code/cluster/submit_intergen_standard_bequest_recalibration_collector.sh
+code/cluster/submit_intergen_bequest_exit_jacobian.sh
+code/cluster/submit_intergen_standard_bequest_theta1_profile.sh
+code/cluster/submit_intergen_standard_bequest_theta1_profile_collector.sh
+```
+
+The six-chain collector requires two bit-identical strict tight solves and
+dominance over the exact `theta0=0` M1 seed under the M4 objective. The fresh
+13-column Jacobian and five-cell conditional `theta1` profile are the
+post-estimation identification gate; `theta1=0.25` is only one dispersed start.
+The recoverable contract and results live under
+`output/model/intergen_standard_bequest_recalibration_20260716/`.
+
+Regenerate the exact M4 winner's full visual diagnostic packet with:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/build_intergen_mechanics_packet.py \
+  --source ../../output/model/intergen_standard_bequest_recalibration_20260716/report/results.json \
+  --outdir ../../output/model/intergen_standard_bequest_recalibration_20260716/diagnostic_packet \
+  --target-set candidate_replacement_bequest_median_composition_v1 \
+  --J 17 --Nb 120 --income-states 5 --n-house 5 \
+  --max-iter-eq 40 --tol-eq 2.5e-5 \
+  --m4-standard-bequest --clean-outdir
+```
+
+That exact solve writes the paper's two established quantitative figures under
+`diagnostic_packet/classic_draft/`. Redraw only those two figures from the
+trusted solved cache (about five seconds in the verified local smoke) with:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python tools/plot_intergen_draft_figures_from_cache.py \
+  --solution-cache ../../output/model/intergen_standard_bequest_recalibration_20260716/diagnostic_packet/solution_cache.pkl \
+  --lifecycle-out ../../output/model/intergen_standard_bequest_recalibration_20260716/diagnostic_packet/classic_draft/quant_lifecycle_equilibrium_repaired_nb120.png \
+  --decision-rules-out ../../output/model/intergen_standard_bequest_recalibration_20260716/diagnostic_packet/classic_draft/quant_decision_rules_repaired_nb120.png
+```
+
+Redraw the full packet, including those figures, without re-solving with:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python tools/build_intergen_mechanics_packet.py \
+  --outdir ../../output/model/intergen_standard_bequest_recalibration_20260716/diagnostic_packet \
+  --target-set candidate_replacement_bequest_median_composition_v1 \
+  --m4-standard-bequest --refresh-plots-from-cache
+```
+
+Regenerate the matched PSID/model late-life portfolio decomposition with:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/diagnose_intergen_bequest_distribution.py \
+  --winner-json ../../output/model/intergen_standard_bequest_recalibration_20260716/report/results.json \
+  --winner-arm M4 --arm M4 \
+  --outdir ../../output/model/intergen_standard_bequest_recalibration_20260716/distribution_diagnostic \
+  --quiet
+```
+
+## Intergen Entrant-Feasibility Diagnostic
+
+The intergenerational model permits legacy unsecured debt to roll forward,
+tapers that capacity between ages 42 and 62, and rejects any parameter vector
+that places positive population mass on a Bellman-infeasible state. The
+collateralized owner floor remains separate, and the cash down-payment test
+continues to use `(1 - phi) * p * H`.
+
+Regenerate the fixed-theta acceptance packet with:
+
+```bash
+NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  PYTHONPATH=$PWD .venv/bin/python \
+  tools/run_intergen_feasibility_fix_diagnostic.py --overwrite
+```
+
+The driver writes both prescribed `Nb=120` records, the complete 15-moment
+comparison, and an acceptance summary under
+`output/model/feasibility_fix_diagnostic_<date>/`. A failed acceptance gate is
+written to the packet and returned as a nonzero exit status.
 
 The SMM objective should remain a wrapper around this same parameter-vector
 application path, not a separate interpretation of `theta`.

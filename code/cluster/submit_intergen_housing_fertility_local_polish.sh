@@ -37,6 +37,9 @@ export INTERGEN_PREVIOUS_RESULTS_DIR="${INTERGEN_PREVIOUS_RESULTS_DIR:-}"
 export INTERGEN_J="${INTERGEN_J:-17}"
 export INTERGEN_NB="${INTERGEN_NB:-120}"
 export INTERGEN_INCOME_STATES="${INTERGEN_INCOME_STATES:-5}"
+export INTERGEN_INCOME_PROCESS="${INTERGEN_INCOME_PROCESS:-current}"
+export INTERGEN_INCOME_ANNUAL_RHO="${INTERGEN_INCOME_ANNUAL_RHO:-0.90}"
+export INTERGEN_INCOME_INNOVATION_SD="${INTERGEN_INCOME_INNOVATION_SD:-0.20}"
 export INTERGEN_N_HOUSE="${INTERGEN_N_HOUSE:-5}"
 export INTERGEN_MAX_ITER_EQ="${INTERGEN_MAX_ITER_EQ:-10}"
 export INTERGEN_LOCAL_MIN_STEP="${INTERGEN_LOCAL_MIN_STEP:-0.003}"
@@ -139,7 +142,7 @@ echo "Production profile: ${INTERGEN_PROFILE}"
 echo "Repair design: ${INTERGEN_REPAIR_DESIGN} arm=${ARM_LABEL}"
 echo "method=${LOCAL_METHOD} initial_step=${LOCAL_STEP} min_step=${INTERGEN_LOCAL_MIN_STEP} shrink=${INTERGEN_LOCAL_SHRINK}"
 echo "max_evals=${INTERGEN_LOCAL_MAX_EVALS} minutes=${INTERGEN_MINUTES}"
-echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
+echo "seed=${SEED} J=${INTERGEN_J} Nb=${INTERGEN_NB} income_states=${INTERGEN_INCOME_STATES} income_process=${INTERGEN_INCOME_PROCESS} income_annual_rho=${INTERGEN_INCOME_ANNUAL_RHO} income_innovation_sd=${INTERGEN_INCOME_INNOVATION_SD} n_house=${INTERGEN_N_HOUSE} max_iter_eq=${INTERGEN_MAX_ITER_EQ}"
 echo "seed_theta_json=${INTERGEN_SEED_THETA_JSON}"
 echo "fixed_beta_annual=${INTERGEN_FIXED_BETA_ANNUAL:-free} fixed_theta_n=${INTERGEN_FIXED_THETA_N:-free} fixed_chi=${INTERGEN_FIXED_CHI:-free}"
 echo "Started: $(date)"
@@ -162,6 +165,9 @@ fi
     --J "${INTERGEN_J}" \
     --Nb "${INTERGEN_NB}" \
     --income-states "${INTERGEN_INCOME_STATES}" \
+    --income-process "${INTERGEN_INCOME_PROCESS}" \
+    --income-annual-rho "${INTERGEN_INCOME_ANNUAL_RHO}" \
+    --income-innovation-sd "${INTERGEN_INCOME_INNOVATION_SD}" \
     --n-house "${INTERGEN_N_HOUSE}" \
     --max-iter-eq "${INTERGEN_MAX_ITER_EQ}" \
     --minutes "${INTERGEN_MINUTES}" \

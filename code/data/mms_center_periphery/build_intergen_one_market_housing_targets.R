@@ -142,6 +142,7 @@ df <- read_dta(
     gq %in% c(1, 2),
     pernum == 1,
     age >= 18,
+    age <= 85,
     !is.na(hhwt),
     hhwt > 0,
     !is.na(rooms),
@@ -174,6 +175,12 @@ prime_parent <- df %>% filter(prime_30_55, parent_u18)
 rows <- list()
 source <- "ACS/IPUMS extract27 household heads, 2012-2023, matched MMS metro sample, middle collapsed to center"
 status <- "candidate; re-audit source/sample/formula before SMM use"
+
+rows <- post_moment(rows, "aggregate_mean_occupied_rooms_18_85",
+  weighted_mean_safe(df$rooms, df$hhwt),
+  "age 18-85, household head, owner or renter, positive literal ROOMS", source,
+  "sum(HHWT * ROOMS) / sum(HHWT)", status,
+  nrow(df), sum(df$hhwt, na.rm = TRUE))
 
 owner_childless <- prime_childless %>% filter(owner)
 renter_childless <- prime_childless %>% filter(renter)

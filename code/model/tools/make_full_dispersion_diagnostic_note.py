@@ -84,6 +84,7 @@ TARGET_ROWS = [
     ("old_age_parent_childless_gap", "Old parent-childless gap"),
     ("inv_pop_share_C", "Center share"),
     ("inv_rent_ratio_C_over_P", "Rent ratio C/P"),
+    ("housing_exp_share_usercost_total", "Housing expenditure share"),
     ("owner25_45_rooms_le6_share", "Prime owner rooms <=6"),
     ("owner25_45_rooms_7to8_share", "Prime owner rooms 7-8"),
     ("owner25_45_rooms_ge9_share", "Prime owner rooms >=9"),
@@ -123,6 +124,24 @@ def main() -> None:
     parser.add_argument("--label", required=True)
     parser.add_argument("--hR-max", type=float, default=8.0)
     parser.add_argument("--outdir", type=Path, required=True)
+    parser.add_argument(
+        "--headline-moments",
+        choices=("fresh", "record"),
+        default="fresh",
+        help="Moment source for headline target tables and fit bars.",
+    )
+    parser.add_argument(
+        "--record-mismatch",
+        choices=("fail", "warn", "ignore"),
+        default="fail",
+        help="What to do if saved record moments differ from the local re-solve.",
+    )
+    parser.add_argument(
+        "--moment-check-tol",
+        type=float,
+        default=1e-4,
+        help="Absolute tolerance for saved-vs-re-solve moment checks.",
+    )
     parser.add_argument("--compile", action="store_true")
     args = parser.parse_args()
 
@@ -140,13 +159,41 @@ def main() -> None:
     b_grid = make_grid(P)
     fresh = extract_moments(sol, P, p_eq, 0.0, 0.0, 0.0, True)
     moments = dict(record.get("moments") or {})
-    moments.update({key: float(value) for key, value in vars(fresh).items() if is_number(value)})
-    moments["inv_pop_share_C"] = float(getattr(fresh, "pop_share_C", moments.get("inv_pop_share_C", np.nan)))
-    moments["inv_rent_ratio_C_over_P"] = float(
-        getattr(fresh, "rent_ratio_C_over_P", moments.get("inv_rent_ratio_C_over_P", np.nan))
+    fresh_moments = {key: float(value) for key, value in vars(fresh).items() if is_number(value)}
+    fresh_moments["inv_pop_share_C"] = first_finite(
+        getattr(fresh, "inv_pop_share_C", np.nan),
+        getattr(fresh, "pop_share_C", np.nan),
+        moments.get("inv_pop_share_C", np.nan),
     )
+    fresh_moments["inv_rent_ratio_C_over_P"] = first_finite(
+        getattr(fresh, "inv_rent_ratio_C_over_P", np.nan),
+        getattr(fresh, "rent_ratio_C_over_P", np.nan),
+        moments.get("inv_rent_ratio_C_over_P", np.nan),
+    )
+    moment_check_rows = build_moment_check_rows(moments, fresh_moments)
+    if moment_check_rows:
+        write_dict_csv(tables_dir / "record_resolve_moment_check.csv", moment_check_rows)
+        mismatches = [row for row in moment_check_rows if abs(row["gap"]) > args.moment_check_tol]
+        if mismatches and args.record_mismatch != "ignore":
+            max_gap = max(abs(row["gap"]) for row in mismatches)
+            message = (
+                f"Saved record moments differ from local re-solve for {len(mismatches)} moments "
+                f"(max abs gap {max_gap:.6g}). See {tables_dir / 'record_resolve_moment_check.csv'}."
+            )
+            if args.record_mismatch == "fail":
+                raise RuntimeError(message)
+            print(f"WARNING: {message}", file=sys.stderr)
+    if args.headline_moments == "fresh":
+        moments.update(fresh_moments)
+    else:
+        for key, value in fresh_moments.items():
+            moments.setdefault(key, value)
 
-    target_rows = build_target_rows(setup.targets, setup.weights, moments)
+    targets = dict(setup.targets)
+    targets.update(record.get("targets") or {})
+    weights = dict(setup.weights)
+    weights.update(record.get("weights") or {})
+    target_rows = build_target_rows(targets, weights, moments)
     param_rows = build_parameter_rows(record, args.hR_max)
     write_dict_csv(tables_dir / "target_comparison.csv", target_rows)
     write_dict_csv(tables_dir / "parameters.csv", param_rows)
@@ -177,13 +224,16 @@ def main() -> None:
     plot_housing_size_fit(sol, P, b_grid, setup, moments, figures_dir / "housing_size_fit.png", args.label)
 
     note_tex = outdir / "current_fit_dispersion_full_diagnostics_20260527.tex"
-    write_note(note_tex, args.label, args.record, record, target_rows, param_rows, outdir)
+    write_note(note_tex, args.label, args.record, record, target_rows, param_rows, outdir, args.headline_moments)
     if args.compile:
         compile_latex(note_tex)
     print(f"Wrote {note_tex}")
 
 
 def build_setup(record: dict, hR_max: float):
+    alpha_cons_bounds = record.get("alpha_cons_bounds")
+    if alpha_cons_bounds is not None:
+        alpha_cons_bounds = tuple(float(x) for x in alpha_cons_bounds)
     return build_direct_calibration_setup(
         "benchmark",
         geo_weight=250.0,
@@ -199,6 +249,8 @@ def build_setup(record: dict, hR_max: float):
         tenure_choice_kappa=record.get("tenure_choice_kappa"),
         weight_overrides=record.get("weight_overrides") or None,
         extra_targets=record.get("extra_targets") or None,
+        calibrate_alpha_cons=bool(record.get("calibrate_alpha_cons", False)),
+        alpha_cons_bounds=alpha_cons_bounds,
         H_own=record.get("H_own") or None,
     )
 
@@ -228,6 +280,13 @@ def is_number(value) -> bool:
     return isinstance(value, (int, float, np.floating)) and np.isfinite(float(value))
 
 
+def first_finite(*values) -> float:
+    for value in values:
+        if is_number(value):
+            return float(value)
+    return float("nan")
+
+
 def build_target_rows(targets: dict, weights: dict, moments: dict) -> list[dict]:
     rows = []
     for key, label in TARGET_ROWS:
@@ -248,11 +307,34 @@ def build_target_rows(targets: dict, weights: dict, moments: dict) -> list[dict]
     return rows
 
 
+def build_moment_check_rows(record_moments: dict, fresh_moments: dict) -> list[dict]:
+    rows = []
+    for key, _label in TARGET_ROWS:
+        record_value = record_moments.get(key)
+        fresh_value = fresh_moments.get(key)
+        if not is_number(record_value) or not is_number(fresh_value):
+            continue
+        record_float = float(record_value)
+        fresh_float = float(fresh_value)
+        rows.append(
+            {
+                "moment": key,
+                "record": record_float,
+                "resolve": fresh_float,
+                "gap": fresh_float - record_float,
+                "abs_gap": abs(fresh_float - record_float),
+            }
+        )
+    return rows
+
+
 def build_parameter_rows(record: dict, hR_max: float) -> list[dict]:
     params = record.get("parameters") or {}
     rows = [{"parameter": key, "value": float(params[key])} for key in PARAMETER_ORDER if key in params]
     controls = {
-        "alpha_cons": record.get("alpha_cons"),
+        "alpha_cons": record.get("alpha_cons_effective")
+        or (record.get("parameters") or {}).get("alpha_cons")
+        or record.get("alpha_cons"),
         "tenure_choice_kappa": record.get("tenure_choice_kappa"),
         "owner_h_bar_scale": record.get("owner_h_bar_scale"),
         "owner_size_cost": record.get("owner_size_cost"),
@@ -265,9 +347,11 @@ def build_parameter_rows(record: dict, hR_max: float) -> list[dict]:
         controls["p_P"] = prices[0]
     if len(prices) > 1:
         controls["p_C"] = prices[1]
+    seen = {row["parameter"] for row in rows}
     for key, value in controls.items():
-        if value is not None:
+        if key not in seen and value is not None:
             rows.append({"parameter": key, "value": float(value)})
+            seen.add(key)
     return rows
 
 
@@ -456,6 +540,7 @@ def write_note(
     target_rows: list[dict],
     param_rows: list[dict],
     outdir: Path,
+    headline_moments: str,
 ) -> None:
     fig_rel = Path("figures")
     table_rel = Path("tables")
@@ -477,6 +562,7 @@ def write_note(
         rf"\item Run tag: \texttt{{{latex_escape(record.get('run_tag', ''))}}}; job {record.get('job_id')}; eval {record.get('eval_id')}; loss {float(record.get('loss')):.3f}.",
         rf"\item Tenure/product logit $\kappa^T={float(record.get('tenure_choice_kappa') or math.nan):.3f}$; owner size cost {float(record.get('owner_size_cost') or 0.0):.4f}; owner $h$ scale {float(record.get('owner_h_bar_scale') or 1.0):.3f}.",
         rf"\item Owner ladder: [{latex_escape(', '.join(f'{float(x):.2g}' for x in (record.get('H_own') or [])))}].",
+        rf"\item Headline target table uses \texttt{{{latex_escape(headline_moments)}}} moments. Policy and distribution figures are generated from a local re-solve at the saved parameters.",
         rf"\item Tables are in \texttt{{{latex_escape(str(table_rel))}}}; figures are in \texttt{{{latex_escape(str(fig_rel))}}}.",
         r"\end{itemize}",
         r"\section*{Target Fit}",

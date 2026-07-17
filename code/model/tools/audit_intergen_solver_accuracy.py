@@ -166,7 +166,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source-row", type=int, default=1)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--target-set", default=DEFAULT_TARGET_SET)
-    parser.add_argument("--J", type=int, default=16)
+    parser.add_argument("--J", type=int, default=17)
     parser.add_argument("--income-states", type=int, default=5)
     parser.add_argument("--n-house", type=int, default=5)
     parser.add_argument("--H-own", default="2,4,6,8,10")

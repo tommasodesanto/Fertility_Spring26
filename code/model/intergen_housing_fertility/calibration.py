@@ -10,7 +10,7 @@ from typing import Any
 
 import numpy as np
 
-from .solver import run_model_cp_dt
+from .solver import income_at_state, run_model_cp_dt
 
 
 PERIOD_YEARS = 4.0
@@ -200,6 +200,49 @@ CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_TARGETS = {
 }
 
 
+# Minimal internally calibrated bequest block. These three PSID targets replace
+# the legacy nonhousing level, parent-childless nonhousing gap, and old-age
+# ownership moment while leaving the other 12 active moments unchanged.
+CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_POST_AUDIT_V1_TARGETS.items()
+        if k
+        not in {
+            "old_nonhousing_wealth_to_income_median_6575",
+            "old_parent_childless_nonhousing_wealth_to_income_gap_6575",
+            "old_age_own_rate",
+        }
+    },
+    "old_total_estate_wealth_to_annual_income_median_7684": 6.50131577436537,
+    "old_total_estate_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
+    "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": 0.101108088567873,
+}
+
+
+NONHOUSING_MEDIAN_TARGET = 1.90821154211154
+NONHOUSING_MEDIAN_WEIGHT = 83.74916751466371
+
+
+# M4 standard-bequest recalibration set. Relative to the internal bequest set,
+# this keeps the late-life estate median level, drops the p90/p50 tail ratio
+# and the 2+-minus-1 family-size estate gap, and restores the legacy
+# nonhousing composition median so late-life wealth composition stays
+# disciplined while theta0 is the only free bequest parameter.
+CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_TARGETS.items()
+        if k
+        not in {
+            "old_total_estate_wealth_to_annual_income_p90_p50_7684",
+            "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575",
+        }
+    },
+    "old_nonhousing_wealth_to_income_median_6575": NONHOUSING_MEDIAN_TARGET,
+}
+
+
 # Non-behavioral target-object ledger. Keep this near the target values so
 # calibration changes document the model statistic, empirical object, and known
 # measurement caveats in the same edit.
@@ -271,10 +314,28 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "issue": "Period-vs-annual denominator and ratio-of-sums vs mean-of-ratios are not identical.",
     },
     "old_nonhousing_wealth_to_income_median_6575": {
-        "model": "weighted median of nonhousing wealth divided by model period income, ages 65-75.",
-        "data": "PSID weighted median nonhousing net worth / annual income, ages 65-75.",
-        "status": "needs-fix",
-        "issue": "Model statistic should divide by annual income or the target should be converted consistently.",
+        "model": "weighted median of nonhousing wealth divided by annual gross income, ages 65-75.",
+        "data": "PSID reference persons, weighted median nonhousing net worth / annual family income, ages 65-75.",
+        "status": "internally-calibrated-balance-sheet-target",
+        "issue": "Target 1.90821154211154 and inverse-variance weight 83.74916751466371 use the same person-cluster bootstrap as the estate targets (499 replications).",
+    },
+    "old_total_estate_wealth_to_annual_income_median_7684": {
+        "model": "weighted median of (b + pH) / annual gross income, ages 76-84.",
+        "data": "PSID reference persons, weighted median NETWORTHR / INCFAMR, ages 76-84.",
+        "status": "internally-calibrated-bequest-target",
+        "issue": "Total estate wealth includes gross housing value because liquid b is net of secured debt.",
+    },
+    "old_total_estate_wealth_to_annual_income_p90_p50_7684": {
+        "model": "weighted p90 divided by weighted median of (b + pH) / annual gross income, ages 76-84.",
+        "data": "PSID reference persons, p90/median of NETWORTHR / INCFAMR, ages 76-84.",
+        "status": "internally-calibrated-bequest-target",
+        "issue": "Upper-tail target identifies the luxury shift jointly with the old-age median.",
+    },
+    "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": {
+        "model": "2+-child minus 1-child weighted median of (b + pH) / annual gross income, ages 65-75.",
+        "data": "PSID reference persons, completed children 2+ minus 1, median NETWORTHR / INCFAMR, ages 65-75.",
+        "status": "internally-calibrated-bequest-target-weak",
+        "issue": "The 2+ bin matches the live 0/1/2+ parity state; person-bootstrap SE is 0.563.",
     },
     "prime30_55_childless_renter_mean_rooms": {
         "model": "mass-weighted mean realized renter housing services for childless-in-household ages 30-55.",
@@ -529,6 +590,39 @@ CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_POST_AUDIT_V1_WEIGHTS.items()
+        if k
+        not in {
+            "old_nonhousing_wealth_to_income_median_6575",
+            "old_parent_childless_nonhousing_wealth_to_income_gap_6575",
+            "old_age_own_rate",
+        }
+    },
+    # Diagonal inverse person-bootstrap variances from
+    # bequest_calibration_targets.csv. The full covariance remains reported.
+    "old_total_estate_wealth_to_annual_income_median_7684": 18.585767349158665,
+    "old_total_estate_wealth_to_annual_income_p90_p50_7684": 56.97941874555749,
+    "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": 3.154769728751094,
+}
+
+
+CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_WEIGHTS.items()
+        if k
+        not in {
+            "old_total_estate_wealth_to_annual_income_p90_p50_7684",
+            "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575",
+        }
+    },
+    "old_nonhousing_wealth_to_income_median_6575": NONHOUSING_MEDIAN_WEIGHT,
+}
+
+
 CORE_FEASIBILITY_V1_WEIGHTS = {
     "tfr": 20.0,
     "childless_rate": 20.0,
@@ -657,6 +751,14 @@ TARGET_SETS = {
     "candidate_replacement_total_due_lifecycle_v1": (
         CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_TARGETS,
         CANDIDATE_REPLACEMENT_TOTAL_DUE_LIFECYCLE_V1_WEIGHTS,
+    ),
+    "candidate_replacement_bequest_internal_v1": (
+        CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_BEQUEST_INTERNAL_V1_WEIGHTS,
+    ),
+    "candidate_replacement_bequest_median_composition_v1": (
+        CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_WEIGHTS,
     ),
     "candidate_no_timing_core_feasibility_v1": (
         CORE_FEASIBILITY_V1_TARGETS,
@@ -1085,7 +1187,11 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
     owner_rooms = float(getattr(sol, "prime_childless_owner_median_rooms", np.nan))
     own_rate_2534 = float(getattr(sol, "own_rate_2534", np.nan))
     old_age_own_rate = float(getattr(sol, "old_age_own_rate_6575", np.nan))
+    total_mass = float(getattr(sol, "total_mass", 1.0))
     return {
+        "aggregate_mean_occupied_rooms_18_85": float(
+            getattr(sol, "aggregate_housing_demand", np.nan)
+        ) / max(total_mass, 1e-12),
         "tfr": 2.0 * household_parity,
         "own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
         "aggregate_own_rate": float(getattr(sol, "own_rate", np.nan)),
@@ -1125,6 +1231,19 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         ),
         "old_parent_childless_total_wealth_to_income_median_gap_6575": float(
             getattr(sol, "old_parent_childless_total_wealth_to_income_median_gap_6575", np.nan)
+        ),
+        "old_total_estate_wealth_to_annual_income_median_7684": float(
+            getattr(sol, "old_total_estate_wealth_to_annual_income_median_7684", np.nan)
+        ),
+        "old_total_estate_wealth_to_annual_income_p90_p50_7684": float(
+            getattr(sol, "old_total_estate_wealth_to_annual_income_p90_p50_7684", np.nan)
+        ),
+        "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": float(
+            getattr(
+                sol,
+                "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575",
+                np.nan,
+            )
         ),
         "mean_age_first_birth": float(getattr(sol, "mean_age_first_birth", np.nan)),
         "housing_increment_0to1": float(getattr(sol, "housing_increment_0to1_eventstudy_t3", np.nan)),
@@ -1200,7 +1319,7 @@ def housing_user_cost_share(sol: Any, P: Any | None) -> float:
     for i in range(P.I):
         for j in range(P.J):
             for zz, z_value in enumerate(z_grid):
-                yj = float(P.income[i, j]) * (float(z_value) if j < int(P.J_R) else 1.0)
+                yj = income_at_state(P, i, j, float(z_value))
                 mass_ijz = float(np.sum(g[:, :, i, j, zz, :, :]))
                 total_income += yj * mass_ijz
                 total_housing += float(np.sum(g[:, 0, i, j, zz, :, :] * hR[:, 0, i, j, zz, :, :])) * user_cost[i]

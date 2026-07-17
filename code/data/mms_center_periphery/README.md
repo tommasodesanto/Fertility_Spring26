@@ -34,6 +34,8 @@ Files:
 - `validate_acs_home_value_scf.R`: builds ACS/MMS household-head `VALUEH` lifecycle profiles and validates the national ACS home-value object against the public 2022 SCF summary extract
 - `analyze_couillard_bedroom_supply_panel.R`: builds a Couillard-style ACS/MMS bedroom supply packet by center/periphery, tenure, parent status, price premium, and descriptive early/late stock response
 - `analyze_income_fertility_cross_section.R`: builds an ACS/MMS cross-section of recent births, parenthood, childlessness, parity, income ranks, and center/periphery decomposition by income
+- `audit_intergen_quality_adjusted_room_targets.R`: audits raw versus location/structure/vintage-adjusted childless owner-renter room targets for the one-market intergen calibration
+- `summarize_intergen_size_tenure_supply_pricing.py`: summarizes existing ACS/MMS family-size, bedroom, and structure packets into a lightweight size-by-tenure supply/pricing audit for the one-market intergen discussion
 
 Outputs:
 - `data/migpuma_mms_origin_bridge.csv`
@@ -78,3 +80,7 @@ Outputs:
 - `output_income_fertility_cross_section/acs_fertility_supply_gap_regressions.csv`
 - `output_income_fertility_cross_section/acs_fertility_supply_level_regressions.csv`
 - `output_income_fertility_cross_section_top100_c25/ACS_MMS_INCOME_FERTILITY_CROSS_SECTION.md` (ignored generated alternate)
+- `output_intergen_quality_adjusted_room_targets/README.md`
+- `output_intergen_quality_adjusted_room_targets/intergen_quality_adjusted_room_gap_targets.csv`
+- `output_intergen_size_tenure_supply_pricing/README.md`
+- `output_intergen_size_tenure_supply_pricing/key_facts.json`

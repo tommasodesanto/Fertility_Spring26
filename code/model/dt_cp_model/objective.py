@@ -189,4 +189,60 @@ def extract_moments(
     moments.inv_err_pop = err_pop
     moments.inv_err_rent = err_rent
     moments.inv_max_error = inv_err
+    _attach_housing_expenditure_share_moments(moments, sol, P_out, p_eq)
     return moments
+
+
+def _attach_housing_expenditure_share_moments(
+    moments: SimpleNamespace,
+    sol: SimpleNamespace,
+    P_out: SimpleNamespace,
+    p_eq: np.ndarray,
+) -> None:
+    """Attach model-imputed user-cost housing expenditure shares."""
+
+    g = getattr(sol, "g", None)
+    c_pol = getattr(sol, "c_pol", None)
+    hR_pol = getattr(sol, "hR_pol", None)
+    if g is None or c_pol is None or hR_pol is None:
+        return
+
+    g = np.asarray(g, dtype=float)
+    c_pol = np.asarray(c_pol, dtype=float)
+    hR_pol = np.asarray(hR_pol, dtype=float)
+    if g.shape != c_pol.shape or g.shape != hR_pol.shape or g.ndim != 6:
+        return
+
+    rents = float(P_out.user_cost_rate) * np.asarray(p_eq, dtype=float).reshape(-1)
+    if rents.size != int(P_out.I):
+        return
+
+    housing_cost = np.zeros_like(g, dtype=float)
+    for i in range(int(P_out.I)):
+        housing_cost[:, 0, i, :, :, :] = rents[i] * hR_pol[:, 0, i, :, :, :]
+        for ten in range(1, 1 + int(P_out.n_house)):
+            housing_cost[:, ten, i, :, :, :] = rents[i] * float(P_out.H_own[ten - 1])
+
+    def share(mask: np.ndarray | None = None) -> float:
+        weights = g if mask is None else g * mask
+        h_exp = float(np.sum(weights * housing_cost))
+        c_exp = float(np.sum(weights * c_pol))
+        denom = h_exp + c_exp
+        return h_exp / denom if denom > 1e-12 else np.nan
+
+    moments.housing_exp_share_usercost_total = share()
+
+    a25s = max(0, round(25 - P_out.age_start))
+    a45e = min(P_out.J - 1, round(45 - P_out.age_start))
+    prime_mask = np.zeros_like(g, dtype=float)
+    prime_mask[:, :, :, a25s : a45e + 1, :, :] = 1.0
+    renter_mask = np.zeros_like(g, dtype=float)
+    renter_mask[:, 0, :, :, :, :] = 1.0
+    owner_mask = np.zeros_like(g, dtype=float)
+    owner_mask[:, 1:, :, :, :, :] = 1.0
+
+    moments.housing_exp_share_usercost_25_45 = share(prime_mask)
+    moments.housing_exp_share_usercost_renters = share(renter_mask)
+    moments.housing_exp_share_usercost_owners = share(owner_mask)
+    moments.housing_exp_share_usercost_25_45_renters = share(prime_mask * renter_mask)
+    moments.housing_exp_share_usercost_25_45_owners = share(prime_mask * owner_mask)

@@ -10,7 +10,12 @@ from typing import Any
 
 import numpy as np
 
-from .parameters import apply_overrides, finalize_location_choice_spec, setup_parameters
+from .parameters import (
+    apply_overrides,
+    finalize_location_choice_spec,
+    setup_parameters,
+    unsecured_debt_floor,
+)
 from .kernels import (
     NUMBA_AVAILABLE,
     eval_owner_block_kernel,
@@ -43,6 +48,7 @@ from .utils import (
     scatter_redistribute_cols_sameidx,
     unflat_nc,
     weighted_median_from_cells,
+    weighted_quantile,
 )
 
 
@@ -60,6 +66,90 @@ RENEWAL_VALVE_CALIBRATED_CLOSURES = {
     "benchmark_renewal_valve",
 }
 RENEWAL_VALVE_CLOSURES = RENEWAL_VALVE_FIXED_CLOSURES | RENEWAL_VALVE_CALIBRATED_CLOSURES
+DEAD_VALUE_CUTOFF = -1e9
+DEAD_MASS_TOL = 1e-12
+
+
+class InfeasibleThetaError(RuntimeError):
+    """Raised when positive population mass reaches a Bellman-dead state."""
+
+    def __init__(
+        self,
+        stage: str,
+        dead_mass: float,
+        census: list[dict[str, Any]] | None = None,
+    ) -> None:
+        self.stage = str(stage)
+        self.dead_mass = float(dead_mass)
+        self.census = list(census or [])
+        detail = jsonable_feasibility_census(self.census)
+        super().__init__(
+            f"{self.stage}: dead-node mass {self.dead_mass:.12g} exceeds {DEAD_MASS_TOL:.1e}; "
+            f"census={detail}"
+        )
+
+
+def jsonable_feasibility_census(census: list[dict[str, Any]]) -> str:
+    """Compact deterministic representation used in exception messages."""
+
+    rows: list[str] = []
+    for row in census[:8]:
+        fields = ",".join(f"{key}={row[key]}" for key in sorted(row))
+        rows.append("{" + fields + "}")
+    return "[" + ";".join(rows) + "]"
+
+
+def debt_rule_at_age(P: SimpleNamespace, current_unsecured: Any, j: int) -> np.ndarray:
+    """Evaluate the unsecured component of the next-period debt floor."""
+
+    return unsecured_debt_floor(
+        current_unsecured,
+        float(np.asarray(P.debt_taper_weights)[int(j) + 1]),
+        float(np.asarray(P.debt_caps)[int(j) + 1]),
+    )
+
+
+def renter_borrowing_floor(P: SimpleNamespace, b: Any, j: int) -> np.ndarray:
+    """Renter floor; all renter debt is unsecured."""
+
+    return debt_rule_at_age(P, b, j)
+
+
+def owner_borrowing_floor(
+    P: SimpleNamespace,
+    b: Any,
+    collateral_floor: Any,
+    j: int,
+) -> np.ndarray:
+    """Owner floor after separating secured from unsecured debt.
+
+    Prices and therefore ``collateral_floor`` are those of the current solver
+    iterate.  This convention is inert in stationary equilibrium.
+    """
+
+    b_arr = np.asarray(b, dtype=float)
+    bf_arr = effective_owner_collateral_floor(P, collateral_floor, j)
+    current_unsecured = b_arr - bf_arr
+    return bf_arr + debt_rule_at_age(P, current_unsecured, j)
+
+
+def effective_owner_collateral_floor(
+    P: SimpleNamespace,
+    collateral_floor: Any,
+    j: int,
+) -> np.ndarray:
+    """Apply the opt-in next-period post-retirement LTV schedule.
+
+    ``collateral_floor`` uses the ordinary financed-share convention
+    ``-phi * p * H``.  Bellman choices at age index ``j`` select next-period
+    liquid wealth, so the schedule is evaluated at ``j + 1``.  With the
+    experiment switched off, the multiplier is one and this helper is inert.
+    """
+
+    base = np.asarray(collateral_floor, dtype=float)
+    multipliers = np.asarray(getattr(P, "owner_ltv_multipliers", np.ones(int(P.J) + 1)), dtype=float)
+    next_idx = min(max(int(j) + 1, 0), multipliers.size - 1)
+    return float(multipliers[next_idx]) * base
 
 
 def uses_outside_option_closure(P: SimpleNamespace) -> bool:
@@ -128,7 +218,8 @@ def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float
     y = float(P.income[i, j])
     if j < int(getattr(P, "J_R", P.J)):
         return y * float(z_value)
-    return y
+    scale = float(getattr(P, "retirement_income_z_scale", 0.0))
+    return y * (1.0 + scale * (float(z_value) - 1.0))
 
 
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
@@ -1259,7 +1350,7 @@ def solve_markov_income_at_prices(
     t_bellman = time.perf_counter() - t0
     t0 = time.perf_counter()
     g, stats = forward_distribution_markov_income(
-        bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
+        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
     )
     t_dist = time.perf_counter() - t0
     if fast_stats:
@@ -1509,7 +1600,7 @@ def solve_partial_equilibrium_dt(
     SD = precompute_shared(P, b_grid)
     V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, timings = solve_bellman_full(r, p_eq, P, b_grid, SD)
     g, stats = forward_distribution(
-        bp_pol, hR_pol, tc, lp_j, fp, r, p_eq, P, b_grid, SD, fast_stats=False, tenure_probs=tp
+        bp_pol, hR_pol, tc, lp_j, fp, V, r, p_eq, P, b_grid, SD, fast_stats=False, tenure_probs=tp
     )
     sol = pack_solution(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p_eq, P)
     sol.timings = {"bellman_full": timings["bellman"], "distribution": timings.get("distribution", 0.0)}
@@ -1612,7 +1703,7 @@ def solve_equilibrium(
 
         t0 = time.perf_counter()
         g, stats = forward_distribution(
-            bp_pol, hR_pol, tc, lp_j, fp, r, p, P, b_grid, SD, fast_stats=True, tenure_probs=tp
+            bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=True, tenure_probs=tp
         )
         t_dist += time.perf_counter() - t0
         n_dist += 1
@@ -1863,6 +1954,7 @@ def solve_equilibrium(
         S["tc"],
         S["lp_j"],
         S["fp"],
+        S["V"],
         S["r"],
         S["p"],
         P,
@@ -2090,6 +2182,9 @@ def solve_bellman_full_markov_income(
 
     for j in range(J - 1, -1, -1):
         in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
+        s_next = float(P.debt_taper_weights[j + 1])
+        D_next = float(P.debt_caps[j + 1])
+        renter_floor = np.maximum(renter_borrowing_floor(P, b_grid, j), b_grid[0])
         for zz, z_value in enumerate(z_grid):
             if j == J - 1:
                 Vnr = Vbq
@@ -2097,6 +2192,9 @@ def solve_bellman_full_markov_income(
                 Vnr = np.zeros((Nb, nt, I, npar, ncs))
                 for znext in range(Nz):
                     Vnr += Pi_z[zz, znext] * V[:, :, :, j + 1, znext, :, :]
+                if bool(getattr(P, "use_age_survival", False)):
+                    survival = float(P.survival_probs[j])
+                    Vnr = survival * Vnr + (1.0 - survival) * Vbq
             Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
             Vd = np.zeros((Nb, nt, I, npar, ncs))
             cd = np.zeros_like(Vd)
@@ -2119,7 +2217,7 @@ def solve_bellman_full_markov_income(
                         Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
                         cb_v, hb_v, psi_v_flat,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
-                        alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                        alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                     )
                 else:
                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
@@ -2133,8 +2231,8 @@ def solve_bellman_full_markov_income(
                         cb_c = SD.cb_flat[0, c]
                         hb_c = SD.hb_flat[0, c]
                         ht_cap_c = max(hRmax - hb_c, 1e-10)
-                        lo = np.maximum(np.zeros(Nb), b_grid[0])
-                        hi = np.maximum((Rv[:, 0] - dc - 1e-6), 0.0)
+                        lo = renter_floor.copy()
+                        hi = np.maximum(Rv[:, 0] - dc - 1e-6, lo)
                         bp, val = golden_renter(
                             lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
                             ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
@@ -2166,14 +2264,17 @@ def solve_bellman_full_markov_income(
                     hsv = hsrv[i, ten]
                     Vco = flat_nc(Vc[:, ten, i, :, :], Nb, nc)
                     if use_full_kernel:
-                        bf_v = np.ascontiguousarray(bmo[i, ten, :, :].reshape(-1, order="F"))
+                        bf_v_base = bmo[i, ten, :, :].reshape(-1, order="F")
+                        bf_v = np.ascontiguousarray(
+                            effective_owner_collateral_floor(P, bf_v_base, j)
+                        )
                         bp_prev_o = np.zeros((Nb, nc))
                         has_prev_o = 0
                         Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
                             Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
                             cb_v, hb_v, psi_v_flat, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
-                            alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                            alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                         )
                     else:
                         for c in range(nc):
@@ -2185,7 +2286,7 @@ def solve_bellman_full_markov_income(
                             nn_c_1 = math.ceil((c + 1) / ncs)
                             cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
                             bf_c = bmo[i, ten, nn_c_1 - 1, cs_c_1 - 1]
-                            lo = np.maximum(bf_c, b_grid[0]) * np.ones(Nb)
+                            lo = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
                             hi = np.maximum(Rv[:, 0] - oc - cb_c - 1e-6, lo)
                             bp, val = golden_owner(
                                 lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc,
@@ -2226,7 +2327,7 @@ def solve_bellman_full_markov_income(
                         if to == 0:
                             Vopt[:, :, :, 0] = Vd[:, 0, id_, :, :]
                         else:
-                            ba = np.maximum(b_grid + sp, 0.0)
+                            ba = np.clip(b_grid + sp, b_grid[0], b_grid[-1])
                             Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
                         for tn in range(1, nt):
                             hc = hcost[id_, tn]
@@ -2268,6 +2369,7 @@ def solve_bellman_full_markov_income(
                         tc = np.argmax(Vopt, axis=3)
                         if use_tenure_logit:
                             ls, pr = logsumexp(Vopt / tenure_choice_kappa, axis=3)
+                            pr[np.max(Vopt, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
                             VH[:, to, id_, :, :] = tenure_choice_kappa * ls
                             tenure_probs[:, to, id_, j, zz, :, :, :] = pr.astype(np.float32)
                         else:
@@ -2297,6 +2399,8 @@ def solve_bellman_full_markov_income(
                             la[:, id_, :, :] += loc_shift[io, id_]
                         la = la / kl
                         ls, pr = logsumexp(la, axis=1)
+                        dead_loc = np.max(Va, axis=1) <= DEAD_VALUE_CUTOFF
+                        pr = np.where(dead_loc[:, None, :, :], 0.0, pr)
                         VI[:, to, io, :, :] = kl * ls
                         lpj[:, to, io, :, :, :] = pr
             loc_probs[:, :, :, :, j, zz, :, :] = lpj
@@ -2308,6 +2412,7 @@ def solve_bellman_full_markov_income(
                     Vfa[:, :, :, nn] = VI[:, :, :, nn, 1]
                 lf = Vfa / P.kappa_fert
                 ls, pr = logsumexp(lf, axis=3)
+                pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
                 fert_probs[:, :, :, j, zz, :] = pr
                 fert_value[:, :, :, j, zz] = P.kappa_fert * ls
                 V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
@@ -2467,10 +2572,16 @@ def solve_bellman_core(
 
     for j in range(J - 1, -1, -1):
         in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
+        s_next = float(P.debt_taper_weights[j + 1])
+        D_next = float(P.debt_caps[j + 1])
+        renter_floor = np.maximum(renter_borrowing_floor(P, b_grid, j), b_grid[0])
         if j == J - 1:
             Vnr = Vbq
         else:
             Vnr = V[:, :, :, j + 1, :, :]
+            if bool(getattr(P, "use_age_survival", False)):
+                survival = float(P.survival_probs[j])
+                Vnr = survival * Vnr + (1.0 - survival) * Vbq
         Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
 
         for i in range(I):
@@ -2492,7 +2603,7 @@ def solve_bellman_core(
                         Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
                         cb_v, hb_v, psi_v_flat,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
-                        alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                        alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                     )
                 else:
                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
@@ -2508,12 +2619,12 @@ def solve_bellman_core(
                         cb_c = SD.cb_flat[0, c]
                         hb_c = SD.hb_flat[0, c]
                         ht_cap_c = max(hRmax - hb_c, 1e-10)
-                        lo = np.maximum(np.zeros(Nb), b_grid[0])
-                        hi = np.maximum((Rv[:, 0] - dc - 1e-6), 0.0)
+                        lo = renter_floor.copy()
+                        hi = np.maximum(Rv[:, 0] - dc - 1e-6, lo)
                         if j < J - 1:
                             lo = np.maximum(lo, bp_prev_r[:, c] - 2.0)
                             hi = np.minimum(hi, bp_prev_r[:, c] + 2.0)
-                            lo = np.maximum(lo, 0.0)
+                            lo = np.maximum(lo, renter_floor)
                             hi = np.maximum(hi, lo)
                         if use_value_kernel:
                             bp, val = golden_renter_kernel(
@@ -2550,7 +2661,10 @@ def solve_bellman_core(
                     hsv = hsrv[i, ten]
                     Vco = flat_nc(Vc[:, ten, i, :, :], Nb, nc)
                     if use_full_kernel:
-                        bf_v = np.ascontiguousarray(bmo[i, ten, :, :].reshape(-1, order="F"))
+                        bf_v_base = bmo[i, ten, :, :].reshape(-1, order="F")
+                        bf_v = np.ascontiguousarray(
+                            effective_owner_collateral_floor(P, bf_v_base, j)
+                        )
                         if j < J - 1:
                             bp_prev_o = flat_nc(bd[:, ten, i, :, :], Nb, nc)
                             has_prev_o = 1
@@ -2561,7 +2675,7 @@ def solve_bellman_core(
                             Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
                             cb_v, hb_v, psi_v_flat, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
-                            alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol,
+                            alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                         )
                     else:
                         bp_prev_o = flat_nc(bd[:, ten, i, :, :], Nb, nc) if j < J - 1 else None
@@ -2574,12 +2688,13 @@ def solve_bellman_core(
                             nn_c_1 = math.ceil((c + 1) / ncs)
                             cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
                             bf_c = bmo[i, ten, nn_c_1 - 1, cs_c_1 - 1]
-                            lo = np.maximum(bf_c, b_grid[0]) * np.ones(Nb)
+                            owner_floor_c = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
+                            lo = owner_floor_c.copy()
                             hi = np.maximum(Rv[:, 0] - oc - cb_c - 1e-6, lo)
                             if j < J - 1:
                                 lo = np.maximum(lo, bp_prev_o[:, c] - 2.0)
                                 hi = np.minimum(hi, bp_prev_o[:, c] + 2.0)
-                                lo = np.maximum(lo, bf_c)
+                                lo = np.maximum(lo, owner_floor_c)
                                 hi = np.maximum(hi, lo)
                             if use_value_kernel:
                                 bp, val = golden_owner_kernel(
@@ -2597,17 +2712,23 @@ def solve_bellman_core(
                     cd[:, ten, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
             else:
                 bpv = flat_nc(stored_bp[:, 0, i, j, :, :], Nb, nc)
+                renter_floor_nc = np.broadcast_to(renter_floor[:, None], bpv.shape)
+                renter_floor_changed = bool(np.any(bpv < renter_floor_nc))
+                bpv = np.maximum(bpv, renter_floor_nc)
                 Vcr_nc = flat_nc(Vc[:, 0, i, :, :], Nb, nc)
                 Rv1d = np.ascontiguousarray(Rv[:, 0]) if use_eval_kernel else None
                 if use_eval_kernel:
-                    idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc).astype(np.int64, copy=False)
-                    wt_nc = flat_nc(stored_wt[:, 0, i, j, :, :], Nb, nc)
+                    if renter_floor_changed:
+                        idx_nc, wt_nc = interp_indices(b_grid, np.clip(bpv, b_lo, b_hi))
+                    else:
+                        idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc).astype(np.int64, copy=False)
+                        wt_nc = flat_nc(stored_wt[:, 0, i, j, :, :], Nb, nc)
                     Vo_nc, co_nc, ho_nc = eval_renter_block_kernel(
                         Rv1d, bpv, Vcr_nc, idx_nc, wt_nc, cb_v, hb_v, psi_v_flat,
                         ri, P.hR_max, P.c_min, P.c_bar_0, P.h_bar_0, alpha, oms, beta,
                     )
                 else:
-                    if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
+                    if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None and not renter_floor_changed:
                         idx_nc = flat_nc(stored_idx[:, 0, i, j, :, :], Nb, nc)
                         wt_nc = flat_nc(stored_wt[:, 0, i, j, :, :], Nb, nc)
                         Vcbp = interp_cols_preidx_kernel(Vcr_nc, idx_nc, wt_nc)
@@ -2648,16 +2769,26 @@ def solve_bellman_core(
                     oc = ocst[i, ten]
                     hsv = hsrv[i, ten]
                     bpv_o = flat_nc(stored_bp[:, ten, i, j, :, :], Nb, nc)
+                    bf_v = np.ascontiguousarray(bmo[i, ten, :, :].reshape(-1, order="F"))
+                    owner_floor_nc = np.maximum(
+                        owner_borrowing_floor(P, b_grid[:, None], bf_v[None, :], j),
+                        b_grid[0],
+                    )
+                    owner_floor_changed = bool(np.any(bpv_o < owner_floor_nc))
+                    bpv_o = np.maximum(bpv_o, owner_floor_nc)
                     Vco_nc = flat_nc(Vc[:, ten, i, :, :], Nb, nc)
                     if use_eval_kernel:
-                        idx_nc_o = flat_nc(stored_idx[:, ten, i, j, :, :], Nb, nc).astype(np.int64, copy=False)
-                        wt_nc_o = flat_nc(stored_wt[:, ten, i, j, :, :], Nb, nc)
+                        if owner_floor_changed:
+                            idx_nc_o, wt_nc_o = interp_indices(b_grid, np.clip(bpv_o, b_lo, b_hi))
+                        else:
+                            idx_nc_o = flat_nc(stored_idx[:, ten, i, j, :, :], Nb, nc).astype(np.int64, copy=False)
+                            wt_nc_o = flat_nc(stored_wt[:, ten, i, j, :, :], Nb, nc)
                         Vo_nc, co_nc = eval_owner_block_kernel(
                             Rv1d, bpv_o, Vco_nc, idx_nc_o, wt_nc_o, cb_v, hb_v, psi_v_flat,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min, alpha, oms, beta,
                         )
                     else:
-                        if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None:
+                        if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None and not owner_floor_changed:
                             idx_nc = flat_nc(stored_idx[:, ten, i, j, :, :], Nb, nc)
                             wt_nc = flat_nc(stored_wt[:, ten, i, j, :, :], Nb, nc)
                             Vcbpo = interp_cols_preidx_kernel(Vco_nc, idx_nc, wt_nc)
@@ -2665,11 +2796,12 @@ def solve_bellman_core(
                             Vcbpo = interp_cols_kernel(b_grid, Vco_nc, np.clip(bpv_o, b_lo, b_hi))
                         else:
                             Vcbpo = interp_cols(b_grid, Vco_nc, np.clip(bpv_o, b_lo, b_hi))
-                        ct_o = np.maximum(Rv - oc - SD.cb_flat - bpv_o, 1e-10)
+                        ct_raw_o = Rv - oc - SD.cb_flat - bpv_o
+                        ct_o = np.maximum(ct_raw_o, 1e-10)
                         ht_o = owner_service_premium * np.maximum(hsv - owner_h_bar_scale * SD.hb_flat, 1e-10)
                         Ko_ev = ht_o ** ((1 - alpha) * oms)
                         Vo_nc = Ko_ev * ct_o ** (alpha * oms) / oms + SD.psi_flat + beta * Vcbpo
-                        Vo_nc[ct_o <= 1e-10] = -1e10
+                        Vo_nc[ct_raw_o <= 1e-10] = -1e10
                         co_nc = SD.cb_flat + np.maximum(ct_o, P.c_min)
                     Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
                     bd[:, ten, i, :, :] = unflat_nc(bpv_o, Nb, npar, ncs)
@@ -2702,7 +2834,7 @@ def solve_bellman_core(
                     if to == 0:
                         Vopt[:, :, :, 0] = Vd[:, 0, id_, :, :]
                     else:
-                        ba = np.maximum(b_grid + sp, 0.0)
+                        ba = np.clip(b_grid + sp, b_grid[0], b_grid[-1])
                         Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
                     for tn in range(1, nt):
                         hc = hcost[id_, tn]
@@ -2744,6 +2876,7 @@ def solve_bellman_core(
                     tc = np.argmax(Vopt, axis=3)
                     if use_tenure_logit:
                         ls, pr = logsumexp(Vopt / tenure_choice_kappa, axis=3)
+                        pr[np.max(Vopt, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
                         VH[:, to, id_, :, :] = tenure_choice_kappa * ls
                         tenure_probs[:, to, id_, j, :, :, :] = pr.astype(np.float32)
                     else:
@@ -2773,6 +2906,8 @@ def solve_bellman_core(
                         la[:, id_, :, :] += loc_shift[io, id_]
                     la = la / kl
                     ls, pr = logsumexp(la, axis=1)
+                    dead_loc = np.max(Va, axis=1) <= DEAD_VALUE_CUTOFF
+                    pr = np.where(dead_loc[:, None, :, :], 0.0, pr)
                     VI[:, to, io, :, :] = kl * ls
                     lpj[:, to, io, :, :, :] = pr
         loc_probs[:, :, :, :, j, :, :] = lpj
@@ -2784,6 +2919,7 @@ def solve_bellman_core(
                 Vfa[:, :, :, nn] = VI[:, :, :, nn, 1]
             lf = Vfa / P.kappa_fert
             ls, pr = logsumexp(lf, axis=3)
+            pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
             fert_probs[:, :, :, j, :] = pr
             fert_value[:, :, :, j] = P.kappa_fert * ls
             V[:, :, :, j, 0, 0] = fert_value[:, :, :, j]
@@ -2866,9 +3002,10 @@ def golden_owner(lo, hi, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta,
 def eval_owner(bp, Rv, Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, vinterp=None):
     if vinterp is None:
         vinterp = make_value_interp(b_grid, Vbar, "linear")
-    ct = np.maximum(Rv - oc - cb_c - bp, 1e-10)
+    ct_raw = Rv - oc - cb_c - bp
+    ct = np.maximum(ct_raw, 1e-10)
     f = Ko_c * ct ** (alpha * oms) / oms + pc + beta * vinterp(bp)
-    f[ct <= 1e-10] = -1e10
+    f[ct_raw <= 1e-10] = -1e10
     return f
 
 
@@ -2924,7 +3061,9 @@ def build_forward_tenure_transition_maps(
                                 bmax,
                             )
                         elif to > 0 and tn == 0:
-                            branch_wealth = np.clip(np.maximum(bg + sale_proceeds, 0.0), bmin, bmax)
+                            # Post-liquidation wealth is a renter position, so
+                            # any residual unsecured debt must carry through.
+                            branch_wealth = np.clip(bg + sale_proceeds, bmin, bmax)
                         else:
                             purchase_cost = hc[id_, tn]
                             branch_wealth = np.clip(
@@ -3240,12 +3379,112 @@ def assign_current_cross_section_to_beginning_assets(
     return out
 
 
+def _dead_mass_census_at_age(
+    g_age: np.ndarray,
+    V_age: np.ndarray,
+    j: int,
+    r_hat: np.ndarray,
+    p_hat: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    SD: SimpleNamespace,
+    *,
+    markov_income: bool,
+) -> tuple[float, list[dict[str, Any]]]:
+    """Return positive mass on Bellman-dead nodes and a compact state census."""
+
+    ga = np.asarray(g_age, dtype=float)
+    va = np.asarray(V_age, dtype=float)
+    if not markov_income:
+        ga = ga[:, :, :, None, :, :]
+        va = va[:, :, :, None, :, :]
+        z_grid = np.array([1.0])
+    else:
+        z_grid, _, _ = income_transition_values(P)
+    dead_mass_array = np.where(va <= DEAD_VALUE_CUTOFF, ga, 0.0)
+    dead_mass = float(np.sum(dead_mass_array))
+    if dead_mass <= DEAD_MASS_TOL:
+        return dead_mass, []
+
+    census: list[dict[str, Any]] = []
+    positive = np.argwhere(dead_mass_array > 0.0)
+    phi_state = SD.phi_state
+    for b_idx, ten, i, zz, nn, cs in positive[:8]:
+        b_now = float(b_grid[b_idx])
+        z_value = float(z_grid[zz])
+        y_now = income_at_state(P, int(i), int(j), z_value)
+        resources = float(P.R_gross) * b_now + y_now
+        if ten == 0:
+            floor = float(renter_borrowing_floor(P, b_now, j))
+            required_flow = float(SD.c_bar[nn, cs]) + float(r_hat[i]) * float(SD.h_bar[nn, cs])
+            unsecured = b_now
+        else:
+            house = float(P.H_own[ten - 1])
+            collateral_floor = -float(phi_state[nn, cs]) * float(p_hat[i]) * house
+            effective_collateral = float(effective_owner_collateral_floor(P, collateral_floor, j))
+            floor = float(owner_borrowing_floor(P, b_now, collateral_floor, j))
+            extra_size_cost = float(getattr(P, "owner_size_cost", 0.0)) * float(p_hat[i]) * max(
+                house - float(getattr(P, "owner_size_cost_ref", 6.0)), 0.0
+            ) ** float(getattr(P, "owner_size_cost_power", 2.0))
+            required_flow = (
+                (float(P.delta) + float(P.tau_H)) * float(p_hat[i]) * house
+                + extra_size_cost
+                + float(SD.c_bar[nn, cs])
+            )
+            unsecured = b_now - effective_collateral
+        census.append(
+            {
+                "age": float(P.age_start + j * P.da),
+                "b": b_now,
+                "child_state": int(cs),
+                "income": float(y_now),
+                "location": int(i),
+                "mass": float(dead_mass_array[b_idx, ten, i, zz, nn, cs]),
+                "parity": int(nn),
+                "slack": float(resources - required_flow - floor),
+                "tenure": int(ten),
+                "unsecured_position": float(unsecured),
+                "z": z_value,
+            }
+        )
+    return dead_mass, census
+
+
+def _gate_dead_mass_at_age(
+    g_age: np.ndarray,
+    V_age: np.ndarray,
+    j: int,
+    stage: str,
+    r_hat: np.ndarray,
+    p_hat: np.ndarray,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    SD: SimpleNamespace,
+    *,
+    markov_income: bool,
+) -> None:
+    dead_mass, census = _dead_mass_census_at_age(
+        g_age,
+        V_age,
+        j,
+        r_hat,
+        p_hat,
+        P,
+        b_grid,
+        SD,
+        markov_income=markov_income,
+    )
+    if dead_mass > DEAD_MASS_TOL:
+        raise InfeasibleThetaError(stage, dead_mass, census)
+
+
 def forward_distribution(
     bp_pol: np.ndarray,
     hR_pol: np.ndarray,
     tenure_choice: np.ndarray,
     loc_probs: np.ndarray,
     fert_probs: np.ndarray,
+    state_values: np.ndarray,
     r_hat: np.ndarray,
     p_hat: np.ndarray,
     P: SimpleNamespace,
@@ -3270,6 +3509,18 @@ def forward_distribution(
         loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=1.0)
         for kk, ww in zip(loc_entry_idx, loc_entry_wt):
             g[int(kk), 0, i, 0, 0, 0] += float(ww) * P.entry_by_loc[i]
+    _gate_dead_mass_at_age(
+        g[:, :, :, 0, :, :],
+        state_values[:, :, :, 0, :, :],
+        0,
+        "entry",
+        r_hat,
+        p_hat,
+        P,
+        b_grid,
+        SD,
+        markov_income=False,
+    )
     total_births = 0.0
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
@@ -3316,6 +3567,7 @@ def forward_distribution(
         and fast_stats
         and NUMBA_AVAILABLE
         and bool(getattr(P, "use_compiled_forward_distribution", True))
+        and not bool(getattr(P, "enforce_feasibility_gate", True))
         and entry_idx.size == 1
     ):
         bp_idx, bp_wt = interp_indices(b_grid, np.clip(bp_pol, bmin, bmax))
@@ -3343,6 +3595,12 @@ def forward_distribution(
             int(P.A_f_end),
             int(K),
             bool(ust),
+            np.asarray(
+                P.survival_probs
+                if bool(getattr(P, "use_age_survival", False))
+                else np.ones(J - 1),
+                dtype=float,
+            ),
         )
         tm = float(np.sum(g))
         if tm > 1e-12 and normalize_population_mass(P):
@@ -3403,6 +3661,18 @@ def forward_distribution(
     twoplus_es3_pre_sum = twoplus_es3_post_sum = twoplus_es3_mass = 0.0
 
     for j in range(J - 1):
+        _gate_dead_mass_at_age(
+            g[:, :, :, j, :, :],
+            state_values[:, :, :, j, :, :],
+            j,
+            f"forward_age_{P.age_start + j * P.da:g}",
+            r_hat,
+            p_hat,
+            P,
+            b_grid,
+            SD,
+            markov_income=False,
+        )
         if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
             gc = g[:, :, :, j, 0, 0]
             pa = fert_probs[:, :, :, j, :]
@@ -3492,7 +3762,8 @@ def forward_distribution(
                             twoplus_es3_post_sum += two_plus_mass * mean_housing_distribution(two_plus, j + event_horizon, hR_pol, P)
                             twoplus_es3_mass += two_plus_birth_mass_total
 
-        gj = g[:, :, :, j, :, :]
+        survival = float(P.survival_probs[j]) if bool(getattr(P, "use_age_survival", False)) else 1.0
+        gj = survival * g[:, :, :, j, :, :]
         gpl = np.zeros((Nb, nt, I, npar, ncs))
         for io in range(I):
             for to in range(nt):
@@ -3590,6 +3861,19 @@ def forward_distribution(
                             entrants_mature_total += fi
                     g[:, :, :, j + 1, nn, csn] += gp
 
+    _gate_dead_mass_at_age(
+        g[:, :, :, J - 1, :, :],
+        state_values[:, :, :, J - 1, :, :],
+        J - 1,
+        f"forward_age_{P.age_start + (J - 1) * P.da:g}",
+        r_hat,
+        p_hat,
+        P,
+        b_grid,
+        SD,
+        markov_income=False,
+    )
+
     tm = float(np.sum(g))
     if tm > 1e-12 and normalize_population_mass(P):
         sc = P.N_target / tm
@@ -3686,6 +3970,7 @@ def forward_distribution_markov_income(
     tenure_choice: np.ndarray,
     loc_probs: np.ndarray,
     fert_probs: np.ndarray,
+    state_values: np.ndarray,
     r_hat: np.ndarray,
     p_hat: np.ndarray,
     P: SimpleNamespace,
@@ -3713,6 +3998,18 @@ def forward_distribution_markov_income(
             loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=float(z_grid[zz]))
             for kk, ww in zip(loc_entry_idx, loc_entry_wt):
                 g[int(kk), 0, i, 0, zz, 0, 0] += float(ww) * P.entry_by_loc[i] * z_weights[zz]
+    _gate_dead_mass_at_age(
+        g[:, :, :, 0, :, :, :],
+        state_values[:, :, :, 0, :, :, :],
+        0,
+        "entry",
+        r_hat,
+        p_hat,
+        P,
+        b_grid,
+        SD,
+        markov_income=True,
+    )
     total_births = 0.0
     births_by_loc = np.zeros(I)
     entrants_mature_by_loc = np.zeros(I)
@@ -3760,6 +4057,18 @@ def forward_distribution_markov_income(
     Pia = P.Pi_child if ust else None
 
     for j in range(J - 1):
+        _gate_dead_mass_at_age(
+            g[:, :, :, j, :, :, :],
+            state_values[:, :, :, j, :, :, :],
+            j,
+            f"forward_age_{P.age_start + j * P.da:g}",
+            r_hat,
+            p_hat,
+            P,
+            b_grid,
+            SD,
+            markov_income=True,
+        )
         if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
             for zz in range(Nz):
                 gc = g[:, :, :, j, zz, 0, 0]
@@ -3898,7 +4207,8 @@ def forward_distribution_markov_income(
                                 )
                                 twoplus_es3_mass += two_plus_birth_mass_total
 
-        gj = g[:, :, :, j, :, :, :]
+        survival = float(P.survival_probs[j]) if bool(getattr(P, "use_age_survival", False)) else 1.0
+        gj = survival * g[:, :, :, j, :, :, :]
         gpl = np.zeros((Nb, nt, I, Nz, npar, ncs))
         for zz in range(Nz):
             for io in range(I):
@@ -4001,6 +4311,19 @@ def forward_distribution_markov_income(
                                 entrants_mature_total += fi
                         for zn in range(Nz):
                             g[:, :, :, j + 1, zn, nn, csn] += Pi_z[zz, zn] * gp
+
+    _gate_dead_mass_at_age(
+        g[:, :, :, J - 1, :, :, :],
+        state_values[:, :, :, J - 1, :, :, :],
+        J - 1,
+        f"forward_age_{P.age_start + (J - 1) * P.da:g}",
+        r_hat,
+        p_hat,
+        P,
+        b_grid,
+        SD,
+        markov_income=True,
+    )
 
     tm = float(np.sum(g))
     if tm > 1e-12 and normalize_population_mass(P):
@@ -4463,6 +4786,91 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         setattr(stats, f"{name}_mass", mass)
 
 
+def add_annual_gross_estate_wealth_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Add the internally calibrated old-age bequest moments.
+
+    The PSID object is total family net worth, so an owner state contributes
+    liquid net worth plus gross housing value, ``b + pH``.  The transaction
+    wedge ``psi`` is not subtracted: it is neither current mortgage debt nor an
+    empirical reduction in home equity.  Income is annual gross income at the
+    full Markov income state, matching the PSID annual-family-income ratio.
+    """
+
+    g_arr = np.asarray(g, dtype=float)
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    ph_arr = np.asarray(ph, dtype=float).reshape(-1)
+    if g_arr.ndim == 6:
+        g7 = g_arr[:, :, :, :, None, :, :]
+        z_values = np.array([1.0])
+    elif g_arr.ndim == 7:
+        g7 = g_arr
+        z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    else:
+        return
+
+    old_vals: list[np.ndarray] = []
+    old_wts: list[np.ndarray] = []
+    one_vals: list[np.ndarray] = []
+    one_wts: list[np.ndarray] = []
+    two_plus_vals: list[np.ndarray] = []
+    two_plus_wts: list[np.ndarray] = []
+    for j in range(int(P.J)):
+        age = float(P.age_start) + j * float(P.da)
+        in_old_tail = 76.0 <= age <= 84.0
+        in_fertility_gap = 65.0 <= age <= 75.0
+        if not (in_old_tail or in_fertility_gap):
+            continue
+        for i in range(int(P.I)):
+            price = float(ph_arr[i])
+            for zz in range(g7.shape[4]):
+                z_value = float(z_values[zz]) if zz < z_values.size else 1.0
+                income = annual_gross_income_at_state(P, i, j, z_value)
+                if not np.isfinite(income) or income <= 0.0:
+                    continue
+                for ten in range(g7.shape[1]):
+                    housing_value = price * float(P.H_own[ten - 1]) if ten > 0 else 0.0
+                    ratio = (bg_arr + housing_value) / income
+                    for nn in range(int(P.n_parity)):
+                        for cs in range(int(P.n_child_states)):
+                            mass = g7[:, ten, i, j, zz, nn, cs]
+                            positive = np.isfinite(mass) & (mass > 0.0)
+                            if not np.any(positive):
+                                continue
+                            values = ratio[positive]
+                            weights = mass[positive]
+                            if in_old_tail:
+                                old_vals.append(values)
+                                old_wts.append(weights)
+                            if in_fertility_gap and nn == 1:
+                                one_vals.append(values)
+                                one_wts.append(weights)
+                            elif in_fertility_gap and nn >= 2:
+                                two_plus_vals.append(values)
+                                two_plus_wts.append(weights)
+
+    def pooled_quantile(value_cells: list[np.ndarray], weight_cells: list[np.ndarray], prob: float) -> float:
+        if not value_cells:
+            return float("nan")
+        return float(weighted_quantile(np.concatenate(value_cells), np.concatenate(weight_cells), prob))
+
+    old_p50 = pooled_quantile(old_vals, old_wts, 0.5)
+    old_p90 = pooled_quantile(old_vals, old_wts, 0.9)
+    one_p50 = pooled_quantile(one_vals, one_wts, 0.5)
+    two_plus_p50 = pooled_quantile(two_plus_vals, two_plus_wts, 0.5)
+    stats.old_total_estate_wealth_to_annual_income_median_7684 = old_p50
+    stats.old_total_estate_wealth_to_annual_income_p90_7684 = old_p90
+    stats.old_total_estate_wealth_to_annual_income_p90_p50_7684 = old_p90 / max(old_p50, 1e-12)
+    stats.old_1_total_estate_wealth_to_annual_income_median_6575 = one_p50
+    stats.old_2plus_total_estate_wealth_to_annual_income_median_6575 = two_plus_p50
+    stats.old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575 = two_plus_p50 - one_p50
+
+
 def compute_markov_statistics(
     g: np.ndarray,
     fp: np.ndarray,
@@ -4490,6 +4898,7 @@ def compute_markov_statistics(
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
+    add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
     Nz = len(z_grid)
     nt = 1 + P.n_house
     stats.income_state_mass = np.zeros(Nz)
@@ -5607,10 +6016,35 @@ def bequest_utility_vec(b, nk, P):
     estate_tax_exemption = max(float(getattr(P, "estate_tax_exemption", 0.0)), 0.0)
     taxable = np.maximum(b_gross - estate_tax_exemption, 0.0)
     b = np.maximum(b_gross - estate_tax_rate * taxable, 0.0)
-    scale = P.theta0 * max(1 + P.theta_n * nk, 0)
+    spec = str(getattr(P, "bequest_spec", "linear_child_scale")).strip().lower()
+    utility_wealth = b
+    if spec in {"linear_child_scale", "legacy", "current"}:
+        scale = P.theta0 * max(1 + P.theta_n * nk, 0)
+    elif spec in {"parent_gated_luxury", "parent_gated"}:
+        scale = P.theta0 if int(nk) >= 1 else 0.0
+    elif spec in {"equal_division_luxury", "equal_division"}:
+        n_children = int(nk)
+        scale = P.theta0 * n_children if n_children >= 1 else 0.0
+        utility_wealth = b / n_children if n_children >= 1 else np.zeros_like(b)
+    else:
+        raise ValueError(f"unknown bequest_spec: {spec}")
+    normalize = bool(getattr(P, "normalize_bequest_utility", False))
+    if spec in {
+        "parent_gated_luxury",
+        "parent_gated",
+        "equal_division_luxury",
+        "equal_division",
+    } and not normalize:
+        raise ValueError("parent-gated and equal-division bequests require zero-estate normalization")
     if abs(P.sigma - 1) < 1e-6:
-        return scale * np.log(P.theta1 + b)
-    return scale * (P.theta1 + b) ** (1 - P.sigma) / (1 - P.sigma)
+        utility = np.log(P.theta1 + utility_wealth)
+        if normalize:
+            utility = utility - np.log(P.theta1)
+        return scale * utility
+    utility = (P.theta1 + utility_wealth) ** (1 - P.sigma) / (1 - P.sigma)
+    if normalize:
+        utility = utility - P.theta1 ** (1 - P.sigma) / (1 - P.sigma)
+    return scale * utility
 
 
 def pti_adjusted_downpayment(dp_arr, hcost, income, P, b_grid):

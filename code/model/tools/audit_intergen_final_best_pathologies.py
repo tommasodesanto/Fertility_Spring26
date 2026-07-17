@@ -144,7 +144,7 @@ def solve_variant(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     t0 = time.perf_counter()
     overrides = {
-        **base_overrides(J=16, Nb=int(spec["Nb"]), n_house=6, max_iter_eq=25),
+        **base_overrides(J=17, Nb=int(spec["Nb"]), n_house=6, max_iter_eq=25),
         **income_process_overrides(5),
         **theta,
     }

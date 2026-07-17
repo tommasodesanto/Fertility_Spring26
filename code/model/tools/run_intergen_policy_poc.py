@@ -70,15 +70,20 @@ def main() -> None:
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--Nb", type=int, default=60)
+    parser.add_argument("--J", type=int, default=17)
+    parser.add_argument("--n-house", type=int, default=6)
+    parser.add_argument("--income-states", type=int, default=5)
     parser.add_argument("--max-iter-eq", type=int, default=25)
+    parser.add_argument("--target-set", default=TARGET_SET, help="Target set used only for reporting rank loss.")
     parser.add_argument("--room-ladder", action="store_true", help="Use [2,4,6,8,9.5,11] instead of the saved cluster ladder")
     parser.add_argument("--skip-standard-diagnostics", action="store_true")
     args = parser.parse_args()
 
     args.outdir.mkdir(parents=True, exist_ok=True)
-    source = json.loads(args.summary.read_text())["best"]
+    source_raw = json.loads(args.summary.read_text())
+    source = source_raw.get("best", source_raw)
     theta = dict(source["theta"])
-    targets, weights = get_target_set(TARGET_SET)
+    targets, weights = get_target_set(str(args.target_set))
 
     cases = default_cases()
     records: list[dict[str, Any]] = []
@@ -92,6 +97,9 @@ def main() -> None:
             outdir=args.outdir,
             Nb=int(args.Nb),
             max_iter_eq=int(args.max_iter_eq),
+            J=int(args.J),
+            n_house=int(args.n_house),
+            income_states=int(args.income_states),
             room_ladder=bool(args.room_ladder),
             write_standard_diagnostics=not bool(args.skip_standard_diagnostics),
         )
@@ -130,6 +138,28 @@ def default_cases() -> list[dict[str, Any]]:
             "note": "Raises financed share to 95 percent only for owner choices by new parents in the birth child-state.",
         },
         {
+            "case": "parent_ltv95_all_parent_states",
+            "label": "Parent credit relief",
+            "overrides": {
+                "parent_dp_waiver": True,
+                "parent_dp_waiver_phi": 0.95,
+                "parent_dp_waiver_birth_state_only": False,
+            },
+            "note": "Raises financed share to 95 percent for owner choices by all parent states.",
+        },
+        {
+            "case": "universal_ltv95",
+            "label": "Universal credit relief",
+            "overrides": {"phi": np.array([0.95, 0.95, 0.95])},
+            "note": "Raises financed share to 95 percent for all parity states.",
+        },
+        {
+            "case": "renter_cap_hR5",
+            "label": "Rental cap hR=5",
+            "overrides": {"hR_max": 5.0},
+            "note": "Restricts the maximum renter housing-service choice to 5, holding fixed theta and re-clearing the market.",
+        },
+        {
             "case": "property_tax_up_1pp",
             "label": "Property tax +1pp annual",
             "overrides": {"tau_H": 0.02 * 4.0},
@@ -153,13 +183,16 @@ def solve_case(
     outdir: Path,
     Nb: int,
     max_iter_eq: int,
+    J: int,
+    n_house: int,
+    income_states: int,
     room_ladder: bool,
     write_standard_diagnostics: bool,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     t0 = time.perf_counter()
     overrides = {
-        **base_overrides(J=16, Nb=Nb, n_house=6, max_iter_eq=max_iter_eq),
-        **income_process_overrides(5),
+        **base_overrides(J=J, Nb=Nb, n_house=n_house, max_iter_eq=max_iter_eq),
+        **income_process_overrides(income_states),
         **theta,
         **dict(case["overrides"]),
     }

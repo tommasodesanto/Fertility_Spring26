@@ -16,6 +16,8 @@ No existing project files were overwritten.
 - `twins_and_gender_iv_v1.do`
 - `secondborn_gender_design_v1.do`
 - `compile_no_location_family_space_packet.py`
+- `future_parent_dp_moments_v1.do`
+- `build_future_parent_dp_moments_v1.py`
 - `audit_intergen_bequest_family_size_targets.R`
 - `build_intergen_bequest_retention_targets.R`
 - `output/` (generated artifacts and logs)
@@ -120,6 +122,22 @@ Run scripts from StataMP in batch mode, for example:
   - Log: `output/secondborn_gender_v1/secondborn_gender_v1.log`
   - First-stage diagnostics: `output/secondborn_gender_v1/secondborn_first_stage_v1.tex`
   - Test-stat export: `output/secondborn_gender_v1/secondborn_design_teststats_v1.csv`
+
+## Future-Parent Down-Payment Moments (June 30, 2026)
+
+`future_parent_dp_moments_v1.do` builds an ID-level PSID sample of respondents
+observed as renters and still childless at ages 25-30, then splits pre-birth
+liquid wealth and down-payment distance by eventual parenthood horizons. The
+Python companion `build_future_parent_dp_moments_v1.py` writes:
+
+- `output/future_parent_dp_moments_v1/future_parent_dp_entry_sample_v1.csv`
+- `output/future_parent_dp_moments_v1/future_parent_dp_moments_v1.csv`
+- `output/future_parent_dp_moments_v1/future_parent_dp_comparison_v1.csv`
+- `output/future_parent_dp_moments_v1/future_parent_dp_shortfall_bins_v1.csv`
+
+The first-pass national target-price diagnostic finds that eventual parents are
+not more down-payment constrained than eventual childless renters in this
+sample; they have higher income and are more often 20%-down-payment sufficient.
 
 ## Intergenerational Bequest Target Audits (July 15, 2026)
 
