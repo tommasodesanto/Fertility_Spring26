@@ -1,0 +1,34 @@
+% Review draft for the quantification/calibration rewrite.
+% Approved text is accumulated here before any edit to the main paper.
+
+\section{Calibration}
+\label{sec:quant_calibration}
+
+I organize the model parameters into two groups. The first consists of
+parameters assigned from external evidence, measured directly in the data, or
+fixed as maintained restrictions.
+The second consists of parameters estimated jointly by matching model moments
+to their empirical counterparts. I describe the two groups in turn, explain
+which moments are particularly informative about the internally estimated
+parameters, and then report the model's fit.
+
+\subsection{Parameters Set Outside the Estimation}
+
+\paragraph{Demographics and preferences.}
+A model period is four years. Households enter adult life at age 18, retire at
+age 66, and live at most through age 85. Mortality begins at retirement:
+survival is certain before age 66 and thereafter follows four-year
+probabilities constructed from the combined male and female survivor counts in
+the 2023 Social Security period life table. Dependent children remain in the
+household for an expected 18 years, implying a maturity probability of $2/9$
+per period. I set risk aversion to $\sigma=2$.
+
+\paragraph{Maintained restrictions.}
+I impose that the bequest motive does not vary with family size,
+$\theta_n=0$. I also set $\kappa_T=0$, so housing choice is deterministic
+conditional on the household state.\footnote{Earlier specifications estimated
+$\kappa_T$ jointly with the remaining parameters. Across those searches, the
+estimate repeatedly converged to or near zero, while imposing positive values
+did not improve model fit. I therefore impose $\kappa_T=0$ in the current
+calibration. Future work will revisit this restriction using moments that
+directly discipline heterogeneity in tenure and house-size choices.}

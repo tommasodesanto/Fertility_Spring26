@@ -1,0 +1,341 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage[round]{natbib}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\pending}[1]{\textcolor{red!70!black}{[PENDING: #1]}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{A standard bequest block:\\
+diagnosis of the estate-target failure and the M4 recalibration}
+\author{Fertility--Housing project}
+\date{16 July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Executive conclusion}
+
+The July-15 attempt to estimate all three bequest parameters against three
+PSID estate moments failed for a reason that is now fully diagnosed: two of
+the three moments are not objects this model class can or should match. The
+dispersion ratio (p90/p50 of estate to income) requires an upper tail of
+financial wealth that no parameterization reaches --- and in the data that
+tail is business, IRA, and other nonhousing wealth with no model counterpart.
+The family-size gap is statistically zero in the PSID (point estimate
+$0.101$, bootstrap standard error $0.563$) and is a knife-edge cancellation
+across marital strata that a model without marriage cannot represent. Because
+the dispersion moment carried an inverse-bootstrap-variance weight, it alone
+contributed 84\% of the SMM loss, and chasing it degraded the eleven
+established moments by a factor of four relative to the July-15 mortality-only
+(M1) benchmark.
+
+The repair is to return to the standard package used by the structural
+savings and housing-retirement literatures: a child-blind luxury warm glow
+\citep{denardi2004,lockwood2018,nakajima2017}, with its remaining strength and
+luxury-shift parameters estimated internally against \emph{level} targets for
+late-life wealth --- the median estate-to-income ratio and the median
+nonhousing wealth-to-income ratio. The M4 recalibration implements exactly
+this. Headline result: \pending{M4 winner loss, estate median fit, nonhousing
+median fit, theta0/theta1 estimates, zero-seed comparison, and identification
+verdict}.
+
+\section{Diagnosis: what the estate targets did}
+
+A matched PSID/model decomposition of the age 76--84 estate distribution
+(both normalized by each dataset's median annual income at those ages) shows
+the failure is composition, not curvature:
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\toprule
+& \multicolumn{3}{c}{PSID} & \multicolumn{3}{c}{Model (M3 winner)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Ages 76--84 & p50 & p75 & p90 & p50 & p75 & p90 \\
+\midrule
+Total estate      & 6.87 & 17.10 & 36.33 & 6.27 & 8.87 & 11.79 \\
+Nonhousing wealth & 2.37 & 10.34 & 26.27 & 0.00 & 0.00 & 0.00 \\
+Home equity       & 3.19 &  6.40 & 11.61 & 6.27 & 8.87 & 11.79 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The model matched the estate median almost exactly --- with the wrong balance
+sheet. Housing supplies 99.9\% of top-decile estate wealth in the model
+versus 18.6\% in the PSID, and every old model household carries collateralized
+debt (liquid position $b<0$ through the 90th percentile). The mechanism is
+transparent: after age 62 the model's only borrowing is mortgage debt with a
+constant floor $b \geq -\phi p H$ and no amortization; the pension is a
+common scalar, so no late-life risk motivates liquid saving; and the warm
+glow values housing at gross price while a living sale nets $(1-\psi)pH$, so
+dying in place dominates. Home equity is therefore the cheapest estate
+vehicle, and the model uses only it.
+
+Critically, this is a property of the July-15 \emph{calibration point}, not
+of the model. The M1 mortality-only winner --- same constraints, no estimated
+bequest parameters --- delivered a positive old nonhousing median of $2.00$
+against the corrected reference-person PSID target of $1.91$, while fitting the twelve shared non-estate moments
+at a summed loss of $3.84$; the M3 winner fits the same twelve at $16.92$.
+The unreachable dispersion row purchased nothing and paid with everything
+else, including flipping the young renter liquid-wealth moment to the wrong
+sign ($-0.18$ versus a target of $+0.18$, which M1 matched almost exactly).
+
+\section{The standard specification}
+
+M4 uses the bequest utility
+\begin{equation}
+B(W) \;=\; \theta_0\,
+\frac{(\theta_1+W)^{1-\sigma}-\theta_1^{1-\sigma}}{1-\sigma},
+\qquad W=\max\{b+pH,\,0\},\quad \sigma=2,
+\label{eq:m4bequest}
+\end{equation}
+where $W$ is the household's net worth at death: the liquid position (with
+mortgage debt as negative $b$) plus gross housing value, floored at zero.
+This is the luxury warm glow of \citet{denardi2004}; \citet{lockwood2018}
+estimates the same form, and \citet{nakajima2017} estimate it inside a
+housing-retirement model, which makes their calibration the closest anchor
+for this project.
+
+\paragraph{Internally estimated shifter and external child restriction.}
+Both $\theta_0$ and $\theta_1$ are estimated internally. The value $0.25$ is
+only one optimizer start, motivated by the published \citet{nakajima2017}
+estimates (Table~I, Panel~B: $\gamma=20.534$ and $\zeta=\$7{,}619$ per year
+in 2000 dollars) and their retired-homeowner income scale; it is not imposed
+as a parameter in our normalization. Dispersed starts span the predeclared
+log domain $\theta_1\in[0.02,16]$, which also covers the much larger shift in
+\citet[eq.~(3), Table~3]{denardifrenchjones2010} ($k=\$273{,}000$ in 1998
+dollars). \citet[eq.~(8), Table~4]{denardi2004} report $\phi_2=11.6$ in model
+units without a dollar mapping, so that value does not supply a conversion.
+The child multiplier alone is externally restricted, $\theta_n=0$. The
+post-calibration Jacobian and profile must show whether the two wealth levels
+actually separate $\theta_1$ from $\theta_0$, discounting, and the housing
+block; otherwise M4 is reported as weakly identified rather than repaired by
+fixing $\theta_1$ after the fact.
+
+\paragraph{Why a child-blind motive in a paper about children.} Children in
+this model direct resources through housing while parents are alive: they
+raise required space, parents buy larger owner-occupied houses, transaction
+costs make those houses sticky into old age, and housing is the dominant
+component of estates. Parents therefore leave larger estates without any
+child-directed taste for posthumous giving. That is where the evidence points.
+In \citet[Tables~4--5]{hurd1989}, households with children do not retain more
+wealth than observationally comparable households without children.
+\citet[pp.~208--209 and Tables~3--4]{kopczuk2007} reject children as a
+deterministic indicator of the motive and estimate an egoistic strength common
+to households for whom the motive is operative. \citet[pp.~750, 789]{denardi2025}
+instead organize luxury bequest saving by marital status, permanent income,
+and age. This does not prove that children never matter:
+\citet{kvaerner2023} supplies important health-shock evidence for intentional
+bequests, and inter vivos transfers can be child-directed
+\citep{mcgarry1999}. It does support the parsimonious restriction that the
+terminal warm glow itself does not scale mechanically with child count. Our
+own sample reinforces that restriction: the family-size gap in median estates
+at ages 65--75 is $0.101$ with a bootstrap standard error of $0.563$.
+
+\section{The M4 calibration}
+
+Fourteen moments, thirteen estimated parameters (the eleven clean-frontier
+coordinates plus $\theta_0$ and $\theta_1$). The twelve established fertility, ownership,
+rooms, and young-liquid-wealth moments are unchanged. The two late-life
+wealth targets are levels, in the style of the median asset profiles targeted
+by \citet{denardifrenchjones2010} and \citet{nakajima2017}:
+
+\begin{center}
+\begin{tabular}{lrl}
+\toprule
+Moment & Target & Disciplines \\
+\midrule
+Median total estate wealth / income, ages 76--84 & 6.501 & $(\theta_0,\theta_1)$ jointly \\
+Median nonhousing wealth / income, ages 65--75 & 1.908 & $(\theta_0,\theta_1)$ and composition \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Weights are inverse person-bootstrap variances (499 replications, person-level
+clustering). The estate dispersion ratio, the family-size estate gap, the
+housing/nonhousing decomposition, and the ownership path by age are reported
+as untargeted diagnostics. The search enforces nested-model dominance: the
+exact $\theta_0=0$ submodel (the M1 winner under the M4 objective) is injected
+as a seed, and the run fails if the free search ends above it.
+
+\section{Results}
+
+The initial six-chain winner had loss $12.654$, but the predeclared conditional
+$\theta_1$ profile found a lower basin. A full 13-parameter polish from the
+profile minimum produced the final point below: two bit-identical tight
+re-solves give a 14-moment loss of $4.402$. Table~\ref{tab:m4fit} shows the
+complete fit. The estate median misses by only $0.003$, the nonhousing median
+misses by $0.095$, and the established twelve-moment loss is $3.650$, below
+the predeclared $4.42$ ceiling. M4 therefore passes every numerical fit gate.
+
+\begin{longtable}{p{0.38\textwidth}rrrrr}
+\caption{M4 target fit}\label{tab:m4fit}\\
+\toprule
+Moment & Target & Model & Gap & Weight & Loss \\
+\midrule
+\endfirsthead
+\toprule
+Moment & Target & Model & Gap & Weight & Loss \\
+\midrule
+\endhead
+TFR & 1.918 & 2.000 & 0.082 & 20.000 & 0.134 \\
+Childless rate & 0.188 & 0.188 & $-0.000$ & 20.000 & 0.000 \\
+Ownership rate & 0.575 & 0.715 & 0.139 & 100.000 & 1.944 \\
+Parent--nonparent ownership gap & 0.168 & 0.207 & 0.040 & 45.000 & 0.070 \\
+Housing increment, zero to one child & 0.664 & 0.759 & 0.095 & 14.000 & 0.126 \\
+Childless renter mean rooms & 3.805 & 3.710 & $-0.095$ & 6.000 & 0.054 \\
+Childless owner share in 6+ rooms & 0.596 & 0.724 & 0.128 & 25.000 & 0.409 \\
+Young childless renter liquid wealth/income & 0.179 & 0.259 & 0.079 & 12.000 & 0.075 \\
+Childless owner--renter room gap & 2.419 & 2.279 & $-0.139$ & 12.000 & 0.233 \\
+Ownership rate, ages 25--34 & 0.341 & 0.344 & 0.003 & 80.000 & 0.001 \\
+3+ versus 1--2 child room gap & 0.368 & 0.493 & 0.125 & 8.000 & 0.126 \\
+Estate wealth/income median, ages 76--84 & 6.501 & 6.505 & 0.003 & 18.586 & 0.000 \\
+Nonhousing wealth/income median, ages 65--75 & 1.908 & 2.003 & 0.095 & 83.749 & 0.752 \\
+Mean occupied rooms, ages 18--85 & 5.780 & 5.498 & $-0.282$ & 6.000 & 0.477 \\
+\midrule
+Total & & & & & 4.402 \\
+\bottomrule
+\end{longtable}
+
+The complete parameter vector is reported in Table~\ref{tab:m4parameters}.
+Neither bequest parameter is near a search bound, so the failure is not a
+mechanical consequence of the predeclared domains.
+
+\begin{table}[!htb]
+\centering
+\caption{Estimated M4 parameters and search bounds.}\label{tab:m4parameters}
+\begin{tabular}{lrrrl}
+\toprule
+Parameter & Estimate & Lower & Upper & Near bound \\
+\midrule
+$\beta$ (annual) & 0.99252 & 0.800 & 0.9995 & No \\
+$\alpha_{cons}$ & 0.62122 & 0.020 & 0.980 & No \\
+$\bar c_0$ & 1.13244 & 0.000 & 2.000 & No \\
+$\bar c_n$ & 0.47052 & 0.000 & 3.000 & No \\
+$\bar h_0$ & 0.44449 & 0.050 & 5.800 & No \\
+$\bar h_{jump}$ & 1.69570 & 0.000 & 8.000 & No \\
+$\bar h_n$ & 0.17997 & 0.000 & 5.000 & No \\
+$\psi_{child}$ & 0.22392 & $-3.000$ & 3.000 & No \\
+$\kappa_{fert}$ & 2.14745 & 0.020 & 50.000 & No \\
+$\chi$ & 1.12893 & 0.100 & 5.000 & No \\
+$H_0$ & 7.85561 & 0.200 & 80.000 & No \\
+$\theta_0$ & 0.24750 & 0.000 & 8.000 & No \\
+$\theta_1$ & 0.42171 & 0.020 & 16.000 & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The external restrictions are $\theta_n=0$ and
+$\texttt{tenure\_choice\_kappa}=0$. SSA post-retirement survival is active,
+the bequest utility is normalized to zero at a zero estate, and the owner-LTV
+taper is inactive.
+
+The untargeted diagnostics show that M4 raises the estate level through the
+same housing-heavy mechanism as M3. At ages 76--84, model total estate divided
+by the common old-age income level is $6.057$, $8.656$, and $11.415$ at the
+50th, 75th, and 90th percentiles; the matched PSID levels are $6.867$,
+$17.101$, and $36.335$. Model nonhousing wealth is zero through the 90th
+percentile, so model housing equity equals total estate at all three
+quantiles. The top-estate-decile housing share is $99.9\%$ in M4 versus
+$18.6\%$ in the PSID, and the estate--income correlation is zero rather than
+$0.393$. Thus the model can move the estate median but still cannot generate
+the financial-wealth tail.
+
+The model estate p90/p50 ratio is $1.884$ against $3.448$ in the PSID. Its
+untargeted 2+-minus-1-child median estate gap is $4.383$, versus a data estimate
+of $0.101$ with standard error $0.563$. The same mechanism pushes the ownership
+rate to $0.983$ at age 62 and keeps it at $0.970$ at age 78, far above the ACS
+path displayed in the standard lifecycle figure. Table~\ref{tab:arms} locates
+M4 between the clean M1 benchmark and the rejected M3 estate-tail exercise.
+
+\begin{table}[!htb]
+\centering
+\caption{Comparison with the preceding bequest specifications}\label{tab:arms}
+\begin{tabular}{lrrr}
+\toprule
+ & M1 & M3 & M4 \\
+\midrule
+Comparable 12-moment loss & 3.841 & 16.921 & 8.242 \\
+Aggregate ownership rate & 0.607 & 0.713 & 0.782 \\
+Old-age ownership rate & 0.901 & 0.977 & 0.983 \\
+Estate median, ages 76--84 & --- & 6.267 & 6.057 \\
+Nonhousing median, ages 65--75 & 2.003 & $-1.245$ & 2.003 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\pending{Nested-zero and identification verdicts: tight loss at the estimated
+$\theta_0$ versus the $\theta_0=0$ seed; Jacobian/profile evidence on whether
+$\theta_1$ is separately identified; interpretation of whether the wealth
+levels support a positive bequest strength and determinate luxury shift.}
+
+\section{What remains open}
+
+The model still cannot produce the PSID estate tail, by design: that tail is
+financial and business wealth held by households with resources far above the
+pension-financed median, and matching it would require an earnings or
+entrepreneurial tail in the style of \citet{denardi2004} or medical-expense
+risk in the style of \citet{denardifrenchjones2010}. Neither belongs in this
+paper unless upper-tail wealth becomes substantive for the housing--fertility
+question. The old-age leverage margin (no amortization of owner debt) also
+remains; policy counterfactuals that operate through late-life home equity
+should not be run off this block without further work.
+
+\small
+\begin{thebibliography}{99}
+
+\bibitem[De Nardi(2004)]{denardi2004}
+De Nardi, M. (2004).
+Wealth inequality and intergenerational links.
+\emph{Review of Economic Studies} 71(3), 743--768.
+
+\bibitem[De Nardi et al.(2010)]{denardifrenchjones2010}
+De Nardi, M., E.~French, and J.~B. Jones (2010).
+Why do the elderly save? The role of medical expenses.
+\emph{Journal of Political Economy} 118(1), 39--75.
+
+\bibitem[De Nardi et al.(2025)]{denardi2025}
+De Nardi, M., E.~French, J.~B. Jones, and R.~McGee (2025).
+Why do couples and singles save during retirement? Household heterogeneity
+and its aggregate implications.
+\emph{Journal of Political Economy} 133(3), 750--792.
+
+\bibitem[Hurd(1989)]{hurd1989}
+Hurd, M.~D. (1989).
+Mortality risk and bequests.
+\emph{Econometrica} 57(4), 779--813.
+
+\bibitem[Kopczuk and Lupton(2007)]{kopczuk2007}
+Kopczuk, W. and J.~P. Lupton (2007).
+To leave or not to leave: The distribution of bequest motives.
+\emph{Review of Economic Studies} 74(1), 207--235.
+
+\bibitem[Kv\ae rner(2023)]{kvaerner2023}
+Kv\ae rner, J. (2023).
+How large are bequest motives? Estimates based on health shocks.
+\emph{Review of Financial Studies} 36(8), 3382--3422.
+
+\bibitem[Lockwood(2018)]{lockwood2018}
+Lockwood, L.~M. (2018).
+Incidental bequests and the choice to self-insure late-life risks.
+\emph{American Economic Review} 108(9), 2513--2550.
+
+\bibitem[McGarry(1999)]{mcgarry1999}
+McGarry, K. (1999).
+Inter vivos transfers and intended bequests.
+\emph{Journal of Public Economics} 73(3), 321--351.
+
+\bibitem[Nakajima and Telyukova(2017)]{nakajima2017}
+Nakajima, M. and I.~A. Telyukova (2017).
+Reverse mortgage loans: A quantitative analysis.
+\emph{Journal of Finance} 72(2), 911--950.
+
+\end{thebibliography}
+
+\end{document}

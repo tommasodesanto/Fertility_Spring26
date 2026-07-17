@@ -1,6 +1,519 @@
 # Calibration Status
 
-Updated: `2026-07-09` (kt REJECTED; D11 Jacobian; entry margin at Nb=120; paper draft expanded)
+Updated: `2026-07-16` late night (M4 completed and audited; M5 in preparation)
+
+## July 16 night: M4 completed, audited at verdict C; M5 preparation underway
+
+The M4 standard-bequest run completed on Torch (six chains, theta1 profile,
+polish): strict winner loss `4.401508692086581`, `theta0=0.2475`,
+`theta1=0.4217`, established-12 loss `3.6497` (M1 comparable `3.841`), all
+five machine-checked gates pass. Sections below written earlier today that say
+no production job was launched are superseded; the earlier claim that "only
+`theta_n=0` is externally restricted" was wrong — `tenure_choice_kappa=0` is
+also fixed. Artifacts:
+`output/model/intergen_standard_bequest_recalibration_20260716/final_report/`.
+
+An independent audit (`docs/model/intergen_m4_calibration_audit_20260716.md`)
+grades M4 **provisional (C)**: numerically clean, but `theta1` is
+set-identified only (weakest Jacobian direction 0.996 on theta1; nothing below
+0.4217 ever searched), the tenure-kappa restriction was never surfaced
+pre-launch, and three upstream inputs are provisional constructions — the
+income process is a same-night inversion of the old ad hoc grid carrying ~10%
+of the Sommer–Sullivan innovation variance; the entrant-wealth distribution is
+the age-25–35 PSID object injected at 18 whose mean is also a hard target; and
+the reinstated nonhousing median is grid-discrete with an exactly zero
+Jacobian row. Do not cite M4 as the paper calibration; it is the M5 baseline.
+
+M5 contract: `docs/model/m5_recalibration_contract_20260716.md`. Data
+preconditions running now (PSID income-process estimation, 18–24 entry
+distribution, smooth 65–75 composition share, bootstrapped old-age ownership
+rate) via `code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R`.
+Income-process provenance evidence lives in `tmp/rouwenhorst_*_SOURCE_SNAPSHOT.txt`
+(untracked); the July-10 SS-parameter experiments and their abandonment are
+reconstructed in the audit memo. No M5 job launched yet.
+
+## July 16 late: user clarification restores internal calibration of theta0 and theta1
+
+The M4 design below was clarified before any Torch launch. The intended
+child-blind De Nardi block estimates both remaining bequest parameters,
+`theta0` and `theta1`; only `theta_n=0` is externally restricted. Thus M4 has
+14 hard moments and 13 free parameters (the 11 clean-frontier coordinates plus
+`theta0` and `theta1`). The 76--84 total-estate median and the corrected 65--75
+reference-person nonhousing median `1.90821154211154` are the two hard wealth
+levels. The estate p90/p50 ratio and family-size estate gap remain diagnostics.
+The value `theta1=0.25` is an optimizer start only, not an external anchor.
+
+The revised local exact-loop smoke completed 15/15 evaluations, moved both
+bequest coordinates, and verified the 14-target/13-parameter contract. Syntax
+checks, 9 focused contract tests, 55 `unittest` cases, and the four remaining
+pytest-style functions pass. No production job has been launched. The next
+gates are an exact Torch smoke, the bounded six-chain run with a separate
+strict `theta0=0` M1 reference, and a post-calibration Jacobian/profile that
+must establish whether `theta1` is actually identified. This section
+supersedes the external-`theta1` recommendation immediately below.
+
+## July 16: independent review memo on the bequest block and old-age balance sheet
+
+A full referee-style review of the bequest calibration and late-life balance
+sheet is at `docs/model/intergen_bequest_balance_sheet_fable_review_20260716.md`.
+Verdict in brief: the p90/p50 miss is an asset-composition/missing-mechanism
+failure (with empirical-tail non-comparability on top), not a taste-curvature
+failure; the universal negative-`b` old age is a property of the M3 winner
+point (the M1 winner delivered old nonhousing median `2.00` vs `2.23` while
+fitting the 12 shared moments at summed loss `3.84` vs M3's `16.92`); the
+accounting itself is verified coherent. Recommendation: keep only the 76--84
+estate median as a hard bequest target (`theta0` estimated with an enforced
+`theta0=0` nested seed), demote p90/p50 and the family gap to diagnostics,
+restrict `theta1=0.25` (0.50 sensitivity) and `theta_n=0` externally,
+reinstate the 65--75 nonhousing median as a hard target with a fresh person-
+bootstrap SE, and run one bounded M4 refit with ex ante pass/fail criteria
+(design in the memo, section 6). One documentation correction: the "age-82
+forced terminal liquidation" line below describes only the rejected owner-LTV
+taper arms, not the production/M3 spec (no forced sale exists at the terminal
+node; `solver.py:2189-2190`). Nothing has been launched; the M4 design awaits
+approval.
+
+## July 16: matched estate-distribution decomposition changes the diagnosis
+
+A diagnostic-only PSID/model decomposition was computed before proposing any
+additional calibration moments. It uses the exact existing samples and
+reproduces all three model estate moments to `1e-10` at a fresh strict M3 solve
+(residual `1.19e-6`). The PSID samples contain 4,015 family-years/1,685 people
+at ages 76--84 and 8,092 family-years/3,109 people at ages 65--75.
+
+At ages 76--84, after dividing level quantiles by each dataset's median annual
+income, total-estate p50/p75/p90 is `6.867/17.101/36.335` in PSID versus
+`6.267/8.866/11.789` in the model. The raw estate p90/p50 is therefore `5.291`
+in PSID versus `1.881` in the model. PSID income p10/p50/p90 is
+`0.367/1/2.957` and estate--income correlation is positive (`0.393`), so income
+heterogeneity compresses rather than creates the estate/income-ratio tail.
+
+The portfolio composition is the sharper failure. PSID nonhousing-wealth
+p50/p75/p90 is `2.368/10.336/26.272` median-income units; the comparable model
+quantiles are all zero. Model housing equity supplies essentially all estate
+wealth through p90 and `99.9%` of wealth in the top estate decile, versus
+`18.6%` in PSID. Raw model liquid/debt quantiles remain negative through p90.
+Thus the missing tail is primarily missing nonhousing wealth accumulation and
+an incorrect late-life balance-sheet composition, not merely the pension
+denominator or one bequest-curvature parameter.
+
+At ages 65--75, PSID estate/income p50 is `4.804` for one child and `4.905` for
+2+, while their p90s are `24.936` and `18.675`; the model instead shifts the
+whole 2+ distribution upward (`11.968 -> 13.738` at p50). Marital composition
+matters but is not sufficient: PSID p90/p50 is `2.800` for married and `4.093`
+for nonmarried households, and both remain dispersed. No new target or model
+change has been proposed or launched. Full packet:
+`output/model/intergen_bequest_distribution_diagnostic_20260716/`.
+
+## July 16 early morning: retirement-income dispersion diagnostic also rejected
+
+Torch array `13917414` and strict collector `13917430` completed `0:0` with
+empty stderr. The seven-cell diagnostic preserves the mean scheduled pension,
+fixes all 11 non-bequest coordinates, and re-optimizes `theta0`, `theta1`, and
+`theta_n` against the three PSID estate targets. Four cells passed two strict,
+bit-identical winner repeats. The best eligible result is the production
+default with no retirement-income loading (`s_R=0`): median `6.267` versus
+`6.501`, p90/median `1.881` versus `3.448`, and family gap `1.770` versus
+`0.101`; three-target loss is `149.729`, and the full 15-moment loss is
+`166.651`. No cell matches all three targets within one bootstrap SE.
+
+The high-scale cells `s_R=1,1.5,2` were deterministic but non-strict, with
+market residuals `3.12e-5`, `3.18e-5`, and `4.15e-5` above the `2.5e-5` gate;
+they were not retried. Even their search outputs do not rescue the mechanism:
+at `s_R=2`, p90/median reaches only `2.371`, while the median falls to `5.505`
+and the family gap remains `1.377`. Persistent retirement-income heterogeneity
+therefore does not explain the missing estate dispersion in this model block.
+No model change is promoted and no further experiment was launched. Complete
+frontier, 15-moment fit, and 14-parameter/restriction table:
+`output/model/intergen_retirement_income_dispersion_20260716/report/`.
+
+## July 16 early morning: current bequest block rejected by reachability frontier
+
+The 12-cell `theta1` frontier completed. Ten cells passed strict exact repeats;
+cells 7 and 11 are reported honestly as non-strict after two materially
+different tightening attempts failed. No cell matches both the late-life
+median and family-size gap within one bootstrap SE. The closest two-target cell
+has `theta1=1.2`, median `6.278` versus `6.501`, family gap `1.448` versus
+`0.101`, and p90/median `1.739` versus `3.448`. Dispersion reaches the target
+only at `theta1=8` or `16`, where the median collapses to `2.515` or `2.188`.
+Thus the current three-parameter bequest block cannot jointly produce the
+three PSID objects; this is a structural reachability failure, not a reason for
+more optimizer time. Complete frontier:
+`output/model/intergen_bequest_reachability_20260715/report/`.
+
+The completed follow-up described above used seven externally fixed
+retirement-income dispersion levels, with the 11 non-bequest coordinates
+fixed and only `theta0`, `theta1`, and `theta_n` re-optimized. Local exact-loop
+smoke passed; Torch smoke `13917092` completed all seven cells, and 20 targeted
+tests passed under the exact batch interpreter. Its full contract and final
+results are in
+`output/model/intergen_retirement_income_dispersion_20260716/README.md`.
+
+## July 15 overnight: bequest-dispersion reachability frontier launched
+
+Rather than spend more optimizer time on the weak 14-parameter system, a
+bounded frontier now asks whether the current bequest block can generate the
+PSID p90/median estate ratio at all. The 11 non-bequest coordinates are fixed
+at the strict M3 winner. Twelve `theta1` cells from `0.02` to `16` separately
+re-optimize `theta0` and `theta_n` against the median estate ratio and the
+2+-minus-1-child median gap; p90/median is excluded from the cell objective and
+is the reported reachability outcome.
+
+Local and Torch exact-loop smokes passed; Torch smoke `13904830` completed
+`0:0` with six checkpoints and empty stderr. Frontier array `13904965` has a
+75-minute/150-evaluation cell cap, 15 CPU-hour maximum, per-case checkpoints,
+and two tight repeats per cell. Strict collector `13904966` is dependent. Full
+contract: `output/model/intergen_bequest_reachability_20260715/README.md`.
+
+## July 15 night: internal bequest calibration fails identification gate; no overnight launch
+
+All four valid M3 chains completed with strict, exactly repeated winners. The
+selected point has loss `166.653676`, residual `1.22e-6`, and estimates
+`theta0=0.31025`, `theta1=0.53614`, and `theta_n=0.71008`; all 14 estimated
+parameters are interior. This loss is not comparable to M1 because the target
+system changed. The principal miss is the PSID p90/median total-estate ratio:
+model `1.8811` versus target `3.4481`, contributing `139.93` of `166.65`.
+The 2+-minus-1-child median gap is `1.7698` versus `0.1011`, contributing
+`8.79`; the late-life median level is close at `6.2674` versus `6.5013`.
+
+Fresh strict Jacobian job `13900577` completed `0:0` after two pre-solve batch-
+environment failures. The 15-by-14 SMM-weighted matrix has rank `9/14` at
+relative threshold `1e-2`, rank `12/14` at `1e-3`, and condition number
+`5498.7`. Its weakest direction is dominated by `theta_n`, `h_bar_0`,
+`theta1`, and `h_bar_n`; target scaling is weaker (`7/14`, `11/14`, condition
+`29944`). Therefore the proposed 14-parameter system is locally weak/
+underidentified. No overnight refinement was launched. Full tables and
+Jacobians are in
+`output/model/intergen_internal_bequest_recalibration_20260715/`.
+
+## July 15 evening: internally calibrated bequest block launched
+
+The PSID audit now supplies one internal target for each bequest parameter:
+late-life median total estate wealth/income for `theta0`, the p90/median ratio
+for `theta1`, and the 2+-minus-1-child median gap for `theta_n`. The family-size
+target uses 2+ because the live model has parity states 0/1/2+; its bootstrap
+SE is 0.563 and its SMM weight is correspondingly low. All model counterparts
+use `(b+pH)/annual gross income`, with full income-state variation and no
+housing-sale wedge.
+
+The revised system drops the old nonhousing median, parent--childless
+nonhousing gap, and old-age ownership level, keeps the other 12 moments, and
+has 15 moments for 14 free parameters (the 11 M1 coordinates plus `theta0`,
+`theta1`, and `theta_n`; tenure smoothing remains fixed at zero). Unit tests
+pass. The exact-loop M3 smoke job `13883754` completed 15/15 cases with exit
+`0:0` and empty stderr. The three bequest columns have SMM-weighted rank 3/3
+at relative threshold `1e-2` in the smoke Jacobian.
+
+The original four-chain Torch job is `13883831`. Its most dispersed start was
+wholly infeasible, so replacement chain `13884299` was launched rather than
+counting an empty search. Strict collector `13884336` depends on both search
+jobs, and the fresh full 15-by-14 Jacobian `13884337` depends on the collector.
+Complete contract:
+`output/model/intergen_internal_bequest_recalibration_20260715/README.md`.
+
+## July 15 late afternoon: mortality-only identification audit completed
+
+Torch job `13855066` computed a strict 15-by-11 finite-difference Jacobian
+at the M1 mortality-only winner. It keeps all targets and the model fixed and
+reports target-scaled and SMM-weighted ranks, condition numbers,
+leave-one-moment-out diagnostics, weakest parameter directions, and the top
+moment loadings for each parameter. The exact 24-solve smoke `13854952`
+completed `0:0` in 1m43s with empty stderr; production completed `0:0` in
+13m32s with empty stderr and a bit-identical baseline repeat. Under target
+scaling the full system has ranks 9/11 at relative tolerances `1e-2`/`1e-3`
+and condition number `470.13`; dropping `old_age_own_rate` leaves ranks 9/11
+and changes the condition number only to `487.02`. Under SMM weighting the
+corresponding comparison is ranks 10/11 and condition `191.43` versus ranks
+10/11 and condition `191.65`. Old-age ownership therefore adds no independent
+local identifying direction at M1. It loads strongly on `chi`, but aggregate
+and young ownership already load on `chi` at least as strongly. The weak
+direction instead combines `h_bar_0`, `h_bar_n`, `beta_annual`, and
+`kappa_fert`. Identification evidence supports demoting old-age ownership to a
+reported validation moment without locally underidentifying the 11-parameter
+system; no target change or recalibration has been launched. Full contract and
+artifacts: `output/model/intergen_mortality_identification_20260715/README.md`.
+
+## July 15 afternoon: clean mortality-plus-child-blind-bequest recalibration completed
+
+The mortality-only battery completed all eight chains and its collector with
+exit `0:0`. The strict M0 no-mortality winner has loss `6.973326`; externally
+pinned SSA post-retirement survival improves the fully re-estimated M1 loss to
+`6.860325`. Mortality reduces the 62+ household mass share from `0.3529` to
+`0.3209` and the 62+ share of occupied rooms from `0.3885` to `0.3529`, but M1
+still fails the ownership-path acceptance rule. Complete 15-moment,
+11-parameter, and lifecycle tables are in
+`output/model/intergen_mortality_recalibration_20260715/report/`.
+
+The clean M2 follow-up adds a normalized child-blind warm glow to M1, with no
+owner-LTV taper. It re-estimates all 11 clean-frontier coordinates plus
+`theta0` against the same 15 moments; `theta_n=0`,
+`tenure_choice_kappa=0`, and `theta1=0.25` are external restrictions. The
+strict M1 winner is injected as M2's exact `theta0=0` nested seed, and the
+collector fails if the free-bequest search does worse than that nested point.
+Local and Torch exact-loop smokes completed all 15 evaluations; Torch smoke
+`13827256` exited `0:0` with empty stderr. Four-chain production job
+`13827577` and dependent strict collector `13827578` completed `0:0` with
+empty stderr. The M2 winner has loss `6.8367871`, only `0.0235376` below M1,
+and estimates `theta0=0.00030099` at the soft-zero boundary. Its two tight
+re-solves have zero loss and moment difference. Old household mass is
+unchanged at `0.3209`, the old share of occupied rooms moves only
+`0.3529 -> 0.3526`, and the ownership path still fails. Thus the standard
+child-blind bequest motive receives no economically meaningful support and
+does not solve the old-age housing miss. Complete target, parameter,
+lifecycle, and plot artifacts are under
+`output/model/intergen_mortality_bequest_recalibration_20260715/report/`; no
+mechanism is promoted.
+
+## July 15 late: bounded post-retirement mortality recalibration completed
+
+Torch job `13806721` re-estimated all 11 clean-frontier parameters in two
+four-chain arms against the complete 15-moment system. M0 is the inert
+no-mortality/no-bequest control; M1 differs only by externally pinned SSA 2023
+four-year survival probabilities from age 66 onward. Survival enters both the
+Bellman continuation and the forward distribution and is fixed at one before
+age 66, so the test cannot change fertility or child-maturation accounting.
+The exact-loop smoke `13806675` completed both arms `0:0` with empty stderr.
+Each chain has 90 minutes or 1,000 evaluations and reserves two strict tight
+winner solves. Dependency job `13806788` collected only strict, exactly
+repeated winners and wrote the full 15-moment, 11-parameter, ownership-path,
+and old-housing-stock tables. The maximum main-run budget is 12 CPU-hours;
+the full contract is
+`output/model/intergen_mortality_recalibration_20260715/README.md`. All eight
+chains and the collector completed `0:0`. No model change is promoted by this
+experiment.
+
+## July 15: exit-rule family rejected; bequest strength returns to the zero envelope
+
+Torch main array `13713920` completed all 22 chains with exit `0:0`; the
+10-chain nuisance-reoptimized profile `13713945` also completed with exit
+`0:0`. Stderr is empty for both. The runs contain 14,711 and 6,143 search
+evaluations, respectively. Six main-chain and three profile-chain search
+winners failed the final tight gate and were excluded; all reported winners
+were re-solved twice at `(max_iter_eq,tol_eq)=(40,2.5e-5)` with zero repeat
+difference.
+
+No main or profile specification passes the ownership-path acceptance rule.
+At the primary external variant (`Lbar=0.4`, `theta1=0.25`), exit-only A2 has
+tight loss `5.0115096360`; free-bequest A3 has loss `5.2934875528` with
+`theta0=0.0150743` near zero. The latter is not a valid optimizer winner:
+A2 is exactly A3's `theta0=0` nested submodel, so a correctly optimized A3
+cannot have a higher loss. The dedicated zero-profile chains also missed the
+A2 basin. Using the valid nested envelope gives loss `5.0115096360` at zero,
+slightly below `5.0154687472` at `theta0=0.05`; higher profile rungs rise to
+`6.1220`, `8.8669`, and `10.7405`. Thus there is no evidence that bequests
+improve the primary exit-margin calibration, and the next search design must
+inject the nested A2 winner into the A3 simplex/profile starts.
+
+The model's age-82 state forces terminal liquidation, so mapping the ACS
+82--84 ownership bin to that state was invalid and must not be used as a cliff
+test. This does not change the verdict: over the scientifically comparable
+62--78 states, no arm passes all empirical bands, and every borrowing-schedule
+arm has a genuine 74--78 ownership collapse. Primary A3 falls from `0.7551` to
+`0.0418`; primary A2 falls from `0.8146` to `0.0429`. No mechanism is promoted.
+
+The first fresh Jacobian job `13713946` stopped honestly because the negative
+beta perturbation missed the tight residual gate. Adaptive strict-sided retry
+`13786796` completed with exit `0:0` in 18m39s. Its 15-by-12 weighted and
+target-scaled matrices have rank 9 at relative tolerance `1e-2` and rank 12 at
+`1e-3`; the `theta0` column is above the exact-zero repeat-noise floor. These
+are local conditioning diagnostics at the rejected, non-optimal A3 point, not
+valid inference about a preferred mechanism. The tight arm, target-fit,
+parameter, ownership, profile, and Jacobian tables are under
+`output/model/intergen_bequest_exit_battery_20260714/`. The options, evidence,
+and staged next-calibration decision are synthesized in
+`docs/model/bequest_exit_note_20260715.pdf`.
+
+## July 14 late: proper joint bequest/exit calibration battery running
+
+The follow-up is a real joint SMM exercise, not another fixed-cell diagnostic.
+Every arm re-estimates the 11 identified clean-frontier coordinates against the
+full 15-moment objective. A0 and A2 therefore have 11 free parameters; headline
+A1, A3, and A4 have 12 because they also estimate `theta0` on a soft-zero
+domain containing exact zero. `theta1=0.25` and the terminal owner-LTV
+multiplier are external restrictions, never selected by loss. A5 alone frees
+both bequest coordinates (13 free parameters) and is explicitly labeled an
+underidentified ridge diagnostic. The old nominal 14-parameter system became
+11 only after the clean-frontier restrictions `theta0=theta_n=
+tenure_choice_kappa=0`; the headline A3 restores `theta0`, so it has 12.
+
+The full-simplex smoke `13713143` ran 15 evaluations in each representative
+arm, verified the intended 11/12/13-dimensional contracts, and moved every
+free coordinate, including `h_bar_0`, `theta0`, and A5's `theta1`. A first
+five-minute launch (`13713246`) was deliberately cancelled when its live
+metadata exposed a hybrid evaluator (`max_iter_eq=10`, `tol_eq=2.5e-5`) rather
+than the declared search/report split; none of those records is eligible. The
+corrected contract smoke `13713765` reproduced the tight anchor twice at loss
+`6.9647123602`, residual `2.00e-5`, with zero loss or moment difference and
+empty stderr.
+
+The clean 22-chain array is Torch job `13713920`. It searches at
+`max_iter_eq=10`, `tol_eq=1e-4`, reserves five minutes, and solves every chain
+winner twice at `40`, `2.5e-5`; only tight records are eligible. Selector
+`13713921` feeds the ten-chain nuisance-reoptimized `theta0` profile
+`13713945`; fresh tight 12-column A3 Jacobian job `13713946` is also dependent
+on the selector. At launch all 22 tasks were running. The main and profile
+stages have a declared upper bound of 122.6 CPU-hours; the Jacobian adds at
+most one CPU-hour. Its two-parameter loop smoke, `13713376`, completed in 29
+seconds with exit `0:0` and empty stderr. Hard acceptance uses the ACS 62--84
+ownership bands plus the adjacent-bin cliff rule. No configuration is promoted
+automatically.
+
+Run contract and live artifact locations are recorded in
+`output/model/intergen_bequest_exit_battery_20260714/README.md`; the corrected
+full prompt is `docs/prompts/intergen_bequest_exit_battery_codex_20260714.md`.
+
+## July 14: small bequest/exit calibration rejects the linear-to-zero LTV schedule
+
+A bounded 53-solve exercise tested Claude's proposed normalized parent-gated
+luxury warm glow,
+\(\mathbf{1}\{n\geq1\}\theta_0[u(\theta_1+b)-u(\theta_1)]\), at
+\((\theta_0,\theta_1)\in\{0.05,0.30\}\times\{0.25,1.00\}\), with and
+without an externally pinned owner-LTV taper from age 66 to zero at age 82.
+Within the best cell of each arm, 11 remaining coordinates received one full
+bounded \(\pm\) coordinate pass. The live 15-moment objective, repaired
+feasibility gate, `J=17`, `Nb=120`, and tight equilibrium evaluator were held
+fixed. Job `13679850` completed `53/53` solves in 28m49s with exit `0:0` and
+empty stderr.
+
+The default-off implementation is inert: the no-bequest clean frontier
+reproduced exactly at loss `6.9647123602`, residual `2.00e-05`. Without the LTV
+taper, the best positive-bequest point was loss `6.9773903753`, so the proposed
+bequest utility alone does not improve the clean frontier. The aggressive LTV
+taper plus \((\theta_0,\theta_1)=(0.05,1.00)\) reached strict loss
+`4.3718161884`, residual `2.93e-06`, and matched the 65--75 ownership target
+(`0.7657` versus `0.7643`). This scalar gain is not a viable calibration:
+ownership falls from `0.8601` at age 70 to `0.5608` at 74, `0.0002` at 78, and
+zero at 82; ownership at 74+ is only `0.1870`. Old nonhousing wealth rises to
+`3.3022` versus the `2.2305` target, and the diagnostic 74+/62--74 liquid-wealth
+ratio is `1.0159`, so the model does not generate retirement decumulation. The
+point also pushes `h_bar_0` to the relaxed experimental lower bound `0.25`.
+
+Verdict: retain the normalized parent-gated form as an opt-in specification
+candidate, but reject the linear-to-zero LTV schedule. Do not promote loss
+`4.3718` or compare it as a production calibration. The next old-age-margin
+test needs an empirically pinned mortgage-balance/refinancing or downsizing
+profile and an approved late-life decumulation target; it must inspect the full
+ownership-by-age path, not only the 65--75 average. Complete target fits,
+parameter restrictions, checkpoints, and plots are under
+`output/model/intergen_bequest_calibration_exercise_20260714/`. The winning
+point was independently re-solved locally with a loss difference of
+`3.55e-15`.
+
+## July 13: focused relaxed polish and h0-by-chi profile live
+
+Following the wide-search audit, a targeted second stage is running on Torch.
+It keeps the repaired `J=17`, `Nb=120`, 15-moment evaluator fixed and contains
+two complementary pieces: seven transformed Nelder--Mead polishes around the
+three wide basins, and a 25-cell deterministic-tenure/no-bequest profile over
+`h_bar_0 in {0.25,0.40,0.55,0.75,1.00}` by
+`chi in {0.90,1.00,1.10,1.25,1.50}`, reoptimizing all other active coordinates
+within each cell. Jobs `13480103`--`13480109` are the free polishes; array job
+`13480110` is the profile; dependent collector `13480164` will write the full
+best-point report and the 5-by-5 loss matrix.
+
+Both exact-loop smokes completed cleanly. The first two-evaluation free polish
+improved `8.4150 -> 8.3764`; the fixed `h_bar_0=0.55, chi=1.10` no-bequest
+smoke produced a strict `8.7459`. Early production health checks found all 32
+tasks checkpointing with clean stderr. After only 24 free-polish and 92 profile
+evaluations, provisional best losses were `8.22854` and `8.45691`, respectively.
+The final point remains provisional until independent reproduction, the full
+15-moment table, parameter restrictions, and diagnostics are checked.
+
+## July 13: overnight search completes; 8.8957 in-box and 8.4150 wide frontier
+
+The July 12 repaired `Nb=120`, 15-moment, 14-parameter point with loss
+`8.9259454907` was challenged by three independent outer loops; the model,
+moments, weights, feasibility repair, and production grid were unchanged.
+
+All search waves completed. Across the full tree, the report parsed `53,518`
+records and found `47,021` eligible strict records (`46,867` unique). The best
+point inside the production parameter box is the independently reproduced
+Nelder--Mead point with loss `8.8956562300`, residual `4.39e-05`, a `0.0302893`
+loss-point (`0.339%`) improvement. Its complete tables are in
+`output/model/intergen_overnight_calibration_20260713/report_classic/`.
+
+The wide transformed-DE arm found and independently reproduced loss
+`8.4150089412`, residual `4.43e-05`, a `5.724%` improvement. It is not an
+in-box production calibration: `h_bar_0=0.5300` is below the production lower
+bound `1`, and `theta_n=2.4546` exceeds the production upper bound `1.5` while
+`theta0=0.000136` is almost zero. Projecting only those two coordinates back to
+the production box makes the vector entrant-infeasible, so this is a genuinely
+different feasible region rather than a hidden in-box optimum. It improves TFR
+and room-separation moments sharply but worsens the already dominant old-age
+ownership miss (loss contribution `5.318`). Treat it as a bound/specification
+frontier and evidence for profiling the `h_bar_0` restriction, not as the
+production estimate. Full tables are in
+`output/model/intergen_overnight_calibration_20260713/report/`.
+
+The ExtraTrees arm produced 64 real-solver validations: `49` were correctly
+rejected as entrant-infeasible, `15` solved, and `14` were strict. Its best
+actual loss was `9.1104472`, so it did not improve the incumbent. The scheduled
+collector failed only because the reporting script had not been copied to the
+remote snapshot; no search output was lost. The script was synced, the wide
+best was independently re-solved, and both full reports were regenerated.
+
+- Classic arm: 24 diversified Nelder--Mead chains in the production box, each
+  with two checkpointed 230-minute waves (about eight hours total). Wave-one
+  jobs are `13450624`, `13450626`, `13450628`, `13450630`, `13450650`,
+  `13450654`, `13450657`, and `13450659`; their continuation jobs are
+  `13450625`, `13450627`, `13450629`, `13450631`, `13450652`, `13450656`,
+  `13450658`, and `13450660`.
+- Wide discovery arm: 12 transformed Latin-hypercube plus differential-
+  evolution tasks over a deliberately much wider but mathematically valid
+  domain, split among positive tenure/bequest, deterministic tenure, and
+  deterministic-tenure/no-bequest nested arms. Two independent 230-minute
+  waves are `13450713` and `13450714`; infeasible proposals are checkpointed as
+  `infeasible_theta`, not treated as solutions.
+- Surrogate arm: an ExtraTrees proposal model passed four task-grouped CV gates
+  on `16,073` unique strict repaired-objective records, then screened `250,000`
+  candidates. The exact-solver smoke reproduced the incumbent bit-for-bit and
+  solved the top proposal at loss `9.1104472`, residual `5.96e-05`. All 64
+  proposals are queued for real-model validation as job `13454485`.
+- Final unattended collector job `13454629` depends on all continuation waves
+  and ML validations. It scans the complete run, selects strict records only,
+  recomputes the 15-moment loss, and writes the full target-fit and 14-parameter
+  tables under the remote `report/` folder.
+
+Both exact-loop cluster smokes wrote configs, metadata, per-case checkpoints,
+and strict best records. All production and wide waves finished with exit
+`0:0`. The two selected candidates were independently reproduced, their 15
+weighted moment contributions were recomputed exactly, and their residuals are
+below `1e-4`. Remote results remain under
+`/scratch/td2248/projects/Fertility_Spring26_20260711_feasibility_recal/output/model/overnight_calibration_20260713/`.
+
+## July 12: repaired calibration reaches 8.9259; 21-case policy battery complete
+
+The feasibility-repaired, combined-specification calibration was refined at
+the user-confirmed production standard `J=17`, `Nb=120` using 24 diversified
+Nelder--Mead chains plus four replacement local refinements. Final loss is
+`8.9259454907`, down from `9.6583054287` (7.58%), with strict market residual
+`6.01e-05`. The complete 15-moment target table and 14-parameter bound table
+are in `output/model/intergen_refinement_policy_20260712/calibration/report/`.
+`H0=9.8118` is interior to `[1,20]` and `c_bar_0=1.1503` is interior to
+`[0.08,1.28]`; `h_bar_0`, tenure smoothing, and `theta0` remain effectively
+at lower bounds. The audit's 11--12 effective-direction / weak-identification
+warning remains live.
+
+All 21 fixed-theta policy cases were rerun on the final point and re-cleared.
+Every case passes the `1e-4` market-residual gate and the unsecured-debt taper
+gate. Headline mechanisms: supply +20% gives dTFR `+0.0368`, price `-6.87%`;
+tax2 alone gives dTFR `-0.0069`, price `-19.19%`; tax2+grant0.4 gives dTFR
+`+0.0315`, price `-18.34%`; grant0.4 targeted to H>=6 gives `+0.0294`, versus
+`+0.1405` if available on all owner rungs; rental-cap relief is near-zero or
+negative for fertility; unsecured credit lowers fertility. These are
+fixed-population mechanism counterfactuals without fiscal/default/resource-cost
+accounting, not welfare estimates. Full tables and plots are in
+`output/model/intergen_refinement_policy_20260712/policy/report/`.
+
+The paper lifecycle figure now compares the model child-at-home stock with the
+ACS own-child-under-18 stock, not completed fertility allocated over decision
+ages. The model peaks at 0.522 at age 42 versus ACS 0.646 at age 41; it is 18.2
+pp low at age 38 and 11.7 pp high at age 62, so the profile is too delayed and
+persistent. The fit table, lifecycle discussion, figure, and decision-rule
+figure were refreshed and the 23-page paper compiled and visually checked.
+The later population-adjusted policy section was not overwritten because it is
+a different estimand. Full session readout:
+`output/model/intergen_refinement_policy_20260712/README.md`.
 
 ## July 9 early: polish converged; Nb=240 verification surfaces honest drift
 

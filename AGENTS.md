@@ -177,20 +177,23 @@ be stated and recoverable.
 
 ## Delegation And Cost Discipline
 
-Default to routing work to the cheapest agent that can do it well, even when the
-lead model is Opus 4.8 or Fable. Spend the lead's budget on economics,
-identification, calibration judgment, specification, and final review; send
-volume and independent passes to cheaper, faster agents. The full routing table
-and the Torch cluster and Codex procedures live in
+Default to routing work to the least expensive adequate worker. Spend the lead's
+budget on economics, identification, calibration judgment, specification, and
+final review; send volume and independent passes to model-selected workers. The
+full routing table and the Torch cluster and Codex procedures live in
 `docs/workflow/delegation_and_cluster_playbook.md`.
 
 Default routing:
 
-- Codebase search and grounding: read-only `Explore` agents, in parallel.
-- Heavy or independent coding, second-opinion diagnosis, and stuck-point rescue:
-  Codex (GPT-5.4) via the `codex:rescue` skill.
-- Bulk mechanical edits, log scraping, table building, and many independent
-  tasks: Haiku, Sonnet, or Fable subagents via a model override.
+- Codebase search, grounding, log parsing, and table building: a read-only fast
+  profile through `ops/codex-workers/scripts/codex-worker.sh`.
+- Scoped implementation and independent diagnosis: a model-selected worker
+  profile through the same wrapper, with exclusive file ownership.
+- Tiny one-shot mechanical work: the fastest reviewed profile, only where
+  skipping deep validation is acceptable.
+- Built-in subagents: use for convenient in-thread parallelism and shared
+  context, but do not assume they use a cheaper model because the spawn tool
+  does not expose model selection.
 - Any run expected to exceed ~30 minutes, calibration sweeps, and grid or DE
   searches: the Torch cluster via `code/cluster/torch.sh`, smoke-tested first
   (see Long-Run Search Safety).
@@ -200,10 +203,51 @@ Default routing:
   against the mathematical specification before it is trusted. This is where
   this repository's past bugs originated.
 
+Context-minimal worker exception: a worker launched through the repository
+wrapper with `context_mode=minimal` may skip Mandatory Startup only when its
+prompt is tightly bounded and the task does not interpret economics,
+calibration, targets, model results, or model code. Typical eligible tasks are
+formatting, file location, log reduction, and deterministic extraction. If the
+scope expands into substantive model or research judgment, the worker must stop
+and be relaunched with full context.
+
 Balanced routing, not blind delegation: the lead never hands off identification
 or calibration judgment, and never accepts a delegated calibration conclusion
 without checking the target-fit table and identification against the standards
-above. Verify delegated output before reporting it as done.
+above. Worker prompts must be bounded and use the repository task template;
+verify delegated output before reporting it as done. Keep current model IDs and
+reasoning levels in `ops/codex-workers/config/models.env`, not in this file.
+
+### Autonomous Routing And Progress Control
+
+Routing is the lead agent's responsibility. The user should normally state the
+outcome, any deadline or urgency, and any non-negotiable constraints; do not
+ask the user to select a model or worker profile when that choice can be made
+from the routing table.
+
+Before delegating, classify the work and choose the least expensive adequate
+route. Do not delegate a task that the lead can complete more quickly than the
+handoff would take. The default is **one** delegated worker. A fan-out needs
+all of the following: genuinely independent questions, non-overlapping file or
+evidence scopes, a separate deliverable for each worker, and a stated synthesis
+step by the lead. Never fan out parallel versions of the same broad question,
+or use built-in subagents merely to save usage.
+
+Before a nontrivial delegation, send one concise progress line containing the
+selected route, the reason, the time limit, and the stop condition. Use the
+wrapper's default profile time limit unless the task itself justifies an
+explicit override. On reaching that limit, return the best available result,
+what remains unresolved, and the next decision; do not silently restart,
+broaden, or multiply the work. A second attempt requires a materially changed
+hypothesis, scope, or method.
+
+Use a short status format for work that can outlast one interaction:
+`phase | elapsed | route | artifact/evidence | next decision`. For a request
+marked urgent or time-critical, default to a bounded read-only investigation or
+a small verified edit; do not initiate a broad audit, full-context fan-out, or
+long computation without saying so first. Long numerical work remains a Torch
+job with its own smoke test, checkpoints, and health checks, not an open-ended
+agent task.
 
 ## Economic And Numerical Standards
 
@@ -298,6 +342,9 @@ if the live model has changed.
 - For paper-facing writing (model sections, abstracts, slides), follow the style
   guide at `docs/style/econ_writing_style_guide.md`: environment-first structure,
   primitives before derived objects, one sentence of economics around every display.
+- Do not narrate computational conventions such as branch screening,
+  infeasible-value sentinels, tie-breaking, or deterministic-limit implementation
+  in paper prose unless economically substantive or explicitly requested.
 - For LaTeX, keep notation consistent with the model and avoid claims that are
   stronger than the evidence.
 - For paper-facing document edits, make the minimal required change. Do not

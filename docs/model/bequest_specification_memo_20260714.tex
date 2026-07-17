@@ -1,0 +1,366 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[round]{natbib}
+\usepackage{microtype}
+
+\newcommand{\one}{\mathbf{1}}
+
+\title{Bequest specification for a housing--fertility lifecycle model:\\
+what the motive should depend on}
+\author{Fertility--Housing project}
+\date{14 July 2026}
+
+\begin{document}
+\maketitle
+
+\section{The question}
+
+The object at issue is a primitive: the utility a household derives from the
+estate it leaves at death, as a function of the estate size and of the
+household's completed number of children $n$. The active model gives this
+terminal payoff the form
+%
+\begin{equation}
+v(b,n)=\theta_0\,\max\{1+\theta_n n,\,0\}
+\left[\frac{(\theta_1+b)^{1-\sigma}}{1-\sigma}
+-\frac{\theta_1^{1-\sigma}}{1-\sigma}\right],
+\qquad \theta_1=0.01,\ \sigma=2,
+\label{eq:current}
+\end{equation}
+%
+where $b$ is the gross estate realized at certain death at age~82 and every
+household is endowed with the motive.\footnote{Form transcribed from
+\texttt{code/model/intergen\_housing\_fertility/solver.py}
+(\texttt{bequest\_utility\_vec}); not modified here.} Two features of
+\eqref{eq:current} do economic work: the multiplier $\max\{1+\theta_n n,0\}$
+makes the \emph{strength} of the motive rise linearly in the number of
+children, and the near-zero shifter $\theta_1$ makes the term a nearly
+homothetic warm glow rather than a luxury good that only the rich act on.
+
+The design question has an extensive and a functional part. Extensively, is
+the motive a property of parents, so that childless households leave estates
+only accidentally? Functionally, if the motive is present, does its strength
+rise with the number of children, and is a linear estate multiplier the right
+way to encode that? The two parts have different answers, and neither answer
+is the current specification.
+
+\section{Evidence}
+
+\paragraph{(a) The extensive margin of the motive.} The best direct evidence
+finds at most an extensive shifter, not a strong gradient in $n$.
+\citet{kopczuk2007} estimate that about three-quarters of elderly singles hold
+a bequest motive; children raise the probability of a motive from $63\%$ to
+$79\%$, significant only at the $10\%$ level, and the remaining child
+covariates (income, education, proximity) are mostly insignificant. They read
+the evidence as an egoistic motive but explicitly reject the older assumption,
+due to \citet{hurd1989}, that only parents have a motive at all---an
+assumption \citeauthor{hurd1989} used to rationalize faster parental
+decumulation as accidental bequests. The margin the data support is that
+parents are more likely to \emph{have} a motive, not that the motive scales
+with how many children they have.
+
+\paragraph{(b) Children matter, but through transfers and division.} The
+operative child channel in the modern evidence is inter vivos giving, not the
+shape of the terminal estate utility. \citet{kvaerner2023} uses quasi-random
+parental cancer diagnoses in Norwegian administrative data: a diagnosis raises
+children's wealth by roughly $10\%$ while dynasty wealth is unchanged, which
+identifies deliberate, child-directed \emph{transfers} and re-reads
+\citeauthor{hurd1989}'s faster decumulation as giving rather than
+indifference. Against a strong altruistic reading, \citet{altonji1997} find
+that redistributing one dollar from parent to child moves the transfer by less
+than thirteen cents, rejecting the sharp Barro--Becker benchmark.
+\citet{mcgarry1999} shows that inter vivos transfers are compensatory---they
+flow to lower-income children---yet bequests are divided \emph{equally} in
+$83\%$ of wills, and \citet{wilhelm1996} finds $88\%$ equal division in estate
+records, regardless of child income. The terminal estate is therefore close to
+a mechanical equal split; the child-contingent action is in the timing and
+targeting of transfers before death.
+
+\paragraph{(c) Accumulation by asset class.} Whether parents ``save more''
+depends entirely on the asset, and the pattern favors housing as the
+child-directed stock. \citet{scholzseshadri} find that children have a large
+negative effect on financial net worth over working life: families with
+children consume more and optimally hold less retirement wealth, a crowd-out
+rather than an absence of caring. \citet{boar2021} shows the mirror image in
+consumption: parental consumption responds to the \emph{child's} permanent
+income risk with an elasticity of $-0.06$ to $-0.08$, precautionary saving
+held as insurance for the child. \citet{bernheim1991} infers bequest motives
+from the life-insurance and annuity choices of the elderly, a further
+child-contingent protective margin. Housing runs the other way: the housing
+budget share rises with the number of children
+\citep{coeurdacier2023}, consistent with this repository's own PSID
+birth event studies. The synthesis is that ``parents save more'' is true in
+houses, insurance, transfers, and buffers and false in measured financial
+wealth---and housing is exactly the child-directed asset the model already
+carries.
+
+\paragraph{(d) Structural conventions.} The structural literature encodes the
+motive as a child-blind luxury warm glow. \citet{denardi2004} introduces the
+luxury shifter that makes bequests a good the rich act on;
+\citet{lockwood2018} and \citet{ameriks2011} estimate the same
+$v(X)=\frac{a}{1-\sigma}\big(X/a+\phi\big)^{1-\sigma}$ form, with $\phi$ the
+threshold below which nothing is left. \citet{denardi2025} find bequests
+behave as luxuries concentrated among rich couples, with children not even a
+conditioning variable in the saving heterogeneity. Closest to this project,
+\citet{nakajima2017} estimate a child-blind warm glow inside a housing model,
+$\gamma\,(a+\zeta)^{1-\sigma}/(1-\sigma)$, with strength $\gamma=0.43$ and
+shifter $\zeta\approx\$19{,}600$---a luxury threshold of order a quarter of
+annual household income. Even \citet{kvaerner2023}, the paper with the
+strongest child-directed evidence, models the motive itself child-blind and
+puts children in the transfer block.\footnote{Verification status, following
+the round-3 source memo's tags. Independently verified today [V]: the negative
+sign of children on financial net worth (\citeauthor{scholzseshadri}), the
+$-0.06$ to $-0.08$ child-risk consumption elasticity (\citeauthor{boar2021}),
+the rising housing budget share in $n$ (\citeauthor{coeurdacier2023}), and the
+life-insurance reading (\citeauthor{bernheim1991}, at search level).
+Extracted from paper pages or abstracts today but not yet re-checked against
+the papers [E], and load-bearing: \citeauthor{kopczuk2007}'s $63\%\!\to\!79\%$
+and $10\%$ significance, \citeauthor{nakajima2017}'s $\gamma=0.43$ and
+$\zeta\approx\$19{,}600$, \citeauthor{kvaerner2023}'s $\sim\!10\%$ wealth
+effect, and \citeauthor{mcgarry1999}'s $83\%$ / \citeauthor{wilhelm1996}'s
+$88\%$ equal-division shares. Spot-check these before paper use.}
+
+\section{Model evidence}
+
+The current block fails for a reason internal to the model, and the failure is
+sharp. With certain death at age~82, no survival risk, and no downsizing
+force, the cheapest way to hold an estate is housing equity, so the motive
+resolves into a single instruction: die owning the largest possible house,
+leveraged. Table~\ref{tab:mech} shows what switching pure warm glow on does at
+the clean frontier coordinates.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+object & $\theta_0=0$ & $\theta_0=0.3$ & data target \\
+\midrule
+ownership at ages $74+$ & $0.606$ & $0.981$ & $\sim\!0.76$ \\
+mean liquid wealth $74\!+\!/\,62\text{--}74$ & $+0.17$ & $-0.33$ & --- \\
+old nonhousing wealth median & $2.33$ & $3.30$ & $2.23$ \\
+TFR & $2.004$ & $2.000$ & $1.918$ \\
+\bottomrule
+\end{tabular}
+\caption{Fixed-$\theta$ profiles, $\theta_n=0$, tight evaluator. Warm glow
+drives old-age ownership to $98\%$ and mean liquid wealth at $74+$ negative:
+households borrow against the house, consume, and bequeath the house.}
+\label{tab:mech}
+\end{table}
+
+The old-age ownership target ($0.764$, weight $160$) makes this arithmetically
+unaffordable, and it is right to bind: the data say old households do not all
+keep their houses. Reoptimizing everything else with $\theta_0=0.3$ forced
+lands at $9.84$--$10.42$ against a verified no-bequest frontier of $6.96$ tight,
+so the reoptimized price of pure warm-glow bequests is about $+2.9$ loss
+points; even the smallest tested warm glow, $\theta_0=0.05$, costs $+2.0$. The
+linear child multiplier is a second, separable catastrophe, multiplying the
+penalty roughly sevenfold on the audit's accounting: at $\theta_0=0.3$ the
+loss rises from $11.43$ under pure warm glow to $96.83$ with the multiplier
+on, as the estate becomes a fertility subsidy stacked on the housing-retention
+channel.\footnote{Diagnostic value $\theta_n=0.375$; the production default is
+$\theta_n=0.25$. The parameter is an exact null direction at $\theta_0\approx0$,
+since the multiplier scales a term whose level is zero.} Inverse-variance
+reweighting does not reverse the verdict: under SE-proportional weights the
+no-bequest baseline scores $345.1$ against $407.2$--$447.8$ for the best
+bequest chain, because precision weighting loads even harder on the ownership
+moments that bequests wreck. Bequests are not rejected by the data or the
+targets; they are rejected by an accounting identity---estates can only be
+houses---that the model change in Section~4 is designed to break.
+
+\section{Proposed specification}
+
+\paragraph{Baseline.} Replace \eqref{eq:current} with a child-blind luxury
+warm glow that parents, and only parents, carry:
+%
+\begin{equation}
+v(b,n)=\one\{n\ge 1\}\,\theta_0\,
+\frac{(\theta_1+b)^{1-\sigma}}{1-\sigma},
+\qquad \theta_1\ \text{estimated.}
+\label{eq:baseline}
+\end{equation}
+%
+The indicator encodes the one margin the data support---parents are more
+likely to have a motive \citep{kopczuk2007,hurd1989}---while the strength is
+child-blind in line with \citet{denardi2004,denardi2025,nakajima2017}, and
+$\theta_1$ is promoted from $0.01$ to an estimated luxury scale of order a
+quarter of annual income, anchored near the \citet{nakajima2017} shifter.
+Identification is clean: with the two free bequest parameters
+$(\theta_0,\theta_1)$, the old nonhousing wealth median (target $2.23$)
+disciplines the luxury threshold and the decumulation moment below disciplines
+the strength.
+
+\paragraph{Where the child channel goes.} The intensive dependence on $n$
+moves out of the estate utility and into inter vivos down-payment transfers at
+family formation, where the causal and descriptive evidence places it
+\citep{kvaerner2023,mcgarry1999}, and where the down-payment-gift literature
+locates it for constrained first-time buyers.\footnote{Engelhardt and Mayer,
+down-payment-gift evidence; the exact year and outlet are not verified from
+within the repository and the citation is deliberately left unpinned.} This is
+also where a housing--fertility mechanism naturally lives, since the transfer
+relaxes the very $(1-\phi)$ down-payment constraint that couples young
+ownership to childbearing. Dropping $\theta_n$ costs no identification: it is a
+null direction at $\theta_0\approx0$, no literature supports the linear estate
+multiplier, and its economic content is reassigned to the transfer block,
+which carries its own identifying moment in birth-timed gift incidence.
+
+\paragraph{Equal-division robustness variant.} If a child term in the estate is
+wanted at all, the disciplined form comes from equal division rather than a
+free slope. Under equal division each of $n$ children receives $b/n$;
+aggregating $n$ identical CRRA continuation values with a Barro--Becker
+altruism weight $n^{\epsilon}$ \citep{barrobecker1989} gives
+%
+\begin{equation}
+\theta_0\,n^{\epsilon}\,\frac{(\theta_1+b/n)^{1-\sigma}}{1-\sigma}
+\ \xrightarrow[\ \theta_1\to0\ ]{}\
+\theta_0\,n^{\,\epsilon+\sigma-1}\,\frac{b^{1-\sigma}}{1-\sigma},
+\label{eq:equaldiv}
+\end{equation}
+%
+so equal division plus altruism collapses to a warm glow whose child-count
+scale is $n^{\epsilon+\sigma-1}$, not a free linear multiplier. For $\sigma=2$
+the exponent is $\epsilon+1$, which lies in $[1,2]$ for $\epsilon\in[0,1]$---a
+bounded, micro-founded range in place of the unrestricted $\theta_n$; the exact
+form $\theta_0\,n\,u(\theta_1+b/n)$ is the $\epsilon=1$ endpoint. This variant
+is justified by the equal-division fact \citep{mcgarry1999,wilhelm1996}, not by
+a stronger motive for parents, and it should be reported as robustness, never
+as the baseline.
+
+\paragraph{A first bounded diagnostic (14 July).} A 53-solve exercise tested
+the parent-gated form \eqref{eq:baseline} at
+$(\theta_0,\theta_1)\in\{0.05,0.30\}\times\{0.25,1.00\}$, with and without an
+owner loan-to-value cap tapering linearly from age~66 to zero at~82, holding
+the live 15-moment objective and tight evaluator fixed.\footnote{Packet:
+\texttt{output/model/intergen\_bequest\_calibration\_exercise\_20260714/};
+summary in the top section of \texttt{CALIBRATION\_STATUS.md}.} The gated form
+alone is loss-neutral: the best positive-bequest point scores $6.9774$ against
+the no-bequest frontier $6.9647$, so the respecified utility neither helps nor
+harms the fit while the exit margin is missing. The taper arm reaches
+$4.3718$, but the gain is an artifact of where the data are measured: the
+forced schedule generates an ownership cliff---$0.860$ at age~70, $0.561$
+at~74, near zero at~78---that matches the 65--75 ownership average ($0.766$
+against $0.764$) precisely because the collapse lands just outside the
+measured window, while the $74+\,/\,62\text{--}74$ liquid-wealth ratio stays
+at $1.016$, so the model still produces no retirement decumulation. Households
+are pushed out of houses without being induced to run down wealth, the
+opposite of the missing margin. The diagnostic therefore sharpens the
+prerequisite: the exit margin must be an empirically pinned mortgage-balance
+or downsizing profile, not a forced linear-to-zero loan-to-value schedule, and
+the moment set must include $75+$ ownership and a $75+\,/\,62\text{--}74$
+decumulation ratio before $\theta_0$ is re-estimated.
+
+\paragraph{Structural prerequisites (model changes awaiting approval).} None of
+\eqref{eq:baseline}--\eqref{eq:equaldiv} should be estimated until the
+accounting identity of Section~3 is broken. That requires an old-age exit
+margin---an externally pinned post-retirement amortization schedule or survival
+risk before age~82---so that estates can be financial rather than only
+housing, and a $75+\,/\,62\text{--}74$ decumulation moment so that $\theta_0$ is
+identified against $\beta$ rather than confounded with it. To be explicit about
+scope, the following are proposals, not implemented changes: (i) the old-age
+exit margin; (ii) the new decumulation target; (iii) the $\one\{n\ge1\}$
+respecification of the motive; (iv) promoting $\theta_1$ to an estimated
+parameter; and (v) removing the $(1+\theta_n n)$ multiplier. Items (i) and (ii)
+are the load-bearing model changes and should be approved before $\theta_0$ is
+re-estimated.
+
+\begingroup
+\small
+\begin{thebibliography}{99}
+
+\bibitem[Altonji et al.(1997)]{altonji1997}
+Altonji, J.~G., F.~Hayashi, and L.~J. Kotlikoff (1997).
+Parental altruism and inter vivos transfers: Theory and evidence.
+\emph{Journal of Political Economy} 105(6), 1121--1166.
+
+\bibitem[Ameriks et al.(2011)]{ameriks2011}
+Ameriks, J., A.~Caplin, S.~Laufer, and S.~Van Nieuwerburgh (2011).
+The joy of giving or assisted living? Using strategic surveys to separate
+public care aversion from bequest motives.
+\emph{Journal of Finance} 66(2), 519--561.
+
+\bibitem[Barro and Becker(1989)]{barrobecker1989}
+Barro, R.~J. and G.~S. Becker (1989).
+Fertility choice in a model of economic growth.
+\emph{Econometrica} 57(2), 481--501.
+
+\bibitem[Bernheim(1991)]{bernheim1991}
+Bernheim, B.~D. (1991).
+How strong are bequest motives? Evidence based on estimates of the demand for
+life insurance and annuities.
+\emph{Journal of Political Economy} 99(5), 899--927.
+
+\bibitem[Boar(2021)]{boar2021}
+Boar, C. (2021).
+Dynastic precautionary savings.
+\emph{Review of Economic Studies} 88(6), 2735--2765.
+
+\bibitem[Coeurdacier et al.(2023)]{coeurdacier2023}
+Coeurdacier, N., P.-P. Combes, L.~Gobillon, and F.~Oswald (2023).
+Fertility, housing costs and city growth. Unpublished manuscript.
+
+\bibitem[De Nardi(2004)]{denardi2004}
+De Nardi, M. (2004).
+Wealth inequality and intergenerational links.
+\emph{Review of Economic Studies} 71(3), 743--768.
+
+\bibitem[De Nardi et al.(2025)]{denardi2025}
+De Nardi, M., E.~French, J.~B. Jones, and R.~McGee (2025).
+Why do couples and singles save during retirement? Household heterogeneity and
+its aggregate implications.
+\emph{Journal of Political Economy} (forthcoming).
+
+\bibitem[Engelhardt and Mayer(n.d.)]{engelhardtmayer}
+Engelhardt, G.~V. and C.~J. Mayer.
+Down-payment gifts and constrained first-time homebuyers.
+Down-payment-gift transfer literature; exact year and outlet not verified from
+within the repository.
+
+\bibitem[Hurd(1989)]{hurd1989}
+Hurd, M.~D. (1989).
+Mortality risk and bequests.
+\emph{Econometrica} 57(4), 779--813.
+
+\bibitem[Kopczuk and Lupton(2007)]{kopczuk2007}
+Kopczuk, W. and J.~P. Lupton (2007).
+To leave or not to leave: The distribution of bequest motives.
+\emph{Review of Economic Studies} 74(1), 207--235.
+
+\bibitem[Kv\ae rner(2023)]{kvaerner2023}
+Kv\ae rner, J. (2023).
+The intergenerational transmission of wealth: Bequest motives and
+child-directed transfers.
+\emph{Review of Financial Studies} (Norwegian administrative-data study of
+parental cancer diagnoses).
+
+\bibitem[Lockwood(2018)]{lockwood2018}
+Lockwood, L.~M. (2018).
+Incidental bequests and the choice to self-insure late-life risks.
+\emph{American Economic Review} 108(9), 2513--2550.
+
+\bibitem[McGarry(1999)]{mcgarry1999}
+McGarry, K. (1999).
+Inter vivos transfers and intended bequests.
+\emph{Journal of Public Economics} 73(3), 321--351.
+
+\bibitem[Nakajima and Telyukova(2017)]{nakajima2017}
+Nakajima, M. and I.~A. Telyukova (2017).
+Reverse mortgage loans: A quantitative analysis.
+\emph{Journal of Finance} 72(2), 911--950.
+
+\bibitem[Scholz and Seshadri(working paper)]{scholzseshadri}
+Scholz, J.~K. and A.~Seshadri.
+Children and household wealth. Working paper.
+
+\bibitem[Wilhelm(1996)]{wilhelm1996}
+Wilhelm, M.~O. (1996).
+Bequest behavior and the effect of heirs' earnings: Testing the altruistic
+model of bequests.
+\emph{American Economic Review} 86(4), 874--892.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

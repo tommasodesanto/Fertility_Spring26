@@ -1,7 +1,12 @@
 # Design: Standardize Delegation, Cluster, and Best-Practice Discipline
 
 Date: 2026-07-02
-Status: approved (brainstorm), implementation in progress
+Status: historical design note; implementation is maintained in
+`docs/workflow/delegation_and_cluster_playbook.md` and `ops/codex-workers/`
+
+The model and agent names below reflect the July 2 design discussion. They are
+kept for historical context; use the current named worker profiles in the
+canonical playbook for live delegation.
 
 ## Purpose
 

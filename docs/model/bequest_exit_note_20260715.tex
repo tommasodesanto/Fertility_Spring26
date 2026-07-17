@@ -1,0 +1,498 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.82in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable,tabularx,array}
+\usepackage[round]{natbib}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\good}{\textcolor{green!45!black}{retain}}
+\newcommand{\bad}{\textcolor{red!65!black}{reject}}
+\newcommand{\diag}{\textcolor{blue!65!black}{diagnostic}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{Bequests and late-life housing exit:\
+options, overnight evidence, and the next calibration strategy}
+\author{Fertility--Housing project}
+\date{15 July 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Executive conclusion}
+
+The overnight battery answers a narrower question than ``do households have
+bequest motives?'' It asks whether a parent-gated bequest motive becomes useful
+after adding one particular late-life housing mechanism: a linear decline in
+the owner's borrowing limit from age 66 onward. The answer is no. The
+borrowing rule improves the scalar loss only by producing a discrete ownership
+collapse between ages 74 and 78, and the valid nested comparison puts the
+bequest strength back at zero. This rejects the borrowing rule and the current
+combination; it does not reject bequests in a model with a credible old-age
+block.
+
+Three additional findings determine the next step. First, the age-82 model
+state forces terminal liquidation, so it cannot be compared with the ACS
+82--84 ownership bin. Removing that endpoint does not rescue the borrowing
+rule: its 74--78 cliff remains. Second, the 12-parameter headline search failed
+to recover its own 11-parameter submodel, exposing a search-design failure.
+Third, the fresh Jacobian has rank 9 at a relative singular-value tolerance of
+$10^{-2}$ and rank 12 only at $10^{-3}$, so the headline system is locally
+weakly identified even though the $\theta_0$ column is numerically above the
+repeat-noise floor.
+
+The recommended sequence is therefore:
+\begin{enumerate}
+  \item keep the no-bequest clean frontier as the interim benchmark;
+  \item extend the old-age horizon and add externally measured survival before
+  any new bequest calibration;
+  \item construct HRS/PSID profiles for ownership transitions, downsizing,
+  mortgage balances, and nonhousing-wealth decumulation;
+  \item use a smooth, data-pinned owner-exit hazard as a low-cost diagnostic,
+  then decide from those facts whether the structural model needs medical
+  expense risk, a moving/downsizing margin, or a mortgage-balance state;
+  \item only after an old-age mechanism passes the ownership and wealth gates,
+  reintroduce one free bequest-strength parameter with the restricted winner
+  injected into every expanded search.
+\end{enumerate}
+
+\section{The decisions and the available options}
+
+There are four distinct decisions. Combining them into one calibration obscures
+which margin failed: the form of estate utility, the source of late-life
+housing exit, the empirical objects used to discipline that exit, and the
+optimizer used to compare nested models.
+
+\subsection{Estate-utility options}
+
+\paragraph{Option B0: no operative bequest motive.}
+The clean frontier fixes $\theta_0=\theta_n=0$ and deterministic tenure, leaving
+11 estimated coordinates. This is the identified and reproducible interim
+benchmark. Its limitation is economic rather than numerical: old-age
+ownership remains too high and the model cannot study estate motives or
+transfers. Status: \good{} as the benchmark, not as the final old-age model.
+
+\paragraph{Option B1: child-blind luxury warm glow.}
+The structural savings literature commonly uses a luxury shifter without a
+child-count multiplier \citep{denardi2004,lockwood2018,nakajima2017}. In the
+normalization used by the code, the payoff is:
+\begin{equation}
+v(b)=\theta_0\left[
+\frac{(b+\theta_1)^{1-\sigma}-\theta_1^{1-\sigma}}{1-\sigma}
+\right].
+\label{eq:childblind}
+\end{equation}
+The subtraction makes zero estate deliver zero utility and prevents a utility
+level constant from contaminating fertility comparisons. This is the cleanest
+literature baseline once the old-age block is credible. The published
+\citet{nakajima2017} calibration reports an annual shifter of \$7,619 in 2000
+dollars; there is no verified one-to-one conversion from that number to this
+model's income normalization, so $\theta_1$ must remain an explicitly external
+scale until a model-specific estate moment is added.
+
+\paragraph{Option B2: parent-gated luxury warm glow.}
+The implemented headline variant gives the normalized payoff only to parents:
+\begin{equation}
+v(b,n)=\one\{n\geq1\}\,\theta_0\left[
+\frac{(b+\theta_1)^{1-\sigma}-\theta_1^{1-\sigma}}{1-\sigma}
+\right].
+\label{eq:parentgate}
+\end{equation}
+This captures the extensive parent-childless contrast used by \citet{hurd1989}
+and the modest difference in motive incidence documented by
+\citet{kopczuk2007}. It is less standard than Option B1 because childless
+households also leave intended estates in the data. Status: \diag{} as an
+extensive-margin sensitivity, not yet the preferred baseline.
+
+\paragraph{Option B3: equal-division robustness.}
+If an estate is divided equally across $n$ children, a disciplined alternative
+is:
+\begin{equation}
+v(b,n)=\one\{n\geq1\}\,\theta_0 n\left[
+\frac{(b/n+\theta_1)^{1-\sigma}-\theta_1^{1-\sigma}}{1-\sigma}
+\right].
+\label{eq:equaldivision}
+\end{equation}
+The form follows the equal-division evidence in \citet{mcgarry1999} and
+\citet{wilhelm1996}; it is not a claim that the motive grows linearly with the
+number of children. Overnight it returned $\theta_0=0.0106$ and failed the same
+ownership test as the headline. Status: \diag{} only.
+
+\paragraph{Option B4: freely estimate both $(\theta_0,\theta_1)$.}
+This is attractive economically but not identified by the current target
+system. The overnight A5 arm has 13 free parameters, reached
+$(\theta_0,\theta_1)=(0.0060,0.1270)$, and failed the ownership rule. Its low
+loss is not an estimate because the Jacobian and earlier audits show weak
+directions. Status: \bad{} as a calibration, retain only for ridge mapping.
+
+\subsection{Old-age housing and wealth options}
+
+\paragraph{Option E0: the tested borrowing-limit taper.}
+The overnight rule multiplies the owner's collateral share by a deterministic
+age schedule. It is not a mortgage contract: there is no loan-balance state,
+origination date, term, refinancing choice, or scheduled payment. Because the
+constraint tightens sharply while the household is still alive, the rule
+forces households out of ownership rather than generating gradual repayment.
+Status: \bad{}.
+
+\paragraph{Option E1: externally measured survival over a longer horizon.}
+Certain death and forced liquidation at age 82 create an artificial endpoint.
+Extending the horizon to at least the early 90s and loading age-specific
+survival probabilities is the smallest structural correction. It creates
+accidental estates and makes the timing of death uncertain, as in
+\citet{hurd1989}. Survival alone may not generate enough downsizing, but it is
+a prerequisite for interpreting any bequest motive. Status: recommended first
+structural change; no calibrated parameter is required.
+
+\paragraph{Option E2: smooth owner-exit or downsizing hazard.}
+An age- and state-dependent owner-to-renter or smaller-home hazard can be pinned
+from HRS transitions and used as a diagnostic envelope. It would answer whether
+a smooth exit path is sufficient before a costly state-space expansion. It is
+reduced form and therefore not a final household problem, but it is far safer
+than selecting an LTV endpoint by loss. Status: recommended diagnostic after
+the data construction.
+
+\paragraph{Option E3: medical expense and health risk.}
+Late-life expense risk can generate nonhousing-wealth decumulation and housing
+exit while preserving endogenous choice. It is standard in structural
+retirement models and interacts meaningfully with intended versus accidental
+estates. It requires health states, transition probabilities, and expense
+distributions, and it may still leave housing too persistent if moving is
+costly. Status: leading structural candidate if the data show health shocks
+predict exit.
+
+\paragraph{Option E4: a true mortgage-balance state.}
+If the HRS shows that mortgage repayment, refinancing, or equity extraction is
+the relevant margin, the model needs a loan balance and contract law of motion.
+This is the most faithful household-finance option and the most expensive: it
+adds a state and requires origination, term, interest, payment, and refinancing
+rules. Reverse-mortgage access can be a later robustness, following
+\citet{nakajima2017}, but its low incidence makes it a poor default explanation.
+Status: conditional on the data, not the next automatic build.
+
+\paragraph{Option E5: inter vivos down-payment transfers.}
+The strongest child-directed evidence concerns transfers while parents are
+alive \citep{kvaerner2023,mcgarry1999}. A transfer at family formation would
+relax the model's down-payment constraint directly and may be more relevant to
+fertility than the terminal estate. This is a separate young-household channel;
+it does not repair the late-life ownership block. Status: promising subsequent
+extension, identified with gift incidence and amounts rather than estate
+moments.
+
+\section{What the overnight battery established}
+
+\subsection{Design}
+
+Every arm re-estimated the 11 clean-frontier coordinates against all 15 active
+moments. A1, A3, and A4 added free $\theta_0$; A5 also freed $\theta_1$ and was
+labeled unidentified. The owner borrowing endpoint and the headline
+$\theta_1$ scale were external variants, never selected by loss. The 22 main
+chains completed 14,711 search evaluations, and the 10 fixed-$\theta_0$
+profile chains completed 6,143. Every reported point was solved twice at the
+tight evaluator with zero repeat difference. Six main-chain and three
+profile-chain search winners failed the final market-residual gate and were
+excluded.
+
+\subsection{Arm comparison}
+
+Lower loss indicates a closer match to the weighted moments, but it is not an
+acceptance criterion by itself. Table~\ref{tab:arms} reports tight results; the
+ownership gate is recomputed over ages 62--78 because age 82 is a forced
+terminal-liquidation state.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lrrrrcc}
+\toprule
+arm & free & loss & $\theta_0$ & $\bar h_0$ & 62--78 band & 62--78 cliff \\
+\midrule
+A0: control & 11 & 6.7881 & 0 & 0.3963 & fail & no \\
+A1: parent gate only & 12 & 6.7430 & 0.0211 & 0.3638 & fail & no \\
+A2: exit only, $\bar L=0.2$ & 11 & 4.2024 & 0 & 0.2851 & fail & yes \\
+A2: exit only, $\bar L=0.4$ & 11 & 5.0115 & 0 & 0.3683 & fail & yes \\
+A2: exit only, $\bar L=0.6$ & 11 & 6.1230 & 0 & 0.3818 & fail & yes \\
+A3: exit + gate, $\bar L=0.4$ & 12 & 5.2935 & 0.0151 & 0.4237 & fail & yes \\
+A3: $\theta_1=0.50$ sensitivity & 12 & 5.6877 & 0.0003 & 0.3783 & fail & yes \\
+A4: equal division & 12 & 5.6473 & 0.0106 & 0.3512 & fail & yes \\
+A5: both bequest terms free & 13 & 4.9850 & 0.0060 & 0.4148 & fail & yes \\
+\bottomrule
+\end{tabular}
+\caption{Tight arm results. $\bar L$ denotes the externally imposed terminal
+multiplier on the owner borrowing limit, not an observed loan-to-value ratio.
+A3 at $\bar L=0.2$ produced no tight-eligible chain winner.}
+\label{tab:arms}
+\end{table}
+
+The scalar gain comes from the wrong lifecycle path. Under primary A2,
+ownership at ages 70, 74, and 78 is $0.902$, $0.815$, and $0.043$; under
+primary A3 it is $0.861$, $0.755$, and $0.042$. The empirical ownership rate
+is roughly three-quarters throughout these ages. The schedule therefore does
+not approximate gradual repayment or smooth downsizing.
+
+\subsection{The falsifiable bequest prediction}
+
+A3 contains A2 exactly when $\theta_0=0$. Consequently, a correctly optimized
+A3 must weakly improve on the A2 loss of 5.0115. The free A3 chain instead
+reported 5.2935, proving that it missed the known nested basin. The dedicated
+profile made the same mistake at zero, so the correct profile replaces that
+cell with the already verified A2 envelope:
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+fixed $\theta_0$ & 0 & 0.05 & 0.10 & 0.20 & 0.40 \\
+\midrule
+direct profile loss & 8.8134 & 5.0155 & 6.1220 & 8.8669 & 10.7405 \\
+valid envelope loss & 5.0115 & 5.0155 & 6.1220 & 8.8669 & 10.7405 \\
+\bottomrule
+\end{tabular}
+\caption{Nuisance-reoptimized $\theta_0$ profile. The zero envelope is the
+algebraically equivalent A2 calibration and must be honored in any nested
+comparison.}
+\label{tab:profile}
+\end{table}
+
+Zero weakly dominates the positive grid. The difference between zero and
+$0.05$ is only 0.004 loss points, smaller than the uncertainty implied by the
+incomplete basin search. The defensible conclusion is therefore ``no evidence
+for positive $\theta_0$ under this exit rule,'' not a precise estimate of zero
+and not a general rejection of bequests.
+
+\subsection{Identification}
+
+The fresh 15-by-12 Jacobian is deterministic, and the $\theta_0$ column has
+target-scaled norm 15.70 against a zero repeat-noise floor. Nevertheless, the
+weighted singular values imply rank 9 at relative tolerance $10^{-2}$ and rank
+12 only at $10^{-3}$. Thus three parameter combinations are weak at the more
+conservative threshold. Since the Jacobian is evaluated at a rejected and
+non-optimal A3 point, it is a warning rather than an inference result. Freeing
+$\theta_1$ would worsen the problem; A5 remains unidentified by construction.
+
+\section{Plan and decision gates}
+
+The next work should be sequential. Each stage has an observable deliverable
+and a stopping rule, so another large calibration cannot conceal a failed
+mechanism or optimizer.
+
+\begin{longtable}{@{}p{0.08\textwidth}p{0.25\textwidth}p{0.38\textwidth}p{0.21\textwidth}@{}}
+\toprule
+stage & action & deliverable & gate \\
+\midrule
+\endfirsthead
+\toprule
+stage & action & deliverable & gate \\
+\midrule
+\endhead
+0 & Correct the experiment infrastructure. & Exclude the forced terminal age
+from empirical acceptance unless the horizon is extended; require every
+expanded optimizer to evaluate and retain the restricted-model incumbent;
+seed the zero-profile cell from the A2 winner. & A nested model may never
+report a worse best loss than its restricted submodel. \\
+\addlinespace
+1 & Build the old-age empirical packet before changing the model. & HRS/PSID
+profiles with provenance and uncertainty for owner-to-renter transitions,
+downsizing, mortgage balances or LTV conditional on ownership, nonhousing
+wealth, and the 75+/62--74 decumulation ratio. & No new hard target or
+borrowing endpoint without a measured counterpart. \\
+\addlinespace
+2 & Extend the horizon and add age-specific survival. & A no-bequest solution
+through at least the early 90s with the standard diagnostic plots and no
+forced endpoint inside the empirical window. & Ownership and wealth paths
+must remain numerically stable at the oldest states. \\
+\addlinespace
+3 & Run a small mechanism frontier with $\theta_0=0$. & Compare a smooth
+data-pinned exit hazard with survival plus health/expense risk. Build a true
+mortgage state only if the empirical packet points to mortgage balances or
+refinancing as the relevant source. & Every four-year nonterminal ownership
+bin lies in the predeclared band; no adjacent decline exceeds 15 points; the
+wealth path moves in the empirical direction. \\
+\addlinespace
+4 & Calibrate bequest strength only inside a mechanism that passes Stage 3. &
+Estimate the 11 core coordinates plus $\theta_0$, keep $\theta_1$ external,
+inject the Stage-3 winner at $\theta_0=0$, and compute a nuisance-reoptimized
+profile and fresh Jacobian. & The expanded search recovers the zero incumbent;
+positive $\theta_0$ must improve the tight loss materially, pass the lifecycle
+gates, and be identified at the declared rank threshold. Otherwise fix
+$\theta_0=0$. \\
+\addlinespace
+5 & Revisit the child channel. & Compare child-blind and parent-gated luxury
+warm glow; keep equal division as robustness. Add inter vivos down-payment
+transfers only with gift-incidence and amount moments. & Do not infer a child
+channel from terminal estates when the identifying variation belongs to
+transfers. \\
+\bottomrule
+\end{longtable}
+
+\section{Recommendation requiring author approval}
+
+The immediate recommendation is to approve Stages 0--2 and defer a new global
+calibration. Concretely, keep $\theta_0=\theta_n=0$ in the interim benchmark,
+retire the linear borrowing-limit taper, extend the old-age horizon, and build
+the HRS/PSID transition and balance profiles. Then run the smooth exit-hazard
+diagnostic and survival/expense alternative at $\theta_0=0$. A full
+mortgage-balance state should be authorized only if the empirical packet says
+the mortgage channel is quantitatively central.
+
+Once one old-age mechanism passes its own lifecycle gates, the preferred
+bequest sequence is Option B1 as the literature baseline, Option B2 as the
+parent-childless sensitivity, and Option B3 as equal-division robustness. Keep
+$\theta_1$ externally fixed until an additional estate-distribution or
+bequest-incidence moment identifies it. Inter vivos transfers are a separate,
+promising fertility mechanism, but they should follow rather than substitute
+for repair of the old-age block.
+
+\clearpage
+\appendix
+\section{Complete primary target fits}
+
+Tables~\ref{tab:a2fit} and \ref{tab:a3fit} report every active target, model
+moment, gap, weight, and loss contribution. They are tight-evaluator records;
+the contribution column sums to the reported scalar loss.
+
+\begin{longtable}{p{0.42\textwidth}rrrrr}
+\caption{Primary A2: exit rule only, $\bar L=0.4$, tight loss 5.0115.}
+\label{tab:a2fit}\\
+\toprule
+moment & target & model & gap & weight & contribution \\
+\midrule
+\endfirsthead
+\toprule
+moment & target & model & gap & weight & contribution \\
+\midrule
+\endhead
+TFR & 1.9180 & 1.9804 & +0.0624 & 20.0 & 0.0778 \\
+Childless share & 0.1880 & 0.1966 & +0.0086 & 20.0 & 0.0015 \\
+Ownership, ages 30--55 & 0.5755 & 0.6443 & +0.0688 & 100.0 & 0.4733 \\
+Parent ownership gap & 0.1677 & 0.1774 & +0.0097 & 45.0 & 0.0043 \\
+Housing increment, 0 to 1 child & 0.6644 & 0.6424 & -0.0220 & 14.0 & 0.0068 \\
+Old parent-childless nonhousing-wealth gap & 1.0074 & 0.8928 & -0.1147 & 2.0 & 0.0263 \\
+Childless renter mean rooms & 3.8053 & 3.8466 & +0.0413 & 6.0 & 0.0102 \\
+Childless owner share with at least 6 rooms & 0.5961 & 0.7645 & +0.1684 & 25.0 & 0.7090 \\
+Old nonhousing-wealth median & 2.2305 & 1.6781 & -0.5523 & 0.8 & 0.2440 \\
+Young childless renter liquid wealth/income & 0.1792 & 0.1808 & +0.0016 & 12.0 & 0.0000 \\
+Childless owner-renter mean-room gap & 2.4188 & 2.2787 & -0.1401 & 12.0 & 0.2355 \\
+Old-age ownership & 0.7643 & 0.8750 & +0.1107 & 160.0 & 1.9624 \\
+Ownership, ages 25--34 & 0.3412 & 0.2630 & -0.0782 & 80.0 & 0.4891 \\
+Large-family room gap & 0.3677 & 0.4740 & +0.1063 & 8.0 & 0.0904 \\
+Mean occupied rooms & 5.7800 & 5.4431 & -0.3369 & 6.0 & 0.6809 \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}{p{0.42\textwidth}rrrrr}
+\caption{Primary A3: exit rule plus parent-gated bequests, $\bar L=0.4$,
+tight loss 5.2935.}
+\label{tab:a3fit}\\
+\toprule
+moment & target & model & gap & weight & contribution \\
+\midrule
+\endfirsthead
+\toprule
+moment & target & model & gap & weight & contribution \\
+\midrule
+\endhead
+TFR & 1.9180 & 2.0048 & +0.0868 & 20.0 & 0.1505 \\
+Childless share & 0.1880 & 0.1845 & -0.0035 & 20.0 & 0.0002 \\
+Ownership, ages 30--55 & 0.5755 & 0.6047 & +0.0292 & 100.0 & 0.0854 \\
+Parent ownership gap & 0.1677 & 0.1424 & -0.0252 & 45.0 & 0.0287 \\
+Housing increment, 0 to 1 child & 0.6644 & 0.5323 & -0.1322 & 14.0 & 0.2445 \\
+Old parent-childless nonhousing-wealth gap & 1.0074 & 0.9091 & -0.0984 & 2.0 & 0.0194 \\
+Childless renter mean rooms & 3.8053 & 4.0932 & +0.2879 & 6.0 & 0.4974 \\
+Childless owner share with at least 6 rooms & 0.5961 & 0.8208 & +0.2247 & 25.0 & 1.2623 \\
+Old nonhousing-wealth median & 2.2305 & 2.0029 & -0.2275 & 0.8 & 0.0414 \\
+Young childless renter liquid wealth/income & 0.1792 & 0.0888 & -0.0904 & 12.0 & 0.0981 \\
+Childless owner-renter mean-room gap & 2.4188 & 2.1723 & -0.2465 & 12.0 & 0.7290 \\
+Old-age ownership & 0.7643 & 0.8282 & +0.0640 & 160.0 & 0.6544 \\
+Ownership, ages 25--34 & 0.3412 & 0.2362 & -0.1050 & 80.0 & 0.8816 \\
+Large-family room gap & 0.3677 & 0.3432 & -0.0245 & 8.0 & 0.0048 \\
+Mean occupied rooms & 5.7800 & 5.4648 & -0.3151 & 6.0 & 0.5959 \\
+\bottomrule
+\end{longtable}
+
+\section{Primary A3 parameter table}
+
+The headline arm estimates 12 coordinates and fixes three by external
+restriction. Only $\theta_0$ is flagged near its search boundary.
+
+\begin{longtable}{lrrrl}
+\toprule
+parameter & estimate & lower & upper & role \\
+\midrule
+\endfirsthead
+\toprule
+parameter & estimate & lower & upper & role \\
+\midrule
+\endhead
+$\beta$ (annual) & 0.983627 & 0.800 & 0.9995 & estimated \\
+$\alpha$ & 0.607209 & 0.020 & 0.980 & estimated \\
+$\bar c_0$ & 1.19964 & 0 & 2 & estimated \\
+$\bar c_n$ & 0.376812 & 0 & 3 & estimated \\
+$\bar h_0$ & 0.423707 & 0.05 & 5.8 & estimated \\
+$\bar h_{\mathrm{jump}}$ & 1.41843 & 0 & 8 & estimated \\
+$\bar h_n$ & 0.119675 & 0 & 5 & estimated \\
+$\psi_{\mathrm{child}}$ & 0.078773 & -3 & 3 & estimated \\
+$\kappa_{\mathrm{fert}}$ & 1.83831 & 0.02 & 50 & estimated \\
+$\chi$ & 1.09210 & 0.1 & 5 & estimated \\
+$H_0$ & 8.06146 & 0.2 & 80 & estimated \\
+$\theta_0$ & 0.015074 & 0 & 1.5 & estimated; near zero \\
+$\kappa_{\mathrm{tenure}}$ & 0 & \multicolumn{2}{c}{external} & fixed \\
+$\theta_1$ & 0.25 & \multicolumn{2}{c}{external scale} & fixed \\
+$\theta_n$ & 0 & \multicolumn{2}{c}{external} & fixed \\
+\bottomrule
+\end{longtable}
+
+\begingroup
+\small
+\begin{thebibliography}{99}
+
+\bibitem[De Nardi(2004)]{denardi2004}
+De Nardi, M. (2004).
+Wealth inequality and intergenerational links.
+\emph{Review of Economic Studies} 71(3), 743--768.
+
+\bibitem[Hurd(1989)]{hurd1989}
+Hurd, M.~D. (1989).
+Mortality risk and bequests.
+\emph{Econometrica} 57(4), 779--813.
+
+\bibitem[Kopczuk and Lupton(2007)]{kopczuk2007}
+Kopczuk, W. and J.~P. Lupton (2007).
+To leave or not to leave: The distribution of bequest motives.
+\emph{Review of Economic Studies} 74(1), 207--235.
+
+\bibitem[Kv\ae rner(2023)]{kvaerner2023}
+Kv\ae rner, J. (2023).
+The intergenerational transmission of wealth: Bequest motives and
+child-directed transfers.
+\emph{Review of Financial Studies}.
+
+\bibitem[Lockwood(2018)]{lockwood2018}
+Lockwood, L.~M. (2018).
+Incidental bequests and the choice to self-insure late-life risks.
+\emph{American Economic Review} 108(9), 2513--2550.
+
+\bibitem[McGarry(1999)]{mcgarry1999}
+McGarry, K. (1999).
+Inter vivos transfers and intended bequests.
+\emph{Journal of Public Economics} 73(3), 321--351.
+
+\bibitem[Nakajima and Telyukova(2017)]{nakajima2017}
+Nakajima, M. and I.~A. Telyukova (2017).
+Reverse mortgage loans: A quantitative analysis.
+\emph{Journal of Finance} 72(2), 911--950.
+
+\bibitem[Wilhelm(1996)]{wilhelm1996}
+Wilhelm, M.~O. (1996).
+Bequest behavior and the effect of heirs' earnings: Testing the altruistic
+model of bequests.
+\emph{American Economic Review} 86(4), 874--892.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}

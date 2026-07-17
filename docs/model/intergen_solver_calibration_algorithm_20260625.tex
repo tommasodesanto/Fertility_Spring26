@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{enumitem}
+\setlist{nosep}
+\title{\vspace{-2.5em}Solution technique for the one--market intergen model (one solve)}
+\author{}\date{2026-06-25}
+\begin{document}\maketitle\vspace{-3em}
+
+\paragraph{Object.} Given parameters $\theta$ and a price $p$, ``solving the model'' means computing the
+finite--horizon optimal policies, the implied stationary cross--section, and the price that clears the
+single floorspace market. The household state is
+$s=(b,t,j,z,n,c_s)$: liquid wealth $b$ (negative $=$ mortgage), tenure $t\in\{R,1,\dots,5\}$ (renter or
+one of five owner rungs), age $j\in\{1,\dots,J\}$ ($J{=}16$, four--year periods), persistent income $z$
+(a $5$--state Markov chain $\Pi_z$), completed parity $n\in\{0,1,2\}$, and child stage $c_s$.
+
+\paragraph{1. Backward induction.} Because the horizon is finite, the value function is obtained by a
+\emph{single backward sweep} $V_j=\mathcal T_j V_{j+1}$, $j=J,\dots,1$, with the terminal node a CRRA
+bequest $B(b+pH_t,n)$. There is no value--function iteration to convergence; one pass is exact (given the
+discretisation). Expectations are taken over $z'\sim\Pi_z(\cdot\mid z)$ and over geometric child ageing.
+
+\paragraph{2. Discrete--continuous nesting (within a period).} $\mathcal T_j$ is evaluated as a nest,
+resolved innermost--first:
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Savings/housing, per tenure branch.} For each candidate tenure $t'$ and the
+transaction--adjusted wealth $\tilde b$ (sale at $(1{-}\psi)pH$, purchase $pH$, down--payment
+$b'\ge-\phi pH$), choose next wealth $b'$. The intratemporal $(c,h)$ split is the closed--form
+Stone--Geary allocation given the budget surplus, so each branch is a \emph{one--dimensional} problem
+\(\max_{b'} u(c(b'),h(b'))+\beta\,\mathbb E V_{j+1}(b',\cdot)\), solved by a golden--section line search;
+$\mathbb E V_{j+1}$ is read by \emph{linear interpolation} over the wealth grid.
+\item \textbf{Tenure} is a Type--I--EV (logit) choice over $\{R,1,\dots,5\}$ with scale
+$\kappa_t{=}0.01$: $V^{\mathrm{ten}}=\kappa_t\log\sum_{t'}\exp(V_{t'}/\kappa_t)$ (a near--argmax inclusive
+value; the small noise also makes aggregate demand continuous in $p$).
+\item \textbf{Location} is degenerate ($I{=}1$).
+\item \textbf{Fertility} (childless fertile states only) is a one--shot logit over completed family size
+$\{0,1,2\}$ with scale $\kappa_f$.
+\end{enumerate}
+
+\paragraph{3. Forward distribution (KFE).} Given the policies, the stationary cross--section $g$ is the
+forward push of the entry cohort through the lifecycle: at each age, mass is moved by the
+fertility/tenure/location transition probabilities, the income chain $\Pi_z$, child ageing, and a
+\emph{mass--conserving lottery} that splits each off--grid $b'$ between its two neighbouring nodes
+(verified conservative to machine precision). Moments are aggregates of $g$.
+
+\paragraph{4. Equilibrium.} The user cost is $q=(r+\delta+\tau^p)p$; demand $H^D(p)=\sum g_R h_R+\sum g_O H$
+clears against $H^S(p)=H_0(q/\bar q)^{\eta}$. The live Markov--income path
+(\texttt{solve\_markov\_income\_equilibrium}) re--solves the \emph{full} backward induction at \emph{every}
+price iteration---there is no Howard policy--iteration reuse (that exists only in the inactive non--Markov
+path). The clearing price is updated by a fixed--damping iteration $p\leftarrow p+\lambda(p^\star-p)$,
+$\lambda{=}0.30$, and then by a hand--rolled Brent/Illinois scalar root--find on excess demand bracketed
+around the best iterate. In practice the \emph{Brent refinement does the clearing}: the damped loop alone
+leaves an $\mathcal O(15\%)$ residual at the production iteration budget, whereas Brent reaches relative
+residual $\sim\!10^{-5}$. Brent is gated to the single--market case ($I{=}1$).
+
+\begin{algorithm}[H]\small
+\SetAlgoLined
+\KwIn{$\theta$, initial price $p$, grids}
+\While{price not converged (damped loop, then Brent)}{
+  $q\leftarrow(r+\delta+\tau^p)p$\;
+  \emph{full} backward sweep $V_J\!\to\!V_1$ (every iter): per tenure branch $\max_{b'}$ (golden + linear interp),
+  then logit over tenure, then fertility\;
+  forward KFE $\to$ stationary $g$ $\to$ $H^D(p)$\;
+  damped update $p\leftarrow p+\lambda(p^\star-p)$, $\lambda{=}0.30$; keep best iterate\;
+}
+Brent/Illinois root--find on $|H^D-H^S|$ around best $p$ \tcp*{delivers the $\sim 10^{-5}$ clearing}
+\KwOut{policies, $g$, moments, $p^\star$}
+\caption{One solve of the model}
+\end{algorithm}
+
+\paragraph{Implementation.} The hot blocks (per--tenure savings search, the scatter/KFE, the tenure
+logit) are Numba--compiled, with a pure--Python fallback that matches them. A solve takes
+$\sim\!10$--$35$\,s at $N_b{=}60$. (The outer calibration simply minimises a weighted moment distance
+over $\theta$ by differential evolution, calling one solve per evaluation.)
+
+\paragraph{Known numerical limitations (see audit).} (i) the continuation is \emph{non--concave}
+(discrete tenure/rung/fertility), so the golden search is a local ascent---empirically global here but
+not guaranteed; (ii) \emph{linear} interpolation on a \emph{coarse, badly--allocated} wealth grid
+(only $\sim\!36/60$ nodes occupied) is the main accuracy weakness, manufacturing kink--locked policy
+steps; (iii) discrete rungs make $H^D(p)$ a step function---the Brent refinement still returns a true root
+when excess demand crosses zero (empirically it does), but the clearing accuracy rests \emph{entirely} on
+that refinement (the damped loop alone leaves $\sim\!15\%$ residual) and the flat $+100$ no--clearing
+penalty is a cliff at threshold prices; (iv) there is no built--in accuracy diagnostic (grid--refinement /
+Euler residual / value--monotonicity check).
+\end{document}

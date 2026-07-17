@@ -9,15 +9,15 @@ Active reference target set:
 
 ## Main Conclusion
 
-The wealth block has a measurement/statistic mismatch. The target value
-`0.17922556` is a PSID annual-income ratio for young childless renters, but it
-is currently attached to `young_liquid_wealth_to_income`, a model statistic that
-divides by 4-year period after-tax income. The same period-versus-annual issue
-also affects the old-age nonhousing wealth-to-income statistics.
+The young-wealth target mismatch has been fixed in the active 14-moment target
+set: `young_liquid_wealth_to_income` has been replaced by
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535`. The old
+period-versus-annual issue still matters for historical losses and still
+affects the old-age nonhousing wealth-to-income statistics.
 
-The active target sets have not been changed yet. The solver now stores
-explicit annual-gross young wealth moments, so the next target revision can be
-made deliberately.
+The active calibration base also no longer searches `b_entry_fixed`: entrant
+wealth is now an external PSID income-ratio distribution mapped into model
+units by entrant income.
 
 ## Wealth Target
 
@@ -42,6 +42,12 @@ Important: the source script reports weighted means but unweighted medians,
 because Stata `centile` was used without weights. A median target is sensible,
 but it should be re-extracted as a weighted median before becoming a hard SMM
 moment.
+
+The re-extracted weighted distribution for the preferred young-childless-renter
+sample has weighted quintile-bin means
+`[-2.519407, -0.079070, 0.102288, 0.352872, 3.039552]` with approximately
+20% weight each. Its weighted mean is `0.179226` and weighted median is
+`0.099967`.
 
 ### Current Model Object
 
@@ -69,7 +75,7 @@ For the current mechanism, the right primary object is:
 Store both:
 
 - mean: use the PSID mean `0.179226` as the first candidate;
-- median: use the PSID median only after re-extracting it as weighted.
+- median: the re-extracted weighted median is `0.099967`.
 
 Do not keep using `young_liquid_wealth_to_income` as a hard target.
 
@@ -83,7 +89,7 @@ Do not keep using `young_liquid_wealth_to_income` as a hard target.
 | `own_family_gap` | `0.167662` | new-parent minus non-parent ownership, ages 30--55 | ACS household heads, DUE-housing sample, new parent minus no-child household, ages 30--55 | Mostly clean, but data uses current no-child household while model uses never-parent/nonparent states. Flag this distinction. |
 | `housing_increment_0to1` | `0.664435` | controlled birth-cohort housing response at model horizon 0 | PSID first-birth room event-study, about 3 years post-birth | Clean after June 25 fix, given 4-year model period approximation. |
 | `housing_increment_1to2` | `0.488031` | model additional-child housing proxy, one-child vs two-plus birth states | PSID quick second-birth room change, post-3 | Not a bug, but not a true sequential second-birth hazard in the model. Interpret as additional-child housing demand only. |
-| `young_liquid_wealth_to_income` | `0.179226` | young childless renter liquid wealth over 4-year period after-tax income | PSID young childless renter liquid nonhousing wealth over annual income | Measurement error. Replace with explicit annual-income model statistic. |
+| `young_childless_renter_liquid_wealth_to_annual_gross_income_2535` | `0.179226` | young childless renter liquid wealth over annual gross-normalized income, ages 25--35 | PSID young childless renter `NETWORTH2R / INCFAMR` | Clean after June 27 target-key fix. Historical `young_liquid_wealth_to_income` losses are stale. |
 | `old_parent_childless_nonhousing_wealth_to_income_gap_6575` | `1.007450` | parent minus childless ratio of aggregate nonhousing wealth to period income | PSID parent minus childless weighted mean of annual nonhousing wealth-income ratios | Needs fix. Denominator and mean-of-ratios versus ratio-of-sums are not identical. |
 | `prime30_55_childless_renter_mean_rooms` | `3.805288` | weighted mean renter housing services for childless-in-household ages 30--55 | ACS household heads, childless renters, mean `ROOMS` | Clean. |
 | `prime30_55_childless_owner_share_rooms_ge6` | `0.596131` | owner share with realized rooms/services at least 6 | ACS household heads, childless owners, `ROOMS >= 6` | Clean after Markov nonlinear-moment fix; economic miss if model fails. |
@@ -94,16 +100,13 @@ Do not keep using `young_liquid_wealth_to_income` as a hard target.
 
 ## Recommended Target Changes Before Recalibration
 
-1. Replace `young_liquid_wealth_to_income` with
-   `young_childless_renter_liquid_wealth_to_annual_gross_income_2535`.
-2. Store the young-renter mean and median as candidate targets, but re-extract
-   the data median as weighted before using it in the hard objective.
-3. Add annual-income old-age wealth statistics before continuing to target
+1. Store the young-renter mean and weighted median as candidate targets.
+2. Add annual-income old-age wealth statistics before continuing to target
    `old_nonhousing_wealth_to_income_median_6575` or the parent-childless old
    wealth gap.
-4. Rename or document `tfr` as completed-fertility-equivalent in reports. The
+3. Rename or document `tfr` as completed-fertility-equivalent in reports. The
    target can be `1.92`, but it should not be described as a period TFR target.
-5. Keep the room and ownership targets as the stable block for now; the main
+4. Keep the room and ownership targets as the stable block for now; the main
    remaining problems there are economic fit and product mapping, not obvious
    measurement bugs.
 
@@ -116,4 +119,9 @@ Current code now stores these annual-gross diagnostic model moments:
 - `young_childless_renter_liquid_wealth_to_annual_gross_income_2535`;
 
 each with `_median` and `_mass` variants. These are exposed through
-`calibration.extract_moments`. No active target set has been changed yet.
+`calibration.extract_moments`. The active
+`candidate_replacement_roomgap_14moment_tfr192_v1` target set now uses
+`young_childless_renter_liquid_wealth_to_annual_gross_income_2535` with target
+`0.17922556`. The calibration base uses the PSID quintile-bin distribution
+above as the external entrant-wealth closure, and the active intergen search
+vector drops `b_entry_fixed`.
