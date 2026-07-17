@@ -56,6 +56,46 @@ def external_entry_wealth_overrides() -> dict[str, Any]:
     }
 
 
+PSID_ENTRY_WEALTH_RATIO_NODES_1824 = np.array(
+    [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567,
+    ],
+    dtype=float,
+)
+PSID_ENTRY_WEALTH_RATIO_WEIGHTS_1824 = np.array(
+    [
+        0.199425762696792,
+        0.200377472937802,
+        0.199863308508567,
+        0.200087860612093,
+        0.200245595244747,
+    ],
+    dtype=float,
+)
+PSID_ENTRY_WEALTH_RATIO_SOURCE_1824 = (
+    "PSID reference-person childless renters ages 18-24, primary rows of "
+    "code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/"
+    "block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over "
+    "annual family income; mean 0.258855836903436 (person-bootstrap SE "
+    "0.125965630995927, 499 replications), weighted median 0.0985177806342346."
+)
+
+
+def external_entry_wealth_overrides_1824() -> dict[str, Any]:
+    """Model-entry-age (18-24) externally calibrated entrant wealth distribution."""
+    return {
+        "entry_wealth_mode": "income_ratio_distribution",
+        "entry_wealth_ratio_nodes": PSID_ENTRY_WEALTH_RATIO_NODES_1824.copy(),
+        "entry_wealth_ratio_weights": PSID_ENTRY_WEALTH_RATIO_WEIGHTS_1824.copy(),
+        "entry_wealth_ratio_source": PSID_ENTRY_WEALTH_RATIO_SOURCE_1824,
+        "entry_wealth_spread_nodes": 1,
+    }
+
+
 OLD_NONLOCATION_TARGETS = {
     "tfr": 1.70,
     "childless_rate": 0.15,
@@ -243,6 +283,34 @@ CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_TARGETS = {
 }
 
 
+# PSID share of 65-75 reference persons holding at least one year of annual
+# family income in nonhousing net worth. Headline row of block3 in
+# code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/
+# (block3_composition_share_6575.csv); the weight is the inverse person-cluster
+# bootstrap variance 1/SE^2 with SE 0.0102949617302331 (499 replications).
+OLD_NONHOUSING_GE1X_SHARE_TARGET = 0.608333139649131
+OLD_NONHOUSING_GE1X_SHARE_SE = 0.0102949617302331
+OLD_NONHOUSING_GE1X_SHARE_WEIGHT = 9435.18732291246
+
+
+# M5 income-disciplined recalibration set. Relative to the M4
+# median-composition set, this drops the old-age nonhousing median level,
+# disciplines the late-life balance sheet with the PSID nonhousing >= 1x
+# annual-income share, and restores the old-age ownership rate at the legacy
+# ACS-sourced value and weight (ACS-consistent with the other ownership
+# targets; the PSID reference-person alternative 0.834 is documented in
+# block4_oldage_ownership_6575.csv of the same 20260716 output folder).
+CANDIDATE_REPLACEMENT_INCOME_DISCIPLINED_V1_TARGETS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_TARGETS.items()
+        if k != "old_nonhousing_wealth_to_income_median_6575"
+    },
+    "old_nonhousing_ge_1x_income_share_6575": OLD_NONHOUSING_GE1X_SHARE_TARGET,
+    "old_age_own_rate": 0.76426097,
+}
+
+
 # Non-behavioral target-object ledger. Keep this near the target values so
 # calibration changes document the model statistic, empirical object, and known
 # measurement caveats in the same edit.
@@ -336,6 +404,12 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "data": "PSID reference persons, completed children 2+ minus 1, median NETWORTHR / INCFAMR, ages 65-75.",
         "status": "internally-calibrated-bequest-target-weak",
         "issue": "The 2+ bin matches the live 0/1/2+ parity state; person-bootstrap SE is 0.563.",
+    },
+    "old_nonhousing_ge_1x_income_share_6575": {
+        "model": "asset-distribution mass share of ages 65-75 with liquid b / annual gross income >= 1, all tenures, positive-income states.",
+        "data": "PSID reference persons ages 65-75, share with nonhousing net worth of at least one year of annual family income.",
+        "status": "internally-calibrated-balance-sheet-target",
+        "issue": "Target 0.608333139649131 and inverse-variance weight 9435.18732291246 use the block3 person-cluster bootstrap (SE 0.0102949617302331, 499 replications).",
     },
     "prime30_55_childless_renter_mean_rooms": {
         "model": "mass-weighted mean realized renter housing services for childless-in-household ages 30-55.",
@@ -623,6 +697,17 @@ CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_WEIGHTS = {
 }
 
 
+CANDIDATE_REPLACEMENT_INCOME_DISCIPLINED_V1_WEIGHTS = {
+    **{
+        k: v
+        for k, v in CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_WEIGHTS.items()
+        if k != "old_nonhousing_wealth_to_income_median_6575"
+    },
+    "old_nonhousing_ge_1x_income_share_6575": OLD_NONHOUSING_GE1X_SHARE_WEIGHT,
+    "old_age_own_rate": 160.0,
+}
+
+
 CORE_FEASIBILITY_V1_WEIGHTS = {
     "tfr": 20.0,
     "childless_rate": 20.0,
@@ -759,6 +844,10 @@ TARGET_SETS = {
     "candidate_replacement_bequest_median_composition_v1": (
         CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_TARGETS,
         CANDIDATE_REPLACEMENT_BEQUEST_MEDIAN_COMPOSITION_V1_WEIGHTS,
+    ),
+    "candidate_replacement_income_disciplined_v1": (
+        CANDIDATE_REPLACEMENT_INCOME_DISCIPLINED_V1_TARGETS,
+        CANDIDATE_REPLACEMENT_INCOME_DISCIPLINED_V1_WEIGHTS,
     ),
     "candidate_no_timing_core_feasibility_v1": (
         CORE_FEASIBILITY_V1_TARGETS,
@@ -1219,6 +1308,9 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         ),
         "old_total_wealth_to_income_median_6575": float(
             getattr(sol, "old_total_wealth_to_income_median_6575", np.nan)
+        ),
+        "old_nonhousing_ge_1x_income_share_6575": float(
+            getattr(sol, "old_nonhousing_ge_1x_income_share_6575", np.nan)
         ),
         "old_parent_childless_nonhousing_wealth_to_income_gap_6575": float(
             getattr(sol, "old_parent_childless_nonhousing_wealth_to_income_gap_6575", np.nan)

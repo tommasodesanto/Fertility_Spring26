@@ -3478,6 +3478,35 @@ def _gate_dead_mass_at_age(
         raise InfeasibleThetaError(stage, dead_mass, census)
 
 
+def _censor_entry_dead_mass(g_age: np.ndarray, V_age: np.ndarray) -> float:
+    """Relocate entrant mass on Bellman-dead nodes to the feasible frontier.
+
+    For each entry state column, mass on a dead b-node moves to the nearest
+    alive node with weakly higher b in the same column, so no mass ever sits
+    on a dead node (the July-11 gate invariant is preserved and the gate
+    itself stays unchanged as a backstop). Columns with no alive node above
+    are left untouched so the gate still rejects them. Operates in place on
+    the age-0 view; returns the relocated mass.
+    """
+
+    dead = (V_age <= DEAD_VALUE_CUTOFF) & (g_age > 0.0)
+    if not np.any(dead):
+        return 0.0
+    moved = 0.0
+    for idx in np.argwhere(dead):
+        b_idx, rest = int(idx[0]), tuple(int(k) for k in idx[1:])
+        column_alive = V_age[(slice(None),) + rest] > DEAD_VALUE_CUTOFF
+        above = np.nonzero(column_alive[b_idx:])[0]
+        if above.size == 0:
+            continue
+        target = b_idx + int(above[0])
+        mass = float(g_age[(b_idx,) + rest])
+        g_age[(target,) + rest] += mass
+        g_age[(b_idx,) + rest] = 0.0
+        moved += mass
+    return moved
+
+
 def forward_distribution(
     bp_pol: np.ndarray,
     hR_pol: np.ndarray,
@@ -3998,6 +4027,12 @@ def forward_distribution_markov_income(
             loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=float(z_grid[zz]))
             for kk, ww in zip(loc_entry_idx, loc_entry_wt):
                 g[int(kk), 0, i, 0, zz, 0, 0] += float(ww) * P.entry_by_loc[i] * z_weights[zz]
+    P._entry_censored_mass = 0.0
+    P._entry_total_mass = float(np.sum(g[:, :, :, 0, :, :, :]))
+    if bool(getattr(P, "entry_wealth_censor_to_frontier", False)):
+        P._entry_censored_mass = _censor_entry_dead_mass(
+            g[:, :, :, 0, :, :, :], state_values[:, :, :, 0, :, :, :]
+        )
     _gate_dead_mass_at_age(
         g[:, :, :, 0, :, :, :],
         state_values[:, :, :, 0, :, :, :],
@@ -4379,6 +4414,10 @@ def forward_distribution_markov_income(
             hR_pol,
             asset_g=asset_current,
         )
+    stats.entry_censored_mass = float(getattr(P, "_entry_censored_mass", 0.0))
+    stats.entry_censored_share = stats.entry_censored_mass / max(
+        float(getattr(P, "_entry_total_mass", 0.0)), 1e-300
+    )
     stats.total_births_kfe = total_births
     if not fast_stats:
         stats.g_beginning_assets_by_current_choice = asset_current
@@ -4871,6 +4910,60 @@ def add_annual_gross_estate_wealth_moments(
     stats.old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575 = two_plus_p50 - one_p50
 
 
+def add_old_nonhousing_income_share_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+) -> None:
+    """Add the PSID-disciplined old-age nonhousing retention share.
+
+    ``old_nonhousing_ge_1x_income_share_6575`` is the mass share of households
+    at ages 65-75 whose liquid wealth ``b`` is at least one year of annual
+    gross income at the full Markov income state.  ``b`` enters raw, so
+    negative balances count in the denominator but never the numerator.  The
+    moment uses the same distribution object, age mapping, and positive-income
+    filter as the estate moments, pooled across locations, income states,
+    tenures, and children states.
+    """
+
+    g_arr = np.asarray(g, dtype=float)
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    if g_arr.ndim == 6:
+        g7 = g_arr[:, :, :, :, None, :, :]
+        z_values = np.array([1.0])
+    elif g_arr.ndim == 7:
+        g7 = g_arr
+        z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    else:
+        return
+
+    share_mass = total_mass = 0.0
+    for j in range(int(P.J)):
+        age = float(P.age_start) + j * float(P.da)
+        if not 65.0 <= age <= 75.0:
+            continue
+        for i in range(int(P.I)):
+            for zz in range(g7.shape[4]):
+                z_value = float(z_values[zz]) if zz < z_values.size else 1.0
+                income = annual_gross_income_at_state(P, i, j, z_value)
+                if not np.isfinite(income) or income <= 0.0:
+                    continue
+                at_least_one_year = (bg_arr / income) >= 1.0
+                for ten in range(g7.shape[1]):
+                    for nn in range(int(P.n_parity)):
+                        for cs in range(int(P.n_child_states)):
+                            mass = g7[:, ten, i, j, zz, nn, cs]
+                            positive = np.isfinite(mass) & (mass > 0.0)
+                            if not np.any(positive):
+                                continue
+                            share_mass += float(np.sum(mass[positive & at_least_one_year]))
+                            total_mass += float(np.sum(mass[positive]))
+    stats.old_nonhousing_ge_1x_income_share_6575 = (
+        share_mass / total_mass if total_mass > 0.0 else float("nan")
+    )
+
+
 def compute_markov_statistics(
     g: np.ndarray,
     fp: np.ndarray,
@@ -4899,6 +4992,7 @@ def compute_markov_statistics(
         setattr(stats, _name, _val)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
+    add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
     Nz = len(z_grid)
     nt = 1 + P.n_house
     stats.income_state_mass = np.zeros(Nz)

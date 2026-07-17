@@ -10,6 +10,11 @@ warm glow and no owner-LTV taper. M4 uses the same mechanism but estimates both
 remaining De Nardi parameters, ``theta0`` and ``theta1``, with ``theta_n=0``.
 M4_PROFILE is a diagnostic conditional profile that fixes ``theta1`` while
 re-estimating the eleven clean-frontier coordinates and ``theta0``.
+M5 is the income-disciplined variant of M4: it re-estimates the eleven
+clean-frontier coordinates plus ``theta0``, ``theta1``, and
+``tenure_choice_kappa`` with ``theta_n=0``, under literature-anchored income
+persistence, the model-entry-age (18-24) entrant wealth distribution, and the
+income-disciplined target system.
 The script writes a recoverable record after every tight model solve.
 """
 
@@ -34,6 +39,7 @@ import numpy as np
 from intergen_housing_fertility.calibration import (
     base_overrides,
     diagnostic_loss,
+    external_entry_wealth_overrides_1824,
     extract_moments,
     get_target_set,
 )
@@ -64,6 +70,20 @@ DEFAULT_ACCEPTANCE = (
 )
 MATCHED_ANNUAL_RHO = 0.9601845894041878
 MATCHED_ANNUAL_INNOVATION_SD = 0.06453733259357768
+# Arm M5 literature anchor in the Sommer-Sullivan tradition: annual AR(1)
+# persistence 0.90 with annual innovation s.d. 0.20.  The in-repo PSID
+# re-estimates (block1_income_process_estimates.csv in code/data/
+# psid_followup_mar2026/output/intergen_income_entry_targets_20260716/)
+# bracket these values -- AR(1)-only rho 0.9436 / s.d. 0.2846 and
+# persistent-plus-transitory rho 0.9749 / s.d. 0.1769 -- and are reported as
+# appendix evidence, not used directly.
+# July-16 feasibility probes (m5 contract, section: income) rejected the
+# SS-range values (0.90, sd 0.12-0.20): interior dead-node mass at age 22
+# under the hard-debt/no-default structure. M5 therefore retains the matched
+# process; the income-risk upgrade is deferred to M6 with a designed
+# forbearance/default margin.
+SS_ANNUAL_RHO = MATCHED_ANNUAL_RHO
+SS_ANNUAL_INNOVATION_SD = MATCHED_ANNUAL_INNOVATION_SD
 ROOMS_TARGET = 5.779970481941968
 ROOMS_WEIGHT = 6.0
 PERIOD_YEARS = 4.0
@@ -98,6 +118,7 @@ THETA1_DOMAIN = ("theta1", 0.10, 2.0, "log")
 THETA_N_DOMAIN = ("theta_n", 0.0, 1.5, "softzero")
 M4_THETA0_DOMAIN = ("theta0", 0.0, 8.0, "softzero")
 M4_THETA1_DOMAIN = ("theta1", 0.02, 16.0, "log")
+M5_KAPPA_DOMAIN = ("tenure_choice_kappa", 0.0, 0.12, "softzero")
 SCHEDULE_ARMS = {"A2", "A3", "A4", "A5", "A3_PROFILE"}
 
 
@@ -123,6 +144,7 @@ def parse_args() -> argparse.Namespace:
             "M3",
             "M4",
             "M4_PROFILE",
+            "M5",
         ),
         required=True,
     )
@@ -130,6 +152,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--theta1", type=float, default=0.25)
     parser.add_argument("--seed-theta0", type=float, default=0.30)
     parser.add_argument("--seed-theta-n", type=float, default=0.75)
+    parser.add_argument("--seed-kappa", type=float, default=0.0)
     parser.add_argument("--fixed-theta0", type=float, default=None)
     parser.add_argument("--seed", type=int, default=2026071401)
     parser.add_argument("--start-mix", type=float, default=0.0)
@@ -196,6 +219,13 @@ def arm_contract(args: argparse.Namespace) -> tuple[list[tuple[str, float, float
         M4_THETA0_DOMAIN[1] <= float(args.seed_theta0) <= M4_THETA0_DOMAIN[2]
     ):
         raise ValueError("M4 theta0 start must lie inside [0,8]")
+    if args.arm == "M5":
+        if not M4_THETA1_DOMAIN[1] <= float(args.theta1) <= M4_THETA1_DOMAIN[2]:
+            raise ValueError("M5 theta1 start must lie inside [0.02,16]")
+        if not M4_THETA0_DOMAIN[1] <= float(args.seed_theta0) <= M4_THETA0_DOMAIN[2]:
+            raise ValueError("M5 theta0 start must lie inside [0,8]")
+        if not M5_KAPPA_DOMAIN[1] <= float(args.seed_kappa) <= M5_KAPPA_DOMAIN[2]:
+            raise ValueError("M5 tenure_choice_kappa start must lie inside [0,0.12]")
     active = list(BASE_DOMAIN)
     fixed: dict[str, float] = {"theta_n": 0.0, "tenure_choice_kappa": 0.0}
     if args.arm == "M3":
@@ -203,6 +233,9 @@ def arm_contract(args: argparse.Namespace) -> tuple[list[tuple[str, float, float
         fixed.pop("theta_n")
     elif args.arm == "M4":
         active.extend((M4_THETA0_DOMAIN, M4_THETA1_DOMAIN))
+    elif args.arm == "M5":
+        active.extend((M4_THETA0_DOMAIN, M4_THETA1_DOMAIN, M5_KAPPA_DOMAIN))
+        fixed.pop("tenure_choice_kappa")
     elif args.arm == "M4_PROFILE":
         active.append(M4_THETA0_DOMAIN)
         fixed["theta1"] = float(args.theta1)
@@ -230,9 +263,13 @@ def arm_contract(args: argparse.Namespace) -> tuple[list[tuple[str, float, float
         "owner_ltv_taper_start_age": 66.0,
         "owner_ltv_taper_end_age": 82.0,
         "owner_ltv_terminal_share": float(args.ltv_terminal),
-        "use_age_survival": args.arm in {"M1", "M2", "M3", "M4", "M4_PROFILE"},
+        "use_age_survival": args.arm in {"M1", "M2", "M3", "M4", "M4_PROFILE", "M5"},
+        # M5 only: entrant debt beyond the state-conditional feasible frontier
+        # is censored to the nearest alive node (relocated, never left dead);
+        # the July-11 entry gate stays active as the backstop.
+        "entry_wealth_censor_to_frontier": args.arm == "M5",
     }
-    if args.arm in {"M0", "M1", "M2", "M3", "M4", "M4_PROFILE"}:
+    if args.arm in {"M0", "M1", "M2", "M3", "M4", "M4_PROFILE", "M5"}:
         mechanism.update(
             owner_ltv_taper=False,
             owner_ltv_terminal_share=0.0,
@@ -244,7 +281,7 @@ def arm_contract(args: argparse.Namespace) -> tuple[list[tuple[str, float, float
 
 def survival_schedule(args: argparse.Namespace) -> np.ndarray:
     schedule = np.ones(int(args.J) - 1, dtype=float)
-    if args.arm not in {"M1", "M2", "M3", "M4", "M4_PROFILE"}:
+    if args.arm not in {"M1", "M2", "M3", "M4", "M4_PROFILE", "M5"}:
         return schedule
     for j in range(int(args.J) - 1):
         age = float(18.0 + j * PERIOD_YEARS)
@@ -277,9 +314,14 @@ def unit_from_theta(theta: dict[str, float], active: list[tuple[str, float, floa
 
 
 def common_overrides(args: argparse.Namespace, mechanism: dict[str, Any]) -> dict[str, Any]:
-    income = income_process_overrides(
-        5, "rouwenhorst", MATCHED_ANNUAL_INNOVATION_SD, MATCHED_ANNUAL_RHO
-    )
+    if args.arm == "M5":
+        income = income_process_overrides(
+            5, "rouwenhorst", SS_ANNUAL_INNOVATION_SD, SS_ANNUAL_RHO
+        )
+    else:
+        income = income_process_overrides(
+            5, "rouwenhorst", MATCHED_ANNUAL_INNOVATION_SD, MATCHED_ANNUAL_RHO
+        )
     overrides = {
         **base_overrides(J=args.J, Nb=args.Nb, n_house=5, max_iter_eq=args.max_iter_eq),
         **production_profile_overrides(),
@@ -295,6 +337,8 @@ def common_overrides(args: argparse.Namespace, mechanism: dict[str, Any]) -> dic
         "debt_taper_end_age": 62.0,
         "survival_probs": survival_schedule(args),
     }
+    if args.arm == "M5":
+        overrides.update(external_entry_wealth_overrides_1824())
     return overrides
 
 
@@ -466,6 +510,14 @@ def main() -> None:
     elif args.arm == "M4":
         # For M4 these are dispersed optimizer starts, never external values.
         seed_theta.update(theta0=float(args.seed_theta0), theta1=float(args.theta1))
+    elif args.arm == "M5":
+        # Dispersed optimizer starts; the nested reference sets theta0=0 and
+        # tenure_choice_kappa=0 at the strict M1 winner coordinates.
+        seed_theta.update(
+            theta0=float(args.seed_theta0),
+            theta1=float(args.theta1),
+            tenure_choice_kappa=float(args.seed_kappa),
+        )
     x0 = unit_from_theta(seed_theta, active)
     rng = np.random.default_rng(int(args.seed))
     start_mix = float(np.clip(args.start_mix, 0.0, 0.25))
@@ -476,6 +528,8 @@ def main() -> None:
         target_set = "candidate_replacement_bequest_internal_v1"
     elif args.arm in {"M4", "M4_PROFILE"}:
         target_set = "candidate_replacement_bequest_median_composition_v1"
+    elif args.arm == "M5":
+        target_set = "candidate_replacement_income_disciplined_v1"
     else:
         target_set = PRODUCTION_TARGET_SET
     targets, weights = target_system(target_set)
@@ -508,9 +562,18 @@ def main() -> None:
         "mechanism": mechanism,
         "survival_source": (
             SSA_2023_LIFE_TABLE_URL
-            if args.arm in {"M1", "M2", "M3", "M4", "M4_PROFILE"}
+            if args.arm in {"M1", "M2", "M3", "M4", "M4_PROFILE", "M5"}
             else None
         ),
+        "income_process": {
+            "states": 5,
+            "process": "rouwenhorst",
+            "annual_rho": SS_ANNUAL_RHO if args.arm == "M5" else MATCHED_ANNUAL_RHO,
+            "annual_innovation_sd": (
+                SS_ANNUAL_INNOVATION_SD if args.arm == "M5" else MATCHED_ANNUAL_INNOVATION_SD
+            ),
+        },
+        "entry_wealth_ages": "18_24" if args.arm == "M5" else "25_35",
         "seed_record": str(args.seed_record),
         "seed_arm": args.seed_arm,
         "seed": int(args.seed),

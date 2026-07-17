@@ -9,8 +9,16 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from intergen_housing_fertility.calibration import get_target_set
-from intergen_housing_fertility.solver import add_annual_gross_estate_wealth_moments
+from intergen_housing_fertility.calibration import (
+    PSID_ENTRY_WEALTH_RATIO_NODES_1824,
+    PSID_ENTRY_WEALTH_RATIO_NODES_2535,
+    PSID_ENTRY_WEALTH_RATIO_WEIGHTS_1824,
+    get_target_set,
+)
+from intergen_housing_fertility.solver import (
+    add_annual_gross_estate_wealth_moments,
+    add_old_nonhousing_income_share_moments,
+)
 
 
 class BequestTargetMomentTests(unittest.TestCase):
@@ -89,6 +97,61 @@ class BequestTargetMomentTests(unittest.TestCase):
         self.assertEqual(targets["old_nonhousing_wealth_to_income_median_6575"], 1.90821154211154)
         self.assertEqual(weights["old_nonhousing_wealth_to_income_median_6575"], 83.74916751466371)
 
+    def test_income_disciplined_target_set_swaps_composition_median_for_share(self) -> None:
+        targets, weights = get_target_set("candidate_replacement_income_disciplined_v1")
+        self.assertEqual(len(targets), 14)
+        self.assertEqual(set(targets), set(weights))
+        self.assertIn("old_nonhousing_ge_1x_income_share_6575", targets)
+        self.assertIn("old_age_own_rate", targets)
+        self.assertIn("old_total_estate_wealth_to_annual_income_median_7684", targets)
+        self.assertNotIn("old_nonhousing_wealth_to_income_median_6575", targets)
+        self.assertNotIn("old_nonhousing_wealth_to_income_6575", targets)
+        self.assertNotIn("old_total_estate_wealth_to_annual_income_p90_p50_7684", targets)
+        self.assertNotIn(
+            "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575",
+            targets,
+        )
+        self.assertNotIn("old_parent_childless_nonhousing_wealth_to_income_gap_6575", targets)
+        # Share target/weight come from the block3 person bootstrap; the
+        # old-age ownership rate keeps its legacy ACS value and weight.
+        self.assertEqual(targets["old_nonhousing_ge_1x_income_share_6575"], 0.608333139649131)
+        self.assertEqual(weights["old_nonhousing_ge_1x_income_share_6575"], 9435.18732291246)
+        self.assertEqual(targets["old_age_own_rate"], 0.76426097)
+        self.assertEqual(weights["old_age_own_rate"], 160.0)
+        self.assertEqual(targets["old_total_estate_wealth_to_annual_income_median_7684"], 6.50131577436537)
+        self.assertEqual(weights["old_total_estate_wealth_to_annual_income_median_7684"], 18.585767349158665)
+
+    def test_old_nonhousing_ge_1x_income_share_uses_raw_b_and_estate_window(self) -> None:
+        p = SimpleNamespace(
+            J=5,
+            I=1,
+            age_start=66.0,
+            da=4.0,
+            period_years=1.0,
+            J_R=0,
+            income=np.ones((1, 5)),
+            n_parity=3,
+            n_child_states=1,
+            n_house=1,
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+            psi=0.5,
+        )
+        bg = np.array([-5.0, 0.5, 1.0, 10.0])
+        ph = np.array([10.0])
+        g = np.zeros((4, 2, 1, 5, 1, 3, 1))
+
+        # Ages 66-74 lie inside the 65-75 window; income is 1 everywhere.
+        g[0, 0, 0, 0, 0, 0, 0] = 1.0  # b=-5: raw negative b stays in the denominator
+        g[2, 0, 0, 0, 0, 1, 0] = 1.0  # b=1: ratio exactly 1 counts (>= is inclusive)
+        g[1, 1, 0, 1, 0, 2, 0] = 2.0  # owner b=0.5: housing is excluded, does not count
+        g[3, 0, 0, 2, 0, 1, 0] = 1.0  # b=10 counts
+        g[3, 0, 0, 3, 0, 1, 0] = 5.0  # age 78 lies outside the window
+
+        stats = SimpleNamespace()
+        add_old_nonhousing_income_share_moments(stats, g, p, bg)
+        self.assertAlmostEqual(stats.old_nonhousing_ge_1x_income_share_6575, 2.0 / 5.0)
+
 
 class StandardBequestArmContractTests(unittest.TestCase):
     def _args(self, arm: str) -> SimpleNamespace:
@@ -146,6 +209,109 @@ class StandardBequestArmContractTests(unittest.TestCase):
         args.theta1 = 16.01
         with self.assertRaisesRegex(ValueError, "theta1 start"):
             arm_contract(args)
+
+    def test_m5_frees_tenure_choice_kappa_with_wide_bequest_domains(self) -> None:
+        from tools.run_intergen_bequest_exit_chain import arm_contract
+
+        args = self._args("M5")
+        args.seed_kappa = 0.01
+        active, fixed, mechanism = arm_contract(args)
+        self.assertEqual(len(active), 14)
+        self.assertEqual(
+            active[-3:],
+            [
+                ("theta0", 0.0, 8.0, "softzero"),
+                ("theta1", 0.02, 16.0, "log"),
+                ("tenure_choice_kappa", 0.0, 0.12, "softzero"),
+            ],
+        )
+        self.assertEqual(fixed, {"theta_n": 0.0})
+        args_m4 = self._args("M4")
+        _, _, mechanism_m4 = arm_contract(args_m4)
+        self.assertTrue(mechanism["entry_wealth_censor_to_frontier"])
+        self.assertFalse(mechanism_m4["entry_wealth_censor_to_frontier"])
+        self.assertEqual(
+            {k: v for k, v in mechanism.items() if k != "entry_wealth_censor_to_frontier"},
+            {k: v for k, v in mechanism_m4.items() if k != "entry_wealth_censor_to_frontier"},
+        )
+        self.assertTrue(mechanism["use_age_survival"])
+
+    def test_m5_uses_ssa_survival_schedule(self) -> None:
+        from tools.run_intergen_bequest_exit_chain import survival_schedule
+
+        schedule = survival_schedule(SimpleNamespace(arm="M5", J=17))
+        self.assertEqual(int(np.count_nonzero(schedule < 1.0)), 4)
+
+    def test_m5_rejects_silent_start_clipping(self) -> None:
+        from tools.run_intergen_bequest_exit_chain import arm_contract
+
+        args = self._args("M5")
+        args.seed_kappa = 0.13
+        with self.assertRaisesRegex(ValueError, "tenure_choice_kappa start"):
+            arm_contract(args)
+        args.seed_kappa = 0.0
+        args.theta1 = 16.01
+        with self.assertRaisesRegex(ValueError, "theta1 start"):
+            arm_contract(args)
+
+    def test_m5_target_system_has_15_moments_including_rooms(self) -> None:
+        from tools.run_intergen_bequest_exit_chain import target_system
+
+        targets, weights = target_system("candidate_replacement_income_disciplined_v1")
+        self.assertEqual(len(targets), 15)
+        self.assertEqual(set(targets), set(weights))
+        self.assertIn("aggregate_mean_occupied_rooms_18_85", targets)
+        self.assertIn("old_nonhousing_ge_1x_income_share_6575", targets)
+
+    def test_m5_income_and_entry_overrides(self) -> None:
+        from intergen_housing_fertility.local_panel import income_process_overrides
+        from tools.run_intergen_bequest_exit_chain import (
+            SS_ANNUAL_INNOVATION_SD,
+            SS_ANNUAL_RHO,
+            arm_contract,
+            common_overrides,
+        )
+
+        self.assertEqual(SS_ANNUAL_RHO, 0.9601845894041878)
+        self.assertEqual(SS_ANNUAL_INNOVATION_SD, 0.06453733259357768)
+        args = self._args("M5")
+        args.seed_kappa = 0.0
+        args.J = 17
+        args.Nb = 60
+        args.max_iter_eq = 2
+        args.tol_eq = 0.25
+        _, _, mechanism = arm_contract(args)
+        overrides = common_overrides(args, mechanism)
+        expected_income = income_process_overrides(
+            5, "rouwenhorst", SS_ANNUAL_INNOVATION_SD, SS_ANNUAL_RHO
+        )
+        np.testing.assert_allclose(overrides["z_grid"], expected_income["z_grid"])
+        np.testing.assert_allclose(overrides["Pi_z"], expected_income["Pi_z"])
+        self.assertEqual(
+            overrides["income_shock_persistence"], expected_income["income_shock_persistence"]
+        )
+        np.testing.assert_array_equal(
+            overrides["entry_wealth_ratio_nodes"], PSID_ENTRY_WEALTH_RATIO_NODES_1824
+        )
+        np.testing.assert_array_equal(
+            overrides["entry_wealth_ratio_weights"], PSID_ENTRY_WEALTH_RATIO_WEIGHTS_1824
+        )
+        args_m4 = self._args("M4")
+        args_m4.J = 17
+        args_m4.Nb = 60
+        args_m4.max_iter_eq = 2
+        args_m4.tol_eq = 0.25
+        _, _, mechanism_m4 = arm_contract(args_m4)
+        overrides_m4 = common_overrides(args_m4, mechanism_m4)
+        np.testing.assert_array_equal(
+            overrides_m4["entry_wealth_ratio_nodes"], PSID_ENTRY_WEALTH_RATIO_NODES_2535
+        )
+        # July-16 feasibility probes forced M5 back onto the matched income
+        # process (see the m5 contract); M5 and M4 share the z-grid until the
+        # M6 forbearance/default margin unlocks higher income risk.
+        self.assertTrue(
+            np.allclose(overrides["z_grid"], overrides_m4["z_grid"])
+        )
 
     def test_m4_profile_fixes_theta1_and_reestimates_other_coordinates(self) -> None:
         from tools.run_intergen_bequest_exit_chain import arm_contract, survival_schedule
@@ -292,6 +458,137 @@ class StandardBequestCollectorContractTests(unittest.TestCase):
                     summary,
                     "candidate_replacement_bequest_median_composition_v1",
                 )
+
+    def test_m5_nested_reference_and_acceptance_rows(self) -> None:
+        from tools.collect_intergen_internal_bequest_recalibration import (
+            ESTATE_MEDIAN,
+            ESTATE_MEDIAN_TARGET,
+            ESTATE_MEDIAN_WEIGHT,
+            EXPECTED_M5_ACTIVE_DOMAIN,
+            EXPECTED_M5_FIXED,
+            EXPECTED_M5_MECHANISM,
+            EXPECTED_TIGHT_EVALUATOR,
+            M4_SHARED_THETA,
+            NONHOUSING_SHARE,
+            NONHOUSING_SHARE_TARGET,
+            NONHOUSING_SHARE_WEIGHT,
+            OLD_AGE_OWN_RATE,
+            OLD_AGE_OWN_RATE_TARGET,
+            OLD_AGE_OWN_RATE_WEIGHT,
+            YOUNG_LIQUID,
+            m5_acceptance_rows,
+            validate_m5_chain_metadata,
+            validate_m5_nested_reference,
+        )
+
+        self.assertEqual(len(EXPECTED_M5_ACTIVE_DOMAIN), 14)
+        self.assertEqual(
+            EXPECTED_M5_ACTIVE_DOMAIN[-1],
+            {"name": "tenure_choice_kappa", "lower": 0.0, "upper": 0.12, "transform": "softzero"},
+        )
+        self.assertEqual(EXPECTED_M5_FIXED, {"theta_n": 0.0})
+
+        theta = {name: float(ii + 1) for ii, name in enumerate(M4_SHARED_THETA)}
+        theta.update(theta0=0.0, theta1=0.25, theta_n=0.0, tenure_choice_kappa=0.0)
+        metadata = {
+            "status": "proper_joint_smm_chain",
+            "arm": "M5",
+            "target_set": "candidate_replacement_income_disciplined_v1",
+            "free_parameter_count": 14,
+            "target_count": 15,
+            "max_evals": 1,
+            "start_mix": 0.0,
+            "seed_arm": "M1",
+            "J": 17,
+            "Nb": 120,
+            "max_iter_eq": 10,
+            "tol_eq": 1e-4,
+            "tight_winner_evaluator": EXPECTED_TIGHT_EVALUATOR,
+            "active_domain": EXPECTED_M5_ACTIVE_DOMAIN,
+            "fixed_parameters": EXPECTED_M5_FIXED,
+            "mechanism": EXPECTED_M5_MECHANISM,
+            "income_process": {
+                "states": 5,
+                "process": "rouwenhorst",
+                "annual_rho": 0.9601845894041878,
+                "annual_innovation_sd": 0.06453733259357768,
+            },
+            "entry_wealth_ages": "18_24",
+            "targets": {
+                ESTATE_MEDIAN: ESTATE_MEDIAN_TARGET,
+                NONHOUSING_SHARE: NONHOUSING_SHARE_TARGET,
+                OLD_AGE_OWN_RATE: OLD_AGE_OWN_RATE_TARGET,
+            },
+            "weights": {
+                ESTATE_MEDIAN: ESTATE_MEDIAN_WEIGHT,
+                NONHOUSING_SHARE: NONHOUSING_SHARE_WEIGHT,
+                OLD_AGE_OWN_RATE: OLD_AGE_OWN_RATE_WEIGHT,
+            },
+        }
+        validate_m5_chain_metadata(metadata)
+        bad_metadata = dict(metadata)
+        bad_metadata["entry_wealth_ages"] = "25_35"
+        with self.assertRaisesRegex(RuntimeError, "exact production contract"):
+            validate_m5_chain_metadata(bad_metadata)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            seed_path = Path(tmp) / "m1_results.json"
+            seed_path.write_text(
+                json.dumps({"winners": {"M1": {"strict_converged": True, "theta": theta}}})
+            )
+            summary = {
+                "metadata": {**metadata, "seed_record": str(seed_path)},
+                "best_tight": {
+                    "strict_converged": True,
+                    "theta": theta,
+                    "rank_loss": 1.0,
+                },
+                "tight_repeat_check": {
+                    "both_strict": True,
+                    "loss_abs_difference": 0.0,
+                    "max_abs_moment_difference": 0.0,
+                },
+            }
+            self.assertIs(
+                validate_m5_nested_reference(
+                    summary, "candidate_replacement_income_disciplined_v1"
+                ),
+                summary["best_tight"],
+            )
+            summary["best_tight"]["theta"] = dict(theta)
+            summary["best_tight"]["theta"]["tenure_choice_kappa"] = 0.01
+            with self.assertRaisesRegex(RuntimeError, "tenure_choice_kappa=0"):
+                validate_m5_nested_reference(
+                    summary, "candidate_replacement_income_disciplined_v1"
+                )
+
+        winner = {
+            "rank_loss": 3.0,
+            "target_fit": [
+                {"moment": ESTATE_MEDIAN, "gap": 0.1, "loss_contribution": 0.2},
+                {"moment": NONHOUSING_SHARE, "gap": 0.01, "loss_contribution": 0.9},
+                {"moment": OLD_AGE_OWN_RATE, "gap": -0.02, "loss_contribution": 0.06},
+                {"moment": YOUNG_LIQUID, "gap": -0.05, "loss_contribution": 0.03},
+                {"moment": "tfr", "gap": 0.1, "loss_contribution": 0.2},
+            ],
+        }
+        rows, established_loss = m5_acceptance_rows(winner, 4.0, None)
+        self.assertEqual(
+            [row["criterion"] for row in rows],
+            [
+                "strict_exact_tight_repeat",
+                "estate_median_absolute_gap",
+                "nonhousing_ge_1x_share_absolute_gap",
+                "established_12_moment_loss",
+                "young_liquid_absolute_gap",
+                "old_age_own_rate_absolute_gap",
+                "free_winner_loss_minus_nested_zero",
+                "identification_reported",
+            ],
+        )
+        self.assertAlmostEqual(established_loss, 0.23)
+        self.assertEqual(rows[-1]["pass"], "pending")
+        self.assertTrue(all(row["pass"] is True for row in rows[:-1]))
 
 
 if __name__ == "__main__":
