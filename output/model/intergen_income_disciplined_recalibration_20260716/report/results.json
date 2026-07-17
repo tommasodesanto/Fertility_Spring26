@@ -1,0 +1,669 @@
+{
+  "acceptance_criteria": [
+    {
+      "criterion": "strict_exact_tight_repeat",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    {
+      "criterion": "estate_median_absolute_gap",
+      "pass": true,
+      "threshold": 0.2319582116443,
+      "value": 0.07038949425879526
+    },
+    {
+      "criterion": "nonhousing_ge_1x_share_absolute_gap",
+      "pass": true,
+      "threshold": 0.0205899234604662,
+      "value": 0.0016836100517948482
+    },
+    {
+      "criterion": "established_12_moment_loss",
+      "pass": true,
+      "threshold": 4.5,
+      "value": 3.1662066342662736
+    },
+    {
+      "criterion": "young_liquid_absolute_gap",
+      "pass": true,
+      "threshold": 0.15,
+      "value": 0.1487022559497473
+    },
+    {
+      "criterion": "old_age_own_rate_absolute_gap",
+      "pass": false,
+      "threshold": 0.03,
+      "value": 0.18972652104273724
+    },
+    {
+      "criterion": "free_winner_loss_minus_nested_zero",
+      "pass": true,
+      "threshold": 0.0,
+      "value": -300.8911294651081
+    },
+    {
+      "criterion": "identification_reported",
+      "pass": "pending",
+      "threshold": "jacobian summary file exists",
+      "value": null
+    }
+  ],
+  "additional_summary_count": 0,
+  "additional_summary_paths": [],
+  "all_acceptance_criteria_pass": false,
+  "eligible_M5_chains": 7,
+  "established_12_moment_loss": 3.1662066342662736,
+  "nested_theta0_zero_tight_loss": 309.93555153417947,
+  "pending_acceptance_criteria": [
+    "identification_reported"
+  ],
+  "production_chain_count": 8,
+  "winners": {
+    "M5": {
+      "arm": "M5",
+      "case": 0,
+      "elapsed_sec": 47.43560293794144,
+      "error": "",
+      "evaluator": {
+        "max_iter_eq": 40,
+        "tol_eq": 2.5e-05
+      },
+      "feasibility_census": [],
+      "label": "tight_winner_repeat_1",
+      "lifecycle": {
+        "adjacent_ownership_changes": [
+          0.005892393035885624,
+          0.002733493034985046,
+          0.0003562067515163747,
+          -0.004704130494515235,
+          -0.04210887601856117
+        ],
+        "age_mass": [
+          0.06173345618565355,
+          0.061733456206215384,
+          0.06173345626877718,
+          0.061733456229219344,
+          0.061733456099162434,
+          0.06173345611303305,
+          0.06173345609326108,
+          0.061733456208398346,
+          0.06173345617665417,
+          0.06173345621540206,
+          0.06173345624819971,
+          0.06173345629463172,
+          0.06173345641102335,
+          0.057975512684329635,
+          0.05325037114776522,
+          0.04712403261565492,
+          0.03911515280256876
+        ],
+        "ages": [
+          18.0,
+          22.0,
+          26.0,
+          30.0,
+          34.0,
+          38.0,
+          42.0,
+          46.0,
+          50.0,
+          54.0,
+          58.0,
+          62.0,
+          66.0,
+          70.0,
+          74.0,
+          78.0,
+          82.0
+        ],
+        "decum_ratio_wealth_74plus_over_62_74": -0.9219595625870229,
+        "hard_acceptance_pass": false,
+        "mean_liquid_wealth_by_age": [
+          -0.049627260103139274,
+          -0.06484419846286466,
+          -0.24303753024839475,
+          -0.1635947017278638,
+          -0.35426050048509217,
+          -0.36665799075908606,
+          -0.4613584544290486,
+          -0.2536618869341532,
+          0.11473210997932605,
+          0.5887553362371796,
+          1.153345161371557,
+          1.6195727050675301,
+          2.151528765510392,
+          1.0531735510738696,
+          -0.09475323782164574,
+          -1.281319270587755,
+          -2.373369514464762
+        ],
+        "occupied_rooms_by_age": [
+          0.19979102062135423,
+          0.2255653367043272,
+          0.2587880283282145,
+          0.2881480971533995,
+          0.32065367416178636,
+          0.3510421906615741,
+          0.3766706009966301,
+          0.3835890540608492,
+          0.38935885364809647,
+          0.39485166251800125,
+          0.39927541974209313,
+          0.40199006245022617,
+          0.4028595358732255,
+          0.3778935873521205,
+          0.3462125636074061,
+          0.30518094745426927,
+          0.2507584259593442
+        ],
+        "old_household_mass_share_62plus": 0.32093198195598965,
+        "old_occupied_rooms_share_62plus": 0.36753595205490086,
+        "old_owner_rooms_share_62plus": 0.4619634109333159,
+        "owner_rooms_by_age": [
+          0.019209502124689623,
+          0.03646840465654073,
+          0.05701916042258341,
+          0.10092133674969289,
+          0.15707434846238807,
+          0.23066758435201662,
+          0.3013258712421589,
+          0.33650343780807296,
+          0.35730367160362086,
+          0.3720761905283823,
+          0.38199098834089873,
+          0.38801576932105014,
+          0.3908688530556634,
+          0.36774099415002115,
+          0.3373113177108192,
+          0.2967933960684529,
+          0.23748361004208393
+        ],
+        "ownership_acceptance_checks": [
+          {
+            "age_state": 62.0,
+            "empirical": 0.744193686,
+            "lower": 0.669193686,
+            "model": 0.9462275878739231,
+            "upper": 0.819193686,
+            "within_band": false
+          },
+          {
+            "age_state": 66.0,
+            "empirical": 0.759160283,
+            "lower": 0.684160283,
+            "model": 0.9521199809098088,
+            "upper": 0.834160283,
+            "within_band": false
+          },
+          {
+            "age_state": 70.0,
+            "empirical": 0.769941933,
+            "lower": 0.694941933,
+            "model": 0.9548534739447938,
+            "upper": 0.844941933,
+            "within_band": false
+          },
+          {
+            "age_state": 74.0,
+            "empirical": 0.775892511,
+            "lower": 0.700892511,
+            "model": 0.9552096806963102,
+            "upper": 0.850892511,
+            "within_band": false
+          },
+          {
+            "age_state": 78.0,
+            "empirical": 0.760542182,
+            "lower": 0.685542182,
+            "model": 0.950505550201795,
+            "upper": 0.835542182,
+            "within_band": false
+          },
+          {
+            "age_state": 82.0,
+            "empirical": 0.748066747,
+            "lower": 0.673066747,
+            "model": 0.9083966741832338,
+            "upper": 0.823066747,
+            "within_band": false
+          }
+        ],
+        "ownership_band_failure": true,
+        "ownership_by_age": [
+          0.06958326745393843,
+          0.11898198289359681,
+          0.165844358125252,
+          0.266618490188157,
+          0.39086175660613426,
+          0.567555506536918,
+          0.7456830451175295,
+          0.8362665240308184,
+          0.8850502771689369,
+          0.916611897685853,
+          0.9350323150064196,
+          0.9462275878739231,
+          0.9521199809098088,
+          0.9548534739447938,
+          0.9552096806963102,
+          0.950505550201795,
+          0.9083966741832338
+        ],
+        "ownership_cliff_failure": false,
+        "survival_probs": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.9391263063710125,
+          0.9184976343249724,
+          0.8849521927812863,
+          0.8300468061015381
+        ],
+        "wealth_62_74": 1.2306119481095217,
+        "wealth_74_82": -1.1345744533934188
+      },
+      "market_residual": 1.4813429516777551e-05,
+      "moments": {
+        "aggregate_mean_occupied_rooms_18_85": 5.672629061293202,
+        "aggregate_own_rate": 0.6678481205764518,
+        "childless_rate": 0.18873484960313644,
+        "housing_increment_0to1": 0.68081728232046,
+        "housing_increment_1to2": 0.48648525492128325,
+        "housing_user_cost_share": 0.24785801771293145,
+        "liquid_wealth_to_income": 0.13856528496855341,
+        "market_residual": 1.4813429516777551e-05,
+        "mean_age_first_birth": 32.29543331632017,
+        "mean_completed_fertility": 1.0171991864082346,
+        "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": 3.572820579446539,
+        "old_age_own_rate": 0.9539874910427373,
+        "old_age_parent_childless_gap": 0.01359043362126322,
+        "old_age_parent_childless_gap_6575": 0.01359043362126322,
+        "old_minus_young_owner_rate_6575_2534": 0.6795459561745081,
+        "old_nonhousing_ge_1x_income_share_6575": 0.6100167497009259,
+        "old_nonhousing_wealth_to_income_6575": 2.58566952178757,
+        "old_nonhousing_wealth_to_income_median_6575": 2.0029448702957864,
+        "old_owner_rate": 0.9539874910427373,
+        "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 1.0765268456501005,
+        "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575": 0.9744056125763283,
+        "old_parent_childless_total_wealth_to_income_gap_6575": 2.8669284039821594,
+        "old_parent_childless_total_wealth_to_income_median_gap_6575": 3.248018708587761,
+        "old_total_estate_wealth_to_annual_income_median_7684": 6.430926280106575,
+        "old_total_estate_wealth_to_annual_income_p90_p50_7684": 1.7514127190498914,
+        "old_total_wealth_to_income_6575": 13.107363817865327,
+        "old_total_wealth_to_income_median_6575": 12.291010679914448,
+        "own_family_gap": 0.21944372724252476,
+        "own_gap_newparent_nonparent_3055": 0.21944372724252476,
+        "own_rate": 0.6583782139379705,
+        "own_rate_2534": 0.2744415348682292,
+        "own_rate_3055": 0.6583782139379705,
+        "own_rate_3544": 0.5680334360811641,
+        "own_rate_newparents_3055": 0.6584287065388754,
+        "own_rate_nonparents_3055": 0.43898497929635066,
+        "owner_neg_liquid_share_2534": 0.5662803293636475,
+        "parity_share_0": 0.18873484960313644,
+        "parity_share_1": 0.6053311143854929,
+        "parity_share_2plus": 0.20593403601137084,
+        "prime30_55_childless_owner_mean_rooms": 6.286046407209366,
+        "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3227683198332425,
+        "prime30_55_childless_owner_share_rooms_ge6": 0.760146244592899,
+        "prime30_55_childless_renter_mean_rooms": 3.963278087376123,
+        "prime30_55_childless_renter_share_rooms_ge6": 0.06729301510865747,
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.607477262023723,
+        "prime30_55_parent_owner_minus_renter_mean_rooms": 1.789731695253824,
+        "prime_childless_owner_median_rooms": 6.0,
+        "prime_childless_owner_minus_renter_rooms": 2.274670347748292,
+        "prime_childless_renter_median_rooms": 3.725329652251708,
+        "renter25_45_all_cap_share": 0.11037658798267606,
+        "tfr": 2.034398372816469,
+        "wealth_to_income": 1.3887647840129018,
+        "young_all_liquid_wealth_to_annual_gross_income_2530": 0.15244711232400154,
+        "young_all_liquid_wealth_to_annual_gross_income_2530_median": 0.2235362463096784,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535": 0.1992233139875168,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535_median": 0.2235362463096784,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3279278159497473,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": 0.32950763184732157,
+        "young_liquid_wealth_to_income": 0.11887654200504831,
+        "young_owner_rate": 0.2744415348682292
+      },
+      "origin": {
+        "phase": "tight_winner_verification",
+        "search_case": 442
+      },
+      "parameters": [
+        {
+          "estimate": 0.9912317808418449,
+          "lower": 0.8,
+          "near_bound": false,
+          "parameter": "beta_annual",
+          "role": "estimated",
+          "transform": "discount",
+          "upper": 0.9995
+        },
+        {
+          "estimate": 0.5912263839788428,
+          "lower": 0.02,
+          "near_bound": false,
+          "parameter": "alpha_cons",
+          "role": "estimated",
+          "transform": "logit",
+          "upper": 0.98
+        },
+        {
+          "estimate": 1.2595937731478881,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "c_bar_0",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 2.0
+        },
+        {
+          "estimate": 0.39294466990660537,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "c_bar_n",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 3.0
+        },
+        {
+          "estimate": 0.3915418909982497,
+          "lower": 0.05,
+          "near_bound": false,
+          "parameter": "h_bar_0",
+          "role": "estimated",
+          "transform": "log",
+          "upper": 5.8
+        },
+        {
+          "estimate": 1.6021182503934808,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "h_bar_jump",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 8.0
+        },
+        {
+          "estimate": 0.16436541806228172,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "h_bar_n",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 5.0
+        },
+        {
+          "estimate": 0.19791383267507004,
+          "lower": -3.0,
+          "near_bound": false,
+          "parameter": "psi_child",
+          "role": "estimated",
+          "transform": "asinh",
+          "upper": 3.0
+        },
+        {
+          "estimate": 2.0433862404293337,
+          "lower": 0.02,
+          "near_bound": false,
+          "parameter": "kappa_fert",
+          "role": "estimated",
+          "transform": "log",
+          "upper": 50.0
+        },
+        {
+          "estimate": 1.113265753289088,
+          "lower": 0.1,
+          "near_bound": false,
+          "parameter": "chi",
+          "role": "estimated",
+          "transform": "log",
+          "upper": 5.0
+        },
+        {
+          "estimate": 8.645577738994191,
+          "lower": 0.2,
+          "near_bound": false,
+          "parameter": "H0",
+          "role": "estimated",
+          "transform": "log",
+          "upper": 80.0
+        },
+        {
+          "estimate": 0.31176482840616865,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "theta0",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 8.0
+        },
+        {
+          "estimate": 0.3972817386975299,
+          "lower": 0.02,
+          "near_bound": false,
+          "parameter": "theta1",
+          "role": "estimated",
+          "transform": "log",
+          "upper": 16.0
+        },
+        {
+          "estimate": 0.010017488787185433,
+          "lower": 0.0,
+          "near_bound": false,
+          "parameter": "tenure_choice_kappa",
+          "role": "estimated",
+          "transform": "softzero",
+          "upper": 0.12
+        },
+        {
+          "estimate": 0.0,
+          "lower": null,
+          "near_bound": false,
+          "parameter": "theta_n",
+          "role": "fixed",
+          "transform": "external restriction",
+          "upper": null
+        }
+      ],
+      "price": 0.7589039340587314,
+      "rank_loss": 9.044422069071352,
+      "status": "ok",
+      "strict_converged": true,
+      "target_fit": [
+        {
+          "gap": 0.11639837281646925,
+          "loss_contribution": 0.27097162388643536,
+          "model": 2.034398372816469,
+          "moment": "tfr",
+          "target": 1.918,
+          "weight": 20.0
+        },
+        {
+          "gap": 0.0007348496031364393,
+          "loss_contribution": 1.0800078784595648e-05,
+          "model": 0.18873484960313644,
+          "moment": "childless_rate",
+          "target": 0.188,
+          "weight": 20.0
+        },
+        {
+          "gap": 0.08290580393797042,
+          "loss_contribution": 0.6873372326601193,
+          "model": 0.6583782139379705,
+          "moment": "own_rate",
+          "target": 0.57547241,
+          "weight": 100.0
+        },
+        {
+          "gap": 0.05178205724252474,
+          "loss_contribution": 0.12066216535206492,
+          "model": 0.21944372724252476,
+          "moment": "own_family_gap",
+          "target": 0.16766167,
+          "weight": 45.0
+        },
+        {
+          "gap": 0.01638261232046001,
+          "loss_contribution": 0.003757459810194834,
+          "model": 0.68081728232046,
+          "moment": "housing_increment_0to1",
+          "target": 0.66443467,
+          "weight": 14.0
+        },
+        {
+          "gap": 0.15798998737612324,
+          "loss_contribution": 0.1497650166666455,
+          "model": 3.963278087376123,
+          "moment": "prime30_55_childless_renter_mean_rooms",
+          "target": 3.8052881,
+          "weight": 6.0
+        },
+        {
+          "gap": 0.16401512459289902,
+          "loss_contribution": 0.6725240273806047,
+          "model": 0.760146244592899,
+          "moment": "prime30_55_childless_owner_share_rooms_ge6",
+          "target": 0.59613112,
+          "weight": 25.0
+        },
+        {
+          "gap": 0.1487022559497473,
+          "loss_contribution": 0.2653483310945298,
+          "model": 0.3279278159497473,
+          "moment": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+          "target": 0.17922556,
+          "weight": 12.0
+        },
+        {
+          "gap": -0.09599341016675744,
+          "loss_contribution": 0.11057681754531998,
+          "model": 2.3227683198332425,
+          "moment": "prime30_55_childless_owner_minus_renter_mean_rooms",
+          "target": 2.41876173,
+          "weight": 12.0
+        },
+        {
+          "gap": -0.06672455513177078,
+          "loss_contribution": 0.3561733006026175,
+          "model": 0.2744415348682292,
+          "moment": "own_rate_2534",
+          "target": 0.34116609,
+          "weight": 80.0
+        },
+        {
+          "gap": 0.239777703213723,
+          "loss_contribution": 0.4599467756675858,
+          "model": 0.607477262023723,
+          "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+          "target": 0.36769955881,
+          "weight": 8.0
+        },
+        {
+          "gap": -0.07038949425879526,
+          "loss_contribution": 0.09208654653405833,
+          "model": 6.430926280106575,
+          "moment": "old_total_estate_wealth_to_annual_income_median_7684",
+          "target": 6.50131577436537,
+          "weight": 18.585767349158665
+        },
+        {
+          "gap": 0.0016836100517948482,
+          "loss_contribution": 0.026744442354185393,
+          "model": 0.6100167497009259,
+          "moment": "old_nonhousing_ge_1x_income_share_6575",
+          "target": 0.608333139649131,
+          "weight": 9435.18732291246
+        },
+        {
+          "gap": 0.18972652104273724,
+          "loss_contribution": 5.759384445916835,
+          "model": 0.9539874910427373,
+          "moment": "old_age_own_rate",
+          "target": 0.76426097,
+          "weight": 160.0
+        },
+        {
+          "gap": -0.1073414206487655,
+          "loss_contribution": 0.06913308352137133,
+          "model": 5.672629061293202,
+          "moment": "aggregate_mean_occupied_rooms_18_85",
+          "target": 5.779970481941968,
+          "weight": 6.0
+        }
+      ],
+      "theta": {
+        "H0": 8.645577738994191,
+        "alpha_cons": 0.5912263839788428,
+        "beta": 0.9653857228201739,
+        "c_bar_0": 1.2595937731478881,
+        "c_bar_n": 0.39294466990660537,
+        "chi": 1.113265753289088,
+        "h_bar_0": 0.3915418909982497,
+        "h_bar_jump": 1.6021182503934808,
+        "h_bar_n": 0.16436541806228172,
+        "kappa_fert": 2.0433862404293337,
+        "psi_child": 0.19791383267507004,
+        "tenure_choice_kappa": 0.010017488787185433,
+        "theta0": 0.31176482840616865,
+        "theta1": 0.3972817386975299,
+        "theta_n": 0.0
+      },
+      "timings": {
+        "accepted": true,
+        "bellman_full": 0.9165681410813704,
+        "bellman_mode": "full_only",
+        "best_eq_error": 1.4813429516777551e-05,
+        "convergence_reason": "strict_tol",
+        "damped_final_eq_error": 1.6196781881102508e-05,
+        "distribution": 2.169768252992071,
+        "final_eq_error": 1.4813429516777551e-05,
+        "income_process": "markov",
+        "iterations_completed": 20,
+        "markov_income_solve_time": 31.50979812326841,
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1,
+        "scalar_market_refine": {
+          "best_excess": 8.402984600408558e-05,
+          "best_metric": 1.4813429516777551e-05,
+          "best_price": 0.7589039340587314,
+          "bracket_found": true,
+          "expansions": 0,
+          "initial_price": 0.7588818168386291,
+          "iterations": 6,
+          "method": "brent",
+          "price_evaluation_time_sec": 12.82971031870693,
+          "price_evaluations": 8,
+          "used": true
+        },
+        "strict_converged": true
+      },
+      "unit_vector": [
+        0.4701796883971985,
+        0.5474119398467661,
+        0.8183664837427512,
+        0.3682715021304529,
+        0.43295055375233155,
+        0.5727498969200261,
+        0.16596603549972766,
+        0.5540692427057634,
+        0.5913348863869345,
+        0.616019615807422,
+        0.6286419337020398,
+        0.23155173424591288,
+        0.44713343818147067,
+        0.10021366756842985
+      ]
+    }
+  }
+}

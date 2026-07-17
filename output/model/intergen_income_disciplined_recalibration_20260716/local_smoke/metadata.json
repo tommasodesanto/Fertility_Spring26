@@ -1,0 +1,182 @@
+{
+  "J": 17,
+  "Nb": 60,
+  "acceptance_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/mms_center_periphery/output_ownership_audit/acs_ownership_4year_acceptance_bins_6284.csv",
+  "active_domain": [
+    {
+      "lower": 0.8,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.02,
+      "name": "alpha_cons",
+      "transform": "logit",
+      "upper": 0.98
+    },
+    {
+      "lower": 0.0,
+      "name": "c_bar_0",
+      "transform": "softzero",
+      "upper": 2.0
+    },
+    {
+      "lower": 0.0,
+      "name": "c_bar_n",
+      "transform": "softzero",
+      "upper": 3.0
+    },
+    {
+      "lower": 0.05,
+      "name": "h_bar_0",
+      "transform": "log",
+      "upper": 5.8
+    },
+    {
+      "lower": 0.0,
+      "name": "h_bar_jump",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "h_bar_n",
+      "transform": "softzero",
+      "upper": 5.0
+    },
+    {
+      "lower": -3.0,
+      "name": "psi_child",
+      "transform": "asinh",
+      "upper": 3.0
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.0,
+      "name": "tenure_choice_kappa",
+      "transform": "softzero",
+      "upper": 0.12
+    }
+  ],
+  "algorithm": "bounded_nelder_mead_in_transformed_coordinates",
+  "arm": "M5",
+  "entry_wealth_ages": "18_24",
+  "fixed_parameters": {
+    "theta_n": 0.0
+  },
+  "free_parameter_count": 14,
+  "identification_status": "rank_to_be_verified_at_winner",
+  "income_process": {
+    "annual_innovation_sd": 0.06453733259357768,
+    "annual_rho": 0.9601845894041878,
+    "process": "rouwenhorst",
+    "states": 5
+  },
+  "initial_unit_vector": [
+    0.5408934107986781,
+    0.5798696812186281,
+    0.8086801844342926,
+    0.3672362544117441,
+    0.4267408224769538,
+    0.5596220520617268,
+    0.14135053819654653,
+    0.5372198790031563,
+    0.5850431283507072,
+    0.6110150173985966,
+    0.6361534267562241,
+    0.19680497193609015,
+    0.4560605468755081,
+    0.10004209847920295
+  ],
+  "max_evals": 15,
+  "max_iter_eq": 2,
+  "mechanism": {
+    "bequest_spec": "linear_child_scale",
+    "entry_wealth_censor_to_frontier": true,
+    "normalize_bequest_utility": true,
+    "owner_ltv_taper": false,
+    "owner_ltv_taper_end_age": 82.0,
+    "owner_ltv_taper_start_age": 66.0,
+    "owner_ltv_terminal_share": 0.0,
+    "use_age_survival": true
+  },
+  "minutes": 8.0,
+  "seed": 2026071751,
+  "seed_arm": "M1",
+  "seed_record": "../../output/model/intergen_mortality_recalibration_20260715/report/results.json",
+  "start_mix": 0.0,
+  "status": "smoke",
+  "survival_source": "https://www.ssa.gov/oact/STATS/table4c6.html",
+  "target_count": 15,
+  "target_set": "candidate_replacement_income_disciplined_v1",
+  "targets": {
+    "aggregate_mean_occupied_rooms_18_85": 5.779970481941968,
+    "childless_rate": 0.188,
+    "housing_increment_0to1": 0.66443467,
+    "old_age_own_rate": 0.76426097,
+    "old_nonhousing_ge_1x_income_share_6575": 0.608333139649131,
+    "old_total_estate_wealth_to_annual_income_median_7684": 6.50131577436537,
+    "own_family_gap": 0.16766167,
+    "own_rate": 0.57547241,
+    "own_rate_2534": 0.34116609,
+    "prime30_55_childless_owner_minus_renter_mean_rooms": 2.41876173,
+    "prime30_55_childless_owner_share_rooms_ge6": 0.59613112,
+    "prime30_55_childless_renter_mean_rooms": 3.8052881,
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
+    "tfr": 1.918,
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.17922556
+  },
+  "tight_winner_evaluator": {
+    "max_iter_eq": 40,
+    "repeats": 2,
+    "tol_eq": 2.5e-05
+  },
+  "tol_eq": 0.25,
+  "weights": {
+    "aggregate_mean_occupied_rooms_18_85": 6.0,
+    "childless_rate": 20.0,
+    "housing_increment_0to1": 14.0,
+    "old_age_own_rate": 160.0,
+    "old_nonhousing_ge_1x_income_share_6575": 9435.18732291246,
+    "old_total_estate_wealth_to_annual_income_median_7684": 18.585767349158665,
+    "own_family_gap": 45.0,
+    "own_rate": 100.0,
+    "own_rate_2534": 80.0,
+    "prime30_55_childless_owner_minus_renter_mean_rooms": 12.0,
+    "prime30_55_childless_owner_share_rooms_ge6": 25.0,
+    "prime30_55_childless_renter_mean_rooms": 6.0,
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": 8.0,
+    "tfr": 20.0,
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 12.0
+  }
+}
