@@ -1,0 +1,1288 @@
+{
+  "baseline_loss": 9.044422069071352,
+  "baseline_parameters": [
+    {
+      "estimate": 0.9912317808418449,
+      "lower": 0.8,
+      "near_bound": false,
+      "parameter": "beta_annual",
+      "role": "estimated",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "estimate": 0.5912263839788428,
+      "lower": 0.02,
+      "near_bound": false,
+      "parameter": "alpha_cons",
+      "role": "estimated",
+      "transform": "logit",
+      "upper": 0.98
+    },
+    {
+      "estimate": 1.2595937731478881,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "c_bar_0",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 2.0
+    },
+    {
+      "estimate": 0.39294466990660537,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "c_bar_n",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 3.0
+    },
+    {
+      "estimate": 0.3915418909982497,
+      "lower": 0.05,
+      "near_bound": false,
+      "parameter": "h_bar_0",
+      "role": "estimated",
+      "transform": "log",
+      "upper": 5.8
+    },
+    {
+      "estimate": 1.6021182503934808,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "h_bar_jump",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "estimate": 0.16436541806228172,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "h_bar_n",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 5.0
+    },
+    {
+      "estimate": 0.19791383267507004,
+      "lower": -3.0,
+      "near_bound": false,
+      "parameter": "psi_child",
+      "role": "estimated",
+      "transform": "asinh",
+      "upper": 3.0
+    },
+    {
+      "estimate": 2.0433862404293337,
+      "lower": 0.02,
+      "near_bound": false,
+      "parameter": "kappa_fert",
+      "role": "estimated",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "estimate": 1.113265753289088,
+      "lower": 0.1,
+      "near_bound": false,
+      "parameter": "chi",
+      "role": "estimated",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "estimate": 8.645577738994191,
+      "lower": 0.2,
+      "near_bound": false,
+      "parameter": "H0",
+      "role": "estimated",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "estimate": 0.31176482840616865,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "theta0",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "estimate": 0.3972817386975299,
+      "lower": 0.02,
+      "near_bound": false,
+      "parameter": "theta1",
+      "role": "estimated",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "estimate": 0.010017488787185433,
+      "lower": 0.0,
+      "near_bound": false,
+      "parameter": "tenure_choice_kappa",
+      "role": "estimated",
+      "transform": "softzero",
+      "upper": 0.12
+    },
+    {
+      "estimate": 0.0,
+      "lower": null,
+      "near_bound": false,
+      "parameter": "theta_n",
+      "role": "fixed",
+      "transform": "external restriction",
+      "upper": null
+    }
+  ],
+  "baseline_target_fit": [
+    {
+      "gap": 0.11639837281646925,
+      "loss_contribution": 0.27097162388643536,
+      "model": 2.034398372816469,
+      "moment": "tfr",
+      "target": 1.918,
+      "weight": 20.0
+    },
+    {
+      "gap": 0.0007348496031364393,
+      "loss_contribution": 1.0800078784595648e-05,
+      "model": 0.18873484960313644,
+      "moment": "childless_rate",
+      "target": 0.188,
+      "weight": 20.0
+    },
+    {
+      "gap": 0.08290580393797042,
+      "loss_contribution": 0.6873372326601193,
+      "model": 0.6583782139379705,
+      "moment": "own_rate",
+      "target": 0.57547241,
+      "weight": 100.0
+    },
+    {
+      "gap": 0.05178205724252474,
+      "loss_contribution": 0.12066216535206492,
+      "model": 0.21944372724252476,
+      "moment": "own_family_gap",
+      "target": 0.16766167,
+      "weight": 45.0
+    },
+    {
+      "gap": 0.01638261232046001,
+      "loss_contribution": 0.003757459810194834,
+      "model": 0.68081728232046,
+      "moment": "housing_increment_0to1",
+      "target": 0.66443467,
+      "weight": 14.0
+    },
+    {
+      "gap": 0.15798998737612324,
+      "loss_contribution": 0.1497650166666455,
+      "model": 3.963278087376123,
+      "moment": "prime30_55_childless_renter_mean_rooms",
+      "target": 3.8052881,
+      "weight": 6.0
+    },
+    {
+      "gap": 0.16401512459289902,
+      "loss_contribution": 0.6725240273806047,
+      "model": 0.760146244592899,
+      "moment": "prime30_55_childless_owner_share_rooms_ge6",
+      "target": 0.59613112,
+      "weight": 25.0
+    },
+    {
+      "gap": 0.1487022559497473,
+      "loss_contribution": 0.2653483310945298,
+      "model": 0.3279278159497473,
+      "moment": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "target": 0.17922556,
+      "weight": 12.0
+    },
+    {
+      "gap": -0.09599341016675744,
+      "loss_contribution": 0.11057681754531998,
+      "model": 2.3227683198332425,
+      "moment": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "target": 2.41876173,
+      "weight": 12.0
+    },
+    {
+      "gap": -0.06672455513177078,
+      "loss_contribution": 0.3561733006026175,
+      "model": 0.2744415348682292,
+      "moment": "own_rate_2534",
+      "target": 0.34116609,
+      "weight": 80.0
+    },
+    {
+      "gap": 0.239777703213723,
+      "loss_contribution": 0.4599467756675858,
+      "model": 0.607477262023723,
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "target": 0.36769955881,
+      "weight": 8.0
+    },
+    {
+      "gap": -0.07038949425879526,
+      "loss_contribution": 0.09208654653405833,
+      "model": 6.430926280106575,
+      "moment": "old_total_estate_wealth_to_annual_income_median_7684",
+      "target": 6.50131577436537,
+      "weight": 18.585767349158665
+    },
+    {
+      "gap": 0.0016836100517948482,
+      "loss_contribution": 0.026744442354185393,
+      "model": 0.6100167497009259,
+      "moment": "old_nonhousing_ge_1x_income_share_6575",
+      "target": 0.608333139649131,
+      "weight": 9435.18732291246
+    },
+    {
+      "gap": 0.18972652104273724,
+      "loss_contribution": 5.759384445916835,
+      "model": 0.9539874910427373,
+      "moment": "old_age_own_rate",
+      "target": 0.76426097,
+      "weight": 160.0
+    },
+    {
+      "gap": -0.1073414206487655,
+      "loss_contribution": 0.06913308352137133,
+      "model": 5.672629061293202,
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "target": 5.779970481941968,
+      "weight": 6.0
+    }
+  ],
+  "determinism_repeat": {
+    "max_abs_moment_difference": 0.0,
+    "target_scaled_difference_norm": 0.0
+  },
+  "elapsed_sec": 1349.694919066038,
+  "leave_one_moment_out": [
+    {
+      "condition_number": 6128.520024060171,
+      "dropped_moment": "tfr",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00016317153180116326,
+      "smallest_singular_value": 0.03175914415792373
+    },
+    {
+      "condition_number": 3446.23800364154,
+      "dropped_moment": "tfr",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.0002901714852379113,
+      "smallest_singular_value": 0.15580437111917764
+    },
+    {
+      "condition_number": 7126.963004234822,
+      "dropped_moment": "childless_rate",
+      "rank_rel_1e_2": 7,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00014031221986220537,
+      "smallest_singular_value": 0.02730982590656634
+    },
+    {
+      "condition_number": 4451.939339522397,
+      "dropped_moment": "childless_rate",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00022462120971021132,
+      "smallest_singular_value": 0.12063518935103403
+    },
+    {
+      "condition_number": 7185.503092016269,
+      "dropped_moment": "own_rate",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00013916910022780294,
+      "smallest_singular_value": 0.026908812769953733
+    },
+    {
+      "condition_number": 3060.404367006216,
+      "dropped_moment": "own_rate",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00032675420633327334,
+      "smallest_singular_value": 0.1738095616339827
+    },
+    {
+      "condition_number": 11083.511458765814,
+      "dropped_moment": "own_family_gap",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 9.022411387585224e-05,
+      "smallest_singular_value": 0.01754331765717497
+    },
+    {
+      "condition_number": 5953.287359310177,
+      "dropped_moment": "own_family_gap",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00016797442146583574,
+      "smallest_singular_value": 0.09021378826545416
+    },
+    {
+      "condition_number": 13639.73173378305,
+      "dropped_moment": "housing_increment_0to1",
+      "rank_rel_1e_2": 7,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 7.331522492654222e-05,
+      "smallest_singular_value": 0.014247774098580806
+    },
+    {
+      "condition_number": 7926.711825588692,
+      "dropped_moment": "housing_increment_0to1",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00012615571525785007,
+      "smallest_singular_value": 0.06769567544029347
+    },
+    {
+      "condition_number": 6671.453241103131,
+      "dropped_moment": "prime30_55_childless_renter_mean_rooms",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00014989237934532072,
+      "smallest_singular_value": 0.02916213490312226
+    },
+    {
+      "condition_number": 3804.8548896536226,
+      "dropped_moment": "prime30_55_childless_renter_mean_rooms",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00026282211253818294,
+      "smallest_singular_value": 0.14112746598551343
+    },
+    {
+      "condition_number": 8933.546426918532,
+      "dropped_moment": "prime30_55_childless_owner_share_rooms_ge6",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00011193762837419229,
+      "smallest_singular_value": 0.02174675575303963
+    },
+    {
+      "condition_number": 4367.397775481791,
+      "dropped_moment": "prime30_55_childless_owner_share_rooms_ge6",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00022896929737289268,
+      "smallest_singular_value": 0.12296292510929523
+    },
+    {
+      "condition_number": 5622.770142468976,
+      "dropped_moment": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00017784828023592245,
+      "smallest_singular_value": 0.009635175632332748
+    },
+    {
+      "condition_number": 12274.09618990792,
+      "dropped_moment": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 8.147239393660822e-05,
+      "smallest_singular_value": 0.04347501884398635
+    },
+    {
+      "condition_number": 15909.986469836429,
+      "dropped_moment": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 6.285360467753315e-05,
+      "smallest_singular_value": 0.012230394279223844
+    },
+    {
+      "condition_number": 10129.96539962033,
+      "dropped_moment": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 9.871702030072875e-05,
+      "smallest_singular_value": 0.05301661381379039
+    },
+    {
+      "condition_number": 8880.916043048084,
+      "dropped_moment": "own_rate_2534",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 0.00011260099691886995,
+      "smallest_singular_value": 0.021334982737511693
+    },
+    {
+      "condition_number": 4124.98632499036,
+      "dropped_moment": "own_rate_2534",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00024242504610056786,
+      "smallest_singular_value": 0.12894858448799001
+    },
+    {
+      "condition_number": 342893.7671390659,
+      "dropped_moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 2.916355139212648e-06,
+      "smallest_singular_value": 0.000567593979872644
+    },
+    {
+      "condition_number": 200138.2281565879,
+      "dropped_moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 4.996546682813646e-06,
+      "smallest_singular_value": 0.0026833619883287383
+    },
+    {
+      "condition_number": 28996.6059819837,
+      "dropped_moment": "old_total_estate_wealth_to_annual_income_median_7684",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 10,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 3.448679478630445e-05,
+      "smallest_singular_value": 0.00671233905336855
+    },
+    {
+      "condition_number": 16705.48064634236,
+      "dropped_moment": "old_total_estate_wealth_to_annual_income_median_7684",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 5.9860594326506174e-05,
+      "smallest_singular_value": 0.03191798513514757
+    },
+    {
+      "condition_number": 10099.77919397113,
+      "dropped_moment": "old_nonhousing_ge_1x_income_share_6575",
+      "rank_rel_1e_2": 7,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 9.901206559019932e-05,
+      "smallest_singular_value": 0.019267219924959892
+    },
+    {
+      "condition_number": 2294.2419688686864,
+      "dropped_moment": "old_nonhousing_ge_1x_income_share_6575",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00043587381521623456,
+      "smallest_singular_value": 0.10458180863710066
+    },
+    {
+      "condition_number": 161112.59717494532,
+      "dropped_moment": "old_age_own_rate",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 6.206839300803664e-06,
+      "smallest_singular_value": 0.0012077925828418686
+    },
+    {
+      "condition_number": 94174.01960563744,
+      "dropped_moment": "old_age_own_rate",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 1.0618639877405616e-05,
+      "smallest_singular_value": 0.005697483443178372
+    },
+    {
+      "condition_number": 15336.46185502867,
+      "dropped_moment": "aggregate_mean_occupied_rooms_18_85",
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "scaling": "target_scaled",
+      "smallest_relative_singular_value": 6.520408745202924e-05,
+      "smallest_singular_value": 0.012691095068417563
+    },
+    {
+      "condition_number": 9776.750742159025,
+      "dropped_moment": "aggregate_mean_occupied_rooms_18_85",
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 11,
+      "scaling": "smm_weighted",
+      "smallest_relative_singular_value": 0.00010228347089670892,
+      "smallest_singular_value": 0.054856699037412346
+    }
+  ],
+  "metadata": {
+    "J": 17,
+    "Nb": 120,
+    "active_domain": [
+      {
+        "lower": 0.8,
+        "name": "beta_annual",
+        "transform": "discount",
+        "upper": 0.9995
+      },
+      {
+        "lower": 0.02,
+        "name": "alpha_cons",
+        "transform": "logit",
+        "upper": 0.98
+      },
+      {
+        "lower": 0.0,
+        "name": "c_bar_0",
+        "transform": "softzero",
+        "upper": 2.0
+      },
+      {
+        "lower": 0.0,
+        "name": "c_bar_n",
+        "transform": "softzero",
+        "upper": 3.0
+      },
+      {
+        "lower": 0.05,
+        "name": "h_bar_0",
+        "transform": "log",
+        "upper": 5.8
+      },
+      {
+        "lower": 0.0,
+        "name": "h_bar_jump",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.0,
+        "name": "h_bar_n",
+        "transform": "softzero",
+        "upper": 5.0
+      },
+      {
+        "lower": -3.0,
+        "name": "psi_child",
+        "transform": "asinh",
+        "upper": 3.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.1,
+        "name": "chi",
+        "transform": "log",
+        "upper": 5.0
+      },
+      {
+        "lower": 0.2,
+        "name": "H0",
+        "transform": "log",
+        "upper": 80.0
+      },
+      {
+        "lower": 0.0,
+        "name": "theta0",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.02,
+        "name": "theta1",
+        "transform": "log",
+        "upper": 16.0
+      },
+      {
+        "lower": 0.0,
+        "name": "tenure_choice_kappa",
+        "transform": "softzero",
+        "upper": 0.12
+      }
+    ],
+    "arm": "M5",
+    "fixed_parameters": {
+      "theta_n": 0.0
+    },
+    "max_iter_eq": 40,
+    "mechanism": {
+      "bequest_spec": "linear_child_scale",
+      "entry_wealth_censor_to_frontier": true,
+      "normalize_bequest_utility": true,
+      "owner_ltv_taper": false,
+      "owner_ltv_taper_end_age": 82.0,
+      "owner_ltv_taper_start_age": 66.0,
+      "owner_ltv_terminal_share": 0.0,
+      "use_age_survival": true
+    },
+    "moment_count": 15,
+    "moment_order": [
+      "tfr",
+      "childless_rate",
+      "own_rate",
+      "own_family_gap",
+      "housing_increment_0to1",
+      "prime30_55_childless_renter_mean_rooms",
+      "prime30_55_childless_owner_share_rooms_ge6",
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "own_rate_2534",
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "old_total_estate_wealth_to_annual_income_median_7684",
+      "old_nonhousing_ge_1x_income_share_6575",
+      "old_age_own_rate",
+      "aggregate_mean_occupied_rooms_18_85"
+    ],
+    "parameter_count": 14,
+    "parameters_perturbed": [
+      "beta_annual",
+      "alpha_cons",
+      "c_bar_0",
+      "c_bar_n",
+      "h_bar_0",
+      "h_bar_jump",
+      "h_bar_n",
+      "psi_child",
+      "kappa_fert",
+      "chi",
+      "H0",
+      "theta0",
+      "theta1",
+      "tenure_choice_kappa"
+    ],
+    "smm_scaling": "sqrt(weight) * d moment per unit-coordinate change",
+    "status": "fresh_tight_m5_identification_jacobian",
+    "target_scaling": "d moment / max(abs(target), 0.1) per unit-coordinate change",
+    "target_set": "candidate_replacement_income_disciplined_v1",
+    "tol_eq": 2.5e-05,
+    "unit_step": 0.005,
+    "winner_arm": "M5",
+    "winner_json": "/scratch/td2248/projects/Fertility_Spring26/output/model/intergen_income_disciplined_recalibration_20260716/report/results.json"
+  },
+  "parameter_column_summary": [
+    {
+      "column_norm": 5.8738959385339164,
+      "parameter": "beta_annual",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 5.487345370558456,
+      "top_abs_loading_2": 1.2090151856740037,
+      "top_abs_loading_3": 1.0583698833434814,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 51.82373571242588,
+      "parameter": "beta_annual",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 48.171228689388094,
+      "top_abs_loading_2": 18.18403064473389,
+      "top_abs_loading_3": 3.4068488383391875,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_3": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535"
+    },
+    {
+      "column_norm": 23.001213137613558,
+      "parameter": "alpha_cons",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 17.876403472683513,
+      "top_abs_loading_2": 8.180496498831642,
+      "top_abs_loading_3": 6.894809875631041,
+      "top_moment_1": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_2": "own_family_gap",
+      "top_moment_3": "old_nonhousing_ge_1x_income_share_6575"
+    },
+    {
+      "column_norm": 416.0219667254463,
+      "parameter": "alpha_cons",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 407.4168946747033,
+      "top_abs_loading_2": 63.35503457169929,
+      "top_abs_loading_3": 33.67310209490196,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_3": "aggregate_mean_occupied_rooms_18_85"
+    },
+    {
+      "column_norm": 26.39020488765113,
+      "parameter": "c_bar_0",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 19.778781121520176,
+      "top_abs_loading_2": 13.360699599267193,
+      "top_abs_loading_3": 8.086260106363913,
+      "top_moment_1": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_2": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_3": "childless_rate"
+    },
+    {
+      "column_norm": 211.73925284217677,
+      "parameter": "c_bar_0",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 206.73111617642886,
+      "top_abs_loading_2": 27.134595220066398,
+      "top_abs_loading_3": 20.570157961089812,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "tfr",
+      "top_moment_3": "prime30_55_parent_3plus_minus_1to2_mean_rooms"
+    },
+    {
+      "column_norm": 27.413108179664373,
+      "parameter": "c_bar_n",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 20.596779387904,
+      "top_abs_loading_2": 16.75229032064178,
+      "top_abs_loading_3": 5.12501896938493,
+      "top_moment_1": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_2": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_3": "childless_rate"
+    },
+    {
+      "column_norm": 47.273509966001,
+      "parameter": "c_bar_n",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 29.076470366658317,
+      "top_abs_loading_2": 24.4518259242677,
+      "top_abs_loading_3": 21.420885488131663,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "tfr",
+      "top_moment_3": "prime30_55_parent_3plus_minus_1to2_mean_rooms"
+    },
+    {
+      "column_norm": 2.951499420937347,
+      "parameter": "h_bar_0",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 1.8463147706443188,
+      "top_abs_loading_2": 1.8331387434870108,
+      "top_abs_loading_3": 1.0765557246252153,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 13.527652742358846,
+      "parameter": "h_bar_0",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 12.282099730611355,
+      "top_abs_loading_2": 3.363653043963893,
+      "top_abs_loading_3": 2.008130325643035,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_3": "prime30_55_childless_renter_mean_rooms"
+    },
+    {
+      "column_norm": 12.083508950978679,
+      "parameter": "h_bar_jump",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 8.553558164395763,
+      "top_abs_loading_2": 6.284680292870719,
+      "top_abs_loading_3": 3.600080726594029,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "housing_increment_0to1",
+      "top_moment_3": "prime30_55_parent_3plus_minus_1to2_mean_rooms"
+    },
+    {
+      "column_norm": 35.09524828889731,
+      "parameter": "h_bar_jump",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 28.745624587419677,
+      "top_abs_loading_2": 15.624261290446908,
+      "top_abs_loading_3": 5.694557470245044,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "housing_increment_0to1",
+      "top_moment_3": "tfr"
+    },
+    {
+      "column_norm": 5.635239986393578,
+      "parameter": "h_bar_n",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 3.6708419939235797,
+      "top_abs_loading_2": 3.645628498076935,
+      "top_abs_loading_3": 1.5187957509355172,
+      "top_moment_1": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_2": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 17.572148076878282,
+      "parameter": "h_bar_n",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 15.919964062250282,
+      "top_abs_loading_2": 3.817717542920376,
+      "top_abs_loading_3": 3.6754481482739516,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_3": "prime30_55_childless_owner_minus_renter_mean_rooms"
+    },
+    {
+      "column_norm": 17.096470752027717,
+      "parameter": "psi_child",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 14.329910304428605,
+      "top_abs_loading_2": 5.90503438701321,
+      "top_abs_loading_3": 5.8929184975789966,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "own_family_gap",
+      "top_moment_3": "childless_rate"
+    },
+    {
+      "column_norm": 34.56381757859478,
+      "parameter": "psi_child",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 20.64599090375752,
+      "top_abs_loading_2": 16.640211187299013,
+      "top_abs_loading_3": 12.446437515893969,
+      "top_moment_1": "tfr",
+      "top_moment_2": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_3": "prime30_55_childless_owner_minus_renter_mean_rooms"
+    },
+    {
+      "column_norm": 22.622214204081885,
+      "parameter": "kappa_fert",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 21.707398355697798,
+      "top_abs_loading_2": 3.4011824400674753,
+      "top_abs_loading_3": 3.379298450566787,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_3": "childless_rate"
+    },
+    {
+      "column_norm": 32.078823086657316,
+      "parameter": "kappa_fert",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 17.945475021838927,
+      "top_abs_loading_2": 14.56986698260257,
+      "top_abs_loading_3": 13.477158785788003,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "top_moment_3": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535"
+    },
+    {
+      "column_norm": 190.925899987364,
+      "parameter": "chi",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 183.2090834309945,
+      "top_abs_loading_2": 44.53657826217156,
+      "top_abs_loading_3": 22.448165967882304,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "own_rate_2534",
+      "top_moment_3": "own_rate"
+    },
+    {
+      "column_norm": 336.19918291772245,
+      "parameter": "chi",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 236.9295461688719,
+      "top_abs_loading_2": 135.90257917537298,
+      "top_abs_loading_3": 129.18300169617214,
+      "top_moment_1": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_2": "own_rate_2534",
+      "top_moment_3": "own_rate"
+    },
+    {
+      "column_norm": 17.258312749074527,
+      "parameter": "H0",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 12.411354022105696,
+      "top_abs_loading_2": 9.958587621719653,
+      "top_abs_loading_3": 3.015852944560587,
+      "top_moment_1": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_2": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 43.164555933995416,
+      "parameter": "H0",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 26.314387414115117,
+      "top_abs_loading_2": 19.294935193981093,
+      "top_abs_loading_3": 13.932110130238659,
+      "top_moment_1": "aggregate_mean_occupied_rooms_18_85",
+      "top_moment_2": "prime30_55_childless_renter_mean_rooms",
+      "top_moment_3": "old_nonhousing_ge_1x_income_share_6575"
+    },
+    {
+      "column_norm": 0.8207140535800598,
+      "parameter": "theta0",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 0.6468125030626496,
+      "top_abs_loading_2": 0.4392706408443862,
+      "top_abs_loading_3": 0.15408268544871878,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_3": "prime30_55_parent_3plus_minus_1to2_mean_rooms"
+    },
+    {
+      "column_norm": 18.195680703176848,
+      "parameter": "theta0",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 18.128835790760363,
+      "top_abs_loading_2": 1.0271439995275682,
+      "top_abs_loading_3": 0.7460107080791282,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_3": "old_age_own_rate"
+    },
+    {
+      "column_norm": 3.6323038687135036,
+      "parameter": "theta1",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 2.990397320731958,
+      "top_abs_loading_2": 1.236705251172142,
+      "top_abs_loading_3": 0.930047349317943,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 35.23084127318014,
+      "parameter": "theta1",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 34.662326893670496,
+      "top_abs_loading_2": 4.63414751468708,
+      "top_abs_loading_3": 1.8566047788735152,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "prime30_55_childless_owner_minus_renter_mean_rooms",
+      "top_moment_3": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535"
+    },
+    {
+      "column_norm": 5.071538785802558,
+      "parameter": "tenure_choice_kappa",
+      "scaling": "target_scaled",
+      "top_abs_loading_1": 3.0640583415881033,
+      "top_abs_loading_2": 2.909181526931389,
+      "top_abs_loading_3": 2.3056690701095466,
+      "top_moment_1": "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+      "top_moment_2": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "top_moment_3": "own_family_gap"
+    },
+    {
+      "column_norm": 24.51434352983395,
+      "parameter": "tenure_choice_kappa",
+      "scaling": "smm_weighted",
+      "top_abs_loading_1": 18.173841571337135,
+      "top_abs_loading_2": 11.258683645554617,
+      "top_abs_loading_3": 9.571131329692484,
+      "top_moment_1": "old_total_estate_wealth_to_annual_income_median_7684",
+      "top_moment_2": "old_nonhousing_ge_1x_income_share_6575",
+      "top_moment_3": "prime30_55_childless_owner_minus_renter_mean_rooms"
+    }
+  ],
+  "rank": {
+    "smm_weighted": {
+      "condition_number": 2925.868659662398,
+      "matrix_shape": [
+        15,
+        14
+      ],
+      "rank_rel_1e_2": 9,
+      "rank_rel_1e_3": 12,
+      "relative_singular_values": [
+        1.0,
+        0.3937244031785117,
+        0.13029600855126705,
+        0.10071442302058396,
+        0.07827075101619337,
+        0.05094419626259445,
+        0.022917187551969066,
+        0.02208729645374852,
+        0.012647719130258969,
+        0.004189708283388817,
+        0.0028442812669468354,
+        0.001183883392501492,
+        0.0005634188885512563,
+        0.0003417788411990391
+      ],
+      "scaling": "smm_weighted",
+      "singular_values": [
+        537.0688718915885,
+        211.45712105127225,
+        69.97793032460577,
+        54.09058155487726,
+        42.03678395037438,
+        27.36054201617528,
+        12.308108065463982,
+        11.862399389549802,
+        6.792696245289847,
+        2.250161901314476,
+        1.527574931381515,
+        0.635826918061963,
+        0.30259474687663585,
+        0.1835587766791823
+      ]
+    },
+    "target_scaled": {
+      "condition_number": 6014.160384618939,
+      "matrix_shape": [
+        15,
+        14
+      ],
+      "rank_rel_1e_2": 8,
+      "rank_rel_1e_3": 11,
+      "relative_singular_values": [
+        1.0,
+        0.19764146465987564,
+        0.08526154123311018,
+        0.04273448389614228,
+        0.029763824035093884,
+        0.026586392740735626,
+        0.020081383472456412,
+        0.012562125769466984,
+        0.007312053526506368,
+        0.003551245355219405,
+        0.00261182220438088,
+        0.0007187530107375426,
+        0.00017863836736122202,
+        0.00016627424878083968
+      ],
+      "scaling": "target_scaled",
+      "singular_values": [
+        194.63655171922298,
+        38.468253158134864,
+        16.595012379878913,
+        8.3176925850458,
+        5.7931280761684025,
+        5.174683805709764,
+        3.908571232830312,
+        2.4450488420322443,
+        1.4231928843855834,
+        0.691202150248812,
+        0.5083560675643941,
+        0.13989560754776495,
+        0.034769555827940044,
+        0.03236304642240685
+      ]
+    }
+  },
+  "status": "complete",
+  "theta0_column": {
+    "above_noise_floor": true,
+    "noise_threshold": 1e-08,
+    "repeat_noise_derivative_equivalent_norm": 0.0,
+    "target_scaled_norm": 0.8207140535800598
+  },
+  "weakest_direction": [
+    {
+      "absolute_coefficient": 0.7467330824081739,
+      "coefficient": -0.7467330824081739,
+      "parameter": "h_bar_0",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.47376995347012524,
+      "coefficient": -0.47376995347012524,
+      "parameter": "theta0",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.3089620134008168,
+      "coefficient": -0.3089620134008168,
+      "parameter": "theta1",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.19511510730803375,
+      "coefficient": -0.19511510730803375,
+      "parameter": "tenure_choice_kappa",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.16771273216567448,
+      "coefficient": -0.16771273216567448,
+      "parameter": "kappa_fert",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.16183585209996432,
+      "coefficient": -0.16183585209996432,
+      "parameter": "h_bar_n",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.10876096691003968,
+      "coefficient": 0.10876096691003968,
+      "parameter": "h_bar_jump",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.10218672993076147,
+      "coefficient": 0.10218672993076147,
+      "parameter": "c_bar_n",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.07783503154683416,
+      "coefficient": -0.07783503154683416,
+      "parameter": "c_bar_0",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.02861649444485508,
+      "coefficient": 0.02861649444485508,
+      "parameter": "psi_child",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.027256453714342335,
+      "coefficient": 0.027256453714342335,
+      "parameter": "beta_annual",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.013427802292953444,
+      "coefficient": -0.013427802292953444,
+      "parameter": "chi",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.0037779024687130455,
+      "coefficient": 0.0037779024687130455,
+      "parameter": "alpha_cons",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.00036900985282608965,
+      "coefficient": 0.00036900985282608965,
+      "parameter": "H0",
+      "scaling": "target_scaled",
+      "smallest_singular_value": 0.03236304642240686
+    },
+    {
+      "absolute_coefficient": 0.5765950645397382,
+      "coefficient": -0.5765950645397382,
+      "parameter": "h_bar_0",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.5703368686481598,
+      "coefficient": -0.5703368686481598,
+      "parameter": "theta1",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.49115871652585336,
+      "coefficient": -0.49115871652585336,
+      "parameter": "theta0",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.2425150331151767,
+      "coefficient": 0.2425150331151767,
+      "parameter": "tenure_choice_kappa",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.16514410727435103,
+      "coefficient": 0.16514410727435103,
+      "parameter": "h_bar_n",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.07579993710264234,
+      "coefficient": -0.07579993710264234,
+      "parameter": "kappa_fert",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.07385637244135698,
+      "coefficient": 0.07385637244135698,
+      "parameter": "h_bar_jump",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.0409563023999675,
+      "coefficient": -0.0409563023999675,
+      "parameter": "beta_annual",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.03879669537644056,
+      "coefficient": 0.03879669537644056,
+      "parameter": "c_bar_n",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.017156046162014334,
+      "coefficient": 0.017156046162014334,
+      "parameter": "H0",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.011064499723873897,
+      "coefficient": -0.011064499723873897,
+      "parameter": "alpha_cons",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.010799170378040403,
+      "coefficient": -0.010799170378040403,
+      "parameter": "c_bar_0",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.003806936782661893,
+      "coefficient": 0.003806936782661893,
+      "parameter": "psi_child",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    },
+    {
+      "absolute_coefficient": 0.0003480222133124678,
+      "coefficient": -0.0003480222133124678,
+      "parameter": "chi",
+      "scaling": "smm_weighted",
+      "smallest_singular_value": 0.18355877667918233
+    }
+  ]
+}

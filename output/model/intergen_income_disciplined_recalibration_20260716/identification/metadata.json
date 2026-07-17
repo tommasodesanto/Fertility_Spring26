@@ -1,0 +1,148 @@
+{
+  "J": 17,
+  "Nb": 120,
+  "active_domain": [
+    {
+      "lower": 0.8,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.02,
+      "name": "alpha_cons",
+      "transform": "logit",
+      "upper": 0.98
+    },
+    {
+      "lower": 0.0,
+      "name": "c_bar_0",
+      "transform": "softzero",
+      "upper": 2.0
+    },
+    {
+      "lower": 0.0,
+      "name": "c_bar_n",
+      "transform": "softzero",
+      "upper": 3.0
+    },
+    {
+      "lower": 0.05,
+      "name": "h_bar_0",
+      "transform": "log",
+      "upper": 5.8
+    },
+    {
+      "lower": 0.0,
+      "name": "h_bar_jump",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "h_bar_n",
+      "transform": "softzero",
+      "upper": 5.0
+    },
+    {
+      "lower": -3.0,
+      "name": "psi_child",
+      "transform": "asinh",
+      "upper": 3.0
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.0,
+      "name": "tenure_choice_kappa",
+      "transform": "softzero",
+      "upper": 0.12
+    }
+  ],
+  "arm": "M5",
+  "fixed_parameters": {
+    "theta_n": 0.0
+  },
+  "max_iter_eq": 40,
+  "mechanism": {
+    "bequest_spec": "linear_child_scale",
+    "entry_wealth_censor_to_frontier": true,
+    "normalize_bequest_utility": true,
+    "owner_ltv_taper": false,
+    "owner_ltv_taper_end_age": 82.0,
+    "owner_ltv_taper_start_age": 66.0,
+    "owner_ltv_terminal_share": 0.0,
+    "use_age_survival": true
+  },
+  "moment_count": 15,
+  "moment_order": [
+    "tfr",
+    "childless_rate",
+    "own_rate",
+    "own_family_gap",
+    "housing_increment_0to1",
+    "prime30_55_childless_renter_mean_rooms",
+    "prime30_55_childless_owner_share_rooms_ge6",
+    "young_childless_renter_liquid_wealth_to_annual_gross_income_2535",
+    "prime30_55_childless_owner_minus_renter_mean_rooms",
+    "own_rate_2534",
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+    "old_total_estate_wealth_to_annual_income_median_7684",
+    "old_nonhousing_ge_1x_income_share_6575",
+    "old_age_own_rate",
+    "aggregate_mean_occupied_rooms_18_85"
+  ],
+  "parameter_count": 14,
+  "parameters_perturbed": [
+    "beta_annual",
+    "alpha_cons",
+    "c_bar_0",
+    "c_bar_n",
+    "h_bar_0",
+    "h_bar_jump",
+    "h_bar_n",
+    "psi_child",
+    "kappa_fert",
+    "chi",
+    "H0",
+    "theta0",
+    "theta1",
+    "tenure_choice_kappa"
+  ],
+  "smm_scaling": "sqrt(weight) * d moment per unit-coordinate change",
+  "status": "fresh_tight_m5_identification_jacobian",
+  "target_scaling": "d moment / max(abs(target), 0.1) per unit-coordinate change",
+  "target_set": "candidate_replacement_income_disciplined_v1",
+  "tol_eq": 2.5e-05,
+  "unit_step": 0.005,
+  "winner_arm": "M5",
+  "winner_json": "/scratch/td2248/projects/Fertility_Spring26/output/model/intergen_income_disciplined_recalibration_20260716/report/results.json"
+}
