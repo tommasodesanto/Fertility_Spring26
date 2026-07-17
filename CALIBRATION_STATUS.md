@@ -1,6 +1,43 @@
 # Calibration Status
 
-Updated: `2026-07-17` ~1:10am (M5 running on Torch; M6 income-risk feasibility decision memo complete)
+Updated: `2026-07-17` (M5 and its identification audit complete; calibration rewrite merged)
+
+## July 17: M5 complete; identification loop closed; calibration rewrite merged
+
+M5 is the current provisional paper calibration. Its strict winner estimates
+14 parameters against 15 moments, with `theta_n=0` as the only external
+restriction. The exact repeated solve has loss `9.044` and equilibrium
+residual `1.5e-5`. The complete parameter, target-fit, diagnostic, and
+acceptance tables are under
+`output/model/intergen_income_disciplined_recalibration_20260716/report/`.
+The report README has been corrected to state the income process actually used:
+annual persistence `0.9602` and innovation standard deviation `0.0645`. The
+higher-risk specification was not used in M5.
+
+The winner-point identification audit is complete at
+`output/model/intergen_income_disciplined_recalibration_20260716/identification/`.
+The SMM-weighted Jacobian has effective rank 9/14 at relative threshold `1e-2`
+and 12/14 at `1e-3`, with condition number `2925.87`. `theta1` is no longer an
+isolated null direction (column norm `35.23`). The remaining weakest direction
+jointly loads on `h_bar_0`, `theta1`, `theta0`, and
+`tenure_choice_kappa`. Paper prose should therefore use joint-discipline
+language and avoid claims of precise or separate identification; it need not
+report Jacobian signs, ranks, or condition numbers.
+
+After paragraph-level review and Tommaso's approval, the calibration-section
+rewrite requested by Corina was merged from
+`latex/quantification_rewrite_review.tex` into
+`latex/intergenerational_housing_fertility_paper_draft.tex`. The `Income
+process` paragraph remains provisional and includes a footnote flagging both
+missing insurance mechanisms and a possible revision of the Stone--Geary
+structure. The target-fit commentary is current. The full 25-page paper
+compiles cleanly, with all citations and cross-references resolved. The
+downstream graphs and policy sections remain unchanged pending the concurrent
+figure and policy refresh.
+The earlier M4 footnote imposing `tenure_choice_kappa=0` is superseded because
+M5 estimates it at `0.0100`. The rewrite reports the low-risk income process as
+a provisional feasibility restriction and treats the old-age ownership miss
+as a disclosed model limitation.
 
 ## July 17 ~1:10am: M6 income-risk feasibility literature decision
 
@@ -55,8 +92,8 @@ LAUNCHED 2026-07-16 ~23:35: smoke `14054621` (healthy: 14-15/15 ok evals per
 task), nested reference `14054667`, main array `14054668_[1-8]` (8 chains,
 3:55 walltime), collector `14054669` dependency-chained. Job IDs in
 output/model/intergen_income_disciplined_recalibration_20260716/JOB_IDS.txt.
-Morning: pull the collector report, run the two-sided theta1 profile and the
-winner Jacobian, verify at Nb=240 before any promotion.
+The collector, winner-point identification audit, and exact repeated solve
+were subsequently completed; see the July 17 update above.
 Contract: docs/model/m5_recalibration_contract_20260716.md. Code committed
 through this state.
 

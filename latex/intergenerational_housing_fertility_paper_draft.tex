@@ -963,193 +963,267 @@ housing demand equals supply.
 \section{Calibration}
 \label{sec:quant_calibration}
 
+I organize the model parameters into two groups. The first consists of
+parameters assigned from external evidence, measured directly in the data, or
+fixed as maintained restrictions. The second consists of parameters estimated
+internally by matching model moments to their empirical counterparts. I describe
+the two groups in turn, explain which moments are particularly informative
+about the internally estimated parameters, and then report the model's fit.
+
 \subsection{Parameters Set Outside the Estimation}
 
-I fix the financial parameters, the income process, and the housing-supply
-elasticity outside the estimation. I choose the available house sizes to match
-those observed in the ACS and measure the initial wealth distribution of
-entrants directly in the PSID.
+I first describe the parameters assigned outside the estimation. Table~\ref{tab:quant_assigned}
+summarizes their values and sources.
+
+\paragraph{Demographics and preferences.}
+A model period is four years. Households enter adult life at age 18, retire at
+age 66, and live at most through age 85. Survival is certain before retirement
+and thereafter follows four-year probabilities constructed from the combined
+male and female survivor counts in the 2023 Social Security period life table.
+Dependent children remain in the household for an expected 18 years, implying
+a maturity probability of $2/9$ per period. I set risk aversion to $\sigma=2$.
+
+\paragraph{Housing finance and transaction costs.}
+Following \citet{greaneyDynamicUrbanEconomics2025}, I set the annual real
+return on liquid wealth to $i_{\mathrm{ann}}=0.02$, annual housing depreciation
+to $\delta_{\mathrm{ann}}=0.011$, the proportional selling cost to
+$\psi^s=0.06$, and the labor-income tax rate to
+$\tau_{\mathrm{pay}}=0.179$. The return is based on the average ten-year real
+interest rate, depreciation combines BEA residential-structure depreciation
+with an adjustment for the land share of house values, and the tax rate comes
+from OECD data. I set the annual property-tax rate to
+$\tau^p_{\mathrm{ann}}=0.01$. Mortgage debt cannot exceed a share $\phi=0.80$
+of the value of the house, so a purchase requires at least 20 percent equity.
+The benchmark imposes no separate payment-to-income limit.
+
+\paragraph{Income process.}
+I impose a deterministic lifecycle profile of household earnings, $e_a$,
+normalized to average one over working ages. Within age, log income follows an
+annual AR(1) process with persistence $\rho_z=0.960$, which I sample at the
+model's four-year frequency and approximate with a five-state Rouwenhorst
+chain. This persistence is near the upper end of the PSID-based estimates
+summarized by \citet{sommerImplicationsUSTax2018}. I set the annual innovation
+standard deviation to $\sigma_z=0.0645$, below estimates of gross income risk
+in that literature. I treat this variance as provisional rather than as an
+externally validated estimate of income risk.\footnote{With innovation risk in
+the empirical range, households in the lowest persistent-income states cannot
+always finance the model's minimum consumption and housing bundle. This
+conflict may reflect missing insurance mechanisms---the current model has no
+means-tested safety net, family transfers, or labor-supply margin---but it may
+also indicate that the hard minimum requirements implied by the Stone--Geary
+specification are too restrictive. Future revisions will therefore reconsider
+both the missing insurance margins and the Stone--Geary preference structure.}
+The quantitative results are conditional on this restriction.
+
+\paragraph{Housing products and supply.}
+Housing is indivisible and available in a limited assortment of types and
+sizes \citep{davisHousingFinanceMacroeconomy2015}. I represent this lumpiness
+with five owner-occupied house sizes,
+$\{H_k\}_{k=1}^5=\{2,4,6,8,10\}$ rooms. Renters choose housing continuously up
+to $\bar h^R=6$ rooms, the 90th percentile of the rental-room distribution in
+the matched ACS sample. These menus summarize the observed tenure-specific
+distribution of rooms. I set the
+housing-supply elasticity to $\eta=1.75$, following the population-weighted
+metropolitan estimate in \citet{saizGeographicDeterminantsHousing2010}.
+
+\paragraph{Entry wealth and bequests.}
+Households enter at age 18 with a draw from the PSID net-worth-to-income
+distribution of childless renters aged 18--24. I impose $\theta_n=0$, so
+bequest utility does not vary directly with the number of children. Among PSID
+households aged 65--75, the median total-wealth-to-income ratio for households
+with two or more children exceeds that for one-child households by $0.101$.
+Children affect estate accumulation through their effects on housing needs,
+tenure, and saving.
 
 \begin{table}[H]
 \centering
 \caption{Parameters set outside the estimation}
+\label{tab:quant_assigned}
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.05}
 \begin{tabularx}{\textwidth}{@{}
->{\raggedright\arraybackslash}p{0.31\textwidth}
->{\raggedright\arraybackslash}p{0.23\textwidth}
+>{\raggedright\arraybackslash}p{0.32\textwidth}
+>{\raggedright\arraybackslash}p{0.22\textwidth}
 >{\raggedright\arraybackslash}X@{}}
 \toprule
-Parameter & Value & Source \\
+Parameter & Value & Source or restriction \\
 \midrule
-Annual real bond return $i_{\mathrm{ann}}$ & 2.0\% per year &
-U.S. average 10-year real rate, 1962--2024 \\
-Depreciation $\delta_{\mathrm{ann}}$ & 1.1\% per year &
-BEA structures depreciation, adjusted for the residential land share \\
-Property tax $\tau^p_{\mathrm{ann}}$ & 1.0\% per year & \\
-Loan-to-value limit $\phi$ & 0.80 &
-20\% down-payment convention \\
-Sale cost $\psi^s$ & 6\% of sale value &
-\citet{greaneyDynamicUrbanEconomics2025} \\
+Model period & 4 years & Model timing \\
+Entry, retirement, and maximum ages & 18, 66, and 85 & Model timing \\
+Post-retirement survival & Age-specific & 2023 Social Security period life table \\
+Expected years with dependent children & 18 years & Child-maturity restriction \\
 Risk aversion $\sigma$ & 2 & \\
-Bequest curvature shift $\theta_1$ & 0.01 & \\
+Annual real return $i_{\mathrm{ann}}$ & 2.0\% &
+Average 10-year real rate, 1962--2024; \citet{greaneyDynamicUrbanEconomics2025} \\
+Annual housing depreciation $\delta_{\mathrm{ann}}$ & 1.1\% &
+BEA structures depreciation, adjusted for the residential land share;
+\citet{greaneyDynamicUrbanEconomics2025} \\
+Annual property tax $\tau^p_{\mathrm{ann}}$ & 1.0\% & Maintained tax rate \\
+Financed share $\phi$ & 0.80 &
+20\% down-payment restriction; \citet{davisHousingFinanceMacroeconomy2015} \\
+Sale cost $\psi^s$ & 6\% &
+\citet{davisHousingFinanceMacroeconomy2015,greaneyDynamicUrbanEconomics2025} \\
 Labor-income tax $\tau_{\mathrm{pay}}$ & 17.9\% &
-OECD U.S. average \\
-Income profile and risk & deterministic age profile; five-state Rouwenhorst chain &
-\emph{[Source for the lifecycle household-earnings profile and earnings-risk
-parameters to be added]} \\
+OECD U.S. average; \citet{greaneyDynamicUrbanEconomics2025} \\
+Income persistence $\rho_z$ & 0.960 annually & see text \\
+Income innovation standard deviation $\sigma_z$ & 0.0645 annually & see text \\
 Owner house sizes $\{H_k\}$ & $\{2,4,6,8,10\}$ rooms &
-Occupied-room support, ACS \\
-Largest rental unit $\bar h^R$ & 6 rooms &
-90th percentile of rental rooms, matched ACS sample \\
-Housing-supply elasticity $\eta$ & 1.75 &
-Population-weighted U.S. metro estimate, \citet{saizGeographicDeterminantsHousing2010} \\
+Occupied-room distribution in the ACS; see text \\
+Largest rental unit $\bar h^R$ & 6 rooms & Matched ACS rental-size distribution \\
+Housing-supply elasticity $\eta$ & 1.75 & \citet{saizGeographicDeterminantsHousing2010} \\
 Entrant wealth distribution & Wealth-to-income distribution &
-Childless renters ages 25--35 in the PSID \\
+Childless renters aged 18--24 in the PSID \\
 \bottomrule
 \end{tabularx}
 \endgroup
 \end{table}
 
-I set the largest available rental unit to six rooms, corresponding to the
-upper tail of the rental-size distribution in the matched ACS sample. I choose the owner house sizes from the observed support of rooms
-in the ACS. The data therefore determine which housing products are available,
-while the estimation determines how households value them and sort across
-them.
-The housing-supply scale $\bar H$ is not fixed outside the estimation. I
-estimate it jointly with the household parameters, using the ACS mean of
-$5.780$ occupied rooms as its primary target.
+\subsection{Internally Estimated Parameters}
 
-\subsection{Estimated parameters}
-
-The remaining parameters govern saving, housing demand, tenure choice, family
-size, and bequests. I estimate these 14 parameters using 15 moments on family
-size, housing consumption, tenure, lifecycle wealth, and aggregate occupied
-rooms.
+I estimate the remaining 14 parameters internally using 15 moments describing
+completed fertility, childlessness, housing consumption, tenure, wealth
+accumulation, and aggregate occupied housing. Table~\ref{tab:quant_parameters}
+reports the estimates. Although the parameters are chosen jointly, I organize
+the discussion into economic blocks and describe which moments are most
+informative about each block.
 
 \begin{table}[H]
 \centering
-\caption{Parameter estimates}
+\caption{Internally estimated parameters}
+\label{tab:quant_parameters}
 \small
-\begin{tabularx}{0.82\textwidth}{@{}l X r@{}}
+\begin{tabularx}{0.84\textwidth}{@{}l X r@{}}
 \toprule
 Parameter & Interpretation & Estimate \\
 \midrule
-$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.949917 \\
-$\alpha_c$ & Consumption weight & 0.669058 \\
-$\bar c_0$ & Baseline consumption requirement & 1.280000 \\
-$\bar c_n$ & Consumption cost per dependent child & 0.449676 \\
-$\bar h_0$ & Baseline housing requirement & 1.100000 \\
-$\bar h_{\mathrm{jump}}$ & Discrete housing-need jump at the first child & 1.776823 \\
-$\bar h_n$ & Housing requirement per dependent child & 0.926595 \\
-$\psi_{\mathrm{child}}$ & Utility from children & 0.350000 \\
-$\kappa_F$ & Dispersion in family-size choices & 1.000000 \\
-$\kappa_T$ & Dispersion in tenure choices & 0.000000 \\
-$\chi_O$ & Utility premium from owner-occupied housing & 1.150000 \\
-$\theta_0$ & Bequest strength & 0.221498 \\
-$\theta_n$ & Effect of family size on the bequest motive & 1.071100 \\
-$\bar H$ & Housing-supply scale & 7.510000 \\
+$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9912 \\
+$\alpha_c$ & Consumption weight & 0.5912 \\
+$\bar c_0$ & Baseline consumption requirement & 1.2596 \\
+$\bar c_n$ & Consumption cost per dependent child & 0.3929 \\
+$\bar h_0$ & Baseline housing requirement & 0.3915 \\
+$\bar h_{\mathrm{jump}}$ & Housing-need increase with the first child & 1.6021 \\
+$\bar h_n$ & Housing requirement per dependent child & 0.1644 \\
+$\psi_{\mathrm{child}}$ & Utility from children & 0.1979 \\
+$\kappa_F$ & Dispersion in family-size choices & 2.0434 \\
+$\chi_O$ & Utility premium from owner-occupied housing & 1.1133 \\
+$\bar H$ & Housing-supply scale & 8.6456 \\
+$\theta_0$ & Strength of the bequest motive & 0.3118 \\
+$\theta_1$ & Bequest curvature shift & 0.3973 \\
+$\kappa_T$ & Dispersion in tenure choices & 0.0100 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Lifecycle wealth and homeownership profiles identify the saving parameters.
-The discount factor $\beta$ primarily changes asset accumulation, while the
-baseline consumption requirement $\bar c_0$ reduces the resources available
-for saving, housing, and children. I use liquid wealth among young renters,
-old-age nonhousing wealth, and homeownership at young and old ages to separate
-these effects. The separation remains weak because both parameters influence
-tenure through accumulated wealth.
+\paragraph{Saving.}
+The annual discount factor $\beta_{\mathrm{annual}}$ governs households'
+willingness to carry resources across ages. Liquid wealth among young childless
+renters, the older nonhousing-wealth share, and the late-life estate median are
+particularly informative about it.
 
-I identify housing needs from how housing consumption changes with family
-composition. Mean rooms among childless renters identifies the baseline
-requirement $\bar h_0$; the change in rooms when the first child arrives
-identifies $\bar h_{\mathrm{jump}}$; and the difference in rooms between larger
-and smaller families identifies the additional requirement $\bar h_n$. These
-moments also respond to income, wealth, and tenure, so the three estimates are
-strongly correlated.
+\paragraph{Housing demand, tenure, and supply.}
+I use housing-size differences by family composition to discipline the housing
+requirements. Mean rooms among childless renters is particularly informative
+about $\bar h_0$, the increase associated with the first child disciplines
+$\bar h_{\mathrm{jump}}$, and the difference between larger and smaller
+families disciplines $\bar h_n$. The owner--renter rooms difference and the
+share of childless owners in large homes help discipline $\alpha_c$ and
+$\chi_O$. Ownership rates by age and family status are particularly informative
+about $\chi_O$ and $\kappa_T$, while aggregate occupied rooms disciplines the
+housing-supply scale $\bar H$.
 
-The consumption weight $\alpha_c$ changes housing demand in both tenure
-arrangements, while $\chi_O$ changes the value of owner housing relative to
-rental housing. I use the owner-renter room difference, the share of owners in
-large homes, and homeownership by age and family status to distinguish the two.
-The distinction is imperfect because wealth and borrowing constraints also
-affect whether a household owns.
+\paragraph{Consumption needs and family size.}
+The consumption requirement is $\bar c_0+\bar c_n n_s$. Outcomes for childless
+households, including young liquid wealth, are particularly informative about
+the baseline requirement $\bar c_0$, while fertility and differences in housing
+and tenure by family composition help discipline the incremental cost
+$\bar c_n$. Completed fertility and childlessness jointly discipline these
+costs with the direct utility value of children $\psi_{\mathrm{child}}$ and the
+dispersion of family-size choices $\kappa_F$. These parameters are estimated
+jointly because the same family outcomes respond to both the cost and the
+utility value of children.
 
-Completed fertility and childlessness identify the consumption cost of
-children $\bar c_n$, the utility value of children $\psi_{\mathrm{child}}$,
-and the dispersion of family-size choices $\kappa_F$. The three parameters
-have different economic roles: $\bar c_n$ reduces the resources left for other
-goods, $\psi_{\mathrm{child}}$ raises the direct value of children, and
-$\kappa_F$ determines how dispersed choices are across otherwise similar
-households. Nevertheless, these effects can substitute for one another
-locally. Homeownership by age and family status identifies $\kappa_T$. Its
-estimate lies on the lower bound at zero, so tenure choices are effectively
-deterministic conditional on the observed state.
+\paragraph{Bequests.}
+The bequest parameters $\theta_0$ and $\theta_1$ govern the strength and wealth
+dependence of the bequest motive. The late-life median estate is particularly
+informative about $\theta_0$, while the older nonhousing-wealth share, together
+with old-age ownership, provides additional information about $\theta_1$.
+These moments also respond to saving and tenure choices, so the two bequest
+parameters are disciplined jointly with those blocks.
 
-Finally, I use old-age wealth and homeownership to identify the overall
-strength of the bequest motive $\theta_0$, and the parent--childless difference
-in old-age wealth to identify how that motive varies with family size through
-$\theta_n$. I do not interpret the estimates as evidence that every preference
-parameter is precisely estimated.\footnote{Several estimates lie at or near the limits of
-the search region.}
+\subsection{Target Moments and Fit}
 
-\subsection{Target moments and fit}
-
-The calibration targets fifteen moments: completed fertility and
-childlessness from the CPS (the June 2024 supplement cells for women 40--44),
-tenure and housing-size moments by age and family status from a matched ACS
-metropolitan sample, aggregate mean occupied rooms from the ACS, and wealth
-moments from the PSID. Table~\ref{tab:quant_fit} compares the data with the
-model.
+The target system combines completed fertility and childlessness from the CPS,
+tenure and housing-size moments by age and family status from the ACS,
+housing responses to changes in the number of children, and wealth moments
+from the PSID. Table~\ref{tab:quant_fit} reports all 15 target moments and their
+model counterparts.
 
 \begin{table}[H]
 \centering
 \caption{Target moments and model fit}
 \label{tab:quant_fit}
 \small
-\begin{tabularx}{0.92\textwidth}{@{}>{\raggedright\arraybackslash}X r r@{}}
+\begin{tabularx}{0.94\textwidth}{@{}>{\raggedright\arraybackslash}X r r@{}}
 \toprule
-Moment & Target & Model \\
+Moment & Data & Model \\
 \midrule
-Owner--renter mean rooms gap (no children at home, 30--55) & 2.419 & 2.153 \\
-Old-age ownership rate (65--75) & 0.764 & 0.927 \\
-Mean occupied rooms (18--85) & 5.780 & 5.485 \\
-Ownership rate (25--34) & 0.341 & 0.266 \\
-Old nonhousing wealth / income, median (65--75) & 2.230 & 2.653 \\
-Family ownership gap & 0.168 & 0.165 \\
-Renter mean rooms (no children at home, 30--55) & 3.805 & 3.951 \\
-Young childless-renter liquid wealth / annual income (25--35) & 0.179 & 0.238 \\
-Ownership rate (30--55) & 0.575 & 0.651 \\
-Owner share with rooms $\ge6$ (no children at home, 30--55) & 0.596 & 0.821 \\
-Housing increment at first birth (rooms) & 0.664 & 0.710 \\
-Completed fertility & 1.918 & 2.101 \\
-Rooms gap, 3$+$ vs.\ 1--2 children (30--55) & 0.368 & 0.339 \\
-Childlessness rate & 0.188 & 0.153 \\
-Old parent--childless nonhousing wealth / income gap (65--75) & 1.007 & 1.062 \\
+\multicolumn{3}{@{}l}{\emph{Family size and family housing}} \\
+Completed fertility & 1.918 & 2.034 \\
+Childlessness rate & 0.188 & 0.189 \\
+Family ownership gap & 0.168 & 0.219 \\
+Housing increment with the first child, rooms & 0.664 & 0.681 \\
+Rooms gap, 3$+$ versus 1--2 children, ages 30--55 & 0.368 & 0.607 \\
+\addlinespace
+\multicolumn{3}{@{}l}{\emph{Tenure and housing consumption}} \\
+Ownership rate, ages 30--55 & 0.575 & 0.658 \\
+Renter mean rooms, no children at home, ages 30--55 & 3.805 & 3.963 \\
+Owner share with rooms $\ge6$, no children at home, ages 30--55 & 0.596 & 0.760 \\
+Owner--renter mean rooms gap, no children at home, ages 30--55 & 2.419 & 2.323 \\
+Ownership rate, ages 25--34 & 0.341 & 0.274 \\
+Ownership rate, ages 65--75 & 0.764 & 0.954 \\
+Mean occupied rooms, ages 18--85 & 5.780 & 5.673 \\
+\addlinespace
+\multicolumn{3}{@{}l}{\emph{Wealth and bequests}} \\
+Young childless-renter liquid wealth / annual income, ages 25--35 & 0.179 & 0.328 \\
+Median total estate wealth / annual income, ages 76--84 & 6.501 & 6.431 \\
+Share with nonhousing wealth $\ge$ annual income, ages 65--75 & 0.608 & 0.610 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-The calibrated equilibrium clears the housing market with a maximum
-relative residual of $6.01\times10^{-5}$.
+The model closely matches childlessness, the housing increment associated with
+the first child, renter mean rooms, the owner--renter rooms difference,
+aggregate occupied rooms, the late-life median estate, and the older
+nonhousing-wealth share. It produces completed fertility of $2.034$, compared
+with $1.918$ in the data. The model overstates the overall ownership rate, the
+family ownership gap, the share of childless owners in large homes, and the
+rooms difference
+between larger and smaller families, while understating ownership at ages
+25--34.
 
-The model currently misses several housing and lifecycle moments. Old-age
-ownership is 0.927 rather than 0.764, the largest contribution to the
-criterion. The share of prime-age childless owners in homes with at least six
-rooms is 0.821 against 0.596, while the owner--renter rooms gap is 2.153 against
-2.419. Aggregate occupied rooms are 5.485 rather than 5.780, and ownership at
-ages 25--34 is 0.266 rather than 0.341. The family ownership gap, by contrast,
-is nearly exact at 0.165 against 0.168.
+The wealth moments reveal a lifecycle tension. The two late-life wealth targets
+are closely matched, but young childless renters accumulate liquid wealth equal
+to $0.328$ of annual income, compared with $0.179$ in the PSID. The estimated
+annual discount factor of $0.9912$ should therefore be read as a joint
+calibration outcome rather than as a direct estimate of household patience.
 
-The model produces completed fertility of 2.101 against 1.918 and a
-childlessness rate of 0.153 against 0.188. The rooms difference between larger
-and smaller families is 0.339 against 0.368, and the old parent--childless
-nonhousing wealth gap is 1.062 against 1.007. The first-child housing increment
-is 0.710 rooms against a target of 0.664. These results remain preliminary.
+The largest miss is old-age ownership: the model produces an ownership rate of
+$0.954$ at ages 65--75, compared with $0.764$ in the ACS. The model has no
+health or long-term-care expense risk and no age-dependent maintenance burden
+that induces older owners to leave homeownership. Together with transaction
+costs and a bequest motive that values the house at death, this makes owner
+housing unusually persistent late in life. The untargeted estate distribution
+shows a related limitation: the model produces an estate p90--p50 ratio of
+$1.75$, compared with $3.45$ in the PSID, and understates nonhousing wealth in
+the upper part of the late-life distribution. I therefore do not use the
+current calibration to draw conclusions that depend on the late-life ownership
+path or portfolio composition.
 
-\clearpage
+The calibration remains provisional because the income variance and the
+late-life exit and portfolio margins require further work. The quantitative
+exercises that follow focus on family housing needs, tenure, and the
+down-payment constraint and should be read conditional on these limitations.
 \section{Lifecycle Housing Patterns}
 \label{sec:quant_baseline}
 
