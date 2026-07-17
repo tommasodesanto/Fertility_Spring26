@@ -1,0 +1,53 @@
+{
+  "gate0_pass": false,
+  "verdict": "STOP — mismatch confirmed, no figures or policy solves generated",
+  "recipe_used": {
+    "description": "Exact recipe specified in the task instructions, reproduced from tools/run_intergen_bequest_exit_chain.py's own public interface",
+    "args": {
+      "arm": "M5",
+      "J": 17,
+      "Nb": 120,
+      "max_iter_eq": 40,
+      "tol_eq": 2.5e-5,
+      "theta1": 0.3972817386975299,
+      "seed_kappa": 0.010017488787185433,
+      "ltv_terminal": 0.4,
+      "seed_theta0": 0.31176482840616865,
+      "seed_theta_n": 0.75
+    },
+    "call_sequence": "active,fixed,mechanism = arm_contract(args); base = common_overrides(args, mechanism); theta = load_theta(results.json, 'M5'); theta.update(fixed); run_model_cp_dt({**base, **theta}, verbose=False)"
+  },
+  "verified_identical_to_record": {
+    "theta_dict": "all 15 keys match output/.../report/results.json winners.M5.theta exactly (visually diffed)",
+    "mechanism_dict": "bequest_spec=linear_child_scale, normalize_bequest_utility=True, owner_ltv_taper=False, owner_ltv_terminal_share=0.0, use_age_survival=True, entry_wealth_censor_to_frontier=True -- matches M5 arm_contract branch exactly",
+    "target_set": "candidate_replacement_income_disciplined_v1 via target_system(), 15 targets, matches target_fit_full.csv moment names exactly"
+  },
+  "reproducibility_within_this_machine": {
+    "run_1_numba_threads_unpinned": {"loss": 8.99896940330704, "residual": 9.324104321982198e-06},
+    "run_2_numba_num_threads_1": {"loss": 8.99896940330704, "residual": 9.324104321982198e-06},
+    "conclusion": "bit-identical across two runs with different NUMBA_NUM_THREADS settings -> deterministic and reproducible on this machine; the mismatch vs. the recorded artifact is systematic, not run-to-run noise"
+  },
+  "hypotheses_ruled_out": [
+    "wrong theta values (visually verified identical to results.json)",
+    "wrong mechanism/arm flags (printed and verified identical to M5 arm_contract spec)",
+    "max_iter_eq passed into base_overrides() affecting anything beyond the pass-through key (read calibration.py:1188-1214; the only max_iter_eq usage is the literal dict key, which the outer common_overrides() call always overwrites with int(args.max_iter_eq) regardless of the internal base_overrides() call's argument -- confirmed the two-stage 'search-then-patch' recipe used by the production chain script is mathematically equivalent to the one-stage direct-(40,2.5e-5) recipe used here for these two keys)",
+    "stale/regenerated data files feeding overrides (income_process_overrides() and external_entry_wealth_overrides_1824() are both pure functions over hardcoded numpy literal arrays / closed-form Rouwenhorst math -- no file I/O, no RNG)",
+    "module-level warm-start/cache state in run_model_cp_dt (read solver.py:987ff -- fresh setup_parameters() + apply_overrides() every call, no persistent global state found)",
+    "within-machine numba thread nondeterminism (ruled out by the bit-identical repeat above)"
+  ],
+  "leading_hypothesis": {
+    "summary": "Cross-platform floating-point non-reproducibility between this local macOS .venv and the Torch cluster environment that actually produced the M5 winner, amplified through a discrete-choice/kinked fixed-point equilibrium solve.",
+    "evidence": [
+      "Local .venv: numpy 1.24.3, numba 0.58.1, numpy linked against MKL from /Users/tommasodesanto/miniconda3/lib, SIMD baseline SSE/SSE2/SSE3 with AVX2/FMA3 found, no AVX512.",
+      "M5 production launch script code/cluster/submit_intergen_income_disciplined_recalibration.sh runs `module load anaconda3/2025.06` on the Torch cluster -- a different anaconda distribution/version than this local .venv, with unknown (likely different) numpy/numba/MKL build and CPU SIMD path (cluster nodes may support AVX512).",
+      "intergen_housing_fertility/kernels.py has multiple @njit(cache=True, parallel=True) kernels using prange (lines ~487, ~752, ~885, ~1056) -- exactly the code shape where different SIMD widths / thread scheduling change floating-point summation order without being a correctness bug.",
+      "The equilibrium price search (scalar_market_refine, Brent's method, tol_eq=2.5e-5) is a deliberately loose research tolerance, not machine epsilon; both the recorded artifact (residual 1.48e-05) and this local solve (residual 9.32e-06) independently satisfy that same tolerance at DIFFERENT price/allocation points -- consistent with a fixed point that is not perfectly unique to floating-point precision under a kinked discrete-choice model.",
+      "Precedent check: this repo's established 'tight repeat, bit-identical' protocol (see CALIBRATION_STATUS.md e.g. July 14/15/16 entries) has only ever been validated same-machine / same-Torch-job (both repeats inside one running process on one node). There is no prior instance in project history of validating 1e-8 cross-machine (local-vs-cluster) reproduction of a Torch-computed winner."
+    ],
+    "magnitude": "All 15 moments differ by 1e-5 to 1e-2 in level (max relative difference ~1.7%, on prime30_55_childless_owner_minus_renter_mean_rooms and young_childless_renter_liquid_wealth_to_annual_gross_income_2535); loss 8.998969 (local) vs 9.044422 (recorded), a 0.5% difference; both are 'strict_converged' under the same tol_eq."
+  },
+  "not_yet_done_due_to_time_budget": [
+    "Did not obtain the exact Torch anaconda3/2025.06 package versions (would require cluster access; SSH to torch failed separately -- see main report) to make the version-mismatch diagnosis fully conclusive rather than well-evidenced-but-circumstantial.",
+    "Did not attempt a bisection (e.g. re-run with AVX512 disabled via NUMBA_CPU_FEATURES, or force numba parallel=False globally) to directly confirm the SIMD/parallel-reduction mechanism, since that risks burning the remaining time budget on a diagnostic that would not change the STOP verdict either way."
+  ]
+}

@@ -81,11 +81,15 @@ def main() -> None:
     cache_path = solution_cache_path(args, outdir)
 
     targets, weights = get_target_set(args.target_set)
-    if args.combined_corrected_spec or args.m4_standard_bequest:
+    if args.combined_corrected_spec or args.m4_standard_bequest or args.m5_income_disciplined:
         targets["aggregate_mean_occupied_rooms_18_85"] = 5.779970481941968
         weights["aggregate_mean_occupied_rooms_18_85"] = 6.0
     if args.m4_standard_bequest and args.target_set != "candidate_replacement_bequest_median_composition_v1":
         raise ValueError("--m4-standard-bequest requires the M4 median-composition target set")
+    if args.m5_income_disciplined and args.target_set != "candidate_replacement_income_disciplined_v1":
+        raise ValueError("--m5-income-disciplined requires the M5 income-disciplined target set")
+    if args.m5_income_disciplined and args.m4_standard_bequest:
+        raise ValueError("choose at most one of --m4-standard-bequest / --m5-income-disciplined")
     policy_records: list[dict[str, Any]] = []
 
     if args.refresh_plots_from_cache:
@@ -116,7 +120,7 @@ def main() -> None:
             quick_first_look_only=bool(args.quick_first_look_only),
             write_csv_sidecars=not args.no_csv,
         )
-        if args.write_classic_draft_figures or args.m4_standard_bequest:
+        if args.write_classic_draft_figures or args.m4_standard_bequest or args.m5_income_disciplined:
             write_classic_draft_outputs(outdir / "classic_draft", baseline)
         write_readme(outdir, source, baseline, args.target_set, targets, policy_records)
         print(
@@ -148,14 +152,14 @@ def main() -> None:
         weights=weights,
         label="baseline",
     )
-    if args.m4_standard_bequest:
+    if args.m4_standard_bequest or args.m5_income_disciplined:
         strict = bool(
             getattr(baseline["sol"], "timings", {}).get(
                 "strict_converged", getattr(baseline["sol"], "converged", False)
             )
         )
         if not strict or float(baseline["market_residual"]) > float(args.tol_eq):
-            raise RuntimeError("M4 diagnostic packet baseline did not converge to its declared tolerance")
+            raise RuntimeError("M4/M5 diagnostic packet baseline did not converge to its declared tolerance")
     if not args.no_save_solution_cache:
         write_solution_cache(
             cache_path,
@@ -182,7 +186,7 @@ def main() -> None:
         quick_first_look_only=bool(args.quick_first_look_only),
         write_csv_sidecars=not args.no_csv,
     )
-    if args.write_classic_draft_figures or args.m4_standard_bequest:
+    if args.write_classic_draft_figures or args.m4_standard_bequest or args.m5_income_disciplined:
         write_classic_draft_outputs(outdir / "classic_draft", baseline)
     if args.run_policy_cases:
         policy_records = write_policy_cases(
@@ -335,6 +339,15 @@ def parse_args() -> argparse.Namespace:
             "child-blind normalized warm-glow, and no-LTV-taper contract."
         ),
     )
+    parser.add_argument(
+        "--m5-income-disciplined",
+        action="store_true",
+        help=(
+            "Re-solve a collected M5 theta with the exact SSA-survival, "
+            "child-blind normalized warm-glow, estimated tenure-kappa, matched "
+            "income-process, 18-24 entrant-wealth, and entry-censoring contract."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -445,6 +458,7 @@ def resolve_grid(args: argparse.Namespace, source: dict[str, Any]) -> dict[str, 
         "entry_wealth_spread_nodes": args.entry_wealth_spread_nodes,
         "combined_corrected_spec": bool(args.combined_corrected_spec),
         "m4_standard_bequest": bool(args.m4_standard_bequest),
+        "m5_income_disciplined": bool(args.m5_income_disciplined),
     }
 
 
@@ -464,18 +478,20 @@ def solve_candidate(
     weights: dict[str, float],
     label: str,
 ) -> dict[str, Any]:
-    if bool(grid.get("m4_standard_bequest", False)):
+    if bool(grid.get("m4_standard_bequest", False)) or bool(grid.get("m5_income_disciplined", False)):
         from tools.run_intergen_bequest_exit_chain import arm_contract, common_overrides
 
+        arm = "M5" if bool(grid.get("m5_income_disciplined", False)) else "M4"
         exact_grid = (int(grid["J"]), int(grid["Nb"]), int(grid["income_states"]), int(grid["n_house"]))
         if exact_grid != (17, 120, 5, 5):
-            raise ValueError(f"M4 diagnostic packet requires grid (17,120,5,5), got {exact_grid}")
+            raise ValueError(f"{arm} diagnostic packet requires grid (17,120,5,5), got {exact_grid}")
 
         contract_args = SimpleNamespace(
-            arm="M4",
+            arm=arm,
             ltv_terminal=0.4,
             theta1=float(theta["theta1"]),
             seed_theta0=float(theta["theta0"]),
+            seed_kappa=float(theta.get("tenure_choice_kappa", 0.0)),
             fixed_theta0=None,
             J=int(grid["J"]),
             Nb=int(grid["Nb"]),
