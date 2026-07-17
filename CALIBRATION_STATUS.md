@@ -23,10 +23,12 @@ the income-risk upgrade is DEFERRED TO M6, which needs a designed
 forbearance/default margin (probe evidence in the M5 contract; this is the
 top morning agenda item).
 
-Launch: `bash code/cluster/launch_m5_income_disciplined.sh` after refreshing
-the Torch login (auth expired ~1am; smoke -> nested ref + 8 chains x 3:55 +
-collector, all dependency-chained, job IDs written to
-output/model/intergen_income_disciplined_recalibration_20260716/JOB_IDS.txt).
+LAUNCHED 2026-07-16 ~23:35: smoke `14054621` (healthy: 14-15/15 ok evals per
+task), nested reference `14054667`, main array `14054668_[1-8]` (8 chains,
+3:55 walltime), collector `14054669` dependency-chained. Job IDs in
+output/model/intergen_income_disciplined_recalibration_20260716/JOB_IDS.txt.
+Morning: pull the collector report, run the two-sided theta1 profile and the
+winner Jacobian, verify at Nb=240 before any promotion.
 Contract: docs/model/m5_recalibration_contract_20260716.md. Code committed
 through this state.
 
