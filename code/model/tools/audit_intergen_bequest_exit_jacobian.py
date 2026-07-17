@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fresh tight-evaluator Jacobian at an A3, M1, M3, or M4 calibration winner.
+"""Fresh tight-evaluator Jacobian at an A3, M1, M3, M4, or M5 calibration winner.
 
 The diagnostic perturbs every active coordinate in the same bounded transformed
 coordinates used by the search. It checkpoints every solve and reports ranks
@@ -41,6 +41,7 @@ from tools.run_intergen_bequest_exit_chain import (
     BASE_DOMAIN,
     M4_THETA0_DOMAIN,
     M4_THETA1_DOMAIN,
+    M5_KAPPA_DOMAIN,
     THETA0_DOMAIN,
     THETA1_DOMAIN,
     THETA_N_DOMAIN,
@@ -56,21 +57,30 @@ from tools.run_intergen_bequest_exit_chain import (
 
 
 ACTIVE_DOMAIN = list(BASE_DOMAIN) + [THETA0_DOMAIN, THETA1_DOMAIN, THETA_N_DOMAIN]
+M5_WINNER_JSON_DEFAULT = (
+    Path(__file__).resolve().parents[3]
+    / "output/model/intergen_income_disciplined_recalibration_20260716/report/results.json"
+)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--winner-json", type=Path, required=True)
+    parser.add_argument(
+        "--winner-json",
+        type=Path,
+        default=None,
+        help="Winner record; defaults to the M5 collector report for --arm M5.",
+    )
     parser.add_argument("--winner-arm", type=str, default=None)
     parser.add_argument("--outdir", type=Path, required=True)
-    parser.add_argument("--arm", choices=("A3", "M1", "M3", "M4"), default="A3")
+    parser.add_argument("--arm", choices=("A3", "M1", "M3", "M4", "M5"), default="A3")
     parser.add_argument("--ltv-terminal", type=float, default=0.4)
     parser.add_argument("--theta1", type=float, default=0.25)
     parser.add_argument("--unit-step", type=float, default=0.005)
     parser.add_argument(
         "--parameter",
         action="append",
-        choices=[row[0] for row in ACTIVE_DOMAIN],
+        choices=[row[0] for row in ACTIVE_DOMAIN + [M5_KAPPA_DOMAIN]],
         help="Restrict the perturbation list; repeatable. Production default is every active coordinate.",
     )
     parser.add_argument("--J", type=int, default=PRODUCTION_J)
@@ -78,7 +88,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-iter-eq", type=int, default=40)
     parser.add_argument("--tol-eq", type=float, default=2.5e-5)
     parser.add_argument("--smoke", action="store_true")
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.winner_json is None:
+        if args.arm != "M5":
+            parser.error(f"--winner-json is required for --arm {args.arm}")
+        args.winner_json = M5_WINNER_JSON_DEFAULT
+        if args.winner_arm is None:
+            args.winner_arm = "M5"
+    return args
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -161,6 +178,7 @@ def main() -> None:
         ltv_terminal=float(args.ltv_terminal),
         theta1=float(args.theta1),
         seed_theta0=0.30,
+        seed_kappa=0.0,
         fixed_theta0=None,
         J=int(args.J),
         Nb=int(args.Nb),
@@ -172,6 +190,12 @@ def main() -> None:
         expected_active = ACTIVE_DOMAIN
     elif args.arm == "M4":
         expected_active = list(BASE_DOMAIN) + [M4_THETA0_DOMAIN, M4_THETA1_DOMAIN]
+    elif args.arm == "M5":
+        expected_active = list(BASE_DOMAIN) + [
+            M4_THETA0_DOMAIN,
+            M4_THETA1_DOMAIN,
+            M5_KAPPA_DOMAIN,
+        ]
     elif args.arm == "A3":
         expected_active = list(BASE_DOMAIN) + [THETA0_DOMAIN]
     else:
@@ -192,6 +216,8 @@ def main() -> None:
         target_set = "candidate_replacement_bequest_internal_v1"
     elif args.arm == "M4":
         target_set = "candidate_replacement_bequest_median_composition_v1"
+    elif args.arm == "M5":
+        target_set = "candidate_replacement_income_disciplined_v1"
     else:
         target_set = PRODUCTION_TARGET_SET
     targets, weights = target_system(target_set)
