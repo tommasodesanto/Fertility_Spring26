@@ -1,6 +1,34 @@
 # Calibration Status
 
-Updated: `2026-07-16` late night (M4 completed and audited; M5 in preparation)
+Updated: `2026-07-17` ~1am (M5 wired, tested, smoke-passed locally; Torch launch blocked on expired login)
+
+## July 17 ~1am: M5 ready to launch; blocked only on Torch credentials
+
+M5 (income-disciplined recalibration) is fully wired, 68 tests pass, and the
+local exact-loop smoke solves finite end to end. Contract (15 moments / 14
+free): M4 set minus the grid-discrete nonhousing median, plus the 65-75
+nonhousing>=1x-income share (0.6083, bootstrap weight 9435.19) and the ACS
+old-age ownership rate (0.76426, weight 160) identifying the freed
+`tenure_choice_kappa` [0,0.12]; 18-24 entrant wealth replaces the circular
+25-35 injection, guarded by state-conditional entry censoring to the feasible
+frontier (relocation with the July-11 gate intact as backstop).
+
+INCOME DECISION REVERSED BY EVIDENCE: Tommaso chose SS sigma=0.20, but
+feasibility probes show ANY sigma in the cited 0.12-0.20 range creates
+interior dead-node mass at age 22 (0.0004-0.0027) -- households near the debt
+frontier pushed onto dead nodes by income shocks. Entry censoring fixes age
+18 only. At rho=0.90 the feasible sigma range gives stationary variance no
+better than the current process, so M5 retains the matched income process and
+the income-risk upgrade is DEFERRED TO M6, which needs a designed
+forbearance/default margin (probe evidence in the M5 contract; this is the
+top morning agenda item).
+
+Launch: `bash code/cluster/launch_m5_income_disciplined.sh` after refreshing
+the Torch login (auth expired ~1am; smoke -> nested ref + 8 chains x 3:55 +
+collector, all dependency-chained, job IDs written to
+output/model/intergen_income_disciplined_recalibration_20260716/JOB_IDS.txt).
+Contract: docs/model/m5_recalibration_contract_20260716.md. Code committed
+through this state.
 
 ## July 16 night: M4 completed, audited at verdict C; M5 preparation underway
 
