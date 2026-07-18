@@ -40,17 +40,13 @@ made — do not re-litigate them.
 
 ## Priority queue (in order)
 
-1. **Fold in advisor feedback.** Guido and Corina received the note + the
-   week's summary (entry-wealth fix, flat-target swap, old-age ownership
-   restored with kappa_T estimated, income-risk impasse with the three
-   candidate fixes). Their replies may reorder everything below.
-2. **Merge the calibration rewrite into the paper draft.** Tommaso's
-   paragraph-approval flow (see the comment header of
-   `quantification_rewrite_review.tex`) governs; once he approves the
-   remaining paragraphs, replace the draft's old calibration section and
-   verify every number and cross-reference survives the merge. The draft's
-   status bullet already says calibration work is ongoing.
-3. **The income-type robustness (pre-designed, awaiting go).** The
+Note: the calibration rewrite is ALREADY MERGED into the paper draft
+(done 2026-07-17; the draft's calibration section, fit table, page-1
+status, policy numbers, and figures are all M5-consistent). Advisor
+feedback (Guido and Corina) is pending — fold it in when it arrives, but
+it is not a work item until then.
+
+1. **The income-type robustness (pre-designed, awaiting Tommaso's go).** The
    prevalent-persistent income-type configuration has teeth: probe 3
    (`~/Desktop/income_risk_advice_20260717/10_topstate_probe_results.txt`,
    corrected cells) moved estate p90/50 from 1.75 to 2.74 at FIXED
@@ -68,17 +64,17 @@ made — do not re-litigate them.
    predeclare which headline policy effects must survive (sign + order of
    magnitude) BEFORE the run. Chain budgets: 8 chains × 3:55 was right for
    M5; reuse. This is a data day + one overnight.
-4. **Feasibility appendix** (cheap, ~an hour): the (rho, sigma) frontier —
+2. **Feasibility appendix** (cheap, ~an hour): the (rho, sigma) frontier —
    dead-node mass and first-failure age — from the existing probe machinery
    (`scratchpad probes are gone; rebuild from the census/probe scripts
    described in the decision memo). It hardens the draft's income footnote
    and is the referee-proofing item the advice memo ranked first.
-5. **Old-age exit margin (design memo only, no code)**: the 0.954-vs-0.764
+3. **Old-age exit margin (design memo only, no code)**: the 0.954-vs-0.764
    miss needs a mechanism (health/LTC expense risk à la De Nardi–French–
    Jones is the leading candidate — it would also eventually unlock income
    risk via the same floor infrastructure). Write the spec memo with
    identification bookkeeping; decide after advisor input.
-6. **Parked, conditional**: equivalence-scale preference redesign (open only
+4. **Parked, conditional**: equivalence-scale preference redesign (open only
    if the measured support schedule rejects c_bar_0 or the type robustness
    breaks the headline results); transfer-floor model version (open if the
    paper later makes welfare claims).
