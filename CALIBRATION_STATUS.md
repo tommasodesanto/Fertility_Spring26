@@ -1,6 +1,33 @@
 # Calibration Status
 
-Updated: `2026-07-18` (transfer-floor probe complete; M5 unchanged)
+Updated: `2026-07-18` (transfer-floor probe + income frontier + sequential-fertility fork; M5 unchanged)
+
+## July 18 afternoon: sequential-fertility fork built, tested, nested (production untouched)
+
+`code/model/intergen_seq_fertility/` is a fork of the production package with
+a fecundity attempt-gate on the one-shot family-formation choice (design:
+`docs/model/sequential_fertility_design_note_20260718.tex`; the readings
+behind it: `docs/model/equivalence_scales_sequential_fertility_readings_20260718.pdf`).
+Childless households now ATTEMPT family formation; success probability
+pi_j = clip(1 - w1*exp(w2*(age-18)), 0, 1), zero at/after 45, all-ones when
+w1=0. Acceptance: (i) with w1=0 the fork reproduces the gate0 M5 local
+baseline BITWISE (loss 8.99896940330704, residual 9.32e-06) and a tiny-config
+side-by-side test asserts array equality against the production package;
+(ii) 77 tests pass in the fork, 4 new; (iii) markov-only guards on the
+non-markov paths. New timing moments: attempt/first-birth hazards by age,
+first-birth age distribution, share of first births 30+, chosen-vs-clock
+childlessness split (synthetic-cohort approximation — at the baseline it
+reads 0.245 vs the exact 0.189 stock, so treat as upper bound pending v1.1
+shadow accounting). Clock smoke at the M5 winner with an ILLUSTRATIVE
+schedule (w1=0.02, w2=0.134): attempt hazards steepen late (0.23->0.52 at
+34-42: racing the clock), realized late hazards capped by pi, TFR
+2.03->1.72, childlessness 0.19->0.31 split chosen 0.17 / clock 0.16, loss
+8.999->10.84 at fixed theta. Artifacts:
+`output/model/seq_fertility_fork_smoke_20260718/`. READY FOR CALIBRATION
+pending: (a) demographic fit of (w1, w2) to Leridon-type schedules, (b)
+timing-moment targets + SEs from NCHS/NSFG/PSID, (c) decision on targets.
+Per-birth sequencing (second-birth hazard, spacing) is a costed v2 state-space
+decision documented in the design note, NOT in this fork.
 
 ## July 18 morning: income-feasibility frontier complete (Torch 14170408)
 
