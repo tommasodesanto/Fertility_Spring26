@@ -38,10 +38,14 @@ housing. Children would stop tilting housing demand entirely, removing the
 paper's mechanism. The experiment therefore prices children through the two
 devices that do work under Cobb--Douglas:
 \[
-u(c,h;n,s) \;=\; e(n,s)^{\,\sigma-1}\,
+u(c,h;n,s) \;=\; \tilde e(n,s)\,
 \frac{\bigl(c^{\alpha(n,s)}\,h^{1-\alpha(n,s)}\bigr)^{1-\sigma}}{1-\sigma}
 \;+\;\psi\,n_k,
+\qquad \tilde e(n,s) = 1+\gamma_e n_k,
 \]
+where $\tilde e$ is the flow-utility multiplier itself (equal to the
+equivalence scale raised to $\sigma-1$; at the maintained $\sigma=2$ the two
+coincide, so $\gamma_e$ parameterizes the scale directly),
 with a \emph{share shifter}
 $\alpha(n,s)=\operatorname{clip}\!\bigl(\alpha_0-(\delta_\alpha^{jump}+
 \delta_\alpha n_k)\,\mathbf{1}\{\text{children present}\},\,0.05,\,0.95\bigr)$
