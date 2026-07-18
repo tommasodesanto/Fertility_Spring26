@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\setlength{\parskip}{3pt}
+\title{\vspace{-1.4em}\textbf{Experiment E1: equivalence-scale preferences with sequential births}\\[2pt]
+\large Design and calibration contract for the \texttt{intergen\_eqscale\_seq} fork}
+\author{Fertility--housing project}
+\date{July 18, 2026 --- an experiment; production and both prior forks untouched}
+\begin{document}
+\maketitle
+\vspace{-1.4em}
+
+\section*{1. What the experiment asks}
+
+Two structural changes at once, each motivated by a measured failure of the
+production model, recalibrated on the unchanged 15-moment target system so
+the fit is comparable to M5. First, preferences lose their Stone--Geary
+intercepts, so no income realization is ever infeasible and the income
+process can carry literature-level risk ($\sigma_z=0.20$, set externally)
+with no safety-net apparatus at all. Second, fertility becomes sequential:
+households try for a first child, and one-child households may later try
+for a second, each attempt succeeding with the age-declining fecundity
+probability of the July-18 design note. The question ``take a look'' will
+answer: can this architecture match the same data the production model
+matches, and what do its timing margins and honest income risk do to the
+objects the production model misses (the wealth tail, young liquid wealth,
+the childlessness composition)?
+
+\section*{2. Preferences: why not textbook Barten scales}
+
+The obvious equivalence-scale implementation --- divide each good by a
+child-dependent scale inside the existing composite --- is \emph{inert}
+here: the period composite is Cobb--Douglas, so good-specific scales enter
+log-additively and cancel from the allocation between consumption and
+housing. Children would stop tilting housing demand entirely, removing the
+paper's mechanism. The experiment therefore prices children through the two
+devices that do work under Cobb--Douglas:
+\[
+u(c,h;n,s) \;=\; e(n,s)^{\,\sigma-1}\,
+\frac{\bigl(c^{\alpha(n,s)}\,h^{1-\alpha(n,s)}\bigr)^{1-\sigma}}{1-\sigma}
+\;+\;\psi\,n_k,
+\]
+with a \emph{share shifter}
+$\alpha(n,s)=\operatorname{clip}\!\bigl(\alpha_0-(\delta_\alpha^{jump}+
+\delta_\alpha n_k)\,\mathbf{1}\{\text{children present}\},\,0.05,\,0.95\bigr)$
+--- children tilt expenditure toward housing, the demographic-taste-shifter
+tradition of the consumption literature --- and a \emph{composite deflator}
+$e(n,s)=1+\gamma_e n_k$, the utility cost of children (with $\sigma=2$ the
+deflator multiplies the negative CRRA term, so larger families need more of
+both goods to reach the same standard of living). There are no intercepts:
+marginal utility diverges as consumption or housing services approach zero,
+every strictly positive income draw admits a feasible choice, and the
+empty-budget-set machinery (gates, censoring, floors) has nothing to catch.
+The honest cost, stated once: the childless necessity structure is gone ---
+poor childless households are no longer disciplined by a committed bundle
+--- so the income and tenure gradients must be carried by the borrowing
+constraint, prices, and the two new parameters. Whether they can be is part
+of what the recalibration tests.
+
+\section*{3. Fertility: the sequential margin}
+
+As specified in the July-18 design note, with the v2 extension now active:
+childless households choose \{wait, try for the first child\}; households
+with one child and the window open choose \{stop, try for the second\};
+attempts succeed with probability $\pi_j$ (external schedule, illustrative
+until the demographic fit); a second birth lands in the existing
+two-children raising state with the \emph{youngest-child clock restarted}.
+The state grid does not grow: the collapse of per-child ages to one clock
+--- the reason sequencing was originally dropped --- is retained, at the
+approximation that the first child's maturation rides the youngest's
+restarted clock (small against an 18-year expected duration). New measured
+objects: first- and second-birth attempt and realized hazards by age, the
+flow progression from one to two children, and the chosen-versus-clock
+childlessness split. TFR and completed-fertility measurement are unchanged.
+
+\section*{4. The E1 calibration contract}
+
+Torch, 8 chains $\times$ 3:55 (the M5 template), smoke first. Targets: the
+15 M5 moments, weights unchanged --- timing moments are reported
+diagnostics, not targets, until their data counterparts are built.
+Twelve free parameters, over-identified by construction:
+
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+Parameter & Domain (transform) & Note \\
+\midrule
+$\beta$ (annual) & $[0.80, 0.9995]$ (discount) & external floor 0.94 still respected in reporting \\
+$\alpha_0$ (\texttt{alpha\_cons}) & $[0.02, 0.98]$ (logit) & childless housing share \\
+$\delta_\alpha^{jump}$ & $[0, 0.25]$ (softzero) & share tilt, any child \\
+$\delta_\alpha$ & $[0, 0.25]$ (softzero) & share tilt per child \\
+$\gamma_e$ & $[0, 3]$ (softzero) & composite deflator per child \\
+$\psi$ (\texttt{psi\_child}) & $[-3, 3]$ (asinh) & child utility \\
+$\kappa_f$ & $[0.02, 50]$ (log) & fertility logit scale \\
+$\chi$ & $[0.10, 5]$ (log) & \\
+$H_0$ & $[0.20, 80]$ (log) & \\
+$\theta_0$ & $[0, 8]$ (softzero) & bequest \\
+$\theta_1$ & $[0.02, 16]$ (log) & bequest luxury \\
+$\kappa_T$ (\texttt{tenure\_choice\_kappa}) & $[0, 0.12]$ (softzero) & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+External restrictions (none free, none silent): $\theta_n=0$; $\sigma=2$;
+$\phi=0.80$; income process $\rho_z=0.9602$, $\sigma_z=0.20$ (SS-range,
+\emph{the experiment's point}); fecundity $(\omega_1,\omega_2,\bar a)=
+(0.02, 0.134, 45)$ illustrative pending the demographic fit; no transfer
+floor; the five Stone--Geary floor parameters do not exist in this
+specification; entry wealth, survival, housing menus, taxes as in M5.
+Seeds: M5 winner for shared coordinates; $(\delta_\alpha^{jump},
+\delta_\alpha, \gamma_e) = (0.10, 0.05, 0.5)$.
+
+Reading protocol for the result: report the full 15-row target-fit table
+against M5's; the timing diagnostics; the estate p90/p50 and young liquid
+wealth (the two objects honest risk moves in opposite directions in the
+production model); and the childlessness composition. This is an
+experiment: a failure to fit is itself the answer to a question worth
+asking, and nothing in production moves either way.
+
+\end{document}
