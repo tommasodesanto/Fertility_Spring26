@@ -2,6 +2,24 @@
 
 Updated: `2026-07-18` (transfer-floor probe complete; M5 unchanged)
 
+## July 18 morning: income-feasibility frontier complete (Torch 14170408)
+
+The appendix frontier is computed: 28 cells (sigma 0.0645-0.22 x floor
+off/measured x c_bar_0 M5/0.10) at the fixed M5 winner, rho held at 0.9602,
+`output/model/income_feasibility_frontier_20260718/` (README + always-current
+frontier_table.md). Anchor cell reproduces the canonical M5 loss
+9.044422069071352 exactly. Findings: without a floor at the current c_bar_0
+even sigma=0.09 is infeasible (age-22 deaths); the measured floor buys ZERO
+frontier room at the current c_bar_0 (C identical to A cell-for-cell);
+lowering c_bar_0 to 0.10 annual alone reaches sigma=0.18, and the floor adds
+only the last step to 0.20; estate p90/50 rises smoothly 1.81 -> 3.07 along
+the low-bundle floor row; young liquid wealth crosses its target near
+sigma~0.09 but overshoots 7x at sigma=0.20 — the sigma-only trade-off curve
+is now measured, and reconciling the tail with young wealth is the refit's
+problem statement. D's own frontier at 0.22 is a knife-edge debt-amortization
+failure (dead mass <5e-7) — the M6 forbearance note. Feasibility-appendix
+queue item is now a writing task.
+
 ## July 18: transfer-floor probe — measured floor + low c_bar_0 + honest sigma (fixed theta, local)
 
 Probe only; M5 remains the working calibration and nothing was recalibrated.
