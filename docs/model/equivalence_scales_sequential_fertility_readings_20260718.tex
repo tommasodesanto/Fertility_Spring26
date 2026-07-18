@@ -1,0 +1,165 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.95in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\setlength{\parskip}{2pt}
+\usepackage{multicol}
+\title{\vspace{-1.2em}\large\textbf{Readings memo: equivalence scales and sequential fertility}\vspace{-0.6em}}
+\author{\normalsize Fertility--housing project}
+\date{\normalsize July 18, 2026 --- readings only; no model change is proposed here}
+\begin{document}
+\maketitle
+\vspace{-1.6em}
+
+\paragraph{Why these readings.}
+The model's income risk is capped by feasibility: every household must afford
+$\bar c(n) + r\bar h(n)$ each period, the childless bundle is roughly a third
+of mean income, and no measured safety-net guarantee for childless adults
+comes close to that. The July~18 frontier computation makes the bind exact:
+at the calibrated persistence the model is infeasible above
+$\sigma_z\!\approx\!0.09$ without intervention; the measured floor buys no
+room at the current intercept; lowering $\bar c_0$ to $0.10$ of mean income
+plus the floor reaches $\sigma_z=0.20$, where the estate tail nearly closes
+but young liquid wealth overshoots its target seven-fold. Two literatures
+speak to the two structural exits. Equivalence scales replace subtraction
+with division in preferences, so no income realization is ever infeasible.
+Sequential-fertility models make the \emph{timing} of births a priced choice,
+which changes how fertility absorbs risk and housing costs and which moments
+identify it.
+
+\paragraph{1. Equivalence scales.}
+An equivalence scale is a divisor $m(n)$ that converts household spending
+into a per-adult-equivalent standard of living. The expert scales are
+conventions: the OECD ``Oxford'' scale assigns $1$ to the first adult, $0.7$
+to further adults, $0.5$ to a child; the OECD-modified scale (Hagenaars, de
+Vos and Zaidi 1994) uses $0.5$ and $0.3$; the square-root scale divides by
+$\sqrt{\text{household size}}$. The measurement tradition estimates $m$ from
+behavior: Engel's method reads adult welfare off the food budget share,
+Rothbarth's off spending on adult goods, and the two disagree wildly ---
+Deaton and Muellbauer (1986) report that under the most extreme assumptions
+Engel makes children about four times as expensive as Rothbarth. Barten
+(1964) scales each commodity separately, so children change relative shadow
+prices, not just a single deflator. The identification limit is the
+discipline's oldest warning: Pollak and Wales (1979) showed that
+welfare-relevant scale \emph{levels} are not identified from demand data
+alone, and Blundell and Lewbel (1991) sharpened this to ``only changes, not
+levels.'' What survives is either an untestable restriction --- Lewbel's
+(1989) base independence, under which the scale is a utility-free function of
+demographics recoverable from shape-invariant demands --- or a change of
+question: Browning, Chiappori and Lewbel (2013) estimate ``indifference
+scales'' inside a collective model and find singles need one half to three
+quarters of a couple's outlay, couples saving about a third through shared
+consumption. Quantitative life-cycle work sidesteps estimation and imposes a
+scale: Fern\'andez-Villaverde and Krueger (2007) deflate consumption by the
+mean of six published scales; Attanasio, Banks, Meghir and Weber (1999) put
+demographics in the Euler equation as taste shifters; and --- the bridge case
+for us --- Scholz, Seshadri and Khitatrakun (2006) use
+$n_j\,U(c_j/n_j)$ with $n_j=(A_j+0.7K_j)^{0.7}$ \emph{and} scale their
+means-tested floor by the same $n_j$, i.e.\ scale-in-utility and floor-in-institutions
+coexist in a published JPE quantitative model.
+
+For our problem the arithmetic is the point. With $u(c/m(n))$ and no
+translation term, utility is defined for every $c>0$: however low the income
+draw, a feasible choice exists, the empty-budget-set region vanishes
+identically, and $\sigma_z$ becomes an estimable parameter rather than a
+feasibility bound. The honest cost is that our nonhomotheticity lives in the
+intercepts: committed child expenditures make children and housing
+necessities, which is where the fertility--income and tenure gradients come
+from. Under pure scaling, child costs turn proportional to the standard of
+living --- a Becker--Lewis flavored substitution, but a different one, and
+the whole fertility block re-identifies. A modern middle path exists:
+nonhomothetic CES (Comin, Lashkari and Mestieri 2021) has \emph{no}
+subtraction term yet generates non-vanishing necessity/luxury structure
+(their relative Engel elasticities are constants, where Stone--Geary income
+effects ``level off quickly''). Two negative results from this pass: we
+found no structural model with a housing-specific equivalence scale, and no
+paper stating the no-empty-budget-set property explicitly --- the property is
+elementary, but we would be asserting it ourselves.
+
+\paragraph{2. Sequential fertility.}
+The dynamic-programming lineage treats fertility as a repeated discrete
+choice, not a completed quantity. Wolpin (1984) is the canonical estimated
+model: a per-period birth decision from age 15 to 45 under child mortality.
+Hotz and Miller (1988) add imperfect conception control, with child-care
+costs shaping spacing; Arroyo and Zhang (1997) survey the class. Adda,
+Dustmann and Stevens (2017) put sequential births inside occupation, labor
+supply and savings choices and price the career cost of children at 35.3\%
+of lifetime income, three quarters of it from employment interruptions. Two
+papers sit closest to us. Sommer (2016) embeds a binary per-period birth
+choice in a Bewley model where infertility risk rises exponentially with age
+(reaching one at 45) and finds that realistic increases in uninsurable
+earnings risk postpone births and reduce their number --- the tempo and
+quantum margins moving together. Ejrn\ae s and J\o rgensen (2020) estimate
+sequential contraceptive effort with income risk and find abortion access
+functions as an insurance margin. Doepke and Kindermann (2019) make each
+birth require both partners' agreement, a veto structure that matters for
+policy targeting; Baudin, de la Croix and Gobbi (2015) split childlessness
+into poverty-driven (2.5\% of women) and opportunity-cost-driven (8.1\%)
+components. De la Croix and Pommeret (2021) make the option value explicit:
+postponing a birth is delaying an irreversible investment, and enough
+uncertainty pushes first births past a threshold --- against an
+age-declining fecundity schedule calibrated to demographic data. The
+demographers' vocabulary is Bongaarts and Feeney (1998): quantum is the
+lifetime number, tempo the mean age, and observed TFR confounds them. The
+reduced-form housing evidence is timing-shaped too: Dettling and Kearney
+(2014) find house-price increases raise owner births ($+5\%$ per \$10{,}000)
+and depress renter births ($-2.4\%$); Lovenheim and Mumford (2013) find
+\$100{,}000 of housing wealth raises the probability of a birth by 16--18\%
+with no renter effect.
+
+Read against our architecture: we already have period-by-period births in a
+fecund window with the $(n,s)$ child states, so ``sequential'' is not the
+missing piece --- \emph{pricing time} is. Without age-declining fecundity,
+waiting is costless, so the option value of postponement is mispriced and
+risk responses load entirely on the number of children (our $\sigma_z=0.20$
+probe raises childlessness from $0.19$ to $0.28$ at fixed parameters); with
+a biological clock, part of that response becomes delayed first births and
+compressed spacing, which is what the data's timing moments measure. A
+fecundity schedule is two externally calibrated parameters, and it converts
+unused moments --- age at first birth, spacing, birth hazards by age and by
+number of children already born --- into identifying variation. It would
+also let the second-birth housing-response target be what its name says,
+rather than housing-demand discipline.
+
+\paragraph{What this buys, jointly.}
+The two readings answer different halves of one problem. Scales (or
+nonhomothetic CES) remove the feasibility cap on $\sigma_z$ at the cost of
+re-identifying the fertility block; a fecundity-priced sequential structure
+supplies precisely the new timing moments that block would need, and gives
+risk a tempo margin our current model lacks. They are complements, each
+separable, and both are redesigns --- nothing here modifies the model today.
+The near-term income-process question (tail versus young liquid wealth)
+stands unchanged in the meantime.
+
+\begin{footnotesize}
+\begin{multicols}{2}
+\noindent
+Adda, Dustmann, Stevens (2017), \emph{JPE} 125(2).\\
+Arroyo, Zhang (1997), \emph{J.\ Population Economics} 10(1).\\
+Attanasio, Banks, Meghir, Weber (1999), \emph{JBES} 17(1).\\
+Barten (1964), in \emph{Econometric Analysis for National Economic Planning}.\\
+Baudin, de la Croix, Gobbi (2015), \emph{AER} 105(6).\\
+Blundell, Lewbel (1991), \emph{J.\ Econometrics} 50.\\
+Bongaarts, Feeney (1998), \emph{PDR} 24(2).\\
+Browning (1992), \emph{JEL} 30(3).\\
+Browning, Chiappori, Lewbel (2013), \emph{ReStud} 80(4).\\
+Comin, Lashkari, Mestieri (2021), \emph{Econometrica} 89(1).\\
+Deaton, Muellbauer (1986), \emph{JPE} 94(4).\\
+de la Croix, Pommeret (2021), \emph{JET} 193.\\
+Dettling, Kearney (2014), \emph{J.\ Public Economics} 110.\\
+Doepke, Kindermann (2019), \emph{AER} 109(9).\\
+Ejrn\ae s, J\o rgensen (2020), \emph{J.\ Applied Econometrics} 35(5).\\
+Fern\'andez-Villaverde, Krueger (2007), \emph{ReStat} 89(3).\\
+Hagenaars, de Vos, Zaidi (1994), \emph{Poverty Statistics in the Late 1980s}.\\
+Hotz, Miller (1988), \emph{Econometrica} 56(1).\\
+Lewbel (1989), \emph{J.\ Public Economics} 39.\\
+Lovenheim, Mumford (2013), \emph{ReStat} 95(2).\\
+Pollak, Wales (1979), \emph{AER} 69(2).\\
+Scholz, Seshadri, Khitatrakun (2006), \emph{JPE} 114(4).\\
+Sommer (2016), \emph{JME} 83.\\
+Wolpin (1984), \emph{JPE} 92(5).
+\end{multicols}
+\end{footnotesize}
+
+\end{document}
