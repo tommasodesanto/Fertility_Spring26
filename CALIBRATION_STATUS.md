@@ -1,6 +1,28 @@
 # Calibration Status
 
-Updated: `2026-07-18` (transfer-floor probe + income frontier + sequential-fertility fork; M5 unchanged)
+Updated: `2026-07-18 evening` (E1 experiment recalibration LAUNCHED on Torch; M5 unchanged)
+
+## July 18 evening: E1 experiment launched (eqscale + sequential births, Torch 14215946)
+
+The E1 recalibration is running: 8 chains x 3:55, cpu_short, seeds
+2026071801-08, outdir `output/model/eqscale_seq_recalibration_20260718/`
+(remote scratch), submit `code/cluster/submit_intergen_e1_experiment.sh`,
+runner `code/model/intergen_eqscale_seq/run_e1_chain.py`, collector
+`collect_e1.py` (run at collection). Contract: 12 free parameters (M5 set
+minus the five Stone-Geary floors, plus delta_alpha, delta_alpha_jump,
+gamma_e) on the UNCHANGED 15-moment income-disciplined target system;
+externals: theta_n=0, sigma_z=0.20 / rho_z=0.9602 (SS-range, no floor, no
+feasibility apparatus — the experiment's point), fecundity (0.02, 0.134, 45)
+illustrative, preference_spec=eqscale, sequential_births=True. Full table:
+`docs/model/eqscale_seq_experiment_design_20260718.pdf`. Verification chain
+before launch: 87 fork tests green (incl. bitwise nesting to production,
+sequential mass conservation, no-same-period-attempt, mortgage-blind, es
+bitwise-across-rents); 18 adversarially-confirmed review findings fixed
+(incl. a childless-mass-annihilation KFE bug and an ulp-fragile nesting
+guard); local seed smoke loss 470.3 feasible at sigma=0.20 with yliq 0.143
+vs target 0.179 (the floor route's 7x explosion absent under scaling
+preferences); remote 8-chain smoke healthy. Timing moments ride as
+diagnostics. Collection + report next session.
 
 ## July 18 afternoon: sequential-fertility fork built, tested, nested (production untouched)
 
