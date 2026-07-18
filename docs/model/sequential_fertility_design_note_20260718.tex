@@ -1,0 +1,196 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\setlength{\parskip}{3pt}
+\newcommand{\Vb}{V}
+\title{\vspace{-1.4em}\textbf{Design note: sequential fertility with a priced biological clock}\\[2pt]
+\large A nested modification of the intergenerational housing--fertility model}
+\author{Fertility--housing project}
+\date{July 18, 2026 --- design for the \texttt{intergen\_seq\_fertility} fork; no production change}
+\begin{document}
+\maketitle
+\vspace{-1.4em}
+
+\section*{1. Purpose and scope}
+
+In the production model, fertility is a \emph{one-shot family-size choice
+with a recurring clock}: at each fertile age a childless household's
+$\kappa_f$-logit picks among remaining childless and forming a family of
+size $1,\dots,\bar n$; a chosen family arrives with certainty, lands in the
+just-gave-birth stage, and the fertility choice never fires again. The
+choice \emph{recurs} period by period only while childless. What the model
+lacks is a \emph{price of time}: family formation succeeds with certainty
+whenever chosen, so waiting is costless, the option value of postponement is
+degenerate, and every response of fertility to risk, prices, or policy loads
+on completed size rather than on timing. This note specifies the minimal
+modification that prices time --- an age-declining conception probability
+--- together with the new timing moments it makes measurable, the
+identification bookkeeping, and the verification protocol. The goal of the
+fork is a solver that is (i) bit-identical to production when the mechanism
+is off, (ii) tested, and (iii) ready for calibration and for a
+timing-versus-completed-fertility comparison against the production model.
+The payoffs we are buying, beyond fit: policy experiments gain a
+tempo/quantum decomposition (do birth grants create births or move them?),
+housing affordability gains a postponement-induced childlessness channel,
+and age-targeted policies (grants by age, entry-debt relief) acquire an
+economic rather than mechanical age profile. Steady-state comparisons reveal
+tempo in hazard shapes; full announcement-dynamics of tempo require
+transition paths, which remain out of scope here.
+
+Three margins are deliberately \emph{not} added in v1, each one line of why:
+contraception failure (unwanted births) would require family-planning
+moments we do not target; attempt costs (medical, search) are unidentified
+without ART data; within-couple bargaining (Doepke--Kindermann) changes the
+decision unit, which is a different paper.
+
+\section*{2. The modification, as primitives}
+
+\textbf{Current primitive.} During fertile ages $j \in [A_f^{start},
+A_f^{end}]$ a childless household at $(n,s)=(0,0)$ faces a
+$\kappa_f$-smoothed logit over $\{$remain childless$\} \cup \{$form a family
+of size $n'\in\{1,\dots,\bar n\}\}$; the chosen family arrives with
+certainty at $(n',1)$, child stages then age by the existing
+stage-transition machinery, and households with $n\ge 1$ never face the
+fertility choice again.
+
+\textbf{Modified primitive.} The childless household chooses to
+\emph{attempt} family formation at size $n'$. An attempt succeeds within the
+period with probability $\pi_j$, landing at $(n',1)$ exactly as today;
+with probability $1-\pi_j$ it fails, the household remains at $(0,0)$, and
+may attempt again next period inside the window --- retrial is what the
+existing recurring choice already supports for free. The attempt itself is
+costless in v1. The schedule $\pi_j$ is a primitive of the environment,
+\[
+  \pi_j \;=\; \max\bigl\{\,0,\;\min\{1,\;1-\omega_1 e^{\omega_2\,(a_j -
+  A_f^{start})}\}\bigr\},
+  \qquad \pi_j = 0 \text{ for } a_j \ge 45,
+\]
+the four-year-period analogue of the exponential infertility risk in Sommer
+(2016), with $(\omega_1,\omega_2)$ calibrated \emph{externally} to
+demographic conception-within-window schedules by maternal age
+(L\'eridon-type fecundity tables aggregated to the model's four-year
+periods), not estimated in the SMM. Setting $\pi_j \equiv 1$ recovers the
+production model identically; this nesting is the fork's acceptance test.
+
+\textbf{Choice and value.} Each family-formation alternative in the
+fertile-age logit replaces its certain continuation with the lottery
+\[
+  \Vb^{attempt\,n'}_j(b,z,\cdot) \;=\; \pi_j\,\Vb_j(b,z,n',1,\cdot)
+  \;+\; (1-\pi_j)\,\Vb_j(b,z,0,0,\cdot),
+\]
+inside the same $\kappa_f$-logit over alternatives (the remain-childless
+alternative is unchanged). One sentence of
+economics: because $\pi_j$ falls with age, the value of postponing an
+attempt now carries a real cost --- the risk that the window closes --- so
+delay is an insurance margin with a price, and households near the end of
+the window attempt more urgently than the same households earlier in life.
+Nothing else in the household problem changes: budget sets, housing menus,
+tenure choice, location choice, bequests, and the transfer floor added on
+July 18 are untouched.
+
+\textbf{Distribution.} Wherever the population flow currently moves
+attempting mass into the birth state with certainty, it now splits it
+$\pi_j : (1-\pi_j)$ between the birth destination and the unchanged state.
+The accounting identity ``births into $(n+1)$ at age $j$ $=$ $\pi_j \times$
+attempting mass at $j$'' must hold exactly and is a unit test. Measured
+births everywhere in the model (birth grants, entrant creation from matured
+children, completed fertility entering bequest utility) follow realized
+births, not attempts, so all downstream objects update through the same
+realized flow with no further modification.
+
+\section*{3. New measurement}
+
+All of the following are read off population flows; none require simulation.
+Timing resolution is one model period (four years) --- stated once,
+honestly: age at first birth is measured in four-year bins, and spacing in
+whole periods.
+
+\begin{itemize}
+\itemsep1pt
+\item \textbf{Family-formation hazard} $h_j$: realized family formations at
+age $j$ divided by childless mass at $j$; the attempted hazard $h^A_j$
+(attempts over childless mass) is also computable, and $h_j = \pi_j h^A_j$
+by construction. Because the production choice is one-shot in size, v1 has
+no second-birth hazard and no spacing distribution --- families of size two
+form in a single event. Pricing \emph{per-birth} sequencing (a real
+second-birth hazard) requires redesigning the child state to track the
+youngest child's stage jointly with a running birth count; that is the
+costed v2 extension of Section 5, not part of this fork.
+\item \textbf{Age at first birth}: the distribution of realized
+family-formation flows across age bins; headline moments are the mean and
+the share of first births at ages 30 and above.
+\item \textbf{Childlessness decomposition}: completed childlessness splits
+into \emph{chosen} (never attempted during the window) and \emph{clock}
+(attempted at least once, never succeeded). Failed attempters and
+never-attempters occupy the same state, so the exact split requires
+carrying a shadow never-attempted mass through the population flow. In v1
+the split is instead computed by integrating the measured attempt and
+realized hazards over a synthetic cohort --- exact under within-age
+homogeneity of attempt rates and labeled as an approximation otherwise;
+the exact shadow-mass accounting is a v1.1 refinement, and either way it is
+measurement, not a state: the household problem is unchanged.
+\item \textbf{Tempo/quantum readout for policy}: for any policy
+counterfactual, report the change in completed fertility (quantum) and the
+change in the birth-hazard age profile and mean age at birth (tempo). In
+steady-state comparisons the two are linked by cohort accounting; the
+decomposition becomes fully dynamic only on transition paths (out of
+scope).
+\end{itemize}
+
+\section*{4. Identification bookkeeping}
+
+New parameters: $(\omega_1,\omega_2)$ and the window close --- all
+\emph{external} restrictions from demographic schedules; the SMM gains no
+free parameters. New usable moments: the age profile of first-birth hazards, mean age at
+first birth, the over-30 first-birth share, and the chosen/clock
+childlessness split at 45 --- from NCHS/NSFG vital statistics and the PSID
+childbirth history (targets and standard errors to be constructed in a
+separate data pass; that pass is the remaining precondition for
+calibration). These moments over-identify the existing fertility block
+($\psi$, $\kappa_f$, $\bar c_n$, $\bar h_n$, $\bar h_{jump}$), whose
+current discipline is levels and gradients only. One substitution risk to
+watch: the logit scale $\kappa_f$ and the fecundity schedule both smooth
+hazards; they are separated because $\pi_j$ is pinned externally by
+biology, leaving $\kappa_f$ to the choice margin (income and price
+gradients of hazards). A known fixed-$\theta$ tension to expect: the clock
+adds a force for \emph{early} births (attempt while $\pi$ is high), while
+the production calibration generates late first births through savings and
+housing constraints; how these interact under recalibration is exactly the
+timing-versus-completed-fertility question the fork exists to answer.
+
+\section*{5. Verification protocol and deliverables}
+
+(i) \emph{Nesting}: with $\pi_j \equiv 1$ the fork must reproduce the
+production M5 local baseline bit for bit (the same gate0 standard used for
+the July-18 transfer floor: loss and market residual to the last digit).
+(ii) \emph{Unit tests}: fecundity-schedule arithmetic; the birth-flow
+accounting identity; hazard identities $h_j=\pi_j h^A_j$; conservation of
+mass across the $\pi:(1-\pi)$ split; a revive/kill pair mirroring the
+floor-test pattern. (iii) \emph{Smoke}: one GE solve at the M5 winner with
+a demographic $\pi$ schedule, reporting the standard packet plus the new
+timing moments --- the first quantitative look at what the clock does at
+fixed parameters. (iv) \emph{Ready for calibration}: the fork solves, the
+timing moments exist as model output with a documented regeneration
+command, and the comparison protocol is: calibrate the fork on the
+production target system plus timing moments, then compare both models'
+policy experiments with the tempo/quantum readout of Section~3.
+
+The fork lives in \texttt{code/model/intergen\_seq\_fertility/} (a renamed
+copy of the production package with its own tests and drivers); production
+code is not modified. Design decisions above that later prove wrong are
+cheap to revise --- the fork is disposable by construction.
+
+\textbf{The v2 extension, costed.} True per-birth sequencing --- separate
+attempt decisions for the first and second child, a second-birth hazard,
+and a spacing distribution --- requires the child state to track (birth
+count, stage of youngest child) rather than the current (family size, one
+stage clock), touching the transition tensor, the value-function shape,
+both Bellman implementations, three population-flow implementations, and
+every $(n,s)$-keyed policy hook. It is the natural next step if the v1
+comparison shows timing margins matter, and a separate scope decision: v1's
+attempt machinery, fecundity schedule, timing moments, and tests all carry
+over to it unchanged.
+
+\end{document}
