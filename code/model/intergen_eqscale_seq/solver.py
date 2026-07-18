@@ -4230,6 +4230,86 @@ def forward_distribution_markov_income(
                         total_births += float(np.sum(realized2))
                         for i in range(I):
                             births_by_loc[i] += float(np.sum(realized2[:, :, i]))
+                    birth_mass = realized1
+                    birth_mass_total = float(np.sum(birth_mass))
+                    if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
+                        birth_weight = np.zeros((Nb, nt, I, Nz))
+                        birth_weight[:, :, :, zz] = birth_mass
+                        pre_h = mean_housing_childless_weighted_markov(birth_weight, j, hR_pol, P)
+                        birth_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+                        birth_cohort[:, :, :, zz, 1, 1] = realized1
+                        birth_cohort = advance_cohort_horizon_markov_income(
+                            birth_cohort,
+                            j,
+                            event_horizon,
+                            loc_probs,
+                            tenure_choice,
+                            tenure_probs,
+                            bp_pol,
+                            P,
+                            b_grid,
+                            SD,
+                            lmm_idx,
+                            lmm_wt,
+                            tmx_idx,
+                            tmx_wt,
+                            ust,
+                            Pia,
+                            Pi_z,
+                        )
+                        observed_birth_cohort = (
+                            realize_current_choices_markov_income(
+                                birth_cohort,
+                                j + event_horizon,
+                                loc_probs,
+                                tenure_choice,
+                                tenure_probs,
+                                lmm_idx,
+                                lmm_wt,
+                                tmx_idx,
+                                tmx_wt,
+                                use_compiled_scatter=use_compiled_scatter,
+                            )
+                            if bool(getattr(P, "use_postdecision_current_distribution", True))
+                            else birth_cohort
+                        )
+                        post_h = mean_housing_distribution_markov(
+                            observed_birth_cohort, j + event_horizon, hR_pol, P
+                        )
+                        # No-birth control: the same pre-birth households (same
+                        # wealth/tenure mass) propagated childless over the same
+                        # horizon. Differencing post_h against this nets out the
+                        # common lifecycle housing drift, leaving the birth effect.
+                        control_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+                        control_cohort[:, :, :, zz, 0, 0] = birth_mass
+                        control_cohort = advance_cohort_horizon_markov_income(
+                            control_cohort, j, event_horizon, loc_probs, tenure_choice,
+                            tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
+                            tmx_idx, tmx_wt, ust, Pia, Pi_z,
+                        )
+                        observed_control_cohort = (
+                            realize_current_choices_markov_income(
+                                control_cohort,
+                                j + event_horizon,
+                                loc_probs,
+                                tenure_choice,
+                                tenure_probs,
+                                lmm_idx,
+                                lmm_wt,
+                                tmx_idx,
+                                tmx_wt,
+                                use_compiled_scatter=use_compiled_scatter,
+                            )
+                            if bool(getattr(P, "use_postdecision_current_distribution", True))
+                            else control_cohort
+                        )
+                        control_post_h = mean_housing_distribution_markov(
+                            observed_control_cohort, j + event_horizon, hR_pol, P
+                        )
+                        birth_es3_pre_sum += birth_mass_total * pre_h
+                        birth_es3_post_sum += birth_mass_total * post_h
+                        birth_es3_control_post_sum += birth_mass_total * control_post_h
+                        birth_es3_mass += birth_mass_total
                     continue
                 mbp = gc[:, :, :, None] * pa
                 gpf = np.zeros((Nb, nt, I, npar, ncs))

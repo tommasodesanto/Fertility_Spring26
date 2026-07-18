@@ -106,6 +106,11 @@ def test_second_birth_hazard_bounded() -> None:
     )
 
 
+def test_sequential_first_birth_event_study_is_measured() -> None:
+    sol, _, _ = run_fork({**_tiny_markov(), "sequential_births": True}, verbose=False)
+    assert sol.housing_increment_0to1_eventstudy_t3 > 0.0
+
+
 def test_eval_renter_scalar_bitwise_vs_production_across_rents() -> None:
     production = production_eval_renter_scalar.py_func
     fork = eval_renter_scalar.py_func
