@@ -752,6 +752,7 @@ def tenure_logit_kernel(
 @njit(cache=True, parallel=True)
 def full_renter_block_kernel(
     Rv1d,           # (Nb,)
+    Rvt1d,          # (Nb,) debt-blind means-test resources
     Vc_flat,        # (Nb, nc)
     bp_prev,        # (Nb, nc) or zeros (use has_prev to gate)
     has_prev,       # bool/int
@@ -759,6 +760,7 @@ def full_renter_block_kernel(
     cb_v,           # (nc,)
     hb_v,           # (nc,)
     psi_v,          # (nc,)
+    gb_v,           # (nc,)
     ri,
     hR_max,
     c_min,
@@ -792,6 +794,7 @@ def full_renter_block_kernel(
         cbc = cb_v[c]
         hbc = hb_v[c]
         psic = psi_v[c]
+        gc = gb_v[c]
         dc = cbc + ri * hbc
         cap_c = ri * (hR_max - hbc) / (1.0 - alpha)
         ht_cap_c = hR_max - hbc
@@ -800,6 +803,12 @@ def full_renter_block_kernel(
         ht_cap_pow = ht_cap_c ** (1.0 - alpha)
         for b in range(Nb):
             Rvb = Rv1d[b]
+            if gc > 0.0:
+                Tb = gc - Rvt1d[b]
+                if Tb > 0.0:
+                    if Tb > gc:
+                        Tb = gc
+                    Rvb = Rvb + Tb
             current_b = b_grid[b]
             rollover_floor = s_next * (current_b if current_b < 0.0 else 0.0)
             line_floor = -D_next
@@ -885,6 +894,7 @@ def full_renter_block_kernel(
 @njit(cache=True, parallel=True)
 def full_owner_block_kernel(
     Rv1d,           # (Nb,)
+    Rvt1d,          # (Nb,) debt-blind means-test resources
     Vco_flat,       # (Nb, nc)
     bp_prev,        # (Nb, nc) or zeros
     has_prev,
@@ -892,6 +902,7 @@ def full_owner_block_kernel(
     cb_v,           # (nc,)
     hb_v,           # (nc,)
     psi_v,          # (nc,)
+    gb_v,           # (nc,)
     bf_v,           # (nc,) — bmo[i, ten, nn, cs] flattened in F order
     oc,
     hsv,
@@ -919,6 +930,7 @@ def full_owner_block_kernel(
         cbc = cb_v[c]
         hbc = hb_v[c]
         psic = psi_v[c]
+        gc = gb_v[c]
         bf = bf_v[c]
         ht_c = hsv - owner_h_bar_scale * hbc
         if ht_c < 1e-10:
@@ -927,6 +939,12 @@ def full_owner_block_kernel(
         Ko_c = ht_c ** one_minus_alpha_oms
         for b in range(Nb):
             Rvb = Rv1d[b]
+            if gc > 0.0:
+                Tb = gc - Rvt1d[b]
+                if Tb > 0.0:
+                    if Tb > gc:
+                        Tb = gc
+                    Rvb = Rvb + Tb
             # b already contains secured mortgage debt.  Subtract the current
             # collateral floor before rolling only the unsecured component.
             current_unsecured = b_grid[b] - bf

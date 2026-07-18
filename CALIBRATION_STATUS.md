@@ -1,6 +1,33 @@
 # Calibration Status
 
-Updated: `2026-07-17` (M5 and its identification audit complete; calibration rewrite merged)
+Updated: `2026-07-18` (transfer-floor probe complete; M5 unchanged)
+
+## July 18: transfer-floor probe — measured floor + low c_bar_0 + honest sigma (fixed theta, local)
+
+Probe only; M5 remains the working calibration and nothing was recalibrated.
+A default-off means-tested transfer floor `T = min(max(0, G(n,s) - x), G(n,s))`
+with a **debt-blind means test** `x = y + R*max(b,0)` is now in the markov
+solver (kernels + census; `transfer_floor_G0/Gn = 0` reproduces gate0
+bitwise; 73 tests pass). A first round that means-tested on cash-on-hand
+`R*b + y` made every mortgaged owner eligible (79% receipt — floor became a
+mortgage subsidy); the debt-blind test is the correct US-faithful form and a
+regression test now pins it.
+
+Fixed-theta results (`output/model/transfer_floor_probe_20260718/`, README
+has full 15-row fit tables per cell): (1) at the current calibration the
+measured floor (0.13 of mean income + 0.10/child, annual) is never touched —
+zero receipt, bitwise-identical equilibrium; (2) at sigma=0.20 the floor is
+necessary (c_bar_0=0.10 annual alone still dies at age 22 via entry-debt
+renters) and the feasible corridor needs the low bundle (c_bar_0=0.14 dies
+dynamically through debt amortization); (3) estate p90/p50 moves 1.751 ->
+3.065 (target 3.45) at sigma=0.20 with NO type heterogeneity; (4) the refit
+tensions are young liquid wealth 0.323 -> 1.328 (target 0.179; precautionary
+saving from honest persistent risk, with beta_annual >= 0.94 externally
+restricted), childlessness 0.189 -> 0.277, and a partly mechanical drop in
+the 9435-weight 65-75 nonhousing>=1x-income share (0.610 -> 0.415) from
+income-dispersion denominators. Receipt in the working cell: 0.91% of
+households, outlays ~5bp of gross income. No cluster job launched; no
+decision taken on an M6 refit.
 
 ## July 17: M5 complete; identification loop closed; calibration rewrite merged
 

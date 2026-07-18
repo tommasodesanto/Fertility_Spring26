@@ -245,12 +245,14 @@ class LowLevelKernelTests(unittest.TestCase):
         kernel = _python_kernel(full_renter_block_kernel)
         values, bp, consumption, housing = kernel(
             resources,
+            resources,
             continuation,
             previous,
             1,
             grid,
             np.array([0.2]),
             np.array([0.5]),
+            np.array([0.0]),
             np.array([0.0]),
             0.3,
             10.0,
@@ -286,12 +288,14 @@ class LowLevelKernelTests(unittest.TestCase):
         kernel = _python_kernel(full_owner_block_kernel)
         values, bp, consumption = kernel(
             resources,
+            resources,
             np.zeros((grid.size, 1)),
             expected_floor[:, None],
             1,
             grid,
             np.array([0.2]),
             np.array([0.5]),
+            np.array([0.0]),
             np.array([0.0]),
             np.array([collateral_floor]),
             0.4,

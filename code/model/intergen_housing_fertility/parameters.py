@@ -51,6 +51,9 @@ def setup_parameters() -> SimpleNamespace:
     P.h_bar_0 = 4.0
     P.h_bar_jump = 0.75
     P.h_bar_n = 0.60
+    # Means-tested floor guarantee (period units, like c_bar_0); 0 = no floor.
+    P.transfer_floor_G0 = 0.0
+    P.transfer_floor_Gn = 0.0
     P.child_housing_spec = "jump_plus_linear"
     P.owner_h_bar_scale = 1.0
     P.owner_size_cost = 0.0

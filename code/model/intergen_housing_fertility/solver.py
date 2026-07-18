@@ -2012,9 +2012,12 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
     nc = P.n_parity * P.n_child_states
     K = P.n_child_stages
     csm1 = K + 1
+    g0 = float(getattr(P, "transfer_floor_G0", 0.0))
+    gn = float(getattr(P, "transfer_floor_Gn", 0.0))
     c_bar = np.zeros((P.n_parity, P.n_child_states))
     h_bar = np.zeros((P.n_parity, P.n_child_states))
     psi_v = np.zeros((P.n_parity, P.n_child_states))
+    g_bar = np.zeros((P.n_parity, P.n_child_states))
     for nn in range(P.n_parity):
         nk = nn
         for cs in range(P.n_child_states):
@@ -2026,9 +2029,11 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
                 else:
                     h_bar[nn, cs] = P.h_bar_0 + P.h_bar_jump + P.h_bar_n * nk
                 psi_v[nn, cs] = P.psi_child * nk
+                g_bar[nn, cs] = g0 + gn * nk
             else:
                 c_bar[nn, cs] = P.c_bar_0
                 h_bar[nn, cs] = P.h_bar_0
+                g_bar[nn, cs] = g0
 
     triples = np.column_stack(
         [
@@ -2049,9 +2054,11 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
         c_bar=c_bar,
         h_bar=h_bar,
         psi_v=psi_v,
+        g_bar=g_bar,
         cb_flat=c_bar.reshape(1, nc, order="F"),
         hb_flat=h_bar.reshape(1, nc, order="F"),
         psi_flat=psi_v.reshape(1, nc, order="F"),
+        gb_flat=g_bar.reshape(1, nc, order="F"),
         nc=nc,
         b=b_grid.reshape(-1, 1),
         bp=b_grid.reshape(1, -1),
@@ -2115,6 +2122,7 @@ def solve_bellman_full_markov_income(
     cb_v = np.ascontiguousarray(SD.cb_flat.reshape(-1))
     hb_v = np.ascontiguousarray(SD.hb_flat.reshape(-1))
     psi_v_flat = np.ascontiguousarray(SD.psi_flat.reshape(-1))
+    gb_v = np.ascontiguousarray(SD.gb_flat.reshape(-1))
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
     c_pol = np.zeros_like(V)
@@ -2207,21 +2215,24 @@ def solve_bellman_full_markov_income(
                 yj = income_at_state(P, i, j, float(z_value))
                 ri = r_hat[i]
                 Rv = Rg * b + yj
+                Rv_test = Rg * np.maximum(b, 0.0) + yj
                 hRmax = P.hR_max
                 Vcr = flat_nc(Vc[:, 0, i, :, :], Nb, nc)
                 Rv1d_full = np.ascontiguousarray(Rv[:, 0])
+                Rvt1d_full = np.ascontiguousarray(Rv_test[:, 0])
                 if use_full_kernel:
                     bp_prev_r = np.zeros((Nb, nc))
                     has_prev_r = 0
                     Vo_nc, bp_nc, co_nc, ho_nc = full_renter_block_kernel(
-                        Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
-                        cb_v, hb_v, psi_v_flat,
+                        Rv1d_full, Rvt1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
+                        cb_v, hb_v, psi_v_flat, gb_v,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                     )
                 else:
                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
                     d_nc = SD.cb_flat + ri * SD.hb_flat
+                    Rv_eff_nc = Rv + np.clip(SD.gb_flat - Rv_test, 0.0, SD.gb_flat)
                     cap_nc = ri * (hRmax - SD.hb_flat) / (1 - alpha)
                     for c in range(nc):
                         Vbar = Vcr[:, c]
@@ -2232,20 +2243,20 @@ def solve_bellman_full_markov_income(
                         hb_c = SD.hb_flat[0, c]
                         ht_cap_c = max(hRmax - hb_c, 1e-10)
                         lo = renter_floor.copy()
-                        hi = np.maximum(Rv[:, 0] - dc - 1e-6, lo)
+                        hi = np.maximum(Rv_eff_nc[:, c] - dc - 1e-6, lo)
                         bp, val = golden_renter(
-                            lo, hi, Rv[:, 0], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
+                            lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
                             ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
                             gs_alpha1, gs_alpha2, gs_tol, interp_method,
                         )
                         bp_nc[:, c] = bp
                         Vo_nc[:, c] = val
-                    surplus_nc = Rv - d_nc - bp_nc
+                    surplus_nc = Rv_eff_nc - d_nc - bp_nc
                     ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
                     ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
                     cm = (SD.hb_flat + ht_nc) > hRmax
                     if np.any(cm):
-                        ct_cap = np.maximum(Rv - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
+                        ct_cap = np.maximum(Rv_eff_nc - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
                         hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
                         ct_nc[cm] = ct_cap[cm]
                         ht_nc[cm] = hcap[cm]
@@ -2271,8 +2282,8 @@ def solve_bellman_full_markov_income(
                         bp_prev_o = np.zeros((Nb, nc))
                         has_prev_o = 0
                         Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
-                            Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
-                            cb_v, hb_v, psi_v_flat, bf_v,
+                            Rv1d_full, Rvt1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+                            cb_v, hb_v, psi_v_flat, gb_v, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                         )
@@ -2287,14 +2298,14 @@ def solve_bellman_full_markov_income(
                             cs_c_1 = (c + 1) - (nn_c_1 - 1) * ncs
                             bf_c = bmo[i, ten, nn_c_1 - 1, cs_c_1 - 1]
                             lo = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
-                            hi = np.maximum(Rv[:, 0] - oc - cb_c - 1e-6, lo)
+                            hi = np.maximum(Rv_eff_nc[:, c] - oc - cb_c - 1e-6, lo)
                             bp, val = golden_owner(
-                                lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc,
+                                lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, oc, cb_c, pc,
                                 Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method,
                             )
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
-                        co_nc = SD.cb_flat + np.maximum(Rv - oc - SD.cb_flat - bp_nc, P.c_min)
+                        co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
                     Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
                     bd[:, ten, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
                     cd[:, ten, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
@@ -2444,6 +2455,8 @@ def solve_bellman_core(
     stored_bp: np.ndarray | None,
     eval_mode: bool,
 ):
+    if float(getattr(P, "transfer_floor_G0", 0.0)) != 0.0 or float(getattr(P, "transfer_floor_Gn", 0.0)) != 0.0:
+        raise NotImplementedError("transfer floor: markov-income Bellman path only")
     # Backward induction over age `j`. At each `j` we solve (per i, ten):
     # savings choice via golden-section (full mode) or plug-in at
     # stored_bp (eval mode); then tenure choice; then location logit;
@@ -2460,6 +2473,7 @@ def solve_bellman_core(
     npar = P.n_parity
     ncs = P.n_child_states
     nc = SD.nc
+    gb_zero = np.zeros(nc)
     use_compiled_scatter = NUMBA_AVAILABLE and bool(getattr(P, "use_numba_scatter", False))
     beta = P.beta
     Rg = P.R_gross
@@ -2600,8 +2614,8 @@ def solve_bellman_core(
                         bp_prev_r = np.zeros((Nb, nc))
                         has_prev_r = 0
                     Vo_nc, bp_nc, co_nc, ho_nc = full_renter_block_kernel(
-                        Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
-                        cb_v, hb_v, psi_v_flat,
+                        Rv1d_full, Rv1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
+                        cb_v, hb_v, psi_v_flat, gb_zero,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                     )
@@ -2672,8 +2686,8 @@ def solve_bellman_core(
                             bp_prev_o = np.zeros((Nb, nc))
                             has_prev_o = 0
                         Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
-                            Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
-                            cb_v, hb_v, psi_v_flat, bf_v,
+                            Rv1d_full, Rv1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+                            cb_v, hb_v, psi_v_flat, gb_zero, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
                         )
@@ -3414,6 +3428,10 @@ def _dead_mass_census_at_age(
         z_value = float(z_grid[zz])
         y_now = income_at_state(P, int(i), int(j), z_value)
         resources = float(P.R_gross) * b_now + y_now
+        gG = float(SD.g_bar[nn, cs]) if hasattr(SD, "g_bar") else 0.0
+        x_test = float(P.R_gross) * max(b_now, 0.0) + y_now
+        tr = min(max(gG - x_test, 0.0), gG)
+        resources = resources + tr
         if ten == 0:
             floor = float(renter_borrowing_floor(P, b_now, j))
             required_flow = float(SD.c_bar[nn, cs]) + float(r_hat[i]) * float(SD.h_bar[nn, cs])
@@ -3443,6 +3461,7 @@ def _dead_mass_census_at_age(
                 "parity": int(nn),
                 "slack": float(resources - required_flow - floor),
                 "tenure": int(ten),
+                "transfer": tr,
                 "unsecured_position": float(unsecured),
                 "z": z_value,
             }
