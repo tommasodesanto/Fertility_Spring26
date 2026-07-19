@@ -9,7 +9,7 @@ runners are unchanged.
 ## Accepted
 
 - Complete package copy under a separate import namespace.
-- Stable test entry point: 75 class-based and 10 top-level tests.
+- Stable test entry point: 78 class-based and 10 top-level tests.
 - Exact fixed-price M5 household-policy parity.
 - Compiled-scatter distribution parity to machine precision.
 - Confirmed audit defects C1--C5 corrected or hardened here.

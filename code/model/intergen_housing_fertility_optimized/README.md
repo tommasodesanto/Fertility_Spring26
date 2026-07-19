@@ -62,6 +62,11 @@ calibration-throughput smoke. The Torch collector now passes all gates. The
 package remains non-production and no existing import has been redirected,
 because numerical promotion and production adoption are separate decisions.
 
+The bounded six-hour continuation workflow is documented in
+`CALIBRATION_RUNBOOK.md`. It preserves the M5 specification and target system,
+uses recoverable one-CPU Torch chains, and promotes only twice-repeated strict
+winners; loose search losses are never compared with canonical M5.
+
 ## Inherited model documentation
 
 This package is the new one-market quantitative implementation for the

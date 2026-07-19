@@ -109,9 +109,9 @@ removed and excluded from all accepted speedups.
 
 ## Verification
 
-- 75 `unittest` tests pass.
+- 78 `unittest` tests pass.
 - 10 top-level tests pass through the stable direct runner.
-- Total: 85 tests.
+- Total: 88 tests.
 - Saved-price values and every policy/probability array are exactly equal.
 - Saved-price distribution maximum difference: `4.19e-16`.
 - Saved-price largest target-moment difference: `1.69e-14`.
