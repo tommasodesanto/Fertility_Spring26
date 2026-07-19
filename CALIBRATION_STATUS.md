@@ -12,9 +12,12 @@ been redirected. The identified contract remains 14 free parameters against
 Nelder--Mead and four coordinate-pattern chains start around the strict M5
 winner, each with 340 search minutes, a 10-minute strict-repeat reserve, a
 2,000-evaluation cap, one CPU, per-case checkpoints, and two strict winner
-repeats. Torch jobs: exact-loop smoke `14322320_[1-2]`; full array
-`14322344_[1-8]` with `afterok:14322320`; collector `14322345` with
-`afterok:14322344`. The canonical M5 loss `9.044422069071352` remains the
+repeats. Torch jobs: exact-loop smoke `14323974_[1-2]`; full array
+`14323975_[1-8]` with `afterok:14323974`; collector `14323976` with
+`afterok:14323975`. These replace never-started jobs `14322320`, `14322344`,
+and `14322345`, whose smoke was incorrectly assigned by Slurm to the broad
+`all` partition rather than `cpu_short`. The canonical M5 loss
+`9.044422069071352` remains the
 paper benchmark. The collector separately reports the optimized strict-root
 baseline `9.14507565057346` so nearby clearing-price differences cannot be
 misreported as objective improvement. Run contract:
