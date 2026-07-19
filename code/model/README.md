@@ -38,6 +38,11 @@ Useful commands:
 
 ## Fast Intergen One-Run Review
 
+An isolated, non-production M5 refactor is under
+`intergen_housing_fertility_optimized/`. It does not replace or redirect the
+active package. Its `README.md` and `REFACTOR_REPORT.md` contain the exact
+parity commands, benchmark evidence, correctness changes, and promotion gates.
+
 For the one-market intergenerational strand under
 `intergen_housing_fertility/`, the default interactive inspection path should
 stay small: one candidate, one solve or trusted solution cache, one quick plot
