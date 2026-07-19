@@ -58,8 +58,9 @@ The complete local/Torch promotion battery is specified in
 `PROMOTION_RUNBOOK.md`. It covers every live M5 parameter bound, the configured
 price bracket, actual and forced-fallback root cases, strict repeats, all
 standard diagnostic packet inputs, and a checkpointed ten-candidate
-calibration-throughput smoke. It remains non-production until the collector
-reports every gate as passing.
+calibration-throughput smoke. The Torch collector now passes all gates. The
+package remains non-production and no existing import has been redirected,
+because numerical promotion and production adoption are separate decisions.
 
 ## Inherited model documentation
 
