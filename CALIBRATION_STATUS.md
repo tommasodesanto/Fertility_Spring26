@@ -1,6 +1,24 @@
 # Calibration Status
 
-Updated: `2026-07-18 evening` (E1 experiment recalibration LAUNCHED on Torch; M5 unchanged)
+Updated: `2026-07-19` (isolated optimized M5 continuation dependency-queued; M5 unchanged)
+
+## July 19: isolated optimized M5 continuation queued on Torch
+
+An eight-chain, six-hour continuation of the unchanged 15-moment M5 objective
+is dependency-queued using only
+`code/model/intergen_housing_fertility_optimized/`; no production import has
+been redirected. The identified contract remains 14 free parameters against
+15 hard moments with `theta_n=0` externally restricted. Four transformed
+Nelder--Mead and four coordinate-pattern chains start around the strict M5
+winner, each with 340 search minutes, a 10-minute strict-repeat reserve, a
+2,000-evaluation cap, one CPU, per-case checkpoints, and two strict winner
+repeats. Torch jobs: exact-loop smoke `14322320_[1-2]`; full array
+`14322344_[1-8]` with `afterok:14322320`; collector `14322345` with
+`afterok:14322344`. The canonical M5 loss `9.044422069071352` remains the
+paper benchmark. The collector separately reports the optimized strict-root
+baseline `9.14507565057346` so nearby clearing-price differences cannot be
+misreported as objective improvement. Run contract:
+`code/model/intergen_housing_fertility_optimized/CALIBRATION_RUNBOOK.md`.
 
 ## July 18 evening: E1 experiment launched (eqscale + sequential births, Torch 14215946)
 
