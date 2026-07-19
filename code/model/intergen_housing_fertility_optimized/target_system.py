@@ -57,6 +57,21 @@ class TargetSystem:
     def weights_dict(self) -> dict[str, float]:
         return dict(zip(self.moment_names, self.weights))
 
+    def loss(self, moments: Mapping[str, float]) -> float:
+        """Return the weighted squared-error objective in declared row order."""
+
+        missing = [name for name in self.moment_names if name not in moments]
+        if missing:
+            raise KeyError(f"missing target moments: {missing}")
+        return sum(
+            weight * (float(moments[name]) - target) ** 2
+            for name, target, weight in zip(
+                self.moment_names,
+                self.target_values,
+                self.weights,
+            )
+        )
+
     def require_identified(self, free_parameter_count: int) -> None:
         if self.count < int(free_parameter_count):
             raise ValueError(

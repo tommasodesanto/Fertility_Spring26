@@ -54,6 +54,13 @@ PYTHONPATH=$PWD .venv/bin/python -m intergen_housing_fertility_optimized.benchma
 See `REFACTOR_REPORT.md` for current evidence, limitations, and the promotion
 checklist.
 
+The complete local/Torch promotion battery is specified in
+`PROMOTION_RUNBOOK.md`. It covers every live M5 parameter bound, the configured
+price bracket, actual and forced-fallback root cases, strict repeats, all
+standard diagnostic packet inputs, and a checkpointed ten-candidate
+calibration-throughput smoke. It remains non-production until the collector
+reports every gate as passing.
+
 ## Inherited model documentation
 
 This package is the new one-market quantitative implementation for the

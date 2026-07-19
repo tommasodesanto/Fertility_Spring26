@@ -1280,6 +1280,7 @@ def refine_one_market_markov_income(
     sol_best = best_sol
 
     expansions = 0
+    directional_fallback_used = False
     if direct_search:
         direct_expand = max(float(getattr(P, "scalar_market_direct_expand", 1.10)), 1.01)
         lo = hi = p0
@@ -1305,6 +1306,7 @@ def refine_one_market_markov_income(
         # If the directional monotonicity guess did not bracket the root,
         # retain correctness by falling back to the legacy bilateral bracket.
         if ex_lo * ex_hi > 0:
+            directional_fallback_used = True
             lo = max(p_min, p0 / expand)
             hi = min(p_max, p0 * expand)
             ex_lo, metric_lo, sol_lo = eval_price(lo)
@@ -1368,6 +1370,7 @@ def refine_one_market_markov_income(
         "price_evaluations": int(eval_count),
         "price_evaluation_time_sec": float(eval_time),
         "cache_hits": int(cache_hits),
+        "directional_fallback_used": bool(directional_fallback_used),
     }
 
     if ex_lo * ex_hi > 0:
