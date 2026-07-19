@@ -445,6 +445,15 @@ def main() -> None:
     (args.outdir / "summary.json").write_text(
         json.dumps(jsonable(summary), indent=2, sort_keys=True) + "\n"
     )
+    if args.smoke and (
+        len(records) != len(DOMAIN) + 1
+        or summary["n_converged"] != len(records)
+        or summary["n_infeasible"] != 0
+        or summary["n_failed"] != 0
+    ):
+        raise RuntimeError(
+            "exact-loop smoke requires 15/15 converged cases with no infeasibility or program errors"
+        )
 
 
 def run_nelder_mead(
