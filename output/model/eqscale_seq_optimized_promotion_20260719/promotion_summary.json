@@ -1,0 +1,3753 @@
+{
+  "completed_tasks": [
+    "demand-map",
+    "root-case",
+    "strict-repeat",
+    "throughput"
+  ],
+  "demand_map_pass": true,
+  "records": {
+    "demand-map": {
+      "points": [
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 7.02060289401561,
+            "excess_demand": 2.555682754906151,
+            "housing_demand": 6.412287158876389,
+            "housing_supply": 3.8566044039702376,
+            "loss": 120.60854111317542,
+            "market_residual": 0.6626769269555275,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.412287158876387,
+              "childless_rate": 0.11141743121002286,
+              "housing_increment_0to1": 0.9948853444369556,
+              "old_age_own_rate": 0.747357742576417,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6166819999779982,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.874972933177431,
+              "own_family_gap": 0.09756708304431683,
+              "own_rate": 0.6010107506251915,
+              "own_rate_2534": 0.4179690504423446,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.5664253367786243,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.8090366944325632,
+              "prime30_55_childless_renter_mean_rooms": 4.620809221948796,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6944689180641355,
+              "tfr": 2.4770461216703943,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.21664101143620565
+            },
+            "package": "old",
+            "price": [
+              0.6649840994257787
+            ],
+            "timings": {
+              "bellman_full": 5.160310089006089,
+              "bellman_mode": "full_only",
+              "distribution": 1.8575400919653475,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 4.6191108780913055,
+            "excess_demand": 2.555682754906151,
+            "housing_demand": 6.412287158876389,
+            "housing_supply": 3.8566044039702376,
+            "loss": 120.60854111317542,
+            "market_residual": 0.6626769269555275,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.412287158876387,
+              "childless_rate": 0.11141743121002283,
+              "housing_increment_0to1": 0.9948853444369556,
+              "old_age_own_rate": 0.7473577425764169,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6166819999779982,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.874972933177431,
+              "own_family_gap": 0.09756708304431683,
+              "own_rate": 0.6010107506251915,
+              "own_rate_2534": 0.4179690504423446,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.5664253367786243,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.8090366944325632,
+              "prime30_55_childless_renter_mean_rooms": 4.620809221948796,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6944689180641355,
+              "tfr": 2.4770461216703943,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.21664101143620565
+            },
+            "package": "optimized",
+            "price": [
+              0.6649840994257787
+            ],
+            "timings": {
+              "bellman_full": 2.659771893057041,
+              "bellman_mode": "full_only",
+              "distribution": 1.9567087469622493,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.6649840994257787,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.6696037870133296,
+            "excess_demand": 2.248988508516385,
+            "housing_demand": 6.318966170162129,
+            "housing_supply": 4.069977661645744,
+            "loss": 116.88799771846053,
+            "market_residual": 0.5525800619767963,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.318966170162127,
+              "childless_rate": 0.11148681805007193,
+              "housing_increment_0to1": 1.018085700150123,
+              "old_age_own_rate": 0.7436438149952316,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6145894961410079,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.653193304279539,
+              "own_family_gap": 0.09456251765778123,
+              "own_rate": 0.5935735908006201,
+              "own_rate_2534": 0.4109828455283405,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.53438123490353,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7950358848839139,
+              "prime30_55_childless_renter_mean_rooms": 4.561377917076189,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.701873216589818,
+              "tfr": 2.4767210401364856,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.23034237240466138
+            },
+            "package": "old",
+            "price": [
+              0.6857648525328344
+            ],
+            "timings": {
+              "bellman_full": 0.8126580939861014,
+              "bellman_mode": "full_only",
+              "distribution": 1.8543521199608222,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.4072041111066937,
+            "excess_demand": 2.248988508516385,
+            "housing_demand": 6.318966170162129,
+            "housing_supply": 4.069977661645744,
+            "loss": 116.88799771846053,
+            "market_residual": 0.5525800619767961,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.318966170162126,
+              "childless_rate": 0.11148681805007192,
+              "housing_increment_0to1": 1.018085700150124,
+              "old_age_own_rate": 0.7436438149952316,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6145894961410078,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.653193304279539,
+              "own_family_gap": 0.09456251765778123,
+              "own_rate": 0.5935735908006202,
+              "own_rate_2534": 0.41098284552834063,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.534381234903531,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7950358848839139,
+              "prime30_55_childless_renter_mean_rooms": 4.5613779170761894,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.701873216589818,
+              "tfr": 2.4767210401364856,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.23034237240466143
+            },
+            "package": "optimized",
+            "price": [
+              0.6857648525328344
+            ],
+            "timings": {
+              "bellman_full": 0.7643611350795254,
+              "bellman_mode": "full_only",
+              "distribution": 1.640226966002956,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.6857648525328344,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.7200266470899805,
+            "excess_demand": 1.9381315771688374,
+            "housing_demand": 6.226387889925421,
+            "housing_supply": 4.288256312756584,
+            "loss": 115.89882938730157,
+            "market_residual": 0.4519626243896239,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.226387889925425,
+              "childless_rate": 0.11155722267020494,
+              "housing_increment_0to1": 1.0373932605615859,
+              "old_age_own_rate": 0.7398213052584204,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6115928081686266,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.7153700760102515,
+              "own_family_gap": 0.08929584298671733,
+              "own_rate": 0.5864857162415005,
+              "own_rate_2534": 0.40478115488064315,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.496856719058832,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7787097558221309,
+              "prime30_55_childless_renter_mean_rooms": 4.501479610362709,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.699929656910407,
+              "tfr": 2.476389180148428,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.24085288408695593
+            },
+            "package": "old",
+            "price": [
+              0.7065456056398899
+            ],
+            "timings": {
+              "bellman_full": 0.8083809349918738,
+              "bellman_mode": "full_only",
+              "distribution": 1.9091697239782661,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3896228440571576,
+            "excess_demand": 1.9381315771688374,
+            "housing_demand": 6.226387889925421,
+            "housing_supply": 4.288256312756584,
+            "loss": 115.89882938730159,
+            "market_residual": 0.4519626243896241,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.226387889925426,
+              "childless_rate": 0.11155722267020494,
+              "housing_increment_0to1": 1.0373932605615859,
+              "old_age_own_rate": 0.7398213052584205,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6115928081686266,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.7153700760102515,
+              "own_family_gap": 0.08929584298671733,
+              "own_rate": 0.5864857162415005,
+              "own_rate_2534": 0.40478115488064315,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.496856719058832,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7787097558221309,
+              "prime30_55_childless_renter_mean_rooms": 4.501479610362709,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6999296569104088,
+              "tfr": 2.476389180148428,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.24085288408695593
+            },
+            "package": "optimized",
+            "price": [
+              0.7065456056398899
+            ],
+            "timings": {
+              "bellman_full": 0.7672328689368442,
+              "bellman_mode": "full_only",
+              "distribution": 1.6198360070120543,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.7065456056398899,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 8.881784197001252e-16,
+          "old": {
+            "elapsed_seconds": 2.6771108499960974,
+            "excess_demand": 1.619801450961762,
+            "housing_demand": 6.131205327657027,
+            "housing_supply": 4.511403876695265,
+            "loss": 115.50882538534029,
+            "market_residual": 0.35904598551445105,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.131205327657032,
+              "childless_rate": 0.111628990660669,
+              "housing_increment_0to1": 1.044376017182281,
+              "old_age_own_rate": 0.7284412662007586,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6093983984890321,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.777546847740966,
+              "own_family_gap": 0.08447952215139054,
+              "own_rate": 0.5715786674940299,
+              "own_rate_2534": 0.38650653691112463,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.46601645785736,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7642080623334203,
+              "prime30_55_childless_renter_mean_rooms": 4.453831618744243,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.7019711158566428,
+              "tfr": 2.476049051964743,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.28744371083640763
+            },
+            "package": "old",
+            "price": [
+              0.7273263587469455
+            ],
+            "timings": {
+              "bellman_full": 0.8093934620264918,
+              "bellman_mode": "full_only",
+              "distribution": 1.8652300209505484,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3610151780303568,
+            "excess_demand": 1.619801450961761,
+            "housing_demand": 6.131205327657026,
+            "housing_supply": 4.511403876695265,
+            "loss": 115.50882538534029,
+            "market_residual": 0.35904598551445105,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.131205327657032,
+              "childless_rate": 0.111628990660669,
+              "housing_increment_0to1": 1.0443760171822798,
+              "old_age_own_rate": 0.7284412662007588,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6093983984890321,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.777546847740966,
+              "own_family_gap": 0.08447952215139065,
+              "own_rate": 0.5715786674940299,
+              "own_rate_2534": 0.38650653691112463,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.46601645785736,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7642080623334204,
+              "prime30_55_childless_renter_mean_rooms": 4.453831618744243,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.7019711158566411,
+              "tfr": 2.4760490519647433,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.28744371083640763
+            },
+            "package": "optimized",
+            "price": [
+              0.7273263587469455
+            ],
+            "timings": {
+              "bellman_full": 0.7634071650682017,
+              "bellman_mode": "full_only",
+              "distribution": 1.5950913010165095,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.7273263587469455,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 8.881784197001252e-16,
+          "old": {
+            "elapsed_seconds": 2.676914965035394,
+            "excess_demand": 1.301529187215599,
+            "housing_demand": 6.040914377636845,
+            "housing_supply": 4.739385190421246,
+            "loss": 114.4876901912788,
+            "market_residual": 0.2746198367345456,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.040914377636852,
+              "childless_rate": 0.11169951935896594,
+              "housing_increment_0to1": 1.0588196359873714,
+              "old_age_own_rate": 0.7249099650841474,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6073408910108363,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.749710823330544,
+              "own_family_gap": 0.08016131044304309,
+              "own_rate": 0.5649954951212869,
+              "own_rate_2534": 0.3799660553907637,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.433725943066227,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7476795734752509,
+              "prime30_55_childless_renter_mean_rooms": 4.3918562372566665,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6981146230166768,
+              "tfr": 2.4757192104523975,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.29816941600666647
+            },
+            "package": "old",
+            "price": [
+              0.748107111854001
+            ],
+            "timings": {
+              "bellman_full": 0.8023510639322922,
+              "bellman_mode": "full_only",
+              "distribution": 1.8720412800321355,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.372137653059326,
+            "excess_demand": 1.301529187215598,
+            "housing_demand": 6.040914377636844,
+            "housing_supply": 4.739385190421246,
+            "loss": 114.48769019127879,
+            "market_residual": 0.2746198367345456,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 6.040914377636852,
+              "childless_rate": 0.11169951935896591,
+              "housing_increment_0to1": 1.0588196359873705,
+              "old_age_own_rate": 0.7249099650841474,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6073408910108364,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.749710823330544,
+              "own_family_gap": 0.08016131044304309,
+              "own_rate": 0.5649954951212869,
+              "own_rate_2534": 0.3799660553907637,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.433725943066227,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.747679573475251,
+              "prime30_55_childless_renter_mean_rooms": 4.3918562372566665,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6981146230166768,
+              "tfr": 2.475719210452397,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.29816941600666647
+            },
+            "package": "optimized",
+            "price": [
+              0.748107111854001
+            ],
+            "timings": {
+              "bellman_full": 0.7685186709277332,
+              "bellman_mode": "full_only",
+              "distribution": 1.601074522943236,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.748107111854001,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.673336289008148,
+            "excess_demand": 0.9841230248861335,
+            "housing_demand": 5.956289350081797,
+            "housing_supply": 4.972166325195664,
+            "loss": 112.87211245523665,
+            "market_residual": 0.19792640883697804,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.9562893500817955,
+              "childless_rate": 0.11176861303545688,
+              "housing_increment_0to1": 1.0682040399119312,
+              "old_age_own_rate": 0.7204204482888443,
+              "old_nonhousing_ge_1x_income_share_6575": 0.606750455242309,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.577098520343616,
+              "own_family_gap": 0.07960175997570501,
+              "own_rate": 0.5581806048801956,
+              "own_rate_2534": 0.3740275945897242,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.4285576047653956,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7338331219123563,
+              "prime30_55_childless_renter_mean_rooms": 4.323883588300666,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.696360165541801,
+              "tfr": 2.475395540263184,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3137066256239138
+            },
+            "package": "old",
+            "price": [
+              0.7688878649610567
+            ],
+            "timings": {
+              "bellman_full": 0.8056576119270176,
+              "bellman_mode": "full_only",
+              "distribution": 1.8651749539421871,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3634759329725057,
+            "excess_demand": 0.9841230248861335,
+            "housing_demand": 5.956289350081797,
+            "housing_supply": 4.972166325195664,
+            "loss": 112.87211245523665,
+            "market_residual": 0.19792640883697804,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.956289350081795,
+              "childless_rate": 0.11176861303545688,
+              "housing_increment_0to1": 1.0682040399119312,
+              "old_age_own_rate": 0.7204204482888442,
+              "old_nonhousing_ge_1x_income_share_6575": 0.606750455242309,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.577098520343616,
+              "own_family_gap": 0.07960175997570501,
+              "own_rate": 0.5581806048801956,
+              "own_rate_2534": 0.3740275945897241,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.4285576047653956,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7338331219123563,
+              "prime30_55_childless_renter_mean_rooms": 4.323883588300666,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6963601655418001,
+              "tfr": 2.475395540263184,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3137066256239138
+            },
+            "package": "optimized",
+            "price": [
+              0.7688878649610567
+            ],
+            "timings": {
+              "bellman_full": 0.7606501210248098,
+              "bellman_mode": "full_only",
+              "distribution": 1.6003312510438263,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.7688878649610567,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 1.7763568394002505e-15,
+          "old": {
+            "elapsed_seconds": 2.701295100036077,
+            "excess_demand": 0.6585833652591147,
+            "housing_demand": 5.868297875969525,
+            "housing_supply": 5.20971451071041,
+            "loss": 112.75987455928347,
+            "market_residual": 0.12641448277159265,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.868297875969527,
+              "childless_rate": 0.11184068558252602,
+              "housing_increment_0to1": 1.0737230002839206,
+              "old_age_own_rate": 0.7172396325497925,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6043750784239252,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.63927529207433,
+              "own_family_gap": 0.07636446805501113,
+              "own_rate": 0.5519911697623898,
+              "own_rate_2534": 0.367901503245215,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.4003077340195924,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7172043764812913,
+              "prime30_55_childless_renter_mean_rooms": 4.261280990498421,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.687870172126468,
+              "tfr": 2.4750574603351208,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.32772891118479797
+            },
+            "package": "old",
+            "price": [
+              0.7896686180681123
+            ],
+            "timings": {
+              "bellman_full": 0.8053659509168938,
+              "bellman_mode": "full_only",
+              "distribution": 1.8934333689976484,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3729789330391213,
+            "excess_demand": 0.6585833652591164,
+            "housing_demand": 5.868297875969526,
+            "housing_supply": 5.20971451071041,
+            "loss": 112.7598745592835,
+            "market_residual": 0.12641448277159315,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.868297875969529,
+              "childless_rate": 0.11184068558252602,
+              "housing_increment_0to1": 1.0737230002839206,
+              "old_age_own_rate": 0.7172396325497925,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6043750784239252,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.63927529207433,
+              "own_family_gap": 0.07636446805501124,
+              "own_rate": 0.5519911697623896,
+              "own_rate_2534": 0.3679015032452149,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.4003077340195915,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.7172043764812912,
+              "prime30_55_childless_renter_mean_rooms": 4.261280990498421,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6878701721264688,
+              "tfr": 2.4750574603351216,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3277289111847981
+            },
+            "package": "optimized",
+            "price": [
+              0.7896686180681123
+            ],
+            "timings": {
+              "bellman_full": 0.7662383450660855,
+              "bellman_mode": "full_only",
+              "distribution": 1.6042144460370764,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.7896686180681123,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.670617896015756,
+            "excess_demand": 0.32999474340287716,
+            "housing_demand": 5.781992809178464,
+            "housing_supply": 5.451998065775586,
+            "loss": 112.35729988168181,
+            "market_residual": 0.06052730382910168,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.781992809178463,
+              "childless_rate": 0.11191281790451096,
+              "housing_increment_0to1": 1.0819772146113782,
+              "old_age_own_rate": 0.7136739578670036,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6027772113104114,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.5012308780040575,
+              "own_family_gap": 0.07188890942240617,
+              "own_rate": 0.5460118053782399,
+              "own_rate_2534": 0.3626020924642912,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3671665481641906,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6994613964101475,
+              "prime30_55_childless_renter_mean_rooms": 4.2018603370276635,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6842048666653193,
+              "tfr": 2.4747221432046533,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.34278262696024014
+            },
+            "package": "old",
+            "price": [
+              0.8104493711751679
+            ],
+            "timings": {
+              "bellman_full": 0.8020732789300382,
+              "bellman_mode": "full_only",
+              "distribution": 1.8660895390203223,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3713024279568344,
+            "excess_demand": 0.32999474340287716,
+            "housing_demand": 5.781992809178464,
+            "housing_supply": 5.451998065775586,
+            "loss": 112.3572998816818,
+            "market_residual": 0.06052730382910168,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.781992809178463,
+              "childless_rate": 0.11191281790451096,
+              "housing_increment_0to1": 1.081977214611377,
+              "old_age_own_rate": 0.7136739578670036,
+              "old_nonhousing_ge_1x_income_share_6575": 0.6027772113104114,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.5012308780040575,
+              "own_family_gap": 0.07188890942240622,
+              "own_rate": 0.5460118053782398,
+              "own_rate_2534": 0.3626020924642912,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3671665481641906,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6994613964101475,
+              "prime30_55_childless_renter_mean_rooms": 4.2018603370276635,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6842048666653193,
+              "tfr": 2.4747221432046533,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.34278262696024014
+            },
+            "package": "optimized",
+            "price": [
+              0.8104493711751679
+            ],
+            "timings": {
+              "bellman_full": 0.7661559910047799,
+              "bellman_mode": "full_only",
+              "distribution": 1.6026427650358528,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.8104493711751679,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.6813290459103882,
+            "excess_demand": -3.95929148631069e-05,
+            "housing_demand": 5.698946741928178,
+            "housing_supply": 5.698986334843041,
+            "loss": 12.608491237749933,
+            "market_residual": 6.947360905557519e-06,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.698946741928174,
+              "childless_rate": 0.11198349346379627,
+              "housing_increment_0to1": 1.0907826476305893,
+              "old_age_own_rate": 0.7102595606425713,
+              "old_nonhousing_ge_1x_income_share_6575": 0.601111485001571,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.43882696467698,
+              "own_family_gap": 0.06794629784823397,
+              "own_rate": 0.540233270434651,
+              "own_rate_2534": 0.35769985276657995,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387056741035064,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6820700989069801,
+              "prime30_55_childless_renter_mean_rooms": 4.1424524216647844,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6792504088509421,
+              "tfr": 2.4743945417792808,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.35538026630954095
+            },
+            "package": "old",
+            "price": [
+              0.8312301242822234
+            ],
+            "timings": {
+              "bellman_full": 0.8073645209660754,
+              "bellman_mode": "full_only",
+              "distribution": 1.8714783260365948,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.403808532981202,
+            "excess_demand": -3.95929148631069e-05,
+            "housing_demand": 5.698946741928178,
+            "housing_supply": 5.698986334843041,
+            "loss": 12.60849123774992,
+            "market_residual": 6.947360905557519e-06,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.698946741928174,
+              "childless_rate": 0.11198349346379624,
+              "housing_increment_0to1": 1.0907826476305889,
+              "old_age_own_rate": 0.7102595606425713,
+              "old_nonhousing_ge_1x_income_share_6575": 0.601111485001571,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.43882696467698,
+              "own_family_gap": 0.06794629784823397,
+              "own_rate": 0.5402332704346511,
+              "own_rate_2534": 0.35769985276657995,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387056741035064,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6820700989069801,
+              "prime30_55_childless_renter_mean_rooms": 4.1424524216647844,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.679250408850943,
+              "tfr": 2.4743945417792803,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.35538026630954095
+            },
+            "package": "optimized",
+            "price": [
+              0.8312301242822234
+            ],
+            "timings": {
+              "bellman_full": 0.7738877750234678,
+              "bellman_mode": "full_only",
+              "distribution": 1.6273992229253054,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.8312301242822234,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.6999813590664417,
+            "excess_demand": -0.3349679485166872,
+            "housing_demand": 5.615681681222881,
+            "housing_supply": 5.950649629739568,
+            "loss": 114.49063837736077,
+            "market_residual": 0.05629098827170207,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.615681681222893,
+              "childless_rate": 0.1120562204796693,
+              "housing_increment_0to1": 1.0936969779803414,
+              "old_age_own_rate": 0.7063420136291838,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5990028146580724,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+              "own_family_gap": 0.05975169504152533,
+              "own_rate": 0.531879901433434,
+              "own_rate_2534": 0.35003860324367186,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3000728382154625,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6607255474033314,
+              "prime30_55_childless_renter_mean_rooms": 4.087779092435728,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6748612197177941,
+              "tfr": 2.4740569268239843,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3726576343922272
+            },
+            "package": "old",
+            "price": [
+              0.8520108773892789
+            ],
+            "timings": {
+              "bellman_full": 0.8036290960153565,
+              "bellman_mode": "full_only",
+              "distribution": 1.8939166940981522,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.396025795955211,
+            "excess_demand": -0.3349679485166872,
+            "housing_demand": 5.615681681222881,
+            "housing_supply": 5.950649629739568,
+            "loss": 114.49063837736077,
+            "market_residual": 0.05629098827170222,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.615681681222892,
+              "childless_rate": 0.1120562204796693,
+              "housing_increment_0to1": 1.0936969779803414,
+              "old_age_own_rate": 0.7063420136291838,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5990028146580724,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+              "own_family_gap": 0.05975169504152533,
+              "own_rate": 0.531879901433434,
+              "own_rate_2534": 0.35003860324367186,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3000728382154625,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6607255474033314,
+              "prime30_55_childless_renter_mean_rooms": 4.087779092435728,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6748612197177941,
+              "tfr": 2.4740569268239843,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3726576343922272
+            },
+            "package": "optimized",
+            "price": [
+              0.8520108773892789
+            ],
+            "timings": {
+              "bellman_full": 0.7666034260764718,
+              "bellman_mode": "full_only",
+              "distribution": 1.62691323494073,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.8520108773892789,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 8.881784197001252e-16,
+          "old": {
+            "elapsed_seconds": 2.7213627360761166,
+            "excess_demand": -0.6677614400763128,
+            "housing_demand": 5.539197735988002,
+            "housing_supply": 6.206959176064315,
+            "loss": 115.10332068294622,
+            "market_residual": 0.10758270211464932,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.539197735987996,
+              "childless_rate": 0.11212661026085959,
+              "housing_increment_0to1": 1.0949335459247826,
+              "old_age_own_rate": 0.7038303993508285,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5967900245027117,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.231873914369755,
+              "own_family_gap": 0.055669635925690464,
+              "own_rate": 0.5268311358391483,
+              "own_rate_2534": 0.34610984502908,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.2697689498764833,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6434645291645137,
+              "prime30_55_childless_renter_mean_rooms": 4.031629387229684,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732839242914022,
+              "tfr": 2.473732208261353,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.38302557273925697
+            },
+            "package": "old",
+            "price": [
+              0.8727916304963346
+            ],
+            "timings": {
+              "bellman_full": 0.813683437067084,
+              "bellman_mode": "full_only",
+              "distribution": 1.9052274089772254,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.383543382049538,
+            "excess_demand": -0.6677614400763137,
+            "housing_demand": 5.539197735988001,
+            "housing_supply": 6.206959176064315,
+            "loss": 115.10332068294623,
+            "market_residual": 0.1075827021146496,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.539197735987997,
+              "childless_rate": 0.11212661026085965,
+              "housing_increment_0to1": 1.094933545924782,
+              "old_age_own_rate": 0.7038303993508286,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5967900245027117,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.231873914369755,
+              "own_family_gap": 0.05566963592569041,
+              "own_rate": 0.5268311358391483,
+              "own_rate_2534": 0.34610984502907993,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.2697689498764833,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6434645291645137,
+              "prime30_55_childless_renter_mean_rooms": 4.031629387229684,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732839242914039,
+              "tfr": 2.4737322082613535,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.38302557273925686
+            },
+            "package": "optimized",
+            "price": [
+              0.8727916304963346
+            ],
+            "timings": {
+              "bellman_full": 0.7674502370646223,
+              "bellman_mode": "full_only",
+              "distribution": 1.6135960350511596,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.8727916304963346,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.6995061619672924,
+            "excess_demand": -1.006726794426763,
+            "housing_demand": 5.46116026934707,
+            "housing_supply": 6.4678870637738335,
+            "loss": 118.20575521983696,
+            "market_residual": 0.15565002673985515,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.461160269347073,
+              "childless_rate": 0.11219847243527058,
+              "housing_increment_0to1": 1.092178510111561,
+              "old_age_own_rate": 0.7006995289498142,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5929082654036395,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.100561364805723,
+              "own_family_gap": 0.04961463256235088,
+              "own_rate": 0.5215439168835513,
+              "own_rate_2534": 0.34113019478549184,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.228985372982337,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6253166063898472,
+              "prime30_55_childless_renter_mean_rooms": 3.979357276441213,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6733487466321737,
+              "tfr": 2.4734009118463884,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.39779842867027326
+            },
+            "package": "old",
+            "price": [
+              0.8935723836033902
+            ],
+            "timings": {
+              "bellman_full": 0.809922609012574,
+              "bellman_mode": "full_only",
+              "distribution": 1.887057201936841,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.398229095968418,
+            "excess_demand": -1.006726794426763,
+            "housing_demand": 5.46116026934707,
+            "housing_supply": 6.4678870637738335,
+            "loss": 118.20575521983702,
+            "market_residual": 0.15565002673985515,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.461160269347073,
+              "childless_rate": 0.11219847243527058,
+              "housing_increment_0to1": 1.0921785101115618,
+              "old_age_own_rate": 0.7006995289498141,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5929082654036394,
+              "old_total_estate_wealth_to_annual_income_median_7684": 6.100561364805723,
+              "own_family_gap": 0.04961463256235088,
+              "own_rate": 0.5215439168835513,
+              "own_rate_2534": 0.34113019478549184,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.2289853729823377,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6253166063898472,
+              "prime30_55_childless_renter_mean_rooms": 3.979357276441212,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6733487466321755,
+              "tfr": 2.473400911846389,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.39779842867027326
+            },
+            "package": "optimized",
+            "price": [
+              0.8935723836033902
+            ],
+            "timings": {
+              "bellman_full": 0.7643209660891443,
+              "bellman_mode": "full_only",
+              "distribution": 1.6313960049301386,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.8935723836033902,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 8.881784197001252e-16,
+          "old": {
+            "elapsed_seconds": 2.728610577993095,
+            "excess_demand": -1.3498521410954387,
+            "housing_demand": 5.383554060441504,
+            "housing_supply": 6.733406201536943,
+            "loss": 135.77709762086909,
+            "market_residual": 0.20047092076330225,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.383554060441507,
+              "childless_rate": 0.11226800474314354,
+              "housing_increment_0to1": 1.0940500325790354,
+              "old_age_own_rate": 0.6972168667740404,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5803994317712621,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.610106197062621,
+              "own_family_gap": 0.046619072027826225,
+              "own_rate": 0.5139735509000659,
+              "own_rate_2534": 0.33314616163806987,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.2069904538312417,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6126525596780014,
+              "prime30_55_childless_renter_mean_rooms": 3.9299179318453814,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6764223141823713,
+              "tfr": 2.473082038187729,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4184391789331566
+            },
+            "package": "old",
+            "price": [
+              0.9143531367104458
+            ],
+            "timings": {
+              "bellman_full": 0.8067714009666815,
+              "bellman_mode": "full_only",
+              "distribution": 1.9192055290332064,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.3779803549405187,
+            "excess_demand": -1.3498521410954396,
+            "housing_demand": 5.3835540604415035,
+            "housing_supply": 6.733406201536943,
+            "loss": 135.77709762086906,
+            "market_residual": 0.20047092076330225,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.383554060441507,
+              "childless_rate": 0.11226800474314354,
+              "housing_increment_0to1": 1.0940500325790343,
+              "old_age_own_rate": 0.6972168667740404,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5803994317712621,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.610106197062621,
+              "own_family_gap": 0.046619072027826225,
+              "own_rate": 0.5139735509000659,
+              "own_rate_2534": 0.33314616163806987,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.2069904538312426,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.6126525596780014,
+              "prime30_55_childless_renter_mean_rooms": 3.9299179318453814,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6764223141823713,
+              "tfr": 2.473082038187729,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4184391789331566
+            },
+            "package": "optimized",
+            "price": [
+              0.9143531367104458
+            ],
+            "timings": {
+              "bellman_full": 0.7663596739294007,
+              "bellman_mode": "full_only",
+              "distribution": 1.6091080500045791,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.9143531367104458,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.712268574978225,
+            "excess_demand": -1.6951574614609886,
+            "housing_demand": 5.3083328130309075,
+            "housing_supply": 7.003490274491896,
+            "loss": 135.60142577489034,
+            "market_residual": 0.24204466559125382,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.308332813030908,
+              "childless_rate": 0.11233825557432367,
+              "housing_increment_0to1": 1.0919199292478687,
+              "old_age_own_rate": 0.6934724124495212,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5801278711045802,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.644219802786549,
+              "own_family_gap": 0.041702998369190725,
+              "own_rate": 0.5092351823858644,
+              "own_rate_2534": 0.3291798300584433,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.171868229935096,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5956290319666143,
+              "prime30_55_childless_renter_mean_rooms": 3.8796166915580623,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6822043043495274,
+              "tfr": 2.472757805068767,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4304663328113275
+            },
+            "package": "old",
+            "price": [
+              0.9351338898175013
+            ],
+            "timings": {
+              "bellman_full": 0.8081467889714986,
+              "bellman_mode": "full_only",
+              "distribution": 1.901691559003666,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.391040220973082,
+            "excess_demand": -1.6951574614609886,
+            "housing_demand": 5.3083328130309075,
+            "housing_supply": 7.003490274491896,
+            "loss": 135.60142577489034,
+            "market_residual": 0.24204466559125382,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.308332813030908,
+              "childless_rate": 0.11233825557432367,
+              "housing_increment_0to1": 1.0919199292478687,
+              "old_age_own_rate": 0.6934724124495212,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5801278711045802,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.644219802786549,
+              "own_family_gap": 0.041702998369190614,
+              "own_rate": 0.5092351823858644,
+              "own_rate_2534": 0.32917983005844337,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.171868229935096,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5956290319666143,
+              "prime30_55_childless_renter_mean_rooms": 3.8796166915580623,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6822043043495274,
+              "tfr": 2.472757805068767,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4304663328113275
+            },
+            "package": "optimized",
+            "price": [
+              0.9351338898175013
+            ],
+            "timings": {
+              "bellman_full": 0.7687659000512213,
+              "bellman_mode": "full_only",
+              "distribution": 1.6197791299782693,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.9351338898175013,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 8.881784197001252e-16,
+          "old": {
+            "elapsed_seconds": 2.7090254250215366,
+            "excess_demand": -2.0415414491482764,
+            "housing_demand": 5.236572255933346,
+            "housing_supply": 7.278113705081623,
+            "loss": 138.80264619406574,
+            "market_residual": 0.2805041981857002,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.236572255933347,
+              "childless_rate": 0.11240910790244127,
+              "housing_increment_0to1": 1.0916074313348298,
+              "old_age_own_rate": 0.6909509820623055,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5782825808984493,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.609651913869891,
+              "own_family_gap": 0.03341305953967433,
+              "own_rate": 0.5033752466069125,
+              "own_rate_2534": 0.32427273909511917,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.129920364076246,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5767943957938881,
+              "prime30_55_childless_renter_mean_rooms": 3.834500872182187,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6946782199117143,
+              "tfr": 2.4724318303488015,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4426050946870679
+            },
+            "package": "old",
+            "price": [
+              0.955914642924557
+            ],
+            "timings": {
+              "bellman_full": 0.8123396059963852,
+              "bellman_mode": "full_only",
+              "distribution": 1.8942362080560997,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.433606993057765,
+            "excess_demand": -2.0415414491482773,
+            "housing_demand": 5.236572255933345,
+            "housing_supply": 7.278113705081623,
+            "loss": 138.80264619406574,
+            "market_residual": 0.2805041981857002,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.236572255933347,
+              "childless_rate": 0.11240910790244127,
+              "housing_increment_0to1": 1.0916074313348298,
+              "old_age_own_rate": 0.6909509820623055,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5782825808984493,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.609651913869891,
+              "own_family_gap": 0.03341305953967433,
+              "own_rate": 0.5033752466069125,
+              "own_rate_2534": 0.32427273909511917,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.129920364076246,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5767943957938881,
+              "prime30_55_childless_renter_mean_rooms": 3.834500872182187,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6946782199117143,
+              "tfr": 2.4724318303488015,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4426050946870679
+            },
+            "package": "optimized",
+            "price": [
+              0.955914642924557
+            ],
+            "timings": {
+              "bellman_full": 0.771516592008993,
+              "bellman_mode": "full_only",
+              "distribution": 1.659605466062203,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.955914642924557,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.7043607929954305,
+            "excess_demand": -2.3918644020740896,
+            "housing_demand": 5.165387214606065,
+            "housing_supply": 7.557251616680155,
+            "loss": 141.00656181355708,
+            "market_residual": 0.3164992411784769,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.165387214606069,
+              "childless_rate": 0.11247981745319323,
+              "housing_increment_0to1": 1.0857255003042268,
+              "old_age_own_rate": 0.6873503412686264,
+              "old_nonhousing_ge_1x_income_share_6575": 0.578386155438427,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.575538308145961,
+              "own_family_gap": 0.027573892471903005,
+              "own_rate": 0.49909954083319924,
+              "own_rate_2534": 0.32036918583957175,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.088430715992419,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5599110772160844,
+              "prime30_55_childless_renter_mean_rooms": 3.7893317484351074,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.705167029767825,
+              "tfr": 2.472105296981968,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.45424680513384624
+            },
+            "package": "old",
+            "price": [
+              0.9766953960316125
+            ],
+            "timings": {
+              "bellman_full": 0.8063098599668592,
+              "bellman_mode": "full_only",
+              "distribution": 1.8955952739343047,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.397233482915908,
+            "excess_demand": -2.3918644020740896,
+            "housing_demand": 5.165387214606065,
+            "housing_supply": 7.557251616680155,
+            "loss": 141.00656181355708,
+            "market_residual": 0.3164992411784769,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.165387214606068,
+              "childless_rate": 0.11247981745319321,
+              "housing_increment_0to1": 1.0857255003042268,
+              "old_age_own_rate": 0.6873503412686264,
+              "old_nonhousing_ge_1x_income_share_6575": 0.578386155438427,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.575538308145961,
+              "own_family_gap": 0.027573892471903116,
+              "own_rate": 0.49909954083319924,
+              "own_rate_2534": 0.32036918583957175,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.088430715992419,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5599110772160844,
+              "prime30_55_childless_renter_mean_rooms": 3.7893317484351074,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.7051670297678259,
+              "tfr": 2.472105296981967,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.45424680513384624
+            },
+            "package": "optimized",
+            "price": [
+              0.9766953960316125
+            ],
+            "timings": {
+              "bellman_full": 0.767216045060195,
+              "bellman_mode": "full_only",
+              "distribution": 1.6274614660069346,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.9766953960316125,
+          "sign_equal": true
+        },
+        {
+          "excess_abs_difference": 0.0,
+          "old": {
+            "elapsed_seconds": 2.7146505009150133,
+            "excess_demand": -2.7448904623300328,
+            "housing_demand": 5.095989337425599,
+            "housing_supply": 7.840879799755632,
+            "loss": 139.50204179613254,
+            "market_residual": 0.3500742942667708,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.0959893374256025,
+              "childless_rate": 0.11254915516514746,
+              "housing_increment_0to1": 1.0835498593265407,
+              "old_age_own_rate": 0.6855713574954084,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5775396763728121,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.672282968793334,
+              "own_family_gap": 0.022749533386268173,
+              "own_rate": 0.4949128613290321,
+              "own_rate_2534": 0.3165399774293068,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.0537231581759907,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5443527498016222,
+              "prime30_55_childless_renter_mean_rooms": 3.744114810940117,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.7133389031438853,
+              "tfr": 2.471784040419485,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4664969004771529
+            },
+            "package": "old",
+            "price": [
+              0.9974761491386681
+            ],
+            "timings": {
+              "bellman_full": 0.8138518519699574,
+              "bellman_mode": "full_only",
+              "distribution": 1.89832662709523,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "optimized": {
+            "elapsed_seconds": 2.4662314490415156,
+            "excess_demand": -2.7448904623300328,
+            "housing_demand": 5.095989337425599,
+            "housing_supply": 7.840879799755632,
+            "loss": 139.50204179613254,
+            "market_residual": 0.35007429426677067,
+            "moments": {
+              "aggregate_mean_occupied_rooms_18_85": 5.0959893374256025,
+              "childless_rate": 0.11254915516514746,
+              "housing_increment_0to1": 1.0835498593265407,
+              "old_age_own_rate": 0.6855713574954085,
+              "old_nonhousing_ge_1x_income_share_6575": 0.5775396763728121,
+              "old_total_estate_wealth_to_annual_income_median_7684": 5.672282968793334,
+              "own_family_gap": 0.022749533386268117,
+              "own_rate": 0.49491286132903206,
+              "own_rate_2534": 0.31653997742930684,
+              "prime30_55_childless_owner_minus_renter_mean_rooms": 2.05372315817599,
+              "prime30_55_childless_owner_share_rooms_ge6": 0.5443527498016222,
+              "prime30_55_childless_renter_mean_rooms": 3.744114810940118,
+              "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.7133389031438844,
+              "tfr": 2.471784040419485,
+              "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.46649690047715303
+            },
+            "package": "optimized",
+            "price": [
+              0.9974761491386681
+            ],
+            "timings": {
+              "bellman_full": 0.7857986430171877,
+              "bellman_mode": "full_only",
+              "distribution": 1.6779190020170063,
+              "income_process": "markov",
+              "n_dist": 1,
+              "n_eval": 0,
+              "n_full": 1
+            }
+          },
+          "price": 0.9974761491386681,
+          "sign_equal": true
+        }
+      ],
+      "smoke": false,
+      "task": "demand-map"
+    },
+    "root-case": {
+      "forced_wrong_direction": {
+        "directional_fallback_used": true,
+        "elapsed_seconds": 18.215987005038187,
+        "housing_demand": 5.698946547475397,
+        "housing_supply": 5.698986869118197,
+        "loss": 12.608491167769783,
+        "market_residual": 7.075229989782422e-06,
+        "moments": {
+          "aggregate_mean_occupied_rooms_18_85": 5.698946547475389,
+          "childless_rate": 0.11198349367946486,
+          "housing_increment_0to1": 1.0907826622546164,
+          "old_age_own_rate": 0.7102595517271607,
+          "old_nonhousing_ge_1x_income_share_6575": 0.6011114717346392,
+          "old_total_estate_wealth_to_annual_income_median_7684": 6.438827793909442,
+          "own_family_gap": 0.0679462915538856,
+          "own_rate": 0.5402332582146496,
+          "own_rate_2534": 0.357699843577869,
+          "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387056041303005,
+          "prime30_55_childless_owner_share_rooms_ge6": 0.6820700584380672,
+          "prime30_55_childless_renter_mean_rooms": 4.142452287889697,
+          "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6792504040679122,
+          "tfr": 2.4743945410022823,
+          "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.35538027451205767
+        },
+        "package": "optimized",
+        "price": [
+          0.8312301688120066
+        ],
+        "timings": {
+          "accepted": true,
+          "bellman_full": 0.0,
+          "bellman_mode": "reused_accepted_price",
+          "best_eq_error": 7.075229989782422e-06,
+          "convergence_reason": "strict_tol",
+          "damped_final_eq_error": 0.46483900569149667,
+          "distribution": 1.599809322040528,
+          "equilibrium_method": "direct_brent",
+          "final_eq_error": 7.075229989782422e-06,
+          "income_process": "markov",
+          "iterations_completed": 1,
+          "markov_income_solve_time": 10.787327333935536,
+          "n_dist": 1,
+          "n_eval": 0,
+          "n_full": 0,
+          "price_cache_hits": 0,
+          "reused_bellman_seconds": 0.8248923909850419,
+          "scalar_market_refine": {
+            "best_excess": -4.032164280776129e-05,
+            "best_metric": 7.075229989782422e-06,
+            "best_price": 0.8312301688120066,
+            "bracket_found": true,
+            "cache_hits": 0,
+            "directional_fallback_used": true,
+            "expansions": 0,
+            "initial_price": 1.0805991615668904,
+            "iterations": 3,
+            "method": "brent",
+            "price_evaluation_time_sec": 5.824058673926629,
+            "price_evaluations": 5,
+            "used": true
+          },
+          "strict_converged": true,
+          "unique_fast_price_evaluations": 6
+        }
+      },
+      "forced_wrong_direction_exercised": true,
+      "ordinary": {
+        "directional_fallback_used": false,
+        "elapsed_seconds": 7.451022717054002,
+        "housing_demand": 5.698975552685706,
+        "housing_supply": 5.6988947742380285,
+        "loss": 12.608777120481928,
+        "market_residual": 1.41744058937347e-05,
+        "moments": {
+          "aggregate_mean_occupied_rooms_18_85": 5.698975552685704,
+          "childless_rate": 0.1119834681477779,
+          "housing_increment_0to1": 1.0907802115741825,
+          "old_age_own_rate": 0.710260878938266,
+          "old_nonhousing_ge_1x_income_share_6575": 0.6011118874404369,
+          "old_total_estate_wealth_to_annual_income_median_7684": 6.438684855713156,
+          "own_family_gap": 0.06794750418832246,
+          "own_rate": 0.5402351037397969,
+          "own_rate_2534": 0.3577012260821135,
+          "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387130471678885,
+          "prime30_55_childless_owner_share_rooms_ge6": 0.682075370465816,
+          "prime30_55_childless_renter_mean_rooms": 4.142474497902746,
+          "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6792579398390526,
+          "tfr": 2.4743946599171633,
+          "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.355373686341908
+        },
+        "package": "optimized",
+        "price": [
+          0.831222493030866
+        ],
+        "timings": {
+          "accepted": true,
+          "bellman_full": 0.0,
+          "bellman_mode": "reused_accepted_price",
+          "best_eq_error": 1.41744058937347e-05,
+          "convergence_reason": "strict_tol",
+          "damped_final_eq_error": 0.297422218862888,
+          "distribution": 1.6355380580062047,
+          "equilibrium_method": "direct_brent",
+          "final_eq_error": 1.41744058937347e-05,
+          "income_process": "markov",
+          "iterations_completed": 1,
+          "markov_income_solve_time": 1.1592514420626685,
+          "n_dist": 1,
+          "n_eval": 0,
+          "n_full": 0,
+          "price_cache_hits": 0,
+          "reused_bellman_seconds": 0.830915802042,
+          "scalar_market_refine": {
+            "best_excess": 8.077844767573339e-05,
+            "best_metric": 1.41744058937347e-05,
+            "best_price": 0.831222493030866,
+            "bracket_found": true,
+            "cache_hits": 0,
+            "directional_fallback_used": false,
+            "expansions": 2,
+            "initial_price": 0.965533650862593,
+            "iterations": 2,
+            "method": "brent",
+            "price_evaluation_time_sec": 4.65513495891355,
+            "price_evaluations": 4,
+            "used": true
+          },
+          "strict_converged": true,
+          "unique_fast_price_evaluations": 5
+        }
+      },
+      "smoke": false,
+      "task": "root-case"
+    },
+    "strict-repeat": {
+      "first": {
+        "directional_fallback_used": false,
+        "elapsed_seconds": 16.94989281508606,
+        "housing_demand": 5.698975552685706,
+        "housing_supply": 5.6988947742380285,
+        "loss": 12.608777120481928,
+        "market_residual": 1.41744058937347e-05,
+        "moments": {
+          "aggregate_mean_occupied_rooms_18_85": 5.698975552685704,
+          "childless_rate": 0.1119834681477779,
+          "housing_increment_0to1": 1.0907802115741825,
+          "old_age_own_rate": 0.710260878938266,
+          "old_nonhousing_ge_1x_income_share_6575": 0.6011118874404369,
+          "old_total_estate_wealth_to_annual_income_median_7684": 6.438684855713156,
+          "own_family_gap": 0.06794750418832246,
+          "own_rate": 0.5402351037397969,
+          "own_rate_2534": 0.3577012260821135,
+          "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387130471678885,
+          "prime30_55_childless_owner_share_rooms_ge6": 0.682075370465816,
+          "prime30_55_childless_renter_mean_rooms": 4.142474497902746,
+          "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6792579398390526,
+          "tfr": 2.4743946599171633,
+          "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.355373686341908
+        },
+        "package": "optimized",
+        "price": [
+          0.831222493030866
+        ],
+        "timings": {
+          "accepted": true,
+          "bellman_full": 0.0,
+          "bellman_mode": "reused_accepted_price",
+          "best_eq_error": 1.41744058937347e-05,
+          "convergence_reason": "strict_tol",
+          "damped_final_eq_error": 0.297422218862888,
+          "distribution": 1.6221464249538258,
+          "equilibrium_method": "direct_brent",
+          "final_eq_error": 1.41744058937347e-05,
+          "income_process": "markov",
+          "iterations_completed": 1,
+          "markov_income_solve_time": 10.686410452006385,
+          "n_dist": 1,
+          "n_eval": 0,
+          "n_full": 0,
+          "price_cache_hits": 0,
+          "reused_bellman_seconds": 0.8183911009691656,
+          "scalar_market_refine": {
+            "best_excess": 8.077844767573339e-05,
+            "best_metric": 1.41744058937347e-05,
+            "best_price": 0.831222493030866,
+            "bracket_found": true,
+            "cache_hits": 0,
+            "directional_fallback_used": false,
+            "expansions": 2,
+            "initial_price": 0.965533650862593,
+            "iterations": 2,
+            "method": "brent",
+            "price_evaluation_time_sec": 4.6374624440213665,
+            "price_evaluations": 4,
+            "used": true
+          },
+          "strict_converged": true,
+          "unique_fast_price_evaluations": 5
+        }
+      },
+      "loss_bitwise_equal": true,
+      "moments_bitwise_equal": true,
+      "price_bitwise_equal": true,
+      "second": {
+        "directional_fallback_used": false,
+        "elapsed_seconds": 7.4345185259589925,
+        "housing_demand": 5.698975552685706,
+        "housing_supply": 5.6988947742380285,
+        "loss": 12.608777120481928,
+        "market_residual": 1.41744058937347e-05,
+        "moments": {
+          "aggregate_mean_occupied_rooms_18_85": 5.698975552685704,
+          "childless_rate": 0.1119834681477779,
+          "housing_increment_0to1": 1.0907802115741825,
+          "old_age_own_rate": 0.710260878938266,
+          "old_nonhousing_ge_1x_income_share_6575": 0.6011118874404369,
+          "old_total_estate_wealth_to_annual_income_median_7684": 6.438684855713156,
+          "own_family_gap": 0.06794750418832246,
+          "own_rate": 0.5402351037397969,
+          "own_rate_2534": 0.3577012260821135,
+          "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3387130471678885,
+          "prime30_55_childless_owner_share_rooms_ge6": 0.682075370465816,
+          "prime30_55_childless_renter_mean_rooms": 4.142474497902746,
+          "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6792579398390526,
+          "tfr": 2.4743946599171633,
+          "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.355373686341908
+        },
+        "package": "optimized",
+        "price": [
+          0.831222493030866
+        ],
+        "timings": {
+          "accepted": true,
+          "bellman_full": 0.0,
+          "bellman_mode": "reused_accepted_price",
+          "best_eq_error": 1.41744058937347e-05,
+          "convergence_reason": "strict_tol",
+          "damped_final_eq_error": 0.297422218862888,
+          "distribution": 1.6260959380306304,
+          "equilibrium_method": "direct_brent",
+          "final_eq_error": 1.41744058937347e-05,
+          "income_process": "markov",
+          "iterations_completed": 1,
+          "markov_income_solve_time": 1.1534277229802683,
+          "n_dist": 1,
+          "n_eval": 0,
+          "n_full": 0,
+          "price_cache_hits": 0,
+          "reused_bellman_seconds": 0.8210824199486524,
+          "scalar_market_refine": {
+            "best_excess": 8.077844767573339e-05,
+            "best_metric": 1.41744058937347e-05,
+            "best_price": 0.831222493030866,
+            "bracket_found": true,
+            "cache_hits": 0,
+            "directional_fallback_used": false,
+            "expansions": 2,
+            "initial_price": 0.965533650862593,
+            "iterations": 2,
+            "method": "brent",
+            "price_evaluation_time_sec": 4.65388617804274,
+            "price_evaluations": 4,
+            "used": true
+          },
+          "strict_converged": true,
+          "unique_fast_price_evaluations": 5
+        }
+      },
+      "smoke": false,
+      "task": "strict-repeat"
+    },
+    "throughput": {
+      "candidates": [
+        {
+          "factor": 0.99,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.014301672927104,
+              "housing_demand": 5.68960461909377,
+              "housing_supply": 5.698986334843041,
+              "loss": 25.604832653101276,
+              "market_residual": 0.001646207798730167,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.689604619093767,
+                "childless_rate": 0.10850511468670118,
+                "housing_increment_0to1": 1.071056077705518,
+                "old_age_own_rate": 0.7036404391446436,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5842021082756653,
+                "old_total_estate_wealth_to_annual_income_median_7684": 5.844895271780265,
+                "own_family_gap": 0.06483843194492855,
+                "own_rate": 0.5322935681382887,
+                "own_rate_2534": 0.3518029546277335,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.361381535573301,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6872792556983126,
+                "prime30_55_childless_renter_mean_rooms": 4.152422685976983,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6669081874065119,
+                "tfr": 2.4908862981208673,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.27163730564362204
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 7.28957367001567,
+                "bellman_mode": "full_only",
+                "distribution": 2.7209983229404315,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.5675043790834025,
+              "housing_demand": 5.689604619093769,
+              "housing_supply": 5.698986334843041,
+              "loss": 25.604832653101333,
+              "market_residual": 0.001646207798730167,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.689604619093767,
+                "childless_rate": 0.10850511468670117,
+                "housing_increment_0to1": 1.0710560777055176,
+                "old_age_own_rate": 0.7036404391446435,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5842021082756652,
+                "old_total_estate_wealth_to_annual_income_median_7684": 5.844895271780265,
+                "own_family_gap": 0.06483843194492867,
+                "own_rate": 0.5322935681382887,
+                "own_rate_2534": 0.3518029546277336,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3613815355733,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6872792556983126,
+                "prime30_55_childless_renter_mean_rooms": 4.152422685976984,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6669081874065128,
+                "tfr": 2.4908862981208673,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.271637305643622
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.248449990991503,
+                "bellman_mode": "full_only",
+                "distribution": 2.315639042062685,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.1164314589696,
+              "housing_demand": 5.691902314261304,
+              "housing_supply": 5.691900212718817,
+              "loss": 25.71904154359293,
+              "market_residual": 3.692163266986245e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.691902314261306,
+                "childless_rate": 0.10850319057256963,
+                "housing_increment_0to1": 1.0707471532866355,
+                "old_age_own_rate": 0.7037634136752918,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5842432768065056,
+                "old_total_estate_wealth_to_annual_income_median_7684": 5.839394726692605,
+                "own_family_gap": 0.06493638509931754,
+                "own_rate": 0.5324688583033593,
+                "own_rate_2534": 0.35193829111718505,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.36204507461669,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6877395347205792,
+                "prime30_55_childless_renter_mean_rooms": 4.154108455832453,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6670918705095037,
+                "tfr": 2.490895300030802,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.2713577881927753
+              },
+              "package": "old",
+              "price": [
+                0.8306393657398087
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1566183120012283,
+                "bellman_mode": "full_only",
+                "best_eq_error": 3.692163266986245e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002245074104441722,
+                "distribution": 2.6577087310142815,
+                "final_eq_error": 3.692163266986245e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.509527061949484,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": 2.101542488475161e-06,
+                  "best_metric": 3.692163266986245e-07,
+                  "best_price": 0.8306393657398087,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8320032890671285,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.78872336097993,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 9.905599849065766,
+              "housing_demand": 5.691937554667385,
+              "housing_supply": 5.691785611896224,
+              "loss": 25.720693680480245,
+              "market_residual": 2.669509737764724e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.691937554667391,
+                "childless_rate": 0.1085031587198781,
+                "housing_increment_0to1": 1.0707422772879942,
+                "old_age_own_rate": 0.7037639549566528,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5842445229282544,
+                "old_total_estate_wealth_to_annual_income_median_7684": 5.839305744621414,
+                "own_family_gap": 0.06493772860270391,
+                "own_rate": 0.5324712445237346,
+                "own_rate_2534": 0.3519403132815269,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.36204967143236,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6877465895415735,
+                "prime30_55_childless_renter_mean_rooms": 4.1541408277712755,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6670936630863862,
+                "tfr": 2.490895448757724,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.2713523847877986
+              },
+              "package": "optimized",
+              "price": [
+                0.8306298090653628
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.669509737764724e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2985292569059011,
+                "distribution": 2.279040455003269,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.669509737764724e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.610347697045654,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1299674089532346,
+                "scalar_market_refine": {
+                  "best_excess": 0.00015194277116226118,
+                  "best_metric": 2.669509737764724e-05,
+                  "best_price": 0.8306298090653628,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.014799864846282,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 0.9922222222222222,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.82598469092045,
+              "housing_demand": 5.691624258070067,
+              "housing_supply": 5.698986334843041,
+              "loss": 19.199146811344015,
+              "market_residual": 0.001291822148785955,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.691624258070063,
+                "childless_rate": 0.10926819510697017,
+                "housing_increment_0to1": 1.071976694685837,
+                "old_age_own_rate": 0.7051343838373884,
+                "old_nonhousing_ge_1x_income_share_6575": 0.588046610630115,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.0807757048934725,
+                "own_family_gap": 0.06548549753691457,
+                "own_rate": 0.534069749398077,
+                "own_rate_2534": 0.3529212668028481,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3560985047872203,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6860432198438161,
+                "prime30_55_childless_renter_mean_rooms": 4.149973391121833,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6698479628895591,
+                "tfr": 2.487251933089767,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.29032627588431664
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.15963590296451,
+                "bellman_mode": "full_only",
+                "distribution": 2.66291818395257,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4244081130018458,
+              "housing_demand": 5.691624258070067,
+              "housing_supply": 5.698986334843041,
+              "loss": 19.199146811344015,
+              "market_residual": 0.001291822148785955,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.691624258070063,
+                "childless_rate": 0.10926819510697017,
+                "housing_increment_0to1": 1.071976694685837,
+                "old_age_own_rate": 0.7051343838373884,
+                "old_nonhousing_ge_1x_income_share_6575": 0.588046610630115,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.0807757048934725,
+                "own_family_gap": 0.06548549753691457,
+                "own_rate": 0.534069749398077,
+                "own_rate_2534": 0.3529212668028482,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.356098504787221,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6860432198438161,
+                "prime30_55_childless_renter_mean_rooms": 4.149973391121833,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6698479628895591,
+                "tfr": 2.487251933089767,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.29032627588431664
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.145873388973996,
+                "bellman_mode": "full_only",
+                "distribution": 2.2750929770991206,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.223587175947614,
+              "housing_demand": 5.6934367785234725,
+              "housing_supply": 5.6934142634965665,
+              "loss": 19.328385532849875,
+              "market_residual": 3.954573804587788e-06,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.6934367785234725,
+                "childless_rate": 0.10926664324593173,
+                "housing_increment_0to1": 1.0717679405412128,
+                "old_age_own_rate": 0.70524666754063,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5881518613991183,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.069963132479933,
+                "own_family_gap": 0.06557049336873688,
+                "own_rate": 0.534215100075749,
+                "own_rate_2534": 0.3530424222217016,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3566367035380082,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6864212083420984,
+                "prime30_55_childless_renter_mean_rooms": 4.151315097610047,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6699201757915407,
+                "tfr": 2.4872591619737423,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.29010588942754273
+              },
+              "package": "old",
+              "price": [
+                0.8307656161713378
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1614188390085474,
+                "bellman_mode": "full_only",
+                "best_eq_error": 3.954573804587788e-06,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.0022028339940224754,
+                "distribution": 2.6503197189886123,
+                "final_eq_error": 3.954573804587788e-06,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.626517756958492,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": 2.2515026905089996e-05,
+                  "best_metric": 3.954573804587788e-06,
+                  "best_price": 0.8307656161713378,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8321550091116866,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.78149441012647,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.366191331995651,
+              "housing_demand": 5.693460965582166,
+              "housing_supply": 5.693339627061498,
+              "loss": 19.33019385457397,
+              "market_residual": 2.1312362973923892e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.693460965582167,
+                "childless_rate": 0.10926662201518225,
+                "housing_increment_0to1": 1.0717649925892188,
+                "old_age_own_rate": 0.7052472847298772,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5881532102730096,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.06981827013373,
+                "own_family_gap": 0.06557109339805495,
+                "own_rate": 0.5342166510965867,
+                "own_rate_2534": 0.35304366363669376,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3566445283725717,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6864261936032944,
+                "prime30_55_childless_renter_mean_rooms": 4.151333218365399,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6699207137972163,
+                "tfr": 2.487259259506887,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.2901037257698173
+              },
+              "package": "optimized",
+              "price": [
+                0.830759392884945
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.1312362973923892e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.29828510671740954,
+                "distribution": 2.2691470220452175,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.1312362973923892e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.6112848670454696,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1475966699654236,
+                "scalar_market_refine": {
+                  "best_excess": 0.00012133852066575912,
+                  "best_metric": 2.1312362973923892e-05,
+                  "best_price": 0.830759392884945,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.484377984073944,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 0.9944444444444445,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.831438121967949,
+              "housing_demand": 5.693576915006714,
+              "housing_supply": 5.698986334843041,
+              "loss": 17.37967571748743,
+              "market_residual": 0.0009491898240302726,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.693576915006721,
+                "childless_rate": 0.11003707749605869,
+                "housing_increment_0to1": 1.074797206041372,
+                "old_age_own_rate": 0.7066834809261483,
+                "old_nonhousing_ge_1x_income_share_6575": 0.591723538640291,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.114025093818204,
+                "own_family_gap": 0.06631934084296331,
+                "own_rate": 0.5358516448863664,
+                "own_rate_2534": 0.354107217468614,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3509693291401206,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6849436552376644,
+                "prime30_55_childless_renter_mean_rooms": 4.147752676413866,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732233331740707,
+                "tfr": 2.483599229484217,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.30872222150213996
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1605379789834842,
+                "bellman_mode": "full_only",
+                "distribution": 2.6676054990384728,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4320219869259745,
+              "housing_demand": 5.693576915006714,
+              "housing_supply": 5.698986334843041,
+              "loss": 17.379675717487416,
+              "market_residual": 0.0009491898240304286,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.69357691500672,
+                "childless_rate": 0.11003707749605866,
+                "housing_increment_0to1": 1.074797206041372,
+                "old_age_own_rate": 0.7066834809261483,
+                "old_nonhousing_ge_1x_income_share_6575": 0.591723538640291,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.114025093818204,
+                "own_family_gap": 0.06631934084296331,
+                "own_rate": 0.5358516448863664,
+                "own_rate_2534": 0.354107217468614,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3509693291401206,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6849436552376644,
+                "prime30_55_childless_renter_mean_rooms": 4.147752676413866,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732233331740698,
+                "tfr": 2.4835992294842164,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.30872222150213996
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1460817259503528,
+                "bellman_mode": "full_only",
+                "distribution": 2.2824983820319176,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.26365848106798,
+              "housing_demand": 5.6948932315252305,
+              "housing_supply": 5.694901757936866,
+              "loss": 17.465639703570304,
+              "market_residual": 1.4972008292557237e-06,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.694893231525232,
+                "childless_rate": 0.1100359399925474,
+                "housing_increment_0to1": 1.0746772369962538,
+                "old_age_own_rate": 0.7067710484994334,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5917388261318477,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.107684570277451,
+                "own_family_gap": 0.06637610973720542,
+                "own_rate": 0.5359466186352292,
+                "own_rate_2534": 0.3541779128987478,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3513837577642027,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.685214651351685,
+                "prime30_55_childless_renter_mean_rooms": 4.148713998709126,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732570658708426,
+                "tfr": 2.483604488781651,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.30853462643944307
+              },
+              "package": "old",
+              "price": [
+                0.830889638168085
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1510393790667877,
+                "bellman_mode": "full_only",
+                "best_eq_error": 1.4972008292557237e-06,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.0022061740968815466,
+                "distribution": 2.6493574439082295,
+                "final_eq_error": 1.4972008292557237e-06,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.6894965529209,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": -8.526411634512954e-06,
+                  "best_metric": 1.4972008292557237e-06,
+                  "best_price": 0.830889638168085,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8322801575641278,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.7700072809821,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.277553971973248,
+              "housing_demand": 5.6949208151447115,
+              "housing_supply": 5.694816474780241,
+              "loss": 17.467314695668232,
+              "market_residual": 1.832198894117282e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.694920815144713,
+                "childless_rate": 0.11003591781992186,
+                "housing_increment_0to1": 1.0746737766465628,
+                "old_age_own_rate": 0.7067723857451547,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5917396379587336,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.10755216373879,
+                "own_family_gap": 0.06637658791752366,
+                "own_rate": 0.5359479744989198,
+                "own_rate_2534": 0.35417896747116634,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.351389790231127,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6852194807766474,
+                "prime30_55_childless_renter_mean_rooms": 4.1487356878142245,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6732587006258814,
+                "tfr": 2.4836045954702213,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3085298859415059
+              },
+              "package": "optimized",
+              "price": [
+                0.8308825279369589
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 1.832198894117282e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.29802188346329905,
+                "distribution": 2.259311595931649,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 1.832198894117282e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.599998440942727,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1351675600744784,
+                "scalar_market_refine": {
+                  "best_excess": 0.00010434036447293238,
+                  "best_metric": 1.832198894117282e-05,
+                  "best_price": 0.8308825279369589,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.416890412918292,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 0.9966666666666667,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.7993262199452147,
+              "housing_demand": 5.695867425253006,
+              "housing_supply": 5.698986334843041,
+              "loss": 15.978210702658973,
+              "market_residual": 0.0005472744461525822,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.6958674252530095,
+                "childless_rate": 0.11081070217589999,
+                "housing_increment_0to1": 1.084645650828583,
+                "old_age_own_rate": 0.7081439106703028,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5955535399039941,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.141861118228622,
+                "own_family_gap": 0.06690418618701094,
+                "own_rate": 0.5375771237758511,
+                "own_rate_2534": 0.3556697924605661,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.346996537227154,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6839514142707478,
+                "prime30_55_childless_renter_mean_rooms": 4.145543250128394,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6751079810057767,
+                "tfr": 2.4799327317011497,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.32653635582641255
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1501345949945971,
+                "bellman_mode": "full_only",
+                "distribution": 2.6457497640512884,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4274298410164192,
+              "housing_demand": 5.695867425253006,
+              "housing_supply": 5.698986334843041,
+              "loss": 15.97821070265898,
+              "market_residual": 0.0005472744461525822,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.6958674252530095,
+                "childless_rate": 0.11081070217589999,
+                "housing_increment_0to1": 1.0846456508285847,
+                "old_age_own_rate": 0.7081439106703028,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5955535399039941,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.141861118228622,
+                "own_family_gap": 0.06690418618701094,
+                "own_rate": 0.5375771237758511,
+                "own_rate_2534": 0.3556697924605661,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.346996537227154,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6839514142707478,
+                "prime30_55_childless_renter_mean_rooms": 4.145543250128394,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6751079810057741,
+                "tfr": 2.4799327317011497,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3265363558264125
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1358261730056256,
+                "bellman_mode": "full_only",
+                "distribution": 2.2882548589259386,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.266770545975305,
+              "housing_demand": 5.696611994655422,
+              "housing_supply": 5.696660615978087,
+              "loss": 16.00918539084689,
+              "market_residual": 8.535056930037236e-06,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.696611994655418,
+                "childless_rate": 0.11081005186209748,
+                "housing_increment_0to1": 1.084581276691812,
+                "old_age_own_rate": 0.7081771308828954,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5955746392476028,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.1391536224564875,
+                "own_family_gap": 0.06693203004582893,
+                "own_rate": 0.5376289471140613,
+                "own_rate_2534": 0.35571199386491653,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3472441122230485,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6841085979387911,
+                "prime30_55_childless_renter_mean_rooms": 4.146092492315106,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6751376420785462,
+                "tfr": 2.4799357518714986,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3264429125013587
+              },
+              "package": "old",
+              "price": [
+                0.8310362675849385
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1565912789665163,
+                "bellman_mode": "full_only",
+                "best_eq_error": 8.535056930037236e-06,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002191549097259348,
+                "distribution": 2.652964086038992,
+                "final_eq_error": 8.535056930037236e-06,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.635263658245094,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": -4.8621322668473965e-05,
+                  "best_metric": 8.535056930037236e-06,
+                  "best_price": 0.8310362675849385,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8324151747889933,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.818280554027297,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.363015046925284,
+              "housing_demand": 5.696638155126362,
+              "housing_supply": 5.69658568666135,
+              "loss": 16.01019967200234,
+              "market_residual": 9.210510978731985e-06,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.696638155126359,
+                "childless_rate": 0.1108100312730137,
+                "housing_increment_0to1": 1.0845788618810854,
+                "old_age_own_rate": 0.708178652915368,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5955753117784984,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.13906638528896,
+                "own_family_gap": 0.0669332838059376,
+                "own_rate": 0.5376309894728901,
+                "own_rate_2534": 0.3557140686313541,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.347250542082401,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6841136615484568,
+                "prime30_55_childless_renter_mean_rooms": 4.1461121078761805,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6751415678631876,
+                "tfr": 2.4799358532297178,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3264407677225019
+              },
+              "package": "optimized",
+              "price": [
+                0.8310300214037437
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 9.210510978731985e-06,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2977710016032206,
+                "distribution": 2.275861534057185,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 9.210510978731985e-06,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.620921002002433,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1436861220281571,
+                "scalar_market_refine": {
+                  "best_excess": 5.246846500828184e-05,
+                  "best_metric": 9.210510978731985e-06,
+                  "best_price": 0.8310300214037437,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.4648967429529876,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 0.9988888888888889,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.802913998020813,
+              "housing_demand": 5.698041202882329,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.236298902035061,
+              "market_residual": 0.0001658421173834411,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.698041202882329,
+                "childless_rate": 0.11159112176395845,
+                "housing_increment_0to1": 1.089329436403806,
+                "old_age_own_rate": 0.7095753830107122,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5992609048206042,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+                "own_family_gap": 0.06747834123883106,
+                "own_rate": 0.5391180882701234,
+                "own_rate_2534": 0.3567229611203452,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3421087856687457,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6827717505183721,
+                "prime30_55_childless_renter_mean_rooms": 4.143426577522985,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6778933050066147,
+                "tfr": 2.4762448825764123,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.34545477783924877
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1495604109950364,
+                "bellman_mode": "full_only",
+                "distribution": 2.650028408970684,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.409855078905821,
+              "housing_demand": 5.698041202882329,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.236298902035074,
+              "market_residual": 0.0001658421173834411,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.69804120288233,
+                "childless_rate": 0.11159112176395845,
+                "housing_increment_0to1": 1.0893294364038064,
+                "old_age_own_rate": 0.7095753830107122,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5992609048206042,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+                "own_family_gap": 0.06747834123883106,
+                "own_rate": 0.5391180882701234,
+                "own_rate_2534": 0.3567229611203452,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3421087856687457,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.682771750518372,
+                "prime30_55_childless_renter_mean_rooms": 4.143426577522985,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6778933050066165,
+                "tfr": 2.4762448825764123,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3454547778392489
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1298512161010876,
+                "bellman_mode": "full_only",
+                "distribution": 2.2765698350267485,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.012135994038545,
+              "housing_demand": 5.698266647458196,
+              "housing_supply": 5.698294488486222,
+              "loss": 14.234868168152063,
+              "market_residual": 4.88585278851322e-06,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.6982666474582055,
+                "childless_rate": 0.11159092312558785,
+                "housing_increment_0to1": 1.0893058298351013,
+                "old_age_own_rate": 0.7095845335757139,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5992685998566286,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+                "own_family_gap": 0.067494290617503,
+                "own_rate": 0.5391368034142806,
+                "own_rate_2534": 0.3567387384486729,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3421853645322477,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6828205128167356,
+                "prime30_55_childless_renter_mean_rooms": 4.143591587944349,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6779138229649249,
+                "tfr": 2.47624580414105,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.34543614848276827
+              },
+              "package": "old",
+              "price": [
+                0.8311724600430668
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1627239589579403,
+                "bellman_mode": "full_only",
+                "best_eq_error": 4.88585278851322e-06,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.0021346595172237184,
+                "distribution": 2.658729517017491,
+                "final_eq_error": 4.88585278851322e-06,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.39957841602154,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": -2.784102801633992e-05,
+                  "best_metric": 4.88585278851322e-06,
+                  "best_price": 0.8311724600430668,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8325153387987101,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.787309778039344,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.37490371603053,
+              "housing_demand": 5.69829484901417,
+              "housing_supply": 5.698205044220865,
+              "loss": 14.234760194131136,
+              "market_residual": 1.576018985050125e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.698294849014171,
+                "childless_rate": 0.11159089870513475,
+                "housing_increment_0to1": 1.0893028748808637,
+                "old_age_own_rate": 0.7095857347428669,
+                "old_nonhousing_ge_1x_income_share_6575": 0.5992691160476693,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.22536919145988,
+                "own_family_gap": 0.06749520690055366,
+                "own_rate": 0.5391385999848974,
+                "own_rate_2534": 0.35674027829996,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3421946686077586,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6828262168532638,
+                "prime30_55_childless_renter_mean_rooms": 4.143611923329615,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6779153125034885,
+                "tfr": 2.476245915817978,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.34543150246768517
+              },
+              "package": "optimized",
+              "price": [
+                0.8311650047938025
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 1.576018985050125e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2975284345625793,
+                "distribution": 2.2867612100671977,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 1.576018985050125e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.61492215807084,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1461675929604098,
+                "scalar_market_refine": {
+                  "best_excess": 8.98047933040047e-05,
+                  "best_metric": 1.576018985050125e-05,
+                  "best_price": 0.8311650047938025,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.471837500110269,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 1.001111111111111,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.8391797799849883,
+              "housing_demand": 5.699837045539274,
+              "housing_supply": 5.698986334843041,
+              "loss": 12.350512252975117,
+              "market_residual": 0.00014927403686341143,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.699837045539274,
+                "childless_rate": 0.11237741847051057,
+                "housing_increment_0to1": 1.093486994207146,
+                "old_age_own_rate": 0.7109681794406788,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6029939243191119,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.466662989087399,
+                "own_family_gap": 0.06816780366777281,
+                "own_rate": 0.541023819456117,
+                "own_rate_2534": 0.3582340766978263,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3361780869603157,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6814508745549932,
+                "prime30_55_childless_renter_mean_rooms": 4.141256009286866,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6804629354593477,
+                "tfr": 2.472538966930177,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3648225177539399
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.16524018405471,
+                "bellman_mode": "full_only",
+                "distribution": 2.67055103299208,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4547552779549733,
+              "housing_demand": 5.699837045539274,
+              "housing_supply": 5.698986334843041,
+              "loss": 12.350512252975117,
+              "market_residual": 0.00014927403686341143,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.699837045539273,
+                "childless_rate": 0.11237741847051057,
+                "housing_increment_0to1": 1.093486994207146,
+                "old_age_own_rate": 0.7109681794406788,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6029939243191119,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.466662989087399,
+                "own_family_gap": 0.06816780366777281,
+                "own_rate": 0.541023819456117,
+                "own_rate_2534": 0.3582340766978263,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3361780869603157,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6814508745549932,
+                "prime30_55_childless_renter_mean_rooms": 4.141256009286866,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6804629354593477,
+                "tfr": 2.472538966930177,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3648225177539399
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1548211469780654,
+                "bellman_mode": "full_only",
+                "distribution": 2.2966306089656428,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.248828079900704,
+              "housing_demand": 5.699659061395615,
+              "housing_supply": 5.699656644026227,
+              "loss": 12.358649837544311,
+              "market_residual": 4.2412544140338717e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.69965906139562,
+                "childless_rate": 0.1123775752326347,
+                "housing_increment_0to1": 1.0934919873562352,
+                "old_age_own_rate": 0.7110914431439689,
+                "old_nonhousing_ge_1x_income_share_6575": 0.602867928729134,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.467443244537747,
+                "own_family_gap": 0.0682189549038974,
+                "own_rate": 0.5410440483171159,
+                "own_rate_2534": 0.35823932453143514,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3361401672657305,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6814380753810564,
+                "prime30_55_childless_renter_mean_rooms": 4.141085665489443,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6803361389896017,
+                "tfr": 2.4725382103292435,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.36483509123152524
+              },
+              "package": "old",
+              "price": [
+                0.8312859905724683
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1449618859915063,
+                "bellman_mode": "full_only",
+                "best_eq_error": 4.2412544140338717e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002135284380051434,
+                "distribution": 2.6534767319681123,
+                "final_eq_error": 4.2412544140338717e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.685752542922273,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": 2.417369389995372e-06,
+                  "best_metric": 4.2412544140338717e-07,
+                  "best_price": 0.8312859905724683,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8326287691331185,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.76082151895389,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.337618201039732,
+              "housing_demand": 5.699688915001459,
+              "housing_supply": 5.699559559661397,
+              "loss": 12.358603061453131,
+              "market_residual": 2.2695673009978522e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.699688915001468,
+                "childless_rate": 0.11237754732393368,
+                "housing_increment_0to1": 1.0934895967058622,
+                "old_age_own_rate": 0.7110927703089076,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6028695746172682,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.467330238518838,
+                "own_family_gap": 0.06822040031339388,
+                "own_rate": 0.5410462163312477,
+                "own_rate_2534": 0.35824104034909854,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3361522960126946,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.681444741607294,
+                "prime30_55_childless_renter_mean_rooms": 4.141107750332653,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6803370016432488,
+                "tfr": 2.4725383379973067,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.36483128546520355
+              },
+              "package": "optimized",
+              "price": [
+                0.8312778993415145
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.2695673009978522e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2973160127057627,
+                "distribution": 2.264491996029392,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.2695673009978522e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.608019266044721,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.150764082907699,
+                "scalar_market_refine": {
+                  "best_excess": 0.00012935534006697225,
+                  "best_metric": 2.2695673009978522e-05,
+                  "best_price": 0.8312778993415145,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.463749147951603,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 1.0033333333333334,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.8241304829716682,
+              "housing_demand": 5.70160052857754,
+              "housing_supply": 5.698986334843041,
+              "loss": 12.149815879789804,
+              "market_residual": 0.00045871205525041693,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.701600528577538,
+                "childless_rate": 0.11316923054366602,
+                "housing_increment_0to1": 1.0983470474074948,
+                "old_age_own_rate": 0.7123914519087979,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6065454132122983,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.466662989087399,
+                "own_family_gap": 0.06868859949929218,
+                "own_rate": 0.5428184919816453,
+                "own_rate_2534": 0.35947662469989067,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3310715052637327,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6803788586588697,
+                "prime30_55_childless_renter_mean_rooms": 4.138879934599017,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6825879095387286,
+                "tfr": 2.4688157612445676,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3852267782294173
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1561965239234269,
+                "bellman_mode": "full_only",
+                "distribution": 2.664551976020448,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4226379249012098,
+              "housing_demand": 5.70160052857754,
+              "housing_supply": 5.698986334843041,
+              "loss": 12.149815879789806,
+              "market_residual": 0.0004587120552502611,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.701600528577537,
+                "childless_rate": 0.11316923054366602,
+                "housing_increment_0to1": 1.0983470474074948,
+                "old_age_own_rate": 0.7123914519087979,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6065454132122983,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.466662989087399,
+                "own_family_gap": 0.06868859949929218,
+                "own_rate": 0.5428184919816453,
+                "own_rate_2534": 0.35947662469989067,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3310715052637327,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6803788586588697,
+                "prime30_55_childless_renter_mean_rooms": 4.138879934599017,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6825879095387286,
+                "tfr": 2.4688157612445676,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3852267782294173
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1407379478914663,
+                "bellman_mode": "full_only",
+                "distribution": 2.278516359976493,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.3814380960539,
+              "housing_demand": 5.700984962542349,
+              "housing_supply": 5.700988559617373,
+              "loss": 12.147432286718944,
+              "market_residual": 6.30956365901162e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.70098496254235,
+                "childless_rate": 0.11316976755841394,
+                "housing_increment_0to1": 1.0983954055651737,
+                "old_age_own_rate": 0.7125043631277306,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6064329760713518,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.468993508508759,
+                "own_family_gap": 0.0687192508804319,
+                "own_rate": 0.5428078707703253,
+                "own_rate_2534": 0.3594541837567063,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3308821495342524,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6802680584868463,
+                "prime30_55_childless_renter_mean_rooms": 4.138386901209891,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6824543831001613,
+                "tfr": 2.4688132607837936,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.3852968887783916
+              },
+              "package": "old",
+              "price": [
+                0.8313969894727928
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1536675499519333,
+                "bellman_mode": "full_only",
+                "best_eq_error": 6.30956365901162e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002129384355819178,
+                "distribution": 2.6585031260037795,
+                "final_eq_error": 6.30956365901162e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.70836014417,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": -3.5970750236202775e-06,
+                  "best_metric": 6.30956365901162e-07,
+                  "best_price": 0.8313969894727928,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8327351367089589,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.857272062217817,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.398431394947693,
+              "housing_demand": 5.701018380322401,
+              "housing_supply": 5.700886591650273,
+              "loss": 12.147534529174203,
+              "market_residual": 2.3117223963385478e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.7010183803224015,
+                "childless_rate": 0.11316973750869827,
+                "housing_increment_0to1": 1.0983929611072436,
+                "old_age_own_rate": 0.7125053704482006,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6064345121549607,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.468874829849149,
+                "own_family_gap": 0.06872026913871915,
+                "own_rate": 0.5428098856747138,
+                "own_rate_2534": 0.3594559147508295,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3308902728718266,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6802751582177348,
+                "prime30_55_childless_renter_mean_rooms": 4.138414816771953,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6824546059012526,
+                "tfr": 2.4688133974383306,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.38529307108713345
+              },
+              "package": "optimized",
+              "price": [
+                0.8313884920807647
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.3117223963385478e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.29710988274945505,
+                "distribution": 2.2882008290616795,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.3117223963385478e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.6177865910576656,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1528115780092776,
+                "scalar_market_refine": {
+                  "best_excess": 0.00013178867212904066,
+                  "best_metric": 2.3117223963385478e-05,
+                  "best_price": 0.8313884920807647,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.491097628953867,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 1.0055555555555555,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.8449796680361032,
+              "housing_demand": 5.7032585266040705,
+              "housing_supply": 5.698986334843041,
+              "loss": 13.454337768955979,
+              "market_residual": 0.0007496406395846242,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.703258526604078,
+                "childless_rate": 0.11396725329160831,
+                "housing_increment_0to1": 1.1025062838447703,
+                "old_age_own_rate": 0.713776030946666,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6101284444259614,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.763628835535756,
+                "own_family_gap": 0.06923052488626308,
+                "own_rate": 0.5443882004149693,
+                "own_rate_2534": 0.3604965781681459,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.325217610425902,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6791198812779421,
+                "prime30_55_childless_renter_mean_rooms": 4.1370313088675745,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.684679483179794,
+                "tfr": 2.4650739015557237,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4058012176114742
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.158874994958751,
+                "bellman_mode": "full_only",
+                "distribution": 2.6827230060007423,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4395101410336792,
+              "housing_demand": 5.70325852660407,
+              "housing_supply": 5.698986334843041,
+              "loss": 13.45433776895598,
+              "market_residual": 0.0007496406395846242,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.703258526604078,
+                "childless_rate": 0.11396725329160826,
+                "housing_increment_0to1": 1.1025062838447703,
+                "old_age_own_rate": 0.713776030946666,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6101284444259614,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.763628835535756,
+                "own_family_gap": 0.06923052488626308,
+                "own_rate": 0.5443882004149692,
+                "own_rate_2534": 0.36049657816814584,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.325217610425903,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6791198812779422,
+                "prime30_55_childless_renter_mean_rooms": 4.1370313088675745,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6846794831797958,
+                "tfr": 2.4650739015557233,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4058012176114742
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1505242720013484,
+                "bellman_mode": "full_only",
+                "distribution": 2.2855794481001794,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 32.96692392195109,
+              "housing_demand": 5.702240124693525,
+              "housing_supply": 5.702238272592609,
+              "loss": 12.21280499162484,
+              "market_residual": 3.248024409771584e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.702240124693518,
+                "childless_rate": 0.11396815721351451,
+                "housing_increment_0to1": 1.1025797726537847,
+                "old_age_own_rate": 0.7138491609392985,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6099928311725911,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.550171062318654,
+                "own_family_gap": 0.06923954091184598,
+                "own_rate": 0.544347812388441,
+                "own_rate_2534": 0.36045310972807143,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3248664610613243,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6789250712044154,
+                "prime30_55_childless_renter_mean_rooms": 4.1362614989862605,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6845118601661184,
+                "tfr": 2.465069713829066,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4059299046122244
+              },
+              "package": "old",
+              "price": [
+                0.8315011276830776
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.15814870595932,
+                "bellman_mode": "full_only",
+                "best_eq_error": 3.248024409771584e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002125831348409611,
+                "distribution": 2.669015993946232,
+                "final_eq_error": 3.248024409771584e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.290187314152718,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": 1.8521009099714547e-06,
+                  "best_metric": 3.248024409771584e-07,
+                  "best_price": 0.8315011276830776,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.8328397917647333,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.845776937901974,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.437450743978843,
+              "housing_demand": 5.7022740604451005,
+              "housing_supply": 5.7021321407276035,
+              "loss": 12.212878283207544,
+              "market_residual": 2.4888886121852737e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.702274060445106,
+                "childless_rate": 0.11396812563630647,
+                "housing_increment_0to1": 1.1025778595627345,
+                "old_age_own_rate": 0.7138494180968304,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6099947494959759,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.550171062318654,
+                "own_family_gap": 0.06924066288068859,
+                "own_rate": 0.5443500906943505,
+                "own_rate_2534": 0.3604550862707971,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3248795094947017,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6789325063777387,
+                "prime30_55_childless_renter_mean_rooms": 4.136287054735687,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6845123253440972,
+                "tfr": 2.4650698582055295,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4059265908446038
+              },
+              "package": "optimized",
+              "price": [
+                0.8314922841264462
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.4888886121852737e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2968988431463815,
+                "distribution": 2.2899203080451116,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.4888886121852737e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.632683378062211,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1535793349612504,
+                "scalar_market_refine": {
+                  "best_excess": 0.00014191971750232568,
+                  "best_metric": 2.4888886121852737e-05,
+                  "best_price": 0.8314922841264462,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.513499128050171,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 1.0077777777777779,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.843302996014245,
+              "housing_demand": 5.704738251602992,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.040396977034117,
+              "market_residual": 0.0010092876911774117,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.704738251602987,
+                "childless_rate": 0.11477129254493029,
+                "housing_increment_0to1": 1.1065196542557252,
+                "old_age_own_rate": 0.7150895766550506,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6136790526023698,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.791464859946175,
+                "own_family_gap": 0.06968037750678485,
+                "own_rate": 0.545880822440626,
+                "own_rate_2534": 0.36141070104148626,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3193035797952968,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6777795370319962,
+                "prime30_55_childless_renter_mean_rooms": 4.13508487918677,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6868164709402063,
+                "tfr": 2.4613137377751872,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.42638642082671424
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1557412160327658,
+                "bellman_mode": "full_only",
+                "distribution": 2.6842385550262406,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.428729560924694,
+              "housing_demand": 5.704738251602992,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.040396977034133,
+              "market_residual": 0.0010092876911774117,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.704738251602987,
+                "childless_rate": 0.11477129254493026,
+                "housing_increment_0to1": 1.1065196542557258,
+                "old_age_own_rate": 0.7150895766550505,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6136790526023699,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.791464859946175,
+                "own_family_gap": 0.06968037750678474,
+                "own_rate": 0.545880822440626,
+                "own_rate_2534": 0.36141070104148626,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3193035797952968,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6777795370319963,
+                "prime30_55_childless_renter_mean_rooms": 4.13508487918677,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6868164709402089,
+                "tfr": 2.4613137377751864,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.42638642082671424
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1379403210012242,
+                "bellman_mode": "full_only",
+                "distribution": 2.287384388037026,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.30729603895452,
+              "housing_demand": 5.703362648856179,
+              "housing_supply": 5.703358547542898,
+              "loss": 14.079910013579301,
+              "market_residual": 7.191049362152525e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.703362648856182,
+                "childless_rate": 0.1147725275369844,
+                "housing_increment_0to1": 1.106607913230278,
+                "old_age_own_rate": 0.7151548443071385,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6135434284430105,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.796553508901238,
+                "own_family_gap": 0.06968711633263575,
+                "own_rate": 0.545821240588743,
+                "own_rate_2534": 0.3613503139085792,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3188138790824997,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6775062374902081,
+                "prime30_55_childless_renter_mean_rooms": 4.134059015730376,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6866637280598127,
+                "tfr": 2.461308065054146,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.42657883813920616
+              },
+              "package": "old",
+              "price": [
+                0.831594471547406
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1563182349782437,
+                "bellman_mode": "full_only",
+                "best_eq_error": 7.191049362152525e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.002131680119556593,
+                "distribution": 2.6641924959840253,
+                "final_eq_error": 7.191049362152525e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.64257546409499,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": 4.101313284543551e-06,
+                  "best_metric": 7.191049362152525e-07,
+                  "best_price": 0.831594471547406,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.832936969321768,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.84044511988759,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.436135132913478,
+              "housing_demand": 5.703392182974326,
+              "housing_supply": 5.703263195909539,
+              "loss": 14.078463060311698,
+              "market_residual": 2.2616361959527782e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.703392182974328,
+                "childless_rate": 0.11477250173155436,
+                "housing_increment_0to1": 1.106603342478413,
+                "old_age_own_rate": 0.7151558443001692,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6135412191873989,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.796442550666101,
+                "own_family_gap": 0.06968770257200546,
+                "own_rate": 0.5458229612119058,
+                "own_rate_2534": 0.3613517497828196,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3188222603341053,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6775122873311429,
+                "prime30_55_childless_renter_mean_rooms": 4.1340814917455395,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6866695031664829,
+                "tfr": 2.461308186613116,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.42657420485658504
+              },
+              "package": "optimized",
+              "price": [
+                0.8315865269377701
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.2616361959527782e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.29670645529296474,
+                "distribution": 2.2782697109505534,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.2616361959527782e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.6308850449277088,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1631884529488161,
+                "scalar_market_refine": {
+                  "best_excess": 0.00012898706478914335,
+                  "best_metric": 2.2616361959527782e-05,
+                  "best_price": 0.8315865269377701,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.525675694108941,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        },
+        {
+          "factor": 1.01,
+          "fixed_price": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.8536680409451947,
+              "housing_demand": 5.706059388737444,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.893126326331599,
+              "market_residual": 0.0012411073617002502,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.706059388737444,
+                "childless_rate": 0.1155814804328575,
+                "housing_increment_0to1": 1.1102301457508763,
+                "old_age_own_rate": 0.7164612474782257,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6171638477249421,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.819300884356594,
+                "own_family_gap": 0.07010609244560878,
+                "own_rate": 0.5474337541507337,
+                "own_rate_2534": 0.3624330578952266,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3127252030149528,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6762475795721813,
+                "prime30_55_childless_renter_mean_rooms": 4.133130588962924,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6891022521706596,
+                "tfr": 2.457534887248837,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.44706573381632336
+              },
+              "package": "old",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1616733729606494,
+                "bellman_mode": "full_only",
+                "distribution": 2.688622514018789,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 3.4476953180273995,
+              "housing_demand": 5.706059388737444,
+              "housing_supply": 5.698986334843041,
+              "loss": 14.893126326331585,
+              "market_residual": 0.0012411073617002502,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.706059388737443,
+                "childless_rate": 0.1155814804328575,
+                "housing_increment_0to1": 1.1102301457508763,
+                "old_age_own_rate": 0.7164612474782257,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6171638477249421,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.819300884356594,
+                "own_family_gap": 0.07010609244560878,
+                "own_rate": 0.5474337541507337,
+                "own_rate_2534": 0.3624330578952266,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3127252030149537,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6762475795721813,
+                "prime30_55_childless_renter_mean_rooms": 4.133130588962923,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6891022521706578,
+                "tfr": 2.457534887248837,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.44706573381632336
+              },
+              "package": "optimized",
+              "price": [
+                0.8312301242822234
+              ],
+              "timings": {
+                "bellman_full": 1.1489014909602702,
+                "bellman_mode": "full_only",
+                "distribution": 2.295427388045937,
+                "income_process": "markov",
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1
+              }
+            }
+          },
+          "ge_loose": {
+            "old": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 33.20832294598222,
+              "housing_demand": 5.704360709736835,
+              "housing_supply": 5.704362135291222,
+              "loss": 14.92071850305996,
+              "market_residual": 2.4990601100104294e-07,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.704360709736835,
+                "childless_rate": 0.11558302749407287,
+                "housing_increment_0to1": 1.1103543358002295,
+                "old_age_own_rate": 0.7165089734547914,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6170398401036105,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.823471850959232,
+                "own_family_gap": 0.07008894033802204,
+                "own_rate": 0.5473481708102913,
+                "own_rate_2534": 0.36234739739031724,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.312095486668021,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6758938151889783,
+                "prime30_55_childless_renter_mean_rooms": 4.131866352650215,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6889655723940367,
+                "tfr": 2.4575277820692305,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.44728866699294256
+              },
+              "package": "old",
+              "price": [
+                0.8316780860953467
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 1.1419311029603705,
+                "bellman_mode": "full_only",
+                "best_eq_error": 2.4990601100104294e-07,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.0021381792484373788,
+                "distribution": 2.646900444990024,
+                "final_eq_error": 2.4990601100104294e-07,
+                "income_process": "markov",
+                "iterations_completed": 10,
+                "markov_income_solve_time": 19.642214555991814,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 1,
+                "scalar_market_refine": {
+                  "best_excess": -1.425554386536021e-06,
+                  "best_metric": 2.4990601100104294e-07,
+                  "best_price": 0.8316780860953467,
+                  "bracket_found": true,
+                  "expansions": 0,
+                  "initial_price": 0.833024042512735,
+                  "iterations": 3,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 9.773618323146366,
+                  "price_evaluations": 5,
+                  "used": true
+                },
+                "strict_converged": true
+              }
+            },
+            "optimized": {
+              "directional_fallback_used": false,
+              "elapsed_seconds": 10.341248387936503,
+              "housing_demand": 5.704392936966003,
+              "housing_supply": 5.704261377003769,
+              "loss": 14.91917683811628,
+              "market_residual": 2.3063452660059635e-05,
+              "moments": {
+                "aggregate_mean_occupied_rooms_18_85": 5.7043929369659985,
+                "childless_rate": 0.11558299784251665,
+                "housing_increment_0to1": 1.1103530722110575,
+                "old_age_own_rate": 0.7165101991747015,
+                "old_nonhousing_ge_1x_income_share_6575": 0.6170361864811145,
+                "old_total_estate_wealth_to_annual_income_median_7684": 6.823393690291471,
+                "own_family_gap": 0.07009000590385239,
+                "own_rate": 0.5473502220436827,
+                "own_rate_2534": 0.3623490521668248,
+                "prime30_55_childless_owner_minus_renter_mean_rooms": 2.3121043090664566,
+                "prime30_55_childless_owner_share_rooms_ge6": 0.6759010414880039,
+                "prime30_55_childless_renter_mean_rooms": 4.13189318812923,
+                "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.6889655733542916,
+                "tfr": 2.4575279176574587,
+                "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.4472822878774963
+              },
+              "package": "optimized",
+              "price": [
+                0.8316696916396292
+              ],
+              "timings": {
+                "accepted": true,
+                "bellman_full": 0.0,
+                "bellman_mode": "reused_accepted_price",
+                "best_eq_error": 2.3063452660059635e-05,
+                "convergence_reason": "strict_tol",
+                "damped_final_eq_error": 0.2965194570424328,
+                "distribution": 2.2797196769388393,
+                "equilibrium_method": "direct_brent",
+                "final_eq_error": 2.3063452660059635e-05,
+                "income_process": "markov",
+                "iterations_completed": 1,
+                "markov_income_solve_time": 1.6047682010103017,
+                "n_dist": 1,
+                "n_eval": 0,
+                "n_full": 0,
+                "price_cache_hits": 0,
+                "reused_bellman_seconds": 1.1464711350854486,
+                "scalar_market_refine": {
+                  "best_excess": 0.00013155996222913302,
+                  "best_metric": 2.3063452660059635e-05,
+                  "best_price": 0.8316696916396292,
+                  "bracket_found": true,
+                  "cache_hits": 0,
+                  "directional_fallback_used": false,
+                  "expansions": 2,
+                  "initial_price": 0.965533650862593,
+                  "iterations": 2,
+                  "method": "brent",
+                  "price_evaluation_time_sec": 6.455406373133883,
+                  "price_evaluations": 4,
+                  "used": true
+                },
+                "strict_converged": true,
+                "unique_fast_price_evaluations": 5
+              }
+            }
+          }
+        }
+      ],
+      "fixed_price_total_seconds": {
+        "old": 44.47922567173373,
+        "optimized": 34.45454762177542
+      },
+      "ge_loose_total_seconds": {
+        "old": 331.9953927388415,
+        "optimized": 103.23814777680673
+      },
+      "smoke": false,
+      "task": "throughput"
+    }
+  },
+  "root_case_pass": true,
+  "strict_repeat_pass": true,
+  "throughput_pass": true
+}
