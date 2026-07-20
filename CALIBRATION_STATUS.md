@@ -1,6 +1,30 @@
 # Calibration Status
 
-Updated: `2026-07-19` (isolated optimized M5 continuation dependency-queued; M5 unchanged)
+Updated: `2026-07-19 night` (E1 collected 12.608; eqscale-seq optimized port promoted, GE 3.22x; E2 overnight launching; optimized M5 continuation dependency-queued; M5 unchanged)
+
+## July 19 night: experiment-fork optimization port verified; E2 overnight
+
+E1 collected: tight winner loss 12.608 (report in
+`output/model/eqscale_seq_recalibration_20260718/report/`; old-age ownership
+miss RESOLVED at 0.710 vs 0.764 target; untargeted estate p90/50 3.67 vs
+data 3.45; remaining loss concentrated in fertility levels, psi~0 tell).
+The Codex computational optimizations were reimplemented for the experiment
+architecture in `code/model/intergen_eqscale_seq_optimized/` (direct Brent
+equilibrium search + price cache + retained Bellman payload EXTENDED with
+the fork's fert2_probs side channel + compiled scatter + contracts).
+Verification: two adversarial review rounds (13 confirmed findings fixed —
+incl. a skipped rename pass that had 87 inherited tests silently re-testing
+the parent, and the chain runner importing the parent); 93 tests green
+genuinely against the port; Torch battery: demand-map parity EXACT, strict
+repeats bitwise, forced wrong-direction root exercises the bilateral
+fallback, throughput fixed-price 1.29x and GE-loose 3.22x (332s->103s over
+10 candidates; loose-mode nearby-root loss agreement <= 1.8e-3, strict
+3e-4 — disclosed). PORT_HANDOFF.md in the package for Codex cross-check.
+E2 overnight: same E1 contract (12 free / 15 moments, sigma_z=0.20 external,
+no floor), optimized evaluator, warm-seeded from the E1 winner via
+E2_SEED_RECORD, 8x3:55 chains, submit
+`code/cluster/submit_intergen_e2_optimized.sh`, outdir
+`output/model/eqscale_seq_optimized_recalibration_20260719/`.
 
 ## July 19: isolated optimized M5 continuation queued on Torch
 
