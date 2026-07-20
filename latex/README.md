@@ -8,9 +8,10 @@ Active documents:
   recent slide deck.
 - `may_29_project_presentation.tex` / `may_29_project_presentation.pdf`:
   current presentation deck.
-- `quantification_note_academic_summary_slides.tex` /
-  `quantification_note_academic_summary_slides.pdf`: 20-slide academic
-  presentation of the circulated July 2026 calibration note.
+- `intergenerational_housing_fertility_note_slides.tex` /
+  `intergenerational_housing_fertility_note_slides.pdf`: 20-slide academic
+  presentation of the full circulated July 2026 paper draft, covering the
+  analytical model, quantitative model, calibration, results, and policy.
 - `distributional_empirics_report.tex` /
   `distributional_empirics_report.pdf`: data-vs-model distributional discipline
   report.
