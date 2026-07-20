@@ -8,9 +8,9 @@ Active documents:
   recent slide deck.
 - `may_29_project_presentation.tex` / `may_29_project_presentation.pdf`:
   current presentation deck.
-- `quantification_note_reaudit_corina_slides.tex` /
-  `quantification_note_reaudit_corina_slides.pdf`: July 2026 re-audit of the
-  circulated M5 calibration note, prepared for discussion with Corina.
+- `quantification_note_academic_summary_slides.tex` /
+  `quantification_note_academic_summary_slides.pdf`: 20-slide academic
+  presentation of the circulated July 2026 calibration note.
 - `distributional_empirics_report.tex` /
   `distributional_empirics_report.pdf`: data-vs-model distributional discipline
   report.
