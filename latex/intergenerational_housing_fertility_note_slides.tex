@@ -1,92 +1,76 @@
 \documentclass[aspectratio=169,11pt]{beamer}
 
 \usetheme{default}
-\usefonttheme{professionalfonts}
 \usepackage[T1]{fontenc}
-\usepackage[default]{sourcesanspro}
+\usepackage{lmodern}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{booktabs,tabularx,array}
 \usepackage{graphicx}
 
 \graphicspath{{figures/}}
 
-\definecolor{Ink}{HTML}{18212B}
-\definecolor{Muted}{HTML}{5D6875}
-\definecolor{Terra}{HTML}{9C3E2F}
-\definecolor{Blue}{HTML}{2F6690}
-\definecolor{Green}{HTML}{2C6E49}
-
-\setbeamercolor{normal text}{fg=Ink,bg=white}
-\setbeamercolor{frametitle}{fg=Ink,bg=white}
-\setbeamercolor{alerted text}{fg=Terra}
-\setbeamercolor{structure}{fg=Blue}
-\setbeamercolor{footline}{fg=Muted,bg=white}
+\definecolor{citecolor}{RGB}{110,110,165}
+\newcommand{\cit}[1]{{\color{citecolor}#1}}
+\setbeamercovered{transparent=5}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{itemize item}{\raise0.15ex\hbox{\scriptsize\textbullet}}
-\setbeamertemplate{itemize subitem}{\raise0.15ex\hbox{\scriptsize--}}
-\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
-\setbeamerfont{title}{size=\huge,series=\bfseries}
-\setbeamerfont{subtitle}{size=\large}
-\setbeamertemplate{frametitle}{%
-  \vspace{0.28em}\insertframetitle\par
-  \vspace{0.12em}{\color{Terra}\rule{\textwidth}{0.8pt}}
-}
-\setbeamertemplate{footline}{%
-  \leavevmode\hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=0.8ex,rightskip=1.2em]{footline}%
-    \hfill\scriptsize\insertframenumber\,/\,\inserttotalframenumber
-  \end{beamercolorbox}}
-}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{framesubtitle}{size=\small}
+\linespread{1.2}
 
-\newcommand{\source}[1]{\vfill{\color{Muted}\tiny Source: #1}}
+\newcommand{\source}[1]{}
 \newcommand{\tightitems}{\setlength{\itemsep}{0.55em}}
 \newcommand{\1}{\mathbf 1}
 \newcommand{\Bcal}{\mathcal B}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 \title{Intergenerational Housing Misallocation and Fertility}
-\subtitle{A lifecycle model of access to family-sized housing}
 \author{Tommaso De Santo}
-\date{July 2026}
+\date{07/2026}
 
 \begin{document}
 
 % 1
-\begin{frame}[plain]
-  \titlepage
-\end{frame}
+{\setbeamertemplate{footline}{}\maketitle}
 
 % 2
-\begin{frame}{Family formation requires access to space}
-  \large
-  Children increase a household's demand for living space, but family-sized housing is unevenly allocated across generations.
-
-  \vspace{0.8em}
+\begin{frame}{Housing and Fertility}
+  \textbf{Children increase how big of a house you need.} This has implications for:
   \begin{itemize}\tightitems
-    \item Large rental units are scarce.
-    \item Buying a larger home requires liquid wealth and a down payment.
-    \item Older households retain much of the family-sized owner stock after children leave.
+    \item Renting: large rental units are scarce.
+    \item Owning: a family-sized home requires liquid wealth and a down payment.
+    \item Wealth: older households retain much of the large owner stock after children leave.
   \end{itemize}
 
-  \vspace{0.6em}
-  \alert{Question:} Does limited access to family-sized housing raise the cost of children and reduce family formation among young households?
+  \vfill
+  Physical space is key. How much does it affect fertility?\\
+  What kind of housing policy can improve access to family-sized homes?\\[0.25em]
+  \hspace{2em}$\rightarrow$ focus on space constraints and tenure choice
   \source{Circulated note, Introduction.}
 \end{frame}
 
 % 3
-\begin{frame}{The paper connects access, allocation, and fertility}
-  \begin{enumerate}\tightitems
-    \item A two-generation analytical model isolates how rental limits, down payments, and old-owner retention affect the shadow value of space.
-    \item A finite-life quantitative model adds income risk, saving, tenure choice, transaction costs, bequests, entry, and upward-sloping housing supply.
-    \item Counterfactuals compare a purchase grant for family-sized homes with a package that combines the grant and a higher property tax.
-  \end{enumerate}
+\begin{frame}{This Paper}
+  Need a structural model where fertility, tenure, housing size, and saving are joint.
 
-  \vspace{0.8em}
-  The central object is the \alert{access gap}: the amount by which a constrained household values another unit of family space above its market user cost.
+  \vfill
+  \alert{Theory:} a simple model of access to family-sized housing
+  \begin{itemize}\tightitems
+    \item Rental limits and down payments raise the shadow value of space.
+    \item Retention by older owners can misallocate the existing housing stock.
+  \end{itemize}
+
+  \vfill
+  \alert{Quantification:} a lifecycle model with income risk, tenure choice, transaction costs, bequests, and entry
+
+  \vfill
+  \alert{Goal:} evaluate housing policies that change access when households make fertility decisions.
   \source{Circulated note, Introduction and status of the draft.}
 \end{frame}
 
 % 4
-\begin{frame}{A fixed housing stock is allocated across generations}
+\begin{frame}{Environment}
   \begin{columns}[T,onlytextwidth]
     \column{0.52\textwidth}
       \textbf{Young households}
@@ -110,7 +94,7 @@
 \end{frame}
 
 % 5
-\begin{frame}{Children use both goods and housing}
+\begin{frame}{Preferences}
   \large
   A young household receives utility from adult consumption, residual space, and completed fertility:
   \[
@@ -131,7 +115,7 @@
 \end{frame}
 
 % 6
-\begin{frame}{Rental limits and financing collapse into an effective cap}
+\begin{frame}{Housing, Tenure, and the Effective Cap}
   \large
   Using $P=r/\rho$, the maximum housing available in each tenure is
   \[
@@ -152,7 +136,7 @@
 \end{frame}
 
 % 7
-\begin{frame}{A binding housing constraint raises the full price of a child}
+\begin{frame}{The Access Gap}
   For a constrained household, the marginal value of space exceeds its effective price by $\zeta_i^m\ge0$:
   \[
     \frac{\alpha(c_i^m-\chi n_i^m)}{h_i^m-\kappa n_i^m}
@@ -171,7 +155,7 @@
 \end{frame}
 
 % 8
-\begin{frame}{The competitive allocation can leave gains from reallocation}
+\begin{frame}{Intergenerational Misallocation}
   \begin{columns}[T,onlytextwidth]
     \column{0.52\textwidth}
       \includegraphics[width=\textwidth,height=0.57\textheight,keepaspectratio]{example_misallocation_only_paper_notation.pdf}
@@ -191,7 +175,7 @@
 \end{frame}
 
 % 9
-\begin{frame}{Relaxing the cap can increase completed fertility}
+\begin{frame}{Fertility and Policy}
   \begin{columns}[T,onlytextwidth]
     \column{0.52\textwidth}
       \includegraphics[width=\textwidth,height=0.57\textheight,keepaspectratio]{example_fertility_cap_paper_notation.pdf}
@@ -212,7 +196,7 @@
 \end{frame}
 
 % 10
-\begin{frame}{The quantitative model follows households over the lifecycle}
+\begin{frame}{Quantitative Lifecycle Model}
   \begin{center}
   \begin{tabular}{c@{\hspace{1.5em}}c@{\hspace{1.5em}}c@{\hspace{1.5em}}c}
     \textbf{18} & \textbf{18--42} & \textbf{66} & \textbf{85}\\
@@ -233,7 +217,7 @@
 \end{frame}
 
 % 11
-\begin{frame}{Family needs enter a Stone--Geary composite}
+\begin{frame}{Preferences and Bequests}
   Dependent children shift minimum consumption and housing requirements:
   \[
     \bar c(n,s)=\bar c_0+\bar c_n n_s,
@@ -253,7 +237,7 @@
 \end{frame}
 
 % 12
-\begin{frame}{Ownership expands the housing menu but requires liquidity}
+\begin{frame}{Housing, Tenure, and Budget Constraints}
   \begin{columns}[T,onlytextwidth]
     \column{0.48\textwidth}
       \textbf{Renters}
@@ -282,7 +266,7 @@
 \end{frame}
 
 % 13
-\begin{frame}{Family size, tenure, and housing are chosen jointly}
+\begin{frame}{Family Size, Housing, and Equilibrium}
   A childless household in the fertile window chooses family size first, then its current housing position:
   \[
     n'\in\{0,1,2\},
@@ -302,7 +286,7 @@
 \end{frame}
 
 % 14
-\begin{frame}{Calibration combines external restrictions with 15 moments}
+\begin{frame}{Calibration}
   \begin{columns}[T,onlytextwidth]
     \column{0.48\textwidth}
       \textbf{Assigned outside estimation}
@@ -330,7 +314,7 @@
 \end{frame}
 
 % 15
-\begin{frame}{The fit reveals a lifecycle tenure tension}
+\begin{frame}{Model Fit}
   \centering
   \scriptsize
   \renewcommand{\arraystretch}{0.92}
@@ -359,7 +343,7 @@
 \end{frame}
 
 % 16
-\begin{frame}{Lifecycle housing and child profiles are shifted too late}
+\begin{frame}{Lifecycle Housing Patterns}
   \centering
   \includegraphics[width=0.96\textwidth,height=0.68\textheight,keepaspectratio]{quant_lifecycle_equilibrium_repaired_nb120.png}
 
@@ -370,7 +354,7 @@
 \end{frame}
 
 % 17
-\begin{frame}{Wealth and income jointly govern family size and housing}
+\begin{frame}{Housing and Family Size at Age 42}
   \centering
   \includegraphics[width=0.96\textwidth,height=0.68\textheight,keepaspectratio]{quant_decision_rules_repaired_nb120.png}
 
@@ -381,7 +365,7 @@
 \end{frame}
 
 % 18
-\begin{frame}{Constrained renters value another room far above user cost}
+\begin{frame}{Quantitative Evidence on the Mechanism}
   Among fertile renters whose positive-family branch reaches the rental cap:
   \[
     \underbrace{r}_{0.130}
@@ -409,7 +393,7 @@
 \end{frame}
 
 % 19
-\begin{frame}{Policies that relax purchase access raise total births}
+\begin{frame}{Housing Policy}
   \begin{center}
   \renewcommand{\arraystretch}{1.25}
   \begin{tabularx}{0.90\textwidth}{@{}Yrr@{}}
@@ -432,17 +416,17 @@
 \end{frame}
 
 % 20
-\begin{frame}{Housing affects fertility when policy changes access to space}
+\begin{frame}{Conclusion}
   \large
   \begin{itemize}\tightitems
-    \item Children make family-sized housing valuable precisely when young households are least able to access it.
-    \item Rental-size limits and down payments create an access gap that raises the effective price of children.
-    \item Older households hold most large owner homes; with retention wedges, a cleared market need not allocate those homes efficiently.
-    \item Purchase assistance raises births in the quantitative model, especially when paired with a policy that changes incumbent housing demand.
+    \item A model of completed fertility with tenure choice, saving, and a lifecycle of housing need.
+    \item Children raise housing need; rental limits and down payments make space especially costly for young households.
+    \item Older households hold most large owner homes. With retention wedges, a cleared market need not allocate them efficiently.
+    \item Aim is policy: purchase assistance raises births, and the tax-plus-grant package changes both access and prices.
   \end{itemize}
 
   \vspace{0.5em}
-  \alert{Current limits:} fertility is one-shot rather than sequential, income risk is provisional, old-age ownership is too persistent, and the one-market model cannot separate new births from births relocated across markets.
+  \alert{More work is needed:} sequential fertility, income risk, old-age downsizing, and across-market relocation.
   \source{Circulated note, Conclusion and limitations.}
 \end{frame}
 
