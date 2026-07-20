@@ -333,6 +333,8 @@ if the live model has changed.
 - Prefer existing local Python patterns and helper functions over new
   abstractions. Consult archived MATLAB code only for historical comparison or
   reference-parity checks.
+- For slide deliverables, use LaTeX/Beamer and deliver a PDF. Do not create a
+  PowerPoint file unless the user explicitly requests one.
 - Keep edits scoped to the task. Do not refactor unrelated code or clean
   generated artifacts unless explicitly asked.
 - Preserve reproducibility: deterministic seeds, explicit parameter overrides,
