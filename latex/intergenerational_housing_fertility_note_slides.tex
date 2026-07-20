@@ -55,21 +55,31 @@
   Need a structural model where fertility, tenure, housing size, and saving are joint.
 
   \vfill
-  \alert{Theory:} a simple model of access to family-sized housing
+  \alert{First:} a simplified two-generation model
   \begin{itemize}\tightitems
-    \item Rental limits and down payments raise the shadow value of space.
-    \item Retention by older owners can misallocate the existing housing stock.
+    \item Isolate how rental limits, down payments, and old-owner retention affect the shadow value of space.
+    \item Characterize the fertility response and the gain from reallocating family-sized housing.
   \end{itemize}
 
   \vfill
-  \alert{Quantification:} a lifecycle model with income risk, tenure choice, transaction costs, bequests, and entry
+  \alert{Then:} a full quantitative lifecycle model
+  \begin{itemize}\tightitems
+    \item Add income risk, saving, tenure adjustment, transaction costs, bequests, entry, and housing supply.
+    \item Discipline the model with fertility, housing, tenure, and wealth moments.
+  \end{itemize}
 
   \vfill
-  \alert{Goal:} evaluate housing policies that change access when households make fertility decisions.
+  \alert{Finally:} use the full model to evaluate policies that change access when households make fertility decisions.
   \source{Circulated note, Introduction and status of the draft.}
 \end{frame}
 
 % 4
+\begin{frame}[plain,c,noframenumbering]
+  \centering
+  {\Large\textbf{I. Simplified Analytical Model}}\\[0.8em]
+  {\normalsize Isolating access, fertility, and intergenerational allocation}
+\end{frame}
+
 \begin{frame}{Environment}
   \begin{columns}[T,onlytextwidth]
     \column{0.52\textwidth}
@@ -105,13 +115,92 @@
 
   \begin{itemize}\tightitems
     \item Each child requires $\chi$ units of consumption and $\kappa$ units of housing.
-    \item Renting and owning have the same market user cost per unit of space.
-    \item Tenure matters because only ownership reaches the largest units and buying requires equity.
+    \item The cost of a child therefore depends on the household's ability to access space.
+    \item Old households value consumption, retained housing, and a warm-glow estate.
   \end{itemize}
-
-  \vspace{0.4em}
-  A buyer must satisfy $(1-\phi)Ph_i\le b_i$: current liquid wealth, not lifetime income, governs access to owner housing.
   \source{Circulated note, Analytical Model: Households.}
+\end{frame}
+
+\begin{frame}{Markets and Housing Technology}
+  One fixed stock $\bar H$ of divisible floorspace can be rented or owned.
+  \[
+    h\le \bar h^R \quad\text{if renting},
+    \qquad
+    h\le \bar h^O \quad\text{if owning},
+    \qquad
+    \bar h^R<\bar h^O.
+  \]
+
+  \begin{itemize}\tightitems
+    \item Family-sized space is available only through ownership.
+    \item A single market clears, and no arbitrage links rent and the asset price:
+    \[
+      r=\rho P,
+      \qquad
+      \rho=q^{-1}-1+\delta+\tau^p.
+    \]
+    \item A buyer finances at most share $\phi$, so the down payment is $(1-\phi)Ph$.
+    \item Selling realizes a nominal capital gain; death receives stepped-up basis.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The Young Household's Problem}
+  Conditional on entry, household $i$ chooses tenure $m\in\{R,O\}$ and solves
+  \[
+  \begin{aligned}
+    W_i^m=\max_{c_i,h_i,n_i,b_i'}\;&u_i^Y(c_i,h_i,n_i)
+      +\beta V^m(b_{j'},h_i)\\
+    \text{s.t.}\quad
+      &c_i+r h_i+b_i'=y_i+b_i,\\
+      &h_i\le\bar h^m,\qquad b_i'\ge0,\\
+      &\1\{m=O\}(1-\phi)Ph_i\le b_i.
+  \end{aligned}
+  \]
+
+  \begin{itemize}\tightitems
+    \item Tenure is chosen by comparing $W_i^R$ and $W_i^O$.
+    \item Entry compares the best inside value with an outside option under extreme-value shocks.
+    \item Current liquid wealth determines whether the ownership branch is feasible.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Old Owners and Lock-In}
+  An old incumbent enters with liquid wealth $b_j$, a house $H_j^0$, and an accrued gain:
+  \[
+  \begin{aligned}
+    V^O(b_j,H_j^0)=\max_{c_j^2,h_j^2,e_j}\;&
+      \log c_j^2+\gamma\log h_j^2+\omega_B\log e_j\\
+    \text{s.t.}\quad
+      &c_j^2+e_j+r h_j^2
+      =b_j+rH_j^0-\bar\ell(H_j^0-h_j^2).
+  \end{aligned}
+  \]
+
+  \begin{itemize}\tightitems
+    \item Selling a unit nets $r-\bar\ell$ in flow-equivalent terms.
+    \item Keeping it until death avoids the capital-gains tax through stepped-up basis.
+    \item At an interior choice, the old incumbent values marginal retained space at $r-\bar\ell<r$.
+    \item Old renters carry no tax wedge and value marginal space at $r$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Stationary Competitive Equilibrium}
+  A stationary equilibrium is a rental rate $r$, asset price $P=r/\rho$, household policies, entry probabilities, and stationary measures such that:
+
+  \begin{enumerate}\tightitems
+    \item young households choose entry, tenure, fertility, housing, and saving optimally;
+    \item old owners and renters choose housing and estates optimally;
+    \item young owners become old incumbents and young renters become old renters;
+    \item births plus the renewal inflow reproduce the next potential-young cohort;
+    \item the single floorspace market clears:
+    \[
+      \bar M\int \pi_i^E h_i\,\mathrm dG_Y(i)
+      +\int h_j^2\,\mathrm dF_O(j)
+      +\int h_j^2\,\mathrm dF_R(j)=\bar H.
+    \]
+  \end{enumerate}
+
+  Market clearing determines the price, but not whether family-sized space reaches the household that values it most.
 \end{frame}
 
 % 6
@@ -137,21 +226,42 @@
 
 % 7
 \begin{frame}{The Access Gap}
-  For a constrained household, the marginal value of space exceeds its effective price by $\zeta_i^m\ge0$:
+  Divide the housing first-order condition by the marginal utility of consumption. For a constrained renter,
   \[
-    \frac{\alpha(c_i^m-\chi n_i^m)}{h_i^m-\kappa n_i^m}
-      = r^m+\zeta_i^m.
+    \frac{\alpha(c_i^R-\chi n_i^R)}{h_i^R-\kappa n_i^R}
+      = r+\underbrace{\frac{\theta_i}{\lambda_i}}_{\zeta_i^R\ge0}.
   \]
 
-  The fertility first-order condition becomes
+  For an owner, the gap separates financing from the physical size limit:
+  \[
+    \zeta_i^O
+    =\underbrace{\frac{\mu_i}{\lambda_i}(1-\phi)P}_{\text{down-payment margin}}
+    +\underbrace{\frac{\theta_i^O}{\lambda_i}}_{\text{owner size limit}}.
+  \]
+
+  \begin{itemize}\tightitems
+    \item $\zeta_i^m$ is the goods value of relaxing the household's constraint by one unit of space.
+    \item It can be read from the household's consumption and housing bundle, net of child needs.
+  \end{itemize}
+  \source{Circulated note, Analytical Model: Equilibrium policies.}
+\end{frame}
+
+\begin{frame}{The Full Price of a Child}
+  The fertility first-order condition prices a marginal child in units of goods:
   \[
     \underbrace{\frac{\vartheta(c_i^m-\chi n_i^m)}{n_i^m}}_{\text{willingness to pay for a child}}
       =
     \underbrace{\chi+\kappa(r^m+\zeta_i^m)}_{\text{full price of a child}}.
   \]
 
-  \alert{Interpretation:} limited access to space acts like a household-specific tax $\kappa\zeta_i^m$ on children, even when market prices do not change.
-  \source{Circulated note, Analytical Model: Equilibrium policies.}
+  \begin{itemize}\tightitems
+    \item $\chi$ is the child's direct consumption requirement.
+    \item $\kappa r^m$ is the market cost of the space required by the child.
+    \item $\kappa\zeta_i^m$ is the additional cost created by limited access to that space.
+  \end{itemize}
+
+  \vfill
+  \alert{Interpretation:} a binding housing constraint acts like a household-specific tax on children even when the market user cost does not change.
 \end{frame}
 
 % 8
@@ -195,7 +305,52 @@
   \source{Circulated note, Analytical Model: Fertility and policy; Figure 2.}
 \end{frame}
 
+\begin{frame}{Policies Relax Different Housing Constraints}
+  \small
+  The effective owner cap is
+  \[
+    H_i^O=\min\left\{\bar h^O,\frac{b_i\rho}{(1-\phi)r}\right\},
+    \qquad
+    H_i^R=\bar h^R.
+  \]
+
+  \begin{center}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabularx}{0.92\textwidth}{@{}Y Y@{}}
+    \toprule
+    Policy & Directly relaxed margin \\
+    \midrule
+    Larger rental units & Rental cap $\bar h^R$ \\
+    Down-payment grant & Liquid wealth $b_i$ at purchase \\
+    Looser mortgage credit & Financed share $\phi$ \\
+    Property-tax change & Asset price $P=r/\rho$ and required equity \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+
+  A policy has a direct fertility effect only for households at the margin it relaxes. The aggregate response also depends on exposure, pass-through, entry, and tenure switching.
+\end{frame}
+
+\begin{frame}{What the Simplified Model Delivers}
+  \begin{itemize}\tightitems
+    \item Rental scarcity and down-payment constraints combine into a household-specific cap on family space.
+    \item The access gap $\zeta_i^m$ measures the marginal value of relaxing that cap.
+    \item The same gap enters the full price of a child through $\kappa\zeta_i^m$.
+    \item Reallocating space from a locked-in old owner to a constrained young buyer can generate positive surplus.
+    \item Fertility rises when relaxing the housing requirement dominates the associated resource cost.
+  \end{itemize}
+
+  \vfill
+  The simple model identifies the mechanism. The quantitative model asks how many households are exposed, how large the gaps are, and how prices and population adjust.
+\end{frame}
+
 % 10
+\begin{frame}[plain,c,noframenumbering]
+  \centering
+  {\Large\textbf{II. Full Quantitative Lifecycle Model}}\\[0.8em]
+  {\normalsize Measuring the mechanism and evaluating policy in equilibrium}
+\end{frame}
+
 \begin{frame}{Quantitative Lifecycle Model}
   \begin{center}
   \begin{tabular}{c@{\hspace{1.5em}}c@{\hspace{1.5em}}c@{\hspace{1.5em}}c}
@@ -216,8 +371,30 @@
   \source{Circulated note, Quantitative Lifecycle Model: Lifecycle and income.}
 \end{frame}
 
+\begin{frame}{Lifecycle and Income}
+  \small
+  Before retirement, household income combines an age profile and persistent idiosyncratic risk:
+  \[
+    y(a,z)=
+    \begin{cases}
+      (1-\tau_{\mathrm{pay}})we_a z, & a\le J_R,\\
+      p^{\mathrm{ret}}, & a>J_R,
+    \end{cases}
+    \qquad
+    z'\sim\Pi^z(\cdot\mid z).
+  \]
+
+  \begin{itemize}\setlength{\itemsep}{0.35em}
+    \item One period is four years; households enter at 18, retire at 66, and live at most to 85.
+    \item $e_a$ is the deterministic lifecycle earnings profile.
+    \item Annual log income has persistence $0.960$ and innovation standard deviation $0.0645$.
+    \item The process is sampled every four years and approximated with a five-state Rouwenhorst chain.
+    \item Survival is certain before retirement and age-specific thereafter.
+  \end{itemize}
+\end{frame}
+
 % 11
-\begin{frame}{Preferences and Bequests}
+\begin{frame}{Preferences and Family Needs}
   Dependent children shift minimum consumption and housing requirements:
   \[
     \bar c(n,s)=\bar c_0+\bar c_n n_s,
@@ -230,10 +407,38 @@
     u=\frac{\left[(c-\bar c)^{\alpha_c}\mathbf h^{1-\alpha_c}\right]^{1-\sigma}}{1-\sigma}
       +\psi_{\mathrm{child}}n_s,
   \]
-  where owners receive service premium $\chi_O$ after household needs are removed.
+  where usable housing services are
+  \[
+    \mathbf h(h^R,h;n,s)=
+    \begin{cases}
+      h^R-\bar h(n,s), & h=0,\\
+      \chi_O[h-\bar h(n,s)], & h>0.
+    \end{cases}
+  \]
 
-  At death, households value liquid wealth plus the gross value of the house through a warm-glow bequest motive.
-  \source{Circulated note, Quantitative Model: Preferences and bequests.}
+  The first child can create a discrete housing jump; additional dependent children increase housing needs linearly.
+\end{frame}
+
+\begin{frame}{Bequests}
+  At death, bequeathable wealth is liquid wealth plus the gross value of the house:
+  \[
+    W^B=b+Ph.
+  \]
+
+  Warm-glow utility is
+  \[
+    \Bcal(W^B,n)
+    =\theta_0(1+\theta_n n)
+    \frac{(\theta_1+\max\{W^B,0\})^{1-\sigma}-\theta_1^{1-\sigma}}
+    {1-\sigma}.
+  \]
+
+  \begin{itemize}\tightitems
+    \item $\theta_0$ governs the strength of the bequest motive.
+    \item $\theta_1$ shifts its curvature with wealth.
+    \item $\theta_n$ allows completed fertility to change the marginal value of an estate; it is set to zero in the benchmark.
+    \item There is no forced sale or transaction cost at death.
+  \end{itemize}
 \end{frame}
 
 % 12
@@ -266,51 +471,253 @@
 \end{frame}
 
 % 13
-\begin{frame}{Family Size, Housing, and Equilibrium}
-  A childless household in the fertile window chooses family size first, then its current housing position:
+\begin{frame}{Fertility and Child Aging}
+  A childless household chooses completed family size during the fertile window:
   \[
-    n'\in\{0,1,2\},
-    \qquad
-    h'\in\{0,2,4,6,8,10\}.
+    n'\in\mathcal N=\{0,1,2\}.
   \]
 
   \begin{itemize}\tightitems
-    \item $h'=0$ means renting; positive values are owner rungs.
-    \item A positive family-size choice fixes completed fertility and activates dependent-child needs immediately.
-    \item Type-I extreme-value shocks smooth both family-size and tenure choices.
-    \item The equilibrium combines optimal policies, the stationary distribution, entry and population scale, and housing-market clearing.
+    \item $n'=0$ means no birth in the current period; a positive choice fixes completed fertility forever.
+    \item If the household reaches age 42 without a positive choice, it remains childless.
+    \item A positive choice moves children into the first dependent stage.
+    \item Children age stochastically and remain at home for 18 years on average.
+    \item All children belong to one cohort and leave together; the model does not yet allow sequential births.
+    \item Completed fertility continues to matter for bequests after children leave home.
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Within-Period Choice Sequence}
+  \small
+  A household begins with state
+  \[
+    x=(b,z,h,a,n,s):
+    \quad
+    \text{wealth, income, housing, age, completed fertility, child stage}.
+  \]
+
+  \begin{enumerate}\setlength{\itemsep}{0.35em}
+    \item If childless and fertile, observe family-size taste shocks and choose $n'$.
+    \item Observe housing taste shocks and choose the next owned position
+    \[
+      h'\in\{0,2,4,6,8,10\};
+    \]
+    $h'=0$ means renting.
+    \item Choose consumption and end-of-period liquid assets; renters also choose current rental space.
+    \item Income and child-stage risk realize before the next period.
+  \end{enumerate}
 
   A birth can therefore change tenure and occupied space in the same period, rather than only affecting future housing demand.
-  \source{Circulated note, Quantitative Model: Household problem and stationary equilibrium.}
+\end{frame}
+
+\begin{frame}{Renter and Owner Problems}
+  \small
+  Conditional on renting,
+  \[
+  \begin{aligned}
+    V^R(\tilde b,z,a,n,s)=\max_{c,h^R,b'}\quad
+      &u(c,h^R,0;n,s)+\beta\bar V(b',z,0,a+1,n,s)\\
+    \text{s.t.}\quad
+      &c+r h^R+b'=\tilde b+y(a,z),\\
+      &0\le h^R\le\bar h^R,\qquad b'\ge0.
+  \end{aligned}
+  \]
+
+  Conditional on choosing owner rung $h'>0$,
+  \[
+  \begin{aligned}
+    V^O(\tilde b,z,h',a,n,s)=\max_{c,b'}\quad
+      &u(c,0,h';n,s)+\beta\bar V(b',z,h',a+1,n,s)\\
+    \text{s.t.}\quad
+      &c+(\delta+\tau^p)Ph'+b'=\tilde b+y(a,z),\\
+      &b'\ge-\phi Ph'.
+  \end{aligned}
+  \]
+  Renting offers continuous space but no borrowing; ownership offers larger discrete units and collateralized borrowing.
+\end{frame}
+
+\begin{frame}{Housing Adjustment and Tenure Choice}
+  Liquid wealth after changing the owned housing position is
+  \[
+    \tilde b(b,h,h')
+    =\frac{b}{q}
+    +\1\{h>0,h'\neq h\}(1-\psi^s)Ph
+    -\1\{h'>0,h'\neq h\}Ph'.
+  \]
+
+  \begin{itemize}\tightitems
+    \item A seller receives the transaction-net value $(1-\psi^s)Ph$.
+    \item A new buyer pays the full purchase price $Ph'$ and must clear the origination down payment.
+    \item An incumbent who keeps the same house makes no transaction.
+    \item Rent-or-own and owner-size choices have Type-I extreme-value shocks with scale $\kappa_T$:
+    \[
+      \pi^H(h'\mid x)
+      =\frac{\exp\{\widetilde V^H(h'\mid x)/\kappa_T\}}
+      {\sum_{\hat h\in\mathcal H}\exp\{\widetilde V^H(\hat h\mid x)/\kappa_T\}}.
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{The Entry Problem}
+  At age 18, a potential household chooses the modeled housing market or an outside economy before drawing initial wealth and income.
+  \[
+    W^E(r)=\int V(b,z,0,1,0,0;r)\,\mathrm dG_E(b,z).
+  \]
+
+  With extreme-value entry tastes,
+  \[
+    q^E(r)
+    =\frac{\exp\{W^E(r)/\kappa_E\}}
+    {\exp\{W^E(r)/\kappa_E\}+\exp\{\bar W^E/\kappa_E\}}.
+  \]
+
+  \begin{itemize}\tightitems
+    \item Entrants begin as childless renters.
+    \item Initial $(b,z)$ is drawn from the entry distribution $G_E$.
+    \item Lower housing costs raise the value and probability of entry.
+    \item Locally born and outside-origin entrants draw from the same $G_E$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Entry Equilibrium and Stationary Scale}
+  There are two sources of potential entrants:
+  \begin{itemize}\tightitems
+    \item a fixed outside-origin mass $M$;
+    \item locally born children who mature, $SB_0(g,r)$.
+  \end{itemize}
+
+  Stationarity requires entrants to replace the age-one mass needed by the stationary composition:
+  \[
+    q^E(r)\left[M+SB_0(g,r)\right]=SE_0(g,r).
+  \]
+  Hence
+  \[
+    S=\frac{q^E(r)M}{E_0(g,r)-q^E(r)B_0(g,r)}.
+  \]
+
+  Housing costs affect population through entry $q^E(r)$; fertility affects population through future locally born entrants $B_0(g,r)$.
+\end{frame}
+
+\begin{frame}{Stationary Equilibrium and Computation}
+  A stationary equilibrium combines:
+  \begin{enumerate}\tightitems
+    \item optimal consumption, saving, fertility, and housing policies;
+    \item a stationary household distribution $g=\mathcal T(g;r,S)$;
+    \item entry probability $q^E(r)$ and population scale $S$;
+    \item housing-market clearing in levels:
+    \[
+      S\widehat H^D(g,r)=H^S(r);
+    \]
+    \item government accounting for taxes, pensions, grants, and rebates.
+  \end{enumerate}
+
+  I solve the household problem by backward induction, obtain the stationary distribution by forward iteration, and adjust the user cost until housing demand equals supply.
+\end{frame}
+
+\begin{frame}{What the Full Model Adds}
+  \begin{itemize}\tightitems
+    \item A lifecycle of earnings, saving, ownership, children at home, retirement, and death.
+    \item A discrete owner ladder and continuous rental choice, with transaction costs and collateralized borrowing.
+    \item Fertility and tenure decisions made jointly in the same period.
+    \item Bequests and late-life housing retention.
+    \item Endogenous entry, population scale, and upward-sloping housing supply.
+  \end{itemize}
+
+  \vfill
+  The analytical model isolates the access gap. The full model measures it in the stationary distribution and allows policies to change prices, quantities, entry, and fertility together.
 \end{frame}
 
 % 14
-\begin{frame}{Calibration}
+\begin{frame}[plain,c,noframenumbering]
+  \centering
+  {\Large\textbf{III. Quantification}}\\[0.8em]
+  {\normalsize Calibration, model fit, mechanism, and policy}
+\end{frame}
+
+\begin{frame}{Externally Calibrated Parameters}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.02}
+  \centering
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Block & Parameter & Value or restriction \\
+    \midrule
+    Lifecycle & Period / entry / retirement / maximum age & 4 years / 18 / 66 / 85 \\
+    Preferences & Risk aversion $\sigma$ & 2 \\
+    Finance & Real return / financed share $\phi$ & 2.0\% annual / 0.80 \\
+    Housing & Depreciation / property tax / sale cost & 1.1\% / 1.0\% / 6\% annual \\
+    Income & Persistence / innovation s.d. & 0.960 / 0.0645 annual \\
+    Products & Owner sizes / rental cap & $\{2,4,6,8,10\}$ / 6 rooms \\
+    Supply & Housing-supply elasticity $\eta$ & 1.75 \\
+    Entry & Initial wealth distribution & PSID young childless renters \\
+    Children & Expected dependent duration & 18 years \\
+    Bequests & Child shifter $\theta_n$ & 0 \\
+    \bottomrule
+  \end{tabular}
+
+  \vfill
+  The income innovation variance is provisional; quantitative results are conditional on this restriction.
+\end{frame}
+
+\begin{frame}{Internally Calibrated Parameters}
+  \scriptsize
+  \renewcommand{\arraystretch}{0.92}
+  \centering
+  \begin{tabular}{@{}llr@{}}
+    \toprule
+    Parameter & Interpretation & Estimate \\
+    \midrule
+    $\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9912 \\
+    $\alpha_c$ & Consumption weight & 0.5912 \\
+    $\bar c_0$ / $\bar c_n$ & Baseline / per-child consumption need & 1.2596 / 0.3929 \\
+    $\bar h_0$ & Baseline housing need & 0.3915 \\
+    $\bar h_{\mathrm{jump}}$ / $\bar h_n$ & First-child jump / per-child housing need & 1.6021 / 0.1644 \\
+    $\psi_{\mathrm{child}}$ & Utility from children & 0.1979 \\
+    $\kappa_F$ & Family-size choice dispersion & 2.0434 \\
+    $\chi_O$ & Owner service premium & 1.1133 \\
+    $\bar H$ & Housing-supply scale & 8.6456 \\
+    $\theta_0$ / $\theta_1$ & Bequest strength / curvature shift & 0.3118 / 0.3973 \\
+    $\kappa_T$ & Tenure-choice dispersion & 0.0100 \\
+    \bottomrule
+  \end{tabular}
+
+  \vfill
+  Fourteen parameters are estimated jointly; the blocks are an interpretation of identifying variation, not separate estimation steps.
+\end{frame}
+
+\begin{frame}{Calibration Targets}
+  \small
   \begin{columns}[T,onlytextwidth]
-    \column{0.48\textwidth}
-      \textbf{Assigned outside estimation}
-      \begin{itemize}\tightitems
-        \item Lifecycle timing and survival
-        \item $\sigma=2$, real return, taxes, depreciation
-        \item $\phi=0.80$ and sale cost $6\%$
-        \item Income process and housing menus
-        \item Supply elasticity and entrant wealth
+    \column{0.32\textwidth}
+      \textbf{Family size}
+      \begin{itemize}\setlength{\itemsep}{0.3em}
+        \item Completed fertility
+        \item Childlessness
+        \item Family ownership gap
+        \item First-child rooms increment
+        \item Rooms gap: 3+ vs. 1--2 children
       \end{itemize}
-    \column{0.48\textwidth}
-      \textbf{Estimated internally}
-      \begin{itemize}\tightitems
-        \item Patience and consumption weight
-        \item Consumption and housing needs
-        \item Value and dispersion of family size
-        \item Ownership premium and tenure dispersion
-        \item Housing-supply scale and bequests
+    \column{0.32\textwidth}
+      \textbf{Tenure and housing}
+      \begin{itemize}\setlength{\itemsep}{0.3em}
+        \item Ownership ages 30--55
+        \item Renter rooms
+        \item Large-home share among owners
+        \item Owner--renter rooms gap
+        \item Ownership ages 25--34 and 65--75
+        \item Mean occupied rooms
+      \end{itemize}
+    \column{0.32\textwidth}
+      \textbf{Wealth and bequests}
+      \begin{itemize}\setlength{\itemsep}{0.3em}
+        \item Young renter liquid wealth
+        \item Late-life estate median
+        \item Older nonhousing-wealth share
       \end{itemize}
   \end{columns}
 
-  \vspace{0.5em}
-  Fourteen parameters are jointly disciplined by CPS fertility, ACS housing and tenure, and PSID wealth and estate moments.
-  \source{Circulated note, Calibration: Tables 1 and 2.}
+  \vfill
+  CPS disciplines completed family size; ACS disciplines tenure and rooms; PSID disciplines entry wealth, saving, and estates.
 \end{frame}
 
 % 15
