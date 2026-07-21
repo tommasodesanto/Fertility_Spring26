@@ -1,6 +1,28 @@
 # Calibration Status
 
-Updated: `2026-07-19 night` (E1 collected 12.608; eqscale-seq optimized port promoted, GE 3.22x; E2 overnight launching; optimized M5 continuation dependency-queued; M5 unchanged)
+Updated: `2026-07-21` (owner-ladder density risk logged; M5 remains the working calibration)
+
+## July 21: owner-ladder density robustness logged; no model change
+
+The canonical M5 owner ladder is `[2,4,6,8,10]`. A fixed-M5-theta GE
+robustness check used the parity-verified optimized solver to compare that
+five-rung ladder with 9, 17, and 40 evenly spaced points over the unchanged
+`[2,10]` support. The 40-point case converged at residual `1.72e-5`.
+Completed fertility was stable (`2.033` to `2.044`) and childlessness moved
+only `0.189` to `0.187`, but tenure and owner-size outcomes were not grid
+invariant: aggregate ownership rose `0.658` to `0.713`, ownership at ages
+25--34 rose `0.275` to `0.350`, and the share of prime-age childless owners
+in 6+ rooms fell `0.758` to `0.489`. At the unchanged M5 theta, the active
+15-moment loss rose from `9.03` to `15.94`; this is not a recalibration and
+does not establish the attainable dense-grid fit.
+
+Decision: retain M5 and the circulated results for now, while recording owner
+ladder density as an unresolved numerical-robustness limitation. Before the
+ladder is changed in the benchmark or robustness is claimed in the paper, run
+a dense-grid recalibration and repeat the policy counterfactuals. Artifacts:
+`output/model/intergen_owner_ladder_robustness_20260721/` and
+`output/model/intergen_owner_ladder_robustness_20260721_40point/`; reproducible
+driver: `code/model/tools/run_intergen_owner_ladder_robustness.py`.
 
 ## July 19 night: experiment-fork optimization port verified; E2 overnight
 
