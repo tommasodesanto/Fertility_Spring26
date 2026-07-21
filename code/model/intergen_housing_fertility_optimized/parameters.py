@@ -82,6 +82,9 @@ def setup_parameters() -> SimpleNamespace:
     # Means-tested floor guarantee (period units, like c_bar_0); 0 = no floor.
     P.transfer_floor_G0 = 0.0
     P.transfer_floor_Gn = 0.0
+    # Equal per-household, per-period fiscal transfer.  The funded-property-tax
+    # test runner solves this transfer from the stationary government budget.
+    P.property_tax_lump_sum_transfer = 0.0
     P.child_housing_spec = "jump_plus_linear"
     P.owner_h_bar_scale = 1.0
     P.owner_size_cost = 0.0

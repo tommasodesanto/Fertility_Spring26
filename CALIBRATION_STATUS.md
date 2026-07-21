@@ -1,6 +1,29 @@
 # Calibration Status
 
-Updated: `2026-07-21` (owner-ladder density risk logged; M5 remains the working calibration)
+Updated: `2026-07-21` (funded property-tax test and owner-ladder risk logged; M5 remains the working calibration)
+
+## July 21: funded property-tax test is first-order; recalibration required before use
+
+The parity-verified optimized M5 solver now has a testing-only stationary
+government budget: property-tax revenue from all occupied housing finances an
+equal per-household rebate, with targeted purchase-grant outlays deducted
+before the residual rebate. At fixed M5 theta and `J=17`, `Nb=120`, the
+rebated 1% baseline has TFR `2.3485` and price `0.7840`. Raising the rebated
+tax to 2% gives TFR `2.5374` (`+8.04%`) and price `0.6475` (`-17.41%`). Adding
+the existing `0.4` grant for renter purchases of 6+ rooms gives TFR `2.5360`
+(`+7.98%`) and price `0.6494` (`-17.17%`). Grant outlays are `0.0344` against
+tax revenue `0.3276`; the remaining universal rebate is `0.2932` per four-year
+period. Fiscal residuals are at most `1.45e-5`, market residuals at most
+`2.72e-6`, and the 40-point smoke has the same qualitative ranking.
+
+This is a fixed-population mechanism test, not a recalibration and not the
+paper's population-adjusted estimand. Fiscal closure changes the baseline TFR
+from the unrebated M5 value `2.0346` to `2.3485` and raises the fixed-theta loss
+from about `9` to `219.7`; therefore these levels cannot replace the circulated
+results. The model must be recalibrated under a funded baseline before the
+policy comparison is paper-ready. Artifacts:
+`output/model/intergen_funded_property_tax_test_20260721/`; reproducible driver:
+`code/model/tools/run_intergen_funded_property_tax_test.py`.
 
 ## July 21: owner-ladder density robustness logged; no model change
 

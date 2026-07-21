@@ -218,9 +218,11 @@ def income_transition_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray
 def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float:
     y = float(P.income[i, j])
     if j < int(getattr(P, "J_R", P.J)):
-        return y * float(z_value)
-    scale = float(getattr(P, "retirement_income_z_scale", 0.0))
-    return y * (1.0 + scale * (float(z_value) - 1.0))
+        income = y * float(z_value)
+    else:
+        scale = float(getattr(P, "retirement_income_z_scale", 0.0))
+        income = y * (1.0 + scale * (float(z_value) - 1.0))
+    return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
 
 
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
@@ -4637,6 +4639,25 @@ def forward_distribution_markov_income(
             hR_pol,
             asset_g=asset_current,
         )
+    grant_recipient_mass, grant_outlays = markov_grant_outlays(
+        g,
+        tenure_choice,
+        tenure_probs,
+        P,
+        SD,
+    )
+    property_tax_revenue = property_tax_revenue_from_distribution(
+        g_current,
+        hR_pol,
+        p_hat,
+        P,
+    )
+    transfer_outlays = float(getattr(P, "property_tax_lump_sum_transfer", 0.0)) * float(np.sum(g_current))
+    stats.property_tax_revenue = property_tax_revenue
+    stats.birth_entry_grant_recipient_mass = grant_recipient_mass
+    stats.birth_entry_grant_outlays = grant_outlays
+    stats.property_tax_transfer_outlays = transfer_outlays
+    stats.property_tax_budget_residual = property_tax_revenue - grant_outlays - transfer_outlays
     stats.entry_censored_mass = float(getattr(P, "_entry_censored_mass", 0.0))
     stats.entry_censored_share = stats.entry_censored_mass / max(
         float(getattr(P, "_entry_total_mass", 0.0)), 1e-300
@@ -6607,6 +6628,78 @@ def get_birth_entry_grant_tensor(P):
         return bg
     bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
     return bg
+
+
+def property_tax_revenue_from_distribution(g, hR_pol, p_hat, P):
+    """Stationary property-tax revenue in model-period goods.
+
+    The implemented tax enters both owner carrying costs and the rental user
+    cost, so its tax base is all occupied housing, including landlord-owned
+    rentals.
+    """
+
+    tax_rate = max(float(getattr(P, "tau_H", 0.0)), 0.0)
+    prices = np.asarray(p_hat, dtype=float).reshape(-1)
+    revenue = 0.0
+    for market in range(P.I):
+        rental_services = float(np.sum(g[:, 0, market, :, :, :, :] * hR_pol[:, 0, market, :, :, :, :]))
+        owner_services = 0.0
+        for tenure in range(1, 1 + P.n_house):
+            owner_services += float(np.sum(g[:, tenure, market, :, :, :, :])) * float(P.H_own[tenure - 1])
+        revenue += tax_rate * float(prices[market]) * (rental_services + owner_services)
+    return float(revenue)
+
+
+def markov_grant_outlays(g, tenure_choice, tenure_probs, P, SD):
+    """Count actual one-market renter-to-owner grant payments."""
+
+    grant = np.asarray(SD.birth_entry_grant, dtype=float)
+    if not np.any(grant > 0.0):
+        return 0.0, 0.0
+    if P.I != 1:
+        raise NotImplementedError("funded-grant accounting is currently restricted to the one-market model")
+
+    recipient_mass = 0.0
+    outlays = 0.0
+    for age in range(P.J):
+        for income_state in range(g.shape[4]):
+            for parity in range(1, P.n_parity):
+                child_state = 1
+                source = np.asarray(g[:, 0, 0, age, income_state, parity, child_state], dtype=float)
+                if float(np.sum(source)) <= 1e-15:
+                    continue
+                eligible = np.where(
+                    (grant[0, :, parity, child_state] > 0.0)
+                    & (~np.asarray(SD.birth_dp[parity, child_state, 0, :], dtype=bool))
+                )[0]
+                if eligible.size == 0:
+                    continue
+                if tenure_probs is None:
+                    chosen = np.asarray(
+                        tenure_choice[:, 0, 0, age, income_state, parity, child_state],
+                        dtype=int,
+                    )
+                    for tenure in eligible:
+                        paid_mass = float(np.sum(source[chosen == tenure]))
+                        recipient_mass += paid_mass
+                        outlays += paid_mass * float(grant[0, tenure, parity, child_state])
+                else:
+                    probabilities = np.asarray(
+                        tenure_probs[:, 0, 0, age, income_state, parity, child_state, :],
+                        dtype=float,
+                    )
+                    probability_sum = np.sum(probabilities, axis=1)
+                    normalized = np.divide(
+                        probabilities,
+                        probability_sum[:, None],
+                        out=np.zeros_like(probabilities),
+                        where=probability_sum[:, None] > 0.0,
+                    )
+                    eligible_probability = np.sum(normalized[:, eligible], axis=1)
+                    recipient_mass += float(np.sum(source * eligible_probability))
+                    weighted_grant = normalized[:, eligible] @ grant[0, eligible, parity, child_state]
+                    outlays += float(np.sum(source * weighted_grant))
+    return float(recipient_mass), float(outlays)
 
 
 def current_child_bin_dt(nn, cs, dep_last):

@@ -54,6 +54,18 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
 Use `--custom-points N` to run one evenly spaced (N)-point ladder over the
 same `[2,10]` support.
 
+The fixed-M5 funded property-tax test solves the equal lump-sum transfer from
+the stationary government budget in a rebated 1% baseline, a rebated 2% tax
+case, and a rebated 2% tax plus targeted-grant case:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_intergen_funded_property_tax_test.py
+```
+
+Use `--smoke` for the 40-node testing grid. This driver is a fixed-parameter
+mechanism test, not a funded-baseline recalibration.
+
 For the one-market intergenerational strand under
 `intergen_housing_fertility/`, the default interactive inspection path should
 stay small: one candidate, one solve or trusted solution cache, one quick plot
