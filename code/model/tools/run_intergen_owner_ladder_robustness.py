@@ -43,6 +43,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Use the canonical M5 price instead of resolving general equilibrium.",
     )
+    parser.add_argument(
+        "--custom-points",
+        type=int,
+        default=None,
+        help="Run one evenly spaced ladder on [2,10] with this many points.",
+    )
     return parser.parse_args()
 
 
@@ -92,6 +98,11 @@ def write_summary_artifacts(
     target_rows: list[dict[str, Any]],
 ) -> None:
     labels = [row["case"] for row in summaries]
+    display_labels = {
+        "baseline_2room": "2-room",
+        "dense_1room": "1-room",
+        "dense_halfroom": "0.5-room",
+    }
     moments = {
         (row["case"], row["moment"]): float(row["model"])
         for row in target_rows
@@ -110,9 +121,12 @@ def write_summary_artifacts(
     fig, axes = plt.subplots(2, 3, figsize=(12, 7))
     colors = ("#304C89", "#648DE5", "#F2B134")
     for ax, (title, values) in zip(axes.flat, panels):
-        ax.bar(range(len(labels)), values, color=colors)
+        ax.bar(range(len(labels)), values, color=colors[: len(labels)])
         ax.set_title(title)
-        ax.set_xticks(range(len(labels)), ("2-room", "1-room", "0.5-room"))
+        ax.set_xticks(
+            range(len(labels)),
+            [display_labels.get(label, label.replace("_", "-")) for label in labels],
+        )
         ax.grid(axis="y", alpha=0.2)
     fig.suptitle("Owner-ladder density robustness: M5 parameters held fixed")
     fig.tight_layout()
@@ -147,13 +161,18 @@ def main() -> None:
     outdir = args.outdir.resolve()
     outdir.mkdir(parents=True, exist_ok=True)
     target_system = m5_target_system()
+    cases = CASES
+    if args.custom_points is not None:
+        if int(args.custom_points) < 2:
+            raise ValueError("--custom-points must be at least 2")
+        cases = ((f"custom_{int(args.custom_points)}point", np.linspace(2.0, 10.0, int(args.custom_points))),)
     metadata = {
         "status": "running",
         "purpose": "fixed-M5-theta owner-ladder density robustness",
         "solver_package": "intergen_housing_fertility_optimized",
         "equilibrium": not args.fixed_price,
         "theta": M5_THETA,
-        "cases": {label: ladder.tolist() for label, ladder in CASES},
+        "cases": {label: ladder.tolist() for label, ladder in cases},
     }
     (outdir / "metadata.json").write_text(json.dumps(metadata, indent=2, sort_keys=True) + "\n")
 
@@ -161,9 +180,9 @@ def main() -> None:
     target_rows: list[dict[str, Any]] = []
     all_rung_rows: list[dict[str, Any]] = []
     started = time.perf_counter()
-    for case_number, (label, ladder) in enumerate(CASES, start=1):
+    for case_number, (label, ladder) in enumerate(cases, start=1):
         case_start = time.perf_counter()
-        print(f"case {case_number}/{len(CASES)}: {label}, {len(ladder)} owner rungs", flush=True)
+        print(f"case {case_number}/{len(cases)}: {label}, {len(ladder)} owner rungs", flush=True)
         overrides = m5_overrides(tight=True, optimized=True)
         overrides["H_own"] = ladder.copy()
         if args.fixed_price:
@@ -215,7 +234,7 @@ def main() -> None:
         all_rung_rows.extend(rung_rows(label, ladder, np.asarray(solution.g)))
         latest = {
             "completed_cases": case_number,
-            "total_cases": len(CASES),
+            "total_cases": len(cases),
             "latest": summary,
             "elapsed_seconds": time.perf_counter() - started,
         }

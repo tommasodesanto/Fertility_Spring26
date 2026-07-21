@@ -51,6 +51,9 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
   .venv/bin/python tools/run_intergen_owner_ladder_robustness.py
 ```
 
+Use `--custom-points N` to run one evenly spaced (N)-point ladder over the
+same `[2,10]` support.
+
 For the one-market intergenerational strand under
 `intergen_housing_fertility/`, the default interactive inspection path should
 stay small: one candidate, one solve or trusted solution cache, one quick plot
