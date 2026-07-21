@@ -43,6 +43,14 @@ An isolated, non-production M5 refactor is under
 active package. Its `README.md` and `REFACTOR_REPORT.md` contain the exact
 parity commands, benchmark evidence, correctness changes, and promotion gates.
 
+The fixed-M5-parameter owner-ladder density robustness uses that parity-verified
+solver to compare the canonical five rungs with one-room and half-room ladders:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_intergen_owner_ladder_robustness.py
+```
+
 For the one-market intergenerational strand under
 `intergen_housing_fertility/`, the default interactive inspection path should
 stay small: one candidate, one solve or trusted solution cache, one quick plot
