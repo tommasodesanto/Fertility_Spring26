@@ -8,6 +8,17 @@ calibration target sheet. The goal is to organize open questions so the model
 can be made economically well behaved before serious calibration or policy
 work.
 
+## Reserved Economics Question: Normality or Inferiority of Children
+
+**Status: open; expand later.** Determine whether children are normal or
+inferior in the current model, using a precise income/wealth comparative
+static for fertility rather than informal language. Separate the response of
+completed fertility from birth timing, and distinguish a genuine preference
+income effect from changes operating through housing access, tenure, prices,
+borrowing constraints, and the bequest motive. Identify the parameter and
+state-space conditions under which the sign can change, then test the result
+in both partial and general equilibrium.
+
 ## Absolute Urgency: Funded Property-Tax Baseline
 
 **Priority: P0, for July 21--22.** The current calibrated baseline charges the
