@@ -27,6 +27,10 @@ Active documents:
   `intergenerational_housing_fertility_paper_draft.pdf`: July 2026 paper draft
   copied from the June 26 full draft and extended with a front-end literature
   review.
+- `housing_efficiency_proof_audit.tex`: standalone reconstruction and proof
+  audit of the simplified model's local first-best, constrained-efficiency,
+  tenure, and planner results. The verified reader PDF is written to
+  `output/pdf/housing_efficiency_proof_audit.pdf`.
 
 Build/support files:
 
