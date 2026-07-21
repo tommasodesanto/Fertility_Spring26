@@ -19,6 +19,18 @@ borrowing constraints, and the bequest motive. Identify the parameter and
 state-space conditions under which the sign can change, then test the result
 in both partial and general equilibrium.
 
+## Bequest Normalization And Exposition
+
+**Status: exposition change pending; no immediate code change.** The current
+benchmark externally imposes \(\theta_n=0\), so bequest utility is child-blind.
+Conditional on participation, subtracting the zero-estate utility is then only
+an additive normalization and does not change saving, housing, tenure, or
+fertility choices. The paper should remove the unused child multiplier and its
+generic discussion from the benchmark exposition, and present the bequest
+motive directly as a function of estate wealth. Before removing the subtraction
+from computation, re-anchor or verify the entry outside option because absolute
+lifetime-value levels can affect the population-entry margin.
+
 ## Absolute Urgency: Funded Property-Tax Baseline
 
 **Priority: P0, for July 21--22.** The current calibrated baseline charges the
@@ -215,7 +227,7 @@ economic mechanisms and clean up the numerical support."
 | `P0` | Young ownership near zero | `own_rate_2534` is about `0.0005` versus target `0.341`. This appears to be a value-ranking problem, not just affordability: young households can afford small owner rungs but prefer renting. | The model lacks a robust young-owner advantage under the current user-cost rent closure. |
 | `P0` | Old ownership too high | Old-age ownership is about `0.916` versus target `0.764`. Owner status is too sticky through sale costs, owner service premium, user-cost wedge, gross-estate bequest, and no old-age exit channel. | The lifecycle tenure profile is not economically well behaved. |
 | `P1` | Renter cap versus room targets | `hR_max=6` helps create owner-renter room separation, but makes renter share with rooms \(\ge 6\) nearly mechanically unreachable. | The current support can fit the owner-renter room gap and fail the large-renter target by construction. |
-| `P1` | Bequest child-level penalty | With \(\sigma \simeq 2\), child-weighted CRRA bequest utility lowers terminal utility at fixed estate for households with more children. | This is a cardinal-normalization problem that can distort fertility and saving incentives. |
+| `P1` | Bequest normalization and exposition | The old child-level penalty occurs only when the CRRA bequest level is multiplied by family size. The current benchmark fixes \(\theta_n=0\), so the penalty is inactive and the zero-estate subtraction is behaviorally irrelevant conditional on participation. | Simplify the paper's benchmark equation; coordinate any computational removal with the entry outside-option normalization. |
 | `P1` | Grid and feasibility hygiene | Large unreachable grid regions and \(-10^{10}\) penalty cliffs are latent interpolation hazards. Owner residual services are floored at `1e-10` rather than treated as explicit infeasibility. | Could contaminate value interpolation even if current headline policies are not optimizer failures. |
 | `P2` | Fertility interpretation | Fertility is one-shot completed family size, not sequential parity progression. | Do not interpret \(1\to2\) objects as literal second-birth hazards without changing the state space. |
 | `P2` | Documentation mismatch | `CALIBRATION_STATUS.md` and `code/model/intergen_housing_fertility/README.md` are current. Parent `code/model/README.md` still describes the older center-periphery path. | Future work can start from stale orientation unless this is cleaned up. |
@@ -232,7 +244,7 @@ not calibration searches.
 | `2` | Young owner value-gap table for renters at ages 26--34 across wealth, owner rungs, and `chi`. | Add a genuine young-owner advantage: rental markup, tax wedge, expected capital gains, starter-rung redesign, or early parental down-payment transfers. |
 | `3` | Old owner retention decomposition: sale cost, `chi`, user-cost wedge, bequest convention, and gross-versus-net estate. | Add an old-age exit, downsizing, maintenance, or liquidity mechanism; test the net-estate bequest convention. |
 | `4` | Renter cap sweep: `hR_max` in `{6,8,10,inf}` at fixed theta. | Decide whether the large-rental target is off-model, or replace the hard cap with economic rental supply or price wedges. |
-| `5` | Bequest ablations: `theta_n=0`, zero-estate-normalized bequest, and net estate \(b+(1-\psi)pH\). | Normalize bequest utility so children affect marginal bequest motives without adding a fixed terminal utility penalty. |
+| `5` | Bequest presentation/code audit under `theta_n=0`, plus the separate gross-versus-net estate comparison \(b+pH\) versus \(b+(1-\psi)pH\). | Remove the unused child multiplier from benchmark prose; retain or re-anchor the computational constant consistently with the entry outside option. |
 | `6` | Feasibility-mask audit for owner residual services and infeasible continuation values. | Replace the `1e-10` owner service floor and \(-10^{10}\) cliffs with explicit masks; rerun a moment-invariance check. |
 | `7` | Tenure-smoothing sweep: `kappa_t` in `{0,0.005,0.01,0.02,0.05}` with dense excess-demand curves. | Document whether market clearing relies on smoothing and decide whether smoothing is structural or numerical. |
 | `8` | Budget and mass-conservation invariant audit on occupied branches. | Fix any residual above numerical tolerance before calibration. |
@@ -269,9 +281,10 @@ Main updates:
   4 rooms is a weak/floor rung for family states, and 6 rooms is effectively
   the first robust owner product. But starter-rung probes alone do not fix
   young ownership.
-- Bequest utility has a confirmed child-level penalty under the current
-  \(\sigma=2\) CRRA form, and terminal bequests use gross \(b+pH\) rather than
-  net liquidation value \(b+(1-\psi)pH\).
+- Child-weighted CRRA bequest utility would create a child-level penalty, but
+  the current \(\theta_n=0\) restriction makes that channel inactive. Terminal
+  bequests still use gross \(b+pH\) rather than net liquidation value
+  \(b+(1-\psi)pH\).
 - Accounting and KFE invariants are mostly clean, but the wealth grid is
   overwide and purchase/down-payment cliffs are reachable near occupied mass.
 - Tenure smoothing affects choices as a real logit mixture, but local market
