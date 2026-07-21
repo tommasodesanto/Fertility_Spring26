@@ -1,12 +1,34 @@
 # Intergen Numerical And Economics Issues Ledger
 
-Date: 2026-06-25
+Date: 2026-06-25; urgent update 2026-07-21
 
 This is a working ledger of issues to think about in the one-market
 intergenerational housing-fertility model. It is not a task checklist and not a
 calibration target sheet. The goal is to organize open questions so the model
 can be made economically well behaved before serious calibration or policy
 work.
+
+## Absolute Urgency: Funded Property-Tax Baseline
+
+**Priority: P0, for July 21--22.** The current calibrated baseline charges the
+1% property tax but does not return the revenue. A fixed-M5-theta test in the
+parity-verified optimized solver closes the stationary government budget with
+an equal lump-sum rebate. The unrebated M5 TFR is `2.0346`; rebating the
+baseline 1% revenue raises it to `2.3485` (`+15.43%`). Relative to that funded
+baseline, a rebated 2% tax raises TFR by `8.04%` and lowers the house price by
+`17.41%`; using part of the revenue for the targeted `0.4` purchase grant gives
+`+7.98%` and `-17.17%`. This is strong fixed-parameter evidence that returning
+the previously burned tax revenue increases fertility in the current model.
+
+It is not yet a paper-ready policy result. Fiscal closure moves the fixed-theta
+loss from about `9` to `219.7`, so the existing calibration cannot simply be
+relabelled as funded. Before relying on or updating the circulated policy
+numbers: (1) move the tested fiscal closure into the production model; (2)
+recalibrate under the rebated 1% baseline; (3) rerun the rebated 2% tax and the
+funded grant package; and (4) repeat the population-adjusted estimand used in
+the paper. Exact test artifacts are in
+`output/model/intergen_funded_property_tax_test_20260721/`; the driver is
+`code/model/tools/run_intergen_funded_property_tax_test.py`.
 
 ## Current State
 
