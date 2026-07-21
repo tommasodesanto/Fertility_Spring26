@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,multicol}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\setlength{\parskip}{2pt}
+\title{\vspace{-1.4em}\textbf{The fecundity schedule: evidence, calibration precedents, and our fit}}
+\author{Fertility--housing project}
+\date{July 20, 2026}
+\begin{document}
+\maketitle
+\vspace{-1.4em}
+
+\section*{1. The object}
+
+In the sequential-fertility architecture, a household that attempts a birth
+succeeds within the model period with probability
+\[
+\pi_j \;=\; \min\bigl\{1,\max\{0,\;1-\omega_1 e^{\omega_2 (a_j-18)}\}\bigr\},
+\qquad \pi_j = 0 \text{ for } a_j \ge 45 .
+\]
+$\pi_j$ is a primitive of the environment, not a calibrated SMM parameter:
+biology identifies it, and pinning it externally is what separates the
+biological margin from the choice margin --- both $\pi_j$ and the fertility
+logit scale $\kappa_f$ smooth birth hazards, so a freely estimated $\pi_j$
+would leave $\kappa_f$ unidentified. One sentence of economics: because
+$\pi_j$ falls with age, postponing an attempt carries a real risk that the
+window closes, so the option value of waiting is priced and policy acquires
+a timing margin. Setting $\omega_1=0$ recovers certain conception --- the
+production model --- exactly.
+
+\section*{2. What the demographic evidence says}
+
+Four sources anchor the shape; all figures below were verified against the
+sources cited (the 1986 table via a secondary source with explicit
+attribution, noted).
+
+\emph{Conception probabilities by starting age.} L\'eridon (2004) reports
+that under natural conditions 75\% of women starting at age 30 conceive
+(with live birth) within one year, 66\% at 35, and 44\% at 40; \emph{within
+four years} the corresponding figures are \textbf{91\%, 84\%, and 64\%}.
+Because our model period is four years, these are direct empirical
+counterparts of $\pi_j$ at ages 30, 35, and 40.
+
+\emph{Infecundity by age.} Menken, Trussell and Larsen (1986) report shares
+infertile rising from 7\% at ages 20--24 to 15\% (30--34), 22\% (35--39) and
+29\% (40--44), with the chance of remaining childless when marrying in those
+bands rising from 6\% to 64\%.
+
+\emph{Per-cycle fecundability.} Dunson, Colombo and Baird (2002), from
+prospective data on 5{,}860 cycles, find per-cycle conception probabilities
+roughly twice as high at ages 19--26 as at 35--39, with decline beginning in
+the late twenties.
+
+\emph{Natural sterility level.} Baudin, de la Croix and Gobbi (2015) put
+natural sterility at 3.7\% of couples, from L\'eridon's (2008) use of the
+Henry database of 18th-century rural France (couples married at 20--24 with
+no effective fertility control).
+
+\section*{3. How the literature calibrates it}
+
+Three strategies recur. (i) \emph{Exponential fit to a permanent-infertility
+CDF}: Sommer (2016) specifies $p^I_t=\omega_1 e^{\omega_2 t}$ reaching one
+at 45 and fits it to the Trussell--Wilson (1985) point estimates of the
+fraction permanently infertile by age (about 97\% at 45); the fitted
+constants are shown graphically and not reported numerically in the paper.
+(ii) \emph{Bounded logistic fit to conception-within-$N$-years}: de la Croix
+and Pommeret (2021) fit $\pi(t)=a e^{b-ct}/(d+e^{b-ct})$ to L\'eridon (2005,
+Table~I) conception probabilities at seven durations, imposing
+$\pi(0)=0.96$ from the 4\% natural-sterility estimate; their reported fit is
+$(a,b,c,d)=(0.96,\,5.53,\,0.33,\,0.012)$.\footnote{Two source cautions from
+our verification pass. The working paper's displayed table prints $b=3.5$
+while the text reports the fitted $b=5.53$ --- an internal inconsistency we
+could not resolve against the paywalled published version. And the fit is
+sourced to L\'eridon (2005), a French-journal companion paper, not the more
+commonly cited L\'eridon (2004) \emph{Human Reproduction} article.}
+(iii) \emph{A single external sterility share}: Baudin, de la Croix and
+Gobbi (2015) fix natural sterility at 3.7\% and split it evenly by sex,
+leaving no age slope inside the fecund window.
+
+Our approach is (ii) in spirit with (i)'s functional form: a two-parameter
+exponential in age, zero from 45, fit to within-window conception
+probabilities.
+
+\section*{4. Our schedule and the fit}
+
+The four-year period makes the fit unusually direct: L\'eridon's
+within-four-year probabilities \emph{are} $\pi$ at the corresponding ages.
+The planned procedure is least squares of $\pi_j$ on the three L\'eridon
+points $\{0.91,0.84,0.64\}$ at ages 30/35/40, with the young-age level
+anchored by the natural-sterility estimate ($\pi \approx 0.96$--$0.965$ in
+the early twenties) and the terminal age at 45 (Sommer's 97\%-infertile
+benchmark; Menken et al.'s 64\% childless for 40--44 marriages).
+
+The schedule currently deployed in the E-series experiments,
+$(\omega_1,\omega_2)=(0.02,\,0.134)$, was chosen by eye before this
+verification pass. Evaluated at the L\'eridon ages it gives:
+
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+ & age 22 & age 30 & age 35 & age 40 \\
+\midrule
+Current schedule $\pi_j$ & 0.966 & 0.899 & 0.805 & 0.618 \\
+Demographic target & 0.960--0.963$^{a}$ & 0.91 & 0.84 & 0.64 \\
+\bottomrule
+\end{tabular}
+
+{\footnotesize $^{a}$one minus natural sterility (3.7--4\%).}
+\end{center}
+
+The deployed schedule sits on the evidence to within one to three
+percentage points at every anchor; the formal fit will therefore move the
+E-series results very little, and the ``illustrative'' caveat carried by
+the E1/E2 reports is, in substance, already discharged up to that
+refinement. The remaining formal step --- running the least-squares fit,
+documenting it, and re-solving the E2 winner at the fitted schedule as a
+robustness line --- is a half-day item and should precede any paper-facing
+use of the timing results.
+
+\begin{footnotesize}
+\begin{multicols}{2}
+\noindent Baudin, de la Croix, Gobbi (2015), \emph{AER} 105(6).\\
+de la Croix, Pommeret (2021), \emph{JET} 193.\\
+Dunson, Colombo, Baird (2002), \emph{Human Reproduction} 17(5).\\
+L\'eridon (2004), \emph{Human Reproduction} 19(7).\\
+L\'eridon (2005), \emph{Rev.\ d'\'Epid.\ et de Sant\'e Publique} 53.\\
+Menken, Trussell, Larsen (1986), \emph{Science} 233.\\
+Sommer (2016), \emph{JME} 83.\\
+Trussell, Wilson (1985), \emph{Population Studies} 39(2).
+\end{multicols}
+\end{footnotesize}
+
+\end{document}
