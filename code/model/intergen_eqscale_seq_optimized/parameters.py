@@ -63,6 +63,18 @@ def setup_parameters() -> SimpleNamespace:
     P.kappa_loc = 2.0
     P.eps_fert = P.kappa_fert
     P.eps_loc = P.kappa_loc
+    # Literal-parity (L4) conventions; defaults reproduce the pre-extension
+    # architecture bitwise.  With n_parity=4 the parity states are literal
+    # birth counts 0/1/2/3+; "literal_topcode" makes the tfr moment the
+    # parity mean with the top-coded bin weighted at tfr_top_bin_weight
+    # (instead of the legacy 2 x mean-parity bridge); the entrant conversion
+    # factor scales matured children into new entrant households (0.5 under
+    # literal units: two children form one household); child_bin_high_cutoff
+    # is the parity at which the family-size room bins switch to "3+".
+    P.fertility_units = "parity2x"
+    P.tfr_top_bin_weight = 3.0
+    P.entrant_conversion_factor = 1.0
+    P.child_bin_high_cutoff = 2
     P.alpha_cons = 0.70
     P.delta_alpha = 0.0
     P.gamma_e = 0.0

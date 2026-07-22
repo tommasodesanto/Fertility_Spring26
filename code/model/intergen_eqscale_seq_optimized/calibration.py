@@ -1272,9 +1272,30 @@ def draw_candidate(rng: np.random.Generator, idx: int) -> dict[str, Any]:
     }
 
 
+def literal_topcode_tfr(parity_dist: np.ndarray, top_bin_weight: float) -> float:
+    """Completed births per household under literal parity states.
+
+    Parity indices count literal births; the top-coded bin is weighted at its
+    empirical mean family size (``top_bin_weight``) instead of its index, so
+    e.g. states 0/1/2/3+ with weight 3.4 give ``p1 + 2 p2 + 3.4 p3plus``.
+    """
+    parity = np.asarray(parity_dist, dtype=float).reshape(-1)
+    if parity.size == 0 or not np.all(np.isfinite(parity)):
+        return float("nan")
+    weights = np.arange(parity.size, dtype=float)
+    if parity.size >= 2:
+        weights[-1] = float(top_bin_weight)
+    return float(np.sum(weights * parity))
+
+
 def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
     household_parity = float(getattr(sol, "mean_completed_fertility", np.nan))
     parity = np.asarray(getattr(sol, "parity_dist", np.array([np.nan])), dtype=float).reshape(-1)
+    fertility_units = str(getattr(P, "fertility_units", "parity2x")) if P is not None else "parity2x"
+    if fertility_units == "literal_topcode":
+        tfr_value = literal_topcode_tfr(parity, float(getattr(P, "tfr_top_bin_weight", 3.0)))
+    else:
+        tfr_value = 2.0 * household_parity
     renter_rooms = float(getattr(sol, "prime_childless_renter_median_rooms", np.nan))
     owner_rooms = float(getattr(sol, "prime_childless_owner_median_rooms", np.nan))
     own_rate_2534 = float(getattr(sol, "own_rate_2534", np.nan))
@@ -1284,7 +1305,7 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "aggregate_mean_occupied_rooms_18_85": float(
             getattr(sol, "aggregate_housing_demand", np.nan)
         ) / max(total_mass, 1e-12),
-        "tfr": 2.0 * household_parity,
+        "tfr": tfr_value,
         "own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
         "aggregate_own_rate": float(getattr(sol, "own_rate", np.nan)),
         "young_owner_rate": float(getattr(sol, "young_owner_rate", np.nan)),
@@ -1344,7 +1365,9 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "attempt_hazard_by_age": np.asarray(getattr(sol, "attempt_hazard_by_age", np.array([np.nan])), dtype=float),
         "first_birth_hazard_by_age": np.asarray(getattr(sol, "first_birth_hazard_by_age", np.array([np.nan])), dtype=float),
         "second_birth_hazard_by_age": np.asarray(getattr(sol, "second_birth_hazard_by_age", np.array([np.nan])), dtype=float),
+        "third_birth_hazard_by_age": np.asarray(getattr(sol, "third_birth_hazard_by_age", np.array([np.nan])), dtype=float),
         "parity_progression_1to2_flow": float(getattr(sol, "parity_progression_1to2_flow", np.nan)),
+        "parity_progression_2to3_flow": float(getattr(sol, "parity_progression_2to3_flow", np.nan)),
         "first_birth_age_distribution": np.asarray(
             getattr(sol, "first_birth_age_distribution", np.array([np.nan])), dtype=float
         ),
@@ -1382,6 +1405,7 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "parity_share_0": float(parity[0]) if parity.size > 0 else np.nan,
         "parity_share_1": float(parity[1]) if parity.size > 1 else np.nan,
         "parity_share_2plus": float(np.sum(parity[2:])) if parity.size > 2 else np.nan,
+        "parity_share_3plus": float(np.sum(parity[3:])) if parity.size > 3 else np.nan,
         "prime_childless_renter_median_rooms": renter_rooms,
         "prime_childless_owner_median_rooms": owner_rooms,
         "prime_childless_owner_minus_renter_rooms": owner_rooms - renter_rooms,

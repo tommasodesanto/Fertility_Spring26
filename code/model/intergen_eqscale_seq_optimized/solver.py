@@ -2280,9 +2280,12 @@ def solve_bellman_full_markov_income(
     )
     loc_probs = np.zeros((Nb, nt, I, I, J, Nz, npar, ncs))
     fert_probs = np.zeros((Nb, nt, I, J, Nz, npar))
-    # alt x {raising-one, matured-one}; retained on P to avoid changing the
-    # established Bellman return contract used by the GE loop.
-    fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, 2))
+    # alt x attempting-parity slot: slot nn-1 holds the {stop, try}
+    # probabilities of the upward attempt from parity nn while a child is at
+    # home (slot 0 = second birth, slot 1 = third birth under n_parity=4).
+    # Shape is unchanged for npar in {3, 4}; retained on P to avoid changing
+    # the established Bellman return contract used by the GE loop.
+    fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2)))
     fert_value = np.zeros((Nb, nt, I, J, Nz))
 
     phi_choice = SD.phi_choice
@@ -2576,15 +2579,16 @@ def solve_bellman_full_markov_income(
                     V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
                     V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
                     V[:, :, :, j, zz, 0, 1:] = VI[:, :, :, 0, 1:]
-                    # second attempts only while the first child is at home
-                    for sidx, cs in enumerate((1,)):
+                    # upward attempts only while a child is at home (cs=1):
+                    # parity nn may try for birth nn+1; side-channel slot nn-1.
+                    for nn in range(1, npar - 1):
                         V2 = np.empty((Nb, nt, I, 2))
-                        V2[:, :, :, 0] = VI[:, :, :, 1, cs]
-                        V2[:, :, :, 1] = pi_j * VI[:, :, :, 2, 1] + (1.0 - pi_j) * VI[:, :, :, 1, cs]
+                        V2[:, :, :, 0] = VI[:, :, :, nn, 1]
+                        V2[:, :, :, 1] = pi_j * VI[:, :, :, nn + 1, 1] + (1.0 - pi_j) * VI[:, :, :, nn, 1]
                         l2, p2 = logsumexp(V2 / P.kappa_fert, axis=3)
                         p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
-                        fert2_probs[:, :, :, j, zz, :, sidx] = p2
-                        V[:, :, :, j, zz, 1, cs] = P.kappa_fert * l2
+                        fert2_probs[:, :, :, j, zz, :, nn - 1] = p2
+                        V[:, :, :, j, zz, nn, 1] = P.kappa_fert * l2
                 else:
                     Vfa = np.zeros((Nb, nt, I, npar))
                     Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
@@ -3768,6 +3772,9 @@ def forward_distribution(
     second_attempts_by_age = np.zeros(J)
     entrants_mature_by_loc = np.zeros(I)
     entrants_mature_total = 0.0
+    # Matured children per new entrant household (0.5 under literal parity:
+    # two children pair into one next-generation household). 1.0 nests.
+    ecf = float(getattr(P, "entrant_conversion_factor", 1.0))
     event_horizon = 3
     birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
     addchild_es3_one_sum = addchild_es3_one_mass = 0.0
@@ -4080,7 +4087,7 @@ def forward_distribution(
                         if pm > 0:
                             nk = nn
                             for im in range(I):
-                                fi = nk * pm * float(np.sum(gp[:, :, im]))
+                                fi = ecf * nk * pm * float(np.sum(gp[:, :, im]))
                                 entrants_mature_by_loc[im] += fi
                                 entrants_mature_total += fi
                     for csn in range(ncs):
@@ -4099,7 +4106,7 @@ def forward_distribution(
                     if cs == K and csn >= csm1 and nn >= 1:
                         nk = nn
                         for im in range(I):
-                            fi = nk * float(np.sum(gp[:, :, im]))
+                            fi = ecf * nk * float(np.sum(gp[:, :, im]))
                             entrants_mature_by_loc[im] += fi
                             entrants_mature_total += fi
                     g[:, :, :, j + 1, nn, csn] += gp
@@ -4266,8 +4273,14 @@ def forward_distribution_markov_income(
     second_births_by_age = np.zeros(J)
     second_attempts_by_age = np.zeros(J)
     second_at_risk_by_age = np.zeros(J)
+    third_births_by_age = np.zeros(J)
+    third_attempts_by_age = np.zeros(J)
+    third_at_risk_by_age = np.zeros(J)
     entrants_mature_by_loc = np.zeros(I)
     entrants_mature_total = 0.0
+    # Matured children per new entrant household (0.5 under literal parity:
+    # two children pair into one next-generation household). 1.0 nests.
+    ecf = float(getattr(P, "entrant_conversion_factor", 1.0))
     # Event-study horizon (in 4-year periods) for the birth housing response.
     # The PSID target is a CONTROLLED room response ~3 years post-birth, which in
     # a 4-year-period model lands inside the birth period itself, so the default
@@ -4330,7 +4343,11 @@ def forward_distribution_markov_income(
                 pv = np.arange(npar).reshape(1, 1, 1, npar)
                 pi_j = float(fec[j])
                 if bool(getattr(P, "sequential_births", False)):
-                    at_risk = g[:, :, :, j, zz, 1, 1].copy()
+                    # Snapshot every upward at-risk pool BEFORE any birth flow
+                    # lands, so no household can chain two births in a period.
+                    at_risk_up = [
+                        g[:, :, :, j, zz, nn, 1].copy() for nn in range(1, npar - 1)
+                    ]
                     m1 = gc * pa[:, :, :, 1]
                     realized1 = pi_j * m1
                     g[:, :, :, j, zz, 0, 0] = gc - realized1
@@ -4341,16 +4358,23 @@ def forward_distribution_markov_income(
                         births_by_loc[i] += float(np.sum(realized1[:, :, i]))
                     p2all = getattr(P, "_fert2_probs", None)
                     if p2all is not None:
-                        m2 = at_risk * p2all[:, :, :, j, zz, 1, 0]
-                        realized2 = pi_j * m2
-                        g[:, :, :, j, zz, 1, 1] -= realized2
-                        g[:, :, :, j, zz, 2, 1] += realized2
-                        second_attempts_by_age[j] += float(np.sum(m2))
-                        second_births_by_age[j] += float(np.sum(realized2))
-                        second_at_risk_by_age[j] += float(np.sum(at_risk))
-                        total_births += float(np.sum(realized2))
-                        for i in range(I):
-                            births_by_loc[i] += float(np.sum(realized2[:, :, i]))
+                        for nn in range(1, npar - 1):
+                            at_risk = at_risk_up[nn - 1]
+                            m2 = at_risk * p2all[:, :, :, j, zz, 1, nn - 1]
+                            realized2 = pi_j * m2
+                            g[:, :, :, j, zz, nn, 1] -= realized2
+                            g[:, :, :, j, zz, nn + 1, 1] += realized2
+                            if nn == 1:
+                                second_attempts_by_age[j] += float(np.sum(m2))
+                                second_births_by_age[j] += float(np.sum(realized2))
+                                second_at_risk_by_age[j] += float(np.sum(at_risk))
+                            else:
+                                third_attempts_by_age[j] += float(np.sum(m2))
+                                third_births_by_age[j] += float(np.sum(realized2))
+                                third_at_risk_by_age[j] += float(np.sum(at_risk))
+                            total_births += float(np.sum(realized2))
+                            for i in range(I):
+                                births_by_loc[i] += float(np.sum(realized2[:, :, i]))
                     birth_mass = realized1
                     birth_mass_total = float(np.sum(birth_mass))
                     if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
@@ -4649,7 +4673,7 @@ def forward_distribution_markov_income(
                             if pm > 0:
                                 nk = nn
                                 for im in range(I):
-                                    fi = nk * pm * float(np.sum(gp[:, :, im]))
+                                    fi = ecf * nk * pm * float(np.sum(gp[:, :, im]))
                                     entrants_mature_by_loc[im] += fi
                                     entrants_mature_total += fi
                         for csn in range(ncs):
@@ -4669,7 +4693,7 @@ def forward_distribution_markov_income(
                         if cs == K and csn >= csm1 and nn >= 1:
                             nk = nn
                             for im in range(I):
-                                fi = nk * float(np.sum(gp[:, :, im]))
+                                fi = ecf * nk * float(np.sum(gp[:, :, im]))
                                 entrants_mature_by_loc[im] += fi
                                 entrants_mature_total += fi
                         for zn in range(Nz):
@@ -4746,10 +4770,16 @@ def forward_distribution_markov_income(
     P._second_attempts_by_age = second_attempts_by_age
     P._first_births_by_age = first_births_by_age
     P._second_at_risk_by_age = second_at_risk_by_age
+    P._third_births_by_age = third_births_by_age
+    P._third_attempts_by_age = third_attempts_by_age
+    P._third_at_risk_by_age = third_at_risk_by_age
     if bool(getattr(P, "sequential_births", False)):
         stats.second_attempt_hazard_by_age = second_attempts_by_age / np.maximum(second_at_risk_by_age, 1e-12)
         stats.second_birth_hazard_by_age = second_births_by_age / np.maximum(second_at_risk_by_age, 1e-12)
         stats.parity_progression_1to2_flow = float(np.sum(second_births_by_age) / max(np.sum(first_births_by_age), 1e-12))
+        stats.third_attempt_hazard_by_age = third_attempts_by_age / np.maximum(third_at_risk_by_age, 1e-12)
+        stats.third_birth_hazard_by_age = third_births_by_age / np.maximum(third_at_risk_by_age, 1e-12)
+        stats.parity_progression_2to3_flow = float(np.sum(third_births_by_age) / max(np.sum(second_births_by_age), 1e-12))
     stats.entry_censored_mass = float(getattr(P, "_entry_censored_mass", 0.0))
     stats.entry_censored_share = stats.entry_censored_mass / max(
         float(getattr(P, "_entry_total_mass", 0.0)), 1e-300
@@ -5042,6 +5072,7 @@ def markov_renter_room_moments(g: np.ndarray, hR: np.ndarray, P: SimpleNamespace
     """
     Nb, nt, I, J, Nz, npar, ncs = g.shape
     dep_last = P.n_child_stages
+    hcut = int(getattr(P, "child_bin_high_cutoff", 2))
     a25s, a45e = age_to_index(P, 25), age_to_index(P, 45)
     a30s, a55e = age_to_index(P, 30), age_to_index(P, 55)
     hRmax = float(P.hR_max)
@@ -5060,7 +5091,7 @@ def markov_renter_room_moments(g: np.ndarray, hR: np.ndarray, P: SimpleNamespace
             for zz in range(Nz):
                 for nn in range(npar):
                     for cs in range(ncs):
-                        cb = current_child_bin_dt(nn, cs, dep_last)
+                        cb = current_child_bin_dt(nn, cs, dep_last, hcut)
                         gr = g[:, 0, i, j, zz, nn, cs]
                         hr = hR[:, 0, i, j, zz, nn, cs]
                         kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -5113,6 +5144,7 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         return
 
     dep_last = int(getattr(P, "n_child_stages", 1))
+    hcut = int(getattr(P, "child_bin_high_cutoff", 2))
 
     def sample_stats(age_lo: float, age_hi: float, *, childless_only: bool, renter_only: bool) -> tuple[float, float, float]:
         vals: list[np.ndarray] = []
@@ -5127,7 +5159,7 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
                         continue
                     for nn in range(P.n_parity):
                         for cs in range(P.n_child_states):
-                            if childless_only and current_child_bin_dt(nn, cs, dep_last) != 2:
+                            if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut) != 2:
                                 continue
                             tenures = [0] if renter_only else range(g7.shape[1])
                             for ten in tenures:
@@ -5914,6 +5946,7 @@ def compute_statistics(
     )
 
     dep_last = P.n_child_stages
+    hcut = int(getattr(P, "child_bin_high_cutoff", 2))
     renter_vals: list[np.ndarray] = []
     renter_wts: list[np.ndarray] = []
     owner_vals: list[np.ndarray] = []
@@ -5922,7 +5955,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    if current_child_bin_dt(nn, cs, dep_last) != 2:
+                    if current_child_bin_dt(nn, cs, dep_last, hcut) != 2:
                         continue
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
@@ -5956,7 +5989,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    child_bin = current_child_bin_dt(nn, cs, dep_last)
+                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut)
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -6040,7 +6073,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    child_bin = current_child_bin_dt(nn, cs, dep_last)
+                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut)
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -6512,13 +6545,22 @@ def pack_solution(V, c, h, bp, tc, tp, lp, fp, fv, g, st: SimpleNamespace, w, p,
 
 
 def get_completed_fertility(nn: int, cs: int, P: SimpleNamespace) -> int:
+    """Completed births for family state (nn, cs).
+
+    Parity ``nn`` is preserved through maturation (the child transition is
+    per-``nn`` over ``cs`` only), so parity-3+ matured states read completed
+    fertility from ``nn``.  For nn <= 2 the legacy cs-based mapping is kept
+    verbatim — including on unreachable cells such as (nn=2, cs=K+1) — so
+    the precomputed bequest table, and hence V, nest bit for bit at
+    n_parity=3.
+    """
     K = P.n_child_stages
     if cs == 0:
         return 0
     if cs == K + 1:
-        return 1
+        return 1 if nn <= 2 else nn
     if cs == K + 2:
-        return 2
+        return 2 if nn <= 2 else nn
     return nn
 
 
@@ -6675,12 +6717,17 @@ def get_birth_entry_grant_tensor(P):
     return bg
 
 
-def current_child_bin_dt(nn, cs, dep_last):
+def current_child_bin_dt(nn, cs, dep_last, high_cutoff=2):
+    """Family-size room bin: 2 = no dependent child present, 3 = small
+    family, 4 = large family.  ``high_cutoff`` is the parity at which the
+    large-family bin starts (default 2 = legacy parity bins; 3 under the
+    literal-parity convention, where bin 3 is "1-2 children" and bin 4 is
+    "3+")."""
     if cs == 0 or cs > dep_last:
         return 2
     current_n = max(nn, 0)
     if current_n <= 0:
         return 2
-    if current_n == 1:
+    if current_n < high_cutoff:
         return 3
     return 4

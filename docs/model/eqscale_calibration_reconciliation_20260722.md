@@ -665,7 +665,36 @@ T6. Only after T1–T5: exact-loop smoke, then an 8-chain Torch search with
     strict-repeat reserves, checkpoints, budgets, and a collector enforcing
     the full target-fit table — the standing Long-Run Search Safety rules.
 
-### Post-run checklist for the live diagnostic `14579021` (do not touch the run)
+### Implementation status (July 22 evening): Option L4 built and smoke-tested
+
+The literal-parity machinery is now implemented as a gated, default-off
+extension of `intergen_eqscale_seq_optimized` (production and the M5 package
+untouched): `n_parity = 4` literal states 0/1/2/3+; a generalized per-parity
+upward-attempt margin (side-channel slot `nn-1`; the `(...,2,2)` payload shape
+is unchanged for `n_parity <= 4`); a snapshot-first KFE birth split so no
+household chains two births in one period; `entrant_conversion_factor`
+(0.5 = two matured children form one entrant household — the factor the old
+x2 convention carried implicitly); `fertility_units = "literal_topcode"` with
+`tfr_top_bin_weight`; `child_bin_high_cutoff = 3` literal room bins; and
+`get_completed_fertility` reading parity for 3+ states while preserving the
+legacy mapping verbatim on nn <= 2 cells. Verification: defaults reproduce
+the pre-edit solution bit for bit (V and g hashes); 102 package tests pass,
+9 new in `tests/test_literal_parity.py` (gate inertness, age-mass
+conservation at n_parity=4, no-same-period chaining, third-birth
+hazard-fecundity identity, entrant-factor accounting, tfr arithmetic).
+
+Fixed-theta L4 smoke at the collected E2 winner (GE, market residual
+5.4e-08): parity distribution 0.206/0.518/0.210/0.067 — third births happen
+(PP 1->2 flow 0.348, PP 2->3 flow 0.241); literal TFR 1.163 vs target 1.918
+(11.39 of the 18.27 fixed-theta loss — expected: E2's preferences were
+calibrated under bin units, so a literal recalibration must roughly double
+birth flows); the 3+/1-2 rooms row is now definitionally aligned with the
+data bins (model 0.817 vs 0.368 at fixed theta — a real, newly meaningful
+miss); the family ownership gap is unchanged at 0.045, confirming the
+mechanism problem is orthogonal to the units fix. No calibration launched;
+recalibration awaits A2/A6/A8 and the T-gates above.
+
+### Post-run checklist for the diagnostic `14579021` (OVERTAKEN: the run was canceled as invalid after 52 minutes — the identity-row defect below was confirmed and the profile disabled; the remaining predictions stand as untested)
 
 When the collector lands, audit against the predictions here: (1) is
 `beta_annual` at 0.9995? (2) is `kappa_T` at 0.12 with a large tenure-row

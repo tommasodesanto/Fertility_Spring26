@@ -1,10 +1,43 @@
 # Calibration Status
 
-Updated: `2026-07-22` (provisional 14-moment diagnostic recalibration running; M5 remains the working calibration)
+Updated: `2026-07-22` (provisional 14-moment diagnostic canceled as invalid; M5 remains the working calibration)
 
-## July 22 afternoon: provisional 14-moment diagnostic recalibration running
+## July 22 evening: E-series reconciliation note; gated literal-parity (L4) extension implemented
 
-An eight-chain, three-hour Torch search is running on the current optimized M5
+`docs/model/eqscale_calibration_reconciliation_20260722.md` (revised after
+author review) audits the provisional 14-row ledger — its Part 1 flags the
+same identity-row defect that led to the cancellation below, plus the p90
+bequest row's living-population/estates-at-death mismatch (recommended
+replacement: PSID living 76--84 p90/p50 = 3.448) — and proposes a 12/12
+E-series system. That table is a proposal, not a settled contract, pending
+the CEX child-cost and PSID tenure auxiliary re-estimations on
+model-consistent conventions and the fertility-units decision (A8).
+
+`intergen_eqscale_seq_optimized` now supports literal parity 0/1/2/3+ behind
+default-off gates: `n_parity=4`, a generalized per-parity attempt margin with
+a third-birth KFE split (snapshot-first, no same-period chaining),
+`entrant_conversion_factor` (0.5 = two matured children form one entrant
+household; the old x2 tfr convention carried this factor implicitly),
+`fertility_units="literal_topcode"` with `tfr_top_bin_weight`, and literal
+family-size room bins via `child_bin_high_cutoff=3`. Defaults nest the
+pre-edit solution bit for bit (golden V/g hash check); 102 package tests pass
+(9 new in `tests/test_literal_parity.py`). Fixed-theta smoke at the collected
+E2 winner (GE, market residual `5.4e-08`): parity `0.206/0.518/0.210/0.067`,
+literal TFR `1.163` vs `1.918` (recalibration required, as expected — E2 was
+calibrated under bin units), PP 1->2 flow `0.348`, PP 2->3 flow `0.241`,
+family ownership gap still `0.045` (the mechanism problem is orthogonal to
+the units fix). No calibration launched.
+
+Bookkeeping: the July 20 E2 collection was never recorded in this file. For
+the record, the optimized-port eight-chain rerun of the E1 contract collected
+a strict, twice-repeated winner with loss `5.485557807431926` (8/8 chains
+eligible) in
+`output/model/eqscale_seq_optimized_recalibration_20260719/report/`; see
+`docs/model/eqscale_seq_specification_note_20260720.tex`.
+
+## July 22 afternoon: provisional 14-moment diagnostic canceled as invalid
+
+An eight-chain, three-hour Torch search was started on the current optimized M5
 model, not the E architecture. It estimates the existing 14 free parameters
 against the new 14-row ledger, with `theta_n=0` externally restricted. The four
 CEX LES quantities enter as first-stage parameter restrictions; the model
@@ -25,9 +58,15 @@ Corrected exact-loop smoke `14578917` completed 15/15 converged cases with no
 infeasibility or program failures. Full array `14579021_[1-8]` and dependent
 collector `14579038` write to
 `output/model/intergen_new_moment_calibration_20260722_3h_earningsfix/` on Torch
-scratch. The chains have 160 search minutes, a 10-minute strict-repeat reserve, a
-1,200-evaluation cap, and per-case latest/best checkpoints. M5 remains the
-working calibration until the completed fit is audited.
+scratch. It was canceled after 52 minutes. Its low loose loss is invalid and
+must not be reported: the objective literally used `P.alpha_cons`, `P.c_bar_0`,
+`P.h_bar_0`, and `P.c_bar_n` as four "model moments," rather than reproducing
+the CEX auxiliary statistics on simulated observations. Those four quantities
+must either be fixed as external first-stage estimates or identified using the
+same observable auxiliary moments in data and model. Without replacements,
+the proposed 14-free-parameter SMM has only 10 genuine moment rows and is
+underidentified. The failed profile is disabled in code. M5 remains the working
+calibration.
 
 ## July 22 morning: provisional identifying-moment ledger complete
 
