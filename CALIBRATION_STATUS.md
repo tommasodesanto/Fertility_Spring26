@@ -1,6 +1,47 @@
 # Calibration Status
 
-Updated: `2026-07-21` (funded property-tax test and owner-ladder risk logged; M5 remains the working calibration)
+Updated: `2026-07-22` (provisional 14-parameter moment ledger complete; M5 remains the working calibration)
+
+## July 22: provisional identifying-moment ledger complete; no recalibration launched
+
+Every parameter in the proposed 14-parameter calibration now has a numerical
+empirical counterpart. The saving/bequest block provisionally borrows the De
+Nardi--Yang definitions and values: aggregate wealth / after-tax earnings
+`6.90`, annual bequest flow / aggregate wealth `0.0088`, and p90 bequest /
+annual income `4.53`. These are published borrowed targets, not newly measured
+project moments.
+
+The 2019--2023 CEX Interview PUMD childless-renter LES uses cash renters ages
+30--55, 2023 dollars, BLS collected-or-imputed income (`FINCBTXM`), final
+weights, consumer-unit clustering, and a two-fold cross-fitted public-geography
+rent-per-room measure. The pooled implied targets are `alpha_cons=0.732605`,
+`h_bar_0=2.629803` rooms, and `c_bar_0=0.397044` four-year model units (4,928
+interviews; 2,452 consumer units). Complete-income reporters give `0.735203`,
+`2.646288`, and `0.395365`. The pooled additional-child expenditure estimate
+implies `c_bar_n=0.043655`; complete reporters give `0.044323`. This target is
+just below the current `c_bar_n` search lower bound `0.05` and remains a
+reduced-form placeholder pending the planned equivalence-scale exercise.
+
+The new PSID tenure-dispersion candidate is the five-fold cross-fitted Brier
+score for ownership four years ahead after conditioning on current tenure,
+liquid financial wealth/income, income, age, children, marital status, and
+year. It is `0.117113` with a conditional person-bootstrap SE `0.002102`
+(32,378 person-years; 8,775 people). The identical auxiliary prediction
+exercise must be implemented on simulated histories before this becomes a hard
+target for `tenure_choice_kappa`; the wealth gradient is validation only.
+
+The remaining numerical moments are unchanged: first-child rooms response
+`0.664435`, 3+-minus-1--2-child rooms gap `0.367700`, completed-fertility
+equivalent `1.918`, completed childlessness `0.188`, prime-age ownership
+`0.575472`, and aggregate occupied rooms `5.779970`. The full mapping is in
+`latex/calibration_strategy_provisional.pdf`. Reproducible empirical drivers:
+`code/data/cex_child_cost/build_childless_renter_les_targets.R`,
+`code/data/cex_child_cost/build_child_cost_target.R`, and
+`code/data/psid_followup_mar2026/build_tenure_residual_variance.R`.
+
+Do not launch the new SMM yet. The model must first compute the same LES
+auxiliary objects and the same four-year residual-tenure score, and the final
+free-parameter list must remove the externally restricted `theta_n=0` cleanly.
 
 ## July 21: funded property-tax test is first-order; recalibration required before use
 

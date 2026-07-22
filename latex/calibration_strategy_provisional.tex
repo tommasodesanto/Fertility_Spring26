@@ -1,0 +1,297 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.92in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,tabularx,array,xcolor}
+\usepackage[round]{natbib}
+\usepackage[colorlinks=true,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{microtype}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\newcommand{\Bcal}{\mathcal B}
+
+\title{Calibration Strategy for the Quantitative Model\\
+\large Provisional note}
+\author{Tommaso De Santo}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Objective}
+
+This note lays out the proposed calibration of the quantitative model. Its purpose is to make the empirical content of each estimated parameter explicit. The calibration is organized in economic blocks. Within each block, parameters are associated with moments that isolate the variation governed most directly by those parameters. All parameters are ultimately chosen jointly, but the target system is designed so that each parameter has one primary empirical counterpart, or belongs to a stated two-parameter, two-moment block.
+
+The revised calibration has four blocks: saving and bequests; baseline consumption and housing demand; child costs and fertility; and tenure and housing supply. Table~\ref{tab:mapping} gives the complete mapping. The remainder of the note explains the economic content of each block and records each moment's construction and current status.
+
+\section{Parameters assigned outside the estimation}
+
+Table~\ref{tab:assigned} records the maintained inputs inherited from the current quantitative specification. These parameters describe timing, survival, income risk, housing finance, the available housing products, and the elasticity of housing supply. They are not counted among the fourteen internally estimated parameters.
+
+\begin{table}[ht]
+\centering
+\caption{Parameters assigned outside the estimation}
+\label{tab:assigned}
+\small
+\renewcommand{\arraystretch}{1.05}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X l>{\raggedright\arraybackslash}p{0.43\textwidth}@{}}
+\toprule
+Object & Value & Basis \\
+\midrule
+Model period; entry, retirement, maximum age & 4 years; 18, 66, 85 & Model timing \\
+Post-retirement survival & Age-specific & 2023 Social Security life table \\
+Expected dependent-child duration & 18 years & Child-maturity restriction \\
+Risk aversion $\sigma$ & 2 & Maintained preference curvature \\
+Annual real return & 2.0\% & Long-run real rate \\
+Annual depreciation; property tax & 1.1\%; 1.0\% & Housing user cost \\
+Financed share; sale cost & 0.80; 6\% & Standard housing-finance values \\
+Annual income persistence; innovation s.d. & 0.960; 0.0645 & Current provisional income process \\
+Owner sizes; largest rental unit & $\{2,4,6,8,10\}$; 6 rooms & ACS room distributions \\
+Housing-supply elasticity $\eta$ & 1.75 & \citet{saiz2010} \\
+Entrant wealth distribution & Ages 18--24 & PSID childless renters \\
+Child shifter in bequest utility & $\theta_n=0$ & Maintained restriction \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The income process remains provisional. Revising income risk changes precautionary saving and therefore requires re-estimating the saving, consumption, tenure, and bequest blocks. It cannot be changed after calibration while retaining the parameter estimates reported under the current process.
+
+\section{Saving and bequests}
+
+The saving and bequest block follows \citet{denardiYang2014} as closely as the housing environment permits. Bequeathable wealth includes both liquid wealth and the gross value of owner-occupied housing:
+\begin{equation}
+W^B=b+Ph.
+\end{equation}
+The warm-glow bequest function is
+\begin{equation}
+\Bcal(W^B)
+=
+\theta_0
+\,
+\frac{(\theta_1+\max\{W^B,0\})^{1-\sigma}
+-\theta_1^{1-\sigma}}
+{1-\sigma}.
+\label{eq:bequest}
+\end{equation}
+The subtraction normalizes $\Bcal(0)=0$ and does not change marginal bequest utility. For positive estates,
+\begin{equation}
+\Bcal'(W^B)=\theta_0(\theta_1+W^B)^{-\sigma}.
+\end{equation}
+Thus $\theta_0$ controls the scale of the bequest motive, while $\theta_1$ controls how the motive varies across the estate distribution. A larger shift makes small estates less attractive relative to large estates and therefore governs the extent to which bequests behave as a luxury good.
+
+The three parameters $(\beta,\theta_0,\theta_1)$ are associated with three moments:
+\begin{align}
+\beta
+&\longleftrightarrow
+\frac{\text{aggregate household wealth}}
+{\text{aggregate after-tax earnings}},
+\label{eq:beta_target}\\
+\theta_0
+&\longleftrightarrow
+\frac{\text{annual bequest flow}}
+{\text{aggregate household wealth}},
+\label{eq:theta0_target}\\
+\theta_1
+&\longleftrightarrow
+\frac{p_{90}(\text{bequest at death})}
+{\text{annual household income}}.
+\label{eq:theta1_target}
+\end{align}
+The first moment disciplines total lifecycle wealth accumulation. The second isolates the level of resources intentionally carried to death. The third disciplines the upper tail of estates and hence the luxury component of the bequest motive. \citet{denardiYang2014} use values $6.90$, $0.0088$, and $4.53$ for these three objects. The initial implementation will reproduce their definitions. Modern target values will replace the original values only after the underlying numerator, denominator, population, and price-year conventions have been reconstructed consistently.
+
+This block replaces the current practice of using young liquid wealth, a late-life estate median, and an old-age nonhousing-wealth threshold to jointly discipline patience and bequests. Those moments remain useful validation outcomes, but they do not separately measure average wealth accumulation, aggregate bequest intensity, and estate curvature.
+
+\section{Consumption and housing demand}
+
+Preferences are CRRA over a Stone--Geary composite. For a renter with no dependent children, the within-period composite is
+\begin{equation}
+(c-\bar c_0)^{\alpha_c}(h^R-\bar h_0)^{1-\alpha_c}.
+\end{equation}
+For an interior renter with allocatable expenditure $x=c+rh^R$, conditional housing expenditure satisfies
+\begin{equation}
+rh^R
+=
+-(1-\alpha_c)\bar c_0
++(1-\alpha_c)x
++\alpha_c r\bar h_0.
+\label{eq:les_demand}
+\end{equation}
+This provides a direct three-parameter mapping. In the auxiliary regression
+\begin{equation}
+rh^R=a+bx+dr+u,
+\end{equation}
+the primitives are recovered as
+\begin{equation}
+\alpha_c=1-b,
+\qquad
+\bar h_0=\frac{d}{1-b},
+\qquad
+\bar c_0=-\frac{a}{b}.
+\label{eq:les_mapping}
+\end{equation}
+We estimate this system on the 2019--2023 CEX Interview files for cash renters ages 30--55 with no dependent children. The local rent per room is constructed from the opposite half of a deterministic consumer-unit split within public CEX geography, so a household's own rent and rooms do not mechanically determine its assigned unit price. Expenditures are converted to 2023 dollars, household income uses the BLS collected-or-imputed measure, repeated interviews are clustered by consumer unit, and the regression uses the CEX final weight. The pooled estimates imply
+\begin{equation}
+\widehat\alpha_c=0.733,
+\qquad
+\widehat{\bar h}_0=2.630,
+\qquad
+\widehat{\bar c}_0=0.397
+\quad\text{(four-year model units)}.
+\end{equation}
+The corresponding one-year estimates are $0.724$, $2.672$, and $0.440$, so the result is not driven by the 2023 cross section. Restricting the pooled sample to complete income reporters gives $0.735$, $2.646$, and $0.395$. The ACS mean rooms of $3.805$ remains a validation outcome: it is the total quantity chosen, whereas $\bar h_0$ is the minimum housing term recovered from the demand system.
+
+\section{Children and family size}
+
+Dependent children shift the household's committed bundle according to
+\begin{align}
+\bar c(n,s)&=\bar c_0+\bar c_n n_s,\\
+\bar h(n,s)&=\bar h_0
++\bar h_{\mathrm{jump}}\mathbf 1\{n_s\geq1\}
++\bar h_n n_s.
+\end{align}
+The consumption cost per child is disciplined by the change in nondurable consumption expenditure associated with an additional dependent child, conditional on household resources:
+\begin{equation}
+\bar c_n
+\longleftrightarrow
+\frac{\partial E[c\mid y,b,h,a]}{\partial n_s}.
+\label{eq:child_consumption_target}
+\end{equation}
+The pooled 2019--2023 CEX estimate, controlling for income, age, adult household size, tenure, rooms, and interview quarter, is $1{,}289$ in annual 2023 dollars per dependent child. Relative to weighted mean annual income and the model's four-year period, this gives a provisional target $\bar c_n=0.0437$. Restricting the sample to complete income reporters gives $0.0443$. The estimate lies just below the lower edge of the current search region and should therefore enter with an explicit sensitivity analysis. Fertility and ownership differences by family size are not used as substitutes for this direct consumption-cost moment.
+
+The two housing-need parameters have direct physical counterparts:
+\begin{align}
+\bar h_{\mathrm{jump}}
+&\longleftrightarrow
+\text{change in rooms following the first child},\\
+\bar h_n
+&\longleftrightarrow
+E[h\mid 3+\text{ children}]-E[h\mid1\text{--}2\text{ children}].
+\end{align}
+The first-child event-study moment and the larger-family rooms gap are already available. Together they distinguish the extensive housing adjustment associated with becoming a parent from the incremental space requirement of additional children.
+
+The direct utility from children and the dispersion in family-size choices form a two-parameter, two-moment block:
+\begin{equation}
+(\psi_{\mathrm{child}},\kappa_F)
+\longleftrightarrow
+(\text{completed fertility},\text{childlessness rate}).
+\label{eq:fertility_block}
+\end{equation}
+The level of completed fertility primarily disciplines the average utility value of children. Conditional on that level, childlessness disciplines heterogeneity in family-size choices. Both moments are already constructed from the CPS.
+
+\section{Tenure and housing supply}
+
+The owner service premium $\chi_O$ shifts the average attractiveness of ownership and is associated with the prime-age ownership rate:
+\begin{equation}
+\chi_O
+\longleftrightarrow
+\Pr(\text{owner}\mid\text{ages 30--55}).
+\end{equation}
+The tenure-choice dispersion $\kappa_T$ determines how sharply otherwise similar households sort into renting and owning. It is associated with residual variation in ownership four years ahead after conditioning on the observable states that the model contains:
+\begin{equation}
+\kappa_T
+\longleftrightarrow
+E\!\left[
+\left(O_{t+4}-\widehat{\Pr}(O_{t+4}=1\mid X_t)\right)^2
+\right],
+\label{eq:tenure_dispersion}
+\end{equation}
+where $X_t$ contains current tenure, liquid financial wealth relative to income, income, age, children, marital status, and year. A five-fold person-level cross-fitted logit on the PSID gives $0.1171$ (conditional person-bootstrap standard error $0.0021$). The identical auxiliary regression must be run on simulated model histories. The ownership--wealth gradient and the unconditional switching rate remain validation moments; they combine residual tenure taste dispersion with observed wealth heterogeneity and lifecycle transitions.
+
+Housing supply is
+\begin{equation}
+H^S(r)=\bar H\left(\frac{r}{\bar r}\right)^\eta,
+\end{equation}
+with $\eta$ assigned externally. The supply scale is associated with aggregate occupied rooms:
+\begin{equation}
+\bar H
+\longleftrightarrow
+E[h\mid\text{ages 18--85}].
+\end{equation}
+The equilibrium user cost adjusts so that aggregate renter and owner housing demand equals this supply.
+
+\section{Complete mapping and implementation}
+
+Table~\ref{tab:mapping} records the proposed mapping for all fourteen internally estimated parameters. Every parameter now has a numerical empirical counterpart, although the CEX child-cost estimate and the De Nardi bequest targets remain provisional pending the sensitivity exercises described below.
+
+\begin{table}[ht]
+\centering
+\caption{Proposed parameter--moment mapping}
+\label{tab:mapping}
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}l>{\raggedright\arraybackslash}X l l@{}}
+\toprule
+Parameter & Primary empirical counterpart & Target & Status \\
+\midrule
+$\beta$ & Aggregate wealth / after-tax earnings & 6.90 & Published definition \\
+$\theta_0$ & Annual bequest flow / aggregate wealth & 0.0088 & Published definition \\
+$\theta_1$ & $p_{90}$ bequest / annual income & 4.53 & Published definition \\
+\addlinespace
+$\alpha_c$ & Childless-renter LES expenditure coefficient & 0.733 & CEX 2019--2023 \\
+$\bar c_0$ & Childless-renter LES intercept & 0.397 & CEX 2019--2023 \\
+$\bar h_0$ & Childless-renter LES price coefficient & 2.630 & CEX 2019--2023 \\
+$\bar c_n$ & Nondurable consumption increment per dependent child & 0.0437 & CEX 2019--2023 \\
+$\bar h_{\mathrm{jump}}$ & First-child rooms response & 0.664 & Available \\
+$\bar h_n$ & Rooms gap: $3+$ versus $1$--$2$ children & 0.368 & Available \\
+$\psi_{\mathrm{child}}$ & Completed-fertility equivalent & 1.918 & Available \\
+$\kappa_F$ & Completed childlessness & 0.188 & Available \\
+$\chi_O$ & Prime-age ownership rate & 0.575 & Available \\
+$\kappa_T$ & Cross-fitted four-year residual tenure variance & 0.1171 & PSID, constructed \\
+$\bar H$ & Aggregate occupied rooms & 5.780 & Available \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The numerical target ledger is now complete. Before launching the new calibration, three implementation tasks remain. First, the model must report the same auxiliary LES coefficients and the same four-year residual-tenure Brier score as the data scripts. Second, the CEX child-cost target is stable to the complete-reporter restriction, but its reduced-form interpretation should remain explicit until the planned equivalence-scale exercise replaces it. Third, the published De Nardi ratios must either be retained explicitly as borrowed targets or reconstructed with modern data; they should not be described as newly measured project moments. These tasks affect measurement and model reporting, not the count of identifying moments.
+
+The current family ownership gap, large-home share among childless owners, owner--renter rooms gap, ownership rates at young and old ages, young liquid wealth, late-life estate median, and old-age nonhousing-wealth share remain in the reporting table as overidentifying outcomes. They evaluate whether the calibrated mechanisms reproduce lifecycle and family differences that were not used to select the corresponding parameters.
+
+\begin{table}[ht]
+\centering
+\caption{Disposition of the current target moments}
+\label{tab:moment_disposition}
+\scriptsize
+\renewcommand{\arraystretch}{1.02}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X l>{\raggedright\arraybackslash}p{0.31\textwidth}@{}}
+\toprule
+Current moment & Revised role & Parameter or use \\
+\midrule
+Completed fertility & Primary target & $\psi_{\mathrm{child}}$ \\
+Childlessness & Primary target & $\kappa_F$ conditional on fertility \\
+Ownership, ages 30--55 & Primary target & $\chi_O$ \\
+Family ownership gap & Validation & Family housing--tenure interaction \\
+First-child rooms increment & Primary target & $\bar h_{\mathrm{jump}}$ \\
+Childless-renter mean rooms & Validation & Baseline housing demand \\
+Childless-owner share in 6+ rooms & Validation & Owner menu and $\chi_O$ \\
+Young childless-renter liquid wealth & Validation & Lifecycle saving \\
+Owner--renter rooms gap & Validation & Tenure-specific housing demand \\
+Ownership, ages 25--34 & Validation & Early ownership path \\
+Rooms gap: $3+$ versus $1$--$2$ children & Primary target & $\bar h_n$ \\
+Late-life estate median & Validation & Bequest level and lifecycle saving \\
+Old nonhousing wealth above annual income & Validation & Portfolio composition \\
+Ownership, ages 65--75 & Validation & Late-life tenure exit \\
+Aggregate occupied rooms & Primary target & $\bar H$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{thebibliography}{9}
+
+\bibitem[De Nardi and Yang(2014)]{denardiYang2014}
+De Nardi, M., and F. Yang. 2014.
+``Bequests and Heterogeneity in Retirement Wealth.''
+\emph{European Economic Review} 72: 182--196.
+
+\bibitem[Greaney et al.(2025)]{greaneyDynamicUrbanEconomics2025}
+Greaney, B., A. Parkhomenko, and S. Van Nieuwerburgh. 2025.
+``Dynamic Urban Economics.'' Working paper.
+
+\bibitem[Saiz(2010)]{saiz2010}
+Saiz, A. 2010.
+``The Geographic Determinants of Housing Supply.''
+\emph{Quarterly Journal of Economics} 125(3): 1253--1296.
+
+\end{thebibliography}
+
+\end{document}

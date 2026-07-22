@@ -25,24 +25,73 @@ if (!dir.exists(file.path(root, "code", "data", "cex_child_cost"))) {
   root <- normalizePath(".")
 }
 
-input_dir <- file.path(root, "code", "data", "cex_child_cost", "raw", "2023", "extracted")
-output_dir <- file.path(root, "code", "data", "cex_child_cost", "output", "les_2023")
+years <- as.integer(strsplit(Sys.getenv("CEX_YEARS", "2023"), ",", fixed = TRUE)[[1]])
+stopifnot(length(years) >= 1L, all(is.finite(years)))
+output_label <- Sys.getenv(
+  "CEX_OUTPUT_LABEL",
+  if (length(years) == 1L) paste0("les_", years) else
+    paste0("les_", min(years), "_", max(years))
+)
+input_dirs <- file.path(root, "code", "data", "cex_child_cost", "raw", years, "extracted")
+output_dir <- file.path(root, "code", "data", "cex_child_cost", "output", output_label)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-files <- list.files(input_dir, pattern = "^fmli.*[.]dta$", full.names = TRUE)
-stopifnot(length(files) == 4L)
+stopifnot(all(dir.exists(input_dirs)))
+files_by_year <- lapply(input_dirs, list.files, pattern = "^fmli.*[.]dta$", full.names = TRUE)
+names(files_by_year) <- years
+stopifnot(all(lengths(files_by_year) >= 4L))
 
 keep <- c(
   "CUID", "INTERI", "QINTRVYR", "QINTRVMO", "AGE_REF", "FAM_SIZE",
   "PERSLT18", "CUTENURE", "ROOMSQ", "REGION", "BLS_URBN", "POPSIZE",
-  "PSU", "FINCBTAX", "FINLWT21", "TOTEXPCQ", "HOUSCQ", "SHELTCQ", "RNTXRPCQ",
+  "PSU", "FINCBTAX", "FINCBTXM", "FINCBTXI", "INCLASS2", "FINLWT21",
+  "TOTEXPCQ", "HOUSCQ", "SHELTCQ", "RNTXRPCQ",
   "RENDWECQ", "RNTAPYCQ", "CARTKNCQ", "CARTKUCQ", "OTHVEHCQ",
   "CASHCOCQ", "PERINSCQ"
 )
 
-d <- do.call(rbind, lapply(files, function(path) {
-  as.data.frame(read_dta(path, col_select = all_of(keep)))
-}))
+read_fmli <- function(path, package_year) {
+  actual_names <- names(read_dta(path, n_max = 0))
+  selected <- actual_names[match(keep, toupper(actual_names))]
+  if (anyNA(selected)) {
+    stop("Missing required columns in ", path, ": ",
+         paste(keep[is.na(selected)], collapse = ", "))
+  }
+  x <- as.data.frame(read_dta(path, col_select = all_of(selected)))
+  names(x) <- toupper(names(x))
+  x$PACKAGE_YEAR <- package_year
+  x
+}
+
+d <- do.call(rbind, unlist(Map(
+  function(paths, package_year) lapply(paths, read_fmli, package_year = package_year),
+  files_by_year, years
+), recursive = FALSE))
+
+# Convert every monetary flow to 2023 dollars using the annual-average CPI-U.
+# Interview packages span Q2 of the named year through Q1 of the next year from
+# 2020 onward, so deflation follows QINTRVYR rather than the package label.
+cpi_u <- c(
+  `2019` = 255.657, `2020` = 258.811, `2021` = 270.970,
+  `2022` = 292.655, `2023` = 304.702, `2024` = 313.689
+)
+if (any(!as.character(d$QINTRVYR) %in% names(cpi_u))) {
+  stop("Missing CPI-U value for an interview year.")
+}
+deflator <- unname(cpi_u[["2023"]] / cpi_u[as.character(d$QINTRVYR)])
+monetary <- c(
+  "FINCBTAX", "FINCBTXM", "TOTEXPCQ", "HOUSCQ", "SHELTCQ", "RNTXRPCQ", "RENDWECQ",
+  "RNTAPYCQ", "CARTKNCQ", "CARTKUCQ", "OTHVEHCQ", "CASHCOCQ", "PERINSCQ"
+)
+d[monetary] <- lapply(d[monetary], function(x) x * deflator)
+income_measure <- toupper(Sys.getenv("CEX_INCOME_MEASURE", "FINCBTXM"))
+if (!income_measure %in% c("FINCBTXM", "FINCBTAX")) {
+  stop("CEX_INCOME_MEASURE must be FINCBTXM or FINCBTAX.")
+}
+d$FINCBTAX_COLLECTED <- d$FINCBTAX
+d$FINCBTAX <- d[[income_measure]]
+complete_reporters_only <- identical(Sys.getenv("CEX_COMPLETE_REPORTERS_ONLY", "0"), "1")
+if (complete_reporters_only) d <- d[!is.na(d$INCLASS2) & d$INCLASS2 != 7, ]
 
 to_character <- function(x) {
   y <- as.character(x)
@@ -353,7 +402,11 @@ write.csv(composite_sensitivities,
 readme <- c(
   "# CEX childless-renter LES pilot",
   "",
-  "Source: 2023 Consumer Expenditure Survey Interview PUMD, interviews 2023Q2--2024Q1.",
+  paste0("Source: ", min(years), "--", max(years),
+         " Consumer Expenditure Survey Interview PUMD; monetary values are 2023 dollars."),
+  paste0("Income measure: ", income_measure,
+         if (complete_reporters_only) "; complete income reporters only." else
+           "; all reporters using BLS collected-or-imputed income."),
   "Sample: cash renters, reference person age 30--55, no persons under 18, one or two",
   "household members, positive income/consumption/rent, and valid rooms. The final",
   "sample trims allocatable expenditure and annual cash rent at the 1st/99th percentiles.",
