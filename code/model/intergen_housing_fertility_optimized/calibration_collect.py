@@ -16,12 +16,14 @@ from .m5_profile import (
     M5_PROFILE_NAME,
     m5_target_system,
 )
+from .new_moment_profile import NEW_MOMENT_PROFILE_NAME, new_moment_target_system
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--profile", choices=("m5", "new-moments"), default="m5")
     return parser.parse_args()
 
 
@@ -46,7 +48,8 @@ def repeat_is_exact(records: list[dict[str, Any]]) -> bool:
 
 def main() -> None:
     args = parse_args()
-    target_system = m5_target_system()
+    target_system = m5_target_system() if args.profile == "m5" else new_moment_target_system()
+    profile_name = M5_PROFILE_NAME if args.profile == "m5" else NEW_MOMENT_PROFILE_NAME
     args.output.mkdir(parents=True, exist_ok=True)
     chains: list[dict[str, Any]] = []
     eligible: list[tuple[Path, dict[str, Any], dict[str, Any]]] = []
@@ -85,8 +88,10 @@ def main() -> None:
         eligible, key=lambda item: float(item[2]["rank_loss"])
     )
     selected_loss = float(selected["rank_loss"])
-    canonical_improvement = float(M5_LOSS) - selected_loss
-    evaluator_improvement = float(M5_OPTIMIZED_STRICT_ROOT_LOSS) - selected_loss
+    canonical_improvement = float(M5_LOSS) - selected_loss if args.profile == "m5" else None
+    evaluator_improvement = (
+        float(M5_OPTIMIZED_STRICT_ROOT_LOSS) - selected_loss if args.profile == "m5" else None
+    )
     fit = list(selected["target_fit"])
     parameters = list(selected["parameters"])
     if len(fit) != target_system.count:
@@ -107,12 +112,14 @@ def main() -> None:
     selected_payload = {
         "status": (
             "beats_canonical_m5"
-            if canonical_improvement > 0.0
+            if args.profile == "m5" and canonical_improvement > 0.0
             else "improves_optimized_evaluator_only"
-            if evaluator_improvement > 0.0
+            if args.profile == "m5" and evaluator_improvement > 0.0
+            else "selected_lowest_strict_loss"
+            if args.profile == "new-moments"
             else "no_strict_improvement"
         ),
-        "profile": M5_PROFILE_NAME,
+        "profile": profile_name,
         "target_system": target_system.name,
         "target_fingerprint": target_system.fingerprint,
         "free_parameter_count": 14,
@@ -123,7 +130,9 @@ def main() -> None:
         "selected_loss": selected_loss,
         "loss_improvement_vs_canonical_m5": canonical_improvement,
         "loss_improvement_vs_optimized_evaluator": evaluator_improvement,
-        "relative_improvement_vs_canonical_m5": canonical_improvement / float(M5_LOSS),
+        "relative_improvement_vs_canonical_m5": (
+            canonical_improvement / float(M5_LOSS) if canonical_improvement is not None else None
+        ),
         "selected_chain": selected_dir.name,
         "eligible_chain_count": len(eligible),
         "completed_chain_count": len(chains),
@@ -134,25 +143,27 @@ def main() -> None:
         json.dumps(selected_payload, indent=2, sort_keys=True) + "\n"
     )
     report = [
-        "# Six-hour optimized M5 continuation",
+        "# Calibration search collection",
         "",
-        "This search preserves the live M5 model and 15-moment objective. It does not",
-        "change production imports or the target system.",
+        f"Profile: `{profile_name}`; target system: `{target_system.name}`.",
         "",
         f"- Completed chains: `{len(chains)}`",
         f"- Eligible chains with two exact strict repeats: `{len(eligible)}`",
         f"- Selected chain: `{selected_dir.name}`",
-        f"- Canonical M5 loss: `{M5_LOSS:.12g}`",
-        f"- Optimized strict-root M5 baseline: `{M5_OPTIMIZED_STRICT_ROOT_LOSS:.12g}`",
         f"- Selected strict loss: `{selected_loss:.12g}`",
-        f"- Improvement versus canonical M5: `{canonical_improvement:.12g}`",
-        f"- Improvement versus optimized-evaluator M5: `{evaluator_improvement:.12g}`",
         f"- Verdict: **{selected_payload['status'].replace('_', ' ').upper()}**",
         "",
         "The complete target-fit, parameter/bounds, and chain tables are adjacent to this report.",
         "No result is eligible on its loose search loss alone.",
         "",
     ]
+    if args.profile == "m5":
+        report[7:7] = [
+            f"- Canonical M5 loss: `{M5_LOSS:.12g}`",
+            f"- Optimized strict-root M5 baseline: `{M5_OPTIMIZED_STRICT_ROOT_LOSS:.12g}`",
+            f"- Improvement versus canonical M5: `{canonical_improvement:.12g}`",
+            f"- Improvement versus optimized-evaluator M5: `{evaluator_improvement:.12g}`",
+        ]
     (args.output / "REPORT.md").write_text("\n".join(report))
     print(json.dumps({key: value for key, value in selected_payload.items() if key not in {"selected", "selected_chain_summary"}}, indent=2, sort_keys=True))
 

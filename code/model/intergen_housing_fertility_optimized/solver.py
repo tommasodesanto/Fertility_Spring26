@@ -4639,6 +4639,12 @@ def forward_distribution_markov_income(
             hR_pol,
             asset_g=asset_current,
         )
+        stats.four_year_tenure_residual_variance = markov_tenure_residual_variance(
+            g,
+            tenure_choice,
+            tenure_probs,
+            P,
+        )
     grant_recipient_mass, grant_outlays = markov_grant_outlays(
         g,
         tenure_choice,
@@ -5363,6 +5369,7 @@ def compute_markov_statistics(
         setattr(stats, _name, _val)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
+    add_aggregate_wealth_bequest_flow_moments(stats, asset_dist, P, bg, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
     if float(getattr(P, "retirement_income_z_scale", 0.0)) != 0.0:
         add_old_wealth_income_moments(stats, asset_dist, P, bg, ph)
@@ -5427,6 +5434,106 @@ def compute_markov_statistics(
     stats.implied_balanced_pension = stats.payroll_tax_revenue / max(stats.retiree_mass_total, 1e-12)
     stats.income_transition = Pi_z.copy()
     return stats
+
+
+def markov_tenure_residual_variance(
+    g: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    P: SimpleNamespace,
+) -> float:
+    """Expected four-year tenure-choice residual variance, ages 25--55.
+
+    The one-market model conditions on the complete beginning-of-period state.
+    With smoothed tenure choice this is ``E[p(1-p)]`` for next-period ownership;
+    with deterministic choice it is zero.  This is the model analogue of the
+    cross-fitted residual Brier moment measured in the PSID.
+    """
+
+    if int(P.I) != 1:
+        raise ValueError("tenure residual variance currently requires the one-market model")
+    mass_total = 0.0
+    variance_total = 0.0
+    for j in range(int(P.J) - 1):
+        age = float(P.age_start) + j * float(P.da)
+        if not 25.0 <= age <= 55.0:
+            continue
+        mass = np.asarray(g[:, :, 0, j, :, :, :], dtype=float)
+        if tenure_probs is None:
+            owner_probability = (
+                np.asarray(tenure_choice[:, :, 0, j, :, :, :], dtype=int) > 0
+            ).astype(float)
+        else:
+            owner_probability = np.sum(
+                np.asarray(tenure_probs[:, :, 0, j, :, :, :, 1:], dtype=float),
+                axis=-1,
+            )
+        mass_total += float(np.sum(mass))
+        variance_total += float(np.sum(mass * owner_probability * (1.0 - owner_probability)))
+    return variance_total / max(mass_total, 1e-12)
+
+
+def add_aggregate_wealth_bequest_flow_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Add aggregate wealth/earnings and annual bequest-flow/wealth ratios.
+
+    Wealth is liquid net worth plus gross owner housing value. Earnings are the
+    working-age after-tax labor-income flow, excluding pensions and lump-sum
+    transfers, annualized when periods exceed one year. Expected bequests use
+    nonnegative estates and the age-specific death probability, also annualized.
+    """
+
+    g_arr = np.asarray(g, dtype=float)
+    if g_arr.ndim != 7:
+        return
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    ph_arr = np.asarray(ph, dtype=float).reshape(-1)
+    z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
+    if not bool(getattr(P, "scale_flows_to_period", False)):
+        period_years = 1.0
+    aggregate_wealth = 0.0
+    aggregate_annual_earnings = 0.0
+    annual_bequest_flow = 0.0
+    for j in range(int(P.J)):
+        if bool(getattr(P, "use_age_survival", False)) and j < int(P.J) - 1:
+            death_probability = 1.0 - float(P.survival_probs[j])
+        elif j == int(P.J) - 1:
+            death_probability = 1.0
+        else:
+            death_probability = 0.0
+        for i in range(int(P.I)):
+            for zz, z_value in enumerate(z_values):
+                state_mass = float(np.sum(g_arr[:, :, i, j, zz, :, :]))
+                if j < int(P.J_R):
+                    labor_earnings = float(P.income[i, j]) * float(z_value) / period_years
+                    aggregate_annual_earnings += labor_earnings * state_mass
+                for ten in range(g_arr.shape[1]):
+                    housing_value = (
+                        float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
+                    )
+                    estate = bg_arr + housing_value
+                    mass_by_asset = np.sum(g_arr[:, ten, i, j, zz, :, :], axis=(1, 2))
+                    aggregate_wealth += float(np.sum(mass_by_asset * estate))
+                    annual_bequest_flow += (
+                        death_probability
+                        * float(np.sum(mass_by_asset * np.maximum(estate, 0.0)))
+                        / period_years
+                    )
+    stats.aggregate_wealth_to_annual_after_tax_earnings = (
+        aggregate_wealth / max(aggregate_annual_earnings, 1e-12)
+    )
+    stats.annual_bequest_flow_to_aggregate_wealth = (
+        annual_bequest_flow / max(aggregate_wealth, 1e-12)
+    )
+    stats.aggregate_wealth = aggregate_wealth
+    stats.aggregate_annual_after_tax_earnings = aggregate_annual_earnings
+    stats.annual_bequest_flow = annual_bequest_flow
 
 
 def compute_markov_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:

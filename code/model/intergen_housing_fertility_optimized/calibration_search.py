@@ -34,6 +34,12 @@ from .m5_profile import (
     m5_overrides,
     m5_target_system,
 )
+from .new_moment_profile import (
+    NEW_MOMENT_PROFILE_NAME,
+    NEW_MOMENT_SEED,
+    new_moment_overrides,
+    new_moment_target_system,
+)
 from .promotion_contract import FREE_PARAMETER_BOUNDS
 from .solver import InfeasibleThetaError, run_model_cp_dt
 
@@ -59,18 +65,20 @@ DOMAIN: tuple[tuple[str, float, float, str], ...] = (
 )
 
 
-def validate_contract() -> None:
+def validate_contract(profile: str = "m5") -> None:
     declared = tuple((name, lower, upper) for name, lower, upper, _ in DOMAIN)
     if declared != FREE_PARAMETER_BOUNDS:
         raise RuntimeError("calibration search domain differs from the promotion contract")
-    target_system = m5_target_system()
+    target_system = m5_target_system() if profile == "m5" else new_moment_target_system()
     target_system.require_identified(free_parameter_count=len(DOMAIN))
-    if target_system.count != 15:
-        raise RuntimeError("six-hour continuation requires the live 15-moment M5 target system")
-    if not math.isclose(float(m5_overrides(tight=False)["tol_eq"]), SEARCH_RESIDUAL):
-        raise RuntimeError("M5 loose evaluator tolerance drifted")
-    if not math.isclose(float(m5_overrides(tight=True)["tol_eq"]), STRICT_RESIDUAL):
-        raise RuntimeError("M5 strict evaluator tolerance drifted")
+    expected_count = 15 if profile == "m5" else 14
+    if target_system.count != expected_count:
+        raise RuntimeError(f"{profile} requires its declared {expected_count}-moment target system")
+    overrides = m5_overrides if profile == "m5" else new_moment_overrides
+    if not math.isclose(float(overrides(tight=False)["tol_eq"]), SEARCH_RESIDUAL):
+        raise RuntimeError(f"{profile} loose evaluator tolerance drifted")
+    if not math.isclose(float(overrides(tight=True)["tol_eq"]), STRICT_RESIDUAL):
+        raise RuntimeError(f"{profile} strict evaluator tolerance drifted")
 
 
 def transform(unit: float, lower: float, upper: float, kind: str) -> float:
@@ -159,8 +167,10 @@ def parameter_rows(theta: dict[str, float]) -> list[dict[str, Any]]:
     return rows
 
 
-def target_fit_rows(moments: dict[str, float]) -> list[dict[str, float | str]]:
-    system = m5_target_system()
+def target_fit_rows(
+    moments: dict[str, float], system=None
+) -> list[dict[str, float | str]]:
+    system = m5_target_system() if system is None else system
     return [
         {
             "moment": name,
@@ -181,6 +191,7 @@ def target_fit_rows(moments: dict[str, float]) -> list[dict[str, float | str]]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--outdir", type=Path, required=True)
+    parser.add_argument("--profile", choices=("m5", "new-moments"), default="m5")
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--method", choices=("nelder-mead", "pattern"), required=True)
     parser.add_argument("--minutes", type=float, default=350.0)
@@ -195,7 +206,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    validate_contract()
+    validate_contract(args.profile)
     if args.smoke:
         args.minutes = min(float(args.minutes), 8.0)
         args.strict_reserve_minutes = 0.0
@@ -203,16 +214,27 @@ def main() -> None:
     if args.minutes <= args.strict_reserve_minutes:
         raise ValueError("total minutes must exceed the strict reserve")
 
-    target_system = m5_target_system()
+    if args.profile == "m5":
+        target_system = m5_target_system()
+        profile_name = M5_PROFILE_NAME
+        seed_theta = M5_THETA
+        override_factory = m5_overrides
+        run_status = "proper_joint_m5_continuation"
+    else:
+        target_system = new_moment_target_system()
+        profile_name = NEW_MOMENT_PROFILE_NAME
+        seed_theta = NEW_MOMENT_SEED
+        override_factory = new_moment_overrides
+        run_status = "provisional_joint_new_moment_calibration"
     rng = np.random.default_rng(int(args.seed))
-    seed_unit = unit_from_theta(M5_THETA)
+    seed_unit = unit_from_theta(seed_theta)
     start_mix = float(np.clip(args.start_mix, 0.0, 0.25))
     start_unit = np.clip(
         (1.0 - start_mix) * seed_unit + start_mix * rng.random(len(DOMAIN)),
         0.0,
         1.0,
     )
-    search_overrides = m5_overrides(tight=False, optimized=True)
+    search_overrides = override_factory(tight=False, optimized=True)
     if args.smoke:
         search_overrides.update(Nb=60, max_iter_eq=2, tol_eq=0.25)
 
@@ -220,8 +242,8 @@ def main() -> None:
     cases_path = args.outdir / "cases.jsonl"
     cases_path.write_text("")
     metadata = {
-        "status": "exact_loop_smoke" if args.smoke else "proper_joint_m5_continuation",
-        "profile": M5_PROFILE_NAME,
+        "status": "exact_loop_smoke" if args.smoke else run_status,
+        "profile": profile_name,
         "target_system": target_system.name,
         "target_fingerprint": target_system.fingerprint,
         "target_count": target_system.count,
@@ -233,6 +255,11 @@ def main() -> None:
         ],
         "canonical_m5_loss": M5_LOSS,
         "optimized_strict_root_m5_loss": M5_OPTIMIZED_STRICT_ROOT_LOSS,
+        "objective_note": (
+            "legacy M5 weighting"
+            if args.profile == "m5"
+            else "sum of squared relative gaps; provisional until joint auxiliary covariance is available"
+        ),
         "method": args.method,
         "seed": int(args.seed),
         "start_mix": start_mix,
@@ -350,7 +377,7 @@ def main() -> None:
 
     tight_records: list[dict[str, Any]] = []
     if not args.smoke and best is not None:
-        tight_overrides = m5_overrides(tight=True, optimized=True)
+        tight_overrides = override_factory(tight=True, optimized=True)
         winning_unit = np.asarray(best["unit_vector"], dtype=float)
         winning_theta = theta_from_unit(winning_unit)
         tight_path = args.outdir / "tight_cases.jsonl"
@@ -390,7 +417,7 @@ def main() -> None:
                 "price": price_value,
                 "theta": winning_theta,
                 "moments": moments,
-                "target_fit": target_fit_rows(moments) if moments else [],
+                "target_fit": target_fit_rows(moments, target_system) if moments else [],
                 "parameters": parameter_rows(winning_theta),
                 "unit_vector": winning_unit,
                 "origin": {"search_case": int(best["case"])},

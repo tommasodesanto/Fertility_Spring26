@@ -1340,6 +1340,9 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "old_total_estate_wealth_to_annual_income_p90_p50_7684": float(
             getattr(sol, "old_total_estate_wealth_to_annual_income_p90_p50_7684", np.nan)
         ),
+        "old_total_estate_wealth_to_annual_income_p90_7684": float(
+            getattr(sol, "old_total_estate_wealth_to_annual_income_p90_7684", np.nan)
+        ),
         "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": float(
             getattr(
                 sol,
@@ -1358,6 +1361,19 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "young_liquid_wealth_to_income": float(getattr(sol, "young_liquid_wealth_to_income", np.nan)),
         "liquid_wealth_to_income": float(getattr(sol, "liquid_wealth_to_income", np.nan)),
         "wealth_to_income": float(getattr(sol, "wealth_to_income", np.nan)),
+        "aggregate_wealth_to_annual_after_tax_earnings": float(
+            getattr(sol, "aggregate_wealth_to_annual_after_tax_earnings", np.nan)
+        ),
+        "annual_bequest_flow_to_aggregate_wealth": float(
+            getattr(sol, "annual_bequest_flow_to_aggregate_wealth", np.nan)
+        ),
+        "four_year_tenure_residual_variance": float(
+            getattr(sol, "four_year_tenure_residual_variance", np.nan)
+        ),
+        "alpha_cons_parameter": float(getattr(P, "alpha_cons", np.nan)),
+        "c_bar_0_parameter": float(getattr(P, "c_bar_0", np.nan)),
+        "h_bar_0_parameter": float(getattr(P, "h_bar_0", np.nan)),
+        "c_bar_n_parameter": float(getattr(P, "c_bar_n", np.nan)),
         "young_all_liquid_wealth_to_annual_gross_income_2530": float(
             getattr(sol, "young_all_liquid_wealth_to_annual_gross_income_2530", np.nan)
         ),

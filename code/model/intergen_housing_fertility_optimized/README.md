@@ -67,6 +67,14 @@ The bounded six-hour continuation workflow is documented in
 uses recoverable one-CPU Torch chains, and promotes only twice-repeated strict
 winners; loose search losses are never compared with canonical M5.
 
+For the July 22 provisional identifying ledger, `calibration_search.py` also
+accepts `--profile new-moments`. The corresponding contract is isolated in
+`new_moment_profile.py`; the three-hour Torch launchers are
+`cluster/submit_three_hour_new_moments.sh` and
+`cluster/submit_three_hour_new_moment_collector.sh`. This is a diagnostic
+objective with relative-gap weights and a state-conditional tenure analogue,
+not a replacement for the M5 paper calibration.
+
 ## Inherited model documentation
 
 This package is the new one-market quantitative implementation for the

@@ -1,8 +1,35 @@
 # Calibration Status
 
-Updated: `2026-07-22` (provisional 14-parameter moment ledger complete; M5 remains the working calibration)
+Updated: `2026-07-22` (provisional 14-moment diagnostic recalibration running; M5 remains the working calibration)
 
-## July 22: provisional identifying-moment ledger complete; no recalibration launched
+## July 22 afternoon: provisional 14-moment diagnostic recalibration running
+
+An eight-chain, three-hour Torch search is running on the current optimized M5
+model, not the E architecture. It estimates the existing 14 free parameters
+against the new 14-row ledger, with `theta_n=0` externally restricted. The four
+CEX LES quantities enter as first-stage parameter restrictions; the model
+generates aggregate wealth / annual after-tax earnings, annual bequest flow /
+aggregate wealth, the old-age p90 estate-wealth / annual-income ratio, the two
+housing responses, fertility, childlessness, ownership, aggregate rooms, and a
+one-market state-conditional tenure analogue `E[p(1-p)]`. The objective is the
+sum of squared relative gaps, pending a joint auxiliary covariance estimate.
+
+This run is diagnostic, not a replacement paper calibration: the tenure row is
+the structural state-conditional analogue, not yet the identical cross-fitted
+PSID prediction exercise, and the saving/bequest levels remain borrowed De
+Nardi--Yang targets. The first smoke `14578636` passed, but its associated full
+array `14578695` and collector `14578698` were canceled after the first
+checkpoint exposed that pension income had been included in the earnings
+denominator. The corrected moment excludes pensions and lump-sum transfers.
+Corrected exact-loop smoke `14578917` completed 15/15 converged cases with no
+infeasibility or program failures. Full array `14579021_[1-8]` and dependent
+collector `14579038` write to
+`output/model/intergen_new_moment_calibration_20260722_3h_earningsfix/` on Torch
+scratch. The chains have 160 search minutes, a 10-minute strict-repeat reserve, a
+1,200-evaluation cap, and per-case latest/best checkpoints. M5 remains the
+working calibration until the completed fit is audited.
+
+## July 22 morning: provisional identifying-moment ledger complete
 
 Every parameter in the proposed 14-parameter calibration now has a numerical
 empirical counterpart. The saving/bequest block provisionally borrows the De
@@ -39,9 +66,10 @@ equivalent `1.918`, completed childlessness `0.188`, prime-age ownership
 `code/data/cex_child_cost/build_child_cost_target.R`, and
 `code/data/psid_followup_mar2026/build_tenure_residual_variance.R`.
 
-Do not launch the new SMM yet. The model must first compute the same LES
-auxiliary objects and the same four-year residual-tenure score, and the final
-free-parameter list must remove the externally restricted `theta_n=0` cleanly.
+The exact simulated auxiliary prediction exercise remains required before the
+tenure target can enter a paper calibration. The running diagnostic instead
+uses the deterministic state-conditional model analogue described above; its
+results must be labeled accordingly.
 
 ## July 21: funded property-tax test is first-order; recalibration required before use
 
