@@ -4,6 +4,19 @@ Date: 2026-07-22 (evening). Author: lead agent session, independent assessment r
 Status: conceptual reconciliation only. No model code changed, no calibration launched.
 The running Torch diagnostic `14579021_[1-8]` (collector `14579038`) was not touched.
 
+REVISED 2026-07-22 (late), after author review. Four corrections: (i) the p90
+"impossibility" argument is reframed as a model-analogue order constraint —
+the data values are not mutually contradictory; (ii) the housing-response
+analogue on the ACTIVE Markov path is a horizon-0 within-birth-period
+diff-in-diff, not the 12-year window an earlier draft described (that block
+is legacy-path-only); (iii) the parity-adjusted child-cost number is removed
+— it must come from the A2 CEX rerun, not a back-of-envelope; (iv) a
+fertility-units decision section is added: the sequential architecture
+inherits `tfr = 2 x mean parity` while treating parity increments as literal
+single births, and this must be resolved before the Part-3 table is frozen.
+**The 12/12 table is a proposal, not a settled contract**, pending the A2/A3
+reruns and the units decision.
+
 Sources verified for this note (not taken on trust): `new_moment_profile.py`,
 `m5_profile.py`, `calibration_search.py`, `solver.py` moment implementations
 (lines cited below), `run_e1_chain.py` DOMAIN, the E-series preference/fertility
@@ -64,10 +77,16 @@ Verified implementation facts used throughout:
 - `tfr = 2.0 * mean_parity` pooled over all post-fertility-window ages;
   parity states are {0, 1, 2+}; `childless_rate = parity_dist[0]` on the same
   pooled population.
-- `housing_increment_0to1` is a model event study: childless rooms at the
-  birth age versus the realized birth cohort 3 periods (12 years) later
-  (`solver.py:3930-4017`, `4197-4199`), cohort = all parity-0 exits (including
-  direct jumps to parity 2+).
+- `housing_increment_0to1` on the ACTIVE Markov-income path is a horizon-0
+  difference-in-differences: birth-cohort rooms within the birth period minus
+  a no-birth control (`forward_distribution_markov_income`,
+  `solver.py:4284-4299`; `production_profile.py:22` pins
+  `PRODUCTION_HOUSING_EVENT_HORIZON = 0`, inherited by `m5_overrides`).
+  Cohort = all parity-0 exits including direct jumps to parity 2+
+  (`solver.py:4348`). The 12-year `event_horizon = 3` block exists only in
+  the legacy non-Markov `forward_distribution` (`solver.py:3782`, `3909`) and
+  must not be quoted for the running system; the `_eventstudy_t3` stat-name
+  suffix is a legacy misnomer on the active path.
 - `aggregate_wealth_to_annual_after_tax_earnings`: wealth = `b + p*H_own`
   (gross housing) over all ages; earnings = working-age after-tax labor income
   only, pensions and lump-sum transfers excluded (the July-22 fix, verified at
@@ -128,15 +147,21 @@ bookkeeping. None of these is disqualifying for a diagnostic.
    model the two populations coincide (mortality is age-only), which is
    precisely why the *data* concept must be chosen deliberately — the model
    cannot bridge them.
-2. *Internal impossibility.* The same construction family produced the M5
-   median target `old_total_estate_wealth_to_annual_income_median_7684 =
-   6.50` (PSID). A p90 target of 4.53 sits **below the median target of the
-   same distribution**. No distribution satisfies p90 < p50. The ledger avoids
-   literal contradiction only because it dropped the median row; the running
-   diagnostic will therefore try to crush the entire estate distribution
-   (median well below 6.5) to chase p90 = 4.53, fighting the bequest-flow row
-   and beta row as it goes. Predicted symptoms in the collector: theta1 at a
-   bound and/or large opposing residuals across rows 1–3.
+2. *Model-analogue order constraint (framing corrected in the revision).*
+   As data, 4.53 and the PSID median 6.50 are NOT mutually contradictory:
+   they come from different samples and concepts (single-decedent estates at
+   death vs living 76–84 households) under different normalizations. The
+   bite is entirely model-side: both targets are assigned to one and the
+   same model statistic family — quantiles of the living-76–84 own-income
+   wealth ratio — and within that family p90 >= p50 holds identically. So
+   the 4.53 target is unreachable by construction whenever the median
+   analogue stays anywhere near its previously targeted (and E2-delivered)
+   6.5, and chasing it means crushing the whole model estate distribution
+   against the bequest-flow and beta rows. Predicted symptoms in the
+   collector: theta1 at a bound and/or large opposing residuals across rows
+   1–3. The root cause is the population/normalization mismatch of item 1 —
+   the model analogue erases a distinction the two data numbers depend on —
+   not any inconsistency in the data themselves.
 3. *Denominator convention.* The model divides by own annual gross income
    (retirement branch, transfer-inclusive) at 76–84; DNY normalize by economy
    income. Retiree own-income denominators inflate the model ratio relative
@@ -208,18 +233,26 @@ Row-specific issues:
 
 ### Block C: children and housing needs
 
-- **h_bar_jump <-> first-child rooms response 0.664.** The event-study
-  analogue is genuinely an event study (pre at the birth age, post 12 years
-  later, birth-cohort mass-weighted) — good. Two verification items: the
-  cohort includes direct parity-2+ entrants (the one-child-only variant
-  exists but is not the target row), and the empirical PSID event-study
-  horizon must match the model's t+3 (12-year) window; if the data moment is
-  a shorter-horizon response, the analogue overstates adjustment time. Also
-  note the mapping is triangular, not one-to-one: the parity-1 committed-
-  rooms increment is `h_bar_jump + h_bar_n`, so this row identifies the sum,
-  and the next row identifies `h_bar_n`; `h_bar_jump` is the residual. Fine —
-  but the strategy note should say "triangular block", not two independent
-  one-to-one rows.
+- **h_bar_jump <-> first-child rooms response 0.664.** CORRECTED in the
+  revision: the active analogue is a **horizon-0 within-birth-period
+  difference-in-differences**, not a 12-year window. The Markov-income path
+  that M5 and the running diagnostic use reads
+  `event_horizon = getattr(P, "housing_event_horizon", 0)`
+  (`solver.py:4285`) and the production/M5 overrides pin it to 0
+  (`production_profile.py:22`), with an explicit code comment that the PSID
+  ~3-year post-birth controlled response lands inside the 4-year birth
+  period, so horizon 0 is the deliberate match and the no-birth control
+  reduces to the contemporaneous committed-rooms jump. The hardcoded
+  `event_horizon = 3` block an earlier draft of this note described exists
+  only in the legacy non-Markov `forward_distribution` and is inert for the
+  running system; the `_eventstudy_t3` suffix is a legacy misnomer worth
+  renaming. Remaining flags: the birth cohort pools all parity-0 exits
+  including direct 2+ entrants (`solver.py:4348`; the one-child-only variant
+  is a separate stat), and the mapping is triangular, not one-to-one: the
+  parity-1 committed-rooms increment is `h_bar_jump + h_bar_n`, so this row
+  identifies the sum, the next row identifies `h_bar_n`, and `h_bar_jump` is
+  the residual. The strategy note should say "triangular block", not two
+  independent one-to-one rows.
 - **h_bar_n <-> 3+ vs 1–2 rooms gap 0.368.** Direct and persuasive given the
   documented bin bridge (model parity 2+ maps to empirical 3+; parity 1 to
   1–2). Cross-loads with tenure composition (owners sit on discrete rungs),
@@ -375,7 +408,7 @@ pinning it is what keeps kappa_f identified (both smooth hazards).
 
 ---
 
-## 3. Proposed reconciled calibration system for the E-series
+## 3. Proposed reconciled calibration system for the E-series (proposal, not settled — see the revision note)
 
 ### 3.1 Externally estimated or fixed (never in the SMM)
 
@@ -401,9 +434,9 @@ pinning it is what keeps kappa_f identified (both smooth hazards).
 | 2 | theta0 | Annual bequest flow / aggregate wealth | 0.0088 (borrowed, Gale–Scholz; label as borrowed) | port |
 | 3 | theta1 | Estate p90/p50, living 76–84, own-income normalized | 3.448 (PSID, project-measured, SE known) | stat exists in E-package |
 | 4 | alpha0 | Childless-renter LES expenditure slope (1 - b) | b = 0.267 -> alpha0 = 0.733 (CEX) | first-stage fix or simulated auxiliary slope |
-| 5 | d_jump | First-child rooms event-study response (block with #6) | 0.664 (PSID) | exists; verify horizon match |
-| 6 | d_a | Rooms gap, 3+ vs 1–2 children, ages 30–55 | 0.368 (data) | exists |
-| 7 | gamma_e | Conditional consumption increment, 0 vs 1–2-children bin, income-controlled, identical model replication | rebuild from CEX (parity-binned; ~0.065–0.075 4-yr units, to be measured) | new data + model moment |
+| 5 | d_jump | First-child rooms response, horizon-0 diff-in-diff (block with #6) | 0.664 (PSID) | exists; active path matches the PSID window by construction |
+| 6 | d_a | Rooms gap, top family-size bin vs parity-1 bin, ages 30–55 (bin labels pending the Section-3.5 units decision) | 0.368 (data) | exists |
+| 7 | gamma_e | Conditional consumption increment on the model's family-size bins, income-controlled, identical model replication | **TBD — must be re-estimated from the CEX on the chosen bin convention (A2); no number is adopted here** | new data + model moment |
 | 8 | psi | Completed-fertility equivalent (2x mean parity) | 1.918 | exists |
 | 9 | kappa_f | Completed childlessness | 0.188 | exists |
 | 10 | chi | Ownership rate, ages 30–55 | 0.5755 | exists |
@@ -419,12 +452,21 @@ count is 12/12 with every external restriction named.
 
 - **CEX evidence.** Slope -> alpha0. Intercept and price coefficient ->
   specification test, never a target. Child consumption increment ->
-  gamma_e, parity-binned, identically replicated. This is the requested
-  answer to "how should the CEX child-cost evidence identify the
-  equivalence-scale parameters": the *allocation* evidence (rooms) identifies
-  the share tilt, the *level* evidence (conditional consumption increment)
-  identifies the scale, and the *nonhomotheticity* evidence (intercept,
-  price coefficient) is the test the specification is allowed to fail.
+  gamma_e, on the model's family-size bins, identically replicated. This is
+  the proposed answer to "how should the CEX child-cost evidence identify
+  the equivalence-scale parameters": the *allocation* evidence (rooms)
+  identifies the share tilt, the *level* evidence (conditional consumption
+  increment) identifies the scale, and the *nonhomotheticity* evidence
+  (intercept, price coefficient) is the test the specification is allowed to
+  fail. Stated honestly, the rooms->deltas / increment->gamma_e assignment
+  is a **conjectured primary loading inside a jointly identified 3x3
+  block**, not an established one-to-one map: the increment coefficient also
+  absorbs the share tilt, the saving response, housing adjustment, and
+  fertility selection into parenthood. The assignment is adopted only
+  conditional on (i) the identical simulated auxiliary regression (B2) and
+  (ii) the T5 Jacobian confirming the block's loading pattern; if the
+  Jacobian shows the increment loading mainly on the deltas, the block is
+  re-blocked rather than relabeled.
 - **Fertility moments for a sequential architecture.** Keep the two stocks
   (TFR-equivalent, childlessness) as the hard pair: the sequential model
   still determines them, and psi/kappa_f remain the level/dispersion
@@ -478,11 +520,61 @@ the full battery above vs NCHS/NSFG/PSID counterparts (data pass pending).
 4. **Borrowed saving targets under honest risk.** 6.90 may be unreachable
    (E2 untargeted wealth/income 2.40); watch beta at bound in any run and
    remeasure the target properly before paper use.
-5. **Units bridge.** All per-"child" parameters are per parity state
-   (parity 1 = empirical 1–2 children; TFR = 2x parity). State once,
-   prominently; it changes the gamma_e/OECD comparison (0.20 per parity is
-   ~0.12–0.13 per child, below the OECD-modified 0.3 per child — the
-   spec-note corroboration claim is overstated as written).
+5. **Fertility units are unresolved and gate rows 5–9 of the table.**
+   (Expanded in the revision; this is a decision, not a footnote.)
+
+   *The fact pattern.* The E-package inherits `"tfr": 2.0 *
+   mean_completed_fertility` unchanged (`calibration.py:1276-1287`,
+   `n_parity = 3`), and E2's collected tfr = 1.981 = 2 x 0.9905 confirms it
+   is live. Under the one-shot model the x2 could be read as a bin bridge
+   (parity 1 ~ the empirical 1–2-children family, parity 2+ ~ 3+), because a
+   childless household could jump directly to the top bin. Under the
+   sequential architecture, parity increments are **literal single births by
+   construction** — the first attempt lands at parity 1, the second attempt
+   moves 1 -> 2 — and the design notes speak of literal first and second
+   births. The code's flow bookkeeping is literal too (births are counted
+   parity-weighted, no doubling), while the headline fertility moment
+   doubles. These two conventions cannot both be right.
+
+   *The arithmetic that forces a decision.* Under the literal reading with
+   the current cap (parity <= 2), dropping the x2 makes the completed-
+   fertility target unreachable: with childlessness 0.188, max mean parity =
+   2 x 0.812 = 1.624 < 1.918. So there are exactly two coherent options:
+
+   **Option B (bins, no code change).** Declare parity 1 = empirical 1–2
+   children, parity 2 = 3+. Then tfr = 2p1 + 4p2 is an approximate
+   births-per-household bridge (E2: 1.98, target 1.918); first-birth timing
+   moments stay valid (entering parenthood is a literal first birth under
+   both readings), and the rooms-gap row keeps its current empirical bins.
+   The cost: the model's "second-birth" margin is empirically the
+   progression from the 1–2 bin to 3+, i.e. a THIRD child. The flow PP
+   "1->2" (E2: 0.285) must then be validated against the data 1–2 -> 3+
+   progression (roughly 0.3 in completed CPS-type distributions), NOT the
+   literal second-birth progression (roughly 0.8) — coincidentally, 0.285
+   sits near the former and would be a catastrophic miss against the
+   latter, which is itself weak evidence the model currently behaves like
+   the bin reading. All per-parity parameters (gamma_e, delta_a, psi) are
+   per bin, and the spec note's "gamma_e = 0.203 reproduces the OECD child
+   weight" claim is overstated: per actual child it is ~0.12–0.13 against
+   the OECD-modified 0.3.
+
+   **Option L4 (literal, extend parity to 0/1/2/3+).** Drop the x2; target
+   completed fertility = mean parity directly (feasible with a 3+ state);
+   the second-birth margin, PP 1->2 (~0.8), spacing, and the tempo/quantum
+   narrative all become literal and usable as advertised in the design
+   notes. Cost: one more parity state (~+33% on that state dimension), a
+   third attempt margin with a fert3 side channel, KFE splits, and
+   re-measured child-binned moments. Unlike the costed v2 redesign this
+   does NOT require per-child age tracking — parity is already a state
+   dimension and the youngest-child clock approximation carries over.
+
+   *Recommendation.* Option B for the next diagnostic round (zero code
+   change, but relabel the second-attempt objects and remap PP validation
+   to the 3+ progression); Option L4 for the paper if second-birth timing
+   is to carry the tempo/quantum story the sequential design notes promise.
+   The literal-cap-2-without-doubling reading is arithmetically excluded.
+   Until this is decided, the bin definitions in rows 5–9 and every timing
+   moment's data counterpart are provisional.
 
 ---
 
@@ -492,10 +584,11 @@ the full battery above vs NCHS/NSFG/PSID counterparts (data pass pending).
 
 A1. Freeze this reconciled contract as the E-series target-system spec:
     names, definitions, parity-bin conventions, the 2x bridge, weight rule.
-A2. CEX: rebuild the child-cost moment parity-binned (0 vs 1–2, and 1–2 vs
-    3+ as a second read), income/age/rooms/tenure-controlled, in model units
-    with the documented income normalization; bootstrap SEs; keep the
-    per-child linear slope as robustness. Driver:
+A2. CEX: rebuild the child-cost moment on the family-size bins chosen in A8
+    (both binned reads: first bin vs childless, top bin vs first bin),
+    income/age/rooms/tenure-controlled, in model units with the documented
+    income normalization; bootstrap SEs; keep the per-child linear slope as
+    robustness. No target number exists until this runs. Driver:
     `code/data/cex_child_cost/build_child_cost_target.R` (extend, do not
     overwrite).
 A3. PSID tenure: re-run `build_tenure_residual_variance.R` with model-
@@ -514,6 +607,11 @@ A7. Saving-block provenance: either keep DNY values explicitly labeled
     borrowed, or remeasure wealth/after-tax-earnings (FoF B.101 net worth /
     NIPA compensation net of taxes) and bequest-flow (literature survey) —
     decide before the paper system, not before the next diagnostic.
+A8. Fertility-units decision memo (gates A2, A6, and rows 5–9): choose
+    Option B (bins) vs Option L4 (literal 0/1/2/3+) per Section 3.5 risk 5;
+    if L4, scope the `n_parity = 4` extension (state-dimension growth, third
+    attempt margin and fert3 side channel, KFE splits, re-measured binned
+    moments) before any model edit.
 
 ### Phase B — model code (E-package only; production untouched)
 
