@@ -41,6 +41,31 @@ with zero infeasible or failed cases. The production array is `14583185_[1-8]`
 reserve per chain), with dependent collector `14583195`. Live output is
 `$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
+## July 22 night: strict-seeded one-shot overnight battery queued
+
+The exact continuation path, including loading the preceding collector's
+strict winner and validating its target fingerprint and `theta_n=0`
+restriction, passed a 15/15-evaluation Torch smoke (`14594177`) with zero
+infeasible or failed cases. Torch rejects CPU jobs longer than 3:55, so the
+overnight search is two dependency-linked waves rather than one invalid
+eight-hour job. The complete chain is: current three-hour collector `14583195`
+-> wave 1 `14595361_[1-8]` -> strict collector `14595362` -> wave 2
+`14595363_[1-8]` -> final strict collector `14595368`. Wave 2 reads wave 1's
+collected `results.json`; it does not restart from the original seed. An
+upstream collector failure prevents the next wave from starting.
+
+Each wave has eight one-CPU chains, alternating transformed Nelder--Mead and
+coordinate-pattern searches over predeclared fine-to-medium neighborhoods.
+Each chain has 215 search minutes, a 10-minute reserve for two exact strict
+winner repeats, a 4,000-evaluation cap, a minimum transformed step of
+`0.00010`, and a per-evaluation checkpoint. Live throughput in the current
+three-hour array is about eight seconds per candidate, implying capacity for
+roughly 25,000 candidate evaluations across both overnight waves before early
+convergence or caps. Outputs are under
+`output/model/intergen_new_moment_overnight_20260722_wave1/` and
+`output/model/intergen_new_moment_overnight_20260722_wave2/` on Torch scratch;
+only the final twice-repeated strict collection is eligible for interpretation.
+
 ## July 22 late night: overnight battery queued (E3 chain + family-gap scan)
 
 The whole battery is Slurm-dependency-driven; no local machine is needed

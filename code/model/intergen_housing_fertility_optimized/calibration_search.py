@@ -140,6 +140,51 @@ def unit_from_theta(theta: dict[str, float]) -> np.ndarray:
     return np.clip(np.asarray(unit, dtype=float), 0.0, 1.0)
 
 
+def load_start_theta(
+    path: Path,
+    *,
+    expected_target_fingerprint: str | None = None,
+) -> dict[str, float]:
+    """Load a bounded continuation seed from a checkpoint or collector result."""
+
+    payload = json.loads(path.read_text())
+    metadata = payload.get("metadata") if isinstance(payload.get("metadata"), dict) else {}
+    fingerprint = payload.get("target_fingerprint") or metadata.get("target_fingerprint")
+    if expected_target_fingerprint is not None:
+        if fingerprint is None:
+            raise ValueError("continuation seed does not declare a target fingerprint")
+        if str(fingerprint) != str(expected_target_fingerprint):
+            raise ValueError("continuation seed target fingerprint does not match the active profile")
+    candidates = [
+        payload.get("theta"),
+        (payload.get("selected") or {}).get("theta"),
+        (payload.get("best_tight") or {}).get("theta"),
+        (payload.get("best") or {}).get("theta"),
+    ]
+    raw = next((candidate for candidate in candidates if isinstance(candidate, dict)), None)
+    if raw is None:
+        raise ValueError(f"no theta object found in continuation seed {path}")
+    theta = {str(name): float(value) for name, value in raw.items()}
+    missing = [
+        "beta" if name == "beta_annual" else name
+        for name, _lower, _upper, _kind in DOMAIN
+        if ("beta" if name == "beta_annual" else name) not in theta
+    ]
+    if missing:
+        raise ValueError(f"continuation seed is missing free parameters: {missing}")
+    if not math.isclose(float(theta.get("theta_n", 0.0)), 0.0, abs_tol=1e-15):
+        raise ValueError("continuation seed violates the external restriction theta_n=0")
+    theta["theta_n"] = 0.0
+    for name, lower, upper, _kind in DOMAIN:
+        key = "beta" if name == "beta_annual" else name
+        value = float(theta[key]) ** (1.0 / PERIOD_YEARS) if name == "beta_annual" else float(theta[key])
+        if value < float(lower) - 1e-12 or value > float(upper) + 1e-12:
+            raise ValueError(
+                f"continuation seed parameter {name}={value} is outside [{lower}, {upper}]"
+            )
+    return theta
+
+
 def parameter_rows(theta: dict[str, float]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for name, lower, upper, kind in DOMAIN:
@@ -206,6 +251,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--initial-step", type=float, default=0.015)
     parser.add_argument("--minimum-step", type=float, default=2.5e-4)
     parser.add_argument("--start-mix", type=float, default=0.0)
+    parser.add_argument(
+        "--start-theta-json",
+        type=Path,
+        default=None,
+        help="Checkpoint or collector JSON whose theta seeds this continuation.",
+    )
     parser.add_argument("--smoke", action="store_true")
     return parser.parse_args()
 
@@ -232,6 +283,11 @@ def main() -> None:
         seed_theta = NEW_MOMENT_SEED
         override_factory = new_moment_overrides
         run_status = "provisional_joint_new_moment_calibration"
+    if args.start_theta_json is not None:
+        seed_theta = load_start_theta(
+            args.start_theta_json,
+            expected_target_fingerprint=target_system.fingerprint,
+        )
     rng = np.random.default_rng(int(args.seed))
     seed_unit = unit_from_theta(seed_theta)
     start_mix = float(np.clip(args.start_mix, 0.0, 0.25))
@@ -268,6 +324,10 @@ def main() -> None:
         ),
         "method": args.method,
         "seed": int(args.seed),
+        "start_theta_json": (
+            str(args.start_theta_json.resolve()) if args.start_theta_json is not None else None
+        ),
+        "start_theta": jsonable(seed_theta),
         "start_mix": start_mix,
         "initial_step": float(args.initial_step),
         "minimum_step": float(args.minimum_step),

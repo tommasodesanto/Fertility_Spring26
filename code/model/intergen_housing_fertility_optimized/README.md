@@ -79,6 +79,16 @@ matched PSID four-year tenure Brier score on simulated households. A local
 one-shot calibration profile, not a replacement for M5 until a strict winner
 is collected and reviewed.
 
+The dependent overnight continuation uses
+`cluster/submit_overnight_new_moment_battery.sh` and
+`cluster/submit_overnight_new_moment_collector.sh`. It requires the preceding
+collector's `results.json`, verifies the target fingerprint and external
+restriction, explores eight fine-to-medium neighborhoods around that strict
+winner, checkpoints every case, and performs two new strict repeats per chain.
+Because Torch caps `cpu_short` jobs at 3:55, an overnight battery is two
+dependent 3:55 waves with a strict collector between them; wave 2 starts from
+wave 1's collected strict winner rather than rerunning the original seed.
+
 ## Inherited model documentation
 
 This package is the new one-market quantitative implementation for the
