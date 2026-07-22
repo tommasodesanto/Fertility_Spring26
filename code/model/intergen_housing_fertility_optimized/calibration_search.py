@@ -36,6 +36,7 @@ from .m5_profile import (
 )
 from .new_moment_profile import (
     NEW_MOMENT_PROFILE_NAME,
+    NEW_MOMENT_PROFILE_RUNNABLE,
     NEW_MOMENT_SEED,
     new_moment_overrides,
     new_moment_target_system,
@@ -66,6 +67,11 @@ DOMAIN: tuple[tuple[str, float, float, str], ...] = (
 
 
 def validate_contract(profile: str = "m5") -> None:
+    if profile == "new-moments" and not NEW_MOMENT_PROFILE_RUNNABLE:
+        raise RuntimeError(
+            "new-moments is disabled until its empirical auxiliaries and "
+            "identification gates pass"
+        )
     declared = tuple((name, lower, upper) for name, lower, upper, _ in DOMAIN)
     if declared != FREE_PARAMETER_BOUNDS:
         raise RuntimeError("calibration search domain differs from the promotion contract")

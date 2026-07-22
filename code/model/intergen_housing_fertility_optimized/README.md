@@ -67,13 +67,17 @@ The bounded six-hour continuation workflow is documented in
 uses recoverable one-CPU Torch chains, and promotes only twice-repeated strict
 winners; loose search losses are never compared with canonical M5.
 
-For the July 22 provisional identifying ledger, `calibration_search.py` also
-accepts `--profile new-moments`. The corresponding contract is isolated in
-`new_moment_profile.py`; the three-hour Torch launchers are
+The invalid July 22 draft ledger is retained in the status history, but the
+current `new_moment_profile.py` no longer equates CEX estimates with structural
+parameters. It reproduces four model-feasible CEX auxiliary regressions and a
+matched PSID four-year tenure Brier score on simulated households. A local
+29-solve transformed-coordinate audit is finite and full rank 14/14
+(condition number 858); the packet is under
+`output/model/intergen_new_moment_jacobian_20260722/full/`. The three-hour Torch launchers are
 `cluster/submit_three_hour_new_moments.sh` and
-`cluster/submit_three_hour_new_moment_collector.sh`. This is a diagnostic
-objective with relative-gap weights and a state-conditional tenure analogue,
-not a replacement for the M5 paper calibration.
+`cluster/submit_three_hour_new_moment_collector.sh`. This is a provisional
+one-shot calibration profile, not a replacement for M5 until a strict winner
+is collected and reviewed.
 
 ## Inherited model documentation
 

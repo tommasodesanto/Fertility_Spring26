@@ -1495,7 +1495,8 @@ def solve_markov_income_at_prices(
     t_bellman = time.perf_counter() - t0
     t0 = time.perf_counter()
     g, stats = forward_distribution_markov_income(
-        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
+        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD,
+        fast_stats=fast_stats, tenure_probs=tp, c_pol=c_pol
     )
     t_dist = time.perf_counter() - t0
     if fast_stats:
@@ -1549,6 +1550,7 @@ def upgrade_fast_markov_solution(
         SD,
         fast_stats=False,
         tenure_probs=tp,
+        c_pol=c_pol,
     )
     distribution_time = time.perf_counter() - start
     solution = pack_solution_markov_income(
@@ -4232,6 +4234,7 @@ def forward_distribution_markov_income(
     SD: SimpleNamespace,
     fast_stats: bool = False,
     tenure_probs: np.ndarray | None = None,
+    c_pol: np.ndarray | None = None,
 ) -> tuple[np.ndarray, SimpleNamespace]:
     J = P.J
     I = P.I
@@ -4638,12 +4641,20 @@ def forward_distribution_markov_income(
             p_hat,
             hR_pol,
             asset_g=asset_current,
+            c_pol=c_pol,
         )
         stats.four_year_tenure_residual_variance = markov_tenure_residual_variance(
             g,
             tenure_choice,
             tenure_probs,
             P,
+        )
+        stats.model_feasible_four_year_tenure_brier = markov_model_feasible_tenure_brier(
+            g,
+            tenure_choice,
+            tenure_probs,
+            P,
+            b_grid,
         )
     grant_recipient_mass, grant_outlays = markov_grant_outlays(
         g,
@@ -5350,6 +5361,7 @@ def compute_markov_statistics(
     ph: np.ndarray,
     hR: np.ndarray,
     asset_g: np.ndarray | None = None,
+    c_pol: np.ndarray | None = None,
 ) -> SimpleNamespace:
     z_grid, z_weights, Pi_z = income_transition_values(P)
     asset_dist = g if asset_g is None else np.asarray(asset_g, dtype=float)
@@ -5370,6 +5382,8 @@ def compute_markov_statistics(
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
     add_aggregate_wealth_bequest_flow_moments(stats, asset_dist, P, bg, ph)
+    if c_pol is not None:
+        add_one_shot_cex_auxiliary_moments(stats, g, c_pol, hR, P, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
     if float(getattr(P, "retirement_income_z_scale", 0.0)) != 0.0:
         add_old_wealth_income_moments(stats, asset_dist, P, bg, ph)
@@ -5436,6 +5450,180 @@ def compute_markov_statistics(
     return stats
 
 
+def _weighted_ols(y: np.ndarray, x: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """Deterministic population-weighted least squares with a rank check."""
+
+    y_arr = np.asarray(y, dtype=float).reshape(-1)
+    x_arr = np.asarray(x, dtype=float)
+    w_arr = np.asarray(weights, dtype=float).reshape(-1)
+    keep = (
+        np.isfinite(y_arr)
+        & np.isfinite(w_arr)
+        & (w_arr > 0.0)
+        & np.all(np.isfinite(x_arr), axis=1)
+    )
+    y_arr, x_arr, w_arr = y_arr[keep], x_arr[keep], w_arr[keep]
+    if y_arr.size == 0:
+        return np.full(x_arr.shape[1], np.nan)
+    root_w = np.sqrt(w_arr)
+    design = x_arr * root_w[:, None]
+    outcome = y_arr * root_w
+    coefficients, _, rank, _ = np.linalg.lstsq(design, outcome, rcond=None)
+    if rank != design.shape[1]:
+        raise ValueError(
+            f"weighted auxiliary regression is rank deficient: {rank}/{design.shape[1]}"
+        )
+    return coefficients
+
+
+def add_one_shot_cex_auxiliary_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    c_pol: np.ndarray,
+    hR: np.ndarray,
+    P: SimpleNamespace,
+    ph: np.ndarray,
+) -> None:
+    """Replicate the model-feasible CEX auxiliaries on the model population.
+
+    The childless-renter block uses ages 30--55, weighted 1st/99th percentile
+    trims of allocatable expenditure and rent expenditure, and a weighted
+    regression of rent expenditure on allocatable expenditure. The child-cost
+    block uses ages 25--55, the one-shot 0/1--2/3+ parity index, the same
+    weighted consumption trim, and controls for rooms, income, age, and owner
+    status. All outcomes are model policies, not structural parameter values.
+    """
+
+    g_arr = np.asarray(g, dtype=float)
+    c_arr = np.asarray(c_pol, dtype=float)
+    h_arr = np.asarray(hR, dtype=float)
+    if g_arr.ndim != 7 or c_arr.shape != g_arr.shape or h_arr.shape != g_arr.shape:
+        raise ValueError("CEX auxiliary moments require aligned Markov distributions and policies")
+    z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    rental_price = float(P.user_cost_rate) * np.asarray(ph, dtype=float).reshape(-1)
+    dep_last = int(P.n_child_stages)
+
+    les_x: list[np.ndarray] = []
+    les_rent: list[np.ndarray] = []
+    les_rooms: list[np.ndarray] = []
+    les_weights: list[np.ndarray] = []
+    child_c: list[np.ndarray] = []
+    child_parity: list[np.ndarray] = []
+    child_rooms: list[np.ndarray] = []
+    child_income: list[np.ndarray] = []
+    child_age: list[np.ndarray] = []
+    child_owner: list[np.ndarray] = []
+    child_weights: list[np.ndarray] = []
+
+    for j in range(int(P.J)):
+        age = float(P.age_start) + j * float(P.da)
+        in_les = 30.0 <= age <= 55.0
+        in_child = 25.0 <= age <= 55.0
+        if not (in_les or in_child):
+            continue
+        for i in range(int(P.I)):
+            for zz, z_value in enumerate(z_values):
+                income = income_at_state(P, i, j, float(z_value))
+                if not np.isfinite(income) or income <= 0.0:
+                    continue
+                for nn in range(int(P.n_parity)):
+                    for cs in range(int(P.n_child_states)):
+                        child_bin = current_child_bin_dt(nn, cs, dep_last)
+                        if in_les and child_bin == 2:
+                            weight = g_arr[:, 0, i, j, zz, nn, cs]
+                            consumption = c_arr[:, 0, i, j, zz, nn, cs]
+                            rooms = h_arr[:, 0, i, j, zz, nn, cs]
+                            rent = rental_price[i] * rooms
+                            allocatable = consumption + rent
+                            keep = (
+                                (weight > 0.0)
+                                & np.isfinite(consumption)
+                                & (consumption > 0.0)
+                                & np.isfinite(rooms)
+                                & (rooms > 0.0)
+                                & np.isfinite(allocatable)
+                                & (allocatable > 0.0)
+                                & (rent > 0.0)
+                            )
+                            if np.any(keep):
+                                les_x.append(allocatable[keep])
+                                les_rent.append(rent[keep])
+                                les_rooms.append(rooms[keep])
+                                les_weights.append(weight[keep])
+                        if in_child:
+                            active_parity = 0 if child_bin == 2 else 1 if child_bin == 3 else 2
+                            for tenure in range(g_arr.shape[1]):
+                                weight = g_arr[:, tenure, i, j, zz, nn, cs]
+                                consumption = c_arr[:, tenure, i, j, zz, nn, cs]
+                                rooms = (
+                                    h_arr[:, tenure, i, j, zz, nn, cs]
+                                    if tenure == 0
+                                    else np.full(g_arr.shape[0], float(P.H_own[tenure - 1]))
+                                )
+                                keep = (
+                                    (weight > 0.0)
+                                    & np.isfinite(consumption)
+                                    & (consumption > 0.0)
+                                    & np.isfinite(rooms)
+                                    & (rooms > 0.0)
+                                )
+                                if np.any(keep):
+                                    count = int(np.count_nonzero(keep))
+                                    child_c.append(consumption[keep])
+                                    child_parity.append(np.full(count, float(active_parity)))
+                                    child_rooms.append(rooms[keep])
+                                    child_income.append(np.full(count, income))
+                                    child_age.append(np.full(count, age))
+                                    child_owner.append(np.full(count, float(tenure > 0)))
+                                    child_weights.append(weight[keep])
+
+    if not les_x or not child_c:
+        raise ValueError("model population has no observations for the matched CEX auxiliaries")
+
+    x = np.concatenate(les_x)
+    rent = np.concatenate(les_rent)
+    rooms = np.concatenate(les_rooms)
+    weight = np.concatenate(les_weights)
+    x_lo, x_hi = weighted_quantile(x, weight, np.array([0.01, 0.99]))
+    r_lo, r_hi = weighted_quantile(rent, weight, np.array([0.01, 0.99]))
+    keep = (x >= x_lo) & (x <= x_hi) & (rent >= r_lo) & (rent <= r_hi)
+    les_coefficients = _weighted_ols(
+        rent[keep], np.column_stack([np.ones(np.count_nonzero(keep)), x[keep]]), weight[keep]
+    )
+    low_cutoff = weighted_quantile(x[keep], weight[keep], 0.20)
+    low = keep & (x <= low_cutoff)
+    stats.childless_renter_rent_expenditure_slope = float(les_coefficients[1])
+    stats.childless_renter_intercept_at_mean_price_model_units = float(les_coefficients[0])
+    stats.bottom_quintile_childless_renter_mean_rooms = float(
+        np.sum(weight[low] * rooms[low]) / max(np.sum(weight[low]), 1e-12)
+    )
+
+    consumption = np.concatenate(child_c)
+    parity = np.concatenate(child_parity)
+    rooms_all = np.concatenate(child_rooms)
+    income = np.concatenate(child_income)
+    age = np.concatenate(child_age)
+    owner = np.concatenate(child_owner)
+    weight_all = np.concatenate(child_weights)
+    c_lo, c_hi = weighted_quantile(consumption, weight_all, np.array([0.01, 0.99]))
+    keep = (consumption >= c_lo) & (consumption <= c_hi)
+    log_income = np.log(income[keep])
+    design = np.column_stack(
+        [
+            np.ones(np.count_nonzero(keep)),
+            parity[keep],
+            rooms_all[keep],
+            log_income,
+            log_income**2,
+            age[keep],
+            age[keep] ** 2,
+            owner[keep],
+        ]
+    )
+    child_coefficients = _weighted_ols(consumption[keep], design, weight_all[keep])
+    stats.one_shot_parity_consumption_coefficient = float(child_coefficients[1])
+
+
 def markov_tenure_residual_variance(
     g: np.ndarray,
     tenure_choice: np.ndarray,
@@ -5471,6 +5659,145 @@ def markov_tenure_residual_variance(
         mass_total += float(np.sum(mass))
         variance_total += float(np.sum(mass * owner_probability * (1.0 - owner_probability)))
     return variance_total / max(mass_total, 1e-12)
+
+
+def _weighted_fractional_logit(
+    outcome_probability: np.ndarray,
+    design: np.ndarray,
+    weights: np.ndarray,
+) -> np.ndarray:
+    """Population-weighted logit for fractional Bernoulli outcomes."""
+
+    y = np.asarray(outcome_probability, dtype=float).reshape(-1)
+    x = np.asarray(design, dtype=float)
+    w = np.asarray(weights, dtype=float).reshape(-1)
+    keep = (
+        np.isfinite(y)
+        & np.isfinite(w)
+        & (w > 0.0)
+        & (y >= 0.0)
+        & (y <= 1.0)
+        & np.all(np.isfinite(x), axis=1)
+    )
+    y, x, w = y[keep], x[keep], w[keep]
+    if y.size == 0:
+        return np.full(x.shape[1], np.nan)
+    beta = np.zeros(x.shape[1])
+    mean_y = float(np.sum(w * y) / np.sum(w))
+    beta[0] = math.log(np.clip(mean_y, 1e-8, 1.0 - 1e-8) / np.clip(1.0 - mean_y, 1e-8, 1.0))
+    ridge = 1e-10 * np.eye(x.shape[1])
+    for _ in range(80):
+        eta = np.clip(x @ beta, -35.0, 35.0)
+        fitted = 1.0 / (1.0 + np.exp(-eta))
+        score = x.T @ (w * (y - fitted))
+        curvature = w * np.maximum(fitted * (1.0 - fitted), 1e-10)
+        information = x.T @ (curvature[:, None] * x) + ridge
+        step = np.linalg.lstsq(information, score, rcond=None)[0]
+        beta += step
+        if float(np.max(np.abs(step))) < 1e-10:
+            break
+    return beta
+
+
+def markov_model_feasible_tenure_brier(
+    g: np.ndarray,
+    tenure_choice: np.ndarray,
+    tenure_probs: np.ndarray | None,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+) -> float:
+    """Matched PSID auxiliary Brier score using model-observable covariates.
+
+    The population logit uses current ownership, income, age, liquid
+    wealth/income, and the one-shot 0/1--2/3+ current-child index. Its outcome
+    is ownership at the next four-year decision. The returned expected Brier
+    integrates both Bernoulli choice variance and auxiliary approximation error.
+    """
+
+    if int(P.I) != 1:
+        raise ValueError("matched tenure Brier currently requires the one-market model")
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    dep_last = int(P.n_child_stages)
+    outcomes: list[np.ndarray] = []
+    weights: list[np.ndarray] = []
+    current_own: list[np.ndarray] = []
+    incomes: list[np.ndarray] = []
+    ages: list[np.ndarray] = []
+    liquid_ratios: list[np.ndarray] = []
+    parity_one: list[np.ndarray] = []
+    parity_two: list[np.ndarray] = []
+    for j in range(int(P.J) - 1):
+        age = float(P.age_start) + j * float(P.da)
+        if not 25.0 <= age <= 55.0:
+            continue
+        for zz, z_value in enumerate(z_values):
+            income = income_at_state(P, 0, j, float(z_value))
+            if not np.isfinite(income) or income <= 0.0:
+                continue
+            for tenure in range(g.shape[1]):
+                for nn in range(int(P.n_parity)):
+                    for cs in range(int(P.n_child_states)):
+                        mass = np.asarray(g[:, tenure, 0, j, zz, nn, cs], dtype=float)
+                        keep = np.isfinite(mass) & (mass > 0.0)
+                        if not np.any(keep):
+                            continue
+                        if tenure_probs is None:
+                            probability = (
+                                np.asarray(
+                                    tenure_choice[:, tenure, 0, j, zz, nn, cs], dtype=int
+                                ) > 0
+                            ).astype(float)
+                        else:
+                            probability = np.sum(
+                                np.asarray(
+                                    tenure_probs[:, tenure, 0, j, zz, nn, cs, 1:],
+                                    dtype=float,
+                                ),
+                                axis=-1,
+                            )
+                        child_bin = current_child_bin_dt(nn, cs, dep_last)
+                        parity_index = 0 if child_bin == 2 else 1 if child_bin == 3 else 2
+                        count = int(np.count_nonzero(keep))
+                        outcomes.append(probability[keep])
+                        weights.append(mass[keep])
+                        current_own.append(np.full(count, float(tenure > 0)))
+                        incomes.append(np.full(count, income))
+                        ages.append(np.full(count, age))
+                        liquid_ratios.append(bg_arr[keep] / income)
+                        parity_one.append(np.full(count, float(parity_index == 1)))
+                        parity_two.append(np.full(count, float(parity_index == 2)))
+    if not outcomes:
+        raise ValueError("model population has no observations for the matched tenure auxiliary")
+    y = np.concatenate(outcomes)
+    w = np.concatenate(weights)
+    own = np.concatenate(current_own)
+    income = np.concatenate(incomes)
+    age = np.concatenate(ages)
+    liquid = np.concatenate(liquid_ratios)
+    p1 = np.concatenate(parity_one)
+    p2 = np.concatenate(parity_two)
+    liquid_lo, liquid_hi = weighted_quantile(liquid, w, np.array([0.01, 0.99]))
+    liquid = np.clip(liquid, liquid_lo, liquid_hi)
+    log_income = np.log(income)
+    design = np.column_stack(
+        [
+            np.ones(y.size),
+            own,
+            log_income,
+            log_income**2,
+            age,
+            age**2,
+            liquid,
+            liquid**2,
+            p1,
+            p2,
+        ]
+    )
+    coefficients = _weighted_fractional_logit(y, design, w)
+    fitted = 1.0 / (1.0 + np.exp(-np.clip(design @ coefficients, -35.0, 35.0)))
+    expected_squared_error = y * (1.0 - fitted) ** 2 + (1.0 - y) * fitted**2
+    return float(np.sum(w * expected_squared_error) / max(np.sum(w), 1e-12))
 
 
 def add_aggregate_wealth_bequest_flow_moments(

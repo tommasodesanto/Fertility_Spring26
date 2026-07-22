@@ -9,6 +9,13 @@ suppressPackageStartupMessages({
   library(sandwich)
 })
 
+weighted_quantile <- function(x, w, p) {
+  ok <- is.finite(x) & is.finite(w) & w > 0
+  x <- x[ok]; w <- w[ok]
+  ord <- order(x); x <- x[ord]; w <- w[ord]
+  x[which(cumsum(w) / sum(w) >= p)[1L]]
+}
+
 root <- normalizePath(file.path(dirname(commandArgs(trailingOnly = FALSE)[1]), "../../.."),
                       mustWork = FALSE)
 if (!dir.exists(file.path(root, "code", "data", "cex_child_cost"))) {
@@ -104,11 +111,25 @@ s <- subset(
 
 # Limit sensitivity to expenditure outliers without trimming on the outcome by
 # family type.  These are unweighted cutoffs, reported below.
+s_pretrim <- s
 trim <- quantile(s$nonhousing_nondurable_annual, c(0.01, 0.99), na.rm = TRUE)
 s <- subset(
   s,
   nonhousing_nondurable_annual >= trim[[1]] &
     nonhousing_nondurable_annual <= trim[[2]]
+)
+matched_trim <- c(
+  weighted_quantile(
+    s_pretrim$nonhousing_nondurable_annual, s_pretrim$FINLWT21, 0.01
+  ),
+  weighted_quantile(
+    s_pretrim$nonhousing_nondurable_annual, s_pretrim$FINLWT21, 0.99
+  )
+)
+s_one_shot <- subset(
+  s_pretrim,
+  nonhousing_nondurable_annual >= matched_trim[[1]] &
+    nonhousing_nondurable_annual <= matched_trim[[2]]
 )
 
 s$log_income <- log(s$FINCBTAX)
@@ -116,6 +137,15 @@ s$log_income_sq <- s$log_income^2
 s$age_sq <- s$AGE_REF^2
 s$any_child <- as.integer(s$PERSLT18 > 0)
 s$additional_children <- pmax(s$PERSLT18 - 1, 0)
+s$one_shot_parity <- ifelse(s$PERSLT18 == 0, 0,
+                            ifelse(s$PERSLT18 <= 2, 1, 2))
+s_one_shot$log_income <- log(s_one_shot$FINCBTAX)
+s_one_shot$log_income_sq <- s_one_shot$log_income^2
+s_one_shot$age_sq <- s_one_shot$AGE_REF^2
+s_one_shot$one_shot_parity <- ifelse(
+  s_one_shot$PERSLT18 == 0, 0, ifelse(s_one_shot$PERSLT18 <= 2, 1, 2)
+)
+s_one_shot$owner <- as.integer(s_one_shot$CUTENURE %in% c(1, 2))
 
 common_controls <- paste(
   "log_income + log_income_sq + AGE_REF + age_sq + adults +",
@@ -132,7 +162,12 @@ models <- list(
   linear_rooms = fit_model(paste("PERSLT18 + ROOMSQ +", common_controls)),
   first_vs_additional = fit_model(paste(
     "any_child + additional_children + ROOMSQ +", common_controls
-  ))
+  )),
+  one_shot_model_feasible = lm(
+    nonhousing_nondurable_annual ~ one_shot_parity + ROOMSQ +
+      log_income + log_income_sq + AGE_REF + age_sq + owner,
+    data = s_one_shot, weights = FINLWT21
+  )
 )
 
 extract_term <- function(model_name, term) {
@@ -155,7 +190,8 @@ results <- rbind(
   extract_term("linear_no_rooms", "PERSLT18"),
   extract_term("linear_rooms", "PERSLT18"),
   extract_term("first_vs_additional", "any_child"),
-  extract_term("first_vs_additional", "additional_children")
+  extract_term("first_vs_additional", "additional_children"),
+  extract_term("one_shot_model_feasible", "one_shot_parity")
 )
 
 weighted_mean_income <- weighted.mean(s$FINCBTAX, s$FINLWT21)
@@ -165,6 +201,12 @@ weighted_mean_consumption <- weighted.mean(
 period_years <- 4
 results$share_of_mean_income <- results$estimate_annual_dollars / weighted_mean_income
 results$model_period_units <- period_years * results$share_of_mean_income
+one_shot_row <- results$specification == "one_shot_model_feasible"
+one_shot_mean_income <- weighted.mean(s_one_shot$FINCBTAX, s_one_shot$FINLWT21)
+results$share_of_mean_income[one_shot_row] <-
+  results$estimate_annual_dollars[one_shot_row] / one_shot_mean_income
+results$model_period_units[one_shot_row] <-
+  period_years * results$share_of_mean_income[one_shot_row]
 
 sample_summary <- data.frame(
   statistic = c(
@@ -211,6 +253,11 @@ readme <- c(
   "Nonhousing nondurable expenditure equals four times quarterly total expenditure",
   "less housing, new/used/other vehicle purchases, cash contributions, and personal",
   "insurance/pension contributions. The primary pilot is `linear_rooms`.",
+  "The `one_shot_model_feasible` row instead uses the model's 0 / 1--2 / 3+",
+  "parity index and only covariates available in the one-shot model: income, age,",
+  "owner/renter tenure, and rooms. It uses weighted 1st/99th-percentile expenditure trims,",
+  "matching the deterministic model-distribution operation. This is the candidate",
+  "matched auxiliary for c_bar_n.",
   "",
   "`model_period_units` divides the annual-dollar coefficient by weighted mean annual",
   "income and multiplies by the model's four-year period length.",

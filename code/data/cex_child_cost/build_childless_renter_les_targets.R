@@ -19,6 +19,13 @@ suppressPackageStartupMessages({
   library(sandwich)
 })
 
+weighted_quantile <- function(x, w, p) {
+  ok <- is.finite(x) & is.finite(w) & w > 0
+  x <- x[ok]; w <- w[ok]
+  ord <- order(x); x <- x[ord]; w <- w[ord]
+  x[which(cumsum(w) / sum(w) >= p)[1L]]
+}
+
 root <- normalizePath(file.path(dirname(commandArgs(trailingOnly = FALSE)[1]), "../../.."),
                       mustWork = FALSE)
 if (!dir.exists(file.path(root, "code", "data", "cex_child_cost"))) {
@@ -217,12 +224,27 @@ s <- subset(
 
 # Symmetric expenditure and rent trimming is fixed before estimating all
 # specifications and is reported in the output.
+s_pretrim <- s
 trim_x <- quantile(s$allocatable_annual, c(0.01, 0.99), na.rm = TRUE)
 trim_rent <- quantile(s$rent_annual, c(0.01, 0.99), na.rm = TRUE)
 s <- subset(
   s,
   allocatable_annual >= trim_x[[1]] & allocatable_annual <= trim_x[[2]] &
     rent_annual >= trim_rent[[1]] & rent_annual <= trim_rent[[2]]
+)
+matched_trim_x <- c(
+  weighted_quantile(s_pretrim$allocatable_annual, s_pretrim$FINLWT21, 0.01),
+  weighted_quantile(s_pretrim$allocatable_annual, s_pretrim$FINLWT21, 0.99)
+)
+matched_trim_rent <- c(
+  weighted_quantile(s_pretrim$rent_annual, s_pretrim$FINLWT21, 0.01),
+  weighted_quantile(s_pretrim$rent_annual, s_pretrim$FINLWT21, 0.99)
+)
+s_one_market <- subset(
+  s_pretrim,
+  allocatable_annual >= matched_trim_x[[1]] &
+    allocatable_annual <= matched_trim_x[[2]] &
+    rent_annual >= matched_trim_rent[[1]] & rent_annual <= matched_trim_rent[[2]]
 )
 
 # Center demographic controls so the intercept in the controlled regression is
@@ -297,6 +319,51 @@ extract_model <- function(name, model) {
 }
 
 results <- do.call(rbind, Map(extract_model, names(models), models))
+
+# Model-feasible one-market auxiliary statistics. The one-market model cannot
+# reproduce the cross-geography price coefficient. We therefore retain the
+# expenditure slope, evaluate the fitted intercept at the weighted mean unit
+# rent, and replace the price coefficient with mean rooms in the bottom
+# weighted quintile of allocatable expenditure. All three are observables that
+# can be computed from model policies rather than parameter identities.
+one_market_model <- lm(
+  rent_annual ~ allocatable_annual + annual_price_per_room,
+  data = s_one_market, weights = FINLWT21
+)
+primary_cf <- coef(one_market_model)
+mean_income_primary <- weighted.mean(s_one_market$FINCBTAX, s_one_market$FINLWT21)
+mean_price_primary <- weighted.mean(
+  s_one_market$annual_price_per_room, s_one_market$FINLWT21
+)
+low_allocatable_cutoff <- weighted_quantile(
+  s_one_market$allocatable_annual, s_one_market$FINLWT21, 0.20
+)
+low_allocatable_sample <- s_one_market[
+  s_one_market$allocatable_annual <= low_allocatable_cutoff,
+]
+one_market_auxiliary <- data.frame(
+  moment = c(
+    "childless_renter_rent_expenditure_slope",
+    "childless_renter_intercept_at_mean_price_model_units",
+    "bottom_quintile_childless_renter_mean_rooms"
+  ),
+  value = c(
+    unname(primary_cf[["allocatable_annual"]]),
+    4 * (
+      unname(primary_cf[["(Intercept)"]]) +
+        unname(primary_cf[["annual_price_per_room"]]) * mean_price_primary
+    ) / mean_income_primary,
+    weighted.mean(low_allocatable_sample$ROOMSQ, low_allocatable_sample$FINLWT21)
+  ),
+  sample = c(
+    "childless cash renters ages 30-55; weighted-trim matched sample",
+    "childless cash renters ages 30-55; weighted-trim matched sample",
+    "bottom weighted allocatable-expenditure quintile of matched sample"
+  ),
+  observations = c(nobs(one_market_model), nobs(one_market_model),
+                   nrow(low_allocatable_sample)),
+  stringsAsFactors = FALSE
+)
 
 estimate_sensitivity <- function(data, name, age_lo = 30, age_hi = 55,
                                  family_rule = "one_two", consumption_q = NULL) {
@@ -398,6 +465,8 @@ write.csv(sample_sensitivities,
           file.path(output_dir, "les_sample_sensitivities.csv"), row.names = FALSE)
 write.csv(composite_sensitivities,
           file.path(output_dir, "les_composite_sensitivities.csv"), row.names = FALSE)
+write.csv(one_market_auxiliary,
+          file.path(output_dir, "one_market_auxiliary_targets.csv"), row.names = FALSE)
 
 readme <- c(
   "# CEX childless-renter LES pilot",
@@ -420,8 +489,15 @@ readme <- c(
   "The exact LES mapping is alpha_cons = 1-b, h_bar_0 = d/(1-b), and c_bar_0 = -a/b.",
   "c_bar_0_model_units converts the annual-dollar subsistence consumption estimate into",
   "four-year model units using weighted mean annual before-tax income.",
+  "For the one-market model, one_market_auxiliary_targets.csv replaces the",
+  "unavailable cross-sectional price-coefficient moment with mean rooms in the",
+  "bottom weighted quintile of allocatable expenditure. It also reports the",
+  "rent-expenditure slope and fitted intercept at the weighted mean unit rent.",
+  "The matched auxiliary applies weighted 1st/99th percentile trims so the same",
+  "deterministic operation can be applied to the model distribution;",
+  "these must be recomputed from model policies rather than copied from parameters.",
   "",
-  "This is a one-year feasibility estimate, not yet the final target. A credible final",
+  "This is a pooled-year feasibility estimate, not yet the final target. A credible final",
   "estimate should pool years, deflate expenditures, test alternative consumption composites,",
   "and verify stability of the price coefficient. The own-price specification is explicitly",
   "mechanical and is diagnostic only."

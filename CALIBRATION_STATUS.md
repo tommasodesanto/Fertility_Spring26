@@ -1,6 +1,45 @@
 # Calibration Status
 
-Updated: `2026-07-22` (provisional 14-moment diagnostic canceled as invalid; M5 remains the working calibration)
+Updated: `2026-07-22` (corrected one-shot 14-moment profile passes local identification; M5 remains the working calibration pending search review)
+
+## July 22 night: corrected one-shot 14-moment system passes the launch gate
+
+The invalid parameter-identity rows described below have been replaced with
+genuine simulated auxiliary moments. The current M5 one-shot model now
+re-estimates, on its own household distribution, three childless-renter CEX
+statistics (rent-expenditure slope, intercept at the one-market price, and
+bottom-quintile mean rooms), one model-feasible CEX 0/1--2/3+ consumption
+coefficient, and a PSID-matched four-year tenure Brier score. The data and
+model use the same age windows, weighted trims, one-shot family bins, and
+model-available controls. No structural parameter appears as a model moment.
+
+The other corrections are: the wealth denominator excludes pensions and
+transfers; the estate-tail target is the matched PSID living-age-76--84
+p90/p50 ratio `3.44811075444552`; and the tenure target is
+`0.117612603915696`, estimated with the same model-feasible covariates. The
+provisional loss remains the transparent sum of squared relative gaps.
+
+An exact-loop local audit at the inherited seed completed 29/29 equilibrium
+solves with finite moments. The transformed-coordinate 14-by-14 Jacobian has
+rank `14`, smallest/largest singular-value ratio `0.0011648`, and condition
+number `858.49`; every parameter column moves the moment system. The cleanest
+local assignments are beta to aggregate wealth/earnings, theta0 to bequest
+flow/wealth, c_bar_n to the one-shot consumption coefficient, h_bar_n to the
+3+-minus-1--2 rooms gap, psi_child to fertility, and chi to ownership. The
+estate-tail, renter, first-child-housing, childlessness-dispersion, tenure, and
+aggregate-room rows identify their assigned parameters jointly rather than
+one at a time. Audit packet:
+`output/model/intergen_new_moment_jacobian_20260722/full/`.
+
+The corrected profile is enabled for a bounded three-hour Torch search, but it
+does not replace M5 unless the collector finds two exact strict repeats and the
+complete 14-row target fit and 14-parameter table are reviewed.
+
+Cluster launch: exact-loop smoke job `14583122` completed 15/15 evaluations
+with zero infeasible or failed cases. The production array is `14583185_[1-8]`
+(eight independent chains; 160 search minutes plus a 10-minute strict-repeat
+reserve per chain), with dependent collector `14583195`. Live output is
+`$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
 ## July 22 evening: E-series reconciliation note; gated literal-parity (L4) extension implemented
 

@@ -84,11 +84,16 @@ hi <- weighted_quantile(panel$liquid_to_income, panel$weight, 0.99)
 panel[, liquid_to_income_w := pmin(pmax(liquid_to_income, lo), hi)]
 panel[, log_income := log(income)]
 panel[, children_capped := pmin(as.integer(children), 3L)]
+panel[, one_shot_parity := fifelse(children <= 0, 0L,
+                                   fifelse(children <= 2, 1L, 2L))]
 panel[, fold := as.integer(id %% 5L)]
 
 formula_aux <- own4 ~ own + log_income + I(log_income^2) + age + I(age^2) +
   liquid_to_income_w + I(liquid_to_income_w^2) + factor(children_capped) +
   married + factor(year)
+formula_model_feasible <- own4 ~ own + log_income + I(log_income^2) + age +
+  I(age^2) + liquid_to_income_w + I(liquid_to_income_w^2) +
+  factor(one_shot_parity)
 
 panel[, predicted_own4 := NA_real_]
 for (ff in 0:4) {
@@ -104,10 +109,43 @@ for (ff in 0:4) {
 }
 
 stopifnot(all(is.finite(panel$predicted_own4)))
+model_feasible_fit <- glm(
+  formula_model_feasible,
+  data = panel,
+  weights = weight,
+  family = quasibinomial(link = "logit")
+)
+panel[, predicted_own4_model_feasible := predict(
+  model_feasible_fit, newdata = panel, type = "response"
+)]
+panel[, predicted_own4_model_feasible_cf := NA_real_]
+for (ff in 0:4) {
+  fit <- glm(
+    formula_model_feasible,
+    data = panel[fold != ff],
+    weights = weight,
+    family = quasibinomial(link = "logit")
+  )
+  panel[fold == ff, predicted_own4_model_feasible_cf := predict(
+    fit, newdata = panel[fold == ff], type = "response"
+  )]
+}
+stopifnot(all(is.finite(panel$predicted_own4_model_feasible)))
+stopifnot(all(is.finite(panel$predicted_own4_model_feasible_cf)))
 panel[, squared_residual := (own4 - predicted_own4)^2]
+panel[, squared_residual_model_feasible :=
+        (own4 - predicted_own4_model_feasible)^2]
+panel[, squared_residual_model_feasible_cf :=
+        (own4 - predicted_own4_model_feasible_cf)^2]
 panel[, raw_change := (own4 - own)^2]
 
 brier <- weighted_mean_safe(panel$squared_residual, panel$weight)
+model_feasible_brier <- weighted_mean_safe(
+  panel$squared_residual_model_feasible, panel$weight
+)
+model_feasible_brier_cf <- weighted_mean_safe(
+  panel$squared_residual_model_feasible_cf, panel$weight
+)
 raw_change_mse <- weighted_mean_safe(panel$raw_change, panel$weight)
 ownership_rate <- weighted_mean_safe(panel$own4, panel$weight)
 prediction_variance <- weighted_mean_safe(
@@ -131,16 +169,21 @@ boot <- replicate(500L, {
 moments <- data.table(
   moment = c(
     "crossfitted_four_year_tenure_residual_variance",
+    "model_feasible_four_year_tenure_brier",
+    "crossfitted_model_feasible_four_year_tenure_brier",
     "four_year_current_tenure_prediction_mse",
     "ownership_rate_four_year_ahead",
     "variance_crossfitted_predicted_ownership"
   ),
-  value = c(brier, raw_change_mse, ownership_rate, prediction_variance),
-  standard_error = c(sd(boot), NA_real_, NA_real_, NA_real_),
-  ci_lower = c(unname(quantile(boot, 0.025)), NA_real_, NA_real_, NA_real_),
-  ci_upper = c(unname(quantile(boot, 0.975)), NA_real_, NA_real_, NA_real_),
+  value = c(brier, model_feasible_brier, model_feasible_brier_cf,
+            raw_change_mse, ownership_rate, prediction_variance),
+  standard_error = c(sd(boot), NA_real_, NA_real_, NA_real_, NA_real_, NA_real_),
+  ci_lower = c(unname(quantile(boot, 0.025)), rep(NA_real_, 5)),
+  ci_upper = c(unname(quantile(boot, 0.975)), rep(NA_real_, 5)),
   status = c(
     "candidate primary target for tenure_choice_kappa",
+    "matched deterministic model-feasible auxiliary target",
+    "cross-fitted robustness for model-feasible covariates",
     "benchmark: prediction using current tenure alone",
     "diagnostic; ownership level targets chi",
     "diagnostic: observable sorting component"
@@ -186,6 +229,10 @@ writeLines(c(
   "The identical auxiliary regression and Brier score must be computed on simulated",
   "model histories. The wealth-gradient and switching-rate moments remain validation",
   "outcomes rather than substitutes for this residual-variation target.",
+  "The model-feasible specification drops marital-status and survey-year effects,",
+  "and replaces raw child counts with the one-shot 0 / 1--2 / 3+ parity index.",
+  "Its full-sample weighted Brier score is the deterministic matched target; the",
+  "five-fold version is reported as a finite-sample robustness check.",
   "",
   "The reported person-bootstrap standard error conditions on the cross-fitted",
   "prediction rule. A final target should use a full bootstrap that re-estimates the",

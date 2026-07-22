@@ -324,6 +324,24 @@ CANDIDATE_REPLACEMENT_INCOME_DISCIPLINED_V1_TARGETS = {
 # calibration changes document the model statistic, empirical object, and known
 # measurement caveats in the same edit.
 TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
+    "aggregate_wealth_to_annual_after_tax_earnings": {
+        "model": "aggregate liquid net worth plus gross owner housing value, divided by working-age annual after-tax labor earnings.",
+        "data": "De Nardi-Yang aggregate wealth divided by after-tax labor earnings target.",
+        "status": "borrowed-target-matched-denominator",
+        "issue": "Model denominator excludes pensions and lump-sum transfers; the level remains borrowed rather than re-estimated for this project.",
+    },
+    "annual_bequest_flow_to_aggregate_wealth": {
+        "model": "age-survival-weighted expected nonnegative estate flow, annualized and divided by aggregate liquid plus gross housing wealth.",
+        "data": "De Nardi-Yang annual bequest-flow share of aggregate wealth.",
+        "status": "borrowed-target",
+        "issue": "The target is an aggregate flow ratio and identifies theta0 jointly with saving and the estate distribution.",
+    },
+    "aggregate_mean_occupied_rooms_18_85": {
+        "model": "population-weighted mean realized renter services or owner rung over ages 18-85.",
+        "data": "ACS/MMS household-head mean rooms over the matched age range.",
+        "status": "clean-level-target",
+        "issue": "Disciplines the aggregate housing-supply scale H0 jointly with demand and equilibrium price.",
+    },
     "tfr": {
         "model": "2 * mean_completed_fertility among post-fertility ages.",
         "data": "Completed-fertility-equivalent target, not a period TFR flow.",
@@ -407,6 +425,36 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "data": "PSID reference persons, p90/median of NETWORTHR / INCFAMR, ages 76-84.",
         "status": "internally-calibrated-bequest-target",
         "issue": "Upper-tail target identifies the luxury shift jointly with the old-age median.",
+    },
+    "childless_renter_rent_expenditure_slope": {
+        "model": "population-WLS slope from rent expenditure on allocatable expenditure for childless renters ages 30-55, after weighted 1st/99th percentile trims.",
+        "data": "CEX cash renters ages 30-55 with no children in the household; identical WLS and weighted trims.",
+        "status": "matched-one-market-auxiliary",
+        "issue": "Identifies alpha_cons jointly with the renter intercept and low-expenditure rooms moment; it is not set equal to alpha_cons.",
+    },
+    "childless_renter_intercept_at_mean_price_model_units": {
+        "model": "population-WLS intercept from rent expenditure on allocatable expenditure in the one-market childless-renter sample.",
+        "data": "CEX fitted rent intercept at the weighted mean cross-fitted rent per room, converted to four-year mean-income units.",
+        "status": "matched-one-market-auxiliary",
+        "issue": "The one-market intercept combines the LES constant and the unit-rent term, so it identifies c_bar_0 jointly with h_bar_0.",
+    },
+    "bottom_quintile_childless_renter_mean_rooms": {
+        "model": "mean renter housing services in the bottom weighted quintile of allocatable expenditure among childless renters ages 30-55.",
+        "data": "CEX mean rooms in the identically defined bottom weighted allocatable-expenditure quintile.",
+        "status": "matched-one-market-auxiliary",
+        "issue": "Replaces a separate unit-rent coefficient that cannot be identified inside a one-price model.",
+    },
+    "one_shot_parity_consumption_coefficient": {
+        "model": "population-WLS coefficient on the current-family bin index 0/1/2 after controlling for rooms, log income and its square, age and its square, and ownership.",
+        "data": "CEX coefficient using bins 0 children, 1-2 children, and 3+ children with the identical model-feasible controls, converted to four-year mean-income units.",
+        "status": "matched-one-shot-auxiliary",
+        "issue": "This is a reduced-form household-expenditure increment, not a literal structural estimate of c_bar_n or an equivalence scale.",
+    },
+    "model_feasible_four_year_tenure_brier": {
+        "model": "population Brier score for next-period ownership after a fractional logit on current ownership, income, age, liquid wealth/income, and one-shot family bins.",
+        "data": "PSID four-year-ahead ownership Brier score from the same model-feasible covariates for reference persons ages 25-55.",
+        "status": "matched-tenure-auxiliary",
+        "issue": "Disciplines tenure_choice_kappa; the ownership level remains assigned to chi.",
     },
     "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": {
         "model": "2+-child minus 1-child weighted median of (b + pH) / annual gross income, ages 65-75.",
@@ -1370,10 +1418,21 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "four_year_tenure_residual_variance": float(
             getattr(sol, "four_year_tenure_residual_variance", np.nan)
         ),
-        "alpha_cons_parameter": float(getattr(P, "alpha_cons", np.nan)),
-        "c_bar_0_parameter": float(getattr(P, "c_bar_0", np.nan)),
-        "h_bar_0_parameter": float(getattr(P, "h_bar_0", np.nan)),
-        "c_bar_n_parameter": float(getattr(P, "c_bar_n", np.nan)),
+        "model_feasible_four_year_tenure_brier": float(
+            getattr(sol, "model_feasible_four_year_tenure_brier", np.nan)
+        ),
+        "childless_renter_rent_expenditure_slope": float(
+            getattr(sol, "childless_renter_rent_expenditure_slope", np.nan)
+        ),
+        "childless_renter_intercept_at_mean_price_model_units": float(
+            getattr(sol, "childless_renter_intercept_at_mean_price_model_units", np.nan)
+        ),
+        "bottom_quintile_childless_renter_mean_rooms": float(
+            getattr(sol, "bottom_quintile_childless_renter_mean_rooms", np.nan)
+        ),
+        "one_shot_parity_consumption_coefficient": float(
+            getattr(sol, "one_shot_parity_consumption_coefficient", np.nan)
+        ),
         "young_all_liquid_wealth_to_annual_gross_income_2530": float(
             getattr(sol, "young_all_liquid_wealth_to_annual_gross_income_2530", np.nan)
         ),
