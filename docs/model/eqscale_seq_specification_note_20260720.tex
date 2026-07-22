@@ -1,0 +1,151 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.95in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,multicol}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\setlength{\parskip}{2pt}
+\title{\vspace{-1.3em}\large\textbf{Specification note: the E-series architecture --- equivalence-scale preferences, sequential fertility, and honest income risk}\vspace{-0.4em}}
+\author{\normalsize Fertility--housing project}
+\date{\normalsize July 20, 2026}
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+
+\paragraph{The change in one view.}
+The E-series replaces the production model's two deepest provisional
+structures at once. Preferences lose their Stone--Geary intercepts ---
+children price in through an expenditure-share shifter and a
+utility-level scale instead of committed bundles --- and fertility becomes
+sequential: households try for a first child and one-child households may
+later try for a second, each attempt succeeding with an age-declining
+fecundity probability. Removing the intercepts removes the feasibility
+bind that capped income risk, so the income process is set externally at
+its literature value rather than tuned down to keep budget sets nonempty.
+
+\begin{center}\footnotesize
+\begin{tabular}{lll}
+\toprule
+ & Production (M5) & E-series \\
+\midrule
+Child costs & floors $\bar c(n), \bar h(n)$ (5 params, SMM) & $\alpha(n,s)$, $\tilde e(n,s)$ (3 params, SMM) \\
+Feasibility & bundle must be affordable; gate + censoring & every $y>0$ feasible by construction \\
+Income risk & $\sigma_z=0.0645$ (feasibility-capped) & $\sigma_z=0.20$, $\rho_z=0.960$ (external) \\
+Fertility & one-shot family-size choice & sequential attempts, fecundity $\pi_j$ (external) \\
+Free params / moments & 14 / 15 & 12 / 15 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Preferences.}
+Period utility is
+\[
+u(c,h;n,s)=\tilde e(n,s)\,
+\frac{\bigl(c^{\alpha(n,s)}h^{1-\alpha(n,s)}\bigr)^{1-\sigma}}{1-\sigma}
++\psi n_k,\qquad
+\tilde e = 1+\gamma_e n_k,\quad
+\alpha = \alpha_0-(\delta^{jump}_\alpha+\delta_\alpha n_k)\mathbf{1}\{n_k>0\},
+\]
+with $\sigma=2$ maintained, so $\tilde e$ coincides with the equivalence
+scale over the composite: a family needs $\tilde e$ times the childless
+composite for equal welfare. Textbook good-specific (Barten) scales are
+deliberately not used: under a Cobb--Douglas composite they cancel from
+the consumption--housing allocation, which would erase the child--housing
+demand channel the paper is about; the share shifter $\alpha(n,s)$
+restores that channel in the form the consumption literature uses
+(demographic taste shifters), and $\tilde e$ carries the cost of children.
+With no intercepts, marginal utility diverges at zero and any positive
+income admits a feasible choice.
+
+How the references handle the same object: Adda, Dustmann and Stevens
+(2017, JPE) \emph{impose} the OECD-modified scale (1 + 0.5 per adult +
+0.3 per child) on household consumption; Scholz, Seshadri and
+Khitatrakun (2006, JPE) impose the Citro--Michael scale
+$(A+0.7K)^{0.7}$ in utility \emph{and} in their means-tested transfer
+floor; Fern\'andez-Villaverde and Krueger (2007, ReStat) deflate by the
+mean of six published scales; Blundell, Pistaferri and Saporta-Eksten
+(2016, AER) estimate demographic preference shifters inside their
+structural system; Borella, De Nardi and Yang (2023, ReStud) and
+De Nardi, Fella and Paz-Pardo (2025, ReStud) use divisor scales
+varying with marital status and children --- the former imposing the
+Citro--Michael scale $(j+0.7f)^{0.7}$, the latter imposing the
+OECD-modified weights (1, 0.5 per second adult, 0.3 per child).
+Guner, Kaygusuz and Ventura (2020, ReStud) explicitly
+reject utility scaling --- but only to preserve balanced-growth
+consistency, a constraint our stationary economy does not face.
+Identification discipline for scales is the Pollak--Wales (1979, AER)
+critique: welfare-level scales are not identified from demand data alone.
+\textbf{Our approach differs from all of the above: we estimate
+$\gamma_e$ inside the SMM} from housing, fertility, and wealth moments
+--- and the estimate, $\gamma_e = 0.203$, implies $+20.3\%$ per one child
+and $+40.5\%$ for two, reproducing the OECD-modified child weights
+($+20\%/+40\%$ on a couple base) that the literature imposes. Because our
+$\gamma_e$ is identified by behavior through the model structure, this
+agreement is corroboration rather than circularity.
+
+\paragraph{Fertility technology.}
+The production model chooses completed family size in one event; the
+E-series prices time. Childless households choose \{wait, try\}; one-child
+households with the window open choose \{stop, try for the second\}; an
+attempt succeeds with probability $\pi_j = \max\{0,\min\{1,
+1-\omega_1e^{\omega_2(a_j-18)}\}\}$, zero from 45, and a second birth
+restarts the single child clock (per-child age tracking stays collapsed
+--- the reason sequencing was originally dropped --- at the small cost
+that the first child's maturation rides the youngest's clock). The
+schedule is \emph{external}: biology identifies it, and pinning it keeps
+the fertility logit scale $\kappa_f$ identified, since both objects
+smooth hazards. Calibration precedents and our fit are documented in the
+companion note (\texttt{fecundity\_schedule\_note\_20260720}): Sommer
+(2016, JME) fits an exponential permanent-infertility CDF to
+Trussell--Wilson (1985), reaching $\approx$97\% infertile at 45; de la
+Croix and Pommeret (2021, JET) fit a bounded logistic to L\'eridon's
+conception-by-duration table with a 4\% natural-sterility level from
+Baudin, de la Croix and Gobbi (2015, AER). Our deployed
+$(\omega_1,\omega_2)=(0.02,0.134)$ evaluates to $\pi=\{0.97, 0.90, 0.81,
+0.62\}$ at ages 22/30/35/40 against L\'eridon's (2004)
+conceive-within-four-years anchors $\{0.96, 0.91, 0.84, 0.64\}$ --- on
+the evidence to 1--3 points; the formal least-squares fit is a pending
+half-day refinement. New measured objects: attempt and realized birth
+hazards by age, first-birth age distribution, birth spacing via the flow
+progression from one to two children, and the decomposition of
+childlessness into chosen versus ran-out-of-clock.
+
+\paragraph{Income process.}
+Production carries $\sigma_z=0.0645$ --- a third of the PSID range ---
+because the Stone--Geary bundle had to be affordable in every state (the
+July-18 frontier computation: infeasible above $\sigma_z\!\approx\!0.09$
+at the calibrated persistence). With no intercepts the constraint is
+gone, and the E-series imposes $(\rho_z,\sigma_z)=(0.960, 0.20)$
+externally (the Sommer--Sullivan range), with no transfer floor needed.
+
+\paragraph{Calibration accounting and status.}
+Twelve free parameters (the five floors leave, $\delta^{jump}_\alpha,
+\delta_\alpha, \gamma_e$ enter) on the unchanged 15-moment
+income-disciplined target system; externals: $\theta_n=0$, $\sigma=2$,
+$\phi=0.80$, the income process, and the fecundity schedule. The share
+shifters are identified by the family/childless housing and rooms
+moments; $\gamma_e$ by fertility levels jointly with wealth accumulation.
+Current status (E2, July 20): loss 5.49 versus the production model's
+9.04 on the same moments, cross-evaluator confirmed; old-age ownership
+and the estate distribution resolved; the open issues are young renters'
+liquid wealth (0.52 vs.\ 0.18) and the pending fecundity fit plus
+timing-moment data targets before paper-facing use.
+
+\begin{footnotesize}
+\begin{multicols}{2}
+\noindent Adda, Dustmann, Stevens (2017), \emph{JPE} 125(2).\\
+Baudin, de la Croix, Gobbi (2015), \emph{AER} 105(6).\\
+Blundell, Pistaferri, Saporta-Eksten (2016), \emph{AER} 106(2).\\
+Borella, De Nardi, Yang (2023), \emph{ReStud} 90(1).\\
+de la Croix, Pommeret (2021), \emph{JET} 193.\\
+De Nardi, Fella, Paz-Pardo (2025), \emph{ReStud} 92(2).\\
+Fern\'andez-Villaverde, Krueger (2007), \emph{ReStat} 89(3).\\
+Guner, Kaygusuz, Ventura (2020), \emph{ReStud} 87(5).\\
+L\'eridon (2004), \emph{Human Reproduction} 19(7).\\
+Pollak, Wales (1979), \emph{AER} 69(2).\\
+Scholz, Seshadri, Khitatrakun (2006), \emph{JPE} 114(4).\\
+Sommer (2016), \emph{JME} 83.\\
+Trussell, Wilson (1985), \emph{Population Studies} 39(2).
+\end{multicols}
+\end{footnotesize}
+
+\end{document}
