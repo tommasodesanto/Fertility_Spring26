@@ -612,6 +612,30 @@ A8. Fertility-units decision memo (gates A2, A6, and rows 5–9): choose
     if L4, scope the `n_parity = 4` extension (state-dimension growth, third
     attempt margin and fert3 side channel, KFE splits, re-measured binned
     moments) before any model edit.
+A9. Income-process finalization (author directive, July 22 evening: once
+    Stone–Geary is removed, the Rouwenhorst process must be done properly,
+    with the proper variance). With no floors there is no feasibility cap,
+    so the process is a genuine choice, not an inherited constraint. The
+    mechanical layer is already correct and verified in code
+    (`local_panel.py::income_process_overrides`: rho_period = rho_annual^4,
+    period innovation sd = annual sd x sqrt(sum rho^{2k}, k=0..3),
+    stationary variance matched by the Rouwenhorst recursion). What remains
+    is conceptual and must be decided BEFORE the 12/12 paper calibration:
+    (i) the risk CONCEPT — sigma_z = 0.20 is the Sommer–Sullivan-range
+    calibration of PRE-TAX labor productivity, while model income is
+    after-tax household income; imposing the pre-tax variance on after-tax
+    income overstates risk (the July-17 memo's point; Boar–Gorea–Midrigan is
+    the verified post-tax-and-transfer comparison process);
+    (ii) the SOURCE — literature value vs the project's own PSID estimation
+    (`estimate_intergen_income_entry_targets.R` pipeline), with provenance
+    documented either way;
+    (iii) DISCRETIZATION adequacy — whether 5 Rouwenhorst states span the
+    honest stationary variance acceptably or 7 states are needed (throughput
+    cost measured before deciding);
+    (iv) CONSEQUENCES — the young-liquid-wealth validation object moves most
+    with this choice; re-run the E-series calibration under the finalized
+    process and report the shift. This item has the same gate status as the
+    fecundity fit: no paper calibration launches before it is closed.
 
 ### Phase B — model code (E-package only; production untouched)
 

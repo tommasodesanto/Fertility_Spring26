@@ -41,6 +41,41 @@ with zero infeasible or failed cases. The production array is `14583185_[1-8]`
 reserve per chain), with dependent collector `14583195`. Live output is
 `$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
+## July 22 late night: overnight battery queued (E3 chain + family-gap scan)
+
+The whole battery is Slurm-dependency-driven; no local machine is needed
+overnight. Chain: E3 array `14583403` -> strict collector `14594363`
+(report at `output/model/eqscale_seq_l4_recalibration_20260722/report/`) ->
+E3b continuation `14594364` (8 x 3:55 fresh chains seeded from the certified
+E3 winner via `submit_intergen_e3b_continuation.sh`, seeds 2026072301-08,
+outdir `.../continuation/`) -> continuation collector `14594365` (report at
+`.../report_continuation/`). Separately, the T4 mechanism probe: 2-cell
+smoke `14594366` then, `afterok`, the full 25-cell family-gap reachability
+scan `14594367` (`run_family_gap_scan.py` via
+`submit_intergen_e3_gap_scan.sh`): fixed-theta tight GE cells over
+`delta_alpha_jump in {0.0388,...,0.25} x delta_alpha in {0.0216,...,0.25}`
+at the collected E2 winner (n_parity=3, the documented failure point; cell 1
+reproduces the winner as a continuity anchor), each writing
+`output/model/eqscale_family_gap_scan_20260722/cell_NN.json` with
+`own_family_gap` and the key moments. Reading rule: if no cell reaches
+`own_family_gap >= ~0.10`, the eqscale share-tilt architecture cannot carry
+the paper's mechanism moment and a committed-housing device is required
+(reconciliation note, Section 3.5 risk 1).
+
+At the 35-minute health check all eight E3 chains were checkpointing
+(170-194 evaluations) with loose best losses 4.64-7.83 — two chains already
+below E2's 5.486 on identical targets. Loose search losses are not results;
+only the collectors' strict twice-repeated winners count.
+
+Standing directive recorded this evening (author): once Stone-Geary is
+removed, the Rouwenhorst income process must be finalized properly, with the
+proper variance — risk concept (pre-tax SS-range vs after-tax household
+income), source (literature vs project PSID estimation), and 5- vs 7-state
+adequacy. Full task: item A9 of
+`docs/model/eqscale_calibration_reconciliation_20260722.md`; the
+annual-to-period aggregation in `income_process_overrides` was verified
+correct in code. Gate status: blocks any E-series paper calibration.
+
 ## July 22 night: E3 literal-parity recalibration launched on Torch
 
 E3 re-estimates the eqscale/sequential architecture under literal parity
