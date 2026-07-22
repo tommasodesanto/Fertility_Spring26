@@ -188,6 +188,19 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
         "eta_supply": np.array([1.75]), "lambda_d": 0.0,
         "debt_taper_start_age": 42.0, "debt_taper_end_age": 62.0,
         "survival_probs": survival_schedule(args.J),
+        # E3 literal-parity arm: default-off; E3_L4=1 activates literal birth
+        # states 0/1/2/3+ with the documented external conventions.
+        **(
+            {
+                "n_parity": 4,
+                "fertility_units": "literal_topcode",
+                "tfr_top_bin_weight": float(os.environ.get("E3_TFR_TOP_BIN_WEIGHT", "3.4")),
+                "entrant_conversion_factor": 0.5,
+                "child_bin_high_cutoff": 3,
+            }
+            if os.environ.get("E3_L4", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -223,7 +236,15 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
-    metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain", "arm": "E1",
+    metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
+                "arm": "E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1",
+                "l4_literal_parity": os.environ.get("E3_L4", "") == "1",
+                "l4_conventions": (
+                    {"n_parity": 4, "fertility_units": "literal_topcode",
+                     "tfr_top_bin_weight": float(os.environ.get("E3_TFR_TOP_BIN_WEIGHT", "3.4")),
+                     "entrant_conversion_factor": 0.5, "child_bin_high_cutoff": 3}
+                    if os.environ.get("E3_L4", "") == "1" else None
+                ),
                 "free_parameter_count": len(DOMAIN), "target_count": len(targets),
                 "active_domain": [{"name": n, "lower": lo, "upper": hi, "transform": k} for n, lo, hi, k in DOMAIN],
                 "fixed_parameters": FIXED, "target_set": TARGET_SET, "targets": targets, "weights": weights,

@@ -41,6 +41,34 @@ with zero infeasible or failed cases. The production array is `14583185_[1-8]`
 reserve per chain), with dependent collector `14583195`. Live output is
 `$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
+## July 22 night: E3 literal-parity recalibration launched on Torch
+
+E3 re-estimates the eqscale/sequential architecture under literal parity
+states 0/1/2/3+ on the UNCHANGED 15-moment income-disciplined system: the
+E1/E2 contract (12 free parameters, `theta_n=0` external) plus the L4
+external conventions `n_parity=4`, `fertility_units="literal_topcode"` with
+`tfr_top_bin_weight=3.4` (provisional top-bin mean pending a proper CPS
+measurement), `entrant_conversion_factor=0.5`, and `child_bin_high_cutoff=3`.
+Seeded from the collected E2 optimized winner (loss `5.4856`); the E2
+comparison on identical targets is the run's question: can literal
+sequential parity match the same data? Fixed-theta baseline at the seed is
+`18.27` (tfr row `11.39` — E2 was calibrated under bin units, so fertility
+levels must roughly double).
+
+Gates before launch: 102 package tests including 9 new literal-parity tests;
+bitwise default-nesting golden check; local exact-loop smoke (9 evals, arm
+`E3_L4` recorded in metadata); Torch two-task smoke `14583267` (13 evals per
+chain, strict flags, empty stderr; artifacts archived under
+`output/model/eqscale_seq_l4_recalibration_20260722/smoke_14583267/`). Full
+array `14583403_[1-8]`, 8 x 3:55 cpu_short, seeds 2026072201-08, 225 minutes
+with strict-repeat reserve and 1,000-eval cap, submit
+`code/cluster/submit_intergen_e3_l4.sh` (env `E3_L4=1`), outdir
+`output/model/eqscale_seq_l4_recalibration_20260722/production/` on Torch
+scratch. Runs concurrently with the corrected one-shot diagnostic
+`14583185`; disjoint packages and outputs. Collection with the E1 collector
+pattern next session; timing moments (PP 1->2 now literal, PP 2->3 new)
+ride as diagnostics.
+
 ## July 22 evening: E-series reconciliation note; gated literal-parity (L4) extension implemented
 
 `docs/model/eqscale_calibration_reconciliation_20260722.md` (revised after
