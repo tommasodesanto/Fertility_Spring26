@@ -55,8 +55,8 @@ def main() -> None:
     for path in paths:
         summary = json.loads(path.read_text())
         meta = summary.get("metadata") or {}
-        if meta.get("arm") != "E1" or int(meta.get("free_parameter_count", -1)) != 12 or int(meta.get("target_count", -1)) != 15:
-            raise RuntimeError(f"{path} does not satisfy the E1 12-parameter/15-target contract")
+        if meta.get("arm") not in {"E1", "E3_L4"} or int(meta.get("free_parameter_count", -1)) != 12 or int(meta.get("target_count", -1)) != 15:
+            raise RuntimeError(f"{path} does not satisfy the E1/E3 12-parameter/15-target contract")
         tight = eligible_tight(summary)
         chain_rows.append({"summary_path": str(path), "seed": meta.get("seed"), "eligible": tight is not None,
                            "search_cases": summary.get("n_cases_completed"), "search_strict": summary.get("n_strict"),
