@@ -4149,22 +4149,8 @@ def forward_distribution(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     stats = (
         compute_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
         if fast_stats
@@ -4176,12 +4162,13 @@ def forward_distribution(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
         )
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_beginning_distribution = g.copy()
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :]))
@@ -4210,7 +4197,7 @@ def forward_distribution(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
     return g_current, stats
 
 
@@ -4737,22 +4724,8 @@ def forward_distribution_markov_income(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     if fast_stats:
         stats = compute_markov_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
     else:
@@ -4764,7 +4737,7 @@ def forward_distribution_markov_income(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
         )
     P._second_births_by_age = second_births_by_age
     P._second_attempts_by_age = second_attempts_by_age
@@ -4786,7 +4759,8 @@ def forward_distribution_markov_income(
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_beginning_distribution = g.copy()
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
@@ -4819,7 +4793,7 @@ def forward_distribution_markov_income(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
     return g_current, stats
 
 
@@ -5193,20 +5167,22 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         setattr(stats, f"{name}_mass", mass)
 
 
-def add_annual_gross_estate_wealth_moments(
+def add_annual_gross_old_wealth_moments(
     stats: SimpleNamespace,
     g: np.ndarray,
     P: SimpleNamespace,
     bg: np.ndarray,
     ph: np.ndarray,
 ) -> None:
-    """Add the internally calibrated old-age bequest moments.
+    """Add cross-sectional old-household wealth moments.
 
-    The PSID object is total family net worth, so an owner state contributes
-    liquid net worth plus gross housing value, ``b + pH``.  The transaction
-    wedge ``psi`` is not subtracted: it is neither current mortgage debt nor an
-    empirical reduction in home equity.  Income is annual gross income at the
-    full Markov income state, matching the PSID annual-family-income ratio.
+    The empirical sample contains living PSID reference persons aged 76--84;
+    it is not a sample of decedents or realized estates. The model therefore
+    uses the coherent beginning-of-period living-household balance sheet.
+    An owner contributes liquid net worth plus gross housing value, ``b + pH``.
+    The transaction wedge ``psi`` is not subtracted: it is neither current
+    mortgage debt nor an empirical reduction in home equity. Income is annual
+    gross income at the full Markov income state.
     """
 
     g_arr = np.asarray(g, dtype=float)
@@ -5270,12 +5246,29 @@ def add_annual_gross_estate_wealth_moments(
     old_p90 = pooled_quantile(old_vals, old_wts, 0.9)
     one_p50 = pooled_quantile(one_vals, one_wts, 0.5)
     two_plus_p50 = pooled_quantile(two_plus_vals, two_plus_wts, 0.5)
+    old_p90_p50 = old_p90 / max(old_p50, 1e-12)
+    stats.old_total_wealth_to_annual_income_median_7684 = old_p50
+    stats.old_total_wealth_to_annual_income_p90_7684 = old_p90
+    stats.old_total_wealth_to_annual_income_p90_p50_7684 = old_p90_p50
+    # Backward-compatible names for historical target systems.
     stats.old_total_estate_wealth_to_annual_income_median_7684 = old_p50
     stats.old_total_estate_wealth_to_annual_income_p90_7684 = old_p90
-    stats.old_total_estate_wealth_to_annual_income_p90_p50_7684 = old_p90 / max(old_p50, 1e-12)
+    stats.old_total_estate_wealth_to_annual_income_p90_p50_7684 = old_p90_p50
     stats.old_1_total_estate_wealth_to_annual_income_median_6575 = one_p50
     stats.old_2plus_total_estate_wealth_to_annual_income_median_6575 = two_plus_p50
     stats.old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575 = two_plus_p50 - one_p50
+
+
+def add_annual_gross_estate_wealth_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Backward-compatible alias for historical target code."""
+
+    add_annual_gross_old_wealth_moments(stats, g, P, bg, ph)
 
 
 def add_old_nonhousing_income_share_moments(
@@ -5415,7 +5408,7 @@ def compute_markov_statistics(
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
-    add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
+    add_annual_gross_old_wealth_moments(stats, asset_dist, P, bg, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
     if float(getattr(P, "retirement_income_z_scale", 0.0)) != 0.0:
         add_old_wealth_income_moments(stats, asset_dist, P, bg, ph)

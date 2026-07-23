@@ -17,6 +17,7 @@ from intergen_eqscale_seq_optimized.calibration import (
 )
 from intergen_eqscale_seq_optimized.solver import (
     add_annual_gross_estate_wealth_moments,
+    add_annual_gross_old_wealth_moments,
     add_old_nonhousing_income_share_moments,
 )
 
@@ -60,10 +61,56 @@ class BequestTargetMomentTests(unittest.TestCase):
         self.assertEqual(stats.old_total_estate_wealth_to_annual_income_median_7684, 10.0)
         self.assertEqual(stats.old_total_estate_wealth_to_annual_income_p90_7684, 30.0)
         self.assertEqual(stats.old_total_estate_wealth_to_annual_income_p90_p50_7684, 3.0)
+        self.assertEqual(stats.old_total_wealth_to_annual_income_median_7684, 10.0)
+        self.assertEqual(stats.old_total_wealth_to_annual_income_p90_7684, 30.0)
+        self.assertEqual(stats.old_total_wealth_to_annual_income_p90_p50_7684, 3.0)
+        self.assertEqual(
+            stats.old_total_wealth_to_annual_income_median_7684,
+            stats.old_total_estate_wealth_to_annual_income_median_7684,
+        )
+        self.assertEqual(
+            stats.old_total_wealth_to_annual_income_p90_7684,
+            stats.old_total_estate_wealth_to_annual_income_p90_7684,
+        )
+        self.assertEqual(
+            stats.old_total_wealth_to_annual_income_p90_p50_7684,
+            stats.old_total_estate_wealth_to_annual_income_p90_p50_7684,
+        )
         self.assertEqual(
             stats.old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575,
             20.0,
         )
+
+    def test_old_wealth_moment_name_is_the_live_implementation(self) -> None:
+        p = SimpleNamespace(
+            J=5,
+            I=1,
+            age_start=66.0,
+            da=4.0,
+            period_years=1.0,
+            J_R=0,
+            income=np.ones((1, 5)),
+            n_parity=3,
+            n_child_states=1,
+            n_house=1,
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+            psi=0.5,
+        )
+        bg = np.array([0.0, 10.0])
+        ph = np.array([10.0])
+        g = np.zeros((2, 2, 1, 5, 1, 3, 1))
+        g[0, 0, 0, 3, 0, 1, 0] = 1.0
+        g[0, 1, 0, 3, 0, 2, 0] = 1.0
+        g[1, 1, 0, 4, 0, 1, 0] = 1.0
+        g[1, 0, 0, 4, 0, 2, 0] = 1.0
+
+        stats = SimpleNamespace()
+        add_annual_gross_old_wealth_moments(stats, g, p, bg, ph)
+
+        self.assertEqual(stats.old_total_wealth_to_annual_income_median_7684, 10.0)
+        self.assertEqual(stats.old_total_wealth_to_annual_income_p90_7684, 30.0)
+        self.assertEqual(stats.old_total_wealth_to_annual_income_p90_p50_7684, 3.0)
 
     def test_internal_target_set_replaces_three_legacy_old_age_moments(self) -> None:
         targets, weights = get_target_set("candidate_replacement_bequest_internal_v1")

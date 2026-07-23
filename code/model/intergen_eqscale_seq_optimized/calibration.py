@@ -401,6 +401,12 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "status": "internally-calibrated-bequest-target",
         "issue": "Upper-tail target identifies the luxury shift jointly with the old-age median.",
     },
+    "old_total_wealth_to_annual_income_p90_p50_7684": {
+        "model": "beginning-of-period weighted p90 divided by weighted median of (b + pH) / annual gross income among living households ages 76-84.",
+        "data": "Living PSID reference persons, p90/median of NETWORTHR / INCFAMR, ages 76-84.",
+        "status": "timing-repaired-cross-sectional-target",
+        "issue": "This is living-household wealth dispersion, not a distribution of realized estates; it identifies the luxury shift jointly with saving and the wealth distribution.",
+    },
     "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": {
         "model": "2+-child minus 1-child weighted median of (b + pH) / annual gross income, ages 65-75.",
         "data": "PSID reference persons, completed children 2+ minus 1, median NETWORTHR / INCFAMR, ages 65-75.",
@@ -1353,6 +1359,15 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         ),
         "old_total_estate_wealth_to_annual_income_p90_p50_7684": float(
             getattr(sol, "old_total_estate_wealth_to_annual_income_p90_p50_7684", np.nan)
+        ),
+        "old_total_wealth_to_annual_income_median_7684": float(
+            getattr(sol, "old_total_wealth_to_annual_income_median_7684", np.nan)
+        ),
+        "old_total_wealth_to_annual_income_p90_p50_7684": float(
+            getattr(sol, "old_total_wealth_to_annual_income_p90_p50_7684", np.nan)
+        ),
+        "old_total_wealth_to_annual_income_p90_7684": float(
+            getattr(sol, "old_total_wealth_to_annual_income_p90_7684", np.nan)
         ),
         "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": float(
             getattr(
