@@ -7,6 +7,11 @@ whether the two-parameter fertility block plus a real child cost can
 generate the required bimodality (19% childless, parents averaging ~2.4
 births) under honest income risk, or whether a structural change (per-parity
 psi, permanent taste heterogeneity) is needed. One tight GE solve per cell.
+
+The v2 design replaces the scanned linear scale with imposed power, square-root,
+and linear-gamma-0.5 forms under the Floden-Linde x HSV after-tax income process.
+It pre-registers whether a concave imposed scale can jointly reach completed
+fertility 1.918 and childlessness 0.188, with linear_g05 isolating the income change.
 """
 from __future__ import annotations
 
@@ -18,6 +23,7 @@ import numpy as np
 
 from intergen_eqscale_seq_optimized.calibration import extract_moments
 from intergen_eqscale_seq_optimized.e1_profile import e1_overrides
+from intergen_eqscale_seq_optimized.externals import flhsv_income_overrides
 from intergen_eqscale_seq_optimized.solver import run_model_cp_dt
 
 E3_THETA = {
@@ -39,6 +45,7 @@ L4 = {
 PSI_GRID = [-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.7233]
 KAPPA_GRID = [0.5, 1.0, 1.8, 3.0, 6.0, 10.0, 15.9109]
 GAMMA_GRID = [0.0085, 0.2, 0.5]
+FORM_GRID = ("power", "sqrt", "linear_g05")
 
 KEEP = [
     "tfr", "mean_completed_fertility", "childless_rate",
@@ -50,41 +57,88 @@ KEEP = [
 ]
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cell", type=int, required=True, help="1..147")
-    parser.add_argument("--outdir", type=Path, required=True)
-    args = parser.parse_args()
-    ncell = len(PSI_GRID) * len(KAPPA_GRID) * len(GAMMA_GRID)
-    if not 1 <= args.cell <= ncell:
-        raise SystemExit(f"cell must be in 1..{ncell}")
-    idx = args.cell - 1
-    ig, rem = divmod(idx, len(PSI_GRID) * len(KAPPA_GRID))
-    ip, ik = divmod(rem, len(KAPPA_GRID))
-    psi, kap, gam = PSI_GRID[ip], KAPPA_GRID[ik], GAMMA_GRID[ig]
+def cell_spec(cell: int, design: str) -> tuple[float, float, float | str]:
+    """Return the form-major grid coordinates for one one-indexed frontier cell."""
+    third_grid: tuple[float, ...] | tuple[str, ...]
+    if design == "v1":
+        third_grid = tuple(GAMMA_GRID)
+    elif design == "v2_imposed_scale":
+        third_grid = FORM_GRID
+    else:
+        raise ValueError(f"unknown frontier design: {design}")
+    ncell = len(PSI_GRID) * len(KAPPA_GRID) * len(third_grid)
+    if not 1 <= cell <= ncell:
+        raise ValueError(f"cell must be in 1..{ncell}")
+    third_idx, rem = divmod(cell - 1, len(PSI_GRID) * len(KAPPA_GRID))
+    psi_idx, kappa_idx = divmod(rem, len(KAPPA_GRID))
+    return PSI_GRID[psi_idx], KAPPA_GRID[kappa_idx], third_grid[third_idx]
 
-    overrides = {
+
+def cell_overrides(cell: int, design: str = "v1") -> dict:
+    """Build one fixed-coordinate frontier cell without solving the model."""
+    psi, kap, third = cell_spec(cell, design)
+    if design == "v1":
+        return {
+            **e1_overrides(tight=True, optimized=True),
+            **E3_THETA,
+            **L4,
+            "psi_child": psi,
+            "kappa_fert": kap,
+            "gamma_e": third,
+            "p_init_override": np.array([E3_PRICE_GUESS]),
+        }
+    form = third
+    form_overrides = (
+        {"eqscale_form": form, "gamma_e": 0.0}
+        if form in {"power", "sqrt"}
+        else {"eqscale_form": "linear", "gamma_e": 0.5}
+    )
+    return {
         **e1_overrides(tight=True, optimized=True),
         **E3_THETA,
         **L4,
+        **flhsv_income_overrides(),
         "psi_child": psi,
         "kappa_fert": kap,
-        "gamma_e": gam,
+        **form_overrides,
         "p_init_override": np.array([E3_PRICE_GUESS]),
     }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--cell", type=int, required=True, help="1..147")
+    parser.add_argument("--design", choices=("v1", "v2_imposed_scale"), default="v1")
+    parser.add_argument("--outdir", type=Path, required=True)
+    args = parser.parse_args()
+    try:
+        psi, kap, third = cell_spec(args.cell, args.design)
+        overrides = cell_overrides(args.cell, args.design)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     sol, P, _ = run_model_cp_dt(overrides, verbose=False)
     moments = extract_moments(sol, P)
     record = {
         "cell": args.cell,
         "psi_child": psi,
         "kappa_fert": kap,
-        "gamma_e": gam,
+        "gamma_e": overrides["gamma_e"],
         "moments": {k: float(moments.get(k, float("nan"))) for k in KEEP},
         "joint_distance": float(
             ((float(moments.get("tfr", float("nan"))) - 1.918) / 1.918) ** 2
             + ((float(moments.get("childless_rate", float("nan"))) - 0.188) / 0.188) ** 2
         ),
     }
+    if args.design == "v2_imposed_scale":
+        record.update(
+            {
+                "design": args.design,
+                "form": third,
+                "income": "flhsv",
+                "eqscale_form": overrides["eqscale_form"],
+                "gamma_e": overrides["gamma_e"],
+            }
+        )
     args.outdir.mkdir(parents=True, exist_ok=True)
     (args.outdir / f"cell_{args.cell:03d}.json").write_text(json.dumps(record, indent=1))
     print(json.dumps(record))
