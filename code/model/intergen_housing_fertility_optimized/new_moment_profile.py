@@ -1,4 +1,4 @@
-"""Provisional fourteen-moment calibration contract for the July 2026 ledger."""
+"""Timing-repaired fourteen-moment calibration contract for the July 2026 ledger."""
 
 from __future__ import annotations
 
@@ -8,21 +8,15 @@ from .m5_profile import M5_THETA, m5_overrides
 from .target_system import TargetSystem
 
 
-NEW_MOMENT_PROFILE_NAME = "intergen_new_moment_ledger_20260722"
-# Disabled on 2026-07-23 after the final-winner audit showed that all three
-# saving/bequest rows pair inherited liquid wealth with newly chosen tenure
-# before applying the housing transaction. Keep the target object readable for
-# forensic diagnostics, but block new searches until timing is coherent.
-NEW_MOMENT_PROFILE_RUNNABLE = False
+NEW_MOMENT_PROFILE_NAME = "intergen_new_moment_ledger_timing_repaired_20260723"
+NEW_MOMENT_PROFILE_RUNNABLE = True
 
-# Historical July 22 one-shot ledger. The four CEX rows are observable
-# auxiliaries recomputed from the model distribution, but the three
-# saving/bequest rows below are invalid until their balance-sheet timing is
-# repaired. The old full-rank Jacobian is forensic evidence only.
+# Cross-sectional wealth and living-old wealth use the beginning-of-period
+# state. The bequest flow uses post-saving resources at the death node.
 NEW_MOMENT_TARGETS = {
     "aggregate_wealth_to_annual_after_tax_earnings": 6.90,
     "annual_bequest_flow_to_aggregate_wealth": 0.0088,
-    "old_total_estate_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
+    "old_total_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
     "childless_renter_rent_expenditure_slope": 0.264688845713763,
     "childless_renter_intercept_at_mean_price_model_units": 0.106415445844303,
     "bottom_quintile_childless_renter_mean_rooms": 3.89742817329093,
@@ -54,7 +48,7 @@ NEW_MOMENT_SEED = {
 
 def new_moment_target_system() -> TargetSystem:
     system = TargetSystem.from_mappings(
-        "new_moment_ledger_14_v1_relative_loss",
+        "new_moment_ledger_14_v2_timing_repaired_relative_loss",
         NEW_MOMENT_TARGETS,
         NEW_MOMENT_WEIGHTS,
     )

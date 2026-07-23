@@ -48,7 +48,7 @@ from .solver import run_model_cp_dt
 MOMENT_PARAMETER_MAP: tuple[tuple[str, str], ...] = (
     ("aggregate_wealth_to_annual_after_tax_earnings", "beta_annual"),
     ("annual_bequest_flow_to_aggregate_wealth", "theta0"),
-    ("old_total_estate_wealth_to_annual_income_p90_p50_7684", "theta1"),
+    ("old_total_wealth_to_annual_income_p90_p50_7684", "theta1"),
     ("childless_renter_rent_expenditure_slope", "alpha_cons"),
     ("childless_renter_intercept_at_mean_price_model_units", "c_bar_0"),
     ("bottom_quintile_childless_renter_mean_rooms", "h_bar_0"),

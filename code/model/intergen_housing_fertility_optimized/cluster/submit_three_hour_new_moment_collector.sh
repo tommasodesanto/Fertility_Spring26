@@ -16,7 +16,7 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../../../.." && pwd)"
 module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || true
 PYTHON_BIN="$(command -v python3 || command -v python)"
 export PYTHONPATH="${MODEL_DIR}:${PYTHONPATH:-}"
-RUN_TAG="${NEW_MOMENT_RUN_TAG:-intergen_new_moment_calibration_20260722}"
+RUN_TAG="${NEW_MOMENT_RUN_TAG:-intergen_new_moment_timing_repaired_20260723}"
 RUN_ROOT="${PROJECT_ROOT}/output/model/${RUN_TAG}"
 mkdir -p "${RUN_ROOT}/report"
 exec "$PYTHON_BIN" -m intergen_housing_fertility_optimized.calibration_collect \

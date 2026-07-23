@@ -4155,22 +4155,8 @@ def forward_distribution(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     stats = (
         compute_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
         if fast_stats
@@ -4182,13 +4168,13 @@ def forward_distribution(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
         )
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
         stats.g_beginning_distribution = g.copy()
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :]))
@@ -4217,7 +4203,7 @@ def forward_distribution(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
     return g_current, stats
 
 
@@ -4614,22 +4600,8 @@ def forward_distribution_markov_income(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     if fast_stats:
         stats = compute_markov_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
     else:
@@ -4641,7 +4613,9 @@ def forward_distribution_markov_income(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
+            bequest_g=g_current,
+            bp_pol=bp_pol,
             c_pol=c_pol,
         )
         stats.four_year_tenure_residual_variance = markov_tenure_residual_variance(
@@ -4683,7 +4657,7 @@ def forward_distribution_markov_income(
     stats.total_births_kfe = total_births
     if not fast_stats:
         stats.g_beginning_distribution = g.copy()
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
@@ -4716,7 +4690,8 @@ def forward_distribution_markov_income(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
+    stats.bequest_moment_timing = "post_saving_at_death"
     return g_current, stats
 
 
@@ -5088,20 +5063,22 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         setattr(stats, f"{name}_mass", mass)
 
 
-def add_annual_gross_estate_wealth_moments(
+def add_annual_gross_old_wealth_moments(
     stats: SimpleNamespace,
     g: np.ndarray,
     P: SimpleNamespace,
     bg: np.ndarray,
     ph: np.ndarray,
 ) -> None:
-    """Add the internally calibrated old-age bequest moments.
+    """Add cross-sectional old-household wealth moments.
 
-    The PSID object is total family net worth, so an owner state contributes
-    liquid net worth plus gross housing value, ``b + pH``.  The transaction
-    wedge ``psi`` is not subtracted: it is neither current mortgage debt nor an
-    empirical reduction in home equity.  Income is annual gross income at the
-    full Markov income state, matching the PSID annual-family-income ratio.
+    The empirical sample contains living PSID reference persons aged 76--84;
+    it is not a sample of decedents or realized estates. The model therefore
+    uses the coherent beginning-of-period living-household balance sheet.
+    An owner contributes liquid net worth plus gross housing value, ``b + pH``.
+    The transaction wedge ``psi`` is not subtracted: it is neither current
+    mortgage debt nor an empirical reduction in home equity. Income is annual
+    gross income at the full Markov income state.
     """
 
     g_arr = np.asarray(g, dtype=float)
@@ -5165,12 +5142,29 @@ def add_annual_gross_estate_wealth_moments(
     old_p90 = pooled_quantile(old_vals, old_wts, 0.9)
     one_p50 = pooled_quantile(one_vals, one_wts, 0.5)
     two_plus_p50 = pooled_quantile(two_plus_vals, two_plus_wts, 0.5)
+    old_p90_p50 = old_p90 / max(old_p50, 1e-12)
+    stats.old_total_wealth_to_annual_income_median_7684 = old_p50
+    stats.old_total_wealth_to_annual_income_p90_7684 = old_p90
+    stats.old_total_wealth_to_annual_income_p90_p50_7684 = old_p90_p50
+    # Backward-compatible names for historical M4/M5 target systems.
     stats.old_total_estate_wealth_to_annual_income_median_7684 = old_p50
     stats.old_total_estate_wealth_to_annual_income_p90_7684 = old_p90
-    stats.old_total_estate_wealth_to_annual_income_p90_p50_7684 = old_p90 / max(old_p50, 1e-12)
+    stats.old_total_estate_wealth_to_annual_income_p90_p50_7684 = old_p90_p50
     stats.old_1_total_estate_wealth_to_annual_income_median_6575 = one_p50
     stats.old_2plus_total_estate_wealth_to_annual_income_median_6575 = two_plus_p50
     stats.old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575 = two_plus_p50 - one_p50
+
+
+def add_annual_gross_estate_wealth_moments(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Backward-compatible alias for historical target code."""
+
+    add_annual_gross_old_wealth_moments(stats, g, P, bg, ph)
 
 
 def add_old_nonhousing_income_share_moments(
@@ -5363,6 +5357,8 @@ def compute_markov_statistics(
     ph: np.ndarray,
     hR: np.ndarray,
     asset_g: np.ndarray | None = None,
+    bequest_g: np.ndarray | None = None,
+    bp_pol: np.ndarray | None = None,
     c_pol: np.ndarray | None = None,
 ) -> SimpleNamespace:
     z_grid, z_weights, Pi_z = income_transition_values(P)
@@ -5382,8 +5378,21 @@ def compute_markov_statistics(
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
-    add_annual_gross_estate_wealth_moments(stats, asset_dist, P, bg, ph)
-    add_aggregate_wealth_bequest_flow_moments(stats, asset_dist, P, bg, ph)
+    add_annual_gross_old_wealth_moments(stats, asset_dist, P, bg, ph)
+    if bequest_g is None or bp_pol is None:
+        raise ValueError(
+            "Markov statistics require the post-transaction distribution and "
+            "post-saving policy for the at-death bequest flow"
+        )
+    add_aggregate_wealth_bequest_flow_moments(
+        stats,
+        asset_dist,
+        bequest_g,
+        bp_pol,
+        P,
+        bg,
+        ph,
+    )
     if c_pol is not None:
         add_one_shot_cex_auxiliary_moments(stats, g, c_pol, hR, P, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
@@ -5804,22 +5813,36 @@ def markov_model_feasible_tenure_brier(
 
 def add_aggregate_wealth_bequest_flow_moments(
     stats: SimpleNamespace,
-    g: np.ndarray,
+    wealth_g: np.ndarray,
+    death_choice_g: np.ndarray,
+    bp_pol: np.ndarray,
     P: SimpleNamespace,
     bg: np.ndarray,
     ph: np.ndarray,
 ) -> None:
     """Add aggregate wealth/earnings and annual bequest-flow/wealth ratios.
 
-    Wealth is liquid net worth plus gross owner housing value. Earnings are the
-    working-age after-tax labor-income flow, excluding pensions and lump-sum
-    transfers, annualized when periods exceed one year. Expected bequests use
-    nonnegative estates and the age-specific death probability, also annualized.
+    Cross-sectional wealth uses the beginning-of-period distribution, where
+    liquid wealth and inherited tenure are a coherent balance sheet. Earnings
+    are measured on that same living-household cross-section.
+
+    Bequests follow the Bellman timing. Households first complete the current
+    location/tenure transaction and choose post-saving liquid wealth ``b'``;
+    survival/death is then realized. Expected nonnegative estates are therefore
+    ``max(b' + p H_current, 0)`` under the realized current-tenure distribution,
+    weighted by the age-specific death probability and annualized.
     """
 
-    g_arr = np.asarray(g, dtype=float)
-    if g_arr.ndim != 7:
+    wealth_arr = np.asarray(wealth_g, dtype=float)
+    death_arr = np.asarray(death_choice_g, dtype=float)
+    bp_arr = np.asarray(bp_pol, dtype=float)
+    if wealth_arr.ndim != 7:
         return
+    if death_arr.shape != wealth_arr.shape or bp_arr.shape != wealth_arr.shape:
+        raise ValueError(
+            "wealth_g, death_choice_g, and bp_pol must share the full "
+            "income-resolved state shape"
+        )
     bg_arr = np.asarray(bg, dtype=float).reshape(-1)
     ph_arr = np.asarray(ph, dtype=float).reshape(-1)
     z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
@@ -5849,18 +5872,20 @@ def add_aggregate_wealth_bequest_flow_moments(
             death_probability = 0.0
         for i in range(int(P.I)):
             for zz, z_value in enumerate(z_values):
-                state_mass = float(np.sum(g_arr[:, :, i, j, zz, :, :]))
+                state_mass = float(np.sum(wealth_arr[:, :, i, j, zz, :, :]))
                 mass_by_age[j] += state_mass
                 if j < int(P.J_R):
                     labor_earnings = float(P.income[i, j]) * float(z_value) / period_years
                     aggregate_annual_earnings += labor_earnings * state_mass
                     annual_earnings_by_age[j] += labor_earnings * state_mass
-                for ten in range(g_arr.shape[1]):
+                for ten in range(wealth_arr.shape[1]):
                     housing_value = (
                         float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
                     )
-                    estate = bg_arr + housing_value
-                    mass_by_asset = np.sum(g_arr[:, ten, i, j, zz, :, :], axis=(1, 2))
+                    mass_by_asset = np.sum(
+                        wealth_arr[:, ten, i, j, zz, :, :],
+                        axis=(1, 2),
+                    )
                     liquid_net_worth = float(np.sum(mass_by_asset * bg_arr))
                     positive_liquid_assets = float(
                         np.sum(mass_by_asset * np.maximum(bg_arr, 0.0))
@@ -5880,11 +5905,13 @@ def add_aggregate_wealth_bequest_flow_moments(
                     liquid_debt_by_age[j] += liquid_debt
                     gross_housing_wealth_by_age[j] += gross_housing_wealth
                     wealth_by_age[j] += total_wealth
-                    annual_bequest_flow += (
-                        death_probability
-                        * float(np.sum(mass_by_asset * np.maximum(estate, 0.0)))
-                        / period_years
+                    death_mass = death_arr[:, ten, i, j, zz, :, :]
+                    estate_at_death = (
+                        bp_arr[:, ten, i, j, zz, :, :] + housing_value
                     )
+                    annual_bequest_flow += death_probability * float(
+                        np.sum(death_mass * np.maximum(estate_at_death, 0.0))
+                    ) / period_years
     stats.aggregate_wealth_to_annual_after_tax_earnings = (
         aggregate_wealth / max(aggregate_annual_earnings, 1e-12)
     )

@@ -3947,22 +3947,8 @@ def forward_distribution(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     stats = (
         compute_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
         if fast_stats
@@ -3974,12 +3960,13 @@ def forward_distribution(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
         )
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_beginning_distribution = g.copy()
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :]))
@@ -4008,7 +3995,7 @@ def forward_distribution(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
     return g_current, stats
 
 
@@ -4404,22 +4391,8 @@ def forward_distribution_markov_income(
         if use_postdecision_current
         else g
     )
-    asset_current = (
-        assign_current_cross_section_to_beginning_assets(
-            g,
-            loc_probs,
-            tenure_choice,
-            tenure_probs,
-            lmm_idx,
-            lmm_wt,
-        )
-        if use_postdecision_current and not fast_stats
-        else g
-    )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
-        if not fast_stats:
-            assert np.isclose(np.sum(asset_current), np.sum(g), rtol=0.0, atol=1e-10)
     if fast_stats:
         stats = compute_markov_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
     else:
@@ -4431,7 +4404,7 @@ def forward_distribution_markov_income(
             b_grid,
             p_hat,
             hR_pol,
-            asset_g=asset_current,
+            asset_g=g,
         )
     stats.entry_censored_mass = float(getattr(P, "_entry_censored_mass", 0.0))
     stats.entry_censored_share = stats.entry_censored_mass / max(
@@ -4439,7 +4412,8 @@ def forward_distribution_markov_income(
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
-        stats.g_beginning_assets_by_current_choice = asset_current
+        stats.g_beginning_distribution = g.copy()
+        stats.g_cross_sectional_wealth_distribution = g.copy()
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
     stats.entry_rate = float(np.sum(g[:, :, :, 0, :, :, :]))
@@ -4472,7 +4446,7 @@ def forward_distribution_markov_income(
         if bool(getattr(P, "use_postdecision_current_distribution", True))
         else "beginning_of_period_legacy"
     )
-    stats.wealth_moment_timing = "beginning_of_period_b_conditioned_on_current_tenure"
+    stats.wealth_moment_timing = "beginning_of_period_state"
     return g_current, stats
 
 

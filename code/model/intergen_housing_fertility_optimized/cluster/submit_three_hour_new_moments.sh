@@ -1,5 +1,5 @@
 #!/bin/bash
-# Eight-chain, three-hour search of the provisional fourteen-moment ledger.
+# Eight-chain, three-hour search of the timing-repaired fourteen-moment ledger.
 # The structural model and numerical contract remain the current M5 version.
 #SBATCH --job-name=ihfnew3
 #SBATCH --output=slurm_ihfnew3_%A_%a.out
@@ -35,7 +35,7 @@ INDEX=$((TASK_ID - 1))
 METHOD="${METHODS[$INDEX]}"
 STEP="${STEPS[$INDEX]}"
 MIX="${MIXES[$INDEX]}"
-RUN_TAG="${NEW_MOMENT_RUN_TAG:-intergen_new_moment_calibration_20260722}"
+RUN_TAG="${NEW_MOMENT_RUN_TAG:-intergen_new_moment_timing_repaired_20260723}"
 RUN_ROOT="${PROJECT_ROOT}/output/model/${RUN_TAG}"
 OUTDIR="${RUN_ROOT}/chains/chain_${TASK_ID}"
 mkdir -p "$NUMBA_CACHE_DIR" "$OUTDIR"
@@ -52,6 +52,9 @@ ARGS=(
   --strict-reserve-minutes "${NEW_MOMENT_STRICT_RESERVE_MINUTES:-10}"
   --max-evals "${NEW_MOMENT_MAX_EVALS:-1200}"
 )
+if [ -n "${NEW_MOMENT_START_THETA_JSON:-}" ]; then
+  ARGS+=(--start-theta-json "${NEW_MOMENT_START_THETA_JSON}")
+fi
 if [ "${NEW_MOMENT_SMOKE:-0}" = "1" ]; then
   ARGS+=(--smoke)
 fi

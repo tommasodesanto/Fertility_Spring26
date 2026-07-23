@@ -71,8 +71,7 @@ DOMAIN: tuple[tuple[str, float, float, str], ...] = (
 def validate_contract(profile: str = "m5") -> None:
     if profile == "new-moments" and not NEW_MOMENT_PROFILE_RUNNABLE:
         raise RuntimeError(
-            "new-moments is disabled because its saving/bequest rows mix "
-            "inherited liquid wealth with post-choice tenure"
+            "new-moments is disabled pending its declared measurement audit"
         )
     declared = tuple((name, lower, upper) for name, lower, upper, _ in DOMAIN)
     if declared != FREE_PARAMETER_BOUNDS:
@@ -387,7 +386,7 @@ def main() -> None:
         profile_name = NEW_MOMENT_PROFILE_NAME
         seed_theta = NEW_MOMENT_SEED
         override_factory = new_moment_overrides
-        run_status = "provisional_joint_new_moment_calibration"
+        run_status = "timing_repaired_joint_new_moment_calibration"
     search_target_system, search_weight_multipliers = build_search_target_system(
         target_system,
         args.search_weight_multiplier,

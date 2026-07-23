@@ -27,6 +27,8 @@ from .new_moment_profile import new_moment_overrides, new_moment_target_system
 from .solver import (
     add_aggregate_wealth_bequest_flow_moments,
     add_annual_gross_estate_wealth_moments,
+    assign_current_cross_section_to_beginning_assets,
+    interp_indices,
     run_model_cp_dt,
 )
 
@@ -104,10 +106,7 @@ def main() -> None:
     args = parse_args()
     args.outdir.mkdir(parents=True, exist_ok=True)
     system = new_moment_target_system()
-    theta = load_start_theta(
-        args.source,
-        expected_target_fingerprint=system.fingerprint,
-    )
+    theta = load_start_theta(args.source)
     solution, parameters, price = run_model_cp_dt(
         {**new_moment_overrides(tight=True, optimized=True), **theta},
         verbose=False,
@@ -128,15 +127,50 @@ def main() -> None:
     asset_grid = np.asarray(solution.b_grid, dtype=float)
     prices = np.asarray(price, dtype=float).reshape(-1)
     owner_sizes = np.asarray(parameters.H_own, dtype=float)
+    beginning_distribution = np.asarray(
+        solution.g_beginning_distribution,
+        dtype=float,
+    )
+    lmm_idx = np.zeros(
+        (int(parameters.I), 1 + int(parameters.n_house), asset_grid.size),
+        dtype=np.int64,
+    )
+    lmm_wt = np.zeros_like(lmm_idx, dtype=float)
+    for location in range(int(parameters.I)):
+        for tenure in range(1 + int(parameters.n_house)):
+            sale_equity = (
+                (1.0 - float(parameters.psi))
+                * prices[location]
+                * owner_sizes[tenure - 1]
+                if tenure > 0
+                else 0.0
+            )
+            mapped_assets = np.clip(
+                asset_grid + sale_equity,
+                asset_grid[0],
+                asset_grid[-1],
+            )
+            lmm_idx[location, tenure], lmm_wt[location, tenure] = interp_indices(
+                asset_grid,
+                mapped_assets,
+            )
+    historical_hybrid = assign_current_cross_section_to_beginning_assets(
+        beginning_distribution,
+        solution.loc_probs,
+        solution.tenure_choice,
+        solution.tenure_probs,
+        lmm_idx,
+        lmm_wt,
+    )
     balance_sheets = {
         "beginning_of_period_consistent": balance_sheet(
-            np.asarray(solution.g_beginning_distribution, dtype=float),
+            beginning_distribution,
             asset_grid,
             prices,
             owner_sizes,
         ),
         "hybrid_current_target": balance_sheet(
-            np.asarray(solution.g_beginning_assets_by_current_choice, dtype=float),
+            historical_hybrid,
             asset_grid,
             prices,
             owner_sizes,
@@ -152,11 +186,11 @@ def main() -> None:
         values["wealth_to_annual_after_tax_earnings"] = values["net_wealth"] / earnings
     timing_distributions = {
         "beginning_of_period_consistent": np.asarray(
-            solution.g_beginning_distribution,
+            beginning_distribution,
             dtype=float,
         ),
         "hybrid_current_target": np.asarray(
-            solution.g_beginning_assets_by_current_choice,
+            historical_hybrid,
             dtype=float,
         ),
         "posttransaction_consistent": np.asarray(solution.g, dtype=float),
@@ -167,6 +201,8 @@ def main() -> None:
         add_aggregate_wealth_bequest_flow_moments(
             timing_stats,
             timing_distribution,
+            np.asarray(solution.g, dtype=float),
+            np.asarray(solution.bp_pol, dtype=float),
             parameters,
             asset_grid,
             prices,
@@ -285,7 +321,7 @@ def main() -> None:
         writer.writerows(age_rows)
 
     distribution = np.asarray(
-        solution.g_beginning_assets_by_current_choice,
+        historical_hybrid,
         dtype=float,
     )
     tenure_rows = []
@@ -449,7 +485,7 @@ change the calibration, targets, parameters, or model solution.
 
 ## Main finding
 
-The active wealth moment combines inherited beginning-of-period liquid wealth
+The historical invalid wealth moment combines inherited beginning-of-period liquid wealth
 with the household's newly chosen tenure. That is not an internally consistent
 balance sheet: it can double-count housing for buyers and omit sale proceeds
 for sellers.
@@ -457,7 +493,7 @@ for sellers.
 | Measurement | Wealth / annual after-tax earnings | Net wealth |
 |---|---:|---:|
 | Beginning of period, inherited tenure and assets | {beginning["wealth_to_annual_after_tax_earnings"]:.6f} | {beginning["net_wealth"]:.6f} |
-| Active target: inherited assets, newly chosen tenure | {hybrid["wealth_to_annual_after_tax_earnings"]:.6f} | {hybrid["net_wealth"]:.6f} |
+| Historical invalid target: inherited assets, newly chosen tenure | {hybrid["wealth_to_annual_after_tax_earnings"]:.6f} | {hybrid["net_wealth"]:.6f} |
 | Post transaction, newly chosen tenure and assets | {posttransaction["wealth_to_annual_after_tax_earnings"]:.6f} | {posttransaction["net_wealth"]:.6f} |
 | Empirical target | {target_ratio:.6f} | {required_wealth:.6f} at model earnings |
 
@@ -465,12 +501,8 @@ Thus the reported ratio of {hybrid["wealth_to_annual_after_tax_earnings"]:.3f}
 overstates both consistent alternatives. The low-wealth problem is not resolved
 by correcting the timing; it becomes larger.
 
-The same hybrid distribution also feeds the bequest-flow/wealth and old-estate
-p90/p50 target rows. Their timing variants are reported in
-`target_moment_timing_comparison.csv`. The correct economic timing for the
-bequest flow requires a separate decision—death should be aligned with the
-model's within-period sequence—so this diagnostic does not silently replace
-that row.
+The repaired code instead uses beginning-of-period living-household wealth for
+the stock moments and post-saving resources at death for the bequest flow.
 
 The hybrid asset assignment predates the July 22 target revision. Therefore
 older M4/M5 total-estate moments that use the same distribution also require

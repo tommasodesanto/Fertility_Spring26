@@ -23,9 +23,8 @@ from intergen_housing_fertility_optimized.solver import (
 
 
 class NewMomentProfileTests(unittest.TestCase):
-    def test_disabled_contract_retains_fourteen_rows_for_forensics(self) -> None:
-        with self.assertRaisesRegex(RuntimeError, "saving/bequest rows"):
-            validate_contract("new-moments")
+    def test_timing_repaired_contract_is_runnable_and_has_fourteen_rows(self) -> None:
+        validate_contract("new-moments")
         system = new_moment_target_system()
         self.assertEqual(system.count, 14)
         self.assertEqual(set(NEW_MOMENT_TARGETS), set(NEW_MOMENT_WEIGHTS))
@@ -64,9 +63,19 @@ class NewMomentProfileTests(unittest.TestCase):
         g = np.zeros((2, 2, 1, 2, 1, 1, 1))
         g[0, 0, 0, 0, 0, 0, 0] = 1.0
         g[1, 1, 0, 1, 0, 0, 0] = 1.0
+        bp = np.broadcast_to(
+            np.array([-1.0, 3.0]).reshape(2, 1, 1, 1, 1, 1, 1),
+            g.shape,
+        ).copy()
         stats = SimpleNamespace()
         add_aggregate_wealth_bequest_flow_moments(
-            stats, g, p, np.array([-1.0, 3.0]), np.array([1.0])
+            stats,
+            g,
+            g,
+            bp,
+            p,
+            np.array([-1.0, 3.0]),
+            np.array([1.0]),
         )
         self.assertAlmostEqual(stats.aggregate_wealth, 4.0)
         self.assertAlmostEqual(stats.aggregate_liquid_net_worth, 2.0)
@@ -77,6 +86,43 @@ class NewMomentProfileTests(unittest.TestCase):
         self.assertAlmostEqual(stats.aggregate_wealth_to_annual_after_tax_earnings, 2.0)
         self.assertAlmostEqual(stats.annual_bequest_flow, 1.25)
         self.assertAlmostEqual(stats.annual_bequest_flow_to_aggregate_wealth, 0.3125)
+
+    def test_bequest_flow_uses_post_saving_estate_at_death(self) -> None:
+        p = SimpleNamespace(
+            J=1,
+            I=1,
+            J_R=0,
+            period_years=4.0,
+            da=4.0,
+            scale_flows_to_period=True,
+            use_age_survival=True,
+            survival_probs=np.array([]),
+            income=np.array([[0.0]]),
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+        )
+        wealth_g = np.zeros((2, 2, 1, 1, 1, 1, 1))
+        wealth_g[1, 1, 0, 0, 0, 0, 0] = 1.0
+        death_choice_g = np.zeros_like(wealth_g)
+        death_choice_g[0, 1, 0, 0, 0, 0, 0] = 1.0
+        bp = np.zeros_like(wealth_g)
+        bp[0, 1, 0, 0, 0, 0, 0] = 7.0
+        stats = SimpleNamespace()
+        add_aggregate_wealth_bequest_flow_moments(
+            stats,
+            wealth_g,
+            death_choice_g,
+            bp,
+            p,
+            np.array([-1.0, 3.0]),
+            np.array([1.0]),
+        )
+        self.assertAlmostEqual(stats.aggregate_wealth, 5.0)
+        self.assertAlmostEqual(stats.annual_bequest_flow, 9.0 / 4.0)
+        self.assertAlmostEqual(
+            stats.annual_bequest_flow_to_aggregate_wealth,
+            9.0 / 20.0,
+        )
 
     def test_tenure_residual_is_expected_bernoulli_variance(self) -> None:
         p = SimpleNamespace(I=1, J=4, age_start=18.0, da=4.0)
