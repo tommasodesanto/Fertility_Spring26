@@ -127,12 +127,36 @@ def main() -> None:
             "selected_task": selected_dir.name,
             "strict_loss": strict_loss,
             "market_residual": float(selected["market_residual"]),
-            "wealth_to_earnings": float(
-                moments["aggregate_wealth_to_annual_after_tax_earnings"]
+            "wealth_to_gross_labor_earnings": float(
+                moments["aggregate_wealth_to_annual_gross_labor_earnings"]
             ),
             "aggregate_wealth": float(components.get("aggregate_wealth", math.nan)),
-            "annual_after_tax_earnings": float(
-                components.get("aggregate_annual_after_tax_earnings", math.nan)
+            "annual_gross_labor_earnings": float(
+                components.get("aggregate_annual_gross_labor_earnings", math.nan)
+            ),
+            "wealth_to_gross_labor_earnings_26_35": float(
+                components.get(
+                    "aggregate_wealth_to_annual_gross_labor_earnings_26_35",
+                    math.nan,
+                )
+            ),
+            "wealth_to_gross_labor_earnings_36_45": float(
+                components.get(
+                    "aggregate_wealth_to_annual_gross_labor_earnings_36_45",
+                    math.nan,
+                )
+            ),
+            "wealth_to_gross_labor_earnings_46_55": float(
+                components.get(
+                    "aggregate_wealth_to_annual_gross_labor_earnings_46_55",
+                    math.nan,
+                )
+            ),
+            "wealth_to_gross_labor_earnings_56_65": float(
+                components.get(
+                    "aggregate_wealth_to_annual_gross_labor_earnings_56_65",
+                    math.nan,
+                )
             ),
             "annual_bequest_flow": float(
                 components.get("annual_bequest_flow", math.nan)
@@ -184,7 +208,7 @@ def main() -> None:
         "",
         f"- Best profiled beta: `{float(best['beta_annual']):.6g}`",
         f"- Best canonical strict loss: `{float(best['strict_loss']):.12g}`",
-        f"- Wealth / earnings there: `{float(best['wealth_to_earnings']):.6g}`",
+        f"- Wealth / gross labor earnings there: `{float(best['wealth_to_gross_labor_earnings']):.6g}`",
         f"- TFR there: `{float(best['tfr']):.6g}`",
         "",
         "The complete curve is in `beta_profile.csv`; complete target-fit and",

@@ -46,7 +46,7 @@ from .solver import run_model_cp_dt
 # the calibration ledger.  Full-system rank, rather than diagonal dominance,
 # is the identification gate because several blocks are necessarily joint.
 MOMENT_PARAMETER_MAP: tuple[tuple[str, str], ...] = (
-    ("aggregate_wealth_to_annual_after_tax_earnings", "beta_annual"),
+    ("aggregate_wealth_to_annual_gross_labor_earnings", "beta_annual"),
     ("annual_bequest_flow_to_aggregate_wealth", "theta0"),
     ("old_total_wealth_to_annual_income_p90_p50_7684", "theta1"),
     ("childless_renter_rent_expenditure_slope", "alpha_cons"),
@@ -346,6 +346,7 @@ def solve_case(
         components = {
             "aggregate_wealth": math.nan,
             "aggregate_annual_after_tax_earnings": math.nan,
+            "aggregate_annual_gross_labor_earnings": math.nan,
             "annual_bequest_flow": math.nan,
         }
     return {

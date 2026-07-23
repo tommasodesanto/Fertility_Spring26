@@ -16,6 +16,7 @@ from intergen_eqscale_seq_optimized.calibration import (
     get_target_set,
 )
 from intergen_eqscale_seq_optimized.solver import (
+    add_aggregate_wealth_gross_labor_diagnostics,
     add_annual_gross_estate_wealth_moments,
     add_annual_gross_old_wealth_moments,
     add_old_nonhousing_income_share_moments,
@@ -23,6 +24,35 @@ from intergen_eqscale_seq_optimized.solver import (
 
 
 class BequestTargetMomentTests(unittest.TestCase):
+    def test_aggregate_gross_ratio_uses_all_wealth_and_worker_earnings(self) -> None:
+        p = SimpleNamespace(
+            J=2,
+            I=1,
+            J_R=1,
+            age_start=62.0,
+            da=4.0,
+            period_years=4.0,
+            tau_pay=0.2,
+            income=np.array([[4.0, 2.0]]),
+            n_parity=1,
+            n_child_states=1,
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+        )
+        bg = np.array([-1.0, 3.0])
+        ph = np.array([1.0])
+        g = np.zeros((2, 2, 1, 2, 1, 1, 1))
+        g[0, 0, 0, 0, 0, 0, 0] = 1.0
+        g[1, 1, 0, 1, 0, 0, 0] = 1.0
+        stats = SimpleNamespace()
+        add_aggregate_wealth_gross_labor_diagnostics(stats, g, p, bg, ph)
+        self.assertAlmostEqual(stats.aggregate_wealth, 4.0)
+        self.assertAlmostEqual(stats.aggregate_annual_gross_labor_earnings, 1.25)
+        self.assertAlmostEqual(
+            stats.aggregate_wealth_to_annual_gross_labor_earnings,
+            3.2,
+        )
+
     def test_estate_targets_use_gross_home_value_and_live_parity_bins(self) -> None:
         p = SimpleNamespace(
             J=5,

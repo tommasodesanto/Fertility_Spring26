@@ -153,12 +153,13 @@ result packets are under:
 
 ## Aggregate Wealth/Earnings Audit (July 23, 2026)
 
-`audit_aggregate_wealth_earnings_ratio.R` constructs a transparent
-gross-wealth/gross-earnings diagnostic from the PSID shelf and reports
-1984--2003 and 2005--2019 vintages separately. Its packet is under
-`output/aggregate_wealth_earnings_audit/`. This is a normalization and vintage
-check, not an adopted calibration target; it does not reproduce Hendricks's
-TAXSIM-based after-tax earnings.
+`audit_aggregate_wealth_earnings_ratio.R` constructs the adopted recent-vintage
+aggregate net-worth/gross-labor-earnings target from the PSID shelf. It uses
+2005--2019 reference-person family-years, wealth ages 18--85, RP/spouse gross
+labor earnings ages 18--65, and a 999-draw reference-person-cluster bootstrap.
+The target is `6.873077` (bootstrap SE `0.398836`). The 26--35 / 36--45 /
+46--55 / 56--65 profile is robustness-only for both model strands. The packet
+is under `output/aggregate_wealth_earnings_audit/`.
 
 ## First-Pass Wealth Findings (v1)
 

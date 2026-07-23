@@ -327,8 +327,14 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
     "aggregate_wealth_to_annual_after_tax_earnings": {
         "model": "aggregate liquid net worth plus gross owner housing value, divided by working-age annual after-tax labor earnings.",
         "data": "De Nardi-Yang aggregate wealth divided by after-tax labor earnings target.",
-        "status": "borrowed-target-matched-denominator",
-        "issue": "Model denominator excludes pensions and lump-sum transfers; the level remains borrowed rather than re-estimated for this project.",
+        "status": "retired-borrowed-target",
+        "issue": "Historical target only: the model removes a payroll wedge, whereas the borrowed data denominator also removed income taxes.",
+    },
+    "aggregate_wealth_to_annual_gross_labor_earnings": {
+        "model": "aggregate beginning-of-period net worth over ages 18-85, divided by annual gross labor earnings over working ages 18-65.",
+        "data": "PSID 2005-2019 aggregate NETWORTHR divided by aggregate RP/spouse EARNINDRRC under the matched age restrictions.",
+        "status": "matched-recent-vintage-target",
+        "issue": "The PSID understates the extreme top wealth tail; age-binned ratios are robustness-only and not calibration targets.",
     },
     "annual_bequest_flow_to_aggregate_wealth": {
         "model": "age-survival-weighted expected nonnegative estate flow, annualized and divided by aggregate liquid plus gross housing wealth.",
@@ -1426,6 +1432,37 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, float]:
         "wealth_to_income": float(getattr(sol, "wealth_to_income", np.nan)),
         "aggregate_wealth_to_annual_after_tax_earnings": float(
             getattr(sol, "aggregate_wealth_to_annual_after_tax_earnings", np.nan)
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings": float(
+            getattr(sol, "aggregate_wealth_to_annual_gross_labor_earnings", np.nan)
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_26_35": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_26_35",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_36_45": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_36_45",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_46_55": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_46_55",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_56_65": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_56_65",
+                np.nan,
+            )
         ),
         "annual_bequest_flow_to_aggregate_wealth": float(
             getattr(sol, "annual_bequest_flow_to_aggregate_wealth", np.nan)

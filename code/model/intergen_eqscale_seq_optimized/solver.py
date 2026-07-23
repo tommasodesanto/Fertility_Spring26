@@ -2599,16 +2599,20 @@ def solve_bellman_full_markov_income(
                     V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
                     V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
                     V[:, :, :, j, zz, 0, 1:] = VI[:, :, :, 0, 1:]
+                    # Entry (childless wait/try) keeps kappa_fert; upward attempts
+                    # at every parity use the continuation scale when set — margin-specific Gumbel scales on the same sequential choice tree.
+                    kf_cont_raw = getattr(P, "kappa_fert_continuation", None)
+                    kf_cont = float(P.kappa_fert) if kf_cont_raw is None else float(kf_cont_raw)
                     # upward attempts only while a child is at home (cs=1):
                     # parity nn may try for birth nn+1; side-channel slot nn-1.
                     for nn in range(1, npar - 1):
                         V2 = np.empty((Nb, nt, I, 2))
                         V2[:, :, :, 0] = VI[:, :, :, nn, 1]
                         V2[:, :, :, 1] = pi_j * VI[:, :, :, nn + 1, 1] + (1.0 - pi_j) * VI[:, :, :, nn, 1]
-                        l2, p2 = logsumexp(V2 / P.kappa_fert, axis=3)
+                        l2, p2 = logsumexp(V2 / kf_cont, axis=3)
                         p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
                         fert2_probs[:, :, :, j, zz, :, nn - 1] = p2
-                        V[:, :, :, j, zz, nn, 1] = P.kappa_fert * l2
+                        V[:, :, :, j, zz, nn, 1] = kf_cont * l2
                 else:
                     Vfa = np.zeros((Nb, nt, I, npar))
                     Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
@@ -5187,6 +5191,86 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
         setattr(stats, f"{name}_mass", mass)
 
 
+def add_aggregate_wealth_gross_labor_diagnostics(
+    stats: SimpleNamespace,
+    g: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Add the matched aggregate gross/gross ratio and lifecycle diagnostics.
+
+    The numerator is beginning-of-period net worth for every living household.
+    The denominator is annual gross labor earnings for working households only.
+    Age-binned ratios are robustness diagnostics, never calibration targets.
+    """
+
+    g_arr = np.asarray(g, dtype=float)
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    ph_arr = np.asarray(ph, dtype=float).reshape(-1)
+    if g_arr.ndim == 6:
+        g7 = g_arr[:, :, :, :, None, :, :]
+        z_values = np.array([1.0])
+    elif g_arr.ndim == 7:
+        g7 = g_arr
+        z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    else:
+        return
+
+    wealth_by_age = np.zeros(int(P.J), dtype=float)
+    gross_labor_earnings_by_age = np.zeros(int(P.J), dtype=float)
+    for j in range(int(P.J)):
+        for i in range(int(P.I)):
+            for zz in range(g7.shape[4]):
+                z_value = float(z_values[zz]) if zz < z_values.size else 1.0
+                state_mass = float(np.sum(g7[:, :, i, j, zz, :, :]))
+                if j < int(P.J_R):
+                    gross_labor_earnings_by_age[j] += (
+                        annual_gross_income_at_state(P, i, j, z_value) * state_mass
+                    )
+                for ten in range(g7.shape[1]):
+                    housing_value = (
+                        float(ph_arr[i]) * float(P.H_own[ten - 1])
+                        if ten > 0
+                        else 0.0
+                    )
+                    mass_by_asset = np.sum(
+                        g7[:, ten, i, j, zz, :, :],
+                        axis=(1, 2),
+                    )
+                    wealth_by_age[j] += float(
+                        np.sum(mass_by_asset * (bg_arr + housing_value))
+                    )
+
+    aggregate_wealth = float(np.sum(wealth_by_age))
+    aggregate_gross_labor_earnings = float(
+        np.sum(gross_labor_earnings_by_age)
+    )
+    stats.aggregate_wealth = aggregate_wealth
+    stats.aggregate_annual_gross_labor_earnings = (
+        aggregate_gross_labor_earnings
+    )
+    stats.aggregate_wealth_to_annual_gross_labor_earnings = (
+        aggregate_wealth / max(aggregate_gross_labor_earnings, 1e-12)
+    )
+    stats.aggregate_wealth_by_age = wealth_by_age
+    stats.aggregate_annual_gross_labor_earnings_by_age = (
+        gross_labor_earnings_by_age
+    )
+    model_ages = float(P.age_start) + np.arange(int(P.J)) * float(P.da)
+    for age_lo, age_hi in ((26, 35), (36, 45), (46, 55), (56, 65)):
+        in_bin = (model_ages >= age_lo) & (model_ages <= age_hi)
+        setattr(
+            stats,
+            f"aggregate_wealth_to_annual_gross_labor_earnings_{age_lo}_{age_hi}",
+            float(np.sum(wealth_by_age[in_bin]))
+            / max(
+                float(np.sum(gross_labor_earnings_by_age[in_bin])),
+                1e-12,
+            ),
+        )
+
+
 def add_annual_gross_old_wealth_moments(
     stats: SimpleNamespace,
     g: np.ndarray,
@@ -5427,6 +5511,7 @@ def compute_markov_statistics(
     # operator). Recompute them on the full income-resolved distribution.
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
+    add_aggregate_wealth_gross_labor_diagnostics(stats, asset_dist, P, bg, ph)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     add_annual_gross_old_wealth_moments(stats, asset_dist, P, bg, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
@@ -6161,6 +6246,7 @@ def compute_statistics(
     stats.housing_increment_1to2 = (
         stats.mean_housing_by_parity[2] - stats.mean_housing_by_parity[1] if npar >= 3 else 0.0
     )
+    add_aggregate_wealth_gross_labor_diagnostics(stats, asset_dist, P, bg, ph)
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     return stats
 

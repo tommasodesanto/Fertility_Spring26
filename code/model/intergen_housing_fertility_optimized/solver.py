@@ -5855,6 +5855,7 @@ def add_aggregate_wealth_bequest_flow_moments(
     aggregate_liquid_debt = 0.0
     aggregate_gross_housing_wealth = 0.0
     aggregate_annual_earnings = 0.0
+    aggregate_annual_gross_labor_earnings = 0.0
     annual_bequest_flow = 0.0
     wealth_by_age = np.zeros(int(P.J), dtype=float)
     liquid_net_worth_by_age = np.zeros(int(P.J), dtype=float)
@@ -5862,6 +5863,7 @@ def add_aggregate_wealth_bequest_flow_moments(
     liquid_debt_by_age = np.zeros(int(P.J), dtype=float)
     gross_housing_wealth_by_age = np.zeros(int(P.J), dtype=float)
     annual_earnings_by_age = np.zeros(int(P.J), dtype=float)
+    annual_gross_labor_earnings_by_age = np.zeros(int(P.J), dtype=float)
     mass_by_age = np.zeros(int(P.J), dtype=float)
     for j in range(int(P.J)):
         if bool(getattr(P, "use_age_survival", False)) and j < int(P.J) - 1:
@@ -5876,8 +5878,18 @@ def add_aggregate_wealth_bequest_flow_moments(
                 mass_by_age[j] += state_mass
                 if j < int(P.J_R):
                     labor_earnings = float(P.income[i, j]) * float(z_value) / period_years
+                    gross_labor_earnings = labor_earnings / max(
+                        1.0 - float(getattr(P, "tau_pay", 0.0)),
+                        1e-12,
+                    )
                     aggregate_annual_earnings += labor_earnings * state_mass
                     annual_earnings_by_age[j] += labor_earnings * state_mass
+                    aggregate_annual_gross_labor_earnings += (
+                        gross_labor_earnings * state_mass
+                    )
+                    annual_gross_labor_earnings_by_age[j] += (
+                        gross_labor_earnings * state_mass
+                    )
                 for ten in range(wealth_arr.shape[1]):
                     housing_value = (
                         float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
@@ -5915,6 +5927,10 @@ def add_aggregate_wealth_bequest_flow_moments(
     stats.aggregate_wealth_to_annual_after_tax_earnings = (
         aggregate_wealth / max(aggregate_annual_earnings, 1e-12)
     )
+    stats.aggregate_wealth_to_annual_gross_labor_earnings = (
+        aggregate_wealth
+        / max(aggregate_annual_gross_labor_earnings, 1e-12)
+    )
     stats.annual_bequest_flow_to_aggregate_wealth = (
         annual_bequest_flow / max(aggregate_wealth, 1e-12)
     )
@@ -5924,6 +5940,9 @@ def add_aggregate_wealth_bequest_flow_moments(
     stats.aggregate_liquid_debt = aggregate_liquid_debt
     stats.aggregate_gross_housing_wealth = aggregate_gross_housing_wealth
     stats.aggregate_annual_after_tax_earnings = aggregate_annual_earnings
+    stats.aggregate_annual_gross_labor_earnings = (
+        aggregate_annual_gross_labor_earnings
+    )
     stats.annual_bequest_flow = annual_bequest_flow
     stats.aggregate_wealth_by_age = wealth_by_age
     stats.aggregate_liquid_net_worth_by_age = liquid_net_worth_by_age
@@ -5931,7 +5950,24 @@ def add_aggregate_wealth_bequest_flow_moments(
     stats.aggregate_liquid_debt_by_age = liquid_debt_by_age
     stats.aggregate_gross_housing_wealth_by_age = gross_housing_wealth_by_age
     stats.aggregate_annual_after_tax_earnings_by_age = annual_earnings_by_age
+    stats.aggregate_annual_gross_labor_earnings_by_age = (
+        annual_gross_labor_earnings_by_age
+    )
     stats.population_mass_by_age = mass_by_age
+    model_ages = float(getattr(P, "age_start", 18.0)) + np.arange(
+        int(P.J)
+    ) * float(getattr(P, "da", period_years))
+    for age_lo, age_hi in ((26, 35), (36, 45), (46, 55), (56, 65)):
+        in_bin = (model_ages >= age_lo) & (model_ages <= age_hi)
+        setattr(
+            stats,
+            f"aggregate_wealth_to_annual_gross_labor_earnings_{age_lo}_{age_hi}",
+            float(np.sum(wealth_by_age[in_bin]))
+            / max(
+                float(np.sum(annual_gross_labor_earnings_by_age[in_bin])),
+                1e-12,
+            ),
+        )
 
 
 def compute_markov_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:

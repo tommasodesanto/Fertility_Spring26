@@ -1,5 +1,5 @@
 #!/bin/bash
-# Collect the historical seven-cell conditional annual-beta diagnostic.
+# Collect the corrected recent-vintage gross/gross conditional-beta profile.
 #SBATCH --job-name=ihfnewbpc
 #SBATCH --output=slurm_ihfnewbp_collect_%j.out
 #SBATCH --error=slurm_ihfnewbp_collect_%j.err
@@ -19,9 +19,10 @@ PYTHON_BIN="$(command -v python3 || command -v python)"
 export PYTHONPATH="${MODEL_DIR}:${PYTHONPATH:-}"
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
-RUN_TAG="${NEW_MOMENT_BETA_PROFILE_RUN_TAG:-intergen_new_moment_beta_profile_20260723}"
+RUN_TAG="${NEW_MOMENT_BETA_PROFILE_RUN_TAG:-intergen_new_moment_beta_recent_gross_20260723}"
 RUN_ROOT="${PROJECT_ROOT}/output/model/${RUN_TAG}"
 mkdir -p "${RUN_ROOT}/report"
 exec "$PYTHON_BIN" -m intergen_housing_fertility_optimized.collect_beta_profile \
   --run-root "${RUN_ROOT}/tasks" \
-  --output "${RUN_ROOT}/report"
+  --output "${RUN_ROOT}/report" \
+  --expected-betas 0.98 0.99 0.995 0.999 0.9995

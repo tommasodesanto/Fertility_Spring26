@@ -118,10 +118,10 @@ def main() -> None:
     positive_liquid = float(solution.aggregate_positive_liquid_assets)
     liquid_debt = float(solution.aggregate_liquid_debt)
     housing = float(solution.aggregate_gross_housing_wealth)
-    earnings = float(solution.aggregate_annual_after_tax_earnings)
+    earnings = float(solution.aggregate_annual_gross_labor_earnings)
     bequests = float(solution.annual_bequest_flow)
     target_ratio = float(
-        system.targets_dict()["aggregate_wealth_to_annual_after_tax_earnings"]
+        system.targets_dict()["aggregate_wealth_to_annual_gross_labor_earnings"]
     )
     required_wealth = target_ratio * earnings
     asset_grid = np.asarray(solution.b_grid, dtype=float)
@@ -183,7 +183,7 @@ def main() -> None:
         ),
     }
     for values in balance_sheets.values():
-        values["wealth_to_annual_after_tax_earnings"] = values["net_wealth"] / earnings
+        values["wealth_to_annual_gross_labor_earnings"] = values["net_wealth"] / earnings
     timing_distributions = {
         "beginning_of_period_consistent": np.asarray(
             beginning_distribution,
@@ -215,8 +215,8 @@ def main() -> None:
             prices,
         )
         timing_target_moments[timing] = {
-            "aggregate_wealth_to_annual_after_tax_earnings": float(
-                timing_stats.aggregate_wealth_to_annual_after_tax_earnings
+            "aggregate_wealth_to_annual_gross_labor_earnings": float(
+                timing_stats.aggregate_wealth_to_annual_gross_labor_earnings
             ),
             "annual_bequest_flow_to_aggregate_wealth": float(
                 timing_stats.annual_bequest_flow_to_aggregate_wealth
@@ -241,8 +241,8 @@ def main() -> None:
         "strict_loss": float(system.loss(moments)),
         "market_residual": float(solution.best_max_abs_rel_excess),
         "price": float(np.asarray(price).reshape(-1)[0]),
-        "wealth_to_annual_after_tax_earnings": wealth / earnings,
-        "target_wealth_to_annual_after_tax_earnings": target_ratio,
+        "wealth_to_annual_gross_labor_earnings": wealth / earnings,
+        "target_wealth_to_annual_gross_labor_earnings": target_ratio,
         "aggregate_wealth": wealth,
         "aggregate_liquid_net_worth": liquid,
         "aggregate_positive_liquid_assets": positive_liquid,
@@ -252,7 +252,7 @@ def main() -> None:
         "gross_housing_share_of_wealth": housing / wealth,
         "positive_liquid_assets_share_of_wealth": positive_liquid / wealth,
         "liquid_debt_share_of_wealth": liquid_debt / wealth,
-        "aggregate_annual_after_tax_earnings": earnings,
+        "aggregate_annual_gross_labor_earnings": earnings,
         "annual_bequest_flow": bequests,
         "target_implied_aggregate_wealth_at_model_earnings": required_wealth,
         "aggregate_wealth_shortfall": required_wealth - wealth,
@@ -281,7 +281,7 @@ def main() -> None:
     housing_age = np.asarray(solution.aggregate_gross_housing_wealth_by_age, dtype=float)
     wealth_age = np.asarray(solution.aggregate_wealth_by_age, dtype=float)
     earnings_age = np.asarray(
-        solution.aggregate_annual_after_tax_earnings_by_age,
+        solution.aggregate_annual_gross_labor_earnings_by_age,
         dtype=float,
     )
     age_rows = [
@@ -293,7 +293,7 @@ def main() -> None:
             "aggregate_liquid_debt": float(liquid_debt_age[index]),
             "aggregate_gross_housing_wealth": float(housing_age[index]),
             "aggregate_total_wealth": float(wealth_age[index]),
-            "aggregate_annual_after_tax_earnings": float(earnings_age[index]),
+            "aggregate_annual_gross_labor_earnings": float(earnings_age[index]),
             "liquid_net_worth_per_household": float(
                 liquid_age[index] / max(mass[index], 1e-12)
             ),
@@ -309,7 +309,7 @@ def main() -> None:
             "total_wealth_per_household": float(
                 wealth_age[index] / max(mass[index], 1e-12)
             ),
-            "annual_after_tax_earnings_per_household": float(
+            "annual_gross_labor_earnings_per_household": float(
                 earnings_age[index] / max(mass[index], 1e-12)
             ),
         }
@@ -415,7 +415,7 @@ def main() -> None:
     axis.plot(ages, liquid_pc, marker="o", label="Liquid net worth")
     axis.plot(ages, housing_pc, marker="o", label="Gross housing wealth")
     axis.plot(ages, liquid_pc + housing_pc, color="black", linewidth=2.0, label="Total wealth")
-    axis.plot(ages, earnings_pc, linestyle="--", label="Annual after-tax earnings")
+    axis.plot(ages, earnings_pc, linestyle="--", label="Annual gross labor earnings")
     axis.axhline(0.0, color="0.75", linewidth=0.8)
     axis.set_xlabel("Age")
     axis.set_ylabel("Model units per household")
@@ -490,14 +490,15 @@ with the household's newly chosen tenure. That is not an internally consistent
 balance sheet: it can double-count housing for buyers and omit sale proceeds
 for sellers.
 
-| Measurement | Wealth / annual after-tax earnings | Net wealth |
+| Measurement | Wealth / annual gross labor earnings | Net wealth |
 |---|---:|---:|
-| Beginning of period, inherited tenure and assets | {beginning["wealth_to_annual_after_tax_earnings"]:.6f} | {beginning["net_wealth"]:.6f} |
-| Historical invalid target: inherited assets, newly chosen tenure | {hybrid["wealth_to_annual_after_tax_earnings"]:.6f} | {hybrid["net_wealth"]:.6f} |
-| Post transaction, newly chosen tenure and assets | {posttransaction["wealth_to_annual_after_tax_earnings"]:.6f} | {posttransaction["net_wealth"]:.6f} |
+| Beginning of period, inherited tenure and assets | {beginning["wealth_to_annual_gross_labor_earnings"]:.6f} | {beginning["net_wealth"]:.6f} |
+| Historical invalid target: inherited assets, newly chosen tenure | {hybrid["wealth_to_annual_gross_labor_earnings"]:.6f} | {hybrid["net_wealth"]:.6f} |
+| Post transaction, newly chosen tenure and assets | {posttransaction["wealth_to_annual_gross_labor_earnings"]:.6f} | {posttransaction["net_wealth"]:.6f} |
 | Empirical target | {target_ratio:.6f} | {required_wealth:.6f} at model earnings |
 
-Thus the reported ratio of {hybrid["wealth_to_annual_after_tax_earnings"]:.3f}
+The historical hybrid balance sheet gives a ratio of
+{hybrid["wealth_to_annual_gross_labor_earnings"]:.3f}, which
 overstates both consistent alternatives. The low-wealth problem is not resolved
 by correcting the timing; it becomes larger.
 
@@ -521,7 +522,7 @@ extreme terminal distortion in the age plot.
 - Liquid debt: {liquid_debt:.6f}
 - Gross housing wealth: {housing:.6f}
 - Net wealth: {wealth:.6f}
-- Annual after-tax earnings: {earnings:.6f}
+- Annual gross labor earnings: {earnings:.6f}
 
 See `wealth_timing_by_age.png` for the age pattern and
 `wealth_timing_comparison.csv` for the exact aggregate accounting.

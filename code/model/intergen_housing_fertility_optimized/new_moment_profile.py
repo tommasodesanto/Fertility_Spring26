@@ -1,4 +1,4 @@
-"""Timing-repaired fourteen-moment calibration contract for the July 2026 ledger."""
+"""Timing- and wealth-definition-repaired fourteen-moment July 2026 contract."""
 
 from __future__ import annotations
 
@@ -8,13 +8,15 @@ from .m5_profile import M5_THETA, m5_overrides
 from .target_system import TargetSystem
 
 
-NEW_MOMENT_PROFILE_NAME = "intergen_new_moment_ledger_timing_repaired_20260723"
+NEW_MOMENT_PROFILE_NAME = "intergen_new_moment_ledger_gross_wealth_income_20260723"
 NEW_MOMENT_PROFILE_RUNNABLE = True
 
 # Cross-sectional wealth and living-old wealth use the beginning-of-period
-# state. The bequest flow uses post-saving resources at the death node.
+# state. The bequest flow uses post-saving resources at the death node. The
+# aggregate saving target is the matched 2005-2019 PSID gross/gross ratio from
+# code/data/psid_followup_mar2026/output/aggregate_wealth_earnings_audit/.
 NEW_MOMENT_TARGETS = {
-    "aggregate_wealth_to_annual_after_tax_earnings": 6.90,
+    "aggregate_wealth_to_annual_gross_labor_earnings": 6.87307721116358,
     "annual_bequest_flow_to_aggregate_wealth": 0.0088,
     "old_total_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
     "childless_renter_rent_expenditure_slope": 0.264688845713763,
@@ -39,16 +41,28 @@ NEW_MOMENT_WEIGHTS = {
 
 NEW_MOMENT_SEED = {
     **M5_THETA,
-    "alpha_cons": 0.732604792138097,
-    "c_bar_0": 0.397043947943839,
-    "h_bar_0": 2.62980268679178,
-    "c_bar_n": 0.0752004729804767,
+    # Timing-repaired v2 winner, used only as the continuation seed for the
+    # gross/gross target revision.
+    "beta": 0.997459215934036,
+    "alpha_cons": 0.6274604033546914,
+    "c_bar_0": 0.5168123052802193,
+    "c_bar_n": 0.1581965720667883,
+    "h_bar_0": 0.5772612042418263,
+    "h_bar_jump": 0.04817446833955657,
+    "h_bar_n": 0.9259334338411668,
+    "psi_child": -1.038325531838713,
+    "kappa_fert": 5.492875182493313,
+    "chi": 1.0802049637994615,
+    "H0": 5.137297717207506,
+    "theta0": 0.020734580571044135,
+    "theta1": 0.12370835450345574,
+    "tenure_choice_kappa": 0.018730093416335268,
 }
 
 
 def new_moment_target_system() -> TargetSystem:
     system = TargetSystem.from_mappings(
-        "new_moment_ledger_14_v2_timing_repaired_relative_loss",
+        "new_moment_ledger_14_v3_recent_gross_wealth_income_relative_loss",
         NEW_MOMENT_TARGETS,
         NEW_MOMENT_WEIGHTS,
     )

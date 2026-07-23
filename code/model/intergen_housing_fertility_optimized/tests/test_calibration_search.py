@@ -95,7 +95,7 @@ class CalibrationSearchContractTests(unittest.TestCase):
 
     def test_search_weight_tilt_changes_navigation_not_canonical_contract(self) -> None:
         canonical = new_moment_target_system()
-        moment = "aggregate_wealth_to_annual_after_tax_earnings"
+        moment = "aggregate_wealth_to_annual_gross_labor_earnings"
         search, multipliers = build_search_target_system(canonical, [f"{moment}=4"])
         self.assertEqual(multipliers, {moment: 4.0})
         self.assertEqual(search.moment_names, canonical.moment_names)

@@ -1369,6 +1369,37 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "old_total_wealth_to_annual_income_p90_7684": float(
             getattr(sol, "old_total_wealth_to_annual_income_p90_7684", np.nan)
         ),
+        "aggregate_wealth_to_annual_gross_labor_earnings": float(
+            getattr(sol, "aggregate_wealth_to_annual_gross_labor_earnings", np.nan)
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_26_35": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_26_35",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_36_45": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_36_45",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_46_55": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_46_55",
+                np.nan,
+            )
+        ),
+        "aggregate_wealth_to_annual_gross_labor_earnings_56_65": float(
+            getattr(
+                sol,
+                "aggregate_wealth_to_annual_gross_labor_earnings_56_65",
+                np.nan,
+            )
+        ),
         "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": float(
             getattr(
                 sol,

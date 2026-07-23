@@ -56,6 +56,8 @@ class NewMomentProfileTests(unittest.TestCase):
             use_age_survival=True,
             survival_probs=np.array([0.5]),
             income=np.array([[4.0, 4.0]]),
+            tau_pay=0.2,
+            age_start=18.0,
             property_tax_lump_sum_transfer=0.0,
             H_own=np.array([2.0]),
             z_grid=np.array([1.0]),
@@ -84,6 +86,11 @@ class NewMomentProfileTests(unittest.TestCase):
         self.assertAlmostEqual(stats.aggregate_gross_housing_wealth, 2.0)
         self.assertAlmostEqual(stats.aggregate_annual_after_tax_earnings, 2.0)
         self.assertAlmostEqual(stats.aggregate_wealth_to_annual_after_tax_earnings, 2.0)
+        self.assertAlmostEqual(stats.aggregate_annual_gross_labor_earnings, 2.5)
+        self.assertAlmostEqual(
+            stats.aggregate_wealth_to_annual_gross_labor_earnings,
+            1.6,
+        )
         self.assertAlmostEqual(stats.annual_bequest_flow, 1.25)
         self.assertAlmostEqual(stats.annual_bequest_flow_to_aggregate_wealth, 0.3125)
 

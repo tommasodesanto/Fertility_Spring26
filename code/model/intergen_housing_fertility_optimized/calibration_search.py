@@ -248,6 +248,11 @@ def wealth_components(solution: Any) -> dict[str, float]:
             "aggregate_liquid_debt",
             "aggregate_gross_housing_wealth",
             "aggregate_annual_after_tax_earnings",
+            "aggregate_annual_gross_labor_earnings",
+            "aggregate_wealth_to_annual_gross_labor_earnings_26_35",
+            "aggregate_wealth_to_annual_gross_labor_earnings_36_45",
+            "aggregate_wealth_to_annual_gross_labor_earnings_46_55",
+            "aggregate_wealth_to_annual_gross_labor_earnings_56_65",
             "annual_bequest_flow",
         )
     }
