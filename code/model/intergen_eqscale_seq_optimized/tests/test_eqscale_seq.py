@@ -58,6 +58,41 @@ def test_sequential_second_birth_hazard_respects_fecundity() -> None:
     )
 
 
+def test_kappa_continuation_default_is_bitwise_inert() -> None:
+    base = {**_tiny_markov(), "sequential_births": True}
+    absent, P, _ = run_fork(base, verbose=False)
+    explicit_none, _, _ = run_fork({**base, "kappa_fert_continuation": None}, verbose=False)
+    explicit_equal, _, _ = run_fork(
+        {**base, "kappa_fert_continuation": float(P.kappa_fert)}, verbose=False
+    )
+    for sol in (explicit_none, explicit_equal):
+        assert np.array_equal(absent.V, sol.V)
+        assert np.array_equal(absent.g, sol.g)
+
+
+def test_kappa_continuation_split_changes_attempt_margin() -> None:
+    base = {**_tiny_markov(), "sequential_births": True, "fecundity_omega1": 0.5, "fecundity_omega2": 0.0}
+    baseline, P, _ = run_fork(base, verbose=False)
+    split, P_split, _ = run_fork(
+        {**base, "kappa_fert_continuation": 0.25 * float(P.kappa_fert)}, verbose=False
+    )
+    assert not np.array_equal(baseline.V, split.V)
+    np.testing.assert_allclose(
+        P_split._second_births_by_age,
+        0.5 * P_split._second_attempts_by_age,
+        atol=1e-12,
+        rtol=0.0,
+    )
+
+
+def test_kappa_continuation_ignored_without_sequential_births() -> None:
+    base = _tiny_markov()
+    baseline, _, _ = run_fork(base, verbose=False)
+    split, _, _ = run_fork({**base, "kappa_fert_continuation": 0.3}, verbose=False)
+    assert np.array_equal(baseline.V, split.V)
+    assert np.array_equal(baseline.g, split.g)
+
+
 def test_eqscale_renter_allocation_and_childless_invariance() -> None:
     base = {**_tiny_markov(), "preference_spec": "eqscale", "delta_alpha": 0.1, "gamma_e": 0.5}
     sol, P, _ = run_fork(base, verbose=False)

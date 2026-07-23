@@ -60,6 +60,7 @@ def setup_parameters() -> SimpleNamespace:
     P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
 
     P.kappa_fert = 4.5
+    P.kappa_fert_continuation = None
     P.kappa_loc = 2.0
     P.eps_fert = P.kappa_fert
     P.eps_loc = P.kappa_loc

@@ -46,6 +46,13 @@ PSI_GRID = [-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.7233]
 KAPPA_GRID = [0.5, 1.0, 1.8, 3.0, 6.0, 10.0, 15.9109]
 GAMMA_GRID = [0.0085, 0.2, 0.5]
 FORM_GRID = ("power", "sqrt", "linear_g05")
+PSI_GRID_V3 = [0.5, 1.0, 1.5, 2.0, 3.0, 4.5, 6.0]
+DJUMP_GRID_V3 = [0.087, 0.15, 0.22, 0.30, 0.38, 0.46, 0.55]
+KCFG_GRID_V3 = [
+    ("shared", 15.9109, None),
+    ("split_lo", 3.0, 0.3),
+    ("split_hi", 10.0, 0.3),
+]
 
 KEEP = [
     "tfr", "mean_completed_fertility", "childless_rate",
@@ -57,9 +64,16 @@ KEEP = [
 ]
 
 
-def cell_spec(cell: int, design: str) -> tuple[float, float, float | str]:
+def cell_spec(cell: int, design: str) -> tuple[float, float, float | str | tuple[str, float, float | None]]:
     """Return the form-major grid coordinates for one one-indexed frontier cell."""
     third_grid: tuple[float, ...] | tuple[str, ...]
+    if design == "v3_entry_noise":
+        ncell = len(KCFG_GRID_V3) * len(PSI_GRID_V3) * len(DJUMP_GRID_V3)
+        if not 1 <= cell <= ncell:
+            raise ValueError(f"cell must be in 1..{ncell}")
+        kcfg_idx, rem = divmod(cell - 1, len(PSI_GRID_V3) * len(DJUMP_GRID_V3))
+        psi_idx, djump_idx = divmod(rem, len(DJUMP_GRID_V3))
+        return PSI_GRID_V3[psi_idx], DJUMP_GRID_V3[djump_idx], KCFG_GRID_V3[kcfg_idx]
     if design == "v1":
         third_grid = tuple(GAMMA_GRID)
     elif design == "v2_imposed_scale":
@@ -77,6 +91,23 @@ def cell_spec(cell: int, design: str) -> tuple[float, float, float | str]:
 def cell_overrides(cell: int, design: str = "v1") -> dict:
     """Build one fixed-coordinate frontier cell without solving the model."""
     psi, kap, third = cell_spec(cell, design)
+    if design == "v3_entry_noise":
+        kcfg, kappa_fert, kappa_fert_continuation = third
+        overrides = {
+            **e1_overrides(tight=True, optimized=True),
+            **E3_THETA,
+            **L4,
+            **flhsv_income_overrides(),
+            "eqscale_form": "power",
+            "gamma_e": 0.0,
+            "psi_child": psi,
+            "delta_alpha_jump": kap,
+            "kappa_fert": kappa_fert,
+            "p_init_override": np.array([E3_PRICE_GUESS]),
+        }
+        if kappa_fert_continuation is not None:
+            overrides["kappa_fert_continuation"] = kappa_fert_continuation
+        return overrides
     if design == "v1":
         return {
             **e1_overrides(tight=True, optimized=True),
@@ -108,7 +139,7 @@ def cell_overrides(cell: int, design: str = "v1") -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cell", type=int, required=True, help="1..147")
-    parser.add_argument("--design", choices=("v1", "v2_imposed_scale"), default="v1")
+    parser.add_argument("--design", choices=("v1", "v2_imposed_scale", "v3_entry_noise"), default="v1")
     parser.add_argument("--outdir", type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -137,6 +168,21 @@ def main() -> None:
                 "income": "flhsv",
                 "eqscale_form": overrides["eqscale_form"],
                 "gamma_e": overrides["gamma_e"],
+            }
+        )
+    elif args.design == "v3_entry_noise":
+        kcfg, kappa_fert, kappa_fert_continuation = third
+        record.update(
+            {
+                "design": args.design,
+                "form": "power",
+                "income": "flhsv",
+                "eqscale_form": overrides["eqscale_form"],
+                "gamma_e": overrides["gamma_e"],
+                "kcfg": kcfg,
+                "delta_alpha_jump": kap,
+                "kappa_fert": kappa_fert,
+                "kappa_fert_continuation": kappa_fert_continuation,
             }
         )
     args.outdir.mkdir(parents=True, exist_ok=True)

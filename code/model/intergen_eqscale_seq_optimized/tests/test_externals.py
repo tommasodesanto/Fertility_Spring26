@@ -32,3 +32,27 @@ def test_v2_cell_one_uses_power_scale_and_flhsv_income():
     assert overrides["eqscale_form"] == "power"
     assert overrides["gamma_e"] == 0.0
     np.testing.assert_array_equal(overrides["Pi_z"], flhsv_income_overrides()["Pi_z"])
+
+
+def test_v3_entry_noise_cell_overrides_and_prior_designs_are_unchanged():
+    cell1 = cell_overrides(1, "v3_entry_noise")
+    assert cell1["psi_child"] == 0.5
+    assert cell1["delta_alpha_jump"] == 0.087
+    assert cell1["kappa_fert"] == 15.9109
+    assert "kappa_fert_continuation" not in cell1 or cell1["kappa_fert_continuation"] is None
+
+    cell50 = cell_overrides(50, "v3_entry_noise")
+    assert cell50["kappa_fert"] == 3.0
+    assert cell50["kappa_fert_continuation"] == 0.3
+
+    cell99 = cell_overrides(99, "v3_entry_noise")
+    assert cell99["kappa_fert"] == 10.0
+    assert cell99["kappa_fert_continuation"] == 0.3
+
+    v1 = cell_overrides(1, "v1")
+    assert v1["psi_child"] == -0.5
+    assert v1["kappa_fert"] == 0.5
+    assert v1["gamma_e"] == 0.0085
+    v2 = cell_overrides(1, "v2_imposed_scale")
+    assert v2["eqscale_form"] == "power"
+    assert v2["gamma_e"] == 0.0
