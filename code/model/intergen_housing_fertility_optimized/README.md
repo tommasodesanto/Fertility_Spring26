@@ -1,9 +1,10 @@
 # Optimized Intergenerational Housing-Fertility Model
 
 > **Experimental physical refactor.** This package is isolated from
-> `intergen_housing_fertility` and no production runner imports it. The source
-> package remains unchanged. Promotion requires the parity and strict-repeat
-> gates below plus a representative parameter-panel benchmark.
+> `intergen_housing_fertility` and no production runner imports it. The
+> wealth-stock timing repair is mirrored in the source package, but production
+> imports have not been redirected. Promotion requires the parity and
+> strict-repeat gates below plus a representative parameter-panel benchmark.
 
 This package is a correctness-first refactor of the production M5 model. Its
 current accepted changes are:
@@ -67,18 +68,16 @@ The bounded six-hour continuation workflow is documented in
 uses recoverable one-CPU Torch chains, and promotes only twice-repeated strict
 winners; loose search losses are never compared with canonical M5.
 
-The July 22 `new_moment_profile.py` correctly replaces parameter identities
-with model-feasible CEX and PSID auxiliary moments, but its three
-saving/bequest rows are invalidated by a separate balance-sheet timing bug.
-Inherited liquid wealth is paired with newly chosen tenure before the housing
-transaction is applied. The final-winner audit is full rank only mechanically
-and is highly ill-conditioned (condition number 8,596); it is not calibration
-evidence. The exact timing decomposition is under
-`output/model/intergen_new_moment_wealth_structure_20260723/`, and the
-final-winner Jacobian is under
-`output/model/intergen_new_moment_final_jacobian_20260723/full/`. Do not launch
-a new calibration under this target system until the stock timing and the
-within-period bequest-flow timing are corrected and re-audited.
+The July 23 v2 `new_moment_profile.py` repairs the balance-sheet timing in the
+July 22 provisional target system. Cross-sectional living-household wealth
+uses the beginning-of-period state; annual bequests use post-saving resources
+at the death node; and the living PSID 76--84 p90/p50 target is no longer
+misnamed as an estate distribution. The old parameter vector has repaired
+strict loss `0.349288279` in two bit-identical solves. The repaired Jacobian is
+rank 14/14 but highly ill-conditioned (condition number 14,224), so the active
+three-hour search is a diagnostic rather than a promoted calibration. Exact
+readout and Jacobian:
+`output/model/intergen_new_moment_timing_repair_20260723/`.
 
 The canceled old-objective annual-beta search has a twice-repeated seven-cell
 strict checkpoint readout under
@@ -95,10 +94,10 @@ PYTHONPATH=$PWD .venv/bin/python \
   --outdir ../../output/model/intergen_new_moment_wealth_structure_20260723
 ```
 
-The historical three-hour launchers are
+The timing-repaired three-hour launchers are
 `cluster/submit_three_hour_new_moments.sh` and
-`cluster/submit_three_hour_new_moment_collector.sh`; they remain for
-reproducibility, not for a fresh launch.
+`cluster/submit_three_hour_new_moment_collector.sh`; they accept a certified
+seed through `NEW_MOMENT_START_THETA_JSON`.
 
 The dependent overnight continuation uses
 `cluster/submit_overnight_new_moment_battery.sh` and

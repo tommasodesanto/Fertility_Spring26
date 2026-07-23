@@ -1,6 +1,8 @@
 # Calibration Status
 
-Updated: `2026-07-23` (consolidated state of play below; the wealth-moment timing repair is the gate on everything. The July 22 one-shot target system is invalidated by hybrid balance-sheet timing; do not treat loss 0.02195 or its Jacobian as calibration evidence)
+Updated: `2026-07-23` (timing repair implemented and certified locally; the
+July 22 loss `0.02195` remains invalid, and a repaired diagnostic recalibration
+is running on Torch)
 
 ## July 23: consolidated state of play (the recap)
 
@@ -16,7 +18,22 @@ Updated: `2026-07-23` (consolidated state of play below; the wealth-moment timin
   the mechanism exists without a committed-housing device.
 - Measured auxiliaries ready for the reconciled system: LES slope -> alpha0
   0.733; parity-binned CEX consumption increment 0.0752; model-feasible
-  tenure Brier 0.1176; PSID living 76-84 estate p90/p50 3.448.
+  tenure Brier 0.1176; PSID living-household 76-84 wealth p90/p50 3.448.
+
+**Timing repair completed and certified locally (commit `d0dce5e`).**
+- Living-household wealth stocks now use the coherent beginning-of-period
+  state, `b_t + pH_t`.
+- The PSID 76-84 p90/p50 row is explicitly named and measured as living-old
+  wealth dispersion, not as realized estates.
+- Annual bequests follow the Bellman timing: current transaction, post-saving
+  `b'`, then death; the transferred estate is `max(b' + pH_current, 0)`.
+- At the invalid July 22 parameter vector, two strict repeats are bit-identical:
+  repaired loss `0.349288279`, wealth/earnings `6.010386`, annual
+  bequests/wealth `0.005705`, and living-old p90/p50 `1.911157`.
+- The repaired 14-by-14 local Jacobian is numerically full rank but more
+  ill-conditioned (`14,224`). Treat any new low loss as diagnostic, not as
+  clean one-to-one identification. Exact packet:
+  `output/model/intergen_new_moment_timing_repair_20260723/`.
 
 **Invalidated (July 23 timing audit, independently confirmed in code).** All
 wealth-row values computed via the hybrid `asset_current` (new-tenure labels
@@ -24,18 +41,17 @@ x beginning-of-period b): the one-shot 14-moment runs, and the wealth rows
 inside M5 (9.044), E1, E2 (5.486), E3 (2.806), E3b (2.294). Their beta,
 theta0, theta1 are contaminated; cross-architecture rankings are suggestive,
 not certified. Adopted repair convention (author-confirmed): cross-sectional
-stocks at beginning of period (b_t + p H_t, incoming labels — equal to the
-stationary end-of-period cross-section, the survey analogue); bequest flow
-and any decedent-based estate target at death (post-saving b' + p H_held,
-death-probability-weighted at the death node, terminal age included); the
+stocks at beginning of period (`b_t + p H_t`, incoming labels); bequest flow
+at death (post-saving `b' + p H_held`, death-probability-weighted at the death
+node, terminal age included); the
 living-PSID p90/p50 stays cross-sectional. Housing in estates stays gross of
 sale costs (stated convention). Expect the real estate-dispersion tension
 (~1.9-2.1 coherent vs 3.45) to return; honest income risk is the E-series'
 structural answer to it.
 
 **Decision queue (critical path, in order).**
-1. Implement the timing repair in both packages; recompute all target tables
-   and the Jacobian. Blocks everything downstream.
+1. **Completed:** implement the current-model timing repair; recompute the
+   target table and Jacobian.
 2. Concave equivalence scale (Citro-Michael power form, zero net new
    parameters) — proposed for the fertility bimodality; test by rerunning
    the frontier scan under the concave form before any recalibration.
@@ -46,8 +62,33 @@ structural answer to it.
 5. Freeze the reconciled 12(+family-gap)/12 system and recalibrate under
    1-4, with SE-based weights.
 
-No jobs of this strand are running. Full history in the dated sections below;
-plan of record: `docs/model/eqscale_calibration_reconciliation_20260722.md`.
+Current diagnostic job: repaired three-hour array `14658852_[1-8]`, followed
+by strict collector `14658853`. Smoke `14658839_[1-2]` passed 30/30 exact-loop
+evaluations with zero failures or infeasible cases. Full history in the dated
+sections below; plan of record:
+`docs/model/eqscale_calibration_reconciliation_20260722.md`.
+
+## July 23: timing-repaired current-model readout and diagnostic search
+
+The repaired v2 target system uses one explicit household timeline:
+beginning-of-period stocks for cross-sectional living households, current
+transactions and post-saving `b'` before the death node, and death-weighted
+bequest flows. The old-age p90/p50 target was renamed from “estate” to
+“living-old wealth” because its data are living PSID reference persons.
+
+The old parameter vector was solved strictly twice with bit-identical results.
+The complete target table and parameter/bounds table are under
+`output/model/intergen_new_moment_timing_repair_20260723/readout/`. Loss is
+`0.349288279`: living-old wealth dispersion contributes `0.198682`, bequest
+flow contributes `0.123677`, wealth/earnings contributes `0.016623`, and TFR
+contributes `0.006893`.
+
+The final-label v2 Jacobian is under
+`output/model/intergen_new_moment_timing_repair_20260723/jacobian_v2/`.
+It solves all 29 cases, is rank 14/14 at relative tolerance `1e-6`, but has
+condition number `14,223.6`; the weakest directions mix annual beta,
+fertility preferences, housing subsistence, and bequest curvature. This is
+formal local rank, not persuasive one-to-one identification.
 
 ## July 23: final-winner audit finds invalid saving/bequest measurement
 
@@ -73,15 +114,17 @@ beginning-of-period ownership at age 82 is 57.9 percent, current chosen
 ownership is 2.7 percent, and the hybrid measure assigns the sellers' inherited
 debt to the renter state without sale proceeds.
 
-At the certified winner, exact timing alternatives are:
+At the certified winner, the original forensic snapshot alternatives were:
 
 | Model moment | Active hybrid | Beginning-period consistent | Post-transaction consistent |
 |---|---:|---:|---:|
 | Wealth / annual after-tax earnings | 6.198057 | 6.010386 | 5.933425 |
-| Annual bequest flow / wealth | 0.008976 | 0.012587 | 0.011995 |
+| Naive snapshot bequest proxy / wealth | 0.008976 | 0.012587 | 0.011995 |
 | Old total-estate p90/p50 | 3.551547 | 1.911157 | 2.146540 |
 
-Holding the other 11 rows fixed, replacing only these three hybrid values
+Those bequest proxies were not aligned with the Bellman death node and are not
+the repaired value. Holding the other 11 rows fixed, replacing only the three
+hybrid values with those preliminary timing alternatives
 raises the relative-gap loss from `0.021954` to `0.410757` under beginning
 timing or `0.304258` under post-transaction timing. The apparent fit of the
 bequest-flow and estate-dispersion rows is therefore an accounting artifact.
@@ -92,9 +135,10 @@ moments using the same distribution also require re-audit.
 
 The diagnostic decomposition, exact CSVs, and age plot are under
 `output/model/intergen_new_moment_wealth_structure_20260723/`. No target or
-calibration moment has been silently replaced; instead,
-`NEW_MOMENT_PROFILE_RUNNABLE=False` now blocks accidental new searches under
-the invalid contract. The next valid sequence is:
+calibration moment was silently replaced. At this audit stage,
+`NEW_MOMENT_PROFILE_RUNNABLE=False` blocked accidental searches under the
+invalid contract. The subsequently completed v2 repair followed the required
+sequence:
 (1) use one coherent stock timing for cross-sectional wealth and estate
 distribution; (2) define the bequest flow at the actual death point in the
 within-period model sequence; (3) re-run the target table, Jacobian, and
