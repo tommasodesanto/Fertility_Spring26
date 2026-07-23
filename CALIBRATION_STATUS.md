@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-07-22` (corrected one-shot 14-moment profile passes local identification; M5 remains the working calibration pending search review)
+Updated: `2026-07-23` (corrected one-shot battery completed at strict loss 0.02195; beta remains at its upper bound, so M5 remains the working calibration pending diagnosis)
 
 ## July 22 night: corrected one-shot 14-moment system passes the launch gate
 
@@ -41,7 +41,7 @@ with zero infeasible or failed cases. The production array is `14583185_[1-8]`
 reserve per chain), with dependent collector `14583195`. Live output is
 `$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
-## July 22 late night: strict one-shot result; tilted basin probe and canonical cleanup running
+## July 23: strict one-shot result; tilted basin probe and canonical cleanup completed
 
 The original three-hour collector `14583195` certified all 8 chains and
 selected strict loss `0.025478146704129533`. The first continuation
@@ -69,15 +69,21 @@ that canonical loss. The exact two-chain Torch smoke `14621075_[1-2]` passed
 15/15 evaluations per chain with no failure or infeasibility and recorded
 distinct search and canonical fingerprints.
 
-The live dependency chain is tilted basin array `14621140_[1-8]` -> canonical
-strict collector `14621141` -> unchanged-weight cleanup array
-`14621142_[1-8]` -> final collector `14621143`. The tilted wave pairs
-Nelder--Mead and pattern search for four predeclared profiles: wealth x4, TFR
-x4, both x4, and both x9, with broader start mixes `0.02`--`0.12`; each chain
-has 130 search minutes and a 10-minute strict reserve. The cleanup is the
-standard 215-minute canonical search plus 10-minute strict reserve. At current
-throughput the two stages have capacity for roughly 7,800 tilted and 25,000
-canonical candidate evaluations. Outputs are under
+The dependency chain completed: tilted basin array `14621140_[1-8]` ->
+canonical strict collector `14621141` -> unchanged-weight cleanup array
+`14621142_[1-8]` -> final collector `14621143`. All 8 chains were strictly
+eligible in both stages, with no failures or infeasibility: 9,326 tilted and
+11,694 canonical-cleanup evaluations. The tilted collector selected canonical
+loss `0.025171745711769392`; the final unchanged-weight cleanup selected
+strict loss `0.021954413159233854` (chain 6), only 1.8 percent below the
+pre-tilt strict result. Thus the tilt did not reveal a materially different
+basin.
+
+At the final winner, `beta_annual=0.999499995`, effectively the upper bound.
+Wealth / annual after-tax earnings is `6.1981` against `6.90`, and TFR is
+`2.0772` against `1.918`; those two rows contribute 79 percent of the final
+loss. `theta0=0.00315`, `h_bar_jump=0.0514`, and `theta1=0.1416` are also
+near their lower bounds. Outputs are under
 `output/model/intergen_new_moment_weight_tilt_20260722_basin/` and
 `output/model/intergen_new_moment_weight_tilt_20260722_canonical_cleanup/` on
 Torch scratch.
