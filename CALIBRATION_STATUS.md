@@ -1,6 +1,53 @@
 # Calibration Status
 
-Updated: `2026-07-23` (the July 22 one-shot target system is invalidated by a hybrid balance-sheet timing in its three saving/bequest rows; do not treat loss 0.02195 or its Jacobian as calibration evidence)
+Updated: `2026-07-23` (consolidated state of play below; the wealth-moment timing repair is the gate on everything. The July 22 one-shot target system is invalidated by hybrid balance-sheet timing; do not treat loss 0.02195 or its Jacobian as calibration evidence)
+
+## July 23: consolidated state of play (the recap)
+
+**Valid and standing.**
+- E-series architecture is built and gated: equivalence-scale preferences,
+  sequential births, literal parity 0/1/2/3+ (L4), honest income risk
+  sigma_z=0.20; bitwise-nested defaults, 102 tests.
+- Clean structural findings (computed from mass/tenure objects, unaffected by
+  the timing bug): (i) the LINEAR equivalence scale cannot hit completed
+  fertility 1.918 and childlessness 0.188 jointly (147-cell frontier; best
+  joint cell CF 1.26 at p0 0.17); (ii) the family ownership gap is monotone
+  in the share tilts and reaches ~0.16 of the 0.168 target (25-cell scan) —
+  the mechanism exists without a committed-housing device.
+- Measured auxiliaries ready for the reconciled system: LES slope -> alpha0
+  0.733; parity-binned CEX consumption increment 0.0752; model-feasible
+  tenure Brier 0.1176; PSID living 76-84 estate p90/p50 3.448.
+
+**Invalidated (July 23 timing audit, independently confirmed in code).** All
+wealth-row values computed via the hybrid `asset_current` (new-tenure labels
+x beginning-of-period b): the one-shot 14-moment runs, and the wealth rows
+inside M5 (9.044), E1, E2 (5.486), E3 (2.806), E3b (2.294). Their beta,
+theta0, theta1 are contaminated; cross-architecture rankings are suggestive,
+not certified. Adopted repair convention (author-confirmed): cross-sectional
+stocks at beginning of period (b_t + p H_t, incoming labels — equal to the
+stationary end-of-period cross-section, the survey analogue); bequest flow
+and any decedent-based estate target at death (post-saving b' + p H_held,
+death-probability-weighted at the death node, terminal age included); the
+living-PSID p90/p50 stays cross-sectional. Housing in estates stays gross of
+sale costs (stated convention). Expect the real estate-dispersion tension
+(~1.9-2.1 coherent vs 3.45) to return; honest income risk is the E-series'
+structural answer to it.
+
+**Decision queue (critical path, in order).**
+1. Implement the timing repair in both packages; recompute all target tables
+   and the Jacobian. Blocks everything downstream.
+2. Concave equivalence scale (Citro-Michael power form, zero net new
+   parameters) — proposed for the fertility bimodality; test by rerunning
+   the frontier scan under the concave form before any recalibration.
+3. A8: formally adopt literal parity units; measure the CPS top-bin weight
+   (3.4 provisional).
+4. A9: income-process variance concept (after-tax vs pre-tax 0.20) — gates
+   the paper calibration.
+5. Freeze the reconciled 12(+family-gap)/12 system and recalibrate under
+   1-4, with SE-based weights.
+
+No jobs of this strand are running. Full history in the dated sections below;
+plan of record: `docs/model/eqscale_calibration_reconciliation_20260722.md`.
 
 ## July 23: final-winner audit finds invalid saving/bequest measurement
 
