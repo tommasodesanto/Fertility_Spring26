@@ -578,6 +578,38 @@ the full battery above vs NCHS/NSFG/PSID counterparts (data pass pending).
 
 ---
 
+## 3.6 Decisions of July 23 (author-confirmed), with verified provenance
+
+1. **Equivalence scale: imposed, not estimated.** Children enter needs
+   through the scale of Scholz, Seshadri, and Khitatrakun (2006, JPE
+   114(4)): relative to a childless couple, e(n) = ((2 + 0.7 n)/2)^0.7.
+   Verified against the published PDF; their calibration section states
+   verbatim: "Equivalence scale.—This is obtained from Citro and Michael
+   (1995) and takes the form n_j = g(A_j, K_j) = (A_j + 0.7 K_j)^0.7" —
+   listed among assigned inputs (next to beta = 0.96, gamma = 3), never
+   calibrated. Also used by Borella, De Nardi, and Yang (2023, ReStud
+   90(1)). Consequence: gamma_e leaves the free list (12 -> 11 free
+   parameters); the two parity-binned CEX increments become
+   overidentification checks of the imposed curvature. The square-root
+   scale is the declared robustness alternative. Whether the concavity
+   unlocks the fertility margins is decided by rerunning the frontier scan
+   under the imposed scale before any recalibration.
+2. **Income process: imported pair.** Floden and Linde (2001, RED 4(2),
+   406-437), US wage process, read off their table: rho = 0.9136 (s.e.
+   0.0090), innovation variance 0.0426 (sigma_eps = 0.206), annual. Passed
+   through the Heathcote-Storesletten-Violante (2017, QJE 132(4)) log-linear
+   tax function, which preserves the AR(1) exactly and scales sigma by
+   (1 - tau_progressivity); HSV WP tables give tau in 0.155-0.185 (published
+   benchmark to be pinned when wiring). Resulting external: rho = 0.9136,
+   sigma approx 0.17, 5-state Rouwenhorst. Note the flat model payroll tax
+   shifts levels only and leaves log-income risk untouched; the HSV wedge
+   stands in for the progressivity the model does not have.
+3. **Family ownership gap (0.168) enters the hard loss** as the single
+   ex-ante overidentifying row: 11 free parameters, 12 hard rows.
+4. **Tenure moment:** deterministic state-conditional analogue for the next
+   diagnostic round (bias direction disclosed); the seeded simulated
+   cross-fitted replication is a hard gate before any paper calibration.
+
 ## 4. Implementation plan (no launch)
 
 ### Phase A — measurement and contracts (no model code)
