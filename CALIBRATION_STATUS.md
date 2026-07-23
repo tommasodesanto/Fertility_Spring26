@@ -1,8 +1,7 @@
 # Calibration Status
 
-Updated: `2026-07-23` (timing repair implemented and certified locally; the
-July 22 loss `0.02195` remains invalid, and a repaired diagnostic recalibration
-is running on Torch)
+Updated: `2026-07-23` (timing repair implemented; the repaired diagnostic
+recalibration and a bounded reasonable-beta profile are complete)
 
 ## July 23: consolidated state of play (the recap)
 
@@ -62,11 +61,88 @@ structural answer to it.
 5. Freeze the reconciled 12(+family-gap)/12 system and recalibrate under
    1-4, with SE-based weights.
 
-Current diagnostic job: repaired three-hour array `14658852_[1-8]`, followed
-by strict collector `14658853`. Smoke `14658839_[1-2]` passed 30/30 exact-loop
-evaluations with zero failures or infeasible cases. Full history in the dated
-sections below; plan of record:
+Current-model diagnostic completed: repaired three-hour array
+`14658852_[1-8]` and strict collector `14658853`. All eight chains were
+eligible after two exact strict repeats. The selected result has loss
+`0.2374791856`, annual beta `0.9993642` (near the `0.9995` bound),
+wealth/earnings `6.148087` against `6.9`, living-old p90/p50 `2.027420`
+against `3.448111`, and TFR `2.076348` against `1.918`. Complete target and
+parameter tables:
+`output/model/intergen_new_moment_timing_repaired_20260723_3h/report/`.
+
+The wealth-target audit finds that `6.9` is published by De Nardi--Yang
+(2014), but Yang (2009), citing the same Hendricks source, uses `4.9`.
+Moreover, the current model denominator removes only the `0.179`
+payroll/pension wedge, not Hendricks's income-tax-plus-Social-Security
+construction. A transparent PSID diagnostic gives gross net-worth/gross-labor-
+earnings ratios `5.2097` for 1984--2003 and `7.0241` for 2005--2019; neither is
+yet an adopted target. A repaired conditional profile that reoptimizes the
+other thirteen parameters yields:
+
+| Fixed annual beta | Strict loss | Wealth / current after-payroll earnings |
+|---:|---:|---:|
+| 0.980 | 0.398933 | 3.871255 |
+| 0.990 | 0.287679 | 5.016297 |
+| 0.995 | 0.244511 | 5.665811 |
+
+Therefore the high-beta result is real conditional on the current `6.9` row,
+but the row is not a matched model/data object. Do not lower it opportunistically
+or fix beta yet. First choose a data vintage and measure aggregate net worth /
+aggregate gross labor earnings identically in data and model; then rerun the
+profile. Full audit:
+`docs/model/intergen_wealth_target_beta_audit_20260723.md`. Full history in
+the dated sections below; plan of record:
 `docs/model/eqscale_calibration_reconciliation_20260722.md`.
+
+## July 23 (E strand): timing repair ported to the E-package; E2/E3/E3b re-measured honestly
+
+The wealth-timing repair of commit `d0dce5e` covered only the two
+`intergen_housing_fertility*` packages. Commit `177b2f0` ports it to
+`code/model/intergen_eqscale_seq_optimized/`: cross-sectional wealth
+statistics now use the coherent beginning-of-period distribution
+(`b_t + p H_t` with incoming tenure labels); the old-age moment family is
+renamed to living-old wealth with backward-compatible legacy names. The
+package has no bequest-flow moment yet, so the at-death half of the repair
+has no E-side counterpart until the planned Phase-B1 port. Gates: V and g
+bit-identical on three tiny configs pre/post, 103 package tests pass, and
+local strict re-solves reproduce the cluster winner records to at most
+`3.6e-15` on every non-wealth moment.
+
+Strict twice-repeated re-measurement at the certified winners under the old
+15-moment system (driver
+`intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py`, packet
+`output/model/eqscale_timing_repair_readout_20260723/`):
+
+| Case | Certified (hybrid) loss | Honest loss | Young renter liquid wealth (0.179 target) | Estate median (6.501 target) | Living-old p90/p50 (untargeted; 3.448 data) |
+|---|---:|---:|---:|---:|---:|
+| E2  | 5.486 | 21.332 | 0.521 -> 1.077 | 6.554 -> 7.142 | 3.026 |
+| E3  | 2.806 | 7.259  | 0.358 -> 0.798 | 6.488 -> 6.386 | 3.176 |
+| E3b | 2.294 | 6.643  | 0.370 -> 0.808 | 6.502 -> 6.454 | 3.143 |
+
+Findings: (i) the cross-architecture ranking survives honest measurement;
+(ii) the loss jump is almost entirely the young-renter liquid-wealth row,
+whose honest value roughly doubles — the disclosed honest-risk overshoot is
+larger than the hybrid showed, supporting the reconciled system's demotion
+of that row to validation; (iii) `old_nonhousing_ge_1x_income_share_6575`
+is hybrid-invariant (tenure-marginal in `b`), so only two of the three
+flagged E rows were ever corrupted; (iv) the coherent living-old p90/p50 is
+`3.03-3.18` against the `3.448` target — versus roughly `1.9` in the
+timing-repaired M model — so honest income risk does sustain the estate
+dispersion, confirming the E-series' structural answer to the known
+tension. These are re-measurements of old winners, not calibrations; do not
+compare the honest losses to any recalibrated loss.
+
+Also this session (E strand): the published HSV progressivity benchmark was
+pinned from the paper itself — `tau_US = 0.181` (s.e. `0.002`), OLS on the
+log tax function, PSID 2000-06 with TAXSIM (final version, Figure I and
+Section II; CBO robustness `0.200`). The Floden-Linde x HSV external
+therefore wires `rho = 0.9136`, annual innovation s.d.
+`sqrt(0.0426) x (1 - 0.181) = 0.1690`, 5-state Rouwenhorst. Stale-fork
+caveat: `intergen_eqscale_seq/` and `intergen_seq_fertility/` still carry
+the hybrid wealth timing; never quote wealth stats from those forks. The
+M-strand tool `code/model/tools/diagnose_intergen_bequest_distribution.py`
+hard-references `g_beginning_assets_by_current_choice`, which `d0dce5e`
+removed from the M solvers — flagged for the M agent.
 
 ## July 23: timing-repaired current-model readout and diagnostic search
 
