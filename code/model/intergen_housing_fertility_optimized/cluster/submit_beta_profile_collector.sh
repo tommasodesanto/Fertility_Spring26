@@ -21,8 +21,14 @@ export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THRE
 
 RUN_TAG="${NEW_MOMENT_BETA_PROFILE_RUN_TAG:-intergen_new_moment_beta_recent_gross_20260723}"
 RUN_ROOT="${PROJECT_ROOT}/output/model/${RUN_TAG}"
+EMPIRICAL_AGE_PROFILE="${PROJECT_ROOT}/code/data/psid_followup_mar2026/output/aggregate_wealth_earnings_audit/age_profile_robustness.csv"
+if [ ! -f "$EMPIRICAL_AGE_PROFILE" ]; then
+  echo "missing empirical age-profile robustness file: $EMPIRICAL_AGE_PROFILE" >&2
+  exit 3
+fi
 mkdir -p "${RUN_ROOT}/report"
 exec "$PYTHON_BIN" -m intergen_housing_fertility_optimized.collect_beta_profile \
   --run-root "${RUN_ROOT}/tasks" \
   --output "${RUN_ROOT}/report" \
-  --expected-betas 0.98 0.99 0.995 0.999 0.9995
+  --expected-betas 0.98 0.99 0.995 0.999 0.9995 \
+  --empirical-age-profile "$EMPIRICAL_AGE_PROFILE"

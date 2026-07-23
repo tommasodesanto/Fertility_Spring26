@@ -28,6 +28,15 @@ def parse_args() -> argparse.Namespace:
         default=EXPECTED_BETAS,
         help="Annual beta cells expected in the run (two chains per cell).",
     )
+    parser.add_argument(
+        "--empirical-age-profile",
+        type=Path,
+        default=None,
+        help=(
+            "Optional PSID age-profile CSV. When supplied, write the standard "
+            "robustness comparison and visual diagnostic packet."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -39,6 +48,121 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+
+
+def write_visual_diagnostics(
+    output: Path,
+    profile_rows: list[dict[str, Any]],
+    empirical_age_profile: Path,
+    aggregate_target: float,
+) -> None:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    with empirical_age_profile.open(newline="") as handle:
+        empirical_rows = list(csv.DictReader(handle))
+    empirical = {
+        str(row["age_bin"]): {
+            "estimate": float(row["estimate"]),
+            "bootstrap_se": float(row["bootstrap_se"]),
+        }
+        for row in empirical_rows
+    }
+    age_bins = ("26-35", "36-45", "46-55", "56-65")
+    if set(age_bins) - set(empirical):
+        raise RuntimeError("empirical age profile lacks one or more required bins")
+
+    comparison_rows: list[dict[str, Any]] = []
+    for row in profile_rows:
+        beta = float(row["beta_annual"])
+        for age_bin in age_bins:
+            stem = age_bin.replace("-", "_")
+            model = float(row[f"wealth_to_gross_labor_earnings_{stem}"])
+            data = empirical[age_bin]["estimate"]
+            comparison_rows.append(
+                {
+                    "beta_annual": beta,
+                    "age_bin": age_bin,
+                    "model": model,
+                    "data": data,
+                    "data_bootstrap_se": empirical[age_bin]["bootstrap_se"],
+                    "gap": model - data,
+                    "status": "robustness_only",
+                }
+            )
+    write_csv(output / "age_profile_comparison.csv", comparison_rows)
+
+    ordered = sorted(profile_rows, key=lambda row: float(row["beta_annual"]))
+    betas = [float(row["beta_annual"]) for row in ordered]
+    losses = [float(row["strict_loss"]) for row in ordered]
+    wealth_ratios = [
+        float(row["wealth_to_gross_labor_earnings"]) for row in ordered
+    ]
+    figure, axes = plt.subplots(1, 2, figsize=(10.5, 4.2))
+    axes[0].plot(betas, losses, marker="o", color="#1f4e79")
+    axes[0].set_xlabel("Annual beta")
+    axes[0].set_ylabel("Strict loss")
+    axes[0].set_title("Conditional objective")
+    axes[1].plot(betas, wealth_ratios, marker="o", color="#a23e48")
+    axes[1].axhline(
+        aggregate_target,
+        color="black",
+        linestyle="--",
+        linewidth=1.2,
+        label=f"PSID target {aggregate_target:.3f}",
+    )
+    axes[1].set_xlabel("Annual beta")
+    axes[1].set_ylabel("Wealth / gross labor earnings")
+    axes[1].set_title("Aggregate saving target")
+    axes[1].legend(frameon=False)
+    for axis in axes:
+        axis.grid(alpha=0.2)
+    figure.tight_layout()
+    figure.savefig(output / "beta_profile_diagnostics.png", dpi=180)
+    plt.close(figure)
+
+    x = list(range(len(age_bins)))
+    data_values = [empirical[label]["estimate"] for label in age_bins]
+    data_errors = [empirical[label]["bootstrap_se"] for label in age_bins]
+    figure, axis = plt.subplots(figsize=(7.4, 4.8))
+    axis.errorbar(
+        x,
+        data_values,
+        yerr=data_errors,
+        marker="o",
+        color="black",
+        linewidth=2.0,
+        capsize=3,
+        label="PSID 2005-2019",
+    )
+    for row in ordered:
+        values = [
+            float(
+                row[
+                    "wealth_to_gross_labor_earnings_"
+                    + label.replace("-", "_")
+                ]
+            )
+            for label in age_bins
+        ]
+        axis.plot(
+            x,
+            values,
+            marker="o",
+            linewidth=1.2,
+            label=f"Model beta={float(row['beta_annual']):.4f}",
+        )
+    axis.set_xticks(x, age_bins)
+    axis.set_xlabel("Reference-person age")
+    axis.set_ylabel("Wealth / gross labor earnings")
+    axis.set_title("Lifecycle robustness profile (not targeted)")
+    axis.grid(alpha=0.2)
+    axis.legend(frameon=False, ncol=2, fontsize=8)
+    figure.tight_layout()
+    figure.savefig(output / "wealth_age_profile_robustness.png", dpi=180)
+    plt.close(figure)
 
 
 def main() -> None:
@@ -182,6 +306,17 @@ def main() -> None:
     write_csv(args.output / "beta_profile.csv", profile_rows)
     write_csv(args.output / "selected_target_fits.csv", selected_target_fit_rows)
     write_csv(args.output / "selected_parameters.csv", selected_parameter_rows)
+    if args.empirical_age_profile is not None:
+        if not args.empirical_age_profile.is_file():
+            raise FileNotFoundError(args.empirical_age_profile)
+        write_visual_diagnostics(
+            args.output,
+            profile_rows,
+            args.empirical_age_profile,
+            system.targets_dict()[
+                "aggregate_wealth_to_annual_gross_labor_earnings"
+            ],
+        )
     best = min(profile_rows, key=lambda row: float(row["strict_loss"]))
     payload = {
         "status": "conditional_beta_profile_not_a_calibration",
@@ -215,6 +350,14 @@ def main() -> None:
         "parameter tables are in `selected_target_fits.csv` and",
         "`selected_parameters.csv`; task status is in `all_tasks.csv`.",
     ]
+    if args.empirical_age_profile is not None:
+        lines.extend(
+            [
+                "The standard visual packet is `beta_profile_diagnostics.png` and",
+                "`wealth_age_profile_robustness.png`; exact lifecycle gaps are in",
+                "`age_profile_comparison.csv` and remain diagnostic-only.",
+            ]
+        )
     (args.output / "REPORT.md").write_text("\n".join(lines) + "\n")
     print(json.dumps({key: value for key, value in payload.items() if key != "selected_records"}, indent=2))
 
