@@ -89,6 +89,14 @@ Because Torch caps `cpu_short` jobs at 3:55, an overnight battery is two
 dependent 3:55 waves with a strict collector between them; wave 2 starts from
 wave 1's collected strict winner rather than rerunning the original seed.
 
+`cluster/submit_weight_tilt_basin_search.sh` is a diagnostic search device,
+not an alternative calibration. It temporarily tilts the wealth and/or TFR
+rows to navigate away from a local basin, while retaining the original
+14-moment loss as `rank_loss`. Its two strict repeats and the standard
+collector always score and select candidates using that unchanged canonical
+objective. A canonical continuation must follow any tilted search before a
+candidate can be considered final.
+
 ## Inherited model documentation
 
 This package is the new one-market quantitative implementation for the

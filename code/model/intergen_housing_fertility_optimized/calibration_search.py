@@ -43,6 +43,7 @@ from .new_moment_profile import (
 )
 from .promotion_contract import FREE_PARAMETER_BOUNDS
 from .solver import InfeasibleThetaError, run_model_cp_dt
+from .target_system import TargetSystem
 
 
 PERIOD_YEARS = 4.0
@@ -239,6 +240,43 @@ def target_fit_rows(
     ]
 
 
+def build_search_target_system(
+    canonical: TargetSystem,
+    specifications: list[str] | tuple[str, ...],
+) -> tuple[TargetSystem, dict[str, float]]:
+    """Apply bounded weight tilts for search while leaving canonical scoring intact."""
+
+    multipliers: dict[str, float] = {}
+    valid_names = set(canonical.moment_names)
+    for specification in specifications:
+        name, separator, raw_factor = str(specification).partition("=")
+        name = name.strip()
+        if not separator or not name or not raw_factor.strip():
+            raise ValueError(
+                f"search weight multiplier must have MOMENT=FACTOR form: {specification!r}"
+            )
+        if name not in valid_names:
+            raise ValueError(f"unknown search-weight moment {name!r}")
+        if name in multipliers:
+            raise ValueError(f"duplicate search-weight moment {name!r}")
+        factor = float(raw_factor)
+        if not math.isfinite(factor) or factor < 0.1 or factor > 10.0:
+            raise ValueError("search weight multipliers must be finite and lie in [0.1, 10]")
+        multipliers[name] = factor
+    if not multipliers:
+        return canonical, {}
+    weights = {
+        name: weight * multipliers.get(name, 1.0)
+        for name, weight in zip(canonical.moment_names, canonical.weights)
+    }
+    search = TargetSystem.from_mappings(
+        f"{canonical.name}_search_tilt",
+        canonical.targets_dict(),
+        weights,
+    )
+    return search, multipliers
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--outdir", type=Path, required=True)
@@ -256,6 +294,16 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help="Checkpoint or collector JSON whose theta seeds this continuation.",
+    )
+    parser.add_argument(
+        "--search-weight-multiplier",
+        action="append",
+        default=[],
+        metavar="MOMENT=FACTOR",
+        help=(
+            "Temporary search-only weight multiplier. Strict repeats and collection "
+            "remain scored on the canonical target system."
+        ),
     )
     parser.add_argument("--smoke", action="store_true")
     return parser.parse_args()
@@ -283,6 +331,10 @@ def main() -> None:
         seed_theta = NEW_MOMENT_SEED
         override_factory = new_moment_overrides
         run_status = "provisional_joint_new_moment_calibration"
+    search_target_system, search_weight_multipliers = build_search_target_system(
+        target_system,
+        args.search_weight_multiplier,
+    )
     if args.start_theta_json is not None:
         seed_theta = load_start_theta(
             args.start_theta_json,
@@ -308,6 +360,9 @@ def main() -> None:
         "profile": profile_name,
         "target_system": target_system.name,
         "target_fingerprint": target_system.fingerprint,
+        "search_target_system": search_target_system.name,
+        "search_target_fingerprint": search_target_system.fingerprint,
+        "search_weight_multipliers": search_weight_multipliers,
         "target_count": target_system.count,
         "free_parameter_count": len(DOMAIN),
         "external_restrictions": {"theta_n": 0.0},
@@ -320,7 +375,11 @@ def main() -> None:
         "objective_note": (
             "legacy M5 weighting"
             if args.profile == "m5"
-            else "sum of squared relative gaps; provisional until joint auxiliary covariance is available"
+            else (
+                "canonical score is the sum of squared relative gaps; any declared "
+                "weight multipliers affect search navigation only, while strict "
+                "repeats and collection use the unchanged canonical objective"
+            )
         ),
         "method": args.method,
         "seed": int(args.seed),
@@ -357,7 +416,7 @@ def main() -> None:
     def score(record: dict[str, Any] | None) -> float:
         if record is None or not bool(record.get("strict_converged", False)):
             return math.inf
-        return float(record.get("rank_loss", math.inf))
+        return float(record.get("search_loss", math.inf))
 
     def can_evaluate() -> bool:
         return eval_index < int(args.max_evals) and time.perf_counter() < deadline
@@ -373,6 +432,7 @@ def main() -> None:
             )
             moments = extract_moments(solution, parameters)
             loss = float(target_system.loss(moments))
+            search_loss = float(search_target_system.loss(moments))
             residual = float(getattr(solution, "best_max_abs_rel_excess", math.inf))
             timings = dict(getattr(solution, "timings", {}))
             tolerance = float(search_overrides["tol_eq"])
@@ -385,11 +445,13 @@ def main() -> None:
             price_value = float(np.asarray(price).reshape(-1)[0])
         except InfeasibleThetaError as exc:
             moments, timings = {}, {}
-            loss, residual, price_value, converged = math.inf, math.inf, math.nan, False
+            loss = search_loss = math.inf
+            residual, price_value, converged = math.inf, math.nan, False
             status, error, census = "infeasible_theta", str(exc), list(exc.census)
         except Exception as exc:  # Persist unexpected failures instead of losing a chain.
             moments, timings = {}, {}
-            loss, residual, price_value, converged = math.inf, math.inf, math.nan, False
+            loss = search_loss = math.inf
+            residual, price_value, converged = math.inf, math.nan, False
             status, error, census = f"failed:{type(exc).__name__}", str(exc), []
         record = {
             "case": eval_index,
@@ -397,6 +459,7 @@ def main() -> None:
             "status": status,
             "strict_converged": converged,
             "rank_loss": loss,
+            "search_loss": search_loss,
             "market_residual": residual,
             "price": price_value,
             "theta": theta,
@@ -422,8 +485,9 @@ def main() -> None:
         eval_index += 1
         print(
             f"eval={eval_index}/{args.max_evals} method={args.method} label={label} "
-            f"status={status} loss={score(record):.9g} residual={residual:.3e} "
-            f"best={score(best):.9g} elapsed_min={(time.perf_counter()-started)/60.0:.2f}",
+            f"status={status} canonical_loss={loss:.9g} search_loss={score(record):.9g} "
+            f"residual={residual:.3e} best_search={score(best):.9g} "
+            f"elapsed_min={(time.perf_counter()-started)/60.0:.2f}",
             flush=True,
         )
         return record
@@ -456,6 +520,7 @@ def main() -> None:
                 )
                 moments = extract_moments(solution, parameters)
                 loss = float(target_system.loss(moments))
+                search_loss = float(search_target_system.loss(moments))
                 residual = float(getattr(solution, "best_max_abs_rel_excess", math.inf))
                 timings = dict(getattr(solution, "timings", {}))
                 converged = bool(
@@ -467,11 +532,13 @@ def main() -> None:
                 price_value = float(np.asarray(price).reshape(-1)[0])
             except InfeasibleThetaError as exc:
                 moments, timings = {}, {}
-                loss, residual, price_value, converged = math.inf, math.inf, math.nan, False
+                loss = search_loss = math.inf
+                residual, price_value, converged = math.inf, math.nan, False
                 status, error, census = "infeasible_theta", str(exc), list(exc.census)
             except Exception as exc:
                 moments, timings = {}, {}
-                loss, residual, price_value, converged = math.inf, math.inf, math.nan, False
+                loss = search_loss = math.inf
+                residual, price_value, converged = math.inf, math.nan, False
                 status, error, census = f"failed:{type(exc).__name__}", str(exc), []
             tight = {
                 "case": repeat,
@@ -479,6 +546,7 @@ def main() -> None:
                 "status": status,
                 "strict_converged": converged,
                 "rank_loss": loss,
+                "search_loss": search_loss,
                 "market_residual": residual,
                 "price": price_value,
                 "theta": winning_theta,

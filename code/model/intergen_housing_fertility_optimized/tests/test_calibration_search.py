@@ -9,6 +9,7 @@ import numpy as np
 
 from intergen_housing_fertility_optimized.calibration_search import (
     DOMAIN,
+    build_search_target_system,
     load_start_theta,
     parameter_rows,
     theta_from_unit,
@@ -78,6 +79,32 @@ class CalibrationSearchContractTests(unittest.TestCase):
             path.write_text(json.dumps({"theta": bad_theta}))
             with self.assertRaisesRegex(ValueError, "theta_n=0"):
                 load_start_theta(path)
+
+    def test_search_weight_tilt_changes_navigation_not_canonical_contract(self) -> None:
+        canonical = new_moment_target_system()
+        moment = "aggregate_wealth_to_annual_after_tax_earnings"
+        search, multipliers = build_search_target_system(canonical, [f"{moment}=4"])
+        self.assertEqual(multipliers, {moment: 4.0})
+        self.assertEqual(search.moment_names, canonical.moment_names)
+        self.assertEqual(search.target_values, canonical.target_values)
+        self.assertEqual(
+            search.weights[canonical.moment_names.index(moment)],
+            4.0 * canonical.weights[canonical.moment_names.index(moment)],
+        )
+        self.assertEqual(canonical, new_moment_target_system())
+
+    def test_search_weight_tilt_rejects_unknown_duplicate_or_extreme_specs(self) -> None:
+        canonical = new_moment_target_system()
+        moment = canonical.moment_names[0]
+        for specifications in (
+            ["not_a_moment=2"],
+            [f"{moment}=2", f"{moment}=3"],
+            [f"{moment}=100"],
+            ["malformed"],
+        ):
+            with self.subTest(specifications=specifications):
+                with self.assertRaises(ValueError):
+                    build_search_target_system(canonical, specifications)
 
 
 if __name__ == "__main__":

@@ -41,30 +41,46 @@ with zero infeasible or failed cases. The production array is `14583185_[1-8]`
 reserve per chain), with dependent collector `14583195`. Live output is
 `$SCRATCH/projects/Fertility_Spring26/output/model/intergen_new_moment_calibration_20260722_corrected_3h/`.
 
-## July 22 night: strict-seeded one-shot overnight battery queued
+## July 22 late night: strict one-shot result; tilted basin probe and canonical cleanup running
 
-The exact continuation path, including loading the preceding collector's
-strict winner and validating its target fingerprint and `theta_n=0`
-restriction, passed a 15/15-evaluation Torch smoke (`14594177`) with zero
-infeasible or failed cases. Torch rejects CPU jobs longer than 3:55, so the
-overnight search is two dependency-linked waves rather than one invalid
-eight-hour job. The complete chain is: current three-hour collector `14583195`
--> wave 1 `14595361_[1-8]` -> strict collector `14595362` -> wave 2
-`14595363_[1-8]` -> final strict collector `14595368`. Wave 2 reads wave 1's
-collected `results.json`; it does not restart from the original seed. An
-upstream collector failure prevents the next wave from starting.
+The original three-hour collector `14583195` certified all 8 chains and
+selected strict loss `0.025478146704129533`. The first continuation
+`14595361_[1-8]` also certified all 8 chains; collector `14595362` selected
+strict loss `0.022349332713517182` (chain 4). Its complete target and parameter
+tables are under
+`output/model/intergen_new_moment_overnight_20260722_wave1/report/`.
+The annual discount factor is exactly at its upper bound, `0.9995`, while
+wealth / annual after-tax earnings remains `6.1512` against `6.90`; TFR is
+`2.0770` against `1.918`. Those two rows contribute `0.01178` and `0.00687`,
+about 84 percent of the remaining objective. Other near-bound coordinates are
+`theta0=0.00763`, `h_bar_jump=0.0514`, and `theta1=0.2898`.
 
-Each wave has eight one-CPU chains, alternating transformed Nelder--Mead and
-coordinate-pattern searches over predeclared fine-to-medium neighborhoods.
-Each chain has 215 search minutes, a 10-minute reserve for two exact strict
-winner repeats, a 4,000-evaluation cap, a minimum transformed step of
-`0.00010`, and a per-evaluation checkpoint. Live throughput in the current
-three-hour array is about eight seconds per candidate, implying capacity for
-roughly 25,000 candidate evaluations across both overnight waves before early
-convergence or caps. Outputs are under
-`output/model/intergen_new_moment_overnight_20260722_wave1/` and
-`output/model/intergen_new_moment_overnight_20260722_wave2/` on Torch scratch;
-only the final twice-repeated strict collection is eligible for interpretation.
+The second same-basin continuation reached loose loss `0.0221747` after 55
+minutes, only a small improvement, so its seven remaining tasks were canceled
+with checkpoints preserved. Its one completed chain was strictly eligible;
+collector `14595368` completed normally and selected loss `0.0223493`.
+
+The replacement is explicitly a search diagnostic, not a reweighted
+calibration. `submit_weight_tilt_basin_search.sh` uses bounded temporary
+wealth and/or TFR weight multipliers only to navigate the loose optimizer.
+Every case also stores the unchanged canonical loss, both strict repeats use
+the canonical 14-moment system, and the standard collector selects only on
+that canonical loss. The exact two-chain Torch smoke `14621075_[1-2]` passed
+15/15 evaluations per chain with no failure or infeasibility and recorded
+distinct search and canonical fingerprints.
+
+The live dependency chain is tilted basin array `14621140_[1-8]` -> canonical
+strict collector `14621141` -> unchanged-weight cleanup array
+`14621142_[1-8]` -> final collector `14621143`. The tilted wave pairs
+Nelder--Mead and pattern search for four predeclared profiles: wealth x4, TFR
+x4, both x4, and both x9, with broader start mixes `0.02`--`0.12`; each chain
+has 130 search minutes and a 10-minute strict reserve. The cleanup is the
+standard 215-minute canonical search plus 10-minute strict reserve. At current
+throughput the two stages have capacity for roughly 7,800 tilted and 25,000
+canonical candidate evaluations. Outputs are under
+`output/model/intergen_new_moment_weight_tilt_20260722_basin/` and
+`output/model/intergen_new_moment_weight_tilt_20260722_canonical_cleanup/` on
+Torch scratch.
 
 ## July 22 late night: overnight battery queued (E3 chain + family-gap scan)
 
