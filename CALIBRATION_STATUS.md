@@ -132,6 +132,26 @@ dispersion, confirming the E-series' structural answer to the known
 tension. These are re-measurements of old winners, not calibrations; do not
 compare the honest losses to any recalibrated loss.
 
+**Frontier v2 verdict (the critical path's decisive test): concavity does
+NOT unlock the fertility stocks.** Torch array `14679019` (smoke
+`14678986`, local and remote smoke cells agree to `1.4e-14`) reran the
+147-cell frontier as {SSK power, sqrt, linear at gamma_e 0.5} x 7 psi x 7
+kappa at the E3 winner, L4 on, under the FL x HSV income external. Zero
+cells within 10 percent of both completed fertility 1.918 and
+childlessness 0.188 under any form; the best joint cells are essentially
+the v1 baseline's (power best: CF 1.254, p0 0.173, distance 0.1261 vs v1
+linear 0.1233). The frontier is invariant to scale curvature, scale
+generosity, and the income-process change; at every best joint cell the
+3+ share is 0.07-0.10 while the joint target requires parents to average
+2.36 children. Pre-registered conclusion: the binding failure is the
+preference structure — one psi plus iid per-period taste noise ties the
+entry and continuation margins — not the needs-scale form and not income
+risk. The rejected-for-now structural options (per-parity psi; permanent
+taste heterogeneity) return to the author with this evidence; no model
+change implemented. Packet:
+`output/model/eqscale_fertility_frontier_v2_20260723/` (README + summary
+CSV tracked).
+
 Also this session (E strand): the published HSV progressivity benchmark was
 pinned from the paper itself — `tau_US = 0.181` (s.e. `0.002`), OLS on the
 log tax function, PSID 2000-06 with TAXSIM (final version, Figure I and
