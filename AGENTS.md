@@ -328,6 +328,16 @@ if the live model has changed.
 - The repository has substantial generated output. Prefer canonical status files
   and active file indexes over raw search by filename.
 
+## Communication Standard
+
+Explain everything as to an advisor: technically expert, not hands-on with
+this project. Define every object in one plain sentence before using its
+name; never assume session shorthand is remembered; one worked numeric
+example beats three abstractions; do not inflate the pedigree of sources
+(a report is a report, a paper is a paper); state clearly what is
+established versus conjectured. Long-but-unclear is the failure mode.
+When referencing files in chat, give absolute paths.
+
 ## Code And Workflow Standards
 
 - Prefer existing local Python patterns and helper functions over new
