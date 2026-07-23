@@ -153,8 +153,24 @@ def main() -> None:
     normalized_gaps = np.asarray(
         [(float(row["model"]) - float(row["target"])) / abs(float(row["target"])) for row in fit]
     )
-    labels = [str(row["moment"]) for row in fit]
-    figure, axis = plt.subplots(figsize=(9.0, 6.4))
+    display_names = {
+        "aggregate_wealth_to_annual_after_tax_earnings": "Wealth / after-tax earnings",
+        "annual_bequest_flow_to_aggregate_wealth": "Annual bequest flow / wealth",
+        "old_total_wealth_to_annual_income_p90_p50_7684": "Living-old wealth p90/p50",
+        "childless_renter_rent_expenditure_slope": "Childless-renter rent slope",
+        "childless_renter_intercept_at_mean_price_model_units": "Childless-renter rent intercept",
+        "bottom_quintile_childless_renter_mean_rooms": "Low-expenditure renter rooms",
+        "one_shot_parity_consumption_coefficient": "Family-size consumption coefficient",
+        "housing_increment_0to1": "First-child housing increment",
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms": "3+ versus 1–2 child rooms",
+        "tfr": "Completed-fertility equivalent",
+        "childless_rate": "Completed childlessness",
+        "own_rate": "Ownership, ages 30–55",
+        "model_feasible_four_year_tenure_brier": "Four-year tenure Brier score",
+        "aggregate_mean_occupied_rooms_18_85": "Mean occupied rooms",
+    }
+    labels = [display_names[str(row["moment"])] for row in fit]
+    figure, axis = plt.subplots(figsize=(10.5, 6.4))
     positions = np.arange(len(labels))
     colors = np.where(normalized_gaps >= 0.0, "#B24C3D", "#366E8A")
     axis.barh(positions, 100.0 * normalized_gaps, color=colors)
@@ -162,7 +178,10 @@ def main() -> None:
     axis.set_yticks(positions, labels)
     axis.invert_yaxis()
     axis.set_xlabel("Model minus target (percent of target)")
-    axis.set_title("Supplemental: timing-repaired target gaps at the old parameter vector")
+    axis.set_title(
+        "Timing-repaired target gaps at the old parameter vector",
+        fontsize=13,
+    )
     axis.grid(axis="x", alpha=0.2)
     figure.tight_layout()
     figure.savefig(outdir / "target_gaps.png", dpi=180)
