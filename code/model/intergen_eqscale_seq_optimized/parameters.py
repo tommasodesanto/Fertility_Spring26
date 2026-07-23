@@ -78,6 +78,7 @@ def setup_parameters() -> SimpleNamespace:
     P.alpha_cons = 0.70
     P.delta_alpha = 0.0
     P.gamma_e = 0.0
+    P.eqscale_form = "linear"
     P.delta_alpha_jump = 0.0
     P.scale_flows_to_period = True
     P.c_bar_0 = 0.10 * P.period_years

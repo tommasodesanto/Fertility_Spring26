@@ -2145,6 +2145,11 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
     g_bar = np.zeros((P.n_parity, P.n_child_states))
     alpha_bar = np.full((P.n_parity, P.n_child_states), P.alpha_cons)
     escale = np.ones((P.n_parity, P.n_child_states))
+    eqscale_form = str(getattr(P, "eqscale_form", "linear")).lower()
+    if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale" and eqscale_form not in {
+        "linear", "power", "sqrt"
+    }:
+        raise ValueError("eqscale_form must be one of: linear, power, sqrt")
     for nn in range(P.n_parity):
         nk = nn
         for cs in range(P.n_child_states):
@@ -2163,7 +2168,22 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
                     alpha_bar[nn, cs] = np.clip(
                         P.alpha_cons - (P.delta_alpha_jump + P.delta_alpha * nk), 0.05, 0.95
                     )
-                    escale[nn, cs] = 1.0 + P.gamma_e * nk
+                    if eqscale_form == "power":
+                        # Imposed Scholz-Seshadri-Khitatrakun (2006, JPE 114(4), p.619;
+                        # Citro-Michael 1995) scale relative to a childless couple:
+                        #   e(n) = ((2 + 0.7 n)/2)**0.7.
+                        # Flow utility is multiplied by escale, u = escale * x**(1-sigma)/(1-sigma),
+                        # while per-equivalent CRRA utility is u(x/e) = e**(sigma-1) * x**(1-sigma)/(1-sigma),
+                        # so the multiplier is e**(sigma-1); at the baseline sigma = 2 the
+                        # multiplier equals the scale itself. n is the literal parity state
+                        # (under L4, nn = 3 is the top-coded 3+ bin, scaled at n = 3).
+                        escale[nn, cs] = (((2.0 + 0.7 * nk) / 2.0) ** 0.7) ** (float(P.sigma) - 1.0)
+                    elif eqscale_form == "sqrt":
+                        # Declared robustness alternative: square-root household-size scale,
+                        # e(n) = sqrt((2 + n)/2) relative to a childless couple.
+                        escale[nn, cs] = (((2.0 + nk) / 2.0) ** 0.5) ** (float(P.sigma) - 1.0)
+                    else:
+                        escale[nn, cs] = 1.0 + P.gamma_e * nk
             else:
                 c_bar[nn, cs] = P.c_bar_0
                 h_bar[nn, cs] = P.h_bar_0

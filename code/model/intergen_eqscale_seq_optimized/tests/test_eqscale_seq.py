@@ -6,7 +6,12 @@ from intergen_housing_fertility.kernels import eval_renter_scalar as production_
 from intergen_eqscale_seq_optimized.kernels import eval_renter_scalar
 from intergen_housing_fertility.solver import run_model_cp_dt as run_production
 from intergen_eqscale_seq_optimized.local_panel import income_process_overrides
-from intergen_eqscale_seq_optimized.solver import InfeasibleThetaError, run_model_cp_dt as run_fork
+from intergen_eqscale_seq_optimized.parameters import apply_overrides, setup_parameters
+from intergen_eqscale_seq_optimized.solver import (
+    InfeasibleThetaError,
+    precompute_shared,
+    run_model_cp_dt as run_fork,
+)
 
 
 def _tiny_markov() -> dict[str, object]:
@@ -68,6 +73,41 @@ def test_eqscale_renter_allocation_and_childless_invariance() -> None:
     # the childless column isolates the shifter's direct incidence exactly.
     np.testing.assert_array_equal(sol.c_pol[:, :, :, -1, :, 0, :], no_shift.c_pol[:, :, :, -1, :, 0, :])
     np.testing.assert_array_equal(sol.hR_pol[:, :, :, -1, :, 0, :], no_shift.hR_pol[:, :, :, -1, :, 0, :])
+
+
+def test_eqscale_form_default_is_bitwise_inert() -> None:
+    base = {**_tiny_markov(), "preference_spec": "eqscale", "delta_alpha": 0.1, "gamma_e": 0.5}
+    implicit, _, _ = run_fork(base, verbose=False)
+    explicit, _, _ = run_fork({**base, "eqscale_form": "linear"}, verbose=False)
+    assert np.array_equal(implicit.V, explicit.V)
+    assert np.array_equal(implicit.g, explicit.g)
+
+
+def test_eqscale_power_form_scale_values() -> None:
+    power = apply_overrides(setup_parameters(), {"preference_spec": "eqscale", "eqscale_form": "power"})
+    power_shared = precompute_shared(power, np.array([0.0, 1.0]))
+    parity_one_parent = 1 + power.n_parity
+    np.testing.assert_allclose(power_shared.escale_flat[0, parity_one_parent], 1.35**0.7, atol=1e-12, rtol=0.0)
+    np.testing.assert_allclose(power_shared.escale_flat[0, 0], 1.0, atol=1e-12, rtol=0.0)
+
+    sqrt = apply_overrides(setup_parameters(), {"preference_spec": "eqscale", "eqscale_form": "sqrt"})
+    sqrt_shared = precompute_shared(sqrt, np.array([0.0, 1.0]))
+    np.testing.assert_allclose(sqrt_shared.escale_flat[0, parity_one_parent], 1.5**0.5, atol=1e-12, rtol=0.0)
+    np.testing.assert_allclose(sqrt_shared.escale_flat[0, 0], 1.0, atol=1e-12, rtol=0.0)
+
+
+def test_eqscale_power_form_changes_parent_cells_only_at_terminal_age() -> None:
+    base = {
+        **_tiny_markov(),
+        "preference_spec": "eqscale",
+        "delta_alpha": 0.0,
+        "delta_alpha_jump": 0.0,
+        "gamma_e": 0.0,
+    }
+    linear, _, _ = run_fork({**base, "eqscale_form": "linear"}, verbose=False)
+    power, _, _ = run_fork({**base, "eqscale_form": "power"}, verbose=False)
+    assert not np.array_equal(linear.V, power.V)
+    np.testing.assert_array_equal(linear.c_pol[:, :, :, -1, :, 0, :], power.c_pol[:, :, :, -1, :, 0, :])
 
 
 def test_eqscale_sigma_point_twenty_is_feasible() -> None:
