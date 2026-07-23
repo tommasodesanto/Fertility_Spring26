@@ -15,6 +15,7 @@ import json
 import math
 import os
 import time
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -26,7 +27,13 @@ os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
 import numpy as np
 
 from .calibration import extract_moments
-from .calibration_search import DOMAIN, theta_from_unit, unit_from_theta
+from .calibration_search import (
+    DOMAIN,
+    load_start_theta,
+    theta_from_unit,
+    unit_from_theta,
+    wealth_components,
+)
 from .new_moment_profile import (
     NEW_MOMENT_SEED,
     new_moment_overrides,
@@ -62,6 +69,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--unit-step", type=float, default=0.025)
     parser.add_argument("--rank-relative-tol", type=float, default=1e-6)
     parser.add_argument(
+        "--start-theta-json",
+        type=Path,
+        default=None,
+        help="Canonical collector result used as the Jacobian baseline.",
+    )
+    parser.add_argument(
         "--max-parameters",
         type=int,
         default=len(MOMENT_PARAMETER_MAP),
@@ -95,6 +108,9 @@ def main() -> None:
         "moments": moment_names,
         "parameters": selected_parameters,
         "complete_14_by_14": len(selected_parameters) == len(parameter_names),
+        "start_theta_json": (
+            str(args.start_theta_json.resolve()) if args.start_theta_json is not None else None
+        ),
         "mapping": [
             {"moment": moment, "assigned_parameter": parameter}
             for moment, parameter in MOMENT_PARAMETER_MAP
@@ -104,7 +120,15 @@ def main() -> None:
     cases_path = outdir / "cases.jsonl"
     cases_path.write_text("")
 
-    baseline_unit = unit_from_theta(NEW_MOMENT_SEED)
+    baseline_theta = (
+        NEW_MOMENT_SEED
+        if args.start_theta_json is None
+        else load_start_theta(
+            args.start_theta_json,
+            expected_target_fingerprint=system.fingerprint,
+        )
+    )
+    baseline_unit = unit_from_theta(baseline_theta)
     domain_index = {name: index for index, name in enumerate(domain_names)}
     start = time.perf_counter()
     baseline = solve_case("baseline", baseline_unit, args.tight, system)
@@ -116,21 +140,38 @@ def main() -> None:
     completed = 1
     for parameter in selected_parameters:
         index = domain_index[parameter]
-        lower_unit = max(0.0, float(baseline_unit[index]) - float(args.unit_step))
-        upper_unit = min(1.0, float(baseline_unit[index]) + float(args.unit_step))
+        base_unit = float(baseline_unit[index])
+        step = float(args.unit_step)
+        if base_unit < step:
+            lower_unit, upper_unit = base_unit, min(1.0, base_unit + step)
+            scheme = "forward_from_baseline"
+        elif base_unit > 1.0 - step:
+            lower_unit, upper_unit = max(0.0, base_unit - step), base_unit
+            scheme = "backward_from_baseline"
+        else:
+            lower_unit, upper_unit = base_unit - step, base_unit + step
+            scheme = "central"
         if not upper_unit > lower_unit:
             raise RuntimeError(f"no transformed perturbation available for {parameter}")
         sides[parameter] = {}
         for side, value in (("minus", lower_unit), ("plus", upper_unit)):
-            unit = baseline_unit.copy()
-            unit[index] = value
-            record = solve_case(f"{parameter}_{side}", unit, args.tight, system)
+            if math.isclose(value, base_unit, rel_tol=0.0, abs_tol=1e-15):
+                record = deepcopy(baseline)
+                record["case"] = f"{parameter}_{side}"
+                record["elapsed_seconds"] = 0.0
+                record["reused_baseline"] = True
+            else:
+                unit = baseline_unit.copy()
+                unit[index] = value
+                record = solve_case(f"{parameter}_{side}", unit, args.tight, system)
+                record["reused_baseline"] = False
             record["perturbation"] = {
                 "parameter": parameter,
                 "side": side,
-                "base_unit": float(baseline_unit[index]),
+                "scheme": scheme,
+                "base_unit": base_unit,
                 "case_unit": float(value),
-                "unit_step": float(value - baseline_unit[index]),
+                "unit_step": float(value - base_unit),
             }
             sides[parameter][side] = record
             append_jsonl(cases_path, record)
@@ -149,7 +190,7 @@ def main() -> None:
         system.targets_dict(),
     )
     write_csv(outdir / "jacobian_long.csv", rows)
-    singular = np.linalg.svd(matrix, compute_uv=False)
+    left_vectors, singular, right_vectors_t = np.linalg.svd(matrix, full_matrices=False)
     largest = float(singular[0]) if singular.size else 0.0
     relative = singular / largest if largest > 0.0 else np.zeros_like(singular)
     rank = int(np.sum(relative > float(args.rank_relative_tol)))
@@ -165,8 +206,51 @@ def main() -> None:
         for index, (value, rel) in enumerate(zip(singular, relative))
     ]
     write_csv(outdir / "singular_values.csv", singular_rows)
+    right_rows = [
+        {
+            "singular_index": singular_index + 1,
+            "singular_value": float(singular[singular_index]),
+            "parameter": parameter,
+            "loading": float(right_vectors_t[singular_index, parameter_index]),
+            "absolute_loading": float(abs(right_vectors_t[singular_index, parameter_index])),
+        }
+        for singular_index in range(len(singular))
+        for parameter_index, parameter in enumerate(selected_parameters)
+    ]
+    write_csv(outdir / "right_singular_vectors.csv", right_rows)
     mapping_rows = mapping_diagnostics(matrix, moment_names, selected_parameters)
     write_csv(outdir / "mapping_diagnostics.csv", mapping_rows)
+    targets = system.targets_dict()
+    normalized_residual = np.asarray(
+        [
+            (float(baseline["moments"][moment]) - float(targets[moment]))
+            / abs(float(targets[moment]))
+            for moment in moment_names
+        ],
+        dtype=float,
+    )
+    gradient = 2.0 * matrix.T @ normalized_residual
+    gradient_rows = [
+        {
+            "parameter": parameter,
+            "unit_coordinate": float(baseline_unit[domain_index[parameter]]),
+            "local_loss_gradient_wrt_unit": float(gradient[index]),
+            "boundary_scheme": sides[parameter]["minus"]["perturbation"]["scheme"],
+        }
+        for index, parameter in enumerate(selected_parameters)
+    ]
+    write_csv(outdir / "local_gradient.csv", gradient_rows)
+    residual_rows = [
+        {
+            "moment": moment,
+            "target": float(targets[moment]),
+            "model": float(baseline["moments"][moment]),
+            "normalized_residual": float(normalized_residual[index]),
+            "loss_contribution": float(normalized_residual[index] ** 2),
+        }
+        for index, moment in enumerate(moment_names)
+    ]
+    write_csv(outdir / "baseline_target_fit.csv", residual_rows)
 
     all_records = [baseline] + [sides[p][s] for p in selected_parameters for s in ("minus", "plus")]
     all_solved = all(record["status"] == "ok" for record in all_records)
@@ -192,6 +276,32 @@ def main() -> None:
             parameter: float(column_norms[index])
             for index, parameter in enumerate(selected_parameters)
         },
+        "local_loss_gradient_by_parameter": {
+            parameter: float(gradient[index])
+            for index, parameter in enumerate(selected_parameters)
+        },
+        "weakest_right_singular_directions": [
+            {
+                "singular_value": float(singular[index]),
+                "relative_to_largest": float(relative[index]),
+                "top_parameter_loadings": [
+                    {
+                        "parameter": selected_parameters[parameter_index],
+                        "loading": float(right_vectors_t[index, parameter_index]),
+                    }
+                    for parameter_index in np.argsort(
+                        -np.abs(right_vectors_t[index, :])
+                    )[:6]
+                ],
+            }
+            for index in range(max(0, len(singular) - 3), len(singular))
+        ],
+        "top_baseline_loss_contributions": sorted(
+            residual_rows,
+            key=lambda row: float(row["loss_contribution"]),
+            reverse=True,
+        )[:6],
+        "baseline_wealth_components": baseline.get("wealth_components", {}),
         "baseline_loss": float(baseline["loss"]),
         "baseline_market_residual": float(baseline["market_residual"]),
         "elapsed_seconds": float(time.perf_counter() - start),
@@ -226,18 +336,25 @@ def solve_case(
         status = "ok" if all(np.isfinite(value) for value in moments.values()) else "nonfinite_moment"
         residual = float(getattr(sol, "best_max_abs_rel_excess", np.nan))
         price_value = float(np.asarray(price, dtype=float).reshape(-1)[0])
+        components = wealth_components(sol)
     except Exception as error:  # Keep failed perturbations in the audit packet.
         moments = {name: math.nan for name in system.moment_names}
         loss = math.inf
         status = f"failed: {type(error).__name__}: {error}"
         residual = math.inf
         price_value = math.nan
+        components = {
+            "aggregate_wealth": math.nan,
+            "aggregate_annual_after_tax_earnings": math.nan,
+            "annual_bequest_flow": math.nan,
+        }
     return {
         "case": label,
         "status": status,
         "theta": theta,
         "unit": [float(value) for value in unit],
         "moments": moments,
+        "wealth_components": components,
         "loss": loss,
         "market_residual": residual,
         "price": price_value,

@@ -15,6 +15,7 @@ import math
 import os
 import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Callable
 
 os.environ.setdefault("NUMBA_NUM_THREADS", "1")
@@ -70,8 +71,8 @@ DOMAIN: tuple[tuple[str, float, float, str], ...] = (
 def validate_contract(profile: str = "m5") -> None:
     if profile == "new-moments" and not NEW_MOMENT_PROFILE_RUNNABLE:
         raise RuntimeError(
-            "new-moments is disabled until its empirical auxiliaries and "
-            "identification gates pass"
+            "new-moments is disabled because its saving/bequest rows mix "
+            "inherited liquid wealth with post-choice tenure"
         )
     declared = tuple((name, lower, upper) for name, lower, upper, _ in DOMAIN)
     if declared != FREE_PARAMETER_BOUNDS:
@@ -131,6 +132,18 @@ def theta_from_unit(unit: np.ndarray) -> dict[str, float]:
     return theta
 
 
+def theta_from_unit_with_fixed_beta(
+    unit: np.ndarray,
+    fixed_beta_annual: float | None = None,
+) -> dict[str, float]:
+    """Map search coordinates to theta, optionally overriding beta for a profile cell."""
+
+    theta = theta_from_unit(unit)
+    if fixed_beta_annual is not None:
+        theta["beta"] = float(fixed_beta_annual) ** PERIOD_YEARS
+    return theta
+
+
 def unit_from_theta(theta: dict[str, float]) -> np.ndarray:
     unit = []
     for name, lower, upper, kind in DOMAIN:
@@ -186,13 +199,18 @@ def load_start_theta(
     return theta
 
 
-def parameter_rows(theta: dict[str, float]) -> list[dict[str, Any]]:
+def parameter_rows(
+    theta: dict[str, float],
+    *,
+    fixed_beta_annual: float | None = None,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for name, lower, upper, kind in DOMAIN:
         key = "beta" if name == "beta_annual" else name
         estimate = float(theta[key])
         if name == "beta_annual":
             estimate **= 1.0 / PERIOD_YEARS
+        profile_fixed = name == "beta_annual" and fixed_beta_annual is not None
         rows.append(
             {
                 "parameter": name,
@@ -200,7 +218,7 @@ def parameter_rows(theta: dict[str, float]) -> list[dict[str, Any]]:
                 "lower": lower,
                 "upper": upper,
                 "transform": kind,
-                "role": "estimated",
+                "role": "profile_fixed" if profile_fixed else "estimated",
                 "near_bound": min(estimate - lower, upper - estimate)
                 <= 0.02 * (upper - lower),
             }
@@ -217,6 +235,23 @@ def parameter_rows(theta: dict[str, float]) -> list[dict[str, Any]]:
         }
     )
     return rows
+
+
+def wealth_components(solution: Any) -> dict[str, float]:
+    """Return the levels underlying the aggregate wealth ratios."""
+
+    return {
+        name: float(getattr(solution, name, np.nan))
+        for name in (
+            "aggregate_wealth",
+            "aggregate_liquid_net_worth",
+            "aggregate_positive_liquid_assets",
+            "aggregate_liquid_debt",
+            "aggregate_gross_housing_wealth",
+            "aggregate_annual_after_tax_earnings",
+            "annual_bequest_flow",
+        )
+    }
 
 
 def target_fit_rows(
@@ -305,6 +340,15 @@ def parse_args() -> argparse.Namespace:
             "remain scored on the canonical target system."
         ),
     )
+    parser.add_argument(
+        "--fixed-beta-annual",
+        type=float,
+        default=None,
+        help=(
+            "Fix annual beta for a conditional profile and search the remaining "
+            "13 coordinates. Values above the calibration bound are diagnostic-only."
+        ),
+    )
     parser.add_argument("--smoke", action="store_true")
     return parser.parse_args()
 
@@ -312,10 +356,23 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     validate_contract(args.profile)
+    fixed_beta_annual = (
+        None if args.fixed_beta_annual is None else float(args.fixed_beta_annual)
+    )
+    if fixed_beta_annual is not None and not (0.80 <= fixed_beta_annual < 1.0):
+        raise ValueError("conditional-profile annual beta must lie in [0.80, 1.0)")
+    beta_dimension = next(
+        index for index, (name, _lower, _upper, _kind) in enumerate(DOMAIN)
+        if name == "beta_annual"
+    )
+    active_dimensions = [
+        index for index in range(len(DOMAIN))
+        if fixed_beta_annual is None or index != beta_dimension
+    ]
     if args.smoke:
         args.minutes = min(float(args.minutes), 8.0)
         args.strict_reserve_minutes = 0.0
-        args.max_evals = min(int(args.max_evals), len(DOMAIN) + 1)
+        args.max_evals = min(int(args.max_evals), len(active_dimensions) + 1)
     if args.minutes <= args.strict_reserve_minutes:
         raise ValueError("total minutes must exceed the strict reserve")
 
@@ -340,6 +397,8 @@ def main() -> None:
             args.start_theta_json,
             expected_target_fingerprint=target_system.fingerprint,
         )
+    if fixed_beta_annual is not None:
+        seed_theta["beta"] = fixed_beta_annual**PERIOD_YEARS
     rng = np.random.default_rng(int(args.seed))
     seed_unit = unit_from_theta(seed_theta)
     start_mix = float(np.clip(args.start_mix, 0.0, 0.25))
@@ -348,6 +407,8 @@ def main() -> None:
         0.0,
         1.0,
     )
+    if fixed_beta_annual is not None:
+        start_unit[beta_dimension] = unit_from_theta(seed_theta)[beta_dimension]
     search_overrides = override_factory(tight=False, optimized=True)
     if args.smoke:
         search_overrides.update(Nb=60, max_iter_eq=2, tol_eq=0.25)
@@ -356,7 +417,13 @@ def main() -> None:
     cases_path = args.outdir / "cases.jsonl"
     cases_path.write_text("")
     metadata = {
-        "status": "exact_loop_smoke" if args.smoke else run_status,
+        "status": (
+            "exact_loop_smoke"
+            if args.smoke
+            else "conditional_beta_profile"
+            if fixed_beta_annual is not None
+            else run_status
+        ),
         "profile": profile_name,
         "target_system": target_system.name,
         "target_fingerprint": target_system.fingerprint,
@@ -364,10 +431,29 @@ def main() -> None:
         "search_target_fingerprint": search_target_system.fingerprint,
         "search_weight_multipliers": search_weight_multipliers,
         "target_count": target_system.count,
-        "free_parameter_count": len(DOMAIN),
-        "external_restrictions": {"theta_n": 0.0},
+        "free_parameter_count": len(active_dimensions),
+        "external_restrictions": {
+            "theta_n": 0.0,
+            **(
+                {"beta_annual": fixed_beta_annual}
+                if fixed_beta_annual is not None
+                else {}
+            ),
+        },
+        "fixed_beta_annual": fixed_beta_annual,
+        "active_dimensions": [DOMAIN[index][0] for index in active_dimensions],
         "domain": [
-            {"name": name, "lower": lower, "upper": upper, "transform": kind}
+            {
+                "name": name,
+                "lower": lower,
+                "upper": upper,
+                "transform": kind,
+                "role": (
+                    "profile_fixed"
+                    if name == "beta_annual" and fixed_beta_annual is not None
+                    else "estimated"
+                ),
+            }
             for name, lower, upper, kind in DOMAIN
         ],
         "canonical_m5_loss": M5_LOSS,
@@ -424,7 +510,7 @@ def main() -> None:
     def evaluate(unit: np.ndarray, label: str, origin: dict[str, Any]) -> dict[str, Any]:
         nonlocal best, eval_index
         clipped = np.clip(np.asarray(unit, dtype=float), 0.0, 1.0)
-        theta = theta_from_unit(clipped)
+        theta = theta_from_unit_with_fixed_beta(clipped, fixed_beta_annual)
         began = time.perf_counter()
         try:
             solution, parameters, price = run_model_cp_dt(
@@ -443,16 +529,19 @@ def main() -> None:
             )
             status, error, census = "ok", "", []
             price_value = float(np.asarray(price).reshape(-1)[0])
+            components = wealth_components(solution)
         except InfeasibleThetaError as exc:
             moments, timings = {}, {}
             loss = search_loss = math.inf
             residual, price_value, converged = math.inf, math.nan, False
             status, error, census = "infeasible_theta", str(exc), list(exc.census)
+            components = wealth_components(SimpleNamespace())
         except Exception as exc:  # Persist unexpected failures instead of losing a chain.
             moments, timings = {}, {}
             loss = search_loss = math.inf
             residual, price_value, converged = math.inf, math.nan, False
             status, error, census = f"failed:{type(exc).__name__}", str(exc), []
+            components = wealth_components(SimpleNamespace())
         record = {
             "case": eval_index,
             "label": label,
@@ -464,6 +553,7 @@ def main() -> None:
             "price": price_value,
             "theta": theta,
             "moments": moments,
+            "wealth_components": components,
             "unit_vector": clipped,
             "origin": origin,
             "timings": timings,
@@ -493,7 +583,15 @@ def main() -> None:
         return record
 
     if args.method == "nelder-mead":
-        run_nelder_mead(start_unit, evaluate, can_evaluate, score, rng, float(args.initial_step))
+        run_nelder_mead(
+            start_unit,
+            evaluate,
+            can_evaluate,
+            score,
+            rng,
+            float(args.initial_step),
+            active_dimensions,
+        )
     else:
         run_pattern_search(
             start_unit,
@@ -503,13 +601,14 @@ def main() -> None:
             rng,
             float(args.initial_step),
             float(args.minimum_step),
+            active_dimensions,
         )
 
     tight_records: list[dict[str, Any]] = []
     if not args.smoke and best is not None:
         tight_overrides = override_factory(tight=True, optimized=True)
         winning_unit = np.asarray(best["unit_vector"], dtype=float)
-        winning_theta = theta_from_unit(winning_unit)
+        winning_theta = theta_from_unit_with_fixed_beta(winning_unit, fixed_beta_annual)
         tight_path = args.outdir / "tight_cases.jsonl"
         tight_path.write_text("")
         for repeat in range(2):
@@ -530,16 +629,19 @@ def main() -> None:
                 )
                 status, error, census = "ok", "", []
                 price_value = float(np.asarray(price).reshape(-1)[0])
+                components = wealth_components(solution)
             except InfeasibleThetaError as exc:
                 moments, timings = {}, {}
                 loss = search_loss = math.inf
                 residual, price_value, converged = math.inf, math.nan, False
                 status, error, census = "infeasible_theta", str(exc), list(exc.census)
+                components = wealth_components(SimpleNamespace())
             except Exception as exc:
                 moments, timings = {}, {}
                 loss = search_loss = math.inf
                 residual, price_value, converged = math.inf, math.nan, False
                 status, error, census = f"failed:{type(exc).__name__}", str(exc), []
+                components = wealth_components(SimpleNamespace())
             tight = {
                 "case": repeat,
                 "label": f"strict_winner_repeat_{repeat + 1}",
@@ -551,8 +653,12 @@ def main() -> None:
                 "price": price_value,
                 "theta": winning_theta,
                 "moments": moments,
+                "wealth_components": components,
                 "target_fit": target_fit_rows(moments, target_system) if moments else [],
-                "parameters": parameter_rows(winning_theta),
+                "parameters": parameter_rows(
+                    winning_theta,
+                    fixed_beta_annual=fixed_beta_annual,
+                ),
                 "unit_vector": winning_unit,
                 "origin": {"search_case": int(best["case"])},
                 "timings": timings,
@@ -607,13 +713,15 @@ def main() -> None:
         json.dumps(jsonable(summary), indent=2, sort_keys=True) + "\n"
     )
     if args.smoke and (
-        len(records) != len(DOMAIN) + 1
+        len(records) != len(active_dimensions) + 1
         or summary["n_converged"] != len(records)
         or summary["n_infeasible"] != 0
         or summary["n_failed"] != 0
     ):
         raise RuntimeError(
-            "exact-loop smoke requires 15/15 converged cases with no infeasibility or program errors"
+            f"exact-loop smoke requires {len(active_dimensions) + 1}/"
+            f"{len(active_dimensions) + 1} converged cases with no infeasibility "
+            "or program errors"
         )
 
 
@@ -624,9 +732,15 @@ def run_nelder_mead(
     score: Callable[[dict[str, Any] | None], float],
     rng: np.random.Generator,
     initial_step: float,
+    active_dimensions: list[int] | tuple[int, ...] | None = None,
 ) -> None:
+    dimensions = (
+        list(range(len(DOMAIN)))
+        if active_dimensions is None
+        else [int(index) for index in active_dimensions]
+    )
     simplex = [(start.copy(), evaluate(start, "seed", {"phase": "seed"}))]
-    for dimension in range(len(DOMAIN)):
+    for dimension in dimensions:
         if not can_evaluate():
             break
         step = initial_step * (0.75 + 0.5 * rng.random())
@@ -647,7 +761,7 @@ def run_nelder_mead(
             )
         )
     iteration = 0
-    while can_evaluate() and len(simplex) == len(DOMAIN) + 1:
+    while can_evaluate() and len(simplex) == len(dimensions) + 1:
         simplex.sort(key=lambda item: score(item[1]))
         centroid = np.mean([unit for unit, _ in simplex[:-1]], axis=0)
         worst_unit, worst_record = simplex[-1]
@@ -718,14 +832,21 @@ def run_pattern_search(
     rng: np.random.Generator,
     initial_step: float,
     minimum_step: float,
+    active_dimensions: list[int] | tuple[int, ...] | None = None,
 ) -> None:
+    dimensions = np.asarray(
+        list(range(len(DOMAIN)))
+        if active_dimensions is None
+        else [int(index) for index in active_dimensions],
+        dtype=int,
+    )
     incumbent_unit = start.copy()
     incumbent_record = evaluate(start, "seed", {"phase": "seed"})
     step = float(initial_step)
     sweep = 0
     while can_evaluate() and step >= minimum_step:
         improved = False
-        for dimension in rng.permutation(len(DOMAIN)):
+        for dimension in rng.permutation(dimensions):
             for direction in rng.permutation(np.asarray((-1.0, 1.0))):
                 if not can_evaluate():
                     break

@@ -13,6 +13,7 @@ from intergen_housing_fertility_optimized.calibration_search import (
     load_start_theta,
     parameter_rows,
     theta_from_unit,
+    theta_from_unit_with_fixed_beta,
     unit_from_theta,
     validate_contract,
 )
@@ -45,6 +46,18 @@ class CalibrationSearchContractTests(unittest.TestCase):
         restriction = next(row for row in rows if row["parameter"] == "theta_n")
         self.assertEqual(restriction["role"], "fixed")
         self.assertEqual(restriction["estimate"], 0.0)
+
+    def test_fixed_beta_profile_overrides_domain_and_marks_parameter_fixed(self) -> None:
+        unit = unit_from_theta(M5_THETA)
+        theta = theta_from_unit_with_fixed_beta(unit, 0.9999)
+        self.assertAlmostEqual(theta["beta"], 0.9999**4)
+        beta_row = next(
+            row
+            for row in parameter_rows(theta, fixed_beta_annual=0.9999)
+            if row["parameter"] == "beta_annual"
+        )
+        self.assertEqual(beta_row["role"], "profile_fixed")
+        self.assertAlmostEqual(beta_row["estimate"], 0.9999)
 
     def test_collector_result_can_seed_a_same_target_continuation(self) -> None:
         payload = {

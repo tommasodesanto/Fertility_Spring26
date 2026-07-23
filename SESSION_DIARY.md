@@ -1094,6 +1094,43 @@ Before running PSO, need to:
 
 ---
 
+## 2026-07-23
+
+### What we discovered
+
+The July 22 one-shot calibration's three saving/bequest moments used a hybrid
+balance sheet: inherited beginning-of-period liquid wealth was paired with the
+newly chosen tenure before the housing transaction was applied. The resulting
+wealth, bequest-flow, and old-estate-dispersion fits are invalid. At the
+certified winner, the old-estate p90/p50 is `3.552` under the hybrid
+measurement but only `1.911` at coherent beginning timing and `2.147` after
+the transaction.
+
+The final-winner Jacobian is numerically full rank but has condition number
+`8595.69`; it describes the invalid old objective and is not calibration
+evidence. Once the three invalid rows are removed, the exercise has 11 valid
+moments for 14 free parameters.
+
+### Actions
+
+- Disabled new searches under the invalid contract.
+- Stopped only the related annual-beta profile jobs after about 20 minutes and
+  preserved their checkpoints.
+- Built exact timing decompositions and a twice-repeated seven-cell strict beta
+  snapshot. Even annual beta `0.9999` leaves coherent wealth/earnings at
+  `6.042` or below versus target `6.9`.
+- Recorded exact artifacts and the repair sequence in
+  `CALIBRATION_STATUS.md`.
+
+### Next steps
+
+Use one coherent stock timing for cross-sectional wealth and estate moments;
+then implement the bequest flow at the actual death point in the model's
+within-period sequence. Only after that should the target table, Jacobian, and
+calibration be rebuilt.
+
+---
+
 ## Template for future sessions
 
 ### Date: YYYY-MM-DD

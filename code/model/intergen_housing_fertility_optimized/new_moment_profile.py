@@ -9,12 +9,16 @@ from .target_system import TargetSystem
 
 
 NEW_MOMENT_PROFILE_NAME = "intergen_new_moment_ledger_20260722"
-NEW_MOMENT_PROFILE_RUNNABLE = True
+# Disabled on 2026-07-23 after the final-winner audit showed that all three
+# saving/bequest rows pair inherited liquid wealth with newly chosen tenure
+# before applying the housing transaction. Keep the target object readable for
+# forensic diagnostics, but block new searches until timing is coherent.
+NEW_MOMENT_PROFILE_RUNNABLE = False
 
-# Corrected one-shot ledger. The four CEX rows are observable auxiliary
-# statistics recomputed from the model distribution. The 2026-07-22 local
-# transformed-coordinate Jacobian is finite and full rank 14/14; see
-# output/model/intergen_new_moment_jacobian_20260722/full/summary.json.
+# Historical July 22 one-shot ledger. The four CEX rows are observable
+# auxiliaries recomputed from the model distribution, but the three
+# saving/bequest rows below are invalid until their balance-sheet timing is
+# repaired. The old full-rank Jacobian is forensic evidence only.
 NEW_MOMENT_TARGETS = {
     "aggregate_wealth_to_annual_after_tax_earnings": 6.90,
     "annual_bequest_flow_to_aggregate_wealth": 0.0088,

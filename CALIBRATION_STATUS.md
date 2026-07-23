@@ -1,6 +1,69 @@
 # Calibration Status
 
-Updated: `2026-07-23` (corrected one-shot battery completed at strict loss 0.02195; beta remains at its upper bound, so M5 remains the working calibration pending diagnosis)
+Updated: `2026-07-23` (the July 22 one-shot target system is invalidated by a hybrid balance-sheet timing in its three saving/bequest rows; do not treat loss 0.02195 or its Jacobian as calibration evidence)
+
+## July 23: final-winner audit finds invalid saving/bequest measurement
+
+A fresh boundary-aware 14-by-14 Jacobian was run at the collected July 23
+winner rather than at the inherited seed (Torch job `14646728`; local packet
+`output/model/intergen_new_moment_final_jacobian_20260723/full/`). It is
+numerically full rank but extremely ill-conditioned: condition number
+`8595.69`, with the three smallest singular values only `0.00339`, `0.00102`,
+and `0.000116` of the largest. The second-weakest direction is 94 percent
+`beta_annual`; the weakest mixes `psi_child`, `kappa_fert`, `theta1`, and
+`h_bar_jump`. The local transformed-coordinate gradient points beyond the
+upper beta bound. This supersedes the inherited-seed condition number `858`
+as the relevant local diagnostic, but it does not validate the target system
+because of the measurement failure below.
+
+The three saving/bequest rows use
+`g_beginning_assets_by_current_choice`: inherited beginning-of-period liquid
+wealth is reassigned to the household's newly chosen tenure without applying
+the housing transaction. This is not a coherent balance sheet. It
+double-counts housing for buyers and can attach pre-sale mortgage debt to
+renters after a sale. The age profile makes the terminal artifact explicit:
+beginning-of-period ownership at age 82 is 57.9 percent, current chosen
+ownership is 2.7 percent, and the hybrid measure assigns the sellers' inherited
+debt to the renter state without sale proceeds.
+
+At the certified winner, exact timing alternatives are:
+
+| Model moment | Active hybrid | Beginning-period consistent | Post-transaction consistent |
+|---|---:|---:|---:|
+| Wealth / annual after-tax earnings | 6.198057 | 6.010386 | 5.933425 |
+| Annual bequest flow / wealth | 0.008976 | 0.012587 | 0.011995 |
+| Old total-estate p90/p50 | 3.551547 | 1.911157 | 2.146540 |
+
+Holding the other 11 rows fixed, replacing only these three hybrid values
+raises the relative-gap loss from `0.021954` to `0.410757` under beginning
+timing or `0.304258` under post-transaction timing. The apparent fit of the
+bequest-flow and estate-dispersion rows is therefore an accounting artifact.
+After removing the three invalid rows, the live exercise has only 11 valid
+moments for 14 free parameters and is underidentified. The underlying hybrid
+assignment predates the July 22 target revision, so older M4/M5 total-estate
+moments using the same distribution also require re-audit.
+
+The diagnostic decomposition, exact CSVs, and age plot are under
+`output/model/intergen_new_moment_wealth_structure_20260723/`. No target or
+calibration moment has been silently replaced; instead,
+`NEW_MOMENT_PROFILE_RUNNABLE=False` now blocks accidental new searches under
+the invalid contract. The next valid sequence is:
+(1) use one coherent stock timing for cross-sectional wealth and estate
+distribution; (2) define the bequest flow at the actual death point in the
+within-period model sequence; (3) re-run the target table, Jacobian, and
+calibration.
+
+The annual-beta profile array `14646928_[1-14]` and collector `14646929` were
+stopped after about 20 minutes once this failure was established; checkpoints
+were preserved and unrelated jobs were untouched. A bounded local readout
+then ran two bit-identical strict solves at the best checkpoint from each of
+seven beta cells. The old-objective loss falls from `0.211899` at annual beta
+`0.98` to `0.020026` at `0.9999`, confirming that the old objective wants beta
+at or beyond one. But at `0.9999`, wealth/earnings is only `6.041624` under
+consistent beginning timing and `5.966040` post transaction, both well below
+the `6.9` target. This is an early sensitivity snapshot, not a converged
+conditional profile or calibration. Results:
+`output/model/intergen_new_moment_beta_profile_20260723_anchored/early_strict_snapshot/`.
 
 ## July 22 night: corrected one-shot 14-moment system passes the launch gate
 

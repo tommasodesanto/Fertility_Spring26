@@ -67,17 +67,38 @@ The bounded six-hour continuation workflow is documented in
 uses recoverable one-CPU Torch chains, and promotes only twice-repeated strict
 winners; loose search losses are never compared with canonical M5.
 
-The invalid July 22 draft ledger is retained in the status history, but the
-current `new_moment_profile.py` no longer equates CEX estimates with structural
-parameters. It reproduces four model-feasible CEX auxiliary regressions and a
-matched PSID four-year tenure Brier score on simulated households. A local
-29-solve transformed-coordinate audit is finite and full rank 14/14
-(condition number 858); the packet is under
-`output/model/intergen_new_moment_jacobian_20260722/full/`. The three-hour Torch launchers are
+The July 22 `new_moment_profile.py` correctly replaces parameter identities
+with model-feasible CEX and PSID auxiliary moments, but its three
+saving/bequest rows are invalidated by a separate balance-sheet timing bug.
+Inherited liquid wealth is paired with newly chosen tenure before the housing
+transaction is applied. The final-winner audit is full rank only mechanically
+and is highly ill-conditioned (condition number 8,596); it is not calibration
+evidence. The exact timing decomposition is under
+`output/model/intergen_new_moment_wealth_structure_20260723/`, and the
+final-winner Jacobian is under
+`output/model/intergen_new_moment_final_jacobian_20260723/full/`. Do not launch
+a new calibration under this target system until the stock timing and the
+within-period bequest-flow timing are corrected and re-audited.
+
+The canceled old-objective annual-beta search has a twice-repeated seven-cell
+strict checkpoint readout under
+`output/model/intergen_new_moment_beta_profile_20260723_anchored/early_strict_snapshot/`.
+It is sensitivity evidence only; the full invalid-objective search was not
+allowed to consume its remaining time budget.
+
+Reproduce the read-only wealth-timing diagnostic from `code/model` with:
+
+```bash
+PYTHONPATH=$PWD .venv/bin/python \
+  -m intergen_housing_fertility_optimized.diagnose_wealth_structure \
+  --source ../../output/model/intergen_new_moment_weight_tilt_20260722_canonical_cleanup/report/results.json \
+  --outdir ../../output/model/intergen_new_moment_wealth_structure_20260723
+```
+
+The historical three-hour launchers are
 `cluster/submit_three_hour_new_moments.sh` and
-`cluster/submit_three_hour_new_moment_collector.sh`. This is a provisional
-one-shot calibration profile, not a replacement for M5 until a strict winner
-is collected and reviewed.
+`cluster/submit_three_hour_new_moment_collector.sh`; they remain for
+reproducibility, not for a fresh launch.
 
 The dependent overnight continuation uses
 `cluster/submit_overnight_new_moment_battery.sh` and

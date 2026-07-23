@@ -23,8 +23,9 @@ from intergen_housing_fertility_optimized.solver import (
 
 
 class NewMomentProfileTests(unittest.TestCase):
-    def test_contract_has_fourteen_identifying_rows_and_relative_weights(self) -> None:
-        validate_contract("new-moments")
+    def test_disabled_contract_retains_fourteen_rows_for_forensics(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "saving/bequest rows"):
+            validate_contract("new-moments")
         system = new_moment_target_system()
         self.assertEqual(system.count, 14)
         self.assertEqual(set(NEW_MOMENT_TARGETS), set(NEW_MOMENT_WEIGHTS))
@@ -68,6 +69,10 @@ class NewMomentProfileTests(unittest.TestCase):
             stats, g, p, np.array([-1.0, 3.0]), np.array([1.0])
         )
         self.assertAlmostEqual(stats.aggregate_wealth, 4.0)
+        self.assertAlmostEqual(stats.aggregate_liquid_net_worth, 2.0)
+        self.assertAlmostEqual(stats.aggregate_positive_liquid_assets, 3.0)
+        self.assertAlmostEqual(stats.aggregate_liquid_debt, 1.0)
+        self.assertAlmostEqual(stats.aggregate_gross_housing_wealth, 2.0)
         self.assertAlmostEqual(stats.aggregate_annual_after_tax_earnings, 2.0)
         self.assertAlmostEqual(stats.aggregate_wealth_to_annual_after_tax_earnings, 2.0)
         self.assertAlmostEqual(stats.annual_bequest_flow, 1.25)

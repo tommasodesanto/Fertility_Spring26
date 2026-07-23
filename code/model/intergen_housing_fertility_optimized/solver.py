@@ -4187,6 +4187,7 @@ def forward_distribution(
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
+        stats.g_beginning_distribution = g.copy()
         stats.g_beginning_assets_by_current_choice = asset_current
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :], axis=(0, 1, 3, 4))
@@ -4681,6 +4682,7 @@ def forward_distribution_markov_income(
     )
     stats.total_births_kfe = total_births
     if not fast_stats:
+        stats.g_beginning_distribution = g.copy()
         stats.g_beginning_assets_by_current_choice = asset_current
     stats.births_by_loc = births_by_loc
     stats.entry_by_loc = np.sum(g[:, :, :, 0, :, :, :], axis=(0, 1, 3, 4, 5))
@@ -5825,8 +5827,19 @@ def add_aggregate_wealth_bequest_flow_moments(
     if not bool(getattr(P, "scale_flows_to_period", False)):
         period_years = 1.0
     aggregate_wealth = 0.0
+    aggregate_liquid_net_worth = 0.0
+    aggregate_positive_liquid_assets = 0.0
+    aggregate_liquid_debt = 0.0
+    aggregate_gross_housing_wealth = 0.0
     aggregate_annual_earnings = 0.0
     annual_bequest_flow = 0.0
+    wealth_by_age = np.zeros(int(P.J), dtype=float)
+    liquid_net_worth_by_age = np.zeros(int(P.J), dtype=float)
+    positive_liquid_assets_by_age = np.zeros(int(P.J), dtype=float)
+    liquid_debt_by_age = np.zeros(int(P.J), dtype=float)
+    gross_housing_wealth_by_age = np.zeros(int(P.J), dtype=float)
+    annual_earnings_by_age = np.zeros(int(P.J), dtype=float)
+    mass_by_age = np.zeros(int(P.J), dtype=float)
     for j in range(int(P.J)):
         if bool(getattr(P, "use_age_survival", False)) and j < int(P.J) - 1:
             death_probability = 1.0 - float(P.survival_probs[j])
@@ -5837,16 +5850,36 @@ def add_aggregate_wealth_bequest_flow_moments(
         for i in range(int(P.I)):
             for zz, z_value in enumerate(z_values):
                 state_mass = float(np.sum(g_arr[:, :, i, j, zz, :, :]))
+                mass_by_age[j] += state_mass
                 if j < int(P.J_R):
                     labor_earnings = float(P.income[i, j]) * float(z_value) / period_years
                     aggregate_annual_earnings += labor_earnings * state_mass
+                    annual_earnings_by_age[j] += labor_earnings * state_mass
                 for ten in range(g_arr.shape[1]):
                     housing_value = (
                         float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
                     )
                     estate = bg_arr + housing_value
                     mass_by_asset = np.sum(g_arr[:, ten, i, j, zz, :, :], axis=(1, 2))
-                    aggregate_wealth += float(np.sum(mass_by_asset * estate))
+                    liquid_net_worth = float(np.sum(mass_by_asset * bg_arr))
+                    positive_liquid_assets = float(
+                        np.sum(mass_by_asset * np.maximum(bg_arr, 0.0))
+                    )
+                    liquid_debt = float(
+                        np.sum(mass_by_asset * np.maximum(-bg_arr, 0.0))
+                    )
+                    gross_housing_wealth = float(np.sum(mass_by_asset)) * housing_value
+                    total_wealth = liquid_net_worth + gross_housing_wealth
+                    aggregate_liquid_net_worth += liquid_net_worth
+                    aggregate_positive_liquid_assets += positive_liquid_assets
+                    aggregate_liquid_debt += liquid_debt
+                    aggregate_gross_housing_wealth += gross_housing_wealth
+                    aggregate_wealth += total_wealth
+                    liquid_net_worth_by_age[j] += liquid_net_worth
+                    positive_liquid_assets_by_age[j] += positive_liquid_assets
+                    liquid_debt_by_age[j] += liquid_debt
+                    gross_housing_wealth_by_age[j] += gross_housing_wealth
+                    wealth_by_age[j] += total_wealth
                     annual_bequest_flow += (
                         death_probability
                         * float(np.sum(mass_by_asset * np.maximum(estate, 0.0)))
@@ -5859,8 +5892,19 @@ def add_aggregate_wealth_bequest_flow_moments(
         annual_bequest_flow / max(aggregate_wealth, 1e-12)
     )
     stats.aggregate_wealth = aggregate_wealth
+    stats.aggregate_liquid_net_worth = aggregate_liquid_net_worth
+    stats.aggregate_positive_liquid_assets = aggregate_positive_liquid_assets
+    stats.aggregate_liquid_debt = aggregate_liquid_debt
+    stats.aggregate_gross_housing_wealth = aggregate_gross_housing_wealth
     stats.aggregate_annual_after_tax_earnings = aggregate_annual_earnings
     stats.annual_bequest_flow = annual_bequest_flow
+    stats.aggregate_wealth_by_age = wealth_by_age
+    stats.aggregate_liquid_net_worth_by_age = liquid_net_worth_by_age
+    stats.aggregate_positive_liquid_assets_by_age = positive_liquid_assets_by_age
+    stats.aggregate_liquid_debt_by_age = liquid_debt_by_age
+    stats.aggregate_gross_housing_wealth_by_age = gross_housing_wealth_by_age
+    stats.aggregate_annual_after_tax_earnings_by_age = annual_earnings_by_age
+    stats.population_mass_by_age = mass_by_age
 
 
 def compute_markov_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:
