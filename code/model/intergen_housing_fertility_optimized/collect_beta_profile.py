@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect the historical conditional-beta diagnostic for the July 22 objective."""
+"""Collect a conditional-beta diagnostic for the repaired one-shot objective."""
 
 from __future__ import annotations
 
@@ -21,6 +21,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--expected-betas",
+        type=float,
+        nargs="+",
+        default=EXPECTED_BETAS,
+        help="Annual beta cells expected in the run (two chains per cell).",
+    )
     return parser.parse_args()
 
 
@@ -37,6 +44,9 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 def main() -> None:
     args = parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
+    expected_betas = tuple(float(value) for value in args.expected_betas)
+    if not expected_betas or len(set(expected_betas)) != len(expected_betas):
+        raise ValueError("--expected-betas must contain distinct values")
     system = new_moment_target_system()
     grouped: dict[float, list[tuple[Path, dict[str, Any], dict[str, Any]]]] = {}
     task_rows: list[dict[str, Any]] = []
@@ -65,14 +75,16 @@ def main() -> None:
         if eligible:
             grouped.setdefault(beta, []).append((summary_path.parent, summary, tight))
 
-    if len(task_rows) != 2 * len(EXPECTED_BETAS):
+    if len(task_rows) != 2 * len(expected_betas):
         write_csv(args.output / "all_tasks.csv", task_rows)
         raise RuntimeError(
-            f"expected {2 * len(EXPECTED_BETAS)} completed tasks, found {len(task_rows)}"
+            f"expected {2 * len(expected_betas)} completed tasks, found {len(task_rows)}"
         )
     profile_rows: list[dict[str, Any]] = []
+    selected_target_fit_rows: list[dict[str, Any]] = []
+    selected_parameter_rows: list[dict[str, Any]] = []
     selected_records: dict[str, Any] = {}
-    for expected_beta in EXPECTED_BETAS:
+    for expected_beta in expected_betas:
         matching_beta = next(
             (beta for beta in grouped if math.isclose(beta, expected_beta, abs_tol=1e-12)),
             None,
@@ -102,6 +114,13 @@ def main() -> None:
         theta = dict(selected["theta"])
         moments = dict(selected["moments"])
         components = dict(selected.get("wealth_components") or {})
+        selected_target_fit_rows.extend(
+            {"beta_annual": expected_beta, **fit_row} for fit_row in fit
+        )
+        selected_parameter_rows.extend(
+            {"beta_annual": expected_beta, **parameter_row}
+            for parameter_row in parameters
+        )
         row = {
             "beta_annual": expected_beta,
             "beta_period": float(theta["beta"]),
@@ -137,13 +156,15 @@ def main() -> None:
 
     write_csv(args.output / "all_tasks.csv", task_rows)
     write_csv(args.output / "beta_profile.csv", profile_rows)
+    write_csv(args.output / "selected_target_fits.csv", selected_target_fit_rows)
+    write_csv(args.output / "selected_parameters.csv", selected_parameter_rows)
     best = min(profile_rows, key=lambda row: float(row["strict_loss"]))
     payload = {
         "status": "conditional_beta_profile_not_a_calibration",
         "target_system": system.name,
         "target_fingerprint": system.fingerprint,
         "profile_fixed_parameter": "beta_annual",
-        "profile_values": list(EXPECTED_BETAS),
+        "profile_values": list(expected_betas),
         "nuisance_free_parameter_count": 13,
         "hard_moment_count": system.count,
         "best_profile_row": best,
@@ -156,9 +177,8 @@ def main() -> None:
     lines = [
         "# Conditional annual-beta profile",
         "",
-        "This collector is retained for historical reproducibility. The July 22",
-        "saving/bequest objective was later invalidated by mixed balance-sheet timing.",
-        "This is a diagnostic profile, not a reweighted or promoted calibration.",
+        "This is a diagnostic profile of the timing-repaired one-shot objective,",
+        "not a reweighted or promoted calibration.",
         "Each beta cell reoptimizes the other 13 parameters with two independent chains",
         "and requires two exact strict repeats per chain.",
         "",
@@ -167,7 +187,9 @@ def main() -> None:
         f"- Wealth / earnings there: `{float(best['wealth_to_earnings']):.6g}`",
         f"- TFR there: `{float(best['tfr']):.6g}`",
         "",
-        "The complete curve is in `beta_profile.csv`; task status is in `all_tasks.csv`.",
+        "The complete curve is in `beta_profile.csv`; complete target-fit and",
+        "parameter tables are in `selected_target_fits.csv` and",
+        "`selected_parameters.csv`; task status is in `all_tasks.csv`.",
     ]
     (args.output / "REPORT.md").write_text("\n".join(lines) + "\n")
     print(json.dumps({key: value for key, value in payload.items() if key != "selected_records"}, indent=2))

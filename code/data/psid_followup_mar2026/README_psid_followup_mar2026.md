@@ -20,6 +20,7 @@ No existing project files were overwritten.
 - `build_future_parent_dp_moments_v1.py`
 - `audit_intergen_bequest_family_size_targets.R`
 - `build_intergen_bequest_retention_targets.R`
+- `audit_aggregate_wealth_earnings_ratio.R`
 - `output/` (generated artifacts and logs)
 
 ## Exact Replication Target
@@ -149,6 +150,15 @@ result packets are under:
 
 - `output/intergen_bequest_family_size_audit/`
 - `output/intergen_bequest_retention_targets/`
+
+## Aggregate Wealth/Earnings Audit (July 23, 2026)
+
+`audit_aggregate_wealth_earnings_ratio.R` constructs a transparent
+gross-wealth/gross-earnings diagnostic from the PSID shelf and reports
+1984--2003 and 2005--2019 vintages separately. Its packet is under
+`output/aggregate_wealth_earnings_audit/`. This is a normalization and vintage
+check, not an adopted calibration target; it does not reproduce Hendricks's
+TAXSIM-based after-tax earnings.
 
 ## First-Pass Wealth Findings (v1)
 
