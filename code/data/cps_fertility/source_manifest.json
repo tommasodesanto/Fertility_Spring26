@@ -1,0 +1,26 @@
+{
+  "source_name": "June 2024 Current Population Survey Fertility Supplement public-use file",
+  "source_url": "https://www2.census.gov/programs-surveys/cps/datasets/2024/supp/jun24pub.csv",
+  "official_tables_url": "https://www.census.gov/data/tables/2024/demo/fertility/women-fertility.html",
+  "technical_documentation_url": "https://www2.census.gov/programs-surveys/cps/techdocs/cpsjun24.pdf",
+  "local_cache_path": "cache/jun24pub.csv",
+  "sha256": "d72940e53ccaa5aa539402f7fd9b8918b85441ee0b85c8fc878011f3e3ea5abf",
+  "byte_size": 145653216,
+  "downloaded_on": "2026-07-24",
+  "weight": {
+    "variable": "PWSSWGT",
+    "census_label": "Weight-second stage weight (rake 6 final step weight)",
+    "role": "Census-suggested supplement final weight for PTSF1",
+    "population_scale_divisor": 10000
+  },
+  "analysis_variables": {
+    "PESEX": "Sex; women are coded 2",
+    "PRTAGE": "Age at interview",
+    "PTSF1": "Number of children ever born; 5 denotes five or more",
+    "PWSSWGT": "Supplement final weight"
+  },
+  "first_birth_timing_variables_checked_but_not_used": {
+    "PTSF2": "Year first child born",
+    "PTSAYFC": "Age of mother at first birth"
+  }
+}

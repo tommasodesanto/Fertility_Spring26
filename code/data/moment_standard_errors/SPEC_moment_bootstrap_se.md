@@ -26,8 +26,8 @@ Plus two supplementary tabulations (same sources, same session):
 
 | key | target | source |
 |---|---:|---|
-| tfr | 1.918000 | fertility source — LOCATE + reproduce; if not reproducible, flag SE as "source-unconfirmed", do NOT fabricate |
-| childless_rate | 0.188000 | same fertility source |
+| tfr | 1.918000 | June 2024 CPS Fertility Supplement, women ages 40--44; reproduced by `code/data/cps_fertility/build_cps_fertility_targets.py` |
+| childless_rate | 0.188000 | same CPS builder and sample |
 | own_rate | 0.575472 | ACS/MMS |
 | own_family_gap | 0.167662 | ACS/MMS |
 | housing_increment_0to1 | 0.664435 | PSID event study (Sun-Abraham) |
@@ -40,6 +40,15 @@ Plus two supplementary tabulations (same sources, same session):
 | old_age_own_rate | 0.764261 | PSID |
 | own_rate_2534 | 0.341166 | ACS/MMS |
 | prime30_55_parent_3plus_minus_1to2_mean_rooms | 0.367700 | ACS/MMS |
+
+The fertility-source flag is resolved by
+`code/data/cps_fertility/build_cps_fertility_targets.py`. Its committed
+`output/cps_fertility_targets.csv` reproduces the two published stock targets
+and reports their person-bootstrap standard errors; its committed
+`output/cps_fertility_covariance.csv` contains their covariance with the
+literal parity distribution and capped 3+ top-bin mean. The E strand should
+consume those files rather than substitute an ACS current-children measure.
+First-birth timing rows remain outside this CPS builder.
 
 ## Builders + microdata (from the grounding pass — read these for the exact filters)
 
