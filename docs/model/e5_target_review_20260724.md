@@ -30,6 +30,20 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Rows 6-7 -- Expenditure-tilts block [SIGNED OFF 2026-07-24]
+
+- Row 6: first-child rooms increment, 0.664. PSID event-study response,
+  horizon-0 diff-in-diff on the active Markov path. Identifies the SUM
+  delta_jump + delta_a (a new parent gets the jump plus one per-child step).
+- Row 7: rooms gap 3+ vs 1-2 children ages 30-55, 0.368, literal bins (L4).
+  ACS build. The jump cancels within parents, so identifies delta_a alone;
+  delta_jump is the residual of row 6. Triangular block, solved in order.
+- delta_jump = one-time housing-share shift at parenthood; delta_a =
+  per-additional-child shift. Registered tension: at E4 both rows overshoot
+  at tiny tilts (scale e(n) already lifts family housing demand) while the
+  family gap wants larger tilts; where E5 settles this tug-of-war tests
+  whether the tilt device serves the space and tenure stories at once.
+
 ### Row 5 -- Family ownership gap [SIGNED OFF 2026-07-24]
 
 - Target: 0.168, TARGETED in the hard loss. Parent minus childless ownership
