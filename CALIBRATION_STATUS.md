@@ -1,7 +1,30 @@
 # Calibration Status
 
-Updated: `2026-07-23` (matched recent-PSID wealth target and corrected
-conditional-beta profile complete)
+Updated: `2026-07-23` (free-beta overnight continuation active on Torch)
+
+## July 23: unrestricted-beta overnight continuation active
+
+The corrected recent-PSID fourteen-moment system is now running with all
+fourteen structural parameters free and only `theta_n=0` imposed externally.
+No target, canonical weight, or parameter bound was changed. The target
+fingerprint is
+`a66c8ac324e828c557dee60d37388562ad26c401bb044737361cda738ce4f15c`.
+
+An exact-loop Torch smoke (`14686817`, `14686818`) passed for all eight chains:
+15/15 cases completed per chain, fourteen active coordinates, and no fixed
+beta. Production wave 1 is `14686845_[1-4]` plus `14686846_[5-8]`, seeded
+equally from the strictly repeated beta-profile winners at annual beta `0.999`
+and `0.9995`; collector `14686857` runs only after both arrays succeed. Wave 2
+is `14686858_[1-8]`, dependent on that collector and seeded from its certified
+winner; final collector `14686859` is dependent on wave 2.
+
+Each production chain has 225 minutes total, of which ten minutes are reserved
+for two fresh strict winner re-solves, and a cap of 4,000 search evaluations.
+Thus the declared stop is two eight-chain waves (at most 64,000 evaluations),
+not open-ended search. Every evaluation writes `cases.jsonl`,
+`latest_completed_case.json`, and `best_so_far.json`. Outputs:
+`output/model/intergen_new_moment_unrestricted_overnight_20260723_w1/` and
+`output/model/intergen_new_moment_unrestricted_overnight_20260723_w2/`.
 
 ## July 23: matched gross wealth target and corrected beta profile
 
