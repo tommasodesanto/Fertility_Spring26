@@ -22,20 +22,45 @@
 \label{sec:quant_calibration}
 
 This section calibrates the equivalence-scale specification of the model. Two
-changes relative to the specification circulated in the previous draft matter
-for the calibration and are described first. Children no longer enter through
-committed consumption and housing bundles. A household with $n$ dependent
-children at home values the consumption--housing composite through the
-equivalence scale of \citet{scholzSeshadriKhitatrakun2006},
-$e(n)=((2+0.7n)/2)^{0.7}$, which is imposed rather than estimated, and through
-an estimated shift of the expenditure share toward housing while children are
-at home. Fertility is sequential rather than one-shot: childless households
-decide each period whether to try for a first birth, parents with a child at
-home decide whether to try for the next, attempts succeed with an
-age-declining fecundity probability taken from the demographic literature, and
-completed family size is therefore an outcome of starting age, biology, and
-sequential choices. The taste shocks attached to these two decisions carry
-different scales, $\kappa_E$ at entry and $\kappa_C$ at continuation: the
+changes relative to the model section of the circulated draft matter for the
+calibration, and since this note travels on its own I state the new objects
+explicitly. First, children no longer enter through the committed consumption
+and housing bundles $(\bar c(n,s),\bar h(n,s))$ of the draft. Within-period
+utility for a household with $n$ dependent children at home is
+\begin{equation}
+u(c,h,n)
+=
+e(n)\,
+\frac{\left(c^{\alpha(n)}\,h^{1-\alpha(n)}\right)^{1-\sigma}}{1-\sigma}
++\psi\,n,
+\qquad
+\alpha(n)=\alpha_0-\left(\delta_{\mathrm{jump}}\mathbf 1\{n\geq1\}+\delta_a n\right),
+\label{eq:eqscale_utility}
+\end{equation}
+where $e(n)=((2+0.7n)/2)^{0.7}$ is the equivalence scale of
+\citet{scholzSeshadriKhitatrakun2006}, imposed rather than estimated. Children
+thus raise the marginal value of the whole consumption--housing composite
+through $e(n)$ and tilt spending toward housing through $\alpha(n)$, both only
+while they live at home; households without children at home have the
+homothetic preferences of the childless. There are no minimum-consumption or
+minimum-housing requirements, which is what permits empirical income risk
+below.
+
+Second, fertility is sequential rather than one-shot. Each period during the
+fertile ages, a childless household chooses between waiting and trying for a
+first birth; a household at parity $n<3$ with a child at home chooses between
+stopping and trying for birth $n+1$. An attempt at age $a$ succeeds with the
+fecundity probability
+\begin{equation}
+\pi_a=\max\left\{0,\;1-0.02\,e^{0.134\,(a-18)}\right\},
+\label{eq:fecundity}
+\end{equation}
+which declines with age and reaches zero at 45; the coefficients are anchored
+to Leridon's clinical conception tables, with the formal fit pending.
+Completed family size is therefore an outcome of starting age, biology, and
+sequential choices---nobody chooses a number of children. Both decisions carry
+type-1 extreme-value taste shocks, with scale $\kappa_E$ on the entry decision
+and $\kappa_C$ on the continuation decision. The asymmetry is deliberate: the
 timing of the first attempt is allowed to be substantially random, standing in
 for the circumstances that time family formation, while the continuation
 decision of an established family is close to deterministic and therefore
