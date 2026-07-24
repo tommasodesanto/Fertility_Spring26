@@ -96,7 +96,8 @@ tenure, and saving.
 \renewcommand{\arraystretch}{1.04}
 \begin{tabularx}{\textwidth}{@{}
 >{\raggedright\arraybackslash}p{0.31\textwidth}
->{\raggedright\arraybackslash}p{0.21\textwidth}
+>{\raggedright\arraybackslash}p{0.19\textwidth}
+@{\hspace{1.5em}}
 >{\raggedright\arraybackslash}X@{}}
 \toprule
 Parameter & Value & Source or restriction \\
@@ -141,50 +142,33 @@ tenure, and aggregate housing. The parameters are chosen jointly. The mapping
 is nevertheless structured in low-dimensional blocks: a three-parameter
 saving--bequest block, a three-parameter baseline demand block, a
 two-parameter fertility block, and six parameters with distinct primary
-counterparts. Table~\ref{tab:quant_parameters} reports the estimates, search
-regions, and the primary empirical counterpart of each parameter.
+counterparts. Table~\ref{tab:quant_parameters} reports the estimates; the
+paragraphs that follow explain the parameter--moment mapping.
 
 \begin{table}[H]
 \centering
-\caption{Internally estimated parameters and primary empirical counterparts}
+\caption{Internally estimated parameters}
 \label{tab:quant_parameters}
-\scriptsize
-\renewcommand{\arraystretch}{1.05}
-\begin{tabularx}{\textwidth}{@{}l r c c >{\raggedright\arraybackslash}X@{}}
+\small
+\renewcommand{\arraystretch}{1.04}
+\begin{tabularx}{0.84\textwidth}{@{}l X r@{}}
 \toprule
-Parameter & Estimate & Search region & Near bound & Primary empirical counterpart \\
+Parameter & Interpretation & Estimate \\
 \midrule
-$\beta_{\mathrm{annual}}$ & 0.9991 & $[0.800,0.9995]$ & Yes &
-Aggregate wealth / annual gross labor earnings \\
-$\theta_0$ & 0.0460 & $[0,8]$ & Yes &
-Annual bequest flow / aggregate wealth \\
-$\theta_1$ & 0.0944 & $[0.02,16]$ & Yes &
-Late-life total-wealth p90/p50 \\
-\addlinespace
-$\alpha_c$ & 0.6145 & $[0.02,0.98]$ & No &
-Childless-renter rent-expenditure slope \\
-$\bar c_0$ & 0.5090 & $[0,2]$ & No &
-Childless-renter intercept at the mean rent per room \\
-$\bar h_0$ & 0.5139 & $[0.05,5.8]$ & No &
-Mean rooms among bottom-quintile childless renters \\
-\addlinespace
-$\bar c_n$ & 0.1553 & $[0,3]$ & No &
-Family-size coefficient in the consumption auxiliary \\
-$\bar h_{\mathrm{jump}}$ & 0.0522 & $[0,8]$ & Yes &
-Housing increment associated with the first child \\
-$\bar h_n$ & 0.9258 & $[0,5]$ & No &
-Rooms gap: 3+ versus 1--2 children \\
-$\psi_{\mathrm{child}}$ & $-1.0261$ & $[-3,3]$ & No &
-Completed fertility, jointly with childlessness \\
-$\kappa_F$ & 5.4615 & $[0.02,50]$ & No &
-Childlessness, jointly with completed fertility \\
-\addlinespace
-$\chi_O$ & 1.0745 & $[0.1,5]$ & No &
-Ownership rate, ages 30--55 \\
-$\kappa_T$ & 0.0190 & $[0,0.12]$ & No &
-Four-year residual tenure Brier score \\
-$\bar H$ & 4.9399 & $[0.2,80]$ & No &
-Mean occupied rooms, ages 18--85 \\
+$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9991 \\
+$\alpha_c$ & Consumption weight & 0.6145 \\
+$\bar c_0$ & Baseline consumption requirement & 0.5090 \\
+$\bar c_n$ & Consumption cost per dependent child & 0.1553 \\
+$\bar h_0$ & Baseline housing requirement & 0.5139 \\
+$\bar h_{\mathrm{jump}}$ & Housing-need increase with the first child & 0.0522 \\
+$\bar h_n$ & Housing requirement per dependent child & 0.9258 \\
+$\psi_{\mathrm{child}}$ & Utility from children & $-1.0261$ \\
+$\kappa_F$ & Dispersion in family-size choices & 5.4615 \\
+$\chi_O$ & Utility premium from owner-occupied housing & 1.0745 \\
+$\bar H$ & Housing-supply scale & 4.9399 \\
+$\theta_0$ & Strength of the bequest motive & 0.0460 \\
+$\theta_1$ & Bequest curvature shift & 0.0944 \\
+$\kappa_T$ & Dispersion in tenure choices & 0.0190 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -265,45 +249,40 @@ dispersion in \citet{denardiYang2014}.
 
 \subsection{Target Moments and Fit}
 
-The target system uses equal squared percentage deviations: the weight on
-moment $m$ is $1/m_{\mathrm{data}}^2$. This transparent preliminary objective
-puts the moments in comparable relative units; it is not an estimated optimal
-GMM weighting matrix. Table~\ref{tab:quant_fit} reports the complete target
-system and its strict model counterpart.
+Table~\ref{tab:quant_fit} reports the empirical targets and their model
+counterparts.
 
 \begin{table}[H]
 \centering
 \caption{Target moments and model fit}
 \label{tab:quant_fit}
-\scriptsize
-\renewcommand{\arraystretch}{1.03}
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X r r r r r@{}}
+\small
+\renewcommand{\arraystretch}{1.04}
+\begin{tabularx}{0.92\textwidth}{@{}>{\raggedright\arraybackslash}X r r@{}}
 \toprule
-Moment & Data & Model & Gap & Weight & Loss \\
+Moment & Target & Model \\
 \midrule
-\multicolumn{6}{@{}l}{\emph{Saving and bequests}} \\
-Wealth / annual gross labor earnings & 6.8731 & 5.1365 & $-1.7366$ & 0.0212 & 0.06384 \\
-Annual bequest flow / aggregate wealth & 0.0088 & 0.0081 & $-0.0007$ & 12913.22 & 0.00711 \\
-Total-wealth p90/p50, ages 76--84 & 3.4481 & 1.8926 & $-1.5556$ & 0.0841 & 0.20352 \\
+\multicolumn{3}{@{}l}{\emph{Saving and bequests}} \\
+Wealth / annual gross labor earnings & 6.8731 & 5.1365 \\
+Annual bequest flow / aggregate wealth & 0.0088 & 0.0081 \\
+Total-wealth p90/p50, ages 76--84 & 3.4481 & 1.8926 \\
 \addlinespace
-\multicolumn{6}{@{}l}{\emph{Baseline consumption and housing demand}} \\
-Childless-renter rent-expenditure slope & 0.2647 & 0.2831 & 0.0185 & 14.2734 & 0.00486 \\
-Childless-renter intercept at mean price & 0.1064 & 0.1068 & 0.0004 & 88.3061 & 0.00001 \\
-Bottom-quintile childless-renter mean rooms & 3.8974 & 3.8348 & $-0.0627$ & 0.0658 & 0.00026 \\
+\multicolumn{3}{@{}l}{\emph{Baseline consumption and housing demand}} \\
+Childless-renter rent-expenditure slope & 0.2647 & 0.2831 \\
+Childless-renter intercept at mean price & 0.1064 & 0.1068 \\
+Bottom-quintile childless-renter mean rooms & 3.8974 & 3.8348 \\
 \addlinespace
-\multicolumn{6}{@{}l}{\emph{Family size and family housing}} \\
-Family-size consumption coefficient & 0.0752 & 0.0752 & $-0.0000$ & 176.8312 & 0.00000 \\
-Housing increment with the first child, rooms & 0.6644 & 0.6653 & 0.0009 & 2.2651 & 0.00000 \\
-Rooms gap, 3+ versus 1--2 children & 0.3677 & 0.3640 & $-0.0037$ & 7.3963 & 0.00010 \\
-Completed fertility & 1.9180 & 2.0854 & 0.1674 & 0.2718 & 0.00761 \\
-Childlessness rate & 0.1880 & 0.1925 & 0.0045 & 28.2933 & 0.00057 \\
+\multicolumn{3}{@{}l}{\emph{Family size and family housing}} \\
+Family-size consumption coefficient & 0.0752 & 0.0752 \\
+Housing increment with the first child, rooms & 0.6644 & 0.6653 \\
+Rooms gap, 3+ versus 1--2 children & 0.3677 & 0.3640 \\
+Completed fertility & 1.9180 & 2.0854 \\
+Childlessness rate & 0.1880 & 0.1925 \\
 \addlinespace
-\multicolumn{6}{@{}l}{\emph{Tenure and aggregate housing}} \\
-Ownership rate, ages 30--55 & 0.5755 & 0.5750 & $-0.0005$ & 3.0196 & 0.00000 \\
-Four-year residual tenure Brier score & 0.1176 & 0.1177 & 0.0001 & 72.2923 & 0.00000 \\
-Mean occupied rooms, ages 18--85 & 5.7800 & 5.6876 & $-0.0924$ & 0.0299 & 0.00026 \\
-\midrule
-\multicolumn{5}{@{}r}{Total loss} & 0.28814 \\
+\multicolumn{3}{@{}l}{\emph{Tenure and aggregate housing}} \\
+Ownership rate, ages 30--55 & 0.5755 & 0.5750 \\
+Four-year residual tenure Brier score & 0.1176 & 0.1177 \\
+Mean occupied rooms, ages 18--85 & 5.7800 & 5.6876 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -313,23 +292,23 @@ family housing moments, ownership, tenure dispersion, and aggregate rooms
 closely. Completed fertility is $2.085$, compared with $1.918$ in the data.
 The central failure is the wealth block: the model produces a wealth-to-gross-
 earnings ratio of $5.136$, compared with $6.873$, and a late-life wealth
-p90/p50 ratio of $1.893$, compared with $3.448$. These two rows account for
-92.8 percent of the objective.
+p90/p50 ratio of $1.893$, compared with $3.448$. These are the two central
+shortcomings of the current fit.
 
 The annual discount factor moves to $0.9991$, close to its upper search bound
 of $0.9995$, yet the model still underproduces both aggregate wealth and
 late-life dispersion. A conditional profile is nearly flat at the top:
-reoptimizing the other parameters at annual discount factors $0.9990$ and
-$0.9995$ gives losses $0.2956$ and $0.2960$. The estimate should therefore not
-be interpreted as a precise direct estimate of patience. The present
+reoptimizing the other parameters over annual discount factors between
+$0.9990$ and $0.9995$ changes the fit very little. The estimate should
+therefore not be interpreted as a precise direct estimate of patience. The present
 specification selects a very patient region because it lacks enough wealth
 accumulation and dispersion even there.
 
 The calibration remains provisional. In particular, the income-risk process
 is constrained by Stone--Geary feasibility, the wealth block points to missing
-late-life heterogeneity, and four parameters are near a search boundary.
-These limitations should be reported alongside the current fit rather than
-hidden by a one-to-one identification claim.
+late-life heterogeneity, and the annual discount factor lies near the upper
+end of the explored region. These limitations should be reported alongside
+the current fit rather than hidden by a one-to-one identification claim.
 
 \begin{thebibliography}{9}
 
