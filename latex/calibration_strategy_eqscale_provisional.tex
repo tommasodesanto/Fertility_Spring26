@@ -116,9 +116,9 @@ The consumption share without children at home is fixed at $\alpha_0=0.733$.
 With Cobb--Douglas preferences and no committed bundles, the share of
 allocatable expenditure that a childless renter spends on housing is exactly
 $1-\alpha_0$, so this parameter has a direct empirical counterpart: the CEX
-housing-expenditure share of childless cash renters in 2019--2023. As a
-cross-check, a diagnostic round that estimated $\alpha_0$ freely returned
-$0.754$, three percent from the CEX value it never saw.
+housing-expenditure share of childless cash renters in 2019--2023. A round
+that estimated $\alpha_0$ freely returned $0.754$, three percent from this
+external value.
 
 The fecundity schedule is equation~\eqref{eq:fecundity}, anchored to the
 conception probabilities in Leridon's clinical tables with the formal
@@ -188,10 +188,9 @@ Entrant wealth distribution & Wealth-to-income draws & PSID childless renters ag
 \subsection{Internally Estimated Parameters}
 
 I estimate the remaining ten parameters internally against twelve moments.
-Table~\ref{tab:quant_parameters} reports the current estimates. Although the
-parameters are chosen jointly, the system is organized in blocks, and within
-each block every parameter has a stated primary moment or a stated triangular
-structure. I describe the blocks in turn.
+Table~\ref{tab:quant_parameters} reports the current estimates. The parameters
+are chosen jointly. I group them into four economic blocks and, for each,
+describe which moments are most informative.
 
 \begin{table}[H]
 \centering
@@ -218,70 +217,62 @@ $\theta_1$ & Bequest curvature shift & 0.0442 \\
 \end{table}
 
 \paragraph{Fertility.}
-Three parameters, $\psi$, $\kappa_E$, and $\kappa_C$, face four moments:
-completed fertility, completed childlessness, the mean age at first birth,
-and the share of first births at ages 30 and above. The primary connections
-are as follows. $\psi$ raises the value of every birth attempt, at entry and
-at continuation alike, so it moves the level of completed childbearing; it is
-mostly connected with completed fertility. $\kappa_E$ spreads the age at
-which households start trying, and the fecundity schedule converts late
-starts into late or missing births, so the location and tail of the
-first-birth age distribution are its footprint; it is mostly connected with
-the two timing moments. $\kappa_C$ works through the option value of entry:
-when continuation is quiet, entering parenthood is close to a committed
-multi-child track, which moves the share who never enter; it is mostly
-connected with childlessness. In diagnostic scans, cutting the continuation
-scale at fixed entry noise roughly doubled childlessness. The block is
-jointly identified, overidentified by roughly one moment since the two timing
-rows are correlated, and the realized progression rates between birth orders
-remain untargeted diagnostics. The timing rows are new, and they exist for a
-concrete reason: in a diagnostic round without them, $\kappa_E$ drifted to
-the boundary of its search region, at which point first births are close to
-random with respect to prices and the policy experiments lose their meaning.
+The utility value of children $\psi$ raises the return to every birth, so it
+governs how many children households have; completed fertility is most
+informative about it. The entry noise $\kappa_E$ spreads the age at which
+women start trying, and biology turns late starts into late or missing
+births, so it governs the timing of first births; the mean age at first
+birth and the share of first births after 30 are most informative about it.
+The continuation noise $\kappa_C$ governs how readily a household that has
+started keeps going: when it is small, starting a family is close to a
+commitment to several children, so fewer women start at all; childlessness is
+most informative about it. The three are estimated together, because the same
+fertility outcomes respond to all of them, and the progression rates between
+birth orders are left untargeted. The timing moments are new to this
+specification. Without them the entry noise is pinned only through the level
+of fertility, and it drifts high enough that first births barely respond to
+prices, which understates the housing channel the policy experiments are meant
+to measure.
 
 \paragraph{Family housing.}
-The two tilt parameters are a triangular block matched to the two
-family-housing moments. The rooms increment at the first child identifies the
-total expenditure-share shift at entry into parenthood,
-$\delta_{\mathrm{jump}}+\delta_a$, because a new parent receives the jump
-plus one per-child step; the rooms gap between families with three or more
-children and families with one or two identifies $\delta_a$ alone, because
-the jump is common to both groups and cancels. The family ownership gap has
-no dedicated parameter and serves as the system's overidentifying
-restriction; it is mostly connected with the composition of the childless
-margin, which the fertility noise scales govern, and with the tilts jointly.
-It stays in the loss because untargeted configurations deliver a gap of
-$0.04$ to $0.07$ against $0.168$ in the data.
+The two shifters $\delta_{\mathrm{jump}}$ and $\delta_a$ set how far a
+household tilts spending toward housing when children arrive. The rooms a
+household adds at the first child is most informative about the total tilt at
+entry into parenthood, $\delta_{\mathrm{jump}}+\delta_a$, since a first-time
+parent takes both the jump and one per-child step; the rooms difference
+between families with three or more children and families with one or two is
+most informative about $\delta_a$ alone, since the jump is common to both and
+drops out. The family ownership gap has no shifter of its own. It responds to
+the tilts and to who remains childless, and I keep it in the estimation
+because leaving it out lets the model deliver a gap of $0.04$ to $0.07$
+against $0.168$ in the data.
 
 \paragraph{Tenure and supply.}
-$\chi_O$ is matched to the prime-age ownership rate and $\bar H$ to aggregate
-occupied rooms; both are one-to-one. Tenure choice is
-deterministic.\footnote{A diagnostic round that included a taste shock on the
-own--rent margin drove its scale to zero at no cost to fit: empirical income
-risk generates tenure turnover without taste noise. The four-year tenure
-switch rate is retained as an untargeted validation check of the income
-architecture.}
+The owner premium $\chi_O$ raises the utility of owning over renting; the
+prime-age ownership rate is most informative about it. The supply scale
+$\bar H$ sets the level of the housing stock; aggregate occupied rooms is
+most informative about it. Tenure choice is deterministic.\footnote{A
+diagnostic round that added a taste shock to the own--rent margin drove its
+scale to zero at no cost to fit: empirical income risk moves households
+between owning and renting without taste noise. The four-year tenure switch
+rate is kept as an untargeted check on the income process.}
 
 \paragraph{Saving and bequests.}
-The discount factor and the two bequest parameters map one-to-one to three
-wealth moments. $\beta_{\mathrm{annual}}$ is matched to the ratio of
-aggregate net worth to annual gross labor earnings, $6.873$, measured in the
-PSID 2005--2019 waves (net worth of households aged 18--85 over gross labor
-earnings of households aged 18--65; bootstrap standard error $0.399$).
-$\theta_0$ governs the resources intentionally carried to death and is
-matched to the annual bequest-flow-to-wealth ratio of $0.0088$, a borrowed
-number from \citet{denardiYang2014}, originally \citet{galeScholz1994}.
-$\theta_1$ governs how the bequest motive varies across the wealth
-distribution and is matched to the $p_{90}/p_{50}$ ratio of $3.448$ among
-living households aged 76--84 in the PSID.\footnote{The dispersion ratio
-pools the 1984--2019 waves while the level ratio uses 2005--2019; the ratio
-is scale-free, so the pooling is defensible.} On the model side, wealth
-statistics are measured on beginning-of-period balance sheets, in which
-liquid wealth and housing refer to the same point in time, and the bequest
-flow is measured at the death node after the period's saving decision. The
-flow moment is load-bearing: in a diagnostic round without it, the two
-bequest parameters collapsed toward zero and old-age ownership reached
-$0.945$, since nothing in the loss rewarded holding wealth to death.
+The discount factor $\beta_{\mathrm{annual}}$ governs how much wealth
+households carry through life; aggregate net worth relative to annual gross
+labor earnings, $6.873$ in the PSID, is most informative about it. The
+bequest strength $\theta_0$ governs how much households hold back to leave at
+death; the annual flow of bequests relative to aggregate wealth, $0.0088$, is
+most informative about it.\footnote{The flow is a borrowed number, from
+\citet{galeScholz1994} through \citet{denardiYang2014}.} The bequest
+curvature $\theta_1$ governs how the motive strengthens with wealth; the
+ratio of the 90th to the 50th percentile of total wealth late in life,
+$3.448$, is most informative about it. Wealth is measured on the
+beginning-of-period balance sheet, so liquid wealth and housing refer to the
+same date, and the bequest is measured at death after the period's saving.
+The flow moment matters for tenure late in life: without it the bequest
+motive falls away, nothing rewards holding wealth to death, and older owners
+never sell, so ownership after 65 climbs to $0.945$.
 
 \subsection{Target Moments and Fit}
 
@@ -334,19 +325,18 @@ $p_{90}/p_{50}$ total wealth, ages 76--84 & PSID & 3.448 & --- \\
 \end{tabularx}
 \end{table}
 
-A diagnostic round estimated on the previous fifteen-moment system
-establishes what the revision builds on. The sequential architecture with
-split noise scales reaches the completed-fertility pair, $1.875$ and $0.155$
-against $1.918$ and $0.188$, which no earlier specification reached without
-overshooting fertility, and about half of model childlessness comes from
-households that try and run out the fertile window, consistent with the
-postponement mechanism at the center of the paper. The same round exposed the
-three weaknesses the revised system addresses: the entry scale unpinned
-without timing moments, the bequest parameters unpinned without a flow
-moment, and a family ownership gap understated at small tilts. The
-revised-system estimation is running at the time of writing; the model column
-above, the estimates in Table~\ref{tab:quant_parameters}, and the figure
-below will be updated when it completes.
+A diagnostic estimate on the previous fifteen-moment system shows what the
+revision builds on. The sequential model with two noise scales reaches
+completed fertility of $1.875$ and childlessness of $0.155$, against $1.918$
+and $0.188$ in the data, a pair no earlier specification reached without
+overshooting fertility; about half of the model's childlessness comes from
+women who try and run out the fertile window, the postponement mechanism at
+the center of the paper. That estimate also showed where the moment system
+was too thin: the entry noise was loose without a timing moment, the bequest
+parameters were loose without a flow moment, and the family ownership gap
+came in too small. The revised estimation is running as I write; the model
+column above, the estimates in Table~\ref{tab:quant_parameters}, and the
+figure below will follow when it finishes.
 
 Figure~\ref{fig:eq_lifecycle} compares model homeownership, the share of
 households with dependent children at home, and mean rooms with their ACS
