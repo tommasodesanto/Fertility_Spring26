@@ -30,6 +30,34 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Saving and bequests block [SIGNED OFF 2026-07-24]
+
+- Aggregate wealth / gross labor earnings = 6.8731 -- primary row for beta.
+  PROJECT-MEASURED AND COMPLETE: PSID 2005-2019, aggregate NETWORTHR ages
+  18-85 over RP/spouse gross labor earnings (EARNINDRRC) ages 18-65, IW
+  weights; 49,550 family-years, 10,432 persons; person-clustered bootstrap
+  SE 0.3988 (interval [6.19, 7.69]). Documented in
+  docs/model/intergen_wealth_target_beta_audit_20260723.md. The borrowed
+  6.90 chain (De Nardi-Yang via Hendricks) stays retired; the numerical
+  closeness is coincidental. NOTE for the E-package port: the matched model
+  statistic uses the GROSS earnings denominator (no payroll wedge) -- port
+  the current matched definition, not the July-23 after-tax version.
+- Annual bequest flow / wealth = 0.0088 -- primary row for theta_0.
+  Borrowed (Gale-Scholz via De Nardi-Yang), labeled as borrowed; model side
+  is the at-death post-saving flow under repaired timing (B1 port).
+- Late-life wealth dispersion p90/p50 = 3.4481 -- primary row for theta_1.
+  Project-measured: PSID living reference persons 76-84, waves 1984-2019,
+  bootstrap SE 0.1325 (499 person-clustered draws). Vintage footnote: the
+  dispersion row pools 1984-2019 while the level row uses 2005-2019; the
+  ratio is scale-free, so pooling is defensible, disclosed once.
+- Registered caution from E4: with the flow unanchored, theta_0/theta_1
+  collapsed and old-age ownership hit 0.945; these rows plus deterministic
+  tenure are the guard. If old-age ownership still lands near 0.95 in E5,
+  that is the health/long-term-care limitation conversation, not a weight
+  tweak.
+- A one-page unified wealth-target source ledger (M side) is endorsed; this
+  entry cites the fragments meanwhile.
+
 ### Tenure and supply block [SIGNED OFF 2026-07-24]
 
 - Ownership rate 30-55 (0.5755, ACS) -- primary row for chi_O, the owner
