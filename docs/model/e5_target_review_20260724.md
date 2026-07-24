@@ -30,6 +30,21 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Row 3 -- Mean age at first birth [SIGNED OFF 2026-07-24; value pending build]
+
+- Target: pending the NCHS build; mean age at first birth for the 1979--84
+  birth cohorts (expected mid-26s). Model: mass-weighted mean age over
+  realized first births in the stationary population (already computed).
+- Source: NCHS cohort fertility tables (birth-certificate based;
+  age-specific first-birth rates by mother's birth cohort; complete
+  coverage by construction). Built by the E strand, committed script +
+  manifest.
+- Connection: mostly connected with kappa_E, the entry noise scale. Entry
+  noise spreads the age at which women start trying and the fecundity
+  schedule converts late starts into late or missing births, so the
+  location of the first-birth age distribution is kappa_E's footprint.
+  This row's absence is what let kappa_E reach its bound in E4.
+
 ### Row 2 -- Completed childlessness [SIGNED OFF 2026-07-24]
 
 - Target: 0.188 (0.188180 reproduced). Share of women ages 40--44 with zero
