@@ -11,7 +11,7 @@
 \setlength{\emergencystretch}{3em}
 
 \title{Calibration\\
-\large Equivalence-scale specification --- drop-in revision of the draft's calibration section}
+\large Provisional revision}
 \author{Tommaso De Santo}
 \date{}
 
@@ -21,91 +21,93 @@
 \section{Calibration}
 \label{sec:quant_calibration}
 
-This section calibrates the equivalence-scale specification of the model. Two
-changes relative to the model section of the circulated draft matter for the
-calibration, and since this note travels on its own I state the new objects
-explicitly. First, children no longer enter through the committed consumption
-and housing bundles $(\bar c(n,s),\bar h(n,s))$ of the draft. Within-period
-utility for a household with $n$ dependent children at home is
-\begin{equation}
-u(c,h,n)
-=
-e(n)\,
-\frac{\left(c^{\alpha(n)}\,h^{1-\alpha(n)}\right)^{1-\sigma}}{1-\sigma}
-+\psi\,n,
-\qquad
-\alpha(n)=\alpha_0-\left(\delta_{\mathrm{jump}}\mathbf 1\{n\geq1\}+\delta_a n\right),
-\label{eq:eqscale_utility}
-\end{equation}
-where $e(n)=((2+0.7n)/2)^{0.7}$ is the equivalence scale of
-\citet{scholzSeshadriKhitatrakun2006}, imposed rather than estimated. Children
-thus raise the marginal value of the whole consumption--housing composite
-through $e(n)$ and tilt spending toward housing through $\alpha(n)$, both only
-while they live at home; households without children at home have the
-homothetic preferences of the childless. There are no minimum-consumption or
-minimum-housing requirements, which is what permits empirical income risk
-below.
-
-Second, fertility is sequential rather than one-shot. Each period during the
-fertile ages, a childless household chooses between waiting and trying for a
-first birth; a household at parity $n<3$ with a child at home chooses between
-stopping and trying for birth $n+1$. An attempt at age $a$ succeeds with the
-fecundity probability
-\begin{equation}
-\pi_a=\max\left\{0,\;1-0.02\,e^{0.134\,(a-18)}\right\},
-\label{eq:fecundity}
-\end{equation}
-which declines with age and reaches zero at 45; the coefficients are anchored
-to Leridon's clinical conception tables, with the formal fit pending.
-Completed family size is therefore an outcome of starting age, biology, and
-sequential choices---nobody chooses a number of children. Both decisions carry
-type-1 extreme-value taste shocks, with scale $\kappa_E$ on the entry decision
-and $\kappa_C$ on the continuation decision. The asymmetry is deliberate: the
-timing of the first attempt is allowed to be substantially random, standing in
-for the circumstances that time family formation, while the continuation
-decision of an established family is close to deterministic and therefore
-governed by prices, income, and preferences.
-
-Second, income risk is set at its empirical value rather than truncated. The
-committed bundles of the previous specification forced income risk far below
-empirical estimates to keep the bundles affordable; without them the
-restriction disappears. I impose the persistent wage process of
-\citet{flodenLinde2001}, with annual persistence $0.9136$ and innovation
-standard deviation $0.206$ net of measurement error, passed through the
-log-linear tax function of \citet{heathcoteStoreslettenViolante2017} with
-progressivity $\tau=0.181$, which preserves the autoregressive structure and
-scales the after-tax innovation to $0.169$. Household wealth statistics are
-measured on the beginning-of-period balance sheet, in which liquid wealth and
-housing refer to the same point in time, and bequest flows are measured at the
-death node after the period's saving decision.
+I organize the model parameters into two groups. The first consists of
+parameters assigned from external evidence, measured directly in the data, or
+fixed as maintained restrictions. The second consists of parameters estimated
+internally by matching model moments to their empirical counterparts. I
+describe the two groups in turn, explain which moments are particularly
+informative about the internally estimated parameters, and then report the
+model's fit.
 
 \subsection{Parameters Set Outside the Estimation}
 
-Table~\ref{tab:quant_assigned} summarizes the parameters assigned outside the
-estimation. Demographics, housing finance, transaction costs, housing menus,
-and supply elasticity are unchanged from the previous draft: a four-year
-period; entry, retirement, and maximum ages of 18, 66, and 85; survival from
-the 2023 Social Security period life table; an 18-year expected duration of
-dependent children; $\sigma=2$; an annual real return of 2.0 percent, housing
-depreciation of 1.1 percent, property tax of 1.0 percent, selling cost of 6
-percent, labor-income tax of 17.9 percent, and a financed share
-$\phi=0.80$ \citep{greaneyDynamicUrbanEconomics2025,
-davisHousingFinanceMacroeconomy2015}; owner sizes $\{2,4,6,8,10\}$ rooms and a
-6-room rental cap from the matched ACS distributions; supply elasticity
-$\eta=1.75$ \citep{saizGeographicDeterminantsHousing2010}; entrant wealth from
-the PSID distribution of childless renters aged 18--24; and $\theta_n=0$, so
-bequest utility does not vary directly with the number of children.
+I first describe the parameters assigned outside the estimation.
+Table~\ref{tab:quant_assigned} summarizes their values and sources.
 
-Three assigned objects are new. The equivalence scale is fixed at the
-Citro--Michael form used by \citet{scholzSeshadriKhitatrakun2006} and
-\citet{borellaDeNardiYang2023}; the square-root household-size scale is the
-robustness alternative. The fecundity schedule declines with age and closes at
-45, anchored to the four-year conception probabilities in Leridon's clinical
-tables; its formal least-squares fit is pending, as is the CPS measurement of
-the weight on the top family-size bin, provisionally $3.4$ children. The
-income process is the Flod\'en--Lind\'e--HSV object described above; unlike
-the previous draft, it is no longer provisional, and the footnote conditioning
-all quantitative results on a truncated income variance is retired.
+\paragraph{Demographics and preferences.}
+A model period is four years. Households enter adult life at age 18, retire at
+age 66, and live at most through age 85. Survival is certain before retirement
+and thereafter follows four-year probabilities constructed from the combined
+male and female survivor counts in the 2023 Social Security period life table.
+Dependent children remain in the household for an expected 18 years. I set
+risk aversion to $\sigma=2$.
+
+Within-period utility is CRRA over the Cobb--Douglas composite
+$c^{\alpha(n)}h^{1-\alpha(n)}$, multiplied by the household equivalence scale
+$e(n)=((2+0.7n)/2)^{0.7}$. I assign this scale from
+\citet{scholzSeshadriKhitatrakun2006}, following the Citro--Michael form also
+used by \citet{borellaDeNardiYang2023}; the square-root household-size scale is
+the robustness alternative. Children tilt expenditure toward housing through
+$\alpha(n)=\alpha_0-\delta_{\mathrm{jump}}\mathbf 1\{n\geq1\}-\delta_a n$.
+The three expenditure-share parameters are estimated internally. Unlike the
+circulated specification, the model has no minimum consumption or minimum
+housing requirement.
+
+Fertility choices are sequential. During fertile ages, a childless household
+decides whether to attempt a first birth, and a parent decides whether to
+attempt another birth. Conception succeeds with an age-specific probability
+that declines to zero at age 45, anchored to Leridon's clinical conception
+tables. The model distinguishes the taste-shock scale governing entry into
+parenthood from the scale governing continuation to higher birth orders. Both
+scales are estimated internally.
+
+\paragraph{Housing finance and transaction costs.}
+Following \citet{greaneyDynamicUrbanEconomics2025}, I set the annual real
+return on liquid wealth to $i_{\mathrm{ann}}=0.02$, annual housing depreciation
+to $\delta_{\mathrm{ann}}=0.011$, the proportional selling cost to
+$\psi^s=0.06$, and the labor-income tax rate to
+$\tau_{\mathrm{pay}}=0.179$. The return is based on the average ten-year real
+interest rate, depreciation combines BEA residential-structure depreciation
+with an adjustment for the land share of house values, and the tax rate comes
+from OECD data. I set the annual property-tax rate to
+$\tau^p_{\mathrm{ann}}=0.01$. Mortgage debt cannot exceed a share $\phi=0.80$
+of the value of the house, so a purchase requires at least 20 percent equity.
+The benchmark imposes no separate payment-to-income limit.
+
+\paragraph{Income process.}
+I impose a deterministic lifecycle profile of household earnings, normalized
+to average one over working ages. Within age, log income follows the annual
+persistent process estimated by \citet{flodenLinde2001}, with persistence
+$\rho_z=0.9136$ and innovation standard deviation $0.206$. I pass this process
+through the log-linear tax function of
+\citet{heathcoteStoreslettenViolante2017}, using progressivity
+$\tau=0.181$. The after-tax process has the same persistence and an innovation
+standard deviation of $0.169$, and is approximated at the model's four-year
+frequency with a five-state Rouwenhorst chain. Because the equivalence-scale
+specification has no minimum bundle, this empirical income process can be used
+without the feasibility restriction that required the circulated
+specification to truncate income risk.
+
+\paragraph{Housing products and supply.}
+Housing is indivisible and available in a limited assortment of types and
+sizes \citep{davisHousingFinanceMacroeconomy2015}. I represent this lumpiness
+with five owner-occupied house sizes,
+$\{H_k\}_{k=1}^5=\{2,4,6,8,10\}$ rooms. Renters choose housing continuously up
+to $\bar h^R=6$ rooms, the 90th percentile of the rental-room distribution in
+the matched ACS sample. These menus summarize the observed tenure-specific
+distribution of rooms. I set the housing-supply elasticity to $\eta=1.75$,
+following the population-weighted metropolitan estimate in
+\citet{saizGeographicDeterminantsHousing2010}.
+
+\paragraph{Entry wealth and bequests.}
+Households enter at age 18 with a draw from the PSID net-worth-to-income
+distribution of childless renters aged 18--24. I impose $\theta_n=0$, so
+bequest utility does not vary directly with the number of children. Children
+can nevertheless affect estates through their effects on housing demand,
+tenure, and saving. Household wealth is measured on the beginning-of-period
+balance sheet, so liquid wealth and housing refer to the same point in time;
+bequest flows are measured at the death node after the period's saving
+decision.
 
 \begin{table}[H]
 \centering
@@ -121,26 +123,38 @@ all quantitative results on a truncated income variance is retired.
 \toprule
 Parameter & Value & Source or restriction \\
 \midrule
-Model period; entry, retirement, maximum ages & 4 years; 18, 66, 85 & Model timing \\
+Model period & 4 years & Model timing \\
+Entry, retirement, and maximum ages & 18, 66, and 85 & Model timing \\
 Post-retirement survival & Age-specific & 2023 Social Security period life table \\
 Expected years with dependent children & 18 years & Child-maturity restriction \\
 Risk aversion $\sigma$ & 2 & \\
 Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ &
-\citet{scholzSeshadriKhitatrakun2006}, from Citro and Michael (1995) \\
-Fecundity by age & Declining; zero from 45 & Leridon anchors; formal fit pending \\
-Family-size states & $0,1,2,3^{+}$; top-bin weight 3.4 & Literal parity; CPS weight provisional \\
-Annual income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
-Annual income innovation s.d.\ $\sigma_z$ & 0.169 &
-\citet{flodenLinde2001} innovation $0.206$, scaled by $1-\tau$ with $\tau=0.181$
-from \citet{heathcoteStoreslettenViolante2017} \\
-Annual real return; depreciation; property tax & 2.0\%; 1.1\%; 1.0\% &
+\citet{scholzSeshadriKhitatrakun2006}; Citro and Michael (1995) \\
+Fecundity by age & Declining; zero from age 45 & Leridon anchors; formal fit pending \\
+Family-size states & $0,1,2,3^{+}$; top-bin weight 3.4 &
+Literal child counts; CPS top-bin weight provisional \\
+Annual income persistence $\rho_z$ & 0.9136 &
+\citet{flodenLinde2001} \\
+Annual after-tax income innovation s.d.\ $\sigma_z$ & 0.169 &
+\citet{flodenLinde2001} and \citet{heathcoteStoreslettenViolante2017} \\
+Annual real return $i_{\mathrm{ann}}$ & 2.0\% &
+Average 10-year real rate, 1962--2024; \citet{greaneyDynamicUrbanEconomics2025} \\
+Annual housing depreciation $\delta_{\mathrm{ann}}$ & 1.1\% &
+BEA structures depreciation, adjusted for the residential land share;
 \citet{greaneyDynamicUrbanEconomics2025} \\
-Financed share $\phi$; sale cost $\psi^s$ & 0.80; 6\% &
-\citet{davisHousingFinanceMacroeconomy2015} \\
+Annual property tax $\tau^p_{\mathrm{ann}}$ & 1.0\% & Maintained tax rate \\
+Financed share $\phi$ & 0.80 &
+20\% down-payment restriction; \citet{davisHousingFinanceMacroeconomy2015} \\
+Sale cost $\psi^s$ & 6\% &
+\citet{davisHousingFinanceMacroeconomy2015,greaneyDynamicUrbanEconomics2025} \\
 Labor-income tax $\tau_{\mathrm{pay}}$ & 17.9\% & OECD U.S. average \\
-Owner house sizes; largest rental unit & $\{2,4,6,8,10\}$; 6 rooms & Matched ACS distributions \\
-Housing-supply elasticity $\eta$ & 1.75 & \citet{saizGeographicDeterminantsHousing2010} \\
-Entrant wealth distribution & Wealth-to-income draws & PSID childless renters aged 18--24 \\
+Owner house sizes $\{H_k\}$ & $\{2,4,6,8,10\}$ rooms &
+Occupied-room distribution in the ACS \\
+Largest rental unit $\bar h^R$ & 6 rooms & Matched ACS rental-size distribution \\
+Housing-supply elasticity $\eta$ & 1.75 &
+\citet{saizGeographicDeterminantsHousing2010} \\
+Entrant wealth distribution & Wealth-to-income distribution &
+Childless renters aged 18--24 in the PSID \\
 Bequest child shifter $\theta_n$ & 0 & Maintained restriction \\
 \bottomrule
 \end{tabularx}
@@ -149,83 +163,124 @@ Bequest child shifter $\theta_n$ & 0 & Maintained restriction \\
 
 \subsection{Internally Estimated Parameters}
 
-I estimate the remaining 12 parameters internally using the same 15 moments as
-the previous draft. Table~\ref{tab:quant_parameters} reports the estimates
-from the current diagnostic calibration. Although the parameters are chosen
-jointly, each parameter now has either one primary moment or membership in an
-explicitly named block with as many moments as parameters, and I state the
-assignment for every parameter in turn.
+I estimate the remaining 12 parameters internally. Table~\ref{tab:quant_parameters}
+reports the estimates from the current diagnostic calibration and the primary
+empirical counterpart proposed for the revised target system. The parameters
+are chosen jointly, so the last column is a statement about the intended
+empirical variation, not a claim that the Jacobian is diagonal. Where one
+moment cannot separately discipline one parameter, I state an equal-sized
+parameter--moment block explicitly.
 
 \begin{table}[H]
 \centering
-\caption{Internally estimated parameters (diagnostic calibration)}
+\caption{Internally estimated parameters and primary empirical counterparts}
 \label{tab:quant_parameters}
-\small
-\begin{tabularx}{0.9\textwidth}{@{}l X r@{}}
+\scriptsize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}
+l
+>{\raggedright\arraybackslash}p{0.25\textwidth}
+r
+>{\raggedright\arraybackslash}X@{}}
 \toprule
-Parameter & Interpretation & Estimate \\
+Parameter & Interpretation & Estimate & Primary empirical counterpart \\
 \midrule
-$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9705 \\
-$\alpha_0$ & Consumption expenditure share, no children at home & 0.7542 \\
-$\delta_{\mathrm{jump}}$ & Expenditure-share shift at entry into parenthood & 0.0373 \\
-$\delta_a$ & Expenditure-share shift per additional child & 0.0242 \\
-$\psi$ & Utility from children & 2.8137 \\
-$\kappa_E$ & Taste-shock scale, first-birth timing & 49.38 \\
-$\kappa_C$ & Taste-shock scale, continuation decisions & 0.1806 \\
-$\chi_O$ & Utility premium from owner-occupied housing & 1.0588 \\
-$\bar H$ & Housing-supply scale & 8.5226 \\
-$\theta_0$ & Strength of the bequest motive & 0.0264 \\
-$\theta_1$ & Bequest curvature shift & 0.0442 \\
-$\kappa_T$ & Dispersion in tenure choices & 0.0002 \\
+$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9705 &
+Wealth block: aggregate wealth / gross labor earnings \\
+$\alpha_0$ & Consumption share, no children at home & 0.7542 &
+Childless-renter housing-expenditure slope \\
+$\delta_{\mathrm{jump}}$ & Share shift at entry into parenthood & 0.0373 &
+Family-housing block: first-child rooms increment \\
+$\delta_a$ & Share shift per additional child & 0.0242 &
+Family-housing block: rooms gap, $3+$ versus 1--2 children \\
+$\psi$ & Utility from children & 2.8137 &
+Childlessness, conditional on first-birth timing \\
+$\kappa_E$ & Taste-shock scale, entry into parenthood & 49.38 &
+Mean age at first birth; absent from the inherited target system \\
+$\kappa_C$ & Taste-shock scale, continuation decisions & 0.1806 &
+Completed fertility, conditional on childlessness \\
+$\chi_O$ & Utility premium from owner-occupied housing & 1.0588 &
+Ownership rate, ages 30--55 \\
+$\bar H$ & Housing-supply scale & 8.5226 &
+Aggregate occupied rooms \\
+$\theta_0$ & Strength of the bequest motive & 0.0264 &
+Wealth block: annual bequest flow / aggregate wealth \\
+$\theta_1$ & Bequest curvature shift & 0.0442 &
+Wealth block: living-old wealth $p_{90}/p_{50}$ \\
+$\kappa_T$ & Dispersion in tenure choices & 0.0002 &
+Four-year residual tenure Brier score \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\paragraph{Saving and bequests.}
-The discount factor and the two bequest parameters form a three-parameter
-block matched to three wealth moments. $\beta_{\mathrm{annual}}$ is chosen to
-match the level of lifecycle wealth accumulation, currently summarized by the
-late-life estate median; $\theta_0$ governs the resources intentionally
-carried to death and is matched to the same late-life wealth level jointly
-with the older nonhousing-wealth share; $\theta_1$ governs how the bequest
-motive varies across the estate distribution. In the planned target revision
-these three parameters map one-to-one to the aggregate wealth-to-earnings
-ratio, the annual bequest-flow-to-wealth ratio, and the late-life wealth
-dispersion ratio $p_{90}/p_{50}=3.448$ measured in the PSID; the aggregate
-ratio awaits the same-definition reconstruction of its borrowed value.
+\paragraph{Saving.}
+The annual discount factor $\beta_{\mathrm{annual}}$ governs households'
+willingness to carry resources across ages. Its primary empirical counterpart
+is aggregate household net worth divided by aggregate gross labor earnings,
+measured on the same sample and with the same balance-sheet definition in the
+PSID and the model. For 2005--2019 the target is $6.873$. This replaces the
+borrowed wealth-to-after-tax-earnings value used in the earlier strategy note.
+The discount factor is still estimated jointly with the bequest parameters,
+because all three affect lifecycle wealth accumulation.
 
 \paragraph{Housing demand, tenure, and supply.}
-The expenditure share $\alpha_0$ is pinned by the housing-expenditure slope of
-childless renters: with Cobb--Douglas preferences the share of allocatable
-expenditure spent on housing is $1-\alpha_0$, and the CEX expenditure
-coefficient for childless cash renters gives $\alpha_0=0.733$, so this
-parameter has a direct empirical counterpart and its estimate can be read
-against it. The two tilt parameters are a triangular block matched to the two
-family-housing moments: the rooms increment at the first child identifies the
-total shift at entry into parenthood, $\delta_{\mathrm{jump}}+\delta_a$, and
-the rooms gap between larger and smaller families identifies $\delta_a$ alone.
-$\chi_O$ is matched to the prime-age ownership rate, $\kappa_T$ to the
-residual variance of tenure transitions, and $\bar H$ to aggregate occupied
-rooms; these three are one-to-one.
+The childless consumption share $\alpha_0$ has a direct empirical counterpart.
+For a childless cash renter with Cobb--Douglas preferences, the housing share
+of expenditure is $1-\alpha_0$; the CEX housing-expenditure regression
+therefore implies $\alpha_0=0.733$. The two family-housing tilts form a
+two-parameter, two-moment block. The rooms increment at the first child
+disciplines the total entry shift $\delta_{\mathrm{jump}}+\delta_a$, while the
+rooms gap between households with three or more children and those with one
+or two disciplines the incremental tilt $\delta_a$. This triangular mapping
+separates the housing adjustment associated with becoming a parent from the
+additional space associated with larger families.
 
-\paragraph{Fertility.}
-The fertility side is a three-parameter block: $\psi$, $\kappa_E$, and
-$\kappa_C$ against completed fertility, childlessness, and---in the planned
-revision---the timing of first births. The level of completed fertility
-primarily disciplines $\psi$. Childlessness disciplines the dispersion of
-family outcomes, and with continuation noise small, large families reappear
-because parents who start early progress to third births whenever the
-economics favors it. The current 15-moment system contains no timing moment,
-so $\kappa_E$ is disciplined only indirectly; its estimate at the boundary of
-the search region, reported below, is the visible consequence, and the mean
-age at first birth with the share of first births after 30 will be added to
-close exactly this gap. The realized progression rates between birth orders
-remain overidentifying outcomes.
+The remaining three housing parameters have distinct counterparts.
+$\chi_O$ is associated with the ownership rate at ages 30--55, $\kappa_T$
+with residual variation in tenure four years ahead after conditioning on the
+states represented in the model, and $\bar H$ with aggregate occupied rooms.
+The family ownership gap remains an overidentifying moment: it tests whether
+the calibrated family-housing tilts interact with the tenure margin as the
+model intends, but it is not assigned to an additional parameter.
+
+\paragraph{Family size.}
+The three fertility parameters are disciplined by a three-moment block rather
+than by three independent one-to-one equations. The distribution of first-birth
+timing, summarized by mean age at first birth, is primarily informative about
+$\kappa_E$. Conditional on that timing margin, childlessness disciplines the
+entry value of children $\psi$. Conditional on entry into parenthood, completed
+fertility and childlessness together imply mean family size among parents,
+which disciplines the continuation scale $\kappa_C$. This mapping is
+approximately triangular, not exact: $\psi$ affects both entry and
+continuation, and both shock scales affect completed family size. The current
+inherited target system contains completed fertility and childlessness but no
+first-birth timing moment. It therefore does not separately discipline
+$\kappa_E$, which is why the current diagnostic estimate lies at the boundary
+of its search region. The share of first births after age 30 and the
+birth-order progression rates remain validation outcomes.
+
+\paragraph{Bequests.}
+The bequest function is a zero-normalized De Nardi-style luxury warm glow over
+total bequeathable wealth, including housing. The scale parameter $\theta_0$
+governs marginal bequest utility at a given estate and is associated with the
+annual bequest-flow-to-wealth ratio, $0.0088$ in
+\citet{denardiYang2014}. The shift $\theta_1$ governs how strongly the motive
+rises across the wealth distribution and is associated with the living-old
+total-wealth dispersion ratio $p_{90}/p_{50}=3.448$ measured in the PSID. Thus
+$(\beta_{\mathrm{annual}},\theta_0,\theta_1)$ form a three-parameter,
+three-moment wealth block: aggregate wealth disciplines average accumulation,
+the bequest flow disciplines the level of resources carried to death, and
+late-life dispersion disciplines curvature. Each moment loads on all three
+parameters, but the block no longer asks one late-life wealth level to
+discipline patience and both bequest parameters simultaneously.
 
 \subsection{Target Moments and Fit}
 
-Table~\ref{tab:quant_fit} reports all 15 target moments and their model
-counterparts at the current diagnostic estimate.
+The current diagnostic calibration predates the revised mapping above and uses
+the same 15 moments as the circulated specification. It is reported here to
+show the quantitative starting point, not as the final implementation of the
+new target system. Table~\ref{tab:quant_fit} reports the target moments and
+their model counterparts.
 
 \begin{table}[H]
 \centering
@@ -260,43 +315,37 @@ Share with nonhousing wealth $\ge$ annual income, ages 65--75 & 0.608 & 0.612 \\
 \end{tabularx}
 \end{table}
 
-The model now matches the two completed-fertility moments closely---completed
-fertility of $1.875$ against $1.918$ and childlessness of $0.155$ against
-$0.188$---which the one-shot specification could reach only by overshooting
-fertility, and which no configuration of the sequential specification reaches
-without the margin-specific shock scales. Roughly half of model childlessness
-arises from households that try and run out the biological clock, consistent
-with the postponement mechanism at the center of the paper. The late-life
-estate median and the older nonhousing-wealth share are closely matched, and
-young ownership is now slightly overstated rather than understated.
+The model closely matches completed fertility, childlessness, young
+ownership, aggregate occupied rooms, the late-life median estate, and the
+older nonhousing-wealth share. The sequential fertility specification reaches
+completed fertility of $1.875$ against $1.918$ in the data and childlessness
+of $0.155$ against $0.188$, two moments that the previous specification could
+not match jointly.
 
-Three misses deserve emphasis, in the same spirit as the previous draft.
-First, young childless renters accumulate wealth equal to $0.467$ of annual
-income against $0.179$ in the PSID. Under empirical income risk young
-households hold buffer wealth; this is a structural property of honest risk,
-smaller than under the previous draft's truncated-risk calibration once
-measurement is done consistently, and I report it as a disclosed miss rather
-than a target. Second, old-age ownership is $0.945$ against $0.764$, the same
-late-life exit failure as in the previous draft; here it is compounded by the
-bequest and tenure-dispersion estimates collapsing toward the boundary of the
-search region ($\theta_0$, $\theta_1$, $\kappa_T$ in
-Table~\ref{tab:quant_parameters}), which removes the motives that would let
-older owners sell. Third, the family ownership gap is understated at $0.072$
-against $0.168$. The expenditure-share tilts at their current estimates are
-too small to generate the full gap; the diagnostic scans show the gap rising
-monotonically in the tilts, so this margin is available but not selected by
-the current target weights.
+The largest misses remain in housing and tenure. The model produces an
+ownership rate of $0.945$ at ages 65--75, compared with $0.764$ in the ACS,
+and a family ownership gap of $0.072$, compared with $0.168$. It also
+overstates large-home ownership among childless households and the two family
+housing responses. These outcomes indicate that the inherited target system
+does not yet balance family housing demand, the ownership margin, and
+late-life tenure exit.
 
-The estimate $\kappa_E=49.38$ sits at the boundary of its search region, and
-this has a substantive consequence rather than a cosmetic one: with
-first-birth timing that random, fertility stops responding to prices and
-transfers, and the policy experiments reported below move births by
-essentially zero. I therefore treat the current calibration as diagnostic. It
-establishes that the sequential architecture can reach the fertility margins
-that motivated it, but its policy elasticities are not usable until the
-timing moments discipline $\kappa_E$ away from the boundary, and the late-life
-exit margin and the family ownership gap require the revised target weights
-before the corresponding conclusions can be drawn.
+The wealth moments reveal a related lifecycle tension. Young childless renters
+accumulate wealth equal to $0.467$ of annual income, compared with $0.179$ in
+the PSID. The late-life estate level is matched, but that fit is obtained with
+the bequest and tenure-dispersion parameters near the lower ends of their
+search regions. The revised wealth block therefore replaces this combination
+of young liquid wealth and late-life levels with aggregate wealth, the bequest
+flow, and late-life dispersion, each measured consistently in the data and
+the model.
+
+Finally, $\kappa_E=49.38$ lies at the upper boundary of its search region.
+With entry into parenthood governed by taste shocks of this scale, fertility
+is nearly unresponsive to prices and transfers. The current calibration is
+therefore diagnostic: it establishes that the sequential architecture can
+match the two completed-family-size moments, but its policy elasticities are
+not usable until first-birth timing disciplines $\kappa_E$ and the revised
+wealth and housing blocks are implemented.
 
 \begin{thebibliography}{9}
 
@@ -338,11 +387,6 @@ Saiz, A. 2010.
 Scholz, J. K., A. Seshadri, and S. Khitatrakun. 2006.
 ``Are Americans Saving `Optimally' for Retirement?''
 \emph{Journal of Political Economy} 114(4): 607--643.
-
-\bibitem[Sommer and Sullivan(2018)]{sommerImplicationsUSTax2018}
-Sommer, K., and P. Sullivan. 2018.
-``Implications of US Tax Policy for House Prices, Rents, and Homeownership.''
-\emph{American Economic Review} 108(2): 241--274.
 
 \end{thebibliography}
 
