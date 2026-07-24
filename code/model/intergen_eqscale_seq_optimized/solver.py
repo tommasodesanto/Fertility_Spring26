@@ -4762,6 +4762,8 @@ def forward_distribution_markov_income(
             p_hat,
             hR_pol,
             asset_g=g,
+            bequest_g=g_current,
+            bp_pol=bp_pol,
         )
     P._second_births_by_age = second_births_by_age
     P._second_attempts_by_age = second_attempts_by_age
@@ -5500,6 +5502,8 @@ def compute_markov_statistics(
     ph: np.ndarray,
     hR: np.ndarray,
     asset_g: np.ndarray | None = None,
+    bequest_g: np.ndarray | None = None,
+    bp_pol: np.ndarray | None = None,
 ) -> SimpleNamespace:
     z_grid, z_weights, Pi_z = income_transition_values(P)
     asset_dist = g if asset_g is None else np.asarray(asset_g, dtype=float)
@@ -5517,7 +5521,15 @@ def compute_markov_statistics(
     # operator). Recompute them on the full income-resolved distribution.
     for _name, _val in markov_renter_room_moments(g, hR, P).items():
         setattr(stats, _name, _val)
-    add_aggregate_wealth_gross_labor_diagnostics(stats, asset_dist, P, bg, ph)
+    if bequest_g is None or bp_pol is None:
+        raise ValueError(
+            "Markov statistics require the post-transaction distribution and "
+            "post-saving policy for the at-death bequest flow"
+        )
+    add_aggregate_wealth_bequest_flow_moments(
+        stats, asset_dist, bequest_g, bp_pol, P, bg, ph
+    )
+    stats.bequest_moment_timing = "post_saving_at_death"
     add_annual_gross_liquid_wealth_moments(stats, asset_dist, P, bg)
     add_annual_gross_old_wealth_moments(stats, asset_dist, P, bg, ph)
     add_old_nonhousing_income_share_moments(stats, asset_dist, P, bg)
@@ -5584,6 +5596,72 @@ def compute_markov_statistics(
     stats.implied_balanced_pension = stats.payroll_tax_revenue / max(stats.retiree_mass_total, 1e-12)
     stats.income_transition = Pi_z.copy()
     return stats
+
+
+def add_aggregate_wealth_bequest_flow_moments(
+    stats: SimpleNamespace,
+    wealth_g: np.ndarray,
+    death_choice_g: np.ndarray,
+    bp_pol: np.ndarray,
+    P: SimpleNamespace,
+    bg: np.ndarray,
+    ph: np.ndarray,
+) -> None:
+    """Add repaired wealth and at-death bequest-flow moments.
+
+    The stock numerator is beginning-of-period net worth for all living
+    households.  The denominator is annual *gross* labor earnings at ages
+    18--65: ``P.income`` is stored after the payroll wedge, so working-age
+    earnings are divided by ``(1 - tau_pay)`` to recover the gross object
+    that matches the PSID EARNINDRRC construction.  Death estates use
+    post-saving ``b'`` and current tenure after the period's transaction.
+    """
+    wealth_arr = np.asarray(wealth_g, dtype=float)
+    death_arr = np.asarray(death_choice_g, dtype=float)
+    bp_arr = np.asarray(bp_pol, dtype=float)
+    if wealth_arr.ndim != 7:
+        return
+    if death_arr.shape != wealth_arr.shape or bp_arr.shape != wealth_arr.shape:
+        raise ValueError("wealth_g, death_choice_g, and bp_pol must share the full income-resolved state shape")
+    bg_arr = np.asarray(bg, dtype=float).reshape(-1)
+    ph_arr = np.asarray(ph, dtype=float).reshape(-1)
+    z_values = np.asarray(getattr(P, "z_grid", [1.0]), dtype=float).reshape(-1)
+    period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
+    gross_up = 1.0 / max(1.0 - float(getattr(P, "tau_pay", 0.0)), 1e-12)
+    aggregate_wealth = aggregate_gross_labor_earnings = annual_bequest_flow = 0.0
+    wealth_by_age = np.zeros(int(P.J), dtype=float)
+    gross_labor_earnings_by_age = np.zeros(int(P.J), dtype=float)
+    for j in range(int(P.J)):
+        if bool(getattr(P, "use_age_survival", False)) and j < int(P.J) - 1:
+            death_probability = 1.0 - float(P.survival_probs[j])
+        elif j == int(P.J) - 1:
+            death_probability = 1.0
+        else:
+            death_probability = 0.0
+        for i in range(int(P.I)):
+            for zz, z_value in enumerate(z_values):
+                state_mass = float(np.sum(wealth_arr[:, :, i, j, zz, :, :]))
+                if j < int(P.J_R):
+                    gross_earnings = float(P.income[i, j]) * float(z_value) * gross_up / max(period_years, 1e-12)
+                    aggregate_gross_labor_earnings += gross_earnings * state_mass
+                    gross_labor_earnings_by_age[j] += gross_earnings * state_mass
+                for ten in range(wealth_arr.shape[1]):
+                    housing_value = float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
+                    mass_by_asset = np.sum(wealth_arr[:, ten, i, j, zz, :, :], axis=(1, 2))
+                    total_wealth = float(np.sum(mass_by_asset * (bg_arr + housing_value)))
+                    aggregate_wealth += total_wealth
+                    wealth_by_age[j] += total_wealth
+                    estate = bp_arr[:, ten, i, j, zz, :, :] + housing_value
+                    annual_bequest_flow += death_probability * float(
+                        np.sum(death_arr[:, ten, i, j, zz, :, :] * np.maximum(estate, 0.0))
+                    ) / max(period_years, 1e-12)
+    stats.aggregate_wealth = aggregate_wealth
+    stats.aggregate_annual_gross_labor_earnings = aggregate_gross_labor_earnings
+    stats.aggregate_wealth_to_annual_gross_labor_earnings = aggregate_wealth / max(aggregate_gross_labor_earnings, 1e-12)
+    stats.annual_bequest_flow = annual_bequest_flow
+    stats.annual_bequest_flow_to_aggregate_wealth = annual_bequest_flow / max(aggregate_wealth, 1e-12)
+    stats.aggregate_wealth_by_age = wealth_by_age
+    stats.aggregate_annual_gross_labor_earnings_by_age = gross_labor_earnings_by_age
 
 
 def compute_markov_eq_stats(g: np.ndarray, P: SimpleNamespace, bg: np.ndarray, ph: np.ndarray, hR: np.ndarray) -> SimpleNamespace:

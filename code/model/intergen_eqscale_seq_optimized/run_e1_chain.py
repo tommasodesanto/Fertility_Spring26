@@ -50,6 +50,16 @@ if os.environ.get("E4_SPLIT", "") == "1":
         for name, lo, hi, kind in DOMAIN
     )
 FIXED = {"theta_n": 0.0}
+# E5 is deliberately gated until the two NCHS timing values are populated in
+# the signed profile.  Its domain removes the now-external alpha and tenure
+# taste scale and retains the E4 continuation-noise margin.
+if os.environ.get("E5", "") == "1":
+    from intergen_eqscale_seq_optimized.e5_profile import (
+        E5_DOMAIN, E5_FIXED, E5_TARGET_SET,
+    )
+    TARGET_SET = E5_TARGET_SET
+    DOMAIN = E5_DOMAIN
+    FIXED = dict(E5_FIXED)
 DEFAULT_J = 17
 DEFAULT_NB = 120
 DEFAULT_MAX_ITER_EQ = 10
@@ -129,16 +139,17 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
     e2_record = os.environ.get("E2_SEED_RECORD", "")
     if e2_record:
         allowed = {"beta" if name == "beta_annual" else name for name, *_ in DOMAIN}
-        required = allowed | {"theta_n"}
+        required = allowed | set(FIXED)
         payload_e2: Any = json.loads(Path(e2_record).read_text())
         winner_e2 = (payload_e2.get("winners") or {}).get("E1")
         if not isinstance(winner_e2, dict) or not isinstance(winner_e2.get("theta"), dict):
             raise ValueError(f"{e2_record} does not contain winners.E1.theta")
         theta = {k: float(v) for k, v in winner_e2["theta"].items() if k in required}
-        if os.environ.get("E4_SPLIT", "") == "1" and "kappa_fert_continuation" not in theta:
+        if (os.environ.get("E4_SPLIT", "") == "1" or os.environ.get("E5", "") == "1") and "kappa_fert_continuation" not in theta:
             # Pre-split records lack the continuation scale; restart it at the
             # frontier-v3 evidence value.
             theta["kappa_fert_continuation"] = 0.3
+        theta.update(FIXED)
         if set(theta) != required:
             raise RuntimeError(f"E2 seed keys differ from contract: {sorted(theta)}")
         return theta
@@ -148,13 +159,17 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         raise ValueError(f"{seed_path} does not contain winners.M5.theta")
     source = winner["theta"]
     allowed = {"beta" if name == "beta_annual" else name for name, *_ in DOMAIN}
-    if os.environ.get("E4_SPLIT", "") == "1":
+    if os.environ.get("E5", "") == "1":
+        theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "kappa_fert_continuation"}}
+        theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, kappa_fert_continuation=0.3)
+    elif os.environ.get("E4_SPLIT", "") == "1":
         theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "kappa_fert_continuation"}}
         theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, kappa_fert_continuation=0.3, theta_n=0.0)
     else:
         theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "gamma_e"}}
         theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, gamma_e=0.5, theta_n=0.0)
-    required = allowed | {"theta_n"}
+    theta.update(FIXED)
+    required = allowed | set(FIXED)
     if set(theta) != required:
         raise RuntimeError(f"E1 seed keys differ from contract: {sorted(theta)}")
     return theta
@@ -228,6 +243,11 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             if os.environ.get("E4_SPLIT", "") == "1"
             else {}
         ),
+        **(
+            __import__("intergen_eqscale_seq_optimized.e5_profile", fromlist=["e5_overrides"]).e5_overrides()
+            if os.environ.get("E5", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -246,13 +266,19 @@ def main() -> None:
         args.max_evals, args.minutes = min(args.max_evals, 13), min(args.minutes, 8.0)
     if not math.isclose(float(args.tol_eq), 1e-4) and not args.smoke:
         raise ValueError("E1 search requires tol_eq=1e-4; winners are repeated at 40/2.5e-5")
-    targets, weights = get_target_set(TARGET_SET)
+    if os.environ.get("E5", "") == "1":
+        from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
+        e5_system = e5_target_system()
+        targets, weights = e5_system.targets_dict(), e5_system.weights_dict()
+    else:
+        targets, weights = get_target_set(TARGET_SET)
     # Atomic in the optimized target registry; assignment remains idempotent
     # for compatibility with the original runner contract.
-    targets["aggregate_mean_occupied_rooms_18_85"] = 5.779970481941968
-    weights["aggregate_mean_occupied_rooms_18_85"] = 6.0
-    if len(targets) != 15 or set(targets) != set(weights):
-        raise ValueError("E1 requires the unchanged 15-moment income-disciplined target system")
+    if os.environ.get("E5", "") != "1":
+        targets["aggregate_mean_occupied_rooms_18_85"] = 5.779970481941968
+        weights["aggregate_mean_occupied_rooms_18_85"] = 6.0
+        if len(targets) != 15 or set(targets) != set(weights):
+            raise ValueError("E1 requires the unchanged 15-moment income-disciplined target system")
     seed_theta = build_seed_theta()
     x0 = unit_from_theta(seed_theta)
     rng = np.random.default_rng(args.seed)
@@ -265,23 +291,33 @@ def main() -> None:
     cases_path.write_text("")
     metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
                 "arm": (
-                    "E4_SPLIT"
+                    "E5"
+                    if os.environ.get("E5", "") == "1"
+                    else ("E4_SPLIT"
                     if os.environ.get("E4_SPLIT", "") == "1"
-                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")
+                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1"))
                 ),
-                "l4_literal_parity": os.environ.get("E3_L4", "") == "1",
+                "l4_literal_parity": os.environ.get("E3_L4", "") == "1" or os.environ.get("E5", "") == "1",
                 "l4_conventions": (
                     {"n_parity": 4, "fertility_units": "literal_topcode",
                      "tfr_top_bin_weight": float(os.environ.get("E3_TFR_TOP_BIN_WEIGHT", "3.4")),
                      "entrant_conversion_factor": 0.5, "child_bin_high_cutoff": 3}
-                    if os.environ.get("E3_L4", "") == "1" else None
+                    if os.environ.get("E3_L4", "") == "1" or os.environ.get("E5", "") == "1" else None
                 ),
                 "free_parameter_count": len(DOMAIN), "target_count": len(targets),
                 "active_domain": [{"name": n, "lower": lo, "upper": hi, "transform": k} for n, lo, hi, k in DOMAIN],
                 "fixed_parameters": FIXED, "target_set": TARGET_SET, "targets": targets, "weights": weights,
+                "external_parameter_metadata": (
+                    __import__("intergen_eqscale_seq_optimized.e5_profile", fromlist=["E5_EXTERNAL_METADATA"]).E5_EXTERNAL_METADATA
+                    if os.environ.get("E5", "") == "1" else None
+                ),
                 "seed": args.seed, "start_mix": start_mix, "initial_unit_vector": x0,
                 "J": args.J, "Nb": args.Nb, "max_iter_eq": args.max_iter_eq, "tol_eq": args.tol_eq,
-                "income_process": {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20},
+                "income_process": (
+                    {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9136, "annual_innovation_sd": 0.1690}
+                    if os.environ.get("E5", "") == "1"
+                    else {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20}
+                ),
                 "tight_winner_evaluator": {"max_iter_eq": 40, "tol_eq": 2.5e-5, "repeats": 2}}
     (args.outdir / "metadata.json").write_text(json.dumps(jsonable(metadata), indent=2, sort_keys=True))
     started, records, best, eval_idx = time.perf_counter(), [], None, 0
@@ -308,7 +344,7 @@ def main() -> None:
             moments, loss, residual, timings, strict, status, error, census, price = {}, math.inf, math.inf, {}, False, "infeasible_theta", str(exc), list(exc.census), math.nan
         except Exception as exc:  # persist each failed proposal as a recoverable checkpoint
             moments, loss, residual, timings, strict, status, error, census, price = {}, math.inf, math.inf, {}, False, f"failed:{type(exc).__name__}", str(exc), [], math.nan
-        record = {"case": eval_idx if tight_case is None else tight_case, "label": label, "arm": "E1", "status": status, "strict_converged": strict,
+        record = {"case": eval_idx if tight_case is None else tight_case, "label": label, "arm": ("E5" if os.environ.get("E5", "") == "1" else "E1"), "status": status, "strict_converged": strict,
                   "rank_loss": loss, "market_residual": residual, "price": price, "theta": theta, "moments": moments,
                   "target_fit": target_fit(moments, targets, weights) if moments else [], "timings": timings,
                   "timing_diagnostics": {k: v for k, v in moments.items() if isinstance(v, (list, tuple, np.ndarray))},

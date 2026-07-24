@@ -1,0 +1,95 @@
+"""E5 sequential-fertility target contract from the signed 2026-07-24 ledger.
+
+``tfr`` is retained as a legacy key, but denotes completed fertility (mean
+children ever born for women ages 40--44), with the literal 3+ top-bin weight
+used by the E4 L4 convention.  The two NCHS first-birth timing targets are
+intentionally ``None`` until their cohort-table builder is committed: E5 must
+not run on invented timing values.  CPS stock-row standard errors and timing
+standard errors are likewise TODO.  Rows with an available standard error use
+the diagonal inverse-variance weight; other pending rows use provisional
+target-scale weights.  The borrowed bequest-flow row uses the explicitly
+synthetic provisional target-scale weight ``1 / 0.0088**2`` pending the
+weights pass.
+"""
+from __future__ import annotations
+
+from typing import Any
+
+from .calibration import OLD_NONLOCATION_TARGETS
+from .externals import flhsv_income_overrides
+from .target_system import TargetSystem
+
+E5_PROFILE_NAME = "eqscale_seq_e5_20260724"
+E5_TARGET_SET = "e5_signed_review_20260724"
+E5_TARGETS: dict[str, float | None] = {
+    "tfr": 1.918,
+    "childless_rate": 0.188,
+    "mean_age_first_birth": None,
+    "share_first_births_age30plus": None,
+    "housing_increment_0to1": 0.664435,
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
+    "own_family_gap": OLD_NONLOCATION_TARGETS["own_family_gap"],
+    "own_rate": 0.575472,
+    "aggregate_mean_occupied_rooms_18_85": 5.779970481941968,
+    "aggregate_wealth_to_annual_gross_labor_earnings": 6.8731,
+    "annual_bequest_flow_to_aggregate_wealth": 0.0088,
+    "old_total_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
+}
+
+
+def _target_scale_weight(name: str) -> float:
+    value = E5_TARGETS[name]
+    return 1.0 / float(value) ** 2 if value is not None else 1.0
+
+
+E5_WEIGHTS: dict[str, float] = {name: _target_scale_weight(name) for name in E5_TARGETS}
+E5_WEIGHTS.update({
+    "aggregate_wealth_to_annual_gross_labor_earnings": 1.0 / 0.3988**2,
+    "old_total_wealth_to_annual_income_p90_p50_7684": 1.0 / 0.1325**2,
+    "annual_bequest_flow_to_aggregate_wealth": 1.0 / 0.0088**2,
+})
+
+E5_DOMAIN: tuple[tuple[str, float, float, str], ...] = (
+    ("beta_annual", 0.80, 0.9995, "discount"),
+    ("delta_alpha", 0.0, 0.25, "softzero"),
+    ("delta_alpha_jump", 0.0, 0.25, "softzero"),
+    ("psi_child", -3.0, 3.0, "asinh"),
+    ("kappa_fert", 0.02, 50.0, "log"),
+    ("kappa_fert_continuation", 0.02, 50.0, "log"),
+    ("chi", 0.10, 5.0, "log"),
+    ("H0", 0.20, 80.0, "log"),
+    ("theta0", 0.0, 8.0, "softzero"),
+    ("theta1", 0.02, 16.0, "log"),
+)
+E5_FIXED = {"theta_n": 0.0, "alpha_cons": 0.733, "tenure_choice_kappa": 0.0}
+E5_EXTERNAL_METADATA = {
+    "alpha_cons": {"value": 0.733, "source": "CEX childless-cash-renter expenditure slope, 2019-2023"},
+    "tenure_choice_kappa": {"value": 0.0, "source": "author-pinned deterministic tenure choice"},
+    "theta_n": {"value": 0.0, "source": "author-pinned child-invariant bequest utility"},
+}
+
+
+def e5_target_system() -> TargetSystem:
+    """Build the E5 target system, refusing the pending NCHS timing rows."""
+    pending = [name for name, value in E5_TARGETS.items() if value is None]
+    if pending:
+        raise ValueError(f"E5 target values are pending: {pending}")
+    targets = {name: float(value) for name, value in E5_TARGETS.items()}
+    system = TargetSystem.from_mappings(E5_TARGET_SET, targets, E5_WEIGHTS)
+    system.require_identified(10)
+    return system
+
+
+def e5_overrides() -> dict[str, Any]:
+    """Return the signed E5 external conventions (E4 L4, power, FL x HSV)."""
+    return {
+        **E5_FIXED,
+        "n_parity": 4,
+        "fertility_units": "literal_topcode",
+        "tfr_top_bin_weight": 3.4,
+        "entrant_conversion_factor": 0.5,
+        "child_bin_high_cutoff": 3,
+        "eqscale_form": "power",
+        "gamma_e": 0.0,
+        **flhsv_income_overrides(),
+    }

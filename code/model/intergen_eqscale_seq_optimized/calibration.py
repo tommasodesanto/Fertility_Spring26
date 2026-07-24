@@ -1372,6 +1372,9 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "aggregate_wealth_to_annual_gross_labor_earnings": float(
             getattr(sol, "aggregate_wealth_to_annual_gross_labor_earnings", np.nan)
         ),
+        "annual_bequest_flow_to_aggregate_wealth": float(
+            getattr(sol, "annual_bequest_flow_to_aggregate_wealth", np.nan)
+        ),
         "aggregate_wealth_to_annual_gross_labor_earnings_26_35": float(
             getattr(
                 sol,
