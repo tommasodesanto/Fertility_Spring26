@@ -30,6 +30,23 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Row 8 -- Consumption share alpha_0: FIXED EXTERNALLY [SIGNED OFF 2026-07-24]
+
+- Decision: alpha_0 = 0.733 (CEX childless-cash-renter expenditure slope,
+  2019-2023) becomes an external, leaving the free list: 11 free parameters.
+  Wired as a contract default recorded in run metadata and verified by the
+  collector -- NOT a CLI flag.
+- Why this was controversial (May 2026 history, from the 05-28 transcript):
+  (i) a May 27 override-flag implementation produced a record whose metadata
+  alpha (0.93) did not match the effective alpha of its saved moments,
+  invalidating a slide baseline; (ii) under Stone-Geary, alpha was a
+  marginal share with no clean external counterpart (observed shares include
+  the floors). Both are resolved: the E branch has no floors, so the
+  childless-renter expenditure share equals 1 - alpha_0 exactly; and
+  externals are now contract defaults with metadata checks.
+- Cross-check kept for the note: E4's freely estimated alpha_0 = 0.754,
+  three percent from the CEX value it never saw.
+
 ### Rows 6-7 -- Expenditure-tilts block [SIGNED OFF 2026-07-24]
 
 - Row 6: first-child rooms increment, 0.664. PSID event-study response,
