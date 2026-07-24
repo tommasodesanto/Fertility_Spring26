@@ -30,6 +30,26 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Tenure and supply block [SIGNED OFF 2026-07-24]
+
+- Ownership rate 30-55 (0.5755, ACS) -- primary row for chi_O, the owner
+  utility premium. One-to-one.
+- Aggregate occupied rooms (5.780, ACS) -- primary row for H-bar, the supply
+  scale. One-to-one.
+- kappa_T: DROPPED. Tenure choice is deterministic (the author's standing
+  preference, reaffirmed; E4 drove kappa_T to ~0 at no cost; honest income
+  risk generates tenure churn without taste noise). The Brier row dies with
+  it. The four-year tenure switch rate becomes an untargeted validation
+  check of the income-risk architecture; if it misses, that is evidence
+  about the income process, not a dial to turn.
+- Presentation rule (author): parameters fixed at zero (kappa_T, theta_n)
+  do NOT appear in the assigned-parameters tables -- footnote treatment
+  only ("tenure choice is deterministic"; "bequest utility does not vary
+  with the number of children"). The strategy note's tables get one
+  coherent revision pass when this review completes.
+- Free parameters now: 10 (beta, delta_jump, delta_a, psi, kappa_E,
+  kappa_C, chi_O, H-bar, theta_0, theta_1).
+
 ### Row 8 -- Consumption share alpha_0: FIXED EXTERNALLY [SIGNED OFF 2026-07-24]
 
 - Decision: alpha_0 = 0.733 (CEX childless-cash-renter expenditure slope,
