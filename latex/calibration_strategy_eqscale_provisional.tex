@@ -11,7 +11,7 @@
 \setlength{\emergencystretch}{3em}
 
 \title{Calibration\\
-\large Equivalence-scale specification --- drop-in revision of the draft's calibration section}
+\large Equivalence-scale specification: revised calibration section}
 \author{Tommaso De Santo}
 \date{}
 
@@ -23,7 +23,7 @@
 
 This section calibrates the equivalence-scale specification of the model. Two
 changes relative to the model section of the circulated draft matter for the
-calibration, and since this note travels on its own I state the new objects
+calibration. The note circulates separately from the draft, so I state both
 explicitly. First, children no longer enter through the committed consumption
 and housing bundles $(\bar c(n,s),\bar h(n,s))$ of the draft. Within-period
 utility for a household with $n$ dependent children at home is
@@ -58,13 +58,15 @@ fecundity probability
 which declines with age and reaches zero at 45; the coefficients are anchored
 to Leridon's clinical conception tables, with the formal fit pending.
 Completed family size is therefore an outcome of starting age, biology, and
-sequential choices---nobody chooses a number of children. Both decisions carry
-type-1 extreme-value taste shocks, with scale $\kappa_E$ on the entry decision
-and $\kappa_C$ on the continuation decision. The asymmetry is deliberate: the
-timing of the first attempt is allowed to be substantially random, standing in
-for the circumstances that time family formation, while the continuation
-decision of an established family is close to deterministic and therefore
-governed by prices, income, and preferences.
+sequential choices; no household ever chooses a number of children. Both
+decisions carry type-1 extreme-value taste shocks, with scale $\kappa_E$ on
+the entry decision and $\kappa_C$ on the continuation decision. The two
+scales are allowed to differ because the two decisions are different objects:
+the timing of the first attempt depends on circumstances the model does not
+describe, such as partnership timing and career events, so $\kappa_E$ can be
+large, while the continuation decision of an established family should be
+governed by prices, income, and preferences, so $\kappa_C$ is expected to be
+small.
 
 Second, income risk is set at its empirical value rather than truncated. The
 committed bundles of the previous specification forced income risk far below
@@ -104,8 +106,9 @@ robustness alternative. The fecundity schedule declines with age and closes at
 tables; its formal least-squares fit is pending, as is the CPS measurement of
 the weight on the top family-size bin, provisionally $3.4$ children. The
 income process is the Flod\'en--Lind\'e--HSV object described above; unlike
-the previous draft, it is no longer provisional, and the footnote conditioning
-all quantitative results on a truncated income variance is retired.
+the previous draft, it is no longer provisional, and the draft's footnote
+conditioning all quantitative results on a truncated income variance no
+longer applies.
 
 \begin{table}[H]
 \centering
@@ -152,9 +155,9 @@ Bequest child shifter $\theta_n$ & 0 & Maintained restriction \\
 I estimate the remaining 12 parameters internally using the same 15 moments as
 the previous draft. Table~\ref{tab:quant_parameters} reports the estimates
 from the current diagnostic calibration. Although the parameters are chosen
-jointly, each parameter now has either one primary moment or membership in an
-explicitly named block with as many moments as parameters, and I state the
-assignment for every parameter in turn.
+jointly, each parameter is now either assigned one primary moment or placed
+in a named block with as many moments as parameters. I state the assignment
+for each parameter in turn.
 
 \begin{table}[H]
 \centering
@@ -191,8 +194,9 @@ with the older nonhousing-wealth share; $\theta_1$ governs how the bequest
 motive varies across the estate distribution. In the planned target revision
 these three parameters map one-to-one to the aggregate wealth-to-earnings
 ratio, the annual bequest-flow-to-wealth ratio, and the late-life wealth
-dispersion ratio $p_{90}/p_{50}=3.448$ measured in the PSID; the aggregate
-ratio awaits the same-definition reconstruction of its borrowed value.
+dispersion ratio $p_{90}/p_{50}=3.448$ measured in the PSID. The aggregate
+ratio is still a borrowed number; its reconstruction on a consistent
+definition is in progress.
 
 \paragraph{Housing demand, tenure, and supply.}
 The expenditure share $\alpha_0$ is pinned by the housing-expenditure slope of
@@ -210,17 +214,16 @@ rooms; these three are one-to-one.
 
 \paragraph{Fertility.}
 The fertility side is a three-parameter block: $\psi$, $\kappa_E$, and
-$\kappa_C$ against completed fertility, childlessness, and---in the planned
-revision---the timing of first births. The level of completed fertility
+$\kappa_C$ against completed fertility, childlessness, and, in the planned
+revision, the timing of first births. The level of completed fertility
 primarily disciplines $\psi$. Childlessness disciplines the dispersion of
 family outcomes, and with continuation noise small, large families reappear
 because parents who start early progress to third births whenever the
 economics favors it. The current 15-moment system contains no timing moment,
-so $\kappa_E$ is disciplined only indirectly; its estimate at the boundary of
-the search region, reported below, is the visible consequence, and the mean
-age at first birth with the share of first births after 30 will be added to
-close exactly this gap. The realized progression rates between birth orders
-remain overidentifying outcomes.
+so $\kappa_E$ is disciplined only indirectly; its estimate sits at the
+boundary of the search region as a result. The mean age at first birth and
+the share of first births after 30 will be added to pin it down. The realized
+progression rates between birth orders remain overidentifying outcomes.
 
 \subsection{Target Moments and Fit}
 
@@ -260,9 +263,9 @@ Share with nonhousing wealth $\ge$ annual income, ages 65--75 & 0.608 & 0.612 \\
 \end{tabularx}
 \end{table}
 
-The model now matches the two completed-fertility moments closely---completed
+The model now matches the two completed-fertility moments closely: completed
 fertility of $1.875$ against $1.918$ and childlessness of $0.155$ against
-$0.188$---which the one-shot specification could reach only by overshooting
+$0.188$. The one-shot specification could reach this pair only by overshooting
 fertility, and which no configuration of the sequential specification reaches
 without the margin-specific shock scales. Roughly half of model childlessness
 arises from households that try and run out the biological clock, consistent
@@ -270,29 +273,26 @@ with the postponement mechanism at the center of the paper. The late-life
 estate median and the older nonhousing-wealth share are closely matched, and
 young ownership is now slightly overstated rather than understated.
 
-Three misses deserve emphasis, in the same spirit as the previous draft.
-First, young childless renters accumulate wealth equal to $0.467$ of annual
-income against $0.179$ in the PSID. Under empirical income risk young
-households hold buffer wealth; this is a structural property of honest risk,
-smaller than under the previous draft's truncated-risk calibration once
-measurement is done consistently, and I report it as a disclosed miss rather
-than a target. Second, old-age ownership is $0.945$ against $0.764$, the same
+Three misses stand out. First, young childless renters accumulate wealth
+equal to $0.467$ of annual income against $0.179$ in the PSID. Under
+empirical income risk young households hold buffer wealth; the miss is a
+structural property of the specification, and I report it as such rather
+than target it. Second, old-age ownership is $0.945$ against $0.764$, the same
 late-life exit failure as in the previous draft; here it is compounded by the
 bequest and tenure-dispersion estimates collapsing toward the boundary of the
 search region ($\theta_0$, $\theta_1$, $\kappa_T$ in
 Table~\ref{tab:quant_parameters}), which removes the motives that would let
 older owners sell. Third, the family ownership gap is understated at $0.072$
 against $0.168$. The expenditure-share tilts at their current estimates are
-too small to generate the full gap; the diagnostic scans show the gap rising
-monotonically in the tilts, so this margin is available but not selected by
-the current target weights.
+too small to generate the full gap. The diagnostic scans show the gap rising
+monotonically in the tilts, so larger tilts can produce it; the current
+target weights do not select them.
 
-The estimate $\kappa_E=49.38$ sits at the boundary of its search region, and
-this has a substantive consequence rather than a cosmetic one: with
+The estimate $\kappa_E=49.38$ sits at the boundary of its search region. With
 first-birth timing that random, fertility stops responding to prices and
 transfers, and the policy experiments reported below move births by
 essentially zero. I therefore treat the current calibration as diagnostic. It
-establishes that the sequential architecture can reach the fertility margins
+shows that the sequential architecture can reach the fertility margins
 that motivated it, but its policy elasticities are not usable until the
 timing moments discipline $\kappa_E$ away from the boundary, and the late-life
 exit margin and the family ownership gap require the revised target weights
