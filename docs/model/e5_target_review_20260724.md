@@ -188,3 +188,13 @@ actual loadings. Birth-order progression rates stay untargeted diagnostics.
   fertility rows; completed fertility is psi's primary assignment.
   Cross-loads disclosed: fecundity (external), expenditure tilts, house
   prices.
+
+## LAUNCH RECORD (2026-07-24 evening)
+
+E5 launched on the signed system: smoke `14736164` (47/47 exact-loop
+evaluations, arm E5, 10 free / 12 targets, timing rows live), production
+array `14736281_[1-8]` (225-minute chains, strict twice-repeated winners),
+dependent collector `14736282`. Seed: certified E4 winner with the
+continuation scale carried over. Weight rule: (gap/SE)^2, measured SEs
+where they exist, declared SEs elsewhere, documented in `e5_profile.py`.
+Only the certified collector output is reportable.
