@@ -64,7 +64,24 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
 ```
 
 Use `--smoke` for the 40-node testing grid. This driver is a fixed-parameter
-mechanism test, not a funded-baseline recalibration.
+mechanism test, not a funded-baseline recalibration. To run the same fiscal
+cases at the selected current-M estimate, use:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_intergen_funded_property_tax_test.py \
+  --profile new-moment \
+  --source ../../output/model/intergen_new_moment_unrestricted_overnight_20260723_w2/report/results.json \
+  --outdir ../../output/model/intergen_current_m_figures_policy_20260724/funded_policy
+```
+
+Reproduce the two established draft figures from that exact current-M result
+with:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/build_intergen_current_m_draft_figures.py
+```
 
 For the one-market intergenerational strand under
 `intergen_housing_fertility/`, the default interactive inspection path should

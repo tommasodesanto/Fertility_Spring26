@@ -1,6 +1,34 @@
 # Calibration Status
 
-Updated: `2026-07-24` (free-beta overnight continuation complete)
+Updated: `2026-07-24` (current-M figures and funded policy rerun complete)
+
+## July 24: current-M figures and fiscally closed policy rerun
+
+The two established draft figures were regenerated from the exact selected
+current-M theta. The tight baseline reproduces the source price and objective
+to machine precision and strictly converges with market residual `1.07e-5`.
+The lifecycle and decision-rule figures, source CSVs, parameter table, complete
+target-fit table, and trusted solution cache are under
+`output/model/intergen_current_m_figures_policy_20260724/equilibrium/`.
+
+The three-case funded policy test was also rerun at the same fixed theta. The
+rebated 1% baseline has TFR `2.10145` and price `1.07968`. A rebated 2% tax
+raises TFR by `0.00727` (`+0.35%`) and lowers the price by `17.78%`; adding
+the targeted 0.4 grant for renter purchases of homes with 6+ rooms raises TFR
+by `0.01170` (`+0.56%`) and lowers the price by `17.86%`. In the combined
+case, tax revenue is `0.44099` per period, grant outlays are `0.02229`, and
+the remaining `0.41870` is rebated universally. All three equilibria strictly
+converge; fiscal residuals are below `2.2e-6`.
+
+This remains a fixed-parameter, normalized-population mechanism test. The
+calibrated current-M baseline did not rebate the 1% tax, whereas the policy
+comparison baseline does. It is not a funded-baseline recalibration and does
+not recover the old population-adjusted total-birth estimand. Do not present
+the policy numbers as paper-ready without resolving those two distinctions.
+Artifacts:
+`output/model/intergen_current_m_figures_policy_20260724/funded_policy/`;
+drivers: `code/model/tools/build_intergen_current_m_draft_figures.py` and
+`code/model/tools/run_intergen_funded_property_tax_test.py`.
 
 ## July 24: unrestricted-beta overnight continuation complete
 
