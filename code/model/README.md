@@ -88,6 +88,17 @@ It recovers the outside-entry objects at the rebated 1% baseline, holds them
 fixed across policies, and jointly solves the house price and lump-sum rebate.
 Use `--smoke` only with a matching 40-node fixed-population packet.
 
+To isolate the property-tax increase without any rebate or grant, starting
+from the actual current-M fiscal convention, use:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_intergen_tax_no_rebate_with_entry.py
+```
+
+This compares a 1% and 2% annual property tax, discards revenue in both cases,
+and resolves the Phase-9b entry/scale price closure.
+
 Reproduce the two established draft figures from that exact current-M result
 with:
 
