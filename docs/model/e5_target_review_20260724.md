@@ -30,6 +30,21 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Row 2 -- Completed childlessness [SIGNED OFF 2026-07-24]
+
+- Target: 0.188 (0.188180 reproduced). Share of women ages 40--44 with zero
+  children ever born. Model: parity-0 share over post-fertile ages; the
+  chosen/clock decomposition stays an untargeted diagnostic.
+- Source: same CPS June 2024 builder as row 1; SE and covariance with row 1
+  from the same bootstrap.
+- Connection: mostly connected with kappa_C, the continuation noise scale,
+  through the option value of entry: quiet continuation makes entering
+  parenthood a committed multi-child track, which moves the share who never
+  enter (in the v3 scan, kappa_C from 15.9 to 0.3 doubled childlessness at
+  fixed entry noise). Draft states the primary connection; the fertility
+  block remains jointly identified and the E5 Jacobian will report the
+  actual loadings.
+
 ### Row 1 -- Completed fertility [SIGNED OFF 2026-07-24]
 
 - Target: 1.918 (1.918425 reproduced from microdata). Mean children ever born
