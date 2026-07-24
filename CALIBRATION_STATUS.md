@@ -224,6 +224,24 @@ first-birth timing distribution (A6/A8). Diagnostic cells, not
 calibrations. Packet with README and summary CSV:
 `output/model/eqscale_fertility_frontier_v3_20260723/`.
 
+**E4 certified (morning July 24): strict loss `14.099`, 8/8 chains, and
+the fertility block is solved.** Completed fertility `1.875` (target
+1.918, contribution 0.037) and childlessness `0.155` (target 0.188,
+contribution 0.022) — the two rows the pre-split architecture could not
+reach jointly — plus estate median on target and young renter wealth down
+to `0.467`. The excess over the honest E3b bar (6.64) is concentrated in
+the housing/tenure block (~12.5 of 14.1), led by old-age ownership
+`0.945` vs `0.764` (5.26 alone): the winner collapsed `theta0` (0.026),
+`theta1` (0.044), and `tenure_choice_kappa` (0.0002) into bound regions
+and `kappa_fert` sits at its 50 cap; chains cluster at 19-22 with one
+14.1 basin, so the search is not globally converged. Interpretation: the
+optimizer bought fertility and saving by selling old-age tenure under the
+new externals on the old contract. Full tables:
+`output/model/eqscale_seq_e4_split_recalibration_20260723/report/`.
+Follow-ups on the table: E4b continuation (seed the winner, consider
+raising the kappa cap) and/or proceed to the reconciled-system freeze
+where the housing rows get their SE-based weights.
+
 **E4 overnight calibration launched (author-requested).** Arm `E4_SPLIT` on
 the UNCHANGED 15-moment contract so the strict loss is directly comparable
 to the honest E2/E3/E3b re-measurements (21.33/7.26/6.64): L4 literal
