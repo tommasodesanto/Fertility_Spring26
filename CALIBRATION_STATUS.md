@@ -218,6 +218,22 @@ first-birth timing distribution (A6/A8). Diagnostic cells, not
 calibrations. Packet with README and summary CSV:
 `output/model/eqscale_fertility_frontier_v3_20260723/`.
 
+**E4 overnight calibration launched (author-requested).** Arm `E4_SPLIT` on
+the UNCHANGED 15-moment contract so the strict loss is directly comparable
+to the honest E2/E3/E3b re-measurements (21.33/7.26/6.64): L4 literal
+parity, imposed SSK power scale (gamma_e inert and out of the free list),
+FL x HSV income, and `kappa_fert_continuation` in gamma_e's DOMAIN slot
+(0.02-50, log) — still 12 free / 15 moments. Seeded from the certified E3b
+winner with the continuation scale restarted at the frontier-v3 value 0.3.
+Local tiny-loop smoke 13/13; Torch exact-loop smoke `14686840` 40/40
+strict-clean. Production: eight 225-minute chains `14686909_[1-8]` with
+strict twice-repeated winners, dependent collector `14686910`. Known
+tensions going in: the honest young-renter liquid-wealth row (0.179
+target) stays hard in this contract and will dominate the loss level; the
+fertility block is psi + two kappas on two hard stocks plus cross-loads,
+so treat any winner's identification as joint pending the reconciled
+system's timing rows (A6).
+
 Also this session (E strand): the published HSV progressivity benchmark was
 pinned from the paper itself — `tau_US = 0.181` (s.e. `0.002`), OLS on the
 log tax function, PSID 2000-06 with TAXSIM (final version, Figure I and
