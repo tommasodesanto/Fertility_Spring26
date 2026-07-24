@@ -1,10 +1,10 @@
 # Calibration Status
 
-Updated: `2026-07-23` (free-beta overnight continuation active on Torch)
+Updated: `2026-07-24` (free-beta overnight continuation complete)
 
-## July 23: unrestricted-beta overnight continuation active
+## July 24: unrestricted-beta overnight continuation complete
 
-The corrected recent-PSID fourteen-moment system is now running with all
+The corrected recent-PSID fourteen-moment system was searched with all
 fourteen structural parameters free and only `theta_n=0` imposed externally.
 No target, canonical weight, or parameter bound was changed. The target
 fingerprint is
@@ -12,17 +12,23 @@ fingerprint is
 
 An exact-loop Torch smoke (`14686817`, `14686818`) passed for all eight chains:
 15/15 cases completed per chain, fourteen active coordinates, and no fixed
-beta. Production wave 1 is `14686845_[1-4]` plus `14686846_[5-8]`, seeded
-equally from the strictly repeated beta-profile winners at annual beta `0.999`
-and `0.9995`; collector `14686857` runs only after both arrays succeed. Wave 2
-is `14686858_[1-8]`, dependent on that collector and seeded from its certified
-winner; final collector `14686859` is dependent on wave 2.
+beta. Production wave 1 (`14686845`, `14686846`, collector `14686857`) and
+wave 2 (`14686858`, collector `14686859`) completed successfully. All sixteen
+chains were eligible after two exact strict winner repeats; there were no
+failed or infeasible search cases.
 
-Each production chain has 225 minutes total, of which ten minutes are reserved
-for two fresh strict winner re-solves, and a cap of 4,000 search evaluations.
-Thus the declared stop is two eight-chain waves (at most 64,000 evaluations),
-not open-ended search. Every evaluation writes `cases.jsonl`,
-`latest_completed_case.json`, and `best_so_far.json`. Outputs:
+Wave 1 selected strict loss `0.2920201354`. Wave 2 selected strict loss
+`0.2881399317`, a 2.54 percent improvement over the best conditional-beta
+cell (`0.2956471012`). The two final strict repeats are bit-identical. Annual
+beta is internally estimated at `0.9990693`, still near the upper bound
+`0.9995`. The wealth/income ratio is `5.136470` against `6.873077`,
+living-old wealth p90/p50 is `1.892559` against `3.448111`, TFR is `2.085367`
+against `1.918`, and childlessness is `0.192485` against `0.188`. The two
+wealth-stock rows contribute 92.79 percent of total loss: the longer search
+improved the scalar objective but did not resolve the wealth-structure failure
+or the high-beta estimate.
+
+Complete target-fit, parameter/bounds, and chain tables:
 `output/model/intergen_new_moment_unrestricted_overnight_20260723_w1/` and
 `output/model/intergen_new_moment_unrestricted_overnight_20260723_w2/`.
 
