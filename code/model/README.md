@@ -75,6 +75,19 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
   --outdir ../../output/model/intergen_current_m_figures_policy_20260724/funded_policy
 ```
 
+Those normalized-population results are decomposition rows only. The headline
+funded exercise must let entry and stationary population scale adjust. Its
+driver is the balanced-budget extension of the established Phase-9b protocol:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_intergen_funded_policy_with_entry.py
+```
+
+It recovers the outside-entry objects at the rebated 1% baseline, holds them
+fixed across policies, and jointly solves the house price and lump-sum rebate.
+Use `--smoke` only with a matching 40-node fixed-population packet.
+
 Reproduce the two established draft figures from that exact current-M result
 with:
 
