@@ -5258,14 +5258,20 @@ def add_aggregate_wealth_gross_labor_diagnostics(
         gross_labor_earnings_by_age
     )
     model_ages = float(P.age_start) + np.arange(int(P.J)) * float(P.da)
+    state_years = float(P.da)
     for age_lo, age_hi in ((26, 35), (36, 45), (46, 55), (56, 65)):
-        in_bin = (model_ages >= age_lo) & (model_ages <= age_hi)
+        overlap_years = np.maximum(
+            0.0,
+            np.minimum(model_ages + state_years, float(age_hi + 1))
+            - np.maximum(model_ages, float(age_lo)),
+        )
+        bin_share = overlap_years / state_years
         setattr(
             stats,
             f"aggregate_wealth_to_annual_gross_labor_earnings_{age_lo}_{age_hi}",
-            float(np.sum(wealth_by_age[in_bin]))
+            float(np.sum(wealth_by_age * bin_share))
             / max(
-                float(np.sum(gross_labor_earnings_by_age[in_bin])),
+                float(np.sum(gross_labor_earnings_by_age * bin_share)),
                 1e-12,
             ),
         )

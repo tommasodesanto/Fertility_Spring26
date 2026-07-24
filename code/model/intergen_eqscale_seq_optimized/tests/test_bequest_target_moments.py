@@ -53,6 +53,39 @@ class BequestTargetMomentTests(unittest.TestCase):
             3.2,
         )
 
+    def test_age_profile_prorates_four_year_states_at_bin_boundaries(self) -> None:
+        p = SimpleNamespace(
+            J=4,
+            I=1,
+            J_R=4,
+            age_start=26.0,
+            da=4.0,
+            period_years=4.0,
+            tau_pay=0.2,
+            income=np.full((1, 4), 4.0),
+            n_parity=1,
+            n_child_states=1,
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+        )
+        bg = np.array([0.0, 10.0, 20.0, 30.0])
+        g = np.zeros((4, 2, 1, 4, 1, 1, 1))
+        for j in range(4):
+            g[j, 0, 0, j, 0, 0, 0] = 1.0
+        stats = SimpleNamespace()
+        add_aggregate_wealth_gross_labor_diagnostics(
+            stats,
+            g,
+            p,
+            bg,
+            np.array([1.0]),
+        )
+        # The 34--37 state contributes one half to the 26--35 bin.
+        self.assertAlmostEqual(
+            stats.aggregate_wealth_to_annual_gross_labor_earnings_26_35,
+            (0.0 + 10.0 + 0.5 * 20.0) / (2.5 * 1.25),
+        )
+
     def test_estate_targets_use_gross_home_value_and_live_parity_bins(self) -> None:
         p = SimpleNamespace(
             J=5,

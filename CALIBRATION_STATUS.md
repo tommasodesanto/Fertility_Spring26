@@ -1,7 +1,49 @@
 # Calibration Status
 
-Updated: `2026-07-23` (timing repair implemented; the repaired diagnostic
-recalibration and a bounded reasonable-beta profile are complete)
+Updated: `2026-07-23` (matched recent-PSID wealth target and corrected
+conditional-beta profile complete)
+
+## July 23: matched gross wealth target and corrected beta profile
+
+The borrowed 6.9 wealth/after-tax-earnings row is retired. The replacement is
+PSID 2005--2019 aggregate family net worth for reference-person ages 18--85
+divided by RP/spouse gross labor earnings for working ages 18--65. The matched
+target is `6.873077` (person-cluster bootstrap s.e. `0.398836`, 999 draws).
+Gross labor earnings were chosen over total family income because they map
+directly to the model labor-income process; the same-sample `INCFAMR`
+sensitivity is `5.569710`. The numerical proximity to 6.9 does not validate
+the old denominator: at the previous timing-repaired winner, the old
+after-payroll ratio is `6.148`, but the matched gross/gross ratio is only
+`5.048`.
+
+The model statistic is now matched in both the current one-shot and future
+E-series code paths. The 26--35 / 36--45 / 46--55 / 56--65 ratios are
+robustness-only and four-year state boundaries are prorated across empirical
+bins. The PSID profile is `1.248`, `2.671`, `4.454`, `9.644`.
+
+Ten Torch chains profiled annual beta over
+`{0.98, 0.99, 0.995, 0.999, 0.9995}`, reoptimizing the other thirteen
+parameters with the unchanged fourteen-moment objective. Every chain
+completed 360 cases and two exact strict repeats. Selected cells:
+
+| Fixed annual beta | Strict loss | Wealth / gross labor earnings |
+|---:|---:|---:|
+| 0.9800 | 0.494155 | 3.179018 |
+| 0.9900 | 0.380447 | 4.117083 |
+| 0.9950 | 0.316187 | 4.640850 |
+| 0.9990 | **0.295647** | **5.163442** |
+| 0.9995 | 0.296005 | 5.060266 |
+
+The result is a high-beta plateau, not a precise point estimate: 0.999 beats
+0.9995 by only `0.000357`. Even the best cell misses the wealth target by 25
+percent. Its untargeted lifecycle profile is `0.910`, `2.421`, `4.545`,
+`6.483`, so the central-age fit is reasonable but the 56--65 shortfall is
+large. Living-old wealth dispersion and the aggregate wealth level contribute
+93 percent of the loss. Do not cap beta at 0.98 or 0.99 and do not solve this
+by reweighting: the current model lacks the wealth structure needed to match
+the level and late-life dispersion jointly. Full tables and figures:
+`output/model/intergen_new_moment_beta_recent_gross_20260723/report/`. Audit:
+`docs/model/intergen_wealth_target_beta_audit_20260723.md`.
 
 ## July 23: consolidated state of play (the recap)
 
@@ -70,28 +112,9 @@ against `3.448111`, and TFR `2.076348` against `1.918`. Complete target and
 parameter tables:
 `output/model/intergen_new_moment_timing_repaired_20260723_3h/report/`.
 
-The wealth-target audit finds that `6.9` is published by De Nardi--Yang
-(2014), but Yang (2009), citing the same Hendricks source, uses `4.9`.
-Moreover, the current model denominator removes only the `0.179`
-payroll/pension wedge, not Hendricks's income-tax-plus-Social-Security
-construction. A transparent PSID diagnostic gives gross net-worth/gross-labor-
-earnings ratios `5.2097` for 1984--2003 and `7.0241` for 2005--2019; neither is
-yet an adopted target. A repaired conditional profile that reoptimizes the
-other thirteen parameters yields:
-
-| Fixed annual beta | Strict loss | Wealth / current after-payroll earnings |
-|---:|---:|---:|
-| 0.980 | 0.398933 | 3.871255 |
-| 0.990 | 0.287679 | 5.016297 |
-| 0.995 | 0.244511 | 5.665811 |
-
-Therefore the high-beta result is real conditional on the current `6.9` row,
-but the row is not a matched model/data object. Do not lower it opportunistically
-or fix beta yet. First choose a data vintage and measure aggregate net worth /
-aggregate gross labor earnings identically in data and model; then rerun the
-profile. Full audit:
-`docs/model/intergen_wealth_target_beta_audit_20260723.md`. Full history in
-the dated sections below; plan of record:
+The preliminary unmatched-target beta audit in this recap is superseded by
+the matched recent-PSID target and five-cell profile reported at the top of
+this file. Full history remains in the dated sections below; plan of record:
 `docs/model/eqscale_calibration_reconciliation_20260722.md`.
 
 ## July 23 (E strand): timing repair ported to the E-package; E2/E3/E3b re-measured honestly

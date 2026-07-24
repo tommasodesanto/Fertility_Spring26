@@ -10,11 +10,14 @@ import math
 from pathlib import Path
 from typing import Any
 
+from .calibration import extract_moments
 from .calibration_collect import repeat_is_exact
-from .new_moment_profile import new_moment_target_system
+from .calibration_search import STRICT_RESIDUAL, wealth_components
+from .new_moment_profile import new_moment_overrides, new_moment_target_system
+from .solver import run_model_cp_dt
 
 
-EXPECTED_BETAS = (0.98, 0.99, 0.995, 0.998, 0.9995, 0.9997, 0.9999)
+EXPECTED_BETAS = (0.98, 0.99, 0.995, 0.999, 0.9995)
 
 
 def parse_args() -> argparse.Namespace:
@@ -165,6 +168,57 @@ def write_visual_diagnostics(
     plt.close(figure)
 
 
+def refresh_strict_age_diagnostics(
+    selected: dict[str, Any],
+    target_system: Any,
+) -> tuple[dict[str, Any], dict[str, float]]:
+    """Recompute robustness-only age bins with the current matched-bin code."""
+
+    solution, parameters, price = run_model_cp_dt(
+        {**new_moment_overrides(tight=True), **dict(selected["theta"])},
+        verbose=False,
+    )
+    moments = extract_moments(solution, parameters)
+    residual = float(getattr(solution, "best_max_abs_rel_excess", math.inf))
+    timings = dict(getattr(solution, "timings", {}))
+    if not bool(
+        timings.get("strict_converged", getattr(solution, "converged", False))
+        and residual <= STRICT_RESIDUAL
+    ):
+        raise RuntimeError("age-profile refresh did not pass the strict equilibrium gate")
+    refreshed_loss = float(target_system.loss(moments))
+    if not math.isclose(
+        refreshed_loss,
+        float(selected["rank_loss"]),
+        rel_tol=1e-12,
+        abs_tol=1e-12,
+    ):
+        raise RuntimeError("age-profile refresh changed the canonical target loss")
+    for name in target_system.moment_names:
+        if not math.isclose(
+            float(moments[name]),
+            float(selected["moments"][name]),
+            rel_tol=1e-12,
+            abs_tol=1e-12,
+        ):
+            raise RuntimeError(f"age-profile refresh changed targeted moment {name}")
+    components = wealth_components(solution)
+    for suffix in ("26_35", "36_45", "46_55", "56_65"):
+        key = f"aggregate_wealth_to_annual_gross_labor_earnings_{suffix}"
+        selected["moments"][key] = float(moments[key])
+        selected["wealth_components"][key] = float(components[key])
+    selected["age_profile_refresh"] = {
+        "status": "strict_matched_bin_refresh",
+        "market_residual": residual,
+        "price": (
+            float(price)
+            if isinstance(price, (int, float))
+            else float(price.reshape(-1)[0])
+        ),
+    }
+    return moments, components
+
+
 def main() -> None:
     args = parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -238,6 +292,11 @@ def main() -> None:
         theta = dict(selected["theta"])
         moments = dict(selected["moments"])
         components = dict(selected.get("wealth_components") or {})
+        if args.empirical_age_profile is not None:
+            moments, components = refresh_strict_age_diagnostics(
+                selected,
+                system,
+            )
         selected_target_fit_rows.extend(
             {"beta_annual": expected_beta, **fit_row} for fit_row in fit
         )

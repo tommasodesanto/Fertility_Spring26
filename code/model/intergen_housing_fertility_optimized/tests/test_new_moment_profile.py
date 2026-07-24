@@ -94,6 +94,44 @@ class NewMomentProfileTests(unittest.TestCase):
         self.assertAlmostEqual(stats.annual_bequest_flow, 1.25)
         self.assertAlmostEqual(stats.annual_bequest_flow_to_aggregate_wealth, 0.3125)
 
+    def test_age_profile_prorates_four_year_states_at_bin_boundaries(self) -> None:
+        p = SimpleNamespace(
+            J=4,
+            I=1,
+            J_R=4,
+            period_years=4.0,
+            da=4.0,
+            scale_flows_to_period=True,
+            use_age_survival=False,
+            survival_probs=np.array([]),
+            income=np.full((1, 4), 4.0),
+            tau_pay=0.2,
+            age_start=26.0,
+            property_tax_lump_sum_transfer=0.0,
+            H_own=np.array([2.0]),
+            z_grid=np.array([1.0]),
+        )
+        bg = np.array([0.0, 10.0, 20.0, 30.0])
+        g = np.zeros((4, 2, 1, 4, 1, 1, 1))
+        for j in range(4):
+            g[j, 0, 0, j, 0, 0, 0] = 1.0
+        bp = np.zeros_like(g)
+        stats = SimpleNamespace()
+        add_aggregate_wealth_bequest_flow_moments(
+            stats,
+            g,
+            g,
+            bp,
+            p,
+            bg,
+            np.array([1.0]),
+        )
+        # The 34--37 state contributes one half to the 26--35 bin.
+        self.assertAlmostEqual(
+            stats.aggregate_wealth_to_annual_gross_labor_earnings_26_35,
+            (0.0 + 10.0 + 0.5 * 20.0) / (2.5 * 1.25),
+        )
+
     def test_bequest_flow_uses_post_saving_estate_at_death(self) -> None:
         p = SimpleNamespace(
             J=1,

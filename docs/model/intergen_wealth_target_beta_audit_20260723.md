@@ -1,109 +1,129 @@
-# Wealth-target and conditional-beta audit
+# Matched wealth target and conditional-beta audit
 
 Date: 2026-07-23
 
 Scope: the timing-repaired **current one-shot model**, not the E-series. The
-conditional profile deliberately leaves the current fourteen-moment system
-unchanged, including the tenure-Brier row and free `tenure_choice_kappa`, so
-that it isolates the beta question. It is not a promoted calibration.
+conditional profile replaces only the aggregate wealth row. The other thirteen
+moments, weights, free nuisance parameters, and external restriction
+\(\theta_n=0\) are unchanged. It is a diagnostic profile, not a promoted
+calibration.
 
-## 1. What the published target establishes
+## 1. Target definition
 
-[De Nardi and Yang (2014)](https://users.nber.org/~denardim/research/De-Nardi_Yang_EER.pdf)
-report a wealth/after-tax-earnings target of 6.90 and match it with annual
-beta 0.96 (Table 2). They attribute the target to Hendricks (2007).
+The hard target is now
 
-That citation does not, by itself, give this project a matched target.
-[Yang (2009)](https://crr.bc.edu/wp-content/uploads/2009/01/wp_2009-6-508.pdf),
-in a closely related model and citing the same Hendricks paper, instead
-reports 4.9. The same paper describes Hendricks's earnings as labor income of
-the household head and spouse net of both income-tax payments and Social
-Security contributions. The difference between 4.9 and 6.9 may reflect a
-changed tax or wealth normalization, but neither paper provides enough detail
-to reconcile the two numbers mechanically.
+\[
+ \frac{\sum_{a=18}^{85} w_i\,\text{NETWORTHR}_i}
+      {\sum_{a=18}^{65} w_i\,\text{EARNINDRRC}_i}
+ = 6.873077.
+\]
 
-## 2. Why the current code is not a matched denominator
+It uses one PSID reference-person family record per wave, waves 2005--2019,
+RP/spouse combined gross labor earnings (`EARNINDRRC`), and the longitudinal
+weight `IW`. The sample contains 49,550 family-years and 10,432 persons. A
+999-draw bootstrap clustered by reference-person ID gives standard error
+0.398836 and percentile interval [6.189879, 7.692717].
 
-The timing-repaired model statistic is internally coherent:
+Gross labor earnings are preferable to total family income (`INCFAMR`) here:
+they map directly to the model's labor-income process, whereas `INCFAMR`
+includes pensions, transfers, asset income, and other components. Holding the
+sample fixed, the `INCFAMR` denominator would give 5.569710; that is recorded
+only as a definitional sensitivity.
+
+The model statistic now matches the same object:
 
 \[
   \frac{\sum_{\text{all living households}}(b_t+pH_t)}
-       {\sum_{\text{working households}} y_t^{\mathrm{after\ payroll}}}.
+       {\sum_{\text{working households}} y_t^{\mathrm{gross}}}.
 \]
 
-Mortgage debt is carried in \(b_t\), so \(b_t+pH_t\) is net worth rather than
-gross housing wealth. Pensions and lump-sum transfers are excluded from the
-denominator.
+Cross-sectional wealth uses the coherent beginning-of-period balance sheet.
+Mortgage debt is carried in \(b_t\), so \(b_t+pH_t\) is net worth. Working
+states 18 through 62 represent empirical ages 18--65; the terminal state 82
+represents ages 82--85.
 
-The denominator, however, deducts only `tau_pay = 0.179`, the Greaney
-payroll/pension wedge used in the model. It does not reproduce Hendricks's
-income-tax-plus-Social-Security construction. The metadata label
-`borrowed-target-matched-denominator` is therefore too strong. The defensible
-status is **borrowed target with an unresolved tax normalization**.
+The old borrowed 6.9 after-tax target is retired. The fact that the newly
+measured target also rounds to 6.9 is coincidence, not validation of the old
+denominator. At the previous timing-repaired winner, the historical
+after-payroll ratio is 6.148, while the matched gross/gross ratio is only
+5.048.
 
-## 3. Transparent PSID diagnostic
+## 2. Lifecycle robustness profile
 
-`code/data/psid_followup_mar2026/audit_aggregate_wealth_earnings_ratio.R`
-constructs a ratio that avoids the unresolved tax convention. It uses one
-reference-person row per family, ages 18--82, `NETWORTHR` in the numerator,
-RP/spouse combined `EARNINDRRC` for households whose reference person is at
-most 62 in the denominator, and the longitudinal weight `IW`.
+The same waves and definitions yield:
 
-| PSID vintage | Gross wealth / gross earnings | Equivalent after only the model's 17.9% payroll wedge |
+| Reference-person age | PSID ratio | Bootstrap s.e. |
 |---|---:|---:|
-| 1984--2003 | 5.209733 | 6.345594 |
-| 2005--2019 | 7.024080 | 8.555518 |
+| 26--35 | 1.248257 | 0.075186 |
+| 36--45 | 2.670562 | 0.218991 |
+| 46--55 | 4.453772 | 0.391760 |
+| 56--65 | 9.643537 | 0.908924 |
 
-These are diagnostics, not adopted targets. They do not reproduce Hendricks's
-TAXSIM calculation, correct PSID top-wealth undercoverage, or settle the
-appropriate calibration vintage. They establish two points:
+These four ratios are **robustness checks only**, in both the one-shot and
+sequential code paths. They are not calibration targets. Because the model
+uses four-year age states, boundary states are prorated by their overlap with
+each empirical bin; for example, the 34--37 state contributes one half to
+26--35 and one half to 36--45.
 
-1. The normalization matters materially.
-2. There is no evidence-based case for lowering the target merely to obtain a
-   conventional beta; the recent-vintage gross ratio is higher, not lower.
+## 3. Literature comparison
+
+[Borella, De Nardi, Yang, and Torres Chain
+(2026)](https://users.nber.org/~denardim/research/NBERwp33874.pdf) estimate an
+annual discount factor of 0.9958 (s.e. 0.00036), not 0.9900. Their estimate is
+supported by 334 moments, including average and median wealth profiles by age
+and marital status from ages 28 to 84. Their Appendix H varies each structural
+parameter and shows that beta shifts wealth broadly over the lifecycle,
+whereas bequest motives have more age- and household-type-specific effects.
+This establishes that a high annual beta can be defensible, but it is not a
+direct validation of a value near 0.999 in the present, much thinner target
+system.
 
 ## 4. Conditional annual-beta profile
 
-Six bounded Torch searches reoptimized the other thirteen parameters at three
-fixed annual betas. Every chain completed 320 evaluations, passed the strict
-equilibrium check, and produced two exact strict repeats. The lower loss from
+Ten bounded Torch searches reoptimized the other thirteen parameters at five
+fixed annual betas. Every chain completed 360 evaluations, passed the strict
+equilibrium gate, and produced two exact strict repeats. The lower loss from
 the two chains in each cell is:
 
-| Annual beta | Strict loss | Wealth / current after-payroll earnings | Living-old p90/p50 | TFR |
+| Annual beta | Strict loss | Wealth / gross earnings | Living-old p90/p50 | TFR |
 |---:|---:|---:|---:|---:|
-| 0.980 | 0.398933 | 3.871255 | 2.040787 | 2.031539 |
-| 0.990 | 0.287679 | 5.016297 | 1.925948 | 2.066726 |
-| 0.995 | 0.244511 | 5.665811 | 1.916880 | 2.064915 |
+| 0.9800 | 0.494155 | 3.179018 | 2.037876 | 2.031583 |
+| 0.9900 | 0.380447 | 4.117083 | 1.899402 | 2.042949 |
+| 0.9950 | 0.316187 | 4.640850 | 1.932108 | 2.078991 |
+| 0.9990 | **0.295647** | **5.163442** | 1.853158 | 2.081957 |
+| 0.9995 | 0.296005 | 5.060266 | 2.026796 | 2.079868 |
 
-For comparison, the unrestricted timing-repaired result has loss 0.237479
-and annual beta 0.999364. Thus fixing beta at 0.995 costs only 0.00703 in the
-current objective, but beta 0.99 or 0.98 produces progressively larger wealth
-shortfalls that nuisance-parameter reoptimization does not undo.
+The objective has a high-beta plateau rather than a sharply identified point:
+0.999 beats 0.9995 by only 0.000357. The nearest cell to Borella et al.'s
+estimate, 0.995, costs 0.020540 relative to the profile minimum; 0.99 costs
+0.084800.
 
-As a score-only sensitivity, replacing the current row by the 1984--2003
-gross target 5.209733 lowers the beta-0.995 loss from 0.244511 to 0.223994 at
-the same parameter vector. Using the 2005--2019 gross target 7.024080 raises
-it to 0.326599. These are not reoptimized calibrations; they show why the
-vintage must be chosen before interpreting beta.
+Even the best cell reaches only 5.163 against the 6.873 wealth target, a 25
+percent shortfall. Its lifecycle ratios are 0.910, 2.421, 4.545, and 6.483.
+Thus the model approximately matches ages 46--55 but under-accumulates
+especially at ages 56--65, where the data ratio is 9.644. These age moments
+remain untargeted.
+
+At the best cell, the living-old wealth-dispersion row contributes 0.213960
+to the loss and the aggregate wealth row contributes 0.061873. Together they
+account for 93 percent of the objective. The remaining rows fit much more
+closely. The profile therefore exposes a wealth-structure problem, not merely
+an unconventional discount factor.
 
 Complete per-cell target fits, parameter tables, and strict-chain checks are
 in
-`output/model/intergen_new_moment_beta_reasonable_probe_20260723/report/`.
+`output/model/intergen_new_moment_beta_recent_gross_20260723/report/`.
 
 ## 5. Decision
 
-The beta result is real **conditional on the current 6.90 row**, but that row
-is not yet a defensible matched target. The next clean specification should:
+Do not cap beta at 0.98 or 0.99: those restrictions materially worsen the
+matched objective and do not solve the wealth structure. Also do not present
+0.999 as a precise estimate. The defensible statement is that the current
+one-shot model selects a very patient region and still cannot jointly generate
+the level and late-life dispersion of wealth.
 
-1. replace the ambiguous after-tax ratio with aggregate net worth divided by
-   aggregate gross labor earnings;
-2. choose and document the empirical vintage;
-3. measure the data and model objects identically; and
-4. rerun the beta profile before changing the saving mechanism.
-
-If beta remains implausibly high after that repair, the next structural
-diagnosis is the model's thin precautionary- and intergenerational-saving
-channels. De Nardi and Yang combine much larger earnings risk, inherited
-ability, accidental and intended inheritances, a consumption floor, Social
-Security, and pensions; their beta 0.96 is not generated by the wealth target
-alone.
+The next diagnosis should use the lifecycle profile to isolate the missing
+saving mechanism. Candidates include richer earnings risk and persistent
+heterogeneity, retirement and pension incentives, and a better disciplined
+intergenerational-saving channel. This diagnosis belongs in the reconciled
+model rather than in another reweighting of the current fourteen rows.
