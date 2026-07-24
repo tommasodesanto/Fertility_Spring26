@@ -40,6 +40,15 @@ DOMAIN: tuple[tuple[str, float, float, str], ...] = (
     ("theta1", 0.02, 16.0, "log"),
     ("tenure_choice_kappa", 0.0, 0.12, "softzero"),
 )
+# E4 margin-split arm: gamma_e is inert under the imposed SSK power scale and
+# leaves the free list; the continuation noise scale enters in its place.
+# Import-time env gating mirrors the submit scripts, which export E4_SPLIT=1
+# before Python starts. 12 free parameters either way.
+if os.environ.get("E4_SPLIT", "") == "1":
+    DOMAIN = tuple(
+        ("kappa_fert_continuation", 0.02, 50.0, "log") if name == "gamma_e" else (name, lo, hi, kind)
+        for name, lo, hi, kind in DOMAIN
+    )
 FIXED = {"theta_n": 0.0}
 DEFAULT_J = 17
 DEFAULT_NB = 120
@@ -51,11 +60,13 @@ def load_runtime() -> None:
     global np, base_overrides, diagnostic_loss, external_entry_wealth_overrides_1824
     global extract_moments, get_target_set, income_process_overrides, jsonable
     global production_profile_overrides, InfeasibleThetaError, run_model_cp_dt
+    global flhsv_income_overrides
     import numpy as np  # type: ignore[no-redef]
     from intergen_eqscale_seq_optimized.calibration import (
         base_overrides, diagnostic_loss, external_entry_wealth_overrides_1824,
         extract_moments, get_target_set,
     )
+    from intergen_eqscale_seq_optimized.externals import flhsv_income_overrides
     from intergen_eqscale_seq_optimized.local_panel import income_process_overrides, jsonable
     from intergen_eqscale_seq_optimized.production_profile import production_profile_overrides
     from intergen_eqscale_seq_optimized.solver import InfeasibleThetaError, run_model_cp_dt
@@ -124,6 +135,10 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         if not isinstance(winner_e2, dict) or not isinstance(winner_e2.get("theta"), dict):
             raise ValueError(f"{e2_record} does not contain winners.E1.theta")
         theta = {k: float(v) for k, v in winner_e2["theta"].items() if k in required}
+        if os.environ.get("E4_SPLIT", "") == "1" and "kappa_fert_continuation" not in theta:
+            # Pre-split records lack the continuation scale; restart it at the
+            # frontier-v3 evidence value.
+            theta["kappa_fert_continuation"] = 0.3
         if set(theta) != required:
             raise RuntimeError(f"E2 seed keys differ from contract: {sorted(theta)}")
         return theta
@@ -133,8 +148,12 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         raise ValueError(f"{seed_path} does not contain winners.M5.theta")
     source = winner["theta"]
     allowed = {"beta" if name == "beta_annual" else name for name, *_ in DOMAIN}
-    theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "gamma_e"}}
-    theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, gamma_e=0.5, theta_n=0.0)
+    if os.environ.get("E4_SPLIT", "") == "1":
+        theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "kappa_fert_continuation"}}
+        theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, kappa_fert_continuation=0.3, theta_n=0.0)
+    else:
+        theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "gamma_e"}}
+        theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, gamma_e=0.5, theta_n=0.0)
     required = allowed | {"theta_n"}
     if set(theta) != required:
         raise RuntimeError(f"E1 seed keys differ from contract: {sorted(theta)}")
@@ -201,6 +220,14 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             if os.environ.get("E3_L4", "") == "1"
             else {}
         ),
+        # E4 margin-split arm: decided externals — imposed SSK power scale
+        # (gamma_e inert, pinned 0) and the FL x HSV after-tax income
+        # process. Placed last so its income keys override the legacy pair.
+        **(
+            {"eqscale_form": "power", "gamma_e": 0.0, **flhsv_income_overrides()}
+            if os.environ.get("E4_SPLIT", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -237,7 +264,11 @@ def main() -> None:
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
     metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
-                "arm": "E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1",
+                "arm": (
+                    "E4_SPLIT"
+                    if os.environ.get("E4_SPLIT", "") == "1"
+                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")
+                ),
                 "l4_literal_parity": os.environ.get("E3_L4", "") == "1",
                 "l4_conventions": (
                     {"n_parity": 4, "fertility_units": "literal_topcode",
