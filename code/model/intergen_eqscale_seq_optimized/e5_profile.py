@@ -24,8 +24,9 @@ E5_TARGET_SET = "e5_signed_review_20260724"
 E5_TARGETS: dict[str, float | None] = {
     "tfr": 1.918,
     "childless_rate": 0.188,
-    "mean_age_first_birth": None,
-    "share_first_births_age30plus": None,
+    # NCHS natality archive, cohorts 1979-84 (code/data/nchs_natality_timing)
+    "mean_age_first_birth": 25.310560799362,
+    "share_first_births_age30plus": 0.270062376851342,
     "housing_increment_0to1": 0.664435,
     "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
     "own_family_gap": OLD_NONLOCATION_TARGETS["own_family_gap"],
@@ -37,17 +38,29 @@ E5_TARGETS: dict[str, float | None] = {
 }
 
 
-def _target_scale_weight(name: str) -> float:
+# One weight rule (provisional, revisited at the freeze): every row enters the
+# loss as (gap / SE)^2.  Measured bootstrap SEs where they exist; the two
+# timing SEs are declared from the primary-vs-sensitivity window spread; all
+# remaining rows carry a declared synthetic SE of 5 percent of the target.
+E5_MEASURED_SES: dict[str, float] = {
+    "tfr": 0.026483780917,                     # CPS Jun 2024 bootstrap
+    "childless_rate": 0.007629200330,          # CPS Jun 2024 bootstrap
+    "mean_age_first_birth": 0.25,              # declared, window spread 0.23
+    "share_first_births_age30plus": 0.008,     # declared, window spread 0.0076
+    "aggregate_wealth_to_annual_gross_labor_earnings": 0.3988,   # PSID bootstrap
+    "old_total_wealth_to_annual_income_p90_p50_7684": 0.1325,    # PSID bootstrap
+}
+
+
+def _weight(name: str) -> float:
     value = E5_TARGETS[name]
-    return 1.0 / float(value) ** 2 if value is not None else 1.0
+    if value is None:
+        return 1.0
+    se = E5_MEASURED_SES.get(name, 0.05 * abs(float(value)))
+    return 1.0 / se**2
 
 
-E5_WEIGHTS: dict[str, float] = {name: _target_scale_weight(name) for name in E5_TARGETS}
-E5_WEIGHTS.update({
-    "aggregate_wealth_to_annual_gross_labor_earnings": 1.0 / 0.3988**2,
-    "old_total_wealth_to_annual_income_p90_p50_7684": 1.0 / 0.1325**2,
-    "annual_bequest_flow_to_aggregate_wealth": 1.0 / 0.0088**2,
-})
+E5_WEIGHTS: dict[str, float] = {name: _weight(name) for name in E5_TARGETS}
 
 E5_DOMAIN: tuple[tuple[str, float, float, str], ...] = (
     ("beta_annual", 0.80, 0.9995, "discount"),
@@ -86,7 +99,7 @@ def e5_overrides() -> dict[str, Any]:
         **E5_FIXED,
         "n_parity": 4,
         "fertility_units": "literal_topcode",
-        "tfr_top_bin_weight": 3.4,
+        "tfr_top_bin_weight": 3.602359422009,  # CPS Jun 2024 capped top-bin mean (SE 0.0279)
         "entrant_conversion_factor": 0.5,
         "child_bin_high_cutoff": 3,
         "eqscale_form": "power",

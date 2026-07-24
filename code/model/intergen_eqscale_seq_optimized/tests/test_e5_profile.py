@@ -16,8 +16,16 @@ from intergen_eqscale_seq_optimized.solver import add_aggregate_wealth_bequest_f
 
 class E5ProfileTests(unittest.TestCase):
     def test_pending_timing_targets_refuse_to_build(self) -> None:
-        with self.assertRaisesRegex(ValueError, "pending"):
-            e5_profile.e5_target_system()
+        # The shipped profile carries the NCHS values; the refusal mechanism
+        # must still fire if any target is unset.
+        with patch.dict(e5_profile.E5_TARGETS, {"mean_age_first_birth": None}):
+            with self.assertRaisesRegex(ValueError, "pending"):
+                e5_profile.e5_target_system()
+
+    def test_shipped_timing_targets_are_the_nchs_build_values(self) -> None:
+        self.assertAlmostEqual(e5_profile.E5_TARGETS["mean_age_first_birth"], 25.310560799362)
+        self.assertAlmostEqual(e5_profile.E5_TARGETS["share_first_births_age30plus"], 0.270062376851342)
+        self.assertEqual(len(e5_profile.e5_target_system().targets_dict()), 12)
 
     def test_dummy_timing_targets_complete_twelve_row_contract(self) -> None:
         with patch.dict(e5_profile.E5_TARGETS, {
