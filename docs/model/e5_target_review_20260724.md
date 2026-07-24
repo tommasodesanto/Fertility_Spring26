@@ -30,6 +30,26 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Fertility block summary [rows 1-4 complete]
+
+Three parameters (psi, kappa_E, kappa_C) on four hard rows. Primary
+connections for the draft: psi -- completed fertility; kappa_E -- first-birth
+timing (mean and 30+ share); kappa_C -- childlessness. Overidentified by
+roughly one moment (the timing pair is correlated, disclosed); the residual
+pattern is a test of the sequential structure, and the E5 Jacobian reports
+actual loadings. Birth-order progression rates stay untargeted diagnostics.
+
+### Row 4 -- Share of first births at 30+ [SIGNED OFF 2026-07-24; value pending build]
+
+- Target: pending the NCHS build; among mothers of the 1979--84 cohorts, the
+  share with first birth at age 30 or later. Denominator = mothers (pure
+  timing; no overlap with childlessness). Model: first births at ages 30+
+  over all first births (computed; denominator convention verified at
+  wiring).
+- Source: same NCHS cohort-table builder as row 3; covariance included.
+- Connection: kappa_E through the tail of the timing distribution -- stops
+  the model from matching the mean with a wrong-shaped distribution.
+
 ### Row 3 -- Mean age at first birth [SIGNED OFF 2026-07-24; value pending build]
 
 - Target: pending the NCHS build; mean age at first birth for the 1979--84
