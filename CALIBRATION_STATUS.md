@@ -152,6 +152,26 @@ change implemented. Packet:
 `output/model/eqscale_fertility_frontier_v2_20260723/` (README + summary
 CSV tracked).
 
+**Frontier v3 (author-approved evening probe): margin-split taste noise
+rotates the fertility frontier through the target neighborhood.** A gated
+`kappa_fert_continuation` (default bitwise-inert; 113 tests) lets the
+childless entry choice and the parents' upward-attempt choice carry
+different Gumbel scales. Torch array `14683440`, 147 cells over psi x
+delta_alpha_jump x {shared control; entry 3/cont 0.3; entry 10/cont 0.3}
+at the E3 winner under the SSK power scale and FL x HSV income. Best cell
+(entry 10 / cont 0.3, psi 0.5): completed fertility `1.835`, childlessness
+`0.156` (chosen `0.072` / clock `0.084`), joint distance `0.031` vs the
+v2 structural best `0.123`; 3+ share `0.320`, literal PP 1->2 flow `0.64`,
+mean age at first birth `27.3` — timing and composition arrive untargeted.
+The shared-kappa control layer reproduces the v2 wall (CF <= 1.64) under
+identical externals, so the split, not the externals, moves the frontier.
+Best cells sit at the psi grid minimum: the optimum lies just outside the
+box (psi < 0.5, kappa_entry ~ 12-16), where the remaining childlessness
+gap plausibly closes. Net cost: one parameter, identified by the
+first-birth timing distribution (A6/A8). Diagnostic cells, not
+calibrations. Packet with README and summary CSV:
+`output/model/eqscale_fertility_frontier_v3_20260723/`.
+
 Also this session (E strand): the published HSV progressivity benchmark was
 pinned from the paper itself — `tau_US = 0.181` (s.e. `0.002`), OLS on the
 log tax function, PSID 2000-06 with TAXSIM (final version, Figure I and
