@@ -36,14 +36,26 @@ from intergen_eqscale_seq_optimized.calibration import (  # noqa: E402
 )
 from intergen_eqscale_seq_optimized.diagnostics import write_diagnostics  # noqa: E402
 from intergen_eqscale_seq_optimized.e1_profile import E1_TARGET_SET, e1_overrides  # noqa: E402
+from intergen_eqscale_seq_optimized.externals import flhsv_income_overrides  # noqa: E402
 from intergen_eqscale_seq_optimized.parameters import get_fecundity_by_age  # noqa: E402
 from intergen_eqscale_seq_optimized.solver import run_model_cp_dt  # noqa: E402
 
 SOURCE = ROOT / "output/model/eqscale_seq_optimized_recalibration_20260719/report/results.json"
 DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_policy_packet_20260720"
+E4_SOURCE = ROOT / "output/model/eqscale_seq_e4_split_recalibration_20260723/report/results.json"
+E4_DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e4_policy_packet_20260724"
 ROOM_TARGET = "aggregate_mean_occupied_rooms_18_85"
 ROOM_TARGET_VALUE = 5.779970481941968
 ROOM_WEIGHT = 6.0
+E4_EXTERNALS = {
+    "n_parity": 4,
+    "fertility_units": "literal_topcode",
+    "tfr_top_bin_weight": 3.4,
+    "entrant_conversion_factor": 0.5,
+    "child_bin_high_cutoff": 3,
+    "eqscale_form": "power",
+    "gamma_e": 0.0,
+}
 
 POLICY_CASES: tuple[dict[str, Any], ...] = (
     {"case": "baseline", "label": "Baseline", "overrides": {}},
@@ -75,10 +87,17 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=SOURCE)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
-    return parser.parse_args()
+    parser.add_argument("--arm", choices=("e2", "e4"), default="e2")
+    args = parser.parse_args()
+    if args.arm == "e4":
+        if args.source == SOURCE:
+            args.source = E4_SOURCE
+        if args.outdir == DEFAULT_OUTDIR:
+            args.outdir = E4_DEFAULT_OUTDIR
+    return args
 
 
-def load_winner_theta(source: Path) -> dict[str, float]:
+def load_winner_theta(source: Path, arm: str) -> dict[str, float]:
     payload = json.loads(source.read_text())
     theta = ((payload.get("winners") or {}).get("E1") or {}).get("theta")
     if not isinstance(theta, dict):
@@ -86,9 +105,20 @@ def load_winner_theta(source: Path) -> dict[str, float]:
     required = {"H0", "alpha_cons", "beta", "chi", "delta_alpha", "delta_alpha_jump",
                 "gamma_e", "kappa_fert", "psi_child", "tenure_choice_kappa", "theta0",
                 "theta1", "theta_n"}
+    if arm == "e4":
+        required.remove("gamma_e")
+        required.add("kappa_fert_continuation")
     if set(theta) != required:
-        raise ValueError(f"unexpected E2 winner keys: {sorted(theta)}")
+        raise ValueError(f"unexpected {arm.upper()} winner keys: {sorted(theta)}")
     return {name: float(value) for name, value in theta.items()}
+
+
+def arm_externals(arm: str) -> dict[str, Any]:
+    if arm == "e2":
+        return {}
+    if arm == "e4":
+        return {**E4_EXTERNALS, **flhsv_income_overrides()}
+    raise ValueError(f"unknown packet arm: {arm}")
 
 
 def target_system() -> tuple[dict[str, float], dict[str, float]]:
@@ -108,9 +138,9 @@ def as_array(sol: Any, name: str) -> np.ndarray:
     return np.asarray(getattr(sol, name, np.array([], dtype=float)), dtype=float).reshape(-1)
 
 
-def solve_case(theta: dict[str, float], policy_overrides: dict[str, Any], targets: dict[str, float], weights: dict[str, float]) -> dict[str, Any]:
+def solve_case(theta: dict[str, float], policy_overrides: dict[str, Any], targets: dict[str, float], weights: dict[str, float], arm: str) -> dict[str, Any]:
     # Policy settings are intentionally last, matching the requested legacy arms.
-    overrides = {**e1_overrides(tight=True, optimized=True), **theta, **policy_overrides}
+    overrides = {**e1_overrides(tight=True, optimized=True), **arm_externals(arm), **theta, **policy_overrides}
     started = time.perf_counter()
     sol, P, p_eq = run_model_cp_dt(overrides, verbose=False)
     moments = extract_moments(sol, P)
@@ -264,12 +294,12 @@ def main() -> None:
     args = parse_args()
     outdir = args.outdir
     outdir.mkdir(parents=True, exist_ok=True)
-    theta, (targets, weights) = load_winner_theta(args.source), target_system()
+    theta, (targets, weights) = load_winner_theta(args.source, args.arm), target_system()
     results: dict[str, dict[str, Any]] = {}
     records: list[dict[str, Any]] = []
     for policy in POLICY_CASES:
         case = str(policy["case"])
-        result = solve_case(theta, dict(policy["overrides"]), targets, weights)
+        result = solve_case(theta, dict(policy["overrides"]), targets, weights, args.arm)
         results[case] = result
         record = {"case": case, "label": policy["label"], "policy_overrides": policy["overrides"],
                   **fertility_record(result), "target_fit": target_fit(result["moments"], targets, weights),
