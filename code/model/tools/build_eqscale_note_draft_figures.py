@@ -167,14 +167,14 @@ def plot_lifecycle(model: list[dict[str, float]], acs: list[dict[str, float]], p
     axes[0].legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.13), ncol=2)
     child_model = axes[1].plot(ma, [row["model_current_child_rate"] for row in model], color=green, marker="o", ms=5.5, lw=2.6, label="Children at home, model")[0]
     child_acs = axes[1].plot(da, [row["acs_current_child_u18_rate"] for row in acs], color=green, ls=(0, (2, 2)), lw=2.4, label="Own child under 18, ACS")[0]
-    axes[1].set(title="Children at home and housing space", xlabel="Age", ylabel="Households with children at home", ylim=(0.0, 0.75))
+    axes[1].set(title="Children at home and housing space", xlabel="Age", ylabel="Households with children at home", ylim=(0.0, 1.03))
     axes[1].yaxis.set_major_formatter(PercentFormatter(1.0)); axes[1].grid(axis="y", alpha=0.25)
     ax2 = axes[1].twinx()
     rooms_acs = ax2.plot(da, [row["acs_mean_rooms"] for row in acs], color=black, ls=(0, (2, 2)), lw=2.4, label="Rooms, ACS")[0]
     rooms_model = ax2.plot(ma, [row["model_mean_rooms"] for row in model], color=orange, marker="o", ms=5.5, lw=2.8, label="Rooms, model")[0]
     ax2.set_ylabel("Mean rooms", color=orange); ax2.set_ylim(2.5, 6.5)
     axes[1].axvline(45.0, color="#777777", ls="--", lw=1.5)
-    axes[1].text(31.5, 0.70, "Fertile window", ha="center", va="top", color="#555555", fontsize=11)
+    axes[1].text(31.5, 1.00, "Fertile window", ha="center", va="top", color="#555555", fontsize=11)
     axes[1].legend([child_model, child_acs, rooms_acs, rooms_model], [line.get_label() for line in (child_model, child_acs, rooms_acs, rooms_model)], frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.13), ncol=2)
     axes[0].text(-0.17, 1.04, "(a)", transform=axes[0].transAxes, fontsize=16)
     axes[1].text(-0.14, 1.04, "(b)", transform=axes[1].transAxes, fontsize=16)
