@@ -30,6 +30,21 @@ This file becomes the E5 contract table when the review completes.
 
 ## Registered rows
 
+### Row 5 -- Family ownership gap [SIGNED OFF 2026-07-24]
+
+- Target: 0.168, TARGETED in the hard loss. Parent minus childless ownership
+  rate, ages 30--55. Model: same difference in the stationary population.
+- Source: project-measured matched ACS build; SE status confirmed at the
+  weights pass.
+- Connection: no dedicated parameter -- the system's overidentifying
+  restriction. For the draft: most closely connected to the composition of
+  the childless margin (who stays childless, governed by the fertility
+  noise scales) and the expenditure tilts jointly. Decision trail: July 23
+  put it in the loss; a validation-only alternative was considered and
+  rejected today because untargeted runs deliver 0.04--0.07 against 0.168.
+  The overall hard-row count (aspiration: 13 rows for 12 parameters) is
+  audited together at the end of this review.
+
 ### Fertility block summary [rows 1-4 complete]
 
 Three parameters (psi, kappa_E, kappa_C) on four hard rows. Primary
