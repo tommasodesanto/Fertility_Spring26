@@ -10,8 +10,10 @@ from __future__ import annotations
 
 import argparse
 import csv
+import importlib
 import json
 import math
+import os
 import sys
 import time
 from pathlib import Path
@@ -44,6 +46,8 @@ SOURCE = ROOT / "output/model/eqscale_seq_optimized_recalibration_20260719/repor
 DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_policy_packet_20260720"
 E4_SOURCE = ROOT / "output/model/eqscale_seq_e4_split_recalibration_20260723/report/results.json"
 E4_DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e4_policy_packet_20260724"
+E5_SOURCE = ROOT / "output/model/eqscale_seq_e5b_recalibration_20260725/report/results.json"
+E5_DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e5b_policy_packet_20260725"
 ROOM_TARGET = "aggregate_mean_occupied_rooms_18_85"
 ROOM_TARGET_VALUE = 5.779970481941968
 ROOM_WEIGHT = 6.0
@@ -87,13 +91,18 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=SOURCE)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
-    parser.add_argument("--arm", choices=("e2", "e4"), default="e2")
+    parser.add_argument("--arm", choices=("e2", "e4", "e5"), default="e2")
     args = parser.parse_args()
     if args.arm == "e4":
         if args.source == SOURCE:
             args.source = E4_SOURCE
         if args.outdir == DEFAULT_OUTDIR:
             args.outdir = E4_DEFAULT_OUTDIR
+    if args.arm == "e5":
+        if args.source == SOURCE:
+            args.source = E5_SOURCE
+        if args.outdir == DEFAULT_OUTDIR:
+            args.outdir = E5_DEFAULT_OUTDIR
     return args
 
 
@@ -154,6 +163,98 @@ def solve_case(theta: dict[str, float], policy_overrides: dict[str, Any], target
         "elapsed_sec": time.perf_counter() - started,
         "overrides": overrides,
     }
+
+
+def e5_chain_overrides(source: Path) -> tuple[dict[str, Any], dict[str, float], dict[str, float], dict[str, float]]:
+    """Build the E5 runtime exactly through its calibration-chain entry point."""
+    os.environ["E3_L4"] = "1"
+    os.environ["E5"] = "1"
+    os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
+    from intergen_eqscale_seq_optimized import run_e1_chain
+
+    chain = importlib.reload(run_e1_chain)
+    chain.load_runtime()
+    chain_args = argparse.Namespace(J=17, Nb=120, max_iter_eq=40, tol_eq=2.5e-5)
+    overrides = chain.common_overrides(chain_args)
+    payload = json.loads(source.read_text())
+    theta = ((payload.get("winners") or {}).get("E1") or {}).get("theta")
+    if not isinstance(theta, dict):
+        raise ValueError(f"{source} does not contain winners.E1.theta")
+    theta = {name: float(value) for name, value in theta.items()}
+    overrides.update(theta)
+    # The E5 contract is not in the calibration TARGET_SETS registry; the
+    # chain itself routes E5 through the profile's target system.
+    from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
+
+    system = e5_target_system()
+    targets, weights = system.targets_dict(), system.weights_dict()
+    return overrides, theta, targets, weights
+
+
+def solve_e5_case(overrides: dict[str, Any], policy_overrides: dict[str, Any], targets: dict[str, float], weights: dict[str, float]) -> dict[str, Any]:
+    """Solve an E5 policy case from the chain-built baseline overrides."""
+    case_overrides = {**overrides, **policy_overrides}
+    started = time.perf_counter()
+    sol, P, p_eq = run_model_cp_dt(case_overrides, verbose=False)
+    moments = extract_moments(sol, P)
+    return {
+        "sol": sol,
+        "P": P,
+        "p_eq": np.asarray(p_eq, dtype=float).reshape(-1),
+        "moments": moments,
+        "loss": float(diagnostic_loss(moments, targets=targets, weights=weights)),
+        "market_residual": float(getattr(sol, "best_max_abs_rel_excess", math.nan)),
+        "elapsed_sec": time.perf_counter() - started,
+        "overrides": case_overrides,
+    }
+
+
+def verify_e5_winner(moments: dict[str, Any], source: Path) -> None:
+    """Require exact reproduction of every certified E5 target-fit row."""
+    target_fit_path = source.parent / "target_fit_full.csv"
+    with target_fit_path.open(newline="", encoding="utf-8") as handle:
+        certified_rows = [(row["moment"], float(row["model"])) for row in csv.DictReader(handle)]
+    if len(certified_rows) != 12 or len({name for name, _ in certified_rows}) != 12:
+        raise ValueError(f"Expected 12 distinct certified E5 rows in {target_fit_path}, found {len(certified_rows)}")
+    rows = []
+    for name, certified_value in certified_rows:
+        if name not in moments:
+            raise ValueError(f"E5 solve does not report certified moment {name!r}")
+        model_value = float(moments[name])
+        rows.append((name, model_value, certified_value, abs(model_value - certified_value)))
+    mismatches = [row for row in rows if row[3] > 1e-6]
+    if mismatches:
+        table = "\n".join(
+            ["moment,solved,certified,abs_diff"]
+            + [f"{name},{model:.15g},{expected:.15g},{diff:.3e}" for name, model, expected, diff in mismatches]
+        )
+        raise RuntimeError(f"Certified E5 moment verification failed; no packet output written.\n{table}")
+
+
+def write_policy_births_summary(path: Path, records: list[dict[str, Any]]) -> None:
+    """Write the compact fertility and ownership policy readout for E5."""
+    base = records[0]
+    columns = (
+        ("tfr", "completed_fertility", "tfr"),
+        ("childless_rate", "completed_fertility", "childless_rate"),
+        ("mean_age_first_birth", "present_fertility", "mean_age_first_birth"),
+        ("share_first_births_age30plus", "present_fertility", "share_first_births_age30plus"),
+        ("own_rate", "equilibrium", "own_rate"),
+    )
+    fieldnames = ["case", "label"] + [name for name, _, _ in columns] + [f"{name}_change_vs_baseline" for name, _, _ in columns]
+    rows = []
+    for record in records:
+        row: dict[str, Any] = {"case": record["case"], "label": record["label"]}
+        for name, group, key in columns:
+            value = float(record[group][key])
+            baseline = float(base[group][key])
+            row[name] = value
+            row[f"{name}_change_vs_baseline"] = value - baseline
+        rows.append(row)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def target_fit(moments: dict[str, Any], targets: dict[str, float], weights: dict[str, float]) -> list[dict[str, float | str]]:
@@ -293,18 +394,39 @@ def write_policy_table(path: Path, records: list[dict[str, Any]]) -> None:
 def main() -> None:
     args = parse_args()
     outdir = args.outdir
-    outdir.mkdir(parents=True, exist_ok=True)
-    theta, (targets, weights) = load_winner_theta(args.source, args.arm), target_system()
+    if args.arm != "e5":
+        outdir.mkdir(parents=True, exist_ok=True)
     results: dict[str, dict[str, Any]] = {}
     records: list[dict[str, Any]] = []
-    for policy in POLICY_CASES:
+
+    if args.arm == "e5":
+        e5_overrides, theta, targets, weights = e5_chain_overrides(args.source)
+        baseline_policy = POLICY_CASES[0]
+        baseline = solve_e5_case(e5_overrides, dict(baseline_policy["overrides"]), targets, weights)
+        verify_e5_winner(baseline["moments"], args.source)
+        results["baseline"] = baseline
+        baseline_record = {"case": baseline_policy["case"], "label": baseline_policy["label"],
+                           "policy_overrides": baseline_policy["overrides"], **fertility_record(baseline),
+                           "target_fit": target_fit(baseline["moments"], targets, weights),
+                           "elapsed_sec": baseline["elapsed_sec"]}
+        records.append(baseline_record)
+        remaining_policies = POLICY_CASES[1:]
+    else:
+        theta, (targets, weights) = load_winner_theta(args.source, args.arm), target_system()
+        remaining_policies = POLICY_CASES
+
+    for policy in remaining_policies:
         case = str(policy["case"])
-        result = solve_case(theta, dict(policy["overrides"]), targets, weights, args.arm)
+        result = (solve_e5_case(e5_overrides, dict(policy["overrides"]), targets, weights)
+                  if args.arm == "e5"
+                  else solve_case(theta, dict(policy["overrides"]), targets, weights, args.arm))
         results[case] = result
         record = {"case": case, "label": policy["label"], "policy_overrides": policy["overrides"],
                   **fertility_record(result), "target_fit": target_fit(result["moments"], targets, weights),
                   "elapsed_sec": result["elapsed_sec"]}
         records.append(record)
+    if args.arm == "e5":
+        outdir.mkdir(parents=True, exist_ok=True)
     write_diagnostics(results["baseline"]["sol"], results["baseline"]["P"], outdir / "standard")
     write_timing_supplement(outdir / "supplemental_timing", results["baseline"])
     for record in records[1:]:
@@ -317,6 +439,8 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=list(flat[0]))
         writer.writeheader(); writer.writerows(flat)
     write_policy_table(outdir / "policy_table.md", records)
+    if args.arm == "e5":
+        write_policy_births_summary(outdir / "policy_births_summary.csv", records)
     print(f"Wrote E2 policy packet to {outdir}", flush=True)
 
 
