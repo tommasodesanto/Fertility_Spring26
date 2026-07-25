@@ -256,6 +256,33 @@ STILL WORTH DECIDING before the paper: whether to replace the pair with a
 single HSV function `y_net = lambda * y^(1 - tau)`, lambda calibrated to
 reproduce the average rate. That is a model change, hence a recalibration.
 
+## FECUNDITY FIT RUN 2026-07-24 (supersedes the "not fitted" framing below)
+
+Corrected object definition. pi_a is a FOUR-YEAR CONCEPTION PROBABILITY, not
+a permanent-infertility share. Because the model period is four years, the
+July-20 memo's reading is the right one: Leridon (2004) four-year figures
+(0.91 / 0.84 / 0.64 at ages 30 / 35 / 40) are DIRECT empirical counterparts
+of pi_a. Sommer (2016) supplies the exponential FORM. The strategy note's
+footnote now states this and reports the model values (0.90 / 0.80 / 0.62).
+
+Least-squares fit to the three Leridon points (lead-run, numpy grid with a
+closed-form step in w1):
+  current (0.02,    0.134  )  SSR = 0.001788
+  fitted  (0.01331, 0.14960)  SSR = 0.000189   (9.5x better)
+
+DECISION-RELEVANT FINDING: the refit does NOT fix the E5 fertility misses.
+The fitted schedule is slightly MORE generous at every age below 42 and
+essentially IDENTICAL at 44 (0.3491 fitted vs 0.3482 current). Late-age
+conception stays near 0.35 at 44 because Leridon's data really are that
+generous (0.64 within four years at age 40). So the model's forgiving late
+biology is empirically correct, not a calibration error, and the earlier
+hypothesis -- that a proper fecundity fit would simultaneously repair the
+late-first-birth, childlessness, and completed-fertility rows -- is WRONG
+and is retracted here.
+
+Consequence: the E5 fertility misses must be explained by the choice side,
+not biology. See the E5 verdict section.
+
 ## OPEN ITEM: fecundity constants are not fitted (registered 2026-07-24)
 
 The fecundity schedule that gates every fertility decision in E5,

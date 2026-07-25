@@ -56,10 +56,13 @@ fertile ages, a childless household chooses between waiting and trying for a
 first birth, and a household with $n<3$ children and a child still at home
 chooses between stopping and trying for child $n+1$. An attempt at age $a$ succeeds with
 probability $\pi_a$, which declines with age and reaches zero at 45, as in
-\citet{sommer2016}.\footnote{The share permanently infertile grows
-exponentially in age, $1-\pi_a=\omega_1 e^{\omega_2(a-18)}$ with
-$\omega_1=0.02$ and $\omega_2=0.134$, and $\pi_a=0$ from age 45; the
-schedule declines from $0.98$ at age 18 to $0.50$ at age 42.}
+\citet{sommer2016}.\footnote{The failure probability rises exponentially in
+age, $1-\pi_a=\omega_1 e^{\omega_2(a-18)}$ with $\omega_1=0.02$ and
+$\omega_2=0.134$, and $\pi_a=0$ from age 45. Because the model period is
+four years, $\pi_a$ has a direct empirical counterpart in the share of women
+who conceive within four years of starting: \citet{leridon2004} reports
+$0.91$, $0.84$, and $0.64$ at ages 30, 35, and 40 under natural conditions,
+against $0.90$, $0.80$, and $0.62$ here.}
 Completed family size is therefore an outcome of starting age, biology, and
 sequential choices. Both decisions carry type-1 extreme-value taste shocks,
 with separate scales $\kappa_E$ on entry and $\kappa_C$ on continuation, so
@@ -143,26 +146,31 @@ distribution of childless renters aged 18--24.
 \small
 \renewcommand{\arraystretch}{1.05}
 \begin{tabularx}{\textwidth}{@{}
->{\raggedright\arraybackslash}p{0.30\textwidth}
->{\raggedright\arraybackslash}p{0.20\textwidth}
+>{\raggedright\arraybackslash}p{0.29\textwidth}
+>{\raggedright\arraybackslash}p{0.235\textwidth}
 >{\raggedright\arraybackslash}X@{}}
 \toprule
 Parameter & Value & Source or restriction \\
 \midrule
-Period; entry, retirement, final age & 4 years; 18, 66, 85 & Model timing \\
+Model period & 4 years & Model timing \\
+Entry, retirement, maximum ages & 18, 66, 85 & Model timing \\
 Post-retirement survival & Age-specific & 2023 Social Security life table \\
 Years with dependent children & 18 & Child-maturity restriction \\
 Risk aversion $\sigma$ & 2 & \\
 Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ & \citet{scholzSeshadriKhitatrakun2006} \\
 Consumption share $\alpha_0$ & 0.733 & CEX childless cash renters, 2019--2023 \\
-Fecundity by age $\pi_a$ & Zero from 45 & \citet{sommer2016} \\
+Fecundity by age $\pi_a$ & Declining; zero from 45 & \citet{leridon2004} \\
 Income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
 Income innovation s.d.\ $\sigma_z$ & 0.169 & \citet{flodenLinde2001}, scaled by $1-\tau$ \\
 Tax progressivity $\tau$ & 0.181 & \citet{heathcoteStoreslettenViolante2017} \\
-Return; depreciation; property tax & 2.0\%; 1.1\%; 1.0\% & \citet{greaneyDynamicUrbanEconomics2025} \\
-Financed share $\phi$; sale cost $\psi^s$ & 0.80; 6\% & \citet{davisHousingFinanceMacroeconomy2015} \\
+Annual real return $i_{\mathrm{ann}}$ & 2.0\% & \citet{greaneyDynamicUrbanEconomics2025} \\
+Housing depreciation $\delta_{\mathrm{ann}}$ & 1.1\% & \citet{greaneyDynamicUrbanEconomics2025} \\
+Property tax $\tau^p_{\mathrm{ann}}$ & 1.0\% & Maintained tax rate \\
+Financed share $\phi$ & 0.80 & \citet{davisHousingFinanceMacroeconomy2015} \\
+Sale cost $\psi^s$ & 6\% & \citet{davisHousingFinanceMacroeconomy2015} \\
 Labor-income tax $\tau_{\mathrm{pay}}$ & 17.9\% & OECD U.S. average \\
-Owner sizes; largest rental unit & $\{2,4,6,8,10\}$; 6 rooms & Matched ACS distributions \\
+Owner house sizes $\{H_k\}$ & $\{2,4,6,8,10\}$ rooms & Matched ACS distributions \\
+Largest rental unit $\bar h^R$ & 6 rooms & Matched ACS distributions \\
 Housing-supply elasticity $\eta$ & 1.75 & \citet{saizGeographicDeterminantsHousing2010} \\
 Entrant wealth distribution & Wealth-to-income draws & PSID childless renters 18--24 \\
 \bottomrule
@@ -187,7 +195,7 @@ the estimation on the revised target system is running)}
 \toprule
 Parameter & Interpretation & Estimate \\
 \midrule
-$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9705 \\
+$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9925 \\
 $\delta_{\mathrm{jump}}$ & Expenditure-share shift at entry into parenthood & 0.0373 \\
 $\delta_a$ & Expenditure-share shift per additional child & 0.0242 \\
 $\psi$ & Utility flow per child at home & 2.8137 \\
@@ -379,6 +387,11 @@ Greaney, B., A. Parkhomenko, and S. Van Nieuwerburgh. 2025.
 Heathcote, J., K. Storesletten, and G. L. Violante. 2017.
 ``Optimal Tax Progressivity: An Analytical Framework.''
 \emph{Quarterly Journal of Economics} 132(4): 1693--1754.
+
+\bibitem[Leridon(2004)]{leridon2004}
+Leridon, H. 2004.
+``Can Assisted Reproduction Technology Compensate for the Natural Decline in Fertility with Age? A Model Assessment.''
+\emph{Human Reproduction} 19(7): 1548--1553.
 
 \bibitem[Saiz(2010)]{saizGeographicDeterminantsHousing2010}
 Saiz, A. 2010.
