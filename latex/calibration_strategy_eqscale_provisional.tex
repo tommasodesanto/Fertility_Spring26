@@ -12,13 +12,7 @@
 \setlength{\parskip}{0.45em}
 \setlength{\emergencystretch}{3em}
 
-\title{Calibration\\
-\large Equivalence-scale specification: revised calibration section}
-\author{Tommaso De Santo}
-\date{}
-
 \begin{document}
-\maketitle
 
 \section{Two Changes to the Model}
 \label{sec:changes}
@@ -26,9 +20,19 @@
 Two changes relative to the model section of the circulated draft matter for
 the calibration.
 
-First, children no longer enter through the committed consumption and housing
-bundles $(\bar c(n,s),\bar h(n,s))$ of the draft. Within-period utility for a
-household with $n$ dependent children at home is
+First, I drop the Stone--Geary structure of the draft, in which children
+entered through the committed consumption and housing bundles
+$(\bar c(n,s),\bar h(n,s))$, and model family size with an equivalence scale,
+the more common device in the quantitative lifecycle literature. An
+equivalence scale answers a simple question: how much more must a family
+spend than a childless couple to reach the same living standard. Consumption
+is then evaluated per adult equivalent, so a given bundle delivers less
+utility, and a marginal dollar more utility, in a larger household.
+\citet{fernandezVillaverdeKrueger2007} attribute about half of the lifecycle
+consumption hump to household size measured this way, and
+\citet{scholzSeshadriKhitatrakun2006} and \citet{borellaDeNardiYang2023} use
+scales of this form in lifecycle models close to this one. Within-period
+utility for a household with $n$ dependent children at home is
 \begin{equation}
 u(c,h,n)
 =
@@ -38,13 +42,11 @@ u(c,h,n)
 \alpha(n)=\alpha_0-\left(\delta_{\mathrm{jump}}\mathbf 1\{n\geq1\}+\delta_a n\right),
 \label{eq:eqscale_utility}
 \end{equation}
-where $e(n)=((2+0.7n)/2)^{0.7}$ is the equivalence scale of
-\citet{scholzSeshadriKhitatrakun2006}, imposed rather than estimated, and
-normalized to one for a childless couple. The household evaluates the
-consumption--housing composite per equivalent adult: children lower flow
-utility at a given bundle and raise the marginal value of the composite
-through $e(n)$, and they tilt spending toward housing through $\alpha(n)$,
-both only while they live at home. Households without children at home have
+where $e(n)=((2+0.7n)/2)^{0.7}$ is the scale of Citro and Michael (1995)
+used by \citet{scholzSeshadriKhitatrakun2006}, normalized to one for a
+childless couple. Children raise the marginal value of the
+consumption--housing composite through $e(n)$ and tilt spending toward
+housing through $\alpha(n)$, both only while they live at home. Households without children at home have
 the homothetic preferences of the childless, and $\psi$ is the direct utility
 flow per child at home. There are no minimum-consumption or minimum-housing
 requirements, which is what permits empirical income risk below.
@@ -370,6 +372,11 @@ Davis, M. A., and S. Van Nieuwerburgh. 2015.
 De Nardi, M., and F. Yang. 2014.
 ``Bequests and Heterogeneity in Retirement Wealth.''
 \emph{European Economic Review} 72: 182--196.
+
+\bibitem[Fern\'andez-Villaverde and Krueger(2007)]{fernandezVillaverdeKrueger2007}
+Fern\'andez-Villaverde, J., and D. Krueger. 2007.
+``Consumption over the Life Cycle: Facts from Consumer Expenditure Survey Data.''
+\emph{Review of Economics and Statistics} 89(3): 552--565.
 
 \bibitem[Flod\'en and Lind\'e(2001)]{flodenLinde2001}
 Flod\'en, M., and J. Lind\'e. 2001.
