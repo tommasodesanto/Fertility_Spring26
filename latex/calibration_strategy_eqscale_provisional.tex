@@ -24,10 +24,10 @@ First, I drop the Stone--Geary structure of the draft, in which children
 entered through the committed consumption and housing bundles
 $(\bar c(n,s),\bar h(n,s))$, and model family size with an equivalence scale,
 the more common device in the quantitative lifecycle literature. An
-equivalence scale answers a simple question: how much more must a family
-spend than a childless couple to reach the same living standard. Consumption
-is then evaluated per adult equivalent, so a given bundle delivers less
-utility, and a marginal dollar more utility, in a larger household.
+equivalence scale measures how much more a family must spend than a childless
+couple to reach the same living standard. Consumption is then evaluated per
+adult equivalent, so a given bundle delivers less utility, and a marginal
+dollar more utility, in a larger household.
 \citet{fernandezVillaverdeKrueger2007} attribute about half of the lifecycle
 consumption hump to household size measured this way, and
 \citet{scholzSeshadriKhitatrakun2006} and \citet{borellaDeNardiYang2023} use
@@ -46,10 +46,11 @@ Children raise the marginal value of the consumption--housing composite
 through $e(n)$\footnote{$e(n)=((2+0.7n)/2)^{0.7}$, the scale of Citro and
 Michael (1995) used by \citet{scholzSeshadriKhitatrakun2006}, normalized to
 one for a childless couple.} and tilt spending toward housing through
-$\alpha(n)$, both only while they live at home. Households without children at home have
-the homothetic preferences of the childless, and $\psi$ is the direct utility
+$\alpha(n)$, both only while they live at home; once children leave,
+preferences revert to the homothetic case, and $\psi$ is the direct utility
 flow per child at home. There are no minimum-consumption or minimum-housing
-requirements, which is what permits empirical income risk below.
+requirements, so no household can be pushed below a subsistence bundle by a
+bad income draw.
 
 Second, fertility is sequential rather than one-shot. Each period during the
 fertile ages, a childless household chooses between waiting and trying for a
@@ -63,8 +64,9 @@ four years, $\pi_a$ has a direct empirical counterpart in the share of women
 who conceive within four years of starting: \citet{leridon2004} reports
 $0.91$, $0.84$, and $0.64$ at ages 30, 35, and 40 under natural conditions,
 against $0.90$, $0.80$, and $0.62$ here.}
-Completed family size is therefore an outcome of starting age, biology, and
-sequential choices. Both decisions carry type-1 extreme-value taste shocks,
+No household chooses a number of children: completed family size is what the
+sequence of attempts and biology deliver. Both decisions carry type-1
+extreme-value taste shocks,
 with separate scales $\kappa_E$ on entry and $\kappa_C$ on continuation, so
 that the extensive and intensive margins of fertility are governed by
 distinct dispersion parameters.
@@ -91,9 +93,10 @@ and thereafter follows four-year probabilities constructed from the combined
 male and female survivor counts in the 2023 Social Security period life table.
 Dependent children remain in the household for an expected 18 years, implying
 a maturity probability of $2/9$ per period. The number of children $n$ takes the values
-$0$, $1$, $2$, and $3$ or more. I set risk aversion to $\sigma=2$. Without children at home a household spends a share
-$1-\alpha_0$ of its expenditure on housing, so $\alpha_0$ is measured
-directly: I set $\alpha_0=0.733$, the housing expenditure share of childless
+$0$, $1$, $2$, and $3$ or more. I set risk aversion to $\sigma=2$. Without
+children at home a household spends a share $1-\alpha_0$ of its expenditure
+on housing, so $\alpha_0$ is measured directly: I set $\alpha_0=0.733$, so
+that housing takes $26.7$ percent of expenditure, its share among childless
 cash renters in the 2019--2023 Consumer Expenditure Survey.
 
 \paragraph{Housing finance and transaction costs.}
@@ -110,8 +113,8 @@ of the value of the house, so a purchase requires at least 20 percent equity.
 The benchmark imposes no separate payment-to-income limit.
 
 \paragraph{Income process.}
-I impose a deterministic lifecycle profile of household earnings, $e_a$,
-normalized to average one over working ages. Within age, log income follows an
+I impose a deterministic lifecycle profile of household earnings,
+$\varepsilon_a$, normalized to average one over working ages. Within age, log income follows an
 annual AR(1) process, which I sample at the model's four-year frequency and
 approximate with a five-state Rouwenhorst chain. I set the persistence to
 $\rho_z=0.9136$ and the annual innovation standard deviation to
@@ -220,7 +223,8 @@ is close to a commitment to several children, so fewer women start at all.
 Childlessness is mostly informed by this margin. The three are estimated
 together, because the same
 fertility outcomes respond to all of them, and the progression rates between
-birth orders are left untargeted.
+birth orders are left untargeted. This assignment is the intended one; the
+estimates below do not yet deliver it, and I return to that in the fit.
 
 \paragraph{Family housing.}
 The two shifters $\delta_{\mathrm{jump}}$ and $\delta_a$ set how far a
@@ -229,9 +233,10 @@ household adds at the first child identify the total tilt at entry into
 parenthood, $\delta_{\mathrm{jump}}+\delta_a$, since a first-time parent
 takes both the jump and one per-child step; the rooms difference between
 families with three or more children and families with one or two pins down
-$\delta_a$ alone, since the jump is common to both and drops out. The family ownership gap has no shifter of its own. It informs both tilts,
-and to a lesser extent who remains childless, and enters as an
-overidentifying restriction.
+$\delta_a$ alone, since the jump is common to both and drops out. The family
+ownership gap has no shifter of its own. It informs both tilts, and to a
+lesser extent who remains childless, so it enters as an overidentifying
+restriction.
 
 \paragraph{Tenure and supply.}
 The owner premium $\chi_O$ raises the utility of owning over renting, and the
@@ -248,11 +253,11 @@ hold back to leave at death; it is mostly informed by the annual flow of
 bequests relative to aggregate wealth, $0.0088$ in \citet{denardiYang2014}.
 The bequest curvature $\theta_1$ governs how the motive strengthens with
 wealth, and the informative moment is the ratio of the 90th to the 50th
-percentile of total wealth late in life, $3.448$. Wealth is measured on the
-beginning-of-period balance sheet, so liquid wealth and housing refer to the
-same date, and the bequest is measured at death after the period's saving.
-The flow moment is what identifies the bequest motive: without it, nothing in
-the estimation disciplines $\theta_0$ and it collapses toward zero.
+percentile of total wealth late in life, $3.448$. Without the flow moment
+nothing in the estimation disciplines $\theta_0$, and it collapses toward
+zero. Wealth is measured on the beginning-of-period balance sheet, so liquid
+wealth and housing refer to the same date, and the bequest is measured at
+death after the period's saving.
 
 \subsection{Target Moments and Fit}
 
@@ -297,7 +302,27 @@ $p_{90}/p_{50}$ total wealth, ages 76--84 & PSID & 3.448 & 2.177 \\
 
 These estimates are provisional and illustrative. They come from a first pass
 at the revised target system and are reported to show where the specification
-currently stands, not as a calibration to be used.
+currently stands, not as a calibration to be used. Four things are wrong with
+it.
+
+The utility value of children sits at the top of its search region while
+completed fertility overshoots. Lowering $\psi$ would improve both the level
+of fertility and childlessness, so the estimate is at a corner rather than an
+interior optimum, and the fertility block is being pulled in two directions
+at once. Second, the entry noise remains large, $\kappa_E=36.3$, and both
+timing moments miss; the moments meant to discipline it are not doing so, and
+with first-birth timing this noisy, births respond weakly to prices. Third,
+the ownership rate is $0.41$ against $0.58$ in the data, and it moves with
+the wealth ratio, $4.35$ against $6.87$: a lower discount factor produces
+less accumulation and fewer households clear the down payment. Since the
+down-payment constraint carries the mechanism, this is not a cosmetic miss.
+Fourth, late-life wealth dispersion is $2.18$ against $3.45$ with
+$\theta_1$ near zero, so the bequest motive is not generating the upper tail.
+
+The weights are the first thing to revisit. They mix bootstrap standard
+errors, working values for the timing rows, and a fixed fraction of the
+target elsewhere, and that mixture decides which rows win when the fertility
+block is torn.
 
 Figure~\ref{fig:eq_lifecycle} compares model homeownership, the share of
 households with dependent children at home, and mean rooms with their ACS
