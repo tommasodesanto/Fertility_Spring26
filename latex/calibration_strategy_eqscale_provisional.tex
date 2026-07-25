@@ -211,7 +211,8 @@ $\theta_1$ & Bequest curvature shift & 0.0442 \\
 
 \paragraph{Fertility.}
 The utility value of children $\psi$ raises the return to every birth, so it
-governs how many children households have, and completed fertility is the
+governs how many children households have. Completed fertility, the average
+number of children a woman has borne by the end of her fertile years, is the
 moment that most closely identifies it. The entry noise $\kappa_E$ spreads
 the age at which women start trying, and biology turns late starts into late
 or missing births, so it governs the timing of first births; the mean age at
@@ -253,30 +254,19 @@ wealth, and the informative moment is the ratio of the 90th to the 50th
 percentile of total wealth late in life, $3.448$. Wealth is measured on the
 beginning-of-period balance sheet, so liquid wealth and housing refer to the
 same date, and the bequest is measured at death after the period's saving.
-The flow moment matters for tenure late in life: without it the bequest
-motive falls away, nothing rewards holding wealth to death, and older owners
-never sell, so ownership after 65 climbs to $0.945$.
+The flow moment is what identifies the bequest motive: without it, nothing in
+the estimation disciplines $\theta_0$ and it collapses toward zero.
 
 \subsection{Target Moments and Fit}
 
 The four family-size and timing moments are measured for the 1979--1984 birth
 cohorts: completed fertility and childlessness for women aged 40--44 in the
 June 2024 CPS fertility supplement, and the two first-birth timing moments
-from the NCHS natality microdata for mothers of the same cohorts (10.2
-million first births; the observed truncation of the timing distribution is
-about one percent). These are the youngest cohorts with essentially complete
-fertility. The environment (prices, incomes, entrant wealth, housing menus)
+from the NCHS natality microdata for mothers of the same cohorts. These are
+the youngest cohorts with essentially complete fertility. The environment (prices, incomes, entrant wealth, housing menus)
 is measured on 2019--2023 cross sections; holding preferences fixed across
 these adjacent cohorts is a maintained assumption, and a robustness package
 re-targeting current period fertility rates is planned.
-
-Each moment enters the loss with weight equal to the inverse of its squared
-standard error, so the loss reads as squared standard errors of distance.
-Bootstrap standard errors are used where the target is project-measured
-(completed fertility $0.026$, childlessness $0.008$, the wealth ratio
-$0.399$, the dispersion ratio $0.133$); the timing rows carry declared
-working values ($0.25$ years and $0.008$) pending the cohort-table bootstrap;
-the remaining rows carry five percent of the target value.
 
 \begin{table}[H]
 \centering
