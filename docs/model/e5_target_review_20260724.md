@@ -308,6 +308,64 @@ schedule, cross-checked against Menken-Trussell-Larsen (1986), documented in
 the calibration must be re-run. The strategy note cites Sommer for the form
 and does not display the constants as estimated.
 
+## OVERNIGHT PROBE VERDICTS (2026-07-25 morning; both runs complete, 10/10 and 64/64)
+
+Artifacts: `output/model/eqscale_seq_e5_probe_20260725/report/frontier.csv`
+(collector defect noted: its `beta_annual` column holds the PERIOD beta;
+annual = value^(1/4)) and
+`output/model/eqscale_seq_e5_wealth_slice_20260725/task_*/wealth_slice.csv`.
+
+1. THE E5 WINNER IS DOMINATED. Probe cell kappa_E = 4 reaches tight loss
+   444.3 vs the certified E5 winner's 485.5 despite one FEWER free
+   parameter. The E5 chains were stuck in the high-noise basin (echo of the
+   single-basin finding of 2026-07-11). At kappa_E = 4: annual beta 0.9914,
+   psi 0.62, kappa_C 0.63, chi 1.04, ownership 0.589 (target 0.575), wealth
+   5.58, tfr 2.015, childlessness 0.096, mafb 26.1, share30+ 0.361.
+
+2. TIMING IS BIMODAL IN kappa_E. At kappa_E <= 1 the model collapses to
+   enter-at-18 (mafb 18.2, childlessness 0.000, tfr 2.72): the DETERMINISTIC
+   economics favors immediate entry, so all observed postponement at larger
+   kappa_E is noise, not prices. Between kappa_E = 1 and 2 the solution jumps
+   straight from degenerate-early to over-dispersed (mafb 26+, share30+
+   0.36+). NOWHERE on the frontier is the data pair (25.31, 0.270)
+   approached: whenever the mean is near 26, the 30+ share is ~0.36. Under
+   logit entry + current fecundity, the timing PAIR looks structurally
+   unmatchable, and the mechanism warning stands: at current parameters the
+   down-payment channel does not delay births; noise does.
+
+3. CHILDLESSNESS HAS A CEILING OF ~0.118 on the entire frontier (target
+   0.188). With entry noise the only childlessness device, the model cannot
+   come close; this is now the binding fertility failure and points to a
+   mechanism (e.g. permanent heterogeneity in psi or a career margin), not a
+   dial.
+
+4. THE PSI CORNER DISSOLVES: with the bound widened to 6, no cell pins
+   (max |psi| = 3.21 at kappa_E = 36.3; 0.33-0.92 at low kappa_E). The E5
+   cap at 3.0 was binding but is not the deep problem.
+
+5. WEALTH 6.87 IS REACHABLE, OWNERSHIP VIA beta/theta0 IS NOT. Slice: wealth
+   crosses 6.87 only at annual beta >= ~0.99 (6.93 at beta_a 0.9981/theta0
+   0.5; 7.39 at theta0 1; 8.03 at theta0 2), consistent with the M-side
+   beta-r tension. But ownership never exceeds 0.447 anywhere on the 64-node
+   grid (chi and fertility fixed at the E5 winner), while the kappa_E = 4
+   probe cell (chi re-optimized, beta_a 0.991) puts ownership at 0.589: the
+   ownership target needs the discount factor AND chi jointly, not beta
+   alone.
+
+6. p90/p50 IS FLAT AT ~2.0-2.2 EVERYWHERE in both runs (target 3.45), even
+   at theta0 = 8 where the flow overshoots (0.022). theta1 is not generating
+   dispersion at any point visited: the late-life tail needs a mechanism
+   (echoes the old "theta1 inert" finding), not reweighting.
+
+DECISIONS FOR THE AUTHOR (none taken): (a) an E5b re-run of the full
+10-parameter system seeded at the kappa_E = 4 probe winner, same contract,
+to replace the dominated winner; (b) the parked weights discussion now has
+content: the timing pair and the childlessness level appear structurally
+unmatchable under the current architecture, so the choice is between
+retargeting (e.g. mean-age only) and a mechanism change (entry
+heterogeneity); (c) a policy packet at the kappa_E = 4 point to measure
+whether prices move births at all once noise is moderate.
+
 ## OVERNIGHT PROBES LAUNCHED (2026-07-24 ~23:45, author-approved "proceed with all")
 
 Motivated by the E5 verdict (psi at its 3.0 cap with fertility overshooting;
