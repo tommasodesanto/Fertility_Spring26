@@ -60,6 +60,19 @@ if os.environ.get("E5", "") == "1":
     TARGET_SET = E5_TARGET_SET
     DOMAIN = E5_DOMAIN
     FIXED = dict(E5_FIXED)
+    psi_bound = float(os.environ.get("E5_PSI_BOUND", "3.0"))
+    if not math.isfinite(psi_bound) or psi_bound <= 0.0:
+        raise ValueError("E5_PSI_BOUND must be a finite positive float")
+    DOMAIN = tuple(
+        (name, -psi_bound, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
+        for name, lo, hi, kind in DOMAIN
+    )
+    if "E5_PROBE_FIX_KE" in os.environ:
+        probe_fixed_kappa_fert = float(os.environ["E5_PROBE_FIX_KE"])
+        if not math.isfinite(probe_fixed_kappa_fert) or probe_fixed_kappa_fert <= 0.0:
+            raise ValueError("E5_PROBE_FIX_KE must be a finite positive float")
+        DOMAIN = tuple(row for row in DOMAIN if row[0] != "kappa_fert")
+        FIXED["kappa_fert"] = probe_fixed_kappa_fert
 DEFAULT_J = 17
 DEFAULT_NB = 120
 DEFAULT_MAX_ITER_EQ = 10
@@ -291,11 +304,12 @@ def main() -> None:
     cases_path.write_text("")
     metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
                 "arm": (
-                    "E5"
+                    "E5_PROBE_KE" if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
+                    else ("E5"
                     if os.environ.get("E5", "") == "1"
                     else ("E4_SPLIT"
                     if os.environ.get("E4_SPLIT", "") == "1"
-                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1"))
+                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")))
                 ),
                 "l4_literal_parity": os.environ.get("E3_L4", "") == "1" or os.environ.get("E5", "") == "1",
                 "l4_conventions": (
@@ -319,6 +333,10 @@ def main() -> None:
                     else {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20}
                 ),
                 "tight_winner_evaluator": {"max_iter_eq": 40, "tol_eq": 2.5e-5, "repeats": 2}}
+    if os.environ.get("E5", "") == "1" and "E5_PSI_BOUND" in os.environ:
+        metadata["psi_bound"] = psi_bound
+    if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ:
+        metadata["probe_fixed_kappa_fert"] = probe_fixed_kappa_fert
     (args.outdir / "metadata.json").write_text(json.dumps(jsonable(metadata), indent=2, sort_keys=True))
     started, records, best, eval_idx = time.perf_counter(), [], None, 0
     reserve = 0.0 if args.smoke else min(300.0, max(0.0, args.minutes * 60.0 - 1.0))

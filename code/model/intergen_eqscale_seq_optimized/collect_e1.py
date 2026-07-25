@@ -57,7 +57,8 @@ def main() -> None:
         meta = summary.get("metadata") or {}
         is_legacy = meta.get("arm") in {"E1", "E3_L4", "E4_SPLIT"} and int(meta.get("free_parameter_count", -1)) == 12 and int(meta.get("target_count", -1)) == 15
         is_e5 = meta.get("arm") == "E5" and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
-        if not (is_legacy or is_e5):
+        is_e5_probe = meta.get("arm") == "E5_PROBE_KE" and int(meta.get("free_parameter_count", -1)) == 9 and int(meta.get("target_count", -1)) == 12
+        if not (is_legacy or is_e5 or is_e5_probe):
             raise RuntimeError(f"{path} does not satisfy an accepted E1/E3/E4/E5 calibration contract")
         tight = eligible_tight(summary)
         chain_rows.append({"summary_path": str(path), "seed": meta.get("seed"), "eligible": tight is not None,
