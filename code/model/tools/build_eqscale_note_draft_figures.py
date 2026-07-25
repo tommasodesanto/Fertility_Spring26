@@ -10,8 +10,11 @@ record so the rendered note figures remain auditable without a solution cache.
 from __future__ import annotations
 
 import csv
+import argparse
+import importlib
 import json
 import math
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -38,9 +41,12 @@ from intergen_eqscale_seq_optimized.solver import run_model_cp_dt  # noqa: E402
 
 
 OUTDIR = ROOT / "output/model/eqscale_note_draft_figures_20260724"
+E5_OUTDIR = ROOT / "output/model/eqscale_note_draft_figures_20260724_e5"
 LIFECYCLE_FIGURE = ROOT / "latex/figures/eqscale_note_lifecycle_equilibrium.png"
 DECISION_FIGURE = ROOT / "latex/figures/eqscale_note_decision_rules.png"
 TARGET_FIT = ROOT / "output/model/eqscale_seq_e4_split_recalibration_20260723/report/target_fit_full.csv"
+E5_SOURCE = ROOT / "output/model/eqscale_seq_e5_recalibration_20260724/report/results.json"
+E5_TARGET_FIT = ROOT / "output/model/eqscale_seq_e5_recalibration_20260724/report/target_fit_full.csv"
 ACS = ROOT / "code/data/mms_center_periphery/output/mms_age_profiles_full.csv"
 ACS_OWNERSHIP = ROOT / "code/data/mms_center_periphery/output_ownership_audit/acs_ownership_age_profiles.csv"
 
@@ -54,13 +60,39 @@ def write_rows(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def certified_targets(path: Path) -> dict[str, float]:
-    wanted = {"own_rate", "aggregate_mean_occupied_rooms_18_85", "tfr", "childless_rate"}
+def certified_targets(path: Path, wanted: set[str] | None = None) -> dict[str, float]:
     with path.open(newline="", encoding="utf-8") as handle:
-        rows = {row["moment"]: float(row["model"]) for row in csv.DictReader(handle) if row["moment"] in wanted}
-    if set(rows) != wanted:
+        rows = {row["moment"]: float(row["model"]) for row in csv.DictReader(handle) if wanted is None or row["moment"] in wanted}
+    if wanted is not None and set(rows) != wanted:
         raise ValueError(f"Missing certified E4 values in {path}: {sorted(wanted - set(rows))}")
     return rows
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--arm", choices=("e4", "e5"), default="e4")
+    return parser.parse_args()
+
+
+def solve_e5() -> tuple[Any, Any, dict[str, float]]:
+    """Reproduce the certified E5 override path without copying its dict."""
+    os.environ["E3_L4"] = "1"
+    os.environ["E5"] = "1"
+    os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
+    from intergen_eqscale_seq_optimized import run_e1_chain
+
+    chain = importlib.reload(run_e1_chain)
+    chain.load_runtime()
+    args = argparse.Namespace(J=17, Nb=120, max_iter_eq=40, tol_eq=2.5e-5)
+    overrides = chain.common_overrides(args)
+    payload = json.loads(E5_SOURCE.read_text(encoding="utf-8"))
+    theta = ((payload.get("winners") or {}).get("E1") or {}).get("theta")
+    if not isinstance(theta, dict):
+        raise ValueError(f"{E5_SOURCE} does not contain winners.E1.theta")
+    theta = {name: float(value) for name, value in theta.items()}
+    overrides.update(theta)
+    sol, P, _ = run_model_cp_dt(overrides, verbose=False)
+    return sol, P, theta
 
 
 def model_age_profiles(sol: Any, P: Any) -> list[dict[str, float]]:
@@ -172,7 +204,7 @@ def plot_lifecycle(model: list[dict[str, float]], acs: list[dict[str, float]], p
     ax2 = axes[1].twinx()
     rooms_acs = ax2.plot(da, [row["acs_mean_rooms"] for row in acs], color=black, ls=(0, (2, 2)), lw=2.4, label="Rooms, ACS")[0]
     rooms_model = ax2.plot(ma, [row["model_mean_rooms"] for row in model], color=orange, marker="o", ms=5.5, lw=2.8, label="Rooms, model")[0]
-    ax2.set_ylabel("Mean rooms", color=orange); ax2.set_ylim(2.5, 6.5)
+    ax2.set_ylabel("Mean rooms", color=orange); ax2.set_ylim(2.5, 7.0)
     axes[1].axvline(45.0, color="#777777", ls="--", lw=1.5)
     axes[1].text(31.5, 1.00, "Fertile window", ha="center", va="top", color="#555555", fontsize=11)
     axes[1].legend([child_model, child_acs, rooms_acs, rooms_model], [line.get_label() for line in (child_model, child_acs, rooms_acs, rooms_model)], frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.13), ncol=2)
@@ -201,26 +233,39 @@ def plot_decision_rules(rows: list[dict[str, float | int]], path: Path, wealth_m
 
 
 def main() -> None:
+    args = parse_args()
     # Exact baseline construction in build_e2_packet.solve_case(..., arm="e4"),
     # without its policy-loop and its unrelated packet writes.
-    theta = load_winner_theta(E4_SOURCE, "e4")
-    overrides = {**e1_overrides(tight=True, optimized=True), **arm_externals("e4"), **theta}
-    sol, P, _ = run_model_cp_dt(overrides, verbose=False)
+    if args.arm == "e4":
+        theta = load_winner_theta(E4_SOURCE, "e4")
+        overrides = {**e1_overrides(tight=True, optimized=True), **arm_externals("e4"), **theta}
+        sol, P, _ = run_model_cp_dt(overrides, verbose=False)
+        source, target_fit, outdir = E4_SOURCE, TARGET_FIT, OUTDIR
+        wanted = {"own_rate", "aggregate_mean_occupied_rooms_18_85", "tfr", "childless_rate"}
+    else:
+        sol, P, theta = solve_e5()
+        source, target_fit, outdir = E5_SOURCE, E5_TARGET_FIT, E5_OUTDIR
+        wanted = None
     moments = extract_moments(sol, P)
-    certified = certified_targets(TARGET_FIT)
+    certified = certified_targets(target_fit, wanted=wanted)
     verification = {name: {"model": float(moments[name]), "certified": certified[name], "abs_diff": abs(float(moments[name]) - certified[name])} for name in certified}
-    for name in ("own_rate", "aggregate_mean_occupied_rooms_18_85", "tfr", "childless_rate"):
-        line = verification[name]
+    for name, line in verification.items():
         print(f"{name}: model={line['model']:.15f} certified={line['certified']:.15f} abs_diff={line['abs_diff']:.3e}", flush=True)
     if any(item["abs_diff"] > 1e-6 for item in verification.values()):
-        raise RuntimeError("Certified E4 moment verification failed; no figures written.")
-    model, acs, decision = model_age_profiles(sol, P), acs_age_profiles(), decision_rule_rows(sol, P)
-    write_rows(OUTDIR / "lifecycle_equilibrium.csv", [{"source": "model", **row} for row in model] + [{"source": "ACS_2012_2023", **row} for row in acs])
-    write_rows(OUTDIR / "decision_rules_age42_childless_renter.csv", decision)
-    OUTDIR.mkdir(parents=True, exist_ok=True)
-    (OUTDIR / "summary.json").write_text(json.dumps({"source": str(E4_SOURCE), "theta": theta, "verification": verification, "figure_series": {"lifecycle": "stationary distribution and active housing policies", "decision_rules": "E packet childless-renter age-42 policy series"}}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        raise RuntimeError(f"Certified {args.arm.upper()} moment verification failed; no figures written.")
+    model, acs = model_age_profiles(sol, P), acs_age_profiles()
+    write_rows(outdir / "lifecycle_equilibrium.csv", [{"source": "model", **row} for row in model] + [{"source": "ACS_2012_2023", **row} for row in acs])
+    outdir.mkdir(parents=True, exist_ok=True)
+    summary = {"source": str(source), "theta": theta, "verification": verification,
+               "figure_series": {"lifecycle": "stationary distribution and active housing policies"}}
+    (outdir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     plot_lifecycle(model, acs, LIFECYCLE_FIGURE)
-    plot_decision_rules(decision, DECISION_FIGURE)
+    if args.arm == "e4":
+        decision = decision_rule_rows(sol, P)
+        write_rows(outdir / "decision_rules_age42_childless_renter.csv", decision)
+        summary["figure_series"]["decision_rules"] = "E packet childless-renter age-42 policy series"
+        (outdir / "summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        plot_decision_rules(decision, DECISION_FIGURE)
 
 
 if __name__ == "__main__":
