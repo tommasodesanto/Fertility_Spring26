@@ -211,15 +211,16 @@ $\theta_1$ & Bequest curvature shift & 0.0442 \\
 
 \paragraph{Fertility.}
 The utility value of children $\psi$ raises the return to every birth, so it
-governs how many children households have; completed fertility is most
-informative about it. The entry noise $\kappa_E$ spreads the age at which
-women start trying, and biology turns late starts into late or missing
-births, so it governs the timing of first births; the mean age at first
-birth and the share of first births after 30 are most informative about it.
-The continuation noise $\kappa_C$ governs how readily a household that has
-started keeps going: when it is small, starting a family is close to a
-commitment to several children, so fewer women start at all; childlessness is
-most informative about it. The three are estimated together, because the same
+governs how many children households have, and completed fertility is the
+moment that most closely identifies it. The entry noise $\kappa_E$ spreads
+the age at which women start trying, and biology turns late starts into late
+or missing births, so it governs the timing of first births; the mean age at
+first birth and the share of first births after 30 are the informative
+moments here. The continuation noise $\kappa_C$ governs how readily a
+household that has started keeps going: when it is small, starting a family
+is close to a commitment to several children, so fewer women start at all.
+Childlessness is mostly informed by this margin. The three are estimated
+together, because the same
 fertility outcomes respond to all of them, and the progression rates between
 birth orders are left untargeted. The timing moments are new to this
 specification. Without them the entry noise is pinned only through the level
@@ -230,37 +231,31 @@ to measure.
 \paragraph{Family housing.}
 The two shifters $\delta_{\mathrm{jump}}$ and $\delta_a$ set how far a
 household tilts spending toward housing when children arrive. The rooms a
-household adds at the first child is most informative about the total tilt at
-entry into parenthood, $\delta_{\mathrm{jump}}+\delta_a$, since a first-time
-parent takes both the jump and one per-child step; the rooms difference
-between families with three or more children and families with one or two is
-most informative about $\delta_a$ alone, since the jump is common to both and
-drops out. The family ownership gap has no shifter of its own. It responds to
+household adds at the first child identify the total tilt at entry into
+parenthood, $\delta_{\mathrm{jump}}+\delta_a$, since a first-time parent
+takes both the jump and one per-child step; the rooms difference between
+families with three or more children and families with one or two pins down
+$\delta_a$ alone, since the jump is common to both and drops out. The family ownership gap has no shifter of its own. It responds to
 the tilts and to who remains childless, and I keep it in the estimation
 because leaving it out lets the model deliver a gap of $0.04$ to $0.07$
 against $0.168$ in the data.
 
 \paragraph{Tenure and supply.}
-The owner premium $\chi_O$ raises the utility of owning over renting; the
-prime-age ownership rate is most informative about it. The supply scale
-$\bar H$ sets the level of the housing stock; aggregate occupied rooms is
-most informative about it. Tenure choice is deterministic.\footnote{A
-diagnostic round that added a taste shock to the own--rent margin drove its
-scale to zero at no cost to fit: empirical income risk moves households
-between owning and renting without taste noise. The four-year tenure switch
-rate is kept as an untargeted check on the income process.}
+The owner premium $\chi_O$ raises the utility of owning over renting, and the
+prime-age ownership rate is the moment that most closely identifies it. The
+supply scale $\bar H$ sets the level of the housing stock; aggregate occupied
+rooms is most informative about it.
 
 \paragraph{Saving and bequests.}
 The discount factor $\beta_{\mathrm{annual}}$ governs how much wealth
-households carry through life; aggregate net worth relative to annual gross
-labor earnings, $6.873$ in the PSID, is most informative about it. The
-bequest strength $\theta_0$ governs how much households hold back to leave at
-death; the annual flow of bequests relative to aggregate wealth, $0.0088$, is
-most informative about it.\footnote{The flow is a borrowed number, from
-\citet{galeScholz1994} through \citet{denardiYang2014}.} The bequest
-curvature $\theta_1$ governs how the motive strengthens with wealth; the
-ratio of the 90th to the 50th percentile of total wealth late in life,
-$3.448$, is most informative about it. Wealth is measured on the
+households carry through life, and aggregate net worth relative to annual
+gross labor earnings, $6.873$ in the PSID, is the moment that most closely
+identifies it. The bequest strength $\theta_0$ governs how much households
+hold back to leave at death; it is mostly informed by the annual flow of
+bequests relative to aggregate wealth, $0.0088$ in \citet{denardiYang2014}.
+The bequest curvature $\theta_1$ governs how the motive strengthens with
+wealth, and the informative moment is the ratio of the 90th to the 50th
+percentile of total wealth late in life, $3.448$. Wealth is measured on the
 beginning-of-period balance sheet, so liquid wealth and housing refer to the
 same date, and the bequest is measured at death after the period's saving.
 The flow moment matters for tenure late in life: without it the bequest
@@ -312,7 +307,7 @@ Mean occupied rooms, ages 18--85 & ACS & 5.780 & --- \\
 \addlinespace
 \multicolumn{4}{@{}l}{\emph{Wealth and bequests}} \\
 Aggregate wealth / annual gross labor earnings & PSID 2005--2019 & 6.873 & --- \\
-Annual bequest flow / aggregate wealth & \citet{galeScholz1994} & 0.0088 & --- \\
+Annual bequest flow / aggregate wealth & \citet{denardiYang2014} & 0.0088 & --- \\
 $p_{90}/p_{50}$ total wealth, ages 76--84 & PSID & 3.448 & --- \\
 \bottomrule
 \end{tabularx}
@@ -373,11 +368,6 @@ Fern\'andez-Villaverde, J., and D. Krueger. 2007.
 Flod\'en, M., and J. Lind\'e. 2001.
 ``Idiosyncratic Risk in the United States and Sweden: Is There a Role for Government Insurance?''
 \emph{Review of Economic Dynamics} 4(2): 406--437.
-
-\bibitem[Gale and Scholz(1994)]{galeScholz1994}
-Gale, W. G., and J. K. Scholz. 1994.
-``Intergenerational Transfers and the Accumulation of Wealth.''
-\emph{Journal of Economic Perspectives} 8(4): 145--160.
 
 \bibitem[Greaney et al.(2025)]{greaneyDynamicUrbanEconomics2025}
 Greaney, B., A. Parkhomenko, and S. Van Nieuwerburgh. 2025.
