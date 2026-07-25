@@ -189,6 +189,42 @@ actual loadings. Birth-order progression rates stay untargeted diagnostics.
   Cross-loads disclosed: fecundity (external), expenditure tilts, house
   prices.
 
+## OPEN ITEM: top-group family-size convention (registered 2026-07-24)
+
+The top family-size group carries a mean of 3.602 children. That number is
+the CPS June 2024 mean among women with three or more children ever born,
+computed on a public file that topcodes children ever born at five, so it is
+a CAPPED mean. The model's completed-fertility moment applies the same cap,
+so model and data means share one convention -- but both are then slightly
+below the true mean of the group.
+
+Author decision (2026-07-24): the note states the number and its source and
+does not narrate the cap, which reads as confusing detail. VERIFY BEFORE THE
+PAPER: (i) reconfirm the builder computes the capped mean as intended;
+(ii) quantify how far the cap moves the mean (upper bound from an uncapped
+external source, e.g. NSFG or the CPS internal file); (iii) decide whether to
+correct or to keep the capped convention and disclose it in a footnote.
+
+## OPEN ITEM: income-process reference (registered 2026-07-24)
+
+Current external: persistence 0.9136 and innovation variance 0.0426 from
+Floden and Linde (2001, RED 4(2), Table IV, GMM on PSID 1988-92 heads,
+measurement error separately identified and excluded), with the innovation
+scaled by (1 - tau), tau = 0.181, from Heathcote, Storesletten and Violante
+(2017). Provenance is verified and recorded in
+`code/model/intergen_eqscale_seq_optimized/externals.py`.
+
+Author question (2026-07-24): Floden-Linde is a 2001 estimate on a 1988-92
+panel and may not be the best modern reference. REVIEW BEFORE THE PAPER:
+compare against the standard alternatives on modern data -- Storesletten,
+Telmer and Yaron (2004), Guvenen (2009), Kaplan and Violante (2010),
+Blundell, Pistaferri and Preston (2008) -- and against the process used by
+the closest structural housing papers (Sommer and Sullivan 2018; Sommer
+2016). Decide whether to keep FL or re-anchor, and whether the persistent /
+transitory split should be modeled rather than folded into one persistent
+component. A change here moves every wealth moment, so it is a
+recalibration, not an edit.
+
 ## OPEN ITEM: fecundity constants are not fitted (registered 2026-07-24)
 
 The fecundity schedule that gates every fertility decision in E5,

@@ -78,55 +78,63 @@ discipline which parameters, and then report the target system.
 
 \subsection{Parameters Set Outside the Estimation}
 
-Table~\ref{tab:quant_assigned} summarizes the parameters assigned outside the
-estimation.
+I first describe the parameters assigned outside the estimation.
+Table~\ref{tab:quant_assigned} summarizes their values and sources.
 
-A model period is four years. Households enter adult life at age 18, retire
-at 66, and live at most through 85. Survival after retirement follows the
-2023 Social Security period life table. Dependent children remain at home for
-an expected 18 years. Risk aversion is $\sigma=2$. Following
-\citet{greaneyDynamicUrbanEconomics2025}, the annual real return is 2.0
-percent, housing depreciation 1.1 percent, the selling cost 6 percent, and
-the labor-income tax 17.9 percent; the annual property tax is 1.0 percent.
-Mortgage debt cannot exceed a share $\phi=0.80$ of the house value, so a
-purchase requires 20 percent equity
-\citep{davisHousingFinanceMacroeconomy2015}. Owner-occupied housing comes in
-five sizes, $\{2,4,6,8,10\}$ rooms, and renters choose continuously up to 6
-rooms, both from the matched ACS distributions; the housing-supply elasticity
-is $\eta=1.75$ \citep{saizGeographicDeterminantsHousing2010}. Households
-enter with a wealth-to-income draw from the PSID distribution of childless
-renters aged 18--24.\footnote{Bequest utility does not vary directly with the
-number of children.}
+\paragraph{Demographics and preferences.}
+A model period is four years. Households enter adult life at age 18, retire at
+age 66, and live at most through age 85. Survival is certain before retirement
+and thereafter follows four-year probabilities constructed from the combined
+male and female survivor counts in the 2023 Social Security period life table.
+Dependent children remain in the household for an expected 18 years, implying
+a maturity probability of $2/9$ per period. Completed family size takes the
+values $0$, $1$, $2$, and $3$ or more, with a mean of $3.602$ children in the
+top group, as in the June 2024 CPS fertility supplement. I set risk aversion
+to $\sigma=2$. Without children at home a household spends a share
+$1-\alpha_0$ of its expenditure on housing, so $\alpha_0$ is measured
+directly: I set $\alpha_0=0.733$, the housing expenditure share of childless
+cash renters in the 2019--2023 Consumer Expenditure Survey.
 
-Three objects specific to this specification are also set outside the
-estimation.
+\paragraph{Housing finance and transaction costs.}
+Following \citet{greaneyDynamicUrbanEconomics2025}, I set the annual real
+return on liquid wealth to $i_{\mathrm{ann}}=0.02$, annual housing depreciation
+to $\delta_{\mathrm{ann}}=0.011$, the proportional selling cost to
+$\psi^s=0.06$, and the labor-income tax rate to
+$\tau_{\mathrm{pay}}=0.179$. The return is based on the average ten-year real
+interest rate, depreciation combines BEA residential-structure depreciation
+with an adjustment for the land share of house values, and the tax rate comes
+from OECD data. I set the annual property-tax rate to
+$\tau^p_{\mathrm{ann}}=0.01$. Mortgage debt cannot exceed a share $\phi=0.80$
+of the value of the house, so a purchase requires at least 20 percent equity.
+The benchmark imposes no separate payment-to-income limit.
 
-The consumption share without children at home is fixed at $\alpha_0=0.733$.
-With Cobb--Douglas preferences and no committed bundles, the share of
-allocatable expenditure that a childless renter spends on housing is exactly
-$1-\alpha_0$, so this parameter has a direct empirical counterpart: the CEX
-housing-expenditure share of childless cash renters in 2019--2023. A round
-that estimated $\alpha_0$ freely returned $0.754$, three percent from this
-external value.
+\paragraph{Income process.}
+I impose a deterministic lifecycle profile of household earnings, $e_a$,
+normalized to average one over working ages. Within age, log income follows an
+annual AR(1) process, which I sample at the model's four-year frequency and
+approximate with a five-state Rouwenhorst chain. I set the persistence to
+$\rho_z=0.9136$ and the annual innovation standard deviation to
+$\sigma_z=0.169$. Persistence and gross risk are the PSID estimates of
+\citet{flodenLinde2001}, purged of measurement error. Households face this
+risk after taxes, so I scale the innovation by $1-\tau$, using the
+progressivity $\tau=0.181$ that \citet{heathcoteStoreslettenViolante2017}
+estimate for the United States; their log-linear tax function leaves the
+autoregressive structure unchanged.
 
-Family size takes the literal values $0,1,2,3^{+}$, and the mean number of
-children in the top bin is fixed at $3.602$, the capped mean among families
-with three or more children in the June 2024 CPS fertility supplement. The
-public file topcodes children ever born at five, and the model's
-completed-fertility moment uses the same capped convention, so model and data
-means share one definition.
+\paragraph{Housing products and supply.}
+Housing is indivisible and available in a limited assortment of types and
+sizes \citep{davisHousingFinanceMacroeconomy2015}. I represent this lumpiness
+with five owner-occupied house sizes,
+$\{H_k\}_{k=1}^5=\{2,4,6,8,10\}$ rooms. Renters choose housing continuously up
+to $\bar h^R=6$ rooms, the 90th percentile of the rental-room distribution in
+the matched ACS sample. These menus summarize the observed tenure-specific
+distribution of rooms. I set the
+housing-supply elasticity to $\eta=1.75$, following the population-weighted
+metropolitan estimate in \citet{saizGeographicDeterminantsHousing2010}.
 
-Income risk is set at its empirical value. I impose the persistent wage
-process of
-\citet{flodenLinde2001}, with annual persistence $0.9136$ and innovation
-standard deviation $0.206$ net of measurement error, passed through the
-log-linear tax function of \citet{heathcoteStoreslettenViolante2017} with
-progressivity $\tau=0.181$, which preserves the autoregressive structure and
-scales the after-tax innovation to $0.169$. The process is sampled at the
-four-year model frequency and approximated with a five-state Rouwenhorst
-chain. Without committed bundles there is no affordability conflict at low
-income states, so the variance need not be truncated to keep households
-feasible.
+\paragraph{Entry wealth.}
+Households enter at age 18 with a draw from the PSID net-worth-to-income
+distribution of childless renters aged 18--24.
 
 \begin{table}[H]
 \centering
@@ -151,8 +159,8 @@ Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ &
 Consumption share $\alpha_0$ & 0.733 &
 CEX housing-expenditure share, childless cash renters, 2019--2023 \\
 Fecundity by age $\pi_a$ & Declining; zero from 45 & \citet{sommer2016} \\
-Family-size states & $0,1,2,3^{+}$; top-bin mean 3.602 &
-CPS June 2024 capped mean among $3^{+}$ families \\
+Family-size states & $0,1,2,3^{+}$; top-group mean 3.602 &
+CPS June 2024 fertility supplement \\
 Annual income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
 Annual income innovation s.d.\ $\sigma_z$ & 0.169 &
 \citet{flodenLinde2001} innovation $0.206$, scaled by $1-\tau$ with $\tau=0.181$
