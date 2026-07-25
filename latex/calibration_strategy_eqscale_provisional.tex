@@ -187,24 +187,23 @@ describe which moments are most informative.
 
 \begin{table}[H]
 \centering
-\caption{Internally estimated parameters (current diagnostic estimates;
-the estimation on the revised target system is running)}
+\caption{Internally estimated parameters (provisional and illustrative)}
 \label{tab:quant_parameters}
 \small
 \begin{tabularx}{0.9\textwidth}{@{}l X r@{}}
 \toprule
 Parameter & Interpretation & Estimate \\
 \midrule
-$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9925 \\
-$\delta_{\mathrm{jump}}$ & Expenditure-share shift at entry into parenthood & 0.0373 \\
-$\delta_a$ & Expenditure-share shift per additional child & 0.0242 \\
-$\psi$ & Utility flow per child at home & 2.8137 \\
-$\kappa_E$ & Taste-shock scale, first-birth entry decision & 49.38 \\
-$\kappa_C$ & Taste-shock scale, continuation decisions & 0.1806 \\
-$\chi_O$ & Utility premium from owner-occupied housing & 1.0588 \\
-$\bar H$ & Housing-supply scale & 8.5226 \\
-$\theta_0$ & Strength of the bequest motive & 0.0264 \\
-$\theta_1$ & Bequest curvature shift & 0.0442 \\
+$\beta_{\mathrm{annual}}$ & Annual discount factor & 0.9821 \\
+$\delta_{\mathrm{jump}}$ & Expenditure-share shift at entry into parenthood & 0.0316 \\
+$\delta_a$ & Expenditure-share shift per additional child & 0.0177 \\
+$\psi$ & Utility flow per child at home & 2.9968 \\
+$\kappa_E$ & Taste-shock scale, first-birth entry decision & 36.34 \\
+$\kappa_C$ & Taste-shock scale, continuation decisions & 0.2213 \\
+$\chi_O$ & Utility premium from owner-occupied housing & 1.0276 \\
+$\bar H$ & Housing-supply scale & 8.8470 \\
+$\theta_0$ & Strength of the bequest motive & 0.1117 \\
+$\theta_1$ & Bequest curvature shift & 0.0465 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -270,7 +269,7 @@ re-targeting current period fertility rates is planned.
 
 \begin{table}[H]
 \centering
-\caption{Target moments (model column pending the revised-system estimation)}
+\caption{Target moments and model fit (provisional and illustrative)}
 \label{tab:quant_fit}
 \small
 \begin{tabularx}{0.99\textwidth}{@{}>{\raggedright\arraybackslash}X l r r@{}}
@@ -278,38 +277,29 @@ re-targeting current period fertility rates is planned.
 Moment & Source & Data & Model \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Family size and timing}} \\
-Completed fertility & CPS June 2024, women 40--44 & 1.918 & --- \\
-Childlessness rate & CPS June 2024, women 40--44 & 0.188 & --- \\
-Mean age at first birth & NCHS natality, 1979--84 cohorts & 25.31 & --- \\
-Share of first births at ages 30$+$ & NCHS natality, 1979--84 cohorts & 0.270 & --- \\
+Completed fertility & CPS June 2024, women 40--44 & 1.918 & 2.079 \\
+Childlessness rate & CPS June 2024, women 40--44 & 0.188 & 0.122 \\
+Mean age at first birth & NCHS natality, 1979--84 cohorts & 25.31 & 26.40 \\
+Share of first births at ages 30$+$ & NCHS natality, 1979--84 cohorts & 0.270 & 0.378 \\
 \addlinespace
 \multicolumn{4}{@{}l}{\emph{Family housing and tenure}} \\
-Housing increment with the first child, rooms & PSID event study & 0.664 & --- \\
-Rooms gap, 3$+$ versus 1--2 children, ages 30--55 & ACS & 0.368 & --- \\
-Family ownership gap, ages 30--55 & ACS & 0.168 & --- \\
-Ownership rate, ages 30--55 & ACS & 0.575 & --- \\
-Mean occupied rooms, ages 18--85 & ACS & 5.780 & --- \\
+Housing increment with the first child, rooms & PSID event study & 0.664 & 0.647 \\
+Rooms gap, 3$+$ versus 1--2 children, ages 30--55 & ACS & 0.368 & 0.348 \\
+Family ownership gap, ages 30--55 & ACS & 0.168 & 0.154 \\
+Ownership rate, ages 30--55 & ACS & 0.575 & 0.410 \\
+Mean occupied rooms, ages 18--85 & ACS & 5.780 & 6.214 \\
 \addlinespace
 \multicolumn{4}{@{}l}{\emph{Wealth and bequests}} \\
-Aggregate wealth / annual gross labor earnings & PSID 2005--2019 & 6.873 & --- \\
-Annual bequest flow / aggregate wealth & \citet{denardiYang2014} & 0.0088 & --- \\
-$p_{90}/p_{50}$ total wealth, ages 76--84 & PSID & 3.448 & --- \\
+Aggregate wealth / annual gross labor earnings & PSID 2005--2019 & 6.873 & 4.354 \\
+Annual bequest flow / aggregate wealth & \citet{denardiYang2014} & 0.0088 & 0.0091 \\
+$p_{90}/p_{50}$ total wealth, ages 76--84 & PSID & 3.448 & 2.177 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-A diagnostic estimate on the previous fifteen-moment system shows what the
-revision builds on. The sequential model with two noise scales reaches
-completed fertility of $1.875$ and childlessness of $0.155$, against $1.918$
-and $0.188$ in the data, a pair no earlier specification reached without
-overshooting fertility; about half of the model's childlessness comes from
-women who try and run out the fertile window, the postponement mechanism at
-the center of the paper. That estimate also showed where the moment system
-was too thin: the entry noise was loose without a timing moment, the bequest
-parameters were loose without a flow moment, and the family ownership gap
-came in too small. The revised estimation is running as I write; the model
-column above, the estimates in Table~\ref{tab:quant_parameters}, and the
-figure below will follow when it finishes.
+These estimates are provisional and illustrative. They come from a first pass
+at the revised target system and are reported to show where the specification
+currently stands, not as a calibration to be used.
 
 Figure~\ref{fig:eq_lifecycle} compares model homeownership, the share of
 households with dependent children at home, and mean rooms with their ACS
