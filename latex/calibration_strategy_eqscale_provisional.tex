@@ -114,16 +114,11 @@ normalized to average one over working ages. Within age, log income follows an
 annual AR(1) process, which I sample at the model's four-year frequency and
 approximate with a five-state Rouwenhorst chain. I set the persistence to
 $\rho_z=0.9136$ and the annual innovation standard deviation to
-$\sigma_z=0.169$. Both come from the PSID estimates of
-\citet{flodenLinde2001}, who separately identify survey measurement error
-from genuine income risk; their persistent innovation has a standard
-deviation of $0.206$ before taxes. The tax system absorbs part of that risk.
-Under the log-linear function of \citet{heathcoteStoreslettenViolante2017}, a
-one percent innovation to gross income raises disposable income by $1-\tau$
-percent, so with their United States estimate $\tau=0.181$ the risk
-households bear has standard deviation $0.169$. The flat rate
-$\tau_{\mathrm{pay}}$ above sets the level of disposable income; $\tau$
-governs how much of a shock passes through to it.
+$\sigma_z=0.169$. Persistence and gross risk are the PSID estimates of
+\citet{flodenLinde2001}, net of the survey measurement error they identify
+separately. Households bear this risk after taxes, so I scale the innovation
+by $1-\tau$, using the progressivity $\tau=0.181$ that
+\citet{heathcoteStoreslettenViolante2017} estimate for the United States.
 
 \paragraph{Housing products and supply.}
 Housing is indivisible and available in a limited assortment of types and
@@ -148,35 +143,28 @@ distribution of childless renters aged 18--24.
 \small
 \renewcommand{\arraystretch}{1.05}
 \begin{tabularx}{\textwidth}{@{}
->{\raggedright\arraybackslash}p{0.32\textwidth}
->{\raggedright\arraybackslash}p{0.22\textwidth}
+>{\raggedright\arraybackslash}p{0.30\textwidth}
+>{\raggedright\arraybackslash}p{0.20\textwidth}
 >{\raggedright\arraybackslash}X@{}}
 \toprule
 Parameter & Value & Source or restriction \\
 \midrule
-Model period; entry, retirement, maximum ages & 4 years; 18, 66, 85 & Model timing \\
-Post-retirement survival & Age-specific & 2023 Social Security period life table \\
-Expected years with dependent children & 18 years & Child-maturity restriction \\
+Period; entry, retirement, final age & 4 years; 18, 66, 85 & Model timing \\
+Post-retirement survival & Age-specific & 2023 Social Security life table \\
+Years with dependent children & 18 & Child-maturity restriction \\
 Risk aversion $\sigma$ & 2 & \\
-Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ &
-\citet{scholzSeshadriKhitatrakun2006}, from Citro and Michael (1995) \\
-Consumption share $\alpha_0$ & 0.733 &
-CEX housing-expenditure share, childless cash renters, 2019--2023 \\
-Fecundity by age $\pi_a$ & Declining; zero from 45 & \citet{sommer2016} \\
-Family-size states & $0,1,2,3^{+}$; top-group mean 3.602 &
-CPS June 2024 fertility supplement \\
-Annual income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
-Annual income innovation s.d.\ $\sigma_z$ & 0.169 &
-\citet{flodenLinde2001} innovation $0.206$, scaled by $1-\tau$ with $\tau=0.181$
-from \citet{heathcoteStoreslettenViolante2017} \\
-Annual real return; depreciation; property tax & 2.0\%; 1.1\%; 1.0\% &
-\citet{greaneyDynamicUrbanEconomics2025} \\
-Financed share $\phi$; sale cost $\psi^s$ & 0.80; 6\% &
-\citet{davisHousingFinanceMacroeconomy2015} \\
+Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ & \citet{scholzSeshadriKhitatrakun2006} \\
+Consumption share $\alpha_0$ & 0.733 & CEX childless cash renters, 2019--2023 \\
+Fecundity by age $\pi_a$ & Zero from 45 & \citet{sommer2016} \\
+Income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
+Income innovation s.d.\ $\sigma_z$ & 0.169 & \citet{flodenLinde2001}, scaled by $1-\tau$ \\
+Tax progressivity $\tau$ & 0.181 & \citet{heathcoteStoreslettenViolante2017} \\
+Return; depreciation; property tax & 2.0\%; 1.1\%; 1.0\% & \citet{greaneyDynamicUrbanEconomics2025} \\
+Financed share $\phi$; sale cost $\psi^s$ & 0.80; 6\% & \citet{davisHousingFinanceMacroeconomy2015} \\
 Labor-income tax $\tau_{\mathrm{pay}}$ & 17.9\% & OECD U.S. average \\
-Owner house sizes; largest rental unit & $\{2,4,6,8,10\}$; 6 rooms & Matched ACS distributions \\
+Owner sizes; largest rental unit & $\{2,4,6,8,10\}$; 6 rooms & Matched ACS distributions \\
 Housing-supply elasticity $\eta$ & 1.75 & \citet{saizGeographicDeterminantsHousing2010} \\
-Entrant wealth distribution & Wealth-to-income draws & PSID childless renters aged 18--24 \\
+Entrant wealth distribution & Wealth-to-income draws & PSID childless renters 18--24 \\
 \bottomrule
 \end{tabularx}
 \endgroup

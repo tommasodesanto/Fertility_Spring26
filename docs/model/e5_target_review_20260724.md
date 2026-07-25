@@ -228,19 +228,33 @@ decide whether the persistent / transitory split should be modeled rather
 than folded into one persistent component. Any change here moves every wealth
 moment, so it is a recalibration, not an edit.
 
-INCONSISTENCY TO RESOLVE (flagged by the author 2026-07-24): the model uses
-two different tax objects, and their values are nearly identical by
-coincidence, which obscures the difference.
-- `tau_pay = 0.179` is a flat AVERAGE RATE (OECD, via DUE). It sets the LEVEL
-  of disposable income; `P.income` is stored net of it.
-- `tau = 0.181` is the HSV PROGRESSIVITY parameter, a curvature. It is used
-  only to scale the innovation s.d. by (1 - tau), i.e. to set how much RISK
-  survives the tax system.
-A consistent specification would apply the HSV function
-`y_net = lambda * y^(1 - tau)` to both, calibrating lambda to reproduce the
-average rate, instead of a flat rate for the level and HSV curvature for the
-risk. Decide before the paper; this is a model change, hence a
-recalibration.
+EVIDENCE FROM SOMMER (2016), the closest family paper (verified 2026-07-24
+by reading the FEDS working-paper text, Section 4.1): Sommer does NOT use
+Floden-Linde. He sets rho = 0.95 and the persistent innovation s.d. to 0.21,
+with a separate transitory component of s.d. 0.17, citing Card (1991),
+Hubbard, Skinner and Zeldes (1995), Storesletten, Telmer and Yaron (1998),
+and Meghir and Pistaferri (2004); seven-state Tauchen for the persistent
+component, two-state i.i.d. for the transitory. Note the consilience: our
+GROSS innovation s.d. from Floden-Linde is 0.206, essentially Sommer's 0.21.
+Our persistence 0.9136 is below his 0.95. We fold the transitory component
+away entirely. (Same reading also confirms the fecundity attribution: Sommer
+fits an exponential in age to Trussell-Wilson (1985) permanent-infertility
+point estimates, with cumulative infertility set to 1 at 45 against 97
+percent in the data.)
+
+TWO TAX OBJECTS -- design rationale, not an accident. The July-22
+reconciliation memo already states the intent: "the flat model payroll tax
+shifts levels only and leaves log-income risk untouched; the HSV wedge stands
+in for the progressivity the model does not have."
+- `tau_pay = 0.179` is a flat AVERAGE RATE (OECD, via DUE); it sets the LEVEL
+  of disposable income and `P.income` is stored net of it.
+- `tau = 0.181` is the HSV PROGRESSIVITY parameter, a curvature; it scales
+  the innovation s.d. by (1 - tau), i.e. it sets how much RISK survives.
+The near-equality of the two numbers is coincidence and reads as confusing,
+so the strategy note states the scaling and does not narrate the two roles.
+STILL WORTH DECIDING before the paper: whether to replace the pair with a
+single HSV function `y_net = lambda * y^(1 - tau)`, lambda calibrated to
+reproduce the average rate. That is a model change, hence a recalibration.
 
 ## OPEN ITEM: fecundity constants are not fitted (registered 2026-07-24)
 
