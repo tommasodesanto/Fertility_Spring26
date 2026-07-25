@@ -54,32 +54,18 @@ requirements, which is what permits empirical income risk below.
 Second, fertility is sequential rather than one-shot. Each period during the
 fertile ages, a childless household chooses between waiting and trying for a
 first birth, and a household with $n<3$ children and a child still at home
-chooses between stopping and trying for child $n+1$. An attempt at age $a$
-succeeds with the fecundity probability
-\begin{equation}
-\pi_a=1-0.02\,e^{0.134\,(a-18)}
-\quad\text{for } a<45,
-\qquad
-\pi_a=0 \text{ thereafter},
-\label{eq:fecundity}
-\end{equation}
-which declines from $0.98$ at age 18 to $0.50$ at age 42.\footnote{The two
-coefficients are set so that the four-year success probability tracks the
-age profile of natural fecundability in \citet{leridon2004}. They imply
-four-year probabilities of about $0.90$, $0.80$, and $0.62$ at ages 30, 35,
-and 40, against Leridon's estimates of $0.91$, $0.84$, and $0.64$ for a
-conception leading to a live birth within four years. A least-squares fit to
-the full schedule is pending.} Completed family size is therefore an outcome
-of starting age,
-biology, and sequential choices; no household ever chooses a number of
-children. Both decisions carry type-1 extreme-value taste shocks, with scale
-$\kappa_E$ on the entry decision and $\kappa_C$ on the continuation decision.
-The two scales are allowed to differ because the two decisions are different
-objects: the timing of the first attempt depends on circumstances the model
-does not describe, such as partnership timing and career events, so
-$\kappa_E$ can be large, while the continuation decision of an established
-family should be governed by prices, income, and preferences, so $\kappa_C$
-is expected to be small.
+chooses between stopping and trying for child $n+1$. An attempt at age $a$ succeeds with
+probability $\pi_a$, which declines with age and reaches zero at 45, as in
+\citet{sommer2016}.\footnote{The share permanently infertile grows
+exponentially in age, $1-\pi_a=\omega_1 e^{\omega_2(a-18)}$ with
+$\omega_1=0.02$ and $\omega_2=0.134$, and $\pi_a=0$ from age 45. The
+schedule declines from $0.98$ at age 18 to $0.50$ at age 42. A formal fit
+to the underlying estimates of permanent infertility by age is pending.}
+Completed family size is therefore an outcome of starting age, biology, and
+sequential choices. Both decisions carry type-1 extreme-value taste shocks,
+with separate scales $\kappa_E$ on entry and $\kappa_C$ on continuation, so
+that the extensive and intensive margins of fertility are governed by
+distinct dispersion parameters.
 
 \section{Calibration}
 \label{sec:quant_calibration}
@@ -94,25 +80,27 @@ discipline which parameters, and then report the target system.
 \subsection{Parameters Set Outside the Estimation}
 
 Table~\ref{tab:quant_assigned} summarizes the parameters assigned outside the
-estimation. Demographics, housing finance, transaction costs, housing menus,
-and supply elasticity are unchanged from the circulated draft: a four-year
-period; entry, retirement, and maximum ages of 18, 66, and 85; survival from
-the 2023 Social Security period life table; an 18-year expected duration of
-dependent children; $\sigma=2$; an annual real return of 2.0 percent, housing
-depreciation of 1.1 percent, property tax of 1.0 percent, selling cost of 6
-percent, labor-income tax of 17.9 percent, and a financed share $\phi=0.80$
-\citep{greaneyDynamicUrbanEconomics2025,davisHousingFinanceMacroeconomy2015};
-owner sizes $\{2,4,6,8,10\}$ rooms and a 6-room rental cap from the matched
-ACS distributions; supply elasticity $\eta=1.75$
-\citep{saizGeographicDeterminantsHousing2010}; and entrant wealth from the
-PSID distribution of childless renters aged 18--24.\footnote{Bequest utility
-does not vary directly with the number of children.}
+estimation.
 
-Four assigned objects are new relative to the draft.
+A model period is four years. Households enter adult life at age 18, retire
+at 66, and live at most through 85. Survival after retirement follows the
+2023 Social Security period life table. Dependent children remain at home for
+an expected 18 years. Risk aversion is $\sigma=2$. Following
+\citet{greaneyDynamicUrbanEconomics2025}, the annual real return is 2.0
+percent, housing depreciation 1.1 percent, the selling cost 6 percent, and
+the labor-income tax 17.9 percent; the annual property tax is 1.0 percent.
+Mortgage debt cannot exceed a share $\phi=0.80$ of the house value, so a
+purchase requires 20 percent equity
+\citep{davisHousingFinanceMacroeconomy2015}. Owner-occupied housing comes in
+five sizes, $\{2,4,6,8,10\}$ rooms, and renters choose continuously up to 6
+rooms, both from the matched ACS distributions; the housing-supply elasticity
+is $\eta=1.75$ \citep{saizGeographicDeterminantsHousing2010}. Households
+enter with a wealth-to-income draw from the PSID distribution of childless
+renters aged 18--24.\footnote{Bequest utility does not vary directly with the
+number of children.}
 
-The equivalence scale is fixed at the Citro--Michael form used by
-\citet{scholzSeshadriKhitatrakun2006} and \citet{borellaDeNardiYang2023}; the
-square-root household-size scale is the robustness alternative.
+Three objects specific to this specification are also set outside the
+estimation.
 
 The consumption share without children at home is fixed at $\alpha_0=0.733$.
 With Cobb--Douglas preferences and no committed bundles, the share of
@@ -122,28 +110,24 @@ housing-expenditure share of childless cash renters in 2019--2023. A round
 that estimated $\alpha_0$ freely returned $0.754$, three percent from this
 external value.
 
-The fecundity schedule is equation~\eqref{eq:fecundity}, anchored to the
-conception probabilities in Leridon's clinical tables with the formal
-least-squares fit pending. Family size takes the literal values
-$0,1,2,3^{+}$, and the mean number of children in the top bin is fixed at
-$3.602$, the capped mean among families with three or more children in the
-June 2024 CPS fertility supplement; the public file topcodes children ever
-born at five, and the model's completed-fertility moment uses the same capped
-convention, so model and data means share one definition.
+Family size takes the literal values $0,1,2,3^{+}$, and the mean number of
+children in the top bin is fixed at $3.602$, the capped mean among families
+with three or more children in the June 2024 CPS fertility supplement. The
+public file topcodes children ever born at five, and the model's
+completed-fertility moment uses the same capped convention, so model and data
+means share one definition.
 
-The income process is set at its empirical value rather than truncated. The
-committed bundles of the previous specification forced income risk far below
-empirical estimates to keep the bundles affordable; without them the
-restriction disappears. I impose the persistent wage process of
+Income risk is set at its empirical value. I impose the persistent wage
+process of
 \citet{flodenLinde2001}, with annual persistence $0.9136$ and innovation
 standard deviation $0.206$ net of measurement error, passed through the
 log-linear tax function of \citet{heathcoteStoreslettenViolante2017} with
 progressivity $\tau=0.181$, which preserves the autoregressive structure and
 scales the after-tax innovation to $0.169$. The process is sampled at the
 four-year model frequency and approximated with a five-state Rouwenhorst
-chain. Unlike in the draft, this object is no longer provisional, and the
-draft's footnote conditioning all quantitative results on a truncated income
-variance no longer applies.
+chain. Without committed bundles there is no affordability conflict at low
+income states, so the variance need not be truncated to keep households
+feasible.
 
 \begin{table}[H]
 \centering
@@ -167,7 +151,7 @@ Equivalence scale $e(n)$ & $((2+0.7n)/2)^{0.7}$ &
 \citet{scholzSeshadriKhitatrakun2006}, from Citro and Michael (1995) \\
 Consumption share $\alpha_0$ & 0.733 &
 CEX housing-expenditure share, childless cash renters, 2019--2023 \\
-Fecundity by age & Eq.~\eqref{eq:fecundity}; zero from 45 & \citet{leridon2004}; formal fit pending \\
+Fecundity by age $\pi_a$ & Declining; zero from 45 & \citet{sommer2016}; formal fit pending \\
 Family-size states & $0,1,2,3^{+}$; top-bin mean 3.602 &
 CPS June 2024 capped mean among $3^{+}$ families \\
 Annual income persistence $\rho_z$ & 0.9136 & \citet{flodenLinde2001} \\
@@ -397,15 +381,15 @@ Heathcote, J., K. Storesletten, and G. L. Violante. 2017.
 ``Optimal Tax Progressivity: An Analytical Framework.''
 \emph{Quarterly Journal of Economics} 132(4): 1693--1754.
 
-\bibitem[Leridon(2004)]{leridon2004}
-Leridon, H. 2004.
-``Can Assisted Reproduction Technology Compensate for the Natural Decline in Fertility with Age? A Model Assessment.''
-\emph{Human Reproduction} 19(7): 1548--1553.
-
 \bibitem[Saiz(2010)]{saizGeographicDeterminantsHousing2010}
 Saiz, A. 2010.
 ``The Geographic Determinants of Housing Supply.''
 \emph{Quarterly Journal of Economics} 125(3): 1253--1296.
+
+\bibitem[Sommer(2016)]{sommer2016}
+Sommer, K. 2016.
+``Fertility Choice in a Life Cycle Model with Idiosyncratic Uninsurable Earnings Risk.''
+\emph{Journal of Monetary Economics} 83: 27--38.
 
 \bibitem[Scholz et al.(2006)]{scholzSeshadriKhitatrakun2006}
 Scholz, J. K., A. Seshadri, and S. Khitatrakun. 2006.
