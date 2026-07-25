@@ -189,6 +189,31 @@ actual loadings. Birth-order progression rates stay untargeted diagnostics.
   Cross-loads disclosed: fecundity (external), expenditure tilts, house
   prices.
 
+## OPEN ITEM: fecundity constants are not fitted (registered 2026-07-24)
+
+The fecundity schedule that gates every fertility decision in E5,
+`1 - pi_a = 0.02 * exp(0.134 * (a - 18))` with a hard zero from age 45, is
+hand-set. The code labels it "ILLUSTRATIVE fecundity schedule; not
+calibrated" (`run_seq_smoke.py`). The FUNCTIONAL FORM is Sommer (2016, JME),
+who fits it to Trussell-Wilson (1985) shares permanently infertile by age but
+reports the fit graphically, not numerically -- so the constants could not be
+copied and were chosen here. Leridon (2004/2005) is NOT our anchor; it
+belongs to the de la Croix-Pommeret (2021) branch, which uses a bounded
+logistic instead. Known discrepancy with Sommer: our schedule still gives
+~0.35 conception probability at 44 and then jumps to zero, while his climbs
+smoothly to full infertility at 45.
+
+Consequence to keep in view: the two new timing targets (mean age at first
+birth 25.31, share of first births at 30+ 0.270) are matched through this
+schedule, so kappa_E's estimate is conditional on it. A refit that moves the
+schedule may move the timing fit without any change in preferences.
+
+Next step (not tonight): least-squares fit of (w1, w2) to the Trussell-Wilson
+schedule, cross-checked against Menken-Trussell-Larsen (1986), documented in
+`docs/model/fecundity_schedule_note_20260720.tex`, then a judgment on whether
+the calibration must be re-run. The strategy note cites Sommer for the form
+and does not display the constants as estimated.
+
 ## LAUNCH RECORD (2026-07-24 evening)
 
 E5 launched on the signed system: smoke `14736164` (47/47 exact-loop
