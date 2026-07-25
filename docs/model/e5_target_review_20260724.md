@@ -308,6 +308,34 @@ schedule, cross-checked against Menken-Trussell-Larsen (1986), documented in
 the calibration must be re-run. The strategy note cites Sommer for the form
 and does not display the constants as estimated.
 
+## OVERNIGHT PROBES LAUNCHED (2026-07-24 ~23:45, author-approved "proceed with all")
+
+Motivated by the E5 verdict (psi at its 3.0 cap with fertility overshooting;
+kappa_E only 49->36; wealth 4.35 vs 6.87 with ownership 0.41). Target system
+and weights UNCHANGED in both runs; these are diagnostics, not calibrations.
+
+1. kappa_E-profile probe, job `14741878_[1-10]` (cpu_short, 3:55): fixes
+   kappa_fert per cell at {0.5, 1, 2, 4, 8, 12, 18, 24, 30, 36.339}, widens
+   psi_child to [-6, 6] (E5_PSI_BOUND=6), re-optimizes the other nine
+   parameters from the certified E5 winner seed, 200-minute chains, strict
+   twice-repeated tight winners. Arm `E5_PROBE_KE`, 9 free / 12 targets.
+   Smoke: 13/13 strict exact-loop evaluations, metadata verified.
+   Collector: `collect_e5_probe.py` on
+   `output/model/eqscale_seq_e5_probe_20260725/production` (run at collection).
+   Questions: is there an interior kappa_E that reaches the timing rows, at
+   what cost elsewhere, and does freeing psi resolve the fertility tension?
+
+2. beta-theta0 wealth slice, job `14741879_[1-8]` (cpu_short, 2:00): 64
+   tight solves (Nb=120, 40/2.5e-5) at the E5 winner, beta_annual in
+   {0.94..0.9981} x theta0 in {0.05..8}, all else fixed; per-node CSV
+   checkpoints, resume-safe. Smoke: 2 nodes + resume-skip verified.
+   Output: `output/model/eqscale_seq_e5_wealth_slice_20260725/task_*/`.
+   Question: is wealth/earnings 6.87 reachable at all in this structure, and
+   what happens to ownership and the bequest rows where it is closest?
+
+Infrastructure commit `01f5cb9`; default paths bit-identical (suite 123
+passed with the gates off).
+
 ## LAUNCH RECORD (2026-07-24 evening)
 
 E5 launched on the signed system: smoke `14736164` (47/47 exact-loop
