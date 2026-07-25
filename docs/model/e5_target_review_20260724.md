@@ -215,15 +215,32 @@ scaled by (1 - tau), tau = 0.181, from Heathcote, Storesletten and Violante
 `code/model/intergen_eqscale_seq_optimized/externals.py`.
 
 Author question (2026-07-24): Floden-Linde is a 2001 estimate on a 1988-92
-panel and may not be the best modern reference. REVIEW BEFORE THE PAPER:
-compare against the standard alternatives on modern data -- Storesletten,
-Telmer and Yaron (2004), Guvenen (2009), Kaplan and Violante (2010),
-Blundell, Pistaferri and Preston (2008) -- and against the process used by
-the closest structural housing papers (Sommer and Sullivan 2018; Sommer
-2016). Decide whether to keep FL or re-anchor, and whether the persistent /
-transitory split should be modeled rather than folded into one persistent
-component. A change here moves every wealth moment, so it is a
-recalibration, not an edit.
+panel and may not be the best modern reference. PREFERRED OPTION, raised by
+the author: estimate the process ourselves on the PSID. The data are already
+in the project for the wealth targets, and an own estimate would match the
+model's exact sample and income definition (household earnings over our age
+range) rather than borrowing an estimate on individual wages from a different
+period. Fallback if we do not estimate: compare against Storesletten, Telmer
+and Yaron (2004), Guvenen (2009), Kaplan and Violante (2010), Blundell,
+Pistaferri and Preston (2008), and the processes used in the closest
+structural housing papers (Sommer and Sullivan 2018; Sommer 2016). Also
+decide whether the persistent / transitory split should be modeled rather
+than folded into one persistent component. Any change here moves every wealth
+moment, so it is a recalibration, not an edit.
+
+INCONSISTENCY TO RESOLVE (flagged by the author 2026-07-24): the model uses
+two different tax objects, and their values are nearly identical by
+coincidence, which obscures the difference.
+- `tau_pay = 0.179` is a flat AVERAGE RATE (OECD, via DUE). It sets the LEVEL
+  of disposable income; `P.income` is stored net of it.
+- `tau = 0.181` is the HSV PROGRESSIVITY parameter, a curvature. It is used
+  only to scale the innovation s.d. by (1 - tau), i.e. to set how much RISK
+  survives the tax system.
+A consistent specification would apply the HSV function
+`y_net = lambda * y^(1 - tau)` to both, calibrating lambda to reproduce the
+average rate, instead of a flat rate for the level and HSV curvature for the
+risk. Decide before the paper; this is a model change, hence a
+recalibration.
 
 ## OPEN ITEM: fecundity constants are not fitted (registered 2026-07-24)
 
