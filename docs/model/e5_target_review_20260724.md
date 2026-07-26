@@ -308,6 +308,31 @@ schedule, cross-checked against Menken-Trussell-Larsen (1986), documented in
 the calibration must be re-run. The strategy note cites Sommer for the form
 and does not display the constants as estimated.
 
+## E5B CERTIFIED (2026-07-26 morning) -- THE OPERATIVE WINNER
+
+Jobs `14756965_[1-8]` + collector `14756966`; 6/8 chains eligible (two
+failed the exact tight-repeat rule); winner loss 385.14 vs E5's 485.50 and
+the restricted probe's 444.31. Report:
+`output/model/eqscale_seq_e5b_recalibration_20260725/report/`. The E5
+winner of 2026-07-24 is superseded for all reporting.
+
+Winner (annual beta 0.9911): delta_jump 0.0239, delta_a 0.0122, psi 0.5850,
+kappa_E 3.552, kappa_C 1.254, chi 1.0380, H0 8.1624, theta0 0.1684, theta1
+0.0500, all interior (registered psi bound +-3 kept).
+
+Fit: EIGHT of twelve rows within ~1.3 SE -- tfr 1.904 (-0.5 SE), mafb 25.64
+(+1.3), own_rate 0.564 (-0.4), own_family_gap 0.166 (-0.2), rooms increment
+(-0.2), 3+ rooms gap (+0.2), bequest flow (+0.6), aggregate rooms (+1.0).
+The four failures are exactly the structural trio of the probe verdicts:
+childlessness 0.080 (-14.1 SE; WORSE than E5, as predicted -- lower noise
+removes the only childlessness device), share30+ 0.332 (+7.8, improved),
+wealth 5.455 (-3.6, improved), p90/p50 2.068 (-10.4, unchanged). The
+current architecture now fits everything it can fit; the remaining misses
+are the mechanism questions in the 2026-07-25 memo, not calibration slack.
+
+Policy packet at this winner launched as job `14796061` (--arm e5,
+verification gate at 1e-6 against the certified table before any output).
+
 ## OVERNIGHT PROBE VERDICTS (2026-07-25 morning; both runs complete, 10/10 and 64/64)
 
 Artifacts: `output/model/eqscale_seq_e5_probe_20260725/report/frontier.csv`
