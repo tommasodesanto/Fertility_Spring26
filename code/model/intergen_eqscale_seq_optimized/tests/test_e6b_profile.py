@@ -140,6 +140,8 @@ def test_strict_collector_accepts_e6_contracts(arm: str) -> None:
         assert (outdir / "results.json").exists()
         results = json.loads((outdir / "results.json").read_text())
         assert results["winner_metadata"]["arm"] == arm
+        assert results["winner_repeat_check"]["both_strict"] is True
+        assert results["winner_summary_path"].endswith("chain_1/summary.json")
         parameter_table = (outdir / "parameter_table_full.csv").read_text()
         assert parameter_table.count("\n") == 11
         assert "beta_annual,0.96,0.8,0.9995" in parameter_table

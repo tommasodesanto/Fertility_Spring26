@@ -100,7 +100,9 @@ def main() -> None:
     paths = sorted(args.results_root.glob("chain_*/summary.json"))
     if not paths:
         raise RuntimeError(f"no E1 chain summaries under {args.results_root}")
-    eligible: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    eligible: list[
+        tuple[dict[str, Any], dict[str, Any], dict[str, Any], str]
+    ] = []
     chain_rows: list[dict[str, Any]] = []
     for path in paths:
         summary = json.loads(path.read_text())
@@ -117,10 +119,14 @@ def main() -> None:
                            "tight_loss": tight.get("rank_loss") if tight else None,
                            "tight_residual": tight.get("market_residual") if tight else None})
         if tight is not None:
-            eligible.append((tight, meta))
+            eligible.append(
+                (tight, meta, summary.get("tight_repeat_check") or {}, str(path))
+            )
     if not eligible:
         raise RuntimeError("no strict, exactly repeated E1 winner")
-    winner, winner_metadata = min(eligible, key=lambda item: float(item[0]["rank_loss"]))
+    winner, winner_metadata, winner_repeat_check, winner_summary_path = min(
+        eligible, key=lambda item: float(item[0]["rank_loss"])
+    )
     args.outdir.mkdir(parents=True, exist_ok=True)
     write_csv(args.outdir / "chain_summary.csv", chain_rows)
     write_csv(args.outdir / "target_fit_full.csv", list(winner["target_fit"]))
@@ -128,6 +134,8 @@ def main() -> None:
     results = {
         "winners": {"E1": winner},
         "winner_metadata": winner_metadata,
+        "winner_repeat_check": winner_repeat_check,
+        "winner_summary_path": winner_summary_path,
         "eligible_E1_chains": len(eligible),
         "production_chain_count": len(paths),
     }
@@ -141,6 +149,7 @@ def main() -> None:
         "The lowest eligible tight-repeat loss is the E1 winner.",
         "`results.json` exposes `winners.E1` in the M5 winner shape.",
         "`results.json` also preserves the selected chain's complete calibration metadata.",
+        "`results.json` preserves the exact-repeat check and source summary path.",
         "`target_fit_full.csv` contains every row in the selected target system.",
         "`parameter_table_full.csv` contains every estimated parameter, its search bounds, and a two-percent near-bound flag.",
         "`chain_summary.csv` records eligibility for every discovered chain.",
