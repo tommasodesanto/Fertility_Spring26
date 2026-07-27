@@ -345,6 +345,23 @@ def plot_policy_childless_renter(
     plt.close(fig)
 
 
+def completed_fertility_measure(sol: SimpleNamespace, P: SimpleNamespace) -> float:
+    """Return the model's configured completed-fertility measurement."""
+    mean_state = float(getattr(sol, "mean_completed_fertility", np.nan))
+    if str(getattr(P, "fertility_units", "parity2x")) != "literal_topcode":
+        return 2.0 * mean_state
+    shares = np.asarray(
+        getattr(sol, "parity_dist", np.array([], dtype=float)),
+        dtype=float,
+    ).reshape(-1)
+    if shares.size == 0 or not np.all(np.isfinite(shares)):
+        return float("nan")
+    values = np.arange(shares.size, dtype=float)
+    if shares.size >= 2:
+        values[-1] = float(getattr(P, "tfr_top_bin_weight", 3.0))
+    return float(np.sum(shares * values))
+
+
 def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:
     return {
         "J": P.J,
@@ -365,7 +382,7 @@ def _summary(sol: SimpleNamespace, P: SimpleNamespace) -> dict[str, Any]:
         "target_own_rate": float(getattr(sol, "own_rate_3055", np.nan)),
         "young_owner_rate": float(getattr(sol, "young_owner_rate", np.nan)),
         "old_owner_rate": float(getattr(sol, "old_owner_rate", np.nan)),
-        "tfr": 2.0 * float(getattr(sol, "mean_completed_fertility", np.nan)),
+        "tfr": completed_fertility_measure(sol, P),
         "mean_completed_fertility": float(getattr(sol, "mean_completed_fertility", np.nan)),
         "tfr_by_income_type": 2.0 * getattr(sol, "mean_fertility_by_income_type", np.array([])),
         "own_rate_by_income_type": getattr(sol, "own_rate_by_income_type", np.array([])),

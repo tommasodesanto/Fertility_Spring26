@@ -11,6 +11,7 @@ from unittest.mock import patch
 import numpy as np
 
 from intergen_eqscale_seq_optimized import e5_profile
+from intergen_eqscale_seq_optimized.diagnostics import completed_fertility_measure
 from intergen_eqscale_seq_optimized.solver import add_aggregate_wealth_bequest_flow_moments
 
 
@@ -26,6 +27,20 @@ class E5ProfileTests(unittest.TestCase):
         self.assertAlmostEqual(e5_profile.E5_TARGETS["mean_age_first_birth"], 25.310560799362)
         self.assertAlmostEqual(e5_profile.E5_TARGETS["share_first_births_age30plus"], 0.270062376851342)
         self.assertEqual(len(e5_profile.e5_target_system().targets_dict()), 12)
+
+    def test_standard_diagnostic_uses_literal_top_group_measurement(self) -> None:
+        sol = SimpleNamespace(
+            mean_completed_fertility=1.5,
+            parity_dist=np.array([0.2, 0.3, 0.3, 0.2]),
+        )
+        parameters = SimpleNamespace(
+            fertility_units="literal_topcode",
+            tfr_top_bin_weight=3.6,
+        )
+        self.assertAlmostEqual(
+            completed_fertility_measure(sol, parameters),
+            0.3 + 2.0 * 0.3 + 3.6 * 0.2,
+        )
 
     def test_dummy_timing_targets_complete_twelve_row_contract(self) -> None:
         with patch.dict(e5_profile.E5_TARGETS, {
