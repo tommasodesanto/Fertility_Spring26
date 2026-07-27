@@ -17,12 +17,15 @@ from typing import Any
 import numpy as np
 
 
+ROOT = Path(__file__).resolve().parents[3]
 MODEL_ROOT = Path(__file__).resolve().parents[1]
 if str(MODEL_ROOT) not in sys.path:
     sys.path.insert(0, str(MODEL_ROOT))
 
 from intergen_eqscale_seq_optimized.diagnostics import write_diagnostics  # noqa: E402
 from intergen_eqscale_seq_optimized.local_panel import jsonable  # noqa: E402
+
+NCHS_COUNTS = ROOT / "code/data/nchs_natality_timing/first_birth_counts_year_age.csv"
 
 
 def parse_args() -> argparse.Namespace:
@@ -89,6 +92,130 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(handle, fieldnames=keys)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def first_birth_age_diagnostic(
+    moments: dict[str, Any],
+    parameters: Any,
+    outdir: Path,
+) -> dict[str, Any]:
+    """Write the supplemental model-versus-NCHS first-birth age comparison."""
+    model_distribution = np.asarray(
+        moments.get("first_birth_age_distribution", np.array([], dtype=float)),
+        dtype=float,
+    ).reshape(-1)
+    if model_distribution.size != int(parameters.J):
+        raise RuntimeError(
+            "first-birth age distribution must have one entry per model age"
+        )
+    ages = float(parameters.age_start) + float(parameters.da) * np.arange(
+        int(parameters.J), dtype=float
+    )
+    model_by_start = {
+        int(round(age)): float(share)
+        for age, share in zip(ages, model_distribution)
+        if 18.0 <= age <= 45.0
+    }
+
+    counts: dict[int, float] = {}
+    with NCHS_COUNTS.open(newline="", encoding="utf-8") as handle:
+        for row in csv.DictReader(handle):
+            year, age = int(row["year"]), int(row["age"])
+            if 1979 <= year - age <= 1984:
+                counts[age] = counts.get(age, 0.0) + float(row["n_first_births"])
+    denominator = float(sum(counts.values()))
+    if denominator <= 0.0:
+        raise RuntimeError("NCHS first-birth cohort counts are empty")
+
+    rows = []
+    nchs_by_start: dict[int, float] = {}
+    for start in range(18, 43, 4):
+        data_share = (
+            sum(value for age, value in counts.items() if start <= age < start + 4)
+            / denominator
+        )
+        model_share = model_by_start.get(start, 0.0)
+        nchs_by_start[start] = data_share
+        rows.append(
+            {
+                "age_bin_start": start,
+                "age_bin_end": start + 3,
+                "model_share": model_share,
+                "nchs_share": data_share,
+                "model_minus_nchs": model_share - data_share,
+            }
+        )
+    write_csv(outdir / "first_birth_age_distribution_4year_bins.csv", rows)
+
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots(figsize=(8.0, 4.6))
+    x = np.arange(len(rows), dtype=float)
+    width = 0.38
+    ax.bar(
+        x - width / 2,
+        [float(row["model_share"]) for row in rows],
+        width,
+        label="Model",
+    )
+    ax.bar(
+        x + width / 2,
+        [float(row["nchs_share"]) for row in rows],
+        width,
+        label="NCHS 1979--84 cohorts",
+    )
+    ax.set_xticks(
+        x,
+        [f"{row['age_bin_start']}--{row['age_bin_end']}" for row in rows],
+    )
+    ax.set_xlabel("Age at first birth")
+    ax.set_ylabel("Share of first births")
+    ax.set_title("Supplemental first-birth age distribution")
+    ax.grid(axis="y", alpha=0.25)
+    ax.legend(frameon=False)
+    fig.tight_layout()
+    fig.savefig(
+        outdir / "supplemental_first_birth_age_distribution.png",
+        dpi=180,
+    )
+    plt.close(fig)
+
+    def grouped_share(starts: tuple[int, ...], source: dict[int, float]) -> float:
+        return float(sum(source.get(start, 0.0) for start in starts))
+
+    early_model = grouped_share((18, 22), model_by_start)
+    early_nchs = grouped_share((18, 22), nchs_by_start)
+    middle_model = grouped_share((26, 30), model_by_start)
+    middle_nchs = grouped_share((26, 30), nchs_by_start)
+    late_model = grouped_share((38, 42), model_by_start)
+    late_nchs = grouped_share((38, 42), nchs_by_start)
+    summary = {
+        "early_18_25": {
+            "model": early_model,
+            "nchs": early_nchs,
+            "gap": early_model - early_nchs,
+        },
+        "middle_26_33": {
+            "model": middle_model,
+            "nchs": middle_nchs,
+            "gap": middle_model - middle_nchs,
+        },
+        "late_38_45": {
+            "model": late_model,
+            "nchs": late_nchs,
+            "gap": late_model - late_nchs,
+        },
+        "missing_25_30_shape_confirmed": bool(
+            early_model > early_nchs and middle_model < middle_nchs
+        ),
+    }
+    (outdir / "first_birth_age_shape_summary.json").write_text(
+        json.dumps(summary, indent=2, sort_keys=True)
+    )
+    return summary
 
 
 def main() -> None:
@@ -173,6 +300,11 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     write_csv(args.outdir / "target_fit_reproduced_full.csv", reproduced_rows)
     write_diagnostics(sol, parameters, args.outdir / "standard")
+    first_birth_shape = first_birth_age_diagnostic(
+        moments,
+        parameters,
+        args.outdir,
+    )
     permanent_diagnostics = {
         name: moments[name]
         for name in (
@@ -198,6 +330,7 @@ def main() -> None:
         "prices": np.asarray(prices, dtype=float).reshape(-1),
         "theta": theta,
         "permanent_income_diagnostics": permanent_diagnostics,
+        "first_birth_age_shape": first_birth_shape,
     }
     (args.outdir / "verification_summary.json").write_text(
         json.dumps(jsonable(summary), indent=2, sort_keys=True)
@@ -210,6 +343,8 @@ def main() -> None:
                 "The winner is solved once at the strict collector settings.",
                 "All twelve calibrated moments must reproduce within `1e-6` before",
                 "the existing standard graph set or verification tables are written.",
+                "The age-bin table and plot are supplemental and do not alter the",
+                "stable standard graph set.",
                 "No policy experiment is run.",
             ]
         )

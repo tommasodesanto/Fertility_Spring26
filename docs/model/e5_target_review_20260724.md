@@ -654,7 +654,9 @@ E6c activates only if the certified E6a+E6b estimate remains more than two
 standard errors (`0.016`) from target **and** the supplemental age-bin
 diagnostic confirms that the missing 25--30 shape remains. If either condition
 fails, no readiness architecture is added; any residual shape issue is merely
-reported.
+reported. The supplemental condition is operationally fixed as excess model
+mass at ages 18--25 together with deficient model mass at ages 26--33, each
+relative to the NCHS 1979--84 cohort distribution.
 
 If triggered, the registered architecture is the handoff's binary readiness
 state: entrants may be unsettled, an age-dependent exogenous arrival moves
@@ -674,3 +676,17 @@ and E6a comparisons plus measured or fixed-parameter E6b evidence; live E6b
 search cases are deliberately excluded. Its final checklist blocks a
 recommendation until both active collectors, the E6c gate, the complete
 comparison tables, and the recommended graph packet are resolved.
+
+The strict diagnostic packet now writes the preregistered supplemental
+first-birth age comparison directly from the certified winner and the
+source-controlled NCHS cohort counts. The first rerun (`14847652`) stopped
+before writing the supplement because the Torch mirror lacked that small input
+CSV. After syncing the exact file, rerun `14847695` completed in 22 seconds
+and again reproduced the E6a loss and all twelve moments exactly.
+
+For E6a, model versus NCHS first-birth mass is `0.4822` versus `0.4338` at
+ages 18--25, `0.3318` versus `0.3587` at ages 26--33, and `0.0843` versus
+`0.0297` at ages 38--45. Thus the preregistered supplemental shape condition
+is true for E6a: excess early mass and deficient middle mass remain, in
+addition to the residual terminal excess. This does not activate E6c by
+itself; the trigger is applied only to the certified combined winner.

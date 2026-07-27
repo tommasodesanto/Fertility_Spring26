@@ -99,5 +99,8 @@ reports only and does not run the model.
 
 `build_e6_winner_diagnostics.py` reconstructs an E6 winner through the exact
 calibration-chain runtime, requires all twelve certified moments to reproduce
-within `1e-6`, and then writes the existing standard graph set. The Torch
-launcher is `code/cluster/submit_intergen_e6_winner_diagnostic.sh`.
+within `1e-6`, and then writes the existing standard graph set. It also writes
+a clearly labeled supplemental model-versus-NCHS first-birth age-bin table,
+plot, and preregistered timing-shape flag without changing the standard set.
+The Torch launcher is
+`code/cluster/submit_intergen_e6_winner_diagnostic.sh`.

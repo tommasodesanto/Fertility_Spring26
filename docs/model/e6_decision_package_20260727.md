@@ -98,6 +98,10 @@ cannot create an earnings or wealth tail.
 
 The independent diagnostic solve reproduces all twelve certified moments and
 the scalar loss exactly. The stable 17-plot packet passes visual inspection.
+The supplemental first-birth comparison also makes the remaining shape failure
+explicit: E6a assigns `0.4822` of first births to ages 18--25 versus `0.4338`
+in the NCHS cohorts, and `0.3318` to ages 26--33 versus `0.3587` in the data.
+It still assigns `0.0843` to ages 38--45 versus `0.0297` in the data.
 Artifacts:
 
 - `output/model/eqscale_seq_e6a_recalibration_20260727/report/`
@@ -150,6 +154,8 @@ The signed 30+ first-birth share has target `0.270062` and declared standard
 error `0.008`. E6c activates only if the certified E6a+E6b estimate remains
 more than two standard errors (`0.016`) from target **and** the supplemental
 age-bin diagnostic still displays the missing 25--30 shape.
+The supplemental condition means that the model assigns more first-birth mass
+than the NCHS cohorts to ages 18--25 and less mass to ages 26--33.
 
 If triggered, E6c is the handoff's binary readiness state. An exogenous,
 age-dependent event moves an entrant irreversibly from unsettled to settled;
