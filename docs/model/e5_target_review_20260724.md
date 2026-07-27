@@ -552,3 +552,23 @@ array `14846990_[1-8]` is running immediately, with after-success collector
 after-success collector is `14846993`. Each production chain is capped at
 1,000 solves or 225 minutes and uses the same two baseline, three
 `start_mix=0.10`, and three `start_mix=0.25` basin design.
+
+## E5/E6 ANNUAL DISCOUNT-FACTOR BOUND REPAIR (2026-07-27)
+
+An audit before E6 certification found that `E5_DOMAIN` declared an annual
+discount-factor search lower bound of `0.80`, although the signed handoff
+preserves the external restriction `beta_annual >= 0.94`. The E5b winner and
+every current E6a/E6b best case are legal under the external restriction; the
+lowest current best is `0.96398` in E6a and `0.96815` in E6b. Thus no reported
+winner has used the prohibited region.
+
+The E5-gated domain lower bound is restored to `0.94` before the combined
+E6a+E6b array begins. The E6b array was already running under the wider search
+box; its collector result is admissible only if the final estimate remains at
+or above `0.94`, and the wider-box discrepancy must remain disclosed in the
+decision package. The combined exact-loop smoke is repeated under the repaired
+domain before its dependent production array is released. Repaired-domain
+smoke: `14847097_[1-2]`. The still-pending combined array and collector
+(`14846992`, `14846993`) were cancelled before doing any work and replaced by
+production `14847114_[1-8]`, dependent on both the E6a collector and this
+smoke, plus after-success collector `14847115`.

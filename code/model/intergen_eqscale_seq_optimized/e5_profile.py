@@ -63,7 +63,7 @@ def _weight(name: str) -> float:
 E5_WEIGHTS: dict[str, float] = {name: _weight(name) for name in E5_TARGETS}
 
 E5_DOMAIN: tuple[tuple[str, float, float, str], ...] = (
-    ("beta_annual", 0.80, 0.9995, "discount"),
+    ("beta_annual", 0.94, 0.9995, "discount"),
     ("delta_alpha", 0.0, 0.25, "softzero"),
     ("delta_alpha_jump", 0.0, 0.25, "softzero"),
     ("psi_child", -3.0, 3.0, "asinh"),

@@ -36,6 +36,7 @@ class E5ProfileTests(unittest.TestCase):
         self.assertEqual(system.count, 12)
         self.assertEqual(set(system.targets_dict()), set(system.weights_dict()))
         self.assertEqual(len(e5_profile.E5_DOMAIN), 10)
+        self.assertEqual(e5_profile.E5_DOMAIN[0][:3], ("beta_annual", 0.94, 0.9995))
 
     def test_wealth_flow_uses_gross_labor_earnings_without_payroll_wedge(self) -> None:
         p = SimpleNamespace(
