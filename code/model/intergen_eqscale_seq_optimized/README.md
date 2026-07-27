@@ -76,3 +76,17 @@ strict fixed-winner frontier with
 `intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py`; the
 cluster refit uses `code/cluster/submit_intergen_e6a.sh` followed by its
 strict collector.
+
+E6b adds an externally measured permanent income level at entry. The PSID
+long-lag minimum-distance decomposition fixes log-level variance at `0.3931`;
+`e6b_profile.py` maps it to a mean-one, three-node Gauss--Hermite rule with
+weights `(1/6, 2/3, 1/6)` and takes the Cartesian product with the existing
+five-state FL--HSV Rouwenhorst chain. The resulting 15-state transition
+matrix is block diagonal, so permanent levels never change. It adds no free
+calibration parameter and is default-off.
+
+`run_e6b_income_level_diagnostic.py` strictly compares the E5b control, E6b
+alone, and E6a+E6b at the certified E5b parameter vector. It reports all
+twelve target rows plus childlessness, completed fertility, and ownership by
+permanent level. `code/cluster/submit_intergen_e6b_fixed_diagnostic.sh` runs
+that comparison on Torch.

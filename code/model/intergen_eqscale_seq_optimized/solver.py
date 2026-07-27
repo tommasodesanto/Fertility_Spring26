@@ -2369,7 +2369,9 @@ def solve_bellman_full_markov_income(
             else:
                 Vnr = np.zeros((Nb, nt, I, npar, ncs))
                 for znext in range(Nz):
-                    Vnr += Pi_z[zz, znext] * V[:, :, :, j + 1, znext, :, :]
+                    transition_weight = Pi_z[zz, znext]
+                    if transition_weight > 0.0:
+                        Vnr += transition_weight * V[:, :, :, j + 1, znext, :, :]
                 if bool(getattr(P, "use_age_survival", False)):
                     survival = float(P.survival_probs[j])
                     Vnr = survival * Vnr + (1.0 - survival) * Vbq
@@ -4691,7 +4693,11 @@ def forward_distribution_markov_income(
                             wt_child = Pi[cs, csn]
                             if wt_child > 0:
                                 for zn in range(Nz):
-                                    g[:, :, :, j + 1, zn, nn, csn] += Pi_z[zz, zn] * wt_child * gp
+                                    transition_weight = Pi_z[zz, zn]
+                                    if transition_weight > 0.0:
+                                        g[:, :, :, j + 1, zn, nn, csn] += (
+                                            transition_weight * wt_child * gp
+                                        )
                     else:
                         if cs == 0:
                             csn = 0
@@ -4708,7 +4714,11 @@ def forward_distribution_markov_income(
                                 entrants_mature_by_loc[im] += fi
                                 entrants_mature_total += fi
                         for zn in range(Nz):
-                            g[:, :, :, j + 1, zn, nn, csn] += Pi_z[zz, zn] * gp
+                            transition_weight = Pi_z[zz, zn]
+                            if transition_weight > 0.0:
+                                g[:, :, :, j + 1, zn, nn, csn] += (
+                                    transition_weight * gp
+                                )
 
     _gate_dead_mass_at_age(
         g[:, :, :, J - 1, :, :, :],
@@ -5003,7 +5013,11 @@ def advance_cohort_one_period_markov_income(
                         wt_child = Pi[cs, csn]
                         if wt_child > 0:
                             for zn in range(Nz):
-                                g_next[:, :, :, zn, nn, csn] += Pi_z[zz, zn] * wt_child * gp
+                                transition_weight = Pi_z[zz, zn]
+                                if transition_weight > 0.0:
+                                    g_next[:, :, :, zn, nn, csn] += (
+                                        transition_weight * wt_child * gp
+                                    )
                 else:
                     if cs == 0:
                         csn = 0
@@ -5014,7 +5028,9 @@ def advance_cohort_one_period_markov_income(
                     else:
                         csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
                     for zn in range(Nz):
-                        g_next[:, :, :, zn, nn, csn] += Pi_z[zz, zn] * gp
+                        transition_weight = Pi_z[zz, zn]
+                        if transition_weight > 0.0:
+                            g_next[:, :, :, zn, nn, csn] += transition_weight * gp
     return g_next
 
 
@@ -5561,6 +5577,65 @@ def compute_markov_statistics(
                         for ten in range(1, nt):
                             Hd += float(np.sum(g[:, ten, i, j, zz, nn, cs]) * P.H_own[ten - 1])
             stats.housing_demand_by_income_type[zz, i] = Hd / max(housing_demand_normalizer(P), 1e-12)
+
+    if bool(getattr(P, "permanent_income_levels_enabled", False)):
+        group_index = np.asarray(P.permanent_income_group_index, dtype=int).reshape(-1)
+        level_values = np.asarray(P.permanent_income_level_values, dtype=float).reshape(-1)
+        n_levels = level_values.size
+        stats.permanent_income_level_values = level_values.copy()
+        stats.permanent_income_completed_mass = np.zeros(n_levels)
+        stats.permanent_income_childless_by_level = np.zeros(n_levels)
+        stats.permanent_income_completed_fertility_by_level = np.zeros(n_levels)
+        stats.permanent_income_own_rate_3055_by_level = np.zeros(n_levels)
+        a30s = age_to_index(P, 30)
+        a55e = age_to_index(P, 55)
+        parity_weights = np.arange(P.n_parity, dtype=float)
+        if (
+            str(getattr(P, "fertility_units", "parity2x")) == "literal_topcode"
+            and parity_weights.size > 0
+        ):
+            parity_weights[-1] = float(getattr(P, "tfr_top_bin_weight", parity_weights[-1]))
+        for level in range(n_levels):
+            states = np.flatnonzero(group_index == level)
+            completed = np.take(
+                g[:, :, :, P.A_f_end :, :, :, :],
+                states,
+                axis=4,
+            )
+            completed_mass = float(np.sum(completed))
+            stats.permanent_income_completed_mass[level] = completed_mass
+            stats.permanent_income_childless_by_level[level] = float(
+                np.sum(completed[:, :, :, :, :, 0, :]) / max(completed_mass, 1e-12)
+            )
+            stats.permanent_income_completed_fertility_by_level[level] = float(
+                sum(
+                    parity_weights[nn]
+                    * np.sum(completed[:, :, :, :, :, nn, :])
+                    for nn in range(P.n_parity)
+                )
+                / max(completed_mass, 1e-12)
+            )
+            prime = np.take(
+                g[:, :, :, a30s : a55e + 1, :, :, :],
+                states,
+                axis=4,
+            )
+            prime_mass = float(np.sum(prime))
+            stats.permanent_income_own_rate_3055_by_level[level] = float(
+                np.sum(prime[:, 1:, :, :, :, :, :]) / max(prime_mass, 1e-12)
+            )
+        stats.permanent_income_childless_high_minus_low = float(
+            stats.permanent_income_childless_by_level[-1]
+            - stats.permanent_income_childless_by_level[0]
+        )
+        stats.permanent_income_completed_fertility_high_minus_low = float(
+            stats.permanent_income_completed_fertility_by_level[-1]
+            - stats.permanent_income_completed_fertility_by_level[0]
+        )
+        stats.permanent_income_own_rate_3055_high_minus_low = float(
+            stats.permanent_income_own_rate_3055_by_level[-1]
+            - stats.permanent_income_own_rate_3055_by_level[0]
+        )
 
     worker_income = worker_mass = 0.0
     young_income = young_mass = young_liquid = 0.0

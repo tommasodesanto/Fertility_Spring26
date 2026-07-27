@@ -268,6 +268,11 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             if os.environ.get("E6A", "") == "1"
             else {}
         ),
+        **(
+            __import__("intergen_eqscale_seq_optimized.e6b_profile", fromlist=["e6b_overrides"]).e6b_overrides()
+            if os.environ.get("E6B", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -310,18 +315,22 @@ def main() -> None:
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
     arm_name = (
-        "E6A"
-        if os.environ.get("E6A", "") == "1"
+        ("E6AB" if os.environ.get("E6A", "") == "1" else "E6B")
+        if os.environ.get("E6B", "") == "1"
         else (
-            "E5_PROBE_KE"
-            if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
+            "E6A"
+            if os.environ.get("E6A", "") == "1"
             else (
-                "E5"
-                if os.environ.get("E5", "") == "1"
+                "E5_PROBE_KE"
+                if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
                 else (
-                    "E4_SPLIT"
-                    if os.environ.get("E4_SPLIT", "") == "1"
-                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")
+                    "E5"
+                    if os.environ.get("E5", "") == "1"
+                    else (
+                        "E4_SPLIT"
+                        if os.environ.get("E4_SPLIT", "") == "1"
+                        else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")
+                    )
                 )
             )
         )
@@ -345,9 +354,23 @@ def main() -> None:
                 "seed": args.seed, "start_mix": start_mix, "initial_unit_vector": x0,
                 "J": args.J, "Nb": args.Nb, "max_iter_eq": args.max_iter_eq, "tol_eq": args.tol_eq,
                 "income_process": (
-                    {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9136, "annual_innovation_sd": 0.1690}
-                    if os.environ.get("E5", "") == "1"
-                    else {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20}
+                    {
+                        "states": 15,
+                        "process": "three_permanent_levels_x_rouwenhorst",
+                        "annual_rho": 0.9136,
+                        "annual_innovation_sd": 0.1690,
+                    }
+                    if os.environ.get("E6B", "") == "1"
+                    else (
+                        {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9136, "annual_innovation_sd": 0.1690}
+                        if os.environ.get("E5", "") == "1"
+                        else {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20}
+                    )
+                ),
+                "permanent_income_levels": (
+                    __import__("intergen_eqscale_seq_optimized.e6b_profile", fromlist=["e6b_metadata"]).e6b_metadata()
+                    if os.environ.get("E6B", "") == "1"
+                    else None
                 ),
                 "fecundity_schedule": (
                     __import__("intergen_eqscale_seq_optimized.e6a_profile", fromlist=["e6a_metadata"]).e6a_metadata()

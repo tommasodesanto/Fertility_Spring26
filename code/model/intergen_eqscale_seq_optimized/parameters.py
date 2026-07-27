@@ -176,6 +176,16 @@ def setup_parameters() -> SimpleNamespace:
     P.income_type_transition = "markov"
     P.income_shock_persistence = 0.85
     P.Pi_z = make_persistent_transition_matrix(P.z_weights, P.income_shock_persistence)
+    # Default-off E6b permanent income level metadata. When enabled, the
+    # ordinary z state is the Cartesian product of a permanent entry level and
+    # the existing Markov income state; the solver still sees one transition
+    # matrix, so the default architecture is unchanged.
+    P.permanent_income_levels_enabled = False
+    P.permanent_income_log_variance = 0.0
+    P.permanent_income_level_values = np.array([1.0])
+    P.permanent_income_level_weights = np.array([1.0])
+    P.permanent_income_group_index = np.zeros(P.z_grid.size, dtype=int)
+    P.permanent_income_base_state_index = np.arange(P.z_grid.size, dtype=int)
     # Diagnostic-only retirement-income dispersion.  Zero preserves the
     # production model, where every retiree receives the same pension.  A
     # positive scale loads the persistent income state into retirement income.
@@ -387,6 +397,28 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.z_weights = zw / zw.sum() if zw.sum() > 0 else np.ones_like(zw) / max(zw.size, 1)
     if "Pi_z" in od:
         P.Pi_z = np.asarray(P.Pi_z, dtype=float)
+    if "permanent_income_level_values" in od:
+        P.permanent_income_level_values = np.asarray(
+            P.permanent_income_level_values, dtype=float
+        ).reshape(-1)
+    if "permanent_income_level_weights" in od:
+        level_weights = np.maximum(
+            np.asarray(P.permanent_income_level_weights, dtype=float).reshape(-1),
+            0.0,
+        )
+        P.permanent_income_level_weights = (
+            level_weights / level_weights.sum()
+            if level_weights.sum() > 0.0
+            else np.ones_like(level_weights) / max(level_weights.size, 1)
+        )
+    if "permanent_income_group_index" in od:
+        P.permanent_income_group_index = np.asarray(
+            P.permanent_income_group_index, dtype=int
+        ).reshape(-1)
+    if "permanent_income_base_state_index" in od:
+        P.permanent_income_base_state_index = np.asarray(
+            P.permanent_income_base_state_index, dtype=int
+        ).reshape(-1)
     if "survival_probs" in od:
         P.survival_probs = np.asarray(P.survival_probs, dtype=float).reshape(-1)
     if not hasattr(P, "survival_probs"):
@@ -416,6 +448,33 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         stationary_gap = float(np.max(np.abs(P.z_weights @ P.Pi_z - P.z_weights)))
         if explicit_transition and stationary_gap > 1e-10:
             raise ValueError("Explicit Pi_z is inconsistent with z_weights: " f"stationary-distribution gap={stationary_gap:.3e}")
+    P.permanent_income_levels_enabled = bool(
+        getattr(P, "permanent_income_levels_enabled", False)
+    )
+    P.permanent_income_log_variance = float(
+        getattr(P, "permanent_income_log_variance", 0.0)
+    )
+    if P.permanent_income_levels_enabled:
+        levels = np.asarray(P.permanent_income_level_values, dtype=float).reshape(-1)
+        level_weights = np.asarray(
+            P.permanent_income_level_weights, dtype=float
+        ).reshape(-1)
+        group_index = np.asarray(P.permanent_income_group_index, dtype=int).reshape(-1)
+        base_index = np.asarray(
+            P.permanent_income_base_state_index, dtype=int
+        ).reshape(-1)
+        if levels.size < 2 or levels.size != level_weights.size:
+            raise ValueError("permanent income levels and weights must have equal length >= 2")
+        if np.any(~np.isfinite(levels)) or np.any(levels <= 0.0):
+            raise ValueError("permanent income levels must be finite and positive")
+        if group_index.size != P.Nz or base_index.size != P.Nz:
+            raise ValueError("permanent income state maps must have one entry per z state")
+        if np.any((group_index < 0) | (group_index >= levels.size)):
+            raise ValueError("permanent income group indices are out of range")
+        if not np.isclose(float(level_weights @ levels), 1.0, atol=1e-12):
+            raise ValueError("permanent income levels must have weighted arithmetic mean one")
+        if not np.isfinite(P.permanent_income_log_variance) or P.permanent_income_log_variance <= 0.0:
+            raise ValueError("enabled permanent income log variance must be positive")
     P.retirement_income_z_scale = float(getattr(P, "retirement_income_z_scale", 0.0))
     if not np.isfinite(P.retirement_income_z_scale) or P.retirement_income_z_scale < 0.0:
         raise ValueError("retirement_income_z_scale must be finite and nonnegative.")

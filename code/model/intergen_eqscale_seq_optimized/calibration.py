@@ -1423,6 +1423,35 @@ def extract_moments(sol: Any, P: Any | None = None) -> dict[str, Any]:
         "share_first_births_age30plus": float(getattr(sol, "share_first_births_age30plus", np.nan)),
         "childless_chosen_45": float(getattr(sol, "childless_chosen_45", np.nan)),
         "childless_clock_45": float(getattr(sol, "childless_clock_45", np.nan)),
+        "permanent_income_level_values": np.asarray(
+            getattr(sol, "permanent_income_level_values", np.array([np.nan])),
+            dtype=float,
+        ),
+        "permanent_income_childless_by_level": np.asarray(
+            getattr(sol, "permanent_income_childless_by_level", np.array([np.nan])),
+            dtype=float,
+        ),
+        "permanent_income_completed_fertility_by_level": np.asarray(
+            getattr(
+                sol,
+                "permanent_income_completed_fertility_by_level",
+                np.array([np.nan]),
+            ),
+            dtype=float,
+        ),
+        "permanent_income_own_rate_3055_by_level": np.asarray(
+            getattr(sol, "permanent_income_own_rate_3055_by_level", np.array([np.nan])),
+            dtype=float,
+        ),
+        "permanent_income_childless_high_minus_low": float(
+            getattr(sol, "permanent_income_childless_high_minus_low", np.nan)
+        ),
+        "permanent_income_completed_fertility_high_minus_low": float(
+            getattr(sol, "permanent_income_completed_fertility_high_minus_low", np.nan)
+        ),
+        "permanent_income_own_rate_3055_high_minus_low": float(
+            getattr(sol, "permanent_income_own_rate_3055_high_minus_low", np.nan)
+        ),
         "housing_increment_0to1": float(getattr(sol, "housing_increment_0to1_eventstudy_t3", np.nan)),
         "housing_increment_1to2": float(
             getattr(sol, "housing_increment_1to2_proxy_t3", getattr(sol, "housing_increment_1to2", np.nan))
