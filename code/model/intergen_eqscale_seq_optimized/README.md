@@ -90,3 +90,9 @@ alone, and E6a+E6b at the certified E5b parameter vector. It reports all
 twelve target rows plus childlessness, completed fertility, and ownership by
 permanent level. `code/cluster/submit_intergen_e6b_fixed_diagnostic.sh` runs
 that comparison on Torch.
+
+After strict collectors finish, `build_e6_decision_tables.py` verifies that
+every report uses the same twelve targets and weights, then writes a ranked
+loss summary, the complete target-fit deltas against E5b, and all ten free
+parameters with bounds and external-restriction checks. It reads certified
+reports only and does not run the model.
