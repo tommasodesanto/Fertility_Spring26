@@ -48,6 +48,11 @@ def setup_parameters() -> SimpleNamespace:
     P.fecundity_omega1 = 0.0
     P.fecundity_omega2 = 0.0
     P.fecundity_terminal_age = 45.0
+    # Default-off E6a terminal-tail refinement.  A positive decay multiplies
+    # the existing conception schedule by exp(-decay * (age - start)) after
+    # the start age.  Zero preserves the established schedule bit for bit.
+    P.fecundity_tail_start_age = 40.0
+    P.fecundity_terminal_decay = 0.0
     # Exploratory switches: both preserve the seq-fertility fork by default.
     P.sequential_births = False
     P.preference_spec = "stone_geary"
@@ -668,6 +673,14 @@ def get_fecundity_by_age(P: SimpleNamespace) -> np.ndarray:
     ages = float(P.age_start) + np.arange(J, dtype=float) * float(P.da)
     pi = 1.0 - w1 * np.exp(w2 * (ages - float(P.age_start)))
     pi = np.clip(pi, 0.0, 1.0)
+    terminal_decay = float(getattr(P, "fecundity_terminal_decay", 0.0))
+    if terminal_decay < 0.0 or not np.isfinite(terminal_decay):
+        raise ValueError("fecundity_terminal_decay must be finite and nonnegative.")
+    if terminal_decay > 0.0:
+        tail_start = float(getattr(P, "fecundity_tail_start_age", 40.0))
+        if not np.isfinite(tail_start):
+            raise ValueError("fecundity_tail_start_age must be finite.")
+        pi *= np.exp(-terminal_decay * np.maximum(ages - tail_start, 0.0))
     pi[ages >= terminal] = 0.0
     return pi
 

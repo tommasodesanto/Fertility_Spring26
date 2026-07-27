@@ -74,6 +74,47 @@ def test_fecundity_schedule_nesting_and_terminal_age() -> None:
     assert np.all(schedule[ages >= 42.0] == 0.0)
 
 
+def test_terminal_tail_gate_is_default_off_and_preserves_early_anchors() -> None:
+    base = apply_overrides(
+        setup_parameters(),
+        {
+            "J": 10,
+            "fecundity_omega1": 0.01331,
+            "fecundity_omega2": 0.14960,
+            "fecundity_terminal_age": 45.0,
+        },
+    )
+    default_tail = get_fecundity_by_age(base)
+    explicit_zero = apply_overrides(base, {"fecundity_terminal_decay": 0.0})
+    np.testing.assert_array_equal(get_fecundity_by_age(explicit_zero), default_tail)
+
+    active_tail = apply_overrides(
+        base,
+        {
+            "fecundity_tail_start_age": 40.0,
+            "fecundity_terminal_decay": 0.4,
+        },
+    )
+    tailed = get_fecundity_by_age(active_tail)
+    ages = active_tail.age_start + np.arange(active_tail.J) * active_tail.da
+    np.testing.assert_array_equal(tailed[ages <= 40.0], default_tail[ages <= 40.0])
+    assert np.all(tailed[ages > 40.0] <= default_tail[ages > 40.0])
+    assert tailed[np.where(ages == 42.0)[0][0]] < default_tail[np.where(ages == 42.0)[0][0]]
+    assert np.all(tailed[ages >= 45.0] == 0.0)
+
+
+def test_terminal_tail_gate_rejects_invalid_decay() -> None:
+    active = apply_overrides(
+        setup_parameters(),
+        {
+            "fecundity_omega1": 0.02,
+            "fecundity_terminal_decay": -0.1,
+        },
+    )
+    with pytest.raises(ValueError, match="finite and nonnegative"):
+        get_fecundity_by_age(active)
+
+
 def test_default_fork_is_bitwise_nested_in_production() -> None:
     overrides = _tiny_markov_overrides()
     fork, _, _ = run_fork(overrides, verbose=False)

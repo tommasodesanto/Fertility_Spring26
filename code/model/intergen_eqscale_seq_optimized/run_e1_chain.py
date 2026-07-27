@@ -73,6 +73,8 @@ if os.environ.get("E5", "") == "1":
             raise ValueError("E5_PROBE_FIX_KE must be a finite positive float")
         DOMAIN = tuple(row for row in DOMAIN if row[0] != "kappa_fert")
         FIXED["kappa_fert"] = probe_fixed_kappa_fert
+if os.environ.get("E6A", "") == "1" and os.environ.get("E5", "") != "1":
+    raise ValueError("E6A requires the signed E5 target contract (set E5=1)")
 DEFAULT_J = 17
 DEFAULT_NB = 120
 DEFAULT_MAX_ITER_EQ = 10
@@ -261,6 +263,11 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             if os.environ.get("E5", "") == "1"
             else {}
         ),
+        **(
+            __import__("intergen_eqscale_seq_optimized.e6a_profile", fromlist=["e6a_overrides"]).e6a_overrides()
+            if os.environ.get("E6A", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -302,15 +309,25 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
-    metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
-                "arm": (
-                    "E5_PROBE_KE" if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
-                    else ("E5"
-                    if os.environ.get("E5", "") == "1"
-                    else ("E4_SPLIT"
+    arm_name = (
+        "E6A"
+        if os.environ.get("E6A", "") == "1"
+        else (
+            "E5_PROBE_KE"
+            if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
+            else (
+                "E5"
+                if os.environ.get("E5", "") == "1"
+                else (
+                    "E4_SPLIT"
                     if os.environ.get("E4_SPLIT", "") == "1"
-                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")))
-                ),
+                    else ("E3_L4" if os.environ.get("E3_L4", "") == "1" else "E1")
+                )
+            )
+        )
+    )
+    metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
+                "arm": arm_name,
                 "l4_literal_parity": os.environ.get("E3_L4", "") == "1" or os.environ.get("E5", "") == "1",
                 "l4_conventions": (
                     {"n_parity": 4, "fertility_units": "literal_topcode",
@@ -331,6 +348,17 @@ def main() -> None:
                     {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9136, "annual_innovation_sd": 0.1690}
                     if os.environ.get("E5", "") == "1"
                     else {"states": 5, "process": "rouwenhorst", "annual_rho": 0.9601845894041878, "annual_innovation_sd": 0.20}
+                ),
+                "fecundity_schedule": (
+                    __import__("intergen_eqscale_seq_optimized.e6a_profile", fromlist=["e6a_metadata"]).e6a_metadata()
+                    if os.environ.get("E6A", "") == "1"
+                    else {
+                        "profile": "e5b_current",
+                        "omega1": 0.02,
+                        "omega2": 0.134,
+                        "terminal_age": 45.0,
+                        "terminal_decay": 0.0,
+                    }
                 ),
                 "tight_winner_evaluator": {"max_iter_eq": 40, "tol_eq": 2.5e-5, "repeats": 2}}
     if os.environ.get("E5", "") == "1" and "E5_PSI_BOUND" in os.environ:
@@ -362,7 +390,7 @@ def main() -> None:
             moments, loss, residual, timings, strict, status, error, census, price = {}, math.inf, math.inf, {}, False, "infeasible_theta", str(exc), list(exc.census), math.nan
         except Exception as exc:  # persist each failed proposal as a recoverable checkpoint
             moments, loss, residual, timings, strict, status, error, census, price = {}, math.inf, math.inf, {}, False, f"failed:{type(exc).__name__}", str(exc), [], math.nan
-        record = {"case": eval_idx if tight_case is None else tight_case, "label": label, "arm": ("E5" if os.environ.get("E5", "") == "1" else "E1"), "status": status, "strict_converged": strict,
+        record = {"case": eval_idx if tight_case is None else tight_case, "label": label, "arm": arm_name, "status": status, "strict_converged": strict,
                   "rank_loss": loss, "market_residual": residual, "price": price, "theta": theta, "moments": moments,
                   "target_fit": target_fit(moments, targets, weights) if moments else [], "timings": timings,
                   "timing_diagnostics": {k: v for k, v in moments.items() if isinstance(v, (list, tuple, np.ndarray))},

@@ -428,3 +428,37 @@ dependent collector `14736282`. Seed: certified E4 winner with the
 continuation scale carried over. Weight rule: (gap/SE)^2, measured SEs
 where they exist, declared SEs elsewhere, documented in `e5_profile.py`.
 Only the certified collector output is reportable.
+
+## E6A FECUNDITY-TAIL GATE (2026-07-27)
+
+The handoff's cheapest-first step is complete at the certified E5b parameter
+vector. The existing two-parameter fit to the Leridon four-year conception
+probabilities does not repair timing: it moves the 38+ first-birth share only
+from `0.0963` to `0.0942` and raises the signed loss from `385.14` to
+`402.27`.
+
+A default-off terminal-decay gate was therefore added to the shared fecundity
+function. It preserves the fitted conception schedule through age 40 and
+decays success from 40 to the hard close at 45. The preferred external reaches
+`0.03` immediately before age 45, matching the terminal evidence used in the
+handoff; 5 and 10 percent terminal-success schedules are retained as
+sensitivities. The gate is used identically by the household problem and
+population flow, adds no free calibration parameter, and leaves the default
+path bitwise unchanged.
+
+Strict fixed-winner results (all market residuals below `2.0e-5`):
+
+| Schedule | Signed loss | Mean first-birth age | Share 30+ | Share 38+ | Share 42+ |
+|---|---:|---:|---:|---:|---:|
+| E5b current | 385.14 | 25.637 | 0.332 | 0.0963 | 0.0348 |
+| Leridon two-parameter | 402.27 | 25.597 | 0.330 | 0.0942 | 0.0336 |
+| Terminal success 10% | 355.72 | 25.397 | 0.320 | 0.0851 | 0.0254 |
+| Terminal success 5% | 338.19 | 25.272 | 0.314 | 0.0792 | 0.0199 |
+| Terminal success 3% | **331.40** | 25.196 | 0.311 | 0.0756 | 0.0165 |
+
+Verdict: the terminal tail clears the E6a refit gate, but biology alone does
+not generate the missing 25--30 hump. At fixed parameters the 3 percent
+schedule improves timing and childlessness but moves the family ownership gap
+from `0.166` to `0.137`; the full refit must determine whether that cost is
+recoverable. Exact outputs:
+`output/model/eqscale_seq_e6a_fecundity_tail_frontier_20260727/`.

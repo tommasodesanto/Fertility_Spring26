@@ -66,3 +66,13 @@ owner-rung diagnostics, owner-entry thresholds, a local solved-object cache, and
 optional policy
 proof-of-concept cases under
 `output/model/intergen_mechanics_packet_YYYYMMDD/`.
+
+## E-strand hardening
+
+The autonomous E-strand hardening program starts from the certified E5b
+twelve-row system. Its first default-off extension is E6a, an externally
+fitted late-age fecundity tail with no added free parameter. Reproduce the
+strict fixed-winner frontier with
+`intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py`; the
+cluster refit uses `code/cluster/submit_intergen_e6a.sh` followed by its
+strict collector.

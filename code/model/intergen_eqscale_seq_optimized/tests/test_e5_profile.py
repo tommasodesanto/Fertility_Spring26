@@ -115,6 +115,22 @@ class E5ProfileTests(unittest.TestCase):
                 collect_e1.main()
             self.assertTrue((outdir / "results.json").exists())
 
+    def test_e6a_external_has_no_added_free_parameter(self) -> None:
+        from intergen_eqscale_seq_optimized.e6a_profile import (
+            e6a_metadata,
+            e6a_overrides,
+        )
+
+        overrides = e6a_overrides()
+        metadata = e6a_metadata()
+        self.assertEqual(len(e5_profile.E5_DOMAIN), 10)
+        self.assertAlmostEqual(overrides["fecundity_omega1"], 0.01331)
+        self.assertAlmostEqual(overrides["fecundity_omega2"], 0.14960)
+        self.assertAlmostEqual(
+            metadata["terminal_success_probability_before_hard_close"], 0.03
+        )
+        self.assertGreater(overrides["fecundity_terminal_decay"], 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()
