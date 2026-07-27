@@ -636,3 +636,12 @@ only from `0.3323` to `0.3309`, and old-age wealth dispersion slightly worsens.
 Verdict: E6a dominates E5b on the signed objective but does not supply the
 missing timing shape or wealth tail. Certified artifacts:
 `output/model/eqscale_seq_e6a_recalibration_20260727/report/`.
+
+E6a diagnostic job `14847427` completed in 23 seconds. Its independent strict
+solve reproduces all twelve certified model moments and the scalar loss
+exactly, with maximum absolute difference `0.0` and residual `4.73e-6`.
+The unchanged standard graph set writes 17 plots; visual inspection of the
+age-fertility and age-30 childless-renter policy panels shows complete labels,
+monotone consumption, explicit tenure thresholds, and the intended terminal
+fertility decline. Packet:
+`output/model/eqscale_seq_e6a_diagnostic_packet_20260727/`.
