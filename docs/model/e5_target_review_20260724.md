@@ -587,3 +587,52 @@ literal top-group measurement. The graph packet now uses the same capped
 top-group mean as the calibration target. Calibration solves, objectives, and
 previous certified target-fit tables were unaffected. The full suite passes
 135 tests after this reporting-only repair.
+
+## E6A CERTIFIED REFIT (2026-07-27)
+
+The strict collector certifies E6a at loss `312.0938643710`, down `73.0490`
+from E5b. All eight production chains are eligible. The selected chain 3
+winner has market residual `4.73e-6`; its two tight repeats have exactly equal
+loss and moments. A strict solve takes `9.25` seconds, so the terminal-tail
+gate has no material state-space cost.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.892551 | -0.025449 | 1425.738991 | 0.923373 |
+| `childless_rate` | 0.188000 | 0.102642 | -0.085358 | 17180.743822 | 125.178478 |
+| `mean_age_first_birth` | 25.310561 | 25.518466 | 0.207905 | 16.000000 | 0.691592 |
+| `share_first_births_age30plus` | 0.270062 | 0.330912 | 0.060849 | 15625.000000 | 57.853558 |
+| `housing_increment_0to1` | 0.664435 | 0.698729 | 0.034294 | 906.055891 | 1.065567 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.357567 | -0.010132 | 2958.514988 | 0.303731 |
+| `own_family_gap` | 0.167662 | 0.164706 | -0.002956 | 14229.590956 | 0.124297 |
+| `own_rate` | 0.575472 | 0.577502 | 0.002030 | 1207.846086 | 0.004979 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 6.172800 | 0.392829 | 11.973159 | 1.847635 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 5.611149 | -1.261951 | 6.287669 | 10.013248 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.008983 | 0.000183 | 5165289.256198 | 0.172630 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 2.033927 | -1.414184 | 56.959772 | 113.914775 |
+
+All ten free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound (2% of range) | External restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.992315 | [0.80, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.014512 | [0, 0.25] | No | -- |
+| `delta_alpha_jump` | 0.022692 | [0, 0.25] | No | -- |
+| `psi_child` | 0.585512 | [-3, 3] | No | -- |
+| `kappa_fert` | 3.850309 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.013326 | [0.02, 50] | Yes, lower | -- |
+| `chi` | 1.038526 | [0.10, 5] | No | -- |
+| `H0` | 8.474818 | [0.20, 80] | No | -- |
+| `theta0` | 0.162808 | [0, 8] | No | -- |
+| `theta1` | 0.042865 | [0.02, 16] | Yes, lower | -- |
+
+The displayed `0.80` annual-beta search lower bound records the launch-time
+domain discrepancy; the estimate satisfies the standing `0.94` external
+restriction. E6a's loss gain is almost entirely the childlessness improvement
+(`0.0802` to `0.1026`). Mean timing improves modestly, but the 30+ share moves
+only from `0.3323` to `0.3309`, and old-age wealth dispersion slightly worsens.
+Verdict: E6a dominates E5b on the signed objective but does not supply the
+missing timing shape or wealth tail. Certified artifacts:
+`output/model/eqscale_seq_e6a_recalibration_20260727/report/`.
