@@ -667,3 +667,10 @@ difference check must show that the two timing rows have rank two with respect
 to the two hazard coordinates. The gate must be default-off, preserve the
 default path exactly, pass the full suite, and clear an exact-loop smoke before
 any production array. No E6c code is written before the trigger is observed.
+
+The working decision package is now
+`docs/model/e6_decision_package_20260727.md`. It contains only certified E5b
+and E6a comparisons plus measured or fixed-parameter E6b evidence; live E6b
+search cases are deliberately excluded. Its final checklist blocks a
+recommendation until both active collectors, the E6c gate, the complete
+comparison tables, and the recommended graph packet are resolved.
