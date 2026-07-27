@@ -572,3 +572,18 @@ smoke: `14847097_[1-2]`. The still-pending combined array and collector
 (`14846992`, `14846993`) were cancelled before doing any work and replaced by
 production `14847114_[1-8]`, dependent on both the E6a collector and this
 smoke, plus after-success collector `14847115`.
+
+## E6 REPORTING HARDENING (2026-07-27)
+
+The strict collector now writes the complete selected-chain metadata, exact
+repeat evidence, all ten free parameters, search bounds, two-percent bound
+flags, and the annual discount-factor external-restriction check. A comparison
+driver validates the common twelve-row target-and-weight contract before
+constructing any E5b/E6 deltas.
+
+The standard diagnostic summary also contained a legacy completed-fertility
+formula that doubled the mean family-state index. That is not the signed E5/E6
+literal top-group measurement. The graph packet now uses the same capped
+top-group mean as the calibration target. Calibration solves, objectives, and
+previous certified target-fit tables were unaffected. The full suite passes
+135 tests after this reporting-only repair.
