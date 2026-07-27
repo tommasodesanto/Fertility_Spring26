@@ -112,7 +112,7 @@ def main() -> None:
         if not (is_legacy or is_e5 or is_e6 or is_e5_probe):
             raise RuntimeError(f"{path} does not satisfy an accepted E1/E3/E4/E5/E6 calibration contract")
         tight = eligible_tight(summary)
-        chain_rows.append({"summary_path": str(path), "seed": meta.get("seed"), "eligible": tight is not None,
+        chain_rows.append({"summary_path": str(path), "arm": meta.get("arm"), "seed": meta.get("seed"), "eligible": tight is not None,
                            "search_cases": summary.get("n_cases_completed"), "search_strict": summary.get("n_strict"),
                            "tight_loss": tight.get("rank_loss") if tight else None,
                            "tight_residual": tight.get("market_residual") if tight else None})
@@ -125,7 +125,12 @@ def main() -> None:
     write_csv(args.outdir / "chain_summary.csv", chain_rows)
     write_csv(args.outdir / "target_fit_full.csv", list(winner["target_fit"]))
     write_csv(args.outdir / "parameter_table_full.csv", parameter_rows(winner, winner_metadata))
-    results = {"winners": {"E1": winner}, "eligible_E1_chains": len(eligible), "production_chain_count": len(paths)}
+    results = {
+        "winners": {"E1": winner},
+        "winner_metadata": winner_metadata,
+        "eligible_E1_chains": len(eligible),
+        "production_chain_count": len(paths),
+    }
     (args.outdir / "results.json").write_text(json.dumps(results, indent=2, sort_keys=True))
     (args.outdir / "README.md").write_text("\n".join([
         "# E1 collector",
@@ -135,6 +140,7 @@ def main() -> None:
         "Exact equality is required for loss and target moments.",
         "The lowest eligible tight-repeat loss is the E1 winner.",
         "`results.json` exposes `winners.E1` in the M5 winner shape.",
+        "`results.json` also preserves the selected chain's complete calibration metadata.",
         "`target_fit_full.csv` contains every row in the selected target system.",
         "`parameter_table_full.csv` contains every estimated parameter, its search bounds, and a two-percent near-bound flag.",
         "`chain_summary.csv` records eligibility for every discovered chain.",
