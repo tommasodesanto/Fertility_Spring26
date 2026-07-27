@@ -82,13 +82,38 @@ def test_strict_collector_accepts_e6_contracts(arm: str) -> None:
             "strict_converged": True,
             "rank_loss": 1.0,
             "target_fit": [],
+            "theta": {
+                "beta": 0.96**4,
+                "delta_alpha": 0.10,
+                "delta_alpha_jump": 0.10,
+                "psi_child": 0.0,
+                "kappa_fert": 1.0,
+                "kappa_fert_continuation": 1.0,
+                "chi": 1.0,
+                "H0": 1.0,
+                "theta0": 1.0,
+                "theta1": 1.0,
+            },
         }
+        active_domain = [
+            {"name": "beta_annual", "lower": 0.80, "upper": 0.9995, "transform": "discount"},
+            {"name": "delta_alpha", "lower": 0.0, "upper": 0.25, "transform": "softzero"},
+            {"name": "delta_alpha_jump", "lower": 0.0, "upper": 0.25, "transform": "softzero"},
+            {"name": "psi_child", "lower": -3.0, "upper": 3.0, "transform": "asinh"},
+            {"name": "kappa_fert", "lower": 0.02, "upper": 50.0, "transform": "log"},
+            {"name": "kappa_fert_continuation", "lower": 0.02, "upper": 50.0, "transform": "log"},
+            {"name": "chi", "lower": 0.10, "upper": 5.0, "transform": "log"},
+            {"name": "H0", "lower": 0.20, "upper": 80.0, "transform": "log"},
+            {"name": "theta0", "lower": 0.0, "upper": 8.0, "transform": "softzero"},
+            {"name": "theta1", "lower": 0.02, "upper": 16.0, "transform": "log"},
+        ]
         summary = {
             "metadata": {
                 "arm": arm,
                 "free_parameter_count": 10,
                 "target_count": 12,
                 "seed": 1,
+                "active_domain": active_domain,
             },
             "best_tight": tight,
             "tight_repeat_check": {
@@ -113,3 +138,6 @@ def test_strict_collector_accepts_e6_contracts(arm: str) -> None:
         ):
             collect_e1.main()
         assert (outdir / "results.json").exists()
+        parameter_table = (outdir / "parameter_table_full.csv").read_text()
+        assert parameter_table.count("\n") == 11
+        assert "beta_annual,0.96,0.8,0.9995" in parameter_table

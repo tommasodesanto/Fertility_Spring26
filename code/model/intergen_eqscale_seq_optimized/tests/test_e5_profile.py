@@ -102,9 +102,34 @@ class E5ProfileTests(unittest.TestCase):
             root = Path(tmp) / "chains"
             chain = root / "chain_001"
             chain.mkdir(parents=True)
-            tight = {"strict_converged": True, "rank_loss": 1.0, "target_fit": []}
+            theta = {
+                ("beta" if name == "beta_annual" else name): (
+                    0.96**4 if name == "beta_annual" else (lower + upper) / 2.0
+                )
+                for name, lower, upper, _transform in e5_profile.E5_DOMAIN
+            }
+            tight = {
+                "strict_converged": True,
+                "rank_loss": 1.0,
+                "target_fit": [],
+                "theta": theta,
+            }
             summary = {
-                "metadata": {"arm": "E5", "free_parameter_count": 10, "target_count": 12, "seed": 1},
+                "metadata": {
+                    "arm": "E5",
+                    "free_parameter_count": 10,
+                    "target_count": 12,
+                    "seed": 1,
+                    "active_domain": [
+                        {
+                            "name": name,
+                            "lower": lower,
+                            "upper": upper,
+                            "transform": transform,
+                        }
+                        for name, lower, upper, transform in e5_profile.E5_DOMAIN
+                    ],
+                },
                 "best_tight": tight,
                 "tight_repeat_check": {"both_strict": True, "loss_abs_difference": 0.0, "max_abs_moment_difference": 0.0},
                 "n_cases_completed": 1, "n_strict": 1,
