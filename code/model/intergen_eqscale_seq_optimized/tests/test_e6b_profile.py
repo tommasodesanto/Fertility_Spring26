@@ -141,3 +141,4 @@ def test_strict_collector_accepts_e6_contracts(arm: str) -> None:
         parameter_table = (outdir / "parameter_table_full.csv").read_text()
         assert parameter_table.count("\n") == 11
         assert "beta_annual,0.96,0.8,0.9995" in parameter_table
+        assert ">= 0.94,True" in parameter_table

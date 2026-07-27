@@ -71,6 +71,8 @@ def parameter_rows(
         lower_distance, upper_distance = estimate - lower, upper - estimate
         distance = min(lower_distance, upper_distance)
         near_bound = bool(distance <= 0.02 * span)
+        external_restriction = ">= 0.94" if name == "beta_annual" else ""
+        restriction_satisfied = estimate >= 0.94 if name == "beta_annual" else ""
         rows.append(
             {
                 "parameter": name,
@@ -86,6 +88,8 @@ def parameter_rows(
                     else "upper" if near_bound
                     else ""
                 ),
+                "external_restriction": external_restriction,
+                "external_restriction_satisfied": restriction_satisfied,
             }
         )
     return rows
