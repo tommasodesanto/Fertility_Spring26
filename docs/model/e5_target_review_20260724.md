@@ -645,3 +645,25 @@ age-fertility and age-30 childless-renter policy panels shows complete labels,
 monotone consumption, explicit tenure thresholds, and the intended terminal
 fertility decline. Packet:
 `output/model/eqscale_seq_e6a_diagnostic_packet_20260727/`.
+
+## E6C EX ANTE TRIGGER AND IDENTIFICATION GATE (2026-07-27)
+
+The E6c decision is fixed before observing the combined collector. The signed
+30+ first-birth share has target `0.270062` and declared standard error `0.008`.
+E6c activates only if the certified E6a+E6b estimate remains more than two
+standard errors (`0.016`) from target **and** the supplemental age-bin
+diagnostic confirms that the missing 25--30 shape remains. If either condition
+fails, no readiness architecture is added; any residual shape issue is merely
+reported.
+
+If triggered, the registered architecture is the handoff's binary readiness
+state: entrants may be unsettled, an age-dependent exogenous arrival moves
+them irreversibly to settled, and first-child entry is available only when
+settled. The hazard has exactly two free coordinates, location and spread,
+identified by the two signed timing rows. The calibration would therefore
+have twelve free parameters and twelve signed moments, with no new target or
+weight. Before a refit can be called identified, a strict local finite-
+difference check must show that the two timing rows have rank two with respect
+to the two hazard coordinates. The gate must be default-off, preserve the
+default path exactly, pass the full suite, and clear an exact-loop smoke before
+any production array. No E6c code is written before the trigger is observed.
