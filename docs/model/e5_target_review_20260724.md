@@ -478,3 +478,36 @@ chains 3--5 use `start_mix = 0.10`, and chains 6--8 use
 array tasks succeed. Based on the smoke throughput, the planned maximum is
 about 21.6 CPU-hours and 3.75 wall-clock hours under full concurrency. Only
 the collector's twice-repeated tight winner will be treated as reportable.
+
+## E6B PSID FIXED-EFFECT GATE (2026-07-27)
+
+The earlier corrected-between share of `0.704` is not used: household
+mean residuals confound a permanent fixed effect with slow mean reversion.
+The replacement decomposition uses PSID RP/spouse real gross labor earnings
+for 89,936 reference-person years and 12,508 persons ages 25--60,
+1984--2019. Age and year effects are removed with survey weights. A
+fixed-effect + persistent AR(1) + transitory model is fit by minimum distance
+to exact-calendar-year autocovariances at 0, 1, 2, 4, 6, 8, 10, 12, 16, 20,
+24, 28, and 32 years.
+
+The 199-draw person-cluster bootstrap fully re-runs residualization and moment
+construction. Its covariance matrix, with 10 percent correlation shrinkage,
+forms the minimum-distance weight. All main, nested, sensitivity, and 199
+bootstrap parameter fits converge.
+
+| Component | Variance | Bootstrap s.e. | 95% interval |
+|---|---:|---:|---:|
+| Fixed effect | 0.3931 | 0.0333 | [0.3300, 0.4528] |
+| Persistent AR(1) | 0.3319 | 0.0285 | [0.2855, 0.3881] |
+| Transitory | 0.3098 | 0.0121 | [0.2886, 0.3357] |
+| Annual persistence \(\rho\) | 0.8863 | 0.0180 | [0.8492, 0.9207] |
+
+The fixed-effect standard deviation is `0.6269` and its share of fitted
+residual variance is `0.380`. Fixed variance remains `0.365`--`0.419` under
+diagonal weighting and maximum lags of 16 or 24 years. Suppressing the fixed
+effect raises the minimum-distance objective from `14.32` to `39.51`.
+
+Verdict: permanent income levels clear the E6b implementation gate. Their
+spacing and weights must be imposed from this measured distribution; they
+are not additional free calibration parameters. Packet:
+`code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/`.

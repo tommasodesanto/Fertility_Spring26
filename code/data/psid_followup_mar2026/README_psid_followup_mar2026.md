@@ -21,6 +21,8 @@ No existing project files were overwritten.
 - `audit_intergen_bequest_family_size_targets.R`
 - `build_intergen_bequest_retention_targets.R`
 - `audit_aggregate_wealth_earnings_ratio.R`
+- `build_psid_income_between_within.R`
+- `extract_psid_income_md.do`
 - `output/` (generated artifacts and logs)
 
 ## Exact Replication Target
@@ -160,6 +162,33 @@ labor earnings ages 18--65, and a 999-draw reference-person-cluster bootstrap.
 The target is `6.873077` (bootstrap SE `0.398836`). The 26--35 / 36--45 /
 46--55 / 56--65 profile is robustness-only for both model strands. The packet
 is under `output/aggregate_wealth_earnings_audit/`.
+
+## Income Fixed-Effect Decomposition (July 27, 2026)
+
+`build_psid_income_between_within.R` now supplements the older 2005--2019
+between/within diagnostic with a long-lag minimum-distance decomposition of
+RP/spouse real gross labor earnings. The estimation sample is reference
+persons ages 25--60, alive in the observation year, with positive earnings
+and survey weights, 1984--2019. Residual log earnings are modeled as the sum
+of a person fixed effect, a persistent AR(1), and a transitory component.
+Exact-calendar-year autocovariances through 32 years separate permanent
+heterogeneity from slow mean reversion.
+
+The 199-draw person-cluster bootstrap re-runs residualization and moment
+construction and checkpoints every five draws. The minimum-distance weight
+uses the bootstrap moment covariance with 10 percent correlation shrinkage.
+All 199 parameter fits converge. The fixed-effect variance is `0.3931`
+(bootstrap 95 percent interval `0.3300`--`0.4528`), or `0.6269` in log
+earnings standard-deviation units. It represents 38.0 percent of fitted
+residual variance; the persistent and transitory variances are `0.3319` and
+`0.3098`, and annual persistence is `0.8863`. Maximum-lag and diagonal-weight
+sensitivities retain fixed-effect variances from `0.3646` to `0.4194`.
+
+The narrow extract helper avoids repeatedly loading the 5.9 GB PSID shelf.
+Results, bootstrap draws, the full autocovariance table, sensitivity table,
+and visual fit are under
+`output/psid_income_fixed_effect_md_20260727/`. This variance is an external
+empirical restriction for E6b, not a freely calibrated parameter.
 
 ## First-Pass Wealth Findings (v1)
 
