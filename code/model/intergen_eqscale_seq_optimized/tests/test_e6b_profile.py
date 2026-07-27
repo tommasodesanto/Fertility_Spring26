@@ -1,5 +1,10 @@
 from __future__ import annotations
 
+import json
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
+
 import numpy as np
 import pytest
 
@@ -63,3 +68,48 @@ def test_default_parameters_leave_permanent_levels_disabled() -> None:
 
     assert parameters.permanent_income_levels_enabled is False
     assert parameters.permanent_income_log_variance == 0.0
+
+
+@pytest.mark.parametrize("arm", ["E6A", "E6B", "E6AB"])
+def test_strict_collector_accepts_e6_contracts(arm: str) -> None:
+    from intergen_eqscale_seq_optimized import collect_e1
+
+    with tempfile.TemporaryDirectory() as temporary_directory:
+        root = Path(temporary_directory) / "chains"
+        chain = root / "chain_1"
+        chain.mkdir(parents=True)
+        tight = {
+            "strict_converged": True,
+            "rank_loss": 1.0,
+            "target_fit": [],
+        }
+        summary = {
+            "metadata": {
+                "arm": arm,
+                "free_parameter_count": 10,
+                "target_count": 12,
+                "seed": 1,
+            },
+            "best_tight": tight,
+            "tight_repeat_check": {
+                "both_strict": True,
+                "loss_abs_difference": 0.0,
+                "max_abs_moment_difference": 0.0,
+            },
+            "n_cases_completed": 1,
+            "n_strict": 1,
+        }
+        (chain / "summary.json").write_text(json.dumps(summary))
+        outdir = Path(temporary_directory) / "report"
+        with patch(
+            "sys.argv",
+            [
+                "collect_e1.py",
+                "--results-root",
+                str(root),
+                "--outdir",
+                str(outdir),
+            ],
+        ):
+            collect_e1.main()
+        assert (outdir / "results.json").exists()

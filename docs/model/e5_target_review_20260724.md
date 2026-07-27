@@ -511,3 +511,44 @@ Verdict: permanent income levels clear the E6b implementation gate. Their
 spacing and weights must be imposed from this measured distribution; they
 are not additional free calibration parameters. Packet:
 `code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/`.
+
+## E6B STRICT FIXED-WINNER DIAGNOSTIC (2026-07-27)
+
+The default-off E6b implementation uses the measured variance `0.3931` in a
+mean-one three-node Gauss--Hermite rule. Multipliers are
+`[0.2775, 0.8220, 2.4347]` with weights `[1/6, 2/3, 1/6]`. Their Cartesian
+product with the existing five-state FL--HSV chain creates 15 income states;
+the transition is block diagonal, so permanent levels never change. No free
+parameter, target, weight, or parameter bound changes.
+
+At the certified E5b parameter vector, all three comparison solves strictly
+converge and the E5b control reproduces all twelve certified moments within
+`1e-6`:
+
+| Variant | Loss | Childless | Share first births 30+ | Family ownership gap | Ownership | Wealth/earnings | Old wealth p90/p50 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| E5b | 385.14 | 0.0802 | 0.3323 | 0.1659 | 0.5638 | 5.4548 | 2.0684 |
+| E6b | 444.15 | 0.0839 | 0.3388 | 0.0947 | 0.4779 | 5.6214 | 3.9089 |
+| E6a + E6b | 473.34 | 0.0938 | 0.3173 | 0.0581 | 0.4813 | 5.6131 | 3.9105 |
+
+E6b supplies the missing wealth dispersion and slightly raises aggregate
+wealth, but it does not generate the missing childlessness. Its childlessness
+gradient also has the wrong sign relative to the CPS education gradient:
+`[0.1008, 0.0816, 0.0758]` from the low to high permanent-income level.
+Ownership by level is `[0.0276, 0.4795, 0.9220]`, and the aggregate family
+ownership gap falls sharply.
+
+Verdict: E6b is a genuine wealth-dispersion mechanism but not, at fixed
+parameters, the missing fertility-heterogeneity mechanism. Bounded full
+refits of E6b and E6a+E6b remain necessary to test whether the existing ten
+parameters can recover the housing rows while retaining the dispersion gain.
+Exact diagnostic job `14846917`; exact-loop refit smokes
+`14846947_[1-2]` and `14846948_[1-2]`.
+
+Both refit smokes completed 13/13 strict cases in each chain. E6b production
+array `14846990_[1-8]` is running immediately, with after-success collector
+`14846991`. E6a+E6b array `14846992_[1-8]` depends on the E6a collector
+`14843677`, so it will start only after a certified E6a seed exists; its
+after-success collector is `14846993`. Each production chain is capped at
+1,000 solves or 225 minutes and uses the same two baseline, three
+`start_mix=0.10`, and three `start_mix=0.25` basin design.
