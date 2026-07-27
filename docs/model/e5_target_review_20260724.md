@@ -462,3 +462,19 @@ schedule improves timing and childlessness but moves the family ownership gap
 from `0.166` to `0.137`; the full refit must determine whether that cost is
 recoverable. Exact outputs:
 `output/model/eqscale_seq_e6a_fecundity_tail_frontier_20260727/`.
+
+## E6A REFIT LAUNCH (2026-07-27)
+
+The exact-loop Torch smoke `14843503_[1-2]` completed successfully. Each
+chain produced 13/13 strict cases and identified arm `E6A`, the unchanged
+signed twelve-row target system, ten free parameters, and the three standing
+external restrictions. Both the household problem and population flow used
+the registered terminal-tail schedule.
+
+Production array `14843676_[1-8]` is now running with a 225-minute and
+1,000-case cap per chain. Chains 1--2 start at the certified E5b winner,
+chains 3--5 use `start_mix = 0.10`, and chains 6--8 use
+`start_mix = 0.25`. Dependent collector `14843677` runs only after all eight
+array tasks succeed. Based on the smoke throughput, the planned maximum is
+about 21.6 CPU-hours and 3.75 wall-clock hours under full concurrency. Only
+the collector's twice-repeated tight winner will be treated as reportable.

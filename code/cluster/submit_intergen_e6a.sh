@@ -30,7 +30,11 @@ export PYTHONPATH="$MODEL_DIR:${PYTHONPATH:-}"
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
 TASK_ID="${SLURM_ARRAY_TASK_ID:?array task required}"
-RUN_ROOT="$PROJECT_ROOT/output/model/eqscale_seq_e6a_recalibration_20260727/production"
+if [ "${E6A_SMOKE:-0}" = "1" ]; then
+  RUN_ROOT="$PROJECT_ROOT/output/model/eqscale_seq_e6a_smoke_20260727"
+else
+  RUN_ROOT="$PROJECT_ROOT/output/model/eqscale_seq_e6a_recalibration_20260727/production"
+fi
 OUTDIR="$RUN_ROOT/chain_${TASK_ID}"
 if [ "$TASK_ID" -le 2 ]; then
   START_MIX=0.0
