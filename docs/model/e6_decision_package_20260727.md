@@ -1,7 +1,7 @@
 # E6 calibration decision package
 
-**Status: working package, not an adoption recommendation.** E6a is certified.
-E6b and E6a+E6b production refits are running. E6c is governed by the
+**Status: working package, not an adoption recommendation.** E6a and E6b are
+certified. The E6a+E6b production refit is running. E6c is governed by the
 preregistered trigger below and has not been implemented. This document becomes
 final only after every launched collector is certified, the E6c gate is
 resolved, and the recommended configuration reproduces its full graph packet.
@@ -33,11 +33,12 @@ twelve certified model moments within `1e-6`.
 
 | Rank among certified rows | Configuration | Signed loss | Change from E5b | Strict solve time | What it buys | Main price |
 |---:|---|---:|---:|---:|---|---|
-| 1 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
-| 2 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
+| 1 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
+| 2 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
+| 3 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
 
-E6b and E6a+E6b are omitted from the ranking until their collectors finish.
-Loose search cases are not evidence.
+E6a+E6b is omitted from the ranking until its collector finishes. Loose search
+cases are not evidence.
 
 ## 3. Certified E5b baseline
 
@@ -141,12 +142,40 @@ refitting:
 - the childlessness gradient across permanent levels has the wrong sign;
 - the family ownership gap falls from `0.166` to `0.095`.
 
-Thus E6b is a wealth-dispersion mechanism, not the missing childlessness
-mechanism at fixed parameters. The strict production refit remains pending.
-No free parameter was added.
+The strict refit confirms the same mechanism. All eight chains are eligible;
+the selected chain 1 winner has loss `297.2096349357`, residual `3.82e-6`, and
+exactly equal tight repeats. Its annual discount factor is `0.994583`, so it
+satisfies the standing `0.94` restriction despite the disclosed launch-time
+search lower bound of `0.80`. No free parameter was added.
+
+Relative to E5b:
+
+| Moment | E6b | Model change | Absolute-gap change | Loss-contribution change |
+|---|---:|---:|---:|---:|
+| Completed fertility | 1.886807 | -0.016766 | +0.016766 | +1.090498 |
+| Childlessness | 0.073433 | -0.006755 | +0.006755 | +25.809476 |
+| Mean first-birth age | 25.576415 | -0.061018 | -0.061018 | -0.578668 |
+| First births at 30+ | 0.328103 | -0.004231 | -0.004231 | -7.953517 |
+| First-child rooms response | 0.680669 | +0.023465 | +0.009004 | +0.191430 |
+| Larger-family rooms contrast | 0.387745 | +0.015506 | +0.015506 | +1.127830 |
+| Family ownership gap | 0.153423 | -0.012455 | +0.012455 | +2.839569 |
+| Ownership | 0.512482 | -0.051276 | +0.051276 | +4.626667 |
+| Mean occupied rooms | 5.637392 | -0.438112 | -0.152956 | -0.802346 |
+| Aggregate wealth / earnings | 6.074755 | +0.620001 | -0.620001 | -8.641469 |
+| Bequest flow / wealth | 0.008954 | -0.000124 | -0.000124 | -0.277232 |
+| Old wealth p90/p50 | 3.680191 | +1.611821 | -1.147660 | -105.365482 |
+
+E6b is therefore the lowest-loss certified row so far, entirely because the
+new earnings layer supplies the missing wealth dispersion. The refit does not
+turn it into a childlessness mechanism: childlessness falls, and its gradient
+across permanent-income levels remains wrong-signed. The ownership costs also
+remain material. This is evidence for retaining E6b as a priced variant, not
+yet a recommendation; the combined collector and E6c gate remain unresolved.
 
 Empirical packet:
 `code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/`.
+Certified refit:
+`output/model/eqscale_seq_e6b_recalibration_20260727/report/`.
 
 ## 6. E6c preregistered decision rule
 
@@ -210,7 +239,6 @@ policy-experiment claim.
 
 ## 10. Items required before this package is final
 
-- certify the E6b collector;
 - certify the E6a+E6b collector;
 - apply the preregistered E6c trigger;
 - if E6c triggers, implement, identify, smoke, refit, and certify it and any

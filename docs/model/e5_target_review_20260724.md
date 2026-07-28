@@ -690,3 +690,62 @@ ages 18--25, `0.3318` versus `0.3587` at ages 26--33, and `0.0843` versus
 is true for E6a: excess early mass and deficient middle mass remain, in
 addition to the residual terminal excess. This does not activate E6c by
 itself; the trigger is applied only to the certified combined winner.
+
+## E6B CERTIFIED REFIT (2026-07-27)
+
+Collector `14846991` completed successfully after all eight production chains
+finished. All eight chains are eligible. The selected chain 1 winner has
+strict loss `297.2096349357`, market residual `3.82e-6`, and exactly equal
+tight repeats: the loss difference and maximum difference across the twelve
+target moments are both `0.0`. The selected annual discount factor is
+`0.994583`, so the winner satisfies the standing `0.94` restriction despite
+this array's disclosed launch-time lower bound of `0.80`.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.886807 | -0.031193 | 1425.738991 | 1.387254 |
+| `childless_rate` | 0.188000 | 0.073433 | -0.114567 | 17180.743822 | 225.509145 |
+| `mean_age_first_birth` | 25.310561 | 25.576415 | 0.265854 | 16.000000 | 1.130854 |
+| `share_first_births_age30plus` | 0.270062 | 0.328103 | 0.058041 | 15625.000000 | 52.636591 |
+| `housing_increment_0to1` | 0.664435 | 0.680669 | 0.016234 | 906.055891 | 0.238798 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.387745 | 0.020046 | 2958.514988 | 1.188814 |
+| `own_family_gap` | 0.167662 | 0.153423 | -0.014238 | 14229.590956 | 2.884829 |
+| `own_rate` | 0.575472 | 0.512482 | -0.062990 | 1207.846086 | 4.792406 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 5.637392 | -0.142578 | 11.973159 | 0.243397 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.074755 | -0.798345 | 6.287669 | 4.007475 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.008954 | 0.000154 | 5165289.256198 | 0.122139 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.680191 | 0.232081 | 56.959772 | 3.067933 |
+
+All ten free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound (2% of range) | External restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.994583 | [0.80, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.003709 | [0, 0.25] | Yes, lower | -- |
+| `delta_alpha_jump` | 0.053180 | [0, 0.25] | No | -- |
+| `psi_child` | 0.622578 | [-3, 3] | No | -- |
+| `kappa_fert` | 3.397822 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.502206 | [0.02, 50] | No | -- |
+| `chi` | 1.041114 | [0.10, 5] | No | -- |
+| `H0` | 8.210179 | [0.20, 80] | No | -- |
+| `theta0` | 0.172250 | [0, 8] | No | -- |
+| `theta1` | 0.027234 | [0.02, 16] | Yes, lower | -- |
+
+Relative to E5b, E6b lowers the common signed loss by `87.9332`. The measured
+income levels repair the old wealth tail (`2.0684` to `3.6802`) and improve
+aggregate wealth (`5.4548` to `6.0748`). Those two rows reduce loss by
+`105.3655` and `8.6415`, respectively. The price is economically important:
+childlessness falls from `0.0802` to `0.0734`, adding `25.8095` to loss;
+ownership falls from `0.5638` to `0.5125`; and the family ownership gap falls
+from `0.1659` to `0.1534`. The permanent-income childlessness gradient remains
+wrong-signed, from `0.0883` at the low level to `0.0664` at the high level.
+
+E6b is therefore the current lowest-loss certified variant, but it is a
+wealth-dispersion repair rather than a childlessness mechanism. It is not yet
+the recommended configuration: the repaired-domain E6a+E6b array
+`14847114_[1-8]` and collector `14847115` remain active, and the preregistered
+E6c rule can be applied only after that combined winner is certified and
+diagnosed. Certified artifacts:
+`output/model/eqscale_seq_e6b_recalibration_20260727/report/`.
