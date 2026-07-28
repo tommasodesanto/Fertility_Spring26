@@ -271,7 +271,7 @@ def main() -> None:
                 "",
                 "These tables compare only strict collector winners on the common signed",
                 "twelve-row target system. The baseline is E5b. Model deltas, absolute-gap",
-                "deltas, loss-contribution deltas, all ten free parameters, bounds, and",
+                "deltas, loss-contribution deltas, every free parameter, bounds, and",
                 "external-restriction checks are reported without running the model.",
                 "",
                 "The historical E5b report predates `parameter_table_full.csv`; its table",

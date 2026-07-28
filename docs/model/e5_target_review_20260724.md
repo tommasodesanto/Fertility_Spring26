@@ -871,3 +871,84 @@ array budget is about `450` evaluations per chain, `30` CPU-hours total, and
 `3.75` hours wall time because the eight chains run in parallel. Every chain
 writes completed-case and best-so-far heartbeats; a missing update for
 30 minutes is an unhealthy-run trigger.
+
+## E6A+E6B+E6C CERTIFIED REFIT AND ARCHITECTURE PROJECTION (2026-07-28)
+
+Collector `14856657` completed after all eight E6ABC production chains exited
+successfully. Seven chains are eligible. The selected chain 1 winner has
+strict loss `207.4206176368`, residual `7.94e-6`, and exactly equal tight
+repeats: both the loss difference and maximum difference across the twelve
+target moments are `0.0`. The annual discount factor is `0.996134`, inside
+the registered `[0.94, 0.9995]` search interval.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.906992 | -0.011008 | 1425.738991 | 0.172767 |
+| `childless_rate` | 0.188000 | 0.100337 | -0.087663 | 17180.743822 | 132.029649 |
+| `mean_age_first_birth` | 25.310561 | 25.613513 | 0.302952 | 16.000000 | 1.468479 |
+| `share_first_births_age30plus` | 0.270062 | 0.336172 | 0.066110 | 15625.000000 | 68.289498 |
+| `housing_increment_0to1` | 0.664435 | 0.672069 | 0.007634 | 906.055891 | 0.052796 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.365638 | -0.002061 | 2958.514988 | 0.012571 |
+| `own_family_gap` | 0.167662 | 0.162323 | -0.005339 | 14229.590956 | 0.405629 |
+| `own_rate` | 0.575472 | 0.571950 | -0.003522 | 1207.846086 | 0.014980 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 6.061710 | 0.281739 | 11.973159 | 0.950393 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.316754 | -0.556346 | 6.287669 | 1.946164 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.009236 | 0.000436 | 5165289.256198 | 0.983989 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.586680 | 0.138569 | 56.959772 | 1.093702 |
+
+All twelve free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound (2% of range) | External restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.996134 | [0.94, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.005259 | [0, 0.25] | No | -- |
+| `delta_alpha_jump` | 0.048361 | [0, 0.25] | No | -- |
+| `psi_child` | 0.836847 | [-3, 3] | No | -- |
+| `kappa_fert` | 5.180906 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.388570 | [0.02, 50] | No | -- |
+| `chi` | 1.044346 | [0.10, 5] | No | -- |
+| `H0` | 10.568215 | [0.20, 80] | No | -- |
+| `theta0` | 0.207554 | [0, 8] | No | -- |
+| `theta1` | 0.045835 | [0.02, 16] | Yes, lower | -- |
+| `readiness_location_age` | 8.137127 | [8, 32] | Yes, lower | -- |
+| `readiness_spread_years` | 1.631330 | [0.5, 10] | No | -- |
+
+The scalar loss is `54.2988` below the earlier E6a+E6b certificate and
+`177.7223` below E5b. Housing rows, completed fertility, and both wealth rows
+are close. Childlessness and the 30+ timing share still account for
+`200.3191`, or `96.6` percent, of the remaining loss.
+
+Strict diagnostic job `14863156` reproduces the certified loss and all twelve
+moments exactly, with residual `7.94e-6`. It writes the unchanged 17-plot
+standard packet plus the supplemental timing plot. Visual inspection shows
+complete labels and the expected discrete tenure thresholds. The missing
+timing shape remains: model versus NCHS mass is `0.4733` versus `0.4338` at
+ages 18--25, `0.3393` versus `0.3587` at ages 26--33, and `0.0840` versus
+`0.0297` at ages 38--45.
+
+The readiness estimate does not support adopting the E6c architecture. Its
+location is within two percent of the lower search bound, and the implied
+probability of already being settled at age 18 is `0.997638`. Strict
+projection job `14863244` switches the readiness gate off while holding the
+other ten estimates fixed. The projected E6a+E6b loss is `206.9771376808`,
+which is `0.443480` lower than the certified E6ABC loss. Both projection cases
+are strict, and the gate-on case reproduces the certificate exactly. Thus the
+lower loss came from a better ten-parameter basin found during the expanded
+search, not from the readiness state.
+
+Search hygiene requires that better basin to be tested under the smaller
+architecture before the final recommendation. Two-chain exact-loop E6a+E6b
+rescue smoke `14863265_[1-2]`, seeded from the projected winner, completes
+`13/13` cases in both chains under the E6AB ten-parameter / twelve-moment
+contract. The eight-chain rescue refit therefore launches as
+`14863327_[1-8]`, with after-success strict collector `14863335`, the same
+`225`-minute per-chain budget, and dispersed starts. The E6ABC row remains a
+certified comparison, but it is not the provisional recommendation.
+
+Artifacts:
+
+- `output/model/eqscale_seq_e6abc_recalibration_20260727/report/`
+- `output/model/eqscale_seq_e6abc_diagnostic_packet_20260728/`
+- `output/model/eqscale_seq_e6c_projection_diagnostic_20260728/`

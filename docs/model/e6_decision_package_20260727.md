@@ -1,10 +1,11 @@
 # E6 calibration decision package
 
-**Status: working package, not an adoption recommendation.** E6a, E6b, and
-E6a+E6b are certified. The preregistered E6c trigger is satisfied, so the
-readiness variant must now be implemented and evaluated. This document becomes
-final only after E6c is resolved and the recommended configuration reproduces
-its full graph packet.
+**Status: working package, not an adoption recommendation.** E6a, E6b,
+E6a+E6b, and E6a+E6b+E6c are certified. E6c is estimated almost completely
+inactive and worsens the loss in a strict gate-off projection. A rescue
+E6a+E6b refit from the newly discovered basin is therefore the last unresolved
+search-hygiene step. This document becomes final only after that rescue and
+the recommended configuration's strict graph packet.
 
 ## 1. Decision question and fixed contract
 
@@ -33,10 +34,11 @@ twelve certified model moments within `1e-6`.
 
 | Rank among certified rows | Configuration | Signed loss | Change from E5b | Strict solve time | What it buys | Main price |
 |---:|---|---:|---:|---:|---|---|
-| 1 | E6a + E6b | 261.719 | -123.423 | 29.38 s | Combines improved childlessness with repaired wealth dispersion | Timing and housing margins worsen materially |
-| 2 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
-| 3 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
-| 4 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
+| 1 | E6a + E6b + E6c | 207.421 | -177.722 | 31.83 s | Finds a better basin with close housing and wealth rows | Readiness is nearly inactive, fails timing shape, and is dominated by its gate-off projection |
+| 2 | E6a + E6b | 261.719 | -123.423 | 29.38 s | Combines improved childlessness with repaired wealth dispersion | Timing and housing margins worsen materially |
+| 3 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
+| 4 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
+| 5 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
 
 Loose search cases are not evidence.
 
@@ -264,6 +266,57 @@ eight-chain production refit is running as Torch array `14856656`, with strict
 after-success collector `14856657`. The budget is `225` minutes per chain,
 about `30` CPU-hours in total and `3.75` hours of parallel wall time.
 
+The refit is now certified at loss `207.4206176368`, residual `7.94e-6`, with
+seven eligible chains and exact strict repeats. The complete certified tables
+are:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.906992 | -0.011008 | 1425.738991 | 0.172767 |
+| `childless_rate` | 0.188000 | 0.100337 | -0.087663 | 17180.743822 | 132.029649 |
+| `mean_age_first_birth` | 25.310561 | 25.613513 | 0.302952 | 16.000000 | 1.468479 |
+| `share_first_births_age30plus` | 0.270062 | 0.336172 | 0.066110 | 15625.000000 | 68.289498 |
+| `housing_increment_0to1` | 0.664435 | 0.672069 | 0.007634 | 906.055891 | 0.052796 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.365638 | -0.002061 | 2958.514988 | 0.012571 |
+| `own_family_gap` | 0.167662 | 0.162323 | -0.005339 | 14229.590956 | 0.405629 |
+| `own_rate` | 0.575472 | 0.571950 | -0.003522 | 1207.846086 | 0.014980 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 6.061710 | 0.281739 | 11.973159 | 0.950393 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.316754 | -0.556346 | 6.287669 | 1.946164 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.009236 | 0.000436 | 5165289.256198 | 0.983989 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.586680 | 0.138569 | 56.959772 | 1.093702 |
+
+| Parameter | Estimate | Search bounds | Near bound | Restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.996134 | [0.94, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.005259 | [0, 0.25] | No | -- |
+| `delta_alpha_jump` | 0.048361 | [0, 0.25] | No | -- |
+| `psi_child` | 0.836847 | [-3, 3] | No | -- |
+| `kappa_fert` | 5.180906 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.388570 | [0.02, 50] | No | -- |
+| `chi` | 1.044346 | [0.10, 5] | No | -- |
+| `H0` | 10.568215 | [0.20, 80] | No | -- |
+| `theta0` | 0.207554 | [0, 8] | No | -- |
+| `theta1` | 0.045835 | [0.02, 16] | Yes, lower | -- |
+| `readiness_location_age` | 8.137127 | [8, 32] | Yes, lower | -- |
+| `readiness_spread_years` | 1.631330 | [0.5, 10] | No | -- |
+
+The strict diagnostic packet reproduces all twelve moments and the loss
+exactly. It also shows that E6c does not repair the timing distribution:
+ages 18--25 remain too high, ages 26--33 remain too low, and ages 38--45
+remain too high.
+
+More decisively, the estimate implies that `0.997638` of entrants are already
+settled at age 18. A strict gate-off projection at the same other ten
+parameters has loss `206.9771376808`, which is `0.443480` lower. E6c therefore
+does not buy the loss improvement. Its expanded search discovered a much
+better basin for the E6a+E6b parameters. The final comparison must use a
+certified E6a+E6b rescue refit from that basin rather than crediting the
+readiness architecture.
+
+The projected-winner E6a+E6b exact-loop smoke clears `13/13` cases in both
+chains. The eight-chain rescue is running as Torch array `14863327`, with
+after-success strict collector `14863335` and a `225`-minute budget per chain.
+
 ## 8. Search and reporting safeguards
 
 - Every refit uses two baseline seeds, three `start_mix=0.10` seeds, and three
@@ -306,7 +359,7 @@ policy-experiment claim.
 
 ## 11. Items required before this package is final
 
-- finish and certify the active E6a+E6b+E6c refit;
+- finish and certify the E6a+E6b rescue refit from the E6ABC-discovered basin;
 - regenerate the ranked comparison tables with every certified variant;
 - select a recommendation and include its complete twelve-row target table,
   complete free-parameter/bounds table, and independently verified standard
