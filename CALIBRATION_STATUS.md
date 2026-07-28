@@ -1,6 +1,46 @@
 # Calibration Status
 
-Updated: `2026-07-24` (current-M figures and funded entry-adjusting policy rerun complete)
+Updated: `2026-07-28` (E-series hardening complete; adoption remains an author decision)
+
+## July 28: E-series hardening complete
+
+The recommended E-series configuration for the author's consideration is the
+smaller E6a+E6b variant: the externally disciplined late-age conception tail
+plus the measured permanent-earnings layer, with the E6c readiness state left
+off. This is a recommendation for review, not an automatic promotion to the
+maintained model.
+
+The rescue E6a+E6b collector certifies loss `205.5497196717` on the unchanged
+signed twelve-row system, down `179.5932` from E5b. Seven of eight chains are
+eligible. The selected winner has residual `7.94e-6`, two exactly equal strict
+repeats, annual beta `0.995600`, and ten free parameters for twelve moments.
+Only `theta1` is within two percent of a search bound. Complete target,
+parameter, bound, chain, and repeat tables are under
+`output/model/eqscale_seq_e6ab_rescue_recalibration_20260728/report/`.
+
+The independent recommended diagnostic packet reproduces the loss and all
+twelve model moments exactly, with 17 unchanged standard plots plus the
+supplemental age-timing comparison:
+`output/model/eqscale_seq_e6ab_rescue_diagnostic_packet_20260728/`.
+
+E6c was implemented, identified locally, refit, and rejected on its own
+evidence. Its certified location estimate lies near the lower bound and
+implies `0.997638` of entrants are already settled. Holding the other ten
+estimates fixed and switching E6c off lowers loss from `207.420618` to
+`206.977138`. The readiness state therefore does not buy the improved fit;
+its expanded search merely found a better basin for E6a+E6b. The rescue refit
+certifies that smaller architecture at still lower loss.
+
+Two material failures remain. Childlessness is `0.10045` against `0.188`, and
+the 30+ first-birth share is `0.33493` against `0.27006`; together they account
+for 96 percent of remaining loss. The age-shape diagnostic still has excess
+mass at 18--25, deficient mass at 26--33, and excess mass at 38--45. The
+permanent-earnings layer repairs wealth dispersion but does not generate the
+empirical childlessness gradient. No housing gate, target change, weight
+change, or policy claim was made.
+
+Decision ledger: `docs/model/e5_target_review_20260724.md`. Final comparison
+and recommendation: `docs/model/e6_decision_package_20260727.md`.
 
 ## July 24: current-M figures and fiscally closed policy rerun
 

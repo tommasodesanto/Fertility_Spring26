@@ -952,3 +952,64 @@ Artifacts:
 - `output/model/eqscale_seq_e6abc_recalibration_20260727/report/`
 - `output/model/eqscale_seq_e6abc_diagnostic_packet_20260728/`
 - `output/model/eqscale_seq_e6c_projection_diagnostic_20260728/`
+
+## E6A+E6B RESCUE CERTIFICATE AND FINAL VERDICT (2026-07-28)
+
+Collector `14863335` certifies the smaller E6a+E6b rescue at loss
+`205.5497196717`, residual `7.94e-6`, with seven of eight chains eligible.
+The selected chain 2 winner has two exactly equal strict repeats: loss
+difference `0.0` and maximum twelve-moment difference `0.0`. Annual beta is
+`0.995600`, inside `[0.94, 0.9995]`.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.905336 | -0.012664 | 1425.738991 | 0.228664 |
+| `childless_rate` | 0.188000 | 0.100446 | -0.087554 | 17180.743822 | 131.703560 |
+| `mean_age_first_birth` | 25.310561 | 25.590659 | 0.280098 | 16.000000 | 1.255278 |
+| `share_first_births_age30plus` | 0.270062 | 0.334932 | 0.064870 | 15625.000000 | 65.751199 |
+| `housing_increment_0to1` | 0.664435 | 0.675109 | 0.010674 | 906.055891 | 0.103228 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.371066 | 0.003366 | 2958.514988 | 0.033526 |
+| `own_family_gap` | 0.167662 | 0.162279 | -0.005383 | 14229.590956 | 0.412301 |
+| `own_rate` | 0.575472 | 0.567865 | -0.007607 | 1207.846086 | 0.069902 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 6.081011 | 0.301041 | 11.973159 | 1.085074 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.259020 | -0.614080 | 6.287669 | 2.371047 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.009289 | 0.000489 | 5165289.256198 | 1.236634 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.599144 | 0.151033 | 56.959772 | 1.299307 |
+
+All ten free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound (2% of range) | External restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.995600 | [0.94, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.006383 | [0, 0.25] | No | -- |
+| `delta_alpha_jump` | 0.047797 | [0, 0.25] | No | -- |
+| `psi_child` | 0.844127 | [-3, 3] | No | -- |
+| `kappa_fert` | 5.281731 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.414934 | [0.02, 50] | No | -- |
+| `chi` | 1.043237 | [0.10, 5] | No | -- |
+| `H0` | 10.678903 | [0.20, 80] | No | -- |
+| `theta0` | 0.212927 | [0, 8] | No | -- |
+| `theta1` | 0.051113 | [0.02, 16] | Yes, lower | -- |
+
+Strict diagnostic job `14878527` reproduces the loss and all twelve moments
+exactly, with the same residual. The 17 standard plots plus supplemental
+timing plot pass visual inspection. The timing shape remains missed: early
+mass is `0.4752` versus `0.4338`, middle mass is `0.3379` versus `0.3587`,
+and late mass is `0.0839` versus `0.0297`.
+
+Final recommendation for author review: prefer this E6a+E6b rescue over E6ABC.
+It has the lowest certified loss, is overidentified at ten free parameters for
+twelve moments, and avoids the unsupported readiness state. The
+recommendation does not hide the remaining failure: childlessness and the
+30+ timing share contribute `197.4548`, or `96.1` percent, of loss. The author
+still decides whether to adopt any E6 variant, whether to pursue a housing
+gate, and whether to change any target system later.
+
+Final artifacts:
+
+- `output/model/eqscale_seq_e6ab_rescue_recalibration_20260728/report/`
+- `output/model/eqscale_seq_e6ab_rescue_diagnostic_packet_20260728/`
+- `output/model/eqscale_seq_e6_decision_tables_20260728/`
+- `docs/model/e6_decision_package_20260727.md`

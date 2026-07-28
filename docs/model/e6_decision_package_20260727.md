@@ -1,11 +1,9 @@
 # E6 calibration decision package
 
-**Status: working package, not an adoption recommendation.** E6a, E6b,
-E6a+E6b, and E6a+E6b+E6c are certified. E6c is estimated almost completely
-inactive and worsens the loss in a strict gate-off projection. A rescue
-E6a+E6b refit from the newly discovered basin is therefore the last unresolved
-search-hygiene step. This document becomes final only after that rescue and
-the recommended configuration's strict graph packet.
+**Status: final decision package.** The recommended configuration for the
+author's consideration is the smaller E6a+E6b rescue: the externally
+disciplined late-age conception tail plus measured permanent earnings levels,
+with E6c left off. This is not an automatic promotion to the maintained model.
 
 ## 1. Decision question and fixed contract
 
@@ -34,11 +32,12 @@ twelve certified model moments within `1e-6`.
 
 | Rank among certified rows | Configuration | Signed loss | Change from E5b | Strict solve time | What it buys | Main price |
 |---:|---|---:|---:|---:|---|---|
-| 1 | E6a + E6b + E6c | 207.421 | -177.722 | 31.83 s | Finds a better basin with close housing and wealth rows | Readiness is nearly inactive, fails timing shape, and is dominated by its gate-off projection |
-| 2 | E6a + E6b | 261.719 | -123.423 | 29.38 s | Combines improved childlessness with repaired wealth dispersion | Timing and housing margins worsen materially |
-| 3 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
-| 4 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
-| 5 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
+| 1 | E6a + E6b rescue | 205.550 | -179.593 | 45.68 s | Retains wealth repair and fits the housing rows in the better basin without E6c | Childlessness and timing shape remain badly missed |
+| 2 | E6a + E6b + E6c | 207.421 | -177.722 | 31.83 s | Finds the better basin | Readiness is nearly inactive, fails timing shape, and is dominated by the smaller rescue |
+| 3 | E6a + E6b, old basin | 261.719 | -123.423 | 29.38 s | Combines improved childlessness with repaired wealth dispersion | Timing and housing margins worsen materially |
+| 4 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
+| 5 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
+| 6 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
 
 Loose search cases are not evidence.
 
@@ -314,10 +313,72 @@ certified E6a+E6b rescue refit from that basin rather than crediting the
 readiness architecture.
 
 The projected-winner E6a+E6b exact-loop smoke clears `13/13` cases in both
-chains. The eight-chain rescue is running as Torch array `14863327`, with
-after-success strict collector `14863335` and a `225`-minute budget per chain.
+chains. The eight-chain rescue array `14863327` and strict collector
+`14863335` both complete successfully under the `225`-minute per-chain
+budget.
 
-## 8. Search and reporting safeguards
+## 8. Recommended E6a + E6b rescue
+
+The rescue collector certifies the smaller E6a+E6b architecture at loss
+`205.5497196717`, `179.5932` below E5b, `56.1697` below the old combined
+basin, and `1.8709` below E6ABC. Seven of eight chains are eligible. The
+selected chain 2 winner has residual `7.94e-6`; its two strict tight repeats
+have exactly equal losses and all twelve model moments. The annual discount
+factor is `0.995600`, inside `[0.94, 0.9995]`.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.905336 | -0.012664 | 1425.738991 | 0.228664 |
+| `childless_rate` | 0.188000 | 0.100446 | -0.087554 | 17180.743822 | 131.703560 |
+| `mean_age_first_birth` | 25.310561 | 25.590659 | 0.280098 | 16.000000 | 1.255278 |
+| `share_first_births_age30plus` | 0.270062 | 0.334932 | 0.064870 | 15625.000000 | 65.751199 |
+| `housing_increment_0to1` | 0.664435 | 0.675109 | 0.010674 | 906.055891 | 0.103228 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.371066 | 0.003366 | 2958.514988 | 0.033526 |
+| `own_family_gap` | 0.167662 | 0.162279 | -0.005383 | 14229.590956 | 0.412301 |
+| `own_rate` | 0.575472 | 0.567865 | -0.007607 | 1207.846086 | 0.069902 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 6.081011 | 0.301041 | 11.973159 | 1.085074 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.259020 | -0.614080 | 6.287669 | 2.371047 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.009289 | 0.000489 | 5165289.256198 | 1.236634 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.599144 | 0.151033 | 56.959772 | 1.299307 |
+
+All ten free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound | Restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.995600 | [0.94, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.006383 | [0, 0.25] | No | -- |
+| `delta_alpha_jump` | 0.047797 | [0, 0.25] | No | -- |
+| `psi_child` | 0.844127 | [-3, 3] | No | -- |
+| `kappa_fert` | 5.281731 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 1.414934 | [0.02, 50] | No | -- |
+| `chi` | 1.043237 | [0.10, 5] | No | -- |
+| `H0` | 10.678903 | [0.20, 80] | No | -- |
+| `theta0` | 0.212927 | [0, 8] | No | -- |
+| `theta1` | 0.051113 | [0.02, 16] | Yes, lower | -- |
+
+Recommendation: carry this E6a+E6b rescue forward for the author's review,
+because it has the lowest certified loss, uses ten free parameters for twelve
+moments, and strictly dominates E6ABC while avoiding an unsupported state.
+The recommendation is conditional, not celebratory. Childlessness and the
+30+ timing share contribute `197.4548`, or `96.1` percent, of remaining loss.
+The permanent-earnings state repairs wealth dispersion but does not supply the
+empirical childlessness gradient. The conception-tail repair lowers late
+opportunities but does not generate the missing timing hump.
+
+Strict diagnostic job `14878527` independently reproduces every certified
+moment and the loss exactly, with residual `7.94e-6`. The unchanged 17-plot
+standard packet plus supplemental timing plot passes visual inspection. The
+supplement confirms excess age-18--25 mass (`0.4752` versus `0.4338`),
+deficient age-26--33 mass (`0.3379` versus `0.3587`), and excess age-38--45
+mass (`0.0839` versus `0.0297`). Artifacts:
+
+- `output/model/eqscale_seq_e6ab_rescue_recalibration_20260728/report/`
+- `output/model/eqscale_seq_e6ab_rescue_diagnostic_packet_20260728/`
+- `output/model/eqscale_seq_e6_decision_tables_20260728/`
+
+## 9. Search and reporting safeguards
 
 - Every refit uses two baseline seeds, three `start_mix=0.10` seeds, and three
   `start_mix=0.25` seeds.
@@ -331,7 +392,7 @@ after-success strict collector `14863335` and a `225`-minute budget per chain.
   the standing `0.94` external restriction. The code was repaired before the
   combined run; this discrepancy remains disclosed rather than rewritten.
 
-## 9. Author decisions reserved
+## 10. Author decisions reserved
 
 The final package will leave these decisions to the author:
 
@@ -344,7 +405,7 @@ The final package will leave these decisions to the author:
 This exercise makes no target-system change, housing-gate choice, or
 policy-experiment claim.
 
-## 10. Attempts that did not solve the stated problem
+## 11. Attempts that did not solve the stated problem
 
 - Refitting only the conception levels at ages 30, 35, and 40 did not remove
   the terminal excess.
@@ -353,15 +414,32 @@ policy-experiment claim.
 - Permanent earnings levels repair wealth dispersion at fixed parameters but
   do not generate the empirical childlessness gradient and damage aggregate
   ownership margins.
+- E6c clears the ex ante local rank check but is estimated almost completely
+  inactive, does not repair the timing shape, and is strictly dominated by
+  its smaller gate-off rescue.
 - Reweighting diagnostics do not change the diagnosis: childlessness and old
   wealth dispersion dominate the loss because mechanisms are missing, not
   because the signed weights are unusual.
 
-## 11. Items required before this package is final
+## 12. Completion audit
 
-- finish and certify the E6a+E6b rescue refit from the E6ABC-discovered basin;
-- regenerate the ranked comparison tables with every certified variant;
-- select a recommendation and include its complete twelve-row target table,
-  complete free-parameter/bounds table, and independently verified standard
-  graph packet;
-- run the completion audit against the handoff contract.
+- Common contract: all ranked losses use the unchanged signed twelve-row
+  target system and weights; comparison-table validation passes.
+- Identification: the recommendation has ten free parameters and twelve
+  moments. E6a's schedule and E6b's fixed variance are externally disciplined.
+  E6c's two-coordinate timing Jacobian is rank two, but E6c is not recommended.
+- Restrictions: annual beta is above `0.94`; `phi=0.80`, deterministic tenure,
+  `theta_n=0`, and the no-median-target rule are unchanged.
+- Search hygiene: every production loop passed an exact-loop smoke; all
+  reportable winners come from strict collectors with two exactly equal
+  repeats and dispersed starts.
+- Diagnostics: the recommended packet reproduces all twelve moments within
+  `1e-6` (maximum difference `0.0`) and preserves the standard 17-plot set.
+- Scope: no M-strand, paper LaTeX, CPS-M, housing-gate, target, or weight
+  changes were made. No policy result is claimed.
+- Records: the ledger, canonical calibration status, daily memory, certified
+  comparison tables, complete target/parameter tables, failed-attempt list,
+  and recommendation are current.
+
+The handoff mission is complete. Remaining choices are author decisions, not
+unfinished calibration operations.
