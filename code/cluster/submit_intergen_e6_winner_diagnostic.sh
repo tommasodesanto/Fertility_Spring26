@@ -1,5 +1,5 @@
 #!/bin/bash
-# Strict certified-winner diagnostic packet for E6a, E6b, or E6a+E6b.
+# Strict certified-winner diagnostic packet for E6a, E6b, E6a+E6b, or E6ABC.
 # Required environment: E6_DIAGNOSTIC_ARM, E6_DIAGNOSTIC_SOURCE,
 # E6_DIAGNOSTIC_OUTDIR.
 #SBATCH --job-name=ihfe6diag
@@ -21,7 +21,7 @@ PYTHON_BIN="$(command -v python3 || command -v python)"
 export PYTHONPATH="$MODEL_DIR:${PYTHONPATH:-}"
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
-: "${E6_DIAGNOSTIC_ARM:?required: e6a, e6b, or e6ab}"
+: "${E6_DIAGNOSTIC_ARM:?required: e6a, e6b, e6ab, or e6abc}"
 : "${E6_DIAGNOSTIC_SOURCE:?required: collector results.json path}"
 : "${E6_DIAGNOSTIC_OUTDIR:?required: output directory}"
 

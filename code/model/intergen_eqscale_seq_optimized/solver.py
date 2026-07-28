@@ -15,6 +15,11 @@ from .parameters import (
     fecundity_active,
     finalize_location_choice_spec,
     get_fecundity_by_age,
+    readiness_childless_states,
+    readiness_cumulative_probability,
+    readiness_gate_active,
+    readiness_settled_state,
+    readiness_transition_hazard,
     setup_parameters,
     unsecured_debt_floor,
 )
@@ -2154,6 +2159,11 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
         nk = nn
         for cs in range(P.n_child_states):
             kp = (cs >= 1) and (cs < csm1)
+            if readiness_gate_active(P) and nn == 0 and cs == 1:
+                # E6c reuses the otherwise invalid (childless, cs=1) cell for
+                # the settled state. It has childless preferences, not the
+                # child-at-home consumption and housing adjustments.
+                kp = False
             if kp:
                 c_bar[nn, cs] = P.c_bar_0 + P.c_bar_n * nk
                 if str(P.child_housing_spec).lower() == "linear_only":
@@ -2375,7 +2385,7 @@ def solve_bellman_full_markov_income(
                 if bool(getattr(P, "use_age_survival", False)):
                     survival = float(P.survival_probs[j])
                     Vnr = survival * Vnr + (1.0 - survival) * Vbq
-            Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
+            Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs, age_index=j)
             Vd = np.zeros((Nb, nt, I, npar, ncs))
             cd = np.zeros_like(Vd)
             hd = np.zeros_like(Vd)
@@ -2591,16 +2601,29 @@ def solve_bellman_full_markov_income(
                 pi_j = float(fec[j])
                 if bool(getattr(P, "sequential_births", False)):
                     Vfa = np.empty((Nb, nt, I, 2))
-                    Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
-                    Vfa[:, :, :, 1] = pi_j * VI[:, :, :, 1, 1] + (1.0 - pi_j) * VI[:, :, :, 0, 0]
+                    settled_cs = readiness_settled_state(P)
+                    Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
+                    Vfa[:, :, :, 1] = (
+                        pi_j * VI[:, :, :, 1, 1]
+                        + (1.0 - pi_j) * VI[:, :, :, 0, settled_cs]
+                    )
                     lf = Vfa / P.kappa_fert
                     ls, pr = logsumexp(lf, axis=3)
                     pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
                     fert_probs[:, :, :, j, zz, :2] = pr
                     fert_value[:, :, :, j, zz] = P.kappa_fert * ls
-                    V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
+                    if readiness_gate_active(P):
+                        # Unsettled households cannot attempt a first birth.
+                        # Settled households retain the existing entry logit.
+                        V[:, :, :, j, zz, 0, 0] = VI[:, :, :, 0, 0]
+                        V[:, :, :, j, zz, 0, 1] = fert_value[:, :, :, j, zz]
+                    else:
+                        V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
                     V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
-                    V[:, :, :, j, zz, 0, 1:] = VI[:, :, :, 0, 1:]
+                    childless_copy_start = 2 if readiness_gate_active(P) else 1
+                    V[:, :, :, j, zz, 0, childless_copy_start:] = VI[
+                        :, :, :, 0, childless_copy_start:
+                    ]
                     # Entry (childless wait/try) keeps kappa_fert; upward attempts
                     # at every parity use the continuation scale when set — margin-specific Gumbel scales on the same sequential choice tree.
                     kf_cont_raw = getattr(P, "kappa_fert_continuation", None)
@@ -4260,8 +4283,20 @@ def forward_distribution_markov_income(
     for i in range(I):
         for zz in range(Nz):
             loc_entry_idx, loc_entry_wt = entry_wealth_grid_weights(b_grid, P, i=i, j=0, z_value=float(z_grid[zz]))
+            settled_entry_share = (
+                readiness_cumulative_probability(P, float(P.age_start))
+                if readiness_gate_active(P)
+                else 0.0
+            )
             for kk, ww in zip(loc_entry_idx, loc_entry_wt):
-                g[int(kk), 0, i, 0, zz, 0, 0] += float(ww) * P.entry_by_loc[i] * z_weights[zz]
+                entrant_mass = float(ww) * P.entry_by_loc[i] * z_weights[zz]
+                g[int(kk), 0, i, 0, zz, 0, 0] += (
+                    (1.0 - settled_entry_share) * entrant_mass
+                )
+                if readiness_gate_active(P):
+                    g[int(kk), 0, i, 0, zz, 0, 1] += (
+                        settled_entry_share * entrant_mass
+                    )
     P._entry_censored_mass = 0.0
     P._entry_total_mass = float(np.sum(g[:, :, :, 0, :, :, :]))
     if bool(getattr(P, "entry_wealth_censor_to_frontier", False)):
@@ -4361,9 +4396,14 @@ def forward_distribution_markov_income(
                     at_risk_up = [
                         g[:, :, :, j, zz, nn, 1].copy() for nn in range(1, npar - 1)
                     ]
+                    if readiness_gate_active(P):
+                        gc = g[:, :, :, j, zz, 0, 1]
                     m1 = gc * pa[:, :, :, 1]
                     realized1 = pi_j * m1
-                    g[:, :, :, j, zz, 0, 0] = gc - realized1
+                    if readiness_gate_active(P):
+                        g[:, :, :, j, zz, 0, 1] = gc - realized1
+                    else:
+                        g[:, :, :, j, zz, 0, 0] = gc - realized1
                     g[:, :, :, j, zz, 1, 1] += realized1
                     first_births_by_age[j] += float(np.sum(realized1))
                     total_births += float(np.sum(realized1))
@@ -4439,7 +4479,9 @@ def forward_distribution_markov_income(
                         # horizon. Differencing post_h against this nets out the
                         # common lifecycle housing drift, leaving the birth effect.
                         control_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
-                        control_cohort[:, :, :, zz, 0, 0] = birth_mass
+                        control_cohort[
+                            :, :, :, zz, 0, readiness_settled_state(P)
+                        ] = birth_mass
                         control_cohort = advance_cohort_horizon_markov_income(
                             control_cohort, j, event_horizon, loc_probs, tenure_choice,
                             tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
@@ -4679,6 +4721,25 @@ def forward_distribution_markov_income(
             for nn in range(npar):
                 for cs in range(ncs):
                     gp = gps[:, :, :, zz, nn, cs]
+                    if readiness_gate_active(P) and nn == 0 and cs in (0, 1):
+                        current_age = float(P.age_start) + float(j) * float(P.da)
+                        next_age = current_age + float(P.da)
+                        hazard = readiness_transition_hazard(P, current_age, next_age)
+                        readiness_weights = (
+                            ((0, 1.0 - hazard), (1, hazard))
+                            if cs == 0
+                            else ((1, 1.0),)
+                        )
+                        for csn, readiness_weight in readiness_weights:
+                            if readiness_weight <= 0.0:
+                                continue
+                            for zn in range(Nz):
+                                transition_weight = Pi_z[zz, zn]
+                                if transition_weight > 0.0:
+                                    g[:, :, :, j + 1, zn, nn, csn] += (
+                                        transition_weight * readiness_weight * gp
+                                    )
+                        continue
                     if ust:
                         Pi = Pia[:, :, nn]
                         if cs == K and nn >= 1:
@@ -4843,9 +4904,15 @@ def collapse_markov_policy(policy: np.ndarray, g: np.ndarray, z_weights: np.ndar
     return out
 
 
-def collapse_markov_fertility_probs(fp: np.ndarray, g: np.ndarray, z_weights: np.ndarray) -> np.ndarray:
+def collapse_markov_fertility_probs(
+    fp: np.ndarray,
+    g: np.ndarray,
+    z_weights: np.ndarray,
+    P: SimpleNamespace | None = None,
+) -> np.ndarray:
     fallback = np.tensordot(fp, z_weights, axes=([4], [0]))
-    mass = g[:, :, :, :, :, 0, 0]
+    settled_cs = readiness_settled_state(P) if P is not None else 0
+    mass = g[:, :, :, :, :, 0, settled_cs]
     den = np.sum(mass, axis=4)
     num = np.sum(fp * mass[:, :, :, :, :, None], axis=4)
     out = fallback.copy()
@@ -5007,6 +5074,25 @@ def advance_cohort_one_period_markov_income(
         for nn in range(npar):
             for cs in range(ncs):
                 gp = gps[:, :, :, zz, nn, cs]
+                if readiness_gate_active(P) and nn == 0 and cs in (0, 1):
+                    current_age = float(P.age_start) + float(j) * float(P.da)
+                    next_age = current_age + float(P.da)
+                    hazard = readiness_transition_hazard(P, current_age, next_age)
+                    readiness_weights = (
+                        ((0, 1.0 - hazard), (1, hazard))
+                        if cs == 0
+                        else ((1, 1.0),)
+                    )
+                    for csn, readiness_weight in readiness_weights:
+                        if readiness_weight <= 0.0:
+                            continue
+                        for zn in range(Nz):
+                            transition_weight = Pi_z[zz, zn]
+                            if transition_weight > 0.0:
+                                g_next[:, :, :, zn, nn, csn] += (
+                                    transition_weight * readiness_weight * gp
+                                )
+                    continue
                 if ust:
                     Pi = Pia[:, :, nn]
                     for csn in range(ncs):
@@ -5037,6 +5123,7 @@ def advance_cohort_one_period_markov_income(
 def mean_housing_childless_weighted_markov(weight_dist, j, hR_pol, P):
     Nb, nt, I, Nz = weight_dist.shape
     th = mn = 0.0
+    childless_cs = readiness_settled_state(P)
     for zz in range(Nz):
         for i in range(I):
             for ten in range(nt):
@@ -5045,7 +5132,9 @@ def mean_housing_childless_weighted_markov(weight_dist, j, hR_pol, P):
                 if mh < 1e-15:
                     continue
                 if ten == 0:
-                    th += float(np.sum(gs * hR_pol[:, ten, i, j, zz, 0, 0]))
+                    th += float(
+                        np.sum(gs * hR_pol[:, ten, i, j, zz, 0, childless_cs])
+                    )
                 else:
                     th += mh * P.H_own[ten - 1]
                 mn += mh
@@ -5491,7 +5580,13 @@ def add_old_wealth_income_moments(
                             weight, nr, tr = mass[keep], nonhousing[keep], total[keep]
                             for key, values in (("nonhousing", nr), ("total", tr)):
                                 cells[key][0].append(values); cells[key][1].append(weight)
-                            group = "parent" if parity > 0 else "childless" if child_state == 0 else None
+                            group = (
+                                "parent"
+                                if parity > 0
+                                else "childless"
+                                if child_state in readiness_childless_states(P)
+                                else None
+                            )
                             if group is not None:
                                 for key, values in ((f"{group}_nonhousing", nr), (f"{group}_total", tr)):
                                     cells[key][0].append(values); cells[key][1].append(weight)
@@ -5528,7 +5623,7 @@ def compute_markov_statistics(
     g_total = np.sum(g, axis=4)
     asset_total = np.sum(asset_dist, axis=4)
     hR_total = collapse_markov_policy(hR, g, z_weights)
-    fp_total = collapse_markov_fertility_probs(fp, g, z_weights)
+    fp_total = collapse_markov_fertility_probs(fp, g, z_weights, P)
     lp_total = collapse_markov_location_probs(lp, g, z_weights)
     stats = compute_statistics(g_total, fp_total, lp_total, P, bg, ph, hR_total, asset_g=asset_total)
     # Correct the nonlinear renter room moments: compute_statistics applied the
@@ -5653,7 +5748,12 @@ def compute_markov_statistics(
                     worker_mass += mass
                     payroll_tax_revenue += period_scale * P.tau_pay * P.w_hat[i] * P.income_age_profile[j] * float(z_value) * mass
                 if a25s <= j <= aye:
-                    gm = asset_dist[:, 0, i, j, zz, 0, 0]
+                    gm = np.sum(
+                        asset_dist[
+                            :, 0, i, j, zz, 0, readiness_childless_states(P)
+                        ],
+                        axis=-1,
+                    )
                     mh = float(np.sum(gm))
                     if mh > 1e-15:
                         young_income += yj * mh
@@ -5819,6 +5919,8 @@ def compute_statistics(
     nt = 1 + P.n_house
     npar = P.n_parity
     ncs = P.n_child_states
+    childless_states = readiness_childless_states(P)
+    settled_childless_state = readiness_settled_state(P)
     asset_dist = g if asset_g is None else np.asarray(asset_g, dtype=float)
     if asset_dist.shape != g.shape:
         raise ValueError("asset_g must have the same shape as the realized current distribution")
@@ -5877,12 +5979,12 @@ def compute_statistics(
                 stats.child_state_dist[jj, cs] = np.sum(g[:, :, :, jj, :, cs]) / mj
     stats.fert_by_age = np.zeros(J)
     for j in range(P.A_f_start - 1, P.A_f_end):
-        mj = float(np.sum(g[:, :, :, j, 0, 0]))
+        mj = float(np.sum(g[:, :, :, j, 0, childless_states]))
         if mj > 1e-12:
             En = 0.0
             for i in range(I):
                 for ten in range(nt):
-                    gs = g[:, ten, i, j, 0, 0]
+                    gs = g[:, ten, i, j, 0, settled_childless_state]
                     nz = gs > 1e-15
                     if not np.any(nz):
                         continue
@@ -5969,7 +6071,10 @@ def compute_statistics(
     ylw = yinc = ycm = 0.0
     for jj in range(a25s, aye + 1):
         for i in range(I):
-            gs = asset_dist[:, 0, i, jj, 0, 0]
+            gs = np.sum(
+                asset_dist[:, 0, i, jj, 0, childless_states],
+                axis=-1,
+            )
             mh = float(np.sum(gs))
             if mh < 1e-15:
                 continue
@@ -5986,11 +6091,11 @@ def compute_statistics(
     tba = tfb = 0.0
     for j in range(P.A_f_start - 1, P.A_f_end):
         ra = P.age_start + j * P.da
-        childless_mass = float(np.sum(g[:, :, :, j, 0, 0]))
+        childless_mass = float(np.sum(g[:, :, :, j, 0, childless_states]))
         attempted = 0.0
         for i in range(I):
             for ten in range(nt):
-                gs = g[:, ten, i, j, 0, 0]
+                gs = g[:, ten, i, j, 0, settled_childless_state]
                 nz = gs > 1e-15
                 if not np.any(nz):
                     continue
@@ -6052,12 +6157,23 @@ def compute_statistics(
         stats.own_gradient_3055 = prime_owner_p / max(prime_mass_p, 1e-12) - prime_owner_c / max(prime_mass_c, 1e-12)
     else:
         stats.own_gradient_3055 = 0.0
-    nonparent_mass_2245 = float(np.sum(g[:, :, :, a22s : a45e + 1, 0, 0]))
-    stats.center_share_nonparents_2245 = (
-        float(np.sum(g[:, :, 1, a22s : a45e + 1, 0, 0]) / max(nonparent_mass_2245, 1e-12)) if I > 1 else 1.0
+    nonparent_mass_2245 = float(
+        np.sum(g[:, :, :, a22s : a45e + 1, 0, childless_states])
     )
-    nonparent_mass_3055 = float(np.sum(g[:, :, :, a30s : a55e + 1, 0, 0]))
-    nonparent_owner_3055 = float(np.sum(g[:, 1:, :, a30s : a55e + 1, 0, 0]))
+    stats.center_share_nonparents_2245 = (
+        float(
+            np.sum(g[:, :, 1, a22s : a45e + 1, 0, childless_states])
+            / max(nonparent_mass_2245, 1e-12)
+        )
+        if I > 1
+        else 1.0
+    )
+    nonparent_mass_3055 = float(
+        np.sum(g[:, :, :, a30s : a55e + 1, 0, childless_states])
+    )
+    nonparent_owner_3055 = float(
+        np.sum(g[:, 1:, :, a30s : a55e + 1, 0, childless_states])
+    )
     stats.own_rate_nonparents_3055 = nonparent_owner_3055 / max(nonparent_mass_3055, 1e-12)
     if not newparent_cs:
         stats.center_share_newparents_2245 = 0.0
@@ -6079,8 +6195,12 @@ def compute_statistics(
     stats.old_age_own_rate_6575 = old_owner / max(old_mass, 1e-12)
     old_parent_mass = float(np.sum(g[:, :, :, a65s : a75e + 1, 1:, :]))
     old_parent_owner = float(np.sum(g[:, 1:, :, a65s : a75e + 1, 1:, :]))
-    old_childless_mass = float(np.sum(g[:, :, :, a65s : a75e + 1, 0, 0]))
-    old_childless_owner = float(np.sum(g[:, 1:, :, a65s : a75e + 1, 0, 0]))
+    old_childless_mass = float(
+        np.sum(g[:, :, :, a65s : a75e + 1, 0, childless_states])
+    )
+    old_childless_owner = float(
+        np.sum(g[:, 1:, :, a65s : a75e + 1, 0, childless_states])
+    )
     stats.old_age_own_rate_parents_6575 = old_parent_owner / max(old_parent_mass, 1e-12)
     stats.old_age_own_rate_childless_6575 = old_childless_owner / max(old_childless_mass, 1e-12)
     stats.old_age_parent_childless_gap_6575 = stats.old_age_own_rate_parents_6575 - stats.old_age_own_rate_childless_6575
@@ -6135,7 +6255,7 @@ def compute_statistics(
                                 old_parent_nonhousing_ratio_wts.append(wts)
                                 old_parent_total_ratio_vals.append(total_ratio)
                                 old_parent_total_ratio_wts.append(wts)
-                        elif cs == 0:
+                        elif cs in childless_states:
                             old_childless_nonhousing_wealth += fin
                             old_childless_total_wealth += total
                             old_childless_income += income
@@ -6618,12 +6738,24 @@ def mean_housing_distribution(g_dist, j, hR_pol, P):
     return th / max(mn, 1e-12)
 
 
-def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs):
+def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs, age_index=None):
     Vc = np.zeros((Nb, nt, I, npar, ncs))
     K = P.n_child_stages
     if P.use_stochastic_aging and hasattr(P, "Pi_child"):
         Pa = P.Pi_child
         for nn in range(npar):
+            if readiness_gate_active(P) and nn == 0 and age_index is not None:
+                current_age = float(P.age_start) + float(age_index) * float(P.da)
+                next_age = current_age + float(P.da)
+                hazard = readiness_transition_hazard(P, current_age, next_age)
+                Vc[:, :, :, 0, 0] = (
+                    (1.0 - hazard) * Vn[:, :, :, 0, 0]
+                    + hazard * Vn[:, :, :, 0, 1]
+                )
+                Vc[:, :, :, 0, 1] = Vn[:, :, :, 0, 1]
+                if ncs > 2:
+                    Vc[:, :, :, 0, 2:] = Vn[:, :, :, 0, 2:]
+                continue
             Pi = Pa[:, :, nn]
             Vnn = np.reshape(Vn[:, :, :, nn, :], (-1, ncs), order="F")
             Vc[:, :, :, nn, :] = np.reshape(Vnn @ Pi.T, (Nb, nt, I, ncs), order="F")

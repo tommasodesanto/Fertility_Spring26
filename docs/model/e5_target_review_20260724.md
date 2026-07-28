@@ -821,3 +821,53 @@ Certified artifacts:
 
 - `output/model/eqscale_seq_e6ab_recalibration_20260727/report/`
 - `output/model/eqscale_seq_e6ab_diagnostic_packet_20260727/`
+
+## E6C IMPLEMENTATION, IDENTIFICATION, AND REFIT LAUNCH (2026-07-27)
+
+The preregistered E6c architecture is now implemented as a default-off binary
+readiness state. A childless entrant is either unsettled or settled; an
+age-dependent logistic arrival moves unsettled households irreversibly to
+settled, and first-child entry is available only from the settled state. The
+two free coordinates are the logistic location age and spread. Their search
+domains are `[8, 32]` years and `[0.5, 10]` years. They are assigned only to
+the two signed timing rows, so the combined E6a+E6b+E6c system has twelve free
+parameters and twelve signed moments.
+
+The gate-off verification is exact, not approximate. Strict Torch job
+`14854097` evaluates the certified E6a+E6b winner with the new code and the
+gate disabled. It reproduces loss `261.7193829994`, residual `1.77e-6`, and
+all twelve certified model moments with maximum absolute difference `0.0`.
+The full gate-off suite passes `143` tests and `3` subtests. The Bellman
+problem, forward distribution, cohort-forward diagnostic, reported
+distributions, and graph packet all use the same readiness transition when
+the gate is active.
+
+The strict five-solve local identification check is also complete. Around
+location `14` and spread `2`, all five cases converge strictly. For rows
+`(mean first-birth age, first births at 30+)` and columns
+`(location, spread)`, the raw finite-difference Jacobian is
+
+```text
+[[0.14487903, 0.33470650],
+ [0.00722062, 0.01831576]]
+```
+
+It has rank two. Its raw condition number is `563.4`, reflecting the different
+units. Scaling the two rows by their declared standard errors (`0.25`,
+`0.008`) and the two columns by their search ranges gives singular values
+`36.0132` and `0.7495`, with condition number `48.05`. Thus the formal rank
+gate clears, but the two coordinates are locally correlated and only weakly
+separated; this limitation must remain visible in the final decision package.
+Artifacts:
+`output/model/eqscale_seq_e6c_timing_jacobian_20260727/`.
+
+Exact-loop smoke array `14855126_[1-2]` completes successfully. Both chains
+write all `13/13` cases, all cases meet the smoke convergence rule, the arm is
+`E6ABC`, and metadata records twelve free parameters, twelve targets, and the
+registered readiness transition. Production therefore launches as array
+`14856656_[1-8]`, with after-success strict collector `14856657`. Each chain
+has a `225`-minute budget. At roughly `30` seconds per strict full solve, the
+array budget is about `450` evaluations per chain, `30` CPU-hours total, and
+`3.75` hours wall time because the eight chains run in parallel. Every chain
+writes completed-case and best-so-far heartbeats; a missing update for
+30 minutes is an unhealthy-run trigger.

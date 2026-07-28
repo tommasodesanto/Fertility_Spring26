@@ -75,6 +75,16 @@ if os.environ.get("E5", "") == "1":
         FIXED["kappa_fert"] = probe_fixed_kappa_fert
 if os.environ.get("E6A", "") == "1" and os.environ.get("E5", "") != "1":
     raise ValueError("E6A requires the signed E5 target contract (set E5=1)")
+if os.environ.get("E6C", "") == "1":
+    if not (
+        os.environ.get("E5", "") == "1"
+        and os.environ.get("E6A", "") == "1"
+        and os.environ.get("E6B", "") == "1"
+    ):
+        raise ValueError("E6C requires the combined E5+E6A+E6B configuration")
+    from intergen_eqscale_seq_optimized.e6c_profile import E6C_DOMAIN
+
+    DOMAIN = DOMAIN + E6C_DOMAIN
 DEFAULT_J = 17
 DEFAULT_NB = 120
 DEFAULT_MAX_ITER_EQ = 10
@@ -109,6 +119,8 @@ def transform(u: float, lo: float, hi: float, kind: str) -> float:
         return math.sinh((1.0 - u) * math.asinh(lo) + u * math.asinh(hi))
     if kind == "softzero":
         return lo + (hi - lo) * u * u
+    if kind == "linear":
+        return lo + (hi - lo) * u
     raise ValueError(f"unknown transform {kind!r}")
 
 
@@ -125,6 +137,8 @@ def inverse(value: float, lo: float, hi: float, kind: str) -> float:
         return (math.asinh(value) - math.asinh(lo)) / (math.asinh(hi) - math.asinh(lo))
     if kind == "softzero":
         return math.sqrt(max(0.0, (value - lo) / (hi - lo)))
+    if kind == "linear":
+        return (value - lo) / (hi - lo)
     raise ValueError(f"unknown transform {kind!r}")
 
 
@@ -160,6 +174,11 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         if not isinstance(winner_e2, dict) or not isinstance(winner_e2.get("theta"), dict):
             raise ValueError(f"{e2_record} does not contain winners.E1.theta")
         theta = {k: float(v) for k, v in winner_e2["theta"].items() if k in required}
+        if os.environ.get("E6C", "") == "1":
+            from intergen_eqscale_seq_optimized.e6c_profile import E6C_SEED
+
+            for name, value in E6C_SEED.items():
+                theta.setdefault(name, float(value))
         if (os.environ.get("E4_SPLIT", "") == "1" or os.environ.get("E5", "") == "1") and "kappa_fert_continuation" not in theta:
             # Pre-split records lack the continuation scale; restart it at the
             # frontier-v3 evidence value.
@@ -273,6 +292,11 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             if os.environ.get("E6B", "") == "1"
             else {}
         ),
+        **(
+            __import__("intergen_eqscale_seq_optimized.e6c_profile", fromlist=["e6c_overrides"]).e6c_overrides()
+            if os.environ.get("E6C", "") == "1"
+            else {}
+        ),
     }
 
 
@@ -315,6 +339,9 @@ def main() -> None:
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
     arm_name = (
+        "E6ABC"
+        if os.environ.get("E6C", "") == "1"
+        else (
         ("E6AB" if os.environ.get("E6A", "") == "1" else "E6B")
         if os.environ.get("E6B", "") == "1"
         else (
@@ -333,6 +360,7 @@ def main() -> None:
                     )
                 )
             )
+        )
         )
     )
     metadata = {"status": "smoke" if args.smoke else "proper_joint_smm_chain",
@@ -370,6 +398,14 @@ def main() -> None:
                 "permanent_income_levels": (
                     __import__("intergen_eqscale_seq_optimized.e6b_profile", fromlist=["e6b_metadata"]).e6b_metadata()
                     if os.environ.get("E6B", "") == "1"
+                    else None
+                ),
+                "readiness_arrival": (
+                    __import__(
+                        "intergen_eqscale_seq_optimized.e6c_profile",
+                        fromlist=["e6c_metadata"],
+                    ).e6c_metadata()
+                    if os.environ.get("E6C", "") == "1"
                     else None
                 ),
                 "fecundity_schedule": (

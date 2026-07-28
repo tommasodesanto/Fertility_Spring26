@@ -91,10 +91,20 @@ twelve target rows plus childlessness, completed fertility, and ownership by
 permanent level. `code/cluster/submit_intergen_e6b_fixed_diagnostic.sh` runs
 that comparison on Torch.
 
+E6c is a default-off binary readiness state. An irreversible logistic
+age-arrival moves a childless household from unsettled to settled, and
+first-child entry is available only when settled. `e6c_profile.py` registers
+the location and spread domains; those two free coordinates are identified by
+the two signed timing moments, making the combined E6a+E6b+E6c refit a
+twelve-parameter / twelve-moment system. Before refitting,
+`run_e6c_timing_jacobian.py` checks the strict local timing Jacobian. The
+production launchers are `code/cluster/submit_intergen_e6abc.sh` and its
+strict collector.
+
 After strict collectors finish, `build_e6_decision_tables.py` verifies that
 every report uses the same twelve targets and weights, then writes a ranked
-loss summary, the complete target-fit deltas against E5b, and all ten free
-parameters with bounds and external-restriction checks. It reads certified
+loss summary, the complete target-fit deltas against E5b, and every free
+parameter with bounds and external-restriction checks. It reads certified
 reports only and does not run the model.
 
 `build_e6_winner_diagnostics.py` reconstructs an E6 winner through the exact

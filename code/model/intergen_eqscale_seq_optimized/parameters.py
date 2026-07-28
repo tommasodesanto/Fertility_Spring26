@@ -53,6 +53,13 @@ def setup_parameters() -> SimpleNamespace:
     # the start age.  Zero preserves the established schedule bit for bit.
     P.fecundity_tail_start_age = 40.0
     P.fecundity_terminal_decay = 0.0
+    # Default-off E6c readiness state. When enabled, childless state 0 is
+    # unsettled and childless state 1 is settled; first-child entry is
+    # available only from the settled state. The irreversible arrival
+    # distribution is logistic in age, parameterized by its median and scale.
+    P.readiness_gate_enabled = False
+    P.readiness_location_age = 14.0
+    P.readiness_spread_years = 2.0
     # Exploratory switches: both preserve the seq-fertility fork by default.
     P.sequential_births = False
     P.preference_spec = "stone_geary"
@@ -481,6 +488,18 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
     retirement_multipliers = 1.0 + P.retirement_income_z_scale * (P.z_grid - 1.0)
     if np.any(retirement_multipliers <= 0.0):
         raise ValueError("retirement_income_z_scale implies nonpositive retirement income.")
+    P.readiness_gate_enabled = bool(getattr(P, "readiness_gate_enabled", False))
+    P.readiness_location_age = float(getattr(P, "readiness_location_age", 14.0))
+    P.readiness_spread_years = float(getattr(P, "readiness_spread_years", 2.0))
+    if not np.isfinite(P.readiness_location_age):
+        raise ValueError("readiness_location_age must be finite.")
+    if not np.isfinite(P.readiness_spread_years) or P.readiness_spread_years <= 0.0:
+        raise ValueError("readiness_spread_years must be finite and strictly positive.")
+    if P.readiness_gate_enabled:
+        if not bool(getattr(P, "sequential_births", False)):
+            raise ValueError("the readiness gate requires sequential_births=True.")
+        if int(P.n_child_states) < 2:
+            raise ValueError("the readiness gate requires at least two child states.")
 
     if "stage_durations" not in od and hasattr(P, "A_m"):
         P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
@@ -746,6 +765,46 @@ def get_fecundity_by_age(P: SimpleNamespace) -> np.ndarray:
 
 def fecundity_active(P: SimpleNamespace) -> bool:
     return float(getattr(P, "fecundity_omega1", 0.0)) != 0.0
+
+
+def readiness_gate_active(P: SimpleNamespace) -> bool:
+    """Whether the default-off E6c childless readiness state is active."""
+    return bool(getattr(P, "readiness_gate_enabled", False))
+
+
+def readiness_cumulative_probability(P: SimpleNamespace, age: float) -> float:
+    """Unconditional probability that readiness has arrived by ``age``."""
+    location = float(getattr(P, "readiness_location_age", 14.0))
+    spread = float(getattr(P, "readiness_spread_years", 2.0))
+    if not np.isfinite(location):
+        raise ValueError("readiness_location_age must be finite.")
+    if not np.isfinite(spread) or spread <= 0.0:
+        raise ValueError("readiness_spread_years must be finite and positive.")
+    x = float(np.clip((float(age) - location) / spread, -40.0, 40.0))
+    return float(1.0 / (1.0 + np.exp(-x)))
+
+
+def readiness_transition_hazard(
+    P: SimpleNamespace,
+    current_age: float,
+    next_age: float,
+) -> float:
+    """Conditional unsettled-to-settled probability over one age interval."""
+    if float(next_age) < float(current_age):
+        raise ValueError("readiness transition ages must be weakly increasing.")
+    current = readiness_cumulative_probability(P, current_age)
+    nxt = readiness_cumulative_probability(P, next_age)
+    return float(np.clip((nxt - current) / max(1.0 - current, 1e-14), 0.0, 1.0))
+
+
+def readiness_childless_states(P: SimpleNamespace) -> tuple[int, ...]:
+    """Child-state indices representing childless households."""
+    return (0, 1) if readiness_gate_active(P) else (0,)
+
+
+def readiness_settled_state(P: SimpleNamespace) -> int:
+    """State from which first-child entry is available."""
+    return 1 if readiness_gate_active(P) else 0
 
 
 def make_child_transition_matrix_with_matured(stage_durations: np.ndarray, n_parity: int) -> np.ndarray:

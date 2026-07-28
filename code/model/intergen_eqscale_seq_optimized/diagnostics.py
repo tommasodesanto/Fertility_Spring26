@@ -8,6 +8,8 @@ from typing import Any
 
 import numpy as np
 
+from .parameters import readiness_childless_states, readiness_settled_state
+
 
 def write_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, outdir: Path) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
@@ -169,11 +171,20 @@ def write_distribution_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, out
             wealth_age_z[j, zz] = weighted_liquid_wealth(gjz, b_grid)
             housing_age_z[j, zz] = mean_housing_for_distribution(gjz, sol, P, j, zz)
             if P.A_f_start - 1 <= j <= P.A_f_end and hasattr(sol, "fert_probs"):
-                childless = g[:, :, :, j, zz, 0, 0]
+                childless = np.sum(
+                    g[:, :, :, j, zz, 0, readiness_childless_states(P)],
+                    axis=-1,
+                )
+                settled = g[
+                    :, :, :, j, zz, 0, readiness_settled_state(P)
+                ]
                 cmass = float(np.sum(childless))
                 if cmass > 1e-14:
                     probs = np.asarray(sol.fert_probs)[:, :, :, j, zz, :]
-                    fert_age_z[j, zz] = float(np.sum(childless * (probs @ np.arange(P.n_parity))) / cmass)
+                    fert_age_z[j, zz] = float(
+                        np.sum(settled * (probs @ np.arange(P.n_parity)))
+                        / cmass
+                    )
 
     plot_age_by_income_state(outdir, plt, ages, z_grid, own_age_z, "ownership rate", "Ownership by age and income state", "ownership_by_age_income_state.png", ylim=(0.0, 1.05))
     plot_age_by_income_state(outdir, plt, ages, z_grid, wealth_age_z, "mean liquid wealth", "Liquid wealth by age and income state", "liquid_wealth_by_age_income_state.png")
@@ -185,7 +196,10 @@ def write_distribution_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, out
         j = age_to_index(P, float(age))
         fig, ax = plt.subplots(figsize=(7, 4))
         for zz, z_value in enumerate(z_grid):
-            mass = g[:, 0, 0, j, zz, 0, 0]
+            mass = np.sum(
+                g[:, 0, 0, j, zz, 0, readiness_childless_states(P)],
+                axis=-1,
+            )
             if float(np.sum(mass)) <= 1e-14:
                 continue
             ax.plot(b_grid, mass / max(float(np.sum(mass)), 1e-14), lw=1.8, label=f"z={z_value:g}")
@@ -287,7 +301,7 @@ def plot_policy_childless_renter(
     i = 0
     ten = 0
     nn = 0
-    cs = 0
+    cs = readiness_settled_state(P)
     age = float(P.age_start + j * P.da)
     nvec = np.arange(P.n_parity)
     c_pol = np.asarray(sol.c_pol)

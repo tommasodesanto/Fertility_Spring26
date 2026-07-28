@@ -135,8 +135,11 @@ def read_parameter_rows(record: dict[str, Any]) -> list[dict[str, Any]]:
             rows = list(csv.DictReader(handle))
     else:
         rows = derived_parameter_rows(record)
-    if len(rows) != 10 or len({str(row["parameter"]) for row in rows}) != 10:
-        raise ValueError(f"{record['label']} must report exactly ten free parameters")
+    expected = int(record["metadata"].get("free_parameter_count", 10))
+    if len(rows) != expected or len({str(row["parameter"]) for row in rows}) != expected:
+        raise ValueError(
+            f"{record['label']} must report exactly {expected} free parameters"
+        )
     return rows
 
 
@@ -229,12 +232,15 @@ def build_parameter_comparison(records: list[dict[str, Any]]) -> list[dict[str, 
     for record in records:
         for name, parameter in by_record[record["label"]].items():
             estimate = float(parameter["estimate"])
+            baseline_estimate = (
+                float(baseline[name]["estimate"]) if name in baseline else math.nan
+            )
             rows.append(
                 {
                     "variant": record["label"],
                     "parameter": name,
                     "estimate": estimate,
-                    "estimate_change_vs_E5b": estimate - float(baseline[name]["estimate"]),
+                    "estimate_change_vs_E5b": estimate - baseline_estimate,
                     "lower_bound": parameter["lower_bound"],
                     "upper_bound": parameter["upper_bound"],
                     "near_bound_2pct": parameter["near_bound_2pct"],

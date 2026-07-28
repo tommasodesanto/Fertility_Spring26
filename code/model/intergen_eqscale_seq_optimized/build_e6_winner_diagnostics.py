@@ -32,24 +32,35 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--outdir", type=Path, required=True)
-    parser.add_argument("--arm", choices=("e6a", "e6b", "e6ab"), required=True)
+    parser.add_argument(
+        "--arm",
+        choices=("e6a", "e6b", "e6ab", "e6abc"),
+        required=True,
+    )
     return parser.parse_args()
 
 
 def configure_environment(arm: str) -> None:
-    for name in ("E6A", "E6B"):
+    for name in ("E6A", "E6B", "E6C"):
         os.environ.pop(name, None)
     os.environ["E3_L4"] = "1"
     os.environ["E5"] = "1"
     os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
-    if arm in {"e6a", "e6ab"}:
+    if arm in {"e6a", "e6ab", "e6abc"}:
         os.environ["E6A"] = "1"
-    if arm in {"e6b", "e6ab"}:
+    if arm in {"e6b", "e6ab", "e6abc"}:
         os.environ["E6B"] = "1"
+    if arm == "e6abc":
+        os.environ["E6C"] = "1"
 
 
 def expected_arm(arm: str) -> str:
-    return {"e6a": "E6A", "e6b": "E6B", "e6ab": "E6AB"}[arm]
+    return {
+        "e6a": "E6A",
+        "e6b": "E6B",
+        "e6ab": "E6AB",
+        "e6abc": "E6ABC",
+    }[arm]
 
 
 def read_certified(source: Path, arm: str) -> tuple[dict[str, Any], dict[str, Any]]:

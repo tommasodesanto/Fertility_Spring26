@@ -238,6 +238,32 @@ Both conditions are satisfied. The combined 30+ share gap is `0.076765`, above
 under the rule fixed before the combined result. No code was written before
 this verdict.
 
+The implementation is now complete and remains default-off. A strict gate-off
+solve reproduces the certified E6a+E6b loss and all twelve model moments
+exactly. The full suite passes `143` tests and `3` subtests. The active
+readiness search bounds are `[8, 32]` years for the logistic location and
+`[0.5, 10]` years for its spread.
+
+The preregistered local identification check clears rank two using five strict
+solves. The raw timing Jacobian, with rows ordered as mean first-birth age and
+the 30+ share and columns ordered as location and spread, is
+
+```text
+[[0.14487903, 0.33470650],
+ [0.00722062, 0.01831576]]
+```
+
+After scaling the rows by their declared standard errors and the columns by
+their search ranges, its singular values are `36.0132` and `0.7495` and its
+condition number is `48.05`. The two parameters are therefore formally
+identified but locally correlated; the E6c result should be interpreted with
+that weakness in view.
+
+The exact-loop smoke completes `13/13` converged cases in both chains. The
+eight-chain production refit is running as Torch array `14856656`, with strict
+after-success collector `14856657`. The budget is `225` minutes per chain,
+about `30` CPU-hours in total and `3.75` hours of parallel wall time.
+
 ## 8. Search and reporting safeguards
 
 - Every refit uses two baseline seeds, three `start_mix=0.10` seeds, and three
@@ -280,8 +306,7 @@ policy-experiment claim.
 
 ## 11. Items required before this package is final
 
-- implement, identify, smoke, refit, and certify E6c and any required
-  combination;
+- finish and certify the active E6a+E6b+E6c refit;
 - regenerate the ranked comparison tables with every certified variant;
 - select a recommendation and include its complete twelve-row target table,
   complete free-parameter/bounds table, and independently verified standard
