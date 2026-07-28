@@ -749,3 +749,75 @@ the recommended configuration: the repaired-domain E6a+E6b array
 E6c rule can be applied only after that combined winner is certified and
 diagnosed. Certified artifacts:
 `output/model/eqscale_seq_e6b_recalibration_20260727/report/`.
+
+## E6A+E6B CERTIFIED REFIT AND E6C TRIGGER (2026-07-27)
+
+Collector `14847115` completed after all eight repaired-domain production
+chains exited successfully. Seven chains are eligible. Chain 2 is excluded
+because its two equal tight repeats have residual `5.02e-5`, above the strict
+`2.5e-5` threshold. The selected chain 1 winner has strict loss
+`261.7193829994`, residual `1.77e-6`, and exactly equal tight repeats: the loss
+difference and maximum difference across the twelve target moments are both
+`0.0`. Its annual discount factor is `0.996792`, estimated inside the corrected
+`[0.94, 0.9995]` search interval.
+
+Complete signed target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| `tfr` | 1.918000 | 1.995047 | 0.077047 | 1425.738991 | 8.463428 |
+| `childless_rate` | 0.188000 | 0.105929 | -0.082071 | 17180.743822 | 115.723499 |
+| `mean_age_first_birth` | 25.310561 | 25.784863 | 0.474302 | 16.000000 | 3.599398 |
+| `share_first_births_age30plus` | 0.270062 | 0.346827 | 0.076765 | 15625.000000 | 92.075068 |
+| `housing_increment_0to1` | 0.664435 | 0.582814 | -0.081621 | 906.055891 | 6.036201 |
+| `prime30_55_parent_3plus_minus_1to2_mean_rooms` | 0.367700 | 0.378997 | 0.011298 | 2958.514988 | 0.377630 |
+| `own_family_gap` | 0.167662 | 0.139614 | -0.028048 | 14229.590956 | 11.194357 |
+| `own_rate` | 0.575472 | 0.470761 | -0.104711 | 1207.846086 | 13.243426 |
+| `aggregate_mean_occupied_rooms_18_85` | 5.779970 | 5.642756 | -0.137215 | 11.973159 | 0.225429 |
+| `aggregate_wealth_to_annual_gross_labor_earnings` | 6.873100 | 6.205776 | -0.667324 | 6.287669 | 2.800029 |
+| `annual_bequest_flow_to_aggregate_wealth` | 0.008800 | 0.008228 | -0.000572 | 5165289.256198 | 1.692758 |
+| `old_total_wealth_to_annual_income_p90_p50_7684` | 3.448111 | 3.780370 | 0.332260 | 56.959772 | 6.288159 |
+
+All ten free parameters:
+
+| Parameter | Estimate | Search bounds | Near bound (2% of range) | External restriction |
+|---|---:|---:|---|---|
+| `beta_annual` | 0.996792 | [0.94, 0.9995] | No | `>= 0.94`, satisfied |
+| `delta_alpha` | 0.002481 | [0, 0.25] | Yes, lower | -- |
+| `delta_alpha_jump` | 0.042103 | [0, 0.25] | No | -- |
+| `psi_child` | 0.638384 | [-3, 3] | No | -- |
+| `kappa_fert` | 3.660642 | [0.02, 50] | No | -- |
+| `kappa_fert_continuation` | 0.616527 | [0.02, 50] | Yes, lower | -- |
+| `chi` | 1.035658 | [0.10, 5] | No | -- |
+| `H0` | 8.376533 | [0.20, 80] | No | -- |
+| `theta0` | 0.112691 | [0, 8] | Yes, lower | -- |
+| `theta1` | 0.062049 | [0.02, 16] | Yes, lower | -- |
+
+The combined variant is the lowest-loss certified configuration so far,
+`123.4235` below E5b. It preserves the income layer's wealth gains: aggregate
+wealth is `6.2058` and old wealth p90/p50 is `3.7804`. It also raises
+childlessness to `0.1059`. The price is a worse timing distribution and weaker
+housing margins: the 30+ share rises to `0.3468`, ownership falls to `0.4708`,
+and the family ownership gap falls to `0.1396`. Childlessness remains
+wrong-signed across permanent-income levels (`0.1301`, `0.1028`, `0.0944`).
+
+Strict diagnostic job `14853317` independently reproduces all twelve model
+moments and the loss exactly, with residual `1.77e-6`. It writes the unchanged
+17-plot standard packet plus the preregistered supplemental age comparison.
+Visual inspection of the fertility, age-30 policy, and supplemental panels
+shows complete labels and the expected state-space patterns.
+
+Both preregistered E6c conditions are now satisfied. First, the combined
+30+ share gap is `0.076765`, well above the two-standard-error threshold
+`0.016`. Second, model first-birth mass is too high at ages 18--25
+(`0.4614` versus `0.4338`) and too low at ages 26--33 (`0.3441` versus
+`0.3587`). Late mass also remains high (`0.0878` versus `0.0297`).
+Accordingly E6c is activated exactly as preregistered. The next steps are the
+default-off binary readiness implementation, a rank-two strict local timing
+Jacobian for its two hazard coordinates, the full gate-off test suite, and an
+exact-loop smoke before any refit.
+
+Certified artifacts:
+
+- `output/model/eqscale_seq_e6ab_recalibration_20260727/report/`
+- `output/model/eqscale_seq_e6ab_diagnostic_packet_20260727/`

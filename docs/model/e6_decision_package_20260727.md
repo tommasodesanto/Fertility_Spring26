@@ -1,10 +1,10 @@
 # E6 calibration decision package
 
-**Status: working package, not an adoption recommendation.** E6a and E6b are
-certified. The E6a+E6b production refit is running. E6c is governed by the
-preregistered trigger below and has not been implemented. This document becomes
-final only after every launched collector is certified, the E6c gate is
-resolved, and the recommended configuration reproduces its full graph packet.
+**Status: working package, not an adoption recommendation.** E6a, E6b, and
+E6a+E6b are certified. The preregistered E6c trigger is satisfied, so the
+readiness variant must now be implemented and evaluated. This document becomes
+final only after E6c is resolved and the recommended configuration reproduces
+its full graph packet.
 
 ## 1. Decision question and fixed contract
 
@@ -33,12 +33,12 @@ twelve certified model moments within `1e-6`.
 
 | Rank among certified rows | Configuration | Signed loss | Change from E5b | Strict solve time | What it buys | Main price |
 |---:|---|---:|---:|---:|---|---|
-| 1 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
-| 2 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
-| 3 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
+| 1 | E6a + E6b | 261.719 | -123.423 | 29.38 s | Combines improved childlessness with repaired wealth dispersion | Timing and housing margins worsen materially |
+| 2 | E6b permanent earnings levels | 297.210 | -87.933 | 38.61 s | Repairs old wealth dispersion and raises aggregate wealth | Childlessness worsens; ownership and the family ownership gap fall |
+| 3 | E6a terminal fecundity tail | 312.094 | -73.049 | 9.25 s | Childlessness rises from 0.0802 to 0.1026; mean first-birth age moves toward target | 30+ share barely changes; old wealth dispersion remains near 2.0 |
+| 4 | E5b baseline | 385.143 | -- | 12.45 s | Fits eight of twelve signed rows closely | Misses childlessness, timing shape, aggregate wealth, and old wealth dispersion |
 
-E6a+E6b is omitted from the ranking until its collector finishes. Loose search
-cases are not evidence.
+Loose search cases are not evidence.
 
 ## 3. Certified E5b baseline
 
@@ -177,7 +177,45 @@ Empirical packet:
 Certified refit:
 `output/model/eqscale_seq_e6b_recalibration_20260727/report/`.
 
-## 6. E6c preregistered decision rule
+## 6. E6a + E6b combined evidence
+
+Seven of eight production chains are eligible. The excluded chain has two
+equal tight solves but misses the strict market-residual threshold. The
+selected chain 1 winner has loss `261.7193829994`, residual `1.77e-6`, and
+exactly equal strict repeats. Its annual discount factor is `0.996792`, inside
+the corrected `[0.94, 0.9995]` domain.
+
+Relative to E5b:
+
+| Moment | Combined | Model change | Absolute-gap change | Loss-contribution change |
+|---|---:|---:|---:|---:|
+| Completed fertility | 1.995047 | +0.091474 | +0.062619 | +8.166672 |
+| Childlessness | 0.105929 | +0.025741 | -0.025741 | -83.976170 |
+| Mean first-birth age | 25.784863 | +0.147430 | +0.147430 | +1.889876 |
+| First births at 30+ | 0.346827 | +0.014493 | +0.014493 | +31.484959 |
+| First-child rooms response | 0.582814 | -0.074391 | +0.074391 | +5.988833 |
+| Larger-family rooms contrast | 0.378997 | +0.006758 | +0.006758 | +0.316647 |
+| Family ownership gap | 0.139614 | -0.026265 | +0.026265 | +11.149097 |
+| Ownership | 0.470761 | -0.092997 | +0.092997 | +13.077687 |
+| Mean occupied rooms | 5.642756 | -0.432749 | -0.158320 | -0.820314 |
+| Aggregate wealth / earnings | 6.205776 | +0.751023 | -0.751023 | -9.848915 |
+| Bequest flow / wealth | 0.008228 | -0.000851 | +0.000294 | +1.293387 |
+| Old wealth p90/p50 | 3.780370 | +1.712000 | -1.047481 | -102.145256 |
+
+The combined variant is the lowest-loss certified row because it retains the
+wealth tail and raises childlessness. It does not solve timing: the 30+ share
+rises to `0.3468`, completed fertility overshoots, and both ownership rows
+worsen. The permanent-income childlessness gradient also remains wrong-signed.
+
+The independent strict diagnostic reproduces every target moment and the loss
+at machine zero. Model first-birth mass is `0.4614` versus `0.4338` in the
+NCHS cohorts at ages 18--25, `0.3441` versus `0.3587` at ages 26--33, and
+`0.0878` versus `0.0297` at ages 38--45. Artifacts:
+
+- `output/model/eqscale_seq_e6ab_recalibration_20260727/report/`
+- `output/model/eqscale_seq_e6ab_diagnostic_packet_20260727/`
+
+## 7. E6c preregistered decision rule
 
 The signed 30+ first-birth share has target `0.270062` and declared standard
 error `0.008`. E6c activates only if the certified E6a+E6b estimate remains
@@ -194,10 +232,13 @@ parameters and twelve signed moments. A strict local finite-difference check
 must show rank two for the two timing rows with respect to the two hazard
 coordinates before the refit can be called identified.
 
-No E6c code is written before the trigger. If either trigger condition fails,
-the architecture is not added.
+Both conditions are satisfied. The combined 30+ share gap is `0.076765`, above
+`0.016`, and the strict supplemental diagnostic confirms excess mass at ages
+18--25 together with deficient mass at ages 26--33. E6c therefore activates
+under the rule fixed before the combined result. No code was written before
+this verdict.
 
-## 7. Search and reporting safeguards
+## 8. Search and reporting safeguards
 
 - Every refit uses two baseline seeds, three `start_mix=0.10` seeds, and three
   `start_mix=0.25` seeds.
@@ -211,7 +252,7 @@ the architecture is not added.
   the standing `0.94` external restriction. The code was repaired before the
   combined run; this discrepancy remains disclosed rather than rewritten.
 
-## 8. Author decisions reserved
+## 9. Author decisions reserved
 
 The final package will leave these decisions to the author:
 
@@ -224,7 +265,7 @@ The final package will leave these decisions to the author:
 This exercise makes no target-system change, housing-gate choice, or
 policy-experiment claim.
 
-## 9. Attempts that did not solve the stated problem
+## 10. Attempts that did not solve the stated problem
 
 - Refitting only the conception levels at ages 30, 35, and 40 did not remove
   the terminal excess.
@@ -237,12 +278,10 @@ policy-experiment claim.
   wealth dispersion dominate the loss because mechanisms are missing, not
   because the signed weights are unusual.
 
-## 10. Items required before this package is final
+## 11. Items required before this package is final
 
-- certify the E6a+E6b collector;
-- apply the preregistered E6c trigger;
-- if E6c triggers, implement, identify, smoke, refit, and certify it and any
-  required combination;
+- implement, identify, smoke, refit, and certify E6c and any required
+  combination;
 - regenerate the ranked comparison tables with every certified variant;
 - select a recommendation and include its complete twelve-row target table,
   complete free-parameter/bounds table, and independently verified standard
