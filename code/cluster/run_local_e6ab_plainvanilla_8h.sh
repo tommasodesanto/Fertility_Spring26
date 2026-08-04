@@ -9,6 +9,8 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 PYTHON_BIN="$MODEL_DIR/.venv/bin/python"
 RUN_ROOT="$PROJECT_ROOT/output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/production"
 LOG_ROOT="$PROJECT_ROOT/output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/logs"
+CHAIN_IDS="${E6_LOCAL_CHAIN_IDS:-1 2}"
+COLLECT_AFTER="${E6_LOCAL_COLLECT_AFTER:-1}"
 
 mkdir -p "$RUN_ROOT" "$LOG_ROOT"
 
@@ -32,14 +34,32 @@ run_chain() {
         >"$LOG_ROOT/chain_$task_id.log" 2>&1
 }
 
-run_chain 1 0.00 &
-pid_1=$!
-run_chain 2 0.10 &
-pid_2=$!
+pids=()
+for task_id in $CHAIN_IDS; do
+    case "$task_id" in
+        1) start_mix=0.00 ;;
+        2) start_mix=0.10 ;;
+        3) start_mix=0.03 ;;
+        4) start_mix=0.06 ;;
+        5) start_mix=0.12 ;;
+        6) start_mix=0.16 ;;
+        7) start_mix=0.20 ;;
+        8) start_mix=0.25 ;;
+        *) echo "unsupported local chain id: $task_id" >&2; exit 2 ;;
+    esac
+    run_chain "$task_id" "$start_mix" &
+    pids+=("$!")
+done
 
-wait "$pid_1"
-wait "$pid_2"
+exit_status=0
+for pid in "${pids[@]}"; do
+    wait "$pid" || exit_status=1
+done
 
-"$PYTHON_BIN" "$MODEL_DIR/intergen_eqscale_seq_optimized/collect_e1.py" \
-    --results-root "$RUN_ROOT" \
-    --outdir "$PROJECT_ROOT/output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/report"
+if [ "$COLLECT_AFTER" = "1" ]; then
+    "$PYTHON_BIN" "$MODEL_DIR/intergen_eqscale_seq_optimized/collect_e1.py" \
+        --results-root "$RUN_ROOT" \
+        --outdir "$PROJECT_ROOT/output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/report"
+fi
+
+exit "$exit_status"
