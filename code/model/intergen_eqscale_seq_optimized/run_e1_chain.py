@@ -156,6 +156,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--Nb", type=int, default=DEFAULT_NB)
     parser.add_argument("--max-iter-eq", type=int, default=DEFAULT_MAX_ITER_EQ)
     parser.add_argument("--tol-eq", type=float, default=1e-4)
+    parser.add_argument(
+        "--weight-scheme",
+        choices=("canonical", "target_relative_block_equal"),
+        default="canonical",
+        help=(
+            "Calibration objective. The alternative is the sum of block mean "
+            "squared proportional target gaps."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -328,6 +337,15 @@ def main() -> None:
         weights["aggregate_mean_occupied_rooms_18_85"] = 6.0
         if len(targets) != 15 or set(targets) != set(weights):
             raise ValueError("E1 requires the unchanged 15-moment income-disciplined target system")
+    canonical_weights = dict(weights)
+    if args.weight_scheme == "target_relative_block_equal":
+        if os.environ.get("E5", "") != "1":
+            raise ValueError("plain E6 weighting requires the signed twelve-row E5 target contract")
+        from intergen_eqscale_seq_optimized.e6_plain_weighting import (
+            target_relative_block_equal_weights,
+        )
+
+        weights = target_relative_block_equal_weights(targets)
     seed_theta = build_seed_theta()
     x0 = unit_from_theta(seed_theta)
     rng = np.random.default_rng(args.seed)
@@ -375,6 +393,8 @@ def main() -> None:
                 "free_parameter_count": len(DOMAIN), "target_count": len(targets),
                 "active_domain": [{"name": n, "lower": lo, "upper": hi, "transform": k} for n, lo, hi, k in DOMAIN],
                 "fixed_parameters": FIXED, "target_set": TARGET_SET, "targets": targets, "weights": weights,
+                "weight_scheme": args.weight_scheme,
+                "canonical_weights": canonical_weights,
                 "external_parameter_metadata": (
                     __import__("intergen_eqscale_seq_optimized.e5_profile", fromlist=["E5_EXTERNAL_METADATA"]).E5_EXTERNAL_METADATA
                     if os.environ.get("E5", "") == "1" else None
