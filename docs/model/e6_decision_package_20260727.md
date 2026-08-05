@@ -1,9 +1,10 @@
 # E6 calibration decision package
 
-**Status: final decision package, with August 4 weight robustness.** The recommended configuration for the
-author's consideration is the smaller E6a+E6b rescue: the externally
-disciplined late-age conception tail plus measured permanent earnings levels,
-with E6c left off. This is not an automatic promotion to the maintained model.
+**Status: completed experimental package; superseded by the author's August 5
+decision.** The maintained model remains the pre-E6 E5b specification. E6a,
+E6b, E6c, and their refits remain default-off robustness evidence and are not
+recommended for adoption. The original package below is retained unchanged as
+an audit trail of what was tested and learned.
 
 ## 1. Decision question and fixed contract
 

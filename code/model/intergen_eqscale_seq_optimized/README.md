@@ -69,6 +69,10 @@ proof-of-concept cases under
 
 ## E-strand hardening
 
+Author decision, August 5: the certified pre-E6 E5b specification remains the
+maintained model. E6a, E6b, E6c, and their refits are retained below only as
+default-off experimental and reproducibility paths; none is adopted.
+
 The autonomous E-strand hardening program starts from the certified E5b
 twelve-row system. Its first default-off extension is E6a, an externally
 fitted late-age fecundity tail with no added free parameter. Reproduce the

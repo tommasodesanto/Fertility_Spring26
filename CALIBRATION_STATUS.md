@@ -1,6 +1,27 @@
 # Calibration Status
 
-Updated: `2026-08-05` (absolute-proportional-gap E6AB robustness complete)
+Updated: `2026-08-05` (author retains the pre-E6 maintained model)
+
+## August 5 author decision: retain the pre-E6 specification
+
+The maintained model remains the certified E5b specification. The E6a
+late-age fecundity tail, E6b permanent earnings levels, E6c readiness state,
+and all E6AB refits are rejected for adoption and retained only as default-off
+robustness experiments. No code rollback is required: E6a has zero terminal
+decay by default and E6b permanent earnings levels are disabled by default.
+
+The reason is economic, not computational. The experiments are numerically
+valid and informative, but the exact assumptions are not presently defensible
+enough for the paper. A focused literature review found related recent
+top-five lifecycle-fertility models—Doepke and Kindermann (2019, AER) and
+Adda, Dustmann, and Stevens (2017, JPE)—but neither supplies a clean precedent
+for the experimental post-age-40 fecundity formula or for the three permanent
+earnings classes used here. Any future biological schedule must be imported
+directly from an approved demographic or medical source rather than extended
+ad hoc.
+
+The sections below remain an audit trail of completed experiments; statements
+recommending E6AB for author review are superseded by this decision.
 
 ## August 5: absolute-proportional-gap E6AB robustness complete
 
