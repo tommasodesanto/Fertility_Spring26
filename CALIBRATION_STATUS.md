@@ -1,6 +1,24 @@
 # Calibration Status
 
-Updated: `2026-08-04` (plain-weight E6AB robustness complete; adoption remains an author decision)
+Updated: `2026-08-05` (absolute-proportional-gap E6AB refit running on Torch)
+
+## August 5: absolute-proportional-gap E6AB refit running
+
+The follow-up robustness exercise keeps the E6a+E6b model, twelve targets,
+ten free parameters, and bounds unchanged. Its fixed objective is the sum,
+across the fertility, housing/tenure, and wealth/bequest blocks, of each
+block's mean absolute proportional target gap. This is the non-squared
+analogue of the August 4 block-equal objective; it introduces neither
+standard-error weights nor a Huber tuning parameter.
+
+The exact local loop passed 13/13 strict smoke cases with loss accounting
+equal to machine precision. Torch smoke array `15288944` then passed the same
+13-case loop on both chains with empty error logs. Production array
+`15288971` has eight one-core chains, a 225-minute per-chain budget, a
+1,200-case ceiling, per-case checkpoints, and strict double evaluation of
+each chain winner. Collector `15288979` is dependency-gated on the array.
+Remote output is under
+`output/model/eqscale_seq_e6ab_l1_recalibration_20260805/`.
 
 ## August 4: plain-weight E6AB robustness complete
 
