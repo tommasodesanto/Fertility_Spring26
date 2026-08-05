@@ -30,8 +30,9 @@ distribution still has excess mass at 18--25 and 38--45 and deficient mass
 at 26--33.
 
 Three estimates are close to bounds: annual beta `0.998431` near its upper
-bound, `delta_alpha=0.003956` near zero, and `theta1=0.076005` near its lower
-bound. The absolute objective therefore creates the expected sparse-residual
+bound, the per-child consumption-versus-housing share shift
+`delta_alpha=0.003956` near zero, and `theta1=0.076005` near its lower bound.
+The absolute objective therefore creates the expected sparse-residual
 solution: it fits many rows almost exactly by concentrating the fertility
 miss in childlessness. It is a robustness frontier, not a replacement.
 Retain the canonical E6AB rescue as the leading author-review candidate, but

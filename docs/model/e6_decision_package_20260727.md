@@ -412,9 +412,10 @@ estimate to `0.23247`. It also lowers overall mean absolute percentage error
 from 8.625 to 7.452 percent. But this is a sparse-residual solution: the five
 housing rows are nearly exact, while childlessness falls to `0.06073` against
 `0.188`. Fertility-block mean absolute percentage error rises to 19.25
-percent, annual beta approaches its upper bound, and the first-child utility
-increment approaches zero. The standard diagnostic packet reproduces the
-winner exactly and still shows excess first births at 18--25 and 38--45 and a
+percent, annual beta approaches its upper bound, and the per-child shift in
+the consumption-versus-housing utility share approaches zero. The standard
+diagnostic packet reproduces the winner exactly and still shows excess first
+births at 18--25 and 38--45 and a
 deficit at 26--33. Thus neither squared nor absolute proportional weighting
 produces a uniformly better estimate; the model's fertility tradeoff is not
 an artifact of the canonical standard-error weights. Full three-objective
