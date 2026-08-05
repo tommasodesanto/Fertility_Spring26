@@ -1,6 +1,49 @@
 # Calibration Status
 
-Updated: `2026-07-28` (E-series hardening complete; adoption remains an author decision)
+Updated: `2026-08-04` (plain-weight E6AB robustness complete; adoption remains an author decision)
+
+## August 4: plain-weight E6AB robustness complete
+
+The concern about the E5/E6 weight system is valid: six rows use measured or
+declared standard errors, while the remaining rows use the synthetic rule of
+five percent of the target. A transparent alternative calibration therefore
+kept the E6a+E6b model, twelve targets, parameter bounds, and ten free
+parameters unchanged, but replaced the objective with the sum of three block
+mean squared proportional gaps. Fertility, housing/tenure, and
+wealth/bequests receive equal aggregate weight, with equal row weights inside
+each block. This is a calibration criterion, not a statistical J test.
+
+Eight local one-core chains completed 3,276 cases. All eight are eligible,
+with two exactly equal strict repeats per chain. The selected chain 1 has
+plain loss `0.0639207658314`, residual `1.59e-5`, and zero repeat differences.
+An independent chain reaches `0.0641345212162`. The standard diagnostic
+packet reproduces the selected loss and all twelve moments exactly.
+
+The new objective lowers its own loss by `13.47` percent relative to the
+canonical E6AB rescue (`0.0738713 -> 0.0639208`), but it does not deliver a
+uniformly better fit. Mean absolute percentage error rises slightly
+(`8.625 -> 8.778` percent), raw absolute gaps rise (`1.539 -> 2.167`), and the
+old canonical loss rises (`205.550 -> 241.241`). Childlessness improves from
+`0.10045` to `0.12802` against `0.188`, but completed fertility falls from
+`1.90534` to `1.82742` against `1.918`, the 30+ first-birth share rises from
+`0.33493` to `0.36851` against `0.27006`, and mean first-birth age rises from
+`25.59` to `26.12` against `25.31`. The wealth/bequest block improves in mean
+absolute percentage terms (`6.29 -> 5.26` percent); housing/tenure remains
+close but worsens slightly (`2.45 -> 2.65` percent).
+
+Decision: retain the canonical E6AB rescue as the leading author-review
+candidate, while treating its scalar loss as criterion-dependent rather than
+as a formal J statistic. The plain-weight result is a useful robustness
+frontier, not a replacement. If another objective is explored, use a
+predeclared absolute-percentage or Huber/tolerance criterion so one large
+proportional miss cannot dominate through squaring. Do not continuously
+change weights inside an optimizer run.
+
+Artifacts:
+
+- `output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/report/`
+- `output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/comparison/`
+- `output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/diagnostic_packet/`
 
 ## July 28: E-series hardening complete
 

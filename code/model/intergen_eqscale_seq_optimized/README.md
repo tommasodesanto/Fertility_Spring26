@@ -114,3 +114,10 @@ a clearly labeled supplemental model-versus-NCHS first-birth age-bin table,
 plot, and preregistered timing-shape flag without changing the standard set.
 The Torch launcher is
 `code/cluster/submit_intergen_e6_winner_diagnostic.sh`.
+
+`build_e6_plain_comparison.py` compares a certified E6AB refit under the
+block-equal proportional-gap objective with the canonical E6AB rescue. It
+requires the same twelve-target contract, evaluates both estimates under both
+objectives, reports every free parameter and bound, and writes the standard
+signed-gap comparison plot. It is a reporting driver and does not solve the
+model.

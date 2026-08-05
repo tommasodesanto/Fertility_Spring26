@@ -1,6 +1,6 @@
 # E6 calibration decision package
 
-**Status: final decision package.** The recommended configuration for the
+**Status: final decision package, with August 4 weight robustness.** The recommended configuration for the
 author's consideration is the smaller E6a+E6b rescue: the externally
 disciplined late-age conception tail plus measured permanent earnings levels,
 with E6c left off. This is not an automatic promotion to the maintained model.
@@ -378,7 +378,34 @@ mass (`0.0839` versus `0.0297`). Artifacts:
 - `output/model/eqscale_seq_e6ab_rescue_diagnostic_packet_20260728/`
 - `output/model/eqscale_seq_e6_decision_tables_20260728/`
 
-## 9. Search and reporting safeguards
+## 9. August 4 plain-weight robustness
+
+The canonical weight concern is legitimate. Six rows use measured or declared
+standard errors; the remaining rows use a synthetic five-percent-of-target
+rule. A separate eight-chain E6AB refit therefore replaced those weights with
+the sum of three block mean squared proportional gaps. The fertility,
+housing/tenure, and wealth/bequest blocks receive equal aggregate influence.
+No model mechanism, target, parameter, or bound changed.
+
+All eight chains are eligible after two exact strict repeats. The winner has
+plain loss `0.0639208`, down 13.47 percent from `0.0738713` at the canonical
+E6AB estimate, and residual `1.59e-5`. A second chain reaches `0.0641345`.
+
+The improvement is not uniform. Childlessness moves toward target (`0.10045`
+to `0.12802`, target `0.188`), but completed fertility falls (`1.90534` to
+`1.82742`, target `1.918`) and the 30+ first-birth share rises (`0.33493` to
+`0.36851`, target `0.27006`). Mean absolute percentage error rises slightly
+from 8.625 to 8.778 percent, while the canonical loss rises from 205.55 to
+241.24. The alternative objective reduces the largest proportional outlier by
+trading against several smaller fertility gaps.
+
+Conclusion: retain the canonical rescue as the leading author-review
+candidate, but do not interpret its loss as a formal J statistic. The
+plain-weight estimate is a robustness frontier, not a replacement. Full dual
+tables and plots are under
+`output/model/eqscale_seq_e6ab_plainvanilla_local_20260804/`.
+
+## 10. Search and reporting safeguards
 
 - Every refit uses two baseline seeds, three `start_mix=0.10` seeds, and three
   `start_mix=0.25` seeds.
@@ -392,7 +419,7 @@ mass (`0.0839` versus `0.0297`). Artifacts:
   the standing `0.94` external restriction. The code was repaired before the
   combined run; this discrepancy remains disclosed rather than rewritten.
 
-## 10. Author decisions reserved
+## 11. Author decisions reserved
 
 The final package will leave these decisions to the author:
 
@@ -405,7 +432,7 @@ The final package will leave these decisions to the author:
 This exercise makes no target-system change, housing-gate choice, or
 policy-experiment claim.
 
-## 11. Attempts that did not solve the stated problem
+## 12. Attempts that did not solve the stated problem
 
 - Refitting only the conception levels at ages 30, 35, and 40 did not remove
   the terminal excess.
@@ -417,11 +444,12 @@ policy-experiment claim.
 - E6c clears the ex ante local rank check but is estimated almost completely
   inactive, does not repair the timing shape, and is strictly dominated by
   its smaller gate-off rescue.
-- Reweighting diagnostics do not change the diagnosis: childlessness and old
-  wealth dispersion dominate the loss because mechanisms are missing, not
-  because the signed weights are unusual.
+- Block-equal proportional weighting improves childlessness and wealth but
+  worsens TFR and first-birth timing; it does not deliver a uniformly better
+  fit. The scalar ranking is criterion-dependent, while the fertility-shape
+  limitation remains under both objectives.
 
-## 12. Completion audit
+## 13. Completion audit
 
 - Common contract: all ranked losses use the unchanged signed twelve-row
   target system and weights; comparison-table validation passes.
