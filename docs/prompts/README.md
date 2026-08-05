@@ -22,3 +22,7 @@ state.
   treats bequests as a required model component and redirects the next stage to
   repairing and expanding wealth/estate identification rather than using
   old-age ownership or a near-zero coefficient as a deletion rule.
+- `HANDOFF_claude_e5b_entry_policy_audit_20260805.md`: read-only Claude audit
+  of the restored E5b calibration and the parenthood, homeownership,
+  population-entry, and fiscal mechanisms behind its weak fertility policy
+  response.
