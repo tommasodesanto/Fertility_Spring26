@@ -1,8 +1,8 @@
 # Calibration Status
 
-Updated: `2026-08-05` (absolute-proportional-gap E6AB refit running on Torch)
+Updated: `2026-08-05` (absolute-proportional-gap E6AB robustness complete)
 
-## August 5: absolute-proportional-gap E6AB refit running
+## August 5: absolute-proportional-gap E6AB robustness complete
 
 The follow-up robustness exercise keeps the E6a+E6b model, twelve targets,
 ten free parameters, and bounds unchanged. Its fixed objective is the sum,
@@ -11,14 +11,38 @@ block's mean absolute proportional target gap. This is the non-squared
 analogue of the August 4 block-equal objective; it introduces neither
 standard-error weights nor a Huber tuning parameter.
 
-The exact local loop passed 13/13 strict smoke cases with loss accounting
-equal to machine precision. Torch smoke array `15288944` then passed the same
-13-case loop on both chains with empty error logs. Production array
-`15288971` has eight one-core chains, a 225-minute per-chain budget, a
-1,200-case ceiling, per-case checkpoints, and strict double evaluation of
-each chain winner. Collector `15288979` is dependency-gated on the array.
-Remote output is under
-`output/model/eqscale_seq_e6ab_l1_recalibration_20260805/`.
+The exact local loop and two-chain Torch smoke passed 13/13 cases with exact
+loss accounting. Production array `15288971` completed 3,085 cases across
+eight chains; seven chains have eligible strict double repeats. Chain 7 wins
+at L1 loss `0.2324698151`, residual `1.99e-5`, and zero repeat differences.
+The independent diagnostic solve reproduces all twelve moments and the loss
+exactly and writes the unchanged seventeen-plot standard packet.
+
+The L1 estimate lowers its own criterion (`0.26834 -> 0.23247` relative to
+the canonical rescue), mean absolute percentage error (`8.625 -> 7.452`
+percent), and raw absolute gaps (`1.539 -> 1.356`). The gain is highly
+uneven. Housing/tenure mean absolute percentage error falls to `0.22`
+percent and wealth/bequest to `3.78` percent, while fertility rises to
+`19.25` percent. Childlessness falls to `0.06073` against `0.188`, a `67.7`
+percent shortfall. Completed fertility is `1.83531` against `1.918`; the 30+
+first-birth share is close at `0.27714` against `0.27006`. The full age
+distribution still has excess mass at 18--25 and 38--45 and deficient mass
+at 26--33.
+
+Three estimates are close to bounds: annual beta `0.998431` near its upper
+bound, `delta_alpha=0.003956` near zero, and `theta1=0.076005` near its lower
+bound. The absolute objective therefore creates the expected sparse-residual
+solution: it fits many rows almost exactly by concentrating the fertility
+miss in childlessness. It is a robustness frontier, not a replacement.
+Retain the canonical E6AB rescue as the leading author-review candidate, but
+state that none of the three scalar criteria is a formal J statistic and that
+the fertility failure is not weight-robust.
+
+Artifacts:
+
+- `output/model/eqscale_seq_e6ab_l1_recalibration_20260805/report/`
+- `output/model/eqscale_seq_e6ab_l1_recalibration_20260805/comparison/`
+- `output/model/eqscale_seq_e6ab_l1_recalibration_20260805/diagnostic_packet/`
 
 ## August 4: plain-weight E6AB robustness complete
 

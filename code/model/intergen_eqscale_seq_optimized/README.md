@@ -129,3 +129,11 @@ gap. Unlike the squared version, it does not give a disproportionately large
 penalty to the worst proportional miss. The production Torch launcher is
 `code/cluster/submit_intergen_e6ab_l1.sh`; its strict collector is the matching
 `submit_intergen_e6ab_l1_collector.sh`.
+
+`build_e6_l1_comparison.py` evaluates the canonical, squared-proportional,
+and absolute-proportional certified winners under all three criteria, raw
+absolute loss, and mean absolute percentage loss. It writes the complete
+twelve-row target comparison, all ten parameters and bounds, and a
+three-estimate signed-gap plot. The standard winner diagnostic reads the
+certified objective scheme, so its loss and row contributions reproduce either
+quadratic or absolute-gap reports exactly.

@@ -268,6 +268,19 @@ def main() -> None:
     differences = []
     targets: dict[str, float] = {}
     weights: dict[str, float] = {}
+    objective_scheme = str(metadata.get("weight_scheme", "canonical"))
+    for row in fit:
+        targets[row["moment"]] = float(row["target"])
+        weights[row["moment"]] = float(row["weight"])
+    runtime_fit = {
+        row["moment"]: row
+        for row in chain.target_fit(
+            moments,
+            targets,
+            weights,
+            objective_scheme,
+        )
+    }
     for row in fit:
         name = row["moment"]
         if name not in moments:
@@ -278,7 +291,6 @@ def main() -> None:
         difference = abs(model - certified_model)
         gap = model - target
         differences.append(difference)
-        targets[name], weights[name] = target, weight
         reproduced_rows.append(
             {
                 "moment": name,
@@ -288,7 +300,7 @@ def main() -> None:
                 "abs_difference_from_certified": difference,
                 "gap": gap,
                 "weight": weight,
-                "loss_contribution": weight * gap**2,
+                "loss_contribution": runtime_fit[name]["loss_contribution"],
             }
         )
     maximum_difference = max(differences)
@@ -297,7 +309,12 @@ def main() -> None:
             "certified moment verification failed: "
             f"maximum absolute difference={maximum_difference:.6g}"
         )
-    loss = float(chain.diagnostic_loss(moments, targets=targets, weights=weights))
+    loss = chain.objective_loss(
+        moments,
+        targets,
+        weights,
+        objective_scheme,
+    )
     if not math.isclose(
         loss,
         float(winner["rank_loss"]),
@@ -334,6 +351,7 @@ def main() -> None:
         "source": str(args.source),
         "strict_converged": strict,
         "market_residual": residual,
+        "objective_scheme": objective_scheme,
         "loss": loss,
         "certified_loss": float(winner["rank_loss"]),
         "maximum_absolute_certified_moment_difference": maximum_difference,
