@@ -938,6 +938,7 @@ def full_owner_block_kernel(
     gs_alpha1,
     gs_alpha2,
     gs_tol,
+    strict_hbar_feasibility=0,
 ):
     Nb, nc = Vco_flat.shape
     Vo = np.empty((Nb, nc))
@@ -954,6 +955,12 @@ def full_owner_block_kernel(
         al = alpha_v[c]
         es = esc_v[c]
         ht_c = hsv - owner_h_bar_scale * hbc
+        if strict_hbar_feasibility and ht_c <= 0.0:
+            for b in range(Nb):
+                Vo[b, c] = -1e10
+                bp_out[b, c] = b_grid[0]
+                co[b, c] = cbc + c_min
+            continue
         if ht_c < 1e-10:
             ht_c = 1e-10
         ht_c = owner_service_premium * ht_c
@@ -1113,6 +1120,7 @@ def eval_owner_block_kernel(
     alpha,
     oms,
     beta,
+    strict_hbar_feasibility=0,
 ):
     Nb, nc = bpv_o.shape
     Vo = np.empty((Nb, nc))
@@ -1125,6 +1133,11 @@ def eval_owner_block_kernel(
         hbc = hb[c]
         psic = psi_v[c]
         ht_c = hsv - owner_h_bar_scale * hbc
+        if strict_hbar_feasibility and ht_c <= 0.0:
+            for b in range(Nb):
+                Vo[b, c] = -1e10
+                co[b, c] = cbc + c_min
+            continue
         if ht_c < 1e-10:
             ht_c = 1e-10
         ht_c = owner_service_premium * ht_c

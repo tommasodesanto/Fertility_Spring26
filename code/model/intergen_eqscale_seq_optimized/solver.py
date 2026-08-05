@@ -2154,6 +2154,9 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
     alpha_bar = np.full((P.n_parity, P.n_child_states), P.alpha_cons)
     escale = np.ones((P.n_parity, P.n_child_states))
     eqscale_form = str(getattr(P, "eqscale_form", "linear")).lower()
+    child_room_floor_active = bool(getattr(P, "child_room_floor", False)) and float(
+        getattr(P, "hbar_child_rooms", 0.0)
+    ) > 0.0
     if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale" and eqscale_form not in {
         "linear", "power", "sqrt"
     }:
@@ -2181,10 +2184,14 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
                 g_bar[nn, cs] = g0 + gn * nk
                 if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale":
                     c_bar[nn, cs] = 0.0
-                    h_bar[nn, cs] = 0.0
-                    alpha_bar[nn, cs] = np.clip(
-                        P.alpha_cons - (P.delta_alpha_jump + P.delta_alpha * nk), 0.05, 0.95
-                    )
+                    if child_room_floor_active:
+                        h_bar[nn, cs] = float(P.hbar_child_rooms) * nk
+                        alpha_bar[nn, cs] = P.alpha_cons
+                    else:
+                        h_bar[nn, cs] = 0.0
+                        alpha_bar[nn, cs] = np.clip(
+                            P.alpha_cons - (P.delta_alpha_jump + P.delta_alpha * nk), 0.05, 0.95
+                        )
                     if eqscale_form == "power":
                         # Imposed Scholz-Seshadri-Khitatrakun (2006, JPE 114(4), p.619;
                         # Citro-Michael 1995) scale relative to a childless couple:
@@ -2286,6 +2293,10 @@ def solve_bellman_full_markov_income(
     oms = 1.0 - sigma
     owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
     owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
+    strict_owner_hbar_feasibility = int(
+        bool(getattr(P, "child_room_floor", False))
+        and float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+    )
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
     owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
@@ -2479,22 +2490,29 @@ def solve_bellman_full_markov_income(
                             cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
+                            strict_owner_hbar_feasibility,
                         )
                     else:
                         for c in range(nc):
                             Vbar = Vco[:, c]
                             cb_c = SD.cb_flat[0, c]
                             pc = SD.psi_flat[0, c]
-                            ht_c = owner_service_premium * max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
-                            Ko_c = ht_c ** ((1 - alpha) * oms)
+                            owner_residual_h = hsv - owner_h_bar_scale * SD.hb_flat[0, c]
                             nn_c, cs_c = decode_flat_family_state(c, npar)
                             bf_c = bmo[i, ten, nn_c, cs_c]
                             lo = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
                             hi = np.maximum(Rv_eff_nc[:, c] - oc - cb_c - 1e-6, lo)
-                            bp, val = golden_owner(
-                                lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, oc, cb_c, pc,
-                                Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0,
-                            )
+                            if strict_owner_hbar_feasibility and owner_residual_h <= 0.0:
+                                bp = lo.copy()
+                                val = np.full(Nb, -1e10)
+                            else:
+                                Ko_c = (
+                                    owner_service_premium * max(owner_residual_h, 1e-10)
+                                ) ** ((1 - alpha) * oms)
+                                bp, val = golden_owner(
+                                    lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, oc, cb_c, pc,
+                                    Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0,
+                                )
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
                         co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
@@ -2736,6 +2754,10 @@ def solve_bellman_core(
     oms = 1.0 - sigma
     owner_h_bar_scale = float(getattr(P, "owner_h_bar_scale", 1.0))
     owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
+    strict_owner_hbar_feasibility = int(
+        bool(getattr(P, "child_room_floor", False))
+        and float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+    )
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
     owner_size_cost_power = float(getattr(P, "owner_size_cost_power", 2.0))
@@ -2944,6 +2966,7 @@ def solve_bellman_core(
                             cb_v, hb_v, psi_v_flat, gb_zero, alpha_v, esc_v, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
+                            strict_owner_hbar_feasibility,
                         )
                     else:
                         bp_prev_o = flat_nc(bd[:, ten, i, :, :], Nb, nc) if j < J - 1 else None
@@ -2951,8 +2974,7 @@ def solve_bellman_core(
                             Vbar = Vco[:, c]
                             cb_c = SD.cb_flat[0, c]
                             pc = SD.psi_flat[0, c]
-                            ht_c = owner_service_premium * max(hsv - owner_h_bar_scale * SD.hb_flat[0, c], 1e-10)
-                            Ko_c = ht_c ** ((1 - alpha) * oms)
+                            owner_residual_h = hsv - owner_h_bar_scale * SD.hb_flat[0, c]
                             nn_c, cs_c = decode_flat_family_state(c, npar)
                             bf_c = bmo[i, ten, nn_c, cs_c]
                             owner_floor_c = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
@@ -2963,14 +2985,21 @@ def solve_bellman_core(
                                 hi = np.minimum(hi, bp_prev_o[:, c] + 2.0)
                                 lo = np.maximum(lo, owner_floor_c)
                                 hi = np.maximum(hi, lo)
-                            if use_value_kernel:
-                                bp, val = golden_owner_kernel(
-                                    lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, 1.0
-                                )
+                            if strict_owner_hbar_feasibility and owner_residual_h <= 0.0:
+                                bp = lo.copy()
+                                val = np.full(Nb, -1e10)
                             else:
-                                bp, val = golden_owner(
-                                    lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0
-                                )
+                                Ko_c = (
+                                    owner_service_premium * max(owner_residual_h, 1e-10)
+                                ) ** ((1 - alpha) * oms)
+                                if use_value_kernel:
+                                    bp, val = golden_owner_kernel(
+                                        lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, 1.0
+                                    )
+                                else:
+                                    bp, val = golden_owner(
+                                        lo, hi, Rv[:, 0], Vbar, b_grid, oc, cb_c, pc, Ko_c, alpha, oms, beta, gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0
+                                    )
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
                         co_nc = SD.cb_flat + np.maximum(Rv - oc - SD.cb_flat - bp_nc, P.c_min)
@@ -3052,7 +3081,8 @@ def solve_bellman_core(
                             wt_nc_o = flat_nc(stored_wt[:, ten, i, j, :, :], Nb, nc)
                         Vo_nc, co_nc = eval_owner_block_kernel(
                             Rv1d, bpv_o, Vco_nc, idx_nc_o, wt_nc_o, cb_v, hb_v, psi_v_flat,
-                            oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min, alpha, oms, beta,
+                            oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
+                            alpha, oms, beta, strict_owner_hbar_feasibility,
                         )
                     else:
                         if NUMBA_AVAILABLE and stored_idx is not None and stored_wt is not None and not owner_floor_changed:
@@ -3065,10 +3095,13 @@ def solve_bellman_core(
                             Vcbpo = interp_cols(b_grid, Vco_nc, np.clip(bpv_o, b_lo, b_hi))
                         ct_raw_o = Rv - oc - SD.cb_flat - bpv_o
                         ct_o = np.maximum(ct_raw_o, 1e-10)
-                        ht_o = owner_service_premium * np.maximum(hsv - owner_h_bar_scale * SD.hb_flat, 1e-10)
+                        owner_residual_h = hsv - owner_h_bar_scale * SD.hb_flat
+                        ht_o = owner_service_premium * np.maximum(owner_residual_h, 1e-10)
                         Ko_ev = ht_o ** ((1 - alpha) * oms)
                         Vo_nc = Ko_ev * ct_o ** (alpha * oms) / oms + SD.psi_flat + beta * Vcbpo
                         Vo_nc[ct_raw_o <= 1e-10] = -1e10
+                        if strict_owner_hbar_feasibility:
+                            Vo_nc[np.broadcast_to(owner_residual_h <= 0.0, Vo_nc.shape)] = -1e10
                         co_nc = SD.cb_flat + np.maximum(ct_o, P.c_min)
                     Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
                     bd[:, ten, i, :, :] = unflat_nc(bpv_o, Nb, npar, ncs)

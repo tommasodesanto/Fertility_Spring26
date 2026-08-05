@@ -77,6 +77,27 @@ if os.environ.get("E6A", "") == "1" and os.environ.get("E5", "") != "1":
     raise ValueError("E6A requires the signed E5 target contract (set E5=1)")
 if os.environ.get("E5_MATURATION_REPAIR", "") == "1" and os.environ.get("E5", "") != "1":
     raise ValueError("E5_MATURATION_REPAIR requires the signed E5 target contract (set E5=1)")
+if os.environ.get("E5F", "") == "1":
+    if not (
+        os.environ.get("E5", "") == "1"
+        and os.environ.get("E5_MATURATION_REPAIR", "") == "1"
+    ):
+        raise ValueError("E5F requires E5=1 and E5_MATURATION_REPAIR=1")
+    if any(os.environ.get(name, "") == "1" for name in ("E6A", "E6B", "E6C")):
+        raise ValueError("E5F is a separate E5 experimental arm and cannot be combined with E6")
+    from intergen_eqscale_seq_optimized.e5f_floor_profile import (
+        E5F_DOMAIN,
+        E5F_FIXED,
+        E5F_TARGET_SET,
+    )
+
+    TARGET_SET = E5F_TARGET_SET
+    DOMAIN = E5F_DOMAIN
+    FIXED = dict(E5F_FIXED)
+    DOMAIN = tuple(
+        (name, -psi_bound, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
+        for name, lo, hi, kind in DOMAIN
+    )
 if os.environ.get("E6C", "") == "1":
     if not (
         os.environ.get("E5", "") == "1"
@@ -189,6 +210,8 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         if not isinstance(winner_e2, dict) or not isinstance(winner_e2.get("theta"), dict):
             raise ValueError(f"{e2_record} does not contain winners.E1.theta")
         theta = {k: float(v) for k, v in winner_e2["theta"].items() if k in required}
+        if os.environ.get("E5F", "") == "1":
+            theta.setdefault("hbar_child_rooms", 0.60)
         if os.environ.get("E6C", "") == "1":
             from intergen_eqscale_seq_optimized.e6c_profile import E6C_SEED
 
@@ -208,7 +231,13 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         raise ValueError(f"{seed_path} does not contain winners.M5.theta")
     source = winner["theta"]
     allowed = {"beta" if name == "beta_annual" else name for name, *_ in DOMAIN}
-    if os.environ.get("E5", "") == "1":
+    if os.environ.get("E5F", "") == "1":
+        theta = {
+            name: float(source[name])
+            for name in allowed - {"hbar_child_rooms", "kappa_fert_continuation"}
+        }
+        theta.update(hbar_child_rooms=0.60, kappa_fert_continuation=0.3)
+    elif os.environ.get("E5", "") == "1":
         theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "kappa_fert_continuation"}}
         theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, kappa_fert_continuation=0.3)
     elif os.environ.get("E4_SPLIT", "") == "1":
@@ -303,6 +332,14 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
                 fromlist=["e5_maturation_repair_overrides"],
             ).e5_maturation_repair_overrides()
             if os.environ.get("E5_MATURATION_REPAIR", "") == "1"
+            else {}
+        ),
+        **(
+            __import__(
+                "intergen_eqscale_seq_optimized.e5f_floor_profile",
+                fromlist=["e5f_overrides"],
+            ).e5f_overrides()
+            if os.environ.get("E5F", "") == "1"
             else {}
         ),
         **(
@@ -406,7 +443,9 @@ def main() -> None:
     cases_path, best_path = args.outdir / "cases.jsonl", args.outdir / "best.json"
     cases_path.write_text("")
     arm_name = (
-        "E6ABC"
+        "E5F"
+        if os.environ.get("E5F", "") == "1"
+        else "E6ABC"
         if os.environ.get("E6C", "") == "1"
         else (
         ("E6AB" if os.environ.get("E6A", "") == "1" else "E6B")
@@ -457,6 +496,14 @@ def main() -> None:
                     ).e5_maturation_repair_metadata()
                     if os.environ.get("E5_MATURATION_REPAIR", "") == "1"
                     else {"profile": "historical_shared_clock"}
+                ),
+                "child_room_floor": (
+                    __import__(
+                        "intergen_eqscale_seq_optimized.e5f_floor_profile",
+                        fromlist=["e5f_metadata"],
+                    ).e5f_metadata()
+                    if os.environ.get("E5F", "") == "1"
+                    else None
                 ),
                 "seed": args.seed, "start_mix": start_mix, "initial_unit_vector": x0,
                 "J": args.J, "Nb": args.Nb, "max_iter_eq": args.max_iter_eq, "tol_eq": args.tol_eq,

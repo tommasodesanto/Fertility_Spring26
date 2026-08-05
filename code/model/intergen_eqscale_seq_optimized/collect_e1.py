@@ -110,10 +110,11 @@ def main() -> None:
         is_legacy = meta.get("arm") in {"E1", "E3_L4", "E4_SPLIT"} and int(meta.get("free_parameter_count", -1)) == 12 and int(meta.get("target_count", -1)) == 15
         is_e5 = meta.get("arm") == "E5" and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
         is_e5_maturation_repair = meta.get("arm") == "E5_MATURATION_REPAIR" and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
+        is_e5f = meta.get("arm") == "E5F" and int(meta.get("free_parameter_count", -1)) == 9 and int(meta.get("target_count", -1)) == 12
         is_e6 = meta.get("arm") in {"E6A", "E6B", "E6AB"} and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
         is_e6c = meta.get("arm") == "E6ABC" and int(meta.get("free_parameter_count", -1)) == 12 and int(meta.get("target_count", -1)) == 12
         is_e5_probe = meta.get("arm") == "E5_PROBE_KE" and int(meta.get("free_parameter_count", -1)) == 9 and int(meta.get("target_count", -1)) == 12
-        if not (is_legacy or is_e5 or is_e5_maturation_repair or is_e6 or is_e6c or is_e5_probe):
+        if not (is_legacy or is_e5 or is_e5_maturation_repair or is_e5f or is_e6 or is_e6c or is_e5_probe):
             raise RuntimeError(f"{path} does not satisfy an accepted E1/E3/E4/E5/E6 calibration contract")
         tight = eligible_tight(summary)
         chain_rows.append({"summary_path": str(path), "arm": meta.get("arm"), "seed": meta.get("seed"), "eligible": tight is not None,
