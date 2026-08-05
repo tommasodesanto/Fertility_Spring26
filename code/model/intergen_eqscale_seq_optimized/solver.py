@@ -15,6 +15,7 @@ from .parameters import (
     fecundity_active,
     finalize_location_choice_spec,
     get_fecundity_by_age,
+    independent_child_maturation_active,
     readiness_childless_states,
     readiness_cumulative_probability,
     readiness_gate_active,
@@ -225,9 +226,11 @@ def income_transition_values(P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray
 def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float:
     y = float(P.income[i, j])
     if j < int(getattr(P, "J_R", P.J)):
-        return y * float(z_value)
-    scale = float(getattr(P, "retirement_income_z_scale", 0.0))
-    return y * (1.0 + scale * (float(z_value) - 1.0))
+        income = y * float(z_value)
+    else:
+        scale = float(getattr(P, "retirement_income_z_scale", 0.0))
+        income = y * (1.0 + scale * (float(z_value) - 1.0))
+    return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
 
 
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
@@ -2156,9 +2159,13 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
     }:
         raise ValueError("eqscale_form must be one of: linear, power, sqrt")
     for nn in range(P.n_parity):
-        nk = nn
         for cs in range(P.n_child_states):
-            kp = (cs >= 1) and (cs < csm1)
+            if independent_child_maturation_active(P):
+                nk = cs if cs <= nn else 0
+                kp = nk > 0
+            else:
+                nk = nn
+                kp = (cs >= 1) and (cs < csm1)
             if readiness_gate_active(P) and nn == 0 and cs == 1:
                 # E6c reuses the otherwise invalid (childless, cs=1) cell for
                 # the settled state. It has childless preferences, not the
@@ -2311,11 +2318,15 @@ def solve_bellman_full_markov_income(
     loc_probs = np.zeros((Nb, nt, I, I, J, Nz, npar, ncs))
     fert_probs = np.zeros((Nb, nt, I, J, Nz, npar))
     # alt x attempting-parity slot: slot nn-1 holds the {stop, try}
-    # probabilities of the upward attempt from parity nn while a child is at
-    # home (slot 0 = second birth, slot 1 = third birth under n_parity=4).
+    # probabilities of the upward attempt from parity nn (slot 0 = second
+    # birth, slot 1 = third birth under n_parity=4).  The repaired child-count
+    # mode adds a final at-home-count axis; historical mode keeps this shape.
     # Shape is unchanged for npar in {3, 4}; retained on P to avoid changing
     # the established Bellman return contract used by the GE loop.
-    fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2)))
+    if independent_child_maturation_active(P):
+        fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2), ncs))
+    else:
+        fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2)))
     fert_value = np.zeros((Nb, nt, I, J, Nz))
 
     phi_choice = SD.phi_choice
@@ -2628,16 +2639,26 @@ def solve_bellman_full_markov_income(
                     # at every parity use the continuation scale when set — margin-specific Gumbel scales on the same sequential choice tree.
                     kf_cont_raw = getattr(P, "kappa_fert_continuation", None)
                     kf_cont = float(P.kappa_fert) if kf_cont_raw is None else float(kf_cont_raw)
-                    # upward attempts only while a child is at home (cs=1):
-                    # parity nn may try for birth nn+1; side-channel slot nn-1.
+                    # Parity nn may try for birth nn+1.  Under the historical
+                    # shared clock this is only child state 1.  Under the
+                    # repaired specification, cs is the current at-home count
+                    # and a birth maps (nn, cs) to (nn+1, cs+1).
                     for nn in range(1, npar - 1):
-                        V2 = np.empty((Nb, nt, I, 2))
-                        V2[:, :, :, 0] = VI[:, :, :, nn, 1]
-                        V2[:, :, :, 1] = pi_j * VI[:, :, :, nn + 1, 1] + (1.0 - pi_j) * VI[:, :, :, nn, 1]
-                        l2, p2 = logsumexp(V2 / kf_cont, axis=3)
-                        p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
-                        fert2_probs[:, :, :, j, zz, :, nn - 1] = p2
-                        V[:, :, :, j, zz, nn, 1] = kf_cont * l2
+                        child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
+                        for cs in child_states:
+                            V2 = np.empty((Nb, nt, I, 2))
+                            V2[:, :, :, 0] = VI[:, :, :, nn, cs]
+                            V2[:, :, :, 1] = (
+                                pi_j * VI[:, :, :, nn + 1, cs + 1]
+                                + (1.0 - pi_j) * VI[:, :, :, nn, cs]
+                            )
+                            l2, p2 = logsumexp(V2 / kf_cont, axis=3)
+                            p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
+                            if independent_child_maturation_active(P):
+                                fert2_probs[:, :, :, j, zz, :, nn - 1, cs] = p2
+                            else:
+                                fert2_probs[:, :, :, j, zz, :, nn - 1] = p2
+                            V[:, :, :, j, zz, nn, cs] = kf_cont * l2
                 else:
                     Vfa = np.zeros((Nb, nt, I, npar))
                     Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
@@ -4131,7 +4152,7 @@ def forward_distribution(
                 gp = gps[:, :, :, nn, cs]
                 if ust:
                     Pi = Pia[:, :, nn]
-                    if cs == K and nn >= 1:
+                    if not independent_child_maturation_active(P) and cs == K and nn >= 1:
                         pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
                         if pm > 0:
                             nk = nn
@@ -4142,6 +4163,12 @@ def forward_distribution(
                     for csn in range(ncs):
                         wt = Pi[cs, csn]
                         if wt > 0:
+                            if independent_child_maturation_active(P) and csn < cs:
+                                matured = cs - csn
+                                for im in range(I):
+                                    fi = ecf * matured * wt * float(np.sum(gp[:, :, im]))
+                                    entrants_mature_by_loc[im] += fi
+                                    entrants_mature_total += fi
                             g[:, :, :, j + 1, nn, csn] += wt * gp
                 else:
                     if cs == 0:
@@ -4393,9 +4420,17 @@ def forward_distribution_markov_income(
                 if bool(getattr(P, "sequential_births", False)):
                     # Snapshot every upward at-risk pool BEFORE any birth flow
                     # lands, so no household can chain two births in a period.
-                    at_risk_up = [
-                        g[:, :, :, j, zz, nn, 1].copy() for nn in range(1, npar - 1)
-                    ]
+                    if independent_child_maturation_active(P):
+                        at_risk_up = {
+                            (nn, cs): g[:, :, :, j, zz, nn, cs].copy()
+                            for nn in range(1, npar - 1)
+                            for cs in range(0, nn + 1)
+                        }
+                    else:
+                        at_risk_up = {
+                            (nn, 1): g[:, :, :, j, zz, nn, 1].copy()
+                            for nn in range(1, npar - 1)
+                        }
                     if readiness_gate_active(P):
                         gc = g[:, :, :, j, zz, 0, 1]
                     m1 = gc * pa[:, :, :, 1]
@@ -4412,22 +4447,29 @@ def forward_distribution_markov_income(
                     p2all = getattr(P, "_fert2_probs", None)
                     if p2all is not None:
                         for nn in range(1, npar - 1):
-                            at_risk = at_risk_up[nn - 1]
-                            m2 = at_risk * p2all[:, :, :, j, zz, 1, nn - 1]
-                            realized2 = pi_j * m2
-                            g[:, :, :, j, zz, nn, 1] -= realized2
-                            g[:, :, :, j, zz, nn + 1, 1] += realized2
-                            if nn == 1:
-                                second_attempts_by_age[j] += float(np.sum(m2))
-                                second_births_by_age[j] += float(np.sum(realized2))
-                                second_at_risk_by_age[j] += float(np.sum(at_risk))
-                            else:
-                                third_attempts_by_age[j] += float(np.sum(m2))
-                                third_births_by_age[j] += float(np.sum(realized2))
-                                third_at_risk_by_age[j] += float(np.sum(at_risk))
-                            total_births += float(np.sum(realized2))
-                            for i in range(I):
-                                births_by_loc[i] += float(np.sum(realized2[:, :, i]))
+                            child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
+                            for cs in child_states:
+                                at_risk = at_risk_up[(nn, cs)]
+                                if independent_child_maturation_active(P):
+                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1, cs]
+                                else:
+                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1]
+                                m2 = at_risk * attempt_prob
+                                realized2 = pi_j * m2
+                                g[:, :, :, j, zz, nn, cs] -= realized2
+                                destination_cs = cs + 1 if independent_child_maturation_active(P) else 1
+                                g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
+                                if nn == 1:
+                                    second_attempts_by_age[j] += float(np.sum(m2))
+                                    second_births_by_age[j] += float(np.sum(realized2))
+                                    second_at_risk_by_age[j] += float(np.sum(at_risk))
+                                else:
+                                    third_attempts_by_age[j] += float(np.sum(m2))
+                                    third_births_by_age[j] += float(np.sum(realized2))
+                                    third_at_risk_by_age[j] += float(np.sum(at_risk))
+                                total_births += float(np.sum(realized2))
+                                for i in range(I):
+                                    births_by_loc[i] += float(np.sum(realized2[:, :, i]))
                     birth_mass = realized1
                     birth_mass_total = float(np.sum(birth_mass))
                     if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
@@ -4742,7 +4784,7 @@ def forward_distribution_markov_income(
                         continue
                     if ust:
                         Pi = Pia[:, :, nn]
-                        if cs == K and nn >= 1:
+                        if not independent_child_maturation_active(P) and cs == K and nn >= 1:
                             pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
                             if pm > 0:
                                 nk = nn
@@ -4753,6 +4795,12 @@ def forward_distribution_markov_income(
                         for csn in range(ncs):
                             wt_child = Pi[cs, csn]
                             if wt_child > 0:
+                                if independent_child_maturation_active(P) and csn < cs:
+                                    matured = cs - csn
+                                    for im in range(I):
+                                        fi = ecf * matured * wt_child * float(np.sum(gp[:, :, im]))
+                                        entrants_mature_by_loc[im] += fi
+                                        entrants_mature_total += fi
                                 for zn in range(Nz):
                                     transition_weight = Pi_z[zz, zn]
                                     if transition_weight > 0.0:
@@ -4850,6 +4898,25 @@ def forward_distribution_markov_income(
         stats.third_attempt_hazard_by_age = third_attempts_by_age / np.maximum(third_at_risk_by_age, 1e-12)
         stats.third_birth_hazard_by_age = third_births_by_age / np.maximum(third_at_risk_by_age, 1e-12)
         stats.parity_progression_2to3_flow = float(np.sum(third_births_by_age) / max(np.sum(second_births_by_age), 1e-12))
+    grant_recipient_mass, grant_outlays = markov_grant_outlays(
+        g,
+        tenure_choice,
+        tenure_probs,
+        P,
+        SD,
+    )
+    property_tax_revenue = property_tax_revenue_from_distribution(
+        g_current,
+        hR_pol,
+        p_hat,
+        P,
+    )
+    transfer_outlays = float(getattr(P, "property_tax_lump_sum_transfer", 0.0)) * float(np.sum(g_current))
+    stats.property_tax_revenue = property_tax_revenue
+    stats.birth_entry_grant_recipient_mass = grant_recipient_mass
+    stats.birth_entry_grant_outlays = grant_outlays
+    stats.property_tax_transfer_outlays = transfer_outlays
+    stats.property_tax_budget_residual = property_tax_revenue - grant_outlays - transfer_outlays
     stats.entry_censored_mass = float(getattr(P, "_entry_censored_mass", 0.0))
     stats.entry_censored_share = stats.entry_censored_mass / max(
         float(getattr(P, "_entry_total_mass", 0.0)), 1e-300
@@ -5196,7 +5263,7 @@ def markov_renter_room_moments(g: np.ndarray, hR: np.ndarray, P: SimpleNamespace
             for zz in range(Nz):
                 for nn in range(npar):
                     for cs in range(ncs):
-                        cb = current_child_bin_dt(nn, cs, dep_last, hcut)
+                        cb = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
                         gr = g[:, 0, i, j, zz, nn, cs]
                         hr = hR[:, 0, i, j, zz, nn, cs]
                         kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -5264,7 +5331,7 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
                         continue
                     for nn in range(P.n_parity):
                         for cs in range(P.n_child_states):
-                            if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut) != 2:
+                            if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock")) != 2:
                                 continue
                             tenures = [0] if renter_only else range(g7.shape[1])
                             for ten in tenures:
@@ -6001,7 +6068,11 @@ def compute_statistics(
     a75e = age_to_index(P, 75)
     asw = age_to_index(P, 45)
     aew = age_to_index(P, 55)
-    newparent_cs = list(range(1, min(P.n_child_stages + 1, 3)))
+    newparent_cs = (
+        list(range(1, P.n_child_states))
+        if independent_child_maturation_active(P)
+        else list(range(1, min(P.n_child_stages + 1, 3)))
+    )
 
     ti = sum(P.income[i, 0] * stats.worker_mass_by_loc[i] for i in range(I))
     tmw = float(np.sum(stats.worker_mass_by_loc))
@@ -6332,7 +6403,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    if current_child_bin_dt(nn, cs, dep_last, hcut) != 2:
+                    if current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock")) != 2:
                         continue
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
@@ -6366,7 +6437,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut)
+                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -6450,7 +6521,7 @@ def compute_statistics(
         for i in range(I):
             for nn in range(npar):
                 for cs in range(ncs):
-                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut)
+                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
                     gr = g[:, 0, i, j, nn, cs]
                     hr = hR[:, 0, i, j, nn, cs]
                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
@@ -6944,6 +7015,8 @@ def get_completed_fertility(nn: int, cs: int, P: SimpleNamespace) -> int:
     the precomputed bequest table, and hence V, nest bit for bit at
     n_parity=3.
     """
+    if independent_child_maturation_active(P):
+        return int(nn)
     K = P.n_child_stages
     if cs == 0:
         return 0
@@ -7026,6 +7099,8 @@ def has_birth_dp_grant(P, nn, cs, to, tn):
         return False
     if to != 0 or tn <= 0:
         return False
+    if independent_child_maturation_active(P):
+        return (nn >= 1) and (1 <= cs <= nn)
     return (nn >= 1) and (cs == 1)
 
 
@@ -7075,6 +7150,9 @@ def get_parent_target_owner_tenures(P):
 
 def get_parent_target_child_states(P):
     kp = np.zeros(P.n_child_states, dtype=bool)
+    if independent_child_maturation_active(P):
+        kp[1:] = True
+        return kp
     if bool(getattr(P, "parent_dp_waiver_birth_state_only", False)):
         if P.n_child_states >= 2:
             kp[1] = True
@@ -7103,16 +7181,103 @@ def get_birth_entry_grant_tensor(P):
     ten_idx = ten_idx[(ten_idx >= 1) & (ten_idx < nt)]
     if len(loc_idx) == 0 or len(ten_idx) == 0:
         return bg
-    bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
+    if independent_child_maturation_active(P):
+        for parity in range(1, P.n_parity):
+            child_states = np.arange(1, min(parity, P.n_child_states - 1) + 1)
+            bg[np.ix_(loc_idx, ten_idx, np.array([parity]), child_states)] = grant
+    else:
+        bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
     return bg
 
 
-def current_child_bin_dt(nn, cs, dep_last, high_cutoff=2):
+def property_tax_revenue_from_distribution(g, hR_pol, p_hat, P):
+    """Stationary property-tax revenue from all occupied housing."""
+    tax_rate = max(float(getattr(P, "tau_H", 0.0)), 0.0)
+    prices = np.asarray(p_hat, dtype=float).reshape(-1)
+    revenue = 0.0
+    for market in range(P.I):
+        rental_services = float(
+            np.sum(g[:, 0, market, :, :, :, :] * hR_pol[:, 0, market, :, :, :, :])
+        )
+        owner_services = 0.0
+        for tenure in range(1, 1 + P.n_house):
+            owner_services += float(np.sum(g[:, tenure, market, :, :, :, :])) * float(
+                P.H_own[tenure - 1]
+            )
+        revenue += tax_rate * float(prices[market]) * (rental_services + owner_services)
+    return float(revenue)
+
+
+def markov_grant_outlays(g, tenure_choice, tenure_probs, P, SD):
+    """Count actual renter-to-owner grant payments in eligible parent states."""
+    grant = np.asarray(SD.birth_entry_grant, dtype=float)
+    if not np.any(grant > 0.0):
+        return 0.0, 0.0
+    if P.I != 1:
+        raise NotImplementedError("funded-grant accounting is currently restricted to the one-market model")
+    recipient_mass = 0.0
+    outlays = 0.0
+    for age in range(P.J):
+        for income_state in range(g.shape[4]):
+            for parity in range(1, P.n_parity):
+                child_states = (
+                    range(1, min(parity, P.n_child_states - 1) + 1)
+                    if independent_child_maturation_active(P)
+                    else (1,)
+                )
+                for child_state in child_states:
+                    source = np.asarray(
+                        g[:, 0, 0, age, income_state, parity, child_state], dtype=float
+                    )
+                    if float(np.sum(source)) <= 1e-15:
+                        continue
+                    eligible = np.where(
+                        (grant[0, :, parity, child_state] > 0.0)
+                        & (~np.asarray(SD.birth_dp[parity, child_state, 0, :], dtype=bool))
+                    )[0]
+                    if eligible.size == 0:
+                        continue
+                    if tenure_probs is None:
+                        chosen = np.asarray(
+                            tenure_choice[:, 0, 0, age, income_state, parity, child_state],
+                            dtype=int,
+                        )
+                        for tenure in eligible:
+                            paid_mass = float(np.sum(source[chosen == tenure]))
+                            recipient_mass += paid_mass
+                            outlays += paid_mass * float(grant[0, tenure, parity, child_state])
+                    else:
+                        probabilities = np.asarray(
+                            tenure_probs[:, 0, 0, age, income_state, parity, child_state, :],
+                            dtype=float,
+                        )
+                        probability_sum = np.sum(probabilities, axis=1)
+                        normalized = np.divide(
+                            probabilities,
+                            probability_sum[:, None],
+                            out=np.zeros_like(probabilities),
+                            where=probability_sum[:, None] > 0.0,
+                        )
+                        eligible_probability = np.sum(normalized[:, eligible], axis=1)
+                        recipient_mass += float(np.sum(source * eligible_probability))
+                        weighted_grant = normalized[:, eligible] @ grant[
+                            0, eligible, parity, child_state
+                        ]
+                        outlays += float(np.sum(source * weighted_grant))
+    return float(recipient_mass), float(outlays)
+
+
+def current_child_bin_dt(nn, cs, dep_last, high_cutoff=2, child_state_mode="shared_clock"):
     """Family-size room bin: 2 = no dependent child present, 3 = small
     family, 4 = large family.  ``high_cutoff`` is the parity at which the
     large-family bin starts (default 2 = legacy parity bins; 3 under the
     literal-parity convention, where bin 3 is "1-2 children" and bin 4 is
     "3+")."""
+    if str(child_state_mode).strip().lower() == "independent_count":
+        current_n = max(int(cs), 0) if int(cs) <= int(nn) else 0
+        if current_n <= 0:
+            return 2
+        return 3 if current_n < high_cutoff else 4
     if cs == 0 or cs > dep_last:
         return 2
     current_n = max(nn, 0)

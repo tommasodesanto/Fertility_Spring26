@@ -2,6 +2,30 @@
 
 Updated: `2026-08-05` (author retains the pre-E6 maintained model)
 
+## August 5 author-directed maturation and counterfactual repairs
+
+Two repairs are in progress on the retained experimental E5b architecture.
+First, parity remains children ever born, while the existing child-state
+dimension now records children currently at home. A birth maps $(n,m)$ to
+$(n+1,m+1)$; every at-home child independently matures each four-year period
+with probability $2/9$, implying 18 years at home in expectation. This adds no
+state dimension and no free parameter. The historical shared-clock mode remains
+available only to reproduce prior E5b artifacts.
+
+Second, the E-package now carries the funded Phase-9b policy accounting: the
+rebated baseline and each policy satisfy the government budget, the baseline
+recovers the outside value and outside entrant flow, and counterfactuals hold
+those objects fixed while entry determines stationary population scale and the
+housing price clears. Fixed-population rows are decomposition results only.
+
+Local exact-loop checks passed: all independent-maturation transition and
+eligibility tests, the historical literal-parity tests, a 13-case calibration
+smoke, and the full fixed-population-plus-entry policy smoke. Torch smoke job
+`15397993` is the current cluster verification. A fresh ten-parameter,
+twelve-target recalibration is required before the repaired model can replace
+the historical E5b estimate. The entry probability `0.5` and taste scale `2`
+remain external sensitivity objects, not estimated parameters.
+
 ## August 5 contract-audit clarification
 
 "Maintained E5b" means the retained benchmark **within the experimental

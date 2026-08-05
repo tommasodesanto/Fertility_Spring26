@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import math
 from types import SimpleNamespace
 from typing import Any, Mapping
 
@@ -66,10 +67,13 @@ def setup_parameters() -> SimpleNamespace:
     P.A_m = 18
     P.n_parity = 3
     P.use_stochastic_aging = True
+    # Default preserves the historical shared child clock.  The repaired
+    # sequential specification instead uses ``independent_count``: child_state
+    # is the number of children currently at home, while parity remains the
+    # number ever born.
+    P.child_state_mode = "shared_clock"
     P.stage_durations = np.array([P.A_m / P.period_years])
-    P.n_child_stages = len(P.stage_durations)
-    P.n_child_states = P.n_child_stages + 3
-    P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
+    configure_child_state_process(P)
 
     P.kappa_fert = 4.5
     P.kappa_fert_continuation = None
@@ -102,6 +106,9 @@ def setup_parameters() -> SimpleNamespace:
     # Means-tested floor guarantee (period units, like c_bar_0); 0 = no floor.
     P.transfer_floor_G0 = 0.0
     P.transfer_floor_Gn = 0.0
+    # Equal per-household, per-period fiscal transfer.  Policy drivers solve
+    # this object from the stationary government budget.
+    P.property_tax_lump_sum_transfer = 0.0
     P.child_housing_spec = "jump_plus_linear"
     P.owner_h_bar_scale = 1.0
     P.owner_size_cost = 0.0
@@ -319,14 +326,14 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
         if np.any(P.stage_durations <= 0):
             raise ValueError("stage_durations must be strictly positive model-period durations.")
-        P.n_child_stages = len(P.stage_durations)
-        P.n_child_states = P.n_child_stages + 3
-        P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
+        configure_child_state_process(P)
     if "n_parity" in od:
         P.n_parity = int(P.n_parity)
         if not hasattr(P, "phi") or len(np.atleast_1d(P.phi)) != P.n_parity:
             P.phi = 0.80 * np.ones(P.n_parity)
-        P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
+        configure_child_state_process(P)
+    if "child_state_mode" in od:
+        configure_child_state_process(P)
     if "H_own" in od:
         P.H_own = np.asarray(P.H_own, dtype=float)
         P.n_house = len(P.H_own)
@@ -495,11 +502,15 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         raise ValueError("readiness_location_age must be finite.")
     if not np.isfinite(P.readiness_spread_years) or P.readiness_spread_years <= 0.0:
         raise ValueError("readiness_spread_years must be finite and strictly positive.")
+    if independent_child_maturation_active(P):
+        configure_child_state_process(P)
     if P.readiness_gate_enabled:
         if not bool(getattr(P, "sequential_births", False)):
             raise ValueError("the readiness gate requires sequential_births=True.")
         if int(P.n_child_states) < 2:
             raise ValueError("the readiness gate requires at least two child states.")
+        if independent_child_maturation_active(P):
+            raise ValueError("the readiness gate is incompatible with independent child-count maturation.")
 
     if "stage_durations" not in od and hasattr(P, "A_m"):
         P.stage_durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
@@ -507,9 +518,7 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
             target_child_periods = float(P.A_m) / max(float(P.period_years), 1e-12)
             if not np.isclose(P.stage_durations[0], target_child_periods):
                 P.stage_durations = np.array([target_child_periods])
-                P.n_child_stages = len(P.stage_durations)
-                P.n_child_states = P.n_child_stages + 3
-                P.Pi_child = make_child_transition_matrix_with_matured(P.stage_durations, P.n_parity)
+                configure_child_state_process(P)
 
     P.user_cost_rate = P.q + P.delta + P.tau_H
     P.R_gross = 1 + P.q
@@ -805,6 +814,69 @@ def readiness_childless_states(P: SimpleNamespace) -> tuple[int, ...]:
 def readiness_settled_state(P: SimpleNamespace) -> int:
     """State from which first-child entry is available."""
     return 1 if readiness_gate_active(P) else 0
+
+
+def independent_child_maturation_active(P: SimpleNamespace) -> bool:
+    """Whether child_state is the number of children currently at home."""
+    return str(getattr(P, "child_state_mode", "shared_clock")).strip().lower() == "independent_count"
+
+
+def configure_child_state_process(P: SimpleNamespace) -> None:
+    """Build the child-state space and transition matrix for the selected mode."""
+    mode = str(getattr(P, "child_state_mode", "shared_clock")).strip().lower()
+    if mode not in {"shared_clock", "independent_count"}:
+        raise ValueError("child_state_mode must be 'shared_clock' or 'independent_count'.")
+    durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
+    if durations.size == 0 or np.any(~np.isfinite(durations)) or np.any(durations <= 0.0):
+        raise ValueError("stage_durations must be finite and strictly positive.")
+    if mode == "independent_count":
+        if durations.size != 1:
+            raise ValueError("independent_count requires one common expected at-home duration.")
+        if int(P.n_parity) < 2:
+            raise ValueError("independent_count requires at least two parity states.")
+        if not bool(getattr(P, "use_stochastic_aging", False)):
+            raise ValueError("independent_count requires stochastic child maturation.")
+        P.n_child_stages = 1
+        P.n_child_states = int(P.n_parity)
+        P.Pi_child = make_independent_child_count_transition_matrix(durations[0], P.n_parity)
+    else:
+        P.n_child_stages = len(durations)
+        P.n_child_states = P.n_child_stages + 3
+        P.Pi_child = make_child_transition_matrix_with_matured(durations, P.n_parity)
+
+
+def make_independent_child_count_transition_matrix(
+    expected_periods_at_home: float,
+    n_parity: int,
+) -> np.ndarray:
+    """Independent binomial maturation for the number of children at home.
+
+    For parity ``n`` and current at-home count ``m <= n``, each child leaves
+    independently with probability ``mu = 1 / expected_periods_at_home``.
+    Therefore next period's count is Binomial(m, 1-mu).  Cells with ``m > n``
+    are unreachable and receive self-loops only to keep every row stochastic.
+    """
+    expected = float(expected_periods_at_home)
+    if not np.isfinite(expected) or expected <= 0.0:
+        raise ValueError("expected_periods_at_home must be finite and positive.")
+    npar = int(n_parity)
+    if npar < 2:
+        raise ValueError("n_parity must be at least two.")
+    mu = float(np.clip(1.0 / expected, 0.0, 1.0))
+    survival = 1.0 - mu
+    Pa = np.zeros((npar, npar, npar))
+    for nn in range(npar):
+        for current in range(npar):
+            if current > nn:
+                Pa[current, current, nn] = 1.0
+                continue
+            for nxt in range(current + 1):
+                Pa[current, nxt, nn] = (
+                    math.comb(current, nxt)
+                    * survival**nxt
+                    * mu ** (current - nxt)
+                )
+    return Pa
 
 
 def make_child_transition_matrix_with_matured(stage_durations: np.ndarray, n_parity: int) -> np.ndarray:

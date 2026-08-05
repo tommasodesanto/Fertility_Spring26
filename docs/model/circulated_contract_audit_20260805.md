@@ -54,7 +54,7 @@ undisclosed or insufficiently disclosed shortcut, or a contradiction.
 | 1 | Fiscal closure | The circulated equilibrium requires government accounting. E5b pays the purchase grant without a financing source and discards property-tax revenue. | **Contradiction.** | The grant and tax-plus-grant cases are not feasible government policies and cannot support welfare or incidence claims. |
 | 1 | Circulated M5 measurement | The saved M5 wealth moments use the pre-repair timing convention that could pair inherited liquid wealth with newly chosen tenure before the housing transaction. | **Known unresolved defect in the circulated benchmark.** | The circulated fit cannot simply be restored; its wealth block must be remeasured and the model recalibrated. |
 | 1 | Reported policy numbers | The circulated draft reports `+2.1%/+2.7%` total-birth effects in its table, but later in the same section and conclusion reports `+3.4%/+4.9%`. | **Internal contradiction in the circulated document.** | There is no unique circulated policy result to restore without tracing the exact source records. |
-| 2 | Sequential child ages | E5b records parity and one common child-age clock. A new birth raises parity but does not create a separate age for each child; children are treated as at home together and mature through the common clock. | **Insufficiently disclosed approximation.** | Birth spacing, the number of children currently at home, housing need, and the flow of mature local entrants are only approximate. |
+| 2 | Sequential child maturation | The absence of separate child ages is intentional and consistent with the current specification. The defect is narrower: E5b puts all children on one shared maturation clock, so they leave home as a group. | **Implementation shortcut inconsistent with the author’s intended specification.** | The model must retain parity as children ever born but stochastically mature each child independently from the existing count-at-home state. |
 | 2 | Grant eligibility | The E5b grant is available whenever a renter with children at home buys an eligible home. This matches the circulated eligibility as written, but there is no state recording prior receipt. | **Exact as written; unresolved design ambiguity.** | A household can in principle receive the grant again after returning to renting. If the intended policy is first-time or once-per-family, the current code cannot implement it. |
 | 2 | Identification | E5b has 12 moments and 10 free parameters, but the gate checks only the count. No fresh full 12-by-10 E5b Jacobian or weak-direction audit is in the certified packet. | **Incomplete validation.** | Formal overidentification by counting does not establish that the ten parameters are separately informative. |
 | 2 | Objective weights | Six E5b rows use measured or declared standard errors; the others use a synthetic standard error equal to 5% of the target. The two timing rows use declared window-spread values, not a joint sampling covariance matrix. | **Disclosed approximation, previously overinterpreted.** | Loss `385.14` is a calibration criterion, not a formal SMM $J$-statistic. |
@@ -191,14 +191,16 @@ effect.
 
 1. Treat the July circulated M5 as the paper's economic specification and
    E5b as an experimental alternative.
-2. Reconstruct M5 with the balance-sheet-timing repair only; do not import the
-   E-series utility or fertility changes.
+2. Repair the experimental sequential specification without adding child-age
+   states: births map $(n,m)$ to $(n+1,m+1)$ and each of the $m$ children at
+   home matures independently with four-year probability $2/9$.
 3. Re-estimate under coherent targets, then run a fresh local Jacobian,
    `Nb=240` verification, and dense-owner-menu robustness.
 4. Freeze and identify the outside-entry objects or report a predeclared
    sensitivity grid. Do not present an assumed entry elasticity as estimated.
 5. Solve a fiscally closed baseline and the tax-only, grant-only, and combined
-   policies under the full entry/scale equilibrium.
+   policies under the full entry/scale equilibrium. Fixed-population E5b rows
+   remain decompositions only.
 6. Add a prior-receipt state if the grant is intended to be one-time or for
    first-time buyers.
 7. Reconcile the contradictory policy numbers and regenerate every table and

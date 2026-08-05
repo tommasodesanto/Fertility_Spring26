@@ -75,6 +75,8 @@ if os.environ.get("E5", "") == "1":
         FIXED["kappa_fert"] = probe_fixed_kappa_fert
 if os.environ.get("E6A", "") == "1" and os.environ.get("E5", "") != "1":
     raise ValueError("E6A requires the signed E5 target contract (set E5=1)")
+if os.environ.get("E5_MATURATION_REPAIR", "") == "1" and os.environ.get("E5", "") != "1":
+    raise ValueError("E5_MATURATION_REPAIR requires the signed E5 target contract (set E5=1)")
 if os.environ.get("E6C", "") == "1":
     if not (
         os.environ.get("E5", "") == "1"
@@ -296,6 +298,14 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
             else {}
         ),
         **(
+            __import__(
+                "intergen_eqscale_seq_optimized.e5_maturation_repair",
+                fromlist=["e5_maturation_repair_overrides"],
+            ).e5_maturation_repair_overrides()
+            if os.environ.get("E5_MATURATION_REPAIR", "") == "1"
+            else {}
+        ),
+        **(
             __import__("intergen_eqscale_seq_optimized.e6a_profile", fromlist=["e6a_overrides"]).e6a_overrides()
             if os.environ.get("E6A", "") == "1"
             else {}
@@ -408,7 +418,9 @@ def main() -> None:
                 "E5_PROBE_KE"
                 if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ
                 else (
-                    "E5"
+                    "E5_MATURATION_REPAIR"
+                    if os.environ.get("E5_MATURATION_REPAIR", "") == "1"
+                    else "E5"
                     if os.environ.get("E5", "") == "1"
                     else (
                         "E4_SPLIT"
@@ -437,6 +449,14 @@ def main() -> None:
                 "external_parameter_metadata": (
                     __import__("intergen_eqscale_seq_optimized.e5_profile", fromlist=["E5_EXTERNAL_METADATA"]).E5_EXTERNAL_METADATA
                     if os.environ.get("E5", "") == "1" else None
+                ),
+                "child_maturation": (
+                    __import__(
+                        "intergen_eqscale_seq_optimized.e5_maturation_repair",
+                        fromlist=["e5_maturation_repair_metadata"],
+                    ).e5_maturation_repair_metadata()
+                    if os.environ.get("E5_MATURATION_REPAIR", "") == "1"
+                    else {"profile": "historical_shared_clock"}
                 ),
                 "seed": args.seed, "start_mix": start_mix, "initial_unit_vector": x0,
                 "J": args.J, "Nb": args.Nb, "max_iter_eq": args.max_iter_eq, "tol_eq": args.tol_eq,
