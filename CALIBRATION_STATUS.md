@@ -2,6 +2,22 @@
 
 Updated: `2026-08-05` (author retains the pre-E6 maintained model)
 
+## August 5 contract-audit clarification
+
+"Maintained E5b" means the retained benchmark **within the experimental
+E-series only**. It is not the model in the July circulated paper: the paper
+uses Stone--Geary needs and one-shot completed-family-size choice, whereas E5b
+uses an imposed equivalence scale and sequential birth attempts. E5b must not
+be presented as a recalibration of the circulated model.
+
+The E5b policy packet is a fixed-population, unfunded mechanism diagnostic. It
+does not activate the circulated outside-option entry/stationary-scale closure,
+does not satisfy a government budget, and does not compute welfare. The saved
+circulated M5 results are not automatically paper-ready either: their wealth
+readout predates the July 23 balance-sheet-timing repair, the entry elasticity
+was not estimated, and the draft contains contradictory policy numbers. Full
+audit: `docs/model/circulated_contract_audit_20260805.md`.
+
 ## August 5 author decision: retain the pre-E6 specification
 
 The maintained model remains the certified E5b specification. The E6a
