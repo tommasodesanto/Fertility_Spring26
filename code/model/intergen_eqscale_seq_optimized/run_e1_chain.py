@@ -158,11 +158,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tol-eq", type=float, default=1e-4)
     parser.add_argument(
         "--weight-scheme",
-        choices=("canonical", "target_relative_block_equal"),
+        choices=(
+            "canonical",
+            "target_relative_block_equal",
+            "target_relative_block_equal_l1",
+        ),
         default="canonical",
         help=(
-            "Calibration objective. The alternative is the sum of block mean "
-            "squared proportional target gaps."
+            "Calibration objective. Alternatives are sums of block mean squared "
+            "or mean absolute proportional target gaps."
         ),
     )
     return parser.parse_args()
@@ -309,10 +313,37 @@ def common_overrides(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
-def target_fit(moments: dict[str, Any], targets: dict[str, float], weights: dict[str, float]) -> list[dict[str, float | str]]:
+def objective_loss(
+    moments: dict[str, Any],
+    targets: dict[str, float],
+    weights: dict[str, float],
+    weight_scheme: str,
+) -> float:
+    if weight_scheme == "target_relative_block_equal_l1":
+        return float(
+            sum(
+                float(weights[name])
+                * abs(float(moments[name]) - float(target))
+                for name, target in targets.items()
+            )
+        )
+    return float(diagnostic_loss(moments, targets=targets, weights=weights))
+
+
+def target_fit(
+    moments: dict[str, Any],
+    targets: dict[str, float],
+    weights: dict[str, float],
+    weight_scheme: str = "canonical",
+) -> list[dict[str, float | str]]:
+    absolute = weight_scheme == "target_relative_block_equal_l1"
     return [{"moment": name, "target": float(target), "model": float(moments.get(name, math.nan)),
              "gap": float(moments.get(name, math.nan)) - float(target), "weight": float(weights[name]),
-             "loss_contribution": float(weights[name]) * (float(moments.get(name, math.nan)) - float(target)) ** 2}
+             "loss_contribution": float(weights[name]) * (
+                 abs(float(moments.get(name, math.nan)) - float(target))
+                 if absolute
+                 else (float(moments.get(name, math.nan)) - float(target)) ** 2
+             )}
             for name, target in targets.items()]
 
 
@@ -338,14 +369,22 @@ def main() -> None:
         if len(targets) != 15 or set(targets) != set(weights):
             raise ValueError("E1 requires the unchanged 15-moment income-disciplined target system")
     canonical_weights = dict(weights)
-    if args.weight_scheme == "target_relative_block_equal":
+    if args.weight_scheme in {
+        "target_relative_block_equal",
+        "target_relative_block_equal_l1",
+    }:
         if os.environ.get("E5", "") != "1":
             raise ValueError("plain E6 weighting requires the signed twelve-row E5 target contract")
         from intergen_eqscale_seq_optimized.e6_plain_weighting import (
+            target_relative_block_equal_l1_weights,
             target_relative_block_equal_weights,
         )
 
-        weights = target_relative_block_equal_weights(targets)
+        weights = (
+            target_relative_block_equal_l1_weights(targets)
+            if args.weight_scheme == "target_relative_block_equal_l1"
+            else target_relative_block_equal_weights(targets)
+        )
     seed_theta = build_seed_theta()
     x0 = unit_from_theta(seed_theta)
     rng = np.random.default_rng(args.seed)
@@ -460,8 +499,8 @@ def main() -> None:
         theta, began = theta_from_unit(np.clip(unit, 0.0, 1.0)), time.perf_counter()
         try:
             sol, P, p_eq = run_model_cp_dt({**(overrides if not tight else {**overrides, "max_iter_eq": 40, "tol_eq": 2.5e-5}), **theta}, verbose=False)
-            moments = extract_moments(sol, P); loss = float(diagnostic_loss(moments, targets=targets, weights=weights)
-            )
+            moments = extract_moments(sol, P)
+            loss = objective_loss(moments, targets, weights, args.weight_scheme)
             residual = float(getattr(sol, "best_max_abs_rel_excess", math.inf)); timings = dict(getattr(sol, "timings", {}))
             strict = bool(timings.get("strict_converged", getattr(sol, "converged", False)) and residual <= (2.5e-5 if tight else P.tol_eq))
             status, error, census, price = "ok", "", [], float(np.asarray(p_eq).reshape(-1)[0])
@@ -471,7 +510,7 @@ def main() -> None:
             moments, loss, residual, timings, strict, status, error, census, price = {}, math.inf, math.inf, {}, False, f"failed:{type(exc).__name__}", str(exc), [], math.nan
         record = {"case": eval_idx if tight_case is None else tight_case, "label": label, "arm": arm_name, "status": status, "strict_converged": strict,
                   "rank_loss": loss, "market_residual": residual, "price": price, "theta": theta, "moments": moments,
-                  "target_fit": target_fit(moments, targets, weights) if moments else [], "timings": timings,
+                  "target_fit": target_fit(moments, targets, weights, args.weight_scheme) if moments else [], "timings": timings,
                   "timing_diagnostics": {k: v for k, v in moments.items() if isinstance(v, (list, tuple, np.ndarray))},
                   "origin": origin, "unit_vector": np.asarray(unit), "feasibility_census": census, "error": error,
                   "elapsed_sec": time.perf_counter() - began}

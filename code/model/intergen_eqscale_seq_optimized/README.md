@@ -121,3 +121,11 @@ requires the same twelve-target contract, evaluates both estimates under both
 objectives, reports every free parameter and bound, and writes the standard
 signed-gap comparison plot. It is a reporting driver and does not solve the
 model.
+
+The follow-up L1 diagnostic uses
+`--weight-scheme target_relative_block_equal_l1`. Its loss is the sum, across
+the three economic blocks, of each block's mean absolute proportional target
+gap. Unlike the squared version, it does not give a disproportionately large
+penalty to the worst proportional miss. The production Torch launcher is
+`code/cluster/submit_intergen_e6ab_l1.sh`; its strict collector is the matching
+`submit_intergen_e6ab_l1_collector.sh`.

@@ -16,6 +16,7 @@ from collections.abc import Mapping
 
 
 PLAIN_WEIGHT_SCHEME = "target_relative_block_equal"
+PLAIN_L1_WEIGHT_SCHEME = "target_relative_block_equal_l1"
 
 MOMENT_BLOCKS: dict[str, tuple[str, ...]] = {
     "fertility": (
@@ -64,3 +65,28 @@ def target_relative_block_equal_weights(
             weights[name] = 1.0 / (block_size * target**2)
     return {name: weights[name] for name in targets}
 
+
+def target_relative_block_equal_l1_weights(
+    targets: Mapping[str, float],
+) -> dict[str, float]:
+    """Return coefficients for a sum of block mean absolute proportional gaps."""
+
+    expected = {name for names in MOMENT_BLOCKS.values() for name in names}
+    actual = set(targets)
+    if actual != expected:
+        missing = sorted(expected - actual)
+        extra = sorted(actual - expected)
+        raise ValueError(
+            "plain E6 L1 weighting requires the exact twelve-row target contract; "
+            f"missing={missing}, extra={extra}"
+        )
+
+    weights: dict[str, float] = {}
+    for names in MOMENT_BLOCKS.values():
+        block_size = float(len(names))
+        for name in names:
+            target = abs(float(targets[name]))
+            if target <= 0.0:
+                raise ValueError(f"plain E6 L1 weighting requires nonzero target {name!r}")
+            weights[name] = 1.0 / (block_size * target)
+    return {name: weights[name] for name in targets}
