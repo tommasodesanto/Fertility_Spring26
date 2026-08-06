@@ -1,0 +1,54 @@
+{
+  "status": "running",
+  "source": "/scratch/td2248/projects/Fertility_Spring26/output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/report/results.json",
+  "source_arm": "E5_MATURATION_REPAIR",
+  "theta": {
+    "H0": 7.701991946161454,
+    "alpha_cons": 0.733,
+    "beta": 0.9735070754844904,
+    "chi": 1.0381843260223078,
+    "delta_alpha": 0.016992184818234828,
+    "delta_alpha_jump": 0.021301550909082177,
+    "kappa_fert": 2.6105151099445743,
+    "kappa_fert_continuation": 2.9775238772817625,
+    "psi_child": -0.5575846072214437,
+    "tenure_choice_kappa": 0.0,
+    "theta0": 0.13207433861119927,
+    "theta1": 0.08505279515469401,
+    "theta_n": 0.0
+  },
+  "closure_mode": "quota",
+  "cases": [
+    "rebated_tax1_baseline",
+    "rebated_tax2",
+    "rebated_tax2_grant0p4_Hge6"
+  ],
+  "child_maturation": "independent binomial thinning; expected 18 years at home",
+  "outside_origin_entrant_share_target": 0.169,
+  "local_birth_entry_weight_status": "fixed at one; empirical retention discipline outstanding",
+  "geographic_interpretation_status": "local-versus-national policy interpretation outstanding",
+  "fiscal_rule": "property-tax revenue equals universal transfers plus targeted grants",
+  "fixed_population_results": "decomposition only",
+  "smoke": false,
+  "population_closure": "fixed retention Rbar and fixed outside inflow Mbar; S*E0 = Rbar*S*B(policy) + Mbar",
+  "closure_object_classification": {
+    "outside_origin_entrant_share": {
+      "classification": "empirically normalized",
+      "value": 0.169,
+      "measure": "across-CBSA outside-origin entrant share",
+      "qualification": "provisional; national re-anchor pending"
+    },
+    "retention_rate": {
+      "classification": "derived identity"
+    },
+    "outside_inflow": {
+      "classification": "derived identity"
+    },
+    "entry_taste_scale": {
+      "classification": "not used"
+    },
+    "outside_value": {
+      "classification": "not used"
+    }
+  }
+}

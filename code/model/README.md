@@ -348,6 +348,23 @@ and fails if that candidate-specific probability is infeasible. The companion
 the common-target and funded-policy comparison tables and figures, and refuses
 policy packets that do not reproduce the empirical share and baseline scale.
 
+The same repaired-E5 driver now also accepts the explicit experimental flag
+`--closure-mode quota`; `logit` remains the default so prior rows remain
+reproducible. Quota mode replaces the outside value and taste scale with the
+baseline identities
+
+\[
+\bar R=(1-s^{E,\mathrm{out}})E_0/B_0,
+\qquad
+\bar M=s^{E,\mathrm{out}}E_0,
+\]
+
+then holds \((\bar R,\bar M)\) fixed and solves
+\(S E_0=\bar R S B_0(\mathrm{policy})+\bar M\) jointly with the funded house
+price and transfer. It fails if \(\bar R>1\) and never evaluates the entry
+logit. The quota closure is an experimental policy-reporting arm, not the
+promoted model closure.
+
 The live calibration uses the benchmark-normalized outside-option closure:
 `P.population_closure = "outside_option_benchmark_normalized"`.
 

@@ -1,0 +1,60 @@
+{
+  "status": "complete",
+  "source": "/scratch/td2248/projects/Fertility_Spring26/output/model/eqscale_seq_e5_maturation_repair_psinneg_extended_20260806/report/results.json",
+  "source_arm": "E5_MATURATION_REPAIR",
+  "theta": {
+    "H0": 7.43944475444815,
+    "alpha_cons": 0.733,
+    "beta": 0.9751465605709366,
+    "chi": 1.0420421718957937,
+    "delta_alpha": 0.016919064055173332,
+    "delta_alpha_jump": 0.020343726107523653,
+    "kappa_fert": 3.566256232941394,
+    "kappa_fert_continuation": 1.7744899468159896,
+    "psi_child": 0.00025791307213917665,
+    "tenure_choice_kappa": 0.0,
+    "theta0": 0.1645103243301698,
+    "theta1": 0.08602194808620833,
+    "theta_n": 0.0
+  },
+  "closure_mode": "logit",
+  "cases": [
+    "rebated_tax1_baseline",
+    "rebated_tax2",
+    "rebated_tax2_grant0p4_Hge6"
+  ],
+  "child_maturation": "independent binomial thinning; expected 18 years at home",
+  "outside_origin_entrant_share_target": 0.169,
+  "local_birth_entry_weight_status": "fixed at one; empirical retention discipline outstanding",
+  "geographic_interpretation_status": "local-versus-national policy interpretation outstanding",
+  "fiscal_rule": "property-tax revenue equals universal transfers plus targeted grants",
+  "fixed_population_results": "decomposition only",
+  "smoke": false,
+  "entry_target_probability": 0.9698443680221587,
+  "entry_taste_scale": 2.0,
+  "entry_taste_scale_status": "external sensitivity; empirical discipline outstanding",
+  "outside_objects": {
+    "outside_value": 4.0089081391842605,
+    "outside_entry_flow": 0.010757348744297311,
+    "target_qbar": 0.9698443680221587,
+    "recovered_qbar": 0.9698443680227802,
+    "entry_taste_scale": 2.0,
+    "local_birth_entry_weight": 1.0,
+    "baseline_entry_flow": 0.06173345618074878,
+    "baseline_mature_cityborn_flow": 0.05289560240559147,
+    "feasible_entry_weight": 1.0,
+    "identity_scale_factor": 0.9999999999999998,
+    "identity_entry_residual": 0.0,
+    "outside_origin_entrant_share_target": 0.169,
+    "baseline_retained_mature_cityborn_flow": 0.05289560240559147,
+    "baseline_mature_cityborn_to_entry_ratio": 0.8568385066716329,
+    "outside_origin_entrant_share_identity_check": 0.16900000000000004,
+    "outside_origin_entrant_share_recovered": 0.16899999999946755
+  },
+  "completed_cases": [
+    "rebated_tax1_baseline",
+    "rebated_tax2",
+    "rebated_tax2_grant0p4_Hge6"
+  ],
+  "elapsed_seconds": 31.214777575805783
+}

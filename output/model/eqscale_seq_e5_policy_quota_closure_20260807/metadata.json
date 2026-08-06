@@ -1,0 +1,137 @@
+{
+  "status": "complete",
+  "packet": "experimental repaired-E5 quota population closure",
+  "interpretation": "long-run stationary household comparison; not a forecast",
+  "promotion_status": "experimental; not promoted",
+  "outside_origin_entrant_share": {
+    "value": 0.169,
+    "classification": "empirically normalized",
+    "measure": "across-CBSA outside-origin entrant share",
+    "qualification": "provisional; national ACS re-anchor pending"
+  },
+  "retention_rate": {
+    "classification": "derived identity; candidate-specific"
+  },
+  "outside_inflow": {
+    "classification": "derived identity; candidate-specific"
+  },
+  "entry_taste_scale": {
+    "classification": "not used in quota production"
+  },
+  "outside_value": {
+    "classification": "not used in quota production"
+  },
+  "logit": {
+    "classification": "unidentified entry-response sensitivity only",
+    "taste_scale": 2.0
+  },
+  "policy_arms": {
+    "floor": "Floor, psi nonnegative winner",
+    "tilt": "Tilt, psi nonnegative winner"
+  },
+  "screened_out_arm": {
+    "arm": "chain6",
+    "label": "Maturation-repair chain-6 winner",
+    "implied_retention_rate": 1.055030359528728,
+    "reason": "Rbar exceeds one at the 0.169 anchor; no corrected policy rows"
+  },
+  "policies": [
+    "rebated_tax2",
+    "rebated_tax2_grant0p4_Hge6"
+  ],
+  "raw_runs": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/eqscale_seq_e5_policy_quota_closure_20260807/raw_runs",
+  "torch_production_job_ids": [
+    "15447628"
+  ],
+  "torch_smoke_job_ids": [],
+  "acceptance": {
+    "status": "passed",
+    "test_count": 14,
+    "baseline_tolerance": 1e-12,
+    "residual_tolerance": 2.6e-05,
+    "maximum_absolute_reported_residual": 2.3802233030924296e-05,
+    "checks": [
+      {
+        "arm": "floor",
+        "test": "quota_logit_objects_absent",
+        "passed": true
+      },
+      {
+        "arm": "floor",
+        "test": "fixed_population_bitwise",
+        "passed": true
+      },
+      {
+        "arm": "floor",
+        "test": "default_logit_rows_bitwise",
+        "passed": true
+      },
+      {
+        "arm": "floor",
+        "test": "baseline_reproduction",
+        "passed": true
+      },
+      {
+        "arm": "floor",
+        "test": "renewal_sanity_and_no_logit_leak",
+        "passed": true
+      },
+      {
+        "arm": "floor",
+        "test": "market_and_fiscal_residuals",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "quota_logit_objects_absent",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "fixed_population_bitwise",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "default_logit_rows_bitwise",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "baseline_reproduction",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "renewal_sanity_and_no_logit_leak",
+        "passed": true
+      },
+      {
+        "arm": "tilt",
+        "test": "market_and_fiscal_residuals",
+        "passed": true
+      },
+      {
+        "arm": "chain6",
+        "test": "infeasible_retention_fails_loudly",
+        "passed": true,
+        "retention_rate": 1.055030359528728
+      },
+      {
+        "arm": "chain6",
+        "test": "screening_fixed_population_bitwise_across_modes",
+        "passed": true
+      }
+    ]
+  },
+  "out_of_scope_unchanged": [
+    "estimated parameters",
+    "12-moment system",
+    "solver numerics",
+    "ACS re-anchoring pull",
+    "half-life computation",
+    "CE-unit sensitivity curves",
+    "promoted-model files",
+    "paper LaTeX"
+  ]
+}

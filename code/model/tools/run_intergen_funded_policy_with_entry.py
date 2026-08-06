@@ -330,8 +330,10 @@ def solve_joint_case(
     initial_price: float,
     initial_transfer: float,
     smoke: bool,
+    population_scale_function: Any | None = None,
 ) -> SimpleNamespace:
     cache: dict[tuple[float, float], SimpleNamespace] = {}
+    scale_function = population_scale if population_scale_function is None else population_scale_function
 
     def evaluate(point: np.ndarray) -> SimpleNamespace:
         log_price = float(point[0])
@@ -347,7 +349,7 @@ def solve_joint_case(
                 price=price,
                 smoke=smoke,
             )
-            scale, _ = population_scale(solution, parameters, outside)
+            scale, _ = scale_function(solution, parameters, outside)
             if not scale.finite:
                 raise RuntimeError(f"{label}: entry/population closure is not finite.")
             demand = (

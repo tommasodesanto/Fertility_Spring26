@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "test_count": 14,
+  "baseline_tolerance": 1e-12,
+  "residual_tolerance": 2.6e-05,
+  "maximum_absolute_reported_residual": 2.3802233030924296e-05,
+  "checks": [
+    {
+      "arm": "floor",
+      "test": "quota_logit_objects_absent",
+      "passed": true
+    },
+    {
+      "arm": "floor",
+      "test": "fixed_population_bitwise",
+      "passed": true
+    },
+    {
+      "arm": "floor",
+      "test": "default_logit_rows_bitwise",
+      "passed": true
+    },
+    {
+      "arm": "floor",
+      "test": "baseline_reproduction",
+      "passed": true
+    },
+    {
+      "arm": "floor",
+      "test": "renewal_sanity_and_no_logit_leak",
+      "passed": true
+    },
+    {
+      "arm": "floor",
+      "test": "market_and_fiscal_residuals",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "quota_logit_objects_absent",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "fixed_population_bitwise",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "default_logit_rows_bitwise",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "baseline_reproduction",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "renewal_sanity_and_no_logit_leak",
+      "passed": true
+    },
+    {
+      "arm": "tilt",
+      "test": "market_and_fiscal_residuals",
+      "passed": true
+    },
+    {
+      "arm": "chain6",
+      "test": "infeasible_retention_fails_loudly",
+      "passed": true,
+      "retention_rate": 1.055030359528728
+    },
+    {
+      "arm": "chain6",
+      "test": "screening_fixed_population_bitwise_across_modes",
+      "passed": true
+    }
+  ]
+}

@@ -2,7 +2,84 @@
 
 Updated: `2026-08-06` (author retains the pre-E6 maintained model)
 
+## August 6 experimental quota population closure complete
+
+The repaired-E5 funded-policy driver now has an explicit experimental
+`closure_mode="quota"`; the historical logit behavior remains the code default
+for reproducibility. This is a policy-closure experiment only. It changes no
+estimated parameter, target, calibration, or promoted-model object, and E5
+remains **not promoted**.
+
+At each funded 1 percent baseline, the quota mode sets
+
+\[
+\bar R=(1-s^{E,\mathrm{out}})E_0/B_0,
+\qquad
+\bar M=s^{E,\mathrm{out}}E_0,
+\]
+
+then holds $(\bar R,\bar M)$ fixed and solves
+$S E_0=\bar R S B_0(\mathrm{policy})+\bar M$ jointly with the house price and
+balanced-budget transfer. Here $S$ is stationary **household** population.
+The anchor $s^{E,\mathrm{out}}=0.169$ is empirically normalized from the
+across-CBSA measure but remains provisional for a national interpretation;
+$\bar R$ and $\bar M$ are derived identities. The outside value and entry
+taste scale are not used in quota production.
+
+Torch array `15447628` ran the two feasible certified arms and matched
+$\lambda=2$ logit sensitivities. Results relative to each arm's funded
+baseline are:
+
+| Arm | Policy | TFR | Births/HH | Household population | Required immigration at fixed population | Fertility gap closed | Price = rent | Logit sensitivity ($\lambda=2$) |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| Floor | 2% tax | +0.378% | +0.334% | +1.695% | -1.742% | 1.742% | -17.534% | +9.980% |
+| Floor | 2% tax + grant | +0.750% | +0.675% | +3.464% | -3.518% | 3.518% | -17.290% | +10.104% |
+| Tilt | 2% tax | +0.202% | +0.178% | +0.897% | -0.918% | 0.918% | -17.710% | +8.988% |
+| Tilt | 2% tax + grant | +0.489% | +0.441% | +2.231% | -2.263% | 2.263% | -17.210% | +9.062% |
+
+The renewal multiplier is
+$(1-0.169)/0.169=4.917$. Across the four policies, the gap between
+$4.917\,d\ln B_0$ and realized $d\ln S$ is only `0.024--0.100` percentage
+point, the housing-feedback damping. Thus the quota population effects are
+roughly `+0.9--3.5%`, rather than the unidentified logit's roughly
+`+9--10%`. The latter is demoted to the explicitly labeled sensitivity row
+shown above.
+
+All fourteen packet gates pass. Both feasible quota baselines reproduce $S=1$
+and the `0.169` outside-origin share to `1e-12`; floor and tilt
+fixed-population CSVs are bitwise identical across closure modes and to the
+prior production packets; the default logit summaries and target-fit rows are
+also bitwise prior-identical; quota objects contain no outside value or taste
+scale; and the maximum absolute reported market or fiscal residual is
+`2.38e-5`. The maturation-repair chain-6 winner is screened out: its baseline
+implies $\bar R=1.055030>1$, so the driver fails loudly and produces no
+corrected policy row rather than using a fallback.
+
+The complete packet—including per-policy long tables, residuals, full
+parameter/bound tables, full twelve-moment target-fit tables, standard
+diagnostics, metadata, raw checkpoints, and the chain-6 screening record—is:
+
+- `output/model/eqscale_seq_e5_policy_quota_closure_20260807/`
+
+### Outstanding population-closure decisions
+
+- Re-anchor $s^{E,\mathrm{out}}$ nationally using the ACS foreign-origin share
+  of new young households; `0.169` remains a provisional city-flow anchor.
+- Reconsider whether a balanced-growth-path closure can preserve the desired
+  housing-scarcity mechanism. This question is explicitly reopened but was
+  not implemented or resolved in tonight's experiment.
+- Decide whether the quota assumptions—policy-invariant outside inflow and
+  policy-invariant native retention—are acceptable for the paper's national
+  interpretation.
+- The entry taste scale is retired from quota production. It survives only in
+  the row labeled `unidentified entry-response sensitivity (lambda=2)`.
+
 ## August 6 empirical entry normalization repair complete
+
+**Policy-status correction:** the logit rows in this historical subsection are
+now sensitivity rows only; the experimental quota results above are the
+current population-closure experiment. The baseline normalization repair and
+fixed-population decompositions remain valid.
 
 The funded floor-versus-tilt policy comparison now implements the approved
 baseline outside-origin entrant share $s^{E,\mathrm{out}}=0.169$. The

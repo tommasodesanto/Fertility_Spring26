@@ -5,6 +5,8 @@ Active launchers:
 - `submit_python_direct_geometry_overnight.sh`
 - `submit_intergen_housing_fertility_twohour_panel.sh`
 - `submit_intergen_housing_fertility_global_de.sh`
+- `submit_intergen_e5_policy_quota_closure.sh` (six deterministic repaired-E5
+  policy tasks: three certified arms under quota and matched logit sensitivity)
 
 ## Standard interface: `torch.sh`
 
