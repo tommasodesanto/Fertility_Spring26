@@ -2,6 +2,42 @@
 
 Updated: `2026-08-06` (author retains the pre-E6 maintained model)
 
+## August 6 psi-nonnegative floor-versus-tilt experiment complete
+
+The author restricted child flow utility to $\psi\geq0$ and compared two
+otherwise common repaired-E5 calibrations. The floor arm removes the two
+child expenditure-share tilts and estimates one minimum-room requirement per
+child at home (nine free parameters). The control retains the two tilts (ten
+free parameters). Both use the unchanged twelve targets, canonical weights,
+and independent child maturation.
+
+The doubled search covered sixteen chains per arm. All 32 chains are eligible,
+with strict exact double repeats and zero loss and moment repeat differences.
+The continuation-stage winners dominate their first-stage seeds:
+
+- Floor: loss `297.111174462`, residual `1.05e-5` (first stage `310.931747`).
+- Tilt control: loss `299.269964063`, residual `2.41e-5` (first stage
+  `308.268379`).
+
+The floor lowers loss by only `2.159`, or `0.72%`, relative to the common-domain
+control. Both estimates put $\psi$ at or effectively at zero. The floor is
+`0.6136` rooms per child and is not near its `[0.10,1.80]` bounds, but it raises
+aggregate mean rooms to `6.478` against `5.780`; the control gives `5.948`.
+Neither arm repairs the main fit failures: childlessness is `0.1039` under the
+floor and `0.1080` under the control against `0.188`; old wealth p90/p50 is
+about `2.09` in both against `3.448`; and first births at age 30+ remain high.
+
+Decision: this is a certified comparison, not an adoption. The floor's small
+criterion gain does not establish that it is economically preferable, and no
+policy packet was run. Complete target and parameter tables:
+
+- `output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/`
+- `output/model/eqscale_seq_e5_maturation_repair_psinneg_extended_20260806/report/`
+
+Torch record: smokes `15409643/15409644`; first-stage arrays and collectors
+`15409822/15409825` and `15409828/15409830`; continuations and collectors
+`15410205/15410207` and `15410208/15410209`.
+
 ## August 6 repaired E5 experiment: calibration and policy audit complete
 
 The author-directed repair is complete for the experimental E5 architecture.
