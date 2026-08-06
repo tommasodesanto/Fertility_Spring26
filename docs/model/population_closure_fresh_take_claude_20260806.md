@@ -459,3 +459,98 @@ leads (Okamoto 2021; Hagiwara 2025) that should be skimmed before the paper
 claims novelty for endogenous-fertility-plus-immigration closure, and the
 "two children form one household" mapping, which confirms the \(B_0\)
 accounting used here.
+
+---
+
+## Coda 2: comparison with the second independent fresh take (2026-08-06)
+
+A second independent take (GPT, supplied by the author) reached the same
+destination: retire the logit/\(\bar V^{out}\)/\(\lambda\) layer; close the
+national model with a fixed absolute flow of net international immigrants;
+keep fixed-population rows as the household-level decomposition; treat the
+national entry elasticity as unidentified, with zero (a fixed immigration
+regime) as the baseline and a sensitivity band otherwise; read (ii)'s
+"parallel movement" as an assumption a one-market model cannot deliver as an
+equilibrium result; reject perpetual youth; and distinguish the
+household-formation margin from international migration. Three independent
+assessments now agree on the closure.
+
+**Adopted from the second take** (it is better on empirical anchoring
+discipline):
+
+1. **Sequencing.** Its sharpest point: the 0.169 outside-origin share is a
+   cross-CBSA *domestic* migration statistic, and domestic moves net to zero
+   nationally; until \(\bar M\) is re-anchored to net international migration
+   in entrant-household units, the 4.92 multiplier and the +3.3 percent
+   headline are transparent algebraic sensitivities, not nationally
+   calibrated estimates. Section 4 above flagged the re-anchoring as a task;
+   the second take correctly makes it a *precondition* for quoting the
+   numbers.
+2. **An explicit \(\kappa\).** Make the child-to-entrant-household mapping an
+   explicit external object (survival \(\times\) two-children-per-household
+   \(\times\) headship \(\times\) retention/emigration), externally
+   restricted and reported — never silently one. Do not back out both
+   \(\kappa\) and \(\bar M\) from \(S=1\): keep \(S=1\) as the units
+   normalization for \(H_0\), pin \(\kappa\) externally, and use Census net
+   international migration as an *overidentification check* on the implied
+   \(\bar M\). This converts the closure from calibrated-to-fit into
+   data-disciplined-and-testable.
+3. **Cleaner identification algebra.** With a common \(q\) across pools,
+   \(s^{out}=qM/[q(M+B)]=M/(M+B)\): the observed share identifies pool
+   composition only; \(q\) itself is an accounting residual of stationarity,
+   and no baseline moment touches its elasticity. Sharper than the version
+   in Section 1 and worth quoting in the paper.
+4. **Consumption-equivalent units for the band.** Write the entry
+   sensitivity as \(I(\Delta c)=I_0\exp(\varepsilon_I\Delta c)\) rather than
+   \(\lambda\) in model-value units (its point that \(\lambda(1-q^*)/s^{out}
+   \approx0.355\) per "value unit" is empirically meaningless is correct);
+   convert the legacy \(\lambda=2\) runs into their implied \(\varepsilon_I\)
+   so they remain usable as the labeled extreme row.
+5. **Naming.** Call the object stationary *households*, not population,
+   unless a persons mapping is added.
+6. **A canonical cite.** Espenshade–Bouvier–Arthur (1982): constant
+   immigration plus below-replacement fertility converges to a stationary
+   population — the demographic theorem under this closure. Verify against
+   the paper before citing (project rule); the second take's other
+   migration cites (Kennan–Walker 2011; Notowidigdo 2020; Zabek 2024;
+   Fehr–Jokisch–Kotlikoff) are standard.
+
+**Where this assessment stands its ground:**
+
+1. **The balanced path.** The second take calls (v) "feasible in principle,"
+   claiming fixed land can preserve scarcity on a BGP. Maintained
+   disagreement: with any level (non-proportional) supply object — fixed
+   land included — \(n\neq0\) forces trending per-capita land and hence
+   trending rents; balancedness fails generically (the knife edge
+   \(n=-\delta\) with zero construction aside). Scarcity on a BGP requires
+   supply proportional to population or stock, which is exactly what
+   desideratum 3 refuses. The impossibility argument in Section 1 stands.
+2. **The GE damping loop is absent there.** Its closure preserves scarcity
+   in levels but never notes that scarcity feeds back to births and damps
+   the renewal multiplier — the model-owned part of the population statement
+   (Section 2) and the main reason the model, not demography alone, is
+   needed for the number.
+3. **Half-life, saturation asymmetry, the \(q^*\)-as-fertility-fit
+   diagnosis, the welfare-across-populations rule, and the trio units** are
+   all absent there and all kept. In particular its claim that the
+   fixed-population protocol "makes no defensible statement about
+   population" misses that the required-immigration-offset row is the same
+   number as the population row in different units.
+4. **The local open-city appendix** it proposes (with a freshly estimated
+   origin-destination migration elasticity) exceeds the runway, and a
+   one-market model calibrated to national moments cannot be reinterpreted
+   as one metro without re-anchoring supply and the entrant pool. Default
+   remains the sensitivity-row demotion; the appendix is an option only if
+   an elasticity is credibly imported and the author accepts the metro
+   reinterpretation.
+5. **The age-structured fixed point** \(\mu=[I-A]^{-1}\iota\) it recommends
+   is, with all entrants at age 18, exactly what the stationary solve
+   already computes — the scalar closure is its reduced form. It becomes
+   substantive only if immigrants enter at multiple ages with their own
+   composition; worth a stated caveat, not implementation.
+
+**Net.** No change of destination across three takes. The union is the
+stronger spec: quota closure with external \(\kappa\) and national
+re-anchoring as a precondition (second take), plus the damping
+decomposition, half-life, trio units, and CE-unit sensitivity band (this
+take). The decision remains the author's.
