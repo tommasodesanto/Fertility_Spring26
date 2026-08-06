@@ -63,8 +63,14 @@ if os.environ.get("E5", "") == "1":
     psi_bound = float(os.environ.get("E5_PSI_BOUND", "3.0"))
     if not math.isfinite(psi_bound) or psi_bound <= 0.0:
         raise ValueError("E5_PSI_BOUND must be a finite positive float")
+    # Author-directed lower restriction on the child utility flow (2026-08-06:
+    # negative psi_child rejected).  Unset preserves the symmetric historical
+    # domain exactly.
+    psi_lower = float(os.environ.get("E5_PSI_MIN", str(-psi_bound)))
+    if not math.isfinite(psi_lower) or psi_lower >= psi_bound:
+        raise ValueError("E5_PSI_MIN must be finite and strictly below E5_PSI_BOUND")
     DOMAIN = tuple(
-        (name, -psi_bound, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
+        (name, psi_lower, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
         for name, lo, hi, kind in DOMAIN
     )
     if "E5_PROBE_FIX_KE" in os.environ:
@@ -95,7 +101,7 @@ if os.environ.get("E5F", "") == "1":
     DOMAIN = E5F_DOMAIN
     FIXED = dict(E5F_FIXED)
     DOMAIN = tuple(
-        (name, -psi_bound, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
+        (name, psi_lower, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
         for name, lo, hi, kind in DOMAIN
     )
 if os.environ.get("E6C", "") == "1":
@@ -548,6 +554,8 @@ def main() -> None:
                 "tight_winner_evaluator": {"max_iter_eq": 40, "tol_eq": 2.5e-5, "repeats": 2}}
     if os.environ.get("E5", "") == "1" and "E5_PSI_BOUND" in os.environ:
         metadata["psi_bound"] = psi_bound
+    if os.environ.get("E5", "") == "1" and "E5_PSI_MIN" in os.environ:
+        metadata["psi_min"] = psi_lower
     if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ:
         metadata["probe_fixed_kappa_fert"] = probe_fixed_kappa_fert
     (args.outdir / "metadata.json").write_text(json.dumps(jsonable(metadata), indent=2, sort_keys=True))
