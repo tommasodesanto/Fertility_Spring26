@@ -34,7 +34,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--outdir", type=Path, required=True)
     parser.add_argument(
         "--arm",
-        choices=("e5_maturation_repair", "e6a", "e6b", "e6ab", "e6abc"),
+        choices=("e5_maturation_repair", "e5f", "e6a", "e6b", "e6ab", "e6abc"),
         required=True,
     )
     return parser.parse_args()
@@ -48,6 +48,9 @@ def configure_environment(arm: str) -> None:
     os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
     if arm == "e5_maturation_repair":
         os.environ["E5_MATURATION_REPAIR"] = "1"
+    if arm == "e5f":
+        os.environ["E5_MATURATION_REPAIR"] = "1"
+        os.environ["E5F"] = "1"
     if arm in {"e6a", "e6ab", "e6abc"}:
         os.environ["E6A"] = "1"
     if arm in {"e6b", "e6ab", "e6abc"}:
@@ -59,6 +62,7 @@ def configure_environment(arm: str) -> None:
 def expected_arm(arm: str) -> str:
     return {
         "e5_maturation_repair": "E5_MATURATION_REPAIR",
+        "e5f": "E5F",
         "e6a": "E6A",
         "e6b": "E6B",
         "e6ab": "E6AB",

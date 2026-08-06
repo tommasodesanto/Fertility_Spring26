@@ -332,6 +332,13 @@ application path, not a separate interpretation of `theta`.
 
 ## Population Closure
 
+For the repaired E5/E5F comparison, `tools/run_e5_repaired_policy_with_entry.py`
+accepts either a certified `E5_MATURATION_REPAIR` or `E5F` collector report and
+routes the selected mechanism through the funded entry closure. The source must
+carry an exact strict repeat. The companion
+`intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py` builds
+the common-target and funded-policy comparison tables and figures.
+
 The live calibration uses the benchmark-normalized outside-option closure:
 `P.population_closure = "outside_option_benchmark_normalized"`.
 

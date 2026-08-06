@@ -51,10 +51,29 @@ def load_repaired_profile(source: Path, smoke: bool) -> tuple[dict[str, float], 
     winner = (payload.get("winners") or {}).get("E1")
     if not isinstance(winner, dict) or not isinstance(winner.get("theta"), dict):
         raise ValueError(f"{source} does not contain winners.E1.theta")
+    repeat = payload.get("winner_repeat_check") or {}
+    if not (
+        repeat.get("both_strict")
+        and float(repeat.get("loss_abs_difference", math.inf)) == 0.0
+        and float(repeat.get("max_abs_moment_difference", math.inf)) == 0.0
+    ):
+        raise ValueError(f"{source} does not preserve an exact strict repeat")
     theta = {str(key): float(value) for key, value in winner["theta"].items()}
+    source_arm = str(
+        (payload.get("winner_metadata") or {}).get("arm", winner.get("arm", "unknown"))
+    )
+    if source_arm not in {"E5_MATURATION_REPAIR", "E5F"}:
+        raise ValueError(
+            f"{source} reports arm {source_arm!r}; expected E5_MATURATION_REPAIR or E5F"
+        )
 
+    for name in ("E5_MATURATION_REPAIR", "E5F", "E6A", "E6B", "E6C"):
+        os.environ.pop(name, None)
+    os.environ["E3_L4"] = "1"
     os.environ["E5"] = "1"
     os.environ["E5_MATURATION_REPAIR"] = "1"
+    if source_arm == "E5F":
+        os.environ["E5F"] = "1"
     from intergen_eqscale_seq_optimized.calibration import extract_moments
     from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
     from intergen_eqscale_seq_optimized import run_e1_chain
@@ -77,6 +96,11 @@ def load_repaired_profile(source: Path, smoke: bool) -> tuple[dict[str, float], 
         child_state_mode="independent_count",
         property_tax_lump_sum_transfer=0.0,
     )
+    floor_is_active = bool(overrides.get("child_room_floor", False))
+    if source_arm == "E5F" and not floor_is_active:
+        raise RuntimeError("E5F policy routing failed to activate the child-room floor")
+    if source_arm == "E5_MATURATION_REPAIR" and floor_is_active:
+        raise RuntimeError("repaired-E5 control unexpectedly activates the child-room floor")
 
     # Reuse the already-audited closure algebra while routing every solve and
     # target readout through the repaired E package.
@@ -84,7 +108,7 @@ def load_repaired_profile(source: Path, smoke: bool) -> tuple[dict[str, float], 
     closure.extract_moments = extract_moments
     closure.entry_wealth_grid_weights = entry_wealth_grid_weights
     closure.income_transition_values = income_transition_values
-    return theta, overrides, e5_target_system(), str(winner.get("arm", "unknown"))
+    return theta, overrides, e5_target_system(), source_arm
 
 
 def fiscal_root(function, *, smoke: bool) -> float:

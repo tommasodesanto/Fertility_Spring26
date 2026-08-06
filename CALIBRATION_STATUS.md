@@ -27,12 +27,31 @@ Neither arm repairs the main fit failures: childlessness is `0.1039` under the
 floor and `0.1080` under the control against `0.188`; old wealth p90/p50 is
 about `2.09` in both against `3.448`; and first births at age 30+ remain high.
 
-Decision: this is a certified comparison, not an adoption. The floor's small
-criterion gain does not establish that it is economically preferable, and no
-policy packet was run. Complete target and parameter tables:
+The correctly funded policy packet is now complete for both winners. Relative
+to each model's funded 1% tax baseline, the floor model gives:
 
+- 2% tax: TFR `+0.187%`, price `-11.468%`, population `+22.211%`, total births
+  `+22.409%`.
+- 2% tax plus 0.4 large-home purchase grant: TFR `+0.578%`, price `-12.488%`,
+  population `+19.021%`, total births `+19.639%`.
+
+The tilt control gives nearly the same policy pattern: TFR `+0.062%/+0.351%`,
+price `-11.606%/-11.969%`, population `+22.226%/+19.579%`, and total births
+`+22.291%/+19.958%`. All six equilibria pass the housing-market and government-
+budget tolerances. The baseline entry probability `0.5` and taste scale `2`
+remain external sensitivities; the large population and total-birth effects are
+therefore not paper-ready estimates.
+
+Decision: this is a certified economic and policy comparison, not an adoption.
+The floor is easier to interpret than the tilts, but it does not repair the main
+fit failures, and the policy totals are dominated by the uncalibrated entry
+elasticity. Complete report, tables, figures, and detailed artifacts:
+
+- `output/model/e5f_psinneg_iteration_report_20260806/REPORT.md`
 - `output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/`
 - `output/model/eqscale_seq_e5_maturation_repair_psinneg_extended_20260806/report/`
+- `output/model/intergen_e5f_child_room_floor_psinneg_policy_entry_20260806/`
+- `output/model/eqscale_seq_e5_maturation_repair_psinneg_policy_entry_20260806/`
 
 Torch record: smokes `15409643/15409644`; first-stage arrays and collectors
 `15409822/15409825` and `15409828/15409830`; continuations and collectors
