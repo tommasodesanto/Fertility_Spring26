@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strictly reproduce a certified E6 winner and write the standard graph packet."""
+"""Strictly reproduce a certified E-series winner and write the standard graph packet."""
 
 from __future__ import annotations
 
@@ -34,18 +34,20 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--outdir", type=Path, required=True)
     parser.add_argument(
         "--arm",
-        choices=("e6a", "e6b", "e6ab", "e6abc"),
+        choices=("e5_maturation_repair", "e6a", "e6b", "e6ab", "e6abc"),
         required=True,
     )
     return parser.parse_args()
 
 
 def configure_environment(arm: str) -> None:
-    for name in ("E6A", "E6B", "E6C"):
+    for name in ("E5_MATURATION_REPAIR", "E5F", "E6A", "E6B", "E6C"):
         os.environ.pop(name, None)
     os.environ["E3_L4"] = "1"
     os.environ["E5"] = "1"
     os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
+    if arm == "e5_maturation_repair":
+        os.environ["E5_MATURATION_REPAIR"] = "1"
     if arm in {"e6a", "e6ab", "e6abc"}:
         os.environ["E6A"] = "1"
     if arm in {"e6b", "e6ab", "e6abc"}:
@@ -56,6 +58,7 @@ def configure_environment(arm: str) -> None:
 
 def expected_arm(arm: str) -> str:
     return {
+        "e5_maturation_repair": "E5_MATURATION_REPAIR",
         "e6a": "E6A",
         "e6b": "E6B",
         "e6ab": "E6AB",
@@ -367,7 +370,7 @@ def main() -> None:
     (args.outdir / "README.md").write_text(
         "\n".join(
             [
-                "# Certified E6 diagnostic packet",
+                "# Certified E-series diagnostic packet",
                 "",
                 "The winner is solved once at the strict collector settings.",
                 "All twelve calibrated moments must reproduce within `1e-6` before",

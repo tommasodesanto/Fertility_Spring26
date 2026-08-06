@@ -1,10 +1,45 @@
 # Calibration Status
 
-Updated: `2026-08-05` (author retains the pre-E6 maintained model)
+Updated: `2026-08-06` (author retains the pre-E6 maintained model)
+
+## August 6 repaired E5 experiment: calibration and policy audit complete
+
+The author-directed repair is complete for the experimental E5 architecture.
+Parity is children ever born, the existing child state is children currently
+at home, births map $(n,m)$ to $(n+1,m+1)$, and each at-home child matures
+independently with four-year probability $2/9$. The funded policy exercise now
+recovers the outside option and entrant flow at the baseline, holds them fixed,
+balances the government budget, and lets entry determine stationary city scale.
+
+The eight-chain recalibration has 8/8 eligible exact strict repeats. Chain 6
+wins at canonical loss `249.186326675`, market residual `1.62e-5`, and zero
+repeat differences across all twelve moments. The independent diagnostic solve
+reproduces the loss and moments to machine precision. The remaining fit failures
+are childlessness (`0.1144` versus `0.188`), completed fertility (`1.7802`
+versus `1.918`), and old-age wealth dispersion (`2.0866` versus `3.4481`).
+
+Under the funded entry/scale closure, raising the property tax from 1% to 2%
+changes completed fertility by `+0.068%`, house price by `-11.84%`, stationary
+scale by `+21.06%`, and total births by `+21.13%`. Adding the `0.4` purchase
+grant changes completed fertility by `+0.383%`, house price by `-12.22%`, scale
+by `+18.71%`, and total births by `+19.13%`. All reported equilibria satisfy
+the housing-market and government-budget checks. The entry probability `0.5`
+and taste scale `2` are external sensitivity assumptions, so scale and total-
+birth effects are not paper-ready estimates. Fixed-population rows remain
+decompositions only.
+
+Decision: the repair is numerically certified but is **not promoted**. E5
+remains an experimental alternative to the circulated Stone--Geary,
+one-shot-family-size model, and its fertility and wealth fit remains inadequate.
+Full artifacts:
+
+- `output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/report/`
+- `output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/diagnostic_packet/`
+- `output/model/eqscale_seq_e5_maturation_repair_policy_entry_20260806/`
 
 ## August 5 author-directed maturation and counterfactual repairs
 
-Two repairs are in progress on the retained experimental E5b architecture.
+Two repairs were initiated on the retained experimental E5b architecture.
 First, parity remains children ever born, while the existing child-state
 dimension now records children currently at home. A birth maps $(n,m)$ to
 $(n+1,m+1)$; every at-home child independently matures each four-year period
@@ -21,10 +56,9 @@ housing price clears. Fixed-population rows are decomposition results only.
 Local exact-loop checks passed: all independent-maturation transition and
 eligibility tests, the historical literal-parity tests, a 13-case calibration
 smoke, and the full fixed-population-plus-entry policy smoke. Torch smoke job
-`15397993` is the current cluster verification. A fresh ten-parameter,
-twelve-target recalibration is required before the repaired model can replace
-the historical E5b estimate. The entry probability `0.5` and taste scale `2`
-remain external sensitivity objects, not estimated parameters.
+`15397993` passed. The completed production result and non-promotion decision
+are recorded above. The entry probability `0.5` and taste scale `2` remain
+external sensitivity objects, not estimated parameters.
 
 ## August 5 contract-audit clarification
 

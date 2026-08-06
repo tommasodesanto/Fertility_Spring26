@@ -210,3 +210,32 @@ effect.
 Until these steps are complete, no E5b policy elasticity and no saved
 population-adjusted M5 total-birth number should be described as a paper
 result.
+
+## August 6 follow-up: repaired experimental E5
+
+The two author-directed implementation defects in the experimental E5 branch
+have now been repaired and tested. Children mature independently from the
+existing count-at-home state, and the policy driver now imposes the government
+budget and the circulated outside-option entry/stationary-scale equations. No
+child-age state or new estimated parameter was added.
+
+The repaired ten-parameter, twelve-target recalibration is numerically
+certified: all eight chains have exact strict repeats, the selected loss is
+`249.186326675`, and an independent solve reproduces all moments. This is an
+improvement over historical E5b loss `385.142880159`, but childlessness,
+completed fertility, and old-age wealth dispersion remain materially wrong.
+
+The funded policy audit also passes. Relative to the rebated 1% baseline, the
+2% tax-only case changes completed fertility by `+0.068%`, house price by
+`-11.84%`, stationary scale by `+21.06%`, and total births by `+21.13%`.
+Adding the `0.4` purchase grant changes those objects by `+0.383%`, `-12.22%`,
+`+18.71%`, and `+19.13%`, respectively. These scale results inherit the
+externally imposed entry probability `0.5` and taste scale `2`; they are
+sensitivity results, not estimated elasticities.
+
+This closes the two implementation items but does not make E5 the circulated
+model. The remaining audit requirements are a circulation-consistent repaired
+M5 benchmark, identified entry behavior, welfare, a decision on one-time grant
+receipt, fresh Jacobian and grid/menu robustness, and reconciliation of all
+paper tables. The repaired E5 result is therefore retained as a certified
+experiment and is not promoted.
