@@ -135,6 +135,20 @@ and whether the estimate is near a bound. If a concise chat answer is needed,
 lead with the scalar loss and a short interpretation, then link to or include
 the complete tables rather than omitting them.
 
+Counterfactual contract discipline:
+
+- Before a production policy run, reconcile every entry, population, fiscal,
+  and geographic-closure object against the live `CALIBRATION_STATUS.md`.
+  A task handoff or old sensitivity packet cannot silently override that
+  contract.
+- Production metadata must classify each closure object as estimated,
+  empirically normalized, externally fixed, or outstanding.
+- Arbitrary diagnostic values must not be production defaults. A production
+  driver should derive the object from its approved empirical target or fail;
+  any sensitivity override must be explicit and labeled diagnostic.
+- Keep unresolved policy objects in a visible outstanding-items section of
+  `CALIBRATION_STATUS.md` until the author closes them.
+
 Identification discipline for SMM:
 
 - Never underidentify an SMM calibration. A calibration with \(x\) free

@@ -9,11 +9,11 @@ The answer is mixed. The child-room floor is economically easier to explain and
 fits the parent housing gradient better, but it does not repair the central
 fertility-timing or wealth-distribution failures. Under the funded policy
 experiment, it produces nearly the same equilibrium responses as the tilt
-model: completed fertility rises by less than 0.6 percent, while total births
-rise by about 20 percent because the externally parameterized entry mechanism
-expands city population. The policy accounting is correct; the entry elasticity
-is not yet empirically disciplined enough for the population or total-birth
-effects to be headline estimates.
+model: completed fertility rises by 0.15--0.67 percent, while total births rise
+by 9.1--10.8 percent because city population expands. The baseline entry level
+now matches the approved 16.9 percent outside-origin entrant share exactly.
+The policy accounting is correct; the entry elasticity is still externally
+fixed and therefore remains outstanding.
 
 Neither model is promoted. The pre-E6 maintained model remains unchanged.
 
@@ -105,11 +105,20 @@ counterfactuals are (i) a 2 percent tax with the revenue rebated, and (ii) the
 same 2 percent tax plus a 0.4 purchase grant for homes with at least six rooms.
 Every case balances the government budget.
 
-At the baseline, the outside value is chosen to give entry probability 0.5,
-and the outside potential-entrant flow is recovered so stationary population
-has scale one. These two outside objects and the entry taste scale 2 are then
-held fixed. For each counterfactual, the house price and transfer clear jointly,
-while entry determines population scale:
+At the baseline, the model entry probability is not imposed arbitrarily. The
+approved empirical normalization is that 16.9 percent of entrants originate
+outside the city. For each calibrated candidate, the driver computes
+
+\[
+ q^*=\frac{1-s^{E,\mathrm{out}}}{B_0/E_0},
+ \qquad s^{E,\mathrm{out}}=0.169,
+\]
+
+and then recovers the outside value and outside potential-entrant flow so that
+stationary population has scale one. This gives $q^*=0.969225$ for the floor
+and $q^*=0.969844$ for the tilt control. The two recovered outside objects and
+the entry taste scale 2 are held fixed. For each counterfactual, the house price
+and transfer clear jointly, while entry determines population scale:
 
 \[
  q=\sum_z\omega_z\Lambda\!\left(2[V_z-\bar V^{out}]\right),
@@ -117,9 +126,10 @@ while entry determines population scale:
  S E_0=q\left[M+S B_0\right].
 \]
 
-Here (E_0) is required entrant flow per unit population, (B_0) is mature
-city-born entrant flow, and (M) is the fixed outside potential-entrant flow.
-The baseline identity recovers (S=1) exactly in both models.
+Here $E_0$ is required entrant flow per unit population, $B_0$ is mature
+city-born entrant flow, and $M$ is the fixed outside potential-entrant flow.
+The baseline identity recovers $S=1$ and the 16.9 percent share to numerical
+precision in both models.
 
 ### General-equilibrium policy effects
 
@@ -127,15 +137,15 @@ All changes are relative to each model's funded 1 percent baseline.
 
 | Model | Policy | TFR | House price | Population | Total births | Entry probability |
 |---|---|---:|---:|---:|---:|---:|
-| Floor | 2% tax | +0.187% | -11.468% | +22.211% | +22.409% | 0.5575 |
-| Floor | 2% tax + grant | +0.578% | -12.488% | +19.021% | +19.639% | 0.5489 |
-| Tilts | 2% tax | +0.062% | -11.606% | +22.226% | +22.291% | 0.5578 |
-| Tilts | 2% tax + grant | +0.351% | -11.969% | +19.579% | +19.958% | 0.5508 |
+| Floor | 2% tax | +0.294% | -15.050% | +9.980% | +10.264% | 0.9821 |
+| Floor | 2% tax + grant | +0.674% | -15.196% | +10.104% | +10.771% | 0.9794 |
+| Tilts | 2% tax | +0.146% | -15.305% | +8.988% | +9.128% | 0.9825 |
+| Tilts | 2% tax + grant | +0.432% | -15.075% | +9.062% | +9.487% | 0.9804 |
 
-For the floor model, TFR levels are 1.98015 in the baseline, 1.98385 under the
-2 percent tax, and 1.99160 with the grant. The corresponding house prices are
-0.77609, 0.68709, and 0.67917. The balanced period transfers are 0.20913,
-0.35745, and 0.30301.
+For the floor model, TFR levels are 1.98015 in the baseline, 1.98598 under the
+2 percent tax, and 1.99351 with the grant. The corresponding house prices are
+0.77609, 0.65929, and 0.65815. The balanced period transfers are 0.20913,
+0.35455, and 0.30096.
 
 ### Fixed-population decomposition
 
@@ -148,23 +158,34 @@ fixed-population rows are decompositions, not counterfactual equilibria.
 ### Accounting audit
 
 All six full counterfactuals pass. Across the two models, the maximum absolute
-fixed-population housing-market residual is (2.23\times10^{-5}), the maximum
-fixed-population budget residual is (2.38\times10^{-5}), the maximum joint
-housing-market residual is (1.66\times10^{-5}), and the maximum joint budget
-residual is (1.07\times10^{-5}). Baseline entry probabilities reproduce 0.5
-within (1.1\times10^{-5}), and baseline scale within (3.6\times10^{-5}).
+fixed-population housing-market residual is $2.23\times10^{-5}$, the maximum
+fixed-population budget residual is $2.38\times10^{-5}$, the maximum joint
+housing-market residual is $2.35\times10^{-5}$, and the maximum joint budget
+residual is $4.89\times10^{-6}$. The accounting identity reproduces the 16.9
+percent outside-origin share within $5.4\times10^{-13}$ and baseline scale
+one to machine precision; the numerical joint root is within $2.1\times10^{-5}$.
 
 ## Interpretation and decision
 
 The room floor succeeds as an economically legible replacement for the two
 share tilts, and it strengthens the grant's fertility response slightly. It
 does not solve the model's low childlessness, late-fertility, or wealth-tail
-problems. More importantly, the 19--22 percent total-birth response is almost
-entirely a population-entry response, not a fertility response. Because the
-entry probability and taste scale are external sensitivity choices, those
-large scale effects are not ready for substantive use. The next policy step,
-if this architecture is retained, is an entry-elasticity sensitivity grid or an
-empirical entry discipline—not another recalibration of the room floor.
+problems. The corrected entry normalization cuts the previously reported
+19--22 percent total-birth response roughly in half, to 9--11 percent. Most of
+that response is still population entry rather than fertility per household.
+
+### Outstanding policy objects
+
+- The baseline entry **level is closed** by the 16.9 percent empirical share.
+- The entry taste scale remains fixed at 2; its empirical discipline is
+  outstanding. No sensitivity grid is run in this iteration.
+- The local-born retention weight remains fixed at 1; its empirical discipline
+  is outstanding.
+- The distinction between a local reallocation experiment and a national
+  fertility experiment remains outstanding.
+
+The older $q=0.5$ entry-adjusted policy rows are withdrawn. Their
+fixed-population decomposition rows are unchanged and remain valid.
 
 ## Figures and complete files
 
@@ -175,5 +196,5 @@ empirical entry discipline—not another recalibration of the room floor.
 - `policy_comparison_full.csv`: every level, change, entry, price, fiscal, and market result.
 - Floor diagnostics: `../intergen_e5f_child_room_floor_psinneg_extended_20260806/diagnostic_packet/`.
 - Tilt diagnostics: `../eqscale_seq_e5_maturation_repair_psinneg_extended_20260806/diagnostic_packet/`.
-- Floor policy details: `../intergen_e5f_child_room_floor_psinneg_policy_entry_20260806/`.
-- Tilt policy details: `../eqscale_seq_e5_maturation_repair_psinneg_policy_entry_20260806/`.
+- Floor policy details: `../intergen_e5f_child_room_floor_psinneg_policy_empirical_entry_20260806/`.
+- Tilt policy details: `../eqscale_seq_e5_maturation_repair_psinneg_policy_empirical_entry_20260806/`.

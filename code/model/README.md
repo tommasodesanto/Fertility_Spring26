@@ -335,17 +335,26 @@ application path, not a separate interpretation of `theta`.
 For the repaired E5/E5F comparison, `tools/run_e5_repaired_policy_with_entry.py`
 accepts either a certified `E5_MATURATION_REPAIR` or `E5F` collector report and
 routes the selected mechanism through the funded entry closure. The source must
-carry an exact strict repeat. The companion
+carry an exact strict repeat. Its production input is the approved
+outside-origin entrant share (currently `0.169`), not a model entry probability.
+For each funded baseline it computes
+
+\[
+q^{E,*}=\frac{1-s^{E,\mathrm{out}}}{B_0/E_0},
+\]
+
+and fails if that candidate-specific probability is infeasible. The companion
 `intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py` builds
-the common-target and funded-policy comparison tables and figures.
+the common-target and funded-policy comparison tables and figures, and refuses
+policy packets that do not reproduce the empirical share and baseline scale.
 
 The live calibration uses the benchmark-normalized outside-option closure:
 `P.population_closure = "outside_option_benchmark_normalized"`.
 
 In the benchmark, the model solves for a normalized stationary distribution,
-calibrates the outside value to a target city-entry probability \(q^E\), and
-sets the outside-born potential entrant mass mechanically so that benchmark
-scale is \(S=1\):
+maps the empirical outside-origin share into \(q^E\), calibrates the outside
+value to that probability, and sets the outside-born potential entrant mass
+mechanically so that benchmark scale is \(S=1\):
 \[
 S E_0(p)=q^E(p)\left[M+S B_0(p)\right],
 \qquad

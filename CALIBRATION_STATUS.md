@@ -2,7 +2,54 @@
 
 Updated: `2026-08-06` (author retains the pre-E6 maintained model)
 
+## August 6 empirical entry normalization repair complete
+
+The funded floor-versus-tilt policy comparison now implements the approved
+baseline outside-origin entrant share $s^{E,\mathrm{out}}=0.169$. The
+production driver no longer accepts an arbitrary baseline entry probability.
+For each candidate it computes
+
+\[
+q^{E,*}=\frac{1-s^{E,\mathrm{out}}}{B_0/E_0},
+\]
+
+then recovers the baseline outside value and outside potential-entrant flow,
+holds those objects fixed, and jointly clears price and the government budget
+in the counterfactual. Torch array `15435794` completed both arms cleanly.
+
+- Floor: $q^{E,*}=0.969225$; 2% tax changes TFR `+0.294%`, price
+  `-15.050%`, population `+9.980%`, and total births `+10.264%`. With the
+  grant: `+0.674%`, `-15.196%`, `+10.104%`, and `+10.771%`.
+- Tilt control: $q^{E,*}=0.969844$; 2% tax changes TFR `+0.146%`, price
+  `-15.305%`, population `+8.988%`, and total births `+9.128%`. With the
+  grant: `+0.432%`, `-15.075%`, `+9.062%`, and `+9.487%`.
+
+Both baselines reproduce the 16.9 percent share within `5.4e-13` and the scale
+identity within machine precision. All six fixed-population and entry-adjusted
+equilibria pass market and fiscal tolerances. The fixed-population rows are
+unchanged to `1.3e-12`. The earlier entry-adjusted rows based on $q=0.5$ are
+withdrawn.
+
+### Outstanding policy objects
+
+- Entry taste scale: fixed at `2`, not empirically disciplined.
+- Local-born retention weight: fixed at `1`, not empirically disciplined.
+- Geographic interpretation: local reallocation versus national fertility
+  remains unresolved.
+
+These objects are deliberately not changed or sensitivity-tested in this
+iteration. Complete corrected report and artifacts:
+
+- `output/model/e5f_psinneg_iteration_report_20260806/REPORT.md`
+- `output/model/intergen_e5f_child_room_floor_psinneg_policy_empirical_entry_20260806/`
+- `output/model/eqscale_seq_e5_maturation_repair_psinneg_policy_empirical_entry_20260806/`
+
 ## August 6 psi-nonnegative floor-versus-tilt experiment complete
+
+**Policy-status correction:** the $q=0.5$ entry-adjusted rows recorded in
+this historical subsection are withdrawn and superseded by the empirical-entry
+normalization above. Calibration results and fixed-population decompositions
+are unaffected.
 
 The author restricted child flow utility to $\psi\geq0$ and compared two
 otherwise common repaired-E5 calibrations. The floor arm removes the two

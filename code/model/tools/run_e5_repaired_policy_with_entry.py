@@ -2,11 +2,12 @@
 """Funded E5 policy counterfactual with genuine entry and population closure.
 
 The baseline is normalized to population one.  At that baseline the driver
-recovers the outside value and outside entrant flow needed to match a declared
-entry probability.  It then holds those outside objects fixed and jointly
-solves the counterfactual house price and lump-sum transfer.  Entry determines
-stationary population scale; the government budget includes property-tax
-revenue, targeted purchase grants, and the universal transfer.
+computes the city-entry probability required to match the empirical
+outside-origin entrant share, then recovers the outside value and outside
+entrant flow.  It holds those outside objects fixed and jointly solves the
+counterfactual house price and lump-sum transfer.  Entry determines stationary
+population scale; the government budget includes property-tax revenue,
+targeted purchase grants, and the universal transfer.
 """
 
 from __future__ import annotations
@@ -28,19 +29,29 @@ if str(MODEL_DIR) not in sys.path:
     sys.path.insert(0, str(MODEL_DIR))
 
 import run_intergen_funded_policy_with_entry as closure
+from entry_target_contract import entry_target_from_outside_origin_share
 from run_intergen_funded_property_tax_test import case_overrides, jsonable, write_csv
 
 
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_SOURCE = ROOT / "output/model/eqscale_seq_e5b_recalibration_20260725/report/results.json"
 DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e5_maturation_repair_policy_entry"
+DEFAULT_OUTSIDE_ORIGIN_ENTRANT_SHARE = 0.169
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
-    parser.add_argument("--target-entry-probability", type=float, default=0.5)
+    parser.add_argument(
+        "--outside-origin-entrant-share",
+        type=float,
+        default=DEFAULT_OUTSIDE_ORIGIN_ENTRANT_SHARE,
+        help=(
+            "Empirical share of baseline entrants originating outside the city. "
+            "The model entry probability is computed from the baseline flow identity."
+        ),
+    )
     parser.add_argument("--entry-taste-scale", type=float, default=2.0)
     parser.add_argument("--smoke", action="store_true")
     return parser.parse_args()
@@ -184,8 +195,8 @@ def solve_fixed_balanced_case(
 
 def main() -> None:
     args = parse_args()
-    if not 0.0 < args.target_entry_probability < 1.0:
-        raise ValueError("target entry probability must lie strictly between zero and one")
+    if not 0.0 < args.outside_origin_entrant_share < 1.0:
+        raise ValueError("outside-origin entrant share must lie strictly between zero and one")
     if not math.isfinite(args.entry_taste_scale) or args.entry_taste_scale <= 0.0:
         raise ValueError("entry taste scale must be finite and positive")
     source, outdir = args.source.resolve(), args.outdir.resolve()
@@ -202,8 +213,12 @@ def main() -> None:
         "source_arm": source_arm,
         "theta": theta,
         "child_maturation": "independent binomial thinning; expected 18 years at home",
-        "entry_target_probability": float(args.target_entry_probability),
+        "outside_origin_entrant_share_target": float(args.outside_origin_entrant_share),
+        "entry_target_probability": "computed from the funded baseline flow identity",
         "entry_taste_scale": float(args.entry_taste_scale),
+        "entry_taste_scale_status": "external sensitivity; empirical discipline outstanding",
+        "local_birth_entry_weight_status": "fixed at one; empirical retention discipline outstanding",
+        "geographic_interpretation_status": "local-versus-national policy interpretation outstanding",
         "outside_objects": "recovered at funded 1 percent baseline and fixed thereafter",
         "fiscal_rule": "property-tax revenue equals universal transfers plus targeted grants",
         "fixed_population_results": "decomposition only",
@@ -228,15 +243,33 @@ def main() -> None:
         write_csv(outdir / "fixed_population_summary.csv", fixed_rows)
 
     baseline_solution, baseline_parameters = fixed_solutions[cases[0][0]]
+    entry_target = entry_target_from_outside_origin_share(
+        baseline_solution,
+        baseline_parameters,
+        outside_origin_share=float(args.outside_origin_entrant_share),
+    )
     outside, entry_rows = closure.calibrate_outside_objects(
         baseline_solution,
         baseline_parameters,
-        target_qbar=float(args.target_entry_probability),
+        target_qbar=float(entry_target["target_qbar"]),
         taste_scale=float(args.entry_taste_scale),
     )
     identity, _ = closure.population_scale(baseline_solution, baseline_parameters, outside)
     outside["identity_scale_factor"] = float(identity.scale_factor)
     outside["identity_entry_residual"] = float(identity.entry_residual)
+    outside.update(entry_target)
+    implied_outside_share = (
+        float(identity.qbar)
+        * float(outside["outside_entry_flow"])
+        / float(entry_target["baseline_entry_flow"])
+    )
+    outside["outside_origin_entrant_share_recovered"] = implied_outside_share
+    if abs(implied_outside_share - float(args.outside_origin_entrant_share)) > 1.0e-10:
+        raise RuntimeError(
+            "baseline outside-origin entrant share does not reproduce its empirical target: "
+            f"target={args.outside_origin_entrant_share:.12g}, "
+            f"recovered={implied_outside_share:.12g}"
+        )
     (outdir / "benchmark_outside_objects.json").write_text(
         json.dumps(jsonable(outside), indent=2) + "\n"
     )
@@ -307,7 +340,12 @@ def main() -> None:
         row["population_change_percent"] = 100.0 * (row["population_scale"] - 1.0)
         row["total_births_change_percent"] = 100.0 * (row["total_births"] / baseline["total_births"] - 1.0)
     write_csv(outdir / "summary.csv", results)
-    metadata.update(status="complete", elapsed_seconds=time.perf_counter() - started, outside_objects=outside)
+    metadata.update(
+        status="complete",
+        elapsed_seconds=time.perf_counter() - started,
+        entry_target_probability=float(entry_target["target_qbar"]),
+        outside_objects=outside,
+    )
     (outdir / "metadata.json").write_text(json.dumps(jsonable(metadata), indent=2) + "\n")
 
 

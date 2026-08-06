@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 from pathlib import Path
 from typing import Any
 
@@ -102,6 +103,36 @@ def policy_comparison(floor_policy: Path, tilt_policy: Path) -> list[dict[str, A
     return rows
 
 
+def validate_entry_contract(floor_policy: Path, tilt_policy: Path) -> float:
+    """Require both policy packets to implement the empirical entry contract."""
+
+    shares: list[float] = []
+    for path in (floor_policy, tilt_policy):
+        payload = json.loads((path / "benchmark_outside_objects.json").read_text())
+        required = {
+            "outside_origin_entrant_share_target",
+            "outside_origin_entrant_share_recovered",
+            "identity_scale_factor",
+        }
+        missing = required.difference(payload)
+        if missing:
+            raise ValueError(
+                f"policy packet {path} does not carry the empirical entry contract; "
+                f"missing {sorted(missing)}"
+            )
+        target = float(payload["outside_origin_entrant_share_target"])
+        recovered = float(payload["outside_origin_entrant_share_recovered"])
+        identity_scale = float(payload["identity_scale_factor"])
+        if not np.isclose(recovered, target, rtol=0.0, atol=1.0e-10):
+            raise ValueError(f"outside-origin entrant share is not reproduced in {path}")
+        if not np.isclose(identity_scale, 1.0, rtol=0.0, atol=1.0e-10):
+            raise ValueError(f"baseline population identity fails in {path}")
+        shares.append(target)
+    if not np.isclose(shares[0], shares[1], rtol=0.0, atol=1.0e-12):
+        raise ValueError("floor and tilt policy packets use different entry targets")
+    return shares[0]
+
+
 def plot_targets(rows: list[dict[str, Any]], path: Path) -> None:
     labels = [row["moment"] for row in rows]
     y = np.arange(len(rows), dtype=float)
@@ -131,7 +162,7 @@ def plot_targets(rows: list[dict[str, Any]], path: Path) -> None:
     plt.close(fig)
 
 
-def plot_policies(rows: list[dict[str, Any]], path: Path) -> None:
+def plot_policies(rows: list[dict[str, Any]], path: Path, outside_origin_share: float) -> None:
     cases = ["rebated_tax2", "rebated_tax2_grant0p4_Hge6"]
     labels = ["2% tax", "2% tax + purchase grant"]
     metrics = [
@@ -163,7 +194,10 @@ def plot_policies(rows: list[dict[str, Any]], path: Path) -> None:
         axis.grid(axis="y", alpha=0.25)
         axis.set_xticks(x, labels)
     axes[0, 1].legend(frameon=False, loc="best")
-    fig.suptitle("Funded policy effects relative to each model's 1% tax baseline")
+    fig.suptitle(
+        "Funded policy effects relative to each model's 1% tax baseline\n"
+        f"Baseline outside-origin entrant share: {100.0 * outside_origin_share:.1f}%"
+    )
     fig.tight_layout()
     fig.savefig(path, dpi=200)
     plt.close(fig)
@@ -174,12 +208,17 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     targets = target_comparison(args.floor_report, args.tilt_report)
     parameters = parameter_comparison(args.floor_report, args.tilt_report)
+    outside_origin_share = validate_entry_contract(args.floor_policy, args.tilt_policy)
     policies = policy_comparison(args.floor_policy, args.tilt_policy)
     write_csv(args.outdir / "target_fit_comparison_full.csv", targets)
     write_csv(args.outdir / "parameter_comparison_full.csv", parameters)
     write_csv(args.outdir / "policy_comparison_full.csv", policies)
     plot_targets(targets, args.outdir / "target_relative_gap_comparison.png")
-    plot_policies(policies, args.outdir / "funded_policy_comparison.png")
+    plot_policies(
+        policies,
+        args.outdir / "funded_policy_comparison.png",
+        outside_origin_share,
+    )
 
 
 if __name__ == "__main__":
