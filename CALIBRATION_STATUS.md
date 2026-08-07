@@ -1,6 +1,76 @@
 # Calibration Status
 
-Updated: `2026-08-06` (author retains the pre-E6 maintained model)
+Updated: `2026-08-07` overnight (author retains the pre-E6 maintained model)
+
+## August 7 overnight population-closure hardening
+
+Four changes, all committed and pushed; no estimated parameter, target,
+weight, bound, or spec flag was touched anywhere tonight.
+
+1. **Quota packet relabeled; renter-rent correction (commit `678ea26`).**
+   Renter-paid rent is \((q+\delta+\tau_H)p\), so the tax experiments cut
+   renter rent only `-5.7%` to `-6.3%`; the `-17.2%` to `-17.7%` figures are
+   pre-tax asset-price changes (the down-payment barrier), previously
+   mislabeled as rent. Verified by hand against
+   `intergen_eqscale_seq_optimized/parameters.py` (`q=1.04^4-1`,
+   `delta=1-0.98^4`, `tau_H=4x annual`). Aggregate stationary births is
+   demoted to an accounting footnote (= population + births/HH); the
+   required-immigration and fertility-gap-closed columns are merged (they are
+   one number). Driver hygiene: `--source` now required; quota mode asserts
+   `E0` policy-invariance (holds to `1e-14` in the production runs).
+2. **Closure arithmetic packet (commit `ad511d7`,
+   `output/model/population_closure_arithmetic_20260807/`).** Convergence
+   half-life of the quota closure at frozen prices: `97--112` years
+   (generational decay `rho = Rbar*B0/E0 = 0.831`, generation `26--30`y); an
+   age-structured variant with uniform birth timing gives `232--236`y and is
+   labeled an artifact-prone upper bound. Anchor-sensitivity curve
+   `dlnS(s_out)` with the infeasible region `s_out < 0.1432` shaded.
+3. **National entry-anchor measurement (commit `ef3009a`,
+   `output/model/population_closure_national_anchor_20260807/`).** ACS/IPUMS
+   2012--2023 (on-disk extract): among household heads aged 18--22, the
+   recent-immigrant share is `3.714%`; every definitional variant lies in
+   `2.9--9.9%`, all far below the `14.3%` quota-feasibility floor. Lead
+   interpretation appended to the packet README: the literal entry-age flow
+   and the age-aggregated immigration contribution to cohort replacement
+   (back-of-envelope `0.17--0.22`, TO BE VERIFIED, brackets the provisional
+   `0.169`) are different objects because real immigrants mostly arrive above
+   the model's stylized age-18 entry window. **No policy rerun was performed**:
+   the anchor-concept choice (age-aggregated vs literal entry-age, the latter
+   requiring multi-age entry) is an author decision queued for the advisor
+   meeting. `0.169` remains the provisional production anchor.
+4. **Authorized 16-chain multi-start of the repaired-E5 arm (running).**
+   Smoke `15450588` passed (both chains wrote `best.json`/`cases.jsonl`/
+   checkpoints); production array `15450694` (task IDs 9--24, fresh seeds
+   `2026080509--24`, seeded from the e5b record exactly like the Aug-5
+   protocol, unchanged 12-moment / 10-parameter contract, 225-minute budget,
+   strict-repeat certification) with collector `15450710` chained. Purpose:
+   basin search only — test whether a better-fitting basin (ideally higher
+   completed fertility, which would also relax quota feasibility) exists.
+   The known childlessness / old-wealth misses are probe-established
+   mechanism limits; this run cannot and is not meant to fix those.
+
+Meeting deck: `latex/population_closure_meeting_20260807.pdf` (commit
+`5c34bb9`; two frames: corrected quota table with labels, anchor decision,
+half-life, chain-6 feasibility stress test).
+
+### Outstanding population-closure decisions (supersedes the list below)
+
+- **Anchor concept** (author + advisor): age-aggregated net-international-
+  migration equivalents (recommended; keeps age-18 entry as stated
+  compression; `0.169` approximately right) versus literal entry-age flow
+  (measured `3.7%`; infeasible at every certified arm; requires multi-age
+  entry or a stronger fertility block). Do not average the concepts. If
+  age-aggregated is chosen, the verification task is a Census-NIM-based
+  entrant-household-equivalent computation, not another ACS entry-age pull.
+- Quota assumptions (policy-invariant inflow and retention) remain the
+  maintained counterfactual contract for the national interpretation.
+- Balanced-growth-path closure: lead recommendation is to close this item —
+  a level supply curve (stock or flow) is generically inconsistent with
+  nonzero steady population growth, proportional supply deletes the
+  aggregate scarcity margin, and Stone--Geary floors independently break
+  balancedness. Author decision.
+- Multi-start `15450694` results pending; certified floor/tilt/chain-6
+  winners unchanged until the strict collector reports.
 
 ## August 6 experimental quota population closure complete
 
