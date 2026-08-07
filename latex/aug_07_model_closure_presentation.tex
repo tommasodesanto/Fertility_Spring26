@@ -119,8 +119,8 @@ Warm-glow utility at death over terminal wealth:
   \]
   \item Households supply efficiency units inelastically: an age profile times a persistent idiosyncratic component
   \[
-  \log y_{j+1} = \rho \log y_j + \varepsilon_{j+1},
-  \qquad \varepsilon \sim N(0,\sigma_\varepsilon^2)
+  \log y' = \rho \log y + \varepsilon',
+  \qquad \varepsilon' \sim N(0,\sigma_\varepsilon^2)
   \]
   \item Earnings are taxed progressively, a payroll tax funds a stationary pension, and a property tax on owners is rebated lump sum
   \item With constant returns, a larger population leaves the wage unchanged: housing is the only fixed factor
@@ -174,16 +174,16 @@ r = (q+\delta+\tau_H)\,p .
 \begin{frame}{The Household's Problem}
 Within the period, a household first decides whether to try for a child, then chooses tenure, housing, and saving:
 \[
-V_j(b,h,y,n,m)
-= \mathbb{E}_{\varepsilon}\max_{a\in\{0,1\}}
-\Big\{ W_j^{a}(b,h,y,n,m) + \varepsilon_a \Big\},
+V(b,h,y,a,n,m)
+= \mathbb{E}_{\varepsilon}\max_{f\in\{0,1\}}
+\Big\{ W^{f}(b,h,y,a,n,m) + \varepsilon_f \Big\},
 \]
 \[
-W_j^{a}
+W^{f}
 = \max_{\text{rent/own},\; h',\, h^{R\prime},\, b'}
-\; u(c,\mathbf h; m) + \beta\,\mathbb{E}\big[V_{j+1}(b',h',y',n',m')\big]
+\; u(c,\mathbf h; m) + \beta\,\mathbb{E}\big[V(b',h',y',a+1,n',m')\big]
 \]
-subject to the renter or owner budget and the collateral constraint; a successful try ($a=1$, probability $\pi_j$) adds a child next period.
+subject to the renter or owner budget and the collateral constraint; a successful try ($f=1$, probability $\pi(a)$) adds a child next period.
 
 \medskip
 In old age there are no fertility decisions; survival risk and the warm glow at death close the problem.
@@ -200,62 +200,68 @@ In old age there are no fertility decisions; survival risk and the warm glow at 
 \begin{frame}{Closing the Population}
 Every version of this model needs a rule for the size of the entering cohort. Three ways to supply one:
 \begin{enumerate}
-  \item \textbf{Balanced growth path.} Population and quantities grow at a common rate and are read per capita. The committed housing requirement makes preferences non-homothetic and the housing stock is fixed in levels, so no such path exists here. It is also counterfactual: the economy is not observed growing along one
-  \item \textbf{Full dynamic equilibrium.} Solve the transition after the reform, with prices clearing each period. Expensive to compute, and it is no longer clear what the calibration should target, since the observed moments would have to be assigned to a date on the path
-  \item \textbf{Stationary equilibrium.} Compare stationary states before and after. This delivers a single number, at the cost of a rule that pins the population level
+  \item \textbf{Balanced growth path.} Population and all quantities grow at a common rate; the model is read per capita
+  \begin{itemize}
+    \item Would need to handle two technical issues here: the committed housing requirement makes preferences non-homothetic, and the housing stock is fixed in levels
+    \item Counterfactual anyway: the economy is not observed growing along one
+  \end{itemize}
+  \item \textbf{Dynamic equilibrium path.} The most general option: no stationarity, solve for the whole time path of the population and prices, markets clearing every period
+  \begin{itemize}
+    \item Expensive, and calibration becomes ambiguous: every observed moment must be assigned a date on the path
+  \end{itemize}
+  \item \textbf{Stationary equilibrium.} Compare stationary states across policies
+  \begin{itemize}
+    \item One long-run number per policy; calibration targets a stationary cross section
+    \item Needs a rule that pins the level of the population
+  \end{itemize}
 \end{enumerate}
-
-\medskip
 The stationary comparison is used here.
 \end{frame}
 
 % ---------------------------------------------------------------- old vs new
 \begin{frame}{The Entry Rule}
-Both protocols keep the same accounting. They differ in what pins the inflow $M$:
-\[
-\text{earlier:}\quad M = M(V)
+Entrants: matured children who stay, plus an inflow $M$ from outside (immigration). $M$ needs a rule:
+\begin{center}
+$\text{earlier:}\quad M = M(V)
 \qquad\qquad
-\text{now:}\quad M = \bar M .
-\]
+\text{now:}\quad M = \bar M$
+\end{center}
+\smallskip
 \begin{itemize}
-  \item \textbf{Earlier.} Entry rises when the economy becomes more attractive. The strength of that response, $\lambda = \partial \ln M/\partial V$, is identified by no moment, and it drives the answer: population responses came out three to ten times larger
-  \item \textbf{Now.} The quota fixes $M$, so policy moves the population only through births, and the rent response damps it
-  \item \textbf{Cost.} Migration cannot respond to a more attractive country. The earlier numbers are kept as a bound on that channel
+  \item \textbf{Earlier.} Entry rises with the value $V$ of living in the economy. No moment disciplines that response, and it drives the results: population responses three to ten times larger
+  \item \textbf{Now.} A fixed quota: policy moves the population only through births
+  \item \textbf{Cost.} Migration cannot respond to a more attractive economy; the earlier numbers bound that channel
 \end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------- balance
 \begin{frame}{Population Balance}
-Entrants each period are retained matured children plus the immigration inflow $M$:
+The economy has a mass $S$ of households: the population level. In a stationary state entrants replace exits:
 \[
 \underbrace{S\,E_0}_{\text{entrants needed}}
 \;=\;
-\underbrace{R\,S\,B_0}_{\text{retained matured children}}
+\underbrace{R\,S\,B_0}_{\text{matured children who stay}}
 \;+\; M ,
 \]
-with $E_0$ the replacement flow per household, $B_0$ the matured-children flow, and $R$ the share who stay.
-
-\medskip
-Given the fixed inflow, the stationary population
-\[
-S = \frac{M}{E_0 - R\,B_0}
-\]
-exists and is stable: as the population shrinks, a fixed inflow becomes a growing share, and the decline stops.
-
-\medskip
-$R$ and $M$ are pinned at the baseline by two observables: the outside-origin share of young entrants and the population normalization.
+with $E_0$ exits and $B_0$ maturing children, per household; $R$ the share who stay.
+\begin{itemize}
+  \item The native terms scale with $S$; the inflow $M$ is a level
+  \item As $S$ falls, $M$ covers a growing share of entrants and the decline stops: $S = M/(E_0 - R\,B_0)$
+  \item The outside share of entrants is measured across metro areas in the ACS: $16.9\%$ of young entrant households arrive from outside, in line with national net migration relative to cohort size. Since $s^{out} = 1 - R\,B_0/E_0$, natives replace $83\%$ of each cohort, and $M$ sets the level
+\end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------- counterfactuals
 \begin{frame}{Population in Counterfactuals}
-With $R$ and $M$ fixed, population responds to policy through births alone. Differentiating the balance condition:
+$R$ and $M$ stay fixed, so policy moves the population through births:
 \[
-\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0 ,
+\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0
+\;=\; \frac{0.831}{0.169}\;\%\Delta B_0 \;\approx\; 5\;\%\Delta B_0 .
 \]
-where $s^{out}$ is the immigrant share of entrants. Each immigrant household founds a family line that fades out at the native replacement rate; a policy that raises births makes every line last longer.
-
-\medskip
-At the measured share ($16.9\%$ of young entrants, ACS), the multiplier is about five. Housing pushes the other way: a larger population raises rents, which discourages births.
+\begin{itemize}
+  \item Extra births become native entrants, who have children in turn; the multiplier sums the generations
+  \item Rents push back: more households raise rents, higher rents discourage births. The offset is small
+\end{itemize}
 \end{frame}
 
 \section{Calibration}
@@ -288,62 +294,63 @@ At the measured share ($16.9\%$ of young entrants, ACS), the multiplier is about
 \textit{Housing} & ladder, rental cap & $\{2,\dots,11\}$, $6$ rooms & room units \\
 \bottomrule
 \end{tabular}
-
-\medskip
-\raggedright
-External restriction on the search: annual $\beta \ge 0.94$.
 \end{frame}
 
 % ---------------------------------------------------------------- internal
 \begin{frame}{Internally Calibrated Parameters}
-\small
 \centering
-\renewcommand{\arraystretch}{0.92}
-\begin{tabular}{llccc}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabular}{llc}
 \toprule
-\textbf{Param} & \textbf{Description} & \textbf{Estimate} & \textbf{Bounds} & \textbf{Near bound?} \\
+\textbf{Param} & \textbf{Description} & \textbf{Estimate} \\
 \midrule
-$\beta$ (annual) & Discount factor & 0.9946 & $[0.94, 0.9995]$ & no \\
-$\psi_{\mathrm{child}}$ & Child flow utility & 0.000 & $[0,3]$ & \textbf{at lower} \\
-$\kappa_f$ & Attempt taste scale, first birth & 2.987 & $[0.02,50]$ & no \\
-$\kappa_f^{\mathrm{cont}}$ & Attempt taste scale, later births & 1.713 & $[0.02,50]$ & no \\
-$\chi$ & Owner service premium & 1.037 & $[0.1,5]$ & no \\
-$H_0$ & Housing supply intercept & 61.706 & $[1.25,500]$ & no \\
-$\theta_0$ & Bequest strength & 0.159 & $[0,8]$ & \textbf{near lower} \\
-$\theta_1$ & Bequest shifter & 0.094 & $[0.02,16]$ & \textbf{near lower} \\
-$\underline h$ & Child room floor & 0.614 & $[0.1,1.8]$ & no \\
+$\beta$ (annual) & Discount factor & 0.9946 \\
+$\psi_{\mathrm{child}}$ & Child flow utility & 0.000 \\
+$\kappa_f$ & Attempt taste scale, first birth & 2.987 \\
+$\kappa_f^{\mathrm{cont}}$ & Attempt taste scale, later births & 1.713 \\
+$\chi$ & Owner service premium & 1.037 \\
+$H_0$ & Housing supply intercept & 61.706 \\
+$\theta_0$ & Bequest strength & 0.159 \\
+$\theta_1$ & Bequest shifter & 0.094 \\
+$\underline h$ & Child room floor & 0.614 \\
 \bottomrule
 \end{tabular}
+\end{frame}
 
-\medskip
-\raggedright
-Nine parameters, twelve moments. $\psi_{\mathrm{child}}$ is estimated at zero, and the bequest parameters sit near their lower bounds.
+% ---------------------------------------------------------------- identification
+\begin{frame}{Identification}
+The nine parameters are estimated jointly; four economic blocks, each with the moments most informative about it:
+\begin{itemize}
+  \item \textbf{Fertility.} The child utility $\psi_{\mathrm{child}}$ raises the return to every birth: completed fertility. The first-birth scale $\kappa_f$ spreads when women start: mean age at first birth and first births after 30. The continuation scale $\kappa_f^{\mathrm{cont}}$ sets how much of a commitment starting is: childlessness
+  \item \textbf{Family housing.} The child room floor $\underline h$ sets the space children require: rooms added at the first birth, and the rooms gap between large and small families. The family ownership gap has no parameter of its own and overidentifies the block
+  \item \textbf{Tenure and supply.} The owner premium $\chi$: the ownership rate. The supply intercept $H_0$: aggregate rooms
+  \item \textbf{Saving and bequests.} The discount factor $\beta$: wealth over earnings. Bequest strength $\theta_0$: the bequest flow. Bequest curvature $\theta_1$: old-age wealth dispersion
+\end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------- fit
 \begin{frame}{Model Fit}
 \centering
-\fontsize{7.4}{8.8}\selectfont
-\setlength{\tabcolsep}{3.5pt}
-\renewcommand{\arraystretch}{0.85}
-\begin{tabular}{@{}llrrrr@{}}
+\small
+\renewcommand{\arraystretch}{0.88}
+\begin{tabular}{@{}llrr@{}}
 \toprule
-& \textbf{Moment} & \textbf{Target} & \textbf{Model} & \textbf{Gap} & \textbf{Contr.} \\
+& \textbf{Moment} & \textbf{Target} & \textbf{Model} \\
 \midrule
-\textit{Fertility} & Completed fertility & 1.918 & 1.967 & $+0.049$ & 3.4 \\
-& Childlessness & 0.188 & 0.104 & $-0.084$ & \textbf{121.5} \\
-& Mean age at first birth & 25.31 & 25.57 & $+0.26$ & 1.1 \\
-& First births at 30+ & 0.270 & 0.327 & $+0.057$ & \textbf{51.5} \\
+\textit{Fertility} & Completed fertility & 1.918 & 1.967 \\
+& Childlessness & 0.188 & 0.104 \\
+& Mean age at first birth & 25.31 & 25.57 \\
+& First births at 30+ & 0.270 & 0.327 \\
 \midrule
-\textit{Housing} & Rooms response to first birth & 0.664 & 0.690 & $+0.026$ & 0.6 \\
-& Rooms, 3+ vs.\ 1--2 children & 0.368 & 0.359 & $-0.009$ & 0.2 \\
-& Family ownership gap & 0.168 & 0.162 & $-0.006$ & 0.5 \\
-& Ownership rate & 0.575 & 0.582 & $+0.007$ & 0.1 \\
-& Aggregate mean rooms & 5.780 & 6.478 & $+0.698$ & 5.8 \\
+\textit{Housing} & Rooms response to first birth & 0.664 & 0.690 \\
+& Rooms, 3+ vs.\ 1--2 children & 0.368 & 0.359 \\
+& Family ownership gap & 0.168 & 0.162 \\
+& Ownership rate & 0.575 & 0.582 \\
+& Aggregate mean rooms & 5.780 & 6.478 \\
 \midrule
-\textit{Wealth} & Wealth / earnings & 6.873 & 5.794 & $-1.079$ & 7.3 \\
-& Bequest flow / wealth & 0.0088 & 0.0087 & $-0.0001$ & 0.0 \\
-& Old wealth p90/p50 & 3.448 & 2.090 & $-1.358$ & \textbf{105.1} \\
+\textit{Wealth} & Wealth / earnings & 6.873 & 5.794 \\
+& Bequest flow / wealth & 0.0088 & 0.0087 \\
+& Old wealth p90/p50 & 3.448 & 2.090 \\
 \bottomrule
 \end{tabular}
 
@@ -369,150 +376,28 @@ The remaining misses are childlessness, the dispersion of old-age wealth, and th
 
 % ---------------------------------------------------------------- policy results
 \begin{frame}{Funded Property-Tax and Grant Reforms}
-Raise the property tax from 1\% to 2\%; rebate lump-sum, or fund a purchase grant for family-sized homes. All changes vs.\ the funded 1\% baseline, percent:
+The experiment: raise the annual property tax from $1\%$ to $2\%$ of house value and return the revenue to households, either as an equal lump-sum rebate or as a grant paid at the purchase of a family-sized home. Percent changes across stationary states:
 \medskip
 
 \centering
 \small
 \renewcommand{\arraystretch}{0.95}
-\begin{tabular}{llrrrrrr}
+\begin{tabular}{lrrrrr}
 \toprule
-Arm & Policy & TFR & Births & Househ. & $-\Delta$Imm. & Price & Rent \\
+Policy & TFR & Births & Households & House price & Rent \\
 \midrule
-Floor & 2\% tax          & $+0.38$ & $+0.33$ & $+1.70$ & $1.74$ & $-17.5$ & $-6.1$ \\
-Floor & tax + grant      & $+0.75$ & $+0.67$ & $+3.46$ & $3.52$ & $-17.3$ & $-5.8$ \\
-Tilt  & 2\% tax          & $+0.20$ & $+0.18$ & $+0.90$ & $0.92$ & $-17.7$ & $-6.3$ \\
-Tilt  & tax + grant      & $+0.49$ & $+0.44$ & $+2.23$ & $2.26$ & $-17.2$ & $-5.7$ \\
+$2\%$ tax, lump-sum rebate & $+0.38$ & $+0.33$ & $+1.70$ & $-17.5$ & $-6.1$ \\
+$2\%$ tax, purchase grant  & $+0.75$ & $+0.67$ & $+3.46$ & $-17.3$ & $-5.8$ \\
 \bottomrule
 \end{tabular}
 
 \medskip
 \raggedright
-\small
-In U.S.\ units, $+0.33$--$0.67\%$ of births is roughly $12$--$24$ thousand additional babies per year. The tax lowers the asset price, so the down payment falls by $17.5\%$, while renter rents --- which include the tax --- fall by $6\%$.
-\end{frame}
-
-% ---------------------------------------------------------------- interpretation
-\begin{frame}{Reading the Population Numbers}
-The same number can be read three ways:
 \begin{itemize}
-  \item more households in the long run, at a fixed immigration inflow;
-  \item fewer immigrants required to hold the population fixed;
-  \item the share of the fertility gap closed by the policy.
+  \item The tax lowers the house price, so the down payment falls by $17.5\%$; rents fall only $6\%$, because rent includes the tax itself
+  \item In U.S.\ units, $+0.33$ to $+0.67\%$ of births is roughly $12$ to $24$ thousand additional babies per year
 \end{itemize}
-
-\medskip
-Housing feedback is present but small: the demographic arithmetic overstates the response by at most a tenth of a percentage point.
-
-\medskip
-Timing: the birth and immigration flows move immediately, while the household count converges over generations --- half of the adjustment takes roughly a century.
 \end{frame}
 
-% ---------------------------------------------------------------- open items
-\begin{frame}{Open Decisions}
-\begin{enumerate}
-  \item \textbf{Anchoring the inflow.} Among household heads aged 18--22, recent immigrants are only $3.7\%$ --- but immigrants mostly arrive older than the model's entry age. Either anchor the inflow to total net migration in entrant equivalents (roughly $17$--$22\%$, close to the $16.9\%$ in use), or model entry at several ages
-  \item \textbf{The fertility block.} The closure requires natives to replace at least $83\%$ of each cohort; the current fit sits close to that edge, and the childlessness and old-age wealth misses are limitations of the mechanism rather than of the search
-  \item \textbf{Welfare.} With different populations across counterfactuals, welfare is compared per household
-\end{enumerate}
-\end{frame}
-
-\appendix
-
-\begin{frame}[plain,c,noframenumbering]
-\centering
-{\Large\textbf{Appendix}}
-\end{frame}
-
-\begin{frame}{Appendix: Housing Market Diagnostics}
-\centering
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/housing_market.png}\hfill
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/owner_rungs.png}
-\end{frame}
-
-\begin{frame}{Appendix: Wealth and Tenure Diagnostics}
-\centering
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/liquid_wealth_by_age_income_state.png}\hfill
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/tenure_services.png}
-\end{frame}
-
-\begin{frame}{Appendix: Policy Comparison}
-\centering
-\includegraphics[width=0.9\textwidth,height=0.82\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/policy/quota_policy_comparison.png}
-\end{frame}
-
-\begin{frame}{Appendix: Anchor Sensitivity and Convergence Speed}
-\centering
-\includegraphics[width=0.62\textwidth,height=0.62\textheight,keepaspectratio]{../output/model/population_closure_arithmetic_20260807/anchor_sensitivity.png}
-
-\smallskip
-\raggedright\footnotesize
-Stationary population response as a function of the outside-origin share $s^{out}$, with the infeasible region ($s^{out}<0.143$) shaded. Convergence: generational decay $\rho = \bar R B_0/E_0 = 0.831$ gives a half-life of $97$--$112$ years ($g=26$--$30$); an age-structured variant with uniform birth timing gives $\sim 230$ years (upper bound).
-\end{frame}
-
-\begin{frame}{Appendix: The Retired Logit as a Sensitivity Row}
-\footnotesize
-The old protocol's numbers survive as a labeled robustness row, not a model:
-\medskip
-
-\centering
-\begin{tabular}{llrr}
-\toprule
-Arm & Policy & Quota population & Logit sensitivity ($\lambda=2$, unidentified) \\
-\midrule
-Floor & 2\% tax     & $+1.70$ & $+9.98$ \\
-Floor & tax + grant & $+3.46$ & $+10.10$ \\
-Tilt  & 2\% tax     & $+0.90$ & $+8.99$ \\
-Tilt  & tax + grant & $+2.23$ & $+9.06$ \\
-\bottomrule
-\end{tabular}
-
-\medskip
-\raggedright
-The gap between columns is what an unidentified taste parameter was contributing. The logit row bounds ``what if entry responded to values'' without pretending to identify it.
-\end{frame}
-
-\begin{frame}{Appendix: National Entry-Anchor Measurement (ACS 2012--2023)}
-\footnotesize
-\centering
-\begin{tabular}{lrr}
-\toprule
-Measure (household heads unless noted) & Share & Multiplier $(1-s)/s$ \\
-\midrule
-Ages 18--22, foreign-born, arrived $\le 4$y (headline) & 3.71\% & 25.9 \\
-Ages 18--22, foreign-born, arrived $\le 8$y & 5.36\% & 17.7 \\
-Ages 18--25, foreign-born, arrived $\le 4$y & 3.47\% & 27.9 \\
-Ages 18--22, foreign-born stock (upper bound) & 9.04\% & 10.1 \\
-Persons 18--22, foreign-born, arrived $\le 4$y & 2.89\% & 33.7 \\
-\midrule
-Quota feasibility floor & 14.3\% & --- \\
-Age-aggregated net-migration bracket (to verify) & 17--22\% & 3.5--4.9 \\
-\bottomrule
-\end{tabular}
-
-\medskip
-\raggedright
-Every entry-age-window measure is infeasible; the age-aggregated concept is not. The two are different objects because immigrants mostly arrive above the stylized entry age --- the anchor decision on the Open Decisions slide.
-\end{frame}
-
-\begin{frame}{Appendix: Multi-Start Record (overnight)}
-\footnotesize
-16 fresh chains, unchanged 12-moment / 9-parameter contract, 225-minute budget each, strict-repeat certification:
-\medskip
-
-\centering
-\begin{tabular}{lrrr}
-\toprule
-& Best & Median & Worst \\
-\midrule
-Fresh chains (seeds 09--24) & 263.5 & $\sim$284 & 370.5 \\
-Certified incumbent (Aug 5, chain 6) & \multicolumn{3}{c}{249.186 --- \textbf{stands}} \\
-\bottomrule
-\end{tabular}
-
-\medskip
-\raggedright
-All 16 eligible with exact strict repeats on the run's best; market residuals $\le 2.2\times 10^{-5}$. With 24 chains total across the two arrays, the remaining misses are search-converged.
-\end{frame}
 
 \end{document}
