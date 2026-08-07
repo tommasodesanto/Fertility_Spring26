@@ -35,7 +35,6 @@ from run_intergen_funded_property_tax_test import case_overrides, jsonable, writ
 
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_SOURCE = ROOT / "output/model/eqscale_seq_e5b_recalibration_20260725/report/results.json"
 DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e5_maturation_repair_policy_entry"
 DEFAULT_OUTSIDE_ORIGIN_ENTRANT_SHARE = 0.169
 POLICY_CASES = (
@@ -47,7 +46,15 @@ POLICY_CASES = (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
+    parser.add_argument(
+        "--source",
+        type=Path,
+        required=True,
+        help=(
+            "Path to a completed repaired-E5 results.json with arm "
+            "E5_MATURATION_REPAIR or E5F."
+        ),
+    )
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument(
         "--outside-origin-entrant-share",
@@ -301,6 +308,7 @@ def main() -> None:
         write_csv(outdir / "fixed_population_demography.csv", fixed_demography_rows)
 
     baseline_solution, baseline_parameters = fixed_solutions[cases[0][0]]
+    baseline_entry_flow = float(baseline_solution.entry_rate)
     if args.closure_mode == "quota":
         try:
             closure_objects = quota_closure_from_outside_origin_share(
@@ -420,6 +428,16 @@ def main() -> None:
                 smoke=args.smoke,
                 population_scale_function=scale_function,
             )
+        if args.closure_mode == "quota":
+            policy_entry_flow = float(joint.solution.entry_rate)
+            relative_entry_flow_gap = abs(policy_entry_flow - baseline_entry_flow) / baseline_entry_flow
+            if relative_entry_flow_gap > 1.0e-8:
+                raise RuntimeError(
+                    "quota closure requires policy-invariant baseline entry flow E0: "
+                    f"baseline_entry_flow={baseline_entry_flow:.16g}, "
+                    f"policy_entry_flow={policy_entry_flow:.16g}, "
+                    f"relative_gap={relative_entry_flow_gap:.3e}"
+                )
         moments = closure.extract_moments(joint.solution, joint.parameters)
         row = {
             "case": label,

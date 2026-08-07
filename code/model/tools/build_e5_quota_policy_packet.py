@@ -19,6 +19,9 @@ ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_OUTDIR = ROOT / "output/model/eqscale_seq_e5_policy_quota_closure_20260807"
 OUTSIDE_SHARE = 0.169
 MULTIPLIER = (1.0 - OUTSIDE_SHARE) / OUTSIDE_SHARE
+PERIOD_YEARS = 4.0
+ANNUAL_INTEREST_RATE = 0.04
+ANNUAL_DEPRECIATION_RATE = 0.02
 BASELINE_CASE = "rebated_tax1_baseline"
 POLICIES = (
     ("rebated_tax2", "Rebated 2% tax"),
@@ -57,6 +60,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--raw-root", type=Path)
     parser.add_argument("--production-job-id", action="append", default=[])
     parser.add_argument("--smoke-job-id", action="append", default=[])
+    parser.add_argument(
+        "--reporting-only",
+        action="store_true",
+        help="Regenerate only README.md and tables/ from the existing policy summary.",
+    )
     return parser.parse_args()
 
 
@@ -70,7 +78,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         raise ValueError(f"refusing to write empty table: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -89,6 +97,13 @@ def assert_close(label: str, actual: float, expected: float, tolerance: float) -
             f"{label} failed: actual={actual:.16g}, expected={expected:.16g}, "
             f"tolerance={tolerance:.3g}"
         )
+
+
+def renter_user_cost_rate(annual_property_tax_rate: float) -> float:
+    """Per-period renter user cost under the active one-market mapping."""
+    q = (1.0 + ANNUAL_INTEREST_RATE) ** PERIOD_YEARS - 1.0
+    delta = 1.0 - (1.0 - ANNUAL_DEPRECIATION_RATE) ** PERIOD_YEARS
+    return q + delta + float(annual_property_tax_rate) * PERIOD_YEARS
 
 
 def copy_calibration_artifacts(outdir: Path) -> None:
@@ -205,32 +220,36 @@ def build_readme(
         "",
         "## Main results",
         "",
-        "| Arm | Policy | ΔTFR (%) | Births/HH (%) | Population (%) | Required immigration at fixed population (%) | Fertility gap closed (%) | Price = rent (%) | Old logit sensitivity (%) |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| Arm | Policy | ΔTFR (%) | Births/HH (%) | Household population (%) | Required immigration at fixed population (identical to percent of fertility gap closed) (%) | Price (%) | Rent (%) | Damping decomposition: arithmetic → realized (damping, pp) | Unidentified entry-response sensitivity (lambda=2) (%) |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in wide_rows:
         lines.append(
             "| {arm} | {policy} | {tfr:.3f} | {births:.3f} | {population:.3f} | "
-            "{immigration:.3f} | {gap:.3f} | {price:.3f} | {logit:.3f} |".format(
+            "{gap:.3f} | {price:.3f} | {rent:.3f} | {arithmetic:.3f} → "
+            "{realized:.3f} ({damping:.3f}) | {logit:.3f} |".format(
                 arm=row["arm"],
                 policy=row["policy_label"],
                 tfr=row["tfr_change_percent"],
                 births=row["births_per_household_change_percent"],
                 population=row["quota_population_change_percent"],
-                immigration=row["required_immigration_change_percent"],
                 gap=row["fertility_gap_closed_percent"],
                 price=row["house_price_change_percent"],
+                rent=row["rent_change_percent"],
+                arithmetic=row["arithmetic_multiplier_times_dlnB_percent"],
+                realized=row["realized_dln_population_percent"],
+                damping=row["housing_feedback_damping_percentage_points"],
                 logit=row["old_logit_population_change_percent"],
             )
         )
     lines.extend(
         [
             "",
-            "The required-immigration and fertility-gap rows use the fixed-population decomposition. The difference between the arithmetic renewal response and the realized population response is the housing-feedback damping reported in the detailed tables.",
+            "The merged required-immigration figure is reported as the reduction in required immigration, so it is numerically identical to the percent of the fertility gap closed. Aggregate stationary births = population + births/HH (accounting identity); see `policy_summary.csv`. The difference between the arithmetic renewal response and the realized population response is the housing-feedback damping reported in the detailed tables.",
             "",
             "## Closure and interpretation",
             "",
-            r"At baseline, \(\bar R=(1-s^{out})E_0/B_0\) and \(\bar M=s^{out}E_0\). In each counterfactual, \((\bar R,\bar M)\) are fixed and the driver solves \(S E_0=\bar R S B_0(\text{policy})+\bar M\) jointly with the house price and balanced-budget transfer. Households are the population unit. Rents move one-for-one with the reported price in the implemented one-market user-cost mapping.",
+            r"At baseline, \(\bar R=(1-s^{out})E_0/B_0\) and \(\bar M=s^{out}E_0\). In each counterfactual, \((\bar R,\bar M)\) are fixed and the driver solves \(S E_0=\bar R S B_0(\text{policy})+\bar M\) jointly with the house price and balanced-budget transfer. Households are the population unit. Renter-paid rent is \((q+\delta+\tau_H)p\), so it differs from the price change when the property-tax rate changes.",
             "",
             "The baseline retention rate is a derived accounting identity, not a directly estimated behavioral elasticity. The experiment assumes quota-rationed outside inflow and policy-invariant retention. A balanced-growth-path closure remains an explicit design question to reconsider after this meeting; it is not implemented here.",
             "",
@@ -256,10 +275,90 @@ def build_readme(
     (outdir / "README.md").write_text("\n".join(lines), encoding="utf-8")
 
 
+def rebuild_reporting_layout(outdir: Path) -> None:
+    """Regenerate the advisor-facing layout without modifying model artifacts."""
+    wide_rows: list[dict[str, Any]] = []
+    for raw_row in read_csv(outdir / "policy_summary.csv"):
+        row: dict[str, Any] = dict(raw_row)
+        for key in (
+            "tfr_change_percent",
+            "births_per_household_change_percent",
+            "quota_population_change_percent",
+            "fertility_gap_closed_percent",
+            "house_price_change_percent",
+            "rent_change_percent",
+            "arithmetic_multiplier_times_dlnB_percent",
+            "realized_dln_population_percent",
+            "housing_feedback_damping_percentage_points",
+            "old_logit_population_change_percent",
+        ):
+            row[key] = float(raw_row[key])
+        quota_rows = keyed(read_csv(outdir / "raw_runs" / row["arm"] / "quota" / "summary.csv"))
+        baseline = quota_rows[BASELINE_CASE]
+        policy = quota_rows[row["case"]]
+        baseline_rent = renter_user_cost_rate(number(baseline, "annual_property_tax_rate")) * number(
+            baseline, "price"
+        )
+        policy_rent = renter_user_cost_rate(number(policy, "annual_property_tax_rate")) * number(
+            policy, "price"
+        )
+        row["rent_change_percent"] = 100.0 * (policy_rent / baseline_rent - 1.0)
+        wide_rows.append(row)
+
+    for row in wide_rows:
+        metric_rows = (
+            ("completed fertility change", row["tfr_change_percent"], "percent"),
+            ("births per household change", row["births_per_household_change_percent"], "percent"),
+            ("household population change under quota", row["quota_population_change_percent"], "percent"),
+            (
+                "required immigration at fixed population "
+                "(identical to percent of fertility gap closed)",
+                row["fertility_gap_closed_percent"],
+                "percent reduction",
+            ),
+            ("house price change", row["house_price_change_percent"], "percent"),
+            ("rent change", row["rent_change_percent"], "percent"),
+            ("4.917 times fixed-population dlnB", row["arithmetic_multiplier_times_dlnB_percent"], "log-percent"),
+            ("realized dln household population", row["realized_dln_population_percent"], "log-percent"),
+            ("housing-feedback damping", row["housing_feedback_damping_percentage_points"], "percentage points"),
+            (
+                "unidentified entry-response sensitivity (lambda=2)",
+                row["old_logit_population_change_percent"],
+                "percent",
+            ),
+        )
+        table_rows = [
+            {
+                "arm": row["arm"],
+                "case": row["case"],
+                "policy": row["policy_label"],
+                "row_order": order,
+                "metric": metric,
+                "value": value,
+                "unit": unit,
+            }
+            for order, (metric, value, unit) in enumerate(metric_rows, start=1)
+        ]
+        write_csv(outdir / "tables" / f"{row['arm']}_{row['case']}.csv", table_rows)
+
+    acceptance = json.loads((outdir / "acceptance_tests.json").read_text(encoding="utf-8"))
+    metadata = json.loads((outdir / "metadata.json").read_text(encoding="utf-8"))
+    build_readme(
+        outdir,
+        wide_rows,
+        acceptance,
+        list(metadata.get("torch_production_job_ids", [])),
+        list(metadata.get("torch_smoke_job_ids", [])),
+    )
+
+
 def main() -> None:
     args = parse_args()
     outdir = args.outdir.resolve()
     raw_root = (args.raw_root or (outdir / "raw_runs")).resolve()
+    if args.reporting_only:
+        rebuild_reporting_layout(outdir)
+        return
     outdir.mkdir(parents=True, exist_ok=True)
     wide_rows: list[dict[str, Any]] = []
     long_rows: list[dict[str, Any]] = []
@@ -372,6 +471,15 @@ def main() -> None:
             price_change = 100.0 * (
                 number(policy, "price") / number(baseline, "price") - 1.0
             )
+            rent_change = 100.0 * (
+                renter_user_cost_rate(number(policy, "annual_property_tax_rate"))
+                * number(policy, "price")
+                / (
+                    renter_user_cost_rate(number(baseline, "annual_property_tax_rate"))
+                    * number(baseline, "price")
+                )
+                - 1.0
+            )
             old_logit = number(logit_policy, "population_change_percent")
             wide = {
                 "arm": arm,
@@ -387,7 +495,7 @@ def main() -> None:
                 "required_immigration_change_percent": immigration_change,
                 "fertility_gap_closed_percent": gap_closed,
                 "house_price_change_percent": price_change,
-                "rent_change_percent": price_change,
+                "rent_change_percent": rent_change,
                 "renewal_multiplier": MULTIPLIER,
                 "fixed_population_mature_birth_flow_dln_percent": 100.0 * dln_mature,
                 "arithmetic_multiplier_times_dlnB_percent": arithmetic,
@@ -397,15 +505,17 @@ def main() -> None:
             }
             wide_rows.append(wide)
             metric_rows = (
-                ("completed fertility change", tfr_change, "children per household"),
                 ("completed fertility change", tfr_change_percent, "percent"),
                 ("births per household change", births_per_household_change, "percent"),
-                ("stationary total births change", total_births_change, "percent"),
                 ("household population change under quota", population_change, "percent"),
-                ("required immigration change at fixed population", immigration_change, "percent"),
-                ("fertility gap closed", gap_closed, "percent"),
+                (
+                    "required immigration at fixed population "
+                    "(identical to percent of fertility gap closed)",
+                    gap_closed,
+                    "percent reduction",
+                ),
                 ("house price change", price_change, "percent"),
-                ("rent change", price_change, "percent"),
+                ("rent change", rent_change, "percent"),
                 ("4.917 times fixed-population dlnB", arithmetic, "log-percent"),
                 ("realized dln household population", realized_dln_scale, "log-percent"),
                 ("housing-feedback damping", damping, "percentage points"),
