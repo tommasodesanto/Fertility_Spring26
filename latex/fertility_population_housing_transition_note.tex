@@ -1,0 +1,210 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.68in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,booktabs,graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage[colorlinks=true,allcolors=MidnightBlue]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3.5pt}
+\setlist[itemize]{leftmargin=1.15em,itemsep=1pt,topsep=2pt}
+\titlespacing*{\section}{0pt}{5pt}{2pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\captionsetup{font=small,labelfont=bf,skip=3pt}
+\newcommand{\Rcal}{\mathcal R}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries A Fertility Shift, Population Decline, and Housing Prices}\par
+\vspace{2pt}
+{\large A two-state steady-state thought experiment}\par
+\vspace{2pt}
+{\small August 7, 2026}
+\end{center}
+
+\vspace{-3pt}
+\textbf{Question.} Can a persistent fall in desired fertility move a closed economy
+from one positive steady state to another with fewer households and cheaper housing?
+Yes, provided housing costs feed back into fertility. The permanent object is a
+downward shift in the \emph{fertility schedule}. Realized fertility is below
+replacement during the transition, but the fall in population lowers housing costs
+until fertility returns to replacement at a smaller steady state. If realized
+fertility instead remained permanently below replacement, a closed population would
+converge to zero rather than to a smaller positive level.
+
+\section*{Environment}
+
+\textbf{Demography.} Let $N_t$ denote adult households and let $\Rcal_t$ be the
+net reproduction rate, normalized so that $\Rcal_t=1$ replaces the current adult
+population. Housing cost $p_t$ reduces desired fertility, while $\theta_t$ shifts
+fertility for nonhousing reasons. Around the initial steady state,
+\begin{equation}
+ \Rcal_t-1=\theta_t-\eta\,\pi_t,
+ \qquad
+ \dot n_t=\lambda(\Rcal_t-1),
+ \label{eq:demography}
+\end{equation}
+where $n_t\equiv\log(N_t/N_0)$, $\pi_t\equiv\log(p_t/p_0)$,
+$\eta>0$ is the fertility response to housing cost, and $\lambda>0$ maps a
+reproduction gap into population growth. Equation \eqref{eq:demography} is the
+feedback: cheaper housing raises fertility.
+
+\textbf{Housing demand.} With fixed income per household and a constant housing
+expenditure share, aggregate expenditure on housing services is proportional to the
+number of households:
+\begin{equation}
+ p_tH_t=A N_t,
+ \qquad
+ \pi_t=n_t-h_t,
+ \label{eq:housing_demand}
+\end{equation}
+Here $A$ is fixed housing expenditure per household and
+$h_t\equiv\log(H_t/H_0)$ is the usable housing stock. Holding the stock fixed, a
+smaller population lowers the housing-services price one for one in logs.
+
+\textbf{Housing stock.} Structures depreciate at rate $\delta$, while gross
+construction is $X_t=\delta H_0(p_t/p_0)^\xi$ with finite price elasticity
+$\xi\geq0$. Log-linearizing $\dot H_t=X_t-\delta H_t$ gives the stock law
+\begin{equation}
+ \dot h_t=\delta\big[\xi\pi_t-h_t\big],
+ \qquad \delta>0.
+ \label{eq:housing_stock}
+\end{equation}
+Thus the stock gradually approaches the long-run supply schedule
+$h=\xi\pi$. This is the smallest way to let excess housing disappear through
+depreciation rather than instantaneously.
+
+\section*{Steady states and transition}
+
+Initially $\theta_0=0$ and $(n_0,h_0,\pi_0)=(0,0,0)$. At date zero, a permanent
+shock sets $\theta_1<0$. The unchanged initial housing cost makes
+$\Rcal_0-1=\theta_1<0$, so population begins to fall. Substituting
+\eqref{eq:housing_demand} into \eqref{eq:demography}--\eqref{eq:housing_stock}
+gives the exact linear system
+\begin{equation}
+ \begin{pmatrix}\dot n_t\\ \dot h_t\end{pmatrix}
+ =
+ \underbrace{\begin{pmatrix}
+ -a & a\\ \delta\xi & -\delta(1+\xi)
+ \end{pmatrix}}_{\mathsf A}
+ \begin{pmatrix}n_t\\h_t\end{pmatrix}
+ +\begin{pmatrix}\lambda\theta_1\\0\end{pmatrix},
+ \qquad a\equiv\lambda\eta>0.
+ \label{eq:system}
+\end{equation}
+The new steady state is pinned down by replacement fertility and housing-stock
+balance:
+\begin{equation}
+ \boxed{
+ \pi_1^*=\frac{\theta_1}{\eta}<0,
+ \qquad
+ h_1^*=\xi\frac{\theta_1}{\eta}\leq0,
+ \qquad
+ n_1^*=(1+\xi)\frac{\theta_1}{\eta}<0.}
+ \label{eq:ss}
+\end{equation}
+The population decline reduces housing demand; lower prices reduce construction and
+allow the stock to depreciate; and the lower price raises fertility back to
+$\Rcal^*=1$. A more elastic long-run housing supply makes the stock contract more,
+so a larger population decline is required to deliver the price decline that restores
+replacement fertility.
+
+The two adjustment roots are
+\begin{equation}
+ \mu_{\pm}=-\frac{a+\delta(1+\xi)\mp
+ \sqrt{[a+\delta(1+\xi)]^2-4a\delta}}{2}<0.
+ \label{eq:roots}
+\end{equation}
+Hence the new steady state is stable. The whole transition is analytical:
+$z_t=z_1^*+\exp(\mathsf A t)(z_0-z_1^*)$, where
+$z_t=(n_t,h_t)^\top$.
+
+\newpage
+\section*{Illustration}
+
+The figure normalizes initial population, housing, and price to one. The permanent
+fertility-schedule shift requires a 10 percent housing-price decline to restore
+replacement fertility, $\theta_1/\eta=\log(0.90)$. Setting $\xi=1$,
+$a=0.02$, and $\delta=0.025$ gives a slow adjustment root of $-0.0081$, or a
+half-life of about 86 years. These values illustrate the mechanism; they are not a
+calibration or a forecast.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../output/model/fertility_population_housing_transition_note/population_transition.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+\centering
+\includegraphics[width=\linewidth]{../output/model/fertility_population_housing_transition_note/housing_price_transition.pdf}
+\end{minipage}
+\caption{After the schedule shifts down, realized fertility is below replacement and
+population declines. The housing stock follows slowly, so housing cost falls. The
+price decline raises fertility until the net reproduction rate returns to one. In the
+illustration, $N_1^*/N_0=0.81$, $H_1^*/H_0=0.90$, and $p_1^*/p_0=0.90$.}
+\label{fig:transition}
+\end{figure}
+
+\section*{What carries over to the quantitative model}
+
+The toy model isolates three objects already present in the quantitative environment.
+First, lower housing costs raise fertility through housing consumption, tenure, and
+down-payment margins. Second, lower fertility reduces future adult household entry,
+although the full age structure inserts a long cohort delay that is suppressed here.
+Third, the level housing-supply curve makes a smaller population cheaper to house. In
+a stationary state the asset price satisfies $P^{H,*}=p^*/u$, where $u$ is the
+stationary user-cost factor, so the long-run asset-price comparison has the same sign
+as \eqref{eq:ss}. A complete asset-price transition would also capitalize future rents
+and could jump on impact.
+
+This thought experiment is an \emph{alternative closure}, not a reinterpretation of
+the current quota exercise. Under the quota closure, permanently subreplacement
+fertility is compatible with a positive population because a fixed outside inflow
+$\bar M$ replaces the missing native entrants. A one-state discrete analogue of its
+stationary renewal accounting uses the household exit rate $E$, the mature
+child-household flow $B_t$, and the retained share $\bar R$:
+\begin{equation}
+ S_{t+1}=(1-E+\bar R B_t)S_t+\bar M,
+ \qquad
+ S^*=\frac{\bar M}{E-\bar R B^*}.
+ \label{eq:quota}
+\end{equation}
+With $\bar M=0$ and $0\leq1-E+\bar R B^*<1$, equation \eqref{eq:quota}
+instead implies $S_t\rightarrow0$. The closed-economy model above avoids that
+outcome because fertility is endogenous and returns to replacement as housing
+becomes cheaper.
+
+\section*{Literature map and limits}
+
+The closest Fern\'andez-Villaverde reference is
+\href{https://www.nber.org/papers/w29480}{Delventhal, Fern\'andez-Villaverde, and
+Guner (2021)}. Their Appendix J analytically characterizes an initial Malthusian
+steady state in which fertility equals replacement; fixed land enters production
+rather than housing. The paper does not derive a lower-population, lower-house-price
+steady state. The likely
+``Rognlie'' reference in the handwritten notes is
+\href{https://www.brookings.edu/articles/deciphering-the-fall-and-rise-in-the-net-capital-share/}{Rognlie (2015)},
+which motivates scarce residential land but has no fertility transition.
+\href{https://doi.org/10.1086/427465}{Glaeser and Gyourko (2005)} provide the
+durable-housing logic: a negative local-demand shock lowers prices immediately,
+while housing and population contract gradually as depreciated units are not rebuilt.
+\href{https://www.nber.org/papers/w2794}{Mankiw and Weil (1989)} provide a
+partial-equilibrium link from cohort size to housing demand.
+
+The clean sign in Figure \ref{fig:transition} is a mechanism result, not a forecast.
+\href{https://doi.org/10.1016/j.econmod.2025.107125}{Lee and Suh (2025)} show in a
+full OLG model that aging and a lower equilibrium interest rate can initially raise
+house prices even though very low fertility lowers them in the long run. The present
+two-state model deliberately holds income, interest rates, taxes, tenure, credit
+constraints, and age composition fixed so that the fertility--housing feedback is
+visible analytically.
+
+\end{document}
