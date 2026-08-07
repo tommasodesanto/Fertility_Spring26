@@ -36,7 +36,7 @@
 \begin{frame}{Since May}
 One-market lifecycle model of housing and fertility. What changed:
 \begin{itemize}
-  \item \textbf{Sequential fertility}: birth-by-birth attempts under declining fecundity; children ever born and children at home tracked separately
+  \item \textbf{Sequential fertility}: birth-by-birth attempts under declining fertility; children ever born and children at home tracked separately
   \item \textbf{Idiosyncratic income risk}: persistent after-tax earnings process, set externally
   \item \textbf{One housing market}: the two-location structure is set aside for the national question
 \end{itemize}
@@ -52,7 +52,6 @@ One-market lifecycle model of housing and fertility. What changed:
 % ---------------------------------------------------------------- environment
 \begin{frame}{Environment}
 \begin{itemize}
-  \item One national housing market; stationary equilibrium with household population $S$
   \item Households live $J$ four-year periods from age 18; retirement, then survival risk
   \item Two child states: $n$ children ever born, $m$ children currently at home
   \begin{itemize}
@@ -98,32 +97,33 @@ Warm-glow utility at death over terminal wealth:
 
 % ---------------------------------------------------------------- fertility
 \begin{frame}{Fertility and Child Maturation}
-Between ages 18 and 45, households decide each period whether to try for a child --- a discrete choice with taste shocks, with separate scales $\kappa_f$ before and after the first child.
-
-\medskip
-Trying yields a birth with the conception probability
-\[
-\pi(\mathrm{age}) = 1 - \omega_1\, e^{\omega_2(\mathrm{age}-18)},
-\qquad \pi = 0 \text{ after } 45,
-\]
-which falls from $0.98$ at 18 to $0.62$ at 40: postponed births are increasingly likely never to happen.
-
-\medskip
-Each child lives at home for 18 years on average (stochastic maturation), raising the equivalence scale and the space requirement; matured children enter the economy as young households.
+\begin{itemize}
+  \item Between ages 18 and 45, households decide each period whether to try for a child: a discrete choice with taste shocks, with separate scales $\kappa_f$ before and after the first child
+  \item Trying yields a birth with the conception probability
+  \[
+  \pi(\mathrm{age}) = 1 - \omega_1\, e^{\omega_2(\mathrm{age}-18)},
+  \qquad \pi = 0 \text{ after } 45,
+  \]
+  which falls from $0.98$ at 18 to $0.62$ at 40: postponed births are increasingly likely never to happen
+  \item Each child lives at home for 18 years on average, with stochastic maturation, raising the equivalence scale and the space requirement
+  \item Matured children enter the economy as young households
+\end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------- income
-\begin{frame}{Earnings and Institutions}
-Idiosyncratic persistent earnings risk over the lifecycle:
-\[
-\log y_{j+1} = \rho \log y_j + \varepsilon_{j+1},
-\qquad \varepsilon \sim N(0,\sigma_\varepsilon^2),
-\]
-discretized and combined with an age profile of earnings.
+\begin{frame}{Firms and Earnings}
 \begin{itemize}
-  \item Earnings are after tax: a progressive retention function applied to gross earnings
-  \item Retirees receive a stationary pension funded by a payroll tax
-  \item Property tax on owners, rebated as a lump-sum transfer
+  \item A competitive firm produces with labor, so the wage is pinned down by technology and the labor market clears at any aggregate efficiency units $L$:
+  \[
+  Y = A\,L, \qquad w = A
+  \]
+  \item Households supply efficiency units inelastically: an age profile times a persistent idiosyncratic component
+  \[
+  \log y_{j+1} = \rho \log y_j + \varepsilon_{j+1},
+  \qquad \varepsilon \sim N(0,\sigma_\varepsilon^2)
+  \]
+  \item Earnings are taxed progressively, a payroll tax funds a stationary pension, and a property tax on owners is rebated lump sum
+  \item With constant returns, a larger population leaves the wage unchanged: housing is the only fixed factor
 \end{itemize}
 \end{frame}
 
@@ -159,7 +159,7 @@ c + b' + (\delta+\tau_H)\,p h
 \begin{frame}{Housing Supply and Market Clearing}
 Housing supply slopes upward in levels, and rents map into prices through user cost:
 \[
-H^S = H_0\left(\frac{r}{\bar r}\right)^{\xi},
+H^S = H_0\,r^{\xi},
 \qquad
 r = (q+\delta+\tau_H)\,p .
 \]
@@ -187,6 +187,75 @@ subject to the renter or owner budget and the collateral constraint; a successfu
 
 \medskip
 In old age there are no fertility decisions; survival risk and the warm glow at death close the problem.
+\end{frame}
+
+\section{Population Closure}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Population Closure}}
+\end{frame}
+
+% ---------------------------------------------------------------- closure problem
+\begin{frame}{Closing the Population}
+Every version of this model needs a rule for the size of the entering cohort. Three ways to supply one:
+\begin{enumerate}
+  \item \textbf{Balanced growth path.} Population and quantities grow at a common rate and are read per capita. The committed housing requirement makes preferences non-homothetic and the housing stock is fixed in levels, so no such path exists here. It is also counterfactual: the economy is not observed growing along one
+  \item \textbf{Full dynamic equilibrium.} Solve the transition after the reform, with prices clearing each period. Expensive to compute, and it is no longer clear what the calibration should target, since the observed moments would have to be assigned to a date on the path
+  \item \textbf{Stationary equilibrium.} Compare stationary states before and after. This delivers a single number, at the cost of a rule that pins the population level
+\end{enumerate}
+
+\medskip
+The stationary comparison is used here.
+\end{frame}
+
+% ---------------------------------------------------------------- old vs new
+\begin{frame}{The Entry Rule}
+Both protocols keep the same accounting. They differ in what pins the inflow $M$:
+\[
+\text{earlier:}\quad M = M(V)
+\qquad\qquad
+\text{now:}\quad M = \bar M .
+\]
+\begin{itemize}
+  \item \textbf{Earlier.} Entry rises when the economy becomes more attractive. The strength of that response, $\lambda = \partial \ln M/\partial V$, is identified by no moment, and it drives the answer: population responses came out three to ten times larger
+  \item \textbf{Now.} The quota fixes $M$, so policy moves the population only through births, and the rent response damps it
+  \item \textbf{Cost.} Migration cannot respond to a more attractive country. The earlier numbers are kept as a bound on that channel
+\end{itemize}
+\end{frame}
+
+% ---------------------------------------------------------------- balance
+\begin{frame}{Population Balance}
+Entrants each period are retained matured children plus the immigration inflow $M$:
+\[
+\underbrace{S\,E_0}_{\text{entrants needed}}
+\;=\;
+\underbrace{R\,S\,B_0}_{\text{retained matured children}}
+\;+\; M ,
+\]
+with $E_0$ the replacement flow per household, $B_0$ the matured-children flow, and $R$ the share who stay.
+
+\medskip
+Given the fixed inflow, the stationary population
+\[
+S = \frac{M}{E_0 - R\,B_0}
+\]
+exists and is stable: as the population shrinks, a fixed inflow becomes a growing share, and the decline stops.
+
+\medskip
+$R$ and $M$ are pinned at the baseline by two observables: the outside-origin share of young entrants and the population normalization.
+\end{frame}
+
+% ---------------------------------------------------------------- counterfactuals
+\begin{frame}{Population in Counterfactuals}
+With $R$ and $M$ fixed, population responds to policy through births alone. Differentiating the balance condition:
+\[
+\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0 ,
+\]
+where $s^{out}$ is the immigrant share of entrants. Each immigrant household founds a family line that fades out at the native replacement rate; a policy that raises births makes every line last longer.
+
+\medskip
+At the measured share ($16.9\%$ of young entrants, ACS), the multiplier is about five. Housing pushes the other way: a larger population raises rents, which discourages births.
 \end{frame}
 
 \section{Calibration}
@@ -239,7 +308,7 @@ $\psi_{\mathrm{child}}$ & Child flow utility & 0.000 & $[0,3]$ & \textbf{at lowe
 $\kappa_f$ & Attempt taste scale, first birth & 2.987 & $[0.02,50]$ & no \\
 $\kappa_f^{\mathrm{cont}}$ & Attempt taste scale, later births & 1.713 & $[0.02,50]$ & no \\
 $\chi$ & Owner service premium & 1.037 & $[0.1,5]$ & no \\
-$H_0$ & Housing supply intercept & 9.873 & $[0.2,80]$ & no \\
+$H_0$ & Housing supply intercept & 61.706 & $[1.25,500]$ & no \\
 $\theta_0$ & Bequest strength & 0.159 & $[0,8]$ & \textbf{near lower} \\
 $\theta_1$ & Bequest shifter & 0.094 & $[0.02,16]$ & \textbf{near lower} \\
 $\underline h$ & Child room floor & 0.614 & $[0.1,1.8]$ & no \\
@@ -289,63 +358,6 @@ The remaining misses are childlessness, the dispersion of old-age wealth, and th
 \includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/fertility_by_age.png}\hfill
 \includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/ownership_by_age.png}
 
-\end{frame}
-
-\section{Population Closure}
-
-\begin{frame}[plain,c,noframenumbering]
-\centering
-{\Large\textbf{Population Closure}}
-\end{frame}
-
-% ---------------------------------------------------------------- closure problem
-\begin{frame}{The Population Question}
-Completed fertility is below replacement: on its own, the household population shrinks. What sustains a stationary economy --- in the model as in the U.S.\ --- is immigration.
-
-\medskip
-This is an economic question before it is a computational one. When policy raises births, what gives?
-\begin{itemize}
-  \item If immigration is unchanged, the population grows --- and presses on a housing supply that does not scale with it
-  \item If instead the population is held fixed, fewer immigrants are needed
-  \item Letting entry respond to the value of living here would require an elasticity that nothing in the data identifies
-\end{itemize}
-
-\medskip
-U.S.\ immigration is rationed and oversubscribed: how many enter is set by the quota, not by the marginal entrant's indifference. The closure adopted here follows: the inflow is a policy quantity, fixed across counterfactuals.
-\end{frame}
-
-% ---------------------------------------------------------------- balance
-\begin{frame}{Population Balance}
-Entrants each period are retained matured children plus the immigration inflow $M$:
-\[
-\underbrace{S\,E_0}_{\text{entrants needed}}
-\;=\;
-\underbrace{R\,S\,B_0}_{\text{retained matured children}}
-\;+\; M ,
-\]
-with $E_0$ the replacement flow per household, $B_0$ the matured-children flow, and $R$ the share who stay.
-
-\medskip
-Given the fixed inflow, the stationary population
-\[
-S = \frac{M}{E_0 - R\,B_0}
-\]
-exists and is stable: as the population shrinks, a fixed inflow becomes a growing share, and the decline stops.
-
-\medskip
-$R$ and $M$ are pinned at the baseline by two observables: the outside-origin share of young entrants and the population normalization.
-\end{frame}
-
-% ---------------------------------------------------------------- counterfactuals
-\begin{frame}{Population in Counterfactuals}
-With $R$ and $M$ fixed, population responds to policy through births alone. Differentiating the balance condition:
-\[
-\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0 ,
-\]
-where $s^{out}$ is the immigrant share of entrants. Each immigrant household founds a family line that fades out at the native replacement rate; a policy that raises births makes every line last longer.
-
-\medskip
-At the measured share ($16.9\%$ of young entrants, ACS), the multiplier is about five. Housing pushes the other way: a larger population raises rents, which discourages births.
 \end{frame}
 
 \section{Policy}
