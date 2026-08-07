@@ -251,19 +251,6 @@ with $E_0$ exits and $B_0$ maturing children, per household; $R$ the share who s
 \end{itemize}
 \end{frame}
 
-% ---------------------------------------------------------------- counterfactuals
-\begin{frame}{Population in Counterfactuals}
-$R$ and $M$ stay fixed, so policy moves the population through births:
-\[
-\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0
-\;=\; \frac{0.831}{0.169}\;\%\Delta B_0 \;\approx\; 5\;\%\Delta B_0 .
-\]
-\begin{itemize}
-  \item Extra births become native entrants, who have children in turn; the multiplier sums the generations
-  \item Rents push back: more households raise rents, higher rents discourage births. The offset is small
-\end{itemize}
-\end{frame}
-
 \section{Calibration}
 
 \begin{frame}[plain,c,noframenumbering]
@@ -319,12 +306,13 @@ $\underline h$ & Child room floor & 0.614 \\
 
 % ---------------------------------------------------------------- identification
 \begin{frame}{Identification}
-The nine parameters are estimated jointly; four economic blocks, each with the moments most informative about it:
+\small\linespread{1.05}\selectfont
+The parameters are chosen jointly, in four economic blocks:
 \begin{itemize}
-  \item \textbf{Fertility.} The child utility $\psi_{\mathrm{child}}$ raises the return to every birth: completed fertility. The first-birth scale $\kappa_f$ spreads when women start: mean age at first birth and first births after 30. The continuation scale $\kappa_f^{\mathrm{cont}}$ sets how much of a commitment starting is: childlessness
-  \item \textbf{Family housing.} The child room floor $\underline h$ sets the space children require: rooms added at the first birth, and the rooms gap between large and small families. The family ownership gap has no parameter of its own and overidentifies the block
-  \item \textbf{Tenure and supply.} The owner premium $\chi$: the ownership rate. The supply intercept $H_0$: aggregate rooms
-  \item \textbf{Saving and bequests.} The discount factor $\beta$: wealth over earnings. Bequest strength $\theta_0$: the bequest flow. Bequest curvature $\theta_1$: old-age wealth dispersion
+  \item \textbf{Fertility.} The utility value of children $\psi_{\mathrm{child}}$ raises the return to every birth: completed fertility. The first-birth noise $\kappa_f$ spreads the age at which women start trying: mean age at first birth and first births after 30. The continuation noise $\kappa_f^{\mathrm{cont}}$ governs how readily a household that has started keeps going: childlessness
+  \item \textbf{Family housing.} The child room floor $\underline h$ sets the rooms a child absorbs: the rooms added at the first child, and the rooms difference between families with three or more children and one or two. The family ownership gap has no parameter of its own and enters as an overidentifying restriction
+  \item \textbf{Tenure and supply.} The owner premium $\chi$ raises the utility of owning over renting: the ownership rate. The supply scale $H_0$ sets the level of the housing stock: aggregate rooms
+  \item \textbf{Saving and bequests.} The discount factor $\beta$ governs how much wealth households carry through life: net worth over earnings. The bequest strength $\theta_0$, how much is held back to leave at death: the bequest flow. The curvature $\theta_1$, how the motive strengthens with wealth: old-age p90/p50
 \end{itemize}
 \end{frame}
 
@@ -354,28 +342,18 @@ The nine parameters are estimated jointly; four economic blocks, each with the m
 \bottomrule
 \end{tabular}
 
-\medskip
-\raggedright\small
-The remaining misses are childlessness, the dispersion of old-age wealth, and the share of late first births; additional search does not improve them.
 \end{frame}
 
 % ---------------------------------------------------------------- fit figures
 \begin{frame}{Lifecycle Profiles}
 \centering
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/fertility_by_age.png}\hfill
-\includegraphics[width=0.49\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/ownership_by_age.png}
-
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]{../output/model/eqscale_seq_e5_policy_quota_closure_20260807/diagnostics/floor/standard/lifecycle_model_vs_data.png}
 \end{frame}
 
 \section{Policy}
 
-\begin{frame}[plain,c,noframenumbering]
-\centering
-{\Large\textbf{Policy Results}}
-\end{frame}
-
 % ---------------------------------------------------------------- policy results
-\begin{frame}{Funded Property-Tax and Grant Reforms}
+\begin{frame}{Funded Property-Tax and Grant Reforms (preliminary)}
 The experiment: raise the annual property tax from $1\%$ to $2\%$ of house value and return the revenue to households, either as an equal lump-sum rebate or as a grant paid at the purchase of a family-sized home. Percent changes across stationary states:
 \medskip
 
