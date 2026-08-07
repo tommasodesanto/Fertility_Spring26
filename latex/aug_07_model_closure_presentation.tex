@@ -68,31 +68,18 @@ One-market lifecycle model of housing and fertility. What changed:
 
 % ---------------------------------------------------------------- preferences
 \begin{frame}{Preferences}
-\small
-\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
-CRRA utility per equivalent adult over a consumption--housing bundle:
+Flow utility over consumption and housing services:
 \[
 u(c,\mathbf h;m)
-= \frac{\big(x/e(m)\big)^{1-\sigma}}{1-\sigma} + \psi_{\mathrm{child}}\,m,
-\qquad
-x = c^{\alpha}\big(\mathbf h-\underline h\, m\big)^{1-\alpha}.
+= \frac{1}{1-\sigma}
+\left[\frac{c^{\alpha}\big(\mathbf h-\underline h\, m\big)^{1-\alpha}}{e(m)}\right]^{1-\sigma}
++ \psi_{\mathrm{child}}\,m .
 \]
-
-\textbf{Equivalence scale} (Citro--Michael 1995; Scholz--Seshadri--Khitatrakun 2006):
-\[
-e(m) = \left(\frac{2+0.7\,m}{2}\right)^{0.7}
-\]
-relative to a childless couple: each child at home raises the resources needed to reach the same utility.
-
-\medskip
-\textbf{Space requirement.} Each child at home absorbs $\underline h$ rooms before housing yields services.
-
-\medskip
-\textbf{Housing services.} Owners receive a service premium:
-\[
-\mathbf h = \mathbf{1}\{\text{own}\}\,\chi\, h + \mathbf{1}\{\text{rent}\}\, h^R,
-\qquad \chi > 1.
-\]
+\begin{itemize}
+  \item \textbf{Space requirement.} Each child at home absorbs $\underline h$ rooms before housing yields services
+  \item \textbf{Equivalence scale.} $e(0)=1$ and $e'>0$: a larger family needs more resources to reach the same utility
+  \item \textbf{Owner premium.} $\mathbf h = \chi h$ for owners, with $\chi>1$; $\mathbf h = h^R$ for renters
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Bequests}
@@ -312,11 +299,24 @@ The remaining misses are childlessness, the dispersion of old-age wealth, and th
 \end{frame}
 
 % ---------------------------------------------------------------- closure problem
-\begin{frame}{Demographics and Population Balance}
-Completed fertility is below replacement: matured children replace about $86\%$ of exiting households. A stationary population therefore needs an inflow from outside --- as in the U.S., where net immigration now sustains population growth.
+\begin{frame}{The Population Question}
+Completed fertility is below replacement: on its own, the household population shrinks. What sustains a stationary economy --- in the model as in the U.S.\ --- is immigration.
 
 \medskip
-Entrants each period are retained matured children plus an outside inflow $M$:
+This is an economic question before it is a computational one. When policy raises births, what gives?
+\begin{itemize}
+  \item If immigration is unchanged, the population grows --- and presses on a housing supply that does not scale with it
+  \item If instead the population is held fixed, fewer immigrants are needed
+  \item Letting entry respond to the value of living here would require an elasticity that nothing in the data identifies
+\end{itemize}
+
+\medskip
+U.S.\ immigration is rationed and oversubscribed: how many enter is set by the quota, not by the marginal entrant's indifference. The closure adopted here follows: the inflow is a policy quantity, fixed across counterfactuals.
+\end{frame}
+
+% ---------------------------------------------------------------- balance
+\begin{frame}{Population Balance}
+Entrants each period are retained matured children plus the immigration inflow $M$:
 \[
 \underbrace{S\,E_0}_{\text{entrants needed}}
 \;=\;
@@ -326,26 +326,26 @@ Entrants each period are retained matured children plus an outside inflow $M$:
 with $E_0$ the replacement flow per household, $B_0$ the matured-children flow, and $R$ the share who stay.
 
 \medskip
-Given a fixed inflow, the stationary population
+Given the fixed inflow, the stationary population
 \[
 S = \frac{M}{E_0 - R\,B_0}
 \]
 exists and is stable: as the population shrinks, a fixed inflow becomes a growing share, and the decline stops.
+
+\medskip
+$R$ and $M$ are pinned at the baseline by two observables: the outside-origin share of young entrants and the population normalization.
 \end{frame}
 
-% ---------------------------------------------------------------- quota closure
-\begin{frame}{Closing the Population}
-The inflow is a quantity, not a choice: U.S.\ immigration is rationed, so marginal changes in the value of living here do not move it. $R$ and $M$ are pinned at the baseline by two observables --- the outside-origin share of young entrants ($16.9\%$, ACS) and the population normalization --- and held fixed in counterfactuals.
-
-\medskip
-Population then responds to policy through births alone. Differentiating the balance condition:
+% ---------------------------------------------------------------- counterfactuals
+\begin{frame}{Population in Counterfactuals}
+With $R$ and $M$ fixed, population responds to policy through births alone. Differentiating the balance condition:
 \[
-\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0 \;\approx\; 4.9 \times \%\Delta B_0 .
+\%\Delta S \;=\; \frac{1-s^{out}}{s^{out}}\;\%\Delta B_0 ,
 \]
-Each immigrant household founds a family line that fades out at the native replacement rate; a policy that raises births makes every line last longer.
+where $s^{out}$ is the immigrant share of entrants. Each immigrant household founds a family line that fades out at the native replacement rate; a policy that raises births makes every line last longer.
 
 \medskip
-Two qualifications. Housing damps the response: a larger population raises rents, which discourages births. And an earlier specification in which entrants weighed home values against an outside option is retired: its entry elasticity is not identified (appendix).
+At the measured share ($16.9\%$ of young entrants, ACS), the multiplier is about five. Housing pushes the other way: a larger population raises rents, which discourages births.
 \end{frame}
 
 \section{Policy}
