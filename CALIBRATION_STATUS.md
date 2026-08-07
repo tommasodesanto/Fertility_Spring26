@@ -38,16 +38,26 @@ weight, bound, or spec flag was touched anywhere tonight.
    the anchor-concept choice (age-aggregated vs literal entry-age, the latter
    requiring multi-age entry) is an author decision queued for the advisor
    meeting. `0.169` remains the provisional production anchor.
-4. **Authorized 16-chain multi-start of the repaired-E5 arm (running).**
-   Smoke `15450588` passed (both chains wrote `best.json`/`cases.jsonl`/
-   checkpoints); production array `15450694` (task IDs 9--24, fresh seeds
-   `2026080509--24`, seeded from the e5b record exactly like the Aug-5
-   protocol, unchanged 12-moment / 10-parameter contract, 225-minute budget,
-   strict-repeat certification) with collector `15450710` chained. Purpose:
-   basin search only — test whether a better-fitting basin (ideally higher
-   completed fertility, which would also relax quota feasibility) exists.
-   The known childlessness / old-wealth misses are probe-established
-   mechanism limits; this run cannot and is not meant to fix those.
+4. **Authorized 16-chain multi-start of the repaired-E5 arm: COMPLETE — the
+   incumbent stands.** Smoke `15450588`; production array `15450694` (task
+   IDs 9--24, fresh seeds `2026080509--24`, e5b seed record, unchanged
+   12-moment / 10-parameter contract, 225-minute budget); collector
+   `15450710`. All 16 chains eligible with 1000 evaluations each and market
+   residuals `<= 2.2e-5`; the run's best tight loss is `263.533` (seed
+   `2026080524`), with the spread `263.5--370.5`, and the collector's
+   winner-repeat check is exact (`both_strict`, zero loss and moment
+   differences). **No chain beats the certified Aug-5 chain-6 winner at
+   `249.186326675`**, which remains the operative repaired-E5 record
+   (its full target-fit and parameter tables:
+   `output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/report/`
+   and the copies under the quota packet's `calibration/chain6/`). With 24
+   total chains across the two arrays, the childlessness (`0.1144/0.188`),
+   completed-fertility (`1.7802/1.918`), and old-wealth-dispersion
+   (`2.0866/3.4481`) misses are search-converged mechanism limits, not
+   calibration slack. Do NOT quote this run's `263.533` "winner" as a
+   calibration result; it is the multi-start record only. Local copy of the
+   report:
+   `output/model/eqscale_seq_e5_maturation_repair_multistart_20260807/report/`.
 
 Meeting deck: `latex/population_closure_meeting_20260807.pdf` (commit
 `5c34bb9`; two frames: corrected quota table with labels, anchor decision,

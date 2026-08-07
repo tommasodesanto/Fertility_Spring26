@@ -1,0 +1,673 @@
+{
+  "eligible_E1_chains": 16,
+  "production_chain_count": 16,
+  "winner_metadata": {
+    "J": 17,
+    "Nb": 120,
+    "active_domain": [
+      {
+        "lower": 0.94,
+        "name": "beta_annual",
+        "transform": "discount",
+        "upper": 0.9995
+      },
+      {
+        "lower": 0.0,
+        "name": "delta_alpha",
+        "transform": "softzero",
+        "upper": 0.25
+      },
+      {
+        "lower": 0.0,
+        "name": "delta_alpha_jump",
+        "transform": "softzero",
+        "upper": 0.25
+      },
+      {
+        "lower": -3.0,
+        "name": "psi_child",
+        "transform": "asinh",
+        "upper": 3.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert_continuation",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.1,
+        "name": "chi",
+        "transform": "log",
+        "upper": 5.0
+      },
+      {
+        "lower": 0.2,
+        "name": "H0",
+        "transform": "log",
+        "upper": 80.0
+      },
+      {
+        "lower": 0.0,
+        "name": "theta0",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.02,
+        "name": "theta1",
+        "transform": "log",
+        "upper": 16.0
+      }
+    ],
+    "arm": "E5_MATURATION_REPAIR",
+    "canonical_weights": {
+      "aggregate_mean_occupied_rooms_18_85": 11.973159013172177,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.287669427540395,
+      "annual_bequest_flow_to_aggregate_wealth": 5165289.256198346,
+      "childless_rate": 17180.743822072007,
+      "housing_increment_0to1": 906.0558911497827,
+      "mean_age_first_birth": 16.0,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 56.95977216091135,
+      "own_family_gap": 14229.590955975675,
+      "own_rate": 1207.8460856134493,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 2958.514988007638,
+      "share_first_births_age30plus": 15625.0,
+      "tfr": 1425.7389910084596
+    },
+    "child_maturation": {
+      "adds_free_parameter": false,
+      "adds_state_dimension": false,
+      "child_state": "children_currently_at_home",
+      "expected_years_at_home_per_child": 18.0,
+      "maturation_process": "independent_binomial_thinning",
+      "parity_state": "children_ever_born",
+      "profile": "e5_independent_child_maturation_20260805"
+    },
+    "child_room_floor": null,
+    "external_parameter_metadata": {
+      "alpha_cons": {
+        "source": "CEX childless-cash-renter expenditure slope, 2019-2023",
+        "value": 0.733
+      },
+      "tenure_choice_kappa": {
+        "source": "author-pinned deterministic tenure choice",
+        "value": 0.0
+      },
+      "theta_n": {
+        "source": "author-pinned child-invariant bequest utility",
+        "value": 0.0
+      }
+    },
+    "fecundity_schedule": {
+      "omega1": 0.02,
+      "omega2": 0.134,
+      "profile": "e5b_current",
+      "terminal_age": 45.0,
+      "terminal_decay": 0.0
+    },
+    "fixed_parameters": {
+      "alpha_cons": 0.733,
+      "tenure_choice_kappa": 0.0,
+      "theta_n": 0.0
+    },
+    "free_parameter_count": 10,
+    "income_process": {
+      "annual_innovation_sd": 0.169,
+      "annual_rho": 0.9136,
+      "process": "rouwenhorst",
+      "states": 5
+    },
+    "initial_unit_vector": [
+      0.6241939360351858,
+      0.22057157230520671,
+      0.30916613483371674,
+      0.6528599601638684,
+      0.6620021711773069,
+      0.5289291490140087,
+      0.5981337071057209,
+      0.6190431351366922,
+      0.14510145026100757,
+      0.13721304954527888
+    ],
+    "l4_conventions": {
+      "child_bin_high_cutoff": 3,
+      "entrant_conversion_factor": 0.5,
+      "fertility_units": "literal_topcode",
+      "n_parity": 4,
+      "tfr_top_bin_weight": 3.602359422009
+    },
+    "l4_literal_parity": true,
+    "max_iter_eq": 10,
+    "permanent_income_levels": null,
+    "readiness_arrival": null,
+    "seed": 2026080524,
+    "start_mix": 0.0,
+    "status": "proper_joint_smm_chain",
+    "target_count": 12,
+    "target_set": "e5_signed_review_20260724",
+    "targets": {
+      "aggregate_mean_occupied_rooms_18_85": 5.779970481941968,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.8731,
+      "annual_bequest_flow_to_aggregate_wealth": 0.0088,
+      "childless_rate": 0.188,
+      "housing_increment_0to1": 0.664435,
+      "mean_age_first_birth": 25.310560799362,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
+      "own_family_gap": 0.16766167,
+      "own_rate": 0.575472,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
+      "share_first_births_age30plus": 0.270062376851342,
+      "tfr": 1.918
+    },
+    "tight_winner_evaluator": {
+      "max_iter_eq": 40,
+      "repeats": 2,
+      "tol_eq": 2.5e-05
+    },
+    "tol_eq": 0.0001,
+    "weight_scheme": "canonical",
+    "weights": {
+      "aggregate_mean_occupied_rooms_18_85": 11.973159013172177,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.287669427540395,
+      "annual_bequest_flow_to_aggregate_wealth": 5165289.256198346,
+      "childless_rate": 17180.743822072007,
+      "housing_increment_0to1": 906.0558911497827,
+      "mean_age_first_birth": 16.0,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 56.95977216091135,
+      "own_family_gap": 14229.590955975675,
+      "own_rate": 1207.8460856134493,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 2958.514988007638,
+      "share_first_births_age30plus": 15625.0,
+      "tfr": 1425.7389910084596
+    }
+  },
+  "winner_repeat_check": {
+    "both_strict": true,
+    "loss_abs_difference": 0.0,
+    "max_abs_moment_difference": 0.0
+  },
+  "winner_summary_path": "/scratch/td2248/projects/Fertility_Spring26/output/model/eqscale_seq_e5_maturation_repair_multistart_20260807/production/chain_24/summary.json",
+  "winners": {
+    "E1": {
+      "arm": "E5_MATURATION_REPAIR",
+      "case": 0,
+      "elapsed_sec": 8.242554336320609,
+      "error": "",
+      "feasibility_census": [],
+      "label": "tight_winner_repeat_1",
+      "market_residual": 1.1297268312768161e-05,
+      "moments": {
+        "aggregate_mean_occupied_rooms_18_85": 5.4822895131749885,
+        "aggregate_own_rate": 0.6065082711009504,
+        "aggregate_wealth_to_annual_gross_labor_earnings": 5.980473422488719,
+        "aggregate_wealth_to_annual_gross_labor_earnings_26_35": 1.3870065985829207,
+        "aggregate_wealth_to_annual_gross_labor_earnings_36_45": 3.0655384081199655,
+        "aggregate_wealth_to_annual_gross_labor_earnings_46_55": 5.311334959400339,
+        "aggregate_wealth_to_annual_gross_labor_earnings_56_65": 7.233444699953966,
+        "annual_bequest_flow_to_aggregate_wealth": 0.009399350034677137,
+        "attempt_hazard_by_age": [
+          0.2652314269948273,
+          0.28582729109435223,
+          0.30802472879765147,
+          0.32977468384738856,
+          0.34987328182668287,
+          0.3721035747912558,
+          0.4096485844372288,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "childless_chosen_45": 0.05864916855990492,
+        "childless_clock_45": 0.05244992522944048,
+        "childless_rate": 0.11109131646917769,
+        "first_birth_age_distribution": [
+          0.29836254532184575,
+          0.2293987424574531,
+          0.1711077781421649,
+          0.1231415546421405,
+          0.08544169570050833,
+          0.057153623540322204,
+          0.035394060195565256,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "first_birth_hazard_by_age": [
+          0.2599267984549308,
+          0.27605681939091,
+          0.29002859289768756,
+          0.29684460009884217,
+          0.29016038456652743,
+          0.2635602677100313,
+          0.20541248483692798,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "housing_increment_0to1": 0.6829752039994258,
+        "housing_increment_1to2": 0.0,
+        "housing_user_cost_share": 0.29152174724097946,
+        "liquid_wealth_to_income": 0.6640810855035417,
+        "market_residual": 1.1297268312768161e-05,
+        "mean_age_first_birth": 25.12375289738096,
+        "mean_completed_fertility": 1.6800961002892887,
+        "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": -0.649603741717554,
+        "old_age_own_rate": 0.9822042743191691,
+        "old_age_parent_childless_gap": -0.004958238361856826,
+        "old_age_parent_childless_gap_6575": -0.004958238361856826,
+        "old_minus_young_owner_rate_6575_2534": 0.801895810795328,
+        "old_nonhousing_ge_1x_income_share_6575": 0.605545610609888,
+        "old_nonhousing_wealth_to_income_6575": 3.8891045253434315,
+        "old_nonhousing_wealth_to_income_median_6575": 2.3277467411545634,
+        "old_owner_rate": 0.9822042743191691,
+        "old_parent_childless_nonhousing_wealth_to_income_gap_6575": -1.016247228586658,
+        "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575": -0.9744056125763287,
+        "old_parent_childless_total_wealth_to_income_gap_6575": -0.9405396736679137,
+        "old_parent_childless_total_wealth_to_income_median_gap_6575": -0.9744056125763283,
+        "old_total_estate_wealth_to_annual_income_median_7684": 7.756545615676615,
+        "old_total_estate_wealth_to_annual_income_p90_p50_7684": 2.014957981418954,
+        "old_total_wealth_to_annual_income_median_7684": 7.756545615676615,
+        "old_total_wealth_to_annual_income_p90_7684": 15.629113496547788,
+        "old_total_wealth_to_annual_income_p90_p50_7684": 2.014957981418954,
+        "old_total_wealth_to_income_6575": 16.155068977486227,
+        "old_total_wealth_to_income_median_6575": 14.453034131172034,
+        "own_family_gap": 0.16376520458652505,
+        "own_gap_newparent_nonparent_3055": 0.16376520458652505,
+        "own_rate": 0.5217927675625132,
+        "own_rate_2534": 0.18030846352384106,
+        "own_rate_3055": 0.5217927675625132,
+        "own_rate_3544": 0.4076209497752105,
+        "own_rate_newparents_3055": 0.5149924563283834,
+        "own_rate_nonparents_3055": 0.35122725174185837,
+        "owner_neg_liquid_share_2534": 0.7297984776617532,
+        "parity_progression_1to2_flow": 0.6502660850314368,
+        "parity_progression_2to3_flow": 0.3687720203872224,
+        "parity_share_0": 0.11109131646917769,
+        "parity_share_1": 0.31088151394078284,
+        "parity_share_2plus": 0.5780271695900394,
+        "parity_share_3plus": 0.21316024716842688,
+        "permanent_income_childless_by_level": [
+          NaN
+        ],
+        "permanent_income_childless_high_minus_low": null,
+        "permanent_income_completed_fertility_by_level": [
+          NaN
+        ],
+        "permanent_income_completed_fertility_high_minus_low": null,
+        "permanent_income_level_values": [
+          NaN
+        ],
+        "permanent_income_own_rate_3055_by_level": [
+          NaN
+        ],
+        "permanent_income_own_rate_3055_high_minus_low": null,
+        "prime30_55_childless_owner_mean_rooms": 6.101910462077806,
+        "prime30_55_childless_owner_minus_renter_mean_rooms": 1.7519249411570073,
+        "prime30_55_childless_owner_share_rooms_ge6": 0.7882945486856531,
+        "prime30_55_childless_renter_mean_rooms": 4.349985520920799,
+        "prime30_55_childless_renter_share_rooms_ge6": 0.07162722140564748,
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.35856100637114174,
+        "prime30_55_parent_owner_minus_renter_mean_rooms": 1.7074182757283722,
+        "prime_childless_owner_median_rooms": 6.0,
+        "prime_childless_owner_minus_renter_rooms": 1.715200850626771,
+        "prime_childless_renter_median_rooms": 4.284799149373229,
+        "renter25_45_all_cap_share": 0.08176086244138753,
+        "second_birth_hazard_by_age": [
+          0.0,
+          0.21114341193681183,
+          0.23260154290177204,
+          0.2551816804793712,
+          0.2717561553567967,
+          0.26372822124383444,
+          0.2056969542513289,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "share_first_births_age30plus": 0.3011309340785363,
+        "tfr": 1.8084951835689578,
+        "third_birth_hazard_by_age": [
+          0.0,
+          0.0,
+          0.12721270756930292,
+          0.14728324248521496,
+          0.17504147814323925,
+          0.20653500663867516,
+          0.20575186514917096,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wealth_to_income": 1.7465527152418607,
+        "young_all_liquid_wealth_to_annual_gross_income_2530": 0.7147160836834479,
+        "young_all_liquid_wealth_to_annual_gross_income_2530_median": 0.43232799638190145,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535": 1.0745119699319485,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535_median": 0.672296875598813,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 1.15759440873164,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": 0.7630314204616142,
+        "young_liquid_wealth_to_income": 0.43845531470730637,
+        "young_owner_rate": 0.18030846352384106
+      },
+      "origin": {
+        "phase": "tight_winner_verification",
+        "search_case": 994
+      },
+      "price": 0.9235857203460113,
+      "rank_loss": 263.5326025297529,
+      "status": "ok",
+      "strict_converged": true,
+      "target_fit": [
+        {
+          "gap": -0.10950481643104215,
+          "loss_contribution": 17.0964708372175,
+          "model": 1.8084951835689578,
+          "moment": "tfr",
+          "target": 1.918,
+          "weight": 1425.7389910084596
+        },
+        {
+          "gap": -0.07690868353082231,
+          "loss_contribution": 101.6231651170848,
+          "model": 0.11109131646917769,
+          "moment": "childless_rate",
+          "target": 0.188,
+          "weight": 17180.743822072007
+        },
+        {
+          "gap": -0.1868079019810409,
+          "loss_contribution": 0.558355075880931,
+          "model": 25.12375289738096,
+          "moment": "mean_age_first_birth",
+          "target": 25.310560799362,
+          "weight": 16.0
+        },
+        {
+          "gap": 0.031068557227194316,
+          "loss_contribution": 15.082113252803877,
+          "model": 0.3011309340785363,
+          "moment": "share_first_births_age30plus",
+          "target": 0.270062376851342,
+          "weight": 15625.0
+        },
+        {
+          "gap": 0.018540203999425797,
+          "loss_contribution": 0.31144689486945415,
+          "model": 0.6829752039994258,
+          "moment": "housing_increment_0to1",
+          "target": 0.664435,
+          "weight": 906.0558911497827
+        },
+        {
+          "gap": -0.00913855243885825,
+          "loss_contribution": 0.2470748783907494,
+          "model": 0.35856100637114174,
+          "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+          "target": 0.36769955881,
+          "weight": 2958.514988007638
+        },
+        {
+          "gap": -0.0038964654134749643,
+          "loss_contribution": 0.21603994959545764,
+          "model": 0.16376520458652505,
+          "moment": "own_family_gap",
+          "target": 0.16766167,
+          "weight": 14229.590955975675
+        },
+        {
+          "gap": -0.053679232437486735,
+          "loss_contribution": 3.4803601759063825,
+          "model": 0.5217927675625132,
+          "moment": "own_rate",
+          "target": 0.575472,
+          "weight": 1207.8460856134493
+        },
+        {
+          "gap": -0.29768096876697925,
+          "loss_contribution": 1.0609890238818303,
+          "model": 5.4822895131749885,
+          "moment": "aggregate_mean_occupied_rooms_18_85",
+          "target": 5.779970481941968,
+          "weight": 11.973159013172177
+        },
+        {
+          "gap": -0.8926265775112814,
+          "loss_contribution": 5.009903122604421,
+          "model": 5.980473422488719,
+          "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+          "target": 6.8731,
+          "weight": 6.287669427540395
+        },
+        {
+          "gap": 0.0005993500346771364,
+          "loss_contribution": 1.855477603654362,
+          "model": 0.009399350034677137,
+          "moment": "annual_bequest_flow_to_aggregate_wealth",
+          "target": 0.0088,
+          "weight": 5165289.256198346
+        },
+        {
+          "gap": -1.433152773026566,
+          "loss_contribution": 116.9912065978632,
+          "model": 2.014957981418954,
+          "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+          "target": 3.44811075444552,
+          "weight": 56.95977216091135
+        }
+      ],
+      "theta": {
+        "H0": 5.925362416509605,
+        "alpha_cons": 0.733,
+        "beta": 0.9784887110169265,
+        "chi": 1.0367630639546366,
+        "delta_alpha": 0.017862055277757378,
+        "delta_alpha_jump": 0.01623118198616128,
+        "kappa_fert": 4.99384075406205,
+        "kappa_fert_continuation": 5.021218272344446,
+        "psi_child": -0.8620729473526386,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.22951231153149626,
+        "theta1": 0.040786143142108315,
+        "theta_n": 0.0
+      },
+      "timing_diagnostics": {
+        "attempt_hazard_by_age": [
+          0.2652314269948273,
+          0.28582729109435223,
+          0.30802472879765147,
+          0.32977468384738856,
+          0.34987328182668287,
+          0.3721035747912558,
+          0.4096485844372288,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "first_birth_age_distribution": [
+          0.29836254532184575,
+          0.2293987424574531,
+          0.1711077781421649,
+          0.1231415546421405,
+          0.08544169570050833,
+          0.057153623540322204,
+          0.035394060195565256,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "first_birth_hazard_by_age": [
+          0.2599267984549308,
+          0.27605681939091,
+          0.29002859289768756,
+          0.29684460009884217,
+          0.29016038456652743,
+          0.2635602677100313,
+          0.20541248483692798,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "permanent_income_childless_by_level": [
+          NaN
+        ],
+        "permanent_income_completed_fertility_by_level": [
+          NaN
+        ],
+        "permanent_income_level_values": [
+          NaN
+        ],
+        "permanent_income_own_rate_3055_by_level": [
+          NaN
+        ],
+        "second_birth_hazard_by_age": [
+          0.0,
+          0.21114341193681183,
+          0.23260154290177204,
+          0.2551816804793712,
+          0.2717561553567967,
+          0.26372822124383444,
+          0.2056969542513289,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "third_birth_hazard_by_age": [
+          0.0,
+          0.0,
+          0.12721270756930292,
+          0.14728324248521496,
+          0.17504147814323925,
+          0.20653500663867516,
+          0.20575186514917096,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "timings": {
+        "accepted": true,
+        "bellman_full": 0.0,
+        "bellman_mode": "reused_accepted_price",
+        "best_eq_error": 1.1297268312768161e-05,
+        "convergence_reason": "strict_tol",
+        "damped_final_eq_error": 0.11170759067433676,
+        "distribution": 0.6261977311223745,
+        "equilibrium_method": "direct_brent",
+        "final_eq_error": 1.1297268312768161e-05,
+        "income_process": "markov",
+        "iterations_completed": 1,
+        "markov_income_solve_time": 1.5306366640143096,
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 0,
+        "price_cache_hits": 0,
+        "reused_bellman_seconds": 1.1678747041150928,
+        "scalar_market_refine": {
+          "best_excess": 6.193419591138394e-05,
+          "best_metric": 1.1297268312768161e-05,
+          "best_price": 0.9235857203460113,
+          "bracket_found": true,
+          "cache_hits": 0,
+          "directional_fallback_used": false,
+          "expansions": 1,
+          "initial_price": 0.965533650862593,
+          "iterations": 3,
+          "method": "brent",
+          "price_evaluation_time_sec": 6.080426947679371,
+          "price_evaluations": 4,
+          "used": true
+        },
+        "strict_converged": true,
+        "unique_fast_price_evaluations": 5
+      },
+      "unit_vector": [
+        0.7123915988622818,
+        0.2672980005743206,
+        0.2548033122717307,
+        0.2854187801209067,
+        0.7055465039015824,
+        0.7062452835471057,
+        0.5978207466281564,
+        0.5655845475316588,
+        0.16937838983009915,
+        0.10660456438326207
+      ]
+    }
+  }
+}
