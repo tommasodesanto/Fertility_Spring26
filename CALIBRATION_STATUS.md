@@ -81,6 +81,20 @@ half-life, chain-6 feasibility stress test).
   balancedness. Author decision.
 - Multi-start `15450694` results pending; certified floor/tilt/chain-6
   winners unchanged until the strict collector reports.
+- **Housing-supply normalization (reporting, not a model change).** The Aug 7
+  deck now writes supply as `H^S = H_0 r^xi` with intercept `61.706`, bounds
+  `[1.25, 500]`, absorbing the fixed reference rent `r_bar = 0.16`
+  (`code/model/intergen_eqscale_seq/parameters.py:178`; never calibrated, also
+  used as the price initializer). Only the composite `H_0 * r_bar^(-xi)` is
+  identified and `xi = 1`, so `9.873 / 0.16 = 61.706` is the same supply curve:
+  nothing was re-solved and no moment moves. Open item: the packet still reports
+  `9.873` (`calibration/floor/parameter_table_full.csv`), and the circulated
+  paper (`latex/intergenerational_housing_fertility_paper_draft.tex:568`) and
+  July 26 slides (`latex/July_26_slides.tex:303`) both use the two-parameter
+  form. Author decided not to revert the deck; paper, deck, and packet must be
+  reconciled on one convention before the next circulation. The two-parameter
+  form is a two-location leftover, where `r_bar_C` was inverted against the
+  center--periphery unit-rent ratio (`latex/main_note.tex:261`).
 
 ## August 6 experimental quota population closure complete
 
