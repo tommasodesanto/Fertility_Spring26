@@ -1,16 +1,18 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=0.78in]{geometry}
+\usepackage[margin=0.80in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,graphicx}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{caption}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{5pt}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=3pt,topsep=4pt}
 \titlespacing*{\section}{0pt}{8pt}{3pt}
 \titleformat{\section}{\large\bfseries}{}{0pt}{}
 \captionsetup{font=small,labelfont=bf,skip=4pt}
@@ -20,131 +22,249 @@
 \begin{center}
 {\LARGE\bfseries Fertility, Population, and House Prices}\par
 \vspace{3pt}
-{\large A simple model}\par
+{\large A transition between steady states}\par
 \vspace{3pt}
 {\small August 8, 2026}
 \end{center}
 
 \vspace{-3pt}
-This note asks whether a lasting fall in the desire for children can move a
-closed economy to a steady state with fewer people and cheaper housing. It can.
-The fall in desired fertility initially puts fertility below replacement.
-Population then contracts, which lowers the house price. Because children use
-housing, the lower price raises fertility until replacement is restored. The
-new steady state has the same replacement rate, but a smaller population and a
-lower house price.
+This note isolates one feedback. A lasting decline in the desire for children
+initially puts fertility below replacement. Population then contracts, which
+reduces housing demand and lowers the house price. Because children require
+housing, the lower price makes children cheaper and fertility recovers. The
+question is whether this process stops at a positive new steady state. In the
+model below it does: long-run fertility returns to replacement, but population
+and the house price are both lower.
 
-\section*{The model}
+\section*{Environment}
 
-Time is discrete. In period $t$ there are $N_t$ identical adult families, so
-$N_t$ is population measured in family units. A family has income $y$ and
-chooses consumption $c$, housing for the adults $h$, and the number of children
-$n$. Each child also requires $a>0$ units of housing and $b\geq0$ units of the
-consumption good. Housing lasts for one period; this removes stock dynamics and
-keeps the argument transparent.
+\textbf{Families and demography.} At date $t$ there is a mass $L_t$ of adult
+families. Population is therefore measured in family units. Each family chooses
+the number of children $n$. The number $\bar n>0$ is replacement fertility; it
+can incorporate survival and the rate at which children form adult families.
 
-The representative family solves
+\textbf{Preferences.} A family has income $y$ and values consumption $c$,
+housing for the adults $h$, and children according to
+\begin{equation}
+ u(c,h,n;\beta)=c+\alpha\log h+\beta\log n,
+ \qquad \alpha>0,\quad \beta>0.
+ \label{eq:utility}
+\end{equation}
+The parameter $\beta$ measures the desire for children. The experiment is a
+permanent decline from $\beta_0$ to $\beta_1<\beta_0$. Quasi-linearity is a
+deliberate simplification: it shuts down income effects and leaves the
+housing-price channel visible in one line.
+
+\textbf{Housing requirements.} Each child uses $a>0$ additional units of
+housing and $b\geq0$ units of the consumption good. If $p$ is the price of one
+unit of housing, the full cost of a child is therefore $b+ap$. A family that
+chooses $(h,n)$ occupies $h+an$ units in total.
+
+\textbf{Housing supply.} The baseline treats housing as a one-period good, so
+its service price and purchase price coincide. Suppliers provide
+\begin{equation}
+ H^s(p)=A p^{\varepsilon},
+ \qquad A>0,\quad \varepsilon\geq0.
+ \label{eq:housing_supply}
+\end{equation}
+The case $\varepsilon=0$ is a fixed supply. A durable housing stock is discussed
+after the main argument.
+
+\section*{The family's problem}
+
+Taking the house price as given, a family solves
 \begin{equation}
  \max_{c,h,n}\; c+\alpha\log h+\beta\log n
  \qquad\text{subject to}\qquad
- c+ph+(b+ap)n=y .
- \tag{1}
+ c+ph+(b+ap)n=y.
+ \label{eq:family_problem}
 \end{equation}
-Here $p$ is the house price, $\alpha>0$ measures the value of housing, and
-$\beta>0$ measures the desire for children. The term $b+ap$ is the full cost of
-a child: $b$ is the direct cost and $ap$ is the cost of the extra housing the
-child requires. The experiment is a permanent fall from $\beta_0$ to
-$\beta_1<\beta_0$.
+The budget makes the mechanism explicit: housing enters the child decision
+through $ap$, the housing cost of accommodating one more child.
 
-The choices implied by (1) are
+The interior choices are
 \begin{equation}
  h(p)=\frac{\alpha}{p},
  \qquad
  n(p;\beta)=\frac{\beta}{b+ap},
  \qquad
- c=y-\alpha-\beta .
- \tag{2}
+ c=y-\alpha-\beta.
+ \label{eq:family_demands}
 \end{equation}
 We assume $y>\alpha+\beta_0$, so consumption is positive before and after the
-change. Equation (2) contains the feedback of interest: a lower house price
-makes the housing needed for children cheaper and therefore raises fertility.
-
-Housing supply is
-\begin{equation}
- H^s(p)=A p^{\varepsilon},
- \qquad A>0,\quad \varepsilon\geq0.
- \tag{3}
-\end{equation}
-The case $\varepsilon=0$ is a fixed supply. Because a family occupies $h+an$
-units of housing, market clearing in period $t$ is
-\begin{equation}
- A p_t^{\varepsilon}
- =N_t\left[\frac{\alpha}{p_t}
- +\frac{a\beta}{b+ap_t}\right].
- \tag{4}
-\end{equation}
-For a given population, this equation determines one house price. More families
-raise the price: supply rises with $p$, while housing demanded by each family
-falls with $p$.
+change. The child decision in \eqref{eq:family_demands} has the two signs the
+argument needs. A lower $\beta$ reduces children at every price; holding
+$\beta$ fixed, a lower house price raises children.
 
 \newpage
-\section*{The steady state}
+\section*{The housing market}
 
-Let $\bar n>0$ be the number of children per family needed for replacement. The
-population law is
+At population $L$, total housing demand is the number of families times the
+housing used by each family. Market clearing therefore requires
 \begin{equation}
- N_{t+1}=N_t\frac{n(p_t;\beta)}{\bar n}.
- \tag{5}
+ A p^{\varepsilon}
+ =L\left[\frac{\alpha}{p}
+ +\frac{a\beta}{b+ap}\right].
+ \label{eq:housing_clearing}
 \end{equation}
-A positive steady state therefore requires $n(p;\beta)=\bar n$. Using (2), the
-house price consistent with replacement is
+The first term inside brackets is adult housing; the second is housing used by
+children. For any $(L,\beta)$, equation \eqref{eq:housing_clearing} determines
+one price. Denote it by $p=P(L;\beta)$.
+
+This price schedule has two simple properties:
+\begin{equation}
+ P_L(L;\beta)>0,
+ \qquad
+ P_\beta(L;\beta)>0.
+ \label{eq:price_schedule_signs}
+\end{equation}
+More families raise housing demand and therefore the price. A stronger desire
+for children also raises the price because each family demands more
+child-related housing. Thus the fall from $\beta_0$ to $\beta_1$ shifts the
+entire price schedule downward. This is the first panel of Figure 1: for every
+current population $L$, the housing market supplies a price $p$.
+
+\section*{Population dynamics and steady states}
+
+The fertility decision changes population slowly. The following reduced-form
+law captures that demographic adjustment:
+\begin{equation}
+ \frac{\dot L_t}{L_t}
+ =\lambda\left[
+ \frac{n(P(L_t;\beta);\beta)}{\bar n}-1
+ \right],
+ \qquad \lambda>0.
+ \label{eq:population_law}
+\end{equation}
+The parameter $\lambda$ determines the speed at which a fertility gap changes
+the adult population. At each date, the housing market first maps $L_t$ into
+$p_t=P(L_t;\beta)$; the family then maps $p_t$ into $n_t=n(p_t;\beta)$; and
+fertility relative to $\bar n$ determines the direction of population change.
+
+A positive steady state requires $n(p^*;\beta)=\bar n$. The child decision
+therefore determines the steady-state price:
 \begin{equation}
  p^*(\beta)=\frac{\beta/\bar n-b}{a}.
- \tag{6}
+ \label{eq:steady_price}
 \end{equation}
 This price is positive when $\beta>b\bar n$. We assume
-$\beta_1>b\bar n$, so both steady states are positive. A fall in $\beta$ lowers
-$p^*$: when families want fewer children, housing must become cheaper before
-they again choose replacement fertility.
+$\beta_1>b\bar n$, so a positive steady state exists after the preference
+change. If this condition fails, even free housing cannot restore replacement
+fertility and the closed population eventually disappears.
 
-At replacement, each family uses $\alpha/p+a\bar n$ units of housing. Combining
-this demand with housing supply gives the population that can be supported at
-each price:
+At replacement, a family uses $\alpha/p^*+a\bar n$ units of housing. Housing
+clearing then determines the steady-state population:
 \begin{equation}
- N(p)=\frac{A p^{\varepsilon}}
- {\alpha/p+a\bar n}
- =\frac{A p^{\varepsilon+1}}
- {\alpha+a\bar n p}.
- \tag{7}
+ L^*(\beta)
+ =\frac{A[p^*(\beta)]^{\varepsilon}}
+ {\alpha/p^*(\beta)+a\bar n}.
+ \label{eq:steady_population}
 \end{equation}
-This function is increasing. A higher price brings forth weakly more housing
-and reduces housing used by each family. Equations (6) and (7) deliver the
-result:
-\[
- \beta\ \text{falls}
+The population supported by the housing market is increasing in the price: a
+higher price brings forth weakly more housing and reduces adult housing used by
+each family. Hence the permanent preference change has the long-run effects
+\begin{equation}
+ \beta_1<\beta_0
  \quad\Longrightarrow\quad
- p^*\ \text{falls}
+ p_1<p_0
  \quad\Longrightarrow\quad
- N^*=N(p^*)\ \text{falls}.
-\]
+ L_1<L_0.
+ \label{eq:long_run_comparison}
+\end{equation}
 
-The adjustment is equally simple. At the old price, the new value $\beta_1$
-would imply fertility below replacement. Market clearing makes the price jump
-down immediately, which cushions the fertility decline. But population is
-still above its new steady-state level, so the price remains above $p^*(\beta_1)$
-and fertility remains below replacement. Population then falls, the price falls
-further, and fertility rises. If population were to fall below its new
-steady-state level, the inequalities would reverse. Thus the feedback moves the
-economy toward the new steady state.
+\newpage
+\section*{The transition and the two diagrams}
 
-\begin{figure}[b!]
+Suppose the economy begins at the old steady state
+$E_0=(L_0,p_0,\bar n)$. When $\beta$ falls, population cannot jump, but the
+housing market can reprice immediately. At the fixed population $L_0$, lower
+child-related housing demand moves the price to
+$\widetilde p=P(L_0;\beta_1)<p_0$.
+
+The impact price does not fall all the way to its new steady-state value. Since
+$L_0>L_1$ and the new price schedule slopes upward,
+$\widetilde p=P(L_0;\beta_1)>P(L_1;\beta_1)=p_1$. The new child decision is
+therefore still below replacement:
+\begin{equation}
+ p_1<\widetilde p<p_0,
+ \qquad
+ \widetilde n\equiv n(\widetilde p;\beta_1)<\bar n.
+ \label{eq:impact_ordering}
+\end{equation}
+The initial price decline cushions the fertility decline but does not eliminate
+it. Population consequently begins to fall. As $L_t$ falls, the economy moves
+down the new housing-market schedule, so $p_t$ falls further. Moving left along
+the new child-demand curve raises fertility from $\widetilde n$ toward
+$\bar n$. If population were below $L_1$, all signs would reverse. The new
+steady state is therefore globally stable in this one-state version of the
+model.
+
+\begin{figure}[h!]
 \centering
-\includegraphics[width=0.96\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
-\caption{Panel (a) maps fertility into the house price. A fall in $\beta$
-shifts the curve down, so replacement fertility is reached at a lower price.
-Panel (b) maps that price into population through the housing market. The lower
-price is associated with a smaller population. The two points compare steady
-states, not dates along the transition.}
+\includegraphics[width=0.98\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+\caption{The feedback is read from left to right. Panel (a) maps current
+population into the market-clearing house price. Panel (b) maps that price into
+the family's child decision. The preference decline shifts both schedules
+down. On impact, the economy moves from the old steady state $E_0$ to $I$ while
+population remains fixed. During the transition it moves from $I$ to the new
+steady state $E_1$: population and price fall, while fertility rises back to
+replacement. The curves are schematic, not a calibration.}
+\label{fig:feedback}
 \end{figure}
+
+\newpage
+\section*{Reading the figure}
+
+The panels contain different economic objects. Panel (a) is a market-clearing
+schedule: it combines housing demand and supply and reports the equilibrium
+price associated with each population. Panel (b) is the family's child demand
+itself: the house price is on the horizontal axis, children are on the vertical
+axis, and the curve slopes downward. Price is therefore the output of the first
+panel and the input into the second.
+
+Figure \ref{fig:feedback} separates three logically different movements:
+\begin{enumerate}
+ \item \textbf{The preference shift.} In Panel (b), lower $\beta$ shifts the
+ child decision down at every price. In Panel (a), the same change reduces
+ child-related housing demand and shifts the market-clearing price down at
+ every population.
+ \item \textbf{The impact response.} Population is still $L_0$, so Panel (a)
+ gives the intermediate price $\widetilde p$. Panel (b) then gives
+ $\widetilde n<\bar n$. This is point $I$.
+ \item \textbf{The demographic response.} Below-replacement fertility reduces
+ $L$. The price moves down the new curve in Panel (a); the lower price moves
+ fertility up the new curve in Panel (b). Adjustment stops at $E_1$, where
+ fertility again equals $\bar n$.
+\end{enumerate}
+
+The diagrams can also be read backward to compare steady states. Replacement
+fertility in Panel (b) selects $p_0$ before the change and $p_1$ after it.
+Those two prices select $L_0$ and $L_1$ in Panel (a). This is why the same figure
+shows both the transition mechanism and the long-run comparative static.
+
+\section*{Durable housing}
+
+The impact jump in Figure \ref{fig:feedback} uses the one-period housing supply
+in \eqref{eq:housing_supply}. A durable model must distinguish the service
+price $r_t$, which enters the family's decisions, from the asset price $q_t$,
+which governs construction. With a predetermined stock $H_t$, the corresponding
+conditions would be
+\begin{equation}
+ H_t=L_t\left[h(r_t)+a n(r_t;\beta)\right],
+ \qquad
+ \dot H_t=X(q_t)-\delta H_t,
+ \qquad
+ r^*=(\rho+\delta)q^*.
+ \label{eq:durable_extension}
+\end{equation}
+Here $\rho$ is the interest rate and the last equality is the stationary user
+cost relation. In a steady state, $H=X(q)/\delta$ and service and asset prices
+move in the same direction. Choosing stationary construction so that the
+resulting supply of services is $A r^\varepsilon$ leaves
+\eqref{eq:steady_price}--\eqref{eq:steady_population} unchanged. The transition
+is no longer summarized by a single curve $P(L;\beta)$ because both $L_t$ and
+$H_t$ are predetermined states. Thus the simple model establishes the two
+steady states and the feedback sign, not the exact time path of a durable asset
+price.
 
 \end{document}

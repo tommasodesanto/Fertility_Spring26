@@ -1,7 +1,7 @@
-"""Build the two linked diagrams for the simple fertility--housing note.
+"""Build the linked housing-market and child-decision diagrams.
 
-The parameters are chosen only to make the analytical relationships easy to
-see.  They are not a calibration or a quantitative counterfactual.
+The parameters are chosen only to make the analytical transition easy to see.
+They are not a calibration or a quantitative counterfactual.
 """
 
 from __future__ import annotations
@@ -19,93 +19,178 @@ OUTDIR = (
 )
 
 
-def inverse_fertility(
-    fertility: np.ndarray,
+def child_demand(
+    price: np.ndarray | float,
     beta: float,
     child_cost: float,
     child_space: float,
-) -> np.ndarray:
-    """House price at which a family chooses a given fertility level."""
+) -> np.ndarray | float:
+    """Return children per family at a given house price."""
 
-    return (beta / fertility - child_cost) / child_space
+    return beta / (child_cost + child_space * price)
 
 
-def population_at_replacement(
+def housing_per_family(
     price: np.ndarray | float,
+    beta: float,
+    *,
+    housing_weight: float,
+    child_cost: float,
+    child_space: float,
+) -> np.ndarray | float:
+    """Return adult plus child-related housing demand per family."""
+
+    adult_housing = housing_weight / price
+    child_housing = child_space * child_demand(
+        price,
+        beta,
+        child_cost,
+        child_space,
+    )
+    return adult_housing + child_housing
+
+
+def population_at_price(
+    price: np.ndarray | float,
+    beta: float,
     *,
     supply_scale: float,
     supply_elasticity: float,
     housing_weight: float,
+    child_cost: float,
     child_space: float,
-    replacement: float,
 ) -> np.ndarray | float:
-    """Population supported by the housing market at replacement fertility."""
+    """Return the population supported by housing clearing at a price."""
 
-    supply = supply_scale * np.power(price, supply_elasticity)
-    housing_per_family = housing_weight / price + child_space * replacement
-    return supply / housing_per_family
+    housing_supply = supply_scale * np.power(price, supply_elasticity)
+    return housing_supply / housing_per_family(
+        price,
+        beta,
+        housing_weight=housing_weight,
+        child_cost=child_cost,
+        child_space=child_space,
+    )
+
+
+def price_at_population(
+    population: float,
+    beta: float,
+    *,
+    supply_scale: float,
+    supply_elasticity: float,
+    housing_weight: float,
+    child_cost: float,
+    child_space: float,
+) -> float:
+    """Invert the monotone housing-clearing schedule."""
+
+    price_grid = np.linspace(0.01, 4.0, 30_000)
+    population_grid = population_at_price(
+        price_grid,
+        beta,
+        supply_scale=supply_scale,
+        supply_elasticity=supply_elasticity,
+        housing_weight=housing_weight,
+        child_cost=child_cost,
+        child_space=child_space,
+    )
+    if population < population_grid[0] or population > population_grid[-1]:
+        raise ValueError("Population lies outside the inversion grid.")
+    return float(np.interp(population, population_grid, price_grid))
 
 
 def illustration() -> dict[str, float]:
-    """Choose a transparent normalization for the schematic figure."""
+    """Choose a normalization with visible impact and transition movements."""
 
     values = {
-        "housing_weight": 1.0,
-        "child_cost": 0.4,
-        "child_space": 0.6,
+        "income": 3.0,
+        "housing_weight": 0.6,
+        "child_cost": 0.2,
+        "child_space": 0.8,
         "replacement": 1.0,
-        "old_price": 1.0,
-        "new_price": 0.68,
+        "old_beta": 1.0,
+        "new_beta": 0.7,
         "supply_elasticity": 0.4,
+        "old_population": 1.0,
     }
-    values["old_beta"] = values["replacement"] * (
-        values["child_cost"] + values["child_space"] * values["old_price"]
-    )
-    values["new_beta"] = values["replacement"] * (
-        values["child_cost"] + values["child_space"] * values["new_price"]
-    )
+    values["old_price"] = (
+        values["old_beta"] / values["replacement"] - values["child_cost"]
+    ) / values["child_space"]
+    values["new_price"] = (
+        values["new_beta"] / values["replacement"] - values["child_cost"]
+    ) / values["child_space"]
 
-    old_housing = (
-        values["housing_weight"] / values["old_price"]
-        + values["child_space"] * values["replacement"]
-    )
-    values["supply_scale"] = old_housing
-    values["old_population"] = population_at_replacement(
+    old_housing = housing_per_family(
         values["old_price"],
-        supply_scale=values["supply_scale"],
-        supply_elasticity=values["supply_elasticity"],
+        values["old_beta"],
         housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
         child_space=values["child_space"],
-        replacement=values["replacement"],
     )
-    values["new_population"] = population_at_replacement(
+    values["supply_scale"] = (
+        values["old_population"]
+        * old_housing
+        / values["old_price"] ** values["supply_elasticity"]
+    )
+    values["new_population"] = population_at_price(
         values["new_price"],
+        values["new_beta"],
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
         child_space=values["child_space"],
-        replacement=values["replacement"],
+    )
+    values["impact_price"] = price_at_population(
+        values["old_population"],
+        values["new_beta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    values["impact_fertility"] = child_demand(
+        values["impact_price"],
+        values["new_beta"],
+        values["child_cost"],
+        values["child_space"],
     )
     return values
 
 
 def verify(values: dict[str, float]) -> None:
-    """Check that the drawing obeys the model's comparative statics."""
+    """Check every ordering displayed in the figure."""
 
     assert values["new_beta"] < values["old_beta"]
-    assert values["new_price"] < values["old_price"]
+    assert values["new_beta"] > values["child_cost"] * values["replacement"]
+    assert values["income"] > values["housing_weight"] + values["old_beta"]
     assert values["new_population"] < values["old_population"]
+    assert values["new_price"] < values["impact_price"] < values["old_price"]
+    assert values["impact_fertility"] < values["replacement"]
 
-    price_grid = np.linspace(0.2, 1.35, 300)
-    population_grid = population_at_replacement(
+    price_grid = np.linspace(0.2, 1.4, 500)
+    old_population = population_at_price(
         price_grid,
+        values["old_beta"],
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
         child_space=values["child_space"],
-        replacement=values["replacement"],
     )
-    assert np.all(np.diff(population_grid) > 0.0)
+    new_population = population_at_price(
+        price_grid,
+        values["new_beta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    assert np.all(np.diff(old_population) > 0.0)
+    assert np.all(np.diff(new_population) > 0.0)
+    assert np.all(new_population > old_population)
 
 
 def write_parameters(values: dict[str, float]) -> None:
@@ -117,17 +202,34 @@ def write_parameters(values: dict[str, float]) -> None:
             writer.writerow([name, f"{value:.12g}"])
 
 
+def add_arrow(
+    axis: plt.Axes,
+    start: tuple[float, float],
+    end: tuple[float, float],
+    *,
+    color: str = "#555555",
+) -> None:
+    """Add an unobtrusive directional arrow between two points."""
+
+    axis.annotate(
+        "",
+        xy=end,
+        xytext=start,
+        arrowprops={"arrowstyle": "->", "color": color, "linewidth": 1.25},
+    )
+
+
 def build_figure(values: dict[str, float]) -> None:
-    """Draw the fertility--price and price--population maps."""
+    """Draw population-to-price and price-to-children maps."""
 
     plt.rcParams.update(
         {
             "font.family": "serif",
-            "font.size": 10.0,
-            "axes.labelsize": 10.0,
-            "axes.titlesize": 10.5,
-            "xtick.labelsize": 9.0,
-            "ytick.labelsize": 9.0,
+            "font.size": 10.2,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.3,
+            "ytick.labelsize": 9.3,
             "axes.spines.top": False,
             "axes.spines.right": False,
             "figure.facecolor": "white",
@@ -138,173 +240,256 @@ def build_figure(values: dict[str, float]) -> None:
 
     old_color = "#244f74"
     new_color = "#a3473f"
-    guide_color = "#999999"
+    guide_color = "#a0a0a0"
+    transition_color = "#555555"
 
-    fig, (left, right) = plt.subplots(
+    fig, (market_axis, child_axis) = plt.subplots(
         1,
         2,
-        figsize=(8.8, 2.75),
-        sharey=True,
-        gridspec_kw={"wspace": 0.26},
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.30},
     )
 
-    fertility = np.linspace(0.68, 1.42, 350)
-    old_curve = inverse_fertility(
-        fertility,
+    price_grid = np.linspace(0.42, 1.16, 500)
+    old_population_curve = population_at_price(
+        price_grid,
         values["old_beta"],
-        values["child_cost"],
-        values["child_space"],
-    )
-    new_curve = inverse_fertility(
-        fertility,
-        values["new_beta"],
-        values["child_cost"],
-        values["child_space"],
-    )
-    left.plot(fertility, old_curve, color=old_color, linewidth=2.0)
-    left.plot(
-        fertility,
-        new_curve,
-        color=new_color,
-        linewidth=2.0,
-        linestyle=(0, (5, 3)),
-    )
-    left.axvline(
-        values["replacement"],
-        color="#555555",
-        linewidth=1.0,
-        linestyle=(0, (2, 2)),
-    )
-    left.scatter(
-        [values["replacement"], values["replacement"]],
-        [values["old_price"], values["new_price"]],
-        color=[old_color, new_color],
-        s=28,
-        zorder=5,
-    )
-    old_label_height = inverse_fertility(
-        np.array([1.27]),
-        values["old_beta"],
-        values["child_cost"],
-        values["child_space"],
-    )[0]
-    new_label_height = inverse_fertility(
-        np.array([1.27]),
-        values["new_beta"],
-        values["child_cost"],
-        values["child_space"],
-    )[0]
-    left.text(
-        1.27,
-        old_label_height + 0.04,
-        r"before: $\beta_0$",
-        color=old_color,
-        ha="center",
-    )
-    left.text(
-        1.27,
-        new_label_height - 0.09,
-        r"after: $\beta_1$",
-        color=new_color,
-        ha="center",
-    )
-    left.text(
-        values["replacement"] + 0.012,
-        1.28,
-        "replacement",
-        rotation=90,
-        va="top",
-        color="#555555",
-    )
-    left.set_title("(a) Fertility and the house price")
-    left.set_xlabel(r"Children per family, $n$")
-    left.set_ylabel(r"House price, $p$")
-    left.set_xlim(0.68, 1.42)
-    left.set_xticks([values["replacement"]], labels=[r"$\bar n$"])
-    left.set_yticks(
-        [values["new_price"], values["old_price"]],
-        labels=[r"$p_1$", r"$p_0$"],
-    )
-
-    price = np.linspace(0.20, 1.35, 350)
-    population = population_at_replacement(
-        price,
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
         child_space=values["child_space"],
-        replacement=values["replacement"],
     )
-    right.plot(population, price, color="#333333", linewidth=2.1)
-    right.scatter(
-        [values["old_population"], values["new_population"]],
-        [values["old_price"], values["new_price"]],
-        color=[old_color, new_color],
-        s=28,
-        zorder=5,
+    new_population_curve = population_at_price(
+        price_grid,
+        values["new_beta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
     )
-    right.text(0.98, 1.04, "housing market", rotation=33, color="#333333")
-    right.set_title("(b) House price and population")
-    right.set_xlabel(r"Population (families), $N$")
-    right.set_xlim(0.25, 1.35)
-    right.set_xticks(
-        [values["new_population"], values["old_population"]],
-        labels=[r"$N_1$", r"$N_0$"],
+    market_axis.plot(
+        old_population_curve,
+        price_grid,
+        color=old_color,
+        linewidth=2.1,
+    )
+    market_axis.plot(
+        new_population_curve,
+        price_grid,
+        color=new_color,
+        linewidth=2.1,
+        linestyle=(0, (5, 3)),
+    )
+    market_axis.text(1.08, 1.085, r"before: $\beta_0$", color=old_color)
+    market_axis.text(1.08, 0.80, r"after: $\beta_1$", color=new_color)
+    market_axis.set_title("(a) Population and the house price")
+    market_axis.set_xlabel(r"Population (families), $L$")
+    market_axis.set_ylabel(r"House price, $p$")
+
+    old_point = (values["old_population"], values["old_price"])
+    impact_market_point = (values["old_population"], values["impact_price"])
+    new_point = (values["new_population"], values["new_price"])
+    market_axis.scatter(
+        [old_point[0], impact_market_point[0], new_point[0]],
+        [old_point[1], impact_market_point[1], new_point[1]],
+        color=[old_color, new_color, new_color],
+        s=[36, 34, 36],
+        zorder=6,
+    )
+    market_axis.text(old_point[0] + 0.025, old_point[1] + 0.025, r"$E_0$", color=old_color)
+    market_axis.text(
+        impact_market_point[0] + 0.025,
+        impact_market_point[1] - 0.055,
+        r"$I$",
+        color=new_color,
+    )
+    market_axis.text(new_point[0] - 0.055, new_point[1] + 0.025, r"$E_1$", color=new_color)
+    add_arrow(market_axis, old_point, impact_market_point)
+
+    transition_start_price = values["impact_price"] - 0.055
+    transition_end_price = values["new_price"] + 0.055
+    transition_start_population = population_at_price(
+        transition_start_price,
+        values["new_beta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    transition_end_population = population_at_price(
+        transition_end_price,
+        values["new_beta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    add_arrow(
+        market_axis,
+        (transition_start_population, transition_start_price),
+        (transition_end_population, transition_end_price),
+    )
+    market_axis.text(
+        0.70,
+        0.70,
+        r"$L$ falls",
+        rotation=34,
+        color=transition_color,
+        fontsize=9.2,
     )
 
-    for axis in (left, right):
-        axis.set_ylim(0.20, 1.35)
-        axis.grid(False)
+    child_price_grid = np.linspace(0.46, 1.16, 500)
+    old_child_curve = child_demand(
+        child_price_grid,
+        values["old_beta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    new_child_curve = child_demand(
+        child_price_grid,
+        values["new_beta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    child_axis.plot(child_price_grid, old_child_curve, color=old_color, linewidth=2.1)
+    child_axis.plot(
+        child_price_grid,
+        new_child_curve,
+        color=new_color,
+        linewidth=2.1,
+        linestyle=(0, (5, 3)),
+    )
+    child_axis.axhline(
+        values["replacement"],
+        color="#666666",
+        linewidth=1.0,
+        linestyle=(0, (2, 2)),
+    )
+    child_axis.text(1.045, 0.92, r"before: $\beta_0$", color=old_color)
+    child_axis.text(0.995, 0.62, r"after: $\beta_1$", color=new_color)
+    child_axis.set_title("(b) House price and the child decision")
+    child_axis.set_xlabel(r"House price, $p$")
+    child_axis.set_ylabel(r"Children per family, $n$")
 
-    for price_value in (values["old_price"], values["new_price"]):
-        left.hlines(
-            price_value,
-            0.68,
-            values["replacement"],
-            color=guide_color,
-            linewidth=0.8,
-            linestyle=(0, (3, 3)),
-        )
-        right.axhline(
-            price_value,
-            color=guide_color,
-            linewidth=0.8,
-            linestyle=(0, (3, 3)),
-        )
+    impact_child_point = (values["impact_price"], values["impact_fertility"])
+    old_child_point = (values["old_price"], values["replacement"])
+    new_child_point = (values["new_price"], values["replacement"])
+    child_axis.scatter(
+        [old_child_point[0], impact_child_point[0], new_child_point[0]],
+        [old_child_point[1], impact_child_point[1], new_child_point[1]],
+        color=[old_color, new_color, new_color],
+        s=[36, 34, 36],
+        zorder=6,
+    )
+    child_axis.text(old_child_point[0] + 0.014, old_child_point[1] + 0.035, r"$E_0$", color=old_color)
+    child_axis.text(
+        impact_child_point[0] + 0.015,
+        impact_child_point[1] - 0.065,
+        r"$I$",
+        color=new_color,
+    )
+    child_axis.text(new_child_point[0] - 0.035, new_child_point[1] + 0.035, r"$E_1$", color=new_color)
+    add_arrow(child_axis, old_child_point, impact_child_point)
 
-    for population_value, price_value in (
-        (values["old_population"], values["old_price"]),
-        (values["new_population"], values["new_price"]),
-    ):
-        right.vlines(
-            population_value,
-            0.20,
-            price_value,
-            color=guide_color,
-            linewidth=0.8,
-            linestyle=(0, (3, 3)),
-        )
-
-    left.annotate(
-        r"$\beta$ falls",
-        xy=(
-            0.84,
-            inverse_fertility(
-                np.array([0.84]),
+    child_transition_start_price = values["impact_price"] - 0.045
+    child_transition_end_price = values["new_price"] + 0.045
+    add_arrow(
+        child_axis,
+        (
+            child_transition_start_price,
+            child_demand(
+                child_transition_start_price,
                 values["new_beta"],
                 values["child_cost"],
                 values["child_space"],
-            )[0],
+            ),
         ),
-        xytext=(0.72, 1.23),
-        arrowprops={"arrowstyle": "->", "color": "#555555", "linewidth": 1.0},
-        ha="center",
-        color="#555555",
+        (
+            child_transition_end_price,
+            child_demand(
+                child_transition_end_price,
+                values["new_beta"],
+                values["child_cost"],
+                values["child_space"],
+            ),
+        ),
+    )
+    child_axis.text(
+        0.72,
+        0.88,
+        r"$n$ rises",
+        rotation=-31,
+        color=transition_color,
+        fontsize=9.2,
     )
 
+    market_axis.set_xlim(0.35, 1.36)
+    market_axis.set_ylim(0.42, 1.16)
+    market_axis.set_xticks(
+        [values["new_population"], values["old_population"]],
+        labels=[r"$L_1$", r"$L_0$"],
+    )
+    market_axis.set_yticks(
+        [values["new_price"], values["impact_price"], values["old_price"]],
+        labels=[r"$p_1$", r"$\widetilde p$", r"$p_0$"],
+    )
+
+    child_axis.set_xlim(0.46, 1.16)
+    child_axis.set_ylim(0.55, 1.42)
+    child_axis.set_xticks(
+        [values["new_price"], values["impact_price"], values["old_price"]],
+        labels=[r"$p_1$", r"$\widetilde p$", r"$p_0$"],
+    )
+    child_axis.set_yticks(
+        [values["impact_fertility"], values["replacement"]],
+        labels=[r"$\widetilde n$", r"$\bar n$"],
+    )
+
+    for axis in (market_axis, child_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    for price_value, population_value in (
+        (values["old_price"], values["old_population"]),
+        (values["impact_price"], values["old_population"]),
+        (values["new_price"], values["new_population"]),
+    ):
+        market_axis.hlines(
+            price_value,
+            0.35,
+            population_value,
+            color=guide_color,
+            linewidth=0.7,
+            linestyle=(0, (3, 3)),
+            zorder=0,
+        )
+
+    for price_value, fertility_value in (
+        (values["old_price"], values["replacement"]),
+        (values["impact_price"], values["impact_fertility"]),
+        (values["new_price"], values["replacement"]),
+    ):
+        child_axis.vlines(
+            price_value,
+            0.55,
+            fertility_value,
+            color=guide_color,
+            linewidth=0.7,
+            linestyle=(0, (3, 3)),
+            zorder=0,
+        )
+
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTDIR / "steady_state_comparative_statics.pdf", pad_inches=0.04)
-    fig.savefig(OUTDIR / "steady_state_comparative_statics.png", dpi=220, pad_inches=0.04)
+    fig.savefig(OUTDIR / "steady_state_comparative_statics.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "steady_state_comparative_statics.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
     plt.close(fig)
 
 
