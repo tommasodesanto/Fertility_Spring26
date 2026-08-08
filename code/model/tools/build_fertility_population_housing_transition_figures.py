@@ -1,8 +1,13 @@
-"""Build the two figures for the fertility-population-housing transition note.
+"""Build the linked steady-state diagrams for the fertility-housing note.
 
-The illustration solves the exact linear two-state system stated in
-``latex/fertility_population_housing_transition_note.tex``.  It is a
-transparent thought experiment, not a calibration or a model counterfactual.
+The figure is schematic.  Its two panels visualize the exact analytical maps
+derived in ``latex/fertility_population_housing_transition_note.tex``:
+
+1. household child demand maps replacement fertility into a house price; and
+2. housing demand and supply map that house price into population.
+
+The parameter values only determine the geometry of the drawing.  They are not
+a calibration or a quantitative counterfactual.
 """
 
 from __future__ import annotations
@@ -16,98 +21,160 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 OUTDIR = REPO_ROOT / "output" / "model" / "fertility_population_housing_transition_note"
+LEGACY_TIME_PATH_OUTPUTS = (
+    "population_transition.pdf",
+    "housing_price_transition.pdf",
+    "transition_paths.csv",
+    "illustration_parameters.csv",
+)
 
 
-def matrix_exponential_2x2(matrix: np.ndarray, time: float) -> np.ndarray:
-    """Return exp(matrix * time) using the two distinct real eigenvalues."""
+def preference_weight_for_price(
+    price: float,
+    *,
+    alpha: float,
+    income: float,
+    child_cost: float,
+    child_space: float,
+    replacement_fertility: float,
+) -> float:
+    """Recover chi so that household fertility equals replacement at ``price``."""
 
-    roots = np.linalg.eigvals(matrix)
-    roots = np.sort(np.real_if_close(roots).astype(float))
-    slow, fast = roots[1], roots[0]
-    if np.isclose(slow, fast):
-        identity = np.eye(2)
-        return np.exp(slow * time) * (identity + (matrix - slow * identity) * time)
-    identity = np.eye(2)
-    return (
-        np.exp(slow * time) * (matrix - fast * identity)
-        - np.exp(fast * time) * (matrix - slow * identity)
-    ) / (slow - fast)
-
-
-def solve_transition() -> tuple[np.ndarray, dict[str, np.ndarray], dict[str, float]]:
-    """Solve the normalized transition used in the note's illustration."""
-
-    price_long_run = 0.90
-    housing_supply_elasticity = 1.0
-    fertility_price_semi_elasticity = 1.0
-    population_adjustment = 0.02
-    housing_depreciation = 0.025
-
-    price_log_ss = np.log(price_long_run)
-    fertility_shift = fertility_price_semi_elasticity * price_log_ss
-    a = population_adjustment * fertility_price_semi_elasticity
-    xi = housing_supply_elasticity
-    delta = housing_depreciation
-
-    transition_matrix = np.array(
-        [[-a, a], [delta * xi, -delta * (1.0 + xi)]], dtype=float
+    expenditure_share = (
+        (child_cost + child_space * price) * replacement_fertility / income
     )
-    forcing = np.array([population_adjustment * fertility_shift, 0.0])
-    steady_state = -np.linalg.solve(transition_matrix, forcing)
+    if not 0.0 < expenditure_share < 1.0:
+        raise ValueError("The illustrative replacement-fertility share must be in (0, 1).")
+    return expenditure_share * (1.0 + alpha) / (1.0 - expenditure_share)
 
-    years = np.linspace(0.0, 500.0, 501)
-    states = np.empty((years.size, 2))
-    initial_state = np.zeros(2)
-    for index, year in enumerate(years):
-        states[index] = steady_state + matrix_exponential_2x2(
-            transition_matrix, year
-        ) @ (initial_state - steady_state)
 
-    population_log = states[:, 0]
-    housing_log = states[:, 1]
-    price_log = population_log - housing_log
-    fertility_gap = fertility_shift - fertility_price_semi_elasticity * price_log
+def inverse_fertility_demand(
+    fertility: np.ndarray,
+    *,
+    chi: float,
+    alpha: float,
+    income: float,
+    child_cost: float,
+    child_space: float,
+) -> np.ndarray:
+    """Return the price consistent with a chosen fertility level."""
 
-    roots = np.sort(np.real_if_close(np.linalg.eigvals(transition_matrix)).astype(float))
-    series = {
-        "population_log": population_log,
-        "housing_log": housing_log,
-        "price_log": price_log,
-        "population_ratio": np.exp(population_log),
-        "housing_ratio": np.exp(housing_log),
-        "price_ratio": np.exp(price_log),
-        "net_reproduction_gap": fertility_gap,
-    }
+    utility_weight_sum = 1.0 + alpha + chi
+    child_expenditure = chi * income / utility_weight_sum
+    return (child_expenditure / fertility - child_cost) / child_space
+
+
+def replacement_housing_demand(
+    price: np.ndarray | float,
+    *,
+    alpha: float,
+    income: float,
+    child_cost: float,
+    child_space: float,
+    replacement_fertility: float,
+) -> np.ndarray | float:
+    """Per-household housing demand conditional on replacement fertility."""
+
+    discretionary_component = (
+        alpha
+        * (income - child_cost * replacement_fertility)
+        / ((1.0 + alpha) * price)
+    )
+    required_component = child_space * replacement_fertility / (1.0 + alpha)
+    return discretionary_component + required_component
+
+
+def population_supported_by_price(
+    price: np.ndarray | float,
+    *,
+    supply_scale: float,
+    supply_elasticity: float,
+    alpha: float,
+    income: float,
+    child_cost: float,
+    child_space: float,
+    replacement_fertility: float,
+) -> np.ndarray | float:
+    """Return population from stationary housing-market clearing."""
+
+    housing_supply = supply_scale * np.power(price, supply_elasticity)
+    housing_per_household = replacement_housing_demand(
+        price,
+        alpha=alpha,
+        income=income,
+        child_cost=child_cost,
+        child_space=child_space,
+        replacement_fertility=replacement_fertility,
+    )
+    return housing_supply / housing_per_household
+
+
+def illustration() -> dict[str, float]:
+    """Construct a transparent normalization for the schematic diagram."""
+
     parameters = {
-        "price_long_run": price_long_run,
-        "population_long_run": float(np.exp(steady_state[0])),
-        "housing_long_run": float(np.exp(steady_state[1])),
-        "housing_supply_elasticity": housing_supply_elasticity,
-        "population_adjustment": population_adjustment,
-        "housing_depreciation": housing_depreciation,
-        "slow_root": float(roots[1]),
-        "fast_root": float(roots[0]),
-        "slow_half_life_years": float(np.log(2.0) / -roots[1]),
+        "alpha": 1.0,
+        "income": 4.0,
+        "child_cost": 0.4,
+        "child_space": 0.6,
+        "replacement_fertility": 1.0,
+        "old_price": 1.0,
+        "new_price": 0.70,
+        "supply_elasticity": 0.40,
     }
-    return years, series, parameters
+    parameters["old_chi"] = preference_weight_for_price(
+        parameters["old_price"],
+        alpha=parameters["alpha"],
+        income=parameters["income"],
+        child_cost=parameters["child_cost"],
+        child_space=parameters["child_space"],
+        replacement_fertility=parameters["replacement_fertility"],
+    )
+    parameters["new_chi"] = preference_weight_for_price(
+        parameters["new_price"],
+        alpha=parameters["alpha"],
+        income=parameters["income"],
+        child_cost=parameters["child_cost"],
+        child_space=parameters["child_space"],
+        replacement_fertility=parameters["replacement_fertility"],
+    )
+    old_housing_per_household = replacement_housing_demand(
+        parameters["old_price"],
+        alpha=parameters["alpha"],
+        income=parameters["income"],
+        child_cost=parameters["child_cost"],
+        child_space=parameters["child_space"],
+        replacement_fertility=parameters["replacement_fertility"],
+    )
+    parameters["supply_scale"] = old_housing_per_household / np.power(
+        parameters["old_price"], parameters["supply_elasticity"]
+    )
+    parameters["old_population"] = population_supported_by_price(
+        parameters["old_price"],
+        supply_scale=parameters["supply_scale"],
+        supply_elasticity=parameters["supply_elasticity"],
+        alpha=parameters["alpha"],
+        income=parameters["income"],
+        child_cost=parameters["child_cost"],
+        child_space=parameters["child_space"],
+        replacement_fertility=parameters["replacement_fertility"],
+    )
+    parameters["new_population"] = population_supported_by_price(
+        parameters["new_price"],
+        supply_scale=parameters["supply_scale"],
+        supply_elasticity=parameters["supply_elasticity"],
+        alpha=parameters["alpha"],
+        income=parameters["income"],
+        child_cost=parameters["child_cost"],
+        child_space=parameters["child_space"],
+        replacement_fertility=parameters["replacement_fertility"],
+    )
+    return parameters
 
 
-def write_csv(
-    years: np.ndarray, series: dict[str, np.ndarray], parameters: dict[str, float]
-) -> None:
+def write_parameters(parameters: dict[str, float]) -> None:
     OUTDIR.mkdir(parents=True, exist_ok=True)
-    with (OUTDIR / "transition_paths.csv").open("w", newline="") as stream:
-        writer = csv.writer(stream)
-        writer.writerow(["year", *series.keys()])
-        for index, year in enumerate(years):
-            writer.writerow(
-                [
-                    f"{year:.8f}",
-                    *(f"{values[index]:.12g}" for values in series.values()),
-                ]
-            )
-
-    with (OUTDIR / "illustration_parameters.csv").open("w", newline="") as stream:
+    with (OUTDIR / "diagram_parameters.csv").open("w", newline="") as stream:
         writer = csv.writer(stream)
         writer.writerow(["parameter", "value"])
         for name, value in parameters.items():
@@ -121,8 +188,8 @@ def apply_plot_style() -> None:
             "font.size": 10.0,
             "axes.labelsize": 10.0,
             "axes.titlesize": 10.5,
-            "xtick.labelsize": 9.0,
-            "ytick.labelsize": 9.0,
+            "xtick.labelsize": 9.5,
+            "ytick.labelsize": 9.5,
             "axes.spines.top": False,
             "axes.spines.right": False,
             "figure.facecolor": "white",
@@ -132,61 +199,206 @@ def apply_plot_style() -> None:
     )
 
 
-def plot_path(
-    years: np.ndarray,
-    values: np.ndarray,
-    long_run: float,
-    ylabel: str,
-    title: str,
-    filename: str,
-    ylim: tuple[float, float],
-) -> None:
-    color = "#1f5a85"
-    fig, axis = plt.subplots(figsize=(4.25, 2.70))
-    axis.plot(years, values, color=color, linewidth=2.2)
-    axis.axhline(1.0, color="#777777", linestyle=(0, (2, 2)), linewidth=1.0)
-    axis.axhline(long_run, color="#a33b33", linestyle=(0, (5, 3)), linewidth=1.2)
-    axis.set_xlim(years[0], years[-1])
-    axis.set_ylim(*ylim)
-    axis.set_xlabel("Years after the fertility-schedule shift")
-    axis.set_ylabel(ylabel)
-    axis.set_title(title, loc="left", fontweight="semibold")
-    axis.grid(axis="y", color="#d9d9d9", linewidth=0.6)
-    axis.text(
-        years[-1] * 0.985,
-        long_run + 0.006,
-        "new steady state",
-        color="#a33b33",
-        fontsize=8.5,
-        ha="right",
+def build_figure(parameters: dict[str, float]) -> None:
+    alpha = parameters["alpha"]
+    income = parameters["income"]
+    child_cost = parameters["child_cost"]
+    child_space = parameters["child_space"]
+    replacement = parameters["replacement_fertility"]
+    old_price = parameters["old_price"]
+    new_price = parameters["new_price"]
+    old_population = parameters["old_population"]
+    new_population = parameters["new_population"]
+
+    old_color = "#245985"
+    new_color = "#b4493f"
+    neutral = "#555555"
+    guide = "#a4a4a4"
+
+    fig, (fertility_axis, population_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(8.65, 3.05),
+        sharey=True,
+        gridspec_kw={"wspace": 0.30},
+    )
+
+    fertility_grid = np.linspace(0.64, 1.48, 350)
+    old_schedule = inverse_fertility_demand(
+        fertility_grid,
+        chi=parameters["old_chi"],
+        alpha=alpha,
+        income=income,
+        child_cost=child_cost,
+        child_space=child_space,
+    )
+    new_schedule = inverse_fertility_demand(
+        fertility_grid,
+        chi=parameters["new_chi"],
+        alpha=alpha,
+        income=income,
+        child_cost=child_cost,
+        child_space=child_space,
+    )
+    fertility_axis.plot(fertility_grid, old_schedule, color=old_color, linewidth=2.1)
+    fertility_axis.plot(
+        fertility_grid,
+        new_schedule,
+        color=new_color,
+        linewidth=2.1,
+        linestyle=(0, (5, 3)),
+    )
+    fertility_axis.axvline(
+        replacement, color=neutral, linewidth=1.1, linestyle=(0, (2, 2))
+    )
+    fertility_axis.scatter(
+        [replacement, replacement],
+        [old_price, new_price],
+        color=[old_color, new_color],
+        s=31,
+        zorder=5,
+    )
+    fertility_axis.annotate(
+        "",
+        xy=(replacement, new_price + 0.025),
+        xytext=(replacement, old_price - 0.025),
+        arrowprops={"arrowstyle": "->", "color": neutral, "lw": 1.1},
+    )
+    fertility_axis.text(
+        0.69,
+        1.49,
+        r"old schedule $p_h^F(\ell;\chi_0)$",
+        color=old_color,
+        ha="left",
+        va="center",
+        fontsize=9.0,
+    )
+    fertility_axis.text(
+        0.69,
+        1.10,
+        r"new schedule $p_h^F(\ell;\chi_1)$",
+        color=new_color,
+        ha="left",
+        va="center",
+        fontsize=9.0,
+    )
+    fertility_axis.text(
+        replacement + 0.018,
+        0.30,
+        "replacement",
+        color=neutral,
+        rotation=90,
+        ha="left",
+        va="bottom",
+        fontsize=8.7,
+    )
+    fertility_axis.set_xlim(0.62, 1.50)
+    fertility_axis.set_xlabel(r"fertility $\ell$")
+    fertility_axis.set_ylabel(r"house price $p_h$")
+    fertility_axis.set_title("A. Household fertility schedule", loc="left", fontweight="semibold")
+    fertility_axis.set_xticks([replacement], [r"$\bar\ell$"])
+
+    price_grid = np.linspace(0.26, 1.56, 400)
+    population_grid = population_supported_by_price(
+        price_grid,
+        supply_scale=parameters["supply_scale"],
+        supply_elasticity=parameters["supply_elasticity"],
+        alpha=alpha,
+        income=income,
+        child_cost=child_cost,
+        child_space=child_space,
+        replacement_fertility=replacement,
+    )
+    population_axis.plot(
+        population_grid, price_grid, color=neutral, linewidth=2.2
+    )
+    population_axis.scatter(
+        [old_population, new_population],
+        [old_price, new_price],
+        color=[old_color, new_color],
+        s=31,
+        zorder=5,
+    )
+    for population, price, color in (
+        (old_population, old_price, old_color),
+        (new_population, new_price, new_color),
+    ):
+        population_axis.hlines(
+            price, 0.0, population, color=color, linewidth=1.0, linestyle=(0, (3, 3))
+        )
+        population_axis.vlines(
+            population, 0.24, price, color=color, linewidth=1.0, linestyle=(0, (3, 3))
+        )
+    population_axis.annotate(
+        "",
+        xy=(new_population + 0.012, new_price + 0.012),
+        xytext=(old_population - 0.012, old_price - 0.012),
+        arrowprops={"arrowstyle": "->", "color": neutral, "lw": 1.1},
+    )
+    population_axis.text(
+        old_population + 0.025,
+        old_price + 0.035,
+        r"$E_0$",
+        color=old_color,
+        ha="left",
         va="bottom",
     )
-    fig.savefig(OUTDIR / filename, format="pdf")
+    population_axis.text(
+        new_population - 0.025,
+        new_price - 0.04,
+        r"$E_1$",
+        color=new_color,
+        ha="right",
+        va="top",
+    )
+    label_price = 1.30
+    label_population = float(
+        population_supported_by_price(
+            label_price,
+            supply_scale=parameters["supply_scale"],
+            supply_elasticity=parameters["supply_elasticity"],
+            alpha=alpha,
+            income=income,
+            child_cost=child_cost,
+            child_space=child_space,
+            replacement_fertility=replacement,
+        )
+    )
+    population_axis.text(
+        label_population + 0.035,
+        label_price,
+        r"housing-market locus $N^H(p_h)$",
+        color=neutral,
+        ha="left",
+        va="center",
+        fontsize=9.0,
+    )
+    population_axis.set_xlim(0.0, 1.65)
+    population_axis.set_xlabel(r"adult households $N$")
+    population_axis.set_title(
+        "B. Housing clearing at replacement", loc="left", fontweight="semibold"
+    )
+    population_axis.set_xticks(
+        [new_population, old_population], [r"$N_1^*$", r"$N_0^*$"]
+    )
+
+    for axis in (fertility_axis, population_axis):
+        axis.set_ylim(0.24, 1.62)
+        axis.set_yticks([new_price, old_price], [r"$p_1^*$", r"$p_0^*$"])
+        axis.grid(False)
+
+    fig.savefig(OUTDIR / "steady_state_comparative_statics.pdf", format="pdf")
     plt.close(fig)
 
 
 def main() -> None:
-    years, series, parameters = solve_transition()
-    write_csv(years, series, parameters)
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    for filename in LEGACY_TIME_PATH_OUTPUTS:
+        (OUTDIR / filename).unlink(missing_ok=True)
+    parameters = illustration()
+    write_parameters(parameters)
     apply_plot_style()
-    plot_path(
-        years,
-        series["population_ratio"],
-        parameters["population_long_run"],
-        r"$N_t/N_0$",
-        "Population",
-        "population_transition.pdf",
-        (0.78, 1.02),
-    )
-    plot_path(
-        years,
-        series["price_ratio"],
-        parameters["price_long_run"],
-        r"$p_t/p_0$",
-        "Housing-services price",
-        "housing_price_transition.pdf",
-        (0.88, 1.02),
-    )
+    build_figure(parameters)
 
 
 if __name__ == "__main__":
