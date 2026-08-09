@@ -26,13 +26,49 @@ reconstruction gives the following event-study path:
 The former target `0.664435` and its synthetic five-percent weight are
 withdrawn. The active E5 target set is now `e5_idfe_review_20260809`, and the
 row uses its measured clustered SE rather than the synthetic weight. No model
-recalibration was launched in this repair. Consequently every M/E calibration
+recalibration was launched in the initial empirical repair; the corrected E5b
+refit is documented immediately below. Consequently every prior M/E calibration
 and paper table using `0.664435` is a **pre-correction historical result**, and
 the retained E5b parameter estimate is not certified under the corrected
 target contract until it is refit. Do not silently rescore or quote its policy
 elasticities as corrected. The empirical reconstruction is reproducible from
 `code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do`; the
 standard-error gate is under `code/data/moment_standard_errors/`.
+
+### Corrected E5b refit and nesting gate
+
+Torch smoke array `15552935` completed two chains with 13/13 converged cases
+each, no stderr, and exact target-metadata checks. That reduced-grid smoke did
+not test historical-model nesting. The first production checkpoints exposed a
+large failure: the certified E5b theta evaluated at loss about `1,700`, with
+completed fertility `1.0811` rather than its certified `1.9036`. Production
+array `15552949` and collector `15552950` were therefore cancelled after about
+five minutes; they are invalid and must never be collected.
+
+A commit bisect pins the break to the August 5 default-off maturation repair
+(`7a402cc`). In the shared-clock branch, an upward birth's Bellman continuation
+incorrectly used child state `cs+1`; historical E5b resets a successful birth
+to its single active child state `1`. The repaired independent-count branch
+correctly uses `cs+1`. The branch-specific destination is now explicit and
+unit-tested. At the old E5b theta, the corrected strict loop reproduces all
+twelve certified model moments with maximum absolute difference `5.19e-12`,
+two bit-identical tight solves, and residual `1.11e-6`. Its loss under the new
+ID-FE target contract is `385.875493604`; this is a nesting/readout gate, not a
+new estimate.
+
+The launch contract fixes target set `e5_idfe_review_20260809` and target
+fingerprint
+`b7c1c1da7578d19e15415c377f2c68b813aca22c6fe5bebda684c14131ec58bc`.
+It explicitly disables maturation repair, the child-room-floor arm, and all
+E6 switches; retains the symmetric $\psi_{child}\in[-3,3]$ domain and the old
+certified E5b estimate only as the search seed; and writes `best.json`,
+`latest_completed_case.json`, and append-only case checkpoints in every
+chain. The collector rejects mixed target fingerprints and still requires two
+bit-identical strict tight solves. A new exact preflight additionally requires
+the unperturbed seed's search moments within `2e-4` and tight moments within
+`1e-8` of the certified E5b record before production is allowed. Until the
+corrected relaunch is collected, the prior E5b remains pre-correction and no
+policy result is promoted.
 
 ## August 7 overnight population-closure hardening
 

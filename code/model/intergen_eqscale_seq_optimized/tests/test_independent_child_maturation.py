@@ -12,6 +12,7 @@ from intergen_eqscale_seq_optimized.parameters import (
     setup_parameters,
 )
 from intergen_eqscale_seq_optimized.solver import (
+    birth_destination_child_state,
     current_child_bin_dt,
     get_birth_entry_grant_tensor,
     get_completed_fertility,
@@ -35,6 +36,15 @@ def repaired_parameters(**extra: object) -> SimpleNamespace:
     }
     overrides.update(extra)
     return apply_overrides(P, overrides)
+
+
+def test_birth_destination_preserves_the_historical_shared_clock() -> None:
+    historical = setup_parameters()
+    repaired = repaired_parameters()
+    assert birth_destination_child_state(historical, 1) == 1
+    assert birth_destination_child_state(repaired, 0) == 1
+    assert birth_destination_child_state(repaired, 1) == 2
+    assert birth_destination_child_state(repaired, 2) == 3
 
 
 def test_two_child_transition_matches_independent_binomial_formula() -> None:

@@ -151,6 +151,16 @@ Counterfactual contract discipline:
 
 Identification discipline for SMM:
 
+- Every active empirical calibration row must record its authoritative
+  builder, estimator, sample, fixed effects, clustering, event-time or
+  measurement definition, estimate, and uncertainty where available. A
+  robustness specification cannot become the calibration source without an
+  explicit author decision and a new target-contract name.
+- Production calibration launchers must pin the complete target-and-weight
+  fingerprint and fail before solving if it differs. Collectors must reject
+  mixed fingerprints across chains. Reproducing an already hard-coded scalar
+  is not a provenance check.
+
 - Never underidentify an SMM calibration. A calibration with \(x\) free
   parameters needs at least \(x\) informative moments or explicitly stated
   external restrictions. If the hard target count falls below the number of

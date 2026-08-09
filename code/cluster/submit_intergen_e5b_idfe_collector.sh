@@ -21,7 +21,7 @@ PYTHON_BIN="$(command -v python3 || command -v python)"
 export PYTHONPATH="$MODEL_DIR:${PYTHONPATH:-}"
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
-RUN_ROOT="${E5B_IDFE_RUN_ROOT:-$PROJECT_ROOT/output/model/eqscale_seq_e5b_idfe_recalibration_20260809}"
+RUN_ROOT="${E5B_IDFE_RUN_ROOT:-$PROJECT_ROOT/output/model/eqscale_seq_e5b_idfe_nestingfixed_recalibration_20260809}"
 exec "$PYTHON_BIN" "$MODEL_DIR/intergen_eqscale_seq_optimized/collect_e1.py" \
   --results-root "$RUN_ROOT/production" \
   --outdir "$RUN_ROOT/report" \

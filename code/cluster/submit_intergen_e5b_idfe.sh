@@ -2,7 +2,7 @@
 # Refit the maintained pre-E6 E5b architecture under the August 9 ID-FE
 # first-birth rooms target contract.  Production: eight independent local
 # chains, at most 1,000 solves or 225 minutes each.  Every solve checkpoints.
-# Submit the two-chain smoke first with E5B_IDFE_MODE=smoke and an array override.
+# Submit the two-chain smoke and one-chain exact preflight before production.
 #SBATCH --job-name=ihfe5bid
 #SBATCH --output=logs/slurm_ihfe5bid_%A_%a.out
 #SBATCH --error=logs/slurm_ihfe5bid_%A_%a.err
@@ -37,7 +37,7 @@ export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THRE
 
 TASK_ID="${SLURM_ARRAY_TASK_ID:?array task required}"
 MODE="${E5B_IDFE_MODE:-production}"
-RUN_ROOT="${E5B_IDFE_RUN_ROOT:-$PROJECT_ROOT/output/model/eqscale_seq_e5b_idfe_recalibration_20260809}"
+RUN_ROOT="${E5B_IDFE_RUN_ROOT:-$PROJECT_ROOT/output/model/eqscale_seq_e5b_idfe_nestingfixed_recalibration_20260809}"
 
 case "$TASK_ID" in
   1) START_MIX=0.000 ;;
@@ -49,6 +49,18 @@ esac
 if [ "$MODE" = "smoke" ]; then
   OUTDIR="$RUN_ROOT/smoke/chain_${TASK_ID}"
   EXTRA_ARGS=(--smoke --minutes 8 --max-evals 13)
+elif [ "$MODE" = "preflight" ]; then
+  if [ "$TASK_ID" != "1" ]; then
+    echo "E5b ID-FE preflight must use array task 1 only" >&2
+    exit 2
+  fi
+  OUTDIR="$RUN_ROOT/preflight/chain_1"
+  START_MIX=0.000
+  EXTRA_ARGS=(
+    --minutes 5 --max-evals 1
+    --seed-reproduction-record "$E2_SEED_RECORD"
+    --seed-reproduction-atol 2e-4
+  )
 elif [ "$MODE" = "production" ]; then
   OUTDIR="$RUN_ROOT/production/chain_${TASK_ID}"
   EXTRA_ARGS=(--minutes 225 --max-evals 1000)

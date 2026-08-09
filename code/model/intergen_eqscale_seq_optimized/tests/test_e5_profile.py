@@ -38,6 +38,23 @@ class E5ProfileTests(unittest.TestCase):
             1.0 / e5_profile.E5_MEASURED_SES[name] ** 2,
         )
 
+    def test_seed_reproduction_gate_compares_model_moments(self) -> None:
+        from intergen_eqscale_seq_optimized.run_e1_chain import seed_reproduction_gate
+
+        with tempfile.TemporaryDirectory() as tmp:
+            reference = Path(tmp) / "reference.json"
+            reference.write_text(json.dumps({
+                "winners": {"E1": {"moments": {"a": 1.0, "b": 2.0}}}
+            }))
+            gate = seed_reproduction_gate(
+                {"moments": {"a": 1.0 + 1e-6, "b": 2.0 - 2e-6}},
+                reference,
+                ("a", "b"),
+                3e-6,
+            )
+        self.assertTrue(gate["pass"])
+        self.assertAlmostEqual(gate["max_absolute_moment_difference"], 2e-6)
+
     def test_standard_diagnostic_uses_literal_top_group_measurement(self) -> None:
         sol = SimpleNamespace(
             mean_completed_fertility=1.5,

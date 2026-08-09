@@ -186,6 +186,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-iter-eq", type=int, default=DEFAULT_MAX_ITER_EQ)
     parser.add_argument("--tol-eq", type=float, default=1e-4)
     parser.add_argument(
+        "--seed-reproduction-record",
+        type=Path,
+        help="Optional certified result whose model moments the unperturbed seed must reproduce.",
+    )
+    parser.add_argument("--seed-reproduction-atol", type=float, default=2e-4)
+    parser.add_argument(
         "--weight-scheme",
         choices=(
             "canonical",
@@ -199,6 +205,46 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     return parser.parse_args()
+
+
+def seed_reproduction_gate(
+    candidate: dict[str, Any],
+    reference_path: Path,
+    moment_names: tuple[str, ...],
+    atol: float,
+) -> dict[str, Any]:
+    """Compare one seed solve with a certified model-moment record."""
+    payload: Any = json.loads(Path(reference_path).read_text())
+    reference = (payload.get("winners") or {}).get("E1")
+    if not isinstance(reference, dict) or not isinstance(reference.get("moments"), dict):
+        raise ValueError(f"{reference_path} does not contain winners.E1.moments")
+    candidate_moments = candidate.get("moments") or {}
+    missing = [
+        name
+        for name in moment_names
+        if name not in reference["moments"] or name not in candidate_moments
+    ]
+    if missing:
+        raise ValueError(f"seed reproduction moment(s) missing: {missing}")
+    rows = [
+        {
+            "moment": name,
+            "reference": float(reference["moments"][name]),
+            "candidate": float(candidate_moments[name]),
+            "difference": float(candidate_moments[name])
+            - float(reference["moments"][name]),
+        }
+        for name in moment_names
+    ]
+    max_abs_difference = max(abs(float(row["difference"])) for row in rows)
+    tolerance = float(atol)
+    return {
+        "reference_path": str(reference_path),
+        "absolute_tolerance": tolerance,
+        "max_absolute_moment_difference": max_abs_difference,
+        "pass": bool(max_abs_difference <= tolerance),
+        "rows": rows,
+    }
 
 
 def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
@@ -629,7 +675,26 @@ def main() -> None:
             eval_idx += 1
         return record
 
-    simplex = [(x0.copy(), evaluate(x0, "seed", {"phase": "seed"}))]
+    seed_record = evaluate(x0, "seed", {"phase": "seed"})
+    simplex = [(x0.copy(), seed_record)]
+    if args.seed_reproduction_record is not None:
+        if start_mix != 0.0:
+            raise ValueError("seed reproduction gate requires --start-mix=0")
+        gate = seed_reproduction_gate(
+            seed_record,
+            args.seed_reproduction_record,
+            tuple(targets),
+            args.seed_reproduction_atol,
+        )
+        (args.outdir / "seed_reproduction_gate.json").write_text(
+            json.dumps(jsonable(gate), indent=2, sort_keys=True)
+        )
+        if not gate["pass"]:
+            raise RuntimeError(
+                "seed reproduction gate failed: "
+                f"max moment difference={gate['max_absolute_moment_difference']:.6g}, "
+                f"tolerance={gate['absolute_tolerance']:.6g}"
+            )
     for j in range(len(DOMAIN)):
         if not can_eval(): break
         step = float(args.initial_step) * (0.75 + 0.5 * rng.random()); trial = x0.copy()
@@ -677,6 +742,24 @@ def main() -> None:
     strict_tight = [row for row in tight_records if row.get("strict_converged")]
     best_tight = min(strict_tight, key=lambda row: float(row["rank_loss"])) if strict_tight else None
     if best_tight is not None: (args.outdir / "best_tight.json").write_text(json.dumps(jsonable(best_tight), indent=2, sort_keys=True))
+    if args.seed_reproduction_record is not None:
+        if best_tight is None:
+            raise RuntimeError("seed reproduction preflight produced no strict tight solve")
+        tight_gate = seed_reproduction_gate(
+            best_tight,
+            args.seed_reproduction_record,
+            tuple(targets),
+            min(float(args.seed_reproduction_atol), 1e-8),
+        )
+        (args.outdir / "tight_seed_reproduction_gate.json").write_text(
+            json.dumps(jsonable(tight_gate), indent=2, sort_keys=True)
+        )
+        if not tight_gate["pass"]:
+            raise RuntimeError(
+                "tight seed reproduction gate failed: "
+                f"max moment difference={tight_gate['max_absolute_moment_difference']:.6g}, "
+                f"tolerance={tight_gate['absolute_tolerance']:.6g}"
+            )
     repeat_check = None
     if len(tight_records) == 2 and all(row.get("moments") for row in tight_records):
         repeat_check = {"loss_abs_difference": abs(float(tight_records[0]["rank_loss"]) - float(tight_records[1]["rank_loss"])),

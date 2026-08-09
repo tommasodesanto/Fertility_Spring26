@@ -233,6 +233,18 @@ def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float
     return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
 
 
+def birth_destination_child_state(P: SimpleNamespace, current_child_state: int) -> int:
+    """Child-state destination after a successful upward birth attempt.
+
+    The historical shared-clock architecture resets every birth to its single
+    active child state.  Only the independent-count repair increments the
+    number of children currently at home.
+    """
+    if independent_child_maturation_active(P):
+        return int(current_child_state) + 1
+    return 1
+
+
 def housing_demand_normalizer(P: SimpleNamespace) -> float:
     if normalize_population_mass(P):
         return max(float(getattr(P, "N_target", 1.0)), 1e-12)
@@ -2664,10 +2676,11 @@ def solve_bellman_full_markov_income(
                     for nn in range(1, npar - 1):
                         child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
                         for cs in child_states:
+                            destination_cs = birth_destination_child_state(P, cs)
                             V2 = np.empty((Nb, nt, I, 2))
                             V2[:, :, :, 0] = VI[:, :, :, nn, cs]
                             V2[:, :, :, 1] = (
-                                pi_j * VI[:, :, :, nn + 1, cs + 1]
+                                pi_j * VI[:, :, :, nn + 1, destination_cs]
                                 + (1.0 - pi_j) * VI[:, :, :, nn, cs]
                             )
                             l2, p2 = logsumexp(V2 / kf_cont, axis=3)
@@ -4490,7 +4503,7 @@ def forward_distribution_markov_income(
                                 m2 = at_risk * attempt_prob
                                 realized2 = pi_j * m2
                                 g[:, :, :, j, zz, nn, cs] -= realized2
-                                destination_cs = cs + 1 if independent_child_maturation_active(P) else 1
+                                destination_cs = birth_destination_child_state(P, cs)
                                 g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
                                 if nn == 1:
                                     second_attempts_by_age[j] += float(np.sum(m2))
