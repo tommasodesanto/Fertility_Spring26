@@ -224,6 +224,18 @@ moves or metro family-size-premium effects.
 
 ## First-Pass Twins/Gender Findings
 
+An August 9 full-panel follow-up is implemented in
+`iv_housing_panel_reaudit_20260809.do`, with compact results documented under
+`output/iv_housing_panel_reaudit_20260809/`. It retains event times -4 through
++5 and estimates mother- and calendar-year-fixed-effect panel reduced forms and
+IV specifications. The panel adds only four twins-proxy mothers to the rooms
+sample (38 rather than 34). The weighted twins rooms IV is 0.706 (SE 0.424,
+p=0.096); its unweighted counterpart is 0.671 (SE 0.302, p=0.027), but the
+dynamic weighted reduced form has a marginal pre-period joint test (p=0.082).
+Treat it as suggestive triangulation, not a replacement target. Other weighted
+panel IV estimates are insignificant, and the same-sex rooms response remains
+negative.
+
 From `output/twins_gender_iv_v1/iv_first_stage_v1.tex`:
 
 - `twin_firstbirth -> two_plus`: coefficient `0.316` (SE `0.050`), strong first stage.
