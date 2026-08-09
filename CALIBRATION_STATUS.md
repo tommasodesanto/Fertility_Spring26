@@ -70,6 +70,14 @@ the unperturbed seed's search moments within `2e-4` and tight moments within
 corrected relaunch is collected, the prior E5b remains pre-correction and no
 policy result is promoted.
 
+The corrected Torch sequence is now live: two-chain smoke `15553259` passed;
+exact full-grid preflight `15553279` passed both reproduction gates; eight-chain
+production array `15553319` is running; strict dependent collector `15553320`
+is pending. Each production chain is capped at 1,000 solves or 225 minutes,
+for at most 8,000 solves and about four hours of wall-clock time. Artifacts are
+under
+`output/model/eqscale_seq_e5b_idfe_nestingfixed_recalibration_20260809/`.
+
 ## August 7 overnight population-closure hardening
 
 Four changes, all committed and pushed; no estimated parameter, target,
