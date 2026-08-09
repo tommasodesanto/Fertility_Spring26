@@ -15,6 +15,7 @@ No existing project files were overwritten.
 - `wealth_regressions_v1.do`
 - `twins_and_gender_iv_v1.do`
 - `secondborn_gender_design_v1.do`
+- `iv_housing_reaudit_20260809.do`
 - `compile_no_location_family_space_packet.py`
 - `future_parent_dp_moments_v1.do`
 - `build_future_parent_dp_moments_v1.py`
@@ -234,3 +235,18 @@ From `output/secondborn_gender_v1/secondborn_first_stage_v1.tex`:
 - Split by first-child sex, `second_girl` is not strongly predictive in either subsample.
 
 Interpretation at this stage: twins design is much stronger than the same-sex/mixed-sex design in this sample; IV point estimates on ownership outcomes are imprecise and should be treated as exploratory.
+
+## August 2026 Twins and Same-Sex Housing Re-audit
+
+`iv_housing_reaudit_20260809.do` supersedes the directional interpretation of
+the four first-pass IV scripts above. It aligns the twins design at the first
+birth and the same-sex design at the second birth, uses mother-level samples,
+defines fertility within the matching five-year housing window, repairs
+biennial transition measurement and missing outcomes, and reports first stages,
+reduced forms, OLS, 2SLS, balance, and unweighted sensitivities.
+
+The corrected point estimates are mostly directionally supportive for
+space-related moving and tenure transitions but remain imprecise. They are
+triangulation only, not calibration targets or an independent causal pillar.
+The complete audit and the exact interview language are in
+`output/iv_housing_reaudit_20260809/README.md`.

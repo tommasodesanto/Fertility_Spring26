@@ -1,6 +1,23 @@
 # Calibration Status
 
-Updated: `2026-08-09` (first-birth rooms household-FE target correction; author retains the pre-E6 maintained model pending refit)
+Updated: `2026-08-09` (first-birth rooms source-code hold discovered during the PSID fertility-IV audit)
+
+## August 9 unresolved rooms-code hold
+
+The PSID source variable `ACTUALROOMS_` contains non-room codes `0` and `99`,
+but the active first-birth Sun--Abraham builder renames the variable to `rooms`
+and uses it without an explicit valid-code restriction. The fertility-IV
+re-audit found 6,712 such values among 704,258 matched parent-years. This is a
+verified source-code omission; its effect on the exact Sun--Abraham estimation
+sample and the $k=+3$ coefficient has not yet been measured.
+
+Consequently the household-FE estimate `0.80494368` and its SE `0.16728361`
+remain the last exactly reproduced values, but they are **under empirical hold**
+rather than final calibration inputs. The live corrected-E5b refit may finish
+computationally, but it cannot be promoted or used for policy until the builder
+applies an authoritatively documented rooms-code rule, the complete event-study
+path is re-estimated, and any changed target contract is refit. No replacement
+estimate was produced during the IV audit.
 
 ## August 9 first-birth rooms target correction: household FE restored
 

@@ -351,6 +351,17 @@ if the live model has changed.
   comparable to live broad-core room-scale benchmark losses.
 - The repository has substantial generated output. Prefer canonical status files
   and active file indexes over raw search by filename.
+- In PSID event-window code, indicators must remain missing outside the window
+  and when the source outcome is unobserved; a Boolean expression that includes
+  the window condition silently turns non-observations into zeros.
+- The PSID is biennial after 1997. Measure transitions from the previous observed
+  interview, not Stata's calendar-year `L.` operator. Treat `ACTUALROOMS_` codes
+  `0` and `99` as non-room values unless an authoritative codebook establishes
+  otherwise.
+- Fertility-IV outcome clocks must begin when the instrument is realized (first
+  birth for a twins-at-first-birth design, second birth for first-two-child sex
+  composition), and household outcomes need one observation per household or
+  household-level clustering.
 
 ## Communication Standard
 
