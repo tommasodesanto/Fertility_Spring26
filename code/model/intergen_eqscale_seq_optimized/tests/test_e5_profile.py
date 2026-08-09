@@ -28,6 +28,16 @@ class E5ProfileTests(unittest.TestCase):
         self.assertAlmostEqual(e5_profile.E5_TARGETS["share_first_births_age30plus"], 0.270062376851342)
         self.assertEqual(len(e5_profile.e5_target_system().targets_dict()), 12)
 
+    def test_rooms_target_uses_idfe_estimate_and_measured_se(self) -> None:
+        name = "housing_increment_0to1"
+        self.assertEqual(e5_profile.E5_TARGET_SET, "e5_idfe_review_20260809")
+        self.assertAlmostEqual(e5_profile.E5_TARGETS[name], 0.80494368)
+        self.assertAlmostEqual(e5_profile.E5_MEASURED_SES[name], 0.16728361)
+        self.assertAlmostEqual(
+            e5_profile.E5_WEIGHTS[name],
+            1.0 / e5_profile.E5_MEASURED_SES[name] ** 2,
+        )
+
     def test_standard_diagnostic_uses_literal_top_group_measurement(self) -> None:
         sol = SimpleNamespace(
             mean_completed_fertility=1.5,

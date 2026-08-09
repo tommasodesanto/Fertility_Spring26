@@ -78,7 +78,7 @@ gen F7event = (K < -6 & K != .)
 drop F${ref_sa}event
 
 eventstudyinteract rooms L*event F*event, ///
-    vce(cluster ID) absorb(year) cohort(first_child_year) control_cohort(lastcohort) ///
+    vce(cluster ID) absorb(ID year) cohort(first_child_year) control_cohort(lastcohort) ///
     covariates(i.AGEREP i.EDUYEAR)
 
 quietly summarize rooms if e(sample) & K == -${ref_sa}

@@ -30,7 +30,7 @@ Plus two supplementary tabulations (same sources, same session):
 | childless_rate | 0.188000 | same CPS builder and sample |
 | own_rate | 0.575472 | ACS/MMS |
 | own_family_gap | 0.167662 | ACS/MMS |
-| housing_increment_0to1 | 0.664435 | PSID event study (Sun-Abraham) |
+| housing_increment_0to1 | 0.80494368 | PSID event study (Sun-Abraham; household and year FE) |
 | old_parent_childless_nonhousing_wealth_to_income_gap_6575 | 1.007450 | PSID |
 | prime30_55_childless_renter_mean_rooms | 3.805288 | ACS/MMS |
 | prime30_55_childless_owner_share_rooms_ge6 | 0.596131 | ACS/MMS |
@@ -62,8 +62,10 @@ First-birth timing rows remain outside this CPS builder.
   (Stata) and `code/data/psid_followup_mar2026/sa_rooms_first_birth_variants_v1.do`.
   Reimplement the Sun-Abraham estimator in R with `fixest::feols` + `sunab()` if
   Stata is unavailable. Vars: ACTUALROOMS_, HOMEOWN, RELCHI1BYEAR, NETWORTH2R, IW.
-  Target 0.664435 = the K=3 (0->1 child) rooms coefficient; the K=5 plateau
-  coef_p5 = 0.843 is also produced (needed for T1b — report it here too).
+  Target 0.80494368 = the household-and-year-FE K=3 (0->1 child) rooms
+  coefficient; the K=5 plateau coef_p5 = 1.0019588 is also produced (needed
+  for T1b — report it here too). The former 0.664435 target came from the
+  no-household-FE rebuild and is withdrawn.
 - ACS/MMS moments: `code/data/mms_center_periphery/reconstruct_target_moments.R`,
   `build_intergen_one_market_housing_targets.R`, `audit_ownership_targets.R`.
   Microdata: `code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta`
@@ -102,7 +104,8 @@ Clustering + weights (do not deviate without logging why):
   dependence across waves. Report the effective number of clusters.
 - PSID event study (housing_increment_0to1): the PRIMARY SE is the analytic
   cluster-robust SE of the Sun-Abraham K=3 coefficient, clustered at the family
-  id (fixest `cluster = ~famid`). Also report the K=5 plateau coefficient and its
+  id, with family and year fixed effects (`fixest`: `| famid + year`,
+  `cluster = ~famid`). Also report the K=5 plateau coefficient and its
   clustered SE. A family-cluster bootstrap of the SA regression is OPTIONAL
   (only if it finishes < 30 min); if run, report both.
 - ACS moments: household-level weighted resample. ACS here is a repeated

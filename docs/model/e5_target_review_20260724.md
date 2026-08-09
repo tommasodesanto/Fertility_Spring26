@@ -1,5 +1,12 @@
 # E5 target review ledger (2026-07-24)
 
+> **Superseded target note (2026-08-09).** The first-child rooms row reviewed
+> below used `0.664435`, which was traced to a no-household-FE robustness
+> rebuild. The intended Sun--Abraham specification absorbs household and year
+> effects. Its exact active-builder estimate is `0.80494368` (clustered SE
+> `0.16728361`). The July E5/E5b estimates are therefore pre-correction
+> calibrations and require refitting under target set `e5_idfe_review_20260809`.
+
 Row-by-row author review of the E5 target system. Each row is registered here
 when signed off in discussion. Format: target, source, parameter connection.
 This file becomes the E5 contract table when the review completes.

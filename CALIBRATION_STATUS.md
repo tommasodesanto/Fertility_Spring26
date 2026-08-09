@@ -1,6 +1,38 @@
 # Calibration Status
 
-Updated: `2026-08-07` overnight (author retains the pre-E6 maintained model)
+Updated: `2026-08-09` (first-birth rooms household-FE target correction; author retains the pre-E6 maintained model pending refit)
+
+## August 9 first-birth rooms target correction: household FE restored
+
+The PSID Sun--Abraham builder used for the first-birth rooms calibration row
+had silently promoted a no-household-fixed-effect robustness specification.
+The historical paper specification absorbed household and calendar-year fixed
+effects; no author decision or identification argument was found for dropping
+the household effect. The drift entered the cleaned repository baseline and
+was subsequently treated as authoritative during the July standard-error
+pass.
+
+The active builders now use `absorb(ID year)` with age and education
+indicators and household-clustered standard errors. The exact full-sample
+reconstruction gives the following event-study path:
+
+- $k=+3$: `0.80494368`, SE `0.16728361` (new active target);
+- $k=+5$: `1.0019588`, SE `0.17687583`;
+- all stored pre-period coefficients are individually insignificant:
+  $k<-6$ `0.1735` (SE `0.1457`), $k=-5$ `0.0454` (`0.2279`),
+  $k=-4$ `-0.1589` (`0.1740`), $k=-3$ `-0.1522` (`0.1745`), and
+  $k=-1$ `-0.0080` (`0.1537`), relative to $k=-2$.
+
+The former target `0.664435` and its synthetic five-percent weight are
+withdrawn. The active E5 target set is now `e5_idfe_review_20260809`, and the
+row uses its measured clustered SE rather than the synthetic weight. No model
+recalibration was launched in this repair. Consequently every M/E calibration
+and paper table using `0.664435` is a **pre-correction historical result**, and
+the retained E5b parameter estimate is not certified under the corrected
+target contract until it is refit. Do not silently rescore or quote its policy
+elasticities as corrected. The empirical reconstruction is reproducible from
+`code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do`; the
+standard-error gate is under `code/data/moment_standard_errors/`.
 
 ## August 7 overnight population-closure hardening
 

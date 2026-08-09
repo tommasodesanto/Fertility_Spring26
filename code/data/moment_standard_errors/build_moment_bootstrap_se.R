@@ -69,7 +69,7 @@ TARGETS <- data.table(
     0.188000,
     0.575472,
     0.167662,
-    0.664435,
+    0.80494368,
     1.007450,
     3.805288,
     0.596131,
@@ -732,7 +732,7 @@ run_event_study <- function(psid) {
       method_note = paste0(
         "Read-only existing Stata builder summary ",
         "sa_rooms_first_birth_one_variant_v1/rooms_f_c_y_all_summary.csv; ",
-        "eventstudyinteract analytic IW estimator with vce(cluster ID), absorb(year), cohort(first_child_year), ",
+        "eventstudyinteract analytic IW estimator with vce(cluster ID), absorb(ID year), cohort(first_child_year), ",
         "control_cohort(lastcohort), covariates(i.AGEREP i.EDUYEAR). ",
         "Set EVENT_USE_FIXEST=1 to attempt the slower R fixest::sunab re-estimation."
       )
@@ -744,7 +744,7 @@ run_event_study <- function(psid) {
   ev <- ev[is.finite(rooms) & !is.na(cohort_sa) & !is.na(year) & !is.na(age) & !is.na(educ)]
   est <- tryCatch(
     feols(
-      rooms ~ sunab(cohort_sa, year, ref.p = -2) + i(age) + i(educ) | year,
+      rooms ~ sunab(cohort_sa, year, ref.p = -2) + i(age) + i(educ) | famid + year,
       data = ev,
       cluster = ~famid,
       notes = FALSE
@@ -796,7 +796,7 @@ run_event_study <- function(psid) {
     se_p5 = unname(p5["se"]),
     n = nobs(est),
     n_clusters = uniqueN(ev$famid),
-    method_note = "fixest::feols rooms ~ sunab(cohort_sa, year, ref.p=-2) + age/education indicators | year, cluster=ID; last first-birth cohort coded as never-treated control"
+    method_note = "fixest::feols rooms ~ sunab(cohort_sa, year, ref.p=-2) + age/education indicators | famid + year, cluster=ID; last first-birth cohort coded as never-treated control"
   )
 }
 
@@ -1245,7 +1245,7 @@ source_provenance <- c(
   "## First-Birth Event Study",
   "",
   "- Authoritative saved Stata output found under `code/data/psid_followup_mar2026/output/sa_rooms_first_birth_one_variant_v1/`.",
-  "- `rooms_f_c_y_all_summary.csv` verifies K=3 `0.66443467` against the published target `0.664435` and reports K=5 `0.84313726` with SE `0.15404199`.",
+  "- `rooms_f_c_y_all_summary.csv` verifies the household-and-year-FE K=3 estimate `0.80494368` against the active target and reports K=5 `1.0019588`; clustered SEs are `0.16728361` and `0.17687583`, respectively.",
   "- `event_study_coefficient_path.csv` imports K=-2..5 from `rooms_f_c_y_all_estimates.dta`.",
   "",
   "## TFR And Childless Rate",

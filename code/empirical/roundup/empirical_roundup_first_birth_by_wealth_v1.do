@@ -115,7 +115,7 @@ foreach outcome in `outcomes' {
         drop F${ref_sa}event
 
         capture noisily eventstudyinteract `outcome' L*event F*event, ///
-            vce(cluster ID) absorb(year) cohort(first_child_year) control_cohort(lastcohort) ///
+            vce(cluster ID) absorb(ID year) cohort(first_child_year) control_cohort(lastcohort) ///
             covariates(i.AGEREP i.EDUYEAR)
 
         local rc_run = _rc

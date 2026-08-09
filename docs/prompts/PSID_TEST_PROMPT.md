@@ -260,6 +260,7 @@ Mirror the existing `sa_rooms_first_birth_variants_v1` spec. Key points:
 - Control = never-treated by end of panel (or last-treated, depending
   on variant — report both).
 - Bins: $k \in \{-5, \ldots, +5\}$ with $k = -2$ as reference.
+- Absorb household and calendar-year fixed effects.
 - Cluster SEs at household level.
 
 Run with the `eventstudyinteract` Stata package if available; else
