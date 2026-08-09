@@ -50,9 +50,9 @@ if os.environ.get("E4_SPLIT", "") == "1":
         for name, lo, hi, kind in DOMAIN
     )
 FIXED = {"theta_n": 0.0}
-# E5 is deliberately gated until the two NCHS timing values are populated in
-# the signed profile.  Its domain removes the now-external alpha and tenure
-# taste scale and retains the E4 continuation-noise margin.
+# E5's domain removes the externally fixed alpha and tenure taste scale and
+# retains the E4 continuation-noise margin. Production launchers can pin the
+# full target/weight contract through the expected-name and fingerprint gates.
 if os.environ.get("E5", "") == "1":
     from intergen_eqscale_seq_optimized.e5_profile import (
         E5_DOMAIN, E5_FIXED, E5_TARGET_SET,
@@ -408,9 +408,31 @@ def main() -> None:
         args.max_evals, args.minutes = min(args.max_evals, 13), min(args.minutes, 8.0)
     if not math.isclose(float(args.tol_eq), 1e-4) and not args.smoke:
         raise ValueError("E1 search requires tol_eq=1e-4; winners are repeated at 40/2.5e-5")
+    canonical_target_fingerprint = None
+    target_provenance = None
+    profile_name = None
     if os.environ.get("E5", "") == "1":
-        from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
+        from intergen_eqscale_seq_optimized.e5_profile import (
+            E5_PROFILE_NAME,
+            E5_TARGET_PROVENANCE,
+            e5_target_system,
+        )
         e5_system = e5_target_system()
+        profile_name = E5_PROFILE_NAME
+        target_provenance = E5_TARGET_PROVENANCE
+        canonical_target_fingerprint = e5_system.fingerprint
+        expected_target_set = os.environ.get("E5_EXPECTED_TARGET_SET")
+        if expected_target_set and e5_system.name != expected_target_set:
+            raise ValueError(
+                "E5 target-set gate failed: "
+                f"active={e5_system.name!r}, expected={expected_target_set!r}"
+            )
+        expected_fingerprint = os.environ.get("E5_EXPECTED_TARGET_FINGERPRINT")
+        if expected_fingerprint and e5_system.fingerprint != expected_fingerprint:
+            raise ValueError(
+                "E5 target-fingerprint gate failed: "
+                f"active={e5_system.fingerprint}, expected={expected_fingerprint}"
+            )
         targets, weights = e5_system.targets_dict(), e5_system.weights_dict()
     else:
         targets, weights = get_target_set(TARGET_SET)
@@ -438,6 +460,10 @@ def main() -> None:
             if args.weight_scheme == "target_relative_block_equal_l1"
             else target_relative_block_equal_weights(targets)
         )
+    from intergen_eqscale_seq_optimized.target_system import TargetSystem
+    search_target_fingerprint = TargetSystem.from_mappings(
+        TARGET_SET, targets, weights
+    ).fingerprint
     seed_theta = build_seed_theta()
     x0 = unit_from_theta(seed_theta)
     rng = np.random.default_rng(args.seed)
@@ -488,7 +514,11 @@ def main() -> None:
                 ),
                 "free_parameter_count": len(DOMAIN), "target_count": len(targets),
                 "active_domain": [{"name": n, "lower": lo, "upper": hi, "transform": k} for n, lo, hi, k in DOMAIN],
-                "fixed_parameters": FIXED, "target_set": TARGET_SET, "targets": targets, "weights": weights,
+                "fixed_parameters": FIXED, "profile_name": profile_name,
+                "target_set": TARGET_SET, "targets": targets, "weights": weights,
+                "canonical_target_fingerprint": canonical_target_fingerprint,
+                "search_target_fingerprint": search_target_fingerprint,
+                "target_provenance": target_provenance,
                 "weight_scheme": args.weight_scheme,
                 "canonical_weights": canonical_weights,
                 "external_parameter_metadata": (

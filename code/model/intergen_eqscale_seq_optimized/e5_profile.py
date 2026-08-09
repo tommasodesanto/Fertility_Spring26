@@ -19,6 +19,19 @@ from .target_system import TargetSystem
 
 E5_PROFILE_NAME = "eqscale_seq_e5_idfe_20260809"
 E5_TARGET_SET = "e5_idfe_review_20260809"
+E5_TARGET_PROVENANCE = {
+    "housing_increment_0to1": {
+        "source": "PSID first-birth Sun--Abraham event study",
+        "builder": "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
+        "event_time": 3,
+        "fixed_effects": ["ID", "year"],
+        "covariates": ["i.AGEREP", "i.EDUYEAR"],
+        "cluster": "ID",
+        "estimate": 0.80494368,
+        "standard_error": 0.16728361,
+        "regenerated": "2026-08-09",
+    }
+}
 E5_TARGETS: dict[str, float | None] = {
     "tfr": 1.918,
     "childless_rate": 0.188,

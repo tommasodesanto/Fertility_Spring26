@@ -7,6 +7,9 @@ Active launchers:
 - `submit_intergen_housing_fertility_global_de.sh`
 - `submit_intergen_e5_policy_quota_closure.sh` (six deterministic repaired-E5
   policy tasks: three certified arms under quota and matched logit sensitivity)
+- `submit_intergen_e5b_idfe.sh` plus its strict collector (maintained pre-E6
+  E5b refit under the August 9 household-FE rooms target; target name and
+  fingerprint are hard-gated before any solve)
 
 ## Standard interface: `torch.sh`
 

@@ -20,6 +20,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-root", type=Path, default=DEFAULT_RESULTS_ROOT)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
+    parser.add_argument("--expected-target-set")
+    parser.add_argument("--expected-target-fingerprint")
     return parser.parse_args()
 
 
@@ -104,9 +106,26 @@ def main() -> None:
         tuple[dict[str, Any], dict[str, Any], dict[str, Any], str]
     ] = []
     chain_rows: list[dict[str, Any]] = []
+    observed_target_contracts: set[tuple[str | None, str | None]] = set()
     for path in paths:
         summary = json.loads(path.read_text())
         meta = summary.get("metadata") or {}
+        target_set = meta.get("target_set")
+        target_fingerprint = meta.get("search_target_fingerprint")
+        observed_target_contracts.add((target_set, target_fingerprint))
+        if args.expected_target_set and target_set != args.expected_target_set:
+            raise RuntimeError(
+                f"{path} target set {target_set!r} does not match "
+                f"expected {args.expected_target_set!r}"
+            )
+        if (
+            args.expected_target_fingerprint
+            and target_fingerprint != args.expected_target_fingerprint
+        ):
+            raise RuntimeError(
+                f"{path} target fingerprint {target_fingerprint!r} does not "
+                f"match expected {args.expected_target_fingerprint!r}"
+            )
         is_legacy = meta.get("arm") in {"E1", "E3_L4", "E4_SPLIT"} and int(meta.get("free_parameter_count", -1)) == 12 and int(meta.get("target_count", -1)) == 15
         is_e5 = meta.get("arm") == "E5" and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
         is_e5_maturation_repair = meta.get("arm") == "E5_MATURATION_REPAIR" and int(meta.get("free_parameter_count", -1)) == 10 and int(meta.get("target_count", -1)) == 12
@@ -125,6 +144,11 @@ def main() -> None:
             eligible.append(
                 (tight, meta, summary.get("tight_repeat_check") or {}, str(path))
             )
+    if len(observed_target_contracts) != 1:
+        raise RuntimeError(
+            "collector found mixed target contracts across chains: "
+            f"{sorted(observed_target_contracts, key=str)}"
+        )
     if not eligible:
         raise RuntimeError("no strict, exactly repeated E1 winner")
     winner, winner_metadata, winner_repeat_check, winner_summary_path = min(

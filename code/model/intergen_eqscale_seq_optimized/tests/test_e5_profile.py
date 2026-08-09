@@ -93,6 +93,7 @@ class E5ProfileTests(unittest.TestCase):
                 "mean_age_first_birth": 26.5,
                 "share_first_births_age30plus": 0.35,
             }), tempfile.TemporaryDirectory() as tmp:
+                expected_smoke_fingerprint = e5_profile.e5_target_system().fingerprint
                 # This is a real --smoke runner invocation, with the model
                 # evaluator replaced only to keep the metadata gate unit-fast.
                 def fake_runtime() -> None:
@@ -121,6 +122,15 @@ class E5ProfileTests(unittest.TestCase):
         self.assertEqual(metadata["arm"], "E5")
         self.assertEqual(metadata["free_parameter_count"], 10)
         self.assertEqual(metadata["target_count"], 12)
+        self.assertEqual(metadata["profile_name"], e5_profile.E5_PROFILE_NAME)
+        self.assertEqual(
+            metadata["search_target_fingerprint"],
+            expected_smoke_fingerprint,
+        )
+        self.assertEqual(
+            metadata["target_provenance"]["housing_increment_0to1"]["fixed_effects"],
+            ["ID", "year"],
+        )
 
     def test_collector_accepts_e5_contract(self) -> None:
         from intergen_eqscale_seq_optimized import collect_e1
@@ -146,6 +156,8 @@ class E5ProfileTests(unittest.TestCase):
                     "free_parameter_count": 10,
                     "target_count": 12,
                     "seed": 1,
+                    "target_set": e5_profile.E5_TARGET_SET,
+                    "search_target_fingerprint": e5_profile.e5_target_system().fingerprint,
                     "active_domain": [
                         {
                             "name": name,
@@ -162,7 +174,11 @@ class E5ProfileTests(unittest.TestCase):
             }
             (chain / "summary.json").write_text(json.dumps(summary))
             outdir = Path(tmp) / "report"
-            with patch("sys.argv", ["collect_e1.py", "--results-root", str(root), "--outdir", str(outdir)]):
+            with patch("sys.argv", [
+                "collect_e1.py", "--results-root", str(root), "--outdir", str(outdir),
+                "--expected-target-set", e5_profile.E5_TARGET_SET,
+                "--expected-target-fingerprint", e5_profile.e5_target_system().fingerprint,
+            ]):
                 collect_e1.main()
             self.assertTrue((outdir / "results.json").exists())
 
