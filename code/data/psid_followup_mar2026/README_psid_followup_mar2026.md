@@ -224,6 +224,17 @@ moves or metro family-size-premium effects.
 
 ## First-Pass Twins/Gender Findings
 
+An August 10 post-only follow-up is implemented in
+`iv_housing_postonly_reaudit_20260810.do`, with results under
+`output/iv_housing_postonly_reaudit_20260810/` and a consolidated same-day
+recap under `output/iv_housing_recap_20260810/`. Dropping the pre-birth housing
+requirement raises the twins rooms sample to 52 proxy-positive mothers. With
+exact maternal-age and race indicators, twins ownership is 0.330 (SE 0.179,
+p=0.065); a quadratic-age specification gives 0.392 (SE 0.178, p=0.028).
+Because conventional significance is sensitive to the age adjustment, this is
+suggestive rather than a new headline result. The twins rooms estimate remains
+positive but imprecise at 0.776 (SE 0.828).
+
 An August 9 full-panel follow-up is implemented in
 `iv_housing_panel_reaudit_20260809.do`, with compact results documented under
 `output/iv_housing_panel_reaudit_20260809/`. It retains event times -4 through
