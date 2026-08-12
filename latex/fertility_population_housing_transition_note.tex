@@ -1,392 +1,530 @@
 \documentclass[11pt]{article}
 
-\usepackage[hmargin=0.80in,vmargin=0.65in]{geometry}
+\usepackage[hmargin=0.82in,vmargin=0.68in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{amsmath,amssymb,graphicx}
-\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath,amssymb,amsthm,graphicx}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{caption}
+\usepackage[authoryear,round]{natbib}
+\usepackage[hidelinks]{hyperref}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
 \setlist[enumerate]{leftmargin=1.45em,itemsep=2pt,topsep=3pt}
 \setlist[itemize]{leftmargin=1.45em,itemsep=2pt,topsep=3pt}
-\titlespacing*{\section}{0pt}{8pt}{3pt}
+\titlespacing*{\section}{0pt}{9pt}{3pt}
+\titlespacing*{\subsection}{0pt}{7pt}{2pt}
 \titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
 \captionsetup{font=small,labelfont=bf,skip=4pt}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
 
 \begin{document}
 
 \begin{center}
 {\LARGE\bfseries Fertility, Population, and House Prices}\par
 \vspace{3pt}
-{\large A reproductive steady-state closure}\par
+{\large A simple theory of reproductive equilibrium}\par
 \vspace{3pt}
-{\small August 11, 2026}
+{\small August 12, 2026}
 \end{center}
 
-\vspace{-3pt}
-This note develops an alternative population closure for the housing--fertility
-model. The economy is closed: every new adult household descends from a child
-born inside the economy, and there is no outside inflow or entry decision. A
-positive steady state must therefore reproduce itself. A permanent decline in
-the desire for children initially puts fertility below replacement. Population
-then contracts, reducing housing demand and the housing price. Because children
-require housing, the lower price raises fertility until reproduction is restored.
-In the simple model below, the new steady state has a smaller population and a
-lower housing price. In the full lifecycle model, that population sign is an
-equilibrium implication to verify rather than an assumption.
+\vspace{-2pt}
+House prices and fertility are jointly determined in the long run. Children
+need space, so expensive housing reduces the demand for children. But children
+become the next generation of households, so fertility also determines future
+housing demand. Closing this loop changes the incidence of permanent shocks.
+A decline in the desire for children produces below-replacement fertility only
+during the adjustment: the new steady state has effective replacement again,
+but a smaller population and a lower house price. Conversely, an expansion of
+housing supply raises fertility only during the adjustment: in the new steady
+state the price returns to its old level and the additional housing is occupied
+by a larger population.
 
-The claim is about a \emph{transition between reproductive steady states}. The
-preference change is permanent; below-replacement fertility is not. The simple
-model establishes the two endpoints and a one-state adjustment mechanism. The
-last part of the note shows how the same closure can be stated using the objects
-of the full lifecycle model and what would still be required to compute the
-calendar-time transition.
+The model below makes this argument with one family problem and one market. It
+delivers three results. First, reproductive stationarity selects the house
+price and housing clearing selects population. Second, a positive steady state
+exists only when the part of child costs that cheaper housing can remove is
+large enough relative to the fertility shortfall. Third, permanent shocks are
+``demographically capitalized'': child-demand shocks move prices and
+population rather than long-run fertility, while housing-supply shocks move
+population rather than the long-run price. None of these results depends on a
+particular calibration.
 
-\section*{1. A simple closed economy}
+\section*{1. Environment}
 
-\textbf{Families and demography.} At date $t$ there is a mass $L_t$ of adult
-families. Population is measured in family units. Each family chooses the number
-of children $n$. The number $\bar n>0$ is effective replacement fertility: it
-includes any survival and household-formation adjustment needed for one adult
-family to reproduce itself.
+\textbf{Families.} At date $t$ there is a mass $L_t$ of adult families. Each
+family chooses consumption $c$, housing for the adults $h$, and the number of
+children $n$. Population is measured in family units.
 
-\textbf{Preferences.} A family has income $y$ and values consumption $c$,
-housing for the adults $h$, and children according to
+\textbf{Preferences.} A family has income $y$ and preferences
 \begin{equation}
- u(c,h,n;\beta)=c+\alpha\log h+\beta\log n,
- \qquad \alpha>0,\quad \beta>0.
+ u(c,h,n)=c+\alpha\log h+\theta\log n,
+ \qquad \alpha>0,\quad \theta>0.
  \label{eq:utility}
 \end{equation}
-The parameter $\beta$ measures the desire for children. The experiment is a
-permanent decline from $\beta_0$ to $\beta_1<\beta_0$. Quasi-linearity is a
-deliberate simplification: it removes income effects and exposes the housing
-price channel in closed form.
+The parameter $\theta$ measures the value of children. Quasi-linearity removes
+income effects and leaves the housing mechanism visible in closed form.
 
-\textbf{Housing requirements.} Each child uses $a>0$ additional units of
-housing and $b\geq0$ units of the consumption good. If $p$ is the price of one
-unit of housing services, the full resource cost of a child is $b+ap$. A family
-that chooses $(h,n)$ occupies $h+an$ units in total.
+\textbf{Child requirements.} Each child costs $q\geq0$ units of ordinary goods
+and requires $a>0$ additional units of housing. A family with choices $(h,n)$
+therefore occupies $h+an$ units of housing. If $p$ is the price of one unit of
+housing services, the full resource cost of a child is $q+ap$.
 
-\textbf{Housing supply.} Housing services are supplied according to
+\textbf{Housing.} Aggregate housing services are supplied according to
 \begin{equation}
  H^s(p)=A p^{\varepsilon},
  \qquad A>0,\quad \varepsilon\geq0.
- \label{eq:housing_supply}
+ \label{eq:supply}
 \end{equation}
-The case $\varepsilon=0$ is a fixed stock. In this baseline, $p$ is the
-one-period price of housing services. We call it the housing price below to keep
-the diagrams readable. With a fixed user-cost wedge, the asset price moves in
-the same direction; when a policy changes that wedge, the two prices must be
-kept separate. The toy symbols are local to this note, and Section 5 translates
-them into the paper's notation.
+The case $\varepsilon=0$ is a fixed stock. The baseline treats $p$ as a
+one-period housing cost. If the user-cost wedge is fixed, the asset price of a
+house moves in the same direction.
+
+\textbf{Demography.} The number $\bar n>0$ is effective replacement fertility:
+after survival and household formation, a family that has $\bar n$ children
+produces exactly one family in the next generation. There is no immigration or
+outside entry in the baseline economy.
 
 \section*{2. The family's problem}
 
-Taking the housing price as given, a family solves
+Taking $p$ as given, a family solves
 \begin{equation}
- \max_{c,h,n}\; c+\alpha\log h+\beta\log n
+ \max_{c,h,n}\;c+\alpha\log h+\theta\log n
  \qquad\text{subject to}\qquad
- c+ph+(b+ap)n=y.
+ c+ph+(q+ap)n=y.
  \label{eq:family_problem}
 \end{equation}
-The term $ap$ is the housing bill associated with one more child, so the price
-of housing enters the child decision directly.
-
-The interior choices are
+The term $ap$ is the housing bill generated by one additional child. The
+interior choices are
 \begin{equation}
  h(p)=\frac{\alpha}{p},
  \qquad
- n(p;\beta)=\frac{\beta}{b+ap},
+ n(p;\theta)=\frac{\theta}{q+ap},
  \qquad
- c=y-\alpha-\beta.
- \label{eq:family_demands}
+ c=y-\alpha-\theta.
+ \label{eq:demands}
 \end{equation}
-\newpage
-We assume $y>\alpha+\beta_0$, so consumption is positive before and after the
-change. A lower $\beta$ reduces children at every price; holding $\beta$ fixed,
-a lower housing price raises children.
-
-\section*{3. Housing clearing and reproductive stationarity}
-
-At population $L$, total housing demand is the number of families times the
-housing used by each family. Market clearing requires
+We assume $y>\alpha+\theta$. A higher house price reduces both adult space and
+children; a lower value of children shifts the child decision down at every
+price. Total housing demand per family is
 \begin{equation}
- A p^{\varepsilon}
- =L\left[\frac{\alpha}{p}
- +\frac{a\beta}{b+ap}\right].
+ d(p;\theta)=\frac{\alpha}{p}+\frac{a\theta}{q+ap}.
+ \label{eq:per_family_demand}
+\end{equation}
+
+\section*{3. Reproductive equilibrium}
+
+For a given population $L$, the house price clears the housing market:
+\begin{equation}
+ A p^{\varepsilon}=L\left[
+ \frac{\alpha}{p}+\frac{a\theta}{q+ap}
+ \right].
  \label{eq:housing_clearing}
 \end{equation}
-For any $(L,\beta)$, this equation determines one price, denoted by
-$p=P(L;\beta)$. More families raise the price, while a weaker desire for
-children reduces child-related housing demand and shifts the entire price
-schedule downward:
+Supply rises and demand falls with $p$, so for every $(L,\theta)$ there is one
+market-clearing price, denoted $p=P(L;\theta)$. More families raise this price,
+while a lower value of children reduces child-related housing demand:
 \begin{equation}
- P_L(L;\beta)>0,
+ P_L(L;\theta)>0,
  \qquad
- P_\beta(L;\beta)>0.
+ P_\theta(L;\theta)>0.
  \label{eq:price_schedule_signs}
 \end{equation}
-The first panel of Figure~\ref{fig:feedback} is this housing-market mapping from
-current population into the housing price.
+Thus equation~\eqref{eq:housing_clearing} is a map from population into the
+house price, not yet a condition that determines population.
 
-Population adjusts according to the gap between chosen and replacement
-fertility. A one-state representation of that adjustment is
+\begin{definition}[Reproductive equilibrium]
+A reproductive equilibrium is a house price $p^*>0$, a population $L^*>0$,
+and family choices $(c^*,h^*,n^*)$ such that families optimize, the housing
+market clears, and fertility is at replacement, $n^*=\bar n$.
+\end{definition}
+
+The order of equilibrium determination is the key. Reproduction selects the
+price at which a family is willing to have exactly $\bar n$ children. Housing
+clearing then determines how many families can live at that price.
+
+\begin{proposition}[Existence, uniqueness, and comparative statics]
+\label{prop:equilibrium}
+A unique positive reproductive equilibrium exists if and only if
+$\theta>q\bar n$. It is
+\begin{equation}
+ p^*(\theta)=\frac{\theta/\bar n-q}{a},
+ \qquad
+ L^*(\theta)=
+ \frac{A[p^*(\theta)]^{\varepsilon+1}}
+ {\alpha+a\bar n p^*(\theta)}.
+ \label{eq:steady_state}
+\end{equation}
+A permanent decline in $\theta$ that preserves existence lowers both $p^*$ and
+$L^*$, while fertility remains $\bar n$.
+\end{proposition}
+
+The existence condition has a direct meaning. Even if housing were free, a
+child would still cost $q$. If $\theta\leq q\bar n$, eliminating the entire
+housing bill cannot restore replacement fertility. When an equilibrium does
+exist, the population supported by the housing market is increasing in its
+reproductive price:
+\begin{equation}
+ \frac{dL^*}{dp^*}
+ =\frac{A(p^*)^\varepsilon
+ \bigl[(\varepsilon+1)\alpha+\varepsilon a\bar n p^*\bigr]}
+ {(\alpha+a\bar n p^*)^2}>0.
+ \label{eq:scale_slope}
+\end{equation}
+A lower price brings forth weakly less housing and induces each family to use
+more adult space. Both forces reduce the population that clears the market.
+
+\section*{4. From one steady state to another}
+
+To describe adjustment without adding cohort structure, let population change
+with the gap between chosen and replacement fertility:
 \begin{equation}
  \frac{\dot L_t}{L_t}
  =\lambda\left[
- \frac{n(P(L_t;\beta);\beta)}{\bar n}-1
+ \frac{n(P(L_t;\theta);\theta)}{\bar n}-1
  \right],
  \qquad \lambda>0.
  \label{eq:population_law}
 \end{equation}
-This reduced law compresses cohort aging into the parameter $\lambda$. It is
-useful for the direction of adjustment, but it is not the age-structured law of
-motion in the full lifecycle model.
+The parameter $\lambda$ compresses the generational lag. This law is useful for
+the direction of adjustment; it is not a substitute for an age-structured
+transition.
 
-A positive steady state must reproduce itself, so $n(p^*;\beta)=\bar n$.
-The child decision therefore selects the steady-state price:
+\begin{proposition}[Impact and adjustment]
+\label{prop:dynamics}
+Suppose the economy begins at the reproductive equilibrium associated with
+$\theta_0$, and $\theta$ falls permanently to $\theta_1<\theta_0$, with both
+values satisfying Proposition~\ref{prop:equilibrium}. Let
+$\widetilde p=P(L_0;\theta_1)$ be the market-clearing impact price, before
+population changes. Then
 \begin{equation}
- p^*(\beta)=\frac{\beta/\bar n-b}{a}.
- \label{eq:steady_price}
+ p_1<\widetilde p<p_0,
+ \qquad
+ n(\widetilde p;\theta_1)<\bar n,
+ \qquad
+ L_1<L_0.
+ \label{eq:impact_ordering}
 \end{equation}
-This price is positive when $\beta>b\bar n$. We assume
-$\beta_1>b\bar n$. If this condition fails, even free housing cannot restore
-replacement fertility and no positive closed-economy steady state exists.
+Under equation~\eqref{eq:population_law}, population and the house price fall
+monotonically from the impact point to the new equilibrium, while fertility
+rises monotonically back to replacement. The new equilibrium is globally
+stable for every initial $L>0$.
+\end{proposition}
 
-At replacement, each family uses $\alpha/p^*+a\bar n$ units of housing.
-Housing clearing then selects the population level:
-\begin{equation}
- L^*(\beta)
- =\frac{A[p^*(\beta)]^{\varepsilon}}
- {\alpha/p^*(\beta)+a\bar n}.
- \label{eq:steady_population}
-\end{equation}
-The population supported by the housing market is increasing in $p$: a higher
-price brings forth weakly more housing and reduces adult housing used by each
-family. Consequently,
-\begin{equation}
- \beta_1<\beta_0
- \quad\Longrightarrow\quad
- p_1<p_0
- \quad\Longrightarrow\quad
- L_1<L_0,
- \qquad n_1=n_0=\bar n.
- \label{eq:long_run_comparison}
-\end{equation}
-The permanent preference change is capitalized into the long-run housing price
-and population level. Fertility is below replacement only while the economy is
-moving between the two steady states.
-
-\section*{4. Interpreting the transition}
-
-Suppose the economy begins at the old steady state
-$E_0=(L_0,p_0,\bar n)$. The experiment has three distinct stages.
-
-\begin{enumerate}
- \item \textbf{Preference change.} The permanent fall from $\beta_0$ to
- $\beta_1$ shifts the child decision down at every housing price.
- \item \textbf{Impact.} Population cannot jump. With one-period housing supply,
- the market reprices at $L_0$ to
- $\widetilde p=P(L_0;\beta_1)<p_0$. The price decline cushions the fertility
- decline, but does not eliminate it:
- \begin{equation}
-  p_1<\widetilde p<p_0,
-  \qquad
-  \widetilde n\equiv n(\widetilde p;\beta_1)<\bar n.
-  \label{eq:impact_ordering}
- \end{equation}
- \item \textbf{Demographic adjustment.} Below-replacement fertility reduces
- population. The housing price falls along the new market-clearing schedule,
- and the lower price raises fertility along the new child-decision curve.
- Adjustment stops at $E_1=(L_1,p_1,\bar n)$.
-\end{enumerate}
+Figure~\ref{fig:feedback} displays the two maps separately. The left panel
+answers: for any current population, what price clears the housing market? The
+right panel answers: at that price, how many children does a family choose?
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.98\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
-\caption{The feedback is read from left to right during the adjustment. Panel
-(a) maps current population into the market-clearing housing price. Panel (b)
-maps that price into the family's child decision. The preference change moves
-the economy from the old steady state $E_0$ to the impact point $I$ at fixed
-population. Population and price then fall from $I$ toward $E_1$, while
-fertility rises back to replacement. For a steady-state comparison, read Panel
-(b) first: replacement selects $p_0$ and $p_1$; Panel (a) maps those prices into
-$L_0$ and $L_1$. The curves are schematic, not a calibration.}
+\caption{A fall in the value of children moves the economy from $E_0$ to the
+impact point $I$ at the inherited population. Fertility is then below
+replacement. As population contracts, the house price falls along the new
+market-clearing schedule; fertility rises along the new child-decision curve
+until the economy reaches $E_1$. For a steady-state comparison, read the right
+panel first: replacement selects $p_0$ and $p_1$. The left panel maps those
+prices into $L_0$ and $L_1$.}
 \label{fig:feedback}
 \end{figure}
 
-There are two different claims in this description. The endpoints
-$(E_0,E_1)$ are equilibrium comparative statics. Equation
-\eqref{eq:population_law} additionally makes the transition monotone and the new
-steady state globally stable in the one-state model. The full lifecycle model
-can adopt the same reproductive closure without inheriting that transition
-result: cohort aging and a durable housing stock introduce additional state
-variables and lags.
+With durable housing, the stock cannot jump and expected capital gains enter
+the user cost. The exact impact response and the path may then overshoot or
+display cohort echoes. The steady-state results survive if the construction
+technology reproduces equation~\eqref{eq:supply} in the long run; the monotone
+arrows in Figure~\ref{fig:feedback} belong to the one-state baseline.
 
-\newpage
-\section*{5. The same closure in the full lifecycle model}
-
-The full model replaces the representative family with a distribution of
-households over age, income, wealth, tenure, completed fertility, and children
-at home. Throughout this section, $\Theta$ includes all preference and policy
-parameters, including the user-cost wedge $\rho(\Theta)$, and the asset-price
-relation $P=r/\rho(\Theta)$ is substituted into the household problem. The
-alternative closure then requires four aggregate objects at a candidate housing
-user cost $r$:
-
-\begin{itemize}
- \item $g(r;\Theta)$ is the normalized stationary lifecycle distribution.
- \item $D(r;\Theta)$ is physical housing demand per adult household after
- integrating the housing and fertility policies over $g$.
- \item $B(r;\Theta)$ is the flow of children who mature into new adult
- households per unit of adult population.
- \item $E(r;\Theta)$ is the inflow of young adults required to reproduce one
- unit of the stationary adult distribution.
-\end{itemize}
-
-The closed-economy replacement condition is
+The timing convention also matters for stability. If children replace families
+one generation at a time, the analogue of~\eqref{eq:population_law} is
+$L_{t+1}=L_tR(P(L_t))$, where $R=1$ at replacement. The local stability
+condition is
 \begin{equation}
- B(r^*;\Theta)=E(r^*;\Theta).
- \label{eq:full_reproduction}
+ \left|1+\varepsilon_{R,p}\varepsilon_{p,L}\right|<1,
+ \qquad
+ \varepsilon_{R,p}<0,\qquad \varepsilon_{p,L}>0.
+ \label{eq:discrete_stability}
 \end{equation}
-This equation replaces the outside-option and fixed-inflow closures. There is
-no immigration flow, retention parameter, outside value, or entry elasticity.
-The correct empirical object is effective net reproduction, not necessarily a
-conventional TFR of $2.1$: the equality must use the model's units for children,
-survival, maturation, and household formation.
+Both elasticities are evaluated at the steady state. Convergence alternates
+when $-2<\varepsilon_{R,p}\varepsilon_{p,L}<-1$, and the equilibrium loses
+local stability when $\varepsilon_{R,p}\varepsilon_{p,L}\leq-2$. Monotone
+convergence is a result of the continuous-time illustration, not a general
+prediction.
 
-Once \eqref{eq:full_reproduction} selects $r^*$, level housing clearing selects
-adult population:
+\section*{5. Can cheaper housing restore replacement?}
+
+The existence condition can be stated in terms of two economically meaningful
+objects. Suppose that, at the inherited price $p_0$, the new child decision is
+below replacement by the fraction $\gamma$:
 \begin{equation}
- S^*(\Theta)
- =\frac{H^S(r^*;\Theta)}{D(r^*;\Theta)}.
- \label{eq:full_scale}
+ n(p_0;\theta_1)=(1-\gamma)\bar n,
+ \qquad 0<\gamma<1.
+ \label{eq:fertility_gap}
 \end{equation}
-Thus the full equilibrium has the same order as the simple model. Reproduction
-selects the housing cost; housing clearing selects population scale. The asset
-price is then obtained from the user-cost relation,
-$P^*=r^*/\rho(\Theta)$.
-
-The household mechanism is also the same, although it is no longer summarized
-by one representative demand curve. In the analytical model, the full price of
-a child contains the goods requirement $\chi$ and the child's space requirement
-$\kappa$ valued at the household's effective marginal housing cost:
+At that same price, housing represents the following share of the full resource
+cost of a child:
 \begin{equation}
- \text{full price of a child}
- =\chi+\kappa\bigl(r^m+\zeta_i^m\bigr).
- \label{eq:full_child_price}
+ s_H\equiv\frac{ap_0}{q+ap_0}.
+ \label{eq:housing_share}
 \end{equation}
-Here $r^m$ is the tenure-specific housing cost and $\zeta_i^m$ is the goods-value
-of a binding rental, menu, or financing constraint. The simple formula
-$b+ap$ is the unconstrained representative-family version of this object. In
-the quantitative model, the corresponding ``child decision'' in Panel (b) is
-an aggregate of discrete birth attempts and housing choices, not a literal
-continuous demand function.
+The share $s_H$ is the largest fraction of the child's cost that a decline in
+the house price can eliminate.
 
-For existence, the reproduction residual
+\begin{proposition}[The stabilization threshold]
+\label{prop:threshold}
+After the change in equation~\eqref{eq:fertility_gap}, a positive reproductive
+equilibrium exists if and only if
 \begin{equation}
- \mathcal R(r;\Theta)\equiv B(r;\Theta)-E(r;\Theta)
- \label{eq:reproduction_residual}
+ \gamma<s_H.
+ \label{eq:threshold}
 \end{equation}
-must cross zero. A sufficient set of conditions for a unique reproductive price
-is that $\mathcal R$ is continuous, positive at a low housing cost, negative at
-a high housing cost, and strictly decreasing in $r$. Assume the preference
-change shifts the whole residual downward,
-$\mathcal R(r;\Theta_1)<\mathcal R(r;\Theta_0)$, over the relevant range. If
-$\mathcal R_r<0$, the new root has $r_1<r_0$.
-
-To state the population comparison precisely, define the scale selected by
-housing clearing as
+When it exists, the price required to restore replacement is
 \begin{equation}
- F(r,\Theta)\equiv \frac{H^S(r;\Theta)}{D(r;\Theta)}.
- \label{eq:scale_mapping}
+ \frac{p_1}{p_0}=1-\frac{\gamma}{s_H}.
+ \label{eq:price_gap_formula}
 \end{equation}
-The simple model gives $S_1<S_0$ analytically. In the full model, the same sign
-requires the cross-regime inequality
-$F(r_1,\Theta_1)<F(r_0,\Theta_0)$. The condition $F_r>0$ alone is not enough:
-the preference change can directly alter housing demand, tenure, and lifecycle
-composition. A quantitative implementation should therefore separate the
-effect of the lower price from this direct preference-and-composition effect.
+If $p_0$ was the old reproductive price, the associated population change is
+\begin{equation}
+ \frac{L_1}{L_0}
+ =\left(\frac{p_1}{p_0}\right)^{\varepsilon+1}
+ \frac{\alpha+a\bar n p_0}{\alpha+a\bar n p_1}.
+ \label{eq:population_ratio}
+\end{equation}
+\end{proposition}
 
-\newpage
-\section*{6. What is the economic interpretation?}
+This result separates the sign of the mechanism from its strength. Cheaper
+housing always raises fertility, but it can stabilize a closed population only
+if housing is a sufficiently large part of the marginal child's cost. For
+example, if housing represents 25 percent of that cost and the direct fertility
+shortfall is 10 percent, restoring replacement requires a 40 percent price
+decline: $p_1/p_0=1-0.10/0.25=0.60$. If the fertility shortfall were 30 percent,
+no nonnegative house price could restore replacement. The economy would need
+another adjustment margin, such as immigration, a change in goods costs, or a
+further change in preferences.
 
-\textbf{As a theory result.} The simple model compares two closed-economy
-reproductive steady states. A weaker desire for children puts fertility below
-replacement on impact; population and the housing price then fall until the
-housing feedback restores reproduction. The permanent differences are a
-smaller population and cheaper housing. The full model preserves the
-reproductive condition, but its population sign requires the cross-regime test
-in \eqref{eq:scale_mapping}.
+\section*{6. Demographic capitalization}
 
-\textbf{As an interpretation of currently low fertility.} One may conjecture
-that an observed below-replacement economy is partway between the two steady
-states: preferences or other child costs have changed, while population, the
-age distribution, and the housing stock still reflect earlier cohorts. Under
-this interpretation, fertility may recover as population and housing demand
-fall. This is a motivating hypothesis, not a result of the stationary model;
-testing it requires locating the observed economy along a demographic
-transition. What must return to one is effective net reproduction, not
-necessarily conventional TFR.
+Reproductive equilibrium reverses the usual way permanent policy effects are
+reported. Long-run fertility cannot absorb a permanent shock because it must
+return to replacement. Prices and population absorb it instead.
 
-\textbf{As a policy model.} In the simple model, a permanent increase in the
-desire for children puts fertility above replacement at the old price;
-population and the price rise until $n=\bar n$ again. In the full model, every
-positive reproductive steady state instead has $B/E=1$. If a policy shifts
-$\mathcal R$ upward and $\mathcal R_r<0$, its reproductive root has a higher
-$r^*$. Population rises only if the corresponding $F(r,\Theta)$ rises across
-regimes. Because $B/E=1$ is an accounting condition on effective reproduction,
-it does not fix conventional TFR, completed-fertility composition, or aggregate
-births. The quantitative exercise should report these objects separately;
-existing stationary policy rows use a different closure and cannot simply be
-relabeled.
-
-\section*{7. Relation to the earlier theoretical sketch}
-
-The two sketches are complements. The earlier value-gap and housing-slack
-sketch describes the microeconomic birth decision: prices, rental limits,
-owner rungs, and down-payment constraints change the value of the parent branch
-relative to the childless branch. This note supplies the aggregate closure:
-births reproduce population, population determines housing demand, and housing
-costs feed back into births.
-
-The natural synthesis for the paper is therefore:
+\begin{proposition}[Incidence of supply and child-cost changes]
+\label{prop:capitalization}
+Consider an initial reproductive equilibrium.
 \begin{enumerate}
- \item use the value gap and the effective price in
- \eqref{eq:full_child_price} to explain the household fertility margin;
- \item use \eqref{eq:full_reproduction} to define reproductive stationarity; and
- \item use \eqref{eq:full_scale} and Figure~\ref{fig:feedback} to determine and
- illustrate population through housing clearing.
+ \item A pure increase in housing supply from $A_0$ to $A_1$ leaves the
+ reproductive price, family choices, and fertility unchanged in the long run,
+ while population changes in direct proportion:
+ \begin{equation}
+  p_1^*=p_0^*,
+  \qquad n_1^*=n_0^*=\bar n,
+  \qquad \frac{L_1^*}{L_0^*}=\frac{A_1}{A_0}.
+  \label{eq:supply_incidence}
+ \end{equation}
+ \item A per-child subsidy $s$ that lowers the goods cost from $q$ to $q-s$
+ raises the reproductive house price one for one with the subsidy per unit of
+ child space:
+ \begin{equation}
+  p^*(s)=\frac{\theta/\bar n-q+s}{a},
+  \qquad \frac{dp^*}{ds}=\frac{1}{a}.
+  \label{eq:subsidy_incidence}
+ \end{equation}
+ The full child cost at the reproductive equilibrium,
+ $q-s+ap^*(s)=\theta/\bar n$, is unchanged.
+ Because $L^*$ rises with its reproductive price, the reduction in the
+ nonhousing cost of children also raises long-run population.
 \end{enumerate}
-The simple utility block is therefore an analytical illustration, not a second
-quantitative household model.
+\end{proposition}
 
-\section*{8. What the quantitative audit finds}
+The first part is a demographic analogue of an open-city result. More housing
+makes the economy temporarily cheaper; families respond with above-replacement
+fertility; population grows until the original price is restored. In the long
+run, housing construction is a population policy rather than an affordability
+policy. The second part is a Malthusian capitalization result. Making children
+cheaper raises fertility on impact, but population and housing demand expand
+until the subsidy is absorbed by a higher house price.
 
-The companion memo \emph{Reproductive Closure in the Full Lifecycle Model}
-implements the stationary checks and specifies the unsolved transition. Its
-main result is that the retained E5b parameter vector is not reproductive:
-$B/E=0.82784$. A favorable reweighting of the top-coded $3+$ state raises the
-diagnostic ratio to $0.90319$, still below replacement. Over fixed asset prices
-from one percent to twice the maintained price, $B/E$ ranges only from $0.83600$
-to $0.82034$. The residual has the proposed slope but never crosses zero. The
-maintained estimate therefore has no positive closed reproductive steady state
-on the tested grid.
+These are incidence statements, not welfare theorems. Comparing total welfare
+across economies with different numbers of people requires a population-ethics
+criterion. The propositions instead describe prices, quantities, and family
+choices for the families present in each equilibrium.
 
-The scale map $F(r,\Theta)=H^S/D$ is increasing, as the simple model requires.
-But without a reproductive root there are no maintained full-model endpoints
-across which to assert or decompose a population change. Point $I$ and the
-arrows in Figure~\ref{fig:feedback} remain intuition until the age distribution
-and durable housing stock are evolved in calendar time.
+\section*{7. What survives in a richer lifecycle model?}
 
-With durable housing, a full transition must evolve both the lifecycle
-distribution and the housing stock while distinguishing service cost $r_t$ from
-asset price $P_t$. Its endpoint matches the static supply curve only if the
-investment technology reproduces $H^S(r)$ in steady state.
+The representative family is not essential to the equilibrium logic. In a
+lifecycle model, let $\mathcal M(p;z)$ be the demographic transition operator
+at housing cost $p$: it ages surviving households and adds the mature entrants
+generated by their fertility choices. The variable $z$ collects preferences
+or policies. Let $R(p;z)$ be the dominant eigenvalue of $\mathcal M(p;z)$.
+This is effective net reproduction: $R=1$, rather than a particular total
+fertility rate, is the condition for a stationary population. The associated
+eigenvector gives the normalized age, family-size, tenure, and wealth
+distribution.
+
+Let $D(p;z)$ be housing demand per adult family in that normalized distribution
+and let $H^s(p)$ be aggregate housing supply. A reproductive equilibrium solves
+only two aggregate equations:
+\begin{equation}
+ R(p^*;z)=1,
+ \qquad
+ L^*D(p^*;z)=H^s(p^*).
+ \label{eq:general_closure}
+\end{equation}
+Survival, the timing of births, child maturation, and household formation all
+belong inside $\mathcal M$. Tenure choice, borrowing constraints, and
+family-size composition affect both $R$ and $D$. The first equation selects the
+price and the shape of the stationary distribution; the second scales that
+distribution to clear the housing market.
+
+If $R$ is continuous, crosses one, and is strictly decreasing in the housing
+cost, the first equation has a unique root. A shock that shifts reproduction
+down at every price lowers that root. The population effect is
+\begin{equation}
+ d\log L^*
+ =\bigl(\eta_S+\eta_D\bigr)d\log p^*
+ -\left.\frac{\partial\log D}{\partial z}\right|_{p}dz,
+ \label{eq:general_population_change}
+\end{equation}
+where $\eta_S=d\log H^s/d\log p\geq0$ and
+$\eta_D=-\partial\log D/\partial\log p\geq0$. The first term is the mechanism
+in the simple model. The second is a direct composition effect: a preference
+or policy change can alter housing demand even at a fixed price. Thus the price
+result is general, while the population sign must be verified when household
+heterogeneity is rich.
+
+One result is especially robust. If housing supply does not enter household
+decisions except through $p$, and wages, fiscal transfers, and local amenities
+do not depend on population scale, a pure shift of $H^s$ cannot change the
+first equation in~\eqref{eq:general_closure}. It changes long-run population
+but not the reproductive price or normalized household distribution. This is
+the general version of Proposition~\ref{prop:capitalization}. If instead land
+rents are rebated, agglomeration changes wages, or policy costs vary with
+population, that triangular separation can fail.
+
+The geographic boundary must also be explicit. At the national level, or in a
+closed region, reproduction can determine long-run population. In an open city,
+migration normally adjusts much faster and adds a separate spatial-equilibrium
+condition; the two-equation closure does not apply unchanged.
+
+\section*{8. Interpretation and contribution}
+
+The feedback itself has a close antecedent. In the spatial lifecycle model of
+\citet{coeurdacierCombesGobillonOswaldFertility2023}, children require housing,
+households choose fertility and location, and demographic composition evolves
+recursively; the authors describe the housing market as an automatic stabilizer
+of fertility. Their public 2023 model studies rich multicity transition
+dynamics. The narrower purpose here is analytical: isolate the stationary
+equilibrium order, obtain a closed-form existence threshold, and characterize
+the long-run incidence of child-cost and supply changes. These results must be
+checked against any later version of that unpublished project before making a
+priority claim.
+
+Earlier analytical models already place children inside housing demand and let
+house prices clear endogenously \citep{dayFertilityHousing2015,
+dayGuestFertilityFemaleWages2016}. They establish the household price--fertility
+mechanism and show why housing-supply elasticity matters. They do not use
+reproductive stationarity to determine aggregate population, which is the
+additional equilibrium margin isolated here.
+
+The model combines three familiar ideas. Fertility theory makes children a
+household choice
+\citep{barroFertilityChoiceModel1989,sommerFertilityChoiceLife2016}; housing
+models make population and housing supply determine prices
+\citep{glaeserEconomicImplicationsHousing2018}; and spatial equilibrium lets
+an extensive population margin absorb local shocks
+\citep{rosenWageBasedIndexes1979,robackWagesRentsQuality1982}. Here the
+extensive margin is national reproduction rather than migration. Replacement
+fertility plays the role usually played by an outside utility: it selects the
+price at which the population is stationary, while the housing market selects
+the scale of that population.
+
+The analytical contribution would therefore be narrower, but sharper, than the
+feedback itself:
+\begin{enumerate}
+ \item it separates reproductive stationarity, which selects the housing cost,
+ from housing clearing, which selects population scale;
+ \item it turns a direct fertility shortfall and the housing share of child
+ costs into the sharp stabilization condition~\eqref{eq:threshold}; and
+ \item it changes the long-run interpretation of policy: child-cost policy is
+ capitalized into housing prices and population, while housing supply is
+ capitalized into population.
+\end{enumerate}
+
+The interpretation of currently low fertility remains disciplined. The model
+allows it to be a transition toward a lower reproductive steady state, but it
+does not establish that this is the transition observed in the data. That
+reading requires the preference or child-cost change to be recent, the
+stabilization inequality to hold, and the inherited age distribution and
+housing stock to be consistent with the proposed path. The theory contributes
+the equilibrium endpoints, the direction of the feedback, and a condition for
+whether a positive endpoint exists. A calendar-time quantitative transition is
+a separate exercise.
+
+Durable housing is the most important extension for that exercise. As
+\citet{glaeserGyourkoUrbanDecline2005} show, negative demand shocks can lower
+prices much faster than the housing stock and population decline. Their result
+reinforces the distinction in this note: the reproductive endpoints may be
+analytically simple even when the transition between them is slow and
+asymmetric.
+
+\appendix
+\section*{Appendix. Proofs}
+
+\begin{proof}[Proof of Proposition~\ref{prop:equilibrium}]
+The first-order conditions of~\eqref{eq:family_problem} give
+$h=\alpha/p$ and $n=\theta/(q+ap)$. Reproductive stationarity therefore
+requires $p^*=(\theta/\bar n-q)/a$, which is positive if and only if
+$\theta>q\bar n$. Substituting $n=\bar n$ and $h=\alpha/p^*$ into housing
+clearing gives the expression for $L^*$. It is positive and unique. Finally,
+$p^*$ rises with $\theta$, and equation~\eqref{eq:scale_slope} shows that
+$L^*$ rises with $p^*$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:dynamics}]
+In~\eqref{eq:housing_clearing}, supply is increasing and per-family demand is
+decreasing in $p$. Hence the clearing price is unique, rises with $L$, and rises
+with $\theta$. At the inherited population, $\theta_1<\theta_0$ implies
+$\widetilde p<p_0$. Proposition~\ref{prop:equilibrium} gives $L_1<L_0$; because
+$P$ rises with population, $\widetilde p=P(L_0;\theta_1)>
+P(L_1;\theta_1)=p_1$. Since $n$ falls with $p$ and
+$n(p_1;\theta_1)=\bar n$, it follows that
+$n(\widetilde p;\theta_1)<\bar n$.
+
+For stability, define
+$\Phi(L)=n(P(L;\theta_1);\theta_1)/\bar n-1$. The price schedule rises with
+$L$ and child demand falls with price, so $\Phi$ is strictly decreasing. It is
+zero only at $L_1$, positive below $L_1$, and negative above it. Equation
+\eqref{eq:population_law} therefore keeps a solution between its initial value
+and $L_1$ and moves it monotonically. Its limit must be the unique zero $L_1$.
+The monotonicity of $p$ and $n$ follows from their respective slopes.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:threshold}]
+Equation~\eqref{eq:fertility_gap} implies
+$\theta_1=(1-\gamma)\bar n(q+ap_0)$. At the new reproductive price,
+$\theta_1=\bar n(q+ap_1)$. Equating the two expressions and using
+$s_H=ap_0/(q+ap_0)$ gives
+$p_1/p_0=1-\gamma/s_H$. The price is positive if and only if
+$\gamma<s_H$. Substituting $p_0$ and $p_1$ into
+equation~\eqref{eq:steady_state} gives equation~\eqref{eq:population_ratio}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:capitalization}]
+The reproductive price in~\eqref{eq:steady_state} does not contain the housing
+supply shifter $A$, while population is proportional to $A$. This proves the
+first part. Replacing $q$ by $q-s$ in the same reproductive condition gives
+equation~\eqref{eq:subsidy_incidence}. Substitution shows that the full child
+cost remains $\theta/\bar n$. Equation~\eqref{eq:scale_slope} and
+$dp^*/ds>0$ imply that population rises.
+\end{proof}
+
+\clearpage
+\bibliographystyle{apalike}
+\bibliography{main_bib,lit_review_extra}
 
 \end{document}

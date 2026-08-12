@@ -1178,6 +1178,56 @@ paper intends to make transition-path claims.
 
 ---
 
+## 2026-08-12: Generic reproductive-equilibrium theory
+
+### What we worked on
+
+Recast the housing--fertility closure as a standalone analytical theory rather
+than a commentary on the current calibration.  Rebuilt the note around one
+family problem, one housing market, a precise reproductive-equilibrium
+definition, propositions, proofs, and the requested linked population--price
+and price--children diagrams.
+
+### What we established
+
+- Reproductive stationarity selects the long-run housing cost; housing-market
+  clearing then selects population scale.
+- A direct fertility shortfall of size $\gamma$ can be offset by cheaper housing
+  if and only if $\gamma<s_H$, where $s_H$ is housing's share of the full
+  resource cost of a child.  When the root exists,
+  $p_1/p_0=1-\gamma/s_H$.
+- A pure housing-supply expansion changes long-run population, not the
+  reproductive price.  A reduction in nonhousing child costs is capitalized
+  into a higher reproductive price and a larger population.
+- In an age-structured lifecycle model, effective replacement is the condition
+  that the dominant eigenvalue of the demographic transition operator equals
+  one.  Its eigenvector determines the normalized distribution; housing
+  clearing determines scale.
+- The one-state monotone transition is illustrative.  Cohort timing and durable
+  housing can create oscillation or overshooting, and a literal calendar-time
+  transition requires additional state variables.
+
+### Literature and positioning
+
+The verbal stabilizing feedback is not itself a priority claim.  Coeurdacier,
+Combes, Gobillon, and Oswald's public 2023 project explicitly describes housing
+as an automatic stabilizer of fertility, and Day (2015) and Day and Guest (2016)
+already combine children's housing needs with endogenous house prices.  The
+defensible candidate contribution is the reproductive separation result, the
+closed-form stabilization threshold, demographic capitalization, and the
+mapping to the lifecycle demographic operator.  The latest nonpublic version
+of the Coeurdacier et al. project remains a novelty risk to audit.
+
+### Artifacts
+
+- Analytical source: `latex/fertility_population_housing_transition_note.tex`.
+- Figure builder:
+  `code/model/tools/build_fertility_population_housing_transition_figures.py`.
+- Verified reader PDF:
+  `output/pdf/fertility_population_housing_transition_note.pdf`.
+
+---
+
 ## Template for future sessions
 
 ### Date: YYYY-MM-DD
