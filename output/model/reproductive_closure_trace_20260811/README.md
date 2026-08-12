@@ -53,6 +53,33 @@ them on 37 log-spaced asset prices from 0.02 to 2.40 (benchmark 0.7761).
   clearing scale `S(r)` is strictly increasing (0.001 to 16.7 relative to
   benchmark supply units).
 
+## The open-economy equilibrium from the same two curves (`quota_from_loci.py`)
+
+Intersecting the traced clearing locus with the quota demographic locus
+`S = Mbar/(E - Rbar*B(r))`, using the production floor-arm objects
+`Rbar = 0.9692247`, `Mbar = 0.01043295`, reproduces the production benchmark
+from the loci alone: rent `0.12812` vs `0.12861` production (0.4%, the smoke
+demand error) and `S = 1.0001`. The two-curve figure is therefore the actual
+equilibrium apparatus, not a stylization. Varying the outside inflow then
+quantifies the theory note's Proposition 5 perturbation (all smoke grade):
+
+| Mbar multiple | long-run rent | long-run population |
+|---|---|---|
+| 0.90 | -3.9% | -9.7% |
+| 0.75 | -10.1% | -24.0% |
+| 0.50 | -23.2% | -48.5% |
+| 0.25 | -44.1% | -73.5% |
+| 0.10 | -65.6% | -89.1% |
+
+Local elasticities at the benchmark: clearing `eta_c = 2.61`, demographic
+feedback `phi = 0.13`; hence `dlnS*/dlnMbar = 0.95`,
+`dln rent*/dlnMbar = 0.36`, and the endogenous-fertility feedback offsets only
+`phi/(eta_c+phi) = 4.8%` of a demographic shock. At this parameterization the
+long-run population level and rent level are essentially inflow-determined;
+the fertility stabilizer is real but small — subject to the same slope caveat
+as above (an undisciplined choice-noise scale flattens `B(r)` and shrinks
+`phi`).
+
 ## Caveats
 
 - Smoke grade: at the benchmark price the implied clearing scale is `1.0098`
