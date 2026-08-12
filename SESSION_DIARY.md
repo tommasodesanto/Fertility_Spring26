@@ -1270,3 +1270,48 @@ of the Coeurdacier et al. project remains a novelty risk to audit.
 
 ### Open questions
 -
+
+---
+
+## August 12, 2026: demographic momentum and intergenerational housing
+
+### What we worked on
+
+Extended the reproductive-equilibrium theory with young and old household
+cohorts while preserving the paper's young-access and old-retention mechanisms.
+
+### What we discovered
+
+- Below-replacement reproduction can coexist with rising adult-household
+  population iff the current young cohort is sufficiently large relative to
+  the old cohort it replaces.
+- The price rises iff housing demand added when that young cohort ages exceeds
+  demand lost because the next young cohort is smaller.
+- From an exact stationary age distribution, a negative fertility shock makes
+  both adult-household population and the price fall. The positive transition
+  requires inherited demographic momentum from earlier fertility or
+  immigration.
+- The fertility shock lowers the price relative to a no-shock counterfactual;
+  it need not prevent the realized price from rising over time.
+
+### What we tested
+
+Verified the propositions algebraically, generated a reproducible numerical
+illustration, independently audited the theory and code, and rendered every
+page of the four-page PDF.
+
+### Artifacts
+
+- Theory source:
+  `latex/demographic_momentum_intergenerational_housing_note.tex`.
+- Illustration driver:
+  `code/model/tools/build_demographic_momentum_intergenerational_housing_illustration.py`.
+- Reader PDF:
+  `output/pdf/demographic_momentum_intergenerational_housing_note.pdf`.
+
+### Next step
+
+If adopted in the paper, propagate unnormalized joint cohort measures in the
+full lifecycle model, add the preference path and outside entrant flow, and
+verify that the maintained parameterization admits a positive stable
+reproductive root before treating the extension as the production closure.
