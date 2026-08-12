@@ -61,5 +61,9 @@ them on 37 log-spaced asset prices from 0.02 to 2.40 (benchmark 0.7761).
   4 digits); levels of `D` and `S` are not production numbers.
 - The transfer is not re-balanced away from the benchmark price, so the fiscal
   budget is unbalanced off-benchmark by construction.
-- One arm only; the certified maturation-repair arm sits lower
-  (`B/E = 0.788` at its benchmark) and would trace lower everywhere.
+- Arm robustness (verified, not assumed): the certified maturation-repair arm
+  traces lower everywhere with the same shape — monotone decreasing, nearly
+  flat, ceiling `B/E = 0.799` at 2.6% of the benchmark price vs `0.789` at the
+  benchmark (19-point sweep, same fixed policy; `trace_points_repair_arm.csv`,
+  `trace_repair_arm.py`). The no-crossing conclusion is not specific to the
+  floor arm.
