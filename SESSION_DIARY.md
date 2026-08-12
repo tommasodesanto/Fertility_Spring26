@@ -1216,6 +1216,11 @@ and price--children diagrams.
 - A small outside entrant flow converges to the closed reproductive equilibrium
   only when a positive closed-economy root exists.  Without a root and under a
   uniform reproductive shortfall, population vanishes with the outside flow.
+- The exact long-run invariance is effective reproduction, $R=1$ or $B=E$.
+  Aggregate lifetime births are also invariant only when survival and the full
+  mapping from births into mature entrants are policy-invariant; TFR, timing,
+  childlessness, composition, and children at home are not fixed by the closure
+  identity alone.
 - The one-state monotone transition is illustrative.  Cohort timing and durable
   housing can create oscillation or overshooting, and a literal calendar-time
   transition requires additional state variables.
