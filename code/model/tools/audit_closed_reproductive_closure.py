@@ -1,0 +1,705 @@
+#!/usr/bin/env python3
+"""Audit the proposed closed reproductive closure in the maintained E5b model.
+
+This is a diagnostic, not a calibration or a transition solver.  It evaluates
+normalized stationary fixed-price solutions and records
+
+    E(r) = required young-adult entrant households,
+    B(r) = mature city-born entrant households,
+    R(r) = B(r) - E(r), and
+    F(r) = H^S(r) / D(r).
+
+The main source is the exact current-contract preflight at the retained E5b
+theta.  A constructed preference normalization is included only to show what
+would be required for the alternative closure to possess two positive steady
+states; it is deliberately labelled diagnostic and is not a recalibration.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import importlib
+import json
+import math
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+from typing import Any, Callable
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+ROOT = Path(__file__).resolve().parents[3]
+MODEL_ROOT = ROOT / "code/model"
+DEFAULT_SOURCE = (
+    ROOT
+    / "output/model/closed_reproductive_closure_audit_20260811/source/"
+    "incumbent_current_contract_preflight_summary.json"
+)
+FALLBACK_SOURCE = ROOT / "output/model/eqscale_seq_e5b_recalibration_20260725/report/results.json"
+REPAIRED_SOURCE = (
+    ROOT
+    / "output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/report/results.json"
+)
+DEFAULT_OUTDIR = ROOT / "output/model/closed_reproductive_closure_audit_20260811"
+PRICE_RATIOS = (0.01, 0.025, 0.05, 0.10, 0.20, 0.35, 0.50, 0.65, 0.80, 0.90, 1.00, 1.10, 1.25, 1.50, 2.00)
+
+
+def jsonable(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {str(key): jsonable(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [jsonable(item) for item in value]
+    if isinstance(value, np.ndarray):
+        return value.tolist()
+    if isinstance(value, (np.floating, np.integer)):
+        return value.item()
+    if isinstance(value, Path):
+        return str(value)
+    return value
+
+
+def write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(jsonable(payload), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    if not rows:
+        raise ValueError(f"Refusing to write empty output: {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fields: list[str] = []
+    for row in rows:
+        for key in row:
+            if key not in fields:
+                fields.append(key)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def configure_environment(*, repaired: bool) -> None:
+    os.environ["E3_L4"] = "1"
+    os.environ["E5"] = "1"
+    os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
+    for name in ("E5_MATURATION_REPAIR", "E5F", "E6A", "E6B", "E6C"):
+        os.environ.pop(name, None)
+    if repaired:
+        os.environ["E5_MATURATION_REPAIR"] = "1"
+
+
+def load_chain(*, repaired: bool = False) -> Any:
+    configure_environment(repaired=repaired)
+    if str(MODEL_ROOT) not in sys.path:
+        sys.path.insert(0, str(MODEL_ROOT))
+    from intergen_eqscale_seq_optimized import run_e1_chain
+
+    chain = importlib.reload(run_e1_chain)
+    chain.load_runtime()
+    return chain
+
+
+def load_winner(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(data.get("best_tight"), dict):
+        winner = data["best_tight"]
+        metadata = data.get("metadata", {})
+    elif isinstance(data.get("winners", {}).get("E1"), dict):
+        winner = data["winners"]["E1"]
+        metadata = data.get("winner_metadata", {})
+    else:
+        raise ValueError(f"Cannot locate a winner record in {path}")
+    if not bool(winner.get("strict_converged", False)) or winner.get("status") != "ok":
+        raise RuntimeError(f"Source winner is not a strict accepted solution: {path}")
+    return winner, metadata
+
+
+def theta_from_winner(winner: dict[str, Any]) -> dict[str, float]:
+    return {str(key): float(value) for key, value in winner["theta"].items()}
+
+
+def make_overrides(chain: Any, theta: dict[str, float], *, nb: int) -> dict[str, Any]:
+    overrides = chain.common_overrides(
+        argparse.Namespace(J=17, Nb=int(nb), max_iter_eq=40, tol_eq=2.5e-5)
+    )
+    overrides.update(theta)
+    return overrides
+
+
+def solve_ge(chain: Any, base: dict[str, Any]) -> tuple[Any, Any, np.ndarray, float]:
+    started = time.perf_counter()
+    sol, parameters, price = chain.run_model_cp_dt(dict(base), verbose=False)
+    return sol, parameters, np.asarray(price, dtype=float).reshape(-1), time.perf_counter() - started
+
+
+def solve_pe(
+    chain: Any,
+    base: dict[str, Any],
+    *,
+    asset_price: float,
+    psi_child: float | None = None,
+) -> tuple[Any, Any, np.ndarray, float]:
+    overrides = dict(base)
+    overrides.update(solve_mode="pe", p_fixed=np.array([float(asset_price)]))
+    if psi_child is not None:
+        overrides["psi_child"] = float(psi_child)
+    started = time.perf_counter()
+    sol, parameters, price = chain.run_model_cp_dt(overrides, verbose=False)
+    return sol, parameters, np.asarray(price, dtype=float).reshape(-1), time.perf_counter() - started
+
+
+def shared_clock_mature_flows_by_parity(sol: Any, parameters: Any) -> np.ndarray:
+    """Reconstruct the code's shared-clock mature flow, split by parity."""
+    if str(parameters.child_state_mode).strip().lower() != "shared_clock":
+        return np.full(int(parameters.n_parity), np.nan)
+    g = np.asarray(sol.g, dtype=float)
+    if g.ndim != 7:
+        raise RuntimeError(f"Unexpected maintained distribution shape: {g.shape}")
+    K = int(parameters.n_child_stages)
+    csm1, csm2 = K + 1, K + 2
+    ecf = float(parameters.entrant_conversion_factor)
+    flows = np.zeros(int(parameters.n_parity), dtype=float)
+    for j in range(int(parameters.J) - 1):
+        survival = (
+            float(parameters.survival_probs[j])
+            if bool(getattr(parameters, "use_age_survival", False))
+            else 1.0
+        )
+        for parity in range(1, int(parameters.n_parity)):
+            target = csm1 if parity == 1 else csm2
+            probability = float(parameters.Pi_child[K, target, parity])
+            mass = float(np.sum(g[:, :, :, j, :, parity, K]))
+            flows[parity] += ecf * parity * probability * survival * mass
+    actual = float(sol.entrants_mature_total)
+    if not math.isclose(float(np.sum(flows)), actual, rel_tol=0.0, abs_tol=1e-10):
+        raise RuntimeError(
+            "Parity-flow reconstruction failed: "
+            f"reconstructed={np.sum(flows):.12g}, actual={actual:.12g}"
+        )
+    return flows
+
+
+def readout(
+    chain: Any,
+    sol: Any,
+    parameters: Any,
+    price: np.ndarray,
+    *,
+    label: str,
+    price_ratio: float,
+    psi_child: float,
+    elapsed: float,
+) -> dict[str, Any]:
+    moments = chain.extract_moments(sol, parameters)
+    total_mass = float(sol.total_mass)
+    entry = float(sol.entry_rate) / total_mass
+    mature = float(sol.entrants_mature_total) / total_mass
+    births = float(sol.total_births_kfe) / total_mass
+    demand = float(np.sum(np.asarray(sol.housing_demand, dtype=float))) / total_mass
+    supply = float(np.sum(np.asarray(sol.housing_supply, dtype=float)))
+    parity_flows = shared_clock_mature_flows_by_parity(sol, parameters)
+    if np.all(np.isfinite(parity_flows)):
+        top_weight = float(parameters.tfr_top_bin_weight)
+        top_state = int(parameters.n_parity) - 1
+        adjusted_mature = float(np.sum(parity_flows[:-1]) + parity_flows[-1] * top_weight / top_state)
+        top_flow_share = float(parity_flows[-1] / max(np.sum(parity_flows), 1e-15))
+    else:
+        adjusted_mature = math.nan
+        top_flow_share = math.nan
+    return {
+        "label": label,
+        "price_ratio": float(price_ratio),
+        "asset_price": float(price[0]),
+        "housing_user_cost": float(parameters.user_cost_rate * price[0]),
+        "psi_child": float(psi_child),
+        "total_mass": total_mass,
+        "entry_households_per_adult": entry,
+        "birth_children_per_adult": births,
+        "mature_entrant_households_per_adult": mature,
+        "reproduction_ratio_B_over_E": mature / entry,
+        "reproduction_residual_B_minus_E": mature - entry,
+        "topcode_adjusted_B_over_E_diagnostic": adjusted_mature / entry,
+        "threeplus_share_of_mature_flow": top_flow_share,
+        "maturation_exit_yield": mature / max(float(parameters.entrant_conversion_factor) * births, 1e-15),
+        "entrant_conversion_factor": float(parameters.entrant_conversion_factor),
+        "housing_demand_per_adult": demand,
+        "housing_supply": supply,
+        "scale_mapping_Hs_over_D": supply / demand,
+        "tfr_topcoded": float(moments["tfr"]),
+        "mean_completed_fertility_raw": float(moments["mean_completed_fertility"]),
+        "childless_rate": float(moments["childless_rate"]),
+        "own_rate": float(moments["own_rate"]),
+        "solve_seconds": float(elapsed),
+    }
+
+
+def verify_source_solution(chain: Any, sol: Any, parameters: Any, price: np.ndarray, winner: dict[str, Any]) -> None:
+    if abs(float(price[0]) - float(winner["price"])) > 2e-6:
+        raise RuntimeError(f"Source price gate failed: solved={price[0]}, source={winner['price']}")
+    moments = chain.extract_moments(sol, parameters)
+    failures = []
+    for row in winner.get("target_fit", []):
+        name = str(row["moment"])
+        difference = abs(float(moments[name]) - float(row["model"]))
+        if difference > 1e-6:
+            failures.append((name, difference))
+    if failures:
+        raise RuntimeError(f"Source target-moment gate failed: {failures}")
+
+
+def checkpoint(outdir: Path, phase: str, rows: list[dict[str, Any]]) -> None:
+    write_json(
+        outdir / "latest_completed_case.json",
+        {"phase": phase, "completed_cases": len(rows), "latest": rows[-1]},
+    )
+
+
+def monotone(values: list[float], *, increasing: bool, tolerance: float = 1e-10) -> bool:
+    differences = np.diff(np.asarray(values, dtype=float))
+    return bool(np.all(differences >= -tolerance) if increasing else np.all(differences <= tolerance))
+
+
+def log_slope(rows: list[dict[str, Any]], field: str, low_ratio: float = 0.8, high_ratio: float = 1.25) -> float:
+    low = min(rows, key=lambda row: abs(float(row["price_ratio"]) - low_ratio))
+    high = min(rows, key=lambda row: abs(float(row["price_ratio"]) - high_ratio))
+    return float(
+        math.log(float(high[field]) / float(low[field]))
+        / math.log(float(high["housing_user_cost"]) / float(low["housing_user_cost"]))
+    )
+
+
+def bisection(
+    evaluator: Callable[[float], float],
+    *,
+    lower: float,
+    upper: float,
+    target: float,
+    increasing: bool,
+    tolerance: float = 2e-5,
+    max_iterations: int = 18,
+    label: str,
+) -> float:
+    flo, fhi = evaluator(lower) - target, evaluator(upper) - target
+    if increasing:
+        bracketed = flo <= 0.0 <= fhi
+    else:
+        bracketed = flo >= 0.0 >= fhi
+    if not bracketed:
+        raise RuntimeError(
+            f"{label} root is not bracketed: lower residual={flo:.6g}, upper residual={fhi:.6g}"
+        )
+    lo, hi = float(lower), float(upper)
+    for iteration in range(1, max_iterations + 1):
+        mid = 0.5 * (lo + hi)
+        residual = evaluator(mid) - target
+        print(f"{label.upper()} iteration={iteration} x={mid:.12g} residual={residual:.6g}", flush=True)
+        if abs(residual) <= tolerance:
+            return mid
+        if increasing:
+            if residual < 0.0:
+                lo = mid
+            else:
+                hi = mid
+        else:
+            if residual > 0.0:
+                lo = mid
+            else:
+                hi = mid
+    return 0.5 * (lo + hi)
+
+
+def parameter_rows(theta: dict[str, float], metadata: dict[str, Any]) -> list[dict[str, Any]]:
+    domain = {str(row["name"]): row for row in metadata.get("active_domain", [])}
+    rows: list[dict[str, Any]] = []
+    for name, spec in domain.items():
+        theta_name = "beta" if name == "beta_annual" else name
+        estimate = float(theta[theta_name]) ** 0.25 if name == "beta_annual" else float(theta[theta_name])
+        lower, upper = float(spec["lower"]), float(spec["upper"])
+        distance = min(estimate - lower, upper - estimate)
+        span = upper - lower
+        rows.append(
+            {
+                "parameter": name,
+                "estimate": estimate,
+                "lower_bound": lower,
+                "upper_bound": upper,
+                "transform": spec["transform"],
+                "distance_as_share_of_range": distance / span,
+                "near_bound_2pct": distance / span <= 0.02,
+                "status": "estimated",
+            }
+        )
+    external = metadata.get("external_parameter_metadata", {})
+    for name, spec in external.items():
+        rows.append(
+            {
+                "parameter": name,
+                "estimate": float(theta[name]),
+                "lower_bound": "",
+                "upper_bound": "",
+                "transform": "",
+                "distance_as_share_of_range": "",
+                "near_bound_2pct": "",
+                "status": f"externally fixed: {spec.get('source', '')}",
+            }
+        )
+    return rows
+
+
+def run_architecture_only(args: argparse.Namespace) -> None:
+    chain = load_chain(repaired=True)
+    main_winner, _ = load_winner(args.source)
+    repaired_winner, _ = load_winner(REPAIRED_SOURCE)
+    records = []
+    for label, winner in (
+        ("same_retained_theta_independent_maturation", main_winner),
+        ("reestimated_Aug5_independent_maturation", repaired_winner),
+    ):
+        base = make_overrides(chain, theta_from_winner(winner), nb=args.nb)
+        sol, parameters, price, elapsed = solve_ge(chain, base)
+        records.append(
+            readout(
+                chain,
+                sol,
+                parameters,
+                price,
+                label=label,
+                price_ratio=math.nan,
+                psi_child=float(base["psi_child"]),
+                elapsed=elapsed,
+            )
+        )
+        print(f"ARCHITECTURE {label} B/E={records[-1]['reproduction_ratio_B_over_E']:.9f}", flush=True)
+    write_json(args.architecture_json, records)
+
+
+def make_plots(
+    outdir: Path,
+    price_rows: list[dict[str, Any]],
+    normalized_rows: list[dict[str, Any]],
+    shock_rows: list[dict[str, Any]],
+    architecture_rows: list[dict[str, Any]],
+    constructed: dict[str, Any],
+) -> None:
+    ratios = np.asarray([row["price_ratio"] for row in price_rows], dtype=float)
+    raw = np.asarray([row["reproduction_ratio_B_over_E"] for row in price_rows], dtype=float)
+    adjusted = np.asarray([row["topcode_adjusted_B_over_E_diagnostic"] for row in price_rows], dtype=float)
+    scale = np.asarray([row["scale_mapping_Hs_over_D"] for row in price_rows], dtype=float)
+
+    fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2))
+    axes[0].plot(ratios, raw, marker="o", lw=2, label="Model KFE flow")
+    axes[0].plot(ratios, adjusted, marker="s", lw=1.6, ls="--", label="3+ top-code diagnostic")
+    axes[0].axhline(1.0, color="black", lw=1, ls=":")
+    axes[0].set(xscale="log", xlabel="Asset price / maintained price", ylabel=r"Effective reproduction $B/E$", title="No reproductive root at maintained preferences")
+    axes[0].grid(alpha=0.25)
+    axes[0].legend(frameon=False, fontsize=8)
+    axes[1].plot(ratios, scale, marker="o", lw=2, color="#a34a28")
+    axes[1].axhline(1.0, color="black", lw=1, ls=":")
+    axes[1].set(xscale="log", yscale="log", xlabel="Asset price / maintained price", ylabel=r"Scale map $H^S/D$", title="Housing block assigns scale conditional on price")
+    axes[1].grid(alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(outdir / "maintained_closure_grid.png", dpi=220)
+    plt.close(fig)
+
+    fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2))
+    for rows, label, style in (
+        (normalized_rows, "Replacement-normalized preference", "-"),
+        (shock_rows, "Half-capacity taste deterioration", "--"),
+    ):
+        x = np.asarray([row["price_ratio"] for row in rows], dtype=float)
+        y = np.asarray([row["reproduction_ratio_B_over_E"] for row in rows], dtype=float)
+        axes[0].plot(x, y, marker="o", lw=1.8, ls=style, label=label)
+    axes[0].axhline(1.0, color="black", lw=1, ls=":")
+    axes[0].axvline(float(constructed["new_root_price_ratio"]), color="#a34a28", lw=1, ls=":")
+    axes[0].set(xscale="log", xlabel="Asset price / maintained price", ylabel=r"Effective reproduction $B/E$", title="Constructed closure: only a very small shock is recoverable")
+    axes[0].grid(alpha=0.25)
+    axes[0].legend(frameon=False, fontsize=8)
+
+    components = [
+        float(constructed["price_effect_log_scale"]),
+        float(constructed["direct_composition_effect_log_scale"]),
+        float(constructed["total_log_scale_change"]),
+    ]
+    colors = ["#4472c4", "#70ad47", "#a34a28"]
+    axes[1].bar(["Price\nmovement", "Direct taste /\ncomposition", "Total"], components, color=colors)
+    axes[1].axhline(0.0, color="black", lw=1)
+    axes[1].set(ylabel="Log change in population scale", title="Population-scale decomposition")
+    axes[1].grid(axis="y", alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(outdir / "constructed_normalized_closure.png", dpi=220)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7.6, 4.2))
+    labels = [
+        "Maintained\nshared clock",
+        "Same theta,\nindependent",
+        "Re-estimated\nindependent",
+    ]
+    values = [float(row["reproduction_ratio_B_over_E"]) for row in architecture_rows]
+    ax.bar(labels, values, color=["#4472c4", "#ed7d31", "#70ad47"])
+    ax.axhline(1.0, color="black", lw=1, ls=":")
+    for index, value in enumerate(values):
+        ax.text(index, value + 0.015, f"{value:.3f}", ha="center", va="bottom")
+    ax.set(ylabel=r"Effective reproduction $B/E$", title="Maturation architecture is quantitatively material")
+    ax.set_ylim(0.0, max(values) * 1.18)
+    ax.grid(axis="y", alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(outdir / "architecture_sensitivity.png", dpi=220)
+    plt.close(fig)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE if DEFAULT_SOURCE.exists() else FALLBACK_SOURCE)
+    parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
+    parser.add_argument("--nb", type=int, default=120)
+    parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--skip-architecture", action="store_true")
+    parser.add_argument("--architecture-only", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--architecture-json", type=Path, default=DEFAULT_OUTDIR / "architecture_helper.json", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    args.source = args.source.resolve()
+    args.outdir = args.outdir.resolve()
+    args.architecture_json = args.architecture_json.resolve()
+
+    if args.architecture_only:
+        run_architecture_only(args)
+        return
+
+    args.outdir.mkdir(parents=True, exist_ok=True)
+    winner, metadata = load_winner(args.source)
+    theta = theta_from_winner(winner)
+    chain = load_chain(repaired=False)
+    base = make_overrides(chain, theta, nb=args.nb)
+
+    print(f"BASELINE_START source={args.source}", flush=True)
+    sol0, parameters0, price0, elapsed0 = solve_ge(chain, base)
+    verify_source_solution(chain, sol0, parameters0, price0, winner)
+    baseline = readout(
+        chain,
+        sol0,
+        parameters0,
+        price0,
+        label="maintained_E5b_GE",
+        price_ratio=1.0,
+        psi_child=float(theta["psi_child"]),
+        elapsed=elapsed0,
+    )
+    write_csv(args.outdir / "baseline_accounting.csv", [baseline])
+    print(f"BASELINE_DONE B/E={baseline['reproduction_ratio_B_over_E']:.9f}", flush=True)
+
+    ratios = (0.35, 1.0, 1.50) if args.smoke else PRICE_RATIOS
+    price_rows: list[dict[str, Any]] = []
+    for index, ratio in enumerate(ratios, start=1):
+        sol, parameters, price, elapsed = solve_pe(
+            chain, base, asset_price=float(price0[0] * ratio), psi_child=float(theta["psi_child"])
+        )
+        row = readout(
+            chain,
+            sol,
+            parameters,
+            price,
+            label="maintained_preference_price_grid",
+            price_ratio=float(ratio),
+            psi_child=float(theta["psi_child"]),
+            elapsed=elapsed,
+        )
+        price_rows.append(row)
+        write_csv(args.outdir / "price_grid.csv", price_rows)
+        checkpoint(args.outdir, "maintained_price_grid", price_rows)
+        print(
+            f"PRICE_CASE {index}/{len(ratios)} ratio={ratio:.4g} "
+            f"B/E={row['reproduction_ratio_B_over_E']:.9f} F={row['scale_mapping_Hs_over_D']:.9g}",
+            flush=True,
+        )
+
+    if args.smoke:
+        write_json(
+            args.outdir / "smoke_summary.json",
+            {"status": "passed", "source": args.source, "baseline": baseline, "price_grid": price_rows},
+        )
+        print("SMOKE_COMPLETE", flush=True)
+        return
+
+    cache: dict[tuple[float, float], dict[str, Any]] = {}
+
+    def evaluate(psi: float, asset_price: float, label: str) -> dict[str, Any]:
+        key = (round(float(psi), 12), round(float(asset_price), 12))
+        if key not in cache:
+            sol, parameters, price, elapsed = solve_pe(
+                chain, base, asset_price=float(asset_price), psi_child=float(psi)
+            )
+            cache[key] = readout(
+                chain,
+                sol,
+                parameters,
+                price,
+                label=label,
+                price_ratio=float(asset_price / price0[0]),
+                psi_child=float(psi),
+                elapsed=elapsed,
+            )
+        return cache[key]
+
+    psi_rep = bisection(
+        lambda psi: float(evaluate(psi, float(price0[0]), "psi_root_search")["reproduction_ratio_B_over_E"]),
+        lower=-3.0,
+        upper=3.0,
+        target=1.0,
+        increasing=True,
+        label="psi_replacement",
+    )
+    normalized_rows: list[dict[str, Any]] = []
+    for index, ratio in enumerate(PRICE_RATIOS, start=1):
+        row = dict(evaluate(psi_rep, float(price0[0] * ratio), "replacement_normalized_grid"))
+        normalized_rows.append(row)
+        write_csv(args.outdir / "replacement_normalized_price_grid.csv", normalized_rows)
+        checkpoint(args.outdir, "replacement_normalized_price_grid", normalized_rows)
+        print(
+            f"NORMALIZED_CASE {index}/{len(PRICE_RATIOS)} ratio={ratio:.4g} "
+            f"B/E={row['reproduction_ratio_B_over_E']:.9f}",
+            flush=True,
+        )
+
+    normalized_at_old_price = min(normalized_rows, key=lambda row: abs(float(row["price_ratio"]) - 1.0))
+    normalized_at_floor = min(normalized_rows, key=lambda row: float(row["price_ratio"]))
+    feedback_capacity = float(normalized_at_floor["reproduction_ratio_B_over_E"]) - float(
+        normalized_at_old_price["reproduction_ratio_B_over_E"]
+    )
+    if feedback_capacity <= 0.0:
+        raise RuntimeError(f"Replacement-normalized price feedback is not positive: {feedback_capacity}")
+    constructed_shortfall = 0.5 * feedback_capacity
+    target_ratio_at_old_price = 1.0 - constructed_shortfall
+    psi_shock = bisection(
+        lambda psi: float(evaluate(psi, float(price0[0]), "shock_psi_search")["reproduction_ratio_B_over_E"]),
+        lower=-3.0,
+        upper=psi_rep,
+        target=target_ratio_at_old_price,
+        increasing=True,
+        label="psi_half_capacity_shock",
+    )
+
+    shock_rows: list[dict[str, Any]] = []
+    for index, ratio in enumerate(PRICE_RATIOS, start=1):
+        row = dict(evaluate(psi_shock, float(price0[0] * ratio), "half_capacity_shock_grid"))
+        shock_rows.append(row)
+        write_csv(args.outdir / "half_capacity_shock_price_grid.csv", shock_rows)
+        checkpoint(args.outdir, "half_capacity_shock_price_grid", shock_rows)
+        print(
+            f"SHOCK_CASE {index}/{len(PRICE_RATIOS)} ratio={ratio:.4g} "
+            f"B/E={row['reproduction_ratio_B_over_E']:.9f}",
+            flush=True,
+        )
+
+    p_floor = float(price0[0] * min(PRICE_RATIOS))
+    new_root_price = bisection(
+        lambda asset_price: float(evaluate(psi_shock, asset_price, "shock_price_root_search")["reproduction_ratio_B_over_E"]),
+        lower=p_floor,
+        upper=float(price0[0]),
+        target=1.0,
+        increasing=False,
+        label="new_price_root",
+    )
+    old_endpoint = evaluate(psi_rep, float(price0[0]), "old_constructed_endpoint")
+    price_only = evaluate(psi_rep, new_root_price, "price_only_counterfactual")
+    new_endpoint = evaluate(psi_shock, new_root_price, "new_constructed_endpoint")
+    old_scale = float(old_endpoint["scale_mapping_Hs_over_D"])
+    price_scale = float(price_only["scale_mapping_Hs_over_D"])
+    new_scale = float(new_endpoint["scale_mapping_Hs_over_D"])
+    constructed = {
+        "interpretation": (
+            "Diagnostic only: old psi is chosen to impose replacement at the maintained price; "
+            "the taste shock uses one half of the maximum reproductive feedback observed between "
+            "one percent and one hundred percent of that price."
+        ),
+        "tested_price_floor_ratio": min(PRICE_RATIOS),
+        "replacement_normalized_psi_child": psi_rep,
+        "maintained_calibrated_psi_child": float(theta["psi_child"]),
+        "psi_normalization_change": psi_rep - float(theta["psi_child"]),
+        "replacement_normalized_tfr": float(old_endpoint["tfr_topcoded"]),
+        "replacement_normalized_childless_rate": float(old_endpoint["childless_rate"]),
+        "max_reproduction_feedback_over_tested_range": feedback_capacity,
+        "constructed_reproduction_shortfall_at_old_price": constructed_shortfall,
+        "postshock_psi_child": psi_shock,
+        "new_root_asset_price": new_root_price,
+        "new_root_price_ratio": new_root_price / float(price0[0]),
+        "old_scale_mapping": old_scale,
+        "price_only_scale_mapping": price_scale,
+        "new_scale_mapping": new_scale,
+        "price_effect_log_scale": math.log(price_scale / old_scale),
+        "direct_composition_effect_log_scale": math.log(new_scale / price_scale),
+        "total_log_scale_change": math.log(new_scale / old_scale),
+        "new_to_old_population_scale_ratio": new_scale / old_scale,
+        "old_endpoint": old_endpoint,
+        "price_only_counterfactual": price_only,
+        "new_endpoint": new_endpoint,
+    }
+    write_json(args.outdir / "constructed_normalized_closure.json", constructed)
+
+    architecture_rows = [dict(baseline)]
+    architecture_rows[0]["label"] = "maintained_shared_clock"
+    if not args.skip_architecture:
+        helper_json = args.outdir / "architecture_helper.json"
+        command = [
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "--architecture-only",
+            "--source",
+            str(args.source),
+            "--architecture-json",
+            str(helper_json),
+            "--nb",
+            str(args.nb),
+        ]
+        subprocess.run(command, check=True, cwd=ROOT)
+        architecture_rows.extend(json.loads(helper_json.read_text(encoding="utf-8")))
+        helper_json.unlink()
+    write_csv(args.outdir / "architecture_sensitivity.csv", architecture_rows)
+
+    target_rows = [dict(row) for row in winner.get("target_fit", [])]
+    if target_rows:
+        write_csv(args.outdir / "source_target_fit_full.csv", target_rows)
+    parameter_table = parameter_rows(theta, metadata)
+    if parameter_table:
+        write_csv(args.outdir / "source_parameter_table_full.csv", parameter_table)
+
+    raw_values = [float(row["reproduction_ratio_B_over_E"]) for row in price_rows]
+    adjusted_values = [float(row["topcode_adjusted_B_over_E_diagnostic"]) for row in price_rows]
+    f_values = [float(row["scale_mapping_Hs_over_D"]) for row in price_rows]
+    summary = {
+        "status": "complete",
+        "source": str(args.source),
+        "source_loss": float(winner["rank_loss"]),
+        "source_price": float(winner["price"]),
+        "source_strict_converged": bool(winner["strict_converged"]),
+        "baseline": baseline,
+        "maintained_grid": {
+            "price_ratios": list(PRICE_RATIOS),
+            "raw_B_over_E_min": min(raw_values),
+            "raw_B_over_E_max": max(raw_values),
+            "topcode_adjusted_B_over_E_max": max(adjusted_values),
+            "raw_reproduction_decreases_with_price": monotone(raw_values, increasing=False),
+            "scale_mapping_increases_with_price": monotone(f_values, increasing=True),
+            "raw_reproduction_root_found": min(raw_values) <= 1.0 <= max(raw_values),
+            "topcode_adjusted_root_found": min(adjusted_values) <= 1.0 <= max(adjusted_values),
+            "local_elasticity_B_over_E_to_user_cost": log_slope(price_rows, "reproduction_ratio_B_over_E"),
+            "local_elasticity_scale_map_to_user_cost": log_slope(price_rows, "scale_mapping_Hs_over_D"),
+        },
+        "constructed_normalization": constructed,
+        "architecture_sensitivity": architecture_rows,
+        "runtime_contract": {"J": 17, "Nb": args.nb, "max_iter_eq": 40, "tol_eq": 2.5e-5},
+    }
+    write_json(args.outdir / "summary.json", summary)
+    make_plots(args.outdir, price_rows, normalized_rows, shock_rows, architecture_rows, constructed)
+    print("AUDIT_COMPLETE", flush=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1131,6 +1131,53 @@ calibration be rebuilt.
 
 ---
 
+## 2026-08-11
+
+### What we worked on
+
+Audited the proposed closed reproductive steady-state closure in the maintained
+E5b lifecycle model, reconciled the August 9 calibration status, and integrated
+the stationary and transition findings into the analytical note.
+
+### What we discovered
+
+- The retained E5b point has effective reproduction $B/E=0.8278435$: its own
+  children replace only 82.8 percent of the entrant households needed to hold
+  the normalized adult distribution stationary.
+- The housing-price feedback has the proposed sign but is quantitatively tiny.
+  Over asset prices from $0.01P_0$ to $2P_0$, $B/E$ ranges only from 0.83600 to
+  0.82034, so there is no reproductive root on the tested grid.
+- The population-scale map $H^S/D$ is steep.  Under a deliberately manufactured
+  replacement normalization, offsetting a 0.187 percentage-point reproductive
+  shock requires a 46.4 percent price decline and a 77.2 percent population
+  contraction.  This is a diagnostic, not a calibration.
+- A stationary closure supplies endpoint conditions only.  A literal transition
+  additionally needs the unnormalized cohort distribution, delayed child
+  maturation, time-indexed household policies, a durable housing stock, dynamic
+  user cost, and date-by-date fiscal accounting.
+- The August 9 jobs completed, but their collector was not incumbent-safe.  Its
+  nominal winner has loss 386.689, above the retained incumbent's exact
+  corrected-contract loss 385.875.  The rooms-code hold still blocks promotion.
+
+### Results and artifacts
+
+- Reproducible driver: `code/model/tools/audit_closed_reproductive_closure.py`.
+- Numerical packet: `output/model/closed_reproductive_closure_audit_20260811/`.
+- Companion audit: `latex/fertility_population_housing_closure_audit.tex` and
+  `output/pdf/fertility_population_housing_closure_audit.pdf`.
+- Integrated analytical note: `latex/fertility_population_housing_transition_note.tex`
+  and `output/pdf/fertility_population_housing_transition_note.pdf`.
+
+### Next steps
+
+Use the simple model as an analytical illustration.  Before adopting $B=E$ as
+the quantitative closure, choose and empirically discipline the top-code,
+child-to-household, maturation, and parental-death conventions, then re-estimate
+the model and re-run the root test.  Build a calendar-time solver only if the
+paper intends to make transition-path claims.
+
+---
+
 ## Template for future sessions
 
 ### Date: YYYY-MM-DD

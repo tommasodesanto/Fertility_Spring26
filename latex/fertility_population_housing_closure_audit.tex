@@ -1,0 +1,398 @@
+\documentclass[11pt]{article}
+
+\usepackage[hmargin=0.78in,vmargin=0.68in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{booktabs,tabularx,array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=2pt,topsep=3pt}
+\setlist[itemize]{leftmargin=1.45em,itemsep=2pt,topsep=3pt}
+\titlespacing*{\section}{0pt}{9pt}{3pt}
+\titlespacing*{\subsection}{0pt}{7pt}{2pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+\captionsetup{font=small,labelfont=bf,skip=4pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\yes}{\textcolor{ForestGreen}{yes}}
+\newcommand{\no}{\textcolor{BrickRed}{no}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Reproductive Closure in the Full Lifecycle Model}\par
+\vspace{3pt}
+{\large Numerical audit and transition requirements}\par
+\vspace{3pt}
+{\small August 11, 2026}
+\end{center}
+
+\vspace{-2pt}
+This memo carries out the three checks listed at the end of the companion note
+\emph{Fertility, Population, and House Prices}: baseline reproduction, the
+shape of the reproductive and housing-scale mappings, and the requirements for
+a calendar-time transition.  The conclusion is not that the alternative
+closure is conceptually wrong.  The conclusion is that it is \emph{not yet a
+closure of the maintained quantitative model}.
+
+\section*{1. Bottom line}
+
+The proposed equilibrium uses two conditions.  Effective reproduction selects
+the housing cost, and housing clearing then selects population scale:
+\begin{equation}
+ B(r;\Theta)=E(r;\Theta),
+ \qquad
+ S=\frac{H^S(r;\Theta)}{D(r;\Theta)}.
+ \label{eq:closure}
+\end{equation}
+Here $B$ is the flow of children who mature into new adult households, $E$ is
+the entrant-household flow needed to reproduce the adult distribution, $D$ is
+housing demand per adult household, and $H^S$ is aggregate housing supply.  The
+first condition is the missing demographic closure; the second is the existing
+housing-market scale condition.
+
+The full-model audit gives four results.
+\begin{enumerate}
+ \item \textbf{The maintained point is not reproductive.}  At the retained E5b
+ parameters, $B/E=0.82784$.  The model produces only 82.8 percent of the entrant
+ households needed to reproduce its normalized adult population.
+ \item \textbf{Cheaper housing moves fertility in the right direction but is
+ quantitatively much too weak.}  Lowering the asset price to one percent of its
+ maintained value raises $B/E$ only to $0.83600$.  The residual is monotone over
+ the tested grid but never crosses zero.
+ \item \textbf{The housing block has the opposite quantitative property.}
+ The scale map $H^S/D$ is steeply increasing in the housing cost.  It falls to
+ $0.000197$ at one percent of the maintained price.  Thus population scale
+ disappears much faster than fertility approaches replacement.
+ \item \textbf{A full-model transition has not been solved.}  The stationary
+ calculations establish endpoint conditions and reject existence at the
+ maintained parameter vector.  They do not establish an impact response,
+ monotone adjustment, transition speed, or the claim that the current economy
+ is already on such a path.
+\end{enumerate}
+
+The practical recommendation is therefore to retain the simple model as a
+clean analytical illustration, but not yet to replace the paper's population
+closure with equation~\eqref{eq:closure}.  Doing that requires an explicit
+demographic re-estimation and, if the paper wants transition language, a new
+calendar-time solution method.
+
+\newpage
+\section*{2. Source candidate and status check}
+
+The audit uses the retained July 25 E5b parameter vector evaluated under the
+corrected August 9 target contract.  Its exact tight preflight has loss
+$385.87549$, price $P_0=0.815625$, and housing-market residual
+$1.11\times10^{-6}$.  Two exact repeats agree in every target moment.
+
+There is a project-status discrepancy worth recording.  The August 9 production
+and collector jobs did finish, although the live status note still described
+them as running.  The collector's nominal new winner has loss $386.68899$, which
+is worse than the retained incumbent.  Because that collector searched only the
+new production chains, it was not incumbent-safe.  The retained E5b point
+remains the best known point under the corrected contract.  Neither point is a
+promoted empirical calibration while the first-birth rooms-code hold remains
+open.  Appendix A reports every target row and every free parameter.
+
+\section*{3. Baseline reproduction accounting}
+
+All flows below are per normalized adult household and per four-year model
+period.  The exact accounting is:
+\begin{align}
+ E_0&=0.06173346,
+ &\text{required entrant households},\notag\\
+ \text{births}_0&=0.10754231,
+ &\text{children born},\notag\\
+ B_0&=0.05110564,
+ &\text{mature entrant households},\notag\\[-2pt]
+ \frac{B_0}{E_0}
+ &=
+ \underbrace{\frac{\text{births}_0}{E_0}}_{1.74204}
+ \times
+ \underbrace{0.5}_{\substack{\text{children per}\\\text{new household}}}
+ \times
+ \underbrace{0.95043}_{\substack{\text{maturation and}\\\text{exit yield}}}
+ =0.82784.
+ \label{eq:accounting}
+\end{align}
+The 17.2 percent reproduction shortfall therefore combines completed family
+size, the external convention that two mature children form one new household,
+and the fact that not every child becomes an entrant before parental exit or
+terminal lifecycle truncation.
+
+The reported TFR is not the same object.  E5b reports $1.90357$ because the
+top-coded $3+$ parity state receives a weight of $3.60236$.  The actual KFE
+transition counts that state as three children.  Reweighting the mature flow by
+the reported top-code convention raises the diagnostic ratio to $0.90319$, but
+still does not produce replacement.  Even at one percent of the maintained
+price, the favorable top-code diagnostic reaches only $0.91326$.
+
+This distinction is substantive rather than cosmetic.  $B/E$ depends on the
+child-to-household conversion, child maturation, parental survival, and the
+terminal lifecycle convention.  It is internally correct model accounting, but
+it is not yet an empirically validated net-reproduction rate.
+
+\section*{4. The two equilibrium mappings}
+
+The first panel of Figure~\ref{fig:maintained} recomputes the normalized
+stationary distribution at fifteen fixed prices between $0.01P_0$ and $2P_0$.
+The second panel evaluates the population-scale map at the same points.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/closed_reproductive_closure_audit_20260811/maintained_closure_grid.png}
+\caption{\textbf{Maintained E5b preferences.}  Effective reproduction falls
+with the housing cost, as the proposed mechanism requires, but it remains well
+below one throughout the grid.  The top-code reweighting is a convention
+sensitivity, not the model's KFE flow.  The housing scale map is increasing and
+passes through one at the maintained market-clearing price.}
+\label{fig:maintained}
+\end{figure}
+
+The local elasticities around the maintained point summarize the mismatch:
+\begin{equation}
+ \frac{d\log(B/E)}{d\log r}\simeq-0.0107,
+ \qquad
+ \frac{d\log(H^S/D)}{d\log r}\simeq2.637.
+ \label{eq:elasticities}
+\end{equation}
+The fertility feedback has the correct sign, but the housing-scale response is
+roughly two orders of magnitude larger.  Most important, existence fails:
+$\mathcal R(r)=B(r)-E(r)$ is negative at every tested price.  Therefore the
+maintained parameter vector has no positive closed reproductive steady state
+on this grid, and there are no old and new full-model endpoints across which to
+decompose population.
+
+\section*{5. What it takes to manufacture two endpoints}
+
+The following exercise is deliberately diagnostic.  First, hold the maintained
+price fixed and raise the child-utility parameter until $B/E=1$.  This requires
+\begin{equation}
+ \psi_{\mathrm{child}}: 0.58502\longrightarrow1.38574.
+ \label{eq:psi_normalization}
+\end{equation}
+The normalization pushes top-coded TFR to $2.35230$ and childlessness to
+$0.02379$, compared with targets $1.918$ and $0.188$.  It is therefore not an
+innocuous scale normalization; it changes the calibration sharply.
+
+Second, measure the greatest fertility recovery available between the
+maintained price and one percent of that price.  Even after imposing
+replacement at $P_0$, this extreme price decline raises $B/E$ by only
+$0.00373$, or 0.37 percentage points.  The constructed preference shock in
+Figure~\ref{fig:constructed} uses one half of that limited capacity: it lowers
+$B/E$ at the old price by only $0.00187$.  The new reproductive root nevertheless
+requires the price to fall to $0.536P_0$.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/closed_reproductive_closure_audit_20260811/constructed_normalized_closure.png}
+\caption{\textbf{Constructed replacement normalization.}  The orange schedule
+is shifted down by half of the maximum feedback available over the tested price
+range.  Restoring replacement requires a 46.4 percent price decline.  The
+housing market then supports only 22.8 percent of the old population scale;
+the direct preference-and-composition term is essentially zero in this
+particular diagnostic.}
+\label{fig:constructed}
+\end{figure}
+
+The population-scale decomposition is:
+\begin{align}
+ \Delta\log S
+ &=\underbrace{\log\frac{F(P_1,\Theta_0)}{F(P_0,\Theta_0)}}_{-1.47980}
+ +\underbrace{\log\frac{F(P_1,\Theta_1)}{F(P_1,\Theta_0)}}_{0.00000}
+ =-1.47980,\notag\\
+ \frac{S_1}{S_0}&=0.22768.
+ \label{eq:scale_decomposition}
+\end{align}
+This example verifies the comparative-static sign but exposes the quantitative
+fragility: reversing a 0.187 percentage-point reproduction shortfall requires
+a 77.2 percent population contraction.  A shock near the maintained 17.2
+percent shortfall has no root.
+
+\section*{6. Demographic conventions are part of the model}
+
+Figure~\ref{fig:architecture} evaluates the child-maturation issue in two ways.
+Simply switching the retained E5b parameters from the historical shared child
+clock to independent child maturation raises $B/E$ to $1.11788$.  But that
+same-theta model is no longer calibrated: its TFR jumps to $2.69920$.  The
+August 5 independently matured model, after re-estimation, instead has
+$B/E=0.78517$.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.78\textwidth]{../output/model/closed_reproductive_closure_audit_20260811/architecture_sensitivity.png}
+\caption{\textbf{Architecture sensitivity.}  Changing maturation at fixed
+parameters alters both fertility policies and mature-child flows.  Re-estimating
+the alternative architecture reverses the apparent replacement result.  The
+closure cannot be repaired by relabeling one accounting field.}
+\label{fig:architecture}
+\end{figure}
+
+Three choices must be fixed before a reproductive equilibrium can be estimated:
+\begin{enumerate}
+ \item whether the $3+$ state produces three children or its empirical
+ top-coded mean in the mature-child flow;
+ \item whether children share the most recent birth's clock or mature
+ independently; and
+ \item whether children can mature after the parental household dies.
+\end{enumerate}
+The maintained code currently uses three children in the $3+$ transition, the
+shared clock, and parental survival before child maturation.  Those conventions
+should either remain the stated demographic model or be revised and then
+re-estimated.  They should not be changed solely to force $B/E=1$.
+
+\clearpage
+\section*{7. What a transition interpretation requires}
+
+The stationary closure can compare endpoints only after two reproductive roots
+exist.  Interpreting today's low fertility as a transition is a different
+exercise.  Let $\mu_t(x)$ be the unnormalized distribution of adult households
+over the full beginning-of-period state $x$, and let $Q_t$ carry surviving
+adults through saving, tenure, fertility, income, adult aging, and child aging.
+If $m_t(x)$ is the flow of children maturing into entrant-household units and
+$\nu_E$ is their initial wealth-income distribution, the demographic law is:
+\begin{equation}
+ B_t=m_t'\mu_t,
+ \qquad
+ \mu_{t+1}=Q_t'\mu_t+B_t\nu_E.
+ \label{eq:calendar_demography}
+\end{equation}
+Equation~\eqref{eq:calendar_demography} makes the cohort lag explicit.  One
+must not impose $B_t=E_t$ along the path: equality holds only at a reproductive
+steady state.  Children born today mature many years later, while today's
+mature entrants reflect earlier fertility.
+
+Household choices also require time-indexed value functions because saving,
+ownership, and fertility depend on anticipated future prices:
+\begin{equation}
+ V_t(x)=\max_{d_t}\left\{u_t(x,d_t)
+ +\beta\,\mathbb E_t[V_{t+1}(x')]\right\}.
+ \label{eq:calendar_bellman}
+\end{equation}
+A sequence of isolated stationary solutions is not equivalent to this problem.
+
+Finally, owned housing is durable.  A literal transition needs a predetermined
+stock and a construction, demolition, or vacancy margin:
+\begin{equation}
+ K_{t+1}=(1-\delta_H)K_t+X_t-Z_t,
+ \qquad
+ H_t^D+V_t^{\mathrm{vac}}=K_t.
+ \label{eq:housing_stock}
+\end{equation}
+With a gross safe return $R$, the deterministic user cost must include the
+next-period asset price:
+\begin{equation}
+ r_t=(R+\delta_H+\tau_t^p)P_t-P_{t+1}.
+ \label{eq:dynamic_user_cost}
+\end{equation}
+At a constant asset price this reduces to the paper's stationary user-cost
+relation.  Along a transition, capital gains or losses matter.
+
+The initial adult distribution and housing stock are predetermined.  The
+asset price can jump at the preference change, but population, age composition,
+the stock of houses, liquid positions, and owned-house positions cannot.  A
+terminal condition must converge to a new reproductive steady state.  A full
+implementation also needs date-by-date pension and property-tax accounting,
+and it must decide how the model's exogenous entrant-wealth distribution is
+reconciled with parental bequests.
+
+The current static supply curve can therefore support stationary endpoint
+comparisons, or an explicitly labelled quasi-static approximation in which the
+housing stock adjusts instantly.  It cannot support a literal durable-housing
+transition.  The statement that durability changes only the path is itself
+conditional on choosing an investment technology whose stationary locus
+reproduces the existing supply curve.
+
+\section*{8. Recommended use in the paper}
+
+There are two coherent routes.
+
+\textbf{Stationary extension.}  Keep the representative-family model as the
+analytical result.  Define $B=E$ as a candidate full-model equilibrium concept,
+but state that the current E5b estimate fails the existence check.  Re-estimate
+the quantitative model only after fixing the demographic conventions and adding
+an empirical net-reproduction object.  Report $B/E$, conventional TFR, completed
+family-size composition, and population separately.
+
+\textbf{Transition model.}  Calibrate an old reproductive steady state, treat
+the preference change as a permanent shock, and solve equations
+\eqref{eq:calendar_demography}--\eqref{eq:dynamic_user_cost}.  The present E5b
+stationary distribution cannot be relabelled as a closed-economy transition:
+its age distribution is held stationary by the maintained entrant injection
+even though its own children replace only 82.8 percent of those entrants.
+
+For the current draft, the first route is safer and already useful.  It lets the
+paper explain the feedback clearly while being explicit that the full model has
+not yet delivered the two reproductive endpoints or their transition.
+
+\clearpage
+\section*{Appendix A. Complete source calibration readout}
+
+The tables below report the exact current-contract preflight at the retained
+E5b parameter vector.  The target system is overidentified: twelve target rows
+discipline ten estimated parameters, with three additional externally fixed
+parameters.  The scalar loss is $385.87549$.  The first-birth rooms row remains
+under the active rooms-code hold.
+
+\begin{table}[ht!]
+\centering
+\caption{Complete target fit}
+\scriptsize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabularx}{\textwidth}{Yrrrrr}
+\toprule
+Target moment & Target & Model & Gap & Weight & Loss contribution\\
+\midrule
+Completed fertility (reported as TFR) & 1.9180 & 1.9036 & $-0.0144$ & 1,425.739 & 0.297\\
+Childlessness & 0.1880 & 0.0802 & $-0.1078$ & 17,180.744 & 199.700\\
+Mean age at first birth & 25.3106 & 25.6374 & 0.3269 & 16.000 & 1.710\\
+Share of first births at age 30+ & 0.2701 & 0.3323 & 0.0623 & 15,625.000 & 60.590\\
+Rooms after first birth, event time $+3$ & 0.8049 & 0.6572 & $-0.1477$ & 35.735 & 0.780\\
+Prime-age rooms: 3+ minus 1--2 children & 0.3677 & 0.3722 & 0.0045 & 2,958.515 & 0.061\\
+Parent--childless ownership gap & 0.1677 & 0.1659 & $-0.0018$ & 14,229.591 & 0.045\\
+Aggregate ownership rate & 0.5755 & 0.5638 & $-0.0117$ & 1,207.846 & 0.166\\
+Mean occupied rooms, ages 18--85 & 5.7800 & 6.0755 & 0.2955 & 11.973 & 1.046\\
+Wealth / annual gross labor earnings & 6.8731 & 5.4548 & $-1.4183$ & 6.288 & 12.649\\
+Annual bequest flow / aggregate wealth & 0.0088 & 0.0091 & 0.0003 & 5,165,289.256 & 0.399\\
+Old-age estate-wealth p90/p50 & 3.4481 & 2.0684 & $-1.3797$ & 56.960 & 108.433\\
+\midrule
+\multicolumn{5}{r}{Total loss} & 385.875\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht!]
+\centering
+\caption{Complete parameter readout}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{Yrrrrl}
+\toprule
+Parameter & Estimate & Lower & Upper & Near bound? & Status\\
+\midrule
+Annual discount factor & 0.991097 & 0.940 & 0.9995 & no & estimated\\
+$\Delta\alpha$ & 0.012163 & 0.000 & 0.250 & no & estimated\\
+$\Delta\alpha$ at first child & 0.023896 & 0.000 & 0.250 & no & estimated\\
+Child utility, $\psi_{\mathrm{child}}$ & 0.585018 & $-3.000$ & 3.000 & no & estimated\\
+First-birth logit scale & 3.552006 & 0.020 & 50.000 & no & estimated\\
+Continuation-birth logit scale & 1.254006 & 0.020 & 50.000 & no & estimated\\
+Bequest curvature, $\chi$ & 1.038033 & 0.100 & 5.000 & no & estimated\\
+Housing-supply level, $H_0$ & 8.162391 & 0.200 & 80.000 & no & estimated\\
+Bequest shifter, $\theta_0$ & 0.168435 & 0.000 & 8.000 & no & estimated\\
+Bequest slope, $\theta_1$ & 0.050046 & 0.020 & 16.000 & \textbf{yes, lower} & estimated\\
+Consumption share, $\alpha$ & 0.733 & -- & -- & -- & externally fixed (CEX)\\
+Tenure smoothing & 0.000 & -- & -- & -- & externally fixed\\
+Child-dependent bequest utility & 0.000 & -- & -- & -- & externally fixed\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}

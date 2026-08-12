@@ -1,6 +1,49 @@
 # Calibration Status
 
-Updated: `2026-08-09` (first-birth rooms source-code hold discovered during the PSID fertility-IV audit)
+Updated: `2026-08-11` (corrected-E5b collection reconciled; closed reproductive-closure audit completed)
+
+## August 11 corrected-E5b collection and reproductive-closure audit
+
+Torch production array `15553319` and strict collector `15553320` completed on
+August 9. The collector report is under
+`output/model/eqscale_seq_e5b_idfe_nestingfixed_recalibration_20260809/report/`.
+Its nominal winner is strict and exactly repeated, with loss
+`386.688991735`, price `0.8125930551`, and market residual `6.07e-7`.
+
+That nominal winner does **not** replace the retained July 25 E5b theta. The
+collector scanned only the new production chains and was not incumbent-safe.
+The exact current-contract preflight at the retained theta has the lower loss
+`385.875493604`, price `0.8156250358`, residual `1.11e-6`, and two
+bit-identical tight repeats. The retained theta therefore remains the best
+known point under target set `e5_idfe_review_20260809`. This is a candidate
+ranking correction, not a promotion: the first-birth rooms-code hold below
+still blocks both estimates from becoming a production calibration or policy
+source.
+
+The proposed closed reproductive steady-state closure has now been audited at
+that retained point. In the model's exact household units,
+
+- required young entrant households are `E0 = 0.06173345618` per normalized
+  adult household and four-year period;
+- mature city-born entrant households are `B0 = 0.05110564070`;
+- effective reproduction is `B0/E0 = 0.8278435044`;
+- a diagnostic reweighting of the top-coded `3+` mature flow raises the ratio
+  to `0.9031870875`, still below replacement.
+
+On a fixed-price grid from `0.01` to `2.00` times the maintained asset price,
+raw `B/E` ranges from `0.8359984564` to `0.8203405879`. It moves in the
+proposed direction but never reaches one, so the maintained parameter vector
+has no positive closed reproductive steady-state root on the tested range.
+The local elasticity of `B/E` to housing user cost is only `-0.01067`, while
+the local elasticity of the housing scale map `H^S/D` is `2.63709`.
+
+The diagnostic driver, full grids, source target-fit and parameter tables, and
+visual packet are under
+`output/model/closed_reproductive_closure_audit_20260811/`. The readable audit
+is `output/pdf/fertility_population_housing_closure_audit.pdf`; the analytical
+closure note has been updated at
+`output/pdf/fertility_population_housing_transition_note.pdf`. These are
+stationary diagnostics. No calendar-time transition was solved.
 
 ## August 9 unresolved rooms-code hold
 
@@ -87,12 +130,11 @@ the unperturbed seed's search moments within `2e-4` and tight moments within
 corrected relaunch is collected, the prior E5b remains pre-correction and no
 policy result is promoted.
 
-The corrected Torch sequence is now live: two-chain smoke `15553259` passed;
+The corrected Torch sequence is complete: two-chain smoke `15553259` passed;
 exact full-grid preflight `15553279` passed both reproduction gates; eight-chain
-production array `15553319` is running; strict dependent collector `15553320`
-is pending. Each production chain is capped at 1,000 solves or 225 minutes,
-for at most 8,000 solves and about four hours of wall-clock time. Artifacts are
-under
+production array `15553319` and strict dependent collector `15553320`
+completed. The collector's nominal winner is worse than the retained exact
+preflight, as reconciled in the August 11 section above. Artifacts are under
 `output/model/eqscale_seq_e5b_idfe_nestingfixed_recalibration_20260809/`.
 
 ## August 7 overnight population-closure hardening

@@ -366,27 +366,27 @@ The natural synthesis for the paper is therefore:
 The simple utility block is therefore an analytical illustration, not a second
 quantitative household model.
 
-\section*{8. What remains to be checked}
+\section*{8. What the quantitative audit finds}
 
-Adopting the closure in the full paper requires three quantitative checks.
-\begin{enumerate}
- \item \textbf{Baseline reproduction.} Compute $B/E$ in the maintained
- calibrated model using consistent household units. If it is not one at the
- observed housing cost, one must recalibrate, revise the child-to-entrant
- mapping, or interpret the observed economy as transitional.
- \item \textbf{Equilibrium shapes.} At a grid of housing costs, recompute the
- normalized distribution and verify that $\mathcal R(r;\Theta)$ crosses zero
- once. Across preference or policy regimes, decompose the change in
- $F(r,\Theta)$ into the price effect and the direct composition effect.
- \item \textbf{Transition language.} Until the age distribution and durable
- housing stock are evolved in calendar time, report steady-state comparisons.
- Point $I$ and the arrows in Figure~\ref{fig:feedback} are exact only in the
- simple model; in the full model they are intuition, not a forecast.
-\end{enumerate}
+The companion memo \emph{Reproductive Closure in the Full Lifecycle Model}
+implements the stationary checks and specifies the unsolved transition. Its
+main result is that the retained E5b parameter vector is not reproductive:
+$B/E=0.82784$. A favorable reweighting of the top-coded $3+$ state raises the
+diagnostic ratio to $0.90319$, still below replacement. Over fixed asset prices
+from one percent to twice the maintained price, $B/E$ ranges only from $0.83600$
+to $0.82034$. The residual has the proposed slope but never crosses zero. The
+maintained estimate therefore has no positive closed reproductive steady state
+on the tested grid.
 
-With durable housing, a full transition jointly evolves the lifecycle
-distribution and $H_{t+1}=(1-\delta)H_t+X(P_t)$ while distinguishing service
-cost $r_t$ from asset price $P_t$. This changes the path, not the endpoint
-definitions.
+The scale map $F(r,\Theta)=H^S/D$ is increasing, as the simple model requires.
+But without a reproductive root there are no maintained full-model endpoints
+across which to assert or decompose a population change. Point $I$ and the
+arrows in Figure~\ref{fig:feedback} remain intuition until the age distribution
+and durable housing stock are evolved in calendar time.
+
+With durable housing, a full transition must evolve both the lifecycle
+distribution and the housing stock while distinguishing service cost $r_t$ from
+asset price $P_t$. Its endpoint matches the static supply curve only if the
+investment technology reproduces $H^S(r)$ in steady state.
 
 \end{document}

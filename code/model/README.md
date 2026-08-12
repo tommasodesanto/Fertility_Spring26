@@ -399,4 +399,19 @@ demand, or equilibrium iteration:
 .venv/bin/python tools/check_population_closure.py
 ```
 
+The August 11 closed reproductive-closure audit evaluates the maintained E5b
+entrant requirement, mature-child flow, reproductive residual, and housing
+scale map over a fixed-price grid. It is a stationary diagnostic, not a
+calibration or transition solver:
+
+```bash
+.venv/bin/python tools/audit_closed_reproductive_closure.py --smoke \
+  --outdir ../../output/model/closed_reproductive_closure_audit_20260811/smoke
+.venv/bin/python tools/audit_closed_reproductive_closure.py
+```
+
+The report and visual packet are under
+`../../output/model/closed_reproductive_closure_audit_20260811/`; the readable
+memo is `../../output/pdf/fertility_population_housing_closure_audit.pdf`.
+
 See `PLAN.md` for the full implementation and optimization plan.
