@@ -1203,6 +1203,19 @@ and price--children diagrams.
   that the dominant eigenvalue of the demographic transition operator equals
   one.  Its eigenvector determines the normalized distribution; housing
   clearing determines scale.
+- With exogenous age survival and one entry age, this operator condition is
+  exactly equivalent to mature entrants equaling the entrant flow required to
+  sustain one unit of adult population, $B(p;z)=E$, provided locally generated
+  entrants also reproduce the maintained entrant-state distribution.  Without
+  that composition condition, $B=E$ closes aggregate population accounting but
+  not the unrestricted demographic operator.  The bridge also makes clear that
+  effective reproduction, not conventional TFR, is the stationary object.
+- The location and comparative statics of the reproductive root depend on the
+  slope of the price--reproduction schedule.  Fertility levels at one price do
+  not generally identify that slope; credible housing-cost variation is needed.
+- A small outside entrant flow converges to the closed reproductive equilibrium
+  only when a positive closed-economy root exists.  Without a root and under a
+  uniform reproductive shortfall, population vanishes with the outside flow.
 - The one-state monotone transition is illustrative.  Cohort timing and durable
   housing can create oscillation or overshooting, and a literal calendar-time
   transition requires additional state variables.

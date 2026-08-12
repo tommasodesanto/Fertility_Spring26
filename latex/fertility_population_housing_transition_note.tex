@@ -21,6 +21,7 @@
 \titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
 \captionsetup{font=small,labelfont=bf,skip=4pt}
 \newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
 
@@ -381,6 +382,36 @@ family-size composition affect both $R$ and $D$. The first equation selects the
 price and the shape of the stationary distribution; the second scales that
 distribution to clear the housing market.
 
+The operator condition has an exact entrant-flow representation in the
+single-entry-age architecture used by the quantitative model. Let $s_j$ be the
+cumulative probability that an entrant survives from entry through adult age
+$j$, with $s_0=1$. Let $B(p;z)$ be the mature entrant households generated per
+adult family and per period when the unique normalized fixed-price distribution
+is sustained by its required entrant flow $E$.
+
+\begin{lemma}[Entrant-flow representation]
+\label{lem:entrant_flow}
+Suppose adult survival depends only on age, all households enter at age zero,
+and locally generated mature entrants have the same normalized entry-state
+distribution as the entrants used to construct the fixed-price distribution.
+The entrant flow required per adult family is
+\begin{equation}
+ E=\left(\sum_{j=0}^{J-1}s_j\right)^{-1}.
+ \label{eq:entrant_requirement}
+\end{equation}
+For every $z$ that preserves these assumptions, the stationary conditions
+$R(p;z)=1$ and $B(p;z)=E$ are equivalent.
+\end{lemma}
+
+The lemma connects the general theory directly to model accounting. $E$ is the
+entrant input needed to maintain one unit of adult population, while $B$ is the
+entrant output produced by that population. Neither object is conventional
+total fertility: survival, birth timing, maturation, and household formation
+all intervene between births and mature entrants.
+If entrant wealth, income, or location shares are instead imposed externally,
+$B=E$ closes aggregate population accounting but does not by itself show that
+the entire entrant-state distribution reproduces itself.
+
 If $R$ is continuous, crosses one, and is strictly decreasing in the housing
 cost, the first equation has a unique root. A shock that shifts reproduction
 down at every price lowers that root. The population effect is
@@ -397,6 +428,24 @@ or policy change can alter housing demand even at a fixed price. Thus the price
 result is general, while the population sign must be verified when household
 heterogeneity is rich.
 
+The root can be theoretically well defined and still weakly disciplined
+quantitatively. Consider a scalar preference or policy shifter $\zeta$ that does
+not alter survival, entry timing, or the maintained entry-state distribution.
+If $R$ and $B$ are continuously differentiable and $R_p$ and $B_p$ are nonzero,
+Lemma~\ref{lem:entrant_flow} implies that both equations define the same local
+root. Implicit differentiation therefore gives
+\begin{equation}
+ \frac{dp^*}{d\zeta}
+ =-\frac{R_\zeta(p^*;z)}{R_p(p^*;z)}
+ =-\frac{B_\zeta(p^*;z)}{B_p(p^*;z)},
+ \label{eq:root_identification}
+\end{equation}
+where the second equality uses Lemma~\ref{lem:entrant_flow}. Even if stationary
+fertility moments pin the height of the reproduction schedule at the observed
+price, they do not generally pin its slope. Credible variation in housing costs
+that measures a fertility response directly disciplines $R_p$ and therefore
+the distance and comparative statics of the reproductive root.
+
 One result is especially robust. If housing supply does not enter household
 decisions except through $p$, and wages, fiscal transfers, and local amenities
 do not depend on population scale, a pure shift of $H^s$ cannot change the
@@ -405,6 +454,45 @@ but not the reproductive price or normalized household distribution. This is
 the general version of Proposition~\ref{prop:capitalization}. If instead land
 rents are rebated, agglomeration changes wages, or policy costs vary with
 population, that triangular separation can fail.
+
+\subsection*{A small outside inflow}
+
+The closed economy can be nested in a broader demographic balance. Let
+$\varrho\in(0,1]$ be the retention rate of locally generated entrants and let
+$M\geq0$ be an outside entrant flow in levels. Stationarity requires
+\begin{equation}
+ L E=\varrho L B(p;z)+M.
+ \label{eq:inflow_balance}
+\end{equation}
+With positive inflow, this equation and housing clearing jointly determine
+population and the housing cost. The national closed economy is the special
+case $(\varrho,M)=(1,0)$, in which population cancels from
+equation~\eqref{eq:inflow_balance} and reproduction selects the price.
+
+\begin{proposition}[The closed economy as a regular limit]
+\label{prop:inflow_limit}
+Set $\varrho=1$ and write the housing-clearing scale as
+$C(p)=H^s(p)/D(p;z)$. Suppose $B$ is continuous and strictly decreasing,
+$B(p^*;z)=E$, and $C$ is continuous, positive, and strictly increasing on a
+nondegenerate compact interval $[p^*,\bar p]$. For every sufficiently small
+$M>0$, the inflow economy has a unique equilibrium $(p_M,L_M)$ on that interval,
+with
+\begin{equation}
+ (p_M,L_M)\longrightarrow\bigl(p^*,C(p^*)\bigr)
+ \qquad\text{as}\qquad M\downarrow0.
+ \label{eq:inflow_limit}
+\end{equation}
+If instead $B(p;z)\leq E-\delta$ at every feasible price for some $\delta>0$,
+then every inflow equilibrium satisfies $L_M\leq M/\delta$ and population
+converges to zero as inflow vanishes.
+\end{proposition}
+
+Thus a small inflow is a regular perturbation of the closed economy only when
+a positive reproductive root exists. If cheaper housing can never restore
+replacement, removing the inflow produces demographic collapse rather than a
+nearby positive steady state. If $\varrho<1$ is held fixed as $M$ vanishes, the
+limiting condition is instead $\varrho B(p;z)=E$; a literally closed national
+economy requires retention to converge to one as well.
 
 The geographic boundary must also be explicit. At the national level, or in a
 closed region, reproduction can determine long-run population. In an open city,
@@ -523,7 +611,33 @@ cost remains $\theta/\bar n$. Equation~\eqref{eq:scale_slope} and
 $dp^*/ds>0$ imply that population rises.
 \end{proof}
 
-\clearpage
+\begin{proof}[Proof of Lemma~\ref{lem:entrant_flow}]
+With entrant flow $E$ and age-only survival, the mass of adult families of age
+$j$ is $E s_j$. Normalizing the total adult mass to one gives
+$1=E\sum_{j=0}^{J-1}s_j$, which proves
+equation~\eqref{eq:entrant_requirement}. At a fixed price, the normalized
+distribution can reproduce itself without an outside injection if and only if
+its mature entrant output $B$ equals its required entrant input $E$ and, by the
+matching-entry-state assumption, has the same composition. This is equivalent
+to the demographic operator mapping that positive distribution into itself.
+Under the maintained uniqueness condition, its dominant eigenvalue is therefore
+one. The converse follows by normalizing the positive eigenvector associated
+with $R=1$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:inflow_limit}]
+For $p>p^*$, the demographic balance defines
+$L_d(p)=M/[E-B(p;z)]$. It is strictly decreasing and diverges as
+$p\downarrow p^*$, while $C(p)$ is positive and strictly increasing. At the
+upper end of the compact interval, $L_d<C$ for all sufficiently small $M$.
+Continuity and the opposing slopes therefore give a unique intersection.
+That intersection cannot remain bounded away from $p^*$ as $M$ vanishes,
+because $L_d$ would then converge to zero while $C$ remains positive. Hence
+$p_M\to p^*$ and housing clearing gives $L_M\to C(p^*)$. In the no-root case,
+equation~\eqref{eq:inflow_balance} gives
+$L_M=M/[E-B(p_M;z)]\leq M/\delta$, proving the second claim.
+\end{proof}
+
 \bibliographystyle{apalike}
 \bibliography{main_bib,lit_review_extra}
 
