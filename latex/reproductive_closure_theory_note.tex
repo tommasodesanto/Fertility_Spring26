@@ -7,6 +7,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{caption}
 
@@ -41,13 +42,27 @@ transition note: births must ultimately reproduce the population, and that
 requirement---not migration or an outside option---pins the long-run housing
 cost. The demographic condition selects the price; housing clearing then
 selects the population. The note states the closure for a class of stationary
-lifecycle economies, gives conditions for existence, uniqueness, and the
-intended comparative statics, and derives four results that are independent of
-any particular calibration: a stabilization condition stated in observables
-(Section 4), an identification requirement on the slope of the reproduction
-schedule (Section 5), long-run supply neutrality (Section 6), and the exact
-sense in which the closed economy is the limit of open-economy closures
-(Section 7).
+lifecycle economies and derives four results that do not depend on any
+particular calibration. In words:
+
+\begin{enumerate}
+\item Housing can stabilize a population only if housing is a large enough
+share of the marginal child's cost: the share must exceed the reproduction gap
+(Section~4).
+\item The slope of the reproduction schedule---how much fertility responds to
+housing costs---is not identified by fertility levels and timing; it needs a
+housing-cost response moment (Section~5).
+\item Under this closure, housing supply cannot move the long-run price or
+fertility; it only moves how many people live at the demographically pinned
+price (Section~6).
+\item The closed economy is the continuous limit of the open-economy
+(inflow) closures, so nothing is knife-edge; the substantive question is
+whether reproduction can reach replacement at all (Section~7).
+\end{enumerate}
+
+Section~8 gives the comparative statics and the honest transition language,
+and Section~9 traces the closure's two schedules in the maintained
+quantitative model.
 
 \section*{1. Environment}
 
@@ -490,31 +505,61 @@ cohort echoes can make the exact path non-monotone. The honest scope is
 therefore: endpoints and their comparative statics are equilibrium objects;
 the arrow between them is intuition until a calendar-time path is computed.
 
-\section*{9. Taking the closure to a quantitative model}
+\section*{9. The two schedules in the quantitative model}
 
-Four steps, in order of leverage:
+Everything above reads off two curves, and both are cheap to compute: a
+fixed-price solve of the stationary model (one household solution, one
+distribution pass, no equilibrium loop) delivers $B$, $E$, and $D$ at that
+price. Figure~\ref{fig:trace} traces them in the maintained quantitative
+model at one certified parameterization, holding the benchmark fiscal policy
+fixed, on 37 prices from 3 to 310 percent of the benchmark.\footnote{Smoke
+grade: a coarse wealth grid, so shapes and demographic ratios are reliable
+(the benchmark reproduction ratio matches the production solution to four
+digits) while levels carry about a one percent error. Full provenance and the
+data are in \texttt{output/model/reproductive\_closure\_trace\_20260811/}.}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.99\textwidth]{../output/model/reproductive_closure_trace_20260811/reproduction_and_clearing_loci.pdf}
+\caption{The closure's two schedules, computed from the quantitative model at
+fixed prices (diagnostic grade). Panel (a): mature entrant households per
+incumbent household, relative to the replacement requirement, against the
+rental user cost. The replacement requirement $E=0.0617$ is identical at every
+point, as Lemma~\ref{lem:E} says. Panel (b): the population supported by
+housing clearing at each price, relative to the benchmark.}
+\label{fig:trace}
+\end{figure}
+
+The trace verifies the theory's maintained slopes: the reproduction schedule
+falls in the price everywhere, and the clearing locus rises. It also answers
+the existence question for this parameterization, and the answer organizes the
+rest of the agenda. The schedule is nearly flat---reproduction rises only from
+$0.857$ at the benchmark to a ceiling of $0.876$ as housing becomes free---so
+it never reaches the replacement line: at this parameterization the economy
+has no closed reproductive steady state and is sustained by its entrant inflow,
+the second branch of Proposition~\ref{prop:limit}. Read through
+Proposition~\ref{prop:stab}, the model currently implies an effective housing
+share of the marginal child's cost of about two percent, against a
+reproduction gap of fourteen percent.
+
+That implied share is far below child-cost accounting, and Section~5 says why
+this is the right place to be suspicious rather than conclusive: the schedule's
+slope is governed by the fertility choice-noise scale, which the stationary
+fertility targets do not discipline. The trace therefore sharpens the agenda
+to two measurements, in order of leverage:
 
 \begin{enumerate}
-\item \textbf{Verify scale invariance} (Assumption~\ref{ass:scale}): the
-fiscal block and any aggregate objects must be per-household at fixed $r$.
-\item \textbf{Trace the two loci.} $B(r;\theta)$ and $D(r;\theta)$ on a grid
-of fixed prices are the entire theory; existence, uniqueness, slopes, and the
-figure all read off them. This requires only fixed-price solves of the
-stationary model.
 \item \textbf{Discipline the slope.} Bring one quasi-experimental
-fertility-response-to-housing-cost moment into the identification set
-(Section~5). Without it, $r^{*}$ and every long-run response are functions of
-the choice-noise convention.
+fertility-response-to-housing-cost moment into the identification set. It
+decides whether panel (a) is genuinely flat---housing cannot stabilize this
+population---or an artifact of the noise scale.
 \item \textbf{Measure the demographic constants.} The conversion $c$ (headship
-of newly formed households) and the loss rate $\ell$ define replacement
-$\bar n^{*}$ in \eqref{eq:replacement_units}; the reproduction gap $\gamma$
-and the cost share $s_H$ then decide, before any recalibration, whether the
-economy sits in the crossing region of Proposition~\ref{prop:stab} or is
-sustained by its inflow (Proposition~\ref{prop:limit}). Current vital
-statistics---completed fertility below household-unit replacement together
-with a positive net entrant inflow---place the observed economy in the open
-region, which is what makes the closed closure a benchmark and the inflow the
-natural perturbation, rather than the reverse.
+of newly formed households) and the loss rate $\ell$ define replacement in
+\eqref{eq:replacement_units} and hence where the replacement line sits.
+Current vital statistics---completed fertility below household-unit
+replacement, positive net entrant inflow---place the observed economy in the
+open region either way, which is what makes the closed closure the benchmark
+and the inflow the natural perturbation, rather than the reverse.
 \end{enumerate}
 
 \end{document}
