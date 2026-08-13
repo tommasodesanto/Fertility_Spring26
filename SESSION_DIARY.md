@@ -1315,3 +1315,51 @@ If adopted in the paper, propagate unnormalized joint cohort measures in the
 full lifecycle model, add the preference path and outside entrant flow, and
 verify that the maintained parameterization admits a positive stable
 reproductive root before treating the extension as the production closure.
+
+---
+
+## August 13, 2026: unified reproductive-equilibrium report
+
+### What we worked on
+
+Combined the reproductive-equilibrium note and the demographic-momentum note
+into one self-contained paper-facing report, using the simpler model as the
+expository spine rather than concatenating the two drafts.
+
+### What the report now contains
+
+- A representative-family problem that jointly determines child demand,
+  consumption, and housing demand.
+- Housing supply, reproductive stationarity, the two requested comparative-
+  statics diagrams, and the steady-state separation and incidence results.
+- A two-generation extension with young access and old retention, including
+  exact conditions for below-replacement reproduction to coexist temporarily
+  with rising household population and rising house prices.
+- A transparent distinction between the realized price path, the no-shock
+  counterfactual, and the lower eventual steady state.
+- The entrant-flow and full age-distribution representations needed to connect
+  the theory to the quantitative lifecycle model.
+- A reduced-form interpretation of the fertility path, an observed-distribution
+  initial condition, identification requirements, and a minimal implementation
+  plan.
+- An explicit warning that the maintained calibration does not yet establish a
+  positive closed-economy reproductive root over the tested price range.
+
+### What we tested
+
+Regenerated the numerical momentum illustration, compiled the report, checked
+references and LaTeX diagnostics, verified embedded fonts, and visually
+inspected all 13 rendered pages.
+
+### Artifacts
+
+- Unified source: `latex/fertility_population_housing_transition_note.tex`.
+- Verified reader PDF:
+  `output/pdf/fertility_population_housing_transition_note.pdf`.
+
+### Next step
+
+Read the unified report as a theory memo. If its interpretation is accepted,
+the next bounded exercise is a transition calculation from an observed joint
+cohort distribution, first holding current policies fixed and then changing
+one young-access or old-retention margin at a time.

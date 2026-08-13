@@ -5,11 +5,15 @@
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,graphicx}
+\usepackage{booktabs,tabularx}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{caption}
+\usepackage{pgfplots}
 \usepackage[authoryear,round]{natbib}
 \usepackage[hidelinks]{hyperref}
+
+\pgfplotsset{compat=1.17}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{4pt}
@@ -30,32 +34,58 @@
 \begin{center}
 {\LARGE\bfseries Fertility, Population, and House Prices}\par
 \vspace{3pt}
-{\large A simple theory of reproductive equilibrium}\par
+{\large Reproductive equilibrium, demographic momentum, and intergenerational housing}\par
 \vspace{3pt}
-{\small August 12, 2026}
+{\small August 13, 2026}
 \end{center}
 
 \vspace{-2pt}
-House prices and fertility are jointly determined in the long run. Children
-need space, so expensive housing reduces the demand for children. But children
-become the next generation of households, so fertility also determines future
-housing demand. Closing this loop changes the incidence of permanent shocks.
-A decline in the desire for children produces below-replacement fertility only
-during the adjustment: the new steady state has effective replacement again,
-but a smaller population and a lower house price. Conversely, an expansion of
-housing supply raises fertility only during the adjustment: in the new steady
-state the price returns to its old level and the additional housing is occupied
-by a larger population.
+Children need space, so expensive housing reduces the demand for children.
+Children also become the next generation of households, so fertility changes
+future housing demand. Closing this feedback yields a simple long-run result:
+effective reproduction selects the house price at which population is
+stationary, and housing clearing selects how many households can live at that
+price. A permanent decline in the desire for children therefore leads, if a
+positive new steady state exists, to a lower long-run house price and a smaller
+household population; effective reproduction eventually returns to one.
 
-The model below makes this argument with one family problem and one market. It
-delivers three results. First, reproductive stationarity selects the house
-price and housing clearing selects population. Second, a positive steady state
-exists only when the part of child costs that cheaper housing can remove is
-large enough relative to the fertility shortfall. Third, permanent shocks are
-``demographically capitalized'': child-demand shocks move prices and
-population rather than long-run fertility, while housing-supply shocks move
-population rather than the long-run price. None of these results depends on a
-particular calibration.
+That endpoint does not imply that population and house prices must begin
+falling immediately. If a large young cohort is already moving through the age
+distribution, it can produce fewer children than replacement and still exceed
+the old cohort it replaces. When it ages, its housing demand can also outweigh
+the loss of demand from the smaller cohort behind it. Below-replacement
+fertility can therefore coexist temporarily with rising household population
+and rising house prices even as the economy moves toward a smaller steady
+state. This is demographic momentum operating through intergenerational
+housing demand.
+
+The report develops the argument in three layers. Keeping them separate is
+important because each answers a different question:
+
+\begin{center}
+\small
+\begin{tabularx}{0.96\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.19\textwidth}
+>{\raggedright\arraybackslash}p{0.31\textwidth}
+>{\raggedright\arraybackslash}X@{}}
+\toprule
+Layer & What it adds & What it answers \\
+\midrule
+One representative family & Child space, housing supply, and reproductive
+stationarity & Where are the old and new steady states? \\
+Two generations & Young and old cohort masses, with old-age housing retention
+& Why can population and prices rise during a low-fertility transition? \\
+Full lifecycle model & Age, wealth, tenure, location, survival, and outside
+entry & How can the mechanism be taken to the quantitative paper? \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The main results are analytical and generic. The numerical path is an
+illustration, not a calibration. The maintained quantitative parameterization
+also does not currently deliver a positive closed-economy reproductive root
+over the tested price range; that limitation is stated explicitly before the
+implementation roadmap.
 
 \section*{1. Environment}
 
@@ -181,9 +211,10 @@ reproductive price:
 A lower price brings forth weakly less housing and induces each family to use
 more adult space. Both forces reduce the population that clears the market.
 
-\section*{4. From one steady state to another}
+\section*{4. A benchmark transition between steady states}
 
-To describe adjustment without adding cohort structure, let population change
+First consider the cleanest possible transition: the economy starts from the
+old steady state, and cohort composition is suppressed. Let population change
 with the gap between chosen and replacement fertility:
 \begin{equation}
  \frac{\dot L_t}{L_t}
@@ -193,9 +224,9 @@ with the gap between chosen and replacement fertility:
  \qquad \lambda>0.
  \label{eq:population_law}
 \end{equation}
-The parameter $\lambda$ compresses the generational lag. This law is useful for
-the direction of adjustment; it is not a substitute for an age-structured
-transition.
+The parameter $\lambda$ compresses the generational lag. This law isolates the
+feedback between prices and fertility. It is a benchmark for the direction of
+adjustment, not an age-structured account of the observed transition.
 
 \begin{proposition}[Impact and adjustment]
 \label{prop:dynamics}
@@ -235,29 +266,224 @@ prices into $L_0$ and $L_1$.}
 \label{fig:feedback}
 \end{figure}
 
-With durable housing, the stock cannot jump and expected capital gains enter
-the user cost. The exact impact response and the path may then overshoot or
-display cohort echoes. The steady-state results survive if the construction
-technology reproduces equation~\eqref{eq:supply} in the long run; the monotone
-arrows in Figure~\ref{fig:feedback} belong to the one-state baseline.
+The monotone path follows from starting at an exact stationary age distribution
+and compressing demography into one state. The next section restores the
+missing cohort state. The same separation determines the endpoints, but the
+path between them can change.
 
-The timing convention also matters for stability. If children replace families
-one generation at a time, the analogue of~\eqref{eq:population_law} is
-$L_{t+1}=L_tR(P(L_t))$, where $R=1$ at replacement. The local stability
-condition is
+\section*{5. Demographic momentum and intergenerational housing}
+
+The empirical question is whether low fertility can be reconciled with a
+population and house prices that are still rising. The answer depends on who
+is currently young and who is currently old, not only on total population.
+
+\subsection*{Two generations}
+
+At date $t$, $Y_t$ is the mass of young-family households and $O_t$ is the mass
+of old-family households. The young family retains the preferences in
+equation~\eqref{eq:utility}. To connect the theory to the paper, let $z\geq0$
+be a goods-equivalent shadow cost of obtaining child space. It summarizes
+rental size limits, down-payment constraints, and other access wedges. The
+young family's child and total housing demands are therefore
 \begin{equation}
- \left|1+\varepsilon_{R,p}\varepsilon_{p,L}\right|<1,
+ n_Y(p;\theta,z)=\frac{\theta}{q+a(p+z)},
  \qquad
- \varepsilon_{R,p}<0,\qquad \varepsilon_{p,L}>0.
- \label{eq:discrete_stability}
+ d_Y(p;\theta,z)=\frac{\alpha}{p}+a n_Y(p;\theta,z).
+ \label{eq:young_cohort_demands}
 \end{equation}
-Both elasticities are evaluated at the steady state. Convergence alternates
-when $-2<\varepsilon_{R,p}\varepsilon_{p,L}<-1$, and the equilibrium loses
-local stability when $\varepsilon_{R,p}\varepsilon_{p,L}\leq-2$. Monotone
-convergence is a result of the continuous-time illustration, not a general
-prediction.
+A higher market price or a tighter young-access wedge raises the full cost of a
+child. Both reduce fertility and young-family housing demand.
 
-\section*{5. Can cheaper housing restore replacement?}
+After solving its tenure and retention problem, an old household has reduced-form
+housing demand
+\begin{equation}
+ d_O(p;\tau)=\frac{\beta(\tau)}{p},
+ \qquad \beta'(\tau)>0.
+ \label{eq:old_cohort_demand}
+\end{equation}
+The parameter $\tau$ indexes institutions that encourage old households to
+retain housing, such as moving costs or an estate motive. This reduced form is
+only a transparent summary; the quantitative model retains the full old-age
+problem.
+
+Housing clearing now adds demand across the two generations:
+\begin{equation}
+ A p_t^\varepsilon
+ =Y_t d_Y(p_t;\theta,z)+O_t d_O(p_t;\tau).
+ \label{eq:cohort_clearing}
+\end{equation}
+For any inherited cohort masses, this equation uniquely determines the current
+price.
+
+Children chosen at $t$ form the next young generation, while the current young
+become old. Writing effective reproduction as $R=n_Y/\bar n$, the cohort law is
+\begin{equation}
+ Y_{t+1}=R(p_t;\theta,z)Y_t,
+ \qquad O_{t+1}=Y_t,
+ \qquad
+ R(p;\theta,z)=\frac{n_Y(p;\theta,z)}{\bar n}.
+ \label{eq:two_cohort_law}
+\end{equation}
+These two accounting equations are the entire extension of the steady-state
+model.
+
+\begin{proposition}[Two-generation reproductive steady state]
+\label{prop:two_cohort_ss}
+A unique positive steady state exists if and only if
+$\theta>\bar n(q+az)$. It is
+\begin{equation}
+ p^*=\frac{\theta/\bar n-q}{a}-z,
+ \qquad
+ Y^*=O^*=\frac{A(p^*)^{\varepsilon+1}}
+ {\alpha+\beta(\tau)+a\bar n p^*},
+ \qquad N^*=2Y^*.
+ \label{eq:two_cohort_ss}
+\end{equation}
+A lower value of children $\theta$ or a tighter young-access wedge $z$ lowers
+both the long-run price and household population. Stronger old-age retention
+raises $\beta(\tau)$ and lowers population, but does not change the reproductive
+price.
+\end{proposition}
+
+The last result is the intergenerational version of the separation result.
+Old households can absorb more of the housing stock, but they cannot
+permanently raise the price in a reproductive steady state: a higher price
+would push the next generation below replacement. Instead, stronger old-age
+retention reduces the number of households that the stock supports at the
+demographically selected price.
+
+\subsection*{The transition}
+
+Fix the post-shock value of $\theta$ and define
+$r_t=R(p_t;\theta,z)<1$ and $\mu_t=O_t/Y_t$. The young cohort is shrinking, but
+total household population need not shrink: the new young cohort must be
+compared with the old cohort that exits.
+
+\begin{proposition}[Demographic momentum]
+\label{prop:momentum}
+With effective reproduction below one, household population rises from $t$ to
+$t+1$ if and only if
+\begin{equation}
+ \mu_t<r_t<1.
+ \label{eq:momentum_population}
+\end{equation}
+The house price rises if and only if
+\begin{equation}
+ (1-\mu_t)d_O(p_t;\tau)
+ >(1-r_t)d_Y(p_t;\theta,z).
+ \label{eq:momentum_price}
+\end{equation}
+Hence below-replacement reproduction, population growth, and house-price
+growth coexist if and only if
+\begin{equation}
+ \mu_t<\min\left\{
+ r_t,\;
+ 1-(1-r_t)\frac{d_Y(p_t;\theta,z)}{d_O(p_t;\tau)}
+ \right\}.
+ \label{eq:momentum_joint}
+\end{equation}
+\end{proposition}
+
+Equation~\eqref{eq:momentum_price} is a transparent accounting test. The
+smaller next young cohort removes $(1-r_t)Y_t d_Y$ units of housing demand. The
+unusually large current young cohort becomes old and adds
+$(Y_t-O_t)d_O$ units relative to the cohort that exits. Prices rise when the
+second force is larger.
+
+The result also says exactly where the transition can start. If the economy
+begins from an \emph{exact} stationary age distribution, then $\mu_t=1$.
+Below-replacement reproduction immediately makes both population and the price
+fall. The empirically relevant interpretation must instead be that aggregate
+population and prices were near their old steady-state values while a large
+young cohort was moving through the age distribution. That cohort bulge may
+reflect earlier fertility, immigration, or both.
+
+\subsection*{An illustrative path}
+
+Figure~\ref{fig:momentum_transition} uses a fixed housing stock and normalizes
+effective replacement to one. The initial economy has the old steady-state
+household mass and price, but its composition is tilted toward the young. The
+illustrative parameters make young and old housing demand equal at the old
+price, so that nonstationary composition preserves both aggregates exactly.
+At date zero, $\theta$ falls permanently. The impact price falls to $0.941$ and
+effective reproduction falls to $0.888$. In the next period, however, the
+initial young bulge becomes old: household mass rises by $8.7$ percent and the
+price rises to $1.051$, even though reproduction remains below replacement.
+
+\begin{figure}[ht!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+ name=price,
+ width=0.43\textwidth,
+ height=0.31\textwidth,
+ xmin=0,xmax=10,
+ ymin=0.64,ymax=1.23,
+ xtick={0,2,4,6,8,10},
+ xlabel={Generation after the shock},
+ ylabel={Price / old steady state},
+ title={(a) House price},
+ axis lines=left,
+ tick label style={font=\small},
+ label style={font=\small},
+ title style={font=\small\bfseries},
+ legend style={font=\footnotesize,draw=none,fill=none,at={(0.98,0.98)},anchor=north east},
+]
+\addplot[very thick,red!75!black,mark=*] table[
+ x=period,y=price_shock,col sep=comma
+] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+\addlegendentry{Fertility shock}
+\addplot[thick,blue!70!black,dashed] table[
+ x=period,y=price_no_shock,col sep=comma
+] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+\addlegendentry{No-shock path}
+\addplot[thin,black,dotted] coordinates {(0,1) (10,1)};
+\addplot[thin,red!75!black,dotted] coordinates {(0,0.7) (10,0.7)};
+\end{axis}
+
+\begin{axis}[
+ at={(price.east)},anchor=west,xshift=0.105\textwidth,
+ width=0.43\textwidth,
+ height=0.31\textwidth,
+ xmin=0,xmax=10,
+ ymin=0.70,ymax=1.19,
+ xtick={0,2,4,6,8,10},
+ xlabel={Generation after the shock},
+ ylabel={Household mass / old steady state},
+ title={(b) Adult-household mass},
+ axis lines=left,
+ tick label style={font=\small},
+ label style={font=\small},
+ title style={font=\small\bfseries},
+]
+\addplot[very thick,red!75!black,mark=*] table[
+ x=period,y=population_shock,col sep=comma
+] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+\addplot[thick,blue!70!black,dashed] table[
+ x=period,y=population_no_shock,col sep=comma
+] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+\addplot[thin,black,dotted] coordinates {(0,1) (10,1)};
+\addplot[thin,red!75!black,dotted] coordinates {(0,0.7724138) (10,0.7724138)};
+\end{axis}
+\end{tikzpicture}
+\caption{A fertility decline during a cohort transition. Solid lines impose a
+permanent decline in the value of children; dashed lines retain its old value.
+Black dotted lines are the old steady state and red dotted lines are the new
+steady state. The initial young-cohort bulge creates temporary population and
+price growth, but the shock path lies below the no-shock counterfactual. The
+parameters are illustrative, not calibrated.}
+\label{fig:momentum_transition}
+\end{figure}
+
+The counterfactual is essential. The fertility shock does not cause the price
+increase: it shifts young families' willingness to pay inward and lowers the
+clearing price relative to the no-shock path in this illustration. Cohort
+composition can nevertheless make the observed price rise over time. With only
+two generations, the echo is necessarily short. A decades-long transition
+requires the full age distribution, survival, immigration, and durable
+housing. Those ingredients affect the path, not the reproductive endpoints.
+
+\section*{6. Can cheaper housing restore replacement?}
 
 The existence condition can be stated in terms of two economically meaningful
 objects. Suppose that, at the inherited price $p_0$, the new child decision is
@@ -308,7 +534,7 @@ no nonnegative house price could restore replacement. The economy would need
 another adjustment margin, such as immigration, a change in goods costs, or a
 further change in preferences.
 
-\section*{6. Demographic capitalization}
+\section*{7. Demographic capitalization and intergenerational policy}
 
 Reproductive equilibrium reverses the usual way permanent policy effects are
 reported. Long-run fertility cannot absorb a permanent shock because it must
@@ -350,12 +576,23 @@ policy. The second part is a Malthusian capitalization result. Making children
 cheaper raises fertility on impact, but population and housing demand expand
 until the subsidy is absorbed by a higher house price.
 
+The two-generation model separates two intergenerational policies that look
+similar in a partial-equilibrium fertility regression. Easing young access,
+$z\downarrow$, lowers the shadow cost of child space. Equation
+\eqref{eq:two_cohort_ss} shows that it raises the reproductive price and, in
+this parametric model, long-run population. Reducing old-age retention,
+$\tau\downarrow$, releases housing to other households. It leaves the
+reproductive price unchanged but raises long-run population by lowering
+$\beta(\tau)$. Their short-run price effects differ: easier young access raises
+young demand at inherited cohort masses, whereas lower old retention reduces
+old demand. Their common long-run effect is to support more households.
+
 These are incidence statements, not welfare theorems. Comparing total welfare
 across economies with different numbers of people requires a population-ethics
 criterion. The propositions instead describe prices, quantities, and family
 choices for the families present in each equilibrium.
 
-\section*{7. What survives in a richer lifecycle model?}
+\section*{8. The bridge to a richer lifecycle model}
 
 The representative family is not essential to the equilibrium logic. In a
 lifecycle model, let $\mathcal M(p;z)$ be the demographic transition operator
@@ -510,7 +747,100 @@ closed region, reproduction can determine long-run population. In an open city,
 migration normally adjusts much faster and adds a separate spatial-equilibrium
 condition; the two-equation closure does not apply unchanged.
 
-\section*{8. Interpretation and contribution}
+\section*{9. How to incorporate the structure into the paper}
+
+The two analytical layers should sit in front of the quantitative model. They
+do not require replacing its household problem. The full model already has the
+objects that generate young access and old retention; what it lacks for this
+exercise is a calendar-time law for unnormalized cohort masses.
+
+Let $m_t$ be the measure of households over age, wealth, tenure, location, and
+children. Let $\pi$ collect policies and housing institutions, $\theta_t$ be a
+calendar-time child-demand shifter, and $\iota_{t+1}$ be the measure of outside
+entrants. The full transition is
+\begin{equation}
+ m_{t+1}=\mathcal T(p_t;\theta_t,\pi)m_t+\iota_{t+1},
+ \qquad
+ H^s(p_t)=\int d(s,p_t;\theta_t,\pi)\,dm_t(s).
+ \label{eq:full_transition}
+\end{equation}
+The operator $\mathcal T$ contains survival, household choices, and the
+conversion of locally born children into mature entrants. Unlike a stationary
+KFE computation, equation~\eqref{eq:full_transition} does not renormalize the
+population after each iteration. This is the one essential quantitative
+change.
+
+The mapping from the simple model into the existing paper is direct:
+
+\begin{center}
+\small
+\begin{tabularx}{0.96\textwidth}{@{}
+>{\raggedright\arraybackslash}p{0.17\textwidth}
+>{\raggedright\arraybackslash}p{0.37\textwidth}
+>{\raggedright\arraybackslash}X@{}}
+\toprule
+Theory object & Full-model counterpart & Economic role \\
+\midrule
+$z$ & Rental size limits, down-payment constraints, and tenure-specific
+access gaps & Raises the effective cost of family-sized housing for the young \\
+$\tau$ & Transaction costs, inherited housing, and the estate motive & Keeps
+older households in housing they might otherwise release \\
+$R$ or $B/E$ & Birth choices, survival, maturation, and household formation &
+Determines whether locally generated cohorts reproduce adult-household mass \\
+$m_t$ & The unnormalized lifecycle distribution & Carries demographic
+momentum and intergenerational housing demand through calendar time \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection*{What is the fertility shock?}
+
+The quantitative exercise does not need to posit a single observed event. It
+can let $\theta_t$ follow a smooth reduced-form trend that shifts child demand
+at every housing price. The honest interpretation is a residual child-demand
+shifter: it collects changes in preferences and nonhousing child costs that are
+not otherwise modeled. It should not be called a causally identified preference
+shock. A practical specification can choose the path of $\theta_t$ to match the
+cohort pattern of fertility that the model misses absent the shifter, while the
+housing channel determines how much of the observed fertility path is an
+endogenous response to prices and access.
+
+\subsection*{Where does the transition start?}
+
+The transition should begin from an observed base-year distribution, not from
+an exact steady state. The initial condition must be the joint distribution of
+age, wealth, tenure, location, and children. Data can discipline its observable
+margins; the model can impute conditional distributions that are not jointly
+observed. The central diagnostic is whether the inherited age and tenure
+composition satisfies the momentum inequalities in Proposition
+\ref{prop:momentum}. If it does not, cohort momentum cannot explain rising
+prices in the model.
+
+\subsection*{A minimal quantitative exercise}
+
+The smallest credible implementation has four steps:
+\begin{enumerate}
+ \item Choose a base year and construct $m_0$, including the observed age
+ distribution and tenure profile.
+ \item Specify transparent paths for $\theta_t$, immigration $\iota_t$, and
+ housing supply. Hold them fixed across the policy comparison.
+ \item Solve equation~\eqref{eq:full_transition} forward under the status quo
+ and under policies that relax young access or reduce old retention.
+ \item Report fertility, cohort masses, tenure, housing demand, prices, and the
+ terminal reproductive equilibrium separately. Always compare the realized
+ path with its no-shock counterfactual.
+\end{enumerate}
+
+This exercise is conceptually modest but empirically demanding. The current
+maintained parameterization generates effective reproduction below one and the
+latest closed-economy audit does not find a positive root over the tested price
+range. Before equation~\eqref{eq:full_transition} can be used as the production
+population closure, the fertility block must admit a positive reproductive
+root and the resulting steady state must be stable. Until then, the theory is a
+candidate architecture and the transition path is an illustration, not a
+quantitative interpretation of U.S. history.
+
+\section*{10. Interpretation and contribution}
 
 The feedback itself has a close antecedent. In the spatial lifecycle model of
 \citet{coeurdacierCombesGobillonOswaldFertility2023}, children require housing,
@@ -551,18 +881,20 @@ feedback itself:
  costs into the sharp stabilization condition~\eqref{eq:threshold}; and
  \item it changes the long-run interpretation of policy: child-cost policy is
  capitalized into housing prices and population, while housing supply is
- capitalized into population.
+ capitalized into population; and
+ \item it gives the exact cohort-composition condition under which population
+ and prices can rise temporarily despite below-replacement reproduction, and
+ maps that condition into young access and old housing retention.
 \end{enumerate}
 
-The interpretation of currently low fertility remains disciplined. The model
-allows it to be a transition toward a lower reproductive steady state, but it
-does not establish that this is the transition observed in the data. That
-reading requires the preference or child-cost change to be recent, the
-stabilization inequality to hold, and the inherited age distribution and
-housing stock to be consistent with the proposed path. The theory contributes
-the equilibrium endpoints, the direction of the feedback, and a condition for
-whether a positive endpoint exists. A calendar-time quantitative transition is
-a separate exercise.
+The interpretation of currently low fertility remains disciplined. The theory
+allows it to be part of a transition toward a lower reproductive steady state,
+but does not establish that this is the transition observed in the data. That
+reading requires the stabilization inequality to hold, the inherited age and
+tenure distribution to generate sufficient momentum, and the housing stock to
+be consistent with the proposed path. The report provides the equilibrium
+endpoints, the exact momentum conditions, and a minimal quantitative
+implementation. Whether they describe U.S. history is an empirical question.
 
 Durable housing is the most important extension for that exercise. As
 \citet{glaeserGyourkoUrbanDecline2005} show, negative demand shocks can lower
@@ -603,6 +935,43 @@ and $L_1$ and moves it monotonically. Its limit must be the unique zero $L_1$.
 The monotonicity of $p$ and $n$ follows from their respective slopes.
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{prop:two_cohort_ss}]
+At a positive steady state, equation~\eqref{eq:two_cohort_law} requires
+$R(p^*)=1$ and $Y^*=O^*$. Solving $n_Y(p^*)=\bar n$ gives the price in
+equation~\eqref{eq:two_cohort_ss}; it is positive exactly when
+$\theta>\bar n(q+az)$. Substituting $Y^*=O^*$ and
+$n_Y(p^*)=\bar n$ into housing clearing gives the expression for $Y^*$.
+Moreover,
+\begin{equation}
+ \frac{dY^*}{dp^*}
+ =\frac{A(p^*)^\varepsilon
+ \left[(\varepsilon+1)(\alpha+\beta)
+ +\varepsilon a\bar n p^*\right]}
+ {\left[\alpha+\beta+a\bar n p^*\right]^2}>0.
+ \label{eq:two_cohort_scale_slope}
+\end{equation}
+Since $p^*_{\theta}=1/(a\bar n)>0$, $p^*_{z}=-1$, and
+$Y^*_{\beta}<0$ holding $p^*$ fixed, the comparative statics follow.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:momentum}]
+Total household population is $N_t=(1+\mu_t)Y_t$, while
+$N_{t+1}=(1+r_t)Y_t$. This proves
+equation~\eqref{eq:momentum_population}. Evaluate next period's housing demand
+at the current price and subtract current demand:
+\begin{align}
+ &Y_{t+1}d_Y(p_t)+O_{t+1}d_O(p_t)
+ -Y_t d_Y(p_t)-O_t d_O(p_t) \notag\\
+ &\hspace{2cm}=Y_t\left[(r_t-1)d_Y(p_t)
+ +(1-\mu_t)d_O(p_t)\right].
+ \label{eq:momentum_demand_change}
+\end{align}
+Supply is weakly increasing and demand is strictly decreasing in $p$, so the
+sign of this expression is the sign of $p_{t+1}-p_t$. This proves
+equation~\eqref{eq:momentum_price}; combining the two inequalities gives
+equation~\eqref{eq:momentum_joint}.
+\end{proof}
+
 \begin{proof}[Proof of Proposition~\ref{prop:threshold}]
 Equation~\eqref{eq:fertility_gap} implies
 $\theta_1=(1-\gamma)\bar n(q+ap_0)$. At the new reproductive price,
@@ -621,6 +990,37 @@ equation~\eqref{eq:subsidy_incidence}. Substitution shows that the full child
 cost remains $\theta/\bar n$. Equation~\eqref{eq:scale_slope} and
 $dp^*/ds>0$ imply that population rises.
 \end{proof}
+
+\subsection*{Local stability and cohort echoes}
+
+In the one-state discrete-generation model, population obeys
+$L_{t+1}=L_tR(P(L_t))$. Let $\varepsilon_{R,p}<0$ be the price elasticity of
+effective reproduction and $\varepsilon_{p,L}>0$ the elasticity of the
+market-clearing price with respect to population. Log-linearization gives local
+stability if and only if
+\begin{equation}
+ \left|1+\varepsilon_{R,p}\varepsilon_{p,L}\right|<1.
+ \label{eq:discrete_stability}
+\end{equation}
+Convergence alternates when
+$-2<\varepsilon_{R,p}\varepsilon_{p,L}<-1$. Thus even the one-state discrete
+model need not converge monotonically.
+
+In the two-generation model, let $f_t=\log(Y_t/Y^*)$. Write $\eta_Y>0$ and
+$\eta_O>0$ for the elasticities of the market-clearing price with respect to
+young and old cohort masses, and retain $\varepsilon_{R,p}<0$. Since
+$O_t=Y_{t-1}$, the first-order law is
+\begin{equation}
+ f_{t+1}=(1+\varepsilon_{R,p}\eta_Y)f_t
+ +\varepsilon_{R,p}\eta_O f_{t-1}.
+ \label{eq:two_cohort_local_law}
+\end{equation}
+Set $a_R=-\varepsilon_{R,p}\eta_Y>0$ and
+$b_R=-\varepsilon_{R,p}\eta_O>0$. The characteristic polynomial is
+$\lambda^2-(1-a_R)\lambda+b_R$. The steady state is locally stable if and only
+if $b_R<1$ and $a_R-b_R<2$. Convergence is oscillatory when
+$(1-a_R)^2<4b_R$. Old-age housing demand creates the lagged term $b_R$ and is
+therefore the source of the cohort echo in Figure~\ref{fig:momentum_transition}.
 
 \begin{proof}[Proof of Lemma~\ref{lem:entrant_flow}]
 With entrant flow $E$ and age-only survival, the mass of adult families of age
