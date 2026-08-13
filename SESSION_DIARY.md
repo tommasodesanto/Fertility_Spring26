@@ -1356,6 +1356,9 @@ inspected all 13 rendered pages.
 - Unified source: `latex/fertility_population_housing_transition_note.tex`.
 - Verified reader PDF:
   `output/pdf/fertility_population_housing_transition_note.pdf`.
+- The three superseded development notes are archived together under
+  `latex/archive/reproductive_equilibrium_development_20260813/`; their
+  duplicate reader PDFs and local build products were removed.
 
 ### Next step
 

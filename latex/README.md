@@ -46,9 +46,10 @@ Active documents:
   `code/model/tools/build_demographic_momentum_intergenerational_housing_illustration.py`;
   the verified reader PDF is written to
   `output/pdf/fertility_population_housing_transition_note.pdf`.
-- `demographic_momentum_intergenerational_housing_note.tex`: short standalone
-  version of the two-generation argument, now subsumed by the unified report
-  above and retained as a compact companion.
+
+The three immediate development notes subsumed by this report are retained
+together under `archive/reproductive_equilibrium_development_20260813/`; they
+are working history, not alternative active drafts.
 
 Build/support files:
 

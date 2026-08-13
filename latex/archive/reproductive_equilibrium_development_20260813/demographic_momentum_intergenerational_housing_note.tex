@@ -226,11 +226,11 @@ household mass $22.8$ percent below the old steady state.
 ]
 \addplot[very thick,red!75!black,mark=*] table[
  x=period,y=price_shock,col sep=comma
-] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+] {../../../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
 \addlegendentry{Fertility shock}
 \addplot[thick,blue!70!black,dashed] table[
  x=period,y=price_no_shock,col sep=comma
-] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+] {../../../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
 \addlegendentry{No-shock path}
 \addplot[thin,black,dotted] coordinates {(0,1) (10,1)};
 \addplot[thin,red!75!black,dotted] coordinates {(0,0.7) (10,0.7)};
@@ -253,10 +253,10 @@ household mass $22.8$ percent below the old steady state.
 ]
 \addplot[very thick,red!75!black,mark=*] table[
  x=period,y=population_shock,col sep=comma
-] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+] {../../../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
 \addplot[thick,blue!70!black,dashed] table[
  x=period,y=population_no_shock,col sep=comma
-] {../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
+] {../../../output/model/demographic_momentum_intergenerational_housing_note/transition_paths.csv};
 \addplot[thin,black,dotted] coordinates {(0,1) (10,1)};
 \addplot[thin,red!75!black,dotted] coordinates {(0,0.7724138) (10,0.7724138)};
 \end{axis}
