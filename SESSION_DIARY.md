@@ -1405,3 +1405,39 @@ transition.
   decomposition to machine precision; all 80 fixed-price sign tests pass.
 - The report compiles without LaTeX warnings and was rendered page by page for
   visual inspection.
+
+---
+
+## August 14, 2026: demographic capitalization and open-economy incidence
+
+### What we worked on
+
+Sharpened the dynamic report around a single paper-level result: reproductive
+closure changes the incidence of housing policy. Added exact sufficient-
+statistics formulas for both a closed reproductive steady state and a steady
+state sustained by fixed outside entry.
+
+### Main conclusions
+
+- In the closed economy, a policy that shifts reproduction changes the housing
+  cost at which replacement is restored; a policy that only releases or creates
+  housing changes population scale at an unchanged reproductive cost.
+- With fixed outside entry and local reproduction below replacement,
+  capitalization is partial. The price response depends jointly on the
+  outside-entry deficit, housing supply, and housing demand per adult.
+- The numerical transition remains supporting accounting rather than a second
+  central theorem. The empirical bottleneck is still the causal housing-cost
+  elasticity of reproduction.
+- A multitype dynastic extension was rejected. The maintained model does not
+  endogenize descendant entry wealth, and a node-by-node diagnostic moves
+  ownership from 0.411 to 0.715 across entrant wealth while moving the
+  reproduction ratio only from 0.8258 to 0.8300; every node remains below
+  replacement. Adding an unidentified parent--child transition matrix would
+  therefore add notation without repairing the closure.
+
+### Verification
+
+The new closed- and open-economy formulas were checked independently, the
+LaTeX source compiles without warnings, and all 21 pages of the final PDF were
+rendered and inspected. The report remains a theory and quantitative-
+architecture document, not a claimed U.S. transition estimate.

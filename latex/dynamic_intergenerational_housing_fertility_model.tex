@@ -23,6 +23,7 @@
 \captionsetup{font=small,labelfont=bf,skip=4pt}
 
 \newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
@@ -45,25 +46,26 @@
 \begin{abstract}
 Young households need additional space when they have children, but access to
 family-sized housing depends on tenure, liquid wealth, and the housing retained
-by older owners. I study the resulting feedback between fertility and the
-housing market. A two-generation model shows that reproductive stationarity
-selects the long-run housing cost, while market clearing selects population
-scale. It also gives exact conditions under which reproduction can be below
-replacement while household population and current housing costs continue to rise: a
-large inherited cohort must add more housing demand as it ages than is lost
-from the smaller cohort behind it. I then embed the mechanism in a lifecycle
-model with sequential births, income risk, saving, tenure choice, collateral
-constraints, child maturation, survival, and bequests. The calendar-time
-equilibrium propagates the unnormalized joint distribution and clears the
-housing market along the transition. A reproducible numerical illustration
-separates inherited demographic momentum from a no-fertility-decline path and
-compares policies that relax young access with policies that release housing
-retained by older households. Finally, an audit of the maintained quantitative
-specification shows what remains before the transition can be interpreted as a
-U.S. quantitative result: the existing fertility block is below replacement
-and responds only weakly to housing costs. The framework is therefore a
-coherent theoretical and computational design; estimating the U.S. transition
-remains a separate empirical and numerical task.
+by older owners. I study the resulting two-way feedback between fertility and
+the housing market. Reproductive stationarity selects the long-run housing
+cost, while market clearing selects population scale. In the two-generation
+benchmark, this changes policy incidence. Relaxing young access raises
+fertility at a given price but is capitalized into a higher long-run housing
+cost and a larger population.
+Releasing housing retained by older households lowers costs and raises
+fertility during adjustment, but only the population effect survives in the
+new steady state. Effective fertility returns to replacement in both cases.
+With fixed outside entry, capitalization is partial and remains well defined
+when local reproduction is below replacement. A lifecycle model with
+sequential births, tenure choice, collateral constraints, child maturation,
+survival, and bequests gives the corresponding calendar-time equilibrium. It
+also shows how reproduction can be below
+replacement while population and housing costs continue to rise: an inherited
+cohort must add more demand as it ages than is lost from the smaller cohort
+behind it. A reproducible numerical illustration verifies the transition
+accounting. The maintained quantitative specification does not yet identify
+the housing-cost elasticity of fertility, so the U.S. magnitude remains an
+empirical and numerical task rather than a claimed result.
 \end{abstract}
 
 \section{The mechanism}
@@ -82,6 +84,20 @@ generation of households, so fertility changes future housing demand. The
 first direction is a household mechanism; the second is a demographic
 equilibrium condition. Combining them changes both the transition and the
 long-run incidence of housing policy.
+
+The two directions have empirical precedents, but they are usually studied
+separately. Housing prices and mortgage access affect childbearing, with
+different exposure for renters, prospective buyers, and incumbent owners
+\citep{lovenheimFamilyWealthShocks2013,dettlingHousePricesBirth2014,hacamoBabiesMortgageDeregulation2021}.
+In the reverse direction, \citet{franckeBabyBoomsAsset2025} show that birth
+cohorts predict owner-occupied housing prices decades later through
+age-concentrated entry into and exit from homeownership.
+\citet{malmbergFertilityCycles2012} documents the broader two-sided association
+between cohort housing pressure and fertility. The contribution here is to
+close these directions in one equilibrium in which tenure and fertility are
+household choices and population scale adjusts. That closure separates an
+intervention's current affordability effect from its long-run demographic
+capitalization.
 
 The analysis proceeds in two layers. Section~\ref{sec:two_generation} makes
 the equilibrium logic transparent with young and old households. Sections
@@ -220,6 +236,40 @@ population rather than the long-run price in the closed economy.
 The existence condition is economically sharp. Even if market housing were
 free, a child would still cost $q+a\omega$. If $\theta\leq\bar n(q+a\omega)$, cheaper
 market housing alone cannot restore replacement.
+
+The same separation changes how a permanent housing policy should be read.
+Start from a reproductive steady state and let an unexpected reform arrive
+after cohort sizes are inherited. Write $g_Y=-\omega$ for easier young access,
+$g_O=-\tau$ for lower old retention, and $g_H=\log\bar H$ for greater housing
+supply, so an increase in any $g$ is the stated reform.
+
+\begin{corollary}[Demographic capitalization]
+\label{cor:demographic_capitalization}
+For a local reform at an interior steady state, the impact and long-run signs
+are
+\begin{center}
+\small
+\begin{tabular}{lccccc}
+\toprule
+ & Impact $p_t$ & Impact $n_t$ & Long-run $p^*$
+ & Long-run $n^*$ & Long-run population \\
+\midrule
+Easier young access, $g_Y$ & $+$ & $+$ & $+$ & $0$ & $+$ \\
+Lower old retention, $g_O$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
+Greater housing supply, $g_H$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{corollary}
+
+The access result is not a paradox. The reform lowers the non-price cost of
+family housing, raises fertility and demand, and is partly capitalized into the
+market price. Thus a higher observed price need not mean that young households
+are worse off. Old release and new supply instead lower the price on impact.
+At any new reproductive steady state, demographic expansion has absorbed the
+released stock: effective fertility is back at replacement, the reproductive
+housing cost is at its original level, and the persistent effect is a larger
+population. A fixed-population comparison misses this change in incidence.
 
 \begin{figure}[ht!]
 \centering
@@ -827,25 +877,118 @@ relative statement is the causal discipline the levels alone cannot provide.
 
 \subsection{Long-run policy incidence}
 
-At a regular closed-economy root, any policy $g$ satisfies
+The lifecycle model admits the same result without the toy model's functional
+forms. Let $\widehat G(P,g)$ be the normalized stationary lifecycle
+distribution under policy $g$, and define housing per adult household by
 \begin{equation}
- \frac{dP^*}{dg}=-\frac{R_{0g}(P^*;g)}{R_{0P}(P^*;g)}.
- \label{eq:root_comparative_static}
+ \bar h(P,g)=\int_{\X}h(x;P,g)\,d\widehat G(P,g).
+ \label{eq:average_stationary_housing}
 \end{equation}
-If reproduction falls with the housing price, a policy that raises reproduction
-at a fixed price supports a higher reproductive price. Relaxing young access
-can have this effect because it changes tenure and fertility before children
-are born. Its long-run population effect combines the induced price with
-housing supply and per-household demand.
+This object includes policy-induced changes in tenure and stationary
+composition, not only a household's conditional housing choice.
 
-A pure old-release policy has different incidence. If it changes housing only
-after fertility and child maturation, and does not enter earlier continuation
-values, bequest utility, or taxes, then $R_{0g}=0$. It leaves the reproductive
-price unchanged and accommodates more households by lowering housing per
-adult. This neutrality is not automatic in the full model: anticipated
-transaction costs and estate incentives can change earlier saving, tenure, and
-fertility decisions. The quantitative model must compute, rather than assume,
-the sign.
+At any stationary price, define the housing-cost elasticity of reproduction
+and the fixed-price policy shift by
+\begin{equation}
+ \eta_R=-\frac{\partial\log R_0}{\partial\log P}>0,
+ \qquad
+ \xi_g=\left.\frac{\partial\log R_0}{\partial g}\right|_P.
+ \label{eq:reproduction_sufficient_statistics}
+\end{equation}
+For the housing market, let $\eta_K=\partial\log K^s/\partial\log P$ and
+$\eta_h=-\partial\log\bar h/\partial\log P$. The direct policy shifts at a
+fixed price are $s_g=\partial\log K^s/\partial g$ and
+$d_g=\partial\log\bar h/\partial g$.
+
+\begin{proposition}[Lifecycle demographic capitalization]
+\label{prop:lifecycle_capitalization}
+At a regular closed-economy root, the long-run price and adult-household scale
+satisfy
+\begin{align}
+ \frac{d\log P^*}{dg}
+ &=\frac{\xi_g}{\eta_R},
+ \label{eq:root_comparative_static}\\
+ \frac{d\log S^*}{dg}
+ &=s_g-d_g
+   +(\eta_K+\eta_h)\frac{\xi_g}{\eta_R}.
+ \label{eq:scale_sufficient_statistics}
+\end{align}
+Effective reproduction remains one.
+\end{proposition}
+
+The proposition isolates the objects that turn the theory into a quantitative
+claim. A young-access policy with $\xi_g>0$ raises the reproductive asset price;
+its population effect additionally depends on supply, housing demand, and the
+direct change in who occupies the stock. A policy that is pure old release in
+the sense that $\xi_g=s_g=0$ and $d_g<0$ raises scale at an unchanged
+reproductive price. A pure supply expansion has $\xi_g=d_g=0$ and $s_g>0$.
+These restrictions require that the policy not alter earlier continuation
+values, bequest utility, or fiscal transfers. In the full model, anticipated
+old-age policy can violate them, so the sign must be computed.
+
+Equation~\eqref{eq:root_comparative_static} also identifies the empirical
+bottleneck. The elasticity $\eta_R$ is a causal housing-cost-to-reproduction
+slope. Fertility levels and timing observed at one market price do not identify
+it; without that slope, neither long-run capitalization nor demographic
+amplification has an estimated magnitude.
+
+The closed result also has a global version. If $R_0(P,g)$ is strictly
+decreasing in $P$, a policy that shifts the entire reproduction schedule up
+raises its unique root. A policy that leaves that schedule unchanged leaves
+the reproductive price exactly unchanged.
+
+The empirically relevant benchmark can instead have fixed outside entry and
+local reproduction below replacement. Let
+\begin{equation}
+ D(P,g)=E_0(P,g)-\rho B_0(P,g)>0
+ \label{eq:open_deficit}
+\end{equation}
+be the number of outside entrants needed per adult household to keep its mass
+stationary. Define its price elasticity and direct policy shift by
+\begin{equation}
+ \eta_D=\frac{\partial\log D}{\partial\log P}>0,
+ \qquad
+ \zeta_g=\left.\frac{\partial\log D}{\partial g}\right|_P.
+ \label{eq:open_deficit_statistics}
+\end{equation}
+
+\begin{proposition}[Open-economy incidence]
+\label{prop:open_incidence}
+Hold the outside entrant flow $M$ and local retention rate $\rho$ fixed. At a
+stationary point where the displayed objects are differentiable and
+$\eta_K+\eta_h+\eta_D\neq0$, housing cost and adult-household scale obey
+\begin{align}
+ \frac{d\log P^\circ}{dg}
+ &=\frac{d_g-s_g-\zeta_g}
+ {\eta_K+\eta_h+\eta_D},
+ \label{eq:open_price_incidence}\\
+ \frac{d\log S^\circ}{dg}
+ &=-\zeta_g-\eta_D\frac{d\log P^\circ}{dg}.
+ \label{eq:open_scale_incidence}
+\end{align}
+\end{proposition}
+
+The formula separates three fixed-price effects: the policy can change housing
+demand per adult, housing supply, or the outside-entry deficit. Under the usual
+condition $\eta_K+\eta_h>0$, a policy whose only direct effect is to raise local
+reproduction has $\zeta_g<0$ and $d_g=s_g=0$. It raises both the housing cost
+and population, but some of its demand is absorbed by ordinary supply and
+housing-demand responses. A pure old-release reform with
+$\zeta_g=s_g=0$ and $d_g<0$, or a pure supply reform with
+$\zeta_g=d_g=0$ and $s_g>0$, instead lowers the price and raises population.
+When $E_0$ is fixed, this expansion operates through the lower price raising
+local reproduction. In that case, with $R_0=B_0/E_0$,
+\begin{equation}
+ \eta_D=\frac{\rho R_0}{1-\rho R_0}\eta_R,
+ \qquad
+ \zeta_g=-\frac{\rho R_0}{1-\rho R_0}\xi_g.
+ \label{eq:open_closed_bridge}
+\end{equation}
+where $\eta_R$ and $\xi_g$ are evaluated at $P^\circ$. Thus the open formula is
+usable below replacement. It converges to the closed incidence formulas along
+an equilibrium sequence with $\rho\to1$, $M\to0$ at a rate that keeps
+$S^\circ=M/D$ finite, $P^\circ\to P^*$, convergent elasticities, and a positive
+limiting $\eta_R$.
 
 \section{A reproducible numerical transition}
 \label{sec:numerical_transition}
@@ -1117,12 +1260,23 @@ Before interpreting a computed transition, five gates should pass.
 
 \section{Conclusion}
 
-The model yields one clean separation. Reproductive balance selects a long-run
-housing cost in the closed economy; housing clearing selects population scale.
-The path between steady states is governed by inherited cohort composition,
-tenure transitions, old-age retention, immigration, and durable supply. It can
-therefore feature below-replacement reproduction, rising adult-household mass,
-and rising housing costs at the same time.
+The main result is an incidence result. In a positive closed steady state,
+permanent housing policy cannot leave effective reproduction above or below
+replacement. A policy that changes young access shifts the housing cost at
+which replacement is restored; a policy that only releases old-held housing
+or expands supply changes the population that can be supported at that cost.
+The distinction is invisible when population is normalized after every model
+solution. With fixed outside entry and below-replacement local reproduction,
+the same forces generate partial rather than complete demographic
+capitalization.
+
+The transition remains economically important. Inherited cohort composition,
+tenure transitions, old-age retention, immigration, and durable supply govern
+the path between endpoints. Below-replacement reproduction can therefore
+coexist with rising adult-household mass and rising housing costs. Moreover,
+the realized price path is not the causal effect of low fertility: the relevant
+comparison holds the inherited state fixed and removes only the fertility
+decline.
 
 The simple theory isolates the mechanism, and the numerical illustration
 verifies its accounting. The lifecycle section provides a closed transition
@@ -1164,6 +1318,31 @@ $(\varepsilon+1)/p-a\bar n/[\alpha+\varphi(\tau)+a\bar np]>0$. The comparative
 statics follow directly.
 \end{proof}
 
+\begin{proof}[Proof of Corollary~\ref{cor:demographic_capitalization}]
+With inherited cohort masses, write housing excess supply as
+\[
+ F(p)=\bar H p^\varepsilon
+ -Y\left(\frac{\alpha}{p}+\frac{a\theta}{q+a(p+\omega)}\right)
+ -O\frac{\varphi(\tau)}{p}.
+\]
+Let $C=q+a(p+\omega)$ and define
+\[
+ A=\varepsilon\bar H p^{\varepsilon-1}
+   +\frac{Y\alpha+O\varphi(\tau)}{p^2}>0,
+ \qquad
+ B=\frac{Ya^2\theta}{C^2}>0.
+\]
+Then $F_p=A+B$. For easier young access,
+$F_{g_Y}=-B$, so $dp_t/dg_Y=B/(A+B)\in(0,1)$. Because the
+full family-housing cost is $p-g_Y$, it falls and fertility rises. For lower
+old retention, $F_{g_O}=O\varphi'(\tau)/p>0$; for greater supply,
+$F_{g_H}=\bar H p^\varepsilon>0$. In both cases the impact price falls and
+fertility rises. Proposition~\ref{prop:toy_ss} gives the long-run signs:
+$dp^*/dg_Y=1$, while $dp^*/dg_O=dp^*/dg_H=0$; in every reproductive steady
+state $n^*=\bar n$. Its population formula is increasing in $p^*$, decreasing
+in $\varphi(\tau)$, and proportional to $\bar H$.
+\end{proof}
+
 \begin{proof}[Proof of Proposition~\ref{prop:toy_momentum}]
 At date $t$, total household population is $(1+\mu_t)Y_t$. At date $t+1$ it is
 $(1+\mathcal R_t)Y_t$, so it rises exactly when $\mathcal R_t>\mu_t$. Evaluate next-period
@@ -1187,6 +1366,46 @@ stationary economy requires this flow to equal $e$, so $R_0(P)=1$.
 Conversely, if $R_0(P)=1$, any positive multiple of $v_P$ reproduces its
 entrant flow. Normalizing gives $g=v_P/\mathcal A(P)$, and housing
 clearing fixes the multiple as in equation~\eqref{eq:renewal_scale}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lifecycle_capitalization}]
+Along a closed reproductive equilibrium, $R_0(P^*,g)=1$. Log differentiation
+gives $0=-\eta_R\,d\log P^*+\xi_g\,dg$, which proves
+equation~\eqref{eq:root_comparative_static}. Housing clearing implies
+$S^*=K^s(P^*,g)/\bar h(P^*,g)$. Therefore
+\[
+ d\log S^*
+ =s_g\,dg+\eta_K\,d\log P^*
+  -d_g\,dg+\eta_h\,d\log P^*.
+\]
+Substituting the price response proves
+equation~\eqref{eq:scale_sufficient_statistics}. The reproductive root itself
+keeps effective reproduction equal to one.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:open_incidence}]
+Equation~\eqref{eq:scalar_open_ss} gives
+$S^\circ=M/D(P^\circ,g)$. Combining it with housing clearing yields
+\[
+ \log M-\log D(P^\circ,g)+\log\bar h(P^\circ,g)
+ -\log K^s(P^\circ,g)=0.
+\]
+Log differentiation at fixed $M$ and $\rho$ proves
+equation~\eqref{eq:open_price_incidence}. Differentiating
+$\log S^\circ=\log M-\log D(P^\circ,g)$ proves
+equation~\eqref{eq:open_scale_incidence}. When $E_0$ is fixed,
+$D=E_0(1-\rho R_0)$; differentiating this identity gives
+equation~\eqref{eq:open_closed_bridge}. To see the stated limit, let
+$\lambda=\rho R_0/(1-\rho R_0)$. Substitution gives
+\[
+ \frac{d\log P^\circ}{dg}
+ =\frac{d_g-s_g+\lambda\xi_g}
+ {\eta_K+\eta_h+\lambda\eta_R}.
+\]
+Along the stated equilibrium sequence, $\lambda\to\infty$, so this expression
+converges to $\xi_g/\eta_R$. Substitution in
+equation~\eqref{eq:open_scale_incidence} gives the limit
+$s_g-d_g+(\eta_K+\eta_h)\xi_g/\eta_R$.
 \end{proof}
 
 \section{Complete benchmark target fit}
