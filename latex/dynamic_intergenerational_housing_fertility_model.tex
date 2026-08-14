@@ -78,88 +78,86 @@ first direction is a household mechanism; the second is a demographic
 equilibrium condition. Combining them changes both the transition and the
 long-run incidence of housing policy.
 
-Neither direction of the feedback is new. Demographic effects on housing
-demand go back at least to \citet{mankiwBabyBoomHousing1989}; recent evidence
-shows that birth cohorts predict owner-occupied housing prices decades later
-through age-concentrated entry into and exit from homeownership
-\citep{franckeBabyBoomsAsset2025}. Housing prices and mortgage access affect childbearing, with
-different exposure for renters, prospective buyers, and incumbent owners
+These links have close precedents. Demographic effects on housing demand go
+back at least to \citet{mankiwBabyBoomHousing1989}, and recent evidence relates
+birth-cohort size to housing prices through entry into and exit from
+homeownership \citep{franckeBabyBoomsAsset2025}. Housing prices and mortgage
+access also affect childbearing
 \citep{lovenheimFamilyWealthShocks2013,dettlingHousePricesBirth2014,hacamoBabiesMortgageDeregulation2021}.
-\citet{malmbergFertilityCycles2012} documents the broader two-sided association
-between cohort housing pressure and fertility, and
-\citet{leeSuhSuperLowFertility2025} study a low-fertility housing transition in
-an OLG model. The contribution cannot therefore be that demography affects
-housing, or even that the feedback can be slow. The narrower candidate
-contribution is policy incidence in a model where tenure, constrained access,
-old-age retention, and fertility are household choices.
+\citet{malmbergFertilityCycles2012} studies the two-way relation between cohort
+housing pressure and fertility, while \citet{leeSuhSuperLowFertility2025}
+analyze a low-fertility housing transition. Our question is narrower: how does
+the incidence of housing policy change when tenure constraints and old-age
+retention affect fertility, and births in turn determine the number of future
+households?
 
-The paper-facing modification is one stationary wrapper around the existing
-model. At a candidate housing cost $p$, the maintained solver produces
-a normalized composition $g$, required young entrants $E_0(p,g)$, mature
-locally born entrants $B_0(p,g)$, and housing demand per adult
-$\bar h(p,g)$. Fixed outside entry $M$ and local retention $\rho$ close scale
-and the housing market through
+The current quantitative model normalizes the mass of adult households. Let
+$S$ denote that mass. At a housing cost $p$, the existing solver gives a
+normalized distribution of households $g$, the entrant flow $E_0(p,g)$ needed
+to reproduce that distribution, the flow $B_0(p,g)$ of new households produced
+by locally born children, and housing demand per adult $\bar h(p,g)$. Two
+additional objects determine population scale. The number $M$ is a fixed flow
+of households entering from outside the model, and $\rho$ is the fraction of
+locally born new households that remain in the modeled economy. A stationary
+equilibrium adds two conditions:
 \begin{equation}
  S E_0(p,g)=M+\rho S B_0(p,g),
  \qquad
  S\bar h(p,g)=H^s(p).
  \label{eq:minimal_stationary_wrapper}
 \end{equation}
-The entrant and maturation flows already existed in the solver. The renewal
-routine also existed, but the active Markov-income price-clearing branch did
-not call it; this update adds that missing call. The exercise holds the
-household block and the closure parameters fixed and solves these two scalar
-conditions jointly. It then reports fertility per household, population
-scale, and total births. No new household state, Bellman equation, or
-stationary distribution algorithm is required.
+The first condition says that the required entrant flow equals local entrants
+who remain plus entrants from outside. The second clears the housing market,
+where $H^s(p)$ is aggregate housing supply. Together they determine $S$ and
+$p$, holding the existing household problem fixed.
+
+Both $E_0$ and $B_0$ were already measured by the stationary solver. The code
+change makes the existing price loop use the first condition when computing
+housing demand. It does not add a household state or change a Bellman equation.
 
 This scalar closure assumes that outside and locally born entrants draw the
 same fixed entrant-state distribution used by the maintained solver. It is
 therefore exact for the model's present aggregate renewal accounting, but it
 does not yet endogenize the wealth or tenure composition of descendants.
 
-Section~\ref{sec:two_generation} makes the logic transparent with young and old
-households. Section~\ref{sec:quantitative_mapping} reports what works in the
-maintained calibration and what remains necessary before calling it a U.S.
-transition.
+The next section presents the same mechanism with young and old households.
+Section~\ref{sec:quantitative_mapping} then maps it into the maintained model.
 
 \section{Two-generation theory}
 \label{sec:two_generation}
 
 \subsection{Environment}
 
-\textbf{Young households.} At date $t$, a mass $Y_t$ of young households has
-income $y$. A young household chooses consumption $c$, adult housing $h$, and
-children $n$. Preferences are
+\textbf{Young households.} At date $t$, there are $Y_t$ young households. Each
+has income $y$ and chooses consumption $c$, housing for the adults $h$, and the
+number of children $n$. Preferences are
 \begin{equation}
  u(c,h,n)=c+\alpha\log h+\theta\log n,
  \qquad \alpha>0,\quad \theta>0.
  \label{eq:toy_utility}
 \end{equation}
-The parameter $\theta$ is the value of children. Quasi-linearity removes income
-effects and keeps the price mechanism available in closed form.
-Throughout this section, income is high enough that the interior allocation is
-feasible: $y>\alpha+\theta$.
+The parameter $\alpha$ governs the demand for adult housing and $\theta$
+governs the demand for children. Quasi-linearity makes both demands available
+in closed form. We assume $y>\alpha+\theta$, so consumption is positive at the
+interior solution.
 
 \textbf{Child costs and young access.} Each child requires $q\geq0$ units of
-ordinary goods and $a>0$ units of housing. The market cost of that housing is
-$ap$, where $p$ is the price of housing services. A goods-equivalent wedge
-$\omega\geq0$ captures the additional cost of obtaining family space through a
-small rental market, a down payment, or another tenure constraint. The full
-cost of a child is therefore $q+a(p+\omega)$.
+other goods and $a>0$ units of housing. One unit of housing costs $p$. Obtaining
+family space also entails an access cost $\omega\geq0$, which represents a
+small rental market, a down-payment constraint, or another tenure friction.
+The cost of a child is therefore $q+a(p+\omega)$.
 
-\textbf{Old households.} A mass $O_t$ of old households no longer chooses
-fertility. After solving its retention and estate problem, an old household's
-housing demand is summarized by
+\textbf{Old households.} There are $O_t$ old households. They no longer choose
+fertility, and their housing demand is
 \begin{equation}
- d_O(p;\tau)=\frac{\varphi(\tau)}{p},
- \qquad \varphi'(\tau)>0.
+ h_O(p)=\frac{\bar h_O}{p},
+ \qquad \bar h_O>0.
  \label{eq:old_demand}
 \end{equation}
-The parameter $\tau$ indexes forces that keep old households in housing,
-including transaction costs and the estate motive. The lifecycle model below
-derives retention from choices rather than imposing equation
-\eqref{eq:old_demand}.
+The parameter $\bar h_O$ summarizes old households' desire to retain housing.
+A policy that encourages downsizing reduces $\bar h_O$. In the full model,
+housing retention follows from moving costs and the value of leaving a house
+to one's children rather than from this demand schedule.
 
 \textbf{Housing.} Aggregate housing services are supplied according to
 \begin{equation}
@@ -167,10 +165,11 @@ derives retention from choices rather than imposing equation
  \qquad \bar H>0,\quad \varepsilon\geq0.
  \label{eq:toy_supply}
 \end{equation}
-The fixed-stock case is $\varepsilon=0$. The number $\bar n>0$ is effective
-replacement fertility: after survival and household formation, a young
-household with $\bar n$ children produces one young household in the next
-generation.
+The fixed-stock case is $\varepsilon=0$.
+
+\textbf{Demography.} The number $\bar n>0$ is replacement fertility. After
+survival and household formation, $\bar n$ children produce one new young
+household.
 
 In this static section, $p$ is the current cost of one unit of housing
 services. The lifecycle model distinguishes that current rent, denoted $r_t$,
@@ -186,23 +185,23 @@ Taking $p$ as given, a young household solves
  c+ph+\bigl[q+a(p+\omega)\bigr]n=y.
  \label{eq:young_problem}
 \end{equation}
-At an interior solution, child demand and total housing demand are
+At an interior solution, the household chooses
 \begin{equation}
- n_Y(p;\theta,\omega)=\frac{\theta}{q+a(p+\omega)},
+ n(p)=\frac{\theta}{q+a(p+\omega)},
  \qquad
- d_Y(p;\theta,\omega)=\frac{\alpha}{p}+a n_Y(p;\theta,\omega).
+ h_Y(p)=\frac{\alpha}{p}+a n(p).
  \label{eq:young_demands}
 \end{equation}
-A higher market price and a tighter access wedge have the same sign in the
-child decision. They differ in equilibrium incidence: the market price clears
-housing, while the access wedge changes which households can obtain it.
+Thus a higher housing cost or a tighter access constraint reduces fertility.
+Young housing demand is adult housing, $\alpha/p$, plus the space required by
+children, $a n(p)$.
 
 \subsection{Equilibrium and the steady state}
 
 Housing clearing adds young and old demand:
 \begin{equation}
  \bar H p_t^\varepsilon
- =Y_t d_Y(p_t;\theta,\omega)+O_t d_O(p_t;\tau).
+ =Y_t h_Y(p_t)+O_t h_O(p_t).
  \label{eq:two_generation_clearing}
 \end{equation}
 For inherited cohort masses, the left side rises and the right side falls with
@@ -210,127 +209,111 @@ $p_t$, so the clearing price is unique.
 
 Children become the next young cohort, while the current young become old:
 \begin{equation}
- Y_{t+1}=\mathcal R(p_t;\theta,\omega)Y_t,
- \qquad O_{t+1}=Y_t,
- \qquad
- \mathcal R(p;\theta,\omega)=\frac{n_Y(p;\theta,\omega)}{\bar n}.
+ Y_{t+1}=\frac{n(p_t)}{\bar n}Y_t,
+ \qquad O_{t+1}=Y_t.
  \label{eq:two_generation_law}
 \end{equation}
-The function $\mathcal R$ is effective reproduction. It is strictly decreasing
-in the housing cost and the young-access wedge.
+The ratio $n(p_t)/\bar n$ is the number of next-period young households
+produced by each current young household.
 
-\begin{definition}[Reproductive steady state]
-A reproductive steady state is a price $p^*>0$, positive cohort masses
-$(Y^*,O^*)$, and household choices such that households optimize, housing
-clears, and $(Y_{t+1},O_{t+1})=(Y_t,O_t)$.
-\end{definition}
+A steady state has a constant housing cost and constant positive cohort
+masses, so $n(p^*)=\bar n$ and $Y^*=O^*$.
 
-\begin{proposition}[Steady state and policy incidence]
+\begin{proposition}[Steady state]
 \label{prop:toy_ss}
-A unique positive reproductive steady state exists if and only if
+A unique positive steady state exists if and only if
 $\theta>\bar n(q+a\omega)$. It is
 \begin{equation}
  p^*=\frac{\theta/\bar n-q}{a}-\omega,
  \qquad
  Y^*=O^*=\frac{\bar H(p^*)^{\varepsilon+1}}
- {\alpha+\varphi(\tau)+a\bar n p^*}.
+ {\alpha+\bar h_O+a\bar n p^*}.
  \label{eq:toy_ss}
 \end{equation}
-A lower value of children $\theta$ or a tighter young-access wedge $\omega$ lowers
-both the long-run housing cost and household population. Stronger old retention
-raises $\varphi(\tau)$ and lowers population without changing the reproductive
-housing cost. A proportional increase in housing supply $\bar H$ raises population in the
-same proportion and leaves the reproductive housing cost unchanged.
+A lower value of children $\theta$ or a higher access cost $\omega$ lowers both
+the steady-state housing cost and population. A higher $\bar h_O$ reduces
+population but does not change the steady-state housing cost. A proportional
+increase in housing supply $\bar H$ raises population in the same proportion
+and also leaves the steady-state housing cost unchanged.
 \end{proposition}
 
-Reproduction and housing clearing perform different jobs. Replacement selects
-the housing cost at which a cohort reproduces itself. Housing clearing then
-selects how many young and old households can occupy the market at that cost.
-This triangular ordering is why permanent housing supply is capitalized into
-population rather than the long-run price in the closed economy.
+The cohort law first determines the housing cost consistent with replacement,
+$n(p^*)=\bar n$. Housing clearing then determines how many households can live
+in the market at that cost. This is why a permanent increase in housing supply
+raises population rather than lowering the steady-state housing cost.
 
-The existence condition is economically sharp. Even if market housing were
-free, a child would still cost $q+a\omega$. If $\theta\leq\bar n(q+a\omega)$, cheaper
-market housing alone cannot restore replacement.
+Even if market housing were free, a child would still cost $q+a\omega$. Hence
+cheaper housing cannot restore replacement when
+$\theta\leq\bar n(q+a\omega)$.
 
-The same separation changes how a permanent housing policy should be read.
-Start from a reproductive steady state and let an unexpected reform arrive
-after cohort sizes are inherited. Write $g_Y=-\omega$ for easier young access,
-$g_O=-\tau$ for lower old retention, and $g_H=\log\bar H$ for greater housing
-supply, so an increase in any $g$ is the stated reform.
-
-\begin{corollary}[Demographic capitalization]
+\subsection{Comparative statics}
 \label{cor:demographic_capitalization}
-For a local reform at an interior steady state, the impact and long-run signs
-are
+
+Suppose the economy begins in a steady state and a permanent reform arrives
+after $Y_t$ and $O_t$ have been inherited. The impact and steady-state effects
+are:
 \begin{center}
 \small
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccccc}
 \toprule
  & Impact $p_t$ & Impact $n_t$ & Long-run $p^*$
  & Long-run $n^*$ & Long-run population \\
 \midrule
-Easier young access, $g_Y$ & $+$ & $+$ & $+$ & $0$ & $+$ \\
-Lower old retention, $g_O$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
-Greater housing supply, $g_H$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
+Lower access cost, $\omega\downarrow$ & $+$ & $+$ & $+$ & $0$ & $+$ \\
+Lower old housing demand, $\bar h_O\downarrow$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
+Greater housing supply, $\bar H\uparrow$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-\end{corollary}
 
-The access result is not a paradox. The reform lowers the non-price cost of
-family housing, raises fertility and demand, and is partly capitalized into the
-market price. Thus a higher observed price need not mean that young households
-are worse off. Old release and new supply instead lower the price on impact.
-At any new reproductive steady state, demographic expansion has absorbed the
-released stock: effective fertility is back at replacement, the reproductive
-housing cost is at its original level, and the persistent effect is a larger
-population. A fixed-population comparison misses this change in incidence.
+Lowering $\omega$ makes family housing easier to obtain. Fertility and housing
+demand rise immediately, so part of the reform appears as a higher market
+price. Lower old housing demand and greater supply instead reduce the price on
+impact. In the new steady state, fertility is again $\bar n$. For the latter
+two reforms, the housing cost returns to its original level and the additional
+housing supports a larger population.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.98\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
-\caption{Reproduction selects the steady-state housing cost, and housing
-clearing maps that cost into population. After a fall in the value of
-children, fertility is initially below replacement. A lower population then
-reduces the price and partly offsets the original shock.}
+\caption{The child decision determines the steady-state housing cost through
+$n(p^*)=\bar n$. Housing clearing then determines population at that cost. A
+fall in $\theta$ initially puts fertility below replacement; as population
+falls, housing becomes cheaper and partly offsets the initial decline.}
 \label{fig:toy_feedback}
 \end{figure}
 
 \subsection{Demographic momentum}
 
-The steady-state result does not imply that population and prices must already
-be falling. This is a simple accounting point, not a separate theorem. Let
-$\mu_t=O_t/Y_t$ be the old-to-young ratio and let
-$\mathcal R_t=\mathcal R(p_t;\theta,\omega)$ be current effective reproduction.
-When $\mathcal R_t<1$, household population still rises between $t$ and $t+1$
-if and only if
+Let $\mu_t=O_t/Y_t$ be the number of old households per young household, and
+let $m_t=n(p_t)/\bar n$ be the number of next-period young households produced
+by each current young household. When fertility is below replacement,
+$m_t<1$, total household population still rises if
 \begin{equation}
- \mu_t<\mathcal R_t<1.
+ \mu_t<m_t<1.
  \label{eq:population_momentum}
 \end{equation}
 For example, 100 young and 70 old households become 80 young and 100 old
-households when $\mathcal R_t=0.8$: population rises from 170 to 180 despite
-below-replacement fertility. The housing cost rises if and only if
+households when $m_t=0.8$. Population rises from 170 to 180 even though the
+young cohort is not replacing itself.
+
+If preferences and housing supply do not change again between $t$ and $t+1$,
+the housing cost also rises when
 \begin{equation}
- (1-\mu_t)d_O(p_t;\tau)
- >(1-\mathcal R_t)d_Y(p_t;\theta,\omega).
+ (1-\mu_t)h_O(p_t)>(1-m_t)h_Y(p_t).
  \label{eq:price_momentum}
 \end{equation}
-Thus low fertility, population growth, and housing-cost growth coexist when
-\begin{equation}
- \mu_t<\min\left\{\mathcal R_t,
- 1-(1-\mathcal R_t)\frac{d_Y(p_t;\theta,\omega)}{d_O(p_t;\tau)}\right\}.
- \label{eq:joint_momentum}
-\end{equation}
+The smaller young cohort reduces demand by $(1-m_t)Y_t h_Y(p_t)$. At the same
+time, the current young cohort replaces a smaller old cohort and raises old
+demand by $(1-\mu_t)Y_t h_O(p_t)$. The price rises when the second change is
+larger.
 
-Equation~\eqref{eq:price_momentum} is an accounting test. The smaller next
-young cohort removes $(1-\mathcal R_t)Y_t d_Y$ units of demand. The unusually large
-current young cohort adds $(Y_t-O_t)d_O$ units as it ages. The housing cost rises when the
-second force is larger. From an exact stationary age distribution,
-$\mu_t=1$, so both population and the housing cost fall after a fertility decline. A
-positive transition requires an inherited cohort bulge generated by earlier
-fertility, immigration, or both.
+Starting from an exact steady state, $\mu_t=1$. In this closed two-cohort model,
+a fertility decline lowers the housing cost on impact and lowers population in
+the next period. A period in which fertility is below replacement while
+population and housing costs rise therefore requires an inherited cohort
+imbalance, produced by earlier fertility, immigration, or both.
 
 The fertility decline nevertheless lowers housing costs relative to the no-shock
 path. Demographic momentum can make the realized cost rise over time; it
@@ -338,20 +321,18 @@ cannot reverse the counterfactual effect of the shock.
 
 \subsection{Intergenerational policy}
 
-Proposition~\ref{prop:toy_ss} distinguishes three interventions. Relaxing the
-young-access wedge $\omega$ raises fertility at a given cost and supports a higher
-reproductive housing cost and population. Reducing old retention $\tau$ releases
-housing, lowers the transition cost, and raises fertility during adjustment;
-in the new closed-economy steady state it raises population while the
-reproductive housing cost returns to the level selected by $\theta$ and $\omega$. Expanding
-housing supply has the same long-run housing-cost neutrality but does not directly
-change which generation occupies the stock.
+Lowering $\omega$ directly improves young households' access to family space.
+Lowering $\bar h_O$ instead releases housing from old households and reduces
+the market price during the transition. Both policies raise fertility, but
+through different margins. A general expansion of supply also lowers the
+transition price, without changing which generation initially releases the
+housing.
 
-This is where the demographic closure strengthens the paper's original
-intergenerational mechanism. Reallocating one home toward a constrained young
-household can affect its current tenure and fertility, and that birth changes
-the size of the future entrant cohort. The second effect is absent when the
-adult population is normalized after every solution.
+With a fixed adult population, reallocating a home toward a constrained young
+household affects current tenure and fertility. With the cohort law in
+equation~\eqref{eq:two_generation_law}, the resulting birth also changes the
+number of future entrants. That second effect is lost when population is
+renormalized after every solution.
 
 \iftechnicalappendix
 \section{Optional lifecycle transition architecture}
