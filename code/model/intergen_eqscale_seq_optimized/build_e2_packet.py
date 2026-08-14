@@ -270,9 +270,14 @@ def target_fit(moments: dict[str, Any], targets: dict[str, float], weights: dict
 def fertility_record(result: dict[str, Any]) -> dict[str, Any]:
     sol, P, moments = result["sol"], result["P"], result["moments"]
     shares = as_array(sol, "parity_dist")
+    entry_flow = float(getattr(sol, "entry_rate", math.nan))
+    mature_flow = float(getattr(sol, "entrants_mature_total", math.nan))
     return {
         "present_fertility": {
             "total_births_kfe": float(getattr(sol, "total_births_kfe", math.nan)),
+            "required_entry_flow": entry_flow,
+            "mature_local_entrant_flow": mature_flow,
+            "effective_reproduction": mature_flow / entry_flow if entry_flow > 0.0 else math.nan,
             "attempt_hazard_by_age": as_array(sol, "attempt_hazard_by_age"),
             "first_birth_hazard_by_age": as_array(sol, "first_birth_hazard_by_age"),
             "second_attempt_hazard_by_age": as_array(sol, "second_attempt_hazard_by_age"),

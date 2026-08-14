@@ -414,6 +414,21 @@ The report and visual packet are under
 `../../output/model/closed_reproductive_closure_audit_20260811/`; the readable
 memo is `../../output/pdf/fertility_population_housing_closure_audit.pdf`.
 
+The August 14 paper update wires the diagnostic `renewal_valve` scale into the
+active Markov-income price loop and reruns the retained shared-clock benchmark
+and legacy policy cases under both normalized and endogenous stationary scale:
+
+```bash
+.venv/bin/python tools/build_population_closure_update.py --solve-policies
+```
+
+Outputs are under `../../output/model/population_closure_update/`. At the
+retained theta, fixed outside flow `M=E0-B0` nests the normalized benchmark at
+scale one. This establishes an open stationary comparison, not a calendar-time
+transition; it also assumes outside and locally born entrants share the fixed
+entrant-state distribution. The integrated report is
+`../../output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
+
 The generic calendar-time illustration used in the comprehensive theory report
 is intentionally separate from the maintained solver. It propagates adult age
 cohorts and a four-stage child pipeline, compares the baseline with a

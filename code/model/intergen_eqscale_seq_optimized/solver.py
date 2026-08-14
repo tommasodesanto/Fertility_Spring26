@@ -994,6 +994,60 @@ def renewal_population_scale(
     )
 
 
+def markov_market_housing_demand(
+    sol: SimpleNamespace,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+) -> tuple[np.ndarray, SimpleNamespace | None]:
+    """Housing demand used to clear the active Markov-income equilibrium.
+
+    The Markov-income branch solves a normalized stationary composition.  A
+    renewal closure must therefore scale that composition's demand before the
+    price is updated.  Previously this branch ignored the already-implemented
+    renewal accounting and always cleared on normalized demand.
+
+    The value returned in ``sol.housing_demand`` remains demand per normalized
+    adult household.  The first return value is aggregate market demand after
+    applying the stationary scale factor.
+    """
+
+    raw_demand = np.asarray(getattr(sol, "housing_demand", np.zeros(P.I)), dtype=float).reshape(-1)
+    if uses_renewal_valve_closure(P):
+        scale_info = renewal_population_scale(sol, P, b_grid)
+        return np.asarray(scale_info.implied_housing_demand, dtype=float).reshape(-1), scale_info
+    if uses_accounting_scale_price_closure(P):
+        raise NotImplementedError(
+            "The Markov-income equilibrium currently supports the transparent renewal-valve "
+            "scale closure only; its value-based outside-option closures require entrant values "
+            "to be carried through the fast price loop."
+        )
+    return raw_demand, None
+
+
+def attach_markov_market_accounting(
+    sol: SimpleNamespace,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+) -> SimpleNamespace:
+    """Attach scale and actual market residuals to an accepted Markov solve."""
+
+    market_demand, scale_info = markov_market_housing_demand(sol, P, b_grid)
+    if scale_info is None:
+        return sol
+    supply = np.asarray(sol.housing_supply, dtype=float).reshape(-1)
+    excess = market_demand - supply
+    metric = float(np.max(np.abs(excess) / np.maximum(np.abs(supply), 1e-12)))
+    sol.accounting_scale = scale_info
+    sol.market_housing_demand = market_demand
+    sol.market_aggregate_housing_demand = float(np.sum(market_demand))
+    sol.market_housing_excess = excess
+    sol.market_aggregate_housing_excess = float(np.sum(excess))
+    sol.best_max_abs_rel_excess = metric
+    sol.best_market_metric = metric
+    sol.converged = bool(metric <= getattr(P, "tol_eq", 1e-4))
+    return sol
+
+
 def set_entry_masses(P: SimpleNamespace, entry_by_loc: np.ndarray) -> tuple[np.ndarray, float]:
     entry = np.maximum(np.asarray(entry_by_loc, dtype=float).reshape(-1), 0.0)
     total = float(np.sum(entry))
@@ -1155,7 +1209,8 @@ def solve_markov_income_equilibrium(
     if use_direct_scalar:
         P.eq_iter = 1
         sol_it = fast_solve(p)
-        demand = float(np.asarray(sol_it.housing_demand).reshape(-1)[0])
+        market_demand, _ = markov_market_housing_demand(sol_it, P, b_grid)
+        demand = float(market_demand[0])
         supply = float(np.asarray(sol_it.housing_supply).reshape(-1)[0])
         best_err = abs(demand - supply) / max(abs(supply), 1e-12)
         best_p, best_sol, final_err, iterations_completed = p.copy(), sol_it, best_err, 1
@@ -1164,7 +1219,7 @@ def solve_markov_income_equilibrium(
         t0 = time.perf_counter()
         sol_it = fast_solve(p)
         t_solve += 0.0
-        Hd = np.asarray(sol_it.housing_demand, dtype=float).reshape(-1)
+        Hd, _ = markov_market_housing_demand(sol_it, P, b_grid)
         p_target = np.zeros(P.I)
         for i in range(P.I):
             hd = max(float(Hd[i]), float(P.housing_demand_floor_for_supply))
@@ -1205,6 +1260,7 @@ def solve_markov_income_equilibrium(
         best_sol = upgrade_fast_markov_solution(best_sol, P, b_grid, SD_shared)
     else:
         best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False, SD=SD_shared)
+    best_sol = attach_markov_market_accounting(best_sol, P, b_grid)
     best_sol.timings = {
         **getattr(best_sol, "timings", {}),
         "income_process": "markov",
@@ -1265,13 +1321,15 @@ def refine_one_market_markov_income(
             cache[key] = summary
         else:
             cache_hits += 1
-        demand = float(np.asarray(sol.housing_demand).reshape(-1)[0])
+        market_demand, _ = markov_market_housing_demand(sol, P, b_grid)
+        demand = float(market_demand[0])
         supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
         excess = demand - supply
         metric = abs(excess) / max(abs(supply), 1e-12)
         return excess, metric, sol
 
-    best_excess = float(np.asarray(best_sol.housing_demand).reshape(-1)[0] - np.asarray(best_sol.housing_supply).reshape(-1)[0])
+    initial_market_demand, _ = markov_market_housing_demand(best_sol, P, b_grid)
+    best_excess = float(initial_market_demand[0] - np.asarray(best_sol.housing_supply).reshape(-1)[0])
     best_metric = float(best_err)
     best_price = p0
     sol_best = best_sol

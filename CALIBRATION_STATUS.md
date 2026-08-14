@@ -1,6 +1,44 @@
 # Calibration Status
 
-Updated: `2026-08-11` (corrected-E5b collection reconciled; closed reproductive-closure audit completed)
+Updated: `2026-08-14` (minimal endogenous stationary-scale update implemented and audited)
+
+## August 14 endogenous stationary-scale update
+
+The retained shared-clock E5b household model has been rerun under a minimal
+fixed-inflow renewal closure. This is a diagnostic paper update, not a promoted
+calibration or a change to the live default outside-option closure. The active
+Markov-income equilibrium branch now uses renewal-scaled housing demand when
+`population_closure="renewal_valve"`; all household states, Bellman equations,
+and the normalized default path are unchanged.
+
+At the retained July 25 theta, choosing full local retention and fixed outside
+flow `M=E0-B0=0.01062781548` nests the normalized benchmark: the normalized and
+renewal asset prices are respectively `0.8156250358` and `0.8156255254`, and
+the renewal scale is `0.9999999692`. The outside flow is an accounting
+normalization, equal to `17.21565%` of required entrants; it is not an empirical
+migration estimate and assumes the fixed entrant-state distribution used by
+the maintained solver.
+
+Two legacy policy diagnostics show that endogenous scale does not overturn the
+maintained incidence results. The family-size-home birth grant raises
+stationary population `0.378%` and changes the price response from `0.458%`
+under normalization to `0.599%` under renewal. The property-tax-plus-grant
+case raises population `0.579%` and changes the price response from `-18.896%`
+to `-18.714%`. These cases remain unpromoted: the first-birth rooms target is
+under measurement hold and the policy contracts do not settle the transition
+question.
+
+The maintained normalized KFE can therefore be embedded as an **open stationary
+point**, but it has not been shown to be a point on a calendar-time transition.
+That exercise requires an observed initial cohort distribution, the children
+already in the maturation pipeline, migration by age, and a sequence of rents
+and asset prices. The current fertility schedule also has no positive closed
+reproductive root over the audited price range, so its terminal endpoint must
+remain open unless the fertility block is re-estimated.
+
+Regeneration and evidence are under
+`output/model/population_closure_update/`; the integrated readable report is
+`output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
 
 ## August 11 corrected-E5b collection and reproductive-closure audit
 
