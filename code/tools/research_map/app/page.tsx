@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import katex from "katex";
+import { useEffect, useMemo, useState } from "react";
+import { EXPLANATIONS } from "./explanations";
 import liveStatus from "./generated-status.json";
 import {
   AREAS,
@@ -12,6 +14,7 @@ import {
   type MapEdge,
   type MapObject,
   type ObjectStatus,
+  type Trace,
 } from "./project-data";
 
 const VIEW_WIDTH = 1200;
@@ -43,6 +46,9 @@ const statusData = liveStatus as {
     targetSet: string;
     profileName: string;
     fingerprint: string;
+    repositoryUrl: string;
+    branch: string;
+    commit: string;
   };
   current: {
     maintainedStrand: string;
@@ -100,6 +106,151 @@ function sourceExists(path: string) {
   return statusData.sourceChecks.find((row) => row.path === path)?.exists;
 }
 
+function repositoryLink(path: string) {
+  if (statusData.generatedFrom.repositoryUrl === "unknown") return null;
+  const revision = statusData.generatedFrom.commit === "unknown" ? statusData.generatedFrom.branch : statusData.generatedFrom.commit;
+  const mode = path.endsWith("/") ? "tree" : "blob";
+  return `${statusData.generatedFrom.repositoryUrl}/${mode}/${revision}/${path.replace(/^\//, "")}`;
+}
+
+function sourceKind(path: string) {
+  if (path === "CALIBRATION_STATUS.md") return "canonical status";
+  if (path.startsWith("code/data/")) return "empirical builder";
+  if (path.includes("/tests/")) return "verification test";
+  if (path.startsWith("code/cluster/")) return "cluster contract";
+  if (path.startsWith("code/model/tools/")) return "diagnostic driver";
+  if (path.startsWith("code/model/")) return "model source";
+  if (path.startsWith("latex/")) return path.endsWith(".pdf") ? "rendered paper" : "paper source";
+  if (path.startsWith("output/")) return "generated artifact";
+  return "project source";
+}
+
+function MathExpression({ tex, display = false }: { tex: string; display?: boolean }) {
+  const html = katex.renderToString(tex, {
+    displayMode: display,
+    throwOnError: false,
+    strict: false,
+    output: "htmlAndMathml",
+  });
+  return <span className={display ? "math-display" : "math-inline"} dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+const SYSTEM_STAGES = [
+  {
+    number: "01",
+    title: "Measure",
+    objectId: "empirical-builders",
+    packet: "moments + uncertainty",
+    description: "Survey estimators define the empirical objects the model must explain.",
+  },
+  {
+    number: "02",
+    title: "Choose",
+    objectId: "household-problem",
+    packet: "policy rules",
+    description: "Households choose fertility, tenure, rooms, consumption, and saving over the lifecycle.",
+  },
+  {
+    number: "03",
+    title: "Aggregate",
+    objectId: "kfe",
+    packet: "distribution g(x)",
+    description: "The forward equation turns individual rules into a stationary population distribution.",
+  },
+  {
+    number: "04",
+    title: "Clear",
+    objectId: "price-clearing",
+    packet: "demand ↔ price",
+    description: "Physical housing demand meets supply; prices return to household budgets.",
+  },
+  {
+    number: "05",
+    title: "Renew",
+    objectId: "population-closure",
+    packet: "births + entrants",
+    description: "Births mature into potential entrants and population accounting determines stationary scale.",
+  },
+];
+
+function SystemGuide({ selectObject }: { selectObject: (id: string) => void }) {
+  return (
+    <section className="system-guide" aria-labelledby="system-guide-title">
+      <div className="guide-heading">
+        <span>START HERE / THE MODEL IN ONE LOOP</span>
+        <h2 id="system-guide-title">Five economic operations, one fixed point.</h2>
+        <p>
+          Read left to right once to understand the mechanism. Then notice the return arrows: prices change choices, choices change the distribution, and births change future entry.
+        </p>
+      </div>
+      <div className="guide-stages">
+        {SYSTEM_STAGES.map((stage, index) => (
+          <button key={stage.objectId} onClick={() => selectObject(stage.objectId)}>
+            <span>{stage.number}</span>
+            <strong>{stage.title}</strong>
+            <p>{stage.description}</p>
+            <em>{stage.packet}</em>
+            {index < SYSTEM_STAGES.length - 1 && <i aria-hidden="true">→</i>}
+          </button>
+        ))}
+      </div>
+      <div className="fixed-point-note">
+        <span>THE CLOSURE</span>
+        <p><strong>This is not a one-way pipeline.</strong> A solution is reached only when household rules, the stationary distribution, housing prices, and renewal accounting are mutually consistent.</p>
+      </div>
+    </section>
+  );
+}
+
+function TraceRoute({
+  trace,
+  selectedId,
+  selectObject,
+}: {
+  trace: Trace;
+  selectedId: string;
+  selectObject: (id: string) => void;
+}) {
+  return (
+    <section className="trace-route" aria-label={`${trace.label} causal sequence`}>
+      <span>FOLLOW THIS TRACE</span>
+      <div>
+        {trace.nodes.map((nodeId, index) => {
+          const node = OBJECTS[nodeId];
+          return (
+            <button key={node.id} className={selectedId === node.id ? "selected" : ""} onClick={() => selectObject(node.id)}>
+              <i>{String(index + 1).padStart(2, "0")}</i>
+              <strong>{node.title}</strong>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function MechanismGraphic({ object }: { object: MapObject }) {
+  return (
+    <section className="mechanism-card" aria-label={`${object.title} input and output diagram`}>
+      <div className="mechanism-side">
+        <span>RECEIVES</span>
+        {object.inputs.slice(0, 4).map((item) => <small key={item}>{item}</small>)}
+      </div>
+      <i aria-hidden="true">→</i>
+      <div className="mechanism-core">
+        <span>{object.kind}</span>
+        <strong>{object.title}</strong>
+        <small>{object.area}</small>
+      </div>
+      <i aria-hidden="true">→</i>
+      <div className="mechanism-side output">
+        <span>PRODUCES</span>
+        {object.outputs.slice(0, 4).map((item) => <small key={item}>{item}</small>)}
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [selectedId, setSelectedId] = useState("target-contract");
   const [traceId, setTraceId] = useState("calibration");
@@ -109,8 +260,19 @@ export default function Home() {
 
   const trace = TRACES.find((item) => item.id === traceId) ?? TRACES[0];
   const selected = OBJECTS[selectedId] ?? OBJECTS["target-contract"];
+  const explanation = EXPLANATIONS[selected.id];
   const activeNodes = useMemo(() => new Set(trace.nodes), [trace.nodes]);
   const activeEdges = useMemo(() => new Set(trace.edges), [trace.edges]);
+
+  useEffect(() => {
+    function syncFromHash() {
+      const hashId = window.location.hash.slice(1);
+      if (OBJECTS[hashId]) setSelectedId(hashId);
+    }
+    window.addEventListener("hashchange", syncFromHash);
+    syncFromHash();
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
 
   async function copyText(key: string, text: string) {
     let succeeded = false;
@@ -137,16 +299,24 @@ export default function Home() {
   function selectTrace(nextTraceId: string) {
     const next = TRACES.find((item) => item.id === nextTraceId) ?? TRACES[0];
     setTraceId(next.id);
-    setSelectedId(next.nodes[0]);
+    selectObject(next.nodes[0]);
+  }
+
+  function selectObject(nextId: string) {
+    setSelectedId(nextId);
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#${nextId}`);
   }
 
   const prompt = [
     `Investigate the project object: ${selected.title}.`,
     `Economic meaning: ${selected.meaning}`,
-    `Key equation: ${selected.equation}`,
+    `Plain-English intuition: ${explanation?.intuition ?? selected.meaning}`,
+    `Why it matters: ${explanation?.whyItMatters ?? "Verify its role in the equilibrium system."}`,
+    `Key equation (LaTeX): ${selected.equation}`,
     `Current trace: ${trace.label} — ${trace.question}`,
     `Start from these exact files:\n${selected.sources.map((path) => `- ${path}`).join("\n")}`,
     `Known caveats:\n${selected.caveats.map((item) => `- ${item}`).join("\n")}`,
+    `Debug questions:\n${(explanation?.debugQuestions ?? []).map((item) => `- ${item}`).join("\n")}`,
     "Read AGENTS.md and the mandatory startup files first. Verify the implementation against the equation, trace inputs and outputs, and report any mismatch, weak identification, stale object, or missing reproducibility step. Do not edit source code unless I explicitly ask.",
   ].join("\n\n");
 
@@ -170,8 +340,15 @@ export default function Home() {
             {statusData.current.contractStatus}
           </span>
           <small>Status refreshed from CALIBRATION_STATUS.md · {statusData.generatedFrom.calibrationStatusUpdated}</small>
+          {repositoryLink("CALIBRATION_STATUS.md") && (
+            <a href={repositoryLink("CALIBRATION_STATUS.md") ?? undefined} target="_blank" rel="noreferrer">
+              Open canonical status ↗
+            </a>
+          )}
         </div>
       </header>
+
+      <SystemGuide selectObject={selectObject} />
 
       <section className="control-deck" aria-label="Map controls">
         <div className="trace-controls">
@@ -201,6 +378,8 @@ export default function Home() {
         <blockquote>{trace.question}</blockquote>
       </section>
 
+      <TraceRoute trace={trace} selectedId={selectedId} selectObject={selectObject} />
+
       <section className="workspace">
         <div className="map-wrap">
           <div className="map-meta">
@@ -229,7 +408,7 @@ export default function Home() {
                 const node = OBJECTS[nodeId];
                 return (
                   <li key={node.id}>
-                    <button onClick={() => setSelectedId(node.id)} className={selectedId === node.id ? "selected" : ""}>
+                    <button onClick={() => selectObject(node.id)} className={selectedId === node.id ? "selected" : ""}>
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <strong>{node.title}</strong>
                       <em className={statusSlug(node.status)}>{node.status}</em>
@@ -287,7 +466,7 @@ export default function Home() {
                         cy={start.y}
                         r="7"
                         className={`moving-packet ${statusSlug(packet.status)}`}
-                        onClick={() => setSelectedId(packetId)}
+                        onClick={() => selectObject(packetId)}
                       ><title>{packet.title}</title></circle>
                     );
                   }
@@ -298,9 +477,9 @@ export default function Home() {
                       tabIndex={0}
                       role="button"
                       className={`moving-packet ${statusSlug(packet.status)}`}
-                      onClick={() => setSelectedId(packetId)}
+                      onClick={() => selectObject(packetId)}
                       onKeyDown={(event) => {
-                        if (event.key === "Enter" || event.key === " ") setSelectedId(packetId);
+                        if (event.key === "Enter" || event.key === " ") selectObject(packetId);
                       }}
                     >
                       <title>{packet.title}</title>
@@ -323,7 +502,7 @@ export default function Home() {
                     key={node.id}
                     className={`map-node ${selectedId === node.id ? "selected" : ""} ${inTrace ? "in-trace" : "off-trace"} ${filtered ? "filtered" : ""}`}
                     style={{ left: `${node.x}%`, top: `${node.y}%` }}
-                    onClick={() => setSelectedId(node.id)}
+                    onClick={() => selectObject(node.id)}
                     aria-label={`${node.title}, ${node.status}`}
                   >
                     <span className="node-eyebrow">{node.eyebrow}</span>
@@ -341,7 +520,7 @@ export default function Home() {
               {trace.packets.map((packetId) => {
                 const packet = OBJECTS[packetId];
                 return (
-                  <button key={packetId} onClick={() => setSelectedId(packetId)} className={selectedId === packetId ? "selected" : ""}>
+                  <button key={packetId} onClick={() => selectObject(packetId)} className={selectedId === packetId ? "selected" : ""}>
                     <i className={statusSlug(packet.status)} /> {packet.title}
                   </button>
                 );
@@ -364,7 +543,14 @@ export default function Home() {
         <p>
           Status, target values, weights, bounds, fingerprints, and closure diagnostics are refreshed from canonical repository files. Economic descriptions and graph topology are intentionally curated.
         </p>
-        <code>{statusData.generatedFrom.targetSet} · {statusData.generatedFrom.fingerprint.slice(0, 12)}…</code>
+        <div className="footer-links">
+          <nav aria-label="Canonical project anchors">
+            <a href={repositoryLink("CALIBRATION_STATUS.md") ?? undefined} target="_blank" rel="noreferrer">Status</a>
+            <a href={repositoryLink("code/model/README.md") ?? undefined} target="_blank" rel="noreferrer">Model index</a>
+            <a href={repositoryLink("latex/dynamic_intergenerational_housing_fertility_model.tex") ?? undefined} target="_blank" rel="noreferrer">Paper source</a>
+          </nav>
+          <code>{statusData.generatedFrom.targetSet} · {statusData.generatedFrom.fingerprint.slice(0, 12)}…</code>
+        </div>
       </footer>
     </main>
   );
@@ -384,6 +570,7 @@ function Inspector({
   prompt: string;
 }) {
   const [promptOpen, setPromptOpen] = useState(false);
+  const explanation = EXPLANATIONS[object.id];
 
   return (
     <aside className="inspector" aria-live="polite">
@@ -392,23 +579,53 @@ function Inspector({
         <span className={`status-pill ${statusSlug(object.status)}`}>{object.status}</span>
       </div>
       <h2>{object.title}</h2>
-      <p className="meaning">{object.meaning}</p>
+      <button
+        className="block-link"
+        onClick={() => copyText("block-link", `${window.location.origin}${window.location.pathname}#${object.id}`)}
+      >
+        {copied === "block-link" ? "Block link copied" : "Copy link to this block"} <span>↗</span>
+      </button>
+
+      <section className="definition-block">
+        <span>DEFINITION</span>
+        <p className="meaning">{object.meaning}</p>
+      </section>
+
+      {explanation && (
+        <section className="explanation-card">
+          <span>IN PLAIN ENGLISH</span>
+          <p>{explanation.intuition}</p>
+        </section>
+      )}
+
+      <MechanismGraphic object={object} />
 
       <section className="detail-block equation-block">
         <h3>KEY EQUATION</h3>
-        <code>{object.equation}</code>
+        <MathExpression tex={object.equation} display />
+        {explanation && <p>{explanation.equationReading}</p>}
       </section>
 
-      <section className="io-grid">
-        <div>
-          <h3>INPUTS</h3>
-          {object.inputs.map((item) => <span key={item}>{item}</span>)}
-        </div>
-        <div>
-          <h3>OUTPUTS</h3>
-          {object.outputs.map((item) => <span key={item}>{item}</span>)}
-        </div>
-      </section>
+      {explanation && (
+        <section className="symbol-glossary">
+          <h3>READ THE SYMBOLS</h3>
+          <dl>
+            {explanation.terms.map((term) => (
+              <div key={term.symbol}>
+                <dt><MathExpression tex={term.symbol} /></dt>
+                <dd>{term.meaning}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {explanation && (
+        <section className="why-block">
+          <span>WHY THIS BLOCK MATTERS</span>
+          <p>{explanation.whyItMatters}</p>
+        </section>
+      )}
 
       {object.id === "target-contract" && <TargetContract />}
       {object.id === "parameters" && <ParameterContract />}
@@ -419,20 +636,38 @@ function Inspector({
         <ul>
           {object.sources.map((path, index) => {
             const exists = sourceExists(path);
+            const remote = repositoryLink(path);
+            const canBrowse = Boolean(remote) && !path.startsWith("output/");
+            const localPath = `${statusData.generatedFrom.repoRoot}/${path}`;
             return (
               <li key={path}>
-                <span className={exists === false ? "missing" : ""}>
+                <div className={exists === false ? "source-main missing" : "source-main"}>
                   <i>{exists === false ? "!" : String(index + 1).padStart(2, "0")}</i>
-                  <code>{path}</code>
-                </span>
-                <button onClick={() => copyText(`source-${index}`, path)} aria-label={`Copy ${path}`}>
-                  {copied === `source-${index}` ? "copied" : "copy"}
-                </button>
+                  <span>
+                    <code>{path}</code>
+                    <small>{sourceKind(path)} · {exists === false ? "not present in this worktree" : exists ? "verified locally" : "listed source"}</small>
+                  </span>
+                </div>
+                <div className="source-actions">
+                  {canBrowse && <a href={remote ?? undefined} target="_blank" rel="noreferrer">View ↗</a>}
+                  <button onClick={() => copyText(`source-${index}`, localPath)} aria-label={`Copy absolute path for ${path}`}>
+                    {copied === `source-${index}` ? "Copied" : "Copy path"}
+                  </button>
+                </div>
               </li>
             );
           })}
         </ul>
       </section>
+
+      {explanation && (
+        <section className="debug-block">
+          <h3>DEBUG THIS OBJECT</h3>
+          <ol>
+            {explanation.debugQuestions.map((question) => <li key={question}>{question}</li>)}
+          </ol>
+        </section>
+      )}
 
       <section className="detail-block caveat-block">
         <h3>CURRENT STATUS + CAVEATS</h3>
@@ -478,14 +713,15 @@ function TargetContract() {
       </summary>
       <div className="table-scroll">
         <table>
-          <thead><tr><th>Moment</th><th>Target</th><th>SE</th><th>Weight</th></tr></thead>
+          <thead><tr><th>Moment</th><th>Target</th><th>SE</th><th>Weight</th><th>Basis</th></tr></thead>
           <tbody>
             {statusData.targetRows.map((row) => (
               <tr key={row.name} className={row.status === "empirically held" ? "held-row" : ""}>
-                <td title={row.weightKind}>{humanize(row.name)}</td>
+                <td>{humanize(row.name)}{row.status === "empirically held" && <small className="held-tag">held</small>}</td>
                 <td>{compactNumber(row.target, 5)}</td>
                 <td>{compactNumber(row.standardError, 5)}</td>
                 <td>{compactNumber(row.weight, 1)}</td>
+                <td>{row.weightKind === "measured / declared" ? "measured SE" : "synthetic 5%"}</td>
               </tr>
             ))}
           </tbody>

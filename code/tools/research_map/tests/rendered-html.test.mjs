@@ -8,6 +8,8 @@ test("production bundle contains the research map", async () => {
   const bundle = (await Promise.all(files.map((path) => readFile(new URL(path, dist), "utf8")))).join("\n");
   assert.ok(bundle.includes("Fertility × Housing Research Map"));
   assert.ok(bundle.includes("The economic argument, made inspectable."));
+  assert.ok(bundle.includes("Five economic operations, one fixed point."));
+  assert.ok(bundle.includes("IN PLAIN ENGLISH"));
   assert.ok(bundle.includes("Housing-market equilibrium"));
   assert.doesNotMatch(bundle, /codex-preview|SkeletonPreview|Your site is taking shape/i);
 });
@@ -17,8 +19,12 @@ test("generated status carries the live contract", async () => {
   assert.notEqual(payload.generatedFrom.targetSet, "unknown");
   assert.notEqual(payload.generatedFrom.profileName, "unknown");
   assert.notEqual(payload.generatedFrom.fingerprint, "unknown");
+  assert.match(payload.generatedFrom.repositoryUrl, /^https:\/\/github\.com\//);
+  assert.notEqual(payload.generatedFrom.branch, "unknown");
+  assert.notEqual(payload.generatedFrom.commit, "unknown");
   assert.equal(payload.targetRows.length, 12);
   assert.equal(payload.parameters.filter((row) => row.restriction === "estimated").length, 10);
   assert.equal(payload.current.roomsCodeHold, true);
-  assert.ok(payload.sourceChecks.every((row) => row.exists));
+  assert.equal(payload.sourceChecks.find((row) => row.path === "CALIBRATION_STATUS.md")?.exists, true);
+  assert.equal(payload.sourceChecks.find((row) => row.path.endsWith("/e5_profile.py"))?.exists, true);
 });

@@ -4,7 +4,10 @@
     "calibrationStatusUpdated": "2026-08-14",
     "targetSet": "e5_idfe_review_20260809",
     "profileName": "eqscale_seq_e5_idfe_20260809",
-    "fingerprint": "b7c1c1da7578d19e15415c377f2c68b813aca22c6fe5bebda684c14131ec58bc"
+    "fingerprint": "b7c1c1da7578d19e15415c377f2c68b813aca22c6fe5bebda684c14131ec58bc",
+    "repositoryUrl": "https://github.com/tommasodesanto/Fertility_Spring26",
+    "branch": "codex/research-project-map",
+    "commit": "680e9ae534de4247f9714f19459974d5cdf5a3ac"
   },
   "current": {
     "maintainedStrand": "retained shared-clock E5b household model",
@@ -214,6 +217,46 @@
       "exists": true
     },
     {
+      "path": "code/cluster/submit_intergen_e5b_idfe.sh",
+      "exists": true
+    },
+    {
+      "path": "code/cluster/submit_intergen_e5b_idfe_collector.sh",
+      "exists": true
+    },
+    {
+      "path": "code/data/cps_fertility/build_cps_fertility_targets.py",
+      "exists": true
+    },
+    {
+      "path": "code/data/mms_center_periphery/build_intergen_one_market_housing_targets.R",
+      "exists": true
+    },
+    {
+      "path": "code/data/moment_standard_errors/SPEC_moment_bootstrap_se.md",
+      "exists": true
+    },
+    {
+      "path": "code/data/moment_standard_errors/build_moment_bootstrap_se.R",
+      "exists": true
+    },
+    {
+      "path": "code/data/nchs_natality_timing/build_first_birth_timing.R",
+      "exists": true
+    },
+    {
+      "path": "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
+      "exists": true
+    },
+    {
+      "path": "code/model/dt_cp_model/objective.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/dt_cp_model/solver.py",
+      "exists": true
+    },
+    {
       "path": "code/model/intergen_eqscale_seq_optimized/e5_profile.py",
       "exists": true
     },
@@ -226,6 +269,34 @@
       "exists": true
     },
     {
+      "path": "code/model/intergen_eqscale_seq_optimized/collect_e1.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/externals.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/target_system.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py",
+      "exists": true
+    },
+    {
       "path": "code/model/tools/build_population_closure_update.py",
       "exists": true
     },
@@ -234,24 +305,36 @@
       "exists": true
     },
     {
+      "path": "code/model/tools/build_intergen_mechanics_packet.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/tools/check_population_closure.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/tools/run_e5_repaired_policy_with_entry.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/tools/run_intergen_funded_policy_with_entry.py",
+      "exists": true
+    },
+    {
       "path": "latex/dynamic_intergenerational_housing_fertility_model.tex",
       "exists": true
     },
     {
-      "path": "code/data/cps_fertility/build_cps_fertility_targets.py",
+      "path": "latex/model_writeup.tex",
       "exists": true
     },
     {
-      "path": "code/data/nchs_natality_timing/build_first_birth_timing.R",
-      "exists": true
+      "path": "output/model/population_closure_update/",
+      "exists": false
     },
     {
-      "path": "code/data/mms_center_periphery/build_intergen_one_market_housing_targets.R",
-      "exists": true
-    },
-    {
-      "path": "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
-      "exists": true
+      "path": "output/pdf/dynamic_intergenerational_housing_fertility_model.pdf",
+      "exists": false
     }
   ]
 }

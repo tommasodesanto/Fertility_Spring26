@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -13,6 +14,22 @@ const statusText = read("CALIBRATION_STATUS.md");
 const e5Text = read("code/model/intergen_eqscale_seq_optimized/e5_profile.py");
 const oldCalibrationText = read("code/model/intergen_eqscale_seq_optimized/calibration.py");
 const launcherText = read("code/cluster/submit_intergen_e5b_idfe.sh");
+
+function git(...args) {
+  try {
+    return execFileSync("git", args, { cwd: repoRoot, encoding: "utf8" }).trim();
+  } catch {
+    return "unknown";
+  }
+}
+
+function normalizeRemote(remote) {
+  if (remote === "unknown") return "unknown";
+  if (remote.startsWith("git@github.com:")) {
+    return `https://github.com/${remote.slice("git@github.com:".length).replace(/\.git$/, "")}`;
+  }
+  return remote.replace(/\.git$/, "");
+}
 
 function match(text, expression, fallback = null) {
   const result = text.match(expression);
@@ -93,16 +110,36 @@ for (const row of fixedText.matchAll(/["']([^"']+)["']\s*:\s*([-\d.]+)/g)) {
 
 const exactSourcePaths = [
   "CALIBRATION_STATUS.md",
+  "code/cluster/submit_intergen_e5b_idfe.sh",
+  "code/cluster/submit_intergen_e5b_idfe_collector.sh",
+  "code/data/cps_fertility/build_cps_fertility_targets.py",
+  "code/data/mms_center_periphery/build_intergen_one_market_housing_targets.R",
+  "code/data/moment_standard_errors/SPEC_moment_bootstrap_se.md",
+  "code/data/moment_standard_errors/build_moment_bootstrap_se.R",
+  "code/data/nchs_natality_timing/build_first_birth_timing.R",
+  "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
+  "code/model/dt_cp_model/objective.py",
+  "code/model/dt_cp_model/solver.py",
   "code/model/intergen_eqscale_seq_optimized/e5_profile.py",
   "code/model/intergen_eqscale_seq_optimized/solver.py",
   "code/model/intergen_eqscale_seq_optimized/calibration.py",
+  "code/model/intergen_eqscale_seq_optimized/collect_e1.py",
+  "code/model/intergen_eqscale_seq_optimized/externals.py",
+  "code/model/intergen_eqscale_seq_optimized/parameters.py",
+  "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py",
+  "code/model/intergen_eqscale_seq_optimized/target_system.py",
+  "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py",
+  "code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py",
   "code/model/tools/build_population_closure_update.py",
   "code/model/tools/audit_closed_reproductive_closure.py",
+  "code/model/tools/build_intergen_mechanics_packet.py",
+  "code/model/tools/check_population_closure.py",
+  "code/model/tools/run_e5_repaired_policy_with_entry.py",
+  "code/model/tools/run_intergen_funded_policy_with_entry.py",
   "latex/dynamic_intergenerational_housing_fertility_model.tex",
-  "code/data/cps_fertility/build_cps_fertility_targets.py",
-  "code/data/nchs_natality_timing/build_first_birth_timing.R",
-  "code/data/mms_center_periphery/build_intergen_one_market_housing_targets.R",
-  "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
+  "latex/model_writeup.tex",
+  "output/model/population_closure_update/",
+  "output/pdf/dynamic_intergenerational_housing_fertility_model.pdf",
 ];
 
 const data = {
@@ -112,6 +149,9 @@ const data = {
     targetSet: stringConstant(e5Text, "E5_TARGET_SET", "unknown"),
     profileName: stringConstant(e5Text, "E5_PROFILE_NAME", "unknown"),
     fingerprint: match(launcherText, /^export E5_EXPECTED_TARGET_FINGERPRINT=([^\s]+)/m, "unknown"),
+    repositoryUrl: normalizeRemote(git("config", "--get", "remote.origin.url")),
+    branch: git("branch", "--show-current"),
+    commit: git("rev-parse", "HEAD"),
   },
   current: {
     maintainedStrand: match(
