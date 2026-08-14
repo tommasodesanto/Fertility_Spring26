@@ -414,4 +414,18 @@ The report and visual packet are under
 `../../output/model/closed_reproductive_closure_audit_20260811/`; the readable
 memo is `../../output/pdf/fertility_population_housing_closure_audit.pdf`.
 
+The generic calendar-time illustration used in the comprehensive theory report
+is intentionally separate from the maintained solver. It propagates adult age
+cohorts and a four-stage child pipeline, compares the baseline with a
+same-initial-state no-fertility-decline path, and verifies the fixed-price
+housing-demand decomposition:
+
+```bash
+.venv/bin/python tools/build_dynamic_population_housing_paper_illustrations.py
+```
+
+Its packet is under
+`../../output/model/dynamic_population_housing_paper/`. The reported `price`
+is a contemporaneous housing-cost index, not a forward-looking asset price.
+
 See `PLAN.md` for the full implementation and optimization plan.

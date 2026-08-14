@@ -25,7 +25,7 @@ def child_demand(
     child_cost: float,
     child_space: float,
 ) -> np.ndarray | float:
-    """Return children per family at a given house price."""
+    """Return children per family at a given current housing cost."""
 
     return child_value / (child_cost + child_space * price)
 
@@ -284,9 +284,9 @@ def build_figure(values: dict[str, float]) -> None:
     )
     market_axis.text(1.08, 1.085, r"before: $\theta_0$", color=old_color)
     market_axis.text(1.08, 0.80, r"after: $\theta_1$", color=new_color)
-    market_axis.set_title("(a) Population and the house price")
+    market_axis.set_title("(a) Population and the housing cost")
     market_axis.set_xlabel(r"Population (families), $L$")
-    market_axis.set_ylabel(r"House price, $p$")
+    market_axis.set_ylabel(r"Housing cost, $p$")
 
     old_point = (values["old_population"], values["old_price"])
     impact_market_point = (values["old_population"], values["impact_price"])
@@ -371,8 +371,8 @@ def build_figure(values: dict[str, float]) -> None:
     )
     child_axis.text(1.045, 0.92, r"before: $\theta_0$", color=old_color)
     child_axis.text(0.995, 0.62, r"after: $\theta_1$", color=new_color)
-    child_axis.set_title("(b) House price and the child decision")
-    child_axis.set_xlabel(r"House price, $p$")
+    child_axis.set_title("(b) Housing cost and the child decision")
+    child_axis.set_xlabel(r"Housing cost, $p$")
     child_axis.set_ylabel(r"Children per family, $n$")
 
     impact_child_point = (values["impact_price"], values["impact_fertility"])

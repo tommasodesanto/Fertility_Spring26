@@ -1366,3 +1366,42 @@ Read the unified report as a theory memo. If its interpretation is accepted,
 the next bounded exercise is a transition calculation from an observed joint
 cohort distribution, first holding current policies fixed and then changing
 one young-access or old-retention margin at a time.
+
+---
+
+## August 13, 2026: comprehensive dynamic theory and transition architecture
+
+### What we worked on
+
+Built a separate, self-contained report that carries the simple
+fertility--housing feedback into the maintained intergenerational lifecycle
+environment without presenting a generic diagnostic as a solved quantitative
+transition.
+
+### What the report adds
+
+- The requested population--housing-cost and housing-cost--fertility panels
+  remain the expository core.
+- An unnormalized adult-household measure and independent child pipeline close
+  calendar-time demographic accounting without deleting future entrants when a
+  parental household exits.
+- Dynamic rents and asset prices are separated through a no-arbitrage
+  condition; construction is written as net stock additions.
+- A fixed-rent excess-demand schedule, rather than an equilibrium quantity
+  identity, determines the sign of the next clearing rent.
+- A no-fertility-decline path starts from exactly the same inherited adult and
+  child distributions as the baseline.
+- The maintained-model audit, identification limitation, and implementation
+  gates are kept explicit and separate from the generic numerical result.
+
+### Artifacts and verification
+
+- Source: `latex/dynamic_intergenerational_housing_fertility_model.tex`.
+- Numerical driver:
+  `code/model/tools/build_dynamic_population_housing_paper_illustrations.py`.
+- Reader PDF:
+  `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
+- The numerical packet passes housing clearing, adult accounting, and demand
+  decomposition to machine precision; all 80 fixed-price sign tests pass.
+- The report compiles without LaTeX warnings and was rendered page by page for
+  visual inspection.
