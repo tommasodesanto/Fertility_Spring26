@@ -1,0 +1,257 @@
+{
+  "generatedFrom": {
+    "repoRoot": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26_map",
+    "calibrationStatusUpdated": "2026-08-14",
+    "targetSet": "e5_idfe_review_20260809",
+    "profileName": "eqscale_seq_e5_idfe_20260809",
+    "fingerprint": "b7c1c1da7578d19e15415c377f2c68b813aca22c6fe5bebda684c14131ec58bc"
+  },
+  "current": {
+    "maintainedStrand": "retained shared-clock E5b household model",
+    "contractStatus": "empirically held",
+    "roomsCodeHold": true,
+    "closure": "open stationary renewal wrapper",
+    "normalizedPrice": 0.8156250358,
+    "renewalPrice": 0.8156255254,
+    "stationaryScale": 0.9999999692,
+    "outsideFlow": 0.01062781548,
+    "reproductionRatio": 0.8278435044
+  },
+  "warnings": [
+    "The first-birth rooms target is under an empirical valid-code hold; no refit or policy result using it is promoted.",
+    "The maintained shared child clock differs from the proposed independent-child maturation architecture; changing it requires re-estimation.",
+    "The renewal result is an open stationary comparison, not a calendar-time U.S. transition.",
+    "Historical spatial and pre-correction losses are not comparable to the current one-market target system."
+  ],
+  "targetRows": [
+    {
+      "name": "tfr",
+      "target": 1.918,
+      "standardError": 0.026483780917,
+      "weight": 1425.7389910084596,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    },
+    {
+      "name": "childless_rate",
+      "target": 0.188,
+      "standardError": 0.00762920033,
+      "weight": 17180.743822072007,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    },
+    {
+      "name": "mean_age_first_birth",
+      "target": 25.310560799362,
+      "standardError": 0.25,
+      "weight": 16,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    },
+    {
+      "name": "share_first_births_age30plus",
+      "target": 0.270062376851342,
+      "standardError": 0.008,
+      "weight": 15625,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    },
+    {
+      "name": "housing_increment_0to1",
+      "target": 0.80494368,
+      "standardError": 0.16728361,
+      "weight": 35.73495305676183,
+      "weightKind": "measured / declared",
+      "status": "empirically held"
+    },
+    {
+      "name": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "target": 0.36769955881,
+      "standardError": 0.0183849779405,
+      "weight": 2958.514988007638,
+      "weightKind": "synthetic 5%",
+      "status": "provisional"
+    },
+    {
+      "name": "own_family_gap",
+      "target": 0.16766167,
+      "standardError": 0.008383083500000001,
+      "weight": 14229.590955975675,
+      "weightKind": "synthetic 5%",
+      "status": "provisional"
+    },
+    {
+      "name": "own_rate",
+      "target": 0.575472,
+      "standardError": 0.0287736,
+      "weight": 1207.8460856134493,
+      "weightKind": "synthetic 5%",
+      "status": "provisional"
+    },
+    {
+      "name": "aggregate_mean_occupied_rooms_18_85",
+      "target": 5.779970481941968,
+      "standardError": 0.2889985240970984,
+      "weight": 11.973159013172177,
+      "weightKind": "synthetic 5%",
+      "status": "provisional"
+    },
+    {
+      "name": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "target": 6.8731,
+      "standardError": 0.3988,
+      "weight": 6.287669427540395,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    },
+    {
+      "name": "annual_bequest_flow_to_aggregate_wealth",
+      "target": 0.0088,
+      "standardError": 0.00044000000000000007,
+      "weight": 5165289.256198346,
+      "weightKind": "synthetic 5%",
+      "status": "provisional"
+    },
+    {
+      "name": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "target": 3.44811075444552,
+      "standardError": 0.1325,
+      "weight": 56.95977216091135,
+      "weightKind": "measured / declared",
+      "status": "provisional"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "beta_annual",
+      "lower": 0.94,
+      "upper": 0.9995,
+      "transform": "discount",
+      "restriction": "estimated"
+    },
+    {
+      "name": "delta_alpha",
+      "lower": 0,
+      "upper": 0.25,
+      "transform": "softzero",
+      "restriction": "estimated"
+    },
+    {
+      "name": "delta_alpha_jump",
+      "lower": 0,
+      "upper": 0.25,
+      "transform": "softzero",
+      "restriction": "estimated"
+    },
+    {
+      "name": "psi_child",
+      "lower": -3,
+      "upper": 3,
+      "transform": "asinh",
+      "restriction": "estimated"
+    },
+    {
+      "name": "kappa_fert",
+      "lower": 0.02,
+      "upper": 50,
+      "transform": "log",
+      "restriction": "estimated"
+    },
+    {
+      "name": "kappa_fert_continuation",
+      "lower": 0.02,
+      "upper": 50,
+      "transform": "log",
+      "restriction": "estimated"
+    },
+    {
+      "name": "chi",
+      "lower": 0.1,
+      "upper": 5,
+      "transform": "log",
+      "restriction": "estimated"
+    },
+    {
+      "name": "H0",
+      "lower": 0.2,
+      "upper": 80,
+      "transform": "log",
+      "restriction": "estimated"
+    },
+    {
+      "name": "theta0",
+      "lower": 0,
+      "upper": 8,
+      "transform": "softzero",
+      "restriction": "estimated"
+    },
+    {
+      "name": "theta1",
+      "lower": 0.02,
+      "upper": 16,
+      "transform": "log",
+      "restriction": "estimated"
+    },
+    {
+      "name": "theta_n",
+      "value": 0,
+      "restriction": "externally fixed"
+    },
+    {
+      "name": "alpha_cons",
+      "value": 0.733,
+      "restriction": "externally fixed"
+    },
+    {
+      "name": "tenure_choice_kappa",
+      "value": 0,
+      "restriction": "externally fixed"
+    }
+  ],
+  "sourceChecks": [
+    {
+      "path": "CALIBRATION_STATUS.md",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/solver.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/calibration.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/tools/build_population_closure_update.py",
+      "exists": true
+    },
+    {
+      "path": "code/model/tools/audit_closed_reproductive_closure.py",
+      "exists": true
+    },
+    {
+      "path": "latex/dynamic_intergenerational_housing_fertility_model.tex",
+      "exists": true
+    },
+    {
+      "path": "code/data/cps_fertility/build_cps_fertility_targets.py",
+      "exists": true
+    },
+    {
+      "path": "code/data/nchs_natality_timing/build_first_birth_timing.R",
+      "exists": true
+    },
+    {
+      "path": "code/data/mms_center_periphery/build_intergen_one_market_housing_targets.R",
+      "exists": true
+    },
+    {
+      "path": "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
+      "exists": true
+    }
+  ]
+}
