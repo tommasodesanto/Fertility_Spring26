@@ -14,6 +14,11 @@ const statusText = read("CALIBRATION_STATUS.md");
 const e5Text = read("code/model/intergen_eqscale_seq_optimized/e5_profile.py");
 const oldCalibrationText = read("code/model/intergen_eqscale_seq_optimized/calibration.py");
 const launcherText = read("code/cluster/submit_intergen_e5b_idfe.sh");
+const firstStatusHeading = statusText.indexOf("\n## ");
+const secondStatusHeading = firstStatusHeading >= 0 ? statusText.indexOf("\n## ", firstStatusHeading + 4) : -1;
+const liveStatusSection = firstStatusHeading >= 0
+  ? statusText.slice(firstStatusHeading, secondStatusHeading >= 0 ? secondStatusHeading : undefined)
+  : statusText;
 
 function git(...args) {
   try {
@@ -163,7 +168,10 @@ const data = {
       ? "empirically held"
       : "provisional",
     roomsCodeHold: /ACTUALROOMS_[^]*?under empirical hold/i.test(statusText),
-    closure: "open stationary renewal wrapper",
+    closure: /minimal\s+fixed-inflow renewal closure/i.test(liveStatusSection)
+      ? "minimal fixed-inflow renewal closure"
+      : "closure not parsed from current status",
+    calendarTransitionSolved: !/has not been shown to be a point on a calendar-time transition|requires an observed initial cohort distribution/i.test(liveStatusSection),
     normalizedPrice: Number(match(statusText, /normalized and\s+renewal asset prices are respectively `([\d.]+)`/m, "NaN")),
     renewalPrice: Number(match(statusText, /renewal asset prices are respectively `[\d.]+` and\s+`([\d.]+)`/m, "NaN")),
     stationaryScale: Number(match(statusText, /renewal scale is `([\d.]+)`/m, "NaN")),

@@ -44,14 +44,20 @@ The desktop view is a five-zone systems map: evidence → calibration → househ
 
 The page starts with a five-step explanation—measure, choose, aggregate, clear, renew—so the map can be read as an economic fixed point before it is explored as a network. Each trace also has a compact, numbered route that works as a guided reading order.
 
+A live research-contract strip summarizes the active target count, uncertainty basis, free-versus-fixed parameter count, joint-equilibrium objects, and current stationary boundary. The counts and closure label are refreshed from canonical project files. A global object finder searches economic meaning, inputs, outputs, and areas without exposing the repository as a giant file graph.
+
 At narrow widths the selected trace becomes a vertical sequence; the complete canvas is intentionally hidden. Clicking any block or packet opens:
 
 - a formal definition and plain-English intuition;
+- role labels distinguishing observed, estimated, externally fixed, endogenous, accounting, diagnostic, historical, and held objects;
 - an input → object → output mechanism sketch;
+- a block-specific economic graphic: empirical pipeline, calibration loop, lifecycle timing, distribution flow, housing-market crossing, cohort renewal, or baseline-versus-counterfactual comparison;
+- a numbered mechanism sequence and an explicitly illustrative worked example;
 - a KaTeX-rendered equation, an equation reading, and a symbol glossary;
 - its role in the economics and a short debugging checklist;
 - exact files with a stable GitHub link pinned to the commit captured at refresh time, plus a copied absolute local path;
 - live contract tables where relevant, current status and caveats, and a reproduction command.
+- related-object links that continue the causal investigation without returning to the full canvas.
 
 The selected object is written to the URL fragment (for example, `#price-clearing`), so a particular block can be bookmarked or shared. “Generate investigation prompt” exposes and copies a scoped AI handoff that includes the explanation, exact sources, debug questions, and mandatory-startup instruction.
 

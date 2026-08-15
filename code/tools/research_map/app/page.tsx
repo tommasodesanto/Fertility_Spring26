@@ -4,6 +4,7 @@ import katex from "katex";
 import { useEffect, useMemo, useState } from "react";
 import { EXPLANATIONS } from "./explanations";
 import liveStatus from "./generated-status.json";
+import { RICH_CONTENT } from "./rich-content";
 import {
   AREAS,
   EDGES,
@@ -55,6 +56,7 @@ const statusData = liveStatus as {
     contractStatus: ObjectStatus;
     roomsCodeHold: boolean;
     closure: string;
+    calendarTransitionSolved: boolean;
     normalizedPrice: number | null;
     renewalPrice: number | null;
     stationaryScale: number | null;
@@ -251,12 +253,255 @@ function MechanismGraphic({ object }: { object: MapObject }) {
   );
 }
 
+function ResearchSnapshot({ selectObject }: { selectObject: (id: string) => void }) {
+  const measured = statusData.targetRows.filter((row) => row.weightKind === "measured / declared").length;
+  const synthetic = statusData.targetRows.length - measured;
+  const estimated = statusData.parameters.filter((row) => row.restriction === "estimated").length;
+  const externallyFixed = statusData.parameters.length - estimated;
+  const held = statusData.targetRows.filter((row) => row.status === "empirically held").length;
+
+  const cards = [
+    {
+      id: "target-contract",
+      number: String(statusData.targetRows.length).padStart(2, "0"),
+      label: "Target rows",
+      detail: `${measured} measured/declared SE · ${synthetic} synthetic · ${held} held`,
+      kind: "observed",
+    },
+    {
+      id: "parameters",
+      number: String(estimated).padStart(2, "0"),
+      label: "Free parameters",
+      detail: `${externallyFixed} externally fixed · identification must be explicit`,
+      kind: "estimated",
+    },
+    {
+      id: "price-clearing",
+      number: "p,g,S",
+      label: "Joint equilibrium",
+      detail: "household rules · distribution · price · stationary scale",
+      kind: "endogenous",
+    },
+    {
+      id: "population-closure",
+      number: "OPEN",
+      label: "Stationary boundary",
+      detail: statusData.current.calendarTransitionSolved
+        ? `${statusData.current.closure} · transition path recorded`
+        : `${statusData.current.closure} · no calendar-time transition solved`,
+      kind: "diagnostic",
+    },
+  ];
+
+  return (
+    <section className="research-snapshot" aria-labelledby="snapshot-title">
+      <div className="snapshot-heading">
+        <span>LIVE RESEARCH CONTRACT</span>
+        <h2 id="snapshot-title">What is disciplined, chosen, cleared, and still open.</h2>
+        <p>Counts come from the active target and parameter profile. Scope labels come from the canonical status contract.</p>
+      </div>
+      <div className="snapshot-grid">
+        {cards.map((card) => (
+          <button key={card.id} onClick={() => selectObject(card.id)}>
+            <span className={`snapshot-number ${card.kind}`}>{card.number}</span>
+            <strong>{card.label}</strong>
+            <small>{card.detail}</small>
+            <i aria-hidden="true">↗</i>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ObjectFinder({
+  query,
+  setQuery,
+  selectObject,
+}: {
+  query: string;
+  setQuery: (value: string) => void;
+  selectObject: (id: string) => void;
+}) {
+  const results = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return [];
+    return [...NODES, ...Object.values(OBJECTS).filter((object) => object.kind === "packet")]
+      .filter((object, index, array) => array.findIndex((candidate) => candidate.id === object.id) === index)
+      .filter((object) => `${object.title} ${object.meaning} ${object.area} ${object.inputs.join(" ")} ${object.outputs.join(" ")}`.toLowerCase().includes(normalized))
+      .slice(0, 7);
+  }, [query]);
+
+  function choose(id: string) {
+    selectObject(id);
+    setQuery("");
+  }
+
+  return (
+    <section className="object-finder" aria-label="Find a research object">
+      <label htmlFor="object-search">JUMP TO AN OBJECT</label>
+      <div className="finder-input">
+        <span aria-hidden="true">⌕</span>
+        <input
+          id="object-search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Try ‘bequest’, ‘rooms’, ‘price’, or ‘entrant’"
+          autoComplete="off"
+        />
+        {query && <button onClick={() => setQuery("")} aria-label="Clear object search">×</button>}
+      </div>
+      {query && (
+        <div className="finder-results">
+          {results.length > 0 ? results.map((object) => (
+            <button key={object.id} onClick={() => choose(object.id)}>
+              <span>{object.area}</span>
+              <strong>{object.title}</strong>
+              <small className={statusSlug(object.status)}>{object.status}</small>
+            </button>
+          )) : <p>No matching research object.</p>}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function ContextGraphic({ object }: { object: MapObject }) {
+  const caption = <div className="graphic-caption"><span>ECONOMIC VIEW</span><small>conceptual · not to scale</small></div>;
+
+  if (object.area === "Evidence") {
+    return (
+      <section className="context-graphic evidence-graphic">
+        {caption}
+        <div className="pipeline-graphic">
+          <div><span>01</span><strong>Records</strong><small>people · households · births</small></div><i>→</i>
+          <div><span>02</span><strong>Estimator</strong><small>sample · FE · weights · cluster</small></div><i>→</i>
+          <div><span>03</span><strong>Target object</strong><small>estimate · SE · provenance</small></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Calibration") {
+    return (
+      <section className="context-graphic calibration-graphic">
+        {caption}
+        <div className="loop-graphic">
+          <div><b>θ</b><small>candidate</small></div><i>→</i>
+          <div><b>Solve</b><small>p, policies, g</small></div><i>→</i>
+          <div><b>m(θ)</b><small>model moments</small></div><i>→</i>
+          <div><b>J(θ)</b><small>row gaps</small></div>
+          <span>search updates θ only after a complete equilibrium</span>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Households") {
+    return (
+      <section className="context-graphic household-graphic">
+        {caption}
+        <div className="state-vector"><span>age</span><span>assets</span><span>income</span><span>tenure</span><span>parity</span><span>children home</span></div>
+        <div className="lifecycle-line">
+          <div><b>Enter</b><small>inherit · work</small></div>
+          <div><b>Family years</b><small>birth · space · tenure</small></div>
+          <div><b>Later life</b><small>save · own · dissave</small></div>
+          <div><b>Exit</b><small>estate · bequest</small></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Aggregation") {
+    return (
+      <section className="context-graphic distribution-graphic">
+        {caption}
+        <div className="mass-flow">
+          <div className="mass-cloud"><i /><i /><i /><i /><i /><i /><i /><i /></div>
+          <span>policies + transitions</span>
+          <div className="mass-bars"><i /><i /><i /><i /><i /></div>
+        </div>
+        <p>Individual decisions become a distribution only after every state transition is applied forward.</p>
+      </section>
+    );
+  }
+
+  if (object.area === "Markets") {
+    return (
+      <section className="context-graphic market-graphic">
+        {caption}
+        <div className="market-chart" aria-label="Conceptual housing supply and demand crossing">
+          <span className="axis-y">rent / user cost</span><span className="axis-x">physical housing</span>
+          <i className="demand-line" /><i className="supply-line" /><b className="market-dot" />
+          <small className="demand-label">demand from g(x)</small><small className="supply-label">supply Hˢ(r)</small>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Renewal") {
+    return (
+      <section className="context-graphic renewal-graphic">
+        {caption}
+        <div className="cohort-flow">
+          <div><span>F</span><strong>births</strong></div><i>→</i>
+          <div><span>𝓜</span><strong>maturation</strong></div><i>→</i>
+          <div><span>B₀</span><strong>local entrants</strong></div><i>+</i>
+          <div className="outside-flow"><span>M</span><strong>outside inflow</strong></div><i>→</i>
+          <div><span>S</span><strong>stationary scale</strong></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Outputs") {
+    return (
+      <section className="context-graphic policy-graphic">
+        {caption}
+        <div className="counterfactual-grid">
+          <div><span>BASELINE</span><strong>θ, policy₀</strong><small>solve p₀, g₀, S₀, T₀</small></div>
+          <i>Δ policy</i>
+          <div><span>COUNTERFACTUAL</span><strong>same θ, policy₁</strong><small>resolve p₁, g₁, S₁, T₁</small></div>
+        </div>
+      </section>
+    );
+  }
+
+  if (object.area === "Historical context") {
+    return (
+      <section className="context-graphic historical-graphic">
+        {caption}
+        <div><span>CENTER</span><i>sorting + prices</i><span>PERIPHERY</span></div>
+        <p>Mechanism reference only: its targets, geography, and loss are not current-contract objects.</p>
+      </section>
+    );
+  }
+
+  return null;
+}
+
+function relatedObjects(object: MapObject) {
+  const ids: string[] = [];
+  for (const edge of EDGES) {
+    if (edge.from === object.id) ids.push(edge.to);
+    if (edge.to === object.id) ids.push(edge.from);
+  }
+  for (const trace of TRACES) {
+    if (trace.nodes.includes(object.id) || trace.packets.includes(object.id)) ids.push(...trace.nodes, ...trace.packets);
+  }
+  return [...new Set(ids)]
+    .filter((id) => id !== object.id && OBJECTS[id])
+    .slice(0, 5)
+    .map((id) => OBJECTS[id]);
+}
+
 export default function Home() {
   const [selectedId, setSelectedId] = useState("target-contract");
   const [traceId, setTraceId] = useState("calibration");
   const [paused, setPaused] = useState(false);
   const [statusFilter, setStatusFilter] = useState<ObjectStatus | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
   const trace = TRACES.find((item) => item.id === traceId) ?? TRACES[0];
   const selected = OBJECTS[selectedId] ?? OBJECTS["target-contract"];
@@ -312,6 +557,8 @@ export default function Home() {
     `Economic meaning: ${selected.meaning}`,
     `Plain-English intuition: ${explanation?.intuition ?? selected.meaning}`,
     `Why it matters: ${explanation?.whyItMatters ?? "Verify its role in the equilibrium system."}`,
+    `Economic roles: ${(RICH_CONTENT[selected.id]?.roles ?? []).map((role) => role.label).join(", ") || "See the selected object contract."}`,
+    `Mechanism steps:\n${(RICH_CONTENT[selected.id]?.steps ?? []).map((item, index) => `${index + 1}. ${item}`).join("\n")}`,
     `Key equation (LaTeX): ${selected.equation}`,
     `Current trace: ${trace.label} — ${trace.question}`,
     `Start from these exact files:\n${selected.sources.map((path) => `- ${path}`).join("\n")}`,
@@ -349,6 +596,10 @@ export default function Home() {
       </header>
 
       <SystemGuide selectObject={selectObject} />
+
+      <ResearchSnapshot selectObject={selectObject} />
+
+      <ObjectFinder query={query} setQuery={setQuery} selectObject={selectObject} />
 
       <section className="control-deck" aria-label="Map controls">
         <div className="trace-controls">
@@ -530,11 +781,13 @@ export default function Home() {
         </div>
 
         <Inspector
+          key={selected.id}
           object={selected}
           traceLabel={trace.label}
           copied={copied}
           copyText={copyText}
           prompt={prompt}
+          selectObject={selectObject}
         />
       </section>
 
@@ -562,15 +815,19 @@ function Inspector({
   copied,
   copyText,
   prompt,
+  selectObject,
 }: {
   object: MapObject;
   traceLabel: string;
   copied: string | null;
   copyText: (key: string, text: string) => Promise<void>;
   prompt: string;
+  selectObject: (id: string) => void;
 }) {
   const [promptOpen, setPromptOpen] = useState(false);
   const explanation = EXPLANATIONS[object.id];
+  const rich = RICH_CONTENT[object.id];
+  const related = relatedObjects(object);
 
   return (
     <aside className="inspector" aria-live="polite">
@@ -591,6 +848,12 @@ function Inspector({
         <p className="meaning">{object.meaning}</p>
       </section>
 
+      {rich && (
+        <div className="role-strip" aria-label="Research roles">
+          {rich.roles.map((role) => <span key={role.label} className={role.kind}>{role.label}</span>)}
+        </div>
+      )}
+
       {explanation && (
         <section className="explanation-card">
           <span>IN PLAIN ENGLISH</span>
@@ -599,6 +862,19 @@ function Inspector({
       )}
 
       <MechanismGraphic object={object} />
+
+      <ContextGraphic object={object} />
+
+      {rich && (
+        <section className="mechanism-steps">
+          <div><span>HOW THIS BLOCK WORKS</span><small>{rich.steps.length} steps</small></div>
+          <ol>
+            {rich.steps.map((step, index) => (
+              <li key={step}><span>{String(index + 1).padStart(2, "0")}</span><p>{step}</p></li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <section className="detail-block equation-block">
         <h3>KEY EQUATION</h3>
@@ -617,6 +893,16 @@ function Inspector({
               </div>
             ))}
           </dl>
+        </section>
+      )}
+
+      {rich?.example && (
+        <section className="worked-example">
+          <div><span>WORKED EXAMPLE</span><small>illustrative arithmetic</small></div>
+          <h3>{rich.example.title}</h3>
+          <p>{rich.example.setup}</p>
+          <MathExpression tex={rich.example.equation} display />
+          <p>{rich.example.result}</p>
         </section>
       )}
 
@@ -684,6 +970,19 @@ function Inspector({
           </button>
         </div>
       </section>
+
+      {related.length > 0 && (
+        <section className="related-block">
+          <div><span>FOLLOW THE SYSTEM</span><small>related objects</small></div>
+          <nav aria-label={`Objects related to ${object.title}`}>
+            {related.map((item) => (
+              <button key={item.id} onClick={() => selectObject(item.id)}>
+                <span>{item.area}</span><strong>{item.title}</strong><i>→</i>
+              </button>
+            ))}
+          </nav>
+        </section>
+      )}
 
       <button className="prompt-button" onClick={() => setPromptOpen((value) => !value)} aria-expanded={promptOpen}>
         <span>

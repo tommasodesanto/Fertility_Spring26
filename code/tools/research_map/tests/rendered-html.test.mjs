@@ -10,6 +10,10 @@ test("production bundle contains the research map", async () => {
   assert.ok(bundle.includes("The economic argument, made inspectable."));
   assert.ok(bundle.includes("Five economic operations, one fixed point."));
   assert.ok(bundle.includes("IN PLAIN ENGLISH"));
+  assert.ok(bundle.includes("LIVE RESEARCH CONTRACT"));
+  assert.ok(bundle.includes("HOW THIS BLOCK WORKS"));
+  assert.ok(bundle.includes("WORKED EXAMPLE"));
+  assert.ok(bundle.includes("JUMP TO AN OBJECT"));
   assert.ok(bundle.includes("Housing-market equilibrium"));
   assert.doesNotMatch(bundle, /codex-preview|SkeletonPreview|Your site is taking shape/i);
 });
@@ -25,6 +29,8 @@ test("generated status carries the live contract", async () => {
   assert.equal(payload.targetRows.length, 12);
   assert.equal(payload.parameters.filter((row) => row.restriction === "estimated").length, 10);
   assert.equal(payload.current.roomsCodeHold, true);
+  assert.equal(payload.current.closure, "minimal fixed-inflow renewal closure");
+  assert.equal(payload.current.calendarTransitionSolved, false);
   assert.equal(payload.sourceChecks.find((row) => row.path === "CALIBRATION_STATUS.md")?.exists, true);
   assert.equal(payload.sourceChecks.find((row) => row.path.endsWith("/e5_profile.py"))?.exists, true);
 });
