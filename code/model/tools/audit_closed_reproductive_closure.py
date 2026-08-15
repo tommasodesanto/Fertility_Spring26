@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit the proposed closed reproductive closure in the maintained E5b model.
+"""Audit the proposed closed reproductive closure in a sequential model.
 
 This is a diagnostic, not a calibration or a transition solver.  It evaluates
 normalized stationary fixed-price solutions and records
@@ -9,10 +9,11 @@ normalized stationary fixed-price solutions and records
     R(r) = B(r) - E(r), and
     F(r) = H^S(r) / D(r).
 
-The main source is the exact current-contract preflight at the retained E5b
-theta.  A constructed preference normalization is included only to show what
-would be required for the alternative closure to possess two positive steady
-states; it is deliberately labelled diagnostic and is not a recalibration.
+The historical default is the retained shared-clock E5b point.  The
+``e5f-floor`` profile instead routes the exact child-room-floor architecture
+shown in the August 7 Raquel slides.  A constructed preference normalization
+is retained only for the historical full audit; ``--schedule-only`` stops
+after the actual calibrated reproductive and housing schedules.
 """
 from __future__ import annotations
 
@@ -47,8 +48,13 @@ REPAIRED_SOURCE = (
     ROOT
     / "output/model/eqscale_seq_e5_maturation_repair_recalibration_20260805/report/results.json"
 )
+E5F_FLOOR_SOURCE = (
+    ROOT
+    / "output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json"
+)
 DEFAULT_OUTDIR = ROOT / "output/model/closed_reproductive_closure_audit_20260811"
 PRICE_RATIOS = (0.01, 0.025, 0.05, 0.10, 0.20, 0.35, 0.50, 0.65, 0.80, 0.90, 1.00, 1.10, 1.25, 1.50, 2.00)
+E5F_PRICE_RATIOS = (0.005, 0.01, 0.025, 0.05, 0.10, 0.20, 0.35, 0.50, 0.65, 0.80, 0.90, 1.00, 1.10, 1.25, 1.50, 2.00, 3.00)
 
 
 def jsonable(value: Any) -> Any:
@@ -85,18 +91,20 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def configure_environment(*, repaired: bool) -> None:
+def configure_environment(*, profile: str) -> None:
     os.environ["E3_L4"] = "1"
     os.environ["E5"] = "1"
     os.environ["E3_TFR_TOP_BIN_WEIGHT"] = "3.602359422009"
     for name in ("E5_MATURATION_REPAIR", "E5F", "E6A", "E6B", "E6C"):
         os.environ.pop(name, None)
-    if repaired:
+    if profile in {"repaired-e5", "e5f-floor"}:
         os.environ["E5_MATURATION_REPAIR"] = "1"
+    if profile == "e5f-floor":
+        os.environ["E5F"] = "1"
 
 
-def load_chain(*, repaired: bool = False) -> Any:
-    configure_environment(repaired=repaired)
+def load_chain(*, profile: str = "maintained-e5b") -> Any:
+    configure_environment(profile=profile)
     if str(MODEL_ROOT) not in sys.path:
         sys.path.insert(0, str(MODEL_ROOT))
     from intergen_eqscale_seq_optimized import run_e1_chain
@@ -125,11 +133,21 @@ def theta_from_winner(winner: dict[str, Any]) -> dict[str, float]:
     return {str(key): float(value) for key, value in winner["theta"].items()}
 
 
-def make_overrides(chain: Any, theta: dict[str, float], *, nb: int) -> dict[str, Any]:
+def make_overrides(
+    chain: Any,
+    theta: dict[str, float],
+    *,
+    nb: int,
+    profile: str = "maintained-e5b",
+) -> dict[str, Any]:
     overrides = chain.common_overrides(
         argparse.Namespace(J=17, Nb=int(nb), max_iter_eq=40, tol_eq=2.5e-5)
     )
     overrides.update(theta)
+    if profile == "e5f-floor":
+        overrides["child_state_mode"] = "independent_count"
+        if not bool(overrides.get("child_room_floor", False)):
+            raise RuntimeError("E5F routing failed to activate the child-room floor")
     return overrides
 
 
@@ -153,6 +171,71 @@ def solve_pe(
     started = time.perf_counter()
     sol, parameters, price = chain.run_model_cp_dt(overrides, verbose=False)
     return sol, parameters, np.asarray(price, dtype=float).reshape(-1), time.perf_counter() - started
+
+
+def solve_fiscally_balanced(
+    chain: Any,
+    base: dict[str, Any],
+    *,
+    asset_price: float | None,
+) -> tuple[Any, Any, np.ndarray, float, float, int]:
+    """Solve the rebated 1-percent property-tax baseline at a fixed price or in GE."""
+    from run_intergen_funded_property_tax_test import case_overrides
+
+    cache: dict[float, tuple[Any, Any, np.ndarray]] = {}
+    started = time.perf_counter()
+
+    def solve_at(transfer: float) -> tuple[Any, Any, np.ndarray]:
+        key = float(round(transfer, 12))
+        if key not in cache:
+            overrides = case_overrides(base, 0.01, False, float(transfer), False)
+            if asset_price is not None:
+                overrides.update(solve_mode="pe", p_fixed=np.array([float(asset_price)]))
+            cache[key] = chain.run_model_cp_dt(overrides, verbose=False)
+        return cache[key]
+
+    def residual(transfer: float) -> float:
+        return float(solve_at(transfer)[0].property_tax_budget_residual)
+
+    lower, upper = 0.0, 0.5
+    f_lower, f_upper = residual(lower), residual(upper)
+    while f_upper > 0.0 and upper < 8.0:
+        upper *= 2.0
+        f_upper = residual(upper)
+    if f_lower < 0.0 or f_upper > 0.0:
+        raise RuntimeError(
+            "Could not bracket the rebated-baseline transfer: "
+            f"F(0)={f_lower:.6g}, F({upper:g})={f_upper:.6g}"
+        )
+
+    transfer = 0.5 * (lower + upper)
+    for _ in range(30):
+        denominator = f_upper - f_lower
+        secant = lower - f_lower * (upper - lower) / denominator if denominator != 0.0 else math.nan
+        span = upper - lower
+        if (
+            not math.isfinite(secant)
+            or secant <= lower + 0.05 * span
+            or secant >= upper - 0.05 * span
+        ):
+            secant = 0.5 * (lower + upper)
+        transfer = float(secant)
+        f_transfer = residual(transfer)
+        if abs(f_transfer) <= 2.5e-5:
+            break
+        if f_transfer > 0.0:
+            lower, f_lower = transfer, f_transfer
+        else:
+            upper, f_upper = transfer, f_transfer
+    solution, parameters, price = solve_at(transfer)
+    return (
+        solution,
+        parameters,
+        np.asarray(price, dtype=float).reshape(-1),
+        time.perf_counter() - started,
+        transfer,
+        len(cache),
+    )
 
 
 def shared_clock_mature_flows_by_parity(sol: Any, parameters: Any) -> np.ndarray:
@@ -354,7 +437,7 @@ def parameter_rows(theta: dict[str, float], metadata: dict[str, Any]) -> list[di
 
 
 def run_architecture_only(args: argparse.Namespace) -> None:
-    chain = load_chain(repaired=True)
+    chain = load_chain(profile="repaired-e5")
     main_winner, _ = load_winner(args.source)
     repaired_winner, _ = load_winner(REPAIRED_SOURCE)
     records = []
@@ -362,7 +445,12 @@ def run_architecture_only(args: argparse.Namespace) -> None:
         ("same_retained_theta_independent_maturation", main_winner),
         ("reestimated_Aug5_independent_maturation", repaired_winner),
     ):
-        base = make_overrides(chain, theta_from_winner(winner), nb=args.nb)
+        base = make_overrides(
+            chain,
+            theta_from_winner(winner),
+            nb=args.nb,
+            profile="repaired-e5",
+        )
         sol, parameters, price, elapsed = solve_ge(chain, base)
         records.append(
             readout(
@@ -378,6 +466,36 @@ def run_architecture_only(args: argparse.Namespace) -> None:
         )
         print(f"ARCHITECTURE {label} B/E={records[-1]['reproduction_ratio_B_over_E']:.9f}", flush=True)
     write_json(args.architecture_json, records)
+
+
+def make_schedule_plot(outdir: Path, rows: list[dict[str, Any]], *, title: str) -> None:
+    ratios = np.asarray([row["price_ratio"] for row in rows], dtype=float)
+    reproduction = np.asarray([row["reproduction_ratio_B_over_E"] for row in rows], dtype=float)
+    scale = np.asarray([row["scale_mapping_Hs_over_D"] for row in rows], dtype=float)
+    fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2))
+    axes[0].plot(ratios, reproduction, marker="o", lw=2, color="#21476b")
+    axes[0].axhline(1.0, color="black", lw=1, ls=":")
+    axes[0].set(
+        xscale="log",
+        xlabel="Asset price / baseline price",
+        ylabel=r"Effective reproduction $B/E$",
+        title="Fertility and replacement",
+    )
+    axes[0].grid(alpha=0.25)
+    axes[1].plot(ratios, scale, marker="o", lw=2, color="#b14f32")
+    axes[1].set(
+        xscale="log",
+        yscale="log",
+        xlabel="Asset price / baseline price",
+        ylabel=r"Stationary scale $H^S/D$",
+        title="Housing clearing conditional on price",
+    )
+    axes[1].grid(alpha=0.25)
+    fig.suptitle(title)
+    fig.tight_layout()
+    fig.savefig(outdir / "calibrated_schedule.png", dpi=220)
+    fig.savefig(outdir / "calibrated_schedule.pdf")
+    plt.close(fig)
 
 
 def make_plots(
@@ -457,14 +575,34 @@ def make_plots(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE if DEFAULT_SOURCE.exists() else FALLBACK_SOURCE)
+    parser.add_argument(
+        "--profile",
+        choices=("maintained-e5b", "e5f-floor"),
+        default="maintained-e5b",
+    )
+    parser.add_argument("--source", type=Path)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
     parser.add_argument("--nb", type=int, default=120)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument(
+        "--fiscal-convention",
+        choices=("calibration-unrebated", "rebated-1pct"),
+        default="calibration-unrebated",
+    )
+    parser.add_argument(
+        "--schedule-only",
+        action="store_true",
+        help="Stop after the calibrated price schedule and any bracketed closed root.",
+    )
     parser.add_argument("--skip-architecture", action="store_true")
     parser.add_argument("--architecture-only", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--architecture-json", type=Path, default=DEFAULT_OUTDIR / "architecture_helper.json", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    if args.source is None:
+        if args.profile == "e5f-floor":
+            args.source = E5F_FLOOR_SOURCE
+        else:
+            args.source = DEFAULT_SOURCE if DEFAULT_SOURCE.exists() else FALLBACK_SOURCE
     args.source = args.source.resolve()
     args.outdir = args.outdir.resolve()
     args.architecture_json = args.architecture_json.resolve()
@@ -476,40 +614,73 @@ def main() -> None:
     args.outdir.mkdir(parents=True, exist_ok=True)
     winner, metadata = load_winner(args.source)
     theta = theta_from_winner(winner)
-    chain = load_chain(repaired=False)
-    base = make_overrides(chain, theta, nb=args.nb)
+    chain = load_chain(profile=args.profile)
+    base = make_overrides(chain, theta, nb=args.nb, profile=args.profile)
 
     print(f"BASELINE_START source={args.source}", flush=True)
-    sol0, parameters0, price0, elapsed0 = solve_ge(chain, base)
-    verify_source_solution(chain, sol0, parameters0, price0, winner)
+    if args.fiscal_convention == "rebated-1pct":
+        sol0, parameters0, price0, elapsed0, transfer0, fiscal_evaluations0 = solve_fiscally_balanced(
+            chain,
+            base,
+            asset_price=None,
+        )
+    else:
+        sol0, parameters0, price0, elapsed0 = solve_ge(chain, base)
+        transfer0, fiscal_evaluations0 = 0.0, 1
+        verify_source_solution(chain, sol0, parameters0, price0, winner)
     baseline = readout(
         chain,
         sol0,
         parameters0,
         price0,
-        label="maintained_E5b_GE",
+        label=f"{args.profile}_GE",
         price_ratio=1.0,
         psi_child=float(theta["psi_child"]),
         elapsed=elapsed0,
     )
+    baseline.update(
+        fiscal_convention=args.fiscal_convention,
+        lump_sum_transfer_period_units=float(transfer0),
+        fiscal_root_evaluations=int(fiscal_evaluations0),
+        fiscal_residual=float(getattr(sol0, "property_tax_budget_residual", math.nan)),
+    )
     write_csv(args.outdir / "baseline_accounting.csv", [baseline])
     print(f"BASELINE_DONE B/E={baseline['reproduction_ratio_B_over_E']:.9f}", flush=True)
 
-    ratios = (0.35, 1.0, 1.50) if args.smoke else PRICE_RATIOS
+    if args.smoke:
+        ratios = (0.10, 1.0, 2.0) if args.profile == "e5f-floor" else (0.35, 1.0, 1.50)
+    elif args.profile == "e5f-floor":
+        ratios = E5F_PRICE_RATIOS
+    else:
+        ratios = PRICE_RATIOS
     price_rows: list[dict[str, Any]] = []
     for index, ratio in enumerate(ratios, start=1):
-        sol, parameters, price, elapsed = solve_pe(
-            chain, base, asset_price=float(price0[0] * ratio), psi_child=float(theta["psi_child"])
-        )
+        if args.fiscal_convention == "rebated-1pct":
+            sol, parameters, price, elapsed, transfer, fiscal_evaluations = solve_fiscally_balanced(
+                chain,
+                base,
+                asset_price=float(price0[0] * ratio),
+            )
+        else:
+            sol, parameters, price, elapsed = solve_pe(
+                chain, base, asset_price=float(price0[0] * ratio), psi_child=float(theta["psi_child"])
+            )
+            transfer, fiscal_evaluations = 0.0, 1
         row = readout(
             chain,
             sol,
             parameters,
             price,
-            label="maintained_preference_price_grid",
+            label=f"{args.profile}_calibrated_price_grid",
             price_ratio=float(ratio),
             psi_child=float(theta["psi_child"]),
             elapsed=elapsed,
+        )
+        row.update(
+            fiscal_convention=args.fiscal_convention,
+            lump_sum_transfer_period_units=float(transfer),
+            fiscal_root_evaluations=int(fiscal_evaluations),
+            fiscal_residual=float(getattr(sol, "property_tax_budget_residual", math.nan)),
         )
         price_rows.append(row)
         write_csv(args.outdir / "price_grid.csv", price_rows)
@@ -521,11 +692,153 @@ def main() -> None:
         )
 
     if args.smoke:
+        if args.profile == "e5f-floor" and args.fiscal_convention == "rebated-1pct":
+            quota_path = (
+                ROOT
+                / "output/model/eqscale_seq_e5_policy_quota_closure_20260807/raw_runs/floor/quota/benchmark_quota_objects.json"
+            )
+            quota = json.loads(quota_path.read_text(encoding="utf-8"))
+            for field, expected in (
+                ("entry_households_per_adult", float(quota["baseline_entry_flow"])),
+                ("mature_entrant_households_per_adult", float(quota["baseline_mature_cityborn_flow"])),
+            ):
+                if abs(float(baseline[field]) - expected) > 1e-7:
+                    raise RuntimeError(
+                        f"E5F baseline nesting failed for {field}: "
+                        f"solved={baseline[field]:.12g}, expected={expected:.12g}"
+                    )
+        if args.fiscal_convention == "rebated-1pct":
+            fiscal_residuals = [abs(float(row["fiscal_residual"])) for row in [baseline, *price_rows]]
+            if max(fiscal_residuals) > 2.5e-5:
+                raise RuntimeError(
+                    f"Rebated-baseline fiscal gate failed: max residual={max(fiscal_residuals):.6g}"
+                )
         write_json(
             args.outdir / "smoke_summary.json",
-            {"status": "passed", "source": args.source, "baseline": baseline, "price_grid": price_rows},
+            {
+                "status": "passed",
+                "profile": args.profile,
+                "fiscal_convention": args.fiscal_convention,
+                "source": args.source,
+                "baseline": baseline,
+                "price_grid": price_rows,
+            },
         )
+        make_schedule_plot(args.outdir, price_rows, title=f"{args.profile}: smoke schedule")
         print("SMOKE_COMPLETE", flush=True)
+        return
+
+    if args.schedule_only:
+        reproduction = [float(row["reproduction_ratio_B_over_E"]) for row in price_rows]
+        if not all(math.isfinite(value) and value > 0.0 for value in reproduction):
+            raise RuntimeError("Nonfinite or nonpositive reproduction on the calibrated schedule")
+        ordered = sorted(price_rows, key=lambda row: float(row["asset_price"]))
+        root_bracket: tuple[dict[str, Any], dict[str, Any]] | None = None
+        for left, right in zip(ordered[:-1], ordered[1:]):
+            left_residual = float(left["reproduction_ratio_B_over_E"]) - 1.0
+            right_residual = float(right["reproduction_ratio_B_over_E"]) - 1.0
+            if left_residual == 0.0 or left_residual * right_residual <= 0.0:
+                root_bracket = (left, right)
+                break
+
+        root_row: dict[str, Any] | None = None
+        if root_bracket is not None:
+            row_cache = {round(float(row["asset_price"]), 12): row for row in price_rows}
+
+            def evaluate_root(asset_price: float) -> float:
+                key = round(float(asset_price), 12)
+                if key not in row_cache:
+                    if args.fiscal_convention == "rebated-1pct":
+                        sol, parameters, price, elapsed, transfer, fiscal_evaluations = solve_fiscally_balanced(
+                            chain,
+                            base,
+                            asset_price=float(asset_price),
+                        )
+                    else:
+                        sol, parameters, price, elapsed = solve_pe(
+                            chain,
+                            base,
+                            asset_price=float(asset_price),
+                            psi_child=float(theta["psi_child"]),
+                        )
+                        transfer, fiscal_evaluations = 0.0, 1
+                    row_cache[key] = readout(
+                        chain,
+                        sol,
+                        parameters,
+                        price,
+                        label=f"{args.profile}_closed_root_search",
+                        price_ratio=float(asset_price / price0[0]),
+                        psi_child=float(theta["psi_child"]),
+                        elapsed=elapsed,
+                    )
+                    row_cache[key].update(
+                        fiscal_convention=args.fiscal_convention,
+                        lump_sum_transfer_period_units=float(transfer),
+                        fiscal_root_evaluations=int(fiscal_evaluations),
+                        fiscal_residual=float(
+                            getattr(sol, "property_tax_budget_residual", math.nan)
+                        ),
+                    )
+                    write_csv(args.outdir / "root_search.csv", list(row_cache.values()))
+                return float(row_cache[key]["reproduction_ratio_B_over_E"])
+
+            left, right = root_bracket
+            increasing = float(right["reproduction_ratio_B_over_E"]) > float(
+                left["reproduction_ratio_B_over_E"]
+            )
+            root_price = bisection(
+                evaluate_root,
+                lower=float(left["asset_price"]),
+                upper=float(right["asset_price"]),
+                target=1.0,
+                increasing=increasing,
+                tolerance=5e-7,
+                label="calibrated_closed_price",
+            )
+            evaluate_root(root_price)
+            root_row = dict(row_cache[round(float(root_price), 12)])
+            root_row["static_supply_population_scale"] = float(root_row["scale_mapping_Hs_over_D"])
+            root_row["fixed_baseline_stock_population_scale"] = float(
+                baseline["housing_supply"] / root_row["housing_demand_per_adult"]
+            )
+            write_csv(args.outdir / "closed_root.csv", [root_row])
+
+        summary = {
+            "status": "complete",
+            "profile": args.profile,
+            "fiscal_convention": args.fiscal_convention,
+            "source": str(args.source),
+            "baseline": baseline,
+            "price_ratios": [float(row["price_ratio"]) for row in price_rows],
+            "B_over_E_min": min(reproduction),
+            "B_over_E_max": max(reproduction),
+            "B_over_E_decreases_with_price": monotone(reproduction, increasing=False),
+            "closed_root_found": root_row is not None,
+            "closed_root": root_row,
+            "baseline_full_retention_outside_share": 1.0
+            - float(baseline["reproduction_ratio_B_over_E"]),
+            "retention_that_nests_16p9_outside_share": (1.0 - 0.169)
+            / float(baseline["reproduction_ratio_B_over_E"]),
+            "local_elasticity_B_over_E_to_user_cost": log_slope(
+                price_rows, "reproduction_ratio_B_over_E"
+            ),
+            "local_elasticity_scale_map_to_user_cost": log_slope(
+                price_rows, "scale_mapping_Hs_over_D"
+            ),
+            "maximum_absolute_fiscal_residual": max(
+                abs(float(row["fiscal_residual"])) for row in [baseline, *price_rows]
+            ),
+            "runtime_contract": {"J": 17, "Nb": args.nb, "max_iter_eq": 40, "tol_eq": 2.5e-5},
+        }
+        write_json(args.outdir / "schedule_summary.json", summary)
+        plot_title = (
+            "Stationary schedules in the sequential model"
+            if args.profile == "e5f-floor"
+            else "Stationary fertility and housing schedules"
+        )
+        make_schedule_plot(args.outdir, price_rows, title=plot_title)
+        print("SCHEDULE_COMPLETE", flush=True)
         return
 
     cache: dict[tuple[float, float], dict[str, Any]] = {}

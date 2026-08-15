@@ -29,6 +29,51 @@ implementation remains available under `intergen_housing_fertility_optimized`
 as a preserved fallback and mechanism comparison; it has not been deleted or
 overwritten.
 
+The exact E5F fertility--price schedule is regenerated from the repository root
+with:
+
+```bash
+PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  code/model/.venv/bin/python code/model/tools/audit_closed_reproductive_closure.py \
+  --profile e5f-floor \
+  --fiscal-convention rebated-1pct \
+  --schedule-only \
+  --outdir output/model/e5f_floor_reproductive_schedule/full_rebated
+```
+
+The current estimate has no positive closed-population root: `B/E` remains
+below one even when the asset price is reduced to `0.5%` of baseline. The
+paper-facing transition therefore uses the open renewal equation and a dated
+birth-to-entry queue:
+
+```bash
+PYTHONPATH=code/model:code/model/tools NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  code/model/.venv/bin/python code/model/tools/run_e5f_open_population_transition.py \
+  --periods 25 \
+  --output-dir output/model/e5f_floor_open_population_transition/production_v2
+```
+
+This wrapper leaves the sequential household problem unchanged. It propagates
+the full unnormalized adult distribution, while an aggregate birth-vintage
+queue prevents newborns from becoming entrant households in the same model
+period. Household policies use temporary-equilibrium/static price expectations;
+the packet is a transition diagnostic, not a perfect-foresight welfare run.
+
+The shared calendar scaffolding also preserves the one-shot fallback. Its
+stationary nesting smoke is:
+
+```bash
+PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  code/model/.venv/bin/python code/model/tools/run_dynamic_population_transition.py \
+  --smoke --periods 4 --initialization stationary --closure nesting \
+  --housing-supply fixed-stock \
+  --output-dir output/model/dynamic_population_transition/verification_smoke_20260815
+```
+
+`tools/build_current_one_shot_transition_initial_state.py` preserves the
+separate observed-head-age diagnostic. It is not a U.S. transition initializer:
+the household model still lacks an age-specific household-formation bridge.
+
 Use the local virtualenv created for the port:
 
 ```bash

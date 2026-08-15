@@ -47,9 +47,43 @@ maturation pipeline determine the intervening population and housing-demand
 path. The immediate production tests are therefore: (i) trace `B(P)/E(P)` for
 the exact E5F floor model and determine the feasible steady-state endpoints;
 and (ii) propagate the sequential child pipeline from an internally consistent
-earlier steady state after a gradual fertility-preference or access shift. A
+earlier steady state after a permanent fertility-preference shift. A
 literal U.S. transition additionally needs an age-specific household-formation
 bridge and a forward-looking asset-price path.
+
+Those two production tests are now complete. Under the fiscally balanced 1%
+property-tax convention, the exact E5F schedule has `B/E=0.85738685` at the
+baseline and reaches only `0.87458194` when the asset price is reduced to
+`0.5%` of its baseline value. It falls monotonically to `0.81866132` at three
+times the baseline price. Cheaper housing therefore raises fertility at the
+current parameter estimate, but far too little to produce a positive closed steady state.
+The current parameter vector must be interpreted with an open population
+closure; a closed-to-closed transition would require a fertility refit, not a
+different numerical root finder.
+
+The sequential household distribution can now be propagated one calendar
+period without normalization. The operator reproduces the stationary
+distribution with L1 error `8.04e-17` and the effective mature-child flow with
+error `1.57e-15`. Population renewal uses a separate aggregate birth-vintage
+queue, because the household children-at-home state is memoryless and otherwise
+allows same-period maturation. In the benchmark diagnostic, `psi_child` falls
+from `0.10` to the calibrated `0.00`, moving stationary TFR from `2.1111` to
+about `1.9848`. With a `16.9%` initial outside-entry share and fixed housing
+stock, adult-household population remains at one for the first twenty years,
+is `0.9110` after 96 years, and converges to `0.7936`; the house-price endpoint
+is `0.7304` of the old price. Starting from an exact steady state produces no
+initial population or price boom. Matching the rising U.S. path therefore
+requires the observed nonstationary cohort/headship distribution or additional
+price shifters. This temporary-equilibrium path is not a welfare calculation or
+a perfect-foresight asset-price solution.
+
+Regeneration and evidence:
+
+- stationary schedule: `code/model/tools/audit_closed_reproductive_closure.py`
+  with `--profile e5f-floor --fiscal-convention rebated-1pct --schedule-only`;
+- calendar transition: `code/model/tools/run_e5f_open_population_transition.py`;
+- schedule packet: `output/model/e5f_floor_reproductive_schedule/full_rebated/`;
+- transition packet: `output/model/e5f_floor_open_population_transition/production_v2/`.
 
 ## August 15 preserved one-shot stationary comparison
 
