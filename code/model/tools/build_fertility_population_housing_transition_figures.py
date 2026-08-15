@@ -285,7 +285,7 @@ def build_figure(values: dict[str, float]) -> None:
     market_axis.text(1.08, 1.085, r"before: $\theta_0$", color=old_color)
     market_axis.text(1.08, 0.80, r"after: $\theta_1$", color=new_color)
     market_axis.set_title("(a) Population and the housing cost")
-    market_axis.set_xlabel(r"Population (families), $L$")
+    market_axis.set_xlabel(r"Adult-household population, $S$")
     market_axis.set_ylabel(r"Housing cost, $p$")
 
     old_point = (values["old_population"], values["old_price"])
@@ -298,14 +298,14 @@ def build_figure(values: dict[str, float]) -> None:
         s=[36, 34, 36],
         zorder=6,
     )
-    market_axis.text(old_point[0] + 0.025, old_point[1] + 0.025, r"$E_0$", color=old_color)
+    market_axis.text(old_point[0] + 0.025, old_point[1] + 0.025, r"$A$", color=old_color)
     market_axis.text(
         impact_market_point[0] + 0.025,
         impact_market_point[1] - 0.055,
         r"$I$",
         color=new_color,
     )
-    market_axis.text(new_point[0] - 0.055, new_point[1] + 0.025, r"$E_1$", color=new_color)
+    market_axis.text(new_point[0] - 0.055, new_point[1] + 0.025, r"$B$", color=new_color)
     add_arrow(market_axis, old_point, impact_market_point)
 
     transition_start_price = values["impact_price"] - 0.055
@@ -336,7 +336,7 @@ def build_figure(values: dict[str, float]) -> None:
     market_axis.text(
         0.70,
         0.70,
-        r"$L$ falls",
+        r"$S$ falls",
         rotation=34,
         color=transition_color,
         fontsize=9.2,
@@ -385,14 +385,14 @@ def build_figure(values: dict[str, float]) -> None:
         s=[36, 34, 36],
         zorder=6,
     )
-    child_axis.text(old_child_point[0] + 0.014, old_child_point[1] + 0.035, r"$E_0$", color=old_color)
+    child_axis.text(old_child_point[0] + 0.014, old_child_point[1] + 0.035, r"$A$", color=old_color)
     child_axis.text(
         impact_child_point[0] + 0.015,
         impact_child_point[1] - 0.065,
         r"$I$",
         color=new_color,
     )
-    child_axis.text(new_child_point[0] - 0.035, new_child_point[1] + 0.035, r"$E_1$", color=new_color)
+    child_axis.text(new_child_point[0] - 0.035, new_child_point[1] + 0.035, r"$B$", color=new_color)
     add_arrow(child_axis, old_child_point, impact_child_point)
 
     child_transition_start_price = values["impact_price"] - 0.045
@@ -431,7 +431,7 @@ def build_figure(values: dict[str, float]) -> None:
     market_axis.set_ylim(0.42, 1.16)
     market_axis.set_xticks(
         [values["new_population"], values["old_population"]],
-        labels=[r"$L_1$", r"$L_0$"],
+        labels=[r"$S_1$", r"$S_0$"],
     )
     market_axis.set_yticks(
         [values["new_price"], values["impact_price"], values["old_price"]],

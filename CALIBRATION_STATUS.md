@@ -1,6 +1,74 @@
 # Calibration Status
 
-Updated: `2026-08-14` (minimal endogenous stationary-scale update implemented and audited)
+Updated: `2026-08-15` (circulated one-shot stationary closure and funded-policy comparison)
+
+## August 15 circulated one-shot stationary closure
+
+The saved July 23 circulated one-shot household estimate has now been placed
+inside the minimal fixed-inflow stationary closure requested for the paper.
+The household states, Bellman problem, fertility choice, tenure policies, and
+estimated parameters are unchanged. At each candidate asset price, an external
+outer loop reads required entrants `E`, mature locally born households `B`,
+and housing demand per adult household from the existing solver, then jointly
+clears renewal and housing. This is a fixed-parameter mechanism calculation,
+not a recalibration, transition, or change to the live model default. For the
+circulated-paper question, it supersedes the August 14 experimental sequential-
+model diagnostic immediately below.
+
+At the saved unrebated point, price is `1.04651434`, `E=0.06173345566`,
+`B=0.06070114477`, and `B/E=0.983277935`. With full local retention, outside
+inflow equal to `1.6722%` of required four-year entrants reproduces adult-
+household mass one. In a closed market, the root `B/E=1` is at price
+`0.47969351`, or `45.84%` of the saved price; its completed-fertility
+equivalent is `2.12003`. Housing clearing gives adult-household mass `0.16686`
+under the maintained static supply curve or `0.65344` with the current housing
+stock fixed. These are endpoints, not forecasts.
+
+The standing funded policies were also rerun. The reference is a 1% annual
+property tax on all occupied housing, with equal rebates; the purchase grant
+is `0.4` model units for a birth-state renter-to-owner purchase of a 6+ room
+home, and the tax-plus-grant package raises the annual tax to 2%. All cases
+balance the government budget. Relative to the funded reference:
+
+| Policy | Fixed population: price | Fixed population: births/adult | 20% outside share: price | 20% outside share: population | 20% outside share: total births |
+|---|---:|---:|---:|---:|---:|
+| Purchase grant | `+0.012%` | `+0.197%` | `+0.316%` | `+0.745%` | `+0.936%` |
+| 2% tax + purchase grant | `-17.856%` | `+0.557%` | `-17.100%` | `+2.240%` | `+2.791%` |
+
+The 20% case is an openness sensitivity, not an estimated migration share. At
+full local retention the funded reference requires outside inflow of only
+`0.8879%` of entrants; near that boundary the purchase grant changes price,
+population, and total births by `+4.12%`, `+10.33%`, and `+10.43%`, while the
+tax-plus-grant package changes them by `-5.88%`, `+39.14%`, and `+39.49%`.
+These large rows are deliberately labeled sensitivity results. Population is
+adult-household mass and total births are a four-year stationary flow.
+
+The saved unrebated fixed-theta loss is `0.288140`; the rebated 1% reference
+has loss `1.562841` because it is a policy baseline, not a re-estimation. More
+importantly, the saved estimate still contains the withdrawn `0.664435`
+first-child housing-response target and therefore cannot be promoted. The
+packet includes the complete source target-fit table, all free parameters and
+bounds, both prime-age and aggregate ownership measures, and the full fiscal
+ledger.
+
+A literal U.S. calendar-time path is not reported. Our 2023 ACS large-metro
+household-head sample has only `0.94%` of heads at ages 18--21, while the model
+places `6.17%` of adult-household mass into its age-18 entrant state. Joining
+those objects creates a false entry jump. The immediate empirical bridge is
+age-specific household formation; a full transition would then require a
+forward-looking asset-price path. No Torch transition was launched.
+
+All numerical gates pass. The maximum stationary housing-market residual is
+`1.27e-5`, the maximum renewal identity error is `6.94e-18`, and the maximum
+closed-root residual is `4.80e-7`. In the funded-policy packet, the original
+and wrapped solvers agree on every reported baseline object to `1.33e-15`; the
+maximum market and fiscal residuals are `8.46e-6` and `1.73e-6`.
+
+Regeneration and evidence:
+
+- driver: `code/model/tools/build_current_one_shot_stationary_closure.py`;
+- packet: `output/model/current_one_shot_stationary_closure/`;
+- readable report: `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
 
 ## August 14 endogenous stationary-scale update
 

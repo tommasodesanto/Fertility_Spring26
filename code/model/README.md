@@ -426,8 +426,24 @@ Outputs are under `../../output/model/population_closure_update/`. At the
 retained theta, fixed outside flow `M=E0-B0` nests the normalized benchmark at
 scale one. This establishes an open stationary comparison, not a calendar-time
 transition; it also assumes outside and locally born entrants share the fixed
-entrant-state distribution. The integrated report is
-`../../output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
+entrant-state distribution. This is a historical diagnostic; it is not the
+circulated one-shot exercise documented next.
+
+A separate August 15 driver applies the same fixed-inflow accounting directly
+to the saved circulated one-shot model, without changing its household states
+or Bellman problem:
+
+```bash
+.venv/bin/python tools/build_current_one_shot_stationary_closure.py
+```
+
+It solves open and closed stationary roots and reruns the circulated funded
+purchase-grant policies under the new closure. Outputs are under
+`../../output/model/current_one_shot_stationary_closure/`. This is a
+fixed-parameter mechanism packet, not a promoted recalibration: the saved
+estimate's original first-child housing-response target was later withdrawn.
+The packet reports adult-household mass, four-year birth flows, the complete
+fiscal ledger, and full fixed-versus-renewal baseline nesting checks.
 
 The generic calendar-time illustration used in the comprehensive theory report
 is intentionally separate from the maintained solver. It propagates adult age
