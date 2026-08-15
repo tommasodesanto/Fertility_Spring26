@@ -1,19 +1,68 @@
 # Calibration Status
 
-Updated: `2026-08-15` (circulated one-shot stationary closure and funded-policy comparison)
+Updated: `2026-08-15` (Raquel-slide sequential architecture promoted; calibration remains provisional)
 
-## August 15 circulated one-shot stationary closure
+## August 15 author decision: production paper architecture
 
-The saved July 23 circulated one-shot household estimate has now been placed
+The production architecture for the paper is now the main model shown in the
+August 7 slides discussed with Raquel. It is the one-market `E5F` floor arm in
+`intergen_eqscale_seq_optimized`: sequential birth attempts with age-dependent
+conception, separate first-birth and continuation shocks, children ever born
+separate from children currently at home, independent child maturation, an
+equivalence scale plus a per-child room requirement, persistent income risk,
+tenure choice, saving, and bequests. The reference slide source is
+`latex/aug_07_model_closure_presentation.tex` and the exact working parameter
+record is
+`output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json`.
+
+This decision promotes the **model architecture**, not the current parameter
+estimate or every closure assumption. The working estimate still understates
+childlessness (`0.104` versus `0.188`), overstates mean rooms (`6.478` versus
+`5.780`), and understates old-age wealth dispersion (`2.09` versus `3.448`).
+Its first-birth rooms target also belongs to the empirical specification now
+under review. These gaps require a corrected refit before policy magnitudes are
+described as final estimates.
+
+The working stationary population closure is the audited fixed-quota rule in
+`code/model/tools/run_e5_repaired_policy_with_entry.py`, invoked explicitly
+with `--closure-mode quota`. At the floor-arm baseline, required entrants are
+`E=0.06173346`, mature locally born households are `B=0.05292942`, and
+`B/E=0.857386`. The provisional `16.9%` outside-origin share implies retention
+`0.969225` and nests population scale one. Under that closure, the rebated 2%
+property tax changes house price, household population, and total births by
+`-17.53%`, `+1.69%`, and `+2.03%`; adding the purchase grant changes them by
+`-17.29%`, `+3.46%`, and `+4.16%`. The outside-origin anchor remains
+provisional for a national interpretation.
+
+The circulated Stone--Geary one-shot model is preserved as a fallback and
+comparison model under `intergen_housing_fertility_optimized`. Its August 15
+stationary-closure packet remains reproducible and useful for mechanism
+comparison, but it is no longer the production quantitative model. No code or
+results from that strand are deleted.
+
+The paper's research object is the movement between steady states, not a table
+of unrelated stationary comparisons. The initial and terminal steady states
+discipline the endpoints; inherited adult cohorts and children already in the
+maturation pipeline determine the intervening population and housing-demand
+path. The immediate production tests are therefore: (i) trace `B(P)/E(P)` for
+the exact E5F floor model and determine the feasible steady-state endpoints;
+and (ii) propagate the sequential child pipeline from an internally consistent
+earlier steady state after a gradual fertility-preference or access shift. A
+literal U.S. transition additionally needs an age-specific household-formation
+bridge and a forward-looking asset-price path.
+
+## August 15 preserved one-shot stationary comparison
+
+The saved July 23 circulated one-shot household estimate was placed
 inside the minimal fixed-inflow stationary closure requested for the paper.
 The household states, Bellman problem, fertility choice, tenure policies, and
 estimated parameters are unchanged. At each candidate asset price, an external
 outer loop reads required entrants `E`, mature locally born households `B`,
 and housing demand per adult household from the existing solver, then jointly
 clears renewal and housing. This is a fixed-parameter mechanism calculation,
-not a recalibration, transition, or change to the live model default. For the
-circulated-paper question, it supersedes the August 14 experimental sequential-
-model diagnostic immediately below.
+not a recalibration or transition. Following the production-architecture
+decision above, this is a preserved fallback comparison rather than the live
+paper model.
 
 At the saved unrebated point, price is `1.04651434`, `E=0.06173345566`,
 `B=0.06070114477`, and `B/E=0.983277935`. With full local retention, outside

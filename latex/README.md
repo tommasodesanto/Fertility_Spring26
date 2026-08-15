@@ -2,6 +2,11 @@
 
 Active documents:
 
+- `aug_07_model_closure_presentation.tex`: reference deck for the production
+  paper architecture following the August 15 author decision. Its main model
+  is the one-market sequential-fertility `E5F` floor arm with independent child
+  maturation. The parameters and policy rows shown there remain provisional;
+  architecture promotion is not calibration promotion.
 - `model_writeup.tex` / `model_writeup.pdf`: current model writeup.
 - `main_note.tex` / `main_note.pdf`: larger paper-style writeup.
 - `april_20_project_presentation.tex` / `april_20_project_presentation.pdf`:
@@ -58,7 +63,10 @@ Active documents:
   and
   `code/model/tools/build_current_one_shot_stationary_closure.py`;
   the verified reader PDF is written to
-  `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
+  `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`. Its
+  analytical and demographic-momentum sections remain useful, but its
+  one-shot quantitative section is now a preserved comparison, not the
+  production-model result.
 
 The three immediate development notes subsumed by this report are retained
 together under `archive/reproductive_equilibrium_development_20260813/`; they

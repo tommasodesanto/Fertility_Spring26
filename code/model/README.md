@@ -1,8 +1,33 @@
 # Python Model Codebase
 
-This folder contains the active Python implementation of the current
-discrete-time center-periphery fertility model. The former MATLAB code is now
-archived for historical reference and parity checks.
+This folder contains the project's active Python model implementations. The
+former MATLAB code is archived for historical reference and parity checks.
+
+## Current paper architecture (author decision, August 15)
+
+The production paper architecture is the one-market sequential-fertility
+`E5F` floor model shown in the August 7 Raquel slides. It runs through
+`intergen_eqscale_seq_optimized` with literal parity, independent child
+maturation, the child-room floor, persistent income risk, tenure choice,
+saving, and bequests. The current parameter record is a working calibration,
+not a final estimate; its empirical and fit limitations are recorded at the
+top of `../../CALIBRATION_STATUS.md`.
+
+The audited stationary policy path is:
+
+```bash
+PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  .venv/bin/python tools/run_e5_repaired_policy_with_entry.py \
+  --source ../../output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json \
+  --closure-mode quota \
+  --outdir ../../output/model/e5f_floor_policy_quota_current
+```
+
+The quota flag is explicit because the driver's default `logit` mode is kept
+only for historical reproducibility. The circulated Stone--Geary one-shot
+implementation remains available under `intergen_housing_fertility_optimized`
+as a preserved fallback and mechanism comparison; it has not been deleted or
+overwritten.
 
 Use the local virtualenv created for the port:
 
@@ -36,11 +61,11 @@ Useful commands:
 .venv/bin/python -m dt_cp_model.cli scaled-equilibrium --setup fast --baseline-max-iter-eq 1 --max-iter-eq 80 --outside-value -35.98609192692343 --force-full --quiet
 ```
 
-## Fast Intergen One-Run Review
+## Preserved one-shot fallback and one-run review
 
-An isolated, non-production M5 refactor is under
+The parity-verified one-shot implementation is under
 `intergen_housing_fertility_optimized/`. It does not replace or redirect the
-active package. Its `README.md` and `REFACTOR_REPORT.md` contain the exact
+production sequential package. Its `README.md` and `REFACTOR_REPORT.md` contain the exact
 parity commands, benchmark evidence, correctness changes, and promotion gates.
 
 The fixed-M5-parameter owner-ladder density robustness uses that parity-verified
