@@ -61,21 +61,34 @@ The current parameter vector must be interpreted with an open population
 closure; a closed-to-closed transition would require a fertility refit, not a
 different numerical root finder.
 
-The sequential household distribution can now be propagated one calendar
-period without normalization. The operator reproduces the stationary
-distribution with L1 error `8.04e-17` and the effective mature-child flow with
-error `1.57e-15`. Population renewal uses a separate aggregate birth-vintage
-queue, because the household children-at-home state is memoryless and otherwise
-allows same-period maturation. In the benchmark diagnostic, `psi_child` falls
-from `0.10` to the calibrated `0.00`, moving stationary TFR from `2.1111` to
-about `1.9848`. With a `16.9%` initial outside-entry share and fixed housing
-stock, adult-household population remains at one for the first twenty years,
-is `0.9110` after 96 years, and converges to `0.7936`; the house-price endpoint
-is `0.7304` of the old price. Starting from an exact steady state produces no
-initial population or price boom. Matching the rising U.S. path therefore
-requires the observed nonstationary cohort/headship distribution or additional
-price shifters. This temporary-equilibrium path is not a welfare calculation or
-a perfect-foresight asset-price solution.
+The sequential household distribution can now be propagated without
+normalization. The updated operator reproduces the stationary distribution
+with L1 error `8.52e-17` and the effective mature-child flow with error
+`1.44e-15`. Population renewal uses a separate aggregate birth-vintage queue,
+because the household children-at-home state is memoryless and otherwise
+allows same-period maturation.
+
+The paper-facing diagnostic now normalizes 2007 as an old steady state and
+moves `psi_child` linearly from `0.1062` to `-0.2419` through 2023. If held
+permanently at the initial housing price, those values produce stationary
+top-coded fertility statistics of `2.11998` and `1.61647`; mapping period TFR
+into stationary completed fertility is a normalization, not an estimated
+preference shock. By 2023, the fixed-stock
+case has adult-household population `1.0000` and price/rent index `0.99287`;
+the static-elastic case has `1.0000` and `0.99851`. Over the same dates, U.S.
+total population rose `11.73%`, real house prices `15.62%`, and real rents
+`15.88%`. The maintained stationary user-cost relation fixes the model
+price-to-rent ratio, while the U.S. ratio fell sharply and recovered.
+
+The large shock has no positive-price terminal equilibrium with the 2007
+housing stock fixed forever: all 25 audited prices from `0.0001` to `0.94928`
+have negative excess demand, with a maximum gap of `-1.43423`. Vacancies,
+depreciation, or scrappage are needed.
+Under the maintained static supply elasticity `1.75`, the positive open endpoint
+has population scale `0.49534`, price/rent index `0.75440`, and top-coded
+completed fertility `1.63215`. After 96 years the transition is still at population `0.73908` and
+price/rent `0.88225`. This is an Oswald-style sequence of contemporaneous
+equilibria, not a welfare calculation or perfect-foresight asset-price solution.
 
 Regeneration and evidence:
 
@@ -83,7 +96,10 @@ Regeneration and evidence:
   with `--profile e5f-floor --fiscal-convention rebated-1pct --schedule-only`;
 - calendar transition: `code/model/tools/run_e5f_open_population_transition.py`;
 - schedule packet: `output/model/e5f_floor_reproductive_schedule/full_rebated/`;
-- transition packet: `output/model/e5f_floor_open_population_transition/production_v2/`.
+- fixed-stock packet:
+  `output/model/e5f_floor_open_population_transition/historical_2007_preference_transition/`;
+- static-elastic packet:
+  `output/model/e5f_floor_open_population_transition/historical_2007_static_elastic/`.
 
 ## August 15 preserved one-shot stationary comparison
 

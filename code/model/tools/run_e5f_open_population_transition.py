@@ -15,11 +15,14 @@ from __future__ import annotations
 
 import argparse
 import copy
+import csv
 import hashlib
+import io
 import json
 import math
 import os
 import shlex
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -60,6 +63,33 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.0,
         help="Permanent post-shock child-preference shifter.",
+    )
+    parser.add_argument(
+        "--preference-transition-periods",
+        type=int,
+        default=0,
+        help=(
+            "Number of model periods over which psi_child moves linearly from "
+            "the old to the new value. Zero preserves the immediate permanent shock."
+        ),
+    )
+    parser.add_argument(
+        "--historical-start-year",
+        type=int,
+        default=None,
+        help=(
+            "If supplied, download the paper-facing FRED comparison series and "
+            "index the model's date 0 to this calendar year."
+        ),
+    )
+    parser.add_argument(
+        "--housing-supply-mode",
+        choices=("fixed-stock", "static-elastic"),
+        default="fixed-stock",
+        help=(
+            "Fixed-stock is the short-run benchmark. Static-elastic is the "
+            "Oswald-style sequence of contemporaneous housing-supply equilibria."
+        ),
     )
     parser.add_argument(
         "--outside-origin-entry-share",
@@ -114,6 +144,23 @@ def jsonable(value: Any) -> Any:
     if isinstance(value, (tuple, list)):
         return [jsonable(item) for item in value]
     return value
+
+
+def preference_shifter_at_date(
+    period: int,
+    old_value: float,
+    new_value: float,
+    transition_periods: int,
+) -> float:
+    """Return the dated fertility-preference shifter.
+
+    With a positive transition length, date 0 remains the old steady state and
+    the new value is reached exactly at ``period == transition_periods``.
+    """
+    if transition_periods <= 0:
+        return float(new_value)
+    weight = min(max(float(period) / float(transition_periods), 0.0), 1.0)
+    return float(old_value + weight * (new_value - old_value))
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -383,6 +430,9 @@ def run_birth_vintage_scenario(
     retention: float,
     conversion: float,
     delay_periods: int,
+    old_psi_child: float,
+    new_psi_child: float,
+    preference_transition_periods: int,
     supply_rule: calendar.HousingSupplyRule,
     market_tol: float,
     market_max_iter: int,
@@ -430,8 +480,24 @@ def run_birth_vintage_scenario(
     min_mass = math.inf
     max_nonfinite = 0
     grid_resolution_fallback_periods: list[int] = []
+    previous_psi_child: float | None = None
 
     for period in range(int(periods)):
+        dated_psi_child = preference_shifter_at_date(
+            period,
+            old_psi_child,
+            new_psi_child,
+            preference_transition_periods,
+        )
+        P.psi_child = dated_psi_child
+        shared = calendar.model.precompute_shared(P, b_grid)
+        if previous_psi_child is not None and not math.isclose(
+            dated_psi_child, previous_psi_child, rel_tol=0.0, abs_tol=1e-14
+        ):
+            # A policy bundle is indexed by both price and preferences.  It is
+            # a valid warm start only while the preference shifter is unchanged.
+            initial_policy = None
+        previous_psi_child = dated_psi_child
         target_tolerance = min(float(market_tol), 5e-5)
         try:
             evaluation = calendar.clear_scalar_housing_market(
@@ -539,6 +605,7 @@ def run_birth_vintage_scenario(
             "scenario": label,
             "period": period,
             "years_from_start": period * float(P.period_years),
+            "psi_child": dated_psi_child,
             "asset_price": price_guess,
             "asset_price_index": price_guess / baseline_price,
             "housing_user_cost": float(P.user_cost_rate * price_guess),
@@ -607,6 +674,10 @@ def run_birth_vintage_scenario(
         "maturation_survival_yield": maturation_survival_yield,
         "birth_to_entry_delay_periods": delay_periods,
         "birth_to_entry_delay_years": delay_periods * float(P.period_years) + float(P.period_years),
+        "old_psi_child": old_psi_child,
+        "new_psi_child": new_psi_child,
+        "preference_transition_periods": preference_transition_periods,
+        "preference_transition_years": preference_transition_periods * float(P.period_years),
         "periods": periods,
         "model_solve_count": counter.total - start_solves,
         "elapsed_seconds": time.perf_counter() - started,
@@ -649,7 +720,7 @@ def solve_stationary_open_endpoint(
     retention: float,
     conversion: float,
     maturation_survival_yield: float,
-    fixed_housing_stock: float,
+    supply_rule: calendar.HousingSupplyRule,
     outdir: Path,
 ) -> dict[str, Any]:
     """Solve the stationary endpoint consistent with the birth-vintage closure."""
@@ -685,18 +756,30 @@ def solve_stationary_open_endpoint(
                 market_gap = math.inf
             else:
                 population_scale = outside_flow / denominator
+                stationary_supply = float(
+                    supply_rule.quantity(np.array([float(asset_price)]))[0]
+                )
                 market_gap = (
                     population_scale * float(readout["housing_demand_per_adult"])
-                    - fixed_housing_stock
+                    - stationary_supply
                 )
             row = dict(readout)
             row.update(
                 queue_mature_entrant_flow_B=queue_B,
                 renewal_denominator=denominator,
                 stationary_population_scale=population_scale,
+                housing_supply_mode=supply_rule.mode,
+                stationary_housing_supply=(
+                    float(supply_rule.quantity(np.array([float(asset_price)]))[0])
+                    if math.isfinite(population_scale)
+                    else math.nan
+                ),
                 fixed_stock_market_gap=market_gap,
                 fixed_stock_relative_market_gap=(
-                    market_gap / fixed_housing_stock
+                    market_gap / max(
+                        float(supply_rule.quantity(np.array([float(asset_price)]))[0]),
+                        1e-15,
+                    )
                     if math.isfinite(market_gap)
                     else math.inf
                 ),
@@ -705,15 +788,67 @@ def solve_stationary_open_endpoint(
             calendar.write_csv(outdir / "stationary_endpoint_search.csv", [item[1] for item in cache.values()])
         return cache[key]
 
-    lower = max(1e-4, 0.05 * float(old_price))
+    # The fixed-stock case can approach a vacancy corner.  Start essentially
+    # at zero so a failed bracket is evidence against a positive-price root,
+    # not merely evidence against a root above five percent of the old price.
+    lower = 1e-4
     upper = 1.25 * float(old_price)
     f_lower, _ = evaluate(lower)
     f_upper, _ = evaluate(upper)
-    if not math.isfinite(f_lower) or not math.isfinite(f_upper) or f_lower * f_upper > 0.0:
-        raise RuntimeError(
-            "Could not bracket the postshock open stationary endpoint: "
-            f"F({lower:.6g})={f_lower:.6g}, F({upper:.6g})={f_upper:.6g}"
-        )
+    audited_prices = [lower, upper]
+    if math.isfinite(f_lower) and math.isfinite(f_upper) and f_lower * f_upper > 0.0:
+        audited_prices = list(np.geomspace(lower, upper, 25))
+        audited = [(price, *evaluate(float(price))) for price in audited_prices]
+        bracket = None
+        for left_row, right_row in zip(audited[:-1], audited[1:]):
+            left_price, left_gap, _ = left_row
+            right_price, right_gap, _ = right_row
+            if (
+                math.isfinite(left_gap)
+                and math.isfinite(right_gap)
+                and left_gap * right_gap <= 0.0
+            ):
+                bracket = (float(left_price), float(left_gap), float(right_price), float(right_gap))
+                break
+        if bracket is not None:
+            lower, f_lower, upper, f_upper = bracket
+        else:
+            finite_rows = [row for row in audited if math.isfinite(row[1])]
+            max_row = max(finite_rows, key=lambda row: row[1]) if finite_rows else None
+            result = {
+                "status": "no_positive_price_root_on_audited_grid",
+                "housing_supply_mode": supply_rule.mode,
+                "lower_asset_price": lower,
+                "lower_market_gap": f_lower,
+                "upper_asset_price": upper,
+                "upper_market_gap": f_upper,
+                "audit_grid_points": len(audited_prices),
+                "maximum_market_gap_on_grid": max_row[1] if max_row is not None else math.nan,
+                "price_at_maximum_market_gap": max_row[0] if max_row is not None else math.nan,
+                "interpretation": (
+                    "At the post-shock renewal scale, households demand less than "
+                    "the inherited fixed stock throughout the audited positive-price "
+                    "grid; a terminal equilibrium needs vacancies, scrappage, or "
+                    "stock adjustment."
+                    if supply_rule.mode == "fixed-stock"
+                    else "The post-shock stationary equilibrium has no sign-changing "
+                    "market root on the audited price grid."
+                ),
+            }
+            calendar.write_csv(outdir / "stationary_open_endpoint.csv", [result])
+            return result
+    if not math.isfinite(f_lower) or not math.isfinite(f_upper):
+        result = {
+            "status": "nonfinite_stationary_endpoint_bracket",
+            "housing_supply_mode": supply_rule.mode,
+            "lower_asset_price": lower,
+            "lower_market_gap": f_lower,
+            "upper_asset_price": upper,
+            "upper_market_gap": f_upper,
+            "interpretation": "The stationary endpoint bracket contains a nonfinite market gap.",
+        }
+        calendar.write_csv(outdir / "stationary_open_endpoint.csv", [result])
+        return result
     midpoint = 0.5 * (lower + upper)
     for _ in range(28):
         midpoint = 0.5 * (lower + upper)
@@ -758,7 +893,7 @@ def make_paper_transition_plot(
     fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2), constrained_layout=True)
     axes[0].plot(years, population, lw=2.2, color="#21476b", label="Adult households")
     axes[0].plot(years, prices, lw=2.2, color="#b14f32", label="House price")
-    if stationary_endpoint is not None:
+    if stationary_endpoint is not None and stationary_endpoint.get("status") == "complete":
         axes[0].axhline(
             float(stationary_endpoint["stationary_population_scale"]),
             color="#21476b",
@@ -804,10 +939,262 @@ def make_paper_transition_plot(
     plt.close(fig)
 
 
+FRED_COMPARISON_SERIES = {
+    "house_price": {
+        "id": "CSUSHPINSA",
+        "title": "S&P Cotality Case-Shiller U.S. National Home Price Index",
+    },
+    "rent": {
+        "id": "CUUR0000SEHA",
+        "title": "Consumer Price Index for All Urban Consumers: Rent of Primary Residence",
+    },
+    "consumer_price": {
+        "id": "CPIAUCSL",
+        "title": "Consumer Price Index for All Urban Consumers: All Items",
+    },
+    "population": {
+        "id": "POPTHM",
+        "title": "Population, Total for United States",
+    },
+    "fertility": {
+        "id": "SPDYNTFRTINUSA",
+        "title": "Fertility Rate, Total for the United States",
+    },
+}
+
+
+def download_fred_annual_comparison(outdir: Path) -> tuple[dict[str, dict[int, float]], dict[str, Any]]:
+    """Download and archive annual averages of the comparison series."""
+    raw_dir = outdir / "observed_fred_raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    annual: dict[str, dict[int, float]] = {}
+    metadata: dict[str, Any] = {
+        "retrieved_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "aggregation": "arithmetic mean of nonmissing observations within calendar year",
+        "series": {},
+    }
+    for name, specification in FRED_COMPARISON_SERIES.items():
+        series_id = str(specification["id"])
+        url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+        completed = subprocess.run(
+            [
+                "curl",
+                "--location",
+                "--fail",
+                "--silent",
+                "--show-error",
+                "--max-time",
+                "45",
+                url,
+            ],
+            check=True,
+            capture_output=True,
+            timeout=50,
+        )
+        raw = completed.stdout
+        if not raw:
+            raise RuntimeError(f"FRED returned an empty file for {series_id}")
+        raw_path = raw_dir / f"{series_id}.csv"
+        raw_path.write_bytes(raw)
+        values_by_year: dict[int, list[float]] = {}
+        reader = csv.DictReader(io.StringIO(raw.decode("utf-8")))
+        for row in reader:
+            date = str(row.get("observation_date", ""))
+            value_text = str(row.get(series_id, "")).strip()
+            if len(date) < 4 or value_text in {"", "."}:
+                continue
+            try:
+                year = int(date[:4])
+                value = float(value_text)
+            except ValueError:
+                continue
+            if math.isfinite(value):
+                values_by_year.setdefault(year, []).append(value)
+        annual[name] = {
+            year: float(sum(values) / len(values))
+            for year, values in values_by_year.items()
+            if values
+        }
+        metadata["series"][name] = {
+            **specification,
+            "fred_page": f"https://fred.stlouisfed.org/series/{series_id}",
+            "download_url": url,
+            "raw_file": str(raw_path),
+            "raw_sha256": hashlib.sha256(raw).hexdigest(),
+            "first_year": min(annual[name]),
+            "last_year": max(annual[name]),
+        }
+    write_json(outdir / "observed_data_metadata.json", metadata)
+    return annual, metadata
+
+
+def make_historical_comparison(
+    paths: list[dict[str, Any]],
+    *,
+    start_year: int,
+    old_user_cost: float,
+    outdir: Path,
+) -> dict[str, Any]:
+    """Compare the deliberately sparse transition with broad U.S. aggregates."""
+    annual, source_metadata = download_fred_annual_comparison(outdir)
+    required = ("house_price", "rent", "consumer_price", "population")
+    missing_base = [name for name in required if start_year not in annual[name]]
+    if missing_base:
+        raise RuntimeError(
+            f"FRED comparison has no {start_year} normalization for {missing_base}"
+        )
+    base_house_price = annual["house_price"][start_year]
+    base_rent = annual["rent"][start_year]
+    base_cpi = annual["consumer_price"][start_year]
+    base_population = annual["population"][start_year]
+    base_real_house_price = base_house_price / base_cpi
+    base_real_rent = base_rent / base_cpi
+    base_price_to_rent = base_house_price / base_rent
+
+    rows: list[dict[str, Any]] = []
+    for model_row in paths:
+        calendar_year_float = start_year + float(model_row["years_from_start"])
+        calendar_year = int(round(calendar_year_float))
+        if abs(calendar_year_float - calendar_year) > 1e-8:
+            continue
+        if any(calendar_year not in annual[name] for name in required):
+            continue
+        house_price = annual["house_price"][calendar_year]
+        rent = annual["rent"][calendar_year]
+        cpi = annual["consumer_price"][calendar_year]
+        population = annual["population"][calendar_year]
+        model_price = float(model_row["asset_price_index"])
+        model_rent = float(model_row["housing_user_cost"]) / old_user_cost
+        rows.append(
+            {
+                "calendar_year": calendar_year,
+                "model_period": int(model_row["period"]),
+                "model_psi_child": float(model_row["psi_child"]),
+                "model_population_index": float(model_row["population_index"]),
+                "observed_population_index": population / base_population,
+                "model_asset_price_index": model_price,
+                "model_rent_index": model_rent,
+                "model_price_to_rent_index": model_price / max(model_rent, 1e-15),
+                "observed_nominal_house_price_index": house_price / base_house_price,
+                "observed_nominal_rent_index": rent / base_rent,
+                "observed_real_house_price_index": (house_price / cpi) / base_real_house_price,
+                "observed_real_rent_index": (rent / cpi) / base_real_rent,
+                "observed_price_to_rent_index": (house_price / rent) / base_price_to_rent,
+                "observed_tfr": annual["fertility"].get(calendar_year),
+            }
+        )
+    if not rows:
+        raise RuntimeError("No model dates overlap the downloaded historical series")
+    calendar.write_csv(outdir / "historical_comparison.csv", rows)
+
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    years = np.asarray([row["calendar_year"] for row in rows], dtype=float)
+    fig, axes = plt.subplots(1, 3, figsize=(13.2, 3.9), constrained_layout=True)
+    axes[0].plot(
+        years,
+        [row["observed_population_index"] for row in rows],
+        color="#222222",
+        marker="o",
+        lw=2.0,
+        label="U.S. data",
+    )
+    axes[0].plot(
+        years,
+        [row["model_population_index"] for row in rows],
+        color="#21476b",
+        marker="o",
+        lw=2.0,
+        label="Model",
+    )
+    axes[0].set(title="Population", ylabel=f"Index ({start_year} = 1)")
+    axes[0].legend(frameon=False, fontsize=8)
+
+    axes[1].plot(
+        years,
+        [row["observed_real_house_price_index"] for row in rows],
+        color="#b14f32",
+        marker="o",
+        lw=2.0,
+        label="Real house price",
+    )
+    axes[1].plot(
+        years,
+        [row["observed_real_rent_index"] for row in rows],
+        color="#7f7f7f",
+        marker="o",
+        lw=2.0,
+        label="Real rent",
+    )
+    axes[1].plot(
+        years,
+        [row["model_asset_price_index"] for row in rows],
+        color="#21476b",
+        marker="o",
+        lw=2.0,
+        ls="--",
+        label="Model price and rent",
+    )
+    axes[1].set(title="Housing costs", ylabel=f"Index ({start_year} = 1)")
+    axes[1].legend(frameon=False, fontsize=8)
+
+    axes[2].plot(
+        years,
+        [row["observed_price_to_rent_index"] for row in rows],
+        color="#222222",
+        marker="o",
+        lw=2.0,
+        label="U.S. data",
+    )
+    axes[2].plot(
+        years,
+        [row["model_price_to_rent_index"] for row in rows],
+        color="#6a4c93",
+        marker="o",
+        lw=2.0,
+        label="Model user-cost restriction",
+    )
+    axes[2].set(title="House-price-to-rent ratio", ylabel=f"Index ({start_year} = 1)")
+    axes[2].legend(frameon=False, fontsize=8)
+    for axis in axes:
+        axis.set_xlabel("Year")
+        axis.axhline(1.0, color="black", lw=0.7, alpha=0.35)
+        axis.grid(alpha=0.18)
+    fig.savefig(outdir / "historical_comparison.png", dpi=220)
+    fig.savefig(outdir / "historical_comparison.pdf")
+    plt.close(fig)
+
+    first = rows[0]
+    last = rows[-1]
+    summary = {
+        "start_year": start_year,
+        "last_overlapping_year": int(last["calendar_year"]),
+        "number_of_model_dates": len(rows),
+        "normalization": f"annual averages indexed to {start_year}=1",
+        "population_units": "FRED total persons versus model adult-household mass",
+        "house_prices_and_rents": "deflated by CPIAUCSL; price-to-rent uses nominal ratios",
+        "first_row": first,
+        "last_row": last,
+        "sources": source_metadata["series"],
+    }
+    write_json(outdir / "historical_comparison_summary.json", summary)
+    return summary
+
+
 def main() -> None:
     args = parse_args()
     if args.periods < 1:
         raise ValueError("--periods must be positive")
+    if args.preference_transition_periods < 0:
+        raise ValueError("--preference-transition-periods cannot be negative")
+    if args.preference_transition_periods > 0 and args.renewal_clock != "birth-vintage":
+        raise ValueError(
+            "A gradual preference path is implemented only for the paper-facing "
+            "birth-vintage renewal clock."
+        )
     if not 0.0 < args.outside_origin_entry_share < 1.0:
         raise ValueError("--outside-origin-entry-share must lie strictly between zero and one")
     if args.smoke:
@@ -898,7 +1285,7 @@ def main() -> None:
         old_parameters,
         b_grid,
         old_shared,
-        "fixed-stock",
+        str(args.housing_supply_mode),
     )
 
     E_old = float(old_solution.entry_rate)
@@ -918,7 +1305,10 @@ def main() -> None:
     postshock_parameters._fert2_probs = np.asarray(old_solution.fert2_probs, dtype=float).copy()
     counter = calendar.SolveCounter()
     if args.renewal_clock == "birth-vintage":
-        scenario = "preference_decline_open_birth_vintage_fixed_stock"
+        scenario = (
+            "preference_decline_open_birth_vintage_"
+            + str(args.housing_supply_mode).replace("-", "_")
+        )
         paths, ages, children, scenario_summary = run_birth_vintage_scenario(
             label=scenario,
             initial_g_pre=initial_g_pre,
@@ -932,6 +1322,9 @@ def main() -> None:
             retention=retention,
             conversion=conversion,
             delay_periods=int(args.birth_to_entry_delay_periods),
+            old_psi_child=float(args.old_psi_child),
+            new_psi_child=float(args.new_psi_child),
+            preference_transition_periods=int(args.preference_transition_periods),
             supply_rule=supply_rule,
             market_tol=float(args.market_tol),
             market_max_iter=int(args.market_max_iter),
@@ -978,15 +1371,22 @@ def main() -> None:
             maturation_survival_yield=float(
                 scenario_summary["maturation_survival_yield"]
             ),
-            fixed_housing_stock=float(supply_rule.initial_stock),
+            supply_rule=supply_rule,
             outdir=outdir,
         )
-        print(
-            "STATIONARY_ENDPOINT_DONE "
-            f"p={stationary_endpoint['asset_price']:.6f} "
-            f"S={stationary_endpoint['stationary_population_scale']:.6f}",
-            flush=True,
-        )
+        if stationary_endpoint.get("status") == "complete":
+            print(
+                "STATIONARY_ENDPOINT_DONE "
+                f"p={stationary_endpoint['asset_price']:.6f} "
+                f"S={stationary_endpoint['stationary_population_scale']:.6f}",
+                flush=True,
+            )
+        else:
+            print(
+                "STATIONARY_ENDPOINT_NO_POSITIVE_ROOT "
+                f"mode={supply_rule.mode}",
+                flush=True,
+            )
     make_paper_transition_plot(
         paths,
         old_births=float(old_solution.total_births_kfe),
@@ -999,6 +1399,16 @@ def main() -> None:
         ),
         outdir=outdir,
     )
+
+    historical_comparison = None
+    if args.historical_start_year is not None:
+        historical_comparison = make_historical_comparison(
+            paths,
+            start_year=int(args.historical_start_year),
+            old_user_cost=float(old_parameters.user_cost_rate)
+            * float(np.asarray(old_price).reshape(-1)[0]),
+            outdir=outdir,
+        )
 
     old_row = closure_audit.readout(
         chain,
@@ -1024,6 +1434,9 @@ def main() -> None:
         "theta": theta,
         "old_psi_child": float(args.old_psi_child),
         "new_psi_child": float(args.new_psi_child),
+        "preference_transition_periods": int(args.preference_transition_periods),
+        "preference_transition_years": int(args.preference_transition_periods)
+        * float(old_parameters.period_years),
         "renewal_clock": args.renewal_clock,
         "birth_to_entry_delay_periods": int(args.birth_to_entry_delay_periods),
         "period_years": float(old_parameters.period_years),
@@ -1043,6 +1456,7 @@ def main() -> None:
         "supply_normalization": supply_normalization,
         "scenario_summary": scenario_summary,
         "stationary_open_endpoint": stationary_endpoint,
+        "historical_comparison": historical_comparison,
         "peak_population": peak_population,
         "peak_asset_price": peak_price,
         "last_simulated_period": final_row,
@@ -1050,7 +1464,11 @@ def main() -> None:
         "elapsed_seconds": time.perf_counter() - started,
         "interpretation": {
             "household_expectations": "current price and post-shock primitives are treated as permanent at each date",
-            "housing_stock": "fixed at the old steady-state occupied stock",
+            "housing_supply": (
+                "fixed at the old steady-state occupied stock"
+                if args.housing_supply_mode == "fixed-stock"
+                else "date-0-normalized contemporaneous constant-elastic supply"
+            ),
             "population_normalization": "none after the old steady state",
             "purpose": "test whether inherited cohorts can generate short-run population and price momentum after a fertility-preference decline",
         },
@@ -1062,9 +1480,15 @@ def main() -> None:
 
 This packet starts from the paper's sequential child-room-floor model at
 `psi_child={args.old_psi_child:g}` and permanently moves to
-`psi_child={args.new_psi_child:g}`. The outside entrant flow and retention rate
+`psi_child={args.new_psi_child:g}`. The preference transition lasts
+`{args.preference_transition_periods}` model periods; zero means an immediate
+shift. The outside entrant flow and retention rate
 are fixed at the old steady state. The full household distribution is then
 carried forward without population renormalization.
+
+Housing supply is `{args.housing_supply_mode}`. The static-elastic option is a
+sequence of contemporaneous supply equilibria; it is not a construction-sector
+transition with a predetermined stock.
 
 The renewal clock is `{args.renewal_clock}`. The paper-facing default uses a
 separate birth-vintage queue: household children-at-home states continue to
@@ -1074,6 +1498,9 @@ the declared child-to-entry delay.
 The calculation is a temporary-equilibrium transition diagnostic: households
 treat the current price as permanent at each date. It is not yet the paper's
 perfect-foresight asset-price transition and should not be used for welfare.
+At every date, the maintained stationary user-cost identity keeps the model
+house-price-to-rent ratio fixed. The optional historical comparison reports
+that restriction directly instead of introducing an unestimated wedge.
 
 Exact command:
 

@@ -1441,3 +1441,46 @@ The new closed- and open-economy formulas were checked independently, the
 LaTeX source compiles without warnings, and all 21 pages of the final PDF were
 rendered and inspected. The report remains a theory and quantitative-
 architecture document, not a claimed U.S. transition estimate.
+
+---
+
+## August 15, 2026: 2007 preference transition and housing-price benchmark
+
+### What we worked on
+
+Implemented the reduced-form experiment discussed with the author: normalize
+2007 as a steady state, phase in a fertility-preference decline through 2023,
+and let the promoted sequential model carry adult cohorts and the twenty-year
+birth-to-entry pipeline forward without population renormalization.
+
+### Main conclusions
+
+- The preference shifter moves from `0.1062` to `-0.2419`, which maps the two
+  stationary fertility statistics at the initial housing price to `2.11998`
+  and `1.61647`. This is a normalization, not an estimated causal preference
+  shock.
+- Through 2023, population is unchanged and the model housing-cost index is
+  `0.99287` with a fixed stock or `0.99851` with static elastic supply. U.S.
+  total population rose `11.73%`, while real house prices and real rents rose
+  about `16%`. The fertility transition alone does not explain those levels.
+- The stationary user-cost restriction keeps the model price-to-rent ratio
+  constant and misses the observed post-2007 fall and recovery.
+- A fixed 2007 housing stock has no positive-price terminal equilibrium after
+  the large demographic decline on a 25-point price grid extending to
+  `0.0001`. With static supply elasticity `1.75`, the positive open endpoint
+  has population `0.49534`, housing cost `0.75440`, and top-coded completed
+  fertility `1.63215`, all relative to the stated initial normalization where
+  appropriate.
+
+### Artifacts and verification
+
+- Driver: `code/model/tools/run_e5f_open_population_transition.py`.
+- Fixed-stock packet:
+  `output/model/e5f_floor_open_population_transition/historical_2007_preference_transition/`.
+- Static-elastic packet:
+  `output/model/e5f_floor_open_population_transition/historical_2007_static_elastic/`.
+- Integrated report:
+  `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
+- Both production paths pass stationary nesting, mature-flow, market-clearing,
+  mass-conservation, and nonnegative-distribution gates. The nine-page report
+  compiles without warnings and was rendered and inspected page by page.

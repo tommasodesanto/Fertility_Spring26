@@ -56,7 +56,9 @@ Active documents:
   fertility model. It presents the transparent two-generation theory,
   demographic momentum, the open and closed stationary conditions, the exact
   fertility--price schedule, policy incidence with endogenous population, and
-  a temporary-equilibrium path between two open steady states. The Stone--
+  a 2007-normalized temporary-equilibrium fertility transition with fixed-stock
+  and static-elastic housing-supply cases, together with its historical
+  population, rent, house-price, and price-to-rent comparison. The Stone--
   Geary one-shot implementation remains a preserved fallback rather than the
   paper-facing quantitative model. Figures and numerical checks are regenerated
   by `code/model/tools/audit_closed_reproductive_closure.py` and

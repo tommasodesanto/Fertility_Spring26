@@ -41,8 +41,8 @@ PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OP
   --outdir output/model/e5f_floor_reproductive_schedule/full_rebated
 ```
 
-The current estimate has no positive closed-population root: `B/E` remains
-below one even when the asset price is reduced to `0.5%` of baseline. The
+The current estimate has no closed-population root on the audited range: `B/E`
+remains below one for asset prices from `0.5%` to `300%` of baseline. The
 paper-facing transition therefore uses the open renewal equation and a dated
 birth-to-entry queue:
 
@@ -50,14 +50,20 @@ birth-to-entry queue:
 PYTHONPATH=code/model:code/model/tools NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
   code/model/.venv/bin/python code/model/tools/run_e5f_open_population_transition.py \
   --periods 25 \
-  --output-dir output/model/e5f_floor_open_population_transition/production_v2
+  --old-psi-child 0.1062 --new-psi-child -0.2419 \
+  --preference-transition-periods 4 --historical-start-year 2007 \
+  --housing-supply-mode fixed-stock \
+  --output-dir output/model/e5f_floor_open_population_transition/historical_2007_preference_transition
 ```
 
 This wrapper leaves the sequential household problem unchanged. It propagates
 the full unnormalized adult distribution, while an aggregate birth-vintage
 queue prevents newborns from becoming entrant households in the same model
 period. Household policies use temporary-equilibrium/static price expectations;
-the packet is a transition diagnostic, not a perfect-foresight welfare run.
+the packet is a transition diagnostic, not a perfect-foresight welfare run. Use
+`--housing-supply-mode static-elastic` and the output folder
+`historical_2007_static_elastic` for the Oswald-style supply sensitivity and
+positive terminal open steady state.
 
 The shared calendar scaffolding also preserves the one-shot fallback. Its
 stationary nesting smoke is:
