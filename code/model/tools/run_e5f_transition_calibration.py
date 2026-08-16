@@ -21,6 +21,7 @@ import json
 import math
 import sys
 import time
+import traceback
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -1303,4 +1304,22 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as error:
+        try:
+            failed_args = parse_args()
+            write_json(
+                failed_args.outdir.resolve() / "failure.json",
+                {
+                    "status": "invalid_candidate",
+                    "model_profile": str(failed_args.model_profile),
+                    "panel_task_id": failed_args.panel_task_id,
+                    "error_type": type(error).__name__,
+                    "error": str(error),
+                    "traceback": traceback.format_exc(),
+                },
+            )
+        except Exception:
+            pass
+        raise

@@ -64,7 +64,19 @@ def main() -> None:
         task_dir = results_dir / f"task_{task:03d}"
         summary_path = task_dir / "summary.json"
         if not summary_path.exists():
-            failures.append({"task_id": task, "reason": "missing_summary"})
+            failure_path = task_dir / "failure.json"
+            if failure_path.exists():
+                failure = read_json(failure_path)
+                failures.append(
+                    {
+                        "task_id": task,
+                        "reason": "classified_invalid_candidate",
+                        "error_type": failure.get("error_type"),
+                        "error": failure.get("error"),
+                    }
+                )
+            else:
+                failures.append({"task_id": task, "reason": "missing_summary"})
             continue
         try:
             summary = read_json(summary_path)
