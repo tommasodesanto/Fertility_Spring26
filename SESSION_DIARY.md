@@ -1545,3 +1545,42 @@ bequest motive affects old-age retention but does not transfer estates to
 particular descendants. The corrected report therefore presents a
 between-stationary-benchmarks cohort-accounting experiment, not a fitted U.S.
 asset-price or welfare transition.
+
+---
+
+## August 16, 2026: first dated transition-calibration pilot
+
+Implemented the first exact calibration of the production sequential E5F model
+along a 2007--2023 transition. For every parameter candidate, an old
+steady-state fertility-preference intercept is derived to match completed
+fertility `2.12`; the benchmark's within-age states are then reweighted to the
+observed 2007 householder-age distribution. The model carries that dated state
+through five four-year dates and measures the current twelve-row target system
+in 2023. Census HH-3 household
+totals and national ACS head-age shares enter as a declared external
+household-formation/migration bridge. This is necessary because post-2007 births
+cannot create adult households before the end of the historical window.
+
+Torch evaluated 109 valid candidates over one broad/local panel and three
+coordinate rounds. The transition anchor loss is `390.608746`; the best bounded
+pilot is `353.937149`, with market residual `4.42e-5` and mass residual
+`2.89e-15`. Two independent repeats reproduce every moment exactly. The best
+path raises the household index to `1.12925` by construction, raises the
+housing-cost index to `1.05907`, and lowers the top-bin-adjusted birth-flow
+index to `0.79466` by 2023.
+
+The result establishes operational feasibility but is not a promoted estimate.
+It remains worse than the stationary calibration and leaves large misses in
+childlessness and old-age wealth dispersion, which together contribute `276.58`
+of the `353.94` loss. The consolidated artifact is
+`output/model/e5f_transition_calibration_report/`; the launcher, collector, and
+report builder are under `code/cluster/` and `code/model/tools/`.
+
+The same matched state was continued through 2183. Household mass and housing
+costs peak in 2027 despite the fertility decline, then fall; births per adult
+household bottom in 2039 and recover. The lifecycle path has a small 2087--2091
+cohort-cycle reversal rather than monotone convergence. At 2183 the household
+and housing-cost indices are `0.56998` and `0.79334`, but remain in motion.
+A dependent-child LTV95 diagnostic raises family ownership `5.132` percentage
+points while moving the birth rate only `0.031%`; the paper's funded tax/grant
+policy has not yet been migrated to this transition.

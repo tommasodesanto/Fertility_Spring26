@@ -27,7 +27,7 @@ import sys
 import time
 from pathlib import Path
 from types import SimpleNamespace
-from typing import Any
+from typing import Any, Callable
 
 import numpy as np
 
@@ -877,6 +877,10 @@ def run_birth_vintage_scenario(
     market_max_iter: int,
     outdir: Path,
     counter: calendar.SolveCounter,
+    period_observer: Callable[
+        [int, calendar.PeriodEvaluation, SimpleNamespace, np.ndarray], None
+    ]
+    | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     """Run the open transition with a dated birth-to-entry queue.
 
@@ -1222,6 +1226,8 @@ def run_birth_vintage_scenario(
             "min_distribution_mass": period_min,
             "nonfinite_distribution_count": nonfinite,
         }
+        if period_observer is not None:
+            period_observer(period, evaluation, P, b_grid)
         path_rows.append(row)
         period_ages, period_children = independent_child_distribution_rows(
             label, period, evaluation.g_post_fertility, P

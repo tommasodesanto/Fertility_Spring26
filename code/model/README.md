@@ -98,6 +98,40 @@ rather than a literal demographic steady state. Rebuild its exact age shares wit
 The fitted supply elasticity is a one-moment diagnostic; fixed stock and the
 retained elasticity remain reported sensitivities.
 
+The dated transition-calibration pilot uses that same empirical bridge but
+measures the full twelve-row E5 target system on the simulated 2023
+distribution. In panel mode, each candidate derives an old steady-state
+preference intercept to match completed fertility `2.12`, then reweights that
+benchmark to the observed 2007 householder-age distribution. It varies the
+existing eight structural parameters and the 2023 preference endpoint without
+changing the household state space. The exact task loop is:
+
+```bash
+PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
+  code/model/.venv/bin/python code/model/tools/run_e5f_transition_calibration.py \
+  --panel-task-id 1 --panel-size 19 --panel-design coordinate \
+  --panel-local-radius 0.015 \
+  --outdir output/model/e5f_transition_calibration/local_check
+```
+
+Torch panels use
+`code/cluster/submit_e5f_transition_calibration_panel.sh`; their strict
+collector is `tools/collect_e5f_transition_calibration.py`. The consolidated
+109-candidate report, including every target, every parameter and bound, exact
+repeat checks, and the best dated path, is rebuilt by
+`tools/build_e5f_transition_calibration_report.py` and stored under
+`output/model/e5f_transition_calibration_report/`. This remains a bounded pilot,
+not a promoted calibration.
+
+The same report contains a no-policy continuation and a dependent-child LTV95
+comparison through 2183. The absolute path, cohort turning points, and policy
+differences are in `post2023_no_policy_path.csv`,
+`long_run_turning_points.csv`, and `post2023_ltv95_policy_path.csv`. The long
+path is still drifting at its finite endpoint; it must not be labeled the exact
+new steady state. The LTV case is a tenure diagnostic without a lender, fiscal,
+or welfare closure, not the paper's funded property-tax/purchase-grant
+experiment.
+
 All transition paths use temporary-equilibrium/static price expectations. They
 are cohort-accounting and incidence diagnostics, not perfect-foresight welfare
 runs.

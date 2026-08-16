@@ -2,6 +2,104 @@
 
 Updated: `2026-08-16` (`3+` renewal-unit correction; calibration remains provisional)
 
+## August 16 dated transition-calibration pilot
+
+The first exact calibration-along-the-transition pilot is complete for the
+production sequential child-room-floor model. Each candidate first solves an
+old steady-state benchmark whose fertility-preference intercept is derived to
+match model completed fertility `2.12`. Date 0 preserves that benchmark's
+within-age household states but reweights age masses to the observed 2007
+householder-age profile; 2007 is therefore a dated transition state, not
+literally a steady state. The preference intercept then moves linearly through
+2023. This is a reduced-form timing normalization, not an estimate that the
+underlying U.S. fertility-preference change began in 2007. Census HH-3
+household totals and national ACS householder-age shares are
+imposed at the five four-year dates as an explicitly external
+household-formation/migration bridge. The bridge matches household growth by
+construction; post-2007 births cannot generate that growth before their
+twenty-year entry delay has elapsed.
+
+The bounded Torch search evaluated `109` valid candidates over nine free
+transition parameters: the eight E5F structural parameters other than the old
+preference intercept, plus the 2023 preference endpoint. The fixed-parameter
+transition anchor has loss `390.608746`; three local coordinate rounds reduce
+it to `353.937149` (`9.39%`). Two independent exact repeats reproduce every
+target moment and the loss to machine zero. Maximum housing-market residual is
+`4.42e-5`; maximum mass residual is `2.89e-15`. The source and target hashes are
+hard-gated in the production launcher.
+The broad first round also rejected 12 declared boundary draws: seven could not
+reach old completed fertility `2.12` anywhere on the preference bracket and
+five failed housing-market clearing. They are not assigned artificial losses.
+
+This is a feasibility and bounded local-search result, **not a promoted
+estimate or a claim of global optimality**. It also remains worse than the
+`296.980765` stationary fit because the dated age composition exposes a sharper
+childlessness miss. The complete paper-facing packet is
+`output/model/e5f_transition_calibration_report/`.
+
+Full best-candidate target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| Completed fertility, age-42 cohort | 1.9180 | 1.9669 | 0.0489 | 1,425.739 | 3.405 |
+| Childless rate, age-42 cohort | 0.1880 | 0.0928 | -0.0952 | 17,180.744 | 155.873 |
+| Mean age at first birth | 25.3106 | 25.3952 | 0.0846 | 16.000 | 0.115 |
+| Share first births at 30+ | 0.2701 | 0.3178 | 0.0477 | 15,625.000 | 35.601 |
+| First-birth rooms response | 0.8049 | 0.5990 | -0.2059 | 35.735 | 1.516 |
+| Prime-age 3+ minus 1--2 room gap | 0.3677 | 0.4126 | 0.0449 | 2,958.515 | 5.976 |
+| Family ownership gap | 0.1677 | 0.1751 | 0.0075 | 14,229.591 | 0.797 |
+| Ownership rate | 0.5755 | 0.5391 | -0.0364 | 1,207.846 | 1.599 |
+| Mean occupied rooms | 5.7800 | 6.4208 | 0.6408 | 11.973 | 4.916 |
+| Wealth / annual gross earnings | 6.8731 | 6.0948 | -0.7783 | 6.288 | 3.809 |
+| Annual bequests / aggregate wealth | 0.0088 | 0.00685 | -0.00195 | 5,165,289.256 | 19.627 |
+| Old wealth p90/p50 | 3.4481 | 1.9924 | -1.4557 | 56.960 | 120.705 |
+
+Full free-parameter and normalization table:
+
+| Object | Value | Search bound / restriction | Status |
+|---|---:|---:|---|
+| Annual discount factor | 0.99411 | [0.9400, 0.9995] | free |
+| First-birth logit scale | 2.45620 | [0.02, 50] | free |
+| Continuation-birth logit scale | 1.71332 | [0.02, 50] | free |
+| Housing preference weight | 1.03694 | [0.10, 5] | free |
+| Housing-supply scale | 9.87303 | [0.20, 80] | free |
+| Bequest intercept | 0.15935 | [0, 8] | free; within 2% of lower bound |
+| Bequest slope | 0.09373 | [0.02, 16] | free; within 2% of lower bound |
+| Child room floor | 0.54661 | [0.10, 1.80] | free |
+| 2023 preference intercept | -0.24190 | [-1.25, 0.20] | free |
+| 2007 preference intercept | 0.04834 | derived in [-3, 3] | matches old completed fertility 2.12000 |
+| Outside-origin entrant share | 0.169 | externally fixed | provisional anchor |
+
+The best path matches the household index `1.12925` in 2023 through the
+declared bridge, raises the model housing-cost index to `1.05907`, and lowers
+the top-bin-adjusted birth-flow index to `0.79466`. The housing-cost index is
+the model asset price scaled by its fixed user-cost relation under static price
+expectations; it is not an independently fitted price-to-rent or
+perfect-foresight asset-price path. Remaining loss is dominated
+by childlessness (`155.87`), old-age wealth dispersion (`120.70`), late first
+births (`35.60`), and bequest flow (`19.63`).
+
+The matched 2023 state was continued to 2183 with the 2023 preference
+intercept fixed and the same provisional outside-entry flow. In the no-policy
+path, household mass and the housing-cost index both peak in 2027 at `1.14277`
+and `1.06293`. The birth rate reaches its trough in 2039 and subsequently
+recovers as housing costs fall. By 2183 the household index is `0.56998`, the
+housing-cost index is `0.79334`, and births per adult household are `0.10057`,
+versus `0.09524` in 2023. This is still an approaching path, not an exact
+endpoint: household mass and housing costs change by `-0.735%` and `-0.290%`
+over the final four-year interval. The twenty-year renewal lag also produces a
+small local household trough in 2087 and rebound in 2091, so the full lifecycle
+adjustment need not be monotone even though the steady-state feedback has the
+simple model's sign.
+
+An illustrative dependent-child-household LTV95 policy, introduced from the
+same 2023 beginning-of-period state, raises dependent-child ownership by
+`5.132` percentage points and aggregate ownership by `1.994` points by 2183,
+but changes the birth rate by only `0.031%` and household mass by `0.028%`.
+Pre-policy paths are identical. Long-path market and mass residuals are at most
+`9.08e-5` and `3.66e-15`. This is a tenure-incidence diagnostic, not the
+paper's funded property-tax/purchase-grant counterfactual or a welfare result.
+
 ## August 16 correction: renewal must use the model's measured child units
 
 The sequential model has parity states `0/1/2/3+`. Its reported completed-
