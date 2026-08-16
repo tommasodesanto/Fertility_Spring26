@@ -41,6 +41,11 @@ import run_e5f_open_population_transition as transition
 
 from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
 from intergen_eqscale_seq_optimized.e5f_floor_profile import E5F_DOMAIN
+from intergen_eqscale_seq_optimized.e5f_income_entry_profile import (
+    E5F_INCOME_ENTRY_DOMAIN,
+    E5F_INCOME_ENTRY_PROFILE_NAME,
+    e5f_income_entry_overrides,
+)
 
 
 DEFAULT_OUTDIR = ROOT / "output/model/e5f_transition_calibration"
@@ -51,12 +56,25 @@ TRANSITION_PERIODS = 4
 TRANSITION_SEARCH_DOMAIN: tuple[tuple[str, float, float, str], ...] = tuple(
     row for row in E5F_DOMAIN if row[0] != "psi_child"
 ) + (("psi_child_2023", -1.25, 0.20, "asinh"),)
+BASELINE_MODEL_PROFILE = "e5f-floor"
+REPAIRED_MODEL_PROFILE = "e5f-income-entry"
+DEFAULT_REPAIRED_PREFERENCE_CHANGE = -0.2902
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=closure.E5F_FLOOR_SOURCE)
     parser.add_argument("--outdir", type=Path, default=DEFAULT_OUTDIR)
+    parser.add_argument(
+        "--model-profile",
+        choices=(BASELINE_MODEL_PROFILE, REPAIRED_MODEL_PROFILE),
+        default=BASELINE_MODEL_PROFILE,
+        help=(
+            "Household profile. The repair keeps the E5F room floor, adds the "
+            "externally measured permanent-income process, and estimates one "
+            "first-birth fixed cost."
+        ),
+    )
     parser.add_argument("--old-psi-child", type=float, default=0.1062)
     parser.add_argument("--old-completed-fertility-target", type=float, default=2.12)
     parser.add_argument("--old-completed-fertility-tol", type=float, default=5e-4)
@@ -64,6 +82,20 @@ def parse_args() -> argparse.Namespace:
         "--candidate-new-psis",
         default="-0.2419,-0.10,0.0",
         help="Comma-separated terminal child-preference intercepts.",
+    )
+    parser.add_argument(
+        "--candidate-psi-changes",
+        default=None,
+        help=(
+            "Optional comma-separated changes from the normalized 2007 intercept. "
+            "This is the invariant coordinate for the repaired profile."
+        ),
+    )
+    parser.add_argument(
+        "--fixed-first-birth-cost",
+        type=float,
+        default=None,
+        help="Diagnostic repaired-profile cost held fixed outside a joint panel.",
     )
     parser.add_argument("--outside-origin-entry-share", type=float, default=0.169)
     parser.add_argument("--market-tol", type=float, default=2e-4)
@@ -175,12 +207,12 @@ def latin_hypercube(size: int, dimensions: int, seed: int) -> np.ndarray:
 
 
 def transition_unit_from_candidate(
-    theta: dict[str, float], new_psi_child: float
+    theta: dict[str, float], terminal_preference_coordinate: float
 ) -> np.ndarray:
     values: list[float] = []
     for name, lower, upper, kind in TRANSITION_SEARCH_DOMAIN:
-        if name == "psi_child_2023":
-            value = float(new_psi_child)
+        if name in {"psi_child_2023", "psi_child_change_2023"}:
+            value = float(terminal_preference_coordinate)
         elif name == "beta_annual":
             value = float(theta["beta"]) ** 0.25
         else:
@@ -193,20 +225,20 @@ def candidate_from_transition_unit(
     source_theta: dict[str, float], unit: np.ndarray
 ) -> tuple[dict[str, float], float]:
     theta = dict(source_theta)
-    new_psi_child = math.nan
+    terminal_preference_coordinate = math.nan
     for u, (name, lower, upper, kind) in zip(
         np.asarray(unit, dtype=float), TRANSITION_SEARCH_DOMAIN, strict=True
     ):
         value = transform_unit(float(u), lower, upper, kind)
-        if name == "psi_child_2023":
-            new_psi_child = value
+        if name in {"psi_child_2023", "psi_child_change_2023"}:
+            terminal_preference_coordinate = value
         elif name == "beta_annual":
             theta["beta"] = value**4
         else:
             theta[name] = value
-    if not math.isfinite(new_psi_child):
+    if not math.isfinite(terminal_preference_coordinate):
         raise RuntimeError("Transition candidate omitted the terminal preference intercept")
-    return theta, float(new_psi_child)
+    return theta, float(terminal_preference_coordinate)
 
 
 def panel_candidate(
@@ -220,15 +252,25 @@ def panel_candidate(
         raise ValueError("--panel-local-radius must lie in (0,0.5]")
 
     center_theta = dict(source_theta)
-    center_new_psi = -0.2419
+    terminal_name = TRANSITION_SEARCH_DOMAIN[-1][0]
+    center_terminal_coordinate = (
+        DEFAULT_REPAIRED_PREFERENCE_CHANGE
+        if terminal_name == "psi_child_change_2023"
+        else -0.2419
+    )
     center_status = "working_stationary_estimate"
     if args.panel_center_json is not None:
         payload = json.loads(args.panel_center_json.resolve().read_text(encoding="utf-8"))
         candidate_payload = payload.get("best_candidate", payload)
         center_theta.update(candidate_payload["theta"])
-        center_new_psi = float(candidate_payload["new_psi_child"])
+        if terminal_name == "psi_child_change_2023":
+            center_terminal_coordinate = float(candidate_payload["new_psi_child"]) - float(
+                candidate_payload["old_psi_child"]
+            )
+        else:
+            center_terminal_coordinate = float(candidate_payload["new_psi_child"])
         center_status = str(args.panel_center_json.resolve())
-    center = transition_unit_from_candidate(center_theta, center_new_psi)
+    center = transition_unit_from_candidate(center_theta, center_terminal_coordinate)
 
     if task == 1:
         unit = center
@@ -267,8 +309,8 @@ def panel_candidate(
             )
             unit = lhs[task - 2 - local_count]
             design = "wide_latin_hypercube"
-    theta, new_psi = candidate_from_transition_unit(source_theta, unit)
-    return theta, new_psi, {
+    theta, terminal_coordinate = candidate_from_transition_unit(source_theta, unit)
+    return theta, terminal_coordinate, {
         "task_id": task,
         "panel_size": size,
         "panel_seed": int(args.panel_seed),
@@ -276,6 +318,7 @@ def panel_candidate(
         "panel_design": str(args.panel_design),
         "local_radius": float(args.panel_local_radius),
         "center": center_status,
+        "terminal_preference_coordinate": terminal_name,
         "unit_vector": unit.tolist(),
         "domain": [
             {"name": name, "lower": lower, "upper": upper, "transform": kind}
@@ -286,6 +329,36 @@ def panel_candidate(
 
 def source_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def activate_model_profile(
+    name: str,
+    theta: dict[str, float],
+) -> tuple[tuple[tuple[str, float, float, str], ...], dict[str, Any], dict[str, Any]]:
+    """Return the active domain, external overrides, and serializable metadata."""
+    if name == BASELINE_MODEL_PROFILE:
+        return tuple(E5F_DOMAIN), {}, {
+            "name": BASELINE_MODEL_PROFILE,
+            "permanent_income_levels": False,
+            "first_birth_fixed_cost": False,
+        }
+    if name == REPAIRED_MODEL_PROFILE:
+        theta.setdefault("first_birth_fixed_cost", 0.0)
+        overrides = e5f_income_entry_overrides()
+        return tuple(E5F_INCOME_ENTRY_DOMAIN), overrides, {
+            "name": REPAIRED_MODEL_PROFILE,
+            "profile_id": E5F_INCOME_ENTRY_PROFILE_NAME,
+            "permanent_income_levels": "externally measured PSID distribution",
+            "permanent_income_log_variance": float(
+                overrides["permanent_income_log_variance"]
+            ),
+            "income_state_count": int(len(np.asarray(overrides["z_grid"]))),
+            "first_birth_fixed_cost": "one additional free parameter",
+            "first_birth_fixed_cost_semantics": (
+                "one-time utility cost paid only when the first child arrives"
+            ),
+        }
+    raise ValueError(f"Unknown model profile: {name}")
 
 
 def solve_old_steady_state(
@@ -340,6 +413,15 @@ def solve_old_steady_state(
     low = evaluate(lower)
     high = evaluate(upper)
     low_gap, high_gap = low[4] - target, high[4] - target
+    while low_gap * high_gap > 0.0 and max(abs(lower), abs(upper)) < 24.0:
+        if low_gap > 0.0 and high_gap > 0.0:
+            lower *= 2.0
+            low = evaluate(lower)
+            low_gap = low[4] - target
+        else:
+            upper *= 2.0
+            high = evaluate(upper)
+            high_gap = high[4] - target
     if low_gap == 0.0:
         chosen_psi, chosen = lower, low
     elif high_gap == 0.0:
@@ -732,8 +814,14 @@ def make_diagnostic_plot(
 
 
 def main() -> None:
+    global E5F_DOMAIN, TRANSITION_SEARCH_DOMAIN
     args = parse_args()
     candidates = parse_candidates(args.candidate_new_psis)
+    candidate_psi_changes = (
+        None
+        if args.candidate_psi_changes is None
+        else parse_candidates(args.candidate_psi_changes)
+    )
     if int(args.nb) != 120:
         raise ValueError("The transition calibration pilot is hard-gated to Nb=120")
     if int(args.post_2023_periods) < 0:
@@ -757,10 +845,30 @@ def main() -> None:
     chain, model = transition.configure_sequential_model()
     winner, source_metadata = closure.load_winner(source)
     theta = closure.theta_from_winner(winner)
+    active_domain, profile_overrides, model_profile = activate_model_profile(
+        str(args.model_profile), theta
+    )
+    if args.fixed_first_birth_cost is not None:
+        if str(args.model_profile) != REPAIRED_MODEL_PROFILE:
+            raise ValueError("--fixed-first-birth-cost requires the repaired profile")
+        if args.panel_task_id is not None:
+            raise ValueError("A fixed first-birth cost cannot be combined with a joint panel")
+        theta["first_birth_fixed_cost"] = float(args.fixed_first_birth_cost)
+    E5F_DOMAIN = active_domain
+    terminal_preference_row = (
+        ("psi_child_change_2023", -1.50, 0.20, "asinh")
+        if str(args.model_profile) == REPAIRED_MODEL_PROFILE
+        else ("psi_child_2023", -1.25, 0.20, "asinh")
+    )
+    TRANSITION_SEARCH_DOMAIN = tuple(
+        row for row in active_domain if row[0] != "psi_child"
+    ) + (terminal_preference_row,)
     panel_metadata = None
+    panel_terminal_preference_coordinate = math.nan
     if args.panel_task_id is not None:
-        theta, panel_new_psi, panel_metadata = panel_candidate(theta, args)
-        candidates = [panel_new_psi]
+        theta, panel_terminal_preference_coordinate, panel_metadata = panel_candidate(
+            theta, args
+        )
     target_system = e5_target_system()
     if (
         args.expected_target_set is not None
@@ -781,6 +889,8 @@ def main() -> None:
         )
     target_system.require_identified(len(E5F_DOMAIN))
     base = closure.make_overrides(chain, theta, nb=int(args.nb), profile="e5f-floor")
+    base.update(profile_overrides)
+    base.update(theta)
 
     print("TRANSITION_CALIBRATION_OLD_STEADY_STATE", flush=True)
     (
@@ -795,11 +905,49 @@ def main() -> None:
         initial_psi=float(args.old_psi_child),
         completed_fertility_target=float(args.old_completed_fertility_target),
         completed_fertility_tolerance=float(args.old_completed_fertility_tol),
-        normalize=panel_metadata is not None,
+        normalize=(
+            panel_metadata is not None
+            or str(args.model_profile) == REPAIRED_MODEL_PROFILE
+        ),
     )
     old_psi_child = float(old_fertility_normalization["psi_child"])
+    if panel_metadata is not None:
+        if str(args.model_profile) == REPAIRED_MODEL_PROFILE:
+            new_psi_child = old_psi_child + float(panel_terminal_preference_coordinate)
+            panel_metadata["psi_child_change_2023"] = float(
+                panel_terminal_preference_coordinate
+            )
+        else:
+            new_psi_child = float(panel_terminal_preference_coordinate)
+        panel_metadata["old_psi_child"] = old_psi_child
+        panel_metadata["new_psi_child"] = new_psi_child
+        candidates = [new_psi_child]
+    elif candidate_psi_changes is not None:
+        candidates = [old_psi_child + change for change in candidate_psi_changes]
     if int(old_parameters.J) != 17 or int(old_parameters.Nb) != 120:
         raise RuntimeError("Production dimension gate failed")
+    income_profile_gates: dict[str, Any] = {
+        "permanent_income_levels_enabled": bool(
+            getattr(old_parameters, "permanent_income_levels_enabled", False)
+        ),
+        "income_state_count": int(old_parameters.Nz),
+        "stationary_weight_max_abs_gap": float(
+            np.max(
+                np.abs(
+                    np.asarray(old_parameters.z_weights, dtype=float)
+                    @ np.asarray(old_parameters.Pi_z, dtype=float)
+                    - np.asarray(old_parameters.z_weights, dtype=float)
+                )
+            )
+        ),
+    }
+    if str(args.model_profile) == REPAIRED_MODEL_PROFILE:
+        if (
+            not income_profile_gates["permanent_income_levels_enabled"]
+            or income_profile_gates["income_state_count"] != 15
+            or income_profile_gates["stationary_weight_max_abs_gap"] > 1.0e-12
+        ):
+            raise RuntimeError(f"Measured-income profile gates failed: {income_profile_gates}")
     b_grid = np.asarray(old_solution.b_grid, dtype=float)
     old_shared = model.precompute_shared(old_parameters, b_grid)
     old_parameters._fert2_probs = np.asarray(old_solution.fert2_probs, dtype=float).copy()
@@ -1064,18 +1212,22 @@ def main() -> None:
         "source": str(source),
         "source_sha256": actual_source_sha256,
         "source_metadata": source_metadata,
+        "model_profile": model_profile,
+        "income_profile_gates": income_profile_gates,
         "target_set": target_system.name,
         "target_fingerprint": target_system.fingerprint,
         "target_count": target_system.count,
         "stationary_free_parameter_count": len(E5F_DOMAIN),
         "transition_free_parameter_count": len(TRANSITION_SEARCH_DOMAIN),
         "identification_status": (
-            "nine transition parameters against twelve dated target moments"
+            f"{len(TRANSITION_SEARCH_DOMAIN)} transition parameters against "
+            f"{target_system.count} dated target moments"
             if panel_metadata is not None
-            else "one terminal preference intercept varied against twelve reported moments; "
-            "not a joint transition calibration"
+            else "fixed-parameter transition frontier; not a joint transition calibration"
         ),
         "panel_design": panel_metadata,
+        "fixed_first_birth_cost": args.fixed_first_birth_cost,
+        "candidate_psi_changes": candidate_psi_changes,
         "policy_case": str(args.policy_case),
         "post_2023_periods": int(args.post_2023_periods),
         "old_psi_child": old_psi_child,

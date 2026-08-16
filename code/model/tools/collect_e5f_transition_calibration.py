@@ -58,7 +58,7 @@ def main() -> None:
     candidate_rows: list[dict[str, Any]] = []
     target_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
-    contracts: set[tuple[str, str, str, int, int]] = set()
+    contracts: set[tuple[str, str, str, int, int, str, str, str, int, str]] = set()
 
     for task in range(1, expected + 1):
         task_dir = results_dir / f"task_{task:03d}"
@@ -70,12 +70,18 @@ def main() -> None:
             summary = read_json(summary_path)
             candidate = dict(summary["best_candidate"])
             panel = dict(summary["panel_design"])
+            profile = dict(summary.get("model_profile") or {})
             contract = (
                 str(summary["source_sha256"]),
                 str(summary["target_set"]),
                 str(summary["target_fingerprint"]),
                 int(summary["target_count"]),
                 int(panel["panel_seed"]),
+                str(profile.get("name", "e5f-floor")),
+                str(profile.get("profile_id", "none")),
+                str(profile.get("permanent_income_log_variance", "none")),
+                int(profile.get("income_state_count", 5)),
+                str(profile.get("first_birth_fixed_cost_semantics", "none")),
             )
             contracts.add(contract)
             if int(panel["task_id"]) != task or int(panel["panel_size"]) != expected:
@@ -88,6 +94,9 @@ def main() -> None:
                 target_rows.append(row)
             candidate["task_id"] = task
             candidate["design"] = panel["design"]
+            candidate["model_profile"] = str(
+                (summary.get("model_profile") or {}).get("name", "e5f-floor")
+            )
             candidate["stationary_measurement_max_abs_gap"] = float(
                 summary["stationary_measurement_max_abs_gap"]
             )

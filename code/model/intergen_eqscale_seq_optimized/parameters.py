@@ -77,6 +77,10 @@ def setup_parameters() -> SimpleNamespace:
 
     P.kappa_fert = 4.5
     P.kappa_fert_continuation = None
+    # Default-off one-time utility cost paid when the first child arrives.  This
+    # separates the extensive parenthood margin from continuation fertility
+    # without adding a household state.  Zero preserves the existing model.
+    P.first_birth_fixed_cost = 0.0
     P.kappa_loc = 2.0
     P.eps_fert = P.kappa_fert
     P.eps_loc = P.kappa_loc
@@ -507,6 +511,9 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         raise ValueError("readiness_location_age must be finite.")
     if not np.isfinite(P.readiness_spread_years) or P.readiness_spread_years <= 0.0:
         raise ValueError("readiness_spread_years must be finite and strictly positive.")
+    P.first_birth_fixed_cost = float(getattr(P, "first_birth_fixed_cost", 0.0))
+    if not np.isfinite(P.first_birth_fixed_cost) or P.first_birth_fixed_cost < 0.0:
+        raise ValueError("first_birth_fixed_cost must be finite and weakly nonnegative.")
     if independent_child_maturation_active(P):
         configure_child_state_process(P)
     P.child_room_floor = bool(getattr(P, "child_room_floor", False))

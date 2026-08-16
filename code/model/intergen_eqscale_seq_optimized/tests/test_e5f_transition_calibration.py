@@ -88,3 +88,16 @@ def test_coordinate_panel_moves_one_dimension_at_a_time() -> None:
     assert changed.tolist() == [0]
     assert np.isclose(candidate[0], center[0] - 0.04)
     assert np.isclose(terminal, -0.2419)
+
+
+def test_repaired_profile_adds_cost_and_measured_income() -> None:
+    theta = dict(SOURCE_THETA)
+    domain, overrides, metadata = transition_calibration.activate_model_profile(
+        transition_calibration.REPAIRED_MODEL_PROFILE,
+        theta,
+    )
+    assert metadata["name"] == transition_calibration.REPAIRED_MODEL_PROFILE
+    assert theta["first_birth_fixed_cost"] == 0.0
+    assert domain[-1][0] == "first_birth_fixed_cost"
+    assert overrides["permanent_income_levels_enabled"] is True
+    assert len(np.asarray(overrides["z_grid"])) == 15

@@ -93,6 +93,41 @@ def test_kappa_continuation_ignored_without_sequential_births() -> None:
     assert np.array_equal(baseline.g, split.g)
 
 
+def test_first_birth_fixed_cost_default_is_bitwise_inert() -> None:
+    base = {**_tiny_markov(), "sequential_births": True}
+    implicit, _, _ = run_fork(base, verbose=False)
+    explicit, _, _ = run_fork({**base, "first_birth_fixed_cost": 0.0}, verbose=False)
+    assert np.array_equal(implicit.V, explicit.V)
+    assert np.array_equal(implicit.g, explicit.g)
+    assert np.array_equal(implicit.fert_probs, explicit.fert_probs)
+
+
+def test_first_birth_fixed_cost_raises_childlessness() -> None:
+    base = {
+        **_tiny_markov(),
+        "sequential_births": True,
+        "fecundity_omega1": 0.5,
+        "fecundity_omega2": 0.0,
+    }
+    baseline, _, _ = run_fork(base, verbose=False)
+    costly, _, _ = run_fork({**base, "first_birth_fixed_cost": 1.0}, verbose=False)
+    assert costly.childless_rate > baseline.childless_rate
+    assert not np.array_equal(costly.fert_probs, baseline.fert_probs)
+
+
+def test_first_birth_fixed_cost_is_paid_only_when_birth_occurs() -> None:
+    base = {
+        **_tiny_markov(),
+        "sequential_births": True,
+        "fecundity_omega1": 1.0,
+        "fecundity_omega2": 0.0,
+    }
+    baseline, _, _ = run_fork(base, verbose=False)
+    costly, _, _ = run_fork({**base, "first_birth_fixed_cost": 1.0}, verbose=False)
+    assert np.array_equal(costly.V, baseline.V)
+    assert np.array_equal(costly.fert_probs, baseline.fert_probs)
+
+
 def test_eqscale_renter_allocation_and_childless_invariance() -> None:
     base = {**_tiny_markov(), "preference_spec": "eqscale", "delta_alpha": 0.1, "gamma_e": 0.5}
     sol, P, _ = run_fork(base, verbose=False)

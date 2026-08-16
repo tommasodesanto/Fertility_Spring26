@@ -2703,7 +2703,11 @@ def solve_bellman_full_markov_income(
                     settled_cs = readiness_settled_state(P)
                     Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
                     Vfa[:, :, :, 1] = (
-                        pi_j * VI[:, :, :, 1, 1]
+                        pi_j
+                        * (
+                            VI[:, :, :, 1, 1]
+                            - float(P.first_birth_fixed_cost)
+                        )
                         + (1.0 - pi_j) * VI[:, :, :, 0, settled_cs]
                     )
                     lf = Vfa / P.kappa_fert
