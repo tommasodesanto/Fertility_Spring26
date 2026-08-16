@@ -49,19 +49,93 @@ CENSUS_HH3_URL = (
     "https://www2.census.gov/programs-surveys/demo/tables/families/"
     "time-series/households/hh3.xls"
 )
-CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS = (
-    ("under_25", None, 25.0, 6662.0),
-    ("25_to_29", 25.0, 30.0, 9667.0),
-    ("30_to_34", 30.0, 35.0, 9767.0),
-    ("35_to_44", 35.0, 45.0, 22779.0),
-    ("45_to_54", 45.0, 55.0, 24141.0),
-    ("55_to_64", 55.0, 65.0, 19266.0),
-    ("65_to_74", 65.0, 75.0, 11926.0),
-    ("75_and_older", 75.0, None, 11803.0),
+CENSUS_HH3_HOUSEHOLDS_THOUSANDS = {
+    2007: 116011.0,
+    2011: 119927.0,
+    2015: 124587.0,
+    2019: 128579.0,
+    2023: 131434.0,
+}
+ACS_NATIONAL_HEAD_AGE_SOURCE = (
+    ROOT / "code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta"
 )
-CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS = 116011.0
-
-
+ACS_NATIONAL_HEAD_AGE_SOURCE_SHA256 = (
+    "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e"
+)
+ACS_NATIONAL_HEAD_AGE_SHARES_18_85 = {
+    2007: (
+        0.01662266202182001, 0.04529676719571153, 0.06359694782099141,
+        0.06696559869635438, 0.07884514768615880, 0.08072893564675242,
+        0.08968295548613242, 0.09115500500154539, 0.08684345526254360,
+        0.07812470544072851, 0.07104778040230673, 0.05661696446968036,
+        0.04505232136554861, 0.03889108604181299, 0.03548381308904295,
+        0.03128817505209684, 0.02375767932077307,
+    ),
+    2011: (
+        0.01423640057870632, 0.04015597541289629, 0.05944231037589900,
+        0.06829743892768564, 0.06969370947726934, 0.07775638667739104,
+        0.07863758615588470, 0.08591835898663702, 0.08895820986694107,
+        0.08466006473759148, 0.07633661295406242, 0.06975907935230928,
+        0.05367679625793782, 0.04331476984142344, 0.03516810939479943,
+        0.02998756910537614, 0.02400062189718957,
+    ),
+    2015: (
+        0.01237826965969259, 0.03850574185466547, 0.05703943274201573,
+        0.06801644249983209, 0.07105444888041931, 0.06998319536695549,
+        0.07633662912233560, 0.07639420525997405, 0.08415207247359373,
+        0.08484820293023589, 0.08099594893356551, 0.07322657866496309,
+        0.06532914452875623, 0.05029551243914543, 0.03838511193415870,
+        0.02999548094268535, 0.02306358176700575,
+    ),
+    2019: (
+        0.01204386212620710, 0.03672383072129470, 0.05910831022458462,
+        0.06727556723592544, 0.07113343807388117, 0.07127626076428463,
+        0.06827752862343339, 0.07300446221666929, 0.07298973943669219,
+        0.07877541510471971, 0.08171188110840960, 0.07839923886409916,
+        0.06788946863719994, 0.06041097476218209, 0.04486839220718734,
+        0.03290898088489887, 0.02320264900833074,
+    ),
+    2023: (
+        0.01269617145483895, 0.03962038556026601, 0.05765140549135367,
+        0.06890576989592977, 0.07222893075363992, 0.07333366867966330,
+        0.07215408288932150, 0.06656022972977625, 0.07142826081255550,
+        0.06959182196947911, 0.07656515710357487, 0.07798978045201599,
+        0.07085160357313883, 0.06165837774909073, 0.05063149245400102,
+        0.03500355974319133, 0.02312930168816325,
+    ),
+}
+ACS_NATIONAL_HEAD_AGE_RECEIPTS = {
+    2007: {
+        "sample": 200701,
+        "head_records_all_ages": 1_174_259,
+        "head_weight_all_ages": 112_376_192.0,
+        "age_18_85_share_of_all_heads": 0.9785258874050475,
+    },
+    2011: {
+        "sample": 201101,
+        "head_records_all_ages": 1_204_817,
+        "head_weight_all_ages": 114_990_599.0,
+        "age_18_85_share_of_all_heads": 0.9746011584825295,
+    },
+    2015: {
+        "sample": 201501,
+        "head_records_all_ages": 1_226_681,
+        "head_weight_all_ages": 118_204_832.0,
+        "age_18_85_share_of_all_heads": 0.9729968145464646,
+    },
+    2019: {
+        "sample": 201901,
+        "head_records_all_ages": 1_276_656,
+        "head_weight_all_ages": 122_797_400.0,
+        "age_18_85_share_of_all_heads": 0.9723886417790605,
+    },
+    2023: {
+        "sample": 202301,
+        "head_records_all_ages": 1_342_971,
+        "head_weight_all_ages": 131_325_888.0,
+        "age_18_85_share_of_all_heads": 0.9753331117776260,
+    },
+}
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
@@ -107,6 +181,15 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--housing-supply-elasticity",
+        type=float,
+        default=None,
+        help=(
+            "Optional diagnostic override for the static housing-supply "
+            "elasticity; the retained model value is used when omitted."
+        ),
+    )
+    parser.add_argument(
         "--outside-origin-entry-share",
         type=float,
         default=0.169,
@@ -149,6 +232,38 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--initial-age-profile",
+        choices=("stationary", "acs-national-heads-2007"),
+        default="stationary",
+        help=(
+            "Optionally reweight the stationary household distribution to the "
+            "national 2007 ACS four-year householder-age shares while preserving "
+            "every model state conditional on age."
+        ),
+    )
+    parser.add_argument(
+        "--household-count-path",
+        choices=("none", "census-hh3-2007-2023"),
+        default="none",
+        help=(
+            "Apply a dated age-specific household-formation/migration residual "
+            "that matches Census HH-3 household totals and national ACS four-year "
+            "householder-age shares through 2023."
+        ),
+    )
+    parser.add_argument(
+        "--policy-case",
+        choices=("none", "dependent-child-ltv95"),
+        default="none",
+        help="Optional tenure policy activated at --policy-start-period.",
+    )
+    parser.add_argument(
+        "--policy-start-period",
+        type=int,
+        default=4,
+        help="First model date at which the optional tenure policy is active.",
+    )
+    parser.add_argument(
         "--smoke",
         action="store_true",
         help="Run at most four calendar periods after the exact baseline gates.",
@@ -187,20 +302,14 @@ def preference_shifter_at_date(
     return float(old_value + weight * (new_value - old_value))
 
 
-def census_2007_age_reweight_diagnostic(
+def acs_2007_age_reweight_diagnostic(
     stationary_age_mass: np.ndarray,
     ages: np.ndarray,
     stationary_entry_flow: float,
     periods: int = 4,
     period_years: float = 4.0,
 ) -> dict[str, Any]:
-    """Advance the Census-reweighted age stock at the stationary entrant flow.
-
-    Census age groups are coarser than the model's four-year cells. Each model
-    cell is assigned using its reported lower-bound age, and the model's
-    within-group age shares are preserved. This is a demographic accounting
-    check, not a new initial condition for the household transition.
-    """
+    """Advance the ACS-reweighted age stock at the stationary entrant flow."""
     stationary = np.asarray(stationary_age_mass, dtype=float).reshape(-1)
     age_grid = np.asarray(ages, dtype=float).reshape(-1)
     if stationary.shape != age_grid.shape or stationary.size < 2:
@@ -212,46 +321,19 @@ def census_2007_age_reweight_diagnostic(
     if period_years <= 0.0:
         raise ValueError("The model period length must be positive")
 
-    detailed_total = sum(row[3] for row in CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS)
-    if not math.isclose(
-        detailed_total,
-        CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS,
-        rel_tol=0.0,
-        abs_tol=1e-9,
-    ):
-        raise RuntimeError("Census HH-3 age rows do not sum to the published total")
-
     initial_total = float(np.sum(stationary))
-    reweighted = np.zeros_like(stationary)
-    groups: list[dict[str, Any]] = []
-    for label, lower, upper, count in CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS:
-        selected = np.ones(age_grid.size, dtype=bool)
-        if lower is not None:
-            selected &= age_grid >= lower
-        if upper is not None:
-            selected &= age_grid < upper
-        if not np.any(selected):
-            raise RuntimeError(f"No model age cell maps to Census group {label}")
-        group_stationary_mass = float(np.sum(stationary[selected]))
-        target_share = float(count / CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS)
-        reweighted[selected] = (
-            initial_total
-            * target_share
-            * stationary[selected]
-            / group_stationary_mass
+    target_shares = np.asarray(
+        ACS_NATIONAL_HEAD_AGE_SHARES_18_85[2007], dtype=float
+    )
+    if target_shares.shape != stationary.shape:
+        raise RuntimeError(
+            "The national ACS age bins do not match the model age grid"
         )
-        groups.append(
-            {
-                "group": label,
-                "lower_age_inclusive": lower,
-                "upper_age_exclusive": upper,
-                "households_thousands": count,
-                "target_share": target_share,
-                "model_age_cells": age_grid[selected].tolist(),
-            }
-        )
+    if not math.isclose(float(np.sum(target_shares)), 1.0, rel_tol=0.0, abs_tol=2e-14):
+        raise RuntimeError("National ACS age shares do not sum to one")
+    reweighted = initial_total * target_shares
     if not math.isclose(float(np.sum(reweighted)), initial_total, rel_tol=0.0, abs_tol=1e-12):
-        raise RuntimeError("Census age reweighting changed date-0 total mass")
+        raise RuntimeError("ACS age reweighting changed date-0 total mass")
 
     survival = stationary[1:] / stationary[:-1]
     if np.any(survival < -1e-14) or np.any(survival > 1.0 + 1e-10):
@@ -287,25 +369,169 @@ def census_2007_age_reweight_diagnostic(
 
     return {
         "status": "diagnostic_only",
-        "source": "U.S. Census Bureau, Table HH-3",
-        "source_url": CENSUS_HH3_URL,
+        "source": "IPUMS USA ACS microdata extract",
+        "source_path": str(ACS_NATIONAL_HEAD_AGE_SOURCE),
+        "source_sha256": ACS_NATIONAL_HEAD_AGE_SOURCE_SHA256,
         "source_year": 2007,
-        "units": "thousands of households",
-        "mapping": (
-            "model four-year age cells assigned by their lower-bound age; "
-            "stationary within-group shares preserved"
+        "units": "HHWT-weighted household heads ages 18--85",
+        "sample": (
+            "national ACS; GQ in {1,2}; PERNUM=1; RELATE=1; HHWT>0; "
+            "age 18--85"
         ),
+        "mapping": (
+            "exact closed integer bins [18+4j, 21+4j], j=0,...,16; "
+            "every non-age model state is preserved conditional on age"
+        ),
+        "source_receipt": ACS_NATIONAL_HEAD_AGE_RECEIPTS[2007],
         "future_entry_rule": "old steady-state entrant flow held fixed",
         "horizon_periods": periods,
         "period_years": period_years,
         "horizon_calendar_year": 2007 + periods * period_years,
-        "groups": groups,
         "model_age_grid": age_grid.tolist(),
         "stationary_age_mass": stationary.tolist(),
         "reweighted_initial_age_mass": reweighted.tolist(),
         "age_survival": survival.tolist(),
         "path": path,
         "population_index_at_horizon": path[-1]["population_index"],
+    }
+
+
+def reweight_distribution_to_acs_2007_ages(
+    g_pre: np.ndarray,
+    diagnostic: dict[str, Any],
+) -> np.ndarray:
+    """Apply the diagnostic's age weights, preserving every within-age state."""
+    out = np.asarray(g_pre, dtype=float).copy()
+    stationary = np.asarray(diagnostic["stationary_age_mass"], dtype=float)
+    target = np.asarray(diagnostic["reweighted_initial_age_mass"], dtype=float)
+    if out.shape[3] != stationary.size or stationary.shape != target.shape:
+        raise ValueError("The ACS age diagnostic does not match the KFE age axis")
+    factors = target / stationary
+    out *= factors.reshape((1, 1, 1, -1, 1, 1, 1))
+    if not math.isclose(
+        float(np.sum(out)),
+        float(np.sum(g_pre)),
+        rel_tol=0.0,
+        abs_tol=1e-12,
+    ):
+        raise RuntimeError("ACS age reweighting changed total household mass")
+    return out
+
+
+def census_household_model_age_levels() -> dict[int, float]:
+    """Convert published HH-3 totals to heads in the model's ages 18--85."""
+    return {
+        year: float(total)
+        * float(
+            ACS_NATIONAL_HEAD_AGE_RECEIPTS[year][
+                "age_18_85_share_of_all_heads"
+            ]
+        )
+        for year, total in CENSUS_HH3_HOUSEHOLDS_THOUSANDS.items()
+    }
+
+
+def census_household_target_indices() -> dict[int, float]:
+    """Return model-age HH-3 household totals indexed to 2007."""
+    levels = census_household_model_age_levels()
+    base = levels[2007]
+    return {
+        int((year - 2007) / 4): count / base
+        for year, count in levels.items()
+    }
+
+
+def census_household_age_target_years() -> dict[int, int]:
+    """Map transition dates to the HH-3 benchmark year at that date."""
+    return {
+        int((year - 2007) / 4): year
+        for year in CENSUS_HH3_HOUSEHOLDS_THOUSANDS
+    }
+
+
+def reweight_distribution_to_observed_age_path(
+    g_pre: np.ndarray,
+    ages: np.ndarray,
+    *,
+    year: int,
+    initial_mass: float,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Match HH-3 total mass and national ACS four-year age shares."""
+    if year not in CENSUS_HH3_HOUSEHOLDS_THOUSANDS:
+        raise ValueError(f"No Census HH-3 target is available for {year}")
+    out = np.asarray(g_pre, dtype=float).copy()
+    age_grid = np.asarray(ages, dtype=float).reshape(-1)
+    if out.shape[3] != age_grid.size:
+        raise ValueError("The HH-3 bridge does not match the model age axis")
+    published_total = float(CENSUS_HH3_HOUSEHOLDS_THOUSANDS[year])
+    model_age_coverage = float(
+        ACS_NATIONAL_HEAD_AGE_RECEIPTS[year][
+            "age_18_85_share_of_all_heads"
+        ]
+    )
+    model_age_levels = census_household_model_age_levels()
+    model_age_total = float(model_age_levels[year])
+    base_model_age_total = float(model_age_levels[2007])
+    target_total = float(initial_mass) * model_age_total / base_model_age_total
+    target_shares = np.asarray(
+        ACS_NATIONAL_HEAD_AGE_SHARES_18_85[year], dtype=float
+    )
+    if target_shares.shape != age_grid.shape:
+        raise RuntimeError(f"The {year} ACS age shares do not match model ages")
+    if not math.isclose(float(np.sum(target_shares)), 1.0, rel_tol=0.0, abs_tol=2e-14):
+        raise RuntimeError(f"The {year} ACS age shares do not sum to one")
+    target_age_masses = target_total * target_shares
+    before_age_masses = np.sum(out, axis=(0, 1, 2, 4, 5, 6))
+    group_rows: list[dict[str, Any]] = []
+    for index, (age, before, target_mass, target_share) in enumerate(
+        zip(age_grid, before_age_masses, target_age_masses, target_shares, strict=True)
+    ):
+        before = float(before)
+        if before <= 0.0:
+            raise RuntimeError(f"Model age {age:g} has no mass in {year}")
+        factor = float(target_mass) / before
+        out[:, :, :, index, :, :, :] *= factor
+        after = float(np.sum(out[:, :, :, index, :, :, :]))
+        group_rows.append(
+            {
+                "model_age": float(age),
+                "closed_integer_age_bin": [int(age), int(age + 3)],
+                "acs_share_conditional_18_85": float(target_share),
+                "mass_before_bridge": before,
+                "target_mass": float(target_mass),
+                "mass_after_bridge": after,
+                "net_residual": after - before,
+                "multiplicative_factor": factor,
+                "target_gap": after - float(target_mass),
+            }
+        )
+    before_total = float(np.sum(before_age_masses))
+    after_total = float(np.sum(out))
+    if not math.isclose(after_total, target_total, rel_tol=0.0, abs_tol=2e-12):
+        raise RuntimeError(
+            f"Observed household age bridge missed the {year} total: "
+            f"model={after_total:.12g}, target={target_total:.12g}"
+        )
+    return out, {
+        "year": int(year),
+        "hh3_published_total_thousands": published_total,
+        "acs_age_18_85_share_of_all_heads": model_age_coverage,
+        "hh3_total_for_model_ages_thousands": model_age_total,
+        "acs_age_source": str(ACS_NATIONAL_HEAD_AGE_SOURCE),
+        "acs_age_source_sha256": ACS_NATIONAL_HEAD_AGE_SOURCE_SHA256,
+        "acs_source_receipt": ACS_NATIONAL_HEAD_AGE_RECEIPTS[year],
+        "acs_age_normalization": "shares conditional on household-head age 18--85",
+        "model_mass_before_bridge": before_total,
+        "model_target_mass": target_total,
+        "model_mass_after_bridge": after_total,
+        "net_residual": after_total - before_total,
+        "absolute_group_residual": float(
+            np.sum([abs(float(row["net_residual"])) for row in group_rows])
+        ),
+        "maximum_absolute_target_gap": max(
+            abs(float(row["target_gap"])) for row in group_rows
+        ),
+        "groups": group_rows,
     }
 
 
@@ -577,6 +803,10 @@ def run_birth_vintage_scenario(
     conversion: float,
     delay_periods: int,
     initial_birth_pipeline_multiplier: float,
+    population_target_indices: dict[int, float] | None,
+    population_age_target_years: dict[int, int] | None,
+    policy_case: str,
+    policy_start_period: int,
     old_psi_child: float,
     new_psi_child: float,
     preference_transition_periods: int,
@@ -615,6 +845,15 @@ def run_birth_vintage_scenario(
     scheduled_entries = [
         float(baseline_B) * float(initial_birth_pipeline_multiplier)
     ] * int(delay_periods)
+    target_indices = dict(population_target_indices or {})
+    target_age_years = dict(population_age_target_years or {})
+    initial_mass = float(np.sum(g_pre))
+    if 0 in target_indices and not math.isclose(
+        float(target_indices[0]), 1.0, rel_tol=0.0, abs_tol=1e-12
+    ):
+        raise ValueError("The date-0 population target must equal one")
+    if policy_case not in {"none", "dependent-child-ltv95"}:
+        raise ValueError(f"Unknown transition policy: {policy_case}")
 
     path_rows: list[dict[str, Any]] = []
     age_rows: list[dict[str, Any]] = []
@@ -628,8 +867,11 @@ def run_birth_vintage_scenario(
     max_projection = 0.0
     min_mass = math.inf
     max_nonfinite = 0
+    max_age_target_gap = 0.0
+    census_age_bridge_audits: list[dict[str, Any]] = []
     grid_resolution_fallback_periods: list[int] = []
     previous_psi_child: float | None = None
+    previous_policy_active: bool | None = None
 
     for period in range(int(periods)):
         dated_psi_child = preference_shifter_at_date(
@@ -639,6 +881,12 @@ def run_birth_vintage_scenario(
             preference_transition_periods,
         )
         P.psi_child = dated_psi_child
+        policy_active = policy_case != "none" and period >= int(policy_start_period)
+        P.parent_dp_waiver = bool(policy_active)
+        P.parent_dp_waiver_phi = 0.95 if policy_active else 1.0
+        P.parent_dp_waiver_locations = np.array([], dtype=int)
+        P.parent_dp_waiver_owner_rungs = np.array([], dtype=int)
+        P.parent_dp_waiver_birth_state_only = False
         shared = calendar.model.precompute_shared(P, b_grid)
         if previous_psi_child is not None and not math.isclose(
             dated_psi_child, previous_psi_child, rel_tol=0.0, abs_tol=1e-14
@@ -646,7 +894,10 @@ def run_birth_vintage_scenario(
             # A policy bundle is indexed by both price and preferences.  It is
             # a valid warm start only while the preference shifter is unchanged.
             initial_policy = None
+        if previous_policy_active is not None and policy_active != previous_policy_active:
+            initial_policy = None
         previous_psi_child = dated_psi_child
+        previous_policy_active = policy_active
         target_tolerance = min(float(market_tol), 5e-5)
         try:
             evaluation = calendar.clear_scalar_housing_market(
@@ -699,12 +950,33 @@ def run_birth_vintage_scenario(
         )
         scheduled_entries.append(new_potential_B)
         retained_B = retention * scheduled_B
-        entrants_next_by_loc = outside_flow * outside_shares
+        next_target_index = target_indices.get(period + 1)
+        dated_outside_flow = float(outside_flow)
+        entrants_next_by_loc = dated_outside_flow * outside_shares
         entrants_next_by_loc[0] += retained_B
         empty_next[:, :, :, 0, :, :, :] = calendar.entrant_cohort(
             entrants_next_by_loc, P, b_grid
         )
-        next_pre = empty_next
+        provisional_next = empty_next
+        bridge_audit = None
+        target_next_year = target_age_years.get(period + 1)
+        if target_next_year is not None:
+            ages = P.age_start + np.arange(int(P.J)) * P.da
+            next_pre, bridge_audit = reweight_distribution_to_observed_age_path(
+                provisional_next,
+                ages,
+                year=int(target_next_year),
+                initial_mass=initial_mass,
+            )
+            bridge_audit["transition_from_period"] = int(period)
+            bridge_audit["transition_to_period"] = int(period + 1)
+            census_age_bridge_audits.append(bridge_audit)
+            max_age_target_gap = max(
+                max_age_target_gap,
+                float(bridge_audit["maximum_absolute_target_gap"]),
+            )
+        else:
+            next_pre = provisional_next
 
         health = calendar.distribution_health(
             {
@@ -727,6 +999,11 @@ def run_birth_vintage_scenario(
             float(np.sum(evaluation.g_post_fertility))
             - deaths
             + float(np.sum(entrants_next_by_loc))
+            + (
+                float(bridge_audit["net_residual"])
+                if bridge_audit is not None
+                else 0.0
+            )
         )
         mass_residual = float(np.sum(next_pre)) - expected_next_mass
         max_mass_residual = max(max_mass_residual, abs(mass_residual))
@@ -738,10 +1015,29 @@ def run_birth_vintage_scenario(
         )
 
         adult_population = float(np.sum(evaluation.g_post_fertility))
+        population_index = adult_population / max(initial_mass, 1e-15)
+        population_target_index = target_indices.get(period)
+        population_target_gap = (
+            population_index - float(population_target_index)
+            if population_target_index is not None
+            else math.nan
+        )
         current_mass = float(np.sum(evaluation.g_current))
         owner_rate = float(
             np.sum(evaluation.g_current[:, 1:, :, :, :, :, :])
         ) / max(current_mass, 1e-15)
+        dependent_mass = float(np.sum(evaluation.g_current[:, :, :, :, :, :, 1:]))
+        dependent_owner_rate = float(
+            np.sum(evaluation.g_current[:, 1:, :, :, :, :, 1:])
+        ) / max(dependent_mass, 1e-15)
+        parent_mass = float(np.sum(evaluation.g_current[:, :, :, :, :, 1:, :]))
+        parent_owner_rate = float(
+            np.sum(evaluation.g_current[:, 1:, :, :, :, 1:, :])
+        ) / max(parent_mass, 1e-15)
+        childless_mass = float(np.sum(evaluation.g_current[:, :, :, :, :, 0, :]))
+        childless_owner_rate = float(
+            np.sum(evaluation.g_current[:, 1:, :, :, :, 0, :])
+        ) / max(childless_mass, 1e-15)
         ages = P.age_start + np.arange(int(P.J)) * P.da
         age_mass = np.sum(
             evaluation.g_post_fertility, axis=(0, 1, 2, 4, 5, 6)
@@ -759,10 +1055,15 @@ def run_birth_vintage_scenario(
             "asset_price_index": price_guess / baseline_price,
             "housing_user_cost": float(P.user_cost_rate * price_guess),
             "adult_population": adult_population,
-            "population_index": adult_population / max(float(np.sum(initial_g_pre)), 1e-15),
+            "population_index": population_index,
+            "population_target_index": population_target_index,
+            "population_target_gap": population_target_gap,
+            "next_population_target_index": next_target_index,
+            "next_population_target_year": target_next_year,
             "mean_adult_age": mean_age,
             "entry_flow_E": entry_flow,
             "birth_children": float(evaluation.births),
+            "births_per_adult": float(evaluation.births) / max(adult_population, 1e-15),
             "births_over_entry": float(evaluation.births) / max(entry_flow, 1e-15),
             "mature_children_raw": scheduled_B / max(conversion, 1e-15),
             "effective_mature_entrant_flow_B": scheduled_B,
@@ -772,15 +1073,40 @@ def run_birth_vintage_scenario(
             "birth_queue_scheduled_flows": list(scheduled_entries),
             "closure": "open_birth_vintage",
             "housing_supply_mode": supply_rule.mode,
-            "outside_entry_flow_M": outside_flow,
+            "outside_entry_flow_M": dated_outside_flow,
+            "outside_entry_flow_share_of_initial_mass": dated_outside_flow
+            / max(initial_mass, 1e-15),
             "retained_mature_entrants": retained_B,
             "entrant_flow_next": float(np.sum(entrants_next_by_loc)),
+            "youngest_age_mass_next": float(
+                np.sum(next_pre[:, :, :, 0, :, :, :])
+            ),
+            "census_age_bridge_net_residual": (
+                float(bridge_audit["net_residual"])
+                if bridge_audit is not None
+                else 0.0
+            ),
+            "census_age_bridge_absolute_group_residual": (
+                float(bridge_audit["absolute_group_residual"])
+                if bridge_audit is not None
+                else 0.0
+            ),
+            "census_age_bridge_maximum_target_gap": (
+                float(bridge_audit["maximum_absolute_target_gap"])
+                if bridge_audit is not None
+                else 0.0
+            ),
             "adult_deaths": deaths,
             "housing_demand": demand,
             "housing_demand_per_adult": demand / max(adult_population, 1e-15),
             "housing_supply": supply,
             "relative_market_residual": float(evaluation.relative_market_residual),
             "owner_rate": owner_rate,
+            "dependent_child_owner_rate": dependent_owner_rate,
+            "parent_owner_rate": parent_owner_rate,
+            "childless_owner_rate": childless_owner_rate,
+            "policy_case": policy_case,
+            "policy_active": policy_active,
             "mass_accounting_residual": mass_residual,
             "feasibility_frontier_projection_mass": float(
                 evaluation.feasibility_projection_mass
@@ -817,7 +1143,21 @@ def run_birth_vintage_scenario(
         "scenario": label,
         "closure": "open_birth_vintage",
         "housing_supply_mode": supply_rule.mode,
-        "outside_entry_flow_M": outside_flow,
+        "post_target_outside_entry_flow_M": outside_flow,
+        "population_target_indices": target_indices,
+        "population_age_target_years": target_age_years,
+        "maximum_absolute_population_target_gap": max(
+            (
+                abs(float(row["population_target_gap"]))
+                for row in path_rows
+                if math.isfinite(float(row["population_target_gap"]))
+            ),
+            default=0.0,
+        ),
+        "census_age_bridge_audits": census_age_bridge_audits,
+        "maximum_absolute_census_age_target_gap": max_age_target_gap,
+        "policy_case": policy_case,
+        "policy_start_period": policy_start_period,
         "renewal_retention": retention,
         "entrant_conversion_factor": conversion,
         "maturation_survival_yield": maturation_survival_yield,
@@ -857,6 +1197,16 @@ def run_birth_vintage_scenario(
         raise RuntimeError(
             f"{label}: feasibility projection gate failed, mass={max_projection:.3e}"
         )
+    if scenario_summary["maximum_absolute_population_target_gap"] > 2e-10:
+        raise RuntimeError(
+            f"{label}: Census household-count target gap is "
+            f"{scenario_summary['maximum_absolute_population_target_gap']:.3e}"
+        )
+    if max_age_target_gap > 2e-10:
+        raise RuntimeError(
+            f"{label}: Census householder-age target gap is "
+            f"{max_age_target_gap:.3e}"
+        )
     return path_rows, age_rows, child_rows, scenario_summary
 
 
@@ -871,17 +1221,29 @@ def solve_stationary_open_endpoint(
     conversion: float,
     maturation_survival_yield: float,
     supply_rule: calendar.HousingSupplyRule,
+    policy_case: str,
     outdir: Path,
 ) -> dict[str, Any]:
     """Solve the stationary endpoint consistent with the birth-vintage closure."""
     cache: dict[float, tuple[float, dict[str, Any]]] = {}
+    endpoint_overrides = dict(base_overrides)
+    if policy_case == "dependent-child-ltv95":
+        endpoint_overrides.update(
+            parent_dp_waiver=True,
+            parent_dp_waiver_phi=0.95,
+            parent_dp_waiver_locations=np.array([], dtype=int),
+            parent_dp_waiver_owner_rungs=np.array([], dtype=int),
+            parent_dp_waiver_birth_state_only=False,
+        )
+    elif policy_case != "none":
+        raise ValueError(f"Unknown stationary policy: {policy_case}")
 
     def evaluate(asset_price: float) -> tuple[float, dict[str, Any]]:
         key = round(float(asset_price), 12)
         if key not in cache:
             solution, parameters, price, elapsed = closure_audit.solve_pe(
                 chain,
-                base_overrides,
+                endpoint_overrides,
                 asset_price=float(asset_price),
                 psi_child=float(new_psi_child),
             )
@@ -915,6 +1277,7 @@ def solve_stationary_open_endpoint(
                 )
             row = dict(readout)
             row.update(
+                policy_case=policy_case,
                 queue_mature_entrant_flow_B=queue_B,
                 renewal_denominator=denominator,
                 stationary_population_scale=population_scale,
@@ -1089,6 +1452,92 @@ def make_paper_transition_plot(
     plt.close(fig)
 
 
+def make_population_target_accounting_plot(
+    paths: list[dict[str, Any]],
+    *,
+    post_target_outside_flow: float,
+    outdir: Path,
+) -> None:
+    """Plot the Census household target and age-specific bridge residual."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    years = np.asarray([row["years_from_start"] for row in paths], dtype=float)
+    model = np.asarray([row["population_index"] for row in paths], dtype=float)
+    target = np.asarray(
+        [
+            float(row["population_target_index"])
+            if row["population_target_index"] is not None
+            else math.nan
+            for row in paths
+        ],
+        dtype=float,
+    )
+    net_residual = np.asarray(
+        [row["census_age_bridge_net_residual"] for row in paths],
+        dtype=float,
+    ) / max(float(paths[0]["adult_population"]), 1e-15)
+    absolute_residual = np.asarray(
+        [row["census_age_bridge_absolute_group_residual"] for row in paths],
+        dtype=float,
+    ) / max(float(paths[0]["adult_population"]), 1e-15)
+    initial_mass = float(paths[0]["adult_population"])
+
+    fig, axes = plt.subplots(1, 2, figsize=(9.8, 3.8), constrained_layout=True)
+    axes[0].plot(years, model, color="#21476b", lw=2.2, label="Model households")
+    axes[0].plot(
+        years,
+        target,
+        color="#222222",
+        marker="o",
+        lw=1.8,
+        label="Census HH-3 target",
+    )
+    axes[0].set(
+        title="Household-count bridge",
+        xlabel="Years after 2007",
+        ylabel="Index (2007 = 1)",
+    )
+    axes[0].legend(frameon=False, fontsize=8)
+    axes[0].grid(alpha=0.2)
+
+    axes[1].plot(
+        years,
+        net_residual,
+        color="#6a4c93",
+        marker="o",
+        lw=2.0,
+        label="Net bridge residual",
+    )
+    axes[1].plot(
+        years,
+        absolute_residual,
+        color="#b14f32",
+        marker="s",
+        lw=1.6,
+        label="Absolute age-group reallocation",
+    )
+    axes[1].axhline(
+        float(post_target_outside_flow) / max(initial_mass, 1e-15),
+        color="#555555",
+        lw=1.1,
+        ls="--",
+        label="Maintained outside flow",
+    )
+    axes[1].set(
+        title="Reduced-form age bridge",
+        xlabel="Transition beginning at model date",
+        ylabel="Flow / 2007 household mass",
+    )
+    axes[1].legend(frameon=False, fontsize=8)
+    axes[1].grid(alpha=0.2)
+    fig.savefig(outdir / "population_target_accounting.png", dpi=220)
+    fig.savefig(outdir / "population_target_accounting.pdf")
+    plt.close(fig)
+
+
 FRED_COMPARISON_SERIES = {
     "house_price": {
         "id": "CSUSHPINSA",
@@ -1183,11 +1632,17 @@ def make_historical_comparison(
     *,
     start_year: int,
     old_user_cost: float,
+    household_counts_by_year: dict[int, float] | None,
     outdir: Path,
 ) -> dict[str, Any]:
     """Compare the deliberately sparse transition with broad U.S. aggregates."""
     annual, source_metadata = download_fred_annual_comparison(outdir)
-    required = ("house_price", "rent", "consumer_price", "population")
+    household_counts = dict(household_counts_by_year or {})
+    required = (
+        ("house_price", "rent", "consumer_price")
+        if household_counts
+        else ("house_price", "rent", "consumer_price", "population")
+    )
     missing_base = [name for name in required if start_year not in annual[name]]
     if missing_base:
         raise RuntimeError(
@@ -1196,7 +1651,13 @@ def make_historical_comparison(
     base_house_price = annual["house_price"][start_year]
     base_rent = annual["rent"][start_year]
     base_cpi = annual["consumer_price"][start_year]
-    base_population = annual["population"][start_year]
+    if household_counts and start_year not in household_counts:
+        raise RuntimeError(f"Census household path has no {start_year} normalization")
+    base_population = (
+        household_counts[start_year]
+        if household_counts
+        else annual["population"][start_year]
+    )
     base_real_house_price = base_house_price / base_cpi
     base_real_rent = base_rent / base_cpi
     base_price_to_rent = base_house_price / base_rent
@@ -1207,12 +1668,18 @@ def make_historical_comparison(
         calendar_year = int(round(calendar_year_float))
         if abs(calendar_year_float - calendar_year) > 1e-8:
             continue
+        if household_counts and calendar_year not in household_counts:
+            continue
         if any(calendar_year not in annual[name] for name in required):
             continue
         house_price = annual["house_price"][calendar_year]
         rent = annual["rent"][calendar_year]
         cpi = annual["consumer_price"][calendar_year]
-        population = annual["population"][calendar_year]
+        population = (
+            household_counts[calendar_year]
+            if household_counts
+            else annual["population"][calendar_year]
+        )
         model_price = float(model_row["asset_price_index"])
         model_rent = float(model_row["housing_user_cost"]) / old_user_cost
         rows.append(
@@ -1250,7 +1717,7 @@ def make_historical_comparison(
         color="#222222",
         marker="o",
         lw=2.0,
-        label="U.S. data",
+        label="U.S. households" if household_counts else "U.S. population",
     )
     axes[0].plot(
         years,
@@ -1260,7 +1727,10 @@ def make_historical_comparison(
         lw=2.0,
         label="Model",
     )
-    axes[0].set(title="Population", ylabel=f"Index ({start_year} = 1)")
+    axes[0].set(
+        title="Adult households" if household_counts else "Population",
+        ylabel=f"Index ({start_year} = 1)",
+    )
     axes[0].legend(frameon=False, fontsize=8)
 
     axes[1].plot(
@@ -1324,12 +1794,27 @@ def make_historical_comparison(
         "last_overlapping_year": int(last["calendar_year"]),
         "number_of_model_dates": len(rows),
         "normalization": f"annual averages indexed to {start_year}=1",
-        "population_units": "FRED total persons versus model adult-household mass",
+        "population_units": (
+            "Census HH-3 households with heads ages 18--85 versus model adult-household mass"
+            if household_counts
+            else "FRED total persons versus model adult-household mass"
+        ),
         "house_prices_and_rents": "deflated by CPIAUCSL; price-to-rent uses nominal ratios",
         "first_row": first,
         "last_row": last,
         "sources": source_metadata["series"],
     }
+    if household_counts:
+        summary["sources"]["households"] = {
+            "title": (
+                "Table HH-3 total households, restricted to head ages 18--85 "
+                "using national ACS age coverage"
+            ),
+            "url": CENSUS_HH3_URL,
+            "published_hh3_totals_thousands": CENSUS_HH3_HOUSEHOLDS_THOUSANDS,
+            "model_age_totals_thousands": household_counts,
+            "revision_note": "The revised 2011 row is used.",
+        }
     write_json(outdir / "historical_comparison_summary.json", summary)
     return summary
 
@@ -1342,15 +1827,50 @@ def main() -> None:
         raise ValueError("--preference-transition-periods cannot be negative")
     if args.initial_birth_pipeline_multiplier <= 0.0:
         raise ValueError("--initial-birth-pipeline-multiplier must be positive")
+    if (
+        args.housing_supply_elasticity is not None
+        and args.housing_supply_elasticity < 0.0
+    ):
+        raise ValueError("--housing-supply-elasticity cannot be negative")
+    if (
+        args.housing_supply_elasticity is not None
+        and args.housing_supply_mode != "static-elastic"
+    ):
+        raise ValueError(
+            "--housing-supply-elasticity requires --housing-supply-mode static-elastic"
+        )
     if args.preference_transition_periods > 0 and args.renewal_clock != "birth-vintage":
         raise ValueError(
             "A gradual preference path is implemented only for the paper-facing "
             "birth-vintage renewal clock."
         )
+    if args.policy_start_period < 0:
+        raise ValueError("--policy-start-period cannot be negative")
+    if (
+        args.initial_age_profile != "stationary"
+        or args.household_count_path != "none"
+    ) and args.historical_start_year != 2007:
+        raise ValueError(
+            "The ACS age and Census household-count options require "
+            "--historical-start-year 2007"
+        )
+    if args.household_count_path != "none" and args.renewal_clock != "birth-vintage":
+        raise ValueError("The Census household-count bridge requires the birth-vintage clock")
+    if (
+        args.household_count_path == "census-hh3-2007-2023"
+        and args.initial_age_profile != "acs-national-heads-2007"
+    ):
+        raise ValueError(
+            "The observed age path requires "
+            "--initial-age-profile acs-national-heads-2007"
+        )
+    if args.policy_case != "none" and args.renewal_clock != "birth-vintage":
+        raise ValueError("The dated tenure policy requires the birth-vintage clock")
     if not 0.0 < args.outside_origin_entry_share < 1.0:
         raise ValueError("--outside-origin-entry-share must lie strictly between zero and one")
     if args.smoke:
-        args.periods = min(int(args.periods), 4)
+        smoke_horizon = 5 if args.household_count_path != "none" else 4
+        args.periods = min(int(args.periods), smoke_horizon)
 
     started = time.perf_counter()
     outdir = args.output_dir.resolve()
@@ -1431,15 +1951,6 @@ def main() -> None:
         flush=True,
     )
 
-    supply_rule, supply_normalization = calendar.normalize_date0_housing_supply(
-        initial_g_pre,
-        old_policy,
-        old_parameters,
-        b_grid,
-        old_shared,
-        str(args.housing_supply_mode),
-    )
-
     E_old = float(old_solution.entry_rate)
     B_old = float(old_solution.entrants_mature_total)
     outside_share = float(args.outside_origin_entry_share)
@@ -1452,7 +1963,7 @@ def main() -> None:
     conversion = float(old_parameters.entrant_conversion_factor)
     B_old_raw = B_old / conversion
 
-    census_age_reweight = None
+    acs_age_reweight = None
     if args.historical_start_year == 2007:
         stationary_age_mass = np.sum(
             initial_g_pre, axis=(0, 1, 2, 4, 5, 6)
@@ -1462,7 +1973,7 @@ def main() -> None:
             + np.arange(int(old_parameters.J), dtype=float)
             * float(old_parameters.da)
         )
-        census_age_reweight = census_2007_age_reweight_diagnostic(
+        acs_age_reweight = acs_2007_age_reweight_diagnostic(
             stationary_age_mass,
             model_ages,
             E_old,
@@ -1470,9 +1981,53 @@ def main() -> None:
             period_years=float(old_parameters.period_years),
         )
         write_json(
-            outdir / "census_2007_age_reweight_diagnostic.json",
-            census_age_reweight,
+            outdir / "acs_2007_head_age_reweight_diagnostic.json",
+            acs_age_reweight,
         )
+        if args.initial_age_profile == "acs-national-heads-2007":
+            initial_g_pre = reweight_distribution_to_acs_2007_ages(
+                initial_g_pre,
+                acs_age_reweight,
+            )
+
+    supply_rule, supply_normalization = calendar.normalize_date0_housing_supply(
+        initial_g_pre,
+        old_policy,
+        old_parameters,
+        b_grid,
+        old_shared,
+        str(args.housing_supply_mode),
+    )
+    retained_supply_elasticity = float(supply_rule.elasticity)
+    if args.housing_supply_elasticity is not None:
+        supply_rule = calendar.HousingSupplyRule(
+            mode=supply_rule.mode,
+            initial_price=supply_rule.initial_price,
+            initial_stock=supply_rule.initial_stock,
+            elasticity=float(args.housing_supply_elasticity),
+        )
+    supply_normalization["retained_housing_supply_elasticity"] = (
+        retained_supply_elasticity
+    )
+    supply_normalization["transition_housing_supply_elasticity"] = float(
+        supply_rule.elasticity
+    )
+    supply_normalization["elasticity_status"] = (
+        "diagnostic_override"
+        if args.housing_supply_elasticity is not None
+        else "retained_model_value"
+    )
+
+    population_target_indices = (
+        census_household_target_indices()
+        if args.household_count_path == "census-hh3-2007-2023"
+        else None
+    )
+    population_age_target_years = (
+        census_household_age_target_years()
+        if args.household_count_path == "census-hh3-2007-2023"
+        else None
+    )
 
     postshock_parameters = copy.deepcopy(old_parameters)
     postshock_parameters.psi_child = float(args.new_psi_child)
@@ -1489,10 +2044,28 @@ def main() -> None:
             )
             else "_inherited_momentum"
         )
+        census_suffix = (
+            "_census_household_bridge"
+            if args.household_count_path == "census-hh3-2007-2023"
+            else ""
+        )
+        age_suffix = (
+            "_acs_age_initial"
+            if args.initial_age_profile == "acs-national-heads-2007"
+            else ""
+        )
+        policy_suffix = (
+            "_dependent_child_ltv95"
+            if args.policy_case == "dependent-child-ltv95"
+            else ""
+        )
         scenario = (
             "preference_decline_open_birth_vintage_"
             + str(args.housing_supply_mode).replace("-", "_")
             + momentum_suffix
+            + census_suffix
+            + age_suffix
+            + policy_suffix
         )
         paths, ages, children, scenario_summary = run_birth_vintage_scenario(
             label=scenario,
@@ -1510,6 +2083,10 @@ def main() -> None:
             initial_birth_pipeline_multiplier=float(
                 args.initial_birth_pipeline_multiplier
             ),
+            population_target_indices=population_target_indices,
+            population_age_target_years=population_age_target_years,
+            policy_case=str(args.policy_case),
+            policy_start_period=int(args.policy_start_period),
             old_psi_child=float(args.old_psi_child),
             new_psi_child=float(args.new_psi_child),
             preference_transition_periods=int(args.preference_transition_periods),
@@ -1560,6 +2137,7 @@ def main() -> None:
                 scenario_summary["maturation_survival_yield"]
             ),
             supply_rule=supply_rule,
+            policy_case=str(args.policy_case),
             outdir=outdir,
         )
         if stationary_endpoint.get("status") == "complete":
@@ -1587,6 +2165,12 @@ def main() -> None:
         ),
         outdir=outdir,
     )
+    if population_target_indices:
+        make_population_target_accounting_plot(
+            paths,
+            post_target_outside_flow=outside_share * E_old,
+            outdir=outdir,
+        )
 
     historical_comparison = None
     if args.historical_start_year is not None:
@@ -1595,6 +2179,11 @@ def main() -> None:
             start_year=int(args.historical_start_year),
             old_user_cost=float(old_parameters.user_cost_rate)
             * float(np.asarray(old_price).reshape(-1)[0]),
+            household_counts_by_year=(
+                census_household_model_age_levels()
+                if args.household_count_path == "census-hh3-2007-2023"
+                else None
+            ),
             outdir=outdir,
         )
 
@@ -1630,11 +2219,22 @@ def main() -> None:
         "initial_birth_pipeline_multiplier": float(
             args.initial_birth_pipeline_multiplier
         ),
+        "initial_age_profile": str(args.initial_age_profile),
+        "household_count_path": str(args.household_count_path),
+        "housing_supply_elasticity_override": args.housing_supply_elasticity,
+        "policy_case": str(args.policy_case),
+        "policy_start_period": int(args.policy_start_period),
         "period_years": float(old_parameters.period_years),
         "periods": int(args.periods),
         "old_steady_state": old_row,
         "renewal_closure": {
-            "equation": "E_(t+1) = M + rho * B_t",
+            "equation": (
+                "G_(t+1) is reweighted to HH-3 totals and national ACS "
+                "four-year head-age shares through 2023; "
+                "E_(t+1) = M_bar + rho * B_t afterward"
+                if population_target_indices
+                else "E_(t+1) = M_bar + rho * B_t"
+            ),
             "outside_origin_entry_share_at_old_steady_state": outside_share,
             "outside_entry_flow_M": outside_flow,
             "retention_rho": retention,
@@ -1648,7 +2248,7 @@ def main() -> None:
         "scenario_summary": scenario_summary,
         "stationary_open_endpoint": stationary_endpoint,
         "historical_comparison": historical_comparison,
-        "census_2007_age_reweight_diagnostic": census_age_reweight,
+        "acs_2007_head_age_reweight_diagnostic": acs_age_reweight,
         "peak_population": peak_population,
         "peak_asset_price": peak_price,
         "last_simulated_period": final_row,
@@ -1662,6 +2262,14 @@ def main() -> None:
                 else "date-0-normalized contemporaneous constant-elastic supply"
             ),
             "population_normalization": "none after the old steady state",
+            "initial_age_profile": str(args.initial_age_profile),
+            "household_count_bridge": (
+                "Census HH-3 totals and national ACS four-year householder ages "
+                "matched through a dated reduced-form formation/migration residual"
+                if population_target_indices
+                else "none"
+            ),
+            "policy": str(args.policy_case),
             "initial_child_pipeline": (
                 "old steady-state pipeline"
                 if math.isclose(
@@ -1672,7 +2280,12 @@ def main() -> None:
                 )
                 else "diagnostically scaled inherited cohorts; future cohorts are model-generated"
             ),
-            "purpose": "test whether inherited cohorts can generate short-run population and price momentum after a fertility-preference decline",
+            "purpose": (
+                "measure housing and policy incidence after matching the observed "
+                "household-count and four-year head-age path with an accounting residual"
+                if population_target_indices
+                else "test whether inherited cohorts can generate short-run population and price momentum after a fertility-preference decline"
+            ),
         },
     }
     write_json(outdir / "summary.json", summary)
@@ -1684,13 +2297,23 @@ This packet starts from the paper's sequential child-room-floor model at
 `psi_child={args.old_psi_child:g}` and permanently moves to
 `psi_child={args.new_psi_child:g}`. The preference transition lasts
 `{args.preference_transition_periods}` model periods; zero means an immediate
-shift. The outside entrant flow and retention rate
-are fixed at the old steady state. The full household distribution is then
+shift. The initial age profile is `{args.initial_age_profile}` and the
+household-count path is `{args.household_count_path}`. With the Census bridge,
+an age-specific reduced-form household-formation/migration residual matches
+HH-3 household totals and national ACS four-year head-age shares through 2023;
+afterward
+the model returns to the old steady-state outside flow. The bridge preserves
+the model's full conditional state distribution within each four-year age cell.
+The observed bridge is used only over the reported historical window; it is not
+a structural post-2023 headship law.
+The retention rate is fixed throughout, and the full household distribution is
 carried forward without population renormalization.
 
 Housing supply is `{args.housing_supply_mode}`. The static-elastic option is a
 sequence of contemporaneous supply equilibria; it is not a construction-sector
-transition with a predetermined stock.
+transition with a predetermined stock. Its transition elasticity is
+`{supply_rule.elasticity:g}`; the retained model value is
+`{retained_supply_elasticity:g}`.
 
 The renewal clock is `{args.renewal_clock}`. The paper-facing default uses a
 separate birth-vintage queue: household children-at-home states continue to
@@ -1698,8 +2321,10 @@ govern housing choices, but locally born entrant households arrive only after
 the declared child-to-entry delay. The date-0 inherited pipeline multiplier is
 `{args.initial_birth_pipeline_multiplier:g}`; values other than one are
 diagnostic initial conditions, not re-estimated household parameters.
-When the historical start is 2007, the packet also writes a coarse Census
-HH-3 age-reweighting check with the old steady-state entrant flow held fixed.
+When the historical start is 2007, the packet also writes a national ACS
+head-age reweighting check with the old steady-state entrant flow held fixed.
+The optional tenure policy is `{args.policy_case}` and starts in period
+`{args.policy_start_period}`.
 
 The calculation is a temporary-equilibrium transition diagnostic: households
 treat the current price as permanent at each date. It is not yet the paper's

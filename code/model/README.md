@@ -41,41 +41,73 @@ PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OP
   --outdir output/model/e5f_floor_reproductive_schedule/full_rebated
 ```
 
-The current estimate has no closed-population root on the audited range: `B/E`
-remains below one for asset prices from `0.5%` to `300%` of baseline. The
-paper-facing transition therefore uses the open renewal equation and a dated
-birth-to-entry queue:
+The current estimate has no closed-population root on the audited price range.
+The robustness audit below changes both fertility-logit scales, reanchors the
+preference intercept at the old house price, and checks whether lower housing
+costs restore replacement:
 
 ```bash
-PYTHONPATH=code/model:code/model/tools NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
-  code/model/.venv/bin/python code/model/tools/run_e5f_open_population_transition.py \
-  --periods 25 \
-  --old-psi-child 0.1062 --new-psi-child -0.2419 \
-  --preference-transition-periods 4 --historical-start-year 2007 \
-  --housing-supply-mode fixed-stock \
-  --output-dir output/model/e5f_floor_open_population_transition/historical_2007_preference_transition
+code/model/.venv/bin/python \
+  code/model/tools/audit_e5f_fertility_price_feedback.py \
+  --outdir output/model/sequential_fertility_price_feedback_audit
+```
+
+The clean between-steady-states experiment instead uses the provisionally
+normalized open renewal equation, a dated birth-to-entry queue, and elastic
+long-run housing supply:
+
+```bash
+code/model/.venv/bin/python \
+  code/model/tools/run_e5f_open_population_transition.py \
+  --periods 60 --old-psi-child 0.1062 --new-psi-child -0.2419 \
+  --preference-transition-periods 4 --housing-supply-mode static-elastic \
+  --output-dir output/model/e5f_floor_open_population_transition/between_steady_states_static_elastic_long
 ```
 
 This wrapper leaves the sequential household problem unchanged. It propagates
-the full unnormalized adult distribution, while an aggregate birth-vintage
-queue prevents newborns from becoming entrant households in the same model
-period. Household policies use temporary-equilibrium/static price expectations;
-the packet is a transition diagnostic, not a perfect-foresight welfare run. Use
-`--housing-supply-mode static-elastic` and the output folder
-`historical_2007_static_elastic` for the Oswald-style supply sensitivity and
-positive terminal open steady state.
+the full unnormalized household distribution, while the birth-vintage queue
+prevents newborns from becoming entrant households immediately. The exact old
+open steady state is the initial condition. A permanently fixed inherited
+housing stock has no usable positive-price terminal root on the audited range;
+the lower steady state requires depreciation, vacancy, demolition, or elastic
+stock adjustment.
 
-`--initial-birth-pipeline-multiplier` is an explicit initial-condition
-sensitivity. A value of `1.5716580479664188` scales only the four cohorts
-already born at date 0 so that model adult-household mass grows by the same
-`11.73%` as U.S. total population through 2023. It produces a `16.97%`
-fixed-stock housing-cost increase and a `3.77%` increase under static elastic
-supply. This is an existence check, not a demographic calibration: official
-Census household-age and CDC birth data reject interpreting the multiplier as
-a literal pre-existing birth-cohort bulge. For 2007 historical runs, the driver
-also writes `census_2007_age_reweight_diagnostic.json`; its coarse age-cell
-reweighting generates only `3.04%` adult-household growth through 2023 when the
-old steady-state entrant flow is held fixed.
+The separate historical accounting exercise uses Census HH-3 household totals
+and national IPUMS ACS four-year householder-age shares from 2007 through 2023:
+
+```bash
+code/model/.venv/bin/python \
+  code/model/tools/run_e5f_open_population_transition.py \
+  --periods 5 --old-psi-child 0.1062 --new-psi-child -0.2419 \
+  --preference-transition-periods 4 --historical-start-year 2007 \
+  --initial-age-profile acs-national-heads-2007 \
+  --household-count-path census-hh3-2007-2023 \
+  --housing-supply-mode static-elastic \
+  --housing-supply-elasticity 0.3675 \
+  --output-dir output/model/e5f_floor_open_population_transition/historical_accounting_fitted_supply
+```
+
+The age bridge is a reduced-form household-formation/migration residual, not a
+structural population closure, and the reported historical run stops at the
+last observed target. It makes the 2007 economy an observed transition state
+rather than a literal demographic steady state. Rebuild its exact age shares with
+`code/data/Spatial_aggregate_withmicrodata/build_national_householder_age_path.py`.
+The fitted supply elasticity is a one-moment diagnostic; fixed stock and the
+retained elasticity remain reported sensitivities.
+
+All transition paths use temporary-equilibrium/static price expectations. They
+are cohort-accounting and incidence diagnostics, not perfect-foresight welfare
+runs.
+
+Build the single comparison figure, result tables, and interpretation note with:
+
+```bash
+code/model/.venv/bin/python code/model/tools/build_e5f_transition_decision_packet.py
+```
+
+The output is under
+`output/model/e5f_floor_open_population_transition/decision_packet/`; it also
+reports the endpoint sensitivity to the provisional outside-entry share.
 
 The shared calendar scaffolding also preserves the one-shot fallback. Its
 stationary nesting smoke is:
