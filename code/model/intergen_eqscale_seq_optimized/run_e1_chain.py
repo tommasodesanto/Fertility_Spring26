@@ -73,12 +73,6 @@ if os.environ.get("E5", "") == "1":
         (name, psi_lower, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
         for name, lo, hi, kind in DOMAIN
     )
-    if "E5_PROBE_FIX_KE" in os.environ:
-        probe_fixed_kappa_fert = float(os.environ["E5_PROBE_FIX_KE"])
-        if not math.isfinite(probe_fixed_kappa_fert) or probe_fixed_kappa_fert <= 0.0:
-            raise ValueError("E5_PROBE_FIX_KE must be a finite positive float")
-        DOMAIN = tuple(row for row in DOMAIN if row[0] != "kappa_fert")
-        FIXED["kappa_fert"] = probe_fixed_kappa_fert
 if os.environ.get("E6A", "") == "1" and os.environ.get("E5", "") != "1":
     raise ValueError("E6A requires the signed E5 target contract (set E5=1)")
 if os.environ.get("E5_MATURATION_REPAIR", "") == "1" and os.environ.get("E5", "") != "1":
@@ -104,6 +98,30 @@ if os.environ.get("E5F", "") == "1":
         (name, psi_lower, psi_bound, kind) if name == "psi_child" else (name, lo, hi, kind)
         for name, lo, hi, kind in DOMAIN
     )
+if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ:
+    probe_fixed_kappa_fert = float(os.environ["E5_PROBE_FIX_KE"])
+    if not math.isfinite(probe_fixed_kappa_fert) or probe_fixed_kappa_fert <= 0.0:
+        raise ValueError("E5_PROBE_FIX_KE must be a finite positive float")
+    if sum(row[0] == "kappa_fert" for row in DOMAIN) != 1:
+        raise ValueError("E5_PROBE_FIX_KE requires exactly one free kappa_fert row")
+    DOMAIN = tuple(row for row in DOMAIN if row[0] != "kappa_fert")
+    FIXED["kappa_fert"] = probe_fixed_kappa_fert
+if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KC" in os.environ:
+    probe_fixed_kappa_fert_continuation = float(
+        os.environ["E5_PROBE_FIX_KC"]
+    )
+    if (
+        not math.isfinite(probe_fixed_kappa_fert_continuation)
+        or probe_fixed_kappa_fert_continuation <= 0.0
+    ):
+        raise ValueError("E5_PROBE_FIX_KC must be a finite positive float")
+    if sum(row[0] == "kappa_fert_continuation" for row in DOMAIN) != 1:
+        raise ValueError(
+            "E5_PROBE_FIX_KC requires exactly one free "
+            "kappa_fert_continuation row"
+        )
+    DOMAIN = tuple(row for row in DOMAIN if row[0] != "kappa_fert_continuation")
+    FIXED["kappa_fert_continuation"] = probe_fixed_kappa_fert_continuation
 if os.environ.get("E6C", "") == "1":
     if not (
         os.environ.get("E5", "") == "1"
@@ -247,6 +265,24 @@ def seed_reproduction_gate(
     }
 
 
+def apply_probe_seed_overrides(theta: dict[str, float]) -> dict[str, float]:
+    """Apply explicit, default-off starting values for diagnostic searches."""
+    if "E5_PROBE_SEED_PSI" not in os.environ:
+        return theta
+    value = float(os.environ["E5_PROBE_SEED_PSI"])
+    psi_rows = [row for row in DOMAIN if row[0] == "psi_child"]
+    if len(psi_rows) != 1:
+        raise ValueError("E5_PROBE_SEED_PSI requires one free psi_child row")
+    _, lower, upper, _ = psi_rows[0]
+    if not math.isfinite(value) or not lower <= value <= upper:
+        raise ValueError(
+            f"E5_PROBE_SEED_PSI must lie in [{lower:g}, {upper:g}]"
+        )
+    out = dict(theta)
+    out["psi_child"] = value
+    return out
+
+
 def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
     """Return the E1 seed: M5 shared coordinates plus E1-only primitives.
 
@@ -274,6 +310,7 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
             # frontier-v3 evidence value.
             theta["kappa_fert_continuation"] = 0.3
         theta.update(FIXED)
+        theta = apply_probe_seed_overrides(theta)
         if set(theta) != required:
             raise RuntimeError(f"E2 seed keys differ from contract: {sorted(theta)}")
         return theta
@@ -299,6 +336,7 @@ def build_seed_theta(seed_path: Path = M5_RESULTS) -> dict[str, float]:
         theta = {name: float(source[name]) for name in allowed - {"delta_alpha", "delta_alpha_jump", "gamma_e"}}
         theta.update(delta_alpha=0.05, delta_alpha_jump=0.10, gamma_e=0.5, theta_n=0.0)
     theta.update(FIXED)
+    theta = apply_probe_seed_overrides(theta)
     required = allowed | set(FIXED)
     if set(theta) != required:
         raise RuntimeError(f"E1 seed keys differ from contract: {sorted(theta)}")
@@ -634,6 +672,12 @@ def main() -> None:
         metadata["psi_min"] = psi_lower
     if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KE" in os.environ:
         metadata["probe_fixed_kappa_fert"] = probe_fixed_kappa_fert
+    if os.environ.get("E5", "") == "1" and "E5_PROBE_FIX_KC" in os.environ:
+        metadata["probe_fixed_kappa_fert_continuation"] = (
+            probe_fixed_kappa_fert_continuation
+        )
+    if os.environ.get("E5", "") == "1" and "E5_PROBE_SEED_PSI" in os.environ:
+        metadata["probe_seed_psi_child"] = float(os.environ["E5_PROBE_SEED_PSI"])
     (args.outdir / "metadata.json").write_text(json.dumps(jsonable(metadata), indent=2, sort_keys=True))
     started, records, best, eval_idx = time.perf_counter(), [], None, 0
     reserve = 0.0 if args.smoke else min(300.0, max(0.0, args.minutes * 60.0 - 1.0))

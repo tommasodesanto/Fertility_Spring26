@@ -107,7 +107,18 @@ code/model/.venv/bin/python code/model/tools/build_e5f_transition_decision_packe
 
 The output is under
 `output/model/e5f_floor_open_population_transition/decision_packet/`; it also
-reports the endpoint sensitivity to the provisional outside-entry share.
+contains the complete current-target fit, the fit cost of making fertility
+responsive enough to restore a closed root, a 16-case closure/supply/policy
+grid, and a ranked menu of quantitative versions. Regenerate the fixed-other-
+parameter slope frontier with:
+
+```bash
+code/model/.venv/bin/python code/model/tools/audit_e5f_slope_fit_tradeoff.py
+```
+
+The slope frontier and its bounded refit are diagnostics, not promoted
+calibrations. The decision packet reports the endpoint sensitivity to the
+provisional outside-entry share explicitly.
 
 The shared calendar scaffolding also preserves the one-shot fallback. Its
 stationary nesting smoke is:

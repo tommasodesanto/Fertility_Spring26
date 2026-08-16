@@ -1,6 +1,66 @@
 # Calibration Status
 
-Updated: `2026-08-15` (Raquel-slide sequential architecture promoted; calibration remains provisional)
+Updated: `2026-08-16` (sequential transition compromise audit; calibration remains provisional)
+
+## August 16 transition decision and bounded calibration audit
+
+The smallest viable dynamic extension is an **open-population transition**
+around the promoted sequential architecture. The household Bellman problem is
+unchanged. Calendar-time cohort mass, the existing child-to-entry delay, a
+fixed outside-entry flow, and date-by-date housing clearing connect a
+constructed old open steady state to a lower one. The older fixed-quota closure
+remains the stationary benchmark; it cannot generate population dynamics by
+construction. The integrated evidence and decision menu are under
+`output/model/e5f_floor_open_population_transition/decision_packet/`.
+
+The saved working estimate was first re-solved under the current 12-moment,
+9-free-parameter target contract. The strict loss is `296.980765`, the market
+residual is `1.05e-5`, and a 25-evaluation local refit returns the same point.
+The corrected first-birth rooms row contributes only `0.471` to the loss. The
+largest contributions are childlessness (`121.529`), old-age wealth dispersion
+(`105.106`), and late first births (`51.482`). Thus the target revision alone
+does not unlock a nearby fit; the target also remains under its empirical hold.
+The packet contains the complete target-fit and parameter/bound tables.
+
+A strict slope frontier fixes both fertility-logit noise scales at common
+factors from `1` through `0.05`, chooses a nonnegative fertility intercept, and
+reports all 12 target rows. The first tested factor with a closed root is
+`0.05`, a twentyfold increase in responsiveness. Holding other parameters
+fixed raises the loss to `1753.368`. A bounded 100-evaluation refit of the other
+seven parameters lowers the strict, exactly repeated loss to `672.030`, with
+market residual `2.07e-6`, but leaves large gaps in late first births,
+childlessness, the family-size room gradient, and ownership. This is a local
+diagnostic, not a production calibration or evidence of a global optimum.
+
+The independently rerun renewal audit confirms that the refitted steep-slope
+point is mathematically capable of a closed steady state: maximum renewal on
+the price grid is `1.01832`, and the root is at only `8.34%` of the old house
+price. The model completed-fertility statistic at that root is `2.36835`.
+Under the retained static supply curve, its implied adult-household scale is
+`0.00855`; with the old housing stock it is `0.66092`. The closed
+avenue is therefore feasible but quantitatively extreme under the present
+fertility block. The still more extreme `0.02` slope row was excluded after a
+strict market residual of `6.40e-5` failed the `2.5e-5` acceptance tolerance.
+
+The open-closure menu covers two supply elasticities, four provisional
+outside-origin entrant shares, and baseline versus dependent-child LTV95. All
+16 cells pass the operator, market, mass, and finite-distribution gates. New
+steady-state household scale ranges from `0.3523` to `0.8767`, and the house-
+price ratio from `0.1915` to `0.9475`, so endpoint levels are not identified
+without supply and migration evidence. LTV95 changes household scale by only
+`0.0035%` to `0.2496%` but raises ownership by `0.462` to `3.957` percentage
+points; the small ownership endpoint is a saturation case with initial
+ownership above 97%. The tenure/intergenerational result is more robust than a
+pronatal interpretation.
+
+The recommended paper version is therefore the open transition with retained
+long-run supply, accompanied by the fixed-quota benchmark and a separate
+2007--2023 historical accounting check. If contemporaneous stock adjustment is
+too stark, the next minimal change is a one-parameter partial-adjustment stock
+law with a vacancy margin. A full perfect-foresight asset-price/welfare model
+and a closed-population recalibration should be deferred. Torch authentication
+was unavailable during this audit, so no production cluster search was
+launched; all reported new calibration work is bounded and local.
 
 ## August 15 author decision: production paper architecture
 
