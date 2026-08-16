@@ -260,8 +260,10 @@ def panel_candidate(
         else -0.2419
     )
     center_status = "working_stationary_estimate"
+    center_sha256 = None
     if args.panel_center_json is not None:
-        payload = json.loads(args.panel_center_json.resolve().read_text(encoding="utf-8"))
+        center_path = args.panel_center_json.resolve()
+        payload = json.loads(center_path.read_text(encoding="utf-8"))
         candidate_payload = payload.get("best_candidate", payload)
         center_theta.update(candidate_payload["theta"])
         if terminal_name == "psi_child_change_2023":
@@ -270,7 +272,8 @@ def panel_candidate(
             )
         else:
             center_terminal_coordinate = float(candidate_payload["new_psi_child"])
-        center_status = str(args.panel_center_json.resolve())
+        center_status = str(center_path)
+        center_sha256 = source_sha256(center_path)
     center = transition_unit_from_candidate(center_theta, center_terminal_coordinate)
 
     if task == 1:
@@ -319,6 +322,7 @@ def panel_candidate(
         "panel_design": str(args.panel_design),
         "local_radius": float(args.panel_local_radius),
         "center": center_status,
+        "center_sha256": center_sha256,
         "terminal_preference_coordinate": terminal_name,
         "unit_vector": unit.tolist(),
         "domain": [

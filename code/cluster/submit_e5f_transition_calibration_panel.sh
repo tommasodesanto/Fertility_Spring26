@@ -1,7 +1,8 @@
 #!/bin/bash
 # Dated-transition calibration panel for the sequential child-room-floor model.
-# Each array task evaluates one reproducible nine-dimensional candidate on the
-# exact 2007--2023 calendar loop and writes a complete twelve-row target table.
+# Each array task evaluates one reproducible candidate on the exact 2007--2023
+# calendar loop and writes a complete twelve-row target table.  The baseline
+# has nine transition parameters; the measured-income repair has ten.
 #
 # Required production launch variables:
 #   E5F_TRANSITION_RUN_TAG, E5F_TRANSITION_PANEL_SIZE,
