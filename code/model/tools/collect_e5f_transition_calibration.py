@@ -117,7 +117,27 @@ def main() -> None:
     if len(contracts) > 1:
         raise RuntimeError(f"Mixed source/target/panel contracts: {sorted(contracts)}")
     valid = [row for row in candidate_rows if bool(row["valid"])]
-    best = min(valid, key=lambda row: float(row["transition_loss"])) if valid else None
+    best = (
+        dict(min(valid, key=lambda row: float(row["transition_loss"])))
+        if valid
+        else None
+    )
+    if best is not None:
+        selected_summary = next(
+            summary
+            for summary in summaries
+            if int(summary["panel_design"]["task_id"]) == int(best["task_id"])
+        )
+        best.update(
+            source=selected_summary["source"],
+            source_sha256=selected_summary["source_sha256"],
+            target_set=selected_summary["target_set"],
+            target_fingerprint=selected_summary["target_fingerprint"],
+            target_count=selected_summary["target_count"],
+            model_profile=selected_summary.get("model_profile"),
+            old_psi_child=selected_summary["old_psi_child"],
+            old_completed_fertility=selected_summary["old_model_completed_fertility"],
+        )
     candidate_rows.sort(key=lambda row: float(row["transition_loss"]))
     write_csv(report_dir / "all_candidates.csv", candidate_rows)
     write_csv(report_dir / "all_target_fit.csv", target_rows)
