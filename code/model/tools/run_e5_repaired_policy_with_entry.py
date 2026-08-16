@@ -26,6 +26,7 @@ if str(MODEL_DIR) not in sys.path:
     sys.path.insert(0, str(MODEL_DIR))
 
 import run_intergen_funded_policy_with_entry as closure
+import audit_closed_reproductive_closure as renewal_audit
 from entry_target_contract import (
     entry_target_from_outside_origin_share,
     quota_closure_from_outside_origin_share,
@@ -42,6 +43,30 @@ POLICY_CASES = (
     ("rebated_tax2", 0.02, False),
     ("rebated_tax2_grant0p4_Hge6", 0.02, True),
 )
+
+
+def topcode_consistent_solution(solution: Any, parameters: Any) -> tuple[Any, dict[str, Any]]:
+    """Return a light solution view with renewal flows in measured-child units."""
+    accounting = renewal_audit.topcode_consistent_renewal_accounting(
+        solution, parameters
+    )
+    view = SimpleNamespace(
+        entry_rate=float(solution.entry_rate),
+        entrants_mature_total=float(
+            accounting["topcode_adjusted_mature_entrant_households"]
+        ),
+        total_mass=float(getattr(solution, "total_mass", 1.0)),
+    )
+    return view, accounting
+
+
+def quota_population_scale_topcode(
+    solution: Any,
+    parameters: Any,
+    quota: dict[str, float | str],
+) -> tuple[SimpleNamespace, list[dict[str, Any]]]:
+    view, _ = topcode_consistent_solution(solution, parameters)
+    return quota_population_scale(view, parameters, quota)
 
 
 def parse_args() -> argparse.Namespace:
@@ -259,6 +284,10 @@ def main() -> None:
                 "fixed retention Rbar and fixed outside inflow Mbar; "
                 "S*E0 = Rbar*S*B(policy) + Mbar"
             ),
+            renewal_child_accounting=(
+                "topcode-consistent 3+ bin; raw explicit-state flows retained "
+                "as diagnostics"
+            ),
             closure_object_classification={
                 "outside_origin_entrant_share": {
                     "classification": "empirically normalized",
@@ -295,12 +324,23 @@ def main() -> None:
             smoke=args.smoke,
         )
         fixed_rows.append(row)
+        _, renewal = topcode_consistent_solution(solution, parameters)
         fixed_demography_rows.append(
             {
                 "case": label,
                 "entry_flow": float(solution.entry_rate),
-                "mature_cityborn_flow": float(solution.entrants_mature_total),
-                "births_per_normalized_household": float(solution.total_births_kfe),
+                "mature_cityborn_flow_raw_explicit_states": float(
+                    solution.entrants_mature_total
+                ),
+                "mature_cityborn_flow_topcode_consistent": float(
+                    renewal["topcode_adjusted_mature_entrant_households"]
+                ),
+                "births_per_normalized_household_raw_explicit_states": float(
+                    solution.total_births_kfe
+                ),
+                "births_per_normalized_household_topcode_consistent": float(
+                    renewal["topcode_adjusted_birth_children"]
+                ),
             }
         )
         fixed_solutions[label] = (solution, parameters)
@@ -310,9 +350,12 @@ def main() -> None:
     baseline_solution, baseline_parameters = fixed_solutions[cases[0][0]]
     baseline_entry_flow = float(baseline_solution.entry_rate)
     if args.closure_mode == "quota":
+        baseline_closure_solution, baseline_renewal = topcode_consistent_solution(
+            baseline_solution, baseline_parameters
+        )
         try:
             closure_objects = quota_closure_from_outside_origin_share(
-                baseline_solution,
+                baseline_closure_solution,
                 baseline_parameters,
                 outside_origin_share=float(args.outside_origin_entrant_share),
             )
@@ -322,7 +365,7 @@ def main() -> None:
                 json.dumps(jsonable(metadata), indent=2) + "\n"
             )
             raise
-        identity, _ = quota_population_scale(
+        identity, _ = quota_population_scale_topcode(
             baseline_solution,
             baseline_parameters,
             closure_objects,
@@ -342,10 +385,22 @@ def main() -> None:
         closure_objects["identity_scale_factor"] = float(identity.scale_factor)
         closure_objects["identity_entry_residual"] = float(identity.entry_residual)
         closure_objects["outside_origin_entrant_share_recovered"] = implied_outside_share
+        closure_objects.update(
+            renewal_child_accounting="topcode_consistent_3plus_bin",
+            baseline_raw_state_mature_cityborn_flow=float(
+                baseline_solution.entrants_mature_total
+            ),
+            baseline_raw_explicit_birth_children=float(
+                baseline_solution.total_births_kfe
+            ),
+            baseline_topcode_adjusted_birth_children=float(
+                baseline_renewal["topcode_adjusted_birth_children"]
+            ),
+        )
         (outdir / "benchmark_quota_objects.json").write_text(
             json.dumps(jsonable(closure_objects), indent=2) + "\n"
         )
-        scale_function = quota_population_scale
+        scale_function = quota_population_scale_topcode
     else:
         try:
             entry_target = entry_target_from_outside_origin_share(
@@ -401,7 +456,7 @@ def main() -> None:
             # Re-solving it with a different residual normalization would move
             # the numerical point and defeat the exact S=1 normalization.
             solution, parameters = fixed_solutions[label]
-            scale, _ = quota_population_scale(
+            scale, _ = quota_population_scale_topcode(
                 solution,
                 parameters,
                 closure_objects,
@@ -439,6 +494,11 @@ def main() -> None:
                     f"relative_gap={relative_entry_flow_gap:.3e}"
                 )
         moments = closure.extract_moments(joint.solution, joint.parameters)
+        _, renewal = topcode_consistent_solution(
+            joint.solution, joint.parameters
+        )
+        raw_births = float(joint.solution.total_births_kfe)
+        adjusted_births = float(renewal["topcode_adjusted_birth_children"])
         row = {
             "case": label,
             "annual_property_tax_rate": annual_tax,
@@ -452,7 +512,12 @@ def main() -> None:
             row.update(
                 retention_rate=float(closure_objects["retention_rate"]),
                 outside_inflow=float(closure_objects["outside_inflow"]),
-                mature_cityborn_flow=float(joint.solution.entrants_mature_total),
+                mature_cityborn_flow=float(
+                    renewal["topcode_adjusted_mature_entrant_households"]
+                ),
+                mature_cityborn_flow_raw_explicit_states=float(
+                    joint.solution.entrants_mature_total
+                ),
                 outside_origin_entrant_share=float(
                     joint.scale.outside_origin_entrant_share
                 ),
@@ -460,11 +525,13 @@ def main() -> None:
             )
         else:
             row["entry_probability"] = float(joint.scale.qbar)
+            adjusted_births = raw_births
         row.update(
-            normalized_births=float(joint.solution.total_births_kfe),
+            normalized_births=adjusted_births,
+            normalized_births_raw_explicit_states=raw_births,
             total_births=(
                 float(joint.scale.scale_factor)
-                * float(joint.solution.total_births_kfe)
+                * adjusted_births
             ),
             lump_sum_transfer_period_units=float(joint.transfer),
             scaled_property_tax_revenue=(

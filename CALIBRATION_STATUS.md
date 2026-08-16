@@ -1,8 +1,73 @@
 # Calibration Status
 
-Updated: `2026-08-16` (sequential transition compromise audit; calibration remains provisional)
+Updated: `2026-08-16` (`3+` renewal-unit correction; calibration remains provisional)
 
-## August 16 transition decision and bounded calibration audit
+## August 16 correction: renewal must use the model's measured child units
+
+The sequential model has parity states `0/1/2/3+`. Its reported completed-
+fertility statistic assigns the top state the observed mean `3.602`, while the
+raw child pipeline carries only three explicit child records. Earlier
+population-closure packets compared that raw maturation flow with required
+entry and therefore mixed child units. Those raw-flow population levels,
+closed-root tests, slope-frontier thresholds, and policy population effects are
+withdrawn as current results. Raw flows remain useful diagnostics only.
+
+The corrected stationary accounting adds `0.602` children for each flow that
+enters the `3+` state and assigns those children the same maturation yield as
+the explicit children. It changes no household choice. Under the rebated 1%
+property-tax benchmark, `E=0.0617334562`, raw mature entry is `0.0529294536`,
+and top-bin-consistent mature entry is `B=0.0577978637`. Thus the renewal ratio
+is `B/E=0.9362486293`, not `0.8573868512`. On the audited housing-cost grid from
+`0.5%` to `300%` of baseline, the corrected ratio ranges from `0.9575538395` to
+`0.8884481552` and has no closed root.
+
+The reanchored fixed-other-parameter slope audit confirms that this is not a
+model-class impossibility. A `0.25` multiplier on both fertility-logit scales
+does not produce a root; a `0.10` multiplier produces one at a housing-cost
+ratio of `0.07832`, and a `0.05` multiplier produces one at `0.49939`. These are
+uncalibrated sensitivities. The earlier bounded steep-slope refit has not yet
+been rerun under the corrected renewal units and is not a current calibration
+result.
+
+For the transition's old preference benchmark, which is reanchored to model
+completed fertility `2.12`, corrected `B/E=1.00285093`. With the provisional
+`16.9%` outside-origin entrant share, the fixed-flow identity implies local
+retention `0.82863761`. For the rebated policy benchmark, retention is
+`0.88758537`. Corrected fixed-flow policy effects are: the rebated 2% property
+tax changes housing cost, adult-household population, and total births by
+`-17.47%`, `+1.91%`, and `+2.29%`; adding the purchase grant changes them by
+`-17.17%`, `+3.84%`, and `+4.61%`.
+
+The corrected between-stationary-benchmarks path keeps population at one for
+the first 20 years, then reaches household mass `0.88524` and a housing-cost
+index `0.95166` after 60 years. With the retained static supply elasticity, the
+limiting fixed-inflow levels are `0.46971` and `0.73747`. The companion
+dependent-child LTV95 path raises dependent-child ownership by `4.13`
+percentage points and aggregate ownership by `1.53` points after 60 years, but
+changes population by only `0.0022%` and housing cost by `0.0223%`. The largest
+gap between the dated birth-vintage queue and the raw household child-state
+maturation clock is `12.97%`; this is a disclosed timing approximation. With
+the initial housing stock fixed, no usable positive-price endpoint exists on
+the audited grid, so vacancy, depreciation, demolition, or stock adjustment is
+required.
+
+The correction also fixes normalization of the saved first-, second-, and
+third-birth flow arrays in the Markov-income KFE. Aggregate moments and choices
+are unchanged; the saved birth-order flows now sum to the already-normalized
+aggregate birth flow. The current artifacts are
+`output/model/e5f_floor_reproductive_schedule/full_rebated/`,
+`output/model/sequential_fertility_price_feedback_audit/`, and
+`output/model/eqscale_seq_e5f_policy_entry_topcode/full_quota/`. The corrected
+transition packets are under
+`output/model/e5f_floor_open_population_transition/between_steady_states_static_elastic_long/`
+and its `_ltv95_long` companion.
+
+## August 16 pre-correction transition audit (historical; do not use for renewal magnitudes)
+
+The block below records the decision process before the `3+` unit correction.
+Its household-fit diagnostics remain informative, but its renewal ratios,
+closed-root thresholds, population endpoints, and population-policy magnitudes
+are superseded by the correction above.
 
 The smallest viable dynamic extension is an **open-population transition**
 around the promoted sequential architecture. The household Bellman problem is
@@ -85,14 +150,16 @@ described as final estimates.
 
 The working stationary population closure is the audited fixed-quota rule in
 `code/model/tools/run_e5_repaired_policy_with_entry.py`, invoked explicitly
-with `--closure-mode quota`. At the floor-arm baseline, required entrants are
-`E=0.06173346`, mature locally born households are `B=0.05292942`, and
-`B/E=0.857386`. The provisional `16.9%` outside-origin share implies retention
-`0.969225` and nests population scale one. Under that closure, the rebated 2%
-property tax changes house price, household population, and total births by
-`-17.53%`, `+1.69%`, and `+2.03%`; adding the purchase grant changes them by
-`-17.29%`, `+3.46%`, and `+4.16%`. The outside-origin anchor remains
-provisional for a national interpretation.
+with `--closure-mode quota`. Renewal uses the top-bin-consistent child units
+defined in the August 16 correction above. At the floor-arm baseline, required
+entrants are `E=0.06173346`, mature locally born households are `B=0.05779782`,
+and `B/E=0.936249`; the raw explicit-state ratio `0.857387` is diagnostic only.
+The provisional `16.9%` outside-origin share implies retention `0.887585` and
+nests population scale one. Under that closure, the rebated 2% property tax
+changes housing cost, household population, and total births by `-17.47%`,
+`+1.91%`, and `+2.29%`; adding the purchase grant changes them by `-17.17%`,
+`+3.84%`, and `+4.61%`. The outside-origin anchor remains provisional for a
+national interpretation.
 
 The circulated Stone--Geary one-shot model is preserved as a fallback and
 comparison model under `intergen_housing_fertility_optimized`. Its August 15

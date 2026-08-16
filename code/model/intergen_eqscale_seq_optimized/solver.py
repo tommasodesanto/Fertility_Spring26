@@ -4952,6 +4952,13 @@ def forward_distribution_markov_income(
         g *= sc
         total_births *= sc
         births_by_loc *= sc
+        first_births_by_age *= sc
+        second_births_by_age *= sc
+        second_attempts_by_age *= sc
+        second_at_risk_by_age *= sc
+        third_births_by_age *= sc
+        third_attempts_by_age *= sc
+        third_at_risk_by_age *= sc
         entrants_mature_by_loc *= sc
         entrants_mature_total *= sc
 

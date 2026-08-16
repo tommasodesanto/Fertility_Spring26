@@ -621,6 +621,44 @@ def apply_sequential_fertility(
     return out, births, births_by_loc
 
 
+def calendar_topcode_birth_accounting(
+    g_pre: np.ndarray,
+    g_post: np.ndarray,
+    explicit_births: float,
+    P: SimpleNamespace,
+) -> dict[str, float]:
+    """Translate the explicit 0/1/2/3+ state into measured child units.
+
+    Entry into the last parity state identifies families reaching the 3+ bin.
+    The additional children represented by that bin are used only for aggregate
+    population renewal; household choices continue to use the existing state.
+    """
+    top_state = int(P.n_parity) - 1
+    if top_state != 3 or str(getattr(P, "fertility_units", "")).lower() != "literal_topcode":
+        return {
+            "explicit_birth_children": float(explicit_births),
+            "top_bin_entry_birth_flow": 0.0,
+            "topcode_adjusted_birth_children": float(explicit_births),
+        }
+    top_weight = float(getattr(P, "tfr_top_bin_weight", top_state))
+    top_before = float(np.sum(g_pre[:, :, :, :, :, top_state, :]))
+    top_after = float(np.sum(g_post[:, :, :, :, :, top_state, :]))
+    top_entry = top_after - top_before
+    if top_entry < -2e-12:
+        raise RuntimeError(
+            f"Top-bin mass fell during the fertility stage: {top_entry:.3e}"
+        )
+    top_entry = max(top_entry, 0.0)
+    adjusted = float(explicit_births) + (top_weight - top_state) * top_entry
+    if adjusted + 1e-14 < float(explicit_births):
+        raise RuntimeError("Top-code adjustment reduced the birth flow")
+    return {
+        "explicit_birth_children": float(explicit_births),
+        "top_bin_entry_birth_flow": top_entry,
+        "topcode_adjusted_birth_children": adjusted,
+    }
+
+
 def children_at_home_units(distribution: np.ndarray, P: SimpleNamespace) -> float:
     total = 0.0
     for parity in range(1, int(P.n_parity)):
@@ -767,6 +805,15 @@ def operator_gates(
     effective_mature = float(P.entrant_conversion_factor) * float(
         np.sum(mature_raw_by_loc)
     )
+    birth_accounting = calendar_topcode_birth_accounting(
+        evaluation.g_pre,
+        evaluation.g_post_fertility,
+        float(evaluation.births),
+        P,
+    )
+    stationary_renewal = closure_audit.topcode_consistent_renewal_accounting(
+        solution, P
+    )
     return {
         "stationary_post_fertility_nesting_l1": float(
             np.sum(
@@ -785,6 +832,19 @@ def operator_gates(
         "birth_flow": float(evaluation.births),
         "stationary_birth_flow": float(solution.total_births_kfe),
         "birth_flow_abs_error": abs(float(evaluation.births) - float(solution.total_births_kfe)),
+        "top_bin_entry_birth_flow": float(
+            birth_accounting["top_bin_entry_birth_flow"]
+        ),
+        "topcode_adjusted_birth_flow": float(
+            birth_accounting["topcode_adjusted_birth_children"]
+        ),
+        "stationary_topcode_adjusted_birth_flow": float(
+            stationary_renewal["topcode_adjusted_birth_children"]
+        ),
+        "topcode_adjusted_birth_flow_abs_error": abs(
+            float(birth_accounting["topcode_adjusted_birth_children"])
+            - float(stationary_renewal["topcode_adjusted_birth_children"])
+        ),
     }
 
 
@@ -795,6 +855,8 @@ def run_birth_vintage_scenario(
     baseline_price: float,
     baseline_B: float,
     baseline_births: float,
+    baseline_raw_B: float,
+    baseline_raw_births: float,
     parameters: SimpleNamespace,
     b_grid: np.ndarray,
     periods: int,
@@ -837,13 +899,30 @@ def run_birth_vintage_scenario(
     # effective mature-entrant flow. It combines child survival and the
     # children-to-households conversion, while the queue supplies the timing.
     maturation_survival_yield = baseline_B / max(conversion * baseline_births, 1e-15)
+    raw_maturation_survival_yield = baseline_raw_B / max(
+        conversion * baseline_raw_births, 1e-15
+    )
     if not 0.0 < maturation_survival_yield <= 1.0 + 1e-10:
         raise RuntimeError(
             "The stationary birth-to-entry yield is invalid: "
             f"{maturation_survival_yield:.12g}"
         )
+    if not math.isclose(
+        maturation_survival_yield,
+        raw_maturation_survival_yield,
+        rel_tol=0.0,
+        abs_tol=2e-12,
+    ):
+        raise RuntimeError(
+            "Raw and top-code-adjusted child maturation yields disagree: "
+            f"raw={raw_maturation_survival_yield:.12g}, "
+            f"adjusted={maturation_survival_yield:.12g}"
+        )
     scheduled_entries = [
         float(baseline_B) * float(initial_birth_pipeline_multiplier)
+    ] * int(delay_periods)
+    scheduled_raw_entries = [
+        float(baseline_raw_B) * float(initial_birth_pipeline_multiplier)
     ] * int(delay_periods)
     target_indices = dict(population_target_indices or {})
     target_age_years = dict(population_age_target_years or {})
@@ -944,11 +1023,25 @@ def run_birth_vintage_scenario(
                 evaluation, np.zeros(int(P.I)), P, b_grid, shared
             )
         )
+        birth_accounting = calendar_topcode_birth_accounting(
+            evaluation.g_pre,
+            evaluation.g_post_fertility,
+            float(evaluation.births),
+            P,
+        )
         scheduled_B = float(scheduled_entries.pop(0))
+        scheduled_raw_B = float(scheduled_raw_entries.pop(0))
+        adjusted_births = float(
+            birth_accounting["topcode_adjusted_birth_children"]
+        )
         new_potential_B = (
+            conversion * maturation_survival_yield * adjusted_births
+        )
+        new_potential_raw_B = (
             conversion * maturation_survival_yield * float(evaluation.births)
         )
         scheduled_entries.append(new_potential_B)
+        scheduled_raw_entries.append(new_potential_raw_B)
         retained_B = retention * scheduled_B
         next_target_index = target_indices.get(period + 1)
         dated_outside_flow = float(outside_flow)
@@ -1063,14 +1156,29 @@ def run_birth_vintage_scenario(
             "mean_adult_age": mean_age,
             "entry_flow_E": entry_flow,
             "birth_children": float(evaluation.births),
+            "birth_children_raw_explicit_states": float(evaluation.births),
+            "top_bin_entry_birth_flow": float(
+                birth_accounting["top_bin_entry_birth_flow"]
+            ),
+            "birth_children_topcode_adjusted": adjusted_births,
             "births_per_adult": float(evaluation.births) / max(adult_population, 1e-15),
+            "topcode_adjusted_births_per_adult": adjusted_births
+            / max(adult_population, 1e-15),
             "births_over_entry": float(evaluation.births) / max(entry_flow, 1e-15),
-            "mature_children_raw": scheduled_B / max(conversion, 1e-15),
+            "topcode_adjusted_births_over_entry": adjusted_births
+            / max(entry_flow, 1e-15),
+            "mature_children_raw": scheduled_raw_B / max(conversion, 1e-15),
             "effective_mature_entrant_flow_B": scheduled_B,
+            "raw_state_scheduled_mature_entrant_flow_B": scheduled_raw_B,
             "mature_to_current_entry_flow_ratio_diagnostic": scheduled_B / max(entry_flow, 1e-15),
             "model_state_same_period_mature_flow_B": model_mature_effective,
             "birth_queue_new_potential_flow_B": new_potential_B,
+            "birth_queue_new_raw_state_potential_flow_B": new_potential_raw_B,
             "birth_queue_scheduled_flows": list(scheduled_entries),
+            "birth_queue_raw_state_scheduled_flows": list(scheduled_raw_entries),
+            "dual_clock_raw_flow_gap_percent": 100.0
+            * (scheduled_raw_B - model_mature_effective)
+            / max(model_mature_effective, 1e-15),
             "closure": "open_birth_vintage",
             "housing_supply_mode": supply_rule.mode,
             "outside_entry_flow_M": dated_outside_flow,
@@ -1133,7 +1241,7 @@ def run_birth_vintage_scenario(
         )
         print(
             f"{label} t={period:02d} p={price_guess:.6f} "
-            f"pop={adult_population:.6f} births={evaluation.births:.6f} "
+            f"pop={adult_population:.6f} births={adjusted_births:.6f} "
             f"queue_B={scheduled_B:.6f} market={evaluation.relative_market_residual:.2e}",
             flush=True,
         )
@@ -1159,8 +1267,12 @@ def run_birth_vintage_scenario(
         "policy_case": policy_case,
         "policy_start_period": policy_start_period,
         "renewal_retention": retention,
+        "renewal_child_accounting": "topcode_consistent_3plus_bin",
         "entrant_conversion_factor": conversion,
         "maturation_survival_yield": maturation_survival_yield,
+        "maximum_absolute_dual_clock_raw_flow_gap_percent": max(
+            abs(float(row["dual_clock_raw_flow_gap_percent"])) for row in path_rows
+        ),
         "birth_to_entry_delay_periods": delay_periods,
         "birth_to_entry_delay_years": delay_periods * float(P.period_years) + float(P.period_years),
         "initial_birth_pipeline_multiplier": initial_birth_pipeline_multiplier,
@@ -1257,10 +1369,15 @@ def solve_stationary_open_endpoint(
                 psi_child=float(new_psi_child),
                 elapsed=elapsed,
             )
+            renewal_accounting = (
+                closure_audit.topcode_consistent_renewal_accounting(
+                    solution, parameters
+                )
+            )
             queue_B = (
                 conversion
                 * maturation_survival_yield
-                * float(solution.total_births_kfe)
+                * float(renewal_accounting["topcode_adjusted_birth_children"])
             )
             denominator = float(solution.entry_rate) - retention * queue_B
             if denominator <= 0.0:
@@ -1279,6 +1396,12 @@ def solve_stationary_open_endpoint(
             row.update(
                 policy_case=policy_case,
                 queue_mature_entrant_flow_B=queue_B,
+                queue_birth_children_topcode_adjusted=float(
+                    renewal_accounting["topcode_adjusted_birth_children"]
+                ),
+                queue_birth_children_raw_explicit_states=float(
+                    renewal_accounting["raw_birth_children"]
+                ),
                 renewal_denominator=denominator,
                 stationary_population_scale=population_scale,
                 housing_supply_mode=supply_rule.mode,
@@ -1397,7 +1520,9 @@ def make_paper_transition_plot(
     years = np.asarray([row["years_from_start"] for row in paths], dtype=float)
     population = np.asarray([row["population_index"] for row in paths], dtype=float)
     prices = np.asarray([row["asset_price_index"] for row in paths], dtype=float)
-    births = np.asarray([row["birth_children"] for row in paths], dtype=float) / old_births
+    births = np.asarray(
+        [row["birth_children_topcode_adjusted"] for row in paths], dtype=float
+    ) / old_births
     mature = np.asarray(
         [row["effective_mature_entrant_flow_B"] for row in paths], dtype=float
     ) / old_B
@@ -1405,25 +1530,10 @@ def make_paper_transition_plot(
 
     fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2), constrained_layout=True)
     axes[0].plot(years, population, lw=2.2, color="#21476b", label="Adult households")
-    axes[0].plot(years, prices, lw=2.2, color="#b14f32", label="House price")
-    if stationary_endpoint is not None and stationary_endpoint.get("status") == "complete":
-        axes[0].axhline(
-            float(stationary_endpoint["stationary_population_scale"]),
-            color="#21476b",
-            lw=1.1,
-            ls=":",
-            label="New population steady state",
-        )
-        axes[0].axhline(
-            float(stationary_endpoint["price_ratio"]),
-            color="#b14f32",
-            lw=1.1,
-            ls=":",
-            label="New price steady state",
-        )
+    axes[0].plot(years, prices, lw=2.2, color="#b14f32", label="Housing cost")
     axes[0].axhline(1.0, color="black", lw=0.8, alpha=0.45)
     axes[0].set(
-        title="Movement toward the new steady state",
+        title="First sixty years of adjustment",
         xlabel="Years after the preference change",
         ylabel="Index (old steady state = 1)",
     )
@@ -1447,6 +1557,16 @@ def make_paper_transition_plot(
     )
     axes[1].legend(frameon=False, fontsize=8)
     axes[1].grid(alpha=0.2)
+    display_horizon = min(60.0, float(np.max(years)))
+    if display_horizon > 0.0:
+        for axis in axes:
+            axis.set_xlim(0.0, display_horizon)
+        visible = years <= display_horizon + 1e-12
+        visible_levels = np.concatenate((population[visible], prices[visible], [1.0]))
+        lower = float(np.min(visible_levels))
+        upper = float(np.max(visible_levels))
+        padding = max(0.01, 0.08 * (upper - lower))
+        axes[0].set_ylim(lower - padding, upper + padding)
     fig.savefig(outdir / "steady_state_transition.png", dpi=220)
     fig.savefig(outdir / "steady_state_transition.pdf")
     plt.close(fig)
@@ -1932,6 +2052,7 @@ def main() -> None:
         and gates["one_step_constant_path_nesting_l1"] <= gate_tolerance
         and gates["mature_flow_abs_error"] <= gate_tolerance
         and gates["birth_flow_abs_error"] <= gate_tolerance
+        and gates["topcode_adjusted_birth_flow_abs_error"] <= gate_tolerance
     )
     if not gates["passed"]:
         write_json(
@@ -1952,7 +2073,21 @@ def main() -> None:
     )
 
     E_old = float(old_solution.entry_rate)
-    B_old = float(old_solution.entrants_mature_total)
+    old_renewal_accounting = (
+        closure_audit.topcode_consistent_renewal_accounting(
+            old_solution, old_parameters
+        )
+    )
+    B_old_raw_state = float(old_solution.entrants_mature_total)
+    B_old = float(
+        old_renewal_accounting[
+            "topcode_adjusted_mature_entrant_households"
+        ]
+    )
+    old_births_raw_state = float(old_solution.total_births_kfe)
+    old_births = float(
+        old_renewal_accounting["topcode_adjusted_birth_children"]
+    )
     outside_share = float(args.outside_origin_entry_share)
     retention = (1.0 - outside_share) * E_old / B_old
     if not 0.0 <= retention <= 1.0:
@@ -1961,7 +2096,7 @@ def main() -> None:
             f"rho={retention:.8g}"
         )
     conversion = float(old_parameters.entrant_conversion_factor)
-    B_old_raw = B_old / conversion
+    B_old_raw_children = B_old_raw_state / conversion
 
     acs_age_reweight = None
     if args.historical_start_year == 2007:
@@ -2072,7 +2207,9 @@ def main() -> None:
             initial_g_pre=initial_g_pre,
             baseline_price=float(np.asarray(old_price).reshape(-1)[0]),
             baseline_B=B_old,
-            baseline_births=float(old_solution.total_births_kfe),
+            baseline_births=old_births,
+            baseline_raw_B=B_old_raw_state,
+            baseline_raw_births=old_births_raw_state,
             parameters=postshock_parameters,
             b_grid=b_grid,
             periods=int(args.periods),
@@ -2105,7 +2242,7 @@ def main() -> None:
             None,
             float(np.asarray(old_price).reshape(-1)[0]),
             E_old,
-            B_old_raw,
+            B_old_raw_children,
             postshock_parameters,
             b_grid,
             int(args.periods),
@@ -2155,7 +2292,7 @@ def main() -> None:
             )
     make_paper_transition_plot(
         paths,
-        old_births=float(old_solution.total_births_kfe),
+        old_births=old_births,
         old_B=B_old,
         stationary_endpoint=stationary_endpoint,
         delay_years=(
@@ -2238,9 +2375,14 @@ def main() -> None:
             "outside_origin_entry_share_at_old_steady_state": outside_share,
             "outside_entry_flow_M": outside_flow,
             "retention_rho": retention,
+            "child_accounting": "topcode_consistent_3plus_bin",
             "entrant_conversion_factor": conversion,
             "old_entry_flow_E": E_old,
             "old_effective_mature_flow_B": B_old,
+            "old_raw_state_mature_flow_B": B_old_raw_state,
+            "old_topcode_adjusted_birth_children": old_births,
+            "old_raw_explicit_birth_children": old_births_raw_state,
+            "topcode_accounting_method": old_renewal_accounting["method"],
             "identity_residual": E_old - outside_flow - retention * B_old,
         },
         "operator_gates": gates,
@@ -2291,7 +2433,7 @@ def main() -> None:
     write_json(outdir / "summary.json", summary)
 
     command = " ".join(shlex.quote(item) for item in [sys.executable, *sys.argv])
-    readme = f"""# Sequential-model open population transition
+    readme = f"""# Sequential-model fixed-inflow population transition
 
 This packet starts from the paper's sequential child-room-floor model at
 `psi_child={args.old_psi_child:g}` and permanently moves to
@@ -2306,7 +2448,7 @@ the model returns to the old steady-state outside flow. The bridge preserves
 the model's full conditional state distribution within each four-year age cell.
 The observed bridge is used only over the reported historical window; it is not
 a structural post-2023 headship law.
-The retention rate is fixed throughout, and the full household distribution is
+The outside entrant flow and local retention rate are fixed throughout, and the full household distribution is
 carried forward without population renormalization.
 
 Housing supply is `{args.housing_supply_mode}`. The static-elastic option is a
@@ -2321,17 +2463,23 @@ govern housing choices, but locally born entrant households arrive only after
 the declared child-to-entry delay. The date-0 inherited pipeline multiplier is
 `{args.initial_birth_pipeline_multiplier:g}`; values other than one are
 diagnostic initial conditions, not re-estimated household parameters.
+The population queue counts the model's 3+ fertility state using the same
+top-bin mean as the reported completed-fertility statistic. The raw explicit
+three-child flow remains in `transition_path.csv`; the closure uses the
+top-code-consistent flow. The separate household and population maturation
+clocks are compared in the same table and summarized in `summary.json`.
 When the historical start is 2007, the packet also writes a national ACS
 head-age reweighting check with the old steady-state entrant flow held fixed.
 The optional tenure policy is `{args.policy_case}` and starts in period
 `{args.policy_start_period}`.
 
 The calculation is a temporary-equilibrium transition diagnostic: households
-treat the current price as permanent at each date. It is not yet the paper's
-perfect-foresight asset-price transition and should not be used for welfare.
-At every date, the maintained stationary user-cost identity keeps the model
-house-price-to-rent ratio fixed. The optional historical comparison reports
-that restriction directly instead of introducing an unestimated wedge.
+treat the current housing cost and preference shifter as permanent at each
+date. It is not yet the paper's perfect-foresight asset-price transition and
+should not be used for welfare. The maintained stationary user-cost identity
+makes the reported housing-cost index proportional to an implied asset value
+and keeps its price-to-rent ratio fixed. The optional historical comparison
+reports that restriction directly instead of introducing an unestimated wedge.
 
 Exact command:
 

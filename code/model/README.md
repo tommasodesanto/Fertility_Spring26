@@ -20,7 +20,7 @@ PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS
   .venv/bin/python tools/run_e5_repaired_policy_with_entry.py \
   --source ../../output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json \
   --closure-mode quota \
-  --outdir ../../output/model/e5f_floor_policy_quota_current
+  --outdir ../../output/model/eqscale_seq_e5f_policy_entry_topcode/full_quota
 ```
 
 The quota flag is explicit because the driver's default `logit` mode is kept
@@ -41,9 +41,12 @@ PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OP
   --outdir output/model/e5f_floor_reproductive_schedule/full_rebated
 ```
 
-The current estimate has no closed-population root on the audited price range.
+The renewal calculation counts the model's `3+` parity state with the same
+top-bin mean used in its completed-fertility statistic; raw three-child flows
+remain diagnostics. The current estimate has no closed-population root on the
+audited housing-cost range.
 The robustness audit below changes both fertility-logit scales, reanchors the
-preference intercept at the old house price, and checks whether lower housing
+preference intercept at the old housing cost, and checks whether lower housing
 costs restore replacement:
 
 ```bash
@@ -52,8 +55,8 @@ code/model/.venv/bin/python \
   --outdir output/model/sequential_fertility_price_feedback_audit
 ```
 
-The clean between-steady-states experiment instead uses the provisionally
-normalized open renewal equation, a dated birth-to-entry queue, and elastic
+The clean between-steady-states experiment instead uses a provisionally
+normalized fixed outside entrant flow, a dated birth-to-entry queue, and elastic
 long-run housing supply:
 
 ```bash
@@ -67,7 +70,7 @@ code/model/.venv/bin/python \
 This wrapper leaves the sequential household problem unchanged. It propagates
 the full unnormalized household distribution, while the birth-vintage queue
 prevents newborns from becoming entrant households immediately. The exact old
-open steady state is the initial condition. A permanently fixed inherited
+stationary benchmark is the initial condition. A permanently fixed inherited
 housing stock has no usable positive-price terminal root on the audited range;
 the lower steady state requires depreciation, vacancy, demolition, or elastic
 stock adjustment.
@@ -493,8 +496,10 @@ baseline identities
 then holds \((\bar R,\bar M)\) fixed and solves
 \(S E_0=\bar R S B_0(\mathrm{policy})+\bar M\) jointly with the funded house
 price and transfer. It fails if \(\bar R>1\) and never evaluates the entry
-logit. The quota closure is an experimental policy-reporting arm, not the
-promoted model closure.
+logit. For the sequential `3+` architecture, quota mode defines (B_0) in the
+same top-bin child units as measured completed fertility and writes the raw
+three-child flow separately. The quota closure is a fixed-flow policy-reporting
+arm, not an equilibrium model of migration.
 
 The live calibration uses the benchmark-normalized outside-option closure:
 `P.population_closure = "outside_option_benchmark_normalized"`.

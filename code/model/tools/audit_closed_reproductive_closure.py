@@ -269,6 +269,110 @@ def shared_clock_mature_flows_by_parity(sol: Any, parameters: Any) -> np.ndarray
     return flows
 
 
+def topcode_consistent_renewal_accounting(
+    sol: Any,
+    parameters: Any,
+) -> dict[str, Any]:
+    """Put measured fertility and demographic renewal in the same child units.
+
+    The sequential model's last parity state represents ``3+`` births.  Its
+    calibration moment therefore weights that state by the observed mean in
+    the top-coded bin, while the transition kernel can only carry three
+    explicit children.  For population renewal, we assign the extra top-bin
+    children the same maturation yield as explicit children.  This leaves the
+    household problem unchanged and makes the demographic accounting
+    consistent with the reported completed-fertility statistic.
+    """
+    raw_births = float(getattr(sol, "total_births_kfe", math.nan))
+    raw_mature = float(getattr(sol, "entrants_mature_total", math.nan))
+    conversion = float(getattr(parameters, "entrant_conversion_factor", math.nan))
+    if not (
+        math.isfinite(raw_births)
+        and raw_births > 0.0
+        and math.isfinite(raw_mature)
+        and raw_mature >= 0.0
+        and math.isfinite(conversion)
+        and conversion > 0.0
+    ):
+        raise RuntimeError(
+            "Invalid raw birth or maturation flow for renewal accounting: "
+            f"births={raw_births}, mature={raw_mature}, conversion={conversion}"
+        )
+
+    top_state = int(parameters.n_parity) - 1
+    top_weight = float(getattr(parameters, "tfr_top_bin_weight", top_state))
+    fertility_units = str(
+        getattr(parameters, "fertility_units", "parity2x")
+    ).strip().lower()
+    extra_per_top_family = (
+        max(top_weight - float(top_state), 0.0)
+        if fertility_units == "literal_topcode"
+        else 0.0
+    )
+    maturation_yield = raw_mature / (conversion * raw_births)
+    if not 0.0 <= maturation_yield <= 1.0 + 1e-10:
+        raise RuntimeError(
+            "Invalid explicit-child maturation yield: "
+            f"{maturation_yield:.12g}"
+        )
+
+    top_entry_birth_flow = 0.0
+    top_flow_share = 0.0
+    method = "raw_explicit_children"
+    adjusted_births = raw_births
+    adjusted_mature = raw_mature
+
+    if extra_per_top_family > 0.0:
+        if bool(getattr(parameters, "sequential_births", False)):
+            if top_state != 3:
+                raise RuntimeError(
+                    "Sequential top-code accounting currently requires parity states 0/1/2/3+."
+                )
+            third_births_by_age = np.asarray(
+                getattr(parameters, "_third_births_by_age", np.array([])),
+                dtype=float,
+            ).reshape(-1)
+            if third_births_by_age.size == 0 or not np.all(
+                np.isfinite(third_births_by_age)
+            ):
+                raise RuntimeError(
+                    "Sequential top-bin entry flow is unavailable after the KFE solve."
+                )
+            top_entry_birth_flow = float(np.sum(third_births_by_age))
+            adjusted_births = (
+                raw_births + extra_per_top_family * top_entry_birth_flow
+            )
+            adjusted_mature = conversion * maturation_yield * adjusted_births
+            top_flow_share = top_entry_birth_flow / raw_births
+            method = "sequential_top_bin_birth_flow_common_maturation_yield"
+        else:
+            parity_flows = shared_clock_mature_flows_by_parity(sol, parameters)
+            if not np.all(np.isfinite(parity_flows)):
+                raise RuntimeError(
+                    "Top-code-consistent mature flow could not be reconstructed."
+                )
+            adjusted_mature = float(
+                np.sum(parity_flows[:-1])
+                + parity_flows[-1] * top_weight / float(top_state)
+            )
+            top_flow_share = float(
+                parity_flows[-1] / max(np.sum(parity_flows), 1e-15)
+            )
+            method = "shared_clock_mature_flow_by_parity"
+
+    return {
+        "method": method,
+        "raw_birth_children": raw_births,
+        "top_bin_entry_birth_flow": top_entry_birth_flow,
+        "extra_children_per_top_bin_family": extra_per_top_family,
+        "topcode_adjusted_birth_children": adjusted_births,
+        "raw_mature_entrant_households": raw_mature,
+        "topcode_adjusted_mature_entrant_households": adjusted_mature,
+        "explicit_child_maturation_yield": maturation_yield,
+        "top_bin_flow_share": top_flow_share,
+    }
+
+
 def readout(
     chain: Any,
     sol: Any,
@@ -287,15 +391,13 @@ def readout(
     births = float(sol.total_births_kfe) / total_mass
     demand = float(np.sum(np.asarray(sol.housing_demand, dtype=float))) / total_mass
     supply = float(np.sum(np.asarray(sol.housing_supply, dtype=float)))
-    parity_flows = shared_clock_mature_flows_by_parity(sol, parameters)
-    if np.all(np.isfinite(parity_flows)):
-        top_weight = float(parameters.tfr_top_bin_weight)
-        top_state = int(parameters.n_parity) - 1
-        adjusted_mature = float(np.sum(parity_flows[:-1]) + parity_flows[-1] * top_weight / top_state)
-        top_flow_share = float(parity_flows[-1] / max(np.sum(parity_flows), 1e-15))
-    else:
-        adjusted_mature = math.nan
-        top_flow_share = math.nan
+    renewal = topcode_consistent_renewal_accounting(sol, parameters)
+    adjusted_births = float(renewal["topcode_adjusted_birth_children"]) / total_mass
+    adjusted_mature = float(
+        renewal["topcode_adjusted_mature_entrant_households"]
+    ) / total_mass
+    top_entry_birth_flow = float(renewal["top_bin_entry_birth_flow"]) / total_mass
+    top_flow_share = float(renewal["top_bin_flow_share"])
     return {
         "label": label,
         "price_ratio": float(price_ratio),
@@ -305,10 +407,19 @@ def readout(
         "total_mass": total_mass,
         "entry_households_per_adult": entry,
         "birth_children_per_adult": births,
+        "top_bin_entry_birth_flow_per_adult": top_entry_birth_flow,
+        "topcode_adjusted_birth_children_per_adult": adjusted_births,
         "mature_entrant_households_per_adult": mature,
+        "topcode_adjusted_mature_entrant_households_per_adult": adjusted_mature,
         "reproduction_ratio_B_over_E": mature / entry,
+        "raw_state_B_over_E": mature / entry,
         "reproduction_residual_B_minus_E": mature - entry,
         "topcode_adjusted_B_over_E_diagnostic": adjusted_mature / entry,
+        "topcode_consistent_B_over_E": adjusted_mature / entry,
+        "renewal_child_accounting_method": str(renewal["method"]),
+        "extra_children_per_top_bin_family": float(
+            renewal["extra_children_per_top_bin_family"]
+        ),
         "threeplus_share_of_mature_flow": top_flow_share,
         "maturation_exit_yield": mature / max(float(parameters.entrant_conversion_factor) * births, 1e-15),
         "entrant_conversion_factor": float(parameters.entrant_conversion_factor),
@@ -470,25 +581,47 @@ def run_architecture_only(args: argparse.Namespace) -> None:
 
 def make_schedule_plot(outdir: Path, rows: list[dict[str, Any]], *, title: str) -> None:
     ratios = np.asarray([row["price_ratio"] for row in rows], dtype=float)
-    reproduction = np.asarray([row["reproduction_ratio_B_over_E"] for row in rows], dtype=float)
+    raw_reproduction = np.asarray(
+        [row["reproduction_ratio_B_over_E"] for row in rows], dtype=float
+    )
+    reproduction = np.asarray(
+        [row["topcode_consistent_B_over_E"] for row in rows], dtype=float
+    )
     scale = np.asarray([row["scale_mapping_Hs_over_D"] for row in rows], dtype=float)
     fig, axes = plt.subplots(1, 2, figsize=(10.4, 4.2))
-    axes[0].plot(ratios, reproduction, marker="o", lw=2, color="#21476b")
+    axes[0].plot(
+        ratios,
+        reproduction,
+        marker="o",
+        lw=2,
+        color="#21476b",
+        label="3+ bin in measured child units",
+    )
+    axes[0].plot(
+        ratios,
+        raw_reproduction,
+        marker="s",
+        lw=1.4,
+        ls="--",
+        color="#7f8c8d",
+        label="Three explicit child states",
+    )
     axes[0].axhline(1.0, color="black", lw=1, ls=":")
     axes[0].set(
         xscale="log",
-        xlabel="Asset price / baseline price",
+        xlabel="Housing-cost ratio",
         ylabel=r"Effective reproduction $B/E$",
         title="Fertility and replacement",
     )
     axes[0].grid(alpha=0.25)
+    axes[0].legend(frameon=False, fontsize=8)
     axes[1].plot(ratios, scale, marker="o", lw=2, color="#b14f32")
     axes[1].set(
         xscale="log",
         yscale="log",
-        xlabel="Asset price / baseline price",
+        xlabel="Housing-cost ratio",
         ylabel=r"Stationary scale $H^S/D$",
-        title="Housing clearing conditional on price",
+        title="Housing clearing conditional on cost",
     )
     axes[1].grid(alpha=0.25)
     fig.suptitle(title)
@@ -645,7 +778,12 @@ def main() -> None:
         fiscal_residual=float(getattr(sol0, "property_tax_budget_residual", math.nan)),
     )
     write_csv(args.outdir / "baseline_accounting.csv", [baseline])
-    print(f"BASELINE_DONE B/E={baseline['reproduction_ratio_B_over_E']:.9f}", flush=True)
+    print(
+        "BASELINE_DONE "
+        f"raw_B/E={baseline['reproduction_ratio_B_over_E']:.9f} "
+        f"topcode_B/E={baseline['topcode_consistent_B_over_E']:.9f}",
+        flush=True,
+    )
 
     if args.smoke:
         ratios = (0.10, 1.0, 2.0) if args.profile == "e5f-floor" else (0.35, 1.0, 1.50)
@@ -687,7 +825,9 @@ def main() -> None:
         checkpoint(args.outdir, "maintained_price_grid", price_rows)
         print(
             f"PRICE_CASE {index}/{len(ratios)} ratio={ratio:.4g} "
-            f"B/E={row['reproduction_ratio_B_over_E']:.9f} F={row['scale_mapping_Hs_over_D']:.9g}",
+            f"raw_B/E={row['reproduction_ratio_B_over_E']:.9f} "
+            f"topcode_B/E={row['topcode_consistent_B_over_E']:.9f} "
+            f"F={row['scale_mapping_Hs_over_D']:.9g}",
             flush=True,
         )
 
@@ -729,14 +869,22 @@ def main() -> None:
         return
 
     if args.schedule_only:
-        reproduction = [float(row["reproduction_ratio_B_over_E"]) for row in price_rows]
+        primary_ratio_field = (
+            "topcode_consistent_B_over_E"
+            if args.profile == "e5f-floor"
+            else "reproduction_ratio_B_over_E"
+        )
+        reproduction = [float(row[primary_ratio_field]) for row in price_rows]
+        raw_reproduction = [
+            float(row["reproduction_ratio_B_over_E"]) for row in price_rows
+        ]
         if not all(math.isfinite(value) and value > 0.0 for value in reproduction):
             raise RuntimeError("Nonfinite or nonpositive reproduction on the calibrated schedule")
         ordered = sorted(price_rows, key=lambda row: float(row["asset_price"]))
         root_bracket: tuple[dict[str, Any], dict[str, Any]] | None = None
         for left, right in zip(ordered[:-1], ordered[1:]):
-            left_residual = float(left["reproduction_ratio_B_over_E"]) - 1.0
-            right_residual = float(right["reproduction_ratio_B_over_E"]) - 1.0
+            left_residual = float(left[primary_ratio_field]) - 1.0
+            right_residual = float(right[primary_ratio_field]) - 1.0
             if left_residual == 0.0 or left_residual * right_residual <= 0.0:
                 root_bracket = (left, right)
                 break
@@ -781,11 +929,11 @@ def main() -> None:
                         ),
                     )
                     write_csv(args.outdir / "root_search.csv", list(row_cache.values()))
-                return float(row_cache[key]["reproduction_ratio_B_over_E"])
+                return float(row_cache[key][primary_ratio_field])
 
             left, right = root_bracket
-            increasing = float(right["reproduction_ratio_B_over_E"]) > float(
-                left["reproduction_ratio_B_over_E"]
+            increasing = float(right[primary_ratio_field]) > float(
+                left[primary_ratio_field]
             )
             root_price = bisection(
                 evaluate_root,
@@ -810,18 +958,21 @@ def main() -> None:
             "fiscal_convention": args.fiscal_convention,
             "source": str(args.source),
             "baseline": baseline,
+            "primary_renewal_accounting": primary_ratio_field,
             "price_ratios": [float(row["price_ratio"]) for row in price_rows],
             "B_over_E_min": min(reproduction),
             "B_over_E_max": max(reproduction),
             "B_over_E_decreases_with_price": monotone(reproduction, increasing=False),
+            "raw_state_B_over_E_min": min(raw_reproduction),
+            "raw_state_B_over_E_max": max(raw_reproduction),
             "closed_root_found": root_row is not None,
             "closed_root": root_row,
             "baseline_full_retention_outside_share": 1.0
-            - float(baseline["reproduction_ratio_B_over_E"]),
+            - float(baseline[primary_ratio_field]),
             "retention_that_nests_16p9_outside_share": (1.0 - 0.169)
-            / float(baseline["reproduction_ratio_B_over_E"]),
+            / float(baseline[primary_ratio_field]),
             "local_elasticity_B_over_E_to_user_cost": log_slope(
-                price_rows, "reproduction_ratio_B_over_E"
+                price_rows, primary_ratio_field
             ),
             "local_elasticity_scale_map_to_user_cost": log_slope(
                 price_rows, "scale_mapping_Hs_over_D"

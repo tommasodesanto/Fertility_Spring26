@@ -1497,3 +1497,51 @@ birth counts are inconsistent with reading the multiplier as a literal birth
 bulge. A coarse reweighting of date-0 ages to the 2007 Census shares generates
 only `3.04%` growth by 2023 at the stationary entrant flow, so the missing
 empirical object is a dated household-formation and migration residual.
+
+---
+
+## August 16, 2026: correction to sequential-model renewal units
+
+### What changed
+
+The sequential model stores parity as `0/1/2/3+`, but its completed-fertility
+moment gives the top state the observed mean `3.602`. The earlier population
+closure used the raw pipeline of three explicit child records, so it mixed
+child units when comparing mature locally born entrants with required entry.
+The corrected closure adds the implied `0.602` children to each flow entering
+the top state and applies the explicit-child maturation yield. Household
+choices and calibrated moments are unchanged. A separate normalization bug in
+the saved birth-order flow arrays was also fixed and regression-tested.
+
+### Corrected results
+
+- The rebated working baseline has `E=0.06173346`, adjusted `B=0.05779786`,
+  and `B/E=0.93624863`; the raw ratio `0.85738685` is diagnostic only. No root
+  appears on the audited housing-cost range `0.005--3.0` at the current slope.
+- Reanchored fixed-other slope sensitivities restore a root at cost ratio
+  `0.07832` with a `0.10` multiplier on both logit scales and `0.49939` with a
+  `0.05` multiplier. These are not calibrated alternatives.
+- The old benchmark matched to model completed fertility `2.12` has
+  `B/E=1.00285093`. With the fixed outside-origin share `0.169`, retention is
+  `0.82863761`.
+- Under static elastic supply, household mass and housing cost are
+  `0.88524/0.95166` after 60 years and converge to `0.46971/0.73747`. The dated
+  queue and raw household child-state maturation clock differ by at most
+  `12.97%` during the transition.
+- Dependent-child LTV95 raises year-60 dependent-child ownership by `4.13`
+  percentage points and aggregate ownership by `1.53` points, but population
+  by only `0.0022%`. The tenure response is much stronger than the demographic
+  response at the current fertility slope.
+- Corrected fixed-flow policy effects are
+  `-17.47%/+1.91%/+2.29%` for housing cost/population/total births under the
+  rebated 2% property tax and `-17.17%/+3.84%/+4.61%` with the purchase grant.
+
+### Interpretation
+
+The fixed outside flow is a local-market accounting anchor, not an equilibrium
+migration model. The 2007 date indexes an old stationary benchmark; it is not a
+claim that the U.S. economy was literally in steady state. The maintained
+bequest motive affects old-age retention but does not transfer estates to
+particular descendants. The corrected report therefore presents a
+between-stationary-benchmarks cohort-accounting experiment, not a fitted U.S.
+asset-price or welfare transition.

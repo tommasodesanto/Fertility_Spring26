@@ -109,6 +109,21 @@ def test_l4_no_same_period_chaining() -> None:
     assert float(np.sum(P._third_births_by_age)) > 0.0
 
 
+def test_saved_birth_order_flows_use_normalized_population_units() -> None:
+    solution, parameters, _ = run_fork(_seq_eqscale(**L4), verbose=False)
+    saved_birth_flow = float(
+        np.sum(parameters._first_births_by_age)
+        + np.sum(parameters._second_births_by_age)
+        + np.sum(parameters._third_births_by_age)
+    )
+    np.testing.assert_allclose(
+        saved_birth_flow,
+        float(solution.total_births_kfe),
+        rtol=0.0,
+        atol=2e-12,
+    )
+
+
 def test_l4_third_birth_hazard_respects_fecundity() -> None:
     sol, _, _ = run_fork(
         _seq_eqscale(**L4, fecundity_omega1=0.5, fecundity_omega2=0.0),

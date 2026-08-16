@@ -4,7 +4,8 @@
 This is an uncalibrated sensitivity around the sequential child-room-floor
 estimate.  For each common multiplier on the first-birth and continuation
 fertility-logit scales, the script reanchors the preference intercept at the
-old house price and then traces effective demographic renewal over prices.
+old stationary housing cost and then traces effective demographic renewal over
+housing costs.
 """
 
 from __future__ import annotations
@@ -31,6 +32,9 @@ for path in (MODEL_ROOT, TOOLS_ROOT):
         sys.path.insert(0, str(path))
 
 import audit_closed_reproductive_closure as closure
+
+
+PRIMARY_RENEWAL_FIELD = "topcode_consistent_B_over_E"
 
 
 def parse_args() -> argparse.Namespace:
@@ -130,20 +134,20 @@ def make_plot(price_rows: list[dict[str, Any]], outdir: Path) -> None:
             key=lambda row: float(row["price_ratio"]),
         )
         x = np.asarray([float(row["price_ratio"]) for row in rows])
-        renewal = np.asarray([float(row["reproduction_ratio_B_over_E"]) for row in rows])
+        renewal = np.asarray([float(row[PRIMARY_RENEWAL_FIELD]) for row in rows])
         fertility = np.asarray([float(row["tfr_topcoded"]) for row in rows])
         axes[0].plot(x, renewal, marker="o", lw=1.8, label=f"scale x {factor:g}")
         axes[1].plot(x, fertility, marker="o", lw=1.8, label=f"scale x {factor:g}")
     axes[0].axhline(1.0, color="black", lw=0.9, ls="--")
     axes[0].set(
         title="Does a lower housing cost restore renewal?",
-        xlabel="House-price ratio",
+        xlabel="Housing-cost ratio",
         ylabel="Effective locally born entrants / required entrants",
         xscale="log",
     )
     axes[1].set(
         title="Fertility response at the post-shock intercept",
-        xlabel="House-price ratio",
+        xlabel="Housing-cost ratio",
         ylabel="Model completed-fertility statistic",
         xscale="log",
     )
@@ -240,9 +244,7 @@ def main() -> None:
         )
         old_anchor = evaluate(psi_old, old_price)
         psi_replacement = bisection(
-            lambda psi: float(
-                evaluate(psi, old_price)["reproduction_ratio_B_over_E"]
-            ),
+            lambda psi: float(evaluate(psi, old_price)[PRIMARY_RENEWAL_FIELD]),
             lower=-5.0,
             upper=5.0,
             target=1.0,
@@ -277,16 +279,14 @@ def main() -> None:
         root = None
         root_bracket = None
         for left, right in zip(ordered[:-1], ordered[1:]):
-            left_gap = float(left["reproduction_ratio_B_over_E"]) - 1.0
-            right_gap = float(right["reproduction_ratio_B_over_E"]) - 1.0
+            left_gap = float(left[PRIMARY_RENEWAL_FIELD]) - 1.0
+            right_gap = float(right[PRIMARY_RENEWAL_FIELD]) - 1.0
             if left_gap == 0.0 or left_gap * right_gap <= 0.0:
                 root_bracket = (float(left["asset_price"]), float(right["asset_price"]))
                 break
         if root_bracket is not None:
             root_price = bisection(
-                lambda price: float(
-                    evaluate(psi_low, price)["reproduction_ratio_B_over_E"]
-                ),
+                lambda price: float(evaluate(psi_low, price)[PRIMARY_RENEWAL_FIELD]),
                 lower=root_bracket[0],
                 upper=root_bracket[1],
                 target=1.0,
@@ -301,16 +301,26 @@ def main() -> None:
             "kappa_fert_continuation": scaled_base["kappa_fert_continuation"],
             "psi_matching_old_fertility": psi_old,
             "old_anchor_tfr": old_anchor["tfr_topcoded"],
-            "old_anchor_B_over_E": old_anchor["reproduction_ratio_B_over_E"],
+            "old_anchor_B_over_E": old_anchor[PRIMARY_RENEWAL_FIELD],
+            "old_anchor_raw_state_B_over_E": old_anchor[
+                "reproduction_ratio_B_over_E"
+            ],
             "old_anchor_childlessness": old_anchor["childless_rate"],
             "psi_imposing_replacement": psi_replacement,
             "replacement_anchor_tfr": replacement_anchor["tfr_topcoded"],
             "replacement_anchor_childlessness": replacement_anchor["childless_rate"],
             "psi_matching_low_fertility": psi_low,
             "low_anchor_tfr": low_anchor["tfr_topcoded"],
-            "low_anchor_B_over_E": low_anchor["reproduction_ratio_B_over_E"],
+            "low_anchor_B_over_E": low_anchor[PRIMARY_RENEWAL_FIELD],
+            "low_anchor_raw_state_B_over_E": low_anchor[
+                "reproduction_ratio_B_over_E"
+            ],
             "low_anchor_childlessness": low_anchor["childless_rate"],
             "maximum_B_over_E_on_price_grid": max(
+                float(row[PRIMARY_RENEWAL_FIELD])
+                for row in factor_price_rows
+            ),
+            "maximum_raw_state_B_over_E_on_price_grid": max(
                 float(row["reproduction_ratio_B_over_E"])
                 for row in factor_price_rows
             ),
@@ -370,6 +380,7 @@ def main() -> None:
         "old_psi_reference": args.old_psi_reference,
         "old_fertility_target": args.old_fertility_target,
         "low_fertility_target": args.low_fertility_target,
+        "primary_renewal_accounting": PRIMARY_RENEWAL_FIELD,
         "baseline": baseline,
         "original_kappa_fert": original_kappa_first,
         "original_kappa_fert_continuation": original_kappa_continuation,
@@ -391,7 +402,9 @@ def main() -> None:
         "The decisive columns are `maximum_B_over_E_on_price_grid` and "
         "`closed_root_found` in `sensitivity_summary.csv`. A different slope is "
         "not admissible for the paper until it is disciplined by causal "
-        "housing-cost variation.\n\n"
+        "housing-cost variation. Renewal uses the same 3+ top-bin child units "
+        "as the completed-fertility statistic; raw three-child-state flows are "
+        "reported alongside it.\n\n"
         f"Exact command:\n\n```bash\n{command}\n```\n",
         encoding="utf-8",
     )

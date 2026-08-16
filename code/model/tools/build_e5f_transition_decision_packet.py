@@ -329,10 +329,12 @@ def make_figure(
     axes[0, 1].legend(frameon=False, fontsize=7)
 
     endpoint = structural_summary["stationary_open_endpoint"]
-    years = structural.years_from_start.to_numpy()
+    structural_display = structural.loc[structural.years_from_start <= 60.0].copy()
+    policy_display = policy.loc[policy.years_from_start <= 60.0].copy()
+    years = structural_display.years_from_start.to_numpy()
     axes[0, 2].plot(
         years,
-        structural.population_index,
+        structural_display.population_index,
         color=colors["blue"],
         lw=2.0,
         label="Transition",
@@ -342,10 +344,10 @@ def make_figure(
         color=colors["gray"],
         ls="--",
         lw=1.2,
-        label="New open steady state",
+        label="Limiting fixed-inflow level",
     )
     axes[0, 2].set(
-        title="C. Structural population transition",
+        title="C. Population: first sixty years",
         xlabel="Years after preference shift",
         ylabel="Adult-household mass",
     )
@@ -353,7 +355,7 @@ def make_figure(
 
     axes[1, 0].plot(
         years,
-        structural.asset_price_index,
+        structural_display.asset_price_index,
         color=colors["red"],
         lw=2.0,
         label="Transition",
@@ -363,16 +365,16 @@ def make_figure(
         color=colors["gray"],
         ls="--",
         lw=1.2,
-        label="New open steady state",
+        label="Limiting fixed-inflow level",
     )
     axes[1, 0].set(
-        title="D. Structural housing-price transition",
+        title="D. Housing cost: first sixty years",
         xlabel="Years after preference shift",
-        ylabel="House-price index",
+        ylabel="Housing-cost index",
     )
     axes[1, 0].legend(frameon=False, fontsize=8)
 
-    joined = structural[
+    joined = structural_display[
         [
             "period",
             "years_from_start",
@@ -381,7 +383,7 @@ def make_figure(
             "dependent_child_owner_rate",
         ]
     ].merge(
-        policy[
+        policy_display[
             [
                 "period",
                 "adult_population",
@@ -454,7 +456,7 @@ def make_figure(
         highlight = float(factor) in highlighted_feedback
         axes[1, 2].plot(
             rows.price_ratio,
-            rows.reproduction_ratio_B_over_E,
+            rows.topcode_consistent_B_over_E,
             color=(
                 highlighted_feedback[float(factor)]
                 if highlight
@@ -469,7 +471,7 @@ def make_figure(
     axes[1, 2].axhline(1.0, color="black", ls="--", lw=1.0)
     axes[1, 2].set(
         title="F. Closed-population existence test",
-        xlabel="House-price ratio",
+        xlabel="Housing-cost ratio",
         ylabel="Locally born entrants / required entrants",
         xscale="log",
     )
