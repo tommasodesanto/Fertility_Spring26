@@ -1276,6 +1276,10 @@ def make_plots(
             if scenario.startswith("endogenous_open")
             else "Fixed entrants"
             if scenario.startswith("fixed_entry_benchmark")
+            else "Momentum"
+            if scenario.endswith("_inherited_momentum")
+            else "Preference decline"
+            if scenario.startswith("preference_decline_open_birth_vintage")
             else scenario
         )
         for scenario in scenarios

@@ -1482,5 +1482,18 @@ birth-to-entry pipeline forward without population renormalization.
 - Integrated report:
   `output/pdf/dynamic_intergenerational_housing_fertility_model.pdf`.
 - Both production paths pass stationary nesting, mature-flow, market-clearing,
-  mass-conservation, and nonnegative-distribution gates. The nine-page report
+  mass-conservation, and nonnegative-distribution gates. The ten-page report
   compiles without warnings and was rendered and inspected page by page.
+
+### Inherited-entry existence check
+
+A separate sensitivity multiplies the four locally born cohorts already in the
+date-0 pipeline by `1.57165805`, chosen to match the `11.73%` increase in U.S.
+total population through 2023. It yields a `16.97%` fixed-stock housing-cost
+increase and `3.77%` with static elastic supply. The result establishes that
+falling fertility, rising population, and rising housing costs can coexist in
+the quantitative model. It is not promoted: Census household-age data and CDC
+birth counts are inconsistent with reading the multiplier as a literal birth
+bulge. A coarse reweighting of date-0 ages to the 2007 Census shares generates
+only `3.04%` growth by 2023 at the stationary entrant flow, so the missing
+empirical object is a dated household-formation and migration residual.

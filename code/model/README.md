@@ -65,6 +65,18 @@ the packet is a transition diagnostic, not a perfect-foresight welfare run. Use
 `historical_2007_static_elastic` for the Oswald-style supply sensitivity and
 positive terminal open steady state.
 
+`--initial-birth-pipeline-multiplier` is an explicit initial-condition
+sensitivity. A value of `1.5716580479664188` scales only the four cohorts
+already born at date 0 so that model adult-household mass grows by the same
+`11.73%` as U.S. total population through 2023. It produces a `16.97%`
+fixed-stock housing-cost increase and a `3.77%` increase under static elastic
+supply. This is an existence check, not a demographic calibration: official
+Census household-age and CDC birth data reject interpreting the multiplier as
+a literal pre-existing birth-cohort bulge. For 2007 historical runs, the driver
+also writes `census_2007_age_reweight_diagnostic.json`; its coarse age-cell
+reweighting generates only `3.04%` adult-household growth through 2023 when the
+old steady-state entrant flow is held fixed.
+
 The shared calendar scaffolding also preserves the one-shot fallback. Its
 stationary nesting smoke is:
 

@@ -45,6 +45,21 @@ import run_dynamic_population_transition as calendar
 
 DEFAULT_SOURCE = closure_audit.E5F_FLOOR_SOURCE
 DEFAULT_OUTDIR = ROOT / "output/model/e5f_floor_open_population_transition"
+CENSUS_HH3_URL = (
+    "https://www2.census.gov/programs-surveys/demo/tables/families/"
+    "time-series/households/hh3.xls"
+)
+CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS = (
+    ("under_25", None, 25.0, 6662.0),
+    ("25_to_29", 25.0, 30.0, 9667.0),
+    ("30_to_34", 30.0, 35.0, 9767.0),
+    ("35_to_44", 35.0, 45.0, 22779.0),
+    ("45_to_54", 45.0, 55.0, 24141.0),
+    ("55_to_64", 55.0, 65.0, 19266.0),
+    ("65_to_74", 65.0, 75.0, 11926.0),
+    ("75_and_older", 75.0, None, 11803.0),
+)
+CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS = 116011.0
 
 
 def parse_args() -> argparse.Namespace:
@@ -125,6 +140,15 @@ def parse_args() -> argparse.Namespace:
         help="Completed four-year child stages between birth and adult entry.",
     )
     parser.add_argument(
+        "--initial-birth-pipeline-multiplier",
+        type=float,
+        default=1.0,
+        help=(
+            "Diagnostic scale factor on the locally born cohorts already in the "
+            "birth-to-entry pipeline at date 0. Future cohorts remain model-generated."
+        ),
+    )
+    parser.add_argument(
         "--smoke",
         action="store_true",
         help="Run at most four calendar periods after the exact baseline gates.",
@@ -161,6 +185,128 @@ def preference_shifter_at_date(
         return float(new_value)
     weight = min(max(float(period) / float(transition_periods), 0.0), 1.0)
     return float(old_value + weight * (new_value - old_value))
+
+
+def census_2007_age_reweight_diagnostic(
+    stationary_age_mass: np.ndarray,
+    ages: np.ndarray,
+    stationary_entry_flow: float,
+    periods: int = 4,
+    period_years: float = 4.0,
+) -> dict[str, Any]:
+    """Advance the Census-reweighted age stock at the stationary entrant flow.
+
+    Census age groups are coarser than the model's four-year cells. Each model
+    cell is assigned using its reported lower-bound age, and the model's
+    within-group age shares are preserved. This is a demographic accounting
+    check, not a new initial condition for the household transition.
+    """
+    stationary = np.asarray(stationary_age_mass, dtype=float).reshape(-1)
+    age_grid = np.asarray(ages, dtype=float).reshape(-1)
+    if stationary.shape != age_grid.shape or stationary.size < 2:
+        raise ValueError("Age masses and age labels must be conformable vectors")
+    if np.any(~np.isfinite(stationary)) or np.any(stationary <= 0.0):
+        raise ValueError("Stationary age masses must be finite and strictly positive")
+    if periods < 1:
+        raise ValueError("The age-reweight horizon must be positive")
+    if period_years <= 0.0:
+        raise ValueError("The model period length must be positive")
+
+    detailed_total = sum(row[3] for row in CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS)
+    if not math.isclose(
+        detailed_total,
+        CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS,
+        rel_tol=0.0,
+        abs_tol=1e-9,
+    ):
+        raise RuntimeError("Census HH-3 age rows do not sum to the published total")
+
+    initial_total = float(np.sum(stationary))
+    reweighted = np.zeros_like(stationary)
+    groups: list[dict[str, Any]] = []
+    for label, lower, upper, count in CENSUS_2007_HOUSEHOLDER_COUNTS_THOUSANDS:
+        selected = np.ones(age_grid.size, dtype=bool)
+        if lower is not None:
+            selected &= age_grid >= lower
+        if upper is not None:
+            selected &= age_grid < upper
+        if not np.any(selected):
+            raise RuntimeError(f"No model age cell maps to Census group {label}")
+        group_stationary_mass = float(np.sum(stationary[selected]))
+        target_share = float(count / CENSUS_2007_TOTAL_HOUSEHOLDS_THOUSANDS)
+        reweighted[selected] = (
+            initial_total
+            * target_share
+            * stationary[selected]
+            / group_stationary_mass
+        )
+        groups.append(
+            {
+                "group": label,
+                "lower_age_inclusive": lower,
+                "upper_age_exclusive": upper,
+                "households_thousands": count,
+                "target_share": target_share,
+                "model_age_cells": age_grid[selected].tolist(),
+            }
+        )
+    if not math.isclose(float(np.sum(reweighted)), initial_total, rel_tol=0.0, abs_tol=1e-12):
+        raise RuntimeError("Census age reweighting changed date-0 total mass")
+
+    survival = stationary[1:] / stationary[:-1]
+    if np.any(survival < -1e-14) or np.any(survival > 1.0 + 1e-10):
+        raise RuntimeError("Stationary age masses imply an invalid survival schedule")
+    if not math.isclose(
+        float(stationary_entry_flow),
+        float(stationary[0]),
+        rel_tol=0.0,
+        abs_tol=1e-10,
+    ):
+        raise RuntimeError("Stationary entry flow does not match the youngest age mass")
+
+    current = reweighted.copy()
+    path = [
+        {
+            "period": 0,
+            "adult_household_mass": float(np.sum(current)),
+            "population_index": 1.0,
+        }
+    ]
+    for period in range(1, periods + 1):
+        next_mass = np.zeros_like(current)
+        next_mass[0] = float(stationary_entry_flow)
+        next_mass[1:] = survival * current[:-1]
+        current = next_mass
+        path.append(
+            {
+                "period": period,
+                "adult_household_mass": float(np.sum(current)),
+                "population_index": float(np.sum(current)) / initial_total,
+            }
+        )
+
+    return {
+        "status": "diagnostic_only",
+        "source": "U.S. Census Bureau, Table HH-3",
+        "source_url": CENSUS_HH3_URL,
+        "source_year": 2007,
+        "units": "thousands of households",
+        "mapping": (
+            "model four-year age cells assigned by their lower-bound age; "
+            "stationary within-group shares preserved"
+        ),
+        "future_entry_rule": "old steady-state entrant flow held fixed",
+        "horizon_periods": periods,
+        "period_years": period_years,
+        "horizon_calendar_year": 2007 + periods * period_years,
+        "groups": groups,
+        "model_age_grid": age_grid.tolist(),
+        "stationary_age_mass": stationary.tolist(),
+        "reweighted_initial_age_mass": reweighted.tolist(),
+        "age_survival": survival.tolist(),
+        "path": path,
+        "population_index_at_horizon": path[-1]["population_index"],
+    }
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -430,6 +576,7 @@ def run_birth_vintage_scenario(
     retention: float,
     conversion: float,
     delay_periods: int,
+    initial_birth_pipeline_multiplier: float,
     old_psi_child: float,
     new_psi_child: float,
     preference_transition_periods: int,
@@ -465,7 +612,9 @@ def run_birth_vintage_scenario(
             "The stationary birth-to-entry yield is invalid: "
             f"{maturation_survival_yield:.12g}"
         )
-    scheduled_entries = [float(baseline_B)] * int(delay_periods)
+    scheduled_entries = [
+        float(baseline_B) * float(initial_birth_pipeline_multiplier)
+    ] * int(delay_periods)
 
     path_rows: list[dict[str, Any]] = []
     age_rows: list[dict[str, Any]] = []
@@ -674,6 +823,7 @@ def run_birth_vintage_scenario(
         "maturation_survival_yield": maturation_survival_yield,
         "birth_to_entry_delay_periods": delay_periods,
         "birth_to_entry_delay_years": delay_periods * float(P.period_years) + float(P.period_years),
+        "initial_birth_pipeline_multiplier": initial_birth_pipeline_multiplier,
         "old_psi_child": old_psi_child,
         "new_psi_child": new_psi_child,
         "preference_transition_periods": preference_transition_periods,
@@ -1190,6 +1340,8 @@ def main() -> None:
         raise ValueError("--periods must be positive")
     if args.preference_transition_periods < 0:
         raise ValueError("--preference-transition-periods cannot be negative")
+    if args.initial_birth_pipeline_multiplier <= 0.0:
+        raise ValueError("--initial-birth-pipeline-multiplier must be positive")
     if args.preference_transition_periods > 0 and args.renewal_clock != "birth-vintage":
         raise ValueError(
             "A gradual preference path is implemented only for the paper-facing "
@@ -1300,14 +1452,47 @@ def main() -> None:
     conversion = float(old_parameters.entrant_conversion_factor)
     B_old_raw = B_old / conversion
 
+    census_age_reweight = None
+    if args.historical_start_year == 2007:
+        stationary_age_mass = np.sum(
+            initial_g_pre, axis=(0, 1, 2, 4, 5, 6)
+        )
+        model_ages = (
+            float(old_parameters.age_start)
+            + np.arange(int(old_parameters.J), dtype=float)
+            * float(old_parameters.da)
+        )
+        census_age_reweight = census_2007_age_reweight_diagnostic(
+            stationary_age_mass,
+            model_ages,
+            E_old,
+            periods=4,
+            period_years=float(old_parameters.period_years),
+        )
+        write_json(
+            outdir / "census_2007_age_reweight_diagnostic.json",
+            census_age_reweight,
+        )
+
     postshock_parameters = copy.deepcopy(old_parameters)
     postshock_parameters.psi_child = float(args.new_psi_child)
     postshock_parameters._fert2_probs = np.asarray(old_solution.fert2_probs, dtype=float).copy()
     counter = calendar.SolveCounter()
     if args.renewal_clock == "birth-vintage":
+        momentum_suffix = (
+            ""
+            if math.isclose(
+                float(args.initial_birth_pipeline_multiplier),
+                1.0,
+                rel_tol=0.0,
+                abs_tol=1e-14,
+            )
+            else "_inherited_momentum"
+        )
         scenario = (
             "preference_decline_open_birth_vintage_"
             + str(args.housing_supply_mode).replace("-", "_")
+            + momentum_suffix
         )
         paths, ages, children, scenario_summary = run_birth_vintage_scenario(
             label=scenario,
@@ -1322,6 +1507,9 @@ def main() -> None:
             retention=retention,
             conversion=conversion,
             delay_periods=int(args.birth_to_entry_delay_periods),
+            initial_birth_pipeline_multiplier=float(
+                args.initial_birth_pipeline_multiplier
+            ),
             old_psi_child=float(args.old_psi_child),
             new_psi_child=float(args.new_psi_child),
             preference_transition_periods=int(args.preference_transition_periods),
@@ -1439,6 +1627,9 @@ def main() -> None:
         * float(old_parameters.period_years),
         "renewal_clock": args.renewal_clock,
         "birth_to_entry_delay_periods": int(args.birth_to_entry_delay_periods),
+        "initial_birth_pipeline_multiplier": float(
+            args.initial_birth_pipeline_multiplier
+        ),
         "period_years": float(old_parameters.period_years),
         "periods": int(args.periods),
         "old_steady_state": old_row,
@@ -1457,6 +1648,7 @@ def main() -> None:
         "scenario_summary": scenario_summary,
         "stationary_open_endpoint": stationary_endpoint,
         "historical_comparison": historical_comparison,
+        "census_2007_age_reweight_diagnostic": census_age_reweight,
         "peak_population": peak_population,
         "peak_asset_price": peak_price,
         "last_simulated_period": final_row,
@@ -1470,6 +1662,16 @@ def main() -> None:
                 else "date-0-normalized contemporaneous constant-elastic supply"
             ),
             "population_normalization": "none after the old steady state",
+            "initial_child_pipeline": (
+                "old steady-state pipeline"
+                if math.isclose(
+                    float(args.initial_birth_pipeline_multiplier),
+                    1.0,
+                    rel_tol=0.0,
+                    abs_tol=1e-14,
+                )
+                else "diagnostically scaled inherited cohorts; future cohorts are model-generated"
+            ),
             "purpose": "test whether inherited cohorts can generate short-run population and price momentum after a fertility-preference decline",
         },
     }
@@ -1493,7 +1695,11 @@ transition with a predetermined stock.
 The renewal clock is `{args.renewal_clock}`. The paper-facing default uses a
 separate birth-vintage queue: household children-at-home states continue to
 govern housing choices, but locally born entrant households arrive only after
-the declared child-to-entry delay.
+the declared child-to-entry delay. The date-0 inherited pipeline multiplier is
+`{args.initial_birth_pipeline_multiplier:g}`; values other than one are
+diagnostic initial conditions, not re-estimated household parameters.
+When the historical start is 2007, the packet also writes a coarse Census
+HH-3 age-reweighting check with the old steady-state entrant flow held fixed.
 
 The calculation is a temporary-equilibrium transition diagnostic: households
 treat the current price as permanent at each date. It is not yet the paper's

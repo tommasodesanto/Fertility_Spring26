@@ -90,6 +90,18 @@ completed fertility `1.63215`. After 96 years the transition is still at populat
 price/rent `0.88225`. This is an Oswald-style sequence of contemporaneous
 equilibria, not a welfare calculation or perfect-foresight asset-price solution.
 
+An unpromoted initial-condition sensitivity scales the four already-born
+future-entrant cohorts by `1.57165805`, mechanically matching the `11.73%` growth of
+U.S. total population through 2023. The fixed-stock housing-cost index then
+rises `16.97%`, while the static-elastic index rises `3.77%`. This shows that
+the interim population/price signs are feasible, but it is not an empirical
+birth-pipeline calibration. CDC births rose only `7.36%` from 1987 to 2003;
+Census households headed by someone under 25 fell `7.90%` from 2007 to 2023,
+even as total households rose `13.29%`. Coarsely reweighting the initial model
+ages to the Census 2007 householder-age shares generates only `3.04%`
+population growth at the steady-state entrant flow. A dated
+household-formation/migration bridge remains outstanding.
+
 Regeneration and evidence:
 
 - stationary schedule: `code/model/tools/audit_closed_reproductive_closure.py`
@@ -100,6 +112,9 @@ Regeneration and evidence:
   `output/model/e5f_floor_open_population_transition/historical_2007_preference_transition/`;
 - static-elastic packet:
   `output/model/e5f_floor_open_population_transition/historical_2007_static_elastic/`.
+- inherited-momentum sensitivity packets:
+  `output/model/e5f_floor_open_population_transition/historical_2007_inherited_momentum_fixed_stock/`
+  and `historical_2007_inherited_momentum_static_elastic/`.
 
 ## August 15 preserved one-shot stationary comparison
 
