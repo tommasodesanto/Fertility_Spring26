@@ -336,6 +336,33 @@ def source_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def code_fingerprint_contract(model: Any) -> dict[str, Any]:
+    """Pin every active file that can change the transition experiment."""
+    paths = {
+        "transition_calibration_driver": Path(__file__).resolve(),
+        "calendar_operator": Path(calendar.__file__).resolve(),
+        "e5f_transition_operator": Path(transition.__file__).resolve(),
+        "closure_audit": Path(closure.__file__).resolve(),
+        "sequential_solver": Path(model.__file__).resolve(),
+        "parameters": Path(
+            sys.modules[
+                "intergen_eqscale_seq_optimized.parameters"
+            ].__file__
+        ).resolve(),
+        "income_entry_profile": Path(
+            sys.modules[
+                "intergen_eqscale_seq_optimized.e5f_income_entry_profile"
+            ].__file__
+        ).resolve(),
+    }
+    files = {name: source_sha256(path) for name, path in paths.items()}
+    encoded = json.dumps(files, sort_keys=True, separators=(",", ":")).encode()
+    return {
+        "files": files,
+        "bundle_sha256": hashlib.sha256(encoded).hexdigest(),
+    }
+
+
 def activate_model_profile(
     name: str,
     theta: dict[str, float],
@@ -848,6 +875,7 @@ def main() -> None:
     outdir = args.outdir.resolve()
     outdir.mkdir(parents=True, exist_ok=True)
     chain, model = transition.configure_sequential_model()
+    code_contract = code_fingerprint_contract(model)
     winner, source_metadata = closure.load_winner(source)
     theta = closure.theta_from_winner(winner)
     active_domain, profile_overrides, model_profile = activate_model_profile(
@@ -1217,6 +1245,7 @@ def main() -> None:
         "source": str(source),
         "source_sha256": actual_source_sha256,
         "source_metadata": source_metadata,
+        "code_fingerprints": code_contract,
         "model_profile": model_profile,
         "income_profile_gates": income_profile_gates,
         "target_set": target_system.name,

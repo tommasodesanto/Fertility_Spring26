@@ -59,7 +59,7 @@ def main() -> None:
     target_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
     contracts: set[
-        tuple[str, str, str, int, int, str, str, str, int, str, str]
+        tuple[str, str, str, int, int, str, str, str, int, str, str, str]
     ] = set()
 
     for task in range(1, expected + 1):
@@ -97,6 +97,11 @@ def main() -> None:
                 int(profile.get("income_state_count", 5)),
                 str(profile.get("first_birth_fixed_cost_semantics", "none")),
                 str(panel.get("center_sha256", "legacy_unspecified")),
+                str(
+                    (summary.get("code_fingerprints") or {}).get(
+                        "bundle_sha256", "legacy_unspecified"
+                    )
+                ),
             )
             contracts.add(contract)
             if int(panel["task_id"]) != task or int(panel["panel_size"]) != expected:
