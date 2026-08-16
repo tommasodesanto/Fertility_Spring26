@@ -441,49 +441,58 @@ def solve_old_steady_state(
             "stationary_solve_seconds": sum(row[3] for row in cache.values()),
         })
 
-    lower, upper = -3.0, 3.0
-    low = evaluate(lower)
-    high = evaluate(upper)
-    low_gap, high_gap = low[4] - target, high[4] - target
-    while low_gap * high_gap > 0.0 and max(abs(lower), abs(upper)) < 24.0:
-        if low_gap > 0.0 and high_gap > 0.0:
-            lower *= 2.0
-            low = evaluate(lower)
-            low_gap = low[4] - target
-        else:
-            upper *= 2.0
-            high = evaluate(upper)
-            high_gap = high[4] - target
-    if low_gap == 0.0:
-        chosen_psi, chosen = lower, low
-    elif high_gap == 0.0:
-        chosen_psi, chosen = upper, high
-    elif low_gap * high_gap > 0.0:
+    initial_gap = initial[4] - target
+    step = 0.25 if initial_gap < 0.0 else -0.25
+    probe_psi = float(initial_psi) + step
+    probe = evaluate(probe_psi)
+    probe_gap = probe[4] - target
+    while initial_gap * probe_gap > 0.0 and abs(step) < 24.0:
+        step *= 2.0
+        probe_psi = float(initial_psi) + step
+        probe = evaluate(probe_psi)
+        probe_gap = probe[4] - target
+    if initial_gap * probe_gap > 0.0:
         raise RuntimeError(
             "Old-steady-state fertility normalization is not bracketed: "
-            f"TFR({lower:g})={low[4]:.6g}, TFR({upper:g})={high[4]:.6g}, "
+            f"TFR({float(initial_psi):g})={initial[4]:.6g}, "
+            f"TFR({probe_psi:g})={probe[4]:.6g}, "
             f"target={target:.6g}"
         )
+    if float(initial_psi) < probe_psi:
+        lower, low, low_gap = float(initial_psi), initial, initial_gap
+        upper, high, high_gap = probe_psi, probe, probe_gap
     else:
-        chosen_psi, chosen = float(initial_psi), initial
-        for _ in range(18):
-            midpoint = 0.5 * (lower + upper)
-            mid = evaluate(midpoint)
-            mid_gap = mid[4] - target
-            if abs(mid_gap) < abs(chosen[4] - target):
-                chosen_psi, chosen = midpoint, mid
-            if abs(mid_gap) <= tolerance:
-                break
-            if low_gap * mid_gap <= 0.0:
-                upper, high_gap = midpoint, mid_gap
-            else:
-                lower, low_gap = midpoint, mid_gap
-        if abs(chosen[4] - target) > tolerance:
-            raise RuntimeError(
-                "Old-steady-state fertility normalization missed tolerance: "
-                f"best={chosen[4]:.8g}, target={target:.8g}, "
-                f"gap={chosen[4] - target:.3e}"
+        lower, low, low_gap = probe_psi, probe, probe_gap
+        upper, high, high_gap = float(initial_psi), initial, initial_gap
+    chosen_psi, chosen = min(
+        ((lower, low), (upper, high)), key=lambda item: abs(item[1][4] - target)
+    )
+    for _ in range(14):
+        width = upper - lower
+        denominator = high_gap - low_gap
+        if denominator == 0.0:
+            candidate_psi = 0.5 * (lower + upper)
+        else:
+            candidate_psi = lower - low_gap * width / denominator
+            candidate_psi = float(
+                np.clip(candidate_psi, lower + 0.05 * width, upper - 0.05 * width)
             )
+        candidate = evaluate(candidate_psi)
+        candidate_gap = candidate[4] - target
+        if abs(candidate_gap) < abs(chosen[4] - target):
+            chosen_psi, chosen = candidate_psi, candidate
+        if abs(candidate_gap) <= tolerance:
+            break
+        if low_gap * candidate_gap <= 0.0:
+            upper, high, high_gap = candidate_psi, candidate, candidate_gap
+        else:
+            lower, low, low_gap = candidate_psi, candidate, candidate_gap
+    if abs(chosen[4] - target) > tolerance:
+        raise RuntimeError(
+            "Old-steady-state fertility normalization missed tolerance: "
+            f"best={chosen[4]:.8g}, target={target:.8g}, "
+            f"gap={chosen[4] - target:.3e}"
+        )
     return (*chosen[:4], {
         "status": "derived_intercept",
         "psi_child": float(chosen_psi),

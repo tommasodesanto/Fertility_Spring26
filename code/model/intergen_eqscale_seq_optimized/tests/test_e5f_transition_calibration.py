@@ -3,6 +3,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from types import SimpleNamespace
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -101,3 +102,40 @@ def test_repaired_profile_adds_cost_and_measured_income() -> None:
     assert domain[-1][0] == "first_birth_fixed_cost"
     assert overrides["permanent_income_levels_enabled"] is True
     assert len(np.asarray(overrides["z_grid"])) == 15
+
+
+def test_old_fertility_normalization_uses_a_local_bracket() -> None:
+    calls: list[float] = []
+
+    class FakeChain:
+        @staticmethod
+        def extract_moments(solution: SimpleNamespace, _: SimpleNamespace) -> dict[str, float]:
+            return {"tfr": float(solution.tfr)}
+
+    original = transition_calibration.closure.solve_ge
+
+    def fake_solve_ge(_: object, overrides: dict[str, float]):
+        psi = float(overrides["psi_child"])
+        calls.append(psi)
+        return (
+            SimpleNamespace(tfr=1.95 + 1.4 * psi),
+            SimpleNamespace(),
+            np.array([1.0]),
+            0.01,
+        )
+
+    transition_calibration.closure.solve_ge = fake_solve_ge
+    try:
+        *_, audit = transition_calibration.solve_old_steady_state(
+            FakeChain(),
+            {},
+            initial_psi=0.10,
+            completed_fertility_target=2.12,
+            completed_fertility_tolerance=5.0e-4,
+            normalize=True,
+        )
+    finally:
+        transition_calibration.closure.solve_ge = original
+    assert audit["absolute_gap"] <= 5.0e-4
+    assert audit["stationary_solves"] <= 3
+    assert max(abs(value - 0.10) for value in calls) <= 0.25
