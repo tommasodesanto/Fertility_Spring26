@@ -541,10 +541,131 @@ def build_figure(values: dict[str, float]) -> None:
     plt.close(fig)
 
 
+def build_equilibrium_figure(values: dict[str, float]) -> None:
+    """Draw the two schedules that determine the initial steady state."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.2,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.3,
+            "ytick.labelsize": 9.3,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    old_color = "#244f74"
+    guide_color = "#a0a0a0"
+    fig, (market_axis, child_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.30},
+    )
+
+    price_grid = np.linspace(0.42, 1.16, 500)
+    population_curve = population_at_price(
+        price_grid,
+        values["old_theta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    market_axis.plot(population_curve, price_grid, color=old_color, linewidth=2.1)
+    market_axis.set_title("(a) Housing-market clearing")
+    market_axis.set_xlabel(r"Adult-household population, $S$")
+    market_axis.set_ylabel(r"Housing cost, $p$")
+
+    child_price_grid = np.linspace(0.46, 1.16, 500)
+    child_curve = child_demand(
+        child_price_grid,
+        values["old_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    child_axis.plot(child_price_grid, child_curve, color=old_color, linewidth=2.1)
+    child_axis.axhline(
+        values["replacement"],
+        color="#666666",
+        linewidth=1.0,
+        linestyle=(0, (2, 2)),
+    )
+    child_axis.set_title("(b) Replacement fertility")
+    child_axis.set_xlabel(r"Housing cost, $p$")
+    child_axis.set_ylabel(r"Children per family, $n$")
+
+    steady_market = (values["old_population"], values["old_price"])
+    steady_child = (values["old_price"], values["replacement"])
+    market_axis.scatter(*steady_market, color=old_color, s=38, zorder=6)
+    child_axis.scatter(*steady_child, color=old_color, s=38, zorder=6)
+    market_axis.text(
+        steady_market[0] + 0.025,
+        steady_market[1] + 0.025,
+        r"$A$",
+        color=old_color,
+    )
+    child_axis.text(
+        steady_child[0] + 0.014,
+        steady_child[1] + 0.035,
+        r"$A$",
+        color=old_color,
+    )
+
+    market_axis.set_xlim(0.35, 1.36)
+    market_axis.set_ylim(0.42, 1.16)
+    market_axis.set_xticks([values["old_population"]], labels=[r"$S^*$"])
+    market_axis.set_yticks([values["old_price"]], labels=[r"$p^*$"])
+    child_axis.set_xlim(0.46, 1.16)
+    child_axis.set_ylim(0.55, 1.42)
+    child_axis.set_xticks([values["old_price"]], labels=[r"$p^*$"])
+    child_axis.set_yticks([values["replacement"]], labels=[r"$\bar n$"])
+
+    market_axis.hlines(
+        values["old_price"],
+        0.35,
+        values["old_population"],
+        color=guide_color,
+        linewidth=0.7,
+        linestyle=(0, (3, 3)),
+        zorder=0,
+    )
+    child_axis.vlines(
+        values["old_price"],
+        0.55,
+        values["replacement"],
+        color=guide_color,
+        linewidth=0.7,
+        linestyle=(0, (3, 3)),
+        zorder=0,
+    )
+    for axis in (market_axis, child_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "steady_state_equilibrium.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "steady_state_equilibrium.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
+    plt.close(fig)
+
+
 def main() -> None:
     values = illustration()
     verify(values)
     write_parameters(values)
+    build_equilibrium_figure(values)
     build_figure(values)
 
 

@@ -3,12 +3,12 @@
 Active documents:
 
 - `transition_closure_update_presentation.tex` /
-  `transition_closure_update_presentation.pdf`: 13-slide advisor update that
-  expands the deck shown to Raquel. It keeps the original household mechanism,
-  develops the two-generation population--housing feedback, explains the
-  2007--2023 dated calibration, separates imposed inputs from targets and
-  holdouts, and reports the certified no-policy continuations and the absence
-  of a positive closed stationary root under the current estimate.
+  `transition_closure_update_presentation.pdf`: 18-slide advisor update. It
+  defines the two-generation population--housing model step by step, separates
+  its steady-state equilibrium from the preference-shock transition, maps the
+  closure into the existing lifecycle model, explains the 2007--2023 dated
+  calibration, and reports the no-policy continuations and the absence of a
+  positive closed stationary root under the current estimate.
 - `aug_07_model_closure_presentation.tex`: reference deck for the production
   paper architecture following the August 15 author decision. Its main model
   is the one-market sequential-fertility `E5F` floor arm with independent child
