@@ -69,9 +69,8 @@
 To fix ideas, let's look at a very simplified economy with young and old households:
 \begin{itemize}
   \item $Y_t$ is the number of young households at date $t$; $O_t$ is the number of old households.
-  \item A young household chooses consumption, housing services, and fertility $n_t$. Next period it becomes old.
-  \item We measure fertility in \textbf{replacement units}: $n_t=1$ exactly reproduces the young cohort.
-  \item Today's children determine the size of the next young generation.
+  \item A young household chooses consumption, housing services, and $n_t$ \textbf{household children}. Next period it becomes old.
+  \item In this unitary-household model, each household child becomes one young household in the next generation.
   \item Both generations purchase housing services in the same market at price $p_t$.
 \end{itemize}
 
@@ -82,15 +81,15 @@ Y_{t+1}=n_tY_t,
 \qquad
 O_{t+1}=Y_t,
 \]
-where one unit of $n_t$ corresponds to the children needed to form one future young household.
+so $n_t=1$ is replacement.
 
 \medskip
 \textbf{Deliberate simplification:} housing is a flow service. There is no tenure choice, mortgage, saving, or bequest in this toy economy; those mechanisms remain in the quantitative model.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Young households choose housing and fertility}
-A young household earns $y$ and chooses consumption $c$, housing services $h$, and fertility $n$ in replacement units:
+\begin{frame}{Young households choose housing and children}
+A young household earns $y$ and chooses consumption $c$, housing services $h$, and household children $n$:
 \[
 u(c,h,n)=c+\alpha\log h+v\log n,
 \]
@@ -99,10 +98,10 @@ c+ph+\big[q+a(p+\omega)\big]n=y.
 \]
 
 \begin{itemize}
-  \item $\alpha$ is the value of adult housing; $v$ is the value of fertility.
-  \item Each unit of fertility requires $a$ units of housing and $q$ units of other goods.
+  \item $\alpha$ is the value of adult housing; $v$ is the value of children.
+  \item Each household child requires $a$ units of housing and $q$ units of other goods.
   \item $\omega$ is an additional cost of accessing child-suitable housing.
-  \item Hence the resource cost of one unit of fertility is $q+a(p+\omega)$.
+  \item Hence the resource cost of one household child is $q+a(p+\omega)$.
 \end{itemize}
 
 Old households do not choose fertility. Their reduced-form housing demand is
@@ -121,7 +120,7 @@ n(p)=\frac{v}{q+a(p+\omega)},
 h_Y(p)=\frac{\alpha}{p}+a n(p).
 \]
 
-Thus a higher $p$ has two effects: it reduces adult housing demand and raises the housing cost of fertility, reducing $n$.
+Thus a higher $p$ has two effects: it reduces adult housing demand and raises the housing cost of a household child, reducing $n$.
 
 \medskip
 Aggregate housing supply is
@@ -139,7 +138,7 @@ Y_t h_Y(p_t)+O_t h_O(p_t)=H^s(p_t).
 % ---------------------------------------------------------------------------
 \begin{frame}{A steady state}
 \small
-Because fertility is measured in replacement units,
+Because one household child becomes one young household,
 \[
 Y_{t+1}=n(p_t)Y_t,
 \qquad
@@ -226,11 +225,11 @@ On the new fertility curve, $\widetilde n=n(\widetilde p;v_1)<1$.
 
 % ---------------------------------------------------------------------------
 \begin{frame}{Stage 3: demographic adjustment}
-\vspace{0.4em}
+\vspace{1.5em}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.63\textwidth}
 \centering
-\includegraphics[width=\textwidth,height=0.49\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+\includegraphics[width=\textwidth,height=0.46\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
 \end{column}
 \begin{column}{0.34\textwidth}
 \footnotesize
@@ -252,7 +251,7 @@ At $A'$, fertility again equals one. This is the new steady state, with $p_1<p_0
 
 % ---------------------------------------------------------------------------
 \begin{frame}{Below-replacement fertility need not lower population immediately}
-Let $n_t=n(p_t)$ be the reproduction rate and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
+Let $n_t=n(p_t)$ be household children per young household and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
 \[
 \mu_t<n_t<1.
 \]

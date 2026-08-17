@@ -421,7 +421,7 @@ def build_figure(values: dict[str, float]) -> None:
     child_axis.text(0.995, 0.62, "after", color=new_color)
     child_axis.set_title("(b) Housing cost and fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Reproduction rate, $n$")
+    child_axis.set_ylabel(r"Household children, $n$")
 
     impact_child_point = (values["impact_price"], values["impact_fertility"])
     old_child_point = (values["old_price"], values["replacement"])
@@ -601,7 +601,7 @@ def build_equilibrium_figure(values: dict[str, float]) -> None:
     )
     child_axis.set_title("(b) Replacement fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Reproduction rate, $n$")
+    child_axis.set_ylabel(r"Household children, $n$")
 
     steady_market = (values["old_population"], values["old_price"])
     steady_child = (values["old_price"], values["replacement"])
@@ -914,7 +914,7 @@ def build_transition_stage_figure(
     market_axis.set_ylabel(r"Housing cost, $p$")
     child_axis.set_title("(b) Housing cost and fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Reproduction rate, $n$")
+    child_axis.set_ylabel(r"Household children, $n$")
     market_axis.set_xlim(0.35, 1.36)
     market_axis.set_ylim(0.42, 1.16)
     child_axis.set_xlim(0.46, 1.16)
