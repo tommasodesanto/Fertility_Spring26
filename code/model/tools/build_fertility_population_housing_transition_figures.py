@@ -541,6 +541,192 @@ def build_figure(values: dict[str, float]) -> None:
     plt.close(fig)
 
 
+def build_fertility_feedback_comparison(values: dict[str, float]) -> None:
+    """Compare impact-equilibrium timing with a no-feedback decomposition."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.2,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.3,
+            "ytick.labelsize": 9.3,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    old_color = "#244f74"
+    new_color = "#a3473f"
+    guide_color = "#888888"
+    price_grid = np.linspace(0.46, 1.16, 500)
+    old_curve = child_demand(
+        price_grid,
+        values["old_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    new_curve = child_demand(
+        price_grid,
+        values["new_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    direct_fertility = float(
+        child_demand(
+            values["old_price"],
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        )
+    )
+    assert direct_fertility < values["impact_fertility"] < values["replacement"]
+
+    old_point = (values["old_price"], values["replacement"])
+    impact_point = (values["impact_price"], values["impact_fertility"])
+    direct_point = (values["old_price"], direct_fertility)
+    new_point = (values["new_price"], values["replacement"])
+
+    fig, axes = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.30},
+    )
+    for axis in axes:
+        axis.plot(price_grid, old_curve, color=old_color, linewidth=2.1, label="initial")
+        axis.plot(
+            price_grid,
+            new_curve,
+            color=new_color,
+            linewidth=2.1,
+            linestyle=(0, (5, 3)),
+            label=r"after lower $v$",
+        )
+        axis.axhline(
+            values["replacement"],
+            color="#666666",
+            linewidth=1.0,
+            linestyle=(0, (2, 2)),
+        )
+        axis.set_xlabel(r"Housing cost, $p$")
+        axis.set_ylabel(r"Household children, $n$")
+        axis.set_xlim(0.46, 1.16)
+        axis.set_ylim(0.55, 1.42)
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    impact_axis, feedback_axis = axes
+    impact_axis.set_title("(a) Impact-equilibrium timing")
+    impact_axis.scatter(
+        [old_point[0], impact_point[0], new_point[0]],
+        [old_point[1], impact_point[1], new_point[1]],
+        color=[old_color, new_color, new_color],
+        s=[38, 36, 38],
+        zorder=6,
+    )
+    add_arrow(impact_axis, old_point, impact_point)
+    add_arrow(impact_axis, impact_point, new_point)
+    impact_axis.text(old_point[0] + 0.014, old_point[1] + 0.035, r"$A$", color=old_color)
+    impact_axis.text(
+        impact_point[0] + 0.015,
+        impact_point[1] - 0.065,
+        r"$I$",
+        color=new_color,
+    )
+    impact_axis.text(
+        new_point[0] - 0.045,
+        new_point[1] + 0.035,
+        r"$A'$",
+        color=new_color,
+    )
+    impact_axis.set_xticks(
+        [values["new_price"], values["impact_price"], values["old_price"]],
+        labels=[r"$p_1$", r"$\widetilde p$", r"$p_0$"],
+    )
+    impact_axis.set_yticks(
+        [values["impact_fertility"], values["replacement"]],
+        labels=[r"$\widetilde n$", r"$1$"],
+    )
+    impact_axis.legend(frameon=False, fontsize=8, loc="upper right")
+
+    feedback_axis.set_title("(b) Feedback decomposition")
+    feedback_axis.scatter(
+        [old_point[0], direct_point[0], new_point[0]],
+        [old_point[1], direct_point[1], new_point[1]],
+        color=[old_color, new_color, new_color],
+        s=[38, 36, 38],
+        zorder=6,
+    )
+    add_arrow(feedback_axis, old_point, direct_point)
+    add_arrow(feedback_axis, direct_point, new_point)
+    feedback_axis.text(old_point[0] + 0.014, old_point[1] + 0.035, r"$A$", color=old_color)
+    feedback_axis.text(
+        direct_point[0] + 0.014,
+        direct_point[1] - 0.055,
+        r"$D$",
+        color=new_color,
+    )
+    feedback_axis.text(
+        new_point[0] - 0.045,
+        new_point[1] + 0.035,
+        r"$A'$",
+        color=new_color,
+    )
+    feedback_axis.text(
+        1.02,
+        0.82,
+        "preferences fall\nat fixed $p_0$",
+        color=guide_color,
+        fontsize=9.0,
+        ha="left",
+    )
+    feedback_axis.text(
+        0.72,
+        0.80,
+        "housing feedback",
+        color=guide_color,
+        fontsize=9.0,
+        rotation=-31,
+    )
+    feedback_axis.set_xticks(
+        [values["new_price"], values["old_price"]],
+        labels=[r"$p_1$", r"$p_0$"],
+    )
+    feedback_axis.set_yticks(
+        [direct_fertility, values["replacement"]],
+        labels=[r"$n^D$", r"$1$"],
+    )
+
+    for axis, points in (
+        (impact_axis, (old_point, impact_point, new_point)),
+        (feedback_axis, (old_point, direct_point, new_point)),
+    ):
+        for price_value, fertility_value in points:
+            axis.vlines(
+                price_value,
+                0.55,
+                fertility_value,
+                color="#a0a0a0",
+                linewidth=0.7,
+                linestyle=(0, (3, 3)),
+                zorder=0,
+            )
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "fertility_feedback_two_interpretations.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "fertility_feedback_two_interpretations.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
+    plt.close(fig)
+
+
 def build_equilibrium_figure(values: dict[str, float]) -> None:
     """Draw the two schedules that determine the initial steady state."""
 
@@ -976,6 +1162,7 @@ def main() -> None:
         output_stem="demographic_adjustment",
     )
     build_figure(values)
+    build_fertility_feedback_comparison(values)
 
 
 if __name__ == "__main__":
