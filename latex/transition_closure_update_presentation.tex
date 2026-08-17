@@ -64,24 +64,24 @@
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{A toy economy with two generations and one housing market}
+\begin{frame}{A toy economy}
 \small
-To fix ideas, let's look at a very simplified economy. Each date contains a young generation and an old generation:
+To fix ideas, let's look at a very simplified economy with young and old households:
 \begin{itemize}
   \item $Y_t$ is the number of young households at date $t$; $O_t$ is the number of old households.
   \item A young household chooses consumption, housing services, and children. Next period it becomes old.
-  \item The children chosen by today's young households determine the size of the next young generation.
-  \item Young and old households purchase housing services in the same market at price $p_t$.
+  \item Today's children determine the size of the next young generation.
+  \item Both generations purchase housing services in the same market at price $p_t$.
 \end{itemize}
 
 \medskip
-One period is one generation. The law of motion is
+Let $\bar n$ denote \textbf{replacement fertility}: $\bar n$ children per young household generate one young household in the next generation. The law of motion is
 \[
 Y_{t+1}=\frac{n_t}{\bar n}Y_t,
 \qquad
 O_{t+1}=Y_t,
 \]
-where $n_t$ is children per young household and $\bar n$ is the number needed to reproduce the young cohort.
+so $n_t/\bar n$ is the reproduction rate. In the quantitative accounting, $\bar n=2.1$.
 
 \medskip
 \textbf{Deliberate simplification:} housing is a flow service. There is no tenure choice, mortgage, saving, or bequest in this toy economy; those mechanisms remain in the quantitative model.
