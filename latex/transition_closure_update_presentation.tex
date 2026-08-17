@@ -1,0 +1,358 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+
+\setbeamercovered{transparent=5}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamerfont{framesubtitle}{size=\small}
+\setbeamercolor{block title}{fg=black,bg=white!80!black}
+\setbeamercolor{block body}{fg=black,bg=white!97!black}
+\setbeamersize{text margin left=0.65cm,text margin right=0.65cm}
+\linespread{1.12}
+
+\definecolor{mainblue}{RGB}{38,82,122}
+\definecolor{mainred}{RGB}{176,73,61}
+\definecolor{softgray}{RGB}{100,100,100}
+\definecolor{citecolor}{RGB}{105,105,150}
+\newcommand{\blue}[1]{{\color{mainblue}#1}}
+\newcommand{\red}[1]{{\color{mainred}#1}}
+\newcommand{\source}[1]{\par\vspace{0.15em}{\tiny\color{citecolor}#1}}
+
+\title{Fertility, Housing, and Population Dynamics}
+\subtitle{From a stationary closure to a dated transition}
+\author{Tommaso De Santo}
+\date{August 2026}
+
+\begin{document}
+
+{
+\setbeamertemplate{footline}{}
+\begin{frame}[plain,c]
+  \titlepage
+\end{frame}
+}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The household mechanism stays; the population closure changes}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\textbf{The model shown to Raquel}
+\begin{itemize}
+  \item Sequential birth attempts and declining fecundity
+  \item Children ever born and children at home tracked separately
+  \item Rent versus own, discrete house sizes, saving, income risk, and bequests
+  \item Housing costs affect fertility through space needs and tenure access
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{The missing aggregate object}
+\begin{itemize}
+  \item How current births generate future households
+  \item How cohort sizes evolve away from stationarity
+  \item How housing clears as population changes
+  \item Where the observed economy sits on that path
+\end{itemize}
+\end{column}
+\end{columns}
+
+\medskip
+\begin{center}
+Household choices $\longrightarrow$ births $\longrightarrow$ entrants
+$\longrightarrow$ housing demand $\longrightarrow$ prices $\longrightarrow$ choices
+\end{center}
+
+\textbf{This is a new equilibrium closure, not a new household model.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{A two-generation model isolates the feedback}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.52\textwidth}
+Young households choose consumption, adult space, and children:
+\[
+u(c,h,n)=c+\alpha\log h+v\log n,
+\]
+\[
+c+ph+\big[q+a(p+\omega)\big]n=y.
+\]
+Their demands are
+\[
+n(p)=\frac{v}{q+a(p+\omega)},
+\qquad
+h_Y(p)=\frac{\alpha}{p}+a n(p).
+\]
+\end{column}
+\begin{column}{0.44\textwidth}
+Old households retain housing:
+\[
+h_O(p)=\frac{\bar h_O}{p}.
+\]
+Housing supply is
+\[
+H^s(p)=\bar H p^\varepsilon.
+\]
+Demography evolves according to
+\[
+Y_{t+1}=\frac{n(p_t)}{\bar n}Y_t,
+\qquad O_{t+1}=Y_t.
+\]
+\end{column}
+\end{columns}
+
+\medskip
+\textbf{Economic content.} A higher housing cost raises the cost of children; fewer children reduce future household formation; a smaller population eventually lowers housing costs.
+
+\source{Source: two-generation model in the current paper. The objects $a$, $q$, $\omega$, and $v$ summarize the full model's child-space requirement, other child costs, tenure frictions, and fertility preference.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The steady state combines replacement fertility and housing clearing}
+\centering
+\includegraphics[width=0.96\textwidth,height=0.68\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+
+\vspace{-0.4em}
+\small
+\begin{itemize}
+  \item The child decision pins down the housing cost consistent with replacement: $n(p^*)=\bar n$.
+  \item Housing clearing then determines how many households can live at that cost.
+\end{itemize}
+\source{Blue: initial value of children. Red: permanently lower value. The arrows compare impact and steady-state outcomes; they are not the literal transition path.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Below-replacement fertility need not lower population immediately}
+Let $m_t=n(p_t)/\bar n$ be the replacement ratio and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $m_t<1$ whenever
+\[
+\mu_t<m_t<1.
+\]
+
+\begin{block}{A numerical example}
+\centering
+\Large
+$100$ young $+$ $70$ old
+$\quad\longrightarrow\quad$
+$80$ young $+$ $100$ old
+
+\normalsize
+\medskip
+$m_t=0.8<1$, but total households rise from $170$ to $180$.
+\end{block}
+
+Housing costs can rise as well if the aging cohort retains more housing than is released by the shrinking young cohort:
+\[
+(1-\mu_t)h_O(p_t)>(1-m_t)h_Y(p_t).
+\]
+
+\vspace{-0.35em}
+\textbf{U.S. interpretation:} inherited cohorts can keep population and housing costs rising even after fertility falls below replacement.
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The full model needs a dated distribution law, not a redesign}
+\small
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\textbf{Keep the existing household block}
+\begin{itemize}
+  \item Sequential fertility and child maturation
+  \item Tenure, house size, saving, and moving costs
+  \item Earnings risk, retirement, survival, and bequests
+\end{itemize}
+\end{column}
+\begin{column}{0.49\textwidth}
+\textbf{Add three aggregate objects}
+\begin{enumerate}
+  \item A calendar-time distribution $g_t(j,x)$ over age and household states
+  \item A birth-vintage queue carrying births to entry twenty years later
+  \item Housing-market clearing at every date
+\end{enumerate}
+\end{column}
+\end{columns}
+
+\medskip
+\[
+B_t=\frac{b_t^{\mathrm{adjusted}}}{2.1},
+\qquad
+e_{t+1}=M+\rho B_{t-4},
+\qquad
+g_{t+1}=\mathcal Q_t g_t+\text{entrants}_{t+1}.
+\]
+\[
+H^s(P_t)=\int h_t(j,x)\,dg_t(j,x).
+\]
+
+\textbf{The factor $2.1$ is explicit replacement accounting:} adjusted child units per future household, combining sex composition, survival to entry age, and household formation. There is no hidden child-death state.
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{We calibrate 2007--2023 as a transition, not as a steady state}
+\small
+\begin{center}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{>{\centering\arraybackslash}m{0.17\textwidth}c>{\centering\arraybackslash}m{0.17\textwidth}c>{\centering\arraybackslash}m{0.17\textwidth}c>{\centering\arraybackslash}m{0.17\textwidth}}
+\textbf{Old benchmark} & $\longrightarrow$ & \textbf{2007 state} & $\longrightarrow$ & \textbf{2007--2023} & $\longrightarrow$ & \textbf{After 2023} \\
+Completed fertility normalized to $2.1$ && Reweight only the age margin to ACS 2007 && Estimate a linear decline in the fertility preference && Hold the 2023 preference fixed and continue \\
+\end{tabular}
+\end{center}
+
+\medskip
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.32\textwidth}
+\textbf{Imposed inputs}
+\begin{itemize}
+  \item Census household totals
+  \item ACS head-age shares
+  \item 2007 start and linear path shape
+\end{itemize}
+\end{column}
+\begin{column}{0.32\textwidth}
+\textbf{Calibration}
+\begin{itemize}
+  \item Ten free structural parameters
+  \item Twelve maintained moments
+  \item Objective evaluated mainly at 2023
+\end{itemize}
+\end{column}
+\begin{column}{0.32\textwidth}
+\textbf{Historical holdouts}
+\begin{itemize}
+  \item Period fertility and timing
+  \item Ownership and rooms
+  \item House prices and rents
+\end{itemize}
+\end{column}
+\end{columns}
+
+\textbf{Thus 2007 is a dated initial state, not literally the old steady state, and the demographic bridge is not counted as model fit.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The 2023 fit has two important housing-size misses}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.64\textwidth}
+\centering
+\includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/calibrated_2023_target_fit.pdf}
+\end{column}
+\begin{column}{0.33\textwidth}
+\footnotesize
+\textbf{Calibration facts}\\[-0.15em]
+\textbf{Loss: $50.742$.} Ten parameters and twelve moments.
+
+\medskip
+Two exact independent repeats.
+
+\medskip
+\textbf{Main misses}
+\begin{itemize}
+  \item First-birth rooms: $0.273$ versus $0.720$
+  \item Mean rooms: $6.742$ versus $5.780$
+\end{itemize}
+
+They contribute $38.57$ of the total loss.
+
+\medskip
+The PSID rooms target is provisional because its prepath is not flat.
+\end{column}
+\end{columns}
+\source{Source: final dated-transition calibration, selected candidate 7; target system \texttt{e5\_fullhistory\_roomsfix\_h1\_20260817}.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Historical validation is mixed rather than hidden}
+\centering
+\includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/historical_untargeted_fertility_housing_validation.pdf}
+
+\vspace{-0.25em}
+\small
+\textbf{Reading the figure:} timing is close by 2023; the model misses the ownership cycle and rooms trend, and its fertility decline is too steep.
+
+\source{National historical series are holdouts. The maintained 2023 targets use mixed samples and vintages, so this is not a unified national time-series fit.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The model does not reproduce the house-price cycle}
+\centering
+\includegraphics[width=0.94\textwidth,height=0.72\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/historical_untargeted_price_rent_validation.pdf}
+
+\vspace{-0.2em}
+\begin{itemize}
+  \item The model cannot reproduce the 2007--2011 house-price collapse and later rebound.
+  \item With temporary-equilibrium expectations and a fixed user-cost relation, it has no independent price-to-rent dynamics.
+\end{itemize}
+\textbf{The exercise should therefore be read as a demographic-housing transition, not as a complete account of the post-2007 housing cycle.}
+\source{Observed house prices: real Case-Shiller. The rent CPI is shown only as a descriptive proxy, not as the model's user cost.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Demographic momentum delays the post-2023 decline}
+\centering
+\includegraphics[width=0.96\textwidth,height=0.69\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/continuation_paired_continuation_levels.pdf}
+
+\vspace{-0.2em}
+\small
+Both paths peak slightly in 2027. By 2183, population is $0.138$ of 2023 in the closed benchmark and $0.359$ in the open sensitivity; asset prices are $0.386$ and $0.628$ of 2023.
+
+\source{The open case fixes the old-state outside flow $M$ and retention rate $\rho$. The value $0.169$ normalizes the old state; it is not a constant entrant share along the path.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{No positive closed steady state at the fitted 2023 preference}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.61\textwidth}
+\centering
+\includegraphics[width=\textwidth,height=0.58\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/continuation_closed_stationary_renewal_schedule.pdf}
+\end{column}
+\begin{column}{0.36\textwidth}
+\footnotesize
+A closed steady state requires
+\[
+\frac{B(P)}{E(P)}=1.
+\]
+At the estimated 2023 preference,
+\[
+0.552\leq B(P)/E(P)\leq0.678
+\]
+over the declared price grid. There is no crossing.
+
+\smallskip
+Even almost free housing does not restore replacement in the fitted model.
+
+\smallskip
+\textbf{Therefore:} the blue path is a finite-horizon closed benchmark, not a verified transition between two positive steady states.
+\end{column}
+\end{columns}
+\vspace{-0.45em}
+\source{Source: 25-point grid, $P/P_0\in[10^{-4},3]$; not a global theorem.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The honest advisor summary}
+\small
+\begin{block}{What the update adds}
+The paper keeps the household block and adds population renewal. It treats 2007--2023 as a dated transition, calibrates at 2023, and follows inherited cohorts forward.
+\end{block}
+
+\begin{itemize}
+  \item \textbf{Theory:} lower fertility eventually reduces population and housing costs, but inherited cohorts can keep population and prices rising initially.
+  \item \textbf{Quantitative result:} the model is credible on several 2023 margins, but weak on housing quantities and the historical price path.
+  \item \textbf{Central limitation:} the fitted housing response is too weak to restore replacement, so the closed path has no positive stationary endpoint.
+\end{itemize}
+
+\smallskip
+\textbf{Decision:} present the finite closed benchmark plus an explicit open sensitivity, or discipline the housing-cost-to-fertility slope and re-estimate under a closed-root requirement before making a between-steady-states claim.
+
+\smallskip
+\textbf{No policy result is promoted until that equilibrium choice is settled.}
+\end{frame}
+
+\end{document}
