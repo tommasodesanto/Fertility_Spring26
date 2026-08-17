@@ -315,6 +315,58 @@ p^{PE}<p^I<p_0,\qquad n^D<n^I<n^F<1.
 \end{frame}
 
 % ---------------------------------------------------------------------------
+\begin{frame}{The toy model now has a genuine transition}
+After the permanent fall in the value of children, $v_0\rightarrow v_1<v_0$, each date is determined by
+\[
+\begin{aligned}
+Y_{t+1}&=n(p_t;v_1)Y_t,
+& O_{t+1}&=Y_t,\\
+Y_t h_Y(p_t;v_1)+O_t h_O(p_t)&=H^s(p_t).
+\end{aligned}
+\]
+The first line advances the two cohorts; the second clears the housing market given their current sizes.
+
+\medskip
+With total adult-household population $S_t=Y_t+O_t$,
+\[
+S_{t+1}-S_t
+=Y_t\left(n_t-\frac{O_t}{Y_t}\right).
+\]
+Population therefore bottoms when fertility crosses the inherited old-to-young cohort ratio, not necessarily when fertility crosses one.
+
+\smallskip
+\centering
+\large
+$
+A\;\longrightarrow\;I\;\longrightarrow\;P\;\longrightarrow\;M\;\longrightarrow\;A'
+.$
+
+\smallskip
+\scriptsize
+$A$: initial steady state; $I$: impact equilibrium; $P$: price trough; $M$: population trough; $A'$: new steady state.
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Population and housing costs undershoot the new steady state}
+\centering
+\includegraphics[width=0.97\textwidth,height=0.68\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/two_cohort_transition_paths.pdf}
+
+\vspace{-0.2em}
+\small
+In this illustration, housing cost reaches its minimum at $P$ in generation 4 and population reaches its minimum at $M$ in generation 5. Both then recover slightly toward $A'$.
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{The price trough comes just before the population trough}
+\centering
+\includegraphics[width=0.97\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/two_cohort_trough_mechanics.pdf}
+
+\vspace{-0.25em}
+\small
+Population keeps falling while $n_t<O_t/Y_t$, even after fertility has returned above one. The two troughs need not coincide because housing demand also depends on the composition of the population between young and old households.
+\end{frame}
+
+% ---------------------------------------------------------------------------
 \begin{frame}{Below-replacement fertility need not lower population immediately}
 Let $n_t=n(p_t)$ be household children per young household and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
 \[

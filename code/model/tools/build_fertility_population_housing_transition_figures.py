@@ -1069,6 +1069,358 @@ def build_contemporaneous_housing_feedback(values: dict[str, float]) -> None:
     plt.close(fig)
 
 
+def clear_two_cohort_housing_market(
+    young: float,
+    old: float,
+    child_value: float,
+    values: dict[str, float],
+) -> float:
+    """Clear housing for arbitrary young and old cohort masses."""
+
+    price_grid = np.linspace(0.01, 4.0, 40_000)
+    supply = values["supply_scale"] * np.power(
+        price_grid, values["supply_elasticity"]
+    )
+    demand = young * housing_per_family(
+        price_grid,
+        child_value,
+        housing_weight=values["housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    ) + old * values["old_housing_weight"] / price_grid
+    gap = supply - demand
+    if gap[0] >= 0.0 or gap[-1] <= 0.0 or np.any(np.diff(gap) <= 0.0):
+        raise ValueError("The two-cohort housing root is not unique on the grid.")
+    return float(np.interp(0.0, gap, price_grid))
+
+
+def simulate_two_cohort_transition(
+    values: dict[str, float],
+    *,
+    periods: int = 18,
+) -> list[dict[str, float]]:
+    """Solve the post-shock transition of the literal two-cohort toy model."""
+
+    young = 0.5 * values["old_population"]
+    old = 0.5 * values["old_population"]
+    rows: list[dict[str, float]] = []
+    for period in range(periods):
+        price = clear_two_cohort_housing_market(
+            young,
+            old,
+            values["new_theta"],
+            values,
+        )
+        fertility = float(
+            child_demand(
+                price,
+                values["new_theta"],
+                values["child_cost"],
+                values["child_space"],
+            )
+        )
+        population = young + old
+        cohort_ratio = old / young
+        rows.append(
+            {
+                "period": float(period),
+                "young": young,
+                "old": old,
+                "population": population,
+                "population_index": population / values["old_population"],
+                "housing_cost": price,
+                "housing_cost_index": price / values["old_price"],
+                "fertility": fertility,
+                "old_to_young_ratio": cohort_ratio,
+                "next_population_change": young * (fertility - cohort_ratio),
+            }
+        )
+        young, old = fertility * young, young
+
+    population_trough = min(rows, key=lambda row: row["population"])
+    price_trough = min(rows, key=lambda row: row["housing_cost"])
+    assert int(price_trough["period"]) == 4
+    assert int(population_trough["period"]) == 5
+    assert price_trough["housing_cost"] < values["new_price"]
+    assert population_trough["population"] < values["new_population"]
+    assert rows[4]["fertility"] > 1.0
+    assert rows[4]["next_population_change"] < 0.0
+    assert rows[5]["next_population_change"] > 0.0
+    assert abs(rows[-1]["population"] - values["new_population"]) < 2e-6
+    assert abs(rows[-1]["housing_cost"] - values["new_price"]) < 2e-6
+    return rows
+
+
+def write_two_cohort_transition(rows: list[dict[str, float]]) -> None:
+    """Save the exact values behind the dynamic illustration."""
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    with (OUTDIR / "two_cohort_transition.csv").open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def build_two_cohort_transition_paths(
+    values: dict[str, float],
+    rows: list[dict[str, float]],
+) -> None:
+    """Plot full population and housing-cost paths after the shock."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.0,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.2,
+            "ytick.labelsize": 9.2,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    period = np.array([row["period"] for row in rows])
+    population = np.array([row["population_index"] for row in rows])
+    price = np.array([row["housing_cost_index"] for row in rows])
+    population_ss = values["new_population"] / values["old_population"]
+    price_ss = values["new_price"] / values["old_price"]
+    population_trough = int(np.argmin(population))
+    price_trough = int(np.argmin(price))
+
+    fig, (population_axis, price_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.28},
+    )
+    population_axis.plot(period, population, color="#244f74", linewidth=2.2)
+    population_axis.axhline(
+        population_ss,
+        color="#777777",
+        linewidth=1.0,
+        linestyle=(0, (3, 2)),
+    )
+    population_axis.scatter(
+        [period[population_trough]],
+        [population[population_trough]],
+        color="#a3473f",
+        s=42,
+        zorder=5,
+    )
+    population_axis.text(
+        period[population_trough] + 0.25,
+        population[population_trough] - 0.018,
+        r"$M$: population trough",
+        color="#a3473f",
+        fontsize=9.2,
+    )
+    population_axis.text(
+        12.1,
+        population_ss + 0.012,
+        r"new steady state $S_1$",
+        color="#666666",
+        fontsize=9.0,
+        ha="right",
+    )
+    population_axis.set_title("(a) Adult-household population")
+    population_axis.set_xlabel("Generation after the shock")
+    population_axis.set_ylabel(r"Index, $S_0=1$")
+    population_axis.set_xlim(0, 13)
+    population_axis.set_ylim(0.595, 1.025)
+
+    price_axis.plot(period, price, color="#a3473f", linewidth=2.2)
+    price_axis.axhline(
+        price_ss,
+        color="#777777",
+        linewidth=1.0,
+        linestyle=(0, (3, 2)),
+    )
+    price_axis.scatter(
+        [period[price_trough]],
+        [price[price_trough]],
+        color="#244f74",
+        s=42,
+        zorder=5,
+    )
+    price_axis.text(
+        period[price_trough] + 0.25,
+        price[price_trough] - 0.014,
+        r"$P$: price trough",
+        color="#244f74",
+        fontsize=9.2,
+    )
+    price_axis.text(
+        12.1,
+        price_ss + 0.010,
+        r"new steady state $p_1$",
+        color="#666666",
+        fontsize=9.0,
+        ha="right",
+    )
+    price_axis.set_title("(b) Housing cost")
+    price_axis.set_xlabel("Generation after the shock")
+    price_axis.set_ylabel(r"Index, $p_0=1$")
+    price_axis.set_xlim(0, 13)
+    price_axis.set_ylim(0.595, 0.925)
+
+    for axis in (population_axis, price_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "two_cohort_transition_paths.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "two_cohort_transition_paths.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
+    plt.close(fig)
+
+
+def build_two_cohort_trough_mechanics(
+    values: dict[str, float],
+    rows: list[dict[str, float]],
+) -> None:
+    """Explain why fertility recovers before population reaches its trough."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.0,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.2,
+            "ytick.labelsize": 9.2,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    period = np.array([row["period"] for row in rows])
+    fertility = np.array([row["fertility"] for row in rows])
+    cohort_ratio = np.array([row["old_to_young_ratio"] for row in rows])
+    population_relative_ss = np.array(
+        [row["population"] / values["new_population"] for row in rows]
+    )
+    price_relative_ss = np.array(
+        [row["housing_cost"] / values["new_price"] for row in rows]
+    )
+    population_trough = int(np.argmin(population_relative_ss))
+    price_trough = int(np.argmin(price_relative_ss))
+
+    fig, (condition_axis, zoom_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.28},
+    )
+    condition_axis.plot(
+        period[:10],
+        fertility[:10],
+        color="#a3473f",
+        linewidth=2.2,
+        label=r"fertility $n_t$",
+    )
+    condition_axis.plot(
+        period[:10],
+        cohort_ratio[:10],
+        color="#244f74",
+        linewidth=2.2,
+        label=r"cohort ratio $O_t/Y_t$",
+    )
+    condition_axis.axhline(1.0, color="#777777", linewidth=0.9, linestyle=(0, (3, 2)))
+    condition_axis.axvline(
+        population_trough,
+        color="#999999",
+        linewidth=0.9,
+        linestyle=(0, (2, 2)),
+    )
+    condition_axis.text(
+        population_trough + 0.15,
+        0.745,
+        r"$M$",
+        color="#777777",
+        fontsize=10.0,
+        va="bottom",
+    )
+    condition_axis.set_title(r"(a) Population rises when $n_t>O_t/Y_t$")
+    condition_axis.set_xlabel("Generation after the shock")
+    condition_axis.set_ylabel("Level")
+    condition_axis.set_xlim(0, 9)
+    condition_axis.set_ylim(0.72, 1.34)
+    condition_axis.legend(frameon=False, fontsize=8.4, loc="upper right")
+
+    start = 2
+    stop = 11
+    zoom_axis.plot(
+        period[start:stop],
+        population_relative_ss[start:stop],
+        color="#244f74",
+        linewidth=2.2,
+        marker="o",
+        markersize=3.5,
+        label=r"population $S_t/S_1$",
+    )
+    zoom_axis.plot(
+        period[start:stop],
+        price_relative_ss[start:stop],
+        color="#a3473f",
+        linewidth=2.2,
+        marker="o",
+        markersize=3.5,
+        label=r"housing cost $p_t/p_1$",
+    )
+    zoom_axis.axhline(1.0, color="#777777", linewidth=0.9, linestyle=(0, (3, 2)))
+    zoom_axis.scatter(
+        [period[price_trough], period[population_trough]],
+        [price_relative_ss[price_trough], population_relative_ss[population_trough]],
+        color=["#a3473f", "#244f74"],
+        s=[46, 46],
+        zorder=6,
+    )
+    zoom_axis.text(
+        period[price_trough] - 0.18,
+        price_relative_ss[price_trough] + 0.0040,
+        r"$P$",
+        color="#a3473f",
+        ha="right",
+        va="bottom",
+    )
+    zoom_axis.text(
+        period[population_trough] + 0.16,
+        population_relative_ss[population_trough] + 0.0040,
+        r"$M$",
+        color="#244f74",
+        va="bottom",
+    )
+    zoom_axis.set_title("(b) The two troughs are close, not identical")
+    zoom_axis.set_xlabel("Generation after the shock")
+    zoom_axis.set_ylabel("Relative to the new steady state")
+    zoom_axis.set_xlim(2, 10)
+    zoom_axis.set_ylim(0.988, 1.15)
+    zoom_axis.legend(frameon=False, fontsize=8.4, loc="upper right")
+
+    for axis in (condition_axis, zoom_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "two_cohort_trough_mechanics.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "two_cohort_trough_mechanics.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
+    plt.close(fig)
+
+
 def build_equilibrium_figure(values: dict[str, float]) -> None:
     """Draw the two schedules that determine the initial steady state."""
 
@@ -1491,7 +1843,9 @@ def build_transition_stage_figure(
 def main() -> None:
     values = illustration()
     verify(values)
+    transition_rows = simulate_two_cohort_transition(values)
     write_parameters(values)
+    write_two_cohort_transition(transition_rows)
     build_equilibrium_figure(values)
     build_transition_stage_figure(
         values,
@@ -1507,6 +1861,8 @@ def main() -> None:
     build_fertility_feedback_comparison(values)
     build_primitive_fertility_shock(values)
     build_contemporaneous_housing_feedback(values)
+    build_two_cohort_transition_paths(values, transition_rows)
+    build_two_cohort_trough_mechanics(values, transition_rows)
 
 
 if __name__ == "__main__":
