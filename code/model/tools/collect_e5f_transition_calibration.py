@@ -49,6 +49,26 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     temporary.replace(path)
 
 
+def target_measurement_provenance(recorded: Any, target_set: str) -> dict[str, Any]:
+    if not isinstance(recorded, dict) or not recorded:
+        raise RuntimeError("task summary omits target-measurement definitions")
+    return {
+        "contract": str(target_set),
+        "recorded_model_timing": recorded,
+        "authoritative_source_ledgers": {
+            "fertility_housing_tenure": "docs/model/e5_target_review_20260724.md",
+            "model_statistic_definitions": "docs/model/intergen_target_object_audit.md",
+            "wealth_level": "docs/model/intergen_wealth_target_beta_audit_20260723.md",
+        },
+        "empirical_hold": (
+            "housing_increment_0to1 remains under the documented August 2026 "
+            "rooms-code review; its household-and-year-FE estimate and clustered "
+            "standard error remain in the active contract until an author-approved "
+            "replacement is refit"
+        ),
+    }
+
+
 def main() -> None:
     args = parse_args()
     results_dir = args.results_dir.resolve()
@@ -89,9 +109,11 @@ def main() -> None:
                 for field in (
                     "population_bridge",
                     "population_validation_status",
-                    "target_measurements",
                 )
             }
+            provenance["target_measurements"] = target_measurement_provenance(
+                summary["target_measurements"], str(summary["target_set"])
+            )
             provenance_contracts.add(
                 json.dumps(provenance, sort_keys=True, separators=(",", ":"))
             )
@@ -174,7 +196,10 @@ def main() -> None:
             population_validation_status=selected_summary[
                 "population_validation_status"
             ],
-            target_measurements=selected_summary["target_measurements"],
+            target_measurements=target_measurement_provenance(
+                selected_summary["target_measurements"],
+                str(selected_summary["target_set"]),
+            ),
             outside_origin_entry_share=float(
                 selected_summary["outside_origin_entry_share"]
             ),
