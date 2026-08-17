@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "contract_id": "nchs_first_birth_timing_v4_boundary_collapsed_midpoint_1987_2023_lbo_unknown_fixed",
+  "cache_contract": "nchs_first_birth_counts_v4_lbo_unknown_code_fixed_raw_sha256",
+  "data_vintage": {
+    "year_min": 1987,
+    "year_max": 2023
+  },
+  "contains_five_dated_period_targets": false,
+  "target_interpretation": "pooled cohort timing target; annual period comparisons must apply the declared operator directly to the year-age cache",
+  "cohort_windows": {
+    "primary": "1979-1984",
+    "sensitivity": "1975-1980",
+    "cohort_assignment": "calendar data year minus exact/decoded maternal age; unavoidable plus-or-minus-one calendar blur",
+    "left_support": "both primary and sensitivity windows are observed from age 12 through each cohort's age attainable in 2023"
+  },
+  "right_tail_diagnostic": {
+    "reference_cohorts": "1970-1974",
+    "status": "diagnostic only; the 1987 start omits some early-age cells in this reference pool",
+    "use_in_target_or_weight": false
+  },
+  "recommended_operator": {
+    "id": "boundary_collapsed_midpoint_v1",
+    "boundary_treatment": "exact/decoded ages <=21 map to cell start 18; 22-25 to 22; 26-29 to 26; 30-33 to 30; 34-37 to 34; 38-41 to 38; ages >=42 map to cell start 42",
+    "bin_starts": [18, 22, 26, 30, 34, 38, 42],
+    "reported_midpoint_labels": [20, 24, 28, 32, 36, 40, 44],
+    "mean_formula": "first-birth-count-weighted mean of midpoint labels 20,24,...,44",
+    "share_30plus_formula": "sum first-birth counts with bin_start >= 30 divided by all used first-birth counts",
+    "share_30plus_classification_identity": "bin_start >= 30 is identical to exact/decoded age >= 30",
+    "observed_age_support": "all observed ages in the cache (nominally 12-49; 2003 MAGER41 code 01 is an under-15 group placed below the first cutoff)",
+    "boundary_exclusions": "none",
+    "primary_target": {
+      "mean_age_first_birth": 26.044627257483299,
+      "share_30plus": 0.260327401666964,
+      "n_first_births": 10578871,
+      "mean_standard_error": 0.14999999999999999,
+      "share_30plus_standard_error": 0.01,
+      "mean_inverse_variance_weight": 44.4444444444444,
+      "share_30plus_inverse_variance_weight": 10000
+    },
+    "sensitivity_target": {
+      "mean_age_first_birth": 25.919040268684601,
+      "share_30plus": 0.25039746016349901,
+      "n_first_births": 10029307
+    }
+  },
+  "uncertainty": {
+    "definition": "absolute primary-versus-sensitivity cohort-window spread under the same operator; both windows are observed from age 12 onward; not a sampling standard error",
+    "mean_rounding": "round upward to the nearest 0.05 year",
+    "share_rounding": "round upward to the nearest 0.001"
+  },
+  "raw_microdata_receipt": {
+    "status": "every 1987--2023 national raw file is content-hashed before cache reuse",
+    "manifest": "first_birth_counts_manifest.csv",
+    "manifest_columns": ["year", "file", "size_bytes", "sha256", "cache_contract"]
+  },
+  "live_birth_order_codes": {
+    "first_birth": 1,
+    "legacy_dlivord_unknown": 99,
+    "lbo_rec_unknown": 9,
+    "missing_values_also_excluded": true
+  },
+  "pre_2003_measurement": {
+    "maternal_age_field": "dmage",
+    "maternal_age_field_label": "Age of Mother",
+    "live_birth_order_field": "dlivord",
+    "live_birth_order_field_label": "Detail Live Birth Order",
+    "years": "1987--2002",
+    "source_item_transition": "1989 revision moves maternal age toward completed age derived from date of birth when available; no concept or coding adjustment applied",
+    "official_1987_document_url": "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Dataset_Documentation/DVS/natality/Nat1987doc.pdf",
+    "official_1987_document_sha256": "145d8496d764ee66583ef1520ae56804e1c3373bea35d3a570ecbc1426bd5c79",
+    "official_1989_document_url": "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Dataset_Documentation/DVS/natality/Nat1989doc.pdf",
+    "official_1989_document_sha256": "92dab8115baec71eec3633239cbd042b2079ad6b80bd1b3a3a43c3276ac3a7cb"
+  },
+  "maternal_age_source_2003": {
+    "field": "MAGER41",
+    "transformation": "code 01 assigned 14 only to preserve its under-15 boundary status; codes 02:41 decoded as code+13",
+    "relevance": "primary and sensitivity cohorts are ages 19-28 in 2003, where MAGER41 is single-year exact after decoding",
+    "official_document_url": "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Dataset_Documentation/DVS/natality/Nat2003doc.pdf",
+    "official_document_sha256": "82246197e30d54c56a69314bfdcb8f553e6ca0a0d509f8ce8112c2e996b5b2f5",
+    "official_document_size_bytes": 16116001
+  },
+  "file_sha256": {
+    "first_birth_counts_year_age.csv": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "first_birth_counts_manifest.csv": "cc2988d58c7d0d4e8fa487abdb9c3a4fe7477ccc40245b271a93ee1fdcaf19d0",
+    "order_exclusion_shares_by_year.csv": "cbc35f9497c44d2dcb8fe4746cf68003906eab3873fe04e3e9916a7ff9432262",
+    "cohort_truncation.csv": "293240d22a2c9ee335077936d1ed531250b87f6ffff98c890f5f555b4f2c6406",
+    "timing_targets.csv": "5a12792ab41085f5c651eb558a582cd4b4b7764878e967970e5f01fe660e8f96",
+    "timing_targets_exact_age.csv": "d4d4988ee99065d1f8775cc36e8841885049dec1cfb266a1940b022602b8a232",
+    "timing_targets_model_comparable.csv": "88f61fc92109b519c6a2aa95754be322a25194d976ed245d9130ad9c72681c52",
+    "timing_target_contract.csv": "d9d2fda53b8032d630a219385bab5fe6040594c04b28e89c2b8decc0fbc1ecb2",
+    "timing_age_bin_counts.csv": "c7d6fbcada3d1743b907bf522f150e8d31bd8fa9f0692a1fb89877b728e18d44",
+    "build_first_birth_timing.R": "893e526f0720dd9d0219ae9bf3f81835414fa3debd03124dc0d772fddfff3926",
+    "test_first_birth_timing_targets.R": "023c6996f1122f09d0a5bcb3064cdd2e9bc979938db4ddc7c12c1ec234c7a633"
+  },
+  "source_bundle_members": {
+    "first_birth_counts_year_age.csv": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "first_birth_counts_manifest.csv": "cc2988d58c7d0d4e8fa487abdb9c3a4fe7477ccc40245b271a93ee1fdcaf19d0",
+    "official_1987_nchs_documentation_pdf": "145d8496d764ee66583ef1520ae56804e1c3373bea35d3a570ecbc1426bd5c79",
+    "official_1989_nchs_documentation_pdf": "92dab8115baec71eec3633239cbd042b2079ad6b80bd1b3a3a43c3276ac3a7cb",
+    "official_2003_nchs_documentation_pdf": "82246197e30d54c56a69314bfdcb8f553e6ca0a0d509f8ce8112c2e996b5b2f5",
+    "cache_contract": "nchs_first_birth_counts_v4_lbo_unknown_code_fixed_raw_sha256"
+  },
+  "source_bundle_sha256": "98bf7bb5339f5ff599a3b0fe135c20784321df3573cefe9d2a890a0a2251cb54",
+  "contract_bundle_members": {
+    "timing_target_contract.csv": "d9d2fda53b8032d630a219385bab5fe6040594c04b28e89c2b8decc0fbc1ecb2",
+    "timing_targets_model_comparable.csv": "88f61fc92109b519c6a2aa95754be322a25194d976ed245d9130ad9c72681c52",
+    "timing_age_bin_counts.csv": "c7d6fbcada3d1743b907bf522f150e8d31bd8fa9f0692a1fb89877b728e18d44",
+    "timing_targets_exact_age.csv": "d4d4988ee99065d1f8775cc36e8841885049dec1cfb266a1940b022602b8a232",
+    "build_first_birth_timing.R": "893e526f0720dd9d0219ae9bf3f81835414fa3debd03124dc0d772fddfff3926",
+    "test_first_birth_timing_targets.R": "023c6996f1122f09d0a5bcb3064cdd2e9bc979938db4ddc7c12c1ec234c7a633"
+  },
+  "contract_bundle_sha256": "1f52a6280e23e090099f31a07393b9d4954c413f79a8c047d084c2a55911e938"
+}

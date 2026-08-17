@@ -499,8 +499,23 @@ def main() -> None:
         from intergen_eqscale_seq_optimized.e5_profile import (
             E5_PROFILE_NAME,
             E5_TARGET_PROVENANCE,
+            E5_TARGET_SCOPE,
             e5_target_system,
         )
+        if (
+            E5_TARGET_SCOPE == "dated_transition_only"
+            and os.environ.get(
+                "E5_ALLOW_STATIONARY_TRANSITION_TARGET_DIAGNOSTIC", ""
+            )
+            != "1"
+        ):
+            raise ValueError(
+                "The active E5 target maps first-birth housing across the dated "
+                "2019--2023 transition. Stationary E5 SMM is disabled; use "
+                "run_e5f_transition_calibration.py. Set "
+                "E5_ALLOW_STATIONARY_TRANSITION_TARGET_DIAGNOSTIC=1 only for an "
+                "explicitly labeled stationary diagnostic."
+            )
         e5_system = e5_target_system()
         profile_name = E5_PROFILE_NAME
         target_provenance = E5_TARGET_PROVENANCE

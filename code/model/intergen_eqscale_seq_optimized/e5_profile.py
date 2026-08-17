@@ -1,11 +1,11 @@
-"""E5 sequential-fertility target contract, revised 2026-08-09.
+"""E5 sequential-fertility target contract, revised 2026-08-17.
 
 ``tfr`` is retained as a legacy key, but denotes completed fertility (mean
 children ever born for women ages 40--44), with the literal 3+ top-bin weight
 used by the E4 L4 convention.  Rows with an available standard error use the
 diagonal inverse-variance weight; other rows use provisional target-scale
-weights.  The first-birth rooms target and standard error come from the
-household-and-year-fixed-effect PSID specification restored on 2026-08-09.
+weights.  The first-birth rooms row is activated only from the corrected,
+wave-aligned PSID event-study receipt.
 The borrowed bequest-flow row uses the explicitly synthetic provisional
 target-scale weight ``1 / 0.0088**2`` pending the weights pass.
 """
@@ -17,30 +17,95 @@ from .calibration import OLD_NONLOCATION_TARGETS
 from .externals import flhsv_income_overrides
 from .target_system import TargetSystem
 
-E5_PROFILE_NAME = "eqscale_seq_e5_idfe_20260809"
-E5_TARGET_SET = "e5_idfe_review_20260809"
+E5_PROFILE_NAME = "eqscale_seq_e5_fullhistory_roomsfix_h1_20260817"
+E5_TARGET_SET = "e5_fullhistory_roomsfix_h1_20260817"
+E5_TARGET_SCOPE = "dated_transition_only"
+E5_HOUSING_EVENT_HORIZON = 1
 E5_TARGET_PROVENANCE = {
     "housing_increment_0to1": {
-        "source": "PSID first-birth Sun--Abraham event study",
-        "builder": "code/data/psid_followup_mar2026/sa_rooms_first_birth_one_variant_v1.do",
-        "event_time": 3,
-        "fixed_effects": ["ID", "year"],
+        "source": "PSID first-birth Sun--Abraham event study, four-year contrast",
+        "builder": "code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do",
+        "finalizer": "code/data/psid_followup_mar2026/finalize_first_birth_rooms_target_receipt.py",
+        "output": "code/data/psid_followup_mar2026/output/sa_rooms_first_birth_household_aligned_v1/metadata.json",
+        "contrast_start_time": -1,
+        "contrast_end_time": 3,
+        "regression_omitted_time": -2,
+        "fixed_effects": ["person ID", "year"],
         "covariates": ["i.AGEREP", "i.EDUYEAR"],
-        "cluster": "ID",
-        "estimate": 0.80494368,
-        "standard_error": 0.16728361,
-        "regenerated": "2026-08-09",
-    }
+        "cluster": "person ID",
+        "weight": "PSID longitudinal IW",
+        "control_group": "confirmed zero-child women",
+        "sample": "single-family-unit dwellings; one current reference/spouse woman per household-year",
+        "estimate": 0.7202462623815278,
+        "standard_error": 0.0852600513385958,
+        "contract_id": "psid_first_birth_rooms_household_aligned_sa_v1_20260817",
+        "do_file_sha256": "f588d6946d772155b75cfdf272b8ae46e5e362bc3b6f977fccd16aa57d18f36c",
+        "target_receipt_sha256": "ca75bef54f80e9a18647ca2cc50c52c0b08677a3afd737c3fcd41966929125da",
+        "measurement_status": "provisional model mapping; earlier leads reject a flat prepath",
+        "model_mapping": (
+            "matched birth-versus-confirmed-childless cohorts from the 2019 dated "
+            "risk set; 2019 policies advance both branches and 2023 policies "
+            "govern continuation fertility and housing"
+        ),
+        "regenerated": "2026-08-17",
+    },
+    "mean_age_first_birth": {
+        "source": "NCHS natality first births, cohorts 1979--1984",
+        "builder": "code/data/nchs_natality_timing/build_first_birth_timing.R",
+        "output": "code/data/nchs_natality_timing/timing_target_contract.csv",
+        "measurement": (
+            "exact ages are collapsed into the model's seven four-year cells "
+            "with boundary bins and labeled by midpoints 20,24,...,44"
+        ),
+        "estimate": 26.0446272574833,
+        "standard_error": 0.15,
+        "uncertainty": (
+            "rounded primary-versus-1975--1980 cohort-window spread; "
+            "not a sampling standard error"
+        ),
+        "source_bundle_sha256": (
+            "98bf7bb5339f5ff599a3b0fe135c20784321df3573cefe9d2a890a0a2251cb54"
+        ),
+        "contract_bundle_sha256": (
+            "1f52a6280e23e090099f31a07393b9d4954c413f79a8c047d084c2a55911e938"
+        ),
+        "regenerated": "2026-08-17",
+    },
+    "share_first_births_age30plus": {
+        "source": "NCHS natality first births, cohorts 1979--1984",
+        "builder": "code/data/nchs_natality_timing/build_first_birth_timing.R",
+        "output": "code/data/nchs_natality_timing/timing_target_contract.csv",
+        "measurement": (
+            "share in four-year model cells beginning at age 30 or later; "
+            "identical to exact age 30+ under the declared binning"
+        ),
+        "estimate": 0.260327401666964,
+        "standard_error": 0.01,
+        "uncertainty": (
+            "rounded primary-versus-1975--1980 cohort-window spread; "
+            "not a sampling standard error"
+        ),
+        "source_bundle_sha256": (
+            "98bf7bb5339f5ff599a3b0fe135c20784321df3573cefe9d2a890a0a2251cb54"
+        ),
+        "contract_bundle_sha256": (
+            "1f52a6280e23e090099f31a07393b9d4954c413f79a8c047d084c2a55911e938"
+        ),
+        "regenerated": "2026-08-17",
+    },
 }
 E5_TARGETS: dict[str, float | None] = {
     "tfr": 1.918,
     "childless_rate": 0.188,
-    # NCHS natality archive, cohorts 1979-84 (code/data/nchs_natality_timing)
-    "mean_age_first_birth": 25.310560799362,
-    "share_first_births_age30plus": 0.270062376851342,
-    # PSID Sun--Abraham first-birth rooms response at k=+3, with household
-    # and year fixed effects; regenerated 2026-08-09 from the active builder.
-    "housing_increment_0to1": 0.80494368,
+    # NCHS natality archive, cohorts 1979--84.  The data and model use the
+    # identical four-year-cell midpoint measurement; exact-age values remain
+    # a reference series but are not the model-comparable calibration target.
+    "mean_age_first_birth": 26.0446272574833,
+    "share_first_births_age30plus": 0.260327401666964,
+    # PSID Sun--Abraham first-birth rooms response from k=-1 to k=+3, a
+    # four-year contrast. The full path has non-flat earlier leads, so this is
+    # a provisional model-mapping moment rather than a clean causal estimate.
+    "housing_increment_0to1": 0.7202462623815278,
     "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
     "own_family_gap": OLD_NONLOCATION_TARGETS["own_family_gap"],
     "own_rate": 0.575472,
@@ -58,9 +123,9 @@ E5_TARGETS: dict[str, float | None] = {
 E5_MEASURED_SES: dict[str, float] = {
     "tfr": 0.026483780917,                     # CPS Jun 2024 bootstrap
     "childless_rate": 0.007629200330,          # CPS Jun 2024 bootstrap
-    "mean_age_first_birth": 0.25,              # declared, window spread 0.23
-    "share_first_births_age30plus": 0.008,     # declared, window spread 0.0076
-    "housing_increment_0to1": 0.16728361,      # PSID ID-FE Sun--Abraham, clustered by household
+    "mean_age_first_birth": 0.15,              # declared, window spread 0.1256
+    "share_first_births_age30plus": 0.01,      # declared, window spread 0.00993
+    "housing_increment_0to1": 0.0852600513385958,  # PSID +3 minus -1, full-covariance clustered SE
     "aggregate_wealth_to_annual_gross_labor_earnings": 0.3988,   # PSID bootstrap
     "old_total_wealth_to_annual_income_p90_p50_7684": 0.1325,    # PSID bootstrap
 }
@@ -116,6 +181,10 @@ def e5_overrides() -> dict[str, Any]:
         "tfr_top_bin_weight": 3.602359422009,  # CPS Jun 2024 capped top-bin mean (SE 0.0279)
         "entrant_conversion_factor": 0.5,
         "child_bin_high_cutoff": 3,
+        # The PSID calibration row is a four-year change from event time -1
+        # to +3.  One model period is four years, so the controlled model
+        # response must be measured one period after the first-birth branch.
+        "housing_event_horizon": E5_HOUSING_EVENT_HORIZON,
         "eqscale_form": "power",
         "gamma_e": 0.0,
         **flhsv_income_overrides(),

@@ -57,19 +57,23 @@ def population_at_price(
     supply_scale: float,
     supply_elasticity: float,
     housing_weight: float,
+    old_housing_weight: float,
     child_cost: float,
     child_space: float,
 ) -> np.ndarray | float:
-    """Return the population supported by housing clearing at a price."""
+    """Return total young-plus-old population supported at a steady-state price."""
 
     housing_supply = supply_scale * np.power(price, supply_elasticity)
-    return housing_supply / housing_per_family(
+    young_housing = housing_per_family(
         price,
         child_value,
         housing_weight=housing_weight,
         child_cost=child_cost,
         child_space=child_space,
     )
+    old_housing = old_housing_weight / price
+    average_housing_per_adult = 0.5 * (young_housing + old_housing)
+    return housing_supply / average_housing_per_adult
 
 
 def price_at_population(
@@ -79,6 +83,7 @@ def price_at_population(
     supply_scale: float,
     supply_elasticity: float,
     housing_weight: float,
+    old_housing_weight: float,
     child_cost: float,
     child_space: float,
 ) -> float:
@@ -91,6 +96,7 @@ def price_at_population(
         supply_scale=supply_scale,
         supply_elasticity=supply_elasticity,
         housing_weight=housing_weight,
+        old_housing_weight=old_housing_weight,
         child_cost=child_cost,
         child_space=child_space,
     )
@@ -105,6 +111,7 @@ def illustration() -> dict[str, float]:
     values = {
         "income": 3.0,
         "housing_weight": 0.6,
+        "old_housing_weight": 0.4,
         "child_cost": 0.2,
         "child_space": 0.8,
         "replacement": 1.0,
@@ -120,16 +127,18 @@ def illustration() -> dict[str, float]:
         values["new_theta"] / values["replacement"] - values["child_cost"]
     ) / values["child_space"]
 
-    old_housing = housing_per_family(
+    young_housing = housing_per_family(
         values["old_price"],
         values["old_theta"],
         housing_weight=values["housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
+    old_housing = values["old_housing_weight"] / values["old_price"]
+    average_housing_per_adult = 0.5 * (young_housing + old_housing)
     values["supply_scale"] = (
         values["old_population"]
-        * old_housing
+        * average_housing_per_adult
         / values["old_price"] ** values["supply_elasticity"]
     )
     values["new_population"] = population_at_price(
@@ -138,6 +147,7 @@ def illustration() -> dict[str, float]:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -147,6 +157,7 @@ def illustration() -> dict[str, float]:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -165,6 +176,37 @@ def verify(values: dict[str, float]) -> None:
     assert values["new_theta"] < values["old_theta"]
     assert values["new_theta"] > values["child_cost"] * values["replacement"]
     assert values["income"] > values["housing_weight"] + values["old_theta"]
+    assert np.isclose(
+        child_demand(
+            values["old_price"],
+            values["old_theta"],
+            values["child_cost"],
+            values["child_space"],
+        ),
+        values["replacement"],
+    )
+    assert np.isclose(
+        child_demand(
+            values["new_price"],
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        ),
+        values["replacement"],
+    )
+    assert np.isclose(
+        population_at_price(
+            values["old_price"],
+            values["old_theta"],
+            supply_scale=values["supply_scale"],
+            supply_elasticity=values["supply_elasticity"],
+            housing_weight=values["housing_weight"],
+            old_housing_weight=values["old_housing_weight"],
+            child_cost=values["child_cost"],
+            child_space=values["child_space"],
+        ),
+        values["old_population"],
+    )
     assert values["new_population"] < values["old_population"]
     assert values["new_price"] < values["impact_price"] < values["old_price"]
     assert values["impact_fertility"] < values["replacement"]
@@ -176,6 +218,7 @@ def verify(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -185,6 +228,7 @@ def verify(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -257,6 +301,7 @@ def build_figure(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -266,6 +311,7 @@ def build_figure(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -282,8 +328,8 @@ def build_figure(values: dict[str, float]) -> None:
         linewidth=2.1,
         linestyle=(0, (5, 3)),
     )
-    market_axis.text(1.08, 1.085, r"before: $\theta_0$", color=old_color)
-    market_axis.text(1.08, 0.80, r"after: $\theta_1$", color=new_color)
+    market_axis.text(1.08, 1.085, "before", color=old_color)
+    market_axis.text(1.08, 0.80, "after", color=new_color)
     market_axis.set_title("(a) Population and the housing cost")
     market_axis.set_xlabel(r"Adult-household population, $S$")
     market_axis.set_ylabel(r"Housing cost, $p$")
@@ -305,7 +351,7 @@ def build_figure(values: dict[str, float]) -> None:
         r"$I$",
         color=new_color,
     )
-    market_axis.text(new_point[0] - 0.055, new_point[1] + 0.025, r"$B$", color=new_color)
+    market_axis.text(new_point[0] - 0.065, new_point[1] + 0.025, r"$A'$", color=new_color)
     add_arrow(market_axis, old_point, impact_market_point)
 
     transition_start_price = values["impact_price"] - 0.055
@@ -316,6 +362,7 @@ def build_figure(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -325,6 +372,7 @@ def build_figure(values: dict[str, float]) -> None:
         supply_scale=values["supply_scale"],
         supply_elasticity=values["supply_elasticity"],
         housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
         child_cost=values["child_cost"],
         child_space=values["child_space"],
     )
@@ -369,8 +417,8 @@ def build_figure(values: dict[str, float]) -> None:
         linewidth=1.0,
         linestyle=(0, (2, 2)),
     )
-    child_axis.text(1.045, 0.92, r"before: $\theta_0$", color=old_color)
-    child_axis.text(0.995, 0.62, r"after: $\theta_1$", color=new_color)
+    child_axis.text(1.045, 0.92, "before", color=old_color)
+    child_axis.text(0.995, 0.62, "after", color=new_color)
     child_axis.set_title("(b) Housing cost and the child decision")
     child_axis.set_xlabel(r"Housing cost, $p$")
     child_axis.set_ylabel(r"Children per family, $n$")
@@ -392,7 +440,7 @@ def build_figure(values: dict[str, float]) -> None:
         r"$I$",
         color=new_color,
     )
-    child_axis.text(new_child_point[0] - 0.035, new_child_point[1] + 0.035, r"$B$", color=new_color)
+    child_axis.text(new_child_point[0] - 0.045, new_child_point[1] + 0.035, r"$A'$", color=new_color)
     add_arrow(child_axis, old_child_point, impact_child_point)
 
     child_transition_start_price = values["impact_price"] - 0.045

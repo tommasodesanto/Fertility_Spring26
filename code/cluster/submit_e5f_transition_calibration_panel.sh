@@ -6,7 +6,9 @@
 #
 # Required production launch variables:
 #   E5F_TRANSITION_RUN_TAG, E5F_TRANSITION_PANEL_SIZE,
-#   E5F_TRANSITION_PANEL_SEED.  Refinement rounds may additionally set
+#   E5F_TRANSITION_PANEL_SEED, E5F_TRANSITION_MODEL_PROFILE,
+#   E5F_TRANSITION_EXPECTED_CODE_BUNDLE_SHA256.
+#   Refinement rounds may additionally set
 #   E5F_TRANSITION_PANEL_CENTER_JSON and E5F_TRANSITION_LOCAL_RADIUS.
 #SBATCH --job-name=e5ftrcal
 #SBATCH --output=logs/slurm_e5ftrcal_%A_%a.out
@@ -36,11 +38,24 @@ LOCAL_RADIUS="${E5F_TRANSITION_LOCAL_RADIUS:-0.18}"
 PANEL_DESIGN="${E5F_TRANSITION_PANEL_DESIGN:-mixed}"
 POST_2023_PERIODS="${E5F_TRANSITION_POST_2023_PERIODS:-0}"
 POLICY_CASE="${E5F_TRANSITION_POLICY_CASE:-none}"
-MODEL_PROFILE="${E5F_TRANSITION_MODEL_PROFILE:-e5f-floor}"
+MODEL_PROFILE="${E5F_TRANSITION_MODEL_PROFILE:?E5F_TRANSITION_MODEL_PROFILE is required}"
+EXPECTED_CODE_BUNDLE_SHA256="${E5F_TRANSITION_EXPECTED_CODE_BUNDLE_SHA256:?E5F_TRANSITION_EXPECTED_CODE_BUNDLE_SHA256 is required}"
+if [ "$POST_2023_PERIODS" != "0" ]; then
+    echo "calibration panels must stop at 2023; run continuations separately" >&2
+    exit 2
+fi
+if [ "$POLICY_CASE" != "none" ]; then
+    echo "calibration panels cannot contain a policy experiment" >&2
+    exit 2
+fi
+if [ "$MODEL_PROFILE" != "e5f-income-entry" ]; then
+    echo "production transition calibration requires e5f-income-entry" >&2
+    exit 2
+fi
 SOURCE="$PROJECT_ROOT/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json"
 EXPECTED_SOURCE_SHA256="0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
-EXPECTED_TARGET_SET="e5_idfe_review_20260809"
-EXPECTED_TARGET_FINGERPRINT="b7c1c1da7578d19e15415c377f2c68b813aca22c6fe5bebda684c14131ec58bc"
+EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817"
+EXPECTED_TARGET_FINGERPRINT="3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
 ACTUAL_SOURCE_SHA256="$(sha256sum "$SOURCE" | awk '{print $1}')"
 if [ "$ACTUAL_SOURCE_SHA256" != "$EXPECTED_SOURCE_SHA256" ]; then
     echo "source hash mismatch: $ACTUAL_SOURCE_SHA256" >&2
@@ -48,11 +63,16 @@ if [ "$ACTUAL_SOURCE_SHA256" != "$EXPECTED_SOURCE_SHA256" ]; then
 fi
 
 OUTDIR="$PROJECT_ROOT/output/model/e5f_transition_calibration_${RUN_TAG}/task_$(printf '%03d' "$TASK_ID")"
+if [ -d "$OUTDIR" ] && [ -n "$(find "$OUTDIR" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+    echo "refusing to overwrite nonempty task output: $OUTDIR" >&2
+    exit 2
+fi
 ARGS=(
     --source "$SOURCE"
     --expected-source-sha256 "$EXPECTED_SOURCE_SHA256"
     --expected-target-set "$EXPECTED_TARGET_SET"
     --expected-target-fingerprint "$EXPECTED_TARGET_FINGERPRINT"
+    --expected-code-bundle-sha256 "$EXPECTED_CODE_BUNDLE_SHA256"
     --outdir "$OUTDIR"
     --panel-task-id "$TASK_ID"
     --panel-size "$PANEL_SIZE"
@@ -62,6 +82,9 @@ ARGS=(
     --post-2023-periods "$POST_2023_PERIODS"
     --policy-case "$POLICY_CASE"
     --model-profile "$MODEL_PROFILE"
+    --replacement-fertility 2.1
+    --old-completed-fertility-target 2.1
+    --outside-origin-entry-share 0.169
 )
 if [ -n "${E5F_TRANSITION_PANEL_CENTER_JSON:-}" ]; then
     ARGS+=(--panel-center-json "$E5F_TRANSITION_PANEL_CENTER_JSON")

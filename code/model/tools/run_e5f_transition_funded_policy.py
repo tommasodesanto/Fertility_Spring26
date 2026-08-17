@@ -1842,6 +1842,12 @@ def write_transition_diagnostic(
 
 def main() -> None:
     args = parse_args()
+    raise RuntimeError(
+        "Funded-policy workflow disabled: it still uses the retired KFE "
+        "maturation-yield renewal contract. Migrate the entire path, endpoint, "
+        "and report accounting to top-code-adjusted births divided by 2.1 "
+        "before re-enabling it."
+    )
     if int(args.post_2023_periods) < 0:
         raise ValueError("--post-2023-periods must be nonnegative")
     if not 0.0 < float(args.outside_origin_entry_share) < 1.0:

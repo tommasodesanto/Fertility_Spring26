@@ -3,174 +3,94 @@
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
-## Current paper architecture (author decision, August 15)
+## Current paper architecture (August 17)
 
-The production paper architecture is the one-market sequential-fertility
-`E5F` floor model shown in the August 7 Raquel slides. It runs through
-`intergen_eqscale_seq_optimized` with literal parity, independent child
-maturation, the child-room floor, persistent income risk, tenure choice,
-saving, and bequests. The current parameter record is a working calibration,
-not a final estimate; its empirical and fit limitations are recorded at the
-top of `../../CALIBRATION_STATUS.md`.
+The production model is the one-market sequential-fertility model shown in the
+August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
+literal parity, independent child maturation, the child-room floor, tenure and
+housing-size choice, saving, moving costs, income risk, and warm-glow bequests.
+The circulated Stone--Geary one-shot model remains available below as a
+fallback; it has not been overwritten.
 
-The audited stationary policy path is:
+The paper calibrates this model at a point along a dated transition. For each
+candidate, `tools/run_e5f_transition_calibration.py`:
 
-```bash
-PYTHONPATH=$PWD NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
-  .venv/bin/python tools/run_e5_repaired_policy_with_entry.py \
-  --source ../../output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json \
-  --closure-mode quota \
-  --outdir ../../output/model/eqscale_seq_e5f_policy_entry_topcode/full_quota
+1. derives the old fertility intercept so old-steady-state completed fertility
+   is the declared replacement normalization `2.1`;
+2. reweights only the age marginal to the 2007 national ACS household-head
+   distribution;
+3. phases in a linear fertility-preference change through 2023;
+4. imposes Census HH-3 household totals and ACS age shares through 2023 as an
+   explicit household-formation/migration bridge; and
+5. evaluates the full twelve-moment target system along the simulated
+   transition, principally on its 2023 state.
+
+The bridge matches household totals and ages by construction; these are inputs,
+not fitted paths. Birth cohorts enter a four-slot vintage queue and generate
+adult households twenty years later. The conversion is exactly adjusted births
+divided by `2.1`; it is an external sex/survival/household-formation
+normalization, not a hidden child-death state. Housing clears date by date with
+the maintained static supply elasticity. This is a sequence of temporary
+equilibria, not a perfect-foresight welfare transition.
+
+The calibrated household block crosses the five-state earnings process with a
+three-node discretization of measured permanent-income dispersion and adds one
+estimated utility cost paid only when a first birth succeeds. The selected
+refinement and two exact execution-identity repeats are under:
+
+```
+output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/
 ```
 
-The quota flag is explicit because the driver's default `logit` mode is kept
-only for historical reproducibility. The circulated Stone--Geary one-shot
-implementation remains available under `intergen_housing_fertility_optimized`
-as a preserved fallback and mechanism comparison; it has not been deleted or
-overwritten.
+The strict loss is `50.7419665167`. Both evaluations reproduce all ten
+parameters, twelve moments, and the loss to machine precision. The active
+target set is `e5_fullhistory_roomsfix_h1_20260817`, with fingerprint
+`3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
+The two dominant misses are the provisional four-year first-birth rooms
+contrast and mean occupied rooms. The complete row-level target receipt is
+`intergen_eqscale_seq_optimized/e5_target_provenance.csv`: six rows are
+measured, five remain provisional, and one is an external normalization.
 
-The exact E5F fertility--price schedule is regenerated from the repository root
-with:
+The historical validation packet is:
 
-```bash
-PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
-  code/model/.venv/bin/python code/model/tools/audit_closed_reproductive_closure.py \
-  --profile e5f-floor \
-  --fiscal-convention rebated-1pct \
-  --schedule-only \
-  --outdir output/model/e5f_floor_reproductive_schedule/full_rebated
+```
+output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817/
 ```
 
-The renewal calculation counts the model's `3+` parity state with the same
-top-bin mean used in its completed-fertility statistic; raw three-child flows
-remain diagnostics. The current estimate has no closed-population root on the
-audited housing-cost range.
-The robustness audit below changes both fertility-logit scales, reanchors the
-preference intercept at the old housing cost, and checks whether lower housing
-costs restore replacement:
+It labels the Census/ACS population bridge as imposed and keeps fertility,
+timing, ownership, rooms, and price/rent comparisons as untargeted holdouts.
+The paired post-2023 exercise contains no policy. It compares a national
+closed finite-horizon benchmark with an open sensitivity. The value `0.169`
+normalizes `M` and `rho` in the old state; those two flows are then fixed while
+the realized outside-origin share can change. The closed stationary audit finds no usable
+root on the declared price grid: the maximum adjusted-birth renewal ratio is
+`0.6779849483`. By 2183 the closed and open adult-household masses are
+`0.138463` and `0.358990` of 2023, and their asset prices are `0.385912` and
+`0.627699` of the common 2023 price. The open endpoint is conditional on the
+external entrant flow; its realized outside-origin entrant share is `0.465109`.
+It is not a national forecast.
+
+Rebuild the single canonical no-policy report from the repository root with:
 
 ```bash
-code/model/.venv/bin/python \
-  code/model/tools/audit_e5f_fertility_price_feedback.py \
-  --outdir output/model/sequential_fertility_price_feedback_audit
+PYTHONPATH=code/model:code/model/tools code/model/.venv/bin/python \
+  code/model/tools/build_e5f_no_policy_transition_report.py \
+  --selected-report output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/report/summary.json \
+  --repeat-task output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/repeat_001 \
+  --repeat-task output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/repeat_002 \
+  --refinement-plan output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817_plan/candidate_plan.json \
+  --target-provenance-csv code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv \
+  --historical-packet output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817 \
+  --continuation-packet output/model/e5f_post2023_no_policy_continuations_fullhistory_roomsfix_h1_dateddid_20260817_cont_production \
+  --output-dir output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817
 ```
 
-The clean between-steady-states experiment instead uses a provisionally
-normalized fixed outside entrant flow, a dated birth-to-entry queue, and elastic
-long-run housing supply:
-
-```bash
-code/model/.venv/bin/python \
-  code/model/tools/run_e5f_open_population_transition.py \
-  --periods 60 --old-psi-child 0.1062 --new-psi-child -0.2419 \
-  --preference-transition-periods 4 --housing-supply-mode static-elastic \
-  --output-dir output/model/e5f_floor_open_population_transition/between_steady_states_static_elastic_long
-```
-
-This wrapper leaves the sequential household problem unchanged. It propagates
-the full unnormalized household distribution, while the birth-vintage queue
-prevents newborns from becoming entrant households immediately. The exact old
-stationary benchmark is the initial condition. A permanently fixed inherited
-housing stock has no usable positive-price terminal root on the audited range;
-the lower steady state requires depreciation, vacancy, demolition, or elastic
-stock adjustment.
-
-The separate historical accounting exercise uses Census HH-3 household totals
-and national IPUMS ACS four-year householder-age shares from 2007 through 2023:
-
-```bash
-code/model/.venv/bin/python \
-  code/model/tools/run_e5f_open_population_transition.py \
-  --periods 5 --old-psi-child 0.1062 --new-psi-child -0.2419 \
-  --preference-transition-periods 4 --historical-start-year 2007 \
-  --initial-age-profile acs-national-heads-2007 \
-  --household-count-path census-hh3-2007-2023 \
-  --housing-supply-mode static-elastic \
-  --housing-supply-elasticity 0.3675 \
-  --output-dir output/model/e5f_floor_open_population_transition/historical_accounting_fitted_supply
-```
-
-The age bridge is a reduced-form household-formation/migration residual, not a
-structural population closure, and the reported historical run stops at the
-last observed target. It makes the 2007 economy an observed transition state
-rather than a literal demographic steady state. Rebuild its exact age shares with
-`code/data/Spatial_aggregate_withmicrodata/build_national_householder_age_path.py`.
-The fitted supply elasticity is a one-moment diagnostic; fixed stock and the
-retained elasticity remain reported sensitivities.
-
-The dated transition-calibration pilot uses that same empirical bridge but
-measures the full twelve-row E5 target system on the simulated 2023
-distribution. In panel mode, each candidate derives an old steady-state
-preference intercept to match completed fertility `2.12`, then reweights that
-benchmark to the observed 2007 householder-age distribution. It varies the
-existing eight structural parameters and the 2023 preference endpoint without
-changing the household state space. The exact task loop is:
-
-```bash
-PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
-  code/model/.venv/bin/python code/model/tools/run_e5f_transition_calibration.py \
-  --panel-task-id 1 --panel-size 19 --panel-design coordinate \
-  --panel-local-radius 0.015 \
-  --outdir output/model/e5f_transition_calibration/local_check
-```
-
-Torch panels use
-`code/cluster/submit_e5f_transition_calibration_panel.sh`; their strict
-collector is `tools/collect_e5f_transition_calibration.py`. The consolidated
-109-candidate report, including every target, every parameter and bound, exact
-repeat checks, and the best dated path, is rebuilt by
-`tools/build_e5f_transition_calibration_report.py` and stored under
-`output/model/e5f_transition_calibration_report/`. This remains a bounded pilot,
-not a promoted calibration.
-
-The same report contains a no-policy continuation and a dependent-child LTV95
-comparison through 2183. The absolute path, cohort turning points, and policy
-differences are in `post2023_no_policy_path.csv`,
-`long_run_turning_points.csv`, and `post2023_ltv95_policy_path.csv`. The long
-path is still drifting at its finite endpoint; it must not be labeled the exact
-new steady state. The LTV case is a tenure diagnostic without a lender, fiscal,
-or welfare closure, not the paper's funded property-tax/purchase-grant
-experiment.
-
-All transition paths use temporary-equilibrium/static price expectations. They
-are cohort-accounting and incidence diagnostics, not perfect-foresight welfare
-runs.
-
-Build the single comparison figure, result tables, and interpretation note with:
-
-```bash
-code/model/.venv/bin/python code/model/tools/build_e5f_transition_decision_packet.py
-```
-
-The output is under
-`output/model/e5f_floor_open_population_transition/decision_packet/`; it also
-contains the complete current-target fit, the fit cost of making fertility
-responsive enough to restore a closed root, a 16-case closure/supply/policy
-grid, and a ranked menu of quantitative versions. Regenerate the fixed-other-
-parameter slope frontier with:
-
-```bash
-code/model/.venv/bin/python code/model/tools/audit_e5f_slope_fit_tradeoff.py
-```
-
-The slope frontier and its bounded refit are diagnostics, not promoted
-calibrations. The decision packet reports the endpoint sensitivity to the
-provisional outside-entry share explicitly.
-
-The shared calendar scaffolding also preserves the one-shot fallback. Its
-stationary nesting smoke is:
-
-```bash
-PYTHONPATH=code/model NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 \
-  code/model/.venv/bin/python code/model/tools/run_dynamic_population_transition.py \
-  --smoke --periods 4 --initialization stationary --closure nesting \
-  --housing-supply fixed-stock \
-  --output-dir output/model/dynamic_population_transition/verification_smoke_20260815
-```
-
-`tools/build_current_one_shot_transition_initial_state.py` preserves the
-separate observed-head-age diagnostic. It is not a U.S. transition initializer:
-the household model still lacks an age-specific household-formation bridge.
+The builder does not solve or rescale the model. It fails unless the selected
+calibration, both repeats, target provenance, historical classification,
+40-date paired continuation, numerical residuals, and endpoint accounting all
+match their recorded hashes. The current paper reports no funded policy
+counterfactual. The older funded driver remains fail-closed until its renewal
+and eligibility architecture is migrated and re-estimated.
 
 Use the local virtualenv created for the port:
 

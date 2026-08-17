@@ -24,19 +24,48 @@ class E5ProfileTests(unittest.TestCase):
                 e5_profile.e5_target_system()
 
     def test_shipped_timing_targets_are_the_nchs_build_values(self) -> None:
-        self.assertAlmostEqual(e5_profile.E5_TARGETS["mean_age_first_birth"], 25.310560799362)
-        self.assertAlmostEqual(e5_profile.E5_TARGETS["share_first_births_age30plus"], 0.270062376851342)
+        self.assertAlmostEqual(e5_profile.E5_TARGETS["mean_age_first_birth"], 26.0446272574833)
+        self.assertAlmostEqual(e5_profile.E5_TARGETS["share_first_births_age30plus"], 0.260327401666964)
+        self.assertAlmostEqual(e5_profile.E5_MEASURED_SES["mean_age_first_birth"], 0.15)
+        self.assertAlmostEqual(e5_profile.E5_MEASURED_SES["share_first_births_age30plus"], 0.01)
         self.assertEqual(len(e5_profile.e5_target_system().targets_dict()), 12)
 
-    def test_rooms_target_uses_idfe_estimate_and_measured_se(self) -> None:
+    def test_rooms_target_uses_wave_aligned_four_year_contrast(self) -> None:
         name = "housing_increment_0to1"
-        self.assertEqual(e5_profile.E5_TARGET_SET, "e5_idfe_review_20260809")
-        self.assertAlmostEqual(e5_profile.E5_TARGETS[name], 0.80494368)
-        self.assertAlmostEqual(e5_profile.E5_MEASURED_SES[name], 0.16728361)
+        self.assertEqual(
+            e5_profile.E5_TARGET_SET,
+            "e5_fullhistory_roomsfix_h1_20260817",
+        )
+        self.assertEqual(e5_profile.e5_overrides()["housing_event_horizon"], 1)
+        self.assertAlmostEqual(e5_profile.E5_TARGETS[name], 0.7202462623815278)
+        self.assertAlmostEqual(e5_profile.E5_MEASURED_SES[name], 0.0852600513385958)
         self.assertAlmostEqual(
             e5_profile.E5_WEIGHTS[name],
             1.0 / e5_profile.E5_MEASURED_SES[name] ** 2,
         )
+
+    def test_stationary_runner_refuses_dated_transition_target(self) -> None:
+        with patch.dict(
+            os.environ,
+            {"E5": "1"},
+            clear=False,
+        ):
+            os.environ.pop(
+                "E5_ALLOW_STATIONARY_TRANSITION_TARGET_DIAGNOSTIC", None
+            )
+            import importlib
+            import intergen_eqscale_seq_optimized.run_e1_chain as chain
+
+            chain = importlib.reload(chain)
+            with tempfile.TemporaryDirectory() as tmp:
+                with patch(
+                    "sys.argv",
+                    ["run_e1_chain.py", "--outdir", tmp, "--smoke"],
+                ):
+                    with self.assertRaisesRegex(
+                        ValueError, "Stationary E5 SMM is disabled"
+                    ):
+                        chain.main()
 
     def test_seed_reproduction_gate_compares_model_moments(self) -> None:
         from intergen_eqscale_seq_optimized.run_e1_chain import seed_reproduction_gate
@@ -102,7 +131,14 @@ class E5ProfileTests(unittest.TestCase):
 
     def test_e5_smoke_metadata_with_injected_timing_targets(self) -> None:
         # Import after setting E5 so the runner selects its gated domain.
-        with patch.dict(os.environ, {"E5": "1"}, clear=False):
+        with patch.dict(
+            os.environ,
+            {
+                "E5": "1",
+                "E5_ALLOW_STATIONARY_TRANSITION_TARGET_DIAGNOSTIC": "1",
+            },
+            clear=False,
+        ):
             import importlib
             import intergen_eqscale_seq_optimized.run_e1_chain as chain
             chain = importlib.reload(chain)
@@ -146,7 +182,7 @@ class E5ProfileTests(unittest.TestCase):
         )
         self.assertEqual(
             metadata["target_provenance"]["housing_increment_0to1"]["fixed_effects"],
-            ["ID", "year"],
+            ["person ID", "year"],
         )
 
     def test_collector_accepts_e5_contract(self) -> None:

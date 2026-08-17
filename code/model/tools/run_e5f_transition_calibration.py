@@ -40,7 +40,10 @@ import audit_closed_reproductive_closure as closure
 import run_dynamic_population_transition as calendar
 import run_e5f_open_population_transition as transition
 
-from intergen_eqscale_seq_optimized.e5_profile import e5_target_system
+from intergen_eqscale_seq_optimized.e5_profile import (
+    E5_HOUSING_EVENT_HORIZON,
+    e5_target_system,
+)
 from intergen_eqscale_seq_optimized.e5f_floor_profile import E5F_DOMAIN
 from intergen_eqscale_seq_optimized.e5f_income_entry_profile import (
     E5F_INCOME_ENTRY_DOMAIN,
@@ -77,7 +80,21 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--old-psi-child", type=float, default=0.1062)
-    parser.add_argument("--old-completed-fertility-target", type=float, default=2.12)
+    parser.add_argument(
+        "--replacement-fertility",
+        type=float,
+        default=transition.REPLACEMENT_FERTILITY,
+        help=(
+            "Births per woman needed for replacement; its inverse maps "
+            "top-code-adjusted births into future entrant households."
+        ),
+    )
+    parser.add_argument(
+        "--old-completed-fertility-target",
+        type=float,
+        default=None,
+        help="Old-steady-state completed fertility; defaults to replacement fertility.",
+    )
     parser.add_argument("--old-completed-fertility-tol", type=float, default=5e-4)
     parser.add_argument(
         "--candidate-new-psis",
@@ -111,6 +128,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-source-sha256", default=None)
     parser.add_argument("--expected-target-set", default=None)
     parser.add_argument("--expected-target-fingerprint", default=None)
+    parser.add_argument("--expected-code-bundle-sha256", default=None)
     parser.add_argument("--panel-task-id", type=int, default=None)
     parser.add_argument("--panel-size", type=int, default=64)
     parser.add_argument("--panel-seed", type=int, default=2026081601)
@@ -509,36 +527,192 @@ def solve_old_steady_state(
     })
 
 
-def first_birth_flows_by_age(
+def first_birth_accounting_by_age(
     evaluation: calendar.PeriodEvaluation,
     P: SimpleNamespace,
-) -> np.ndarray:
-    """Realized first-birth flows by model age in the current period."""
+) -> dict[str, np.ndarray]:
+    """Return first-birth risk sets, realized flows, and hazards by age."""
     model = calendar.model
     flows = np.zeros(int(P.J))
+    at_risk = np.zeros(int(P.J))
     fecundity = model.get_fecundity_by_age(P)
     settled = model.readiness_settled_state(P)
     for j in range(int(P.J)):
+        childless_by_income = evaluation.g_pre[:, :, :, j, :, 0, settled]
+        at_risk[j] = float(np.sum(childless_by_income))
         if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
             continue
         for zz in range(evaluation.g_pre.shape[4]):
             childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
             attempt = evaluation.policy.fert_probs[:, :, :, j, zz, 1]
             flows[j] += float(np.sum(float(fecundity[j]) * childless * attempt))
-    return flows
+    hazards = np.divide(
+        flows,
+        at_risk,
+        out=np.zeros_like(flows),
+        where=at_risk > 1e-15,
+    )
+    if np.any(hazards < -1e-14) or np.any(hazards > 1.0 + 1e-12):
+        raise RuntimeError(f"Invalid first-birth hazards: {hazards}")
+    return {
+        "at_risk": at_risk,
+        "flow": flows,
+        "hazard": np.clip(hazards, 0.0, 1.0),
+    }
+
+
+def first_birth_flows_by_age(
+    evaluation: calendar.PeriodEvaluation,
+    P: SimpleNamespace,
+) -> np.ndarray:
+    """Backward-compatible realized first-birth flows by model age."""
+    return first_birth_accounting_by_age(evaluation, P)["flow"]
+
+
+def period_fertility_diagnostics(
+    evaluation: calendar.PeriodEvaluation,
+    P: SimpleNamespace,
+) -> dict[str, Any]:
+    """Measure current-rate fertility from dated age-specific birth flows.
+
+    Each model age cell spans one four-year period. Dividing its four-year
+    birth flow by the corresponding adult-household mass and summing over
+    ages therefore gives the model analogue of period TFR; no extra factor of
+    four is required. This is a diagnostic because model households, not all
+    U.S. women, form the denominator.
+    """
+    model = calendar.model
+    n_progressions = int(P.n_parity) - 1
+    if n_progressions != 3:
+        raise RuntimeError("Period-fertility diagnostics require parity states 0/1/2/3+")
+    flows = np.zeros((int(P.J), n_progressions), dtype=float)
+    age_mass = np.sum(evaluation.g_pre, axis=(0, 1, 2, 4, 5, 6))
+    fecundity = model.get_fecundity_by_age(P)
+    continuation = getattr(P, "_fert2_probs", None)
+    if continuation is None:
+        raise RuntimeError("Sequential continuation-birth probabilities are unavailable")
+    settled = model.readiness_settled_state(P)
+    for j in range(int(P.J)):
+        if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
+            continue
+        pi_j = float(fecundity[j])
+        for zz in range(evaluation.g_pre.shape[4]):
+            childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
+            first_attempt = evaluation.policy.fert_probs[:, :, :, j, zz, 1]
+            flows[j, 0] += float(np.sum(pi_j * childless * first_attempt))
+            for parity in range(1, int(P.n_parity) - 1):
+                for child_state in range(parity + 1):
+                    pool = evaluation.g_pre[
+                        :, :, :, j, zz, parity, child_state
+                    ]
+                    attempt = continuation[
+                        :, :, :, j, zz, 1, parity - 1, child_state
+                    ]
+                    flows[j, parity] += float(np.sum(pi_j * pool * attempt))
+    explicit_by_age = np.sum(flows, axis=1)
+    top_weight = float(P.tfr_top_bin_weight)
+    topcode_by_age = (
+        flows[:, 0] + flows[:, 1] + (top_weight - 2.0) * flows[:, 2]
+    )
+    explicit_total = float(np.sum(explicit_by_age))
+    if abs(explicit_total - float(evaluation.births)) > 2e-10:
+        raise RuntimeError(
+            "Dated parity birth flows do not reproduce aggregate births: "
+            f"flows={explicit_total:.12g}, aggregate={evaluation.births:.12g}"
+        )
+    topcode_accounting = transition.calendar_topcode_birth_accounting(
+        evaluation.g_pre,
+        evaluation.g_post_fertility,
+        float(evaluation.births),
+        P,
+    )
+    topcode_total = float(np.sum(topcode_by_age))
+    if abs(
+        topcode_total
+        - float(topcode_accounting["topcode_adjusted_birth_children"])
+    ) > 2e-10:
+        raise RuntimeError("Dated parity flows do not reproduce top-code-adjusted births")
+    explicit_rates = np.divide(
+        explicit_by_age,
+        age_mass,
+        out=np.zeros_like(explicit_by_age),
+        where=age_mass > 1e-15,
+    )
+    topcode_rates = np.divide(
+        topcode_by_age,
+        age_mass,
+        out=np.zeros_like(topcode_by_age),
+        where=age_mass > 1e-15,
+    )
+    age_cell_starts = (
+        float(P.age_start) + np.arange(int(P.J), dtype=float) * float(P.da)
+    )
+    ages = age_cell_starts + 0.5 * float(P.da)
+    first_birth_accounting = first_birth_accounting_by_age(evaluation, P)
+    if np.max(np.abs(first_birth_accounting["flow"] - flows[:, 0])) > 2e-12:
+        raise RuntimeError("First-birth flow diagnostics disagree")
+    first_birth_rates = np.divide(
+        flows[:, 0],
+        age_mass,
+        out=np.zeros(int(P.J), dtype=float),
+        where=age_mass > 1e-15,
+    )
+    first_total = float(np.sum(flows[:, 0]))
+    return {
+        "period_tfr_explicit_states": float(np.sum(explicit_rates)),
+        "period_tfr_topcode_adjusted": float(np.sum(topcode_rates)),
+        "period_first_birth_mean_age": float(
+            np.sum(ages * flows[:, 0]) / max(first_total, 1e-15)
+        ),
+        "period_first_birth_share_age30plus": float(
+            np.sum(flows[ages >= 30.0, 0]) / max(first_total, 1e-15)
+        ),
+        "age_cell_start": age_cell_starts,
+        "age_cell_midpoint": ages,
+        # Backward-compatible display field, now explicitly midpoint-coded.
+        "age": ages,
+        "age_mass": age_mass,
+        "birth_flow_first": flows[:, 0],
+        "birth_flow_second": flows[:, 1],
+        "birth_flow_third_bin_entry": flows[:, 2],
+        "birth_flow_explicit": explicit_by_age,
+        "birth_flow_topcode_adjusted": topcode_by_age,
+        "childless_at_risk_mass": first_birth_accounting["at_risk"],
+        "first_birth_hazard": first_birth_accounting["hazard"],
+        "first_birth_rate_all_households": first_birth_rates,
+        "age_specific_birth_rate_explicit": explicit_rates,
+        "age_specific_birth_rate_topcode_adjusted": topcode_rates,
+    }
 
 
 def first_birth_housing_response(
     evaluation: calendar.PeriodEvaluation,
     P: SimpleNamespace,
+    b_grid: np.ndarray,
+    shared: SimpleNamespace,
 ) -> float:
-    """Horizon-zero birth-versus-no-birth housing response on the dated risk set."""
-    if int(getattr(P, "housing_event_horizon", 0)) != 0:
-        raise ValueError("The transition calibration currently requires housing_event_horizon=0")
+    """One-period birth-versus-no-birth housing response on the dated risk set.
+
+    The PSID row is the change from event time -1 to +3.  One model period is
+    four years, so both branches are advanced once from the same pre-birth
+    state before their housing choices are compared.  The branch holds the
+    current temporary-equilibrium policy fixed and deliberately does not add a
+    second birth inside the four-year window.
+    """
+    horizon = int(getattr(P, "housing_event_horizon", 0))
+    if horizon != E5_HOUSING_EVENT_HORIZON:
+        raise ValueError(
+            "The E5 transition calibration requires a one-period housing-event horizon"
+        )
     model = calendar.model
     policy = evaluation.policy
     fecundity = model.get_fecundity_by_age(P)
     settled = model.readiness_settled_state(P)
+    _, _, income_transition = model.income_transition_values(P)
+    stochastic_child_aging = bool(
+        getattr(P, "use_stochastic_aging", False) and hasattr(P, "Pi_child")
+    )
+    child_transition = P.Pi_child if stochastic_child_aging else None
     shape = (
         len(policy.bp_pol),
         1 + int(P.n_house),
@@ -552,6 +726,8 @@ def first_birth_housing_response(
     for j in range(int(P.J)):
         if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
             continue
+        if j + horizon >= int(P.J):
+            continue
         for zz in range(evaluation.g_pre.shape[4]):
             childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
             attempt = policy.fert_probs[:, :, :, j, zz, 1]
@@ -563,9 +739,47 @@ def first_birth_housing_response(
             birth_cohort[:, :, :, zz, 1, 1] = realized
             control_cohort = np.zeros(shape)
             control_cohort[:, :, :, zz, 0, settled] = realized
-            observed_birth = model.realize_current_choices_markov_income(
+            birth_cohort = model.advance_cohort_horizon_markov_income(
                 birth_cohort,
                 j,
+                horizon,
+                policy.loc_probs,
+                policy.tenure_choice,
+                policy.tenure_probs,
+                policy.bp_pol,
+                P,
+                b_grid,
+                shared,
+                policy.maps.lmm_idx,
+                policy.maps.lmm_wt,
+                policy.maps.tmx_idx,
+                policy.maps.tmx_wt,
+                stochastic_child_aging,
+                child_transition,
+                income_transition,
+            )
+            control_cohort = model.advance_cohort_horizon_markov_income(
+                control_cohort,
+                j,
+                horizon,
+                policy.loc_probs,
+                policy.tenure_choice,
+                policy.tenure_probs,
+                policy.bp_pol,
+                P,
+                b_grid,
+                shared,
+                policy.maps.lmm_idx,
+                policy.maps.lmm_wt,
+                policy.maps.tmx_idx,
+                policy.maps.tmx_wt,
+                stochastic_child_aging,
+                child_transition,
+                income_transition,
+            )
+            observed_birth = model.realize_current_choices_markov_income(
+                birth_cohort,
+                j + horizon,
                 policy.loc_probs,
                 policy.tenure_choice,
                 policy.tenure_probs,
@@ -577,7 +791,7 @@ def first_birth_housing_response(
             )
             observed_control = model.realize_current_choices_markov_income(
                 control_cohort,
-                j,
+                j + horizon,
                 policy.loc_probs,
                 policy.tenure_choice,
                 policy.tenure_probs,
@@ -588,14 +802,210 @@ def first_birth_housing_response(
                 use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
             )
             birth_housing = model.mean_housing_distribution_markov(
-                observed_birth, j, policy.hR_pol, P
+                observed_birth, j + horizon, policy.hR_pol, P
             )
             control_housing = model.mean_housing_distribution_markov(
-                observed_control, j, policy.hR_pol, P
+                observed_control, j + horizon, policy.hR_pol, P
             )
             response_sum += mass * (birth_housing - control_housing)
             response_mass += mass
     return response_sum / max(response_mass, 1e-15)
+
+
+def begin_dated_first_birth_housing_branch(
+    evaluation: calendar.PeriodEvaluation,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    shared: SimpleNamespace,
+    *,
+    origin_period: int,
+) -> dict[str, Any]:
+    """Create equal birth/control branches and carry them one dated period.
+
+    The branches are selected from successful first births in the origin-date
+    pre-fertility risk set.  Survival and the origin-date location, tenure,
+    saving, income, and child-maturation kernels carry both branches to the
+    next date.  The aggregate Census age bridge is intentionally not applied
+    to this fixed cohort.
+    """
+    model = calendar.model
+    policy = evaluation.policy
+    fecundity = model.get_fecundity_by_age(P)
+    settled = model.readiness_settled_state(P)
+    treated = np.zeros_like(evaluation.g_pre)
+    control = np.zeros_like(evaluation.g_pre)
+    for j in range(int(P.J) - 1):
+        if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
+            continue
+        for zz in range(evaluation.g_pre.shape[4]):
+            childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
+            attempt = policy.fert_probs[:, :, :, j, zz, 1]
+            realized = float(fecundity[j]) * childless * attempt
+            treated[:, :, :, j, zz, 1, 1] = realized
+            control[:, :, :, j, zz, 0, settled] = realized
+
+    origin_mass = float(np.sum(treated))
+    if origin_mass <= 1e-14:
+        raise RuntimeError("The dated first-birth branch has zero treated mass")
+    if not math.isclose(
+        float(np.sum(control)), origin_mass, rel_tol=0.0, abs_tol=2e-13
+    ):
+        raise RuntimeError("Birth and control branches do not have equal origin mass")
+
+    _, _, income_transition = model.income_transition_values(P)
+    stochastic_child_aging = bool(
+        getattr(P, "use_stochastic_aging", False) and hasattr(P, "Pi_child")
+    )
+    child_transition = P.Pi_child if stochastic_child_aging else None
+
+    def advance(branch: np.ndarray) -> tuple[np.ndarray, float]:
+        next_pre = np.zeros_like(branch)
+        deaths = 0.0
+        for j in range(int(P.J) - 1):
+            cohort = branch[:, :, :, j, :, :, :]
+            survival = (
+                float(P.survival_probs[j])
+                if bool(getattr(P, "use_age_survival", False))
+                else 1.0
+            )
+            deaths += (1.0 - survival) * float(np.sum(cohort))
+            next_pre[:, :, :, j + 1, :, :, :] = (
+                model.advance_cohort_one_period_markov_income(
+                    survival * cohort,
+                    j,
+                    policy.loc_probs,
+                    policy.tenure_choice,
+                    policy.tenure_probs,
+                    policy.bp_pol,
+                    P,
+                    b_grid,
+                    shared,
+                    policy.maps.lmm_idx,
+                    policy.maps.lmm_wt,
+                    policy.maps.tmx_idx,
+                    policy.maps.tmx_wt,
+                    stochastic_child_aging,
+                    child_transition,
+                    income_transition,
+                )
+            )
+        return next_pre, deaths
+
+    treated_next, treated_deaths = advance(treated)
+    control_next, control_deaths = advance(control)
+    treated_next_mass = float(np.sum(treated_next))
+    control_next_mass = float(np.sum(control_next))
+    if not math.isclose(
+        treated_next_mass, control_next_mass, rel_tol=0.0, abs_tol=2e-11
+    ):
+        raise RuntimeError("Birth and control branch masses differ after advancement")
+    if not math.isclose(
+        treated_deaths, control_deaths, rel_tol=0.0, abs_tol=2e-13
+    ):
+        raise RuntimeError("Birth and control branches have different survival losses")
+    return {
+        "status": "pending_one_period_dated_branch",
+        "origin_period": int(origin_period),
+        "origin_price": float(policy.price[0]),
+        "origin_mass": origin_mass,
+        "survivor_mass_before_destination_gating": treated_next_mass,
+        "survival_loss": treated_deaths,
+        "treated_next_pre": treated_next,
+        "control_next_pre": control_next,
+    }
+
+
+def finish_dated_first_birth_housing_branch(
+    branch: dict[str, Any],
+    evaluation: calendar.PeriodEvaluation,
+    P: SimpleNamespace,
+    b_grid: np.ndarray,
+    shared: SimpleNamespace,
+    *,
+    destination_period: int,
+) -> dict[str, Any]:
+    """Measure the prior date's branch with the destination policy and price."""
+    origin_period = int(branch["origin_period"])
+    if int(destination_period) != origin_period + 1:
+        raise ValueError("The first-birth housing branch must span exactly one period")
+    treated_pre, treated_projection = calendar.gate_pre_fertility_distribution(
+        np.asarray(branch["treated_next_pre"], dtype=float),
+        evaluation.policy,
+        P,
+        b_grid,
+        shared,
+    )
+    control_pre, control_projection = calendar.gate_pre_fertility_distribution(
+        np.asarray(branch["control_next_pre"], dtype=float),
+        evaluation.policy,
+        P,
+        b_grid,
+        shared,
+    )
+    # Only the treated branch can take a continuation birth at the destination
+    # date.  The empirical comparison group is confirmed childless, so the
+    # otherwise identical control branch is held childless by construction.
+    treated_post, continuation_births, _ = transition.apply_sequential_fertility(
+        treated_pre,
+        evaluation.policy.fert_probs,
+        P,
+    )
+    control_parent_mass = float(np.sum(control_pre[..., 1:, :]))
+    if control_parent_mass > 2e-13:
+        raise RuntimeError("The confirmed-childless control branch acquired parent mass")
+    treated_current = calendar.model.realize_current_cross_section(
+        treated_post,
+        evaluation.policy.loc_probs,
+        evaluation.policy.tenure_choice,
+        evaluation.policy.tenure_probs,
+        evaluation.policy.maps.lmm_idx,
+        evaluation.policy.maps.lmm_wt,
+        evaluation.policy.maps.tmx_idx,
+        evaluation.policy.maps.tmx_wt,
+        use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
+    )
+    control_current = calendar.model.realize_current_cross_section(
+        control_pre,
+        evaluation.policy.loc_probs,
+        evaluation.policy.tenure_choice,
+        evaluation.policy.tenure_probs,
+        evaluation.policy.maps.lmm_idx,
+        evaluation.policy.maps.lmm_wt,
+        evaluation.policy.maps.tmx_idx,
+        evaluation.policy.maps.tmx_wt,
+        use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
+    )
+    treated_mass = float(np.sum(treated_current))
+    control_mass = float(np.sum(control_current))
+    if not math.isclose(treated_mass, control_mass, rel_tol=0.0, abs_tol=2e-11):
+        raise RuntimeError("Birth and control branch masses differ at destination")
+    if treated_mass <= 1e-14:
+        raise RuntimeError("The dated first-birth branch has zero destination mass")
+    treated_housing = float(
+        np.sum(calendar.housing_demand_by_location(treated_current, evaluation.policy.hR_pol, P))
+        / treated_mass
+    )
+    control_housing = float(
+        np.sum(calendar.housing_demand_by_location(control_current, evaluation.policy.hR_pol, P))
+        / control_mass
+    )
+    return {
+        "status": "complete_one_period_dated_matched_branch_did",
+        "origin_period": origin_period,
+        "destination_period": int(destination_period),
+        "origin_price": float(branch["origin_price"]),
+        "destination_price": float(evaluation.policy.price[0]),
+        "origin_mass": float(branch["origin_mass"]),
+        "destination_mass": treated_mass,
+        "survival_loss": float(branch["survival_loss"]),
+        "treated_feasibility_projection_mass": float(treated_projection),
+        "control_feasibility_projection_mass": float(control_projection),
+        "treated_continuation_births": float(continuation_births),
+        "treated_mean_housing": treated_housing,
+        "control_mean_housing": control_housing,
+        "housing_response": treated_housing - control_housing,
+        "census_age_bridge_applied": False,
+    }
 
 
 def target_age_fertility_moments(
@@ -626,7 +1036,10 @@ def transition_cross_section_moments(
     evaluation: calendar.PeriodEvaluation,
     P: SimpleNamespace,
     b_grid: np.ndarray,
+    shared: SimpleNamespace,
     target_names: tuple[str, ...],
+    *,
+    housing_increment_override: float | None = None,
 ) -> dict[str, float]:
     """Measure the E5 cross-sectional targets on a dated transition distribution."""
     model = calendar.model
@@ -650,9 +1063,14 @@ def transition_cross_section_moments(
     stats.g = evaluation.g_current
     stats.hR_pol = evaluation.policy.hR_pol
     stats.owner_user_cost = np.asarray(P.user_cost_rate * evaluation.policy.price)
-    stats.housing_increment_0to1_eventstudy_t3 = first_birth_housing_response(
-        evaluation, P
+    housing_response = (
+        first_birth_housing_response(evaluation, P, b_grid, shared)
+        if housing_increment_override is None
+        else float(housing_increment_override)
     )
+    if not math.isfinite(housing_response):
+        raise RuntimeError("The first-birth housing response is nonfinite")
+    stats.housing_increment_0to1_eventstudy_t3 = housing_response
     extracted = extract_moments(stats, P)
     extracted.update(target_age_fertility_moments(evaluation.g_current, P))
     moments = {name: float(extracted[name]) for name in target_names}
@@ -663,56 +1081,97 @@ def transition_cross_section_moments(
 
 
 def cohort_timing_moments(
-    old_stationary_flows: np.ndarray,
+    old_stationary_accounting: dict[str, np.ndarray],
     period_records: dict[int, dict[str, Any]],
     P: SimpleNamespace,
     terminal_period: int = TRANSITION_PERIODS,
     target_age: float = TARGET_AGE,
 ) -> dict[str, Any]:
-    """First-birth timing for the cohort aged 42 at the 2023 model date."""
+    """First-birth timing for a fixed synthetic cohort reaching age 42.
+
+    Dated Census age reweighting changes the mass of an age cell. We therefore
+    splice age-specific hazards, not raw birth counts, and propagate one common
+    childless risk set through the cohort's life.
+    """
     model = calendar.model
     target_index = model.age_to_index(P, target_age)
-    initial_index = target_index - int(terminal_period)
-    if initial_index < 0:
-        raise ValueError("The target cohort does not exist at the initial date")
-    ages = float(P.age_start) + np.arange(int(P.J), dtype=float) * float(P.da)
+    initial_period = max(0, int(terminal_period) - target_index)
+    initial_index = max(0, target_index - int(terminal_period))
+    age_cell_starts = (
+        float(P.age_start) + np.arange(int(P.J), dtype=float) * float(P.da)
+    )
+    ages = age_cell_starts + 0.5 * float(P.da)
     rows: list[dict[str, Any]] = []
+    hazards: list[float] = []
     for age_index in range(initial_index):
+        hazard = float(old_stationary_accounting["hazard"][age_index])
+        hazards.append(hazard)
         rows.append(
             {
                 "source": "old_steady_state_prehistory",
                 "period": age_index - initial_index,
                 "age_index": age_index,
+                "age_cell_start": float(age_cell_starts[age_index]),
                 "age": float(ages[age_index]),
-                "first_birth_flow": float(old_stationary_flows[age_index]),
+                "source_at_risk_mass": float(
+                    old_stationary_accounting["at_risk"][age_index]
+                ),
+                "source_first_birth_flow": float(
+                    old_stationary_accounting["flow"][age_index]
+                ),
+                "first_birth_hazard": hazard,
             }
         )
-    for period in range(int(terminal_period) + 1):
-        age_index = initial_index + period
-        flows = np.asarray(period_records[period]["first_birth_flows_by_age"], dtype=float)
+    for period in range(initial_period, int(terminal_period) + 1):
+        age_index = initial_index + period - initial_period
+        accounting = period_records[period]["first_birth_accounting_by_age"]
+        hazard = float(np.asarray(accounting["hazard"], dtype=float)[age_index])
+        hazards.append(hazard)
         rows.append(
             {
                 "source": "simulated_transition",
                 "period": period,
                 "age_index": age_index,
+                "age_cell_start": float(age_cell_starts[age_index]),
                 "age": float(ages[age_index]),
-                "first_birth_flow": float(flows[age_index]),
+                "source_at_risk_mass": float(
+                    np.asarray(accounting["at_risk"], dtype=float)[age_index]
+                ),
+                "source_first_birth_flow": float(
+                    np.asarray(accounting["flow"], dtype=float)[age_index]
+                ),
+                "first_birth_hazard": hazard,
             }
         )
-    total = sum(float(row["first_birth_flow"]) for row in rows)
+    synthetic_childless = 1.0
+    for row, hazard in zip(rows, hazards, strict=True):
+        synthetic_flow = synthetic_childless * hazard
+        row["synthetic_childless_risk_set"] = synthetic_childless
+        row["synthetic_first_birth_probability"] = synthetic_flow
+        synthetic_childless *= 1.0 - hazard
+    total = sum(float(row["synthetic_first_birth_probability"]) for row in rows)
     mean_age = sum(
-        float(row["age"]) * float(row["first_birth_flow"]) for row in rows
+        float(row["age"]) * float(row["synthetic_first_birth_probability"])
+        for row in rows
     ) / max(total, 1e-15)
     late_share = sum(
-        float(row["first_birth_flow"]) for row in rows if float(row["age"]) >= 30.0
+        float(row["synthetic_first_birth_probability"])
+        for row in rows
+        if float(row["age"]) >= 30.0
     ) / max(total, 1e-15)
     return {
-        "target_cohort_initial_age": float(ages[initial_index]),
-        "target_cohort_terminal_age": float(ages[target_index]),
-        "first_birth_flow_total": total,
+        "target_cohort_initial_age": float(age_cell_starts[initial_index]),
+        "target_cohort_terminal_age": float(age_cell_starts[target_index]),
+        "target_cohort_initial_age_cell_midpoint": float(ages[initial_index]),
+        "target_cohort_terminal_age_cell_midpoint": float(ages[target_index]),
+        "first_birth_age_measurement": (
+            "four-year model cells labeled by interval midpoints"
+        ),
+        "synthetic_ever_first_birth_probability": total,
+        "synthetic_childless_probability": synthetic_childless,
         "mean_age_first_birth": mean_age,
         "share_first_births_age30plus": late_share,
-        "flow_rows": rows,
+        "hazard_rows": rows,
     }
 
 
@@ -748,28 +1207,39 @@ def target_fit_rows(
     return rows, loss
 
 
-def parameter_rows(theta: dict[str, float], candidates: list[float]) -> list[dict[str, Any]]:
-    bounds = {name: (lower, upper) for name, lower, upper, _ in E5F_DOMAIN}
+def parameter_rows(
+    theta: dict[str, float],
+    best: dict[str, Any],
+    *,
+    old_psi_child: float,
+    joint_panel: bool,
+) -> list[dict[str, Any]]:
+    """Report the actual dated-transition coordinates and their true bounds."""
     rows: list[dict[str, Any]] = []
-    for name, value in theta.items():
-        domain_name = "beta_annual" if name == "beta" else name
-        lower, upper = bounds.get(domain_name, (math.nan, math.nan))
-        estimate = float(value) ** 0.25 if name == "beta" else float(value)
+    for name, lower, upper, transform in TRANSITION_SEARCH_DOMAIN:
+        if name == "beta_annual":
+            estimate = float(theta["beta"]) ** 0.25
+        elif name == "psi_child_change_2023":
+            estimate = float(best["new_psi_child"]) - float(old_psi_child)
+        elif name == "psi_child_2023":
+            estimate = float(best["new_psi_child"])
+        else:
+            estimate = float(theta[name])
         rows.append(
             {
-                "parameter": domain_name,
+                "parameter": name,
                 "value": estimate,
                 "lower_bound": lower,
                 "upper_bound": upper,
+                "transform": transform,
+                "is_free_parameter": True,
                 "status": (
-                    "replaced_by_dated_preference_path"
-                    if name == "psi_child"
-                    else "candidate_value_in_bounded_transition_pilot"
+                    "estimated_free_transition_parameter"
+                    if joint_panel
+                    else "fixed_or_bounded_pilot_transition_parameter"
                 ),
                 "near_bound": bool(
-                    math.isfinite(lower)
-                    and math.isfinite(upper)
-                    and min(abs(estimate - lower), abs(upper - estimate))
+                    min(abs(estimate - lower), abs(upper - estimate))
                     <= 0.02 * max(upper - lower, 1e-12)
                 ),
             }
@@ -779,17 +1249,21 @@ def parameter_rows(theta: dict[str, float], candidates: list[float]) -> list[dic
             {
                 "parameter": "psi_child_2007",
                 "value": math.nan,
-                "lower_bound": -3.0,
-                "upper_bound": 3.0,
+                "lower_bound": math.nan,
+                "upper_bound": math.nan,
+                "transform": "derived",
+                "is_free_parameter": False,
                 "status": "externally_normalized_to_old_completed_fertility",
                 "near_bound": False,
             },
             {
                 "parameter": "psi_child_2023",
                 "value": math.nan,
-                "lower_bound": min(candidates),
-                "upper_bound": max(candidates),
-                "status": "one_parameter_bounded_pilot_grid",
+                "lower_bound": math.nan,
+                "upper_bound": math.nan,
+                "transform": "derived",
+                "is_free_parameter": False,
+                "status": "derived_from_old_intercept_and_transition_coordinate",
                 "near_bound": False,
             },
         ]
@@ -874,6 +1348,31 @@ def main() -> None:
         raise ValueError("--post-2023-periods must be nonnegative")
     if not 0.0 < float(args.outside_origin_entry_share) < 1.0:
         raise ValueError("--outside-origin-entry-share must lie in (0,1)")
+    replacement_fertility = float(args.replacement_fertility)
+    renewal_conversion = transition.effective_birth_to_household_conversion(
+        replacement_fertility
+    )
+    if not math.isclose(
+        replacement_fertility,
+        transition.REPLACEMENT_FERTILITY,
+        rel_tol=0.0,
+        abs_tol=1e-14,
+    ):
+        raise ValueError("Production calibration is hard-gated to replacement fertility 2.1")
+    old_completed_fertility_target = (
+        replacement_fertility
+        if args.old_completed_fertility_target is None
+        else float(args.old_completed_fertility_target)
+    )
+    if not math.isclose(
+        old_completed_fertility_target,
+        replacement_fertility,
+        rel_tol=0.0,
+        abs_tol=1e-14,
+    ):
+        raise ValueError(
+            "The old steady state must be normalized to the declared replacement fertility"
+        )
 
     started = time.perf_counter()
     source = args.source.resolve()
@@ -890,6 +1389,16 @@ def main() -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     chain, model = transition.configure_sequential_model()
     code_contract = code_fingerprint_contract(model)
+    if (
+        args.expected_code_bundle_sha256 is not None
+        and str(code_contract["bundle_sha256"])
+        != str(args.expected_code_bundle_sha256)
+    ):
+        raise RuntimeError(
+            "Code-bundle fingerprint gate failed: "
+            f"actual={code_contract['bundle_sha256']}, "
+            f"expected={args.expected_code_bundle_sha256}"
+        )
     winner, source_metadata = closure.load_winner(source)
     theta = closure.theta_from_winner(winner)
     active_domain, profile_overrides, model_profile = activate_model_profile(
@@ -950,7 +1459,7 @@ def main() -> None:
         chain,
         base,
         initial_psi=float(args.old_psi_child),
-        completed_fertility_target=float(args.old_completed_fertility_target),
+        completed_fertility_target=old_completed_fertility_target,
         completed_fertility_tolerance=float(args.old_completed_fertility_tol),
         normalize=(
             panel_metadata is not None
@@ -1038,6 +1547,7 @@ def main() -> None:
         old_evaluation,
         old_parameters,
         b_grid,
+        old_shared,
         target_system.moment_names,
     )
     old_stationary_moments = chain.extract_moments(old_solution, old_parameters)
@@ -1059,15 +1569,41 @@ def main() -> None:
         old_solution, old_parameters
     )
     E_old = float(old_solution.entry_rate)
-    B_old_raw = float(old_solution.entrants_mature_total)
-    B_old = float(old_renewal["topcode_adjusted_mature_entrant_households"])
+    kfe_B_old_raw = float(old_solution.entrants_mature_total)
+    kfe_B_old_adjusted = float(
+        old_renewal["topcode_adjusted_mature_entrant_households"]
+    )
     births_old_raw = float(old_solution.total_births_kfe)
     births_old = float(old_renewal["topcode_adjusted_birth_children"])
+    B_old_raw = renewal_conversion * births_old_raw
     outside_share = float(args.outside_origin_entry_share)
-    retention = (1.0 - outside_share) * E_old / B_old
-    if not 0.0 <= retention <= 1.0:
-        raise RuntimeError(f"Outside share implies invalid retention: {retention}")
-    conversion = float(old_parameters.entrant_conversion_factor)
+    renewal_old_state = transition.stationary_renewal_from_births(
+        E_old,
+        births_old,
+        outside_share,
+        renewal_conversion,
+    )
+    B_old = float(renewal_old_state["queue_mature_flow_B"])
+    outside_flow = float(renewal_old_state["outside_flow_M"])
+    retention = float(renewal_old_state["retention_rho"])
+    old_queue_B_over_E = float(renewal_old_state["queue_B_over_E"])
+    old_renewal_residual = float(renewal_old_state["identity_residual"])
+    old_fertility_ratio = float(old_transition_moments["tfr"]) / replacement_fertility
+    if abs(old_queue_B_over_E - old_fertility_ratio) > 2e-8:
+        raise RuntimeError(
+            "Old renewal flow does not match the stationary fertility ratio: "
+            f"B/E={old_queue_B_over_E:.12g}, "
+            f"completed/replacement={old_fertility_ratio:.12g}"
+        )
+    if abs(old_queue_B_over_E - 1.0) > float(args.old_completed_fertility_tol):
+        raise RuntimeError(
+            "Old renewal state is not at replacement: "
+            f"B/E={old_queue_B_over_E:.12g}"
+        )
+    if abs(old_renewal_residual) > 2e-12:
+        raise RuntimeError(
+            f"Old renewal accounting does not nest exactly: {old_renewal_residual:.3e}"
+        )
     stationary_initial_g_pre = initial_g_pre
     model_ages = (
         float(old_parameters.age_start)
@@ -1095,7 +1631,9 @@ def main() -> None:
         old_shared,
         "static-elastic",
     )
-    old_first_birth_flows = first_birth_flows_by_age(old_evaluation, old_parameters)
+    old_first_birth_accounting = first_birth_accounting_by_age(
+        old_evaluation, old_parameters
+    )
     population_target_indices = transition.census_household_target_indices()
     population_age_target_years = transition.census_household_age_target_years()
     population_target = float(population_target_indices[TRANSITION_PERIODS])
@@ -1105,9 +1643,17 @@ def main() -> None:
     target_measurements = {
         "tfr": "completed fertility of the model cohort centered at age 42 in 2023",
         "childless_rate": "childless share of the model cohort centered at age 42 in 2023",
-        "mean_age_first_birth": "cohort first-birth flows: old-steady-state prehistory plus dated 2007--2023 transition",
-        "share_first_births_age30plus": "same dated target-cohort first-birth ledger",
-        "housing_increment_0to1": "horizon-zero birth-versus-no-birth housing response on the 2023 risk set",
+        "mean_age_first_birth": (
+            "four-year age-cell midpoint mean for a fixed synthetic cohort built "
+            "from dated first-birth hazards: old-steady-state prehistory plus "
+            "the 2007--2023 transition"
+        ),
+        "share_first_births_age30plus": "same hazard-based fixed-cohort ledger",
+        "housing_increment_0to1": (
+            "2019--2023 matched birth-versus-confirmed-childless branch: 2019 "
+            "policies advance the fixed cohort, 2023 policies govern continuation "
+            "fertility and housing, and the Census age bridge is not applied"
+        ),
         "remaining_targets": "2023 transition cross-section with beginning-of-period wealth timing",
     }
     for index, new_psi in enumerate(candidates, start=1):
@@ -1119,21 +1665,66 @@ def main() -> None:
         candidate_dir = outdir / "cases" / label
         candidate_dir.mkdir(parents=True, exist_ok=True)
         period_records: dict[int, dict[str, Any]] = {}
+        pending_housing_branch: dict[str, Any] | None = None
 
         def observer(
             period: int,
             evaluation: calendar.PeriodEvaluation,
             parameters: SimpleNamespace,
             grid: np.ndarray,
+            shared: SimpleNamespace,
         ) -> None:
+            nonlocal pending_housing_branch
+            if pending_housing_branch is None:
+                same_policy_response = first_birth_housing_response(
+                    evaluation, parameters, grid, shared
+                )
+                housing_measurement = {
+                    "status": "same_policy_one_period_diagnostic_no_prior_date",
+                    "origin_period": None,
+                    "destination_period": int(period),
+                    "housing_response": same_policy_response,
+                    "census_age_bridge_applied": False,
+                }
+            else:
+                housing_measurement = finish_dated_first_birth_housing_branch(
+                    pending_housing_branch,
+                    evaluation,
+                    parameters,
+                    grid,
+                    shared,
+                    destination_period=int(period),
+                )
             period_records[int(period)] = {
                 "moments": transition_cross_section_moments(
-                    evaluation, parameters, grid, target_system.moment_names
+                    evaluation,
+                    parameters,
+                    grid,
+                    shared,
+                    target_system.moment_names,
+                    housing_increment_override=float(
+                        housing_measurement["housing_response"]
+                    ),
                 ),
-                "first_birth_flows_by_age": first_birth_flows_by_age(
+                "first_birth_housing_did": housing_measurement,
+                "first_birth_accounting_by_age": first_birth_accounting_by_age(
+                    evaluation, parameters
+                ),
+                "period_fertility_diagnostics": period_fertility_diagnostics(
                     evaluation, parameters
                 ),
             }
+            pending_housing_branch = (
+                begin_dated_first_birth_housing_branch(
+                    evaluation,
+                    parameters,
+                    grid,
+                    shared,
+                    origin_period=int(period),
+                )
+                if int(period) < total_periods - 1
+                else None
+            )
 
         print(
             f"TRANSITION_CALIBRATION_CASE {index}/{len(candidates)} "
@@ -1147,16 +1738,14 @@ def main() -> None:
             label=label,
             initial_g_pre=initial_g_pre,
             baseline_price=float(np.asarray(old_price).reshape(-1)[0]),
-            baseline_B=B_old,
             baseline_births=births_old,
-            baseline_raw_B=B_old_raw,
             baseline_raw_births=births_old_raw,
             parameters=copy.deepcopy(old_parameters),
             b_grid=b_grid,
             periods=total_periods,
-            outside_flow=outside_share * E_old,
+            outside_flow=outside_flow,
             retention=retention,
-            conversion=conversion,
+            effective_birth_to_household_conversion=renewal_conversion,
             delay_periods=4,
             initial_birth_pipeline_multiplier=1.0,
             population_target_indices=population_target_indices,
@@ -1178,16 +1767,202 @@ def main() -> None:
         calendar.write_csv(candidate_dir / "child_pipeline.csv", children)
         if sorted(period_records) != list(range(total_periods)):
             raise RuntimeError(f"Incomplete transition moment ledger: {sorted(period_records)}")
-        timing = cohort_timing_moments(
-            old_first_birth_flows,
-            period_records,
-            old_parameters,
+        dated_moment_rows: list[dict[str, Any]] = []
+        dated_fertility_rows: list[dict[str, Any]] = []
+        dated_fertility_age_rows: list[dict[str, Any]] = []
+        dated_timing_ledgers: list[dict[str, Any]] = []
+        dated_housing_did_rows: list[dict[str, Any]] = []
+        target_lookup = {
+            name: (float(target), float(weight))
+            for name, target, weight in zip(
+                target_system.moment_names,
+                target_system.target_values,
+                target_system.weights,
+                strict=True,
+            )
+        }
+        for period in range(total_periods):
+            period_timing = cohort_timing_moments(
+                old_first_birth_accounting,
+                period_records,
+                old_parameters,
+                terminal_period=period,
+            )
+            dated_timing_ledgers.append(
+                {
+                    "period": period,
+                    "calendar_year": START_YEAR
+                    + period * float(old_parameters.period_years),
+                    **period_timing,
+                }
+            )
+            dated_moments = dict(period_records[period]["moments"])
+            housing_did = dict(period_records[period]["first_birth_housing_did"])
+            dated_housing_did_rows.append(
+                {
+                    "candidate": label,
+                    "period": period,
+                    "calendar_year": START_YEAR
+                    + period * float(old_parameters.period_years),
+                    "status": housing_did["status"],
+                    "origin_period": housing_did.get("origin_period"),
+                    "destination_period": housing_did.get("destination_period"),
+                    "origin_price": housing_did.get("origin_price"),
+                    "destination_price": housing_did.get("destination_price"),
+                    "origin_mass": housing_did.get("origin_mass"),
+                    "destination_mass": housing_did.get("destination_mass"),
+                    "survival_loss": housing_did.get("survival_loss"),
+                    "treated_feasibility_projection_mass": housing_did.get(
+                        "treated_feasibility_projection_mass"
+                    ),
+                    "control_feasibility_projection_mass": housing_did.get(
+                        "control_feasibility_projection_mass"
+                    ),
+                    "treated_continuation_births": housing_did.get(
+                        "treated_continuation_births"
+                    ),
+                    "treated_mean_housing": housing_did.get(
+                        "treated_mean_housing"
+                    ),
+                    "control_mean_housing": housing_did.get(
+                        "control_mean_housing"
+                    ),
+                    "housing_response": housing_did["housing_response"],
+                    "census_age_bridge_applied": housing_did[
+                        "census_age_bridge_applied"
+                    ],
+                }
+            )
+            dated_moments["mean_age_first_birth"] = float(
+                period_timing["mean_age_first_birth"]
+            )
+            dated_moments["share_first_births_age30plus"] = float(
+                period_timing["share_first_births_age30plus"]
+            )
+            for name in target_system.moment_names:
+                target, weight = target_lookup[name]
+                is_terminal = period == TRANSITION_PERIODS
+                model_value = float(dated_moments[name])
+                gap = model_value - target if is_terminal else math.nan
+                dated_moment_rows.append(
+                    {
+                        "candidate": label,
+                        "period": period,
+                        "calendar_year": START_YEAR
+                        + period * float(old_parameters.period_years),
+                        "moment": name,
+                        "model": model_value,
+                        "role": (
+                            "calibration_moment_at_2023_model_state"
+                            if is_terminal
+                            else "untargeted_transition_diagnostic"
+                        ),
+                        "target": target if is_terminal else None,
+                        "weight": weight if is_terminal else None,
+                        "gap": gap if is_terminal else None,
+                        "loss_contribution": weight * gap**2 if is_terminal else None,
+                    }
+                )
+            fertility = period_records[period]["period_fertility_diagnostics"]
+            year = START_YEAR + period * float(old_parameters.period_years)
+            dated_fertility_rows.append(
+                {
+                    "candidate": label,
+                    "period": period,
+                    "calendar_year": year,
+                    "period_tfr_explicit_states": float(
+                        fertility["period_tfr_explicit_states"]
+                    ),
+                    "period_tfr_topcode_adjusted": float(
+                        fertility["period_tfr_topcode_adjusted"]
+                    ),
+                    "period_first_birth_mean_age": float(
+                        fertility["period_first_birth_mean_age"]
+                    ),
+                    "period_first_birth_share_age30plus": float(
+                        fertility["period_first_birth_share_age30plus"]
+                    ),
+                    "role": "untargeted_current-rate_diagnostic",
+                    "denominator": "model pre-fertility adult-household mass by age",
+                }
+            )
+            ages_diagnostic = np.asarray(fertility["age"], dtype=float)
+            age_starts_diagnostic = np.asarray(
+                fertility["age_cell_start"], dtype=float
+            )
+            for age_index, age in enumerate(ages_diagnostic):
+                dated_fertility_age_rows.append(
+                    {
+                        "candidate": label,
+                        "period": period,
+                        "calendar_year": year,
+                        "age_index": age_index,
+                        "age_cell_start": float(
+                            age_starts_diagnostic[age_index]
+                        ),
+                        "age_cell_midpoint": float(age),
+                        "age": float(age),
+                        "age_mass": float(fertility["age_mass"][age_index]),
+                        "birth_flow_first": float(
+                            fertility["birth_flow_first"][age_index]
+                        ),
+                        "birth_flow_second": float(
+                            fertility["birth_flow_second"][age_index]
+                        ),
+                        "birth_flow_third_bin_entry": float(
+                            fertility["birth_flow_third_bin_entry"][age_index]
+                        ),
+                        "birth_flow_explicit": float(
+                            fertility["birth_flow_explicit"][age_index]
+                        ),
+                        "birth_flow_topcode_adjusted": float(
+                            fertility["birth_flow_topcode_adjusted"][age_index]
+                        ),
+                        "childless_at_risk_mass": float(
+                            fertility["childless_at_risk_mass"][age_index]
+                        ),
+                        "first_birth_hazard": float(
+                            fertility["first_birth_hazard"][age_index]
+                        ),
+                        "first_birth_rate_all_households": float(
+                            fertility["first_birth_rate_all_households"][age_index]
+                        ),
+                        "age_specific_birth_rate_explicit": float(
+                            fertility["age_specific_birth_rate_explicit"][age_index]
+                        ),
+                        "age_specific_birth_rate_topcode_adjusted": float(
+                            fertility["age_specific_birth_rate_topcode_adjusted"][age_index]
+                        ),
+                    }
+                )
+        calendar.write_csv(candidate_dir / "dated_model_moments.csv", dated_moment_rows)
+        calendar.write_csv(
+            candidate_dir / "dated_first_birth_housing_did.csv",
+            dated_housing_did_rows,
         )
+        calendar.write_csv(
+            candidate_dir / "dated_period_fertility.csv", dated_fertility_rows
+        )
+        calendar.write_csv(
+            candidate_dir / "dated_period_fertility_by_age.csv",
+            dated_fertility_age_rows,
+        )
+        write_json(candidate_dir / "dated_cohort_timing_ledgers.json", dated_timing_ledgers)
+        timing = dated_timing_ledgers[TRANSITION_PERIODS]
         terminal_moments = dict(period_records[TRANSITION_PERIODS]["moments"])
         terminal_moments["mean_age_first_birth"] = float(timing["mean_age_first_birth"])
         terminal_moments["share_first_births_age30plus"] = float(
             timing["share_first_births_age30plus"]
         )
+        synthetic_childless_gap = float(timing["synthetic_childless_probability"]) - float(
+            terminal_moments["childless_rate"]
+        )
+        if abs(synthetic_childless_gap) > 2e-10:
+            raise RuntimeError(
+                "Hazard-spliced cohort childlessness does not match the terminal "
+                "age-42 stock: "
+                f"gap={synthetic_childless_gap:.3e}"
+            )
         fit_rows, loss = target_fit_rows(label, terminal_moments, target_system)
         all_fit_rows.extend(fit_rows)
         calendar.write_csv(candidate_dir / "target_fit.csv", fit_rows)
@@ -1205,6 +1980,10 @@ def main() -> None:
             "terminal_share_first_births_age30plus": float(
                 terminal_moments["share_first_births_age30plus"]
             ),
+            "terminal_first_birth_housing_response": float(
+                terminal_moments["housing_increment_0to1"]
+            ),
+            "terminal_synthetic_childless_consistency_gap": synthetic_childless_gap,
             "terminal_population_index": float(terminal["population_index"]),
             "census_household_population_target_index": population_target,
             "population_target_gap": float(terminal["population_index"]) - population_target,
@@ -1242,7 +2021,12 @@ def main() -> None:
         write_json(outdir / "best_so_far.json", best)
 
     best = min(summaries, key=lambda row: float(row["transition_loss"]))
-    params = parameter_rows(theta, candidates)
+    params = parameter_rows(
+        theta,
+        best,
+        old_psi_child=old_psi_child,
+        joint_panel=panel_metadata is not None,
+    )
     for row in params:
         if row["parameter"] == "psi_child_2007":
             row["value"] = old_psi_child
@@ -1281,14 +2065,82 @@ def main() -> None:
         "old_psi_child": old_psi_child,
         "old_fertility_normalization": old_fertility_normalization,
         "old_model_completed_fertility": float(old_transition_moments["tfr"]),
-        "old_completed_fertility_reference": float(
-            args.old_completed_fertility_target
-        ),
+        "old_completed_fertility_reference": old_completed_fertility_target,
         "outside_origin_entry_share": outside_share,
         "outside_origin_entry_status": "provisional_across_market_anchor_not_national_migration",
         "renewal_retention": retention,
+        "renewal_accounting_contract": {
+            "replacement_fertility": replacement_fertility,
+            "effective_birth_to_household_conversion": renewal_conversion,
+            "birth_measure": "topcode_adjusted_birth_children",
+            "top_bin_mean_children": float(old_parameters.tfr_top_bin_weight),
+            "birth_vintage_queue_waiting_slots": 4,
+            "birth_to_entry_effect_lag_dates": 5,
+            "birth_to_entry_effect_lag_years": 20.0,
+            "outside_flow_formula": "M = outside_origin_entry_share * E_old",
+            "retention_formula": "rho = (1 - outside_origin_entry_share) * E_old / B_old",
+            "status": (
+                "external replacement normalization; household KFE maturation "
+                "is diagnostic and does not determine population renewal"
+            ),
+        },
+        "renewal_accounting_old_state": {
+            "old_entry_flow_E": E_old,
+            "old_queue_mature_flow_B": B_old,
+            "old_raw_birth_queue_flow_B": B_old_raw,
+            "old_queue_B_over_E": old_queue_B_over_E,
+            "old_renewal_residual": old_renewal_residual,
+            "outside_flow_M": outside_flow,
+            "outside_origin_entry_share": outside_share,
+            "retention_rho": retention,
+            "kfe_entrant_conversion_factor_diagnostic": float(
+                old_parameters.entrant_conversion_factor
+            ),
+            "kfe_old_topcode_adjusted_mature_flow_diagnostic": kfe_B_old_adjusted,
+            "kfe_old_raw_mature_flow_diagnostic": kfe_B_old_raw,
+        },
         "housing_supply": supply_normalization,
         "target_measurements": target_measurements,
+        "dated_measurement_contract": {
+            "first_birth_housing": (
+                "one-period matched branch DID; the origin-date policy carries "
+                "equal birth and confirmed-childless branches through survival, "
+                "saving, tenure, location, income, and child maturation; the "
+                "destination policy governs continuation fertility and housing; "
+                "the Census age bridge is excluded"
+            ),
+            "first_birth_housing_horizon_periods": 1,
+            "first_birth_housing_horizon_years": 4.0,
+            "first_birth_housing_terminal_origin_year": 2019,
+            "first_birth_housing_terminal_destination_year": 2023,
+            "cohort_first_birth_timing": (
+                "age-specific first-birth hazards spliced into a fixed synthetic "
+                "cohort; raw age-cell masses never weight timing"
+            ),
+            "first_birth_age_cells": (
+                "four-year intervals [18,22),...,[42,46) labeled by midpoints "
+                "20,24,...,44; the NCHS target applies the identical binned-age "
+                "operator with boundary collapse"
+            ),
+            "period_fertility": (
+                "sum over four-year age cells of dated birth flows divided by "
+                "all pre-fertility adult-household mass in the age cell"
+            ),
+            "period_fertility_topcode_timing": (
+                "the extra 0.602 children represented by the 3+ bin are imputed "
+                "to the date and age of entry into parity 3; explicit-state TFR "
+                "is the main historical diagnostic and the top-coded version is "
+                "a sensitivity"
+            ),
+            "period_fertility_status": (
+                "untargeted diagnostic; model household denominator is not literal "
+                "national female exposure"
+            ),
+            "dated_maintained_moments": (
+                "all twelve moments saved at every model date; only the 2023 "
+                "model-state measurements enter the calibration loss"
+            ),
+        },
         "population_bridge": {
             "status": "externally_normalized_not_estimated",
             "total_households": "Census HH-3, ages 18--85 after ACS coverage adjustment",
@@ -1323,8 +2175,9 @@ def main() -> None:
                 "promoted estimate.",
                 "",
                 "The fertility stock targets use the model cohort centered at age 42.",
-                "First-birth timing combines old-steady-state prehistory with realized",
-                "first-birth flows during 2007--2023. The previous period-TFR",
+                "First-birth timing combines old-steady-state prehistory with dated",
+                "first-birth hazards during 2007--2023 and labels four-year age cells",
+                "by their midpoints. The previous period-TFR",
                 "normalization is therefore not treated as the completed-fertility",
                 "calibration target.",
                 "",

@@ -1,0 +1,67 @@
+{
+  "caveats": [
+    "ACTUALROOMS_ is shifted forward by one observed interview before applying year-specific missing codes.",
+    "Valid HHID is unavailable in 1982--1984, so those rows are excluded by the one-household-year rule.",
+    "Physical dwellings containing multiple PSID family units are excluded before choosing one woman per HHID-year.",
+    "The outcome is household-level; the primary sample clusters by the selected woman's stable person ID.",
+    "The calibration target is the +3 minus -1 four-year contrast; the full event-study path is retained because earlier leads reject a flat prepath.",
+    "The model analogue branches birth and no-birth cohorts for one four-year period; the mapping remains provisional rather than causal.",
+    "The four-year contrast can include another birth and is not a mechanically pure 0-to-1 space increment."
+  ],
+  "contract_id": "psid_first_birth_rooms_household_aligned_sa_v1_20260817",
+  "estimator": {
+    "clustering": "individual ID",
+    "command": "eventstudyinteract",
+    "control_group": "confirmed zero-child women from full relationship history",
+    "fertility_timing": "first biological child across RELCHI1-20 TYPE/BYEAR records",
+    "fixed_effects_and_controls": "person and survey-year fixed effects; age and education controls",
+    "rooms_alignment": "ACTUALROOMS_ shifted forward one observed interview within individual",
+    "runtime_seconds": 511.832,
+    "weighting": "PSID longitudinal pweight IW"
+  },
+  "measurement_status": "empirical contrast verified; structural mapping remains provisional because earlier leads reject a flat prepath",
+  "outputs": {
+    "event_study_estimates.csv": "8ba851754dfa1191534505dfb168eb85d1394a6ef78a40029090e50e92ee5028",
+    "sa_rooms_first_birth_household_aligned_v1.log": "48cc60169f24866727eab503debf13bb091bf27b42c89d270de1b4519026c6d8",
+    "target_receipt.csv": "ca75bef54f80e9a18647ca2cc50c52c0b08677a3afd737c3fcd41966929125da"
+  },
+  "sample": {
+    "confirmed_never_treated_individuals": 1654,
+    "definition": "current women age 18+, ref/spouse, positive IW, single-FID dwelling, one woman per HH-year",
+    "estimation_household_years": 49457,
+    "estimation_individuals": 4112,
+    "estimation_observations": 49457,
+    "excluded_known_parent_without_biological_timing_individuals": 96,
+    "excluded_multi_fu_eligible_women": 11368,
+    "excluded_multi_fu_household_years": 7338,
+    "excluded_nonstandard_room_alignment_rows": 0,
+    "excluded_unknown_child_history_individuals": 1296,
+    "input_individuals": 4527,
+    "input_observations": 49872,
+    "one_observation_per_household_year": true,
+    "single_family_unit_dwellings_only": true,
+    "treated_individuals": 2486
+  },
+  "schema_version": 1,
+  "source": {
+    "do_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do",
+    "do_file_sha256": "f588d6946d772155b75cfdf272b8ae46e5e362bc3b6f977fccd16aa57d18f36c",
+    "finalizer": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/finalize_first_birth_rooms_target_receipt.py",
+    "finalizer_sha256": "0390bf19d0740de822ddafcf46f5ec4e277d2ec48b1ba4875c2a8b804429fe8a",
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta",
+    "sha256": "f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029"
+  },
+  "status": "complete_provisional_model_mapping_target",
+  "target": {
+    "component_f1": 0.4814988255173503,
+    "component_l3": 1.201745087898878,
+    "contrast_end_time": 3,
+    "contrast_start_time": -1,
+    "covariance_l3_f1": 0.0047806126996336,
+    "estimate": 0.7202462623815278,
+    "inverse_variance_weight": 137.5652749002964,
+    "moment": "housing_increment_0to1",
+    "regression_omitted_time": -2,
+    "standard_error": 0.0852600513385958
+  }
+}

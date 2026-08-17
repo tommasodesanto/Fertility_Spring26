@@ -45,6 +45,8 @@ import run_dynamic_population_transition as calendar
 
 DEFAULT_SOURCE = closure_audit.E5F_FLOOR_SOURCE
 DEFAULT_OUTDIR = ROOT / "output/model/e5f_floor_open_population_transition"
+REPLACEMENT_FERTILITY = 2.1
+EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION = 1.0 / REPLACEMENT_FERTILITY
 CENSUS_HH3_URL = (
     "https://www2.census.gov/programs-surveys/demo/tables/families/"
     "time-series/households/hh3.xls"
@@ -196,6 +198,15 @@ def parse_args() -> argparse.Namespace:
         help="Initial steady-state share of entrant households supplied from outside.",
     )
     parser.add_argument(
+        "--replacement-fertility",
+        type=float,
+        default=REPLACEMENT_FERTILITY,
+        help=(
+            "Births per woman needed for replacement. Population renewal maps "
+            "top-code-adjusted births into future entrant households at its inverse."
+        ),
+    )
+    parser.add_argument(
         "--market-tol",
         type=float,
         default=2e-4,
@@ -220,7 +231,10 @@ def parse_args() -> argparse.Namespace:
         "--birth-to-entry-delay-periods",
         type=int,
         default=4,
-        help="Completed four-year child stages between birth and adult entry.",
+        help=(
+            "Four-year waiting slots in the vintage queue. With next-date "
+            "injection, four slots imply a five-date/20-year effect lag."
+        ),
     )
     parser.add_argument(
         "--initial-birth-pipeline-multiplier",
@@ -283,6 +297,77 @@ def jsonable(value: Any) -> Any:
     if isinstance(value, (tuple, list)):
         return [jsonable(item) for item in value]
     return value
+
+
+def effective_birth_to_household_conversion(replacement_fertility: float) -> float:
+    """Return future entrant households per top-code-adjusted birth.
+
+    This is an external demographic normalization. It is deliberately separate
+    from the household solver's child-maturation and entrant-conversion objects.
+    """
+    value = float(replacement_fertility)
+    if not math.isfinite(value) or value <= 0.0:
+        raise ValueError("replacement fertility must be finite and positive")
+    return 1.0 / value
+
+
+def stationary_renewal_from_births(
+    entry_flow: float,
+    topcode_adjusted_births: float,
+    outside_origin_entry_share: float,
+    birth_to_household_conversion: float,
+) -> dict[str, float]:
+    """Anchor the open renewal law at a declared old stationary state."""
+    E = float(entry_flow)
+    births = float(topcode_adjusted_births)
+    share = float(outside_origin_entry_share)
+    conversion = float(birth_to_household_conversion)
+    if not (
+        math.isfinite(E)
+        and E > 0.0
+        and math.isfinite(births)
+        and births > 0.0
+        and math.isfinite(share)
+        and 0.0 < share < 1.0
+        and math.isfinite(conversion)
+        and conversion > 0.0
+    ):
+        raise ValueError("Invalid old-state renewal inputs")
+    B = conversion * births
+    M = share * E
+    retention = (E - M) / B
+    if not 0.0 <= retention <= 1.0:
+        raise ValueError(f"Old-state renewal implies invalid retention: {retention}")
+    return {
+        "entry_flow_E": E,
+        "queue_mature_flow_B": B,
+        "outside_flow_M": M,
+        "retention_rho": retention,
+        "queue_B_over_E": B / E,
+        "identity_residual": E - M - retention * B,
+    }
+
+
+def advance_birth_vintage_queue(
+    scheduled_flows: list[float],
+    current_births: float,
+    birth_to_household_conversion: float,
+) -> tuple[float, list[float]]:
+    """Pop the entrant flow due now and append the current birth vintage."""
+    if not scheduled_flows:
+        raise ValueError("birth-vintage queue cannot be empty")
+    queue = [float(value) for value in scheduled_flows]
+    if any(not math.isfinite(value) or value < 0.0 for value in queue):
+        raise ValueError("birth-vintage queue contains invalid flows")
+    births = float(current_births)
+    conversion = float(birth_to_household_conversion)
+    if not math.isfinite(births) or births < 0.0:
+        raise ValueError("current births must be finite and nonnegative")
+    if not math.isfinite(conversion) or conversion <= 0.0:
+        raise ValueError("birth-to-household conversion must be finite and positive")
+    due = queue.pop(0)
+    queue.append(conversion * births)
+    return due, queue
 
 
 def preference_shifter_at_date(
@@ -853,16 +938,14 @@ def run_birth_vintage_scenario(
     label: str,
     initial_g_pre: np.ndarray,
     baseline_price: float,
-    baseline_B: float,
     baseline_births: float,
-    baseline_raw_B: float,
     baseline_raw_births: float,
     parameters: SimpleNamespace,
     b_grid: np.ndarray,
     periods: int,
     outside_flow: float,
     retention: float,
-    conversion: float,
+    effective_birth_to_household_conversion: float,
     delay_periods: int,
     initial_birth_pipeline_multiplier: float,
     population_target_indices: dict[int, float] | None,
@@ -878,7 +961,14 @@ def run_birth_vintage_scenario(
     outdir: Path,
     counter: calendar.SolveCounter,
     period_observer: Callable[
-        [int, calendar.PeriodEvaluation, SimpleNamespace, np.ndarray], None
+        [
+            int,
+            calendar.PeriodEvaluation,
+            SimpleNamespace,
+            np.ndarray,
+            SimpleNamespace,
+        ],
+        None,
     ]
     | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -899,34 +989,28 @@ def run_birth_vintage_scenario(
     if int(P.I) != 1:
         raise NotImplementedError("The birth-vintage transition is currently one-market only")
 
-    # At the old steady state this yield maps births exactly into the model's
-    # effective mature-entrant flow. It combines child survival and the
-    # children-to-households conversion, while the queue supplies the timing.
-    maturation_survival_yield = baseline_B / max(conversion * baseline_births, 1e-15)
-    raw_maturation_survival_yield = baseline_raw_B / max(
-        conversion * baseline_raw_births, 1e-15
-    )
-    if not 0.0 < maturation_survival_yield <= 1.0 + 1e-10:
-        raise RuntimeError(
-            "The stationary birth-to-entry yield is invalid: "
-            f"{maturation_survival_yield:.12g}"
-        )
+    renewal_conversion = float(effective_birth_to_household_conversion)
     if not math.isclose(
-        maturation_survival_yield,
-        raw_maturation_survival_yield,
+        renewal_conversion,
+        EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION,
         rel_tol=0.0,
-        abs_tol=2e-12,
+        abs_tol=1e-15,
     ):
         raise RuntimeError(
-            "Raw and top-code-adjusted child maturation yields disagree: "
-            f"raw={raw_maturation_survival_yield:.12g}, "
-            f"adjusted={maturation_survival_yield:.12g}"
+            "The paper transition requires the declared 2.1 replacement "
+            "normalization: "
+            f"actual={renewal_conversion:.16g}, "
+            f"required={EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION:.16g}"
         )
     scheduled_entries = [
-        float(baseline_B) * float(initial_birth_pipeline_multiplier)
+        renewal_conversion
+        * float(baseline_births)
+        * float(initial_birth_pipeline_multiplier)
     ] * int(delay_periods)
     scheduled_raw_entries = [
-        float(baseline_raw_B) * float(initial_birth_pipeline_multiplier)
+        renewal_conversion
+        * float(baseline_raw_births)
+        * float(initial_birth_pipeline_multiplier)
     ] * int(delay_periods)
     target_indices = dict(population_target_indices or {})
     target_age_years = dict(population_age_target_years or {})
@@ -1033,19 +1117,21 @@ def run_birth_vintage_scenario(
             float(evaluation.births),
             P,
         )
-        scheduled_B = float(scheduled_entries.pop(0))
-        scheduled_raw_B = float(scheduled_raw_entries.pop(0))
         adjusted_births = float(
             birth_accounting["topcode_adjusted_birth_children"]
         )
-        new_potential_B = (
-            conversion * maturation_survival_yield * adjusted_births
+        scheduled_B, scheduled_entries = advance_birth_vintage_queue(
+            scheduled_entries,
+            adjusted_births,
+            renewal_conversion,
         )
-        new_potential_raw_B = (
-            conversion * maturation_survival_yield * float(evaluation.births)
+        scheduled_raw_B, scheduled_raw_entries = advance_birth_vintage_queue(
+            scheduled_raw_entries,
+            float(evaluation.births),
+            renewal_conversion,
         )
-        scheduled_entries.append(new_potential_B)
-        scheduled_raw_entries.append(new_potential_raw_B)
+        new_potential_B = renewal_conversion * adjusted_births
+        new_potential_raw_B = renewal_conversion * float(evaluation.births)
         retained_B = retention * scheduled_B
         next_target_index = target_indices.get(period + 1)
         dated_outside_flow = float(outside_flow)
@@ -1142,7 +1228,8 @@ def run_birth_vintage_scenario(
         mean_age = float(np.sum(ages * age_mass) / max(np.sum(age_mass), 1e-15))
         demand = float(np.sum(evaluation.demand_by_loc))
         supply = float(np.sum(evaluation.supply_by_loc))
-        model_mature_effective = conversion * float(np.sum(model_mature_raw_by_loc))
+        kfe_conversion = float(P.entrant_conversion_factor)
+        model_mature_effective = kfe_conversion * float(np.sum(model_mature_raw_by_loc))
         row = {
             "scenario": label,
             "period": period,
@@ -1171,7 +1258,8 @@ def run_birth_vintage_scenario(
             "births_over_entry": float(evaluation.births) / max(entry_flow, 1e-15),
             "topcode_adjusted_births_over_entry": adjusted_births
             / max(entry_flow, 1e-15),
-            "mature_children_raw": scheduled_raw_B / max(conversion, 1e-15),
+            "scheduled_raw_birth_children": scheduled_raw_B
+            / max(renewal_conversion, 1e-15),
             "effective_mature_entrant_flow_B": scheduled_B,
             "raw_state_scheduled_mature_entrant_flow_B": scheduled_raw_B,
             "mature_to_current_entry_flow_ratio_diagnostic": scheduled_B / max(entry_flow, 1e-15),
@@ -1227,7 +1315,7 @@ def run_birth_vintage_scenario(
             "nonfinite_distribution_count": nonfinite,
         }
         if period_observer is not None:
-            period_observer(period, evaluation, P, b_grid)
+            period_observer(period, evaluation, P, b_grid, shared)
         path_rows.append(row)
         period_ages, period_children = independent_child_distribution_rows(
             label, period, evaluation.g_post_fertility, P
@@ -1274,13 +1362,19 @@ def run_birth_vintage_scenario(
         "policy_start_period": policy_start_period,
         "renewal_retention": retention,
         "renewal_child_accounting": "topcode_consistent_3plus_bin",
-        "entrant_conversion_factor": conversion,
-        "maturation_survival_yield": maturation_survival_yield,
+        "replacement_fertility": REPLACEMENT_FERTILITY,
+        "effective_birth_to_household_conversion": renewal_conversion,
+        "renewal_accounting_status": (
+            "external replacement normalization; no explicit child-death state"
+        ),
+        "kfe_entrant_conversion_factor_diagnostic": float(P.entrant_conversion_factor),
         "maximum_absolute_dual_clock_raw_flow_gap_percent": max(
             abs(float(row["dual_clock_raw_flow_gap_percent"])) for row in path_rows
         ),
-        "birth_to_entry_delay_periods": delay_periods,
-        "birth_to_entry_delay_years": delay_periods * float(P.period_years) + float(P.period_years),
+        "birth_vintage_queue_waiting_slots": delay_periods,
+        "birth_to_entry_effect_lag_dates": delay_periods + 1,
+        "birth_to_entry_effect_lag_years": (delay_periods + 1)
+        * float(P.period_years),
         "initial_birth_pipeline_multiplier": initial_birth_pipeline_multiplier,
         "old_psi_child": old_psi_child,
         "new_psi_child": new_psi_child,
@@ -1336,13 +1430,20 @@ def solve_stationary_open_endpoint(
     new_psi_child: float,
     outside_flow: float,
     retention: float,
-    conversion: float,
-    maturation_survival_yield: float,
+    effective_birth_to_household_conversion: float,
     supply_rule: calendar.HousingSupplyRule,
     policy_case: str,
     outdir: Path,
 ) -> dict[str, Any]:
     """Solve the stationary endpoint consistent with the birth-vintage closure."""
+    renewal_conversion = float(effective_birth_to_household_conversion)
+    if not math.isclose(
+        renewal_conversion,
+        EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION,
+        rel_tol=0.0,
+        abs_tol=1e-15,
+    ):
+        raise RuntimeError("Stationary endpoint uses the wrong replacement conversion")
     cache: dict[float, tuple[float, dict[str, Any]]] = {}
     endpoint_overrides = dict(base_overrides)
     if policy_case == "dependent-child-ltv95":
@@ -1380,10 +1481,8 @@ def solve_stationary_open_endpoint(
                     solution, parameters
                 )
             )
-            queue_B = (
-                conversion
-                * maturation_survival_yield
-                * float(renewal_accounting["topcode_adjusted_birth_children"])
+            queue_B = renewal_conversion * float(
+                renewal_accounting["topcode_adjusted_birth_children"]
             )
             denominator = float(solution.entry_rate) - retention * queue_B
             if denominator <= 0.0:
@@ -1401,6 +1500,8 @@ def solve_stationary_open_endpoint(
             row = dict(readout)
             row.update(
                 policy_case=policy_case,
+                replacement_fertility=REPLACEMENT_FERTILITY,
+                effective_birth_to_household_conversion=renewal_conversion,
                 queue_mature_entrant_flow_B=queue_B,
                 queue_birth_children_topcode_adjusted=float(
                     renewal_accounting["topcode_adjusted_birth_children"]
@@ -1994,6 +2095,16 @@ def main() -> None:
         raise ValueError("The dated tenure policy requires the birth-vintage clock")
     if not 0.0 < args.outside_origin_entry_share < 1.0:
         raise ValueError("--outside-origin-entry-share must lie strictly between zero and one")
+    renewal_conversion = effective_birth_to_household_conversion(
+        float(args.replacement_fertility)
+    )
+    if not math.isclose(
+        renewal_conversion,
+        EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION,
+        rel_tol=0.0,
+        abs_tol=1e-15,
+    ):
+        raise ValueError("The production transition is hard-gated to replacement fertility 2.1")
     if args.smoke:
         smoke_horizon = 5 if args.household_count_path != "none" else 4
         args.periods = min(int(args.periods), smoke_horizon)
@@ -2084,8 +2195,8 @@ def main() -> None:
             old_solution, old_parameters
         )
     )
-    B_old_raw_state = float(old_solution.entrants_mature_total)
-    B_old = float(
+    kfe_B_old_raw_state = float(old_solution.entrants_mature_total)
+    kfe_B_old_adjusted = float(
         old_renewal_accounting[
             "topcode_adjusted_mature_entrant_households"
         ]
@@ -2094,15 +2205,18 @@ def main() -> None:
     old_births = float(
         old_renewal_accounting["topcode_adjusted_birth_children"]
     )
+    B_old_raw_state = renewal_conversion * old_births_raw_state
     outside_share = float(args.outside_origin_entry_share)
-    retention = (1.0 - outside_share) * E_old / B_old
-    if not 0.0 <= retention <= 1.0:
-        raise RuntimeError(
-            "Initial outside-origin share implies an invalid retention rate: "
-            f"rho={retention:.8g}"
-        )
-    conversion = float(old_parameters.entrant_conversion_factor)
-    B_old_raw_children = B_old_raw_state / conversion
+    renewal_old_state = stationary_renewal_from_births(
+        E_old,
+        old_births,
+        outside_share,
+        renewal_conversion,
+    )
+    B_old = float(renewal_old_state["queue_mature_flow_B"])
+    retention = float(renewal_old_state["retention_rho"])
+    kfe_conversion = float(old_parameters.entrant_conversion_factor)
+    B_old_raw_children = kfe_B_old_raw_state / kfe_conversion
 
     acs_age_reweight = None
     if args.historical_start_year == 2007:
@@ -2212,16 +2326,14 @@ def main() -> None:
             label=scenario,
             initial_g_pre=initial_g_pre,
             baseline_price=float(np.asarray(old_price).reshape(-1)[0]),
-            baseline_B=B_old,
             baseline_births=old_births,
-            baseline_raw_B=B_old_raw_state,
             baseline_raw_births=old_births_raw_state,
             parameters=postshock_parameters,
             b_grid=b_grid,
             periods=int(args.periods),
             outside_flow=outside_share * E_old,
             retention=retention,
-            conversion=conversion,
+            effective_birth_to_household_conversion=renewal_conversion,
             delay_periods=int(args.birth_to_entry_delay_periods),
             initial_birth_pipeline_multiplier=float(
                 args.initial_birth_pipeline_multiplier
@@ -2253,7 +2365,7 @@ def main() -> None:
             b_grid,
             int(args.periods),
             retention,
-            conversion,
+            kfe_conversion,
             supply_rule,
             float(args.market_tol),
             int(args.market_max_iter),
@@ -2275,10 +2387,7 @@ def main() -> None:
             new_psi_child=float(args.new_psi_child),
             outside_flow=outside_share * E_old,
             retention=retention,
-            conversion=conversion,
-            maturation_survival_yield=float(
-                scenario_summary["maturation_survival_yield"]
-            ),
+            effective_birth_to_household_conversion=renewal_conversion,
             supply_rule=supply_rule,
             policy_case=str(args.policy_case),
             outdir=outdir,
@@ -2302,7 +2411,7 @@ def main() -> None:
         old_B=B_old,
         stationary_endpoint=stationary_endpoint,
         delay_years=(
-            float(scenario_summary.get("birth_to_entry_delay_years", 0.0))
+            float(scenario_summary.get("birth_to_entry_effect_lag_years", 0.0))
             if args.renewal_clock == "birth-vintage"
             else 0.0
         ),
@@ -2358,7 +2467,12 @@ def main() -> None:
         "preference_transition_years": int(args.preference_transition_periods)
         * float(old_parameters.period_years),
         "renewal_clock": args.renewal_clock,
-        "birth_to_entry_delay_periods": int(args.birth_to_entry_delay_periods),
+        "birth_vintage_queue_waiting_slots": int(args.birth_to_entry_delay_periods),
+        "birth_to_entry_effect_lag_dates": int(args.birth_to_entry_delay_periods) + 1,
+        "birth_to_entry_effect_lag_years": (
+            int(args.birth_to_entry_delay_periods) + 1
+        )
+        * float(old_parameters.period_years),
         "initial_birth_pipeline_multiplier": float(
             args.initial_birth_pipeline_multiplier
         ),
@@ -2382,10 +2496,18 @@ def main() -> None:
             "outside_entry_flow_M": outside_flow,
             "retention_rho": retention,
             "child_accounting": "topcode_consistent_3plus_bin",
-            "entrant_conversion_factor": conversion,
+            "replacement_fertility": REPLACEMENT_FERTILITY,
+            "effective_birth_to_household_conversion": renewal_conversion,
+            "renewal_accounting_status": (
+                "external replacement normalization; no explicit child-death state"
+            ),
             "old_entry_flow_E": E_old,
-            "old_effective_mature_flow_B": B_old,
-            "old_raw_state_mature_flow_B": B_old_raw_state,
+            "old_queue_mature_entrant_flow_B": B_old,
+            "old_raw_birth_queue_flow_B": B_old_raw_state,
+            "old_queue_B_over_E": B_old / E_old,
+            "kfe_entrant_conversion_factor_diagnostic": kfe_conversion,
+            "kfe_old_topcode_adjusted_mature_flow_diagnostic": kfe_B_old_adjusted,
+            "kfe_old_raw_state_mature_flow_diagnostic": kfe_B_old_raw_state,
             "old_topcode_adjusted_birth_children": old_births,
             "old_raw_explicit_birth_children": old_births_raw_state,
             "topcode_accounting_method": old_renewal_accounting["method"],

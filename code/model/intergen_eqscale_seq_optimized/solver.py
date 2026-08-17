@@ -4464,14 +4464,11 @@ def forward_distribution_markov_income(
     # Matured children per new entrant household (0.5 under literal parity:
     # two children pair into one next-generation household). 1.0 nests.
     ecf = float(getattr(P, "entrant_conversion_factor", 1.0))
-    # Event-study horizon (in 4-year periods) for the birth housing response.
-    # The PSID target is a CONTROLLED room response ~3 years post-birth, which in
-    # a 4-year-period model lands inside the birth period itself, so the default
-    # is horizon 0 (NOT 3 periods / 12 years, which would mostly capture
-    # lifecycle drift). housing_increment_0to1 is reported as a
-    # difference-in-differences: birth cohort minus a no-birth control cohort
-    # (at horizon 0 the control is the pre-birth state, so it reduces to the
-    # contemporaneous floor jump). Set housing_event_horizon>0 to look further out.
+    # Event-study horizon in four-year model periods.  The generic production
+    # default remains zero.  The active E5 transition profile overrides it to
+    # one because its PSID calibration row is the four-year change from event
+    # time -1 to +3.  The statistic is the birth branch minus an otherwise
+    # identical no-birth branch after the declared horizon.
     event_horizon = int(getattr(P, "housing_event_horizon", 0))
     birth_es3_pre_sum = birth_es3_post_sum = birth_es3_mass = 0.0
     birth_es3_control_post_sum = 0.0
@@ -6276,7 +6273,10 @@ def compute_statistics(
     first_birth_flows = np.zeros(J)
     tba = tfb = 0.0
     for j in range(P.A_f_start - 1, P.A_f_end):
-        ra = P.age_start + j * P.da
+        # Birth decisions cover the four-year interval beginning at the state
+        # age.  Report timing at the interval midpoint so the model statistic
+        # can be measured with the identical binned-age operator in NCHS data.
+        ra = P.age_start + (j + 0.5) * P.da
         childless_mass = float(np.sum(g[:, :, :, j, 0, childless_states]))
         attempted = 0.0
         for i in range(I):
@@ -6299,7 +6299,9 @@ def compute_statistics(
     stats.first_birth_age_distribution = (
         first_birth_flows / first_birth_total if first_birth_total > 0.0 else np.zeros(J)
     )
-    ages = float(P.age_start) + np.arange(J, dtype=float) * float(P.da)
+    ages = float(P.age_start) + (
+        np.arange(J, dtype=float) + 0.5
+    ) * float(P.da)
     stats.share_first_births_age30plus = float(np.sum(stats.first_birth_age_distribution[ages >= 30.0]))
     chosen_survival = clock_survival = 1.0
     for j in range(P.A_f_start - 1, P.A_f_end):

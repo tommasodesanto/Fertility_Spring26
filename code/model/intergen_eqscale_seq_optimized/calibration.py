@@ -342,7 +342,7 @@ TARGET_MOMENT_OBJECTS: dict[str, dict[str, str]] = {
         "issue": "Data no-child household and model nonparent/never-parent states are close but not identical.",
     },
     "housing_increment_0to1": {
-        "model": "housing_increment_0to1_eventstudy_t3: birth cohort minus no-birth control, default horizon 0 in 4-year periods.",
+        "model": "housing_increment_0to1_eventstudy_t3: birth cohort minus no-birth control after the profile-declared horizon in 4-year periods; active E5 uses one period.",
         "data": "PSID first-birth rooms event-study, about 3 years post-birth.",
         "status": "clean-after-fix",
         "issue": "June 25 fix removed the old raw 12-year lifecycle-drift window.",

@@ -38,7 +38,7 @@
 \newif\iftechnicalappendix
 \technicalappendixfalse
 
-\title{Endogenous Population Scale in the Existing Housing--Fertility Model\\
+\title{Housing, Fertility, and Demographic Transition\\
 \large Research update}
 \author{Tommaso De Santo}
 \date{August 2026}
@@ -47,26 +47,27 @@
 \maketitle
 
 \begin{abstract}
-The paper's lifecycle model determines fertility, tenure, and housing choices
-for a stationary population. This update adds one feedback: births become
-future entrant households, and those households add to housing demand. A
-two-generation model shows how fertility and housing clearing jointly
-determine long-run housing cost and population. We add this demographic
-closure around the sequential-fertility model used in the August presentation,
-without changing the household problem. In units consistent with the model's
-$3+$ fertility category, the current estimate does not reach replacement over
-the audited housing-cost range after the fertility decline. This is a
-conditional model result, not a structural rejection: the causal response of
-fertility to housing costs is not yet identified.
+How does a fertility decline change future housing demand, and can cheaper
+housing stabilize population? We add one feedback to the paper's existing
+lifecycle model: birth cohorts generate entrant households after twenty years,
+and those households add to housing demand. A two-generation model shows that a
+fall in the value of children produces a lower positive steady state only if
+the fertility response to cheaper housing is strong enough to restore
+replacement.
 
-The numerical exercise indexes the old stationary benchmark to 2007 and phases
-in a reduced-form fertility-preference decline through 2023. It makes the
-twenty-year delay from births to adult entry explicit. It does not reproduce
-the contemporaneous rise in U.S. population or housing costs, nor the movement
-in the price--rent ratio. A fixed outside entrant flow anchors population in
-levels; it is an accounting assumption, not a model of migration. The reported
-first sixty years are therefore a transition experiment between stationary
-benchmarks, not a fitted history or a welfare calculation.
+We calibrate the lifecycle model at a point along a dated transition rather
+than treating the 2023 cross-section as stationary. We construct a replacement
+benchmark, reweight its age distribution to 2007, impose the observed path of
+household totals and ages through 2023, and estimate ten parameters using
+twelve fertility, housing, tenure, and wealth moments evaluated along the
+simulated transition, principally at 2023. The model fits fertility stocks, tenure, and wealth more closely
+than housing quantities. Untargeted historical comparisons make clear which
+paths are explained and which are not. At the estimated terminal preferences,
+locally generated entry reaches at most 0.678 of replacement on the audited
+price grid, so no usable positive closed terminal root is verified over that
+range. We therefore distinguish a closed finite-horizon benchmark from an open
+population sensitivity. The exercise is a sequence of temporary equilibria,
+not a forecast or a perfect-foresight asset-price calculation.
 \end{abstract}
 
 \section{The mechanism}
@@ -84,9 +85,9 @@ access constraint reduces fertility. Second, children eventually form the next
 generation of households, so fertility changes future housing demand. The
 first direction is a household mechanism; the second is a demographic
 equilibrium condition. Combining them changes both the transition and the
-long-run incidence of housing policy.
+long-run response to fertility and housing shocks.
 
-The existing model's intergenerational channel should be stated precisely.
+The existing model's intergenerational channel works as follows.
 Children change their parents' housing needs, while young and old households
 compete for the housing stock and face different tenure constraints. The
 bequest motive also affects old-age saving and housing retention. Estates are
@@ -103,44 +104,13 @@ access also affect childbearing
 \citet{malmbergFertilityCycles2012} studies the two-way relation between cohort
 housing pressure and fertility, while \citet{leeSuhSuperLowFertility2025}
 analyze a low-fertility housing transition. Our question is narrower: how does
-the incidence of housing policy change when tenure constraints and old-age
-retention affect fertility, and births in turn determine the number of future
-households?
+the housing--fertility transition change when tenure constraints and old-age
+retention affect childbearing, and births in turn determine the number of
+future households?
 
-The current paper already writes a stationary entry condition, while its
-household computations describe a population normalized to unit size. Let $S$
-be the number of adult households in the market. For any housing cost $p$, the
-household model tells us four things: the distribution of households, housing
-demand per household $\bar h(p)$, the number of new households required to
-replace those that exit $E(p)$, and the number produced by children born
-inside the model $B(p)$. The objects $E(p)$ and $B(p)$ are flows per adult
-household and model period.
-
-To anchor population in levels, let $M$ be a fixed number of households arriving
-from outside in each period and let $\rho$ be the fraction of locally born
-households that remain in the market. This is a transparent accounting closure,
-not an equilibrium model of migration. A stationary population and a clearing
-housing market then require
-\begin{equation}
- S E(p)=M+\rho S B(p),
- \qquad
- S\bar h(p)=H^s(p).
- \label{eq:minimal_stationary_wrapper}
-\end{equation}
-The first equation says that retained local children and the fixed outside flow
-together replace exiting households. The second says that total housing demand
-equals housing supply. These two equations determine population $S$ and the
-housing cost $p$ without changing the household problem.
-
-For a stationary comparison, this is the entire population extension. A
-transition additionally requires the age distribution and the children who
-have already been born but have not yet formed households. Those objects are
-introduced below. Outside and locally born entrants are initially assigned the
-same entry-state distribution as in the current model; allowing their wealth
-or income distributions to differ is a later extension.
-
-The next section presents the same mechanism with young and old households.
-Section~\ref{sec:quantitative_mapping} then maps it into the current paper.
+The next section presents the feedback with young and old households and no
+additional state variables. Section~\ref{sec:quantitative_mapping} then adds
+the same cohort accounting to the existing lifecycle model.
 
 \section{Two-generation theory}
 \label{sec:two_generation}
@@ -151,13 +121,13 @@ Section~\ref{sec:quantitative_mapping} then maps it into the current paper.
 has income $y$ and chooses consumption $c$, housing for the adults $h$, and the
 number of children $n$. Preferences are
 \begin{equation}
- u(c,h,n)=c+\alpha\log h+\theta\log n,
- \qquad \alpha>0,\quad \theta>0.
+ u(c,h,n)=c+\alpha\log h+v\log n,
+ \qquad \alpha>0,\quad v>0.
  \label{eq:toy_utility}
 \end{equation}
-The parameter $\alpha$ governs the demand for adult housing and $\theta$
+The parameter $\alpha$ governs the demand for adult housing and $v$
 governs the demand for children. Quasi-linearity makes both demands available
-in closed form. We assume $y>\alpha+\theta$, so consumption is positive at the
+in closed form. We assume $y>\alpha+v$, so consumption is positive at the
 interior solution.
 
 \textbf{Child costs and young access.} Each child requires $q\geq0$ units of
@@ -200,14 +170,14 @@ proportionally only under a constant user cost and a stationary price path.
 
 Taking $p$ as given, a young household solves
 \begin{equation}
- \max_{c,h,n}\;c+\alpha\log h+\theta\log n
+ \max_{c,h,n}\;c+\alpha\log h+v\log n
  \quad\text{subject to}\quad
  c+ph+\bigl[q+a(p+\omega)\bigr]n=y.
  \label{eq:young_problem}
 \end{equation}
 At an interior solution, the household chooses
 \begin{equation}
- n(p)=\frac{\theta}{q+a(p+\omega)},
+ n(p)=\frac{v}{q+a(p+\omega)},
  \qquad
  h_Y(p)=\frac{\alpha}{p}+a n(p).
  \label{eq:young_demands}
@@ -217,13 +187,13 @@ Young housing demand is adult housing, $\alpha/p$, plus the space required by
 children, $a n(p)$.
 
 This is a stripped-down version of the household mechanism already in the
-paper. There, the other-goods cost of children is $\chi$, the space required
-per child is $\kappa$, and the relevant housing cost depends on tenure and on
-whether the household is constrained. In the notation of the current model,
-the simple expression $q+a(p+\omega)$ corresponds to
-$\chi+\kappa(r^m+\zeta_i^m)$: $\omega$ summarizes the shadow cost of limited
-housing access. The simple model removes heterogeneity, saving, and the
-rent-versus-own decision only to make the demographic feedback transparent.
+paper. In the full model, the per-child room floor plays the role of $a$, the
+equivalence scale generates the nonhousing resource cost summarized by $q$,
+and the fertility-preference shifter plays the role of $v$. Tenure constraints
+and the small market for large rental units generate the friction summarized
+by $\omega$. The parameter $\chi$ is instead the owner-service premium. The
+simple model removes heterogeneity, saving, and the rent-versus-own decision
+only to make the demographic feedback transparent.
 
 \subsection{Equilibrium and the steady state}
 
@@ -248,18 +218,21 @@ produced by each current young household.
 A steady state has a constant housing cost and constant positive cohort
 masses, so $n(p^*)=\bar n$ and $Y^*=O^*$.
 
+Let $S_t=Y_t+O_t$ denote total adult-household population. In a steady state,
+$S^*=2Y^*=2O^*$.
+
 \begin{proposition}[Steady state]
 \label{prop:toy_ss}
 A unique positive steady state exists if and only if
-$\theta>\bar n(q+a\omega)$. It is
+$v>\bar n(q+a\omega)$. It is
 \begin{equation}
- p^*=\frac{\theta/\bar n-q}{a}-\omega,
+ p^*=\frac{v/\bar n-q}{a}-\omega,
  \qquad
  Y^*=O^*=\frac{\bar H(p^*)^{\varepsilon+1}}
  {\alpha+\bar h_O+a\bar n p^*}.
  \label{eq:toy_ss}
 \end{equation}
-A lower value of children $\theta$ or a higher access cost $\omega$ lowers both
+A lower value of children $v$ or a higher access cost $\omega$ lowers both
 the steady-state housing cost and population. A higher $\bar h_O$ reduces
 population but does not change the steady-state housing cost. A proportional
 increase in housing supply $\bar H$ raises population in the same proportion
@@ -273,14 +246,14 @@ raises population rather than lowering the steady-state housing cost.
 
 Even if market housing were free, a child would still cost $q+a\omega$. Hence
 cheaper housing cannot restore replacement when
-$\theta\leq\bar n(q+a\omega)$.
+$v\leq\bar n(q+a\omega)$.
 
 \subsection{Comparative statics}
 \label{cor:demographic_capitalization}
 
-Suppose the economy begins in a steady state and a permanent reform arrives
-after $Y_t$ and $O_t$ have been inherited. The impact and steady-state effects
-are:
+Suppose the economy begins in a steady state, a permanent parameter change
+arrives after $Y_t$ and $O_t$ have been inherited, and the subsequent dynamics
+converge to the new steady state. The impact and steady-state effects are:
 \begin{center}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -297,7 +270,7 @@ Greater housing supply, $\bar H\uparrow$ & $-$ & $+$ & $0$ & $0$ & $+$ \\
 \end{center}
 
 Lowering $\omega$ makes family housing easier to obtain. Fertility and housing
-demand rise immediately, so part of the reform appears as a higher market
+demand rise immediately, so part of the change appears as a higher market
 price. Lower old housing demand and greater supply instead reduce the price on
 impact. In the new steady state, fertility is again $\bar n$. For the latter
 two reforms, the housing cost returns to its original level and the additional
@@ -306,13 +279,16 @@ housing supports a larger population.
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.98\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
-\caption{The child decision determines the steady-state housing cost through
+\caption{With equal cohort masses, $Y=O=S/2$, housing clearing gives
+$S^H(p;v)=2\bar H p^\varepsilon/[h_Y(p;v)+h_O(p)]$; these are the left-panel
+schedules. The child decision determines the steady-state housing cost through
 $n(p^*)=\bar n$. Housing clearing then determines population at that cost. A
-fall in $\theta$ initially puts fertility below replacement; as population
-falls, housing becomes cheaper and partly offsets the initial decline. The
-solid blue housing-clearing schedule applies before the fall in $\theta$ and
-the dashed red schedule after it; $A$, $I$, and $B$ denote the initial steady
-state, impact allocation, and new steady state.}
+fall in $v$ initially puts fertility below replacement; as population falls,
+housing becomes cheaper and partly offsets the initial decline. Blue objects
+describe the initial value of children and red objects the lower value. Point
+$I$ and point $A'$ show the impact and new-steady-state comparisons. They do
+not trace the literal transition, because the ratio $Y_t/O_t$ generally changes
+away from a steady state.}
 \label{fig:toy_feedback}
 \end{figure}
 
@@ -352,20 +328,14 @@ no-shock allocation. Demographic momentum can nevertheless make the realized
 cost rise over time. The sign comparison above does not by itself order the
 entire shocked and no-shock price paths.
 
-\subsection{Intergenerational policy}
+\subsection{What carries to the lifecycle model}
 
-Lowering $\omega$ directly improves young households' access to family space.
-Lowering $\bar h_O$ instead releases housing from old households and reduces
-the market price during the transition. Both policies raise fertility, but
-through different margins. A general expansion of supply also lowers the
-transition price, without changing which generation initially releases the
-housing.
-
-With a fixed adult population, reallocating a home toward a constrained young
-household affects current tenure and fertility. With the cohort law in
-equation~\eqref{eq:two_generation_law}, the resulting birth also changes the
-number of future entrants. That second effect is lost when population is
-renormalized after every solution.
+The simple model separates two dates. A child changes the parent's need for
+housing immediately, but changes the number of adult households only after the
+child forms a household. The lifecycle model retains that distinction, along
+with tenure constraints, moving costs, saving, and old-age housing retention.
+Renormalizing the population after every solution would preserve the first
+effect and remove the second.
 
 \iftechnicalappendix
 \section{Optional lifecycle transition architecture}
@@ -1126,363 +1096,407 @@ it does not explain the observed U.S. house-price path.
 \section{Quantitative implementation}
 \label{sec:quantitative_mapping}
 
-\subsection{Minimal wrapper around the sequential model}
+\subsection{The existing household model}
 
-The quantitative model is the one-market sequential-fertility specification
-used in the August presentation. Households make age-dependent first- and
-later-birth decisions, children ever born are distinct from children currently
-at home, and the model retains income risk, saving, tenure choice, the owner
-ladder, and a warm-glow bequest motive. The population closure does not add a
-new household state or alter these decisions. It also does not make bequests
-flow to descendants; entrant wealth remains exogenous.
+The household block is the paper's sequential-fertility model. Households
+choose saving, tenure, housing size, and whether to attempt a first or a later
+birth. The state distinguishes children ever born from children currently at
+home, and retains the owner-size ladder, down-payment constraints, moving
+costs, income risk, and a warm-glow bequest motive. The population extension
+does not replace this problem; it changes how the masses generated by the
+problem enter subsequent dates.
 
-At a candidate stationary housing cost $P$, the solver returns the adult entry
-flow $E(P)$, effective locally born entrant households $B(P)$, and housing
-demand per adult household $D(P)$. In the stationary solver, rent and the house
-asset value move proportionally through the maintained user-cost equation. For
-a fixed outside entrant flow $M$ and local retention $\rho$, stationary
-adult-household population is
+The quantitative specification contains two additions to the earlier household
+block. The five-state income process is crossed with a three-node discretization
+of permanent income. Its log variance, \(0.393053\), is estimated from the PSID
+and is not a free parameter. We also allow a one-time utility cost \(F_1\) when the
+first child arrives. Here \(j\) is the age index and \(x\) collects the remaining
+household state variables. If \(V_j^1(x)\) is the value after a successful first
+birth, \(V_j^0(x)\) is the value after an unsuccessful attempt, and \(\pi_j\)
+is the conception probability, the value before the attempt-specific taste
+shock is
 \begin{equation}
- S(P)=\frac{M}{E(P)-\rho B(P)}.
- \label{eq:quant_open_scale}
+ V_j^A(x)=\pi_j\bigl[V_j^1(x)-F_1\bigr]+(1-\pi_j)V_j^0(x).
+ \label{eq:first_birth_fixed_cost}
 \end{equation}
-The denominator is the entry shortfall left after retained local children. The
-fixed-inflow stationary population is finite when this denominator is positive.
-Housing clearing then chooses $P$ from
-\begin{equation}
- S(P)D(P)=H^s(P).
- \label{eq:quant_open_clearing}
-\end{equation}
-Thus the stationary extension is an outer calculation around the existing
-sequential model. It does not require a new household problem.
+Thus the cost is paid once, conditional on becoming a parent. Setting
+\(F_1=0\) recovers the previous fertility problem.
 
-For comparison, a positive closed steady state would require both replacement
-and housing clearing:
+\subsection{From births to future households}
+
+One model period is four years. Let \(\widetilde b_k\) be births during model
+period \(k\), measured in child units. Because the parity state is top-coded at
+\(3+\), we assign families in that state their observed mean of \(3.602\)
+children. We then convert children into future households using
 \begin{equation}
- B(P^*)=E(P^*),
+ B_{k+5}=\frac{\widetilde b_k}{2.1}.
+ \label{eq:birth_entry_queue}
+\end{equation}
+Births during \(k\) enter a four-slot queue at the end of the period and first
+affect the adult distribution at \(k+5\), twenty years later. The number
+\(2.1\) is an external replacement normalization: it combines sex composition,
+survival to household-entry age, and household formation. The model does not
+contain an explicit childhood-death state. In the constructed old steady state,
+\(\widetilde b/E=2.1\), so the mature flow \(B\) equals the required entrant
+flow \(E\).
+
+At a stationary asset price \(P\), let \(E(P)\) be required adult entry per
+adult household, \(B(P)\) locally produced mature entry, and \(D(P)\) housing
+demand per adult household. A positive closed steady state requires
+\begin{equation}
+ \frac{B(P)}{E(P)}=1,
  \qquad
- S^*=\frac{H^s(P^*)}{D(P^*)}.
- \label{eq:quant_closed_root}
+ S D(P)=H^s(P),
+ \label{eq:closed_stationary_conditions}
 \end{equation}
-The first condition need not have a solution at the estimated household
-parameters. This is a substantive restriction, not a numerical normalization.
+where \(S\) is the mass of adult households. This is the lifecycle counterpart
+of replacement in the simple model.
 
-\subsection{Replacement accounting and the closed root}
-
-The calculation holds the working parameter estimate fixed. That estimate is
-not yet a final calibration: it misses childlessness, mean occupied rooms, and
-old-age wealth dispersion, and its first-birth housing target remains under
-empirical review.
-
-One accounting correction is essential. The household state space records
-parities $0,1,2,3+$, so its raw child pipeline carries at most three explicit
-children. The reported completed-fertility moment instead assigns the $3+$
-state its observed mean, $3.602$. Comparing the raw maturation flow to required
-entry therefore mixes child units. For stationary renewal, we assign the extra
-$0.602$ children to each flow entering the $3+$ state and give them the same
-maturation yield as the explicit children. This changes no household choice.
-
-Under the fiscally balanced 1 percent property-tax convention, required
-entrants are $E_0=0.061733$ per adult household. The raw three-child state
-delivers $0.052929$ mature entrants; the top-bin-consistent flow is
-$B_0=0.057798$. The replacement ratio relevant for the closure is therefore
+For comparison, suppose that \(M\) entrants arrive from outside each period
+and that a fraction \(\rho\) of locally produced entrants remains. An open
+steady state solves
 \begin{equation}
- \frac{B_0}{E_0}=0.936249,
- \label{eq:quant_baseline_reproduction}
+ S E(P)=M+\rho S B(P),
+ \qquad
+ S D(P)=H^s(P),
+ \qquad
+ S=\frac{M}{E(P)-\rho B(P)}.
+ \label{eq:minimal_stationary_wrapper}
 \end{equation}
-not $0.857387$. The latter is retained only as a raw-state diagnostic.
+For \(M>0\) and \(E(P)-\rho B(P)>0\), this closure can sustain a positive
+population below local replacement. In the reported sensitivity, \(0.169\) is
+used once to normalize the old steady state: \(E_0\) and \(B_0\) are its required
+and locally produced entrant flows, \(M=0.169E_0\), and
+\(\rho=(1-0.169)E_0/B_0\). Thereafter \(M\) and \(\rho\) are held fixed, so the
+realized outside-origin share can change. The normalization is not identified
+by the 2007--2023 calibration and is not used to improve its fit.
 
-The estimated fertility response has the expected sign but is small. Reducing
-the housing cost to one half of one percent of its baseline value raises the
-consistent $B(P)/E(P)$ ratio only to $0.957554$. The schedule is monotone and
-does not cross one over the audited range from $0.5$ to $300$ percent of the
-baseline cost. Equation~\eqref{eq:quant_closed_root} therefore has no root on
-that range at the current parameters. By contrast, the old preference
-benchmark chosen to deliver completed fertility of $2.12$ has $B/E=1.003$ in
-the same units, so treating it as the initial stationary benchmark is
-internally coherent to numerical accuracy.
+\subsection{A calibration along the 2007--2023 transition}
 
-This no-root result is conditional on an incompletely identified slope. The
-fertility levels and timing used in the current calibration mainly determine
-the preference intercepts at one housing cost; they do not identify the causal
-change in fertility when housing costs move. A slope sensitivity reported below
-therefore reanchors the old and post-decline fertility levels before changing
-the logit scales. It is useful for feasibility, but it is not a replacement for
-a housing-cost-to-fertility moment.
+For every candidate parameter vector, we first choose an old fertility
+intercept \(\psi_{\mathrm{old}}\) so that completed fertility is \(2.1\). We
+then preserve the old steady state's wealth, income, tenure, and family states
+conditional on age, but replace its age marginal with the national ACS
+distribution of household heads in 2007. The constructed steady state therefore
+supplies the histories behind the initial condition; the age-reweighted 2007
+economy is already a transition state.
 
-Figure~\ref{fig:quant_stationary_schedules} shows the two stationary objects.
-The left panel is the replacement condition; the right panel records the
-population scale allowed by housing clearing at each cost. The solid line uses
-the top-bin-consistent child units; the dashed line shows why the raw
-three-child state cannot be used for this test. The present estimate supports a
-fixed-inflow endpoint over the displayed range, not a closed one.
+The additive utility weight on children, \(\psi_t\), follows the deliberately
+simple path
+\begin{equation}
+ \psi_t=\psi_{2007}
+ +\frac{t-2007}{2023-2007}\Delta\psi,
+ \qquad t\in\{2007,2011,2015,2019,2023\}.
+ \label{eq:dated_preference_path}
+\end{equation}
+The change \(\Delta\psi\) is estimated, but linearity and the starting date are
+imposed. The shifter summarizes changes in the value or cost of children not
+otherwise present in the model; it is not an estimated causal preference
+shock.
 
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=0.96\textwidth]{../output/model/e5f_floor_reproductive_schedule/full_rebated/calibrated_schedule.pdf}
-\caption{Stationary schedules in the sequential model. The left panel plots
-effective locally born entrant households relative to required entrants. The
-solid line counts the $3+$ state in the same units as measured completed
-fertility; the dashed line counts only three explicit children. The right panel
-plots the scale permitted by the maintained housing-supply schedule,
-conditional on housing cost. The working estimate remains below replacement
-throughout the displayed range.}
-\label{fig:quant_stationary_schedules}
-\end{figure}
+At the same five dates, Census household totals and ACS householder-age shares
+are imposed exactly. This bridge represents household formation and migration
+that cannot be generated by births inside a sixteen-year window. It ends after
+2023. The historical calibration therefore asks whether the household model,
+conditional on the observed demographic state, can match the 2023 fertility,
+housing, tenure, and wealth targets. It does not claim to explain the observed
+growth or aging of households before 2023.
 
-A deliberately uncalibrated sensitivity confirms that the model class can
-produce the feedback in the simple theory. Multiplying both fertility-logit
-scales by $0.10$ makes choices much more responsive, while the preference
-intercepts are reanchored to the same old and post-decline fertility levels.
-Replacement then occurs at a housing cost equal to $0.078$ of its old level.
-With a multiplier of $0.25$, no root appears; with a multiplier of $0.05$, a
-root appears at $0.499$ of the old housing cost. These are feasibility checks,
-not alternative estimates: they show both that the feedback can operate and
-that its quantitative strength is presently undisciplined.
+Housing clears at every date against a constant-elastic supply schedule with
+elasticity \(1.75\). After the 2007 age reweighting, its intercept is multiplied
+by \(1.011446\) so the inherited price clears the reweighted initial market;
+the elasticity is unchanged. Households treat the current fertility intercept
+and current prices as permanent when making decisions. The computation is a
+sequence of temporary equilibria with an evolving distribution and birth
+queue, not a perfect-foresight asset-price transition. The model has no
+separate market-rent path: its asset-price-to-implicit-user-cost ratio is
+constant under the maintained user-cost identity.
 
-\subsection{How the closure changes the paper's policy experiments}
+We estimate the ten-element parameter vector \(\vartheta\) with twelve moments
+evaluated along the simulated transition. Let \(m_k^{2023}(\vartheta)\) denote
+model moment \(k\), \(\widehat m_k\) its empirical target, and \(w_k\) its
+calibration weight. The objective is
+\begin{equation}
+ Q(\vartheta)=\sum_{k=1}^{12}w_k
+ \left[m_k^{2023}(\vartheta)-\widehat m_k\right]^2.
+ \label{eq:transition_objective}
+\end{equation}
+Completed fertility and childlessness are model age-42 stocks matched to CPS
+women ages 40--44. The
+timing moments use a synthetic cohort that combines steady-state prehistory
+with the 2007--2023 first-birth hazards, and the first-birth rooms moment uses
+the 2019--2023 branch described below. The remaining moments are evaluated on
+the simulated 2023 cross-section. Six targets have documented empirical
+standard errors or stability scales, five use declared provisional calibration
+scales, and one is an external normalization. The target documentation records
+the source, sample, estimator, and uncertainty classification for each row. The
+criterion is a weighted calibration loss, not a test statistic.
 
-The standing fiscally balanced policy cases are also run under the sequential
-model. The reference is a 1 percent annual property tax on occupied housing,
-rebated equally. The first counterfactual raises the rate to 2 percent. The
-second also provides a purchase grant of $0.4$ model income units to a
-dependent-child renter who buys a home with at least six rooms. Residual tax
-revenue is rebated equally in both counterfactuals. The parameter estimate is
-fixed, so these are mechanism calculations rather than final policy estimates.
-
-The diagnostic assigns $16.9$ percent of baseline entrants to outside origin.
-This number comes from across-market mobility and is most naturally read as a
-local-market anchor, not as national immigration. Local retention is chosen to
-reproduce the reference population exactly; the top-bin-consistent accounting
-implies $\rho=0.8876$. That retention rate and the outside flow are then held
-fixed. Total births combine births per adult
-household with the change in adult-household population.
+The first-birth housing target is provisional. In the
+PSID it is the change in occupied rooms between event times \(-1\) and \(+3\)
+around a first biological birth. Its model analogue takes the same childless
+2019 risk set, branches it into birth and no-birth states, advances both
+branches one four-year period, and compares their 2023 housing. The Census age
+bridge is excluded from this comparison. The empirical pre-trend is not flat,
+so this row remains provisional rather than a clean causal estimate.
 
 \begin{table}[ht!]
 \centering
-\caption{Policy effects under the fixed-inflow stationary closure}
-\label{tab:funded_policy_closure}
-\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabularx}{\textwidth}{@{}Xrrrr@{}}
+\caption{Calibration along the transition: complete 2023 target fit}
+\label{tab:transition_fit}
+\scriptsize
+\setlength{\tabcolsep}{3.1pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrrr@{}}
 \toprule
-& $\Delta P$ & $\Delta S$ & $\Delta$ births/adult & $\Delta$ total births \\
+Moment & Target & Model & Gap & Weight & Loss \\
 \midrule
-Rebated 2\% property tax & $-17.47$ & $+1.91$ & $+0.38$ & $+2.29$ \\
-Rebated 2\% tax $+$ purchase grant & $-17.17$ & $+3.84$ & $+0.75$ & $+4.61$ \\
+Completed fertility, women 40--44
+ & 1.918000 & 1.898987 & \(-0.019013\) & 1,425.739 & 0.515 \\
+Childless share, women 40--44
+ & 0.188000 & 0.176567 & \(-0.011433\) & 17,180.744 & 2.246 \\
+Mean age at first birth
+ & 26.044627 & 26.338512 & 0.293885 & 44.444 & 3.839 \\
+Share of first births at age 30 or later
+ & 0.260327 & 0.242820 & \(-0.017508\) & 10,000.000 & 3.065 \\
+Four-year rooms contrast at first birth
+ & 0.720246 & 0.273250 & \(-0.446997\) & 137.565 & 27.486 \\
+Rooms gap, \(3+\) versus 1--2 children
+ & 0.367700 & 0.381988 & 0.014289 & 2,958.515 & 0.604 \\
+Family ownership gap
+ & 0.167662 & 0.169653 & 0.001991 & 14,229.591 & 0.056 \\
+Ownership rate, ages 30--55
+ & 0.575472 & 0.555126 & \(-0.020346\) & 1,207.846 & 0.500 \\
+Mean occupied rooms, ages 18--85
+ & 5.779970 & 6.741957 & 0.961987 & 11.973 & 11.080 \\
+Wealth / annual gross labor earnings
+ & 6.873100 & 6.804305 & \(-0.068795\) & 6.288 & 0.030 \\
+Annual bequest flow / aggregate wealth
+ & 0.008800 & 0.008575 & \(-0.000225\) & 5,165,289.256 & 0.262 \\
+Old wealth-to-income \(p90/p50\), ages 76--84
+ & 3.448111 & 3.311776 & \(-0.136335\) & 56.960 & 1.059 \\
+\midrule
+\multicolumn{5}{r}{Total loss} & 50.742 \\
 \bottomrule
 \end{tabularx}
-\vspace{1pt}
 
-{\footnotesize Notes: Percent changes from the fiscally balanced 1 percent
-property-tax reference. Population is adult-household mass; births use the
-top-bin-consistent child units defined above.\par}
+{\footnotesize Notes: Contributions use unrounded values and sum to
+\(50.741967\). ``Family'' denotes households with dependent children. The
+first-birth rooms row, four ACS housing rows, and their declared scales remain
+provisional; Table values do not conceal that classification.\par}
 \end{table}
-
-At the current parameter values, the housing-cost response remains the main
-effect, as in the fixed-population exercise. The closure adds a second margin:
-lower housing costs raise births per household and, after children form
-households, the stationary market contains more households. This demographic
-magnitude is conditional on the model's housing-cost-to-fertility slope, which
-the current target system does not identify causally. The rows therefore show
-model mechanics under one slope and one provisional outside-flow anchor; they
-are not empirical pronatal-policy estimates, transition paths, or welfare
-results.
-
-\subsection{A transition indexed to 2007}
-
-The calendar wrapper carries the full adult distribution over age, liquid
-wealth, income, tenure, parity, and children at home. Its one-period operator
-reproduces the stationary distribution and the top-bin-consistent birth and
-entrant flows with errors below $10^{-12}$. Population mass is never
-renormalized.
-
-The household child state is deliberately not used as the demographic clock.
-Although it tracks children's departure independently, its geometric transition
-is designed for housing demand rather than exact birth-vintage timing.
-Population renewal therefore carries a separate aggregate queue: births affect
-parents' housing choices immediately, but affect adult entry twenty years
-later. The model's final parity state is $3+$. For renewal accounting, families
-entering that state receive the same mean number of children, $3.602$, used in
-the reported completed-fertility statistic. The extra children are assigned the
-same maturation rate and timing as the third birth. This accounting bridge
-leaves household choices unchanged, but it is an approximation to the timing
-of fourth and later births. During the preference transition, the mature flow
-from this dated queue differs from the household child-state clock by as much
-as $13.0$ percent. That gap is a transparent timing choice, not a market-
-clearing error.
-
-The diagnostic asks a deliberately narrow question. We index the old
-stationary benchmark to 2007; we do not claim that the U.S. economy was then in
-steady state. The child-preference shifter moves linearly from $0.1062$ in 2007
-to $-0.2419$ in 2023. At the initial housing cost, these values imply model
-top-coded completed-fertility statistics of $2.120$ and $1.616$. The latter is
-not the new stationary value because housing costs subsequently adjust. The
-corresponding U.S. observations are period total fertility rates, not completed
-fertility in a stationary cross-section. The preference path is therefore a
-reduced-form normalization, not an estimated structural shock.
-
-The outside flow remains $16.9$ percent of initial entry and local retention is
-fixed at the value that balances the old benchmark, $\rho=0.8286$. Both are held
-fixed rather than determined by migration choices.
-Table~\ref{tab:historical_transition_fit} reports what
-the preference change alone generates through 2023. Population cannot yet
-respond because the affected births have not reached adult entry. Housing
-demand responds immediately, but only modestly. The model therefore predicts
-essentially flat population and slightly lower housing costs, while U.S.
-population and real housing costs rose.
 
 \begin{table}[ht!]
 \centering
-\caption{The 2007--2023 path: data and model}
-\label{tab:historical_transition_fit}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lrrrr}
+\caption{Estimated transition parameters}
+\label{tab:transition_parameters}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrr>{\raggedright\arraybackslash}X@{}}
 \toprule
-& Population & Real house price & Real rent & Price/rent \\
+Object & Estimate & Search bound & Status \\
 \midrule
-U.S. data & $+11.73$ & $+15.62$ & $+15.88$ & $-0.23$ \\
-Fixed housing stock & $0.00$ & $-0.71$ & $-0.71$ & $0.00$ \\
-Static elastic supply & $0.00$ & $-0.15$ & $-0.15$ & $0.00$ \\
+Annual discount factor \(\beta_{\rm annual}\)
+ & 0.995305 & \([0.9400,0.9995]\) & Estimated; interior \\
+First-birth logit scale \(\kappa_f\)
+ & 2.149553 & \([0.02,50]\) & Estimated; interior \\
+Continuation-birth logit scale \(\kappa_f^C\)
+ & 1.682038 & \([0.02,50]\) & Estimated; interior \\
+Owner-service premium \(\chi\)
+ & 1.033945 & \([0.10,5]\) & Estimated; interior \\
+Housing-supply scale \(H_0\)
+ & 16.967273 & \([0.20,80]\) & Estimated; interior \\
+Bequest scale \(\theta_0\)
+ & 0.548015 & \([0,8]\) & Estimated; interior \\
+Bequest shift \(\theta_1\)
+ & 0.100631 & \([0.02,16]\) & Estimated; interior \\
+Child room floor \(\bar h_c\)
+ & 0.314216 & \([0.10,1.80]\) & Estimated; interior \\
+First-birth fixed cost \(F_1\)
+ & 3.793328 & \([0,8]\) & Estimated; interior \\
+Preference change \(\Delta\psi\)
+ & \(-0.365051\) & \([-1.50,0.20]\) & Estimated; interior \\
 \bottomrule
-\end{tabular}
-\vspace{1pt}
-
-{\footnotesize Notes: Percent changes from annual 2007 averages. House prices
-and rents are deflated by the all-items CPI. The model population is
-adult-household mass; the U.S. series is total persons. The other U.S. series
-are the Case-Shiller national index, rent of primary residence CPI, and total
-CPI, downloaded from FRED.\par}
+\end{tabularx}
 \end{table}
 
-Figure~\ref{fig:quant_historical_comparison} makes the miss visible rather than
-absorbing it in another shifter. The maintained stationary relation
-$r_t=(R_b-1+\delta_H+\tau_t^p)P_t$ fixes the model price-rent ratio. It therefore cannot
-reproduce the sharp fall in the U.S. ratio after 2007 and its subsequent
-recovery, even though the ratio happens to be close to its 2007 value again by
-2023.
+The old normalization gives \(\psi_{2007}=0.230149\) and completed fertility
+\(2.100007\); the estimate implies \(\psi_{2023}=-0.134901\). No free
+parameter lies within two percent of a bound in the transformed coordinates
+used by the search; on the untransformed interval, the bequest shift
+\(\theta_1\) is close to its lower bound. Two independent evaluations of the
+selected candidate reproduce every moment and the loss to machine precision.
+The weighted local Jacobian has rank ten at the predeclared relative
+singular-value threshold \(10^{-3}\), with condition number \(135.6\). This is
+a local numerical diagnostic, not a claim of global identification; the tenure
+premium and bequest-shift directions are especially non-smooth or weak.
+
+The fit is informative about where the model fails. Fertility stocks, the
+family ownership gap, and the wealth aggregates are close. The two main misses
+are the four-year first-birth housing contrast and mean rooms, which together
+contribute \(38.57\) of the total loss. Thus the calibrated point should not be
+described as matching the housing response to fertility.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=0.99\textwidth]{../output/model/e5f_floor_open_population_transition/historical_2007_preference_transition/historical_comparison.pdf}
-\caption{Historical comparison for the fixed-stock transition. The old
-stationary benchmark is indexed to 2007 and only the fertility-preference
-shifter changes. Real house prices and rents are nominal indexes divided by the
-all-items CPI. The model's price and rent indexes coincide because its
-stationary user-cost coefficient is constant. Population is total persons in
-the data and adult households in the model.}
-\label{fig:quant_historical_comparison}
+\includegraphics[width=0.90\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/calibrated_2023_target_fit.pdf}
+\caption{Standardized gaps for all twelve targets. Bars are model minus target,
+scaled by the square root of the reported weight. The figure reports the same
+rows as Table~\ref{tab:transition_fit}; it does not convert provisional scales
+into sampling standard errors.}
+\label{fig:calibrated_target_fit}
 \end{figure}
 
-Within this model, holding other aggregate forces fixed, the result rules out
-using the fertility trend alone to explain the aggregate post-2007 housing
-boom. The paper can instead make a relative claim: the fertility decline
-lowers housing demand and eventually population relative to a no-decline path.
+\subsection{What is and is not matched between 2007 and 2023}
 
-A mechanical existence check confirms that the sign conflict is not built
-into the model. Multiplying the four already-born cohorts in the future-entrant
-pipeline by $1.572$, chosen solely to match the 2007--2023 growth of U.S. total
-population, makes the fixed-stock housing-cost index rise by $16.97$ percent;
-with elastic supply it rises by $3.77$ percent. This is not yet a defensible
-demographic initialization. U.S. births rose only $7.36$ percent between 1987
-and 2003 \citep{martinBirthsFinalData2003}, while the number of households
-headed by someone under 25 fell $7.90$ percent between 2007 and 2023. Total
-households rose $13.29$ percent over those dates
-\citep{censusHistoricalHouseholds2025}. A coarse reweighting of the model's
-initial age distribution to the Census's 2007 householder-age shares produces
-only $3.04$ percent growth by 2023 at the steady-state entrant flow. The missing
-object is therefore a dated household-formation and migration residual, not
-simply a larger birth queue.
+The historical comparison separates inputs from validation. Household totals and
+the age distribution are inputs and match by construction. Period fertility,
+first-birth timing, ownership, rooms, and the observed house-price and rent
+series are not targeted as paths. The 2023 calibration targets are also not
+uniformly national 2023 cross-sections: several housing targets pool matched
+metropolitan markets over 2012--2023. The historical national series are
+therefore holdouts, not hidden
+calibration rows.
 
-The long-run housing-supply convention matters. With the initial stock fixed
-forever, the post-shock population demands less housing than that stock
-throughout the audited grid, which extends down to $P=10^{-4}$. A usable
-positive-price endpoint therefore requires vacancies, depreciation, or
-scrappage. The simpler alternative is the
-sequence of static equilibria used by
-\citet{coeurdacierCombesGobillonOswaldFertility2023}: at each date a
-constant-elastic housing-supply schedule clears, and the demographic
-distribution is then advanced. Using the maintained supply elasticity of
-$1.75$, the limiting fixed-inflow stationary point is:
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/historical_untargeted_fertility_housing_validation.pdf}
+\caption{Untargeted demographic and housing-quantity validation. The period
+fertility series use different denominators and are shown as a descriptive
+comparison. The 2007 rooms observation is isolated because the ACS top-codes
+rooms differently in that year.}
+\label{fig:historical_quantities}
+\end{figure}
+
+The model captures part of the rise in first-birth age: by 2023 its period
+mean is within \(0.03\) years of the NCHS series. It understates the 2023 share
+of first births at age 30 or later by \(2.3\) percentage points. Aggregate ownership
+is within \(0.4\) percentage points of the national ACS in 2023, but the model
+misses the fall through 2015 and subsequent recovery. Mean rooms moves in the
+wrong direction and remains \(0.83\) room above the 2023 national holdout. The
+model's explicit-state and top-bin-adjusted births-per-adult series also
+decline more sharply than observed period TFR, although those objects are not
+directly comparable.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/historical_untargeted_price_rent_validation.pdf}
+\caption{Untargeted housing-price validation. The model reports its temporary-
+equilibrium asset-price index and the user cost implied by the stationary
+user-cost identity. Real Case--Shiller and real rent are external comparison
+series. The model does not have an independent market-rent path.}
+\label{fig:historical_prices}
+\end{figure}
+
+The model house-price index rises from one in 2007 to \(1.064\) in 2023,
+against \(1.156\) for real Case--Shiller. More importantly, it cannot reproduce
+the 2007--2011 collapse and rebound. Its asset-price-to-implicit-user-cost
+ratio is flat by construction. These misses are a limitation of the temporary-equilibrium
+price closure, not evidence in favor of a particular fertility shock path.
+
+\subsection{Does the calibrated economy have a lower closed steady state?}
+
+The theory says that cheaper housing restores a positive closed steady state
+only if it raises fertility enough to satisfy \(B(P)/E(P)=1\). We evaluate the
+estimated terminal preference at 25 log-spaced prices from \(10^{-4}\) to
+three times the old price; denote this grid by \(\mathcal G\). Required entry
+\(E(P)\) is constant to numerical
+precision. The renewal ratio is nonincreasing on the audited grid and never
+crosses one there:
 \begin{equation}
- \frac{S^{\mathrm{new}}}{S^{\mathrm{old}}}=0.4697,
+ \max_{P\in\mathcal G}\frac{B(P)}{E(P)}=0.677985,
  \qquad
- \frac{P^{\mathrm{new}}}{P^{\mathrm{old}}}=0.7375,
- \qquad
- \text{model completed fertility}^{\mathrm{new}}=1.633.
- \label{eq:quant_transition_endpoints}
+ \min_{P\in\mathcal G}\frac{B(P)}{E(P)}=0.552425.
+ \label{eq:closed_root_audit}
 \end{equation}
-Cheaper housing partly offsets the preference decline, but local reproduction
-remains below replacement and the fixed outside flow supports a smaller city.
-The static schedule is a tractable benchmark, not a literal law of motion for a
-durable stock: it lets supply contract as readily as it expands. The smallest
-realistic extension would treat that curve as a desired stock and allow slow
-downward adjustment through vacancies, depreciation, and demolition. That
-asymmetric stock adjustment has not yet been estimated or implemented.
+The maximum occurs at the smallest price and corresponds to top-bin-adjusted
+completed fertility of \(1.424\). The schedule is already nearly flat near
+zero, so the result is not driven by a bad root bracket; the sampled values
+also provide no evidence of a crossing hidden by a discrete-tenure jump. Using \(2\), rather
+than \(2.1\), as the replacement divisor would raise the maximum renewal ratio
+only to about \(0.712\).
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=0.96\textwidth]{../output/model/e5f_floor_open_population_transition/between_steady_states_static_elastic_long/steady_state_transition.pdf}
-\caption{Movement under static elastic housing supply. Births fall while
-locally born entry remains at its old flow until the birth-vintage queue turns
-over. Adult-household population is therefore unchanged for twenty years and
-then declines. The figure shows the first sixty years; the dashed vertical line
-marks the twenty-year entry delay, and equation~\eqref{eq:quant_transition_endpoints}
-reports the limiting fixed-inflow levels.}
-\label{fig:quant_open_transition}
+\includegraphics[width=0.80\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/continuation_closed_stationary_renewal_schedule.pdf}
+\caption{Closed stationary renewal schedule at the estimated 2023 fertility
+preference. A positive closed steady state requires a crossing of one. No
+crossing occurs on the audited price grid.}
+\label{fig:closed_root_schedule}
 \end{figure}
 
-To reconnect the transition to the paper's tenure mechanism, a companion path
-raises the financed share to $0.95$ for every dependent-child household from
-2023 onward. This is an eighteen-year expected child-spell policy, not a
-one-period new-parent intervention. Sixty years after the initial date, it
-raises dependent-child ownership by $4.13$ percentage points and aggregate
-ownership by $1.53$ points relative to the no-policy path. Adult-household
-population is only $0.002$ percent higher and housing cost $0.022$ percent
-higher. At the current slope, the access reform therefore has a visible tenure
-effect but essentially no demographic amplification over this horizon.
+This is the central quantitative qualification. The simple model's lower
+positive steady state is a conditional theoretical result; the current
+calibration does not verify a usable positive root over the audited range.
+Housing remains a stabilizing feedback, but it does not restore replacement on
+that grid. The closed post-2023 path can therefore be reported over a finite
+horizon, not described as movement between two verified positive steady states.
 
-After sixty years, adult-household mass is $0.8852$ and the housing-cost index
-is $0.9517$. Even after 236 years they remain at $0.5051$ and $0.7599$, above
-their limiting values, so convergence is slow. The calculation follows Oswald's tractable
-timing but not a forward-looking asset-price equilibrium: households treat the
-current price and current preference shifter as permanent at each date. It can
-therefore describe demographic and housing-demand accounting, but not welfare
-or expected capital gains.
+\subsection{Paired no-policy continuations after 2023}
 
-\subsection{Interpretation}
+We advance the exact same 2023 distribution and birth queue under two
+demographic closures. The national closed benchmark sets \(M=0\) and
+\(\rho=1\). The open sensitivity holds the externally normalized flow
+\(M=0.169E_0\) and its associated retention rate fixed. There is no policy or
+fiscal change. Both paths keep the terminal fertility preference fixed and use
+the same household and housing-supply blocks.
 
-The minimal paper should not call this a fitted U.S. transition. It can index
-an old stationary benchmark to 2007, interpret the preference path as a
-reduced-form fertility trend, and compare housing policies from the 2023 point
-along that path. The aggregate data are then descriptive benchmarks, not
-calibration targets. The historical miss is reported explicitly.
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/continuation_paired_continuation_levels.pdf}
+\caption{No-policy continuations from the common 2023 state. The closed path is
+a finite-horizon national benchmark; the open path is a sensitivity to a fixed
+outside entrant flow. Neither is a forecast.}
+\label{fig:paired_continuation_levels}
+\end{figure}
 
-A literal U.S. transition would require two further objects. First, the model
-needs the inherited age and household-formation distribution that generated
-population growth after 2007. Simply inserting the ACS head-age distribution
-is not valid because the model treats age 18 as household entry. Second,
-households must anticipate rents and resale prices. That requires the
-calendar-time Bellman problem and dynamic user-cost equation above, rather than
-a sequence of stationary household problems.
+Both paths initially inherit demographic momentum. In the closed benchmark,
+adult-household mass rises by \(1.24\) percent between 2023 and 2027 even
+though terminal fertility is below replacement; the cohorts entering in 2027
+were already born. New post-2023 births first affect entry twenty years later.
+The paths then separate as outside entry accumulates and the inherited queue is
+replaced by cohorts born under the lower fertility preference.
 
-Finally, the long-run strength of the feedback depends on the causal response
-of fertility to housing costs and access. Fertility levels at one price do not
-identify that slope. The current no-root result should therefore be revisited
-after the fertility and first-birth housing targets are repaired and the model
-is refit. This is the closed-population replacement root discussed above; it is
-separate from the fixed-stock vacancy corner in the transition.
+By 2183, adult-household mass is (0.138) of its 2023 level in the closed
+benchmark and (0.359) in the open sensitivity. The corresponding asset prices
+are (0.386) and (0.628) of their common 2023 value. These are finite-horizon
+outcomes, not stationary endpoints or forecasts.
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.98\textwidth]{../output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/continuation_paired_renewal_diagnostics.pdf}
+\caption{Births, mature entrants, and replacement diagnostics along the paired
+continuations. Ratios that divide current mature entry by current required
+entry are transition diagnostics; the stationary root test is reported
+separately in Figure~\ref{fig:closed_root_schedule}.}
+\label{fig:paired_renewal_diagnostics}
+\end{figure}
+
+The open stationary sensitivity has a population scale of \(0.363\) and an
+asset-price ratio of \(0.632\), both relative to the constructed old steady
+state. Those levels are conditional on the external old-state normalization
+and the resulting fixed values of \(M\) and \(\rho\); the realized outside-origin
+share is endogenous away from that old state and equals \(0.465\) at this
+endpoint. They are not identified national forecasts. No corresponding
+positive closed endpoint is verified over the audited range.
+
+The quantitative result is therefore narrower than a closed-to-closed
+transition. The exercise establishes a dated 2023 calibration, shows how the
+existing intergenerational model propagates cohort size, and measures the
+failure of housing feedback to restore replacement at the estimated point. A
+causal housing-cost-to-fertility elasticity is the missing moment needed to
+judge whether re-estimation of the existing fertility block could overturn
+that conclusion. Adding a steeper response without such evidence would simply
+engineer the desired root.
 \iftechnicalappendix
-\section{Optional full-transition roadmap}
+\section{Optional perfect-foresight extension}
 \label{sec:implementation}
 
-\subsection{Only if a calendar-time transition is later pursued}
+\subsection{Beyond the temporary-equilibrium transition}
 
-This is a separate computational project, not part of the minimal stationary
-extension and not a result that should be presented as already implemented.
-It would require the following steps.
+The quantitative exercise above already solves a calendar-time demographic
+transition, but households use temporary price expectations. A
+perfect-foresight asset-price transition would additionally require the
+following steps.
 \begin{enumerate}
  \item Construct $G_0$ from the observed joint age, wealth, tenure, parity, and
  child-stage distribution. Construct $K_0$ from the housing stock. The initial
@@ -1531,32 +1545,36 @@ Before interpreting a computed transition, five gates should pass.
 
 \section{Conclusion}
 
-The proposed change is narrow. A stationary outer loop uses the existing
-model's entry, child-maturation, and housing-demand objects to determine adult-
-household population and housing cost jointly; a birth-vintage queue adds the
-transition. The sequential household problem is unchanged. The paper's
-intergenerational content remains the allocation of housing across cohorts and
-parents' housing response to children, not a transfer of estates to model
-descendants.
+The paper adds a population law to the existing sequential-fertility and
+housing model. Children affect their parents' housing immediately, while birth
+cohorts generate entrant households twenty years later using the replacement
+conversion in equation~\eqref{eq:birth_entry_queue}. This distinction makes the transition
+intergenerational without assigning estates to particular descendants or
+replacing the underlying household problem.
 
-In corrected child units, the working estimate has $B/E=0.936$ and no closed
-root on the audited housing-cost range. Because the housing-cost-to-fertility
-slope is not identified, this is a conditional result rather than a rejection
-of the mechanism. The old preference benchmark is nevertheless internally
-close to replacement, with $B/E=1.003$. After the reduced-form fertility
-decline, population is flat through 2023, then falls with a twenty-year delay;
-after sixty years household mass is $0.885$ and housing cost is $0.952$. Under
-static elastic supply the limiting fixed-inflow levels are $0.470$ and $0.737$.
+The simple theory gives a threshold, not an automatic result. Cheaper housing
+can return fertility to replacement and produce a lower positive steady state,
+but only when the fertility response is sufficiently strong. The quantitative
+model is calibrated at a dated 2023 transition state. Household totals and age
+shares before 2023 are transparently imposed; the remaining historical series
+are reported as holdouts. The fit is strongest for fertility stocks, tenure,
+and wealth, and weakest for the first-birth rooms response and the level of
+housing consumption.
 
-This path does not explain the post-2007 U.S. housing boom or the price--rent
-cycle. It is a coherent cohort-accounting benchmark for asking who owns the
-housing stock and when policy effects reach future cohorts. At the current
-slope, the dependent-child credit reform meaningfully raises ownership but has
-almost no demographic effect. The next empirical priority is therefore the
-causal fertility response to housing costs and access; a fitted U.S. transition
-would additionally need inherited household-formation and migration momentum,
-asymmetric housing-stock adjustment, and eventually forward-looking asset
-prices.
+At the estimated terminal preferences, locally produced entry reaches at most
+\(0.678\) of replacement on the audited price grid. No usable positive closed
+terminal root is verified over that range. Its post-2023 path is a
+finite-horizon benchmark, while the positive open endpoint is conditional on
+an externally fixed entrant flow. Neither path is a forecast, and the model's
+temporary-equilibrium price closure cannot explain the observed house-price
+crash and rebound or movements in the observed price-to-rent ratio.
+
+A central empirical requirement remains: estimate the causal response of
+fertility to housing costs or access and use it to discipline the slope of the
+renewal schedule. If that evidence supports a substantially steeper response,
+the existing model may deliver a genuine closed-to-closed transition after
+re-estimation. Without it, adding a steeper fertility response would impose the
+desired steady state rather than establish it.
 
 \iftechnicalappendix
 \appendix
@@ -1628,11 +1646,11 @@ Child dependence of bequest utility & 0 & Child-invariant bequest & Externally f
 \begin{proof}[Proof of Proposition~\ref{prop:toy_ss}]
 The first-order conditions in equation~\eqref{eq:young_problem} give
 $h=\alpha/p$ and
-$n=\theta/[q+a(p+\omega)]$. Expenditures on adult housing and children are
-$\alpha$ and $\theta$, so the stated income condition ensures positive
+$n=v/[q+a(p+\omega)]$. Expenditures on adult housing and children are
+$\alpha$ and $v$, so the stated income condition ensures positive
 consumption. Reproductive stationarity requires $n=\bar n$, which gives the
 price in equation~\eqref{eq:toy_ss}. It is positive exactly when
-$\theta>\bar n(q+a\omega)$. In a steady state $Y=O$. Substituting young demand, old
+$v>\bar n(q+a\omega)$. In a steady state $Y=O$. Substituting young demand, old
 demand, and $n=\bar n$ into market clearing and multiplying by $p$ gives the
 stated population. It is increasing in $p$: its log derivative is
 $(\varepsilon+1)/p-a\bar n/[\alpha+\varphi(\tau)+a\bar np]>0$. The comparative
@@ -1643,7 +1661,7 @@ statics follow directly.
 With inherited cohort masses, write housing excess supply as
 \[
  F(p)=\bar H p^\varepsilon
- -Y\left(\frac{\alpha}{p}+\frac{a\theta}{q+a(p+\omega)}\right)
+ -Y\left(\frac{\alpha}{p}+\frac{av}{q+a(p+\omega)}\right)
  -O\frac{\varphi(\tau)}{p}.
 \]
 Let $C=q+a(p+\omega)$ and define
@@ -1651,7 +1669,7 @@ Let $C=q+a(p+\omega)$ and define
  A=\varepsilon\bar H p^{\varepsilon-1}
    +\frac{Y\alpha+O\varphi(\tau)}{p^2}>0,
  \qquad
- B=\frac{Ya^2\theta}{C^2}>0.
+ B=\frac{Ya^2v}{C^2}>0.
 \]
 Then $F_p=A+B$. For easier young access,
 $F_{g_Y}=-B$, so $dp_t/dg_Y=B/(A+B)\in(0,1)$. Because the
