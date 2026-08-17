@@ -59,6 +59,7 @@ def main() -> None:
     target_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
     contracts: set[tuple[Any, ...]] = set()
+    provenance_contracts: set[str] = set()
 
     for task in range(1, expected + 1):
         task_dir = results_dir / f"task_{task:03d}"
@@ -83,6 +84,17 @@ def main() -> None:
             candidate = dict(summary["best_candidate"])
             panel = dict(summary["panel_design"])
             profile = dict(summary.get("model_profile") or {})
+            provenance = {
+                field: summary[field]
+                for field in (
+                    "population_bridge",
+                    "population_validation_status",
+                    "target_measurements",
+                )
+            }
+            provenance_contracts.add(
+                json.dumps(provenance, sort_keys=True, separators=(",", ":"))
+            )
             contract = (
                 str(summary["source_sha256"]),
                 str(summary["target_set"]),
@@ -135,6 +147,8 @@ def main() -> None:
 
     if len(contracts) > 1:
         raise RuntimeError(f"Mixed source/target/panel contracts: {sorted(contracts)}")
+    if len(provenance_contracts) > 1:
+        raise RuntimeError("Mixed population or target-measurement provenance")
     valid = [row for row in candidate_rows if bool(row["valid"])]
     best = (
         dict(min(valid, key=lambda row: float(row["transition_loss"])))
@@ -156,6 +170,11 @@ def main() -> None:
             model_profile=selected_summary.get("model_profile"),
             income_profile_gates=selected_summary.get("income_profile_gates"),
             code_fingerprints=selected_summary.get("code_fingerprints"),
+            population_bridge=selected_summary["population_bridge"],
+            population_validation_status=selected_summary[
+                "population_validation_status"
+            ],
+            target_measurements=selected_summary["target_measurements"],
             outside_origin_entry_share=float(
                 selected_summary["outside_origin_entry_share"]
             ),
@@ -167,6 +186,16 @@ def main() -> None:
     write_csv(report_dir / "all_target_fit.csv", target_rows)
     if best is not None:
         write_json(report_dir / "best_candidate.json", best)
+        write_json(
+            report_dir / "calibration_provenance.json",
+            {
+                "population_bridge": best["population_bridge"],
+                "population_validation_status": best[
+                    "population_validation_status"
+                ],
+                "target_measurements": best["target_measurements"],
+            },
+        )
         best_fit = [
             row for row in target_rows if int(row["task_id"]) == int(best["task_id"])
         ]
@@ -186,6 +215,15 @@ def main() -> None:
             best.get("code_fingerprints") if best is not None else None
         ),
         "model_profile": best.get("model_profile") if best is not None else None,
+        "population_bridge": (
+            best.get("population_bridge") if best is not None else None
+        ),
+        "population_validation_status": (
+            best.get("population_validation_status") if best is not None else None
+        ),
+        "target_measurements": (
+            best.get("target_measurements") if best is not None else None
+        ),
         "best_candidate": best,
     }
     write_json(report_dir / "summary.json", report)
