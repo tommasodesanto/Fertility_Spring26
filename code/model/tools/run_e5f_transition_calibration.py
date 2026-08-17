@@ -267,9 +267,18 @@ def panel_candidate(
         candidate_payload = payload.get("best_candidate", payload)
         center_theta.update(candidate_payload["theta"])
         if terminal_name == "psi_child_change_2023":
-            center_terminal_coordinate = float(candidate_payload["new_psi_child"]) - float(
-                candidate_payload["old_psi_child"]
+            old_psi = candidate_payload.get(
+                "old_psi_child", payload.get("old_psi_child")
             )
+            new_psi = candidate_payload.get(
+                "new_psi_child", payload.get("new_psi_child")
+            )
+            if old_psi is None or new_psi is None:
+                raise ValueError(
+                    "A repaired-profile center must save old_psi_child and "
+                    "new_psi_child either in best_candidate or at the top level"
+                )
+            center_terminal_coordinate = float(new_psi) - float(old_psi)
         else:
             center_terminal_coordinate = float(candidate_payload["new_psi_child"])
         center_status = str(center_path)
@@ -338,23 +347,19 @@ def source_sha256(path: Path) -> str:
 
 def code_fingerprint_contract(model: Any) -> dict[str, Any]:
     """Pin every active file that can change the transition experiment."""
+    profile_dir = Path(model.__file__).resolve().parent
     paths = {
         "transition_calibration_driver": Path(__file__).resolve(),
         "calendar_operator": Path(calendar.__file__).resolve(),
         "e5f_transition_operator": Path(transition.__file__).resolve(),
         "closure_audit": Path(closure.__file__).resolve(),
-        "sequential_solver": Path(model.__file__).resolve(),
-        "parameters": Path(
-            sys.modules[
-                "intergen_eqscale_seq_optimized.parameters"
-            ].__file__
-        ).resolve(),
-        "income_entry_profile": Path(
-            sys.modules[
-                "intergen_eqscale_seq_optimized.e5f_income_entry_profile"
-            ].__file__
-        ).resolve(),
     }
+    paths.update(
+        {
+            f"sequential_package/{path.name}": path
+            for path in sorted(profile_dir.glob("*.py"))
+        }
+    )
     files = {name: source_sha256(path) for name, path in paths.items()}
     encoded = json.dumps(files, sort_keys=True, separators=(",", ":")).encode()
     return {
@@ -1312,9 +1317,9 @@ def main() -> None:
                 "This packet measures the existing twelve-row E5 target system on the",
                 "simulated 2023 distribution. Date 0 preserves conditional states from",
                 "an old steady-state benchmark but reweights age masses to the observed",
-                "2007 householder-age profile. In panel mode the existing eight structural parameters",
-                "and the terminal child-preference intercept form a nine-dimensional",
-                "transition-calibration candidate. This remains a search packet, not a",
+                "2007 householder-age profile. In panel mode the active structural parameters",
+                "and the terminal child-preference change are estimated jointly on the",
+                "dated 2023 target system. This remains a search packet, not a",
                 "promoted estimate.",
                 "",
                 "The fertility stock targets use the model cohort centered at age 42.",

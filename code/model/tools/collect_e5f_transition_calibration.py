@@ -58,9 +58,7 @@ def main() -> None:
     candidate_rows: list[dict[str, Any]] = []
     target_rows: list[dict[str, Any]] = []
     failures: list[dict[str, Any]] = []
-    contracts: set[
-        tuple[str, str, str, int, int, str, str, str, int, str, str, str]
-    ] = set()
+    contracts: set[tuple[Any, ...]] = set()
 
     for task in range(1, expected + 1):
         task_dir = results_dir / f"task_{task:03d}"
@@ -102,6 +100,7 @@ def main() -> None:
                         "bundle_sha256", "legacy_unspecified"
                     )
                 ),
+                float(summary["outside_origin_entry_share"]),
             )
             contracts.add(contract)
             if int(panel["task_id"]) != task or int(panel["panel_size"]) != expected:
@@ -155,6 +154,11 @@ def main() -> None:
             target_fingerprint=selected_summary["target_fingerprint"],
             target_count=selected_summary["target_count"],
             model_profile=selected_summary.get("model_profile"),
+            income_profile_gates=selected_summary.get("income_profile_gates"),
+            code_fingerprints=selected_summary.get("code_fingerprints"),
+            outside_origin_entry_share=float(
+                selected_summary["outside_origin_entry_share"]
+            ),
             old_psi_child=selected_summary["old_psi_child"],
             old_completed_fertility=selected_summary["old_model_completed_fertility"],
         )
@@ -175,6 +179,13 @@ def main() -> None:
         "valid_tasks": len(valid),
         "failed_or_missing_tasks": failures,
         "contract": list(next(iter(contracts))) if contracts else None,
+        "outside_origin_entry_share": (
+            float(best["outside_origin_entry_share"]) if best is not None else None
+        ),
+        "code_fingerprints": (
+            best.get("code_fingerprints") if best is not None else None
+        ),
+        "model_profile": best.get("model_profile") if best is not None else None,
         "best_candidate": best,
     }
     write_json(report_dir / "summary.json", report)
