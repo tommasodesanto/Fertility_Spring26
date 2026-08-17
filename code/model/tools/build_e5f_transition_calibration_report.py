@@ -816,8 +816,8 @@ def validate_selected_transition_path(
     if len(rows) < 5:
         raise RuntimeError("Selected transition path does not reach the matched 2023 date")
     first_five = rows[:5]
-    if [int(row["period"]) for row in first_five] != list(range(5)) or [
-        int(float(row["years_from_start"])) for row in first_five
+    if [float(row["period"]) for row in first_five] != list(range(5)) or [
+        float(row["years_from_start"]) for row in first_five
     ] != [0, 4, 8, 12, 16]:
         raise RuntimeError("Selected transition path has an invalid 2007--2023 calendar")
     required = (
