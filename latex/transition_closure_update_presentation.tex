@@ -64,25 +64,47 @@ The missing aggregate link was what happens after those choices:
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{The simplified economy has young and old households}
-At date $t$, there are $Y_t$ young households and $O_t$ old households.
+\begin{frame}{The toy economy has two generations and one housing market}
+\small
+Each date contains a young generation and an old generation:
+\begin{itemize}
+  \item $Y_t$ is the number of young households at date $t$; $O_t$ is the number of old households.
+  \item A young household chooses consumption, housing services, and children. Next period it becomes old.
+  \item The children chosen by today's young households determine the size of the next young generation.
+  \item Young and old households purchase housing services in the same market at price $p_t$.
+\end{itemize}
 
 \medskip
-A young household earns $y$ and chooses consumption $c$, housing $h$, and children $n$:
+One period is one generation. The law of motion is
+\[
+Y_{t+1}=\frac{n_t}{\bar n}Y_t,
+\qquad
+O_{t+1}=Y_t,
+\]
+where $n_t$ is children per young household and $\bar n$ is the number needed to reproduce the young cohort.
+
+\medskip
+\textbf{Deliberate simplification:} housing is a flow service. There is no tenure choice, mortgage, saving, or bequest in this toy economy; those mechanisms remain in the quantitative model.
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Young households choose housing and children}
+A young household earns $y$ and chooses consumption $c$, housing services $h$, and children $n$:
 \[
 u(c,h,n)=c+\alpha\log h+v\log n,
-\qquad
+\]
+\[
 c+ph+\big[q+a(p+\omega)\big]n=y.
 \]
 
 \begin{itemize}
-  \item $p$ is the current price of one unit of housing services.
   \item $\alpha$ is the value of adult housing; $v$ is the value of children.
-  \item Each child uses $a$ units of housing and $q$ units of other goods.
-  \item $\omega$ is an extra housing-access cost associated with accommodating children.
+  \item Each child requires $a$ units of housing and $q$ units of other goods.
+  \item $\omega$ is an additional cost of accessing child-suitable housing.
+  \item Hence the total resource cost of one child is $q+a(p+\omega)$.
 \end{itemize}
 
-Old households no longer choose fertility. Their housing demand is
+Old households do not choose fertility. Their reduced-form housing demand is
 \[
 h_O(p)=\frac{\bar h_O}{p},
 \]
@@ -143,7 +165,7 @@ S^*=\frac{2\bar H(p^*)^{1+\varepsilon}}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{In steady state, population and housing cost are positively related}
+\begin{frame}{Stage 1: the initial steady-state equilibrium}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.62\textwidth}
 \centering
@@ -151,21 +173,21 @@ S^*=\frac{2\bar H(p^*)^{1+\varepsilon}}
 \end{column}
 \begin{column}{0.35\textwidth}
 \footnotesize
-With equal young and old cohorts, the housing-clearing schedule is
+With equal cohorts and fertility at replacement, housing clearing gives
 \[
-S^H(p;v)=
-\frac{2\bar H p^\varepsilon}
-{h_Y(p;v)+h_O(p)}.
+S^*(p)=
+\frac{2\bar H p^{1+\varepsilon}}
+{\alpha+\bar h_O+a\bar n p}.
 \]
 It slopes upward: supply weakly rises with $p$, while each household demands less housing.
 
-The replacement condition in the right panel selects $p^*$; the left panel then selects $S^*$.
+The replacement condition in the right panel selects $p_0$; the left panel then selects the population $S_0$ supported at that price. Point $A$ is the initial steady state.
 \end{column}
 \end{columns}
 
 \vspace{-0.55em}
 \small
-At a steady state, direct differentiation gives
+Along the steady-state schedule, direct differentiation gives
 \[
 \frac{dS^*}{dp}
 =\frac{2\bar H p^\varepsilon
@@ -176,28 +198,55 @@ At a steady state, direct differentiation gives
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{A permanent fertility-preference decline has an impact and a transition}
+\begin{frame}{Stage 2: the impact of the preference shock}
+\vspace{1.5em}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.63\textwidth}
 \centering
-\includegraphics[width=\textwidth,height=0.51\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+\includegraphics[width=\textwidth,height=0.46\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/partial_equilibrium_response.pdf}
 \end{column}
 \begin{column}{0.34\textwidth}
 \footnotesize
-\textbf{1. Impact.} Let $v$ fall permanently. Cohort sizes are inherited, but young households want fewer children and less space. The housing cost falls to $\widetilde p$, and fertility to $\widetilde n<\bar n$.
+Let the value of children fall permanently from $v_0$ to $v_1<v_0$.
 
 \medskip
-\textbf{2. Transition.} Fewer births create smaller future young cohorts. Population and housing demand fall, pushing the housing cost down further.
+\textbf{On impact, cohort sizes cannot move:} $Y_t=Y_0$, $O_t=O_0$, and $S_t=S_0$.
 
 \medskip
-\textbf{3. New steady state.} The lower $p_1$ offsets part of the shock. Fertility returns to $\bar n$ at a smaller population $S_1<S_0$.
+Young households want fewer children and less child-related space. At the inherited population $S_0$, housing clearing therefore lowers the price from $p_0$ to $\widetilde p$.
+
+\medskip
+On the new child-demand curve, fertility falls to $\widetilde n=n(\widetilde p;v_1)<\bar n$.
+
+\textbf{Point $I$ is an impact equilibrium, not a steady state.}
 \end{column}
 \end{columns}
+\end{frame}
 
-\vspace{-0.15em}
+% ---------------------------------------------------------------------------
+\begin{frame}{Stage 3: demographic adjustment}
+\vspace{0.4em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.63\textwidth}
+\centering
+\includegraphics[width=\textwidth,height=0.49\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/demographic_adjustment.pdf}
+\end{column}
+\begin{column}{0.34\textwidth}
 \footnotesize
-Since $dp^*/dv=1/(a\bar n)>0$ and $dS^*/dp>0$, a lower $v$ implies both $p_1<p_0$ and $S_1<S_0$.
-\source{The arrows show impact and steady-state comparisons. The literal transition also depends on the evolving young-to-old cohort ratio.}
+At $I$, fertility is below replacement, so the next young cohort is smaller:
+\[
+Y_{t+1}=\frac{\widetilde n}{\bar n}Y_t<Y_t.
+\]
+
+Once the smaller cohorts dominate, adult population and housing demand fall. The housing cost moves from $\widetilde p$ toward $p_1$.
+
+\medskip
+The lower housing cost makes children cheaper, so fertility rises along the red child-demand curve.
+
+\medskip
+At $A'$, fertility again equals $\bar n$. This is the new steady state, with $p_1<p_0$ and $S_1<S_0$.
+\end{column}
+\end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------------

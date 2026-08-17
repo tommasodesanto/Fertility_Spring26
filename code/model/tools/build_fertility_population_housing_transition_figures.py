@@ -622,11 +622,11 @@ def build_equilibrium_figure(values: dict[str, float]) -> None:
 
     market_axis.set_xlim(0.35, 1.36)
     market_axis.set_ylim(0.42, 1.16)
-    market_axis.set_xticks([values["old_population"]], labels=[r"$S^*$"])
-    market_axis.set_yticks([values["old_price"]], labels=[r"$p^*$"])
+    market_axis.set_xticks([values["old_population"]], labels=[r"$S_0$"])
+    market_axis.set_yticks([values["old_price"]], labels=[r"$p_0$"])
     child_axis.set_xlim(0.46, 1.16)
     child_axis.set_ylim(0.55, 1.42)
-    child_axis.set_xticks([values["old_price"]], labels=[r"$p^*$"])
+    child_axis.set_xticks([values["old_price"]], labels=[r"$p_0$"])
     child_axis.set_yticks([values["replacement"]], labels=[r"$\bar n$"])
 
     market_axis.hlines(
@@ -661,11 +661,320 @@ def build_equilibrium_figure(values: dict[str, float]) -> None:
     plt.close(fig)
 
 
+def build_transition_stage_figure(
+    values: dict[str, float],
+    *,
+    stage: str,
+    output_stem: str,
+) -> None:
+    """Draw either the impact response or the later demographic adjustment."""
+
+    if stage not in {"partial_equilibrium", "demographic_adjustment"}:
+        raise ValueError(f"Unknown transition stage: {stage}")
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.2,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.3,
+            "ytick.labelsize": 9.3,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    old_color = "#244f74"
+    new_color = "#a3473f"
+    guide_color = "#a0a0a0"
+    transition_color = "#555555"
+    fig, (market_axis, child_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.30},
+    )
+
+    price_grid = np.linspace(0.42, 1.16, 500)
+    old_population_curve = population_at_price(
+        price_grid,
+        values["old_theta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    new_population_curve = population_at_price(
+        price_grid,
+        values["new_theta"],
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
+        child_cost=values["child_cost"],
+        child_space=values["child_space"],
+    )
+    child_price_grid = np.linspace(0.46, 1.16, 500)
+    old_child_curve = child_demand(
+        child_price_grid,
+        values["old_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    new_child_curve = child_demand(
+        child_price_grid,
+        values["new_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+
+    old_market = (values["old_population"], values["old_price"])
+    impact_market = (values["old_population"], values["impact_price"])
+    new_market = (values["new_population"], values["new_price"])
+    old_child = (values["old_price"], values["replacement"])
+    impact_child = (values["impact_price"], values["impact_fertility"])
+    new_child = (values["new_price"], values["replacement"])
+
+    if stage == "partial_equilibrium":
+        market_axis.plot(
+            old_population_curve,
+            price_grid,
+            color=old_color,
+            linewidth=2.1,
+            label="initial",
+        )
+        market_axis.plot(
+            new_population_curve,
+            price_grid,
+            color=new_color,
+            linewidth=2.1,
+            linestyle=(0, (5, 3)),
+            label=r"after lower $v$",
+        )
+        child_axis.plot(
+            child_price_grid,
+            old_child_curve,
+            color=old_color,
+            linewidth=2.1,
+            label="initial",
+        )
+        child_axis.plot(
+            child_price_grid,
+            new_child_curve,
+            color=new_color,
+            linewidth=2.1,
+            linestyle=(0, (5, 3)),
+            label=r"after lower $v$",
+        )
+        market_axis.scatter(
+            [old_market[0], impact_market[0]],
+            [old_market[1], impact_market[1]],
+            color=[old_color, new_color],
+            s=[38, 36],
+            zorder=6,
+        )
+        child_axis.scatter(
+            [old_child[0], impact_child[0]],
+            [old_child[1], impact_child[1]],
+            color=[old_color, new_color],
+            s=[38, 36],
+            zorder=6,
+        )
+        add_arrow(market_axis, old_market, impact_market)
+        add_arrow(child_axis, old_child, impact_child)
+        market_axis.text(old_market[0] + 0.025, old_market[1] + 0.025, r"$A$", color=old_color)
+        market_axis.text(
+            impact_market[0] + 0.025,
+            impact_market[1] - 0.055,
+            r"$I$",
+            color=new_color,
+        )
+        child_axis.text(old_child[0] + 0.014, old_child[1] + 0.035, r"$A$", color=old_color)
+        child_axis.text(
+            impact_child[0] + 0.015,
+            impact_child[1] - 0.065,
+            r"$I$",
+            color=new_color,
+        )
+        market_axis.set_xticks([values["old_population"]], labels=[r"$S_0$"])
+        market_axis.set_yticks(
+            [values["impact_price"], values["old_price"]],
+            labels=[r"$\widetilde p$", r"$p_0$"],
+        )
+        child_axis.set_xticks(
+            [values["impact_price"], values["old_price"]],
+            labels=[r"$\widetilde p$", r"$p_0$"],
+        )
+        child_axis.set_yticks(
+            [values["impact_fertility"], values["replacement"]],
+            labels=[r"$\widetilde n$", r"$\bar n$"],
+        )
+        market_axis.legend(frameon=False, fontsize=8, loc="upper left")
+        child_axis.legend(frameon=False, fontsize=8, loc="upper right")
+    else:
+        market_axis.plot(
+            new_population_curve,
+            price_grid,
+            color=new_color,
+            linewidth=2.1,
+        )
+        child_axis.plot(
+            child_price_grid,
+            new_child_curve,
+            color=new_color,
+            linewidth=2.1,
+        )
+        market_axis.scatter(
+            [impact_market[0], new_market[0]],
+            [impact_market[1], new_market[1]],
+            color=new_color,
+            s=[36, 38],
+            zorder=6,
+        )
+        child_axis.scatter(
+            [impact_child[0], new_child[0]],
+            [impact_child[1], new_child[1]],
+            color=new_color,
+            s=[36, 38],
+            zorder=6,
+        )
+        add_arrow(market_axis, impact_market, new_market)
+        add_arrow(child_axis, impact_child, new_child)
+        market_axis.text(
+            impact_market[0] + 0.025,
+            impact_market[1] - 0.055,
+            r"$I$",
+            color=new_color,
+        )
+        market_axis.text(
+            new_market[0] - 0.065,
+            new_market[1] + 0.025,
+            r"$A'$",
+            color=new_color,
+        )
+        child_axis.text(
+            impact_child[0] + 0.015,
+            impact_child[1] - 0.065,
+            r"$I$",
+            color=new_color,
+        )
+        child_axis.text(
+            new_child[0] - 0.045,
+            new_child[1] + 0.035,
+            r"$A'$",
+            color=new_color,
+        )
+        market_axis.text(
+            0.70,
+            0.70,
+            r"$S$ falls",
+            rotation=34,
+            color=transition_color,
+            fontsize=9.2,
+        )
+        child_axis.text(
+            0.72,
+            0.88,
+            r"$n$ rises",
+            rotation=-31,
+            color=transition_color,
+            fontsize=9.2,
+        )
+        market_axis.set_xticks(
+            [values["new_population"], values["old_population"]],
+            labels=[r"$S_1$", r"$S_0$"],
+        )
+        market_axis.set_yticks(
+            [values["new_price"], values["impact_price"]],
+            labels=[r"$p_1$", r"$\widetilde p$"],
+        )
+        child_axis.set_xticks(
+            [values["new_price"], values["impact_price"]],
+            labels=[r"$p_1$", r"$\widetilde p$"],
+        )
+        child_axis.set_yticks(
+            [values["impact_fertility"], values["replacement"]],
+            labels=[r"$\widetilde n$", r"$\bar n$"],
+        )
+
+    child_axis.axhline(
+        values["replacement"],
+        color="#666666",
+        linewidth=1.0,
+        linestyle=(0, (2, 2)),
+    )
+    market_axis.set_title("(a) Population and the housing cost")
+    market_axis.set_xlabel(r"Adult-household population, $S$")
+    market_axis.set_ylabel(r"Housing cost, $p$")
+    child_axis.set_title("(b) Housing cost and the child decision")
+    child_axis.set_xlabel(r"Housing cost, $p$")
+    child_axis.set_ylabel(r"Children per family, $n$")
+    market_axis.set_xlim(0.35, 1.36)
+    market_axis.set_ylim(0.42, 1.16)
+    child_axis.set_xlim(0.46, 1.16)
+    child_axis.set_ylim(0.55, 1.42)
+
+    market_guides = (
+        (old_market, impact_market)
+        if stage == "partial_equilibrium"
+        else (impact_market, new_market)
+    )
+    child_guides = (
+        (old_child, impact_child)
+        if stage == "partial_equilibrium"
+        else (impact_child, new_child)
+    )
+    for population_value, price_value in market_guides:
+        market_axis.hlines(
+            price_value,
+            0.35,
+            population_value,
+            color=guide_color,
+            linewidth=0.7,
+            linestyle=(0, (3, 3)),
+            zorder=0,
+        )
+    for price_value, fertility_value in child_guides:
+        child_axis.vlines(
+            price_value,
+            0.55,
+            fertility_value,
+            color=guide_color,
+            linewidth=0.7,
+            linestyle=(0, (3, 3)),
+            zorder=0,
+        )
+    for axis in (market_axis, child_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / f"{output_stem}.pdf", pad_inches=0.05)
+    fig.savefig(OUTDIR / f"{output_stem}.png", dpi=220, pad_inches=0.05)
+    plt.close(fig)
+
+
 def main() -> None:
     values = illustration()
     verify(values)
     write_parameters(values)
     build_equilibrium_figure(values)
+    build_transition_stage_figure(
+        values,
+        stage="partial_equilibrium",
+        output_stem="partial_equilibrium_response",
+    )
+    build_transition_stage_figure(
+        values,
+        stage="demographic_adjustment",
+        output_stem="demographic_adjustment",
+    )
     build_figure(values)
 
 
