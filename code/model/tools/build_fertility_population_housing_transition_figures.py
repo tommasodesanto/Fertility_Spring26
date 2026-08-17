@@ -105,6 +105,30 @@ def price_at_population(
     return float(np.interp(population, population_grid, price_grid))
 
 
+def price_at_population_fixed_fertility(
+    population: float,
+    fertility: float,
+    *,
+    supply_scale: float,
+    supply_elasticity: float,
+    housing_weight: float,
+    old_housing_weight: float,
+    child_space: float,
+) -> float:
+    """Clear housing while holding fertility at a fixed mechanical level."""
+
+    price_grid = np.linspace(0.01, 4.0, 30_000)
+    housing_supply = supply_scale * np.power(price_grid, supply_elasticity)
+    housing_demand = 0.5 * population * (
+        (housing_weight + old_housing_weight) / price_grid
+        + child_space * fertility
+    )
+    gap = housing_supply - housing_demand
+    if gap[0] >= 0.0 or gap[-1] <= 0.0 or np.any(np.diff(gap) <= 0.0):
+        raise ValueError("The fixed-fertility housing root is not unique on the grid.")
+    return float(np.interp(0.0, gap, price_grid))
+
+
 def illustration() -> dict[str, float]:
     """Choose a normalization with visible impact and transition movements."""
 
@@ -727,6 +751,324 @@ def build_fertility_feedback_comparison(values: dict[str, float]) -> None:
     plt.close(fig)
 
 
+def build_primitive_fertility_shock(values: dict[str, float]) -> None:
+    """Show the preference shock before either price or population adjusts."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.2,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.3,
+            "ytick.labelsize": 9.3,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    old_color = "#244f74"
+    new_color = "#a3473f"
+    price_grid = np.linspace(0.46, 1.16, 500)
+    old_curve = child_demand(
+        price_grid,
+        values["old_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    new_curve = child_demand(
+        price_grid,
+        values["new_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    direct_fertility = float(
+        child_demand(
+            values["old_price"],
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        )
+    )
+    old_point = (values["old_price"], values["replacement"])
+    direct_point = (values["old_price"], direct_fertility)
+
+    fig, axis = plt.subplots(figsize=(5.15, 3.45))
+    axis.plot(price_grid, old_curve, color=old_color, linewidth=2.1, label="initial")
+    axis.plot(
+        price_grid,
+        new_curve,
+        color=new_color,
+        linewidth=2.1,
+        linestyle=(0, (5, 3)),
+        label=r"after lower $v$",
+    )
+    axis.axhline(
+        values["replacement"],
+        color="#666666",
+        linewidth=1.0,
+        linestyle=(0, (2, 2)),
+    )
+    axis.scatter(
+        [old_point[0], direct_point[0]],
+        [old_point[1], direct_point[1]],
+        color=[old_color, new_color],
+        s=[42, 40],
+        zorder=6,
+    )
+    add_arrow(axis, old_point, direct_point)
+    axis.text(old_point[0] + 0.012, old_point[1] + 0.035, r"$A$", color=old_color)
+    axis.text(
+        direct_point[0] + 0.012,
+        direct_point[1] - 0.055,
+        r"$D$",
+        color=new_color,
+    )
+    axis.text(
+        1.02,
+        0.83,
+        r"lower $v$ at fixed $p_0$",
+        color="#777777",
+        fontsize=9.4,
+        ha="left",
+    )
+    axis.vlines(
+        values["old_price"],
+        0.55,
+        values["replacement"],
+        color="#a0a0a0",
+        linewidth=0.7,
+        linestyle=(0, (3, 3)),
+        zorder=0,
+    )
+    axis.set_xlabel(r"Housing cost, $p$")
+    axis.set_ylabel(r"Household children, $n$")
+    axis.set_xlim(0.46, 1.20)
+    axis.set_ylim(0.55, 1.42)
+    axis.set_xticks([values["old_price"]], labels=[r"$p_0$"])
+    axis.set_yticks(
+        [direct_fertility, values["replacement"]],
+        labels=[r"$n^D$", r"$1$"],
+    )
+    axis.legend(frameon=False, fontsize=8.5, loc="upper right")
+    axis.grid(False)
+    axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "primitive_fertility_shock.pdf", pad_inches=0.05)
+    fig.savefig(OUTDIR / "primitive_fertility_shock.png", dpi=220, pad_inches=0.05)
+    plt.close(fig)
+
+
+def build_contemporaneous_housing_feedback(values: dict[str, float]) -> None:
+    """Show how fertility demand partially reverses the mechanical price fall."""
+
+    plt.rcParams.update(
+        {
+            "font.family": "serif",
+            "font.size": 10.0,
+            "axes.labelsize": 10.5,
+            "axes.titlesize": 11.0,
+            "xtick.labelsize": 9.2,
+            "ytick.labelsize": 9.2,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
+            "figure.facecolor": "white",
+            "axes.facecolor": "white",
+            "savefig.bbox": "tight",
+        }
+    )
+
+    old_color = "#244f74"
+    fixed_color = "#777777"
+    new_color = "#a3473f"
+    direct_fertility = float(
+        child_demand(
+            values["old_price"],
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        )
+    )
+    mechanical_price = price_at_population_fixed_fertility(
+        values["old_population"],
+        direct_fertility,
+        supply_scale=values["supply_scale"],
+        supply_elasticity=values["supply_elasticity"],
+        housing_weight=values["housing_weight"],
+        old_housing_weight=values["old_housing_weight"],
+        child_space=values["child_space"],
+    )
+    mechanical_fertility_response = float(
+        child_demand(
+            mechanical_price,
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        )
+    )
+    assert mechanical_price < values["impact_price"] < values["old_price"]
+    assert (
+        direct_fertility
+        < values["impact_fertility"]
+        < mechanical_fertility_response
+        < values["replacement"]
+    )
+
+    fig, (fertility_axis, market_axis) = plt.subplots(
+        1,
+        2,
+        figsize=(9.2, 3.45),
+        gridspec_kw={"wspace": 0.30},
+    )
+
+    child_price_grid = np.linspace(0.84, 1.03, 500)
+    new_child_curve = child_demand(
+        child_price_grid,
+        values["new_theta"],
+        values["child_cost"],
+        values["child_space"],
+    )
+    direct_point = (values["old_price"], direct_fertility)
+    mechanical_point = (mechanical_price, mechanical_fertility_response)
+    impact_point = (values["impact_price"], values["impact_fertility"])
+    fertility_axis.plot(
+        child_price_grid,
+        new_child_curve,
+        color=new_color,
+        linewidth=2.2,
+    )
+    fertility_axis.scatter(
+        [direct_point[0], mechanical_point[0], impact_point[0]],
+        [direct_point[1], mechanical_point[1], impact_point[1]],
+        color=[new_color, fixed_color, new_color],
+        s=[40, 38, 40],
+        zorder=6,
+    )
+    add_arrow(fertility_axis, direct_point, mechanical_point)
+    add_arrow(fertility_axis, mechanical_point, impact_point)
+    fertility_axis.text(
+        direct_point[0] + 0.003,
+        direct_point[1] - 0.018,
+        r"$D$",
+        color=new_color,
+    )
+    fertility_axis.text(
+        mechanical_point[0] - 0.007,
+        mechanical_point[1] + 0.012,
+        r"$F$",
+        color=fixed_color,
+    )
+    fertility_axis.text(
+        impact_point[0] + 0.003,
+        impact_point[1] - 0.018,
+        r"$I$",
+        color=new_color,
+    )
+    fertility_axis.set_title("(a) Fertility responds to the lower price")
+    fertility_axis.set_xlabel(r"Housing cost, $p$")
+    fertility_axis.set_ylabel(r"Household children, $n$")
+    fertility_axis.set_xlim(0.84, 1.03)
+    fertility_axis.set_ylim(0.675, 0.81)
+    fertility_axis.set_xticks(
+        [mechanical_price, values["impact_price"], values["old_price"]],
+        labels=[r"$p^{PE}$", r"$p^I$", r"$p_0$"],
+    )
+    fertility_axis.set_yticks(
+        [direct_fertility, values["impact_fertility"], mechanical_fertility_response],
+        labels=[r"$n^D$", r"$n^I$", r"$n^F$"],
+    )
+
+    market_price_grid = np.linspace(0.80, 1.05, 500)
+    supply = values["supply_scale"] * np.power(
+        market_price_grid, values["supply_elasticity"]
+    )
+    fixed_demand = 0.5 * values["old_population"] * (
+        (values["housing_weight"] + values["old_housing_weight"])
+        / market_price_grid
+        + values["child_space"] * direct_fertility
+    )
+    feedback_demand = 0.5 * values["old_population"] * (
+        (values["housing_weight"] + values["old_housing_weight"])
+        / market_price_grid
+        + values["child_space"]
+        * child_demand(
+            market_price_grid,
+            values["new_theta"],
+            values["child_cost"],
+            values["child_space"],
+        )
+    )
+    mechanical_housing = float(
+        values["supply_scale"] * mechanical_price ** values["supply_elasticity"]
+    )
+    impact_housing = float(
+        values["supply_scale"]
+        * values["impact_price"] ** values["supply_elasticity"]
+    )
+    market_axis.plot(supply, market_price_grid, color=old_color, linewidth=2.2, label="supply")
+    market_axis.plot(
+        fixed_demand,
+        market_price_grid,
+        color=fixed_color,
+        linewidth=2.0,
+        linestyle=(0, (3, 2)),
+        label=r"demand at fixed $n^D$",
+    )
+    market_axis.plot(
+        feedback_demand,
+        market_price_grid,
+        color=new_color,
+        linewidth=2.2,
+        label="demand with fertility response",
+    )
+    market_axis.scatter(
+        [mechanical_housing, impact_housing],
+        [mechanical_price, values["impact_price"]],
+        color=[fixed_color, new_color],
+        s=[38, 40],
+        zorder=6,
+    )
+    add_arrow(
+        market_axis,
+        (mechanical_housing, mechanical_price),
+        (impact_housing, values["impact_price"]),
+    )
+    market_axis.text(
+        mechanical_housing - 0.012,
+        mechanical_price - 0.012,
+        r"$PE$",
+        color=fixed_color,
+        ha="right",
+    )
+    market_axis.text(
+        impact_housing + 0.006,
+        values["impact_price"] + 0.006,
+        r"$I$",
+        color=new_color,
+    )
+    market_axis.set_title("(b) Child demand pushes the price back up")
+    market_axis.set_xlabel(r"Housing services, $H$")
+    market_axis.set_ylabel(r"Housing cost, $p$")
+    market_axis.legend(frameon=False, fontsize=7.7, loc="upper right")
+
+    for axis in (fertility_axis, market_axis):
+        axis.grid(False)
+        axis.tick_params(direction="out", length=3.5)
+
+    OUTDIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUTDIR / "contemporaneous_housing_feedback.pdf", pad_inches=0.05)
+    fig.savefig(
+        OUTDIR / "contemporaneous_housing_feedback.png",
+        dpi=220,
+        pad_inches=0.05,
+    )
+    plt.close(fig)
+
+
 def build_equilibrium_figure(values: dict[str, float]) -> None:
     """Draw the two schedules that determine the initial steady state."""
 
@@ -1163,6 +1505,8 @@ def main() -> None:
     )
     build_figure(values)
     build_fertility_feedback_comparison(values)
+    build_primitive_fertility_shock(values)
+    build_contemporaneous_housing_feedback(values)
 
 
 if __name__ == "__main__":
