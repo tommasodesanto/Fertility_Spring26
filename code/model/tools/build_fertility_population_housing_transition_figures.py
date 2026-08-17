@@ -419,9 +419,9 @@ def build_figure(values: dict[str, float]) -> None:
     )
     child_axis.text(1.045, 0.92, "before", color=old_color)
     child_axis.text(0.995, 0.62, "after", color=new_color)
-    child_axis.set_title("(b) Housing cost and the child decision")
+    child_axis.set_title("(b) Housing cost and fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Children per family, $n$")
+    child_axis.set_ylabel(r"Reproduction rate, $n$")
 
     impact_child_point = (values["impact_price"], values["impact_fertility"])
     old_child_point = (values["old_price"], values["replacement"])
@@ -494,7 +494,7 @@ def build_figure(values: dict[str, float]) -> None:
     )
     child_axis.set_yticks(
         [values["impact_fertility"], values["replacement"]],
-        labels=[r"$\widetilde n$", r"$\bar n$"],
+        labels=[r"$\widetilde n$", r"$1$"],
     )
 
     for axis in (market_axis, child_axis):
@@ -601,7 +601,7 @@ def build_equilibrium_figure(values: dict[str, float]) -> None:
     )
     child_axis.set_title("(b) Replacement fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Children per family, $n$")
+    child_axis.set_ylabel(r"Reproduction rate, $n$")
 
     steady_market = (values["old_population"], values["old_price"])
     steady_child = (values["old_price"], values["replacement"])
@@ -627,7 +627,7 @@ def build_equilibrium_figure(values: dict[str, float]) -> None:
     child_axis.set_xlim(0.46, 1.16)
     child_axis.set_ylim(0.55, 1.42)
     child_axis.set_xticks([values["old_price"]], labels=[r"$p_0$"])
-    child_axis.set_yticks([values["replacement"]], labels=[r"$\bar n$"])
+    child_axis.set_yticks([values["replacement"]], labels=[r"$1$"])
 
     market_axis.hlines(
         values["old_price"],
@@ -813,7 +813,7 @@ def build_transition_stage_figure(
         )
         child_axis.set_yticks(
             [values["impact_fertility"], values["replacement"]],
-            labels=[r"$\widetilde n$", r"$\bar n$"],
+            labels=[r"$\widetilde n$", r"$1$"],
         )
         market_axis.legend(frameon=False, fontsize=8, loc="upper left")
         child_axis.legend(frameon=False, fontsize=8, loc="upper right")
@@ -900,7 +900,7 @@ def build_transition_stage_figure(
         )
         child_axis.set_yticks(
             [values["impact_fertility"], values["replacement"]],
-            labels=[r"$\widetilde n$", r"$\bar n$"],
+            labels=[r"$\widetilde n$", r"$1$"],
         )
 
     child_axis.axhline(
@@ -912,9 +912,9 @@ def build_transition_stage_figure(
     market_axis.set_title("(a) Population and the housing cost")
     market_axis.set_xlabel(r"Adult-household population, $S$")
     market_axis.set_ylabel(r"Housing cost, $p$")
-    child_axis.set_title("(b) Housing cost and the child decision")
+    child_axis.set_title("(b) Housing cost and fertility")
     child_axis.set_xlabel(r"Housing cost, $p$")
-    child_axis.set_ylabel(r"Children per family, $n$")
+    child_axis.set_ylabel(r"Reproduction rate, $n$")
     market_axis.set_xlim(0.35, 1.36)
     market_axis.set_ylim(0.42, 1.16)
     child_axis.set_xlim(0.46, 1.16)
