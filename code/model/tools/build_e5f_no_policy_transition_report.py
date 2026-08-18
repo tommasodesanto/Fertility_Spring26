@@ -4,8 +4,9 @@
 This is a deliberately narrow presentation layer.  It accepts only a fully
 collected ridge-refinement result with two independent repeats, the separately
 validated 2007--2023 historical packet, and the paired closed/open post-2023
-continuation packet.  It does not solve, refit, rescale, or run policy cases.
-Every input contract is checked before a new output directory is created.
+continuation packet, plus the target-preserving fertility-slope diagnostic.
+It does not solve, refit, rescale, or run policy cases. Every input contract is
+checked before a new output directory is created.
 """
 
 from __future__ import annotations
@@ -28,9 +29,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 EXPECTED_TARGETS = 12
-EXPECTED_PARAMETERS = 10
 EXPECTED_YEARS = (2007, 2011, 2015, 2019, 2023)
+EXPECTED_SLOPE_FACTORS = (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
 LOSS_TOL = 1.0e-9
 MOMENT_TOL = 1.0e-10
 PARAMETER_TOL = 5.0e-12
@@ -80,6 +82,7 @@ PARAMETER_LABELS = {
     "theta1": "Bequest slope",
     "hbar_child_rooms": "Per-child room floor",
     "first_birth_fixed_cost": "One-time first-birth utility cost",
+    "hbar_first_child_jump": "Housing-service intercept with children at home",
     "psi_child_change_2023": "2007--2023 fertility-preference change",
 }
 
@@ -126,6 +129,15 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         type=Path,
         required=True,
         help="Completed paired no-policy closed/open continuation packet.",
+    )
+    parser.add_argument(
+        "--slope-frontier-packet",
+        type=Path,
+        required=True,
+        help=(
+            "Completed target-preserving common fertility-logit-scale frontier "
+            "used only as a closed-root diagnostic."
+        ),
     )
     parser.add_argument("--output-dir", type=Path, required=True)
     return parser.parse_args(argv)
@@ -425,8 +437,14 @@ def parse_target_rows(rows: Sequence[Mapping[str, Any]], label: str) -> list[dic
 def parse_parameter_rows(
     rows: Sequence[Mapping[str, Any]], plan: Mapping[str, Any]
 ) -> list[dict[str, Any]]:
-    if len(rows) != EXPECTED_PARAMETERS:
-        raise ContractError("Selected parameter table must contain ten estimated rows")
+    domain = list(plan.get("domain") or [])
+    parameter_count = len(domain)
+    if parameter_count not in (10, 11):
+        raise ContractError("Refinement plan has an unsupported parameter count")
+    if len(rows) != parameter_count:
+        raise ContractError(
+            "Selected parameter table differs from the refinement-plan dimension"
+        )
     require_columns(
         rows,
         (
@@ -443,13 +461,10 @@ def parse_parameter_rows(
         ),
         "selected parameter table",
     )
-    domain = list(plan.get("domain") or [])
-    if len(domain) != EXPECTED_PARAMETERS:
-        raise ContractError("Refinement plan must have a ten-dimensional domain")
     parsed: list[dict[str, Any]] = []
     for index, (row, restriction) in enumerate(zip(rows, domain)):
         if integer(row["dimension"], "parameter dimension") != index:
-            raise ContractError("Parameter dimensions are not ordered 0..9")
+            raise ContractError("Parameter dimensions are not consecutively ordered")
         name = str(row["parameter"])
         if name != str(restriction.get("name")):
             raise ContractError(f"Parameter {index} differs from the plan domain")
@@ -600,14 +615,18 @@ def validate_jacobian(
 
     target_contract = list(plan.get("target_contract") or [])
     domain = list(plan.get("domain") or [])
-    if len(target_contract) != EXPECTED_TARGETS or len(domain) != EXPECTED_PARAMETERS:
+    parameter_count = len(domain)
+    if (
+        len(target_contract) != EXPECTED_TARGETS
+        or parameter_count not in (10, 11)
+    ):
         raise ContractError("Refinement plan has the wrong target/domain dimensions")
     rows = read_csv(paths["weighted_jacobian.csv"])
     if len(rows) != EXPECTED_TARGETS:
         raise ContractError("Weighted Jacobian must have twelve rows")
     parameter_names = [str(row["name"]) for row in domain]
     require_columns(rows, ("moment_index", "moment", *parameter_names), "weighted Jacobian")
-    matrix = np.empty((EXPECTED_TARGETS, EXPECTED_PARAMETERS), dtype=float)
+    matrix = np.empty((EXPECTED_TARGETS, parameter_count), dtype=float)
     for index, (row, target) in enumerate(zip(rows, target_contract)):
         if integer(row["moment_index"], "Jacobian moment_index") != index:
             raise ContractError("Weighted Jacobian moment indices are not ordered")
@@ -627,17 +646,17 @@ def validate_jacobian(
     leading = float(singular[0])
     rank_1e3 = int(np.sum(singular >= 1.0e-3 * leading)) if leading > 0 else 0
     reported_ranks = dict(full.get("relative_ranks") or {})
-    if rank_1e3 != EXPECTED_PARAMETERS or integer(
+    if rank_1e3 != parameter_count or integer(
         reported_ranks.get("relative_0.001"), "reported rank at 1e-3"
-    ) != EXPECTED_PARAMETERS:
-        raise ContractError("Weighted Jacobian fails the ten-dimensional rank gate")
+    ) != parameter_count:
+        raise ContractError("Weighted Jacobian fails its declared full-rank gate")
     gate = dict(diagnostics.get("identification_gate") or {})
     if gate.get("passed") is not True:
         raise ContractError("Refinement identification gate is not marked passed")
 
     side_rows = read_csv(paths["side_consistency.csv"])
-    if len(side_rows) != EXPECTED_PARAMETERS:
-        raise ContractError("Side-consistency table must have ten rows")
+    if len(side_rows) != parameter_count:
+        raise ContractError("Side-consistency table has the wrong parameter count")
     require_columns(
         side_rows,
         ("dimension", "parameter", "side_consistency_cosine", "frozen_for_step"),
@@ -654,8 +673,8 @@ def validate_jacobian(
         raise ContractError("Side-consistency frozen dimensions differ from the plan")
 
     singular_rows = read_csv(paths["singular_values.csv"])
-    if len(singular_rows) != EXPECTED_PARAMETERS:
-        raise ContractError("Singular-value table must have ten rows")
+    if len(singular_rows) != parameter_count:
+        raise ContractError("Singular-value table has the wrong parameter count")
     for index, row in enumerate(singular_rows):
         assert_close(
             row["singular_value"], singular[index], f"singular value {index}", 1.0e-10
@@ -725,6 +744,9 @@ def validate_selected_report(
         if require_hash(summary.get(summary_key), summary_key) != expected or require_hash(plan.get(plan_key), plan_key) != expected:
             raise ContractError(f"{summary_key} does not reproduce")
     scientific = dict(summary["scientific_contract"])
+    parameter_count = len(list(plan.get("domain") or []))
+    if parameter_count not in (10, 11):
+        raise ContractError("Selected refinement has an unsupported parameter count")
     if scientific.get("policy_case") != "none" or integer(
         scientific.get("post_2023_periods"), "scientific post_2023_periods"
     ) != 0:
@@ -733,8 +755,10 @@ def validate_selected_report(
         raise ContractError("Scientific contract does not contain twelve targets")
     if integer(
         scientific.get("transition_free_parameter_count"), "transition free parameters"
-    ) != EXPECTED_PARAMETERS:
-        raise ContractError("Scientific contract does not contain ten free parameters")
+    ) != parameter_count:
+        raise ContractError(
+            "Scientific contract parameter count differs from the refinement plan"
+        )
 
     target_rows = parse_target_rows(
         list(summary.get("target_fit_table") or []), "selected target table"
@@ -804,6 +828,7 @@ def validate_selected_report(
         "best": best,
         "theta": theta,
         "jacobian": jacobian,
+        "parameter_count": parameter_count,
         "required_selected_files": required_selected_files,
     }
 
@@ -905,22 +930,29 @@ def local_artifact(packet_dir: Path, recorded: Mapping[str, Any], label: str) ->
     expected_sha = require_hash(recorded.get("sha256"), f"{label}.sha256")
     expected_size = recorded.get("size_bytes")
     recorded_path = Path(str(recorded.get("path") or ""))
-    candidates = [recorded_path, packet_dir / recorded_path.name]
-    valid = []
+    workspace_relative = None
+    if PROJECT_ROOT.name in recorded_path.parts:
+        root_index = recorded_path.parts.index(PROJECT_ROOT.name)
+        workspace_relative = PROJECT_ROOT.joinpath(*recorded_path.parts[root_index + 1 :])
+    # Prefer the packet-local copy.  A report archive must remain portable even
+    # when the source machine's recorded absolute path still happens to exist.
+    # The hash and size gates below make this preference substantive rather
+    # than a path-based fallback.
+    candidates = [packet_dir / recorded_path.name]
+    if workspace_relative is not None:
+        candidates.append(workspace_relative)
+    candidates.append(recorded_path)
     for candidate in candidates:
         candidate = candidate.resolve()
         if (
             candidate.is_file()
             and (expected_size is None or candidate.stat().st_size == integer(expected_size, f"{label}.size_bytes"))
             and file_sha256(candidate) == expected_sha
-            and candidate not in valid
         ):
-            valid.append(candidate)
-    if len(valid) != 1:
-        raise ContractError(
-            f"Cannot resolve exactly one hash-matching local artifact for {label}: {candidates}"
-        )
-    return valid[0]
+            return candidate
+    raise ContractError(
+        f"Cannot resolve a hash-matching local artifact for {label}: {candidates}"
+    )
 
 
 def validate_historical_packet(
@@ -1086,6 +1118,181 @@ def validate_historical_packet(
         "fit_path": fit_path,
         "fit_rows": fit_rows,
         "figure_paths": figure_paths,
+    }
+
+
+def validate_slope_frontier_packet(
+    packet_path: Path,
+    selected: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Validate the target-preserving common-logit-scale closed-root diagnostic."""
+    packet_path = packet_path.resolve()
+    report_dir = packet_path / "report" if (packet_path / "report").is_dir() else packet_path
+    summary_path = report_dir / "summary.json"
+    manifest_path = report_dir / "manifest.json"
+    frontier_path = report_dir / "frontier_summary.csv"
+    target_fit_path = report_dir / "target_fit_full.csv"
+    schedules_path = report_dir / "closed_stationary_schedules_full.csv"
+    summary = read_json(summary_path)
+    manifest = read_json(manifest_path)
+    if summary.get("schema") != "e5f_target_preserving_closed_root_frontier_v1":
+        raise ContractError("Slope-frontier summary has the wrong schema")
+    if summary.get("status") != "complete_target_preserving_closed_root_frontier":
+        raise ContractError("Slope-frontier summary is not complete")
+    if summary.get("classification") != "conditional_profile_diagnostic_not_calibration":
+        raise ContractError("Slope frontier is not classified as a diagnostic")
+    if summary.get("promotion_eligible") is not False:
+        raise ContractError("Slope frontier may not be promoted as a calibration")
+    if summary.get("target_moment") != "tfr":
+        raise ContractError("Slope frontier does not profile the completed-fertility row")
+    tolerance = finite_float(summary.get("target_tolerance"), "slope target tolerance")
+    if tolerance <= 0 or tolerance > 5.0e-4 + 1.0e-15:
+        raise ContractError("Slope-frontier target tolerance is not the approved 5e-4 or tighter")
+    tfr_target = next(
+        row["target"] for row in selected["target_rows"] if row["moment"] == "tfr"
+    )
+    assert_close(
+        summary.get("target_completed_fertility"),
+        tfr_target,
+        "slope-frontier completed-fertility target",
+        MOMENT_TOL,
+    )
+
+    factors = tuple(
+        finite_float(value, "slope factor") for value in list(summary.get("factors") or [])
+    )
+    if factors != EXPECTED_SLOPE_FACTORS:
+        raise ContractError(f"Slope frontier has unexpected factors {factors}")
+    if list(summary.get("root_capable_factors") or []):
+        raise ContractError("Slope frontier unexpectedly reports a root-capable factor")
+
+    provenance = dict(summary.get("input_provenance") or {})
+    scientific = selected["scientific_contract"]
+    expected_provenance = {
+        "source_sha256": scientific["source_sha256"],
+        "target_fingerprint": scientific["target_fingerprint"],
+        "code_bundle_sha256": scientific["code_fingerprints"]["bundle_sha256"],
+        "scientific_contract_sha256": selected["summary"]["scientific_contract_sha256"],
+        "renewal_contract_sha256": selected["summary"]["renewal_contract_sha256"],
+        "dated_contract_sha256": selected["summary"]["dated_contract_sha256"],
+    }
+    for field, expected in expected_provenance.items():
+        if require_hash(provenance.get(field), f"slope {field}") != expected:
+            raise ContractError(f"Slope frontier {field} differs from the selected contract")
+
+    frontier = list(summary.get("frontier") or [])
+    if len(frontier) != len(EXPECTED_SLOPE_FACTORS):
+        raise ContractError("Slope-frontier summary does not contain seven rows")
+    csv_rows = read_csv(frontier_path)
+    require_columns(
+        csv_rows,
+        (
+            "factor_index",
+            "kappa_factor",
+            "profile_success",
+            "preference_change",
+            "completed_fertility",
+            "completed_fertility_gap",
+            "transition_loss",
+            "profile_trials",
+            "maximum_B_over_E",
+            "usable_closed_root",
+            "closed_root_price_ratio",
+        ),
+        "slope-frontier table",
+    )
+    if len(csv_rows) != len(frontier):
+        raise ContractError("Slope-frontier JSON and CSV row counts differ")
+
+    normalized_rows: list[dict[str, Any]] = []
+    for index, (factor, summary_row, csv_row) in enumerate(
+        zip(EXPECTED_SLOPE_FACTORS, frontier, csv_rows), start=1
+    ):
+        if summary_row.get("profile_success") is not True:
+            raise ContractError(f"Slope factor {factor} did not profile successfully")
+        if summary_row.get("usable_closed_root") is not False:
+            raise ContractError(f"Slope factor {factor} unexpectedly has a closed root")
+        if summary_row.get("closed_root_price_ratio") is not None:
+            raise ContractError(f"Slope factor {factor} reports a root price without a root")
+        assert_close(summary_row.get("factor_index"), index, "slope factor index", 0.0)
+        assert_close(summary_row.get("kappa_factor"), factor, "slope factor", 1.0e-12)
+        completed = finite_float(
+            summary_row.get("completed_fertility"), f"slope factor {factor} fertility"
+        )
+        gap = finite_float(
+            summary_row.get("completed_fertility_gap"), f"slope factor {factor} gap"
+        )
+        assert_close(gap, completed - tfr_target, "slope fertility gap identity", 1.0e-10)
+        if abs(gap) > tolerance + 1.0e-12:
+            raise ContractError(f"Slope factor {factor} misses the profiled fertility target")
+        loss = finite_float(summary_row.get("transition_loss"), f"slope factor {factor} loss")
+        maximum = finite_float(
+            summary_row.get("maximum_B_over_E"), f"slope factor {factor} maximum B/E"
+        )
+        if loss < 0 or not 0 < maximum < 1:
+            raise ContractError(f"Slope factor {factor} has invalid loss or renewal ratio")
+        if str(csv_row["profile_success"]).lower() != "true" or str(
+            csv_row["usable_closed_root"]
+        ).lower() != "false":
+            raise ContractError(f"Slope factor {factor} CSV classifications differ")
+        for field in (
+            "factor_index",
+            "kappa_factor",
+            "preference_change",
+            "completed_fertility",
+            "completed_fertility_gap",
+            "transition_loss",
+            "profile_trials",
+            "maximum_B_over_E",
+        ):
+            assert_close(
+                csv_row[field],
+                summary_row[field],
+                f"slope JSON/CSV {factor} {field}",
+                1.0e-10,
+            )
+        if str(csv_row.get("closed_root_price_ratio") or "").strip():
+            raise ContractError(f"Slope factor {factor} CSV reports a root price")
+        normalized_rows.append(
+            {
+                "kappa_factor": factor,
+                "preference_change": finite_float(
+                    summary_row.get("preference_change"), "slope preference change"
+                ),
+                "completed_fertility": completed,
+                "completed_fertility_gap": gap,
+                "transition_loss": loss,
+                "maximum_B_over_E": maximum,
+                "usable_closed_root": False,
+            }
+        )
+
+    if manifest.get("schema") != "e5f_target_preserving_closed_root_report_manifest_v1":
+        raise ContractError("Slope-frontier manifest has the wrong schema")
+    if manifest.get("status") != "complete_target_preserving_closed_root_report_manifest":
+        raise ContractError("Slope-frontier manifest is not complete")
+    artifacts = dict(manifest.get("artifacts") or {})
+    required_paths = {
+        "summary.json": summary_path,
+        "frontier_summary.csv": frontier_path,
+        "target_fit_full.csv": target_fit_path,
+        "closed_stationary_schedules_full.csv": schedules_path,
+    }
+    if set(artifacts) != set(required_paths):
+        raise ContractError("Slope-frontier manifest has the wrong artifact set")
+    for name, path in required_paths.items():
+        if not path.is_file() or artifacts[name] != file_sha256(path):
+            raise ContractError(f"Slope-frontier artifact hash differs for {name}")
+    return {
+        "packet_dir": packet_path,
+        "report_dir": report_dir,
+        "summary_path": summary_path,
+        "manifest_path": manifest_path,
+        "frontier_path": frontier_path,
+        "target_fit_path": target_fit_path,
+        "schedules_path": schedules_path,
+        "summary": summary,
+        "rows": normalized_rows,
     }
 
 
@@ -1328,8 +1535,8 @@ def validate_continuation_packet(
 
     comparison_rows: list[dict[str, Any]] = []
     metrics = (
-        ("adult-household population index", "population_index_2023"),
-        ("housing-cost index", "asset_price_index"),
+        ("adult-household population index (2023=1)", "population_index_2023"),
+        ("housing-cost index (2007=1)", "asset_price_index"),
         ("births per adult household", "topcode_adjusted_births_per_adult"),
         ("ownership rate", "owner_rate"),
     )
@@ -1560,6 +1767,7 @@ def build_readme(
     repeats: Sequence[Mapping[str, Any]],
     historical: Mapping[str, Any],
     continuation: Mapping[str, Any],
+    slope_frontier: Mapping[str, Any],
     numerical: Sequence[Mapping[str, Any]],
 ) -> str:
     target_rows = selected["target_rows"]
@@ -1662,9 +1870,21 @@ def build_readme(
         "",
         "## Estimated parameters and bounds",
         "",
+        (
+            "Bound proximity is measured in the transformed unit coordinate used by "
+            "the search, not by linear distance on the raw parameter scale."
+        ),
+        "",
     ]
     lines += markdown_table(
-        ("Parameter", "Estimate", "Bounds", "Transform", "Bound status", "Status"),
+        (
+            "Parameter",
+            "Estimate",
+            "Bounds",
+            "Transform",
+            "Search-coordinate bound status",
+            "Status",
+        ),
         [
             (
                 row["label"],
@@ -1678,12 +1898,14 @@ def build_readme(
         ],
     )
     jacobian = selected["jacobian"]
+    parameter_count = int(selected["parameter_count"])
     lines += [
         "",
         "## Local identification and numerical reproducibility",
         "",
         (
-            f"The 12-by-10 weighted Jacobian has rank {jacobian['rank_at_relative_1e3']} "
+            f"The 12-by-{parameter_count} weighted Jacobian has rank "
+            f"{jacobian['rank_at_relative_1e3']} "
             f"at the predeclared relative singular-value threshold 1e-3 and condition "
             f"number {jacobian['condition_number']:.4g}. "
             f"Side-consistency froze {len(jacobian['frozen_dimensions'])} coordinate(s) "
@@ -1777,12 +1999,42 @@ def build_readme(
         "a policy effect. A finite terminal date is called a steady state only when the "
         "continuation packet's explicit endpoint/root and drift gates pass.",
         "",
+        "## Target-preserving fertility-slope diagnostic",
+        "",
+        "This is a conditional diagnostic, not a recalibration. Starting from the "
+        "immediately preceding calibration point, both fertility-logit scales are "
+        "multiplied by a common factor. At every factor, the old fertility intercept "
+        "is re-normalized to replacement and the 2007--2023 preference change is "
+        "re-solved so the 2023 completed-fertility target remains matched.",
+        "",
+    ]
+    lines += markdown_table(
+        ("Common logit-scale factor", "Profiled preference change", "2007--2023 loss", "Maximum B/E", "Closed root"),
+        [
+            (
+                markdown_number(row["kappa_factor"]),
+                markdown_number(row["preference_change"]),
+                markdown_number(row["transition_loss"]),
+                markdown_number(row["maximum_B_over_E"]),
+                "no",
+            )
+            for row in slope_frontier["rows"]
+        ],
+    )
+    lines += [
+        "",
+        "All seven factors hit completed fertility within the declared 0.0005 "
+        "tolerance, and none generates a positive closed steady-state root on the "
+        "audited price grid. This rules out a simple common rescaling of the existing "
+        "fertility response; it does not rule out a different fertility mechanism or "
+        "population closure.",
+        "",
         "## Files and provenance",
         "",
         "- `calibrated_2023_target_fit.csv`: all twelve target rows.",
         "- `target_provenance.csv`: authoritative builder, sample, estimator, "
         "  uncertainty, status, and caveat for every target row.",
-        "- `estimated_parameters_and_bounds.csv`: all ten free parameters.",
+        f"- `estimated_parameters_and_bounds.csv`: all {parameter_count} free parameters.",
         "- `weighted_jacobian.csv`, `singular_values.csv`, `side_consistency.csv`, and "
         "  `weak_directions.csv`: local numerical-identification diagnostics.",
         "- `numerical_residuals.csv`: solver, accounting, repeat, and path gates kept "
@@ -1790,6 +2042,8 @@ def build_readme(
         "- `historical_model_data.csv` and `historical_fit_statistics.csv`: classified "
         "  five-date evidence.",
         "- `continuation_*.csv`: the two no-policy paths and their comparison.",
+        "- `closed_root_slope_frontier*.csv`: the target-preserving common-slope "
+        "  diagnostic and its underlying target-fit and price-grid schedules.",
         "- `report_manifest.json`: exact input/output paths, sizes, and SHA-256 hashes.",
         "",
         "The report builder is presentation-only: it does not alter estimates, solve the "
@@ -1822,6 +2076,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     historical = validate_historical_packet(args.historical_packet, selected)
     continuation = validate_continuation_packet(
         args.continuation_packet, selected, historical
+    )
+    slope_frontier = validate_slope_frontier_packet(
+        args.slope_frontier_packet, selected
     )
     numerical = numerical_residual_rows(
         selected, repeats, historical, continuation
@@ -1893,6 +2150,27 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         for path in paths:
             copy_file(path, output_dir / f"continuation_{figure_name}{path.suffix}")
 
+    write_csv(
+        output_dir / "closed_root_slope_frontier.csv",
+        slope_frontier["rows"],
+    )
+    copy_file(
+        slope_frontier["summary_path"],
+        output_dir / "closed_root_slope_frontier_summary.json",
+    )
+    copy_file(
+        slope_frontier["manifest_path"],
+        output_dir / "closed_root_slope_frontier_manifest.json",
+    )
+    copy_file(
+        slope_frontier["target_fit_path"],
+        output_dir / "closed_root_slope_frontier_target_fit_full.csv",
+    )
+    copy_file(
+        slope_frontier["schedules_path"],
+        output_dir / "closed_root_slope_frontier_price_schedules_full.csv",
+    )
+
     make_target_figure(selected["target_rows"], output_dir)
     make_jacobian_figure(selected["jacobian"], output_dir)
     (output_dir / "README.md").write_text(
@@ -1902,6 +2180,7 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             repeats,
             historical,
             continuation,
+            slope_frontier,
             numerical,
         )
     )
@@ -1933,6 +2212,11 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             f"continuation_artifact_{name.replace('/', '__')}": path
             for name, path in continuation["artifact_paths"].items()
         },
+        "slope_frontier_summary": slope_frontier["summary_path"],
+        "slope_frontier_manifest": slope_frontier["manifest_path"],
+        "slope_frontier_table": slope_frontier["frontier_path"],
+        "slope_frontier_target_fit": slope_frontier["target_fit_path"],
+        "slope_frontier_price_schedules": slope_frontier["schedules_path"],
     }
     for group, figure_paths in historical["figure_paths"].items():
         for path in figure_paths:
@@ -1950,12 +2234,12 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         if path.is_file() and path.name not in {"report_manifest.json", "report_manifest.sha256"}
     }
     manifest = {
-        "schema": "e5f_canonical_no_policy_transition_report_v1",
+        "schema": "e5f_canonical_no_policy_transition_report_v2",
         "status": "complete_canonical_no_policy_transition_report",
         "scope": "theory-facing quantitative evidence; no funded policy material",
         "selected_transition_loss": selected["loss"],
         "target_count": EXPECTED_TARGETS,
-        "free_parameter_count": EXPECTED_PARAMETERS,
+        "free_parameter_count": int(selected["parameter_count"]),
         "target_set": selected["scientific_contract"]["target_set"],
         "target_fingerprint": selected["scientific_contract"]["target_fingerprint"],
         "target_provenance_status_counts": target_provenance["status_counts"],
@@ -1979,6 +2263,8 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
             "imposed_bridge_not_relabelled_as_fit": True,
             "untargeted_holdouts_not_added_to_objective": True,
             "paired_closed_open_continuations_complete": True,
+            "target_preserving_slope_frontier_complete": True,
+            "slope_frontier_retained_as_diagnostic": True,
             "all_inputs_no_policy": True,
             "no_posthoc_rescaling_or_refit": True,
         },

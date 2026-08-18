@@ -2,7 +2,9 @@
 # Dated-transition calibration panel for the sequential child-room-floor model.
 # Each array task evaluates one reproducible candidate on the exact 2007--2023
 # calendar loop and writes a complete twelve-row target table.  The baseline
-# has nine transition parameters; the measured-income repair has ten.
+# has nine transition parameters; the measured-income repair has ten.  The
+# optional first-child housing intercept adds an eleventh parameter and uses
+# a 23-task coordinate panel.
 #
 # Required production launch variables:
 #   E5F_TRANSITION_RUN_TAG, E5F_TRANSITION_PANEL_SIZE,
@@ -23,10 +25,18 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "${SLURM_SUBMIT_DIR:-$(pwd)}" && pwd)"
-MODEL_DIR="$(cd "${SCRIPT_DIR}/../model" && pwd)"
-PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
-mkdir -p "$SCRIPT_DIR/logs"
+SUBMIT_DIR="$(cd "${SLURM_SUBMIT_DIR:-$(pwd)}" && pwd)"
+if [ -d "$SUBMIT_DIR/../model" ] && [ -d "$SUBMIT_DIR/../../output" ]; then
+    CLUSTER_DIR="$SUBMIT_DIR"
+elif [ -d "$SUBMIT_DIR/code/model" ] && [ -d "$SUBMIT_DIR/code/cluster" ]; then
+    CLUSTER_DIR="$SUBMIT_DIR/code/cluster"
+else
+    echo "cannot resolve the project checkout from SLURM_SUBMIT_DIR=$SUBMIT_DIR" >&2
+    exit 2
+fi
+MODEL_DIR="$(cd "${CLUSTER_DIR}/../model" && pwd)"
+PROJECT_ROOT="$(cd "${CLUSTER_DIR}/../.." && pwd)"
+mkdir -p "$CLUSTER_DIR/logs"
 module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || true
 PYTHON_BIN="$(command -v python3 || command -v python)"
 
@@ -40,6 +50,8 @@ POST_2023_PERIODS="${E5F_TRANSITION_POST_2023_PERIODS:-0}"
 POLICY_CASE="${E5F_TRANSITION_POLICY_CASE:-none}"
 MODEL_PROFILE="${E5F_TRANSITION_MODEL_PROFILE:?E5F_TRANSITION_MODEL_PROFILE is required}"
 EXPECTED_CODE_BUNDLE_SHA256="${E5F_TRANSITION_EXPECTED_CODE_BUNDLE_SHA256:?E5F_TRANSITION_EXPECTED_CODE_BUNDLE_SHA256 is required}"
+ESTIMATE_FIRST_CHILD_JUMP="${E5F_TRANSITION_ESTIMATE_FIRST_CHILD_ROOM_JUMP:-0}"
+FIXED_FIRST_CHILD_JUMP="${E5F_TRANSITION_FIXED_FIRST_CHILD_ROOM_JUMP:-}"
 if [ "$POST_2023_PERIODS" != "0" ]; then
     echo "calibration panels must stop at 2023; run continuations separately" >&2
     exit 2
@@ -50,6 +62,18 @@ if [ "$POLICY_CASE" != "none" ]; then
 fi
 if [ "$MODEL_PROFILE" != "e5f-income-entry" ]; then
     echo "production transition calibration requires e5f-income-entry" >&2
+    exit 2
+fi
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" != "0" ] && [ "$ESTIMATE_FIRST_CHILD_JUMP" != "1" ]; then
+    echo "E5F_TRANSITION_ESTIMATE_FIRST_CHILD_ROOM_JUMP must be 0 or 1" >&2
+    exit 2
+fi
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ] && [ -n "$FIXED_FIRST_CHILD_JUMP" ]; then
+    echo "the first-child room jump cannot be both fixed and estimated" >&2
+    exit 2
+fi
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ] && [ "$PANEL_DESIGN" = "coordinate" ] && [ "$PANEL_SIZE" != "23" ]; then
+    echo "the 11-parameter jump specification requires a 23-task coordinate panel" >&2
     exit 2
 fi
 SOURCE="$PROJECT_ROOT/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json"
@@ -88,6 +112,12 @@ ARGS=(
 )
 if [ -n "${E5F_TRANSITION_PANEL_CENTER_JSON:-}" ]; then
     ARGS+=(--panel-center-json "$E5F_TRANSITION_PANEL_CENTER_JSON")
+fi
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ]; then
+    ARGS+=(--estimate-first-child-room-jump)
+fi
+if [ -n "$FIXED_FIRST_CHILD_JUMP" ]; then
+    ARGS+=(--fixed-first-child-room-jump "$FIXED_FIRST_CHILD_JUMP")
 fi
 
 export PYTHONPATH="$MODEL_DIR:${PYTHONPATH:-}"

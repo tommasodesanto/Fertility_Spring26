@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-08-17` (dated sequential calibration, historical validation, and no-policy demographic closure)
+Updated: `2026-08-18` (dated sequential calibration, first-child housing repair, historical validation, and no-policy demographic closure)
 
 ## Current working estimate: calibration along the 2007--2023 transition
 
@@ -39,20 +39,38 @@ years later. The transition conversion is exactly adjusted births divided by
 `2.1`. It is an external normalization combining sex composition, survival to
 household-entry age, and household formation; the model has no explicit
 childhood-death state. The old benchmark satisfies completed fertility
-`2.100007`, queue `B/E=1.000003` up to solve tolerance, and the exact old-scale
+`2.100011`, queue `B/E=1.000005` up to solve tolerance, and the exact old-scale
 renewal identity.
 
 ### Calibration result and identification status
 
-The selected refinement has strict loss `50.7419665167`. Candidate `7` and two
-independent execution-identity repeats reproduce all ten parameters, all twelve
-model moments, and the loss to machine precision. No estimated parameter is
-within two percent of its transformed search boundary. The weighted local
-Jacobian has rank ten at the predeclared relative singular-value threshold
-`1e-3` and condition number `135.64`; this is only a local numerical check, not
-global identification or global optimality. The tenure-premium and
-bequest-shift directions are locally non-smooth or weak and were frozen in the
-accepted refinement step.
+The selected refinement has strict loss `36.0992231622`. Two independent
+execution-identity repeats reproduce all eleven parameters, all twelve model
+moments, and the loss to machine precision. No estimated parameter is within
+two percent of its transformed search boundary. The weighted local Jacobian
+has rank eleven at the predeclared relative singular-value threshold `1e-3`
+and condition number `268.72`; after freezing the locally inconsistent
+tenure-premium step direction, the active ten-column Jacobian has condition
+number `96.00`. These are local numerical checks, not global identification or
+global optimality.
+
+Relative to the August 17 specification, the only new structural object is an
+extra housing-service floor when the first child is at home,
+`hbar_first_child_jump`. The child floor is now
+`hbar_first_child_jump * 1{m>0} + hbar_child_rooms * m`, where `m` is children
+currently at home. It adds no state and nests the previous model exactly at
+zero. The selected estimate is `0.199446`; a fixed-parameter profile over
+`0, .1, .2, .25, .35, .5` has its lowest loss at `.2`, so the estimate is not
+being driven by a search boundary. The mechanism improves but does not solve
+the first-birth rooms and mean-rooms conflict.
+
+A predeclared 64-point mixed-radius search around the preceding `38.342` point
+produced 55 valid equilibria and 9 classified failures; none improved on that
+point. The failures are saved rather than assigned artificial objective values
+and include market non-clearing, zero treated mass, feasibility projection, and
+old-fertility normalization failures. The final `36.099` point comes from a
+separate standardized coordinate panel and two exact repeats. This expands the
+local search evidence; it is not a claim of global optimality.
 
 The active target set is `e5_fullhistory_roomsfix_h1_20260817`; its fingerprint
 is `3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
@@ -70,22 +88,22 @@ Full target fit:
 
 | Moment | Target | Model | Gap | Weight | Loss contribution |
 |---|---:|---:|---:|---:|---:|
-| Completed fertility, women 40--44 | 1.918000 | 1.898987 | -0.019013 | 1,425.738991 | 0.515372 |
-| Childless share, women 40--44 | 0.188000 | 0.176567 | -0.011433 | 17,180.743822 | 2.245638 |
-| Mean age at first birth | 26.044627 | 26.338512 | 0.293885 | 44.444444 | 3.838598 |
-| Share of first births at age 30 or later | 0.260327 | 0.242820 | -0.017508 | 10,000.000000 | 3.065174 |
-| Four-year rooms contrast at first birth | 0.720246 | 0.273250 | -0.446997 | 137.565275 | 27.486375 |
-| Rooms gap, 3+ versus 1--2 children | 0.367700 | 0.381988 | 0.014289 | 2,958.514988 | 0.604046 |
-| Family ownership gap | 0.167662 | 0.169653 | 0.001991 | 14,229.590956 | 0.056430 |
-| Ownership rate, ages 30--55 | 0.575472 | 0.555126 | -0.020346 | 1,207.846086 | 0.500012 |
-| Mean occupied rooms, ages 18--85 | 5.779970 | 6.741957 | 0.961987 | 11.973159 | 11.080188 |
-| Wealth / annual gross labor earnings | 6.873100 | 6.804305 | -0.068795 | 6.287669 | 0.029758 |
-| Annual bequest flow / aggregate wealth | 0.008800 | 0.008575 | -0.000225 | 5,165,289.256198 | 0.261656 |
-| Old wealth-to-income p90/p50, ages 76--84 | 3.448111 | 3.311776 | -0.136335 | 56.959772 | 1.058721 |
-| **Total** |  |  |  |  | **50.741967** |
+| Completed fertility, women 40--44 | 1.918000 | 1.918251 | 0.000251 | 1,425.738991 | 0.000090 |
+| Childless share, women 40--44 | 0.188000 | 0.185867 | -0.002133 | 17,180.743822 | 0.078133 |
+| Mean age at first birth | 26.044627 | 26.327334 | 0.282707 | 44.444444 | 3.552148 |
+| Share of first births at age 30 or later | 0.260327 | 0.242115 | -0.018213 | 10,000.000000 | 3.316971 |
+| Four-year rooms contrast at first birth | 0.720246 | 0.379786 | -0.340461 | 137.565275 | 15.945664 |
+| Rooms gap, 3+ versus 1--2 children | 0.367700 | 0.359253 | -0.008447 | 2,958.514988 | 0.211071 |
+| Family ownership gap | 0.167662 | 0.176866 | 0.009204 | 14,229.590956 | 1.205562 |
+| Ownership rate, ages 30--55 | 0.575472 | 0.546060 | -0.029412 | 1,207.846086 | 1.044837 |
+| Mean occupied rooms, ages 18--85 | 5.779970 | 6.710105 | 0.930135 | 11.973159 | 10.358582 |
+| Wealth / annual gross labor earnings | 6.873100 | 6.766352 | -0.106748 | 6.287669 | 0.071648 |
+| Annual bequest flow / aggregate wealth | 0.008800 | 0.008623 | -0.000177 | 5,165,289.256198 | 0.161538 |
+| Old wealth-to-income p90/p50, ages 76--84 | 3.448111 | 3.396287 | -0.051824 | 56.959772 | 0.152979 |
+| **Total** |  |  |  |  | **36.099223** |
 
 The two main misses are the provisional four-year first-birth rooms contrast
-and mean occupied rooms; together they contribute `38.566563` to the loss. The
+and mean occupied rooms; together they contribute `26.304246` to the loss. The
 model should therefore not be described as matching the housing response to
 fertility. The first-birth rooms row is a PSID event-time `-1` to `+3` contrast
 with a non-flat prepath. Its model analogue follows the same 2019 childless risk
@@ -96,19 +114,20 @@ Full free-parameter table:
 
 | Object | Estimate | Search bound | Transformed-coordinate boundary status |
 |---|---:|---:|---|
-| Annual discount factor | 0.9953053643 | [0.9400, 0.9995] | interior |
-| First-birth logit scale | 2.1495528033 | [0.02, 50] | interior |
-| Continuation-birth logit scale | 1.6820382493 | [0.02, 50] | interior |
+| Annual discount factor | 0.9949589974 | [0.9400, 0.9995] | interior |
+| First-birth logit scale | 2.2676305068 | [0.02, 50] | interior |
+| Continuation-birth logit scale | 1.7654265156 | [0.02, 50] | interior |
 | Owner-service premium | 1.0339451239 | [0.10, 5] | interior |
-| Housing-supply scale | 16.9672729478 | [0.20, 80] | interior |
-| Bequest scale | 0.5480147519 | [0, 8] | interior |
-| Bequest shift | 0.1006310046 | [0.02, 16] | interior on log coordinate; near lower bound on raw interval |
-| Child room floor | 0.3142156816 | [0.10, 1.80] | interior |
-| First-birth fixed cost | 3.7933275951 | [0, 8] | interior |
-| 2007--2023 preference change | -0.3650507433 | [-1.50, 0.20] | interior |
+| Housing-supply scale | 16.3811889708 | [0.20, 80] | interior |
+| Bequest scale | 0.5632192099 | [0, 8] | interior |
+| Bequest shift | 0.0997072353 | [0.02, 16] | interior on transformed log coordinate |
+| Per-child room floor | 0.3152667033 | [0.10, 1.80] | interior |
+| First-child room jump | 0.1994463336 | [0, 0.50] | interior |
+| First-birth fixed cost | 4.5451673906 | [0, 8] | interior |
+| 2007--2023 preference change | -0.3500000000 | [-1.50, 0.20] | interior |
 
-The derived fertility intercepts are `psi_2007=0.2301494339` and
-`psi_2023=-0.1349013094`. The outside-origin value `0.169` is **not identified
+The derived fertility intercepts are `psi_2007=0.2803409348` and
+`psi_2023=-0.0696590652`. The outside-origin value `0.169` is **not identified
 by the 2007--2023 calibration**: because the bridge fixes the age masses and the
 inherited queue supplies entrants through 2023, the objective is invariant to
 it over the calibration window. It is used once to normalize the old state,
@@ -119,7 +138,7 @@ is not fixed away from the old state.
 ### Historical validation and steady-state interpretation
 
 The canonical historical packet is
-`output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817/`.
+`output/model/e5f_transition_historical_validation_jump11_polish_r2_20260818/`.
 It separates the imposed household/age bridge from untargeted comparisons. The
 model gets close to 2023 national first-birth timing and ownership, but misses
 the ownership cycle, predicts mean rooms in the wrong direction, and cannot
@@ -131,74 +150,115 @@ target.
 
 The closed steady-state condition is `B(P)/E(P)=1`. At the estimated 2023
 preference, an exact 25-point audit over prices from `1e-4` to `3` times the old
-price finds a nonincreasing renewal ratio from a maximum `0.6779849483` to a
-minimum `0.5524252195`; no crossing is verified on this declared grid. The
-maximum corresponds to top-bin-adjusted completed fertility `1.4237683914`.
+price finds a nonincreasing renewal ratio from a maximum `0.7084847727` to a
+minimum `0.5570040098`; no crossing is verified on this declared grid. The
+maximum corresponds to top-bin-adjusted completed fertility `1.4878180228`.
 Using `2` rather than `2.1` as the replacement divisor would raise the maximum
-only to about `0.712`. This is a grid-qualified numerical result, not a global
+only to about `0.744`. This is a grid-qualified numerical result, not a global
 nonexistence theorem.
 
-A supplemental fixed-parameter diagnostic multiplies both fertility-logit
-scales by a common factor, re-normalizes the old intercept to replacement, and
-holds the selected **absolute** preference change fixed. It is not a
-recalibration or a target-preserving elasticity profile:
+A supplemental target-preserving diagnostic around the immediately preceding
+pre-polish point multiplies both fertility-logit noise scales by a common
+factor, re-normalizes the old intercept to replacement, and separately solves
+the 2007--2023 preference change so the 2023 completed-fertility target remains
+matched. The other ten coordinates remain fixed, so this is a conditional
+profile rather than a recalibration:
 
 | Common logit-scale factor | 2007--2023 loss | Maximum terminal B/E | Closed root on grid |
 |---:|---:|---:|---|
-| 1.00 | 50.742 | 0.677985 | no |
-| 0.50 | 478.342 | 0.285972 | no |
-| 0.25 | 2,173.779 | 0.020018 | no |
-| 0.10 | 3,290.734 | 0.0000287 | no |
-| 0.05 | 3,641.999 | 0.0000000040 | no |
+| 0.25 | 1,767.904 | 0.285181 | no |
+| 0.50 | 323.794 | 0.645409 | no |
+| 0.75 | 69.047 | 0.697825 | no |
+| 1.00 | 38.205 | 0.712883 | no |
+| 1.25 | 48.230 | 0.719428 | no |
+| 1.50 | 67.167 | 0.722754 | no |
+| 2.00 | 104.029 | 0.725974 | no |
 
-The deterioration has a clear interpretation: lowering the logit scales while
-holding the absolute preference decline fixed makes the same decline much
-larger in utility-noise units. This rules out a naive one-parameter repair, but
-does not rule out a jointly re-estimated steeper fertility response. A
-target-preserving slope profile must re-solve the preference change at every
-factor before it can answer that question. The verified packet is
-`output/model/e5f_final_closed_root_slope_frontier_production_20260817/`.
+Every factor matches completed fertility within `0.0005`; none produces a
+closed root. The best fit remains at the unscaled fertility noise, and even the
+largest renewal ratio is only `0.725974`. Thus a simple common rescaling of the
+existing fertility-response block does not repair the closed endpoint. The
+verified packet is
+`output/model/e5f_target_preserving_closed_root_frontier_jump11_production_20260818/`.
 
 Consequently, the calibrated closed post-2023 path is a finite-horizon national
 benchmark, **not** a verified transition between two positive steady states.
 The paired open path is a sensitivity conditional on the external entrant
 flow. Both paths initially rise slightly: their adult-household mass peaks in
-2027 at `1.01236` and `1.01204` times its common 2023 level. By 2183, the closed
-and open masses are respectively `0.138463` and `0.358990` of 2023, while their
-asset prices are `0.385912` and `0.627699` of the common 2023 price. These are
+2027 at `1.012411` and `1.012075` times its common 2023 level. By 2183, the closed
+and open masses are respectively `0.159890` and `0.378074` of 2023, while their
+asset prices are `0.417498` and `0.642780` of the common 2023 price. These are
 finite-horizon outcomes, not endpoints or forecasts. The open stationary
-endpoint has population scale `0.3633554826` and asset-price ratio
-`0.6319912939`, relative to the constructed old steady state. Its realized
-outside-origin share is `0.465109`, not `0.169`, because `M` and `rho` rather
+endpoint has population scale `0.3808339390` and asset-price ratio
+`0.6475706842`, relative to the constructed old steady state. Its realized
+outside-origin share is `0.443763`, not `0.169`, because `M` and `rho` rather
 than the share are fixed away from the old state. No policy or fiscal experiment
 is part of the current paper result. The previous funded-policy workflow
 remains fail-closed until its renewal and grant-eligibility architecture is
 repaired and re-estimated.
 
+The 40-date continuation passes the full accounting audit. Maximum market
+residuals are `4.77e-5` in the closed path and `1.996e-4` in the open path;
+the latter occurs at one lumpy-market grid fallback and remains just below the
+declared `2e-4` tolerance. Maximum mass residuals are below `1.6e-14`, and no
+projection mass or nonfinite distribution appears.
+
+### Current keep/repair decision
+
+Keep the sequential household model, the twenty-year birth-to-entry queue, the
+dated 2007--2023 calibration, the explicit population/age bridge, and the
+nested first-child housing term. These objects are internally consistent and
+have passed exact reconstruction, accounting, and independent-repeat checks.
+
+Do not describe the quantitative economy as moving between two verified
+positive closed steady states. The final closed path is a finite-horizon
+benchmark, while the open path is a sensitivity to an externally normalized
+entry flow. A simple common rescaling of the two fertility-logit slopes does
+not repair that endpoint. Obtaining a positive closed endpoint would require a
+different fertility mechanism or an explicit closed-root restriction in a new
+calibration, not another local numerical polish of the current specification.
+
+Before structural policy analysis, the two housing-quantity problems remain
+the binding empirical work: the provisional first-birth rooms contrast and the
+mean-rooms level account for most of the calibration loss. The model also does
+not explain the post-2007 house-price cycle. These are substantive limitations,
+not solver failures, and they should remain visible in the paper and slides.
+
 ### Canonical artifacts and reproducibility
 
 - Final ridge selection and repeat report:
-  `output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/report/summary.json`
+  `output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818/report/summary.json`
 - Historical validation packet:
-  `output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817/`
+  `output/model/e5f_transition_historical_validation_jump11_polish_r2_20260818/`
 - Paired no-policy continuation (40 dates after 2023):
-  `output/model/e5f_post2023_no_policy_continuations_fullhistory_roomsfix_h1_dateddid_20260817_cont_production/`
+  `output/model/e5f_post2023_no_policy_continuations_jump11_polish_r2_20260818_production/`
+- Target-preserving fertility-slope diagnostic:
+  `output/model/e5f_target_preserving_closed_root_frontier_jump11_production_20260818/`
 - Single paper-facing no-policy report:
-  `output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817/`
+  `output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/`
+- Advisor presentation:
+  `latex/transition_closure_update_presentation.pdf`
 - Paper-facing model note:
   `latex/dynamic_intergenerational_housing_fertility_model.tex`
 
 The selected-report SHA-256 is
-`39b7603eea613a5d2818e5ae074bef6daaa7aad38fffc0e3d5acfaf83139495b`;
+`509b9b6a2fdb603aa40631600ac09f3656101d5ef40b4a9239e873af6e692499`;
+the selected-candidate and selection SHA-256 values are respectively
+`a1bde4553bf9de5f5d02ca7a3a16a3b8719ccfa60cc8a5a6fd8e4d342a64e673`
+and `2449cd2267e6b9485fc21c5b5b747e45358b5b1e9c035e4e216435f905da4e54`;
 the scientific-code bundle is
-`46a346201ccfc34513b017f988b9ec0a88345d29a68861b5a35abb6f3772aef6`.
+`cd1d984bc8c8ed03d317d5899118a20ba536d7e8391b6e00912c69904f61a2ea`.
 The source candidate SHA-256 is
 `0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6`;
 the full scientific-contract SHA-256 is
-`d55c925a91ebbd1f8e2773803d70bf201123b42a3bb93f1ab9b8dd5219140e1f`;
+`db9dcd8c58fa652403985683b035372a2442584316fd669a55d0d75177925c7e`;
 the renewal- and dated-measurement-contract SHA-256 values are respectively
 `be4df40c258cc92758c75c0f99f32089677c48938d6c5d6507eb77e6dfb61fb3`
 and `4d82d0fe019c9cfced72d8a60f0a9ec6a24949e7e9614fe053a48cfdaaed20d6`.
+The final continuation launcher-status and canonical-report-manifest SHA-256
+values are respectively
+`ad0de4b57f83a2d0edc73efb1cc5313de3f4163a2771ae7b8aa272a739d71913`
+and `5879fea92b9039903676a835b244a641c54eb0cf5b9fee799a3165c89581b26a`.
 The report builder performs no model solve or rescaling and fails unless the
 selected candidate, two repeats, complete target ledger, historical packet,
 forty-date paired continuation, numerical residuals, and endpoint accounting
@@ -207,7 +267,7 @@ match their recorded hashes.
 ## Superseded record: August 16 dated transition-calibration pilot
 
 Everything below this heading is retained as chronological background. Where
-it conflicts with the August 17 block above, it is superseded and must not be
+it conflicts with the August 18 block above, it is superseded and must not be
 reported as the current model, target contract, calibration, closure, or policy
 result.
 

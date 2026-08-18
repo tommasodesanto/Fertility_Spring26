@@ -80,10 +80,11 @@ def load_and_validate_plan(plan_path: Path, expected_sha256: str) -> tuple[dict[
     if int(plan["proposal_contract"].get("observed_incumbent_count", -1)) != 1:
         raise ContractError("Plan must contain one observed incumbent")
     coordinate = dict(plan.get("coordinate_panel_contract") or {})
-    if int(coordinate.get("task_count", -1)) != 21:
-        raise ContractError("Plan was not built from 21 coordinate tasks")
-    if int(coordinate.get("dimensions", -1)) != 10:
-        raise ContractError("Plan is not ten-dimensional")
+    dimensions = int(coordinate.get("dimensions", -1))
+    if dimensions not in (10, 11):
+        raise ContractError("Plan dimension must be one of the supported 10 or 11")
+    if int(coordinate.get("task_count", -1)) != 1 + 2 * dimensions:
+        raise ContractError("Plan task count is inconsistent with its dimension")
     if not math.isclose(
         float(coordinate.get("central_step", math.nan)),
         CENTRAL_STEP,
@@ -92,8 +93,8 @@ def load_and_validate_plan(plan_path: Path, expected_sha256: str) -> tuple[dict[
     ):
         raise ContractError("Plan does not use h=.02 central differences")
     rank = dict(plan["jacobian_diagnostics"]["full"]["relative_ranks"])
-    if int(rank.get("relative_0.001", -1)) != 10:
-        raise ContractError("Plan failed the ten-dimensional rank gate")
+    if int(rank.get("relative_0.001", -1)) != dimensions:
+        raise ContractError("Plan failed its declared full-rank gate")
     if not bool(plan["jacobian_diagnostics"]["identification_gate"].get("passed")):
         raise ContractError("Plan identification gate is not marked passed")
 
@@ -720,6 +721,8 @@ def main() -> None:
         "schema": "e5f_transition_ridge_refinement_report_v1",
         "status": status,
         "promotion_eligible": promotion_eligible,
+        "collector": str(Path(__file__).resolve()),
+        "collector_sha256": file_sha256(Path(__file__).resolve()),
         "results_dir": str(results_dir),
         "plan": str(plan_path),
         "plan_sha256": plan_sha,

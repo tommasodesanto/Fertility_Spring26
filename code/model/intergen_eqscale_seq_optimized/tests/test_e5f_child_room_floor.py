@@ -101,6 +101,25 @@ def test_floor_is_keyed_to_children_currently_at_home() -> None:
     assert np.all(shared.alpha_flat == 0.733)
 
 
+def test_first_child_jump_separates_level_from_additional_child_slope() -> None:
+    P = _parameters(
+        **{
+            **e5f_overrides(),
+            "hbar_child_rooms": 0.3,
+            "hbar_first_child_jump": 0.5,
+            "delta_alpha": 0.0,
+            "delta_alpha_jump": 0.0,
+        }
+    )
+    shared = precompute_shared(P, np.linspace(-1.0, 2.0, 5))
+    np.testing.assert_allclose(
+        shared.h_bar[3], np.array([0.0, 0.8, 1.1, 1.4]), rtol=0.0, atol=1e-15
+    )
+    # Once parenthood begins, each additional child changes the floor by the
+    # original slope while the first-child jump is paid only once.
+    np.testing.assert_allclose(np.diff(shared.h_bar[3, 1:]), 0.3, rtol=0.0, atol=1e-15)
+
+
 def test_renter_utility_respects_floor_and_diverges_at_boundary() -> None:
     alpha, sigma, rent = 0.733, 2.0, 1.0
     oms = 1.0 - sigma
@@ -174,3 +193,9 @@ def test_floor_cap_guard_accepts_domain_upper_bound_and_refuses_collision() -> N
     assert accepted.hbar_child_rooms == 1.8
     with pytest.raises(ValueError, match="rental-service cap"):
         _parameters(child_room_floor=True, hbar_child_rooms=2.0)
+    with pytest.raises(ValueError, match="rental-service cap"):
+        _parameters(
+            child_room_floor=True,
+            hbar_child_rooms=1.7,
+            hbar_first_child_jump=1.0,
+        )

@@ -3,7 +3,7 @@
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
-## Current paper architecture (August 17)
+## Current paper architecture (August 18)
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
@@ -34,27 +34,31 @@ the maintained static supply elasticity. This is a sequence of temporary
 equilibria, not a perfect-foresight welfare transition.
 
 The calibrated household block crosses the five-state earnings process with a
-three-node discretization of measured permanent-income dispersion and adds one
-estimated utility cost paid only when a first birth succeeds. The selected
+three-node discretization of measured permanent-income dispersion, adds one
+estimated utility cost paid only when a first birth succeeds, and allows a
+separate housing-service floor when the first child is at home. This last
+mechanism is nested: setting `hbar_first_child_jump=0` reproduces the previous
+child-room floor exactly. The selected
 refinement and two exact execution-identity repeats are under:
 
 ```
-output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/
+output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818/
 ```
 
-The strict loss is `50.7419665167`. Both evaluations reproduce all ten
+The strict loss is `36.0992231622`. Both evaluations reproduce all eleven
 parameters, twelve moments, and the loss to machine precision. The active
 target set is `e5_fullhistory_roomsfix_h1_20260817`, with fingerprint
 `3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
 The two dominant misses are the provisional four-year first-birth rooms
-contrast and mean occupied rooms. The complete row-level target receipt is
+contrast (`0.380` versus `0.720`) and mean occupied rooms (`6.710` versus
+`5.780`); together they contribute `26.304` to the loss. The complete row-level target receipt is
 `intergen_eqscale_seq_optimized/e5_target_provenance.csv`: six rows are
 measured, five remain provisional, and one is an external normalization.
 
 The historical validation packet is:
 
 ```
-output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817/
+output/model/e5f_transition_historical_validation_jump11_polish_r2_20260818/
 ```
 
 It labels the Census/ACS population bridge as imposed and keeps fertility,
@@ -63,34 +67,45 @@ The paired post-2023 exercise contains no policy. It compares a national
 closed finite-horizon benchmark with an open sensitivity. The value `0.169`
 normalizes `M` and `rho` in the old state; those two flows are then fixed while
 the realized outside-origin share can change. The closed stationary audit finds no usable
-root on the declared price grid: the maximum adjusted-birth renewal ratio is
-`0.6779849483`. By 2183 the closed and open adult-household masses are
-`0.138463` and `0.358990` of 2023, and their asset prices are `0.385912` and
-`0.627699` of the common 2023 price. The open endpoint is conditional on the
-external entrant flow; its realized outside-origin entrant share is `0.465109`.
-It is not a national forecast.
+root on the declared price grid: the adjusted-birth renewal ratio lies between
+`0.5570040098` and `0.7084847727`. The audited 2183 closed/open population
+indices are `0.159890`/`0.378074` relative to 2023, and the corresponding
+asset-price ratios are `0.417498`/`0.642780`. The open stationary endpoint has
+old-steady-state population scale `0.380834`, price ratio `0.647571`, and
+realized outside-origin entry share `0.443763`; these are sensitivity results,
+not forecasts.
+In a separate conditional profile, both fertility-logit noise scales vary from
+`0.25` to `2` times their pre-polish values and the preference decline is
+re-solved at every factor to keep 2023 completed fertility on target. No factor
+has a closed root; the largest renewal ratio is `0.725974`, and the best fit is
+at the unscaled noise. This rules out a simple common-slope repair, not every
+possible fertility mechanism.
+The open endpoint is conditional on the external entrant flow. It is not a
+national forecast.
 
 Rebuild the single canonical no-policy report from the repository root with:
 
 ```bash
 PYTHONPATH=code/model:code/model/tools code/model/.venv/bin/python \
   code/model/tools/build_e5f_no_policy_transition_report.py \
-  --selected-report output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/report/summary.json \
-  --repeat-task output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/repeat_001 \
-  --repeat-task output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817/repeat_002 \
-  --refinement-plan output/model/e5f_transition_ridge_refinement_fullhistory_roomsfix_h1_dateddid_20260817_plan/candidate_plan.json \
+  --selected-report output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818/report/summary.json \
+  --repeat-task output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818/repeat_001 \
+  --repeat-task output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818/repeat_002 \
+  --refinement-plan output/model/e5f_transition_ridge_refinement_jump11_polish_r2_20260818_plan/candidate_plan.json \
   --target-provenance-csv code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv \
-  --historical-packet output/model/e5f_transition_historical_validation_fullhistory_roomsfix_h1_dateddid_20260817 \
-  --continuation-packet output/model/e5f_post2023_no_policy_continuations_fullhistory_roomsfix_h1_dateddid_20260817_cont_production \
-  --output-dir output/model/e5f_no_policy_transition_report_fullhistory_roomsfix_h1_dateddid_20260817
+  --historical-packet output/model/e5f_transition_historical_validation_jump11_polish_r2_20260818 \
+  --continuation-packet output/model/e5f_post2023_no_policy_continuations_jump11_polish_r2_20260818_production \
+  --slope-frontier-packet output/model/e5f_target_preserving_closed_root_frontier_jump11_production_20260818 \
+  --output-dir output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818
 ```
 
 The builder does not solve or rescale the model. It fails unless the selected
 calibration, both repeats, target provenance, historical classification,
-40-date paired continuation, numerical residuals, and endpoint accounting all
-match their recorded hashes. The current paper reports no funded policy
-counterfactual. The older funded driver remains fail-closed until its renewal
-and eligibility architecture is migrated and re-estimated.
+40-date paired continuation, numerical residuals, endpoint accounting, and the
+target-preserving slope diagnostic all match their recorded hashes. The current
+paper reports no funded policy counterfactual. The older funded driver remains
+fail-closed until its renewal and eligibility architecture is migrated and
+re-estimated.
 
 Use the local virtualenv created for the port:
 

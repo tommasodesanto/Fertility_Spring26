@@ -2224,9 +2224,10 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
     alpha_bar = np.full((P.n_parity, P.n_child_states), P.alpha_cons)
     escale = np.ones((P.n_parity, P.n_child_states))
     eqscale_form = str(getattr(P, "eqscale_form", "linear")).lower()
-    child_room_floor_active = bool(getattr(P, "child_room_floor", False)) and float(
-        getattr(P, "hbar_child_rooms", 0.0)
-    ) > 0.0
+    child_room_floor_active = bool(getattr(P, "child_room_floor", False)) and (
+        float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+        or float(getattr(P, "hbar_first_child_jump", 0.0)) > 0.0
+    )
     if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale" and eqscale_form not in {
         "linear", "power", "sqrt"
     }:
@@ -2255,7 +2256,10 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
                 if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale":
                     c_bar[nn, cs] = 0.0
                     if child_room_floor_active:
-                        h_bar[nn, cs] = float(P.hbar_child_rooms) * nk
+                        h_bar[nn, cs] = (
+                            float(P.hbar_first_child_jump)
+                            + float(P.hbar_child_rooms) * nk
+                        )
                         alpha_bar[nn, cs] = P.alpha_cons
                     else:
                         h_bar[nn, cs] = 0.0
@@ -2365,7 +2369,10 @@ def solve_bellman_full_markov_income(
     owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
     strict_owner_hbar_feasibility = int(
         bool(getattr(P, "child_room_floor", False))
-        and float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+        and (
+            float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+            or float(getattr(P, "hbar_first_child_jump", 0.0)) > 0.0
+        )
     )
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))
@@ -2831,7 +2838,10 @@ def solve_bellman_core(
     owner_service_premium = max(float(getattr(P, "chi", 1.0)), 1e-8)
     strict_owner_hbar_feasibility = int(
         bool(getattr(P, "child_room_floor", False))
-        and float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+        and (
+            float(getattr(P, "hbar_child_rooms", 0.0)) > 0.0
+            or float(getattr(P, "hbar_first_child_jump", 0.0)) > 0.0
+        )
     )
     owner_size_cost = float(getattr(P, "owner_size_cost", 0.0))
     owner_size_cost_ref = float(getattr(P, "owner_size_cost_ref", 6.0))

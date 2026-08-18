@@ -666,6 +666,58 @@ def test_parameter_table_uses_actual_transition_domain() -> None:
     ]
 
 
+def test_first_child_jump_can_be_fixed_or_jointly_estimated_but_not_both() -> None:
+    base_domain = (("first_birth_fixed_cost", 0.0, 8.0, "softzero"),)
+    theta: dict[str, float] = {}
+    domain, overrides, metadata = calibration.configure_first_child_room_jump(
+        model_profile_name=calibration.REPAIRED_MODEL_PROFILE,
+        theta=theta,
+        active_domain=base_domain,
+        profile_overrides={},
+        model_profile={"name": calibration.REPAIRED_MODEL_PROFILE},
+        fixed_jump=None,
+        estimate_jump=True,
+    )
+    assert domain[-1] == ("hbar_first_child_jump", 0.0, 0.5, "softzero")
+    assert theta["hbar_first_child_jump"] == 0.0
+    assert overrides["hbar_first_child_jump"] == 0.0
+    assert metadata["first_child_room_jump_status"] == (
+        "jointly estimated transition parameter"
+    )
+
+    fixed_theta: dict[str, float] = {}
+    fixed_domain, fixed_overrides, fixed_metadata = (
+        calibration.configure_first_child_room_jump(
+            model_profile_name=calibration.REPAIRED_MODEL_PROFILE,
+            theta=fixed_theta,
+            active_domain=base_domain,
+            profile_overrides={},
+            model_profile={"name": calibration.REPAIRED_MODEL_PROFILE},
+            fixed_jump=0.2,
+            estimate_jump=False,
+        )
+    )
+    assert fixed_domain == base_domain
+    assert fixed_theta["hbar_first_child_jump"] == 0.2
+    assert fixed_overrides["hbar_first_child_jump"] == 0.2
+    assert fixed_metadata["first_child_room_jump"] == 0.2
+
+    try:
+        calibration.configure_first_child_room_jump(
+            model_profile_name=calibration.REPAIRED_MODEL_PROFILE,
+            theta={},
+            active_domain=base_domain,
+            profile_overrides={},
+            model_profile={},
+            fixed_jump=0.2,
+            estimate_jump=True,
+        )
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("fixed and estimated jump must be mutually exclusive")
+
+
 if __name__ == "__main__":
     test_replacement_conversion_and_old_stationary_identity()
     test_historical_bridge_is_invariant_to_open_share()
@@ -680,4 +732,5 @@ if __name__ == "__main__":
     test_first_birth_housing_response_uses_one_four_year_branch()
     test_dated_first_birth_branch_uses_origin_and_destination_kernels()
     test_parameter_table_uses_actual_transition_domain()
-    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=13")
+    test_first_child_jump_can_be_fixed_or_jointly_estimated_but_not_both()
+    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=14")

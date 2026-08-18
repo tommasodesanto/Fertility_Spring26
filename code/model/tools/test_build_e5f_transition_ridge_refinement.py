@@ -74,7 +74,12 @@ DOMAIN = [
 ]
 
 
-def expectations(renewal_hash: str | None = None, dated_hash: str | None = None) -> Expectations:
+def expectations(
+    renewal_hash: str | None = None,
+    dated_hash: str | None = None,
+    *,
+    dimensions: int = 10,
+) -> Expectations:
     return Expectations(
         source_sha256=SOURCE_SHA,
         source="/scratch/fixture/source.json",
@@ -83,6 +88,7 @@ def expectations(renewal_hash: str | None = None, dated_hash: str | None = None)
         code_bundle_sha256=CODE_SHA,
         model_profile=PROFILE,
         panel_seed=PANEL_SEED,
+        dimensions=dimensions,
         renewal_contract_sha256=renewal_hash or object_sha256(renewal_contract()),
         dated_contract_sha256=dated_hash or object_sha256(dated_contract()),
     )
@@ -148,6 +154,7 @@ def base_theta() -> dict[str, float]:
         "theta0": 1.0,
         "theta1": 0.5,
         "hbar_child_rooms": 0.4,
+        "hbar_first_child_jump": 0.125,
         "kappa_fert": 2.0,
         "kappa_fert_continuation": 2.5,
         "first_birth_fixed_cost": 2.0,
@@ -159,25 +166,46 @@ def base_theta() -> dict[str, float]:
     }
 
 
-def fixture_jacobian(rank_deficient: bool = False) -> np.ndarray:
-    matrix = np.zeros((12, 10), dtype=float)
-    matrix[:10, :] = np.eye(10)
-    matrix[10, :] = np.linspace(0.1, 1.0, 10)
-    matrix[11, :] = np.linspace(1.0, -0.5, 10)
+def fixture_domain(dimensions: int) -> list[dict[str, Any]]:
+    if dimensions == 10:
+        return list(DOMAIN)
+    if dimensions == 11:
+        return DOMAIN[:-1] + [
+            {
+                "name": "hbar_first_child_jump",
+                "lower": 0.0,
+                "upper": 0.5,
+                "transform": "softzero",
+            },
+            DOMAIN[-1],
+        ]
+    raise ValueError(dimensions)
+
+
+def fixture_jacobian(
+    rank_deficient: bool = False, *, dimensions: int = 10
+) -> np.ndarray:
+    matrix = np.zeros((12, dimensions), dtype=float)
+    matrix[:dimensions, :] = np.eye(dimensions)
+    matrix[dimensions:, :] = np.linspace(0.1, 1.0, dimensions)
     if rank_deficient:
         matrix[:, -1] = matrix[:, 0]
     return matrix
 
 
-def write_coordinate_fixture(root: Path, *, rank_deficient: bool = False) -> tuple[np.ndarray, np.ndarray]:
-    anchor = np.full(10, 0.5, dtype=float)
+def write_coordinate_fixture(
+    root: Path, *, rank_deficient: bool = False, dimensions: int = 10
+) -> tuple[np.ndarray, np.ndarray]:
+    domain_rows = fixture_domain(dimensions)
+    task_count = 1 + 2 * dimensions
+    anchor = np.full(dimensions, 0.5, dtype=float)
     residual0 = np.linspace(-0.6, 0.5, 12)
-    jacobian = fixture_jacobian(rank_deficient)
+    jacobian = fixture_jacobian(rank_deficient, dimensions=dimensions)
     target = np.linspace(0.2, 1.3, 12)
     weights = np.linspace(1.0, 3.2, 12)
     renewal = renewal_contract()
     dated = dated_contract()
-    for task_id in range(1, 22):
+    for task_id in range(1, task_count + 1):
         if task_id == 1:
             unit = anchor.copy()
             design = "anchor"
@@ -217,7 +245,7 @@ def write_coordinate_fixture(root: Path, *, rank_deficient: bool = False) -> tup
             writer.writerows(target_rows)
         theta = base_theta()
         terminal_change = math.nan
-        for coordinate, domain in zip(unit, DOMAIN):
+        for coordinate, domain in zip(unit, domain_rows, strict=True):
             value = transform_unit(
                 float(coordinate),
                 float(domain["lower"]),
@@ -265,11 +293,11 @@ def write_coordinate_fixture(root: Path, *, rank_deficient: bool = False) -> tup
             "target_set": TARGET_SET,
             "target_fingerprint": TARGET_FINGERPRINT,
             "target_count": 12,
-            "stationary_free_parameter_count": 10,
-            "transition_free_parameter_count": 10,
+            "stationary_free_parameter_count": dimensions,
+            "transition_free_parameter_count": dimensions,
             "panel_design": {
                 "task_id": task_id,
-                "panel_size": 21,
+                "panel_size": task_count,
                 "panel_seed": PANEL_SEED,
                 "design": design,
                 "panel_design": "coordinate",
@@ -278,7 +306,7 @@ def write_coordinate_fixture(root: Path, *, rank_deficient: bool = False) -> tup
                 "center_sha256": CENTER_SHA,
                 "terminal_preference_coordinate": "psi_child_change_2023",
                 "unit_vector": unit.tolist(),
-                "domain": DOMAIN,
+                "domain": domain_rows,
                 "old_psi_child": 0.1,
                 "new_psi_child": 0.1 + terminal_change,
                 "psi_child_change_2023": terminal_change,
@@ -404,6 +432,9 @@ def test_valid_fixture_builds_exact_hashed_plan() -> None:
         assert not np.any(frozen)
         built = build_refinement(results, root / "refinement", expectations(renewal_sha, dated_sha))
         plan = built["plan"]
+        assert plan["refinement_builder_sha256"] == file_sha256(
+            Path(__file__).resolve().parent / "build_e5f_transition_ridge_refinement.py"
+        )
         assert plan["coordinate_panel_contract"]["task_count"] == 21
         assert plan["coordinate_panel_contract"]["central_step"] == 0.02
         assert plan["jacobian_diagnostics"]["full"]["relative_ranks"]["relative_0.001"] == 10
@@ -415,6 +446,31 @@ def test_valid_fixture_builds_exact_hashed_plan() -> None:
         loaded, loaded_sha = load_and_validate_plan(plan_path, built["plan_sha256"])
         assert loaded_sha == built["plan_sha256"]
         assert loaded["target_contract_sha256"] == plan["target_contract_sha256"]
+
+
+def test_eleven_parameter_fixture_builds_and_passes_collector_plan_gate() -> None:
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        results = root / "coordinate"
+        expected_jacobian, _ = write_coordinate_fixture(results, dimensions=11)
+        expected = expectations(dimensions=11)
+        panel = load_coordinate_panel(results, expected)
+        recovered, sides, frozen = central_jacobian(panel)
+        assert recovered.shape == (12, 11)
+        assert np.allclose(recovered, expected_jacobian, rtol=0.0, atol=1.0e-11)
+        assert len(sides) == 11
+        assert not np.any(frozen)
+        built = build_refinement(results, root / "refinement", expected)
+        plan = built["plan"]
+        assert plan["coordinate_panel_contract"]["task_count"] == 23
+        assert plan["coordinate_panel_contract"]["dimensions"] == 11
+        assert plan["jacobian_diagnostics"]["full"]["relative_ranks"][
+            "relative_0.001"
+        ] == 11
+        loaded, _ = load_and_validate_plan(
+            Path(built["plan_path"]), built["plan_sha256"]
+        )
+        assert loaded["coordinate_panel_contract"]["dimensions"] == 11
 
 
 def test_missing_coordinate_task_is_rejected() -> None:
@@ -647,11 +703,15 @@ def test_launcher_resolves_the_slurm_submission_checkout() -> None:
     text = launcher.read_text(encoding="utf-8")
     assert "SLURM_SUBMIT_DIR" in text
     assert 'CLUSTER_DIR="$(cd "${SLURM_SUBMIT_DIR:-' in text
+    assert "E5F_RIDGE_ESTIMATE_FIRST_CHILD_ROOM_JUMP" in text
+    assert "--estimate-first-child-room-jump" in text
+    assert "expected_dimensions = 11" in text
 
 
 def main() -> None:
     tests = [
         test_valid_fixture_builds_exact_hashed_plan,
+        test_eleven_parameter_fixture_builds_and_passes_collector_plan_gate,
         test_missing_coordinate_task_is_rejected,
         test_corrupted_central_pair_is_rejected,
         test_mixed_dated_contract_is_rejected,

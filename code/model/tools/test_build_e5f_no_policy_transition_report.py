@@ -57,7 +57,7 @@ def target_rows() -> list[dict[str, object]]:
         weight = 1.0 + index
         rows.append(
             {
-                "moment": f"moment_{index + 1:02d}",
+                "moment": "tfr" if index == 0 else f"moment_{index + 1:02d}",
                 "target": target,
                 "model": target + gap,
                 "gap": gap,
@@ -83,7 +83,8 @@ def build_fixture(root: Path) -> argparse.Namespace:
     selected_dir = root / "selected"
     historical_dir = root / "historical"
     continuation_dir = root / "continuation"
-    for directory in (plan_dir, selected_dir, historical_dir, continuation_dir):
+    slope_dir = root / "slope_frontier" / "report"
+    for directory in (plan_dir, selected_dir, historical_dir, continuation_dir, slope_dir):
         directory.mkdir(parents=True)
 
     renewal = {
@@ -694,6 +695,69 @@ def build_fixture(root: Path) -> argparse.Namespace:
     }
     write_json(continuation_dir / "manifest.json", manifest)
 
+    slope_rows = []
+    for factor_index, factor in enumerate(report.EXPECTED_SLOPE_FACTORS, start=1):
+        completed = 1.0 + 1.0e-5 * factor_index
+        slope_rows.append(
+            {
+                "factor_index": factor_index,
+                "kappa_factor": factor,
+                "profile_success": True,
+                "preference_change": -0.2 * factor,
+                "completed_fertility": completed,
+                "completed_fertility_gap": completed - 1.0,
+                "transition_loss": 10.0 + factor_index,
+                "profile_trials": 2,
+                "maximum_B_over_E": 0.6 + 0.02 * factor_index,
+                "usable_closed_root": False,
+                "closed_root_price_ratio": None,
+                "runtime_seconds": 1.0,
+            }
+        )
+    slope_summary = {
+        "schema": "e5f_target_preserving_closed_root_frontier_v1",
+        "status": "complete_target_preserving_closed_root_frontier",
+        "classification": "conditional_profile_diagnostic_not_calibration",
+        "promotion_eligible": False,
+        "factors": list(report.EXPECTED_SLOPE_FACTORS),
+        "target_moment": "tfr",
+        "target_completed_fertility": 1.0,
+        "target_tolerance": 5.0e-4,
+        "root_capable_factors": [],
+        "frontier": slope_rows,
+        "input_provenance": {
+            "source_sha256": scientific["source_sha256"],
+            "target_fingerprint": scientific["target_fingerprint"],
+            "code_bundle_sha256": scientific["code_fingerprints"]["bundle_sha256"],
+            "scientific_contract_sha256": selected_summary["scientific_contract_sha256"],
+            "renewal_contract_sha256": selected_summary["renewal_contract_sha256"],
+            "dated_contract_sha256": selected_summary["dated_contract_sha256"],
+        },
+    }
+    write_json(slope_dir / "summary.json", slope_summary)
+    write_csv(slope_dir / "frontier_summary.csv", slope_rows)
+    write_csv(slope_dir / "target_fit_full.csv", [{"status": "fixture"}])
+    write_csv(
+        slope_dir / "closed_stationary_schedules_full.csv", [{"status": "fixture"}]
+    )
+    slope_artifacts = {
+        name: report.file_sha256(slope_dir / name)
+        for name in (
+            "summary.json",
+            "frontier_summary.csv",
+            "target_fit_full.csv",
+            "closed_stationary_schedules_full.csv",
+        )
+    }
+    write_json(
+        slope_dir / "manifest.json",
+        {
+            "schema": "e5f_target_preserving_closed_root_report_manifest_v1",
+            "status": "complete_target_preserving_closed_root_report_manifest",
+            "artifacts": slope_artifacts,
+        },
+    )
+
     return argparse.Namespace(
         selected_report=selected_summary_path,
         repeat_task=repeat_paths,
@@ -701,6 +765,7 @@ def build_fixture(root: Path) -> argparse.Namespace:
         target_provenance_csv=target_provenance_path,
         historical_packet=historical_dir,
         continuation_packet=continuation_dir,
+        slope_frontier_packet=slope_dir.parent,
         output_dir=root / "canonical_report",
     )
 
@@ -715,12 +780,68 @@ class CanonicalNoPolicyReportTest(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         result = report.build_report(args)
         self.assertEqual(result["status"], "complete_canonical_no_policy_transition_report")
+        self.assertEqual(result["schema"], "e5f_canonical_no_policy_transition_report_v2")
         self.assertEqual(len(read_csv_for_test(args.output_dir / "calibrated_2023_target_fit.csv")), 12)
         self.assertEqual(len(read_csv_for_test(args.output_dir / "estimated_parameters_and_bounds.csv")), 10)
         readme = (args.output_dir / "README.md").read_text().lower()
         self.assertIn("no funded policy", readme)
         self.assertIn("not described as a transition between steady states", readme)
+        self.assertIn("target-preserving fertility-slope diagnostic", readme)
+        self.assertEqual(
+            len(read_csv_for_test(args.output_dir / "closed_root_slope_frontier.csv")),
+            7,
+        )
         self.assertTrue((args.output_dir / "report_manifest.sha256").is_file())
+
+    def test_parameter_parser_accepts_eleven_dimensional_nested_repair(self) -> None:
+        domain = []
+        rows = []
+        for index in range(11):
+            name = f"parameter_{index:02d}"
+            domain.append(
+                {"name": name, "lower": 0.0, "upper": 1.0, "transform": "softzero"}
+            )
+            rows.append(
+                {
+                    "dimension": index,
+                    "parameter": name,
+                    "estimate": 0.25,
+                    "lower": 0.0,
+                    "upper": 1.0,
+                    "transform": "softzero",
+                    "unit_coordinate": 0.5,
+                    "distance_to_nearest_unit_bound": 0.5,
+                    "near_bound_within_0.02": False,
+                    "status": "estimated_in_dated_transition_refinement",
+                }
+            )
+        parsed = report.parse_parameter_rows(rows, {"domain": domain})
+        self.assertEqual(len(parsed), 11)
+        self.assertEqual(parsed[-1]["parameter"], "parameter_10")
+
+    def test_packet_local_artifact_takes_precedence_over_recorded_absolute_path(self) -> None:
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        root = Path(temporary.name)
+        packet = root / "packet"
+        external = root / "external"
+        packet.mkdir()
+        external.mkdir()
+        packet_copy = packet / "input.csv"
+        recorded_copy = external / "input.csv"
+        payload = b"same verified input\n"
+        packet_copy.write_bytes(payload)
+        recorded_copy.write_bytes(payload)
+        resolved = report.local_artifact(
+            packet,
+            {
+                "path": str(recorded_copy),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "size_bytes": len(payload),
+            },
+            "portable fixture",
+        )
+        self.assertEqual(resolved, packet_copy.resolve())
 
     def test_requires_exactly_two_repeats_without_touching_output(self) -> None:
         temporary, args = self.fixture()
@@ -783,6 +904,22 @@ class CanonicalNoPolicyReportTest(unittest.TestCase):
         manifest["artifacts"]["paired_continuation_path.csv"] = "0" * 64
         write_json(manifest_path, manifest)
         with self.assertRaisesRegex(report.ContractError, "artifact hash differs"):
+            report.build_report(args)
+        self.assertFalse(args.output_dir.exists())
+
+    def test_rejects_root_capable_slope_frontier_without_touching_output(self) -> None:
+        temporary, args = self.fixture()
+        self.addCleanup(temporary.cleanup)
+        summary_path = args.slope_frontier_packet / "report" / "summary.json"
+        summary = json.loads(summary_path.read_text())
+        summary["frontier"][0]["usable_closed_root"] = True
+        summary["root_capable_factors"] = [summary["frontier"][0]["kappa_factor"]]
+        write_json(summary_path, summary)
+        manifest_path = args.slope_frontier_packet / "report" / "manifest.json"
+        manifest = json.loads(manifest_path.read_text())
+        manifest["artifacts"]["summary.json"] = report.file_sha256(summary_path)
+        write_json(manifest_path, manifest)
+        with self.assertRaisesRegex(report.ContractError, "root-capable"):
             report.build_report(args)
         self.assertFalse(args.output_dir.exists())
 

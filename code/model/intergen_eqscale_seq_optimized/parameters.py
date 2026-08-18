@@ -102,10 +102,12 @@ def setup_parameters() -> SimpleNamespace:
     P.eqscale_form = "linear"
     P.delta_alpha_jump = 0.0
     # Default-off E5F experiment.  When active under the repaired E5 child
-    # process, each child currently at home requires this many housing-service
-    # units.  A zero floor is deliberately inert.
+    # process, the floor with m children at home is
+    # hbar_first_child_jump * 1{m>0} + hbar_child_rooms * m.  Zero values are
+    # deliberately inert.
     P.child_room_floor = False
     P.hbar_child_rooms = 0.0
+    P.hbar_first_child_jump = 0.0
     P.scale_flows_to_period = True
     P.c_bar_0 = 0.10 * P.period_years
     P.c_bar_n = 0.12 * P.period_years
@@ -518,18 +520,27 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         configure_child_state_process(P)
     P.child_room_floor = bool(getattr(P, "child_room_floor", False))
     P.hbar_child_rooms = float(getattr(P, "hbar_child_rooms", 0.0))
+    P.hbar_first_child_jump = float(getattr(P, "hbar_first_child_jump", 0.0))
     if not np.isfinite(P.hbar_child_rooms) or P.hbar_child_rooms < 0.0:
         raise ValueError("hbar_child_rooms must be finite and weakly nonnegative.")
-    if P.child_room_floor and P.hbar_child_rooms > 0.0:
+    if not np.isfinite(P.hbar_first_child_jump) or P.hbar_first_child_jump < 0.0:
+        raise ValueError("hbar_first_child_jump must be finite and weakly nonnegative.")
+    if P.child_room_floor and (
+        P.hbar_child_rooms > 0.0 or P.hbar_first_child_jump > 0.0
+    ):
         if str(getattr(P, "preference_spec", "stone_geary")).lower() != "eqscale":
             raise ValueError("the child-room floor requires preference_spec='eqscale'.")
         if not independent_child_maturation_active(P):
             raise ValueError("the child-room floor requires independent child-count maturation.")
-        maximum_floor = (int(P.n_parity) - 1) * P.hbar_child_rooms
+        maximum_floor = (
+            P.hbar_first_child_jump
+            + (int(P.n_parity) - 1) * P.hbar_child_rooms
+        )
         if not maximum_floor < float(P.hR_max):
             raise ValueError(
                 "child-room floor violates the rental-service cap: "
-                f"(n_parity - 1) * hbar_child_rooms = {maximum_floor:g} "
+                "hbar_first_child_jump + (n_parity - 1) * "
+                f"hbar_child_rooms = {maximum_floor:g} "
                 f"must be strictly below hR_max = {float(P.hR_max):g}."
             )
     if P.readiness_gate_enabled:

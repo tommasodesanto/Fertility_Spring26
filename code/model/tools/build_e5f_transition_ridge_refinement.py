@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a fail-closed ridge/trust refinement from a 21-point E5F panel.
+"""Build a fail-closed ridge/trust refinement from an E5F coordinate panel.
 
 The input is an already evaluated central-coordinate panel.  This script does
 no model solving: it reconstructs the weighted residual Jacobian, reports its
@@ -52,6 +52,7 @@ class Expectations:
     code_bundle_sha256: str
     model_profile: str
     panel_seed: int
+    dimensions: int = EXPECTED_DIMENSIONS
     source: str | None = None
     renewal_contract_sha256: str | None = None
     dated_contract_sha256: str | None = None
@@ -94,6 +95,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-code-bundle-sha256", required=True)
     parser.add_argument("--expected-model-profile", required=True)
     parser.add_argument("--expected-panel-seed", type=int, required=True)
+    parser.add_argument(
+        "--expected-dimensions",
+        type=int,
+        default=EXPECTED_DIMENSIONS,
+        help="Joint transition-parameter count; coordinate tasks must equal 1+2d.",
+    )
     parser.add_argument("--expected-renewal-contract-sha256", required=True)
     parser.add_argument("--expected-dated-contract-sha256", required=True)
     return parser.parse_args()
@@ -367,10 +374,10 @@ def check_expectations(contract: dict[str, Any], expectations: Expectations) -> 
         raise ContractError(
             f"target_count={contract['target_count']}; expected {EXPECTED_TARGET_COUNT}"
         )
-    if contract["transition_free_parameter_count"] != EXPECTED_DIMENSIONS:
-        raise ContractError("Transition parameter count is not ten")
-    if contract["stationary_free_parameter_count"] != EXPECTED_DIMENSIONS:
-        raise ContractError("Stationary parameter count is not ten")
+    if contract["transition_free_parameter_count"] != expectations.dimensions:
+        raise ContractError("Transition parameter count differs from the declared dimension")
+    if contract["stationary_free_parameter_count"] != expectations.dimensions:
+        raise ContractError("Stationary parameter count differs from the declared dimension")
     if contract["policy_case"] != "none" or contract["post_2023_periods"] != 0:
         raise ContractError("Coordinate panel must be a no-policy 2007--2023 calibration")
     _exact_float(
@@ -586,7 +593,14 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
     results_dir = results_dir.resolve()
     if not results_dir.is_dir():
         raise ContractError(f"Coordinate results directory does not exist: {results_dir}")
-    expected_names = {f"task_{task:03d}" for task in range(1, EXPECTED_TASKS + 1)}
+    dimensions = int(expectations.dimensions)
+    if dimensions < 1 or dimensions >= EXPECTED_TARGET_COUNT:
+        raise ContractError(
+            "The declared parameter dimension must be positive and smaller than "
+            "the target count"
+        )
+    expected_tasks = 1 + 2 * dimensions
+    expected_names = {f"task_{task:03d}" for task in range(1, expected_tasks + 1)}
     observed_names = {
         path.name
         for path in results_dir.glob("task_*")
@@ -596,7 +610,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
     unexpected = sorted(observed_names.difference(expected_names))
     if missing or unexpected:
         raise ContractError(
-            f"Coordinate panel must contain exactly task_001..task_021; "
+            f"Coordinate panel must contain exactly task_001..task_{expected_tasks:03d}; "
             f"missing={missing}, unexpected={unexpected}"
         )
 
@@ -609,7 +623,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
     common_domain: list[dict[str, Any]] | None = None
     common_center_hash: str | None = None
 
-    for task_id in range(1, EXPECTED_TASKS + 1):
+    for task_id in range(1, expected_tasks + 1):
         task_dir = results_dir / f"task_{task_id:03d}"
         failure = task_dir / "failure.json"
         if failure.exists():
@@ -625,8 +639,8 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         panel = dict(summary.get("panel_design") or {})
         if int(panel.get("task_id", -1)) != task_id:
             raise ContractError(f"task {task_id}: internal task id mismatch")
-        if int(panel.get("panel_size", -1)) != EXPECTED_TASKS:
-            raise ContractError(f"task {task_id}: panel size is not {EXPECTED_TASKS}")
+        if int(panel.get("panel_size", -1)) != expected_tasks:
+            raise ContractError(f"task {task_id}: panel size is not {expected_tasks}")
         if int(panel.get("panel_seed", -1)) != expectations.panel_seed:
             raise ContractError(f"task {task_id}: panel seed mismatch")
         if panel.get("panel_design") != "coordinate":
@@ -635,10 +649,10 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         if panel.get("terminal_preference_coordinate") != "psi_child_change_2023":
             raise ContractError(f"task {task_id}: wrong terminal preference coordinate")
         domain = list(panel.get("domain") or [])
-        if len(domain) != EXPECTED_DIMENSIONS:
-            raise ContractError(f"task {task_id}: domain is not ten-dimensional")
+        if len(domain) != dimensions:
+            raise ContractError(f"task {task_id}: domain does not have {dimensions} rows")
         domain_names = [str(row.get("name")) for row in domain]
-        if len(set(domain_names)) != EXPECTED_DIMENSIONS:
+        if len(set(domain_names)) != dimensions:
             raise ContractError(f"task {task_id}: duplicate domain names")
         for row in domain:
             if set(row) != {"name", "lower", "upper", "transform"}:
@@ -659,7 +673,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         elif center_hash != common_center_hash:
             raise ContractError(f"task {task_id}: center hash differs across panel")
         unit = np.asarray(panel.get("unit_vector"), dtype=float)
-        if unit.shape != (EXPECTED_DIMENSIONS,) or not np.all(np.isfinite(unit)):
+        if unit.shape != (dimensions,) or not np.all(np.isfinite(unit)):
             raise ContractError(f"task {task_id}: invalid unit vector")
         if np.any(unit < 0.0) or np.any(unit > 1.0):
             raise ContractError(f"task {task_id}: unit vector lies outside [0,1]")
@@ -736,7 +750,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
     if tasks[0].panel.get("design") != "anchor":
         raise ContractError("task 1 is not the anchor")
     _assert_close_vector(tasks[0].unit, anchor, "anchor")
-    for dimension in range(EXPECTED_DIMENSIONS):
+    for dimension in range(dimensions):
         minus_task = tasks[1 + 2 * dimension]
         plus_task = tasks[2 + 2 * dimension]
         expected_minus = anchor.copy()
@@ -801,7 +815,7 @@ def central_jacobian(panel: CoordinatePanel) -> tuple[np.ndarray, list[dict[str,
     anchor_residual = panel.tasks[0].residual
     columns: list[np.ndarray] = []
     side_rows: list[dict[str, Any]] = []
-    frozen = np.zeros(EXPECTED_DIMENSIONS, dtype=bool)
+    frozen = np.zeros(len(panel.domain), dtype=bool)
     for dimension, domain_row in enumerate(panel.domain):
         minus = panel.tasks[1 + 2 * dimension].residual
         plus = panel.tasks[2 + 2 * dimension].residual
@@ -870,7 +884,7 @@ def ridge_trust_proposals(
 ) -> list[dict[str, Any]]:
     active_indices = np.flatnonzero(~frozen)
     if active_indices.size < 1:
-        raise ContractError("All ten coordinates fail the predeclared side-consistency gate")
+        raise ContractError("All coordinates fail the predeclared side-consistency gate")
     active = jacobian[:, active_indices]
     active_rank = matrix_rank_report(active)
     active_key = f"relative_{IDENTIFICATION_THRESHOLD:g}"
@@ -891,7 +905,7 @@ def ridge_trust_proposals(
             )
         except np.linalg.LinAlgError as error:
             raise ContractError(f"Ridge solve failed: {error}") from error
-        raw = np.zeros(EXPECTED_DIMENSIONS, dtype=float)
+        raw = np.zeros(anchor.size, dtype=float)
         raw[active_indices] = active_raw
         for trust_radius in TRUST_RADIUS_GRID:
             step, scale, scale_reason = trust_and_box_scale(raw, anchor, trust_radius)
@@ -1009,12 +1023,14 @@ def build_refinement(
     if outdir.exists() and any(outdir.iterdir()):
         raise ContractError(f"Refusing to overwrite nonempty output directory: {outdir}")
     panel = load_coordinate_panel(coordinate_results_dir, expectations)
+    dimensions = len(panel.domain)
+    expected_tasks = 1 + 2 * dimensions
     jacobian, side_rows, frozen = central_jacobian(panel)
     full_rank = matrix_rank_report(jacobian)
     rank_key = f"relative_{IDENTIFICATION_THRESHOLD:g}"
-    if int(full_rank["relative_ranks"][rank_key]) != EXPECTED_DIMENSIONS:
+    if int(full_rank["relative_ranks"][rank_key]) != dimensions:
         raise ContractError(
-            "The ten-parameter weighted Jacobian is rank deficient at the 1e-3 "
+            "The weighted Jacobian is rank deficient at the 1e-3 "
             "relative threshold; no refinement plan was created"
         )
     active_rank = matrix_rank_report(jacobian[:, ~frozen])
@@ -1109,10 +1125,12 @@ def build_refinement(
     plan = {
         "schema": "e5f_transition_ridge_refinement_plan_v1",
         "status": "ready_for_independent_scientific_validation",
+        "refinement_builder": str(Path(__file__).resolve()),
+        "refinement_builder_sha256": file_sha256(Path(__file__).resolve()),
         "coordinate_results_dir": str(panel.results_dir),
         "coordinate_panel_contract": {
-            "task_count": EXPECTED_TASKS,
-            "dimensions": EXPECTED_DIMENSIONS,
+            "task_count": expected_tasks,
+            "dimensions": dimensions,
             "central_step": CENTRAL_STEP,
             "panel_seed": expectations.panel_seed,
             "center_sha256": panel.tasks[0].panel["center_sha256"],
@@ -1151,7 +1169,7 @@ def build_refinement(
             "active_after_side_gate": active_rank,
             "identification_gate": {
                 "relative_singular_value_threshold": IDENTIFICATION_THRESHOLD,
-                "required_full_rank": EXPECTED_DIMENSIONS,
+                "required_full_rank": dimensions,
                 "passed": True,
             },
             "side_consistency_rule": "freeze a step column iff forward dot backward is nonpositive or either side has zero norm",
@@ -1213,6 +1231,7 @@ def main() -> None:
             code_bundle_sha256=str(args.expected_code_bundle_sha256),
             model_profile=str(args.expected_model_profile),
             panel_seed=int(args.expected_panel_seed),
+            dimensions=int(args.expected_dimensions),
             renewal_contract_sha256=(
                 str(args.expected_renewal_contract_sha256)
                 if args.expected_renewal_contract_sha256 is not None
@@ -1231,7 +1250,8 @@ def main() -> None:
     print(
         "E5F_RIDGE_REFINEMENT_BUILT "
         f"plan_sha256={result['plan_sha256']} candidates=7 "
-        f"rank_1e-3={rank['relative_0.001']}/10 frozen={frozen}",
+        f"rank_1e-3={rank['relative_0.001']}/"
+        f"{plan['coordinate_panel_contract']['dimensions']} frozen={frozen}",
         flush=True,
     )
 

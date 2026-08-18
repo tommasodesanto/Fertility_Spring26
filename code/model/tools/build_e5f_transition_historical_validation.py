@@ -46,6 +46,7 @@ if ACTIVE_TARGET_SYSTEM.count != 12:
 EXPECTED_TARGET_SET = ACTIVE_TARGET_SYSTEM.name
 EXPECTED_TARGET_COUNT = 12
 EXPECTED_TARGET_FINGERPRINT = ACTIVE_TARGET_SYSTEM.fingerprint
+SUPPORTED_FREE_PARAMETER_COUNTS = (10, 11)
 EXPECTED_NCHS_METADATA_SHA256 = (
     "631454d5901399e9ee26ec914d13a5c3cb657b77b428308d04cf65aa644ed60d"
 )
@@ -306,8 +307,14 @@ def validate_case_summary(summary: Mapping[str, Any], summary_path: Path) -> dic
     free_count = integer(
         summary["transition_free_parameter_count"], "transition_free_parameter_count"
     )
-    if free_count != 10:
-        raise ValueError("Selected transition calibration does not have ten free parameters")
+    if free_count not in SUPPORTED_FREE_PARAMETER_COUNTS:
+        raise ValueError(
+            "Selected transition calibration must use one of the supported "
+            f"overidentified specifications with {SUPPORTED_FREE_PARAMETER_COUNTS} "
+            f"free parameters; found {free_count}"
+        )
+    if free_count >= EXPECTED_TARGET_COUNT:
+        raise ValueError("Historical validation refuses an underidentified calibration")
     profile = summary["model_profile"]
     if not isinstance(profile, dict):
         raise ValueError("model_profile must be an object")

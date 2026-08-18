@@ -115,6 +115,25 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Diagnostic repaired-profile cost held fixed outside a joint panel.",
     )
+    parser.add_argument(
+        "--fixed-first-child-room-jump",
+        type=float,
+        default=None,
+        help=(
+            "Diagnostic nonnegative extra housing-service floor applied whenever "
+            "at least one child is at home. It is external to the active "
+            "ten-parameter calibration and nests the current model at zero."
+        ),
+    )
+    parser.add_argument(
+        "--estimate-first-child-room-jump",
+        action="store_true",
+        help=(
+            "Add the nonnegative first-child housing-service intercept to the "
+            "joint transition-search domain. This adds one free parameter and "
+            "requires the repaired income-entry profile."
+        ),
+    )
     parser.add_argument("--outside-origin-entry-share", type=float, default=0.169)
     parser.add_argument("--market-tol", type=float, default=2e-4)
     parser.add_argument("--market-max-iter", type=int, default=30)
@@ -414,6 +433,57 @@ def activate_model_profile(
             ),
         }
     raise ValueError(f"Unknown model profile: {name}")
+
+
+def configure_first_child_room_jump(
+    *,
+    model_profile_name: str,
+    theta: dict[str, float],
+    active_domain: tuple[tuple[str, float, float, str], ...],
+    profile_overrides: dict[str, Any],
+    model_profile: dict[str, Any],
+    fixed_jump: float | None,
+    estimate_jump: bool,
+) -> tuple[
+    tuple[tuple[str, float, float, str], ...],
+    dict[str, Any],
+    dict[str, Any],
+]:
+    """Apply the nested first-child housing-intercept contract."""
+    if estimate_jump and fixed_jump is not None:
+        raise ValueError("The first-child room jump cannot be both fixed and estimated")
+    if not estimate_jump and fixed_jump is None:
+        return active_domain, profile_overrides, model_profile
+    if model_profile_name != REPAIRED_MODEL_PROFILE:
+        raise ValueError("The first-child room jump requires the repaired profile")
+
+    if estimate_jump:
+        theta.setdefault("hbar_first_child_jump", 0.0)
+        profile_overrides["hbar_first_child_jump"] = 0.0
+        active_domain = tuple(active_domain) + (
+            ("hbar_first_child_jump", 0.0, 0.5, "softzero"),
+        )
+        model_profile["first_child_room_jump"] = "one additional free parameter"
+        model_profile["first_child_room_jump_semantics"] = (
+            "extra housing-service floor whenever at least one child is at home"
+        )
+        model_profile["first_child_room_jump_status"] = (
+            "jointly estimated transition parameter"
+        )
+        return active_domain, profile_overrides, model_profile
+
+    jump = float(fixed_jump)
+    if not math.isfinite(jump) or jump < 0.0:
+        raise ValueError(
+            "--fixed-first-child-room-jump must be finite and nonnegative"
+        )
+    theta["hbar_first_child_jump"] = jump
+    profile_overrides["hbar_first_child_jump"] = jump
+    model_profile["first_child_room_jump"] = jump
+    model_profile["first_child_room_jump_status"] = (
+        "externally fixed diagnostic; not included in the free-parameter count"
+    )
+    return active_domain, profile_overrides, model_profile
 
 
 def solve_old_steady_state(
@@ -1404,6 +1474,15 @@ def main() -> None:
     active_domain, profile_overrides, model_profile = activate_model_profile(
         str(args.model_profile), theta
     )
+    active_domain, profile_overrides, model_profile = configure_first_child_room_jump(
+        model_profile_name=str(args.model_profile),
+        theta=theta,
+        active_domain=active_domain,
+        profile_overrides=profile_overrides,
+        model_profile=model_profile,
+        fixed_jump=args.fixed_first_child_room_jump,
+        estimate_jump=bool(args.estimate_first_child_room_jump),
+    )
     if args.fixed_first_birth_cost is not None:
         if str(args.model_profile) != REPAIRED_MODEL_PROFILE:
             raise ValueError("--fixed-first-birth-cost requires the repaired profile")
@@ -2059,6 +2138,10 @@ def main() -> None:
         ),
         "panel_design": panel_metadata,
         "fixed_first_birth_cost": args.fixed_first_birth_cost,
+        "fixed_first_child_room_jump": args.fixed_first_child_room_jump,
+        "estimate_first_child_room_jump": bool(
+            args.estimate_first_child_room_jump
+        ),
         "candidate_psi_changes": candidate_psi_changes,
         "policy_case": str(args.policy_case),
         "post_2023_periods": int(args.post_2023_periods),

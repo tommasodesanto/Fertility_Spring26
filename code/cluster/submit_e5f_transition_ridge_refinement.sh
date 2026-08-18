@@ -58,6 +58,7 @@ EXPECTED_CODE_BUNDLE_SHA256="${E5F_RIDGE_EXPECTED_CODE_BUNDLE_SHA256:?E5F_RIDGE_
 EXPECTED_MODEL_PROFILE="${E5F_RIDGE_EXPECTED_MODEL_PROFILE:?E5F_RIDGE_EXPECTED_MODEL_PROFILE is required}"
 EXPECTED_RENEWAL_SHA256="${E5F_RIDGE_EXPECTED_RENEWAL_CONTRACT_SHA256:?E5F_RIDGE_EXPECTED_RENEWAL_CONTRACT_SHA256 is required}"
 EXPECTED_DATED_SHA256="${E5F_RIDGE_EXPECTED_DATED_CONTRACT_SHA256:?E5F_RIDGE_EXPECTED_DATED_CONTRACT_SHA256 is required}"
+ESTIMATE_FIRST_CHILD_JUMP="${E5F_RIDGE_ESTIMATE_FIRST_CHILD_ROOM_JUMP:-0}"
 MODE="${E5F_RIDGE_MODE:-validation}"
 TASK_ID="${SLURM_ARRAY_TASK_ID:?SLURM_ARRAY_TASK_ID is required}"
 SELECTION="${E5F_RIDGE_SELECTION:-}"
@@ -65,6 +66,10 @@ EXPECTED_SELECTION_SHA256="${E5F_RIDGE_EXPECTED_SELECTION_SHA256:-}"
 
 if [ "$MODE" != "validation" ] && [ "$MODE" != "repeat" ]; then
     echo "E5F_RIDGE_MODE must be validation or repeat" >&2
+    exit 2
+fi
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" != "0" ] && [ "$ESTIMATE_FIRST_CHILD_JUMP" != "1" ]; then
+    echo "E5F_RIDGE_ESTIMATE_FIRST_CHILD_ROOM_JUMP must be 0 or 1" >&2
     exit 2
 fi
 if [ "$MODE" = "validation" ]; then
@@ -99,7 +104,8 @@ mapfile -t PLAN_FIELDS < <(
         "$EXPECTED_CODE_BUNDLE_SHA256" \
         "$EXPECTED_MODEL_PROFILE" \
         "$EXPECTED_RENEWAL_SHA256" \
-        "$EXPECTED_DATED_SHA256" <<'PY'
+        "$EXPECTED_DATED_SHA256" \
+        "$ESTIMATE_FIRST_CHILD_JUMP" <<'PY'
 import hashlib
 import json
 import sys
@@ -119,6 +125,7 @@ from pathlib import Path
     expected_profile,
     expected_renewal_sha,
     expected_dated_sha,
+    estimate_first_child_jump,
 ) = sys.argv[1:]
 
 def digest(path: Path) -> str:
@@ -152,6 +159,11 @@ for actual, expected, label in checks:
         raise SystemExit(f"{label} mismatch: {actual} versus {expected}")
 if len(plan.get("candidates", [])) != 7:
     raise SystemExit("plan does not contain seven candidates")
+expected_dimensions = 11 if estimate_first_child_jump == "1" else 10
+if int(plan["coordinate_panel_contract"].get("dimensions", -1)) != expected_dimensions:
+    raise SystemExit(
+        "refinement-plan dimension disagrees with the first-child-jump mode"
+    )
 
 outer_task = int(task_raw)
 selection_sha = ""
@@ -251,6 +263,10 @@ fi
 
 export PYTHONPATH="$MODEL_DIR:${PYTHONPATH:-}"
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+EXTRA_ARGS=()
+if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ]; then
+    EXTRA_ARGS+=(--estimate-first-child-room-jump)
+fi
 "$PYTHON_BIN" "$MODEL_DIR/tools/run_e5f_transition_calibration.py" \
     --source "$SOURCE" \
     --expected-source-sha256 "$SOURCE_SHA256" \
@@ -269,7 +285,8 @@ export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THRE
     --model-profile "$MODEL_PROFILE" \
     --replacement-fertility "$OLD_FERTILITY_REFERENCE" \
     --old-completed-fertility-target "$OLD_FERTILITY_REFERENCE" \
-    --outside-origin-entry-share "$OUTSIDE_ORIGIN_ENTRY_SHARE"
+    --outside-origin-entry-share "$OUTSIDE_ORIGIN_ENTRY_SHARE" \
+    "${EXTRA_ARGS[@]}"
 
 if [ ! -s "$OUTDIR/summary.json" ] || [ ! -s "$OUTDIR/target_fit_long.csv" ]; then
     echo "scientific driver returned without complete core artifacts" >&2

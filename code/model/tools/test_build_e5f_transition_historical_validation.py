@@ -187,7 +187,7 @@ def make_fixture(tmp_path: Path) -> argparse.Namespace:
         "target_fingerprint": builder.EXPECTED_TARGET_FINGERPRINT,
         "target_set": builder.EXPECTED_TARGET_SET,
         "target_count": 12,
-        "transition_free_parameter_count": 10,
+        "transition_free_parameter_count": 11,
         "target_measurements": {
             "tfr": "fixture cohort TFR",
             "childless_rate": "fixture cohort childlessness",
