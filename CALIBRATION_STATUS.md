@@ -224,6 +224,47 @@ mean-rooms level account for most of the calibration loss. The model also does
 not explain the post-2007 house-price cycle. These are substantive limitations,
 not solver failures, and they should remain visible in the paper and slides.
 
+### Completed alternative: fixed four-group historical demographic law
+
+A separate, not-yet-promoted experiment replaces the five dated population/age
+bridge targets with four time-invariant net household-formation, migration, and
+dissolution rates for ages 18--21, 22--29, 30--45, and 46--85. The rates are
+estimated on the 2007--2011, 2011--2015, and 2015--2019 demographic changes;
+2023 is held out. The actual 2007 age distribution remains the initial stock,
+so this exercise does not claim that the 2007 U.S. demographic state was a
+steady state.
+
+An exact 23-candidate local recalibration selected a 4.4-percent increase in the
+per-child room floor and otherwise retained the current parameter vector. The
+selected loss is `36.3220785888`, versus `36.7478005927` at the unchanged
+parameters and `36.0992231622` in the current dated-bridge specification. The
+model predicts a 2023 adult-household index of `1.1337616863` against
+`1.1292476712` in the held-out data, with age-distribution total-variation
+distance `0.0302782531`. Without the dated bridge or the four-rate law, the
+corresponding index is `1.0730891717` and the distance is `0.1164047926`.
+
+The wider historical validation is not yet adequate for a claim that the model
+fits the full 2007--2023 transition. In 2023, model versus data are respectively
+`1.2717` versus `1.6165` for explicit-state period fertility, `30.77` versus
+`28.09` for period mean age at first birth, `0.488` versus `0.377` for the
+period share of first births at age 30 or later, `0.558` versus `0.652` for
+ownership, `6.748` versus `5.914` for occupied rooms, and `1.069` versus
+`1.156` for the real-house-price index. The top-bin-adjusted period-fertility
+sensitivity is `1.4206`; its extra top-bin births have imputed timing. The
+model gets several trend directions but misses these levels, the ownership
+cycle, and the 2007--2011 house-price collapse.
+
+The alternative does not repair the closed endpoint. An exact 25-price audit
+over `[0.0001,3]` times the old price finds `B/E` between `0.5557943151` and
+`0.7093530338`, with no positive renewal root. Its open sensitivity endpoint is
+usable at price ratio `0.6477232277` and population scale `0.3812130831`, but
+those levels remain conditional on the external outside-flow contract.
+
+This result establishes feasibility of a parsimonious no-date-specific-bridge
+historical accounting law. It does not supersede the current fitted-2023
+baseline. The concise comparison is
+`output/model/e5f_transition_design_comparison_20260818/README.md`.
+
 ### Canonical artifacts and reproducibility
 
 - Final ridge selection and repeat report:
@@ -236,6 +277,10 @@ not solver failures, and they should remain visible in the paper and slides.
   `output/model/e5f_target_preserving_closed_root_frontier_jump11_production_20260818/`
 - Single paper-facing no-policy report:
   `output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/`
+- Experimental four-group calibration and historical validation:
+  `output/model/e5f_historical_four_group_coordinate_production_20260818/`
+- Experimental four-group endpoint audit:
+  `output/model/e5f_historical_four_group_best_endpoints_production_20260818/`
 - Advisor presentation:
   `latex/transition_closure_update_presentation.pdf`
 - Paper-facing model note:
