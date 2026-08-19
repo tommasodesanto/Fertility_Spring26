@@ -37,7 +37,7 @@ the codebase or the sequence of internal experiments.
   economic object an audience needs.
 - Keep issue-ledger language out of outward-facing slides: `provisional`, `pending`,
   `not final`, `needs review`, run readiness, and implementation status belong in project
-  notes unless they are necessary to interpret the economics shown on that frame.
+  notes. Include them on a visible slide only when the author explicitly requests them.
 
 ## 3. Calibration and quantitative tables
 
