@@ -106,19 +106,11 @@ Corollaries of the rule:
 
 ## 6. Slides
 
-- Conventional noun-phrase frame titles ("Young households", "Competitive equilibrium",
-  "Marginal values and access gaps"). Not assertion sentences, not section numbers with
-  no content.
-- One idea per frame: at most one framing line, then the display(s), then at most one
-  interpretation line. No symbol glossaries; define symbols in the line that uses them.
-- Figures only where they carry a result (target ~2 per deck: the mechanism figure and
-  the result figure). Diagrams of the economy, pipelines, and bar-chart metaphors are
-  usually too much.
-- Proofs and derivations go to appendix frames.
-- Metaphors only if load-bearing and used once ("subsidy to staying put" earns its place;
-  "misallocation thermometer" does not).
-- Calibrate to "casual but technical reader": more normal than you think. When in doubt,
-  copy the structure of a good job-market-paper deck, not a popular talk.
+For Beamer decks and presentation-facing text, read and follow
+`docs/style/econ_presentation_style_guide.md`. Its defaults are intentionally conventional:
+one idea per frame, noun-phrase titles, full-width exposition, sparse figures, and standard
+production-paper tables. In particular, a calibration slide defaults to
+`Moment | Target | Model`; diagnostic columns appear only when the author requests them.
 
 ## 7. Workflow checks (LaTeX)
 

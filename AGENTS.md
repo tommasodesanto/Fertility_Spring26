@@ -386,9 +386,11 @@ When referencing files in chat, give absolute paths.
   and saved diagnostics for nontrivial runs.
 - For empirical code, preserve sample definitions, weights, geography mappings,
   and event-time definitions. If any of these change, document the change.
-- For paper-facing writing (model sections, abstracts, slides), follow the style
-  guide at `docs/style/econ_writing_style_guide.md`: environment-first structure,
-  primitives before derived objects, one sentence of economics around every display.
+- For paper-facing writing, follow `docs/style/econ_writing_style_guide.md`:
+  environment-first structure, primitives before derived objects, and one sentence of
+  economics around every display. For slide work, also follow
+  `docs/style/econ_presentation_style_guide.md`, including the default three-column
+  calibration table (`Moment | Target | Model`).
 - Do not narrate computational conventions such as branch screening,
   infeasible-value sentinels, tie-breaking, or deterministic-limit implementation
   in paper prose unless economically substantive or explicitly requested.
