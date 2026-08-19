@@ -43,8 +43,8 @@
 }
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Today: from the population closure to an equilibrium transition}
-\textbf{Last time:} we focused on the missing population closure:
+\begin{frame}{Population closure and equilibrium transition}
+\textbf{Previous focus:} the population closure linking fertility to housing demand:
 \[
 \text{births today}
 \longrightarrow \text{new households later}
@@ -52,27 +52,25 @@
 \]
 
 \medskip
-\textbf{Today:} I try to make that idea an equilibrium object:
+\textbf{This presentation embeds the closure in equilibrium:}
 \begin{itemize}
-  \item build the simplest model with a well-defined steady state;
-  \item separate the immediate response to a fertility-preference shock from the later demographic adjustment;
-  \item add the same population accounting to the existing quantitative model;
-  \item ask whether the 2007--2023 economy can be interpreted as a point along such a transition.
+  \item a simplified economy with a well-defined steady state;
+  \item the impact response and subsequent demographic adjustment;
+  \item the same population law in the lifecycle quantitative model;
+  \item calibration and validation from 2007 to 2023, followed by a forward transition.
 \end{itemize}
 
-\medskip
-\textbf{The update is small: the same household architecture, a population closure, and one nested first-child housing term.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
 \begin{frame}{A toy economy}
 \small
-To fix ideas, let's look at a very simplified economy with young and old households:
+To fix ideas, consider a simplified economy with young and old households:
 \begin{itemize}
   \item $Y_t$ is the number of young households at date $t$; $O_t$ is the number of old households.
   \item Total adult-household population is $S_t=Y_t+O_t$.
-  \item A young household chooses consumption, housing services, and $n_t$ \textbf{household children}. Next period it becomes old.
-  \item In this unitary-household model, each household child becomes one young household in the next generation.
+  \item Young households choose consumption, housing services, and $n_t$ \textbf{household children}; next period they are old.
+  \item Each household child becomes one young household in the next generation.
   \item Both generations purchase housing services in the same market at price $p_t$.
 \end{itemize}
 
@@ -86,11 +84,11 @@ O_{t+1}=Y_t,
 so $n_t=1$ is replacement.
 
 \medskip
-\textbf{Focus of the toy model:} fertility, cohort replacement, and the housing-services market. The quantitative model adds tenure choice, mortgages, saving, and bequests.
+The quantitative model adds tenure choice, mortgages, saving, and bequests.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Household choices and the housing market}
+\begin{frame}{Household choice and housing-market clearing}
 \small
 A young household earns $y$ and chooses consumption $c$, housing services $h$, and household children $n$:
 \[
@@ -115,11 +113,11 @@ Y_t h_Y(p_t)+O_t h_O(p_t)=H^s(p_t).
 \]
 The parameter $\bar H$ scales housing supply and $\varepsilon$ is its price elasticity.
 
-\textbf{A higher housing cost reduces both housing demand and fertility. Cohort sizes then feed back into the same market-clearing price.}
+\textbf{Higher housing costs reduce housing demand and fertility; cohort sizes feed back into the market-clearing price.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Stage 1: the initial steady-state equilibrium}
+\begin{frame}{Initial steady state}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.62\textwidth}
 \centering
@@ -159,7 +157,7 @@ Along the steady-state schedule, direct differentiation gives
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Stage 2: the impact response}
+\begin{frame}{Impact response}
 \vspace{1.5em}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.63\textwidth}
@@ -182,7 +180,7 @@ Along the steady-state schedule, direct differentiation gives
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}[label=steady-state-transition]{Stage 3: demographic adjustment}
+\begin{frame}[label=steady-state-transition]{Demographic adjustment}
 \vspace{-0.55em}
 \hfill\hyperlink{dynamic-path}{\beamergotobutton{Dynamic path}}
 \vspace{-0.7em}
@@ -209,11 +207,11 @@ Along the steady-state schedule, direct differentiation gives
 \end{columns}
 \vspace{-0.35em}
 \small
-\textbf{The price response cushions the demographic contraction: falling $p$ raises $n$, and the larger entrant cohorts slow the subsequent fall in both $S$ and $p$.}
+\textbf{Lower prices cushion the contraction by raising fertility and subsequent entrant cohorts.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Below-replacement fertility need not lower population immediately}
+\begin{frame}{Below-replacement fertility and population dynamics}
 Let $n_t=n(p_t)$ be household children per young household and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
 \[
 \mu_t<n_t<1.
@@ -237,13 +235,13 @@ Housing costs can rise as well if the aging cohort retains more housing than is 
 \]
 
 \vspace{-0.35em}
-\textbf{U.S. interpretation:} inherited cohorts can keep population and housing costs rising even after fertility falls below replacement.
+Inherited cohorts can sustain short-run population and housing-cost growth below replacement.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{From the stationary model to a dated transition}
+\begin{frame}{Dated quantitative transition}
 \small
-\textbf{Household problem.} Households make the existing fertility, tenure, housing, saving, and location choices. The distribution $G_t$ now records household masses as well as characteristics.
+\textbf{Household problem.} Households choose fertility, tenure, housing, saving, and location. The distribution $G_t$ records their joint distribution and mass.
 
 \medskip
 \textbf{Calendar-time accounting.}
@@ -252,7 +250,7 @@ G_{t+1}=\mathcal T(G_t,p_t)+E_{t+1},
 \qquad
 E_{t+5}=\frac{b_t^{\mathrm{child}}}{2.1}.
 \]
-The existing transition $\mathcal T$ moves households across age and economic states. The current run converts literal births into entrant households after twenty years.
+The transition $\mathcal T$ moves households across age and economic states. Births generate entrant households after twenty years.
 
 \medskip
 \textbf{Housing market.} At each date, the housing cost clears demand from the current distribution:
@@ -261,24 +259,24 @@ H^s(p_t)=D(G_t,p_t).
 \]
 
 \begin{itemize}
-  \item \textbf{2007--2023:} Census household totals and ACS age shares fix the mass of each age group; the model determines the distribution within each group.
-  \item \textbf{After 2023:} the demographic reweighting ends and cohort masses evolve under the model law above.
+  \item \textbf{2007--2023:} household totals and age shares are imposed; the model determines states within age.
+  \item \textbf{After 2023:} cohort masses evolve under the demographic law above.
 \end{itemize}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{We calibrate an economy moving from 2007 to 2023}
+\begin{frame}{Calibration from 2007 to 2023}
 \small
 \begin{enumerate}
-  \item \textbf{Construct an old steady state.} Choose the initial fertility preference so completed fertility is $2.1$. This is a replacement normalization, not a measured 2007 target.
-  \item \textbf{Construct the 2007 state.} Reweight the old distribution only by observed 2007 age shares, preserving wealth, tenure, and fertility states within each age.
-  \item \textbf{Run the economy to 2023.} Feed in Census household totals and ACS age shares. Let the fertility preference decline linearly, and estimate ten household-and-supply parameters and the total preference decline using twelve maintained moments, evaluated mainly in 2023.
-  \item \textbf{Check the path.} Compare untargeted model movements with period fertility, birth timing, ownership, rooms, house prices, and rents.
-  \item \textbf{Continue after 2023.} Hold preferences fixed and let the inherited household distribution and birth pipeline evolve.
+  \item \textbf{Replacement normalization:} completed fertility equals $2.1$.
+  \item \textbf{2007 state:} match age shares and preserve economic states conditional on age.
+  \item \textbf{2007--2023:} impose demographics; estimate eleven parameters from twelve moments.
+  \item \textbf{Validation:} compare untargeted fertility, timing, tenure, rooms, house prices, and rents.
+  \item \textbf{Post-2023:} hold preferences fixed; evolve the inherited distribution and entrant cohorts.
 \end{enumerate}
 
 \medskip
-\textbf{The population and age bridge are inputs, not successes of the model. The 2007 economy is a dated initial condition, not literally the old steady state.}
+\textbf{Demographic inputs:} household totals and age shares. \textbf{Initial condition:} the 2007 distribution.
 \end{frame}
 
 % ---------------------------------------------------------------------------
@@ -309,38 +307,37 @@ Old-age wealth p90/p50 & $3.448$ & $3.396$ \\
 
 \smallskip
 \raggedright
-\textbf{Main misses:} the rooms response around first birth and mean occupied rooms.
-\source{The first-birth rooms target remains provisional.}
+\textbf{Largest discrepancies:} the rooms response around first birth and mean occupied rooms.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Historical validation: close timing, weak housing fit}
+\begin{frame}{Historical validation}
 \centering
 \includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/historical_untargeted_fertility_housing_validation.pdf}
 
 \vspace{-0.25em}
 \small
-\textbf{Reading the figure:} timing is close by 2023; the model misses the ownership cycle and rooms trend, and its fertility decline is too steep.
+Birth timing is close by 2023; ownership and rooms dynamics are missed, and fertility falls too rapidly.
 
-\source{National series are holdouts; maintained targets use mixed samples and vintages.}
+\source{Sources: NCHS natality, World Bank period fertility, and ACS.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{The model does not reproduce the house-price cycle}
+\begin{frame}{House-price dynamics}
 \centering
 \includegraphics[width=0.94\textwidth,height=0.50\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/historical_untargeted_price_rent_validation.pdf}
 
 \vspace{-0.2em}
 \begin{itemize}
-  \item The model cannot reproduce the 2007--2011 house-price collapse and later rebound.
-  \item With temporary-equilibrium expectations and a fixed user-cost relation, it has no independent price-to-rent dynamics.
+  \item The model misses the 2007--2011 house-price collapse and subsequent recovery.
+  \item A fixed user-cost relation rules out independent price--rent dynamics.
 \end{itemize}
-\textbf{The exercise should therefore be read as a demographic-housing transition, not as a complete account of the post-2007 housing cycle.}
-\source{Observed house prices: real Case-Shiller. The rent CPI is shown only as a descriptive proxy, not as the model's user cost.}
+The exercise isolates demographic-housing forces rather than the full housing cycle.
+\source{Sources: real Case-Shiller national house-price index and CPI rent of primary residence.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{The quantitative options are now explicit}
+\begin{frame}{Options}
 \scriptsize
 \renewcommand{\arraystretch}{1.15}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}
@@ -348,53 +345,53 @@ Old-age wealth p90/p50 & $3.448$ & $3.396$ \\
                 >{\raggedright\arraybackslash}p{0.27\textwidth}
                 >{\raggedright\arraybackslash}p{0.23\textwidth}@{}}
 \toprule
-\textbf{Exercise} & \textbf{Taken from outside the model} & \textbf{What the model determines} & \textbf{Current reading} \\
+\textbf{Exercise} & \textbf{Exogenous demographic input} & \textbf{Endogenous outcomes} & \textbf{Interpretation} \\
 \midrule
-2007--2023 dated bridge
+2007--2023 bridge
 & Household totals and age shares at each date
 & Prices and household choices within each age group
-& Useful for fitting 2023; not a demographic validation \\
+& Historical accounting and 2023 calibration \\
 
-Historical semi-open path
+Semi-open historical path
 & Four age-group residual flows
 & Cohort evolution around those flows
-& Residuals mainly capture household formation, not immigration \\
+& Requires a separate household-formation margin \\
 
-Forward closed path
+Closed post-2023 path
 & The fitted 2023 state; no outside entry
 & Births, cohort sizes, prices, and tenure after 2023
-& Clean finite-horizon national benchmark; no positive terminal root yet \\
+& National finite-horizon benchmark \\
 
-Forward open path
+Open post-2023 path
 & A fixed outside inflow and retention rate
 & The same endogenous choices and prices
-& Sensitivity to continued entry, not a national forecast \\
+& Entry-flow sensitivity \\
 \bottomrule
 \end{tabular}
 
 \smallskip
-\textbf{For the paper, the clean comparison starts from the fitted 2023 state and shows the closed path together with the open sensitivity.}
+\textbf{Main specification:} closed post-2023 path. \textbf{Sensitivity:} open post-2023 path.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{What the quantitative work has established}
+\begin{frame}{Quantitative findings}
 \small
 \begin{itemize}
   \setlength\itemsep{0.8em}
-  \item The 2023 model gives a disciplined joint distribution of fertility, tenure, housing, income, and age. Its main remaining misses are housing quantities.
-  \item The current 2007--2023 population and age path is imposed. It provides dated initial conditions, but it does not show that the model generates U.S. demographic history.
-  \item Endogenous fertility first changes the adult-household population after twenty years. The inherited pipeline can therefore raise population and prices temporarily even when current fertility is below replacement.
-  \item With no outside entry, the fitted economy contracts and has no positive steady-state root on the audited price grid. With outside entry, the long-run scale depends on an external closure.
+  \item The 2023 calibration fits most targets; housing quantities remain the largest misses.
+  \item Historical household totals and age shares are imposed demographic inputs.
+  \item Inherited cohorts determine population and prices for twenty years.
+  \item The closed path contracts; the open path's scale depends on entrant flows.
 \end{itemize}
 
 \medskip
-\textbf{The quantitative result to carry forward is the interaction between fertility, intergenerational housing allocation, and the endogenous housing price---conditional on a stated population closure.}
+\textbf{Central mechanism:} fertility shifts intergenerational housing demand and equilibrium house prices.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{A Coven-style tax reallocates ownership toward families}
+\begin{frame}{Rebated property-tax experiment}
 \footnotesize
-The same fitted 2023 distribution is evaluated under a revenue-neutral property-tax reform. The annual rate rises from $1\%$ to $2\%$, all revenue is rebated equally, and the house price and transfer clear jointly. Housing supply uses Coven et al.'s California elasticity, $\rho=0.232$.
+Starting from the calibrated 2023 distribution, the annual property-tax rate rises from $1\%$ to $2\%$. Revenue is rebated equally, and the house price and transfer clear jointly. Housing supply has elasticity $\rho=0.232$.
 
 \medskip
 \centering
@@ -413,35 +410,35 @@ Births per adult & $0.08599$ & $0.08643$ & $+0.52\%$ \\
 
 \medskip
 \raggedright
-\textbf{Interpretation.} Capitalization lowers the upfront purchase price. Ownership rises most for households with dependent children, which are more exposed to down-payment constraints. The fertility response is positive but modest.
+Capitalization lowers the purchase price and down payment. Ownership rises most among dependent-child households; fertility rises modestly.
 
-\source{Impact mechanism exercise, not a final policy calibration. The supply elasticity is from Coven et al. (2025); the rebated baseline re-anchors the 2023 housing stock by 2.57\%.}
+\source{Housing-supply elasticity: Coven et al. (2025), California estimate.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
 \appendix
 
-\begin{frame}[label=dynamic-path]{Population and housing costs can undershoot}
+\begin{frame}[label=dynamic-path]{Population and housing-cost dynamics}
 \centering
 \includegraphics[width=0.97\textwidth,height=0.68\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/two_cohort_transition_paths.pdf}
 
 \vspace{-0.2em}
 \small
-For this parameterization, population and housing costs reach their trough in generation 3 and then converge to the smaller steady state.
+Both series reach a trough in generation 3 before converging to lower steady states.
 
-\scriptsize Parameters are illustrative; every point solves the model shown in the main slides.
+\scriptsize Illustrative parameterization.
 
 \hfill\hyperlink{steady-state-transition}{\beamerreturnbutton{Equilibrium diagram}}
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{The cohort ratio determines when population stops falling}
+\begin{frame}{Cohort composition and the population trough}
 \centering
 \includegraphics[width=0.97\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/two_cohort_trough_mechanics.pdf}
 
 \vspace{-0.25em}
 \small
-Population falls while $n_t<O_t/Y_t$, even after fertility has risen above one. Here the population and price troughs coincide; with different young--old housing demands, they need not.
+Population falls while $n_t<O_t/Y_t$, even after $n_t>1$. Population and price troughs coincide here but need not when housing demand differs by age.
 
 \hfill\hyperlink{steady-state-transition}{\beamerreturnbutton{Equilibrium diagram}}
 \end{frame}

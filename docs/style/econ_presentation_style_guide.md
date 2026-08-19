@@ -13,6 +13,9 @@ the codebase or the sequence of internal experiments.
   second wall of prose.
 - Use conventional noun-phrase titles: `Toy economy`, `Competitive equilibrium`,
   `2023 calibration`, `Population dynamics`. Put the argument in the frame body.
+- Use academic language even in advisor updates. Avoid deictic titles such as `Today`,
+  `Now`, `Current status`, `What we established`, or `Where this leaves us` unless the
+  date or sequence is itself substantive.
 - Use `booktabs` tables without vertical rules, boxes, cards, dashboard elements, or
   decorative labels.
 - Keep the main deck readable at presentation distance. Move robustness, derivations,
@@ -21,6 +24,8 @@ the codebase or the sequence of internal experiments.
 ## 2. Frame architecture
 
 - One idea per frame.
+- Keep bullets to one line whenever possible. If a bullet needs a paragraph, shorten it or
+  split the argument across frames.
 - A standard frame contains at most: one short framing sentence, one display/table/figure,
   and one interpretation sentence.
 - Define each parameter or variable in plain English where it first appears. Do not use a
@@ -30,6 +35,9 @@ the codebase or the sequence of internal experiments.
 - Never expose workflow language such as `current reading`, `what we tried`, `the model
   shown to X`, `implementation status`, or internal experiment names. Translate it into the
   economic object an audience needs.
+- Keep issue-ledger language out of outward-facing slides: `provisional`, `pending`,
+  `not final`, `needs review`, run readiness, and implementation status belong in project
+  notes unless they are necessary to interpret the economics shown on that frame.
 
 ## 3. Calibration and quantitative tables
 
@@ -84,6 +92,8 @@ the codebase or the sequence of internal experiments.
 - Keep caveats short and economically substantive. Source notes belong in a small footer;
   code hashes, run identifiers, residual tolerances, and solver details do not belong in the
   visible main deck.
+- Source footers should be standard citations or dataset names, not explanatory prose. If a
+  measurement mismatch changes the economics, explain it once in the frame body.
 
 ## 7. Final check
 
