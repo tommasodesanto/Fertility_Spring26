@@ -17,6 +17,7 @@ from build_e5f_transition_ridge_refinement import (
     CENTRAL_STEP,
     ContractError,
     Expectations,
+    build_identification_diagnostic,
     build_refinement,
     central_jacobian,
     file_sha256,
@@ -79,6 +80,7 @@ def expectations(
     dated_hash: str | None = None,
     *,
     dimensions: int = 10,
+    central_step: float = CENTRAL_STEP,
 ) -> Expectations:
     return Expectations(
         source_sha256=SOURCE_SHA,
@@ -89,6 +91,7 @@ def expectations(
         model_profile=PROFILE,
         panel_seed=PANEL_SEED,
         dimensions=dimensions,
+        central_step=central_step,
         renewal_contract_sha256=renewal_hash or object_sha256(renewal_contract()),
         dated_contract_sha256=dated_hash or object_sha256(dated_contract()),
     )
@@ -194,7 +197,11 @@ def fixture_jacobian(
 
 
 def write_coordinate_fixture(
-    root: Path, *, rank_deficient: bool = False, dimensions: int = 10
+    root: Path,
+    *,
+    rank_deficient: bool = False,
+    dimensions: int = 10,
+    central_step: float = CENTRAL_STEP,
 ) -> tuple[np.ndarray, np.ndarray]:
     domain_rows = fixture_domain(dimensions)
     task_count = 1 + 2 * dimensions
@@ -214,7 +221,7 @@ def write_coordinate_fixture(
             dimension = offset // 2
             sign = -1.0 if offset % 2 == 0 else 1.0
             unit = anchor.copy()
-            unit[dimension] += sign * CENTRAL_STEP
+            unit[dimension] += sign * central_step
             design = f"coordinate_{dimension}_{'minus' if sign < 0 else 'plus'}"
         residual = residual0 + jacobian @ (unit - anchor)
         model = target + residual / np.sqrt(weights)
@@ -301,7 +308,7 @@ def write_coordinate_fixture(
                 "panel_seed": PANEL_SEED,
                 "design": design,
                 "panel_design": "coordinate",
-                "local_radius": CENTRAL_STEP,
+                "local_radius": central_step,
                 "center": "/scratch/fixture/center.json",
                 "center_sha256": CENTER_SHA,
                 "terminal_preference_coordinate": "psi_child_change_2023",
@@ -473,6 +480,21 @@ def test_eleven_parameter_fixture_builds_and_passes_collector_plan_gate() -> Non
         assert loaded["coordinate_panel_contract"]["dimensions"] == 11
 
 
+def test_one_percent_coordinate_radius_builds_and_passes_collector_plan_gate() -> None:
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        results = root / "coordinate"
+        write_coordinate_fixture(results, dimensions=11, central_step=0.01)
+        expected = expectations(dimensions=11, central_step=0.01)
+        built = build_refinement(results, root / "refinement", expected)
+        plan = built["plan"]
+        assert plan["coordinate_panel_contract"]["central_step"] == 0.01
+        loaded, _ = load_and_validate_plan(
+            Path(built["plan_path"]), built["plan_sha256"]
+        )
+        assert loaded["coordinate_panel_contract"]["central_step"] == 0.01
+
+
 def test_missing_coordinate_task_is_rejected() -> None:
     with tempfile.TemporaryDirectory() as temporary:
         results = Path(temporary) / "coordinate"
@@ -578,6 +600,21 @@ def test_rank_deficiency_blocks_candidate_generation() -> None:
             "rank deficient",
         )
         assert not (root / "refinement" / "candidate_plan.json").exists()
+
+
+def test_rank_deficiency_writes_diagnostic_without_candidates() -> None:
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        results = root / "coordinate"
+        write_coordinate_fixture(results, rank_deficient=True)
+        outdir = root / "diagnostic"
+        summary = build_identification_diagnostic(results, outdir, expectations())
+        assert summary["status"] == "rank_gate_failed_no_candidates_created"
+        assert not summary["identification_gate_passed"]
+        assert not summary["candidate_centers_created"]
+        assert (outdir / "diagnostic_summary.json").is_file()
+        assert (outdir / "weighted_jacobian.csv").is_file()
+        assert not (outdir / "candidate_plan.json").exists()
 
 
 def test_nonpositive_side_consistency_freezes_column() -> None:
@@ -712,6 +749,7 @@ def main() -> None:
     tests = [
         test_valid_fixture_builds_exact_hashed_plan,
         test_eleven_parameter_fixture_builds_and_passes_collector_plan_gate,
+        test_one_percent_coordinate_radius_builds_and_passes_collector_plan_gate,
         test_missing_coordinate_task_is_rejected,
         test_corrupted_central_pair_is_rejected,
         test_mixed_dated_contract_is_rejected,
@@ -720,6 +758,7 @@ def main() -> None:
         test_preference_metadata_corruption_is_rejected,
         test_target_candidate_label_corruption_is_rejected,
         test_rank_deficiency_blocks_candidate_generation,
+        test_rank_deficiency_writes_diagnostic_without_candidates,
         test_nonpositive_side_consistency_freezes_column,
         test_candidate_hash_corruption_is_rejected,
         test_scientific_validation_contract_and_wrapper_corruption,

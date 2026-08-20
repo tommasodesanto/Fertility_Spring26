@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-08-18` (dated sequential calibration, first-child housing repair, historical validation, and no-policy demographic closure)
+Updated: `2026-08-20` (dated sequential calibration, closure audit, and property-tax mechanism benchmark)
 
 ## Current working estimate: calibration along the 2007--2023 transition
 
@@ -47,12 +47,21 @@ renewal identity.
 The selected refinement has strict loss `36.0992231622`. Two independent
 execution-identity repeats reproduce all eleven parameters, all twelve model
 moments, and the loss to machine precision. No estimated parameter is within
-two percent of its transformed search boundary. The weighted local Jacobian
-has rank eleven at the predeclared relative singular-value threshold `1e-3`
-and condition number `268.72`; after freezing the locally inconsistent
-tenure-premium step direction, the active ten-column Jacobian has condition
-number `96.00`. These are local numerical checks, not global identification or
-global optimality.
+two percent of its transformed search boundary.
+
+A fresh 23-task coordinate panel around this exact point, using a transformed
+radius of `0.01`, found only one lower one-coordinate value: moving the bequest
+shift `theta1` downward reduced loss to `36.0221586216`. The gain is negligible
+and the move pushes further toward the parameter's raw lower bound, so it is not
+promoted. More importantly, the new weighted Jacobian has rank `10/11` at the
+predeclared relative singular-value threshold `1e-3` and condition number
+`1104.01`; its weakest right-singular direction loads `91.9%` on `theta1` in
+absolute loading. The `theta0` column also fails the two-sided local-consistency
+gate. After freezing that column, the active ten-column Jacobian has condition
+number `391.02`. The strict ridge builder therefore created no joint candidates.
+This is evidence of weak local identification and local numerical saturation,
+not global optimality. The audited packet is
+`output/model/e5f_transition_identification_jump11_finalcoord_r3_20260819/`.
 
 Relative to the August 17 specification, the only new structural object is an
 extra housing-service floor when the first child is at home,
@@ -135,6 +144,34 @@ it over the calibration window. It is used once to normalize the old state,
 the post-2023 open-population sensitivity, so the realized outside-origin share
 is not fixed away from the old state.
 
+### Property-tax capitalization benchmark
+
+The paper-facing policy example is an impact comparison from the same fitted
+2023 pre-fertility distribution. It raises the annual property-tax rate from
+`1%` to `2%`, rebates all contemporaneous revenue equally across adult
+households, re-anchors static housing supply so the rebated `1%` economy clears
+at the inherited price, and jointly solves the reform price and transfer. The
+population closure is nationally closed (`M=0`, `rho=1`); the calculation is
+not a stationary comparison, a welfare calculation, or a migration response.
+
+The `0.232` elasticity is the California floor-space elasticity used by Coven
+et al., not the maintained national elasticity in this calibration. The
+audited sensitivity gives:
+
+| Housing-supply elasticity | Reference | House price | User cost | Ownership | Dependent-child ownership | Births/adult |
+|---:|---|---:|---:|---:|---:|---:|
+| 0.232 | Coven California calibration | -8.018% | +14.185% | +1.803 pp | +2.532 pp | +0.521% |
+| 0.500 | Baum-Snow--Han average U.S. urban floor space | -5.252% | +17.619% | +1.444 pp | +2.340 pp | +0.437% |
+| 1.750 | Maintained national elasticity; Saiz benchmark | -2.035% | +21.613% | +0.427 pp | +1.057 pp | +0.339% |
+
+Thus the qualitative ownership and fertility responses survive the maintained
+national elasticity, but the price-capitalization and tenure effects are
+smaller than under the California supply elasticity. All cases share the exact
+2023 distribution and queue. Market residuals are below `3.13e-5`, absolute
+fiscal residuals below `1.23e-5`, and mass residuals below `8.66e-15`; no
+projection or nonfinite mass appears. The two national sensitivity packets are
+`output/model/e5f_post2023_coven_tax_elasticity_national_supply_r2_20260820/`.
+
 ### Historical validation and steady-state interpretation
 
 The canonical historical packet is
@@ -193,9 +230,10 @@ endpoint has population scale `0.3808339390` and asset-price ratio
 `0.6475706842`, relative to the constructed old steady state. Its realized
 outside-origin share is `0.443763`, not `0.169`, because `M` and `rho` rather
 than the share are fixed away from the old state. No policy or fiscal experiment
-is part of the current paper result. The previous funded-policy workflow
-remains fail-closed until its renewal and grant-eligibility architecture is
-repaired and re-estimated.
+is embedded in this calibrated transition result; the property-tax exercise is
+the separate impact benchmark described above. The previous funded-policy
+workflow remains fail-closed until its renewal and grant-eligibility
+architecture is repaired and re-estimated.
 
 The 40-date continuation passes the full accounting audit. Maximum market
 residuals are `4.77e-5` in the closed path and `1.996e-4` in the open path;
@@ -224,7 +262,18 @@ mean-rooms level account for most of the calibration loss. The model also does
 not explain the post-2007 house-price cycle. These are substantive limitations,
 not solver failures, and they should remain visible in the paper and slides.
 
-### Completed alternative: fixed four-group historical demographic law
+### Rejected diagnostic: fixed four-group historical demographic law
+
+An August 19 accounting audit rejects this object as a demographic closure.
+The implementation resets every next-period age-cell mass to the fitted target,
+so endogenous birth-queue entrants affect within-age composition but not cohort
+or aggregate mass. In the youngest cell it rescales raw entrant mass by about
+`0.216`, removing `78.4%`. The fitted residuals primarily measure household
+formation and headship changes rather than immigration. The exercise remains a
+diagnostic and must not be used for post-2043 fertility-policy population
+effects. An additive semi-open prototype preserves endogenous entrants but
+requires a large negative young-household residual, confirming that an explicit
+household-formation margin is needed before promotion.
 
 A separate, not-yet-promoted experiment replaces the five dated population/age
 bridge targets with four time-invariant net household-formation, migration, and

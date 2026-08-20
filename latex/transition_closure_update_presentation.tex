@@ -207,7 +207,7 @@ Along the steady-state schedule, direct differentiation gives
 \end{columns}
 \vspace{-0.35em}
 \small
-\textbf{Lower prices cushion the contraction by raising fertility and subsequent entrant cohorts.}
+\textbf{Lower prices cushion the contraction if the fertility schedule crosses replacement at a positive population level.}
 \end{frame}
 
 % ---------------------------------------------------------------------------
@@ -250,7 +250,7 @@ G_{t+1}=\mathcal T(G_t,p_t)+E_{t+1},
 \qquad
 E_{t+5}=\frac{b_t^{\mathrm{child}}}{2.1}.
 \]
-The transition $\mathcal T$ moves households across age and economic states. Births generate entrant households after twenty years.
+The transition $\mathcal T$ moves households across age and economic states. Here $b_t^{\mathrm{child}}$ counts children; $2.1$ children generate one future entrant household under the replacement normalization. Entrants arrive after twenty years.
 
 \medskip
 \textbf{Housing market.} At each date, the housing cost clears demand from the current distribution:
@@ -313,11 +313,14 @@ Old-age wealth p90/p50 & $3.448$ & $3.396$ \\
 % ---------------------------------------------------------------------------
 \begin{frame}{Historical validation}
 \centering
-\includegraphics[width=0.98\textwidth,height=0.69\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/historical_untargeted_fertility_housing_validation.pdf}
+\includegraphics[width=0.84\textwidth,viewport=0 230 885.6 445,clip]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/historical_untargeted_fertility_housing_validation.pdf}
 
-\vspace{-0.25em}
+\vspace{-0.15em}
+\includegraphics[width=0.55\textwidth,viewport=0 20 590.4 230,clip]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/historical_untargeted_fertility_housing_validation.pdf}
+
+\vspace{-0.35em}
 \small
-Birth timing is close by 2023; ownership and rooms dynamics are missed, and fertility falls too rapidly.
+Birth timing is close by 2023; ownership and rooms dynamics are missed, and births per adult household fall too rapidly.
 
 \source{Sources: NCHS natality, World Bank period fertility, and ACS.}
 \end{frame}
@@ -374,45 +377,44 @@ Open post-2023 path
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Quantitative findings}
-\small
-\begin{itemize}
-  \setlength\itemsep{0.8em}
-  \item The 2023 calibration fits most targets; housing quantities remain the largest misses.
-  \item Historical household totals and age shares are imposed demographic inputs.
-  \item Inherited cohorts determine population and prices for twenty years.
-  \item The closed path contracts; the open path's scale depends on entrant flows.
-\end{itemize}
+\begin{frame}{Closed-population renewal}
+\centering
+\includegraphics[width=0.82\textwidth,height=0.49\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/continuation_closed_stationary_renewal_schedule.pdf}
 
-\medskip
-\textbf{Central mechanism:} fertility shifts intergenerational housing demand and equilibrium house prices.
+\vspace{-0.2em}
+\small
+A positive closed steady state requires $B(P)/E(P)=1$. Over the audited price grid,
+\[
+0.557\leq B(P)/E(P)\leq0.708<1.
+\]
+No price restores replacement. The closed continuation is therefore a finite-horizon contraction experiment, not a transition between two positive steady states.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Rebated property-tax experiment}
+\begin{frame}{Rebated property tax: capitalization}
 \footnotesize
-Starting from the calibrated 2023 distribution, the annual property-tax rate rises from $1\%$ to $2\%$. Revenue is rebated equally, and the house price and transfer clear jointly. Housing supply has elasticity $\rho=0.232$.
+From the same fitted 2023 distribution, raise the annual property-tax rate from $1\%$ to $2\%$ and rebate the revenue equally. For each supply elasticity, re-anchor housing supply at the inherited price and solve jointly for the house price and transfer.
 
 \medskip
 \centering
+\scriptsize
 \renewcommand{\arraystretch}{1.25}
-\begin{tabular}{lrrr}
+\begin{tabular}{@{}llrrrrr@{}}
 \toprule
-& \textbf{Rebated 1\%} & \textbf{Rebated 2\%} & \textbf{Change} \\
+$\varepsilon_H$ & \textbf{Reference} & $\Delta P$ & $\Delta$ user cost
+& $\Delta$ ownership & $\Delta$ child ownership & $\Delta$ births/adult \\
 \midrule
-House price & $0.617$ & $0.568$ & $-8.02\%$ \\
-Housing user cost & $0.102$ & $0.117$ & $+14.18\%$ \\
-Aggregate ownership & $65.15\%$ & $66.96\%$ & $+1.80$ pp \\
-Dependent-child ownership & $61.06\%$ & $63.59\%$ & $+2.53$ pp \\
-Births per adult & $0.08599$ & $0.08643$ & $+0.52\%$ \\
+$0.232$ & Coven: California & $-8.02\%$ & $+14.18\%$ & $+1.80$ pp & $+2.53$ pp & $+0.52\%$ \\
+$0.500$ & B--S--H: U.S. urban & $-5.25\%$ & $+17.62\%$ & $+1.44$ pp & $+2.34$ pp & $+0.44\%$ \\
+$1.750$ & Maintained national & $-2.03\%$ & $+21.61\%$ & $+0.43$ pp & $+1.06$ pp & $+0.34\%$ \\
 \bottomrule
 \end{tabular}
 
 \medskip
 \raggedright
-Capitalization lowers the purchase price and down payment. Ownership rises most among dependent-child households; fertility rises modestly.
+A more elastic supply curve weakens price capitalization. With the maintained national elasticity, the rebate still raises ownership---especially among households with dependent children---and fertility rises modestly.
 
-\source{Housing-supply elasticity: Coven et al. (2025), California estimate.}
+\source{Housing supply: Baum-Snow and Han (2024), Saiz (2010), and the California calibration in Coven et al. (2025).}
 \end{frame}
 
 % ---------------------------------------------------------------------------

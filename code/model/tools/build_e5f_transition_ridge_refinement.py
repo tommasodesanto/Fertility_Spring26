@@ -53,6 +53,7 @@ class Expectations:
     model_profile: str
     panel_seed: int
     dimensions: int = EXPECTED_DIMENSIONS
+    central_step: float = CENTRAL_STEP
     source: str | None = None
     renewal_contract_sha256: str | None = None
     dated_contract_sha256: str | None = None
@@ -82,6 +83,7 @@ class CoordinatePanel:
     targets: np.ndarray
     weights: np.ndarray
     input_artifact_sha256: str
+    central_step: float
 
 
 def parse_args() -> argparse.Namespace:
@@ -101,8 +103,22 @@ def parse_args() -> argparse.Namespace:
         default=EXPECTED_DIMENSIONS,
         help="Joint transition-parameter count; coordinate tasks must equal 1+2d.",
     )
+    parser.add_argument(
+        "--expected-local-radius",
+        type=float,
+        default=CENTRAL_STEP,
+        help="Exact transformed-unit radius used by the coordinate panel.",
+    )
     parser.add_argument("--expected-renewal-contract-sha256", required=True)
     parser.add_argument("--expected-dated-contract-sha256", required=True)
+    parser.add_argument(
+        "--diagnostics-only",
+        action="store_true",
+        help=(
+            "Write the audited Jacobian/rank packet without creating candidate "
+            "centers. This mode remains available when the refinement rank gate fails."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -594,6 +610,11 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
     if not results_dir.is_dir():
         raise ContractError(f"Coordinate results directory does not exist: {results_dir}")
     dimensions = int(expectations.dimensions)
+    central_step = float(expectations.central_step)
+    if not math.isfinite(central_step) or not 0.0 < central_step <= 0.1:
+        raise ContractError(
+            "The declared coordinate radius must be finite and lie in (0,0.1]"
+        )
     if dimensions < 1 or dimensions >= EXPECTED_TARGET_COUNT:
         raise ContractError(
             "The declared parameter dimension must be positive and smaller than "
@@ -645,7 +666,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
             raise ContractError(f"task {task_id}: panel seed mismatch")
         if panel.get("panel_design") != "coordinate":
             raise ContractError(f"task {task_id}: panel design is not coordinate")
-        _exact_float(panel.get("local_radius"), CENTRAL_STEP, f"task {task_id} local radius")
+        _exact_float(panel.get("local_radius"), central_step, f"task {task_id} local radius")
         if panel.get("terminal_preference_coordinate") != "psi_child_change_2023":
             raise ContractError(f"task {task_id}: wrong terminal preference coordinate")
         domain = list(panel.get("domain") or [])
@@ -743,9 +764,10 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
             raise ContractError(f"task {task_id}: mixed scientific contract")
 
     anchor = tasks[0].unit
-    if np.any(anchor <= CENTRAL_STEP) or np.any(anchor >= 1.0 - CENTRAL_STEP):
+    if np.any(anchor <= central_step) or np.any(anchor >= 1.0 - central_step):
         raise ContractError(
-            "Anchor is within h=.02 of a unit bound; central differences would be clipped"
+            f"Anchor is within h={central_step:g} of a unit bound; "
+            "central differences would be clipped"
         )
     if tasks[0].panel.get("design") != "anchor":
         raise ContractError("task 1 is not the anchor")
@@ -755,8 +777,8 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         plus_task = tasks[2 + 2 * dimension]
         expected_minus = anchor.copy()
         expected_plus = anchor.copy()
-        expected_minus[dimension] -= CENTRAL_STEP
-        expected_plus[dimension] += CENTRAL_STEP
+        expected_minus[dimension] -= central_step
+        expected_plus[dimension] += central_step
         expected_minus_design = f"coordinate_{dimension}_minus"
         expected_plus_design = f"coordinate_{dimension}_plus"
         if minus_task.panel.get("design") != expected_minus_design:
@@ -786,6 +808,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         targets=target_values,
         weights=weights,
         input_artifact_sha256=object_sha256(artifact_hashes),
+        central_step=central_step,
     )
 
 
@@ -813,15 +836,16 @@ def matrix_rank_report(matrix: np.ndarray) -> dict[str, Any]:
 
 def central_jacobian(panel: CoordinatePanel) -> tuple[np.ndarray, list[dict[str, Any]], np.ndarray]:
     anchor_residual = panel.tasks[0].residual
+    central_step = float(panel.central_step)
     columns: list[np.ndarray] = []
     side_rows: list[dict[str, Any]] = []
     frozen = np.zeros(len(panel.domain), dtype=bool)
     for dimension, domain_row in enumerate(panel.domain):
         minus = panel.tasks[1 + 2 * dimension].residual
         plus = panel.tasks[2 + 2 * dimension].residual
-        forward = (plus - anchor_residual) / CENTRAL_STEP
-        backward = (anchor_residual - minus) / CENTRAL_STEP
-        central = (plus - minus) / (2.0 * CENTRAL_STEP)
+        forward = (plus - anchor_residual) / central_step
+        backward = (anchor_residual - minus) / central_step
+        central = (plus - minus) / (2.0 * central_step)
         forward_norm = float(np.linalg.norm(forward))
         backward_norm = float(np.linalg.norm(backward))
         dot = float(forward @ backward)
@@ -1014,6 +1038,83 @@ def weak_direction_rows(jacobian: np.ndarray, domain: list[dict[str, Any]]) -> l
     return rows
 
 
+def build_identification_diagnostic(
+    coordinate_results_dir: Path,
+    outdir: Path,
+    expectations: Expectations,
+) -> dict[str, Any]:
+    """Write an inspectable rank packet without proposing a calibration update."""
+    outdir = outdir.resolve()
+    if outdir.exists() and any(outdir.iterdir()):
+        raise ContractError(f"Refusing to overwrite nonempty output directory: {outdir}")
+    panel = load_coordinate_panel(coordinate_results_dir, expectations)
+    jacobian, side_rows, frozen = central_jacobian(panel)
+    full_rank = matrix_rank_report(jacobian)
+    active_rank = (
+        matrix_rank_report(jacobian[:, ~frozen])
+        if np.any(~frozen)
+        else {"shape": [len(panel.moment_names), 0], "status": "all_columns_frozen"}
+    )
+    rank_key = f"relative_{IDENTIFICATION_THRESHOLD:g}"
+    passed = int(full_rank["relative_ranks"][rank_key]) == len(panel.domain)
+
+    jacobian_rows: list[dict[str, Any]] = []
+    for moment_index, moment in enumerate(panel.moment_names):
+        row: dict[str, Any] = {
+            "moment_index": moment_index,
+            "moment": moment,
+            "anchor_weighted_residual": float(panel.tasks[0].residual[moment_index]),
+        }
+        for dimension, domain_row in enumerate(panel.domain):
+            row[str(domain_row["name"])] = float(jacobian[moment_index, dimension])
+        jacobian_rows.append(row)
+    singular_rows = [
+        {
+            "singular_value_index": index,
+            "singular_value": value,
+            "relative_to_largest": value / full_rank["singular_values"][0],
+        }
+        for index, value in enumerate(full_rank["singular_values"])
+    ]
+    incumbent = min(panel.tasks, key=lambda task: task.loss)
+    summary = {
+        "schema": "e5f_transition_identification_diagnostic_v1",
+        "status": "identified" if passed else "rank_gate_failed_no_candidates_created",
+        "coordinate_results_dir": str(panel.results_dir),
+        "coordinate_panel_contract": {
+            "task_count": len(panel.tasks),
+            "dimensions": len(panel.domain),
+            "central_step": panel.central_step,
+            "panel_seed": expectations.panel_seed,
+            "center_sha256": panel.tasks[0].panel["center_sha256"],
+            "input_artifact_sha256": panel.input_artifact_sha256,
+        },
+        "scientific_contract_sha256": panel.contract_sha256,
+        "anchor_loss": panel.tasks[0].loss,
+        "best_coordinate_task": incumbent.task_id,
+        "best_coordinate_loss": incumbent.loss,
+        "full_rank": full_rank,
+        "active_after_side_gate": active_rank,
+        "frozen_dimensions": [
+            str(panel.domain[index]["name"])
+            for index, is_frozen in enumerate(frozen)
+            if is_frozen
+        ],
+        "identification_threshold": IDENTIFICATION_THRESHOLD,
+        "identification_gate_passed": passed,
+        "candidate_centers_created": False,
+    }
+    outdir.mkdir(parents=True, exist_ok=True)
+    atomic_write_csv(outdir / "weighted_jacobian.csv", jacobian_rows)
+    atomic_write_csv(outdir / "singular_values.csv", singular_rows)
+    atomic_write_csv(outdir / "side_consistency.csv", side_rows)
+    atomic_write_csv(
+        outdir / "weak_directions.csv", weak_direction_rows(jacobian, panel.domain)
+    )
+    atomic_write_json(outdir / "diagnostic_summary.json", summary)
+    return summary
+
+
 def build_refinement(
     coordinate_results_dir: Path,
     outdir: Path,
@@ -1131,7 +1232,7 @@ def build_refinement(
         "coordinate_panel_contract": {
             "task_count": expected_tasks,
             "dimensions": dimensions,
-            "central_step": CENTRAL_STEP,
+            "central_step": panel.central_step,
             "panel_seed": expectations.panel_seed,
             "center_sha256": panel.tasks[0].panel["center_sha256"],
             "center_role": (
@@ -1220,29 +1321,35 @@ def build_refinement(
 
 def main() -> None:
     args = parse_args()
+    expectations = Expectations(
+        source_sha256=str(args.expected_source_sha256),
+        source=str(args.expected_source) if args.expected_source is not None else None,
+        target_set=str(args.expected_target_set),
+        target_fingerprint=str(args.expected_target_fingerprint),
+        code_bundle_sha256=str(args.expected_code_bundle_sha256),
+        model_profile=str(args.expected_model_profile),
+        panel_seed=int(args.expected_panel_seed),
+        dimensions=int(args.expected_dimensions),
+        central_step=float(args.expected_local_radius),
+        renewal_contract_sha256=str(args.expected_renewal_contract_sha256),
+        dated_contract_sha256=str(args.expected_dated_contract_sha256),
+    )
+    if args.diagnostics_only:
+        summary = build_identification_diagnostic(
+            args.coordinate_results_dir, args.outdir, expectations
+        )
+        print(
+            "E5F_IDENTIFICATION_DIAGNOSTIC_WRITTEN "
+            f"status={summary['status']} "
+            f"rank_1e-3={summary['full_rank']['relative_ranks']['relative_0.001']}/"
+            f"{summary['coordinate_panel_contract']['dimensions']}",
+            flush=True,
+        )
+        return
     result = build_refinement(
         args.coordinate_results_dir,
         args.outdir,
-        Expectations(
-            source_sha256=str(args.expected_source_sha256),
-            source=str(args.expected_source) if args.expected_source is not None else None,
-            target_set=str(args.expected_target_set),
-            target_fingerprint=str(args.expected_target_fingerprint),
-            code_bundle_sha256=str(args.expected_code_bundle_sha256),
-            model_profile=str(args.expected_model_profile),
-            panel_seed=int(args.expected_panel_seed),
-            dimensions=int(args.expected_dimensions),
-            renewal_contract_sha256=(
-                str(args.expected_renewal_contract_sha256)
-                if args.expected_renewal_contract_sha256 is not None
-                else None
-            ),
-            dated_contract_sha256=(
-                str(args.expected_dated_contract_sha256)
-                if args.expected_dated_contract_sha256 is not None
-                else None
-            ),
-        ),
+        expectations,
     )
     plan = result["plan"]
     rank = plan["jacobian_diagnostics"]["full"]["relative_ranks"]

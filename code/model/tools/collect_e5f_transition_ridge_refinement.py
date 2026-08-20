@@ -85,13 +85,9 @@ def load_and_validate_plan(plan_path: Path, expected_sha256: str) -> tuple[dict[
         raise ContractError("Plan dimension must be one of the supported 10 or 11")
     if int(coordinate.get("task_count", -1)) != 1 + 2 * dimensions:
         raise ContractError("Plan task count is inconsistent with its dimension")
-    if not math.isclose(
-        float(coordinate.get("central_step", math.nan)),
-        CENTRAL_STEP,
-        rel_tol=0.0,
-        abs_tol=1.0e-14,
-    ):
-        raise ContractError("Plan does not use h=.02 central differences")
+    central_step = float(coordinate.get("central_step", math.nan))
+    if not math.isfinite(central_step) or not 0.0 < central_step <= 0.1:
+        raise ContractError("Plan central-difference step must lie in (0,0.1]")
     rank = dict(plan["jacobian_diagnostics"]["full"]["relative_ranks"])
     if int(rank.get("relative_0.001", -1)) != dimensions:
         raise ContractError("Plan failed its declared full-rank gate")

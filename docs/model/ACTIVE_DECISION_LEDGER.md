@@ -1,6 +1,6 @@
 # Active Theory and Quantitative Decision Ledger
 
-Updated: 2026-08-18
+Updated: 2026-08-19
 
 This is the short working ledger for the current paper. It records decisions
 that can still change the theory, quantitative interpretation, or paper-facing
@@ -9,13 +9,12 @@ reproducibility contracts.
 
 ## Active points
 
-1. **Resolve the child unit in the quantitative model.** The live sequential
-   model uses literal parity states and converts top-code-adjusted births into
-   future entrant households by dividing by `2.1`. Confirm whether this is the
-   intended convention or whether a model child was meant to be a future
-   household already. Do not change only the divisor: the fertility targets,
-   parity states, housing-demand interpretation, and renewal law must use one
-   consistent unit.
+1. **Child unit resolved.** The live sequential model's parity states count
+   literal children and match CPS children-ever-born per woman. The transition
+   therefore converts top-code-adjusted child births into future entrant
+   households by dividing by `2.1`. In the toy economy, one household-child unit
+   corresponds to `2.1` quantitative-model children. The divisor is an external
+   replacement normalization, not an explicit childhood-survival state.
 
 2. **Finish the small transition theory.** Write the explicit population law,
    the impact response to lower desired fertility, demographic momentum, the
@@ -30,19 +29,23 @@ reproducibility contracts.
 
 4. **Address the two binding housing-quantity misses.** The first-birth housing
    response and mean rooms remain the largest contributions to the current
-   calibration loss. Any repair must preserve identification of the child-space
-   and tenure blocks.
+   calibration loss. A fresh 23-task radius-`0.01` coordinate panel found no
+   material local improvement: the best one-coordinate loss is `36.0222`
+   versus `36.0992`, and the eleven-column Jacobian has rank ten at the
+   predeclared `1e-3` threshold. Its weakest direction is primarily the already
+   low bequest shift. Do not force a ridge update through this weak direction.
+   The next structural test should separate the first-child room increment from
+   the level of large-home demand or from the tenure utility margin; any added
+   parameter requires an identifying moment and a fresh target/code contract.
 
-5. **Choose the quantitative presentation.** The current 2023-forward baseline
+5. **Quantitative presentation.** The current 2023-forward baseline
    uses household totals and age shares as imposed dated inputs through 2023.
-   The four-group historical alternative replaces that bridge with fixed net
-   household-formation/migration rates estimated through 2019; it predicts the
-   2023 household index within 0.45 percent and preserves essentially the same
-   2023 SMM loss. It does not make the observed 2007 demographic stock a steady
-   state, and it still misses the levels of period fertility, first-birth
-   timing, ownership, and rooms. Decide whether to present the four-group law
-   as the leading historical specification or as a diagnostic beside the
-   cleaner fitted-2023 forward experiment.
+   The fixed four-group alternative is rejected as a demographic closure: it
+   resets all age-cell masses, removes most raw youngest entrants, and identifies
+   household-formation/headship wedges rather than immigration. The additive
+   semi-open prototype preserves endogenous entrants but reveals that an
+   explicit household-formation margin is needed. The main exercise is the
+   fitted-2023 closed finite-horizon path; the open path is a sensitivity.
 
 6. **Choose and state the long-run interpretation.** Neither the fitted-2023
    baseline nor the four-group historical calibration has a verified positive
@@ -56,9 +59,12 @@ reproducibility contracts.
    feedback in that order. Do not claim movement between two positive steady
    states unless a positive closed root is actually established.
 
-8. **Keep structural policy analysis deferred.** Do not promote policy or
-   fiscal results until the population unit, fertility-flow measurement, and
-   baseline transition are settled.
+8. **Keep structural policy analysis deferred.** The rebated property-tax
+   impact benchmark may be shown separately from the calibrated transition.
+   Lead with the maintained national supply elasticity `1.75`; the Coven
+   California elasticity `0.232` and the Baum-Snow--Han U.S. urban elasticity
+   `0.5` are sensitivities. Do not promote the impact calculation as a complete
+   stationary or transition policy counterfactual.
 
 ## Legacy points -- to be reviewed
 
