@@ -43,80 +43,97 @@
 }
 
 % ---------------------------------------------------------------------------
-\begin{frame}{From population closure to transition dynamics}
-\textbf{Last week:} fertility closes the aggregate economy through cohort replacement and housing-market clearing:
-\[
-Y_{t+1}=n_tY_t,
-\qquad
-O_{t+1}=Y_t,
-\qquad
-Y_t h_Y(p_t)+O_t h_O(p_t)=H^s(p_t).
-\]
-A steady state is a constant equilibrium $(Y^*,O^*,p^*)$ satisfying household optimality, replacement,
-\[
-n(p^*)=1,
-\qquad
-Y^*=O^*,
-\]
-and housing-market clearing.
+\begin{frame}{Equilibrium closure and transition dynamics}
+\textbf{Last time:} discussion of how to close population and housing markets:
+\begin{itemize}
+  \item closed versus open population, and the role of migration and household formation;
+  \item stationary equilibrium versus a dated transition;
+  \item fertility as a source of future household demand.
+\end{itemize}
 
 \medskip
-\textbf{This time:} separate the impact response to a fall in child preferences from the subsequent adjustment of cohort sizes and housing prices, then carry the closure into the quantitative model.
+\textbf{This time:} consider a closed economy that begins in a steady state and experiences a permanent fall in the preference for children:
+\begin{itemize}
+  \item fertility and the house price respond on impact;
+  \item cohort sizes then change population and housing demand;
+  \item the path may converge to a new steady state;
+  \item closed and open population versions are then compared in the quantitative model.
+\end{itemize}
 
 \end{frame}
 
 % ---------------------------------------------------------------------------
 \begin{frame}{A toy economy}
 \small
-To fix ideas, consider a simplified economy with young and old households:
+To fix ideas, consider a simplified economy with two household generations:
 \begin{itemize}
-  \item $Y_t$ is the number of young households at date $t$; $O_t$ is the number of old households.
-  \item Total adult-household population is $S_t=Y_t+O_t$.
-  \item Young households choose consumption, housing services, and $n_t$ \textbf{household children}; next period they are old.
-  \item Each household child becomes one young household in the next generation.
-  \item Both generations purchase housing services in the same market at price $p_t$.
+  \item At date $t$, there are $Y_t$ young households and $O_t$ old households; total population is $S_t=Y_t+O_t$.
+  \item A household lives for two periods. A young household becomes old next period; an old household exits after the current period.
+  \item Young households choose consumption, adult housing, and $n_t$ \textbf{household children}. Each household child becomes one young household next period.
+  \item Old households choose consumption and housing but not fertility.
+  \item Both generations purchase housing services in one competitive market at price $p_t$.
 \end{itemize}
 
 \medskip
-The cohort law is therefore
+There is no migration or asset accumulation. The timing implies
 \[
-Y_{t+1}=n_tY_t,
-\qquad
-O_{t+1}=Y_t,
+(Y_t,O_t)
+\xrightarrow{\text{choices at }p_t}
+(Y_{t+1},O_{t+1})=(n_tY_t,Y_t).
 \]
-so $n_t=1$ is replacement.
 
 \medskip
-The quantitative model adds tenure choice, mortgages, saving, and bequests.
+The quantitative model restores age, tenure, mortgages, saving, earnings risk, and bequests.
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Household choice and housing-market clearing}
+\begin{frame}{Household problems}
 \small
-A young household earns $y$ and chooses consumption $c$, housing services $h$, and household children $n$:
+A young household earns $y_Y$ and chooses consumption $c_Y$, adult housing $h^A$, and household children $n$:
 \[
-u(c,h,n)=c+\alpha\log h+v\log n,
+\max_{c_Y,h^A,n}\left\{c_Y+\alpha\log h^A+v\log n\right\},
 \qquad
-c+ph+\big[q+a(p+\omega)\big]n=y.
+c_Y+ph^A+\big[q+a(p+\omega)\big]n=y_Y.
 \]
-Here $\alpha$ values adult housing, $v$ values children, and each household child requires $a$ units of housing plus $q$ other goods. The term $\omega$ is the extra cost of accessing child-suitable housing.
+The parameter $\alpha$ values adult housing and $v$ values children. Each household child requires $q$ units of other goods and $a$ units of housing; $\omega$ is the extra unit cost of child-suitable housing. Fertility and total young-household housing demand are
+\[
+n(p;v)=\frac{v}{q+a(p+\omega)},
+\qquad
+h_Y(p;v)=\frac{\alpha}{p}+a n(p;v).
+\]
 
-\medskip
-The interior choices are
+An old household earns $y_O$ and has housing weight $\bar h_O$:
 \[
-n(p)=\frac{v}{q+a(p+\omega)},
+\max_{c_O,h_O}\left\{c_O+\bar h_O\log h_O\right\},
 \qquad
-h_Y(p)=\frac{\alpha}{p}+a n(p).
+c_O+ph_O=y_O,
 \]
-An old household has utility $c_O+\bar h_O\log h_O$, so its housing demand is $h_O(p)=\bar h_O/p$. Housing supply and market clearing are
+which gives $h_O(p)=\bar h_O/p$. Consumption is the numeraire, and incomes are high enough for the interior choices shown above.
+
+\textbf{A higher housing cost lowers fertility and housing demand.}
+\end{frame}
+
+% ---------------------------------------------------------------------------
+\begin{frame}{Competitive equilibrium}
+\small
+Housing is supplied competitively according to
 \[
 H^s(p)=\bar H p^\varepsilon,
-\qquad
-Y_t h_Y(p_t)+O_t h_O(p_t)=H^s(p_t).
 \]
-The parameter $\bar H$ scales housing supply and $\varepsilon$ is its price elasticity.
+where $\bar H$ is the supply scale and $\varepsilon$ is the price elasticity.
 
-\textbf{Higher housing costs reduce housing demand and fertility; cohort sizes feed back into the market-clearing price.}
+Given $(Y_0,O_0)$ and a path for child preferences $\{v_t\}$, an equilibrium is a sequence of prices, household choices, and cohort masses satisfying
+\[
+Y_t h_Y(p_t;v_t)+O_t h_O(p_t)=H^s(p_t),
+\]
+and
+\[
+Y_{t+1}=n(p_t;v_t)Y_t,
+\qquad
+O_{t+1}=Y_t.
+\]
+
+Current cohort masses determine the market-clearing price; the price determines fertility and therefore the next cohort.
 \end{frame}
 
 % ---------------------------------------------------------------------------
@@ -130,7 +147,7 @@ The parameter $\bar H$ scales housing supply and $\varepsilon$ is its price elas
 \footnotesize
 A steady state is a constant triple $(Y^*,O^*,p^*)$. It requires
 \[
-n(p^*)=1,
+n(p^*;v_0)=1,
 \qquad Y^*=O^*.
 \]
 Replacement selects
@@ -215,7 +232,7 @@ Along the steady-state schedule, direct differentiation gives
 
 % ---------------------------------------------------------------------------
 \begin{frame}{Below-replacement fertility and population dynamics}
-Let $n_t=n(p_t)$ be household children per young household and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
+Let $n_t=n(p_t;v_t)$ be household children per young household and $\mu_t=O_t/Y_t$ the old-to-young cohort ratio. Population can rise with $n_t<1$ whenever
 \[
 \mu_t<n_t<1.
 \]
