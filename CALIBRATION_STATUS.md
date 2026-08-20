@@ -144,15 +144,16 @@ it over the calibration window. It is used once to normalize the old state,
 the post-2023 open-population sensitivity, so the realized outside-origin share
 is not fixed away from the old state.
 
-### Property-tax capitalization benchmark
+### Property-tax transition benchmark
 
-The paper-facing policy example is an impact comparison from the same fitted
-2023 pre-fertility distribution. It raises the annual property-tax rate from
-`1%` to `2%`, rebates all contemporaneous revenue equally across adult
-households, re-anchors static housing supply so the rebated `1%` economy clears
-at the inherited price, and jointly solves the reform price and transfer. The
-population closure is nationally closed (`M=0`, `rho=1`); the calculation is
-not a stationary comparison, a welfare calculation, or a migration response.
+The paper-facing policy example begins from the same fitted 2023 pre-fertility
+distribution and follows the economy through 2035. It permanently raises the
+annual property-tax rate from `1%` to `2%`, rebates all contemporaneous revenue
+equally across adult households, re-anchors static housing supply so the
+rebated `1%` economy clears at the inherited price, and jointly solves the
+house price and transfer at every date. The population closure is nationally
+closed (`M=0`, `rho=1`). This is a finite twelve-year transition, not a
+stationary comparison, welfare calculation, or migration response.
 
 The `0.232` elasticity is the California floor-space elasticity used by Coven
 et al., not the maintained national elasticity in this calibration. The
@@ -166,10 +167,24 @@ audited sensitivity gives:
 
 Thus the qualitative ownership and fertility responses survive the maintained
 national elasticity, but the price-capitalization and tenure effects are
-smaller than under the California supply elasticity. All cases share the exact
-2023 distribution and queue. Market residuals are below `3.13e-5`, absolute
-fiscal residuals below `1.23e-5`, and mass residuals below `8.66e-15`; no
-projection or nonfinite mass appears. The two national sensitivity packets are
+smaller than under the California supply elasticity. Under the maintained
+elasticity, the dynamic reform effects are:
+
+| Year | House price | User cost | Ownership | Dependent-child ownership | Births/adult | Adult population |
+|---:|---:|---:|---:|---:|---:|---:|
+| 2023 | -2.035% | +21.613% | +0.427 pp | +1.057 pp | +0.339% | 0.000% |
+| 2027 | -2.460% | +21.085% | +1.346 pp | +2.041 pp | +0.385% | 0.000% |
+| 2031 | -2.839% | +20.614% | +1.834 pp | +2.777 pp | +0.435% | 0.000% |
+| 2035 | -3.171% | +20.201% | +2.384 pp | +3.432 pp | +0.479% | 0.000% |
+
+Capitalization persists while tenure adjusts gradually. The fertility response
+remains modest. Adult population is unchanged through 2035 because reform-date
+birth cohorts enter the adult-household population only after twenty years.
+All cases share the exact 2023 distribution and queue. Maximum market, fiscal,
+and mass residuals are respectively `5.27e-5`, `1.42e-5`, and `1.09e-14`; no
+projection or nonfinite mass appears. The exact transition packet is
+`output/model/e5f_post2023_rebated_tax_path_national_r2_20260820_production/`.
+The elasticity sensitivity packet is
 `output/model/e5f_post2023_coven_tax_elasticity_national_supply_r2_20260820/`.
 
 ### Historical validation and steady-state interpretation

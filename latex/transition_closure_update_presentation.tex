@@ -239,6 +239,43 @@ Inherited cohorts can sustain short-run population and housing-cost growth below
 \end{frame}
 
 % ---------------------------------------------------------------------------
+\begin{frame}{Quantitative options}
+\scriptsize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}
+                >{\raggedright\arraybackslash}p{0.24\textwidth}
+                >{\raggedright\arraybackslash}p{0.27\textwidth}
+                >{\raggedright\arraybackslash}p{0.23\textwidth}@{}}
+\toprule
+\textbf{Exercise} & \textbf{Exogenous demographic input} & \textbf{Endogenous outcomes} & \textbf{Interpretation} \\
+\midrule
+2007--2023 bridge
+& Household totals and age shares at each date
+& Prices and household choices within each age group
+& Historical accounting and 2023 calibration \\
+
+Semi-open historical path
+& Four age-group residual flows
+& Cohort evolution around those flows
+& Requires a separate household-formation margin \\
+
+Closed post-2023 path
+& The fitted 2023 state; no outside entry
+& Births, cohort sizes, prices, and tenure after 2023
+& National finite-horizon benchmark \\
+
+Open post-2023 path
+& A fixed outside inflow and retention rate
+& The same endogenous choices and prices
+& Entry-flow sensitivity \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\textbf{Main specification:} closed post-2023 path. \textbf{Sensitivity:} open post-2023 path.
+\end{frame}
+
+% ---------------------------------------------------------------------------
 \begin{frame}{Dated quantitative transition}
 \small
 \textbf{Household problem.} Households choose fertility, tenure, housing, saving, and location. The distribution $G_t$ records their joint distribution and mass.
@@ -339,44 +376,6 @@ The exercise isolates demographic-housing forces rather than the full housing cy
 \source{Sources: real Case-Shiller national house-price index and CPI rent of primary residence.}
 \end{frame}
 
-% ---------------------------------------------------------------------------
-\begin{frame}{Options}
-\scriptsize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}
-                >{\raggedright\arraybackslash}p{0.24\textwidth}
-                >{\raggedright\arraybackslash}p{0.27\textwidth}
-                >{\raggedright\arraybackslash}p{0.23\textwidth}@{}}
-\toprule
-\textbf{Exercise} & \textbf{Exogenous demographic input} & \textbf{Endogenous outcomes} & \textbf{Interpretation} \\
-\midrule
-2007--2023 bridge
-& Household totals and age shares at each date
-& Prices and household choices within each age group
-& Historical accounting and 2023 calibration \\
-
-Semi-open historical path
-& Four age-group residual flows
-& Cohort evolution around those flows
-& Requires a separate household-formation margin \\
-
-Closed post-2023 path
-& The fitted 2023 state; no outside entry
-& Births, cohort sizes, prices, and tenure after 2023
-& National finite-horizon benchmark \\
-
-Open post-2023 path
-& A fixed outside inflow and retention rate
-& The same endogenous choices and prices
-& Entry-flow sensitivity \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\textbf{Main specification:} closed post-2023 path. \textbf{Sensitivity:} open post-2023 path.
-\end{frame}
-
-% ---------------------------------------------------------------------------
 \begin{frame}{Closed-population renewal}
 \centering
 \includegraphics[width=0.82\textwidth,height=0.49\textheight,keepaspectratio]{../output/model/e5f_no_policy_transition_report_jump11_polish_r2_20260818/continuation_closed_stationary_renewal_schedule.pdf}
@@ -391,30 +390,33 @@ No price restores replacement. The closed continuation is therefore a finite-hor
 \end{frame}
 
 % ---------------------------------------------------------------------------
-\begin{frame}{Rebated property tax: capitalization}
+\begin{frame}{Rebated property tax: impact and first decade}
 \footnotesize
-From the same fitted 2023 distribution, raise the annual property-tax rate from $1\%$ to $2\%$ and rebate the revenue equally. For each supply elasticity, re-anchor housing supply at the inherited price and solve jointly for the house price and transfer.
+From the same fitted 2023 distribution, permanently raise the annual property-tax rate from $1\%$ to $2\%$ and rebate the revenue equally. At each date, solve jointly for the house price and transfer under the maintained national supply elasticity, $\varepsilon_H=1.75$.
+
+The 2031 and 2035 model dates bracket a ten-year response.
 
 \medskip
 \centering
 \scriptsize
 \renewcommand{\arraystretch}{1.25}
-\begin{tabular}{@{}llrrrrr@{}}
+\begin{tabular}{@{}lrrrrr@{}}
 \toprule
-$\varepsilon_H$ & \textbf{Reference} & $\Delta P$ & $\Delta$ user cost
-& $\Delta$ ownership & $\Delta$ child ownership & $\Delta$ births/adult \\
+\textbf{Year} & $\Delta P$ & $\Delta$ user cost & $\Delta$ ownership
+& $\Delta$ child ownership & $\Delta$ births/adult \\
 \midrule
-$0.232$ & Coven: California & $-8.02\%$ & $+14.18\%$ & $+1.80$ pp & $+2.53$ pp & $+0.52\%$ \\
-$0.500$ & B--S--H: U.S. urban & $-5.25\%$ & $+17.62\%$ & $+1.44$ pp & $+2.34$ pp & $+0.44\%$ \\
-$1.750$ & Maintained national & $-2.03\%$ & $+21.61\%$ & $+0.43$ pp & $+1.06$ pp & $+0.34\%$ \\
+2023 & $-2.03\%$ & $+21.61\%$ & $+0.43$ pp & $+1.06$ pp & $+0.34\%$ \\
+2027 & $-2.46\%$ & $+21.08\%$ & $+1.35$ pp & $+2.04$ pp & $+0.38\%$ \\
+2031 & $-2.84\%$ & $+20.61\%$ & $+1.83$ pp & $+2.78$ pp & $+0.44\%$ \\
+2035 & $-3.17\%$ & $+20.20\%$ & $+2.38$ pp & $+3.43$ pp & $+0.48\%$ \\
 \bottomrule
 \end{tabular}
 
 \medskip
 \raggedright
-A more elastic supply curve weakens price capitalization. With the maintained national elasticity, the rebate still raises ownership---especially among households with dependent children---and fertility rises modestly.
+Capitalization persists, while the tenure response builds as household states adjust. Fertility rises modestly. Adult population is unchanged through 2035 because births first affect household entry after twenty years.
 
-\source{Housing supply: Baum-Snow and Han (2024), Saiz (2010), and the California calibration in Coven et al. (2025).}
+\source{The 2023 response is robust to the alternative supply elasticities in Baum-Snow and Han (2024) and Coven et al. (2025).}
 \end{frame}
 
 % ---------------------------------------------------------------------------

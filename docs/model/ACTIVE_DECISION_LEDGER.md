@@ -59,12 +59,12 @@ reproducibility contracts.
    feedback in that order. Do not claim movement between two positive steady
    states unless a positive closed root is actually established.
 
-8. **Keep structural policy analysis deferred.** The rebated property-tax
-   impact benchmark may be shown separately from the calibrated transition.
-   Lead with the maintained national supply elasticity `1.75`; the Coven
-   California elasticity `0.232` and the Baum-Snow--Han U.S. urban elasticity
-   `0.5` are sensitivities. Do not promote the impact calculation as a complete
-   stationary or transition policy counterfactual.
+8. **Keep structural policy analysis separate.** The rebated property-tax
+   transition may be shown from 2023 through 2035. Lead with the maintained
+   national supply elasticity `1.75`; the Coven California elasticity `0.232`
+   and the Baum-Snow--Han U.S. urban elasticity `0.5` are impact sensitivities.
+   The path is a finite transition with equal rebates, not a stationary or
+   welfare comparison.
 
 ## Legacy points -- to be reviewed
 
