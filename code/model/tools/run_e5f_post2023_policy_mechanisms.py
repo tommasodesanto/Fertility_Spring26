@@ -157,6 +157,31 @@ def apply_policy(parameters: Any, spec: PolicySpec) -> None:
     parameters.parent_dp_waiver_birth_state_only = False
 
 
+def population_accounting(
+    evaluation: calendar.PeriodEvaluation, parameters: Any
+) -> dict[str, float]:
+    """Count adult decision units and dependent children in the solved state."""
+    child_state_mode = str(
+        getattr(parameters, "child_state_mode", "shared_clock")
+    ).strip().lower()
+    if child_state_mode != "independent_count":
+        raise RuntimeError(
+            "Child-inclusive population requires the independent-count child state"
+        )
+    adult_household_units = float(np.sum(evaluation.g_post_fertility))
+    dependent_child_units = 0.0
+    for parity in range(1, int(parameters.n_parity)):
+        for child_state in range(1, parity + 1):
+            dependent_child_units += child_state * float(
+                np.sum(evaluation.g_current[..., parity, child_state])
+            )
+    return {
+        "adult_household_units": adult_household_units,
+        "dependent_child_units": dependent_child_units,
+        "model_population_units": adult_household_units + dependent_child_units,
+    }
+
+
 def reconstruct_matched_2023(
     prepared: baseline.PreparedModel,
     contracts: dict[str, Any],
@@ -355,6 +380,7 @@ def run_policy_path(
             next_bridge_year=None,
             grid_fallback=fallback,
         )
+        row.update(population_accounting(evaluation, parameters))
         row["policy_case"] = spec.name
         row["policy_label"] = spec.label
         row["supply_intercept_multiplier"] = spec.supply_multiplier

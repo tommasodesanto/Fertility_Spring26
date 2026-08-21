@@ -71,9 +71,41 @@ def test_property_tax_policy_is_unrebated_and_has_no_grant() -> None:
     assert parameters.parent_dp_waiver is False
 
 
+def test_population_accounting_counts_children_without_decision_making() -> None:
+    g_post = np.zeros((1, 1, 1, 1, 1, 4, 4))
+    g_current = np.zeros_like(g_post)
+    g_post[0, 0, 0, 0, 0, 0, 0] = 0.6
+    g_post[0, 0, 0, 0, 0, 2, 2] = 0.4
+    g_current[...] = g_post
+    evaluation = SimpleNamespace(g_post_fertility=g_post, g_current=g_current)
+    result = policy.population_accounting(
+        evaluation,
+        SimpleNamespace(n_parity=4, child_state_mode="independent_count"),
+    )
+    assert np.isclose(result["adult_household_units"], 1.0)
+    assert np.isclose(result["dependent_child_units"], 0.8)
+    assert np.isclose(result["model_population_units"], 1.8)
+
+
+def test_population_accounting_rejects_shared_clock_state() -> None:
+    g = np.ones((1, 1, 1, 1, 1, 1, 1))
+    evaluation = SimpleNamespace(g_post_fertility=g, g_current=g)
+    try:
+        policy.population_accounting(
+            evaluation,
+            SimpleNamespace(n_parity=1, child_state_mode="shared_clock"),
+        )
+    except RuntimeError as error:
+        assert "independent-count" in str(error)
+    else:
+        raise AssertionError("Shared-clock population accounting did not fail closed")
+
+
 if __name__ == "__main__":
     test_policy_menu_is_small_and_predeclared()
     test_supply_policy_shifts_only_the_intercept()
     test_credit_policy_is_dependent_child_not_birth_only()
     test_property_tax_policy_is_unrebated_and_has_no_grant()
-    print("POST2023_POLICY_MECHANISM_TESTS_PASS tests=4")
+    test_population_accounting_counts_children_without_decision_making()
+    test_population_accounting_rejects_shared_clock_state()
+    print("POST2023_POLICY_MECHANISM_TESTS_PASS tests=6")
