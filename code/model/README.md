@@ -35,8 +35,15 @@ comparison is
 The roots imply `184.278m` and `185.360m` terminal resident persons and pass
 the declared market, fiscal, transfer, finite-renewal, and person/head one-step
 gates. `tools/run_e5f_perfect_foresight_person_demography_policy.py` is the
-isolated full-transition driver. Its H32 convergence stage is in progress; no
-corrected transition has yet been promoted.
+isolated full-transition driver. Both H32 policy paths are equilibrium-
+converged: the 1%/2% maximum market residuals are `1.485e-4`/`1.133e-4`, and
+the maximum fiscal residuals are `1.426e-5`/`2.242e-5`. Every accounting gate
+passes. Their roughly `27.4%` terminal population gaps are the expected finite-
+horizon truncation, so the paired H32 comparison remains deliberately
+unaccepted and no corrected transition has yet been promoted. Exact outputs
+are `../../output/model/e5f_pf_person_policy_rebated-tax1-baseline_20260826a_h032_convergence/`,
+`../../output/model/e5f_pf_person_policy_rebated-tax2-reform_20260826a_h032_convergence/`,
+and `../../output/model/e5f_pf_person_policy_comparison_h032_20260826a/`.
 
 `tools/build_e5f_person_demography_terminal_spectrum.py` computes the exact
 four-year linear operator implied by the frozen terminal demographic closure.
@@ -50,7 +57,8 @@ The cluster launcher also refuses to chain a longer horizon from a saved path
 unless the shorter path is equilibrium-converged, accounting-clean,
 case/terminal-consistent, strictly shorter, and hash-matched. This prevents a
 numerically convenient but failed checkpoint from silently becoming the H64 or
-H128 production seed.
+H128 production seed. Hash-verified H64 bridge jobs `16432316` and `16432319`
+are now running from the completed H32 1% and 2% paths.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains

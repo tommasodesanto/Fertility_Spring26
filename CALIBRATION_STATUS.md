@@ -1,8 +1,8 @@
 # Calibration Status
 
-Updated: `2026-08-26` (coherent person-law integration and conditional terminal roots)
+Updated: `2026-08-26` (coherent person-law H32 paths and conditional terminal roots)
 
-## August 26 coherent person-law transition: terminal roots solved; paths in progress
+## August 26 coherent person-law transition: H32 paths solved; horizon extension in progress
 
 The certified **unrebated 1% status-quo baseline and all slides remain
 unchanged**. An isolated perfect-foresight experiment now couples the household
@@ -40,10 +40,27 @@ the verified comparison is
 `output/model/e5f_person_demography_terminal_comparison_20260826a/`.
 
 The exact two-date full-transition smokes pass all accounting and terminal-root
-reproduction checks. H32 transition jobs `16422600` and `16422601` are the
-current first convergence stage. Do not call the corrected transition solved
-until path market/fiscal gates, terminal-state gates, and longer-horizon
-stability pass.
+reproduction checks. Both H32 paths are now equilibrium-converged and pass an
+independent saved-path audit:
+
+| Case | Iterations | Max. market residual | Max. fiscal residual | Path gates | Terminal-state gate |
+|---|---:|---:|---:|:---:|:---:|
+| Rebated 1% | `26` | `1.485e-4` | `1.426e-5` | pass | fail as expected |
+| Rebated 2% | `27` | `1.133e-4` | `2.242e-5` | pass | fail as expected |
+
+Every person, head, age-cell, and household-distribution accounting gate also
+passes. At H32, the resident-person terminal gaps are still `27.35%` and
+`27.45%`; this is the mechanically expected demographic truncation, not an
+equilibrium-path failure. The paired H32 comparison is deliberately
+unaccepted for that reason. Its horizon-sensitive diagnostic effects are:
+`-4.117%` asset price, `+19.337%` rent-equivalent price, `+0.512%` annual
+births per head, and `+0.087%` resident persons in 2051; and `-4.052%`,
+`+17.705%`, `+0.739%`, and `+0.227%`, respectively, in 2079. Exact outputs are
+`output/model/e5f_pf_person_policy_rebated-tax1-baseline_20260826a_h032_convergence/`,
+`output/model/e5f_pf_person_policy_rebated-tax2-reform_20260826a_h032_convergence/`,
+and `output/model/e5f_pf_person_policy_comparison_h032_20260826a/`. Do not call
+the corrected transition solved until the terminal-state and longer-horizon
+stability gates pass.
 
 The frozen-terminal person block has now been diagonalized exactly. Its
 dominant four-year eigenvalue is `0.960754` in the rebated-1% case and
@@ -61,7 +78,9 @@ seed H64 or H128 only when its summary is complete, the path itself passed the
 declared market and fiscal gates, every accounting gate passed, the policy case
 and terminal root match, the horizon is strictly shorter, and both the summary
 and path hashes match the launch contract. Torch rejection test `16427948`
-correctly rejected an unconverged H2 seed before creating any output.
+correctly rejected an unconverged H2 seed before creating any output. H64 jobs
+`16432316` and `16432319` are now running from the hash-verified H32 1% and 2%
+paths, respectively, under six-hour and 16 GB bounds.
 
 ## Superseded queue-based August 26 property-tax diagnostic: not promoted
 
