@@ -46,6 +46,38 @@ CSVs, and visually inspected plots are in
 The full-horizon plot contains the known terminal-boundary distortion at the
 last date and must not be read as an accepted asymptotic transition.
 
+### Isolated coherent demographic-law repair: terminal condition must change
+
+An isolated person-cohort operator now replaces the diagnostic
+`births / 2.1 at age 20` queue with separate annual births, age-sex survival,
+net migration, nonhead-to-head formation, head dissolution, and household-head
+stocks. It starts from the exact Vintage 2025 age-sex population and reproduces
+the cohort-anchored Census-main target path with zero cell-level error. The
+largest person- and head-flow identity residuals are `1.79e-7` and `5.96e-8`
+persons, respectively. The operator and nine exact unit tests are under
+`code/model/demographic_transition/`; the isolated packet is
+`output/model/e5f_coherent_person_cohort_path_20260826a/`. It is not yet wired
+into household choices or housing-market clearing.
+
+The replacement changes the terminal-equilibrium problem. Under average
+2096--2100 Census survival, fixed 2023 ACS headship, and the late-Census
+age-sex migration residual, one annual birth generates `32.7842` future
+head-years. The critical birth rate is therefore `0.0305025` per head per year,
+or `0.122010` per four-year model period. The reconstructed 2023 rebated 1% and
+2% rates imply renewal ratios `0.84757` and `0.84993`, so both admit finite
+positive fixed-migration demographic steady states. By contrast, the old
+queue-based terminal household fixed points imply renewal ratios `1.06254` and
+`1.06253`; neither admits a finite steady state under the corrected person law
+with positive fixed migration.
+
+Consequently, terminal `psi_child=0.27460458049447606` is withdrawn as a valid
+terminal condition for the repaired algorithm. It was selected to close the
+old queue and must not be reused. The next step is a joint terminal solve for
+household policy, housing price, fiscal transfer, demographic scale, and a
+demographically admissible fertility rate. The exact diagnostic and copied
+source summaries are in
+`output/model/e5f_coherent_terminal_demographic_diagnostic_20260826a/`.
+
 ### Exploratory persons-based demographic satellite
 
 The active transition's `adult_population` is a mass of adult household heads,

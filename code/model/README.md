@@ -5,6 +5,27 @@ former MATLAB code is archived for historical reference and parity checks.
 
 ## Current paper architecture (August 18)
 
+### Isolated demographic-transition repair (August 26)
+
+The active perfect-foresight diagnostic still uses the historical
+`births / 2.1` age-20 household-renewal queue. A replacement person-cohort
+accounting layer is now isolated under `demographic_transition/`; it is not yet
+imported by the active solver. The new law separately advances births,
+age-specific survival, age-sex net migration, nonhead-to-head household
+formation, head dissolution, and household-head mass.
+
+The verified path packet is
+`../../output/model/e5f_coherent_person_cohort_path_20260826a/`. It starts from
+the exact Vintage 2025 age-sex population, reproduces the cohort-anchored Census
+main path cell by cell, and writes the proposed four-year model interface. The
+terminal diagnostic is
+`../../output/model/e5f_coherent_terminal_demographic_diagnostic_20260826a/`.
+It shows that the old queue-based terminal birth rates imply a corrected-law
+renewal ratio of about `1.0625`; hence the imposed terminal preference
+`psi_child=0.27460458049447606` cannot remain the terminal condition after the
+queue is removed. The household policy, price, transfer, demographic scale,
+and terminal preference must be solved jointly under the new law.
+
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
 literal parity, independent child maturation, the child-room floor, tenure and
