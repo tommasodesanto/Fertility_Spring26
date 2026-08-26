@@ -46,6 +46,11 @@ attenuation requires `116` model periods (`464` years). H32 therefore cannot
 be a terminal certification horizon; it is a path-solver stage, H64 is a seed
 bridge, and H128 is the first planned terminal test. The fingerprinted packet
 is `../../output/model/e5f_person_demography_terminal_spectrum_20260826a/`.
+The cluster launcher also refuses to chain a longer horizon from a saved path
+unless the shorter path is equilibrium-converged, accounting-clean,
+case/terminal-consistent, strictly shorter, and hash-matched. This prevents a
+numerically convenient but failed checkpoint from silently becoming the H64 or
+H128 production seed.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains

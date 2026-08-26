@@ -124,6 +124,63 @@ if not all((summary.get("accounting_gates") or {}).values()):
 if summary.get("path_status") not in {"converged", "maximum_iterations_reached"}:
     raise SystemExit("smoke did not execute the path loop")
 PY
+    if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
+        : "${E5F_PF_PERSON_POLICY_INITIAL_SUMMARY:?seeded convergence requires initial summary}"
+        : "${E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_SUMMARY_SHA256:?seeded convergence requires initial-summary hash}"
+        : "${E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256:?seeded convergence requires initial-path hash}"
+        INITIAL_PATH="$E5F_PF_PERSON_POLICY_INITIAL_PATH"
+        [[ "$INITIAL_PATH" = /* ]] || INITIAL_PATH="$PROJECT_ROOT/$INITIAL_PATH"
+        INITIAL_SUMMARY="$E5F_PF_PERSON_POLICY_INITIAL_SUMMARY"
+        [[ "$INITIAL_SUMMARY" = /* ]] || INITIAL_SUMMARY="$PROJECT_ROOT/$INITIAL_SUMMARY"
+        [ -s "$INITIAL_PATH" ] || { echo "missing initial path: $INITIAL_PATH" >&2; exit 2; }
+        [ -s "$INITIAL_SUMMARY" ] || { echo "missing initial summary: $INITIAL_SUMMARY" >&2; exit 2; }
+        check_hash "$INITIAL_PATH" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256" "initial path"
+        check_hash "$INITIAL_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_SUMMARY_SHA256" "initial summary"
+        python3 - "$INITIAL_SUMMARY" "$INITIAL_PATH" "$TERMINAL_SUMMARY" \
+            "$E5F_PF_PERSON_POLICY_CASE" "$HORIZON" <<'PY'
+import csv, json, os, sys
+from pathlib import Path
+
+summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+rows = list(csv.DictReader(Path(sys.argv[2]).open(newline="", encoding="utf-8")))
+terminal = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
+case = sys.argv[4]
+requested_horizon = int(sys.argv[5])
+if summary.get("status") != "complete_unpromoted_person_demography_policy_path":
+    raise SystemExit("initial summary is incomplete")
+if summary.get("case") != case:
+    raise SystemExit("initial summary uses a different policy case")
+if not summary.get("path_converged") or summary.get("path_status") != "converged":
+    raise SystemExit("initial path has not passed its equilibrium gates")
+if not all((summary.get("accounting_gates") or {}).values()):
+    raise SystemExit("initial path accounting gates failed")
+seed_horizon = int(summary.get("horizon", 0))
+if seed_horizon < 2 or seed_horizon >= requested_horizon:
+    raise SystemExit("initial-path horizon must be shorter than requested horizon")
+if len(rows) != seed_horizon:
+    raise SystemExit("initial-path row count differs from its summary horizon")
+if [int(row["period"]) for row in rows] != list(range(seed_horizon)):
+    raise SystemExit("initial-path periods are not contiguous from zero")
+if summary.get("terminal_root") != terminal:
+    raise SystemExit("initial path used a different terminal root")
+expected = {
+    "driver": os.environ["E5F_PF_PERSON_POLICY_EXPECTED_DRIVER_SHA256"],
+    "person_demography": os.environ[
+        "E5F_PF_PERSON_POLICY_EXPECTED_PERSON_DRIVER_SHA256"
+    ],
+    "funded_policy": os.environ[
+        "E5F_PF_PERSON_POLICY_EXPECTED_FUNDED_DRIVER_SHA256"
+    ],
+    "perfect_foresight": os.environ[
+        "E5F_PF_PERSON_POLICY_EXPECTED_PF_DRIVER_SHA256"
+    ],
+    "solver": os.environ["E5F_PF_PERSON_POLICY_EXPECTED_SOLVER_SHA256"],
+}
+for name, digest in expected.items():
+    if (summary.get("source_hashes") or {}).get(name) != digest:
+        raise SystemExit(f"initial path used a different {name} hash")
+PY
+    fi
 fi
 
 module load anaconda3/2025.06 2>/dev/null || module load anaconda3 2>/dev/null || true
@@ -146,6 +203,8 @@ payload = {
     "horizon": int(os.environ.get("E5F_PF_PERSON_POLICY_HORIZON", "2")),
     "maximum_path_iterations": int(os.environ.get("E5F_PF_PERSON_POLICY_MAX_ITERATIONS", "1")),
     "terminal_summary": os.environ["E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"],
+    "initial_path": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_PATH"),
+    "initial_summary": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_SUMMARY"),
     "hashes": {
         key: value for key, value in os.environ.items()
         if key.startswith("E5F_PF_PERSON_POLICY_EXPECTED_")
@@ -171,7 +230,7 @@ ARGS=(
     --maximum-transfer-step "${E5F_PF_PERSON_POLICY_MAXIMUM_TRANSFER_STEP:-0.08}"
 )
 if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
-    INITIAL_PATH="$E5F_PF_PERSON_POLICY_INITIAL_PATH"
+    INITIAL_PATH="${INITIAL_PATH:-$E5F_PF_PERSON_POLICY_INITIAL_PATH}"
     [[ "$INITIAL_PATH" = /* ]] || INITIAL_PATH="$PROJECT_ROOT/$INITIAL_PATH"
     [ -s "$INITIAL_PATH" ] || { echo "missing initial path: $INITIAL_PATH" >&2; exit 2; }
     ARGS+=(--initial-path "$INITIAL_PATH")

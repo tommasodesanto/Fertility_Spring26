@@ -56,6 +56,13 @@ horizon guidance, not proof that the nonlinear equilibrium or household
 distribution has converged. The exact diagnostic is
 `output/model/e5f_person_demography_terminal_spectrum_20260826a/`.
 
+Longer-horizon launchers now fail closed on their seed. A recorded path may
+seed H64 or H128 only when its summary is complete, the path itself passed the
+declared market and fiscal gates, every accounting gate passed, the policy case
+and terminal root match, the horizon is strictly shorter, and both the summary
+and path hashes match the launch contract. Torch rejection test `16427948`
+correctly rejected an unconverged H2 seed before creating any output.
+
 ## Superseded queue-based August 26 property-tax diagnostic: not promoted
 
 The certified **unrebated 1% status-quo baseline is unchanged**. The new
