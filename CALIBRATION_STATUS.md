@@ -1,8 +1,51 @@
 # Calibration Status
 
-Updated: `2026-08-26` (dated sequential calibration, closure audit, and unpromoted perfect-foresight property-tax diagnostic)
+Updated: `2026-08-26` (coherent person-law integration and conditional terminal roots)
 
-## August 26 perfect-foresight rebated property-tax diagnostic: not solved or promoted
+## August 26 coherent person-law transition: terminal roots solved; paths in progress
+
+The certified **unrebated 1% status-quo baseline and all slides remain
+unchanged**. An isolated perfect-foresight experiment now couples the household
+model to annual age-sex persons, survival, inferred net migration, fixed
+headship, and household-head stocks. The latest exact accounting regression
+starts from `338,723,802` resident persons in 2023 and passes person, head,
+age-cell, household-person, policy-reproduction, and feasibility gates at
+numerical precision. The active integrated source is
+`code/model/tools/run_e5f_perfect_foresight_person_demography.py`; the exact
+smoke is `output/model/e5f_pf_person_demography_20260826d_smoke/` on the
+Torch snapshot.
+
+Conditional on holding the 2100 Census survival, inferred age-sex migration
+flow, and birth-sex shares fixed after 2100; holding the aligned 2023 ACS
+headship schedule fixed; setting `psi_child=-0.06965906519972437`; and retaining
+the diagnostic housing-supply elasticity `1.75`, the corrected joint terminal
+housing/fiscal/demographic roots are:
+
+| Case | Asset price | Rent-equivalent price | Four-year rebate | Resident persons | Annual births/head | Renewal | Market residual | Budget residual |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Rebated 1% | `0.4977450` | `0.0824821` | `0.1593883` | `184.278m` | `0.0169930` | `0.556841` | `1.143e-4` | `9.490e-6` |
+| Rebated 2% | `0.4799803` | `0.0987374` | `0.2868983` | `185.360m` | `0.0170644` | `0.559181` | `5.150e-5` | `9.291e-6` |
+
+All declared terminal gates pass, including the absolute `2.5e-5` fiscal and
+transfer-gap gates and independent person/head one-step checks. The 2% case has
+`1.082m` more terminal residents (`+0.587%`), a `3.569%` lower asset price, a
+`19.708%` higher rent-equivalent price because the property-tax user cost is
+higher, and `0.420%` more annual births per head. These are conditional
+terminal equilibria, not a filtered demographic forecast. Immutable root
+packets are
+`output/model/e5f_person_demography_terminal_root_rebated-tax1-baseline_20260826a_production/`
+and
+`output/model/e5f_person_demography_terminal_root_rebated-tax2-reform_20260826a_production/`;
+the verified comparison is
+`output/model/e5f_person_demography_terminal_comparison_20260826a/`.
+
+The exact two-date full-transition smokes pass all accounting and terminal-root
+reproduction checks. H32 transition jobs `16422600` and `16422601` are the
+current first convergence stage. Do not call the corrected transition solved
+until path market/fiscal gates, terminal-state gates, and longer-horizon
+stability pass.
+
+## Superseded queue-based August 26 property-tax diagnostic: not promoted
 
 The certified **unrebated 1% status-quo baseline is unchanged**. The new
 experiment instead compares a rebated 1% property-tax economy with a rebated
@@ -56,8 +99,9 @@ the cohort-anchored Census-main target path with zero cell-level error. The
 largest person- and head-flow identity residuals are `1.79e-7` and `5.96e-8`
 persons, respectively. The operator and nine exact unit tests are under
 `code/model/demographic_transition/`; the isolated packet is
-`output/model/e5f_coherent_person_cohort_path_20260826a/`. It is not yet wired
-into household choices or housing-market clearing.
+`output/model/e5f_coherent_person_cohort_path_20260826a/`. The operator is now
+wired into the isolated perfect-foresight household and housing-market driver
+described above; it is not promoted to the calibrated baseline.
 
 The replacement changes the terminal-equilibrium problem. Under average
 2096--2100 Census survival, fixed 2023 ACS headship, and the late-Census
@@ -74,8 +118,9 @@ Consequently, terminal `psi_child=0.27460458049447606` is withdrawn as a valid
 terminal condition for the repaired algorithm. It was selected to close the
 old queue and must not be reused. The next step is a joint terminal solve for
 household policy, housing price, fiscal transfer, demographic scale, and a
-demographically admissible fertility rate. The exact diagnostic and copied
-source summaries are in
+demographically admissible fertility rate. That diagnostic led to the
+conditional roots reported above at the fitted 2023 preference value; the
+earlier exact diagnostic and copied source summaries remain in
 `output/model/e5f_coherent_terminal_demographic_diagnostic_20260826a/`.
 
 ### Exploratory persons-based demographic satellite

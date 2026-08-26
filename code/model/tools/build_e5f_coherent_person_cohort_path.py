@@ -428,7 +428,17 @@ def make_figure(
     axes[1, 0].set(title="Household-head flow ledger", ylabel="Millions/year")
     axes[1, 0].legend(frameon=False, fontsize=8)
 
-    for year, color in ((2025, "#999999"), (2049, "#7aa6c2"), (2081, "#26547c")):
+    available_age_years = sorted(
+        {int(row["calendar_year"]) for row in age_rows if int(row["sex"]) == 0}
+    )
+    display_years = (
+        available_age_years[0],
+        min(available_age_years, key=lambda value: abs(value - 2050)),
+        min(available_age_years, key=lambda value: abs(value - 2080)),
+    )
+    for year, color in zip(
+        display_years, ("#999999", "#7aa6c2", "#26547c"), strict=True
+    ):
         selected = [
             row
             for row in age_rows
@@ -636,10 +646,11 @@ def main() -> None:
 
 Status: `complete_isolated_coherent_demographic_law_not_integrated`.
 
-This packet removes the diagnostic `births / 2.1 at age 20` renewal rule. It
-starts from the exact Vintage 2025 age-sex population ({vintage_total:,.0f}
-resident persons), advances births and survival by single year of age, records
-the age-sex net-migration residual separately, and converts persons into
+This packet removes the diagnostic `births / 2.1 at age 20` renewal rule. Its
+population path is cohort-anchored to the exact Vintage 2025 age-sex population
+({vintage_total:,.0f} resident persons) and begins in {start_year}. It advances
+births and survival by single year of age, records the age-sex net-migration
+residual separately, and converts persons into
 household heads through explicit nonhead-to-head formation and head-dissolution
 flows.
 

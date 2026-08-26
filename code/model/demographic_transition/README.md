@@ -21,6 +21,17 @@ within-age household distribution to those masses while preserving its
 conditional economic-state composition. Every addition and removal is exposed
 in a separate ledger; this proportional-composition rule is provisional.
 
+`four_year_bridge.py` maps one four-year model birth flow into four annual
+birth cohorts, then applies the annual person law with year-specific survival,
+migration, and headship. The initial timing convention spreads births uniformly
+within the period and records that convention explicitly.
+
+`household_person_coupling.py` applies the resulting head stocks to the
+four-year lifecycle distribution. The existing household operator supplies the
+conditional wealth, tenure, income, parity, and child-state composition within
+each age cell; the person law supplies the exact mass of heads in that cell.
+The rescaling ledger keeps this provisional composition closure visible.
+
 Run the unit tests from the repository root:
 
 ```bash

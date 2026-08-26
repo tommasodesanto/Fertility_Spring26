@@ -5,12 +5,12 @@ former MATLAB code is archived for historical reference and parity checks.
 
 ## Current paper architecture (August 18)
 
-### Isolated demographic-transition repair (August 26)
+### Integrated demographic-transition repair (August 26)
 
-The active perfect-foresight diagnostic still uses the historical
-`births / 2.1` age-20 household-renewal queue. A replacement person-cohort
-accounting layer is now isolated under `demographic_transition/`; it is not yet
-imported by the active solver. The new law separately advances births,
+The certified baseline still uses the historical `births / 2.1` age-20
+household-renewal queue and has not been overwritten. An isolated replacement
+person-cohort layer under `demographic_transition/` is now integrated with an
+experimental perfect-foresight household and housing-market solver. The new law separately advances births,
 age-specific survival, age-sex net migration, nonhead-to-head household
 formation, head dissolution, and household-head mass.
 
@@ -25,6 +25,18 @@ renewal ratio of about `1.0625`; hence the imposed terminal preference
 `psi_child=0.27460458049447606` cannot remain the terminal condition after the
 queue is removed. The household policy, price, transfer, demographic scale,
 and terminal preference must be solved jointly under the new law.
+
+The coupled one-period regression and terminal-mapping tests pass under
+`tools/run_e5f_perfect_foresight_person_demography.py`. Conditional terminal
+price/rebate/demographic roots are solved by
+`tools/solve_e5f_person_demography_terminal_root.py`; the verified 1%/2%
+comparison is
+`../../output/model/e5f_person_demography_terminal_comparison_20260826a/`.
+The roots imply `184.278m` and `185.360m` terminal resident persons and pass
+the declared market, fiscal, transfer, finite-renewal, and person/head one-step
+gates. `tools/run_e5f_perfect_foresight_person_demography_policy.py` is the
+isolated full-transition driver. Its H32 convergence stage is in progress; no
+corrected transition has yet been promoted.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains

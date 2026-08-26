@@ -2347,6 +2347,7 @@ def solve_bellman_full_markov_income(
     P: SimpleNamespace,
     b_grid: np.ndarray,
     SD: SimpleNamespace,
+    continuation_V: np.ndarray | None = None,
 ):
     t0 = time.perf_counter()
     fec = get_fecundity_by_age(P)
@@ -2394,6 +2395,15 @@ def solve_bellman_full_markov_income(
     esc_v = np.ascontiguousarray(SD.escale_flat.reshape(-1))
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
+    if continuation_V is not None:
+        continuation_V = np.asarray(continuation_V, dtype=float)
+        if continuation_V.shape != V.shape:
+            raise ValueError(
+                "Calendar-time continuation value has shape "
+                f"{continuation_V.shape}; expected {V.shape}."
+            )
+        if not np.all(np.isfinite(continuation_V)):
+            raise ValueError("Calendar-time continuation value must be finite.")
     c_pol = np.zeros_like(V)
     hR_pol = np.zeros_like(V)
     bp_pol = np.ones_like(V)
@@ -2477,10 +2487,13 @@ def solve_bellman_full_markov_income(
                 Vnr = Vbq
             else:
                 Vnr = np.zeros((Nb, nt, I, npar, ncs))
+                next_values = V if continuation_V is None else continuation_V
                 for znext in range(Nz):
                     transition_weight = Pi_z[zz, znext]
                     if transition_weight > 0.0:
-                        Vnr += transition_weight * V[:, :, :, j + 1, znext, :, :]
+                        Vnr += transition_weight * next_values[
+                            :, :, :, j + 1, znext, :, :
+                        ]
                 if bool(getattr(P, "use_age_survival", False)):
                     survival = float(P.survival_probs[j])
                     Vnr = survival * Vnr + (1.0 - survival) * Vbq

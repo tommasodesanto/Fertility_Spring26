@@ -1438,9 +1438,15 @@ def solve_closed_stationary_endpoint(
     price_max_ratio: float,
     grid_points: int,
     outdir: Path,
+    root_residual_tolerance: float = ROOT_RESIDUAL_TOLERANCE,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     if not 0.0 < price_min_ratio < price_max_ratio or grid_points < 5:
         raise ValueError("Closed-endpoint price grid is invalid")
+    if not 0.0 < float(root_residual_tolerance) <= ROOT_RESIDUAL_TOLERANCE:
+        raise ValueError(
+            "The endpoint root tolerance must be positive and no looser than "
+            f"{ROOT_RESIDUAL_TOLERANCE:g}."
+        )
     cache: dict[float, dict[str, Any]] = {}
 
     def evaluate(asset_price: float) -> dict[str, Any]:
@@ -1584,7 +1590,7 @@ def solve_closed_stationary_endpoint(
             midpoint = 0.5 * (lower + upper)
             root = evaluate(midpoint)
             gap = float(root["renewal_residual_ratio"])
-            if abs(gap) <= ROOT_RESIDUAL_TOLERANCE:
+            if abs(gap) <= float(root_residual_tolerance):
                 break
             if low_gap * gap <= 0.0:
                 upper = midpoint
@@ -1598,7 +1604,7 @@ def solve_closed_stationary_endpoint(
         float(root["asset_price"]) > 0.0
         and math.isfinite(scale)
         and scale > 0.0
-        and renewal_gap <= ROOT_RESIDUAL_TOLERANCE
+        and renewal_gap <= float(root_residual_tolerance)
         and housing_gap <= 1e-10
     )
     endpoint = dict(root)
@@ -1607,6 +1613,7 @@ def solve_closed_stationary_endpoint(
         usable_closed_root=usable,
         between_steady_states_label_allowed=usable,
         renewal_root_absolute_residual=renewal_gap,
+        renewal_root_declared_tolerance=float(root_residual_tolerance),
         housing_clearing_absolute_residual=housing_gap,
         audited_root_bracket=brackets[0],
         interpretation=(
