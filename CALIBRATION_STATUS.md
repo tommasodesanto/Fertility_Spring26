@@ -161,6 +161,24 @@ The reconciliation is in
 `output/model/e5f_policy_demographic_reconciliation_20260826a/`; its source is
 `code/model/tools/build_e5f_policy_demographic_reconciliation.py`.
 
+For a usable preliminary forecast, the four Census 2023 projection scenarios
+are now proportionally level-anchored to the latest Vintage 2025 population of
+`341,784,857`; household-head paths are separately anchored to the ACS-implied
+`131.228` million heads ages 18--85. Under the anchored Census-main path,
+baseline resident population is `364.660` million in 2050, `373.481` million
+in 2080, and `369.634` million in 2100. Adding the model's birth-only policy
+wedge gives `365.060`, `374.613`, and `371.394` million. The corresponding
+policy head wedges are only `17,472`, `270,348`, and `543,211`.
+
+This is the preferred current demographic reporting object because it uses the
+model for the proportional policy-induced fertility response but not for the
+national population level. It is still an exploratory satellite: the
+level-rescaled Census scenarios are not official revised projections, frozen
+2023 headship is not structural, policy-induced migration is zero, and the
+corrected demographic path is not fed back into housing equilibrium. The
+packet is in `output/model/e5f_census_anchored_policy_forecast_20260826a/`; its
+source is `code/model/tools/build_e5f_census_anchored_policy_forecast.py`.
+
 ## Current working estimate: calibration along the 2007--2023 transition
 
 The active quantitative model is the one-market **sequential-fertility** model
