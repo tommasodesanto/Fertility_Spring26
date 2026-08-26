@@ -23,10 +23,25 @@ if [ "${1:-}" = "--submit" ]; then
         convergence) REQUESTED_TIME="${E5F_PF_PERSON_POLICY_TIME_LIMIT:-04:00:00}" ;;
         *) echo "mode must be smoke or convergence" >&2; exit 2 ;;
     esac
+    SBATCH_OVERRIDES=()
+    if [ -n "${E5F_PF_PERSON_POLICY_PARTITION:-}" ]; then
+        [[ "$E5F_PF_PERSON_POLICY_PARTITION" =~ ^[A-Za-z0-9._-]+$ ]] || {
+            echo "invalid partition: $E5F_PF_PERSON_POLICY_PARTITION" >&2
+            exit 2
+        }
+        SBATCH_OVERRIDES+=(--partition="$E5F_PF_PERSON_POLICY_PARTITION")
+    fi
+    if [ -n "${E5F_PF_PERSON_POLICY_QOS:-}" ]; then
+        [[ "$E5F_PF_PERSON_POLICY_QOS" =~ ^[A-Za-z0-9._-]+$ ]] || {
+            echo "invalid QOS: $E5F_PF_PERSON_POLICY_QOS" >&2
+            exit 2
+        }
+        SBATCH_OVERRIDES+=(--qos="$E5F_PF_PERSON_POLICY_QOS")
+    fi
     cd "$SCRIPT_DIR"
     exec sbatch --time="$REQUESTED_TIME" \
         --mem="${E5F_PF_PERSON_POLICY_MEMORY:-12G}" --cpus-per-task=1 \
-        --export=ALL "$SCRIPT_DIR/$SCRIPT_NAME" "$@"
+        "${SBATCH_OVERRIDES[@]}" --export=ALL "$SCRIPT_DIR/$SCRIPT_NAME" "$@"
 fi
 
 : "${SLURM_JOB_ID:?Submit with --submit or sbatch}"
@@ -202,6 +217,12 @@ payload = {
     "case": os.environ["E5F_PF_PERSON_POLICY_CASE"],
     "horizon": int(os.environ.get("E5F_PF_PERSON_POLICY_HORIZON", "2")),
     "maximum_path_iterations": int(os.environ.get("E5F_PF_PERSON_POLICY_MAX_ITERATIONS", "1")),
+    "scheduler": {
+        "partition": os.environ.get("SLURM_JOB_PARTITION"),
+        "qos": os.environ.get("SLURM_JOB_QOS"),
+        "requested_time_limit": os.environ.get("E5F_PF_PERSON_POLICY_TIME_LIMIT"),
+        "requested_memory": os.environ.get("E5F_PF_PERSON_POLICY_MEMORY"),
+    },
     "terminal_summary": os.environ["E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"],
     "initial_path": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_PATH"),
     "initial_summary": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_SUMMARY"),

@@ -80,7 +80,10 @@ and terminal root match, the horizon is strictly shorter, and both the summary
 and path hashes match the launch contract. Torch rejection test `16427948`
 correctly rejected an unconverged H2 seed before creating any output. H64 jobs
 `16432316` and `16432319` are now running from the hash-verified H32 1% and 2%
-paths, respectively, under six-hour and 16 GB bounds.
+paths, respectively, under six-hour and 16 GB bounds. The launcher now accepts
+validated explicit partition/QOS overrides and records the resulting scheduler
+contract. Long-queue smoke `16432404` passed on `cs/cpu48` in five minutes, so
+H128 can use a predeclared 16-hour bound after H64 supplies the valid seed.
 
 ## Superseded queue-based August 26 property-tax diagnostic: not promoted
 

@@ -58,7 +58,10 @@ unless the shorter path is equilibrium-converged, accounting-clean,
 case/terminal-consistent, strictly shorter, and hash-matched. This prevents a
 numerically convenient but failed checkpoint from silently becoming the H64 or
 H128 production seed. Hash-verified H64 bridge jobs `16432316` and `16432319`
-are now running from the completed H32 1% and 2% paths.
+are now running from the completed H32 1% and 2% paths. The launcher supports
+explicit validated partition/QOS overrides and records them in its launch
+contract; `cs/cpu48` smoke `16432404` passed before that route is used for the
+longer H128 jobs.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
