@@ -1,6 +1,89 @@
 # Calibration Status
 
-Updated: `2026-08-20` (dated sequential calibration, closure audit, and property-tax mechanism benchmark)
+Updated: `2026-08-26` (dated sequential calibration, closure audit, and unpromoted perfect-foresight property-tax diagnostic)
+
+## August 26 perfect-foresight rebated property-tax diagnostic: not solved or promoted
+
+The certified **unrebated 1% status-quo baseline is unchanged**. The new
+experiment instead compares a rebated 1% property-tax economy with a rebated
+2% economy, both initialized from the same reconstructed 2023 state. The
+national closure remains `M=0`, `rho=1`; the terminal fertility-preference
+value is `0.27460458049447606`; and the maintained housing-supply elasticity is
+`1.75`.
+
+Both terminal stationary equilibria pass their fixed-point gates, including
+market clearing, fiscal balance, policy reproduction, population accounting,
+and the renewal condition. The finite perfect-foresight paths do **not** pass
+the declared transition gates:
+
+| Case | Horizon | Max. market residual | Max. fiscal residual | Market gate (`2e-4`) | Fiscal gate (`2.5e-5`) | Terminal fixed point | Terminal path |
+|---|---:|---:|---:|:---:|:---:|:---:|:---:|
+| Rebated 1% | 256 | `2.564212e-4` | `3.518543e-5` | fail | fail | pass | fail |
+| Rebated 2% | 256 | `1.202191e-4` | `4.815894e-5` | pass | fail | pass | fail |
+
+The remaining rebated-1% maximum market and fiscal residuals coincide in 2083
+and move discontinuously under very-low-damping updates, consistent with a
+narrow discrete-policy kink. The rebated-2% fiscal residual is distributed
+across distant-tail dates, with its maximum in 2647. Bounded micro-polishes
+preserve the best immutable checkpoints; no tolerance was relaxed. The H256
+terminal population gaps remain `39.62%` and `47.22%` for the rebated 1% and 2%
+cases, respectively. This is glacial demographic convergence, not a failed
+terminal stationary fixed point, but it prevents calling either finite path a
+solved transition to the new steady state.
+
+Across H160 and H256, every level path over the first 80 dates is stable within
+the predeclared `1e-3` relative tolerance; the largest level-path gap is
+`6.8954e-4`. The stricter derived-effect stability gate nevertheless fails:
+the largest gap is a `0.0446` percentage-point difference in the ownership
+effect. The H256 impact row is therefore diagnostic only: rebated 2% relative
+to rebated 1% gives a `-2.266%` house-price response, `+23.833%` rent response,
+`-0.399` percentage-point ownership response, and `+0.279%` births-per-adult
+response in 2023. Adult population is unchanged on impact.
+
+Exact source hashes, gate failures, H160/H256 stability rows, policy-effect
+CSVs, and visually inspected plots are in
+`output/model/e5f_perfect_foresight_rebated_tax_h160_h256_exact_early_diagnostic_20260826q3/`.
+The full-horizon plot contains the known terminal-boundary distortion at the
+last date and must not be read as an accepted asymptotic transition.
+
+### Exploratory persons-based demographic satellite
+
+The active transition's `adult_population` is a mass of adult household heads,
+not resident persons. Ages 0--17, spouses and other non-head adults, and group
+quarters are absent from that population measure. The four-slot birth queue is
+also not a child stock: adjusted births are divided by `2.1` and delayed twenty
+years to construct future household entrants. That normalization bundles sex,
+survival, and household formation. Active adult survival is off and the closed
+post-2023 policy transition has zero immigration.
+
+An isolated accounting diagnostic now applies the H256 model's proportional
+change in aggregate births to the Census 2023 projected birth series, counts
+policy-born children immediately, and ages the additional male and female
+native-born cohorts with Census survival ratios. The policy starts in 2025 and
+the migration response is held equal across policies. Under the Census main
+series, the preliminary rebated-2% minus rebated-1% wedge is:
+
+| Year | Extra children 0--17 | Extra adults 18+ | Extra resident persons | Percent of Census baseline |
+|---|---:|---:|---:|---:|
+| 2050 | 305,695 | 95,117 | 400,813 | 0.111% |
+| 2080 | 486,043 | 646,302 | 1,132,345 | 0.307% |
+| 2100 | 586,094 | 1,174,359 | 1,760,453 | 0.482% |
+
+The Census zero/high-migration range for the same policy wedge is 346--428
+thousand people in 2050 and 0.849--1.274 million in 2080. The latest Census
+Vintage 2025 resident-population estimate, 341,784,857, is 1.11 percent above
+the 2023 main projection for 2025, so the projection level is not promoted as a
+current point forecast. The satellite is reproducible at
+`output/model/e5f_persons_demographic_satellite_20260826b/`; its source is
+`code/model/tools/build_e5f_persons_demographic_satellite.py`.
+
+This corrects the narrow reporting omission but does not yet feed persons back
+into equilibrium. A semi-credible demographic closure still requires an
+age-specific person-to-household-head mapping. The existing ACS validation
+shows that headship-rate changes explain about 94 percent of the historical
+22--29 household-head residual and 80 percent of the 30--45 residual, so the
+historical head wedge cannot be relabeled as immigration. Do not promote the
+satellite or use it as a structural baseline forecast.
 
 ## Current working estimate: calibration along the 2007--2023 transition
 
