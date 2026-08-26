@@ -38,6 +38,15 @@ gates. `tools/run_e5f_perfect_foresight_person_demography_policy.py` is the
 isolated full-transition driver. Its H32 convergence stage is in progress; no
 corrected transition has yet been promoted.
 
+`tools/build_e5f_person_demography_terminal_spectrum.py` computes the exact
+four-year linear operator implied by the frozen terminal demographic closure.
+The two policy cases have dominant eigenvalues `0.960754` and `0.961022`, so
+their demographic half-lives are roughly `69--70` years and one-percent modal
+attenuation requires `116` model periods (`464` years). H32 therefore cannot
+be a terminal certification horizon; it is a path-solver stage, H64 is a seed
+bridge, and H128 is the first planned terminal test. The fingerprinted packet
+is `../../output/model/e5f_person_demography_terminal_spectrum_20260826a/`.
+
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
 literal parity, independent child maturation, the child-room floor, tenure and

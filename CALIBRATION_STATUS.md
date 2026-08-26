@@ -45,6 +45,17 @@ current first convergence stage. Do not call the corrected transition solved
 until path market/fiscal gates, terminal-state gates, and longer-horizon
 stability pass.
 
+The frozen-terminal person block has now been diagonalized exactly. Its
+dominant four-year eigenvalue is `0.960754` in the rebated-1% case and
+`0.961022` in the rebated-2% case, implying a demographic half-life of about
+`69--70` years. The slow mode requires `116` four-year periods (`464` years)
+to fall below one percent in either case. Consequently H32 cannot pass the
+terminal-state gate by construction; H64 is an intermediate seed and H128 is
+the first planned certification horizon. This spectral result is necessary
+horizon guidance, not proof that the nonlinear equilibrium or household
+distribution has converged. The exact diagnostic is
+`output/model/e5f_person_demography_terminal_spectrum_20260826a/`.
+
 ## Superseded queue-based August 26 property-tax diagnostic: not promoted
 
 The certified **unrebated 1% status-quo baseline is unchanged**. The new
