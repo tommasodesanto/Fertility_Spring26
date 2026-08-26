@@ -85,6 +85,82 @@ shows that headship-rate changes explain about 94 percent of the historical
 historical head wedge cannot be relabeled as immigration. Do not promote the
 satellite or use it as a structural baseline forecast.
 
+### Exploratory household-head bridge and baseline forecast-gap decomposition
+
+The canonical ACS extract now supplies national resident-person headship rates
+by sex and four-year age cell. In 2023, only `0.0937` of resident persons ages
+18--21 and `0.2915` of persons ages 22--25 are household heads. The active
+queue instead assigns `1/2.1 = 0.4762` heads per birth at exactly age 20 and
+then carries those entrants as heads. It therefore overstates immediate young
+headship by a factor of `5.08` relative to ages 18--21 while omitting later
+household formation by adults who begin as nonheads. The reproducible bridge is
+`output/model/e5f_headship_demographic_bridge_20260826a/`; its source is
+`code/model/tools/build_e5f_headship_demographic_bridge.py`.
+
+Anchoring the model's 2025 adult mass to the `131.228` million household heads
+ages 18--85 implied by Census Vintage 2025 persons and 2023 ACS headship rates
+reveals a large baseline forecast miss. The model has `116.975` million heads
+in 2050 and `95.829` million in 2080, while a similarly anchored Census-main
+population path with frozen 2023 headship has `143.522` and `150.049` million.
+The corresponding gaps are `26.547` and `54.219` million heads.
+
+A sequential accounting decomposition, which is order-dependent and not
+causal, separates the gap as follows:
+
+| Year | Model population-law wedge | Queue-to-ACS headship wedge | Zero-to-main immigration wedge | Total gap |
+|---|---:|---:|---:|---:|
+| 2050 | `8.976m` | `2.946m` | `14.625m` | `26.547m` |
+| 2080 | `11.620m` | `5.022m` | `37.578m` | `54.219m` |
+| 2100 | `-8.104m` | `4.682m` | `52.888m` | `49.467m` |
+
+The population-law wedge deliberately bundles the initial model age state,
+the birth flow, four-year timing, deterministic terminal-age exit, and zero
+migration; it is not a mortality estimate. A separate flow check shows why a
+completed-fertility target is insufficient: annualizing the model's 2025 birth
+flow after the same household-head scaling gives `3.389` million
+top-code-adjusted births versus `3.637` million in the Census main projection.
+The model currently targets completed fertility, not the period birth flow
+that drives near-term cohort renewal.
+
+Exact inputs, identities, tables, and visually inspected plots are in
+`output/model/e5f_baseline_demographic_gap_decomposition_20260826c/`; its source
+is `code/model/tools/build_e5f_baseline_demographic_gap_decomposition.py`.
+Neither diagnostic changes the active solver or promotes the preliminary
+perfect-foresight policy comparison. A credible structural repair requires a
+person cohort law with age-specific survival and migration plus an explicit
+transition from nonhead adult to household head.
+
+A follow-up residual audit shows that the near-term population-law wedge is not
+principally the modest 2025 birth-flow miss. Replacing Census zero-immigration
+births with the model's top-code-adjusted birth path explains only `0.263`
+million of the `8.976` million 2050 population-law gap. The remaining `8.713`
+million is an initial-state/aging/exit residual. In 2080 the model birth path is
+already above the Census zero-immigration birth path and closes `3.766` million
+of the gap; the residual is `15.386` million. These signed-cohort calculations
+use official native-born survival and are accounting substitutions, not
+re-solved equilibria.
+
+The active transition exposes the underlying inconsistency directly. Its 2023
+youngest head cell has mass `0.014337`, while the inherited birth queue
+schedules `0.063974` next-cohort entrants, a factor of `4.46`. The observed
+headship age profile and the `births/2.1` renewal queue are therefore not one
+coherent demographic law. When those cohorts reach the terminal age, exits
+fall from the surrounding path to `0.029892` in 2087 and rebound to `0.060083`
+in 2091, producing a mechanical population rebound. The exact audit is in
+`output/model/e5f_population_law_residual_audit_20260826b/`; its source is
+`code/model/tools/build_e5f_population_law_residual_audit.py`.
+
+The same timing problem matters for the policy comparison. In 2050 the persons
+satellite gives `400,813` extra residents, of whom `95,117` are adults ages
+18--85. Frozen 2023 ACS headship maps those adults into only `17,472` extra
+household heads. The active transition instead reports `58,175` scaled extra
+heads, or `3.33` times the ACS-mapped number. The ratio falls to `1.13` in 2080
+and `1.03` in 2100. This convergence supports a household-formation timing
+diagnosis rather than a materially different long-run heads-per-birth mapping.
+The reconciliation is in
+`output/model/e5f_policy_demographic_reconciliation_20260826a/`; its source is
+`code/model/tools/build_e5f_policy_demographic_reconciliation.py`.
+
 ## Current working estimate: calibration along the 2007--2023 transition
 
 The active quantitative model is the one-market **sequential-fertility** model
