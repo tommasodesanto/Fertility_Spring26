@@ -68,6 +68,10 @@ The launcher supports explicit validated partition/QOS overrides and records
 them in its launch contract. `cs/cpu48` routing smoke `16432404` and exact
 H64-to-H65 seed-extension smokes `16441659`/`16442703` passed. Hash-verified
 H128 jobs `16442149` and `16443849` are running under 16-hour and 16 GB bounds.
+Focused terminal-gate coverage is in
+`tools/test_run_e5f_perfect_foresight_person_demography_policy.py`; it verifies
+scale-invariant distribution comparisons and joint enforcement of every
+declared terminal tolerance without changing the production driver.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains
