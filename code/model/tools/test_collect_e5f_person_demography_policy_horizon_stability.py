@@ -45,6 +45,8 @@ def _run(
             "iterations": 4,
             "elapsed_seconds": 10.0,
             "terminal_convergence": {"all_checks_pass": True},
+            "source_hashes": {"driver": "same-source"},
+            "terminal_root": {"case": case, "root": "same-root"},
         },
         "summary_path": Path("summary.json"),
         "summary_sha256": "summary",
@@ -93,6 +95,32 @@ class PersonDemographyHorizonAuditTests(unittest.TestCase):
         result = audit.effect_stability(baseline, reform, 2, 0.02)
         self.assertEqual(result["status"], "failed")
         self.assertGreater(result["maximum_absolute_gap"], 0.02)
+
+    def test_common_contract_requires_matching_sources_roots_and_initial_state(self) -> None:
+        runs = [
+            _run("rebated-tax1-baseline", 2),
+            _run("rebated-tax1-baseline", 3),
+            _run("rebated-tax2-reform", 2),
+            _run("rebated-tax2-reform", 3),
+        ]
+        self.assertEqual(audit.contract_gate(runs)["status"], "passed")
+
+        wrong_source = copy.deepcopy(runs)
+        wrong_source[-1]["summary"]["source_hashes"] = {"driver": "changed"}
+        self.assertEqual(audit.contract_gate(wrong_source)["status"], "failed")
+
+        wrong_root = copy.deepcopy(runs)
+        wrong_root[1]["summary"]["terminal_root"] = {
+            "case": "rebated-tax1-baseline",
+            "root": "changed",
+        }
+        self.assertEqual(audit.contract_gate(wrong_root)["status"], "failed")
+
+        wrong_initial_state = copy.deepcopy(runs)
+        wrong_initial_state[2]["rows"][0]["resident_persons"] = "3.1"
+        self.assertEqual(
+            audit.contract_gate(wrong_initial_state)["status"], "failed"
+        )
 
 
 if __name__ == "__main__":
