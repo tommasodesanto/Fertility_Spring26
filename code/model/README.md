@@ -66,8 +66,25 @@ are the expected reason the H64 comparison remains unaccepted. Exact output:
 
 The launcher supports explicit validated partition/QOS overrides and records
 them in its launch contract. `cs/cpu48` routing smoke `16432404` and exact
-H64-to-H65 seed-extension smokes `16441659`/`16442703` passed. Hash-verified
-H128 jobs `16442149` and `16443849` are running under 16-hour and 16 GB bounds.
+H64-to-H65 seed-extension smokes `16441659`/`16442703` passed. The H128 rebated
+1% path is accepted with market/fiscal residuals `1.794337e-4` / `1.157235e-5`
+and every accounting and terminal gate passing. The original H128 rebated 2%
+path is accounting- and terminal-clean but fails the same gates at
+`4.320885e-4` / `8.022423e-5`.
+
+`tools/build_e5f_person_policy_discrete_kink_map.py` audits twelve exact H128
+one-evaluation path blends and writes the reproducible packet
+`../../output/model/e5f_pf_person_policy_discrete_kink_map_20260827a/`. The
+2351 deterministic ownership branch switches between blend weights `0.250`
+and `0.275`; ownership falls `0.254807` percentage point for an asset-price
+change of only `-8.423e-8`. Both bracketing sides remain outside the exact
+market and fiscal gates. This is a local discontinuity diagnosis, not proof of
+global nonexistence. Another damping run is therefore unwarranted. Before
+altering the model, identify the occupied state whose tenure value ranking
+flips and separately evaluate exact-indifference mixing, a common `Nb=240`
+verification, and an identified positive tenure-choice dispersion. The active
+estimate is `Nb=120` with author-pinned deterministic tenure.
+
 Focused terminal-gate coverage is in
 `tools/test_run_e5f_perfect_foresight_person_demography_policy.py`; it verifies
 scale-invariant distribution comparisons and joint enforcement of every

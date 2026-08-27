@@ -1,6 +1,46 @@
 # Calibration Status
 
-Updated: `2026-08-26` (coherent person-law H64 paths; H128 running)
+Updated: `2026-08-27` (H128 1% accepted; H128 2% tenure kink diagnosed)
+
+## August 27 H128 transition audit: deterministic-tenure kink in the 2% case
+
+The coherent-person-law H128 **rebated 1%** path is accepted. Its saved path
+independently recomputes to a maximum housing-market residual of
+`1.7943366464856665e-4` and a maximum fiscal residual of
+`1.157234593848755e-5`; every accounting, history, feasibility, and terminal
+gate passes. The accepted summary/path hashes are
+`bae2b1732554c70ff881bb79f0dbf177f5d699140c3d01dde45fcc839de70ff3` and
+`f5c38a08aba1e25fa60d82316fd8b6c039a9ac2c0e9b9792f00dabbffcc170f6`.
+
+The original H128 **rebated 2%** run exhausted its 35-iteration bound. Its
+immutable best path is accounting- and terminal-clean but has maximum
+market/fiscal residuals `4.320884759241043e-4` / `8.02242346848725e-5`, both
+at year 2367 and both above the exact `2e-4` / `2.5e-5` gates. A fail-closed
+same-horizon polish and the damping-floor correction in commit `26d37a8`
+confirmed that ordinary underdamping is not the problem.
+
+Twelve exact one-evaluation H128 path blends map the remaining failure. All
+source/input hashes match, feasibility adjustment is zero, and every
+accounting and terminal gate passes. The deterministic ownership branch
+switches between blend weights `0.250` and `0.275`: the 2351 ownership rate
+falls by `0.2548066` percentage point when the 2351 asset price changes by only
+`-8.4232e-8` and the transfer by `-1.3926e-7`. Immediately before the switch,
+the maximum market/fiscal residuals are `4.245022e-4` / `7.834491e-5`;
+immediately after it they are `7.886948e-4` / `1.594359e-4`. Neither limiting
+side clears the declared gates. This establishes a failed local fixed-point
+update along the audited blend direction; it is **not** a global proof that no
+pure deterministic-tenure equilibrium exists elsewhere.
+
+The reproducible audit and visually inspected plot are in
+`output/model/e5f_pf_person_policy_discrete_kink_map_20260827a/`; the builder
+is `code/model/tools/build_e5f_person_policy_discrete_kink_map.py`. Do not run
+another damping polish or relax the gates. The next diagnostic is to identify
+the occupied wealth/age/family state whose tenure value ranking flips. Only
+then compare: (i) an endogenous mixed choice at an exact indifference atom,
+(ii) a common `Nb=240` verification of both policies, or (iii) a positive
+`tenure_choice_kappa`, which would be an economic and calibration change rather
+than a numerical patch. The active estimate uses `Nb=120` and author-pinned
+`tenure_choice_kappa=0`.
 
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
