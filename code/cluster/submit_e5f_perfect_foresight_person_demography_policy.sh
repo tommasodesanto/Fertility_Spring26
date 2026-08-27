@@ -69,6 +69,11 @@ if [[ ! "$E5F_PF_PERSON_POLICY_RUN_TAG" =~ ^[A-Za-z0-9._-]+$ ]]; then
     echo "invalid run tag: $E5F_PF_PERSON_POLICY_RUN_TAG" >&2
     exit 2
 fi
+SAME_HORIZON_POLISH="${E5F_PF_PERSON_POLICY_SAME_HORIZON_POLISH:-0}"
+case "$SAME_HORIZON_POLISH" in
+    0|1) ;;
+    *) echo "same-horizon polish flag must be 0 or 1" >&2; exit 2 ;;
+esac
 
 CLUSTER_DIR="$(cd "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}" && pwd)"
 PROJECT_ROOT="$(cd "$CLUSTER_DIR/../.." && pwd)"
@@ -152,8 +157,8 @@ PY
         check_hash "$INITIAL_PATH" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256" "initial path"
         check_hash "$INITIAL_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_SUMMARY_SHA256" "initial summary"
         python3 - "$INITIAL_SUMMARY" "$INITIAL_PATH" "$TERMINAL_SUMMARY" \
-            "$E5F_PF_PERSON_POLICY_CASE" "$HORIZON" <<'PY'
-import csv, json, os, sys
+            "$E5F_PF_PERSON_POLICY_CASE" "$HORIZON" "$SAME_HORIZON_POLISH" <<'PY'
+import csv, json, math, os, sys
 from pathlib import Path
 
 summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
@@ -161,21 +166,43 @@ rows = list(csv.DictReader(Path(sys.argv[2]).open(newline="", encoding="utf-8"))
 terminal = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
 case = sys.argv[4]
 requested_horizon = int(sys.argv[5])
+same_horizon_polish = sys.argv[6] == "1"
 if summary.get("status") != "complete_unpromoted_person_demography_policy_path":
     raise SystemExit("initial summary is incomplete")
 if summary.get("case") != case:
     raise SystemExit("initial summary uses a different policy case")
-if not summary.get("path_converged") or summary.get("path_status") != "converged":
-    raise SystemExit("initial path has not passed its equilibrium gates")
 if not all((summary.get("accounting_gates") or {}).values()):
     raise SystemExit("initial path accounting gates failed")
 seed_horizon = int(summary.get("horizon", 0))
-if seed_horizon < 2 or seed_horizon >= requested_horizon:
-    raise SystemExit("initial-path horizon must be shorter than requested horizon")
+if same_horizon_polish:
+    if seed_horizon != requested_horizon:
+        raise SystemExit("same-horizon polish requires an equal-horizon seed")
+    if summary.get("path_converged") or summary.get("path_status") != "maximum_iterations_reached":
+        raise SystemExit("same-horizon polish requires a bounded nonconverged seed")
+else:
+    if not summary.get("path_converged") or summary.get("path_status") != "converged":
+        raise SystemExit("initial path has not passed its equilibrium gates")
+    if seed_horizon < 2 or seed_horizon >= requested_horizon:
+        raise SystemExit("initial-path horizon must be shorter than requested horizon")
 if len(rows) != seed_horizon:
     raise SystemExit("initial-path row count differs from its summary horizon")
 if [int(row["period"]) for row in rows] != list(range(seed_horizon)):
     raise SystemExit("initial-path periods are not contiguous from zero")
+try:
+    market = max(abs(float(row["relative_market_residual"])) for row in rows)
+    fiscal = max(abs(float(row["government_budget_residual"])) for row in rows)
+except (KeyError, TypeError, ValueError) as exc:
+    raise SystemExit("initial path lacks finite equilibrium residuals") from exc
+if not math.isfinite(market) or not math.isfinite(fiscal):
+    raise SystemExit("initial path has nonfinite equilibrium residuals")
+if not (
+    math.isclose(market, float(summary["maximum_market_residual"]), rel_tol=1e-12, abs_tol=1e-14)
+    and math.isclose(fiscal, float(summary["maximum_fiscal_residual"]), rel_tol=1e-12, abs_tol=1e-14)
+):
+    raise SystemExit("initial summary residuals differ from the saved path")
+recomputed_converged = market <= 2.0e-4 and fiscal <= 2.5e-5
+if bool(summary.get("path_converged")) != recomputed_converged:
+    raise SystemExit("initial summary convergence flag differs from the saved path")
 if summary.get("terminal_root") != terminal:
     raise SystemExit("initial path used a different terminal root")
 expected = {
@@ -226,6 +253,9 @@ payload = {
     "terminal_summary": os.environ["E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"],
     "initial_path": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_PATH"),
     "initial_summary": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_SUMMARY"),
+    "same_horizon_polish": os.environ.get(
+        "E5F_PF_PERSON_POLICY_SAME_HORIZON_POLISH", "0"
+    ) == "1",
     "hashes": {
         key: value for key, value in os.environ.items()
         if key.startswith("E5F_PF_PERSON_POLICY_EXPECTED_")
