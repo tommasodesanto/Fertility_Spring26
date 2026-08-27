@@ -31,16 +31,31 @@ side clears the declared gates. This establishes a failed local fixed-point
 update along the audited blend direction; it is **not** a global proof that no
 pure deterministic-tenure equilibrium exists elsewhere.
 
-The reproducible audit and visually inspected plot are in
-`output/model/e5f_pf_person_policy_discrete_kink_map_20260827a/`; the builder
-is `code/model/tools/build_e5f_person_policy_discrete_kink_map.py`. Do not run
-another damping polish or relax the gates. The next diagnostic is to identify
-the occupied wealth/age/family state whose tenure value ranking flips. Only
-then compare: (i) an endogenous mixed choice at an exact indifference atom,
-(ii) a common `Nb=240` verification of both policies, or (iii) a positive
-`tenure_choice_kappa`, which would be an economic and calibration change rather
-than a numerical patch. The active estimate uses `Nb=120` and author-pinned
-`tenure_choice_kappa=0`.
+The exact state diagnostic identifies the discontinuity. All `40` indexed rows
+that flip in 2351 are one economic atom repeated across ten income states and
+four parity labels: a current renter, age 70, with no dependent child and
+liquid wealth `0.4418605` (wealth-grid index `49`). Every row switches from
+owner product `2` to renting. Their value gap (renting minus owning) changes
+from about `-6.09747e-8` before the path switch to `+8.90605e-8` after it. The
+atom has `0.254820%` of household-head mass, so this single choice switch
+directly accounts for `-0.254820` percentage point of ownership, essentially
+the entire observed `-0.254807` percentage-point jump. There are no other
+positive-mass tenure-choice flips in 2363 or 2367. Thus the problem is not a
+broadly unstable household policy: it is a single occupied grid atom crossing
+an extremely small deterministic value gap.
+
+The reproducible path audit is in
+`output/model/e5f_pf_person_policy_discrete_kink_map_20260827a/`. The exact
+state packet and visually inspected plot are in
+`output/model/e5f_pf_person_policy_tenure_kink_state_map_20260827a/`; its
+collector is
+`code/model/tools/collect_e5f_person_policy_tenure_kink_states.py`. Do not run
+another damping polish or relax the gates. The smallest exact remedy to assess
+first is a complementarity equilibrium that permits an endogenous mixing share
+only at this atom and requires its tenure value gap to be zero. A common
+`Nb=240` verification remains a separate full rebuild of both policies, while
+positive `tenure_choice_kappa` remains an economic and calibration change. The
+active estimate uses `Nb=120` and author-pinned `tenure_choice_kappa=0`.
 
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
