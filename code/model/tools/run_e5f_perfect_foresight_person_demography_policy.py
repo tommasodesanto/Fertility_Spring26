@@ -316,16 +316,14 @@ def solve_person_funded_path(
                 iteration,
             )
             break
-        if score > previous_score * 1.02:
-            current_price_damping = max(0.04, 0.5 * current_price_damping)
-            current_transfer_damping = max(0.08, 0.5 * current_transfer_damping)
-        elif score < previous_score * 0.80:
-            current_price_damping = min(
-                float(price_damping), 1.08 * current_price_damping
-            )
-            current_transfer_damping = min(
-                float(transfer_damping), 1.08 * current_transfer_damping
-            )
+        current_price_damping, current_transfer_damping = adapt_path_damping(
+            current_price_damping=current_price_damping,
+            current_transfer_damping=current_transfer_damping,
+            declared_price_damping=float(price_damping),
+            declared_transfer_damping=float(transfer_damping),
+            score=score,
+            previous_score=previous_score,
+        )
         price_step = np.clip(
             log_residual,
             -float(maximum_log_price_step),
@@ -434,6 +432,37 @@ def solve_person_funded_path(
         bellman_solves=total_bellman,
         elapsed_seconds=time.perf_counter() - started,
     )
+
+
+def adapt_path_damping(
+    *,
+    current_price_damping: float,
+    current_transfer_damping: float,
+    declared_price_damping: float,
+    declared_transfer_damping: float,
+    score: float,
+    previous_score: float,
+) -> tuple[float, float]:
+    """Adapt damping without exceeding a deliberately lower declared value."""
+    price_floor = min(0.04, float(declared_price_damping))
+    transfer_floor = min(0.08, float(declared_transfer_damping))
+    if score > previous_score * 1.02:
+        return (
+            max(price_floor, 0.5 * float(current_price_damping)),
+            max(transfer_floor, 0.5 * float(current_transfer_damping)),
+        )
+    if score < previous_score * 0.80:
+        return (
+            min(
+                float(declared_price_damping),
+                1.08 * float(current_price_damping),
+            ),
+            min(
+                float(declared_transfer_damping),
+                1.08 * float(current_transfer_damping),
+            ),
+        )
+    return float(current_price_damping), float(current_transfer_damping)
 
 
 def initial_paths(

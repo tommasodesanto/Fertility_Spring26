@@ -71,5 +71,31 @@ class TerminalConvergenceDiagnosticsTest(unittest.TestCase):
         )
 
 
+class AdaptiveDampingTest(unittest.TestCase):
+    def test_deliberately_low_declared_damping_is_not_raised_after_worsening(self) -> None:
+        price, transfer = policy.adapt_path_damping(
+            current_price_damping=0.02,
+            current_transfer_damping=0.04,
+            declared_price_damping=0.02,
+            declared_transfer_damping=0.04,
+            score=1.03,
+            previous_score=1.0,
+        )
+        self.assertEqual(price, 0.02)
+        self.assertEqual(transfer, 0.04)
+
+    def test_standard_declared_damping_retains_existing_floors(self) -> None:
+        price, transfer = policy.adapt_path_damping(
+            current_price_damping=0.0625,
+            current_transfer_damping=0.125,
+            declared_price_damping=0.25,
+            declared_transfer_damping=0.50,
+            score=1.03,
+            previous_score=1.0,
+        )
+        self.assertEqual(price, 0.04)
+        self.assertEqual(transfer, 0.08)
+
+
 if __name__ == "__main__":
     unittest.main()

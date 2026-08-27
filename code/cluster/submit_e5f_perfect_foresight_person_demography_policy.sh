@@ -74,6 +74,9 @@ case "$SAME_HORIZON_POLISH" in
     0|1) ;;
     *) echo "same-horizon polish flag must be 0 or 1" >&2; exit 2 ;;
 esac
+if [ "$SAME_HORIZON_POLISH" = "1" ]; then
+    : "${E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_DRIVER_SHA256:?same-horizon polish requires the seed driver hash}"
+fi
 
 CLUSTER_DIR="$(cd "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}" && pwd)"
 PROJECT_ROOT="$(cd "$CLUSTER_DIR/../.." && pwd)"
@@ -157,7 +160,8 @@ PY
         check_hash "$INITIAL_PATH" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256" "initial path"
         check_hash "$INITIAL_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_SUMMARY_SHA256" "initial summary"
         python3 - "$INITIAL_SUMMARY" "$INITIAL_PATH" "$TERMINAL_SUMMARY" \
-            "$E5F_PF_PERSON_POLICY_CASE" "$HORIZON" "$SAME_HORIZON_POLISH" <<'PY'
+            "$E5F_PF_PERSON_POLICY_CASE" "$HORIZON" "$SAME_HORIZON_POLISH" \
+            "${E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_DRIVER_SHA256:-$E5F_PF_PERSON_POLICY_EXPECTED_DRIVER_SHA256}" <<'PY'
 import csv, json, math, os, sys
 from pathlib import Path
 
@@ -167,6 +171,7 @@ terminal = json.loads(Path(sys.argv[3]).read_text(encoding="utf-8"))
 case = sys.argv[4]
 requested_horizon = int(sys.argv[5])
 same_horizon_polish = sys.argv[6] == "1"
+expected_initial_driver = sys.argv[7]
 if summary.get("status") != "complete_unpromoted_person_demography_policy_path":
     raise SystemExit("initial summary is incomplete")
 if summary.get("case") != case:
@@ -206,7 +211,7 @@ if bool(summary.get("path_converged")) != recomputed_converged:
 if summary.get("terminal_root") != terminal:
     raise SystemExit("initial path used a different terminal root")
 expected = {
-    "driver": os.environ["E5F_PF_PERSON_POLICY_EXPECTED_DRIVER_SHA256"],
+    "driver": expected_initial_driver,
     "person_demography": os.environ[
         "E5F_PF_PERSON_POLICY_EXPECTED_PERSON_DRIVER_SHA256"
     ],
