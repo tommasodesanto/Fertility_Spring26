@@ -57,11 +57,17 @@ The cluster launcher also refuses to chain a longer horizon from a saved path
 unless the shorter path is equilibrium-converged, accounting-clean,
 case/terminal-consistent, strictly shorter, and hash-matched. This prevents a
 numerically convenient but failed checkpoint from silently becoming the H64 or
-H128 production seed. Hash-verified H64 bridge jobs `16432316` and `16432319`
-are now running from the completed H32 1% and 2% paths. The launcher supports
-explicit validated partition/QOS overrides and records them in its launch
-contract; `cs/cpu48` smoke `16432404` passed before that route is used for the
-longer H128 jobs.
+H128 production seed. Both H64 paths converged in 20 iterations and pass
+independent saved-path audits. Their 1%/2% market residuals are
+`1.718e-4`/`1.368e-4`, fiscal residuals are `1.394e-5`/`2.046e-5`, and every
+accounting gate passes. Their `3.965%`/`4.062%` resident-person terminal gaps
+are the expected reason the H64 comparison remains unaccepted. Exact output:
+`../../output/model/e5f_pf_person_policy_comparison_h064_20260826a/`.
+
+The launcher supports explicit validated partition/QOS overrides and records
+them in its launch contract. `cs/cpu48` routing smoke `16432404` and exact
+H64-to-H65 seed-extension smokes `16441659`/`16442703` passed. Hash-verified
+H128 jobs `16442149` and `16443849` are running under 16-hour and 16 GB bounds.
 
 The production model is the one-market sequential-fertility model shown in the
 August presentation. It lives in `intergen_eqscale_seq_optimized` and retains

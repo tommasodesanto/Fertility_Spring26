@@ -1,8 +1,8 @@
 # Calibration Status
 
-Updated: `2026-08-26` (coherent person-law H32 paths and conditional terminal roots)
+Updated: `2026-08-26` (coherent person-law H64 paths; H128 running)
 
-## August 26 coherent person-law transition: H32 paths solved; horizon extension in progress
+## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
 unchanged**. An isolated perfect-foresight experiment now couples the household
@@ -78,12 +78,30 @@ seed H64 or H128 only when its summary is complete, the path itself passed the
 declared market and fiscal gates, every accounting gate passed, the policy case
 and terminal root match, the horizon is strictly shorter, and both the summary
 and path hashes match the launch contract. Torch rejection test `16427948`
-correctly rejected an unconverged H2 seed before creating any output. H64 jobs
-`16432316` and `16432319` are now running from the hash-verified H32 1% and 2%
-paths, respectively, under six-hour and 16 GB bounds. The launcher now accepts
-validated explicit partition/QOS overrides and records the resulting scheduler
-contract. Long-queue smoke `16432404` passed on `cs/cpu48` in five minutes, so
-H128 can use a predeclared 16-hour bound after H64 supplies the valid seed.
+correctly rejected an unconverged H2 seed before creating any output. Both H64
+paths are now equilibrium-converged and independently audited:
+
+| Case | Iterations | Max. market residual | Max. fiscal residual | Resident-person terminal gap | Terminal-state gate |
+|---|---:|---:|---:|---:|:---:|
+| Rebated 1% | `20` | `1.718e-4` | `1.394e-5` | `3.965%` | fail as expected |
+| Rebated 2% | `20` | `1.368e-4` | `2.046e-5` | `4.062%` | fail as expected |
+
+Every H64 accounting gate passes, and independent recomputation from the saved
+paths exactly matches both summaries. The paired comparison remains
+deliberately unaccepted only because H64 is not a terminal horizon. Its 2051
+resident-person effect is `+297,302` (`+0.0869%`) and its 2079 effect is
+`+726,958` (`+0.2265%`), essentially unchanged from H32. Exact packets are
+`output/model/e5f_pf_person_policy_rebated-tax1-baseline_20260826a_h064_convergence/`,
+`output/model/e5f_pf_person_policy_rebated-tax2-reform_20260826a_h064_convergence/`,
+and `output/model/e5f_pf_person_policy_comparison_h064_20260826a/`.
+
+The launcher accepts validated explicit partition/QOS overrides and records the
+resulting scheduler contract. Long-queue smoke `16432404` passed on `cs/cpu48`.
+Exact H64-to-H65 one-iteration extension smokes `16441659` and `16442703` also
+passed for the 1% and 2% cases. H128 jobs `16442149` and `16443849` are now
+running from the hash-verified H64 paths under 16-hour and 16 GB bounds. H128
+is the first plausible terminal-certification horizon; no transition is yet
+promoted.
 
 ## Superseded queue-based August 26 property-tax diagnostic: not promoted
 
