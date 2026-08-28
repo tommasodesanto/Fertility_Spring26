@@ -102,6 +102,34 @@ scalar share. That keeps the Bellman max deterministic while turning the
 problem into smooth conditional transition solves plus a one-dimensional
 complementarity root.
 
+That conditional-transition method has now passed an exact H128 integration
+smoke. The default-off wrapper forces the declared atom share in every full
+price/transfer path evaluation, leaves the Bellman value and deterministic
+argmax unchanged, and records immutable per-evaluation path, value-gap,
+accounting, and source-hash checkpoints. At owner share `0.5`, one evaluation
+reproduces the independently audited oracle transition path **byte for byte**:
+both have SHA-256
+`173c87593b4b8e8cb3706258c1bf2be9dd92ac84ed7874040933d7336686d904`.
+The owner-renter gap remains between `2.08722e-14` and `2.17604e-14`; maximum
+market/fiscal residuals remain `5.27563e-4` / `1.08734e-4`; feasibility
+adjustment is zero; and every history, accounting, and H128 terminal gate
+passes. Torch job `16499194` completed in `19m45s` using `4.51 GB`. Immutable
+local packet:
+`output/model/e5f_pf_person_policy_tenure_conditional_20260828a_h128_share05_oneiter_smoke/`.
+This validates the conditional solver but is deliberately not a converged
+transition because it executes only one path iteration.
+
+The next predeclared bracket consists of two parallel H128 conditional solves,
+with fixed owner shares `0` and `1`, each seeded from the exact indifference
+path. Each case has at most `35` evaluations and `16` hours, writes an atomic
+checkpoint every evaluation, and stops successfully only at the unchanged
+`2e-4` market and `2.5e-5` fiscal tolerances with all history, accounting,
+terminal, and feasibility gates passing. At the observed `19m45s` evaluation
+cost, the mechanical 35-evaluation bound is about `11.5` hours per case plus
+possible final best-path evaluation. A scalar secant-share solve is admissible
+only if both fixed-share paths converge and their audited terminal value gaps
+bracket zero.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
