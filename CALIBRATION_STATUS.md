@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-08-27` (H128 1% accepted; H128 2% tenure kink diagnosed)
+Updated: `2026-08-28` (H128 1% accepted; H128 2% tenure complementarity diagnosed)
 
 ## August 27 H128 transition audit: deterministic-tenure kink in the 2% case
 
@@ -56,6 +56,26 @@ only at this atom and requires its tenure value gap to be zero. A common
 `Nb=240` verification remains a separate full rebuild of both policies, while
 positive `tenure_choice_kappa` remains an economic and calibration change. The
 active estimate uses `Nb=120` and author-pinned `tenure_choice_kappa=0`.
+
+The default-off complementarity oracle has now passed an exact H128
+backward-plus-forward integration smoke on the genuine 2351 atom. It leaves
+the Bellman value and deterministic argmax hashes unchanged, assigns a common
+owner share only to the declared atom, and verifies that the same share enters
+the current distribution, housing demand, property-tax revenue, and forward
+law. At owner share `0.5` on the fixed lambda-`0.250` path, the current- and
+next-distribution linearity errors are `3.39e-21` and `5.42e-20`; feasibility
+adjustment is zero and every history, accounting, and terminal gate passes.
+Both branches are live, but the owner-minus-renter gap remains positive at
+about `6.09747e-8`, so this interior share is deliberately **not** a
+complementarity equilibrium. Its 2351 market/fiscal residuals are
+`2.27777e-4` / `-3.63105e-5`, and the maximum path residuals remain
+`5.27959e-4` / `1.08851e-4`. The smoke therefore validates the economic
+accounting of atom-specific mixing without claiming that the 2% transition is
+solved. Immutable packet:
+`output/model/e5f_pf_person_policy_tenure_complementarity_20260827c_h128_real_atom_smoke/`.
+The next bounded diagnostic is to locate and verify the fixed path where this
+atom's value gap is zero, then map a small predeclared set of owner shares at
+that path.
 
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
