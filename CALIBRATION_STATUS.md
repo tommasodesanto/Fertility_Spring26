@@ -130,6 +130,32 @@ possible final best-path evaluation. A scalar secant-share solve is admissible
 only if both fixed-share paths converge and their audited terminal value gaps
 bracket zero.
 
+The endpoint bracket has now been evaluated. The share-`1` path from Torch job
+`16500336` converged after four evaluations with market/fiscal residuals
+`1.39128e-4` / `1.85309e-5`; all history, accounting, H128 terminal, and
+feasibility gates pass. Its owner-minus-renter gap is nevertheless
+`-4.87238e-5`, so forcing full ownership violates the share-`1` boundary
+complementarity condition. The share-`0` job `16500334` reached its declared
+35-evaluation bound without convergence. Independently recomputed residuals
+from its saved path are `2.11105e-4` in 2359 and `3.13275e-5` in 2355. All
+history, accounting, H128 terminal, feasibility, checkpoint-hash, and source
+contracts pass, but the exact market and fiscal gates do not. Its final
+owner-minus-renter gap is positive at `2.96081e-6`, opposite the share-`1`
+gap, so an interior complementarity root is bracketed only after a genuinely
+converged share-`0` conditional path is obtained. Immutable local packet:
+`output/model/e5f_pf_person_policy_tenure_conditional_20260828a_h128_share0_convergence/`.
+
+Because the final share-`0` branch contracted monotonically and missed the
+gates narrowly, one fail-closed continuation is running from its exact saved
+path SHA-256
+`be42f362b0b055056980d6a939d6a5589e891611cd6216c8190ceeb57ed792cc`.
+Torch job `16512236` has at most `12` evaluations, `5` hours, and `16 GB`,
+continues the recorded `0.0432`/`0.0864` price/transfer damping, writes a new
+immutable output tag, and retains every existing tolerance and source hash.
+It stops successfully only if both equilibrium gates pass; otherwise its
+bounded output is the endpoint failure record. No interior-share solve is
+admissible before this continuation is independently audited.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
