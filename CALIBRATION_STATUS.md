@@ -77,6 +77,31 @@ The next bounded diagnostic is to locate and verify the fixed path where this
 atom's value gap is zero, then map a small predeclared set of owner shares at
 that path.
 
+That fixed-path map is now complete. The secant path at blend weight
+`0.2601600668823943` places all `60` income/parity copies of the atom within
+`2.18e-14` of owner-renter indifference. Exact owner-share `0`, `0.5`, and `1`
+evaluations show that signed market residuals, fiscal residuals, household and
+person stocks, births, housing demand, tax revenue, and ownership are affine in
+the atom share to machine precision. There is nevertheless **no feasible share
+on this fixed price/transfer path**. In 2367 the market residual is
+`-4.24220e-4` for every share, versus the `2e-4` gate, and the fiscal residual
+is `7.82734e-5` for every share, versus the `2.5e-5` gate. The 2371 fiscal
+residual is also share-invariant at `3.03641e-5`; 2363 fails both gates even at
+its best endpoint. Across all shares, the smallest attainable maximum market
+and fiscal violations are `2.121` and `3.131` times their tolerances.
+
+Canonical unaccepted share packet and visually inspected plot:
+`output/model/e5f_pf_person_policy_tenure_complementarity_share_map_20260828b/`.
+Collector:
+`code/model/tools/collect_e5f_person_policy_tenure_complementarity_share_map.py`.
+This rules out repairing the audited fixed path by choosing an arbitrary share;
+it does **not** rule out a joint complementarity equilibrium. The next exact
+method should solve the full price/transfer transition conditional on a fixed
+atom share, then root-find the resulting owner-renter value gap over that
+scalar share. That keeps the Bellman max deterministic while turning the
+problem into smooth conditional transition solves plus a one-dimensional
+complementarity root.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
