@@ -191,13 +191,13 @@
   One period is four years. A household enters at age 18, can live through age
   85, and carries the beginning-of-period state
   \[
-    x=(b,z,a,o,n,\mathbf c).
+    x=(b,z,a,o,n,m).
   \]
 
   \begin{itemize}
     \item $b$: liquid net wealth; $z$: persistent earnings; $a$: age.
-    \item $o$: renter or owner product; $n$: literal parity; $\mathbf c$: independent dependent-child clocks.
-    \item Fertility is sequential: a successful birth raises parity by one and starts a child clock.
+    \item $o$: renter or owner product; $n$: literal parity; $m$: number of dependent children at home.
+    \item Fertility is sequential: a successful birth raises parity by one; children then mature independently.
     \item The active national specification has one location; no migration choice is assigned to households.
   \end{itemize}
 
@@ -230,7 +230,7 @@
     \item Renters choose continuous rooms up to 6; owners choose $H_k\in\{2,4,6,8,10\}$.
     \item A purchase requires cash of at least $(1-\phi)P_tH_k$, with $\phi=0.80$.
     \item Owners pay depreciation and property tax and incur a proportional moving cost when changing products.
-    \item Liquid wealth earns a risk-free return and can be negative only within the collateral and age-tapered debt rules.
+    \item New unsecured borrowing is ruled out; inherited unsecured debt is age-tapered, while owner debt also has a collateral floor.
   \end{itemize}
 
   Warm-glow bequest utility is
@@ -245,20 +245,23 @@
 
 \begin{frame}{Sequential fertility and the Bellman problem}
   At an eligible state, the household compares waiting with attempting the next
-  birth. Let $d=1$ denote an attempt, let $\pi_a$ be age-$a$ conception success,
-  and let $x^+$ raise parity by one and start a child clock. Then
+  birth. Let $\pi_a$ be age-$a$ conception success, let $F_1$ be the one-time
+  first-birth cost, and let $x^+$ raise parity by one and add one dependent
+  child. Before the attempt taste shock,
+  \[
+    W_t^0(x)\equiv\mathcal V_t(x),\qquad
+    W_t^A(x)=\pi_a\!\left[\mathcal V_t(x^+)
+      -F_1\mathbf 1\{n=0\}\right]+(1-\pi_a)\mathcal V_t(x),
+  \]
+  and the attempt probability is
   \[
     \Pr(d=1\mid x,t)=
-    \Lambda\!\left(
-      \frac{\pi_a\!\left[\mathcal V_t(x^+)-\mathcal V_t(x)
-      -F_1\mathbf 1\{n=0\}\right]}{\kappa(n)}
-    \right),
+    \frac{\exp\{W_t^A(x)/\kappa(n)\}}
+    {\exp\{W_t^A(x)/\kappa(n)\}+\exp\{W_t^0(x)/\kappa(n)\}}.
   \]
-  where $\mathcal V_t$ already optimizes tenure, rooms, consumption, and saving
-  conditional on the parity branch. A birth occurs with probability
-  $\pi_a\Pr(d=1\mid x,t)$; $\kappa(0)=\kappa_1$ and
-  $\kappa(n\ge1)=\kappa_C$. Childless households must also satisfy the readiness
-  gate before attempting.
+  Here $\mathcal V_t$ already optimizes tenure, rooms, consumption, and saving
+  conditional on the parity branch; $\kappa(0)=\kappa_1$ and
+  $\kappa(n\ge1)=\kappa_C$.
 
   \takeaway{Housing affects fertility through current child-space needs, tenure feasibility, and the continuation value of wealth and housing.}
 \end{frame}
@@ -496,7 +499,7 @@
 \begin{frame}{Remaining fit and identification}
   The strict SMM loss is $36.099$. Two housing moments account for $26.304$, or
   73\% of the objective:
-  \par\vspace{0.2em}
+  \par\vspace{0.7em}
   \begin{itemize}
     \item first-birth rooms contrast: model $0.380$ versus target $0.720$;
     \item mean occupied rooms: model $6.710$ versus target $5.780$.
@@ -543,9 +546,10 @@
 
   \vspace{0.15em}
   \small
-  Resident persons rise from 338.7 million in 2023 to 344.6 million in 2039;
-  household heads peak later, at 142.1 million in 2047. Both then contract
-  toward the conditional terminal stocks.
+  Resident persons rise from 338.7 million in 2023 to 344.6 million in 2039.
+  The right panel is in model mass units; its 2047 peak corresponds to 142.1
+  million household heads. Both stocks then contract toward their conditional
+  terminal levels.
 
   \takeaway{An inherited age distribution can generate decades of momentum even when subsequent births are low.}
   \source{Accepted H128 rebated 1\% transition. Dashed lines are its jointly solved conditional terminal equilibrium.}
@@ -598,7 +602,8 @@
   $\tau_{H,t}=4\tau^{\mathrm{ann}}_{H,t}$ in a four-year model period,
   \[
     T_t\int dG_t
-    =\tau_{H,t}P_t\int H(o_t)\,dG_t.
+    =\tau_{H,t}P_t Q_t^H,
+    \qquad Q_t^H\equiv\int h_t(x)\,dG_t(x).
   \]
 
   \begin{itemize}
@@ -638,8 +643,6 @@
 % ============================================================================
 % APPENDIX
 % ============================================================================
-
-\appendix
 
 \begin{frame}[plain,noframenumbering]
   \centering
@@ -799,7 +802,7 @@
   \]
   The rebated tax satisfies
   \[
-    \tau_{H,t}P_t\int H(o_t)\,dG_t
+    \tau_{H,t}P_t Q_t^H
     =T_t\int dG_t.
   \]
   At a stationary price,
@@ -975,7 +978,7 @@
       Object & Maximum absolute residual & Interpretation \\
       \midrule
       Housing market & $1.7943\times10^{-4}$ & Demand relative to supply \\
-      Government budget & $1.1572\times10^{-5}$ & Revenue minus equal transfers \\
+      Fiscal budget & $1.1572\times10^{-5}$ & Revenue minus equal transfers \\
       Person identity & numerical precision & Births, deaths, and migration \\
       Head identity & numerical precision & Deaths, formation, dissolution, migrant heads \\
       Household/head identity & numerical precision & Household mass equals person-law head mass \\
