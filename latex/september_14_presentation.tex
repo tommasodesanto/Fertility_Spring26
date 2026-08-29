@@ -55,62 +55,238 @@
 \end{frame}
 
 \begin{frame}{Housing, Fertility, and Tenure Choice}
-\textbf{Housing costs affect fertility}, but tenure and wealth matter:
-\begin{itemize}
-  \item Owners have more children when house prices or housing wealth rise; renters do not
-        \cit{(Dettling \& Kearney 2014)}
-  \item Easier mortgage credit raises buying and births jointly, especially through purchases of larger homes
-        \cit{(Hacamo 2021; Couillard 2025)}
-\end{itemize}
-
-\smallskip
-Children increase how much physical space a household needs. This has implications for:
-\begin{itemize}
-  \item \textbf{Owning}: large units are disproportionately owner occupied
-  \item \textbf{Wealth}: the down payment determines access to family-sized housing
-  \item \textbf{Age}: much of the large owner stock remains with older households
+\textbf{Children increase how much physical space a household needs.}
+Access to that space depends on tenure and wealth:
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item Rental housing can limit the size of the home a family can occupy.
+  \item Ownership expands the housing menu but requires liquid wealth for a down payment.
+  \item Older owners may retain family-sized homes after their children leave.
 \end{itemize}
 
 \vfill
-{\small
-How much does access to physical space affect fertility?\\
-Can housing policy increase fertility, and through which margins?\\
-\hspace{2em}$\longrightarrow$ space constraints, tenure choice, and demographic feedback}
+How much does access to family-sized housing affect fertility?\\
+Which housing constraints matter, and for whom?
 \end{frame}
 
 \begin{frame}{This Paper}
-Need a structural model where fertility, tenure, saving, and population scale are jointly determined.
+Need a framework where fertility, tenure, housing size, saving, and population are jointly determined.
 
 \vfill
-\alert{Model:} lifecycle model of sequential fertility, tenure, housing size, and saving
+\alert{First:} a simplified model of family space and tenure
 \begin{itemize}
-  \vfill\item Children create a discrete increase in housing need
-  \vfill\item Rental-size limits, down payments, transaction costs, income risk, and bequests
-  \vfill\item Births create persons; persons create household heads only later
+  \item Isolate the housing constraint that enters the price of a child.
+  \item Characterize how rental limits, down payments, and old-owner retention interact.
 \end{itemize}
 
 \vfill
-\alert{Empirics:} document how family formation changes housing demand
+\alert{Then:} a quantitative lifecycle model
 \begin{itemize}
-  \vfill\item Large units are primarily owned
-  \vfill\item First birth raises ownership, rooms, and moves for space
+  \item Add sequential fertility, income risk, saving, housing adjustment, and bequests.
+  \item Distinguish births, resident persons, household heads, and housing demand.
 \end{itemize}
 
 \vfill
-\alert{Quantification:} fit the lifecycle model, solve the demographic transition, and discipline a rebated property-tax experiment.
+\alert{Finally:} discipline the model and use it to study demographic and housing-market dynamics.
 \end{frame}
 
-\section{Model}
+\section{Simple Theory}
 
 \begin{frame}[plain,c,noframenumbering]
 \centering
-{\Large\textbf{Model}}
+{\Large\textbf{Simple Theory}}
+\end{frame}
+
+\begin{frame}{Environment}
+A two-period economy isolates the allocation of family-sized housing across generations.
+
+\begin{itemize}\setlength\itemsep{0.65em}
+  \item \textbf{Young households} draw income and liquid wealth, then choose fertility, tenure, housing, and saving.
+  \item \textbf{Old households} choose how much housing to retain and how much wealth to leave.
+  \item A single stock of physical space can be rented or owned.
+  \item Renting is capped at $\bar h^R$; ownership offers more space but requires a down payment.
+\end{itemize}
+
+\vfill
+The market user cost is $r=\rho P$, where $P$ is the asset price and $\rho$ converts the asset price into a flow cost.
+\end{frame}
+
+\begin{frame}{Preferences and Family Space}
+A young household receives utility from adult consumption, residual housing space, and fertility:
+\[
+u_i^Y
+=
+\log(c_i-\chi n_i)
++\alpha\log(h_i-\kappa n_i)
++\vartheta\log n_i.
+\]
+
+\begin{itemize}\setlength\itemsep{0.55em}
+  \item Each child requires $\chi$ units of consumption and $\kappa$ units of housing.
+  \item Housing enters after the space required by children has been removed.
+  \item The resource cost of a child therefore depends on access to housing, not only on its market price.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Tenure and the Effective Housing Cap}
+Using $P=r/\rho$, the maximum housing available under each tenure is
+\[
+H_i^R=\bar h^R,
+\qquad
+H_i^O
+=
+\min\left\{
+\bar h^O,
+\frac{b_i\rho}{(1-\phi)r}
+\right\}.
+\]
+
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item A renter is constrained by the largest available rental unit.
+  \item A buyer may be constrained by the owner menu or by liquid wealth.
+  \item A household can afford the flow cost of space yet remain unable to finance the purchase.
+\end{itemize}
+
+\vfill
+The relevant friction is a household-specific cap on family-sized housing.
+\end{frame}
+
+\begin{frame}{The Young Household's Problem}
+Conditional on tenure $m\in\{R,O\}$, household $i$ solves
+\[
+\begin{aligned}
+W_i^m=\max_{c_i,h_i,n_i,b_i'}\quad
+&u_i^Y(c_i,h_i,n_i)+\beta V_i^m(b_i',h_i)\\
+\text{s.t.}\quad
+&c_i+r h_i+b_i'=y_i+b_i,\\
+&h_i\le H_i^m,\qquad b_i'\ge0.
+\end{aligned}
+\]
+
+\begin{itemize}\setlength\itemsep{0.55em}
+  \item Tenure is chosen by comparing the renter and owner values.
+  \item Liquid wealth affects both consumption smoothing and access to ownership.
+  \item Fertility and housing are chosen jointly because children absorb both goods and space.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Competitive Equilibrium}
+A stationary equilibrium consists of prices, household policies, and young and old household distributions such that:
+
+\begin{enumerate}\setlength\itemsep{0.55em}
+  \item young households choose fertility, tenure, housing, and saving optimally;
+  \item old households choose retained housing and estates optimally;
+  \item young renters and owners become the corresponding old households;
+  \item the common housing stock clears:
+  \[
+    \int h_i^Y\,dG_Y(i)
+    +\int h_j^O\,dG_O(j)
+    +\int h_j^R\,dG_R(j)
+    =\bar H.
+  \]
+\end{enumerate}
+
+\vfill
+Market clearing determines the common price, but household constraints determine who receives family-sized space.
+\end{frame}
+
+\begin{frame}{The Access Gap}
+Convert the multiplier on the housing cap into consumption goods. For tenure $m$,
+\[
+\frac{\alpha(c_i^m-\chi n_i^m)}
+{h_i^m-\kappa n_i^m}
+=
+r+\zeta_i^m,
+\qquad
+\zeta_i^m\ge0.
+\]
+
+\begin{itemize}\setlength\itemsep{0.55em}
+  \item $\zeta_i^m$ is the household's marginal value of relaxing its housing constraint.
+  \item An unconstrained household has $\zeta_i^m=0$.
+  \item For a buyer, the gap combines the down-payment margin and any limit on owner size.
+\end{itemize}
+
+\vfill
+The access gap measures scarcity at the household level, after accounting for the common market price.
+\end{frame}
+
+\begin{frame}{The Full Price of a Child}
+The fertility first-order condition values a marginal child in consumption goods:
+\[
+\underbrace{
+\frac{\vartheta(c_i^m-\chi n_i^m)}{n_i^m}
+}_{\text{willingness to pay}}
+=
+\underbrace{
+\chi+\kappa\bigl(r+\zeta_i^m\bigr)
+}_{\text{full price of a child}}.
+\]
+
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item $\chi$ is the child's direct consumption requirement.
+  \item $\kappa r$ is the market cost of the required space.
+  \item $\kappa\zeta_i^m$ is the additional cost created by limited access to that space.
+\end{itemize}
+
+\vfill
+A binding housing constraint acts like a household-specific tax on children.
+\end{frame}
+
+\begin{frame}{Intergenerational Allocation}
+Suppose an old incumbent values one more unit of retained housing at $r-\ell$, while a constrained young household values it at $r+\zeta_i^m$:
+\[
+\underbrace{r-\ell}_{\text{old incumbent}}
+\;<\;
+\underbrace{r}_{\text{market user cost}}
+\;<\;
+\underbrace{r+\zeta_i^m}_{\text{young household}}.
+\]
+
+Reallocating one unit of housing creates surplus
+\[
+\zeta_i^m+\ell>0.
+\]
+
+\begin{itemize}\setlength\itemsep{0.55em}
+  \item The common market price cancels from the comparison.
+  \item The gain combines the young household's access gap and the old household's retention wedge.
+  \item Fertility can respond when reallocation relaxes the space constraint during fertile ages.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{From the Simple Model to the Quantitative Model}
+\small
+\begin{table}
+\centering
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{0.94\textwidth}{@{}p{0.29\textwidth}Y@{}}
+\toprule
+Simple-theory object & Quantitative counterpart \\
+\midrule
+Family-space requirement & Child-dependent housing needs \\
+Rental cap & Continuous rental choice with a size limit \\
+Down-payment cap & Owner ladder and collateral constraint \\
+Old-owner retention & Transaction costs, saving, and bequests \\
+Access gap & State-specific value of relaxing housing constraints \\
+Market clearing & Time-varying prices and housing supply \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\vfill
+The simple model identifies the mechanism. The quantitative model measures exposure and embeds it in lifecycle and demographic equilibrium.
+\end{frame}
+
+\section{Quantitative Model}
+
+\begin{frame}[plain,c,noframenumbering]
+\centering
+{\Large\textbf{Quantitative Model}}
 \end{frame}
 
 \begin{frame}{Environment}
 \begin{itemize}\setlength\itemsep{0.35em}
-  \item One national housing market; the active quantitative model has no household location choice
-  \item One period is four years; households enter at age 18 and can live through age 85
+  \item Households live for a finite number of periods in one housing market.
   \item Beginning-of-period state:
   \[
     x=(b,z,a,h,n,m)
@@ -120,17 +296,19 @@ Need a structural model where fertility, tenure, saving, and population scale ar
     \item $h$: inherited owner size, with $h=0$ for renters
     \item $n$: literal parity; $m$: number of dependent children at home
   \end{itemize}
-  \item Households choose whether to attempt the next birth, renter or owner housing, consumption, and saving
-  \item Earnings, child maturation, and survival are stochastic
+  \item Households choose whether to attempt the next birth, housing tenure and size, consumption, and saving.
+  \item Earnings, conception, child maturation, and survival are stochastic.
 \end{itemize}
+
+\vfill
+The model keeps fertility and housing choices at the household level while tracking the persons and household heads they generate.
 \end{frame}
 
 \begin{frame}{Preferences}
 \small
 Let $m$ denote the number of dependent children currently at home.
 
-\medskip
-\textbf{Flow utility.} Over consumption and housing services:
+\textbf{Flow utility.} Households value consumption, usable housing space, and children; $e(m)$ scales total household needs:
 \[
 u_t(c,s;m)
 =
@@ -143,27 +321,21 @@ e(m)^{\sigma-1}
 +\psi_t m .
 \]
 
-\textbf{Family needs.}
+Family-space needs and housing services are
 \[
-e(m)=\left(\frac{2+0.7m}{2}\right)^{0.7},
+\bar h(m)=h_1\1\{m>0\}+h_m m,
 \qquad
-\bar h(m)=
-h_1\1\{m>0\}+h_m m .
-\]
-
-\textbf{Housing services.}
-\[
 s=
 \begin{cases}
 h^R, & \text{renter},\\
 \chi h, & \text{owner},
 \end{cases}
-\qquad \chi>1.
+\quad \chi>1.
 \]
 
 \begin{itemize}
-  \item $h_1$ is the first-child room jump; $h_m$ is the additional floor per child at home.
-  \item Child costs shut off as children mature.
+  \item $h_1$ is a discrete first-child space requirement; $h_m$ is the additional requirement per child at home.
+  \item Child needs disappear as children mature, while parity remains part of the household state.
 \end{itemize}
 \end{frame}
 
@@ -171,9 +343,9 @@ h^R, & \text{renter},\\
 \small
 Households choose housing inputs
 \[
-h^R\in[0,6],
+h^R\in[0,\bar h^R],
 \qquad
-h'\in\{0,2,4,6,8,10\},
+h'\in\{0\}\cup\mathcal H^O,
 \qquad
 h'h^R=0.
 \]
@@ -203,7 +375,7 @@ R_b b+y(a,z)+\mathcal T_t(h,h')+T_t .
 \]
 
 \begin{itemize}\setlength\itemsep{1pt}\footnotesize
-  \item A buyer needs cash of at least $(1-\phi)P_t h'$, with financed share $\phi=0.80$.
+  \item A buyer needs cash of at least $(1-\phi)P_t h'$, where $\phi$ is the financed share.
   \item The debt floor rules out new unsecured borrowing and tapers inherited debt with age.
 \end{itemize}
 \end{frame}
@@ -211,7 +383,7 @@ R_b b+y(a,z)+\mathcal T_t(h,h')+T_t .
 \begin{frame}{Sequential Fertility and Child Aging}
 \small
 \begin{itemize}\setlength\itemsep{0.35em}
-  \item During fertile ages, a household at parity $n<3+$ chooses whether to attempt the next birth.
+  \item During fertile ages, a household below terminal parity chooses whether to attempt the next birth.
   \item An attempt succeeds with age-specific probability $\pi_a$.
   \item A successful birth:
   \[
@@ -220,9 +392,10 @@ R_b b+y(a,z)+\mathcal T_t(h,h')+T_t .
   and the first successful birth pays the one-time cost $F_1$.
   \item Fertility taste shocks have scale $\kappa_1$ on the first-birth margin and $\kappa_C$ on continuation margins.
   \item Each child at home matures independently; $m$ falls as children leave, while parity $n$ remains a stock.
-  \item A birth changes the person stock immediately. It affects the number of household heads only later through survival and household formation.
 \end{itemize}
 
+\vfill
+A birth changes the household's space needs immediately, but its demographic effects propagate across cohorts.
 \end{frame}
 
 \begin{frame}{Earnings and Bequests}
@@ -232,8 +405,8 @@ R_b b+y(a,z)+\mathcal T_t(h,h')+T_t .
 \textbf{Earnings}
 \begin{itemize}\setlength\itemsep{0.45em}
   \item Lifecycle earnings profile
-  \item Five-state persistent Markov process
-  \item Three permanent-income types
+  \item Persistent idiosyncratic risk
+  \item Permanent-income heterogeneity
   \item Retirement income after working life
   \item Liquid return $R_b$
 \end{itemize}
@@ -262,12 +435,12 @@ Occupied housing demand is the integral of physical rooms:
 \[
 D_t=\int h_t(x)\,dG_t(x).
 \]
-Static elastic supply is anchored to the fitted 2023 economy:
+Housing supply is static and upward sloping:
 \[
 H_t^s
 =
-H_{2023}
-\left(\frac{P_t}{P_{2023}}\right)^\eta,
+H_0
+\left(\frac{P_t}{\bar P}\right)^\eta,
 \qquad
 D_t=H_t^s.
 \]
@@ -283,7 +456,7 @@ r_t+P_{t+1}
   \item $P_t$ capitalizes the next-period resale value.
   \item $r_t$ is the current renter price.
   \item Owner service utility $\chi h$ does not create extra physical housing supply.
-  \item The maintained supply elasticity is $\eta=1.75$.
+  \item The elasticity $\eta$ determines how a demand shift is divided between prices and quantities.
 \end{itemize}
 \end{frame}
 
@@ -331,13 +504,13 @@ r_t+P_{t+1}
 \[
 x=(b,z,a,h,n,m),
 \qquad
-h\in\{0,2,4,6,8,10\}.
+h\in\{0\}\cup\mathcal H^O.
 \]
 
 \begin{itemize}\setlength\itemsep{3pt}
   \item $b$: liquid wealth; $z$: earnings; $a$: age; $h$: inherited owner stock.
   \item $n$: parity; $m$: number of children currently at home.
-  \item The national location state is degenerate and is suppressed.
+  \item The model has one housing market, so location is suppressed.
 \end{itemize}
 
 \medskip
@@ -399,30 +572,28 @@ Housing affects fertility through current child-space needs, tenure feasibility,
 }
 \end{frame}
 
-\begin{frame}{Persons Are Not Household Heads}
-\begin{table}
-\centering
-\large
-\begin{tabular}{@{}lrr@{}}
-\toprule
-2023 stock & Level & Accounting role \\
-\midrule
-Resident persons & 338.7 million & Cohorts exposed to survival and migration \\
-Household heads & 129.0 million & Economic decision makers \\
-Persons per head & 2.63 & Ratio of two distinct stocks \\
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{frame}{Persons, Heads, and Households}
+The demographic block distinguishes three distributions:
+\[
+\underbrace{N_t}_{\text{resident persons}}
+\quad\Longrightarrow\quad
+\underbrace{H_t}_{\text{household heads}}
+\quad\Longrightarrow\quad
+\underbrace{G_t}_{\text{household economic states}}.
+\]
 
-\vspace{0.8em}
-\begin{itemize}\setlength\itemsep{0.5em}
-  \item A birth changes the person stock now.
-  \item It can change the head stock only later through survival and household formation.
-  \item The economic household distribution must agree with the head mass implied by persons.
+\begin{itemize}\setlength\itemsep{0.65em}
+  \item Births enter the person distribution immediately.
+  \item Survival and migration move person cohorts across age and sex.
+  \item Headship maps persons into the mass of household decision makers.
+  \item The household transition moves wealth, earnings, tenure, parity, and child states within that head mass.
 \end{itemize}
+
+\vfill
+The total mass of the household distribution must equal the head mass implied by persons.
 \end{frame}
 
-\begin{frame}{Births Create Persons}
+\begin{frame}{The Person-Cohort Law}
 \small
 Let $N_t^{g,a}$ denote resident persons of sex $g$ and single year of age $a$.
 
@@ -438,14 +609,14 @@ A_{t+1}N_t+f_{t+1}B_{t+1}+M_{t+1}.
   \item $A_{t+1}$ ages existing cohorts using destination-age survival.
   \item $f_{t+1}B_{t+1}$ allocates newborn survivors by sex at age zero.
   \item $M_{t+1}$ is the age--sex net-migration flow after survival.
-  \item The four-year birth flow is spread uniformly across calendar years, each with its own sex shares, survival rates, and migration inputs.
+  \item Model-period births are assigned to calendar cohorts before the annual law is iterated.
 \end{itemize}
 
 \vfill
-Births are never converted mechanically into future household heads by dividing by 2.1.
+Births and household heads remain distinct objects throughout the transition.
 \end{frame}
 
-\begin{frame}{Persons Create Heads}
+\begin{frame}{The Household-Head Law}
 \small
 Fixed age--sex headship rates $\rho^{g,a}$ map persons into the target head stock:
 \[
@@ -479,7 +650,7 @@ H_{t+1,a}
 \begin{frame}{Transition Equilibrium}
 A perfect-foresight transition is a path
 \[
-  \{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t\}_{t=2023}^{T}
+  \{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t\}_{t=0}^{T}
 \]
 such that, at every date:
 \begin{enumerate}\setlength\itemsep{0.55em}
@@ -491,7 +662,7 @@ such that, at every date:
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{The Corrected Steady State}
+\begin{frame}{Steady-State Equilibrium}
 A steady state is a constant tuple
 \[
   (N^*,H^*,G^*,\pi^*,P^*,r^*,T^*)
@@ -508,137 +679,19 @@ that satisfies simultaneously:
 A finite path is not a steady state. Neither is a constant household distribution whose births fail to reproduce persons and heads.
 \end{frame}
 
-\begin{frame}{Summary}
+\begin{frame}{What the Quantitative Model Adds}
 \small
 \begin{itemize}\setlength\itemsep{0.6em}
-  \item A lifecycle model of sequential fertility, housing size, tenure, saving, income risk, and bequests
-  \item Children raise housing needs immediately; rental limits and down payments restrict access
-  \item Births, resident persons, and household heads move on different clocks
-  \item The model predicts:
-  \begin{itemize}\setlength\itemsep{2pt}
-    \item childbirth raises demand for rooms and ownership
-    \item inherited age structure creates demographic and housing-market momentum
-    \item housing policy changes both current family formation and future market scale
-  \end{itemize}
-  \item The data can:
-  \begin{itemize}\setlength\itemsep{2pt}
-    \item discipline the child-space and tenure margins
-    \item identify where the quantitative model succeeds and fails
-  \end{itemize}
+  \item Sequential first and continuation births rather than a one-time family-size choice.
+  \item A lifecycle of earnings, saving, tenure adjustment, child maturation, retirement, and death.
+  \item A discrete owner ladder and continuous rental choice with collateral and transaction costs.
+  \item Bequests and late-life housing retention.
+  \item Separate laws for resident persons, household heads, and household economic states.
+  \item Endogenous housing prices, rents, fiscal transfers, and demographic feedback.
 \end{itemize}
-\end{frame}
 
-\section{Empirics}
-
-\begin{frame}[plain,c,noframenumbering]
-\centering
-{\Large\textbf{Empirics}}
-\end{frame}
-
-\begin{frame}{Data}
-\begin{itemize}\setlength\itemsep{0.65em}
-  \item \textbf{American Community Survey and American Housing Survey}
-  \begin{itemize}
-    \item Ownership, occupied rooms, family composition, age, and headship
-    \item Allocation of large owner-occupied units across the lifecycle
-  \end{itemize}
-  \item \textbf{Panel Study of Income Dynamics}
-  \begin{itemize}
-    \item Longitudinal fertility, rooms, tenure, wealth, income, and reasons for moving
-    \item First-birth event study and family-size housing contrasts
-  \end{itemize}
-  \item \textbf{Current Population Survey and natality records}
-  \begin{itemize}
-    \item Completed fertility, childlessness, and first-birth timing
-  \end{itemize}
-  \item \textbf{Survey of Consumer Finances}
-  \begin{itemize}
-    \item Aggregate and old-age wealth moments
-  \end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Big Units Are Owned}
-\centering
-\includegraphics[width=0.72\linewidth,height=0.80\textheight,keepaspectratio]{../code/data/ahs_supply_snapshot/output_ahs_family_unit_menu_national/ahs_tenure_share_within_size.png}
-\end{frame}
-
-\begin{frame}{Using the PSID: Event-Study Design}
-\small
-Let $E_i$ denote household $i$'s first-birth year. For a housing outcome $Y_{it}$:
-\[
-Y_{it}
-=
-\sum_{k=-5,k\neq-2}^{10}
-\alpha_k\1\{t-E_i=k\}
-+\zeta_i+\tau_t+\delta X_{it}+\varepsilon_{it}.
-\]
-
-\begin{itemize}\setlength\itemsep{0.45em}
-  \item $\zeta_i$ and $\tau_t$ are household and calendar-year fixed effects.
-  \item The displayed descriptive plots use $k=-2$ as the omitted period.
-  \item PSID transitions are measured from the previous observed interview; the survey is biennial after 1997.
-  \item The active rooms target uses a separate Sun--Abraham $k=-1$ to $k=+3$ contrast.
-  \item Because that target has a non-flat prepath, it is used for calibration but not interpreted causally.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{PSID: Childbirth Raises Moves for Space}
-{\small $\widehat\alpha_k$: change in moving probability relative to $k=-2$.}
-
-\smallskip
-\begin{columns}[T]
-\begin{column}{0.48\textwidth}
-\centering
-{\footnotesize $Y=\1\{\text{moved for expansion of housing}\}$}
-
-\smallskip
-\includegraphics[width=\linewidth]{../../Outputs/Graphs/mv_s_f_c_y_all.png}
-\end{column}
-\begin{column}{0.48\textwidth}
-\centering
-{\footnotesize $Y=\1\{\text{moved for neighborhood quality}\}$}
-
-\smallskip
-\includegraphics[width=\linewidth]{../../Outputs/Graphs/mv_n_f_c_y_all.png}
-\end{column}
-\end{columns}
-
-\medskip
-\footnotesize
-\begin{itemize}
-  \item The probability of moving for housing size rises around first birth.
-  \item Moves for neighborhood quality do not rise in the same way.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{PSID: Ownership and Housing Size Around First Birth}
-{\footnotesize \textit{Model: children raise required space and can move households toward ownership.}
-\quad $\widehat\alpha_k$: change relative to $k=-2$.}
-
-\smallskip
-\begin{columns}[T]
-\begin{column}{0.48\textwidth}
-\centering
-{\footnotesize $Y_{it}=\1\{\text{owner}\}_{it}$}
-
-\smallskip
-\includegraphics[width=0.96\linewidth]{../../Outputs/Graphs/own_f_c_y_all.png}
-\end{column}
-\begin{column}{0.48\textwidth}
-\centering
-{\footnotesize $Y_{it}=\text{number of rooms}_{it}$}
-
-\smallskip
-\includegraphics[width=0.96\linewidth]{../../Outputs/Graphs/rooms_f_c_y_all.png}
-\end{column}
-\end{columns}
-
-\smallskip
-\footnotesize
-\begin{center}
-Homeownership rises sharply and occupied rooms expand after first birth.
-\end{center}
+\vfill
+The quantitative model preserves the access mechanism while measuring its exposure and general-equilibrium consequences.
 \end{frame}
 
 \section{Quantification}
@@ -903,17 +956,6 @@ All effects are general equilibrium: prices, tenure, births, population, and the
 \vfill
 {\Large\textbf{Appendix}}
 \vfill
-\end{frame}
-
-\begin{frame}{PSID: Housing Also Expands After Second Birth}
-\centering
-\includegraphics[width=0.76\textwidth,height=0.72\textheight,keepaspectratio]{../code/data/psid_followup_mar2026/output/sa_rooms_second_birth_with_onechild_controls_v1/rooms_s_c_y_all.png}
-
-\medskip
-\footnotesize
-Baseline second-birth event study with stay-at-one-child controls: the $+3$
-coefficient is about \textbf{0.57 rooms}. This disciplines housing demand, not
-a sequential second-birth fertility hazard.
 \end{frame}
 
 \begin{frame}{Compact Household Derivation}
