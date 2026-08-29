@@ -213,6 +213,34 @@ conditional endpoint solves for the 2355 share, with the 2351 share fixed at
 zero. An interior 2355 share is admissible only if both endpoint paths converge
 and their audited 2355 value gaps bracket zero.
 
+Both endpoint paths now pass that numerical contract. The 2355-share-0 job
+`16544607` converged after `23` evaluations. Its independently recomputed
+maximum market/fiscal residuals are `1.7437576393321107e-4` /
+`2.483430630068062e-5`, both in 2363 and within the unchanged gates. All `23`
+checkpoint hashes, source and seed hashes, history, accounting, H128 terminal,
+feasibility, and probability checks pass. The path SHA-256 is
+`ad7696cf503e035d614ebf0434c92ef78c6109984cee36e942c1c53985ae349c`;
+the immutable packet was copied locally without overwrite and its diagnostics
+were visually clean. It is not a boundary complementarity equilibrium:
+owner minus renter is positive by about `4.71367e-5` in 2351 and `8.22653e-5`
+in 2355. Together with the audited share-1 endpoint's 2355 gap
+`-9.04118e-6`, this brackets an interior 2355 share.
+
+The first secant share is `0.9009798732512629`. Exact route-smoke job
+`16554459` reproduced the pinned share-1 endpoint price and transfer arrays,
+applied the new interior share to all `60` target rows in 2355, and passed all
+non-complementarity gates. Because reusing an endpoint path also reuses its
+value gap, the actual joint candidate instead interpolates both audited
+endpoint price and transfer paths at the same secant weight. Its deterministic
+128-row seed has SHA-256
+`edfd6c1ae1960c25dd037fc12824150d732ee98195a536d0c5561e4f3248e44f`;
+the predeclared manifest is
+`output/model/e5f_pf_person_policy_tenure_conditional_two_date_secant_candidate_20260829b/manifest.json`.
+One-evaluation H128 job `16554853` was launched under an isolated tag. It may
+be accepted only if market is at most `2e-4`, fiscal at most `2.5e-5`, the 2351
+share-0 gap is nonpositive, the absolute 2355 interior gap is at most `1e-8`,
+and every other declared gate passes.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
