@@ -45,6 +45,11 @@ fi
     echo "invalid run tag" >&2
     exit 2
 }
+if [ -n "${E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR:-}" ] \
+    || [ -n "${E5F_TENURE_CONDITIONAL_SECOND_OWNER_SHARE:-}" ]; then
+    : "${E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR:?second mix year is required with second share}"
+    : "${E5F_TENURE_CONDITIONAL_SECOND_OWNER_SHARE:?second owner share is required with second year}"
+fi
 
 CLUSTER_DIR="$(cd "${SLURM_SUBMIT_DIR:-$SCRIPT_DIR}" && pwd)"
 PROJECT_ROOT="$(cd "$CLUSTER_DIR/../.." && pwd)"
@@ -99,6 +104,14 @@ Path(sys.argv[1]).write_text(json.dumps({
     "horizon": int(os.environ.get("E5F_TENURE_CONDITIONAL_HORIZON", "128")),
     "mix_calendar_year": int(os.environ.get("E5F_TENURE_CONDITIONAL_CALENDAR_YEAR", "2351")),
     "owner_share": float(os.environ["E5F_TENURE_CONDITIONAL_OWNER_SHARE"]),
+    "second_mix_calendar_year": (
+        int(os.environ["E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR"])
+        if os.environ.get("E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR") else None
+    ),
+    "second_owner_share": (
+        float(os.environ["E5F_TENURE_CONDITIONAL_SECOND_OWNER_SHARE"])
+        if os.environ.get("E5F_TENURE_CONDITIONAL_SECOND_OWNER_SHARE") else None
+    ),
     "maximum_path_iterations": int(os.environ.get("E5F_TENURE_CONDITIONAL_MAX_ITERATIONS", "35")),
     "price_damping": float(os.environ.get("E5F_TENURE_CONDITIONAL_PRICE_DAMPING", "0.25")),
     "transfer_damping": float(os.environ.get("E5F_TENURE_CONDITIONAL_TRANSFER_DAMPING", "0.50")),
@@ -133,6 +146,14 @@ export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export OPENBLAS_NUM_THREADS=1
 
+SECOND_MIX_ARGS=()
+if [ -n "${E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR:-}" ]; then
+    SECOND_MIX_ARGS=(
+        --second-mix-calendar-year "$E5F_TENURE_CONDITIONAL_SECOND_CALENDAR_YEAR"
+        --second-owner-share "$E5F_TENURE_CONDITIONAL_SECOND_OWNER_SHARE"
+    )
+fi
+
 "$PYTHON_BIN" "$DRIVER" \
     --terminal-summary "$TERMINAL" \
     --initial-path "$INITIAL" \
@@ -140,6 +161,7 @@ export OPENBLAS_NUM_THREADS=1
     --horizon "${E5F_TENURE_CONDITIONAL_HORIZON:-128}" \
     --mix-calendar-year "${E5F_TENURE_CONDITIONAL_CALENDAR_YEAR:-2351}" \
     --owner-share "$E5F_TENURE_CONDITIONAL_OWNER_SHARE" \
+    "${SECOND_MIX_ARGS[@]}" \
     --maximum-path-iterations "${E5F_TENURE_CONDITIONAL_MAX_ITERATIONS:-35}" \
     --price-damping "${E5F_TENURE_CONDITIONAL_PRICE_DAMPING:-0.25}" \
     --transfer-damping "${E5F_TENURE_CONDITIONAL_TRANSFER_DAMPING:-0.50}" \

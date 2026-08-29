@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Solve a PF policy path conditional on one atom-specific tenure share.
+"""Solve a PF policy path conditional on atom-specific tenure shares.
 
 This default-off wrapper leaves the household Bellman problem and the ordinary
 production driver unchanged. During every path evaluation it replaces tenure
-realization only at one predeclared live renter/owner atom. The resulting path
-is conditional on the supplied share; it is a complementarity equilibrium only
-if its final value gap also satisfies the relevant boundary/interior condition.
+realization only at one or two predeclared live renter/owner atoms. The second
+date is optional, uses the same economic state, and is inactive by default. The
+resulting path is conditional on the supplied shares; it is a complementarity
+equilibrium only if every final value gap also satisfies its boundary/interior
+condition.
 """
 
 from __future__ import annotations
@@ -58,12 +60,16 @@ class ConditionalCapture:
     output_dir: Path
     atom: AtomSpec
     owner_share: float
+    second_atom: AtomSpec | None = None
+    second_owner_share: float | None = None
     horizon: int = 0
     active: bool = False
     solve_count: int = 0
     evaluation_count: int = 0
     capture_target: bool = False
     current_period: int | None = None
+    current_atom: AtomSpec | None = None
+    current_owner_share: float | None = None
     current_parameters: SimpleNamespace | None = None
     current_nz: int = 0
     kernel_calls: int = 0
@@ -84,6 +90,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--horizon", type=int, default=128)
     parser.add_argument("--owner-share", type=float, required=True)
     parser.add_argument("--mix-calendar-year", type=int, default=oracle.MIX_YEAR)
+    parser.add_argument("--second-mix-calendar-year", type=int)
+    parser.add_argument("--second-owner-share", type=float)
     parser.add_argument("--wealth-index", type=int, default=oracle.WEALTH_INDEX)
     parser.add_argument("--origin-tenure", type=int, default=oracle.ORIGIN_TENURE)
     parser.add_argument("--market", type=int, default=oracle.MARKET)
@@ -172,6 +180,62 @@ def extract_atom_options_and_choices(
             ]
         )
     return np.stack(option_rows, axis=0), np.stack(choice_rows, axis=0)
+
+
+def conditional_mix_specs(
+    context: ConditionalCapture,
+) -> tuple[tuple[AtomSpec, float], ...]:
+    if (context.second_atom is None) != (context.second_owner_share is None):
+        raise ValueError("Second atom and second owner share must be supplied together")
+    specs: list[tuple[AtomSpec, float]] = [(context.atom, float(context.owner_share))]
+    if context.second_atom is not None and context.second_owner_share is not None:
+        specs.append((context.second_atom, float(context.second_owner_share)))
+    years = [int(atom.calendar_year) for atom, _ in specs]
+    if len(set(years)) != len(years):
+        raise ValueError("Conditional mix years must be distinct")
+    for _atom, share in specs:
+        if not math.isfinite(share) or not 0.0 <= share <= 1.0:
+            raise ValueError("Every owner share must lie in [0,1]")
+    return tuple(specs)
+
+
+def collect_mix_year_records(
+    rows: list[dict[str, Any]],
+    transformations: list[dict[str, Any]],
+    specs: tuple[tuple[AtomSpec, float], ...],
+) -> list[dict[str, Any]]:
+    rows_by_year: dict[int, dict[str, Any]] = {}
+    for row in rows:
+        year = int(row["calendar_year"])
+        if year in rows_by_year:
+            raise RuntimeError(f"Conditional path repeats calendar year {year}")
+        rows_by_year[year] = row
+    transformations_by_year: dict[int, dict[str, Any]] = {}
+    for transformation in transformations:
+        year = int(transformation["calendar_year"])
+        if year in transformations_by_year:
+            raise RuntimeError(f"Conditional evaluation repeats transformation year {year}")
+        transformations_by_year[year] = transformation
+    expected_years = {int(atom.calendar_year) for atom, _ in specs}
+    if set(transformations_by_year) != expected_years:
+        raise RuntimeError("Conditional transformations differ from declared mix years")
+    records: list[dict[str, Any]] = []
+    for atom, share in specs:
+        year = int(atom.calendar_year)
+        row = rows_by_year.get(year)
+        if row is None:
+            raise RuntimeError(f"Conditional evaluation lacks mix-year row {year}")
+        records.append(
+            {
+                "calendar_year": year,
+                "owner_share": float(share),
+                "market_residual": float(row["relative_market_residual"]),
+                "fiscal_residual": float(row["government_budget_residual"]),
+                "owner_rate": float(row["owner_rate"]),
+                "transformation": transformations_by_year[year],
+            }
+        )
+    return records
 
 
 def path_array_hashes(rows: list[dict[str, Any]]) -> dict[str, str]:
@@ -295,14 +359,15 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
         values, choices = original_kernel(*args)
         if context.capture_target:
             parameters = context.current_parameters
-            if parameters is None:
-                raise RuntimeError("Conditional capture lacks model parameters")
+            atom = context.current_atom
+            if parameters is None or atom is None:
+                raise RuntimeError("Conditional capture lacks model parameters or atom")
             call = context.kernel_calls
             context.kernel_calls += 1
             age, income_state = kink.bellman_slice_indices(
                 call, int(parameters.J), int(context.current_nz)
             )
-            if age == int(context.atom.age_index):
+            if age == int(atom.age_index):
                 Vd, bg, heq, hcost, dp_arr, bmo, birth_dp, grant = args
                 options = kink.reconstruct_tenure_option_values(
                     Vd, bg, heq, hcost, dp_arr, bmo, birth_dp, grant
@@ -330,15 +395,28 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
         call = context.solve_count
         context.solve_count += 1
         capture_this_call = False
+        target_atom: AtomSpec | None = None
+        target_share: float | None = None
         if call >= context.horizon:
             period = call - context.horizon
             year = pf.CALENDAR_START_YEAR + 4 * period
-            capture_this_call = year == int(context.atom.calendar_year)
+            matches = [
+                (atom, share)
+                for atom, share in conditional_mix_specs(context)
+                if int(atom.calendar_year) == year
+            ]
+            if len(matches) > 1:
+                raise RuntimeError(f"Multiple conditional atoms declared in {year}")
+            if matches:
+                target_atom, target_share = matches[0]
+                capture_this_call = True
         if capture_this_call:
             if context.capture_target:
                 raise RuntimeError("Nested conditional tenure capture")
             context.capture_target = True
             context.current_period = period
+            context.current_atom = target_atom
+            context.current_owner_share = target_share
             context.current_parameters = kwargs["P"]
             context.current_nz = len(calendar.model.income_transition_values(kwargs["P"])[0])
             context.kernel_calls = 0
@@ -349,13 +427,17 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
             policy = original_solve_date(**kwargs)
         except Exception:
             context.capture_target = False
+            context.current_atom = None
+            context.current_owner_share = None
             raise
         if not capture_this_call:
             return policy
 
         parameters = context.current_parameters
-        if parameters is None:
-            raise RuntimeError("Conditional target solve lost its parameters")
+        atom = context.current_atom
+        owner_share = context.current_owner_share
+        if parameters is None or atom is None or owner_share is None:
+            raise RuntimeError("Conditional target solve lost its parameters or atom")
         expected_calls = int(parameters.J) * int(context.current_nz)
         if context.kernel_calls != expected_calls:
             raise RuntimeError(
@@ -365,26 +447,26 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
             policy,
             context.target_slices,
             number_of_income_states=context.current_nz,
-            atom=context.atom,
+            atom=atom,
         )
         gaps = oracle.validate_mixing_atom_options(
             options,
             choices,
-            renter_tenure=context.atom.renter_tenure,
-            owner_tenure=context.atom.owner_tenure,
+            renter_tenure=atom.renter_tenure,
+            owner_tenure=atom.owner_tenure,
         )
         choices_hash = oracle.array_sha256(policy.tenure_choice)
         values_hash = oracle.array_sha256(policy.V)
         probabilities, probability_record = oracle.probabilities_with_atom_share(
             policy.tenure_choice,
-            owner_share=context.owner_share,
-            wealth_index=context.atom.wealth_index,
-            origin_tenure=context.atom.origin_tenure,
-            market=context.atom.market,
-            age_index=context.atom.age_index,
-            child_state=context.atom.child_state,
-            renter_tenure=context.atom.renter_tenure,
-            owner_tenure=context.atom.owner_tenure,
+            owner_share=owner_share,
+            wealth_index=atom.wealth_index,
+            origin_tenure=atom.origin_tenure,
+            market=atom.market,
+            age_index=atom.age_index,
+            child_state=atom.child_state,
+            renter_tenure=atom.renter_tenure,
+            owner_tenure=atom.owner_tenure,
         )
         policy.tenure_probs = probabilities
         if choices_hash != oracle.array_sha256(policy.tenure_choice) or values_hash != oracle.array_sha256(policy.V):
@@ -394,19 +476,19 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
                 **probability_record,
                 "evaluation": context.evaluation_count,
                 "period": int(context.current_period),
-                "calendar_year": int(context.atom.calendar_year),
-                "wealth_index": int(context.atom.wealth_index),
-                "origin_tenure": int(context.atom.origin_tenure),
-                "market": int(context.atom.market),
-                "age_index": int(context.atom.age_index),
-                "child_state": int(context.atom.child_state),
-                "renter_tenure": int(context.atom.renter_tenure),
-                "owner_tenure": int(context.atom.owner_tenure),
+                "calendar_year": int(atom.calendar_year),
+                "wealth_index": int(atom.wealth_index),
+                "origin_tenure": int(atom.origin_tenure),
+                "market": int(atom.market),
+                "age_index": int(atom.age_index),
+                "child_state": int(atom.child_state),
+                "renter_tenure": int(atom.renter_tenure),
+                "owner_tenure": int(atom.owner_tenure),
                 "owner_minus_renter_value_gap_minimum": float(np.min(gaps)),
                 "owner_minus_renter_value_gap_maximum": float(np.max(gaps)),
                 "owner_minus_renter_value_gap_spread": float(np.ptp(gaps)),
                 "complementarity_violation": oracle.complementarity_violation(
-                    context.owner_share, gaps
+                    owner_share, gaps
                 ),
                 "maximum_live_value_reconstruction_error": max(
                     context.live_value_errors, default=0.0
@@ -420,6 +502,8 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
         )
         context.capture_target = False
         context.current_period = None
+        context.current_atom = None
+        context.current_owner_share = None
         context.current_parameters = None
         context.current_nz = 0
         context.target_slices = {}
@@ -432,6 +516,7 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
         context.evaluation_count += 1
         context.active = True
         transformation_count = len(context.transformations)
+        specs = conditional_mix_specs(context)
         active_model = calendar.model
         original_kernel = active_model.tenure_choice_kernel
         active_kernel["model"] = active_model
@@ -445,21 +530,22 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
             active_kernel["original"] = None
             context.active = False
             context.capture_target = False
+            context.current_atom = None
+            context.current_owner_share = None
         if context.solve_count != 2 * context.horizon:
             raise RuntimeError(
                 f"Conditional evaluation observed {context.solve_count} policy solves; "
                 f"expected {2 * context.horizon}"
             )
-        if len(context.transformations) != transformation_count + 1:
-            raise RuntimeError("Each path evaluation must transform the atom exactly once")
-        transformation = context.transformations[-1]
-        mix_rows = [
-            row
-            for row in result.rows
-            if int(row["calendar_year"]) == int(context.atom.calendar_year)
-        ]
-        if len(mix_rows) != 1:
-            raise RuntimeError("Conditional evaluation lacks one mix-year row")
+        new_transformations = context.transformations[transformation_count:]
+        if len(new_transformations) != len(specs):
+            raise RuntimeError(
+                "Each path evaluation must transform every declared atom exactly once"
+            )
+        mix_year_records = collect_mix_year_records(
+            result.rows, new_transformations, specs
+        )
+        primary_mix = mix_year_records[0]
         record = {
             "evaluation": context.evaluation_count,
             "elapsed_seconds": time.perf_counter() - context.started,
@@ -479,13 +565,15 @@ def install_conditional_share(context: ConditionalCapture) -> Callable[[], None]
             "maximum_feasibility_projection_mass": float(
                 result.maximum_feasibility_projection_mass
             ),
-            "mix_year_market_residual": float(mix_rows[0]["relative_market_residual"]),
-            "mix_year_fiscal_residual": float(mix_rows[0]["government_budget_residual"]),
-            "mix_year_owner_rate": float(mix_rows[0]["owner_rate"]),
+            "mix_year_market_residual": primary_mix["market_residual"],
+            "mix_year_fiscal_residual": primary_mix["fiscal_residual"],
+            "mix_year_owner_rate": primary_mix["owner_rate"],
             **path_array_hashes(result.rows),
             "contract_hashes": context.contract_hashes,
-            "transformation": transformation,
+            "transformation": primary_mix["transformation"],
         }
+        if len(mix_year_records) > 1:
+            record["mix_year_records"] = mix_year_records
         checkpoints = context.output_dir / "conditional_checkpoints"
         checkpoints.mkdir(parents=True, exist_ok=True)
         stem = f"evaluation_{context.evaluation_count:04d}"
@@ -530,18 +618,14 @@ def main() -> None:
     }
     if int(args.mix_calendar_year) not in allowed_years:
         raise ValueError("Mix year must lie on the requested horizon")
-    if not math.isfinite(float(args.owner_share)) or not 0.0 <= float(args.owner_share) <= 1.0:
-        raise ValueError("Owner share must lie in [0,1]")
+    if (args.second_mix_calendar_year is None) != (args.second_owner_share is None):
+        raise ValueError("Second mix year and owner share must be supplied together")
+    if (
+        args.second_mix_calendar_year is not None
+        and int(args.second_mix_calendar_year) not in allowed_years
+    ):
+        raise ValueError("Second mix year must lie on the requested horizon")
     output_dir = args.output_dir.resolve()
-    launcher_files = {"launch_contract.json", "driver.log", "heartbeat.json"}
-    unexpected = (
-        sorted(path.name for path in output_dir.iterdir() if path.name not in launcher_files)
-        if output_dir.exists()
-        else []
-    )
-    if unexpected:
-        raise FileExistsError(f"Refusing to overwrite non-launcher output: {unexpected}")
-    output_dir.mkdir(parents=True, exist_ok=True)
     atom = AtomSpec(
         calendar_year=int(args.mix_calendar_year),
         wealth_index=int(args.wealth_index),
@@ -552,16 +636,46 @@ def main() -> None:
         renter_tenure=int(args.renter_tenure),
         owner_tenure=int(args.owner_tenure),
     )
+    second_atom = (
+        AtomSpec(
+            calendar_year=int(args.second_mix_calendar_year),
+            wealth_index=atom.wealth_index,
+            origin_tenure=atom.origin_tenure,
+            market=atom.market,
+            age_index=atom.age_index,
+            child_state=atom.child_state,
+            renter_tenure=atom.renter_tenure,
+            owner_tenure=atom.owner_tenure,
+        )
+        if args.second_mix_calendar_year is not None
+        else None
+    )
     context = ConditionalCapture(
         output_dir=output_dir,
         atom=atom,
         owner_share=float(args.owner_share),
+        second_atom=second_atom,
+        second_owner_share=(
+            float(args.second_owner_share)
+            if args.second_owner_share is not None
+            else None
+        ),
         contract_hashes={
             "initial_path_sha256": file_sha256(args.initial_path.resolve()),
             "terminal_summary_sha256": file_sha256(args.terminal_summary.resolve()),
             "source_hashes": source_hashes(),
         },
     )
+    conditional_mix_specs(context)
+    launcher_files = {"launch_contract.json", "driver.log", "heartbeat.json"}
+    unexpected = (
+        sorted(path.name for path in output_dir.iterdir() if path.name not in launcher_files)
+        if output_dir.exists()
+        else []
+    )
+    if unexpected:
+        raise FileExistsError(f"Refusing to overwrite non-launcher output: {unexpected}")
+    output_dir.mkdir(parents=True, exist_ok=True)
     restore = install_conditional_share(context)
     original_argv = sys.argv[:]
     sys.argv = [
@@ -661,6 +775,13 @@ def main() -> None:
             "required_separate_exact_oracle_audit_after_conditional_convergence"
         ),
     }
+    if context.second_atom is not None and context.second_owner_share is not None:
+        payload["additional_mixes"] = [
+            {
+                "atom": context.second_atom.__dict__,
+                "owner_share": float(context.second_owner_share),
+            }
+        ]
     write_json_atomic(output_dir / "conditional_transition_summary.json", payload)
 
 

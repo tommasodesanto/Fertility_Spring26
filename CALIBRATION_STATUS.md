@@ -195,6 +195,24 @@ existing H128 evaluation exactly and then by solving the two 2355 share
 endpoints. No interior two-date share is admissible until both conditional
 endpoint paths pass the unchanged market/fiscal and all non-equilibrium gates.
 
+The default-off two-date extension has now passed that exact H128 reproduction
+smoke. Torch job `16544084` held the validated 2351 share at `0`, set the 2355
+share to `1`, and reproduced the audited input transition path byte for byte:
+SHA-256 `dca256c63b804dc0da37f5fb94f10616eff23a2716c29d2de8196cab791d3178`.
+Exactly one live transformation occurred in each declared year. The
+owner-minus-renter gap is `-1.10130e-6` in 2351 and `+4.84135e-7` in 2355;
+probability-row sums and value reconstruction are exact. The independently
+recomputed maximum market/fiscal residuals remain `1.70567e-4` / `2.57913e-5`,
+feasibility adjustment is zero, and every history, accounting, and H128
+terminal gate passes. The visually inspected immutable packet is
+`output/model/e5f_pf_person_policy_tenure_conditional_20260829a_h128_share0_year2355_share1_oneiter_smoke/`.
+This validates only the two-date conditional evaluation route; the 2% path is
+still not solved because the reproduced fiscal residual remains above its
+unchanged `2.5e-5` gate. The next bounded step is the predeclared pair of full
+conditional endpoint solves for the 2355 share, with the 2351 share fixed at
+zero. An interior 2355 share is admissible only if both endpoint paths converge
+and their audited 2355 value gaps bracket zero.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain

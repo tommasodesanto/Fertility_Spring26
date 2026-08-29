@@ -57,6 +57,72 @@ class ConditionalHelpersTests(unittest.TestCase):
         self.assertEqual(atom.owner_tenure, 2)
         self.assertNotEqual(atom.owner_tenure, atom.renter_tenure)
 
+    def test_two_date_mix_specs_are_distinct_and_bounded(self) -> None:
+        with TemporaryDirectory() as temporary:
+            context = conditional.ConditionalCapture(
+                output_dir=Path(temporary),
+                atom=conditional.AtomSpec(calendar_year=2351),
+                owner_share=0.0,
+                second_atom=conditional.AtomSpec(calendar_year=2355),
+                second_owner_share=0.25,
+            )
+            specs = conditional.conditional_mix_specs(context)
+            self.assertEqual(
+                [(atom.calendar_year, share) for atom, share in specs],
+                [(2351, 0.0), (2355, 0.25)],
+            )
+            context.second_atom = conditional.AtomSpec(calendar_year=2351)
+            with self.assertRaisesRegex(ValueError, "distinct"):
+                conditional.conditional_mix_specs(context)
+            context.second_atom = conditional.AtomSpec(calendar_year=2355)
+            context.second_owner_share = 1.01
+            with self.assertRaisesRegex(ValueError, r"\[0,1\]"):
+                conditional.conditional_mix_specs(context)
+
+    def test_second_mix_arguments_are_paired(self) -> None:
+        with TemporaryDirectory() as temporary:
+            context = conditional.ConditionalCapture(
+                output_dir=Path(temporary),
+                atom=conditional.AtomSpec(calendar_year=2351),
+                owner_share=0.0,
+                second_atom=conditional.AtomSpec(calendar_year=2355),
+            )
+            with self.assertRaisesRegex(ValueError, "supplied together"):
+                conditional.conditional_mix_specs(context)
+
+    def test_mix_year_records_match_each_declared_date(self) -> None:
+        specs = (
+            (conditional.AtomSpec(calendar_year=2351), 0.0),
+            (conditional.AtomSpec(calendar_year=2355), 0.75),
+        )
+        rows = [
+            {
+                "calendar_year": 2351,
+                "relative_market_residual": 1.0e-4,
+                "government_budget_residual": -1.0e-5,
+                "owner_rate": 0.70,
+            },
+            {
+                "calendar_year": 2355,
+                "relative_market_residual": 2.0e-4,
+                "government_budget_residual": 2.0e-5,
+                "owner_rate": 0.71,
+            },
+        ]
+        transformations = [
+            {"calendar_year": 2355, "marker": "second"},
+            {"calendar_year": 2351, "marker": "primary"},
+        ]
+        records = conditional.collect_mix_year_records(rows, transformations, specs)
+        self.assertEqual([record["calendar_year"] for record in records], [2351, 2355])
+        self.assertEqual([record["owner_share"] for record in records], [0.0, 0.75])
+        self.assertEqual(
+            [record["transformation"]["marker"] for record in records],
+            ["primary", "second"],
+        )
+        with self.assertRaisesRegex(RuntimeError, "transformations differ"):
+            conditional.collect_mix_year_records(rows, transformations[:1], specs)
+
     def test_atomic_writers_leave_complete_files(self) -> None:
         with TemporaryDirectory() as temporary:
             root = Path(temporary)
