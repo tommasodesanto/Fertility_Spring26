@@ -156,6 +156,28 @@ It stops successfully only if both equilibrium gates pass; otherwise its
 bounded output is the endpoint failure record. No interior-share solve is
 admissible before this continuation is independently audited.
 
+That continuation is now complete and independently audited. Its best path is
+evaluation `4`, reproduced exactly by the final best-path audit at evaluation
+`13`, with path SHA-256
+`dca256c63b804dc0da37f5fb94f10616eff23a2716c29d2de8196cab791d3178`.
+The market residual passes at `1.70567e-4`, while the fiscal residual is
+`2.57913e-5` in 2355, only `7.91306e-7` above the exact `2.5e-5` gate. The
+share-`0` boundary complementarity condition passes because owner minus renter
+is `-1.10130e-6`. All source, seed, 13 checkpoint-hash, history, accounting,
+H128 terminal, feasibility, and probability gates pass; the path remains
+unaccepted solely because the fiscal gate fails. Immutable packet and visually
+inspected diagnostics:
+`output/model/e5f_pf_person_policy_tenure_conditional_20260828b_h128_share0_continuation/`.
+
+The next solver update is not smooth: 2355 ownership falls from `0.7519931` to
+`0.7494455`, a `0.25476` percentage-point jump, and the market/fiscal failures
+move downstream. Two exact one-evaluation H128 state diagnostics are therefore
+queued before any further polish: Torch jobs `16541513` and `16541514` compare
+the immutable best and adverse checkpoints at 2355, 2359, and 2363. Each has a
+60-minute/16-GB bound and writes a new isolated packet with exact input/source
+hashes. No interior-share solve is admissible until a share-`0` path passes the
+fiscal gate.
+
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
 The certified **unrebated 1% status-quo baseline and all slides remain
