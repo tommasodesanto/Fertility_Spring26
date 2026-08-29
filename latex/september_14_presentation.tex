@@ -1,0 +1,1077 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{microtype}
+
+\definecolor{seminarblue}{RGB}{35,82,124}
+\definecolor{seminarred}{RGB}{175,64,53}
+\definecolor{sourcegray}{RGB}{95,95,95}
+\setbeamercolor{structure}{fg=seminarblue}
+\setbeamercolor{alerted text}{fg=seminarred}
+\setbeamercolor{frametitle}{fg=black}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=0.65cm,text margin right=0.65cm}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcommand{\1}{\mathbf 1}
+\newcommand{\E}{\mathbb E}
+\newcommand{\source}[1]{\par\vspace{0.25em}{\tiny\color{sourcegray}Source: #1}}
+\newcommand{\takeaway}[1]{\vfill{\small\textbf{Takeaway.} #1}}
+\newcommand{\baselinefigure}{../output/model/e5f_pf_person_policy_rebated-tax1-baseline_20260826a_h128_convergence/diagnostics.pdf}
+
+\title{Housing, Fertility, and Demographic Transition}
+\author{Tommaso De Santo}
+\date{September 14, 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================================================================
+% MAIN DECK: 30 numbered frames including the title page
+% ============================================================================
+
+\section{Motivation}
+
+\begin{frame}{Research question}
+  \Large
+  How do housing costs and access to family-sized space affect fertility when
+  births also reshape future population and housing demand?
+
+  \vspace{1.0em}
+  \normalsize
+  \begin{itemize}
+    \item Children raise current demand for rooms when households have little liquid wealth.
+    \item Tenure and down-payment constraints determine which households can obtain those rooms.
+    \item Birth cohorts later become persons and household heads, feeding back into housing demand.
+  \end{itemize}
+
+  \takeaway{Housing is both a current input into family formation and a market whose future scale depends on family formation.}
+\end{frame}
+
+\begin{frame}{Family size and housing demand}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.93\textwidth}{@{}Y r Y@{}}
+      \toprule
+      Data object & Estimate & Interpretation \\
+      \midrule
+      Four-year rooms contrast at first birth & $+0.720$ & Housing expands around entry into parenthood \\
+      Rooms gap: 3+ versus 1--2 children & $+0.368$ & Larger families occupy more space \\
+      Family ownership gap & $+16.8$ pp & Families are more likely to own \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.5em}
+  \begin{itemize}
+    \item The first-birth contrast is a PSID event-time $-1$ to $+3$ comparison, not a causal estimate.
+    \item The other two moments are cross-sectional ACS targets in the active calibration.
+  \end{itemize}
+
+  \takeaway{The same family transition that raises demand for rooms also moves households toward ownership.}
+  \source{Project target ledger: PSID, ACS/IPUMS, and the active 2023 calibration contract.}
+\end{frame}
+
+\begin{frame}{Access to family-sized housing}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.91\textwidth}{@{}Y r Y@{}}
+      \toprule
+      Descriptive object & Share & Economic margin \\
+      \midrule
+      Six-plus-room owner stock held by heads age 46+ & 71.8\% & Intergenerational allocation \\
+      Six-plus-room owner stock held by households without children at home & 54.9\% & Retention after children leave \\
+      Largest rental unit in the quantitative menu & 6 rooms & Upper tail of the rental-size distribution \\
+      Required buyer equity in the benchmark & 20\% & Liquid-wealth access \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.4em}
+  The friction is not that older households occupy housing. It is that the
+  marginal value of family space can be high for young constrained households
+  while much of the large owner stock is held elsewhere.
+
+  \source{ACS/IPUMS matched-metro tabulations in the circulated model note; active housing menu and financing restriction.}
+\end{frame}
+
+\begin{frame}{Contribution}
+  \begin{enumerate}
+    \item \textbf{Household mechanism:} sequential fertility, housing size, tenure, saving, income risk, and warm-glow bequests are chosen jointly.
+    \item \textbf{Demographic equilibrium:} births create persons; survival, migration, and head formation create the household-head stock.
+    \item \textbf{Transition equilibrium:} forward-looking asset prices, housing supply, and an equal property-tax rebate clear jointly with household and demographic dynamics.
+  \end{enumerate}
+
+  \vspace{0.8em}
+  The active implementation is a single national housing market. Location is
+  therefore degenerate here; spatial sorting is a separate extension.
+
+  \takeaway{Separating persons from household heads changes both the transition law and the definition of a steady state.}
+\end{frame}
+
+\section{Mechanism}
+
+\begin{frame}{The full cost of a child}
+  In a compact model, a young household chooses adult housing $h$ and children
+  $n$. One child requires $a$ units of space and $q$ units of other goods.
+  Limited access to family housing adds a goods-equivalent wedge $z$:
+  \[
+    n(r,z)=\frac{v}{q+a(r+z)},
+    \qquad
+    d_Y(r,z)=\frac{\alpha}{r}+a\,n(r,z).
+  \]
+
+  \begin{itemize}
+    \item $r$ is the current price of housing services.
+    \item $z$ summarizes the rental-size limit and the down-payment constraint.
+    \item A higher $r$ or $z$ raises the full resource cost $q+a(r+z)$ of a child.
+  \end{itemize}
+
+  \takeaway{Housing access acts like a household-specific addition to the price of children.}
+  \source{Compact analytical model; the representative-family law is intuition, not the quantitative demographic closure.}
+\end{frame}
+
+\begin{frame}{The effective housing cap}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.54\textwidth}
+      \centering
+      \includegraphics[width=\textwidth,height=0.64\textheight,keepaspectratio]{figures/example_fertility_cap_paper_notation.pdf}
+    \column{0.43\textwidth}
+      \small
+      The accessible family-space cap is
+      \[
+        H_i^R=\bar h^R,
+        \qquad
+        H_i^O=\min\!\left\{\bar h^O,
+        \frac{b_i}{(1-\phi)P}\right\}.
+      \]
+      \begin{itemize}
+        \item Renters face the largest available rental unit.
+        \item Buyers need cash for the down payment $(1-\phi)PH$.
+        \item Relaxing a binding cap raises fertility along $n(H)$.
+      \end{itemize}
+  \end{columns}
+
+  \source{Analytical model figure; $P$ is the housing asset price and $\phi$ is the financed share.}
+\end{frame}
+
+\begin{frame}{Housing--fertility feedback}
+  \centering
+  \includegraphics[width=0.95\textwidth,height=0.63\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+
+  \vspace{-0.1em}
+  \small
+  In the closed toy economy, reproductive stationarity selects the housing
+  cost and housing clearing selects population scale. The lifecycle model
+  replaces this representative-family condition with the full person-cohort
+  and household-head fixed point.
+
+  \source{Analytical transition note; the figure illustrates the mechanism, not the calibrated U.S. closure.}
+\end{frame}
+
+\section{Lifecycle model}
+
+\begin{frame}{Lifecycle timing and state}
+  One period is four years. A household enters at age 18, can live through age
+  85, and carries the beginning-of-period state
+  \[
+    x=(b,z,a,o,n,\mathbf c).
+  \]
+
+  \begin{itemize}
+    \item $b$: liquid net wealth; $z$: persistent earnings; $a$: age.
+    \item $o$: renter or owner product; $n$: literal parity; $\mathbf c$: independent dependent-child clocks.
+    \item Fertility is sequential: a successful birth raises parity by one and starts a child clock.
+    \item The active national specification has one location; no migration choice is assigned to households.
+  \end{itemize}
+
+  \takeaway{Children affect current housing needs immediately, but their effect on the number of household heads arrives through a separate demographic law.}
+\end{frame}
+
+\begin{frame}{Preferences and child space}
+  Let $m$ be the number of dependent children currently at home. Flow utility is
+  \[
+    u_t(c,s;m)=e(m)^{\sigma-1}
+    \frac{\left[c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}\right]^{1-\sigma}}
+    {1-\sigma}+\psi_t m,
+  \]
+  with
+  \[
+    e(m)=\left(\frac{2+0.7m}{2}\right)^{0.7},
+    \qquad
+    \bar h(m)=h_1\mathbf 1\{m>0\}+h_m m.
+  \]
+
+  \begin{itemize}
+    \item $e(m)$ is a consumption equivalence scale.
+    \item $h_1$ is a first-child room jump and $h_m$ is the per-child room floor.
+    \item Owner services are $s=\chi H_k$; renter services are the chosen rental rooms.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Housing, finance, and bequests}
+  \begin{itemize}
+    \item Renters choose continuous rooms up to 6; owners choose $H_k\in\{2,4,6,8,10\}$.
+    \item A purchase requires cash of at least $(1-\phi)P_tH_k$, with $\phi=0.80$.
+    \item Owners pay depreciation and property tax and incur a proportional moving cost when changing products.
+    \item Liquid wealth earns a risk-free return and can be negative only within the collateral and age-tapered debt rules.
+  \end{itemize}
+
+  Warm-glow bequest utility is
+  \[
+    \mathcal B(w^e)=\theta_0
+    \frac{(\theta_1+\max\{w^e,0\})^{1-\sigma}}{1-\sigma}.
+  \]
+
+  Estates affect saving and old-age housing retention. They are not assigned
+  to particular descendants; entrant wealth is externally distributed.
+\end{frame}
+
+\begin{frame}{Sequential fertility and the Bellman problem}
+  At an eligible state, the household compares waiting with attempting the next
+  birth. Let $d=1$ denote an attempt, let $\pi_a$ be age-$a$ conception success,
+  and let $x^+$ raise parity by one and start a child clock. Then
+  \[
+    \Pr(d=1\mid x,t)=
+    \Lambda\!\left(
+      \frac{\pi_a\!\left[\mathcal V_t(x^+)-\mathcal V_t(x)
+      -F_1\mathbf 1\{n=0\}\right]}{\kappa(n)}
+    \right),
+  \]
+  where $\mathcal V_t$ already optimizes tenure, rooms, consumption, and saving
+  conditional on the parity branch. A birth occurs with probability
+  $\pi_a\Pr(d=1\mid x,t)$; $\kappa(0)=\kappa_1$ and
+  $\kappa(n\ge1)=\kappa_C$. Childless households must also satisfy the readiness
+  gate before attempting.
+
+  \takeaway{Housing affects fertility through current child-space needs, tenure feasibility, and the continuation value of wealth and housing.}
+\end{frame}
+
+\begin{frame}{Housing-market equilibrium}
+  Household policies imply occupied housing demand $D_t$. Supply is static
+  elastic around the 2023 anchor:
+  \[
+    H_t^s=H_{2023}\left(\frac{P_t}{P_{2023}}\right)^{\eta},
+    \qquad \eta=1.75,
+    \qquad D_t=H_t^s.
+  \]
+
+  Asset prices and rents satisfy the one-period no-arbitrage identity
+  \[
+    r_t+P_{t+1}=(R+\delta+\tau_H)P_t.
+  \]
+
+  \begin{itemize}
+    \item $P_t$ capitalizes the next price; $r_t$ is the current renter price.
+    \item $R$ is the four-year gross liquid return; $\delta$ and $\tau_H$ are four-year wedges.
+    \item Households solve backward along the price and transfer paths.
+    \item The distribution, births, persons, and heads move forward.
+  \end{itemize}
+\end{frame}
+
+\section{Demographic transition}
+
+\begin{frame}{From the estimation bridge to the transition law}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.94\textwidth}{@{}p{0.18\textwidth}Y Y@{}}
+      \toprule
+      Dates & Population object & Role \\
+      \midrule
+      2007--2023 & Census household totals and ACS head-age shares & External bridge used to evaluate a dated calibration \\
+      2023 & Persons, heads, and the household state distribution & Joint initial condition \\
+      After 2023 & Births, person cohorts, survival, migration, and head formation & Endogenous transition accounting \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.7em}
+  The pre-2023 bridge is an imposed historical input, not a model fit. It is
+  not extrapolated forward. Post-2023 births are never converted mechanically
+  into future heads by dividing by 2.1.
+
+  \takeaway{The estimated household model and the forward demographic closure meet at the reconstructed 2023 state.}
+\end{frame}
+
+\begin{frame}{Persons are not household heads}
+  \begin{table}
+    \centering
+    \large
+    \begin{tabular}{@{}lrr@{}}
+      \toprule
+      2023 stock & Level & Accounting role \\
+      \midrule
+      Resident persons & 338.7 million & Cohorts exposed to survival and migration \\
+      Household heads & 129.0 million & Economic decision makers in the lifecycle model \\
+      Persons per head & 2.63 & Endogenous ratio of two distinct stocks \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \vspace{0.8em}
+  Headship is low at young adult ages and rises sharply as nonheads form
+  households. A birth changes the person stock now; it can change the head stock
+  only later through survival and household formation.
+
+  \source{Accepted 1\% transition initial state and the aligned 2023 ACS age--sex headship schedule.}
+\end{frame}
+
+\begin{frame}{The person-cohort law}
+  Let $N_t^{g,a}$ denote resident persons of sex $g$ and single year of age $a$.
+  The annual law is
+  \[
+    N_{t+1}=A_{t+1}N_t+f_{t+1}B_{t+1}+M_{t+1},
+  \]
+  where
+  \begin{itemize}
+    \item $A_{t+1}$ ages existing cohorts using destination-age survival;
+    \item $f_{t+1}B_{t+1}$ allocates newborn survivors by sex at age zero;
+    \item $M_{t+1}$ is the age--sex net-migration flow after survival.
+  \end{itemize}
+
+  The model produces a four-year birth flow. It is spread uniformly across the
+  four calendar years, while each year uses its own sex shares, survival, and
+  migration inputs.
+
+  \takeaway{Births create persons; survival and migration determine which cohorts are resident four years later.}
+\end{frame}
+
+\begin{frame}{Head formation and the household distribution}
+  The head stock is a separate accounting object. In each age--sex cell,
+  surviving heads are adjusted by the minimum one-way flow needed to attain the
+  externally fixed headship rate $\rho^{g,a}$:
+  \[
+    H_{t+1}^{g,a}=\rho^{g,a}N_{t+1}^{g,a}
+    =H_{t+1}^{\mathrm{surv},g,a}+F_{t+1}^{g,a}-D_{t+1}^{g,a}+H_{t+1}^{M,g,a}.
+  \]
+
+  The economic household operator supplies a raw within-age distribution
+  $\widetilde G_{t+1,a}$. Its mass is rescaled to the person-law head target:
+  \[
+    G_{t+1,a}(x)=H_{t+1,a}
+    \frac{\widetilde G_{t+1,a}(x)}{\int\widetilde G_{t+1,a}(x')\,dx'}.
+  \]
+
+  The conditional wealth, tenure, income, parity, and child-state composition
+  is preserved within age; this is an accounting closure, not an estimated
+  household-formation hazard.
+\end{frame}
+
+\begin{frame}{Transition equilibrium}
+  A perfect-foresight transition consists of paths
+  \[
+    \{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t\}_{t=2023}^{T}
+  \]
+  such that, at every date:
+  \begin{enumerate}
+    \item household policies $\pi_t$ solve the Bellman problem given future prices and transfers;
+    \item births from $G_t$ advance persons and heads, and the household distribution is rebalanced to head mass;
+    \item occupied housing equals static-elastic supply;
+    \item the asset-price/rent identity holds;
+    \item property-tax revenue equals the equal transfer paid to household heads.
+  \end{enumerate}
+
+  \takeaway{Prices are forward looking, while the person and household distributions move forward from the same initial condition.}
+\end{frame}
+
+\begin{frame}{The corrected steady state}
+  A steady state is a constant tuple
+  \[
+    (N^*,H^*,G^*,\pi^*,P^*,r^*,T^*)
+  \]
+  satisfying all of the following simultaneously:
+  \begin{itemize}
+    \item household optimality and household-distribution stationarity;
+    \item the person-cohort fixed point under the stated survival and migration closure;
+    \item head formation and exact agreement between head mass and household mass;
+    \item housing-market clearing and the stationary asset-price/rent identity;
+    \item the government budget and demographic reproduction.
+  \end{itemize}
+
+  A finite path is not a steady state. Nor is a constant household distribution
+  whose implied births fail to reproduce the person and head stocks.
+\end{frame}
+
+\begin{frame}{Externally fixed terminal objects}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.96\textwidth}{@{}p{0.25\textwidth}Y >{\raggedright\arraybackslash}p{0.22\textwidth}@{}}
+      \toprule
+      Object & Terminal treatment & Classification \\
+      \midrule
+      Survival & 2100 age--sex schedule held fixed & External \\
+      Net migration & 2100 inferred age--sex flow held fixed in levels & External \\
+      Birth sex shares & 2100 shares held fixed & External \\
+      Headship & Aligned 2023 ACS age--sex rates held fixed & Empirical accounting normalization \\
+      Fertility preference & $\psi=-0.069659$ & Fitted 2023 value \\
+      Housing supply elasticity & $\eta=1.75$ & External benchmark \\
+      Property tax and rebate & Policy-specific, equal per head & Counterfactual contract \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \takeaway{The terminal equilibrium is conditional on fixed migration, survival, headship, and policy objects; it is not an unconditional national forecast.}
+\end{frame}
+
+\section{Calibration}
+
+\begin{frame}{Dated calibration}
+  The model is estimated at a point along the 2007--2023 transition.
+
+  \begin{enumerate}
+    \item The 2007 fertility intercept reproduces completed fertility of 2.1 in a constructed old benchmark.
+    \item Only the age marginal is reweighted to the 2007 ACS head distribution.
+    \item A reduced-form fertility-preference shifter moves linearly through 2023.
+    \item Census household totals and ACS head-age shares are imposed at five dates.
+    \item Twelve moments, principally measured on the 2023 state, discipline eleven free parameters.
+  \end{enumerate}
+
+  \vspace{0.3em}
+  The preference path is not interpreted as a causally identified shock date,
+  and the imposed household bridge is not counted as fit.
+\end{frame}
+
+\begin{frame}{Fertility, timing, and family housing fit}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.92\textwidth}{@{}Yrr@{}}
+      \toprule
+      Moment & Target & Model \\
+      \midrule
+      Completed fertility, women 40--44 & 1.918 & 1.918 \\
+      Childless share, women 40--44 & 0.188 & 0.186 \\
+      Mean age at first birth & 26.045 & 26.327 \\
+      First births at age 30 or later & 0.260 & 0.242 \\
+      Four-year rooms contrast at first birth & 0.720 & 0.380 \\
+      Rooms gap, 3+ versus 1--2 children & 0.368 & 0.359 \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \takeaway{Fertility stocks fit closely; first-birth timing is reasonable; the model produces only about half of the first-birth rooms contrast.}
+  \source{Active target set \texttt{e5\_fullhistory\_roomsfix\_h1\_20260817}.}
+\end{frame}
+
+\begin{frame}{Tenure, rooms, and wealth fit}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.92\textwidth}{@{}Yrr@{}}
+      \toprule
+      Moment & Target & Model \\
+      \midrule
+      Family ownership gap & 0.168 & 0.177 \\
+      Ownership rate, ages 30--55 & 0.575 & 0.546 \\
+      Mean occupied rooms, ages 18--85 & 5.780 & 6.710 \\
+      Wealth / annual gross labor earnings & 6.873 & 6.766 \\
+      Annual bequest flow / aggregate wealth & 0.0088 & 0.0086 \\
+      Old wealth-to-income p90/p50 & 3.448 & 3.396 \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \takeaway{Tenure and wealth are close, but the model overstates the level of occupied rooms.}
+  \source{Active 2023 target-fit packet; complete weighted-loss accounting is in the appendix.}
+\end{frame}
+
+\begin{frame}{Remaining fit and identification}
+  The strict SMM loss is $36.099$. Two housing moments account for $26.304$, or
+  73\% of the objective:
+  \par\vspace{0.2em}
+  \begin{itemize}
+    \item first-birth rooms contrast: model $0.380$ versus target $0.720$;
+    \item mean occupied rooms: model $6.710$ versus target $5.780$.
+  \end{itemize}
+
+  \vspace{0.6em}
+  The weighted Jacobian has rank $10/11$ at the predeclared relative
+  singular-value threshold $10^{-3}$ and condition number $1{,}104$.
+  Its weakest direction loads primarily on the bequest shift $\theta_1$.
+
+  \takeaway{The estimate is reproducible and interior, but locally weakly identified and not a claim of global optimality.}
+  \source{Final coordinate identification audit around the selected parameter vector.}
+\end{frame}
+
+\section{Baseline transition}
+
+\begin{frame}{The accepted transition reference}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.95\textwidth}{@{}p{0.25\textwidth}C C Y@{}}
+      \toprule
+      Object & Annual tax & Rebate & Role \\
+      \midrule
+      Calibration status quo & 1\% & None & Preserved fitted 2023 reference \\
+      Transition reference & 1\% & Equal per head & Accepted 2023-forward equilibrium path \\
+      Policy reform & 2\% & Equal per head & Permanent tax change under the same closure \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.5em}
+  The transition reference begins from the fitted 2023 household state and the
+  reconstructed 2023 person/head stocks. Supply is reanchored so the rebated
+  1\% economy clears at the inherited quantity, and the terminal fertility
+  preference remains at its fitted 2023 value.
+
+  \takeaway{The accepted transition baseline is rebated; it is not the unrebated calibration status quo.}
+\end{frame}
+
+\begin{frame}{Demographic momentum}
+  \centering
+  \includegraphics[width=0.98\textwidth,trim=0 470bp 0 0,clip]{\baselinefigure}
+
+  \vspace{0.15em}
+  \small
+  Resident persons rise from 338.7 million in 2023 to 344.6 million in 2039;
+  household heads peak later, at 142.1 million in 2047. Both then contract
+  toward the conditional terminal stocks.
+
+  \takeaway{An inherited age distribution can generate decades of momentum even when subsequent births are low.}
+  \source{Accepted H128 rebated 1\% transition. Dashed lines are its jointly solved conditional terminal equilibrium.}
+\end{frame}
+
+\begin{frame}{Prices and births on different clocks}
+  \centering
+  \includegraphics[width=0.98\textwidth,trim=0 232bp 0 255bp,clip]{\baselinefigure}
+
+  \vspace{0.1em}
+  \small
+  The asset price peaks in 2055; the renter price peaks in 2083 because it also
+  reflects the next-period asset payoff. Annual births per head undershoot the
+  terminal rate before converging back toward it.
+
+  \takeaway{Cohort composition, forward-looking capitalization, and household fertility need not turn at the same date.}
+  \source{Accepted H128 rebated 1\% transition; four-year model births are divided by four in the plotted annual rate.}
+\end{frame}
+
+\begin{frame}{The conditional terminal equilibrium}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.88\textwidth}{@{}Yrrr@{}}
+      \toprule
+      Object & 2023 & Terminal & Change \\
+      \midrule
+      Resident persons, millions & 338.724 & 184.278 & $-45.6\%$ \\
+      Household heads, millions & 128.964 & 76.073 & $-41.0\%$ \\
+      Asset price & 0.6229 & 0.4977 & $-20.1\%$ \\
+      Rent-equivalent price & 0.0936 & 0.0825 & $-11.8\%$ \\
+      Annual births per head & 0.02152 & 0.01699 & $-21.0\%$ \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.4em}
+  The terminal demographic renewal ratio is $0.5568$. A constant population is
+  possible because the fixed age--sex migration flow supplies the remaining
+  person cohorts; without that flow, this is not a positive closed steady state.
+
+  \takeaway{The endpoint is a conditional fixed-migration equilibrium, not a forecast of the U.S. population level.}
+\end{frame}
+
+\section{Policy}
+
+\begin{frame}{The rebated property tax}
+  The reform permanently raises the annual property-tax rate from 1\% to 2\%
+  and returns all contemporaneous revenue equally across household heads. With
+  $\tau_{H,t}=4\tau^{\mathrm{ann}}_{H,t}$ in a four-year model period,
+  \[
+    T_t\int dG_t
+    =\tau_{H,t}P_t\int H(o_t)\,dG_t.
+  \]
+
+  \begin{itemize}
+    \item \textbf{Capitalization:} the higher carrying cost tends to reduce the asset price.
+    \item \textbf{User cost:} the renter price depends on both the tax rate and the next asset price.
+    \item \textbf{Tenure and fertility:} down payments, owner products, and child-space choices adjust state by state.
+    \item \textbf{Demographic scale:} changed births affect persons immediately and heads only with a lag.
+  \end{itemize}
+
+  This is an equilibrium incidence exercise, not a welfare comparison.
+
+  \source{Policy contract: identical initial state, survival, migration, headship, supply elasticity, and terminal fertility preference across tax cases.}
+\end{frame}
+
+% Quantitative 2% comparison frames are intentionally excluded from the PDF.
+% They should be populated only from a certified comparison packet that passes
+% the same household, person, head, market, fiscal, and terminal contract as the
+% accepted 1% reference. Older finite-horizon diagnostics are not substitutes.
+\iffalse
+\begin{frame}{Rebated property-tax effects}
+  % Reserved table: Baseline | Reform | Change.
+\end{frame}
+\fi
+
+\begin{frame}{Conclusion}
+  \begin{enumerate}
+    \item Children raise demand for rooms when rental size and down payments constrain access to family housing.
+    \item A lifecycle model is needed because fertility, tenure, saving, and old-age housing retention are jointly determined.
+    \item A coherent transition must move persons first and derive household heads through survival, migration, and formation.
+    \item The fitted model matches fertility stocks, tenure, and wealth more closely than housing quantities and is locally weakly identified.
+    \item The accepted rebated 1\% path displays demographic momentum followed by a slow transition to a conditional fixed-migration equilibrium.
+  \end{enumerate}
+
+  \takeaway{Housing policy can affect family formation today and the scale of housing demand generations later; the two margins require one internally consistent equilibrium law.}
+\end{frame}
+
+% ============================================================================
+% APPENDIX
+% ============================================================================
+
+\appendix
+
+\begin{frame}[plain,noframenumbering]
+  \centering
+  \vfill
+  {\LARGE\bfseries Appendix}
+  \vfill
+\end{frame}
+
+\begin{frame}{Compact household derivation}
+  The young household in the simple model solves
+  \[
+    \max_{c,h,n}\ c+\alpha\log h+v\log n
+    \quad\text{s.t.}\quad
+    c+rh+\bigl[q+a(r+z)\bigr]n=y.
+  \]
+  Interior first-order conditions give
+  \[
+    h(r)=\frac{\alpha}{r},
+    \qquad
+    n(r,z)=\frac{v}{q+a(r+z)},
+    \qquad
+    d_Y(r,z)=\frac{\alpha}{r}+a n(r,z).
+  \]
+  Thus
+  \[
+    \frac{\partial n}{\partial r}
+    =\frac{\partial n}{\partial z}
+    =-\frac{av}{[q+a(r+z)]^2}<0.
+  \]
+
+  The quantitative model preserves the cost channel but replaces continuous
+  fertility, space, and tenure with sequential fertility, a rental cap, and a
+  discrete owner ladder.
+\end{frame}
+
+\begin{frame}{Access-gap interpretation}
+  For a constrained renter, divide the housing first-order condition by the
+  marginal utility of consumption:
+  \[
+    \frac{u_h}{u_c}=r+\zeta_i^R,
+    \qquad \zeta_i^R\ge0.
+  \]
+  For an owner, the same gap separates the down-payment and size constraints:
+  \[
+    \zeta_i^O=
+    \underbrace{\frac{\mu_i}{\lambda_i}(1-\phi)P}_{\text{financing}}
+    +\underbrace{\frac{\theta_i}{\lambda_i}}_{\text{owner size limit}}.
+  \]
+  If each child requires $a$ units of space, $a\zeta_i$ is the shadow child cost
+  generated by limited access. The gap is a local marginal valuation, not the
+  welfare gain from an entire extra room.
+\end{frame}
+
+\begin{frame}{Bellman timing}
+  Within a four-year date, the household:
+  \begin{enumerate}
+    \item observes fertility taste shocks and, when eligible, chooses whether to wait or attempt a birth;
+    \item realizes conception success and chooses renter rooms or an owner product conditional on parity;
+    \item chooses consumption and next-period liquid wealth;
+    \item receives income and pays rent, property tax, depreciation, and any moving cost;
+    \item ages children independently, transitions income, and survives or leaves a warm-glow estate.
+  \end{enumerate}
+
+  In a transition, date-$t$ policies use the date-$(t+1)$ continuation value.
+  The terminal value function and terminal next-date asset price are boundary
+  conditions; they do not replace the requirement that the simulated terminal
+  distribution approach the terminal fixed point.
+\end{frame}
+
+\begin{frame}{Exact annual person accounting}
+  The annual law can be written cell by cell. For newborns,
+  \[
+    N_{t+1}^{g,0}=s_{t+1}^{g,0}f_{t+1}^gB_{t+1}+M_{t+1}^{g,0}.
+  \]
+  For interior ages $a\ge1$,
+  \[
+    N_{t+1}^{g,a}=s_{t+1}^{g,a}N_t^{g,a-1}+M_{t+1}^{g,a}.
+  \]
+  The terminal age is top-coded, so survivors from the penultimate and terminal
+  cells both enter the last cell. Every step satisfies
+  \[
+    \sum N_{t+1}=\sum N_t+B_{t+1}
+    -\text{newborn deaths}-\text{existing deaths}+\sum M_{t+1}.
+  \]
+\end{frame}
+
+\begin{frame}{Exact household-head accounting}
+  Surviving heads are aged with the same survival schedule. In each cell, the
+  target is $\rho^{g,a}N_{t+1}^{g,a}$. The accounting closure uses only one
+  gross adjustment direction:
+  \[
+    F_{t+1}^{g,a}
+    =\max\{\rho^{g,a}N_{t+1}^{\mathrm{preM},g,a}
+      -H_{t+1}^{\mathrm{surv},g,a},0\},
+  \]
+  \[
+    D_{t+1}^{g,a}
+    =\max\{H_{t+1}^{\mathrm{surv},g,a}
+      -\rho^{g,a}N_{t+1}^{\mathrm{preM},g,a},0\},
+    \qquad
+    H_{t+1}^{M,g,a}=\rho^{g,a}M_{t+1}^{g,a}.
+  \]
+  Hence $H_{t+1}^{g,a}=\rho^{g,a}N_{t+1}^{g,a}$ exactly. Formation and
+  dissolution are accounting flows, not simultaneous estimated hazards.
+\end{frame}
+
+\begin{frame}{The within-age household bridge}
+  Let $\widetilde G_{t+1,a}(x)$ be the raw household transition within age $a$,
+  and let $H_{t+1,a}$ be the head mass implied by persons. Then
+  \[
+    G_{t+1,a}(x)=
+    \begin{cases}
+      \displaystyle H_{t+1,a}
+      \frac{\widetilde G_{t+1,a}(x)}{\int\widetilde G_{t+1,a}(x')dx'},
+      & \int\widetilde G_{t+1,a}>0,\\[1.2em]
+      H_{t+1,a}\,\Gamma_a(x), & \text{for an empty entrant age cell},
+    \end{cases}
+  \]
+  where $\Gamma_a$ is the externally specified entrant template. The operation
+  exposes added and removed mass separately and moves no mass across ages.
+
+  A richer model would estimate economic states for newly formed, dissolved,
+  and migrant heads rather than preserve the raw conditional composition.
+\end{frame}
+
+\begin{frame}{Steady-state demographic scale}
+  With fixed terminal survival $A$, newborn-survivor vector $f$, net migration
+  $m$, and headship vector $\rho$, persons satisfy
+  \[
+    N^*=AN^*+f\,b^*(\rho'N^*)+m,
+  \]
+  where $b^*$ is annual births per head implied by the household policy.
+
+  Define the person responses
+  \[
+    v_B=(I-A)^{-1}f,
+    \qquad
+    v_M=(I-A)^{-1}m.
+  \]
+  Then the demographic renewal ratio is
+  \[
+    \mathcal R=b^*\rho'v_B,
+  \]
+  and, when fixed migration is positive, a finite steady state requires
+  $\mathcal R<1$. Annual births and persons are
+  \[
+    B^*=\frac{b^*\rho'v_M}{1-\mathcal R},
+    \qquad N^*=v_M+B^*v_B.
+  \]
+\end{frame}
+
+\begin{frame}{Market and fiscal closure}
+  At every date, occupied physical rooms satisfy
+  \[
+    \int h(x;\pi_t)\,dG_t(x)
+    =H_{2023}\left(\frac{P_t}{P_{2023}}\right)^{\eta}.
+  \]
+  The rebated tax satisfies
+  \[
+    \tau_{H,t}P_t\int H(o_t)\,dG_t
+    =T_t\int dG_t.
+  \]
+  At a stationary price,
+  \[
+    r^*=(R-1+\delta+\tau_H)P^*.
+  \]
+
+  Housing demand uses physical rooms. The owner-service premium affects utility
+  but does not create additional physical supply. Conditional renter housing is
+  also distinct from realized housing after the tenure choice.
+\end{frame}
+
+\begin{frame}{Complete target fit I}
+  \centering
+  \tiny
+  \setlength{\tabcolsep}{3.2pt}
+  \begin{tabularx}{\textwidth}{@{}Yrrrrr@{}}
+    \toprule
+    Moment & Target & Model & Gap & Weight & Loss \\
+    \midrule
+    Completed fertility, women 40--44 & 1.918000 & 1.918251 & 0.000251 & 1,425.739 & 0.000090 \\
+    Childless share, women 40--44 & 0.188000 & 0.185867 & $-0.002133$ & 17,180.744 & 0.078133 \\
+    Mean age at first birth & 26.044627 & 26.327334 & 0.282707 & 44.444 & 3.552148 \\
+    First births at age 30 or later & 0.260327 & 0.242115 & $-0.018213$ & 10,000.000 & 3.316971 \\
+    Four-year rooms contrast at first birth & 0.720246 & 0.379786 & $-0.340461$ & 137.565 & 15.945664 \\
+    Rooms gap, 3+ versus 1--2 children & 0.367700 & 0.359253 & $-0.008447$ & 2,958.515 & 0.211071 \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.7em}
+  \small
+  Completed fertility and childlessness are CPS age-42 cohort stocks. First-birth
+  timing uses a fixed synthetic cohort. The rooms response follows the 2019
+  childless risk set through matched birth/no-birth branches to 2023.
+\end{frame}
+
+\begin{frame}{Complete target fit II}
+  \centering
+  \tiny
+  \setlength{\tabcolsep}{3.2pt}
+  \begin{tabularx}{\textwidth}{@{}Yrrrrr@{}}
+    \toprule
+    Moment & Target & Model & Gap & Weight & Loss \\
+    \midrule
+    Family ownership gap & 0.167662 & 0.176866 & 0.009204 & 14,229.591 & 1.205562 \\
+    Ownership rate, ages 30--55 & 0.575472 & 0.546060 & $-0.029412$ & 1,207.846 & 1.044837 \\
+    Mean occupied rooms, ages 18--85 & 5.779970 & 6.710105 & 0.930135 & 11.973 & 10.358582 \\
+    Wealth / annual gross labor earnings & 6.873100 & 6.766352 & $-0.106748$ & 6.288 & 0.071648 \\
+    Annual bequest flow / aggregate wealth & 0.008800 & 0.008623 & $-0.000177$ & 5,165,289.256 & 0.161538 \\
+    Old wealth-to-income p90/p50 & 3.448111 & 3.396287 & $-0.051824$ & 56.960 & 0.152979 \\
+    \midrule
+    \multicolumn{5}{r}{\textbf{Total strict loss}} & \textbf{36.099223} \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.7em}
+  \small
+  All twelve moments enter the same active objective. The first-birth rooms row
+  is retained as a descriptive contrast despite its non-flat prepath.
+\end{frame}
+
+\begin{frame}{Free parameters I}
+  \centering
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Yrr@{}}
+    \toprule
+    Parameter & Economic interpretation & Estimate & Search bound \\
+    \midrule
+    $\beta_{\mathrm{annual}}$ & Patience & 0.994959 & $[0.9400,0.9995]$ \\
+    $\kappa_1$ & First-birth logit scale & 2.267631 & $[0.02,50]$ \\
+    $\kappa_C$ & Continuation-birth logit scale & 1.765427 & $[0.02,50]$ \\
+    $\chi$ & Owner-service premium & 1.033945 & $[0.10,5]$ \\
+    $H_0$ & Housing-supply scale & 16.381189 & $[0.20,80]$ \\
+    $\theta_0$ & Bequest scale & 0.563219 & $[0,8]$ \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.5em}
+  No estimate is within two percent of its transformed search boundary.
+\end{frame}
+
+\begin{frame}{Free parameters II}
+  \centering
+  \scriptsize
+  \begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Yrr@{}}
+    \toprule
+    Parameter & Economic interpretation & Estimate & Search bound \\
+    \midrule
+    $\theta_1$ & Bequest wealth shift & 0.099707 & $[0.02,16]$ \\
+    $h_m$ & Per-child room floor & 0.315267 & $[0.10,1.80]$ \\
+    $h_1$ & First-child room jump & 0.199446 & $[0,0.50]$ \\
+    $F_1$ & First-birth fixed cost & 4.545167 & $[0,8]$ \\
+    $\Delta\psi_{2007:2023}$ & Fertility-preference change & $-0.350000$ & $[-1.50,0.20]$ \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.6em}
+  The implied fertility intercepts are $\psi_{2007}=0.280341$ and
+  $\psi_{2023}=-0.069659$. The intercept change is a reduced-form residual, not
+  a causally identified preference shock.
+\end{frame}
+
+\begin{frame}{Assigned household and market objects}
+  \centering
+  \scriptsize
+  \begin{tabularx}{0.97\textwidth}{@{}p{0.28\textwidth}p{0.20\textwidth}Y@{}}
+    \toprule
+    Parameter & Value & Source or restriction \\
+    \midrule
+    Model period & 4 years & Timing \\
+    Entry and maximum ages & 18 and 85 & Timing \\
+    Risk aversion $\sigma$ & 2 & Maintained \\
+    Financed share $\phi$ & 0.80 & 20\% buyer-equity restriction \\
+    Sale cost & 6\% & Housing literature benchmark \\
+    Owner room menu & $\{2,4,6,8,10\}$ & ACS occupied-room distribution \\
+    Rental cap & 6 rooms & ACS rental-size distribution \\
+    Supply elasticity $\eta$ & 1.75 & Saiz benchmark \\
+    Entrant wealth & PSID ratio distribution & Childless renters age 18--24 \\
+    Tenure taste-shock scale & 0 & Author restriction \\
+    Child dependence of bequests & 0 & Child-invariant warm glow \\
+    \bottomrule
+  \end{tabularx}
+\end{frame}
+
+\begin{frame}{Historical calibration bridge}
+  The 2007--2023 calibration uses five four-year dates. At each date, the
+  observed household total and head-age marginal are imposed before the twelve
+  maintained moments are evaluated.
+
+  \begin{itemize}
+    \item This absorbs household formation and migration that births since 2007 cannot generate by 2023.
+    \item It makes the cross-section a dated state rather than a stationary distribution.
+    \item Historical fertility, ownership, rooms, and price paths are holdouts unless explicitly included in the target system.
+    \item The bridge is retired after 2023 and replaced by the person/head law.
+  \end{itemize}
+
+  Consequently, matching the imposed population path is an accounting identity,
+  not evidence that the model explains U.S. household growth over 2007--2023.
+\end{frame}
+
+\begin{frame}{Local identification audit}
+  At the selected vector, the standardized residual is
+  \[
+    r_j(\theta)=\sqrt{w_j}\,[m_j(\theta)-\widehat m_j].
+  \]
+  A fresh two-sided coordinate panel constructs the weighted Jacobian
+  $J=\partial r/\partial\theta$.
+
+  \begin{table}
+    \centering
+    \small
+    \begin{tabular}{@{}lrr@{}}
+      \toprule
+      Jacobian & Rank at $10^{-3}$ & Condition number \\
+      \midrule
+      All 11 free parameters & 10/11 & 1,104.01 \\
+      Ten active columns after freezing the inconsistent bequest column & 10/10 & 391.02 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  The weakest right-singular vector places 91.9\% of its absolute loading on
+  $\theta_1$. Local weak identification is therefore concentrated in the
+  bequest block.
+\end{frame}
+
+\begin{frame}{Accepted baseline equilibrium checks}
+  \begin{table}
+    \centering
+    \small
+    \begin{tabularx}{0.88\textwidth}{@{}Yrr@{}}
+      \toprule
+      Object & Maximum absolute residual & Interpretation \\
+      \midrule
+      Housing market & $1.7943\times10^{-4}$ & Demand relative to supply \\
+      Government budget & $1.1572\times10^{-5}$ & Revenue minus equal transfers \\
+      Person identity & numerical precision & Births, deaths, and migration \\
+      Head identity & numerical precision & Deaths, formation, dissolution, migrant heads \\
+      Household/head identity & numerical precision & Household mass equals person-law head mass \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \vspace{0.5em}
+  The final endogenous date is also close to the independently solved terminal
+  person distribution, head distribution, household distribution, price, rent,
+  transfer, and fertility preference.
+\end{frame}
+
+\begin{frame}{Slow terminal convergence}
+  The dominant eigenvalue of the frozen-terminal four-year demographic block is
+  \[
+    \lambda_1=0.960754.
+  \]
+  It implies
+  \[
+    \text{half-life}=\frac{4\log(1/2)}{\log\lambda_1}\approx69\ \text{years},
+    \qquad
+    \lambda_1^{116}<0.01.
+  \]
+
+  Thus one percent attenuation of the slow mode requires about 116 model
+  periods, or 464 years. The accepted path uses 128 four-year periods so the
+  simulated state can approach the terminal fixed point rather than merely
+  inherit it as a boundary condition.
+
+  \takeaway{The long horizon reflects age-structured demographic persistence, not a forecast horizon.}
+\end{frame}
+
+\begin{frame}{Baseline transition diagnostics}
+  \centering
+  \includegraphics[width=0.98\textwidth,trim=0 0 0 488bp,clip]{\baselinefigure}
+
+  \vspace{0.1em}
+  \small
+  The equal rebate and equilibrium residuals are solved jointly with prices.
+  The displayed residuals remain below their common acceptance thresholds
+  throughout the path.
+
+  \source{Accepted H128 rebated 1\% transition packet.}
+\end{frame}
+
+\begin{frame}{Policy comparison contract}
+  A quantitative 2\%--minus--1\% comparison must hold fixed:
+  \begin{itemize}
+    \item the fitted 2023 household state and reconstructed person/head stocks;
+    \item survival, net migration, birth sex shares, and headship;
+    \item the housing-supply elasticity and 2023 supply anchor;
+    \item the terminal fertility preference and all calibrated household parameters;
+    \item the equal-rebate rule and the definitions of housing and fiscal residuals.
+  \end{itemize}
+
+  The comparison then separates the immediate response of prices, rents,
+  tenure, and births from the delayed response of resident persons and
+  household heads. No migration response or welfare ranking is part of this
+  contract.
+\end{frame}
+
+\begin{frame}{Interpretive boundaries}
+  \begin{itemize}
+    \item The first-birth rooms contrast is descriptive and has a non-flat prepath.
+    \item The active calibration is locally weakly identified in the bequest block.
+    \item Fixed 2023 headship is an accounting closure, not a structural formation model.
+    \item Fixed 2100 migration in levels is essential to the positive terminal population scale.
+    \item Static-elastic supply omits durable construction and asymmetric decline dynamics.
+    \item One national market omits spatial sorting and local migration.
+    \item The policy exercise reports equilibrium incidence, not welfare.
+  \end{itemize}
+
+  These limitations narrow the interpretation without changing the exact
+  accounting distinction between persons, heads, and household economic states.
+\end{frame}
+
+\begin{frame}{Selected literature}
+  \small
+  \begin{tabularx}{0.97\textwidth}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}Y@{}}
+    \toprule
+    Margin & Selected references \\
+    \midrule
+    Lifecycle fertility & Becker and Lewis; Sommer; Doepke and Kindermann \\
+    Housing and childbearing & Lovenheim and Mumford; Dettling and Kearney; Hacamo \\
+    Housing supply and capitalization & Rosen; Roback; Saiz; Gyourko, Mayer, and Sinai \\
+    Housing tenure and user cost & Henderson and Ioannides; Sommer, Sullivan, and Verbrugge \\
+    Demography and housing demand & Mankiw and Weil; Francke et al.; Coeurdacier et al. \\
+    Spatial scale & Hsieh and Moretti; Rosen--Roback spatial equilibrium \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.7em}
+  The contribution here is to combine the lifecycle housing--fertility
+  mechanism with an explicit person-to-head demographic transition and a
+  jointly cleared housing and fiscal equilibrium.
+\end{frame}
+
+\end{document}
