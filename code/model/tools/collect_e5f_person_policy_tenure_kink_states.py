@@ -40,6 +40,24 @@ STATE_KEY_FIELDS = (
 )
 
 
+def parse_expected_years(value: str) -> tuple[int, ...]:
+    try:
+        years = tuple(int(item.strip()) for item in value.split(",") if item.strip())
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError(
+            "expected years must be comma-separated integers"
+        ) from exc
+    if not years:
+        raise argparse.ArgumentTypeError("at least one expected year is required")
+    if any(year <= 0 for year in years):
+        raise argparse.ArgumentTypeError("expected years must be positive")
+    if tuple(sorted(set(years))) != years:
+        raise argparse.ArgumentTypeError(
+            "expected years must be unique and strictly increasing"
+        )
+    return years
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pre-dir", type=Path, default=DEFAULT_PRE)
@@ -47,6 +65,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--expected-pre-path-sha256", default=EXPECTED_PRE_PATH_SHA256)
     parser.add_argument("--expected-post-path-sha256", default=EXPECTED_POST_PATH_SHA256)
+    parser.add_argument(
+        "--expected-years",
+        type=parse_expected_years,
+        default=EXPECTED_YEARS,
+        help="comma-separated diagnostic years (default: 2351,2363,2367)",
+    )
     return parser.parse_args()
 
 
@@ -156,7 +180,10 @@ def maximum_path_feasibility_projection(
 
 
 def audit_packet(
-    directory: Path, *, expected_initial_path_sha256: str
+    directory: Path,
+    *,
+    expected_initial_path_sha256: str,
+    expected_years: tuple[int, ...] = EXPECTED_YEARS,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[int, Path], dict[int, dict[str, str]]]:
     summary_path = directory / "summary.json"
     diagnostic_path = directory / "tenure_diagnostic_summary.json"
@@ -177,7 +204,7 @@ def audit_packet(
         raise RuntimeError(f"Accounting or history gate failed: {directory}")
     if maximum_path_feasibility_projection(path_rows) != 0.0:
         raise RuntimeError(f"Feasibility projection was nonzero: {directory}")
-    if tuple(diagnostic.get("diagnostic_years") or ()) != EXPECTED_YEARS:
+    if tuple(diagnostic.get("diagnostic_years") or ()) != expected_years:
         raise RuntimeError(f"Diagnostic years differ: {directory}")
     tables: dict[int, Path] = {}
     for validation in diagnostic.get("validations") or []:
@@ -192,7 +219,7 @@ def audit_packet(
         if sha256(table) != validation["state_csv_sha256"]:
             raise RuntimeError(f"State-table hash differs in {year}: {directory}")
         tables[year] = table
-    if tuple(sorted(tables)) != EXPECTED_YEARS:
+    if tuple(sorted(tables)) != expected_years:
         raise RuntimeError(f"Missing state tables: {directory}")
     return summary, diagnostic, tables, path_rows
 
@@ -475,16 +502,20 @@ def main() -> None:
         raise FileExistsError(f"Refusing to overwrite nonempty output: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
     pre_summary, pre_diag, pre_tables, pre_path = audit_packet(
-        pre_dir, expected_initial_path_sha256=args.expected_pre_path_sha256
+        pre_dir,
+        expected_initial_path_sha256=args.expected_pre_path_sha256,
+        expected_years=args.expected_years,
     )
     post_summary, post_diag, post_tables, post_path = audit_packet(
-        post_dir, expected_initial_path_sha256=args.expected_post_path_sha256
+        post_dir,
+        expected_initial_path_sha256=args.expected_post_path_sha256,
+        expected_years=args.expected_years,
     )
     if pre_diag.get("source_hashes") != post_diag.get("source_hashes"):
         raise RuntimeError("Pre/post diagnostics used different source hashes")
     all_flips: list[dict[str, Any]] = []
     year_summaries: list[dict[str, Any]] = []
-    for year in EXPECTED_YEARS:
+    for year in args.expected_years:
         flips, summary = compare_year(
             year,
             pre_tables[year],

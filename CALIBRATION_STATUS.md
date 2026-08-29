@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-08-28` (H128 1% accepted; H128 2% tenure complementarity diagnosed)
+Updated: `2026-08-29` (H128 1% accepted; H128 2% second tenure atom diagnosed)
 
 ## August 27 H128 transition audit: deterministic-tenure kink in the 2% case
 
@@ -171,12 +171,29 @@ inspected diagnostics:
 
 The next solver update is not smooth: 2355 ownership falls from `0.7519931` to
 `0.7494455`, a `0.25476` percentage-point jump, and the market/fiscal failures
-move downstream. Two exact one-evaluation H128 state diagnostics are therefore
-queued before any further polish: Torch jobs `16541513` and `16541514` compare
-the immutable best and adverse checkpoints at 2355, 2359, and 2363. Each has a
-60-minute/16-GB bound and writes a new isolated packet with exact input/source
-hashes. No interior-share solve is admissible until a share-`0` path passes the
-fiscal gate.
+move downstream. Exact one-evaluation H128 state diagnostics from Torch jobs
+`16541513` and `16541514` now identify the switch. Both packets match their
+immutable input and source hashes, use zero feasibility adjustment, and pass
+every history, accounting, terminal, value-reconstruction, and exact-choice
+gate. The main 2355 switch is the same occupied atom as in 2351: wealth-grid
+index `49` (liquid wealth `0.4418605`), current renter, age 70, and no dependent
+child, repeated across ten income states and four parity labels. These `40`
+rows contain about `0.25473%` of household-head mass and account for essentially
+the full ownership jump. Their renter-minus-owner value gap changes from about
+`-4.84135e-7` on the best side to `+1.16185e-6` on the adverse side. The two
+other 2355 flips and five 2359 flips have negligible mass; there are no choice
+flips in 2363, where the adverse residuals are downstream distribution effects.
+
+The canonical state packet and visually inspected plot are in
+`output/model/e5f_pf_person_policy_tenure_kink_state_map_20260829a/`. This
+rules out another ordinary damping polish. The smallest exact continuation is
+a two-date complementarity solve: retain the validated share `0` at the 2351
+atom and introduce a separate conditional share at the same occupied atom in
+2355. The 2355 value ranking is bracketed across the audited best/adverse paths,
+so a default-off two-date extension may be tested, first by reproducing one
+existing H128 evaluation exactly and then by solving the two 2355 share
+endpoints. No interior two-date share is admissible until both conditional
+endpoint paths pass the unchanged market/fiscal and all non-equilibrium gates.
 
 ## August 26 coherent person-law transition: H64 paths solved; H128 running
 
