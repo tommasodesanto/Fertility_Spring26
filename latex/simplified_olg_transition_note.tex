@@ -1,0 +1,292 @@
+\documentclass[10pt]{article}
+
+\usepackage[hmargin=0.78in,vmargin=0.62in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\emergencystretch}{3em}
+\allowdisplaybreaks
+\setlist[enumerate]{leftmargin=1.45em,itemsep=1pt,topsep=2pt}
+\setlist[itemize]{leftmargin=1.45em,itemsep=1pt,topsep=2pt}
+\titlespacing*{\section}{0pt}{7pt}{2pt}
+\titlespacing*{\subsection}{0pt}{5pt}{1pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\1}{\mathbf 1}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Housing, Fertility, and Demographic Renewal}\par
+\vspace{2pt}
+{\large A two-generation model}\par
+\end{center}
+
+\section{Environment}
+
+\textbf{Agents.} Time is discrete and one period is one generation. At date
+$t$, the economy contains $Y_t$ young households and $O_t$ old households. A
+young household has type $i=(y_i,b_i)$, drawn from a fixed distribution $F$ of
+income and liquid wealth. A young renter becomes an old renter, a young owner
+becomes an old incumbent, and every old household exits at the end of the
+period. Entry wealth is exogenous: estates are not assigned to particular
+descendants.
+
+\textbf{Preferences.} A young household values consumption, space net of its
+children's needs, and completed fertility:
+\begin{equation}
+ u_t^Y(c,h,n)=\log(c-\chi n)+\alpha\log(h-\kappa n)
+ +\vartheta_t\log n .
+ \label{eq:young_utility}
+\end{equation}
+Each child requires $\chi>0$ units of goods and $\kappa>0$ units of space. An
+old household values consumption, housing, and a warm-glow estate:
+\begin{equation}
+ u^O(c^O,h^O,e)=\log c^O+\gamma\log h^O+\omega_B\log e .
+ \label{eq:old_utility}
+\end{equation}
+The estate affects the old household's utility but does not determine the
+number or wealth of next period's young households.
+
+\textbf{Housing.} There is a fixed stock $\bar H$ of divisible floorspace. A
+renter can occupy at most $\bar h^R$, while an owner can occupy at most
+$\bar h^O>\bar h^R$. The rental price is $r_t$ and the asset price is $P_t$.
+With one-period bond price $q$, depreciation $\delta$, and property-tax rate
+$\tau_t^p$, no arbitrage requires:
+\begin{equation}
+ r_t=\bigl(q^{-1}+\delta+\tau_t^p\bigr)P_t-P_{t+1}.
+ \label{eq:dynamic_user_cost}
+\end{equation}
+The familiar stationary relation
+$r=(q^{-1}-1+\delta+\tau^p)P$ is the special case $P_{t+1}=P_t$.
+
+\textbf{Housing institutions.} A buyer can finance at most a share
+$\phi\in(0,1)$ of the purchase price and must therefore post
+$(1-\phi)P_t h$ from current liquid wealth. Selling in old age realizes a
+nominal capital gain, while death receives stepped-up basis. If nominal prices
+grow at rate $\varpi$, the real tax due per unit sold at date $t$ is:
+\begin{equation}
+ \ell_t=\tau^g\left[P_t-\frac{P_{t-1}}{1+\varpi}\right]_+ .
+ \label{eq:dynamic_gain}
+\end{equation}
+At a stationary real price this becomes
+$\bar\ell=\tau^gP\varpi/(1+\varpi)$, exactly the wedge in the July model.
+Tax receipts accrue to the government; any rebate is absorbed into the
+exogenous nonhousing resources $y_i$ and does not alter the marginal
+conditions below.
+
+\textbf{Demography.} One child produces $\nu>0$ future young households after
+survival and household formation. The scalar $\nu$ is the simple model's
+counterpart of the quantitative model's person-to-household conversion.
+
+\section{Household problems}
+
+\subsection{Young households}
+
+Conditional on tenure $m\in\{R,O\}$, a young household chooses consumption,
+housing, completed fertility, and bond expenditure:
+\begin{align}
+ W_t^m(i)=\max_{c,h,n,b'}\;&u_t^Y(c,h,n)
+ +\beta\left[\1\{m=R\}V_{t+1}^R(b_{t+1})
+ +\1\{m=O\}V_{t+1}^O(b_{t+1},h)\right]
+ \label{eq:young_problem}\\
+ \text{subject to}\quad
+ &c+r_t h+b'=y_i+b_i, \nonumber\\
+ &h\leq \bar h^m,\qquad b'\geq0, \nonumber\\
+ &\1\{m=O\}(1-\phi)P_t h\leq b_i, \nonumber\\
+ &b_{t+1}=b'/q-\1\{m=O\}r_th. \nonumber
+\end{align}
+The household chooses the tenure with the higher value. Its effective
+family-housing caps are:
+\begin{equation}
+ H_t^R=\bar h^R,
+ \qquad
+ H_t^O(i)=\min\left\{\bar h^O,
+ \frac{b_i}{(1-\phi)P_t}\right\}.
+ \label{eq:effective_caps}
+\end{equation}
+Thus current liquid wealth, rather than the ability to service the flow cost,
+can prevent a household from occupying family-sized owner housing.
+
+When saving and the future old-age allocation are interior, a buyer anticipates
+the discounted tax on a future sale. Define the tenure-specific effective
+price by $r_t^R=r_t$ and $r_t^O=r_t+q\ell_{t+1}$. Dividing the housing
+first-order condition by the marginal utility of consumption gives:
+\begin{equation}
+ \frac{\alpha(c_t^m-\chi n_t^m)}{h_t^m-\kappa n_t^m}
+ =r_t^m+\zeta_t^m,
+ \qquad \zeta_t^m\geq0.
+ \label{eq:access_gap}
+\end{equation}
+The access gap $\zeta_t^m$ is the goods value of relaxing the binding rental,
+owner-size, or financing constraint by one unit of space.
+
+The same gap enters the full price of a marginal child:
+\begin{equation}
+ \frac{\vartheta_t(c_t^m-\chi n_t^m)}{n_t^m}
+ =\chi+\kappa\bigl(r_t^m+\zeta_t^m\bigr).
+ \label{eq:fertility_foc}
+\end{equation}
+A binding housing constraint therefore acts as a household-specific tax of
+$\kappa\zeta_t^m$ on fertility.
+
+\subsection{Old households}
+
+An old incumbent arrives with liquid wealth $b$, a house $H^0$, and the tax
+basis established when young. She chooses how much of the house to retain:
+\begin{align}
+ V_t^O(b,H^0)=\max_{c^O,h^O,e}\;&u^O(c^O,h^O,e)
+ \label{eq:old_owner_problem}\\
+ \text{subject to}\quad
+ &c^O+e+r_t h^O=b+r_tH^0-\ell_t(H^0-h^O),
+ \qquad 0\leq h^O\leq H^0. \nonumber
+\end{align}
+At an interior retention choice, her marginal value of retained space is
+$r_t-\ell_t$. An old renter instead solves the same utility problem subject to
+$c^O+e+r_th^O=b$ and values marginal housing at $r_t$.
+
+\section{Demography, markets, and transition equilibrium}
+
+Let $\bar n_t$ and $\bar h_t^Y$ denote average fertility and housing among the
+young, integrating the policies in equation~\eqref{eq:young_problem} over
+$F$. Let $\bar h_t^O$ denote average housing among the old distribution
+generated by the preceding young cohort. Births are therefore:
+\begin{equation}
+ B_t=Y_t\bar n_t.
+ \label{eq:births}
+\end{equation}
+The baseline closed economy and its open-market extension are nested in the
+cohort law:
+\begin{equation}
+ Y_{t+1}=M_{t+1}+\rho\nu B_t,
+ \qquad
+ O_{t+1}=Y_t.
+ \label{eq:cohort_law}
+\end{equation}
+The closed national economy sets $M_t=0$ and $\rho=1$. In the open extension,
+$M_t$ is an outside inflow and $\rho\in[0,1]$ is the retention rate of locally
+born future households.
+
+Housing clears at every date rather than only at an endpoint:
+\begin{equation}
+ Y_t\bar h_t^Y+O_t\bar h_t^O=\bar H.
+ \label{eq:housing_clearing}
+\end{equation}
+The clearing condition determines the price path jointly with household
+expectations and the inherited cohort distribution.
+
+\begin{definition}[Transition equilibrium]
+Given the initial cohort masses, old-household distribution and tax bases, a
+path of primitives, and a terminal condition when one is available, a
+transition equilibrium is a sequence of prices, household policies,
+distributions, births, and cohort masses such that: (i) young and old choices
+solve their problems given the anticipated price path; (ii) the old
+distribution is the push-forward of the preceding young cohort's tenure,
+housing, and saving choices; (iii) equation~\eqref{eq:cohort_law} generates the
+next young cohort; (iv) housing clears according to
+equation~\eqref{eq:housing_clearing} at every date; and (v) asset pricing and
+government accounting hold at every date.
+\end{definition}
+
+A transition equilibrium is a dated sequence, not by definition movement
+between two steady states. Convergence to a new steady state is an additional
+boundary condition that can be imposed only when that steady state exists.
+
+\newpage
+\section{Steady states}
+
+Under constant primitives, let $\mathcal N(P)$ denote average fertility per
+young household in the stationary household problem, and let
+$\mathcal H^Y(P)$ and $\mathcal H^O(P)$ denote stationary average housing by
+the two cohorts.
+
+\begin{proposition}[Closed steady state]
+Suppose the stationary household problem is well defined. A positive closed
+steady state exists only at a price $P^*>0$ satisfying:
+\begin{equation}
+ \nu\mathcal N(P^*)=1.
+ \label{eq:replacement_condition}
+\end{equation}
+For every such price, the associated cohort masses are:
+\begin{equation}
+ Y^*=O^*=\frac{\bar H}
+ {\mathcal H^Y(P^*)+\mathcal H^O(P^*)}.
+ \label{eq:closed_scale}
+\end{equation}
+If $\mathcal N(P)$ is continuous and crosses $1/\nu$ exactly once, the positive
+closed steady state is unique.
+\end{proposition}
+
+Demographic replacement selects the stationary price; housing clearing then
+selects how many households can live at that price. If
+$\nu\mathcal N(P)<1$ at every positive price, the model has no positive closed
+steady state. A finite transition can still be computed, but it should not be
+described as movement to a second positive steady state.
+
+With constant outside inflow $M>0$, the open steady-state cohort mass instead
+satisfies:
+\begin{equation}
+ Y^*=O^*=\frac{M}{1-\rho\nu\mathcal N(P^*)},
+ \qquad \rho\nu\mathcal N(P^*)<1.
+ \label{eq:open_scale}
+\end{equation}
+Together, equations~\eqref{eq:housing_clearing} and
+\eqref{eq:open_scale} determine the open-market price and scale. Thus an open
+local economy can remain stationary with below-replacement fertility because
+outside inflows fill the replacement gap.
+
+Suppose the economy begins at an old steady state and $\vartheta_t$ then falls
+permanently. On impact, $Y_t$ and $O_t$ are inherited, while prices, tenure,
+housing, and fertility respond. Fertility changes $Y_{t+1}$ through
+equation~\eqref{eq:cohort_law}; the new cohort changes subsequent housing
+demand and prices. If a new root of equation~\eqref{eq:replacement_condition}
+exists, convergence to it defines a transition between steady states. If it
+does not exist, the equilibrium remains a nonstationary demographic path.
+
+One implication is immediate. Average fertility in every positive closed
+steady state equals $1/\nu$. Housing policy can change fertility during the
+transition, the distribution of fertility across households, and the
+stationary population scale, but it cannot permanently change average
+fertility across closed steady states without changing survival or household
+formation summarized by $\nu$.
+
+\section{Intergenerational housing misallocation}
+
+The July reallocation result can be stated at any date of the transition. Hold
+the price path, cohort masses, tenure assignments, and all other household
+allocations fixed. Consider a young owner whose financing constraint binds and
+whose owner-size cap is slack, and an old incumbent at an interior retention
+choice. Moving one unit of housing from the incumbent to the young buyer
+generates goods-equivalent surplus:
+\begin{equation}
+ \underbrace{\left(r_t+q\ell_{t+1}+\zeta_t^{O,F}\right)}_{
+ \text{young buyer's marginal value}}
+ -\underbrace{\left(r_t-\ell_t\right)}_{
+ \text{old incumbent's marginal value}}
+ =\zeta_t^{O,F}+q\ell_{t+1}+\ell_t>0.
+ \label{eq:dynamic_misallocation}
+\end{equation}
+In a stationary equilibrium, $\ell_t=\ell_{t+1}=\bar\ell$, so
+equation~\eqref{eq:dynamic_misallocation} becomes the July surplus formula
+$\zeta^{O,F}+q\bar\ell+\bar\ell$.
+
+This is a conditional date-$t$ allocation result, not a dynamic welfare
+theorem. A policy that reallocates housing also changes fertility, future
+cohort sizes, and equilibrium prices. Evaluating that policy requires welfare
+weights over present and future cohorts and an explicit decision about whether
+the utility of unborn children is counted separately from parental utility.
+
+\end{document}

@@ -2,6 +2,10 @@
 
 Active documents:
 
+- `simplified_olg_transition_note.tex` / `simplified_olg_transition_note.pdf`:
+  short model-only note that adds an explicit cohort law, transition-equilibrium
+  definition, and closed/open steady states to the July two-generation housing,
+  fertility, and old-owner-lock-in model.
 - `transition_closure_update_presentation.tex` /
   `transition_closure_update_presentation.pdf`: 20-slide advisor update. It
   defines the timing and choices in the two-generation population--housing
