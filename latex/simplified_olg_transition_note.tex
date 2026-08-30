@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage[hidelinks]{hyperref}
@@ -401,5 +402,56 @@ theorem. A policy that reallocates housing also changes fertility, future
 cohort sizes, and equilibrium prices. Evaluating that policy requires welfare
 weights over present and future cohorts and an explicit decision about whether
 the utility of unborn children is counted separately from parental utility.
+
+\newpage
+\section{The two ingredients in pictures}
+
+The July allocation wedge remains a within-date comparison, while the new
+cohort law determines how that date sits inside a demographic transition.
+In Figures 2--3, $p$ denotes the rent-equivalent housing cost, not the asset
+price $P_t$.
+
+\begin{minipage}[t]{0.37\textwidth}
+\centering
+\includegraphics[width=\textwidth]{figures/example_misallocation_only.pdf}
+
+\vspace{2pt}
+\footnotesize
+\textbf{Figure 1: July allocation wedge.}
+In stationary July notation, a constrained young buyer values the marginal
+unit above the owner price, while an old incumbent values it below the market
+price because selling triggers the gains tax. The vertical difference is the
+conditional reallocation surplus in
+equation~\eqref{eq:dynamic_misallocation}.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\centering
+\includegraphics[width=\textwidth]{../output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.pdf}
+
+\vspace{2pt}
+\footnotesize
+\textbf{Figure 2: Steady-state logic.}
+The figure sets $\nu=1$. Replacement selects the steady-state housing cost;
+housing clearing then selects population scale. After a permanent fall in the
+value of children, $I$ is the impact equilibrium and $A'$ is a new steady
+state only if the new fertility schedule crosses replacement.
+\end{minipage}
+
+\vspace{8pt}
+\begin{center}
+\includegraphics[width=0.88\textwidth]{../output/model/fertility_population_housing_transition_note/two_cohort_transition_paths.pdf}
+
+\vspace{2pt}
+\begin{minipage}{0.91\textwidth}
+\footnotesize
+\textbf{Figure 3: Transition implied by the cohort law.}
+The inherited cohorts determine the impact point $I$; subsequent births move
+cohort masses, housing demand, and prices. The price trough $P$ and population
+trough $M$ need not coincide. This illustration converges to a positive root
+$A'$; when equation~\eqref{eq:replacement_condition} has no positive root, the
+same law instead generates a continuing nonstationary contraction.
+\end{minipage}
+\end{center}
 
 \end{document}
