@@ -12,6 +12,10 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2pt}
 \setlength{\emergencystretch}{3em}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
 \allowdisplaybreaks
 \setlist[enumerate]{leftmargin=1.45em,itemsep=1pt,topsep=2pt}
 \setlist[itemize]{leftmargin=1.45em,itemsep=1pt,topsep=2pt}
@@ -107,7 +111,7 @@ housing, completed fertility, and bond expenditure:
  &c+r_t h+b'=y_i+b_i, \nonumber\\
  &h\leq \bar h^m,\qquad b'\geq0, \nonumber\\
  &\1\{m=O\}(1-\phi)P_t h\leq b_i, \nonumber\\
- &b_{t+1}=b'/q-\1\{m=O\}r_th. \nonumber
+ &b_{t+1}=b'/q-\1\{m=O\}r_{t+1}h. \nonumber
 \end{align}
 The household chooses the tenure with the higher value. Its effective
 family-housing caps are:
@@ -120,28 +124,6 @@ family-housing caps are:
 \end{equation}
 Thus current liquid wealth, rather than the ability to service the flow cost,
 can prevent a household from occupying family-sized owner housing.
-
-When saving and the future old-age allocation are interior, a buyer anticipates
-the discounted tax on a future sale. Define the tenure-specific effective
-price by $r_t^R=r_t$ and $r_t^O=r_t+q\ell_{t+1}$. Dividing the housing
-first-order condition by the marginal utility of consumption gives:
-\begin{equation}
- \frac{\alpha(c_t^m-\chi n_t^m)}{h_t^m-\kappa n_t^m}
- =r_t^m+\zeta_t^m,
- \qquad \zeta_t^m\geq0.
- \label{eq:access_gap}
-\end{equation}
-The access gap $\zeta_t^m$ is the goods value of relaxing the binding rental,
-owner-size, or financing constraint by one unit of space.
-
-The same gap enters the full price of a marginal child:
-\begin{equation}
- \frac{\vartheta_t(c_t^m-\chi n_t^m)}{n_t^m}
- =\chi+\kappa\bigl(r_t^m+\zeta_t^m\bigr).
- \label{eq:fertility_foc}
-\end{equation}
-A binding housing constraint therefore acts as a household-specific tax of
-$\kappa\zeta_t^m$ on fertility.
 
 \subsection{Old households}
 
@@ -157,6 +139,112 @@ basis established when young. She chooses how much of the house to retain:
 At an interior retention choice, her marginal value of retained space is
 $r_t-\ell_t$. An old renter instead solves the same utility problem subject to
 $c^O+e+r_th^O=b$ and values marginal housing at $r_t$.
+
+The old owner's budget can be written as
+$c^O+e+(r_t-\ell_t)h^O=b+(r_t-\ell_t)H^0$. Define her effective resources by
+$\Omega_t^O=b+(r_t-\ell_t)H^0$ and let
+$A=1+\gamma+\omega_B$. When the retention limit is slack and $r_t>\ell_t$, the log problem has
+the closed-form allocation:
+\begin{equation}
+ c_t^O=\frac{\Omega_t^O}{A},
+ \qquad
+ h_t^O=\frac{\gamma\Omega_t^O}{A(r_t-\ell_t)},
+ \qquad
+ e_t=\frac{\omega_B\Omega_t^O}{A}.
+ \label{eq:old_closed_form}
+\end{equation}
+The old incumbent behaves as if retained housing carried price
+$r_t-\ell_t$. For an old renter, equation~\eqref{eq:old_closed_form} applies
+with $\Omega_t^R=b$, housing price $r_t$, and no carried house.
+
+\subsection{Young first-order conditions}
+
+The link between the two periods is clearest after substituting the old
+problem into the young problem. A young owner's next-period effective
+resources are:
+\begin{equation}
+ \Omega_{t+1}^O
+ =\underbrace{\left(\frac{b'}q-r_{t+1}h\right)}_{b_{t+1}}
+ +\underbrace{(r_{t+1}-\ell_{t+1})h}_{
+ \text{value of carried housing}}
+ =\frac{b'}q-\ell_{t+1}h.
+ \label{eq:owner_old_resources}
+\end{equation}
+The future housing service cancels the flow-equivalent liability carried into
+old age; only the tax on a sale remains. A young renter instead has
+$\Omega_{t+1}^R=b'/q$.
+
+Let $\Lambda=\beta A$ be old-age claims on one unit of young marginal utility.
+At an interior saving choice, the Euler equation and
+equation~\eqref{eq:owner_old_resources} imply:
+\begin{equation}
+ b'=\Lambda(c-\chi n)+\1\{m=O\}q\ell_{t+1}h.
+ \label{eq:saving_rule}
+\end{equation}
+The buyer saves the ordinary old-age claim plus the discounted future tax bill
+attached to the house. At $b'=0$, the corresponding complementary-slackness
+condition replaces equation~\eqref{eq:saving_rule}.
+
+Define residual consumption $x=c-\chi n$, residual adult space
+$s=h-\kappa n$, and the tenure-specific effective housing price
+$r_t^R=r_t$ and $r_t^O=r_t+q\ell_{t+1}$. Substituting the saving rule into the
+young budget gives the lifetime resource identity:
+\begin{equation}
+ y_i+b_i=(1+\Lambda)x+r_t^m s+
+ \bigl(\chi+\kappa r_t^m\bigr)n.
+ \label{eq:lifetime_resource_identity}
+\end{equation}
+Thus $\chi+\kappa r_t^m$ is the unconstrained full price of a child. When the
+housing and financing constraints are slack, the log problem allocates
+lifetime resources according to:
+\begin{equation}
+ \begin{aligned}
+ D_t&=1+\alpha+\vartheta_t+\Lambda,
+ &x_t^m&=\frac{y_i+b_i}{D_t},\\
+ n_t^m&=\frac{\vartheta_t(y_i+b_i)}
+ {D_t(\chi+\kappa r_t^m)},
+ &h_t^m&=\frac{\alpha(y_i+b_i)}{D_t r_t^m}+\kappa n_t^m.
+ \end{aligned}
+ \label{eq:young_unconstrained_policies}
+\end{equation}
+Higher housing costs reduce fertility because each child requires $\kappa$
+units of space; they also reduce adult housing directly.
+
+\newpage
+To characterize constrained households, let $\lambda_t^m$ be the multiplier
+on the young budget, $\eta_t^m$ the multiplier on the tenure-specific size
+limit, and $\mu_t$ the multiplier on the owner's down-payment constraint. The
+goods value of relaxing the active housing constraints is:
+\begin{equation}
+ \zeta_t^R=\frac{\eta_t^R}{\lambda_t^R},
+ \qquad
+ \zeta_t^O=
+ \underbrace{\frac{\mu_t}{\lambda_t^O}(1-\phi)P_t}_{
+ \text{financing gap}}
+ +\underbrace{\frac{\eta_t^O}{\lambda_t^O}}_{
+ \text{owner-size gap}}.
+ \label{eq:access_gap_definition}
+\end{equation}
+The housing first-order condition then identifies the total access gap from
+the household's bundle:
+\begin{equation}
+ \frac{\alpha(c_t^m-\chi n_t^m)}{h_t^m-\kappa n_t^m}
+ =r_t^m+\zeta_t^m,
+ \qquad \zeta_t^m\geq0.
+ \label{eq:access_gap}
+\end{equation}
+An unconstrained household has $\zeta_t^m=0$; a constrained household values
+one more unit of space above its effective price by exactly $\zeta_t^m$.
+
+Finally, the fertility first-order condition prices the marginal child in
+units of current goods:
+\begin{equation}
+ \frac{\vartheta_t(c_t^m-\chi n_t^m)}{n_t^m}
+ =\chi+\kappa\bigl(r_t^m+\zeta_t^m\bigr).
+ \label{eq:fertility_foc}
+\end{equation}
+A binding housing constraint therefore acts as a household-specific tax of
+$\kappa\zeta_t^m$ on fertility.
 
 \section{Demography, markets, and transition equilibrium}
 
@@ -205,7 +293,22 @@ A transition equilibrium is a dated sequence, not by definition movement
 between two steady states. Convergence to a new steady state is an additional
 boundary condition that can be imposed only when that steady state exists.
 
-\newpage
+The two-cohort law also makes demographic momentum explicit. In the closed
+economy, define the effective reproduction rate
+$g_t=\nu\bar n_t$ and the inherited old-young ratio $\mu_t=O_t/Y_t$. Total
+adult-household population $S_t=Y_t+O_t$ then obeys:
+\begin{equation}
+ S_{t+1}=Y_t(1+g_t),
+ \qquad
+ S_t=Y_t(1+\mu_t),
+ \qquad
+ S_{t+1}>S_t\ \Longleftrightarrow\ g_t>\mu_t.
+ \label{eq:demographic_momentum}
+\end{equation}
+Hence below-replacement fertility can coexist with population growth when
+$\mu_t<g_t<1$. Starting from an exact steady state, however, $\mu_t=1$, so an
+immediate fall below replacement reduces total population in the next period.
+
 \section{Steady states}
 
 Under constant primitives, let $\mathcal N(P)$ denote average fertility per
@@ -229,6 +332,16 @@ For every such price, the associated cohort masses are:
 If $\mathcal N(P)$ is continuous and crosses $1/\nu$ exactly once, the positive
 closed steady state is unique.
 \end{proposition}
+
+\begin{proof}
+Stationarity of the aging law gives $O^*=Y^*$. With $M=0$ and $\rho=1$, the
+young-cohort law becomes
+$Y^*=\nu Y^*\mathcal N(P^*)$. Dividing by the positive mass $Y^*$ gives
+equation~\eqref{eq:replacement_condition}. Substituting $O^*=Y^*$ into
+housing clearing gives equation~\eqref{eq:closed_scale}. A unique crossing of
+the replacement schedule gives a unique price, after which housing clearing
+gives a unique positive scale.
+\end{proof}
 
 Demographic replacement selects the stationary price; housing clearing then
 selects how many households can live at that price. If
