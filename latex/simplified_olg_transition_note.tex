@@ -65,7 +65,11 @@ death:
  u^O(c^O,h^O,e)=\log c^O+\gamma\log h^O+\omega_B\log e.
  \label{eq:old_utility}
 \end{equation}
-The financial sector supplies liquid claims and absorbs estates at price $q$.
+All choices lie in the log domain:
+$c,n,h-\kappa n,c^O,h^O,e>0$. A competitive financial sector trades a claim
+delivering one unit of next-period goods at price $q$, finances mortgages at
+the corresponding gross return, and buys stepped-up estate housing at the
+market price.
 
 \textbf{Housing and financial markets.} A fixed stock $\bar H$ produces one
 unit of housing services per unit and period. Renters can occupy at most
@@ -73,10 +77,10 @@ $\bar h^R$, while owners can occupy at most $\bar h^O>\bar h^R$. The asset
 price is $P_t$, one-period-ahead goods have price $q\in(0,1)$, and
 $R=q^{-1}$. Competitive housing intermediaries imply the user-cost relation:
 \begin{equation}
- r_t=(1+\tau_t^p)P_t-qP_{t+1},
+ r_t=(1+\tau^p)P_t-qP_{t+1},
  \label{eq:user_cost}
 \end{equation}
-where $\tau_t^pP_t$ is the recurring property tax per unit.
+where $\tau^pP_t$ is the recurring property tax per unit.
 
 \textbf{Ownership and taxation.} A buyer finances the share $\phi$ of the
 purchase with a one-period mortgage and posts $(1-\phi)P_th$ at closing. The
@@ -87,18 +91,23 @@ $R\phi P_th$. Selling a unit realizes the capital-gains tax
  \label{eq:gains_tax}
 \end{equation}
 while a unit retained until death enters the estate with stepped-up basis. The
-tax is zero whenever the real asset price is constant. These cash flows give
-two tenure-specific costs. Buying a unit, paying its
+tax is zero whenever the real asset price is constant. Only household sales are
+taxable events; stepped-up estate liquidations are exempt, and intermediaries
+trade at $P_t$ with basis marked to market.
+Retained housing is occupied by the incumbent: households do not operate as
+landlords, and rental services are supplied only by intermediaries. The policy
+parameters $\tau^p$ and $\tau^g$ are constant. These cash flows give two
+tenure-specific costs. Buying a unit, paying its
 property tax, and selling it next period costs:
 \begin{equation}
- r_t^O=(1+\tau_t^p)P_t-q(P_{t+1}-\ell_{t+1})
+ r_t^O=(1+\tau^p)P_t-q(P_{t+1}-\ell_{t+1})
  =r_t+q\ell_{t+1}.
  \label{eq:owner_user_cost}
 \end{equation}
 For an old incumbent, retaining a unit rather than selling it, paying the
 property tax, and placing its next-period value in the estate costs:
 \begin{equation}
- r_t^I=(P_t-\ell_t)+\tau_t^pP_t-qP_{t+1}=r_t-\ell_t.
+ r_t^I=(P_t-\ell_t)+\tau^pP_t-qP_{t+1}=r_t-\ell_t.
  \label{eq:incumbent_user_cost}
 \end{equation}
 Thus the buyer anticipates the future tax, while the incumbent avoids the
@@ -125,14 +134,15 @@ equation~\eqref{eq:incumbent_user_cost}. Her problem is therefore:
  \qquad e\geq P_{t+1}h^O.\nonumber
 \end{align}
 The estate includes the next-period value of retained housing. When its
-composition constraint and $h^O\leq H$ are slack, the incumbent's marginal
-value of retained space is:
+composition constraint and $h^O\leq H$ are slack and $r_t>\ell_t$, the
+incumbent's marginal value of retained space is:
 \begin{equation}
  \frac{u_h^O}{u_c^O}=\frac{\gamma c_t^O}{h_t^O}=r_t-\ell_t.
  \label{eq:old_marginal_value}
 \end{equation}
-An old renter has no house or gain and solves the same problem with budget
-$c^O+qe+r_th^O=a+T_t$.
+An old renter has no house and no realization. She maximizes
+$u^O(c^O,h^O,e)$ subject to
+$c^O+qe+r_th^O=a+T_t$, $0<h^O\leq\bar h^R$, and $e>0$.
 
 \subsection{Young households}
 
@@ -152,7 +162,7 @@ payment at the beginning of the period, and repays the mortgage when old:
  +\beta V_{t+1}^O(a_{t+1},h)
  \label{eq:young_owner_problem}\\
  \text{subject to}\quad
- &c+\chi n+a'+[(1-\phi)+\tau_t^p]P_th=y_i+b_i+T_t,\nonumber\\
+ &c+\chi n+a'+[(1-\phi)+\tau^p]P_th=y_i+b_i+T_t,\nonumber\\
  &a_{t+1}=Ra'-R\phi P_th,\qquad
  (1-\phi)P_th\leq b_i,\nonumber\\
  &0<h\leq\bar h^O,\qquad a'\geq0.\nonumber
@@ -161,7 +171,8 @@ Income received after closing can finance consumption and saving but cannot be
 pledged for the down payment. The household chooses the tenure with the higher
 value.
 
-Suppose saving is interior and the future old retention limit is slack. Let
+Suppose saving is interior and the future old retention limit is slack. For
+$m\in\{R,O\}$, let
 $\lambda_t^m$ be the multiplier on the young budget, $\mu_t$ the multiplier on
 the owner's down-payment constraint, and $\eta_t^m$ the multiplier on the
 tenure-specific size limit. The access values in current goods are:
@@ -182,6 +193,15 @@ housing conditions reduce to:
 \end{equation}
 The ownership expression follows from the purchase, mortgage, property-tax,
 and resale cash flows in equation~\eqref{eq:young_owner_problem}.
+Equivalently, the access value is the household's marginal valuation above its
+tenure-specific user cost:
+\begin{equation}
+ \zeta_t^m=
+ \frac{\alpha c_t^m}{h_t^m-\kappa n_t^m}-r_t^m.
+ \label{eq:observable_access_value}
+\end{equation}
+Thus the wedge is expressible from the household's bundle and prices, not only
+from multipliers.
 
 The fertility condition prices the goods and space required by a marginal
 child:
@@ -195,10 +215,19 @@ $\kappa\zeta_t^m$.
 
 \section{Steady states and transition}
 
+Let $G_t$ denote the normalized distribution of old net financial wealth,
+inherited housing, and tenure. It is the pushforward of $F$ under the preceding
+young policies:
+\begin{equation}
+ G_{t+1}=\operatorname{Law}_{i\sim F}\!\left(
+ Ra_t'(i)-\mathbf 1\{m_t(i)=O\}R\phi P_th_t(i),
+ \mathbf 1\{m_t(i)=O\}h_t(i),m_t(i)\right).
+ \label{eq:old_distribution}
+\end{equation}
 Let $\bar n_t$, $\bar h_t^Y$, and $\bar h_t^O$ denote fertility and housing
-averaged over the young type distribution and the inherited old distribution.
-Let $\bar s_t^O$ denote housing sold by an average old incumbent. Cohort sizes
-and the housing stock obey:
+averaged over $F$ and $G_t$, respectively.
+Let $\bar s_t^O$ denote housing sold by the average old household, assigning
+zero sales to old renters. Cohort sizes and the housing stock obey:
 \begin{equation}
  Y_{t+1}=\nu\bar n_tY_t,\qquad O_{t+1}=Y_t,
  \qquad Y_t\bar h_t^Y+O_t\bar h_t^O=\bar H.
@@ -211,7 +240,7 @@ The government rebates property- and capital-gains-tax receipts equally across
 living households:
 \begin{equation}
  (Y_t+O_t)T_t
- =\tau_t^pP_t\bar H+\ell_t O_t\bar s_t^O.
+ =\tau^pP_t\bar H+\ell_t O_t\bar s_t^O.
  \label{eq:government_budget}
 \end{equation}
 The taxes remain private wedges, while their revenue stays within the household
@@ -235,11 +264,17 @@ Its aggregate conditions are:
  2Y^*T^*&=\tau^pP^*\bar H.
  \label{eq:ss_government}
 \end{align}
+The old-state distribution is stationary: $G^*=\Gamma(P^*,T^*;\vartheta)$.
 \end{definition}
 The replacement condition determines whether a positive stationary population
-is feasible; housing clearing and the balanced rebate jointly determine its
+is feasible; housing clearing and the balanced rebate jointly characterize its
 price, transfer, and scale. Because $P_t=P_{t-1}$, equation
 \eqref{eq:gains_tax} gives $\ell^*=0$ in every steady state.
+Equation~\eqref{eq:ss_replacement} also implies that every positive steady state
+has the same average fertility, $\mathcal N=1/\nu$. A permanent preference
+change can alter the stationary price, transfer, population scale, and household
+policies. Conditional on convergence to a positive steady state, demographic
+stationarity nevertheless requires average fertility to equal $1/\nu$.
 
 Consider two fertility preferences, $\vartheta^0$ and $\vartheta^1$, for which
 the steady-state conditions admit positive equilibria $\mathcal E^0$ and
@@ -256,66 +291,29 @@ The shock changes current choices immediately and future cohort sizes through
 equation~\eqref{eq:cohort_and_housing}.
 
 \begin{definition}[Transition equilibrium]
-Given the initial steady state $\mathcal E^0$, a transition equilibrium is a
-sequence of prices, transfers, household policies, old-household distributions,
-and cohort masses such that households solve
-equations~\eqref{eq:old_owner_problem}--\eqref{eq:young_owner_problem}; the old
-distribution is generated by the preceding young choices; housing clears and
-the government budget balances at every date; equation~\eqref{eq:user_cost}
-prices the housing asset; equation~\eqref{eq:cohort_and_housing} advances the
-cohorts; $P_{-1}=P^0$ and the date-zero old enter with the state inherited from
+Given the initial steady state $\mathcal E^0$, a perfect-foresight transition
+equilibrium is a sequence of prices, transfers, household policies,
+old-household distributions, and cohort masses such that all old and young
+households solve the problems above; the old distribution is generated by the
+preceding young choices; housing clears and the government budget balances at
+every date; equation~\eqref{eq:user_cost} prices the housing asset;
+equation~\eqref{eq:cohort_and_housing} advances the cohorts; the policy
+parameters $(\tau^p,\tau^g)$ remain fixed; $P_{-1}=P^0$,
+$Y_0=O_0=Y^0$, $G_0=G^0$, and the date-zero old enter with the state inherited from
 $\mathcal E^0$; and the sequence converges to $\mathcal E^1$.
 \end{definition}
-Capital gains can arise when the asset price rises along the transition, but
-they vanish at both stationary endpoints.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[x=0.92cm,y=1.20cm,>=Latex]
-  \begin{scope}
-    \draw[->] (-1.15,0) -- (5.35,0) node[right] {$t$};
-    \draw[->] (-1.15,0) -- (-1.15,1.75) node[above] {$P_t$};
-    \draw[dashed,midgray] (-1.05,1.38) -- (0,1.38);
-    \draw[dashed,midgray] (3.85,0.58) -- (5.05,0.58);
-    \draw[dotted] (0,0) -- (0,1.68);
-    \node[below] at (0,0) {$0$};
-    \node[left] at (-1.15,1.38) {$P^0$};
-    \node[left] at (-1.15,0.58) {$P^1$};
-    \draw[oldblue,thick] plot[smooth] coordinates
-      {(-1.05,1.38) (0,1.38) (0.18,1.14) (1.0,1.00)
-       (2.0,0.80) (3.1,0.65) (4.8,0.58)};
-    \fill[oldblue] (-0.85,1.38) circle (1.6pt);
-    \fill[oldblue] (4.75,0.58) circle (1.6pt);
-    \node[above] at (-0.70,1.41) {$\mathcal E^0$};
-    \node[above] at (4.50,0.61) {$\mathcal E^1$};
-  \end{scope}
-  \begin{scope}[xshift=7.25cm]
-    \draw[->] (-1.15,0) -- (5.35,0) node[right] {$t$};
-    \draw[->] (-1.15,0) -- (-1.15,1.75) node[above] {$Y_t$};
-    \draw[dashed,midgray] (-1.05,1.38) -- (0.60,1.38);
-    \draw[dashed,midgray] (3.85,0.58) -- (5.05,0.58);
-    \draw[dotted] (0,0) -- (0,1.68);
-    \node[below] at (0,0) {$0$};
-    \node[left] at (-1.15,1.38) {$Y^0$};
-    \node[left] at (-1.15,0.58) {$Y^1$};
-    \draw[newred,thick] plot[smooth] coordinates
-      {(-1.05,1.38) (0,1.38) (0.60,1.38) (1.2,1.25)
-       (2.1,1.00) (3.2,0.74) (4.8,0.58)};
-    \fill[newred] (-0.85,1.38) circle (1.6pt);
-    \fill[newred] (4.75,0.58) circle (1.6pt);
-  \end{scope}
-\end{tikzpicture}
-\caption{A permanent preference change moves prices immediately, while cohort
-mass adjusts with a lag through $Y_{t+1}=\nu\bar n_tY_t$. The monotone paths
-shown are illustrative; a transition equilibrium may adjust nonmonotonically.}
-\label{fig:transition}
-\end{figure}
+The date-zero cohort masses, old states, and tax basis $P_{-1}$ are inherited;
+$P_0$, $T_0$, and household choices are equilibrium objects at impact. Capital
+gains arise only on dates with $P_t>P_{t-1}$ and vanish at both stationary
+endpoints. The definition imposes convergence but no monotonicity or sign on
+the transition path.
 
 \section{Intergenerational housing allocation}
 
-Consider an old incumbent at an interior retention choice and a young owner
-whose down-payment constraint binds while the owner-size limit is slack. Their
-marginal values of current housing services are:
+Consider an old incumbent whose retention and estate-composition constraints
+are slack with $r_t>\ell_t$, and a young owner whose down-payment constraint
+binds while the owner-size limit and next-period old constraints are slack.
+Their marginal values of current housing services are:
 \begin{equation}
  MV_{it}^Y=r_t+q\ell_{t+1}+\zeta_{it}^{O,F},
  \qquad
@@ -324,56 +322,73 @@ marginal values of current housing services are:
 \end{equation}
 The market component cancels when a unit is transferred between them.
 
-\begin{definition}[Conditional housing efficiency]
-At date $t$, an allocation is conditionally efficient if no infinitesimal
-reallocation of the existing housing stock, accompanied by balanced goods
-transfers among the affected living households and the government, can make
-all affected households weakly better off and one strictly better off. The
-comparison holds fertility, cohort masses, tenure assignments, saving choices,
-and the price sequence fixed.
+\begin{definition}[Local compensated housing test]
+At a positive steady state, an allocation passes the local compensated housing
+test if no infinitesimal transfer of title and occupancy from an old incumbent
+to a current young owner, together with balanced goods transfers between the
+two households, can leave both weakly better off and one strictly better off.
+The comparison holds prices, fertility, cohort masses, tenure labels, and
+constraint active sets fixed. The current young household's lifetime utility
+includes its own old age; no unborn household enters the comparison.
 \end{definition}
 
-\begin{proposition}[Compensated intergenerational reallocation]
-Hold the price sequence, fertility, cohort masses, tenure assignments,
-and saving choices fixed. Suppose an institution can transfer one marginal unit
-of existing housing from household $j$ to household $i$, compensate all affected
-households and the government, and incurs real cost $K_{ijt}$ per unit. The
-goods-equivalent surplus is:
-\begin{equation}
- \mathcal S_{ijt}
- =\zeta_{it}^{O,F}+q\ell_{t+1}+\ell_t-K_{ijt}.
- \label{eq:reallocation_surplus}
-\end{equation}
-The equilibrium allocation is conditionally inefficient whenever
-$\mathcal S_{ijt}>0$.
-\end{proposition}
-
-\begin{proof}
-Increase the young household's housing by $\dd h$ and reduce the incumbent's
-retained housing by the same amount. Compensating the two households at their
-marginal utilities leaves
-$(MV_{it}^Y-MV_{jt}^O-K_{ijt})\dd h$ units of goods. Substituting
-equation~\eqref{eq:two_marginal_values} gives
-equation~\eqref{eq:reallocation_surplus}. Equation~\eqref{eq:government_budget}
-returns the two tax payments to the household sector, so they are private
-wedges rather than resource costs.
-\end{proof}
-
-\begin{corollary}[Steady-state misallocation]
-At either steady state, $\ell_t=\ell_{t+1}=0$, and the surplus reduces to:
+\begin{proposition}[Steady-state intergenerational reallocation]
+Suppose an institution can convey a marginal unit of existing housing from an
+old incumbent $j$ to a financing-constrained young owner $i$, finance the
+transaction within the two-household coalition, and incur real cost $K_{ij}$
+per unit. At either positive steady state, the goods-equivalent surplus is:
 \begin{equation}
  \mathcal S_{ij}^*=\zeta_i^{O,F}-K_{ij}.
  \label{eq:ss_reallocation_surplus}
 \end{equation}
-A financing-constrained young owner and an old incumbent are conditionally
-misallocated whenever $\zeta_i^{O,F}>K_{ij}$.
-\end{corollary}
-Capital gains therefore amplify the same allocation gap on appreciation dates
-along the transition; they are absent from its stationary endpoints.
+The steady-state allocation fails the local compensated housing test whenever
+$\mathcal S_{ij}^*>0$.
+\end{proposition}
 
-\begin{figure}[t]
+\begin{proof}
+At a steady state, $\ell_t=\ell_{t+1}=0$. Equation
+\eqref{eq:two_marginal_values} therefore values an additional unit at
+$r^*+\zeta_i^{O,F}$ for the young owner and at $r^*$ for the old incumbent.
+Convey $\dd h$ units of title and occupancy from $j$ to $i$, relaxing the
+buyer's down-payment constraint with a pledgeable bridge
+$L=(1-\phi)P^*\dd h$ at closing and repayment $RL$ next period. The advance
+raises the young household's Lagrangian by $(\lambda_i+\mu_i)L$, while the
+repayment lowers it by $\beta V_{a,i,t+1}^ORL$. The saving Euler equation
+$\lambda_i=\beta RV_{a,i,t+1}^O$ gives
+\begin{equation*}
+ (\lambda_i+\mu_i)L-\beta V_{a,i,t+1}^ORL
+ =\mu_iL=\lambda_i\zeta_i^{O,F}\dd h.
+\end{equation*}
+The unit returns to
+the competitive market at $t+1$, so later housing allocations are unchanged.
+The old incumbent sells the same marginal unit. At an interior retention
+choice, the extra sale proceeds and the change in estate resources compensate
+her marginal loss of housing services. No realization tax is due at a constant
+price. Paying the real implementation cost therefore leaves
+$(\zeta_i^{O,F}-K_{ij})\dd h$ goods. If this amount is positive, it can be
+divided so that both households are weakly better off and one is strictly
+better off.
+\end{proof}
+
+\begin{corollary}[Transition valuation gap]
+At any date along the transition, the difference between the two households'
+marginal valuations is:
+\begin{equation}
+ MV_{it}^Y-MV_{jt}^O
+ =\zeta_{it}^{O,F}+q\ell_{t+1}+\ell_t.
+ \label{eq:transition_valuation_gap}
+\end{equation}
+Capital gains therefore widen the private allocation gap when the incumbent
+realizes appreciation at $t$ or the buyer anticipates appreciation at $t+1$;
+the gap reduces to $\zeta_i^{O,F}$ at either stationary endpoint.
+\end{corollary}
+The corollary does not rank whole transition paths: doing so would require a
+rule for distributing tax rebates across dates and cohorts.
+
+\begin{figure}[b!]
 \centering
-\begin{tikzpicture}[x=1.2cm,y=0.82cm,>=Latex]
+\small
+\begin{tikzpicture}[x=0.88cm,y=0.50cm,>=Latex]
   \draw[->] (0,0) -- (6.2,0) node[right] {housing services};
   \draw[->] (0,0) -- (0,5.2) node[above] {marginal value};
   \draw[oldblue,thick] plot[smooth] coordinates
@@ -381,7 +396,7 @@ along the transition; they are absent from its stationary endpoints.
   \draw[newred,thick,dashed] plot[smooth] coordinates
     {(0.8,5.0) (1.5,3.65) (2.15,2.75) (2.8,2.0) (3.5,1.3)};
   \draw[dotted,midgray] (0,2.75) -- (5.7,2.75);
-  \node[right,midgray] at (5.05,2.9) {$r_t$};
+  \node[right,midgray] at (5.05,2.9) {$r^*$};
   \fill[oldblue] (3.25,3.76) circle (2pt);
   \fill[newred] (2.15,2.75) circle (2pt);
   \draw[dotted] (3.25,0) -- (3.25,3.76);
@@ -393,10 +408,9 @@ along the transition; they are absent from its stationary endpoints.
   \node[below] at (3.25,0) {$h_i$};
   \node[below] at (2.15,0) {$h_j^O$};
 \end{tikzpicture}
-\caption{In steady state, a constrained young owner values a marginal unit
-above the common user cost, while an unconstrained incumbent values it at that
-cost. The vertical distance is the financing component of the reallocation
-surplus.}
+\caption{At a positive steady state, the financing wedge raises the constrained
+young owner's marginal value above the unconstrained incumbent's common user
+cost. The gap is gross of real implementation cost.}
 \label{fig:reallocation}
 \end{figure}
 
@@ -425,19 +439,29 @@ differentiating the fertility condition yields:
  +\dfrac{\alpha\kappa^2}{(\widehat h-\kappa n)^2}}.
  \label{eq:fertility_cap_derivative}
 \end{equation}
-The first term in the numerator is the value of additional family space; the
-second is the consumption cost of occupying more housing. Equation
+The denominator is positive. The first term in the numerator is the value of
+additional family space; the second is the consumption cost of occupying more
+housing. Equation
 \eqref{eq:housing_foc} implies
 $[\mathcal W_t-r_t^m\widehat h-\chi n]/[\widehat h-\kappa n]
-=(1+k)(r_t^m+\zeta_t^m)/\alpha$. Since $\zeta_t^m\geq0$, a sufficient
-condition for greater housing access to raise fertility is:
+=(1+k)(r_t^m+\zeta_t^m)/\alpha$. For $r_t^m>0$, the exact sign condition is:
+\begin{equation}
+ \frac{\dd n}{\dd\widehat h}\geq0
+ \quad\Longleftrightarrow\quad
+ \chi\leq
+ \frac{(1+k)\kappa(r_t^m+\zeta_t^m)^2}{\alpha r_t^m}.
+ \label{eq:fertility_exact_condition}
+\end{equation}
+Since $\zeta_t^m\geq0$, a simpler sufficient condition is:
 \begin{equation}
  \chi\leq\frac{(1+k)\kappa r_t^m}{\alpha}.
  \label{eq:fertility_sufficient_condition}
 \end{equation}
-Under this condition, an institution that reaches a positive financing gap and
-increases the household's housing both improves the conditional allocation and
-raises fertility among the constrained households it directly affects.
+Under this condition, relaxing access and permitting the household to purchase
+more housing at its market user cost raises its fertility. Separately,
+Proposition~1 implies that a marginal housing transfer passes the local
+compensated test when $K_{ij}<\zeta_i^{O,F}$. The two conditions can hold
+simultaneously, but they are distinct results.
 General-equilibrium prices, rebates, and cohort sizes then propagate that
 response through
 equations~\eqref{eq:cohort_and_housing}--\eqref{eq:government_budget}.

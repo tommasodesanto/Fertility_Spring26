@@ -6,8 +6,10 @@ Active documents:
   short model-only note with explicit owner mortgage and resale accounting, a
   balanced property- and capital-gains-tax rebate, two positive steady states,
   and a perfect-foresight transition after one permanent fertility-preference
-  change. It gives a local compensated-efficiency result, its fertility
-  implication, and a transitional capital-gains corollary.
+  change. It gives a local compensated steady-state reallocation result, an
+  exact fertility comparative static, and a transitional capital-gains
+  valuation-gap corollary. The independent proof ledger is
+  `../docs/model/simplified_olg_transition_max_theory_audit_20260830.md`.
 - `transition_closure_update_presentation.tex` /
   `transition_closure_update_presentation.pdf`: 20-slide advisor update. It
   defines the timing and choices in the two-generation population--housing
