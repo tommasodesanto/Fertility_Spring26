@@ -4,10 +4,10 @@ Active documents:
 
 - `simplified_olg_transition_note.tex` / `simplified_olg_transition_note.pdf`:
   short model-only note with explicit owner mortgage and resale accounting, a
-  balanced property- and capital-gains-tax rebate, a transition-equilibrium
-  definition, closed steady-state existence conditions, and local
-  intergenerational reallocation and fertility results. Its figures are drawn
-  directly from the displayed model.
+  balanced property- and capital-gains-tax rebate, two positive steady states,
+  and a perfect-foresight transition after one permanent fertility-preference
+  change. It gives a local compensated-efficiency result, its fertility
+  implication, and a transitional capital-gains corollary.
 - `transition_closure_update_presentation.tex` /
   `transition_closure_update_presentation.pdf`: 20-slide advisor update. It
   defines the timing and choices in the two-generation population--housing
