@@ -3,6 +3,20 @@
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
+## Simplified OLG theory construction
+
+`tools/build_simplified_olg_mixed_tenure_theory.py` solves the mixed renter--
+owner numerical construction used in the paper-facing two-generation theory.
+It writes exact steady states, a terminally closed finite-horizon transition
+approximation, an active-set and finite-root conditioning ledger, and the two
+paper figures to
+`../../output/model/simplified_olg_mixed_tenure_theory/` and
+`../../latex/figures/`. Run it from the repository root with
+`code/model/.venv/bin/python`. The horizon comparison and terminal-state gap
+are convergence diagnostics, not a proof of the infinite-horizon limiting
+condition. This is a constructive theory example, not the active quantitative
+calibration.
+
 ## Current paper architecture (August 18)
 
 ### Integrated demographic-transition repair (August 26)
