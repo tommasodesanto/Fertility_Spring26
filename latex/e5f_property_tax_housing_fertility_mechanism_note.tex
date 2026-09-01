@@ -1,10 +1,10 @@
-\documentclass[11pt]{article}
+\documentclass[10pt]{article}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[margin=0.92in]{geometry}
-\usepackage{amsmath,amssymb}
+\usepackage[margin=0.72in]{geometry}
+\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
@@ -13,318 +13,178 @@
 \usepackage{caption}
 \usepackage{enumitem}
 \usepackage{microtype}
-\usepackage{setspace}
 \usepackage{placeins}
 \usepackage{hyperref}
 
-\definecolor{ink}{HTML}{1F2937}
-\definecolor{muted}{HTML}{5F6B7A}
 \definecolor{accent}{HTML}{245B78}
-\definecolor{rulegray}{HTML}{D5DBE3}
-
-\hypersetup{
-  colorlinks=true,
-  linkcolor=accent,
-  citecolor=accent,
-  urlcolor=accent,
+\hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent,
   pdfauthor={Tommaso De Santo},
-  pdftitle={Property Taxes, Housing Reallocation, and Fertility in E5f}
-}
-
+  pdftitle={Property Taxes, Housing Reallocation, and Fertility in E5f}}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.55em}
-\setlist[itemize]{leftmargin=1.35em,itemsep=0.25em,topsep=0.25em}
-\setlist[enumerate]{leftmargin=1.55em,itemsep=0.35em,topsep=0.3em}
-\captionsetup{font=small,labelfont=bf,justification=raggedright,singlelinecheck=false}
-\renewcommand{\arraystretch}{1.12}
+\setlength{\parskip}{0.38em}
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.15em,topsep=0.15em}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=0.2em,topsep=0.15em}
+\captionsetup{font=footnotesize,labelfont=bf,skip=3pt}
+\renewcommand{\arraystretch}{1.07}
 \newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
-
 \newcommand{\figroot}{../output/model/e5f_post2023_kappa_m5_property_tax_mechanism_decomposition_20260901}
 \newcommand{\pp}{\text{ pp}}
 
-\title{\textbf{Property Taxes, Housing Reallocation, and Fertility in E5f}\\[0.35em]
-\large A mechanism diagnostic}
+\title{\vspace{-2.4em}\textbf{Property Taxes, Housing Reallocation, and Fertility in E5f}\\[-0.05em]
+\large Advisor brief}
 \author{Tommaso De Santo}
 \date{September 2026}
 
 \begin{document}
-
 \maketitle
-\vspace{-1.2em}
+\vspace{-1.7em}
 
-\begin{abstract}
-\noindent
-Doubling the rebated annual property-tax rate from 1 to 2 percent produces a substantial housing response in the E5f model but only a modest fertility response. Asset prices fall by 3--5 percent, ownership falls by 2--3 percentage points, and housing services per household fall by 6--8 percent. Annual births per household head rise by only 0.2--0.6 percent. An exact state-level decomposition shows that less than half of the peak fertility response comes from higher birth probabilities for otherwise comparable households; the rest comes from changes in the distribution of households across states. The central problem is not that housing is frozen. It is that the reform does not reproduce the child-relevant reallocation emphasized by Coven et al.: young childless households can become owners, but they consume smaller homes, while young parents lose both ownership and space. The current calibration also leaves prospective parents far from both the child-space floor and the fertility cutoff. The evidence therefore points to a combination of an incomplete housing-allocation first stage and a weakly identified housing-to-fertility transmission, rather than the absence of any theoretical link.
-\end{abstract}
+\section*{The answer}
 
-\vspace{0.4em}
-\noindent\colorbox{accent!8}{\parbox{0.965\textwidth}{
-\textbf{Main conclusion.} The model contains the intended housing--fertility mechanism and gives it the expected sign, but the current policy experiment does not deliver more family-sized housing to prospective parents. A positive tenure-choice taste smooths the numerics and changes incidence, but it cannot by itself supply the missing capitalization, financing, spatial, or family-housing margins.
+Doubling the rebated annual property tax from 1 to 2 percent produces a large housing response but only a modest fertility response. Asset prices fall 3--5 percent, ownership falls 2--3 percentage points, and housing services fall 6--8 percent. Annual births per household head rise only 0.2--0.6 percent.
+
+The model's housing--fertility link is present and has the expected sign. The larger problem is that the reform does not deliver more family-sized housing to prospective parents. Some young childless households become owners, but they occupy smaller homes. Young parents lose both ownership and space. The present experiment therefore does not yet reproduce the housing reallocation emphasized by Coven et al.; it cannot tell us how strongly fertility would respond if that reallocation actually reached young constrained families.
+
+\begin{center}
+\colorbox{accent!9}{\parbox{0.95\textwidth}{
+\textbf{Bottom line.} This is partly calibration and partly theory. The family-housing block is calibrated too weakly at the relevant margins, but the policy also lacks the capitalization, financing, tenure-market, and migration forces needed to generate a strong young-family housing first stage. Positive tenure taste fixes an important numerical problem, but it cannot create those missing mechanisms.
 }}
+\end{center}
 
-\tableofcontents
-\newpage
+\section*{What was run}
 
-\section{The result in plain terms}
+The experiment compares two deterministic perfect-foresight paths beginning from the same reconstructed 2023 distribution. Both span 128 four-year dates and pass the maintained market, fiscal, history, accounting, feasibility, probability, and terminal gates. Post-2023 tenure choice uses $\kappa_{\mathrm{tenure}}=0.0100175$, borrowed from the older M5 calibration. E5f itself was estimated with deterministic tenure choice, so this is a stable conditional sensitivity rather than a jointly recalibrated production result.
 
-The reform is not a null experiment. Doubling the property tax changes the housing equilibrium materially. It lowers the purchase price of housing, raises the annual cost of occupying it, reduces ownership, and induces households to consume less space. Fertility nevertheless rises by less than one percent throughout the transition.
-
-The combination matters. A lower purchase price is helpful to a wealth-constrained buyer because it lowers the required down payment. But the same tax raises the recurring user cost of housing. In the present equilibrium, the recurring-cost effect is strong enough that housing consumption contracts for every young group inspected. The government rebates the extra revenue equally across households, creating a broad income effect that raises fertility slightly. The result is therefore a small positive net birth response, not a large ``cheaper houses permit children'' effect.
-
-The diagnosis has three layers:
-
-\begin{enumerate}
-  \item \textbf{Housing moves, but not in the family-relevant direction.} Aggregate ownership falls by 2--3 percentage points and housing services fall by 6--8 percent. Some childless young households become owners, but they own smaller bundles. Young parents lose both ownership and housing.
-  \item \textbf{The within-household fertility response is positive but small.} At the peak aggregate response, only 0.258 percentage point comes from changes in birth behavior for comparable households; 0.347 point comes from changes in population composition.
-  \item \textbf{The calibration supplies little local amplification.} The model underpredicts the increase in rooms after a first birth, overpredicts average rooms, places no positive-mass young-parent state at the child-space floor, and places almost no mass near birth indifference.
-\end{enumerate}
-
-This is partly a quantitative calibration problem and partly a structural first-stage problem. The model does not yet reproduce the allocation mechanism that makes the Coven et al. result powerful: a sufficiently large price capitalization, combined with binding financial constraints and age-specific release of owner housing, reallocates housing toward young constrained households.
-
-\section{Experiment and numerical status}
-
-The experiment compares two deterministic perfect-foresight paths beginning from the same reconstructed 2023 household and person distributions. The baseline has a rebated 1 percent annual property tax; the reform raises the rate to 2 percent. Both paths contain 128 four-year dates, from 2023 through 2531, use the same terminal demographic closure, and impose a housing-supply elasticity of 1.75.
-
-Tenure choice after 2023 is smoothed with an extreme-value taste scale of
-\[
-\kappa_{\mathrm{tenure}}=0.0100175.
-\]
-This value was estimated in the older M5 calibration. It was not jointly estimated in E5f, whose maintained calibration sets the tenure taste scale to zero. The exercise is therefore a conditional sensitivity: it asks how the E5f transition behaves after adding a plausible amount of tenure smoothing while holding the remaining E5f parameters fixed.
-
-Both policy paths pass the official equilibrium and accounting gates. The maximum market and fiscal residuals are, respectively, $1.4942\times10^{-4}$ and $1.4131\times10^{-5}$ under the 1 percent tax, and $1.1567\times10^{-4}$ and $1.6511\times10^{-5}$ under the 2 percent tax. These lie below the maintained thresholds of $2\times10^{-4}$ and $2.5\times10^{-5}$. History reproduction, feasibility, probability, accounting, and H128 terminal checks also pass. The results below are therefore interpretable equilibrium sensitivities, although they are not a production counterfactual from a fully recalibrated positive-tenure-taste model.
-
-\section{Aggregate housing and fertility effects}
-
-Table~\ref{tab:aggregate} reports the reform path relative to the 1 percent baseline. Asset prices fall 3.2 percent on impact and nearly 4.7 percent at their largest decline. The rent-equivalent price, which measures the annual flow cost of housing services, rises 17--27 percent. Ownership falls 2.3 percentage points on impact and by as much as 2.94 points. Housing services per household head fall 5.5--8.0 percent.
-
-\begin{table}[htbp]
+\begin{table}[h]
 \centering
-\caption{Aggregate response to a 2 percent rather than 1 percent property tax}
-\label{tab:aggregate}
+\caption{Selected effects of a 2 percent rather than 1 percent property tax}
 \scriptsize
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{rrrrrrrr}
+\begin{tabular}{rrrrrr}
 \toprule
-Year & Asset price & Rent-equivalent price & Ownership & Housing/head & Annual births/head & Resident persons & Equal rebate \\
+Year & Asset price & Ownership & Housing/head & Annual births/head & Equal rebate \\
 \midrule
-2023 & $-3.196\%$ & $+27.063\%$ & $-2.299\pp$ & $-5.525\%$ & $+0.158\%$ & $+0.000\%$ & $+82.906\%$ \\
-2035 & $-4.574\%$ & $+19.494\%$ & $-2.864\pp$ & $-7.864\%$ & $+0.321\%$ & $+0.021\%$ & $+75.838\%$ \\
-2051 & $-4.653\%$ & $+18.191\%$ & $-2.605\pp$ & $-8.004\%$ & $+0.415\%$ & $+0.068\%$ & $+75.428\%$ \\
-2079 & $-4.344\%$ & $+17.314\%$ & $-2.230\pp$ & $-7.572\%$ & $+0.605\%$ & $+0.180\%$ & $+76.824\%$ \\
-2103 & $-4.224\%$ & $+17.772\%$ & $-2.167\pp$ & $-7.515\%$ & $+0.535\%$ & $+0.319\%$ & $+77.156\%$ \\
-2355 & $-4.163\%$ & $+18.930\%$ & $-2.629\pp$ & $-7.568\%$ & $+0.302\%$ & $+0.476\%$ & $+77.164\%$ \\
-2531 & $-4.164\%$ & $+18.944\%$ & $-2.633\pp$ & $-7.538\%$ & $+0.307\%$ & $+0.434\%$ & $+77.226\%$ \\
+2023 & $-3.196\%$ & $-2.299\pp$ & $-5.525\%$ & $+0.158\%$ & $+82.906\%$ \\
+2035 & $-4.574\%$ & $-2.864\pp$ & $-7.864\%$ & $+0.321\%$ & $+75.838\%$ \\
+2079 & $-4.344\%$ & $-2.230\pp$ & $-7.572\%$ & $+0.605\%$ & $+76.824\%$ \\
+2103 & $-4.224\%$ & $-2.167\pp$ & $-7.515\%$ & $+0.535\%$ & $+77.156\%$ \\
+2531 & $-4.164\%$ & $-2.633\pp$ & $-7.538\%$ & $+0.307\%$ & $+77.226\%$ \\
 \bottomrule
-\end{tabular}}
-\begin{minipage}{0.98\textwidth}\vspace{0.3em}\footnotesize
-\textit{Note:} Percentage changes compare the 2 percent path with the 1 percent path. Ownership is reported in percentage points. Both paths begin from the same 2023 distribution.
-\end{minipage}
+\end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
+The flow cost of housing rises 17--27 percent even though the purchase price falls. The reform therefore relaxes the down payment modestly but makes housing more expensive to occupy. The equal rebate supplies a broad positive income effect. The small positive birth response is the net of these offsetting forces, not a pure affordability effect.
+
+\newpage
+\section*{Housing moves much more than fertility}
+
+\begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{\figroot/paired_transition_effects.pdf}
+\includegraphics[width=0.91\textwidth]{\figroot/paired_transition_effects.pdf}
 \caption{Dynamic effects of the property-tax reform}
-\label{fig:effects}
 \end{figure}
 
-The birth response peaks at 0.605 percent in 2079. In levels, annual births per household head rise from 0.0152279 to 0.0153200. The increase is 0.0000921 births per head; dividing by the baseline gives $0.0000921/0.0152279=0.00605$, or 0.605 percent. This distinction resolves an earlier unit confusion: a number near $0.000006$ was a fiscal-equilibrium residual used to judge numerical convergence, not a fertility effect.
+The birth response peaks at 0.605 percent in 2079. In levels, annual births per household head rise from 0.0152279 to 0.0153200. The change is 0.0000921 births per head, and $0.0000921/0.0152279=0.00605$. A number near 0.000006 discussed during the solver work was instead a fiscal-equilibrium residual: it measured numerical convergence, not fertility.
 
-Figure~\ref{fig:levels} shows that the underlying level paths are smooth. The modest fertility response is not created by a failed or visibly erratic equilibrium path.
+The exact state decomposition separates birth behavior for comparable households from movements in the household distribution. If $w_s^j$ is state mass and $p_s^j$ is the four-year birth flow in policy $j$, annual births are $F^j=\frac14\sum_s w_s^jp_s^j$. The exact symmetric decomposition is
+\[
+F^1-F^0=\frac18\sum_s(w_s^0+w_s^1)(p_s^1-p_s^0)
++\frac18\sum_s(p_s^0+p_s^1)(w_s^1-w_s^0).
+\]
+The first term is within-state birth behavior; the second is distribution and composition. It is an accounting identity, not a separate causal identification claim.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{\figroot/paired_transition_levels.pdf}
-\caption{Levels along the rebated 1 percent and 2 percent transition paths}
-\label{fig:levels}
-\end{figure}
-
-\FloatBarrier
-\section{Exact decomposition of the fertility response}
-
-Let $s$ denote the complete state of an at-risk household: liquid wealth, origin tenure, age, income, parity, and the number and stage of children at home. Let $w_s^j$ be the mass of state $s$ per household head and $p_s^j$ be expected child units produced during the four-year model period, where $j=0$ denotes the 1 percent path and $j=1$ the 2 percent path. Annual births per household head are
-\begin{equation}
-F^j=\frac{1}{4}\sum_s w_s^j p_s^j.
-\label{eq:births}
-\end{equation}
-The factor $1/4$ converts four-year birth units to an annual flow.
-
-The exact symmetric two-factor decomposition is
-\begin{align}
-F^1-F^0
-={}&\underbrace{\frac{1}{8}\sum_s(w_s^0+w_s^1)(p_s^1-p_s^0)}_{\text{within-state birth behavior}}
-\\[-0.2em]
-&+\underbrace{\frac{1}{8}\sum_s(p_s^0+p_s^1)(w_s^1-w_s^0)}_{\text{distribution and composition}}.
-\label{eq:decomp}
-\end{align}
-The first term asks whether an otherwise comparable household becomes more or less likely to have a child. The second asks whether the reform moves households toward states that already have higher or lower fertility. Equation~\eqref{eq:decomp} is an exact accounting identity, not a claim that its two components are independently identified causal mechanisms.
-
-\begin{table}[htbp]
+\begin{table}[h]
 \centering
 \caption{Exact decomposition of the annual birth-rate response}
-\label{tab:decomp}
-\small
+\scriptsize
 \begin{tabular}{rrrr}
 \toprule
-Year & Total effect & Within-state behavior & Distribution/composition \\
+Year & Total & Within-state behavior & Distribution/composition \\
 \midrule
 2023 & $+0.158\%$ & $+0.158\%$ & $-0.000\%$ \\
 2035 & $+0.321\%$ & $+0.232\%$ & $+0.089\%$ \\
 2051 & $+0.415\%$ & $+0.244\%$ & $+0.170\%$ \\
 2079 & $+0.605\%$ & $+0.258\%$ & $+0.347\%$ \\
 2103 & $+0.535\%$ & $+0.227\%$ & $+0.308\%$ \\
-2355 & $+0.302\%$ & $+0.175\%$ & $+0.126\%$ \\
 2531 & $+0.307\%$ & $+0.175\%$ & $+0.132\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The same-household behavioral response is positive, so the housing--fertility link is neither absent nor wrong-signed. It is small. Across the inspected dates, the within-state component raises births by only 0.16--0.26 percent. At the 2079 peak, 0.258 percentage point comes from within-state behavior, while 0.347 point---57 percent of the total---comes from the endogenous distribution of households.
+At the peak, only 0.258 percentage point comes from comparable households changing birth behavior. The remaining 0.347 point---57 percent of the total---comes from changes in the distribution of households across wealth, tenure, age, parity, and child states. The household mechanism is positive, but quantitatively small.
 
-The age decomposition in Figure~\ref{fig:age} confirms that the effect is concentrated among households in their main childbearing years. In 2079, ages 25--34 contribute 0.338 percentage point of the aggregate response, ages 35--44 contribute 0.176 point, and households under 25 contribute 0.091 point. These are contributions to the aggregate birth rate, not group-specific percentage changes.
+\newpage
+\section*{The reform does not expand young-family housing}
 
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.96\textwidth]{\figroot/fertility_age_decomposition.pdf}
+\includegraphics[width=0.84\textwidth]{\figroot/fertility_age_decomposition.pdf}
 \caption{Age decomposition of the aggregate birth response}
-\label{fig:age}
 \end{figure}
 
-Tenure and wealth groups contain large offsets. In 2079, renter-origin states contribute $+0.699$ percent of baseline aggregate births, while owner-origin states contribute $-0.094$ percent. Similar offsetting movements appear across wealth quartiles. The positive aggregate effect should therefore not be described as a single clean price channel. It is the equilibrium sum of changes in transfers, tenure, wealth, household composition, and birth behavior.
+The fertility response is concentrated at childbearing ages, but the housing incidence is not favorable to families. In 2079, childless households aged 25--34 experience a 2.379 percentage-point ownership increase, yet their housing services fall 7.437 percent. Parents aged 25--34 lose 1.081 ownership points and 6.200 percent of housing; parents aged 35--44 lose 2.943 points and 6.590 percent of housing.
 
-\section{The missing family-housing first stage}
-
-The most important diagnostic is the incidence of ownership and housing services among young households. By 2079, ownership among childless households aged 25--34 rises by 2.379 percentage points. Taken alone, this resembles the young-buyer channel in Coven et al. But housing services for this group fall by 7.437 percent. Among households aged 25--34 with dependent children, ownership falls by 1.081 percentage points and housing services fall by 6.200 percent. Among parents aged 35--44, ownership falls by 2.943 points and housing services fall by 6.590 percent.
-
-\begin{figure}[htbp]
+\begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{\figroot/young_household_incidence.pdf}
-\caption{Ownership and housing-service incidence among young households}
-\label{fig:young}
+\includegraphics[width=0.82\textwidth]{\figroot/young_household_incidence.pdf}
+\caption{Ownership and housing services among young households}
 \end{figure}
 
-The reform can therefore move a young household from renting to owning while reducing the amount of housing it consumes. It reallocates tenure, but not family-sized space. That distinction is central: ownership is not itself the fertility input in the model. Housing services and the difference in housing needs between the birth and no-birth branches are what matter for fertility.
+The reform can move a childless young household from renting to owning while shrinking its housing bundle. It changes tenure without relaxing the family-space margin. No positive-mass young-parent state binds the child-space floor in either policy. No positive-mass at-risk state lies within 0.05 value units of birth indifference; only 2.3--2.6 percent of at-risk mass lies within 0.25 units. There is little household mass at which a modest value change can produce a large birth response.
 
-The state tables also show very little local pressure at the modeled family-space constraint. No positive-mass young-parent cell binds the child-space floor in either policy at any inspected date. No positive-mass at-risk state lies within 0.05 value units of birth indifference. Only 2.3--2.6 percent of at-risk mass lies within 0.25 units, and roughly 13--14 percent lies within 0.50 units.
+\newpage
+\section*{Why this differs from Coven et al.}
 
-\begin{figure}[htbp]
+Coven, Golder, Gupta, and Ndiaye study housing allocation across generations; they do not model endogenous fertility. Their mechanism combines lower down payments for young constrained buyers with higher recurring costs that induce older owners to release housing. The age reallocation, rather than the aggregate ownership rate, is the key result.
+
+\begin{table}[h]
 \centering
-\includegraphics[width=\textwidth]{\figroot/child_space_floor_binding.pdf}
-\caption{The child-space floor does not bind for positive-mass young-parent groups}
-\label{fig:floor}
-\end{figure}
-
-The model therefore has two forms of slack at once. Prospective parents can reduce housing without reaching the child-space floor, and most are not close enough to birth indifference for a moderate change in the fertility value gap to switch much probability mass.
-
-\FloatBarrier
-\section{Comparison with Coven et al.}
-
-Coven, Golder, Gupta, and Ndiaye study how property taxes reallocate housing across generations under financial constraints. Their August 2026 paper does not contain endogenous fertility. Their phrase ``young families'' refers to young households facing housing-market constraints, not households choosing whether to have a child. Their contribution supplies a housing-allocation first stage that a fertility model can build upon.
-
-Their mechanism has two complementary parts:
-
-\begin{enumerate}
-  \item \textbf{Capitalization and down payments.} A higher recurring property tax lowers the purchase price. With an 80 percent loan-to-value ceiling, the required 20 percent equity payment falls with the price, helping low-wealth young buyers.
-  \item \textbf{Recurring costs and old-owner release.} Higher property-tax payments increase the cost of remaining in a large owner-occupied home. A payment-to-income constraint, transaction costs, mortgages, capital-gains treatment, and bequest motives generate age-specific downsizing and release of owner housing.
-\end{enumerate}
-
-The full allocation result needs both forces. Coven et al. show that imposing only the counterfactual price and rent paths, while keeping the tax system fixed, raises aggregate ownership sharply but disproportionately among older households. Capitalization alone does not produce the desired generational reallocation.
-
-\begin{table}[htbp]
-\centering
-\caption{Housing-allocation mechanisms: Coven et al. and the current E5f sensitivity}
-\label{tab:coven}
+\caption{Housing-allocation mechanisms}
 \scriptsize
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{p{0.24\textwidth}p{0.32\textwidth}p{0.36\textwidth}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.22\textwidth}XX}
 \toprule
 Object & Coven et al. & Current E5f sensitivity \\
 \midrule
 Property-tax change & 0.8 to 2.0 percent & 1.0 to 2.0 percent \\
-Housing-supply elasticity & 0.232 & 1.75 diagnostic value \\
+Supply elasticity & 0.232 & 1.75 diagnostic value \\
 Asset-price response & $-12.6$ percent & $-3.2$ percent initially; $-4.7$ percent at peak \\
-Aggregate ownership & $-2.06$ percentage points & $-2.30$ points initially; $-2.94$ points at peak \\
 Payment-to-income limit & 36 percent and active & Inactive \\
 Owner and rental housing & Segmented stocks & One housing-service market \\
 Spatial adjustment & Two-region migration extension & Absent from this run \\
-Young incidence & Ownership $+0.62$ point at ages 25--34; strong old-age declines & Childless ages 25--34 eventually own more, but every young group consumes less housing and young parents own less \\
+Young incidence & Ownership rises at ages 25--34 while old ownership falls sharply & Childless young eventually own more, but all young groups consume less housing and parents own less \\
 \bottomrule
-\end{tabular}}
+\end{tabularx}
 \end{table}
 
-Four differences explain why E5f currently delivers a weaker and less family-relevant first stage.
+The differences locate the missing first stage. More elastic supply produces less price capitalization and hence less down-payment relief. Without an active payment-to-income constraint, the higher tax does not sharply induce cash-flow-constrained older owners to downsize. A common owner--renter housing-service market makes tenure less consequential for space. Without migration, households cannot sort toward locations where the tax releases larger homes.
 
-\textbf{Capitalization is smaller.} The supply elasticity of 1.75 makes the stock response larger and the asset-price response smaller than in the California calibration. A 3--5 percent price decline supplies much less down-payment relief than a 12.6 percent decline.
+\section*{Why the fertility block amplifies so little}
 
-\textbf{The payment-to-income constraint is inactive.} E5f includes a 20 percent down payment because the financed share is 0.8, but the payment-to-income test is switched off. A higher property tax therefore cannot mechanically force a cash-flow-constrained older owner to downsize.
+Fertility depends on the difference between the optimized value of attempting a birth and waiting. Housing prices affect both branches. If the branches choose similar interior housing bundles, their common housing-cost exposure largely cancels from the birth value gap. Housing becomes a strong fertility margin when a child creates a large additional need for space, one branch is constrained, or tenure supplies a child-specific service.
 
-\textbf{Owner and renter space are close substitutes.} Households can obtain housing services as renters, and ownership has no child-specific service such as residential stability, school access, control over the dwelling, or reduced displacement risk. A tenure change need not relax the housing constraint relevant for family formation.
+The calibration currently supplies little of that amplification. The first-child housing floor rises by only $0.19945+0.31527=0.51471$ room-equivalent units, while young parents consume roughly 5 units as renters and 8--9 as owners. The model predicts only a 0.380-room increase after a first birth against 0.720 in the data, while predicting 6.710 average rooms against 5.780. Prospective parents begin with too much space and add too little after childbirth.
 
-\textbf{The spatial sorting margin is absent.} Coven et al. emphasize migration and the geographic reallocation of younger and older households. A one-market transition cannot move prospective parents toward places where high taxes release larger owner homes.
+The target set also contains no moment measuring fertility responses to plausibly exogenous rents, prices, taxes, supply, or down-payment relief. ``Housing after a birth'' and ``births after a housing-cost shock'' are different derivatives. The latter is presently model-implied rather than directly identified.
 
-\section{Why housing can move strongly while fertility moves little}
-
-The fertility decision compares two optimized indirect values: the value of attempting a birth and the value of waiting. Housing prices, rents, wealth, and transfers affect both branches. Fertility responds to the difference between their exposures, not to the level of housing demand by itself.
-
-This point is easiest to see through the envelope logic. If the attempt and wait branches choose similar interior housing bundles, a common increase in housing cost lowers both values by nearly the same amount. The common component cancels from the birth value gap. Housing becomes a first-order fertility margin when a child generates a sufficiently large extra need for space, when one branch is constrained and the other is not, or when tenure delivers a child-specific service.
-
-The current calibration offers little of this local amplification. The modeled first-child housing floor is
-\[
-\bar h_1=0.19945+0.31527=0.51471
-\]
-room-equivalent units. Young parents consume roughly 5 units as renters and 8--9 as owners. The child-space increment still costs resources away from the floor, but it is small relative to the baseline bundle and never binds for a positive-mass young-parent group in the inspected paths.
-
-The equal rebate adds another offset. The property-tax rate rises, the annual housing user cost rises, and housing contracts; at the same time, the additional revenue is returned equally to households. An earlier fixed-distribution diagnostic found the same qualitative signs: the tax-rate component lowered births, modest asset-price relief raised them slightly, and the equal rebate raised them enough to leave a small positive net effect. The dynamic decomposition presented here confirms that the final result is an equilibrium mixture rather than a pure affordability response.
-
-\section{Calibration and identification}
-
-The active E5f transition calibration has loss 36.099 under 12 dated targets and 11 free parameters. The two largest misses are precisely the moments most relevant for the proposed mechanism. The model predicts a 0.380-room increase after a first birth against a target of 0.720 rooms, and average occupied rooms of 6.710 against a target of 5.780. These two rows contribute 26.304 of the 36.099 objective points.
-
-The first miss says that the model under-delivers the observed increase in space associated with family formation. The second says that households begin with too much housing on average. Together they make it easy to absorb a policy-induced housing contraction without strongly changing birth incentives.
-
-There is also a deeper identification issue. The target set includes fertility levels and timing, housing responses to births, ownership, wealth, and bequests. It does not include a moment measuring fertility responses to plausibly exogenous variation in rents, house prices, down-payment requirements, housing supply, or property taxes. The policy elasticity of fertility with respect to housing costs is therefore model-implied rather than directly disciplined by the data.
-
-This is not merely a semantic distinction. ``Housing after a birth'' and ``births after a housing-cost shock'' are different derivatives. A model can fit the former and still imply a small latter response if households substitute across tenure, housing size, consumption, and saving. Here the model does not yet fit the former well either.
-
-\section{What positive tenure taste can and cannot accomplish}
-
-Restoring a positive tenure-choice taste is economically and numerically sensible. Deterministic tenure choice creates discontinuous policy mappings when a positive-mass state crosses an owner--renter cutoff. The positive taste scale smooths this margin and produced clean, convergent perfect-foresight paths.
-
-Jointly estimating the scale inside E5f could alter the mass of households near tenure margins and therefore change age-specific incidence. It should be part of a serious recalibration. But it is not a fertility mechanism by itself. It does not create a payment-to-income constraint, a spatial migration margin, segmented owner and rental stocks, stronger capitalization, or a child-specific value of tenure. Nor does it identify the response of births to housing costs.
-
-The appropriate prior is therefore modest: joint positive-taste recalibration may move the result meaningfully and make it more stable, but it is unlikely by itself to transform a 0.2--0.6 percent fertility response into a several-percent response. Such a change would require a stronger first stage for young family housing, a stronger empirically disciplined housing-to-fertility transmission, or both.
-
-\section{A disciplined next sequence}
-
-The evidence suggests a sequential research strategy rather than one broad recalibration.
+\section*{Recommended sequence}
 
 \begin{enumerate}
-  \item \textbf{Establish the housing first stage.} Run bounded structural sensitivities for the housing-supply elasticity, an explicitly calibrated payment-to-income constraint, and owner--renter market segmentation. Report age-specific ownership and housing services, not only aggregate ownership.
-  \item \textbf{Repair the family-housing fit.} Re-estimate the child-housing block so that the first-birth room response is not missed by 0.34 rooms and mean rooms are not high by 0.93 rooms. The identifying contract must remain at least as rich as the free parameter vector.
-  \item \textbf{Add a reverse-link moment.} Discipline the fertility response to housing using plausibly exogenous variation in rents, prices, supply, down-payment relief, or property taxes. Without such a moment, a large fertility effect would be an assumption generated by the model architecture rather than an estimated elasticity.
-  \item \textbf{Re-estimate tenure smoothing jointly.} Estimate the positive tenure taste with the revised E5f target system and report its covariance with the ownership premium, child-space parameters, and wealth process.
-  \item \textbf{Add new theory only if the evidence requires it.} If prospective parents gain owner-occupied housing services and fertility still barely responds, then child-specific tenure services---stability, schools, landlord restrictions, displacement risk, or control over space---become serious candidates. Each should enter with a corresponding empirical moment.
+  \item Establish the Coven-style first stage with bounded sensitivities for supply elasticity, an explicitly calibrated payment-to-income constraint, and owner--renter segmentation. Report age-specific housing services, not only ownership.
+  \item Repair the first-birth room response and average-room fit.
+  \item Add a moment identifying fertility responses to exogenous housing-cost or financing variation.
+  \item Re-estimate the positive tenure taste jointly with E5f.
+  \item Add child-specific tenure services only if young parents receive more housing and fertility still barely responds.
 \end{enumerate}
 
-The first two steps separate the two diagnoses cleanly. If a stronger Coven-style housing reallocation reaches young parents but births remain insensitive, the fertility block is the bottleneck. If the reallocation still does not reach them, the missing object is the housing-market architecture.
-
-\section{Implication for the paper}
-
-The current result is not that housing is irrelevant for fertility. It is that housing affects fertility only when the households receiving child-relevant space are also near a birth margin. The property-tax reform studied here lowers asset prices, but it also raises recurring housing costs, contracts housing services, and rebates revenue broadly. The lower price is not large enough, and the financing and spatial margins are not rich enough, to reproduce the reallocation toward young constrained households emphasized by Coven et al.
-
-That distinction creates a potentially strong paper contribution. Coven et al. establish an age reallocation of housing, not a fertility effect. A housing--fertility model can show when such reallocation reaches prospective parents, whether it relaxes the relevant housing margin, and how much family formation follows. The present calibration says that this transmission is small under the current closure. Because the calibration underfits first-birth housing adjustment and does not directly identify the housing-cost elasticity of fertility, this is a diagnostic result rather than the final quantitative conclusion.
+The positive tenure taste is worth retaining because it smooths an economically relevant discrete choice and stabilizes the transition. But it cannot by itself add the financial, spatial, or family-housing mechanisms above.
 
 \newpage
-\appendix
+\section*{Compact calibration appendix}
 
-\section{Complete active target fit}
+The active E5f transition loss is 36.0992. The two housing-size rows contribute 26.304 points, making the family-housing fit the dominant calibration tension.
 
-Table~\ref{tab:targets} reports every target in the active E5f transition objective. The scalar loss is 36.0992. The standardized gap is the raw gap in units of the maintained target uncertainty, and the contribution is the weighted squared gap.
-
-\begin{table}[htbp]
+\begin{table}[h]
 \centering
-\caption{Active E5f target fit}
-\label{tab:targets}
+\caption{Complete active target fit}
 \scriptsize
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}Xrrrrrr}
 \toprule
@@ -346,15 +206,10 @@ Old-age wealth p90/p50, ages 76--84 & 3.4481 & 3.3963 & $-0.0518$ & 56.96 & $-0.
 \end{tabularx}
 \end{table}
 
-\section{Complete active free-parameter table}
-
-The active transition system estimates 11 parameters with 12 targets. Only $\theta_1$ is flagged near a search bound. The positive tenure-choice scale used in the policy sensitivity is excluded because it was not estimated in E5f.
-
-\begin{table}[htbp]
+\begin{table}[h]
 \centering
-\caption{Active E5f free parameters}
-\label{tab:parameters}
-\small
+\caption{Complete active free-parameter table}
+\scriptsize
 \begin{tabular}{lrrrrl}
 \toprule
 Parameter & Estimate & Lower & Upper & Transform & Near bound \\
@@ -374,20 +229,8 @@ $\Delta\psi_{\mathrm{child},2023}$ & $-0.350000$ & $-1.5$ & 0.2 & asinh & No \\
 \end{tabular}
 \end{table}
 
-For completeness, the derived fertility-preference intercepts are $\psi_{\mathrm{child},2007}=0.280341$ and $\psi_{\mathrm{child},2023}=-0.069659$.
-
-\section{Reproducibility and interpretation}
-
-The aggregate paths and all state-level decompositions come from the audited packet
-\begin{center}
-\path{output/model/e5f_post2023_kappa_m5_property_tax_mechanism_decomposition_20260901/}.
-\end{center}
-The collector validates the path, source, terminal, and state-table hashes; the equilibrium, history, accounting, feasibility, probability, and terminal gates; exact equality of the two state grids; and exact add-up of the decomposition before writing the tables and figures used in this note. Each policy diagnostic contains 453,600 state rows at each of seven dates.
-
-The 2 percent diagnostic required 29 minutes and 24 seconds on one CPU and used 5.64 GB of memory. The transition solve itself is longer because it iterates on the full equilibrium path. One scheduler allocation reached its one-hour boundary only after the complete scientific packet had been written; the successful batch output and immutable packet were audited separately. This scheduler status has no bearing on the economic results reported above.
-
-\section*{Reference}
-
-Coven, Joshua, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye. 2026. ``Property Taxes and Housing Allocation Under Financial Constraints.'' Working paper, August 1. \url{https://abdouecon.github.io/research/papers/Property_Tax.pdf}.
+\vfill
+\footnotesize
+\textit{Source and verification.} All paths, state decompositions, tables, and figures come from the hash-audited packet \path{output/model/e5f_post2023_kappa_m5_property_tax_mechanism_decomposition_20260901/}. The collector verifies equilibrium, accounting, feasibility, probability, state-grid equality, and exact decomposition add-up. Coven et al.: Joshua Coven, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye, ``Property Taxes and Housing Allocation Under Financial Constraints,'' August 1, 2026, \url{https://abdouecon.github.io/research/papers/Property_Tax.pdf}.
 
 \end{document}
