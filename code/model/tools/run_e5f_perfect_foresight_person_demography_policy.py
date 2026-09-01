@@ -37,6 +37,7 @@ for search_path in (MODEL_ROOT, TOOLS_ROOT):
         sys.path.insert(0, str(search_path))
 
 import run_dynamic_population_transition as calendar  # noqa: E402
+import e5f_post2023_tenure_sensitivity as tenure_sensitivity  # noqa: E402
 import run_e5f_open_population_transition as transition  # noqa: E402
 import run_e5f_perfect_foresight_person_demography as person_pf  # noqa: E402
 import run_e5f_perfect_foresight_rebated_property_tax as funded  # noqa: E402
@@ -124,6 +125,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--maximum-log-price-step", type=float, default=0.12)
     parser.add_argument("--maximum-transfer-step", type=float, default=0.08)
     parser.add_argument("--initial-path", type=Path)
+    parser.add_argument("--post2023-tenure-choice-kappa", type=float)
     return parser.parse_args()
 
 
@@ -611,6 +613,11 @@ def main() -> None:
         args.selected_transition.resolve(),
         market_tolerance=MARKET_TOLERANCE,
     )
+    tenure_sensitivity_contract = (
+        tenure_sensitivity.apply_post2023_tenure_choice_kappa(
+            prepared, args.post2023_tenure_choice_kappa
+        )
+    )
     pf.write_csv(output_dir / "reconstructed_2007_2023_history.csv", history)
     primitives = person_pf.build_annual_demographic_primitives(
         initial_households.g_pre,
@@ -626,7 +633,14 @@ def main() -> None:
         (root_summary.get("gates") or {}).values()
     ):
         raise RuntimeError("Terminal root case or gates do not match")
+    if root_summary.get("tenure_choice_sensitivity") != tenure_sensitivity_contract:
+        raise RuntimeError(
+            "Terminal root and transition use different tenure-choice sensitivities"
+        )
     expected_hashes = {
+        "tenure_sensitivity": pf.file_sha256(
+            TOOLS_ROOT / "e5f_post2023_tenure_sensitivity.py"
+        ),
         "person_demography": pf.file_sha256(
             TOOLS_ROOT / "run_e5f_perfect_foresight_person_demography.py"
         ),
@@ -835,6 +849,7 @@ def main() -> None:
         "bellman_solves": solution.bellman_solves,
         "terminal_root": root_summary,
         "history_reproduction_status": history_gate.get("status"),
+        "tenure_choice_sensitivity": tenure_sensitivity_contract,
         "source_provenance": provenance,
         "source_hashes": {
             "driver": pf.file_sha256(Path(__file__).resolve()),

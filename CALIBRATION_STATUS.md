@@ -1,6 +1,65 @@
 # Calibration Status
 
-Updated: `2026-08-29` (H128 1% accepted; H128 2% second tenure atom diagnosed)
+Updated: `2026-09-01` (positive-tenure-taste H128 sensitivity and mechanism decomposition complete)
+
+## September 1 positive-tenure-taste property-tax sensitivity: paths and mechanism packet complete
+
+This section records a **sensitivity, not a production recalibration**. E5f was
+estimated with deterministic tenure choice. The experiment imposes the older
+M5 value `tenure_choice_kappa = 0.010017488787185433` from 2023 onward while
+holding the E5f parameters fixed.
+
+The paired H128 rebated 1% and 2% paths both pass the unchanged official
+`2e-4` housing-market and `2.5e-5` fiscal gates, history reproduction,
+distribution feasibility, probability accounting, all accounting identities,
+and the H128 terminal audit. The 1% path has maximum market/fiscal residuals
+`1.4941657914915922e-4` / `1.413057030391629e-5` and path SHA-256
+`f784a02b5b73441ee884c84de044fd6d9ec982139199f77029c3cebeaba8dfa3`.
+The 2% path has residuals `1.156722366450562e-4` /
+`1.6510816389980754e-5` and path SHA-256
+`d9fbcbb9dd88284552c42741c1db2187cb4e8052074c60e24d37a89f280687da`.
+Its Slurm allocation reached its wall-time after the complete numerical packet
+had been written; the batch step and both evaluations completed successfully.
+
+Exact matched state diagnostics at seven dates passed all source, input,
+terminal, reconstruction, feasibility, and probability checks. Each policy has
+`453600` exact state rows per date. The final 2% diagnostic was Torch job
+`16702137`, completed in `00:29:24` on one CPU with `5.64 GB` maximum RSS. No
+cluster job remains active for this experiment.
+
+The audited decomposition establishes:
+
+- the reform lowers the asset price by `3.2%` initially and at most `4.69%`,
+  raises the rent-equivalent price by roughly `17–27%`, lowers aggregate
+  ownership by `2.30–2.94` percentage points, and lowers housing services per
+  head by `5.5–8.0%`;
+- annual births per head rise only `0.16–0.60%`;
+- the exact within-state fertility-policy effect is only `0.16–0.26%` of
+  baseline annual births; at the `2079` peak it is `0.258%`, while
+  distribution/composition contributes `0.347%`;
+- by `2079`, ownership among childless ages 25–34 rises `2.379` percentage
+  points, but their housing services fall `7.437%`; ownership and housing both
+  fall for young parents;
+- no positive-mass young-parent group is at the numerical child-space floor,
+  and no positive-mass at-risk state is within `0.05` value units of birth
+  indifference.
+
+Thus the theory link is present and positive, but weak quantitatively under
+this closure. More importantly, the reform does not reproduce the Coven et al.
+first stage of reallocating child-relevant owned space toward young families.
+The active fit underpredicts rooms gained after a first birth (`0.380` versus
+`0.720`) and overpredicts mean occupied rooms (`6.710` versus `5.780`). A
+joint positive-tenure-taste recalibration may change incidence, but cannot by
+itself identify the missing housing-cost-to-fertility elasticity or add the
+inactive payment-to-income, segmented tenure-market, and migration channels.
+
+Canonical packet:
+`output/model/e5f_post2023_kappa_m5_property_tax_mechanism_decomposition_20260901/`.
+Advisor memo:
+`docs/model/e5f_post2023_kappa_property_tax_mechanism_memo.md`.
+No further long run is authorized automatically; the next author decision is
+whether to prioritize a first-stage structural sensitivity or a joint positive-
+tenure-taste recalibration with a revised identifying target contract.
 
 ## August 27 H128 transition audit: deterministic-tenure kink in the 2% case
 

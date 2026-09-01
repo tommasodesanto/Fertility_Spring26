@@ -33,6 +33,7 @@ for search_path in (MODEL_ROOT, TOOLS_ROOT):
         sys.path.insert(0, str(search_path))
 
 import build_e5f_person_demography_terminal_point as point  # noqa: E402
+import e5f_post2023_tenure_sensitivity as tenure_sensitivity  # noqa: E402
 import run_dynamic_population_transition as calendar  # noqa: E402
 import run_e5f_open_population_transition as transition  # noqa: E402
 import run_e5f_perfect_foresight_person_demography as person_pf  # noqa: E402
@@ -71,6 +72,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--transfer-difference-step", type=float, default=0.01)
     parser.add_argument("--maximum-inner-iterations", type=int, default=250)
     parser.add_argument("--inner-damping", type=float, default=0.50)
+    parser.add_argument("--post2023-tenure-choice-kappa", type=float)
     return parser.parse_args()
 
 
@@ -141,6 +143,11 @@ def main() -> None:
         contracts,
         args.selected_transition.resolve(),
         market_tolerance=MARKET_TOLERANCE,
+    )
+    tenure_sensitivity_contract = (
+        tenure_sensitivity.apply_post2023_tenure_choice_kappa(
+            prepared, args.post2023_tenure_choice_kappa
+        )
     )
     primitives = person_pf.build_annual_demographic_primitives(
         initial_state.g_pre,
@@ -485,12 +492,16 @@ def main() -> None:
             "fertility_preference": "declared psi_child input, not estimated here",
         },
         "history_reproduction_status": history_gate.get("status"),
+        "tenure_choice_sensitivity": tenure_sensitivity_contract,
         "headship_alignment_factors": (
             primitives.model_age_headship_alignment_factors.tolist()
         ),
         "source_provenance": provenance,
         "source_hashes": {
             "driver": pf.file_sha256(Path(__file__).resolve()),
+            "tenure_sensitivity": pf.file_sha256(
+                TOOLS_ROOT / "e5f_post2023_tenure_sensitivity.py"
+            ),
             "person_demography": pf.file_sha256(
                 TOOLS_ROOT / "run_e5f_perfect_foresight_person_demography.py"
             ),

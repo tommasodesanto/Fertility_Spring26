@@ -36,6 +36,7 @@ fi
 : "${E5F_PERSON_ROOT_EXPECTED_PF_DRIVER_SHA256:?PF driver hash is required}"
 : "${E5F_PERSON_ROOT_EXPECTED_SOLVER_SHA256:?solver hash is required}"
 : "${E5F_PERSON_ROOT_EXPECTED_CONTINUATION_SHA256:?continuation hash is required}"
+: "${E5F_PERSON_ROOT_EXPECTED_TENURE_SENSITIVITY_SHA256:?tenure-sensitivity hash is required}"
 
 case "$E5F_PERSON_ROOT_CASE" in
     rebated-tax1-baseline|rebated-tax2-reform) ;;
@@ -55,6 +56,7 @@ FUNDED_DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_perfect_foresight_rebated_
 PF_DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_perfect_foresight_transition.py"
 SOLVER="$PROJECT_ROOT/code/model/intergen_eqscale_seq_optimized/solver.py"
 CONTINUATION="$PROJECT_ROOT/code/model/tools/run_e5f_post2023_no_policy_continuations.py"
+TENURE_SENSITIVITY="$PROJECT_ROOT/code/model/tools/e5f_post2023_tenure_sensitivity.py"
 SOURCE_DIR="$PROJECT_ROOT/output/model/e5f_persons_demographic_satellite_20260826b/source_data"
 HEADSHIP_DIR="$PROJECT_ROOT/output/model/e5f_headship_demographic_bridge_20260826a"
 OUTDIR="$PROJECT_ROOT/output/model/e5f_person_demography_terminal_root_${E5F_PERSON_ROOT_CASE}_${E5F_PERSON_ROOT_RUN_TAG}"
@@ -75,6 +77,7 @@ check_hash "$FUNDED_DRIVER" "$E5F_PERSON_ROOT_EXPECTED_FUNDED_DRIVER_SHA256" "fu
 check_hash "$PF_DRIVER" "$E5F_PERSON_ROOT_EXPECTED_PF_DRIVER_SHA256" "PF driver"
 check_hash "$SOLVER" "$E5F_PERSON_ROOT_EXPECTED_SOLVER_SHA256" "solver"
 check_hash "$CONTINUATION" "$E5F_PERSON_ROOT_EXPECTED_CONTINUATION_SHA256" "continuation"
+check_hash "$TENURE_SENSITIVITY" "$E5F_PERSON_ROOT_EXPECTED_TENURE_SENSITIVITY_SHA256" "tenure sensitivity"
 for required in \
     "$SOURCE_DIR/population_mid.csv" \
     "$SOURCE_DIR/births_mid.csv" \
@@ -107,6 +110,11 @@ payload = {
     "initial_asset_price": float(os.environ["E5F_PERSON_ROOT_ASSET_PRICE"]),
     "initial_equal_transfer": float(os.environ["E5F_PERSON_ROOT_EQUAL_TRANSFER"]),
     "psi_child": float(os.environ["E5F_PERSON_ROOT_PSI_CHILD"]),
+    "post2023_tenure_choice_kappa": (
+        float(os.environ["E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA"])
+        if os.environ.get("E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA")
+        else None
+    ),
     "maximum_root_evaluations": int(os.environ.get("E5F_PERSON_ROOT_MAXIMUM_EVALUATIONS", "24")),
     "maximum_root_iterations": int(os.environ.get("E5F_PERSON_ROOT_MAXIMUM_ITERATIONS", "16")),
     "log_price_difference_step": float(os.environ.get("E5F_PERSON_ROOT_LOG_PRICE_DIFFERENCE_STEP", "0.01")),
@@ -126,20 +134,26 @@ with open(path + ".tmp", "w", encoding="utf-8") as handle:
 os.replace(path + ".tmp", path)
 PY
 
-"$PYTHON_BIN" "$DRIVER" \
-    --case "$E5F_PERSON_ROOT_CASE" \
-    --psi-child "$E5F_PERSON_ROOT_PSI_CHILD" \
-    --initial-asset-price "$E5F_PERSON_ROOT_ASSET_PRICE" \
-    --initial-equal-transfer "$E5F_PERSON_ROOT_EQUAL_TRANSFER" \
-    --source-dir "$SOURCE_DIR" \
-    --headship-dir "$HEADSHIP_DIR" \
-    --output-dir "$OUTDIR/result" \
-    --maximum-root-evaluations "${E5F_PERSON_ROOT_MAXIMUM_EVALUATIONS:-24}" \
-    --maximum-root-iterations "${E5F_PERSON_ROOT_MAXIMUM_ITERATIONS:-16}" \
-    --log-price-difference-step "${E5F_PERSON_ROOT_LOG_PRICE_DIFFERENCE_STEP:-0.01}" \
-    --transfer-difference-step "${E5F_PERSON_ROOT_TRANSFER_DIFFERENCE_STEP:-0.01}" \
-    --maximum-inner-iterations "${E5F_PERSON_ROOT_MAXIMUM_INNER_ITERATIONS:-250}" \
-    --inner-damping "${E5F_PERSON_ROOT_INNER_DAMPING:-0.50}" \
+ARGS=(
+    --case "$E5F_PERSON_ROOT_CASE"
+    --psi-child "$E5F_PERSON_ROOT_PSI_CHILD"
+    --initial-asset-price "$E5F_PERSON_ROOT_ASSET_PRICE"
+    --initial-equal-transfer "$E5F_PERSON_ROOT_EQUAL_TRANSFER"
+    --source-dir "$SOURCE_DIR"
+    --headship-dir "$HEADSHIP_DIR"
+    --output-dir "$OUTDIR/result"
+    --maximum-root-evaluations "${E5F_PERSON_ROOT_MAXIMUM_EVALUATIONS:-24}"
+    --maximum-root-iterations "${E5F_PERSON_ROOT_MAXIMUM_ITERATIONS:-16}"
+    --log-price-difference-step "${E5F_PERSON_ROOT_LOG_PRICE_DIFFERENCE_STEP:-0.01}"
+    --transfer-difference-step "${E5F_PERSON_ROOT_TRANSFER_DIFFERENCE_STEP:-0.01}"
+    --maximum-inner-iterations "${E5F_PERSON_ROOT_MAXIMUM_INNER_ITERATIONS:-250}"
+    --inner-damping "${E5F_PERSON_ROOT_INNER_DAMPING:-0.50}"
+)
+if [ -n "${E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA:-}" ]; then
+    ARGS+=(--post2023-tenure-choice-kappa "$E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA")
+fi
+
+"$PYTHON_BIN" "$DRIVER" "${ARGS[@]}" \
     >"$OUTDIR/driver.log" 2>&1
 
 cp "$OUTDIR/result/summary.json" "$OUTDIR/summary.json"

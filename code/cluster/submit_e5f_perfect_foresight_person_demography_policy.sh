@@ -56,6 +56,7 @@ fi
 : "${E5F_PF_PERSON_POLICY_EXPECTED_PF_DRIVER_SHA256:?PF-driver hash is required}"
 : "${E5F_PF_PERSON_POLICY_EXPECTED_SOLVER_SHA256:?solver hash is required}"
 : "${E5F_PF_PERSON_POLICY_EXPECTED_CONTINUATION_SHA256:?continuation hash is required}"
+: "${E5F_PF_PERSON_POLICY_EXPECTED_TENURE_SENSITIVITY_SHA256:?tenure-sensitivity hash is required}"
 
 case "$E5F_PF_PERSON_POLICY_CASE" in
     rebated-tax1-baseline|rebated-tax2-reform) ;;
@@ -86,6 +87,7 @@ FUNDED_DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_perfect_foresight_rebated_
 PF_DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_perfect_foresight_transition.py"
 SOLVER="$PROJECT_ROOT/code/model/intergen_eqscale_seq_optimized/solver.py"
 CONTINUATION="$PROJECT_ROOT/code/model/tools/run_e5f_post2023_no_policy_continuations.py"
+TENURE_SENSITIVITY="$PROJECT_ROOT/code/model/tools/e5f_post2023_tenure_sensitivity.py"
 SOURCE_DIR="$PROJECT_ROOT/output/model/e5f_persons_demographic_satellite_20260826b/source_data"
 HEADSHIP_DIR="$PROJECT_ROOT/output/model/e5f_headship_demographic_bridge_20260826a"
 TERMINAL_SUMMARY="$E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"
@@ -107,6 +109,7 @@ check_hash "$FUNDED_DRIVER" "$E5F_PF_PERSON_POLICY_EXPECTED_FUNDED_DRIVER_SHA256
 check_hash "$PF_DRIVER" "$E5F_PF_PERSON_POLICY_EXPECTED_PF_DRIVER_SHA256" "PF driver"
 check_hash "$SOLVER" "$E5F_PF_PERSON_POLICY_EXPECTED_SOLVER_SHA256" "solver"
 check_hash "$CONTINUATION" "$E5F_PF_PERSON_POLICY_EXPECTED_CONTINUATION_SHA256" "continuation"
+check_hash "$TENURE_SENSITIVITY" "$E5F_PF_PERSON_POLICY_EXPECTED_TENURE_SENSITIVITY_SHA256" "tenure sensitivity"
 check_hash "$TERMINAL_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_TERMINAL_SUMMARY_SHA256" "terminal summary"
 for required in \
     "$SOURCE_DIR/population_mid.csv" \
@@ -124,6 +127,31 @@ fi
 if [ "$E5F_PF_PERSON_POLICY_MODE" = "smoke" ]; then
     HORIZON="${E5F_PF_PERSON_POLICY_HORIZON:-2}"
     MAX_ITERATIONS="${E5F_PF_PERSON_POLICY_MAX_ITERATIONS:-1}"
+    if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
+        : "${E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256:?seeded smoke requires initial-path hash}"
+        INITIAL_PATH="$E5F_PF_PERSON_POLICY_INITIAL_PATH"
+        [[ "$INITIAL_PATH" = /* ]] || INITIAL_PATH="$PROJECT_ROOT/$INITIAL_PATH"
+        [ -s "$INITIAL_PATH" ] || { echo "missing initial path: $INITIAL_PATH" >&2; exit 2; }
+        check_hash "$INITIAL_PATH" "$E5F_PF_PERSON_POLICY_EXPECTED_INITIAL_PATH_SHA256" "smoke initial path"
+        python3 - "$INITIAL_PATH" "$HORIZON" <<'PY'
+import csv, math, sys
+from pathlib import Path
+
+rows = list(csv.DictReader(Path(sys.argv[1]).open(newline="", encoding="utf-8")))
+horizon = int(sys.argv[2])
+if len(rows) != horizon:
+    raise SystemExit("smoke initial-path row count differs from requested horizon")
+if [int(row["period"]) for row in rows] != list(range(horizon)):
+    raise SystemExit("smoke initial-path periods are not contiguous from zero")
+for row in rows:
+    price = float(row["asset_price"])
+    transfer = float(row["equal_transfer_period_units"])
+    if not math.isfinite(price) or price <= 0.0:
+        raise SystemExit("smoke initial path has invalid asset price")
+    if not math.isfinite(transfer) or transfer < 0.0:
+        raise SystemExit("smoke initial path has invalid equal transfer")
+PY
+    fi
 else
     : "${E5F_PF_PERSON_POLICY_HORIZON:?convergence horizon is required}"
     : "${E5F_PF_PERSON_POLICY_SMOKE_SUMMARY:?convergence requires smoke summary}"
@@ -261,6 +289,11 @@ payload = {
     "same_horizon_polish": os.environ.get(
         "E5F_PF_PERSON_POLICY_SAME_HORIZON_POLISH", "0"
     ) == "1",
+    "post2023_tenure_choice_kappa": (
+        float(os.environ["E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA"])
+        if os.environ.get("E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA")
+        else None
+    ),
     "hashes": {
         key: value for key, value in os.environ.items()
         if key.startswith("E5F_PF_PERSON_POLICY_EXPECTED_")
@@ -290,6 +323,9 @@ if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
     [[ "$INITIAL_PATH" = /* ]] || INITIAL_PATH="$PROJECT_ROOT/$INITIAL_PATH"
     [ -s "$INITIAL_PATH" ] || { echo "missing initial path: $INITIAL_PATH" >&2; exit 2; }
     ARGS+=(--initial-path "$INITIAL_PATH")
+fi
+if [ -n "${E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA:-}" ]; then
+    ARGS+=(--post2023-tenure-choice-kappa "$E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA")
 fi
 
 "$PYTHON_BIN" "$DRIVER" "${ARGS[@]}" >"$OUTDIR/driver.log" 2>&1 &
