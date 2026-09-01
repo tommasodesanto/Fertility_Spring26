@@ -55,8 +55,9 @@ inactive payment-to-income, segmented tenure-market, and migration channels.
 
 Canonical packet:
 `output/model/e5f_post2023_kappa_m5_property_tax_mechanism_decomposition_20260901/`.
-Advisor memo:
-`docs/model/e5f_post2023_kappa_property_tax_mechanism_memo.md`.
+Advisor note:
+`output/pdf/e5f_property_tax_housing_fertility_mechanism_note.pdf`, with
+paper-facing source in `latex/e5f_property_tax_housing_fertility_mechanism_note.tex`.
 No further long run is authorized automatically; the next author decision is
 whether to prioritize a first-stage structural sensitivity or a joint positive-
 tenure-taste recalibration with a revised identifying target contract.
