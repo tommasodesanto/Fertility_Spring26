@@ -504,6 +504,58 @@ def configure_first_child_room_jump(
     return active_domain, profile_overrides, model_profile
 
 
+def validated_structural_stationary_age_mass(
+    observed_age_mass: np.ndarray,
+    *,
+    entry_flow: float,
+    structural_survival: np.ndarray,
+    relative_tolerance: float = 5.0e-9,
+) -> tuple[np.ndarray, dict[str, float]]:
+    """Remove only KFE roundoff from a stationary cohort-age profile.
+
+    A stationary cohort's age mass is the entrant flow multiplied by cumulative
+    structural survival. Positive tenure smoothing can leave solver-scale
+    roundoff of order 1e-9 in otherwise unit survival cells. The ACS bridge must
+    not reinterpret that noise as survival above one, so this helper checks the
+    full observed profile against the exact structural recursion before using
+    the recursion. Any economically meaningful mismatch still fails closed.
+    """
+    observed = np.asarray(observed_age_mass, dtype=float).reshape(-1)
+    survival = np.asarray(structural_survival, dtype=float).reshape(-1)
+    entry = float(entry_flow)
+    tolerance = float(relative_tolerance)
+    if observed.size < 2 or survival.size != observed.size - 1:
+        raise ValueError("Age mass and structural survival dimensions do not conform")
+    if (
+        not math.isfinite(entry)
+        or entry <= 0.0
+        or not math.isfinite(tolerance)
+        or tolerance <= 0.0
+        or np.any(~np.isfinite(observed))
+        or np.any(observed <= 0.0)
+        or np.any(~np.isfinite(survival))
+        or np.any(survival < 0.0)
+        or np.any(survival > 1.0)
+    ):
+        raise ValueError("Age-mass structural recursion inputs are invalid")
+    structural = np.empty_like(observed)
+    structural[0] = entry
+    structural[1:] = entry * np.cumprod(survival)
+    scale = max(entry, 1.0e-15)
+    relative_gap = float(np.max(np.abs(observed - structural)) / scale)
+    if relative_gap > tolerance:
+        raise RuntimeError(
+            "Stationary age mass disagrees with structural survival: "
+            f"relative_gap={relative_gap:.3e}, tolerance={tolerance:.3e}"
+        )
+    return structural, {
+        "status": "structural_survival_recursion_after_kfe_roundoff_gate",
+        "max_abs_mass_gap": float(np.max(np.abs(observed - structural))),
+        "max_relative_mass_gap_to_entry": relative_gap,
+        "relative_tolerance": tolerance,
+    }
+
+
 def solve_old_steady_state(
     chain: Any,
     base_overrides: dict[str, Any],
@@ -1734,12 +1786,61 @@ def main() -> None:
     stationary_age_mass = np.sum(
         stationary_initial_g_pre, axis=(0, 1, 2, 4, 5, 6)
     )
+    implied_age_survival = stationary_age_mass[1:] / stationary_age_mass[:-1]
+    structural_age_survival = (
+        np.asarray(old_parameters.survival_probs, dtype=float)[: int(old_parameters.J) - 1]
+        if bool(old_parameters.use_age_survival)
+        else np.ones(int(old_parameters.J) - 1, dtype=float)
+    )
+    age_survival_diagnostic = {
+        "stationary_age_mass": stationary_age_mass.tolist(),
+        "implied_age_survival": implied_age_survival.tolist(),
+        "structural_age_survival": structural_age_survival.tolist(),
+        "implied_minus_structural": (
+            implied_age_survival - structural_age_survival
+        ).tolist(),
+        "max_implied_age_survival": float(np.max(implied_age_survival)),
+        "max_abs_implied_minus_structural": float(
+            np.max(np.abs(implied_age_survival - structural_age_survival))
+        ),
+        "stationary_entry_flow": E_old,
+        "youngest_age_mass": float(stationary_age_mass[0]),
+    }
+    bridge_structural_survival = None
+    if args.fixed_tenure_choice_kappa is not None:
+        (
+            structural_stationary_age_mass,
+            structural_roundoff_gate,
+        ) = validated_structural_stationary_age_mass(
+            stationary_age_mass,
+            entry_flow=E_old,
+            structural_survival=structural_age_survival,
+        )
+        age_survival_diagnostic["structural_roundoff_gate"] = (
+            structural_roundoff_gate
+        )
+        age_survival_diagnostic["bridge_stationary_age_mass"] = (
+            stationary_age_mass.tolist()
+        )
+        age_survival_diagnostic["exact_structural_stationary_age_mass"] = (
+            structural_stationary_age_mass.tolist()
+        )
+        bridge_structural_survival = structural_age_survival
+    write_json(outdir / "stationary_age_survival_diagnostic.json", age_survival_diagnostic)
+    print(
+        "STATIONARY_AGE_SURVIVAL_DIAGNOSTIC "
+        f"max_implied={age_survival_diagnostic['max_implied_age_survival']:.12g} "
+        "max_gap="
+        f"{age_survival_diagnostic['max_abs_implied_minus_structural']:.3e}",
+        flush=True,
+    )
     age_reweight = transition.acs_2007_age_reweight_diagnostic(
         stationary_age_mass,
         model_ages,
         E_old,
         periods=TRANSITION_PERIODS,
         period_years=float(old_parameters.period_years),
+        structural_survival=bridge_structural_survival,
     )
     initial_g_pre = transition.reweight_distribution_to_acs_2007_ages(
         stationary_initial_g_pre,

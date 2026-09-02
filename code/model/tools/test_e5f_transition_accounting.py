@@ -718,6 +718,52 @@ def test_first_child_jump_can_be_fixed_or_jointly_estimated_but_not_both() -> No
         raise AssertionError("fixed and estimated jump must be mutually exclusive")
 
 
+def test_structural_age_recursion_removes_only_solver_roundoff() -> None:
+    entry = 0.06
+    survival = np.asarray([1.0, 1.0, 0.9, 0.8])
+    exact = np.asarray([entry, entry, entry, 0.9 * entry, 0.72 * entry])
+    noisy = exact * np.asarray([1.0, 1.0 + 4e-10, 1.0 - 3e-10, 1.0, 1.0])
+    reconstructed, gate = calibration.validated_structural_stationary_age_mass(
+        noisy,
+        entry_flow=entry,
+        structural_survival=survival,
+    )
+    assert np.allclose(reconstructed, exact, rtol=0.0, atol=1e-17)
+    assert gate["max_relative_mass_gap_to_entry"] < 5e-9
+    materially_wrong = noisy.copy()
+    materially_wrong[2] *= 1.0 + 1e-6
+    try:
+        calibration.validated_structural_stationary_age_mass(
+            materially_wrong,
+            entry_flow=entry,
+            structural_survival=survival,
+        )
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("structural age recursion accepted a material KFE mismatch")
+
+    ages = 18.0 + 4.0 * np.arange(17)
+    observed = np.full(17, entry)
+    observed[4] *= 1.0 + 4.0e-10
+    diagnostic = transition.acs_2007_age_reweight_diagnostic(
+        observed,
+        ages,
+        entry,
+        structural_survival=np.ones(16),
+    )
+    assert diagnostic["age_survival"] == [1.0] * 16
+    assert diagnostic["survival_source"] == (
+        "structural_survival_after_5e-9_roundoff_gate"
+    )
+    assert math.isclose(
+        sum(diagnostic["reweighted_initial_age_mass"]),
+        float(np.sum(observed)),
+        rel_tol=0.0,
+        abs_tol=1e-12,
+    )
+
+
 if __name__ == "__main__":
     test_replacement_conversion_and_old_stationary_identity()
     test_historical_bridge_is_invariant_to_open_share()
@@ -733,4 +779,5 @@ if __name__ == "__main__":
     test_dated_first_birth_branch_uses_origin_and_destination_kernels()
     test_parameter_table_uses_actual_transition_domain()
     test_first_child_jump_can_be_fixed_or_jointly_estimated_but_not_both()
-    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=14")
+    test_structural_age_recursion_removes_only_solver_roundoff()
+    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=15")

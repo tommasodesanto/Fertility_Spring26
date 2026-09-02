@@ -393,6 +393,7 @@ def acs_2007_age_reweight_diagnostic(
     stationary_entry_flow: float,
     periods: int = 4,
     period_years: float = 4.0,
+    structural_survival: np.ndarray | None = None,
 ) -> dict[str, Any]:
     """Advance the ACS-reweighted age stock at the stationary entrant flow."""
     stationary = np.asarray(stationary_age_mass, dtype=float).reshape(-1)
@@ -420,9 +421,26 @@ def acs_2007_age_reweight_diagnostic(
     if not math.isclose(float(np.sum(reweighted)), initial_total, rel_tol=0.0, abs_tol=1e-12):
         raise RuntimeError("ACS age reweighting changed date-0 total mass")
 
-    survival = stationary[1:] / stationary[:-1]
-    if np.any(survival < -1e-14) or np.any(survival > 1.0 + 1e-10):
-        raise RuntimeError("Stationary age masses imply an invalid survival schedule")
+    implied_survival = stationary[1:] / stationary[:-1]
+    if structural_survival is None:
+        survival = implied_survival
+        if np.any(survival < -1e-14) or np.any(survival > 1.0 + 1e-10):
+            raise RuntimeError("Stationary age masses imply an invalid survival schedule")
+    else:
+        survival = np.asarray(structural_survival, dtype=float).reshape(-1)
+        if (
+            survival.shape != implied_survival.shape
+            or np.any(~np.isfinite(survival))
+            or np.any(survival < 0.0)
+            or np.any(survival > 1.0)
+        ):
+            raise ValueError("Structural age survival is invalid or nonconformable")
+        survival_gap = float(np.max(np.abs(implied_survival - survival)))
+        if survival_gap > 5.0e-9:
+            raise RuntimeError(
+                "Stationary age masses disagree with structural survival: "
+                f"max_gap={survival_gap:.3e}"
+            )
     if not math.isclose(
         float(stationary_entry_flow),
         float(stationary[0]),
@@ -476,6 +494,12 @@ def acs_2007_age_reweight_diagnostic(
         "stationary_age_mass": stationary.tolist(),
         "reweighted_initial_age_mass": reweighted.tolist(),
         "age_survival": survival.tolist(),
+        "implied_age_survival": implied_survival.tolist(),
+        "survival_source": (
+            "stationary_age_mass_ratio"
+            if structural_survival is None
+            else "structural_survival_after_5e-9_roundoff_gate"
+        ),
         "path": path,
         "population_index_at_horizon": path[-1]["population_index"],
     }
