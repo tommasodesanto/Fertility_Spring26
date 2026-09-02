@@ -135,6 +135,24 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--outside-origin-entry-share", type=float, default=0.169)
+    parser.add_argument(
+        "--housing-supply-elasticity",
+        type=float,
+        default=None,
+        help=(
+            "Externally fixed dated-transition housing-supply elasticity. "
+            "Omission retains the calibrated stationary value exactly."
+        ),
+    )
+    parser.add_argument(
+        "--fixed-tenure-choice-kappa",
+        type=float,
+        default=None,
+        help=(
+            "Externally fixed nonnegative tenure-choice dispersion. It is not "
+            "added to the free-parameter count or the dated target system."
+        ),
+    )
     parser.add_argument("--market-tol", type=float, default=2e-4)
     parser.add_argument("--market-max-iter", type=int, default=30)
     parser.add_argument("--nb", type=int, default=120)
@@ -1418,6 +1436,16 @@ def main() -> None:
         raise ValueError("--post-2023-periods must be nonnegative")
     if not 0.0 < float(args.outside_origin_entry_share) < 1.0:
         raise ValueError("--outside-origin-entry-share must lie in (0,1)")
+    if args.housing_supply_elasticity is not None and (
+        not math.isfinite(float(args.housing_supply_elasticity))
+        or float(args.housing_supply_elasticity) < 0.0
+    ):
+        raise ValueError("--housing-supply-elasticity must be finite and nonnegative")
+    if args.fixed_tenure_choice_kappa is not None and (
+        not math.isfinite(float(args.fixed_tenure_choice_kappa))
+        or float(args.fixed_tenure_choice_kappa) < 0.0
+    ):
+        raise ValueError("--fixed-tenure-choice-kappa must be finite and nonnegative")
     replacement_fertility = float(args.replacement_fertility)
     renewal_conversion = transition.effective_birth_to_household_conversion(
         replacement_fertility
@@ -1504,6 +1532,21 @@ def main() -> None:
         theta, panel_terminal_preference_coordinate, panel_metadata = panel_candidate(
             theta, args
         )
+    retained_tenure_choice_kappa = float(theta.get("tenure_choice_kappa", 0.0))
+    if args.fixed_tenure_choice_kappa is not None:
+        theta["tenure_choice_kappa"] = float(args.fixed_tenure_choice_kappa)
+        profile_overrides["tenure_choice_kappa"] = float(
+            args.fixed_tenure_choice_kappa
+        )
+    model_profile["tenure_choice_kappa"] = {
+        "value": float(theta.get("tenure_choice_kappa", retained_tenure_choice_kappa)),
+        "retained_value": retained_tenure_choice_kappa,
+        "status": (
+            "externally_fixed_profile_not_estimated"
+            if args.fixed_tenure_choice_kappa is not None
+            else "retained_model_value"
+        ),
+    }
     target_system = e5_target_system()
     if (
         args.expected_target_set is not None
@@ -1709,6 +1752,25 @@ def main() -> None:
         b_grid,
         old_shared,
         "static-elastic",
+    )
+    retained_supply_elasticity = float(supply_rule.elasticity)
+    if args.housing_supply_elasticity is not None:
+        supply_rule = calendar.HousingSupplyRule(
+            mode=supply_rule.mode,
+            initial_price=supply_rule.initial_price,
+            initial_stock=supply_rule.initial_stock,
+            elasticity=float(args.housing_supply_elasticity),
+        )
+    supply_normalization["retained_housing_supply_elasticity"] = (
+        retained_supply_elasticity
+    )
+    supply_normalization["transition_housing_supply_elasticity"] = float(
+        supply_rule.elasticity
+    )
+    supply_normalization["elasticity_status"] = (
+        "externally_fixed_profile_not_estimated"
+        if args.housing_supply_elasticity is not None
+        else "retained_model_value"
     )
     old_first_birth_accounting = first_birth_accounting_by_age(
         old_evaluation, old_parameters
@@ -2106,6 +2168,30 @@ def main() -> None:
         old_psi_child=old_psi_child,
         joint_panel=panel_metadata is not None,
     )
+    params.extend(
+        [
+            {
+                "parameter": "tenure_choice_kappa",
+                "value": float(theta.get("tenure_choice_kappa", 0.0)),
+                "lower_bound": math.nan,
+                "upper_bound": math.nan,
+                "transform": "external_profile",
+                "is_free_parameter": False,
+                "status": model_profile["tenure_choice_kappa"]["status"],
+                "near_bound": False,
+            },
+            {
+                "parameter": "housing_supply_elasticity",
+                "value": float(supply_rule.elasticity),
+                "lower_bound": math.nan,
+                "upper_bound": math.nan,
+                "transform": "external_profile",
+                "is_free_parameter": False,
+                "status": supply_normalization["elasticity_status"],
+                "near_bound": False,
+            },
+        ]
+    )
     for row in params:
         if row["parameter"] == "psi_child_2007":
             row["value"] = old_psi_child
@@ -2142,6 +2228,20 @@ def main() -> None:
         "estimate_first_child_room_jump": bool(
             args.estimate_first_child_room_jump
         ),
+        "external_closure_contract": {
+            "housing_supply_elasticity": float(supply_rule.elasticity),
+            "housing_supply_elasticity_status": supply_normalization[
+                "elasticity_status"
+            ],
+            "tenure_choice_kappa": float(theta.get("tenure_choice_kappa", 0.0)),
+            "tenure_choice_kappa_status": model_profile[
+                "tenure_choice_kappa"
+            ]["status"],
+            "identification": (
+                "both objects are externally fixed; the existing eleven "
+                "transition parameters remain identified by twelve dated moments"
+            ),
+        },
         "candidate_psi_changes": candidate_psi_changes,
         "policy_case": str(args.policy_case),
         "post_2023_periods": int(args.post_2023_periods),

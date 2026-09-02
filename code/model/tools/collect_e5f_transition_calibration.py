@@ -26,6 +26,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--expected-center-sha256", required=True)
     parser.add_argument("--expected-panel-design", required=True)
     parser.add_argument("--expected-local-radius", type=float, required=True)
+    parser.add_argument("--expected-housing-supply-elasticity", type=float, default=None)
+    parser.add_argument("--expected-tenure-choice-kappa", type=float, default=None)
     parser.add_argument("--require-complete", action="store_true")
     return parser.parse_args()
 
@@ -240,6 +242,28 @@ def validate_expected_contract(
         if recorded != str(expected):
             raise RuntimeError(
                 f"Unexpected {label}: recorded={recorded!r}, expected={expected!r}"
+            )
+    closure = dict(summary.get("external_closure_contract") or {})
+    for expected, key, label in (
+        (
+            args.expected_housing_supply_elasticity,
+            "housing_supply_elasticity",
+            "housing-supply elasticity",
+        ),
+        (
+            args.expected_tenure_choice_kappa,
+            "tenure_choice_kappa",
+            "tenure-choice dispersion",
+        ),
+    ):
+        if expected is None:
+            continue
+        recorded = float(closure.get(key, math.nan))
+        if not math.isfinite(recorded) or not math.isclose(
+            recorded, float(expected), rel_tol=0.0, abs_tol=1e-14
+        ):
+            raise RuntimeError(
+                f"Unexpected {label}: recorded={recorded}, expected={expected}"
             )
     radius = float(panel.get("local_radius", math.nan))
     if not math.isfinite(radius) or not math.isclose(
@@ -509,6 +533,11 @@ def main() -> None:
                 ),
                 int(summary["post_2023_periods"]),
                 str(summary["policy_case"]),
+                json.dumps(
+                    summary.get("external_closure_contract") or {},
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
             )
             contracts.add(contract)
             if int(panel["task_id"]) != task or int(panel["panel_size"]) != expected:
@@ -571,6 +600,9 @@ def main() -> None:
             model_profile=selected_summary.get("model_profile"),
             income_profile_gates=selected_summary.get("income_profile_gates"),
             code_fingerprints=selected_summary.get("code_fingerprints"),
+            external_closure_contract=selected_summary.get(
+                "external_closure_contract"
+            ),
             population_bridge=selected_summary["population_bridge"],
             population_validation_status=selected_summary[
                 "population_validation_status"
@@ -673,6 +705,9 @@ def main() -> None:
         ),
         "code_fingerprints": (
             best.get("code_fingerprints") if best is not None else None
+        ),
+        "external_closure_contract": (
+            best.get("external_closure_contract") if best is not None else None
         ),
         "model_profile": best.get("model_profile") if best is not None else None,
         "population_bridge": (
