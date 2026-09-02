@@ -165,12 +165,16 @@ PY
 else
     : "${E5F_PF_PERSON_POLICY_HORIZON:?convergence horizon is required}"
     : "${E5F_PF_PERSON_POLICY_SMOKE_SUMMARY:?convergence requires smoke summary}"
+    : "${E5F_PF_PERSON_POLICY_EXPECTED_SMOKE_SUMMARY_SHA256:?convergence requires smoke-summary hash}"
     HORIZON="$E5F_PF_PERSON_POLICY_HORIZON"
     MAX_ITERATIONS="${E5F_PF_PERSON_POLICY_MAX_ITERATIONS:-35}"
     SMOKE_SUMMARY="$E5F_PF_PERSON_POLICY_SMOKE_SUMMARY"
     [[ "$SMOKE_SUMMARY" = /* ]] || SMOKE_SUMMARY="$PROJECT_ROOT/$SMOKE_SUMMARY"
+    check_hash "$SMOKE_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_SMOKE_SUMMARY_SHA256" "smoke summary"
     python3 - "$SMOKE_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_DRIVER_SHA256" \
-        "$E5F_PF_PERSON_POLICY_CASE" <<'PY'
+        "$E5F_PF_PERSON_POLICY_CASE" \
+        "$E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_REPORT_SHA256" \
+        "$E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_TRANSITION_SHA256" <<'PY'
 import json, sys
 from pathlib import Path
 summary = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
@@ -186,6 +190,11 @@ if summary.get("path_status") not in {
     "converged", "maximum_iterations_reached", "soft_time_budget_reached"
 }:
     raise SystemExit("smoke did not execute the path loop")
+provenance = summary.get("source_provenance") or {}
+if provenance.get("selected_report_sha256") != sys.argv[4]:
+    raise SystemExit("smoke used a different selected calibration report")
+if provenance.get("selected_transition_sha256") != sys.argv[5]:
+    raise SystemExit("smoke used a different selected calibration transition")
 PY
     if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
         : "${E5F_PF_PERSON_POLICY_INITIAL_SUMMARY:?seeded convergence requires initial summary}"
