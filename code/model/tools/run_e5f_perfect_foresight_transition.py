@@ -875,25 +875,152 @@ def load_diagnostic_contracts(
         if not path.is_file():
             raise FileNotFoundError(path)
     raw = json.loads(report_path.read_text(encoding="utf-8"))
-    if raw.get("schema") != "e5f_transition_ridge_refinement_report_v1":
-        raise RuntimeError("The selected report has the wrong schema.")
-    if raw.get("status") != "complete_refinement_with_two_independent_identity_repeats":
-        raise RuntimeError("The selected report is not a completed refinement.")
-    if not bool(raw.get("promotion_eligible", False)):
-        raise RuntimeError("The selected report is not promotion eligible.")
-    scientific = dict(raw.get("scientific_contract") or {})
-    best = dict(raw.get("best_candidate") or {})
-    if not scientific or not best:
-        raise RuntimeError("The selected report lacks its scientific contract or winner.")
     source_hash = file_sha256(source_path)
-    if source_hash != str(scientific.get("source_sha256")):
-        raise RuntimeError("The stationary source does not match the selected report.")
-    report = dict(scientific)
-    report.update(
-        best_candidate=best,
-        old_psi_child=best.get("old_psi_child"),
-        renewal_accounting_old_state=best.get("renewal_accounting_old_state"),
-    )
+    schema = raw.get("schema")
+    if schema == "e5f_transition_ridge_refinement_report_v1":
+        if raw.get("status") != "complete_refinement_with_two_independent_identity_repeats":
+            raise RuntimeError("The selected report is not a completed refinement.")
+        if not bool(raw.get("promotion_eligible", False)):
+            raise RuntimeError("The selected report is not promotion eligible.")
+        scientific = dict(raw.get("scientific_contract") or {})
+        best = dict(raw.get("best_candidate") or {})
+        if not scientific or not best:
+            raise RuntimeError(
+                "The selected report lacks its scientific contract or winner."
+            )
+        if source_hash != str(scientific.get("source_sha256")):
+            raise RuntimeError(
+                "The stationary source does not match the selected report."
+            )
+        report = dict(scientific)
+        report.update(
+            best_candidate=best,
+            old_psi_child=best.get("old_psi_child"),
+            renewal_accounting_old_state=best.get(
+                "renewal_accounting_old_state"
+            ),
+        )
+    elif schema is None:
+        # The bounded transition-calibration collector predates the ridge-report
+        # wrapper.  Accept it only after reproducing its complete-task, live-code,
+        # target, closure, source, and selected-path gates here.  This branch is
+        # intentionally fail closed so legacy ridge behavior remains unchanged.
+        if raw.get("status") != "complete":
+            raise RuntimeError("The collector report is not complete.")
+        expected_tasks = int(raw.get("expected_tasks", -1))
+        if not (
+            expected_tasks > 0
+            and int(raw.get("completed_tasks", -1)) == expected_tasks
+            and int(raw.get("valid_tasks", -1)) == expected_tasks
+            and list(raw.get("failed_or_missing_tasks") or []) == []
+        ):
+            raise RuntimeError("The collector report has incomplete or invalid tasks.")
+        best = dict(raw.get("best_candidate") or {})
+        if not best or not bool(best.get("valid", False)):
+            raise RuntimeError("The collector report lacks a valid winner.")
+        if (
+            str(best.get("policy_case")) != "none"
+            or int(best.get("post_2023_periods", -1)) != 0
+            or int(best.get("target_count", -1)) != 12
+        ):
+            raise RuntimeError("The collector winner has the wrong calibration scope.")
+        live_target = continuation.e5_target_system()
+        if str(best.get("target_fingerprint")) != str(live_target.fingerprint):
+            raise RuntimeError("The collector winner uses a stale target system.")
+        if source_hash != str(best.get("source_sha256")):
+            raise RuntimeError(
+                "The stationary source does not match the collector winner."
+            )
+        shared_contracts = (
+            "code_fingerprints",
+            "external_closure_contract",
+            "model_profile",
+            "renewal_accounting_contract",
+            "renewal_accounting_old_state",
+            "outside_origin_entry_share",
+            "population_validation_status",
+        )
+        for key in shared_contracts:
+            if raw.get(key) != best.get(key):
+                raise RuntimeError(
+                    f"Collector report/winner contract mismatch for {key}."
+                )
+        _, live_model = transition.configure_sequential_model()
+        live_code = continuation.calibration.code_fingerprint_contract(live_model)
+        if str((best.get("code_fingerprints") or {}).get("bundle_sha256")) != str(
+            live_code.get("bundle_sha256")
+        ):
+            raise RuntimeError("The collector winner uses a stale model-code bundle.")
+        continuation.validate_renewal_contract(
+            dict(best.get("renewal_accounting_contract") or {})
+        )
+        external = dict(best.get("external_closure_contract") or {})
+        theta = dict(best.get("theta") or {})
+        if not (
+            math.isclose(
+                float(external.get("housing_supply_elasticity")),
+                0.63,
+                rel_tol=0.0,
+                abs_tol=1e-14,
+            )
+            and str(external.get("housing_supply_elasticity_status"))
+            == "externally_fixed_profile_not_estimated"
+            and math.isclose(
+                float(external.get("tenure_choice_kappa")),
+                float(theta.get("tenure_choice_kappa")),
+                rel_tol=0.0,
+                abs_tol=1e-14,
+            )
+            and str(external.get("tenure_choice_kappa_status"))
+            == "externally_fixed_profile_not_estimated"
+        ):
+            raise RuntimeError("The collector winner has the wrong external closure.")
+        with selected_transition_path.open(newline="", encoding="utf-8") as handle:
+            transition_rows = list(csv.DictReader(handle))
+        if len(transition_rows) != 5 or [
+            int(row.get("period", -1)) for row in transition_rows
+        ] != list(range(5)):
+            raise RuntimeError("The collector transition path has the wrong dates.")
+        try:
+            path_market = max(
+                abs(float(row["relative_market_residual"]))
+                for row in transition_rows
+            )
+            path_mass = max(
+                abs(float(row["mass_accounting_residual"]))
+                for row in transition_rows
+            )
+            path_population = max(
+                abs(float(row["population_target_gap"]))
+                for row in transition_rows
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            raise RuntimeError(
+                "The collector transition path lacks finite audit columns."
+            ) from exc
+        if not (
+            math.isclose(
+                path_market,
+                float(best.get("max_market_residual")),
+                rel_tol=1e-12,
+                abs_tol=1e-14,
+            )
+            and path_market <= 2e-4
+            and path_mass <= 2e-10
+            and path_population <= 2e-10
+        ):
+            raise RuntimeError("The collector transition path fails its audit gates.")
+        report = dict(raw)
+        report.update(
+            best_candidate=best,
+            old_psi_child=best.get("old_psi_child"),
+            renewal_accounting_old_state=best.get(
+                "renewal_accounting_old_state"
+            ),
+        )
+        scientific = report
+    else:
+        raise RuntimeError("The selected report has the wrong schema.")
     contracts = {
         "report": report,
         "raw_report": raw,

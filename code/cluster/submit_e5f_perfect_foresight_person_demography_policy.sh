@@ -57,6 +57,10 @@ fi
 : "${E5F_PF_PERSON_POLICY_EXPECTED_SOLVER_SHA256:?solver hash is required}"
 : "${E5F_PF_PERSON_POLICY_EXPECTED_CONTINUATION_SHA256:?continuation hash is required}"
 : "${E5F_PF_PERSON_POLICY_EXPECTED_TENURE_SENSITIVITY_SHA256:?tenure-sensitivity hash is required}"
+: "${E5F_PF_PERSON_POLICY_SELECTED_REPORT:?selected calibration report is required}"
+: "${E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_REPORT_SHA256:?selected-report hash is required}"
+: "${E5F_PF_PERSON_POLICY_SELECTED_TRANSITION:?selected calibration transition is required}"
+: "${E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_TRANSITION_SHA256:?selected-transition hash is required}"
 
 case "$E5F_PF_PERSON_POLICY_CASE" in
     rebated-tax1-baseline|rebated-tax2-reform) ;;
@@ -88,6 +92,10 @@ PF_DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_perfect_foresight_transition.p
 SOLVER="$PROJECT_ROOT/code/model/intergen_eqscale_seq_optimized/solver.py"
 CONTINUATION="$PROJECT_ROOT/code/model/tools/run_e5f_post2023_no_policy_continuations.py"
 TENURE_SENSITIVITY="$PROJECT_ROOT/code/model/tools/e5f_post2023_tenure_sensitivity.py"
+SELECTED_REPORT="$E5F_PF_PERSON_POLICY_SELECTED_REPORT"
+[[ "$SELECTED_REPORT" = /* ]] || SELECTED_REPORT="$PROJECT_ROOT/$SELECTED_REPORT"
+SELECTED_TRANSITION="$E5F_PF_PERSON_POLICY_SELECTED_TRANSITION"
+[[ "$SELECTED_TRANSITION" = /* ]] || SELECTED_TRANSITION="$PROJECT_ROOT/$SELECTED_TRANSITION"
 SOURCE_DIR="$PROJECT_ROOT/output/model/e5f_persons_demographic_satellite_20260826b/source_data"
 HEADSHIP_DIR="$PROJECT_ROOT/output/model/e5f_headship_demographic_bridge_20260826a"
 TERMINAL_SUMMARY="$E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"
@@ -111,6 +119,8 @@ check_hash "$SOLVER" "$E5F_PF_PERSON_POLICY_EXPECTED_SOLVER_SHA256" "solver"
 check_hash "$CONTINUATION" "$E5F_PF_PERSON_POLICY_EXPECTED_CONTINUATION_SHA256" "continuation"
 check_hash "$TENURE_SENSITIVITY" "$E5F_PF_PERSON_POLICY_EXPECTED_TENURE_SENSITIVITY_SHA256" "tenure sensitivity"
 check_hash "$TERMINAL_SUMMARY" "$E5F_PF_PERSON_POLICY_EXPECTED_TERMINAL_SUMMARY_SHA256" "terminal summary"
+check_hash "$SELECTED_REPORT" "$E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_REPORT_SHA256" "selected report"
+check_hash "$SELECTED_TRANSITION" "$E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_TRANSITION_SHA256" "selected transition"
 for required in \
     "$SOURCE_DIR/population_mid.csv" \
     "$SOURCE_DIR/births_mid.csv" \
@@ -172,7 +182,9 @@ if (summary.get("source_hashes") or {}).get("driver") != sys.argv[2]:
     raise SystemExit("smoke used a different path-driver hash")
 if not all((summary.get("accounting_gates") or {}).values()):
     raise SystemExit("smoke accounting gates failed")
-if summary.get("path_status") not in {"converged", "maximum_iterations_reached"}:
+if summary.get("path_status") not in {
+    "converged", "maximum_iterations_reached", "soft_time_budget_reached"
+}:
     raise SystemExit("smoke did not execute the path loop")
 PY
     if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
@@ -210,7 +222,9 @@ seed_horizon = int(summary.get("horizon", 0))
 if same_horizon_polish:
     if seed_horizon != requested_horizon:
         raise SystemExit("same-horizon polish requires an equal-horizon seed")
-    if summary.get("path_converged") or summary.get("path_status") != "maximum_iterations_reached":
+    if summary.get("path_converged") or summary.get("path_status") not in {
+        "maximum_iterations_reached", "soft_time_budget_reached"
+    }:
         raise SystemExit("same-horizon polish requires a bounded nonconverged seed")
 else:
     if not summary.get("path_converged") or summary.get("path_status") != "converged":
@@ -254,6 +268,18 @@ expected = {
 for name, digest in expected.items():
     if (summary.get("source_hashes") or {}).get(name) != digest:
         raise SystemExit(f"initial path used a different {name} hash")
+provenance = summary.get("source_provenance") or {}
+selected_hashes = {
+    "selected_report_sha256": os.environ[
+        "E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_REPORT_SHA256"
+    ],
+    "selected_transition_sha256": os.environ[
+        "E5F_PF_PERSON_POLICY_EXPECTED_SELECTED_TRANSITION_SHA256"
+    ],
+}
+for name, digest in selected_hashes.items():
+    if provenance.get(name) != digest:
+        raise SystemExit(f"initial path used a different calibration {name}")
 PY
     fi
 fi
@@ -284,6 +310,8 @@ payload = {
         "requested_memory": os.environ.get("E5F_PF_PERSON_POLICY_MEMORY"),
     },
     "terminal_summary": os.environ["E5F_PF_PERSON_POLICY_TERMINAL_SUMMARY"],
+    "selected_report": os.environ["E5F_PF_PERSON_POLICY_SELECTED_REPORT"],
+    "selected_transition": os.environ["E5F_PF_PERSON_POLICY_SELECTED_TRANSITION"],
     "initial_path": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_PATH"),
     "initial_summary": os.environ.get("E5F_PF_PERSON_POLICY_INITIAL_SUMMARY"),
     "same_horizon_polish": os.environ.get(
@@ -292,6 +320,11 @@ payload = {
     "post2023_tenure_choice_kappa": (
         float(os.environ["E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA"])
         if os.environ.get("E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA")
+        else None
+    ),
+    "soft_time_limit_seconds": (
+        float(os.environ["E5F_PF_PERSON_POLICY_SOFT_TIME_LIMIT_SECONDS"])
+        if os.environ.get("E5F_PF_PERSON_POLICY_SOFT_TIME_LIMIT_SECONDS")
         else None
     ),
     "hashes": {
@@ -308,6 +341,8 @@ PY
 ARGS=(
     --case "$E5F_PF_PERSON_POLICY_CASE"
     --terminal-summary "$TERMINAL_SUMMARY"
+    --selected-report "$SELECTED_REPORT"
+    --selected-transition "$SELECTED_TRANSITION"
     --horizon "$HORIZON"
     --source-dir "$SOURCE_DIR"
     --headship-dir "$HEADSHIP_DIR"
@@ -326,6 +361,15 @@ if [ -n "${E5F_PF_PERSON_POLICY_INITIAL_PATH:-}" ]; then
 fi
 if [ -n "${E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA:-}" ]; then
     ARGS+=(--post2023-tenure-choice-kappa "$E5F_PF_PERSON_POLICY_POST2023_TENURE_CHOICE_KAPPA")
+fi
+if [ -n "${E5F_PF_PERSON_POLICY_SOFT_TIME_LIMIT_SECONDS:-}" ]; then
+    "$PYTHON_BIN" - "$E5F_PF_PERSON_POLICY_SOFT_TIME_LIMIT_SECONDS" <<'PY'
+import math, sys
+value = float(sys.argv[1])
+if not math.isfinite(value) or value <= 0.0:
+    raise SystemExit("soft time limit must be finite and positive")
+PY
+    ARGS+=(--soft-time-limit-seconds "$E5F_PF_PERSON_POLICY_SOFT_TIME_LIMIT_SECONDS")
 fi
 
 "$PYTHON_BIN" "$DRIVER" "${ARGS[@]}" >"$OUTDIR/driver.log" 2>&1 &

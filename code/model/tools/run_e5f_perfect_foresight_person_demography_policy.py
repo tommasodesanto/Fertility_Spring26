@@ -126,6 +126,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--maximum-transfer-step", type=float, default=0.08)
     parser.add_argument("--initial-path", type=Path)
     parser.add_argument("--post2023-tenure-choice-kappa", type=float)
+    parser.add_argument(
+        "--soft-time-limit-seconds",
+        type=float,
+        help=(
+            "Optional wall-clock budget. After the first completed iteration "
+            "that reaches this budget, write the normal best-path packet and "
+            "exit with a restartable soft-time status."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -244,6 +253,7 @@ def solve_person_funded_path(
         [dict[str, Any], person_pf.PersonPathEvaluation], None
     ]
     | None = None,
+    stop_after_iteration: Callable[[dict[str, Any]], bool] | None = None,
 ) -> PersonFundedPFSolution:
     started = time.perf_counter()
     prices = np.asarray(initial_prices, dtype=float).reshape(-1).copy()
@@ -258,6 +268,7 @@ def solve_person_funded_path(
     best: tuple[float, float, float, np.ndarray, np.ndarray, int] | None = None
     total_bellman = 0
     path_converged = False
+    soft_time_budget_reached = False
 
     for iteration in range(1, int(maximum_iterations) + 1):
         evaluation = person_pf.evaluate_path_at_prices_person_demography(
@@ -336,6 +347,9 @@ def solve_person_funded_path(
                 iteration,
             )
             break
+        if stop_after_iteration is not None and stop_after_iteration(record):
+            soft_time_budget_reached = True
+            break
         current_price_damping, current_transfer_damping = adapt_path_damping(
             current_price_damping=current_price_damping,
             current_transfer_damping=current_transfer_damping,
@@ -410,7 +424,15 @@ def solve_person_funded_path(
         )
     return PersonFundedPFSolution(
         case=terminal.case.name,
-        status="converged" if path_converged else "maximum_iterations_reached",
+        status=(
+            "converged"
+            if path_converged
+            else (
+                "soft_time_budget_reached"
+                if soft_time_budget_reached
+                else "maximum_iterations_reached"
+            )
+        ),
         path_converged=path_converged,
         iterations=len(history),
         prices=best_evaluation.prices,
@@ -601,6 +623,11 @@ def main() -> None:
     args = parse_args()
     if int(args.horizon) < 2 or int(args.maximum_path_iterations) < 1:
         raise ValueError("Horizon must be at least two and iterations positive")
+    if args.soft_time_limit_seconds is not None and (
+        not math.isfinite(float(args.soft_time_limit_seconds))
+        or float(args.soft_time_limit_seconds) <= 0.0
+    ):
+        raise ValueError("The soft time limit must be finite and positive")
     output_dir = args.output_dir.resolve()
     launcher_files = {"launch_contract.json", "driver.log", "heartbeat.json"}
     unexpected = (
@@ -655,6 +682,12 @@ def main() -> None:
         raise RuntimeError(
             "Terminal root and transition use different tenure-choice sensitivities"
         )
+    root_provenance = dict(root_summary.get("source_provenance") or {})
+    for key in ("selected_report_sha256", "selected_transition_sha256"):
+        if root_provenance.get(key) != provenance.get(key):
+            raise RuntimeError(
+                f"Terminal root and transition use different calibration {key}."
+            )
     expected_hashes = {
         "tenure_sensitivity": pf.file_sha256(
             TOOLS_ROOT / "e5f_post2023_tenure_sensitivity.py"
@@ -833,6 +866,14 @@ def main() -> None:
         maximum_log_price_step=float(args.maximum_log_price_step),
         maximum_transfer_step=float(args.maximum_transfer_step),
         progress_callback=progress,
+        stop_after_iteration=(
+            (
+                lambda _record: time.perf_counter() - started
+                >= float(args.soft_time_limit_seconds)
+            )
+            if args.soft_time_limit_seconds is not None
+            else None
+        ),
     )
     pf.write_csv(output_dir / "transition_path.csv", solution.rows)
     pf.write_csv(output_dir / "joint_iteration_history.csv", solution.iteration_history)
@@ -864,6 +905,7 @@ def main() -> None:
         "maximum_log_price_residual": solution.maximum_log_price_residual,
         "maximum_transfer_residual": solution.maximum_transfer_residual,
         "iterations": solution.iterations,
+        "soft_time_limit_seconds": args.soft_time_limit_seconds,
         "bellman_solves": solution.bellman_solves,
         "terminal_root": root_summary,
         "history_reproduction_status": history_gate.get("status"),

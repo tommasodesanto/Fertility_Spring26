@@ -6,6 +6,8 @@ import tempfile
 import types
 import unittest
 import weakref
+import hashlib
+import json
 from pathlib import Path
 from types import SimpleNamespace
 from unittest import mock
@@ -243,6 +245,104 @@ class TinyPerfectForesightTests(unittest.TestCase):
                 outdir=Path("unused_endpoint_test_output"),
                 root_residual_tolerance=1.0,
             )
+
+    def test_collector_contract_loader_is_complete_and_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "source.json"
+            source.write_text("source\n", encoding="utf-8")
+            source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+            transition_path = root / "best_transition_path.csv"
+            transition_path.write_text(
+                "period,relative_market_residual,mass_accounting_residual,"
+                "population_target_gap\n"
+                + "".join(f"{period},0.00003,0,0\n" for period in range(5)),
+                encoding="utf-8",
+            )
+            shared = {
+                "code_fingerprints": {"bundle_sha256": "live-code"},
+                "external_closure_contract": {
+                    "housing_supply_elasticity": 0.63,
+                    "housing_supply_elasticity_status": (
+                        "externally_fixed_profile_not_estimated"
+                    ),
+                    "tenure_choice_kappa": 0.005,
+                    "tenure_choice_kappa_status": (
+                        "externally_fixed_profile_not_estimated"
+                    ),
+                },
+                "model_profile": {"name": "e5f-income-entry"},
+                "renewal_accounting_contract": {"test": "mocked"},
+                "renewal_accounting_old_state": {"test": "mocked"},
+                "outside_origin_entry_share": 0.169,
+                "population_validation_status": "matched",
+            }
+            best = {
+                **shared,
+                "valid": True,
+                "policy_case": "none",
+                "post_2023_periods": 0,
+                "target_count": 12,
+                "target_fingerprint": "live-target",
+                "source_sha256": source_hash,
+                "theta": {"tenure_choice_kappa": 0.005},
+                "old_psi_child": 0.2,
+                "new_psi_child": -0.1,
+                "max_market_residual": 0.00003,
+            }
+            report = root / "summary.json"
+            report.write_text(
+                json.dumps(
+                    {
+                        **shared,
+                        "status": "complete",
+                        "expected_tasks": 23,
+                        "completed_tasks": 23,
+                        "valid_tasks": 23,
+                        "failed_or_missing_tasks": [],
+                        "best_candidate": best,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with (
+                mock.patch.object(
+                    driver.continuation,
+                    "e5_target_system",
+                    return_value=SimpleNamespace(fingerprint="live-target"),
+                ),
+                mock.patch.object(
+                    driver.transition,
+                    "configure_sequential_model",
+                    return_value=(object(), object()),
+                ),
+                mock.patch.object(
+                    driver.continuation.calibration,
+                    "code_fingerprint_contract",
+                    return_value={"bundle_sha256": "live-code"},
+                ),
+                mock.patch.object(
+                    driver.continuation, "validate_renewal_contract"
+                ),
+            ):
+                contracts, provenance = driver.load_diagnostic_contracts(
+                    report, transition_path, source
+                )
+                self.assertEqual(
+                    contracts["report_best"]["theta"]["tenure_choice_kappa"],
+                    0.005,
+                )
+                self.assertEqual(
+                    provenance["selected_report_sha256"],
+                    hashlib.sha256(report.read_bytes()).hexdigest(),
+                )
+                broken = json.loads(report.read_text(encoding="utf-8"))
+                broken["valid_tasks"] = 22
+                report.write_text(json.dumps(broken), encoding="utf-8")
+                with self.assertRaisesRegex(RuntimeError, "incomplete or invalid"):
+                    driver.load_diagnostic_contracts(
+                        report, transition_path, source
+                    )
 
     def test_recorded_price_seed_extends_at_terminal_price(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

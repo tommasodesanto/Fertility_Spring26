@@ -683,6 +683,12 @@ def prepare_model(
     base = closure.make_overrides(chain, theta, nb=120, profile="e5f-floor")
     base.update(profile_overrides)
     base.update(theta)
+    positive_tenure_dispersion = float(theta.get("tenure_choice_kappa", 0.0)) > 0.0
+    if positive_tenure_dispersion:
+        # Match the audited transition-calibration numerical contract. Positive
+        # tenure smoothing creates only solver-scale redistribution roundoff;
+        # normalize it after the same strict mass gate used in calibration.
+        base["normalize_transition_mass_roundoff"] = True
     base.update(
         parent_dp_waiver=False,
         parent_dp_waiver_phi=1.0,
@@ -783,12 +789,27 @@ def prepare_model(
     stationary_age_mass = np.sum(
         stationary_g_pre, axis=(0, 1, 2, 4, 5, 6)
     )
+    structural_survival = None
+    if positive_tenure_dispersion:
+        structural_survival = (
+            np.asarray(old_parameters.survival_probs, dtype=float)[
+                : int(old_parameters.J) - 1
+            ]
+            if bool(old_parameters.use_age_survival)
+            else np.ones(int(old_parameters.J) - 1, dtype=float)
+        )
+        calibration.validated_structural_stationary_age_mass(
+            stationary_age_mass,
+            entry_flow=E_old,
+            structural_survival=structural_survival,
+        )
     age_reweight = transition.acs_2007_age_reweight_diagnostic(
         stationary_age_mass,
         ages,
         E_old,
         periods=TRANSITION_PERIODS,
         period_years=float(old_parameters.period_years),
+        structural_survival=structural_survival,
     )
     initial_g_pre = transition.reweight_distribution_to_acs_2007_ages(
         stationary_g_pre, age_reweight
