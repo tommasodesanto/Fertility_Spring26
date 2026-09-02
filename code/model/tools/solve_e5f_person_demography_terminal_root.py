@@ -72,6 +72,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--transfer-difference-step", type=float, default=0.01)
     parser.add_argument("--maximum-inner-iterations", type=int, default=250)
     parser.add_argument("--inner-damping", type=float, default=0.50)
+    parser.add_argument("--housing-supply-elasticity", type=float, default=1.75)
     parser.add_argument("--post2023-tenure-choice-kappa", type=float)
     return parser.parse_args()
 
@@ -120,6 +121,11 @@ def main() -> None:
         or float(args.transfer_difference_step) <= 0.0
     ):
         raise ValueError("Finite-difference steps must be positive")
+    if (
+        not math.isfinite(float(args.housing_supply_elasticity))
+        or float(args.housing_supply_elasticity) <= 0.0
+    ):
+        raise ValueError("Housing-supply elasticity must be finite and positive")
     output_dir = args.output_dir.resolve()
     if output_dir.exists() and any(output_dir.iterdir()):
         raise FileExistsError(f"Refusing to overwrite nonempty output: {output_dir}")
@@ -175,7 +181,7 @@ def main() -> None:
     supply_rule, supply_contract = impact.reanchor_supply_rule(
         inherited_price=float(impact_price),
         baseline_demand=float(anchor.evaluation.demand_by_loc[0]),
-        elasticity=1.75,
+        elasticity=float(args.housing_supply_elasticity),
     )
 
     case = impact.CASES[args.case]

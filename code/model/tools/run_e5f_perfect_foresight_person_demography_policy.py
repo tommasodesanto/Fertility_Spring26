@@ -151,6 +151,24 @@ def normalized_l1(candidate: np.ndarray, reference: np.ndarray) -> float:
     return float(np.sum(np.abs(left / left_mass - right / right_mass)))
 
 
+def terminal_supply_elasticity(root_summary: dict[str, Any]) -> float:
+    """Return the terminal packet's explicit, validated direct elasticity."""
+    contract = root_summary.get("supply_contract")
+    if not isinstance(contract, dict):
+        raise RuntimeError("Terminal root lacks a supply contract")
+    try:
+        elasticity = float(contract["supply_elasticity"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise RuntimeError(
+            "Terminal root lacks a finite positive supply elasticity"
+        ) from exc
+    if not math.isfinite(elasticity) or elasticity <= 0.0:
+        raise RuntimeError(
+            "Terminal root lacks a finite positive supply elasticity"
+        )
+    return elasticity
+
+
 def terminal_convergence_diagnostics(
     evaluation: person_pf.PersonPathEvaluation,
     *,
@@ -683,7 +701,7 @@ def main() -> None:
     supply_rule, supply_contract = impact.reanchor_supply_rule(
         inherited_price=float(impact_price),
         baseline_demand=float(tax1_anchor.evaluation.demand_by_loc[0]),
-        elasticity=1.75,
+        elasticity=terminal_supply_elasticity(root_summary),
     )
     if root_summary.get("supply_contract") != supply_contract:
         raise RuntimeError("Terminal root and transition use different supply contracts")

@@ -110,6 +110,9 @@ payload = {
     "initial_asset_price": float(os.environ["E5F_PERSON_ROOT_ASSET_PRICE"]),
     "initial_equal_transfer": float(os.environ["E5F_PERSON_ROOT_EQUAL_TRANSFER"]),
     "psi_child": float(os.environ["E5F_PERSON_ROOT_PSI_CHILD"]),
+    "housing_supply_elasticity": float(
+        os.environ.get("E5F_PERSON_ROOT_HOUSING_SUPPLY_ELASTICITY", "1.75")
+    ),
     "post2023_tenure_choice_kappa": (
         float(os.environ["E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA"])
         if os.environ.get("E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA")
@@ -148,6 +151,7 @@ ARGS=(
     --transfer-difference-step "${E5F_PERSON_ROOT_TRANSFER_DIFFERENCE_STEP:-0.01}"
     --maximum-inner-iterations "${E5F_PERSON_ROOT_MAXIMUM_INNER_ITERATIONS:-250}"
     --inner-damping "${E5F_PERSON_ROOT_INNER_DAMPING:-0.50}"
+    --housing-supply-elasticity "${E5F_PERSON_ROOT_HOUSING_SUPPLY_ELASTICITY:-1.75}"
 )
 if [ -n "${E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA:-}" ]; then
     ARGS+=(--post2023-tenure-choice-kappa "$E5F_PERSON_ROOT_POST2023_TENURE_CHOICE_KAPPA")

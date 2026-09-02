@@ -16,6 +16,22 @@ def state(*, persons: np.ndarray, heads: np.ndarray, g_pre: np.ndarray, year: in
 
 
 class TerminalConvergenceDiagnosticsTest(unittest.TestCase):
+    def test_terminal_supply_elasticity_is_explicit_and_positive(self) -> None:
+        self.assertEqual(
+            policy.terminal_supply_elasticity(
+                {"supply_contract": {"supply_elasticity": 0.63}}
+            ),
+            0.63,
+        )
+        invalid_contracts = (
+            {},
+            {"supply_contract": {}},
+            {"supply_contract": {"supply_elasticity": 0.0}},
+        )
+        for invalid in invalid_contracts:
+            with self.assertRaises(RuntimeError):
+                policy.terminal_supply_elasticity(invalid)
+
     def test_normalized_l1_is_invariant_to_total_mass(self) -> None:
         reference = np.array([1.0, 2.0, 3.0])
         self.assertAlmostEqual(policy.normalized_l1(7.0 * reference, reference), 0.0)
