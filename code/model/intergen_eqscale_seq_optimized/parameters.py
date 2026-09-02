@@ -227,6 +227,10 @@ def setup_parameters() -> SimpleNamespace:
     P.entry_by_loc = P.E_total * P.entry_shares
     P.population_closure = "normalized"
     P.normalize_population_mass = True
+    # Default-off transition accounting guard.  Selected transition drivers may
+    # remove floating-point scatter error from pure cohort redistributions only
+    # after a strict relative mass gate; the established model path is unchanged.
+    P.normalize_transition_mass_roundoff = False
     P.outside_entry_flow = P.E_total
     P.outside_entry_shares = P.entry_shares.copy()
     P.local_birth_entry_weight = 1.0

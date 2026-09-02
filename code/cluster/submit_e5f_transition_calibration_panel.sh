@@ -54,6 +54,7 @@ ESTIMATE_FIRST_CHILD_JUMP="${E5F_TRANSITION_ESTIMATE_FIRST_CHILD_ROOM_JUMP:-0}"
 FIXED_FIRST_CHILD_JUMP="${E5F_TRANSITION_FIXED_FIRST_CHILD_ROOM_JUMP:-}"
 HOUSING_SUPPLY_ELASTICITY="${E5F_TRANSITION_HOUSING_SUPPLY_ELASTICITY:-}"
 FIXED_TENURE_CHOICE_KAPPA="${E5F_TRANSITION_FIXED_TENURE_CHOICE_KAPPA:-}"
+MARKET_MAX_ITERATIONS="${E5F_TRANSITION_MARKET_MAX_ITERATIONS:-30}"
 if [ "$POST_2023_PERIODS" != "0" ]; then
     echo "calibration panels must stop at 2023; run continuations separately" >&2
     exit 2
@@ -76,6 +77,10 @@ if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ] && [ -n "$FIXED_FIRST_CHILD_JUMP" ]; t
 fi
 if [ "$ESTIMATE_FIRST_CHILD_JUMP" = "1" ] && [ "$PANEL_DESIGN" = "coordinate" ] && [ "$PANEL_SIZE" != "23" ]; then
     echo "the 11-parameter jump specification requires a 23-task coordinate panel" >&2
+    exit 2
+fi
+if ! [[ "$MARKET_MAX_ITERATIONS" =~ ^[1-9][0-9]*$ ]]; then
+    echo "E5F_TRANSITION_MARKET_MAX_ITERATIONS must be a positive integer" >&2
     exit 2
 fi
 SOURCE="$PROJECT_ROOT/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json"
@@ -108,6 +113,7 @@ ARGS=(
     --post-2023-periods "$POST_2023_PERIODS"
     --policy-case "$POLICY_CASE"
     --model-profile "$MODEL_PROFILE"
+    --market-max-iter "$MARKET_MAX_ITERATIONS"
     --replacement-fertility 2.1
     --old-completed-fertility-target 2.1
     --outside-origin-entry-share 0.169

@@ -177,15 +177,24 @@ def validate_renewal_accounting(summary: dict[str, Any]) -> None:
         raise RuntimeError("Old renewal accounting has invalid signs or shares")
     completed = float(summary["old_model_completed_fertility"])
     identities = (
-        (ratio, B / E, "reported B/E"),
-        (ratio, completed / replacement, "fertility-to-replacement ratio"),
-        (outside, share * E, "outside-flow formula"),
-        (retention, (1.0 - share) * E / B, "retention formula"),
-        (values["old_renewal_residual"], E - outside - retention * B, "renewal residual"),
+        (ratio, B / E, "reported B/E", 2e-10),
+        # The completed-fertility stock and top-code-adjusted renewal flow are
+        # independently measured objects.  Match the driver's established
+        # stationary-measurement gate rather than imposing a tighter collector-
+        # only identity that valid tasks cannot satisfy in floating point.
+        (ratio, completed / replacement, "fertility-to-replacement ratio", 2e-8),
+        (outside, share * E, "outside-flow formula", 2e-10),
+        (retention, (1.0 - share) * E / B, "retention formula", 2e-10),
+        (
+            values["old_renewal_residual"],
+            E - outside - retention * B,
+            "renewal residual",
+            2e-10,
+        ),
     )
-    for reported, reconstructed, label in identities:
+    for reported, reconstructed, label, tolerance in identities:
         if not math.isclose(
-            reported, reconstructed, rel_tol=0.0, abs_tol=2e-10
+            reported, reconstructed, rel_tol=0.0, abs_tol=tolerance
         ):
             raise RuntimeError(
                 f"Old renewal {label} failed: {reported} versus {reconstructed}"

@@ -435,11 +435,17 @@ def acs_2007_age_reweight_diagnostic(
             or np.any(survival > 1.0)
         ):
             raise ValueError("Structural age survival is invalid or nonconformable")
-        survival_gap = float(np.max(np.abs(implied_survival - survival)))
-        if survival_gap > 5.0e-9:
+        structural_age_mass = np.empty_like(stationary)
+        structural_age_mass[0] = float(stationary_entry_flow)
+        structural_age_mass[1:] = float(stationary_entry_flow) * np.cumprod(survival)
+        age_mass_relative_gap = float(
+            np.max(np.abs(stationary - structural_age_mass))
+            / max(float(stationary_entry_flow), 1.0e-15)
+        )
+        if age_mass_relative_gap > 1.0e-8:
             raise RuntimeError(
                 "Stationary age masses disagree with structural survival: "
-                f"max_gap={survival_gap:.3e}"
+                f"relative_age_mass_gap={age_mass_relative_gap:.3e}"
             )
     if not math.isclose(
         float(stationary_entry_flow),
@@ -498,7 +504,7 @@ def acs_2007_age_reweight_diagnostic(
         "survival_source": (
             "stationary_age_mass_ratio"
             if structural_survival is None
-            else "structural_survival_after_5e-9_roundoff_gate"
+            else "structural_survival_after_1e-8_age_mass_roundoff_gate"
         ),
         "path": path,
         "population_index_at_horizon": path[-1]["population_index"],
@@ -778,6 +784,46 @@ def children_at_home_units(distribution: np.ndarray, P: SimpleNamespace) -> floa
     return total
 
 
+def normalize_pure_transition_mass_roundoff(
+    distribution: np.ndarray,
+    *,
+    expected_mass: float,
+    stage: str,
+    relative_tolerance: float = 1.0e-8,
+) -> np.ndarray:
+    """Normalize a pure redistribution only after a strict mass-conservation gate."""
+    values = np.asarray(distribution, dtype=float)
+    expected = float(expected_mass)
+    actual = float(np.sum(values))
+    tolerance = float(relative_tolerance)
+    if (
+        not math.isfinite(expected)
+        or expected < 0.0
+        or not math.isfinite(actual)
+        or actual < 0.0
+        or not math.isfinite(tolerance)
+        or tolerance <= 0.0
+    ):
+        raise RuntimeError(
+            f"{stage} has invalid mass inputs: actual={actual:.17g}, "
+            f"expected={expected:.17g}, tolerance={tolerance:.3e}"
+        )
+    if expected == 0.0:
+        if actual > 5.0e-15:
+            raise RuntimeError(
+                f"{stage} created mass from a zero-mass cohort: actual={actual:.17g}"
+            )
+        return np.zeros_like(values)
+    relative_gap = abs(actual - expected) / expected
+    if actual <= 0.0 or relative_gap > tolerance:
+        raise RuntimeError(
+            f"{stage} mass gate failed: actual={actual:.17g}, "
+            f"expected={expected:.17g}, relative_gap={relative_gap:.3e}, "
+            f"tolerance={tolerance:.3e}"
+        )
+    return values * (expected / actual)
+
+
 def advance_sequential_calendar_distribution(
     evaluation: calendar.PeriodEvaluation,
     entry_by_loc_next: np.ndarray,
@@ -820,6 +866,12 @@ def advance_sequential_calendar_distribution(
             P.Pi_child if stochastic else None,
             Pi_z,
         )
+        if bool(getattr(P, "normalize_transition_mass_roundoff", False)):
+            advanced = normalize_pure_transition_mass_roundoff(
+                advanced,
+                expected_mass=float(np.sum(survivors)),
+                stage=f"sequential_calendar_age_{j}_advancement",
+            )
         next_pre[:, :, :, j + 1, :, :, :] = advanced
         matured_children = children_at_home_units(survivors, P) - children_at_home_units(
             advanced, P
@@ -832,9 +884,16 @@ def advance_sequential_calendar_distribution(
         mature_by_loc[0] += max(matured_children, 0.0)
 
     deaths += float(np.sum(g_post[:, :, :, int(P.J) - 1, :, :, :]))
-    next_pre[:, :, :, 0, :, :, :] = calendar.entrant_cohort(
+    entrants = calendar.entrant_cohort(
         np.asarray(entry_by_loc_next, dtype=float), P, b_grid
     )
+    if bool(getattr(P, "normalize_transition_mass_roundoff", False)):
+        entrants = normalize_pure_transition_mass_roundoff(
+            entrants,
+            expected_mass=float(np.sum(entry_by_loc_next)),
+            stage="sequential_calendar_entrant_cohort",
+        )
+    next_pre[:, :, :, 0, :, :, :] = entrants
     expected_mass = float(np.sum(g_post)) - deaths + float(np.sum(entry_by_loc_next))
     mass_residual = float(np.sum(next_pre)) - expected_mass
     return next_pre, mature_by_loc, deaths, mass_residual

@@ -21,6 +21,7 @@ for path in (MODEL, TOOLS):
 import run_e5f_open_population_transition as transition
 import run_e5f_transition_calibration as calibration
 import collect_e5f_transition_calibration as collector
+from intergen_eqscale_seq_optimized import parameters
 
 
 def test_replacement_conversion_and_old_stationary_identity() -> None:
@@ -101,6 +102,38 @@ def test_collector_rejects_wrong_replacement_contract() -> None:
         pass
     else:
         raise AssertionError("collector accepted a mixed replacement contract")
+
+
+def test_collector_uses_driver_gate_for_independent_fertility_measurement() -> None:
+    E = 0.05
+    share = 0.169
+    summary = {
+        "old_model_completed_fertility": 2.1 + 2.1e-8,
+        "renewal_accounting_contract": {
+            "replacement_fertility": 2.1,
+            "effective_birth_to_household_conversion": 1.0 / 2.1,
+            "birth_vintage_queue_waiting_slots": 4,
+            "birth_to_entry_effect_lag_dates": 5,
+            "birth_to_entry_effect_lag_years": 20.0,
+        },
+        "renewal_accounting_old_state": {
+            "old_entry_flow_E": E,
+            "old_queue_mature_flow_B": E,
+            "old_queue_B_over_E": 1.0,
+            "old_renewal_residual": 0.0,
+            "outside_flow_M": share * E,
+            "outside_origin_entry_share": share,
+            "retention_rho": 1.0 - share,
+        },
+    }
+    collector.validate_renewal_accounting(summary)
+    summary["old_model_completed_fertility"] = 2.1 + 5.0e-8
+    try:
+        collector.validate_renewal_accounting(summary)
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("collector accepted a fertility identity outside 2e-8")
 
 
 def test_collector_rejects_post_target_or_policy_calibration() -> None:
@@ -365,6 +398,35 @@ def test_fixed_cohort_timing_uses_hazards_not_source_cell_masses() -> None:
         "four-year model cells labeled by interval midpoints"
     )
     assert math.isclose(result["synthetic_childless_probability"], survivor, abs_tol=1e-14)
+
+    normalized = calibration.cohort_timing_moments(
+        old,
+        records,
+        P,
+        terminal_childless_probability=survivor + 5.0e-10,
+    )
+    assert normalized["synthetic_childless_probability"] == survivor + 5.0e-10
+    assert math.isclose(
+        normalized["synthetic_ever_first_birth_probability"]
+        + normalized["synthetic_childless_probability"],
+        1.0,
+        rel_tol=0.0,
+        abs_tol=1e-16,
+    )
+    assert math.isclose(normalized["mean_age_first_birth"], expected_mean, abs_tol=1e-14)
+    gate = normalized["terminal_childless_identity_normalization"]
+    assert gate["status"] == "terminal_stock_identity_after_2e-9_roundoff_gate"
+    try:
+        calibration.cohort_timing_moments(
+            old,
+            records,
+            P,
+            terminal_childless_probability=survivor + 3.0e-9,
+        )
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("timing identity normalization accepted a material gap")
 
 
 def test_period_tfr_reconstructs_parity_flows() -> None:
@@ -754,7 +816,7 @@ def test_structural_age_recursion_removes_only_solver_roundoff() -> None:
     )
     assert diagnostic["age_survival"] == [1.0] * 16
     assert diagnostic["survival_source"] == (
-        "structural_survival_after_5e-9_roundoff_gate"
+        "structural_survival_after_1e-8_age_mass_roundoff_gate"
     )
     assert math.isclose(
         sum(diagnostic["reweighted_initial_age_mass"]),
@@ -764,10 +826,54 @@ def test_structural_age_recursion_removes_only_solver_roundoff() -> None:
     )
 
 
+def test_branch_mass_normalization_is_strict_and_mass_preserving() -> None:
+    raw = np.asarray([0.01, 0.02, 0.010000000024])
+    normalized, gate = calibration.normalize_distribution_mass_roundoff(
+        raw,
+        expected_mass=0.04,
+        stage="unit_test",
+    )
+    assert math.isclose(float(np.sum(normalized)), 0.04, rel_tol=0.0, abs_tol=1e-17)
+    assert gate["relative_gap"] < 5e-9
+    try:
+        calibration.normalize_distribution_mass_roundoff(
+            np.asarray([0.01, 0.02, 0.010001]),
+            expected_mass=0.04,
+            stage="unit_test_bad",
+        )
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("branch normalization accepted a material mass error")
+
+
+def test_calendar_mass_normalization_is_default_off_and_fail_closed() -> None:
+    P = parameters.setup_parameters()
+    assert P.normalize_transition_mass_roundoff is False
+    raw = np.asarray([0.01, 0.02, 0.0100000003])
+    normalized = transition.normalize_pure_transition_mass_roundoff(
+        raw,
+        expected_mass=0.04,
+        stage="unit_test_calendar",
+    )
+    assert math.isclose(float(np.sum(normalized)), 0.04, rel_tol=0.0, abs_tol=1e-17)
+    try:
+        transition.normalize_pure_transition_mass_roundoff(
+            np.asarray([0.01, 0.02, 0.0100000005]),
+            expected_mass=0.04,
+            stage="unit_test_calendar_bad",
+        )
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("calendar normalization accepted a material mass error")
+
+
 if __name__ == "__main__":
     test_replacement_conversion_and_old_stationary_identity()
     test_historical_bridge_is_invariant_to_open_share()
     test_collector_rejects_wrong_replacement_contract()
+    test_collector_uses_driver_gate_for_independent_fertility_measurement()
     test_collector_rejects_post_target_or_policy_calibration()
     test_collector_reconstructs_target_loss_and_fingerprint()
     test_collector_gates_dated_housing_ledger()
@@ -780,4 +886,6 @@ if __name__ == "__main__":
     test_parameter_table_uses_actual_transition_domain()
     test_first_child_jump_can_be_fixed_or_jointly_estimated_but_not_both()
     test_structural_age_recursion_removes_only_solver_roundoff()
-    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=15")
+    test_branch_mass_normalization_is_strict_and_mass_preserving()
+    test_calendar_mass_normalization_is_default_off_and_fail_closed()
+    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=18")

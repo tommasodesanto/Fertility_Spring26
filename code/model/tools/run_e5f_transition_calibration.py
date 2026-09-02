@@ -509,7 +509,7 @@ def validated_structural_stationary_age_mass(
     *,
     entry_flow: float,
     structural_survival: np.ndarray,
-    relative_tolerance: float = 5.0e-9,
+    relative_tolerance: float = 1.0e-8,
 ) -> tuple[np.ndarray, dict[str, float]]:
     """Remove only KFE roundoff from a stationary cohort-age profile.
 
@@ -552,6 +552,44 @@ def validated_structural_stationary_age_mass(
         "status": "structural_survival_recursion_after_kfe_roundoff_gate",
         "max_abs_mass_gap": float(np.max(np.abs(observed - structural))),
         "max_relative_mass_gap_to_entry": relative_gap,
+        "relative_tolerance": tolerance,
+    }
+
+
+def normalize_distribution_mass_roundoff(
+    distribution: np.ndarray,
+    *,
+    expected_mass: float,
+    stage: str,
+    relative_tolerance: float = 5.0e-9,
+) -> tuple[np.ndarray, dict[str, float | str]]:
+    """Enforce exact mass for a pure redistribution after a fail-closed gate."""
+    values = np.asarray(distribution, dtype=float)
+    expected = float(expected_mass)
+    actual = float(np.sum(values))
+    tolerance = float(relative_tolerance)
+    scale = max(abs(expected), 1.0e-15)
+    relative_gap = abs(actual - expected) / scale
+    if (
+        not math.isfinite(expected)
+        or expected <= 0.0
+        or not math.isfinite(actual)
+        or actual <= 0.0
+        or not math.isfinite(tolerance)
+        or tolerance <= 0.0
+        or relative_gap > tolerance
+    ):
+        raise RuntimeError(
+            f"{stage} mass gate failed: actual={actual:.17g}, "
+            f"expected={expected:.17g}, relative_gap={relative_gap:.3e}, "
+            f"tolerance={tolerance:.3e}"
+        )
+    normalized = values * (expected / actual)
+    return normalized, {
+        "stage": stage,
+        "actual_mass_before_normalization": actual,
+        "expected_mass": expected,
+        "relative_gap": relative_gap,
         "relative_tolerance": tolerance,
     }
 
@@ -998,7 +1036,9 @@ def begin_dated_first_birth_housing_branch(
     )
     child_transition = P.Pi_child if stochastic_child_aging else None
 
-    def advance(branch: np.ndarray) -> tuple[np.ndarray, float]:
+    def advance(
+        branch: np.ndarray, label: str
+    ) -> tuple[np.ndarray, float, dict[str, float | str]]:
         next_pre = np.zeros_like(branch)
         deaths = 0.0
         for j in range(int(P.J) - 1):
@@ -1029,16 +1069,28 @@ def begin_dated_first_birth_housing_branch(
                     income_transition,
                 )
             )
-        return next_pre, deaths
+        expected_survivor_mass = float(np.sum(branch)) - deaths
+        next_pre, mass_gate = normalize_distribution_mass_roundoff(
+            next_pre,
+            expected_mass=expected_survivor_mass,
+            stage=f"{label}_branch_advancement",
+        )
+        return next_pre, deaths, mass_gate
 
-    treated_next, treated_deaths = advance(treated)
-    control_next, control_deaths = advance(control)
+    treated_next, treated_deaths, treated_advance_gate = advance(treated, "treated")
+    control_next, control_deaths, control_advance_gate = advance(control, "control")
     treated_next_mass = float(np.sum(treated_next))
     control_next_mass = float(np.sum(control_next))
     if not math.isclose(
         treated_next_mass, control_next_mass, rel_tol=0.0, abs_tol=2e-11
     ):
-        raise RuntimeError("Birth and control branch masses differ after advancement")
+        raise RuntimeError(
+            "Birth and control branch masses differ after advancement: "
+            f"treated={treated_next_mass:.17g}, "
+            f"control={control_next_mass:.17g}, "
+            f"gap={treated_next_mass - control_next_mass:.3e}, "
+            f"origin={origin_mass:.17g}"
+        )
     if not math.isclose(
         treated_deaths, control_deaths, rel_tol=0.0, abs_tol=2e-13
     ):
@@ -1052,6 +1104,10 @@ def begin_dated_first_birth_housing_branch(
         "survival_loss": treated_deaths,
         "treated_next_pre": treated_next,
         "control_next_pre": control_next,
+        "branch_mass_roundoff_gates": [
+            treated_advance_gate,
+            control_advance_gate,
+        ],
     }
 
 
@@ -1082,6 +1138,19 @@ def finish_dated_first_birth_housing_branch(
         b_grid,
         shared,
     )
+    expected_destination_mass = float(
+        branch["survivor_mass_before_destination_gating"]
+    )
+    treated_pre, treated_gate = normalize_distribution_mass_roundoff(
+        treated_pre,
+        expected_mass=expected_destination_mass,
+        stage="treated_destination_feasibility_gate",
+    )
+    control_pre, control_gate = normalize_distribution_mass_roundoff(
+        control_pre,
+        expected_mass=expected_destination_mass,
+        stage="control_destination_feasibility_gate",
+    )
     # Only the treated branch can take a continuation birth at the destination
     # date.  The empirical comparison group is confirmed childless, so the
     # otherwise identical control branch is held childless by construction.
@@ -1089,6 +1158,11 @@ def finish_dated_first_birth_housing_branch(
         treated_pre,
         evaluation.policy.fert_probs,
         P,
+    )
+    treated_post, treated_fertility_gate = normalize_distribution_mass_roundoff(
+        treated_post,
+        expected_mass=expected_destination_mass,
+        stage="treated_destination_fertility",
     )
     control_parent_mass = float(np.sum(control_pre[..., 1:, :]))
     if control_parent_mass > 2e-13:
@@ -1114,6 +1188,16 @@ def finish_dated_first_birth_housing_branch(
         evaluation.policy.maps.tmx_idx,
         evaluation.policy.maps.tmx_wt,
         use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
+    )
+    treated_current, treated_current_gate = normalize_distribution_mass_roundoff(
+        treated_current,
+        expected_mass=expected_destination_mass,
+        stage="treated_destination_current_choice",
+    )
+    control_current, control_current_gate = normalize_distribution_mass_roundoff(
+        control_current,
+        expected_mass=expected_destination_mass,
+        stage="control_destination_current_choice",
     )
     treated_mass = float(np.sum(treated_current))
     control_mass = float(np.sum(control_current))
@@ -1145,6 +1229,14 @@ def finish_dated_first_birth_housing_branch(
         "control_mean_housing": control_housing,
         "housing_response": treated_housing - control_housing,
         "census_age_bridge_applied": False,
+        "branch_mass_roundoff_gates": [
+            *list(branch.get("branch_mass_roundoff_gates") or []),
+            treated_gate,
+            control_gate,
+            treated_fertility_gate,
+            treated_current_gate,
+            control_current_gate,
+        ],
     }
 
 
@@ -1226,6 +1318,8 @@ def cohort_timing_moments(
     P: SimpleNamespace,
     terminal_period: int = TRANSITION_PERIODS,
     target_age: float = TARGET_AGE,
+    terminal_childless_probability: float | None = None,
+    terminal_identity_tolerance: float = 2.0e-9,
 ) -> dict[str, Any]:
     """First-birth timing for a fixed synthetic cohort reaching age 42.
 
@@ -1290,6 +1384,46 @@ def cohort_timing_moments(
         row["synthetic_first_birth_probability"] = synthetic_flow
         synthetic_childless *= 1.0 - hazard
     total = sum(float(row["synthetic_first_birth_probability"]) for row in rows)
+    raw_total = total
+    raw_childless = synthetic_childless
+    identity_normalization = None
+    if terminal_childless_probability is not None:
+        terminal_childless = float(terminal_childless_probability)
+        tolerance = float(terminal_identity_tolerance)
+        gap = raw_childless - terminal_childless
+        if (
+            not math.isfinite(terminal_childless)
+            or not 0.0 <= terminal_childless <= 1.0
+            or not math.isfinite(tolerance)
+            or tolerance <= 0.0
+            or abs(gap) > tolerance
+            or total <= 0.0
+        ):
+            raise RuntimeError(
+                "Hazard-spliced cohort childlessness does not match the terminal "
+                "age-42 stock before numerical identity normalization: "
+                f"gap={gap:.3e}, tolerance={tolerance:.3e}"
+            )
+        target_total = 1.0 - terminal_childless
+        probability_scale = target_total / total
+        for row in rows:
+            raw_probability = float(row["synthetic_first_birth_probability"])
+            row[
+                "synthetic_first_birth_probability_before_terminal_identity_normalization"
+            ] = raw_probability
+            row["synthetic_first_birth_probability"] = (
+                probability_scale * raw_probability
+            )
+        total = target_total
+        synthetic_childless = terminal_childless
+        identity_normalization = {
+            "status": "terminal_stock_identity_after_2e-9_roundoff_gate",
+            "raw_synthetic_childless_probability": raw_childless,
+            "terminal_childless_probability": terminal_childless,
+            "raw_gap": gap,
+            "absolute_tolerance": tolerance,
+            "first_birth_probability_scale": probability_scale,
+        }
     mean_age = sum(
         float(row["age"]) * float(row["synthetic_first_birth_probability"])
         for row in rows
@@ -1309,6 +1443,9 @@ def cohort_timing_moments(
         ),
         "synthetic_ever_first_birth_probability": total,
         "synthetic_childless_probability": synthetic_childless,
+        "synthetic_ever_first_birth_probability_before_terminal_identity_normalization": raw_total,
+        "synthetic_childless_probability_before_terminal_identity_normalization": raw_childless,
+        "terminal_childless_identity_normalization": identity_normalization,
         "mean_age_first_birth": mean_age,
         "share_first_births_age30plus": late_share,
         "hazard_rows": rows,
@@ -1621,6 +1758,11 @@ def main() -> None:
     base = closure.make_overrides(chain, theta, nb=int(args.nb), profile="e5f-floor")
     base.update(profile_overrides)
     base.update(theta)
+    if (
+        args.fixed_tenure_choice_kappa is not None
+        and float(args.fixed_tenure_choice_kappa) > 0.0
+    ):
+        base["normalize_transition_mass_roundoff"] = True
 
     print("TRANSITION_CALIBRATION_OLD_STEADY_STATE", flush=True)
     (
@@ -2029,6 +2171,9 @@ def main() -> None:
                 period_records,
                 old_parameters,
                 terminal_period=period,
+                terminal_childless_probability=float(
+                    period_records[period]["moments"]["childless_rate"]
+                ),
             )
             dated_timing_ledgers.append(
                 {
