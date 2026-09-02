@@ -822,6 +822,40 @@ def prepare_model(
         shared,
         "static-elastic",
     )
+    try:
+        external_closure = _selected(
+            contracts["report"], "external_closure_contract"
+        )
+    except KeyError:
+        external_closure = None
+    if external_closure is not None:
+        external_closure = dict(external_closure)
+        selected_elasticity = float(
+            external_closure["housing_supply_elasticity"]
+        )
+        if (
+            not math.isfinite(selected_elasticity)
+            or selected_elasticity <= 0.0
+            or str(external_closure.get("housing_supply_elasticity_status"))
+            != "externally_fixed_profile_not_estimated"
+        ):
+            raise RuntimeError("Selected external supply elasticity is invalid")
+        retained_elasticity = float(supply_rule.elasticity)
+        supply_rule = calendar.HousingSupplyRule(
+            mode=supply_rule.mode,
+            initial_price=supply_rule.initial_price,
+            initial_stock=supply_rule.initial_stock,
+            elasticity=selected_elasticity,
+        )
+        supply_normalization["retained_housing_supply_elasticity"] = (
+            retained_elasticity
+        )
+        supply_normalization["transition_housing_supply_elasticity"] = (
+            selected_elasticity
+        )
+        supply_normalization["elasticity_status"] = (
+            "externally_fixed_profile_not_estimated"
+        )
     return PreparedModel(
         chain=chain,
         model=model,
