@@ -10,6 +10,12 @@ Active launchers:
 - `submit_intergen_e5b_idfe.sh` plus its strict collector (maintained pre-E6
   E5b refit under the August 9 household-FE rooms target; target name and
   fingerprint are hard-gated before any solve)
+- `submit_e5f_post2023_policy_mechanisms.sh` (five-case one-date smoke followed
+  by a hash-gated 2023--2063 production comparison; collector-style calibration
+  winners require their exact task-summary and case-directory receipt)
+- `submit_e5f_rebated_tax_shapley_current.sh` (exact current-calibration 2023
+  rebated-tax impact followed by the eight-cell tax/asset-price/rebate Shapley
+  decomposition; all scientific inputs and drivers are hash-pinned)
 
 ## Standard interface: `torch.sh`
 

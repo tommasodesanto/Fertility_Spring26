@@ -3,6 +3,31 @@
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
+## Current E5F calibration and policy audit utilities
+
+`tools/analyze_e5f_transition_calibration_panel.py` validates a complete
+coordinate panel against its target and source fingerprints, constructs the
+local weighted moment Jacobian, and writes the stable calibration-gap and
+identification diagnostic packet used in advisor readouts. Its focused test is
+`tools/test_analyze_e5f_transition_calibration_panel.py`.
+
+`tools/run_e5f_post2023_policy_mechanisms.py` and
+`tools/collect_e5f_post2023_policy_mechanisms.py` produce the standard five-case
+post-2023 policy comparison from one hash-matched fitted 2023 state. The cases
+are no policy, housing supply +20%, a 5% family down payment, their combination,
+and a 1% to 2% property-tax increase without a rebate. The exact one-date
+rebated-tax calculation and three-factor Shapley decomposition are implemented
+by `tools/run_e5f_post2023_rebated_property_tax_smoke.py` and
+`tools/run_e5f_rebated_tax_shapley_diagnosis.py`. All routes are fail-closed and
+accept a collector-style selected calibration only with its exact task-summary
+and case-directory receipt.
+
+`tools/build_e5f_overnight_numerical_report.py` combines the full target fit,
+all estimated and externally fixed parameters, the calibration diagnosis,
+policy paths, exact tax decomposition, and final H128 convergence evidence in
+one concise advisor-facing PDF. It does not replace the canonical live results
+record in `../../CALIBRATION_STATUS.md`.
+
 ## Simplified OLG theory construction
 
 `tools/build_simplified_olg_mixed_tenure_theory.py` solves the mixed renter-owner

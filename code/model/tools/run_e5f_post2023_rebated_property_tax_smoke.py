@@ -68,10 +68,13 @@ CASES = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selected-report", type=Path, required=True)
+    parser.add_argument("--selected-task-summary", type=Path)
+    parser.add_argument("--selected-case-dir", type=Path)
     parser.add_argument("--selected-case-transition", type=Path, required=True)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--expected-report-sha256", required=True)
+    parser.add_argument("--expected-task-summary-sha256")
     parser.add_argument("--expected-case-transition-sha256", required=True)
     parser.add_argument("--expected-source-sha256", required=True)
     parser.add_argument("--expected-target-fingerprint", required=True)
@@ -411,12 +414,12 @@ def main() -> None:
     chain, model = transition.configure_sequential_model()
     contracts = baseline.validate_input_contracts(
         report_path=args.selected_report,
-        task_summary_path=None,
-        case_dir=None,
+        task_summary_path=args.selected_task_summary,
+        case_dir=args.selected_case_dir,
         case_transition_path=args.selected_case_transition,
         source_path=args.source,
         expected_report_sha256=args.expected_report_sha256,
-        expected_task_summary_sha256=None,
+        expected_task_summary_sha256=args.expected_task_summary_sha256,
         expected_case_transition_sha256=args.expected_case_transition_sha256,
         expected_source_sha256=args.expected_source_sha256,
         expected_target_fingerprint=args.expected_target_fingerprint,

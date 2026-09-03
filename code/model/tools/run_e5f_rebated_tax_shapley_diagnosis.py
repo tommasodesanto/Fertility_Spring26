@@ -38,11 +38,14 @@ METRICS = (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--selected-report", type=Path, required=True)
+    parser.add_argument("--selected-task-summary", type=Path)
+    parser.add_argument("--selected-case-dir", type=Path)
     parser.add_argument("--selected-case-transition", type=Path, required=True)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--rebated-path-csv", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--expected-report-sha256", required=True)
+    parser.add_argument("--expected-task-summary-sha256")
     parser.add_argument("--expected-case-transition-sha256", required=True)
     parser.add_argument("--expected-source-sha256", required=True)
     parser.add_argument("--expected-target-fingerprint", required=True)
@@ -57,11 +60,16 @@ def read_policy_endpoints(path: Path) -> dict[str, dict[str, float]]:
     with path.open(newline="", encoding="utf-8") as stream:
         rows = list(csv.DictReader(stream))
     result: dict[str, dict[str, float]] = {}
-    for case in ("rebated-tax1-baseline", "rebated-tax2-reform"):
+    aliases = {
+        "rebated-tax1-baseline": ("rebated-tax1-baseline", "tax1-equal-rebate"),
+        "rebated-tax2-reform": ("rebated-tax2-reform", "tax2-equal-rebate"),
+    }
+    for case, accepted_names in aliases.items():
         found = [
             row
             for row in rows
-            if row["policy_case"] == case and int(row["calendar_year"]) == 2023
+            if row["policy_case"] in accepted_names
+            and int(row["calendar_year"]) == 2023
         ]
         if len(found) != 1:
             raise RuntimeError(f"Expected one 2023 row for {case}; found {len(found)}")
@@ -116,12 +124,12 @@ def main() -> None:
     chain, model = transition.configure_sequential_model()
     contracts = baseline.validate_input_contracts(
         report_path=args.selected_report,
-        task_summary_path=None,
-        case_dir=None,
+        task_summary_path=args.selected_task_summary,
+        case_dir=args.selected_case_dir,
         case_transition_path=args.selected_case_transition,
         source_path=args.source,
         expected_report_sha256=args.expected_report_sha256,
-        expected_task_summary_sha256=None,
+        expected_task_summary_sha256=args.expected_task_summary_sha256,
         expected_case_transition_sha256=args.expected_case_transition_sha256,
         expected_source_sha256=args.expected_source_sha256,
         expected_target_fingerprint=args.expected_target_fingerprint,

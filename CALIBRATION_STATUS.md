@@ -1,6 +1,151 @@
 # Calibration Status
 
-Updated: `2026-09-01` (positive-tenure-taste H128 sensitivity and mechanism decomposition complete)
+Updated: `2026-09-03` (eta=0.63, tenure-kappa=0.005 validation, policy audit, and bounded H128 runtime diagnosis complete)
+
+## September 3 eta=0.63, tenure-kappa=0.005 validation and policy audit
+
+The active overnight quantitative profile fixes the national housing-supply
+elasticity externally at `0.63` and fixes the tenure-choice taste dispersion
+externally at `0.005`. These are restrictions, not estimated parameters. The
+unchanged calibration contract has twelve target moments and eleven free
+transition parameters. A complete 23-point round-4 validation promotes
+`task_021` (`coordinate_9_plus`, a higher first-child room jump) with loss
+`34.925512505553456`, down `8.48%` from the prior complete benchmark loss
+`38.1605764414`. This is a validated local improvement, not a global-optimum
+claim. The report, selected-task, and selected-transition SHA-256 values are
+`998e3e0a2b571091018dc7b9a35952192582e3a304238c90fb71f558f765d889`,
+`2917d5e34a428302cbfb3f4555e3a4f1214c783af792395f9b9809334e3372a8`,
+and `c48a7863231226701e68a7a4ffc0bd55f3217fb645dd860f672a185e59c7df07`.
+The target fingerprint remains
+`3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
+
+Complete target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| Completed fertility | 1.918000 | 1.916104 | -0.001896 | 1425.739 | 0.0051 |
+| Childlessness | 0.188000 | 0.187225 | -0.000775 | 17180.744 | 0.0103 |
+| Mean age at first birth | 26.044627 | 26.330048 | 0.285421 | 44.444 | 3.6207 |
+| Share first births age 30+ | 0.260327 | 0.242055 | -0.018273 | 10000.000 | 3.3389 |
+| Rooms response to first birth | 0.720246 | 0.429080 | -0.291167 | 137.565 | 11.6625 |
+| Rooms, 3+ minus 1--2 children | 0.367700 | 0.398842 | 0.031142 | 2958.515 | 2.8693 |
+| Family ownership gap | 0.167662 | 0.161251 | -0.006411 | 14229.591 | 0.5848 |
+| Ownership rate | 0.575472 | 0.517591 | -0.057881 | 1207.846 | 4.0465 |
+| Mean occupied rooms | 5.779970 | 6.506641 | 0.726670 | 11.973 | 6.3224 |
+| Wealth / annual earnings | 6.873100 | 6.934566 | 0.061466 | 6.288 | 0.0238 |
+| Bequest flow / wealth | 0.008800 | 0.008587 | -0.000213 | 5165289.256 | 0.2342 |
+| Old-age wealth p90 / p50 | 3.448111 | 3.251276 | -0.196835 | 56.960 | 2.2069 |
+
+Complete parameter record:
+
+| Parameter | Estimate | Search bound / restriction | Status |
+|---|---:|---:|---|
+| Annual discount factor | 0.994959 | [0.94, 0.9995] | estimated |
+| First-birth taste dispersion | 2.267631 | [0.02, 50] | estimated |
+| Continuation-birth taste dispersion | 1.765427 | [0.02, 50] | estimated |
+| Housing utility weight | 1.033945 | [0.1, 5] | estimated |
+| Baseline housing scale | 16.381189 | [0.2, 80] | estimated |
+| Housing preference intercept | 0.563219 | [0, 8] | estimated |
+| Housing preference slope | 0.099707 | [0.02, 16] | estimated, near lower bound |
+| Child-room floor | 0.289081 | [0.1, 1.8] | estimated |
+| First-birth fixed cost | 4.545167 | [0, 8] | estimated |
+| First-child room jump | 0.345762 | [0, 0.5] | estimated |
+| 2007--2023 child-value change | -0.350000 | [-1.5, 0.2] | estimated |
+| Tenure-choice taste dispersion | 0.005000 | externally fixed | not estimated |
+| Housing-supply elasticity | 0.630000 | externally fixed | not estimated |
+
+The local weighted Jacobian has numerical rank `11/11` at the declared
+relative `1e-3` threshold, with condition number `121.3`; this is evidence of
+local rank, not global identification. Its weakest direction is `96.66%` the
+first-child room-jump parameter by squared loading, and the near-bound housing
+preference slope has the panel's largest forward/backward disagreement. The
+three largest loss contributions account for `63.08%` of total loss. Most importantly, the target system fits
+fertility levels and the housing response *after* a birth, but contains no
+causal housing-cost-to-fertility moment. Policy fertility elasticities are
+therefore model predictions rather than directly identified quantities.
+
+The complete five-case 2023--2063 closed-national mechanism comparison starts
+from one common fitted 2023 state and makes no welfare or terminal-steady-state
+claim. It passed source, target,
+calibration, common-initial-state, market, accounting, feasibility, and
+artifact-hash gates. In 2023, housing supply +20% lowers user cost `18.13%`,
+raises housing use `5.80%`, ownership `2.37` percentage points, and births
+`1.21%`. The dependent-child 95% LTV policy raises ownership `0.62` percentage
+point but housing use only `0.045%` and births only `0.014%`. Doubling the
+property tax without a rebate raises user cost `14.48%`, lowers housing use
+`4.97%`, ownership `2.80` percentage points, and births `1.02%`. By 2063 the
+supply and unrebated-tax birth effects are `+1.91%` and `-1.50%`. Across the
+supply and unrebated-tax paths in 2023, 2043, and 2063, the model-implied arc
+ratio of percent births to percent housing use lies between `0.18` and `0.25`.
+The housing--fertility link is therefore quantitatively present when housing
+services move; a financing-only tenure relabeling is weak.
+
+The exact one-date 2023 three-factor Shapley decomposition holds the fitted
+pre-fertility distribution fixed. For the rebated 1% to 2% tax change it gives
+births `-1.234%` from the direct tax, `+0.284%` from asset-price
+capitalization, and `+1.421%` from the equal rebate, for a net `+0.471%`.
+Ownership contributions are `-2.960`, `+0.726`, and `+0.903` percentage points,
+for a net `-1.331` percentage points. Housing-use contributions are `-6.940%`,
+`+1.569%`, and `+2.131%`, for a net `-3.240%`. Thus the small positive net
+fertility response is a fiscal-incidence result: the direct property-tax
+channel contracts housing and fertility, but the equal transfer more than
+offsets births in 2023.
+
+The active profile has `P.I = 1`: one national location. It can generate tenure
+and housing-product reallocation but cannot reproduce the cross-jurisdiction
+relocation mechanism emphasized by Coven et al. Owner status also has no direct
+fertility payoff; fertility responds through housing services, wealth, and the
+budget constraint. These architecture facts, rather than calibration alone,
+explain why the LTV experiment can move ownership without moving fertility.
+
+Canonical local packets:
+
+- `output/pdf/e5f_housing_tenure_fertility_overnight_numerical_audit_20260903_v3.pdf`
+- `output/model/e5f_transition_calibration_eta063_kappa005_recal_r004_r4_coord_20260902p/`
+- `output/model/e5f_eta063_kappa005_overnight_numerical_20260902/calibration_panel_diagnosis_r4/`
+- `output/model/e5f_post2023_policy_mechanisms_comparison_20260902r_eta063_kappa005_r4_validated_production/`
+- `output/model/e5f_post2023_rebated_tax_impact_20260902s_eta063_kappa005_r4_validated/`
+- `output/model/e5f_rebated_tax_shapley_diagnosis_20260902s_eta063_kappa005_r4_validated/`
+- `output/model/e5f_pf_person_policy_comparison_20260903b_eta063_kappa005_h128_runtime_diagnostic/`
+- `output/model/e5f_h128_baseline_stage02_snapshots_20260903/`
+
+The paired checkpointed H128 jobs `16808542` and `16808543` use the immediately
+preceding joint calibration and are a solver-runtime and horizon diagnostic,
+not the source of the policy magnitudes above. The reform converged after 18
+evaluations with exact market/fiscal residuals
+`8.482728318780801e-5`/`2.3639493111016208e-5`; every history, accounting,
+feasibility, probability, hash, and H128 terminal gate passes. Its summary and
+path hashes are
+`1ce298146674e438ce894d4da01e063c30e38b8222b10c30dbf41249e1ea86c7`
+and `9adca1c5e4e614452e42628ca33846110b77e65a46798006738060b000b93850`.
+
+The baseline stage ended after 20 evaluations with its immutable best path at
+market/fiscal residuals `3.4854883947494e-4`/`3.6913691039766605e-5`, both
+at 2359 and both above the unchanged gates. All nonconvergence gates pass; its
+summary and path hashes are
+`054b992c6160ba7db78dfbed3b382b3a970672d38912c02a359ffba19c26d93b`
+and `e555111540bc0ddb43b07e9b809a61668ae830a295e042430a028e56750a31b9`.
+The one authorized continuation, job `16824521`, evaluated that seed exactly
+and then six updates at fixed damping `0.04`/`0.08`. Residuals did not contract;
+the market maximum cycled among 2359, 2363, and 2367 and ended at
+`7.659065437571115e-4`, with fiscal `7.335046616901986e-5`. The final saved
+evaluation has zero feasibility adjustment, no nonfinite distribution entries, and
+accounting errors below `1.6e-15`. The scheduler timed out at `03:00:18` only
+during the driver's redundant re-evaluation of the already audited stage-1
+best path, before it could write a duplicate summary packet. The seven exact
+path snapshots and reconstructed audit are preserved locally; diagnostic hash
+`12e73ab57ec6a25112344e14acb84b74e8dc9e4da3763d2e36d56686e93c6fbb`.
+No third stage is authorized: longer wall time under the same update is not a
+defensible convergence strategy.
+
+The demographic terminal operator has four-year persistence `0.9610220`, a
+`69.7`-year half-life, and needs 116 periods (`464` years) for 1% attenuation.
+H32 retains about `28.0%` of the slow mode, while H128 retains `0.62%`.
+Accordingly H128 is an economically defensible certification horizon; the
+remaining problem is the coupled fixed-point method, not insufficient horizon.
+The independently rebuilt pair comparison is intentionally unaccepted because
+the baseline path fails the exact market and fiscal gates; its summary hash is
+`3a4a0d49347e3c11f25a16158dc9823177fa8009437dab1ea2689d99b962e125`.
 
 ## September 1 positive-tenure-taste property-tax sensitivity: paths and mechanism packet complete
 

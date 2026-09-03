@@ -48,6 +48,11 @@ require_environment() {
         smoke|production) ;;
         *) echo "E5F_POLICY_MODE must be smoke or production" >&2; exit 2 ;;
     esac
+    if [ -n "${E5F_POLICY_SELECTED_TASK_SUMMARY:-}${E5F_POLICY_SELECTED_CASE_DIR:-}${E5F_POLICY_EXPECTED_TASK_SUMMARY_SHA256:-}" ]; then
+        : "${E5F_POLICY_SELECTED_TASK_SUMMARY:?selected task summary is required for a collector-style report}"
+        : "${E5F_POLICY_SELECTED_CASE_DIR:?selected case directory is required for a collector-style report}"
+        : "${E5F_POLICY_EXPECTED_TASK_SUMMARY_SHA256:?selected task-summary hash is required for a collector-style report}"
+    fi
     if [ "$E5F_POLICY_MODE" = "production" ]; then
         : "${E5F_POLICY_SMOKE_ROOT:?E5F_POLICY_SMOKE_ROOT is required in production}"
         : "${E5F_POLICY_SMOKE_COMPARISON_SUMMARY:?smoke comparison summary is required}"
@@ -103,6 +108,19 @@ check_hash() {
 REPORT="$(resolve_path "$E5F_POLICY_REPORT")"
 TRANSITION="$(resolve_path "$E5F_POLICY_SELECTED_TRANSITION")"
 SOURCE="$(resolve_path "$E5F_POLICY_SOURCE")"
+CALIBRATION_ARGS=()
+if [ -n "${E5F_POLICY_SELECTED_TASK_SUMMARY:-}" ]; then
+    TASK_SUMMARY="$(resolve_path "$E5F_POLICY_SELECTED_TASK_SUMMARY")"
+    CASE_DIR="$(resolve_path "$E5F_POLICY_SELECTED_CASE_DIR")"
+    [ -s "$TASK_SUMMARY" ] || { echo "Missing selected task summary: $TASK_SUMMARY" >&2; exit 2; }
+    [ -d "$CASE_DIR" ] || { echo "Missing selected case directory: $CASE_DIR" >&2; exit 2; }
+    check_hash selected-task-summary "$(hash_file "$TASK_SUMMARY")" "$E5F_POLICY_EXPECTED_TASK_SUMMARY_SHA256"
+    CALIBRATION_ARGS+=(
+        --selected-task-summary "$TASK_SUMMARY"
+        --selected-case-dir "$CASE_DIR"
+        --expected-task-summary-sha256 "$E5F_POLICY_EXPECTED_TASK_SUMMARY_SHA256"
+    )
+fi
 RUN_ROOT="${E5F_POLICY_OUT_ROOT:-$PROJECT_ROOT/output/model/e5f_post2023_policy_mechanisms_${E5F_POLICY_RUN_TAG}}"
 RUN_ROOT="$(resolve_path "$RUN_ROOT")"
 OUTDIR="$RUN_ROOT/$POLICY_CASE"
@@ -165,6 +183,7 @@ export PYTHONPATH="$MODEL_DIR:$MODEL_DIR/tools:${PYTHONPATH:-}"
 
 "$PYTHON_BIN" "$DRIVER" \
     --selected-report "$REPORT" \
+    "${CALIBRATION_ARGS[@]}" \
     --selected-case-transition "$TRANSITION" \
     --source "$SOURCE" \
     --output-dir "$OUTDIR" \
