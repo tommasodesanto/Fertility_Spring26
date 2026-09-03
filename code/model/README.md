@@ -5,17 +5,30 @@ former MATLAB code is archived for historical reference and parity checks.
 
 ## Simplified OLG theory construction
 
-`tools/build_simplified_olg_mixed_tenure_theory.py` solves the mixed renter--
-owner numerical construction used in the paper-facing two-generation theory.
-It writes exact steady states, a terminally closed finite-horizon transition
-approximation, an active-set and finite-root conditioning ledger, and the two
+`tools/build_simplified_olg_mixed_tenure_theory.py` solves the mixed renter-owner
+numerical construction used in the paper-facing two-generation theory.
+It writes steady states, a terminally closed finite-horizon transition
+approximation, household first-order-condition and active-set checks, a
+finite-root conditioning ledger, and the two
 paper figures to
 `../../output/model/simplified_olg_mixed_tenure_theory/` and
 `../../latex/figures/`. Run it from the repository root with
 `code/model/.venv/bin/python`. The horizon comparison and terminal-state gap
-are convergence diagnostics, not a proof of the infinite-horizon limiting
-condition. This is a constructive theory example, not the active quantitative
-calibration.
+are convergence diagnostics, not an infinite-horizon existence or determinacy
+proof. The focused regression check is
+`tools/test_build_simplified_olg_mixed_tenure_theory.py`. This is a
+constructive theory example, not the active quantitative calibration.
+`tools/build_simplified_olg_saddle_path_diagnostic.py` adds a local
+descriptor-system diagnostic at both endpoints. It requires SciPy and writes
+`saddle_path_diagnostic.json` to the same output folder. The reported root
+count is numerical evidence about local saddle-path structure under the four
+one-sided gains-tax derivatives. The diagnostic also eliminates the static
+transfer equation and verifies that the remaining nine-dimensional pencil has
+seven stable and two unstable finite roots; it is not a nonsmooth
+stable-manifold proof.
+The construction defines rent at the end of the period, so household budgets
+use its present value and the stationary rent-price ratio is
+`gross_return - 1 + property_tax` before depreciation.
 
 ## Current paper architecture (August 18)
 

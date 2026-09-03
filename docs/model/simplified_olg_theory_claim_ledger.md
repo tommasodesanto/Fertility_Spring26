@@ -1,33 +1,42 @@
 # Simplified OLG theory claim ledger
 
 This ledger records exactly what the paper-facing two-generation theory proves,
-what is conditional, and what is established only by the reproducible mixed-
-tenure construction. The source files are
+what is conditional, and what is established only by the reproducible
+mixed-tenure construction. The source files are
 `latex/simplified_olg_paper_theory_section.tex` and
 `latex/simplified_olg_paper_theory_appendix.tex`; the numerical driver is
 `code/model/tools/build_simplified_olg_mixed_tenure_theory.py`. The independent
-audit and its resolution are recorded in
-`docs/model/simplified_olg_theory_hostile_audit_20260831.md`.
+earlier audit is recorded in
+`docs/model/simplified_olg_theory_hostile_audit_20260831.md`.  The correction
+and repair prompted by the 2026-09-02 audit are recorded below.
+
+Rent is paid at the end of each period.  Thus
+$r_t=(R_f+\tau^p)P_t-P_{t+1}$ is the end-of-period rent and $q r_t$ is its
+beginning-of-period value in household budgets.  The steady-state expression
+$r=(R_f-1+\tau^p)P$ matches the quantitative model's convention when
+depreciation is omitted.
 
 | Claim | Status | Conditions | Paper location | Verification |
 |---|---|---|---|---|
+| Writing young choices as gross consumption $c$ and gross housing $h$, with usable bundles $x=c-\chi n$ and $s=h-\kappa n$, leaves the allocation unchanged. | Proved | Positive usable bundles. | Equations `olg_usable_bundles` and `olg_lifetime_problem` | One-to-one change of variables; the code verifies both gross budgets. |
 | The old renter and old owner problems have the stated active-set solutions. | Proved | Positive user costs and resources; the row-specific complementary-slackness inequalities. | Lemma `lem:olg_old_allocations` and equations `olg_app_old_*` | Direct substitution into the KKT system. |
-| Interior saving collapses each conditional young problem to the lifetime budget `(1+k)c + chi n + r_m h = W`. | Proved | Young saving and the relevant next-period old constraints are interior. | Proposition `prop:olg_app_conditional_policies` | Mortgage inflow and repayment cancel exactly; saving policies are reported separately for renters and owners. |
-| Unconstrained conditional consumption, fertility, and housing have the closed forms in the paper. | Proved | Interior saving, old choices, and tenure-specific housing limit. | Equation `eq:olg_unconstrained_policies` | Algebraic solution of the three first-order conditions. |
-| Fertility at a binding housing limit is unique. | Proved | Nonempty log domain and positive user cost. | Equation `eq:olg_binding_fertility`; proof of Proposition 3 | The scalar first-order condition falls strictly from positive to negative infinity over its feasible interval. |
-| The logit tenure formulation produces positive renter and owner shares and continuous aggregate choices. | Proved | Finite conditional values and taste scale `kappa_T>0`. | Equation `eq:olg_owner_share`; Appendix A.2 | The logit probability is strictly inside `(0,1)`; conditional policies are continuous within their stated active sets. |
+| Interior saving gives the branch-specific lifetime budget `(1+k_m)x + chi n + u_m h = wtilde_m`, where `x=c-chi n` is usable consumption. | Proved | Interior old choices, or a strictly binding old rental limit; branch consistency is required. | Proposition `prop:olg_app_conditional_policies` | The capped-old-renter branch uses `k_R=beta(1+omega_B)`, deducts `q^2 r_{t+1} h_R^max` from lifetime resources, and adds the same amount to saving. |
+| Unconstrained conditional usable consumption, usable housing, and fertility have the closed forms in the paper. | Proved | Interior saving, one of the stated old-age branches, and a slack current housing limit. | Equation `eq:olg_unconstrained_policies` | Algebraic solution of the reduced lifetime problem; gross choices are recovered from $c=x+\chi n$ and $h=s+\kappa n$. |
+| Fertility at a binding housing limit is unique. | Proved | Nonempty log domain, positive user cost, and a fixed old-age branch. | Equation `eq:olg_binding_fertility`; proof of Proposition `prop:olg_app_conditional_policies` | The branch-specific scalar first-order condition falls strictly from positive to negative infinity over its feasible interval. |
+| The logistic ownership-preference type produces positive renter and owner shares and continuous aggregate choices. | Proved | Finite conditional values and ownership-preference scale `sigma_xi>0`. | Equation `eq:olg_owner_share`; Appendix A.2 | The owner probability is strictly inside `(0,1)`; conditional policies are continuous within their stated active sets. |
 | Every positive steady state satisfies average fertility `1/nu`, has zero taxable real gains, and solves the two-equation `(P,T)` system. | Proved | Positive stationary cohort masses and stationary household policies/distribution. | Proposition `prop:olg_steady_state` | Follows from the two cohort laws, housing clearing, and the balanced government budget. |
-| A positive steady state exists under the stated fiscal contraction and replacement-boundary inequalities. | Conditional theorem | Compact feasible price-transfer rectangle, continuous aggregate policies, fiscal self-map/contraction, and a replacement sign change. | Proposition `prop:olg_app_ss_existence` | Banach fixed point for the fiscal locus plus the intermediate value theorem. These conditions are sufficient, not automatic. |
+| A positive steady state exists under the stated fiscal contraction and replacement-boundary inequalities. | Conditional theorem | Compact feasible price-transfer rectangle, continuous aggregate policies, fiscal self-map/contraction, and a replacement sign change. | Proposition `prop:olg_app_ss_existence` | Banach fixed point plus the intermediate value theorem. The construction reports a `41 x 31` grid check of the self-map, contraction derivative, and boundary signs, explicitly labeled non-rigorous over the continuum. |
 | A positive steady state is locally unique and differentiable in the fertility preference when its two-by-two Jacobian is nonsingular. | Conditional theorem | Differentiability at the root and `det J != 0`. | Equation `eq:olg_app_ss_jacobian` and comparative static `eq:olg_app_ss_comparative_static` | Implicit-function theorem. No unconditional sign is claimed for the price or population response. |
-| A terminally closed finite-horizon truncation exists locally for a small one-sided permanent shock on a selected appreciation branch. | Conditional theorem | Regular endpoint, strict household active sets, nonsingular branch Jacobian, and strict directional price signs consistent with every selected gains branch. | Proposition `prop:olg_app_local_transition` | Directional branch construction plus the implicit-function theorem. This is a root through the terminal date, not an exact infinite-horizon transition. |
-| A terminally closed finite-horizon truncation exists globally under coordinate-wise boundary signs. | Conditional theorem | Continuous stacked residual on a compact feasible box and opposite signs on each pair of coordinate faces. | Proposition `prop:olg_app_global_transition` | Poincare--Miranda theorem. The boundary signs must be verified for a parameterization. |
-| A pointwise limit of terminally closed truncations is an infinite-horizon transition equilibrium under compactness, tightness, fixed-date convergence, continuity, and uniform convergence of the finite-horizon tails to the terminal steady state. | Conditional limiting theorem | The convergence conditions and uniform-tail equation stated in Appendix A.4. | Proposition `prop:olg_app_transition_limit` | Fixed-date passage to the limit plus the uniform-tail condition. A terminal condition at a moving horizon alone is not sufficient. |
-| One permanent shock can generate taxable gains for several cohorts. | Proved, conditional on the equilibrium price path | `P_s>P_{s-1}` on each stated date. | Corollary `cor:olg_app_one_shock_gains` | Immediate from `ell_s=tau_g(P_s-P_{s-1})`. A two-period life determines the basis, not the duration of price adjustment. |
-| The current-goods marginal-value gap between a constrained young owner and an interior old incumbent is `zeta_OF + ell_t + q ell_{t+1}`. | Proved | Binding young down-payment constraint, slack owner-size limit, interior young saving/future old choices, and interior incumbent retention. | Equation `eq:olg_marginal_values` | Young and old housing KKT conditions. |
-| A small intergenerational housing transfer is a compensated improvement when the marginal-value gap exceeds the real transfer cost. | Conditional welfare proposition | Fixed fertility, cohort masses, tenure, and unaffected allocations; pledgeable bridge finance; two-date lump-sum transfers; incremental rebate recovery; marginal resale next period. | Proposition `prop:olg_reallocation` and Assumption `ass:olg_two_date_ledger` | Willingness-to-pay/willingness-to-accept argument with an explicit two-date government ledger. |
-| Relaxing a binding housing limit raises fertility exactly under the reported inequality. | Proved partial-equilibrium result | Tenure, prices, lifetime wealth, and active set fixed; interior fertility. | Equations `eq:olg_fertility_derivative` and `eq:olg_fertility_sign` | Implicit differentiation; analytic derivative agrees with a centered finite difference to `8.0e-12` in the construction. |
-| The displayed renter-owner path is a high-accuracy terminally closed truncation of the specialized numerical model. | Constructively verified | Parameter table in Appendix A.7; final steady-state prices, transfers, and continuation values after date 28, with the induced terminal state recorded rather than imposed. | Figure `fig:olg_mixed_transition` and Appendix A.7 | Max scaled residual `2.07e-10`; terminal state gap `1.10e-8`; finite-root Jacobian minimum singular value `0.401`; 24-vs-28 first-nine-date gap `1.84e-15`. These diagnostics do not verify the uniform-tail theorem. |
-| Both tenures and all asserted active sets remain strict in the numerical truncation. | Constructively verified | Same parameterization. | Appendix A.7 | Owner share `0.4704`--`0.7877`; positive saving; strictly binding young caps; owner-size slack at least `1.2046`; positive old-renter cap wedge; positive old-owner sales, user cost, and estate slack. |
+| A terminally closed finite-horizon truncation exists locally for a small one-sided permanent shock on a selected appreciation branch. | Conditional theorem | Regular endpoint, strict household active sets, nonsingular branch Jacobian, and strict directional price signs consistent with every selected gains branch. | Proposition `prop:olg_app_local_transition` | Directional branch construction plus the implicit-function theorem. Uniqueness is local to the selected branch; another self-consistent branch is not excluded. |
+| One permanent shock can generate taxable gains for several cohorts. | Mechanism plus constructive example | The demographic state propagates the initial fertility response; gains occur on dates when the resulting equilibrium price rises. | Transition discussion and Figure `fig:olg_mixed_transition` | In the displayed truncation, gains exceed `1e-4` on dates 0--3 and 7--8. No general sign theorem is claimed. |
+| The current-goods marginal-value gap between a constrained young owner and an interior old incumbent is `zeta_OF + ell_t + q ell_{t+1}`. | Proved | Binding young down-payment constraint, slack owner-size limit, interior young saving/future old choices, and slack incumbent retention and estate-composition constraints. | Equation `eq:olg_marginal_values` | Young and old housing KKT conditions. |
+| A small intergenerational title transfer is a Pareto improvement among households alive at $t$ when the marginal-value gap exceeds the real transfer cost. | Conditional local-efficiency proposition | Fixed fertility, cohort masses, tenure, prices, and unaffected allocations; pledgeable bridge finance at the bond price; two-date transfers; the buyer's baseline old-age retained housing is held fixed and the added unit is resold. | Proposition `prop:olg_reallocation` and Assumption `ass:olg_two_date_ledger` | A single title-transfer ledger accounts separately for the incumbent, buyer, government, lenders, and real resources. Strict old-age slackness makes the imposed marginal resale path feasible and first-order welfare neutral. It is not a welfare ranking across populations. |
+| A binding access wedge raises the effective resource price of a child by $\kappa\zeta$. | Proved | Interior fertility and the stated household branch. | Equation `eq:olg_full_price_child` | Direct combination of the fertility and housing first-order conditions; maximum numerical identity residual is `2.3e-16`. |
+| Relaxing a binding housing limit raises fertility exactly under the reported inequality; wealth raises fertility and the user cost lowers it at a fixed cap. | Proved partial-equilibrium result | Tenure, prices, active set, and the stated held-fixed objects; interior fertility. | Equations `eq:olg_fertility_derivative`, `eq:olg_fertility_sign`, and `eq:olg_app_fertility_wealth_user_cost` | Implicit differentiation; analytic cap derivative agrees with a centered finite difference to `3.3e-12` in the construction. |
+| The displayed renter-owner path is a terminally closed truncation of the specialized numerical model. | Constructively verified | Parameter table in the computational appendix; final steady-state prices and transfers after date 28; the last cohort retains its transitional purchase-price basis when its old-age gain is computed; the induced terminal state is recorded rather than imposed. | Figure `fig:olg_mixed_transition` and Appendix `app:olg_computation` | Max scaled residual `6.51e-10`; terminal-state gap `1.88e-9`; finite-root Jacobian minimum singular value `0.350`; 24-vs-28 first-nine-date gap `1.78e-15`; 28-vs-32 first-twenty-date gap `3.11e-15`. |
+| Both tenures, the stated household first-order conditions, and all asserted active sets hold in the numerical truncation. | Constructively verified | Same parameterization. | Appendix `app:olg_computation` | Maximum normalized young Euler residual `2.4e-16`; owner share `0.4830`--`0.7900`; capped old renters and interior old owners on every date; positive saving and strict young caps. |
+| The specialized final steady state has the saddle-path root count implied by seven predetermined states and two forward price variables for every one-sided gains-tax derivative. | Numerical local diagnostic | Homogeneous-type specialization; strict active sets; log-linear descriptor system at the endpoint. | Appendix `app:olg_computation` | All four derivative selections and a `21 x 21` generalized-slope grid have seven stable, two finite unstable, and one static infinite root. Eliminating the statically determined transfer leaves a regular nine-dimensional pencil with the same finite roots. The stable projection is full rank and no finite root is near the unit circle. This is not a nonsmooth stable-manifold theorem. |
+| Taxing rental intermediaries on resale does not change the marginal-value gap. | Proved comparative incidence statement | The intermediary pays the same per-unit realization tax `ell_{t+1}`. | Appendix `app:olg_reallocation` | End-of-period rent rises by `ell_{t+1}`, so its current value rises by `q ell_{t+1}`; the difference remains `zeta+ell_t+q ell_{t+1}`. |
 
 ## Claims deliberately not made
 
@@ -37,9 +46,11 @@ audit and its resolution are recorded in
 - No claim is made that a positive steady state or a transition exists for
   every parameterization, that either object is globally unique, or that house
   prices must rise after every fertility shock.
-- The computed horizon-28 path is not labeled an exact infinite-horizon
-  equilibrium. It is a terminally closed approximation with small residuals,
-  a small terminal-state gap, and horizon stability over the reported window.
+- No existence or determinacy theorem is claimed for an infinite-horizon
+  transition. The horizon-28 path is a terminally closed approximation with
+  small residuals, a small terminal-state gap, horizon stability, and the
+  correct local saddle-path root count. The gains-tax kink still requires a
+  nonsmooth stable-manifold argument for an exact theorem.
 - The partial-equilibrium fertility derivative does not sign a funded policy
   in general equilibrium, because prices, transfers, tenure, and lifetime
   resources can also move.
@@ -48,3 +59,30 @@ audit and its resolution are recorded in
 - Nothing in this simplified construction establishes a positive closed
   stationary root for the active quantitative lifecycle model. Its live
   stationary and transition status remains governed by `CALIBRATION_STATUS.md`.
+
+## Correction following the 2026-09-02 audit
+
+The 2026-08-31 audit's first-order-condition certification is withdrawn.  It
+checked the reduced renter problem while the old rental cap bound, rather than
+checking the original renter Euler equation against the realized old
+allocation.  The corrected construction now:
+
+- solves a separate capped-old-renter reduction and verifies its active set;
+- evaluates the original young budget, fertility condition, and saving Euler
+  equation for both tenures at every transition date;
+- records both economically material gains dates (0--3 and 7--8) and the
+  smaller numerical tail separately;
+- uses one title-transfer ledger for the compensated allocation result; and
+- makes no infinite-horizon transition existence or determinacy claim.
+
+A further proof audit clarified that slack future retention does not by itself
+force the transferred unit to be resold one-for-one. The final proposition
+therefore holds the buyer's baseline old-age retained housing fixed and assigns
+the marginal unit to resale. Strict slackness makes that path feasible, and the
+old-age first-order conditions make the restriction welfare-neutral to first
+order.
+
+The integrated paper now states that the quantitative model omits the
+capital-gains-basis channel and that its total-birth result relies on entry and
+elastic housing supply, whereas stationary average fertility is fixed at
+replacement in the analytical model.
