@@ -16,12 +16,14 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** H0, the household's net resource change under the housing
-intervention. The planner and credit-policy descriptions need not be mutually
+**Resume here:** H0, an explicit analytical restriction guaranteeing a positive
+fertility response. Tommaso clarified that this parameter-threshold proposition,
+rather than an external empirical test, is his immediate objective. The planner
+and credit-policy descriptions need not be mutually
 exclusive or have different fertility signs; match housing, net resources,
-and the maintained household branch before comparing them. The quantitative
-prediction and independent empirical validation branch is now retained as Q1;
-no specific reform, fertility outcome, or empirical design has been selected.
+and the maintained household branch before comparing them. The lead's separate
+empirical-validation suggestion is retained but parked as Q1; no specific
+reform, fertility outcome, or empirical design has been selected.
 W0 fixes the
 allocation-efficiency objective; W1 permits the
 planner to relax private borrowing limits. I0 now leaves realized capital-gains
@@ -100,9 +102,9 @@ between mechanism analysis and welfare analysis before either is understood.
 | W4 | Working proof criterion: a compensated Pareto improvement at fixed fertility. Exact welfare coverage and protection of future households must be made explicit. No social-weighted optimum or welfare ranking across different populations has been selected. | TENTATIVE | The lead carries forward the proposed Pareto test as the proof route; preserve all real and dated resource constraints. Detailed coverage remains open. | Sections 4, 6; W1 discussion below |
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
-| Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | OPEN | H0-H1, I1, D0, U0. Retain the link between theory, a calibrated policy prediction, and external causal validation; specify financing, eligibility, horizon, and fertility measure before evaluating it. No positive sign, policy, or new calibration target is imposed. | Q1 discussion below; CALIBRATION_STATUS.md identification statement |
+| Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
-| H0 | Derive fertility as a response to housing and net resources. A planner reallocation and a credit change yield the same conditional fertility choice if they deliver the same inputs on the same household branch. | ACTIVE | W1/W4/I1. Do not force an exclusive choice between the two descriptions. Establish the conditional sign, specify payment incidence, then distinguish allocation results from aggregate policy effects. | Sections 3, 6, 8; H0 clarification below |
+| H0 | State an explicit analytical restriction under which improved housing access raises fertility. Retain the exact state-dependent threshold and a simpler sufficient parameter/user-cost restriction. | ACTIVE | W1/W4/I1. Matched housing and net resources imply matched conditional choices. Specify payment incidence; a toy-model threshold is not yet a theorem for the quantitative model or an aggregate policy effect. | Sections 3, 6, 8; H0 threshold clarification below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
 | D0 | What is the demographic proposition? Cohort accounting, impact response, momentum, housing feedback, replacement, and conditions for absence of a positive closed endpoint. | OPEN | U0, H1, I1. Separate a toy existence example from the live quantitative endpoint problem. | Sections 5-6, 8 |
 | D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
@@ -370,7 +372,72 @@ lead recommends treating the planner allocation and its possible policy
 implementation as related stages, not asking the author to choose between
 them before specifying these objects. H0 remains active.
 
+### H0 clarification: the author wants an analytical threshold
+
+**Author clarification, 2026-09-04:**
+
+> i am saying a simpler thing.
+> there is a model implied prediciton that says something lik e'if parameter x is greatter than y+z, we get it'
+
+**Correction to the lead's interpretation:** the immediate request is for a
+conditional analytical prediction expressed as an inequality, not an external
+policy-validation design. Return to H0 and park the lead's additional Q1
+suggestion. Extending such a condition to the quantitative model remains a
+possible later task; no numerical run or parameter change is requested here.
+
+**Exact local restriction already present in the appendix.** Let $u>0$ be
+the housing user cost, $\zeta\geq0$ the housing-access wedge, and
+$\rho=1+k$ the reduced consumption weight. The housing condition is
+$\alpha x/s=u+\zeta$. For a pure relaxation of the binding current housing
+limit, with prices, effective wealth, tenure, and the old-age branch fixed,
+\[
+ \frac{\partial n}{\partial\widehat h}>0
+ \quad\Longleftrightarrow\quad
+ \rho\kappa(u+\zeta)^2>\alpha\chi u.
+\]
+This follows from `eq:olg_fertility_derivative` and `eq:olg_fertility_sign`
+in `latex/simplified_olg_paper_theory_appendix.tex`; the latter writes the
+weak-sign condition on the interior old-age branch. Here $\kappa$ is space
+required per child, $\chi$ the goods requirement per child, and $\alpha$
+the young household's housing utility weight. On the interior old-age branch,
+$\rho=1+\beta(1+\gamma+\omega_B)$; on the maintained capped-old-renter branch,
+$\rho=1+\beta(1+\omega_B)$, for a young-only housing-limit change.
+
+**A simpler sufficient restriction.** Since $u+\zeta\geq u>0$,
+\[
+ \frac{\kappa u}{\chi}>\frac{\alpha}{\rho}
+ \quad\Longrightarrow\quad
+ \frac{\partial n}{\partial\widehat h}>0.
+\]
+The left side compares each child's required housing-space cost with the
+goods requirement; the right side is a relative preference weight in the
+reduced lifetime problem. This condition removes the endogenous access wedge
+from a sufficient test, but $u$ is still an equilibrium price object. It is
+not an if-and-only-if primitive-parameter restriction. Failure of this stronger
+condition does not imply a negative response; the exact condition may still
+hold with $\zeta>0$. At a slack limit, relaxing the limit has no access effect.
+
+**Connection to the compensated-reallocation branch.** At the same initial
+allocation let $m=\alpha x/s=u+\zeta$ and let $p=-dR_{\rm net}/dh$ be the
+young household's net payment per extra unit. The general exact threshold is
+$p<\rho\kappa m^2/(\alpha\chi)$. The sufficient restriction above also
+implies a positive conditional fertility response for any marginal payment
+$p<m$ that leaves the young household better off, within this same reduced
+household problem. This does not verify dated compensation to the old, real
+costs, lender claims, or unaffected-household welfare; those remain W4/I1/W3.
+
+**Verification and scope:** exact rational checks over 216 parameter/wedge
+combinations verify the numerator identity, sufficient restriction, and general
+payment threshold. These are algebra checks, not model simulations or evidence
+that the calibrated model satisfies the condition. A quantitative analogue
+must be derived from its own preferences and discrete fertility choices;
+aggregate price and composition effects remain separate.
+
 ### Q1 discussion: quantitative prediction and empirical validation
+
+**Now parked:** this was a broader lead suggestion. The subsequent H0
+clarification establishes that the author meant an analytical sign restriction.
+Retain the material below for a possible later validation discussion.
 
 **Author question, 2026-09-04:**
 
@@ -429,12 +496,14 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso accepted leaving capital-gains taxation as an extension and deferring it until the quantitative-model inclusion decision. | I0 decided; Q0 and W2 parked, along with tax-specific proof/diagnostic work. H0 becomes the current discussion question. |
 | 2026-09-04 | Tommaso asked what distinguishes the two fertility experiments and expected fertility to rise under both. | No new choice imposed. Clarified that matched housing/net resources imply the same conditional response; derived the common sign condition and retained policy-equilibrium obligations separately. |
 | 2026-09-04 | Tommaso asked whether extension to the quantitative model would yield a testable prediction that housing policy raises fertility. | Added Q1 for a specified reform's quantitative prediction and independent empirical test. Preserve the conditional sign, distinguish fertility outcomes, and keep the existing calibration and Q0 deferral unchanged. |
+| 2026-09-04 | Tommaso clarified that he meant an analytical inequality guaranteeing a positive fertility response. | Corrected the lead's interpretation, returned to H0, and parked Q1. Recorded the exact threshold and a simpler sufficient restriction without assuming their validity in the quantitative model. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
 work resume when Q0 becomes active. H0 is now being discussed; its derivation
-must return to W4/I1 to settle exact compensation and resources. Other branches
-remain open.
+must return to W4/I1 to settle exact compensation and resources. Q1's empirical
+validation design is parked following the author's clarification; revisit only
+if that separate objective becomes relevant. Other branches remain open.
 
 **Author decisions in this review discussion:** W0 research objective and W1
 permission to relax private borrowing limits; I0 defers capital-gains taxation
