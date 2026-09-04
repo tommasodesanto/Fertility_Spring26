@@ -2,6 +2,15 @@
 
 Active documents:
 
+- `JMP_DS_draft/`: author-controlled source for the new job-market-paper draft.
+  Its main file is `JMP_DS_draft/JMP_DS_draft.tex`, with separate section and
+  appendix files. The entire subtree is read-only for agents after its initial
+  creation; proposed text belongs in `JMP_DS_suggestions/` for manual
+  copy-and-paste by the author.
+- `JMP_DS_suggestions/`: agent-writable staging area for passages, equations,
+  or revisions proposed for the author-controlled draft. Nothing placed here
+  is part of the manuscript unless the author copies it into the draft.
+
 - `simplified_olg_paper_theory_package.tex` /
   `simplified_olg_paper_theory_package.pdf`: definitive paper-facing theory
   package. Its first five pages are the compact analytical section; the

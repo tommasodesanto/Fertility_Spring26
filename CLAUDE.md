@@ -106,6 +106,24 @@ layout unless there is a strong reason to add a new top-level category.
   (`.aux`, `.log`, caches, scratch plots), but do not delete or move user work
   or potentially important generated results without explicit instruction.
 
+## Author-Owned JMP Draft
+
+`latex/JMP_DS_draft/` is Tommaso De Santo's author-controlled manuscript. After
+its initial creation on 2026-09-03, every agent and assistant must treat the
+entire subtree as strictly read-only.
+
+- Agents may inspect and quote from the draft, but must not create, edit,
+  delete, rename, move, format, or overwrite anything inside the subtree.
+- Agents must not write compilation artifacts or generated PDFs into the
+  subtree. If a read-only compilation check is needed, direct every output to a
+  temporary directory outside `latex/JMP_DS_draft/`.
+- All proposed prose, equations, citations, tables, or revisions must be
+  written outside the protected subtree, by default under
+  `latex/JMP_DS_suggestions/`, for Tommaso to copy and paste by hand.
+- A normal request to draft or revise text does not waive this restriction.
+  Only Tommaso may edit the protected files. The policy may change only if he
+  explicitly revokes it and asks for the guard instructions to be updated.
+
 ## Calibration Guidance
 
 Calibration changes frequently. Do not hard-code current targets, losses, best

@@ -1,0 +1,69 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[round]{natbib}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\graphicspath{{../figures/}{figures/}}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black
+}
+
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.45em}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=1.3em,itemsep=0.12em,topsep=0.12em}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=0.12em,topsep=0.12em}
+\allowdisplaybreaks
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\dd}{\mathrm d}
+\newcommand{\E}{\mathbb E}
+\newcommand{\1}{\mathbf 1}
+
+\title{Intergenerational Housing Misallocation and Fertility}
+\author{Tommaso De Santo}
+\date{}
+
+\begin{document}
+
+\maketitle
+\input{sections/00_abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_analytical_model}
+\input{sections/03_quantitative_model}
+\input{sections/04_calibration}
+\input{sections/05_housing_patterns}
+\input{sections/06_mechanism}
+\input{sections/07_policy}
+\input{sections/08_conclusion}
+
+\clearpage
+\appendix
+\input{appendices/A_analytical_derivations}
+\input{appendices/B_quantitative_appendix}
+
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{../references,../main_bib,../lit_review_extra}
+
+\end{document}
