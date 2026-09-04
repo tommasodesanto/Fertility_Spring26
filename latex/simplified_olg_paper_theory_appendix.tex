@@ -9,99 +9,71 @@ numerical transition.
 \subsection{Old-age problems}
 \label{app:olg_old_households}
 
-An old renter with financial wealth $a$ solves
-\begin{align}
- V_t^R(a)=\max_{c^2,h^2,e}\;&
- \log c^2+\gamma\log h^2+\omega_B\log e \\
- \text{s.t.}\quad&c^2+qe+q\,r_th^2=a+T_t,\qquad
- 0<h^2\leq h_R^{\max}.\nonumber
- \label{eq:olg_app_old_renter}
-\end{align}
-For an old owner, define
+The old problems are \eqref{eq:olg_old_renter}--\eqref{eq:olg_old_owner}.
+For owners, it is useful to define
 \begin{equation}
  A=1+\gamma+\omega_B,\qquad
  \varrho_t=q\,r_t-\ell_t,\qquad
  X_t=a+(P_t-\ell_t)H+T_t.
  \label{eq:olg_app_old_objects}
 \end{equation}
-The owner problem is \eqref{eq:olg_old_owner}.  Both old problems are strictly
-concave on their feasible sets.
+Here $\varrho_t$ is the cost of retaining one unit and $X_t$ values housing
+carried into old age at its after-tax sale price.
 
 \begin{lemma}[Old-age allocations]
 \label{lem:olg_old_allocations}
-Suppose $r_t>0$, $\varrho_t>0$, and resources place the household in the log
-domain.  If the renter size limit is slack, then
-\begin{equation}
- c^2=\frac{a+T_t}{A},\qquad
- h^2=\frac{\gamma(a+T_t)}{Aq\,r_t},\qquad
- e=\frac{\omega_B(a+T_t)}{Aq}.
- \label{eq:olg_app_old_renter_interior}
-\end{equation}
-If the renter limit binds, set $Z^R=a+T_t-q\,r_t h_R^{\max}$; then
-\begin{equation}
- h^2=h_R^{\max},\qquad
- c^2=\frac{Z^R}{1+\omega_B},\qquad
- e=\frac{\omega_BZ^R}{(1+\omega_B)q}.
- \label{eq:olg_app_old_renter_cap}
-\end{equation}
-If both owner constraints are slack, then
-\begin{equation}
- c^2=\frac{X_t}{A},\qquad
- h^2=\frac{\gamma X_t}{A\varrho_t},\qquad
- e=\frac{\omega_BX_t}{Aq},
+Suppose $r_t>0$, $\varrho_t>0$, $a+T_t>0$, and $X_t>0$.
+When housing is interior, renter and owner expenditure shares give
+\begin{align}
+ (c_R^2,h_R^2,e_R)
+ &=\left(\frac{a+T_t}{A},
+ \frac{\gamma(a+T_t)}{Aq\,r_t},
+ \frac{\omega_B(a+T_t)}{Aq}\right),
+ \label{eq:olg_app_old_renter_interior}\\
+ (c_O^2,h_O^2,e_O)
+ &=\left(\frac{X_t}{A},
+ \frac{\gamma X_t}{A\varrho_t},
+ \frac{\omega_BX_t}{Aq}\right).
  \label{eq:olg_app_old_owner_interior}
-\end{equation}
-and the two strict slackness conditions are
+\end{align}
+The owner row applies when
 \begin{equation}
  \frac{\gamma X_t}{A\varrho_t}<H,\qquad
  \omega_B\varrho_t>\gamma qP_{t+1}.
  \label{eq:olg_app_old_slackness}
 \end{equation}
+If the rental cap binds, set
+$Z^R=a+T_t-q\,r_th_R^{\max}$.  The allocation is then
+\begin{equation}
+ h_R^2=h_R^{\max},\qquad
+ c_R^2=\frac{Z^R}{1+\omega_B},\qquad
+ e_R=\frac{\omega_BZ^R}{(1+\omega_B)q}.
+ \label{eq:olg_app_old_renter_cap}
+\end{equation}
 \end{lemma}
 
 \begin{proof}
-The result is an expenditure-share calculation.  Consider first the generic
-interior budget $c^2+qe+p_hh^2=X$.  The first-order conditions allocate
-spending across consumption, housing, and the estate in the proportions
-$1:\gamma:\omega_B$:
-
-\begin{equation*}
- p_hh^2=\gamma c^2,\qquad qe=\omega_Bc^2,
- \qquad Ac^2=X.
-\end{equation*}
-
-For a renter, set $p_h=q r_t$; for an owner, set $p_h=\varrho_t$.  This gives
-the two interior rows.  If the rental limit binds, housing is fixed and the
-remaining resources are divided between consumption and the estate in the
-proportions $1:\omega_B$, which gives
-\eqref{eq:olg_app_old_renter_cap}.  Finally, substituting the interior owner
-policy into $h^2<H$ and $e>P_{t+1}h^2$ gives the two slackness conditions.
+For an interior budget $c^2+qe+p_hh^2=X$, the first-order conditions imply
+$p_hh^2=\gamma c^2$, $qe=\omega_Bc^2$, and $Ac^2=X$.  Setting
+$p_h=qr_t$ for renters and $p_h=\varrho_t$ for owners gives the two interior
+rows.  At the rental cap, the residual $Z^R$ is divided between consumption and
+the estate in the ratio $1:\omega_B$.  Substituting the owner row into
+$h_O^2<H$ and $e_O>P_{t+1}h_O^2$ gives
+\eqref{eq:olg_app_old_slackness}.
 \end{proof}
 
-Other owner corners are obtained by fixing $h^2=H$, $e=P_{t+1}h^2$, or both,
-and allocating the residual resources across the unconstrained uses.  Strict
-concavity makes each branch unique.
-
-In the interior owner region, the indirect value and relevant envelopes are
-\begin{align}
- V_t^O(a,H)
- &=A\log X_t-A\log A+\gamma\log\gamma-\gamma\log\varrho_t
-   +\omega_B\log\omega_B-\omega_B\log q,
- \label{eq:olg_app_old_indirect}\\
- V_{a,t}^O&=\frac{A}{X_t}=\frac1{c_t^2},\qquad
- V_{H,t}^O=(P_t-\ell_t)V_{a,t}^O.
- \label{eq:olg_app_old_envelopes}
-\end{align}
+Fixing $h^2=H$, $e=P_{t+1}h^2$, or both gives the remaining owner corners.
+Strict concavity makes each branch unique.  On every branch used below, the
+wealth envelope is $V_{a,t}=1/c_t^2$; on the interior owner branch,
+$V_{H,t}^O=(P_t-\ell_t)V_{a,t}^O$.
 
 \subsection{Young household solutions and tenure}
 \label{app:olg_young_households}
 
-The renter and owner problems are those in the main text.  Let
-$\lambda_t^m$ be the current-budget multiplier, $\eta_t^m$ the multiplier on
-the tenure-specific housing limit, $\upsilon_t^m$ the multiplier on $a'\geq0$,
-and $\mu_t$ the owner down-payment multiplier.  Using
-$x_t^m=c_t^m-\chi n_t^m$ and $s_t^m=h_t^m-\kappa n_t^m$, the common
-consumption and fertility conditions are
+Let $\lambda_t^m$ be the current-budget multiplier, $\eta_t^m$ the multiplier
+on the tenure-specific housing limit, and $\mu_t$ the owner down-payment
+multiplier.  Using $x_t^m=c_t^m-\chi n_t^m$ and
+$s_t^m=h_t^m-\kappa n_t^m$, the consumption and fertility conditions are
 \begin{align}
  \lambda_t^m&=\frac1{x_t^m},
  \label{eq:olg_app_young_lambda}\\
@@ -109,16 +81,12 @@ consumption and fertility conditions are
  &=\frac{\chi}{x_t^m}+\frac{\alpha\kappa}{s_t^m}.
  \label{eq:olg_app_young_fertility_kkt}
 \end{align}
-The saving conditions are
-\begin{align}
- \lambda_t^R&=\beta R_f V_{a,t+1}^R+\upsilon_t^R,\\
- \lambda_t^O&=\beta R_f V_{a,t+1}^O+\upsilon_t^O,
- \qquad \upsilon_t^ma_t^{\prime m}=0.
- \label{eq:olg_app_saving_kkt}
-\end{align}
+When saving is interior, both tenure problems also satisfy
+$\lambda_t^m=\beta R_fV_{a,t+1}^m$.
 
-The main text presents the interior old-age branch.  To include the case in
-which an old renter is constrained at $h_R^{\max}$, define
+The only additional branch needed for the numerical example is an old renter
+at the rental cap.  The two possible saving loads and effective lifetime
+resources are
 \begin{equation}
  (k_{t+1}^m,\widetilde w_{it}^m)=
  \begin{cases}
@@ -128,26 +96,22 @@ which an old renter is constrained at $h_R^{\max}$, define
  \end{cases}
  \label{eq:olg_old_branch_objects}
 \end{equation}
-Here $k_{t+1}^m$ is the saving load implied by the Euler equation and
-$\widetilde w_{it}^m$ is lifetime wealth net of any committed old-age rent.
-On either branch, the young household's reduced lifetime problem, up to a
-constant, is
+The capped-renter row removes committed old-age rent from lifetime resources
+and removes old-age housing from the saving load.  On either row, eliminating
+saving and old-age choices gives
 \begin{align}
  \max_{x,s,n}\quad &(1+k_{t+1}^m)\log x+\alpha\log s+
  \vartheta_t\log n \nonumber\\
  \text{s.t.}\quad &(1+k_{t+1}^m)x+u_t^m s+
- (\chi+\kappa u_t^m)n=\widetilde w_{it}^m.
- \label{eq:olg_lifetime_problem}
-\end{align}
-Equivalently, its budget in gross housing is
-\begin{equation}
- (1+k_{t+1}^m)x+\chi n+u_t^mh=\widetilde w_{it}^m.
+ (\chi+\kappa u_t^m)n
+ =(1+k_{t+1}^m)x+\chi n+u_t^mh
+ =\widetilde w_{it}^m.
  \label{eq:olg_lifetime_budget}
-\end{equation}
+\end{align}
+Thus renter and owner choices differ only through the user cost, effective
+resources, and housing limit.
 
-For a renter on either old-age branch in
-\eqref{eq:olg_old_branch_objects}, and for an owner whose next-period retention
-and estate-composition constraints are slack, the housing conditions reduce to
+On the same branches, the housing condition in consumption units is
 \begin{equation}
  \frac{\alpha x_t^m}{s_t^m}
  =u_t^m+\zeta_t^m,\qquad
@@ -157,11 +121,17 @@ and estate-composition constraints are slack, the housing conditions reduce to
  +\frac{\eta_t^O}{\lambda_t^O}.
  \label{eq:olg_app_housing_kkt}
 \end{equation}
-This proves \eqref{eq:olg_access_wedge}.  If the owner-size limit is slack,
-the second term in $\zeta_t^O$ is zero and the access wedge is purely financial.
+This is \eqref{eq:olg_access_wedge} expressed in primitives.  If the owner-size
+limit is slack, $\eta_t^O=0$ and the owner's wedge is entirely due to the down
+payment.
 
-Writing $B_{it}^m=1+k_{t+1}^m+\alpha+\vartheta_t$, an unconstrained household
-chooses
+\begin{proposition}[Conditional household policies]
+\label{prop:olg_app_conditional_policies}
+Suppose young saving is interior.  For owners, suppose next-period old
+retention and estate composition are interior.  For renters, allow either an
+interior old housing choice or a strictly binding old rental limit.  Write
+$B_{it}^m=1+k_{t+1}^m+\alpha+\vartheta_t$.  If the current housing limit is
+slack, then
 \begin{equation}
  x_t^m=\frac{\widetilde w_{it}^m}{B_{it}^m},\qquad
  s_t^m=\frac{\alpha\widetilde w_{it}^m}{B_{it}^m u_t^m},\qquad
@@ -170,34 +140,8 @@ chooses
  \label{eq:olg_unconstrained_policies}
 \end{equation}
 Gross choices are $c_t^m=x_t^m+\chi n_t^m$ and
-$h_t^m=s_t^m+\kappa n_t^m$.
-If the current housing limit binds, substituting
-$h_t^m=\widehat h_{it}^m$ into the budget and fertility condition leaves the
-single equation
-\begin{equation}
- \frac{\vartheta_t}{n}
- -\frac{\alpha\kappa}{\widehat h_{it}^m-\kappa n}
- -\frac{(1+k_{t+1}^m)\chi}
- {\widetilde w_{it}^m-u_t^m\widehat h_{it}^m-\chi n}=0.
- \label{eq:olg_binding_fertility}
-\end{equation}
-This is the substituted version of the two transparent conditions
-\eqref{eq:olg_binding_budget}--\eqref{eq:olg_binding_fertility_foc} in the main
-text.
-
-Eliminating old-age choices turns both tenure problems into the same static
-allocation problem.  They differ only in user cost, effective wealth, and the
-housing limit.
-
-\begin{proposition}[Lifetime reduction and conditional policies]
-\label{prop:olg_app_conditional_policies}
-Suppose young saving is interior.  For owners, suppose next-period old
-retention and estate composition are interior.  For renters, allow either an
-interior old housing choice or a strictly binding old rental limit.  Then the
-branch objects in \eqref{eq:olg_old_branch_objects} give the lifetime budget
-\eqref{eq:olg_lifetime_budget}.  If the current housing limit is slack, the
-policies are \eqref{eq:olg_unconstrained_policies}.  Saving on the interior
-old-renter, capped old-renter, and interior old-owner branches is, respectively,
+$h_t^m=s_t^m+\kappa n_t^m$.  Saving on the interior old-renter, capped
+old-renter, and interior old-owner branches is
 \begin{align}
  a_t^{\prime R,I}&=\beta A x_t^R-qT_{t+1},
  \label{eq:olg_app_renter_saving}\\
@@ -210,9 +154,18 @@ old-renter, capped old-renter, and interior old-owner branches is, respectively,
 \end{align}
 The capped renter row applies when its implied old allocation satisfies
 $\gamma c_{t+1}^2/h_R^{\max}>q\,r_{t+1}$; the interior row applies with the
-reverse strict inequality.  Equality is the boundary between the two rows.
-If the effective housing limit binds, $h_t^m=\widehat h_{it}^m$ and fertility
-is the unique root of \eqref{eq:olg_binding_fertility} in
+reverse inequality.  If the current limit binds on a feasible branch, so that
+$\widehat h_{it}^m>0$ and
+$\widetilde w_{it}^m>u_t^m\widehat h_{it}^m$, then
+$h_t^m=\widehat h_{it}^m$ and fertility is the unique root of
+\begin{equation}
+ \frac{\vartheta_t}{n}
+ -\frac{\alpha\kappa}{\widehat h_{it}^m-\kappa n}
+ -\frac{(1+k_{t+1}^m)\chi}
+ {\widetilde w_{it}^m-u_t^m\widehat h_{it}^m-\chi n}=0
+ \label{eq:olg_binding_fertility}
+\end{equation}
+on the feasible interval
 \begin{equation}
  0<n<\min\left\{
  \frac{\widehat h_{it}^m}{\kappa},
@@ -223,73 +176,52 @@ is the unique root of \eqref{eq:olg_binding_fertility} in
 \end{proposition}
 
 \begin{proof}
-On every stated branch, the old household's marginal value of wealth is
-$V_{a,t+1}=1/c_{t+1}^2$.  The saving Euler equation therefore gives
-$c_{t+1}^2=\beta R_fx_t$.  For an owner, total old-age resources are
-\begin{equation}
- X_{t+1}=R_fa_t'-R_f\phi P_th_t
- +(P_{t+1}-\ell_{t+1})h_t+T_{t+1}.
- \label{eq:olg_app_owner_old_resources}
-\end{equation}
-Interior old-age expenditure shares give $qX_{t+1}=\beta A x_t$.  Combining
-this identity with the current owner budget cancels the mortgage inflow against
-its repayment and leaves
-$(1+\beta A)x_t+\chi n_t+u_t^Oh_t=w_{it}$.
+The wealth envelope is $V_{a,t+1}=1/c_{t+1}^2$, so the Euler equation gives
+$c_{t+1}^2=\beta R_fx_t$.  For owners, old-age resources are
+$R_fa_t'-R_f\phi P_th_t+(P_{t+1}-\ell_{t+1})h_t+T_{t+1}$.
+The old-age shares in Lemma~\ref{lem:olg_old_allocations} then imply that their
+date-$t$ value is $\beta A x_t$.  Combining this identity with the current
+budget cancels mortgage borrowing against repayment and gives the owner row of
+\eqref{eq:olg_lifetime_budget} and \eqref{eq:olg_app_owner_saving}.  The same
+calculation gives \eqref{eq:olg_app_renter_saving} for an interior old renter.
+At the old rental cap, resources net of committed rent are
+$Z_{t+1}^R=R_fa_t'+T_{t+1}-q\,r_{t+1}h_R^{\max}$.
+Equation~\eqref{eq:olg_app_old_renter_cap} and the Euler equation give
+$qZ_{t+1}^R=\beta(1+\omega_B)x_t$, which yields the capped row of
+\eqref{eq:olg_old_branch_objects} and
+\eqref{eq:olg_app_renter_capped_saving}.
 
-For an interior old renter, $X_{t+1}=R_fa_t'+T_{t+1}$ and the same argument gives
-$a_t'=\beta A x_t-qT_{t+1}$.  If the old rental limit binds, instead define
-\begin{equation}
- Z_{t+1}^R=R_fa_t'+T_{t+1}-q\,r_{t+1}h_R^{\max}.
- \label{eq:olg_app_capped_renter_resources}
-\end{equation}
-Equation~\eqref{eq:olg_app_old_renter_cap} gives
-$c_{t+1}^2=Z_{t+1}^R/(1+\omega_B)$, so the Euler equation implies
-$qZ_{t+1}^R=\beta(1+\omega_B)x_t$.  Combining this identity with the young
-budget gives the second row of \eqref{eq:olg_old_branch_objects}, the capped
-saving rule \eqref{eq:olg_app_renter_capped_saving}, and
-\eqref{eq:olg_lifetime_budget}.  Thus the committed old-age rent changes both
-the consumption weight and effective lifetime resources.
-
-When housing is unconstrained,
-\eqref{eq:olg_app_housing_kkt} gives $s=\alpha x/u_t^m$ and
-\eqref{eq:olg_app_young_fertility_kkt} gives
-$n=\vartheta_t x/(\chi+\kappa u_t^m)$.  Substitution into the lifetime budget
-gives $\widetilde w_{it}^m=(1+k_{t+1}^m+\alpha+\vartheta_t)x$, proving
-\eqref{eq:olg_unconstrained_policies}.
-
-When the limit binds, substitute $h=\widehat h$ and
-$x=(\widetilde w^m-u_t^m\widehat h-\chi n)/(1+k_{t+1}^m)$ into the fertility condition.
-This gives \eqref{eq:olg_binding_fertility}.  Its left side tends to $+\infty$
-at the lower boundary of \eqref{eq:olg_app_binding_domain} and to $-\infty$
-at the upper boundary.  It is strictly decreasing because its derivative is
+When housing is unconstrained, \eqref{eq:olg_app_housing_kkt} and
+\eqref{eq:olg_app_young_fertility_kkt} give
+$s=\alpha x/u_t^m$ and
+$n=\vartheta_tx/(\chi+\kappa u_t^m)$.  The lifetime budget then gives
+\eqref{eq:olg_unconstrained_policies}.  At a binding limit, substitute
+$h=\widehat h$ and
+$x=(\widetilde w^m-u_t^m\widehat h-\chi n)/(1+k_{t+1}^m)$ into the fertility
+condition.  The resulting left side is \eqref{eq:olg_binding_fertility}; it
+moves from $+\infty$ to $-\infty$ over
+\eqref{eq:olg_app_binding_domain} and has derivative
 \begin{equation}
  -\frac{\vartheta_t}{n^2}
  -\frac{\alpha\kappa^2}{(\widehat h-\kappa n)^2}
  -\frac{(1+k_{t+1}^m)\chi^2}
  {(\widetilde w^m-u_t^m\widehat h-\chi n)^2}<0.
 \end{equation}
-The binding branch therefore has exactly one interior fertility choice.
+Hence the root exists and is unique.
 \end{proof}
 
-At a zero-saving or different old-age corner, the corresponding KKT system
-replaces the closed-form policy above.  Strict concavity still gives a unique
-conditional tenure choice.
-
-With the logistic ownership preference in \eqref{eq:olg_owner_share}, the
-conditional probability of ownership is strictly between zero and one whenever
-the two conditional values are finite.  Because the owner-share formula and
-the conditional policies are continuous, aggregate choices are continuous
-across the rent--own indifference locus.  Other atomless continuous preference
-distributions give the same regularity, although not generally the same
-closed-form share.
+At a zero-saving or other old-age corner, the corresponding KKT conditions
+replace these formulas.  Strict concavity still gives a unique policy within
+each tenure.  The logistic taste then makes the owner share and aggregate
+choices continuous wherever both conditional values are finite.
 
 \subsection{Aggregation and positive steady states}
 \label{app:olg_steady_states}
 
 Let $F$ denote the distribution of observed young types $i=(y_i,b_i)$.  The
-old-state distribution is over financial wealth $a$, inherited owner housing
-$H$, and tenure.  For any bounded measurable test function $\psi$, its law of
-motion is
+old-state distribution is over financial wealth $a$, housing $H$ carried from
+young age, and tenure.  For any bounded measurable test function $\psi$, its
+law of motion is
 \begin{align}
  \int\psi\,\dd G_{t+1}
  =\int\Big[&(1-\pi_t^O(i))
@@ -320,39 +252,30 @@ equation in \eqref{eq:olg_steady_state_system}.  Reversing these steps proves
 sufficiency once the stationary household distribution is constructed.
 \end{proof}
 
-Existence can be shown in two one-dimensional steps.  For each candidate house
-price, the fiscal rule determines a transfer.  Moving along this fiscal locus,
-a steady state is a price at which fertility equals replacement.  The
-following proposition makes that argument precise and also makes clear that a
-positive steady state is not guaranteed for arbitrary primitives.
+For each house price, fiscal balance determines the transfer.  A steady state
+is then a point on this fiscal locus at which fertility equals replacement.
 
 \begin{proposition}[Steady-state existence and local uniqueness]
 \label{prop:olg_app_ss_existence}
 Let
 $\mathcal D=[\underline P,\overline P]\times
 [\underline T,\overline T]\subset\mathbb R_{++}^2$ be a rectangle on which
-conditional policies are feasible, relevant user costs are positive, and
-$\bar n$ and $\bar h$ are continuous.  For the local-uniqueness statement,
-suppose they are continuously differentiable near the steady state.  Define
+the household policies are feasible, user costs are positive, and
+$\bar n$ and $\bar h$ are continuous.  Define the fiscal map
 \begin{equation}
  \Psi(P,T)=\frac{q\tau^pP}{2}\bar h(P,T;\vartheta).
  \label{eq:olg_app_fiscal_map}
 \end{equation}
-Suppose:
-\begin{enumerate}
- \item $\Psi(P,\cdot)$ maps
- $[\underline T,\overline T]$ into itself for every $P$, and there is an
- $L<1$ such that $|\Psi(P,T)-\Psi(P,T')|\leq L|T-T'|$ for all
- $P\in[\underline P,\overline P]$ and
- $T,T'\in[\underline T,\overline T]$;
- \item writing $T=\mathcal T(P)$ for its unique fixed point,
- \begin{equation}
+Suppose $\Psi(P,\cdot)$ maps the transfer interval into itself and is a
+contraction in $T$, uniformly in $P$, with common modulus $L<1$.  Write
+$\mathcal T(P)$ for its fixed point.  If
+\begin{equation}
  [\nu\bar n(\underline P,\mathcal T(\underline P);\vartheta)-1]
  [\nu\bar n(\overline P,\mathcal T(\overline P);\vartheta)-1]<0.
  \label{eq:olg_app_replacement_boundary}
- \end{equation}
-\end{enumerate}
-Then a positive steady state exists in $\mathcal D$.  It is locally unique if
+\end{equation}
+then a positive steady state exists in $\mathcal D$.  If $\bar n$ and $\bar h$
+are continuously differentiable near that state, it is locally unique when
 \begin{equation}
  J^*=\begin{bmatrix}
  \nu\bar n_P & \nu\bar n_T\\[2pt]
@@ -365,32 +288,14 @@ is nonsingular.
 \end{proposition}
 
 \begin{proof}
-Fix a price $P$.  The contraction theorem gives a unique transfer
-$\mathcal T(P)$ that balances the government budget.  Uniform contraction and
-continuity of the fiscal map make this transfer continuous in $P$.  The
-replacement residual therefore varies continuously along the fiscal locus.
-The boundary sign change and the intermediate value theorem produce a price
-$P^*$ at which fertility is exactly $1/\nu$.  Its fiscal fixed point
-$T^*=\mathcal T(P^*)$ completes the steady state.  If $J^*$ is nonsingular,
-the implicit-function theorem gives local uniqueness.
+The contraction theorem gives one fiscally balanced transfer $\mathcal T(P)$
+for each price.  The common contraction modulus and continuity of $\Psi$ make
+$\mathcal T(P)$ continuous.  The sign change in
+\eqref{eq:olg_app_replacement_boundary} therefore yields a price at which
+fertility is $1/\nu$.  Its fiscal fixed point completes the steady state.
+Nonsingularity of $J^*$ gives local uniqueness by the implicit-function
+theorem.
 \end{proof}
-
-The first condition can be checked from bounds on primitives and policies.  For
-example, suppose $0<\underline h\leq\bar h\leq\overline h$ on
-$\mathcal D$ and $\bar h(P,\cdot)$ is uniformly Lipschitz with constant
-$L_h$.  It is enough to choose transfer bounds such that
-\begin{equation}
- \underline T\leq\frac{q\tau^p\underline P}{2}
- \underline h,\qquad
- \overline T\geq\frac{q\tau^p\overline P}{2}
- \overline h,
- \qquad
- \frac{q\tau^p\overline P}{2}L_h<1.
- \label{eq:olg_app_fiscal_primitive_bounds}
-\end{equation}
-The replacement boundary condition requires average fertility to lie on
-opposite sides of $1/\nu$ at the two price bounds, after closing the fiscal
-account.  It can be checked directly from the household policies.
 
 If $J^*$ is nonsingular, the response to a permanent change in $\vartheta$ is
 \begin{equation}
@@ -484,15 +389,9 @@ terminal date, not an existence theorem for the infinite-horizon transition.
 The horizon comparisons below show that the computed path is insensitive to
 extending $J$.
 
-The reason one shock can affect several successive capital-gains bases is the
-demographic state.  The initial fertility response changes $Y_1$ through
-$Y_1=\nu\bar n_0Y_0$; the resulting young cohort becomes the old cohort one
-period later, and subsequent fertility choices continue to update cohort
-masses.  With a fixed housing stock, this propagation can move equilibrium
-housing demand and prices over several dates.  Whenever a date in that path
-has $P_s>P_{s-1}$, the cohort selling at $s$ realizes
-$\ell_s=\tau^g(P_s-P_{s-1})$.  In the numerical example, the equilibrium path
-determines the sign and duration of appreciation.
+The cohort recursion in \eqref{eq:olg_iterated_cohorts} lets one permanent shock
+move housing demand and capital-gains bases for several dates.  The equilibrium
+path determines when appreciation, and hence taxable gains, occurs.
 
 \subsection{Compensated reallocation}
 \label{app:olg_reallocation}
@@ -521,11 +420,13 @@ changing title and occupancy.
 
 \begin{assumption}[Implementation]
 \label{ass:olg_two_date_ledger}
-The marginal transfer can be financed at the bond price, and household-specific
-transfers can be made at dates $t$ and $t+1$.  The buyer's old-age retention and
-estate constraints are slack.  The added unit is sold at $t+1$ while the
-buyer's baseline old-age housing is held fixed.  Fertility, tenure, cohort
-masses, and all other allocations are unchanged.
+The marginal purchase and any compensation can be financed at the bond price.
+The government rebates the incremental tax revenue and can make
+household-specific transfers at dates $t$ and $t+1$.  The buyer's old-age
+retention and estate constraints are slack.  The added unit is sold at $t+1$
+while the buyer's baseline old-age housing is held fixed.  Fertility, tenure,
+cohort masses, and all other allocations are unchanged.  The transfer cost
+$K_{ijt}$ is measured in date-$t$ goods.
 \end{assumption}
 
 \begin{proof}[Proof of Proposition~\ref{prop:olg_reallocation}]
@@ -670,49 +571,24 @@ $k_{t+1}^m=\beta A$.  On the capped old-renter branch the same derivation uses
 $k_{t+1}^R=\beta(1+\omega_B)$.
 \end{proof}
 
-The same calculation separates two other partial-equilibrium channels:
+When the down-payment constraint alone binds,
 \begin{equation}
- \frac{\partial n}{\partial\widetilde w_{it}^m}
- =\frac{\chi}{(1+k_{t+1}^m)x^2\Delta}>0,
- \qquad
- \frac{\partial n}{\partial u_t^m}
- =-\frac{\chi\widehat h}
- {(1+k_{t+1}^m)x^2\Delta}<0.
- \label{eq:olg_app_fertility_wealth_user_cost}
-\end{equation}
-At a fixed cap, more lifetime resources raise fertility and a higher housing
-user cost lowers it.
-
-A primitive sufficient condition, stronger than the exact condition, is
-\begin{equation}
- \chi\leq\frac{(1+k_{t+1}^m)\kappa u_t^m}{\alpha},
- \label{eq:olg_app_fertility_sufficient}
-\end{equation}
-because $\zeta_{it}^m\geq0$.  When the down-payment constraint alone binds,
-\begin{equation}
- \widehat h_{it}^O=\frac{b_i}{(1-\phi)P_t},\qquad
- \frac{\partial\widehat h^O}{\partial b_i}
- =\frac1{(1-\phi)P_t},\qquad
- \frac{\partial\widehat h^O}{\partial\phi}
- =\frac{b_i}{(1-\phi)^2P_t}.
- \label{eq:olg_app_cap_pass_through}
-\end{equation}
-The derivative with respect to $\phi$ isolates the cap-relaxation channel when
-prices and resources are held fixed.  The two total derivatives on this branch
-are
-\begin{align}
+\begin{aligned}
+ \widehat h_{it}^O&=\frac{b_i}{(1-\phi)P_t},\\
  \frac{\partial n}{\partial\phi}
  &=\frac{\partial n}{\partial\widehat h}
  \frac{b_i}{(1-\phi)^2P_t},\\
  \frac{\partial n}{\partial b_i}
- &=\frac{\partial n}{\partial\widetilde w_{it}^O}
+ &=\frac{\chi}{(1+k_{t+1}^O)x^2\Delta}
  +\frac{\partial n}{\partial\widehat h}
  \frac{1}{(1-\phi)P_t}.
+\end{aligned}
  \label{eq:olg_app_financing_fertility_derivatives}
-\end{align}
-A change in liquid wealth has both a wealth channel and a housing-access
-channel.  A funded policy additionally moves prices, transfers, and tenure,
-and its aggregate response requires the equilibrium system.
+\end{equation}
+The first expression isolates the access channel.  Liquid wealth also has a
+direct resource effect, shown by the first term in its derivative.  A funded
+policy additionally changes prices, transfers, and tenure, so its aggregate
+effect must be computed in equilibrium.
 
 \subsection{Mixed-tenure example}
 \label{app:olg_computation}
@@ -722,7 +598,7 @@ retains the logistic ownership preference in \eqref{eq:olg_owner_share}.  It
 computes the two steady states and a terminally closed transition between them.
 Table~\ref{tab:olg_app_parameters} lists the parameters.
 
-\begin{table}[!htb]
+\begin{table}[H]
 \centering
 \caption{Parameters of the mixed-tenure construction}
 \label{tab:olg_app_parameters}
@@ -747,7 +623,7 @@ Owner intercept & $\bar\xi$ & $-0.15$ & Taste scale & $\sigma_\xi$ & 0.12\\
 At date zero, $\vartheta$ rises permanently from $0.35$ to $0.50$.  Solving
 \eqref{eq:olg_steady_state_system} gives Table~\ref{tab:olg_app_steady_states}.
 
-\begin{table}[!htb]
+\begin{table}[H]
 \centering
 \caption{Positive steady-state endpoints}
 \label{tab:olg_app_steady_states}
@@ -786,9 +662,13 @@ cohorts even though gains are zero in both steady states.
 Both tenures have positive mass.  The young renter and owner housing limits
 bind, and the owner's limit is financial.  The old rental limit binds, while
 old owners are interior.  The maximum scaled equilibrium residual is
-$6.51\times10^{-10}$; extending the horizon from 28 to 32 changes the first
-twenty dates by at most $3.11\times10^{-15}$.
+$6.51\times10^{-10}$; extending the horizon from 24 to 28 changes the first
+nine dates by at most $1.78\times10^{-15}$.
 
-The steady-state existence conditions are also satisfied on the declared
-price--transfer grid: the fiscal map is a contraction and the replacement
-residual changes sign at the two price boundaries.
+As a numerical check, evaluate the fiscal map on a $41\times31$ grid over
+$P\in[0.25,0.60]$ and $T\in[0.005,0.02]$.  Every sampled value lies in the
+transfer interval, and the largest sampled absolute derivative with respect to
+$T$ is $0.00588$ at the initial parameter and $0.00560$ at the final one.  The
+replacement residual has opposite signs at the two price boundaries in both
+cases.  These calculations support, but do not prove, the uniform conditions
+in Proposition~\ref{prop:olg_app_ss_existence}.
