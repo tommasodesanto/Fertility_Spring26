@@ -494,7 +494,7 @@ has $P_s>P_{s-1}$, the cohort selling at $s$ realizes
 $\ell_s=\tau^g(P_s-P_{s-1})$.  In the numerical example, the equilibrium path
 determines the sign and duration of appreciation.
 
-\subsection{Conditional reallocation}
+\subsection{Compensated reallocation}
 \label{app:olg_reallocation}
 
 For a constrained young owner, \eqref{eq:olg_app_housing_kkt} gives the
@@ -582,13 +582,12 @@ a sufficiently small finite transfer.  At a steady state the two gains terms
 are zero, so the condition becomes $\zeta_i^{O,F}>K_{ij}$.
 \end{proof}
 
-The efficiency statement is conditional on the financing and transfers in
+The Pareto statement depends on the financing and transfers in
 Assumption~\ref{ass:olg_two_date_ledger}.  Without them, the value gap remains
-a useful decomposition but need not be implementable as a Pareto improvement.
-The proposition also fixes population.  Comparing policies that change
-fertility requires a social criterion for economies with different people; see
-\citet{golosovjonestertilt2007} and \citet{pereznievasetal2019}.  The paper
-therefore applies the efficiency statement only to a fixed population.
+a useful decomposition but need not be implementable.  The proposition also
+fixes population.  Comparing paths with different populations requires a
+social criterion for economies with different people; see
+\citet{golosovjonestertilt2007} and \citet{pereznievasetal2019}.
 
 The tax treatment of rental intermediaries affects incidence but not the
 decomposition.  If an intermediary also pays $\ell_{t+1}$ upon resale, its
@@ -604,8 +603,9 @@ $\zeta_{it}^{O,F}+\ell_t+q\ell_{t+1}$.
 raises the young buyer's value; realization taxes lower the old incumbent's
 value and raise the buyer's anticipated private cost.  The displayed object is
 the gross marginal-value gap.  Under the ledger in
-Proposition~\ref{prop:olg_reallocation}, a compensated improvement obtains when
-this gap exceeds the real transfer cost.}
+Proposition~\ref{prop:olg_reallocation}, the reallocation is a Pareto
+improvement for current households when this gap exceeds the real transfer
+cost.}
 \label{fig:olg_reallocation_wedge}
 \end{figure}
 
@@ -637,6 +637,12 @@ Implicit differentiation of the binding-fertility condition gives
  =\frac{\alpha\kappa/s^2-\chi u_t^m/
  [(1+k_{t+1}^m)x^2]}{\Delta}.
  \label{eq:olg_fertility_derivative}
+\end{equation}
+On the interior old-age branch, the derivative is nonnegative exactly when
+\begin{equation}
+ \chi\leq
+ \frac{(1+\beta A)\kappa(u_t^m+\zeta_{it}^m)^2}{\alpha u_t^m}.
+ \label{eq:olg_fertility_sign}
 \end{equation}
 
 \begin{proof}[Derivation of \eqref{eq:olg_fertility_derivative} and

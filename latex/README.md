@@ -20,6 +20,13 @@ Active documents:
   mixed-tenure transition approximation. The same section and appendix are
   input into `intergenerational_housing_fertility_paper_draft.tex`. The claim
   ledger is `../docs/model/simplified_olg_theory_claim_ledger.md`.
+- `full_quantitative_model_analytical_note.tex`: compact analytical map for the
+  quantitative model. It derives the stationary person law, the renter,
+  tenure-product, and sequential-fertility margins, the long-run and finite-
+  transition implicit systems, and the appropriate money-metric reallocation
+  test without introducing a continuous owner-housing choice. The verified
+  reader PDF is written to
+  `output/pdf/full_quantitative_model_analytical_note.pdf`.
 - `archive/simplified_olg_owner_only_development_20260830/`: superseded
   owner-only development note, technical appendix, PDFs, and figure. They are
   retained for provenance; the mixed-tenure package above is the only current
