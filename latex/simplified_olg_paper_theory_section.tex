@@ -12,8 +12,9 @@ generates house-price appreciation and taxable gains even though gains vanish
 at either endpoint.  Appendix~\ref{app:olg_proofs} gives the household
 solutions, transition results, and mixed-tenure construction.
 
-\subsection{Environment and household choices}
+\subsection{Environment}
 
+\textbf{Households.}
 At date $t$, the economy contains $Y_t$ young households and $O_t$ old
 households.  A young household has income $y_i$, liquid wealth $b_i$, and
 chooses total nondurable expenditure $c$, total housing $h$, completed
@@ -21,6 +22,7 @@ fertility $n$, saving $a'$, and tenure $m\in\{R,O\}$.  The pair $(y_i,b_i)$ is
 drawn from a fixed distribution $F$ in each cohort; estates are warm-glow
 expenditures rather than the source of the next cohort's $b_i$.
 
+\textbf{Preferences.}
 Each child uses $\chi>0$ units of goods and $\kappa>0$ units of housing.  Define
 the parts of the household bundle available to the adults as
 \begin{equation}
@@ -41,11 +43,13 @@ the adults.  Logarithmic utility keeps conditional demands and the response to
 a binding housing limit in closed form; the mechanisms themselves enter through
 access constraints and tax timing.
 
+\textbf{Demography.}
 A child born at $t$ produces $\nu>0$ young households at $t+1$, after survival
 and household formation.  Thus
 $Y_{t+1}=\nu\bar n_tY_t$ and $O_{t+1}=Y_t$, where $\bar n_t$ is average
 fertility among the young.
 
+\textbf{Housing and asset markets.}
 The fixed housing stock is $\bar H$.  Rental units satisfy
 $h\leq h_R^{\max}$, owner units satisfy $h\leq h_O^{\max}$, and
 $h_R^{\max}<h_O^{\max}$.  The consumption good is the numeraire, and the
@@ -73,6 +77,7 @@ the gains tax does not enter \eqref{eq:olg_rental_user_cost}.  Appendix
 \ref{app:olg_reallocation} gives the corresponding incidence calculation when
 intermediaries are also taxed.
 
+\textbf{Capital-gains taxation and home finance.}
 Household capital gains are taxed only upon sale.  An old owner who bought one
 unit at $P_{t-1}$ and sells it at $P_t$ pays the tax per unit
 \begin{equation}
@@ -88,6 +93,14 @@ warm-glow estate and leave the economy.  Selling while alive therefore
 triggers a tax that retaining the unit avoids.  A young buyer finances the share
 $\phi\in(0,1)$ and therefore posts $(1-\phi)P_th$ at purchase.
 
+\subsection{Household problems}
+
+Households take prices and transfers as given.  A renter buys housing services
+and carries only financial wealth into old age.  An owner buys housing, posts a
+down payment before receiving current income, and carries both mortgage debt
+and the house into old age.
+
+\textbf{Young renters.}
 Conditional on renting, the young household solves
 \begin{align}
  W_t^R(i)=\max_{c,h,n,a'}\;&u_t^Y(c,h,n)+\beta V_{t+1}^R(R_fa') \\
@@ -97,7 +110,10 @@ Conditional on renting, the young household solves
  \label{eq:olg_young_renter}
 \end{align}
 The renter pays for housing services each period and enters old age with
-financial wealth $R_fa'$.  Conditional on owning, the young household solves
+financial wealth $R_fa'$.
+
+\textbf{Young owners.}
+Conditional on owning, the young household solves
 \begin{align}
  W_t^O(i)=\max_{c,h,n,a'}\;&u_t^Y(c,h,n)+\beta V_{t+1}^O(a_{t+1},h) \nonumber\\
  \text{s.t.}\quad&
@@ -111,6 +127,7 @@ unsecured borrowing is unavailable.  Thus only beginning-of-period liquid
 wealth $b_i$ can satisfy the down payment.  The transfer $T_t$ is the date-$t$
 present value of the equal per-household rebate of housing-tax revenue.
 
+\textbf{Old households.}
 An old household has financial wealth $a$.  An owner also carries housing $H$
 from young age.  Renters and owners solve, respectively,
 \begin{align}
@@ -125,6 +142,7 @@ from young age.  Renters and owners solve, respectively,
 The marginal cost of retaining a unit is therefore $q\,r_t-\ell_t$: selling
 realizes the current tax, while retaining the unit avoids it.
 
+\textbf{Tenure choice.}
 Each household draws once an idiosyncratic preference $\xi_i$ for ownership,
 independently of $(y_i,b_i)$, and observes it before choosing tenure.  It owns
 when $W_t^O(i)+\xi_i\geq W_t^R(i)$.  Assume $\xi_i$ is logistic with
@@ -138,14 +156,12 @@ location $\bar\xi$ and scale $\sigma_\xi>0$, which gives the owner share
 This cross-sectional preference heterogeneity makes aggregate tenure shares
 smooth.  It does not enter the conditional renter or owner policies.
 
-\subsection{Housing demand and access}
+\subsection{Housing constraints and the cost of children}
 
-We first ask how much housing a young household would choose if neither the
-rental limit nor the down-payment constraint restricted it.  We then compare
-that desired amount with the housing the household can actually obtain.  If
-desired housing exceeds the accessible amount, the constraint binds.  We then
-measure the constraint by the household's willingness to pay for one more unit
-of housing.
+Desired housing is the amount a household would choose without the rental or
+down-payment limit.  The access constraint binds when this amount exceeds the
+housing the household can obtain.  Its shadow value measures willingness to
+pay for one more unit.
 
 Fix a household $i$, a date $t$, and a tenure choice $m\in\{R,O\}$.  To obtain
 closed forms, first suppose that saving and the household's old-age choices are
@@ -239,11 +255,9 @@ lifetime budget.  Appendix~\ref{app:olg_young_households} gives that branch.
 
 \subsection{Positive steady states and transitions}
 
-The second exercise asks how the economy responds to a permanent change in
-desired fertility.  We first characterize the old and new steady states and
-then compute a terminally closed approximation to their adjustment.  House
-prices and taxable gains are constant at either endpoint, but can change during
-the transition.
+A permanent change in desired fertility moves the economy between two steady
+states.  House prices and taxable gains are constant at either endpoint, but
+can change during the transition.
 
 At an arbitrary date, let $\bar n_t$, $\bar h_t^Y$, and $\bar h_t^O$ denote
 average fertility, young housing, and old housing generated by current choices
@@ -284,17 +298,18 @@ the old steady state, so $S_0=(Y^0,Y^0,G^0,P^0)$ and $P_{-1}=P^0$.  Because the
 old at date $t$ made their choices when young at $t-1$, the state must keep
 track of their financial wealth, housing, and tenure.  Let $G_t$ denote this
 distribution and write $S_t=(Y_t,O_t,G_t,P_{t-1})$.  Given $S_0$, a transition
-equilibrium is a sequence of prices, transfers, household choices, tenure
-shares, and distributions such that households optimize, the cohort and
-distribution laws hold, and the following two conditions hold at every date:
+equilibrium is a sequence of prices, transfers, household
+choices, tenure shares, and distributions such that households optimize, the
+cohort and distribution laws hold, housing clears, the government budget
+balances at every date, and the sequence converges to the new steady state.
+The two market conditions are
 \begin{align}
  Y_t\bar h_t^Y+O_t\bar h_t^O&=\bar H,\\
  (Y_t+O_t)T_t&=q\tau^pP_t\bar H+\ell_tO_t\bar h_t^{\mathrm{sell}}.
  \label{eq:olg_transition_residuals}
 \end{align}
 The first equation clears the housing market.  The second rebates property-tax
-revenue and the gains taxes paid by old sellers.  The sequence must also
-converge to the new steady state.
+revenue and the gains taxes paid by old sellers.
 
 Figure~\ref{fig:olg_mixed_transition} uses a finite terminal closure.  From date
 $J+1$ onward, prices and transfers equal their new steady-state values.  The
@@ -324,23 +339,18 @@ properties of its computed equilibrium path.
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.70\textwidth]{figures/simplified_olg_mixed_tenure_transition.png}
-\caption{Terminally closed mixed-tenure transition after a permanent increase
-in the fertility preference.  Dotted and dashed lines mark the two steady-state
-prices; the horizontal fertility line is replacement $1/\nu$.  Both tenures
-have positive mass throughout, and the preference change is the only shock.}
+\includegraphics[width=0.55\textwidth]{figures/simplified_olg_mixed_tenure_transition.png}
+\caption{Transition after a permanent increase in the fertility preference.
+Lines mark steady-state prices and replacement fertility $1/\nu$.}
 \label{fig:olg_mixed_transition}
 \end{figure}
 
 \subsection{Intergenerational reallocation and fertility}
 
-Consider moving a small amount of housing from an old incumbent to a
-financing-constrained young owner.  Fertility, cohort sizes, tenure, prices,
-and all unaffected allocations are held fixed.  The old incumbent is interior
-in both housing retention and estate composition.  The young owner saves, has
-a binding down-payment constraint and a slack physical size limit, and is
-interior in the relevant old-age choices.  Their marginal values of current
-housing services, expressed in units of current consumption, are
+Consider a marginal transfer of housing from an old incumbent to a young
+owner, holding fertility, cohort sizes, tenure, prices, and other allocations
+fixed.  The buyer's down-payment constraint binds; the other relevant choices
+are interior.  Their marginal values of current housing services are
 \begin{equation}
  MV_{it}^Y=q\,r_t+q\ell_{t+1}+\zeta_{it}^{O,F},
  \qquad
@@ -348,22 +358,17 @@ housing services, expressed in units of current consumption, are
  \label{eq:olg_marginal_values}
 \end{equation}
 
-The two households share the housing-service term $q r_t$.  The old owner loses
-$\ell_t$ upon sale, the young buyer anticipates $q\ell_{t+1}$, and the binding
-down-payment constraint contributes
-$\zeta_{it}^{O,F}$.
+The common term $q r_t$ is the value of housing services.  A sale costs the
+incumbent $\ell_t$, the buyer anticipates $q\ell_{t+1}$, and the financing
+constraint contributes $\zeta_{it}^{O,F}$.
 
-To give this comparison a welfare meaning without assigning weights to future
-people, call an allocation \emph{conditionally locally efficient} if no small
-reallocation of existing housing, together with budget-balanced transfers, can
-make the households alive at $t$ weakly better off and at least one strictly
-better off while fertility, cohort sizes, and tenure are fixed.  Suppose an
-authority can supply pledgeable bridge finance at the bond price and return
-incremental tax receipts.  At $t+1$, it sells the transferred unit while
-holding the buyer's baseline old-age housing choice fixed.  Strict slackness of
-the buyer's old-age constraints makes this marginal path feasible.
+Holding fertility, cohort sizes, and tenure fixed, call an allocation
+\emph{conditionally locally efficient} if no small housing reallocation and
+budget-balanced transfers can make all households alive at $t$ weakly better
+off and one strictly better off.  Appendix~\ref{app:olg_reallocation} gives the
+transfer scheme.
 
-\begin{proposition}[Conditional local efficiency test]
+\begin{proposition}[Intergenerational reallocation]
 \label{prop:olg_reallocation}
 Under the conditions above and the two-date transfer ledger stated in
 Appendix~\ref{app:olg_reallocation}, the marginal-value difference is
@@ -372,22 +377,19 @@ Appendix~\ref{app:olg_reallocation}, the marginal-value difference is
  =\zeta_{it}^{O,F}+\ell_t+q\ell_{t+1}.
  \label{eq:olg_reallocation_surplus}
 \end{equation}
-Let $K_{ijt}\geq0$ be the marginal real resource cost, in current goods, of
-transferring title and occupancy from $j$ to $i$.  Purchase and tax payments
-are transfers, not resource costs.  If
+Let $K_{ijt}\geq0$ be the marginal resource cost of transferring title and
+occupancy.  Purchase and tax payments are transfers.  If
 $MV_{it}^Y-MV_{jt}^O>K_{ijt}$, the allocation is not conditionally locally
 efficient.
 \end{proposition}
 
-At a steady state, both tax terms vanish, so the condition is
-$\zeta_i^{O,F}>K_{ij}$; the tax terms are transition-specific lock-in wedges.
-The result is a Pareto statement for households alive at $t$, not a ranking of
-equilibria with different populations, which requires weights on future people.
+At a steady state the condition is $\zeta_i^{O,F}>K_{ij}$; the gains-tax terms
+are transition-specific.  Thus the transfer improves the welfare of households
+alive at $t$ when the value gap covers its resource cost.  The result does not
+rank economies with different populations.
 
-The housing constraint can also affect fertility.  The sign is not automatic:
-another child requires both $\chi$ units of goods and $\kappa$ units of space.
-Holding tenure, prices, lifetime wealth, and the active set fixed, and using the
-interior old-age branch above, Appendix~\ref{app:olg_fertility} shows that
+Let $\widehat h$ denote a binding housing limit.  Holding tenure, prices,
+lifetime wealth, and the active set fixed, the interior old-age branch gives
 \begin{equation}
  \frac{\dd n}{\dd\widehat h}\geq0
  \quad\Longleftrightarrow\quad
@@ -395,9 +397,9 @@ interior old-age branch above, Appendix~\ref{app:olg_fertility} shows that
  \frac{(1+\beta A)\kappa(u_t^m+\zeta_{it}^m)^2}{\alpha u_t^m}.
 \label{eq:olg_fertility_sign}
 \end{equation}
+Appendix~\ref{app:olg_fertility} derives this expression and the corresponding
+capped-renter formula.
 More accessible space raises fertility when children are sufficiently
-space-intensive relative to their goods cost.  If the old rental limit also
-binds, $\beta A$ is replaced by $\beta(1+\omega_B)$.  This partial-equilibrium
-calculation also gives $\partial n/\partial w>0$ and
-$\partial n/\partial u_t^m<0$.  It does not sign a funded policy because prices,
-rebates, tenure, and lifetime resources also respond.
+space-intensive relative to their goods cost.  The same calculation gives
+$\partial n/\partial w>0$ and $\partial n/\partial u_t^m<0$.  This is a
+partial-equilibrium result; a funded policy also moves prices and transfers.

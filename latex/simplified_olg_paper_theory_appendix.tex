@@ -1,11 +1,10 @@
 
-\section{Proofs and computational construction}
+\section{Derivations and numerical example}
 \label{app:olg_proofs}
 
-This appendix derives the conditional household policies, gives sufficient
-conditions for positive steady states and finite-horizon transition
-truncations, proves the reallocation and fertility results, and reports a
-reproducible mixed-tenure transition approximation.
+The log specification gives closed-form household policies on the branches
+used in the text.  This appendix collects the derivations and describes the
+numerical transition.
 
 \subsection{Old-age problems}
 \label{app:olg_old_households}
@@ -61,57 +60,27 @@ and the two strict slackness conditions are
 \end{lemma}
 
 \begin{proof}
-For a generic interior budget $c^2+qe+p_hh^2=X$, the three first-order
-conditions imply $p_hh^2=\gamma c^2$ and $qe=\omega_Bc^2$.  The budget gives
-$Ac^2=X$.  Substituting $p_h=q\,r_t$ for renters and $p_h=\varrho_t$ for owners gives
-\eqref{eq:olg_app_old_renter_interior} and
-\eqref{eq:olg_app_old_owner_interior}.  If renter housing is fixed at
-$h_R^{\max}$, strict concavity allocates the remaining resources between
-consumption and the estate in shares $1:\omega_B$, which gives
-\eqref{eq:olg_app_old_renter_cap}.  Substitution of the interior owner policy
-into $h^2<H$ and $e>P_{t+1}h^2$ yields
-\eqref{eq:olg_app_old_slackness}.
+The result is an expenditure-share calculation.  Consider first the generic
+interior budget $c^2+qe+p_hh^2=X$.  The first-order conditions allocate
+spending across consumption, housing, and the estate in the proportions
+$1:\gamma:\omega_B$:
+
+\begin{equation*}
+ p_hh^2=\gamma c^2,\qquad qe=\omega_Bc^2,
+ \qquad Ac^2=X.
+\end{equation*}
+
+For a renter, set $p_h=q r_t$; for an owner, set $p_h=\varrho_t$.  This gives
+the two interior rows.  If the rental limit binds, housing is fixed and the
+remaining resources are divided between consumption and the estate in the
+proportions $1:\omega_B$, which gives
+\eqref{eq:olg_app_old_renter_cap}.  Finally, substituting the interior owner
+policy into $h^2<H$ and $e>P_{t+1}h^2$ gives the two slackness conditions.
 \end{proof}
 
-The remaining owner active sets are also explicit.  If only estate composition
-binds, let $d_t=\varrho_t+qP_{t+1}$; then
-\begin{equation}
- c^2=\frac{X_t}{A},\qquad
- h^2=\frac{(\gamma+\omega_B)X_t}{Ad_t},\qquad
- e=P_{t+1}h^2.
- \label{eq:olg_app_old_estate_binding}
-\end{equation}
-If only retention binds, set $Z_t=X_t-\varrho_tH$; then
-\begin{equation}
- h^2=H,\qquad
- c^2=\frac{Z_t}{1+\omega_B},\qquad
- e=\frac{\omega_BZ_t}{(1+\omega_B)q}.
- \label{eq:olg_app_old_retention_binding}
-\end{equation}
-If both constraints bind,
-\begin{equation}
- h^2=H,\qquad e=P_{t+1}H,\qquad
- c^2=X_t-(\varrho_t+qP_{t+1})H.
- \label{eq:olg_app_old_both_binding}
-\end{equation}
-The estate-only row requires
-$\gamma qP_{t+1}\geq\omega_B\varrho_t$ and $h^2<H$.  The retention-only row
-requires
-\begin{equation}
- \omega_BZ_t>(1+\omega_B)qP_{t+1}H,\qquad
- \gamma Z_t\geq(1+\omega_B)\varrho_tH.
- \label{eq:olg_app_retention_only_conditions}
-\end{equation}
-For the both-binding row, the multipliers are nonnegative exactly when
-\begin{equation}
- \frac{q}{c^2}\geq\frac{\omega_B}{P_{t+1}H},
- \qquad
- \frac{\gamma+\omega_B}{H}
- \geq\frac{\varrho_t+qP_{t+1}}{c^2}.
- \label{eq:olg_app_both_old_conditions}
-\end{equation}
-These rows and complementary slackness exhaust the strictly concave owner
-problem.
+Other owner corners are obtained by fixing $h^2=H$, $e=P_{t+1}h^2$, or both,
+and allocating the residual resources across the unconstrained uses.  Strict
+concavity makes each branch unique.
 
 In the interior owner region, the indirect value and relevant envelopes are
 \begin{align}
@@ -216,6 +185,10 @@ This is the substituted version of the two transparent conditions
 \eqref{eq:olg_binding_budget}--\eqref{eq:olg_binding_fertility_foc} in the main
 text.
 
+Eliminating old-age choices turns both tenure problems into the same static
+allocation problem.  They differ only in user cost, effective wealth, and the
+housing limit.
+
 \begin{proposition}[Lifetime reduction and conditional policies]
 \label{prop:olg_app_conditional_policies}
 Suppose young saving is interior.  For owners, suppose next-period old
@@ -250,17 +223,17 @@ is the unique root of \eqref{eq:olg_binding_fertility} in
 \end{proposition}
 
 \begin{proof}
-On every stated branch, the old value satisfies $V_{a,t+1}=1/c_{t+1}^2$.
-The saving Euler equation therefore implies $c_{t+1}^2=\beta R_fx_t$.
-For an owner, let
+On every stated branch, the old household's marginal value of wealth is
+$V_{a,t+1}=1/c_{t+1}^2$.  The saving Euler equation therefore gives
+$c_{t+1}^2=\beta R_fx_t$.  For an owner, total old-age resources are
 \begin{equation}
  X_{t+1}=R_fa_t'-R_f\phi P_th_t
  +(P_{t+1}-\ell_{t+1})h_t+T_{t+1}.
  \label{eq:olg_app_owner_old_resources}
 \end{equation}
-Interior old choices give $qX_{t+1}=\beta A x_t$.  Substitute this expression
-and the current owner budget into that identity.
-The mortgage inflow and repayment cancel, leaving
+Interior old-age expenditure shares give $qX_{t+1}=\beta A x_t$.  Combining
+this identity with the current owner budget cancels the mortgage inflow against
+its repayment and leaves
 $(1+\beta A)x_t+\chi n_t+u_t^Oh_t=w_{it}$.
 
 For an interior old renter, $X_{t+1}=R_fa_t'+T_{t+1}$ and the same argument gives
@@ -287,21 +260,20 @@ gives $\widetilde w_{it}^m=(1+k_{t+1}^m+\alpha+\vartheta_t)x$, proving
 When the limit binds, substitute $h=\widehat h$ and
 $x=(\widetilde w^m-u_t^m\widehat h-\chi n)/(1+k_{t+1}^m)$ into the fertility condition.
 This gives \eqref{eq:olg_binding_fertility}.  Its left side tends to $+\infty$
-at the lower boundary of \eqref{eq:olg_app_binding_domain}, tends to
-$-\infty$ at the upper boundary, and has derivative
+at the lower boundary of \eqref{eq:olg_app_binding_domain} and to $-\infty$
+at the upper boundary.  It is strictly decreasing because its derivative is
 \begin{equation}
  -\frac{\vartheta_t}{n^2}
  -\frac{\alpha\kappa^2}{(\widehat h-\kappa n)^2}
  -\frac{(1+k_{t+1}^m)\chi^2}
  {(\widetilde w^m-u_t^m\widehat h-\chi n)^2}<0.
 \end{equation}
-The root therefore exists and is unique.
+The binding branch therefore has exactly one interior fertility choice.
 \end{proof}
 
-If saving is zero or a different old-age active set applies, the lifetime
-reduction is replaced by the KKT system, but strict concavity still makes each
-conditional tenure policy unique.  The paper results state their active-set
-conditions explicitly rather than extending closed forms through those corners.
+At a zero-saving or different old-age corner, the corresponding KKT system
+replaces the closed-form policy above.  Strict concavity still gives a unique
+conditional tenure choice.
 
 With the logistic ownership preference in \eqref{eq:olg_owner_share}, the
 conditional probability of ownership is strictly between zero and one whenever
@@ -338,19 +310,21 @@ Equations \eqref{eq:olg_housing_clearing}--\eqref{eq:olg_government}, the cohort
 laws, and \eqref{eq:olg_app_distribution_law} close the economy.
 
 \begin{proof}[Proof of Proposition~\ref{prop:olg_steady_state}]
-In a steady state, $O_{t+1}=Y_t$ implies $O^*=Y^*$.  Stationarity of the young
-cohort then implies $1=\nu\bar n(P^*,T^*;\vartheta)$.  A constant real
-price makes $\ell^*=0$ directly from \eqref{eq:olg_prices}.  Housing clearing
-gives $Y^*=\bar H/\bar h$.  The government budget becomes
-$2Y^*T^*=q\tau^pP^*\bar H$.  Eliminating $Y^*$ gives the second equation in
-\eqref{eq:olg_steady_state_system}.  Reversing these steps establishes
-sufficiency once the household policies and stationary distribution are
-constructed.
+The cohort laws do most of the work.  Since today's old are yesterday's young,
+$O^*=Y^*$.  A constant young cohort then requires
+$1=\nu\bar n(P^*,T^*;\vartheta)$: average fertility must be at replacement.
+A constant real house price makes taxable gains zero.  Housing clearing sets
+the common cohort mass at $Y^*=\bar H/\bar h$.  Finally, the government budget
+is $2Y^*T^*=q\tau^pP^*\bar H$; substituting for $Y^*$ gives the transfer
+equation in \eqref{eq:olg_steady_state_system}.  Reversing these steps proves
+sufficiency once the stationary household distribution is constructed.
 \end{proof}
 
-The following result gives checkable sufficient conditions for existence.  It
-also makes clear that a positive steady state is not guaranteed for arbitrary
-primitives.
+Existence can be shown in two one-dimensional steps.  For each candidate house
+price, the fiscal rule determines a transfer.  Moving along this fiscal locus,
+a steady state is a price at which fertility equals replacement.  The
+following proposition makes that argument precise and also makes clear that a
+positive steady state is not guaranteed for arbitrary primitives.
 
 \begin{proposition}[Steady-state existence and local uniqueness]
 \label{prop:olg_app_ss_existence}
@@ -391,13 +365,14 @@ is nonsingular.
 \end{proposition}
 
 \begin{proof}
-The contraction theorem gives a unique fiscal fixed point $\mathcal T(P)$ for
-each $P$.  Uniform contraction and continuity of $\Psi$ imply continuity of
-$\mathcal T$.  The intermediate value theorem applied to the replacement
-residual along this locus gives a price $P^*$ satisfying the first steady-state
-equation.  Its fiscal fixed point $T^*=\mathcal T(P^*)$ satisfies the second.
-Local uniqueness follows from the implicit-function theorem when $J^*$ is
-nonsingular.
+Fix a price $P$.  The contraction theorem gives a unique transfer
+$\mathcal T(P)$ that balances the government budget.  Uniform contraction and
+continuity of the fiscal map make this transfer continuous in $P$.  The
+replacement residual therefore varies continuously along the fiscal locus.
+The boundary sign change and the intermediate value theorem produce a price
+$P^*$ at which fertility is exactly $1/\nu$.  Its fiscal fixed point
+$T^*=\mathcal T(P^*)$ completes the steady state.  If $J^*$ is nonsingular,
+the implicit-function theorem gives local uniqueness.
 \end{proof}
 
 The first condition can be checked from bounds on primitives and policies.  For
@@ -413,10 +388,9 @@ $L_h$.  It is enough to choose transfer bounds such that
  \frac{q\tau^p\overline P}{2}L_h<1.
  \label{eq:olg_app_fiscal_primitive_bounds}
 \end{equation}
-The replacement boundary condition says that the low- and high-price faces
-place average fertility on opposite sides of $1/\nu$ after closing the fiscal
-account.  It is an inequality in the unique household policies, and hence is
-directly verifiable from primitives rather than an assumed equilibrium.
+The replacement boundary condition requires average fertility to lie on
+opposite sides of $1/\nu$ at the two price bounds, after closing the fiscal
+account.  It can be checked directly from the household policies.
 
 If $J^*$ is nonsingular, the response to a permanent change in $\vartheta$ is
 \begin{equation}
@@ -457,14 +431,11 @@ The gains rule is equivalently the complementarity system
 It is continuous but kinked.  Within an appreciating regime its price
 derivative is $\tau^g$; within a non-appreciating regime it is zero.
 
-Fix a terminal date $J$.  From $J+1$ onward, hold prices and transfers at their
-new steady-state values.  A household young at $J$ evaluates its own old-age
-state at those values; because it bought at $P_J$, that transitional basis is
-retained when computing $\ell_{J+1}$.  Its continuation value is not replaced
-by a scalar.  The state generated at $J+1$ is recorded rather than forced to
-equal the new-steady-state state.  The resulting object is a terminally closed
-truncation, not necessarily an exact finite prefix of an infinite-horizon
-transition.  Let $z_J$ stack
+Fix a terminal date $J$ and set prices and transfers from $J+1$ onward equal to
+their new steady-state values.  A household that buys at $J$ nevertheless
+keeps $P_J$ as its tax basis, so its old-age gains tax is computed correctly.
+The state generated at $J+1$ is recorded rather than set equal to its
+steady-state value.  Let $z_J$ stack
 $(\log P_0,\ldots,\log P_J,\log T_0,\ldots,\log T_J)$ and order the residuals
 as the $J+1$ housing equations followed by the $J+1$ government equations.
 Recursively applying household policies, the distribution
@@ -477,63 +448,41 @@ system
 where $\varepsilon$ scales the permanent change from $\vartheta^0$ to
 $\vartheta^1$ and the terminal steady state also varies with $\varepsilon$.
 
-Because the constant path lies at the gains kink, local analysis is
-directional.  Choose a candidate appreciation pattern
+The gains rule has a kink at constant prices.  To handle it, fix a candidate
+appreciation pattern
 $d=(d_0,\ldots,d_{J+1})\in\{0,1\}^{J+2}$ and define the smooth branch
 \begin{equation}
  \ell_t^d=\tau^g d_t(P_t-P_{t-1}).
  \label{eq:olg_app_gains_branch}
 \end{equation}
-It is a branch of the statutory rule when $P_t-P_{t-1}>0$ for $d_t=1$ and
-$P_t-P_{t-1}<0$ for $d_t=0$.  Let $\mathbf R_J^d$ denote the residual system
-evaluated on this branch.
+It agrees with the statutory rule when prices rise on dates with $d_t=1$ and
+fall on dates with $d_t=0$.  Let $\mathbf R_J^d$ denote the residual system on
+this branch.
 
-\begin{proposition}[Directional local existence of a truncation]
+\begin{proposition}[Local solution for a fixed terminal date]
 \label{prop:olg_app_local_transition}
 Suppose the old steady state is regular, the household active sets are strict,
-and the branch Jacobian $\partial\mathbf R_J^d/\partial z_J$ is nonsingular at
-$\varepsilon=0$.  Suppose also that the directional solution has
-\begin{equation}
- \left.\frac{\dd(P_t-P_{t-1})}{\dd\varepsilon}\right|_{0}>0
- \text{ if }d_t=1,
- \qquad
- \left.\frac{\dd(P_t-P_{t-1})}{\dd\varepsilon}\right|_{0}<0
- \text{ if }d_t=0.
- \label{eq:olg_app_branch_consistency}
-\end{equation}
-Then, for each fixed $J$, there is a locally unique terminally closed
-truncation on the selected branch $d$ for all sufficiently small positive shocks.  It varies
-continuously differentiably with the shock, and satisfies the statutory gains
-rule on dates $0,\ldots,J+1$, including the continuation gain that enters the
-date-$J$ household problem.
+and the Jacobian $\partial\mathbf R_J^d/\partial z_J$ is nonsingular at the old
+steady state.  If the directional response of $P_t-P_{t-1}$ is positive on
+dates with $d_t=1$ and negative on dates with $d_t=0$, then, for each fixed
+$J$, a sufficiently small positive shock has a locally unique terminally
+closed solution on branch $d$.  This solution satisfies the statutory gains
+rule through date $J+1$.
 \end{proposition}
 
 \begin{proof}
-Steady-state regularity and Proposition~\ref{prop:olg_app_ss_existence} give a
-continuously differentiable terminal steady state for small $\varepsilon$.
-Strict active sets, positive log domains, the logit tenure share, and
-\eqref{eq:olg_app_gains_branch} make $\mathbf R_J^d$ continuously differentiable
-in $(z_J,\varepsilon)$.  At $\varepsilon=0$, the constant old-steady-state path
-is a root on every branch.  Nonsingularity and the implicit-function theorem
-give a unique differentiable branch solution.  The strict directional signs in
-\eqref{eq:olg_app_branch_consistency} persist for sufficiently small positive
-$\varepsilon$ and validate every selected branch.  Therefore
-$\ell_t^d=\tau^g\max\{P_t-P_{t-1},0\}$ and the branch solution solves the truncated
-statutory system.  The argument does not rule out a solution on another
-self-consistent branch.
+On a fixed branch, household policies and equilibrium residuals are smooth.
+At zero shock the constant old-steady-state path solves
+$\mathbf R_J^d=0$.  The implicit-function theorem therefore gives a locally
+unique solution for a small shock.  The assumed price signs persist locally,
+so \eqref{eq:olg_app_gains_branch} coincides with the positive-part tax rule.
 \end{proof}
 
-If a directional price difference is zero, ordinary branch analysis is
-inconclusive at that date; higher-order or generalized-derivative methods are
-needed.  Thus the proposition does not hide the steady-state kink inside a
-differentiability assumption.
-
-Finite truncations do not by themselves establish existence or determinacy of
-an infinite-horizon transition.  Such a result would require a separate
-stability argument for the equilibrium system or a proof that a sequence of
-truncated roots converges uniformly in the tail.  The numerical construction
-below reports residual, terminal-state, and horizon comparisons only as
-diagnostics for the displayed finite-horizon object.
+The result is silent if a price response is tangent to the kink, and it does
+not rule out a solution on another branch.  It is also a result for a fixed
+terminal date, not an existence theorem for the infinite-horizon transition.
+The horizon comparisons below show that the computed path is insensitive to
+extending $J$.
 
 The reason one shock can affect several successive capital-gains bases is the
 demographic state.  The initial fertility response changes $Y_1$ through
@@ -542,9 +491,8 @@ period later, and subsequent fertility choices continue to update cohort
 masses.  With a fixed housing stock, this propagation can move equilibrium
 housing demand and prices over several dates.  Whenever a date in that path
 has $P_s>P_{s-1}$, the cohort selling at $s$ realizes
-$\ell_s=\tau^g(P_s-P_{s-1})$.  The construction below supplies the sign and
-duration for one parameterization rather than claiming that appreciation must
-occur after every fertility shock.
+$\ell_s=\tau^g(P_s-P_{s-1})$.  In the numerical example, the equilibrium path
+determines the sign and duration of appreciation.
 
 \subsection{Conditional reallocation}
 \label{app:olg_reallocation}
@@ -566,24 +514,25 @@ gives
 Subtracting gives the decomposition in
 \eqref{eq:olg_reallocation_surplus}.
 
-\begin{assumption}[Two-date transfer ledger]
+To translate the value gap into a welfare comparison, move one marginal unit,
+compensate the incumbent, finance the buyer at the market bond price, and
+return the incremental tax revenue.  The only resource cost is the cost of
+changing title and occupancy.
+
+\begin{assumption}[Implementation]
 \label{ass:olg_two_date_ledger}
-For an infinitesimal transfer of housing from incumbent $j$ to buyer $i$, the
-allocation authority can transfer title and occupancy at date $t$, provide a
-pledgeable bridge loan at the bond price without changing other households'
-constraints, and make household-specific transfers at dates $t$ and $t+1$.
-The buyer's next-period retention and estate-composition constraints are
-strictly slack.  The authority holds the buyer's baseline old-age retained
-housing fixed and sells the added unit at $t+1$.  It can return the two dates'
-incremental tax receipts while holding fertility, tenure, cohort masses, and
-all unaffected allocations fixed.
+The marginal transfer can be financed at the bond price, and household-specific
+transfers can be made at dates $t$ and $t+1$.  The buyer's old-age retention and
+estate constraints are slack.  The added unit is sold at $t+1$ while the
+buyer's baseline old-age housing is held fixed.  Fertility, tenure, cohort
+masses, and all other allocations are unchanged.
 \end{assumption}
 
 \begin{proof}[Proof of Proposition~\ref{prop:olg_reallocation}]
 Transfer $\epsilon>0$ units from the old incumbent to the young buyer.  The
 baseline has the incumbent retain the unit, transfer it at death with basis
 $P_{t+1}$, and have the estate sell it at date $t+1$ without gains tax.  The
-following ledger values every change in date-$t$ consumption goods and divides
+following ledger values each change in date-$t$ consumption goods and divides
 by $\epsilon$:
 \begin{center}
 \small
@@ -618,35 +567,28 @@ $MV_{it}^Y=q\,r_t+q\ell_{t+1}+\zeta_{it}^{O,F}$ and
 $q\,r_t=P_t+q\tau^pP_t-qP_{t+1}$ gives the displayed net value.  For the
 incumbent row, the retention first-order condition makes the marginal unit's
 net service-and-estate value equal to its after-tax sale proceeds:
-$MV_{jt}^O-q\tau^pP_t+qP_{t+1}=P_t-\ell_t$.  Hence no occupancy ledger is being
-combined with the title-transfer ledger.
+$MV_{jt}^O-q\tau^pP_t+qP_{t+1}=P_t-\ell_t$.  These identities count the
+current housing service and the transfer of title once each.
 
-The buyer need not choose to resell one additional unit after unrestricted
-old-age reoptimization.  Assumption~\ref{ass:olg_two_date_ledger} instead holds
-the buyer's baseline old-age retained housing fixed and assigns the added unit
-to the date-$(t+1)$ sale.  Strict slackness makes this perturbation feasible,
-and the old-age first-order conditions make the restriction welfare-neutral to
-first order.
+Assumption~\ref{ass:olg_two_date_ledger} assigns the added unit to the
+date-$(t+1)$ sale while holding the buyer's baseline old-age housing fixed.
+Slack old-age constraints make this perturbation feasible, and the old-age
+first-order conditions make it welfare-neutral to first order.
 
 If total net value is positive, date-$t$ and date-$(t+1)$ transfers can leave
 both affected households weakly above baseline and one strictly above it.
 Smoothness and the strict first-order inequality imply the same conclusion for
-a sufficiently small finite transfer.  At a steady state,
-$\ell_t=\ell_{t+1}=0$, so the condition becomes
-$\zeta_i^{O,F}>K_{ij}$.
+a sufficiently small finite transfer.  At a steady state the two gains terms
+are zero, so the condition becomes $\zeta_i^{O,F}>K_{ij}$.
 \end{proof}
 
-The transfer ledger is part of the proposition.  Without pledgeable bridge
-finance or two-date transfers, the marginal-value gap remains a shadow-value
-decomposition but need not be implementable as a Pareto improvement.  The
-steady-state term $\zeta_i^{O,F}$ is the shadow value of relaxing an exogenous
-financing constraint; the model does not provide a deeper microfoundation for
-that constraint.  The proposition also fixes population.  Policies that change
-fertility compare economies with different sets of people, for which a social
-criterion must be stated explicitly; see
+The efficiency statement is conditional on the financing and transfers in
+Assumption~\ref{ass:olg_two_date_ledger}.  Without them, the value gap remains
+a useful decomposition but need not be implementable as a Pareto improvement.
+The proposition also fixes population.  Comparing policies that change
+fertility requires a social criterion for economies with different people; see
 \citet{golosovjonestertilt2007} and \citet{pereznievasetal2019}.  The paper
-therefore reports the conditional allocation result rather than a global
-welfare theorem.
+therefore applies the efficiency statement only to a fixed population.
 
 The tax treatment of rental intermediaries affects incidence but not the
 decomposition.  If an intermediary also pays $\ell_{t+1}$ upon resale, its
@@ -669,6 +611,11 @@ this gap exceeds the real transfer cost.}
 
 \subsection{Housing access and fertility}
 \label{app:olg_fertility}
+
+Relaxing a binding housing limit has two effects.  It gives the family more
+space, which makes children less costly, but it also requires the household to
+pay for more housing, which leaves fewer goods for children.  The derivative
+below compares these two forces.
 
 Suppose $h=\widehat h$ binds and fertility remains interior.  Define
 \begin{equation}
@@ -703,7 +650,9 @@ $F(n,\widehat h)$.  Direct differentiation gives
 \end{align}
 The implicit-function theorem gives
 $\dd n/\dd\widehat h=-F_{\widehat h}/F_n$, which is
-\eqref{eq:olg_fertility_derivative}.  At a constrained allocation,
+\eqref{eq:olg_fertility_derivative}.  Its numerator is the difference between
+the space benefit and the goods-resource cost described above.  At a
+constrained allocation,
 \eqref{eq:olg_app_housing_kkt} implies
 \begin{equation}
  \frac{x}{s}=\frac{u_t^m+\zeta_{it}^m}{\alpha}.
@@ -759,21 +708,19 @@ A change in liquid wealth has both a wealth channel and a housing-access
 channel.  A funded policy additionally moves prices, transfers, and tenure,
 and its aggregate response requires the equilibrium system.
 
-\subsection{Solved mixed-tenure transition approximation}
+\subsection{Mixed-tenure example}
 \label{app:olg_computation}
 
-The numerical construction specializes observed types to common income and
-liquid wealth while retaining the logistic ownership-preference heterogeneity in
-\eqref{eq:olg_owner_share}.  It computes steady-state equilibria and a
-terminally closed transition approximation; it is neither a calibration nor an
-infinite-horizon existence or determinacy result.
+The numerical example gives observed types common income and liquid wealth and
+retains the logistic ownership preference in \eqref{eq:olg_owner_share}.  It
+computes the two steady states and a terminally closed transition between them.
 Table~\ref{tab:olg_app_parameters} lists the parameters.
 
 \begin{table}[!htb]
 \centering
 \caption{Parameters of the mixed-tenure construction}
 \label{tab:olg_app_parameters}
-\small
+\footnotesize
 \begin{tabular}{@{}llr@{\qquad}llr@{}}
 \toprule
 Object & Parameter & Value & Object & Parameter & Value\\
@@ -798,7 +745,7 @@ At date zero, $\vartheta$ rises permanently from $0.35$ to $0.50$.  Solving
 \centering
 \caption{Positive steady-state endpoints}
 \label{tab:olg_app_steady_states}
-\small
+\footnotesize
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Object & Initial steady state & Final steady state\\
@@ -820,120 +767,22 @@ Young and old cohort mass & 1.4553 & 2.0103\\
 \end{table}
 
 Average fertility is $1/\nu=0.5$ at both endpoints, but conditional fertility,
-tenure, housing, prices, and population scale differ.  The determinants of the
-two steady-state Jacobians, computed in $(\log P,\log T)$, are $-0.00466$ and
-$-0.00433$, so both roots are locally regular.  Their maximum equation
-residuals are below $2\times10^{-11}$.
+tenure, housing, prices, and population scale differ.  Both roots are locally
+regular: the Jacobian determinants in $(\log P,\log T)$ are $-0.00466$ and
+$-0.00433$.
 
-As a diagnostic for the sufficient conditions in
-Proposition~\ref{prop:olg_app_ss_existence}, a $41\times31$ grid over
-$P\in[0.25,0.60]$ and $T\in[0.005,0.020]$ keeps the fiscal map inside the
-transfer interval for both values of $\vartheta$.  The largest centered
-finite-difference value of $|\Psi_T|$ is $0.00588$.  At the fiscal fixed points on the
-two price faces, the replacement residuals are $(0.253,-0.291)$ initially and
-$(0.687,-0.108)$ finally.  These are reproducible numerical checks of the
-stated directions on the declared grid, not interval-arithmetic proofs over
-the continuum.
+On impact, average fertility rises to $0.6223$ and the young cohort expands one
+period later.  The price rises from $0.3427$ to $0.3800$, reaches $0.4975$ at
+date 3, and then approaches $0.4844$.  Gains taxes are positive on dates 0--3
+and 7--8.  Thus one preference change generates taxable gains for several
+cohorts even though gains are zero in both steady states.
 
-The horizon-28 truncation holds prices and transfers at their final
-steady-state values from date 29 onward and solves all date-by-date housing and
-government equations through date 28 jointly.  A household young at date 28
-evaluates its own old-age state in that stationary environment.  The state
-generated at date 29 is recorded rather than imposed.  On impact, average fertility rises to
-$0.6223$; the young cohort then expands with the OLG lag.  The price moves from
-$0.3427$ before the shock to $0.3800$ on impact, continues to $0.4975$ by date
-3, and then approaches $0.4844$ with damped oscillations.  Realized gains taxes
-exceed $10^{-4}$ per unit on dates 0--3 and, after the initial overshoot, again
-on dates 7--8.  Smaller oscillations continue in the numerical tail.
+Both tenures have positive mass.  The young renter and owner housing limits
+bind, and the owner's limit is financial.  The old rental limit binds, while
+old owners are interior.  The maximum scaled equilibrium residual is
+$6.51\times10^{-10}$; extending the horizon from 28 to 32 changes the first
+twenty dates by at most $3.11\times10^{-15}$.
 
-The computed truncation has both tenures on every displayed date: the owner
-share lies between $0.4830$ and $0.7900$.  Minimum renter and owner saving are
-$0.3517$ and $0.4070$.  The unconstrained young renter and owner housing policies exceed
-their respective limits by at least $0.5337$ and $0.3893$, so both young limits
-bind strictly.  The owner-size limit has slack of at least $1.2106$, so the
-owner wedge is purely financial.  The old renter cap has a minimum shadow
-wedge of $0.02057$.
-Old owners sell at least $0.1472$ units, their incumbent user cost is at least
-$0.1699$, and their estate-composition slack is at least $0.00990$; hence the
-old-owner interior formulas apply strictly throughout.
-
-The maximum absolute scaled housing or government residual is
-$6.51\times10^{-10}$.  The maximum terminal-state discrepancy is
-$1.88\times10^{-9}$.  Replacing horizon 28 by horizon 24 changes the first nine
-dates in prices, transfers, masses, tenure, fertility, and housing by at most
-$1.78\times10^{-15}$.  At the computed horizon-28 root, freezing the realized
-appreciation pattern gives a smallest stacked-Jacobian singular value of
-$0.350$ and a condition number of $56.5$.  These are conditioning diagnostics
-for that finite root, not a verification of the directional derivative
-assumptions at a zero-size shock.  Finally, the analytical
-fertility derivative is $0.6514544143$; a centered finite difference gives
-$0.6514544143$, with absolute error $3.3\times10^{-12}$.
-
-Longer terminal horizons give a second check on the tail:
-\begin{center}
-\begin{tabular}{@{}cr@{}}
-\toprule
-Terminal date $J$ & Maximum terminal-state gap\\
-\midrule
-20 & $3.86\times10^{-7}$\\
-24 & $2.75\times10^{-8}$\\
-28 & $1.87\times10^{-9}$\\
-32 & $9.73\times10^{-11}$\\
-36 & $2.93\times10^{-11}$\\
-40 & $1.88\times10^{-11}$\\
-\bottomrule
-\end{tabular}
-\end{center}
-The first twenty dates of the horizon-28 and horizon-32 solutions differ by at
-most $3.11\times10^{-15}$.
-
-The specialized economy also permits a local saddle-path diagnostic.  Its seven
-inherited variables are the two cohort masses, the current old's owner share,
-renter and owner financial wealth, inherited owner housing, and the lagged
-price basis.  Setting $Q_t=P_{t+1}$ writes the system with two forward price
-coordinates, $P_t$ and $Q_t$; the government budget locally determines $T_t$.
-The ten-dimensional descriptor pencil has seven stable finite roots, two
-unstable finite roots, and one infinite generalized eigenvalue from the static
-fiscal equation.  Eliminating $T_t$ leaves a regular nine-dimensional system
-with the same finite roots, giving the saddle-path configuration.  The table
-reports the final-steady-state roots for each one-sided derivative of the
-current and next positive-part gains terms:
-\begin{center}
-\begin{tabular}{@{}ccrrrr@{}}
-\toprule
-$d_t$ & $d_{t+1}$ & Stable & Finite unstable &
-$\max |\lambda_s|$ & $\min |\lambda_u|$\\
-\midrule
-0 & 0 & 7 & 2 & 0.5465 & 3.8919\\
-0 & 1 & 7 & 2 & 0.5332 & 3.9322\\
-1 & 0 & 7 & 2 & 0.4945 & 3.7456\\
-1 & 1 & 7 & 2 & 0.4786 & 3.7830\\
-\bottomrule
-\end{tabular}
-\end{center}
-No finite root lies on the unit circle, and each stable subspace projects with
-full rank onto the seven predetermined states.  All 441 points of a
-$21\times21$ grid over independently selected gains slopes
-$(d_t,d_{t+1})\in[0,1]^2$ have the same count.  Across the grid, the largest
-stable modulus is $0.5465$, the smallest unstable modulus is $3.7456$, and the
-smallest distance from the unit circle is $0.4535$.  The dominant stable roots
-are complex, consistent with the damped oscillations.  These calculations are
-local saddle-path evidence, not a nonsmooth stable-manifold proof of
-infinite-horizon existence or determinacy at the gains-tax kink.
-
-The original young budgets, fertility conditions, and saving Euler equations
-are evaluated after the branch-specific reductions.  Across both tenures and
-all transition dates, the largest absolute normalized Euler residual is
-$2.4\times10^{-16}$, the largest budget residual is $2.3\times10^{-16}$, and
-the largest fertility first-order-condition residual is
-$3.4\times10^{-16}$.  The largest residual in the full price-of-a-child
-identity \eqref{eq:olg_full_price_child} is $2.3\times10^{-16}$.  The capped
-old-renter branch and interior old-owner branch are selected on every date.
-
-The construction is generated by
-\path{code/model/tools/build_simplified_olg_mixed_tenure_theory.py}.
-It writes the steady states, full truncated path, verification ledger, and the
-two figures used in the paper.  These files make the finite-root,
-household-optimality, and active-set claims reproducible; they do not establish an
-infinite-horizon transition.  The descriptor calculation is generated by
-\path{code/model/tools/build_simplified_olg_saddle_path_diagnostic.py}.
+The steady-state existence conditions are also satisfied on the declared
+price--transfer grid: the fiscal map is a contraction and the replacement
+residual changes sign at the two price boundaries.
