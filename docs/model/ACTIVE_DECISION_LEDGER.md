@@ -16,14 +16,16 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** I0, whether realized capital-gains taxation is needed in the
-core allocation result. W0 fixes the research objective: housing reallocation
-toward young households establishes inefficiency, with fertility effects as
-a subsequent result. W1 now permits the planner to relax private borrowing
-limits; the stronger result retaining those limits is parked. The working
-proof route is a compensated Pareto improvement. Exact dated transfers,
-welfare coverage, and real costs still require explicit conditions under
-W4/I1/W3. No model or manuscript amendment has begun.
+**Resume here:** H0, the intervention whose fertility effect we want to
+establish. W0 fixes the allocation-efficiency objective; W1 permits the
+planner to relax private borrowing limits. I0 now leaves realized capital-gains
+taxation outside the core argument as a deferred extension, to be revisited
+when Q0 considers inclusion in the quantitative model. The stronger W1
+benchmark retaining borrowing limits is also parked. The working proof route
+is a compensated Pareto improvement at fixed fertility, followed by a
+separate fertility result. Exact transfers, welfare coverage, and real costs
+remain proof obligations under W4/I1/W3. No model or manuscript amendment has
+begun.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),
@@ -70,6 +72,7 @@ flowchart TD
     I["I: Taxes and housing institutions"] --> W
     I --> H
     I --> D
+    Q["Q: Deferred quantitative gains-tax decision"] --> I
     U["U: Child and household units"] --> D
     W --> V["V: Amendments and verification"]
     H --> V
@@ -86,16 +89,17 @@ between mechanism analysis and welfare analysis before either is understood.
 | P0 | The stated priority is an allocation-efficiency result, with fertility effects as an additional result. The complete paper role and placement remain to be decided. | TENTATIVE | Follow the author's objective in W0; do not presume adoption of the review's recommendation to omit main-text welfare. | Sections 1, 6, 8, 10; W0 discussion below |
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
 | W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
-| W2 | Does the gains-tax/common-rebate construction earn a place? Assess the zero-cost result, recipient eligibility, continuation accounting, and whether a constructed allocation is decentralized by an actual policy. | OPEN | W0, W1, I0. A tax-revenue result for unconstrained buyers is not a result about the displayed constrained buyers. | Section 4, C |
-| W3 | If real transaction costs are retained, who pays and how is each participant compensated? Zero costs; explicit public cost financing; or participant-specific conditions. | OPEN | W1-W2. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
+| W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
+| W3 | State the real cost and its incidence for the core compensated reallocation. The positive-cost/common-rebate gains-tax extension is separately deferred. | OPEN | W1/W4 for core costs; Q0/W2 for the parked tax extension. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
 | W4 | Working proof criterion: a compensated Pareto improvement at fixed fertility. Exact welfare coverage and protection of future households must be made explicit. No social-weighted optimum or welfare ranking across different populations has been selected. | TENTATIVE | The lead carries forward the proposed Pareto test as the proof route; preserve all real and dated resource constraints. Detailed coverage remains open. | Sections 4, 6; W1 discussion below |
-| I0 | Does realized capital-gains taxation belong in the main model, an extension, or neither? Establish its intended economic contribution and connection to the quantitative exercise. | ACTIVE | W1 makes a financing-based allocation result the current route. Assess whether gains taxation adds enough to justify inclusion; removing its kink alone does not prove an infinite-horizon transition. | Sections 5-6, 8 |
+| I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
+| Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
-| H0 | Which housing-access experiment should the derivative describe? A current-young cap change, a common cap change at both ages, an LTV/liquid-wealth change, or a funded equilibrium policy. | OPEN | I1. Specify held-fixed prices, transfers, tenure, and old-age commitments before using the derivative. | Sections 3, 6, 8 |
+| H0 | Which intervention should the fertility result describe? Start by specifying the response to the same compensated housing reallocation as the efficiency result; distinguish a pure borrowing-limit relaxation and a funded equilibrium policy. | ACTIVE | W1/W4/I1. The lead recommends matching the welfare and fertility interventions; that linkage and the exact compensation rule remain to be settled. Keep rental-cap alternatives on record. | Sections 3, 6, 8; H0 entry below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
 | D0 | What is the demographic proposition? Cohort accounting, impact response, momentum, housing feedback, replacement, and conditions for absence of a positive closed endpoint. | OPEN | U0, H1, I1. Separate a toy existence example from the live quantitative endpoint problem. | Sections 5-6, 8 |
-| D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | P0, I0, D0. Each retained claim has its own assumptions and verification burden. | Section 5 |
-| D2 | What construction must support the chosen result? Shock direction, fixed housing stock, admissible active sets, terminal closure, numerical scope, and generality across household types. | OPEN | D0-D1, H1. Appreciation is an example, not a signed response to every fertility shock. | Sections 3, 5-6 |
+| D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
+| D2 | What construction must support the chosen result? Shock direction, fixed housing stock, admissible active sets, terminal closure, numerical scope, and generality across household types. | OPEN | D0-D1, H1. Gains-tax-specific basis/gains diagnostics are deferred with Q0; ordinary boundary and horizon checks remain. The saved taxed example has not been replaced or revalidated. | Sections 3, 5-6 |
 | U0 | How do toy fertility, literal children, and entrant households map into one another? Reconcile the conversion coefficient and replacement condition explicitly. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Existing quantitative units are not reopened by default. | Section 3, details behind audit |
 | P1 | Which results and figures go in main text, appendix, or outside the paper? Also decide environment/problem ordering, notation, and exposition. | OPEN | P0 plus selected W/H/D results. The review's proposed five-page allocation is a recommendation. | Sections 7-8 |
 | V0 | Which exact amendments and checks implement the agreed choices? Reconcile the existing section, appendix, builder, and claim ledger in one pass; keep manuscript suggestions outside the protected draft. | OPEN | Relevant decisions above. No implementation authorized merely by exploring an option. | Section 9 |
@@ -103,7 +107,8 @@ between mechanism analysis and welfare analysis before either is understood.
 ### Corrections and verification work retained across branches
 
 These rows retain every action in the review's 14-row priority ladder, in its
-original order. They are **not started** in this discussion. Rows described as
+original order. Implementation has **not started** in this discussion; author
+choices are recorded separately in the node statuses. Rows described as
 corrections can be checked independently; they do not require choosing facts.
 Their eventual inclusion and implementation must match the selected claims.
 
@@ -112,7 +117,7 @@ Their eventual inclusion and implementation must match the selected claims.
 | 1 | Separate baseline feasibility from the value of added closing credit. | W0-W1 |
 | 2 | Repair the positive-cost/common-rebate sufficiency claim or omit that extension. | W2-W3 |
 | 3 | Bound numerical transition and quantitative endpoint claims by the evidence actually available. | D0-D1 |
-| 4 | Decide the role of capital-gains taxation. | I0, P0 |
+| 4 | Role decided: deferred extension, tied to the quantitative inclusion decision. Reflect this in the core source when amendments begin. | I0, Q0, P0 |
 | 5 | Distinguish young-only from common-cap derivatives and include the old-rent resource effect. | H0 |
 | 6 | Reconcile toy child units, replacement, and the literal-child mapping. | U0 |
 | 7 | Consolidate equilibrium; state external finance, timing, and title/occupancy restrictions. | I1, P1 |
@@ -247,11 +252,54 @@ implementation assumptions, not established merely by the author's choice.
 No cost value, tax removal, or general first-best planner optimum has been
 adopted here.
 
-**Next issue, I0:** should the core allocation result be established using the
+**Question raised for I0:** should the core allocation result be established using the
 financing friction, with realized capital-gains taxation considered separately?
 The lead recommends that separation to isolate the mechanism and obtain a
-steady-state result, but the author has not decided. Property taxation is a
-different instrument; this question does not imply removing it.
+steady-state result. The subsequent I0 entry records the author's decision.
+Property taxation is a different instrument; this question does not imply
+removing it.
+
+### I0 discussion: capital-gains extension deferred
+
+**Author statement, 2026-09-04:**
+
+> i agree with your recommendation. we should leave it as extension and defer that to when we decide whether to put it in the quant model or not
+
+**Decision:** the core allocation result uses the borrowing friction. Realized
+capital-gains taxation remains an extension, deferred until the author
+considers whether to include it in the quantitative model (Q0). This is not
+permanent rejection and not a decision to add the tax to the quantitative
+model. The quantitative contract and the property-tax instrument are unchanged.
+
+**Dependency update:** park W2, the gains-tax-specific part of W3, and the
+gains-kink/basis/gains-date work within D1-D2. Preserve their objections and
+conditions for the return to Q0. General transaction costs, compensation,
+demographic propagation, and transition verification remain relevant. The
+existing sources still contain gains taxation; their later reconciliation
+must implement this author decision without deleting the retained extension.
+
+### H0 discussion entry: connect the fertility effect to an intervention
+
+The next open question is which intervention the fertility claim follows.
+The lead recommends evaluating the same compensated reallocation used in the
+efficiency comparison, with its financing and compensation rule stated. A
+pure borrowing-limit change and a funded equilibrium policy remain distinct
+alternatives, as do a young-only cap change and a common rental-cap change.
+
+The existing derivative in `latex/simplified_olg_paper_theory_appendix.tex`,
+`eq:olg_fertility_derivative`, holds effective resources, user cost, tenure,
+and the old-age branch fixed while raising the current housing limit. It
+balances a positive space effect against the goods cost of additional housing.
+It does not by itself describe a compensated planner transfer, whose payment
+rule can also change effective resources. Nor does a Pareto improvement at
+fixed fertility establish a positive fertility response. Derive the response
+for the chosen intervention; do not copy the cap derivative or its sign into
+the welfare theorem without reconciling those objects.
+
+**Next question:** should the fertility result concern the same compensated
+old-to-young housing reallocation, with a separate borrowing-policy response
+only if needed? The lead recommends this link; no author choice has yet been
+made on the precise fertility experiment or payment rule.
 
 ### Traversal and decision record
 
@@ -261,24 +309,27 @@ different instrument; this question does not imply removing it.
 | 2026-09-04 | Lead proposed W0 as the first question, linked to P0. | Clarify the intended claim before deciding the planner's instruments. |
 | 2026-09-04 | Tommaso specified equilibrium inefficiency through a planner's old-to-young housing reallocation as the desired first result; fertility effects are additional. | W0 objective recorded; W1 becomes active. P0 is provisionally welfare-first. No theorem, welfare weights, or planner powers accepted yet. |
 | 2026-09-04 | Tommaso accepted relaxing borrowing limits in the planner benchmark; retaining those limits would be desirable but is not required now. | W1 financing permission decided; stronger alternative parked. Carry forward the compensated proof route under W4 and turn to I0's tax-mechanism choice. |
+| 2026-09-04 | Tommaso accepted leaving capital-gains taxation as an extension and deferring it until the quantitative-model inclusion decision. | I0 decided; Q0 and W2 parked, along with tax-specific proof/diagnostic work. H0 becomes the current discussion question. |
 
-**Suspended questions / return points:** H0 fertility effects follow the first
-allocation claim; return after the allocation mechanism and relevant W4
-conditions. The W1 alternative retaining private borrowing limits is parked
-under the revisit conditions above. Other branches remain open.
+**Suspended questions / return points:** the W1 alternative retaining private
+borrowing limits remains parked. The gains-tax extension and its dependent
+work resume when Q0 becomes active. H0 is now being discussed; its derivation
+must return to W4/I1 to settle exact compensation and resources. Other branches
+remain open.
 
 **Author decisions in this review discussion:** W0 research objective and W1
-permission to relax private borrowing limits. No decision yet on capital-gains
-taxation, exact transfers, real costs, or a welfare ranking across populations.
-The desired result's validity and implementation remain proof obligations.
+permission to relax private borrowing limits; I0 defers capital-gains taxation
+to an extension linked to Q0. Exact transfers, real costs, and welfare coverage
+remain unresolved. Validity and implementation remain proof obligations.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
 discussion follows Tommaso's welfare-first objective using his accepted
 permission to relax borrowing limits. A compensated Pareto proof is the
-working route. The lead now recommends isolating the financing-based result
-from the gains-tax extension; that tax choice, paper placement, and advanced
-transition analysis remain open.
+working route, and I0 now adopts separation of the gains-tax extension. The
+lead recommends linking the fertility claim to the same compensated
+reallocation; its exact experiment, paper placement, and general transition
+scope remain open.
 
 **Amendments:** none started. The PDF remains the review snapshot; the live
 discussion state is here.
