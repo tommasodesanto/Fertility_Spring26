@@ -9,6 +9,9 @@ Current notes kept here:
   PDF: `../../output/pdf/e5f_independent_quantitative_audit.pdf`.
   Regenerate with `python3 code/model/tools/build_e5f_independent_audit_pdf.py`
   from the repository root; this renders the frozen document without model solves.
+- `ACTIVE_DECISION_LEDGER.md` -- live simplified-theory discussion map with
+  stable issue IDs, alternatives, dependencies, decisions, and amendment status;
+  also preserves the earlier active and legacy paper-decision registers
 - `HOUSING_MOMENT_MAPPING.md`
 - `LIVE_HOUSING_SIZE_AUDIT.md`
 - `INCOME_WEALTH_FERTILITY_ROADMAP.md`
