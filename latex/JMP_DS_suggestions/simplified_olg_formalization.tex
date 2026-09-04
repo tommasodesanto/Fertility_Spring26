@@ -1,0 +1,335 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,tabularx}
+\usepackage{microtype}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newcommand{\dd}{\mathrm d}
+
+\begin{document}
+
+\section*{Constrained efficiency and infinite-horizon dynamics}
+
+Two questions remain after solving the household problems.  First, does the
+marginal-value gap imply inefficiency under the institutions households
+actually face?  Second, can the finite transition be replaced by an exact
+infinite-horizon result?  The answers are different.  The baseline model gives
+a sharp but limited efficiency result.  An infinite-horizon theorem is
+available for a smooth specialization, but the realization-tax kink prevents
+that theorem from applying directly to the model as written.
+
+\subsection*{1. Efficiency under the baseline institutions}
+
+Fix a date and hold fertility, cohort masses, tenure, prices, and the identity
+of future households fixed.  A \emph{baseline-implementable} perturbation must
+respect three institutional restrictions.  A buyer cannot borrow against
+current income or the rebate to meet the down payment; the common rebate
+arrives after closing; and housing retained by an incumbent cannot be occupied
+by another household.  The government may change only the common transfers
+implied by its period-by-period budget.  In particular, it cannot make a
+buyer-specific transfer at closing.  Let $\mathcal F_t^B$ denote the set of
+allocations attainable with these instruments, the household mortgage and bond
+constraints, and the aggregate goods and housing constraints.  A constrained
+planner may select any allocation in $\mathcal F_t^B$, but may not reassign
+pre-closing liquid wealth.  An allocation is locally constrained Pareto
+efficient if no differentiable path in $\mathcal F_t^B$ makes every household
+alive at $t$ weakly better off over its remaining lifetime and at least one
+strictly better off.
+
+For a young owner, define liquid wealth left at closing by
+\begin{equation}
+ L_{it}=b_i-(1-\phi)P_th_{it}^{O}\geq 0.
+ \label{eq:liquidity_slack}
+\end{equation}
+The multiplier on this inequality, expressed in current consumption goods, is
+the financing component of the access wedge,
+\begin{equation}
+ \zeta_{it}^{O,F}=\frac{\mu_{it}}{\lambda_{it}}(1-\phi)P_t.
+ \label{eq:financing_wedge}
+\end{equation}
+It measures the value of additional liquidity at closing, not the gain from a
+reallocation that is feasible under the original credit technology.
+
+\begin{lemma}[The constrained buyer is not a feasible recipient]
+\label{lem:tangent}
+Suppose \eqref{eq:liquidity_slack} binds.  Along any one-sided differentiable
+baseline-implementable perturbation that holds $P_t$ and pre-closing liquid
+wealth $b_i$ fixed, the buyer's housing change satisfies
+$\dot h_{it}^{O}\leq0$.
+\end{lemma}
+
+\begin{proof}
+Feasibility requires $L_{it}(\epsilon)\geq0$ for $\epsilon\geq0$ and
+$L_{it}(0)=0$.  Hence
+\[
+ 0\leq \dot L_{it}=-(1-\phi)P_t\dot h_{it}^{O},
+\]
+which gives the result.  A change in the common date-$t$ rebate does not enter
+this derivative because the rebate is unavailable at closing.
+\end{proof}
+
+The lemma changes the interpretation of the steady-state value gap.  At a
+positive steady state, realization taxes are zero and the comparison between a
+constrained young owner and an interior old incumbent is
+\begin{equation}
+ MV_{it}^{Y}-MV_{jt}^{O}=\zeta_{it}^{O,F}>0.
+ \label{eq:ss_gap}
+\end{equation}
+But the perturbation that increases $h_{it}^{O}$ is outside the tangent set of
+baseline-implementable allocations.  The positive multiplier is therefore
+consistent with the first-order conditions of a planner constrained by the
+same closing rule.  Equation~\eqref{eq:ss_gap} does not prove that the
+competitive allocation is constrained inefficient.
+
+This conclusion is specific to the financing component of the gap.  During an
+appreciation episode, the realization tax can distort a transfer that is
+feasible without relaxing credit.
+
+\begin{proposition}[A baseline transition inefficiency]
+\label{prop:baseline_tax}
+Suppose households form an atomless population and $\ell_t>0$.  Suppose there
+are matched subsets of young owners and old incumbents, each of mass $m>0$, on
+which allocations lie in a compact interior set, the relevant objectives are
+twice continuously differentiable, and the following slackness margins are
+bounded away from zero.  Young saving, the
+down-payment constraint, the owner-size constraint, and the young buyer's
+future old-age retention and estate constraints are slack; old incumbents have
+interior retention and estate choices.  Suppose small title transfers use no
+real resources.  Then the date-$t$ competitive allocation is not locally
+Pareto efficient in $\mathcal F_t^B$ when fertility and population are fixed.
+\end{proposition}
+
+\begin{proof}
+Transfer $\epsilon$ units of housing within each matched pair at the market
+price.  The young can finance the purchase because the closing constraint is
+slack.  When the buyer becomes old, hold baseline retained housing fixed and
+sell the added unit.  Slack future constraints make this path feasible.  The
+household first-order conditions imply that both parties' private welfare
+changes are zero to first order: the incumbent receives the after-tax value of
+the marginal unit, and the unconstrained buyer pays its private user cost.  The
+sale raises current gains-tax revenue by $m\ell_t\epsilon$.  The baseline
+budget therefore raises the common current transfer by
+\[
+ \Delta T_t=\frac{m\ell_t\epsilon}{Y_t+O_t}>0.
+\]
+Every household alive at $t$ can consume this transfer and is therefore better
+off unless its private allocation was perturbed.  On the matched subsets,
+twice continuous differentiability and uniform slackness make the private
+losses $O(\epsilon^2)$ uniformly, whereas the transfer gain is of order
+$\epsilon$.  For sufficiently small $\epsilon$, every current household is
+weakly better off and some are strictly better off.
+\end{proof}
+
+The proposition requires current appreciation.  If title transfer uses
+$K_{ijt}$ current goods per unit, let $\bar K_t$ be its average over the matched
+pairs.  The common-current-rebate construction then requires
+$\ell_t>\bar K_t$.  A larger present-value surplus that arrives only at $t+1$
+does not complete this particular construction under the baseline
+period-by-period government budget, because the old incumbent cannot be
+compensated after death.
+
+\begin{corollary}[No unconditional efficiency classification]
+The maintained model class contains both locally constrained-efficient and
+locally constrained-inefficient allocations.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:baseline_tax} supplies the inefficient case.  For the
+efficient case, consider a stationary allocation with no realization taxes,
+allocation-independent tax revenue, and slack housing and financing limits.
+If a feasible perturbation made all current households weakly better off and
+one strictly better off, household optimality at the common goods, bond, and
+housing prices would make the value of their aggregate net purchases strictly
+positive.  Market clearing makes the same sum zero, a contradiction.
+\end{proof}
+
+Thus an appreciation episode can fail constrained efficiency when an
+unconstrained buyer can absorb housing released by an incumbent.  If all
+potential recipients are against their closing constraints, the
+marginal-value comparison alone is silent.
+
+The smallest additional primitive that makes the steady-state access wedge
+actionable is a pledgeable down-payment advance.  Let a lender or the government
+advance $(1-\phi)P_t\epsilon$ at closing and recover its market-value repayment
+from the buyer's next-period resources or resale proceeds.  This changes the
+tangent condition in Lemma~\ref{lem:tangent} without changing present-value
+resources.  If
+\begin{equation}
+ \zeta_{it}^{O,F}>K_{ijt},
+ \label{eq:credit_test}
+\end{equation}
+then a small transfer to the constrained buyer generates enough surplus to
+compensate the incumbent and pay the real transfer cost.  This is a theorem
+about the value of adding a liquidity instrument, not a theorem that the
+baseline competitive allocation violates its own constraints.
+
+\subsection*{2. The autonomous transition system}
+
+The finite-dimensional numerical specialization has seven predetermined
+states.  A convenient ordering is
+\begin{equation}
+ s_t=(Y_t,O_t,\pi_{t-1}^{O},a_t^{R},a_t^{O},H_t^{O},P_{t-1})\in\mathbb R^7.
+ \label{eq:states}
+\end{equation}
+The two nonpredetermined coordinates are the current price and an auxiliary
+copy of next period's price, $j_t=(P_t,Q_t)$.  Provided its derivative with
+respect to $T_t$ is nonzero, the fiscal equation locally determines the current
+transfer.  After substituting this transfer, the seven
+state laws, housing clearing, and the identity $Q_t=P_{t+1}$ form nine
+autonomous equations:
+\begin{equation}
+ \mathcal F(x_t,x_{t+1};\vartheta)=0,
+ \qquad x_t=(s_t,j_t)\in\mathbb R^9.
+ \label{eq:autonomous_system}
+\end{equation}
+This system is exact for the homogeneous-type specialization used in the
+numerical construction.  With continuously distributed or otherwise
+unrestricted heterogeneity, the old-state distribution is itself a state and
+the corresponding system is generally infinite-dimensional.
+
+The following result states what the usual saddle-path calculation would prove
+if the equilibrium map were smooth.
+
+\begin{proposition}[Local infinite-horizon transition in the smooth case]
+\label{prop:smooth_transition}
+Fix the post-shock value of $\vartheta$ and let $x^*$ be its steady state.
+Suppose $\mathcal F$ is continuously differentiable near $(x^*,x^*)$ and
+$D_2\mathcal F(x^*,x^*)$ is nonsingular.  Let
+\[
+ A=-[D_2\mathcal F(x^*,x^*)]^{-1}D_1\mathcal F(x^*,x^*).
+\]
+Suppose $A$ has seven eigenvalues strictly inside the unit circle and two
+strictly outside it.  Finally, suppose the projection of the seven-dimensional
+stable eigenspace onto the predetermined coordinates $s$ is nonsingular.  Then
+every admissible initial state $s_0$ sufficiently close to $s^*$ selects a unique
+$j_0$ such that the resulting equilibrium remains near $x^*$ and converges to
+$x^*$.  The transition is locally unique among paths that remain in that
+neighborhood.
+\end{proposition}
+
+\begin{proof}
+The implicit-function theorem applied to
+\eqref{eq:autonomous_system} gives a local map $x_{t+1}=g(x_t)$ with
+$Dg(x^*)=A$.  Hyperbolicity gives a seven-dimensional local stable manifold.
+The nonsingular projection makes this manifold a graph $j=\Gamma(s)$ over the
+predetermined states.  Hence $j_0=\Gamma(s_0)$ is the unique local choice whose
+orbit converges to $x^*$.
+\end{proof}
+
+For a small permanent shock, the state inherited from the old steady state is
+close to the new steady state.  Proposition~\ref{prop:smooth_transition} would
+therefore turn the local saddle-path conditions into an exact transition
+between the two steady states.  It neither imposes a terminal date nor assumes
+that terminally closed finite systems converge.
+
+\subsection*{3. Why the proposition does not yet apply}
+
+The statutory gains rule,
+\begin{equation}
+ \ell_t=\tau^g\max\{P_t-P_{t-1},0\},
+ \label{eq:kink}
+\end{equation}
+is not differentiable at either steady state.  Consequently there is no single
+matrix $A$ to which the smooth stable-manifold theorem can be applied.  The
+existing diagnostic supplies strong numerical evidence: after eliminating the
+static transfer, the next-date Jacobian has rank nine; each of the four
+one-sided derivative selections has seven stable and two unstable roots; and
+the stable subspace projects with full rank onto the seven predetermined
+states.  At the final steady state, the largest stable modulus across the
+reported generalized-derivative grid is $0.547$, the smallest unstable modulus
+is $3.746$, and the smallest reported projection singular value is $0.544$.
+
+These calculations do not prove an infinite-horizon result.  They use finite
+differences in the homogeneous specialization and sample, rather than exhaust,
+the generalized derivatives.  More importantly, hyperbolicity of every frozen
+matrix does not imply stability under an arbitrary sequence of switches among
+those matrices.
+
+For the exact kinked model, a sufficient theorem would require strong
+regularity of an infinite-horizon boundary-value operator.  Place deviations
+from the final steady state in the weighted sequence space
+\begin{equation}
+ \mathbb X_\rho=\left\{(x_t)_{t\geq0}:
+ \sup_{t\geq0}\rho^{-t}\lVert x_t-x^*\rVert<\infty\right\},
+ \qquad \alpha<\rho<1,
+ \label{eq:weighted_space}
+\end{equation}
+where $\alpha$ is a uniform bound on the stable decay rate.  Substitute the
+positive-part rule \eqref{eq:kink} directly into the one-date residual and call
+the resulting locally Lipschitz map $\mathcal F^{\max}$.  If $\Pi_s$ selects
+the seven predetermined coordinates, the relevant operator is
+\begin{equation}
+ \mathfrak H(\boldsymbol x;s_0,\varepsilon)=
+ \left(
+ (\mathcal F^{\max}(x_t,x_{t+1};\varepsilon))_{t\geq0},
+ \Pi_sx_0-s_0
+ \right).
+ \label{eq:augmented_operator}
+\end{equation}
+The initial-state equation is essential.  Without it, the linearized residual
+has the seven-dimensional stable manifold in its kernel and cannot be
+invertible.
+
+A sufficient nonsmooth theorem requires the following conditions:
+\begin{enumerate}
+ \item every admissible generalized next-date Jacobian is nonsingular, with a
+ common bound on its inverse;
+ \item the resulting switched linear system has a uniform exponential
+ dichotomy with a seven-dimensional stable bundle and a two-dimensional
+ unstable bundle, and stable rate at most $\alpha$; and
+ \item the stable bundle projects uniformly and nonsingularly onto the seven
+ predetermined states.
+\end{enumerate}
+Together with a uniform semismooth remainder bound, these conditions make each
+admissible generalized derivative of the augmented operator
+\eqref{eq:augmented_operator} a bounded bijection, with a common bound on its
+inverse.  This is the strong-regularity condition that a nonsmooth implicit-
+function or graph-transform argument needs.  It would deliver a unique local
+path in $\mathbb X_\rho$, and membership in that space would establish
+convergence.  This does not assume convergence of finite-horizon solutions; it
+derives convergence from bounded invertibility of the infinite linearized
+boundary-value problem.
+
+The existing root-count calculation does not verify this uniform switched-
+system condition.  Establishing it would require either an analytic common-cone
+argument or a certified bound over all admissible generalized Jacobians and
+their products.  For the model with a general distribution of household types,
+the same argument would also have to be carried out on a space of measures.
+
+The clean alternative is to make the gains schedule continuously
+differentiable at zero gains, including the special case $\tau^g=0$.  Then the
+smooth theorem applies once the rank, root-count, and projection conditions are
+verified exactly.  That modification removes the lock-in kink that motivates
+the transition exercise.  The nonsmooth infinite-horizon proof is therefore
+possible in principle, but it is not a minimal addition to the analytical
+model.
+
+\subsection*{4. Claims supported by the analysis}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}X@{}}
+\toprule
+Status & Claim\\
+\midrule
+Established & A binding down-payment wedge does not establish inefficiency
+relative to the baseline credit technology, because the proposed recipient is
+outside the baseline tangent set.\\
+Established & Current realization taxation can generate a baseline-feasible
+local Pareto improvement when an unconstrained young buyer and an interior old
+incumbent can trade and the common current rebate returns the revenue.\\
+One additional instrument & A pledgeable down-payment advance turns
+$\zeta_{it}^{O,F}>K_{ijt}$ into a local policy test at a steady state.\\
+One smoothness change & A differentiable gains schedule plus the stated exact
+rank, hyperbolicity, and projection conditions yields a locally determinate
+infinite-horizon transition.\\
+Not established & The numerical saddle-path diagnostic does not prove strong
+regularity of the statutory kinked system or of the model with a distribution
+state.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\end{document}
