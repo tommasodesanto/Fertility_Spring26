@@ -16,12 +16,14 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** W1, the planner's feasible set. Tommaso has specified the
-desired result in W0: equilibrium inefficiency demonstrated by a housing
-reallocation toward young households, with fertility effects as a subsequent
-result. This is a chosen research objective, not a proved proposition. The
-planner's powers and the exact welfare criterion remain open. No model or
-manuscript amendment has begun.
+**Resume here:** I0, whether realized capital-gains taxation is needed in the
+core allocation result. W0 fixes the research objective: housing reallocation
+toward young households establishes inefficiency, with fertility effects as
+a subsequent result. W1 now permits the planner to relax private borrowing
+limits; the stronger result retaining those limits is parked. The working
+proof route is a compensated Pareto improvement. Exact dated transfers,
+welfare coverage, and real costs still require explicit conditions under
+W4/I1/W3. No model or manuscript amendment has begun.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),
@@ -83,11 +85,11 @@ between mechanism analysis and welfare analysis before either is understood.
 |---|---|---|---|---|
 | P0 | The stated priority is an allocation-efficiency result, with fertility effects as an additional result. The complete paper role and placement remain to be decided. | TENTATIVE | Follow the author's objective in W0; do not presume adoption of the review's recommendation to omit main-text welfare. | Sections 1, 6, 8, 10; W0 discussion below |
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
-| W1 | Can the planner reallocate housing and consumption subject to real resource/technology constraints while overcoming private finance limits, or must the planner respect those limits? Specify any closing advance and dated transfers explicitly. | ACTIVE | W0. Distinguish resource-feasible Pareto inefficiency from constrained inefficiency; then specify title, estate, lender, and fiscal implementation. | Section 4, A-B |
+| W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
 | W2 | Does the gains-tax/common-rebate construction earn a place? Assess the zero-cost result, recipient eligibility, continuation accounting, and whether a constructed allocation is decentralized by an actual policy. | OPEN | W0, W1, I0. A tax-revenue result for unconstrained buyers is not a result about the displayed constrained buyers. | Section 4, C |
 | W3 | If real transaction costs are retained, who pays and how is each participant compensated? Zero costs; explicit public cost financing; or participant-specific conditions. | OPEN | W1-W2. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
-| W4 | Whose welfare is evaluated, with what population held fixed? Existing households with fixed fertility; existing-household policy welfare; or an explicit criterion covering different future populations. | OPEN | W0-W2 and U0/D0 if populations differ. Keep the welfare population and the policy's demographic effects distinct. | Sections 4, 6 |
-| I0 | Does realized capital-gains taxation belong in the main model, an extension, or neither? Establish its intended economic contribution and connection to the quantitative exercise. | OPEN | P0; changes relevance of W2-W3 and the gains kink in D1. Removing the kink alone does not prove an infinite-horizon transition. | Sections 5-6, 8 |
+| W4 | Working proof criterion: a compensated Pareto improvement at fixed fertility. Exact welfare coverage and protection of future households must be made explicit. No social-weighted optimum or welfare ranking across different populations has been selected. | TENTATIVE | The lead carries forward the proposed Pareto test as the proof route; preserve all real and dated resource constraints. Detailed coverage remains open. | Sections 4, 6; W1 discussion below |
+| I0 | Does realized capital-gains taxation belong in the main model, an extension, or neither? Establish its intended economic contribution and connection to the quantitative exercise. | ACTIVE | W1 makes a financing-based allocation result the current route. Assess whether gains taxation adds enough to justify inclusion; removing its kink alone does not prove an infinite-horizon transition. | Sections 5-6, 8 |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Which housing-access experiment should the derivative describe? A current-young cap change, a common cap change at both ages, an LTV/liquid-wealth change, or a funded equilibrium policy. | OPEN | I1. Specify held-fixed prices, transfers, tenure, and old-age commitments before using the derivative. | Sections 3, 6, 8 |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
@@ -188,7 +190,7 @@ This illustrates resource-feasible gains when that service-and-goods exchange
 is permitted; it does not by itself verify the model's durable-title, estate,
 lending, and fiscal implementation. Those remain W1/I1 obligations.
 
-**Lead recommendation, not yet adopted:** explore a Pareto improvement
+**Lead recommendation at the W0 exchange:** explore a Pareto improvement
 relative to a planner who can reallocate real resources and overcome private
 financing limits. This is a legitimate resource-feasible benchmark, though
 it does not establish constrained inefficiency under the original closing
@@ -203,11 +205,53 @@ distribution along a Pareto frontier is also explained in
 This is background for the criterion, not evidence for the project-specific
 reallocation theorem.
 
-**Next question:** may the planner overcome the private financing constraint,
-or must the desired inefficiency result survive that same constraint?
+**Question raised at this exchange:** may the planner overcome the private
+financing constraint, or must the desired inefficiency result survive that
+same constraint? The subsequent W1 entry records the author's answer.
 **Return point:** once W1 and the relevant W4 conditions are settled, identify
 the smallest valid allocation proposition. Then return to H0 for the fertility
 response; an allocation improvement does not by itself sign that response.
+
+### W1 discussion: financing permission adopted
+
+**Author statement, 2026-09-04:**
+
+> I think it's fine to think that the palnner can relax the oborrowing limits. the stronger requirement would be nice, but i think for now we can do.
+
+**Decision:** the current planner benchmark may overcome private borrowing
+limits. This answers the financing fork only; it does not waive real resource
+costs, outside lenders' claims, or the need for a complete feasible allocation.
+The allocation-efficiency objective and the separate fertility extension remain.
+
+**Parked alternative:** prove constrained inefficiency with the original
+borrowing rules retained. It remains desirable, not rejected. Revisit if the
+paper requires an intervention feasible under those rules, or after the core
+allocation result and its policy interpretation are settled. The gains-tax
+result under W2 remains a distinct possible route within that alternative.
+
+**Proof route carried forward by the lead:** use the compensated Pareto
+comparison proposed in W0. The old household must be compensated for the lost
+space and any relevant estate consequences; the young household's gain must
+remain positive after repayment, compensation, and real costs; outside
+lenders and unaffected households cannot finance the gain through losses.
+Fertility remains fixed for this comparison. The precise transfer dates and
+welfare coverage must be specified in the eventual proof. No arbitrary social
+weights or additional benefit from births are needed for this proof route.
+
+Under the existing appendix's maintained interiority and transfer assumptions,
+the steady-state valuation gap is $m_Y-m_O=\zeta^{O,F}$. If $K$ denotes the
+marginal real cost of reallocating housing, the local sufficient inequality is
+$\zeta^{O,F}>K$. This identifies why a financing-based result can be developed
+without realized capital-gains taxes; it is conditional on the complete
+implementation assumptions, not established merely by the author's choice.
+No cost value, tax removal, or general first-best planner optimum has been
+adopted here.
+
+**Next issue, I0:** should the core allocation result be established using the
+financing friction, with realized capital-gains taxation considered separately?
+The lead recommends that separation to isolate the mechanism and obtain a
+steady-state result, but the author has not decided. Property taxation is a
+different instrument; this question does not imply removing it.
 
 ### Traversal and decision record
 
@@ -216,20 +260,25 @@ response; an allocation improvement does not by itself sign that response.
 | 2026-09-04 | Tommaso requested sequential discussion with all branches retained. | Maintain this map and update it after substantive exchanges. |
 | 2026-09-04 | Lead proposed W0 as the first question, linked to P0. | Clarify the intended claim before deciding the planner's instruments. |
 | 2026-09-04 | Tommaso specified equilibrium inefficiency through a planner's old-to-young housing reallocation as the desired first result; fertility effects are additional. | W0 objective recorded; W1 becomes active. P0 is provisionally welfare-first. No theorem, welfare weights, or planner powers accepted yet. |
+| 2026-09-04 | Tommaso accepted relaxing borrowing limits in the planner benchmark; retaining those limits would be desirable but is not required now. | W1 financing permission decided; stronger alternative parked. Carry forward the compensated proof route under W4 and turn to I0's tax-mechanism choice. |
 
 **Suspended questions / return points:** H0 fertility effects follow the first
-allocation claim; return after W1 and the relevant W4 conditions. Other branches
-remain open. This sequencing does not reject the fertility branch.
+allocation claim; return after the allocation mechanism and relevant W4
+conditions. The W1 alternative retaining private borrowing limits is parked
+under the revisit conditions above. Other branches remain open.
 
-**Author decisions in this review discussion:** W0 research objective recorded
-above. The desired result's validity, scope, and implementation remain open.
+**Author decisions in this review discussion:** W0 research objective and W1
+permission to relax private borrowing limits. No decision yet on capital-gains
+taxation, exact transfers, real costs, or a welfare ranking across populations.
+The desired result's validity and implementation remain proof obligations.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
-discussion follows Tommaso's welfare-first objective and examines the strongest
-defensible allocation result. Exploring the resource-feasible Pareto benchmark
-is the lead's next proposed route, not yet an author choice. Paper placement
-and advanced transition analysis remain open.
+discussion follows Tommaso's welfare-first objective using his accepted
+permission to relax borrowing limits. A compensated Pareto proof is the
+working route. The lead now recommends isolating the financing-based result
+from the gains-tax extension; that tax choice, paper placement, and advanced
+transition analysis remain open.
 
 **Amendments:** none started. The PDF remains the review snapshot; the live
 discussion state is here.
