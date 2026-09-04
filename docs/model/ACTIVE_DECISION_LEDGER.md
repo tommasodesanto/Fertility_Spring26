@@ -16,10 +16,13 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** H0, an explicit analytical restriction guaranteeing a positive
-fertility response. Tommaso clarified that this parameter-threshold proposition,
-rather than an external empirical test, is his immediate objective. The planner
-and credit-policy descriptions need not be mutually
+**Resume here:** D0, the time horizon of the fertility claim and the replacement
+restriction at a positive stationary population. Tommaso asked to move forward
+with discussion and plan amendments later. H0's desired form is settled: seek
+an explicit parameter restriction, preferably entirely in primitives and
+especially without the endogenous multiplier $\zeta$. The derivation and final
+restriction are deferred to the later planning/amendment stage, not established.
+The planner and credit-policy descriptions need not be mutually
 exclusive or have different fertility signs; match housing, net resources,
 and the maintained household branch before comparing them. The lead's separate
 empirical-validation suggestion is retained but parked as Q1; no specific
@@ -104,9 +107,9 @@ between mechanism analysis and welfare analysis before either is understood.
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
-| H0 | State an explicit analytical restriction under which improved housing access raises fertility. Retain the exact state-dependent threshold and a simpler sufficient parameter/user-cost restriction. | ACTIVE | W1/W4/I1. Matched housing and net resources imply matched conditional choices. Specify payment incidence; a toy-model threshold is not yet a theorem for the quantitative model or an aggregate policy effect. | Sections 3, 6, 8; H0 threshold clarification below |
+| H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | Author's desired form only. Defer the derivation until planning/amendment work; return to W1/W4/I1 for payment incidence and to H1 for a quantitative analogue. No primitive-only condition or aggregate policy sign is established. | Sections 3, 6, 8; H0 threshold clarification and preference below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
-| D0 | What is the demographic proposition? Cohort accounting, impact response, momentum, housing feedback, replacement, and conditions for absence of a positive closed endpoint. | OPEN | U0, H1, I1. Separate a toy existence example from the live quantitative endpoint problem. | Sections 5-6, 8 |
+| D0 | What is the demographic proposition? Next discussion: a fertility response along the transition versus a permanently different stationary fertility rate. Retain momentum, housing feedback, and possible absence of a positive closed endpoint. | ACTIVE | U0, H1, I1. Positive constant cohort masses impose replacement fertility in the toy model. A positive long-run fertility policy effect relative to another stationary endpoint requires a different demographic scope or closure. | Sections 5-6, 8; D0 discussion below |
 | D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
 | D2 | What construction must support the chosen result? Shock direction, fixed housing stock, admissible active sets, terminal closure, numerical scope, and generality across household types. | OPEN | D0-D1, H1. Gains-tax-specific basis/gains diagnostics are deferred with Q0; ordinary boundary and horizon checks remain. The saved taxed example has not been replaced or revalidated. | Sections 3, 5-6 |
 | U0 | How do toy fertility, literal children, and entrant households map into one another? Reconcile the conversion coefficient and replacement condition explicitly. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Existing quantitative units are not reopened by default. | Section 3, details behind audit |
@@ -433,6 +436,49 @@ that the calibrated model satisfies the condition. A quantitative analogue
 must be derived from its own preferences and discrete fertility choices;
 aggregate price and composition effects remain separate.
 
+**Author preference and traversal instruction, 2026-09-04:**
+
+> of course the best if it it does not involve equilibrium object, but even more specifically not a fan of the condition having the multiplier zeta inside. but anyway, you gto way i mean. let's move forward and then we'll plan
+
+**Settled direction:** prioritize a condition in primitives; especially avoid
+an endogenous multiplier in the presented condition. The author expresses a
+preference for excluding all equilibrium objects, not approval of the existing
+user-cost restriction as the final theorem and not a claim that a useful
+primitive-only restriction must exist. Preserve both calculations as working
+evidence. Defer further derivation and implementation planning, continue to
+the next substantive issue, and return to H0 when assembling amendments.
+
+### D0 discussion: transition fertility versus stationary fertility
+
+**Next issue raised by the lead:** decide the intended time horizon of the
+fertility claim. The simplified model's cohort law is
+$Y_{t+1}=\nu\bar n_tY_t$, where $Y_t$ is young-household mass,
+$\bar n_t$ is average completed fertility of that young cohort in toy units,
+and $\nu$ converts those units into next-period young households. Consequently,
+any positive stationary population satisfies $\bar n^*=1/\nu$. A policy that
+leaves $\nu$ and this demographic closure unchanged cannot produce two positive
+stationary endpoints with different average fertility. This is an accounting
+restriction, not proof that either endpoint exists, and not a statement that
+fertility cannot respond during a transition. Sources:
+`latex/simplified_olg_paper_theory_section.tex`, cohort law and
+`eq:olg_steady_state_system`; the appendix's steady-state proof.
+
+**Consequence to discuss:** a permanent housing reform can affect the fertility
+of transitional cohorts and the eventual population level, housing allocation,
+and distribution of fertility across types. These possibilities do not imply
+a permanently higher average stationary fertility rate, nor do they establish
+the sign or duration of the transition response. Literal-child conversion
+remains U0; no numerical replacement normalization is selected here.
+
+**Lead recommendation, not yet an author decision:** retain the current
+demographic accounting and frame the policy fertility claim along the
+transition. If a permanently different long-run fertility rate is essential,
+reopen the demographic setting explicitly (for example a growing population
+or an open population), with its own housing and population consistency
+requirements. No change to the toy or quantitative closure is made here.
+W4/I1 compensation and W3 real-cost questions remain open while D0 is discussed;
+moving to this issue does not settle them.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -497,18 +543,22 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso asked what distinguishes the two fertility experiments and expected fertility to rise under both. | No new choice imposed. Clarified that matched housing/net resources imply the same conditional response; derived the common sign condition and retained policy-equilibrium obligations separately. |
 | 2026-09-04 | Tommaso asked whether extension to the quantitative model would yield a testable prediction that housing policy raises fertility. | Added Q1 for a specified reform's quantitative prediction and independent empirical test. Preserve the conditional sign, distinguish fertility outcomes, and keep the existing calibration and Q0 deferral unchanged. |
 | 2026-09-04 | Tommaso clarified that he meant an analytical inequality guaranteeing a positive fertility response. | Corrected the lead's interpretation, returned to H0, and parked Q1. Recorded the exact threshold and a simpler sufficient restriction without assuming their validity in the quantitative model. |
+| 2026-09-04 | Tommaso preferred a restriction without equilibrium objects, especially without $\zeta$, and asked to continue discussion before planning. | H0's desired form recorded; exact restriction remains deferred. Opened D0's transition-versus-stationary fertility scope as the next issue, with no author decision on demographic closure inferred. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
-work resume when Q0 becomes active. H0 is now being discussed; its derivation
-must return to W4/I1 to settle exact compensation and resources. Q1's empirical
+work resume when Q0 becomes active. H0's derivation is deferred until the later
+planning/amendment stage and must return to W4/I1 to settle exact compensation
+and resources. D0's time-horizon issue is now active. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
 
 **Author decisions in this review discussion:** W0 research objective and W1
 permission to relax private borrowing limits; I0 defers capital-gains taxation
-to an extension linked to Q0. Exact transfers, real costs, and welfare coverage
-remain unresolved. Validity and implementation remain proof obligations.
+to an extension linked to Q0; H0 seeks an explicit fertility restriction,
+preferably in primitives and especially without $\zeta$, with derivation
+deferred. Exact transfers, real costs, welfare coverage, and D0's time-horizon
+choice remain unresolved. Validity and implementation remain proof obligations.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
