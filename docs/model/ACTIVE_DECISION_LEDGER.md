@@ -19,7 +19,10 @@ review or agreeing to discuss it.
 **Resume here:** H0, the household's net resource change under the housing
 intervention. The planner and credit-policy descriptions need not be mutually
 exclusive or have different fertility signs; match housing, net resources,
-and the maintained household branch before comparing them. W0 fixes the
+and the maintained household branch before comparing them. The quantitative
+prediction and independent empirical validation branch is now retained as Q1;
+no specific reform, fertility outcome, or empirical design has been selected.
+W0 fixes the
 allocation-efficiency objective; W1 permits the
 planner to relax private borrowing limits. I0 now leaves realized capital-gains
 taxation outside the core argument as a deferred extension, to be revisited
@@ -97,6 +100,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | W4 | Working proof criterion: a compensated Pareto improvement at fixed fertility. Exact welfare coverage and protection of future households must be made explicit. No social-weighted optimum or welfare ranking across different populations has been selected. | TENTATIVE | The lead carries forward the proposed Pareto test as the proof route; preserve all real and dated resource constraints. Detailed coverage remains open. | Sections 4, 6; W1 discussion below |
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
+| Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | OPEN | H0-H1, I1, D0, U0. Retain the link between theory, a calibrated policy prediction, and external causal validation; specify financing, eligibility, horizon, and fertility measure before evaluating it. No positive sign, policy, or new calibration target is imposed. | Q1 discussion below; CALIBRATION_STATUS.md identification statement |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Derive fertility as a response to housing and net resources. A planner reallocation and a credit change yield the same conditional fertility choice if they deliver the same inputs on the same household branch. | ACTIVE | W1/W4/I1. Do not force an exclusive choice between the two descriptions. Establish the conditional sign, specify payment incidence, then distinguish allocation results from aggregate policy effects. | Sections 3, 6, 8; H0 clarification below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
@@ -366,6 +370,54 @@ lead recommends treating the planner allocation and its possible policy
 implementation as related stages, not asking the author to choose between
 them before specifying these objects. H0 remains active.
 
+### Q1 discussion: quantitative prediction and empirical validation
+
+**Author question, 2026-09-04:**
+
+> yeah, and that, extended to he quant model, woul digve a testable prediction, no? for housing policy to increase fertility
+
+**Interpretation:** retain the proposed theory-to-quantitative-policy link.
+The question does not select a reform or establish that its fertility effect
+is positive. H0 remains the current conditional household-mechanism question;
+Q1 records the quantitative and empirical extension rather than reopening
+the separately parked gains-tax decision Q0.
+
+**Lead recommendation:** use the quantitative model to predict the sign,
+magnitude, timing, and distribution of fertility responses to a specified
+housing reform, with preferences held at the maintained baseline path and
+the financing, eligibility, price, and demographic closures explicit. The
+candidate positive mechanism is that improved access to usable family housing
+raises fertility when its space benefit dominates the net resource cost.
+The simplified within-branch derivative is not a theorem for the quantitative
+model's discrete birth choices, tenure switches, or equilibrium price changes;
+those responses must be evaluated in that model. Do not assume the poorest or
+most constrained group necessarily has the largest fertility response.
+
+**What makes this empirically testable:** estimate the model from other
+moments, predict its response to a defined reform, and compare with a credible
+causal estimate of that reform's effect that was not used in estimation. Match
+the treated population, eligibility date, observation horizon, and outcome.
+Measure housing services and net housing expenditure alongside fertility to
+assess the proposed mechanism; ownership alone is insufficient evidence of
+more space. Avoid selecting comparison groups by post-reform housing choices.
+Birth probabilities, birth timing, completed fertility, and aggregate births
+are different outcomes: an impact birth increase may only change timing, and
+aggregate births also reflect cohort size and composition. A precise null or
+negative effect where the model predicts a material increase would challenge
+the specified model-policy prediction; a simulation by itself is not external
+validation, and a positive fertility effect would not validate the separate
+Pareto claim.
+
+**Current identification boundary:** the live `CALIBRATION_STATUS.md` states
+that the target system fits fertility levels and housing responses after a
+birth but includes no causal housing-cost-to-fertility moment. Its fertility
+policy responses are therefore structural predictions rather than directly
+targeted causal elasticities. This is a reason to seek independent validation,
+not to presume those predictions are reliable or to retune parameters until
+the desired sign appears. If a policy-effect estimate is later used as a
+calibration target, it is no longer an independent test of that same fit.
+No target-contract change, policy run, or manuscript amendment is made here.
+
 ### Traversal and decision record
 
 | Date | Record | Consequence |
@@ -376,6 +428,7 @@ them before specifying these objects. H0 remains active.
 | 2026-09-04 | Tommaso accepted relaxing borrowing limits in the planner benchmark; retaining those limits would be desirable but is not required now. | W1 financing permission decided; stronger alternative parked. Carry forward the compensated proof route under W4 and turn to I0's tax-mechanism choice. |
 | 2026-09-04 | Tommaso accepted leaving capital-gains taxation as an extension and deferring it until the quantitative-model inclusion decision. | I0 decided; Q0 and W2 parked, along with tax-specific proof/diagnostic work. H0 becomes the current discussion question. |
 | 2026-09-04 | Tommaso asked what distinguishes the two fertility experiments and expected fertility to rise under both. | No new choice imposed. Clarified that matched housing/net resources imply the same conditional response; derived the common sign condition and retained policy-equilibrium obligations separately. |
+| 2026-09-04 | Tommaso asked whether extension to the quantitative model would yield a testable prediction that housing policy raises fertility. | Added Q1 for a specified reform's quantitative prediction and independent empirical test. Preserve the conditional sign, distinguish fertility outcomes, and keep the existing calibration and Q0 deferral unchanged. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
