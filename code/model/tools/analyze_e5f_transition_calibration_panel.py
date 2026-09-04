@@ -107,8 +107,8 @@ def finite(value: Any, label: str) -> float:
 def parse_target_rows(
     rows: list[dict[str, str]], expected_candidate: str
 ) -> tuple[list[str], np.ndarray, np.ndarray, np.ndarray, np.ndarray, float]:
-    if len(rows) != 12:
-        raise ContractError(f"Expected 12 target rows; found {len(rows)}")
+    if not rows:
+        raise ContractError("Expected at least one target row")
     moments: list[str] = []
     targets: list[float] = []
     models: list[float] = []
@@ -323,12 +323,22 @@ def main() -> None:
     report = args.selected_report_dir.resolve()
     selected_summary_path = report / "summary.json"
     selected_fit_path = report / "best_target_fit.csv"
-    selected_parameters_path = report.parent / "task_021" / "parameter_table.csv"
     selected_summary = read_json(selected_summary_path)
     selected_candidate = dict(selected_summary.get("best_candidate") or {})
     selected_label = str(selected_candidate.get("candidate") or "")
-    if selected_label != "task_021":
-        raise ContractError(f"Selected report does not select task_021: {selected_label!r}")
+    if not selected_label.startswith("task_"):
+        raise ContractError(f"Selected report has invalid candidate: {selected_label!r}")
+    try:
+        selected_task_id = int(selected_label.removeprefix("task_"))
+    except ValueError as error:
+        raise ContractError(
+            f"Selected report has invalid candidate: {selected_label!r}"
+        ) from error
+    if not 1 <= selected_task_id <= len(tasks):
+        raise ContractError(f"Selected task is outside the coordinate panel: {selected_task_id}")
+    selected_parameters_path = (
+        report.parent / f"task_{selected_task_id:03d}" / "parameter_table.csv"
+    )
     selected_rows_raw = read_csv(selected_fit_path)
     selected_moments, selected_targets, selected_models, selected_weights, selected_residual, selected_loss = parse_target_rows(
         selected_rows_raw, selected_label
@@ -337,11 +347,12 @@ def main() -> None:
         raise ContractError("Selected report target contract differs from the coordinate panel")
     if not math.isclose(selected_loss, float(selected_candidate["transition_loss"]), rel_tol=1e-10, abs_tol=1e-9):
         raise ContractError("Selected report loss does not reconstruct")
-    if not np.array_equal(selected_models, tasks[20].model) or not np.array_equal(
-        selected_residual, tasks[20].residual
+    selected_task = tasks[selected_task_id - 1]
+    if not np.array_equal(selected_models, selected_task.model) or not np.array_equal(
+        selected_residual, selected_task.residual
     ):
         raise ContractError(
-            "Selected best_target_fit.csv is not numerically identical to task_021"
+            f"Selected best_target_fit.csv is not numerically identical to {selected_label}"
         )
 
     total_loss = float(selected_residual @ selected_residual)
@@ -477,6 +488,15 @@ def main() -> None:
         ),
         "owner_rate_gap_pp": 100.0
         * float(selected_models[moments.index("own_rate")] - targets[moments.index("own_rate")]),
+        "young_owner_rate_gap_pp": (
+            100.0
+            * float(
+                selected_models[moments.index("own_rate_2534")]
+                - targets[moments.index("own_rate_2534")]
+            )
+            if "own_rate_2534" in moments
+            else None
+        ),
         "theta1_near_lower_bound": str(theta1["near_bound"]).lower() == "true",
         "local_weighted_jacobian": rank,
         "rank_gate_at_relative_1e_3_passed": rank["relative_ranks"]["relative_0.001"] == 11,
@@ -500,6 +520,7 @@ def main() -> None:
         "prime30_55_parent_3plus_minus_1to2_mean_rooms": "3+ vs 1-2 rooms",
         "aggregate_mean_occupied_rooms_18_85": "Mean rooms",
         "own_rate": "Ownership",
+        "own_rate_2534": "Young ownership (25--34)",
         "mean_age_first_birth": "Age at first birth",
         "share_first_births_age30plus": "First births 30+",
         "old_total_wealth_to_annual_income_p90_p50_7684": "Old wealth p90/p50",

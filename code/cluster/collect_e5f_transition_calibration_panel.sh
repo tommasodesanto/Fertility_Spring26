@@ -39,13 +39,28 @@ EXPECTED_DESIGN="${E5F_TRANSITION_PANEL_DESIGN:-mixed}"
 EXPECTED_RADIUS="${E5F_TRANSITION_LOCAL_RADIUS:-0.18}"
 EXPECTED_ETA="${E5F_TRANSITION_HOUSING_SUPPLY_ELASTICITY:-}"
 EXPECTED_KAPPA="${E5F_TRANSITION_FIXED_TENURE_CHOICE_KAPPA:-}"
+TARGET_PROFILE="${E5F_TRANSITION_TARGET_PROFILE:-baseline}"
+case "$TARGET_PROFILE" in
+    baseline)
+        EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817"
+        EXPECTED_TARGET_FINGERPRINT="3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+        ;;
+    young-ownership-overid-v1)
+        EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817_plus_young_ownership_v1"
+        EXPECTED_TARGET_FINGERPRINT="186d692167d2d0905b2621f5dc31a9f9edca2fe3e7f9c9a3c20d35201442f0ac"
+        ;;
+    *)
+        echo "unsupported target profile: $TARGET_PROFILE" >&2
+        exit 2
+        ;;
+esac
 
 ARGS=(
     --results-dir "$PROJECT_ROOT/output/model/e5f_transition_calibration_${RUN_TAG}"
     --expected-tasks "$EXPECTED_TASKS"
     --expected-source-sha256 0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6
-    --expected-target-set e5_fullhistory_roomsfix_h1_20260817
-    --expected-target-fingerprint 3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497
+    --expected-target-set "$EXPECTED_TARGET_SET"
+    --expected-target-fingerprint "$EXPECTED_TARGET_FINGERPRINT"
     --expected-code-bundle-sha256 "$EXPECTED_CODE"
     --expected-model-profile "$EXPECTED_PROFILE"
     --expected-panel-seed "$EXPECTED_SEED"

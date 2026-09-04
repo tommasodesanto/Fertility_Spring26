@@ -1,7 +1,8 @@
 #!/bin/bash
 # Dated-transition calibration panel for the sequential child-room-floor model.
 # Each array task evaluates one reproducible candidate on the exact 2007--2023
-# calendar loop and writes a complete twelve-row target table.  The baseline
+# calendar loop and writes a complete target table.  The production baseline
+# has twelve rows; an explicit diagnostic profile may append young ownership.
 # has nine transition parameters; the measured-income repair has ten.  The
 # optional first-child housing intercept adds an eleventh parameter and uses
 # a 23-task coordinate panel.
@@ -55,6 +56,7 @@ FIXED_FIRST_CHILD_JUMP="${E5F_TRANSITION_FIXED_FIRST_CHILD_ROOM_JUMP:-}"
 HOUSING_SUPPLY_ELASTICITY="${E5F_TRANSITION_HOUSING_SUPPLY_ELASTICITY:-}"
 FIXED_TENURE_CHOICE_KAPPA="${E5F_TRANSITION_FIXED_TENURE_CHOICE_KAPPA:-}"
 MARKET_MAX_ITERATIONS="${E5F_TRANSITION_MARKET_MAX_ITERATIONS:-30}"
+TARGET_PROFILE="${E5F_TRANSITION_TARGET_PROFILE:-baseline}"
 if [ "$POST_2023_PERIODS" != "0" ]; then
     echo "calibration panels must stop at 2023; run continuations separately" >&2
     exit 2
@@ -85,8 +87,20 @@ if ! [[ "$MARKET_MAX_ITERATIONS" =~ ^[1-9][0-9]*$ ]]; then
 fi
 SOURCE="$PROJECT_ROOT/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json"
 EXPECTED_SOURCE_SHA256="0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
-EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817"
-EXPECTED_TARGET_FINGERPRINT="3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+case "$TARGET_PROFILE" in
+    baseline)
+        EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817"
+        EXPECTED_TARGET_FINGERPRINT="3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+        ;;
+    young-ownership-overid-v1)
+        EXPECTED_TARGET_SET="e5_fullhistory_roomsfix_h1_20260817_plus_young_ownership_v1"
+        EXPECTED_TARGET_FINGERPRINT="186d692167d2d0905b2621f5dc31a9f9edca2fe3e7f9c9a3c20d35201442f0ac"
+        ;;
+    *)
+        echo "unsupported target profile: $TARGET_PROFILE" >&2
+        exit 2
+        ;;
+esac
 ACTUAL_SOURCE_SHA256="$(sha256sum "$SOURCE" | awk '{print $1}')"
 if [ "$ACTUAL_SOURCE_SHA256" != "$EXPECTED_SOURCE_SHA256" ]; then
     echo "source hash mismatch: $ACTUAL_SOURCE_SHA256" >&2
@@ -101,6 +115,7 @@ fi
 ARGS=(
     --source "$SOURCE"
     --expected-source-sha256 "$EXPECTED_SOURCE_SHA256"
+    --target-profile "$TARGET_PROFILE"
     --expected-target-set "$EXPECTED_TARGET_SET"
     --expected-target-fingerprint "$EXPECTED_TARGET_FINGERPRINT"
     --expected-code-bundle-sha256 "$EXPECTED_CODE_BUNDLE_SHA256"

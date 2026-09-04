@@ -182,8 +182,11 @@ def require_exact_task_directories(root: Path, prefix: str, count: int) -> None:
 
 def _expected_target_contract(plan: dict[str, Any]) -> tuple[list[str], np.ndarray, np.ndarray]:
     rows = list(plan.get("target_contract") or [])
-    if len(rows) != 12:
-        raise ContractError("Plan target contract must contain twelve rows")
+    expected_count = int(plan["scientific_contract"]["target_count"])
+    if len(rows) != expected_count:
+        raise ContractError(
+            f"Plan target contract has {len(rows)} rows; expected {expected_count}"
+        )
     names = [str(row["moment"]) for row in rows]
     targets = np.asarray([float(row["target"]) for row in rows], dtype=float)
     weights = np.asarray([float(row["weight"]) for row in rows], dtype=float)
@@ -306,7 +309,7 @@ def validate_scientific_task(
 
     parsed_rows, residual, table_loss = parse_target_rows(
         read_csv(task_dir / "target_fit_long.csv"),
-        12,
+        int(plan["scientific_contract"]["target_count"]),
         outer_task_id,
         str(candidate.get("candidate")),
     )

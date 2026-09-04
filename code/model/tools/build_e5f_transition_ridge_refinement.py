@@ -53,6 +53,7 @@ class Expectations:
     model_profile: str
     panel_seed: int
     dimensions: int = EXPECTED_DIMENSIONS
+    target_count: int = EXPECTED_TARGET_COUNT
     central_step: float = CENTRAL_STEP
     source: str | None = None
     renewal_contract_sha256: str | None = None
@@ -102,6 +103,12 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=EXPECTED_DIMENSIONS,
         help="Joint transition-parameter count; coordinate tasks must equal 1+2d.",
+    )
+    parser.add_argument(
+        "--expected-target-count",
+        type=int,
+        default=EXPECTED_TARGET_COUNT,
+        help="Exact overidentified target-row count in every coordinate task.",
     )
     parser.add_argument(
         "--expected-local-radius",
@@ -386,9 +393,9 @@ def check_expectations(contract: dict[str, Any], expectations: Expectations) -> 
         raise ContractError(
             f"source={contract['source']!r}; expected {expectations.source!r}"
         )
-    if contract["target_count"] != EXPECTED_TARGET_COUNT:
+    if contract["target_count"] != expectations.target_count:
         raise ContractError(
-            f"target_count={contract['target_count']}; expected {EXPECTED_TARGET_COUNT}"
+            f"target_count={contract['target_count']}; expected {expectations.target_count}"
         )
     if contract["transition_free_parameter_count"] != expectations.dimensions:
         raise ContractError("Transition parameter count differs from the declared dimension")
@@ -615,7 +622,7 @@ def load_coordinate_panel(results_dir: Path, expectations: Expectations) -> Coor
         raise ContractError(
             "The declared coordinate radius must be finite and lie in (0,0.1]"
         )
-    if dimensions < 1 or dimensions >= EXPECTED_TARGET_COUNT:
+    if dimensions < 1 or dimensions >= expectations.target_count:
         raise ContractError(
             "The declared parameter dimension must be positive and smaller than "
             "the target count"
@@ -1330,6 +1337,7 @@ def main() -> None:
         model_profile=str(args.expected_model_profile),
         panel_seed=int(args.expected_panel_seed),
         dimensions=int(args.expected_dimensions),
+        target_count=int(args.expected_target_count),
         central_step=float(args.expected_local_radius),
         renewal_contract_sha256=str(args.expected_renewal_contract_sha256),
         dated_contract_sha256=str(args.expected_dated_contract_sha256),

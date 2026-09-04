@@ -67,3 +67,24 @@ def test_target_parser_rejects_inconsistent_gap() -> None:
     rows[4]["gap"] = "0"
     with pytest.raises(MODULE.ContractError, match="gap is inconsistent"):
         MODULE.parse_target_rows(rows, "task_001")
+
+
+def test_target_parser_accepts_overidentified_row_count() -> None:
+    rows = []
+    for index in range(13):
+        rows.append(
+            {
+                "candidate": "task_001",
+                "moment": f"m{index}",
+                "target": "0",
+                "model": "1",
+                "gap": "1",
+                "weight": "4",
+                "loss_contribution": "4",
+                "standardized_gap": "2",
+            }
+        )
+    moments, _, _, _, residual, loss = MODULE.parse_target_rows(rows, "task_001")
+    assert len(moments) == 13
+    assert residual.shape == (13,)
+    assert loss == pytest.approx(52.0)

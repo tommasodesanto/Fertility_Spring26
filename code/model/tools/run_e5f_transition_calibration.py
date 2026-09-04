@@ -42,7 +42,12 @@ import run_e5f_open_population_transition as transition
 
 from intergen_eqscale_seq_optimized.e5_profile import (
     E5_HOUSING_EVENT_HORIZON,
-    e5_target_system,
+)
+from intergen_eqscale_seq_optimized.e5_young_ownership_profile import (
+    E5_BASELINE_TARGET_PROFILE,
+    E5_YOUNG_OWNERSHIP_PROFILE,
+    E5_YOUNG_OWNERSHIP_PROVENANCE,
+    e5_target_system_for_profile,
 )
 from intergen_eqscale_seq_optimized.e5f_floor_profile import E5F_DOMAIN
 from intergen_eqscale_seq_optimized.e5f_income_entry_profile import (
@@ -63,8 +68,6 @@ TRANSITION_SEARCH_DOMAIN: tuple[tuple[str, float, float, str], ...] = tuple(
 BASELINE_MODEL_PROFILE = "e5f-floor"
 REPAIRED_MODEL_PROFILE = "e5f-income-entry"
 DEFAULT_REPAIRED_PREFERENCE_CHANGE = -0.2902
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=closure.E5F_FLOOR_SOURCE)
@@ -163,6 +166,16 @@ def parse_args() -> argparse.Namespace:
         default="none",
     )
     parser.add_argument("--expected-source-sha256", default=None)
+    parser.add_argument(
+        "--target-profile",
+        choices=(E5_BASELINE_TARGET_PROFILE, E5_YOUNG_OWNERSHIP_PROFILE),
+        default=E5_BASELINE_TARGET_PROFILE,
+        help=(
+            "Explicit dated-target contract. The default is byte-for-byte the "
+            "live E5 target system; the young-ownership profile appends one "
+            "diagnostic overidentifying row."
+        ),
+    )
     parser.add_argument("--expected-target-set", default=None)
     parser.add_argument("--expected-target-fingerprint", default=None)
     parser.add_argument("--expected-code-bundle-sha256", default=None)
@@ -1552,6 +1565,7 @@ def make_diagnostic_plot(
     summaries: list[dict[str, Any]],
     fit_rows: list[dict[str, Any]],
     outdir: Path,
+    target_count: int,
 ) -> None:
     import matplotlib
 
@@ -1574,7 +1588,7 @@ def make_diagnostic_plot(
     axes[1].plot(x, loss, marker="o")
     axes[1].set(
         xlabel=r"Terminal child-preference intercept $\psi_{2023}$",
-        ylabel="12-moment transition loss",
+        ylabel=f"{int(target_count)}-moment transition loss",
         title="Fixed-parameter pilot objective",
         yscale="log",
     )
@@ -1736,7 +1750,7 @@ def main() -> None:
             else "retained_model_value"
         ),
     }
-    target_system = e5_target_system()
+    target_system = e5_target_system_for_profile(str(args.target_profile))
     if (
         args.expected_target_set is not None
         and target_system.name != str(args.expected_target_set)
@@ -2040,6 +2054,11 @@ def main() -> None:
         ),
         "remaining_targets": "2023 transition cross-section with beginning-of-period wealth timing",
     }
+    if "own_rate_2534" in target_system.moment_names:
+        target_measurements["own_rate_2534"] = (
+            "2023 transition cross-section: owner mass divided by total household "
+            "mass over model ages 25--34"
+        )
     for index, new_psi in enumerate(candidates, start=1):
         label = (
             f"task_{int(args.panel_task_id):03d}"
@@ -2444,7 +2463,12 @@ def main() -> None:
         elif row["parameter"] == "psi_child_2023":
             row["value"] = float(best["new_psi_child"])
     calendar.write_csv(outdir / "parameter_table.csv", params)
-    make_diagnostic_plot(summaries, all_fit_rows, outdir)
+    make_diagnostic_plot(
+        summaries,
+        all_fit_rows,
+        outdir,
+        target_count=target_system.count,
+    )
     summary = {
         "status": (
             "complete_transition_calibration_panel_task"
@@ -2458,8 +2482,14 @@ def main() -> None:
         "model_profile": model_profile,
         "income_profile_gates": income_profile_gates,
         "target_set": target_system.name,
+        "target_profile": str(args.target_profile),
         "target_fingerprint": target_system.fingerprint,
         "target_count": target_system.count,
+        "target_profile_metadata": (
+            E5_YOUNG_OWNERSHIP_PROVENANCE
+            if str(args.target_profile) == E5_YOUNG_OWNERSHIP_PROFILE
+            else {}
+        ),
         "stationary_free_parameter_count": len(E5F_DOMAIN),
         "transition_free_parameter_count": len(TRANSITION_SEARCH_DOMAIN),
         "identification_status": (
@@ -2484,8 +2514,8 @@ def main() -> None:
                 "tenure_choice_kappa"
             ]["status"],
             "identification": (
-                "both objects are externally fixed; the existing eleven "
-                "transition parameters remain identified by twelve dated moments"
+                "both objects are externally fixed; the transition parameters "
+                f"are disciplined by {target_system.count} dated moments"
             ),
         },
         "candidate_psi_changes": candidate_psi_changes,

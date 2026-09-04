@@ -80,6 +80,7 @@ def expectations(
     dated_hash: str | None = None,
     *,
     dimensions: int = 10,
+    target_count: int = 12,
     central_step: float = CENTRAL_STEP,
 ) -> Expectations:
     return Expectations(
@@ -91,6 +92,7 @@ def expectations(
         model_profile=PROFILE,
         panel_seed=PANEL_SEED,
         dimensions=dimensions,
+        target_count=target_count,
         central_step=central_step,
         renewal_contract_sha256=renewal_hash or object_sha256(renewal_contract()),
         dated_contract_sha256=dated_hash or object_sha256(dated_contract()),
@@ -186,9 +188,9 @@ def fixture_domain(dimensions: int) -> list[dict[str, Any]]:
 
 
 def fixture_jacobian(
-    rank_deficient: bool = False, *, dimensions: int = 10
+    rank_deficient: bool = False, *, dimensions: int = 10, target_count: int = 12
 ) -> np.ndarray:
-    matrix = np.zeros((12, dimensions), dtype=float)
+    matrix = np.zeros((target_count, dimensions), dtype=float)
     matrix[:dimensions, :] = np.eye(dimensions)
     matrix[dimensions:, :] = np.linspace(0.1, 1.0, dimensions)
     if rank_deficient:
@@ -201,15 +203,20 @@ def write_coordinate_fixture(
     *,
     rank_deficient: bool = False,
     dimensions: int = 10,
+    target_count: int = 12,
     central_step: float = CENTRAL_STEP,
 ) -> tuple[np.ndarray, np.ndarray]:
     domain_rows = fixture_domain(dimensions)
     task_count = 1 + 2 * dimensions
     anchor = np.full(dimensions, 0.5, dtype=float)
-    residual0 = np.linspace(-0.6, 0.5, 12)
-    jacobian = fixture_jacobian(rank_deficient, dimensions=dimensions)
-    target = np.linspace(0.2, 1.3, 12)
-    weights = np.linspace(1.0, 3.2, 12)
+    residual0 = np.linspace(-0.6, 0.5, target_count)
+    jacobian = fixture_jacobian(
+        rank_deficient,
+        dimensions=dimensions,
+        target_count=target_count,
+    )
+    target = np.linspace(0.2, 1.3, target_count)
+    weights = np.linspace(1.0, 3.2, target_count)
     renewal = renewal_contract()
     dated = dated_contract()
     for task_id in range(1, task_count + 1):
@@ -229,7 +236,7 @@ def write_coordinate_fixture(
         task_dir = root / f"task_{task_id:03d}"
         task_dir.mkdir(parents=True)
         target_rows: list[dict[str, Any]] = []
-        for index in range(12):
+        for index in range(target_count):
             gap = float(model[index] - target[index])
             standardized = math.sqrt(float(weights[index])) * gap
             target_rows.append(
@@ -299,7 +306,7 @@ def write_coordinate_fixture(
             },
             "target_set": TARGET_SET,
             "target_fingerprint": TARGET_FINGERPRINT,
-            "target_count": 12,
+            "target_count": target_count,
             "stationary_free_parameter_count": dimensions,
             "transition_free_parameter_count": dimensions,
             "panel_design": {
@@ -478,6 +485,31 @@ def test_eleven_parameter_fixture_builds_and_passes_collector_plan_gate() -> Non
             Path(built["plan_path"]), built["plan_sha256"]
         )
         assert loaded["coordinate_panel_contract"]["dimensions"] == 11
+
+
+def test_thirteen_moment_fixture_builds_and_passes_collector_plan_gate() -> None:
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        results = root / "coordinate"
+        expected_jacobian, _ = write_coordinate_fixture(
+            results,
+            dimensions=11,
+            target_count=13,
+        )
+        expected = expectations(dimensions=11, target_count=13)
+        panel = load_coordinate_panel(results, expected)
+        recovered, sides, frozen = central_jacobian(panel)
+        assert recovered.shape == (13, 11)
+        assert np.allclose(recovered, expected_jacobian, rtol=0.0, atol=1.0e-11)
+        assert len(sides) == 11
+        assert not np.any(frozen)
+        built = build_refinement(results, root / "refinement", expected)
+        plan = built["plan"]
+        assert len(plan["target_contract"]) == 13
+        loaded, _ = load_and_validate_plan(
+            Path(built["plan_path"]), built["plan_sha256"]
+        )
+        assert loaded["scientific_contract"]["target_count"] == 13
 
 
 def test_one_percent_coordinate_radius_builds_and_passes_collector_plan_gate() -> None:
