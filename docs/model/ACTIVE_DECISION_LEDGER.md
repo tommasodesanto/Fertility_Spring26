@@ -17,7 +17,11 @@ independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
 **Resume here:** D2, whether to retain fixed housing stock in the simple model's
-long-run comparison. D0's scope is now settled: compare along the transition
+long-run comparison. Tommaso asked how consequential that assumption is; no
+supply choice has been made. The local allocation argument can survive elastic
+supply, while the terminal population effect includes a stock response. A
+minimal stationary supply extension is retained for later planning; explicit
+construction dynamics are a separate addition. D0's scope is now settled: compare along the transition
 and compare total population in the new steady state. A permanently different
 stationary fertility rate is not the intended claim. Tommaso asked to continue
 discussion and plan amendments later. H0's desired form is settled: seek
@@ -515,6 +519,67 @@ This next discussion does not authorize either amendment or change the live
 quantitative supply specification. W4/I1 compensation, W3 costs, and D1
 transition existence remain open while this issue is considered.
 
+**Author clarification request, 2026-09-04:**
+
+> I mean does it changemuch?
+
+**Economic assessment:** separate the allocation argument from the population
+comparative static. Allowing construction does not by itself eliminate a
+young household's borrowing constraint or its marginal housing-valuation gap
+with an old household. Conditional on that gap and the previously stated
+financing, compensation, and real-cost assumptions, the same local exchange
+of existing housing remains a candidate improvement. Supply may change the
+equilibrium at which the gap is evaluated; persistence and size of the gap
+are not guaranteed. A full planner optimum with construction has an additional
+margin, but its solution is not needed merely to exhibit a feasible local gain.
+
+**Terminal accounting:** define $\bar h_{\rm hh}^*=(\bar h_Y^*+\bar h_O^*)/2$ as mean housing
+use per adult household and $N^*=Y^*+O^*$ as adult-household population. Then
+$N^*=H^*/\bar h_{\rm hh}^*$ and, for two positive stationary endpoints,
+\[
+ \log(N_1^*/N_0^*)
+ =\log(H_1^*/H_0^*)-\log(\bar h_{{\rm hh},1}^*/\bar h_{{\rm hh},0}^*).
+\]
+Fixed stock removes the first term. An endogenous stock can amplify, offset,
+or potentially reverse the population effect; its sign cannot be inferred
+from a positive immediate fertility response. This identity concerns the
+toy model's adult households, with literal population measurement still U0.
+
+**Why a minimal long-run extension can be tractable in this toy model:**
+suppose stationary stock satisfies $H^*=S(P^*)>0$, and adding suppliers leaves
+the household resource distribution and fiscal rule unchanged. Replacement
+and the current rebate equation remain
+\[
+ \bar n(P^*,T^*;\pi)=1/\nu,\qquad
+ T^*=q\tau^pP^*\bar h_{\rm hh}(P^*,T^*;\pi),
+\]
+where $\pi$ denotes the fixed policy specification. The stock cancels from
+these two equations, just as in the fixed-stock source. For a given selected
+household/fiscal root, supply determines population through
+$N^*=S(P^*)/\bar h_{\rm hh}^*$. For a constant-elasticity curve normalized at the initial
+price, $S(P)=H_0(P/P_0)^\eta$, the extra term in the log population comparison
+is $\eta\log(P_1^*/P_0^*)$. This is a conditional algebraic extension, not an
+implemented construction sector or a signed policy result. Supplier profits,
+land income, financing, or taxes entering household resources may alter the
+separation. In particular, do not mechanically claim that elastic supply
+dampens the terminal price response here: endogenous population can absorb
+the additional stock while the household/fiscal root remains unchanged.
+
+**Transition and complexity:** the price and fertility paths depend on how
+quickly stock adjusts. A realistic construction law requires costs, financing,
+depreciation or irreversibility, and treatment of producers. An instantaneous
+supply curve is a different simplification and must be labeled as such. None
+of these dynamics follows from the stationary supply equation alone.
+
+**Refined lead recommendation, not an author decision:** fixed stock is a
+useful core benchmark, but robustness of the terminal population claim to a
+simple upward-sloping long-run supply curve should be assessed when planning
+the amendments. Retain explicit construction dynamics for quantitative work
+unless the theory needs them. No supply specification is selected, no model
+is run, and no claim is made that the population difference is quantitatively
+small. The accounting and cancellation were checked against the current
+section's market-clearing and steady-state equations.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -581,6 +646,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso clarified that he meant an analytical inequality guaranteeing a positive fertility response. | Corrected the lead's interpretation, returned to H0, and parked Q1. Recorded the exact threshold and a simpler sufficient restriction without assuming their validity in the quantitative model. |
 | 2026-09-04 | Tommaso preferred a restriction without equilibrium objects, especially without $\zeta$, and asked to continue discussion before planning. | H0's desired form recorded; exact restriction remains deferred. Opened D0's transition-versus-stationary fertility scope as the next issue, with no author decision on demographic closure inferred. |
 | 2026-09-04 | Tommaso specified comparisons along the transition and total population in the new steady state. | D0 scope decided; endpoint existence, convergence, units, and signs remain obligations. D2's simple-model housing-stock assumption becomes the next issue. |
+| 2026-09-04 | Tommaso asked whether allowing housing supply to adjust changes much. | D2 remains open. Distinguished persistence of the local allocation mechanism from the stock contribution to terminal population; derived the minimal stationary supply extension and retained construction dynamics separately for later planning. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
