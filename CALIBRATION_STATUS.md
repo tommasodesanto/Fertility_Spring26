@@ -1,6 +1,121 @@
 # Calibration Status
 
-Updated: `2026-09-03` (eta=0.63, tenure-kappa=0.005 validation, policy audit, and bounded H128 runtime diagnosis complete)
+Updated: `2026-09-04` (one-day eta=0.63, tenure-kappa=0.005 calibration repair and policy reassessment complete)
+
+## September 4 one-day calibration repair and policy reassessment
+
+The active quantitative calibration is now the reproducible local repair
+`task_010` from the complete 23-point coordinate panel
+`output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_gauss_newton_coord_20260904a/`.
+The panel keeps the September 3 model and target contract unchanged: national
+housing-supply elasticity `0.63` and tenure-choice taste dispersion `0.005`
+remain externally fixed, while the same eleven transition parameters are
+estimated against the same twelve moments. The selected loss is
+`30.482966707698903`, which is `12.72%` below the September 3 incumbent loss
+`34.925512505553456`. This is a validated local improvement, not a claim of a
+global optimum. All 23 candidates completed and passed source, target,
+code-bundle, history, market, accounting, feasibility, and population gates.
+Two independent exact repeats, Torch jobs `16959101` and `16959103`, reproduce
+every parameter and every target-fit number exactly; only elapsed-time fields
+differ. The selected task summary SHA-256 is
+`7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd`,
+the panel report SHA-256 is
+`4d9bf21f679f1bd63d2156228f73c672cc39e229489c11e289c319c958df590b`,
+and the selected transition SHA-256 is
+`1f1e8d5246690a0d7e72ae9085ebc08297820f37dcdafa71dad17f6a1e537863`.
+
+Complete target fit:
+
+| Moment | Target | Model | Gap | Weight | Loss contribution |
+|---|---:|---:|---:|---:|---:|
+| Completed fertility | 1.918000 | 1.922907 | 0.004907 | 1425.739 | 0.0343 |
+| Childlessness | 0.188000 | 0.189407 | 0.001407 | 17180.744 | 0.0340 |
+| Mean age at first birth | 26.044627 | 26.256032 | 0.211404 | 44.444 | 1.9863 |
+| Share first births age 30+ | 0.260327 | 0.237579 | -0.022748 | 10000.000 | 5.1748 |
+| Rooms response to first birth | 0.720246 | 0.436418 | -0.283828 | 137.565 | 11.0821 |
+| Rooms, 3+ minus 1--2 children | 0.367700 | 0.403441 | 0.035741 | 2958.515 | 3.7793 |
+| Family ownership gap | 0.167662 | 0.161699 | -0.005963 | 14229.591 | 0.5060 |
+| Ownership rate | 0.575472 | 0.544488 | -0.030984 | 1207.846 | 1.1596 |
+| Mean occupied rooms | 5.779970 | 6.317291 | 0.537321 | 11.973 | 3.4568 |
+| Wealth / annual earnings | 6.873100 | 6.932652 | 0.059552 | 6.288 | 0.0223 |
+| Bequest flow / wealth | 0.008800 | 0.008433 | -0.000367 | 5165289.256 | 0.6971 |
+| Old-age wealth p90 / p50 | 3.448111 | 3.236511 | -0.211600 | 56.960 | 2.5503 |
+
+Complete parameter record:
+
+| Parameter | Estimate | Search bound / restriction | Status |
+|---|---:|---:|---|
+| Annual discount factor | 0.995117 | [0.94, 0.9995] | estimated |
+| First-birth taste dispersion | 2.168173 | [0.02, 50] | estimated |
+| Continuation-birth taste dispersion | 1.736471 | [0.02, 50] | estimated |
+| Housing utility weight | 1.043472 | [0.1, 5] | estimated |
+| Baseline housing scale | 14.562959 | [0.2, 80] | estimated |
+| Housing preference intercept | 0.528428 | [0, 8] | estimated |
+| Housing preference slope | 0.107249 | [0.02, 16] | estimated, near lower bound |
+| Child-room floor | 0.282210 | [0.1, 1.8] | estimated |
+| First-birth fixed cost | 4.559138 | [0, 8] | estimated |
+| First-child room jump | 0.364931 | [0, 0.5] | estimated |
+| 2007--2023 child-value change | -0.328714 | [-1.5, 0.2] | estimated |
+| Tenure-choice taste dispersion | 0.005000 | externally fixed | not estimated |
+| Housing-supply elasticity | 0.630000 | externally fixed | not estimated |
+
+The repair improves the three central housing-fit objects relative to the
+September 3 incumbent: first-birth rooms rise from `0.429080` to `0.436418`,
+mean rooms fall from `6.506641` to `6.317291`, and ownership rises from
+`0.517591` to `0.544488`. It therefore moves in the intended direction, but it
+does not close the central housing-response gap: the model still explains only
+about `61%` of the `0.720246` first-birth rooms target. The main tradeoff is that
+the 3+ versus 1--2 child rooms gap worsens from `0.398842` to `0.403441` against
+the `0.367700` target. This is the remaining calibration limitation to report,
+not a numerical-convergence failure.
+
+The exact five-case 2023--2063 closed-national policy comparison was rerun from
+the repaired calibration in Torch job `16959294`. All five cases pass their
+common-initial-state, history, market, mass, feasibility, nonfinite, and
+artifact-hash gates. Maximum market residuals range from `3.7042e-5` to
+`4.7790e-5`, comfortably inside the unchanged `2e-4` gate. The report SHA-256
+is `ec49ef705468abbf2bb06695a93ce3a03e88f5ba862662df322ebe80138b6e7a`.
+
+| Policy | Births 2023 | Births 2043 | Births 2063 | Ownership 2023 | Ownership 2063 | Housing use 2023 | Housing use 2063 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Housing supply +20% | 1.291% | 1.704% | 2.050% | 1.784 pp | 2.671 pp | 5.754% | 8.603% |
+| 95% LTV for dependent-child households | 0.018% | 0.045% | 0.076% | 0.745 pp | 1.677 pp | 0.044% | 0.020% |
+| Supply +20% and family credit | 1.314% | 1.766% | 2.155% | 2.963 pp | 4.230 pp | 5.897% | 8.720% |
+| Property tax 1% to 2%, no rebate | -1.100% | -1.296% | -1.623% | -2.301 pp | 0.722 pp | -4.951% | -6.187% |
+
+Relative to the September 3 calibration, the repaired calibration raises the
+absolute birth response to the supply and unrebated-tax experiments by only
+about `7--8%`. This is a meaningful robustness improvement, but not a change in
+the paper's quantitative conclusion. Policies that materially move housing
+services move fertility; a financing-only tenure policy moves ownership much
+more than housing services or fertility. The positive 2063 aggregate ownership
+effect of the unrebated tax is a transition-composition result and must not be
+read as a positive individual tenure response.
+
+The exact one-date rebated-tax Shapley decomposition was also rerun in Torch job
+`16959338`. Every source, calibration, common-state, market, fiscal, accounting,
+feasibility, and eight-cell add-up gate passes. For births, the 1% to 2% reform
+has a direct-tax contribution of `-1.323%`, an asset-price contribution of
+`+0.291%`, and an equal-rebate contribution of `+1.531%`, for a net impact of
+`+0.498%`. The fiscal-incidence interpretation is unchanged: the gross tax
+channel reduces housing and fertility, while the broad equal rebate more than
+offsets births on impact. The Shapley summary and decomposition SHA-256 values
+are `6065592be434b386a0e18aab3d663b0a675b46124f9e9a47d02cdb4fd4641e58`
+and `6d15c1108809933d7978e79aa243b469a93cd915216638409471fa5ebab8615e`.
+
+Canonical local packets:
+
+- `output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_gauss_newton_coord_20260904a/`
+- `output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_task010_exact_repeat1_20260904a/`
+- `output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_task010_exact_repeat2_20260904a/`
+- `output/model/e5f_post2023_policy_mechanisms_eta063_kappa005_task010_smoke_20260904a/`
+- `output/model/e5f_post2023_policy_mechanisms_eta063_kappa005_task010_production_20260904a/`
+- `output/model/e5f_post2023_rebated_tax_impact_eta063_kappa005_task010_20260904a/`
+- `output/model/e5f_rebated_tax_shapley_diagnosis_eta063_kappa005_task010_20260904a/`
+
+This one-day freeze does not certify a new H128 perfect-foresight equilibrium.
+The September 3 H128 baseline convergence failure remains a separate solver
+problem; no tolerance was relaxed and no new long H128 run was launched.
 
 ## September 3 eta=0.63, tenure-kappa=0.005 validation and policy audit
 
