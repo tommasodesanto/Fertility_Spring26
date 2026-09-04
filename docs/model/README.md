@@ -4,6 +4,11 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+- `e5f_independent_quantitative_audit.md` -- full September 4 independent audit,
+  discussion guide, and reconciliation with the separate young-ownership diagnostic.
+  PDF: `../../output/pdf/e5f_independent_quantitative_audit.pdf`.
+  Regenerate with `python3 code/model/tools/build_e5f_independent_audit_pdf.py`
+  from the repository root; this renders the frozen document without model solves.
 - `HOUSING_MOMENT_MAPPING.md`
 - `LIVE_HOUSING_SIZE_AUDIT.md`
 - `INCOME_WEALTH_FERTILITY_ROADMAP.md`
