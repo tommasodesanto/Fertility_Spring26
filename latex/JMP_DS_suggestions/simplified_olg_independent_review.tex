@@ -1,0 +1,1212 @@
+% Full independent review from the 4 September 2026 conversation.
+% This is a review document, not a replacement manuscript section.
+% Build from repository root with pdflatex; keep auxiliary files outside this directory.
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.85in,headheight=14pt,headsep=18pt,footskip=25pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext,newpxmath}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,longtable,array,calc}
+\usepackage{pdflscape}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\definecolor{inkblue}{HTML}{234A65}
+\hypersetup{colorlinks=true,linkcolor=inkblue,urlcolor=inkblue,
+ pdftitle={Independent review of the simplified OLG theory},
+ pdfsubject={Formal audit, welfare arbitration, transition verdict, and author decisions}}
+\urlstyle{tt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.47em}
+\linespread{1.045}
+\setlength{\emergencystretch}{2.5em}
+\setlength{\LTpre}{0.7em}
+\setlength{\LTpost}{0.7em}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.35em,topsep=0.35em,parsep=0pt}
+\setlist[enumerate]{leftmargin=1.6em,itemsep=0.35em,topsep=0.35em,parsep=0pt}
+\providecommand{\tightlist}{\setlength{\itemsep}{0.25em}\setlength{\parskip}{0pt}}
+\titleformat{\section}{\Large\bfseries\color{inkblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.3em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1em}{0.45em}
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textsc{Simplified OLG theory}}
+\fancyhead[R]{\small Independent review}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.25pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\allowdisplaybreaks[1]
+\begin{document}
+\thispagestyle{empty}
+{\small\textsc{Fertility\_Spring26}\hfill 4 September 2026\par}
+\vspace{1.0cm}
+{\LARGE\bfseries Independent review of the simplified OLG theory\par}
+\vspace{0.35cm}
+{\large Housing, fertility, and intergenerational allocation\par}
+\vspace{0.65cm}
+This report preserves the full evaluation from the conversation, including the formal
+claim audit, the arbitration of welfare claims A--C, the transition assessment, and
+the proposed priority ladder. Recommendations remain proposals for discussion;
+they are not author decisions or amendments to the model.
+
+The audit refers to the working-tree versions inspected on 4 September 2026.
+Source labels and line numbers are retained, with full paths in the source guide.
+The protected manuscript has not been amended.
+\vspace{0.35cm}
+\tableofcontents
+\clearpage
+\section{Bottom line}\label{bottom-line}
+
+\textbf{I would sign off on the core household algebra and the numerical finite-horizon
+construction. I would not sign off on the present package as a baseline misallocation
+theorem or a proved transition between two positive steady states.}
+
+The repaired model is substantially sound. Rent timing, mortgage cancellation, old-age
+budgets, the capped-old-renter reduction, conditional fertility choices, and steady-state
+accounting are consistent. Independent optimization of the original household problems
+reproduces the analytical solutions. The numerical transition is credible as a
+finite-horizon approximation.
+
+The welfare dispute has a clear resolution:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{A is valid under an expanded institution:} bridge credit and targeted,
+  intertemporal compensation make the proposed transfer feasible.
+\item
+  \textbf{B is correct:} the same transfer is infeasible for a down-payment-constrained
+  buyer under the baseline closing rule. A and B are not contradictory.
+\item
+  \textbf{C has a valid zero-transaction-cost version}, conditional on a positive mass of
+  unconstrained buyers and interior sellers. It identifies a realization-tax fiscal
+  externality. Its proposed extension using only average transaction costs is not
+  sufficient under the stated common-rebate restriction.
+\end{itemize}
+
+Two additional qualifications matter. The rental-cap derivative is a partial derivative
+holding the old-age housing commitment fixed; changing the common cap at both ages adds an
+omitted resource effect. And the numerical Jacobian checks do not verify the zero-shock
+hypotheses of the fixed-\(J\) proposition.
+
+\textbf{For this job-market paper, I recommend retaining the housing-cost/fertility
+mechanism and a compact demographic accounting result, with no welfare proposition in the
+main text.} Capital-gains taxation should be an optional extension: the quantitative model
+does not contain it, the displayed constrained buyers cannot implement C, and the
+empirical application concerns falling desired fertility rather than the appreciation
+experiment used here.
+
+The three decisions are:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Make the analytical section explain the quantitative mechanism, rather than carry a
+  separate welfare contribution.
+\item
+  Keep the transition numerical and explicitly approximate; do not pursue the nonsmooth
+  infinite-horizon theorem for this paper.
+\item
+  Remove capital-gains taxation from the main analytical benchmark unless its separate
+  contribution is important enough to justify its institutional and expositional cost.
+\end{enumerate}
+
+At the time of this review, no project files had been changed. The author-controlled
+analytical section and appendix remained placeholders.
+
+\clearpage
+\section{Model map}\label{model-map}
+
+Here is the timing implied by the actual budgets.
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4100}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4100}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Object
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Young at \(t\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Old at \(t+1\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Cohorts & Mass \(Y_t\); chooses completed fertility \(n_t\) & This cohort becomes
+\(O_{t+1}=Y_t\) \\
+Income and wealth & Receives \(y_i\); enters with liquid wealth \(b_i\) & No labor income;
+receives matured financial assets net of mortgage repayment \\
+Closing & Occurs before income and rebates become available & Existing ownership and
+acquisition basis are predetermined \\
+Purchase and mortgage & Buys \(h\) for \(P_th\), borrows \(\phi P_th\), posts
+\((1-\phi)P_th\leq b_i\) & Mortgage repayment is \(R_f\phi P_th\) \\
+Saving & Chooses \(a'\geq0\) & Receives \(R_fa'\); owner net financial wealth is
+\(R_fa'-R_f\phi P_th\) \\
+Rent & \(r_t h\) is paid at the period's end; its current value is \(qr_th\) & An old
+renter similarly pays present-value rent \(qr_{t+1}h^2\) \\
+Property tax & Owner of record owes \(\tau^pP_th\) at period end & Pays tax on retained
+housing during old age \\
+Housing services & Occupies \(h\); children require \(\kappa n\), leaving \(s=h-\kappa n\)
+& Renter chooses housing; owner retains \(h^2\leq H\) \\
+Living-owner sale & Not an additional choice within young age & Sells \(H-h^2\), paying
+\(\ell_{t+1}=\tau^g(P_{t+1}-P_t)_+\) per unit \\
+Retention and death & --- & Retained housing supplies services, then is sold by the estate
+after its basis resets to the death-date price \\
+Estate & Anticipates warm-glow estate utility & Estate \(e\) includes retained housing's
+sale value; \(e\geq P_{t+2}h^2\) prevents negative nonhousing estate wealth \\
+Government rebate & Receives the current value \(T_t\), unavailable at closing & Receives
+\(T_{t+1}\) while alive \\
+Descendants & \(Y_{t+1}=\nu\bar n_tY_t\) & Estates do \textbf{not} finance descendants'
+entry wealth; new entrants draw fresh \((y,b)\) from \(F\) \\
+\end{longtable}
+
+\endgroup
+
+The economy is \textbf{demographically closed but financially open}. Housing clears
+domestically; the consumption good and bond trade against an external sector at the fixed
+bond price \(q\). Consequently, there is no missing domestic bond-clearing equation. There
+would be one if this were described as a closed goods-and-asset economy.
+
+The rental intermediary's primitive cash flow gives:
+
+\[
+-P_t+q\bigl(r_t-\tau^pP_t+P_{t+1}\bigr)=0,
+\]
+
+and therefore
+
+\[
+qr_t=P_t+q\tau^pP_t-qP_{t+1}.
+\]
+
+This verifies the household timing. At constant prices, \(r/P=R_f-1+\tau^p\). Assigning
+legal property-tax payment to the titleholder does not establish economic incidence; the
+substantive asymmetries are realization taxation, exemption of intermediaries, stepped-up
+basis, and financing restrictions.
+
+\Needspace{6\baselineskip}
+For old owners, define their effective resources and retention cost by:
+
+\[
+X_t=a+(P_t-\ell_t)H+T_t,
+\qquad
+\rho_t=qr_t-\ell_t.
+\]
+
+Their budget follows by adding after-tax sales, subtracting property tax on retained
+housing, and including its eventual estate value. It counts title and services correctly.
+
+The essential equilibrium objects are prices \(P_t\), rebates \(T_t\), cohort masses, and
+the old-state distribution \(G_t\). The state
+
+\[
+S_t=(Y_t,O_t,G_t,P_{t-1})
+\]
+
+is sufficient because all living old owners bought at the same date. Their ownership taste
+need not remain in the state: it affects the original tenure choice but not their old-age
+problem.
+
+Two institutional assumptions deserve more prominence:
+
+\begin{itemize}
+\tightlist
+\item
+  Rental limits restrict household housing consumption, including the ability to combine
+  rental units. Otherwise the cap could be circumvented.
+\item
+  Owners cannot separate title from occupancy by renting out retained housing. This
+  restriction is essential to the reallocation argument.
+\end{itemize}
+
+\clearpage\begin{landscape}
+
+\section{Formal claim audit}\label{formal-claim-audit}
+
+References below point to the working-tree sources. ``Conditional'' means \textbf{correct
+only under the stated conditions}, not an unconditional result about the model class.
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2050}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2650}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1150}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2350}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Claim
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Verdict
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Missing or essential assumptions
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paper consequence
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Usable bundles \(x=c-\chi n,\ s=h-\kappa n\) & Proved as written & Positive bundles and
+positive preference weights & \hyperlink{source-main}{Main:23} & Coherent goods and space
+requirements; no double counting \\
+Rental zero profit and stationary user cost & Proved as written & End-of-period rent/tax;
+untaxed intermediary resale; fixed \(q\) & \hyperlink{source-main}{Main:49} & Retain \\
+Young budgets and mortgage cancellation & Conditional & Same borrowing/lending return; no
+default; explicit closing chronology & \hyperlink{source-main}{Main:89},
+\hyperlink{source-appendix}{Appendix:178} & Down payment is a liquidity restriction, not
+an extra lifetime resource cost \\
+Old-owner budget and estate floor & Conditional & Estate sells retained title; stepped-up
+basis; nonnegative financial estate & \hyperlink{source-main}{Main:115} & Explain the
+primitive cash flow before the compressed budget \\
+Lemma 1: old-age allocations & Conditional & Positive resources/user costs; owner
+retention and estate inequalities; renter branch consistency &
+\hyperlink{source-appendix}{Appendix:23} & Correct on the displayed branches \\
+Remaining owner corners and zero saving & Incomplete as a solution catalogue & Their KKT
+systems are referenced but not fully displayed or implemented &
+\hyperlink{source-appendix}{Appendix:65}, \hyperlink{source-appendix}{Appendix:213} & Do
+not describe the driver as a general solver \\
+Lifetime reduction & Conditional & Interior saving; correct old-age branch &
+\hyperlink{source-appendix}{Appendix:87} & Correct repair: capped old renters use a
+different saving weight and resource term \\
+Proposition 3: unconstrained conditional policies and saving & Conditional & Positive user
+cost/resources; all recovered choices satisfy their branch inequalities &
+\hyperlink{source-appendix}{Appendix:128} & Retain derivation in appendix \\
+Unique binding-cap fertility root & Proved as written on the feasible branch &
+\(\vartheta>0\), nonempty stated domain, fixed old-age branch &
+\hyperlink{source-appendix}{Appendix:157} & Strictly decreasing FOC establishes
+uniqueness \\
+Housing wedge and full price of a child & Correct but economically weaker than some
+descriptions suggest & Interior fertility; relevant housing KKT condition &
+\hyperlink{source-main}{Main:209} & A private shadow-price identity, not a social
+resource-cost or inefficiency theorem \\
+Cap derivative and sign condition & Conditional & Hold user cost, effective wealth,
+tenure, and old-age commitment fixed & \hyperlink{source-appendix}{Appendix:513} & Correct
+partial derivative \\
+Applying that derivative to the common rental cap & Incomplete; false if treated as the
+full derivative & The old rental commitment changes too &
+\hyperlink{source-appendix}{Appendix:570} & Add the resource term derived below \\
+LTV and liquid-wealth derivatives & Conditional & Only the financing cap binds; prices,
+transfers, tenure, and active set fixed & \hyperlink{source-appendix}{Appendix:574} &
+Correct local derivatives; no aggregate policy sign \\
+Logistic tenure shares & Proved as written & Finite conditional values; positive taste
+scale; independent additive taste & \hyperlink{source-main}{Main:130} & Smooths tenure
+shares, not every household constraint kink \\
+Distribution law, housing clearing, government budget & Conditional & Normalized \(G_t\);
+external financial sector; fixed title/occupancy rules &
+\hyperlink{source-appendix}{Appendix:218} & Essentially complete; consolidate into one
+equilibrium definition \\
+Proposition 1: replacement fertility and two-equation steady state & Proved as written &
+Positive constant cohort masses and stationary household distribution &
+\hyperlink{source-main}{Main:247} & Accounting characterization, not existence \\
+Proposition 4: steady-state existence/local uniqueness & Conditional & Fiscal self-map and
+uniform contraction; replacement sign change; differentiability and nonsingular Jacobian &
+\hyperlink{source-appendix}{Appendix:258} & Correct sufficient theorem; grid checks do not
+prove its uniform hypotheses \\
+Steady-state price/transfer/population derivatives & Conditional & Regular differentiable
+root & \hyperlink{source-appendix}{Appendix:300} & Correct; signs remain unrestricted \\
+Gains complementarity and cohort recursion & Proved as written & Nonnegative gains-tax
+rate; given demographic law & \hyperlink{source-appendix}{Appendix:329},
+\hyperlink{source-main}{Main:285} & Explains persistence; does not guarantee
+appreciation \\
+Proposition 5: fixed-\(J\) local transition & Conditional & Smooth aggregate branch;
+nonsingular \textbf{zero-shock} Jacobian; strictly consistent directional price signs &
+\hyperlink{source-appendix}{Appendix:367} & Correct for the homogeneous specialization;
+general \(F\) also needs appropriate uniform/integrability regularity \\
+Reported numerical transition and horizon stability & Numerically demonstrated but not
+proved & Declared specialization and terminal closure &
+\hyperlink{source-builder}{Builder:770} & Credible approximation, not an exact infinite
+path \\
+Young--old marginal-value decomposition & Conditional & Financing-only young wedge;
+interior saving and old choices & \hyperlink{source-appendix}{Appendix:399} & Correct
+diagnostic \\
+A: Proposition 2, compensated reallocation & Conditional & Added bridge finance; targeted
+two-date transfers; explicit resale path; real costs counted once &
+\hyperlink{source-appendix}{Appendix:421} & Not baseline constrained inefficiency \\
+B: constrained buyer outside the feasible tangent set & Proved as written & Fixed
+\(P,b,\phi\); rebate unavailable at closing & \hyperlink{source-memo}{Memo:55} & Decisive
+restriction on the intended financing interpretation \\
+C: zero-cost baseline transition inefficiency & Conditional & Positive-mass uniformly
+interior matched subsets; coordinated feasible trades; common current rebate &
+\hyperlink{source-memo}{Memo:90} & Valid fiscal-externality result; inapplicable to
+displayed constrained buyers \\
+C with \(\ell_t>\bar K_t\) & Incomplete; false as a sufficient condition under the stated
+instruments & Must specify cost incidence or authorize common financing of costs &
+\hyperlink{source-memo}{Memo:125}, \hyperlink{source-ledger}{Ledger:43} & Withdraw the
+average-cost sufficiency claim \\
+Corollary: model class contains efficient and inefficient allocations & Incomplete as a
+self-contained proof & Establish admissible examples; specify continuation resource
+accounting and positive-measure strict improvement & \hyperlink{source-memo}{Memo:133} &
+Plausible, but contributes little; omit \\
+Smooth infinite-horizon proposition & Conditional & \(C^1\) map, invertible next-date
+derivative, hyperbolicity, full-rank stable projection & \hyperlink{source-memo}{Memo:195}
+& Correct standard local result; does not cover statutory kink \\
+Proposed nonsmooth infinite-horizon argument & Incomplete & Precise operator theorem and
+uniform switched-system bounds & \hyperlink{source-memo}{Memo:250} & Research outline, not
+a completed theorem \\
+Taxing intermediaries leaves the decomposition unchanged & Correct but economically weaker
+than an invariance claim & Same per-unit tax; distinguish algebraic form from equilibrium
+magnitudes & \hyperlink{source-appendix}{Appendix:493} & Identity survives; prices,
+tenure, and \(\zeta\) can change \\
+\end{longtable}
+
+\endgroup
+
+\end{landscape}\clearpage\subsection*{Details behind the audit}
+
+Three details warrant elaboration.
+
+\textbf{The lifetime reduction is correct, but its branch conditions do real work.}
+Writing \(k\) for the old-age saving weight,
+
+\[
+(1+k)x+\chi n+uh=\widetilde w,
+\]
+
+where
+
+\[
+(k,\widetilde w)=
+\begin{cases}
+(\beta(1+\gamma+\omega_B),w),&\text{interior old choices},\\
+(\beta(1+\omega_B),w-q^2r_{t+1}h_R^{\max}),&\text{capped old renter}.
+\end{cases}
+\]
+
+The old renter correction is implemented correctly. Tenure values must retain the
+tenure-dependent constants omitted from this policy reduction; the code correctly
+evaluates the original utilities.
+
+\textbf{The common rental-cap derivative needs an additional term.} On the
+capped-old-renter branch, let
+
+\[
+n_{\widetilde w}
+=\frac{\chi}{(1+k)x^2\Delta}>0.
+\]
+
+If the same rental cap rises at both ages, then
+
+\[
+\frac{dn}{dh_R^{\max}}
+=
+\left.\frac{\partial n}{\partial\widehat h}\right|_{\widetilde w}
+-q^2r_{t+1}n_{\widetilde w}.
+\]
+
+The second term reflects additional committed old-age rent. At the final illustrative
+steady state, the current-cap partial derivative is approximately \(0.80296\), while the
+common-cap derivative is \(0.79348\); an independent finite difference confirms the
+latter. This does not overturn the example's sign, but it changes the claimed policy
+derivative.
+
+\textbf{The child-unit mapping is unresolved across documents.} The example uses
+\(\nu=2\), implying replacement \(n=0.5\). The decision ledger separately says one toy
+child unit corresponds to \(2.1\) literal children. Together these imply \(1.05\), not
+\(2.1\), literal children per toy household at replacement. The abstract model can use
+normalized units, but the biological interpretation and quantitative mapping must be
+reconciled. Compare \hyperlink{source-appendix}{Appendix:616} with
+\hyperlink{source-ledger}{Ledger:16}.
+
+\section{Welfare verdict}\label{welfare-verdict}
+
+\subsection{A: valid with added credit and
+compensation}\label{a-valid-with-added-credit-and-compensation}
+
+The transfer ledger is internally consistent. Define \(u_t^O=qr_t+q\ell_{t+1}\). Then:
+
+\begin{itemize}
+\tightlist
+\item
+  The old incumbent's first-order private loss is zero because \[
+  MV_{jt}^{O}-q\tau^pP_t+qP_{t+1}=P_t-\ell_t.
+  \]
+\item
+  The young buyer's net private gain, after purchase, property tax, and eventual taxable
+  resale, is \(\zeta_{it}^{O,F}\).
+\item
+  The government receives incremental revenue \(\ell_t+q\ell_{t+1}\).
+\item
+  Market-rate lenders break even.
+\end{itemize}
+
+With unrestricted implementation of the stated compensation ledger, the available marginal
+surplus is therefore
+
+\[
+\mathcal S_{ijt}
+=\zeta_{it}^{O,F}+\ell_t+q\ell_{t+1}-K_{ijt}.
+\]
+
+A strict positive surplus supports a sufficiently small compensated improvement, including
+compensation for second-order private losses.
+
+\textbf{But bridge finance is an additional credit technology.} It permits the buyer to
+fund the marginal down payment with a pledgeable advance rather than existing liquid
+wealth. Its zero present value does not make it institutionally innocuous. A
+zero-present-value loan can be extremely valuable precisely because the baseline household
+cannot obtain it.
+
+The strongest honest description of A is:
+
+\begin{quote}
+Adding pledgeable closing finance and appropriately financed compensation can improve the
+allocation of housing among existing households.
+\end{quote}
+
+It is not a theorem that the original credit-constrained allocation violates the
+efficiency conditions associated with its original feasible set.
+
+\subsection{B: correct, and compatible with A}\label{b-correct-and-compatible-with-a}
+
+At a binding closing constraint,
+
+\[
+b_i-(1-\phi)P_th_i=0.
+\]
+
+Holding \(b_i,P_t,\phi\) fixed, feasibility of a one-sided perturbation requires
+
+\[
+-(1-\phi)P_t\dot h_i\geq0,
+\qquad\text{hence}\qquad \dot h_i\leq0.
+\]
+
+The proposed recipient cannot receive more owned housing under that institution.
+
+This does \textbf{not} establish constrained efficiency of the entire economy. Other
+reallocations or equilibrium price changes could matter. If price changes,
+
+\[
+P_t\dot h_i+h_i\dot P_t\leq0,
+\]
+
+so falling prices can expand affordable housing. B rules out the particular fixed-price
+transfer, not all possible policies.
+
+\subsection{C: the zero-cost result works}\label{c-the-zero-cost-result-works}
+
+The proof can be made concrete without targeted transfers.
+
+Consider an unconstrained young buyer receiving \(\epsilon\) extra housing. Hold fertility
+and subsequent retained housing fixed. Before receiving the incremental common rebate,
+choose:
+
+\[
+\Delta a'
+=\bigl[\phi P_t-q(P_{t+1}-\ell_{t+1})\bigr]\epsilon,
+\qquad
+\Delta c=-u_t^O\epsilon.
+\]
+
+These changes satisfy the young budget and leave old-age resources unchanged before the
+additional future rebate. Slack closing and saving constraints make them feasible. The
+young household's first-order utility change is zero because \(MV^Y=u_t^O\).
+
+For the old seller, reduce retention by \(\epsilon\), hold total estate expenditure fixed,
+and increase current consumption by
+
+\[
+\Delta c^2=(qr_t-\ell_t)\epsilon.
+\]
+
+The old household's first-order private utility change is also zero.
+
+Now perform these transfers within matched subsets of mass \(m\). Current gains-tax
+revenue increases by \(m\ell_t\epsilon\), generating the common rebate
+
+\[
+\Delta T_t=\frac{m\ell_t}{Y_t+O_t}\epsilon.
+\]
+
+Private losses on the matched subsets are uniformly \(O(\epsilon^2)\); the rebate benefit
+is \(O(\epsilon)\). Thus, for sufficiently small \(\epsilon\), it dominates those losses.
+
+This also addresses the omitted continuation accounting:
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2600}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7400}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Concern
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Resolution in the zero-cost construction
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Buyer's future resale & The extra unit is sold when the buyer becomes old; baseline
+retained housing is unchanged \\
+Tax basis & Extra housing has acquisition basis \(P_t\) \\
+Future tax & Generates \(m\ell_{t+1}\epsilon\) at \(t+1\) \\
+Baseline estate sale & The original incumbent would have sold that unit through the estate
+without gains tax \\
+Property tax & Aggregate title/occupancy changes leave the total property-tax base
+unchanged \\
+Old incumbent's death & Current appreciation supplies compensation while the incumbent is
+alive \\
+Other current households & Can consume the additional common current rebate \\
+Future households & Can receive the additional \(t+1\) rebate while retaining baseline
+choices; no loss is required \\
+Prices & The constructed allocation preserves housing clearing at the original prices; it
+is not a newly decentralized policy equilibrium \\
+\end{longtable}
+
+\endgroup
+
+\textbf{The strongest baseline theorem is therefore:}
+
+\begin{quote}
+At fixed fertility, population, and prices, current realization taxation creates a local
+Pareto-improving feasible allocation when a positive mass of sufficiently interior buyers
+and sellers can make costless coordinated trades and the resulting current revenue is
+rebated equally.
+\end{quote}
+
+Mathematically, the relevant sufficient condition in this construction is
+
+\[
+\ell_t>0,\qquad K=0,
+\]
+
+together with the stated positive-mass and uniform-interiority assumptions.
+
+It is a \textbf{realization-tax allocative distortion with a fiscal externality}. It is
+not merely a pecuniary externality: prices are held fixed. Nor is it a costless wash-sale
+trick: housing services actually move between households with different marginal
+valuations. However, it does not depend on fertility and does not establish that
+financially constrained families should receive the housing.
+
+It also requires coordination of trades. The common rebate alone does not decentralize the
+proposed allocation as individually optimal behavior.
+
+\subsection{The average-cost extension does not
+follow}\label{the-average-cost-extension-does-not-follow}
+
+The condition \(\ell_t>\bar K_t\) identifies an aggregate surplus. It does not identify
+who pays the costs or ensure compensation under a common rebate.
+
+For example, suppose \(m/(Y_t+O_t)=0.1\), current tax revenue per transferred unit is
+\(1\), future gains are zero, and each buyer incurs a transaction cost \(0.5\). Then
+
+\[
+\ell_t=1>\bar K_t=0.5,
+\]
+
+but each buyer receives only \(0.1\epsilon\) through the current rebate and incurs
+\(0.5\epsilon\) in cost. The first-order loss is not repaired.
+
+The extension could work if the government paid the transaction costs before distributing
+a net common rebate. But that introduces an expenditure instrument absent from the stated
+government budget. Alternatively, participant-specific cost bounds could establish that
+each party's rebate covers its own cost. An average-cost inequality cannot substitute for
+those conditions.
+
+The memo's wording is incomplete; the decision ledger's stronger reading of it as
+sufficiency is incorrect.
+
+\subsection{What should remain in the paper?}\label{what-should-remain-in-the-paper}
+
+\textbf{Only the marginal-value and child-cost decompositions. No welfare proposition in
+the main text.}
+
+C does not apply to the displayed numerical construction: all young owners face binding
+financing limits, and young renters also face binding rental limits. A applies only after
+adding institutions that are not part of the quantitative exercise.
+
+For policy welfare, a more natural object is the \textbf{distribution of
+consumption-equivalent changes for households already alive}, reported by age, wealth, and
+tenure. This permits transparent reporting of winners and losers without inventing
+transfers that the policy does not provide.
+
+Comparisons across different future populations require an explicit additional criterion.
+They do not necessarily require arbitrary utilitarian weights, but they do require
+decisions about potential people and their identities. That distinction is central in
+\href{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1468-0262.2007.00781.x}{Golosov,
+Jones, and Tertilt (2007)} and
+\href{https://onlinelibrary.wiley.com/doi/full/10.3982/TE2138}{Pérez-Nievas, Conde-Ruiz,
+and Giménez (2019)}.
+
+If the desired result is specifically an improvement for constrained young buyers, the
+smallest algebraic addition is a pledgeable down-payment advance. Its economic
+justification must explain why the relevant authority can supply credit that private
+lenders cannot. Otherwise the theorem simply restates that relaxing a binding constraint
+is valuable. I would prefer evaluating an actual financing policy with its costs and
+distributional effects over adding a friction solely to obtain a Pareto theorem.
+
+\section{Transition verdict}\label{transition-verdict}
+
+The fixed-\(J\) proposition proves a narrow but legitimate result:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Select a smooth appreciation branch.
+\item
+  Assume a nonsingular stacked Jacobian at the zero-shock steady state.
+\item
+  Verify that the resulting directional price changes have the selected signs.
+\item
+  Obtain a locally unique solution \textbf{on that branch}, for a sufficiently small shock
+  and that fixed horizon.
+\end{enumerate}
+
+It does not establish another branch's nonexistence, a shock-size neighborhood uniform in
+\(J\), or convergence as \(J\to\infty\).
+
+The numerical evidence is strong within its proper scope:
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6400}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3600}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Check
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Existing endpoint tests & All four pass \\
+Independent original-program optimizations & All 12 converge; largest objective
+discrepancy \(3.73\times10^{-14}\) \\
+Initial/final illustrative prices & \(0.342683563,\ 0.484405426\) \\
+Initial/final young owner shares & \(0.748566127,\ 0.514929506\) \\
+Average fertility at both endpoints & \(0.5\) \\
+Horizon-28 maximum scaled residual & Approximately \(6.50\times10^{-10}\) \\
+Fresh horizon-24/28 difference, first nine dates & Approximately \(2.22\times10^{-15}\) \\
+Saved maximum reported terminal-state gap & Approximately \(1.87\times10^{-9}\) \\
+\end{longtable}
+
+\endgroup
+
+The maintained active sets pass. In particular, old-owner retention and estate constraints
+remain slack, and the old-renter cap remains binding.
+
+There are three limits to this evidence:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{The reported branch Jacobian is evaluated at the finite-shock solution.} It does
+  not verify the zero-shock directional theorem. See
+  \hyperlink{source-builder}{Builder:986}.
+\item
+  \textbf{The horizon comparator checks selected aggregates over dates 0--8.} The
+  terminal-state summary also omits the acquisition-price coordinate. See
+  \hyperlink{source-builder}{Builder:1397}.
+\item
+  \textbf{Tiny tail appreciation signs are not robustly certified.} The smallest price
+  change is around \(1.84\times10^{-10}\). Dates 0--3 and 7--8 are the dates with gains
+  taxes above \(10^{-4}\); they are not the exhaustive list of positive floating-point
+  gains.
+\end{itemize}
+
+The generalized-root calculations also reproduce: seven stable roots, two finite unstable
+roots, and one infinite root associated with the static transfer. Eliminating that
+transfer removes the infinite root. The final-state sampled stable modulus is at most
+about \(0.547\).
+
+That supports the frozen linearizations. It does not prove stability when the economy
+switches between tax regimes. Stable or hyperbolic individual matrices do not supply the
+necessary bounds on their products.
+
+\textbf{An infinite-horizon theorem is not economically necessary for the proposed
+main-text role.} A clearly labeled numerical transition can demonstrate demographic
+propagation and several episodes of appreciation.
+
+If the paper insists on an exact existence claim, the weakest useful target is existence
+of a convergent path for the homogeneous specialization, without global uniqueness. A
+limit argument would need actual solutions for arbitrarily large horizons, compactness and
+continuity sufficient to pass equilibrium conditions to the limit, and a uniform tail
+condition selecting the final steady state. The existing horizon checks do not establish
+these assumptions.
+
+A local existence-and-uniqueness result for the exact kinked model requires substantially
+stronger control of the admissible switching dynamics and the initial-state boundary
+condition. The memo correctly identifies the difficulty but has not supplied the theorem.
+
+One nuance: smoothing the gains schedule need not remove realization-based lock-in
+altogether. A smooth positive tax on gains combined with stepped-up basis still rewards
+retention. It removes the kink; setting \(\tau^g=0\) removes the gains-tax mechanism.
+Those are different changes.
+
+\section{Economic assessment}\label{economic-assessment}
+
+\textbf{The useful economics is the distinction between obtaining ownership and obtaining
+child-relevant housing services.}
+
+The identity
+
+\[
+\frac{\vartheta x}{n}
+=\chi+\kappa(u+\zeta)
+\]
+
+makes that distinction transparent. Children use goods and space; housing constraints can
+raise the private shadow cost of the latter. Relaxing a housing cap can raise fertility,
+but paying for additional housing can offset the space benefit.
+
+Log utility is doing useful analytical work: it gives simple expenditure shares, a unique
+conditional solution, and a readable comparative static. But it also imposes strong
+behavior:
+
+\begin{itemize}
+\tightlist
+\item
+  Everyone chooses strictly positive continuous fertility.
+\item
+  There is no childlessness margin, birth timing, or sequential parity decision.
+\item
+  Conditional unconstrained fertility is proportional to effective wealth.
+\item
+  Housing requirements are technologically imposed rather than chosen through child
+  quality or household production.
+\end{itemize}
+
+These limitations are acceptable for a mechanism model. They preclude presenting its
+elasticities as structural counterparts of the full sequential model.
+
+Ownership adds something essential only if the question concerns \textbf{liquidity, resale
+wealth, or title-dependent taxes}. A renter-only model can already establish the
+goods-versus-space fertility mechanism. Ownership earns its place through the financing
+constraint; gains taxation requires a separate justification.
+
+The fixed housing stock is a reasonable short-run simplification. It becomes restrictive
+as a long-run theory. Since the two steady-state equations determine \(P,T\) independently
+of \(\bar H\), increasing the stock simply scales steady-state population in this
+specification. The result is clean, but much of it comes from replication of identical
+economic environments.
+
+The replacement-fertility result is useful as a diagnostic restriction, not a substantive
+explanation of fertility:
+
+\begin{quote}
+A positive constant population in a closed reproduction system must replace itself.
+\end{quote}
+
+That conclusion does not depend on logarithmic utility or fixed housing supply. Housing
+determines whether a supporting equilibrium exists and what population scale it supports.
+It does not guarantee that prices can always restore replacement.
+
+The two-period structure clarifies the distinction between a living sale and an estate
+sale. It also makes tax lock-in unusually stark: death is certain, only one retention
+period remains, household landlords are prohibited, and tax bases have only one
+acquisition vintage. This is a useful illustration of avoidance incentives, not a
+convincing account of realistic housing turnover by itself.
+
+The common rebate is a transparent fiscal closure. It is also economically powerful. In C,
+it supplies the first-order benefit that repairs the participants' second-order losses. It
+should therefore be presented as a maintained institution, not neutral bookkeeping.
+
+The ownership taste is a reasonable smoothing device. One additive draw is sufficient;
+richer taste machinery would add little. Nevertheless, in the homogeneous numerical
+example, the taste distribution is doing substantive aggregate work: mixed tenure is not
+generated by heterogeneous incomes or wealth.
+
+A permanent preference shock is a clean experiment. \textbf{Its upward direction is
+selected to produce appreciation.} The main quantitative application concerns a fertility
+decline, which need not generate the same gains-tax mechanism. That asymmetry should
+prevent the tax example from becoming the paper's general account of demographic change.
+
+The two proposed theory pieces share an environment but currently provide \textbf{two
+distinct lessons}:
+
+\begin{itemize}
+\tightlist
+\item
+  A conditional statement about housing access and private valuations.
+\item
+  A numerical statement about demographic propagation and transitional tax bases.
+\end{itemize}
+
+They become a coherent paper contribution only if the tax mechanism matters for the
+empirical or quantitative exercise. At present, it does not.
+
+The quantitative connections are narrower and stronger:
+
+\begin{itemize}
+\tightlist
+\item
+  Housing services, wealth, and budgets affect fertility.
+\item
+  Tenure changes alone need not change fertility materially.
+\item
+  Population evolves through cohort propagation.
+\item
+  The existence of a positive terminal population must be checked, not presumed.
+\end{itemize}
+
+The toy model cannot establish a capital-gains mechanism absent from the quantitative code
+or repair its unverified positive closed endpoint. The live quantitative distinction
+between housing-service responses and financing-only tenure responses is documented in
+\hyperlink{source-status}{Status:90}.
+
+My assessment is therefore:
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3900}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6100}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Standard
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Assessment
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Intellectually correct & Most core results, with the qualifications above \\
+Useful for the paper & Child-cost mechanism and demographic accounting \\
+Worth five main-text pages as currently assembled & No \\
+Worth presenting in a seminar & One mechanism slide; possibly one demographic diagram \\
+Worth an appendix & Household derivations and numerical transition \\
+Worth an online supplement & Gains-tax welfare extension and advanced transition
+diagnostics \\
+\end{longtable}
+
+\endgroup
+
+\section{Taste and exposition}\label{taste-and-exposition}
+
+The current rendered main section is \textbf{five pages}, followed by nine appendix pages
+and a references page. The older review's six-page description is stale. I inspected the
+current package and formalization memo: \hyperlink{source-package-pdf}{Theory PDF}
+\hyperlink{source-memo-pdf}{Memo PDF}
+
+The writing is substantially clearer than a typical overformalized model note. The
+weaknesses are mainly allocation of attention and claim hierarchy.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{The opening promises more than the section establishes.} ``Move the economy
+  between positive steady states'' precedes the later admission that no infinite-horizon
+  result is established. Start with the mechanism and describe the transition as an
+  illustration. See \hyperlink{source-main}{Main:6}.
+\item
+  \textbf{Some primitives appear too late.} The ownership taste, discount factor, rebate
+  rule, and closing chronology belong in the environment. They currently arrive inside or
+  after the household problems.
+\item
+  \textbf{The rental intermediary is explained well.} Keep its short cash-flow account.
+  The sentence about taxing intermediaries can move to an appendix footnote.
+\item
+  \textbf{Stepped-up basis is understandable, but needs one ordinary example.} A house
+  bought for 100 and worth 150 generates taxable gains of 50 on a living sale; an
+  immediate estate sale after resetting basis to 150 generates zero. State that this is
+  the model's tax rule.
+\item
+  \textbf{The old-owner budget is too compressed for its importance.} Show sale proceeds,
+  retained housing, and financial estate once. That would make the estate floor
+  intelligible without requiring a reader to reverse-engineer it.
+\item
+  \textbf{The order of household problems should make continuation values available before
+  they are used.} A compact old-age problem followed by the young problem is the cleanest
+  recursive presentation.
+\item
+  \textbf{Equilibrium should be defined once.} Housing clearing and fiscal balance appear
+  twice within a short span. Replace the repetition with one numbered definition. See
+  \hyperlink{source-main}{Main:234}.
+\item
+  \textbf{The notation is mostly defensible.} Keep \(\chi,\kappa,P,r,T\). Use a visibly
+  distinct symbol for old households rather than overloading \(O\) for old age and
+  ownership. ``Net-of-child goods'' and ``net-of-child space'' are clearer than repeatedly
+  saying ``usable bundles.'' Explain \(\zeta\) as the extra willingness to pay per unit of
+  space; it is not itself the value of one dollar of liquidity.
+\item
+  \textbf{The most useful comparative static is buried.} The space benefit versus
+  goods-cost tradeoff belongs in the main mechanism discussion. The reduced maximization
+  problem and expenditure-share catalogue can move out.
+\item
+  \textbf{The final subsection's title promises fertility but then fixes fertility.}
+  ``Intergenerational reallocation and fertility'' is misleading for that comparison. See
+  \hyperlink{source-main}{Main:305}.
+\item
+  \textbf{Qualifications currently carry too much of the argument.} This is not solved by
+  deleting caveats. Choose a narrower headline result so fewer caveats are needed.
+\item
+  \textbf{The appendix is too long relative to the contribution.} Its length comes from
+  retaining several different ambitions. The household derivations are worth keeping; the
+  contraction theorem, branchwise transition theorem, welfare ledger, and saddle apparatus
+  should not all receive equal prominence.
+\end{enumerate}
+
+The prose occasionally sounds procedural: ``isolates two implications,'' repeated
+statements that an appendix establishes something, and the succession of generic theorem
+announcements. I would not infer authorship from this. The editorial problem is that the
+text describes the machinery more often than it explains why the reader needs the result.
+
+\textbf{Figures.} The transition figure is informative at full size but too small at its
+current half-text-width placement. Its four panels become miniature plots. If retained,
+give it full width in the appendix, identify the pre-shock point, label the owner share as
+the young owner share, and explain the illustrative fertility units.
+
+The wedge figure is readable and accurately displays a valuation gap. It is largely
+redundant with one equation, and its long labels dominate the graphic. I would omit it
+from the paper. It should never be used as visual evidence of a measured welfare loss.
+
+Neither figure directly shows the fertility response to housing access---the analytical
+result most relevant to the paper.
+
+\section{Minimum viable theory}\label{minimum-viable-theory}
+
+I would retain the following ingredients:
+
+\begin{itemize}
+\tightlist
+\item
+  Two overlapping adult cohorts and explicit cohort accounting.
+\item
+  Goods and housing requirements per child.
+\item
+  Saving and a common borrowing/lending return.
+\item
+  Renting versus ownership, with a clearly stated financing restriction.
+\item
+  A simple rental-size restriction, if that institution is part of the intended mechanism.
+\item
+  Old-age housing and estate motives sufficient to describe lifecycle demand.
+\item
+  A common property-tax rebate if property-tax policy remains central.
+\item
+  Fixed housing for the short-run illustration.
+\item
+  No capital-gains tax in the main benchmark.
+\item
+  One ownership taste distribution only if mixed tenure is needed for the illustration.
+\end{itemize}
+
+\textbf{Five-page main-text ceiling}
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7200}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Space
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Retained content
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+About one page & Environment, timing, and institutions \\
+About one page & Compact household problems and one equilibrium definition \\
+About one page & Child-cost identity and conditional housing-cap response \\
+About one page & Cohort propagation, replacement accounting, and the possibility that no
+positive steady state exists \\
+Remaining space & Interpretation and, only if needed, one clearly labeled numerical
+illustration \\
+\end{longtable}
+
+\endgroup
+
+The retained theorem set would be:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{One household proposition:} the full private price of a child and the
+  conditional sign of the housing-access response.
+\item
+  \textbf{One demographic lemma:} positive closed stationarity requires \(\nu\bar n=1\);
+  housing clearing determines scale.
+\item
+  \textbf{No welfare proposition.}
+\item
+  \textbf{No infinite-horizon transition theorem.}
+\end{enumerate}
+
+A useful nonexistence statement is simply:
+
+\[
+\sup_{P\ \text{on the feasible fiscal locus}}
+\nu\bar n(P,\mathcal T(P);\vartheta)<1
+\quad\Longrightarrow\quad
+\text{no positive closed steady state}.
+\]
+
+It is modest, but directly disciplines interpretation of the quantitative model.
+
+\textbf{Appendix}
+
+Retain the original-budget derivations, branch conditions, corrected cap derivatives,
+aggregation, and one reproducible numerical packet. State the finite terminal closure
+precisely. Compress generic existence and implicit-function arguments.
+
+\textbf{Park outside the paper}
+
+The expanded-credit Pareto theorem, the baseline tax/rebate theorem, the nonsmooth
+operator argument, the full generalized-root discussion, and the wedge graphic. Preserve
+them as research material; do not give them paper space merely because they are
+technically available.
+
+\section{Priority ladder}\label{priority-ladder}
+
+\begingroup\small\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.17}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1800}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2200}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Priority
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Next concrete action
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Author decision?
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Fatal before use} & Remove any claim that the financing wedge proves baseline
+constrained inefficiency; distinguish A's expanded credit institution from B's baseline
+feasible set & \textbf{Yes:} choose intended welfare benchmark \\
+\textbf{Fatal before use} & Withdraw \(\ell_t>\bar K_t\) as sufficient under common
+rebates unless cost financing/incidence is explicitly supplied & Only if retaining a
+positive-cost welfare theorem \\
+\textbf{Fatal before use} & Remove literal claims that the computation proves an exact
+infinite-horizon transition or validates the quantitative closed endpoint & No; this is a
+claim-boundary correction \\
+\textbf{Important before circulating} & Decide whether capital-gains taxation belongs in
+the main analytical model & \textbf{Yes} \\
+\textbf{Important before circulating} & Distinguish a young-only cap relaxation from
+changing the rental cap at both ages; add the omitted resource term & No \\
+\textbf{Important before circulating} & Reconcile \(\nu\), normalized fertility units, and
+the claimed mapping to literal children & \textbf{Yes:} choose the normalization \\
+\textbf{Important before circulating} & Consolidate equilibrium and state the external
+financial sector, timing, and title/occupancy restrictions explicitly & No, unless
+changing institutions \\
+\textbf{Important before circulating} & Describe the finite-shock Jacobian honestly;
+either verify zero-shock hypotheses or leave the proposition explicitly conditional &
+No \\
+\textbf{Useful improvement} & Include acquisition basis in terminal diagnostics and attach
+a threshold to ``positive gains'' dates & No \\
+\textbf{Useful improvement} & Move the informative fertility comparative static into the
+main discussion; shorten the branch catalogue there & No substantive decision \\
+\textbf{Useful improvement} & Enlarge or demote the transition figure; omit the redundant
+wedge figure & Editorial decision \\
+\textbf{Optional} & Add selected tests for unused corners if the code is to become a
+general solver & No need for the maintained example \\
+\textbf{Optional} & Evaluate current-household consumption-equivalent policy changes under
+actual fiscal and lending rules & \textbf{Yes:} choose policy and welfare reporting
+scope \\
+\textbf{Optional} & Pursue a certified infinite-horizon result & \textbf{Yes; my
+recommendation is not to do so} \\
+\end{longtable}
+
+\endgroup
+
+\section{Final recommendation}\label{final-recommendation}
+
+If this were my job-market paper, I would make the analytical section explain one
+proposition: \textbf{housing affects fertility through the services and resources
+available to families; ownership matters insofar as it changes access to those services or
+resources.} That proposition connects directly to the quantitative finding that financing
+policy can move tenure much more than fertility.
+
+I would retain demographic accounting to prevent an unsupported long-run interpretation. I
+would not use replacement fertility as a major theoretical result, and I would not let a
+successful toy transition imply a terminal equilibrium that the quantitative model has not
+established.
+
+I would remove the main-text Pareto proposition. A is a valid theorem about additional
+credit and compensation; C is a valid zero-cost fiscal-externality construction for
+unconstrained recipients. Neither establishes the intended claim about the displayed
+constrained young families under the baseline institutions.
+
+The analytical model is worth keeping only after that narrowing. Its core is useful. Its
+present collection of welfare, tax-basis, steady-state, and nonsmooth-transition ambitions
+asks the reader to learn substantially more machinery than the paper presently uses.
+
+\clearpage
+\appendix
+\section{Source guide}
+Source references in the report link to the entries below. Line numbers identify the versions reviewed; subsequent edits may move them. All paths are absolute.
+
+\Needspace{5\baselineskip}
+\hypertarget{source-main}{\textbf{Main -- Main analytical section}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/simplified_olg_paper_theory_section.tex}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-appendix}{\textbf{Appendix -- Proof and computational appendix}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/simplified_olg_paper_theory_appendix.tex}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-builder}{\textbf{Builder -- Numerical construction}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_simplified_olg_mixed_tenure_theory.py}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-memo}{\textbf{Memo -- Competing formalization memo}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/JMP_DS_suggestions/simplified_olg_formalization.tex}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-ledger}{\textbf{Ledger -- Active decision ledger}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/docs/model/ACTIVE_DECISION_LEDGER.md}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-status}{\textbf{Status -- Canonical quantitative status}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/CALIBRATION_STATUS.md}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-package-pdf}{\textbf{Theory PDF -- Rendered analytical package}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/latex/simplified_olg_paper_theory_package.pdf}}\par
+\vspace{0.35em}
+
+\Needspace{5\baselineskip}
+\hypertarget{source-memo-pdf}{\textbf{Memo PDF -- Rendered formalization memo}}\par
+{\small\nolinkurl{/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/pdf/simplified_olg_formalization.pdf}}\par
+\vspace{0.35em}
+
+\subsection*{Research references}
+Golosov, Mikhail, Larry E. Jones, and Mich\`ele Tertilt (2007). ``Efficiency with Endogenous Population Growth.'' \emph{Econometrica} 75(4), 1039--1071. \href{https://doi.org/10.1111/j.1468-0262.2007.00781.x}{doi:10.1111/j.1468-0262.2007.00781.x}.
+
+P\'erez-Nievas, Mikel, Jos\'e I. Conde-Ruiz, and Eduardo L. Gim\'enez (2019). ``Efficiency and endogenous fertility.'' \emph{Theoretical Economics} 14(2), 475--512. \href{https://doi.org/10.3982/TE2138}{doi:10.3982/TE2138}.
+
+\end{document}
