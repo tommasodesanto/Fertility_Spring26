@@ -16,10 +16,12 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** W0, the intended welfare claim. No substantive decision from
-this discussion has been made, and no model or manuscript amendment has begun.
-P0 is the related question about the analytical section's role. Start by
-understanding the claim Tommaso wants; then examine its feasible set in W1.
+**Resume here:** W1, the planner's feasible set. Tommaso has specified the
+desired result in W0: equilibrium inefficiency demonstrated by a housing
+reallocation toward young households, with fertility effects as a subsequent
+result. This is a chosen research objective, not a proved proposition. The
+planner's powers and the exact welfare criterion remain open. No model or
+manuscript amendment has begun.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),
@@ -79,9 +81,9 @@ between mechanism analysis and welfare analysis before either is understood.
 
 | ID | Question and retained alternatives | Status | Dependencies / consequences | Review evidence |
 |---|---|---|---|---|
-| P0 | What should the analytical section establish? Housing-access/fertility mechanism; an allocation or policy-welfare contribution; demographic propagation; or a justified combination. | OPEN | Guides placement and required proof effort across all branches. | Sections 1, 6, 8, 10 |
-| W0 | What exactly is the desired welfare claim, for whom and relative to what comparison? A private valuation gap; a feasible Pareto improvement; or the effects of a specified policy are distinct claims. | ACTIVE | Clarify before selecting W1 or treating the financing wedge as a welfare result. Links to P0 and W4. | Sections 3-4 |
-| W1 | Which instruments and constraints define the comparison? Baseline closing rules; an explicit pledgeable advance; targeted transfers at two dates; or another specified intervention. | OPEN | W0. Determines which parts of A/B apply and which financing costs or institutional justifications must be supplied. | Section 4, A-B |
+| P0 | The stated priority is an allocation-efficiency result, with fertility effects as an additional result. The complete paper role and placement remain to be decided. | TENTATIVE | Follow the author's objective in W0; do not presume adoption of the review's recommendation to omit main-text welfare. | Sections 1, 6, 8, 10; W0 discussion below |
+| W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
+| W1 | Can the planner reallocate housing and consumption subject to real resource/technology constraints while overcoming private finance limits, or must the planner respect those limits? Specify any closing advance and dated transfers explicitly. | ACTIVE | W0. Distinguish resource-feasible Pareto inefficiency from constrained inefficiency; then specify title, estate, lender, and fiscal implementation. | Section 4, A-B |
 | W2 | Does the gains-tax/common-rebate construction earn a place? Assess the zero-cost result, recipient eligibility, continuation accounting, and whether a constructed allocation is decentralized by an actual policy. | OPEN | W0, W1, I0. A tax-revenue result for unconstrained buyers is not a result about the displayed constrained buyers. | Section 4, C |
 | W3 | If real transaction costs are retained, who pays and how is each participant compensated? Zero costs; explicit public cost financing; or participant-specific conditions. | OPEN | W1-W2. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
 | W4 | Whose welfare is evaluated, with what population held fixed? Existing households with fixed fertility; existing-household policy welfare; or an explicit criterion covering different future populations. | OPEN | W0-W2 and U0/D0 if populations differ. Keep the welfare population and the policy's demographic effects distinct. | Sections 4, 6 |
@@ -147,22 +149,87 @@ whenever a primitive, branch, or theorem scope changes.
   `CALIBRATION_STATUS.md`. Use that status file for the live contract. No
   calibration choice is made through this theory discussion map.
 
+### W0 discussion: author objective and next fork
+
+**Author statement, 2026-09-04:**
+
+> The claim I would like to be true is that the eq. is inefficient, in the sense that a central planner would reallocate hosuing to young people. this is without considering fertility outcomes preferences, just int erms of marginal utyiliy of housing. on top of hat it would be good to claim fertility effects.
+
+**Recorded choice:** pursue an allocation-efficiency result first and assess
+fertility effects separately. Do not treat the desired claim as already true,
+as an instruction to manufacture it, or as agreement to arbitrary welfare
+weights or a particular financing instrument.
+
+**Working interpretation, to retain explicitly:** hold fertility and cohort
+masses fixed in the first allocation comparison. Existing children's space
+and goods requirements can remain in preferences. This is not a decision to
+set the child-space requirement or the fertility-preference parameter to zero.
+Which households must be protected, and whether the statement is Pareto or
+uses specified social weights, remain questions under W4.
+
+**Economic distinction for discussion:** raw marginal utilities across people
+do not provide a utility-normalization-invariant efficiency test. Use the
+marginal rate of substitution $m_i=U_{h,i}/U_{c,i}$, meaning the household's
+marginal housing valuation in units of consumption goods. At the maintained
+steady-state branches, the existing appendix gives
+$m_Y-m_O=\zeta^{O,F}>0$ for a young owner with a positive financing wedge and
+an interior old incumbent. This establishes a valuation gap for that pair,
+not a universal age ranking or a feasible welfare improvement by itself.
+Source: `latex/simplified_olg_paper_theory_appendix.tex`, equations
+`eq:olg_app_young_mv` and `eq:olg_app_old_mv`.
+
+A local zero-cost exchange illustrates the required proof: for
+$m_O<a<m_Y$, transfer $\epsilon$ units of housing services from old to young,
+reduce the young household's goods by $a\epsilon$, and increase the old
+household's goods by the same amount. Holding fertility and continuation
+allocations fixed, the first-order utility changes are
+$U_c^Y(m_Y-a)\epsilon>0$ and $U_c^O(a-m_O)\epsilon>0$.
+This illustrates resource-feasible gains when that service-and-goods exchange
+is permitted; it does not by itself verify the model's durable-title, estate,
+lending, and fiscal implementation. Those remain W1/I1 obligations.
+
+**Lead recommendation, not yet adopted:** explore a Pareto improvement
+relative to a planner who can reallocate real resources and overcome private
+financing limits. This is a legitimate resource-feasible benchmark, though
+it does not establish constrained inefficiency under the original closing
+rules. A planner facing a microfounded enforcement or information restriction
+must respect that restriction if it is part of the maintained feasible set.
+Do not infer that every weighted planner optimum necessarily raises aggregate
+young housing from the existence of one local improving transfer.
+
+The basic welfare distinction between Pareto improvements and changes in the
+distribution along a Pareto frontier is also explained in
+[Robert Townsend's MIT welfare-theorems lecture](https://ocw.mit.edu/courses/14-04-intermediate-microeconomic-theory-fall-2020/1gcajw7hbthjPcO8f8wCXWoKIBXEYkUEH_transcript.pdf).
+This is background for the criterion, not evidence for the project-specific
+reallocation theorem.
+
+**Next question:** may the planner overcome the private financing constraint,
+or must the desired inefficiency result survive that same constraint?
+**Return point:** once W1 and the relevant W4 conditions are settled, identify
+the smallest valid allocation proposition. Then return to H0 for the fertility
+response; an allocation improvement does not by itself sign that response.
+
 ### Traversal and decision record
 
 | Date | Record | Consequence |
 |---|---|---|
 | 2026-09-04 | Tommaso requested sequential discussion with all branches retained. | Maintain this map and update it after substantive exchanges. |
 | 2026-09-04 | Lead proposed W0 as the first question, linked to P0. | Clarify the intended claim before deciding the planner's instruments. |
+| 2026-09-04 | Tommaso specified equilibrium inefficiency through a planner's old-to-young housing reallocation as the desired first result; fertility effects are additional. | W0 objective recorded; W1 becomes active. P0 is provisionally welfare-first. No theorem, welfare weights, or planner powers accepted yet. |
 
-**Suspended questions / return points:** none yet.
+**Suspended questions / return points:** H0 fertility effects follow the first
+allocation claim; return after W1 and the relevant W4 conditions. Other branches
+remain open. This sequencing does not reject the fertility branch.
 
-**Author decisions in this review discussion:** none yet.
+**Author decisions in this review discussion:** W0 research objective recorded
+above. The desired result's validity, scope, and implementation remain open.
 
-**Lead recommendations, not adopted:** the review recommends a narrower main
-text built around the housing/fertility mechanism and demographic accounting,
-with welfare results and advanced transition analysis outside the main text.
-These recommendations remain contestable on the relevant nodes; they do not
-close any branch.
+**Lead recommendations, not adopted:** the review's earlier recommendation to
+put welfare outside the main text is preserved as history. The current
+discussion follows Tommaso's welfare-first objective and examines the strongest
+defensible allocation result. Exploring the resource-feasible Pareto benchmark
+is the lead's next proposed route, not yet an author choice. Paper placement
+and advanced transition analysis remain open.
 
 **Amendments:** none started. The PDF remains the review snapshot; the live
 discussion state is here.
