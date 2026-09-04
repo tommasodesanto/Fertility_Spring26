@@ -16,8 +16,11 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** H0, the intervention whose fertility effect we want to
-establish. W0 fixes the allocation-efficiency objective; W1 permits the
+**Resume here:** H0, the household's net resource change under the housing
+intervention. The planner and credit-policy descriptions need not be mutually
+exclusive or have different fertility signs; match housing, net resources,
+and the maintained household branch before comparing them. W0 fixes the
+allocation-efficiency objective; W1 permits the
 planner to relax private borrowing limits. I0 now leaves realized capital-gains
 taxation outside the core argument as a deferred extension, to be revisited
 when Q0 considers inclusion in the quantitative model. The stronger W1
@@ -95,7 +98,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
-| H0 | Which intervention should the fertility result describe? Start by specifying the response to the same compensated housing reallocation as the efficiency result; distinguish a pure borrowing-limit relaxation and a funded equilibrium policy. | ACTIVE | W1/W4/I1. The lead recommends matching the welfare and fertility interventions; that linkage and the exact compensation rule remain to be settled. Keep rental-cap alternatives on record. | Sections 3, 6, 8; H0 entry below |
+| H0 | Derive fertility as a response to housing and net resources. A planner reallocation and a credit change yield the same conditional fertility choice if they deliver the same inputs on the same household branch. | ACTIVE | W1/W4/I1. Do not force an exclusive choice between the two descriptions. Establish the conditional sign, specify payment incidence, then distinguish allocation results from aggregate policy effects. | Sections 3, 6, 8; H0 clarification below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
 | D0 | What is the demographic proposition? Cohort accounting, impact response, momentum, housing feedback, replacement, and conditions for absence of a positive closed endpoint. | OPEN | U0, H1, I1. Separate a toy existence example from the live quantitative endpoint problem. | Sections 5-6, 8 |
 | D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
@@ -296,10 +299,72 @@ fixed fertility establish a positive fertility response. Derive the response
 for the chosen intervention; do not copy the cap derivative or its sign into
 the welfare theorem without reconciling those objects.
 
-**Next question:** should the fertility result concern the same compensated
-old-to-young housing reallocation, with a separate borrowing-policy response
-only if needed? The lead recommends this link; no author choice has yet been
-made on the precise fertility experiment or payment rule.
+**Clarification requested, 2026-09-04:**
+
+> can you clarify the consequenes of the decision? I am not sure, but I would expect fertility to increase under both?
+
+**Correction to the earlier framing:** the alternatives are not inherently
+exclusive and need not have different signs. With identical realized housing,
+net resources, preferences, tenure, and the relevant old-age branch, the
+household has the same conditional fertility problem regardless of whether
+those inputs arise through a planner's arrangement or a credit policy. The
+author's expectation of positive effects under both is a hypothesis to assess,
+not a decision imposing their sign. No choice between the two is recorded.
+
+**Common local calculation.** Let $R_{\rm net}$ be effective lifetime resources
+left after net housing expenditure and transfers. Write $\rho=1+k>0$ for the
+coefficient on usable consumption $x$, and $s=h-\kappa n$ for adult space.
+On a maintained branch, with transfers independent of the fertility choice,
+the budget and fertility condition are
+\[
+ \rho x+\chi n=R_{\rm net},\qquad
+ \frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{s}.
+\]
+Define the positive curvature term
+$\Delta=\vartheta/n^2+\chi^2/(\rho x^2)+\alpha\kappa^2/s^2$.
+Differentiating gives
+\[
+ dn=\frac{\alpha\kappa}{s^2\Delta}\,dh
+   +\frac{\chi}{\rho x^2\Delta}\,dR_{\rm net}.
+\]
+Thus extra housing at unchanged net resources raises fertility, and extra net
+resources at fixed housing also raise fertility. Housing that must be paid
+for can combine a positive space effect with a negative resource effect.
+If $p=-dR_{\rm net}/dh$ is the net marginal resource cost to the young
+household, including the chosen payment rule, then
+\[
+ \frac{dn}{dh}=
+ \frac{\alpha\kappa/s^2-\chi p/(\rho x^2)}{\Delta}.
+\]
+For the original pure cap relaxation at fixed prices and effective wealth,
+$p=u$, the housing user cost. A planner's financing/compensation arrangement
+can have that same $p$, or a different one; calling it a planner intervention
+does not make housing free. A grant needs a funding source in the full
+feasibility comparison. This calculation allows the household's usual
+within-branch consumption/saving reoptimization; it is not yet a complete
+planner implementation or a general-equilibrium policy derivative.
+
+**Check of the absence of a universal positive sign.** An illustrative reduced
+household point has $\rho=2$, $\alpha=\chi=x=s=n=1$, $\kappa=0.1$,
+$\vartheta=1.1$, and $u=0.5$. It satisfies the fertility condition, has
+$h=1.1$, effective pre-housing resources $3.55$, and a positive housing-access
+wedge $\alpha x/s-u=0.5$. With $p=u$, $dn/dh=-15/161<0$, even though the
+young household's goods-equivalent marginal welfare gain is $0.5$. With
+$p=0$, the derivative is $10/161>0$. These are didactic conditional-household
+calculations, not calibrated results or a constructed equilibrium. The FOC,
+positive wedge, and derivative were checked using exact rational arithmetic;
+central differences of the FOC agree with the implicit derivative to less
+than $10^{-10}$. The example establishes that a positive access wedge or a
+private welfare gain alone does not prove a positive fertility response.
+
+**Consequence for the research design:** derive the common household sign
+condition first and assess whether the intended example satisfies it. Then
+state which financing and compensation arrangements deliver the required
+housing and net resources. A policy additionally requires endogenous prices,
+tenure responses, and fiscal closure to determine aggregate fertility. The
+lead recommends treating the planner allocation and its possible policy
+implementation as related stages, not asking the author to choose between
+them before specifying these objects. H0 remains active.
 
 ### Traversal and decision record
 
@@ -310,6 +375,7 @@ made on the precise fertility experiment or payment rule.
 | 2026-09-04 | Tommaso specified equilibrium inefficiency through a planner's old-to-young housing reallocation as the desired first result; fertility effects are additional. | W0 objective recorded; W1 becomes active. P0 is provisionally welfare-first. No theorem, welfare weights, or planner powers accepted yet. |
 | 2026-09-04 | Tommaso accepted relaxing borrowing limits in the planner benchmark; retaining those limits would be desirable but is not required now. | W1 financing permission decided; stronger alternative parked. Carry forward the compensated proof route under W4 and turn to I0's tax-mechanism choice. |
 | 2026-09-04 | Tommaso accepted leaving capital-gains taxation as an extension and deferring it until the quantitative-model inclusion decision. | I0 decided; Q0 and W2 parked, along with tax-specific proof/diagnostic work. H0 becomes the current discussion question. |
+| 2026-09-04 | Tommaso asked what distinguishes the two fertility experiments and expected fertility to rise under both. | No new choice imposed. Clarified that matched housing/net resources imply the same conditional response; derived the common sign condition and retained policy-equilibrium obligations separately. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
@@ -327,9 +393,10 @@ put welfare outside the main text is preserved as history. The current
 discussion follows Tommaso's welfare-first objective using his accepted
 permission to relax borrowing limits. A compensated Pareto proof is the
 working route, and I0 now adopts separation of the gains-tax extension. The
-lead recommends linking the fertility claim to the same compensated
-reallocation; its exact experiment, paper placement, and general transition
-scope remain open.
+lead now recommends a common household response calculation followed by
+implementation analysis; the earlier forced fork between planner and credit
+descriptions is withdrawn. Exact compensation, paper placement, and general
+transition scope remain open.
 
 **Amendments:** none started. The PDF remains the review snapshot; the live
 discussion state is here.
