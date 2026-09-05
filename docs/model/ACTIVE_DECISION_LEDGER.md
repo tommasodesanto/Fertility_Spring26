@@ -42,8 +42,11 @@ Historical discussion-only passages below remain the record of the decision pass
 **Next discussion:** define the planner's feasible allocations and welfare
 criterion under W1/W4/I1 before choosing a compensation formula. On September 5,
 Tommaso clarified that the efficiency benchmark need not be an actionable policy
-and said he is still considering what the planner may do. W1's earlier borrowing
-permission remains recorded; no broader removal of restrictions is inferred.
+and said he is still considering what the planner may do. He subsequently
+specified that tenure segmentation must be respected as a physical constraint.
+W1's earlier borrowing permission remains recorded; no broader removal of
+restrictions is inferred. The exact housing feasibility conditions remain to be
+written, and the welfare criterion remains open.
 W4 is REOPENED, with the previous compensation scheme retained as one proof
 construction. W3's real cost remains TENTATIVE. U0's population interpretation
 also remains open. No manuscript or model amendment follows from this discussion.
@@ -111,7 +114,7 @@ The menu below is for discussion; no option has been chosen by requesting it.
 
 | Option | Planner powers | Meaning and current status |
 |---|---|---|
-| A. First best at fixed fertility | Choose housing, consumption, and intertemporal allocations subject to the actual housing stock, endowments, external intertemporal resource feasibility, and any real costs or technological limits. Remove private financing and purely institutional access restrictions. Preserve preferences, including any tenure taste. | Broad efficiency benchmark. Requires classifying housing-size and title restrictions as technological or institutional; that classification is open. Does not authorize free resources or choosing additional births. |
+| A. First best at fixed fertility | Choose housing, consumption, and intertemporal allocations subject to the actual housing stock, endowments, external intertemporal resource feasibility, and any real costs or technological limits. Remove private financing and purely institutional access restrictions. Preserve preferences, including any tenure taste. | Broad efficiency benchmark. Subsequent author clarification retains tenure segmentation as a physical constraint; its exact feasibility conditions and treatment of other title restrictions remain to be specified. Does not authorize free resources or choosing additional births. |
 | B. Planner who can overcome borrowing limits | Permit financing and the associated redistribution needed to reallocate housing, while retaining other specified tenure, housing-access, and estate restrictions. | Isolates credit as the source of the improvement. The present local proof supports this comparison under its stated permissions and slackness assumptions. It does not characterize the complete optimum. |
 | C. Planner facing the same private constraints | Retain household borrowing and access limits, without transfers that circumvent those limits at closing. | Stronger constrained-efficiency question, already parked. The financing marginal-value gap alone does not establish an improvement here. |
 | D. Government choosing available policy instruments | Restrict interventions to specified taxes, subsidies, credit rules, or other instruments and their fiscal/market consequences. | Second-best policy problem for later quantitative work. It is not required to define or prove the theoretical efficiency benchmark. |
@@ -160,6 +163,37 @@ References located and inspected:
 The author's request supersedes the old audit's editorial recommendation to
 keep exactly one figure. Its warning about an unproved transition shape remains
 relevant. No old figure, manuscript, or builder was overwritten in this discussion.
+
+### Planner allocations, prices, and tenure segmentation — September 5
+
+**Author clarification under W1/I1:** the planner must respect physical
+constraints, explicitly including tenure segmentation. Preserve this restriction
+when defining the benchmark. The current model has one aggregate housing stock
+and tenure-specific housing-size bounds; this clarification does not introduce
+separate fixed rental and owner stocks or settle permissible tenure reassignment.
+The author asks whether the planner should face prices and has not selected a
+new welfare criterion or a market-based constrained-planner problem.
+
+**Conceptual clarification and lead recommendation:** formulate the main
+benchmark as a direct allocation of housing and consumption at fixed fertility
+and cohort masses, retaining housing feasibility and segmentation while relaxing
+private borrowing limits as already agreed. Domestic house prices and rents do
+not enter as individual budget restrictions on this planner. Shadow values may
+emerge from scarcity, and aggregate external intertemporal resource feasibility
+still respects the economy's world borrowing/lending terms. A planner restricted
+to interventions followed by market trade is a separate possible comparison;
+it can anticipate the resulting price changes. It is not needed merely because
+housing segmentation is retained. A Pareto comparison remains a recommendation,
+not a newly accepted author decision. No formal planner program or manuscript
+amendment is made in this discussion.
+
+**Primary reference checked:** Alberto Bisin, *General equilibrium theory*,
+lecture notes, November 4, 2014, Section 2.1 (printed pp. 4–5), formulates Pareto
+efficiency using allocations, resources, and utility constraints. Section 3.2.4
+(printed pp. 43–44) separately defines constrained efficiency with market trade
+and a planner who anticipates the equilibrium price response. These are lecture
+notes, not a new research result for this model.
+[NYU source](https://bpb-us-e1.wpmucdn.com/wp.nyu.edu/dist/c/16384/files/2019/11/Lecture-notes-Oct2014.pdf).
 
 ### Progress count and remaining discussion topics
 
@@ -241,7 +275,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. The proposed core and new verification override gains tax to zero; the historical builder and evidence remain unchanged. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
-| I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | The proposal now states the original dated institutions and one equilibrium definition; the planner transaction is explicit. Broader changes remain open. Keep inherited entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
+| I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | September 5: retain tenure segmentation as a physical constraint on the planner. Its exact feasibility conditions and broader institutional choices remain open. The proposal records the dated institutions and one explicit planner transaction. Keep inherited entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | A local payment condition and a primitive sufficient restriction in a stationary zero-property-tax specialization have been derived and checked under V0. General-equilibrium policy signs remain open; return to W1/W4/I1 for incidence and to H1 for a quantitative analogue. | Sections 3, 6, 8; H0 threshold clarification and preference below |
 | H1 | Retain the simple model's one-shot completed-fertility choice in its two-period OLG structure; leave sequential birth timing and childlessness to quantitative work. | DECIDED | Fertility-architecture scope only. Log utility, goods/space requirements, tenure tastes, and maintained old-age branches remain assumptions to assess where relevant; do not infer blanket approval. P0/H0/I1/V0 remain dependencies. | Sections 2-3, 6, 8; H1 author response below |
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Illustrative common-initial-state paths and terminal household comparisons are checked. General signs and model-wide convergence remain open under D1-D2; literal-person measurement remains U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
