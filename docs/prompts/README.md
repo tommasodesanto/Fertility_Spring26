@@ -4,6 +4,11 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `HANDOFF_simplified_olg_planner_discussion.md`: filesystem-only handoff for
+  an independent conversation about the simplified housing/fertility theory,
+  the literature-based planner benchmark, and the conditional constrained-
+  efficiency proof; separates author decisions from recommendations and gives
+  an ordered source-reading list.
 - `HANDOFF_calibration_theory_discussion.md`: filesystem-only handoff for an
   independent discussion of the calibration plan, simplified OLG theory,
   outstanding author decisions, and September 14 presentation priorities;
