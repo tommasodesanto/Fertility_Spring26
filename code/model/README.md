@@ -22,6 +22,16 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/analyze_e5f_first_birth_measurement.py` checks saved empirical cohort
+support and the first-birth target's normalization null direction, then compares
+saved calibration housing moments. It performs no regression or model solve.
+The companion sample/estimator replay driver is
+`../data/psid_followup_mar2026/audit_first_birth_rooms_measurement.py`.
+The completed checks, timed-out full replay, interpretation limits and complete
+fit tables are indexed in
+`../../output/model/e5f_first_birth_measurement_review_20260905a/README.md`
+and `../../docs/model/e5f_first_birth_measurement_review.md`.
+
 `tools/analyze_e5f_transition_calibration_panel.py` validates a complete
 coordinate panel against its target and source fingerprints, constructs the
 local weighted moment Jacobian, and writes the stable calibration-gap and

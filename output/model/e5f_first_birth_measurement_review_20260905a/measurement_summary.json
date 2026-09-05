@@ -1,0 +1,159 @@
+{
+  "empirical": {
+    "target": 0.7202462623815278,
+    "target_se": 0.0852600513385958,
+    "input_cohort_weight_total_variation": 0.20235780579399817,
+    "treated_calendar_range": [
+      1970.0,
+      2019.0
+    ],
+    "support": [
+      {
+        "event_time": -2,
+        "observations": 1106,
+        "mean_birth_year": 1995.082361968076,
+        "post1997_weight_share": 0.37546050557173366,
+        "birth2007plus_weight_share": 0.22612416273405586,
+        "no_kminus2_cohort_weight_share": 0.0,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": -1,
+        "observations": 1355,
+        "mean_birth_year": 1994.6393942656,
+        "post1997_weight_share": 0.38617898809921414,
+        "birth2007plus_weight_share": 0.21388371897443523,
+        "no_kminus2_cohort_weight_share": 0.419136149004718,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": 0,
+        "observations": 1671,
+        "mean_birth_year": 1994.0820684194518,
+        "post1997_weight_share": 0.4072603224415197,
+        "birth2007plus_weight_share": 0.21207015575016727,
+        "no_kminus2_cohort_weight_share": 0.10170936939244916,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": 1,
+        "observations": 1466,
+        "mean_birth_year": 1993.5474588738828,
+        "post1997_weight_share": 0.38783790697695386,
+        "birth2007plus_weight_share": 0.19952435276142103,
+        "no_kminus2_cohort_weight_share": 0.460713408899194,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": 2,
+        "observations": 1462,
+        "mean_birth_year": 1993.7085467119355,
+        "post1997_weight_share": 0.4275430558140973,
+        "birth2007plus_weight_share": 0.20253741047215448,
+        "no_kminus2_cohort_weight_share": 0.12493265971120286,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": 3,
+        "observations": 1344,
+        "mean_birth_year": 1992.974307490303,
+        "post1997_weight_share": 0.4165275051143079,
+        "birth2007plus_weight_share": 0.1804944608788391,
+        "no_kminus2_cohort_weight_share": 0.4600969867803591,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      },
+      {
+        "event_time": 4,
+        "observations": 1329,
+        "mean_birth_year": 1992.9047881049366,
+        "post1997_weight_share": 0.4575044403269554,
+        "birth2007plus_weight_share": 0.16982548098948488,
+        "no_kminus2_cohort_weight_share": 0.11039694232998136,
+        "scope": "pre_regression_input_sample_not_final_estimation_sample"
+      }
+    ],
+    "event_window_diagnostics": [
+      {
+        "contrast": "primary_-1_to_3",
+        "estimate": 0.7202462623815278,
+        "standard_error": ".0852600513385958",
+        "status": "unchanged_primary"
+      },
+      {
+        "contrast": "alternative_-2_to_2",
+        "estimate": 0.72615957,
+        "standard_error": ".0803146909487257",
+        "status": "diagnostic_point_from_existing_event_table"
+      },
+      {
+        "contrast": "pooled_pre_post_two_year_cells",
+        "estimate": 0.723202865,
+        "standard_error": "not_available",
+        "status": "diagnostic_point_from_existing_event_table"
+      },
+      {
+        "contrast": "post_birth_0_to_4_different_estimand",
+        "estimate": 0.38543346999999994,
+        "standard_error": "not_available",
+        "status": "different_estimand_not_a_replacement"
+      }
+    ],
+    "analysis_scope": "input support and saved primary estimates; no new regression coefficients or covariance",
+    "full_replay_status": "failed",
+    "full_replay_error": "Declared Stata audit budget exceeded",
+    "full_replay_elapsed_seconds": 902.5279079930001,
+    "common_cohort_weight_effect": "not_quantified",
+    "standard_errors_of_window_differences": "not_available",
+    "post_run_verification": {
+      "full_replay_status": "failed",
+      "full_replay_error": "Declared Stata audit budget exceeded",
+      "primary_outputs_unchanged": true,
+      "source_builder_unchanged": true,
+      "saved_covariance_available": false,
+      "input_support_sha256": "a9661ade3d97b2943849a09c8129918bf33f6786a00c5a6a3c82fd6fe90aa4dc",
+      "input_support_replays_identical": true
+    },
+    "normalization_check": {
+      "status": "pass",
+      "cohorts_without_observed_reference": 16,
+      "witness": {
+        "cohort": 1986,
+        "weight_minus1": 0.02629881690188689,
+        "weight_plus3": 0.040434863144316616,
+        "no_observed_kminus2": true,
+        "null_loading": 0.014136046242429725
+      },
+      "maximum_absolute_fitted_value_shift": 0,
+      "interpretation": "normalization dependence of nominal common-reference contrast; not a corrected target or estimated bias",
+      "sample_design_receipt": "design_check/smoke/run_receipt.json"
+    }
+  },
+  "model": {
+    "evaluated_coordinate_and_joint_cases": 35,
+    "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+    "selected": {
+      "stage": "round2",
+      "case_id": "9",
+      "label": "child_space_rebalance_0.1",
+      "loss": 23.15344472757269,
+      "tfr": 1.9216975578798428,
+      "childless_rate": 0.18985895060790128,
+      "mean_age_first_birth": 26.251702786396663,
+      "share_first_births_age30plus": 0.23716275185854563,
+      "housing_increment_0to1": 0.46604419298872113,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.37919818852699816,
+      "own_family_gap": 0.1695784661356256,
+      "own_rate": 0.5466182046608248,
+      "aggregate_mean_occupied_rooms_18_85": 6.3285941535538965,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 7.0311956981510075,
+      "annual_bequest_flow_to_aggregate_wealth": 0.008484568648442574,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 3.303594814389452
+    },
+    "minimum_observed_rooms": 6.270186008242861,
+    "maximum_observed_birth_response": 0.46604419298872113,
+    "destination_treated_rooms": 5.800342454027575,
+    "destination_control_rooms": 5.334298261038854,
+    "destination_continuation_birth_rate": 0.2688151779012405,
+    "no_new_equilibrium_solved": true
+  }
+}

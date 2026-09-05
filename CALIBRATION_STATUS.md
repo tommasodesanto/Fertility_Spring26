@@ -1,6 +1,47 @@
 # Calibration Status
 
-Updated: `2026-09-05` (bounded refinement and independent code review complete; September 4 production unchanged)
+Updated: `2026-09-05` (first-birth target normalization issue identified; September 4 production unchanged)
+
+## September 5 first-birth housing measurement assessment
+
+The nominal common-reference first-birth rooms contrast has a newly verified
+normalization concern. Sixteen first-birth cohorts have no observation at the
+regression's stated reference event year -2. They receive 41.9136% of the
+cohort-share weight at -1 and 46.0097% at +3. The estimator constructs these
+shares before the final regression's singleton pruning. A separate sample-only
+check verifies nonmissing regression inputs, person-constant birth cohorts and
+the exact event-indicator partition, so the saved input support is the share
+sample. Adding a constant to a no-reference cohort's supported event coefficients
+and subtracting it from its person fixed effects leaves fitted values unchanged,
+but changes the weighted endpoint contrast when that cohort's weights differ.
+The 1986 cohort supplies a checked example with both endpoints observed:
+a one-room normalization shift changes the contrast by 0.014136 rooms with zero
+change in fitted rows. This is an algebraic illustration, not an estimated bias
+or a replacement target. An independent read-only review agrees with the algebra.
+
+The original source/target provenance check and two sample-only checks pass.
+The one full unchanged-specification regression replay timed out at its declared
+900-second limit, without exporting the cohort coefficients or covariance.
+The realized omitted-column normalization, final estimation sample and a
+quantified alternative contrast remain outstanding. The null identity holds on
+any retained subset, but this audit does not recover the production coefficient
+normalizations or establish a corrected causal estimate. Primary source and all
+target-output hashes remain unchanged. The existing scalar 0.720246 and its
+reported SE 0.085260 are retained for forensic comparability; their reproduction
+does not resolve this interpretation problem. Resolve it before another
+calibration search or presenting the shortfall as a structural model rejection.
+
+The active matched model branch already permits treated continuation births.
+Its selected review candidate has destination rooms 5.800342 versus 5.334298 in
+the held-childless copy; the difference is 0.466044. The empirical childless
+comparison group, before-birth behavior and pooled historical cohort mix still
+require reconciliation with that model statistic. No target, weight, parameter,
+model source or policy result was changed by this measurement review. Production
+remains September 4 task_010; round2/task_009 remains a review candidate. Complete
+target-fit and parameter tables accompany the new note
+`docs/model/e5f_first_birth_measurement_review.md` and PDF
+`output/pdf/e5f_first_birth_measurement_review.pdf`. Evidence and reproduction
+instructions are under `output/model/e5f_first_birth_measurement_review_20260905a/`.
 
 ## September 5 completed bounded calibration refinement
 
