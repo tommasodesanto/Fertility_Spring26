@@ -1,28 +1,43 @@
 # Calibration Status
 
-Updated: `2026-09-05` (first independent overnight stage complete; bounded grid continuation running; September 4 production calibration unchanged)
+Updated: `2026-09-05` (independent overnight checks complete; September 4 production calibration unchanged)
 
 ## September 5 independent numerical and identification verification
 
 After the first PDF delivery, the author authorized further safe work while he
-sleeps. A separately bounded nested-wealth-grid impact diagnostic is running in
-the frozen audit snapshot: Torch smoke `16986180` completed in 16 minutes,
-reproducing the 120-node global baseline exactly and passing the 239-node
-baseline market loop (residual `2.2893e-6`). The two 239-node policy comparisons
-are running as job `16986566`, submitted at 04:31 UTC. Original nodes,
-inherited household mass, endpoints,
-economic parameters, and production files are held fixed. At most two fine-grid
-policy cases and, conditionally, three 477-node cases may follow. The seven-case
-continuation budget and stop gates are in the existing overnight run plan;
+sleeps. A separately bounded nested-wealth-grid impact diagnostic is complete in
+the frozen audit snapshot. Smoke `16986180` and policy job `16986566` are complete.
+The 120-node baseline reproduces exactly; all three 239-node markets pass.
+Supply's impact birth response changes from `1.290873%` to `1.288387%`, and
+credit's from `0.017850%` to `0.018494%`. No predeclared materiality threshold
+is crossed, so no 477-node case will run. Original wealth nodes, inherited
+household mass, endpoints, and all economic parameters are held fixed in this
+comparison. Its budget and stop gates are in the existing overnight run plan;
 `output/model/e5f_overnight_independent_verification_20260905a/nested_grid/`
-holds submission receipts. No calibration search is authorized by this diagnostic.
+holds the complete receipts and stop decision. No calibration search ran.
+
+A separate **uncalibrated economic variant** tests an eight-room rental upper
+bound against six on the 239-node grid. Smoke `16987040` and policy job
+`16987657` completed in 16 and 33 minutes; all three markets, checkpoint hashes,
+and seventeen-graph packets pass. Only the rental opportunity changes across
+variants; baseline estimates, owner choices, external restrictions, and inherited
+input household distributions are fixed. Supply's birth effect is `1.288387%`
+under six rooms and `1.292605%` under eight, but its ownership effect reverses
+from `+1.769706 pp` to `-0.232000 pp`. Credit's birth effect falls from
+`0.018494%` to `0.013773%`; ownership still rises `0.626012 pp` under eight.
+Eight rooms is a diagnostic value, not an empirical estimate or production
+proposal. History, the matched 2019-2023 rooms target, SMM fit, and long-run
+responses were not recomputed. No further variants will run in this continuation.
+`output/model/e5f_overnight_independent_verification_20260905a/rental_cap/`
+retains the design, checks, and a negligible processed-distribution projection;
+the inherited inputs and saved preparation operator replay exactly.
 
 Production remains September 4 `task_010`, loss `30.482966707698903`, with
 the twelve targets and eleven estimated parameters tabulated immediately below.
-No parameter, target, weight, numerical gate, or production policy result was
+No production parameter, target, weight, numerical gate, or production policy result was
 changed. The morning brief is `docs/model/e5f_overnight_morning_review.md`
 with PDF `output/pdf/e5f_overnight_morning_review.pdf`; the full revised audit
-is `docs/model/e5f_independent_quantitative_audit.md`, Section 16, with PDF
+is `docs/model/e5f_independent_quantitative_audit.md`, Sections 16-18, with PDF
 `output/pdf/e5f_independent_quantitative_audit.pdf`.
 
 - A frozen snapshot matching all fifty production source hashes reproduces all
@@ -37,7 +52,8 @@ is `docs/model/e5f_independent_quantitative_audit.md`, Section 16, with PDF
   These are diagnostic impacts from a common inherited 2023 distribution,
   not replacement production results or a revised 2063 transition. Global
   saving removes two rare occupied value-monotonicity violations in the local
-  credit case. Wealth-grid and housing-menu sensitivity remain outstanding.
+  credit case. Section 17 completes a conditional 120-to-239-node grid check; a separately
+  labeled rental-cap sensitivity is described above.
 - The inherited young-ownership panel is complete, 23/23. Collector `16964275`
   completed; ridge planner `16964564` failed a stricter flow-versus-stock
   measurement comparison. Exact renewal-flow identities pass within `2.22e-16`,
@@ -58,6 +74,9 @@ is `docs/model/e5f_independent_quantitative_audit.md`, Section 16, with PDF
   `26.9792%` or `30.2169%`. Old-age ownership is approximately `99.2%` at ages
   80–84 versus ACS `75.0%`. Age, geography, and time alignment, and late-life
   portfolio/tenure validation, require author decisions before target changes.
+  The full-cell age map also affects existing targets: reported ownership 30-55
+  includes cells through 57, and old-wealth labels select cells 78-85. Section 17
+  and the read-only age receipts document these mappings without changing scores.
 - Historical age-18 mass rises from `0.0143371` in 2023 to `0.0639084` in 2027
   at the handoff from imposed age shares to the inherited queue. This is not
   a policy-induced birth response. Household-formation/entry interpretation

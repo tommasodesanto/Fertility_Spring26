@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only age, occupied-state irregularity, and nested-grid audit receipts."""
+"""Read-only measurement and conditional sensitivity audit receipts."""
 from __future__ import annotations
 import argparse
 import csv
@@ -173,8 +173,11 @@ def grid_receipts(stages, saving_dir, out):
     fig, axes = plt.subplots(1,2,figsize=(9,3.5))
     for ax,name,title in zip(axes,("supply-plus-20","dependent-child-ltv95"),("Housing supply +20%","Dependent-child 95% LTV")):
         selected=[r for r in effects if r["policy"]==name]
-        ax.plot([r["nodes"] for r in selected],[r["births_pct"] for r in selected],"o-",color="#183f59")
-        ax.set_xticks(levels);ax.set_xlabel("Nested liquid-wealth grid nodes")
+        values=[r["births_pct"] for r in selected]
+        bars=ax.bar([str(r["nodes"]) for r in selected],values,color="#183f59",width=.6)
+        ax.bar_label(bars,labels=[f"{v:.6f}%" for v in values],padding=4,fontsize=9)
+        ax.set_ylim(0,max(values)*1.22)
+        ax.set_xlabel("Nested liquid-wealth grid nodes")
         ax.set_ylabel("Impact births per household (%)");ax.set_title(title);ax.grid(alpha=.2)
     fig.suptitle("Supplemental: fixed history, global saving, separately cleared prices",fontsize=10)
     fig.tight_layout()
@@ -185,6 +188,134 @@ def grid_receipts(stages, saving_dir, out):
         interpretation="Conditional impact sensitivity only. Common original pre-choice measure and unchanged parameters. Neither history nor calibration is recomputed.")
 
 
+def rental_receipts(stages, out, grid_stages):
+    """Compare the economic rental-cap variant with the same-grid reference."""
+    rows = [dict(r,rental_cap=6.0) for r in read_csv(out / "grid_levels.csv") if int(r["nodes"]) == 239]
+    if len(rows) != 3:
+        raise RuntimeError("Complete 239-node reference required for rental-cap comparison")
+    references = []
+    for stage in grid_stages:
+        for row in json.loads((stage / "summary.json").read_text())["rows"]:
+            if int(row["nodes"]) == 239 and row["policy"] == "baseline":
+                references.append((stage / "cases" / row["case"] / "case_state.pkl.gz",row["case_checkpoint_sha256"]))
+    if len(references) != 1 or audit.digest(references[0][0]) != references[0][1]:
+        raise RuntimeError("Unique hash-verified fine-grid baseline required")
+    reference = audit.load_checkpoint(references[0][0])
+    reference_g = reference["state"].g_pre.copy()
+    reference_grid = reference["b_grid"].copy()
+    del reference
+    gc.collect()
+    hashes = {}
+    inherited_checks = []
+    for stage in stages:
+        path = stage / "summary.json";summary = json.loads(path.read_text())
+        if summary.get("status") != "complete" or not summary.get("all_case_gates_passed"):
+            raise RuntimeError(f"Rental-cap stage incomplete: {stage}")
+        if summary.get("economic_parameter_changes") != {"hR_max":{"reference":6.0,"diagnostic":8.0}}:
+            raise RuntimeError("Unexpected cap-variant economic changes")
+        hashes[str(stage)] = audit.digest(path)
+        for row in summary["rows"]:
+            folder = stage / "cases" / Path(row["diagnostic_directory"]).name
+            if audit.digest(folder / "case_state.pkl.gz") != row["case_checkpoint_sha256"]:
+                raise RuntimeError("Rental-cap checkpoint differs")
+            if len(list((folder / "standard_diagnostics").glob("*.png"))) != 17:
+                raise RuntimeError("Rental-cap standard graph packet incomplete")
+            if not row["all_gates_passed"] or row["nodes"] != 239 or row["rental_cap"] != 8.0:
+                raise RuntimeError("Rental-cap case contract failed")
+            packet = audit.load_checkpoint(folder / "case_state.pkl.gz")
+            if not np.array_equal(packet["b_grid"],reference_grid) or not np.array_equal(packet["state"].g_pre,reference_g):
+                raise RuntimeError("Rental-cap inherited input distribution or wealth grid changed")
+            evaluation=packet["evaluation"]
+            processed,projected=audit.calendar.gate_pre_fertility_distribution(reference_g,
+                evaluation.policy,packet["parameters"],packet["b_grid"],packet["shared"])
+            if not np.array_equal(processed,evaluation.g_pre) or projected != evaluation.feasibility_projection_mass:
+                raise RuntimeError("Saved pre-choice preparation does not exactly replay")
+            inherited_checks.append(dict(policy=row["policy"],case_checkpoint_sha256=row["case_checkpoint_sha256"],
+                exact_grid_identity=True,exact_inherited_input_measure_identity=True,
+                exact_processed_measure_identity=np.array_equal(evaluation.g_pre,reference_g),
+                exact_pre_choice_preparation_replay=True,feasibility_projection_mass=float(projected),
+                processed_measure_l1_difference=float(np.sum(np.abs(evaluation.g_pre-reference_g))),
+                maximum_initial_input_mass_difference=0.0,reference_checkpoint_sha256=references[0][1]))
+            del packet,evaluation,processed
+            gc.collect()
+            rows.append(row)
+    effects = [];baselines = {}
+    for cap in (6.,8.):
+        subset = {r["policy"]:r for r in rows if float(r["rental_cap"]) == cap}
+        if set(subset) != {"baseline","supply-plus-20","dependent-child-ltv95"}:
+            raise RuntimeError("Incomplete three-policy rental-cap comparison")
+        b = subset["baseline"];baselines[cap] = b
+        for name in ("supply-plus-20","dependent-child-ltv95"):
+            r = subset[name]
+            effects.append(dict(rental_cap=cap,nodes=239,policy=name,
+                births_pct=100*(float(r["births_per_household"])/float(b["births_per_household"])-1),
+                rooms_pct=100*(float(r["rooms_per_household"])/float(b["rooms_per_household"])-1),
+                ownership_pp=100*(float(r["ownership"])-float(b["ownership"])),
+                price_pct=100*(float(r["asset_price"])/float(b["asset_price"])-1)))
+    fields=("rental_cap","nodes","policy","births_per_household","ownership","rooms_per_household","asset_price","market_residual","budget_excess_share","case_checkpoint_sha256")
+    audit.baseline.write_csv(out / "rental_cap_levels.csv",[{k:r[k] for k in fields} for r in rows])
+    audit.baseline.write_csv(out / "rental_cap_policy_effects.csv",effects)
+    b6,b8=baselines[6.],baselines[8.]
+    baseline_change=dict(births_pct=100*(float(b8["births_per_household"])/float(b6["births_per_household"])-1),
+        rooms_pct=100*(float(b8["rooms_per_household"])/float(b6["rooms_per_household"])-1),
+        ownership_pp=100*(float(b8["ownership"])-float(b6["ownership"])),
+        price_pct=100*(float(b8["asset_price"])/float(b6["asset_price"])-1))
+    import matplotlib.pyplot as plt
+    fig,axes=plt.subplots(2,2,figsize=(9,4.8))
+    for column,(name,title) in enumerate(zip(("supply-plus-20","dependent-child-ltv95"),("Housing supply +20%","Dependent-child 95% LTV"))):
+        selected=[r for r in effects if r["policy"]==name]
+        for index,(field,label,suffix) in enumerate((("births_pct","Births per household (%)","%"),("ownership_pp","Ownership (percentage points)"," pp"))):
+            ax=axes[index,column];values=[r[field] for r in selected]
+            bars=ax.bar(["Six rooms","Eight rooms"],values,color=["#183f59","#b76532"])
+            ax.bar_label(bars,labels=[f"{v:.4f}{suffix}" for v in values],padding=4,fontsize=9)
+            ax.margins(y=.25)
+            ax.axhline(0,color="black",linewidth=.6);ax.set_ylabel(label)
+            if index == 0: ax.set_title(title)
+            else: ax.set_xlabel("Rental upper bound")
+            ax.grid(axis="y",alpha=.2)
+    fig.suptitle("Supplemental economic sensitivity: fixed parameters and history, 239 nodes",fontsize=10)
+    fig.tight_layout()
+    for ext in ("png","pdf"): fig.savefig(out / f"supplemental_rental_cap.{ext}",dpi=180)
+    plt.close(fig)
+    audit.save_json(out / "rental_inherited_measure_checks.json",inherited_checks)
+    return dict(stage_summary_hashes=hashes,effects=effects,baseline_change_from_six_to_eight=baseline_change,
+        inherited_measure_checks=inherited_checks,
+        interpretation="An uncalibrated economic opportunity change at fixed parameters and inherited history. Each policy is compared with its own cap-specific baseline. Not a numerical repair, first-birth room-target remeasurement, long-run or welfare estimate.")
+
+
+def housing_stock_receipts(path, out):
+    """Independently aggregate the existing descriptive ACS/MMS stock cells."""
+    expected = "2c9ae796b6bc8aeb6f37df6b640c5a52e8a811b40fa1d6a9eac4144fbffb052b"
+    if audit.digest(path) != expected:
+        raise RuntimeError("Reviewed housing-stock cells differ")
+    cells = read_csv(path)
+    keys = [tuple(r[k] for k in ("met2013","mms_location","size_bin","tenure")) for r in cells]
+    if len(set(keys)) != len(keys) or sum(int(r["n_hh"]) for r in cells) != 4103889:
+        raise RuntimeError("Housing-stock cell keys or reported sample count differ")
+    rows = []
+    for tenure in ("renter","owner"):
+        selected = [r for r in cells if r["tenure"] == tenure]
+        denominator = sum(float(r["hh_weight"]) for r in selected)
+        for size in ("S_1_4","M_5_6","L_7plus"):
+            group = [r for r in selected if r["size_bin"] == size]
+            weight = sum(float(r["hh_weight"]) for r in group)
+            if not group or min(float(r["hh_weight"]) for r in group) <= 0:
+                raise RuntimeError("Invalid housing-stock weights")
+            rows.append(dict(tenure=tenure,size_bin=size,weighted_share=weight/denominator,
+                n_hh=sum(int(r["n_hh"]) for r in group),household_weight=weight,
+                mean_rooms=sum(float(r["mean_rooms"])*float(r["hh_weight"]) for r in group)/weight))
+        if abs(sum(r["weighted_share"] for r in rows if r["tenure"] == tenure)-1) > 1e-12:
+            raise RuntimeError("Housing-stock shares do not add up")
+    audit.baseline.write_csv(out / "descriptive_acs_housing_stock.csv",rows)
+    return dict(source=str(path),source_sha256=expected,rows=rows,
+        authoritative_builder="code/data/mms_center_periphery/analyze_family_size_supply_menu.R",
+        estimator="Household-weighted stock shares, aggregating mutually exclusive metro-location-size-tenure cells",
+        sample="Existing 2012-2023 packet: matched MMS metropolitan household heads age 18+, GQ codes 1 or 2, positive HHWT and rooms; middle PUMAs assigned to center",
+        uncertainty="No empirical standard error computed from saved aggregate cells",
+        fixed_effects="Not applicable to these descriptive shares",clustering="Not applicable; no inference performed",
+        scope="Saved-cell arithmetic and builder inspection, not a raw-IPUMS rebuild or newly approved calibration target. This sample does not impose the active ownership target's standard-structure filter.")
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--saving-dir",type=Path,required=True)
@@ -192,9 +323,15 @@ def main():
     parser.add_argument("--lifecycle",type=Path,required=True)
     parser.add_argument("--acs-age-profile",type=Path,required=True)
     parser.add_argument("--grid-stage",type=Path,action="append",default=[])
+    parser.add_argument("--rental-stage",type=Path,action="append",default=[])
+    parser.add_argument("--housing-stock-cells",type=Path)
     parser.add_argument("--outdir",type=Path,required=True)
     parser.add_argument("--reuse-exposure",action="store_true")
     args=parser.parse_args();out=args.outdir;out.mkdir(parents=True,exist_ok=True)
+    _,configured=audit.transition.configure_sequential_model()
+    live=audit.baseline.calibration.code_fingerprint_contract(configured)["bundle_sha256"]
+    if live != audit.BUNDLE or audit.digest(audit.__file__) != "ba0f94f52705f43fd0bf7a18ea8c2053f9897674abeb20b030eaf37c57de8623":
+        raise RuntimeError("Read-only receipts require the frozen production source and audit helper")
     ages=age_receipts(args.panel_dir,args.lifecycle,args.acs_age_profile,out)
     if args.reuse_exposure:
         exposure=json.loads((out / "exposure_receipt.json").read_text())
@@ -204,8 +341,13 @@ def main():
         exposure=exposure_receipts(args.saving_dir,out)
         audit.save_json(out / "exposure_receipt.json",exposure)
     grid=grid_receipts(args.grid_stage,args.saving_dir,out) if args.grid_stage else None
-    audit.save_json(out / "summary.json",dict(status="complete",driver_sha256=audit.digest(__file__),
-        age_alignment=ages,irregularity_exposure=exposure,grid_comparison=grid))
+    if args.rental_stage and grid is None:
+        raise RuntimeError("Rental-cap comparison requires verified grid reference stages")
+    rental=rental_receipts(args.rental_stage,out,args.grid_stage) if args.rental_stage else None
+    stock=housing_stock_receipts(args.housing_stock_cells,out) if args.housing_stock_cells else None
+    audit.save_json(out / "summary.json",dict(status="complete",driver_sha256=audit.digest(__file__),source_bundle_sha256=live,
+        age_alignment=ages,irregularity_exposure=exposure,grid_comparison=grid,rental_cap_comparison=rental,
+        descriptive_housing_stock=stock))
 
 
 if __name__=="__main__":

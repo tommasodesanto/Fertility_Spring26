@@ -61,10 +61,17 @@ function Table(t)
   if n == 2 then widths = {0.29,0.71}
   elseif n == 3 then
     if label:match('Authoritative source') then widths = {0.19,0.43,0.38}
+    elseif label:match('Impact births per household') then widths = {0.50,0.25,0.25}
     else widths = {0.24,0.37,0.39} end
-  elseif n == 4 then widths = {0.23,0.24,0.26,0.27}
+  elseif n == 4 then
+    if label:match('Diagnostic measurement') then widths = {0.44,0.14,0.15,0.27}
+    elseif label:match('Impact births per household') then widths = {0.39,0.20,0.20,0.21}
+    elseif label:match('Baseline quantity') then widths = {0.40,0.18,0.18,0.24}
+    else widths = {0.23,0.24,0.26,0.27} end
   elseif n == 5 then
     if label:match('Panel 003') then widths = {0.29,0.14,0.14,0.26,0.17}
+    elseif label:match('Wealth nodes') then widths = {0.32,0.14,0.18,0.18,0.18}
+    elseif label:match('Rental limit') then widths = {0.32,0.14,0.18,0.18,0.18}
     else widths = {0.15,0.20,0.25,0.24,0.16} end
   elseif n == 6 then
     if label:match('Estimate') then widths = {0.20,0.10,0.12,0.15,0.20,0.23}

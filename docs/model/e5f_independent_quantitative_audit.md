@@ -10,7 +10,7 @@ lang: en-US
 
 **The model is worth keeping. The current quantitative package is not yet ready for circulation as identified policy estimates.** The selected calibration is reproducible, and the supply-versus-credit contrast is informative. The first task is to establish that the relevant moments, numerical choices, and demographic objects support the claims the paper will make.
 
-This document brings together the complete fourteen-section audit and the subsequent reconciliation with concurrent calibration work. It preserves the full target-fit table, all estimated parameters and bounds, equation-to-code findings, source receipts, policy results, historical validation, and proposed priorities. Section 15 preserves the September 4 reconciliation. **Section 16 contains the overnight verification and supersedes earlier pending-work descriptions.** The initial review was read-only; the overnight work includes a verified reconstruction and explicitly separate numerical experiments.
+This document brings together the complete fourteen-section audit and the subsequent reconciliation with concurrent calibration work. It preserves the full target-fit table, all estimated parameters and bounds, equation-to-code findings, source receipts, policy results, historical validation, and proposed priorities. Section 15 preserves the September 4 reconciliation. **Sections 16-18 contain the overnight verification and supersede earlier pending-work descriptions.** The initial review was read-only; the overnight work includes a verified reconstruction, numerical experiments, and a separately labeled rental-cap economic sensitivity.
 
 ## Start our discussion with these five issues
 
@@ -18,11 +18,11 @@ This document brings together the complete fourteen-section audit and the subseq
 |---|---|---|
 | **1. Scope of the paper** | The active model is a national, one-location housing-access model. | Lead with conditional household mechanisms; decide separately whether resident-population, spatial, tax-basis, or welfare claims belong in a future extension. |
 | **2. First-birth housing response** | Model 0.436 rooms versus target 0.720. Exact repeats preserve the miss. | Separate measurement, numerical, and economic explanations before changing targets or weights. |
-| **3. Numerical reliability** | Reporting-floor excess is negligible at the selected state; global saving barely changes the initial supply and credit effects. | Check wealth-grid refinement, transaction interpolation, and exposure to housing-size limits. |
+| **3. Numerical and housing-opportunity sensitivity** | Global saving and the denser wealth grid preserve the birth contrast. Larger rentals leave supply births near 1.29% but reverse its ownership response. | Use the completed conditional checks; validate wealth support, history, and the tenure-specific opportunity set. |
 | **4. Demographic handoff** | Historical household totals and age shares are imposed; the post-2023 queue changes entry sharply. | Reconcile the 2023-2027 handoff and distinguish household birth rates, total births, household heads, and resident persons. |
 | **5. Identification and tenure evidence** | The reported young fit is 31.0984% versus 34.1166%; aligned-age diagnostics fit less well. The bequest direction is weak. | Choose age/geography/time definitions and confront the large old-age ownership miss before further calibration. |
 
-**Reading route.** Start here and with the completed overnight evidence in Section 16, then read Sections 1 and 13. Use Sections 3-8 for implementation, targets, identification, and demographic details; Sections 9-12 contain policy interpretation and validation. Section 14 states the proposed research direction; Section 15 preserves the earlier reconciliation.
+**Reading route.** Start here and with the completed overnight evidence in Sections 16-18, then read Sections 1 and 13. Use Sections 3-8 for implementation, targets, identification, and demographic details; Sections 9-12 contain policy interpretation and validation. Section 14 states the proposed research direction; Section 15 preserves the earlier reconciliation.
 
 \clearpage
 
@@ -36,7 +36,7 @@ The separate young-ownership profile adds a thirteenth diagnostic row with a syn
 
 **Updated work snapshot, 5 September 2026.** All 23 cases in Torch panel 16963855 and collector 16964275 have completed. Ridge-plan job 16964564 rejected a flow-versus-stock measurement comparison. Independent read-only receipts explain that rejection and reconstruct both Jacobians; both fail the declared relative-rank threshold. The panel perturbs normalized transformed coordinates by 0.02, not parameters by 2%. The H128 baseline remains unaccepted. No calibration proposal has been launched or promoted.
 
-The seven-case smaller-step follow-up and nine-case saving-method experiment also completed. The former confirms substantial step dependence and the ownership-versus-rooms trade-off. The latter finds a negligible effect of global saving on the two initial policy responses tested. All planned numerical work for this audit is collected; remaining checks are identified as future research decisions.
+The seven-case smaller-step follow-up, nine-case saving comparison, four-case nested-grid check, and three-case rental-cap sensitivity are complete. The numerical checks preserve the initial supply-versus-credit contrast. Allowing eight-room rentals leaves the supply birth response near 1.29% but reverses its ownership response. This economic variant is uncalibrated. All planned work is collected; remaining target, identification, and model choices await author review.
 
 **Scope of authoring.** The author-owned manuscript under latex/JMP_DS_draft remains read-only. This is an audit and discussion document, not a revised manuscript. The overnight reconstruction now supplies the standard seventeen-figure diagnostic packet for the actual selected 2023 state; supplemental validation figures are labeled separately.
 
@@ -56,7 +56,7 @@ My sign-off would be narrower:
 
 | Object | Judgment |
 |---|---|
-| Household implementation | Substantial central machinery survives inspection, including sequential births, independent child maturation, transaction accounting, and the financed-share convention. The overnight checks find rare local saving misses and negligible reporting-floor excess; their impact on the tested initial policy effects is negligible. Discretization sensitivity remains unverified. |
+| Household implementation | Substantial central machinery survives inspection, including sequential births, independent child maturation, transaction accounting, and the financed-share convention. The overnight checks find rare local saving misses and negligible reporting-floor excess; their impact on the tested initial policy effects is negligible. The 120-to-239-node conditional impact check preserves the supply-versus-credit contrast; wealth-support and full-history sensitivity remain unverified. |
 | Calibration | **A reproducible local calibration, not a convincingly identified structural estimate.** The score is **30.4829667**. Important housing moments remain wrong, one family-ownership analogue is materially mismatched, and numerical derivatives are unstable. |
 | Historical transition | A conditional simulation with imposed household totals and age distributions. It is **not an explanation of those demographic paths**, and it misses the housing-price collapse and subsequent recovery pattern. |
 | Finite policy experiments | Useful conditional mechanism comparisons. Their accounting and market gates pass, but demographic closure, external restrictions, and numerical uncertainty limit their interpretation. |
@@ -67,9 +67,9 @@ Three decisions matter most:
 
 1. **Choose the contribution:** a national housing-access-and-fertility model, or a quantitative account of spatial reallocation and tax lock-in. The current implementation supports the former.
 2. **Choose the demographic claim:** conditional household responses from the fitted 2023 state, or resident-population dynamics. The existing birth-to-household normalization does not support the latter.
-3. **Make identification and numerical validation precede further searches.** Align the family-ownership target, extend the completed saving check to discretization, and validate the policy-relevant fertility response before trying to reduce the score again.
+3. **Make identification and numerical validation precede further searches.** Align age-bounded and family-ownership targets, use the completed numerical checks, and validate the policy-relevant fertility response before trying to reduce the score again.
 
-The initial September 4 review used saved records and bounded arithmetic. The subsequent authorized overnight work reconstructed the dated state and completed separate cluster experiments, without changing production. This document incorporates both stages; Section 16 records exactly what was run and what remains outside the completed checks.
+The initial September 4 review used saved records and bounded arithmetic. The subsequent authorized overnight work reconstructed the dated state and completed separate cluster experiments, without changing production. This document incorporates these stages; Sections 16-18 record exactly what was run and what remains outside the completed checks.
 
 ## 2. Source-of-truth map
 
@@ -193,7 +193,7 @@ The transaction-timing discrepancy is not proof that the code lacks an economic 
 | **Fatal before use** | Resident-population, spatial-reallocation, or welfare claims from the maintained packet are **unsupported or absent by construction** | [Population units](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_post2023_policy_mechanisms.py:160), [policy scope](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_post2023_policy_mechanisms.py:1) | These claims would exceed the model’s objects | Narrow claims or change and validate the required architecture |
 | **Major** | Family-ownership target is **inconsistent across data and model** | Data and model references in Section 4 | Apparently good fit does not validate the intended parenthood-tenure margin | Align the empirical comparison or implement an event-conditioned model analogue; adopt a new contract |
 | **Major** | Historical-to-renewal handoff creates a **demonstrated entry discontinuity** | [Baseline path](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_post2023_policy_mechanisms_eta063_kappa005_task010_production_20260904a/baseline/policy_path.csv:2) | Subsequent composition and price dynamics inherit an artificial household-formation change | Reconcile young-head entry with the historical bridge; quantify closure sensitivity |
-| **Major** | Rare non-global saving choices and reporting-floor defects are **verified** | [Golden search](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py:2476), [post-search floors](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/kernels.py:890) | Repetition does not quantify the policy effect of those defects | Use the occupied-state receipts and conditional global-saving comparison in Section 16; retain grid checks |
+| **Major** | Rare non-global saving choices and reporting-floor defects are **verified** | [Golden search](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py:2476), [post-search floors](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/kernels.py:890) | Repetition does not quantify the policy effect of those defects | Use the occupied-state receipts and conditional global-saving comparison in Section 16 and nested-grid check in Section 17; retain their scope limits |
 | **Major** | Local identification is **numerically fragile** | Raw coordinate records and [Jacobian construction](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/analyze_e5f_transition_calibration_panel.py:186) | Central-difference rank overstates what is established about parameter separation | Multiple step sizes, tighter numerical checks, and profiles in weak directions |
 | **Major** | Central housing fit failures are **reproducibly demonstrated** | [Full target table](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_gauss_newton_coord_20260904a/report/best_target_fit.csv:1) | Counterfactuals operate through a margin the calibration materially misses | Diagnose measurement, numerical behavior, and mechanism before altering weights |
 | **Major** | Household heads, potential mothers, and persons are **not fully reconciled** | [Historical bridge](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py:567), [person alignment](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_person_demography.py:169) | National fertility and population interpretations require additional assumptions | Explicit unit correspondence and validation against female exposures/headship |
@@ -220,7 +220,7 @@ This is an algebraic inconsistency conditional on binding floors. The overnight 
 
 **Interpolation and boundaries.** Wealth interpolation clips outside the grid. The active grid has 120 wealth points over a finite support, and owner housing has five rungs. The overnight extraction finds zero mass at the lower wealth node and 0.781% at the upper node. No occupied adjacent-wealth comparison violates value monotonicity at \(10^{-7}\). The remaining checks include:
 
-- stability when the wealth support and density are increased;
+- stability under a higher wealth ceiling and a refined historical path; Section 17 completes a conditional 120-to-239-node density check;
 - stable ownership at down-payment thresholds;
 - stable wealth quantiles;
 - robustness to a denser owner menu or renter-cap changes.
@@ -240,7 +240,7 @@ The smallest decisive numerical package is:
 3. Fixed-parameter verification at a denser wealth grid, followed by matched baseline-policy comparisons.
 4. Value monotonicity, probability adding-up, boundary mass, and distribution diagnostics from that same solution.
 
-The overnight work completes the dated budget, saving-oracle, value/probability, and boundary-exposure checks. It also generates the standard diagnostic packet. A denser-grid calibrated history and matched policy comparison remain unperformed; the conditional saving-method experiment is documented separately in Section 16.
+The overnight work completes the dated budget, saving-oracle, value/probability, and boundary-exposure checks. It also generates the standard diagnostic packet. Section 17 also completes matched current baseline-policy comparisons on a denser wealth grid. Reconstructed history and re-estimated target fits on that grid remain unperformed; Section 16 documents the separate saving-method experiment.
 
 ## 7. Calibration and identification verdict
 
@@ -686,10 +686,10 @@ For presentation:
 | Priority | Next concrete action | Evidence produced | Author decision? |
 |---|---|---|---|
 | **Fatal before use** | Exclude unaccepted H128 differences and unsupported population/spatial/welfare claims | A claim set consistent with actual objects | Yes, on scope |
-| **Completed for the selected state and tested impacts** | Occupied-state budgets, global saving, and matched initial supply/credit comparisons | Reporting-floor excess and optimizer effects are negligible for these aggregates; see Section 16 | No production change adopted |
-| **Important before circulating** | Align family-ownership data and model definitions | A genuinely comparable target and revised fingerprint | Yes, target-contract choice |
+| **Completed for the selected state and tested impacts** | Occupied-state budgets, global saving, and matched 120/239-node supply/credit comparisons | The numerical checks preserve the supply-versus-credit contrast; see Sections 16-17 | No production change adopted |
+| **Important before circulating** | Align age-bounded and family-ownership data and model definitions | Comparable moments and an explicitly approved target fingerprint | Yes, target-contract choice |
 | **Important before circulating** | Reconcile the 2023-2027 entrant jump | Explicit formation/entry accounting and matched closure sensitivities | Yes |
-| **Important before circulating** | Verify selected parameters and matched policies on denser wealth grids; inspect owner-menu effects | Numerical uncertainty relative to reported policy effects | Yes for an economic menu change |
+| **Important before circulating** | Validate wealth support, historical discretization, and tenure-specific housing opportunities | Extend the completed conditional grid check and rental-cap sensitivity with empirical discipline | Yes for an economic menu change |
 | **Important before circulating** | Extend the completed three-column step check when defining an identified estimation strategy; profile weak directions | Stable local information and policy variation along nearly equivalent fits | Yes on identifying evidence or restrictions |
 | **Important before circulating** | Explain the first-birth rooms and mean-room tension before changing weights | Diagnosis separating measurement, numerics, and missing mechanism | Yes if changing model or target weights |
 | **Important before circulating** | Source the exact \(0.63\) restriction and justify \(0.005\); evaluate their effects | External provenance and policy sensitivity | Yes on maintained restrictions |
@@ -705,7 +705,7 @@ For presentation:
 
 If this were my job-market paper, I would stop broadening the quantitative model for now. I would keep the sequential housing-access mechanism and make the near-term contribution narrower: **which housing interventions change usable space for families, and how does that affect fertility within a disciplined household model?**
 
-I would first resolve the family-ownership mapping, the household-entry handoff, and the remaining grid checks. The completed saving-method comparison supports retaining the qualitative supply-versus-credit contrast. I would then evaluate policy variation across credible near-fit parameter values. The present score and exact repeats are a sound platform for that work, but they are not the endpoint.
+I would first resolve the age and family-ownership mappings, the household-entry handoff, and empirical housing-opportunity validation. The completed saving-method and wealth-grid comparisons support retaining the qualitative supply-versus-credit contrast. I would then evaluate policy variation across credible near-fit parameter values. The present score and exact repeats are a sound platform for that work, but they are not the endpoint.
 
 I would lead with supply and credit only after those checks. I would present the rebated-tax result as incidence driven substantially by the transfer rule. I would leave spatial reallocation, capital-gains lock-in, long-run resident population, and welfare outside the quantitative claims until the model actually contains and validates those objects.
 
@@ -852,4 +852,259 @@ This strengthens the case for direct late-life tenure, portfolio, and housing-re
 
 The saved paths verify that current age-18 mass rises from **0.0143371 in 2023 to 0.0639084 in 2027**, a factor of **4.4575**. The identity is exactly \(E_{2027}=M_{2023}+\rho_{2023}B_{2023}=0+1\times0.0639084\). The due queue contains historical births, while the 2023 entrant cohort comes from the imposed historical age distribution. This is a historical-to-forward handoff, not a 2023 policy fertility effect. Policy-induced births affect entry only twenty years later under the present contract.
 
-The priority ordering is therefore more precise than in the initial review: establish one ownership measurement convention; confront the older-age tenure miss and weak bequest block; then assess wealth-grid refinement, transaction interpolation, and housing-menu sensitivity. The saving-method comparison is complete and has negligible effects on the two initial policy responses tested. Smaller steps clarify local derivatives without supplying a new identification certificate. Keep the first-birth rooms miss central. Keep household formation, resident-population forecasts, and the fiscal meaning of alternative rebates as distinct specification decisions. The conditional supply-versus-credit interpretation survives this numerical test; its empirical identification and long-horizon interpretation remain separate questions.
+The priority ordering is therefore more precise than in the initial review: establish one ownership measurement convention; confront the older-age tenure miss and weak bequest block; then use the additional grid and rental-cap evidence in Sections 17-18 to specify the remaining transaction, wealth-support, and housing-opportunity checks. The saving-method comparison is complete and has negligible effects on the two initial policy responses tested. Smaller steps clarify local derivatives without supplying a new identification certificate. Keep the first-birth rooms miss central. Keep household formation, resident-population forecasts, and the fiscal meaning of alternative rebates as distinct specification decisions. The conditional supply-versus-credit interpretation survives this numerical test; its empirical identification and long-horizon interpretation remain separate questions.
+
+\clearpage
+
+## 17. Age alignment and nested wealth grids
+
+These additional checks keep the production selection, target system, weights,
+and economic parameters fixed. The continuation design is recorded in the
+overnight run plan; it separates saved-array measurement checks from a bounded
+nested-wealth-grid experiment.
+
+### The young-ownership discrepancy is mainly the age window
+
+The national ACS age builder assigns each annual age to a four-year cell using
+integer floor division. The historical bridge uses closed integer bins
+\([18+4j,21+4j]\), preserving the distribution of all other states conditional on
+age. Thus nodes 26, 30, and 34 receive age-bin masses for **26-29, 30-33, and
+34-37**. In contrast, `age_to_index` rounds the requested age to the nearest
+label. Applying that operator to the bounds 25 and 34 selects these three whole
+nodes. The apparent 25-34 ownership comparison therefore combines different age
+windows under the historical bridge's implemented convention.
+
+The table isolates window selection and weighting in the unchanged 2023 state.
+The original model rate is reconstructed from the saved lifecycle masses and
+rates, not copied from a hard-coded scalar. ACS rows retain the same metropolitan
+household-head sample, housing restrictions, and pooled 2012-2023 period.
+
+| Diagnostic measurement | Model | ACS | Gap, pp |
+|---|---:|---:|---:|
+| Stored comparison: three model nodes versus ACS 25-34 | 31.0984% | 34.1166% | -3.0182 |
+| ACS 26-37, original model age weights | 31.0984% | 39.5101% | -8.4117 |
+| ACS 26-37, common ACS age weights on both sides | 31.1798% | 39.5101% | -8.3303 |
+| ACS 25-34, common weights and constant within-cell rates | 26.9792% | 34.1166% | -7.1374 |
+| ACS 25-34, common weights and linear rates between labels | 30.2169% | 34.1166% | -3.8997 |
+
+In an ordered arithmetic decomposition, changing the ACS window from 25-34 to
+26-37 contributes **-5.39346 pp** to the original gap. Standardizing the model to
+ACS age weights contributes **+0.08141 pp**. Together these move the gap from
+-3.01822 to -8.33027 pp. This establishes that the particular discrepancy is
+mainly about the selected age window, not differing age weights. It does not
+establish a new preferred target: the model has no identified annual within-cell
+ownership path, and geography and period alignment remain separate choices.
+
+The review should extend to the existing age-bounded targets. The active prime
+ownership statistic selects nodes 30 through 54, which the bridge treats as full
+cells covering **30-57**, while its ACS target uses literal ages 30-55. The saved
+rate reproduces at **54.4488%**, versus **57.5472%** in ACS. Applying common ACS
+weights to literal ages 30-55 and holding rates constant within model cells gives
+**53.4737%**, a **-4.0735 pp** gap. Matching the full 30-57 cells with common ACS
+weights instead gives model **54.9512%**, ACS **58.5175%**, and a **-3.5663 pp**
+gap. These remain diagnostic comparisons; the complete production fit and its
+loss contribution stay unchanged. The living-old wealth/income dispersion
+operator uses a direct label test, \(76\leq a_j\leq84\), selecting nodes 78 and
+82 (bridge cells 78-85), rather than the requested literal 76-84 interval.
+Consequently, bequest-block identification should also be assessed after an
+explicit age-measurement contract is agreed. This source observation does not
+establish how much that wealth-quantile target would change.
+
+Fertility measurement uses a different reporting convention. Timing statistics
+explicitly label flows at cell midpoints, \(20,24,\ldots,44\). Completed-fertility
+stocks select node 42 through `age_to_index`, although their docstring calls it
+a cohort centered at 42. The executable age-bin map and the written descriptions
+should be reconciled before changing empirical target rows. No model operator,
+target builder, or production statistic was modified in this check.
+
+Source evidence is in
+[the national age builder](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/Spatial_aggregate_withmicrodata/build_national_householder_age_path.py:154),
+[the historical age bridge](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py:567),
+[the age-index operator](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py:6102),
+and [fertility measurement](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py:1256).
+The [continuation receipts](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_overnight_independent_verification_20260905a/continuation_receipts/summary.json)
+pin the original lifecycle table, annual-age weights, and decomposition.
+
+### The visible first-birth spike has no current household exposure
+
+The unchanged standard renter-policy plots show a narrow first-birth attempt
+probability spike under local saving at age 42, wealth **-4.72093**, and income
+state 7. Replacing local saving by the global interval method changes its attempt
+probability from **1 to 0**. The inherited pre-choice mass at that exact state is
+**zero**, for baseline, supply expansion, and family credit. Its contribution to
+the current first-birth difference is therefore exactly zero.
+
+A broader screen considers fertile childless states above the production value
+cutoff where the two methods' attempt probabilities differ by more than 0.1. There are **19 baseline,
+20 supply, and 19 credit grid states** in that screen; their total inherited mass
+is also exactly zero. These are counts of numerical state cells, not sampled
+households or estimated frequencies. The comparison uses identical saved prices
+and pre-choice measures for each local/global policy pair. It weights probability
+differences by age-specific fecundity and childless mass, and independently
+checks the implied first-birth difference against changes in post-fertility
+childless stocks.
+
+That independent stock replay agrees within **\(6.36\times10^{-17}\)**. Across
+occupied fertile childless states (mass above \(10^{-12}\)), the largest attempt
+probability differences are **0.000642** at baseline, **0.000870** under supply,
+and **0.000643** under family credit. These are probability units, not percentage
+changes in aggregate births.
+
+This resolves why those particular plots can change visibly while aggregate
+births barely move. It does not certify off-distribution behavior, the historical
+path under another method, or other parameter vectors. The separate two local
+credit value declines occur at occupied states with three dependent children;
+they are a different finding and retain their small positive exposure reported
+in Section 16. The standard plots have been retained intact.
+
+\clearpage
+
+### Nested wealth-grid check
+
+The finer grid adds each interval midpoint, raising the node count from
+**120 to 239**. Every original node and its inherited 2023 pre-choice mass stay
+in place; new nodes initially have zero mass. Both grids use global saving,
+unchanged parameters and housing choices, wealth endpoints **-12 and 30**, and
+separately cleared current markets at a requested residual of \(10^{-5}\).
+
+Smoke **16986180** exactly reproduces the 120-node global baseline and solves
+the full 239-node baseline market in 16 minutes. Job **16986566** completes both
+fine-grid policies in about 29 minutes. All three fine markets pass: maximum
+residual **\(2.29\times10^{-6}\)**, valid population/probabilities/feasibility,
+and no occupied wealth-value declines above \(10^{-7}\). Reporting-floor excess
+remains negligible and separately measured. All four checkpoints and their
+seventeen-graph packets are verified.
+
+Each effect below is measured against its own grid's baseline. Ownership covers
+all households; births and rooms are per household.
+
+| Policy | Wealth nodes | Births, % | Rooms, % | Ownership, pp |
+|---|---:|---:|---:|---:|
+| Supply +20% | 120 | 1.290873 | 5.753410 | 1.783440 |
+| Supply +20% | 239 | 1.288387 | 5.759105 | 1.769706 |
+| Dependent-child LTV 95% | 120 | 0.017850 | 0.041861 | 0.744088 |
+| Dependent-child LTV 95% | 239 | 0.018494 | 0.041947 | 0.747284 |
+
+![Supplemental resolution comparison. The two panels have different vertical scales. Both use global saving and the same inherited household measure.](output/model/e5f_overnight_independent_verification_20260905a/continuation_receipts/supplemental_nested_grid.pdf){width=90%}
+
+The supply birth response changes by **-0.002486 pp**, or **-0.193%** of its
+coarse-grid value; credit changes by **+0.000644 pp**, or **+3.61%**. The contrast
+survives. Baseline births per household move from **0.084776385 to 0.084791202**
+(**+0.01748%**); ownership moves by **+0.00443 pp**. The baseline birth-level
+change is similar in size to the credit effect, making matched baselines essential.
+
+The predeclared refinement triggers were 2% of the supply effect, 5% of the
+credit effect, 1% in baseline births, or 0.1 pp in baseline ownership. None is
+crossed: the branch stops after four scenarios, with **no 477-node launch**.
+These are disclosed materiality thresholds, not a convergence certificate or
+statistical test. The
+[stop receipt](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_overnight_independent_verification_20260905a/nested_grid/stop_decision.json)
+records every calculation.
+
+This check leaves the wealth bounds, housing choices, and historical path fixed.
+It does not re-estimate the model or the matched **2019-2023 first-birth rooms
+target**, revise the 2063 path, or compute welfare. Full levels, effects, and
+checkpoint hashes are in `continuation_receipts/summary.json` and its CSV tables.
+
+\clearpage
+
+## 18. Rental opportunities: a separate economic sensitivity
+
+### Why test the six-room restriction?
+
+The rental cap is an upper bound on continuously chosen rented space. The
+production model sets it to six rooms, while owners choose among 2, 4, 6, 8,
+and 10 rooms. This is an economic restriction on housing access. Refining wealth
+interpolation leaves it in place; allowing larger rentals changes it.
+
+The existing ACS/MMS housing-stock packet supplies a useful descriptive check.
+Independent aggregation of its metro-location-size-tenure cells reproduces a
+**9.1661%** share of renter households in the **seven-or-more-room** bin,
+compared with **48.3463%** of owners. Thus its room distribution does not support
+a literal universal six-room rental limit. It does not identify a replacement
+upper bound, an elasticity, or a new target weight.
+
+The packet pools **2012-2023** metropolitan household heads aged 18 or above,
+with positive household weights and rooms, GQ codes 1 or 2, and a matched MMS
+location. Middle PUMAs are assigned to the center. Its **4,103,889** records
+reproduce when the mutually exclusive cells are summed. This is a saved-cell
+arithmetic check and builder inspection, not a new raw-IPUMS extraction; the
+sample also lacks the active ownership target's standard-structure filter.
+No empirical standard error was computed from these saved cells.
+The [builder](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/mms_center_periphery/analyze_family_size_supply_menu.R:157)
+and [stock cells](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/mms_center_periphery/output_family_size_supply/acs_family_size_supply_cells.csv)
+are recorded by hash in `continuation_receipts/summary.json`.
+
+### Maintained experiment and baseline change
+
+The diagnostic raises only the continuous rental limit from **six to eight
+rooms**. Eight is an explicit diagnostic value, not an empirical estimate or
+production default. All eleven fitted parameters, supply elasticity 0.63,
+tenure dispersion 0.005, owner choices and their taste distribution, the 239-node
+wealth grid, and the exact inherited 2023 pre-choice measure stay fixed.
+Global saving and separately cleared current markets are used throughout.
+The underlying history is not re-estimated under the new opportunity set.
+
+Baseline smoke **16987040** passes the complete market loop in sixteen minutes,
+with residual **\(1.56\times10^{-7}\)**, unchanged population, valid probabilities,
+no occupied wealth-value declines above the declared screen, and all seventeen
+standard graphs verified. The sole public-parameter change is independently
+checked across the saved parameter records. Reporting-floor budget excess remains
+negligible and separately reported.
+
+| Baseline quantity | Six rooms | Eight rooms | Change |
+|---|---:|---:|---:|
+| Births per household | 0.08479120 | 0.08477440 | -0.01982% |
+| Ownership, all households | 63.5671% | 61.6049% | -1.9622 pp |
+| Rooms per household | 6.316906 | 6.341289 | +0.38599% |
+| Housing asset price | 0.693013 | 0.697262 | +0.61304% |
+| Renters at their own limit | 13.2451% | 6.6445% | Different limits |
+| Parent renters at their own limit | 20.3493% | 6.8552% | Different limits |
+
+Changing rental access moves tenure substantially at this inherited state,
+while baseline births barely move. Aggregate rooms rise slightly, from an
+already high baseline. This is not a demonstrated solution to the original
+joint-fit problem. Prices and tenure composition also adjust; the baseline
+birth change cannot be read as a pure housing-services derivative.
+
+\clearpage
+
+### Matched initial policy effects
+
+Job **16987657** completes the two remaining cases in **33 minutes**. All three
+cap-eight markets pass, with maximum residual **\(5.23\times10^{-6}\)**.
+Every checkpoint and seventeen-graph packet is verified. Each effect below is
+measured against its own rental-limit baseline; both limits use global saving
+and 239 wealth nodes. Ownership covers all households; births and rooms are
+per household in the current four-year period.
+
+| Policy | Rental limit | Births, % | Rooms, % | Ownership, pp |
+|---|---:|---:|---:|---:|
+| Supply +20% | 6 rooms | 1.288387 | 5.759105 | 1.769706 |
+| Supply +20% | 8 rooms | 1.292605 | 6.076940 | -0.232000 |
+| Dependent-child LTV 95% | 6 rooms | 0.018494 | 0.041947 | 0.747284 |
+| Dependent-child LTV 95% | 8 rooms | 0.013773 | 0.010498 | 0.626012 |
+
+![Supplemental economic sensitivity. Every policy uses its own rental-limit baseline. Births and ownership use different units; panels have separate vertical scales.](output/model/e5f_overnight_independent_verification_20260905a/continuation_receipts/supplemental_rental_cap.pdf){width=90%}
+
+**Supply's birth response barely changes, while its ownership response reverses
+sign.** The birth effect moves from 1.2884% to 1.2926%; ownership changes from
+**+1.7697 pp to -0.2320 pp**. Similar aggregate fertility responses can therefore
+coexist with opposite tenure responses in this model. Tenure predictions need
+their own housing-opportunity validation.
+
+Credit's birth effect falls from **0.018494% to 0.013773%**, a **25.5%** reduction
+in an already small coefficient. Its ownership response falls from **0.7473 pp
+to 0.6260 pp**. The qualitative supply-versus-credit contrast survives, without
+certifying the exact credit coefficient or identifying the correct rental limit.
+
+Inherited input distributions and grids agree **exactly**. Existing feasibility
+preparation moves **\(8.31\times10^{-31}\)** units of household mass under supply.
+The processed-array identity rejection is retained; saved-policy replay is exact.
+[The continuation receipt](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_overnight_independent_verification_20260905a/continuation_receipts/summary.json)
+records both objects, hashes, and outcomes. Production gates remain unchanged.
+
+This experiment does not recompute the matched **2019-2023 first-birth rooms
+response**, SMM fit, history, 2063 transitions, or welfare. Value differences
+across cleared prices are not a welfare test. Cap eight remains unpromoted;
+its role is to identify housing opportunities that need empirical validation.

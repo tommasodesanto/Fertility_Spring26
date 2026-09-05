@@ -214,6 +214,82 @@ Smoke `16986180` completed in 16 minutes with a 15.3-minute fine-grid baseline,
 15 backward solves, residual `2.289275e-6`, zero feasibility projection, and no
 occupied negative wealth-value steps. Both checkpoint hashes and 34 standard
 graphs were verified; the seventeen fine-grid graphs were visually inspected.
-The remaining two 239-node cases are job `16986566`, submitted at 04:31 UTC,
-with a 90-minute wall limit and revised serial expectation of 28-40 minutes.
-No 477-node case has been submitted at this stage.
+The remaining two 239-node cases completed as job `16986566` in about 29 minutes.
+All gates and standard graph packets pass. None of the predeclared refinement
+triggers is crossed; `nested_grid/stop_decision.json` records the calculations.
+This branch stops after four scenarios, without a 477-node launch.
+
+## Bounded rental-cap mechanism sensitivity
+
+At 04:53 UTC, after the fine-grid baseline and supply cases passed, the lead
+specified one additional model-sensitivity question within the author's broad
+overnight authorization: does the six-room rental limit materially govern the
+contrast between supply and family credit? Around 40% of dependent-child renters
+reach that limit under the supply policy. This is a concrete, occupied margin.
+
+The diagnostic raises the continuous rental upper bound from six to **eight
+rooms**, the penultimate existing owner size. Eight is an explicit diagnostic
+value, not an empirical estimate or production default. The owner menu and its
+option-specific taste distribution do not change. All estimated parameters,
+external restrictions, wealth endpoints, fiscal objects, and the inherited 2023
+measure remain fixed. The experiment uses the already tested **239-node** grid
+and global saving. It changes an economic housing opportunity, so it must never
+be described as numerical refinement, re-estimated SMM, or a new production result.
+
+The additional allowance is **three cases**: one cap-eight baseline through the
+complete market loop as the exact-loop smoke; then, only if it passes, supply
++20% and dependent-child LTV 95%. Stop on the same source, checkpoint, population,
+probability, feasibility, requested market precision, and occupied value-monotonicity
+gates. Retain reported-budget excess separately. Each case must save the full
+seventeen-graph packet, checkpoint, latest case, and explicit no-selection record.
+Heartbeat is once per minute. Use one CPU and 8 GB, 90 minutes per stage. The
+observed 239-node cost gives an initial 45-60 serial CPU-minute estimate for all
+three cases. No additional cap values, owner-menu variants, calibration, or
+historical re-estimation are included. The first-birth rooms target requires its
+matched 2019-2023 branch and is not remeasured by this current-impact exercise.
+
+This brings the maximum continuation allowance to ten scenarios (seven grid,
+three rental-cap), without extending the original 12:48 UTC ceiling or the
+reserved final reporting hour. The cap baseline may run alongside the remaining
+grid-credit case in the isolated snapshot; they read common immutable inputs and
+write separate output folders. Economic conclusions will be reconciled only
+after both comparisons are collected. A failed smoke stops its own branch.
+
+Cap-eight smoke `16987040` completed in 16 minutes. Its checkpoint and source
+hashes, sole public parameter override, numerical gates, and all seventeen
+standard graphs were verified; the contact sheet was visually inspected.
+Policy job `16987657` was submitted at 05:27 UTC for the final two cases,
+with a 90-minute limit and an expected 30-40 serial minutes. The smoke receipt
+SHA256 is `49c235b071b45b1bb5e552dca0857588f9b4c51cc42a1b41985467375386d7a0`.
+No further numerical or economic branches will be launched in this continuation.
+
+
+## Continuation completed
+
+Both final cap policies completed as job `16987657` in 33 minutes at 06:00 UTC.
+All original gates pass; maximum cap-eight market residual is `5.2349e-6`.
+The continuation stops after **seven** scenarios: four nested-grid evaluations
+and three rental-cap cases. No 477-node resolution or further economic variant
+was launched. Every checkpoint hash and standard seventeen-graph packet is
+verified. The initial source and helper hashes remain pinned.
+
+The read-only collector verifies exact inherited input distributions and grids.
+An additional demand for exact identity of processed pre-choice arrays rejected
+the cap-eight supply case: existing feasibility preparation moves `8.3098e-31`
+units of mass, yielding an L1 difference of `1.6620e-30`. That rejection remains
+recorded. The collector now separately verifies the intended exact input identity
+and exactly replays the existing preparation operator from saved policies in all
+three cases. No production gate was altered. See
+`rental_cap/processed_measure_identity_investigation.json` and
+`continuation_receipts/rental_inherited_measure_checks.json` in the output packet.
+
+The same read-only collector independently aggregates the existing ACS/MMS
+housing-stock cells: renter seven-plus-room share `9.1661%`, with source hash and
+sample differences recorded. This is descriptive saved-cell evidence, not a raw
+microdata rebuild, an empirical standard error, or a new calibration target.
+
+The revised PDFs include age-window alignment, zero current exposure of the
+visible first-birth spike, the wealth-grid stopping decision, and the complete
+rental-cap sensitivity. Production remains unchanged. Remaining decisions concern
+measurement, identifying evidence, first-birth housing fit, housing opportunities,
+and demographic/fiscal closure, rather than another diagnostic search tonight.
