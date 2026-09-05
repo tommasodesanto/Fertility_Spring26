@@ -16,12 +16,13 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** D2, whether to retain fixed housing stock in the simple model's
-long-run comparison. Tommaso asked how consequential that assumption is; no
-supply choice has been made. The local allocation argument can survive elastic
-supply, while the terminal population effect includes a stock response. A
-minimal stationary supply extension is retained for later planning; explicit
-construction dynamics are a separate addition. D0's scope is now settled: compare along the transition
+**Resume here:** discussion and decision recording only; detailed development
+and implementation await the later agreed plan. D2's supply scope is now
+settled: fixed stock as the simple-model benchmark, with a simple long-run
+supply extension to assess the terminal population result. The exact supply
+specification and construction dynamics are not selected. D1's transition
+result and the remaining W4/I1/W3 issues are still open; no new question is
+decided by this workflow confirmation. D0's scope is settled: compare along the transition
 and compare total population in the new steady state. A permanently different
 stationary fertility rate is not the intended claim. Tommaso asked to continue
 discussion and plan amendments later. H0's desired form is settled: seek
@@ -75,6 +76,13 @@ here rather than silently rewriting what the review said.
 - After each substantive exchange, save a short delta: settled; still open;
   newly created branches; and next question. Save before ending the turn and
   before drafting amendments. Read this section when resuming the discussion.
+- **Current author instruction:** bank decisions without developing them.
+  Record choices, rationale, dependencies, and deferred alternatives; limit
+  analysis to what is needed to explain the choice being discussed. Detailed
+  derivations, theorem development, manuscript amendments, model changes, and
+  simulations wait until discussion is complete and an implementation plan is
+  agreed. Earlier explanatory algebra is working evidence, not completed
+  development or authorization to continue it autonomously.
 - Draft agreed manuscript changes in `latex/JMP_DS_suggestions/`. Close an
   amendment only after checking the relevant prose, equations, code, and claim
   ledger together. The protected manuscript remains author-controlled.
@@ -117,7 +125,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
 | D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
-| D2 | What construction must support the chosen result? Next discussion: fixed housing stock versus supply adjustment in the simple model's long-run population comparison. Retain shock direction, admissible branches, terminal closure, numerical scope, and generality. | ACTIVE | D0-D1, H1. Gains-tax-specific diagnostics remain deferred with Q0. Ordinary boundary and horizon checks remain; the saved taxed example has not been replaced or revalidated. | Sections 3, 5-6; D2 next issue below |
+| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
 | U0 | How do toy fertility, literal children, and entrant households map into one another? Reconcile the conversion coefficient and replacement condition explicitly. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Existing quantitative units are not reopened by default. | Section 3, details behind audit |
 | P1 | Which results and figures go in main text, appendix, or outside the paper? Also decide environment/problem ordering, notation, and exposition. | OPEN | P0 plus selected W/H/D results. The review's proposed five-page allocation is a recommendation. | Sections 7-8 |
 | V0 | Which exact amendments and checks implement the agreed choices? Reconcile the existing section, appendix, builder, and claim ledger in one pass; keep manuscript suggestions outside the protected draft. | OPEN | Relevant decisions above. No implementation authorized merely by exploring an option. | Section 9 |
@@ -580,6 +588,23 @@ is run, and no claim is made that the population difference is quantitatively
 small. The accounting and cancellation were checked against the current
 section's market-clearing and steady-state equations.
 
+**Author agreement and workflow confirmation, 2026-09-04:**
+
+> ok, got it. agreed. you are banking these decisions right, without developig them\_
+
+**Recorded decision:** accept fixed stock as the simple-theory benchmark and
+include assessment of a simple long-run supply extension for the terminal
+population claim in the later plan. This does not select a particular supply
+curve, elasticity, construction technology, or adjustment law. Detailed
+construction dynamics remain a separate quantitative consideration.
+
+**Workflow reaffirmed:** this phase banks decisions, explanations, dependencies,
+and deferred branches. No manuscript or model changes and no model simulations
+have been made in this discussion. Small explanatory algebra checks were used
+to clarify earlier questions; they are not a completed amendment or an
+implemented extension. Further development waits until the discussion is
+complete and the author agrees the plan.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -647,13 +672,14 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso preferred a restriction without equilibrium objects, especially without $\zeta$, and asked to continue discussion before planning. | H0's desired form recorded; exact restriction remains deferred. Opened D0's transition-versus-stationary fertility scope as the next issue, with no author decision on demographic closure inferred. |
 | 2026-09-04 | Tommaso specified comparisons along the transition and total population in the new steady state. | D0 scope decided; endpoint existence, convergence, units, and signs remain obligations. D2's simple-model housing-stock assumption becomes the next issue. |
 | 2026-09-04 | Tommaso asked whether allowing housing supply to adjust changes much. | D2 remains open. Distinguished persistence of the local allocation mechanism from the stock contribution to terminal population; derived the minimal stationary supply extension and retained construction dynamics separately for later planning. |
+| 2026-09-04 | Tommaso agreed to the supply recommendation and confirmed that decisions should be banked without development. | D2 supply scope decided: fixed-stock benchmark plus later assessment of a simple long-run supply extension. Reaffirmed discussion-only workflow; exact specifications, derivations, and implementation remain deferred. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
 work resume when Q0 becomes active. H0's derivation is deferred until the later
 planning/amendment stage and must return to W4/I1 to settle exact compensation
-and resources. D0's comparison scope is settled; D2's housing-stock assumption
-is now active. Q1's empirical
+and resources. D0's comparison scope and D2's supply scope are settled; D1 and
+the remaining implementation choices await discussion. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
 
@@ -661,9 +687,11 @@ if that separate objective becomes relevant. Other branches remain open.
 permission to relax private borrowing limits; I0 defers capital-gains taxation
 to an extension linked to Q0; H0 seeks an explicit fertility restriction,
 preferably in primitives and especially without $\zeta$, with derivation
-deferred. D0 compares transitions and terminal total population. Exact
-transfers, real costs, welfare coverage, and D2's supply choice remain
-unresolved. Validity and implementation remain proof obligations.
+deferred. D0 compares transitions and terminal total population. D2 retains
+fixed stock as the benchmark and a simple long-run supply extension for later
+assessment. Exact transfers, real costs, welfare coverage, supply specification,
+and transition scope remain unresolved. Validity and implementation remain
+proof obligations.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
