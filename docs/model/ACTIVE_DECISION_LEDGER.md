@@ -20,9 +20,12 @@ review or agreeing to discuss it.
 and implementation await the later agreed plan. D1's desired scope is now
 settled: aim for the broadest valid transition result under economically
 reasonable, transparent conditions; do not precommit to small reforms. The
-author's expectation of mild restrictions remains to be checked. The next
-discussion is W4/I1: whether the planner may tailor compensating transfers
-to affected households. Borrowing-limit relaxation is already accepted.
+author's expectation of mild restrictions remains to be checked. W4/I1 now
+provisionally allows household-specific compensating transfers as the working
+benchmark, with the author's expressed doubt and an explicit revisit before
+finalizing the welfare proposition. This is not a fully settled decision.
+The next discussion in this block is W3, real reallocation costs.
+Borrowing-limit relaxation is already accepted.
 D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
 supply extension to assess the terminal population result. The exact supply
@@ -63,7 +66,8 @@ here rather than silently rewriting what the review said.
 After the author's broad-transition preference on 2026-09-04, this map has
 **18 entries**: **7 agreed directions** (W0, W1, I0, H0, D0, D1, D2),
 **3 parked branches** (W2, Q0, Q1), and **8 unresolved entries** (P0, W3,
-W4, I1, H1, U0, P1, V0). The unresolved group includes tentative and active entries.
+W4, I1, H1, U0, P1, V0). The unresolved group includes tentative and active entries;
+W4's provisionally accepted compensation instrument remains in this group.
 Agreed directions are not completed proofs or implementations; their retained
 technical obligations remain. The parked stricter W1 benchmark and tax-specific
 subbranches are nested in existing entries, not extra independent rows.
@@ -147,8 +151,8 @@ between mechanism analysis and welfare analysis before either is understood.
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
 | W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
-| W3 | State the real cost and its incidence for the core compensated reallocation. The positive-cost/common-rebate gains-tax extension is separately deferred. | OPEN | W1/W4 for core costs; Q0/W2 for the parked tax extension. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
-| W4 | Working proof criterion: a compensated Pareto improvement at fixed fertility. Next question: whether the planner may tailor compensating transfers to affected households. Exact welfare coverage and protection of future households remain open. | ACTIVE | The lead carries forward the proposed Pareto route and recommends household-specific compensation; no acceptance of this transfer instrument is inferred from W1's borrowing permission. Preserve real and dated resource constraints. | Sections 4, 6; W1 discussion; W4/I1 next question below |
+| W3 | State the real cost and its incidence for the core compensated reallocation. The positive-cost/common-rebate gains-tax extension is separately deferred. | ACTIVE | Next discussion after provisional W4 agreement. W1/W4 govern core costs; Q0/W2 govern the parked tax extension. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
+| W4 | Provisionally use household-specific compensation in the working Pareto benchmark, holding fertility fixed. The author remains doubtful and explicitly wants to revisit it. Exact welfare coverage remains open. | TENTATIVE | Use as a working assumption for later planning, not final acceptance. Revisit the concrete financing/compensation scheme and restricted-transfer alternatives before finalizing the welfare proposition. Preserve real and dated resource constraints. | Sections 4, 6; W4/I1 author response below |
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
@@ -676,6 +680,28 @@ recommendation does not select exact transfers, waive financing obligations,
 or assume that an operational housing policy implements the arrangement.
 No author choice on this question is recorded yet.
 
+**Subsequent author response, 2026-09-04:**
+
+> eh, yeah, but i am a bit in doubt on this. i think you shoudl go along with your recommendaiton but keep in mind that i want to revisit ie better
+
+**Status: TENTATIVE, explicit revisit.** Proceed in the discussion with
+household-specific compensating transfers as the provisional working
+benchmark. Preserve the author's reservation; this is not an eighth settled
+direction and does not resolve all I1 institutions. The response does not
+override the discussion-only instruction or authorize development now.
+
+**Return condition:** when the later plan or formal compensation scheme is
+concrete, and before finalizing the welfare proposition, revisit who pays whom,
+when payments occur, and what result survives with simpler or restricted
+transfer instruments. Retain the restricted common-transfer alternative and
+ordinary market transactions as comparisons to assess, not already validated
+implementations. Any change to the transfer rule requires rechecking the
+welfare and fertility implications under W0/W1/H0 and real costs under W3.
+The author need not repeat this revisit request for it to remain active.
+
+**Next discussion:** W3, whether and how real moving or transaction costs enter
+the core reallocation claim. No cost specification or value is selected here.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -746,14 +772,17 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso agreed to the supply recommendation and confirmed that decisions should be banked without development. | D2 supply scope decided: fixed-stock benchmark plus later assessment of a simple long-run supply extension. Reaffirmed discussion-only workflow; exact specifications, derivations, and implementation remain deferred. |
 | 2026-09-04 | Tommaso asked what comes next and how many decisions remain. | Counted 18 entries: 6 agreed directions, 3 parked, 9 unresolved. Grouped the latter into four substantive topics plus presentation and planning; opened D1 for discussion without adopting or developing a theorem. |
 | 2026-09-04 | Tommaso preferred the broadest transition result and expected conditions not to be very stringent. | D1 objective recorded without assuming mild hypotheses or a global theorem. Updated count to 7 agreed directions, 3 parked, 8 unresolved; W4/I1 compensation instruments become the next discussion. |
+| 2026-09-04 | Tommaso provisionally accepted the compensation recommendation while expressing doubt and requesting a later revisit. | W4 becomes TENTATIVE, not DECIDED. Keep the household-specific transfer benchmark for discussion; require a return to the concrete scheme and restricted alternatives before finalizing welfare. W3 real costs are next. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
 work resume when Q0 becomes active. H0's derivation is deferred until the later
 planning/amendment stage and must return to W4/I1 to settle exact compensation
 and resources. D0's comparison scope, D1's breadth objective, and D2's supply
-scope are settled. W4/I1's transfer instruments are now being discussed; actual
-transition hypotheses and implementation remain deferred. Q1's empirical
+scope are settled. W4/I1's tailored transfers are provisionally accepted and
+must be revisited once the scheme is concrete, before the welfare claim is
+finalized. W3 real costs are next; actual transition hypotheses and
+implementation remain deferred. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
 
@@ -767,6 +796,10 @@ assessment. D1 targets broad transition results under economically reasonable
 conditions. Exact transfers, real costs, welfare coverage, supply specification,
 and transition hypotheses remain unresolved. Validity and implementation remain
 proof obligations.
+
+**Provisional author choice:** W4 permits tailored compensation as a working
+benchmark, with expressed doubt and an explicit revisit. Keep this separate
+from the seven settled directions and preserve its return condition above.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
