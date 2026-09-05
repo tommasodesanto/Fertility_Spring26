@@ -1,0 +1,760 @@
+{
+  "scope": "Uniform conditional branches and exact limiting aggregation. Dated prices in these checks are diagnostic inputs, not equilibrium paths.",
+  "mean_income": 0.95,
+  "mean_wealth": 0.2,
+  "support": {
+    "income": [
+      0.94,
+      0.96
+    ],
+    "wealth": [
+      0.195,
+      0.205
+    ]
+  },
+  "symbolic_hessians": "All eight owner quantity/asset maps have identically zero Hessian in income and wealth.",
+  "cases": [
+    {
+      "name": "limiting_stationary",
+      "prices": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "transfers": [
+        0.0,
+        0.0
+      ],
+      "exact_aggregation_error": 1.6653345369377348e-16,
+      "types": [
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8,
+            "b": 0.195,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.40517241379310337,
+            0.9750000000000002,
+            0.4875000000000001,
+            0.5348275862068965,
+            0.2025862068965517,
+            0.3038793103448276,
+            0.5064655172413792
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 2.220446049250313e-16,
+            "maximum_fertility_foc_error": 5.551115123125783e-17,
+            "minimum_branch_margins": {
+              "saving": 0.5348275862068965,
+              "retention": 0.6711206896551726,
+              "estate": 0.2025862068965516,
+              "owner_cap": 1.025,
+              "owner_housing_wedge": 0.021632773356911272,
+              "renter_young_wedge": 0.8133333333333332,
+              "renter_old_wedge": 0.08499999999999996,
+              "actual_old_renter_wedge": 0.08500000000000008
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.305396234996259e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.69599656780251e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8,
+            "b": 0.205,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.4051724137931034,
+            1.0250000000000001,
+            0.5125000000000001,
+            0.5348275862068966,
+            0.2025862068965517,
+            0.3038793103448276,
+            0.5064655172413792
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 1.1102230246251565e-16,
+            "maximum_fertility_foc_error": 0.0,
+            "minimum_branch_margins": {
+              "saving": 0.5348275862068966,
+              "retention": 0.7211206896551725,
+              "estate": 0.2025862068965516,
+              "owner_cap": 0.9749999999999999,
+              "owner_housing_wedge": 0.010821418559013196,
+              "renter_young_wedge": 0.823030303030303,
+              "renter_old_wedge": 0.08772727272727271,
+              "actual_old_renter_wedge": 0.08772727272727271
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.3999633424743863e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.438265525738785e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8,
+            "b": 0.195,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.4137931034482758,
+            0.9750000000000002,
+            0.4875000000000001,
+            0.5462068965517242,
+            0.20689655172413793,
+            0.31034482758620696,
+            0.5172413793103448
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 2.220446049250313e-16,
+            "maximum_fertility_foc_error": 5.551115123125783e-17,
+            "minimum_branch_margins": {
+              "saving": 0.5462068965517242,
+              "retention": 0.6646551724137932,
+              "estate": 0.2068965517241378,
+              "owner_cap": 1.025,
+              "owner_housing_wedge": 0.02634836427939874,
+              "renter_young_wedge": 0.8327272727272725,
+              "renter_old_wedge": 0.09045454545454545,
+              "actual_old_renter_wedge": 0.09045454545454557
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.3978176827134092e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.46422396391555e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8,
+            "b": 0.205,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.41379310344827586,
+            1.0250000000000001,
+            0.5125000000000001,
+            0.5462068965517243,
+            0.20689655172413793,
+            0.31034482758620696,
+            0.5172413793103448
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 2.220446049250313e-16,
+            "maximum_fertility_foc_error": 0.0,
+            "minimum_branch_margins": {
+              "saving": 0.5462068965517243,
+              "retention": 0.7146551724137932,
+              "estate": 0.2068965517241378,
+              "owner_cap": 0.9749999999999999,
+              "owner_housing_wedge": 0.015306980656013491,
+              "renter_young_wedge": 0.8424242424242423,
+              "renter_old_wedge": 0.0931818181818182,
+              "actual_old_renter_wedge": 0.09318181818181831
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.8251554134707249e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 5.992206711380454e-08
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "limiting_dated",
+      "prices": [
+        1.003,
+        1.004,
+        1.0047
+      ],
+      "transfers": [
+        0.0,
+        0.0
+      ],
+      "exact_aggregation_error": 1.1102230246251565e-16,
+      "types": [
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8009950248756219,
+            "b": 0.195,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.4050890324715508,
+            0.9769441674975077,
+            0.48847208374875384,
+            0.5349109675284491,
+            0.20254451623577543,
+            0.30345263119622773,
+            0.5063612905894386
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 3.3306690738754696e-16,
+            "maximum_fertility_foc_error": 5.551115123125783e-17,
+            "minimum_branch_margins": {
+              "saving": 0.5349109675284491,
+              "retention": 0.6734915363012799,
+              "estate": 0.2014824320265886,
+              "owner_cap": 1.0230558325024923,
+              "owner_housing_wedge": 0.021346193582632178,
+              "renter_young_wedge": 0.8135352727272728,
+              "renter_old_wedge": 0.08476054545454548,
+              "actual_old_renter_wedge": 0.08522000000000018
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 2.3070066385022514e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 6.140166386447987e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8009950248756219,
+            "b": 0.205,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.40508475650634307,
+            1.0270438683948158,
+            0.5135219341974079,
+            0.5349152434936568,
+            0.20254237825317156,
+            0.3034494280660781,
+            0.5063559456329288
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 1.1102230246251565e-16,
+            "maximum_fertility_foc_error": 0.0,
+            "minimum_branch_margins": {
+              "saving": 0.5349152434936568,
+              "retention": 0.7235944403287377,
+              "estate": 0.2014803052549402,
+              "owner_cap": 0.9729561316051842,
+              "owner_housing_wedge": 0.01055635391866025,
+              "renter_young_wedge": 0.8232322424242425,
+              "renter_old_wedge": 0.08748781818181822,
+              "actual_old_renter_wedge": 0.08794727272727287
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.7548755915086645e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 6.90787974877427e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8009950248756219,
+            "b": 0.195,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.41370972212672324,
+            0.9769441674975077,
+            0.48847208374875384,
+            0.5462902778732768,
+            0.20685486106336165,
+            0.3099103991161032,
+            0.5171371526584041
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 2.220446049250313e-16,
+            "maximum_fertility_foc_error": 5.551115123125783e-17,
+            "minimum_branch_margins": {
+              "saving": 0.5462902778732768,
+              "retention": 0.6670337683814045,
+              "estate": 0.20577017466645525,
+              "owner_cap": 1.0230558325024923,
+              "owner_housing_wedge": 0.026052400244577417,
+              "renter_young_wedge": 0.8329292121212123,
+              "renter_old_wedge": 0.09021509090909091,
+              "actual_old_renter_wedge": 0.09067454545454567
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.0796840538285224e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.697578902066127e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8009950248756219,
+            "b": 0.205,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.0,
+            "tau": 0.0,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.0,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.4137054461615155,
+            1.0270438683948158,
+            0.5135219341974079,
+            0.5462945538384845,
+            0.20685272308075778,
+            0.30990719598595357,
+            0.5171318077018944
+          ],
+          "owner_share": 1.0,
+          "checks": {
+            "maximum_original_budget_error": 1.1102230246251565e-16,
+            "maximum_fertility_foc_error": 0.0,
+            "minimum_branch_margins": {
+              "saving": 0.5462945538384845,
+              "retention": 0.7171366724088621,
+              "estate": 0.20576804789480685,
+              "owner_cap": 0.9729561316051842,
+              "owner_housing_wedge": 0.015032989523925205,
+              "renter_young_wedge": 0.842626181818182,
+              "renter_old_wedge": 0.09294236363636366,
+              "actual_old_renter_wedge": 0.09340181818181836
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.409466530155612e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.606172011676016e-08
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mixed_dated",
+      "prices": [
+        1.0,
+        1.0005,
+        1.0007
+      ],
+      "transfers": [
+        0.0026,
+        0.0026
+      ],
+      "exact_aggregation_error": null,
+      "types": [
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8001998001998002,
+            "b": 0.195,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.005,
+            "tau": 0.005,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.02,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.40457433790145403,
+            0.975975,
+            0.47180521372532835,
+            0.5317627360299193,
+            0.20228716895072704,
+            0.2975657328319723,
+            0.5057179223768176
+          ],
+          "owner_share": 0.9866286044997501,
+          "checks": {
+            "maximum_original_budget_error": 1.5785983631388945e-16,
+            "maximum_fertility_foc_error": 5.551115123125783e-17,
+            "minimum_branch_margins": {
+              "saving": 0.5317627360299193,
+              "retention": 0.6784092671680277,
+              "estate": 0.20794389353186293,
+              "owner_cap": 1.024025,
+              "owner_housing_wedge": 0.01506743937650265,
+              "renter_young_wedge": 0.8095510422946444,
+              "renter_old_wedge": 0.0817046889064133,
+              "actual_old_renter_wedge": 0.08205625267559347
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.5032869243869484e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.472233906624659e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8001998001998002,
+            "b": 0.205,
+            "y": 0.94,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.005,
+            "tau": 0.005,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.02,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.40444206645289094,
+            1.026025,
+            0.4951431658586017,
+            0.531578117717816,
+            0.20222103322644547,
+            0.2974684467541439,
+            0.5055525830661136
+          ],
+          "owner_share": 0.9866943801387007,
+          "checks": {
+            "maximum_original_budget_error": 2.220446049250313e-16,
+            "maximum_fertility_foc_error": 2.220446049250313e-16,
+            "minimum_branch_margins": {
+              "saving": 0.531578117717816,
+              "retention": 0.728556553245856,
+              "estate": 0.2078759083992418,
+              "owner_cap": 0.973975,
+              "owner_housing_wedge": 0.004218249664724394,
+              "renter_young_wedge": 0.8192477971905263,
+              "renter_old_wedge": 0.08443194984582153,
+              "actual_old_renter_wedge": 0.08478351361251335
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.4108467166762395e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.812454094757726e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8001998001998002,
+            "b": 0.195,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.005,
+            "tau": 0.005,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.02,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.41319431625639524,
+            0.975975,
+            0.4721352570325985,
+            0.5431411074584417,
+            0.20659715812819765,
+            0.30390575476586124,
+            0.5164928953204941
+          ],
+          "owner_share": 0.9867245891381332,
+          "checks": {
+            "maximum_original_budget_error": 3.7990444123892075e-16,
+            "maximum_fertility_foc_error": 2.220446049250313e-16,
+            "minimum_branch_margins": {
+              "saving": 0.5431411074584417,
+              "retention": 0.6720692452341388,
+              "estate": 0.2123744065262968,
+              "owner_cap": 1.024025,
+              "owner_housing_wedge": 0.019776239881398427,
+              "renter_young_wedge": 0.8289445560916759,
+              "renter_old_wedge": 0.08715921100503093,
+              "actual_old_renter_wedge": 0.08751077476930391
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.0184942511592965e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.60361286156197e-08
+              }
+            ]
+          }
+        },
+        {
+          "parameters": {
+            "q": 0.8,
+            "phi": 0.8001998001998002,
+            "b": 0.205,
+            "y": 0.96,
+            "alpha": 0.4,
+            "beta": 0.4,
+            "gamma": 0.3,
+            "omega": 2.0,
+            "kappa": 0.5,
+            "theta": 0.13333333333333333,
+            "nu": 2.0,
+            "chi": 0.005,
+            "tau": 0.005,
+            "rental_cap": 0.25,
+            "owner_cap": 2.0,
+            "sigma": 1.0,
+            "taste_weight": 0.02,
+            "Hbar": 1.3071120689655173
+          },
+          "owner_choices": [
+            0.4130619713431676,
+            1.026025,
+            0.4955072967702158,
+            0.5429563921729813,
+            0.2065309856715838,
+            0.3038084146545347,
+            0.5163274641789595
+          ],
+          "owner_share": 0.9867951868041532,
+          "checks": {
+            "maximum_original_budget_error": 1.7520707107365752e-16,
+            "maximum_fertility_foc_error": 2.220446049250313e-16,
+            "minimum_branch_margins": {
+              "saving": 0.5429563921729813,
+              "retention": 0.7222165853454653,
+              "estate": 0.21230638363416665,
+              "owner_cap": 0.973975,
+              "owner_housing_wedge": 0.008697148281804373,
+              "renter_young_wedge": 0.8386413188871051,
+              "renter_old_wedge": 0.08988647237795078,
+              "actual_old_renter_wedge": 0.09023803613987158
+            },
+            "original_optimizations": [
+              {
+                "date": 0,
+                "tenure": "owner",
+                "maximum_choice_error": 1.0921439980160486e-07
+              },
+              {
+                "date": 0,
+                "tenure": "renter",
+                "maximum_choice_error": 7.694856518636328e-08
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "source_sha256": "18ad89d37a50cdd2c35e65e995a4236b3cdde6fedb5f52938e91e2e9110b3d0e"
+}

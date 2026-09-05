@@ -1,8 +1,100 @@
 # Simplified OLG amendment checks
 
-## September 5: simple allocation assessment
+## September 5 continuation: analytical transition and primitive conditions
 
-The latest reading note is the eight-page
+The latest reading note is now **ten pages**, at
+`output/pdf/simplified_olg_simple_assessment.pdf`; its LaTeX source remains
+`latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`. Pages 1–4 keep
+the allocation and conditional fertility arguments. Page 5 replaces the
+prescribed demographic curve with the analytical equilibrium response.
+Appendix B gives primitive stability and initial-fertility conditions;
+Appendix C gives a stationary population condition with positive child costs.
+No preference or planner-instrument decision is adopted.
+
+The all-owner limit with zero child goods cost and property tax has an exact
+aggregate recurrence, including with heterogeneous entrants on uniformly
+strict household branches. The condition `ell + (3+q) C > 4D`, with each
+coefficient defined from primitives in the proof, gives exactly two stable
+roots and one unstable root. The predetermined initial cohort and actual old
+assets select a local converging equilibrium. The exact initial-fertility test
+uses a primitive polynomial evaluation; a simpler sufficient inequality is
+also available. These extend locally to positive renter mass, child costs and
+property tax through the full dated equilibrium operator.
+
+The original model's initial-old accounting, endogenous tenure, extra price
+leads, normalized type distribution and all private constraints are retained.
+The positive-parameter neighborhood and reform must be small; their numerical
+size and a global transition theorem remain unproved. Initial fertility and
+terminal population rise under the stated conditions. All-date finite-reform
+fertility and monotone population are proved only for the plotted limiting
+example. An admissible second economy instead has lower initial fertility and
+a larger final population. The uncompensated credit reform lowers stationary
+household welfare in the plotted limiting example; it is not the compensated
+Pareto allocation proof.
+
+Supporting files:
+
+- `local_transition_proof.md`: full derivation, general primitive conditions,
+  exact aggregation, uniform infinite-tail proof, welfare distinction, and
+  counterexamples. Sections 10.4 and 10.2 contain the broad stability condition
+  and exact initial-fertility test.
+- `local_transition_independent_review.md`: first review of the explicit
+  recurrence, household choices and original initial-old boundary; identifies
+  the subsequently closed mixed-extension and uniform-tail gaps.
+- `local_transition_closure_review.md`: independent check of those two newly
+  completed proof steps and the negative welfare derivative.
+- `local_transition_heterogeneity_review.md`: independent aggregation and
+  positive-child-cost stationary-condition review; required probability,
+  inherited-state and uniform-operator qualifications are incorporated.
+- `local_transition_general_review.md`: independent general convergence review
+  under `w>d`, the exact/sufficient fertility tests and negative initial-sign
+  example. This report predates the sharper condition in section 10.4.
+- `local_transition_sharp_stability_review.md`: final narrow independent check
+  of that sharper root condition, including zero/repeated stable roots and
+  carryover of the original initial-old boundary and primitive fertility tests.
+  Its requested standalone operator/decay-weight qualification is incorporated.
+- `local_transition_checks.json`: eight original-equation cases, original
+  household optimizations, a central difference versus the analytical path,
+  and 24/40-date horizon comparison. Maximum equilibrium residual is below
+  `2.3e-14`; derivative error is `1.48e-9`. Finite paths are arithmetic support,
+  not the proof of infinite convergence or an admissible-neighborhood bound.
+- `local_transition_stationary_checks.json`: exact symbolic derivative and
+  three original stationary cases with both population signs at positive cost.
+- `local_transition_heterogeneity_checks.json`: zero Hessians of eight owner
+  quantity/asset maps, four-corner constraints and 24 original household
+  optimizations, plus exact aggregate dated-demand and inherited-old checks.
+  Its dated prices are diagnostic inputs, not equilibrium paths.
+- `local_transition_general_checks.json`: six symbolic polynomial/transform
+  identities, three initial-boundary identities, 270 declared coefficient
+  cases (including unstable cases), and an original-equation counterexample
+  with initial fertility derivative `-0.0597632` and final population derivative
+  `0.0952381` per proportional credit-cap increase. This grid is an arithmetic
+  check, not a calibration or an economically admissible-parameter map.
+- `local_transition_smoke.json`: the exact zero/tiny-reform loop smoke check.
+- `local_transition_analytical_figure.pdf` / `.png`: Figure 2, obtained directly
+  from the analytical formula, never from the finite-path solver.
+
+All verification modes take seconds locally and record the current driver hash.
+From the repository root:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_local_transition.py --smoke
+python3 code/model/tools/verify_simplified_olg_local_transition.py
+python3 code/model/tools/verify_simplified_olg_local_transition.py --stationary-only
+python3 code/model/tools/verify_simplified_olg_local_transition.py --heterogeneity-only
+python3 code/model/tools/verify_simplified_olg_local_transition.py --general-only
+python3 code/model/tools/verify_simplified_olg_local_transition.py --figure
+```
+
+The first unscaled optimizer check at the deliberately tiny rental cap was
+ill-conditioned and did not report success. Scaling the optimizer's choice
+units resolved it; the original objective and constraints were retained. All
+final modes pass with independent household optimization and strict private
+conditions. No failed check was accepted as proof.
+
+## September 5: earlier simple allocation assessment
+
+The initial reading note was the eight-page
 `output/pdf/simplified_olg_simple_assessment.pdf`, with source
 `latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`. It restores
 the author's priority: first establish housing misallocation simply; then
@@ -26,7 +118,8 @@ adopt new preferences or public collection powers.
   allocation on this comparison, not a full economy-wide first best.
 - `simple_population_figure.pdf` / `.png`: a prescribed fertility sequence
   and the resulting demographic identity. This is not a solved equilibrium
-  transition or a prediction of adjustment speed. Earlier figures are retained.
+  transition or a prediction of adjustment speed. This earlier figure is retained
+  but the latest note uses the analytical Figure 2 described above.
 
 Regenerate this bounded packet in a few seconds, without calibration or
 equilibrium search:
@@ -39,8 +132,9 @@ The full derivations and assessment are also recorded near the top of
 `docs/model/simplified_olg_overnight_work.md`. A complete equilibrium example
 now establishes that a positive group of eligible owner pairs can exist.
 A second example establishes that the binding rental cap is not necessary
-with the existing ownership taste. Broader credit-reform transition signs and
-anonymous public-loan implementation remain unproved.
+with the existing ownership taste. The continuation above supplies local
+analytical credit-reform results; global transitions and anonymous public-loan
+implementation remain unproved.
 
 ## September 5: external discussion assessment
 

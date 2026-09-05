@@ -25,33 +25,44 @@ allocation result. Public lending and repayment through taxation belong to a
 later discussion of remedies. The previous prompt to decide public collection
 powers is therefore deferred; those powers have not been accepted or rejected.
 
-**September 5 simplicity assessment completed; discussion pending.** The
-new eight-page `output/pdf/simplified_olg_simple_assessment.pdf` is the next
-reading object. The direct compensation proof is short and valid under the
-permitted finance relaxation, with physical restrictions, individual fertility,
-and future allocations held fixed. New explicit mixed-tenure equilibria show
-that a positive group of eligible owner pairs can exist. This closes the
-nonemptiness question for the conditional result, not general existence or
-inefficiency of every equilibrium.
+**September 5 assessment and analytical continuation completed; discussion pending.**
+The ten-page `output/pdf/simplified_olg_simple_assessment.pdf` is the next
+reading object. The direct compensation proof remains short and valid under
+the permitted finance relaxation, with physical restrictions, individual
+fertility and future allocations held fixed. Explicit mixed-tenure equilibria
+show that positive masses of eligible owner pairs can exist. This closes
+nonemptiness for the conditional result, not inefficiency of every equilibrium.
 
-A second constructed equilibrium has slack rental caps and a positive owner
-housing-value gap. The existing ownership taste can therefore sustain the
-borrowing distortion even with larger rentals available. The accompanying
-replication lemma explains the rental alternative in the absence of an
-ownership benefit. Recommend preserving the current preferences and explaining
-the two constraints accurately; joint necessity is not required by the author's
+The existing ownership taste can sustain the borrowing distortion with slack
+rental caps. The owner-to-renter replication lemma explains the alternative
+without an ownership benefit. Recommend preserving preferences and explaining
+the two restrictions accurately; joint necessity is not required by the
 original “can misallocate” claim. No preference change is adopted.
 
-The note retains the conditional fertility derivative (including both dated
-rents for a common rental-cap change), its primitive sufficient specialization,
-exact population identities, and a stationary stock-scaling result under the
-existing closure. Figure 1 is an exact compensated allocation comparison;
-Figure 2 prescribes fertility and illustrates its population accounting, not
-an equilibrium transition. A broad credit-reform transition and the anonymous
-public-loan proposal remain unproved. Constrained efficiency remains an optional
-strengthening with explicit instrument permissions, not a prerequisite for the
-core claim. Two scoped independent reviews and original-equation checks are
-indexed in `output/model/simplified_olg_amendments/README.md`.
+The continuation adds an analytical local equilibrium transition, replacing
+the previous schematic Figure 2. In an all-owner zero-child-cost/property-tax
+limit, convergence has an explicit primitive inequality, and an initial
+fertility increase has separate exact and sufficient primitive conditions.
+A fixed heterogeneous entrant distribution is allowed on uniformly strict
+household branches. Smooth perturbation extends the result to small positive
+renter mass, child costs and property tax, retaining endogenous tenure and the
+actual initial old. The parameter neighborhood and reform size are local and
+not numerically bounded; global continuation and unrestricted heterogeneity
+remain open. Initial fertility and terminal population rise under the stated
+conditions. All-date finite-reform signs are proved only for the plotted
+limiting example. Another admissible economy has lower initial fertility but
+a larger final population. A separate positive-child-cost stationary formula
+admits both population signs.
+
+The uncompensated credit reform lowers stationary household welfare in the
+plotted limit. It is not the compensated Pareto allocation and does not
+implement it automatically. The conditional household fertility derivative,
+its original primitive sufficient specialization, population identities and
+stationary stock scaling remain intact. Constrained efficiency remains an
+optional strengthening with explicit instruments; anonymous public lending
+remains unproved and collection powers await discussion. The proof and exact
+review/check coverage are indexed in
+`output/model/simplified_olg_amendments/README.md`.
 
 **Recommended discussion order:** settle the direct-allocation statement and
 its benchmark; decide how much fertility and population material to include;
@@ -625,14 +636,14 @@ between mechanism analysis and welfare analysis before either is understood.
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | September 5: retain tenure segmentation as a physical constraint on the planner. Its exact feasibility conditions and broader institutional choices remain open. The proposal records the dated institutions and one explicit planner transaction. Keep inherited entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
-| H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | A local payment condition and a primitive sufficient restriction in a stationary zero-property-tax specialization have been derived and checked under V0. General-equilibrium policy signs remain open; return to W1/W4/I1 for incidence and to H1 for a quantitative analogue. | Sections 3, 6, 8; H0 threshold clarification and preference below |
+| H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | The original conditional household derivative and primitive sufficient restriction remain. The analytical continuation adds exact and sufficient primitive tests for an initial general-equilibrium credit/fertility response; the positive-cost stationary population condition is separate. Neither is an unconditional housing-policy sign or a newly selected paper proposition. | Sections 3, 6, 8; H0 author preference; local_transition_proof.md sections 8, 10 |
 | H1 | Retain the simple model's one-shot completed-fertility choice in its two-period OLG structure; leave sequential birth timing and childlessness to quantitative work. | DECIDED | Fertility-architecture scope only. Log utility, goods/space requirements, tenure tastes, and maintained old-age branches remain assumptions to assess where relevant; do not infer blanket approval. P0/H0/I1/V0 remain dependencies. | Sections 2-3, 6, 8; H1 author response below |
-| D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Illustrative common-initial-state paths and terminal household comparisons are checked. General signs and model-wide convergence remain open under D1-D2; literal-person measurement remains U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
-| D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. A conditional finite-reform continuation proof is complete; its aggregate smoothness, bounded feasibility, and local-uniqueness assumptions are not established over the full model policy interval. | Section 5; D1 author preference below |
-| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Stationary supply accounting is checked; no supply function or construction dynamics are selected. The new credit examples retain property tax and have separately verified paths. Historical gains-tax examples remain evidence; tax-specific work stays deferred with Q0. | Sections 3, 5-6; D2 author agreement below |
+| D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author comparison scope only. A local original-model equilibrium transition is now proved under explicit conditions, including heterogeneous entry on uniform branches and small positive renter mass/costs/tax. Initial fertility and final population signs are conditional; all-date finite signs are limited to the plotted limit. Literal-person measurement remains U0. No quantitative endpoint is certified. | D0 author decision; local_transition_proof.md; analytical Figure 2 |
+| D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only; no author acceptance of local scope as the final target is inferred. The new primitive stability condition and transverse initial boundary establish local existence, convergence and uniqueness. Uniform perturbation admits positive costs, renters and tax. The admissible neighborhood has no numerical size bound. Global continuation and unrestricted branch crossings remain open. | D1 author preference; local_transition_proof.md sections 5, 9, 10 |
+| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. Preferred visual structure: one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | September 5: recover the two conceptual figure roles, with notation and geometry derived from the chosen model. Exact figure version, axes, conditions, and placement remain open. Simulated paths are not the intended second figure. | Sections 7-8; P0/P1 author agreement; September 5 planner menu and figure preference |
-| V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal, checks, independent reviews, PDF, and 14-row reconciliation delivered. Preserve W3/W4 as provisional and the stated unproved transition/global-policy claims; see simplified_olg_overnight_work.md. | Section 9; overnight authorization |
+| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. Preferred visual structure: one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | September 5: both figure roles are restored in the ten-page assessment. Figure 1 is an exact compensated-allocation comparison; Figure 2 is the analytical first-order equilibrium response, replacing the prescribed fertility schematic. Earlier versions remain available. Final paper placement and scope await discussion. | P0/P1 author agreement; simplified_olg_simple_assessment.tex; analytical figure receipt |
+| V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal and original reconciliation remain completed. The September 5 continuation adds the ten-page assessment, primitive local transition conditions, proof/reviews and original-equation receipts. W3/W4 stay provisional or reopened; global-policy and large-reform claims remain unproved. | Overnight/September 5 authorization; simplified_olg_overnight_work.md |
 
 ### Corrections and verification work retained across branches
 

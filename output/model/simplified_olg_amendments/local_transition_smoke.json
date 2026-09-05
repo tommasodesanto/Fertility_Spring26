@@ -1,0 +1,637 @@
+{
+  "scope": "Analytical cubic and original-equation checks. Finite terminally closed paths are supporting evidence, not the convergence proof.",
+  "source_sha256": "18ad89d37a50cdd2c35e65e995a4236b3cdde6fedb5f52938e91e2e9110b3d0e",
+  "original_specification_sha256": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+  "analytical": {
+    "polynomial": "1140*z**3 - 3253*z**2 + 945*z - 45",
+    "rational_sign_brackets": [
+      [
+        "59/1000",
+        "3/50",
+        "-16728047/50000000",
+        "2943/12500"
+      ],
+      [
+        "261/1000",
+        "131/500",
+        "15805467/50000000",
+        "-644819/3125000"
+      ],
+      [
+        "253/100",
+        "127/50",
+        "-46256/3125",
+        "618727/12500"
+      ]
+    ],
+    "roots": [
+      0.05958564983608153,
+      0.2616061279584184,
+      2.5323169941353245
+    ],
+    "initial_boundary_derivatives": [
+      3.3094631661442007,
+      -1.228448275862069,
+      0.1474333855799373,
+      -1.0
+    ],
+    "boundary_determinant": 0.5888686190496223,
+    "stationary_young_derivative": 0.28441879637262985,
+    "coefficients": [
+      0.8779240825232393,
+      -1.1623428788958692
+    ],
+    "uniform_first_order_increment_bound": 0.03265445342853357,
+    "rational_initial_response_lower_bound": "293918959/9027813150",
+    "young_derivative": [
+      0.0,
+      0.032654453428533514,
+      0.2079876714654026,
+      0.2637942427956056,
+      0.27898576551191545,
+      0.2829952464775059,
+      0.28404625377927095,
+      0.28432132900943985,
+      0.28439329784016193,
+      0.2844121257720994,
+      0.2844170513009746,
+      0.28441833985109105,
+      0.2844186769437918,
+      0.28441876512931363,
+      0.2844187881991868,
+      0.2844187942344071,
+      0.2844187958132577,
+      0.2844187962262947,
+      0.2844187963343477,
+      0.28441879636261497,
+      0.2844187963700099,
+      0.28441879637194445,
+      0.28441879637245054,
+      0.28441879637258294,
+      0.2844187963726176,
+      0.2844187963726266,
+      0.284418796372629,
+      0.2844187963726296,
+      0.2844187963726298,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985,
+      0.28441879637262985
+    ]
+  },
+  "cases": [
+    {
+      "name": "zero",
+      "parameters_before": {
+        "q": 0.8,
+        "phi": 0.8,
+        "b": 0.2,
+        "y": 0.95,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 0.13333333333333333,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.25,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.3071120689655173
+      },
+      "parameters_after": {
+        "q": 0.8,
+        "phi": 0.8,
+        "b": 0.2,
+        "y": 0.95,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 0.13333333333333333,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.25,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.3071120689655173
+      },
+      "horizon": 24,
+      "initial_steady": {
+        "price": 1.0000000000000002,
+        "transfer": 0.0,
+        "cohort": 1.0
+      },
+      "final_steady": {
+        "price": 1.0000000000000002,
+        "transfer": 0.0,
+        "cohort": 1.0
+      },
+      "maximum_equilibrium_residual": 0.0,
+      "checks": {
+        "maximum_original_budget_error": 1.1102230246251565e-16,
+        "maximum_fertility_foc_error": 0.0,
+        "minimum_branch_margins": {
+          "saving": 0.5405172413793102,
+          "retention": 0.6928879310344828,
+          "estate": 0.2047413793103447,
+          "owner_cap": 1.0,
+          "owner_housing_wedge": 0.018390804597701177,
+          "renter_young_wedge": 0.8278787878787877,
+          "renter_old_wedge": 0.08909090909090905,
+          "actual_old_renter_wedge": 0.08909090909090911
+        },
+        "original_optimizations": []
+      },
+      "rows": [
+        {
+          "date": 0,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 1,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 2,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 3,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 4,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 5,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 6,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 7,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 8,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 9,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 10,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 11,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 12,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 13,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 14,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 15,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 16,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 17,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 18,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 19,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 20,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 21,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 22,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 23,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 24,
+          "price": 1.0000000000000002,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        }
+      ]
+    },
+    {
+      "name": "credit_plus_tiny",
+      "parameters_before": {
+        "q": 0.8,
+        "phi": 0.8,
+        "b": 0.2,
+        "y": 0.95,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 0.13333333333333333,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.25,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.3071120689655173
+      },
+      "parameters_after": {
+        "q": 0.8,
+        "phi": 0.8000199980002,
+        "b": 0.2,
+        "y": 0.95,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 0.13333333333333333,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.25,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.3071120689655173
+      },
+      "horizon": 24,
+      "initial_steady": {
+        "price": 1.0000000000000002,
+        "transfer": 0.0,
+        "cohort": 1.0
+      },
+      "final_steady": {
+        "price": 1.0001,
+        "transfer": 0.0,
+        "cohort": 1.0000284398445356
+      },
+      "maximum_equilibrium_residual": 1.1102230246251565e-15,
+      "checks": {
+        "maximum_original_budget_error": 5.551115123125783e-16,
+        "maximum_fertility_foc_error": 5.551115123125783e-17,
+        "minimum_branch_margins": {
+          "saving": 0.5405217402262124,
+          "retention": 0.6929119936944346,
+          "estate": 0.20471625542615424,
+          "owner_cap": 0.9999824678273779,
+          "owner_housing_wedge": 0.018352108441004655,
+          "renter_young_wedge": 0.8278392250655154,
+          "renter_old_wedge": 0.08906845454545453,
+          "actual_old_renter_wedge": 0.08905707159067505
+        },
+        "original_optimizations": []
+      },
+      "rows": [
+        {
+          "date": 0,
+          "price": 1.0000967344690996,
+          "young": 1.0,
+          "old": 1.0,
+          "fertility": 0.5000016326075207,
+          "owner_share": 1.0
+        },
+        {
+          "date": 1,
+          "price": 1.000082466381563,
+          "young": 1.0000032652150415,
+          "old": 1.0,
+          "fertility": 0.5000087660863111,
+          "owner_share": 1.0
+        },
+        {
+          "date": 2,
+          "price": 1.0000944195159827,
+          "young": 1.0000207974449098,
+          "old": 1.0000032652150415,
+          "fertility": 0.5000027899785803,
+          "owner_share": 1.0
+        },
+        {
+          "date": 3,
+          "price": 1.0000984808607618,
+          "young": 1.0000263775181193,
+          "old": 1.0000207974449098,
+          "fertility": 0.5000007594948234,
+          "owner_share": 1.0
+        },
+        {
+          "date": 4,
+          "price": 1.0000995990360009,
+          "young": 1.0000278965478333,
+          "old": 1.0000263775181193,
+          "fertility": 0.5000002004620338,
+          "owner_share": 1.0
+        },
+        {
+          "date": 5,
+          "price": 1.0000998948891708,
+          "young": 1.0000282974830852,
+          "old": 1.0000278965478333,
+          "fertility": 0.5000000525501651,
+          "owner_share": 1.0
+        },
+        {
+          "date": 6,
+          "price": 1.0000999724882176,
+          "young": 1.0000284025863895,
+          "old": 1.0000282974830852,
+          "fertility": 0.5000000137545161,
+          "owner_share": 1.0
+        },
+        {
+          "date": 7,
+          "price": 1.000099992801575,
+          "young": 1.000028430096203,
+          "old": 1.0000284025863895,
+          "fertility": 0.5000000035988527,
+          "owner_share": 1.0
+        },
+        {
+          "date": 8,
+          "price": 1.0000999981166914,
+          "young": 1.000028437294113,
+          "old": 1.000028430096203,
+          "fertility": 0.5000000009415602,
+          "owner_share": 1.0
+        },
+        {
+          "date": 9,
+          "price": 1.000099999507283,
+          "young": 1.000028439177287,
+          "old": 1.000028437294113,
+          "fertility": 0.5000000002463338,
+          "owner_share": 1.0
+        },
+        {
+          "date": 10,
+          "price": 1.0000999998710944,
+          "young": 1.0000284396699686,
+          "old": 1.000028439177287,
+          "fertility": 0.5000000000644463,
+          "owner_share": 1.0
+        },
+        {
+          "date": 11,
+          "price": 1.0000999999662754,
+          "young": 1.000028439798865,
+          "old": 1.0000284396699686,
+          "fertility": 0.5000000000168606,
+          "owner_share": 1.0
+        },
+        {
+          "date": 12,
+          "price": 1.0000999999911768,
+          "young": 1.0000284398325872,
+          "old": 1.000028439798865,
+          "fertility": 0.5000000000044111,
+          "owner_share": 1.0
+        },
+        {
+          "date": 13,
+          "price": 1.0000999999976916,
+          "young": 1.0000284398414097,
+          "old": 1.0000284398325872,
+          "fertility": 0.5000000000011541,
+          "owner_share": 1.0
+        },
+        {
+          "date": 14,
+          "price": 1.000099999999396,
+          "young": 1.0000284398437178,
+          "old": 1.0000284398414097,
+          "fertility": 0.5000000000003019,
+          "owner_share": 1.0
+        },
+        {
+          "date": 15,
+          "price": 1.0000999999998421,
+          "young": 1.0000284398443215,
+          "old": 1.0000284398437178,
+          "fertility": 0.5000000000000789,
+          "owner_share": 1.0
+        },
+        {
+          "date": 16,
+          "price": 1.0000999999999587,
+          "young": 1.0000284398444794,
+          "old": 1.0000284398443215,
+          "fertility": 0.5000000000000207,
+          "owner_share": 1.0
+        },
+        {
+          "date": 17,
+          "price": 1.000099999999989,
+          "young": 1.0000284398445207,
+          "old": 1.0000284398444794,
+          "fertility": 0.5000000000000054,
+          "owner_share": 1.0
+        },
+        {
+          "date": 18,
+          "price": 1.000099999999997,
+          "young": 1.0000284398445316,
+          "old": 1.0000284398445207,
+          "fertility": 0.5000000000000014,
+          "owner_share": 1.0
+        },
+        {
+          "date": 19,
+          "price": 1.0000999999999993,
+          "young": 1.0000284398445345,
+          "old": 1.0000284398445316,
+          "fertility": 0.5000000000000003,
+          "owner_share": 1.0
+        },
+        {
+          "date": 20,
+          "price": 1.0000999999999998,
+          "young": 1.0000284398445352,
+          "old": 1.0000284398445345,
+          "fertility": 0.5000000000000001,
+          "owner_share": 1.0
+        },
+        {
+          "date": 21,
+          "price": 1.0001,
+          "young": 1.0000284398445354,
+          "old": 1.0000284398445352,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 22,
+          "price": 1.0001,
+          "young": 1.0000284398445354,
+          "old": 1.0000284398445354,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 23,
+          "price": 1.0001,
+          "young": 1.0000284398445354,
+          "old": 1.0000284398445354,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        },
+        {
+          "date": 24,
+          "price": 1.0001,
+          "young": 1.0000284398445354,
+          "old": 1.0000284398445354,
+          "fertility": 0.5,
+          "owner_share": 1.0
+        }
+      ]
+    }
+  ],
+  "elapsed_seconds": 0.7047852790000001
+}

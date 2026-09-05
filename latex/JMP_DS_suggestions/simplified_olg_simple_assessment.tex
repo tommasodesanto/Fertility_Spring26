@@ -239,7 +239,7 @@ prices, tenure, and later cohort sizes, which must be included before claiming
 an aggregate fertility increase.
 
 \newpage
-\pageheading{5. Population levels and the second figure}
+\pageheading{5. A transition to a larger population}
 
 Let $Y_t$ and $O_t$ count young and old households, and let $\bar n_t$ be
 mean young fertility. The parameter $\nu$ converts births into entering
@@ -250,44 +250,46 @@ young cohort satisfy:
  \frac{\bar n_s^1}{\bar n_s^0},\qquad O_t^j=Y_{t-1}^j.
  \label{eq:simple_population_product}
 \end{equation}
-Temporary fertility differences can therefore leave permanent population
-differences. The old cohort follows one period later. What matters is the
-cumulative fertility difference, which can include some negative terms.
-
-At a positive steady state, $\bar n^*=1/\nu$ and $Y^*=O^*$. Housing clearing
-therefore fixes total household population:
+Temporary fertility differences can leave permanent population differences.
+The relevant object is their cumulative effect, even if fertility falls at
+some dates. At a positive steady state, $\bar n^*=1/\nu$ and $Y^*=O^*$;
+housing clearing then fixes total household population:
 \begin{equation}
- N_{\rm hh}^*=
- \frac{2\bar H}{\bar h^{Y*}+\bar h^{O*}}.
+ N_{\rm hh}^*=\frac{2\bar H}{\bar h^{Y*}+\bar h^{O*}}.
  \label{eq:simple_population_stock}
 \end{equation}
-With a fixed stock, a larger population requires less housing per household
-on average. Young housing may rise if housing used by older households falls
-enough. Replacement fertility alone does not determine the population level.
+A larger population with the same stock requires less housing per household
+on average. Young housing may rise if old housing falls enough.
 
-\textbf{A simple supply extension.} Multiplying the exogenous housing stock
-by $a>0$ gives a corresponding steady state with every cohort mass multiplied
-by $a$ and unchanged prices, individual choices, and rebates per household.
-Housing supply and demand scale together. The rebate is unchanged because
-property-tax revenue and recipients also scale together. Household problems
-remain identical with the entrant distribution and world bond price fixed.
-Thus stationary population scales with the stock. This uses the existing
-closure: the extra stock adds no further entrant-income or fiscal channel.
+\textbf{A local equilibrium result is now available.} Appendix B gives
+an explicit condition in parameters for convergence in the all-owner limit
+with $\chi=\tau^p=0$, and a separate sufficient condition for initial fertility
+to rise. The final population rises. With uniformly strict household choices,
+these results extend to small positive renter shares, child goods costs and
+property tax. Income and wealth can be heterogeneous. Fertility and tenure
+are chosen freely. The reform must be small, and the allowed positive-parameter
+neighborhood has not been numerically bounded.
 
 \begin{center}
-\includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/simple_population_figure.pdf}
+\includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/local_transition_analytical_figure.pdf}
 \end{center}
-{\small\textbf{Figure 2.} A prescribed fertility sequence and the population
-path implied by \eqref{eq:simple_population_product}. Fertility returns to
-replacement with more households. These curves do not establish an equilibrium
-transition or its speed.}
+{\small\textbf{Figure 2.} The analytical first-order equilibrium response in
+Appendix B's limiting economy, per unit increase in $d=b/(1-\phi)$. The curves
+come from the derived path, not a prescribed fertility sequence. Fertility
+rises most in the second young cohort. These illustrative parameters are not
+a calibration.}
 
-We still need to establish an equilibrium path between the relevant steady
-states. The existing continuation argument assumes regularity along the whole
-reform; simple primitive conditions remain unavailable. The stationary ranking
-also applies to persons when adults per household and the fixed timing and
-residence rules for counting children are unchanged. During a transition,
-resident children must also be counted.
+In the limiting economy, sufficiently small finite reforms also raise
+fertility above replacement at every date, and population rises monotonically.
+For the nearby mixed economies, the proved signs are initial fertility and
+final population; an all-date sign is a separate question. Appendix C gives
+a primitive condition for the stationary population sign when $\chi>0$.
+
+The stationary ranking also applies to persons when adults per household and
+child-counting rules are unchanged. During adjustment, resident children must
+also be counted. A stock increase has a simpler stationary comparison:
+multiplying $\bar H$ by $a$ scales every cohort by $a$ at unchanged individual
+choices, prices, and rebates under the existing external-income closure.
 
 \newpage
 \pageheading{6. Constrained efficiency and public finance}
@@ -368,11 +370,9 @@ necessary. The replication argument on page 3 shows how removing the ownership
 taste could sharpen their joint role, at the cost of a model change.
 
 \textbf{My recommendation is to retain the present model for the first pass.}
-Preserve its notation and household problems, state the conditional allocation
-result, and explain the two constraints accurately. Do not change preferences
-simply to make both restrictions necessary. If their joint necessity matters
-to the paper's message, consider the version without ownership tastes as an
-explicit alternative.
+Preserve its notation and household problems, and state the allocation result.
+Removing ownership tastes is an alternative to consider only if the paper's
+message requires both access restrictions to be essential.
 
 The extensions have different value and cost:
 \begin{itemize}
@@ -385,10 +385,10 @@ The extensions have different value and cost:
   Equation \eqref{eq:simple_fertility_derivative} expresses the space benefit
   and resource cost directly. The primitive restriction is available as a
   sufficient specialization, with its limitations stated once.
-\item \textbf{Population: retain the identities and the stationary scaling
-  result.} They explain how replacement fertility can coexist with different
-  population levels. A general analytical transition after a credit reform
-  remains a further result; a schematic figure cannot establish it.
+\item \textbf{Population: an analytical local transition is available.}
+  It gives a model-implied second figure and a larger final population.
+  The parameter conditions and local scope must stay visible. General
+  large-reform transitions and unrestricted heterogeneity remain open.
 \item \textbf{Constrained efficiency: optional strengthening.} Its value
   depends on a natural and clearly stated instrument class. The current
   committed-finance proof can remain outside the short core while that choice
@@ -398,17 +398,18 @@ The extensions have different value and cost:
   policy design would make the initial illustration harder to read.
 \end{itemize}
 
-For the paper, the core could occupy two or three pages after the household
-setup, including Figure 1. The fertility prediction and demographic comparison
-can follow briefly; longer finance and transition arguments belong in an
-appendix only if the paper uses them.
+\textbf{Population and welfare must remain separate.} The uncompensated
+credit reform in Appendix B lowers stationary household welfare even though
+it raises population. This does not contradict Proposition 1, which compensates
+the housing donor and holds fertility fixed. A credit reform does not implement
+that compensated allocation automatically.
 
-\textbf{Proposed order for discussion.} First settle the allocation benchmark
-and the wording of Proposition 1. Then choose how much of the fertility and
-population extensions to include. Finally consider whether the constrained
-comparison adds enough to keep. Revisit ownership tastes only if the paper's
-message requires both access restrictions to be essential. No change to those
-preferences is adopted here.
+The paper's core could occupy two or three pages after the household setup,
+including Figure 1. The longer transition proof can stay in an appendix.
+
+\textbf{Proposed order for discussion.} Settle Proposition 1 and its allocation
+benchmark first, then the fertility and population extensions, then the value
+of retaining constrained efficiency. No preference change is adopted here.
 
 \newpage
 \pageheading{Appendix A. The conditions can hold in equilibrium}
@@ -474,5 +475,153 @@ Old owner housing value & $0.525000$ & $0.500000$\\
 The second equilibrium remains an equilibrium if its redundant rental limit
 is removed. These are two different constructed economies, not a comparison
 holding all primitives fixed while changing the rental cap.
+
+
+\newpage
+\pageheading{Appendix B. Conditions for a local equilibrium path}
+
+Use the all-owner demand limit at a steady state with $\chi=\tau^p=0$. Young saving is
+positive, purchase limits strictly restrict housing, and physical owner caps
+and old retention and estate constraints are slack. Entrants may differ in
+income and wealth if these conditions hold uniformly. Define:
+\begin{gather*}
+ \ell=1-q,\quad A=1+\gamma+\omega_B,\quad\rho=1+\beta A,
+ \quad D=\frac{\beta\gamma}{\rho},\quad L=\frac\gamma A,\\
+ d=\frac{E[b_i]}{1-\phi},\quad w=E[y_i+b_i],\quad r=\frac wd,
+ \qquad C=\frac{D(r-\ell)}{q\ell}.
+\end{gather*}
+All these quantities are computed from primitives. Here $C$ equals mean old
+housing divided by mean young housing. Strict old retention gives $0<C<1$;
+the estate condition gives $D<L<\ell$. The other stated private constraints
+must also be checked.
+
+\textbf{Convergence.} A sufficiently small permanent credit reform has a
+locally unique converging equilibrium if:
+\begin{equation}
+ \ell+(3+q)C>4D.
+ \label{eq:simple_primitive_stability}
+\end{equation}
+This holds automatically if $w>d$, or if $4D\le\ell$. Substitution of the
+household budgets and cohort law into housing clearing gives two roots inside
+the unit circle precisely under \eqref{eq:simple_primitive_stability}, with a
+third root above one. The initial cohort and its predetermined old assets
+select a unique local converging path.
+
+\textbf{Fertility and population.} The stationary population response is:
+\begin{equation}
+ \frac{\partial\log N_{\rm hh}^*}{\partial\log d}
+ =J:=\frac{Dr}{q\ell(1+C)}>0.
+ \label{eq:simple_local_ss}
+\end{equation}
+Initial fertility needs an additional condition. When $q\ge1/2$ and $r>1$,
+a sufficient restriction, again entirely in primitives, is:
+\begin{equation}
+ \ell C[\ell+(1+q)C]>L(\ell-D+C).
+ \label{eq:simple_primitive_initial_fertility}
+\end{equation}
+There is no equilibrium price or borrowing multiplier in this restriction.
+The full proof also gives an exact primitive test and an admissible example
+with lower initial fertility and a larger final population.
+
+\textbf{The plotted example.} Figure 2 uses:
+\begin{gather*}
+ q=\phi=4/5,\quad b=1/5,\quad y=19/20,\quad
+ \alpha=\beta=2/5,\quad\gamma=3/10,\quad\omega_B=2,\\
+ \kappa=1/2,\quad\vartheta=2/15,\quad\nu=2,\quad
+ h_O^{\max}=2,\quad h_R^{\max}=1/4,\quad\bar H=1213/928.
+\end{gather*}
+Its baseline has $P=Y=O=1$ and $(x,h,n)=(95/232,1,1/2)$. Both inequalities
+above are strict. The first-order young-population response is:
+\begin{equation}
+ \left.\frac{\partial Y_t}{\partial d}\right|_{d=1}
+ =J+.87792408\ldots\,\lambda_1^t-1.16234288\ldots\,\lambda_2^t,
+ \label{eq:simple_analytical_path}
+\end{equation}
+where $J=345/1213$ and the stable roots are
+$\lambda_1=.05958565\ldots$ and $\lambda_2=.26160613\ldots$.
+The original equations define these coefficients exactly. A uniform remainder
+bound preserves positive population increments for small finite reforms here.
+
+The mixed-model extension uses smooth aggregation and uniformly strict
+conditional owner and renter choices. It retains the actual pre-reform old
+distribution and the extra future prices entering tenure choice. The full
+proof gives an admissible income and wealth distribution around this example.
+
+\newpage
+\pageheading{Appendix C. A population condition in primitives}
+
+The stationary comparison can be made explicit even with a positive child
+goods cost. Retain homogeneous entrants, all owners and $\tau^p=0$.
+Assume the purchase limit binds strictly, young saving is positive, and old
+retention and estate restrictions are slack. This is a conditional result
+for these household choices.
+
+For this calculation only, define the following quantities from primitives:
+\begin{gather*}
+ \ell=1-q,\quad d=\frac b{1-\phi},\quad
+ \rho=1+\beta(1+\gamma+\omega_B),\quad
+ w_\chi=y+b-\frac\chi\nu,\\
+ X=\frac{w_\chi-\ell d}{\rho},\qquad
+ g=\frac{\beta\gamma}{q\ell}.
+\end{gather*}
+Here $X$ is adult consumption at replacement fertility, calculated directly
+from the budget. Suppose $X>0$ and $\nu\vartheta X>\chi$. The fertility
+condition then gives stationary young and old housing:
+\begin{equation}
+ h^*=\frac\kappa\nu\,
+ \frac{\nu(\alpha+\vartheta)X-\chi}{\nu\vartheta X-\chi},
+ \qquad h^{2*}=\frac{gX}{d}h^*,\qquad P^*=\frac d{h^*}.
+ \label{eq:simple_positive_cost_housing}
+\end{equation}
+The original feasibility and saving inequalities must still hold. In
+particular, strictly binding purchase rationing requires
+$(\alpha+\vartheta)X>\ell d+\chi/\nu$.
+
+Since $Y^*=\bar H/[h^*(1+gX/d)]$, differentiation yields:
+\begin{equation}
+ \frac{\partial\log Y^*}{\partial d}
+ =\frac1\rho\left[
+ \frac{g w_\chi}{d(d+gX)}-
+ \frac{\alpha\nu\chi\ell}
+ {(\nu\vartheta X-\chi)[\nu(\alpha+\vartheta)X-\chi]}
+ \right].
+ \label{eq:simple_primitive_population}
+\end{equation}
+Every abbreviation on the right is defined above from primitives. There is
+no borrowing multiplier or independently determined equilibrium price.
+Because $\partial d/\partial\phi>0$, looser credit raises stationary population
+precisely when the first bracketed term exceeds the second.
+
+The first term captures the decline in old housing relative to young housing.
+The second captures the extra young housing needed to maintain replacement
+fertility as goods become scarcer. At $\chi=0$, the second term disappears
+and the population sign is positive. At $\chi>0$, either sign is possible.
+
+For Appendix B's parameters with $\chi=.015$, the derivative in
+\eqref{eq:simple_primitive_population} is $0.25659$. Young housing is $1.12054$
+and old housing is $0.34141$; purchase rationing remains strict. With
+$\gamma=.001$ instead, the population derivative is $-0.02358$, still with a
+strictly binding purchase limit. These examples satisfy the original owner
+problem. They establish the two stationary signs; the second example is not
+an additional proved transition.
+
+\textbf{The welfare distinction is concrete.} In Appendix B's limiting
+stationary economy, young housing and fertility stay fixed when $d$ rises,
+while adult consumption and old housing fall. Differentiating the original
+owner lifetime value gives:
+\begin{equation}
+ \left.\frac{\partial W^O}{\partial d}\right|_{d=1}
+ =-\frac{1-q}{x^*}-\frac{\beta\gamma}{d}
+ =-\frac{289}{475}<0.
+\end{equation}
+Thus the demographic prediction and the compensated allocation result answer
+different questions. A larger stationary population is not itself a welfare
+improvement.
+
+\textbf{Verification.} The supporting files retain the full proof, scoped
+independent reviews, symbolic identities, and checks against the original
+dated household problems. Small finite transitions check the analytical
+response and initial-old accounting. These computations establish no
+calibrated policy magnitude or numerical bound for the theorem's neighborhood.
 
 \end{document}

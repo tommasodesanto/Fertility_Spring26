@@ -1,5 +1,98 @@
 # Simplified OLG: development plan and overnight record
 
+## September 5 continuation before the author's 9pm return — completed
+
+Start: 21:33 UTC, authorized when Tommaso said he would not be back before
+9pm America/New_York (01:00 UTC September 6). The analytical work and document verification were completed at 23:12 UTC;
+the source/output backup outcome is recorded in the daily memory note. The earlier
+eight-page simplicity pass remains a historical checkpoint. Its reading note
+is now ten pages, with a derived equilibrium Figure 2 and primitive transition
+conditions. All work remains outside the author-controlled manuscript.
+
+### Results and scope
+
+The new proof in `output/model/simplified_olg_amendments/local_transition_proof.md`
+starts from the exact original dated budgets in an all-owner, zero-child-cost,
+zero-property-tax demand limit. It retains initial old assets and titles rather
+than reoptimizing their past choices. Its example admits a local nonlinear
+converging transition, initial and all-date above-replacement fertility, and a
+larger final population. A uniform tail bound proves the finite-reform all-date
+sign in this example; pointwise positive derivatives alone would not suffice.
+
+The general result is stronger than the initial numerical parameter example.
+Writing all coefficients from primitives as in proof section 10, local
+convergence has the exact root condition
+\[
+(1-q)+(3+q)C>4D.
+\]
+With the maintained uniformly strict household branches, the initial cohort
+and actual pre-reform old demand select a unique local converging path. A
+separate exact initial-fertility test evaluates an explicit cubic at a point
+computed from primitives. Under \(q\ge1/2,r>1\), the simpler sufficient
+condition is
+\[
+(1-q)C[(1-q)+(1+q)C]>L[(1-q)-D+C].
+\]
+These are primitive conditions, not conditions on an unknown price or borrowing
+multiplier. The local theorem permits heterogeneous entry: owner quantities
+aggregate exactly by income and wealth means at the limit, and integration is
+smooth under uniform original private conditions. An explicit nondegenerate
+support is verified in section 9. The theorem admits small positive renter
+mass, child goods costs and property tax by a weighted infinite-sequence
+implicit-function argument that retains endogenous tenure and its added price
+leads. Neither the allowed neighborhood nor the reform size is numerically
+certified. Arbitrary heterogeneity crossing constraints and global continuation
+remain outside the theorem.
+
+Initial fertility and terminal population are separate signs. A second
+admissible economy has lower initial fertility and a larger final population.
+The all-date monotonic population result is therefore limited to the plotted
+example, not the whole family or the positive-renter extension. Separately,
+section 8 gives an explicit stationary population derivative with positive
+child costs and examples with both signs. The uncompensated credit reform
+lowers stationary household welfare in the plotted limiting economy:
+\(\partial_d W^O=-289/475\). This is not the direct compensated Pareto
+comparison and does not implement it automatically.
+
+### Verification and review record
+
+- Lead derivation against the original dated utility, budgets, demographic law,
+  normalized entrant distribution, tenure rule, inherited old state, and rebate.
+- Symbolic recurrence and boundary differentiation, rational root/sign bounds,
+  two algebraic stability arguments (direct roots and a unit-circle transform),
+  exact primitive stationary derivative, and uniform infinite-tail proof.
+- Five sequential read-only `reviewer_strong` passes, each with the profile's
+  20-minute limit and a distinct new deliverable: initial example; newly closed
+  operator/tail gaps; heterogeneity and positive-cost stationary formula;
+  general convergence under \(w>d\) and exact/sufficient fertility tests;
+  the final sharper stability condition, including zero/repeated roots. Each
+  completed within its 20-minute limit. The last report independently confirms
+  the section 10.4 algebra, alongside the lead’s second proof and symbolic/root
+  receipts. All requested scope and operator qualifications are incorporated.
+- One deterministic driver, no long search: eight finite original-equation
+  cases, three stationary sign cases, four-corner conditional/integration
+  checks, 270 declared coefficient cases including unstable ones, and a
+  negative-initial-fertility original-model counterexample. Finite terminal
+  closures only check arithmetic; they never substitute for the infinite-path
+  proof. The largest equilibrium residual is below \(2.3\times10^{-14}\),
+  central derivative error is \(1.48\times10^{-9}\), and 24/40-date paths
+  agree within \(4.45\times10^{-16}\).
+- The deliberately tiny rental cap caused one unscaled SLSQP check to fail
+  its success criterion. Scaling numerical choice units fixed the conditioning
+  without changing the original objective or constraints. Every final mode
+  passes and its JSON records the final driver hash.
+- Figure 2 now plots the analytical first-order formula, including the
+  second-cohort fertility hump. Earlier figures are preserved. The core
+  allocation figure and original flow/value notation remain unchanged.
+
+The final ten-page PDF was compiled without warnings or overflowing boxes,
+rendered, and inspected page by page. Its final SHA-256 is
+`d4f9316baead87946dc6af5f069493f710291f6ede40e362fc057028ee327c86`.
+Evidence and regeneration commands are indexed in
+`output/model/simplified_olg_amendments/README.md`. No planner permission,
+ownership preference, population-welfare objective, or quantitative-model
+change is adopted. The new theorem is a proposed theory extension for discussion.
+
 ## September 5 simplicity pass — completed
 
 Authorized while Tommaso is on a three-hour run. Start: 20:38 UTC; finish by

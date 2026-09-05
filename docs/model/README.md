@@ -5,10 +5,12 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 Current notes kept here:
 
 - `../../output/pdf/simplified_olg_simple_assessment.pdf` -- September 5
-  simplicity assessment, eight pages: the short housing-allocation proof,
-  distinct roles of borrowing and rental restrictions, explicit mixed-tenure
-  equilibria, fertility and population extensions, and two conceptual figures.
-  The population figure is accounting, not a solved equilibrium transition.
+  assessment, ten pages: the short housing-allocation proof, distinct roles
+  of borrowing and rental restrictions, explicit mixed-tenure equilibria,
+  and fertility/population extensions. Figure 2 now shows an analytical local
+  equilibrium response. Primitive stability and initial-fertility conditions,
+  a positive-child-cost population condition, heterogeneous-entry extension
+  and welfare distinctions are explicit. Global transitions remain open.
   Source: `../../latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`.
   Derivations and reviews: `simplified_olg_overnight_work.md` and
   `../../output/model/simplified_olg_amendments/README.md`.
