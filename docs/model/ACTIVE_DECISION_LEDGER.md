@@ -29,6 +29,51 @@ is now paused. He also asked for simpler, more transparent prose based on the
 recent chats. Technical language should be used only when necessary. The
 work record contains the three-check procedure and ongoing progress.
 
+**September 5 author criterion: use the fertility/OLG literature's powers.**
+Tommaso wants the authority grounded in established work and does not want to
+invent a bespoke planner to obtain the desired result. This criterion is an
+author instruction. The detailed transfer timing, eligibility, and initial-owner
+arrangements in our construction are not thereby accepted.
+
+The [reading guide](../../output/pdf/simplified_olg_efficiency_reading_guide.pdf)
+now has a fourth page mapping relevant precedents to the proposed housing
+benchmark. Auerbach--Kotlikoff provides the compensation method. Schoonbroodt
+and Tertilt (2014, JET, sections 5.2--5.3) explicitly use public transfers, debt,
+and taxes to overcome private intergenerational transfer constraints; their
+mechanism concerns fertility and parent-child resources. They distinguish
+implementing an efficient allocation from a Pareto improvement over the initial
+allocation. Boldrin--Montes (2005, ReStud; official Fed abstract/publication
+record checked) supplies the education-credit analogy for public financing
+across a person's life. Bishnu, Garg, Garg and Ray (2023, JEDC, sections 4--5)
+provide an endogenous-fertility education/pension example with lump-sum taxes
+and period-by-period budget balance. These are precedents for the authority's
+role, not proofs of our housing result or a single universally used planner.
+
+For a direct fertility application of compensation, Okamoto's June 2021
+working paper, Intergenerational Earnings Mobility and Demographic Dynamics,
+section 3.1, was read: compensation of existing households, payments to future
+households on entry, aggregate PV balance. Its subsequent 2022 publication
+was verified, but the full-text version inspected is the working paper. Do not
+claim that its per-capita welfare comparisons settle all variable-population
+welfare questions. Fehr--Ujhelyiova's 2011 working paper compares stationary
+policy outcomes; it is not evidence for complete-transition Pareto gains.
+
+**Working recommendation:** a stated adaptation of the intergenerational-transfer
+approach, with committed dated lump-sum taxes/transfers, public financing
+subject to an explicit budget/solvency restriction, private housing/tenure/saving
+choices and market clearing, the agreed physical restrictions, fixed individual
+fertility, and lifetime welfare of initial claimants and all future cohorts.
+Government financing may offset private credit constraints; unchanged mortgage
+shares must not be presented as unchanged effective financing opportunities.
+The original AK compensation timing is one payment to future households on
+entry. Our before-purchase/old-age pair is not automatically equivalent when
+liquidity constraints bind. Household/type eligibility, down-payment cash
+eligibility, and initial-owner taxation/compensation must be mapped explicitly.
+The passive outside title owner remains our accounting completion, not a
+literature requirement. Next: assess the existing construction against this
+named approach and isolate departures, rather than reopen a generic planner
+menu. No model amendments or additional proof claims were made in this pass.
+
 **September 5 proposed route back to the paper (not an author decision):**
 the author asked for next steps that keep the expanding literature discussion
 focused on the housing result. The desired claim remains: financial frictions
@@ -144,10 +189,10 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** assess the proposed compensation benchmark for W1/W4/I1,
-using the reading guide only where it resolves the planner's financial powers.
-The proposed four-step route above keeps this discussion tied to the housing
-claim. No new author decision is inferred from the proof, reading, or proposal.
+**Next discussion:** apply the author's literature-alignment criterion for
+W1/W4/I1. Map the existing proof to the intergenerational-transfer approach and
+isolate the housing-specific timing, eligibility and initial-owner assumptions.
+The author has chosen the criterion, not every proposed instrument detail.
 The direct-allocation benchmark remains available, and its complete first-best
 estate-settlement question remains separate. W3's real cost is tentative;
 U0's population interpretation and the two requested theory figures remain

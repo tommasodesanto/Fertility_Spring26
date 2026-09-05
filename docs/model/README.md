@@ -9,7 +9,8 @@ Current notes kept here:
   versus unrestricted Pareto comparisons, steady states versus transitions,
   compensation authorities, constrained efficiency, and population welfare.
   Source: `../../latex/JMP_DS_suggestions/simplified_olg_efficiency_reading_guide.tex`.
-  Three pages with a worked example and links to the primary literature.
+  Four pages: a worked example, primary references, and a fertility/OLG
+  precedent map distinguishing compensation from public financing across ages.
 
 - `../../output/pdf/simplified_olg_constrained_efficiency.pdf` -- latest
   September 5 focused result: complete local Pareto improvement under committed
