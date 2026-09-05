@@ -16,6 +16,49 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**September 5 external assessment returned; discussion pending.** Tommaso
+returned the independent agent's assessment and asked for elaboration. The
+verbatim assessment is saved in
+`output/model/simplified_olg_amendments/external_discussion_review.md`.
+It endorses the existing conditional algebra and proposes describing the
+intervention as public down-payment finance, with repayment through later
+taxes and a present-value government budget. No author acceptance follows.
+
+The loan interpretation is supported locally for cohorts after date zero:
+\(\mathrm d\ell^Y=(1-\phi)P\,\mathrm dh\) and
+\(-q\,\mathrm d\ell^O=[(1-\phi)P+MV^Y-u]\,\mathrm dh\). Existing exact
+compensation collects the housing gain as an additional repayment; leaving
+some gain with young owners is economically natural. The proposed pure-loan
+accounting identity is also correct to first order: with
+\(\rho=1+\beta(1+\gamma+\omega_B)\), \(B=1+\beta(1+\omega_B)\), and
+\(\mu=\beta\gamma/(q\rho)\), we have
+\(B/[\rho(1-q\mu)]=1\). However, implementing its allocation for the first
+young cohort needs a separate net transfer to cover its changed initial
+service cost and rebate (\(h\,\mathrm du_0-\mathrm dT_0\) to first order
+when future prices/rebates are fixed).
+A loan alone does not supply it. Finite fees, complete compensation, initial
+claims, solvency and uniform future-cohort incentives still need a proof for
+that proposed implementation; the identity is not that proof.
+
+Lead assessment: public collection of future resources is the useful proposed
+power, and an unqualified constrained-inefficiency headline should be avoided.
+But failure of one initial round of transfers does not establish that public
+loans are necessary, or constrained efficiency under every other instrument
+class. Government borrowing may replace the passive owner's financing role;
+its original titles and promised estate payments still require accounting.
+Loan-contingent eligibility changes the household's options and requires fresh
+participation/tenure checks. With freely chosen fertility, first-order changes
+in births and cohort sizes prevent automatically carrying over the existing
+fixed-fertility market-clearing construction. Literature supports the broad
+public-financing idea, not automatic equivalence of these implementations.
+
+**Next discussion on this assessment:** whether the author wants the authority
+to advance purchase cash and enforce repayment from the same household's
+future resources, subject to full compensation and public solvency. Recommend
+considering this permission explicitly; no revision or broader theorem is
+accepted. Direct allocation, fertility signs, population transitions and the
+two conceptual figures remain recorded separately.
+
 **September 5 author correction:** preserve the author's chosen notation,
 separate flow utilities, explicit value functions, and variable names. The
 amendment pass did not authorize replacing those conventions. Restore them

@@ -1,5 +1,14 @@
 # Simplified OLG amendment checks
 
+## September 5: external discussion assessment
+
+`external_discussion_review.md` preserves the independent agent's response
+returned by the author. It recommends public down-payment finance and revising
+the interpretation of the existing conditional proof. It is a discussion input,
+not acceptance of planner powers or verification of its proposed anonymous
+pure-loan implementation. The lead's qualifications are in the live decision
+ledger; the existing mathematical sources and receipts remain unchanged.
+
 ## September 5: focused constrained-efficiency result (latest)
 
 The author asked to settle constrained inefficiency before moving to other
