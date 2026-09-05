@@ -463,7 +463,7 @@ def test_period_tfr_reconstructs_parity_flows() -> None:
         g_pre=g_pre,
         g_post_fertility=g_post,
         births=3.0 * explicit_by_age,
-        policy=SimpleNamespace(fert_probs=fert_probs),
+        policy=SimpleNamespace(fert_probs=fert_probs, fert2_probs=P._fert2_probs.copy()),
     )
     try:
         result = calibration.period_fertility_diagnostics(evaluation, P)
@@ -576,11 +576,12 @@ def test_dated_first_birth_branch_uses_origin_and_destination_kernels() -> None:
         advance_policy_sentinels.append(float(np.asarray(loc_probs).reshape(-1)[0]))
         return cohort
 
-    def apply_continuation(cohort, fert_probs, parameters):
+    def apply_continuation(cohort, fert_probs, parameters, fert2_probs):
         # The control branch is never passed through this fertility operator.
         assert float(np.sum(cohort[..., 0, :])) == 0.0
         assert float(np.asarray(fert_probs).reshape(-1)[0]) == 33.0
-        assert float(np.asarray(parameters._fert2_probs).reshape(-1)[0]) == 77.0
+        assert float(np.asarray(fert2_probs).reshape(-1)[0]) == 77.0
+        assert float(np.asarray(parameters._fert2_probs).reshape(-1)[0]) == -99.0
         fertility_calls.append(float(np.sum(cohort)))
         return cohort.copy(), 0.1, np.asarray([0.1])
 
@@ -628,7 +629,7 @@ def test_dated_first_birth_branch_uses_origin_and_destination_kernels() -> None:
         use_numba_scatter=False,
         use_age_survival=True,
         survival_probs=np.asarray([0.8]),
-        _fert2_probs=np.asarray([77.0]),
+        _fert2_probs=np.asarray([-99.0]),
     )
     g_pre = np.zeros((1, 1, 1, 2, 1, 2, 2))
     g_pre[0, 0, 0, 0, 0, 0, 0] = 2.0
@@ -655,6 +656,7 @@ def test_dated_first_birth_branch_uses_origin_and_destination_kernels() -> None:
     destination_policy.price = np.asarray([2.0])
     destination_policy.loc_probs = np.asarray([22.0])
     destination_policy.fert_probs = np.full_like(fert_probs, 33.0)
+    destination_policy.fert2_probs = np.asarray([77.0])
     destination = SimpleNamespace(policy=destination_policy)
     try:
         branch = calibration.begin_dated_first_birth_housing_branch(

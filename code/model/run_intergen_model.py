@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
-"""One-click runner for the current June 2026 intergen model.
+"""Historical June 2026 one-shot intergen diagnostic runner.
 
-Open this file and run it. It runs the active one-market intergenerational
-housing-fertility model from the saved current diagnostic theta, then writes a
-mechanics packet with plots and tables under `output/model/`.
-
-This is the file to use when someone asks: "run the model and show me the
-results." It is diagnostic, not a production calibration search.
+This preserves the June source, target set and grid for historical inspection.
+For the maintained sequential dated calibration and its saved graph packet,
+read CALIBRATION_STATUS.md and code/model/intergen_eqscale_seq_optimized/README.md.
+This command does not run the maintained calibration.
 """
 
 from __future__ import annotations
@@ -22,16 +20,16 @@ from pathlib import Path
 
 
 # =============================================================================
-# Current run settings
+# Historical June run settings
 # =============================================================================
 
-# Saved June 23 current/balanced diagnostic theta.
+# Saved June 23 balanced diagnostic theta.
 SOURCE_RECORD = "output/model/intergen_room_distribution_current_best_20260623/summary.json"
 
 # Output folder. Change this if you want to preserve several named runs.
 OUTPUT_FOLDER = "output/model/intergen_model_run_current"
 
-# Active target set used for target/model/gap tables.
+# Historical target set used for target/model/gap tables.
 TARGET_SET = "candidate_replacement_young_old_roomgap_v1"
 
 # Main model grid. Keep rental support below the upper owner rungs: the intended
@@ -98,9 +96,9 @@ def main() -> None:
             cmd.extend(["--skip-standard-diagnostics", "--skip-contact-sheet", "--quick-first-look-only"])
 
     if REFRESH_PLOTS_FROM_SAVED_SOLUTION:
-        print("Refreshing current one-market intergen graphs from saved solution", flush=True)
+        print("Refreshing historical June one-shot graphs from saved solution", flush=True)
     else:
-        print("Running current one-market intergen model", flush=True)
+        print("Running historical June one-shot intergen model", flush=True)
     print(f"Started: {start_stamp}", flush=True)
     print(f"Source theta: {repo_root / SOURCE_RECORD}", flush=True)
     print(f"Output folder: {repo_root / OUTPUT_FOLDER}", flush=True)

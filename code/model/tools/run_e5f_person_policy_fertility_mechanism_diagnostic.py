@@ -179,7 +179,7 @@ def fertility_attempt(
         )
         scale = float(parameters.kappa_fert)
     elif 1 <= parity < int(parameters.n_parity) - 1 and child_state <= parity:
-        continuation = getattr(parameters, "_fert2_probs", None)
+        continuation = calendar.policy_continuation_birth_probs(policy, parameters)
         if continuation is None:
             raise RuntimeError("Continuation-birth probabilities were not retained")
         probability = float(

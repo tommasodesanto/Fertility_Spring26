@@ -61,14 +61,25 @@ and executable probes in `output/model/e5f_code_architecture_audit_20260905a/`.
 The report maps the active path and gives a returning-author reading guide;
 it does not certify every historical or experimental route.
 
-**Outstanding correctness repair:** calendar `PolicyBundle` omits later-birth
-probabilities, while the forward operator reads mutable `P._fert2_probs`.
+**Correctness repair in the working checkout:** calendar `PolicyBundle` now
+owns copied later-birth probabilities and passes them explicitly to fertility
+and its measurement. Nine regression tests, eighteen accounting checks and five
+compiled saved-state replays pass. The full five-date historical replay also
+passes, exactly reproducing all twelve target rows, all parameter/bound rows
+and 253 saved numeric history entries. Torch jobs `17004440` and `17004455`
+are complete; no production result or parameter is promoted.
+The final repaired scientific bundle is
+`33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3`.
+The frozen production source is retained unchanged. Before the repair,
+`PolicyBundle` omitted later-birth probabilities, while the forward operator read
+mutable `P._fert2_probs`.
 An old policy reused after another price solve can therefore mix policies.
 The independent probe and lead replay reproduce the API defect. No affected
 task_010 result is demonstrated: none of the 55 saved five-policy dates records
 a tight-market fallback, and the fitted history invalidates warm starts as
-preferences change each date. Repair and test saved-policy/retry consistency
-before relying on vulnerable reuse paths; exact repetition alone is insufficient.
+preferences change each date. Saved-policy/retry consistency is now tested in the repair packet
+`output/model/e5f_policy_cleanup_verification_20260905a/`; exact repetition alone
+would have been insufficient to diagnose the original defect.
 
 The review also confirms that the package's supposedly current runner invokes
 a June model, verbose fertility output retains a wrong factor of two for literal
@@ -76,7 +87,9 @@ parity, and failed boundary searches repeat an identical expensive evaluation.
 Authoritative production target tables do not use that console formula. Fifteen
 existing pure test functions and four independent invariants pass, independently
 repeated by the lead, with Numba JIT disabled. Native pytest exited 139 without
-test output; this is not a passing compiled suite. No model source was edited.
+test output; this is not a passing compiled suite. That original review edited no model source. The subsequent focused patch
+repairs policy reuse and repeated boundary expansion, and labels the historical
+runner and package instructions. The verbose fertility formula remains outstanding.
 
 **Outstanding specification clarification:** elasticity 0.63 is applied to the
 dated supply rule after the inherited old equilibrium is built with elasticity

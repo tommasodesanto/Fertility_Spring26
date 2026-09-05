@@ -1,0 +1,24 @@
+--- a/code/model/tools/run_dynamic_population_transition.py
++++ b/code/model/tools/run_dynamic_population_transition.py
+@@ -505,4 +504,0 @@
+-    p_min = max(float(getattr(P, "p_min", 1e-4)), 1e-8)
+-    p_max = float(getattr(P, "p_max", 100.0))
+-    if not p_min <= float(price_guess) <= p_max:
+-        raise ValueError("Initial housing price must lie within the declared price bounds")
+@@ -531 +527,3 @@
+-    lo = hi = float(price_guess)
++    p_min = max(float(getattr(P, "p_min", 1e-4)), 1e-8)
++    p_max = float(getattr(P, "p_max", 100.0))
++    lo = hi = float(np.clip(price_guess, p_min, p_max))
+--- a/code/model/tools/test_calendar_policy_reuse.py
++++ b/code/model/tools/test_calendar_policy_reuse.py
+@@ -143,9 +142,0 @@
+-    def test_out_of_bounds_guess_fails_before_solving(self):
+-        with patch.object(calendar, 'evaluate_period') as evaluate:
+-            with self.assertRaisesRegex(ValueError, 'price bounds'):
+-                calendar.clear_scalar_housing_market(np.ones(1), .8,
+-                    NS(I=1, p_min=.9, p_max=1.1), np.array([0., 1.]), NS(),
+-                    calendar.SolveCounter(), 1e-4, 2,
+-                    calendar.HousingSupplyRule('fixed-stock', 1., 1., 0.))
+-        evaluate.assert_not_called()
+-

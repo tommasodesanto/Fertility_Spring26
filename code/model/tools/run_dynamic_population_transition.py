@@ -76,6 +76,25 @@ class PolicyBundle:
     fert_value: np.ndarray
     price: np.ndarray
     maps: TransitionMaps
+    fert2_probs: np.ndarray | None = None
+
+    def __post_init__(self) -> None:
+        # The Bellman API returns continuation births on P. Own a snapshot so
+        # another price solve cannot change this policy's forward operator.
+        if self.fert2_probs is not None:
+            self.fert2_probs = self.fert2_probs.copy()
+
+
+def policy_continuation_birth_probs(
+    policy: PolicyBundle, P: SimpleNamespace,
+) -> np.ndarray | None:
+    probabilities = getattr(policy, "fert2_probs", None)
+    if bool(getattr(P, "sequential_births", False)) and probabilities is None:
+        raise RuntimeError(
+            "Sequential policy lacks continuation-birth probabilities; rebuild "
+            "the policy from its matching solution or solve it again."
+        )
+    return probabilities
 
 
 @dataclass
@@ -290,6 +309,7 @@ def policy_from_solution(
         solution.fert_value,
         np.asarray(price, dtype=float).reshape(-1).copy(),
         build_transition_maps(price, P, b_grid, shared),
+        fert2_probs=getattr(solution, "fert2_probs", None),
     )
 
 
@@ -318,6 +338,7 @@ def solve_policy(
         fert_value,
         price.copy(),
         build_transition_maps(price, P, b_grid, shared),
+        fert2_probs=getattr(P, "_fert2_probs", None),
     )
 
 
@@ -379,6 +400,7 @@ def apply_fertility(
     g_pre: np.ndarray,
     fert_probs: np.ndarray,
     P: SimpleNamespace,
+    fert2_probs: np.ndarray | None = None,
 ) -> tuple[np.ndarray, float, np.ndarray]:
     out = g_pre.copy()
     births = 0.0
@@ -429,8 +451,11 @@ def evaluate_period(
     supplied_policy: PolicyBundle | None = None,
 ) -> PeriodEvaluation:
     policy = supplied_policy or solve_policy(price, P, b_grid, shared, counter)
+    continuation = policy_continuation_birth_probs(policy, P)
+    if not np.array_equal(np.asarray(price).reshape(-1), policy.price):
+        raise ValueError("Supplied policy price does not match the requested price")
     gated, projected_mass = gate_pre_fertility_distribution(g_pre, policy, P, b_grid, shared)
-    g_post, births, births_by_loc = apply_fertility(gated, policy.fert_probs, P)
+    g_post, births, births_by_loc = apply_fertility(gated, policy.fert_probs, P, continuation)
     g_current = model.realize_current_cross_section(
         g_post,
         policy.loc_probs,
@@ -477,6 +502,10 @@ def clear_scalar_housing_market(
 ) -> PeriodEvaluation:
     if P.I != 1:
         raise NotImplementedError("The calendar transition currently supports the circulated one-market model only.")
+    p_min = max(float(getattr(P, "p_min", 1e-4)), 1e-8)
+    p_max = float(getattr(P, "p_max", 100.0))
+    if not p_min <= float(price_guess) <= p_max:
+        raise ValueError("Initial housing price must lie within the declared price bounds")
 
     def full(price: float, supplied: PolicyBundle | None = None) -> PeriodEvaluation:
         return evaluate_period(
@@ -499,20 +528,24 @@ def clear_scalar_housing_market(
     first_excess = signed(first)
     del first
 
-    p_min = max(float(getattr(P, "p_min", 1e-4)), 1e-8)
-    p_max = float(getattr(P, "p_max", 100.0))
-    lo = hi = float(np.clip(price_guess, p_min, p_max))
+    lo = hi = float(price_guess)
     ex_lo = ex_hi = first_excess
     expansion = 1.18
     for _ in range(18):
         if ex_lo * ex_hi <= 0.0:
             break
         if first_excess > 0.0:
-            hi = min(p_max, hi * expansion)
+            next_hi = min(p_max, hi * expansion)
+            if next_hi == hi:
+                break
+            hi = next_hi
             candidate = full(hi)
             ex_hi = signed(candidate)
         else:
-            lo = max(p_min, lo / expansion)
+            next_lo = max(p_min, lo / expansion)
+            if next_lo == lo:
+                break
+            lo = next_lo
             candidate = full(lo)
             ex_lo = signed(candidate)
         if candidate.relative_market_residual <= market_tol:
@@ -579,7 +612,9 @@ def reconstruct_stationary_pre_fertility(
             P.Pi_child if stochastic else None,
             Pi_z,
         )
-    reconstructed_post, births, _ = apply_fertility(g_pre, policy.fert_probs, P)
+    reconstructed_post, births, _ = apply_fertility(
+        g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P)
+    )
     diagnostics = {
         "stationary_post_fertility_nesting_l1": float(np.sum(np.abs(reconstructed_post - saved_post))),
         "stationary_post_fertility_nesting_max_abs": float(np.max(np.abs(reconstructed_post - saved_post))),

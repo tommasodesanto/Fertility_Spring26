@@ -409,6 +409,7 @@ def policy_from_objects(
         fert_value=fert_value,
         price=price_array,
         maps=calendar.build_transition_maps(price_array, P, b_grid, shared),
+        fert2_probs=getattr(P, "_fert2_probs", None),
     )
 
 

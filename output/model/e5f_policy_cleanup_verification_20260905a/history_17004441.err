@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_policy_cleanup_verification_20260905a/history.py", line 16, in <module>
+    assert checks.digest(contract['reference_summary']) == contract['reference_summary_sha256']
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/run_e5f_bounded_calibration_refinement.py", line 37, in digest
+    with Path(path).open("rb") as stream:
+         ~~~~~~~~~~~~~~~^^^^^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905a/output/model/e5f_morning_refinement_20260905a/round2/task_009/summary.json'

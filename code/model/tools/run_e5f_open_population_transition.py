@@ -674,6 +674,7 @@ def apply_sequential_fertility(
     g_pre: np.ndarray,
     fert_probs: np.ndarray,
     P: SimpleNamespace,
+    fert2_probs: np.ndarray | None = None,
 ) -> tuple[np.ndarray, float, np.ndarray]:
     """Apply at most one sequential birth per household during the period."""
     model = calendar.model
@@ -684,7 +685,7 @@ def apply_sequential_fertility(
 
     out = np.asarray(g_pre, dtype=float).copy()
     fecundity = model.get_fecundity_by_age(P)
-    continuation = getattr(P, "_fert2_probs", None)
+    continuation = fert2_probs
     if continuation is None:
         raise RuntimeError("Sequential continuation-birth probabilities are unavailable")
     births = 0.0

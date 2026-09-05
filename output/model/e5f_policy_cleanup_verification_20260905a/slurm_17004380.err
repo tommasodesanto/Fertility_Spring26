@@ -1,0 +1,30 @@
+test_each_exhausted_boundary_is_evaluated_only_once (__main__.BracketTests.test_each_exhausted_boundary_is_evaluated_only_once) ... ok
+test_root_at_boundary_still_returns_success (__main__.BracketTests.test_root_at_boundary_still_returns_success) ... ok
+test_all_factories_capture_the_matching_continuation (__main__.PolicyReuseTests.test_all_factories_capture_the_matching_continuation) ... ok
+test_failed_market_retry_uses_original_policy (__main__.PolicyReuseTests.test_failed_market_retry_uses_original_policy) ... ok
+test_legacy_one_shot_does_not_require_continuation (__main__.PolicyReuseTests.test_legacy_one_shot_does_not_require_continuation) ... ok
+test_old_incomplete_sequential_checkpoint_fails_without_using_P (__main__.PolicyReuseTests.test_old_incomplete_sequential_checkpoint_fails_without_using_P) ... ok
+test_reuse_after_another_solve_and_pickle_preserves_entire_distribution (__main__.PolicyReuseTests.test_reuse_after_another_solve_and_pickle_preserves_entire_distribution) ... ok
+test_wrong_price_is_rejected (__main__.PolicyReuseTests.test_wrong_price_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.047s
+
+OK
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_policy_cleanup_verification_20260905a/replay.py", line 111, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_policy_cleanup_verification_20260905a/replay.py", line 48, in main
+    assert sha(path) == case['sha256']
+           ~~~^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_policy_cleanup_verification_20260905a/replay.py", line 24, in sha
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+                          ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_abc.py", line 625, in read_bytes
+    with self.open(mode='rb') as f:
+         ~~~~~~~~~^^^^^^^^^^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_overnight_independent_verification_20260905a/numerical_smoke/dated_state.pkl'

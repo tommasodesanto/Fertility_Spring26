@@ -113,7 +113,7 @@ def standard_diagnostics(packet, out, *, validate_production_young=True):
     )
     for key in ("V", "c_pol", "hR_pol", "bp_pol", "tenure_choice", "tenure_probs", "loc_probs", "fert_probs", "fert_value"):
         setattr(stats, key, getattr(p, key))
-    stats.fert2_probs = P._fert2_probs
+    stats.fert2_probs = calendar.policy_continuation_birth_probs(p, P)
     stats.g, stats.b_grid = g, bg
     stats.type_values,stats.type_weights,_=model.income_transition_values(P)
     stats.owner_asset_price = p.price
@@ -262,7 +262,7 @@ def policy_array_audit(packet, out):
         baseline.write_csv(out/"value_monotonicity_worst.csv",rows)
     probabilities={}
     for name,arr in (("tenure",p.tenure_probs),("first_birth",p.fert_probs),
-                     ("continuation_birth",P._fert2_probs),("location",p.loc_probs)):
+                     ("continuation_birth",calendar.policy_continuation_birth_probs(p, P)),("location",p.loc_probs)):
         if arr is not None:
             probabilities[name]=dict(minimum=float(np.min(arr)),maximum=float(np.max(arr)),
                          nonfinite=int(np.count_nonzero(~np.isfinite(arr))))

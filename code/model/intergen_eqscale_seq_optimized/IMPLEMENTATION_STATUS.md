@@ -1,6 +1,9 @@
-# Implementation Status: Intergenerational Housing Fertility
+# Historical June implementation record
 
-Updated: 2026-06-25
+Recorded: 2026-06-25. This file describes the historical one-shot scaffold.
+For the maintained sequential dated model, read
+[`../../../CALIBRATION_STATUS.md`](../../../CALIBRATION_STATUS.md) and this
+package's `README.md`. Statements below about "current" refer to June 2026.
 
 ## 2026-06-25 audit fixes (committed to `main`)
 

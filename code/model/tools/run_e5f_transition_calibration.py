@@ -779,7 +779,7 @@ def period_fertility_diagnostics(
     flows = np.zeros((int(P.J), n_progressions), dtype=float)
     age_mass = np.sum(evaluation.g_pre, axis=(0, 1, 2, 4, 5, 6))
     fecundity = model.get_fecundity_by_age(P)
-    continuation = getattr(P, "_fert2_probs", None)
+    continuation = calendar.policy_continuation_birth_probs(evaluation.policy, P)
     if continuation is None:
         raise RuntimeError("Sequential continuation-birth probabilities are unavailable")
     settled = model.readiness_settled_state(P)
@@ -1171,6 +1171,7 @@ def finish_dated_first_birth_housing_branch(
         treated_pre,
         evaluation.policy.fert_probs,
         P,
+        calendar.policy_continuation_birth_probs(evaluation.policy, P),
     )
     treated_post, treated_fertility_gate = normalize_distribution_mass_roundoff(
         treated_post,

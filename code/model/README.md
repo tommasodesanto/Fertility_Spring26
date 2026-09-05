@@ -3,6 +3,23 @@
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
+## Start here
+
+[`../../CALIBRATION_STATUS.md`](../../CALIBRATION_STATUS.md) owns the current
+calibration and policy status. The [sequential package reading map](intergen_eqscale_seq_optimized/README.md)
+points to the few files needed to follow the maintained calculation and to the
+saved diagnostic PDF. `run_intergen_model.py` is a historical June one-shot
+runner. The dated sections below preserve development context; their old losses,
+"current" labels and defaults do not override the canonical status.
+
+The calendar policy reuse regression is
+`tools/test_calendar_policy_reuse.py`; run it with the project Python and
+`NUMBA_DISABLE_JIT=1` for the local pure checks. The compiled replay evidence and
+exact source contracts are in
+`../../output/model/e5f_policy_cleanup_verification_20260905a/README.md`.
+Sequential saved policies now need their own continuation-birth probabilities;
+old incomplete bundles must be rebuilt from their matching solution or re-solved.
+
 ## Current E5F calibration and policy audit utilities
 
 `tools/analyze_e5f_transition_calibration_panel.py` validates a complete

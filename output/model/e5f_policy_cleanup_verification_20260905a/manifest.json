@@ -1,0 +1,92 @@
+{
+  "cases": [
+    {
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_overnight_independent_verification_20260905a/numerical_smoke/dated_state.pkl",
+      "name": "production_2023",
+      "sha256": "bbe10a21a843facaf2bceed56e89281e00992d632cddab640ff0c572d3eb494f"
+    },
+    {
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_morning_refinement_20260905a/round2/task_009/dated_state.pkl.gz",
+      "name": "review_candidate",
+      "sha256": "07634f5557c4e630fa27b66b9978a8274a4b776994d70b46ecfc8f9481dfaf29"
+    },
+    {
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_overnight_independent_verification_20260905a/global_saving_equilibrium/cases/local_baseline_separately_cleared/case_state.pkl.gz",
+      "name": "baseline",
+      "sha256": "38746c9ed544f906a18f30b0c0a06338ee8c3f04f3f609c4242ffa867f45a07e"
+    },
+    {
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_overnight_independent_verification_20260905a/global_saving_equilibrium/cases/local_supply-plus-20_separately_cleared/case_state.pkl.gz",
+      "name": "supply-plus-20",
+      "sha256": "4858340de63fb6a92e08c1e0afe6baa5a02449013389f2b604ba193dbe8d6cfa"
+    },
+    {
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/e5f_overnight_independent_verification_20260905a/global_saving_equilibrium/cases/local_dependent-child-ltv95_separately_cleared/case_state.pkl.gz",
+      "name": "dependent-child-ltv95",
+      "sha256": "470d9c221bae314c4b5cef3f3d976755f1fcb5c3b0978cc9e0e5743dff7ad156"
+    }
+  ],
+  "helper_sha256": {
+    "run_e5f_independent_numerical_audit.py": "b9eb7e33b284d8937f48f22e1f1375e6221fb711c29c1f09bdac486f342f3345",
+    "test_calendar_policy_reuse.py": "fe7a404e4539220f682a39a51eaac2c961f94a41c771ed8370b07c9d79ee4003",
+    "test_e5f_transition_accounting.py": "5fcdf197964b08e9cb801d62ff9494ad38b00445cf6fc3c8ec96e4f299edca35"
+  },
+  "replay_sha256": "24fce2b2c80b9cd8d7d58acbb8a17e0240ace4362e0aee045220b626409dbc6f",
+  "schema": "calendar_policy_cleanup_replay_v1",
+  "scientific_contract": {
+    "bundle_sha256": "c6746d240c829d7efe9769be211c1a57402765e8bd7f913289bce5076bad5a60",
+    "files": {
+      "calendar_operator": "d46a102eed8d2705bd2799a9930ef6eaf7ff771f1b5a8fad929631f323edf2a8",
+      "closure_audit": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "e5f_transition_operator": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "sequential_package/__init__.py": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "sequential_package/audit_timing_repaired_readout.py": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "sequential_package/benchmark_e1.py": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "sequential_package/build_e2_packet.py": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "sequential_package/build_e5f_psinneg_iteration_packet.py": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "sequential_package/build_e6_decision_tables.py": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "sequential_package/build_e6_l1_comparison.py": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "sequential_package/build_e6_plain_comparison.py": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "sequential_package/build_e6_winner_diagnostics.py": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "sequential_package/calibration.py": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "sequential_package/cli.py": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "sequential_package/collect_e1.py": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "sequential_package/collect_e5_probe.py": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "sequential_package/diagnostics.py": "96e82c012df3615fa33c3b04126f409a58bc77e42146c018b07317517663a113",
+      "sequential_package/e1_profile.py": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "sequential_package/e5_maturation_repair.py": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "sequential_package/e5_profile.py": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "sequential_package/e5_young_ownership_profile.py": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "sequential_package/e5f_floor_profile.py": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "sequential_package/e5f_income_entry_profile.py": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "sequential_package/e6_plain_weighting.py": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "sequential_package/e6a_profile.py": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "sequential_package/e6b_profile.py": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "sequential_package/e6c_profile.py": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "sequential_package/externals.py": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "sequential_package/kernels.py": "dede2128339131dba4ef5bc1575aa92fbf6fe30f2f63a81aae4800b0726e950f",
+      "sequential_package/local_panel.py": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "sequential_package/parameters.py": "8ffa743f6bcc22e42f24e2f846c187f19d006813a3795dc4a935d09d2fbfc7a6",
+      "sequential_package/parity_panel_e1.py": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "sequential_package/production_profile.py": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "sequential_package/promotion_collect_e1.py": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "sequential_package/promotion_worker_e1.py": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "sequential_package/run_e1_chain.py": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "sequential_package/run_e5_wealth_slice.py": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "sequential_package/run_e5b_autopsy.py": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "sequential_package/run_e5f_floor_strict_smoke.py": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "sequential_package/run_e6a_fecundity_tail_frontier.py": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "sequential_package/run_e6b_income_level_diagnostic.py": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "sequential_package/run_e6c_projection_diagnostic.py": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "sequential_package/run_e6c_timing_jacobian.py": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "sequential_package/run_family_gap_scan.py": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "sequential_package/run_fertility_frontier_scan.py": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "sequential_package/run_seq_smoke.py": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "sequential_package/solver.py": "dfccca23781913316bcbb024b5143ee54286038c7a3906bcdb1861fcc08cd517",
+      "sequential_package/state_layout.py": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "sequential_package/target_system.py": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "sequential_package/utils.py": "f86c52633ec0f7d3ccad5e922a78f387ff637bd42a294ce4ecc3084eb5bc9ff9",
+      "transition_calibration_driver": "b0efe58a39d2bdf45db0863f76e42955d65f0720a2ba1cf23e222ae22116c330"
+    }
+  }
+}

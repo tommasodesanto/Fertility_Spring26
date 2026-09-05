@@ -6,7 +6,11 @@ date: "5 September 2026"
 ---
 
 
-**5 September 2026. Read-only first pass, performed while a separate agent runs the authorized calibration refinement.**
+**5 September 2026. Original read-only review, followed by a focused repair.**
+
+The closing repair addendum records the subsequent saved-policy fix, bounded-price
+search cleanup and corrected reading map. Findings and source-line references in
+the original review below describe the frozen pre-repair code.
 
 The code supports continued, carefully checked calibration work. I did not find a new defect that invalidates the selected calibration or its saved five-policy comparison. I did find a reproducible state-management defect that can corrupt a reused policy after another price evaluation, misleading fertility output, and a failure path that repeats an identical expensive calculation. These deserve targeted repairs before more elaborate policy experiments.
 
@@ -219,3 +223,63 @@ services, the dated supply override and the legacy fertility log were checked
 against the frozen source. The review's distinction between a demonstrated API
 defect and an affected production result is retained. No solver repair or
 production promotion is part of this document.
+
+\clearpage
+
+## Repair addendum: the first practical cleanup
+
+The author's follow-up asked for obvious improvements with correctness first.
+This patch changes the calendar policy interface and removes redundant work. It
+does not change household preferences, constraints, the saving optimizer, target
+values, weights, parameter bounds, grids or acceptance tolerances.
+
+**C1 repaired: saved household decisions carry all birth probabilities.** All
+three policy factories now retain their own copy of later-birth probabilities.
+The calendar fertility operator, dated first-birth housing branch and diagnostic
+readers use that copy explicitly. A new solve can no longer change the birth
+probabilities used when an earlier policy is reused. Old incomplete sequential
+policy objects fail clearly and must be rebuilt from their matching solution or
+solved again; no automatic imputation from mutable parameter state is allowed.
+A policy supplied at a different price is also rejected. Callers still own
+invalidation when preferences or policy primitives change; the independent
+follow-up traced the maintained callers without finding another blocker.
+
+**C4 repaired for bracket expansion.** When expansion reaches a price bound, the
+search evaluates that bound once and then reports failure if no root is bracketed.
+The isolated failure example falls from nineteen evaluations at two prices to
+two evaluations, with the same explicit failure. This is a saving on that
+failure path, not a measured overall speed multiplier. Initial prices outside
+the declared bounds fail before solving. The redundant final bisection-midpoint
+evaluation remains a small separate cleanup.
+
+**C2 clarified: one short reading map.** The sequential package README points to
+canonical status, the household solver, dated target measurement, population
+operators and the existing diagnostic PDF. The June runner and implementation
+record are explicitly historical. Inspecting the saved result needs no new
+solve. Historical executable routes are preserved for reproducibility.
+
+**Verification.** Nine focused regression checks and eighteen existing accounting
+checks pass locally and on Torch. Five full compiled Bellman replays exactly
+reproduce every saved policy array, continuation probability, distribution,
+birth total and market residual: the production 2023 state, the morning review
+candidate, and the baseline, supply and credit diagnostic impacts. Reuse and
+serialization/reload remain exact after deliberately corrupting the solver's
+scratch probabilities. Every replay writes the unchanged seventeen-graph packet.
+The complete five-date historical replay also reproduces all twelve target rows,
+all parameter and bound rows, and 253 numeric history entries exactly. Complete
+tables and receipts are in the repair evidence folder.
+
+**Still outstanding.** C3, the misleading verbose fertility formula, is unchanged.
+Separating old and experimental routes, splitting large functions, consolidating
+duplicate modules and reducing memory use need a separate profiled pass. Keeping a
+copied continuation array adds about 23.5 MB per retained production policy;
+that cost buys correct reuse and should precede more aggressive caching.
+The interpretation of the initialization elasticity and the economic issues
+in the review remain open. No calibration or policy result is promoted by this patch.
+
+The reproducible repair packet is
+`output/model/e5f_policy_cleanup_verification_20260905a/README.md`.
+Its final scientific bundle is
+`33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3`.
+Original source and target fingerprints remain intact in their frozen packets;
+production commands must continue to verify their own declared source contract.
