@@ -702,6 +702,23 @@ The author need not repeat this revisit request for it to remain active.
 **Next discussion:** W3, whether and how real moving or transaction costs enter
 the core reallocation claim. No cost specification or value is selected here.
 
+### W3 discussion: real costs of reallocating housing
+
+Following the author's request to continue, the next decision is whether the
+simple theory should allow a real cost of reallocation. Compensation transfers
+purchasing power between households; moving services and administrative work
+also consume resources.
+
+**Lead recommendation, not yet adopted:** retain a simple nonnegative real
+reallocation cost in the theoretical benchmark and require the gain from the
+reallocation to exceed it. The costless case remains a special case. Exact
+functional form, incidence, and financing remain for the later plan; no value
+is calibrated now. A marginal cost and a fixed cost per move are different
+objects: a local marginal-surplus test does not by itself cover a discrete
+move with a fixed cost. Preserve that distinction when developing the result.
+This recommendation does not reopen the parked common-rebate gains-tax
+extension or finalize W4's provisional compensation instrument.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -773,6 +790,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso asked what comes next and how many decisions remain. | Counted 18 entries: 6 agreed directions, 3 parked, 9 unresolved. Grouped the latter into four substantive topics plus presentation and planning; opened D1 for discussion without adopting or developing a theorem. |
 | 2026-09-04 | Tommaso preferred the broadest transition result and expected conditions not to be very stringent. | D1 objective recorded without assuming mild hypotheses or a global theorem. Updated count to 7 agreed directions, 3 parked, 8 unresolved; W4/I1 compensation instruments become the next discussion. |
 | 2026-09-04 | Tommaso provisionally accepted the compensation recommendation while expressing doubt and requesting a later revisit. | W4 becomes TENTATIVE, not DECIDED. Keep the household-specific transfer benchmark for discussion; require a return to the concrete scheme and restricted alternatives before finalizing welfare. W3 real costs are next. |
+| 2026-09-04 | Tommaso asked for the next issue after provisional compensation agreement. | Introduced W3's real-cost scope and the lead's simple nonnegative-cost recommendation. No cost assumption, parameter value, or author decision is inferred. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
