@@ -39,12 +39,14 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** revisit W4 with the concrete choice now available: exact
-seller compensation or a simpler small per-unit premium. W3's real cost remains
-TENTATIVE; distinguish a marginal cost from a fixed moving cost. The financing,
-title, tax-reserve, estate, and repayment entries are explicit under I1. U0's
-arithmetic is corrected; the literal-child and resident-person interpretation
-still requires an author choice. No quantitative units have changed.
+**Next discussion:** define the planner's feasible allocations and welfare
+criterion under W1/W4/I1 before choosing a compensation formula. On September 5,
+Tommaso clarified that the efficiency benchmark need not be an actionable policy
+and said he is still considering what the planner may do. W1's earlier borrowing
+permission remains recorded; no broader removal of restrictions is inferred.
+W4 is REOPENED, with the previous compensation scheme retained as one proof
+construction. W3's real cost remains TENTATIVE. U0's population interpretation
+also remains open. No manuscript or model amendment follows from this discussion.
 
 **Established and qualified:** the fixed-fertility allocation result has an
 explicit feasible compensated transaction. The fertility result has no
@@ -65,18 +67,51 @@ The report is a dated assessment, not a record of accepted author decisions.
 Retain it as the starting evidence; record later disagreements and resolutions
 here rather than silently rewriting what the review said.
 
+### September 5: efficiency benchmark and the role of numerical examples
+
+**Author clarification:** efficiency can be assessed against a first-best
+planner without requiring the planner's allocation to map into an actionable
+policy. The planner's powers have not been fully settled, and Tommaso is still
+thinking about them. The lead had placed too much weight on implementation when
+assessing whether the efficiency result belongs in the paper.
+
+**Record under W0/W1/W4/I1:** distinguish the planner's feasible allocations
+and welfare criterion from the later policy instruments used to approach that
+allocation. The existing compensated reallocation establishes a local Pareto
+improvement under its stated permissions; it is not a completed characterization
+of the first-best allocation. Keep that proof as evidence while reopening the
+benchmark discussion. No welfare weights, new planner powers, or treatment of
+institutional versus technological housing constraints has been chosen. The
+stronger same-private-credit benchmark remains parked unless the author reopens it.
+
+**Author view under D0/D1/P0/P1:** the small model's numerical example is useful
+for internal understanding and checks, but is not the intended paper contribution;
+the quantitative model will do the numerical work. Do not use the example as a
+substitute for an analytical transition result or as the reason to retain the
+theory section. Keep the saved examples and checks. Final figure placement and
+the scope of the analytical transition statement remain open; no example is
+removed and D1's broader research objective is not abandoned.
+
+**Lead recommendation, not an author decision:** first settle which real
+constraints and institutional restrictions bind the planner, and how existing
+households' welfare is compared while fertility remains fixed. A Pareto
+improvement can prove inefficiency without solving for a complete first-best
+allocation or specifying a practical government transfer scheme. Any later
+second-best policy still needs its own welfare assessment; following the
+first-best direction alone is insufficient.
+
 ### Progress count and remaining discussion topics
 
 The map retains **18 entries**: **10 agreed directions** (P0, W0, W1, I0,
 H0, H1, D0, D1, D2, P1), **3 parked branches** (W2, Q0, Q1), **4 unresolved
 author/specification entries** (W3, W4, I1, U0), and **1 completed development
-pass** (V0). W3 and W4 remain tentative. Agreed directions are not proof
+pass** (V0). W3 remains tentative and W4 is reopened. Agreed directions are not proof
 certificates: D1's interval-wide assumptions and general policy signs remain
 visible proof obligations. The stronger same-private-credit benchmark is a
 parked alternative within W1, not a nineteenth entry.
 
-The next topics group naturally as the transfer/cost choice (W3/W4/I1) and
-literal population units (U0). The 14 review repairs below are work obligations,
+The next topic is the planner benchmark (W1/W4/I1), followed by real costs
+(W3) and literal population units (U0). The 14 review repairs below are work obligations,
 not 14 additional author decisions; each now has a resolution in the work record.
 
 ### How to use and maintain this map
@@ -141,7 +176,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
 | W3 | Provisionally include a reduced-form nonnegative real reallocation cost in the working theoretical benchmark. Exact functional form, incidence, and numerical value remain open. | TENTATIVE | Author accepts proceeding with the recommendation with a "we'll see" qualification. Review the specification later alongside W4's compensation scheme. Keep fixed and marginal costs distinct; the gains-tax/common-rebate extension stays deferred. | Section 4, cost extension; W3 author response below |
-| W4 | Provisionally use household-specific compensation in the working Pareto benchmark, holding fertility fixed. The author remains doubtful and explicitly wants to revisit it. Exact welfare coverage remains open. | TENTATIVE | Use as a working assumption during authorized development, not final acceptance. An exact compensation scheme and a uniform seller-premium alternative are now concrete proposals; revisit before finalizing the welfare benchmark. Preserve real and dated resource constraints. | Sections 4, 6; W4/I1 author response below |
+| W4 | Define the planner welfare criterion and permissible redistribution at fixed fertility. The earlier household-specific compensation benchmark remains a possible proof construction. | REOPENED | September 5: settle feasible allocations and welfare coverage before choosing an implementation scheme. A practical policy is not required for the efficiency benchmark. Preserve the prior provisional choice and the proved compensated construction; no new criterion or transfer power is selected. | Sections 4, 6; September 5 clarification; earlier W4/I1 author response below |
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. The proposed core and new verification override gains tax to zero; the historical builder and evidence remain unchanged. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
