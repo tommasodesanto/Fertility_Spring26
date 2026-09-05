@@ -28,8 +28,11 @@ W3 also provisionally includes a reduced-form real reallocation cost; exact
 form, incidence, and size will be reviewed later. H1's fertility architecture
 is now retained: one-shot completed fertility in the two-period simple model,
 with sequential births, timing, and childlessness in quantitative work. Other
-household assumptions have not been separately finalized. U0's mapping of
-children, households, and total population is the next queued topic.
+household assumptions have not been separately finalized. The author reaffirmed
+that these simplifications are appropriate for the theory model and asked to
+move on. U0's recorded unit mismatch is retained for later reconciliation,
+without selecting a new normalization now. The next discussion is P0/P1:
+how to place the agreed theoretical contributions in the main paper and appendix.
 Borrowing-limit relaxation is already accepted.
 D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
@@ -167,8 +170,8 @@ between mechanism analysis and welfare analysis before either is understood.
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. Actual hypotheses and proofs remain deferred. | Section 5; D1 author preference below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
-| U0 | How do toy fertility, literal children, and entrant households map into one another? Reconcile the conversion coefficient and replacement condition explicitly. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Existing quantitative units are not reopened by default. | Section 3, details behind audit |
-| P1 | Which results and figures go in main text, appendix, or outside the paper? Also decide environment/problem ordering, notation, and exposition. | OPEN | P0 plus selected W/H/D results. The review's proposed five-page allocation is a recommendation. | Sections 7-8 |
+| U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Do not ask the author to decide whether inconsistent conversions are mathematically valid. Existing quantitative units remain unchanged; return for a choice if reconciliation requires a substantive interpretation change. | Section 3, details behind audit; U0 correction note below |
+| P1 | Which results and figures go in main text and appendix? Current discussion: main-text environment/equilibrium, allocation result, conditional fertility result, and transition/population implications, with detailed proofs in the appendix. | ACTIVE | Lead recommendation only, not an author decision. P0 and the selected W/H/D results remain dependencies; exact length and figures are not selected. | Sections 7-8; P0/P1 next discussion below |
 | V0 | Which exact amendments and checks implement the agreed choices? Reconcile the existing section, appendix, builder, and claim ledger in one pass; keep manuscript suggestions outside the protected draft. | OPEN | Relevant decisions above. No implementation authorized merely by exploring an option. | Section 9 |
 
 ### Corrections and verification work retained across branches
@@ -788,6 +791,41 @@ but its precise comparative-static conditions remain specification-dependent.
 No new theorem, household implementation, or blanket approval of all remaining
 household assumptions is recorded. The next queued discussion is U0.
 
+**Author reaffirmation, 2026-09-04:**
+
+> of course, but htis is just the theory model. so it's fine. move on
+
+The simple theory's fertility architecture is settled. Do not reopen it merely
+because it omits quantitative-model detail; reconsider only if an identified
+problem obstructs an intended claim. Continue recording decisions without
+developing the model.
+
+### U0 correction retained for the amendment plan
+
+The existing discrepancy remains: the toy example's $\nu=2$ implies replacement
+$n=0.5$, while an older note maps one toy child unit to $2.1$ literal children.
+Using both implies $1.05$ literal children per toy household at replacement,
+not $2.1$. This mismatch is already documented in the review and the source
+discrepancy inventory above. Its reconciliation and the distinction between
+household counts and resident persons remain explicit amendment tasks.
+No coefficient is changed, no literal-population interpretation is adopted,
+and no quantitative demographic contract is reopened here. The lead moves
+past this as a consistency correction for later work rather than requiring
+another author decision on elementary accounting. If a substantive choice is
+needed when the mapping is specified, return to the author with that choice.
+
+### P0/P1 next discussion: main-text theory and appendix
+
+**Lead recommendation, not yet adopted:** the main theory section should
+introduce the environment and equilibrium, then state the allocation-efficiency
+result, the conditional fertility prediction, and the transition/terminal
+population implications with their economic interpretation. Keep the assumptions
+that determine the economic meaning visible alongside each result. Put detailed
+proofs, long derivations, and technical verification in the appendix. The
+intended broad transition theorem remains a research objective whose eventual
+statement must match what is proved. Exact length, figures, and the final
+ordering within this structure remain to be discussed. No paper text is drafted.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -862,6 +900,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso asked for the next issue after provisional compensation agreement. | Introduced W3's real-cost scope and the lead's simple nonnegative-cost recommendation. No cost assumption, parameter value, or author decision is inferred. |
 | 2026-09-04 | Tommaso accepted proceeding with the reduced-form cost recommendation, adding "we'll see." | W3 becomes TENTATIVE; functional form, incidence, and value remain for later review. Opened H1's one-shot-versus-sequential fertility scope for discussion. |
 | 2026-09-04 | Tommaso agreed to the simple fertility architecture and asked whether it creates problems given the two-generation setup. | H1 temporal scope recorded: one childbearing period and completed fertility, with successive cohorts generating transitions. Distinguished timing and childlessness limitations; U0 is next. |
+| 2026-09-04 | Tommaso reaffirmed that the simple fertility structure is appropriate for the theory model and asked to move on. | H1 remains settled. Retained U0 as an explicit unit-reconciliation task for later amendments without choosing a normalization; moved to P0/P1's main-text/appendix presentation choice. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
@@ -872,7 +911,8 @@ scope are settled. W4/I1's tailored transfers are provisionally accepted and
 must be revisited once the scheme is concrete, before the welfare claim is
 finalized. W3's reduced-form real cost is provisional and will be reviewed with
 the compensation specification. H1's fertility-choice architecture is retained;
-U0's units are next. Actual transition hypotheses and
+U0's units remain a later correction, with any substantive interpretation choice
+returned to the author. P0/P1 presentation is now being discussed. Actual transition hypotheses and
 implementation remain deferred. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
