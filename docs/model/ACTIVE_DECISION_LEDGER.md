@@ -16,6 +16,13 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**September 5 author correction:** preserve the author's chosen notation,
+separate flow utilities, explicit value functions, and variable names. The
+amendment pass did not authorize replacing those conventions. Restore them
+from the pre-amendment analytical section and appendix while retaining the
+agreed economic amendments. This is a presentation correction, not a new
+economic branch or acceptance of the remaining provisional choices.
+
 **Latest execution and writing instruction:** Tommaso asked to work continuously
 until done, with three checks of every substantive result; the hourly schedule
 is now paused. He also asked for simpler, more transparent prose based on the

@@ -43,6 +43,12 @@ first under its own heading, then "Setup", then the framework.
 
 ## 2. Primitives before derived objects
 
+Preserve the author's existing notation, utility definitions, value-function
+presentation, and variable names when amending a draft. Permission to develop
+economic results or simplify prose does not authorize changing those choices.
+If a correction requires a convention to change, explain the specific reason
+and propose the change separately; otherwise work within the existing convention.
+
 A derived object (a multiplier, gap, wedge, sufficient statistic) may not do work in the
 text before it has been expressed in primitives and tied to observables.
 

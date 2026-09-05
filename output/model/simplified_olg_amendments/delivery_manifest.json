@@ -1,9 +1,9 @@
 {
   "status": "passed",
-  "delivered_at_utc": "2026-09-05T03:28:53.833225+00:00",
-  "pdf_pages": 12,
+  "delivered_at_utc": "2026-09-05T14:23:14.962845+00:00",
+  "pdf_pages": 13,
   "latex_checks": "Two final compilations; no warnings, undefined references, or overfull boxes",
-  "visual_checks": "All 12 pages inspected; identical page images retained from prior inspection; all final changed pages inspected",
+  "visual_checks": "All 13 pages inspected; after retaining the explicit positive-price condition, the final changed page was inspected again and the other 12 page images are identical",
   "independent_reviews": [
     "welfare and fertility",
     "finite-reform theorem and cohort history",
@@ -13,7 +13,7 @@
   "review_rows": 14,
   "numerical_scope": "Constructed theory examples only; no quantitative calibration or production policy run",
   "proof_limit": "Continuation theorem is conditional; interval-wide applicability and general policy fertility signs remain unproved",
-  "source_note": "Only prose clarified optimizer date coverage after the final analytical/saved-path check. Transition and original optimizer functions were unchanged after their completed numerical run. CSV line endings were normalized to LF before commit; a row-by-row comparison confirmed unchanged values. The writer now emits LF and was separately checked.",
+  "source_note": "Only prose clarified optimizer date coverage after the final analytical/saved-path check. Transition and original optimizer functions were unchanged after their completed numerical run. CSV line endings were normalized to LF before commit; a row-by-row comparison confirmed unchanged values. The writer now emits LF and was separately checked. September 5 restores the author's presentation and notation without changing the economic results; details are recorded in notation_restoration.",
   "numerical_function_sha256": {
     "original_household_check": "b8fe346e4cfebb7f07f73d0fb561d0c4690168d20f72ed7a98690dfce8b1e014",
     "transition_checks": "918e31c3ba8a16b372461a7666a5ac929acc8c579a98d6dd9c5f6d9367b5276c",
@@ -21,8 +21,8 @@
     "saved_transition_checks": "e679416e15a31ea2a88b3369f10e46e11c3f774b3d142130b5a3c8f859a4670d"
   },
   "sha256": {
-    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "4d36126b4f5a31d6540f56491864d63b5756eecc217ec5956c9d5398d9dc542f",
-    "output/pdf/simplified_olg_amendment_proposal.pdf": "1f37755058dbe2e20904cf41dcde1b2dfe566f7dd1c69ea05ff37f2cbd146ad2",
+    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+    "output/pdf/simplified_olg_amendment_proposal.pdf": "86e8071cb9b3ed1a2c407c5349afc771c2b7fe3a35a07d8080984633719d0068",
     "code/model/tools/verify_simplified_olg_amendments.py": "395d2a2086ead26c086f187f7ecf67cf63ea119e03c4d34c18d411650b55a2f6",
     "code/model/tools/build_simplified_olg_mixed_tenure_theory.py": "5cb5c20b001659e694ad175bd03055710c06ed4d0df025895560de3d2566c4aa",
     "code/model/tools/build_simplified_olg_saddle_path_diagnostic.py": "19f96be0e6491a26ec1107f79ef0b981fa6b7e0814884849020e9d81fb6a20a4",
@@ -60,5 +60,20 @@
       "Fernández and Rogerson (1996), Income Distribution, Communities, and the Quality of Public Education, pp. 137–138 and 140–141"
     ],
     "reference_record": "docs/style/econ_writing_style_guide.md, Section 9"
+  },
+  "analytical_delivery_at_utc": "2026-09-05T03:28:53.833225+00:00",
+  "notation_restoration": {
+    "completed_at_utc": "2026-09-05T14:23:14.962845+00:00",
+    "previous_proposal_commit": "20d9c0b",
+    "comparison_sources": [
+      "latex/simplified_olg_paper_theory_section.tex",
+      "latex/simplified_olg_paper_theory_appendix.tex"
+    ],
+    "scope": "Restore separate flow utilities, explicit young and old value functions, original tenure/age/type notation, rental-market presentation, and reduced-household notation",
+    "formal_checks": "Four propositions, one equilibrium definition, 16 result displays, and all tables match the previous proposal after the documented notation substitution; original labels retained and all references resolve",
+    "household_checks": "Restored objectives, dated budgets, tenure-share identity, and change of variables s=h-kappa*n checked against the earlier source and previous proposal",
+    "numerical_files_match_prior_hashes": true,
+    "numerical_runs_repeated": false,
+    "work_record": "docs/model/simplified_olg_overnight_work.md"
   }
 }

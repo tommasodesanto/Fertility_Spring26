@@ -380,3 +380,44 @@ No economic choice or formal result changed. There was no new model run,
 theory review, protected-manuscript edit, or scheduled work. This completes the
 bounded prose pass; the next discussion still starts with W4's compensation
 choice, and the automation remains paused.
+
+### Author conventions restored — September 5
+
+Tommaso objected that the proposal had changed presentation and notation he
+had chosen himself. The earlier section and appendix,
+`latex/simplified_olg_paper_theory_section.tex` and
+`latex/simplified_olg_paper_theory_appendix.tex`, are the comparison sources.
+The protected manuscript contains a placeholder and was not edited.
+
+| Object | Unnecessary change in the proposal | Restored convention |
+|---|---|---|
+| Preferences | One expanded lifetime-utility expression | Separate flow utilities $u_t^Y(c,h,n)$ and $u^2(c^2,h^2,e)$ |
+| Household problems | Budgets followed by unnamed optimization and renamed young values | Explicit $W_t^R(i),W_t^O(i),V_t^R(a),V_t^O(a,H)$ problems |
+| Old-age choices | $c_2,h_2$ and $c_{2i}$ | $c^2,h^2$ and $c_i^2$ |
+| Tenure | $\pi_t$, $\sigma$, inverse-logit expression | $\pi_t^O$, $\sigma_\xi$, and the original exponential-share expression |
+| Entrant distribution | $F_I$ | $F$; the new appendix matching function uses $\mathcal F$ to avoid taking this name |
+| Housing values and costs | $m_Y,m_O,k_c$ | $MV^Y,MV^O,K_{ijt}$; local household indices are suppressed |
+| Lifetime reduction | $\rho$, $h$ as the housing choice | $1+k$, with $k=\beta A$ or $\beta(1+\omega_B)$, and the original $x,s,n$ choice presentation |
+| Markets and averages | New user-cost shorthand throughout, changed housing-average subscripts | $R_f=q^{-1}$, the original rental-intermediary equation, $\bar h_t^Y,\bar h_t^O$ |
+
+The environment, household problems, and equilibrium are separate again.
+The earlier housing-menu inequality and rule against renting retained owner
+housing are stated explicitly, as in the pre-amendment source. The reduced
+household comparison suppresses indices locally, with the correspondence stated
+before its equations. The agreed removal of gains tax from the core, planner
+credit, conditional fertility result, and qualified transition result remain.
+
+The restored household objectives and constraints were read against both the
+earlier source and the previous proposal. Substituting $R_f=1/q$ gives the
+same dated budgets; the two tenure-share formulas are algebraically identical;
+and $s=h-\kappa n$ gives the same reduced budget and feasible housing limit.
+An automated comparison against `20d9c0b` verifies all four propositions,
+the equilibrium definition, all 16 result displays, and all tables after the
+documented notation substitution. All old labels remain and references resolve.
+The final PDF compiled successfully, with no warnings or layout errors in the
+last pass, and all 13 pages were visually inspected. Supporting numerical code
+and results retain their earlier hashes; no numerical model was rerun.
+
+The correction is recorded in the live discussion map, writing guide, and
+cross-session memory. Future economic amendments must preserve the author's
+existing conventions unless a specific necessary change is proposed separately.
