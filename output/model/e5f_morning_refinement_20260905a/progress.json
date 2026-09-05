@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "stages": [
+    {
+      "stage": "smoke",
+      "cases": 2,
+      "sum_case_seconds": 1219.5694637298584,
+      "best_loss": 29.385883689710354,
+      "plan_sha256": "8ed820afb20c6c5851a4b333e2fba81e45cac3069fc12b79d57c0c9957dc666e"
+    },
+    {
+      "stage": "round1",
+      "cases": 23,
+      "sum_case_seconds": 12417.708419084549,
+      "best_loss": 28.587974547700586,
+      "plan_sha256": "04c7bc99b58edeeee74a0887119c40e04e353b93850cb35b5bebdbf584cebbf4"
+    },
+    {
+      "stage": "round2",
+      "cases": 12,
+      "sum_case_seconds": 6309.017409801483,
+      "best_loss": 23.15344472757269,
+      "plan_sha256": "c709cdd0607c68ac5d26a463e1264df510fba5b4f30afbc06bada79e328d8065"
+    },
+    {
+      "stage": "repeats",
+      "cases": 2,
+      "sum_case_seconds": 1064.8421330451965,
+      "best_loss": 23.15344472757269,
+      "plan_sha256": "40cb7c93e7c53ff55489045838ba0e94fb6b84e22cca5cf3724c151c8b63cffe"
+    }
+  ],
+  "full_historical_evaluations": 39,
+  "allocated_cpu_hours": 5.861111111111111,
+  "selected_case": "round2/task_009",
+  "loss": 23.15344472757269,
+  "production_loss": 30.482966707698903,
+  "improvement_percent": 24.044647787759576,
+  "two_exact_final_repeats": true,
+  "production_promoted": false,
+  "policies_recomputed": false,
+  "stop_reason": "Both predeclared search rounds and exact repeats completed; no third round.",
+  "final_repeats_bitwise_fit_parameters_and_17_pngs": true
+}

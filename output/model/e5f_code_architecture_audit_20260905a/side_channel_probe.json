@@ -1,0 +1,21 @@
+{
+  "test": "identical supplied PolicyBundle depends on unrelated last-solve continuation side channel",
+  "source": "frozen production",
+  "source_files": {
+    "tools/run_dynamic_population_transition.py": "233576462de5266c99c965b8d293cf973af42ba3eb0fe56365e6ef6fcecf4344",
+    "tools/run_e5f_open_population_transition.py": "bb2d97af6d45bf5854da3a464e2db19fdb0c30f1cc5eb247d79525991639e26a",
+    "intergen_eqscale_seq_optimized/solver.py": "dfccca23781913316bcbb024b5143ee54286038c7a3906bcdb1861fcc08cd517"
+  },
+  "first_evaluation_births": 0.0,
+  "second_evaluation_births": 1.0,
+  "same_policy_object": true,
+  "same_inherited_distribution": true,
+  "same_price": true,
+  "changed_only_parameter_field": "P._fert2_probs",
+  "mocked_operations": [
+    "dead-mass gate identity",
+    "current-tenure realization identity"
+  ],
+  "production_effect_demonstrated": false,
+  "interpretation": "Confirmed non-self-contained policy API. Actual fertility operator and evaluate_period executed; no economic solve or production result changed."
+}

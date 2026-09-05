@@ -1,6 +1,88 @@
 # Calibration Status
 
-Updated: `2026-09-05` (independent overnight checks complete; September 4 production calibration unchanged)
+Updated: `2026-09-05` (bounded refinement and independent code review complete; September 4 production unchanged)
+
+## September 5 completed bounded calibration refinement
+
+The authorized morning refinement is complete: 39/39 full historical evaluations,
+including two initial exact-loop smokes, 23 coordinate cases, 12 predeclared joint
+cases and two final exact repeats. Torch arrays `17001372`, `17002396`, `17002846`
+and `17003313` are all completed. The design is
+`docs/model/e5f_bounded_calibration_refinement_20260905.md`; complete results and
+reproduction receipts are under `output/model/e5f_morning_refinement_20260905a/`.
+The run used 5.86 allocated CPU-hours and stopped after its two declared rounds.
+
+The best review candidate is **round2/task_009**, loss **23.15344472757269**,
+versus retained production **30.482966707698903**, a **24.0446% reduction** in the
+same twelve-row objective. Two fresh executions exactly reproduce all twelve fit
+rows, all estimated parameters, preference normalizations and 253 numeric
+historical entries. The first-birth rooms response improves from 0.436418 to
+0.466044 against target 0.720246; the 3+ versus 1-2 child rooms contrast improves
+from 0.403441 to 0.379198 against 0.367700. Mean occupied rooms worsen slightly,
+from 6.317291 to 6.328594 against 5.779970. This is a bounded improvement, not
+resolution of the principal housing-response gap or weak identification.
+
+The complete production-versus-candidate target-fit and parameter tables are in
+`docs/model/e5f_bounded_calibration_refinement_review.md` and its PDF
+`output/pdf/e5f_bounded_calibration_refinement_review.pdf`. Machine-readable
+complete tables for every case are in each stage's `report/all_target_fits.csv`
+and `report/all_parameters.csv`; the selected case also retains its full
+`target_fit_long.csv` and `parameter_table.csv`. All eleven free parameters,
+original bounds, targets and weights remain unchanged. The observed best uses
+higher patience and bequest strength than production, plus a higher first-child
+room intercept and a lower per-child floor. No young-ownership target is active.
+
+All source, target, history, market, accounting, feasibility and population gates
+pass. Every case has a terminal checkpoint and the unchanged seventeen-graph
+packet, with all 819 recorded artifact hashes verified locally. The independent
+adjacent-wealth screen retains one occupied value decrease in each of two
+nonwinning coordinate cases (maximum exposed pre-choice mass share 2.08e-7).
+The selected point has no flagged occupied decrease; its reporting-floor budget
+excess share is 1.76e-9. Its visible negative-wealth age-30 first-birth spike has
+zero settled-childless pre-choice mass. These screens are not proof of optimality
+outside occupied states or of globally accurate derivatives.
+
+The complete smaller-step weighted Jacobian has algebraic and relative-1e-3 rank
+11, but 98.4% of its weakest direction's squared loading falls on the bequest
+shifter. The supply-intercept forward/backward cosine is -0.369. These diagnostics
+remain step-dependent and do not establish precise identification. The original
+ridge planner's stricter rejection is retained; no inverse-Jacobian or ridge
+proposal was used. **Production remains September 4 task_010 pending review; no
+new policy path or welfare result was computed.** The dated supply elasticity
+0.63 and tenure dispersion 0.005 remain fixed; the initialization distinction
+is stated in the code-review section below.
+
+## September 5 independent code correctness and efficiency review
+
+The author requested a separate full look at correctness, code bloat and speed
+while calibration continues. The bounded read-only review is complete in
+`docs/model/e5f_full_code_correctness_efficiency_review_20260905.md`, with evidence
+and executable probes in `output/model/e5f_code_architecture_audit_20260905a/`.
+The report maps the active path and gives a returning-author reading guide;
+it does not certify every historical or experimental route.
+
+**Outstanding correctness repair:** calendar `PolicyBundle` omits later-birth
+probabilities, while the forward operator reads mutable `P._fert2_probs`.
+An old policy reused after another price solve can therefore mix policies.
+The independent probe and lead replay reproduce the API defect. No affected
+task_010 result is demonstrated: none of the 55 saved five-policy dates records
+a tight-market fallback, and the fitted history invalidates warm starts as
+preferences change each date. Repair and test saved-policy/retry consistency
+before relying on vulnerable reuse paths; exact repetition alone is insufficient.
+
+The review also confirms that the package's supposedly current runner invokes
+a June model, verbose fertility output retains a wrong factor of two for literal
+parity, and failed boundary searches repeat an identical expensive evaluation.
+Authoritative production target tables do not use that console formula. Fifteen
+existing pure test functions and four independent invariants pass, independently
+repeated by the lead, with Numba JIT disabled. Native pytest exited 139 without
+test output; this is not a passing compiled suite. No model source was edited.
+
+**Outstanding specification clarification:** elasticity 0.63 is applied to the
+dated supply rule after the inherited old equilibrium is built with elasticity
+1.75 and the date-0 supply intercept is normalized. This order is unchanged in
+the frozen calibration comparison. Its intended economic interpretation needs
+an explicit decision; a code cleanup must not silently replace either value.
 
 ## September 5 independent numerical and identification verification
 

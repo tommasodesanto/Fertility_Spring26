@@ -1,0 +1,49 @@
+{
+  "python": "3.10.10 (main, Mar 21 2023, 13:41:39) [Clang 14.0.6 ]",
+  "numpy": "1.24.3",
+  "numba_available": true,
+  "numba_jit_disabled": "1",
+  "source": "frozen production",
+  "checks": {
+    "downpayment_threshold": {
+      "pH": 2.0,
+      "phi": 0.8,
+      "threshold": 0.4,
+      "below_buys": false,
+      "above_buys": true
+    },
+    "bellman_forward_adjoint": {
+      "gap": 0.0,
+      "mass_error": 0.0,
+      "includes": [
+        "identity tenure and saving",
+        "nontrivial income transition",
+        "binomial child maturation"
+      ]
+    },
+    "one_birth_per_period": {
+      "births": 2.0,
+      "parity1_mass": 1.0,
+      "parity2_mass": 1.0,
+      "parity3_mass": 0.0
+    },
+    "queue_impulse": {
+      "next_state_years": [
+        4,
+        8,
+        12,
+        16,
+        20,
+        24
+      ],
+      "due": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  }
+}

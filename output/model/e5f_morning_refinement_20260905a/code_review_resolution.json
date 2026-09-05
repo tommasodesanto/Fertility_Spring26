@@ -1,0 +1,7 @@
+{
+  "status": "findings_resolved",
+  "planner_hash": "Generation actions now require --expected-planner-sha256 and verify it before reading case data. New plan records parent plan and parent planner hashes; earlier immutable plans are preserved. Stage-1 execution used the previously pinned adapter and unchanged scientific bundle. Deliberate planner source revisions affect only not-yet-generated stages.",
+  "checkpoint_transfer": "Both smoke checkpoints retrieved and independently SHA-256 verified locally, along with all other receipt artifacts.",
+  "tests": "Four focused tests pass locally; read-only worker could not create TemporaryDirectory fixtures.",
+  "worker_report": "tmp/e5f_morning_refinement_20260905a/code_review.md"
+}

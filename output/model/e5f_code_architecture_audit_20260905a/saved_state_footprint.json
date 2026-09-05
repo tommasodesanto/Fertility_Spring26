@@ -1,0 +1,186 @@
+{
+  "python": "3.9.6 (default, Nov 11 2024, 03:15:39) \n[Clang 16.0.0 (clang-1600.0.26.6)]",
+  "numpy": "2.0.2",
+  "source": "frozen production",
+  "checks": {
+    "saved_array_footprint": {
+      "policy_arrays": [
+        {
+          "field": "V",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 23500800
+        },
+        {
+          "field": "c_pol",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 23500800
+        },
+        {
+          "field": "hR_pol",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 23500800
+        },
+        {
+          "field": "bp_pol",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 23500800
+        },
+        {
+          "field": "tenure_choice",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "int16",
+          "bytes": 5875200
+        },
+        {
+          "field": "tenure_probs",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4,
+            6
+          ],
+          "dtype": "float32",
+          "bytes": 70502400
+        },
+        {
+          "field": "loc_probs",
+          "shape": [
+            120,
+            6,
+            1,
+            1,
+            17,
+            15,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 23500800
+        },
+        {
+          "field": "fert_probs",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15,
+            4
+          ],
+          "dtype": "float64",
+          "bytes": 5875200
+        },
+        {
+          "field": "fert_value",
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            15
+          ],
+          "dtype": "float64",
+          "bytes": 1468800
+        },
+        {
+          "field": "price",
+          "shape": [
+            1
+          ],
+          "dtype": "float64",
+          "bytes": 8
+        }
+      ],
+      "policy_array_bytes": 201225608,
+      "continuation_probability_bytes": 23500800,
+      "valid_family_states": 10,
+      "allocated_family_states": 16,
+      "invalid_pre_fertility_mass": 0.0,
+      "grid_size": 120,
+      "location_count": 1,
+      "income_states": 15,
+      "uses_compiled_forward_distribution_flag": false,
+      "uses_numba_scatter_flag": true
+    },
+    "saved_policy_retry_exposure": {
+      "dependent-child-ltv95": {
+        "dates": 11,
+        "fallback_dates": [],
+        "source_sha256": "2b907b8fbb6c9cfe53fc0fa337b11737328a645fcc03348b97ec165f24305353"
+      },
+      "supply-plus-20": {
+        "dates": 11,
+        "fallback_dates": [],
+        "source_sha256": "2546d2b821c7d0fed4836ce5bfda744e8bef6cc52771148e438a002ad23c8f45"
+      },
+      "baseline": {
+        "dates": 11,
+        "fallback_dates": [],
+        "source_sha256": "32f5e157c46de0950a2fbaf9fe545c40e2a7ac3647de7bcf3253b769bc1d5cd5"
+      },
+      "property-tax-2pct-no-rebate": {
+        "dates": 11,
+        "fallback_dates": [],
+        "source_sha256": "3d5ae11b563c0c3292a2deb1021cbae519438bae5a90dbda0faa4228e1d7217f"
+      },
+      "combined": {
+        "dates": 11,
+        "fallback_dates": [],
+        "source_sha256": "a532238756719606adecb8e236d864689d8047abfe45980efb4182921e671ae5"
+      }
+    },
+    "verbose_fertility_units_probe": {
+      "printed_legacy_TFR": 2.0,
+      "correct_literal_completed_fertility": 1.0,
+      "example": "Every household has exactly one child"
+    }
+  }
+}

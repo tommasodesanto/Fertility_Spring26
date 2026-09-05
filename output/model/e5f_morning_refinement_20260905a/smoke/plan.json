@@ -1,0 +1,71 @@
+{
+  "adapter_sha256": "1fd1fd5c6c3e87a95412cc28693f1b1c3ead74e6b82378bb1a771350290e3c89",
+  "cases": [
+    {
+      "center": "production_center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 1,
+      "label": "panel003_exact_repeat_1",
+      "output": "task_001",
+      "panel_design": "coordinate",
+      "panel_seed": 2026090404,
+      "panel_size": 23,
+      "panel_task_id": 3,
+      "radius": 0.02,
+      "reference": "reference_task003/summary.json",
+      "reference_sha256": "ee7534b2e5c77086253a1be71f5c9ae15a6fb689ae66555b70232b87612f0bb7"
+    },
+    {
+      "center": "production_center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 2,
+      "label": "panel003_exact_repeat_2",
+      "output": "task_002",
+      "panel_design": "coordinate",
+      "panel_seed": 2026090404,
+      "panel_size": 23,
+      "panel_task_id": 3,
+      "radius": 0.02,
+      "reference": "reference_task003/summary.json",
+      "reference_sha256": "ee7534b2e5c77086253a1be71f5c9ae15a6fb689ae66555b70232b87612f0bb7"
+    }
+  ],
+  "code_bundle_sha256": "630ba20bca6a1b54eb4c46aca904c4a087afb8c808b9c7f4660d5fcd316a970e",
+  "helper_sha256": {
+    "collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "run_e5f_independent_numerical_audit.py": "ba0f94f52705f43fd0bf7a18ea8c2053f9897674abeb20b030eaf37c57de8623"
+  },
+  "input_sha256": {
+    "reference_task003/README.md": "7d309a540c9ecb3d84f915f622bb9ba58230792edc08545727f170819127137b",
+    "reference_task003/best_so_far.json": "66ac26cbf50f7eed14acbceacfd39be96af24990f5c2c866a4c6e47e5bf8003a",
+    "reference_task003/candidate_summary.csv": "22dc1fbbe486db9698f2ff36a3b659cb78149591a2ef227c36eb901c52fdec39",
+    "reference_task003/cases/task_003/adult_age_distribution.csv": "9d40f494ccd99d3025f6a971c669cf8fcb5c5c8d64d03e89d7d550ea92df3d18",
+    "reference_task003/cases/task_003/child_pipeline.csv": "5e841d847d47f748b5132906513d54a5b968a3b59bf36e624a62e884160c3fcc",
+    "reference_task003/cases/task_003/cohort_timing_ledger.json": "25c9ccb8ef580a1e2f66fdab8aad79d7ba8d5a8791d0c406908ac86292618217",
+    "reference_task003/cases/task_003/dated_cohort_timing_ledgers.json": "d3ed9e9986ad94b0f5d7dfb3caf03da9a810c6426c8fc7c75f1946e98ce5777f",
+    "reference_task003/cases/task_003/dated_first_birth_housing_did.csv": "1fe27f852bc9957521d8590f76744f7d28fdfc2bb17b73f704016eb57aa93cc1",
+    "reference_task003/cases/task_003/dated_model_moments.csv": "067940bf9403853bf8cc82ee401330649b1e4f37929ebb4c027fbdb8042c4514",
+    "reference_task003/cases/task_003/dated_period_fertility.csv": "27a8dbbc53d5fabacc8882b43b3136a9b472216018e8eb64b8eb5874a4e80afd",
+    "reference_task003/cases/task_003/dated_period_fertility_by_age.csv": "a4a7ec94b303d4f8b3c4c8d697f5bf4d51f3d4c8db24e061c58cc43773a8a15c",
+    "reference_task003/cases/task_003/latest_completed_period.json": "492d4392ddd6eb6639b972a0deed2aaeef612d6b60fddf7f526fa2d0f9b4cd6c",
+    "reference_task003/cases/task_003/target_fit.csv": "3e8e74fbeb45853d1285db1a682077094211680ef5b3181374f72595d385b446",
+    "reference_task003/cases/task_003/transition_path.csv": "29040c902941c2651cd16e57b668a08c1977e851107b68fe09848916b24d90a5",
+    "reference_task003/latest_completed_case.json": "436f09ccd679951a63111547f82c350bb1a87d9138cc0e9536f0a7acaff884dd",
+    "reference_task003/parameter_table.csv": "66a0588d35c754e2f64712df381e5da72a5f862ec122390807f7a0c4a5dd5fde",
+    "reference_task003/stationary_age_survival_diagnostic.json": "173b50f9ef06da09b9155fa5a92e6fa426831451b75d698a9765dbf0fe617ce4",
+    "reference_task003/summary.json": "ee7534b2e5c77086253a1be71f5c9ae15a6fb689ae66555b70232b87612f0bb7",
+    "reference_task003/target_fit_long.csv": "3e8e74fbeb45853d1285db1a682077094211680ef5b3181374f72595d385b446",
+    "reference_task003/transition_calibration_pilot.pdf": "7cfbfd6ad843cda6e40d26b2d39f1be729369c8abcea44f403231136a33dc2db",
+    "reference_task003/transition_calibration_pilot.png": "b9d4b7dd9dc4a00af9c3a46d6c445ad677c2c8507a9893689dec3b87579cd647",
+    "reference_task003/transition_target_fit.pdf": "5be32a145f7552bab6063d21b667be888289e5c08a980ea8f42af28f96f033ec",
+    "reference_task003/transition_target_fit.png": "33e990056f799d78d3365d3af8a1750027448cddbee29dd1a6ca5af6f1112cf8"
+  },
+  "launch_deadline_epoch": 1788632820.0,
+  "production_promoted": false,
+  "schema": "e5f_bounded_refinement_v1",
+  "source": "/scratch/td2248/projects/Fertility_Spring26_pf_20260823/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "two_exact_smokes",
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817"
+}

@@ -4,6 +4,16 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+- `e5f_bounded_calibration_refinement_review.md` -- completed September 5 local
+  refinement, full production/candidate fit and parameter comparisons, numerical
+  qualifications and unchanged standard diagnostics. PDF:
+  `../../output/pdf/e5f_bounded_calibration_refinement_review.pdf`.
+  Run design: `e5f_bounded_calibration_refinement_20260905.md`.
+- `e5f_full_code_correctness_efficiency_review_20260905.md` -- independent active
+  code correctness, bloat and performance review; seven-stop reading guide,
+  reproducible defect probes, explicit coverage and staged improvements. PDF:
+  `../../output/pdf/e5f_full_code_correctness_efficiency_review.pdf`.
+
 - `simplified_olg_overnight_work.md` -- completed September 4–5 theory amendment
   proposal, three-check record, all 14 repair resolutions, and next discussion
   choices. PDF: `../../output/pdf/simplified_olg_amendment_proposal.pdf`.
