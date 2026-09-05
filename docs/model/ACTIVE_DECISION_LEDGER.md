@@ -17,7 +17,9 @@ independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
 **Resume here:** discussion and decision recording only; detailed development
-and implementation await the later agreed plan. D2's supply scope is now
+and implementation await the later agreed plan. The next discussion is D1:
+what formal transition result the paper should target. No theorem scope has
+been accepted yet. D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
 supply extension to assess the terminal population result. The exact supply
 specification and construction dynamics are not selected. D1's transition
@@ -51,6 +53,33 @@ with its [19-page PDF](../../output/pdf/simplified_olg_independent_review.pdf).
 The report is a dated assessment, not a record of accepted author decisions.
 Retain it as the starting evidence; record later disagreements and resolutions
 here rather than silently rewriting what the review said.
+
+### Progress count and remaining discussion topics
+
+At the author's progress-count request on 2026-09-04, this map has **18
+entries**: **6 agreed directions** (W0, W1, I0, H0, D0, D2), **3 parked
+branches** (W2, Q0, Q1), and **9 unresolved entries** (P0, W3, W4, I1, H1,
+D1, U0, P1, V0). The unresolved group includes tentative and active entries.
+Agreed directions are not completed proofs or implementations; their retained
+technical obligations remain. The parked stricter W1 benchmark and tax-specific
+subbranches are nested in existing entries, not extra independent rows.
+
+The nine unresolved entries can be discussed as four substantive topics,
+followed by presentation and implementation planning:
+
+1. D1: the strength and scope of the transition result.
+2. W3/W4/I1: the planner's exact financing, compensation, real costs, and
+   protection of affected and unaffected households, without reopening the
+   already accepted borrowing-limit permission.
+3. H1: household simplifications needed for the simple model's mechanism and
+   its relationship to the richer quantitative model.
+4. U0: consistent mapping of children, entrant households, and total population.
+5. P0/P1: final paper role, placement, and exposition, preserving W0's objective.
+6. V0: the later agreed amendment and verification plan.
+
+This is a grouping of existing topics, not a promise that each takes one
+exchange or a new implementation plan. The review's 14 repair items remain
+mapped below; they are not 14 additional author decisions.
 
 ### How to use and maintain this map
 
@@ -124,7 +153,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | Author's desired form only. Defer the derivation until planning/amendment work; return to W1/W4/I1 for payment incidence and to H1 for a quantitative analogue. No primitive-only condition or aggregate policy sign is established. | Sections 3, 6, 8; H0 threshold clarification and preference below |
 | H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
-| D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | OPEN | Gains-tax-specific nonsmooth work is parked with Q0. Other regularity and transition-existence obligations remain; removing the tax kink does not prove the transition theorem. | Section 5; I0 decision |
+| D1 | What transition result is needed? Clearly labeled finite-horizon illustration; a fixed-horizon conditional local theorem; an exact infinite-horizon existence result; or existence plus local uniqueness. | ACTIVE | Next discussion after the progress inventory. Gains-tax-specific work remains parked; regularity, existence, and convergence obligations remain. No theorem scope is adopted. | Section 5; I0 decision; D1 proposed target below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
 | U0 | How do toy fertility, literal children, and entrant households map into one another? Reconcile the conversion coefficient and replacement condition explicitly. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Existing quantitative units are not reopened by default. | Section 3, details behind audit |
 | P1 | Which results and figures go in main text, appendix, or outside the paper? Also decide environment/problem ordering, notation, and exposition. | OPEN | P0 plus selected W/H/D results. The review's proposed five-page allocation is a recommendation. | Sections 7-8 |
@@ -605,6 +634,18 @@ to clarify earlier questions; they are not a completed amendment or an
 implemented extension. Further development waits until the discussion is
 complete and the author agrees the plan.
 
+### D1 proposed target for the next discussion
+
+**Lead recommendation, not an author decision:** target a local theorem
+establishing an equilibrium transition that converges to the new steady state
+for sufficiently small reforms, supported by numerical transition comparisons
+for larger reforms. This is a proposed exact-path research objective, not a
+claim that the existing fixed-terminal-horizon theorem establishes it. Its
+assumptions and feasibility must be assessed in the later development phase.
+Retain weaker numerical/finite-horizon scope and stronger uniqueness/global
+scope as alternatives. Do not start proof development, add assumptions, or
+implement a new solver during this discussion-only phase.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -673,6 +714,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso specified comparisons along the transition and total population in the new steady state. | D0 scope decided; endpoint existence, convergence, units, and signs remain obligations. D2's simple-model housing-stock assumption becomes the next issue. |
 | 2026-09-04 | Tommaso asked whether allowing housing supply to adjust changes much. | D2 remains open. Distinguished persistence of the local allocation mechanism from the stock contribution to terminal population; derived the minimal stationary supply extension and retained construction dynamics separately for later planning. |
 | 2026-09-04 | Tommaso agreed to the supply recommendation and confirmed that decisions should be banked without development. | D2 supply scope decided: fixed-stock benchmark plus later assessment of a simple long-run supply extension. Reaffirmed discussion-only workflow; exact specifications, derivations, and implementation remain deferred. |
+| 2026-09-04 | Tommaso asked what comes next and how many decisions remain. | Counted 18 entries: 6 agreed directions, 3 parked, 9 unresolved. Grouped the latter into four substantive topics plus presentation and planning; opened D1 for discussion without adopting or developing a theorem. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
