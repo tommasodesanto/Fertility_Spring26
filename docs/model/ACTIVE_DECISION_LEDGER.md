@@ -31,8 +31,12 @@ with sequential births, timing, and childlessness in quantitative work. Other
 household assumptions have not been separately finalized. The author reaffirmed
 that these simplifications are appropriate for the theory model and asked to
 move on. U0's recorded unit mismatch is retained for later reconciliation,
-without selecting a new normalization now. The next discussion is P0/P1:
-how to place the agreed theoretical contributions in the main paper and appendix.
+without selecting a new normalization now. P0/P1's main-text/appendix division
+is agreed but explicitly low priority. There is enough direction for V0's
+consolidated work plan; the provisional compensation and cost choices, I1's
+financing/feasibility specification, and U0's unit correction must remain
+visible in that plan. No implementation or detailed development begins before
+the later plan is agreed.
 Borrowing-limit relaxation is already accepted.
 D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
@@ -71,25 +75,24 @@ here rather than silently rewriting what the review said.
 
 ### Progress count and remaining discussion topics
 
-After the author's household-architecture response on 2026-09-04, this map has
-**18 entries**: **8 agreed directions** (W0, W1, I0, H0, H1, D0, D1, D2),
-**3 parked branches** (W2, Q0, Q1), and **7 unresolved entries** (P0, W3,
-W4, I1, U0, P1, V0). The unresolved group includes tentative entries;
+After the author's low-priority presentation agreement on 2026-09-04, this map
+has **18 entries**: **10 agreed directions** (P0, W0, W1, I0, H0, H1, D0,
+D1, D2, P1), **3 parked branches** (W2, Q0, Q1), and **5 unresolved entries**
+(W3, W4, I1, U0, V0). The unresolved group includes tentative entries;
 W3's provisionally accepted cost term and W4's compensation instrument remain
 in this group.
 Agreed directions are not completed proofs or implementations; their retained
 technical obligations remain. The parked stricter W1 benchmark and tax-specific
 subbranches are nested in existing entries, not extra independent rows.
 
-The seven unresolved entries can be discussed as two substantive topics,
-followed by presentation and implementation planning:
+The five unresolved entries consist of two provisional choices, the related
+institutional specification, a unit correction, and the work plan:
 
 1. W3/W4/I1: the planner's exact financing, compensation, real costs, and
    protection of affected and unaffected households, without reopening the
    already accepted borrowing-limit permission.
 2. U0: consistent mapping of children, entrant households, and total population.
-3. P0/P1: final paper role, placement, and exposition, preserving W0's objective.
-4. V0: the later agreed amendment and verification plan, including checks of
+3. V0: the later agreed amendment and verification plan, including checks of
    remaining household assumptions not settled by H1's temporal scope.
 
 This is a grouping of existing topics, not a promise that each takes one
@@ -155,7 +158,7 @@ between mechanism analysis and welfare analysis before either is understood.
 
 | ID | Question and retained alternatives | Status | Dependencies / consequences | Review evidence |
 |---|---|---|---|---|
-| P0 | The stated priority is an allocation-efficiency result, with fertility effects as an additional result. The complete paper role and placement remain to be decided. | TENTATIVE | Follow the author's objective in W0; do not presume adoption of the review's recommendation to omit main-text welfare. | Sections 1, 6, 8, 10; W0 discussion below |
+| P0 | Main-text theory presents the allocation-efficiency result, conditional fertility prediction, and transition/terminal-population implications. The author agrees but treats presentation as low priority now. | DECIDED | Preserve W0's economic objective; defer detailed presentation work. Actual claims remain bounded by what is established. | Sections 1, 6, 8, 10; P0/P1 author agreement below |
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
 | W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
@@ -171,7 +174,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. Actual hypotheses and proofs remain deferred. | Section 5; D1 author preference below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Do not ask the author to decide whether inconsistent conversions are mathematically valid. Existing quantitative units remain unchanged; return for a choice if reconciliation requires a substantive interpretation change. | Section 3, details behind audit; U0 correction note below |
-| P1 | Which results and figures go in main text and appendix? Current discussion: main-text environment/equilibrium, allocation result, conditional fertility result, and transition/population implications, with detailed proofs in the appendix. | ACTIVE | Lead recommendation only, not an author decision. P0 and the selected W/H/D results remain dependencies; exact length and figures are not selected. | Sections 7-8; P0/P1 next discussion below |
+| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs and technical derivations in the appendix. | DECIDED | Explicitly low priority. Economic assumptions remain visible in the main text. Exact length, figures, and detailed order remain for later; no drafting is authorized now. | Sections 7-8; P0/P1 author agreement below |
 | V0 | Which exact amendments and checks implement the agreed choices? Reconcile the existing section, appendix, builder, and claim ledger in one pass; keep manuscript suggestions outside the protected draft. | OPEN | Relevant decisions above. No implementation authorized merely by exploring an option. | Section 9 |
 
 ### Corrections and verification work retained across branches
@@ -826,6 +829,16 @@ intended broad transition theorem remains a research objective whose eventual
 statement must match what is proved. Exact length, figures, and the final
 ordering within this structure remain to be discussed. No paper text is drafted.
 
+**Author agreement and priority, 2026-09-04:**
+
+> that is not too. important for now, but i agree with you.
+
+Bank the proposed broad division as agreed and low priority. Do not spend the
+current discussion developing presentation details. The next substantive stage
+is a consolidated V0 work plan for the agreed economic claims, retaining W3/W4
+as provisional, I1's feasibility obligations, and U0's unit correction. This
+agreement does not start proof development, manuscript drafting, or model work.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -901,6 +914,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso accepted proceeding with the reduced-form cost recommendation, adding "we'll see." | W3 becomes TENTATIVE; functional form, incidence, and value remain for later review. Opened H1's one-shot-versus-sequential fertility scope for discussion. |
 | 2026-09-04 | Tommaso agreed to the simple fertility architecture and asked whether it creates problems given the two-generation setup. | H1 temporal scope recorded: one childbearing period and completed fertility, with successive cohorts generating transitions. Distinguished timing and childlessness limitations; U0 is next. |
 | 2026-09-04 | Tommaso reaffirmed that the simple fertility structure is appropriate for the theory model and asked to move on. | H1 remains settled. Retained U0 as an explicit unit-reconciliation task for later amendments without choosing a normalization; moved to P0/P1's main-text/appendix presentation choice. |
+| 2026-09-04 | Tommaso agreed to the proposed presentation division but said it is not important now. | P0/P1 broad direction banked as low priority. Next stage is the consolidated V0 plan, with provisional choices and unresolved specifications kept explicit; development remains deferred. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
@@ -912,7 +926,8 @@ must be revisited once the scheme is concrete, before the welfare claim is
 finalized. W3's reduced-form real cost is provisional and will be reviewed with
 the compensation specification. H1's fertility-choice architecture is retained;
 U0's units remain a later correction, with any substantive interpretation choice
-returned to the author. P0/P1 presentation is now being discussed. Actual transition hypotheses and
+returned to the author. P0/P1 presentation is agreed at low priority; V0's
+consolidated plan is next. Actual transition hypotheses and
 implementation remain deferred. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
@@ -931,11 +946,13 @@ proof obligations.
 H1 retains one-shot completed fertility in the two-period theory, with birth
 timing and childlessness left to quantitative work. This does not settle all
 household assumptions independently of the later specification checks.
+P0/P1 places the main economic results in the main text and detailed proofs
+in the appendix, with presentation work explicitly low priority.
 
 **Provisional author choices:** W4 permits tailored compensation as a working
 benchmark, with expressed doubt and an explicit revisit. W3 includes a
 reduced-form real reallocation cost subject to later review of its specification.
-Keep both separate from the eight settled directions and preserve the return
+Keep both separate from the ten settled directions and preserve the return
 conditions above.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
