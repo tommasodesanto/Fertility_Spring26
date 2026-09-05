@@ -100,6 +100,67 @@ allocation or specifying a practical government transfer scheme. Any later
 second-best policy still needs its own welfare assessment; following the
 first-best direction alone is insufficient.
 
+### Planner menu and the two theory figures — September 5
+
+The author requested a menu of planner options and wants to recover two
+conceptual figures: housing misallocation and adjustment to a new steady state.
+The second should explain the theory, rather than display a simulated path.
+The menu below is for discussion; no option has been chosen by requesting it.
+
+**Feasible allocations, W1/W4/I1:**
+
+| Option | Planner powers | Meaning and current status |
+|---|---|---|
+| A. First best at fixed fertility | Choose housing, consumption, and intertemporal allocations subject to the actual housing stock, endowments, external intertemporal resource feasibility, and any real costs or technological limits. Remove private financing and purely institutional access restrictions. Preserve preferences, including any tenure taste. | Broad efficiency benchmark. Requires classifying housing-size and title restrictions as technological or institutional; that classification is open. Does not authorize free resources or choosing additional births. |
+| B. Planner who can overcome borrowing limits | Permit financing and the associated redistribution needed to reallocate housing, while retaining other specified tenure, housing-access, and estate restrictions. | Isolates credit as the source of the improvement. The present local proof supports this comparison under its stated permissions and slackness assumptions. It does not characterize the complete optimum. |
+| C. Planner facing the same private constraints | Retain household borrowing and access limits, without transfers that circumvent those limits at closing. | Stronger constrained-efficiency question, already parked. The financing marginal-value gap alone does not establish an improvement here. |
+| D. Government choosing available policy instruments | Restrict interventions to specified taxes, subsidies, credit rules, or other instruments and their fiscal/market consequences. | Second-best policy problem for later quantitative work. It is not required to define or prove the theoretical efficiency benchmark. |
+
+**Welfare criterion, separate from those powers:** a Pareto comparison asks
+whether at least one household can gain while all others retain at least their
+competitive-equilibrium utilities. A weighted-welfare planner selects an
+allocation for specified welfare weights. The former establishes inefficiency
+without choosing distributive weights; the latter characterizes a selected
+first-best allocation, but its housing distribution depends on those weights.
+Fertility, the households being compared, and real resource feasibility still
+need to be specified in either case. Endogenous fertility/population welfare
+remains outside this first comparison, in line with W0.
+
+**Lead recommendation, not adopted:** A as the broad benchmark, evaluated
+through a Pareto comparison with the competitive allocation. B can identify
+how much of the inefficiency follows from borrowing restrictions alone. The
+existing feasible improvement can rule out first-best efficiency if its
+allocations are admissible under A, even before the whole first-best allocation
+is solved. Preserve C as the parked stronger benchmark and D for policy work.
+
+**Two-figure preference, P0/P1/D1:** recover the allocation and theoretical
+transition figures as the intended visual organization. The first should show
+the marginal housing values at the competitive allocation, the direction of
+an improving reallocation, and the efficient allocation once it is derived for
+the selected benchmark. A gap above real marginal reallocation cost supports a
+local gain; an arbitrary curve crossing or shaded area is not a substitute for
+that derivation. The second should link the initial steady state, impact with
+inherited cohorts, demographic adjustment, and the new steady state. Its arrows
+and endpoint ordering must follow the analytical conditions; do not assume a
+monotone path or treat a two-variable projection as the complete dynamic system.
+The replacement-fertility label remains $1/\nu$ in the present units.
+
+References located and inspected:
+
+- `latex/figures/fig6_ce_planner_wedge.tex` and `.png`: earlier crossing-value
+  diagram, with obsolete price notation and an old-age tax wedge. Retain as a
+  visual reference; it is not the selected model's verified first-best figure.
+- `latex/figures/simplified_olg_reallocation_wedge.png`: later value-gap figure;
+  its gains-tax terms belong to the deferred extension.
+- `output/model/fertility_population_housing_transition_note/steady_state_comparative_statics.png`
+  and `demographic_adjustment.png`: earlier linked population/housing-cost and
+  fertility diagrams. Their builder uses a different illustrative household
+  demand system, so equations and arrows cannot be imported unchanged.
+
+The author's request supersedes the old audit's editorial recommendation to
+keep exactly one figure. Its warning about an unproved transition shape remains
+relevant. No old figure, manuscript, or builder was overwritten in this discussion.
+
 ### Progress count and remaining discussion topics
 
 The map retains **18 entries**: **10 agreed directions** (P0, W0, W1, I0,
@@ -187,7 +248,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. A conditional finite-reform continuation proof is complete; its aggregate smoothness, bounded feasibility, and local-uniqueness assumptions are not established over the full model policy interval. | Section 5; D1 author preference below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Stationary supply accounting is checked; no supply function or construction dynamics are selected. The new credit examples retain property tax and have separately verified paths. Historical gains-tax examples remain evidence; tax-specific work stays deferred with Q0. | Sections 3, 5-6; D2 author agreement below |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs and technical derivations in the appendix. | DECIDED | Explicitly low priority. Economic assumptions remain visible in the main text. Exact length, figures, and detailed order remain low priority; suggested drafting is now authorized under V0. | Sections 7-8; P0/P1 author agreement below |
+| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. Preferred visual structure: one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | September 5: recover the two conceptual figure roles, with notation and geometry derived from the chosen model. Exact figure version, axes, conditions, and placement remain open. Simulated paths are not the intended second figure. | Sections 7-8; P0/P1 author agreement; September 5 planner menu and figure preference |
 | V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal, checks, independent reviews, PDF, and 14-row reconciliation delivered. Preserve W3/W4 as provisional and the stated unproved transition/global-policy claims; see simplified_olg_overnight_work.md. | Section 9; overnight authorization |
 
 ### Corrections and verification work retained across branches
