@@ -39,8 +39,13 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** define the planner's feasible allocations and welfare
-criterion under W1/W4/I1 before choosing a compensation formula. On September 5,
+**Next discussion:** pursue both the direct-allocation benchmark and a
+constrained planner who makes transfers before markets operate (W1/W4/I1).
+Tommaso has reopened the stronger constrained-efficiency question. Specify the
+transfer dates, financing, eligibility for down payments, and welfare coverage;
+then test for a Pareto improvement after household choices and prices adjust.
+Constrained inefficiency is an active research objective, not an established
+result. On September 5,
 Tommaso clarified that the efficiency benchmark need not be an actionable policy
 and said he is still considering what the planner may do. He subsequently
 specified that tenure segmentation must be respected as a physical constraint.
@@ -61,7 +66,8 @@ household populations; the largest initially lowers fertility through the
 change in tenure shares. Neither the household theorem nor these examples
 establishes a universally positive aggregate fertility response. All proposed
 writing remains outside the protected author draft. Capital-gains taxation
-and the stronger same-private-credit benchmark remain deferred.
+remains deferred. The stronger constrained-efficiency benchmark was subsequently
+reopened by the author; no theorem for it has yet been established.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),
@@ -116,7 +122,7 @@ The menu below is for discussion; no option has been chosen by requesting it.
 |---|---|---|
 | A. First best at fixed fertility | Choose housing, consumption, and intertemporal allocations subject to the actual housing stock, endowments, external intertemporal resource feasibility, and any real costs or technological limits. Remove private financing and purely institutional access restrictions. Preserve preferences, including any tenure taste. | Broad efficiency benchmark. Subsequent author clarification retains tenure segmentation as a physical constraint; its exact feasibility conditions and treatment of other title restrictions remain to be specified. Does not authorize free resources or choosing additional births. |
 | B. Planner who can overcome borrowing limits | Permit financing and the associated redistribution needed to reallocate housing, while retaining other specified tenure, housing-access, and estate restrictions. | Isolates credit as the source of the improvement. The present local proof supports this comparison under its stated permissions and slackness assumptions. It does not characterize the complete optimum. |
-| C. Planner facing the same private constraints | Retain household borrowing and access limits, without transfers that circumvent those limits at closing. | Stronger constrained-efficiency question, already parked. The financing marginal-value gap alone does not establish an improvement here. |
+| C. Planner facing the same private constraints | Keep the mortgage financing share and physical housing restrictions fixed. Specify permitted cash transfers and their eligibility for down payments; households then choose and markets clear. | Stronger constrained-efficiency question, subsequently reopened by the author for transfers followed by market clearing. Which transfers count toward purchase cash remains to be specified. The financing marginal-value gap alone does not establish an improvement here. |
 | D. Government choosing available policy instruments | Restrict interventions to specified taxes, subsidies, credit rules, or other instruments and their fiscal/market consequences. | Second-best policy problem for later quantitative work. It is not required to define or prove the theoretical efficiency benchmark. |
 
 **Welfare criterion, separate from those powers:** a Pareto comparison asks
@@ -195,6 +201,50 @@ and a planner who anticipates the equilibrium price response. These are lecture
 notes, not a new research result for this model.
 [NYU source](https://bpb-us-e1.wpmucdn.com/wp.nyu.edu/dist/c/16384/files/2019/11/Lecture-notes-Oct2014.pdf).
 
+### Both efficiency comparisons requested — September 5
+
+**Author decision:** pursue both the direct-allocation benchmark and the
+constrained planner who makes transfers and then allows markets to operate.
+The desired second result is constrained Pareto inefficiency. This reopens the
+stronger W1 branch; it does not establish that result or settle every transfer
+permission. Keep physical tenure segmentation in both comparisons and retain
+W0's fixed-fertility and fixed-cohort housing-welfare objective.
+
+**What the existing proof establishes:** Proposition 1 in the amendment
+proposal supplies extra purchase credit and directly arranges a compensated
+housing transaction while holding prices and other allocations fixed. It does
+not construct a new competitive equilibrium after cash transfers under the
+original credit rules. Its marginal housing-value gap therefore does not prove
+the requested stronger result.
+
+**Specific issue checked in the household equations:** closing precedes income
+and ordinary rebates, so $T_t$ does not enter the down-payment constraint. A new
+net cash transfer $\ell_i$ paid before purchase and eligible for the down payment
+would instead give $(1-\phi_t)P_t h_i\le b_i+\ell_i$, with the mortgage share
+$\phi_t$ unchanged. This is a proposed transfer permission, not yet an author
+choice or a change to the model. On a smooth, strictly binding owner branch,
+starting from $\ell_i=0$, its local housing response is
+$d h_i/h_i=d\ell_i/b_i-dP_t/P_t$. A price increase can therefore offset the cash
+increase; no aggregate housing or welfare sign follows from the grant alone.
+Transfers payable only after purchase do not directly change purchase cash.
+Compulsory future repayment would introduce public credit and must be disclosed
+as an additional power, rather than silently treated as an ordinary cash gift.
+
+**Lead recommendation, not yet selected:** start with cash transfers balanced
+across households and paid before housing purchases, retaining the mortgage rule
+and physical segmentation. This changes the distribution of purchase cash,
+without assuming a public loan with compulsory future repayment.
+
+**Next proof task:** select the admissible cash-transfer schedule and resource
+budget; keep mortgage and housing restrictions explicit; derive household and
+market-clearing responses; and check the welfare of every affected household,
+including sellers, other buyers, and later cohorts if future prices change.
+A constrained Pareto improvement requires everyone weakly better off and some
+strictly better off. Improved weighted welfare or a gain for young households
+alone is insufficient. No general constrained-inefficiency theorem is claimed.
+Bisin Section 3.2.4 supplies the conceptual definition, not a theorem applying
+automatically to this deterministic housing economy.
+
 ### Progress count and remaining discussion topics
 
 The map retains **18 entries**: **10 agreed directions** (P0, W0, W1, I0,
@@ -202,8 +252,9 @@ H0, H1, D0, D1, D2, P1), **3 parked branches** (W2, Q0, Q1), **4 unresolved
 author/specification entries** (W3, W4, I1, U0), and **1 completed development
 pass** (V0). W3 remains tentative and W4 is reopened. Agreed directions are not proof
 certificates: D1's interval-wide assumptions and general policy signs remain
-visible proof obligations. The stronger same-private-credit benchmark is a
-parked alternative within W1, not a nineteenth entry.
+visible proof obligations. The stronger constrained-efficiency benchmark is now
+an active alternative within W1, not a nineteenth entry. Its transfer rules and
+proof remain open; the three parked IDs above are unchanged.
 
 The next topic is the planner benchmark (W1/W4/I1), followed by real costs
 (W3) and literal population units (U0). The 14 review repairs below are work obligations,
@@ -268,7 +319,7 @@ between mechanism analysis and welfare analysis before either is understood.
 |---|---|---|---|---|
 | P0 | Main-text theory presents the allocation-efficiency result, conditional fertility prediction, and transition/terminal-population implications. The author agrees but treats presentation as low priority now. | DECIDED | Preserve W0's economic objective; defer detailed presentation work. Actual claims remain bounded by what is established. | Sections 1, 6, 8, 10; P0/P1 author agreement below |
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
-| W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
+| W1 | The direct-allocation planner may relax private borrowing limits. Also pursue constrained inefficiency with transfers followed by market clearing; the author reopened this stronger branch on September 5. | DECIDED | Keep the two feasible sets explicit. The existing financed transaction supports the first comparison, not a constrained-efficiency theorem. Retain segmentation; specify transfer timing, funding, purchase-cash eligibility, and all affected households before testing the second. | Section 4, A-B; W1 discussion below |
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
 | W3 | Provisionally include a reduced-form nonnegative real reallocation cost in the working theoretical benchmark. Exact functional form, incidence, and numerical value remain open. | TENTATIVE | Author accepts proceeding with the recommendation with a "we'll see" qualification. Review the specification later alongside W4's compensation scheme. Keep fixed and marginal costs distinct; the gains-tax/common-rebate extension stays deferred. | Section 4, cost extension; W3 author response below |
 | W4 | Define the planner welfare criterion and permissible redistribution at fixed fertility. The earlier household-specific compensation benchmark remains a possible proof construction. | REOPENED | September 5: settle feasible allocations and welfare coverage before choosing an implementation scheme. A practical policy is not required for the efficiency benchmark. Preserve the prior provisional choice and the proved compensated construction; no new criterion or transfer power is selected. | Sections 4, 6; September 5 clarification; earlier W4/I1 author response below |
@@ -409,8 +460,11 @@ limits. This answers the financing fork only; it does not waive real resource
 costs, outside lenders' claims, or the need for a complete feasible allocation.
 The allocation-efficiency objective and the separate fertility extension remain.
 
-**Parked alternative:** prove constrained inefficiency with the original
-borrowing rules retained. It remains desirable, not rejected. Revisit if the
+**Originally parked; reopened September 5:** prove constrained inefficiency
+with transfers followed by market clearing and explicitly retained private
+credit rules. The paragraph below records the original deferral, superseded by
+the author's later request to pursue both benchmarks. The original alternative
+was to prove constrained inefficiency with the original borrowing rules retained. It remains desirable, not rejected. Revisit if the
 paper requires an intervention feasible under those rules, or after the core
 allocation result and its policy interpretation are settled. The gains-tax
 result under W2 remains a distinct possible route within that alternative.
@@ -1026,8 +1080,9 @@ No target-contract change, policy run, or manuscript amendment is made here.
 
 | 2026-09-04 | Tommaso authorized proceeding with the plan and overnight work while he sleeps. | V0 ACTIVE. Consolidated plan and hourly same-task continuation through September 5 morning; proceed with proofs, checks, and suggestions while retaining W3/W4 as provisional. |
 
-**Suspended questions / return points:** the W1 alternative retaining private
-borrowing limits remains parked. The gains-tax extension and its dependent
+**Suspended questions / return points:** the W1 constrained-efficiency
+alternative was reopened on September 5; the original deferral is superseded.
+Transfer timing, funding, and private credit rules remain to be specified. The gains-tax extension and its dependent
 work resume when Q0 becomes active. H0's derivation is now authorized and
 must return to W4/I1 to settle exact compensation
 and resources. D0's comparison scope, D1's breadth objective, and D2's supply
