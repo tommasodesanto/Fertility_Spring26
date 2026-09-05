@@ -141,3 +141,79 @@ overnight output directory. They pin inputs, complete fit/parameter tables,
 operator identities, nine compressed case checkpoints, and standard graph
 counts. The output README gives the regeneration commands; the morning brief
 and full audit explain the economic conclusions and their limits.
+
+## Authorized continuation after the first PDF delivery
+
+At approximately 04:00 UTC the author explicitly invited further safe work while
+he sleeps. The completed 23-evaluation stage above remains closed. The following
+separate discretization experiment has a new, bounded allowance of **seven
+additional scenario evaluations**, within the original 12:48 UTC overall ceiling.
+It does not authorize a calibration search or production changes.
+
+The lead will embed the exact inherited 2023 pre-choice measure on nested liquid
+wealth grids. Subdividing each original interval into two pieces gives 239 nodes;
+four pieces gives 477. Every old node and its mass remain exactly in place, all
+new nodes initially have zero mass, and the endpoints remain -12 and 30. This
+changes backward-solution and current transaction interpolation resolution,
+without reconstructing history or changing the economic housing choice set.
+The independently checked global saving kernels are used throughout, so their
+known local-optimizer difference is not confounded with grid resolution.
+
+1. **Exact-loop smoke:** one 120-node global baseline evaluation at its previously
+   cleared price, reproducing the completed comparison; one 239-node baseline
+   through the full existing market loop. Both write a checkpoint, all seventeen
+   standard graphs, accounting and probability checks, and numerical exposures.
+2. **First comparison:** only after the smoke passes, two 239-node cleared cases:
+   housing supply +20% and dependent-child 95% LTV. Baseline comes from the smoke.
+3. **Optional second comparison:** at most three 477-node cases (the same baseline
+   and policies), only if the first comparison materially changes the interpretation
+   or leaves appreciable resolution dependence. Its own first baseline is the
+   size-specific exact-loop smoke; the policy cases stop if it fails. This is not
+   permission to keep doubling grids until a preferred answer appears.
+
+Before the 239-node policy results are available, the second-round trigger is
+specified as any of: a change above 2% of the coarse supply birth effect; above
+5% of the coarse credit birth effect; above 1% in baseline births per household;
+or above 0.1 percentage point in baseline ownership. These are disclosed
+diagnostic materiality thresholds, not sampling tests or acceptance standards.
+If none is triggered and all first-round gates pass, stop at 239 nodes.
+
+Observed 120-node global backward solves take roughly 11–14 seconds. Doubling
+states and interpolation intervals suggests roughly four times that cost at 239
+nodes: 45–60 seconds per backward solution, or about 10–20 minutes per market
+case at 14–20 iterations. The three fine cases are provisionally 30–60 serial
+CPU-minutes; a possible 477-node round is provisionally two to four CPU-hours.
+Reassess these estimates after the smoke. Allocate one CPU and 16 GB for the
+first round, with a 90-minute smoke limit and 90-minute policy-stage limit;
+the optional round cannot exceed four hours or encroach on the final report hour.
+
+Stop on any frozen-source, helper, inherited-checkpoint or smoke-receipt hash
+mismatch; nonfinite/negative mass; changed initial measure or economic parameters;
+failed population/feasibility gate; or failure to meet the requested market
+residual of 1e-5. The production acceptance thresholds remain documented separately.
+Retain failed-case evidence. Write runtime heartbeat every minute and completed
+case summaries/checkpoints immediately; investigate active silence at 30 minutes.
+There is no best calibration candidate: `best_so_far.json` explicitly records
+the latest admissible resolution comparison and no production selection.
+
+One independent read-only `explorer_fast` worker has a ten-minute limit to trace
+the ownership age conventions. The lead will separately quantify the occupied
+mass exposed to the existing saving/first-birth irregularities from saved arrays.
+Neither read-only task requires a model solve. Useful findings will be added to
+both PDFs with the conditional nature of the grid experiment stated prominently.
+
+The numerical driver is `code/model/tools/run_e5f_nested_wealth_grid_audit.py`;
+the isolated launcher is `code/cluster/submit_e5f_nested_wealth_grid_audit.sh`.
+Two tests verify preservation of the joint inherited measure, including
+nonlinear state payoffs on an unequal grid. The independent read-only collector
+is `code/model/tools/build_e5f_continuation_receipts.py`. It pins the saved
+source and state receipts and independently checks first-birth attribution
+against the post-fertility childless stock difference.
+
+Smoke `16986180` completed in 16 minutes with a 15.3-minute fine-grid baseline,
+15 backward solves, residual `2.289275e-6`, zero feasibility projection, and no
+occupied negative wealth-value steps. Both checkpoint hashes and 34 standard
+graphs were verified; the seventeen fine-grid graphs were visually inspected.
+The remaining two 239-node cases are job `16986566`, submitted at 04:31 UTC,
+with a 90-minute wall limit and revised serial expectation of 28-40 minutes.
+No 477-node case has been submitted at this stage.

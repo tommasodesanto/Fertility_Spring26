@@ -1,8 +1,21 @@
 # Calibration Status
 
-Updated: `2026-09-05` (independent overnight verification complete; September 4 production calibration unchanged)
+Updated: `2026-09-05` (first independent overnight stage complete; bounded grid continuation running; September 4 production calibration unchanged)
 
 ## September 5 independent numerical and identification verification
+
+After the first PDF delivery, the author authorized further safe work while he
+sleeps. A separately bounded nested-wealth-grid impact diagnostic is running in
+the frozen audit snapshot: Torch smoke `16986180` completed in 16 minutes,
+reproducing the 120-node global baseline exactly and passing the 239-node
+baseline market loop (residual `2.2893e-6`). The two 239-node policy comparisons
+are running as job `16986566`, submitted at 04:31 UTC. Original nodes,
+inherited household mass, endpoints,
+economic parameters, and production files are held fixed. At most two fine-grid
+policy cases and, conditionally, three 477-node cases may follow. The seven-case
+continuation budget and stop gates are in the existing overnight run plan;
+`output/model/e5f_overnight_independent_verification_20260905a/nested_grid/`
+holds submission receipts. No calibration search is authorized by this diagnostic.
 
 Production remains September 4 `task_010`, loss `30.482966707698903`, with
 the twelve targets and eleven estimated parameters tabulated immediately below.
