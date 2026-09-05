@@ -1,8 +1,8 @@
 {
   "status": "passed",
-  "verified_at_utc": "2026-09-05T02:10:17.594382+00:00",
-  "verification_code_sha256": "1bace17b307f0eb6e795d35d2ebc56d4a1eb3bfacefdb177ab26605b7234816f",
-  "proposal_sha256": "94193bde5a8e590dd9ac3c4c13be199bfefe18f18cffda3393d76352452770f3",
+  "verified_at_utc": "2026-09-05T03:23:00.808702+00:00",
+  "verification_code_sha256": "e522659bda4bfc21536131f3edd7969fc0ad540487ea2691236ad4884911873e",
+  "proposal_sha256": "c4f7021a8dbfe341c999e2a2f2bbbeee874a87ed9cf9bb0d96f4a0cc0dc10467",
   "scope": "Conditional analytical checks; no GE or calibrated result",
   "binding_cases": 4280,
   "primitive_sufficient_cases": 796,
@@ -13,6 +13,17 @@
     "partial": 0.0031406698436568597,
     "corrected": -0.08512252434073424,
     "finite_difference": -0.08512252432923971
+  },
+  "accounting_checks": {
+    "status": "passed",
+    "child_scales": [
+      0.3,
+      2.1,
+      4.2,
+      10.0
+    ],
+    "maximum_rescaling_error": 1.7763568394002505e-14,
+    "supply_identity_error": 0.0
   },
   "welfare_baseline": {
     "q": 0.8,
@@ -71,5 +82,5 @@
     "primitive_threshold": 0.17857142857142858,
     "dn_dh": 0.2567567567567569
   },
-  "elapsed_seconds": 1.8770600720000001
+  "elapsed_seconds": 5.730595111
 }

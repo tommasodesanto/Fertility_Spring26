@@ -133,3 +133,22 @@ production-paper tables. In particular, a calibration slide defaults to
 | "The math speaks for itself" | One sentence of economics before and after every display. |
 | "Creative presentation helps the reader" | More normal than you think. One idea per frame. |
 | "The preferences belong with the problem" | Preferences are primitives; they go in the environment. |
+
+## 9. Plain explanations and simple proofs
+
+Tommaso reaffirmed on September 4 that simple theory should read simply.
+Earlier instructions in the `Reconstruct theory and draft history` conversation
+were to “make simple things simple,” make proofs more verbal and clear, and
+avoid announcing a complex proof strategy for an elementary exercise.
+
+- Start with what the result says about households, housing, or children.
+- Use a technical term only when it saves a necessary distinction. Explain
+  “the same constraints continue to bind” before using “fixed active set.”
+- Give the short argument directly. Avoid announcing a framework, strategy,
+  architecture, or mechanism map for a few lines of algebra.
+- State the scope once where it matters. Repeated lists of what a result does
+  not prove make the argument harder to follow.
+- Keep workflow, verification receipts, issue IDs, and implementation status
+  in the work record. They do not belong in proposed paper prose.
+- Prefer a compact appendix that explains the nontrivial steps over a catalogue
+  of near-identical cases. Preserve every condition needed for correctness.

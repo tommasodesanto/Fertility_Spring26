@@ -16,40 +16,40 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**Resume here:** development is authorized. On 2026-09-04 Tommaso replied
-“yeah, let's do this.. so you can work on this overnight while i sleep hopefulyl”
-to the proposed consolidated work plan. The lead is recording that plan and
-advancing the agreed theory work overnight, with a checkpoint by September 5
-at 08:00 New York time. See
-[`simplified_olg_overnight_work.md`](simplified_olg_overnight_work.md) for phase
-status, evidence, time limits, and the next unfinished step. V0 is ACTIVE.
-This latest authorization supersedes earlier discussion-only language below;
-those passages remain the historical record of the decision pass.
+**Latest execution and writing instruction:** Tommaso asked to work continuously
+until done, with three checks of every substantive result; the hourly schedule
+is now paused. He also asked for simpler, more transparent prose based on the
+recent chats. Technical language should be used only when necessary. The
+work record contains the three-check procedure and ongoing progress.
 
-Preserve all ten agreed economic/presentation directions, three parked
-branches, and the five entries still requiring development or review. W3's
-real cost and W4's household-specific compensation remain TENTATIVE, with
-an explicit return to the concrete scheme before finalizing the welfare
-benchmark. I1's dated finance/title/estate accounting and U0's units must be
-resolved or clearly flagged. H0 seeks a restriction preferably entirely in
-primitives, especially without the multiplier; D1 seeks the broadest valid
-transition result. Neither objective is a completed theorem. Capital-gains
-taxation remains deferred under I0/Q0; property tax is separate. Retain D0's
-transition and terminal total-population comparison and D2's fixed-stock
-benchmark plus a simple stationary supply extension. Put all proposed
-manuscript changes outside the protected author draft and distinguish author
-choices, proof status, and verified amendments.
+**Resume here:** the amendment proposal and verification are complete for the
+agreed development pass. Read
+[`simplified_olg_amendment_proposal.tex`](../../latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex)
+and its [PDF](../../output/pdf/simplified_olg_amendment_proposal.pdf).
+The [work record](simplified_olg_overnight_work.md) contains all 14 repair
+resolutions, the three-check record, numerical evidence, and remaining limits.
+No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
+that does not finalize provisional author choices or prove every desired claim.
+Historical discussion-only passages below remain the record of the decision pass.
 
-**Development checkpoint:** the proposed allocation proof now specifies exact
-seller compensation and market-rate repayment, with a small uniform seller
-premium as a simpler alternative for W4's revisit. H0 has a checked primitive
-sufficient restriction in a stationary zero-property-tax specialization, plus
-the broader payment-based local condition. These have passed a bounded
-independent review and constructed household checks; they do not establish
-aggregate policy signs. Population-unit and supply identities are drafted.
-D1's broad transition result is the next unfinished phase. The seven-page
-proposal, checks, and qualifications are indexed in the overnight work record.
-W3/W4 remain TENTATIVE; no provisional instrument or cost size is finalized.
+**Next discussion:** revisit W4 with the concrete choice now available: exact
+seller compensation or a simpler small per-unit premium. W3's real cost remains
+TENTATIVE; distinguish a marginal cost from a fixed moving cost. The financing,
+title, tax-reserve, estate, and repayment entries are explicit under I1. U0's
+arithmetic is corrected; the literal-child and resident-person interpretation
+still requires an author choice. No quantitative units have changed.
+
+**Established and qualified:** the fixed-fertility allocation result has an
+explicit feasible compensated transaction. The fertility result has no
+multiplier and has a price-free sufficient specialization at stationary prices
+with zero property tax. The finite-reform continuation proposition has a short
+conditional proof, but its model-wide hypotheses remain unproved. Four
+illustrative credit cases retain property tax and show larger terminal
+household populations; the largest initially lowers fertility through the
+change in tenure shares. Neither the household theorem nor these examples
+establishes a universally positive aggregate fertility response. All proposed
+writing remains outside the protected author draft. Capital-gains taxation
+and the stronger same-private-credit benchmark remain deferred.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),
@@ -60,36 +60,24 @@ here rather than silently rewriting what the review said.
 
 ### Progress count and remaining discussion topics
 
-After the author's presentation agreement and overnight authorization on 2026-09-04, this map
-has **18 entries**: **10 agreed directions** (P0, W0, W1, I0, H0, H1, D0,
-D1, D2, P1), **3 parked branches** (W2, Q0, Q1), and **5 unresolved entries**
-(W3, W4, I1, U0, V0). The unresolved group includes tentative entries;
-W3's provisionally accepted cost term and W4's compensation instrument remain
-in this group.
-Agreed directions are not completed proofs or implementations; their retained
-technical obligations remain. The parked stricter W1 benchmark and tax-specific
-subbranches are nested in existing entries, not extra independent rows.
+The map retains **18 entries**: **10 agreed directions** (P0, W0, W1, I0,
+H0, H1, D0, D1, D2, P1), **3 parked branches** (W2, Q0, Q1), **4 unresolved
+author/specification entries** (W3, W4, I1, U0), and **1 completed development
+pass** (V0). W3 and W4 remain tentative. Agreed directions are not proof
+certificates: D1's interval-wide assumptions and general policy signs remain
+visible proof obligations. The stronger same-private-credit benchmark is a
+parked alternative within W1, not a nineteenth entry.
 
-The five unresolved entries consist of two provisional choices, the related
-institutional specification, a unit correction, and the work plan:
-
-1. W3/W4/I1: the planner's exact financing, compensation, real costs, and
-   protection of affected and unaffected households, without reopening the
-   already accepted borrowing-limit permission.
-2. U0: consistent mapping of children, entrant households, and total population.
-3. V0: the active overnight amendment and verification plan, including checks
-   of remaining household assumptions not settled by H1's temporal scope.
-
-This is a grouping of existing topics, not a promise that each takes one
-exchange or a new implementation plan. The review's 14 repair items remain
-mapped below; they are not 14 additional author decisions.
+The next topics group naturally as the transfer/cost choice (W3/W4/I1) and
+literal population units (U0). The 14 review repairs below are work obligations,
+not 14 additional author decisions; each now has a resolution in the work record.
 
 ### How to use and maintain this map
 
 - Give each question a stable ID. Record new branches when they arise; do not
   erase alternatives merely because the conversation follows another branch.
 - Discussion status is **OPEN**, **ACTIVE**, **TENTATIVE**, **DECIDED**,
-  **PARKED**, or **REOPENED**. A tentative preference is not an author decision.
+  **PARKED**, **REOPENED**, or **COMPLETE** (for finished work). A tentative preference is not an author decision.
   A parked branch needs a reason and a condition for revisiting it.
 - Keep three objects separate: what the evidence supports, what Tommaso
   chooses, and what has actually been amended and verified. A mathematical
@@ -147,23 +135,23 @@ between mechanism analysis and welfare analysis before either is understood.
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
 | W3 | Provisionally include a reduced-form nonnegative real reallocation cost in the working theoretical benchmark. Exact functional form, incidence, and numerical value remain open. | TENTATIVE | Author accepts proceeding with the recommendation with a "we'll see" qualification. Review the specification later alongside W4's compensation scheme. Keep fixed and marginal costs distinct; the gains-tax/common-rebate extension stays deferred. | Section 4, cost extension; W3 author response below |
 | W4 | Provisionally use household-specific compensation in the working Pareto benchmark, holding fertility fixed. The author remains doubtful and explicitly wants to revisit it. Exact welfare coverage remains open. | TENTATIVE | Use as a working assumption during authorized development, not final acceptance. An exact compensation scheme and a uniform seller-premium alternative are now concrete proposals; revisit before finalizing the welfare benchmark. Preserve real and dated resource constraints. | Sections 4, 6; W4/I1 author response below |
-| I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
+| I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. The proposed core and new verification override gains tax to zero; the historical builder and evidence remain unchanged. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
-| I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
+| I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | The proposal now states the original dated institutions and one equilibrium definition; the planner transaction is explicit. Broader changes remain open. Keep inherited entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | A local payment condition and a primitive sufficient restriction in a stationary zero-property-tax specialization have been derived and checked under V0. General-equilibrium policy signs remain open; return to W1/W4/I1 for incidence and to H1 for a quantitative analogue. | Sections 3, 6, 8; H0 threshold clarification and preference below |
 | H1 | Retain the simple model's one-shot completed-fertility choice in its two-period OLG structure; leave sequential birth timing and childlessness to quantitative work. | DECIDED | Fertility-architecture scope only. Log utility, goods/space requirements, tenure tastes, and maintained old-age branches remain assumptions to assess where relevant; do not infer blanket approval. P0/H0/I1/V0 remain dependencies. | Sections 2-3, 6, 8; H1 author response below |
-| D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
-| D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. Actual hypotheses and proofs are the next development phase under V0. | Section 5; D1 author preference below |
-| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision; stationary supply accounting is drafted but no supply function is selected. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
-| U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | Required before interpreting D0-D2 or linking to quantitative units. Do not ask the author to decide whether inconsistent conversions are mathematically valid. Existing quantitative units remain unchanged; return for a choice if reconciliation requires a substantive interpretation change. | Section 3, details behind audit; U0 correction note below |
+| D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Illustrative common-initial-state paths and terminal household comparisons are checked. General signs and model-wide convergence remain open under D1-D2; literal-person measurement remains U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
+| D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. A conditional finite-reform continuation proof is complete; its aggregate smoothness, bounded feasibility, and local-uniqueness assumptions are not established over the full model policy interval. | Section 5; D1 author preference below |
+| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Stationary supply accounting is checked; no supply function or construction dynamics are selected. The new credit examples retain property tax and have separately verified paths. Historical gains-tax examples remain evidence; tax-specific work stays deferred with Q0. | Sections 3, 5-6; D2 author agreement below |
+| U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
 | P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs and technical derivations in the appendix. | DECIDED | Explicitly low priority. Economic assumptions remain visible in the main text. Exact length, figures, and detailed order remain low priority; suggested drafting is now authorized under V0. | Sections 7-8; P0/P1 author agreement below |
-| V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | ACTIVE | Explicit overnight authorization on 2026-09-04; see simplified_olg_overnight_work.md. Preserve W3/W4 as provisional and unresolved proof obligations. | Section 9; overnight authorization |
+| V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal, checks, independent reviews, PDF, and 14-row reconciliation delivered. Preserve W3/W4 as provisional and the stated unproved transition/global-policy claims; see simplified_olg_overnight_work.md. | Section 9; overnight authorization |
 
 ### Corrections and verification work retained across branches
 
 These rows retain every action in the review's 14-row priority ladder, in its
-original order. Development is **authorized and underway** under V0; author
+original order. The development pass is **complete as a proposal** under V0; author
 choices and completed verification remain separate from implementation status. Rows described as
 corrections can be checked independently; they do not require choosing facts.
 Their eventual inclusion and implementation must match the selected claims.

@@ -4,9 +4,11 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
-- `simplified_olg_overnight_work.md` -- authorized theory development plan,
-  phase checkpoints, verification, and morning readout for the September 4–5
-  discussion follow-through; retains the provisional compensation/cost choices.
+- `simplified_olg_overnight_work.md` -- completed September 4–5 theory amendment
+  proposal, three-check record, all 14 repair resolutions, and next discussion
+  choices. PDF: `../../output/pdf/simplified_olg_amendment_proposal.pdf`.
+  The compensation/cost choices and unproved general transition claims remain
+  explicit in `ACTIVE_DECISION_LEDGER.md`.
 
 - `e5f_independent_quantitative_audit.md` -- full September 4 independent audit,
   discussion guide, and reconciliation with the separate young-ownership diagnostic.
