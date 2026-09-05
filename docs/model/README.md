@@ -4,6 +4,10 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+- `simplified_olg_overnight_work.md` -- authorized theory development plan,
+  phase checkpoints, verification, and morning readout for the September 4–5
+  discussion follow-through; retains the provisional compensation/cost choices.
+
 - `e5f_independent_quantitative_audit.md` -- full September 4 independent audit,
   discussion guide, and reconciliation with the separate young-ownership diagnostic.
   PDF: `../../output/pdf/e5f_independent_quantitative_audit.pdf`.
