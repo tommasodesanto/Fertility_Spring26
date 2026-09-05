@@ -95,7 +95,7 @@ Complete target fit:
 | Mean occupied rooms | 5.779970 | 6.317291 | 0.537321 | 11.973 | 3.4568 |
 | Wealth / annual earnings | 6.873100 | 6.932652 | 0.059552 | 6.288 | 0.0223 |
 | Bequest flow / wealth | 0.008800 | 0.008433 | -0.000367 | 5165289.256 | 0.6971 |
-| Old-age wealth p90 / p50 | 3.448111 | 3.236511 | -0.211600 | 56.960 | 2.5503 |
+| Living-old wealth/income p90 / p50, ages 76–84 | 3.448111 | 3.236511 | -0.211600 | 56.960 | 2.5503 |
 
 Complete parameter record:
 

@@ -136,7 +136,7 @@ The twelve-row objective is **30.4829667**. Gaps equal model minus target; each 
 | Mean occupied rooms | 5.779970 | 6.317291 | 0.537321 | 11.9732 | 3.4568 |
 | Wealth / annual earnings | 6.873100 | 6.932652 | 0.059552 | 6.28767 | 0.0223 |
 | Bequest flow / wealth | 0.008800 | 0.008433 | -0.000367 | 5.16529e+06 | 0.6971 |
-| Older wealth p90 / p50 | 3.448111 | 3.236511 | -0.211600 | 56.9598 | 2.5503 |
+| Older wealth/income p90 / p50 | 3.448111 | 3.236511 | -0.211600 | 56.9598 | 2.5503 |
 
 At this exact parameter vector, young ownership is 0.31098385 against 0.34116609. Its synthetic weight is 3436.594375 and its additional loss is 3.1306261, giving a thirteen-row score of 33.6135928. This is not a deterioration in the twelve-row fit.
 
@@ -181,7 +181,7 @@ This is the best observed case in the original 23-case young-ownership panel, no
 | Mean occupied rooms | 5.779970 | 6.320025 | 0.540054 | 11.9732 | 3.4921 |
 | Wealth / annual earnings | 6.873100 | 7.015451 | 0.142351 | 6.28767 | 0.1274 |
 | Bequest flow / wealth | 0.008800 | 0.008417 | -0.000383 | 5.16529e+06 | 0.7573 |
-| Older wealth p90 / p50 | 3.448111 | 3.274138 | -0.173972 | 56.9598 | 1.7240 |
+| Older wealth/income p90 / p50 | 3.448111 | 3.274138 | -0.173972 | 56.9598 | 1.7240 |
 | Young ownership (diagnostic) | 0.341166 | 0.311695 | -0.029471 | 3436.59 | 2.9849 |
 
 The thirteenth-row scale is **5% of its target**, not an empirical standard error. These objective values are diagnostic scores, not specification-test statistics. Source and target fingerprints differ from the production record only as explicitly documented for the additional default-off row and its code profile. The household numerical kernels are unchanged in these inherited panel evaluations.
