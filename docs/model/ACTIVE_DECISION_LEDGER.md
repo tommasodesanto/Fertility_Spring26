@@ -25,9 +25,11 @@ provisionally allows household-specific compensating transfers as the working
 benchmark, with the author's expressed doubt and an explicit revisit before
 finalizing the welfare proposition. This is not a fully settled decision.
 W3 also provisionally includes a reduced-form real reallocation cost; exact
-form, incidence, and size will be reviewed later. The next discussion is H1:
-whether to retain a one-shot continuous completed-fertility choice in the
-simple theory, with sequential births and timing in quantitative work.
+form, incidence, and size will be reviewed later. H1's fertility architecture
+is now retained: one-shot completed fertility in the two-period simple model,
+with sequential births, timing, and childlessness in quantitative work. Other
+household assumptions have not been separately finalized. U0's mapping of
+children, households, and total population is the next queued topic.
 Borrowing-limit relaxation is already accepted.
 D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
@@ -66,27 +68,26 @@ here rather than silently rewriting what the review said.
 
 ### Progress count and remaining discussion topics
 
-After the author's broad-transition preference on 2026-09-04, this map has
-**18 entries**: **7 agreed directions** (W0, W1, I0, H0, D0, D1, D2),
-**3 parked branches** (W2, Q0, Q1), and **8 unresolved entries** (P0, W3,
-W4, I1, H1, U0, P1, V0). The unresolved group includes tentative and active entries;
+After the author's household-architecture response on 2026-09-04, this map has
+**18 entries**: **8 agreed directions** (W0, W1, I0, H0, H1, D0, D1, D2),
+**3 parked branches** (W2, Q0, Q1), and **7 unresolved entries** (P0, W3,
+W4, I1, U0, P1, V0). The unresolved group includes tentative entries;
 W3's provisionally accepted cost term and W4's compensation instrument remain
 in this group.
 Agreed directions are not completed proofs or implementations; their retained
 technical obligations remain. The parked stricter W1 benchmark and tax-specific
 subbranches are nested in existing entries, not extra independent rows.
 
-The eight unresolved entries can be discussed as three substantive topics,
+The seven unresolved entries can be discussed as two substantive topics,
 followed by presentation and implementation planning:
 
 1. W3/W4/I1: the planner's exact financing, compensation, real costs, and
    protection of affected and unaffected households, without reopening the
    already accepted borrowing-limit permission.
-2. H1: household simplifications needed for the simple model's mechanism and
-   its relationship to the richer quantitative model.
-3. U0: consistent mapping of children, entrant households, and total population.
-4. P0/P1: final paper role, placement, and exposition, preserving W0's objective.
-5. V0: the later agreed amendment and verification plan.
+2. U0: consistent mapping of children, entrant households, and total population.
+3. P0/P1: final paper role, placement, and exposition, preserving W0's objective.
+4. V0: the later agreed amendment and verification plan, including checks of
+   remaining household assumptions not settled by H1's temporal scope.
 
 This is a grouping of existing topics, not a promise that each takes one
 exchange or a new implementation plan. The review's 14 repair items remain
@@ -162,7 +163,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | Author's desired form only. Defer the derivation until planning/amendment work; return to W1/W4/I1 for payment incidence and to H1 for a quantitative analogue. No primitive-only condition or aggregate policy sign is established. | Sections 3, 6, 8; H0 threshold clarification and preference below |
-| H1 | Which household ingredients are essential? Next discussion: retain one-shot continuous completed fertility in the simple theory versus sequential/discrete choices. Keep log utility, goods/space requirements, tenure tastes, and old-age branches as further subquestions. | ACTIVE | P0, H0, I1. No household architecture is adopted through the W3 cost agreement. Do not reinterpret the toy model as sequential birth timing or transfer its elasticities to the quantitative model. | Sections 2-3, 6, 8; H1 next topic below |
+| H1 | Retain the simple model's one-shot completed-fertility choice in its two-period OLG structure; leave sequential birth timing and childlessness to quantitative work. | DECIDED | Fertility-architecture scope only. Log utility, goods/space requirements, tenure tastes, and maintained old-age branches remain assumptions to assess where relevant; do not infer blanket approval. P0/H0/I1/V0 remain dependencies. | Sections 2-3, 6, 8; H1 author response below |
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. Actual hypotheses and proofs remain deferred. | Section 5; D1 author preference below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
@@ -766,6 +767,27 @@ analytical condition. The other household ingredients remain separate H1
 subquestions; no full household specification is accepted by answering this
 first question. No derivation or implementation begins now.
 
+**Author response, 2026-09-04:**
+
+> yeah, do you see particularproblems with this? isn't this two generation anyway?
+
+**Recorded scope and clarification:** retain the one-shot fertility architecture.
+The simple model has two adult life stages, young and old, with one childbearing
+period and a new young cohort every date. It is an ongoing OLG economy, not
+only two cohorts over its entire history. A single completed-fertility choice
+is natural for this setup and is adequate to formulate the intended housing
+allocation and cohort-population mechanisms. Sequential births would require
+a richer reproductive lifecycle, which is left to quantitative work.
+
+The relevant limits are interpretation: this simple model cannot distinguish
+earlier births from more lifetime births. Continuous strictly positive fertility
+is a separate preference/domain simplification, not forced by having two adult
+life stages; the current logarithmic fertility term excludes childlessness.
+These limits do not justify expanding the toy model for the chosen objectives,
+but its precise comparative-static conditions remain specification-dependent.
+No new theorem, household implementation, or blanket approval of all remaining
+household assumptions is recorded. The next queued discussion is U0.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -839,6 +861,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso provisionally accepted the compensation recommendation while expressing doubt and requesting a later revisit. | W4 becomes TENTATIVE, not DECIDED. Keep the household-specific transfer benchmark for discussion; require a return to the concrete scheme and restricted alternatives before finalizing welfare. W3 real costs are next. |
 | 2026-09-04 | Tommaso asked for the next issue after provisional compensation agreement. | Introduced W3's real-cost scope and the lead's simple nonnegative-cost recommendation. No cost assumption, parameter value, or author decision is inferred. |
 | 2026-09-04 | Tommaso accepted proceeding with the reduced-form cost recommendation, adding "we'll see." | W3 becomes TENTATIVE; functional form, incidence, and value remain for later review. Opened H1's one-shot-versus-sequential fertility scope for discussion. |
+| 2026-09-04 | Tommaso agreed to the simple fertility architecture and asked whether it creates problems given the two-generation setup. | H1 temporal scope recorded: one childbearing period and completed fertility, with successive cohorts generating transitions. Distinguished timing and childlessness limitations; U0 is next. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
@@ -848,7 +871,8 @@ and resources. D0's comparison scope, D1's breadth objective, and D2's supply
 scope are settled. W4/I1's tailored transfers are provisionally accepted and
 must be revisited once the scheme is concrete, before the welfare claim is
 finalized. W3's reduced-form real cost is provisional and will be reviewed with
-the compensation specification. H1's fertility-choice architecture is next; actual transition hypotheses and
+the compensation specification. H1's fertility-choice architecture is retained;
+U0's units are next. Actual transition hypotheses and
 implementation remain deferred. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
@@ -864,10 +888,14 @@ conditions. Exact transfers, real costs, welfare coverage, supply specification,
 and transition hypotheses remain unresolved. Validity and implementation remain
 proof obligations.
 
+H1 retains one-shot completed fertility in the two-period theory, with birth
+timing and childlessness left to quantitative work. This does not settle all
+household assumptions independently of the later specification checks.
+
 **Provisional author choices:** W4 permits tailored compensation as a working
 benchmark, with expressed doubt and an explicit revisit. W3 includes a
 reduced-form real reallocation cost subject to later review of its specification.
-Keep both separate from the seven settled directions and preserve the return
+Keep both separate from the eight settled directions and preserve the return
 conditions above.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
