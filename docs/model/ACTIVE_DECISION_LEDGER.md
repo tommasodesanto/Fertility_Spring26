@@ -29,7 +29,39 @@ is now paused. He also asked for simpler, more transparent prose based on the
 recent chats. Technical language should be used only when necessary. The
 work record contains the three-check procedure and ongoing progress.
 
-**September 5 two-planner review:** the author requested two Astra agents at
+**September 5 focused constrained-efficiency pass (latest):** the author asked
+to settle issue 2 before moving on. A complete local Pareto improvement is now
+proved for a stated committed-transfer class: household-specific cash when
+young and old, enforceable future lump-sum taxes, and a fully accounted passive
+initial title owner with outside bond access and fiscal participation. Under
+the stationary group structure, strict original constraints/tenure margins and
+contraction condition, housing moves toward the young at every date; initial
+young owners can gain strictly and nobody loses. Every future market clears.
+The four-page [current note](../../output/pdf/simplified_olg_constrained_efficiency.pdf)
+and [source](../../latex/JMP_DS_suggestions/simplified_olg_constrained_efficiency.tex)
+contain the construction and resource identity. The two new reviews and
+independent original-budget/optimization checks are indexed in
+`output/model/simplified_olg_amendments/README.md`.
+
+The same stationary regime has a local obstruction to one-time gifts with a
+nearby converging continuation: its negative stable price root makes later
+renter welfare alternate; the unchanged-tail case fails complete resource
+accounting. This is not a global impossibility theorem. A separate finite
+construction with a current-income advance and two housing incentives is kept
+as an expanded-instrument fallback.
+
+**Author choice remains OPEN (W1/W4/I1):** the research has established what
+committed transfers can deliver; the author has not accepted future-tax
+commitment, passive-owner fiscal jurisdiction/finance, or identity-based
+eligibility. These permissions provide public financing across ages even with
+unchanged mortgage shares. Do not present the result as inefficiency under
+one-time gifts or as a pure price externality. Fertility is fixed individually
+for this comparison. Real costs remain tentative; the optional threshold
+requires an explicit date-specific cost base. The author manuscript is unchanged.
+This result supersedes the older statements below that no complete-path theorem
+had been established; those passages record earlier evidence.
+
+**Earlier September 5 two-planner review (historical):** the author requested two Astra agents at
 maximum reasoning, one per benchmark. Their bounded passes and the lead's
 independent checks are complete. Read the five-page
 [planner note](../../output/pdf/simplified_olg_planner_benchmarks.pdf), with
@@ -50,27 +82,13 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** pursue both the direct-allocation benchmark and a
-constrained planner who makes transfers before markets operate (W1/W4/I1).
-Tommaso has reopened the stronger constrained-efficiency question. Specify the
-transfer dates, financing, eligibility for down payments, and welfare coverage;
-then test for a Pareto improvement after household choices and prices adjust.
-Constrained inefficiency is an active research objective, not an established
-result. On September 5,
-Tommaso clarified that the efficiency benchmark need not be an actionable policy
-and said he is still considering what the planner may do. He subsequently
-specified that tenure segmentation must be respected as a physical constraint.
-W1's earlier borrowing permission remains recorded; no broader removal of
-restrictions is inferred. The exact housing feasibility conditions remain to be
-written, and the welfare criterion remains open.
-W4 is REOPENED, with the previous compensation scheme retained as one proof
-construction. W3's real cost remains TENTATIVE. U0's population interpretation
-also remains open. The subsequent authorized two-agent pass develops a
-separate discussion note, without changing the model or author manuscript.
-Next settle initial title ownership and the admissible dated transfer schedule
-for the full constrained comparison, plus estate settlement for a complete
-first-best program. No such institutional choice is inferred from authorizing
-research on both benchmarks.
+**Next discussion:** stay with constrained efficiency. Decide whether the
+committed transfer and ownership permissions in the current note are acceptable
+for W1/W4/I1; no new author decision is inferred from completing the proof.
+The direct-allocation benchmark remains available, and its complete first-best
+estate-settlement question remains separate. W3's real cost is tentative;
+U0's population interpretation and the two requested theory figures remain
+banked. No hourly continuation is active.
 
 **Established and qualified:** the fixed-fertility allocation result has an
 explicit feasible compensated transaction. The fertility result has no
@@ -83,7 +101,8 @@ change in tenure shares. Neither the household theorem nor these examples
 establishes a universally positive aggregate fertility response. All proposed
 writing remains outside the protected author draft. Capital-gains taxation
 remains deferred. The stronger constrained-efficiency benchmark was subsequently
-reopened by the author; no theorem for it has yet been established.
+reopened by the author; the latest committed-transfer theorem is stated
+above with its unaccepted institutional permissions.
 
 **Review evidence:**
 [`simplified_olg_independent_review.tex`](../../latex/JMP_DS_suggestions/simplified_olg_independent_review.tex),

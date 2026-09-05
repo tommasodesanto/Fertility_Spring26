@@ -1,5 +1,49 @@
 # Simplified OLG amendment checks
 
+## September 5: focused constrained-efficiency result (latest)
+
+The author asked to settle constrained inefficiency before moving to other
+issues. The two existing Astra reviewers and the lead completed a new pass.
+The current four-page synthesis is
+`output/pdf/simplified_olg_constrained_efficiency.pdf`, from
+`latex/JMP_DS_suggestions/simplified_olg_constrained_efficiency.tex`.
+This result supersedes the earlier statement below that the complete-path
+constrained comparison is entirely unproved.
+
+- `constrained_full_path_review.md` proves a complete infinite-path Pareto
+  improvement with committed household-specific young and old transfers,
+  enforceable future taxes, and an explicit passive initial title owner with
+  outside bond access and participation in the fiscal account. Young housing
+  rises at every date. Initial young owners can gain strictly. Every market
+  clears and all initial claims are included. It also proves a local obstruction
+  to one-time gifts around the verified stationary regime, not a global no-go.
+- `constrained_instruments_review.md` gives a separate finite-support fallback
+  using a current-income advance and two targeted housing incentives. It is an
+  expanded-instrument result, not a claim of globally minimal instruments.
+- `planner_benchmark_checks.json` now also records three finite committed
+  reforms, a fourth case with a strict initial-young gain, original-budget and
+  full-resource identities, the infinite contraction bound, 12 independent
+  household optimizations, full tenure-deviation checks at fixed individual
+  fertility, and the one-time-gift price roots.
+- `committed_cash_path.csv` contains dated receipts for the analytical path.
+  `committed_cash_diagnostics.png` is a supplemental six-panel internal check;
+  the agreed theory and earlier numerical figures are unchanged.
+
+Regenerate the complete receipts and supplemental diagnostic with SciPy and
+Matplotlib installed (about five seconds locally):
+
+```sh
+python3 code/model/tools/verify_simplified_olg_planner_benchmarks.py --original-optimizers --plot
+```
+
+The positive theorem is conditional on the stated transfer and ownership
+permissions, stationary group structure, strict private branches and tenure
+margin, and a contraction condition. Author acceptance of those permissions
+remains OPEN in the decision ledger. In particular, public commitment provides
+financing across ages; an unchanged mortgage share does not remove this extra
+economic power. No new fertility externality is used. The author manuscript
+and quantitative model were not edited.
+
 ## September 5 planner benchmarks
 
 The author requested two Astra agents at maximum reasoning, one for direct

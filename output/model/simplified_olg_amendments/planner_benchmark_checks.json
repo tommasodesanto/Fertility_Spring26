@@ -1,7 +1,9 @@
 {
-  "scope": "Constructed conditional households; no equilibrium or calibration solve",
+  "scope": "Conditional checks plus a complete analytical committed-transfer equilibrium path; no calibration or numerical equilibrium solve",
   "source": "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
   "source_sha256": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+  "verifier_sha256": "88ba37027f520a6cbbb94fcf427080eb60ee8ae0751e4208d80fe783aa91e79c",
+  "constrained_theorem_sha256": "2d3e8ea5096e29cb2898202948744bf0b9994db2074bfa0e88b5b5c9e3ff0ba6",
   "input_sha256": {
     "transition_verification.json": "30d896f6eda66c8fdb18a892b3306cb18d942b200d256cd6280eaef63c5a264b",
     "transition_phi80.csv": "cb73331c0a8e361df4e807eac5e1f04ab28e7af0c76ad9238e80f81d55c4a145"
@@ -354,6 +356,161 @@
       "c": 1.2410714285714286,
       "h": 0.5,
       "e": 0.9928571428571429
+    }
+  },
+  "committed_cash_path": {
+    "scope": "Committed two-age cash transfers; fixed individual fertility; stationary four-group regime; passive initial title owner with outside bond access",
+    "baseline": {
+      "price": 0.34268356297507874,
+      "user_cost": 0.17990887056191632,
+      "owner_housing": 0.8754432147123941,
+      "old_owner_housing": 0.6581964003552694,
+      "owner_adult_consumption": 0.4933973791493142,
+      "young_housing_value": 0.3285480745093843,
+      "passive_initial_titles": 1.0463260567599697,
+      "contraction_factor": 0.26088451930708617,
+      "owner_mass": 1.0893612826199552,
+      "renter_mass": 0.36590264650346216
+    },
+    "cases": [
+      {
+        "relative_initial_user_cost_change": 0.001,
+        "initial_young_owner_lifetime_utility_gain": 0.0,
+        "passive_present_value_gain": 0.00010067043877843913,
+        "resource_identity_gain": 0.00010067043877848122,
+        "predicted_gain_derivative": 0.10093493283500261,
+        "observed_gain_derivative": 0.10067043877843913,
+        "maximum_original_equation_residual": 8.239936510889834e-16,
+        "minimum_branch_slack": 0.09020187982371353,
+        "minimum_taste_threshold_tenure_margin": 0.03572784788036354,
+        "discounted_consumption_tail_bound": 2.0837847375408006e-75,
+        "impact_young_housing_gain": 0.0005415503424367474,
+        "impact_old_housing_change": -0.0005415503424367474
+      },
+      {
+        "relative_initial_user_cost_change": 0.0001,
+        "initial_young_owner_lifetime_utility_gain": 0.0,
+        "passive_present_value_gain": 1.009084427445239e-05,
+        "resource_identity_gain": 1.0090844274727929e-05,
+        "predicted_gain_derivative": 0.10093493283500261,
+        "observed_gain_derivative": 0.1009084427445239,
+        "maximum_original_equation_residual": 7.771561172376096e-16,
+        "minimum_branch_slack": 0.09021929696159248,
+        "minimum_taste_threshold_tenure_margin": 0.03572891211218221,
+        "discounted_consumption_tail_bound": 2.0865416758110438e-76,
+        "impact_young_housing_gain": 5.419946773943529e-05,
+        "impact_old_housing_change": -5.419946773943529e-05
+      },
+      {
+        "relative_initial_user_cost_change": 1e-05,
+        "initial_young_owner_lifetime_utility_gain": 0.0,
+        "passive_present_value_gain": 1.0093228340108004e-06,
+        "resource_identity_gain": 1.0093228343470271e-06,
+        "predicted_gain_derivative": 0.10093493283500261,
+        "observed_gain_derivative": 0.10093228340108003,
+        "maximum_original_equation_residual": 8.881784197001252e-16,
+        "minimum_branch_slack": 0.09022104121051402,
+        "minimum_taste_threshold_tenure_margin": 0.03572906840216561,
+        "discounted_consumption_tail_bound": 2.086817787891385e-77,
+        "impact_young_housing_gain": 5.420391522958923e-06,
+        "impact_old_housing_change": -5.420391522958923e-06
+      },
+      {
+        "relative_initial_user_cost_change": 0.0001,
+        "initial_young_owner_lifetime_utility_gain": 2e-06,
+        "passive_present_value_gain": 8.94294196803833e-06,
+        "resource_identity_gain": 8.942941968256085e-06,
+        "predicted_gain_derivative": 0.08945562609075794,
+        "observed_gain_derivative": 0.0894294196803833,
+        "maximum_original_equation_residual": 8.378714388967978e-16,
+        "minimum_branch_slack": 0.09021940436558135,
+        "minimum_taste_threshold_tenure_margin": 0.03572891211218221,
+        "discounted_consumption_tail_bound": 1.9709104485201356e-76,
+        "impact_young_housing_gain": 5.419946773943529e-05,
+        "impact_old_housing_change": -5.419946773943529e-05
+      }
+    ],
+    "original_optimizer_checks": [
+      {
+        "owner": false,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 4.3076530398256097e-08,
+        "budget_residual": 3.3306690738754696e-16
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 8.59698630062411e-08,
+        "budget_residual": 6.245004513516506e-17
+      },
+      {
+        "owner": false,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.5622308668916673e-08,
+        "budget_residual": 3.0357660829594124e-17
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.7784069983317607e-07,
+        "budget_residual": 3.0357660829594124e-17
+      },
+      {
+        "owner": false,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 4.3095831570028054e-08,
+        "budget_residual": 1.1102230246251565e-16
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 8.626221081886598e-08,
+        "budget_residual": 3.2959746043559335e-17
+      },
+      {
+        "owner": false,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.5622308668916673e-08,
+        "budget_residual": 3.0357660829594124e-17
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.7820116726685598e-07,
+        "budget_residual": 8.066464163292153e-17
+      },
+      {
+        "owner": false,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 4.307430695460468e-08,
+        "budget_residual": 1.1102230246251565e-16
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.5494856788378992,
+        "maximum_choice_discrepancy": 8.635825732294933e-08,
+        "budget_residual": 7.45931094670027e-17
+      },
+      {
+        "owner": false,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.5622308668916673e-08,
+        "budget_residual": 3.0357660829594124e-17
+      },
+      {
+        "owner": true,
+        "fixed_fertility": 0.352671788308486,
+        "maximum_choice_discrepancy": 1.7820116726685598e-07,
+        "budget_residual": 8.066464163292153e-17
+      }
+    ],
+    "one_time_tail": {
+      "roots": [
+        -0.05518475204076946,
+        3.30801404998033
+      ],
+      "renter_utility_numerator_loading": -0.15211448478364695,
+      "qualification": "Linear local tail only; not a general no-inefficiency theorem"
     }
   },
   "max_accounting_residual": 1.7763568394002505e-15,
