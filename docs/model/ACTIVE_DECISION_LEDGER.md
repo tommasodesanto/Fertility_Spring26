@@ -719,6 +719,20 @@ move with a fixed cost. Preserve that distinction when developing the result.
 This recommendation does not reopen the parked common-rebate gains-tax
 extension or finalize W4's provisional compensation instrument.
 
+**Clarification requested, 2026-09-04:**
+
+> so this is like just a sort of represntative cost? reduced form ?
+
+Yes: the proposal is a reduced-form real resource cost, expressed in
+consumption-good units, summarizing the resources needed to reallocate housing
+without modeling the individual service providers. A common cost term could
+be the simplest benchmark; household- or transaction-specific costs remain
+possible. It is not a claim that a population-average cost establishes each
+household's compensation condition. Compensation payments remain transfers,
+separate from resources consumed. Fixed versus marginal/proportional cost,
+functional form, and numerical value remain for later specification. This
+clarification is not recorded as author adoption of W3.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
