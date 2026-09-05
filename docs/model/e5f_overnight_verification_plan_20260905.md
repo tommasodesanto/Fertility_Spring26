@@ -52,7 +52,8 @@ below replace further optimization.
    inherited and measured; their nonzero excess is not declared feasible.
    Job `16981492` was cancelled while still pending, with zero solve time,
    to add these receipts and the market-loop smoke. Revised smoke job:
-   `16983266`, thirty-minute wall limit. Intermediate pending job `16983006`
+   `16983266`, thirty-minute wall limit (failed and superseded as recorded
+   below). Intermediate pending job `16983006`
    was also cancelled with zero compute time to correct the dated diagnostic
    unit conversion and add compressed case checkpoints after visual review.
    Full-stage runtime and submission must
@@ -87,3 +88,56 @@ regeneration from the hash-pinned checkpoint. The source file is
 `code/model/tools/run_e5f_independent_numerical_audit.py` and must be run from
 the frozen production snapshot. It rejects a mismatched checkpoint or live
 code bundle before any diagnostic computation.
+
+## Completed execution and disposition
+
+Both bounded questions are complete. No further numerical panel or calibration
+search was launched. The two PDF sources incorporate the completed results.
+
+| Stage | Torch job | Outcome and observed cost |
+|---|---|---|
+| Dated reconstruction and exact-loop smoke | 16981272 | Complete, 6:43; all 75 historical entries exactly reproduced |
+| 50,000-draw interval oracle | 16981404 | Complete, approximately 49 seconds from the checkpoint |
+| First checkpoint-based global smoke | 16983266 | Failed exact local reproduction after two backward solutions; approximately 52 seconds |
+| Corrected global smoke | 16984897 | Complete, approximately 54 seconds in the driver; exact local reproduction and global dominance pass |
+| Seven-case smaller-step smoke | 16982612, task 2 | Complete, 9:47; every scientific and numerical gate and artifact check passes |
+| Remaining six smaller-step cases | 16985059 | All complete, 9:59–10:51 per task, within 25-minute limits |
+| Nine-case impact saving comparison | 16985060 | Complete, 14:06, within the 60-minute limit; all six cleared cases meet requested residual `1e-5` |
+
+The first global smoke failed because the new audit adapter reloaded the saved
+state without reinstalling the three sequential calendar operators. This was
+an audit-driver error, not a production-kernel failure. A zero-solve replay with
+the correct operators reproduces all saved distributions and aggregate
+quantities exactly. The corrected driver installs and asserts those operators
+before every case. The successful reconstruction and saved-array audits used
+the correct production initialization and remain valid. The failed output is
+retained under `global_saving_smoke_v3/`; the corrected result is under
+`global_saving_smoke_v4/`.
+
+One bounded local fallback smoke was attempted during the priority delay, in an
+isolated temporary environment matching Torch NumPy/Numba versions. It completed
+one backward solution and was stopped when the Torch smoke exposed the adapter
+error. It was not retried locally and was not used as numerical evidence. The
+environment, elapsed time, and termination receipt are retained. The two pending
+cancelled versions consumed no compute. Counting reconstruction, smoke attempts,
+the stopped local evaluation, and both completed expansions conservatively gives
+23 scenario evaluations, within the cap of 24. Price-loop backward solves are
+counted separately in each case receipt and are not hidden in that scenario count.
+
+The saving comparison uses a common inherited 2023 distribution and tighter
+current market precision, with no history re-estimation. Global saving changes
+the supply birth response from `1.290982%` to `1.290873%`, and the family-credit
+response from `0.017845%` to `0.017850%`. The smaller-step panel confirms the
+owner-premium versus first-birth-rooms trade-off and material derivative step
+dependence. Its seven tasks are a diagnostic subset, not a complete new Jacobian.
+No incumbent, target, weight, external restriction, production code, or gate was
+changed. Remaining work requires a stated measurement/identification strategy
+or a separately designed discretization comparison, so another panel would not
+be an appropriate use of the remaining twelve-hour allowance.
+
+The authoritative completed readouts are `global_saving_receipts/summary.json`,
+`smallstep_receipts/summary.json`, and `panel_receipts/summary.json` in the
+overnight output directory. They pin inputs, complete fit/parameter tables,
+operator identities, nine compressed case checkpoints, and standard graph
+counts. The output README gives the regeneration commands; the morning brief
+and full audit explain the economic conclusions and their limits.

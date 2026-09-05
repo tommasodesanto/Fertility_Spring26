@@ -10,8 +10,13 @@ Current notes kept here:
   The compensation/cost choices and unproved general transition claims remain
   explicit in `ACTIVE_DECISION_LEDGER.md`.
 
-- `e5f_independent_quantitative_audit.md` -- full September 4 independent audit,
-  discussion guide, and reconciliation with the separate young-ownership diagnostic.
+- `e5f_overnight_morning_review.md` -- September 5 discussion brief, completed
+  cluster verification, ownership measurement, and complete fit/parameter appendices.
+  PDF: `../../output/pdf/e5f_overnight_morning_review.pdf`.
+- `e5f_overnight_verification_plan_20260905.md` -- bounded run designs, source
+  snapshots, completed jobs, failed-smoke diagnosis, and reproduction index.
+- `e5f_independent_quantitative_audit.md` -- full September 4–5 independent audit,
+  discussion guide, reconciliation, and completed numerical/identification addendum.
   PDF: `../../output/pdf/e5f_independent_quantitative_audit.pdf`.
   Regenerate with `python3 code/model/tools/build_e5f_independent_audit_pdf.py`
   from the repository root; this renders the frozen document without model solves.

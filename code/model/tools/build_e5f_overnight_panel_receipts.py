@@ -10,6 +10,8 @@ import argparse
 import csv
 import json
 import math
+import pickle
+import sys
 from pathlib import Path
 import numpy as np
 import analyze_e5f_transition_calibration_panel as panel
@@ -18,6 +20,51 @@ import build_e5f_transition_ridge_refinement as ridge
 ROOT=Path(__file__).resolve().parents[3]
 PANEL=ROOT/"output/model/e5f_transition_calibration_eta063_kappa005_rooms_repair_youngown_overid_coord_20260904a"
 OUT=ROOT/"output/model/e5f_overnight_independent_verification_20260905a/panel_receipts"
+
+
+def boundary_receipts(checkpoint,out):
+    """Extract exposure from saved arrays; never evaluate a policy or model."""
+    expected="bbe10a21a843facaf2bceed56e89281e00992d632cddab640ff0c572d3eb494f"
+    if panel.sha256(checkpoint)!=expected:raise RuntimeError("Boundary checkpoint differs")
+    frozen=ROOT/"tmp/e5f_overnight_20260905a/frozen_production/code/model"
+    if not frozen.is_dir():raise RuntimeError("Recreate the documented frozen source for record deserialization")
+    sys.path[:0]=[str(frozen),str(frozen/"tools")]
+    with checkpoint.open("rb") as stream:s=pickle.load(stream)
+    P,e,bg=s["parameters"],s["evaluation"],s["b_grid"]
+    g=e.g_current;bp=e.policy.bp_pol;mass=float(g.sum());over=np.maximum(bp-bg[-1],0)
+    rows=[]
+    for j in range(P.J):
+        gj=g[:,:,:,j];total=float(gj.sum());rent=gj[:,0];rh=e.policy.hR_pol[:,0,:,j];saving=bp[:,:,:,j]
+        rows.append(dict(age=P.age_start+P.da*j,households=total,
+            grid_lower_share=float(gj[0].sum()/total),grid_upper_share=float(gj[-1].sum()/total),
+            saving_above_grid_share=float(gj[saving>bg[-1]+1e-9].sum()/total),
+            saving_at_upper_grid_share=float(gj[saving>=bg[-1]-1e-3].sum()/total),
+            upper_owner_rung_share=float(gj[:,-1].sum()/total),
+            renter_at_cap_share=float(rent[rh>=P.hR_max-1e-8].sum()/max(rent.sum(),1e-30))))
+    rent=g[:,0];rh=e.policy.hR_pol[:,0]
+    result=dict(scope="Saved 2023 post-tenure grid distribution and conditional saving policies; no model solve.",
+        checkpoint_sha256=expected,wealth_min=float(bg[0]),wealth_max=float(bg[-1]),wealth_points=len(bg),
+        renter_cap=float(P.hR_max),owner_menu=np.asarray(P.H_own).tolist(),
+        grid_lower_share=float(g[0].sum()/mass),grid_upper_share=float(g[-1].sum()/mass),
+        saving_above_grid_share=float(g[bp>bg[-1]+1e-9].sum()/mass),
+        saving_at_upper_grid_share=float(g[bp>=bg[-1]-1e-3].sum()/mass),
+        upper_owner_rung_household_share=float(g[:,-1].sum()/mass),
+        upper_rung_share_among_owners=float(g[:,-1].sum()/g[:,1:].sum()),
+        renter_at_cap_share=float(rent[rh>=P.hR_max-1e-8].sum()/rent.sum()),
+        maximum_occupied_saving_above_grid=float(np.max(over[g>1e-12])),
+        weighted_saving_above_grid=float(np.sum(g*over)),
+        saving_above_grid_001_share=float(g[over>.01].sum()/mass),production_changed=False)
+    ages=P.age_start+P.da*np.arange(P.J)
+    for key,mask in (("fertile",ages<=42),("older",ages>=66)):
+        gj=g[:,:,:,mask];mg=float(gj.sum())
+        result[key+"_grid_upper_share"]=float(gj[-1].sum()/mg)
+        result[key+"_upper_owner_rung_share"]=float(gj[:,-1].sum()/mg)
+    for key,midx in (("without_dependent_children",slice(0,1)),("with_dependent_children",slice(1,None))):
+        rental=g[:,0,...,midx];h=e.policy.hR_pol[:,0,...,midx]
+        result[key+"_renter_cap_share"]=float(rental[h>=P.hR_max-1e-8].sum()/rental.sum())
+    panel.write_csv(out/"boundary_exposure_by_age.csv",rows)
+    panel.write_json(out/"boundary_exposure_summary.json",result)
+    return result
 
 
 def ownership_measurement(out,aggregate_room_target):
@@ -160,7 +207,7 @@ def smallstep_receipts(root,out,original,moments,targets,weights,Jlarge):
             ax.axhline(float(targets[k])*factor,ls="--",color="#B35A32",lw=1)
             ax.set_ylabel(label,fontsize=8);ax.tick_params(labelsize=7)
             ax.grid(alpha=.15)
-            if row==0:ax.set_title(original[0].panel["domain"][dimension]["name"],fontsize=10)
+            if row==0:ax.set_title({0:r"Annual patience $\beta$",3:r"Owner premium $\chi$",6:r"Bequest shifter $\theta_1$"}[dimension],fontsize=10)
             if row==1:ax.set_xlabel("Transformed-coordinate change",fontsize=8)
     fig.savefig(out/"supplemental_step_stability.pdf",bbox_inches="tight")
     fig.savefig(out/"supplemental_step_stability.png",dpi=180,bbox_inches="tight");plt.close(fig)
@@ -180,6 +227,11 @@ def global_saving_receipts(root,out):
         raise RuntimeError("Global-saving inherited state differs")
     if summary["input_hashes"]["code_bundle_sha256"]!="630ba20bca6a1b54eb4c46aca904c4a087afb8c808b9c7f4660d5fcd316a970e":
         raise RuntimeError("Global-saving production source differs")
+    expected_operators={"apply_fertility":"run_e5f_open_population_transition.apply_sequential_fertility",
+        "advance_calendar_distribution":"run_e5f_open_population_transition.advance_sequential_calendar_distribution",
+        "distribution_rows":"run_e5f_open_population_transition.independent_child_distribution_rows"}
+    if summary.get("calendar_operators")!=expected_operators:
+        raise RuntimeError("Global-saving sequential operator contract differs")
     for key,path in (("driver_sha256",ROOT/"code/model/tools/run_e5f_global_saving_quantification.py"),
                      ("oracle_driver_sha256",ROOT/"code/model/tools/run_e5f_independent_numerical_audit.py")):
         if summary[key]!=panel.sha256(path):raise RuntimeError(f"Global-saving {key} differs from reviewed source")
@@ -190,13 +242,28 @@ def global_saving_receipts(root,out):
         raise RuntimeError("Global-saving case set differs")
     if max(r["adult_households"] for r in rows)-min(r["adult_households"] for r in rows)>2e-10:
         raise RuntimeError("Global-saving common population differs")
-    comparisons=[];checkpoints={}
+    comparisons=[];checkpoints={};array_receipts=[]
     for r in rows:
         case=f'{r["method"]}_{r["policy"]}_{r["pricing"]}'
         path=root/"cases"/case/"case_state.pkl.gz"
         if panel.sha256(path)!=r["case_checkpoint_sha256"]:raise RuntimeError(f"Case checkpoint {case} differs")
         checkpoints[case]=r["case_checkpoint_sha256"]
         if r["market_cleared"] and r["market_residual"]>2e-4:raise RuntimeError("Market gate failed")
+        if r["market_cleared"] and r["market_residual"]>r["requested_market_tolerance"]:
+            raise RuntimeError("Requested tighter market tolerance was not achieved")
+        if r["feasibility_projection"]>1e-6:raise RuntimeError("Production projection gate failed")
+        receipt=panel.read_json(path.parent/"case_receipt.json")
+        if receipt["row"]!=r or receipt["inherited_state_checkpoint_sha256"]!=summary["checkpoint_sha256"]:
+            raise RuntimeError("Global-saving case receipt differs")
+        arrays=receipt["policy_arrays"]
+        for probability in arrays["probabilities"].values():
+            if probability["nonfinite"] or probability["minimum"]<0 or probability["maximum"]>1:
+                raise RuntimeError("Global-saving choice probability check failed")
+        graphs=list((path.parent/"standard_diagnostics").glob("*.png"))
+        if len(graphs)!=17:raise RuntimeError("Global-saving standard graph packet is incomplete")
+        array_receipts.append(dict(case=case,standard_graph_count=len(graphs),
+            occupied_negative_steps=arrays["occupied_negative_steps"],
+            maximum_occupied_value_drop=arrays["maximum_occupied_value_drop"]))
         if r["policy"]=="baseline":continue
         base=next(b for b in rows if b["method"]==r["method"] and b["pricing"]==r["pricing"] and b["policy"]=="baseline")
         comparisons.append(dict(method=r["method"],policy=r["policy"],pricing=r["pricing"],
@@ -221,6 +288,7 @@ def global_saving_receipts(root,out):
     fig.savefig(out/"supplemental_global_saving.png",dpi=180,bbox_inches="tight");plt.close(fig)
     result=dict(status="complete_verified_conditional_policy_readout",comparisons=comparisons,
         summary_sha256=panel.sha256(root/"summary.json"),checkpoint_hashes=checkpoints,
+        calendar_operators=expected_operators,policy_array_receipts=array_receipts,
         max_cleared_market_residual=max(r["market_residual"] for r in rows if r["market_cleared"]),
         max_budget_excess_share=max(r["budget_excess_share"] for r in rows),production_unchanged=True,
         scope="Common inherited 2023 pre-choice distribution, unchanged calibrated parameters. Each method clears current markets separately. Fixed_local_policy_price rows use the corresponding local-method policy and baseline prices; those markets need not clear under global saving.")
@@ -234,6 +302,7 @@ def main():
     parser.add_argument("--outdir",type=Path,default=OUT)
     parser.add_argument("--smallstep-panel",type=Path,help="Explicit completed seven-case subset; omitted by default.")
     parser.add_argument("--global-saving-dir",type=Path,help="Explicit completed nine-case numerical comparison.")
+    parser.add_argument("--boundary-checkpoint",type=Path,help="Explicit hash-pinned saved production state for boundary exposure only.")
     args=parser.parse_args();out=args.outdir
     out.mkdir(parents=True,exist_ok=True)
     tasks,moments,targets,weights,provenance=panel.load_panel(args.panel)
@@ -319,6 +388,8 @@ def main():
         summary["smallstep"]=smallstep_receipts(args.smallstep_panel,out.parent/"smallstep_receipts",tasks,moments,targets,weights,J)
     if args.global_saving_dir:
         summary["global_saving"]=global_saving_receipts(args.global_saving_dir,out.parent/"global_saving_receipts")
+    if args.boundary_checkpoint:
+        summary["boundary_exposure"]=boundary_receipts(args.boundary_checkpoint,out.parent)
     panel.write_json(out/"summary.json",summary)
     print(json.dumps({k:v for k,v in summary.items() if k!="provenance"},indent=2))
 

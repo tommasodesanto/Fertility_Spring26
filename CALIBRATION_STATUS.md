@@ -1,6 +1,62 @@
 # Calibration Status
 
-Updated: `2026-09-04` (one-day eta=0.63, tenure-kappa=0.005 calibration repair and policy reassessment complete)
+Updated: `2026-09-05` (independent overnight verification complete; September 4 production calibration unchanged)
+
+## September 5 independent numerical and identification verification
+
+Production remains September 4 `task_010`, loss `30.482966707698903`, with
+the twelve targets and eleven estimated parameters tabulated immediately below.
+No parameter, target, weight, numerical gate, or production policy result was
+changed. The morning brief is `docs/model/e5f_overnight_morning_review.md`
+with PDF `output/pdf/e5f_overnight_morning_review.pdf`; the full revised audit
+is `docs/model/e5f_independent_quantitative_audit.md`, Section 16, with PDF
+`output/pdf/e5f_independent_quantitative_audit.pdf`.
+
+- A frozen snapshot matching all fifty production source hashes reproduces all
+  75 checked historical entries exactly. The selected 2023 state now has the
+  standard seventeen-figure diagnostic packet. Reporting-floor budget excess
+  affects only `2.9138e-9` of household mass at that state.
+- The separate nine-case global-saving comparison, Torch job `16985060`,
+  completed after an exact-loop smoke. With a tighter requested market residual
+  of `1e-5`, initial births per household rise `1.290982%` under the production
+  saving optimizer and `1.290873%` under global saving for supply +20%; the
+  corresponding family-credit effects are `0.017845%` and `0.017850%`.
+  These are diagnostic impacts from a common inherited 2023 distribution,
+  not replacement production results or a revised 2063 transition. Global
+  saving removes two rare occupied value-monotonicity violations in the local
+  credit case. Wealth-grid and housing-menu sensitivity remain outstanding.
+- The inherited young-ownership panel is complete, 23/23. Collector `16964275`
+  completed; ridge planner `16964564` failed a stricter flow-versus-stock
+  measurement comparison. Exact renewal-flow identities pass within `2.22e-16`,
+  and all cases meet the original `2e-8` measurement gate. Independent read-only
+  Jacobians retain that rejection: both original and augmented systems have
+  algebraic rank eleven but relative rank ten at `1e-3`, with the weakest
+  direction dominated by the bequest wealth shifter. No ridge proposal ran.
+- Seven smaller-step evaluations, jobs `16982612` and `16985059`, pass the
+  unchanged diagnostic contract. Steps of `0.005` in transformed coordinates
+  improve forward/backward agreement for patience and the owner premium, but
+  their central derivative vectors differ from the `0.02` estimates by 35%
+  and 53%. This is three columns, not a new complete Jacobian. The inherited
+  panel's best original-row score `29.3858837` remains unpromoted; its complete
+  fit and parameter comparison appear in the morning brief appendices.
+- Young ownership remains default-off. Its reported comparison, `31.0984%`
+  versus ACS `34.1166%`, uses different age aggregation. Same annual-age ACS
+  weights with explicit model-cell mappings give diagnostic model rates of
+  `26.9792%` or `30.2169%`. Old-age ownership is approximately `99.2%` at ages
+  80–84 versus ACS `75.0%`. Age, geography, and time alignment, and late-life
+  portfolio/tenure validation, require author decisions before target changes.
+- Historical age-18 mass rises from `0.0143371` in 2023 to `0.0639084` in 2027
+  at the handoff from imposed age shares to the inherited queue. This is not
+  a policy-induced birth response. Household-formation/entry interpretation
+  remains outstanding, as do the fiscal and H128 limitations recorded below.
+
+All receipts, exact input hashes, case checkpoints, complete 23-case and
+seven-case fit/parameter tables, and reproduction commands are indexed in
+`output/model/e5f_overnight_independent_verification_20260905a/README.md`.
+The run design and completed job record are in
+`docs/model/e5f_overnight_verification_plan_20260905.md`. Parameter names and
+birth-rate units in the live September 4 tables below were corrected as
+documentation, without changing any stored estimate or result.
 
 ## September 4 one-day calibration repair and policy reassessment
 
@@ -35,7 +91,7 @@ Complete target fit:
 | Rooms response to first birth | 0.720246 | 0.436418 | -0.283828 | 137.565 | 11.0821 |
 | Rooms, 3+ minus 1--2 children | 0.367700 | 0.403441 | 0.035741 | 2958.515 | 3.7793 |
 | Family ownership gap | 0.167662 | 0.161699 | -0.005963 | 14229.591 | 0.5060 |
-| Ownership rate | 0.575472 | 0.544488 | -0.030984 | 1207.846 | 1.1596 |
+| Ownership rate, ages 30–55 | 0.575472 | 0.544488 | -0.030984 | 1207.846 | 1.1596 |
 | Mean occupied rooms | 5.779970 | 6.317291 | 0.537321 | 11.973 | 3.4568 |
 | Wealth / annual earnings | 6.873100 | 6.932652 | 0.059552 | 6.288 | 0.0223 |
 | Bequest flow / wealth | 0.008800 | 0.008433 | -0.000367 | 5165289.256 | 0.6971 |
@@ -48,16 +104,20 @@ Complete parameter record:
 | Annual discount factor | 0.995117 | [0.94, 0.9995] | estimated |
 | First-birth taste dispersion | 2.168173 | [0.02, 50] | estimated |
 | Continuation-birth taste dispersion | 1.736471 | [0.02, 50] | estimated |
-| Housing utility weight | 1.043472 | [0.1, 5] | estimated |
-| Baseline housing scale | 14.562959 | [0.2, 80] | estimated |
-| Housing preference intercept | 0.528428 | [0, 8] | estimated |
-| Housing preference slope | 0.107249 | [0.02, 16] | estimated, near lower bound |
+| Owner-service premium \(\chi\) | 1.043472 | [0.1, 5] | estimated |
+| Housing-supply intercept \(H_0\) | 14.562959 | [0.2, 80] | estimated |
+| Bequest strength \(\theta_0\) | 0.528428 | [0, 8] | estimated |
+| Bequest wealth shifter \(\theta_1\) | 0.107249 | [0.02, 16] | estimated; raw-scale bound flag only |
 | Child-room floor | 0.282210 | [0.1, 1.8] | estimated |
 | First-birth fixed cost | 4.559138 | [0, 8] | estimated |
 | First-child room jump | 0.364931 | [0, 0.5] | estimated |
 | 2007--2023 child-value change | -0.328714 | [-1.5, 0.2] | estimated |
 | Tenure-choice taste dispersion | 0.005000 | externally fixed | not estimated |
 | Housing-supply elasticity | 0.630000 | externally fixed | not estimated |
+
+The stored near-bound flag for \(\theta_1\) uses raw units. Its normalized
+logarithmic search coordinate is `0.251237`, so it is not at the lower search
+edge. All other estimated parameters have no stored near-bound flag.
 
 The repair improves the three central housing-fit objects relative to the
 September 3 incumbent: first-birth rooms rise from `0.429080` to `0.436418`,
@@ -76,7 +136,11 @@ artifact-hash gates. Maximum market residuals range from `3.7042e-5` to
 `4.7790e-5`, comfortably inside the unchanged `2e-4` gate. The report SHA-256
 is `ec49ef705468abbf2bb06695a93ce3a03e88f5ba862662df322ebe80138b6e7a`.
 
-| Policy | Births 2023 | Births 2043 | Births 2063 | Ownership 2023 | Ownership 2063 | Housing use 2023 | Housing use 2063 |
+The birth columns are percentage changes in **births per household**, not total
+births. Ownership changes refer to all adult households; housing use is per
+household. By 2063, total-birth responses also include changing household mass.
+
+| Policy | Births/HH 2023 | Births/HH 2043 | Births/HH 2063 | Ownership 2023 | Ownership 2063 | Housing use 2023 | Housing use 2063 |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | Housing supply +20% | 1.291% | 1.704% | 2.050% | 1.784 pp | 2.671 pp | 5.754% | 8.603% |
 | 95% LTV for dependent-child households | 0.018% | 0.045% | 0.076% | 0.745 pp | 1.677 pp | 0.044% | 0.020% |

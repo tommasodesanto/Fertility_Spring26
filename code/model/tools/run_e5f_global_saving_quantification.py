@@ -85,6 +85,22 @@ GLOBAL_RENTER=global_renter
 GLOBAL_OWNER=global_owner
 
 
+def install_sequential_operators():
+    """Match production prepare_model after loading a saved dated state."""
+    calendar.apply_fertility=transition.apply_sequential_fertility
+    calendar.advance_calendar_distribution=transition.advance_sequential_calendar_distribution
+    calendar.distribution_rows=transition.independent_child_distribution_rows
+
+
+def operator_contract():
+    expected=dict(apply_fertility=transition.apply_sequential_fertility,
+        advance_calendar_distribution=transition.advance_sequential_calendar_distribution,
+        distribution_rows=transition.independent_child_distribution_rows)
+    if any(getattr(calendar,key) is not value for key,value in expected.items()):
+        raise RuntimeError("Production sequential calendar routing differs")
+    return {key:value.__module__+"."+value.__name__ for key,value in expected.items()}
+
+
 def quantities(e,P):
     g=e.g_current;mass=float(e.g_post_fertility.sum())
     births=transition.calendar_topcode_birth_accounting(e.g_pre,e.g_post_fertility,e.births,P)
@@ -103,6 +119,7 @@ def quantities(e,P):
 
 
 def run_case(packet,method,name,clear,out,*,fixed_price=None,market_tol=2e-4):
+    operator_contract()
     set_method(method)
     P=copy.deepcopy(packet["parameters"])
     audit.policy.apply_policy(P,audit.policy.POLICIES[name])
@@ -182,6 +199,7 @@ def main():
         if receipt.get("oracle_driver_sha256")!=audit.digest(audit.__file__):
             raise RuntimeError("Oracle or diagnostic helper differs from the smoke")
     transition.configure_sequential_model()
+    install_sequential_operators()
     packet=audit.load_checkpoint(args.checkpoint)
     packet["checkpoint_sha256"]=args.checkpoint_sha256
     _,configured=transition.configure_sequential_model()
@@ -256,6 +274,7 @@ def main():
         oracle_driver_sha256=audit.digest(audit.__file__),input_hashes=packet["input_hashes"],
         checkpoint_sha256=args.checkpoint_sha256,production_changed=False,
         market_tolerance=args.market_tol,
+        calendar_operators=operator_contract(),
         interpretation="Conditional on the original 2023 distribution and inherited history. Only the saving maximization method differs; current prices clear separately in equilibrium mode. This is numerical sensitivity, not a new calibration or confidence interval.")
     audit.save_json(out/"summary.json",summary)
     audit.progress(out,"complete",elapsed_seconds=summary["elapsed_seconds"])
