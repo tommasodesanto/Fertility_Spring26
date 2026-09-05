@@ -158,3 +158,16 @@ avoid announcing a complex proof strategy for an elementary exercise.
   in the work record. They do not belong in proposed paper prose.
 - Prefer a compact appendix that explains the nontrivial steps over a catalogue
   of near-identical cases. Preserve every condition needed for correctness.
+
+Writing references consulted for the illustrative theory:
+
+- Guido Menzio, [*A Theory of Partially Directed Search*](https://web-facstaff.sas.upenn.edu/~gmenzio/linkies/PDS.pdf),
+  JPE 2007, Section II, pp. 751–754: agents and timing precede the equilibrium
+  definition, whose conditions are then explained in words.
+- Raquel Fernández and Richard Rogerson,
+  [*Income Distribution, Communities, and the Quality of Public Education*](https://drive.google.com/file/d/1QQA7trmlvZeW5a0HFZ2OMH9vTsPm8g8T/view),
+  QJE 1996, pp. 137–138 and 140–141: the question and chosen simplifications
+  are stated before the formal analysis.
+
+Use these as references for exposition. Their economic assumptions and the
+complexity of their results are not a template for this illustrative exercise.

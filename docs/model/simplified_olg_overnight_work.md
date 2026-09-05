@@ -359,3 +359,24 @@ were not rerun merely to refresh prose hashes; the delivery manifest records
 the numerical function hashes separately. No model equations changed after the
 completed checks. All 18 map IDs and the ordered 14 repair rows were validated.
 The hourly automation remains paused and no reviewer remains active.
+
+### Additional prose pass — September 4, 23:47 EDT
+
+Tommaso authorized any safe remaining work before going to sleep. This pass
+simplified the opening, the explanation of payments in the compensated sale,
+and several appendix passages. It also kept a subsection heading with its
+explanation across a page break. The specific Menzio and Fernández–Rogerson
+passages read for exposition are now recorded in Section 9 of the writing guide.
+
+Three checks covered these edits: a reading of the prose diff for changes in
+meaning; a comparison against commit `509e773` confirming unchanged inline
+mathematics, displayed equations, propositions, definitions, tables, and labels;
+and two clean LaTeX compilations followed by visual inspection of all 12 final
+pages. All cross-references resolve. The existing numerical files and code
+match their delivery hashes. The inspected PDF replaces the previous delivery,
+and the manifest records this prose pass separately from the numerical checks.
+
+No economic choice or formal result changed. There was no new model run,
+theory review, protected-manuscript edit, or scheduled work. This completes the
+bounded prose pass; the next discussion still starts with W4's compensation
+choice, and the automation remains paused.

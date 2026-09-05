@@ -8,20 +8,20 @@
 \newtheorem{definition}{Definition}
 \newcommand{\dd}{\mathrm d}
 \newcommand{\Rnet}{\mathcal R}
-\title{Housing Allocation, Fertility, and Population\\\large Proposed theoretical amendments}
+\title{Housing Allocation, Fertility, and Population\\\large An illustrative model}
 \author{Working note for Tommaso De Santo}
 \date{September 4--5, 2026}
 \begin{document}
 \maketitle
 
-A young household may value an additional room more than an old owner does,
-yet be unable to finance its purchase. We show when a planner can make both
-households better off by arranging the sale and its financing. The gain does
-not require a fertility increase. We then derive a separate condition for
-fertility to rise and examine how temporary fertility changes can leave a
-permanently larger population.
+This two-period model illustrates how borrowing limits can keep housing
+with old owners even when young households would pay more to use it. We show
+when a planner can improve the allocation by arranging a sale and its
+financing, holding fertility fixed. We then give a separate condition for
+fertility to rise and illustrate how temporary fertility changes can leave
+a permanently larger population.
 
-\section{Environment and equilibrium}
+\section{Model}
 
 \textbf{Households.}
 Each household lives for a young and an old period. Entrants draw income $y>0$
@@ -162,11 +162,11 @@ An additional child uses both adult consumption and adult space. The young
 household's willingness to pay for another housing unit is $m_Y=\alpha x/s$;
 the housing constraint binds strictly when $m_Y>u$.
 
-\section{A compensated allocation improvement at fixed fertility}
+\section{Housing reallocation at fixed fertility}
 
-The planner's question is whether one can make existing households better
-off by moving some housing from an old owner to a young buyer, without changing
-fertility or relying on the utility of future additional people.
+We ask whether the planner can improve the allocation by moving housing
+from an old owner to a young buyer. Fertility and cohort sizes are fixed,
+so any gain comes from the use of housing by existing households.
 
 Consider an old owner $j$ with consumption $c_j$, retained housing $h_j$, and
 estate $e_j$. Suppose both its retention bound and estate-composition bound
@@ -176,8 +176,9 @@ are slack. Its retention condition equates willingness to pay to user cost:
  \label{eq:amend_oldmrs}
 \end{equation}
 Match it with a young buyer $i$ for whom the down-payment limit is the binding
-housing restriction and $m_Y>u_t$. These are comparisons in units of the
-consumption good, not interpersonal comparisons of marginal utility levels.
+housing restriction and $m_Y>u_t$. Each value measures willingness to pay
+for a small increase in housing, in units of consumption. We compare these
+values, not marginal utility levels across people.
 
 Let $\epsilon>0$ be the housing transferred and let $C(\epsilon)\geq0$ be its
 real cost in date-$t$ goods. Initially assume $C(0)=0$ and the right derivative
@@ -214,15 +215,14 @@ left at their baseline allocations or returns.
 The proof is in Appendix~\ref{app:amend_households}.
 
 
-This establishes inefficiency relative to a planner who can extend closing
-credit. It does not establish constrained inefficiency under the original
-private credit limit, nor that every old household should sell. The allocation
-comparison holds fertility fixed, although children enter the definition of
-the young household's baseline usable space.
+The gain requires the planner to extend credit at purchase. The result does
+not establish an improvement under the original private credit limit or say
+that every old household should sell. Fertility is fixed in this comparison;
+children affect how much space is left for the young household's adults.
 
 \textbf{A simpler transfer.}
-Exact household-specific compensation is stronger than necessary for this
-local result. Choose a uniform per-unit seller premium $a$ with
+The planner can also pay a small premium for each unit sold. Choose a uniform
+per-unit seller premium $a$ with
 $0<a<m_Y-u_t-k_c$. Replace $L(\epsilon)$ by $a\epsilon$, financed by the
 buyer. The old seller now gains to first order by $a\epsilon/c_j$, while
 the buyer still gains. For several pairs, the same premium works under a
@@ -242,9 +242,9 @@ requires feasible positive consumption and:
  \left(1+\frac{\epsilon}{s_i}\right)^{-\alpha/\beta}\right].
  \label{eq:amend_fixedcost}
 \end{equation}
-This is exactly the positivity condition in \eqref{eq:amend_exact_gain}; a
-fixed move must generate enough total benefit to pay its discrete resource
-cost. A fixed moving cost must therefore be assessed using the size of the move.
+This is the condition for a positive utility gain in
+\eqref{eq:amend_exact_gain}. The total benefit from the move must cover its fixed
+cost. The marginal comparison alone does not establish this.
 
 \section{A conditional fertility prediction}
 
@@ -282,6 +282,7 @@ The sufficient condition uses user cost but no borrowing multiplier. The next re
 specialization. Positive saving, the stated old-age choices, and strict down-payment binding
 are still required.
 
+\Needspace{10\baselineskip}
 \subsection{A sufficient condition entirely in primitives}
 
 At stationary prices, set $d=1-q+q\tau^p>0$, so $u=dP$. If the down-payment
@@ -514,26 +515,23 @@ Government & Ownership changes; the taxable stock does not.
 \bottomrule
 \end{tabularx}
 \end{center}
-The seller invests $qP_{t+1}\epsilon$ of the title receipt to replace the
-estate's missing sale proceeds and saves $q\tau^pP_t\epsilon$ on its own
-property-tax reserve. The remainder of the title receipt and tax saving is
-$u_t\epsilon$, which is available for consumption. The buyer's next-period
-sale replaces the seller estate's baseline sale.
-Housing allocation after date $t$ can therefore be held fixed. The baseline
-permits external goods trade; the bond finances dated expenditures rather than
-creating consumption resources.
+The seller sets aside $qP_{t+1}\epsilon$ of the sale proceeds in a bond.
+This replaces the housing sold from its estate. It also saves
+$q\tau^pP_t\epsilon$ in the amount set aside for property tax.
+Together, the sale and tax saving leave $u_t\epsilon$ for consumption. The buyer sells the additional unit
+when old, at the same date the seller's estate would have sold it. Housing
+use after date $t$ can therefore stay unchanged. External borrowing finances
+the payments, and the loan is repaid in full.
 
 \begin{proof}
-The seller's utility change is exactly zero by
-\eqref{eq:amend_compensation}. Its lower retention relaxes both relevant
-inequalities, and its unchanged estate is feasible for a small sale. The
-buyer's young consumption and its baseline old housing and estate can remain
-fixed. Pay its net financing bill entirely from its old consumption, reducing
-that consumption by
-$[u_t\epsilon+L(\epsilon)+C(\epsilon)]/q$.
-The resale and debt entries in the table give exactly this bill.
-All strict positivity and slackness conditions persist for a sufficiently
-small transfer. The young buyer's lifetime utility change is:
+The compensation in \eqref{eq:amend_compensation} leaves the seller's
+utility unchanged. Selling a small amount of housing relaxes its retention
+and estate constraints. For the buyer, keep young consumption, old housing,
+and the estate fixed, and pay the remaining bill from old consumption.
+The table shows that this reduces old consumption by
+$[u_t\epsilon+L(\epsilon)+C(\epsilon)]/q$. For a sufficiently small sale,
+consumption stays positive and the other constraints remain slack. The
+buyer's lifetime utility gain is:
 \begin{equation}
  \Delta U_i=\alpha\log\left(1+\frac{\epsilon}{s_i}\right)
  +\beta\log\left(1-
@@ -541,22 +539,19 @@ small transfer. The young buyer's lifetime utility change is:
  \label{eq:amend_exact_gain}
 \end{equation}
 The interior saving condition gives $c_{2i}=\beta x_i/q$, so the right
-derivative at zero is $(m_Y-u_t-k_c)/x_i>0$. This strict derivative proves
-a positive gain for a sufficiently small finite transfer. Property revenue,
-next-date housing supply, and other households' bundles are unchanged, and the
-loan is repaid at the market rate.
+derivative at zero is $(m_Y-u_t-k_c)/x_i>0$. The buyer therefore gains from a
+sufficiently small sale. Property-tax receipts, future housing supply, and other households' allocations stay
+unchanged, and lenders receive the market return.
 \end{proof}
 
 \Needspace{9\baselineskip}
 \subsection{Proof of Proposition~\ref{prop:amend_fertility}}
 
+\begin{proof}
 Differentiate $\rho x+\chi n=\Rnet(h)$ to obtain
 $\rho x'=-p-\chi n'$. Differentiating
 $\vartheta/n=\chi/x+\alpha\kappa/(h-\kappa n)$ and substituting for $x'$
-gives \eqref{eq:amend_fertility_sign}.
-
-\begin{proof}
-Multiply the numerator of \eqref{eq:amend_fertility_sign} by the positive
+gives \eqref{eq:amend_fertility_sign}. Multiply its numerator by the positive
 number $\rho x^2$ and use $m_Y=\alpha x/s$. For the sufficient condition,
 $m_Y\geq u$ implies $\rho\kappa m_Y>\alpha\chi$, hence
 $\rho\kappa m_Y^2>\alpha\chi p$ whenever $p<m_Y$.
@@ -579,10 +574,10 @@ $g(v)>g(\alpha/\rho)$ and hence $v>\alpha/\rho$.
 Proposition~\ref{prop:amend_fertility} supplies the fertility implication.
 \end{proof}
 
-The restriction is not vacuous: a strictly binding cap can satisfy it when
-$\alpha/(\rho+\alpha)\leq a_h<(\alpha+\vartheta)/D$.
-The interval has positive length. It is nevertheless a substantive restriction:
-it does not cover arbitrarily low liquidity relative to lifetime resources.
+The condition can hold while the cap binds strictly: the housing expenditure
+share can lie in $\alpha/(\rho+\alpha)\leq a_h<(\alpha+\vartheta)/D$.
+This interval has positive length. The condition still excludes households
+with very little liquid wealth relative to lifetime resources.
 A constructed example also satisfies the original owner constraints.
 Set $q=0.8$, $\phi=0.7$, $P=4$, $y=4.8$, $b=2.4$, and $\tau^p=T=0$.
 Let $\beta=0.8$, $\gamma=0.5$, $\omega_B=3$, $\alpha=\chi=\kappa=1$,
@@ -596,7 +591,7 @@ equilibrium construction.
 
 \subsection{A negative response and a common rental limit}
 
-\textbf{Welfare alone does not sign fertility.}
+\textbf{More housing can improve welfare and lower fertility.}
 Set $\rho=2$, $\alpha=\chi=x=s=n=1$, $\kappa=0.1$, $\vartheta=1.1$, and
 $u=0.5$. Then $h=1.1$, $\widetilde w=3.55$, $m_Y=1$, and $\Delta=1.61$.
 At $p=u$, the household is better off with more housing but
@@ -622,9 +617,10 @@ cap change under these constraints.
 \section{Conditions for a converging transition}
 \label{app:amend_transition}
 
-This appendix states what is needed to extend the transition argument beyond
-an arbitrarily small policy change. The result follows one continuous family of steady states as policy changes.
-It does not rule out other steady states.
+For each reform, we need initial prices that generate a feasible path to the
+new steady state. The conditions below allow us to follow those prices as the
+reform grows. We follow one continuous family of steady states; other steady
+states may exist.
 
 Let $\lambda\in[0,1]$ index the size of a permanent reform, with $\lambda=0$
 the initial policy. Let $s_t\in\mathbb R^d$ describe inherited cohort sizes and
