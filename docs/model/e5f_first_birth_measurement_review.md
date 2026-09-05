@@ -1,27 +1,35 @@
 ---
-title: "First-birth housing: a measurement issue to resolve"
+title: "First-birth housing: retain the target after the check"
 subtitle: "Calibration assessment for the September 14 presentation"
 author: "Prepared for Tommaso De Santo"
 date: "5 September 2026"
 ---
 
-# The decision for discussion
+# Decision after the completed check
 
-**Resolve the empirical housing statistic before another calibration search.**
-The audit identifies a normalization problem in the event-study design: some
-birth cohorts have no observation in the stated reference period, and their
-weights differ between the two endpoints used to construct the target. An
-arbitrary shift in their coefficient levels can therefore change the reported
-contrast without changing fitted housing outcomes. An independent read-only
-review confirms the algebra. The exact omitted coefficients in the production
-regression still need to be recovered.
+**Retain the existing 0.720246-room target and return attention to the model.**
+The actual Sun-Abraham interacted regression reproduces the target to machine
+precision. Changing only the reference choice for the 1986 first-birth cohort
+gives **0.730459 rooms**, with the same 49,457 observations, 4,112 clusters and
+fitted housing values equal to within **4.41e-12 rooms**. The normalization
+concern is real; its effect in this test is **+0.010213 rooms**. This is not an
+estimate of total bias or a new target.
 
-This finding does **not** supply a corrected rooms target, establish the size or
-sign of its error, or explain the whole model shortfall. The recorded target
-remains **0.720246 rooms**, with its existing reported standard error **0.085260**.
-The existing model, target file, weights and calibration results are unchanged.
-The appendix retains every target-fit row and estimated parameter for both the
-production calibration and the verified refinement candidate.
+The predeclared descriptive comparisons use the same 27 birth cohorts and the
+same weights at both endpoints. They give **0.811582**, **0.797759** and
+**0.804369 rooms**, respectively, using pre-endpoint, post-endpoint and averaged
+shares. Each is unchanged by the tested reference choice to machine precision.
+They have no newly estimated standard error and are not replacements for the
+approved target. They support a substantial housing response rather than a
+measurement explanation of the model shortfall.
+
+The earlier suggestion that this issue might account for the model's miss was
+premature. The current model, twelve targets, weights and production calibration
+remain unchanged. The empirical aggregation convention should be documented for
+the paper; these checks do not certify causal interpretation. The appendix
+retains every target-fit row and parameter for production and the verified
+refinement candidate. The practical next step is to assess the candidate and
+compare its policy implications under the unchanged target system.
 
 # Why the reference period matters
 
@@ -72,13 +80,12 @@ The one-room shift is an algebraic illustration, not an economic intervention,
 an estimate of bias, or a proposed correction.
 
 The installed estimator calculates these cohort shares before the regression's
-singleton pruning. The all-inputs-observed assertion verifies that the saved
-input support is the sample used for that share calculation. The zero-prediction
-identity also holds on any subset retained by the regression. What remains
-unrecovered is the realized estimation sample, the omitted-column choices and
-the cohort coefficient/covariance objects needed to quantify an alternative
-well-defined contrast. The original receipt reports 49,457 estimation rows;
-the verified input sample contains 49,872 rows.
+singleton pruning. The all-inputs-observed assertion verifies that saved input
+support is the share-calculation sample. The paired Torch regression now verifies
+the actual coefficient change and identical final estimation membership, beyond
+the earlier design identity. The cohort-specific coefficients and final support
+are retained in the follow-up packet. The primary receipt has 49,457 estimation
+rows; its input sample contains 49,872 rows.
 
 A common set of cohort weights applied to estimable within-cohort changes would
 cancel this particular arbitrary level. That is a candidate diagnostic repair,
@@ -88,14 +95,19 @@ demoted or reweighted in this review.
 
 # What passed, and what did not
 
-The source and target provenance verification passed, including the raw PSID
-source hash. The first sample-only replay passed in **28 seconds**, and the
-additional design assertions passed in **84 seconds**. The one predeclared full
-regression replay reached its **900-second limit** and was stopped; its recorded
-elapsed time is 902.5 seconds including termination. It produced no usable
-cohort coefficients or covariance matrix. No second regression was launched.
-Post-run hashes confirm that the primary builder and every primary target
-output remain unchanged. Only cohort/event aggregates were exported.
+Source and target provenance verification passed, as did two sample checks.
+The two-regression loop passed on synthetic data locally and on Torch. Full
+Torch job **17007732** completed in **8m03s**, reproducing the primary point and
+verifying fitted-value and sample invariance under the changed reference.
+
+The earlier 900-second full-covariance replay and a 1,200-second local paired-fit
+attempt timed out. The successful Torch run supersedes those computational
+blockers. It skips the costly cohort-share covariance calculation, which is not
+needed for the point-estimate invariance test; no new target standard error is
+claimed. It uses Stata 19 in version-17 mode, pinned installed ado sources and a
+hash-matched minimal analysis sample. The primary builder and target outputs are
+unchanged. Only aggregate results are retained; temporary person-level working
+copies used on the author's cluster are removed after collection.
 
 \clearpage
 
@@ -114,8 +126,7 @@ nearby four-year summaries of the saved coefficients remain near 0.72 rooms:
 | 0 to +4 | 0.385433 | Different object, excluding adjustment through the birth year |
 
 These comparisons are arithmetic diagnostics from the old coefficient table,
-not newly estimated or validated causal effects. The missing covariance prevents
-an uncertainty calculation for their differences. In particular, the smaller
+not newly estimated or validated causal effects. No new joint uncertainty calculation for these alternative windows was made. In particular, the smaller
 0-to-4 value is not a reason to replace the target with a number closer to the
 model.
 
@@ -176,15 +187,15 @@ proof that the target pair is globally unreachable.
 
 ![Supplemental housing-fit comparison using saved evaluations. No new model solution is computed.](output/model/e5f_first_birth_measurement_review_20260905a/observed_housing_fit.png){width=100%}
 
-After resolving the empirical normalization, the model measurement exercise should reproduce a stated empirical
+The remaining model measurement comparison should reproduce a stated empirical
 population and event clock in the model, including before-birth housing choices,
 and compare that statistic with the current matched-copy response. It should
 preserve the full twelve-moment fit table and distinguish a measurement change
 from an improvement under the existing objective. A new empirical weighting
 rule requires its own uncertainty calculation and target-contract decision.
 
-Until that comparison is resolved, retain both the production calibration and
-the verified refinement candidate for discussion. The principal question is how
+Retain both the production calibration and the verified refinement candidate
+for the next fit-and-policy comparison. The principal question is how
 much of the rooms shortfall reflects housing-demand parameters, and how much
 reflects comparing different populations and timing conventions. Another broad
 search alone cannot answer it. Existing policy numbers belong to the retained
@@ -275,7 +286,7 @@ All paths below are relative to the project root:
 - Primary target and original event table: `code/data/psid_followup_mar2026/output/sa_rooms_first_birth_household_aligned_v1/`.
 - Sample replay driver: `code/data/psid_followup_mar2026/audit_first_birth_rooms_measurement.py`.
 - Aggregate analysis and two supplemental figures: `code/model/tools/analyze_e5f_first_birth_measurement.py`.
-- Complete receipts, aggregates, null-direction check, failed regression receipt and independent review: `output/model/e5f_first_birth_measurement_review_20260905a/`.
+- Complete receipts, aggregates, null-direction check, initial failed local receipts, completed paired Torch check and independent review: `output/model/e5f_first_birth_measurement_review_20260905a/`.
 - Active matched-branch implementation: `code/model/tools/run_e5f_transition_calibration.py`, functions `begin_dated_first_birth_housing_branch` and `finish_dated_first_birth_housing_branch`.
 - Saved candidate: `output/model/e5f_morning_refinement_20260905a/round2/task_009/`; its dated-branch CSV is under `cases/task_001/` within that folder. This inner case identifier does not change the selected outer candidate.
 - Earlier complete calibration readout and standard seventeen-graph packet: `docs/model/e5f_bounded_calibration_refinement_review.md` and `output/pdf/e5f_bounded_calibration_refinement_review.pdf`.
@@ -292,6 +303,6 @@ python3 code/model/tools/analyze_e5f_first_birth_measurement.py
 ```
 
 The output-folder README retains the original regression budget, both successful
-sample checks, the failed full replay and the PDF build command. Full per-case
+sample checks, the initial failed local attempts, successful Torch follow-up and PDF build command. Full per-case
 target and parameter tables are retained alongside this report. The two new
 figures are supplemental; the standard model diagnostic packet is unchanged.

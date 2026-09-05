@@ -1,0 +1,237 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/
+> sa_rooms_first_birth_household_aligned_v1.log
+  log type:  text
+ opened on:   5 Sep 2026, 16:50:22
+
+. use "/scratch/td2248/projects/e5f_first_birth_reference_20260905a/analysis_sa
+> mple.dta", clear
+(PSID-SHELF, 1968–2019, Beta Release 2023.01. Long format. Compiled: 2023/10/11
+> .)
+
+. do "/scratch/td2248/projects/e5f_first_birth_reference_20260905a/reference_ch
+> eck.do" full "/scratch/td2248/projects/e5f_first_birth_reference_20260905a/fu
+> ll"
+
+. * Diagnostic only: same interacted least-squares regression, two normalizatio
+> ns.
+. * Called by audit_first_birth_rooms_measurement.py after the primary sample
+. * builder, or with the small synthetic sample used to exercise this exact loo
+> p.
+. args mode outdir
+
+. if "`mode'" == "toy" {
+.     clear
+.     set seed 51986
+.     set obs 2520
+.     gen long ID = ceil(_n/21)
+.     bysort ID: gen int year = 1978 + _n - 1
+.     gen int first_child_year = 1982 + 4*mod(ID,3) if ID <= 90
+.     gen byte never_treated = ID > 90
+.     gen int K = year-first_child_year
+.     drop if first_child_year == 1986 & K == -2
+.     gen double IW = 1+mod(ID,4)+.01*(year-1978)*mod(ID,3)
+.     gen int AGEREP = 20+year-1978+mod(ID,5)
+.     gen int EDUYEAR = 12+mod(ID,4)
+.     gen double rooms = 4+.01*ID+.03*(year-1978)+.6*(K>=0 & K<.)+rnormal(0,.1)
+.     forvalues k=0/10 {
+  2.         gen byte L`k'event = K==`k'
+  3.     }
+.     gen byte L11event = K>10 & !missing(K)
+.     foreach k in 1 3 4 5 6 {
+  2.         gen byte F`k'event = K==-`k'
+  3.     }
+.     gen byte F7event = K<=-7 & !missing(K)
+. }
+
+. assert !missing(ID, year, AGEREP, EDUYEAR, IW, rooms)
+
+. bysort ID: assert first_child_year==first_child_year[1]
+
+. egen byte indicator_total = rowtotal(L*event F*event)
+
+. assert indicator_total==(K!=-2) if !never_treated
+
+. assert indicator_total==0 if never_treated
+
+. drop indicator_total
+
+. quietly count if first_child_year==1986 & K==-2
+
+. assert r(N)==0
+
+. quietly count if first_child_year==1986 & K==-1
+
+. assert r(N)>0
+
+. quietly count if first_child_year==1986 & K==3
+
+. assert r(N)>0
+
+. preserve
+
+.     gen long one=1
+
+.     collapse (sum) observations=one weight_sum=IW, by(first_child_year K neve
+> r_treated)
+
+.     export delimited using "`outdir'/input_support.csv", replace
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/input_s
+    > upport.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/input_su
+> pport.csv saved
+
+. restore
+
+. 
+. quietly levelsof first_child_year if !never_treated, local(cohorts)
+
+. local interactions ""
+
+. foreach l of varlist L*event F*event {
+  2.     foreach g of local cohorts {
+  3.         gen byte sa_`l'_`g' = (first_child_year==`g')*`l'
+  4.         local interactions "`interactions' sa_`l'_`g'"
+  5.     }
+  6. }
+
+. local alternative ""
+
+. foreach v of local interactions {
+  2.     if "`v'"!="sa_F1event_1986" local alternative "`alternative' `v'"
+  3. }
+
+. tempname summaries
+
+. foreach specification in original reference {
+  2.     local regressors "`interactions'"
+  3.     if "`specification'"=="reference" local regressors "`alternative'"
+  4.     di as result "REFERENCE_CHECK_START `specification'"
+  5.     quietly reghdfe rooms `regressors' i.AGEREP i.EDUYEAR [pw=IW], ///
+>         absorb(ID year) vce(cluster ID) residuals(residual_`specification')
+  6.     local obs = e(N)
+  7.     local clusters = e(N_clust)
+  8.     local rss = e(rss)
+  9.     gen byte sample_`specification'=e(sample)
+ 10.     if "`specification'"=="original" & "`mode'"=="full" {
+ 11.         assert `obs'==49457
+ 12.         assert `clusters'==4112
+ 13.     }
+ 14.     local maxdiff=0
+ 15.     if "`specification'"=="reference" {
+ 16.         assert sample_original==sample_reference
+ 17.         gen double fitted_difference=abs(residual_reference-residual_origi
+> nal)
+ 18.         quietly summarize fitted_difference if sample_original, meanonly
+ 19.         local maxdiff=r(max)
+ 20.         assert `maxdiff'<2e-6
+ 21.     }
+ 22.     postfile `summaries' str12 specification double observations clusters 
+> rss ///
+>         max_fitted_difference using "`outdir'/fit_receipt_`specification'.dta
+> ", replace
+ 23.     post `summaries' ("`specification'") (`obs') (`clusters') (`rss') (`ma
+> xdiff')
+ 24.     postclose `summaries'
+ 25.     tempname coefficients
+ 26.     postfile `coefficients' int cohort str12 event double coefficient vari
+> ance ///
+>         byte explicit_reference using "`outdir'/coefficients_`specification'.
+> dta", replace
+ 27.     foreach l of varlist L*event F*event {
+ 28.         foreach g of local cohorts {
+ 29.             if "`specification'"=="reference" & "`l'"=="F1event" & `g'==19
+> 86 {
+ 30.                 post `coefficients' (`g') ("`l'") (0) (0) (1)
+ 31.             }
+ 32.             else {
+ 33.                 post `coefficients' (`g') ("`l'") (_b[sa_`l'_`g']) ///
+>                     (_se[sa_`l'_`g']^2) (0)
+ 34.             }
+ 35.         }
+ 36.     }
+ 37.     postclose `coefficients'
+ 38.     preserve
+ 39.         use "`outdir'/fit_receipt_`specification'.dta", clear
+ 40.         export delimited using "`outdir'/fit_receipt_`specification'.csv",
+>  replace
+ 41.     restore
+ 42.     preserve
+ 43.         use "`outdir'/coefficients_`specification'.dta", clear
+ 44.         export delimited using "`outdir'/coefficients_`specification'.csv"
+> , replace
+ 45.     restore
+ 46.     preserve
+ 47.         keep if sample_`specification'
+ 48.         gen long one=1
+ 49.         collapse (sum) observations=one weight_sum=IW, by(first_child_year
+>  K never_treated)
+ 50.         export delimited using "`outdir'/estimation_support_`specification
+> '.csv", replace
+ 51.     restore
+ 52.     di as result "REFERENCE_CHECK_DONE `specification' obs=`obs' max_fitte
+> d_difference=`maxdiff'"
+ 53. }
+REFERENCE_CHECK_START original
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rec
+    > eipt_original.dta not found)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffic
+    > ients_original.dta not found)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rec
+    > eipt_original.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rece
+> ipt_original.csv saved
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffic
+    > ients_original.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffici
+> ents_original.csv saved
+(415 observations deleted)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/estimat
+    > ion_support_original.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/estimati
+> on_support_original.csv saved
+REFERENCE_CHECK_DONE original obs=49457 max_fitted_difference=0
+REFERENCE_CHECK_START reference
+(415 missing values generated)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rec
+    > eipt_reference.dta not found)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffic
+    > ients_reference.dta not found)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rec
+    > eipt_reference.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/fit_rece
+> ipt_reference.csv saved
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffic
+    > ients_reference.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/coeffici
+> ents_reference.csv saved
+(415 observations deleted)
+(file
+    /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/estimat
+    > ion_support_reference.csv not found)
+file /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/estimati
+> on_support_reference.csv saved
+REFERENCE_CHECK_DONE reference obs=49457 max_fitted_difference=4.40836256388e-1
+> 2
+
+. di as result "FIRST_BIRTH_REFERENCE_INVARIANCE_CHECK_COMPLETED"
+FIRST_BIRTH_REFERENCE_INVARIANCE_CHECK_COMPLETED
+
+. log close _all
+      name:  <unnamed>
+       log:  /scratch/td2248/projects/e5f_first_birth_reference_20260905a/full/
+> sa_rooms_first_birth_household_aligned_v1.log
+  log type:  text
+ closed on:   5 Sep 2026, 16:58:18
+-------------------------------------------------------------------------------

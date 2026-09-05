@@ -113,6 +113,52 @@ def normalization_check(output):
             'sample_design_receipt': 'design_check/smoke/run_receipt.json'}
 
 
+def reference_aggregation_check(output, reference_directory=None):
+    full = reference_directory or output / 'reference_full'
+    log = (full / 'sa_rooms_first_birth_household_aligned_v1.log').read_text()
+    if '\nFIRST_BIRTH_REFERENCE_INVARIANCE_CHECK_COMPLETED\n' not in log:
+        raise RuntimeError('The paired full-data reference check has not passed')
+    support = rows(full / 'input_support.csv')
+    fitted = rows(full / 'estimation_support_original.csv')
+    weights = {}
+    present = {}
+    for k in (-1, 3):
+        z = [r for r in support if r['never_treated'] == '0' and float(r['K']) == k]
+        total = sum(float(r['weight_sum']) for r in z)
+        weights[k] = {int(float(r['first_child_year'])): float(r['weight_sum']) / total for r in z}
+        present[k] = {int(float(r['first_child_year'])) for r in fitted if r['never_treated'] == '0' and float(r['K']) == k}
+    common = sorted(present[-1] & present[3])
+    wm = np.array([weights[-1].get(g, 0.) for g in common])
+    wp = np.array([weights[3].get(g, 0.) for g in common])
+    differences = {}
+    result = {'points': {}, 'new_target_or_standard_error': False}
+    for specification in ('original', 'reference'):
+        b = {(int(r['cohort']), r['event']): float(r['coefficient']) for r in rows(full / f'coefficients_{specification}.csv')}
+        differences[specification] = np.array([b[g, 'L3event'] - b[g, 'F1event'] for g in common])
+        components = {event: sum(w*b[g, event] for g, w in weights[k].items())
+                      for event, k in [('F1event', -1), ('L3event', 3)]}
+        fit = rows(full / f'fit_receipt_{specification}.csv')[0]
+        assert int(fit['observations']) == 49457 and int(fit['clusters']) == 4112
+        assert float(fit['max_fitted_difference']) < 2e-6
+        result['points'][specification] = {'target': components['L3event']-components['F1event'],
+                                          'components': components, 'fit': fit}
+    result['target_change'] = result['points']['reference']['target']-result['points']['original']['target']
+    result['baseline_reproduction_gap'] = result['points']['original']['target']-float(rows(PRIMARY / 'target_receipt.csv')[0]['estimate'])
+    (full / 'reference_comparison.json').write_text(json.dumps(result, indent=2))
+    assert abs(result['baseline_reproduction_gap']) < 2e-6
+    comparisons = []
+    for name, q in [('pre_endpoint', wm), ('post_endpoint', wp), ('mean_endpoint', (wm+wp)/2)]:
+        q = q/q.sum()
+        a, b = float(q @ differences['original']), float(q @ differences['reference'])
+        assert abs(a-b) < 1e-5
+        comparisons.append({'weight_rule': name, 'original_normalization': a, 'changed_normalization': b,
+                            'difference': b-a, 'standard_error': 'not_computed', 'status': 'diagnostic_only_not_a_target'})
+    result.update(common_cohorts=common, common_weight_comparisons=comparisons,
+                  common_pre_weight=float(wm.sum()), common_post_weight=float(wp.sum()))
+    (output / 'reference_aggregation_check.json').write_text(json.dumps(result, indent=2))
+    return result
+
+
 def model(output):
     data = []
     fits = []; parameters = []
@@ -174,8 +220,13 @@ def plots(output, empirical_result, model_result):
 
 
 if __name__ == '__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,default=DEFAULT);args=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,default=DEFAULT)
+    p.add_argument('--reference-check-only', action='store_true')
+    p.add_argument('--reference-directory', type=Path);args=p.parse_args()
     output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
+    if args.reference_check_only:
+        print(json.dumps(reference_aggregation_check(output, args.reference_directory), indent=2))
+        raise SystemExit(0)
     e=empirical(output);e['normalization_check']=normalization_check(output);m=model(output);plots(output,e,m)
     payload={'empirical':e,'model':m}
     (output/'measurement_summary.json').write_text(json.dumps(payload,indent=2))

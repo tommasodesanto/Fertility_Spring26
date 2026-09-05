@@ -1,8 +1,33 @@
 # Calibration Status
 
-Updated: `2026-09-05` (first-birth target normalization issue identified; September 4 production unchanged)
+Updated: `2026-09-05` (paired empirical check complete; existing housing target and production retained)
 
 ## September 5 first-birth housing measurement assessment
+
+**Completed follow-up; retain the existing target.** Torch job `17007732`
+completed the paired reference-choice test in 8m03s. The baseline reproduces
+0.7202462623815278 to 4.4e-16. Explicitly changing the 1986 cohort's reference
+to event year -1 gives 0.7304592340763741, an increase of 0.0102129716948468
+rooms, with identical 49,457 observations / 4,112 clusters and maximum fitted
+housing difference 4.41e-12. The reference dependence is real, but this test
+supplies no reason to lower the target or explain away the model's shortfall.
+
+The predeclared descriptive comparisons apply common weights to within-cohort
+changes for 27 cohorts observed at both endpoints. Pre-endpoint, post-endpoint
+and mean-endpoint weights give 0.811582, 0.797759 and 0.804369 rooms. Each is
+invariant to the tested reference change to 2.3e-16. These are diagnostic point
+summaries with no new uncertainty estimate, not replacement targets or proof of
+causality. The current twelve-moment calibration contract remains unchanged.
+Close the broad empirical detour for the current calibration assessment; the
+formal aggregation convention remains a paper-measurement documentation item.
+
+The exact-loop smoke passed locally and on Torch. Two local full attempts timed
+out (the original 900-second covariance replay and the 1,200-second paired-fit
+attempt); the completed Torch result supersedes those computational blockers.
+Stata 19 ran in version-17 mode with pinned ado sources and a hash-matched
+minimal sample. No model, calibration estimate or policy path changed. Results:
+`output/model/e5f_first_birth_measurement_review_20260905a/reference_aggregation_check.json`
+and `reference_cluster/full/` in the same folder.
 
 The nominal common-reference first-birth rooms contrast has a newly verified
 normalization concern. Sixteen first-birth cohorts have no observation at the
@@ -22,14 +47,14 @@ or a replacement target. An independent read-only review agrees with the algebra
 The original source/target provenance check and two sample-only checks pass.
 The one full unchanged-specification regression replay timed out at its declared
 900-second limit, without exporting the cohort coefficients or covariance.
-The realized omitted-column normalization, final estimation sample and a
-quantified alternative contrast remain outstanding. The null identity holds on
-any retained subset, but this audit does not recover the production coefficient
-normalizations or establish a corrected causal estimate. Primary source and all
-target-output hashes remain unchanged. The existing scalar 0.720246 and its
-reported SE 0.085260 are retained for forensic comparability; their reproduction
-does not resolve this interpretation problem. Resolve it before another
-calibration search or presenting the shortfall as a structural model rejection.
+That initial attempt did not recover the realized coefficients or final sample;
+the completed paired Torch follow-up above now does. It recovers the original
+point coefficients and final sample, but supplies no corrected causal estimate
+or uncertainty for a replacement target. Primary source and all target-output
+hashes remain unchanged. The existing scalar 0.720246 and reported SE 0.085260
+remain the calibration inputs. Their reproduction does not settle the formal
+aggregation convention, but the completed checks preserve a large housing
+response; the concern is not a demonstrated explanation for the model shortfall.
 
 The active matched model branch already permits treated continuation births.
 Its selected review candidate has destination rooms 5.800342 versus 5.334298 in

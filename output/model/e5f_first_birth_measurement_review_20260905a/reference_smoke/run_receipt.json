@@ -1,0 +1,66 @@
+{
+  "mode": "reference_smoke",
+  "status": "pass",
+  "started_at": 1788639837.933673,
+  "source_builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do",
+  "source_builder_sha256": "f588d6946d772155b75cfdf272b8ae46e5e362bc3b6f977fccd16aa57d18f36c",
+  "generated_do_sha256": "ba4c19691d9905b3e14b3475ef413945154cea62e6cc01a854b6e77f2d86c1ab",
+  "timeout_seconds": 120,
+  "primary_output_hashes_before": {
+    "sa_rooms_first_birth_household_aligned_v1.log": "48cc60169f24866727eab503debf13bb091bf27b42c89d270de1b4519026c6d8",
+    "target_receipt.csv": "ca75bef54f80e9a18647ca2cc50c52c0b08677a3afd737c3fcd41966929125da",
+    "metadata.json": "0a6d6c7a97545404ac56c7713fbdeabfde4657d02b71394fe045758aa4a1e4f3",
+    "event_study_estimates.dta": "6bcfeec290791374ddbee0a4b997f59e77b1417c89500aaa1ca5d2067a1099ea",
+    "README.md": "ce1670d27a06d4cc4a292509b7a0ddd2dc314a2f9ffc7d62bea255f8df805aa6",
+    "event_study_estimates.csv": "8ba851754dfa1191534505dfb168eb85d1394a6ef78a40029090e50e92ee5028",
+    "target_receipt.dta": "c9c0d7196677084024fd3a3a3f990695b202a3466333b79868a97132bbfb25fd"
+  },
+  "regression_specification_changed": true,
+  "microdata_exported": false,
+  "reference_check_sha256": "186657ccd33022bb8566ca24d7a0c91318439ec141ec357b8e72ae5272bbfa00",
+  "change_scope": "same least-squares column space; explicit F1event zero for cohort 1986 in second fit; cohort-share covariance omitted",
+  "pid": 51458,
+  "primary_outputs_unchanged": true,
+  "sample_design_assertions": {
+    "all_regression_inputs_nonmissing": true,
+    "birth_cohort_constant_within_person": true,
+    "event_indicators_partition_all_treated_rows_except_kminus2": true,
+    "never_treated_event_indicators_zero": true
+  },
+  "reference_comparison": {
+    "points": {
+      "original": {
+        "target": 0.5875868065843823,
+        "components": {
+          "F1event": 0.007647780407672023,
+          "L3event": 0.5952345869920543
+        },
+        "fit": {
+          "specification": "original",
+          "observations": "2490",
+          "clusters": "120",
+          "rss": "22.941164",
+          "max_fitted_difference": "0"
+        }
+      },
+      "reference": {
+        "target": 0.5875918014617092,
+        "components": {
+          "F1event": 0.016478619461700584,
+          "L3event": 0.6040704209234098
+        },
+        "fit": {
+          "specification": "reference",
+          "observations": "2490",
+          "clusters": "120",
+          "rss": "22.941164",
+          "max_fitted_difference": "5.8286709e-16"
+        }
+      }
+    },
+    "target_change": 4.994877326858216e-06,
+    "new_target_or_standard_error": false
+  },
+  "elapsed_seconds": 8.092562114,
+  "source_builder_unchanged": true
+}

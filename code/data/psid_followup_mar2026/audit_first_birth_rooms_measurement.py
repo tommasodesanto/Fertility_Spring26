@@ -21,6 +21,7 @@ BUILDER = HERE / 'sa_rooms_first_birth_household_aligned_v1.do'
 PRIMARY = HERE / 'output/sa_rooms_first_birth_household_aligned_v1'
 DEFAULT_OUTPUT = ROOT / 'output/model/e5f_first_birth_measurement_review_20260905a'
 STATA = Path('/Applications/Stata/StataMP.app/Contents/MacOS/stata-mp')
+REFERENCE_CHECK = HERE / 'audit_first_birth_rooms_reference_invariance.do'
 
 
 def sha(path: Path) -> str:
@@ -39,6 +40,14 @@ def generate(output: Path, mode: str) -> str:
     text = text.replace(old, f'local outdir  "{output}"')
     anchor = 'di as text "Running weighted Sun-Abraham event study:'
     assert text.count(anchor) == 1
+    if mode.startswith('reference_'):
+        if mode == 'reference_smoke':
+            text = text[:text.index('di as text "Loading the PSID shelf')]
+            sample = 'toy'
+        else:
+            text = text[:text.index(anchor)]
+            sample = 'full'
+        return text + f'\ndo "{output / "reference_check.do"}" {sample} "`outdir\'"\n'
     pre = r'''
 * Supplemental input-support receipts; no estimation changes.
 assert `input_obs' == 49872
@@ -110,13 +119,18 @@ def run(mode: str, outroot: Path, timeout: int) -> None:
     primary_hashes = {p.name: sha(p) for p in PRIMARY.iterdir() if p.is_file()}
     source_hash = sha(BUILDER)
     do_path = output / 'replay.do'
+    if mode.startswith('reference_'):
+        (output / 'reference_check.do').write_text(REFERENCE_CHECK.read_text())
     do_path.write_text(generate(output, mode))
     receipt = {'mode': mode, 'status': 'running', 'started_at': time.time(),
                'source_builder': str(BUILDER), 'source_builder_sha256': source_hash,
                'generated_do_sha256': sha(do_path), 'timeout_seconds': timeout,
                'primary_output_hashes_before': primary_hashes,
-               'regression_specification_changed': False,
+               'regression_specification_changed': mode.startswith('reference_'),
                'microdata_exported': False}
+    if mode.startswith('reference_'):
+        receipt['reference_check_sha256'] = sha(output / 'reference_check.do')
+        receipt['change_scope'] = 'same least-squares column space; explicit F1event zero for cohort 1986 in second fit; cohort-share covariance omitted'
     (output / 'run_receipt.json').write_text(json.dumps(receipt, indent=2))
     start = time.monotonic()
     try:
@@ -137,6 +151,8 @@ def run(mode: str, outroot: Path, timeout: int) -> None:
             time.sleep(2)
         log_text = (output / 'sa_rooms_first_birth_household_aligned_v1.log').read_text()
         marker = 'FIRST_BIRTH_SUPPORT_SMOKE_PASS' if mode == 'smoke' else 'CORRECTED_FIRST_BIRTH_ROOMS_TARGET estimate='
+        if mode.startswith('reference_'):
+            marker = 'FIRST_BIRTH_REFERENCE_INVARIANCE_CHECK_COMPLETED'
         if p.returncode != 0 or marker not in log_text:
             raise RuntimeError('Stata did not complete the declared audit; inspect replay.log')
         if sha(BUILDER) != source_hash:
@@ -170,6 +186,28 @@ def run(mode: str, outroot: Path, timeout: int) -> None:
             receipt['target_estimate'] = float(new['estimate'])
             receipt['target_standard_error'] = float(new['standard_error'])
         receipt['status'] = 'pass'
+        if mode.startswith('reference_'):
+            support = rows(output / 'input_support.csv')
+            points = {}
+            for specification in ('original', 'reference'):
+                coefficients = rows(output / f'coefficients_{specification}.csv')
+                components = {}
+                for event, k in [('F1event', -1), ('L3event', 3)]:
+                    subset = [r for r in support if r['never_treated'] == '0' and float(r['K']) == k]
+                    total = sum(float(r['weight_sum']) for r in subset)
+                    weights = {int(float(r['first_child_year'])): float(r['weight_sum']) / total for r in subset}
+                    components[event] = sum(weights.get(int(r['cohort']), 0.) * float(r['coefficient']) for r in coefficients if r['event'] == event)
+                points[specification] = {'target': components['L3event'] - components['F1event'], 'components': components,
+                                         'fit': rows(output / f'fit_receipt_{specification}.csv')[0]}
+            result = {'points': points, 'target_change': points['reference']['target'] - points['original']['target'],
+                      'new_target_or_standard_error': False}
+            if mode == 'reference_full':
+                primary = rows(PRIMARY / 'target_receipt.csv')[0]
+                result['baseline_reproduction_gap'] = points['original']['target'] - float(primary['estimate'])
+                if abs(result['baseline_reproduction_gap']) > 2e-6:
+                    raise RuntimeError(f'Original point failed reproduction: {result["baseline_reproduction_gap"]}')
+            (output / 'reference_comparison.json').write_text(json.dumps(result, indent=2))
+            receipt['reference_comparison'] = result
     except BaseException as error:
         receipt['status'] = 'failed'
         receipt['error'] = str(error)
@@ -187,7 +225,7 @@ def run(mode: str, outroot: Path, timeout: int) -> None:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=['smoke', 'full'])
+    parser.add_argument('mode', choices=['smoke', 'full', 'reference_smoke', 'reference_full'])
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument('--timeout', type=int, default=900)
     args = parser.parse_args()
