@@ -4,6 +4,13 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+- `../../output/pdf/simplified_olg_planner_benchmarks.pdf` -- September 5
+  two-agent planner assessment: a simpler direct-allocation Pareto proof,
+  conditional cash-transfer results, and the open full OLG welfare question.
+  Source: `../../latex/JMP_DS_suggestions/simplified_olg_planner_benchmarks.tex`.
+  Full reviews and reproducible checks are indexed in
+  `../../output/model/simplified_olg_amendments/README.md`.
+
 - `e5f_bounded_calibration_refinement_review.md` -- completed September 5 local
   refinement, full production/candidate fit and parameter comparisons, numerical
   qualifications and unchanged standard diagnostics. PDF:

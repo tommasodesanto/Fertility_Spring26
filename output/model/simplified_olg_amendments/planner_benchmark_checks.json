@@ -1,0 +1,362 @@
+{
+  "scope": "Constructed conditional households; no equilibrium or calibration solve",
+  "source": "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
+  "source_sha256": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+  "input_sha256": {
+    "transition_verification.json": "30d896f6eda66c8fdb18a892b3306cb18d942b200d256cd6280eaef63c5a264b",
+    "transition_phi80.csv": "cb73331c0a8e361df4e807eac5e1f04ab28e7af0c76ad9238e80f81d55c4a145"
+  },
+  "direct_cases": [
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.0,
+      "epsilon": 0.001,
+      "young_utility_change": 0.0001985791809109396,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.2000000000000004,
+      "observed_slope": 0.1985791809109396,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-05,
+      "young_utility_change": 1.9998579991826515e-06,
+      "old_utility_change": 8.470329472543003e-22,
+      "predicted_derivative": 0.2000000000000004,
+      "observed_slope": 0.19998579991826515,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-07,
+      "young_utility_change": 1.9999985799999238e-08,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.2000000000000004,
+      "observed_slope": 0.1999998579999924,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.5,
+      "epsilon": 0.001,
+      "young_utility_change": 9.849404836363295e-05,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1000000000000002,
+      "observed_slope": 0.09849404836363294,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-05,
+      "young_utility_change": 9.99849499050314e-07,
+      "old_utility_change": 8.470329472543003e-22,
+      "predicted_derivative": 0.1000000000000002,
+      "observed_slope": 0.09998494990503139,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-07,
+      "young_utility_change": 9.999984949999085e-09,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1000000000000002,
+      "observed_slope": 0.09999984949999086,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 1.5,
+      "epsilon": 0.001,
+      "young_utility_change": -0.00010170627284596047,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.1000000000000002,
+      "observed_slope": -0.10170627284596047,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-05,
+      "young_utility_change": -1.0001705012703617e-06,
+      "old_utility_change": 8.470329472543003e-22,
+      "predicted_derivative": -0.1000000000000002,
+      "observed_slope": -0.10001705012703616,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.0,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-07,
+      "young_utility_change": -1.0000017050001274e-08,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.1000000000000002,
+      "observed_slope": -0.10000017050001274,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.0,
+      "epsilon": 0.001,
+      "young_utility_change": 0.00015893758633443657,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1604383999453566,
+      "observed_slope": 0.15893758633443655,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-05,
+      "young_utility_change": 1.6042340101806621e-06,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1604383999453566,
+      "observed_slope": 0.1604234010180662,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-07,
+      "young_utility_change": 1.6043824995700284e-08,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1604383999453566,
+      "observed_slope": 0.16043824995700284,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.5,
+      "epsilon": 0.001,
+      "young_utility_change": 7.864715629342194e-05,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.0802191999726783,
+      "observed_slope": 0.07864715629342194,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-05,
+      "young_utility_change": 8.020348987531701e-07,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.0802191999726783,
+      "observed_slope": 0.080203489875317,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-07,
+      "young_utility_change": 8.021904287273659e-09,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.0802191999726783,
+      "observed_slope": 0.0802190428727366,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 1.5,
+      "epsilon": 0.001,
+      "young_utility_change": -8.195304603644295e-05,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.0802191999726783,
+      "observed_slope": -0.08195304603644295,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-05,
+      "young_utility_change": -8.023652546746402e-07,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.0802191999726783,
+      "observed_slope": -0.08023652546746401,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.02,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-07,
+      "young_utility_change": -8.021937322633182e-09,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.0802191999726783,
+      "observed_slope": -0.08021937322633182,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.0,
+      "epsilon": 0.001,
+      "young_utility_change": 0.00010273311657090173,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1043519287587207,
+      "observed_slope": 0.10273311657090173,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-05,
+      "young_utility_change": 1.0433575152585002e-06,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1043519287587207,
+      "observed_slope": 0.10433575152585002,
+      "maximum_accounting_residual": 1.7763568394002505e-15
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.0,
+      "epsilon": 1e-07,
+      "young_utility_change": 1.0435176698747882e-08,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.1043519287587207,
+      "observed_slope": 0.10435176698747883,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.5,
+      "epsilon": 0.001,
+      "young_utility_change": 5.05080983361618e-05,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.05217596437936035,
+      "observed_slope": 0.0505080983361618,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-05,
+      "young_utility_change": 5.215929741801753e-07,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.05217596437936035,
+      "observed_slope": 0.052159297418017524,
+      "maximum_accounting_residual": 1.7763568394002505e-15
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 0.5,
+      "epsilon": 1e-07,
+      "young_utility_change": 5.21757977109145e-09,
+      "old_utility_change": 0.0,
+      "predicted_derivative": 0.05217596437936035,
+      "observed_slope": 0.0521757977109145,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 1.5,
+      "epsilon": 0.001,
+      "young_utility_change": -5.395012120318235e-05,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.05217596437936035,
+      "observed_slope": -0.05395012120318235,
+      "maximum_accounting_residual": 0.0
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-05,
+      "young_utility_change": -5.219369246918935e-07,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.05217596437936035,
+      "observed_slope": -0.05219369246918935,
+      "maximum_accounting_residual": 1.7763568394002505e-15
+    },
+    {
+      "tau_p": 0.05,
+      "cost_ratio": 1.5,
+      "epsilon": 1e-07,
+      "young_utility_change": -5.21761416589134e-09,
+      "old_utility_change": 0.0,
+      "predicted_derivative": -0.05217596437936035,
+      "observed_slope": -0.052176141658913405,
+      "maximum_accounting_residual": 8.881784197001252e-16
+    }
+  ],
+  "conditional_cash": {
+    "scope": "Four household groups only; fixed fertility/tenure/future prices; intermediary ownership omitted",
+    "compensation_sum": 0.5206469345944182,
+    "compensated_housing_slope": 0.17244224425765564,
+    "old_housing_cash_slope": 0.9808887559830225,
+    "cases": [
+      {
+        "price_change": -0.0001,
+        "grants": {
+          "YO": -3.973313022564984e-05,
+          "YR": -4.440709855951502e-05,
+          "OO": 3.7453866667353126e-05,
+          "OR": 5.119289663189132e-05
+        },
+        "young_owner_housing": 0.8751188520096778,
+        "old_owner_housing": 0.6585207630576296,
+        "old_owner_utility_gain": 3.970937318615217e-05,
+        "old_renter_utility_gain": 0.00020839346200843126,
+        "maximum_residual": 3.9150540448451565e-16
+      },
+      {
+        "price_change": -1e-05,
+        "grants": {
+          "YO": -3.975668838238078e-06,
+          "YR": -4.440709855865234e-06,
+          "OO": 3.788699941615313e-06,
+          "OR": 4.997351571861495e-06
+        },
+        "young_owner_housing": 0.8754107525852213,
+        "old_owner_housing": 0.6582288624820866,
+        "old_owner_utility_gain": 4.0767425699477545e-06,
+        "old_renter_utility_gain": 2.0574919789541562e-05,
+        "maximum_residual": 3.1180976854325304e-17
+      },
+      {
+        "price_change": -1e-06,
+        "grants": {
+          "YO": -3.9759046752130267e-07,
+          "YR": -4.4407098550146993e-07,
+          "OO": 3.793035795911573e-07,
+          "OR": 4.985145045120483e-07
+        },
+        "young_owner_housing": 0.875439968238896,
+        "old_owner_housing": 0.6581996468284117,
+        "old_owner_utility_gain": 4.087333889762311e-07,
+        "old_renter_utility_gain": 2.0548445542868895e-06,
+        "maximum_residual": 2.220446049250313e-16
+      }
+    ]
+  },
+  "conditional_obstruction": {
+    "scope": "Current-date conditional economy; inherited old states not asserted stationary; transfer account covers four household groups",
+    "q": 0.5,
+    "tau_p": 0.05,
+    "phi": 0.8,
+    "price": 1.0,
+    "young_housing_value_gap": 0.5416666666666667,
+    "compensation_sum": 0.6051264044943818,
+    "compensated_housing_slope": -0.0987552324300508,
+    "young_renter_fertility": 0.27602970456301235,
+    "young_renter_adult_consumption": 2.2595163745612488,
+    "young_renter_saving": 1.3878291697542997,
+    "young_owner_future": {
+      "c": 1.5999999999999999,
+      "h": 0.9142857142857143,
+      "e": 1.28
+    },
+    "old_owner": {
+      "c": 1.3999999999999997,
+      "h": 0.7999999999999999,
+      "e": 1.1199999999999999
+    },
+    "old_renter": {
+      "c": 1.2410714285714286,
+      "h": 0.5,
+      "e": 0.9928571428571429
+    }
+  },
+  "max_accounting_residual": 1.7763568394002505e-15,
+  "positive_gain_cases": 18,
+  "cost_obstruction_cases": 9
+}

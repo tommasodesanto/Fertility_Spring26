@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs,tabularx,enumitem,needspace}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\interfootnotelinepenalty=10000
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist{nosep,leftmargin=*}
+\newtheorem{proposition}{Proposition}
+\title{Housing allocation and constrained efficiency}
+\author{Discussion note}
+\date{September 5, 2026}
+\begin{document}
+\maketitle
+\vspace{-1em}
+The two planner comparisons answer different questions. A direct-allocation
+planner can redistribute housing and consumption subject to real feasibility.
+A constrained planner redistributes cash, after which households choose and
+markets clear. In both comparisons, the housing technology and physical tenure
+segmentation are retained. Fertility and the population path are held fixed
+for the housing-welfare question.
+
+\textbf{Assessment.} A simple local Pareto improvement toward young owners is
+proved for the direct-allocation benchmark under the value comparison below.
+Constrained inefficiency of the complete OLG economy remains unproved. A
+conditional market exercise supplies both an improving cash-transfer example
+and an obstruction, so the stronger conclusion does not follow from the
+financing gap alone. The positive example gives more housing to old households.
+Its future markets, tenure changes, and rental-intermediary owners are not
+covered. It should remain an internal check.
+
+\section{Direct allocation}
+
+\textbf{Households and feasible changes.} Consider a young owner $i$ and an old
+owner $j$. The young household has adult consumption $x_i=c_i-\chi n_i>0$ and
+adult space $s_i=h_i-\kappa n_i>0$. Its current utility is
+$\log x_i+\alpha\log s_i+\vartheta_t\log n_i$. The old household has utility
+$\log c_j^2+\gamma\log h_j^2+\omega_B\log e_j$. Keep each household's tenure,
+fertility, estate, and every future consumption and housing allocation fixed.
+The tenure-taste term and the young household's continuation utility therefore
+remain unchanged.
+
+The housing stock is fixed. Rental and owner size bounds remain in place;
+there are no newly assumed separate rental and owner stocks. The proposed
+transfer is owner to owner: the young owner's housing rises by $\epsilon$ and
+the old owner's occupancy falls by the same amount. The young owner must have
+room below $h_O^{\max}$, and the old owner must have positive housing to give up.
+A real cost $C(\epsilon)$ uses current goods, with $C(0)=0$ and finite right
+derivative $C'(0+)=K\geq0$.
+
+The value of a housing unit in each household's own consumption is:
+\begin{equation}
+ MV_i^Y=\frac{\alpha x_i}{s_i},\qquad
+ MV_j^O=\frac{\gamma c_j^2}{h_j^2}.
+\end{equation}
+These ratios compare willingness to exchange consumption for housing. Unequal
+raw housing marginal utilities would not, by themselves, establish inefficiency.
+
+\Needspace{9\baselineskip}
+\begin{proposition}[An improving housing reallocation]
+Suppose the owner-to-owner transfer is physically feasible and the planner may
+redistribute current goods and settle financial claims while relaxing private
+borrowing limits. If $MV_i^Y>MV_j^O+K$, sufficiently small positive transfers of
+housing from the old owner to the young owner are Pareto improvements. The old
+owner is indifferent, the young owner gains, and every other household and
+outside creditor can retain its allocation or contractual payment.
+\end{proposition}
+
+\begin{proof}
+Exactly compensating the old owner requires extra current consumption:
+\begin{equation}
+ D_j(\epsilon)=c_j^2\left[
+ \left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1\right].
+\end{equation}
+Give the old owner $D_j(\epsilon)$ and reduce the young owner's current
+consumption by $D_j(\epsilon)+C(\epsilon)$. Housing and current goods balance,
+and the old owner's utility is unchanged. The young owner's lifetime gain is:
+\begin{equation}
+ \Delta U_i=\log\left(1-\frac{D_j(\epsilon)+C(\epsilon)}{x_i}\right)
+ +\alpha\log\left(1+\frac{\epsilon}{s_i}\right).
+\end{equation}
+All future utility arguments are unchanged. Since $D_j'(0)=MV_j^O$, the right
+derivative is $(MV_i^Y-MV_j^O-K)/x_i>0$. Sufficiently small transfers preserve
+positive consumption and respect the physical bounds.
+\end{proof}
+
+\textbf{Connection to the competitive equilibrium.} An old owner with slack
+retention and estate-composition constraints satisfies $MV_j^O=q r_t$. A young
+owner with positive saving, slack future retention and estate bounds, and a
+strictly positive financing wedge satisfies $MV_i^Y>q r_t$, provided its physical
+size cap is slack. Such a pair therefore gives the desired inefficiency result
+at zero real cost, or whenever cost is smaller than the gap. The existence of
+eligible pairs is a condition, not a consequence of age alone. A positive
+aggregate reallocation requires a positive measure of such pairs.
+
+\textbf{What is established.} There exists an improving allocation with more
+housing for the eligible young households. This does not select the whole
+economy's first-best allocation or imply that every choice of welfare weights
+raises aggregate young housing. No welfare weights are needed for the local
+Pareto argument.
+
+\section{Resources, titles, and the first-best benchmark}
+
+The planner's aggregate resource constraint counts goods, the physical housing
+stock, real transfer costs, and claims on the rest of the world. A housing sale
+transfers goods between counterparties; it does not destroy goods equal to the
+house price. Claims held outside the economy belong in the external account,
+and property taxes and rebates are consolidated. The world bond price $q$
+remains relevant to trade across dates. Private borrowing limits
+may be relaxed; outside creditors' payments and external solvency must still
+be respected.
+
+The local construction avoids a new aggregate financing assumption: current
+goods balance, every estate expenditure remains fixed, and the net external
+asset path is unchanged. It also admits an exact check against the original
+household accounts. Write $u_t=q r_t=(1+q\tau^p)P_t-qP_{t+1}$ and
+$L=D_j(\epsilon)-u_t\epsilon$. Change the young owner's saving account by:
+\begin{equation}
+ \Delta a_i'=\phi_tP_t\epsilon-qP_{t+1}\epsilon.
+\end{equation}
+\Needspace{5\baselineskip}
+The change in its next-date resources, including title liquidation, is then:
+\begin{equation}
+ \Delta(a_{i,t+1}+P_{t+1}H_i)
+ =\frac{\Delta a_i'}q-\frac{\phi_tP_t\epsilon}q+P_{t+1}\epsilon=0.
+\end{equation}
+The original young and old budgets hold with net current transfers $-L-C$ to
+the young owner and $L$ to the old owner, and $C$ used by the transfer activity.
+The seller replaces the estate's missing title proceeds with a bond. Its bond
+purchase exactly offsets the buyer's net financial adjustment. Property-tax
+reserves also offset because total taxable housing is unchanged.
+
+The young owner sells the additional title next period, when the old owner's
+estate would have sold it. Later housing availability is therefore unchanged.
+The seller's lower occupancy relaxes its original retention and estate bounds.
+The buyer's next-period retention bound relaxes, while its old-age occupancy
+and estate remain fixed. If the saving-account adjustment would make private
+saving negative, the planner must provide the permitted alternative finance;
+the construction does not claim that all private financial restrictions hold.
+
+\textbf{The remaining first-best choice.} A complete planner program needs a
+resource interpretation of the estate condition $e\geq P_{t+1}h^2$. The retained
+house is physical, but its lower bound in goods uses a market valuation. We
+must specify how title proceeds and goods estates are settled in the global
+planner problem. The origin of entrant wealth and initial external claims
+must also be accounted for once. The local proof preserves these objects and
+verifies settlement at the reference price path, so it does not require
+choosing a new planner valuation rule.
+
+\textbf{The allocation figure.} A valid crossing-value diagram can be drawn
+along the old household's indifference curve. At transfer $\epsilon$, plot:
+\begin{align}
+ MV_i^Y(\epsilon)&=
+ \frac{\alpha[x_i-D_j(\epsilon)-C(\epsilon)]}{s_i+\epsilon},\\
+ MV_j^O(\epsilon)&=
+ \frac{\gamma[c_j^2+D_j(\epsilon)]}{h_j^2-\epsilon}.
+\end{align}
+With a smooth increasing convex cost, the first falls and the second plus
+$C'(\epsilon)$ rises. Their crossing, if reached before a physical bound, is
+the best allocation for this pair holding the old owner's utility and all
+other allocations fixed. It is not the entire economy's first best. The area
+between the curves is not an exact utility loss; the utility derivative is
+the value gap divided by the young owner's remaining adult consumption.
+
+\section{Cash transfers followed by markets}
+
+\textbf{The proposed instrument.} Let $\ell_i$ be a net cash transfer paid before
+housing purchases; negative transfers are cash taxes. Balance the transfers
+across the specified recipients and donors. Retain the financed share $\phi_t$
+and all physical housing restrictions. A young owner's purchase constraint is
+then $(1-\phi_t)P_th_i\leq b_i+\ell_i$, and the same $\ell_i$ enters its goods
+budget once. Ordinary property-tax rebates still arrive after closing and
+have their original separate budget. This is a proposed transfer permission;
+it does not include public loans or compulsory future repayment.
+
+The constrained planner must anticipate the resulting private choices and
+market prices. This is the distinction in Bisin's constrained-efficiency
+formulation. It does not imply that a borrowing distortion alone guarantees
+an improving transfer scheme.\footnote{Alberto Bisin, \emph{General equilibrium
+theory}, November 4, 2014, Section 3.2.4.
+\href{https://bpb-us-e1.wpmucdn.com/wp.nyu.edu/dist/c/16384/files/2019/11/Lecture-notes-Oct2014.pdf}{NYU lecture notes}.}
+
+\Needspace{7\baselineskip}
+\textbf{A useful conditional test.} First fix future prices and rebates, the
+inherited old states, fertility, and the local tenure and constraint branches.
+At a candidate current price $P$, calculate the exact cash transfer
+$\ell_i^c(P)$ needed to leave each household at its baseline utility. Let $G(P)$
+be the sum of those transfers, weighted by household masses, and let $Q^c(P)$
+be their total housing demand after compensation. At the baseline price $P_0$,
+$G(P_0)=0$ and $Q^c(P_0)=\bar H$.
+
+On the branches examined, utility increases with cash and housing demand is
+nondecreasing in cash. A balanced Pareto reform must therefore satisfy:
+\begin{equation}
+ G(P)\leq0,\qquad Q^c(P)\leq\bar H.
+\end{equation}
+The first inequality says compensation is affordable. The second says that
+compensating everybody must not already exhaust more than the housing stock;
+additional welfare gains cannot reduce housing demand on these branches.
+
+\begin{proposition}[A local obstruction for cash transfers]
+In this conditional comparison, suppose exact compensation and demands are
+smooth on the maintained branches. If $G'(P_0)>0$ and
+$Q^{c\,\prime}(P_0)<0$, no sufficiently close balanced cash-transfer equilibrium
+makes all the compared households weakly better off and any strictly better off.
+\end{proposition}
+
+\begin{proof}
+A higher price requires positive net compensation, violating the balanced
+transfer budget. A lower price raises compensated housing demand above the
+stock, violating housing clearing. At the unchanged price, every household
+requires a nonnegative transfer; budget balance forces all transfers to zero.
+Strict derivative signs preserve these arguments in a neighborhood.
+\end{proof}
+
+The obstruction can occur with a positive property tax, an interior old owner,
+and a strictly constrained young owner whose housing value exceeds the old
+owner's. An independently checked construction gives
+$G'(P_0)=0.60513>0$ and $Q^{c\,\prime}(P_0)=-0.09876<0$.
+It satisfies the original current-date household equations and housing and tax
+accounts. Its inherited old state is specified directly; it is not a claimed
+stationary OLG equilibrium. The example disproves an automatic inference from
+the financing gap to an improving cash transfer in this conditional comparison.
+It does not prove constrained efficiency of the full OLG economy.
+
+\textbf{A conditional improvement with the opposite housing direction.} In the
+saved illustrative allocation, the same calculation instead gives
+$G'(P_0)=0.52065>0$ and $Q^{c\,\prime}(P_0)=0.17244>0$. A small price reduction
+releases enough resources after compensation to improve the two old household
+groups. The exact construction keeps both young groups at their baseline
+lifetime utility, lets old-owner demand clear housing, and gives the remaining
+cash to old renters. It taxes the young groups and transfers cash to the old.
+The private housing choices move toward old households.
+
+The direction follows from the old household's compensated demand. When its
+retention and estate bounds are slack, its housing rises as the current user
+cost falls along an indifference curve; a utility gain raises its housing
+further. Since affordable compensation requires a lower price in this case,
+old housing rises. With renters at their physical caps and fixed total housing,
+young-owner housing must fall. Thus an improving transfer among these household
+groups does not implement the direct planner's old-to-young reallocation.
+
+These calculations are internal checks. The positive construction covers four
+current household groups, with their lifetime continuation values evaluated
+at fixed future prices. It is not a complete-economy Pareto result.
+
+\section{What is needed for the full constrained comparison}
+
+\textbf{Future markets.} A current transfer changes young saving, title holdings,
+and subsequent housing and estates even when young lifetime utility is held
+constant. The next old distribution consequently changes. Future prices and
+property-tax rebates must clear that changed economy, and all later cohorts
+must be included in the welfare test. Fixing fertility preserves their masses;
+it does not preserve their prices or welfare.
+
+\textbf{Initial ownership.} Rental intermediaries earn their prescribed return
+on units bought at the new price. That does not compensate the owners of titles
+held before an unexpected price change. The household equations do not identify
+the ultimate recipients of all initial intermediary and estate claims. A price
+fall can reduce those claims' value. We must state who owns them and whether
+their welfare belongs in the comparison before claiming a Pareto improvement.
+Zero profits on new purchases do not settle that question.
+
+\textbf{Transfer powers.} The initial cash-transfer class is narrower than an
+arbitrary sequence of household-specific compensation payments. We must choose
+whether the planner has one transfer date or a committed sequence of separately
+balanced transfers, and which characteristics it may use for targeting. Adding
+public bridge credit or future compulsory repayment is a different instrument.
+Any positive theorem must name that permission explicitly.
+
+The next research question is therefore specific: under a stated ownership
+account and transfer schedule, can a fully clearing OLG path make every covered
+household weakly better off? The direct-allocation proof supplies the housing
+mechanism. It does not answer this stronger question. The conditional examples
+show why both the fiscal permission and equilibrium response matter.
+
+\section{Verification and working record}
+
+The direct result was checked by deriving exact compensation from the original
+preferences, reconciling the dated accounts and physical restrictions, and
+independently testing finite transfers and boundary failures. The independent
+check covers 27 constructed household perturbations with positive and zero
+property taxes. It includes 18 gains when cost is below the gap and nine losses
+when cost exceeds it. The maximum accounting error is $1.78\times10^{-15}$.
+These are household checks, not equilibrium or calibration estimates.
+
+The cash-transfer argument was checked by deriving compensation from the
+original budgets, proving the finite-neighborhood obstruction, and constructing
+exact finite transfers in the saved conditional illustration. Independent lead
+calculations reproduce the positive example at price reductions of $10^{-4}$,
+$10^{-5}$, and $10^{-6}$, with maximum residual $3.92\times10^{-16}$, and verify
+the obstruction's household budgets, first-order conditions, and strict bounds.
+The examples do not verify future market clearing or the welfare of omitted
+initial title owners.
+
+Two Astra agents at maximum reasoning wrote separate bounded reviews. The lead
+checked their arguments and independently reproduced the numerical algebra.
+The reports and checks are indexed in
+\path{output/model/simplified_olg_amendments/README.md}.
+Reproduce the lead checks from the repository root with:
+\begin{quote}\small
+\texttt{python3}\ \path{code/model/tools/verify_simplified_olg_planner_benchmarks.py}
+\end{quote}
+No author manuscript, calibration specification, or model solver was changed.
+
+\end{document}

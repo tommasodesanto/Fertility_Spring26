@@ -1,5 +1,34 @@
 # Simplified OLG amendment checks
 
+## September 5 planner benchmarks
+
+The author requested two Astra agents at maximum reasoning, one for direct
+allocation and one for cash transfers followed by markets. The lead reviewed
+both arguments and performed independent algebra and finite-allocation checks.
+The five-page synthesis is `output/pdf/simplified_olg_planner_benchmarks.pdf`;
+its source is `latex/JMP_DS_suggestions/simplified_olg_planner_benchmarks.tex`.
+
+- `first_best_review.md`: exact current-goods compensation, original title and
+  estate accounting, conditional marginal-value diagram, and global choices.
+- `constrained_efficiency_review.md`: exact cash-transfer envelopes, a local
+  obstruction and four-household-group improvement. The latter moves housing
+  toward the old and omits future market clearing and intermediary-owner welfare.
+  Neither example establishes constrained inefficiency of the complete OLG model.
+- `planner_benchmark_checks.json`: independent receipts, including source hashes,
+  27 direct perturbations, three exact conditional cash cases, and the obstruction.
+
+Reproduce these small checks without equilibrium or calibration solves:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_planner_benchmarks.py
+```
+
+The live decisions and remaining ownership/transfer/estate questions are in
+`docs/model/ACTIVE_DECISION_LEDGER.md`. The earlier amendment and its evidence
+remain below as a separate completed pass.
+
+## Earlier amendment checks
+
 This is the supporting output folder for the September 4–5 theory development.
 The live phase/checkpoint record is `docs/model/simplified_olg_overnight_work.md`.
 The proposal is `latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex`;

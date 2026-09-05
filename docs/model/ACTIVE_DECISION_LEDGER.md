@@ -29,6 +29,17 @@ is now paused. He also asked for simpler, more transparent prose based on the
 recent chats. Technical language should be used only when necessary. The
 work record contains the three-check procedure and ongoing progress.
 
+**September 5 two-planner review:** the author requested two Astra agents at
+maximum reasoning, one per benchmark. Their bounded passes and the lead's
+independent checks are complete. Read the five-page
+[planner note](../../output/pdf/simplified_olg_planner_benchmarks.pdf), with
+[source](../../latex/JMP_DS_suggestions/simplified_olg_planner_benchmarks.tex).
+The direct current-goods compensation result is proved under its stated
+permissions. Constrained inefficiency of the complete OLG economy is still
+unproved; conditional examples do not settle it. Detailed findings below
+supersede the earlier statement that the financed-sale construction is the
+only developed allocation argument.
+
 **Resume here:** the amendment proposal and verification are complete for the
 agreed development pass. Read
 [`simplified_olg_amendment_proposal.tex`](../../latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex)
@@ -54,7 +65,12 @@ restrictions is inferred. The exact housing feasibility conditions remain to be
 written, and the welfare criterion remains open.
 W4 is REOPENED, with the previous compensation scheme retained as one proof
 construction. W3's real cost remains TENTATIVE. U0's population interpretation
-also remains open. No manuscript or model amendment follows from this discussion.
+also remains open. The subsequent authorized two-agent pass develops a
+separate discussion note, without changing the model or author manuscript.
+Next settle initial title ownership and the admissible dated transfer schedule
+for the full constrained comparison, plus estate settlement for a complete
+first-best program. No such institutional choice is inferred from authorizing
+research on both benchmarks.
 
 **Established and qualified:** the fixed-fertility allocation result has an
 explicit feasible compensated transaction. The fertility result has no
@@ -244,6 +260,59 @@ strictly better off. Improved weighted welfare or a gain for young households
 alone is insufficient. No general constrained-inefficiency theorem is claimed.
 Bisin Section 3.2.4 supplies the conceptual definition, not a theorem applying
 automatically to this deterministic housing economy.
+
+### Two Astra reviews and lead verification completed — September 5
+
+**Execution:** the author explicitly requested two Astra agents at maximum
+reasoning. One derived the direct-allocation result; the other investigated
+cash transfers followed by markets. Separate evidence files, a 20-minute
+first-pass limit, and lead synthesis were specified before dispatch. Both
+returned completed reports; no workers or automatic continuation remain active
+for this pass. The earlier one-worker default in the overnight plan was
+superseded by this explicit request.
+
+**W0/W1 direct result:** giving an eligible old owner exact current-goods
+compensation $D_j(\epsilon)$ and reducing young current consumption by
+$D_j(\epsilon)+C(\epsilon)$ proves a local Pareto gain when
+$MV_i^Y>MV_j^O+K$. This avoids an interior-saving Euler condition in the basic
+allocation proof. Original title, estate, fiscal, and external-claim accounting
+was reconciled; the net external asset path is unchanged. The CE corollary
+still needs the stated household interiority/slackness and a positive measure
+of eligible pairs. Neither every weighted optimum nor a global first-best
+allocation is characterized.
+
+**W1/W4 constrained result:** a finite-neighborhood obstruction was proved for
+the conditional cash-transfer problem using the signs of aggregate exact
+compensation and compensated housing demand. A fully specified current-date
+example satisfies the obstruction despite a strict financing gap. The saved
+illustration instead admits an exact improvement for four current household
+groups, but moves housing toward the old. It fixes continuation prices and
+local tenure/constraint branches, does not clear future markets, and omits the
+welfare of initial intermediary title owners. It is not a complete-economy
+constrained Pareto improvement or a theorem for an OLG transition. Preserve
+these calculations as internal evidence, in line with the author's preference.
+
+**I1/W4 remaining choices:** specify ultimate initial title ownership and whose
+welfare is covered; a single date or committed sequence of cash transfers;
+transfer targeting and purchase-cash eligibility; and estate settlement in a
+global first-best problem. Public credit or compulsory later repayment is an
+additional power, not silently part of a cash gift. These choices remain open.
+
+**P1 figure:** exact compensated marginal-value curves were derived for the
+two-household, fixed-continuation Pareto problem. A crossing is that restricted
+optimum, not the whole economy's first best. No old figure was overwritten and
+no transition result was developed in this pass.
+
+**Verification:** direct derivation, original-equation/accounting checks, and
+independent finite perturbations/boundary review. The lead driver
+`code/model/tools/verify_simplified_olg_planner_benchmarks.py` verifies 27 direct
+perturbations, three exact conditional cash examples, and the obstruction's
+household conditions and coefficient signs. No model/calibration solve ran.
+Reports and receipts are indexed in
+[`output/model/simplified_olg_amendments/README.md`](../../output/model/simplified_olg_amendments/README.md).
+The five-page PDF compiled twice without layout/reference warnings and every
+page was visually inspected. The protected manuscript and active solver were
+not edited.
 
 ### Progress count and remaining discussion topics
 
