@@ -24,7 +24,10 @@ author's expectation of mild restrictions remains to be checked. W4/I1 now
 provisionally allows household-specific compensating transfers as the working
 benchmark, with the author's expressed doubt and an explicit revisit before
 finalizing the welfare proposition. This is not a fully settled decision.
-The next discussion in this block is W3, real reallocation costs.
+W3 also provisionally includes a reduced-form real reallocation cost; exact
+form, incidence, and size will be reviewed later. The next discussion is H1:
+whether to retain a one-shot continuous completed-fertility choice in the
+simple theory, with sequential births and timing in quantitative work.
 Borrowing-limit relaxation is already accepted.
 D2's supply scope is now
 settled: fixed stock as the simple-model benchmark, with a simple long-run
@@ -67,7 +70,8 @@ After the author's broad-transition preference on 2026-09-04, this map has
 **18 entries**: **7 agreed directions** (W0, W1, I0, H0, D0, D1, D2),
 **3 parked branches** (W2, Q0, Q1), and **8 unresolved entries** (P0, W3,
 W4, I1, H1, U0, P1, V0). The unresolved group includes tentative and active entries;
-W4's provisionally accepted compensation instrument remains in this group.
+W3's provisionally accepted cost term and W4's compensation instrument remain
+in this group.
 Agreed directions are not completed proofs or implementations; their retained
 technical obligations remain. The parked stricter W1 benchmark and tax-specific
 subbranches are nested in existing entries, not extra independent rows.
@@ -151,14 +155,14 @@ between mechanism analysis and welfare analysis before either is understood.
 | W0 | Desired result: equilibrium inefficiency, demonstrated by a planner reallocating housing toward young households without relying on fertility benefits; fertility effects are a subsequent claim. | DECIDED | Research objective only. Feasible set remains W1; compensation, welfare population, and criterion remain W4. Truth and generality are not decided by the objective. | Sections 3-4; W0 discussion below |
 | W1 | The planner may relax private borrowing limits for the current benchmark. A theorem retaining those same limits is desirable but parked. | DECIDED | Financing permission only; specify real costs and the title, estate, lender, and dated-transfer conditions. This is not a choice to remove every institutional restriction. | Section 4, A-B; W1 discussion below |
 | W2 | The gains-tax/common-rebate construction is deferred with the gains-tax extension. Preserve the zero-cost result, eligibility qualifications, and unresolved implementation questions. | PARKED | Revisit through Q0/I0. A tax-revenue result for unconstrained buyers remains distinct from the core financing result. | Section 4, C; I0 discussion below |
-| W3 | State the real cost and its incidence for the core compensated reallocation. The positive-cost/common-rebate gains-tax extension is separately deferred. | ACTIVE | Next discussion after provisional W4 agreement. W1/W4 govern core costs; Q0/W2 govern the parked tax extension. Average surplus alone does not settle individual compensation under a common rebate. | Section 4, cost extension |
+| W3 | Provisionally include a reduced-form nonnegative real reallocation cost in the working theoretical benchmark. Exact functional form, incidence, and numerical value remain open. | TENTATIVE | Author accepts proceeding with the recommendation with a "we'll see" qualification. Review the specification later alongside W4's compensation scheme. Keep fixed and marginal costs distinct; the gains-tax/common-rebate extension stays deferred. | Section 4, cost extension; W3 author response below |
 | W4 | Provisionally use household-specific compensation in the working Pareto benchmark, holding fertility fixed. The author remains doubtful and explicitly wants to revisit it. Exact welfare coverage remains open. | TENTATIVE | Use as a working assumption for later planning, not final acceptance. Revisit the concrete financing/compensation scheme and restricted-transfer alternatives before finalizing the welfare proposition. Preserve real and dated resource constraints. | Sections 4, 6; W4/I1 author response below |
 | I0 | Keep the core allocation result based on borrowing constraints. Realized capital-gains taxation is a deferred extension, to revisit when deciding whether to include it in the quantitative model. | DECIDED | W2 and gains-tax-specific transition work are parked. Property taxation is a separate instrument. Source and code amendments remain pending. | Sections 5-6, 8; I0 discussion below |
 | Q0 | Should realized capital-gains taxation enter the quantitative model, with the necessary institutional, empirical, and state-variable justification? | PARKED | Author's explicit return condition for the gains-tax extension. If this decision becomes active, revisit I0/W2 and relevant D1-D2 obligations. No quantitative implementation or run is authorized by this deferral. | I0 author statement below; live quantitative contract remains in CALIBRATION_STATUS.md |
 | Q1 | Can the housing-access mechanism generate an independently testable quantitative prediction for a specified housing policy? | PARKED | The author clarified that he currently wants H0's analytical threshold, not an empirical-validation design. Retain this separate lead suggestion; revisit if external validation becomes a requested paper objective. No policy or new calibration target is imposed. | Q1 discussion below; H0 threshold clarification |
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | W1-W3, H0-H1, D0. Keep inheritance of entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | Author's desired form only. Defer the derivation until planning/amendment work; return to W1/W4/I1 for payment incidence and to H1 for a quantitative analogue. No primitive-only condition or aggregate policy sign is established. | Sections 3, 6, 8; H0 threshold clarification and preference below |
-| H1 | Which household ingredients are essential for that mechanism? Continuous positive completed fertility, goods/space requirements, log utility, tenure tastes, and the maintained old-age branches versus richer alternatives. | OPEN | P0, H0, I1. Do not reinterpret the toy model as sequential birth timing or use its elasticities as structural quantitative estimates. | Sections 2-3, 6, 8 |
+| H1 | Which household ingredients are essential? Next discussion: retain one-shot continuous completed fertility in the simple theory versus sequential/discrete choices. Keep log utility, goods/space requirements, tenure tastes, and old-age branches as further subquestions. | ACTIVE | P0, H0, I1. No household architecture is adopted through the W3 cost agreement. Do not reinterpret the toy model as sequential birth timing or transfer its elasticities to the quantitative model. | Sections 2-3, 6, 8; H1 next topic below |
 | D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author's comparison scope only. Endpoint existence, convergence, population measurement, and the signs of all effects remain to be established under D1-D2/U0. No quantitative endpoint is certified by this decision. | Sections 5-6, 8; D0 author decision below |
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only. Mild restrictions are the author's expectation, not an established fact. Separate existence, convergence, and uniqueness; retain local scope as a fallback. Actual hypotheses and proofs remain deferred. | Section 5; D1 author preference below |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Scope decision only, for later planning. D0-D1/H1 obligations remain; gains-tax-specific diagnostics stay deferred with Q0. The saved example has not been replaced or revalidated. | Sections 3, 5-6; D2 author agreement below |
@@ -733,6 +737,35 @@ separate from resources consumed. Fixed versus marginal/proportional cost,
 functional form, and numerical value remain for later specification. This
 clarification is not recorded as author adoption of W3.
 
+**Subsequent author response, 2026-09-04:**
+
+> let's go for what you say, we'll see.
+
+**Provisional working choice:** include the proposed reduced-form nonnegative
+real reallocation cost, keeping the author's "we'll see" qualification. The
+precise function, incidence, and size are not chosen. Review these during later
+planning/development together with the compensation arrangement; do not equate
+this with approval of a fixed cost, a proportional cost, or a common calibrated
+value. Discussion-only status continues; no model or manuscript is amended.
+
+### H1 next topic: the household fertility choice
+
+The simple model currently has a young household choose completed fertility
+once as a continuous positive quantity. Its logarithmic fertility term excludes
+zero children, and it has no within-household sequence of birth decisions.
+Different cohorts can nevertheless choose different family sizes, generating
+aggregate fertility and population transitions. Source:
+`latex/simplified_olg_paper_theory_section.tex`, household definition and
+`eq:olg_young_utility`.
+
+**Lead recommendation, not yet adopted:** retain this simple completed-fertility
+choice for the analytical mechanism and leave sequential birth timing and
+childlessness to the quantitative model. The alternative is to enrich the
+simple theory's fertility choices, with corresponding implications for H0's
+analytical condition. The other household ingredients remain separate H1
+subquestions; no full household specification is accepted by answering this
+first question. No derivation or implementation begins now.
+
 ### Q1 discussion: quantitative prediction and empirical validation
 
 **Now parked:** this was a broader lead suggestion. The subsequent H0
@@ -805,6 +838,7 @@ No target-contract change, policy run, or manuscript amendment is made here.
 | 2026-09-04 | Tommaso preferred the broadest transition result and expected conditions not to be very stringent. | D1 objective recorded without assuming mild hypotheses or a global theorem. Updated count to 7 agreed directions, 3 parked, 8 unresolved; W4/I1 compensation instruments become the next discussion. |
 | 2026-09-04 | Tommaso provisionally accepted the compensation recommendation while expressing doubt and requesting a later revisit. | W4 becomes TENTATIVE, not DECIDED. Keep the household-specific transfer benchmark for discussion; require a return to the concrete scheme and restricted alternatives before finalizing welfare. W3 real costs are next. |
 | 2026-09-04 | Tommaso asked for the next issue after provisional compensation agreement. | Introduced W3's real-cost scope and the lead's simple nonnegative-cost recommendation. No cost assumption, parameter value, or author decision is inferred. |
+| 2026-09-04 | Tommaso accepted proceeding with the reduced-form cost recommendation, adding "we'll see." | W3 becomes TENTATIVE; functional form, incidence, and value remain for later review. Opened H1's one-shot-versus-sequential fertility scope for discussion. |
 
 **Suspended questions / return points:** the W1 alternative retaining private
 borrowing limits remains parked. The gains-tax extension and its dependent
@@ -813,7 +847,8 @@ planning/amendment stage and must return to W4/I1 to settle exact compensation
 and resources. D0's comparison scope, D1's breadth objective, and D2's supply
 scope are settled. W4/I1's tailored transfers are provisionally accepted and
 must be revisited once the scheme is concrete, before the welfare claim is
-finalized. W3 real costs are next; actual transition hypotheses and
+finalized. W3's reduced-form real cost is provisional and will be reviewed with
+the compensation specification. H1's fertility-choice architecture is next; actual transition hypotheses and
 implementation remain deferred. Q1's empirical
 validation design is parked following the author's clarification; revisit only
 if that separate objective becomes relevant. Other branches remain open.
@@ -829,9 +864,11 @@ conditions. Exact transfers, real costs, welfare coverage, supply specification,
 and transition hypotheses remain unresolved. Validity and implementation remain
 proof obligations.
 
-**Provisional author choice:** W4 permits tailored compensation as a working
-benchmark, with expressed doubt and an explicit revisit. Keep this separate
-from the seven settled directions and preserve its return condition above.
+**Provisional author choices:** W4 permits tailored compensation as a working
+benchmark, with expressed doubt and an explicit revisit. W3 includes a
+reduced-form real reallocation cost subject to later review of its specification.
+Keep both separate from the seven settled directions and preserve the return
+conditions above.
 
 **Lead recommendations, not adopted:** the review's earlier recommendation to
 put welfare outside the main text is preserved as history. The current
