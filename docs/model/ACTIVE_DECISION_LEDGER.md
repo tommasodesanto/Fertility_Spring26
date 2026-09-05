@@ -16,6 +16,30 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**September 5 author priority: establish misallocation before a remedy.**
+Tommaso clarified that the purpose of the simplified model is to show, in
+simple terms, that borrowing limits and restricted rental housing can produce
+housing misallocation in an OLG economy. A constrained-inefficiency result
+would be a welcome strengthening, not a prerequisite for stating the core
+allocation result. Public lending and repayment through taxation belong to a
+later discussion of remedies. The previous prompt to decide public collection
+powers is therefore deferred; those powers have not been accepted or rejected.
+
+**Current next step:** present the basic mechanism and its precise local welfare
+content: for an eligible young/old pair, housing can move toward the young with
+consumption compensation and no loss elsewhere when their consumption-unit
+housing-value gap exceeds the real reallocation cost. Respect the existing
+stock and physical tenure restrictions, fix individual fertility and future
+allocations in this comparison, and state the borrowing relaxation already
+permitted for direct allocation. The rental cap limits an alternative route to
+space; it is not itself a physical restriction to remove in the benchmark.
+The proof is conditional on an eligible pair and a value gap, not a claim that
+both constraints bind or every equilibrium is inefficient. Constrained
+inefficiency remains a separate possible strengthening. Keep the existing
+conditional transfer theorem, loan interpretation, fertility prediction,
+population transition and two conceptual figures banked without letting policy
+design displace the original allocation question.
+
 **September 5 external assessment returned; discussion pending.** Tommaso
 returned the independent agent's assessment and asked for elaboration. The
 verbatim assessment is saved in
