@@ -1,0 +1,191 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,booktabs,array}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\reading}[2]{\href{#1}{#2}}
+\begin{document}
+\begin{center}
+{\LARGE Efficiency across generations}\par
+\vspace{0.5em}
+A reading guide for the housing model \quad September 5, 2026
+\end{center}
+
+\section*{1. Whose welfare enters the comparison?}
+
+An overlapping-generations economy contains households with finite lives,
+but an endless succession of households. Two periods of life do not mean
+that the economy contains only two generations in total.
+
+For a full Pareto comparison, include the initial old, the initial young,
+and every future cohort. Compare each household's lifetime utility under the
+reform with its utility along the original equilibrium path, starting from
+the same inherited situation. For the initial old, their past is fixed, so
+only their remaining life can change. With heterogeneous households, an
+average improvement within a cohort is insufficient.
+
+For this discussion only, let $\Delta U_i$ denote the change in the lifetime
+utility of person $i$; this does not replace the model's value-function notation.
+A Pareto improvement requires
+\[
+\Delta U_i\geq 0\quad\text{for every person in every cohort},
+\qquad \Delta U_j>0\quad\text{for at least one person }j.
+\]
+There is no need to sum these utilities or choose social discount weights.
+Those choices arise when specifying a social objective that may trade one
+person's loss against another's gain.
+
+Balasko and Shell (1980, p.~286) give a precise definition for an infinite
+sequence of generations. They distinguish full Pareto optimality from the
+weaker requirement of admitting no improvement that changes only finitely
+many households' allocations. Their terminology for this weaker requirement
+is specific to that paper. The economic distinction is what matters here.
+
+\textbf{Including a cohort does not require changing its allocation.}
+If a feasible reform leaves its entire lifetime allocation unchanged, its
+welfare comparison is already settled. A finite construction can therefore
+prove inefficiency of the full economy. But showing that no finite
+construction works does not exclude an improvement involving infinitely many
+cohorts.
+
+\section*{2. A small example}
+
+Consider a separate teaching economy with one young and one old person at
+each date. Each person receives two units of goods when young and one when
+old. Goods cannot be stored, there are no privately traded assets, and utility
+is $\log c^Y+\log c^O$. Without transfers, consumption is $(2,1)$.
+
+Suppose every young person gives half a unit to the current old person, at
+every date. Each young person's lifetime consumption becomes $(1.5,1.5)$:
+\[
+\log 1.5+\log 1.5=\log 2.25>\log 2=\log 2+\log 1.
+\]
+The initial old person also gains, consuming $1.5$ instead of $1$. Consumption
+still totals three units at every date. Everyone gains over their own life,
+although every young person initially gives something up.
+
+If the arrangement stops, the last young person who pays does not receive
+the later transfer. The absence of a last generation matters. This original
+example illustrates Samuelson's intergenerational-transfer intuition; it is
+not a specification of our housing economy.
+
+\newpage
+\section*{3. Three questions in the literature}
+
+\textbf{Can competition be inefficient simply because generations overlap?}
+Samuelson (1958) develops the consumption-loan economy and the role of transfers
+between successive generations. Balasko and Shell (1980) make the welfare
+distinctions precise: in their frictionless exchange economy, competitive
+allocations cannot be improved by changing only finitely many households,
+yet need not be fully Pareto optimal. They allow competitive trade in dated
+goods. Thus the classical OLG issue cannot be reduced to the usual statement
+that an insurance market is missing.
+
+\textbf{Can an economy accumulate too much capital?}
+Diamond (1965, sections~3--4) extends OLG analysis to production. Beyond the
+Golden Rule capital stock, reducing capital accumulation can release goods
+for consumption and permit a Pareto improvement. In the basic deterministic
+model, the familiar comparison between the return on capital and population
+growth diagnoses this possibility. Diamond also distinguishes comparing
+stationary allocations from finding an improvement that respects initial
+conditions.
+
+Our illustrative housing model has a fixed housing stock and an externally
+given bond price. We have not identified a Diamond overaccumulation mechanism.
+Its housing-allocation question must be established from its own preferences,
+financial restrictions, and resource constraints. A comparison of interest
+and growth rates would not establish our proposed result.
+
+\textbf{How can we separate efficiency from redistribution along a transition?}
+Auerbach and Kotlikoff (1987, chapter~5, section~B.3, pp.~62--64) introduce a
+hypothetical \emph{Lump Sum Redistribution Authority}. It compensates cohorts
+while the reform and compensation are jointly evaluated in general
+equilibrium. The authority balances its present-value budget, with assets or
+debt allowed along the path. Transfers go to existing cohorts initially and
+to later cohorts on entry. This is an efficiency-measurement device, not a
+requirement to propose a practical institution.
+
+That is a useful precedent for our exercise. It does not establish that our
+particular transfers are feasible: cash before a housing purchase, future
+tax enforcement, and the treatment of initial owners remain model-specific
+assumptions to assess.
+
+\section*{4. Full-path welfare and steady-state welfare}
+
+These comparisons answer different questions:
+
+\begin{center}
+\begin{tabular}{@{}p{0.26\textwidth}p{0.67\textwidth}@{}}
+\toprule
+Comparison & What must be established \\
+\midrule
+Pareto improvement & No initial or future household loses; someone gains. \\[5pt]
+Steady-state welfare & A specified household is better off at the new stationary allocation. Transitional cohorts still require evaluation. \\[5pt]
+Weighted welfare & Gains and losses are aggregated using an explicit social objective and a well-defined treatment of the infinite horizon. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For example, a reform might raise the lifetime utility of every cohort born
+after year 20 while harming some earlier cohorts. That is a long-run welfare
+gain. The uncompensated reform is not a Pareto improvement. Whether feasible
+compensation can remove the losses is a further question.
+
+\newpage
+\section*{5. What this means for our planner}
+
+\textbf{The welfare comparison and the planner's powers are separate choices.}
+We can evaluate every generation while limiting the planner to transfers at
+one date. We can also evaluate every generation while allowing a committed
+transfer sequence. The latter gives the planner more ways to rearrange
+resources; it does not change the meaning of ``no household loses.''
+
+Bisin's \emph{General Equilibrium Theory} lecture notes (2014, section~3.2.4)
+are a useful introduction to constrained efficiency. They specify the
+planner's instruments and let subsequent markets clear at endogenous prices.
+The incomplete-asset-market literature, including Geanakoplos and Polemarchakis
+(1986), provides conditions under which asset redistribution can improve
+welfare after spot prices adjust. These results depend on their market and
+heterogeneity assumptions; they are not an automatic theorem for our
+deterministic housing OLG model.
+
+A one-time gift is one possible restriction, not the default definition of
+constrained efficiency. Our local obstruction to that instrument does not
+settle broader transfer classes. The committed-transfer result remains
+conditional on its financing and ownership permissions. The literature helps
+frame these choices; each of our proofs still needs its own verification.
+
+\textbf{Fertility introduces a further question.} Holding individual fertility
+and cohort sizes fixed lets us compare the same people. When fertility
+changes, some people exist in one allocation but not the other. Golosov,
+Jones, and Tertilt (2007, section~3.1) study alternative efficiency definitions
+for this setting. Their A-efficiency compares people alive in both allocations
+over the entire history; it does not mean only people alive at the reform date.
+Their P-efficiency includes potential people and requires specifying welfare
+when they are not born. A larger population alone is not a welfare ranking.
+
+Our housing-efficiency claim and the fertility prediction can remain separate.
+Predicting a larger population does not itself require a welfare ranking
+across populations.
+
+\section*{6. A short reading route}
+
+For our immediate question, begin with Auerbach and Kotlikoff, pp.~62--64.
+Use Samuelson and Balasko--Shell for foundations, Diamond for capital accumulation,
+and Bisin for constrained efficiency. Defer population welfare until we need it.
+The links below lead to primary texts or publication records.
+
+{\small
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\item \reading{https://ludwigbc.com/wp-content/uploads/2013/08/samuelson_overlapping.pdf}{Samuelson (1958)}, ``An Exact Consumption-Loan Model of Interest with or without the Social Contrivance of Money,'' \emph{JPE} 66, 467--482.
+\item \reading{https://karlshell.com/wp-content/uploads/2015/03/OGM_1.pdf}{Balasko and Shell (1980)}, ``The Overlapping-Generations Model, I: The Case of Pure Exchange without Money,'' \emph{JET} 23, 281--306. Definitions: p.~286.
+\item \reading{https://assets.aeaweb.org/asset-server/files/9443.pdf}{Diamond (1965)}, ``National Debt in a Neoclassical Growth Model,'' \emph{AER} 55, 1126--1150. Begin with pp.~1128--1129.
+\item \reading{https://kotlikoff.net/wp-content/uploads/2019/04/Dynamic-Fiscal-Policy.pdf}{Auerbach and Kotlikoff (1987)}, \emph{Dynamic Fiscal Policy}. Chapter~5, section~B.3, pp.~62--64.
+\item \reading{https://bpb-us-e1.wpmucdn.com/wp.nyu.edu/dist/c/16384/files/2019/11/Lecture-notes-Oct2014.pdf}{Bisin (2014)}, \emph{General Equilibrium Theory}, lecture notes, section~3.2.4. Technical background: \reading{https://doi.org/10.1017/CBO9780511983566.007}{Geanakoplos and Polemarchakis (1986)}, ``Existence, Regularity, and Constrained Suboptimality of Competitive Allocations When the Asset Market Is Incomplete.''
+\item \reading{https://jenni.uchicago.edu/Fertility/Golosov_Jones_Tertilt_2007_Econometrica_v75_n4.pdf}{Golosov, Jones, and Tertilt (2007)}, ``Efficiency with Endogenous Population Growth,'' \emph{Econometrica} 75, 1039--1071. Section~3.1.
+\end{itemize}
+}
+\end{document}

@@ -29,6 +29,30 @@ is now paused. He also asked for simpler, more transparent prose based on the
 recent chats. Technical language should be used only when necessary. The
 work record contains the three-check procedure and ongoing progress.
 
+**September 5 literature detour (current discussion):** the author asked to
+understand efficiency in OLG models before deciding the planner's powers.
+Read the three-page [reading guide](../../output/pdf/simplified_olg_efficiency_reading_guide.pdf)
+and its [source](../../latex/JMP_DS_suggestions/simplified_olg_efficiency_reading_guide.tex).
+A full Pareto comparison includes initial old households and every future
+cohort's lifetime utility. It does not require changing every cohort, and it
+does not require a weighted sum of utilities. Comparing stationary allocations
+alone does not evaluate transitional losses. Balasko--Shell distinguish
+improvements changing finitely many agents from unrestricted comparisons;
+one-time gifts are an instrument restriction, not the default OLG welfare test.
+
+Auerbach--Kotlikoff, chapter 5, B.3, pp. 62--64, provides a closely relevant
+hypothetical compensation authority: transfers are included in the equilibrium
+transition and its account balances in present value. Its transfer timing and
+public financing are not identical to our young/old cash construction. Bisin's
+2014 lecture notes, section 3.2.4, guide the subsequent instrument discussion.
+Diamond's overaccumulation result is distinct from our proposed housing
+misallocation. Golosov--Jones--Tertilt's population-welfare definitions are
+banked for later; fixed individual fertility avoids that additional comparison.
+No new planner permission or welfare criterion has been accepted. The literature
+does not independently certify the model-specific proofs. Start the next
+conversation with the lifetime comparison and the small transfer example, then
+discuss compensation across generations before returning to W1/W4/I1.
+
 **September 5 focused constrained-efficiency pass (latest):** the author asked
 to settle issue 2 before moving on. A complete local Pareto improvement is now
 proved for a stated committed-transfer class: household-specific cash when
@@ -82,9 +106,10 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** stay with constrained efficiency. Decide whether the
-committed transfer and ownership permissions in the current note are acceptable
-for W1/W4/I1; no new author decision is inferred from completing the proof.
+**Next discussion:** take the requested OLG welfare literature detour before
+choosing the committed transfer and ownership permissions for W1/W4/I1. The
+reading guide above gives the first example and the compensation reference.
+No new author decision is inferred from completing the proof or this reading.
 The direct-allocation benchmark remains available, and its complete first-best
 estate-settlement question remains separate. W3's real cost is tentative;
 U0's population interpretation and the two requested theory figures remain
