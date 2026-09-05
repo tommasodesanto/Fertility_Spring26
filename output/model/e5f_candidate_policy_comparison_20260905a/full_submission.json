@@ -1,0 +1,19 @@
+{
+  "job_id": "17009732",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=e5fcand-full",
+    "--array=1-5%5",
+    "--time=00:55:00",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/full_%A_%a.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/full_%A_%a.err",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/cluster/run_e5f_candidate_policy_comparison.sh",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/plan.json",
+    "6b07151b7e2473e37746e703cbddb52f109b4b69a1f08b7b8e34d8d420d1490a",
+    "full"
+  ],
+  "plan_sha256": "6b07151b7e2473e37746e703cbddb52f109b4b69a1f08b7b8e34d8d420d1490a",
+  "smoke_summary_sha256": "fc50eaf3943d5cc28a03bff32d2f8e774996cb16a4e17186c544183f82753d4c"
+}

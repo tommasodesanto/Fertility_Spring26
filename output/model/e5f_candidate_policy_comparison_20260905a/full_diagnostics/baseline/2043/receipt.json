@@ -1,0 +1,65 @@
+{
+  "artifact_hashes": {
+    "dated_state.pkl.gz": "09549003020bd08ca692e54a5908f8872faf6e075de82b6da378cbde19716d60",
+    "standard_diagnostics/fertility_by_age.png": "d02a45560a4f315d75309cbae69f9143f7606a4dc846f5a10d4e0d339e7c4f27",
+    "standard_diagnostics/fertility_policy_by_age_income_state.png": "5067107545f0743a60633ebb4df90ed51642cf79234496636d4bd97c8cf12d72",
+    "standard_diagnostics/housing_by_age_income_state.png": "07a339e36deb289a3392585e2978df1bcf82af96db3fb5b586d60f46adab6f31",
+    "standard_diagnostics/housing_market.png": "9a7c5b06b8cfc4a51f0c1900217179342fd4af4f04be0ada498379d0428a94aa",
+    "standard_diagnostics/housing_prices.png": "28acee862bac4b01860353a65b08b1ba2f2d71e58cd7087ea717e2f27d0932e5",
+    "standard_diagnostics/income_state_outcomes.png": "ddb6cc7fd07f85511e9c150465047880ea3f2c39f3b9a7e5502296a10d14ca99",
+    "standard_diagnostics/liquid_wealth_by_age_income_state.png": "533821b59c82b80e88b4d637d7497d086aa764cb2e6f08e67b18b67e79f9e91d",
+    "standard_diagnostics/market_clearing_by_market.png": "037663c568b801ce92cd943d61b5880f7e8d8aafd43e8316171a24fe31a32f83",
+    "standard_diagnostics/market_clearing_residuals.png": "f23c477b59a8e59ae9493f4f7a38a209f36a6fe3c132eec21b0551638eef4b62",
+    "standard_diagnostics/owner_rungs.png": "768c6dd4e8f20ca64ca65787c01cd79d8aabb8302c59a50932eb53a900ee7bfe",
+    "standard_diagnostics/ownership_by_age.png": "3a121596d7e33aa9f610570e0c4d8bfa0ca41f5243d45af63928165c35e24d54",
+    "standard_diagnostics/ownership_by_age_income_state.png": "69b9658cfce59d1999880d640ac4319a2a7acfa86b3d3a54fbc1d97879e76bd3",
+    "standard_diagnostics/policy_childless_renter_age30.png": "0af93c8c6d9a29b364917107aa72c1feaa73388f4a7cbe59aa409910898433a9",
+    "standard_diagnostics/policy_childless_renter_age42.png": "e9276ab6649ff800d695e6c0b492d8ba37cb03cb2c52d1b53e3007e636d53ba1",
+    "standard_diagnostics/tenure_services.png": "0313e7ce81e0933267261334c9c3b296f38eb8019e7f9c68654052f809bda81b",
+    "standard_diagnostics/wealth_dist_childless_renter_age30.png": "2177924cea71e860c13850e5024fd2c165bfba16b3b28d7954c1a806e3edb1df",
+    "standard_diagnostics/wealth_dist_childless_renter_age42.png": "930c10feb721d143755a6c3d99de54b5c2787c5fd1d17e596d267fdafd287cba"
+  },
+  "budget": {
+    "budget_excess_mass": 1.385521423808375e-09,
+    "budget_excess_share": 1.314064513500512e-09,
+    "budget_tolerance": 1e-09,
+    "household_mass": 1.0543785404549966,
+    "maximum_occupied_excess": 0.020086531904876442,
+    "occupancy_threshold_for_maximum": 1e-12,
+    "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+    "weighted_positive_budget_gap": 1.7655780789637327e-12
+  },
+  "calendar_year": 2043,
+  "grid_fallback": false,
+  "policy_arrays": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "status": "complete"
+}

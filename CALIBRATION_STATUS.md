@@ -1,6 +1,62 @@
 # Calibration Status
 
-Updated: `2026-09-05` (paired empirical check complete; existing housing target and production retained)
+Updated: `2026-09-05` (candidate policy comparison complete; existing housing target and production retained)
+
+## September 5 completed candidate policy comparison
+
+**The verified candidate preserves the retained policy ordering.** On the same
+12-target/11-parameter system, candidate loss is 23.1534447276 versus retained
+30.4829667077. Complete target/weight/loss and parameter/bound tables accompany
+`docs/model/e5f_candidate_policy_comparison_review.md` and the seven-page PDF
+`output/pdf/e5f_candidate_policy_comparison_review.pdf`. Production remains
+September 4 task_010; no new calibration search, target change or promotion.
+
+The author authorized three hours starting 21:11 UTC, requiring old-chat
+reconciliation before diagnosing inconsistencies. Smoke array `17009623`, full
+array `17009732`, rebate/Shapley job `17009733` and six fixed-price saving checks
+`17009779` all completed 0:0, using 2.27 allocated CPU-hours. The five full paths
+pass the existing collector and exactly reproduce their two-date smoke prefixes.
+
+| Candidate policy | Births/HH, 2023 | Births/HH, 2063 | Total births, 2063 |
+|---|---:|---:|---:|
+| Supply schedule +20% | +1.343280% | +2.140588% | +2.567723% |
+| Dependent-child LTV 95% | +0.017992% | +0.074818% | +0.082364% |
+| Combined | +1.365519% | +2.244344% | +2.682037% |
+| Unrebated property tax 1% to 2% | -1.144991% | -1.698748% | -2.019930% |
+
+The impact rebated-tax decomposition, **rebated 2% versus rebated 1%**, is
+-1.376585% direct tax, +0.301906% capitalization and +1.574415% rebate: net
++0.499736%. This is a different baseline from the unrebated tax arm above.
+The selected rebate matches the parameter state exactly in both equilibria.
+
+The verified source bundle is
+`33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3`.
+Its history exactly reproduces the original candidate. Old and new policy-driver
+hashes differ only by three read-only population reporting columns, as checked
+against Git history. Policy definitions, renewal contract, target fingerprint,
+source input, dates and fiscal treatment match. The already verified later-birth
+policy-reuse repair is disclosed; neither five-policy packet uses market fallback.
+
+All 55 dates have checkpoints and the unchanged 17-graph packet. The value screen
+flags 28 dates with maximum exposed pre-choice mass share 1.773586e-6; four of
+11 tax/component packets are flagged, maximum 2.581302e-6. At three tested smoke
+distributions, local arrays reproduce exactly and exhaustive saving removes all
+occupied value decreases; largest fixed-price births difference 0.000345945%.
+This is not an equilibrium-path or Shapley error bound. Maximum reported-budget
+excess share is 2.1554e-8. All 1,368 originally recorded checkpoint/graph hashes
+pass on Torch, and 2,319 collected local files match the full manifest; 82 large
+checkpoints remain on Torch. Complete plan, jobs, contracts, graph packets,
+historical reconciliation and all 110 old/new policy-date rows are under
+`output/model/e5f_candidate_policy_comparison_20260905a/`.
+
+Historical reconciliation preserves old initialization elasticity 1.75, dated
+elasticity 0.63, births/2.1 and the closed-national delayed-entry convention.
+The later coherent-person branch is separate. Direct author statements support
+the transition experiment broadly, but do not close every inherited population
+or initialization assumption. The 2063 figures remain conditional mechanism
+comparisons, not validated population forecasts, welfare results or terminal
+steady states. The 0.466 versus 0.720 first-birth housing shortfall remains the
+main calibration issue for the September 14 discussion.
 
 ## September 5 first-birth housing measurement assessment
 
@@ -113,8 +169,9 @@ The complete smaller-step weighted Jacobian has algebraic and relative-1e-3 rank
 shifter. The supply-intercept forward/backward cosine is -0.369. These diagnostics
 remain step-dependent and do not establish precise identification. The original
 ridge planner's stricter rejection is retained; no inverse-Jacobian or ridge
-proposal was used. **Production remains September 4 task_010 pending review; no
-new policy path or welfare result was computed.** The dated supply elasticity
+proposal was used. **Production remains September 4 task_010 pending review. No policy or welfare
+result was computed during the refinement; the subsequent policy comparison
+is recorded above.** The dated supply elasticity
 0.63 and tenure dispersion 0.005 remain fixed; the initialization distinction
 is stated in the code-review section below.
 

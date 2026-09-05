@@ -1,0 +1,16 @@
+{
+  "job_id": "17009779",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--account=torch_pr_570_general",
+    "--partition=cpu_short",
+    "--cpus-per-task=1",
+    "--mem=8G",
+    "--time=00:20:00",
+    "--job-name=e5fcand-flags",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/flags_%j.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/flags_%j.err",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/submit_saving_flags.sh"
+  ]
+}

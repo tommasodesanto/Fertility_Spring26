@@ -1,0 +1,62 @@
+{
+  "endpoint_reproduction_tolerance": 5e-10,
+  "factors": [
+    "tax_rate",
+    "asset_price",
+    "equal_rebate"
+  ],
+  "input_hashes": {
+    "code_bundle_sha256": "33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3",
+    "renewal_contract_sha256": "be4df40c258cc92758c75c0f99f32089677c48938d6c5d6507eb77e6dfb61fb3",
+    "selected_case_transition_sha256": "41813226ffa7a254594f907ac05b48e3d1cbea277554d113a9f51d4b55b22c64",
+    "selected_report_sha256": "ae5db41d9928ce0b50f4eaf7f943ece875b8b8eb6361b76a70257db0ac90b1a8",
+    "selected_task_summary_sha256": "d7a376805b2decf2ea56be65d4ad0f11c2d18a7039befc61b697141fdaaad9c8",
+    "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+    "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+  },
+  "levels": {
+    "asset_price": [
+      0.7124424122645823,
+      0.6779512875142738
+    ],
+    "equal_rebate": [
+      0.1834013905892734,
+      0.3383078187686669
+    ],
+    "tax_rate": [
+      0.01,
+      0.02
+    ]
+  },
+  "model_solve_count": 8,
+  "reconstruction": {
+    "history_reproduction": {
+      "fields": [
+        "psi_child",
+        "asset_price",
+        "asset_price_index",
+        "adult_population",
+        "population_index",
+        "entry_flow_E",
+        "birth_children",
+        "birth_children_topcode_adjusted",
+        "effective_mature_entrant_flow_B",
+        "housing_demand",
+        "housing_supply",
+        "owner_rate",
+        "dependent_child_owner_rate",
+        "parent_owner_rate",
+        "childless_owner_rate"
+      ],
+      "maximum_absolute_gap": 0.0,
+      "periods": 5,
+      "status": "passed",
+      "tolerance": 5e-10
+    },
+    "matched_2023_distribution_sha256": "3ee29a21f7103b938e9f5943fb91c9f36697edfcb5925696d499ca040015e07d",
+    "matched_2023_queue_sha256": "4355158d34331c1f0d6d8784e51d8dde2fbdb3b4bcd650208f520e2f914ef686",
+    "solve_count_through_2023_audit": 44
+  },
+  "scope": "2023 partial-equilibrium Shapley decomposition holding the fitted pre-fertility distribution fixed; all eight tax-price-rebate cells solved",
+  "status": "complete"
+}

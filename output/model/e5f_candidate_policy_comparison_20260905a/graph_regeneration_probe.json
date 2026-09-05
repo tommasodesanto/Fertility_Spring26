@@ -1,0 +1,8 @@
+{
+  "command": "cd /scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a && module load anaconda3/2025.06 && PYTHONPATH=code/model:code/model/tools python3 -",
+  "script": "from pathlib import Path\nimport hashlib, json\nimport run_e5f_independent_numerical_audit as audit\nfolder = Path('output/model/e5f_candidate_policy_comparison_20260905a')\nrelative = 'full_diagnostics/baseline/2063/dated_state.pkl.gz'\ncheckpoint = folder / relative\nassert hashlib.sha256(checkpoint.read_bytes()).hexdigest() == json.loads((folder/'artifact_manifest.json').read_text())['files'][relative]\n_, configured = audit.transition.configure_sequential_model()\nassert audit.baseline.calibration.code_fingerprint_contract(configured)['bundle_sha256'] == json.loads((folder/'plan.json').read_text())['code_bundle_sha256']\nout = Path('tmp/candidate_baseline_2063_regenerated')\nout.mkdir(parents=True, exist_ok=False)\naudit.standard_diagnostics(audit.load_checkpoint(checkpoint), out, validate_production_young=False)",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "",
+  "regenerated_standard_pngs_exact": 17
+}

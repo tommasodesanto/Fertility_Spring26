@@ -1,0 +1,19 @@
+{
+  "job_id": "17009733",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--account=torch_pr_570_general",
+    "--partition=cpu_short",
+    "--cpus-per-task=1",
+    "--mem=8G",
+    "--time=00:55:00",
+    "--job-name=e5fcand-rebate",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/rebate_%j.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/rebate_%j.err",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_candidate_policy_comparison_20260905a/submit_rebate.sh"
+  ],
+  "plan_sha256": "05b28547b2a442c4625d264e057e1411faeaf68b540d48248ca7d17439d03101",
+  "smoke_summary_sha256": "fc50eaf3943d5cc28a03bff32d2f8e774996cb16a4e17186c544183f82753d4c",
+  "launcher_sha256": "dd307bad52b971f71431056813cb46331277f9aa5dcabe7e8165e133df2a14f1"
+}

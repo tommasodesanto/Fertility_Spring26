@@ -22,6 +22,18 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_candidate_policy_comparison.py` observes the existing five-policy
+loop in a hash-pinned source snapshot: every date gets a saved state and the
+standard seventeen-graph packet, and full paths must exactly nest the smoke.
+`tools/observe_e5f_candidate_rebate.py` adds the matching three-equilibrium/eight-
+component tax packet. `tools/build_e5f_candidate_policy_comparison_report.py`
+checks the old/new contracts and collected artifacts, then builds the concise
+comparison with complete target and parameter tables. Completed results and
+reproduction commands are in
+`../../output/model/e5f_candidate_policy_comparison_20260905a/README.md`;
+the discussion PDF is `../../output/pdf/e5f_candidate_policy_comparison_review.pdf`.
+These utilities do not change calibration or promote a candidate.
+
 `tools/analyze_e5f_first_birth_measurement.py` checks saved empirical cohort
 support and the first-birth target's normalization null direction, then compares
 saved calibration housing moments. It performs no regression or model solve.
