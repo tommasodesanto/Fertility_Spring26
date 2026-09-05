@@ -29,6 +29,44 @@ is now paused. He also asked for simpler, more transparent prose based on the
 recent chats. Technical language should be used only when necessary. The
 work record contains the three-check procedure and ongoing progress.
 
+**September 5 proposed route back to the paper (not an author decision):**
+the author asked for next steps that keep the expanding literature discussion
+focused on the housing result. The desired claim remains: financial frictions
+leave too little housing with young households, and a feasible reallocation
+can improve welfare at fixed individual fertility. A fertility prediction and
+population transition are separate subsequent results.
+
+1. Use one focused discussion to settle the compensation benchmark. Recommended
+   starting point: include initial claimants and all future cohorts in the
+   lifetime Pareto comparison; retain physical/tenure restrictions; let prices
+   and private choices adjust; allow specified committed lump-sum transfers with
+   an explicit aggregate financing constraint. Explain that young grants backed
+   by old-age taxes provide public financing even if mortgage rules are fixed.
+   Future-tax enforceability, purchase-cash timing, and initial-owner fiscal
+   participation remain choices, not accepted assumptions. Stop the literature
+   detour once these questions can be stated and assessed clearly.
+2. Reassess the existing conditional proof under the chosen benchmark. Its
+   mathematical construction is already available; the task is to identify
+   economically defensible necessary assumptions, simplify the statement, and
+   establish exactly how broad it is. Separate housing/credit gains from any
+   unrelated intergenerational saving mechanism. Do not repeat completed
+   numerical checks without a changed assumption or unresolved concern.
+3. Close issue 2 with a paper-ready proposition under accepted assumptions or
+   a precise limitation. If the proposed constrained class cannot support a
+   defensible result, explain the obstruction and the smallest economically
+   motivated relaxation; do not broaden the model repeatedly to force the
+   result. Retain the direct-allocation inefficiency result where valid without
+   presenting it as a solved complete first best.
+4. Then return to the fertility condition, analytical population transition,
+   and the two requested conceptual figures. These remain distinct proof tasks.
+   Quantitative magnitudes belong in the quantitative model. Population welfare,
+   Diamond overaccumulation, and a general optimal-policy theory are parked
+   unless the core housing argument needs them.
+
+Keep one active question in this ledger: the financial powers of the
+compensation planner. Other branches remain recorded; this proposed sequence
+is not approval to amend the author manuscript or adopt new planner powers.
+
 **September 5 literature detour (current discussion):** the author asked to
 understand efficiency in OLG models before deciding the planner's powers.
 Read the three-page [reading guide](../../output/pdf/simplified_olg_efficiency_reading_guide.pdf)
@@ -106,10 +144,10 @@ No hourly continuation is active. V0 is COMPLETE as a proposal and review pass;
 that does not finalize provisional author choices or prove every desired claim.
 Historical discussion-only passages below remain the record of the decision pass.
 
-**Next discussion:** take the requested OLG welfare literature detour before
-choosing the committed transfer and ownership permissions for W1/W4/I1. The
-reading guide above gives the first example and the compensation reference.
-No new author decision is inferred from completing the proof or this reading.
+**Next discussion:** assess the proposed compensation benchmark for W1/W4/I1,
+using the reading guide only where it resolves the planner's financial powers.
+The proposed four-step route above keeps this discussion tied to the housing
+claim. No new author decision is inferred from the proof, reading, or proposal.
 The direct-allocation benchmark remains available, and its complete first-best
 estate-settlement question remains separate. W3's real cost is tentative;
 U0's population interpretation and the two requested theory figures remain
