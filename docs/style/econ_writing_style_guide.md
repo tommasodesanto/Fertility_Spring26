@@ -141,6 +141,12 @@ Earlier instructions in the `Reconstruct theory and draft history` conversation
 were to “make simple things simple,” make proofs more verbal and clear, and
 avoid announcing a complex proof strategy for an elementary exercise.
 
+- Use the prose of **Guido Menzio and Raquel Fernández** as writing references,
+  as Tommaso requested. Revisit relevant passages when drafting or revising;
+  take cues from the actual prose, not just the authors' names.
+- Present this theory as a **simple, illustrative exercise**. Keep the claims,
+  explanations, notation, and proofs proportionate to that purpose. Do not
+  make it sound more ambitious than it is or add complexity to signal rigor.
 - Start with what the result says about households, housing, or children.
 - Use a technical term only when it saves a necessary distinction. Explain
   “the same constraints continue to bind” before using “fixed active set.”
