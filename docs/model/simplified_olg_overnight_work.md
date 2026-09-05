@@ -1,5 +1,223 @@
 # Simplified OLG: development plan and overnight record
 
+## September 5 simplicity pass — completed
+
+Authorized while Tommaso is on a three-hour run. Start: 20:38 UTC; finish by
+23:38 UTC or earlier when the assessment, independent checks and compact PDF
+are complete. The aim is a problem-set-sized allocation argument, followed by
+a ranked discussion of extensions. No further author choice is inferred.
+
+- Core: verify the short compensated reallocation, the roles of both access
+  constraints, and a nonempty mixed-tenure equilibrium case.
+- Extensions: reconcile the meaning of constrained efficiency, the existing
+  public-finance construction, the fertility threshold, and demographic
+  identities. Do not turn the later finance branch into the core result.
+- Figures: an exact compensated-allocation diagram and a clearly conditional
+  demographic-transition diagram; retain all earlier figures unchanged.
+- Deliverable: approximately six to eight pages, source
+  `latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`, PDF
+  `output/pdf/simplified_olg_simple_assessment.pdf`. Supporting evidence stays
+  in the existing `output/model/simplified_olg_amendments/` folder.
+- Route: one read-only `reviewer_strong` worker, profile limit 20 minutes,
+  reviewing the direct proof and roles of the constraints. Lead owns the
+  economics, independent household/equilibrium arithmetic, extension synthesis
+  and final prose. No model search or policy simulation is planned.
+- Three checks: analytical derivation, original-equation/feasibility checks,
+  and the bounded independent review; then compile and visually inspect the PDF.
+
+### Assessment
+
+The simple allocation result works. Keep the existing household problems and
+ownership taste. A positive group of young owners can value extra housing more
+than old owners value keeping it; current-goods compensation then produces a
+local Pareto improvement with fertility and future allocations fixed. This is
+the direct benchmark already allowing relaxed private finance, not a full
+first-best characterization or a claim about an unspecified constrained
+planner. A binding physical rental cap alone supplies no feasible improving
+direction for a renter who must retain that tenure.
+
+New analytical constructions close the nonemptiness question. They include
+mixed-tenure steady states with both rental caps binding, and another economy
+with both rental caps slack but a positive owner value gap. Ownership tastes
+make the latter possible. Thus rental segmentation can limit an alternative
+route to space without being necessary for this particular inefficiency.
+No preference change is adopted merely to make both restrictions essential.
+
+The fertility derivative and its price-free sufficient specialization remain
+separate conditional predictions. A common relaxation of young and old rental
+caps includes both dated rent costs. Population accounting and stationary
+stock scaling are established; a broad equilibrium transition following a
+credit reform is not. The new second figure prescribes fertility and applies
+the demographic identity. It is not a solved equilibrium path.
+
+The existing committed-transfer proof and one-time-gift obstruction retain
+their distinct, narrow scopes. Public collection of future income supplies
+financing across ages. The obstruction does not prove that loans are necessary;
+an anonymous loan programme is not proved by renaming identity-based transfers.
+These remain later branches, with no new author acceptance of planner powers.
+
+### New derivations retained for reproducibility
+
+**Owner-to-renter replication.** With zero gains tax and the same prices and
+rebates, set
+\[
+a_R'=a_O'+qP_{t+1}h-\phi P_t h.
+\]
+Then \(a_R'+u_th=a_O'+[(1-\phi)+q\tau^p]P_th\), and
+\(a_R'/q=a_O'/q-\phi P_th/q+P_{t+1}h\). These reproduce the young
+budget and the owner's old resources, including title value. The rental menu
+must contain both housing choices and replicated saving must be nonnegative.
+Without an ownership benefit, values agree; if current rental space can rise,
+a small change \((\mathrm dx,\mathrm dh)=(-u_t\epsilon,\epsilon)\)
+improves utility when \(MV^Y>u_t\). With an ownership taste, the material
+replication need not match utility. This is a conditional deviation, not a
+general-equilibrium cap-removal experiment.
+
+**An explicit family with binding rental caps.** Use \(P=1,q=.5,\phi=.8\),
+\(b=.2,\bar H=2,\nu=2\), \(\alpha=\beta=\omega_B=.4\),
+\(\gamma=.3,\chi=.15,\kappa=.5\), rental cap .25, owner cap 2.
+Select young-owner \((x,h,n)=(1,1,.75)\); its fertility condition sets
+\(\vartheta=.3525\). For each \(0\leq\tau^p<.28\), let
+\(u=(1+\tau^p)/2\), \(w=1.7925+u\), and
+\[
+(c^2,h^2,e)=(.8,.24/u,.64),\qquad MV^Y=.64>MV^O=u.
+\]
+The old owner has strict retention and estate slack. Both renter caps bind
+at the unique root \(n^R\in(0,.5)\) of
+\[
+\frac{.3525}{n^R}=\frac{.15}{x^R}
+ +\frac{.2}{.25-.5n^R},\qquad
+x^R=\frac{1.7925+.625u-.15n^R}{1.56}.
+\]
+The left side strictly decreases from infinity, the right side strictly
+increases to infinity, and \(x^R>2.03/1.56>1.30\). Consequently young
+renter housing value exceeds 2.08 and old renter housing value exceeds 1.248,
+both strictly above \(u<.64\). These choices have the right cap multipliers.
+
+Let \(\pi^O=(.5-n^R)/(.75-n^R)\),
+\(d_h=\pi^O(1+.24/u)+(1-\pi^O).5\), and choose
+\[
+Y=O=2/d_h,\quad T=q\tau^p d_h/2,\quad
+y=w-b-(1+q)T,\quad
+\bar\xi=\sigma_\xi\log[\pi^O/(1-\pi^O)]-W^O+W^R.
+\]
+Any \(\sigma_\xi>0\) supports the required owner share. Average fertility
+is .5, housing and fiscal budgets clear, and the inherited old distribution
+is generated by these same young choices. The entrant distribution is a point
+mass in income and wealth, with the original continuous ownership taste.
+Since \(d_h<1.48\), \(T<.1036\), \(y>1.9371\), and owner saving
+\(a'_O=.98-.5T>.9282\). Renter saving is
+\(a'_R=.56x^R+.125u-.5T>.7387\). The original objectives are concave
+on convex feasible sets. The fertility, saving, estate, housing and cap KKT
+conditions therefore establish global household optimality, not feasibility
+alone. Income and taste location vary across this family: it is an existence
+construction, not a tax comparative static holding primitives fixed.
+
+**A complete equilibrium with slack rental caps.** Keep the other displayed
+primitives, but set \(\tau^p=0\), rental cap 1.5, and young-owner
+\((x,h,n)=(1,1,.49)\). Set
+\(\vartheta=61397/302000\), \(y=2.0535\), and \(w=2.2535\).
+Writing \(\rho=1+\beta(1+\gamma+\omega_B)=1.68\) only in this
+supporting derivation, the unconstrained renter has
+\[
+x^R=\frac{w}{\rho+\alpha+\vartheta},\quad
+n^R=\frac{\vartheta x^R}{\chi+\kappa u}
+=\frac{276716279}{551645600}>.5>.49,\quad
+h^R=\frac{\alpha x^R}{u}+\kappa n^R.
+\]
+The same share and stock construction gives \(\pi^O=.139389713\),
+\(Y=O=1.325073899\), \(h^R=1.040368344<1.5\), and
+\(h^{2R}=.473735108<1.5\). Owners still satisfy
+\(MV^Y=.529801325>.5=MV^O\). At taste scale .12 the needed location
+is \(\bar\xi=-.217848432\). Removing the redundant cap leaves this
+second equilibrium unchanged. Comparing it with the first construction is not
+a causal rental-cap reform: preferences and income also differ.
+
+**Fertility condition.** The short derivative agrees with the earlier checked
+proposal. A direct sufficient-condition proof is also available without an
+unconstrained-demand detour. Put \(\rho=1+k\), \(w=\rho x+\chi n+uh\).
+Strict purchase rationing implies \(\alpha x>us\). If
+\(uh/w\geq\alpha/(\rho+\alpha)\), then
+\[
+0<\alpha\rho x-\rho us
+ =\alpha w-(\rho+\alpha)uh+n(\rho\kappa u-\alpha\chi)
+\]
+forces \(\rho\kappa u>\alpha\chi\). Hence
+\(\rho\kappa x>\chi s\); for any \(p<MV^Y=\alpha x/s\),
+\(\alpha\kappa/s^2-\chi p/(\rho x^2)>0\). Stationary zero-tax
+purchase spending is \(uh=(1-q)b/(1-\phi)\), giving the displayed
+primitive restriction. No aggregate policy sign follows. The original-owner
+negative-response example added to the new verifier uses
+\(q=.5,\phi=.8,\beta=.4,\gamma=.5,\omega_B=1,\alpha=\chi=1\),
+\(\kappa=.1,\vartheta=1.1,b=.22,y=3.33,P=1,\tau^p=0\), and
+\((x,h,n,a',c^2,h^2,e)=(1,1.1,1,1.33,.8,.8,1.6)\). It is an
+original household optimum with strict credit rationing and a negative
+fertility response when \(p=u=.5\), not a policy equilibrium.
+
+**Population.** The cohort ratio is the product of fertility ratios from a
+common initial state; total household population includes the lagged old
+cohort. At a positive steady state, \(\bar n=1/\nu\) and
+\(N_{hh}=2\bar H/(\bar h^Y+\bar h^O)\). Under the actual fixed-entrant,
+world-bond, ordinary-rebate closure, scaling \(\bar H\) and all cohort
+masses by \(a>0\) leaves prices, rebates and individual problems unchanged.
+This is a statement about corresponding stationary equilibria. An additional
+supplier-income/finance channel, an endogenous entrant distribution, or
+domestic bond clearing could invalidate it. For the new schematic,
+\(\log(\bar n_t^1/\bar n_t^0)=(1-\delta)\log(a)\delta^t\), so
+\(Y_t^1/Y_t^0=a^{1-\delta^t}\). The choice \(a=1.2,\delta=.6\)
+illustrates accounting only. It proves no equilibrium transition or speed.
+Stationary person counts require common adults-per-household and fixed rules
+for the timing and residence of children; transitional children must be counted.
+
+### Checks and review scope
+
+Reproduce the new receipts and figures with:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_simple_assessment.py --plot
+```
+
+The driver checks four constructed equilibria (three points of the proved
+tax-indexed family and the slack-cap example), nine independent optimizations
+using all seven original dated choices, 36 finite reallocations including
+real-cost cases, replication, fertility finite differences, and demographic
+identities. Maximum original equilibrium residual: \(1.30\times10^{-15}\);
+maximum optimizer choice discrepancy: \(1.19\times10^{-6}\). The JSON pins
+the driver and original specification hashes. There is no calibration, policy
+simulation, numerical equilibrium search, or claim that these examples fit data.
+
+Two sequential read-only `reviewer_strong` passes completed within their
+20-minute limits. The first verified the direct proof and role of each
+constraint; the second independently derived replication, the equilibrium
+constructions and stationary scaling. Their corrected/preserved reports are
+`simple_assessment_direct_review.md` and
+`simple_assessment_new_claims_review.md` in the evidence folder. The first
+report's accidental inclusion of K in the old-value definition and one broken
+path were explicitly corrected; no economic conclusion was changed. The
+second review's tax-family and person-count qualifications were incorporated.
+Its scaling display was corrected to retain the normalized old-state
+distribution G; the original specification scales the cohort mass, not that
+probability distribution. The draft and driver already use this convention.
+Earlier fertility proof review and original receipts remain independently
+available; the new negative-response original optimization is a lead check,
+not attributed to the second reviewer.
+
+For style, the lead read Menzio's actual *A Theory of Partially Directed
+Search* model section and the Fernández--Rogerson NBER abstract. The latter's
+full PDF was inaccessible, so no full-text read is claimed. These are prose
+references, not authority for this model's welfare or transition claims.
+The author-controlled manuscript, original notation, original figures, and
+quantitative model remain unchanged.
+
+Final PDF verification: eight pages, two clean compilation passes after the
+last text edits, no undefined references or overfull boxes, and all eight
+rendered pages visually inspected. Figures, equations, table, citations and
+page breaks are readable. The final PDF is in `output/pdf/`; source and
+verification artifacts are ready for the author’s discussion.
+
+## Earlier September 4–5 amendment pass
+
+
 Authorized by Tommaso on 2026-09-04: “yeah, let's do this.. so you can work on
 this overnight while i sleep hopefulyl.” This begins development after the
 discussion pass. It does not convert provisional economic choices into final

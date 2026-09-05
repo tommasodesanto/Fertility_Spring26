@@ -25,7 +25,42 @@ allocation result. Public lending and repayment through taxation belong to a
 later discussion of remedies. The previous prompt to decide public collection
 powers is therefore deferred; those powers have not been accepted or rejected.
 
-**Current next step:** present the basic mechanism and its precise local welfare
+**September 5 simplicity assessment completed; discussion pending.** The
+new eight-page `output/pdf/simplified_olg_simple_assessment.pdf` is the next
+reading object. The direct compensation proof is short and valid under the
+permitted finance relaxation, with physical restrictions, individual fertility,
+and future allocations held fixed. New explicit mixed-tenure equilibria show
+that a positive group of eligible owner pairs can exist. This closes the
+nonemptiness question for the conditional result, not general existence or
+inefficiency of every equilibrium.
+
+A second constructed equilibrium has slack rental caps and a positive owner
+housing-value gap. The existing ownership taste can therefore sustain the
+borrowing distortion even with larger rentals available. The accompanying
+replication lemma explains the rental alternative in the absence of an
+ownership benefit. Recommend preserving the current preferences and explaining
+the two constraints accurately; joint necessity is not required by the author's
+original “can misallocate” claim. No preference change is adopted.
+
+The note retains the conditional fertility derivative (including both dated
+rents for a common rental-cap change), its primitive sufficient specialization,
+exact population identities, and a stationary stock-scaling result under the
+existing closure. Figure 1 is an exact compensated allocation comparison;
+Figure 2 prescribes fertility and illustrates its population accounting, not
+an equilibrium transition. A broad credit-reform transition and the anonymous
+public-loan proposal remain unproved. Constrained efficiency remains an optional
+strengthening with explicit instrument permissions, not a prerequisite for the
+core claim. Two scoped independent reviews and original-equation checks are
+indexed in `output/model/simplified_olg_amendments/README.md`.
+
+**Recommended discussion order:** settle the direct-allocation statement and
+its benchmark; decide how much fertility and population material to include;
+then decide whether the constrained comparison adds enough to keep. Reopen the
+ownership taste only if both restrictions must be essential to the paper's
+message. These are recommendations, not new author decisions; all existing
+issue IDs, parked alternatives, and later finance choices remain banked.
+
+**Starting instruction for this pass:** present the basic mechanism and its precise local welfare
 content: for an eligible young/old pair, housing can move toward the young with
 consumption compensation and no loss elsewhere when their consumption-unit
 housing-value gap exceeds the real reallocation cost. Respect the existing

@@ -1,0 +1,604 @@
+{
+  "scope": "Analytical equilibrium witnesses, original-problem checks, and conditional figures; no calibration or policy simulation.",
+  "source_sha256": "97c4224d62c67fff485b64707e351ed6c8a5c7eb3b752dcb0d4791af60822d9f",
+  "specification_source": "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
+  "specification_sha256": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+  "equilibria": [
+    {
+      "parameters": {
+        "q": 0.5,
+        "phi": 0.8,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 0.4,
+        "chi": 0.15,
+        "kappa": 0.5,
+        "sigma": 0.12,
+        "nu": 2.0,
+        "Hbar": 2.0,
+        "P": 1.0,
+        "b": 0.2,
+        "owner_cap": 2.0,
+        "tau": 0.0,
+        "rental_cap": 0.25,
+        "theta": 0.3525,
+        "y": 2.0925000000000002,
+        "xi_bar": -0.65465519604699
+      },
+      "user_cost": 0.5,
+      "transfer": 0.0,
+      "cohort_mass": 1.9735636415706976,
+      "owner_share": 0.5238726937716559,
+      "owner": [
+        1.0,
+        1.0,
+        0.75,
+        0.9800000000000004,
+        0.8,
+        0.48,
+        0.6400000000000001
+      ],
+      "renter": [
+        1.32773105648622,
+        0.25,
+        0.22493034587664787,
+        0.8060293916322834,
+        1.062184845188976,
+        0.25,
+        0.8497478761511807
+      ],
+      "rental_cap_binds": true,
+      "owner_value": -0.5381490401934019,
+      "renter_value": -1.2042718484948343,
+      "checks": {
+        "maximum_original_equilibrium_residual": 6.661338147750939e-16,
+        "young_housing_value": 0.64,
+        "old_housing_value": 0.5,
+        "optimizer_checks": [
+          {
+            "tenure": "owner",
+            "maximum_choice_error": 1.0039587894361546e-07,
+            "maximum_budget_error": 2.220446049250313e-16
+          },
+          {
+            "tenure": "renter",
+            "maximum_choice_error": 2.613160021702754e-08,
+            "maximum_budget_error": 8.881784197001252e-16
+          }
+        ],
+        "direct_reallocations": [
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.0,
+            "young_gain": 1.3999868591575107e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.07,
+            "young_gain": 6.999864846568372e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.21000000000000002,
+            "young_gain": -7.000144113446871e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.0,
+            "young_gain": 1.3986858250792183e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 8.881784197001252e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.07,
+            "young_gain": 6.986483683318296e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 8.881784197001252e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.21000000000000002,
+            "young_gain": -7.014412469077025e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 8.881784197001252e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.0,
+            "young_gain": 0.00013868499766541483,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.07,
+            "young_gain": 6.864748006777765e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.21000000000000002,
+            "young_gain": -7.14422726070923e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          }
+        ],
+        "renter_replication": {
+          "replication_budget_error": 6.661338147750939e-16,
+          "replicated_renter_saving": 0.6800000000000004,
+          "utility_gain_from_more_rental_space": 1.3999363004391085e-06,
+          "scope": "Fixed-price deviation with adequate rental space and no ownership taste; not a cap-removal policy equilibrium."
+        }
+      }
+    },
+    {
+      "parameters": {
+        "q": 0.5,
+        "phi": 0.8,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 0.4,
+        "chi": 0.15,
+        "kappa": 0.5,
+        "sigma": 0.12,
+        "nu": 2.0,
+        "Hbar": 2.0,
+        "P": 1.0,
+        "b": 0.2,
+        "owner_cap": 2.0,
+        "tau": 0.05,
+        "rental_cap": 0.25,
+        "theta": 0.3525,
+        "y": 2.0987244789513966,
+        "xi_bar": -0.6371064166035076
+      },
+      "user_cost": 0.525,
+      "transfer": 0.012517014032402424,
+      "cohort_mass": 1.9972814550885092,
+      "owner_share": 0.5238101280813966,
+      "owner": [
+        1.0,
+        1.0,
+        0.75,
+        0.973741492983799,
+        0.8,
+        0.45714285714285713,
+        0.6400000000000001
+      ],
+      "renter": [
+        1.3377404486740951,
+        0.25,
+        0.22499933378941478,
+        0.8085011442412917,
+        1.0701923589392761,
+        0.25,
+        0.8561538871514209
+      ],
+      "rental_cap_binds": true,
+      "owner_value": -0.5440038598937338,
+      "renter_value": -1.1925477887834819,
+      "checks": {
+        "maximum_original_equilibrium_residual": 7.042977312465837e-16,
+        "young_housing_value": 0.64,
+        "old_housing_value": 0.525,
+        "optimizer_checks": [
+          {
+            "tenure": "owner",
+            "maximum_choice_error": 3.125172471918347e-07,
+            "maximum_budget_error": 3.8163916471489756e-17
+          },
+          {
+            "tenure": "renter",
+            "maximum_choice_error": 2.972007573376345e-08,
+            "maximum_budget_error": 8.881784197001252e-16
+          }
+        ],
+        "direct_reallocations": [
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.0,
+            "young_gain": 1.1499860370197916e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.057499999999999996,
+            "young_gain": 5.749857186129358e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.1725,
+            "young_gain": -5.750150173883955e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.0,
+            "young_gain": 1.1486035884920576e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.057499999999999996,
+            "young_gain": 5.735717418087202e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.1725,
+            "young_gain": -5.765018715017678e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.0,
+            "young_gain": 0.00011360255312155981,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.057499999999999996,
+            "young_gain": 5.6070651796520264e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.1725,
+            "young_gain": -5.900308156480023e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          }
+        ],
+        "renter_replication": {
+          "replication_budget_error": 1.8388068845354155e-16,
+          "replicated_renter_saving": 0.6737414929837989,
+          "utility_gain_from_more_rental_space": 1.1499350192067936e-06,
+          "scope": "Fixed-price deviation with adequate rental space and no ownership taste; not a cap-removal policy equilibrium."
+        }
+      }
+    },
+    {
+      "parameters": {
+        "q": 0.5,
+        "phi": 0.8,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 0.4,
+        "chi": 0.15,
+        "kappa": 0.5,
+        "sigma": 0.12,
+        "nu": 2.0,
+        "Hbar": 2.0,
+        "P": 1.0,
+        "b": 0.2,
+        "owner_cap": 2.0,
+        "tau": 0.27,
+        "rental_cap": 0.25,
+        "theta": 0.3525,
+        "y": 2.1303356335630226,
+        "xi_bar": -0.5638418407890458
+      },
+      "user_cost": 0.635,
+      "transfer": 0.06477624429131841,
+      "cohort_mass": 2.084097364349561,
+      "owner_share": 0.523545328018261,
+      "owner": [
+        1.0,
+        1.0,
+        0.75,
+        0.9476118778543412,
+        0.8,
+        0.3779527559055118,
+        0.6400000000000001
+      ],
+      "renter": [
+        1.3817829056718225,
+        0.25,
+        0.22529111434637852,
+        0.820785305030562,
+        1.105426324537458,
+        0.25,
+        0.8843410596299665
+      ],
+      "rental_cap_binds": true,
+      "owner_value": -0.5668310682498621,
+      "renter_value": -1.1419830316154183,
+      "checks": {
+        "maximum_original_equilibrium_residual": 1.2906342661267445e-15,
+        "young_housing_value": 0.64,
+        "old_housing_value": 0.635,
+        "optimizer_checks": [
+          {
+            "tenure": "owner",
+            "maximum_choice_error": 1.7897923365595148e-07,
+            "maximum_budget_error": 2.636779683484747e-16
+          },
+          {
+            "tenure": "renter",
+            "maximum_choice_error": 3.408487396772131e-07,
+            "maximum_budget_error": 1.3322676295501878e-15
+          }
+        ],
+        "direct_reallocations": [
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.0,
+            "young_gain": 4.998194317343718e-09,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.0025000000000000022,
+            "young_gain": 2.4981927267150755e-09,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.007500000000000007,
+            "young_gain": -2.501810473292554e-09,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.0,
+            "young_gain": 4.819407492110458e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.0025000000000000022,
+            "young_gain": 2.3192483921786816e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.007500000000000007,
+            "young_gain": -2.681071682924201e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 6.661338147750939e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.0,
+            "young_gain": 3.1918638912871097e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.0025000000000000022,
+            "young_gain": 6.902695143993186e-07,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.007500000000000007,
+            "young_gain": -4.312938013377714e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          }
+        ],
+        "renter_replication": {
+          "replication_budget_error": 6.245004513516506e-16,
+          "replicated_renter_saving": 0.6476118778543412,
+          "utility_gain_from_more_rental_space": 4.992863922304025e-08,
+          "scope": "Fixed-price deviation with adequate rental space and no ownership taste; not a cap-removal policy equilibrium."
+        }
+      }
+    },
+    {
+      "parameters": {
+        "q": 0.5,
+        "phi": 0.8,
+        "alpha": 0.4,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 0.4,
+        "chi": 0.15,
+        "kappa": 0.5,
+        "sigma": 0.12,
+        "nu": 2.0,
+        "Hbar": 2.0,
+        "P": 1.0,
+        "b": 0.2,
+        "owner_cap": 2.0,
+        "tau": 0.0,
+        "rental_cap": 1.5,
+        "theta": 0.2033013245033113,
+        "y": 2.0534999999999997,
+        "xi_bar": -0.21784843234751006
+      },
+      "user_cost": 0.5,
+      "transfer": 0.0,
+      "cohort_mass": 1.3250738985935437,
+      "owner_share": 0.13938971300021186,
+      "owner": [
+        1.0,
+        1.0,
+        0.49,
+        0.98,
+        0.8,
+        0.48,
+        0.6400000000000001
+      ],
+      "renter": [
+        0.9869481420680234,
+        1.040368344277558,
+        0.5016196612462784,
+        0.6711247366062556,
+        0.7895585136544188,
+        0.4737351081926512,
+        0.631646810923535
+      ],
+      "rental_cap_binds": false,
+      "owner_value": -0.5061796468888771,
+      "renter_value": -0.5055839104942368,
+      "checks": {
+        "maximum_original_equilibrium_residual": 6.661338147750939e-16,
+        "young_housing_value": 0.5298013245033113,
+        "old_housing_value": 0.5,
+        "optimizer_checks": [
+          {
+            "tenure": "owner",
+            "maximum_choice_error": 1.4348231397454114e-07,
+            "maximum_budget_error": 0.0
+          },
+          {
+            "tenure": "renter",
+            "maximum_choice_error": 8.099215178525299e-07,
+            "maximum_budget_error": 2.220446049250313e-16
+          }
+        ],
+        "direct_reallocations": [
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.0,
+            "young_gain": 2.9800171557021678e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.01490066225165565,
+            "young_gain": 1.4899501744006157e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 1e-06,
+            "marginal_cost": 0.04470198675496695,
+            "young_gain": -1.4901838548114866e-08,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.0,
+            "young_gain": 2.9686018467934064e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.551940863487756e-17
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.01490066225165565,
+            "young_gain": 1.4784599942388004e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.0001,
+            "marginal_cost": 0.04470198675496695,
+            "young_gain": -1.5018303724551813e-06,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 4.440892098500626e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.0,
+            "young_gain": 2.864722438992171e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.01490066225165565,
+            "young_gain": 1.37389868376382e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          },
+          {
+            "epsilon": 0.001,
+            "marginal_cost": 0.04470198675496695,
+            "young_gain": -1.6078155050137217e-05,
+            "old_gain": 0.0,
+            "maximum_accounting_error": 2.220446049250313e-16
+          }
+        ],
+        "renter_replication": {
+          "replication_budget_error": 2.220446049250313e-16,
+          "replicated_renter_saving": 0.6799999999999999,
+          "utility_gain_from_more_rental_space": 2.979656590351709e-07,
+          "scope": "Fixed-price deviation with adequate rental space and no ownership taste; not a cap-removal policy equilibrium."
+        }
+      }
+    }
+  ],
+  "fertility_checks": [
+    {
+      "payment": 0.5,
+      "predicted_derivative": -0.09316770186335403,
+      "numerical_derivative": -0.09316770185896493
+    },
+    {
+      "payment": 0.0,
+      "predicted_derivative": 0.062111801242236024,
+      "numerical_derivative": 0.06211180124116033
+    }
+  ],
+  "original_negative_fertility_example": {
+    "parameters": {
+      "q": 0.5,
+      "phi": 0.8,
+      "alpha": 1.0,
+      "beta": 0.4,
+      "gamma": 0.5,
+      "omega": 1.0,
+      "chi": 1.0,
+      "kappa": 0.1,
+      "theta": 1.1,
+      "P": 1.0,
+      "b": 0.22,
+      "y": 3.33,
+      "owner_cap": 2.0,
+      "rental_cap": 0.25,
+      "tau": 0.0
+    },
+    "owner": [
+      1.0,
+      1.1,
+      1.0,
+      1.33,
+      0.8,
+      0.8,
+      1.6
+    ],
+    "maximum_choice_error": 1.181109575920658e-06,
+    "scope": "An optimal constrained owner at fixed prices, not a constructed policy equilibrium."
+  },
+  "demographic_identity_error": 2.220446049250313e-16,
+  "stationary_stock_scaling": {
+    "scale": 1.2,
+    "maximum_equilibrium_residual": 6.938893903907228e-18,
+    "scope": "Corresponding stationary allocations only; no claim of transition existence or convergence."
+  },
+  "figures": {
+    "compensated_pair_optimum": 0.038939772895031866,
+    "population_figure": "Conditional demographic identity with prescribed fertility; no equilibrium transition was solved."
+  }
+}

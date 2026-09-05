@@ -1,0 +1,478 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs,graphicx,enumitem}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\newtheorem{proposition}{Proposition}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\pageheading}[1]{\section*{#1}}
+\begin{document}
+\begin{center}
+{\LARGE Housing allocation across generations}\par
+\vspace{4pt}
+A simple argument and its extensions\par
+\smallskip
+Discussion note for Tommaso De Santo \quad September 5, 2026
+\end{center}
+
+\pageheading{1. The question}
+
+Can borrowing limits and restricted rental housing leave too much of the
+existing housing stock with older households? The useful claim is that a
+young household may value additional space more than an older owner values
+keeping it. A small reallocation can then improve welfare while leaving
+fertility unchanged. We can establish this before discussing a policy.
+
+\textbf{Households and preferences.} Take an equilibrium of the existing
+two-period OLG model. At each date there are young and old households, with
+an infinite succession of cohorts. Young households choose consumption,
+housing, completed fertility, saving, and tenure. Their flow utility and the
+old household's flow utility remain:
+\begin{align}
+u_t^Y(c,h,n)&=\log(c-\chi n)+\alpha\log(h-\kappa n)+\vartheta_t\log n,\\
+u^2(c^2,h^2,e)&=\log c^2+\gamma\log h^2+\omega_B\log e.
+\end{align}
+Each child uses $\chi$ goods and $\kappa$ housing; $e$ is the warm-glow estate.
+Old-age utility is discounted by $\beta$; ownership adds the taste $\xi_i$.
+The original lifetime value functions $W_t^m$ and old-age value functions
+$V_t^m$ retain their definitions. Write $x=c-\chi n$ and $s=h-\kappa n$
+for the goods and space available to adults.
+
+\textbf{Housing and finance.} The fixed housing stock is $\bar H$. Rental
+homes satisfy $h\leq h_R^{\max}$, and owner homes satisfy
+$h\leq h_O^{\max}$, with $h_R^{\max}<h_O^{\max}$. A mortgage finances the
+share $\phi$ of the purchase. A young buyer with liquid wealth $b_i$ must meet:
+\begin{equation}
+ (1-\phi)P_t h\leq b_i.
+ \label{eq:simple_purchase}
+\end{equation}
+Only liquid wealth is available at closing. Income and ordinary rebates arrive
+later. Old owners can sell part of their homes, but cannot buy more or let
+their retained housing. The original saving, retention, and estate restrictions
+remain part of the household problems.
+
+Households save in a world bond priced at $q$. There is no capital-gains
+tax in this core. The ordinary property-tax rate is $\tau^p$, so the current value of
+one unit of rent is:
+\begin{equation}
+ u_t=q r_t=(1+q\tau^p)P_t-qP_{t+1}.
+ \label{eq:simple_user_cost}
+\end{equation}
+This is the cost of using a unit of housing for the period, including its
+subsequent resale value.
+
+\textbf{The comparison.} Hold each household's fertility and tenure fixed.
+The direct planner may relax private financing limits, as already agreed,
+while respecting the housing stock, physical tenure restrictions, and real
+resources. We compare each household's lifetime welfare, including the initial
+old and all future cohorts. The construction below leaves every future real
+allocation unchanged.
+
+\newpage
+\pageheading{2. The short allocation argument}
+
+Consider a young owner $i$ and an old owner $j$. Their willingness to give up
+current consumption for an additional housing unit is:
+\begin{equation}
+ MV_i^Y=\frac{\alpha x_i}{s_i},\qquad
+ MV_j^O=\frac{\gamma c_j^2}{h_j^2}.
+ \label{eq:simple_values}
+\end{equation}
+These are marginal rates of substitution, expressed in the same goods units.
+They do not compare raw marginal utilities across people.
+
+\begin{proposition}[Housing misallocation]
+Suppose a positive mass of young owners can physically occupy more housing
+and a positive mass of old owners can release some. If, on matched groups,
+$MV_i^Y>MV_j^O$, a sufficiently small owner-to-owner reallocation can make
+young households better off and leave everyone else equally well off, holding
+fertility fixed. The benchmark admits direct goods compensation and financial
+settlement while relaxing private financing restrictions. Reallocation has no
+additional real cost.
+\end{proposition}
+
+\textbf{Proof.} Select equal-mass groups with a strict value gap and room for
+a small change. Transfer $\epsilon$ housing per household from old to young.
+The old household requires the following extra consumption to retain its utility:
+\begin{equation}
+ D_j(\epsilon)=c_j^2\left[
+ \left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1\right].
+ \label{eq:simple_compensation}
+\end{equation}
+Give it this amount from the young household's current consumption. Goods and
+housing balance exactly. The young household's utility change is
+$\log(1-D_j(\epsilon)/x_i)+\alpha\log(1+\epsilon/s_i)$; its derivative at
+zero is $(MV_i^Y-MV_j^O)/x_i>0$. Small changes preserve positive consumption
+and physical feasibility. Estates, future consumption and occupancy, and all
+other households' allocations stay fixed. Title settlement replaces the old
+seller's lost estate title with an equal bond claim; the young buyer's later
+sale of the extra title offsets its financing. Existing creditors and the
+aggregate external-asset position are unchanged.\hfill$\square$
+
+\begin{center}
+\includegraphics[width=.87\textwidth]{output/model/simplified_olg_amendments/simple_allocation_figure.pdf}
+\end{center}
+{\small\textbf{Figure 1.} A compensated reallocation in Appendix A's
+equilibrium, holding old utility fixed. Shading marks the value gap; its area
+is not a welfare measure. Equal values maximize the young household's gain
+along this comparison, without solving the economy's full first best.}
+
+\newpage
+\pageheading{3. Why the constraints matter}
+
+\textbf{The borrowing limit creates the value gap.} In the case we have been
+studying, young owners save a positive amount, their physical housing limit is
+slack, and their old-age retention and estate constraints are slack. If the
+purchase limit strictly restricts housing, their optimal choices imply
+$MV_i^Y>u_t$. An old owner with slack retention and estate constraints has
+$MV_j^O=u_t$. The equilibrium therefore supplies the strict inequality used
+in Proposition 1. Appendix A constructs mixed-tenure steady states satisfying
+these conditions; they are not empty assumptions.
+
+The proposition itself needs only the actual value gap and feasible
+compensation. If another household constraint binds, compare the two values
+in \eqref{eq:simple_values} directly. The special equality to user cost may
+then fail.
+
+\textbf{The rental restriction limits an alternative way to obtain space.}
+A young family may be unable to rent the home it wants, and unable to fund the
+down payment on a larger owned home. This is a useful account of housing access.
+The local proof, however, transfers housing between owners and leaves rental
+housing unchanged. A renter at a physical size cap cannot receive more space
+under the same tenure when the planner must respect that cap. Its high housing
+value alone is therefore insufficient to prove misallocation.
+
+\textbf{An ownership taste matters for this interpretation.} The original
+model gives households a taste $\xi_i$ for ownership. With a sufficiently
+positive taste, a household may prefer constrained ownership even if larger
+rentals are available. Indeed, Appendix A gives an equilibrium with slack
+rental limits and a strict owner value gap. Removing the redundant rental
+limit leaves that equilibrium unchanged. Both constraints need not bind for
+the owner-to-owner inefficiency to exist.
+
+There is a useful elementary comparison if we want both access restrictions
+to be essential. Suppose an owner receives no ownership-taste benefit, and
+the rental menu contains its current and old-age housing choices. Its entire
+owner allocation can be reproduced by renting and choosing financial saving:
+\begin{equation}
+ a_R'=a_O'+qP_{t+1}h-\phi P_t h.
+ \label{eq:simple_replication}
+\end{equation}
+Substituting \eqref{eq:simple_user_cost} into the original budgets verifies
+both dated budgets exactly. If this saving is nonnegative and the current
+rental cap leaves room, a household with $MV_i^Y>u_t$ can then improve by
+renting a little more space. Such a household would not choose constrained
+ownership without an ownership benefit. Rental segmentation can prevent that
+alternative. Removing the ownership taste would make this joint role sharper,
+but would be a separate model choice, not a notation change.
+
+\textbf{What OLG adds.} Young households need purchase cash while old owners
+already hold titles. Housing needs and financial positions differ over life,
+and the same stock passes through successive cohorts. The local proof remains
+a simple exchange argument with fixed continuation allocations. It establishes
+housing misallocation without invoking capital overaccumulation or benefits
+from additional births.
+
+\newpage
+\pageheading{4. A separate fertility prediction}
+
+More housing reduces the space cost of children, but paying for it leaves
+less for their goods costs. These effects can be separated in the original
+household equations.
+
+Take the conditional household problem with positive saving and unchanged
+old-age constraints. At a binding housing limit, it gives:
+\begin{equation}
+ (1+k)x+\chi n+uh=\widetilde w,\qquad
+ \frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{h-\kappa n}.
+ \label{eq:simple_fertility_system}
+\end{equation}
+Here $k=\beta(1+\gamma+\omega_B)$ with interior old choices, and
+$\widetilde w=y+b+T_t+qT_{t+1}$. If old renter housing is capped, instead use
+$k=\beta(1+\omega_B)$ and subtract the discounted fixed old rent from resources.
+
+Let $p$ be the net lifetime payment per marginal unit of current housing.
+Relaxing only its cap gives $p=u_t$ at fixed prices and resources. If both
+binding rental caps increase equally, $p=u_t+qu_{t+1}$. Accompanying transfers
+also enter $p$. The budget gives $(1+k)\dd x=-\chi\dd n-p\dd h$.
+Substituting this into the fertility condition yields:
+\begin{equation}
+ \frac{\dd n}{\dd h}=
+ \frac{\displaystyle\frac{\alpha\kappa}{s^2}
+ -\frac{\chi p}{(1+k)x^2}}
+ {\displaystyle\frac{\vartheta}{n^2}
+ +\frac{\chi^2}{(1+k)x^2}+\frac{\alpha\kappa^2}{s^2}}.
+ \label{eq:simple_fertility_derivative}
+\end{equation}
+The denominator is positive. Fertility rises precisely when the space benefit
+in the numerator exceeds the resource cost. There is no borrowing multiplier
+in this condition.
+
+\textbf{A sufficient restriction in primitives.} With stationary prices,
+zero property tax, interior old choices, and a strictly binding down-payment
+limit, the existing sufficient restriction is:
+\begin{equation}
+ \frac{(1-q)b}{(1-\phi)(y+b)}
+ \geq\frac{\alpha}{1+\beta(1+\gamma+\omega_B)+\alpha}.
+ \label{eq:simple_primitive}
+\end{equation}
+It implies that a marginal increase in housing raises fertility for every
+$p<MV^Y$ while the stated constraints continue to bind. The left side is
+housing expenditure at the purchase limit relative to lifetime resources;
+the price cancels because the limit is inversely proportional to price.
+This is sufficient, not necessary, and the zero-property-tax specialization
+is explicit. Endogenous rebates cannot generally be treated as primitives.
+
+\textbf{Why the qualification matters.} For the constructed household values
+$1+k=2$, $\alpha=\chi=x=s=n=1$, $\kappa=0.1$, $\vartheta=1.1$, and
+$u=p=0.5$, more housing improves welfare but
+$\dd n/\dd h=-15/161$. At $p=0$ the derivative is $10/161$.
+The difference is the payment for the extra space.
+
+This is a conditional household prediction. The fixed-fertility allocation
+proof holds future choices fixed; this calculation allows optimal saving and
+old-age choices to adjust. They are distinct comparisons. A policy also changes
+prices, tenure, and later cohort sizes, which must be included before claiming
+an aggregate fertility increase.
+
+\newpage
+\pageheading{5. Population levels and the second figure}
+
+Let $Y_t$ and $O_t$ count young and old households, and let $\bar n_t$ be
+mean young fertility. The parameter $\nu$ converts births into entering
+households. From $Y_{t+1}=\nu\bar n_tY_t$, two paths with the same initial
+young cohort satisfy:
+\begin{equation}
+ \frac{Y_t^1}{Y_t^0}=\prod_{s=0}^{t-1}
+ \frac{\bar n_s^1}{\bar n_s^0},\qquad O_t^j=Y_{t-1}^j.
+ \label{eq:simple_population_product}
+\end{equation}
+Temporary fertility differences can therefore leave permanent population
+differences. The old cohort follows one period later. What matters is the
+cumulative fertility difference, which can include some negative terms.
+
+At a positive steady state, $\bar n^*=1/\nu$ and $Y^*=O^*$. Housing clearing
+therefore fixes total household population:
+\begin{equation}
+ N_{\rm hh}^*=
+ \frac{2\bar H}{\bar h^{Y*}+\bar h^{O*}}.
+ \label{eq:simple_population_stock}
+\end{equation}
+With a fixed stock, a larger population requires less housing per household
+on average. Young housing may rise if housing used by older households falls
+enough. Replacement fertility alone does not determine the population level.
+
+\textbf{A simple supply extension.} Multiplying the exogenous housing stock
+by $a>0$ gives a corresponding steady state with every cohort mass multiplied
+by $a$ and unchanged prices, individual choices, and rebates per household.
+Housing supply and demand scale together. The rebate is unchanged because
+property-tax revenue and recipients also scale together. Household problems
+remain identical with the entrant distribution and world bond price fixed.
+Thus stationary population scales with the stock. This uses the existing
+closure: the extra stock adds no further entrant-income or fiscal channel.
+
+\begin{center}
+\includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/simple_population_figure.pdf}
+\end{center}
+{\small\textbf{Figure 2.} A prescribed fertility sequence and the population
+path implied by \eqref{eq:simple_population_product}. Fertility returns to
+replacement with more households. These curves do not establish an equilibrium
+transition or its speed.}
+
+We still need to establish an equilibrium path between the relevant steady
+states. The existing continuation argument assumes regularity along the whole
+reform; simple primitive conditions remain unavailable. The stationary ranking
+also applies to persons when adults per household and the fixed timing and
+residence rules for counting children are unchanged. During a transition,
+resident children must also be counted.
+
+\newpage
+\pageheading{6. Constrained efficiency and public finance}
+
+\textbf{The basic result already identifies misallocation.} Proposition 1
+exhibits a feasible allocation that improves welfare. It respects physical
+housing restrictions and relaxes private finance. It neither characterizes
+the full first best nor requires a government lending policy.
+
+\textbf{A constrained comparison asks an additional question.} Can an
+authority improve welfare using a specified set of instruments while
+households continue to choose at clearing prices? The restrictions on the
+authority must be stated before answering. Retaining the private mortgage
+formula while allowing public credit is a different comparison from retaining
+the household's effective financing opportunities. Bisin's lecture notes,
+section 3.2.4, make the choice of constrained feasible allocations explicit.
+
+The current research contains two results with different scopes:
+\begin{itemize}
+\item A complete local improving path under committed household-specific
+  payments when young and old, enforceable future taxes, and explicit initial
+  title ownership with access to finance. Fertility is fixed individually.
+  Every market clears, but the path returns to the original steady state.
+\item An obstruction to one initial round of transfers near one studied
+  stationary regime, for nearby converging paths on the maintained household
+  branches. This does not establish efficiency under every other transfer class.
+\end{itemize}
+
+These results remain useful background. The second does not show that public
+loans are the only possible remedy. The first supplies financing across a
+household's life and should be described accordingly. Neither is required
+for the short allocation argument.
+
+\textbf{The loan interpretation is a later extension.} For later cohorts,
+the committed-transfer construction advances purchase cash and collects
+repayment plus part of the household's housing gain. A government with access
+to world bonds could potentially replace the separate financier. All original
+property claims and promised estate payments would still need to be honored.
+A voluntary loan programme also changes participation and tenure choices;
+its proof is not obtained just by relabeling identity-based transfers.
+
+There are established precedents for the broad financing role. Auerbach and
+Kotlikoff's compensation authority balances in present value; their payments
+to future households occur on entry. Schoonbroodt and Tertilt use public
+transfers to overcome parent-child transfer restrictions. With binding
+liquidity constraints, the timing and eligibility of our proposed payments
+remain substantive adaptations.
+
+\textbf{Recommendation.} Use ``housing misallocation'' for the core result.
+Retain constrained efficiency as an optional strengthening under a precisely
+defined benchmark. Discuss public financing after deciding whether that
+strengthening adds enough to justify its assumptions and length.
+
+{\small
+\textbf{References for these distinctions:}
+\href{https://bpb-us-e1.wpmucdn.com/wp.nyu.edu/dist/c/16384/files/2019/11/Lecture-notes-Oct2014.pdf}{Bisin (2014), lecture notes, section 3.2.4};
+\href{https://kotlikoff.net/wp-content/uploads/2019/04/Dynamic-Fiscal-Policy.pdf}{Auerbach and Kotlikoff (1987), chapter 5, B.3, pp. 62--64};
+\href{https://tertilt.vwl.uni-mannheim.de/research/JET2013.pdf}{Schoonbroodt and Tertilt (2014), sections 5.2--5.3}.
+These sources motivate the comparisons; our housing claims require the
+model-specific proofs.}
+
+\newpage
+\pageheading{7. Assessment and opportunities}
+
+\textbf{The core is ready to be stated simply.} A financial restriction can
+prevent a young household from obtaining housing it values more than an old
+owner does. A direct reallocation with consumption compensation establishes
+the welfare content. The proof takes a paragraph. Its role is to define the
+misallocation and explain the first figure. There is no need to present it as
+an unusual welfare theorem.
+
+\textbf{The useful clarification concerns tenure.} Rental segmentation helps
+explain why a household cannot obtain its preferred space by renting. Yet the
+ownership taste allows the borrowing distortion to persist without a binding
+rental cap. The existing model supports the statement that the two restrictions
+can coexist with misallocation. It does not support the claim that both are
+necessary. The replication argument on page 3 shows how removing the ownership
+taste could sharpen their joint role, at the cost of a model change.
+
+\textbf{My recommendation is to retain the present model for the first pass.}
+Preserve its notation and household problems, state the conditional allocation
+result, and explain the two constraints accurately. Do not change preferences
+simply to make both restrictions necessary. If their joint necessity matters
+to the paper's message, consider the version without ownership tastes as an
+explicit alternative.
+
+The extensions have different value and cost:
+\begin{itemize}
+\item \textbf{Real reallocation costs: keep compact.} If
+  $C(0)=0$ and $C'(0)=K$, replace the condition by
+  $MV_i^Y>MV_j^O+K$. A positive fixed moving cost requires a finite transfer;
+  the exact compensation formula supplies the test. Compensation paid to the
+  seller is not itself a real resource cost.
+\item \textbf{Fertility: retain as a separate conditional prediction.}
+  Equation \eqref{eq:simple_fertility_derivative} expresses the space benefit
+  and resource cost directly. The primitive restriction is available as a
+  sufficient specialization, with its limitations stated once.
+\item \textbf{Population: retain the identities and the stationary scaling
+  result.} They explain how replacement fertility can coexist with different
+  population levels. A general analytical transition after a credit reform
+  remains a further result; a schematic figure cannot establish it.
+\item \textbf{Constrained efficiency: optional strengthening.} Its value
+  depends on a natural and clearly stated instrument class. The current
+  committed-finance proof can remain outside the short core while that choice
+  is considered.
+\item \textbf{Public loans, endogenous rental supply, and gains taxation:
+  later branches.} Each asks an additional economic question. Their detailed
+  policy design would make the initial illustration harder to read.
+\end{itemize}
+
+For the paper, the core could occupy two or three pages after the household
+setup, including Figure 1. The fertility prediction and demographic comparison
+can follow briefly; longer finance and transition arguments belong in an
+appendix only if the paper uses them.
+
+\textbf{Proposed order for discussion.} First settle the allocation benchmark
+and the wording of Proposition 1. Then choose how much of the fertility and
+population extensions to include. Finally consider whether the constrained
+comparison adds enough to keep. Revisit ownership tastes only if the paper's
+message requires both access restrictions to be essential. No change to those
+preferences is adopted here.
+
+\newpage
+\pageheading{Appendix A. The conditions can hold in equilibrium}
+
+The following construction checks that Proposition 1 can apply to positive
+masses of households in a mixed-tenure steady state. It chooses primitives
+to support an allocation directly. Income and the ownership-taste location
+vary across the family; this is not a tax comparative static or a calibration.
+
+Set $P=1$, $q=0.5$, $\phi=0.8$, $b=0.2$, $\bar H=2$, and $\nu=2$.
+Use $\alpha=\beta=\omega_B=0.4$, $\gamma=0.3$, $\chi=0.15$, $\kappa=0.5$,
+$h_R^{\max}=0.25$, and $h_O^{\max}=2$. Choose young-owner adult consumption,
+housing, and fertility as $(x,h,n)=(1,1,0.75)$. The fertility condition sets
+$\vartheta=0.3525$. For any $0\leq\tau^p<0.28$, user cost is
+$u=(1+\tau^p)/2<0.64=MV^Y$. Old-owner choices are:
+\begin{equation}
+ c^2=0.8,\qquad h^2=0.24/u,\qquad e=0.64.
+ \label{eq:simple_witness_old}
+\end{equation}
+Retention and estate bounds are strictly slack throughout this interval.
+
+Let $w=1.7925+u$. With both rental caps binding, the renter's fertility is the
+unique root in $(0,0.5)$ of:
+\begin{equation}
+ \frac{0.3525}{n^R}=\frac{0.15}{x^R}
+ +\frac{0.2}{0.25-0.5n^R},\qquad
+ x^R=\frac{1.7925+0.625u-0.15n^R}{1.56}.
+ \label{eq:simple_witness_renter}
+\end{equation}
+The left side decreases from infinity and the right side increases to
+infinity. Their root has $x^R>1.30$, which makes both rental caps strictly
+binding under the original housing conditions. Both tenures save positively.
+
+Set the owner share to $\pi^O=(0.5-n^R)/(0.75-n^R)\in(0,1)$, so average
+fertility is replacement. Define housing demand per young-old pair as
+$d_h=\pi^O(1+0.24/u)+(1-\pi^O)0.5$. Choose
+$Y=O=2/d_h$, $T=q\tau^p d_h/2$, and $y=w-b-(1+q)T>0$.
+Housing and the property-tax budget then clear exactly. With any taste scale
+$\sigma_\xi>0$, choose
+$\bar\xi=\sigma_\xi\log[\pi^O/(1-\pi^O)]-W^O+W^R$ to support the owner
+share under the original logistic rule. The dated budgets and first-order
+conditions give household optima because their feasible sets are convex and
+their utility is concave.
+
+\textbf{A rental cap need not bind.} A second construction sets
+$\tau^p=0$, $h_R^{\max}=1.5$, and owner fertility $n^O=0.49$, retaining
+$(x,h)=(1,1)$ and the other displayed primitives. Set
+$\vartheta=61397/302000$ and $y=2.0535$. Unconstrained renter demands and the
+same tenure-share construction give:
+\begin{center}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+ & Both rental caps bind & Both rental caps slack\\
+\midrule
+Property tax & $0.05$ & $0$\\
+Owner share & $0.523810$ & $0.139390$\\
+Young renter housing & $0.250000$ & $1.040368$\\
+Young owner housing value & $0.640000$ & $0.529801$\\
+Old owner housing value & $0.525000$ & $0.500000$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The second equilibrium remains an equilibrium if its redundant rental limit
+is removed. These are two different constructed economies, not a comparison
+holding all primitives fixed while changing the rental cap.
+
+\end{document}

@@ -1,5 +1,47 @@
 # Simplified OLG amendment checks
 
+## September 5: simple allocation assessment
+
+The latest reading note is the eight-page
+`output/pdf/simplified_olg_simple_assessment.pdf`, with source
+`latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`. It restores
+the author's priority: first establish housing misallocation simply; then
+assess fertility, population and constrained-finance extensions. It does not
+adopt new preferences or public collection powers.
+
+- `simple_assessment_checks.json`: four explicit mixed-tenure equilibria,
+  nine independent original household optimizations, 36 finite compensated
+  reallocations, owner-to-renter replication, conditional fertility signs,
+  demographic accounting and stationary stock scaling. Driver/specification
+  hashes are recorded. The family varies income and ownership-taste location
+  with the tax rate; it is not a tax comparative static.
+- `simple_assessment_direct_review.md`: independent direct-proof and
+  constraint-role review. Two transcription corrections are disclosed at the
+  top. This review preceded the new equilibrium constructions.
+- `simple_assessment_new_claims_review.md`: separate independent derivation
+  of replication, the equilibrium family, the slack-rental equilibrium, and
+  stationary scaling. Its scope and incorporated clarifications are explicit.
+- `simple_allocation_figure.pdf` / `.png`: exact compensated reallocation for
+  the eligible pair in the constructed equilibrium; the crossing is the best
+  allocation on this comparison, not a full economy-wide first best.
+- `simple_population_figure.pdf` / `.png`: a prescribed fertility sequence
+  and the resulting demographic identity. This is not a solved equilibrium
+  transition or a prediction of adjustment speed. Earlier figures are retained.
+
+Regenerate this bounded packet in a few seconds, without calibration or
+equilibrium search:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_simple_assessment.py --plot
+```
+
+The full derivations and assessment are also recorded near the top of
+`docs/model/simplified_olg_overnight_work.md`. A complete equilibrium example
+now establishes that a positive group of eligible owner pairs can exist.
+A second example establishes that the binding rental cap is not necessary
+with the existing ownership taste. Broader credit-reform transition signs and
+anonymous public-loan implementation remain unproved.
+
 ## September 5: external discussion assessment
 
 `external_discussion_review.md` preserves the independent agent's response
