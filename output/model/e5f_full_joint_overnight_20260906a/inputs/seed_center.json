@@ -1,0 +1,107 @@
+{
+  "best_candidate": {
+    "new_psi_child": -0.0340371267617689,
+    "theta": {
+      "H0": 14.562959141565095,
+      "alpha_cons": 0.733,
+      "beta": 0.983063675214588,
+      "chi": 1.0434717373613915,
+      "delta_alpha": 0.0,
+      "delta_alpha_jump": 0.0,
+      "first_birth_fixed_cost": 4.544052672413152,
+      "hbar_child_rooms": 0.23268814270366286,
+      "hbar_first_child_jump": 0.6,
+      "kappa_fert": 2.23273003596061,
+      "kappa_fert_continuation": 1.7364706586958831,
+      "psi_child": 0.0,
+      "tenure_choice_kappa": 0.005,
+      "theta0": 0.5544418580619153,
+      "theta1": 0.10635689183849886,
+      "theta_n": 0.0
+    }
+  },
+  "old_psi_child": 0.29284377042365817,
+  "panel_design": {
+    "domain": [
+      {
+        "lower": 0.94,
+        "name": "beta_annual",
+        "transform": "discount",
+        "upper": 0.9995
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert_continuation",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.1,
+        "name": "chi",
+        "transform": "log",
+        "upper": 5.0
+      },
+      {
+        "lower": 0.2,
+        "name": "H0",
+        "transform": "log",
+        "upper": 80.0
+      },
+      {
+        "lower": 0.0,
+        "name": "theta0",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.02,
+        "name": "theta1",
+        "transform": "log",
+        "upper": 16.0
+      },
+      {
+        "lower": 0.1,
+        "name": "hbar_child_rooms",
+        "transform": "log",
+        "upper": 1.8
+      },
+      {
+        "lower": 0.0,
+        "name": "first_birth_fixed_cost",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.0,
+        "name": "hbar_first_child_jump",
+        "transform": "softzero",
+        "upper": 2.0
+      },
+      {
+        "lower": -1.5,
+        "name": "psi_child_change_2023",
+        "transform": "asinh",
+        "upper": 0.2
+      }
+    ],
+    "unit_vector": [
+      0.7485757822767003,
+      0.6026610869836136,
+      0.5705331609102533,
+      0.5994694950525492,
+      0.7156712918158278,
+      0.26325886928599274,
+      0.2499873047894332,
+      0.29218695672043277,
+      0.7536621153087396,
+      0.5477225575051661,
+      0.6268170349492123
+    ]
+  }
+}

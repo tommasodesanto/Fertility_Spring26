@@ -1,0 +1,46 @@
+--- a/code/model/tools/run_e5f_transition_calibration.py
++++ b/code/model/tools/run_e5f_transition_calibration.py
+@@ -137,6 +137,8 @@
+             "requires the repaired income-entry profile."
+         ),
+     )
++    parser.add_argument("--first-child-room-jump-upper", type=float, default=0.5,
++                        help="Explicit upper search bound for the estimated first-child housing term.")
+     parser.add_argument("--outside-origin-entry-share", type=float, default=0.169)
+     parser.add_argument(
+         "--housing-supply-elasticity",
+@@ -475,12 +477,17 @@
+     model_profile: dict[str, Any],
+     fixed_jump: float | None,
+     estimate_jump: bool,
++    estimated_jump_upper: float = 0.5,
+ ) -> tuple[
+     tuple[tuple[str, float, float, str], ...],
+     dict[str, Any],
+     dict[str, Any],
+ ]:
+     """Apply the nested first-child housing-intercept contract."""
++    if not math.isfinite(estimated_jump_upper) or estimated_jump_upper <= 0:
++        raise ValueError("The first-child search upper bound must be finite and positive")
++    if estimated_jump_upper != 0.5 and not estimate_jump:
++        raise ValueError("An explicit first-child search bound requires estimation")
+     if estimate_jump and fixed_jump is not None:
+         raise ValueError("The first-child room jump cannot be both fixed and estimated")
+     if not estimate_jump and fixed_jump is None:
+@@ -492,7 +499,7 @@
+         theta.setdefault("hbar_first_child_jump", 0.0)
+         profile_overrides["hbar_first_child_jump"] = 0.0
+         active_domain = tuple(active_domain) + (
+-            ("hbar_first_child_jump", 0.0, 0.5, "softzero"),
++            ("hbar_first_child_jump", 0.0, estimated_jump_upper, "softzero"),
+         )
+         model_profile["first_child_room_jump"] = "one additional free parameter"
+         model_profile["first_child_room_jump_semantics"] = (
+@@ -1714,6 +1721,7 @@
+         model_profile=model_profile,
+         fixed_jump=args.fixed_first_child_room_jump,
+         estimate_jump=bool(args.estimate_first_child_room_jump),
++        estimated_jump_upper=float(args.first_child_room_jump_upper),
+     )
+     if args.fixed_first_birth_cost is not None:
+         if str(args.model_profile) != REPAIRED_MODEL_PROFILE:

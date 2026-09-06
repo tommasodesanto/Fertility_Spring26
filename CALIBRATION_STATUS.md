@@ -1,6 +1,38 @@
 # Calibration Status
 
-Updated: `2026-09-05` (evening refinement and both diagnostic profiles complete; exact repeats verified; production retained)
+Updated: `2026-09-06` (full eleven-parameter overnight search running; evening results verified; production retained)
+
+## September 6 full joint overnight search - running
+
+The author requested autonomous full overnight calibration after clarifying
+that the final evening loss-20.695274 point held nine coordinates fixed. The
+new search varies all eleven parameters under the same twelve targets and
+weights. It explicitly extends only the first-child housing-intercept search
+ceiling from0.5 to2.0 in an isolated source snapshot; all other parameter
+bounds, model equations, target measurements and numerical gates remain fixed.
+The source/default-domain checks and concurrent loop smoke `17022832` passed.
+Both runs reproduce all twelve rows, parameters,253 numeric history entries
+and17 standard PNGs exactly. The fixed-to-estimated-domain bridge differs by
+at most4.8e-12 in fit entries and2.2e-11 in history entries, within the declared
+roundoff-only tolerances. Full search `17023172` uses cpu_short/cpu48 with12CPUs/96GB and a six-hour
+allocation. The earlier8.5-hour request was first rejected by the short queue;
+its cs/cpu48 replacement17023057 stayed pending without a start estimate and
+was canceled before any evaluation. `short_queue_contract.json` retains the
+exact-smoked controller/source and only advances the finish cutoff to04:47
+Eastern September6. The same360-case maximum applies; time may reduce the
+number completed. Exact repetitions retain their reserved time. The new source bundle is
+`ce38de90a85de7102f4d462bd1f2618fbad17f649c5c57d840d5152e5917dff6`.
+
+Plan: two smokes,32 initial joint points, at most eight32-point differential-
+evolution generations, two all-parameter local refinement rounds, and two
+exact original-generator repeats. Maximum360 histories,12 concurrent,
+30-minute per-case timeout,7.5-hour search budget plus verification,8.5-hour
+allocation maximum and an original absolute08:00 Eastern September6 stop, tightened to04:47
+for the prioritized allocation described above. Source,
+inputs, target/weight fingerprint, range change, budgets and scripts are pinned
+in `output/model/e5f_full_joint_overnight_20260906a/contract.json` and its README.
+No policy run or production promotion is included. The existing scientific
+working tree and author manuscript stay unchanged.
 
 ## September 5 evening housing-response refinement
 
