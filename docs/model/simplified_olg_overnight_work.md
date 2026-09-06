@@ -1,31 +1,28 @@
 # Simplified OLG: development plan and overnight record
 
-## September 6 main slide deck — completed for discussion
+## September 6: seven-slide revision after the author's correction
 
-After asking to assess the main results before integrating the note, Tommaso
-requested them in the main slides for review after lunch. Updated
-`latex/september_14_presentation.tex` and the existing adjacent PDF; the
-identical reader copy is `output/pdf/september_14_presentation.pdf`.
-Main theory is PDF pages 6--19, with the central allocation/fertility argument
-on pages 14--18. The theory appendix is pages 51--58. The full note remains
-unintegrated pending the author's assessment.
+Tommaso rejected the 14-frame theory section and asked for 5–7 slides using
+the earlier misallocation and two-panel equilibrium-transition structures.
+The review PDF is `output/pdf/simplified_olg_theory_slides.pdf` (seven pages).
+The identical frames are pages 6–12 of the 74-page September 14 main deck;
+full household problems and supporting theory are on pages 44–55.
 
-Replaced the deck's older shorthand problems and inconsistent toy appendix
-with the original separate utilities, dated renter/owner value functions,
-market clearing and cohort law, direct compensated allocation, rental-role
-qualification and conditional fertility. Added the existing allocation figure
-in the main section and the mixed transition figure only in the appendix.
-The zero-property-tax primitive fertility restriction and additional planner
-powers are stated with their maintained scope. Quantitative sections are
-byte-identical; this does not refresh or promote their older numerical results.
+Recovered the July note's marginal-value layout and the August advisor deck's
+population/price and price/fertility panel layout. The figures now use current
+model equations: exact compensated reallocation and a local analytical credit
+response with both tenures. The transition panels represent a common dated
+path and allow overshooting. They are not static equilibrium schedules.
+Original utilities and W/V notation are retained; the household-problem and
+rental-role frames moved verbatim to the appendix. No new planner decision,
+full-note integration, calibration or finite-horizon transition solve.
 
-One read-only reviewer with the default 20-minute limit found no equation
-transcription errors. Incorporated its scope clarifications, compiled twice,
-checked all changed frames at 1400-pixel width and verified the appendix links.
-No errors, undefined references or overflowing boxes; the original harmless
-hyperref appendix-bookmark warning remains. No model run or protected-draft
-edit. Source/PDF hashes, review and reproduction are indexed in
-`output/model/simplified_olg_amendments/README.md`.
+All seven main frames and four moved appendix frames were visually inspected;
+final two-pass compilations have no undefined references or overflowing
+boxes. Both quantitative source blocks are unchanged. The reproducible driver
+and receipts are indexed in `output/model/simplified_olg_amendments/README.md`.
+The previous long-version review is retained as historical equation evidence;
+it does not represent approval of that presentation.
 
 ## September 6 author response — full note still to be updated
 

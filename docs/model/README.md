@@ -11,6 +11,13 @@ appendix for now. The earlier full-model note is
 ([PDF](../../output/pdf/simplified_olg_amendment_proposal.pdf)); incorporating
 the later discussion into that integrated note remains unfinished.
 
+- `../../output/pdf/simplified_olg_theory_slides.pdf` -- seven-slide theory
+  review after the author's September 6 correction. These are main-deck pages
+  6–12, with the earlier marginal-value and two-panel transition structures
+  updated for the current model. Original household problems and supporting
+  theory remain in the main appendix. Source: `../../latex/september_14_presentation.tex`;
+  build/checks: `../../output/model/simplified_olg_amendments/README.md`.
+
 - `../../output/pdf/simplified_olg_paper_core.pdf` -- revised September 6
   four-page theory proposal. Allocation and conditional fertility are unchanged;
   Figure 2 uses a proved mixed-tenure transition with substantial renting and

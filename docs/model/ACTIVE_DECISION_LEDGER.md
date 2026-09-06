@@ -16,23 +16,28 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**September 6: theory slides for discussion before note integration.**
-Tommaso asked to put the main results into the main slide deck for review
-before a more comprehensive afternoon discussion. This authorizes a slide
-revision, not final selection of the planner benchmark or integration of the
-full note. The updated `latex/september_14_presentation.tex` and its PDF now
-contain the complete dated setup, household problems, equilibrium, the direct
-allocation result, its figure, and the conditional fertility implication.
-Main theory: PDF pages 6--19; central results: pages 14--18. The primitive
-condition, compensation details, population and mixed transition, and the
-conditional committed-transfer result are in appendix pages 51--58.
+**September 6 correction: seven theory slides and the earlier diagrams.**
+Tommaso rejected the long theory block and asked for 5–7 slides describing the
+model, with the earlier marginal-value/reallocation diagram and the two-panel
+movement from initial equilibrium through impact to a new steady state.
+`output/pdf/simplified_olg_theory_slides.pdf` is the seven-page review version.
+The same frames are main-deck pages 6–12; original household problems and
+supporting theory are on pages 44–55. The main source remains
+`latex/september_14_presentation.tex`.
 
-The source preserves the original flow utilities and value functions. Both
-quantitative source blocks remain byte-identical. One bounded read-only
-review, two final compilations, changed-frame visual inspection and appendix
-links are recorded in `output/model/simplified_olg_amendments/september_slides_verification.json`.
-The full note remains to be integrated after discussion; all 18 decision IDs
-and unresolved institutional choices remain in place.
+The earlier diagram structures are restored with current-model economics:
+exact compensation at fixed fertility and an analytical local credit path.
+The transition panels are views of one dated equilibrium path; they do not
+assume a static price/population or price/fertility schedule. Household
+population is labeled explicitly; U0 remains open. The newer transition proof
+and stationary-welfare discussion remain appendix material. No new planner
+powers or general transition claim are inferred.
+
+Original flow utilities and W/V functions are preserved. Both quantitative
+source blocks are unchanged. `theory_slides_verification.json` in the existing
+amendment evidence folder records source/PDF checks and complete visual review.
+The previous longer version was not author-approved. Full-note integration
+still awaits discussion, and all 18 decision IDs remain in place.
 
 **September 6 author response: return to the main note.**
 Tommaso places the new mixed-tenure transition and stationary welfare analysis
@@ -736,7 +741,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only; no author acceptance of local scope as the final target is inferred. The new primitive stability condition and transverse initial boundary establish local existence, convergence and uniqueness. Uniform perturbation admits positive costs, renters and tax. The admissible neighborhood has no numerical size bound. Global continuation and unrestricted branch crossings remain open. | D1 author preference; local_transition_proof.md sections 5, 9, 10 |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Earlier broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. September 6: the new mixed-tenure transition and stationary welfare analysis are secondary appendix material for now. Preferred visual structure remains one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | Return to the main housing-allocation argument. September 6: author requested a preview in the main slides before full-note integration; the September 14 deck now has allocation in the main section and the new transition in its appendix. The four-page core remains a results extract; the integrated amendment proposal still needs the later discussion incorporated. Both figure roles and earlier versions remain available; final paper placement remains open. No new planner power or restriction on the broader transition research objective is inferred. | P0/P1 author agreement; September 6 author response above; simplified_olg_simple_assessment.tex; analytical figure receipt |
+| P1 | Main theory presents environment/equilibrium, allocation, conditional fertility and transition/population implications; proofs remain in the appendix. September 6 correction: 5–7 theory slides with the earlier marginal-value/reallocation diagram and two-panel equilibrium movement. | DECIDED | Seven-page preview and main-deck pages 6–12 implement the requested structure. Full household problems and supporting theory are on pages 44–55. The newer mixed-transition proof and stationary welfare result remain secondary. The four-page core remains a results extract; full-note integration and final paper placement await discussion. No new planner power or restriction on the broader transition objective is inferred. | P0/P1 author agreement; September 6 slide correction above; theory_slides_verification.json |
 | V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal and original reconciliation remain completed. The September 5 continuation adds the ten-page assessment, primitive local transition conditions, proof/reviews and original-equation receipts. W3/W4 stay provisional or reopened; global-policy and large-reform claims remain unproved. | Overnight/September 5 authorization; simplified_olg_overnight_work.md |
 
 ### Corrections and verification work retained across branches

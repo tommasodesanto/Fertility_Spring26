@@ -3,16 +3,15 @@
 Active documents:
 
 - `september_14_presentation.tex` / `september_14_presentation.pdf`: main
-  September 14 seminar deck. The September 6 theory revision presents the
-  original dated household problems, equilibrium, fixed-fertility housing
-  reallocation and conditional fertility response on PDF pages 6--19.
-  The allocation figure is in the main section; detailed compensation,
-  primitive fertility condition, population/transition figure and the optional
-  committed-transfer comparison are on appendix PDF pages 51--58.
-  The reader copy is `../output/pdf/september_14_presentation.pdf`, identical
-  to the adjacent PDF. Existing quantitative sections were not refreshed in
-  this theory pass. Verification and the build recipe are in
-  `../output/model/simplified_olg_amendments/README.md`.
+  September 14 seminar deck. Following the author's September 6 correction,
+  the main theory is seven slides (PDF pages 6–12), including a marginal-value
+  reallocation diagram and a two-panel equilibrium transition. Start with the
+  standalone `../output/pdf/simplified_olg_theory_slides.pdf`, generated from
+  those same seven frames. Full household problems and supporting theory are
+  on main-deck pages 44–55. The original utilities and notation are preserved.
+  The full reader copy, `../output/pdf/september_14_presentation.pdf`, matches
+  the adjacent PDF. Quantitative sections were not changed or refreshed.
+  Build and verification: `../output/model/simplified_olg_amendments/README.md`.
 
 - `JMP_DS_draft/`: author-controlled source for the new job-market-paper draft.
   Its main file is `JMP_DS_draft/JMP_DS_draft.tex`, with separate section and

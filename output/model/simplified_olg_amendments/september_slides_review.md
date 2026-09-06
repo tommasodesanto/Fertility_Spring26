@@ -1,3 +1,35 @@
+## September 6 author correction: seven-slide version
+
+The author rejected the longer presentation reviewed below. Its equation
+review remains evidence, but does not establish presentation approval.
+The revised main section has seven frames, with both requested graph roles
+in the main sequence. Three complete household problems and the rental-role
+qualification moved verbatim to the appendix. No utility or W/V convention
+was changed.
+
+One ten-minute read-only retrieval located the earlier note's marginal-value
+figure and August 17–21 advisor deck's A–I–A′ transition panels. Neither can be
+specifically attributed to the Raquel meeting from the retrieved records.
+The new diagrams preserve those layouts without importing the older
+capital-gains-tax wedge or quasi-linear preference-shock schedules.
+
+Lead economics review: allocation curves use the exact compensation formula;
+old utility is unchanged and the plotted small move raises young utility.
+The transition is two projections of the established local analytical path
+at taste scale four in the certified family, not a new finite-horizon solve.
+It includes inherited initial-old claims and permits overshooting. The
+fertility condition substitutes p=qr only with fixed prices/tenure and no
+accompanying transfers. The direct planner's financing permission, fixed
+fertility and future real allocations remain explicit. No first-best solution,
+general constrained-inefficiency or universal fertility claim is introduced.
+
+The final receipts are `theory_slides_figure_checks.json` and
+`theory_slides_verification.json`. They supersede the old page map and record
+both diagram checks, all changed-frame visual inspections, two-pass builds,
+and unchanged quantitative source blocks.
+
+## Earlier review of the superseded long section
+
 Review complete: no mathematical transcription error in the dated mortgage/tax equations, old-estate convention, MRS formulas, compensation formula, conditional-fertility derivative, or primitive condition.
 
 - Correct as written: young-owner tax reserve and mortgage repayment (slides 189–194); old estate \(e\ge P_{t+1}h^2\) (209–213); \(MV^Y=\alpha x/s\), \(MV^O=\gamma c^2/h^2\) (243–252); and \(D_j(\epsilon)\), \(\Delta U_i'(0)\) (1018–1032). Sources: amendment proposal 102–138; simple assessment 80–110, 180–230.
