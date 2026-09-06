@@ -2,6 +2,28 @@
 
 Updated: `2026-09-06` (recovery stopped at the market gate; completed evidence audited; provisional candidate preserved; production retained)
 
+## Absolute priority: order and information timing of discrete-choice shocks
+
+Author instruction, September 6 before lunch: make the sequence of
+discrete-choice shocks the first quantitative issue for discussion before
+the September 14 presentation. This takes priority over further calibration,
+market-solver refinement and code cleanup. Trace which fertility and tenure/
+housing shocks are observed before each decision, whether later shocks are
+integrated out or already known, and whether code, equations and slides agree.
+Reconcile prior author discussions before recommending a specification change.
+The timing decision remains open; this instruction adopts no new ordering,
+shock distribution, scale or calibration. The two-page discussion note is
+`docs/model/e5f_discrete_choice_timing_review.md`, with PDF
+`output/pdf/e5f_discrete_choice_timing_review.pdf`. Its code read confirms
+expected housing values inside the fertility decision and fertility/conception
+before realized housing in the forward operator. Earlier housing information
+and prior housing commitment are distinct alternatives. The old HT-1 issue was
+open; no author resolution was found in the bounded historical search. The
+September 14 assigned-parameter slide retains zero tenure dispersion and old
+estimates, while the maintained result explicitly overrides dispersion to .005;
+reconcile presentation and selected specification without silently adopting
+either shock restriction. No economic code, slide or model run changed.
+
 ## September 6 full joint overnight search - stopped, candidate provisional
 
 Recovery `17024465` FAILED after 49m36s at round 2 joint proposal 7, during the

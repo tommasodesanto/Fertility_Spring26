@@ -15,7 +15,7 @@ resolved merely because the paper and code currently agree.
 | HF-2 | Capital-gains lock-in absent quantitatively | The analytical model includes capital-gains taxation and stepped-up basis, but the quantitative model uses only sale costs, bequests, and a direct retention experiment. | Accepted for current draft; open extension | Add tax basis as a state and recompute retention and policy effects before presenting the capital-gains channel quantitatively. |
 | HF-3 | Rental-size cap | The hard cap \(\bar h^R=6\) is motivated by the DUE rental-support rule, discussed extensively in the paper, and supported by the existing cap profile. | Accepted for current draft | Retain six rooms as the benchmark and 6.5 as the stated robustness case. |
 | HF-4 | Housing-supply calibration | The active code fixes the supply level at \(\bar H=4\) and the elasticity at \(\eta=1\). The level is not internally calibrated, and the elasticity is below the population-weighted U.S. metro average reported by Saiz. | Open | Calibrate or invert \(\bar H\) to an aggregate housing-quantity or price anchor. Set \(\eta\) from external evidence and report sensitivity. |
-| HT-1 | Within-period choice timing | The current paper and code nest fertility outside the contemporaneous housing and saving problem: an eligible household chooses family size, then housing, consumption, and saving conditional on that choice. | Open | Decide whether fertility should precede housing, follow housing, or be chosen jointly with housing; determine the corresponding taste-shock nesting and re-estimate if the model timing changes. |
+| HT-1 | Within-period choice timing | September 6 active sequential model: wait/attempt uses expected housing values; conception resolves before realized tenure, rooms and saving. Earlier housing information and prior housing commitment are distinct alternatives. | Open; absolute author priority | Discuss shock meaning, revelation, dependence/persistence and commitment before further calibration; reconcile equations, code and September 14 slides. See the linked timing note below; no new sequence is adopted. |
 | INC-1 | Lifecycle labor-income process | Labor income is a deterministic household-earnings profile \(e_a\) times a persistent mean-one component \(z\), discretized with a five-state Rouwenhorst chain. The architecture is standard, but the current five-point age profile and the empirical source for the AR(1) parameters are not documented. | Open; urgent | Choose and cite an external source for the household-earnings profile and earnings-risk parameters. Replace the current age-profile inputs if the chosen source implies different values, and document their normalization and four-year conversion. No solver or state-space change is required. |
 | LC-1 | Lifecycle fertility profile | The original figure labeled a conditional family-size index as expected births. The paper figure now allocates reported completed fertility across ages using reconstructed family-size choice flows. | Corrected in paper figure; code diagnostic open | Repair the generic `fert_by_age` statistic for the Markov-income state dimensions and regenerate after the pending recalibration. |
 | LC-2 | Sequential fertility and child cohorts | Fertility is a one-time completed-family-size choice. All children arrive in one cohort and share the same child-age stage, so the model cannot represent sequential births or children of different ages. | Open; urgent | Add parity and child-cohort ages to the state, allow birth choices over successive fertile periods, redefine the fertility moments consistently, and re-estimate before treating the lifecycle timing or policy results as final. |
@@ -88,6 +88,13 @@ population-weighted U.S. metropolitan average is 1.75, while later quantitative
 work commonly rounds this benchmark to 2.
 
 ### HT-1: Within-period choice timing
+
+**September 6 author priority:** this is the first quantitative discussion before
+September 14. The [current timing note](e5f_discrete_choice_timing_review.md)
+and [two-page PDF](../../output/pdf/e5f_discrete_choice_timing_review.pdf)
+trace the sequential-birth code and separate information from commitment.
+The paragraph below records the earlier family-size formulation; its open
+timing decision was not automatically resolved by adding sequential births.
 
 The current nesting lets a household's fertility option value incorporate the
 housing, consumption, and saving choices made in the same period. It therefore

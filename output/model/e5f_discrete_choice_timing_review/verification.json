@@ -1,0 +1,46 @@
+{
+  "status": "reviewed",
+  "author_priority": "absolute, first quantitative discussion before September 14",
+  "specification_decision": "open",
+  "pdf": "output/pdf/e5f_discrete_choice_timing_review.pdf",
+  "pdf_sha256": "38f7d33f1643061a2c9a8a96548ef39ef342192058de94870a57d54a4a0b07a8",
+  "source": "docs/model/e5f_discrete_choice_timing_review.md",
+  "source_sha256": "415ce1f3c35bebf5ede5db6965303994dd16ce3243d0ab16cf491a444bc17e2b",
+  "pages": 2,
+  "both_pages_visually_reviewed": true,
+  "latex_warnings_or_overflows": 0,
+  "source_checks": {
+    "code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "sha256": "dfccca23781913316bcbb024b5143ee54286038c7a3906bcdb1861fcc08cd517",
+      "retained_sha256": "dfccca23781913316bcbb024b5143ee54286038c7a3906bcdb1861fcc08cd517",
+      "matches": true
+    },
+    "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "sha256": "dede2128339131dba4ef5bc1575aa92fbf6fe30f2f63a81aae4800b0726e950f",
+      "retained_sha256": "dede2128339131dba4ef5bc1575aa92fbf6fe30f2f63a81aae4800b0726e950f",
+      "matches": true
+    },
+    "code/model/intergen_eqscale_seq_optimized/utils.py": {
+      "sha256": "f86c52633ec0f7d3ccad5e922a78f387ff637bd42a294ce4ecc3084eb5bc9ff9",
+      "retained_sha256": "f86c52633ec0f7d3ccad5e922a78f387ff637bd42a294ce4ecc3084eb5bc9ff9",
+      "matches": true
+    }
+  },
+  "illustration": {
+    "status": "not calibrated; equal probability gains 2 and -1, fertility dispersion 1",
+    "later_information_probability": 0.6224593312018546,
+    "earlier_information_probability": 0.5748692496739387
+  },
+  "historical_review": {
+    "route": "explorer_fast, full context, read-only",
+    "limit_minutes": 10,
+    "status": "returned within limit",
+    "lead_verified": "HT-1 surrounding text, July design distinction, selected .005 override versus older zero metadata and slide",
+    "limitation": "No explicit prior resolution found in bounded evidence; this does not prove no decision exists."
+  },
+  "economic_code_changed": false,
+  "model_runs": 0,
+  "slides_changed": false,
+  "protected_manuscript_changed": false,
+  "rebuild_command": "python3 code/model/tools/build_e5f_independent_audit_pdf.py --source docs/model/e5f_discrete_choice_timing_review.md --output output/pdf/e5f_discrete_choice_timing_review.pdf --date '6 September 2026' --heading 'FERTILITY / DISCRETE-CHOICE SHOCK TIMING' --no-source-index"
+}
