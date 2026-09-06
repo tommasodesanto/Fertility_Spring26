@@ -4,12 +4,20 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+September 6 author response: prioritize the main housing-allocation argument;
+the new mixed-tenure transition and stationary welfare work belong in the
+appendix for now. The earlier full-model note is
+`../../latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex`
+([PDF](../../output/pdf/simplified_olg_amendment_proposal.pdf)); incorporating
+the later discussion into that integrated note remains unfinished.
+
 - `../../output/pdf/simplified_olg_paper_core.pdf` -- revised September 6
   four-page theory proposal. Allocation and conditional fertility are unchanged;
   Figure 2 uses a proved mixed-tenure transition with substantial renting and
   positive child costs. The assessment separates population and welfare signs.
   Source: `../../latex/JMP_DS_suggestions/simplified_olg_paper_core.tex`.
-  This is the shorter starting point; the earlier assessment remains below.
+  This is a short results extract, not the complete rewritten note. The earlier
+  assessment remains below.
 
 - `../../output/pdf/simplified_olg_mixed_transition_proof.pdf` -- eight-page
   supporting appendix: exact original-equation map and initial-old boundary,

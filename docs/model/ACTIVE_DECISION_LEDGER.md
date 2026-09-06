@@ -16,6 +16,23 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**September 6 author response: return to the main note.**
+Tommaso places the new mixed-tenure transition and stationary welfare analysis
+in the appendix as secondary material for now. The priority is the simple
+housing-misallocation argument. This does not discard the earlier preference
+for an allocation figure and a theoretical transition figure, or decide any
+additional planner powers.
+
+The four-page `output/pdf/simplified_olg_paper_core.pdf` is a results extract
+plus an assessment, not a complete rewritten note. The earlier
+`output/pdf/simplified_olg_amendment_proposal.pdf` contains the environment,
+household problems and equilibrium, but has not incorporated the subsequent
+September 5–6 discussion. Updating that integrated note remains unfinished.
+The next revision should preserve the author's notation and put the model,
+physical and financial restrictions, and direct allocation comparison first;
+the new transition proof remains supporting appendix material. No complete
+rewrite or new PDF was produced in this status clarification.
+
 **September 5 author priority: establish misallocation before a remedy.**
 Tommaso clarified that the purpose of the simplified model is to show, in
 simple terms, that borrowing limits and restricted rental housing can produce
@@ -54,9 +71,9 @@ This does not rank all transition cohorts or different population sizes, and
 is distinct from the compensated housing-allocation gain. Three bounded
 reviews and exact/original-equation checks are indexed in
 `output/model/simplified_olg_amendments/README.md`. All 18 discussion rows,
-planner permissions and author conventions are retained. The result is a
-proposed extension; choosing its paper placement and any constrained-finance
-institution remains for the author.
+planner permissions and author conventions are retained. The result was a
+proposed extension at completion. The subsequent author response above places
+it in the appendix for now; constrained-finance institutions remain undecided.
 
 **September 5 late-evening continuation: compact results and economic scope.**
 After returning tired, Tommaso authorized safe further autonomous work. Start
@@ -701,7 +718,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only; no author acceptance of local scope as the final target is inferred. The new primitive stability condition and transverse initial boundary establish local existence, convergence and uniqueness. Uniform perturbation admits positive costs, renters and tax. The admissible neighborhood has no numerical size bound. Global continuation and unrestricted branch crossings remain open. | D1 author preference; local_transition_proof.md sections 5, 9, 10 |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Agreed broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. Preferred visual structure: one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | September 5: both figure roles are restored in the ten-page assessment. Figure 1 is an exact compensated-allocation comparison; Figure 2 is the analytical first-order equilibrium response, replacing the prescribed fertility schematic. Earlier versions remain available. Final paper placement and scope await discussion. | P0/P1 author agreement; simplified_olg_simple_assessment.tex; analytical figure receipt |
+| P1 | Earlier broad division: environment/equilibrium, allocation, conditional fertility, and transition/population implications in the main text; detailed proofs in the appendix. September 6: the new mixed-tenure transition and stationary welfare analysis are secondary appendix material for now. Preferred visual structure remains one misallocation figure and one theoretical transition-to-steady-state figure. | DECIDED | Return to the main housing-allocation argument. The four-page core is a results extract, not the full rewritten note; the integrated amendment proposal still needs the later discussion incorporated. Both figure roles and earlier versions remain available; exact final placement of the transition figure remains open. No new planner power or restriction on the broader transition research objective is inferred. | P0/P1 author agreement; September 6 author response above; simplified_olg_simple_assessment.tex; analytical figure receipt |
 | V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal and original reconciliation remain completed. The September 5 continuation adds the ten-page assessment, primitive local transition conditions, proof/reviews and original-equation receipts. W3/W4 stay provisional or reopened; global-policy and large-reform claims remain unproved. | Overnight/September 5 authorization; simplified_olg_overnight_work.md |
 
 ### Corrections and verification work retained across branches

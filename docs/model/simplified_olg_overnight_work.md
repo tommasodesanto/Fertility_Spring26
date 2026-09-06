@@ -1,5 +1,18 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6 author response — full note still to be updated
+
+Tommaso assigns the new mixed-tenure transition and stationary welfare work
+to the appendix as secondary material for now, and returns the priority to
+housing misallocation. The four-page `simplified_olg_paper_core.pdf` is a
+results extract plus an assessment. It is not the full rewritten note.
+The earlier `simplified_olg_amendment_proposal.tex` contains the full setup,
+household problems and equilibrium, but has not been updated to incorporate
+all subsequent discussion. That integration remains unfinished; this turn
+records the distinction and placement decision, without producing another
+partial note or changing the PDFs. Preserve the author's conventions, all
+other decision branches, and the earlier two-figure preference.
+
 ## September 6 ten-hour proof window — proof and verification completed
 
 Tommaso authorized a more ambitious proof while sleeping. Start 03:28 UTC

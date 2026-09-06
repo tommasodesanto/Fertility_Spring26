@@ -7,6 +7,22 @@ into the protected draft by hand.
 Use clear, task-specific filenames. Do not overwrite or synchronize files in
 the protected draft directory.
 
+## Current full-note status (6 September 2026)
+
+Tommaso has placed the new mixed-tenure transition and stationary welfare
+analysis in the appendix as secondary material for now. The main priority is
+the simple housing-allocation argument.
+
+The four-page core below is a results extract, not the complete rewritten
+note. The earlier full-model proposal is
+[`simplified_olg_amendment_proposal.tex`](simplified_olg_amendment_proposal.tex),
+with its [PDF](../../output/pdf/simplified_olg_amendment_proposal.pdf). It contains
+the environment, household problems and equilibrium, but has not yet been
+updated to incorporate all the later discussion. A consolidated revision of
+that note remains to be done, preserving the author's notation and keeping
+the new transition analysis in the appendix. The existing PDFs are unchanged
+by this status clarification.
+
 ## Compact theory results (6 September 2026)
 
 [`simplified_olg_paper_core.tex`](simplified_olg_paper_core.tex) is a four-page
@@ -33,8 +49,9 @@ The longer ten-page assessment is
 with its [PDF](../../output/pdf/simplified_olg_simple_assessment.pdf).
 Evidence and reproduction commands are indexed in
 [`output/model/simplified_olg_amendments/README.md`](../../output/model/simplified_olg_amendments/README.md).
-These are suggestions for discussion; no author decision or manuscript edit
-is implied. Compile the compact source twice from the repository root:
+These are proposed results for discussion; their development did not change
+planner permissions or the manuscript. The subsequent author placement
+decision is recorded above. Compile the compact source twice from the repository root:
 
 ```sh
 mkdir -p tmp/pdfs/simplified_olg_paper_core output/pdf
