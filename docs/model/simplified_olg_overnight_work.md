@@ -1,5 +1,25 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: author reminder on notation and prose
+
+Tommaso reiterates that the full note must follow his previous notation and
+writing choices without requiring another round of author corrections. The
+lead reread the complete writing guide, the original analytical setup and the
+integrated main text. The follow-up moves the ownership-taste primitive into
+Preferences, states the binding down-payment condition in words, clarifies
+the sentence explaining net housing cost, and removes a repeated scope caveat.
+All 44 displayed equation blocks and their labels are unchanged. Both figures
+and the appendix are unchanged. The note compiles twice cleanly; changed pages
+1, 2, 4, 5, 6 and 7 were visually inspected. The existing verification record
+now includes this limited follow-up and updated source/PDF hashes.
+
+The writing guide's final check now explicitly requires comparison with the
+author's reference draft, rather than treating an assistant rewrite as an
+approved convention. This supplements the existing requirements to retain
+utility and value-function notation, introduce primitives first, write plainly,
+and keep the claims proportionate to an illustrative exercise. No economic
+result, institution, author decision or quantitative specification changed.
+
 ## September 6: integrated theory polishing pass
 
 Tommaso authorizes polishing the existing theory while away for a couple of

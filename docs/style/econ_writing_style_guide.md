@@ -126,6 +126,10 @@ production-paper tables. In particular, a calibration slide defaults to
 - After structural edits, grep for orphaned `\ref`/`\eqref` of deleted labels and for
   leftover symbols from the old structure.
 - Commit a checkpoint before and after any restructure.
+- Before delivery, reread the entire main text against Sections 2 and 9.
+  Check against the author's reference draft as well as the previous version;
+  a recent assistant rewrite is not evidence that its conventions were approved.
+  Correct avoidable notation and prose drift before handing the draft back.
 
 ## 8. Red flags → corrections
 

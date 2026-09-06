@@ -59,6 +59,10 @@ estates. The factor $\beta>0$ discounts old-age utility. The estate $e$ is value
 the date after the old period. Parents value what they leave, but their
 children do not inherit it as entrant wealth in this model.
 
+Each household draws once an idiosyncratic preference $\xi_i$ for ownership,
+independently of $(y_i,b_i)$, and observes it before making its choices.
+The draw is logistic with location $\bar\xi$ and scale $\sigma_\xi>0$.
+
 \textbf{Demography.}
 A child born at $t$ produces $\nu>0$ young households at $t+1$, after survival
 and household formation. Thus
@@ -144,10 +148,8 @@ in its estate. The budget includes sale receipts, property tax, and the value
 of housing eventually sold by the estate.
 
 \textbf{Tenure choice.}
-Each household draws once an idiosyncratic preference $\xi_i$ for ownership,
-independently of $(y_i,b_i)$, and observes it before making its choices. It owns
-when $W_t^O(i)+\xi_i\geq W_t^R(i)$. Assume $\xi_i$ is logistic with
-location $\bar\xi$ and scale $\sigma_\xi>0$, which gives the owner share
+A household owns when $W_t^O(i)+\xi_i\geq W_t^R(i)$. The logistic ownership
+taste gives the owner share
 \begin{equation}
  \pi_t^O(i)=
  \frac{\exp\{[W_t^O(i)+\bar\xi]/\sigma_\xi\}}
@@ -241,9 +243,9 @@ Appendix~\ref{app:amend_settlement} gives the payments.
 \end{proof}
 
 \textbf{Why the values can differ.}
-With positive saving and interior old-age choices, a young owner at a
-strictly restrictive down-payment limit has $MV_i^Y>q r_t$, provided the
-physical owner cap is slack. An old owner with slack retention and estate
+With positive saving and interior old-age choices, a young owner who would
+buy more housing if its down-payment limit were relaxed has $MV_i^Y>q r_t$,
+provided the physical owner cap is slack. An old owner with slack retention and estate
 bounds instead satisfies:
 \begin{equation}
  MV_j^O=\frac{\gamma c_j^2}{h_j^2}=q r_t.
@@ -300,8 +302,8 @@ from the original problem gives:
  (1+k)x+\chi n+u h=w,\qquad u=q r_t.
  \label{eq:amend_owner_resources}
 \end{equation}
-Current housing costs its user cost once the eventual sale is taken into
-account. The fertility first-order condition is:
+The net cost of housing is $u$ per unit, after accounting for its eventual
+sale. The fertility first-order condition is:
 \begin{equation}
  \frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{s},
  \qquad s=h-\kappa n.
@@ -386,7 +388,7 @@ lowers stationary price and population. Housing per young and per old
 household rises. A small increase in $\phi$ raises stationary price,
 population, and young housing; old housing falls by more than young housing
 rises. These are local comparisons around an economy with both renters and
-owners. They do not give unrestricted policy signs for the model.
+owners.
 
 \subsection{The two continuations}
 
