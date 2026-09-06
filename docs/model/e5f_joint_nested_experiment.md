@@ -162,3 +162,59 @@ The five-page readout is `docs/model/e5f_joint_nested_readout.md` with PDF
 `output/pdf/e5f_joint_nested_readout.pdf`. The result README gives source
 reconstruction and collection commands. The first-stage cap is closed at
 6m35s of allocated-job elapsed time; no additional experiment is running.
+
+
+## Full lifecycle and calibration extension (September 6)
+
+The author subsequently requested a full overnight calibration and equilibrium
+paths. This extension is isolated on branch `codex/joint-nested-full`. The
+first-stage fixed-continuation calculation above is a separate completed
+experiment, not evidence that the full model is calibrated.
+
+Every age now integrates the four joint plans before its value is passed to
+the preceding age. The original conditional budget and saving solvers,
+transaction maps, fecundity and independent child maturation are retained.
+The joint plan object is owned by its policy and accepted-price cache.
+
+For a given population, accumulate mass by post-conception family state and
+chosen product before applying the original transaction map. Divide this
+selected product mass by its post-conception family-state mass to obtain an
+effective product kernel. This is an exact computational compression because
+subsequent transactions and conditional policies depend on the destination
+product and family state. It is valid only for that population. Recompute it
+for every date, candidate price and matched birth/control branch; do not use
+it as an ex ante household probability or in policy plots. The selected
+attempt tenure is preserved for both origin birth/control branches. At the
+next date the confirmed-childless control faces the restricted wait menu.
+
+The eleven-dimensional search replaces `kappa_fert` and
+`kappa_fert_continuation` by the outer tenure scale kappa in [0.005,10] and a
+common dissimilarity lambda in [0.02,1]. Both use log search coordinates. The
+upper restriction lambda<=1 is required for the chosen GEV law; the positive
+lower bound is a numerical search restriction, not an empirical estimate.
+The common lambda across birth orders is explicit and may be rejected by fit
+or identification. The prior authorized first-child room-jump upper bound
+2.0 is retained. The other nine parameter coordinates and all twelve targets
+and weights are unchanged. No target is dropped or demoted.
+
+The complete-loop smoke requires two exact histories (including all target
+rows and seventeen PNGs), two small perturbations of every free parameter,
+and short versions of all four policy paths. The long controller bounds both
+attempted and completed candidates, preserves valid incumbents after declared
+price/feasibility rejections, and stops for unexpected source, accounting or
+code failures. Final repetitions copy the exact candidate-generator inputs.
+The final Jacobian records its own anchor and any missing/one-sided columns;
+it cannot certify identification by parameter count alone.
+
+The expectation method remains temporary equilibrium: current prices are
+permanent in each household solve and each dated housing market clears. The
+post-2023 baseline and supply/LTV/property-tax experiments retain the existing
+closed-national finite-horizon closure, with no outside entry, retention one,
+2.1 replacement conversion and the exact inherited queue. They are not a
+perfect-foresight solution or stationary endpoint. Welfare, rebates, purchase
+grants and production promotion are outside this run.
+
+Long-run hard limits and hashes are in the immutable experiment contract.
+The target fit, every free parameter/bound, identification diagnostics,
+standard graph packets and a short PDF are required deliverables. Safe
+numerical completion is not author approval of the nesting structure.
