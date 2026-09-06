@@ -25,11 +25,11 @@
   "preview_pages": 7,
   "full_deck_pages": 74,
   "pdf_hashes": {
-    "output/pdf/simplified_olg_theory_slides.pdf": "04885dddeda0acf0b6365c23ba10d7f3241d1b0b3ebe8d6739e4373cd766825f",
-    "output/pdf/september_14_presentation.pdf": "e745041a93117ff1d49d6ac739fd1edd5700e09f460fb8aea66be52e31890beb",
-    "latex/september_14_presentation.pdf": "e745041a93117ff1d49d6ac739fd1edd5700e09f460fb8aea66be52e31890beb"
+    "output/pdf/simplified_olg_theory_slides.pdf": "615e6402e1e79031c79bbb41eb5530f655f58df9f540ee205a7c860d8d6c4eaa",
+    "output/pdf/september_14_presentation.pdf": "98a5c9ccb4e23804cd32b2e8347d2c6838fdef0eb7a0c36fccfe3a7cff0a740f",
+    "latex/september_14_presentation.pdf": "98a5c9ccb4e23804cd32b2e8347d2c6838fdef0eb7a0c36fccfe3a7cff0a740f"
   },
-  "source_hash": "e72c1056f1db244842607235952f32b81290a21691851083adbdc3fc17693d08",
+  "source_hash": "66d77a81a7aa3ee6c405626329d62dd4f0753a5b0ffa5a47d689c93ca6882996",
   "unchanged_quantitative_block_hashes": [
     "d2d0f4f96a51ac40a019cc2261ed9bb867a517b9622114e8c1338439ca422327",
     "0b93304f87c114ef8f856ff43a44096521ea22ca62273309aed1466eee367c4d"
@@ -50,14 +50,22 @@
     ]
   },
   "figure_receipt": "output/model/simplified_olg_amendments/theory_slides_figure_checks.json",
-  "visual_review": "Seven main frames inspected at 1500 pixels; four moved appendix frames at 1400 pixels. Final wording/spacing corrections inspected on pages 2 and 4.",
+  "visual_review": "Clarity pass: all six changed main frames (2\u20137) inspected at 1450 pixels; final page 3 wording rechecked. The first frame and entire quantitative/appendix source are unchanged from the previously reviewed version.",
   "historical_structure_sources": [
     "latex/intergenerational_housing_fertility_note_slides.tex:268",
     "latex/transition_closure_update_presentation.tex:187"
   ],
   "meeting_attribution": "No repository evidence specifically confirms the Raquel meeting. August 17\u201321 advisor deck is the closest dated transition reference.",
-  "limits": "The phase diagram is a local analytical example. The allocation diagram follows exact old-utility compensation. Neither solves a full first best or proves general constrained inefficiency.",
+  "limits": "The transition figure compares initial, impact and final states of the same local analytical example. Arrows connect those equilibria schematically; intermediate adjustment may overshoot. The compensation argument and fertility condition are unchanged. No global or general constrained-efficiency claim.",
   "calibration_or_finite_horizon_transition_run": false,
   "analytical_diagram_checks_executed": true,
-  "protected_draft_edited": false
+  "protected_draft_edited": false,
+  "clarity_pass": {
+    "baseline_commit": "e6351b1",
+    "all_display_equations_unchanged": true,
+    "all_analytical_values_unchanged": true,
+    "first_frame_unchanged": true,
+    "entire_quantitative_and_appendix_source_unchanged": true,
+    "transition_display": "Three equilibrium states; schematic connecting arrows. Full analytical path remains in the data receipt and the supporting appendix."
+  }
 }

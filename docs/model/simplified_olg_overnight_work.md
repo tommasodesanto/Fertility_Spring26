@@ -11,8 +11,12 @@ full household problems and supporting theory are on pages 44–55.
 Recovered the July note's marginal-value layout and the August advisor deck's
 population/price and price/fertility panel layout. The figures now use current
 model equations: exact compensated reallocation and a local analytical credit
-response with both tenures. The transition panels represent a common dated
-path and allow overshooting. They are not static equilibrium schedules.
+response with both tenures. The lunch-time clarity pass retains seven slides
+and makes the fixed-fertility inefficiency statement and subsequent fertility
+response explicit. The transition panels compare the initial, impact and
+final states with schematic arrows, retaining possible overshooting in the
+caption and the full path in supporting material. Equations and analytical
+values are unchanged; no static equilibrium schedule is assumed.
 Original utilities and W/V notation are retained; the household-problem and
 rental-role frames moved verbatim to the appendix. No new planner decision,
 full-note integration, calibration or finite-horizon transition solve.

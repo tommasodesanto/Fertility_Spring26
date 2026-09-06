@@ -108,14 +108,6 @@ def allocation_figure(p, hh):
                 curve_definition="Exact old-utility compensation, individual fertility and future real allocations fixed. Curves are plotted against each household's own housing, not against the transfer.")
 
 
-def movement(ax, start, end, fraction=(.30,.65), color=GRAY):
-    start,end=np.asarray(start),np.asarray(end)
-    a=start+fraction[0]*(end-start)
-    b=start+fraction[1]*(end-start)
-    ax.annotate("",xy=b,xytext=a,arrowprops=dict(arrowstyle="->",lw=1.6,
-                 color=color,mutation_scale=14))
-
-
 def transition_figure(p, Z, hh):
     result=linearization(p,Z,hh)
     J,stat=result["J"],result["derivative"]
@@ -134,26 +126,25 @@ def transition_figure(p, Z, hh):
     assert fertility[0]>0 and n1>0 and abs(population[0])<1e-12
     assert np.max(abs(states[-1]-stat))<1e-10
 
-    # These are two projections of ONE equilibrium path. There is deliberately
-    # no static P(population) or n(P) schedule: assets, expectations and age
-    # composition also change in the current model. Axes display symbolic level
-    # endpoints; distances are first-order derivatives of those levels.
+    # Both panels compare the SAME initial, impact and final equilibria.
+    # Arrows connect those states schematically; they are not date-by-date
+    # trajectories. The full analytical response, including overshooting, is
+    # retained in the receipt and the existing supporting appendix. No static
+    # P(population) or n(P) schedule is assumed. Distances are first-order
+    # derivatives of levels, with symbolic level endpoints on the axes.
     fig,axes=plt.subplots(1,2,figsize=(12.5,3.8),layout="constrained")
     panels=[(population,price,np.array([n1,p1])),
             (price,fertility,np.array([p1,0.]))]
     for j,(ax,(xx,yy,endpoint)) in enumerate(zip(axes,panels)):
-        ax.plot(xx,yy,color=RED,lw=2.5,ls=(0,(6,3)),zorder=2)
         impact=np.array([xx[0],yy[0]])
         ax.annotate("",xy=impact,xytext=(0,0),
                     arrowprops=dict(arrowstyle="->",color="#999999",lw=1.7,
                                     shrinkA=7,shrinkB=7,mutation_scale=14),zorder=1)
-        movement(ax,(xx[0],yy[0]),(xx[1],yy[1]))
-        movement(ax,(xx[1],yy[1]),(xx[2],yy[2]),(.35,.7))
+        ax.annotate("",xy=endpoint,xytext=impact,
+                    arrowprops=dict(arrowstyle="->",color=RED,lw=2.,linestyle=(0,(5,3)),
+                                    shrinkA=7,shrinkB=7,mutation_scale=14),zorder=1)
         ax.scatter([0],[0],color=BLUE,s=70,zorder=5)
         ax.scatter([impact[0],endpoint[0]],[impact[1],endpoint[1]],color=RED,s=70,zorder=5)
-        ax.scatter([xx[1]],[yy[1]],facecolor="white",edgecolor=RED,s=40,zorder=5)
-        ax.annotate("Next cohort",(xx[1],yy[1]),xytext=(8,-18 if j==0 else 10),
-                    textcoords="offset points",color=RED,fontsize=13)
         ax.annotate(r"$A$",(0,0),xytext=(8,10),textcoords="offset points",color=BLUE,fontsize=18)
         ax.annotate(r"$I$",impact,xytext=(9,2 if j==0 else 5),textcoords="offset points",color=RED,fontsize=18)
         ax.annotate(r"$A'$",endpoint,xytext=(9,8 if j==0 else -23),textcoords="offset points",color=RED,fontsize=18)
@@ -163,12 +154,14 @@ def transition_figure(p, Z, hh):
     ax.set_xticks([0,n1],[r"$Y_0+O_0$",r"$Y_1^*+O_1^*$"])
     ax.set_yticks([0,p1],[r"$P_0^*$",r"$P_1^*$"])
     ax.set_xlim(-.20,2.90);ax.set_ylim(-.22,5.05)
+    ax.text(.11,1.9,"Impact",color=GRAY,fontsize=13)
+    ax.text(.88,3.50,"Population adjustment",color=RED,fontsize=13)
     ax=axes[1]
     ax.axhline(0,color=GRAY,lw=1,ls=":")
     ax.set(title="(b) House prices and fertility",xlabel=r"House price, $P$",ylabel=r"Mean fertility, $\bar n$")
     ax.set_xticks([0,p1],[r"$P_0^*$",r"$P_1^*$"])
     ax.set_yticks([0],[r"$1/\nu$"])
-    ax.set_xlim(-.25,4.92);ax.set_ylim(-.09,.51)
+    ax.set_xlim(-.25,4.92);ax.set_ylim(-.020,1.38*fertility[0])
     for ax in axes:
         ax.title.set_fontsize(18)
         ax.xaxis.label.set_size(17)
@@ -181,7 +174,7 @@ def transition_figure(p, Z, hh):
                 stationary_price_derivative=float(p1),
                 map_residual=float(map_error),initial_boundary_residual=float(boundary_error),
                 states=states.tolist(),fertility=fertility.tolist(),population=population.tolist(),
-                interpretation="Local analytical phase projections after an infinitesimal permanent credit relaxation. Same A-I-A' layout as the August advisor diagrams, with no static one-dimensional schedule or monotonicity claim.")
+                interpretation="Initial, impact and final equilibria from the local analytical credit response. Arrows connect those states schematically; intermediate overshooting is not drawn. The complete analytical path remains in the receipt and supporting appendix. No static one-dimensional schedule or monotonicity claim.")
 
 
 def compile_decks():

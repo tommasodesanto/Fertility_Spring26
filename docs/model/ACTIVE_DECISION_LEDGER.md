@@ -27,8 +27,11 @@ supporting theory are on pages 44–55. The main source remains
 
 The earlier diagram structures are restored with current-model economics:
 exact compensation at fixed fertility and an analytical local credit path.
-The transition panels are views of one dated equilibrium path; they do not
-assume a static price/population or price/fertility schedule. Household
+At lunch Tommaso reaffirmed clarity and structure as the priority. The
+transition panels now compare the initial, impact and final equilibria, with
+schematic arrows and explicit possible overshooting. The full analytical path
+is retained in supporting material; all equations and values are unchanged.
+No static price/population or price/fertility schedule is assumed. Household
 population is labeled explicitly; U0 remains open. The newer transition proof
 and stationary-welfare discussion remain appendix material. No new planner
 powers or general transition claim are inferred.

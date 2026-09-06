@@ -24,11 +24,16 @@ The visual references are `intergenerational_housing_fertility_note_slides.tex`
 Meeting attribution to Raquel is not established by the retrieved records.
 The earlier tax wedge and preference-shock formulas are not imported. The
 reallocation curves use exact old-utility compensation in the verified mixed
-stationary economy. The transition uses two projections of its local
-analytical credit response, with both tenures, positive child costs and tax.
-These are one equilibrium path, not static P(population) or fertility(P)
-schedules. The graph permits overshooting and labels population as adult
-households. No general fertility, global-transition or welfare claim is added.
+stationary economy. Following the author's lunch-time clarity instruction,
+the two transition panels compare the initial, impact and final equilibria
+of the same local analytical credit response. Connecting arrows are schematic;
+the caption states that intermediate adjustment may overshoot. The full path
+remains in the receipt and supporting appendix. Both tenures, positive child
+costs and tax are retained, and all analytical values are unchanged. Population
+is labeled as adult households. No static price/population or price/fertility
+schedule, general fertility sign, global convergence or new welfare claim is
+added. The main result now explicitly states inefficiency at fixed fertility;
+the subsequent fertility slide explains the separate conditional response.
 
 Rebuild both diagrams, the main deck and the seven-page extract:
 

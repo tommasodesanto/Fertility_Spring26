@@ -15,9 +15,11 @@ capital-gains-tax wedge or quasi-linear preference-shock schedules.
 
 Lead economics review: allocation curves use the exact compensation formula;
 old utility is unchanged and the plotted small move raises young utility.
-The transition is two projections of the established local analytical path
-at taste scale four in the certified family, not a new finite-horizon solve.
-It includes inherited initial-old claims and permits overshooting. The
+The transition uses the initial, impact and final states of the established
+local analytical path at taste scale four in the certified family. The lunch-time
+clarity pass replaced the intervening path with schematic connecting arrows;
+the caption explicitly retains possible overshooting. All analytical values,
+including inherited initial-old claims, are unchanged. No new solve. The
 fertility condition substitutes p=qr only with fixed prices/tenure and no
 accompanying transfers. The direct planner's financing permission, fixed
 fertility and future real allocations remain explicit. No first-best solution,
