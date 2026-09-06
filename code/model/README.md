@@ -32,6 +32,13 @@ source reconstruction and receipts are indexed in
 `../../output/model/e5f_joint_nested_experiment_20260906a/README.md` and
 `../../docs/model/e5f_joint_nested_experiment.md`.
 
+The full simultaneous-choice extension is isolated on `codex/joint-nested-full`.
+`tools/run_e5f_joint_nested_reporting_check.py` verifies owner-consumption
+reporting at the exact previously failed policy price, before and after the
+experimental repair. `tools/build_e5f_joint_nested_review.py` builds the
+discussion PDF only from complete history/policy receipts, all target and
+parameter rows, and the independently verified reporting comparison.
+
 `tools/run_e5f_joint_overnight_search.py` runs the hash-pinned full-objective
 search and the separately contracted smaller-step recovery. All eleven
 parameters, twelve targets, numerical gates and exact repetition requirements

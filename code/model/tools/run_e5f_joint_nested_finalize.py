@@ -57,7 +57,9 @@ def prepare(path,s):
     if not np.array_equal(replay, e.g_pre) or projected != e.feasibility_projection_mass:
         raise RuntimeError('Original inherited population does not reproduce the fitted feasibility gate')
     rows=adapter.read_csv(path.parent/'cases'/s['best_candidate']['candidate']/'transition_path.csv')
-    if len(rows)!=5 or [int(float(x['calendar_year'])) for x in rows] != [2007,2011,2015,2019,2023]:
+    if (len(rows)!=5 or float(P.period_years)!=4 or
+        [float(x['period']) for x in rows] != [0,1,2,3,4] or
+        [policy.baseline.START_YEAR+float(x['years_from_start']) for x in rows] != [2007,2011,2015,2019,2023]):
         raise RuntimeError('Expected complete five-date fitted history')
     # A path row saves the queue AFTER that date advances. The 2019 row
     # therefore contains exactly the queue inherited at the start of 2023.
@@ -162,6 +164,8 @@ def main():
     ap.add_argument('--contract',type=Path,required=True);ap.add_argument('--smoke',action='store_true');ap.add_argument('--report-only',action='store_true')
     a=ap.parse_args();out=a.outdir.resolve();out.mkdir(parents=True,exist_ok=True)
     contract=adapter.read_json(a.contract);selected=selected_path(a.selected_summary)
+    adapter.verify(__file__, contract['finalizer_sha256'])
+    adapter.verify(adapter.__file__, contract['adapter_sha256'])
     summary,selected_receipt=verify_selected(selected,contract)
     if a.report_only:report(out,selected,contract,a.smoke);return
     if (out/'equilibrium_receipt.json').exists():raise RuntimeError('Refusing to overwrite completed equilibrium paths')
@@ -189,13 +193,14 @@ def main():
             if name=='baseline' and count==0:
                 gap=float(np.abs(evaluation.g_current-packet['evaluation'].g_current).sum())
                 if gap>2e-10:raise RuntimeError(f'Baseline does not reproduce selected 2023 state: {gap}')
+            # Preserve an inspectable state even when a subsequent audit fails.
+            with gzip.open(target/'dated_state.pkl.gz','wb',compresslevel=1) as stream:pickle.dump(current,stream,protocol=5)
             audit.standard_diagnostics(current,target,validate_production_young=False)
             arrays=audit.policy_array_audit(current,target);budget=audit.budget_audit(current,target)
             if arrays['occupied_negative_steps'] != 0:raise RuntimeError('Occupied value monotonicity failed on policy path')
             for bounds in arrays['probabilities'].values():
                 if bounds['nonfinite'] or bounds['minimum']<0 or bounds['maximum']>1:raise RuntimeError('Policy probability gate failed')
             if budget['budget_excess_mass']>2e-10:raise RuntimeError('Material occupied budget violation on policy path')
-            with gzip.open(target/'dated_state.pkl.gz','wb',compresslevel=1) as stream:pickle.dump(current,stream,protocol=5)
             count+=1
             return evaluation,shared,fallback
         policy.baseline.evaluate_state=observed

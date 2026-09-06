@@ -228,3 +228,23 @@ replays the fitted feasibility gate as a handoff check. A nonzero projection
 is recorded; the original input must not be reconstructed by silently treating
 the gated distribution as inherited data. Older experimental checkpoints lack
 this field and must be rebuilt. This changes checkpoint metadata only.
+
+### Owner-consumption reporting verification
+
+The unchanged owner optimizer uses actual consumption implied by resources,
+housing expenditure and saving. Its legacy output applies a larger reporting
+floor after optimization. That can report consumption of 0.040 when a feasible
+optimized budget supports only 0.015366, creating an apparent budget violation.
+In the experimental joint mode only, feasible solved owner branches now report
+\(c=\text{resources}-\text{owner cost}-b'\). The objective, saving choice,
+housing product and feasibility requirements are unchanged; infeasible branch
+sentinels remain untouched.
+
+The before/after replay at the exact failed supply-policy price verifies fifteen
+unchanged value, choice and distribution arrays, unchanged prices, births,
+demand and supply, and seventeen identical standard PNGs. Budget-violating mass
+falls from \(1.93905\times10^{-7}\) to \(1.16494\times10^{-12}\), below the
+unchanged \(2\times10^{-10}\) gate. The standalone checker is
+`run_e5f_joint_nested_reporting_check.py`; snapshot e and its receipts are
+indexed in the full experiment README. A complete history/policy smoke must
+still pass after this source revision. The production solver is unchanged.

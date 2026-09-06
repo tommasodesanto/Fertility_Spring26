@@ -2612,6 +2612,10 @@ def solve_bellman_full_markov_income(
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
                         co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
+                    if joint_active:
+                        resources = Rv + np.clip(SD.gb_flat - Rv_test, 0.0, SD.gb_flat)
+                        co_nc = joint_nested.owner_consumption_from_solution(
+                            resources, oc, bp_nc, SD.cb_flat, Vo_nc, co_nc)
                     Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
                     bd[:, ten, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
                     cd[:, ten, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)

@@ -4,6 +4,8 @@ from __future__ import annotations
 from types import SimpleNamespace as NS
 from unittest import TestCase, main
 from unittest.mock import patch
+from pathlib import Path
+import json
 
 import numpy as np
 
@@ -76,6 +78,28 @@ class JointNestedIntegrationTests(TestCase):
         self.assertFalse(np.shares_memory(evaluation.inherited_g_pre, self.g))
         self.assertFalse(np.array_equal(evaluation.inherited_g_pre, evaluation.g_pre))
         self.assertEqual(evaluation.feasibility_projection_mass, .25)
+
+    def test_finalizer_inherits_raw_population_and_2019_end_queue(self) -> None:
+        import run_e5f_joint_nested_finalize as finalizer
+        raw = self.g.copy()
+        gated = raw.copy(); gated.flat[0] -= .1; gated.flat[-1] += .1
+        P = NS(joint_nested_choice=True, period_years=4)
+        evaluation = NS(policy=NS(joint_choice=object(), price=np.array([.7])),
+                        inherited_g_pre=raw, g_pre=gated, feasibility_projection_mass=.1)
+        packet = dict(parameters=P, evaluation=evaluation, b_grid=np.array([0.]),
+                      shared=NS(), supply_rule=object())
+        rows = [dict(period=str(t), years_from_start=str(4*t), adult_population='1',
+                     birth_queue_scheduled_flows=json.dumps([t+1]*4),
+                     birth_queue_raw_state_scheduled_flows=json.dumps([t+11]*4)) for t in range(5)]
+        with (patch.object(finalizer.audit, 'load_checkpoint', return_value=packet),
+              patch.object(finalizer.adapter, 'read_csv', return_value=rows),
+              patch.object(finalizer.policy.calendar, 'gate_pre_fertility_distribution', return_value=(gated, .1))):
+            _, _, state, _ = finalizer.prepare(Path('/unused/summary.json'), dict(best_candidate=dict(candidate='task_001')))
+        np.testing.assert_array_equal(state.g_pre, raw)
+        self.assertFalse(np.shares_memory(state.g_pre, raw))
+        self.assertEqual(state.scheduled_entries, [4]*4)
+        self.assertEqual(state.scheduled_raw_entries, [14]*4)
+        self.assertEqual(state.price_guess, .7)
 
 
 if __name__ == "__main__":

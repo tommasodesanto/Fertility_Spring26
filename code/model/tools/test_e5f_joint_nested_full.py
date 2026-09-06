@@ -10,6 +10,17 @@ from intergen_eqscale_seq_optimized import joint_nested as joint
 from e5f_joint_nested_choice import choose, scatter_joint_block
 
 class JointFullTests(unittest.TestCase):
+    def test_owner_consumption_reports_the_optimizer_budget(self):
+        resources = np.array([.4, .4, -.1])
+        saving = np.array([.38, .1, 0.])
+        values = np.array([-3., -2., -1e10])
+        reported = np.array([.04, .3, .04])
+        original_saving = saving.copy()
+        result = joint.owner_consumption_from_solution(resources, 0., saving, 0., values, reported)
+        np.testing.assert_allclose(result, [.02, .3, .04], rtol=0, atol=1e-16)
+        np.testing.assert_array_equal(saving, original_saving)
+        np.testing.assert_allclose(result[:2]+saving[:2], resources[:2],rtol=0,atol=0)
+
     def setUp(self):
         self.rng=np.random.default_rng(2345)
         self.P=SimpleNamespace(I=1,J=2,n_parity=4,n_child_states=4,A_f_start=1,A_f_end=1,

@@ -14,7 +14,7 @@ export MPLCONFIGDIR="${TMPDIR:-/tmp}/joint_nested_long_mpl_${SLURM_JOB_ID}"
 cd "${SLURM_SUBMIT_DIR:?}"
 : "${E5F_JOINT_MODE:?smoke or search required}"
 CONTRACT=output/model/joint_nested_overnight/contract.json
-SHA=416477db8ce66d22a6017aee24fd8a2a2d974c3fcf87bbed6bfe8f6f673c48ab
+SHA=59fb3a15911cf8692b30402d3d867b145c0c851479cac59f0fef720194b4e8c4
 python3 code/model/tools/test_e5f_joint_nested_full.py
 PYTHONPATH=code/model:code/model/tools python3 code/model/tools/test_e5f_joint_nested_integration.py
 python3 code/model/tools/test_e5f_joint_nested_long_search.py
@@ -22,5 +22,13 @@ if [[ "$E5F_JOINT_MODE" == smoke ]]; then
  python3 -u code/model/tools/run_e5f_joint_nested_full_smoke.py \
   --checkpoint /scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/independent_numerical_smoke/dated_state.pkl \
   --output output/model/joint_nested_overnight/default_off_reference --reference
+fi
+if [[ "$E5F_JOINT_MODE" == policy-smoke ]]; then
+ : "${E5F_JOINT_SELECTED_SUMMARY:?verified calibration summary required}"
+ printf '%s  %s\n' "$SHA" "$CONTRACT" | sha256sum --check -
+ exec python3 -u code/model/tools/run_e5f_joint_nested_finalize.py \
+  --selected-summary "$E5F_JOINT_SELECTED_SUMMARY" \
+  --outdir output/model/joint_nested_overnight/policy_loop_smoke \
+  --contract "$CONTRACT" --smoke
 fi
 exec python3 -u code/model/tools/run_e5f_joint_nested_long_search.py --contract "$CONTRACT" --contract-sha256 "$SHA" --mode "$E5F_JOINT_MODE"

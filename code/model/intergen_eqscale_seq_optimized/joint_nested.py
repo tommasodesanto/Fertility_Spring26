@@ -9,6 +9,18 @@ from types import SimpleNamespace
 import numpy as np
 
 
+def owner_consumption_from_solution(resources, owner_cost, saving, subsistence, value, reported):
+    """Report the consumption used by the existing owner objective.
+
+    The owner optimizer requires positive consumption above subsistence;
+    its legacy output then applies a larger display floor. Remove that
+    output floor only for feasible solved branches, without changing saving.
+    """
+    consumption = resources - owner_cost - saving
+    feasible = (value > -1e9) & (consumption - subsistence > 1e-10)
+    return np.where(feasible, consumption, reported)
+
+
 def logsum_prob(values, scale, axis=-1):
     if not np.isfinite(scale) or scale <= 0:
         raise ValueError('Invalid positive GEV scale')
