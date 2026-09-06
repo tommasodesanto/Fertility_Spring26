@@ -4,6 +4,16 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+**Latest September 6 clarification:** today is a point on an ongoing transition
+after an externally specified fertility decline. Compare policy from that
+inherited state with the continuing baseline. The theory must combine this
+transition with housing constraints, allocation and fertility. The current
+seven-slide PDF shows a credit reform from a stationary baseline and does not
+yet implement that experiment. Reconcile the design before revising it; see
+`ACTIVE_DECISION_LEDGER.md`. No exact shock date, policy or new steady-state
+notion is chosen, and no claim that the actual 2007 economy was stationary is
+made. The model setup and conditional allocation result remain useful.
+
 September 6 author response: prioritize the main housing-allocation argument;
 the new mixed-tenure transition and stationary welfare work belong in the
 appendix for now. The earlier full-model note is

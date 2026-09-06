@@ -1,5 +1,15 @@
 # Simplified OLG amendment checks
 
+**Latest author clarification:** the desired illustration compares policy
+against a baseline already adjusting after a fertility decline, with today
+as an inherited point on that path. Explaining the initial decline is outside
+the exercise; the suggested historical date remains tentative. The current
+credit-only figure starts from a stationary baseline and does not yet show
+that comparison. The checks below validate the existing artifact, not its
+alignment with the author's clarified request. See the live decision ledger
+and `docs/model/simplified_olg_overnight_work.md` for the two-path question,
+unchanged steady-state notion, and preliminary local baseline-sign check.
+
 ## September 6: seven slides with equilibrium curves and the complete model
 
 Tommaso asked to follow the earlier Raquel-style diagram more closely and
@@ -29,8 +39,9 @@ prices/rebate fixed. The long-run curve uses constant prices and repeated
 lifetime choices. The right panel evaluates fertility along the same housing
 curve. Only the marked states satisfy all equilibrium conditions.
 
-A distinct dotted impact curve is needed because inherited assets and
-expectations differ from their long-run values. The arrows compare the three
+The dotted impact curve conditions on inherited assets and expectations that
+differ from their long-run values. This is a presentation choice, not a general
+requirement for a third curve. The arrows compare the three
 states; they do not assert monotone dynamics or a static one-state transition.
 Axes are explicitly schematic. A monotone arcsinh vertical transformation
 makes the small fertility impact visible; neither numerical distances nor

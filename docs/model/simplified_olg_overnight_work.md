@@ -1,5 +1,51 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: recover the two-path transition question
+
+The author clarified the intended comparison: first a fertility-decline shock
+starts a baseline transition; then compare a policy adopted along that path
+against continued baseline policy, keeping the non-policy shocks and inherited
+state common at the decision date. This was already the D0 objective. The
+recent credit-only transition illustrates a different experiment and is not
+an accepted replacement. Current slide sources/PDFs are unchanged in this
+clarification; the next revision must restore the baseline-plus-policy question.
+
+The author further clarifies the motivation: today's economy is not stationary.
+An earlier externally specified fertility decline, perhaps around 2007, puts it
+on a transition; explaining that initial decline is outside the exercise.
+Today is an inherited state along that baseline, not a new steady-state start
+for policy. The original housing-allocation mechanism and this demographic
+adjustment must be illustrated together. The earlier August advisor deck
+already states this premise and calls policy a comparison of two paths.
+The historical date is tentative, and the old steady state is a stylized
+reference rather than a claim about actual stationarity in 2007. Reconcile
+this experiment before another slide revision. The allocation proposition can
+apply at transition dates where its eligibility and valuation-gap conditions
+hold; the credit-reform proof does not establish the requested joint exercise.
+Retain original notation. Whether further model changes are needed is open.
+
+The toy endpoint remains a positive stationary equilibrium with constant
+prices, choices, distributions and cohort sizes, Y*=O*, and mean fertility
+1/nu. Higher population under policy does not require higher stationary
+average fertility or a return to the original population. The quantitative
+closure remains separate. Policy persistence and announcement timing must be
+stated: identical final primitives with a unique stationary equilibrium cannot
+produce different limiting equilibria merely from temporary policy timing.
+No particular instrument, duration or shock parameterization is adopted here.
+
+A bounded read-only derivative check used the unchanged mixed-transition
+verification driver at anchor(4). Replace its phi derivative by the fertility
+weight derivative, D_theta=G_theta-G_v F_v^{-1} F_theta; solve
+(I-J) dZ*=D_theta and impose the same initial-old boundary B with the stable
+subspace. For a unit increase in theta, initial mean fertility changes by
+0.8471315506447953, stationary adult households by 4.797285385588395, and
+stationary price by 3.1031513911654076. Thus a small theta decrease has the
+intended negative baseline signs in this local calculation. Initial boundary
+residual 4.44e-16; stationary linear-equation residual 1.60e-14. This is not a
+finite transition, a global sign theorem, or the requested paired-policy proof.
+No scientific source, calibration, model parameters, or PDF changed. The
+allocation proof is unaffected; the paired transition remains to establish.
+
 ## September 6: seven slides with the original curve structure
 
 The latest author request was to follow the earlier Raquel-style figure more

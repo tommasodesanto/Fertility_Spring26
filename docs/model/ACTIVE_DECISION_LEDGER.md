@@ -16,6 +16,61 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**Latest author clarification, September 6: two paths after a fertility decline.**
+The organizing premise is that today's economy is still adjusting after an
+earlier fertility decline. The theory uses an old steady state as a starting
+reference, an externally specified shock to initiate the decline, and today
+as an inherited point on that transition. Explaining the original decline is
+outside this exercise. The suggested date, perhaps 2007, is illustrative;
+no historical shock date or claim that the actual 2007 economy was stationary
+is adopted. This premise also appears in the earlier August advisor deck,
+`latex/transition_closure_update_presentation.tex`, in the frames on transition
+dynamics and the quantitative exercise.
+
+The baseline continues changing after today. Compare it with a housing policy
+introduced during that adjustment, sharing the inherited state and non-policy
+shocks at the decision/announcement date. The policy can change the subsequent
+fertility, housing and population paths and potentially the terminal population.
+If policy is anticipated earlier, histories can diverge from announcement;
+do not assume identical pre-implementation choices with different expectations.
+The intended theory combines the housing-constraint/allocation mechanism with
+this demographic transition and policy comparison in one model.
+
+This restates D0's existing common-state/common-shock comparison. It is not an
+author change of direction. The recent credit-only transition from a stationary
+baseline displaced that objective. The current seven-slide PDF therefore
+**does not yet implement the requested transition illustration**. Keep its
+household setup and separate allocation/fertility results, but do not call the
+credit-only graph an approved restoration of the intended exercise.
+
+Preserve the simple model's positive stationary endpoint: prices, allocations,
+old-state distributions and cohort masses are constant, with Y*=O* and mean
+fertility 1/nu. A persistent fall in fertility preferences can lower transition
+fertility and terminal population while realized fertility eventually returns
+to replacement. Policy effects are relative to the declining baseline and
+need not produce fertility above replacement or restore the old population.
+The quantitative population/migration closure remains separately governed by
+CALIBRATION_STATUS.md; neither a positive endpoint nor the toy closure is
+imposed on quantitative results by this discussion.
+
+Policy persistence is still to be specified. A permanent policy introduced
+on the path can alter the stationary endpoint. If policy is temporary, all
+final primitives are restored, and the stationary equilibrium is unique,
+both convergent paths have the same endpoint; a lasting population difference
+would need a persistent state/primitives effect or multiple steady states.
+This qualification does not select an instrument, announcement date, duration,
+or new steady-state notion. Existing local credit proofs are useful supporting
+results, not a proof of the requested paired transition. The direct allocation
+proposition does not require stationarity, but its eligible housing transfers
+and marginal-valuation gap must hold at any date where it is applied.
+
+Next settle the experiment and its economic sequence before revising slides
+or pursuing more extensions. Retain the author's notation and household setup
+where valid; whether the model itself needs rebuilding remains to assess.
+A verified baseline decline, policy branch from today's inherited state, and
+appropriate convergence/endpoint argument are still missing as one exercise.
+No slide, model or calibration changes in this clarification.
+
 **September 6 correction: seven slides, equilibrium curves, and all equilibrium elements.**
 Tommaso asked to follow the earlier Raquel-style two-panel figure more closely
 and show the complete equilibrium. The seven-page review PDF remains
@@ -743,11 +798,11 @@ between mechanism analysis and welfare analysis before either is understood.
 | I1 | Which baseline institutions are intended? External bond trade, closing chronology, common rebates, renter size limits, owner title/occupancy restrictions, and estate treatment. Clarify existing restrictions or explicitly choose changes. | OPEN | September 5: retain tenure segmentation as a physical constraint on the planner. Its exact feasibility conditions and broader institutional choices remain open. The proposal records the dated institutions and one explicit planner transaction. Keep inherited entrant wealth distinct from warm-glow estate utility. | Sections 2, 6-7 |
 | H0 | Pursue an analytical restriction for higher fertility, preferably entirely in primitives and especially without the multiplier $\zeta$. The existing formulas are derivation evidence, not the selected final proposition. | DECIDED | The original conditional household derivative and primitive sufficient restriction remain. The analytical continuation adds exact and sufficient primitive tests for an initial general-equilibrium credit/fertility response; the positive-cost stationary population condition is separate. Neither is an unconditional housing-policy sign or a newly selected paper proposition. | Sections 3, 6, 8; H0 author preference; local_transition_proof.md sections 8, 10 |
 | H1 | Retain the simple model's one-shot completed-fertility choice in its two-period OLG structure; leave sequential birth timing and childlessness to quantitative work. | DECIDED | Fertility-architecture scope only. Log utility, goods/space requirements, tenure tastes, and maintained old-age branches remain assumptions to assess where relevant; do not infer blanket approval. P0/H0/I1/V0 remain dependencies. | Sections 2-3, 6, 8; H1 author response below |
-| D0 | Compare fertility and population along the transition, and total population in the new steady state. A permanently higher stationary fertility rate is not the requested outcome. | DECIDED | Author comparison scope only. A local original-model equilibrium transition is now proved under explicit conditions, including heterogeneous entry on uniform branches and small positive renter mass/costs/tax. Initial fertility and final population signs are conditional; all-date finite signs are limited to the plotted limit. Literal-person measurement remains U0. No quantitative endpoint is certified. | D0 author decision; local_transition_proof.md; analytical Figure 2 |
+| D0 | Treat today as a point on a transition initiated by an externally specified fertility decline; compare policy from that inherited state with the continuing baseline, including fertility/population paths and terminal population levels. No permanently higher stationary fertility rate is requested. | DECIDED | This is the existing common-state/common-shock objective, reaffirmed September 6. The credit-only local proof starts from a stationary baseline and does not yet establish the intended paired transition. Retain positive stationary replacement in the toy model; policy persistence, shock specification, timing, endpoint signs and attainability still need checking. Literal-person measurement remains U0; quantitative closure is separate. | D0 author agreement and latest September 6 clarification; local_transition_proof.md and mixed_transition_proof.md are supporting results |
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only; no author acceptance of local scope as the final target is inferred. The new primitive stability condition and transverse initial boundary establish local existence, convergence and uniqueness. Uniform perturbation admits positive costs, renters and tax. The admissible neighborhood has no numerical size bound. Global continuation and unrestricted branch crossings remain open. | D1 author preference; local_transition_proof.md sections 5, 9, 10 |
-| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
+| D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock specification, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Main theory presents the model, allocation, conditional fertility and transition/population implications; proofs remain in the appendix. September 6: 5–7 slides, the earlier curve-based two-panel figure, and every equilibrium element. | DECIDED | Seven-page preview and main pages 6–12 contain all four household problems, the complete equilibrium, allocation/compensation, fertility and transition curves. Theory support is on pages 44–56. A separate impact curve retains inherited assets and expectations; only marked states impose the complete equilibrium. The newer proof and stationary welfare remain secondary. Full-note integration and final placement await discussion; no new planner power or general transition claim. | P0/P1 author agreement; September 6 slide requests above; theory_slides_verification.json |
+| P1 | Main theory presents the model, allocation, conditional fertility and population transitions; proofs remain in the appendix. Keep 5–7 slides and the earlier two-panel structure: fertility-decline baseline first, then policy along that path. | DECIDED | The current seven-page extract includes the complete model but its credit-only transition graph does not implement the intended comparison. Revise the illustration around the baseline decline and the policy counterfactual from a common inherited state; do not substitute the appendix credit example or silently change axes and shocks again. Full-note integration and final placement await discussion; no new planner powers. | P0/P1 agreement; latest September 6 clarification; current PDF and checks remain evidence of the superseded illustration |
 | V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal and original reconciliation remain completed. The September 5 continuation adds the ten-page assessment, primitive local transition conditions, proof/reviews and original-equation receipts. W3/W4 stay provisional or reopened; global-policy and large-reform claims remain unproved. | Overnight/September 5 authorization; simplified_olg_overnight_work.md |
 
 ### Corrections and verification work retained across branches
