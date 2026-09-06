@@ -115,7 +115,8 @@ def has_budget(completed, proposed, maximum=360, repeats=2):
 def verify_contract(path, sha):
     adapter.verify(path, sha)
     c = adapter.read_json(path)
-    if c.get('schema') != 'e5f_joint_overnight_contract_v1': raise RuntimeError('Unknown contract')
+    if c.get('schema') not in ('e5f_joint_overnight_contract_v1', 'e5f_joint_local_recovery_v1'):
+        raise RuntimeError('Unknown contract')
     adapter.verify(__file__, c['controller_sha256'])
     adapter.verify(adapter.__file__, c['case_adapter_sha256'])
     adapter.verify(planner.__file__, c['planner_sha256'])
@@ -125,6 +126,11 @@ def verify_contract(path, sha):
                     max_search_seconds=27000, max_total_seconds=30600,
                     max_generations=8, population_size=32, initial_radius=.01,
                     polish_rounds=2, polish_radius=.0025)
+    if c['schema'] == 'e5f_joint_local_recovery_v1':
+        expected.update(max_histories=210, max_generations=0, population_size=0,
+                        initial_radius=0., polish_rounds=6, polish_radius=.00125,
+                        smoke_histories=4, smoke_probe_radius=.0003125,
+                        minimum_polish_radius=.0003125)
     if any(c.get(k) != v for k, v in expected.items()): raise RuntimeError('Changed overnight budget/design')
     if c['search_domain'] != adapter.SEARCH_DOMAIN: raise RuntimeError('Changed parameter restrictions')
     for key in ('source_sha256', 'target_fingerprint', 'code_bundle_sha256'):
@@ -159,7 +165,7 @@ class Search:
         self.started, self.wall_start = time.monotonic(), time.time()
         self.finish_epoch = min(self.wall_start+contract['max_total_seconds'], contract['absolute_finish_epoch'])
         self.search_epoch = min(self.wall_start+contract['max_search_seconds'], self.finish_epoch-3600)
-        self.completed = 0 if mode == 'smoke' else 2
+        self.completed = 0 if mode == 'smoke' else contract.get('smoke_histories', 2)
         self.ledger, self.best, self.phase = [], None, 'initializing'
         self.stop = threading.Event()
         self.active, self.lock = {}, threading.Lock()
@@ -361,6 +367,14 @@ class Search:
             reference = adapter.read_json(base/'case_receipt.json')['reference']
             if not reference.get('bridge_twelve_row_fit') or not reference.get('bridge_parameters'):
                 raise RuntimeError('Smoke bridge failed')
+        if self.c['schema'] == 'e5f_joint_local_recovery_v1':
+            radius = self.c['smoke_probe_radius']
+            vectors = [[x+sign*radius*(-1 if j%2 else 1) for j,x in enumerate(u)] for sign in (-1,1)]
+            probe_path, probe_sha = self.new_plan('joint_probe_loop', vectors, ['joint_minus', 'joint_plus'])
+            probes = self.run_batch(probe_path, probe_sha)
+            if len(probes) != 2 or any(any(x == y for x,y in zip(v,u)) for _,v in probes):
+                raise RuntimeError('Joint smoke did not vary all eleven parameters')
+            exact.update(joint_probe_plan_sha256=probe_sha, joint_probe_cases=2)
         adapter.write_json(self.root/'smoke_verification.json', {'status': 'pass', 'plan_sha256': sha, **exact})
         self.finish_report('smoke_passed')
 
@@ -373,40 +387,48 @@ class Search:
         paths = [Path(r['summary']).parent for r in sorted(rows, key=lambda x:x['id'])]
         adapter.compare_reference(paths[1], paths[0]/'summary.json')
         verify_graph_match(paths[0], paths[1])
+        if self.c['schema'] == 'e5f_joint_local_recovery_v1':
+            if proof.get('joint_probe_cases') != 2: raise RuntimeError('Missing joint-proposal smoke')
+            _, _, probes = planner.collect(root/'joint_probe_loop/plan.json', proof['joint_probe_plan_sha256'])
+            if len(probes) != 2: raise RuntimeError('Incomplete joint-proposal smoke')
+            rows += probes
         # The starting incumbent is valid even if later exploratory proposals all fail.
-        row = rows[0]
+        row = min(rows, key=lambda r: r['loss'])
         self.best = (row, adapter.read_json(row['summary'])['panel_design']['unit_vector'])
 
     def search(self):
         self.require_smoke()
-        rng = random.Random(self.c['seed']); base = self.seed['panel_design']['unit_vector']
-        hidx = next(i for i,d in enumerate(self.c['search_domain']) if d['name']=='hbar_first_child_jump')
-        pop = [base]
-        for i in range(31):
-            u = [min(1., max(0., x+rng.uniform(-.01,.01))) for x in base]
-            h = (.50,.60,.75,.90,1.05,1.20)[i%6]+rng.uniform(-1e-8,1e-8)
-            u[hidx] = math.sqrt(h/2.)
-            pop.append(u)
-        if not self.stage_fits(len(pop)): raise RuntimeError('Insufficient time for initial population')
-        pairs = self.evaluate('initial_population', pop, ['seed']+[f'initial_{i}' for i in range(1,32)])
-        ordered = sorted(pairs, key=lambda x:x[0]['id'])
-        pop, losses = [u for _,u in ordered], [r['loss'] for r,_ in ordered]
-        stale = 0
-        for generation in range(1,9):
-            if not self.stage_fits(32): break
-            before = self.best[0]['loss']
-            trials = de_trial(pop,losses,rng)
-            pairs = self.evaluate(f'generation_{generation:02d}',trials,[f'de_{generation}_{i}' for i in range(32)])
-            pop, losses = select_population(pop,losses,pairs)
-            spread = max(max(u[j] for u in pop)-min(u[j] for u in pop) for j in range(N))
-            stale = stale+1 if (before-self.best[0]['loss'])/max(abs(before),1.) < .001 else 0
-            adapter.write_json(self.root/'population.json', {'generation': generation, 'unit_vectors': pop,
-                'evaluated_losses': losses, 'range_max': spread, 'consecutive_small_improvements': stale})
-            if stale >= 3 and spread < .002: break
-        for round_ in range(1,3):
+        recovery = self.c.get('schema') == 'e5f_joint_local_recovery_v1'
+        if not recovery:
+            rng = random.Random(self.c['seed']); base = self.seed['panel_design']['unit_vector']
+            hidx = next(i for i,d in enumerate(self.c['search_domain']) if d['name']=='hbar_first_child_jump')
+            pop = [base]
+            for i in range(31):
+                u = [min(1., max(0., x+rng.uniform(-.01,.01))) for x in base]
+                h = (.50,.60,.75,.90,1.05,1.20)[i%6]+rng.uniform(-1e-8,1e-8)
+                u[hidx] = math.sqrt(h/2.)
+                pop.append(u)
+            if not self.stage_fits(len(pop)): raise RuntimeError('Insufficient time for initial population')
+            pairs = self.evaluate('initial_population', pop, ['seed']+[f'initial_{i}' for i in range(1,32)])
+            ordered = sorted(pairs, key=lambda x:x[0]['id'])
+            pop, losses = [u for _,u in ordered], [r['loss'] for r,_ in ordered]
+            stale = 0
+            for generation in range(1,9):
+                if not self.stage_fits(32): break
+                before = self.best[0]['loss']
+                trials = de_trial(pop,losses,rng)
+                pairs = self.evaluate(f'generation_{generation:02d}',trials,[f'de_{generation}_{i}' for i in range(32)])
+                pop, losses = select_population(pop,losses,pairs)
+                spread = max(max(u[j] for u in pop)-min(u[j] for u in pop) for j in range(N))
+                stale = stale+1 if (before-self.best[0]['loss'])/max(abs(before),1.) < .001 else 0
+                adapter.write_json(self.root/'population.json', {'generation': generation, 'unit_vectors': pop,
+                    'evaluated_losses': losses, 'range_max': spread, 'consecutive_small_improvements': stale})
+                if stale >= 3 and spread < .002: break
+        radius = self.c.get('polish_radius', .0025)
+        for round_ in range(1, self.c.get('polish_rounds', 2)+1):
             if not self.stage_fits(22): break
             center, anchor_loss = list(self.best[1]), self.best[0]['loss']
-            radius = .0025/2**(round_-1)
+            if not recovery: radius = .0025/2**(round_-1)
             probes, labels = [], []
             for j in range(N):
                 for sign, suffix in [(-1,'minus'),(1,'plus')]:
@@ -418,6 +440,14 @@ class Search:
             vectors, labels = joint_polish_vectors(center,direction,order,seen)
             if vectors and self.stage_fits(len(vectors)):
                 self.evaluate(f'polish_{round_}_joint',vectors,labels)
+            if recovery:
+                gain = anchor_loss-self.best[0]['loss']
+                adapter.write_json(self.root/f'polish_{round_}_decision.json', {
+                    'anchor_loss': anchor_loss, 'best_loss': self.best[0]['loss'],
+                    'radius': radius, 'all_eleven_coordinates_probed': True})
+                if gain/max(abs(anchor_loss),1.) < .001:
+                    if radius <= self.c['minimum_polish_radius'] and gain < 1e-8: break
+                    radius = max(self.c['minimum_polish_radius'], radius/2.)
         if self.stage_fits(2,repeats=True):
             selected = copy.deepcopy(self.best)
             path, sha = self.new_plan('final_repeats',repeat=selected)

@@ -160,3 +160,19 @@ remain identical. Maximum360 histories is unchanged; time may truncate the
 search. The six-hour allocation caps reserved CPU time at72CPU-hours. The local
 collector now follows17023172. The earlier contracts and queue evidence are
 retained; the final submission receipt identifies the operative contract.
+
+## Market-gate stop and separately recorded recovery
+
+Monitoring found job17023172 FAILED after14m56s and14 completed search trials
+(16 histories including the initial two smokes). Candidate17's housing-market
+residual6.118e-4 exceeded2e-4 after both existing bracket attempts. No completed
+trial improved the seed. The failure is retained in search/failure.json and
+initial_population/task_017/adapter_failure.json; all completed fits, parameters
+and dated checkpoints remain. It is not evidence of an unreachable target.
+
+See [the separate recovery design](recovery_01/README.md). Smoke17023921 tests
+smaller full-objective coordinate and joint steps with all eleven parameters
+free, source and gates unchanged, a210-history maximum and the original04:47
+Eastern stop. Full recovery awaits its four-case smoke receipt. The app heartbeat
+monitor is `monitor-full-joint-fertility-calibration`, every15minutes, in the
+current calibration task; the older numerical-task automation stays paused.

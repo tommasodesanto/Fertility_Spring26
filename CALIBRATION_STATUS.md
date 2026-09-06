@@ -1,8 +1,34 @@
 # Calibration Status
 
-Updated: `2026-09-06` (full eleven-parameter overnight search running; evening results verified; production retained)
+Updated: `2026-09-06` (broad overnight attempt stopped at the market gate; smaller full-objective recovery smoke running; production retained)
 
-## September 6 full joint overnight search - running
+## September 6 full joint overnight search - recovery smoke
+
+**Live update, 03:39 UTC:** job `17023172` stopped after 14 completed search
+histories plus the two initial smokes. Candidate 17 failed the unchanged
+housing-market tolerance: residual `6.118e-4` against `2e-4`, after the solver's
+existing second bracket attempt. No completed search point improved the seed.
+This is a failed numerical evaluation, not evidence that the empirical target
+is unreachable. The controller canceled its other children as declared; the
+failed run, completed fits, checkpoints and original source snapshot remain.
+
+The author-authorized continuation is now a separate local-step recovery under
+`output/model/e5f_full_joint_overnight_20260906a/recovery_01/`. Smoke `17023921`
+is running in snapshot `Fertility_Spring26_full_joint_overnight_20260906b`.
+All 51 scientific files, the case adapter, targets, weights, parameter domains,
+seed and numerical gates are identical to the first attempt. The revised
+controller probes all eleven coordinates, then evaluates joint directions,
+with smaller steps instead of the broad initial population. Its ten pure tests
+pass, including the six-round full workflow and original-generator repetitions.
+Maximum 210 histories: four smoke evaluations, six rounds of 22 coordinate and
+up to 12 joint proposals, and two exact final repeats. The original 04:47 Eastern
+finish remains binding. Contract SHA:
+`580723c437640677038966d5f5bcfb1638037446fc319bfb443e160f7832bd6e`.
+The full recovery must await the four-case smoke receipt; it is not yet launched.
+This task has an active 15-minute heartbeat monitor, separate from the paused
+older numerical-task automation. Production and policy results stay retained.
+
+### Original attempt and source contract
 
 The author requested autonomous full overnight calibration after clarifying
 that the final evening loss-20.695274 point held nine coordinates fixed. The

@@ -22,6 +22,13 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_joint_overnight_search.py` runs the hash-pinned full-objective
+search and the separately contracted smaller-step recovery. All eleven
+parameters, twelve targets, numerical gates and exact repetition requirements
+are retained. The live experiment and failure/recovery history are indexed in
+`../../output/model/e5f_full_joint_overnight_20260906a/README.md`; the finite
+collector supports `--recovery` and never submits or retries model jobs.
+
 `tools/run_e5f_candidate_policy_comparison.py` observes the existing five-policy
 loop in a hash-pinned source snapshot: every date gets a saved state and the
 standard seventeen-graph packet, and full paths must exactly nest the smoke.

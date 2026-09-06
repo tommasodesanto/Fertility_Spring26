@@ -100,16 +100,32 @@ class OvernightTests(unittest.TestCase):
 
 
     def test_complete_search_flow_reaches_original_generator_repeats(self):
+        self.exercise_complete_search(False)
+
+    def test_recovery_probes_every_parameter_each_round_and_repeats_winner(self):
+        self.exercise_complete_search(True)
+
+    def exercise_complete_search(self, recovery):
         with tempfile.TemporaryDirectory() as raw:
             root=Path(raw)
             run=search.Search.__new__(search.Search)
             run.c={'seed':123,'search_domain':search.adapter.SEARCH_DOMAIN,'output_root':str(root),'max_histories':360}
-            run.root=root;run.completed=2;run.ledger=[];run.seed={'panel_design':{'unit_vector':[.5]*11}}
+            if recovery:
+                run.c.update(schema='e5f_joint_local_recovery_v1', max_histories=210, polish_rounds=6,
+                             polish_radius=.00125, minimum_polish_radius=.0003125)
+            run.root=root;run.completed=4 if recovery else 2;run.ledger=[];run.seed={'panel_design':{'unit_vector':[.5]*11}}
             run.best=({'loss':100.,'id':1,'summary':str(root/'seed/summary.json')},[.5]*11)
-            run.require_smoke=mock.Mock();run.stage_fits=lambda n,repeats=False: search.has_budget(run.completed,n,repeats=0 if repeats else 2)
+            run.require_smoke=mock.Mock();run.stage_fits=lambda n,repeats=False: search.has_budget(run.completed,n,maximum=run.c['max_histories'],repeats=0 if repeats else 2)
             phases=[]
             def evaluated(stage,vectors,labels):
                 phases.append((stage,len(vectors)));answer=[]
+                if recovery and stage.endswith('_coordinates'):
+                    self.assertEqual(len(vectors),22)
+                    for j in range(11):
+                        for i in (2*j,2*j+1):
+                            self.assertNotEqual(vectors[i][j],run.best[1][j])
+                            self.assertEqual([v for k,v in enumerate(vectors[i]) if k!=j],
+                                             [v for k,v in enumerate(run.best[1]) if k!=j])
                 for i,(unit,label) in enumerate(zip(vectors,labels),1):
                     run.completed+=1
                     row={'id':i,'label':label,'loss':100.-run.completed,'summary':str(root/'selected/summary.json')}
@@ -129,10 +145,10 @@ class OvernightTests(unittest.TestCase):
                 return rows
             run.run_batch=repeats;run.finish_report=mock.Mock()
             with mock.patch.object(search,'verify_graph_match',return_value=17):run.search()
-            self.assertEqual(phases[0],('initial_population',32))
-            self.assertEqual(sum(name.startswith('generation_') for name,_ in phases),8)
-            self.assertEqual(sum(name.endswith('_coordinates') for name,_ in phases),2)
-            self.assertEqual(phases[-1],('final_repeats',2));self.assertLessEqual(run.completed,360)
+            self.assertEqual(phases[0],('polish_1_coordinates',22) if recovery else ('initial_population',32))
+            self.assertEqual(sum(name.startswith('generation_') for name,_ in phases),0 if recovery else 8)
+            self.assertEqual(sum(name.endswith('_coordinates') for name,_ in phases),6 if recovery else 2)
+            self.assertEqual(phases[-1],('final_repeats',2));self.assertLessEqual(run.completed,210 if recovery else 360)
             self.assertEqual(len(selected_repeat),1)
             run.finish_report.assert_called_once_with('complete_verified')
 

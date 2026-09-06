@@ -74,4 +74,48 @@ def main():
         shutil.copy2(ROOT/'code/model/tools'/name,SNAP/'code/model/tools'/name)
     print(json.dumps({'contract_sha256':adapter.digest(OUT/'contract.json'),'bundle':source['bundle_sha256'],'estimated_parameters':11,'targets':12}))
 
-if __name__=='__main__':main()
+
+def local_recovery():
+    """Preserve attempt A and prepare smaller full-objective steps in snapshot B."""
+    dest = OUT/'recovery_01'
+    if dest.exists(): raise RuntimeError('Recovery contract is immutable')
+    dest.mkdir()
+    snapshot = ROOT/'tmp/e5f_full_joint_overnight_20260906b'
+    remote = Path('/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b')
+    shutil.copytree(SNAP/'code', snapshot/'code', ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+    for name in ('run_e5f_joint_overnight_search.py', 'test_run_e5f_joint_overnight_search.py'):
+        shutil.copy2(ROOT/'code/model/tools'/name, snapshot/'code/model/tools'/name)
+    (snapshot/'code/cluster').mkdir(exist_ok=True)
+    shutil.copy2(ROOT/'code/cluster/submit_e5f_joint_overnight_search.sh',
+                 snapshot/'code/cluster/submit_e5f_joint_overnight_search.sh')
+    shutil.copytree(OUT/'inputs', dest/'inputs')
+    shutil.copy2(OUT/'source_contract.json', dest/'source_contract.json')
+    old = json.loads((OUT/'short_queue_contract.json').read_text())
+    c = json.loads(json.dumps(old).replace(str(REMOTE/REL), str(remote/REL/'recovery_01')))
+    c.update(schema='e5f_joint_local_recovery_v1',
+             controller_sha256=adapter.digest(ROOT/'code/model/tools/run_e5f_joint_overnight_search.py'),
+             max_histories=210, max_generations=0, population_size=0, initial_radius=0.,
+             polish_rounds=6, polish_radius=.00125, smoke_histories=4,
+             smoke_probe_radius=.0003125, minimum_polish_radius=.0003125,
+             recovery_of_job='17023172',
+             recovery_reason='Candidate 17 failed the unchanged 2e-4 housing-market gate at about 6.12e-4. '
+             'No completed trial improved the seed. Replace broad jumps with small coordinate probes '
+             'and jointly evaluated directions across all eleven free parameters. No failed point is retried.',
+             routing_note='Separate source-identical recovery; cpu_short/cpu48; original absolute finish retained.')
+    save(dest/'contract.json', c)
+    save(dest/'preflight.json', {'contract_sha256':adapter.digest(dest/'contract.json'),
+         'controller_sha256':c['controller_sha256'], 'scientific_bundle':c['code_bundle_sha256'],
+         'maximum_histories':4+6*(22+12)+2, 'absolute_finish_epoch':c['absolute_finish_epoch'],
+         'snapshot':str(snapshot), 'remote_snapshot':str(remote),
+         'seed_and_reference_hashes_unchanged':all(c[k]==old[k] for k in ('seed_center_sha256','seed_reference_sha256')),
+         'source_target_domain_unchanged':all(c[k]==old[k] for k in ('base_plan','source_sha256','target_fingerprint','search_domain','case_adapter_sha256','planner_sha256')),
+         'production_promoted':False})
+    print((dest/'preflight.json').read_text())
+
+
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--local-recovery',action='store_true')
+    args=parser.parse_args()
+    local_recovery() if args.local_recovery else main()

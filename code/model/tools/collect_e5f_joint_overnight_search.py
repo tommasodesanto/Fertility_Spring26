@@ -18,6 +18,7 @@ ROOT=Path(__file__).resolve().parents[3]
 REL=Path('output/model/e5f_full_joint_overnight_20260906a')
 OUT=ROOT/REL
 REMOTE=Path('/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906a')
+PDF_NAME='e5f_full_joint_overnight_review.pdf'
 LABELS=['Completed fertility, age 42','Childless share, age 42','Age at first birth',
         'First births at age 30+','First-birth rooms response','Parent rooms: 3+ vs. 1-2',
         'Parent ownership gap','Ownership, ages 30-55','Mean rooms, ages 18-85',
@@ -42,6 +43,13 @@ def command(args,timeout=180):
     r=subprocess.run(args,cwd=ROOT,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=timeout)
     if r.returncode:raise RuntimeError(f'{args[0]} exited {r.returncode}: {r.stderr[-1800:]}')
     return r.stdout
+
+
+def queue_state(job_id):
+    # Listing this user's queue also works after Slurm purges a completed job ID.
+    queue=command(['ssh','-o','BatchMode=yes','torch','squeue -h -u td2248 -o "%i %T"'],timeout=30)
+    return next((line.split()[1] for line in queue.splitlines()
+                 if line.split() and line.split()[0]==str(int(job_id))), '')
 
 
 def pull():
@@ -82,6 +90,8 @@ def build_report():
     proof_path=OUT/'search/final_verification.json'
     verified_repeat=state['status']=='complete_verified' and proof_path.exists() and read(proof_path)['status']=='pass'
     moments={x['moment']:float(x['model']) for x in fit}
+    contract=read(OUT/'contract.json')
+    smoke_count=contract.get('smoke_histories',2)
     text=['---','title: "Overnight calibration: results and remaining gaps"',
           'subtitle: "All eleven parameters searched under the unchanged twelve targets"',
           'author: "Prepared for Tommaso De Santo"','date: "6 September 2026"','---','',
@@ -95,7 +105,8 @@ def build_report():
           '| Housing-only starting diagnostic | 20.6953 | 0.5158 | 6.3491 |',
           f"| Overnight joint search | {best['loss']:.4f} | {moments['housing_increment_0to1']:.4f} | {moments['aggregate_mean_occupied_rooms_18_85']:.4f} |",'',
           'All eleven estimated parameters could move during the overnight search. The first-child housing term could range from 0 to 2 instead of 0 to 0.5; every other bound, all twelve empirical targets and all weights stayed fixed. The model equations and numerical gates were retained.',
-          '',f"The controller stopped with status `{state['status']}` after {state['completed_histories']} completed histories, counting the two initial smokes. Production remains the September 4 calibration. These results have not been used to update policy or population forecasts.",
+          '',f"The controller stopped with status `{state['status']}` after {state['completed_histories']} completed histories, counting the {smoke_count} initial smoke evaluations. Production remains the September 4 calibration. These results have not been used to update policy or population forecasts.",
+          '',('The first broad attempt stopped at candidate 17 when the housing-market residual exceeded the unchanged 0.0002 tolerance; none of its fourteen completed trials improved the seed. This separately recorded recovery uses smaller steps: each round probes all eleven parameters, then evaluates combinations of improving changes under the complete objective. It retains the original overnight cutoff.' if contract.get('schema')=='e5f_joint_local_recovery_v1' else 'The complete failure and status receipts accompany this attempt.'),
           '', '**Next discussion:** assess the complete fit and parameter restrictions below before selecting the presentation calibration. This finite search does not establish a global optimum. The empirical childbirth housing target has not been lowered.',
           '', '\\clearpage', '', '# Complete target fit', '',
           'Every gap is model minus target; the loss contribution is weight times squared gap. Provisional weight scales mean the total is an optimization objective, not a chi-squared statistic.','',
@@ -121,10 +132,10 @@ def build_report():
            f"[Experiment design and reproducibility]({OUT/'README.md'}). [Complete case ledger]({OUT/'search/all_cases.csv'}). [All target fits]({OUT/'search/all_target_fits.csv'}). [All parameter tables]({OUT/'search/all_parameters.csv'}). [Selected diagnostics]({case/'standard_diagnostics/summary.json'}).",'',
            'The earlier local Jacobian had a weak bequest direction and a nonsmooth old wealth-to-income quantile. A lower loss alone does not resolve identification, age-window measurement, old-age ownership saturation or population-closure questions. These remain separate from the target-and-equation-preserving search.']
     source=OUT/'MORNING_REVIEW.md';source.write_text('\n'.join(text)+'\n')
-    pdf=ROOT/'output/pdf/e5f_full_joint_overnight_review.pdf'
+    pdf=ROOT/'output/pdf'/PDF_NAME
     command([sys.executable,str(ROOT/'code/model/tools/build_e5f_independent_audit_pdf.py'),
              '--source',str(source),'--output',str(pdf),'--heading','FERTILITY / OVERNIGHT CALIBRATION','--date','6 September 2026','--no-source-index'],timeout=180)
-    render=ROOT/'tmp/pdfs/e5f_full_joint_overnight_review';render.mkdir(parents=True,exist_ok=True)
+    render=ROOT/'tmp/pdfs'/pdf.stem;render.mkdir(parents=True,exist_ok=True)
     command(['pdftoppm','-scale-to','1400','-png',str(pdf),str(render/'page')],timeout=180)
     write(OUT/'automatic_report_receipt.json',{'status':'rendered_visual_review_pending','source':str(source),
           'pdf':str(pdf),'pdf_sha256':digest(pdf),'available_artifact_hashes_verified':verified,
@@ -132,15 +143,21 @@ def build_report():
 
 
 def main():
+    global REL, OUT, REMOTE, PDF_NAME
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--watch',action='store_true');parser.add_argument('--job-id')
+    parser.add_argument('--recovery',action='store_true',help='Collect the separately preserved local-step recovery.')
     args=parser.parse_args()
+    if args.recovery:
+        REL=REL/'recovery_01';OUT=ROOT/REL
+        REMOTE=Path('/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b')
+        PDF_NAME='e5f_full_joint_recovery_review.pdf'
     deadline=read(OUT/'contract.json')['absolute_finish_epoch']+1800
     failures=0;last_count=-1
     while True:
         try:
             if args.job_id:
-                queue=command(['ssh','-o','BatchMode=yes','torch',f'squeue -h -j {int(args.job_id)} -o %T'],timeout=30).strip()
+                queue=queue_state(args.job_id)
                 if queue == 'PENDING':
                     write(OUT/'watch_status.json',{'status':'waiting_for_cluster_priority','epoch':time.time(),'job_id':args.job_id})
                     if not args.watch or time.time()>deadline:return
@@ -155,7 +172,7 @@ def main():
             if terminal:
                 build_report();return
             if args.job_id:
-                queue=command(['ssh','-o','BatchMode=yes','torch',f'squeue -h -j {int(args.job_id)} -o %T'],timeout=30).strip()
+                queue=queue_state(args.job_id)
                 if not queue:
                     pull()
                     write(OUT/'watch_status.json',{'status':'job_ended_without_terminal_report','epoch':time.time(),'remote_state':state})

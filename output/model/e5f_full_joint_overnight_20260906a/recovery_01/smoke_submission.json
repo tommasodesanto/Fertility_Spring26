@@ -1,0 +1,6 @@
+{
+  "job_id": "17023921",
+  "command": "cd /scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b/code/cluster && E5F_JOINT_CONTRACT=/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b/output/model/e5f_full_joint_overnight_20260906a/recovery_01/contract.json E5F_JOINT_CONTRACT_SHA256=580723c437640677038966d5f5bcfb1638037446fc319bfb443e160f7832bd6e E5F_JOINT_MODE=smoke sbatch --parsable --partition=cpu_short --qos=cpu48 --time=00:35:00 --cpus-per-task=2 --mem=16G --output=/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b/output/model/e5f_full_joint_overnight_20260906a/recovery_01/smoke.out --error=/scratch/td2248/projects/Fertility_Spring26_full_joint_overnight_20260906b/output/model/e5f_full_joint_overnight_20260906a/recovery_01/smoke.err submit_e5f_joint_overnight_search.sh",
+  "contract_sha256": "580723c437640677038966d5f5bcfb1638037446fc319bfb443e160f7832bd6e",
+  "setup_correction": "Initial submit command failed before sbatch because snapshot omitted code/cluster; copied unchanged launcher."
+}
