@@ -4,6 +4,16 @@ Updated: `2026-09-06` (recovery stopped at the market gate; completed evidence a
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**Latest author direction:** explore simultaneous revelation of fertility and
+housing taste shocks with a nested choice structure, to avoid imposing an
+artificial order of taste revelation. This is an exploration request, not an
+adopted specification. A nested probability factorization need not imply
+sequential economic decisions: derive a valid joint random-utility law and
+its scale/correlation restrictions. Preserve the distinction between a birth
+attempt and subsequent conception success; whether housing is a commitment
+or a success-contingent plan must be stated. Do not assume that revealing
+the current independent shocks simultaneously preserves the coded formulas.
+
 Author instruction, September 6 before lunch: make the sequence of
 discrete-choice shocks the first quantitative issue for discussion before
 the September 14 presentation. This takes priority over further calibration,
