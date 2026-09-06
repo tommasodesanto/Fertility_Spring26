@@ -1,5 +1,27 @@
 # Simplified OLG amendment checks
 
+## September 6: first combined baseline-and-policy assessment
+
+The latest work record establishes a local route in the original mixed-tenure
+model: an initial preference decline and a permanent credit reform introduced
+later from the same inherited state. Read the newest section of
+`docs/model/simplified_olg_overnight_work.md` for assumptions, proof and limits.
+This supersedes the earlier preliminary baseline-sign status. The existing
+slides and PDFs below have not been revised to present this result.
+
+The new stationary and baseline certificates can be replayed with:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/verify_simplified_olg_stationary_endpoints.py
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/verify_simplified_olg_fertility_decline.py
+```
+
+Receipts: `stationary_endpoint_checks.json` and `two_stage_transition_checks.json`.
+The latter includes source hashes and lead check output. The policy-date extension
+was checked analytically; no finite paired-policy simulation was run. No broad
+primitive conditions, numerical reform radius, all-date fertility ordering or
+policy-welfare conclusion is established. Proposed shocks are not author-adopted.
+
 **Latest author clarification:** the desired illustration compares policy
 against a baseline already adjusting after a fertility decline, with today
 as an inherited point on that path. Explaining the initial decline is outside

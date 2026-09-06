@@ -1,5 +1,148 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: three-agent assessment of the combined exercise
+
+The author authorized subagents for the four pieces and asked how to improve
+mathematical work. Three in-thread agents, inheriting the task's model/reasoning
+settings, received separate 20-minute first passes: stationary endpoints,
+no-policy fertility-decline transition, and policy from an inherited state.
+The lead retained allocation/fertility conditions and synthesis. All returned
+within the cap. No further workers, overnight jobs, or model settings changed.
+
+The first local combined argument works within the existing household model.
+This is a proposed illustrative experiment, not adoption of the preference
+shock, instrument, duration, or information assumption. Preserve all prior
+planner and quantitative decisions. The admissible shock/reform radii are
+not numerically bounded; broad primitive conditions remain a research objective.
+
+### Allocation and fertility at a date
+
+The short compensated allocation proof requires no stationarity. At the
+mixed anchor its young-owner housing-value gap, physical room, positive
+saving and old-owner retention/estate margins are strictly positive. Uniformly
+small paths preserve these conditions, so the same argument applies at any
+date on the local baseline. Positive young and old owner masses permit matching
+equal subgroups even when the cohort sizes differ. This remains a direct
+planner comparison, holding fertility and future real allocations fixed.
+
+There is also a simple direct preference result at fixed full price/transfer
+sequences and inherited conditions. Write the lifetime objective as a part
+independent of $\vartheta$ plus $\vartheta\log n$. Optimality at two weights gives
+$(\vartheta_1-\vartheta_0)(\log n_1-\log n_0)\ge0$. Thus a lower weight weakly
+reduces fertility even allowing tenure changes; the feasible set is unchanged.
+This is a household result, not the sign of its general-equilibrium response.
+
+On the maintained reduced household branch, let $x=c-\chi n$, $s=h-\kappa n$
+and retain the original $k$ and net resources $\widetilde w$. Differentiation gives
+\[
+\Delta\,dn=\frac{d\vartheta}{n}
+ +\left(\frac{\alpha\kappa}{s^2}
+       -\frac{\chi u}{(1+k)x^2}\right)dh
+ +\frac{\chi}{(1+k)x^2}(d\widetilde w-h\,du),
+\qquad
+\Delta=\frac{\vartheta}{n^2}+
+\frac{\chi^2}{(1+k)x^2}+\frac{\alpha\kappa^2}{s^2}>0.
+\]
+Here $u=qr_t$ is the current housing user cost; capped old-renter payments
+remain subtracted from $\widetilde w$. This separates the direct preference,
+space and resource effects without imposing stationary prices. Symbolic
+verification reproduces this expression and the compensated-allocation derivative.
+
+### Stationary endpoints and the baseline
+
+In the existing exact mixed-tenure family, with each positive taste scale held
+fixed during the comparison, exact differentiation proves
+$P^*_{\vartheta}>0$, $N^*_{{\rm hh},\vartheta}>0$ and both mean housing derivatives
+negative. A small preference-weight fall therefore lowers stationary price and
+population and raises housing per young and old household. For a small financed-
+share increase, price, population and mean young housing rise; mean old housing
+falls by more. The latter population sign remains specific to this family.
+Both stationary fertility levels remain replacement. These results do not
+require a transition proof but interpreting them as endpoints reached from
+today does. Taxes and endogenous rebates are included.
+
+The existing sequence theorem accepts $\vartheta$ as a parameter just as it
+accepts $\phi$. The additional forcing terms are $d\vartheta/n$ in the fertility
+FOC and $\log(n_O/n_R)d\vartheta$ in the tenure-value difference. The initial
+old retain their actual claims and purchased titles; their housing demand can
+change through price/rebate revaluation. Exact rational intervals at taste
+scale 4 give initial-fertility derivative $(0.84713,0.84714)$, stationary total
+household derivative $(4.79728,4.79729)$ and stationary price derivative
+$(3.10315,3.10316)$ for a unit increase in $\vartheta$. Hence sufficiently small
+permanent declines have initial fertility below replacement and converge to a
+positive lower-population, lower-price endpoint. The inequalities persist in
+an open neighborhood. The exact root and boundary conditions are verified.
+
+### Policy from the inherited state
+
+Let $\vartheta_1=\vartheta_0-\epsilon$ start the baseline, then at date $t\ge1$
+compare continuing $\phi_0$ against permanent $\phi_0+\delta$. Each continuation
+inherits the same $(Y_t,O_t,G_t)$. Let $B_t,A_t,H_t$ be old-owner mass, net
+financial claims and purchased titles. Initial old-owner demand is determined by
+\[
+M=\frac{\gamma}{1+\gamma+\omega_B}
+  [A_t+PH_t+T(P,Y_t,O_t)B_t],\qquad
+T(P,Y,O)=\frac{q\tau^pP\bar H}{Y+O}.
+\]
+Fix these inherited claims, not baseline $M$ or their market valuation. Retain
+full conditional old-state supports to check every household's feasibility.
+
+Treat inherited data and $(\vartheta,\phi)$ as parameters in the existing
+weighted-sequence residual. Its invertible derivative is unchanged at the
+certified anchor. The implicit-function theorem gives a smooth converging
+continuation; at $\delta=0$, local uniqueness identifies the baseline tail.
+Strict initial policy-fertility and stationary-population derivatives persist.
+For each fixed intervention date and small enough $\epsilon,\delta>0$,
+\[
+\bar n_t^1>\bar n_t^0,\qquad
+N_{{\rm hh},\infty}^1>N_{{\rm hh},\infty}^0.
+\]
+A common sufficiently small neighborhood can cover all $t\ge1$: the baseline
+weighted bound and its stationary displacement keep the whole path $O(\epsilon)$
+from the anchor. Conditional assets, titles and tenure probabilities on fixed
+compact entrant support vary smoothly, preserving individual branch margins.
+Use this conditional representation of $G_t$, not total-variation closeness of
+moving atoms. This uniform local corollary says nothing about arbitrary inherited
+states, large declines/reforms or changes in which constraints bind.
+
+For this proposed experiment the policy is unexpectedly announced and introduced
+at $t$. Pre-$t$ contracts use baseline expectations. In particular, rental entry
+at $t-1$ uses the then-expected baseline price at $t$, not the unexpectedly
+realized policy price. Only each post-announcement continuation imposes the
+deterministic user-cost relation with its own updated future prices. Two
+perfect-foresight paths cannot be spliced while ignoring this expectations change.
+
+The exact cohort product implies a positive limiting cumulative relative
+fertility effect, but no ordering at every intermediate date. The preference-
+shock certificate also has a nonzero dominant complex mode: the displayed local
+baseline eventually approaches replacement and its endpoint from both sides.
+Thus monotonicity is false in this example. With $\chi>0$, the original fertility
+FOC gives $n<\vartheta h_O^{\max}/[\kappa(\alpha+\vartheta)]$. If this bound is
+at most $1/\nu$, no positive closed stationary equilibrium exists. Large declines
+therefore cannot be covered automatically. Policy welfare remains separate.
+
+### Verification and next discussion
+
+The lead read both new derivations against the original household equations,
+replayed both checkers, verified the dated household identities symbolically,
+and checked the inherited-state/expectations argument. Stationary algebra proves
+signs using rational coefficients and $1<\log(10/3)<2$; sixteen original stationary
+solves agree within $4.46\times10^{-10}$. The baseline uses a sharper rational
+log enclosure, exact root isolation and outward interval arithmetic. Two short
+original-equation paths and eight independent household optimizations check the
+calculation; they do not supply the convergence proof.
+
+Reproducible sources: `code/model/tools/verify_simplified_olg_stationary_endpoints.py`
+and `code/model/tools/verify_simplified_olg_fertility_decline.py`. Receipts and source
+hashes are in `output/model/simplified_olg_amendments/two_stage_transition_checks.json`
+and `stationary_endpoint_checks.json`. No finite paired-policy path was simulated.
+The policy-date extension is an analytical argument conditional on the stated
+local hypotheses. Original model helpers, paper, slides and PDFs are unchanged.
+
+Next discuss whether this local combined result is an adequate first illustrative
+statement and which restrictions most deserve relaxing. D1 still seeks broader
+transparent conditions; no author acceptance of local scope is inferred.
+
 ## September 6: separate characterization from the missing transition
 
 Author direction: ignore slides for now. Steady-state characterization remains
