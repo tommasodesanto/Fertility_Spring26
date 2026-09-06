@@ -269,11 +269,13 @@ from the routing table.
 
 Before delegating, classify the work and choose the least expensive adequate
 route. Do not delegate a task that the lead can complete more quickly than the
-handoff would take. The default is **one** delegated worker. A fan-out needs
-all of the following: genuinely independent questions, non-overlapping file or
-evidence scopes, a separate deliverable for each worker, and a stated synthesis
-step by the lead. Never fan out parallel versions of the same broad question,
-or use built-in subagents merely to save usage.
+handoff would take. Tommaso authorizes proactive parallel work up to the available
+agent limit whenever it helps; there is no one-worker default. Use as many
+workers as have useful independent tasks or distinct verification roles. Give
+each worker a bounded scope and separate deliverable, each write-capable worker
+exclusive file ownership, and state how the lead will verify and combine the
+results. Do not fill slots with duplicate broad inquiries or work that adds no
+value.
 
 Before a nontrivial delegation, send one concise progress line containing the
 selected route, the reason, the time limit, and the stop condition. Use the

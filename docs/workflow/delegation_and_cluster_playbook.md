@@ -33,11 +33,15 @@ constraints; deadline or urgency is helpful, but asking the user to name a
 model/profile defeats the purpose of the routing system.
 
 1. Keep the work with the lead if the likely handoff cost exceeds the work.
-2. Otherwise dispatch one least-cost adequate worker with a narrow scope,
-   required output, verification, time limit, and stop condition.
-3. Use multiple workers only when their evidence/file scopes and deliverables
-   are independent. Record the synthesis step before dispatching. Parallel
-   versions of the same broad inquiry are prohibited.
+2. Otherwise dispatch as many least-cost adequate workers as have useful
+   independent tasks or distinct verification roles, up to the available agent
+   limit. Tommaso authorizes this proactively; there is no one-worker default.
+   Give each a narrow scope, required output, verification, time limit, and
+   stop condition.
+3. Give each worker a separate deliverable and each write-capable worker
+   exclusive file ownership. Record how the lead will verify and combine the
+   results before dispatching. Do not fill slots with duplicate broad inquiries
+   or work that adds no value.
 4. Before dispatching, tell the user: `route | reason | time limit | stop
    condition`. For work that lasts beyond one interaction, update in the form
    `phase | elapsed | route | artifact/evidence | next decision`.
@@ -90,8 +94,9 @@ Start every worker prompt from
 files not to touch, compressed return format, verification, and stop condition.
 The wrapper checks the route and permissions; the caller remains responsible
 for keeping the prompt bounded and complete.
-Start with one worker. Use two or three only for genuinely independent tasks,
-and give each write-capable worker exclusive ownership of its files.
+Use the available concurrency when independent tasks or distinct verification
+roles benefit from it; do not impose a fixed one-, two-, or three-worker cap.
+Give each write-capable worker exclusive ownership of its files.
 
 ```bash
 # Prepare one bounded task.
