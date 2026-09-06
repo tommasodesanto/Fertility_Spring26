@@ -1,5 +1,41 @@
 # Simplified OLG amendment checks
 
+## September 6: main presentation theory update
+
+The author requested a slide preview before integrating the full note.
+Source: `latex/september_14_presentation.tex`. Final reader PDF:
+`output/pdf/september_14_presentation.pdf`, with an identical copy at the
+existing `latex/september_14_presentation.pdf` path.
+
+- Main theory: PDF pages 6--19; central allocation and fertility results: 14--18.
+- Supporting theory appendix: PDF pages 51--58. The mixed transition and
+  stationary-welfare discussion remain secondary appendix material.
+- `september_slides_review.md`: bounded read-only equation/scope review and
+  lead resolution. No mathematical transcription errors; scope wording fixed.
+- `september_slides_verification.json`: source/PDF/figure hashes, reviewed-source
+  hash and post-review diff, page map, two-pass compile and full changed-frame
+  visual review, appendix links, and unchanged quantitative-source block hashes.
+
+The two quantitative source blocks are byte-identical. Their earlier numerical
+results were not refreshed or promoted. Two sampled equation frames whose text
+extractors decoded braces differently are pixel-identical in their bodies.
+There are no compilation errors, undefined references, or overflowing boxes;
+the original harmless hyperref warning about the appendix bookmark remains.
+The complete integrated note and additional planner permissions remain for
+later author discussion. No model or calibration run was needed.
+
+Rebuild the deck from the repository root (all build files stay in `tmp/`):
+
+```sh
+mkdir -p tmp/pdfs/september_14_theory output/pdf
+cd latex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=../tmp/pdfs/september_14_theory september_14_presentation.tex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=../tmp/pdfs/september_14_theory september_14_presentation.tex
+cp ../tmp/pdfs/september_14_theory/september_14_presentation.pdf ../output/pdf/september_14_presentation.pdf
+cp ../tmp/pdfs/september_14_theory/september_14_presentation.pdf september_14_presentation.pdf
+```
+
+
 ## September 6: transition with substantial renting and positive child costs
 
 Start with the revised **four-page** `output/pdf/simplified_olg_paper_core.pdf`.

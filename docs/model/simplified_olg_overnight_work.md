@@ -1,5 +1,32 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6 main slide deck — completed for discussion
+
+After asking to assess the main results before integrating the note, Tommaso
+requested them in the main slides for review after lunch. Updated
+`latex/september_14_presentation.tex` and the existing adjacent PDF; the
+identical reader copy is `output/pdf/september_14_presentation.pdf`.
+Main theory is PDF pages 6--19, with the central allocation/fertility argument
+on pages 14--18. The theory appendix is pages 51--58. The full note remains
+unintegrated pending the author's assessment.
+
+Replaced the deck's older shorthand problems and inconsistent toy appendix
+with the original separate utilities, dated renter/owner value functions,
+market clearing and cohort law, direct compensated allocation, rental-role
+qualification and conditional fertility. Added the existing allocation figure
+in the main section and the mixed transition figure only in the appendix.
+The zero-property-tax primitive fertility restriction and additional planner
+powers are stated with their maintained scope. Quantitative sections are
+byte-identical; this does not refresh or promote their older numerical results.
+
+One read-only reviewer with the default 20-minute limit found no equation
+transcription errors. Incorporated its scope clarifications, compiled twice,
+checked all changed frames at 1400-pixel width and verified the appendix links.
+No errors, undefined references or overflowing boxes; the original harmless
+hyperref appendix-bookmark warning remains. No model run or protected-draft
+edit. Source/PDF hashes, review and reproduction are indexed in
+`output/model/simplified_olg_amendments/README.md`.
+
 ## September 6 author response — full note still to be updated
 
 Tommaso assigns the new mixed-tenure transition and stationary welfare work

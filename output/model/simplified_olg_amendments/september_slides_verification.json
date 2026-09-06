@@ -1,0 +1,147 @@
+{
+  "date": "2026-09-06",
+  "scope": "September 14 main deck: simplified theory and theory appendix only; two roadmap bullets updated",
+  "baseline": {
+    "git_head": "fc62a7c3d6267a9bb3ce7bb87f99b3682b2d3ca2",
+    "source_sha256": "040c710c6f02c2cd5642c7fd14917355a61fd3c62b98f9301e448c299f27c9d1"
+  },
+  "source": "latex/september_14_presentation.tex",
+  "source_sha256": "6cd26e3dd57d8de67fa47a56dcdb7aca620270e66cdc89e7157cf849e0542c2f",
+  "pdf": "output/pdf/september_14_presentation.pdf",
+  "pdf_sha256": "f7aa201f51fad5558a54c858ec42e4c76e9d3a0d31d4106c09d5a6ab27bcc74f",
+  "existing_deck_pdf_mirror": "latex/september_14_presentation.pdf",
+  "mirror_identical": true,
+  "pdf_pages": 77,
+  "main_theory_pdf_pages": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "main_results_pdf_pages": [
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "theory_appendix_pdf_pages": [
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58
+  ],
+  "visual_inspection": {
+    "all_changed_frames_inspected_at_1400px": true,
+    "pages": [
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58
+    ],
+    "final_post_review_pages": [
+      4,
+      8,
+      11,
+      14,
+      16,
+      18,
+      52,
+      53,
+      56,
+      58
+    ],
+    "boundary_samples": [
+      1,
+      5,
+      20,
+      50,
+      77
+    ],
+    "unmodified_body_pixel_equality_samples": [
+      [
+        17,
+        22
+      ],
+      [
+        51,
+        62
+      ]
+    ]
+  },
+  "compilation": {
+    "tool": "pdfTeX 3.141592653-2.6-1.40.22 (TeX Live 2021)",
+    "final_passes": 2,
+    "errors": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "underfull_boxes": 0,
+    "existing_warning": "hyperref removes translate from the unchanged appendix PDF bookmark; same warning in original deck log"
+  },
+  "verified_hyperlinks": {
+    "theory-allocation": 15,
+    "theory-compensation": 51,
+    "theory-fertility": 18,
+    "theory-primitives": 54
+  },
+  "unchanged_source_blocks": {
+    "quantitative_main_and_quantification_sha256": "5e1667f45189bf8a62162e825ea38fd0c0233b8ab57f6cc9b46da6c39ee0936d",
+    "quantitative_appendix_sha256": "0b93304f87c114ef8f856ff43a44096521ea22ca62273309aed1466eee367c4d"
+  },
+  "review": {
+    "profile": "reviewer_strong",
+    "time_limit_minutes": 20,
+    "read_only": true,
+    "result_file": "output/model/simplified_olg_amendments/september_slides_review.md",
+    "result_sha256": "f8c83e73db6d851d07737806ce9a494e3663d60a0a7d590ae8d3d3771bd9c299",
+    "frozen_source_sha256": "d921f700407ba8a86c94d1b1cdeaf1fb324e8c76170c3bf8eeef4f44ec730ed7",
+    "post_review_diff": "--- reviewed.tex\n+++ final.tex\n@@ -75,7 +75,7 @@\n \\alert{First:} a simplified model of family space and tenure\n \\begin{itemize}\n   \\item Show when reallocating housing toward the young improves welfare at fixed fertility.\n-  \\item Derive a separate condition for better housing access to raise fertility.\n+  \\item Give a household condition for better housing access to raise fertility.\n \\end{itemize}\n \n \\vfill\n@@ -141,7 +141,7 @@\n The cost of using housing accounts for its purchase, tax, and resale value.\n \n \\vfill\n-Rental and owner homes satisfy $h\\le h_R^{\\max}<h_O^{\\max}$ and $h\\le h_O^{\\max}$, respectively. Property-tax revenue is rebated equally.\n+Rentals satisfy $h\\le h_R^{\\max}$; owners satisfy $h\\le h_O^{\\max}$, with $h_R^{\\max}<h_O^{\\max}$. Property-tax revenue is rebated equally.\n \\end{frame}\n \n \\begin{frame}{Home Finance}\n@@ -194,7 +194,7 @@\n The mortgage is repaid next period; $a_{t+1}$ is financial wealth after repayment.\n \n \\vfill\n-The household owns if $W_t^O(i)+\\xi_i\\ge W_t^R(i)$. The ownership taste is drawn independently of income and wealth.\n+The household owns if $W_t^O(i)+\\xi_i\\ge W_t^R(i)$. The ownership taste is logistic and independent of income and wealth.\n \\end{frame}\n \n \\begin{frame}{Old Households}\n@@ -246,11 +246,11 @@\n These values use the same consumption units for young and old households.\n \n \\medskip\n-With positive young saving, slack owner size limits, and interior old choices, a strictly binding down payment implies:\n+Take positive young saving, slack physical owner limits, and slack old retention and estate bounds. A strictly binding young down payment implies:\n \\[\n MV_i^Y>q r_t=MV_j^O.\n \\]\n-The young owner values more space above its cost; the old owner adjusts housing at that cost.\n+Young buyers need cash at purchase; old owners adjust housing at its cost.\n \\end{frame}\n \n \\begin{frame}[label=theory-allocation]{Housing Reallocation}\n@@ -275,7 +275,7 @@\n \\includegraphics[width=0.91\\textwidth,height=0.71\\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/simple_allocation_figure.pdf}\n \\end{center}\n \\small\n-The old owner's utility is held fixed. Moving housing toward the young improves its use until marginal values meet along this comparison.\n+The old owner's utility is held fixed. The strict value gap gives a local gain from moving housing toward the young.\n \\end{frame}\n \n \\begin{frame}{Tenure and Housing Access}\n@@ -292,7 +292,7 @@\n \\end{frame}\n \n \\begin{frame}[label=theory-fertility]{Housing and Fertility}\n-Consider a young owner with positive saving and interior old choices. Write $x=c-\\chi n$, $s=h-\\kappa n$, and $k=\\beta(1+\\gamma+\\omega_B)$.\n+Consider a young owner at a binding housing limit, with positive saving and interior old choices. Write $x=c-\\chi n$, $s=h-\\kappa n$, and $k=\\beta(1+\\gamma+\\omega_B)$.\n \n \\medskip\n Let $p$ be the net lifetime payment for a marginal unit of current housing, including transfers. At fixed prices and tenure:\n@@ -1038,7 +1038,7 @@\n \n \\begin{itemize}\\setlength\\itemsep{0.6em}\n   \\item Replace the old seller's lost estate title with a bond of equal value.\n-  \\item The young buyer's later sale of the additional title covers its financing.\n+  \\item The young buyer's later sale of the additional title offsets its title financing.\n   \\item Existing creditors and aggregate external assets remain unchanged.\n \\end{itemize}\n \n@@ -1051,7 +1051,7 @@\n \\end{frame}\n \n \\begin{frame}{Conditional Fertility Response}\n-Let $p$ include the net lifetime payment and transfers associated with additional current housing. The budget and fertility condition give:\n+For a young owner at a binding housing limit, let $p$ be the net marginal payment for housing. With positive saving and interior old choices:\n \\[\n (1+k)\\mathrm dx=-\\chi\\mathrm dn-p\\mathrm dh,\n \\qquad\n@@ -1107,7 +1107,7 @@\n \\includegraphics[width=0.98\\textwidth,height=0.67\\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/mixed_transition_analytical_figure.pdf}\n \\end{center}\n \\small\n-Analytical first-order equilibrium response to a permanent increase in the financed share. Initial fertility rises and final population is higher; fertility approaches replacement from both sides.\n+Analytical first-order response to a permanent rise in the financed share. Initial fertility rises and final population is higher. Near this economy, sufficiently small finite reforms also produce oscillations around the new steady state.\n \\end{frame}\n \n \\begin{frame}{Local Credit Transitions}\n@@ -1124,11 +1124,11 @@\n \\end{frame}\n \n \\begin{frame}{Committed Transfers Across Ages}\n-A constrained comparison lets households choose at market-clearing prices after specified transfers.\n+Suppose an authority can commit to household-specific transfers across ages, with households choosing at market-clearing prices.\n \n \\begin{itemize}\\setlength\\itemsep{0.6em}\n-  \\item Allow household-specific purchase cash when young and enforceable, announced payments or taxes when old.\n-  \\item Include every initial property owner and honor its financial claims.\n+  \\item Purchase cash arrives before closing; old-age payments or taxes are announced and enforceable.\n+  \\item Include every initial property owner in welfare and funding accounts, with access to outside bond finance.\n   \\item Hold individual fertility fixed and account for all cohorts along the path.\n \\end{itemize}\n \n"
+  },
+  "theory_reference_sha256": {
+    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "da2a6295dece72b6809816d66dd858bc98f307505c6353c988eb0a3872b999cd",
+    "latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex": "b91b6491bbef1df9c3e77851553bc2892a4f6f21b03ad1992cd2c0a41d4b391a",
+    "latex/JMP_DS_suggestions/simplified_olg_paper_core.tex": "486f7d2c06183e52d37fa97571d1f7fc84d31a0a4ad18c4ed50fce0822272e1c",
+    "latex/JMP_DS_suggestions/simplified_olg_mixed_transition_proof.tex": "286b4e447764e71909ada6e78982811813e7840d9539d9dfdd17d6e92c7229a5",
+    "latex/JMP_DS_suggestions/simplified_olg_constrained_efficiency.tex": "2d3e8ea5096e29cb2898202948744bf0b9994db2074bfa0e88b5b5c9e3ff0ba6"
+  },
+  "figure_sha256": {
+    "output/model/simplified_olg_amendments/simple_allocation_figure.pdf": "8de163206c5ead6a6664ed8e46ea264237cf28c07eb7e48dd73eaa9d75eeadf3",
+    "output/model/simplified_olg_amendments/mixed_transition_analytical_figure.pdf": "7b8311b7aa0db221f261e27031b814b84031bdade852faf33c90f912aa0ee27f"
+  },
+  "model_code_or_calibration_run": false,
+  "protected_manuscript_modified": false,
+  "author_decisions": "Slide integration authorized for discussion; full-note integration remains deferred; additional planner powers remain unaccepted."
+}
