@@ -16,6 +16,17 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
+**September 6 sequencing: set slides aside; retain useful steady-state results.**
+The author is comfortable characterizing parts of the theory in steady state.
+First distinguish the allocation result at a date, conditional fertility,
+stationary endpoints, and the transition connecting them; then unpack the work
+needed for the combined exercise before planning the next hours. Existing
+steady-state results are retained. A date-wise comparison still respects
+lifetime budgets and initial claims. Its applicability requires the stated
+constraints and feasible compensation; stationary policy signs do not establish
+transition signs. No new shock parameter, policy instrument, persistence,
+planner power, or narrower theorem scope is adopted by this discussion.
+
 **Latest author clarification, September 6: two paths after a fertility decline.**
 The organizing premise is that today's economy is still adjusting after an
 earlier fertility decline. The theory uses an old steady state as a starting

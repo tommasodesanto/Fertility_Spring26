@@ -1,5 +1,50 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: separate characterization from the missing transition
+
+Author direction: ignore slides for now. Steady-state characterization remains
+useful; unpack the requirements before organizing further hours of proof work.
+The existing direct-allocation argument applies at any date with the stated
+valuation gap and feasible compensation, while preserving lifetime budgets.
+Constructed steady states show these conditions can occur in equilibrium.
+The conditional fertility derivative also applies at a date under its stated
+constraints and fixed-price/resource comparison. A sufficient restriction
+expressed only in primitives was established in a stationary specialization;
+that restriction cannot be assumed unchanged during adjustment.
+
+Proposed work sequence, not adoption of the shock or policy:
+
+1. Retain the allocation result and identify its assumptions at any date.
+   Check those assumptions on the baseline under study; a declining population
+   need not make misallocation worse at every date.
+2. Construct the fertility-decline baseline in the original equations. A
+   permanent decrease in the existing fertility weight $\vartheta$ is the
+   simplest candidate. Characterize the old and new stationary equilibria,
+   the initial fertility response and a converging path with inherited old
+   assets and titles. The earlier derivative check is evidence, not a proof
+   of this complete exercise or a general sign result.
+3. At a later date on that baseline, introduce a specified policy and retain
+   the same inherited cohorts, assets and titles. A permanent increase in the
+   financed share $\phi$ is the first candidate because the existing work can
+   be reused; it is not an author-selected instrument or a welfare theorem.
+   Compare fertility and cohort sizes during adjustment and terminal population.
+4. Join the comparisons in one verified argument. Interpreting stationary
+   population differences as policy effects from today requires paths reaching
+   those endpoints. Higher fertility at every date is stronger than a cumulative
+   population gain. Preserve the exact cohort
+   product identity and the positive stationary replacement condition.
+   Do not promise a larger endpoint from a temporary reform with unchanged
+   final primitives and a unique stationary equilibrium.
+
+Use existing local transition results as a starting point, then assess which
+restrictions can be relaxed. D1 still seeks broad transparent conditions;
+local scope is not adopted as the final result. A complete closed-form path
+is not necessary if date-wise claims, endpoint comparisons and convergence
+can be established. Numerical calculations support verification. The next
+reading deliverable should be one short account of the combined result and
+its remaining conditions, before further appendix extensions or presentation.
+No model, slide, PDF, calibration or long-running process changed in this turn.
+
 ## September 6: recover the two-path transition question
 
 The author clarified the intended comparison: first a fertility-decline shock
