@@ -1,32 +1,31 @@
 # Simplified OLG: development plan and overnight record
 
-## September 6: seven-slide revision after the author's correction
+## September 6: seven slides with the original curve structure
 
-Tommaso rejected the 14-frame theory section and asked for 5–7 slides using
-the earlier misallocation and two-panel equilibrium-transition structures.
-The review PDF is `output/pdf/simplified_olg_theory_slides.pdf` (seven pages).
-The identical frames are pages 6–12 of the 74-page September 14 main deck;
-full household problems and supporting theory are on pages 44–55.
+The latest author request was to follow the earlier Raquel-style figure more
+closely and show all equilibrium elements. The seven-page review PDF remains
+`output/pdf/simplified_olg_theory_slides.pdf`, identical to main-deck pages
+6–12. The full September 14 deck has 75 pages, with theory support on 44–56.
+All four household W/V problems and the complete equilibrium definition are
+in the main section; the compensation result shares the allocation figure.
 
-Recovered the July note's marginal-value layout and the August advisor deck's
-population/price and price/fertility panel layout. The figures now use current
-model equations: exact compensated reallocation and a local analytical credit
-response with both tenures. The lunch-time clarity pass retains seven slides
-and makes the fixed-fertility inefficiency statement and subsequent fertility
-response explicit. The transition panels compare the initial, impact and
-final states with schematic arrows, retaining possible overshooting in the
-caption and the full path in supporting material. Equations and analytical
-values are unchanged; no static equilibrium schedule is assumed.
-Original utilities and W/V notation are retained; the household-problem and
-rental-role frames moved verbatim to the appendix. No new planner decision,
-full-note integration, calibration or finite-horizon transition solve.
+The transition now has conditional housing and fertility curves, the initial,
+impact and terminal points, and replacement fertility. A distinct impact
+curve preserves initial old assets and actual future expectations. The
+long-run curve uses stationary choices. Both panels derive from the same
+housing-clearing system, and only the marked states impose every equilibrium
+condition. Symbolic axes are schematic and the adjustment can overshoot.
+Original parameters, equilibrium states and the allocation figure are retained.
 
-All seven main frames and four moved appendix frames were visually inspected;
-final two-pass compilations have no undefined references or overflowing
-boxes. Both quantitative source blocks are unchanged. The reproducible driver
-and receipts are indexed in `output/model/simplified_olg_amendments/README.md`.
-The previous long-version review is retained as historical equation evidence;
-it does not represent approval of that presentation.
+Original-equation derivatives, an independent central-difference check, and
+agreement with the certified equilibrium path verify the new curves. Both
+PDFs compile twice without overflow or undefined references; all seven main
+frames and the new curve-definition appendix frame are visually reviewed.
+All previous appendix frames and both quantitative source blocks are unchanged.
+Evidence and build recipe: `output/model/simplified_olg_amendments/README.md`.
+No new planner decision, protected-draft edit, finite transition solve,
+calibration, full-note integration or author approval of the revised deck.
+All 18 decision branches remain banked.
 
 ## September 6 author response — full note still to be updated
 

@@ -1,63 +1,62 @@
 # Simplified OLG amendment checks
 
-## September 6: seven theory slides after the author's correction
+## September 6: seven slides with equilibrium curves and the complete model
 
-Tommaso rejected the 14-frame main theory section and asked for 5–7 slides
-using the earlier marginal-value/reallocation figure and the two-panel
-movement from initial equilibrium, through impact, to a new steady state.
+Tommaso asked to follow the earlier Raquel-style diagram more closely and
+show every equilibrium element. The review PDF is
+`output/pdf/simplified_olg_theory_slides.pdf`: seven main frames, identical to
+pages 6–12 of the 75-page `output/pdf/september_14_presentation.pdf`.
+The latter is also saved beside `latex/september_14_presentation.tex`.
+Supporting theory is on pages 44–56; page 55 defines the plotted curves.
 
-Start with `output/pdf/simplified_olg_theory_slides.pdf`: seven pages, built
-from the same frames as main-deck PDF pages 6–12. The main source remains
-`latex/september_14_presentation.tex`; the complete 74-page reader PDF is
-`output/pdf/september_14_presentation.pdf`, identical to its adjacent LaTeX
-copy. Full household problems and supporting theory are on pages 44–55.
+The sequence is environment/preferences, housing/finance, household choices,
+competitive equilibrium, housing misallocation and compensation, conditional
+fertility, and equilibrium transition. All four W/V problems are visible in
+the main section, with their original notation and dated budgets. Equilibrium
+includes tenure, rental entry, housing clearing, fiscal balance, cohort growth,
+the old-state distribution, initial conditions, and external goods/bond trade.
+The longer original household-problem frames remain in the appendix.
 
-The sequence is environment/preferences, housing/finance, equilibrium,
-misallocation, compensated reallocation, conditional fertility, and transition.
-The separate utilities and original W/V problems retain the author's notation.
-The three full household-problem frames and rental-role qualification moved
-verbatim to the appendix. Both quantitative source blocks remain unchanged.
+The two-panel transition again has curves, symbolic price/population/fertility
+axes, replacement fertility, and initial A, impact I, and terminal A-prime.
+Its visual reference is the August 17–21 advisor deck's demographic-adjustment
+figure; retrieved records do not establish the exact Raquel meeting attribution.
+The older quasi-linear preference-shock model is not substituted for the
+accepted model. Instead, the original household equations give conditional
+local housing-clearing curves in the same certified mixed-tenure credit example.
+Initial and impact curves keep inherited old assets and the respective future
+prices/rebate fixed. The long-run curve uses constant prices and repeated
+lifetime choices. The right panel evaluates fertility along the same housing
+curve. Only the marked states satisfy all equilibrium conditions.
 
-The visual references are `intergenerational_housing_fertility_note_slides.tex`
-("Intergenerational Misallocation") and the August 17–21 advisor deck
-`transition_closure_update_presentation.tex` ("Demographic adjustment").
-Meeting attribution to Raquel is not established by the retrieved records.
-The earlier tax wedge and preference-shock formulas are not imported. The
-reallocation curves use exact old-utility compensation in the verified mixed
-stationary economy. Following the author's lunch-time clarity instruction,
-the two transition panels compare the initial, impact and final equilibria
-of the same local analytical credit response. Connecting arrows are schematic;
-the caption states that intermediate adjustment may overshoot. The full path
-remains in the receipt and supporting appendix. Both tenures, positive child
-costs and tax are retained, and all analytical values are unchanged. Population
-is labeled as adult households. No static price/population or price/fertility
-schedule, general fertility sign, global convergence or new welfare claim is
-added. The main result now explicitly states inefficiency at fixed fertility;
-the subsequent fertility slide explains the separate conditional response.
+A distinct dotted impact curve is needed because inherited assets and
+expectations differ from their long-run values. The arrows compare the three
+states; they do not assert monotone dynamics or a static one-state transition.
+Axes are explicitly schematic. A monotone arcsinh vertical transformation
+makes the small fertility impact visible; neither numerical distances nor
+curvature are claimed. All three marked states and model parameters are
+unchanged. The allocation figure still uses exact old-utility compensation;
+the separate fixed-price fertility condition and all planner decisions remain.
 
-Rebuild both diagrams, the main deck and the seven-page extract:
+Rebuild the figures, main deck, and extract from the single main TeX source:
 
 ```sh
 python3 code/model/tools/build_simplified_olg_theory_slides.py
 ```
 
-The driver writes all TeX build files and the generated extract wrapper to
-`tmp/pdfs/september_14_theory_compact/`. The main deck is the only slide source.
-Use `--figures-only` to rebuild the two diagrams without compiling the decks.
+The driver uses `tmp/pdfs/september_14_theory_compact/` for build products;
+`--figures-only` omits PDF compilation. `theory_slides_figure_checks.json`
+records the curve definitions, derivatives, original-equation central checks,
+matching equilibrium points, full analytical response, and compensation checks.
+`theory_slides_verification.json` records final hashes, the page map, two-pass
+builds, visual review, and preservation of both quantitative source blocks
+and all pre-existing appendix frames. No overflow or undefined references;
+the pre-existing main-deck appendix-bookmark warning remains.
 
-`theory_slides_figure_checks.json` records formulas, parameters, exact
-compensation checks, local response arrays and equilibrium residuals.
-`theory_slides_verification.json` records final hashes, page mapping,
-two-pass compilation, visual inspection of all seven main and four moved
-frames, and source preservation. No undefined references or overflowing
-boxes; only the main deck's pre-existing appendix-bookmark warning remains.
-No calibration or finite-horizon transition solve was launched.
-
-The earlier `september_slides_review.md` and
-`september_slides_verification.json` concern the superseded long section.
-Their equation review is historical evidence, not author approval of its
-presentation. Full-note integration and remaining planner choices still await
-discussion; all 18 decision IDs are preserved.
+No calibration, finite-horizon transition solve, new planner permission,
+protected-manuscript edit, or full-note integration. All 18 decisions remain.
+`september_slides_review.md` records this review and retains the earlier audit;
+`september_slides_verification.json` concerns only the superseded long deck.
 
 ## September 6: transition with substantial renting and positive child costs
 

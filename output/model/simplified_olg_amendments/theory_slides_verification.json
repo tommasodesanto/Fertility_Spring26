@@ -8,6 +8,15 @@
     11,
     12
   ],
+  "main_frame_titles": [
+    "Environment and Preferences",
+    "Housing and Finance",
+    "Household Choices",
+    "Competitive Equilibrium",
+    "Housing Misallocation",
+    "Housing and Fertility",
+    "Equilibrium Transition"
+  ],
   "theory_appendix_pages": [
     44,
     45,
@@ -20,28 +29,28 @@
     52,
     53,
     54,
-    55
+    55,
+    56
   ],
+  "curve_definition_page": 55,
   "preview_pages": 7,
-  "full_deck_pages": 74,
+  "full_deck_pages": 75,
   "pdf_hashes": {
-    "output/pdf/simplified_olg_theory_slides.pdf": "615e6402e1e79031c79bbb41eb5530f655f58df9f540ee205a7c860d8d6c4eaa",
-    "output/pdf/september_14_presentation.pdf": "98a5c9ccb4e23804cd32b2e8347d2c6838fdef0eb7a0c36fccfe3a7cff0a740f",
-    "latex/september_14_presentation.pdf": "98a5c9ccb4e23804cd32b2e8347d2c6838fdef0eb7a0c36fccfe3a7cff0a740f"
+    "output/pdf/simplified_olg_theory_slides.pdf": "b1f180615d108a31cb950af1f79f8c442f763c083b1bcfec20c01449d094d0fa",
+    "output/pdf/september_14_presentation.pdf": "d94ef3d5b13e170b48d61e6e77d0ed6d37185a907b0746a52facfdedd36e0adb",
+    "latex/september_14_presentation.pdf": "d94ef3d5b13e170b48d61e6e77d0ed6d37185a907b0746a52facfdedd36e0adb"
   },
-  "source_hash": "66d77a81a7aa3ee6c405626329d62dd4f0753a5b0ffa5a47d689c93ca6882996",
+  "source_hash": "243d274d1248fb4c93c22de0781ff836ac9f34ef261be84d0676da705619eb97",
   "unchanged_quantitative_block_hashes": [
-    "d2d0f4f96a51ac40a019cc2261ed9bb867a517b9622114e8c1338439ca422327",
-    "0b93304f87c114ef8f856ff43a44096521ea22ca62273309aed1466eee367c4d"
+    "03db2a5526a48b6e81df24d97f97b9155f0ea7047f843aefd8d061865f752ccd",
+    "29ab5c667b7d2f47e7a3bb198cace13630f50ef6cfb681678d871f62d9d3d501"
   ],
-  "preserved_frames": [
-    "Young Renters",
-    "Young Owners",
-    "Old Households",
-    "Tenure and Housing Access"
-  ],
+  "all_previous_appendix_frames_unchanged": true,
   "separate_flow_utilities_unchanged": true,
-  "preview_matches_main_pages": "Text matches after removing footer counters and extractor whitespace differences; both use the same TeX frame block.",
+  "conditional_fertility_frame_unchanged": true,
+  "parameters_allocation_and_marked_equilibria_unchanged": true,
+  "theory_verifier_sources_unchanged": true,
+  "preview_matches_main_pages": true,
   "two_pass_compile": true,
   "compile_warnings": {
     "simplified_olg_theory_slides": [],
@@ -49,23 +58,86 @@
       "Package hyperref Warning: Token not allowed in a PDF string (Unicode):"
     ]
   },
+  "equilibrium_coverage": [
+    "original four W/V problems and budgets",
+    "physical housing/old title/estate restrictions",
+    "down payment and saving constraints",
+    "ownership taste and tenure selection",
+    "initial cohorts/old distribution and fixed entrant distribution",
+    "rent-price relation",
+    "housing clearing",
+    "property-tax rebate balance",
+    "demographic reproduction",
+    "old-state distribution evolution",
+    "external goods/bond closure",
+    "steady-state price/allocation/distribution constancy and replacement fertility"
+  ],
+  "curve_checks": {
+    "stationary": {
+      "N_P": 1.571793307983097,
+      "N_shift": -4.454908628313983,
+      "n_P": -0.3195179938795178,
+      "n_shift": 1.3808527332249456
+    },
+    "impact": {
+      "N_P": 1.715908635143529,
+      "N_shift": -6.832374115466147,
+      "n_P": -0.3568685333858356,
+      "n_shift": 1.500640026257496
+    },
+    "equilibrium_point_max_error": 6.661338147750939e-15,
+    "finite_difference_max_error": 5.994650997820372e-09,
+    "stationary_jacobian": [
+      [
+        -0.7845635752420409,
+        0.49915187401375427,
+        2.223675990382968
+      ],
+      [
+        -0.31858618993974336,
+        -0.0005928285449758591,
+        1.3782117362248218
+      ]
+    ],
+    "impact_jacobian": [
+      [
+        -0.8569902846680587,
+        0.4994381793506009,
+        2.6458827449898896,
+        0.24038184644076485,
+        0.0031576181036717826,
+        0.005905139833711266
+      ],
+      [
+        -0.3561903736395131,
+        -0.00039521902998390575,
+        1.3782117362248218,
+        0.034868219224117925,
+        0.002340745445667837,
+        0.03127377546576283
+      ]
+    ],
+    "impact_exogenous_direction": [
+      0.0,
+      0.0,
+      1.0,
+      3.136132360584149,
+      3.9169923272089835,
+      0.03862575365312768
+    ],
+    "scope": "Local tangents at the certified mixed-tenure economy, not global schedules. Equal age shares on both plotted schedules; inherited old assets and transition expectations at impact, repeated lifetime choices and constant prices for stationary curves. Only marked points impose every equilibrium condition."
+  },
   "figure_receipt": "output/model/simplified_olg_amendments/theory_slides_figure_checks.json",
-  "visual_review": "Clarity pass: all six changed main frames (2\u20137) inspected at 1450 pixels; final page 3 wording rechecked. The first frame and entire quantitative/appendix source are unchanged from the previously reviewed version.",
+  "visual_review": "All seven main frames and the new curve-definition appendix frame inspected at 1450 pixels; final cosmetic changes on slides 4 and 7 rechecked.",
   "historical_structure_sources": [
     "latex/intergenerational_housing_fertility_note_slides.tex:268",
     "latex/transition_closure_update_presentation.tex:187"
   ],
-  "meeting_attribution": "No repository evidence specifically confirms the Raquel meeting. August 17\u201321 advisor deck is the closest dated transition reference.",
-  "limits": "The transition figure compares initial, impact and final states of the same local analytical example. Arrows connect those equilibria schematically; intermediate adjustment may overshoot. The compensation argument and fertility condition are unchanged. No global or general constrained-efficiency claim.",
+  "meeting_attribution": "Closest dated advisor figure found; exact Raquel meeting attribution not established.",
+  "limits": "Conditional local housing/fertility curves, not a one-state dynamic law. Initial/impact curves hold inherited old assets and corresponding future prices/rebate fixed; the long-run curve uses stationary choices. Only marked points satisfy all equilibrium conditions. Axes are schematic, with a monotone vertical transformation for fertility; no metric or curvature claim. Arrows do not assert monotonicity.",
   "calibration_or_finite_horizon_transition_run": false,
   "analytical_diagram_checks_executed": true,
   "protected_draft_edited": false,
-  "clarity_pass": {
-    "baseline_commit": "e6351b1",
-    "all_display_equations_unchanged": true,
-    "all_analytical_values_unchanged": true,
-    "first_frame_unchanged": true,
-    "entire_quantitative_and_appendix_source_unchanged": true,
-    "transition_display": "Three equilibrium states; schematic connecting arrows. Full analytical path remains in the data receipt and the supporting appendix."
-  }
+  "all_18_decision_ids_retained": true,
+  "baseline_commit": "369eb24"
 }

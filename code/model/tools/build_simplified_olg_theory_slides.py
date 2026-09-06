@@ -24,6 +24,9 @@ import numpy as np
 from scipy.linalg import schur
 
 from verify_simplified_olg_mixed_transition import anchor, linearization
+from verify_simplified_olg_local_transition import (
+    young_choices, old_choices, complex_jacobian,
+)
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "output/model/simplified_olg_amendments"
@@ -126,47 +129,69 @@ def transition_figure(p, Z, hh):
     assert fertility[0]>0 and n1>0 and abs(population[0])<1e-12
     assert np.max(abs(states[-1]-stat))<1e-10
 
-    # Both panels compare the SAME initial, impact and final equilibria.
-    # Arrows connect those states schematically; they are not date-by-date
-    # trajectories. The full analytical response, including overshooting, is
-    # retained in the receipt and the existing supporting appendix. No static
-    # P(population) or n(P) schedule is assumed. Distances are first-order
-    # derivatives of levels, with symbolic level endpoints on the axes.
-    fig,axes=plt.subplots(1,2,figsize=(12.5,3.8),layout="constrained")
-    panels=[(population,price,np.array([n1,p1])),
-            (price,fertility,np.array([p1,0.]))]
-    for j,(ax,(xx,yy,endpoint)) in enumerate(zip(axes,panels)):
-        impact=np.array([xx[0],yy[0]])
+    curves = equilibrium_curves(p, Z, hh, states, result)
+    # These are first-order conditional housing-market schedules, not a
+    # one-state law of motion. Initial and impact schedules keep initial old
+    # assets and the corresponding equilibrium future prices/rebate fixed.
+    # The final schedule uses constant prices and repeated lifetime choices. Each marked
+    # point satisfies the full equilibrium. A monotone vertical transformation
+    # makes the small fertility overshoot legible on explicitly schematic axes;
+    # it preserves curve ordering, slopes' signs, intersections, and the points.
+    fy = lambda n: np.arcsinh(np.asarray(n)/.055)
+    fig,axes=plt.subplots(1,2,figsize=(12.5,4.45))
+    fig.subplots_adjust(left=.075,right=.985,bottom=.19,top=.77,wspace=.32)
+    Ngrid=np.linspace(-.62,3.05,250)
+    Pgrid=np.linspace(-.90,4.98,350)
+    schedules=[("Initial",BLUE,"-",curves["impact"],0.),
+               ("Impact",GRAY,":",curves["impact"],1.),
+               ("Long run",RED,(0,(6,3)),curves["stationary"],1.)]
+    handles=[]
+    for label,color,ls,curve,shock in schedules:
+        line,=axes[0].plot(Ngrid,(Ngrid-curve["N_shift"]*shock)/curve["N_P"],
+                          color=color,ls=ls,lw=2.6,label=label)
+        axes[1].plot(Pgrid,fy(curve["n_P"]*Pgrid+curve["n_shift"]*shock),
+                     color=color,ls=ls,lw=2.6)
+        handles.append(line)
+    fig.legend(handles=handles,labels=[r"Initial: $\phi_0$",r"Impact: $\phi_1$",r"Long run: $\phi_1$"],
+               loc="upper center",bbox_to_anchor=(.52,1.01),ncol=3,fontsize=15,
+               handlelength=2.6,columnspacing=2.4)
+    panels=[(np.array([population[0],price[0]]),np.array([n1,p1])),
+            (np.array([price[0],fy(fertility[0])]),np.array([p1,0.]))]
+    for j,(ax,(impact,endpoint)) in enumerate(zip(axes,panels)):
         ax.annotate("",xy=impact,xytext=(0,0),
                     arrowprops=dict(arrowstyle="->",color="#999999",lw=1.7,
                                     shrinkA=7,shrinkB=7,mutation_scale=14),zorder=1)
         ax.annotate("",xy=endpoint,xytext=impact,
-                    arrowprops=dict(arrowstyle="->",color=RED,lw=2.,linestyle=(0,(5,3)),
-                                    shrinkA=7,shrinkB=7,mutation_scale=14),zorder=1)
+                    arrowprops=dict(arrowstyle="->",color="#555555",lw=1.7,
+                                    shrinkA=7,shrinkB=7,mutation_scale=14),zorder=4)
         ax.scatter([0],[0],color=BLUE,s=70,zorder=5)
         ax.scatter([impact[0],endpoint[0]],[impact[1],endpoint[1]],color=RED,s=70,zorder=5)
         ax.annotate(r"$A$",(0,0),xytext=(8,10),textcoords="offset points",color=BLUE,fontsize=18)
-        ax.annotate(r"$I$",impact,xytext=(9,2 if j==0 else 5),textcoords="offset points",color=RED,fontsize=18)
-        ax.annotate(r"$A'$",endpoint,xytext=(9,8 if j==0 else -23),textcoords="offset points",color=RED,fontsize=18)
+        ax.annotate(r"$I$",impact,xytext=(-16,9) if j==0 else (-18,6),textcoords="offset points",color=RED,fontsize=18)
+        ax.annotate(r"$A'$",endpoint,xytext=(9,-20),textcoords="offset points",color=RED,fontsize=18)
 
     ax=axes[0]
-    ax.set(title="(a) Housing market",xlabel=r"Adult households, $Y+O$",ylabel=r"House price, $P$")
+    ax.set(title="(a) Housing-market clearing",xlabel=r"Adult households, $Y+O$",ylabel=r"House price, $P$")
     ax.set_xticks([0,n1],[r"$Y_0+O_0$",r"$Y_1^*+O_1^*$"])
     ax.set_yticks([0,p1],[r"$P_0^*$",r"$P_1^*$"])
-    ax.set_xlim(-.20,2.90);ax.set_ylim(-.22,5.05)
-    ax.text(.11,1.9,"Impact",color=GRAY,fontsize=13)
-    ax.text(.88,3.50,"Population adjustment",color=RED,fontsize=13)
+    ax.set_xlim(-.62,3.05);ax.set_ylim(-.5,5.5)
+    for xv,yv in [(0,0),(n1,p1)]:
+        ax.plot([xv,xv],[-.5,yv],color=GRAY,ls=":",lw=.85)
+        ax.plot([-.62,xv],[yv,yv],color=GRAY,ls=":",lw=.85)
+    ax.annotate(r"$\widetilde P$",(0,price[0]),xytext=(9,-21),textcoords="offset points",fontsize=15)
     ax=axes[1]
     ax.axhline(0,color=GRAY,lw=1,ls=":")
     ax.set(title="(b) House prices and fertility",xlabel=r"House price, $P$",ylabel=r"Mean fertility, $\bar n$")
     ax.set_xticks([0,p1],[r"$P_0^*$",r"$P_1^*$"])
-    ax.set_yticks([0],[r"$1/\nu$"])
-    ax.set_xlim(-.25,4.92);ax.set_ylim(-.020,1.38*fertility[0])
+    ax.set_yticks([0,fy(fertility[0])],[r"$1/\nu$",r"$\widetilde n$"])
+    ax.set_xlim(-.90,4.98);ax.set_ylim(-1.1,4.25)
+    ax.plot([-.90,price[0]],[fy(fertility[0])]*2,color=GRAY,lw=.8,ls=":")
+    ax.plot([p1,p1],[-1.1,0],color=GRAY,lw=.8,ls=":")
     for ax in axes:
-        ax.title.set_fontsize(18)
-        ax.xaxis.label.set_size(17)
-        ax.yaxis.label.set_size(17)
-        ax.tick_params(length=4,pad=6,labelsize=17)
+        ax.title.set_fontsize(16)
+        ax.xaxis.label.set_size(16)
+        ax.yaxis.label.set_size(16)
+        ax.tick_params(length=4,pad=6,labelsize=16)
     save(fig,"theory_slides_transition")
     return dict(taste_scale=p["sigma"],owner_share=float(hh["pi"]),
                 first_fertility_derivative=float(fertility[0]),
@@ -174,7 +199,78 @@ def transition_figure(p, Z, hh):
                 stationary_price_derivative=float(p1),
                 map_residual=float(map_error),initial_boundary_residual=float(boundary_error),
                 states=states.tolist(),fertility=fertility.tolist(),population=population.tolist(),
-                interpretation="Initial, impact and final equilibria from the local analytical credit response. Arrows connect those states schematically; intermediate overshooting is not drawn. The complete analytical path remains in the receipt and supporting appendix. No static one-dimensional schedule or monotonicity claim.")
+                curves=curves,
+                interpretation="Conditional local equilibrium curves with initial, impact and final equilibria. Initial/impact curves hold inherited old states and their respective equilibrium future prices/rebate fixed; the long-run curve uses stationary lifetime choices. Arrows compare the states, not every transition date. Symbolic axes are schematic; fertility uses a monotone arcsinh transformation. No one-state dynamics or monotonic adjustment claim.")
+
+
+def equilibrium_curves(p, Z, hh, states, result):
+    """Derive both panels from the original household and market equations.
+
+    F is excess housing demand, with equal young/old masses N/2. Eliminating
+    N from F=0 yields fertility along the SAME conditional market schedule.
+    The old-age asset distribution is generated by repeated lifetime choices
+    for stationary curves, and inherited from the pre-reform economy at impact.
+    Only the marked A/I/A' points also satisfy all demographic and expectation
+    conditions. Off-point schedules deliberately relax those conditions.
+    """
+    q,tau,H=p["q"],p["tau"],p["Hbar"]
+    T=q*tau*Z[0]*H/(Z[2]+Z[3])
+
+    def stationary(v):
+        P,N,phi=v
+        rebate=q*tau*P*H/N
+        choices=young_choices([P]*3,[rebate]*2,dict(p,phi=phi))
+        old_h=sum(prob*choices[tenure]["z"][5] for tenure,prob in
+                  (("owner",choices["pi"]),("renter",1-choices["pi"])))
+        return np.array([N/2*(choices["housing"]+old_h)-H,choices["fertility"]])
+
+    def impact(v):
+        P,N,phi,Pn,Pnn,Tn=v
+        rebate=q*tau*P*H/N
+        pp=dict(p,phi=phi)
+        choices=young_choices([P,Pn,Pnn],[rebate,Tn],pp)
+        old_h=sum(prob*old_choices(hh[tenure]["assets"],hh[tenure]["z"][1],
+                                  P,Pn,rebate,pp,tenure=="owner")[1]
+                  for tenure,prob in (("owner",hh["pi"]),("renter",1-hh["pi"])))
+        return np.array([N/2*(choices["housing"]+old_h)-H,choices["fertility"]])
+
+    Js=complex_jacobian(stationary,[Z[0],Z[2]+Z[3],p["phi"]])
+    Ji=complex_jacobian(impact,[Z[0],Z[2]+Z[3],p["phi"],Z[0],Z[0],T])
+    Tn=q*tau*H*(states[1,0]/2-Z[0]*(states[1,2]+states[1,3])/4)
+    direction=np.array([0.,0.,1.,states[1,0],states[2,0],Tn])
+
+    def eliminate(J,shift):
+        N_P=-J[0,0]/J[0,1]
+        N_shift=-shift[0]/J[0,1]
+        return dict(N_P=float(N_P),N_shift=float(N_shift),
+                    n_P=float(J[1,0]+J[1,1]*N_P),
+                    n_shift=float(shift[1]+J[1,1]*N_shift))
+
+    cs=eliminate(Js,Js[:,2]); ci=eliminate(Ji,Ji@direction)
+    Pss=-cs["n_shift"]/cs["n_P"]
+    Nss=cs["N_P"]*Pss+cs["N_shift"]
+    Pi=-ci["N_shift"]/ci["N_P"]
+    ni=ci["n_P"]*Pi+ci["n_shift"]
+    errors=[abs(Pss-result["derivative"][0]),
+            abs(Nss-sum(result["derivative"][2:4])),
+            abs(Pi-states[0,0]),abs(ni-(states[1,2]-states[0,2])/p["nu"])]
+    assert max(errors)<1e-11 and cs["N_P"]>0 and ci["N_P"]>0
+    assert cs["n_P"]<0 and ci["n_P"]<0
+    # Independent central differences check the derivatives used to draw curves.
+    finite_errors=[]
+    for fun,point,J in ((stationary,np.array([1.,2.,p["phi"]]),Js),
+                        (impact,np.array([1.,2.,p["phi"],1.,1.,T]),Ji)):
+        step=1e-5
+        for j in range(len(point)):
+            dx=np.zeros_like(point);dx[j]=step
+            finite_errors.append(float(np.max(abs((fun(point+dx)-fun(point-dx))/(2*step)-J[:,j]))))
+    assert max(finite_errors)<1e-7
+    return dict(stationary=cs,impact=ci,
+                equilibrium_point_max_error=float(max(errors)),
+                finite_difference_max_error=max(finite_errors),
+                stationary_jacobian=Js.tolist(),impact_jacobian=Ji.tolist(),
+                impact_exogenous_direction=direction.tolist(),
+                scope="Local tangents at the certified mixed-tenure economy, not global schedules. Equal age shares on both plotted schedules; inherited old assets and transition expectations at impact, repeated lifetime choices and constant prices for stationary curves. Only marked points impose every equilibrium condition.")
 
 
 def compile_decks():

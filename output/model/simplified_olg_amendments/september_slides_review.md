@@ -1,34 +1,35 @@
-## September 6 author correction: seven-slide version
+## September 6: equilibrium curves and complete household problems
 
-The author rejected the longer presentation reviewed below. Its equation
-review remains evidence, but does not establish presentation approval.
-The revised main section has seven frames, with both requested graph roles
-in the main sequence. Three complete household problems and the rental-role
-qualification moved verbatim to the appendix. No utility or W/V convention
-was changed.
+The latest author request was to follow the earlier Raquel-style plot more
+closely and show every equilibrium element. The seven main frames now include
+all four household W/V problems and a full equilibrium definition. The
+misallocation figure and its compensated Pareto comparison share one frame.
+Original utilities, budgets, constraints, and policy permissions are retained.
+All previous appendix frames and both quantitative source blocks are unchanged.
 
-One ten-minute read-only retrieval located the earlier note's marginal-value
-figure and August 17–21 advisor deck's A–I–A′ transition panels. Neither can be
-specifically attributed to the Raquel meeting from the retrieved records.
-The new diagrams preserve those layouts without importing the older
-capital-gains-tax wedge or quasi-linear preference-shock schedules.
+The initial/impact/terminal points are unchanged from the certified analytical
+credit response at taste scale four. The left curves are derived from housing
+clearing and the rebate rule with equal age shares. Initial and impact curves
+hold initial old states and their respective future prices/rebate fixed;
+long-run curves use stationary lifetime choices. The right curves compute
+fertility on those same housing-clearing schedules. Housing and fertility
+curves jointly reproduce each marked equilibrium to below 1e-11. Central
+finite differences independently check every plotted derivative to below 1e-7.
+Only the three marked states impose all equilibrium conditions.
 
-Lead economics review: allocation curves use the exact compensation formula;
-old utility is unchanged and the plotted small move raises young utility.
-The transition uses the initial, impact and final states of the established
-local analytical path at taste scale four in the certified family. The lunch-time
-clarity pass replaced the intervening path with schematic connecting arrows;
-the caption explicitly retains possible overshooting. All analytical values,
-including inherited initial-old claims, are unchanged. No new solve. The
-fertility condition substitutes p=qr only with fixed prices/tenure and no
-accompanying transfers. The direct planner's financing permission, fixed
-fertility and future real allocations remain explicit. No first-best solution,
-general constrained-inefficiency or universal fertility claim is introduced.
+The extra impact curve prevents treating inherited assets as already adjusted.
+The vertical fertility axis is a monotone schematic transformation; numerical
+distances and curve curvature have no claimed economic content. The figure
+therefore restores curves without inventing a one-dimensional transition law.
+The actual path may overshoot. The August figure remains the visual reference,
+not the source of household equations or a confirmed Raquel meeting record.
 
-The final receipts are `theory_slides_figure_checks.json` and
-`theory_slides_verification.json`. They supersede the old page map and record
-both diagram checks, all changed-frame visual inspections, two-pass builds,
-and unchanged quantitative source blocks.
+All seven main frames and the new curve-definition appendix frame were rendered
+and visually checked; the final cosmetic changes were rechecked. Both PDFs
+compile twice without overflow or undefined references. Their hashes, page map,
+and scientific preservation checks are in `theory_slides_verification.json`.
+No new model solve, welfare claim, parameter change, or full-note integration.
+The historical equation review below does not establish author approval.
 
 ## Earlier review of the superseded long section
 

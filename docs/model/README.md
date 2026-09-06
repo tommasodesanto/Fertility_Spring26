@@ -12,10 +12,12 @@ appendix for now. The earlier full-model note is
 the later discussion into that integrated note remains unfinished.
 
 - `../../output/pdf/simplified_olg_theory_slides.pdf` -- seven-slide theory
-  review after the author's September 6 correction. These are main-deck pages
-  6–12, with the earlier marginal-value and two-panel transition structures
-  updated for the current model. Original household problems and supporting
-  theory remain in the main appendix. Source: `../../latex/september_14_presentation.tex`;
+  review, identical to main-deck pages 6–12. Includes all four household problems,
+  the full equilibrium definition, misallocation/compensation, conditional
+  fertility, and the earlier two-panel structure with equilibrium curves.
+  Initial/impact and long-run curves distinguish inherited assets from
+  stationary choices; supporting theory is on main pages 44–56.
+  Source: `../../latex/september_14_presentation.tex`;
   build/checks: `../../output/model/simplified_olg_amendments/README.md`.
 
 - `../../output/pdf/simplified_olg_paper_core.pdf` -- revised September 6

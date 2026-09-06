@@ -16,31 +16,34 @@ theory and quantitative decisions; it has not yet been reconciled with the
 independent review. No substantive author choice is inferred from reading the
 review or agreeing to discuss it.
 
-**September 6 correction: seven theory slides and the earlier diagrams.**
-Tommaso rejected the long theory block and asked for 5–7 slides describing the
-model, with the earlier marginal-value/reallocation diagram and the two-panel
-movement from initial equilibrium through impact to a new steady state.
-`output/pdf/simplified_olg_theory_slides.pdf` is the seven-page review version.
-The same frames are main-deck pages 6–12; original household problems and
-supporting theory are on pages 44–55. The main source remains
-`latex/september_14_presentation.tex`.
+**September 6 correction: seven slides, equilibrium curves, and all equilibrium elements.**
+Tommaso asked to follow the earlier Raquel-style two-panel figure more closely
+and show the complete equilibrium. The seven-page review PDF remains
+`output/pdf/simplified_olg_theory_slides.pdf`; the same frames are main-deck
+pages 6–12. The full deck has 75 pages and theory support on pages 44–56.
+The source remains `latex/september_14_presentation.tex`.
 
-The earlier diagram structures are restored with current-model economics:
-exact compensation at fixed fertility and an analytical local credit path.
-At lunch Tommaso reaffirmed clarity and structure as the priority. The
-transition panels now compare the initial, impact and final equilibria, with
-schematic arrows and explicit possible overshooting. The full analytical path
-is retained in supporting material; all equations and values are unchanged.
-No static price/population or price/fertility schedule is assumed. Household
-population is labeled explicitly; U0 remains open. The newer transition proof
-and stationary-welfare discussion remain appendix material. No new planner
-powers or general transition claim are inferred.
+All four original household W/V problems now appear in the main section,
+followed by the full equilibrium definition: optimality and tenure, rental
+entry, housing clearing, rebates, cohort growth, old-state evolution, initial
+conditions, and external goods/bond trade. The misallocation graph and
+compensated comparison share a frame. Utilities and financial conventions are
+preserved; every original appendix frame and both quantitative blocks remain.
 
-Original flow utilities and W/V functions are preserved. Both quantitative
-source blocks are unchanged. `theory_slides_verification.json` in the existing
-amendment evidence folder records source/PDF checks and complete visual review.
-The previous longer version was not author-approved. Full-note integration
-still awaits discussion, and all 18 decision IDs remain in place.
+The transition figure again shows conditional housing-market and fertility
+curves, replacement fertility, and initial/impact/terminal equilibria. A
+separate impact curve holds inherited old states and corresponding future
+prices/rebate fixed; the long-run curve uses stationary choices. Only marked
+states impose all equilibrium conditions. Axes and connecting arrows are
+schematic, and the full transition can overshoot. All parameters and marked
+equilibria are unchanged. The earlier quasi-linear preference-shock model is
+not imported; the exact Raquel-meeting attribution remains unverified.
+
+Original-equation, central-difference, equilibrium-point and rendered-PDF
+checks are recorded in the existing amendments evidence folder. This is a
+presentation revision, not a new planner power, general transition theorem,
+full-note integration, or author approval of the output. All 18 IDs remain;
+U0 and the previously parked policy and welfare branches retain their status.
 
 **September 6 author response: return to the main note.**
 Tommaso places the new mixed-tenure transition and stationary welfare analysis
@@ -744,7 +747,7 @@ between mechanism analysis and welfare analysis before either is understood.
 | D1 | Aim for the broadest valid transition result under economically reasonable, transparent conditions; do not restrict the objective to small reforms in advance. | DECIDED | Research objective only; no author acceptance of local scope as the final target is inferred. The new primitive stability condition and transverse initial boundary establish local existence, convergence and uniqueness. Uniform perturbation admits positive costs, renters and tax. The admissible neighborhood has no numerical size bound. Global continuation and unrestricted branch crossings remain open. | D1 author preference; local_transition_proof.md sections 5, 9, 10 |
 | D2 | Supply scope: fixed stock as the simple-model benchmark, with a simple long-run supply extension to assess the terminal population claim. Exact supply specification, transition construction, shock direction, branch coverage, and numerical scope remain open. | DECIDED | Exact stationary stock scaling is established under the existing external-income closure; the plotted limiting economy also admits a local stock transition. No construction dynamics or endogenous supply function are selected. The main new Figure 2 concerns credit. Historical gains-tax examples remain evidence, with that policy extension deferred through Q0. | D2 author agreement; simple assessment page 5; local_transition_proof.md sections 4, 6 |
 | U0 | Reconcile the recorded mismatch between toy fertility, literal children, entrant households, and total population labels. Retained as a correction for the later amendment plan; no new normalization selected. | OPEN | The change-of-variables correction is derived and verified: mapping 0.5 to 2.1 requires a factor 4.2. Literal-child and resident-person conventions remain author choices. Existing quantitative units remain unchanged. | Section 3, details behind audit; U0 correction note below |
-| P1 | Main theory presents environment/equilibrium, allocation, conditional fertility and transition/population implications; proofs remain in the appendix. September 6 correction: 5–7 theory slides with the earlier marginal-value/reallocation diagram and two-panel equilibrium movement. | DECIDED | Seven-page preview and main-deck pages 6–12 implement the requested structure. Full household problems and supporting theory are on pages 44–55. The newer mixed-transition proof and stationary welfare result remain secondary. The four-page core remains a results extract; full-note integration and final paper placement await discussion. No new planner power or restriction on the broader transition objective is inferred. | P0/P1 author agreement; September 6 slide correction above; theory_slides_verification.json |
+| P1 | Main theory presents the model, allocation, conditional fertility and transition/population implications; proofs remain in the appendix. September 6: 5–7 slides, the earlier curve-based two-panel figure, and every equilibrium element. | DECIDED | Seven-page preview and main pages 6–12 contain all four household problems, the complete equilibrium, allocation/compensation, fertility and transition curves. Theory support is on pages 44–56. A separate impact curve retains inherited assets and expectations; only marked states impose the complete equilibrium. The newer proof and stationary welfare remain secondary. Full-note integration and final placement await discussion; no new planner power or general transition claim. | P0/P1 author agreement; September 6 slide requests above; theory_slides_verification.json |
 | V0 | Implement and verify the agreed directions under the consolidated overnight plan; reconcile section, appendix, builder, and claim ledger, with suggestions outside the protected draft. | COMPLETE | Consolidated proposal and original reconciliation remain completed. The September 5 continuation adds the ten-page assessment, primitive local transition conditions, proof/reviews and original-equation receipts. W3/W4 stay provisional or reopened; global-policy and large-reform claims remain unproved. | Overnight/September 5 authorization; simplified_olg_overnight_work.md |
 
 ### Corrections and verification work retained across branches
