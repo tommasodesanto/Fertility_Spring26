@@ -67,8 +67,9 @@ The smoke's best provisional loss was 20.3589601953; its full
 twelve-row fit and eleven-parameter/bound tables accompany
 `recovery_01/smoke/all_target_fits.csv` and `all_parameters.csv`. This is an
 interim evaluated point, not the final repeated recovery result.
-This task has an active 15-minute heartbeat monitor, separate from the paused
-older numerical-task automation. Production and policy results stay retained.
+This task used a 15-minute heartbeat monitor, separate from the older
+numerical-task automation. Both are now paused. Production and policy results
+stay retained.
 
 ### Original attempt and source contract
 
