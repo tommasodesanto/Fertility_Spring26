@@ -1,0 +1,119 @@
+{
+  "adapter_sha256": "3d218e015a6d3bdc90505c2a759dd4493108a6eaae4c9a09eb657c4d0cb635cc",
+  "anchor_loss": 21.79803291709123,
+  "cases": [
+    {
+      "center": "center_001.json",
+      "center_sha256": "2a6311d3124c2a47866aabc6cbabffcbf11b28bb3963789b276bf23b0c92d7c0",
+      "fixed_first_child_room_jump": 0.525,
+      "id": 1,
+      "label": "jump_0.525_observed_room_gap",
+      "output": "task_001",
+      "panel_design": "mixed",
+      "panel_seed": 2026090506,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.0025
+    },
+    {
+      "center": "center_002.json",
+      "center_sha256": "0e862cc20ce5ac15d05cc8c89f974143996aa1f5b2e52edab6cd254296240df5",
+      "fixed_first_child_room_jump": 0.55,
+      "id": 2,
+      "label": "jump_0.55_observed_room_gap",
+      "output": "task_002",
+      "panel_design": "mixed",
+      "panel_seed": 2026090506,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.0025
+    },
+    {
+      "center": "center_003.json",
+      "center_sha256": "16aa6cd6622711cef99e80a28998586467c93fa312bbcdc1e69f603779d0c2e7",
+      "fixed_first_child_room_jump": 0.575,
+      "id": 3,
+      "label": "jump_0.575_observed_room_gap",
+      "output": "task_003",
+      "panel_design": "mixed",
+      "panel_seed": 2026090506,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.0025
+    },
+    {
+      "center": "center_004.json",
+      "center_sha256": "e6e799f5dedc057bae828914f0ec10d2ec661fdc0b8db705e3c0629114382829",
+      "fixed_first_child_room_jump": 0.6,
+      "id": 4,
+      "label": "jump_0.6_observed_room_gap",
+      "output": "task_004",
+      "panel_design": "mixed",
+      "panel_seed": 2026090506,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.0025
+    }
+  ],
+  "code_bundle_sha256": "33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3",
+  "coordinate_direction": [
+    0.0,
+    0.0025,
+    0.0,
+    0.0,
+    0.0,
+    0.0025,
+    -0.0025,
+    0.0,
+    -0.0025,
+    0.0,
+    0.0025
+  ],
+  "derivative_source_sha256": {
+    "round1/task_016/parameter_table.csv": "d298f6eb10bcdbc3c1292a7c1fcb604850a49e2185b2512362d40f504fea75f0",
+    "round1/task_016/target_fit_long.csv": "c5f9df4586a6d922988f2796337d1f4eb7ec0bbd87d73dc7d9ba250c18a3af1b",
+    "round1/task_017/parameter_table.csv": "9496963c80856c7094614f241ce97f6f4b5aca7b2f18b8c7942ea05c39c7fa9f",
+    "round1/task_017/target_fit_long.csv": "62a7daaf574774ae3d3047d37c43358ef2f8943adfc15639a1f3dcf43ae84872",
+    "round1/task_020/parameter_table.csv": "f127637e61b34980a1085f2e7b4b1f0c6544327ff12c40c2994af74869c17f54",
+    "round1/task_020/target_fit_long.csv": "a6839983dd76621aae0c821858885fed59dd1982b27b2f1623149670ec8e1f4f",
+    "round1/task_021/parameter_table.csv": "ad5368385a2ad1339ccce3a630c7b8d66b89d96c950147f0510cfef85734f1a2",
+    "round1/task_021/target_fit_long.csv": "3c4527340b7e3a6bdd7b8aab4e64bc1e7b731eb21d13761678a824df6076ba71"
+  },
+  "empirical_gap_preparation_sha256": "259247ffebb41e26cb3c97caf7d82300f9c244bd18a183a32aa4599074931382",
+  "evening_preparation_sha256": "41888bbda47db931ff5c9f791036a6f36ee82b4d690e8c2a26dbde4d1967a028",
+  "held_nine": {
+    "H0": 14.562959141565095,
+    "beta_annual": 0.9957387588331625,
+    "chi": 1.0434717373613915,
+    "first_birth_fixed_cost": 4.544052672413152,
+    "kappa_fert": 2.23273003596061,
+    "kappa_fert_continuation": 1.7364706586958831,
+    "psi_child_change_2023": -0.32688089718542696,
+    "theta0": 0.5544418580619153,
+    "theta1": 0.10635689183849888
+  },
+  "helper_sha256": {
+    "collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "run_e5f_independent_numerical_audit.py": "b9eb7e33b284d8937f48f22e1f1375e6221fb711c29c1f09bdac486f342f3345"
+  },
+  "identifying_row": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+  "input_sha256": {},
+  "launch_deadline_epoch": 1788656100.0,
+  "physical_derivatives": {
+    "hbar_child_rooms": 0.6904211020891521,
+    "hbar_first_child_jump": -0.019021418283744176
+  },
+  "planner_sha256": "3b662b2e1fd78a297bb8e2e83ff3af8ec694b3338a76b62cff85ec18c4b8079c",
+  "production_promoted": false,
+  "profile_preparation_sha256": "394424dd1e7c4ae48e4e762bec321515e9ac179fcaa31835b92c6536775a018c",
+  "rule": "Local slope adjustment toward the unchanged observed parent-room gap; evaluate all twelve actual moments. Linear predictions are not model results.",
+  "schema": "e5f_fixed_first_child_profile_v1",
+  "scope": "conditional_profile_not_calibration",
+  "selected_summary_sha256": "e7e85b5183392e8db9e3d8c7429f9286fbd385ed1d5ec647d450e7e6e12912bf",
+  "source": "/scratch/td2248/projects/Fertility_Spring26_pf_20260823/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "empirical_large_family_gap_four_points",
+  "starting_summary_sha256": "d77edb77adc6ce5a1565ae8fbb9bf7ba9e6a3be410a6697fb06ed72ecea30b00",
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817"
+}

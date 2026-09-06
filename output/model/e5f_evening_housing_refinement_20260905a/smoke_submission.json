@@ -1,0 +1,6 @@
+{
+  "job_id": "17010311",
+  "command": "cd /scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/cluster && E5F_BOUNDED_PLAN=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/smoke/plan.json E5F_BOUNDED_PLAN_SHA256=df43d5bfa5b3d3b8f9ff31e236fa4fd880a26170e3197abea298bf24e56bab46 sbatch --parsable --job-name=e5feven-smoke --array=1-2%2 --output=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/smoke_%A_%a.out --error=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/smoke_%A_%a.err submit_e5f_bounded_calibration_refinement.sh",
+  "plan_sha256": "df43d5bfa5b3d3b8f9ff31e236fa4fd880a26170e3197abea298bf24e56bab46",
+  "launcher_sha256": "9b9c0c661da036df3cdae95f584d08545c962b99dd6658f9f3096155434831b5"
+}

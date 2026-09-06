@@ -1,6 +1,74 @@
 # Calibration Status
 
-Updated: `2026-09-05` (candidate policy comparison complete; existing housing target and production retained)
+Updated: `2026-09-05` (evening refinement and both diagnostic profiles complete; exact repeats verified; production retained)
+
+## September 5 evening housing-response refinement
+
+The same-target, unchanged-bound 39-case follow-up is complete. Evening
+`output/model/e5f_evening_housing_refinement_20260905a/round2/task_010` has
+loss **21.7980329171**, versus retained production **30.4829667077** and the
+reviewed morning candidate **23.1534447276**. It has first-birth rooms
+**0.4766454140** versus target **0.7202462624**, and mean rooms **6.3325296653**
+versus **5.7799704819**. Complete twelve-row target/weight/loss and eleven-
+parameter/bound tables are in that case and the experiment `analysis/` ledger.
+This evening task_010 is distinct from retained September 4 task_010. Production
+and all targets/weights remain unchanged.
+
+Arrays `17010311`, `17010431`, `17014282`, `17015163` completed; both final
+repeats exactly match all twelve fit rows, physical parameters, 253 numeric
+historical entries and seventeen standard PNGs. The verified scientific bundle
+is `33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3`;
+all 51 fingerprinted files match Git commit c63821a6e027 (see `source_recovery.json`).
+
+The separate fixed-jump smokes `17015491` also reproduce the anchor exactly.
+The three-child-floor-preserving diagnostic `17015738` tests jumps .6/.75/.9:
+room responses rise to .499538/.539678/.580064, but losses worsen to
+22.089168/30.679490/49.496266. The observed 3+-versus-1/2-child room gap falls
+from .372708 to .347717/.310451/.274571 against target .367700; the parent
+ownership gap also worsens. All three pass the maintained gates with zero
+occupied value decreases. The anchor remains best, so two further repeats of
+the same already twice-smoked point were not launched (`profile_stop.json`).
+This does not rule out nearby or jointly re-estimated improvements.
+
+A final separate four-point test started as `17018812`, plan SHA
+`7daf7866bf99031be1fb3f152ce4c3f365c677d0085c90a7f717fc420275abfa`.
+It changes the hypothesis: use the stable local floor derivatives to preserve
+the *observed* parent-room contrast to first order, not the three-child
+preference floor. Fixed jumps .525/.55/.575/.6 pair with slopes
+.230622/.231311/.231999/.232688; the other nine estimated coordinates stay
+at the bounded winner, and all twelve actual targets and weights are checked.
+This is a conditional diagnostic, not a new production calibration. It reuses
+the exact fixed-option loop; maximum four evaluations plus two repeats only for
+a newly improving point, four concurrent, one CPU/8GB, hard 30 minutes each.
+The newly declared start window closes 00:35 UTC and launch cutoff 00:55 UTC.
+All four new points completed and passed after correcting a readout lookup for
+the externally fixed term (stored in summary metadata, not the free-parameter
+table; no model result or gate changed). Best is
+`empirical_room_gap/grid/task_004`, loss **20.6952742796**, first-birth rooms
+**0.5157782240**, family-size room gap **0.3675410210** versus **0.3676995588**,
+mean rooms **6.3491145755**, ownership **0.5449671610**, parent ownership gap
+**0.1757242866**. First-child term .6 is outside the old bound; slope .232688143
+is within its old bound, and all nine other estimated coordinates remain at
+the bounded winner. All twelve fit rows and every estimated/external parameter
+are saved in the case plus the report ledgers. Both exact repeats completed as
+`17019294`, plan SHA
+`e7c895a8ee414ae4ccc16be38ac1cb2eb03d84769e11057aa8bc60f96210bc05`.
+Both match all twelve fit rows, physical parameters, 253 numeric historical
+entries and seventeen standard PNGs exactly. The fixed-parameter point remains
+diagnostic; production is not promoted.
+Full design, budgets and historical reconciliation are in the experiment README.
+
+The rejected lower-chi coordinate's occupied value warning received two
+fixed-price Bellman checks (`17013496`): fresh local policies and distributions
+reproduce; exhaustive saving removes the drop, with fixed-state births changing
++0.000233535%. This is not a historical-fit or matched-event-response error
+bound. In total, 50 histories and two fixed-price Bellmans consumed 8.05 allocated
+CPU-hours. All 1,050 original artifact hashes and 2,742 collected local files
+pass verification, with 52 checkpoints retained on Torch. All Slurm jobs
+completed 0:0. The full review, twelve-row fits and parameter restrictions are
+in `docs/model/e5f_evening_housing_refinement_review.md` and
+`output/pdf/e5f_evening_housing_refinement_review.pdf`.
+The completed policy comparison below refers to the morning candidate.
 
 ## September 5 completed candidate policy comparison
 

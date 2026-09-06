@@ -1,0 +1,116 @@
+{
+  "cases": [
+    {
+      "births_difference_percent": 0.0,
+      "case": "coordinate_chi_minus_2023",
+      "checkpoint_sha256": "972ba4bf0bfa3926b55e87880999249f8b0328493fd4468ba07133643bcb1538",
+      "elapsed_seconds": 10.739146709442139,
+      "method": "local",
+      "minimum_occupied_value_change": 0.0,
+      "ownership_difference_pp": 0.0,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 2.583431637503673e-07,
+        "maximum_occupied_value_drop": 0.004461103380746012,
+        "occupied_negative_steps": 1,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 2.287745818106555e-07,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.09554776382888924,
+        "adult_households": 1.1292476712477792,
+        "asset_price": 0.6926156936701993,
+        "births_per_household": 0.08461187590788857,
+        "dependent_renter_at_cap_share": 0.23875604375412424,
+        "explicit_births": 0.08325611192204425,
+        "feasibility_projection": 0.0,
+        "market_residual": 1.8319154473565008e-05,
+        "ownership": 0.5990219180917112,
+        "renter_at_cap_share": 0.15212550614253342,
+        "renter_mass": 0.45280356521624,
+        "rooms_per_household": 6.323581860607359
+      },
+      "rooms_difference_percent": 0.0
+    },
+    {
+      "births_difference_percent": 0.00023353489841948516,
+      "case": "coordinate_chi_minus_2023",
+      "checkpoint_sha256": "972ba4bf0bfa3926b55e87880999249f8b0328493fd4468ba07133643bcb1538",
+      "elapsed_seconds": 31.763667583465576,
+      "method": "global",
+      "minimum_occupied_value_change": -4.440892098500626e-16,
+      "ownership_difference_pp": -2.1580613396299242e-05,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.09554798696626245,
+        "adult_households": 1.1292476712477792,
+        "asset_price": 0.6926156936701993,
+        "births_per_household": 0.08461207350614702,
+        "dependent_renter_at_cap_share": 0.23851518670756114,
+        "explicit_births": 0.08325631656770195,
+        "feasibility_projection": 0.0,
+        "market_residual": 1.9010851325852667e-05,
+        "ownership": 0.5990217022855773,
+        "renter_at_cap_share": 0.15202862644996107,
+        "renter_mass": 0.45280380891481387,
+        "rooms_per_household": 6.323586234528901
+      },
+      "rooms_difference_percent": 6.916841812643071e-05
+    }
+  ],
+  "elapsed_seconds": 34.75792908668518,
+  "model_solves": 2,
+  "scope": "Fixed prices, parameters and inherited distributions; no new equilibrium or calibration",
+  "status": "complete"
+}

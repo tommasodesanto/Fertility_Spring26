@@ -1,0 +1,21 @@
+{
+  "scope": "2 fixed-price Bellman solves; local reproduction must pass before exhaustive saving; expected 2-4 minutes, hard 10; no following market or calibration run",
+  "cases": [
+    {
+      "label": "coordinate_chi_minus_2023",
+      "case_id": 8,
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/round1/task_008/dated_state.pkl.gz",
+      "sha256": "972ba4bf0bfa3926b55e87880999249f8b0328493fd4468ba07133643bcb1538"
+    }
+  ],
+  "driver_sha256": "571964321d4a0a5e2277ab411e85abb393b2b970db5b97919743814fe2822bde",
+  "parent_plan": "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/round1/plan.json",
+  "parent_plan_sha256": "8de84aeaca7c7388480f83d0d042311c09830c47bed93b4e911aa9c9b094e521",
+  "helper_hashes": {
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/run_e5f_independent_numerical_audit.py": "b9eb7e33b284d8937f48f22e1f1375e6221fb711c29c1f09bdac486f342f3345",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/run_e5f_global_saving_quantification.py": "0e89d55a6cd3d0432dcff39b24683a7f6233ac0820a03b47a94eda8e2a924586",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/run_e5f_candidate_policy_comparison.py": "5d68a1eda49f7157a0828ef88de64f17340786cc80ca46ec07ada41f907ded1f",
+    "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools/run_e5f_bounded_calibration_refinement.py": "dccca604130b2938cb36eba5ba4a9d6548dfe3a298a19e6a612711cdfc8172e8"
+  }
+}

@@ -28,6 +28,8 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT / "code/model"), str(ROOT / "code/model/tools")]
 
 BUNDLE = "630ba20bca6a1b54eb4c46aca904c4a087afb8c808b9c7f4660d5fcd316a970e"
+VERIFIED_REPAIR_BUNDLE = "33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3"
+SUPPORTED_BUNDLES = (BUNDLE, VERIFIED_REPAIR_BUNDLE)
 TARGET = "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
 SOURCE = "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
 
@@ -70,8 +72,8 @@ def load_plan(path, expected):
         raise RuntimeError("Unknown plan schema")
     if plan["source_sha256"] != SOURCE or plan["target_fingerprint"] != TARGET:
         raise RuntimeError("Plan changes the maintained source or target system")
-    if plan["code_bundle_sha256"] != BUNDLE:
-        raise RuntimeError("Plan changes the production scientific bundle")
+    if plan["code_bundle_sha256"] not in SUPPORTED_BUNDLES:
+        raise RuntimeError("Plan requests an unverified scientific bundle")
     if len(plan["cases"]) > 23 or len({c["id"] for c in plan["cases"]}) != len(plan["cases"]):
         raise RuntimeError("Unbounded or duplicated case list")
     return plan
@@ -84,7 +86,7 @@ def validate_result(out, plan, case):
     expected = SimpleNamespace(
         expected_source_sha256=SOURCE,
         expected_target_set=plan["target_set"], expected_target_fingerprint=TARGET,
-        expected_code_bundle_sha256=BUNDLE, expected_model_profile="e5f-income-entry",
+        expected_code_bundle_sha256=plan["code_bundle_sha256"], expected_model_profile="e5f-income-entry",
         expected_panel_seed=case["panel_seed"], expected_center_sha256=case["center_sha256"],
         expected_panel_design=case["panel_design"], expected_local_radius=case["radius"],
         expected_housing_supply_elasticity=.63, expected_tenure_choice_kappa=.005,
@@ -184,7 +186,7 @@ def run_case(args):
         import run_e5f_independent_numerical_audit as audit
         from intergen_eqscale_seq_optimized import solver
         actual = calibration.code_fingerprint_contract(solver)
-        if actual["bundle_sha256"] != BUNDLE:
+        if actual["bundle_sha256"] != plan["code_bundle_sha256"]:
             raise RuntimeError("Frozen scientific bundle has drifted")
         original = calibration.transition.run_birth_vintage_scenario
         captured = {}
@@ -201,7 +203,7 @@ def run_case(args):
         calibration.transition.run_birth_vintage_scenario = observed_scenario
         argv = [str(calibration.__file__), "--source", plan["source"],
             "--expected-source-sha256", SOURCE, "--expected-target-set", plan["target_set"],
-            "--expected-target-fingerprint", TARGET, "--expected-code-bundle-sha256", BUNDLE,
+            "--expected-target-fingerprint", TARGET, "--expected-code-bundle-sha256", plan["code_bundle_sha256"],
             "--outdir", str(out), "--model-profile", "e5f-income-entry",
             "--estimate-first-child-room-jump", "--housing-supply-elasticity", "0.63",
             "--fixed-tenure-choice-kappa", "0.005", "--replacement-fertility", "2.1",

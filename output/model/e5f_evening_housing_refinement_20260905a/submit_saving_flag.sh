@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+module load anaconda3/2025.06
+export PYTHONPATH=/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model:/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/model/tools
+export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+python3 /scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/inspect_saving_flag.py c396bd2ae0dc1555882b9b67ae196bdd74ebeab70e64deb8ec3c5078f22b1c02

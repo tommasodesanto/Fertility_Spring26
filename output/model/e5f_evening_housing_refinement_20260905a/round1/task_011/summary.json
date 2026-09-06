@@ -1,0 +1,756 @@
+{
+  "best_candidate": {
+    "candidate": "task_011",
+    "census_household_population_target_index": 1.1292476712477624,
+    "elapsed_seconds": 218.0010694442317,
+    "endpoint_dependent_child_owner_rate": 0.6034311959437817,
+    "endpoint_housing_cost_index": 1.1372433858589255,
+    "endpoint_owner_rate": 0.6386184639522726,
+    "endpoint_population_index": 1.1292476712477626,
+    "endpoint_topcode_adjusted_births": 0.0955343386416366,
+    "endpoint_year": 2023,
+    "max_market_residual": 4.1908890009705534e-05,
+    "max_mass_residual": 6.661338147750939e-16,
+    "model_solve_count": 47,
+    "new_psi_child": -0.039767132868888666,
+    "policy_case": "none",
+    "population_target_gap": 2.220446049250313e-16,
+    "post_2023_periods": 0,
+    "terminal_childless_rate": 0.18980539407140584,
+    "terminal_first_birth_housing_response": 0.4622090102916374,
+    "terminal_housing_cost_index": 1.1372433858589255,
+    "terminal_mean_age_first_birth": 26.25130047958361,
+    "terminal_population_index": 1.1292476712477626,
+    "terminal_share_first_births_age30plus": 0.2371443199856681,
+    "terminal_synthetic_childless_consistency_gap": 0.0,
+    "terminal_tfr": 1.921698301067241,
+    "theta": {
+      "H0": 14.78273463736427,
+      "alpha_cons": 0.733,
+      "beta": 0.983063675214588,
+      "chi": 1.0434717373613915,
+      "delta_alpha": 0.0,
+      "delta_alpha_jump": 0.0,
+      "first_birth_fixed_cost": 4.5591384147193255,
+      "hbar_child_rooms": 0.24887678975085575,
+      "hbar_first_child_jump": 0.4649311350610432,
+      "kappa_fert": 2.1681730392479377,
+      "kappa_fert_continuation": 1.7364706586958831,
+      "psi_child": 0.0,
+      "tenure_choice_kappa": 0.005,
+      "theta0": 0.5491891806761955,
+      "theta1": 0.10724930821495539,
+      "theta_n": 0.0
+    },
+    "transition_loss": 25.302566071122698
+  },
+  "candidate_psi_changes": null,
+  "candidates": [
+    {
+      "candidate": "task_011",
+      "census_household_population_target_index": 1.1292476712477624,
+      "elapsed_seconds": 218.0010694442317,
+      "endpoint_dependent_child_owner_rate": 0.6034311959437817,
+      "endpoint_housing_cost_index": 1.1372433858589255,
+      "endpoint_owner_rate": 0.6386184639522726,
+      "endpoint_population_index": 1.1292476712477626,
+      "endpoint_topcode_adjusted_births": 0.0955343386416366,
+      "endpoint_year": 2023,
+      "max_market_residual": 4.1908890009705534e-05,
+      "max_mass_residual": 6.661338147750939e-16,
+      "model_solve_count": 47,
+      "new_psi_child": -0.039767132868888666,
+      "policy_case": "none",
+      "population_target_gap": 2.220446049250313e-16,
+      "post_2023_periods": 0,
+      "terminal_childless_rate": 0.18980539407140584,
+      "terminal_first_birth_housing_response": 0.4622090102916374,
+      "terminal_housing_cost_index": 1.1372433858589255,
+      "terminal_mean_age_first_birth": 26.25130047958361,
+      "terminal_population_index": 1.1292476712477626,
+      "terminal_share_first_births_age30plus": 0.2371443199856681,
+      "terminal_synthetic_childless_consistency_gap": 0.0,
+      "terminal_tfr": 1.921698301067241,
+      "theta": {
+        "H0": 14.78273463736427,
+        "alpha_cons": 0.733,
+        "beta": 0.983063675214588,
+        "chi": 1.0434717373613915,
+        "delta_alpha": 0.0,
+        "delta_alpha_jump": 0.0,
+        "first_birth_fixed_cost": 4.5591384147193255,
+        "hbar_child_rooms": 0.24887678975085575,
+        "hbar_first_child_jump": 0.4649311350610432,
+        "kappa_fert": 2.1681730392479377,
+        "kappa_fert_continuation": 1.7364706586958831,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.005,
+        "theta0": 0.5491891806761955,
+        "theta1": 0.10724930821495539,
+        "theta_n": 0.0
+      },
+      "transition_loss": 25.302566071122698
+    }
+  ],
+  "census_household_population_target_index": 1.1292476712477624,
+  "code_fingerprints": {
+    "bundle_sha256": "33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3",
+    "files": {
+      "calendar_operator": "17116a11214e73726504aaee5c2885a589e0340811bc1bad74100c0a96acc52f",
+      "closure_audit": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "e5f_transition_operator": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "sequential_package/__init__.py": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "sequential_package/audit_timing_repaired_readout.py": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "sequential_package/benchmark_e1.py": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "sequential_package/build_e2_packet.py": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "sequential_package/build_e5f_psinneg_iteration_packet.py": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "sequential_package/build_e6_decision_tables.py": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "sequential_package/build_e6_l1_comparison.py": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "sequential_package/build_e6_plain_comparison.py": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "sequential_package/build_e6_winner_diagnostics.py": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "sequential_package/calibration.py": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "sequential_package/cli.py": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "sequential_package/collect_e1.py": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "sequential_package/collect_e5_probe.py": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "sequential_package/diagnostics.py": "96e82c012df3615fa33c3b04126f409a58bc77e42146c018b07317517663a113",
+      "sequential_package/e1_profile.py": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "sequential_package/e5_maturation_repair.py": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "sequential_package/e5_profile.py": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "sequential_package/e5_young_ownership_profile.py": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "sequential_package/e5f_floor_profile.py": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "sequential_package/e5f_income_entry_profile.py": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "sequential_package/e6_plain_weighting.py": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "sequential_package/e6a_profile.py": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "sequential_package/e6b_profile.py": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "sequential_package/e6c_profile.py": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "sequential_package/externals.py": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "sequential_package/kernels.py": "dede2128339131dba4ef5bc1575aa92fbf6fe30f2f63a81aae4800b0726e950f",
+      "sequential_package/local_panel.py": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "sequential_package/parameters.py": "8ffa743f6bcc22e42f24e2f846c187f19d006813a3795dc4a935d09d2fbfc7a6",
+      "sequential_package/parity_panel_e1.py": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "sequential_package/production_profile.py": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "sequential_package/promotion_collect_e1.py": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "sequential_package/promotion_worker_e1.py": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "sequential_package/run_e1_chain.py": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "sequential_package/run_e5_wealth_slice.py": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "sequential_package/run_e5b_autopsy.py": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "sequential_package/run_e5f_floor_strict_smoke.py": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "sequential_package/run_e6a_fecundity_tail_frontier.py": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "sequential_package/run_e6b_income_level_diagnostic.py": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "sequential_package/run_e6c_projection_diagnostic.py": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "sequential_package/run_e6c_timing_jacobian.py": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "sequential_package/run_family_gap_scan.py": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "sequential_package/run_fertility_frontier_scan.py": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "sequential_package/run_seq_smoke.py": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "sequential_package/solver.py": "dfccca23781913316bcbb024b5143ee54286038c7a3906bcdb1861fcc08cd517",
+      "sequential_package/state_layout.py": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "sequential_package/target_system.py": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "sequential_package/utils.py": "f86c52633ec0f7d3ccad5e922a78f387ff637bd42a294ce4ecc3084eb5bc9ff9",
+      "transition_calibration_driver": "b0efe58a39d2bdf45db0863f76e42955d65f0720a2ba1cf23e222ae22116c330"
+    }
+  },
+  "dated_measurement_contract": {
+    "cohort_first_birth_timing": "age-specific first-birth hazards spliced into a fixed synthetic cohort; raw age-cell masses never weight timing",
+    "dated_maintained_moments": "all twelve moments saved at every model date; only the 2023 model-state measurements enter the calibration loss",
+    "first_birth_age_cells": "four-year intervals [18,22),...,[42,46) labeled by midpoints 20,24,...,44; the NCHS target applies the identical binned-age operator with boundary collapse",
+    "first_birth_housing": "one-period matched branch DID; the origin-date policy carries equal birth and confirmed-childless branches through survival, saving, tenure, location, income, and child maturation; the destination policy governs continuation fertility and housing; the Census age bridge is excluded",
+    "first_birth_housing_horizon_periods": 1,
+    "first_birth_housing_horizon_years": 4.0,
+    "first_birth_housing_terminal_destination_year": 2023,
+    "first_birth_housing_terminal_origin_year": 2019,
+    "period_fertility": "sum over four-year age cells of dated birth flows divided by all pre-fertility adult-household mass in the age cell",
+    "period_fertility_status": "untargeted diagnostic; model household denominator is not literal national female exposure",
+    "period_fertility_topcode_timing": "the extra 0.602 children represented by the 3+ bin are imputed to the date and age of entry into parity 3; explicit-state TFR is the main historical diagnostic and the top-coded version is a sensitivity"
+  },
+  "elapsed_seconds": 497.41753846779466,
+  "estimate_first_child_room_jump": true,
+  "external_closure_contract": {
+    "housing_supply_elasticity": 0.63,
+    "housing_supply_elasticity_status": "externally_fixed_profile_not_estimated",
+    "identification": "both objects are externally fixed; the transition parameters are disciplined by 12 dated moments",
+    "tenure_choice_kappa": 0.005,
+    "tenure_choice_kappa_status": "externally_fixed_profile_not_estimated"
+  },
+  "fixed_first_birth_cost": null,
+  "fixed_first_child_room_jump": null,
+  "housing_supply": {
+    "date0_housing_demand": 6.616163698491254,
+    "date0_market_residual_after_normalization": 0.0,
+    "date0_normalized_housing_stock": 6.616163698491254,
+    "elasticity_status": "externally_fixed_profile_not_estimated",
+    "housing_supply_mode": "static-elastic",
+    "original_stationary_supply_at_date0_price": 6.546805682585301,
+    "retained_date0_asset_price": 0.6062317171463796,
+    "retained_housing_supply_elasticity": 1.75,
+    "rule": "rescale the static supply intercept so supply at p0 equals date-0 demand",
+    "static_supply_intercept_scale": 1.0105941766517446,
+    "status": "empirical_initialization_normalization_not_recalibration",
+    "transition_housing_supply_elasticity": 0.63
+  },
+  "identification_status": "11 transition parameters against 12 dated target moments",
+  "income_profile_gates": {
+    "income_state_count": 15,
+    "permanent_income_levels_enabled": true,
+    "stationary_weight_max_abs_gap": 2.7755575615628914e-17
+  },
+  "model_profile": {
+    "first_birth_fixed_cost": "one additional free parameter",
+    "first_birth_fixed_cost_semantics": "one-time utility cost paid only when the first child arrives",
+    "first_child_room_jump": "one additional free parameter",
+    "first_child_room_jump_semantics": "extra housing-service floor whenever at least one child is at home",
+    "first_child_room_jump_status": "jointly estimated transition parameter",
+    "income_state_count": 15,
+    "name": "e5f-income-entry",
+    "permanent_income_levels": "externally measured PSID distribution",
+    "permanent_income_log_variance": 0.393053,
+    "profile_id": "eqscale_seq_e5f_income_entry_20260816",
+    "tenure_choice_kappa": {
+      "retained_value": 0.0,
+      "status": "externally_fixed_profile_not_estimated",
+      "value": 0.005
+    }
+  },
+  "old_completed_fertility_reference": 2.1,
+  "old_fertility_normalization": {
+    "absolute_gap": 1.7461338363666812e-05,
+    "completed_fertility": 2.1000174613383638,
+    "psi_child": 0.2889467740266749,
+    "stationary_solve_seconds": 268.03487379848957,
+    "stationary_solves": 5,
+    "status": "derived_intercept",
+    "target": 2.1
+  },
+  "old_model_completed_fertility": 2.100017461128049,
+  "old_psi_child": 0.2889467740266749,
+  "outside_origin_entry_share": 0.169,
+  "outside_origin_entry_status": "provisional_across_market_anchor_not_national_migration",
+  "panel_design": {
+    "center": "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/output/model/e5f_evening_housing_refinement_20260905a/round1/center_011.json",
+    "center_sha256": "6a411b57d3c9262839ebd2ccbc38684b8c4f9534e8cea42e985ef0d9a52925d7",
+    "design": "coordinate_4_plus",
+    "domain": [
+      {
+        "lower": 0.94,
+        "name": "beta_annual",
+        "transform": "discount",
+        "upper": 0.9995
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert_continuation",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.1,
+        "name": "chi",
+        "transform": "log",
+        "upper": 5.0
+      },
+      {
+        "lower": 0.2,
+        "name": "H0",
+        "transform": "log",
+        "upper": 80.0
+      },
+      {
+        "lower": 0.0,
+        "name": "theta0",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.02,
+        "name": "theta1",
+        "transform": "log",
+        "upper": 16.0
+      },
+      {
+        "lower": 0.1,
+        "name": "hbar_child_rooms",
+        "transform": "log",
+        "upper": 1.8
+      },
+      {
+        "lower": 0.0,
+        "name": "first_birth_fixed_cost",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.0,
+        "name": "hbar_first_child_jump",
+        "transform": "softzero",
+        "upper": 0.5
+      },
+      {
+        "lower": -1.5,
+        "name": "psi_child_change_2023",
+        "transform": "asinh",
+        "upper": 0.2
+      }
+    ],
+    "local_radius": 0.0025,
+    "new_psi_child": -0.039767132868888666,
+    "old_psi_child": 0.2889467740266749,
+    "panel_design": "coordinate",
+    "panel_seed": 2026090506,
+    "panel_size": 23,
+    "psi_child_change_2023": -0.32871390689556357,
+    "task_id": 11,
+    "terminal_preference_coordinate": "psi_child_change_2023",
+    "unit_vector": [
+      0.7485757822767003,
+      0.5989110869836137,
+      0.5705331609102533,
+      0.5994694950525492,
+      0.7181712918158277,
+      0.26200886928599276,
+      0.2512373047894332,
+      0.3154569183856973,
+      0.7549121153087396,
+      0.9642936638400599,
+      0.6255670349492122
+    ]
+  },
+  "policy_case": "none",
+  "population_bridge": {
+    "age_distribution": "national ACS household-head age shares at each four-year date",
+    "initial_age_reweight": {
+      "age_survival": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9391263063710125,
+        0.9184976343249724,
+        0.8849521927812863,
+        0.8300468061015381
+      ],
+      "future_entry_rule": "old steady-state entrant flow held fixed",
+      "horizon_calendar_year": 2023.0,
+      "horizon_periods": 4,
+      "implied_age_survival": [
+        1.0000000005591032,
+        0.99999999970142,
+        1.0000000008521772,
+        0.9999999994878219,
+        1.0000000002634548,
+        1.0000000002943217,
+        1.0000000003659364,
+        1.0000000000870417,
+        0.9999999999595601,
+        0.9999999992452175,
+        0.999999999900229,
+        0.9999999993543429,
+        0.939126304637404,
+        0.9184976343446514,
+        0.8849521946238887,
+        0.830046808059462
+      ],
+      "mapping": "exact closed integer bins [18+4j, 21+4j], j=0,...,16; every non-age model state is preserved conditional on age",
+      "model_age_grid": [
+        18.0,
+        22.0,
+        26.0,
+        30.0,
+        34.0,
+        38.0,
+        42.0,
+        46.0,
+        50.0,
+        54.0,
+        58.0,
+        62.0,
+        66.0,
+        70.0,
+        74.0,
+        78.0,
+        82.0
+      ],
+      "path": [
+        {
+          "adult_household_mass": 1.0000000000000127,
+          "period": 0,
+          "population_index": 1.0
+        },
+        {
+          "adult_household_mass": 1.0226636999300889,
+          "period": 1,
+          "population_index": 1.022663699930076
+        },
+        {
+          "adult_household_mass": 1.042085225256629,
+          "period": 2,
+          "population_index": 1.042085225256616
+        },
+        {
+          "adult_household_mass": 1.0592520867965132,
+          "period": 3,
+          "population_index": 1.0592520867964998
+        },
+        {
+          "adult_household_mass": 1.0730891715262318,
+          "period": 4,
+          "population_index": 1.0730891715262183
+        }
+      ],
+      "period_years": 4.0,
+      "population_index_at_horizon": 1.0730891715262183,
+      "reweighted_initial_age_mass": [
+        0.016622662021820223,
+        0.04529676719571211,
+        0.06359694782099222,
+        0.06696559869635522,
+        0.0788451476861598,
+        0.08072893564675344,
+        0.08968295548613356,
+        0.09115500500154654,
+        0.0868434552625447,
+        0.0781247054407295,
+        0.07104778040230764,
+        0.05661696446968108,
+        0.04505232136554918,
+        0.03889108604181348,
+        0.0354838130890434,
+        0.03128817505209724,
+        0.023757679320773373
+      ],
+      "sample": "national ACS; GQ in {1,2}; PERNUM=1; RELATE=1; HHWT>0; age 18--85",
+      "source": "IPUMS USA ACS microdata extract",
+      "source_path": "/scratch/td2248/projects/Fertility_Spring26_policy_cleanup_20260905a/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "source_receipt": {
+        "age_18_85_share_of_all_heads": 0.9785258874050475,
+        "head_records_all_ages": 1174259,
+        "head_weight_all_ages": 112376192.0,
+        "sample": 200701
+      },
+      "source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "source_year": 2007,
+      "stationary_age_mass": [
+        0.06173345614402076,
+        0.06173345617853613,
+        0.06173345616010375,
+        0.0617334562127116,
+        0.06173345618109308,
+        0.061733456197357046,
+        0.06173345621552654,
+        0.06173345623811706,
+        0.06173345624349045,
+        0.06173345624099395,
+        0.06173345619439862,
+        0.061733456188239416,
+        0.06173345614838077,
+        0.057975512545124064,
+        0.05325037112261511,
+        0.04712403278949479,
+        0.039115152999809576
+      ],
+      "status": "diagnostic_only",
+      "survival_source": "structural_survival_after_1e-8_age_mass_roundoff_gate",
+      "units": "HHWT-weighted household heads ages 18--85"
+    },
+    "status": "externally_normalized_not_estimated",
+    "target_indices": {
+      "0": 1.0,
+      "1": 1.029609172980129,
+      "2": 1.0678559129609455,
+      "3": 1.1013831580148525,
+      "4": 1.1292476712477624
+    },
+    "total_households": "Census HH-3, ages 18--85 after ACS coverage adjustment"
+  },
+  "population_validation_status": "matched by the declared Census/ACS household-formation and migration bridge; not generated by post-2007 fertility",
+  "post_2023_periods": 0,
+  "renewal_accounting_contract": {
+    "birth_measure": "topcode_adjusted_birth_children",
+    "birth_to_entry_effect_lag_dates": 5,
+    "birth_to_entry_effect_lag_years": 20.0,
+    "birth_vintage_queue_waiting_slots": 4,
+    "effective_birth_to_household_conversion": 0.47619047619047616,
+    "outside_flow_formula": "M = outside_origin_entry_share * E_old",
+    "replacement_fertility": 2.1,
+    "retention_formula": "rho = (1 - outside_origin_entry_share) * E_old / B_old",
+    "status": "external replacement normalization; household KFE maturation is diagnostic and does not determine population renewal",
+    "top_bin_mean_children": 3.602359422009
+  },
+  "renewal_accounting_old_state": {
+    "kfe_entrant_conversion_factor_diagnostic": 0.5,
+    "kfe_old_raw_mature_flow_diagnostic": 0.05504344919948529,
+    "kfe_old_topcode_adjusted_mature_flow_diagnostic": 0.06139581326398844,
+    "old_entry_flow_E": 0.061733456144020746,
+    "old_queue_B_over_E": 1.0000083159661624,
+    "old_queue_mature_flow_B": 0.061733969517353125,
+    "old_raw_birth_queue_flow_B": 0.05534661786138629,
+    "old_renewal_residual": 0.0,
+    "outside_flow_M": 0.010432954088339507,
+    "outside_origin_entry_share": 0.169,
+    "retention_rho": 0.8309930894895866
+  },
+  "renewal_retention": 0.8309930894895866,
+  "source": "/scratch/td2248/projects/Fertility_Spring26_pf_20260823/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json",
+  "source_metadata": {
+    "J": 17,
+    "Nb": 120,
+    "active_domain": [
+      {
+        "lower": 0.94,
+        "name": "beta_annual",
+        "transform": "discount",
+        "upper": 0.9995
+      },
+      {
+        "lower": 0.0,
+        "name": "psi_child",
+        "transform": "asinh",
+        "upper": 3.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.02,
+        "name": "kappa_fert_continuation",
+        "transform": "log",
+        "upper": 50.0
+      },
+      {
+        "lower": 0.1,
+        "name": "chi",
+        "transform": "log",
+        "upper": 5.0
+      },
+      {
+        "lower": 0.2,
+        "name": "H0",
+        "transform": "log",
+        "upper": 80.0
+      },
+      {
+        "lower": 0.0,
+        "name": "theta0",
+        "transform": "softzero",
+        "upper": 8.0
+      },
+      {
+        "lower": 0.02,
+        "name": "theta1",
+        "transform": "log",
+        "upper": 16.0
+      },
+      {
+        "lower": 0.1,
+        "name": "hbar_child_rooms",
+        "transform": "log",
+        "upper": 1.8
+      }
+    ],
+    "arm": "E5F",
+    "canonical_weights": {
+      "aggregate_mean_occupied_rooms_18_85": 11.973159013172177,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.287669427540395,
+      "annual_bequest_flow_to_aggregate_wealth": 5165289.256198346,
+      "childless_rate": 17180.743822072007,
+      "housing_increment_0to1": 906.0558911497827,
+      "mean_age_first_birth": 16.0,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 56.95977216091135,
+      "own_family_gap": 14229.590955975675,
+      "own_rate": 1207.8460856134493,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 2958.514988007638,
+      "share_first_births_age30plus": 15625.0,
+      "tfr": 1425.7389910084596
+    },
+    "child_maturation": {
+      "adds_free_parameter": false,
+      "adds_state_dimension": false,
+      "child_state": "children_currently_at_home",
+      "expected_years_at_home_per_child": 18.0,
+      "maturation_process": "independent_binomial_thinning",
+      "parity_state": "children_ever_born",
+      "profile": "e5_independent_child_maturation_20260805"
+    },
+    "child_room_floor": {
+      "added_free_parameter": "hbar_child_rooms",
+      "floor_formula": "hbar(m) = hbar_child_rooms * m",
+      "free_parameter_count": 9,
+      "identifying_room_moments": [
+        "housing_increment_0to1",
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms"
+      ],
+      "mechanism": "housing_service_floor_per_child_currently_at_home",
+      "profile": "eqscale_seq_e5f_child_room_floor_20260805",
+      "removed_free_parameters": [
+        "delta_alpha",
+        "delta_alpha_jump"
+      ],
+      "state_dimension_change": false,
+      "target_count": 12
+    },
+    "external_parameter_metadata": {
+      "alpha_cons": {
+        "source": "CEX childless-cash-renter expenditure slope, 2019-2023",
+        "value": 0.733
+      },
+      "tenure_choice_kappa": {
+        "source": "author-pinned deterministic tenure choice",
+        "value": 0.0
+      },
+      "theta_n": {
+        "source": "author-pinned child-invariant bequest utility",
+        "value": 0.0
+      }
+    },
+    "fecundity_schedule": {
+      "omega1": 0.02,
+      "omega2": 0.134,
+      "profile": "e5b_current",
+      "terminal_age": 45.0,
+      "terminal_decay": 0.0
+    },
+    "fixed_parameters": {
+      "alpha_cons": 0.733,
+      "delta_alpha": 0.0,
+      "delta_alpha_jump": 0.0,
+      "tenure_choice_kappa": 0.0,
+      "theta_n": 0.0
+    },
+    "free_parameter_count": 9,
+    "income_process": {
+      "annual_innovation_sd": 0.169,
+      "annual_rho": 0.9136,
+      "process": "rouwenhorst",
+      "states": 5
+    },
+    "initial_unit_vector": [
+      0.6921462215423702,
+      0.00964064608136371,
+      0.6513143431710606,
+      0.5717429023996012,
+      0.5978156391568719,
+      0.6513858178676726,
+      0.13893802817483103,
+      0.2230723177880415,
+      0.6314043953310955
+    ],
+    "l4_conventions": {
+      "child_bin_high_cutoff": 3,
+      "entrant_conversion_factor": 0.5,
+      "fertility_units": "literal_topcode",
+      "n_parity": 4,
+      "tfr_top_bin_weight": 3.602359422009
+    },
+    "l4_literal_parity": true,
+    "max_iter_eq": 10,
+    "permanent_income_levels": null,
+    "psi_min": 0.0,
+    "readiness_arrival": null,
+    "seed": 2026080551,
+    "start_mix": 0.0,
+    "status": "proper_joint_smm_chain",
+    "target_count": 12,
+    "target_set": "e5_signed_review_20260724",
+    "targets": {
+      "aggregate_mean_occupied_rooms_18_85": 5.779970481941968,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.8731,
+      "annual_bequest_flow_to_aggregate_wealth": 0.0088,
+      "childless_rate": 0.188,
+      "housing_increment_0to1": 0.664435,
+      "mean_age_first_birth": 25.310560799362,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 3.44811075444552,
+      "own_family_gap": 0.16766167,
+      "own_rate": 0.575472,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.36769955881,
+      "share_first_births_age30plus": 0.270062376851342,
+      "tfr": 1.918
+    },
+    "tight_winner_evaluator": {
+      "max_iter_eq": 40,
+      "repeats": 2,
+      "tol_eq": 2.5e-05
+    },
+    "tol_eq": 0.0001,
+    "weight_scheme": "canonical",
+    "weights": {
+      "aggregate_mean_occupied_rooms_18_85": 11.973159013172177,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 6.287669427540395,
+      "annual_bequest_flow_to_aggregate_wealth": 5165289.256198346,
+      "childless_rate": 17180.743822072007,
+      "housing_increment_0to1": 906.0558911497827,
+      "mean_age_first_birth": 16.0,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 56.95977216091135,
+      "own_family_gap": 14229.590955975675,
+      "own_rate": 1207.8460856134493,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 2958.514988007638,
+      "share_first_births_age30plus": 15625.0,
+      "tfr": 1425.7389910084596
+    }
+  },
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stationary_free_parameter_count": 11,
+  "stationary_measurement_gaps": {
+    "aggregate_mean_occupied_rooms_18_85": 5.329070518200751e-15,
+    "aggregate_wealth_to_annual_gross_labor_earnings": 5.3290705182007514e-14,
+    "annual_bequest_flow_to_aggregate_wealth": 1.734723475976807e-17,
+    "childless_rate": -2.196101633877845e-11,
+    "housing_increment_0to1": -1.2136402993689899e-12,
+    "mean_age_first_birth": 0.0,
+    "old_total_wealth_to_annual_income_p90_p50_7684": 0.0,
+    "own_family_gap": 1.3322676295501878e-15,
+    "own_rate": 3.219646771412954e-15,
+    "prime30_55_parent_3plus_minus_1to2_mean_rooms": 1.865174681370263e-14,
+    "share_first_births_age30plus": 5.551115123125783e-17,
+    "tfr": -2.103148766252616e-10
+  },
+  "stationary_measurement_max_abs_gap": 2.103148766252616e-10,
+  "stationary_operator_gates": {
+    "birth_flow": 0.11622789750891148,
+    "birth_flow_abs_error": 2.636779683484747e-16,
+    "effective_mature_flow_B": 0.05504344919948529,
+    "entry_flow_E": 0.061733456144020746,
+    "mature_flow_abs_error": 1.9668891515500775e-11,
+    "one_step_constant_path_nesting_l1": 5.932286197815841e-10,
+    "reconstructed_baseline_births": 0.11622789750891148,
+    "reconstructed_effective_mature_flow_B": 0.0550434491798164,
+    "stationary_birth_flow": 0.11622789750891122,
+    "stationary_feasibility_projection_mass": 0.0,
+    "stationary_post_fertility_nesting_l1": 1.2457407934191115e-14,
+    "stationary_post_fertility_nesting_max_abs": 2.1010116005145325e-16,
+    "stationary_topcode_adjusted_birth_flow": 0.12964133598644156,
+    "top_bin_entry_birth_flow": 0.02226816413495064,
+    "topcode_adjusted_birth_flow": 0.1296413359864419,
+    "topcode_adjusted_birth_flow_abs_error": 3.3306690738754696e-16,
+    "zero_entry_mass_accounting_residual": 5.551115123125783e-16
+  },
+  "status": "complete_transition_calibration_panel_task",
+  "target_count": 12,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_measurements": {
+    "childless_rate": "childless share of the model cohort centered at age 42 in 2023",
+    "housing_increment_0to1": "2019--2023 matched birth-versus-confirmed-childless branch: 2019 policies advance the fixed cohort, 2023 policies govern continuation fertility and housing, and the Census age bridge is not applied",
+    "mean_age_first_birth": "four-year age-cell midpoint mean for a fixed synthetic cohort built from dated first-birth hazards: old-steady-state prehistory plus the 2007--2023 transition",
+    "remaining_targets": "2023 transition cross-section with beginning-of-period wealth timing",
+    "share_first_births_age30plus": "same hazard-based fixed-cohort ledger",
+    "tfr": "completed fertility of the model cohort centered at age 42 in 2023"
+  },
+  "target_profile": "baseline",
+  "target_profile_metadata": {},
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817",
+  "transition_free_parameter_count": 11
+}

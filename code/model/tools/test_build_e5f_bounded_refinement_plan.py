@@ -30,6 +30,20 @@ class BoundedRefinementTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "target system"):
                 adapter.load_plan(path, adapter.digest(path))
 
+    def test_plan_accepts_only_the_two_verified_bundles(self):
+        with tempfile.TemporaryDirectory() as raw:
+            path = Path(raw) / "plan.json"
+            for bundle in adapter.SUPPORTED_BUNDLES:
+                adapter.write_json(path, dict(schema="e5f_bounded_refinement_v1",
+                    source_sha256=adapter.SOURCE, target_fingerprint=adapter.TARGET,
+                    code_bundle_sha256=bundle, cases=[]))
+                self.assertEqual(adapter.load_plan(path, adapter.digest(path))["code_bundle_sha256"], bundle)
+            changed = adapter.read_json(path)
+            changed["code_bundle_sha256"] = "unreviewed"
+            adapter.write_json(path, changed)
+            with self.assertRaisesRegex(RuntimeError, "unverified scientific bundle"):
+                adapter.load_plan(path, adapter.digest(path))
+
     def test_first_child_pattern_preserves_three_child_floor(self):
         reference = adapter.read_json(REFERENCE)
         with tempfile.TemporaryDirectory() as raw:
