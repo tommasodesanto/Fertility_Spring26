@@ -54,6 +54,28 @@ class JointNestedIntegrationTests(TestCase):
         self.assertIs(evaluation.policy.joint_choice, self.joint)
         self.assertIs(evaluation.policy.tenure_probs, effective)
         self.assertAlmostEqual(evaluation.births, 0.25)
+        np.testing.assert_array_equal(evaluation.inherited_g_pre, self.g)
+        self.assertFalse(np.shares_memory(evaluation.inherited_g_pre, self.g))
+
+    def test_inherited_state_precedes_candidate_price_projection(self) -> None:
+        gated = self.g.copy()
+        gated[0, 0, 0, 0, 0, 0, 0] = 0.75
+        gated[0, 1, 0, 0, 0, 0, 0] = 0.25
+        effective = np.full(self.g.shape + (2,), 0.5)
+        births = np.zeros((1, 2))
+        with (
+            patch.object(calendar, 'gate_pre_fertility_distribution', return_value=(gated, .25)),
+            patch.object(calendar, 'factor_joint_distribution', return_value=(gated.copy(), effective, births, births, births)),
+            patch.object(calendar.model, 'realize_current_cross_section', side_effect=lambda g, *x, **k: g),
+        ):
+            evaluation = calendar.evaluate_period(
+                np.array([1.0]), self.g, self.P, np.array([0.0]), NS(),
+                calendar.SolveCounter(), supplied_policy=self.policy)
+        np.testing.assert_array_equal(evaluation.g_pre, gated)
+        np.testing.assert_array_equal(evaluation.inherited_g_pre, self.g)
+        self.assertFalse(np.shares_memory(evaluation.inherited_g_pre, self.g))
+        self.assertFalse(np.array_equal(evaluation.inherited_g_pre, evaluation.g_pre))
+        self.assertEqual(evaluation.feasibility_projection_mass, .25)
 
 
 if __name__ == "__main__":

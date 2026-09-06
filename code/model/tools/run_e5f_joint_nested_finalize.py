@@ -47,8 +47,15 @@ def prepare(path,s):
     P=packet['parameters'];e=packet['evaluation']
     if not P.joint_nested_choice or e.policy.joint_choice is None:
         raise RuntimeError('Selected checkpoint has no joint household policies')
-    if e.feasibility_projection_mass != 0:
-        raise RuntimeError('Need the unprojected inherited population before policy branching')
+    inherited = getattr(e, 'inherited_g_pre', None)
+    if inherited is None:
+        raise RuntimeError('Checkpoint lacks the original inherited population; rebuild it')
+    if inherited.shape != e.g_pre.shape or not np.isfinite(inherited).all() or inherited.min() < 0:
+        raise RuntimeError('Invalid original inherited population')
+    replay, projected = policy.calendar.gate_pre_fertility_distribution(
+        inherited, e.policy, P, packet['b_grid'], packet['shared'])
+    if not np.array_equal(replay, e.g_pre) or projected != e.feasibility_projection_mass:
+        raise RuntimeError('Original inherited population does not reproduce the fitted feasibility gate')
     rows=adapter.read_csv(path.parent/'cases'/s['best_candidate']['candidate']/'transition_path.csv')
     if len(rows)!=5 or [int(float(x['calendar_year'])) for x in rows] != [2007,2011,2015,2019,2023]:
         raise RuntimeError('Expected complete five-date fitted history')
@@ -57,7 +64,7 @@ def prepare(path,s):
     queue=json.loads(rows[3]['birth_queue_scheduled_flows'])
     raw=json.loads(rows[3]['birth_queue_raw_state_scheduled_flows'])
     if len(queue)!=4 or len(raw)!=4 or min(queue+raw)<0:raise RuntimeError('Invalid inherited birth queue')
-    state=policy.baseline.DynamicState(e.g_pre.copy(),queue,raw,float(e.policy.price[0]),None)
+    state=policy.baseline.DynamicState(inherited.copy(),queue,raw,float(e.policy.price[0]),None)
     initial_mass=float(rows[0]['adult_population'])
     prepared=SimpleNamespace(b_grid=packet['b_grid'],supply_rule=packet['supply_rule'],initial_mass_2007=initial_mass)
     return packet,prepared,state,rows
@@ -162,6 +169,14 @@ def main():
     policy.calendar.apply_fertility=policy.transition.apply_sequential_fertility
     policy.calendar.advance_calendar_distribution=policy.transition.advance_sequential_calendar_distribution
     packet,prepared,state,history=prepare(selected,summary)
+    adapter.write_json(out/'inherited_state_verification.json', dict(
+        status='exact_feasibility_replay', source_summary_sha256=adapter.digest(selected),
+        inherited_population_sha256=policy.baseline.array_sha256(state.g_pre),
+        fitted_gated_population_sha256=policy.baseline.array_sha256(packet['evaluation'].g_pre),
+        inherited_to_gated_l1=float(np.abs(state.g_pre-packet['evaluation'].g_pre).sum()),
+        fitted_projection_mass=float(packet['evaluation'].feasibility_projection_mass),
+        birth_queue_source_year=2019, scheduled_entries=state.scheduled_entries,
+        scheduled_raw_entries=state.scheduled_raw_entries))
     post=1 if a.smoke else 10;start=time.time();receipts={};failures={}
     for name in CASES:
         folder=out/name;folder.mkdir(parents=True,exist_ok=True);count=0
@@ -198,6 +213,7 @@ def main():
             if 'Housing market did not clear' not in str(error) and 'market gate failed' not in str(error):raise
         finally:policy.baseline.evaluate_state=original
     receipt=dict(status='complete' if not failures else 'partial_policy_failures',smoke=a.smoke,elapsed_seconds=time.time()-start,
+        inherited_state_verification_sha256=adapter.digest(out/'inherited_state_verification.json'),
         cases=receipts,failures=failures,selected_summary=str(selected),selected_summary_sha256=adapter.digest(selected),
         scientific_bundle=contract['code_bundle_sha256'],target_fingerprint=adapter.TARGET,
         expectations='temporary equilibrium: each current price treated as permanent',population_closure='closed national: M=0, rho=1',

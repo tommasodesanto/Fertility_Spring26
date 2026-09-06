@@ -14,7 +14,7 @@ export MPLCONFIGDIR="${TMPDIR:-/tmp}/joint_nested_long_mpl_${SLURM_JOB_ID}"
 cd "${SLURM_SUBMIT_DIR:?}"
 : "${E5F_JOINT_MODE:?smoke or search required}"
 CONTRACT=output/model/joint_nested_overnight/contract.json
-SHA=7558feaf55ddae7058f481569cda72a8dba5e09a0d094300aa171b66806adb1d
+SHA=416477db8ce66d22a6017aee24fd8a2a2d974c3fcf87bbed6bfe8f6f673c48ab
 python3 code/model/tools/test_e5f_joint_nested_full.py
 PYTHONPATH=code/model:code/model/tools python3 code/model/tools/test_e5f_joint_nested_integration.py
 python3 code/model/tools/test_e5f_joint_nested_long_search.py

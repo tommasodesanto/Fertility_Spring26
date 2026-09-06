@@ -218,3 +218,13 @@ Long-run hard limits and hashes are in the immutable experiment contract.
 The target fit, every free parameter/bound, identification diagnostics,
 standard graph packets and a short PDF are required deliverables. Safe
 numerical completion is not author approval of the nesting structure.
+
+### Inherited-population handoff verification
+
+Each joint-mode dated solution now saves the original input distribution,
+before the candidate price applies feasibility projection. The final policy
+driver branches every policy from that same original distribution and exactly
+replays the fitted feasibility gate as a handoff check. A nonzero projection
+is recorded; the original input must not be reconstructed by silently treating
+the gated distribution as inherited data. Older experimental checkpoints lack
+this field and must be rebuilt. This changes checkpoint metadata only.

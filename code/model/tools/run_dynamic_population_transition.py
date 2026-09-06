@@ -130,6 +130,9 @@ class PeriodEvaluation:
     supply_by_loc: np.ndarray
     relative_market_residual: float
     feasibility_projection_mass: float
+    # Policy branches must inherit the input population, before a candidate
+    # price applies its own feasibility projection. Older checkpoints lack it.
+    inherited_g_pre: np.ndarray | None = None
 
 
 class SolveCounter:
@@ -520,6 +523,7 @@ def evaluate_period(
         supply,
         residual,
         projected_mass,
+        inherited_g_pre=g_pre.copy() if joint_nested_enabled(P) else None,
     )
 
 
