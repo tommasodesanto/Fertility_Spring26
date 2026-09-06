@@ -10,6 +10,8 @@ from typing import Any
 
 import numpy as np
 
+from . import joint_nested
+
 from .parameters import (
     apply_overrides,
     fecundity_active,
@@ -1541,6 +1543,7 @@ def solve_markov_income_at_prices(
     # probabilities from a later rejected price evaluation.
     if fast_stats and retain_payload:
         sol._model_payload = (V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, P._fert2_probs.copy())
+        sol.joint_choice = getattr(P, "_joint_choice", None)
     if verbose:
         print(
             f"  Markov income fixed-price solve: own={100 * sol.own_rate:.1f}% "
@@ -1560,6 +1563,7 @@ def upgrade_fast_markov_solution(
     # Must precede the KFE: forward_distribution reads P._fert2_probs only as
     # an input; its other P._* fertility fields are KFE outputs.
     P._fert2_probs = fert2_probs
+    P._joint_choice = getattr(fast_solution, "joint_choice", None)
     start = time.perf_counter()
     g, stats = forward_distribution_markov_income(
         bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD,
@@ -2395,6 +2399,8 @@ def solve_bellman_full_markov_income(
     esc_v = np.ascontiguousarray(SD.escale_flat.reshape(-1))
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
+    joint_active = bool(getattr(P, "joint_nested_choice", False))
+    joint = joint_nested.allocate(V.shape, P) if joint_active else None
     if continuation_V is not None:
         continuation_V = np.asarray(continuation_V, dtype=float)
         if continuation_V.shape != V.shape:
@@ -2409,7 +2415,7 @@ def solve_bellman_full_markov_income(
     bp_pol = np.ones_like(V)
     tenure_choice = np.zeros((Nb, nt, I, J, Nz, npar, ncs), dtype=np.int16)
     tenure_probs = (
-        np.zeros((Nb, nt, I, J, Nz, npar, ncs, nt), dtype=np.float32)
+        np.zeros((Nb, nt, I, J, Nz, npar, ncs, nt), dtype=float if joint_active else np.float32)
         if use_tenure_logit
         else None
     )
@@ -2619,6 +2625,30 @@ def solve_bellman_full_markov_income(
                 income_j = np.array([income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float)
                 dp_choice = pti_adjusted_downpayment(dp_arr, hcost, income_j, P, b_grid)
 
+            if joint_active:
+                value, joint_prob, product, wait_prob = joint_nested.bellman_block(
+                    Vd, (b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant),
+                    P, j, fec, tenure_choice_kernel,
+                )
+                V[:, :, :, j, zz] = value
+                joint.probabilities[:, :, :, j, zz] = joint_prob
+                joint.products[:, :, :, j, zz] = product
+                joint.wait_probabilities[:, :, :, j, zz] = wait_prob
+                # This wait-menu kernel is a fallback only. Every forward call
+                # replaces it with exact joint-selected mass for its own pool.
+                for product_index in range(nt):
+                    tenure_probs[:, :, :, j, zz, :, :, product_index] = np.sum(
+                        wait_prob * (product == product_index), axis=-1
+                    )
+                tenure_choice[:, :, :, j, zz] = product[..., 0]
+                loc_probs[:, :, 0, 0, j, zz] = (value[:, :, 0] > DEAD_VALUE_CUTOFF)
+                fert_probs[:, :, :, j, zz, :2] = joint_nested.action_marginals(joint_prob[..., 0, 0, :, :])
+                fert_value[:, :, :, j, zz] = value[..., 0, 0]
+                for nn in range(1, npar - 1):
+                    for cs in range(nn + 1):
+                        fert2_probs[:, :, :, j, zz, :, nn - 1, cs] = joint_nested.action_marginals(joint_prob[..., nn, cs, :, :])
+                continue
+
             if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
                 VH, tcj, prj = tenure_logit_kernel(
                     Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
@@ -2793,6 +2823,7 @@ def solve_bellman_full_markov_income(
                 V[:, :, :, j, zz, :, :] = VI
 
     P._fert2_probs = fert2_probs
+    P._joint_choice = joint
     return (
         V,
         c_pol,
@@ -4455,6 +4486,7 @@ def forward_distribution_markov_income(
                     g[int(kk), 0, i, 0, zz, 0, 1] += (
                         settled_entry_share * entrant_mass
                     )
+    joint_pre = np.zeros_like(g) if bool(getattr(P, "joint_nested_choice", False)) and not fast_stats else None
     P._entry_censored_mass = 0.0
     P._entry_total_mass = float(np.sum(g[:, :, :, 0, :, :, :]))
     if bool(getattr(P, "entry_wealth_censor_to_frontier", False)):
@@ -4539,7 +4571,22 @@ def forward_distribution_markov_income(
             SD,
             markov_income=True,
         )
-        if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
+        if bool(getattr(P, "joint_nested_choice", False)):
+            if joint_pre is not None:
+                joint_pre[:, :, :, j] = g[:, :, :, j]
+            post, effective, born, attempts, risk = joint_nested.factor_age(
+                g[:, :, :, j], P._joint_choice, P, j
+            )
+            g[:, :, :, j] = post
+            tenure_probs[:, :, :, j] = effective
+            first_births_by_age[j] = born[0]
+            second_births_by_age[j] = born[1]
+            third_births_by_age[j] = born[2]
+            second_attempts_by_age[j], second_at_risk_by_age[j] = attempts[1], risk[1]
+            third_attempts_by_age[j], third_at_risk_by_age[j] = attempts[2], risk[2]
+            total_births += float(born.sum())
+            births_by_loc[0] += float(born.sum())
+        elif (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
             for zz in range(Nz):
                 gc = g[:, :, :, j, zz, 0, 0]
                 pa = fert_probs[:, :, :, j, zz, :]
@@ -4970,10 +5017,23 @@ def forward_distribution_markov_income(
         markov_income=True,
     )
 
+    if bool(getattr(P, "joint_nested_choice", False)):
+        if joint_pre is not None:
+            joint_pre[:, :, :, J - 1] = g[:, :, :, J - 1]
+        post, effective, born, attempts, risk = joint_nested.factor_age(
+            g[:, :, :, J - 1], P._joint_choice, P, J - 1
+        )
+        if born.sum() != 0:
+            raise NotImplementedError("Fertility in final age is outside this experiment")
+        g[:, :, :, J - 1] = post
+        tenure_probs[:, :, :, J - 1] = effective
+
     tm = float(np.sum(g))
     if tm > 1e-12 and normalize_population_mass(P):
         sc = P.N_target / tm
         g *= sc
+        if joint_pre is not None:
+            joint_pre *= sc
         total_births *= sc
         births_by_loc *= sc
         first_births_by_age *= sc
@@ -5033,6 +5093,8 @@ def forward_distribution_markov_income(
         stats.third_attempt_hazard_by_age = third_attempts_by_age / np.maximum(third_at_risk_by_age, 1e-12)
         stats.third_birth_hazard_by_age = third_births_by_age / np.maximum(third_at_risk_by_age, 1e-12)
         stats.parity_progression_2to3_flow = float(np.sum(third_births_by_age) / max(np.sum(second_births_by_age), 1e-12))
+    if bool(getattr(P, "joint_nested_choice", False)) and np.any(SD.birth_entry_grant):
+        raise NotImplementedError("Joint experimental grant accounting is not implemented")
     grant_recipient_mass, grant_outlays = markov_grant_outlays(
         g,
         tenure_choice,
@@ -5093,6 +5155,16 @@ def forward_distribution_markov_income(
         else "beginning_of_period_legacy"
     )
     stats.wealth_moment_timing = "beginning_of_period_state"
+    if bool(getattr(P, "joint_nested_choice", False)):
+        for name in ("housing_increment_0to1_eventstudy_t3", "housing_increment_1to2_proxy_t3",
+                     "housing_increment_0to1_onechild_eventstudy_t3", "housing_increment_0to2plus_eventstudy_t3"):
+            setattr(stats, name, float("nan"))
+        stats.stationary_eventstudy_status = "not_measured_fast_statistics"
+        if not fast_stats:
+            stats.housing_increment_0to1_eventstudy_t3 = joint_nested.stationary_first_birth_response(
+                joint_pre, P._joint_choice, P, b_grid, SD, loc_probs, tenure_choice,
+                bp_pol, hR_pol, (lmm_idx, lmm_wt, tmx_idx, tmx_wt))
+            stats.stationary_eventstudy_status = "joint_matched_one_period_branch"
     return g_current, stats
 
 
@@ -7014,6 +7086,7 @@ def pack_solution_markov_income(
         loc_probs=lp,
         fert_probs=fp,
         fert2_probs=getattr(P, "_fert2_probs", None),
+        joint_choice=getattr(P, "_joint_choice", None),
         fert_value=fv,
         g=g,
         g_collapsed=np.sum(g, axis=4),

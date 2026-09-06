@@ -1,8 +1,57 @@
 # Calibration Status
 
-Updated: `2026-09-06` (first simultaneous nested-choice diagnostic complete; production retained; full experimental lifecycle solution still outstanding)
+Updated: `2026-09-06` (full simultaneous-choice experiment authorized; isolated lifecycle and overnight-loop verification in progress; production retained)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+
+**September 6, 21:10 UTC: the author authorized a full overnight experimental
+calibration and equilibrium paths, beyond the completed one-date diagnostic.**
+Source worktree: `tmp/e5f_joint_nested_full_20260906a`, branch
+`codex/joint-nested-full`; the main production checkout is unchanged. The model
+uses tenure-nested simultaneous plans throughout the Bellman recursion and
+population transition, including the dated birth/control housing branches.
+The common outer scale and common nesting dissimilarity replace the two old
+fertility scales: eleven estimated parameters against the original twelve
+moments and unchanged target fingerprint
+`3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
+This is a new experimental restriction, not author adoption of the final model.
+
+Full lifecycle core smoke `17070652` passed: current distribution replay L1
+`3.19e-15`, birth-flow difference `-1.39e-17`, fixed-price lifecycle solve
+12.67 seconds. Initial full-history trials `17071299` completed the five-date
+calculation but failed the final probability gate because summed marginals
+reached `1.0000000000000002`. Those runs are not certified calibrations. The
+correction constructs complementary binary marginals; the probability gate
+remains unchanged. Independent review also found and resolved a duplicate
+parameter row and missing dated grant guard. Policy plots retain the seventeen
+standard filenames but use original joint household probabilities, not the
+population-dependent computational tenure kernel.
+
+Corrected full-loop smoke `17074777` is running in the exclusive Torch snapshot
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260906b`.
+Its default-off ten-array baseline reproduction already passed exactly.
+Scientific bundle: `5020a3e77ec8a0f7ee2deb6cd4b642c67dcaa115f26b68df1f14a06e780f9766`.
+Full contract: `output/model/joint_nested_overnight/contract.json` in that
+snapshot, SHA `7558feaf55ddae7058f481569cda72a8dba5e09a0d094300aa171b66806adb1d`.
+The smoke requires two exact new-model histories, two all-parameter probes,
+and four two-date policy loops. No long search is authorized by a partial
+smoke receipt. Proposed long-run cap: 360 histories including smoke and final
+checks, twelve workers, nine hours search and twelve hours total, hard cutoff
+September 7 at 12:00 UTC (08:00 New York). Reserve final Jacobian, exact
+reproductions and 2023-2063 baseline/supply/LTV/property-tax paths.
+
+Expectation closure remains the existing temporary-equilibrium method, with
+current prices treated as permanent each date. No perfect-foresight claim.
+Post-2023 policy paths use the maintained closed-national finite-horizon
+benchmark (outside entry zero, retention one, inherited birth-vintage queue,
+2.1 replacement conversion), not the historical provisional outside-entry
+share. Housing-supply elasticity remains 0.63. Tax revenue is discarded;
+rebates and purchase grants are outside this run. Author adoption, local
+identification, expectation extensions and production promotion remain open.
+See the full extension in `docs/model/e5f_joint_nested_experiment.md` and the
+experiment result README for verification/collection commands.
+
 
 **September 6, 20:17 UTC: author authorized an isolated numerical experiment.**
 The first stage evaluates simultaneous nested-logit plans with tenure nests

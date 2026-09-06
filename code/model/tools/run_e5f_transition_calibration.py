@@ -22,6 +22,7 @@ import math
 import sys
 import time
 import traceback
+from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -137,6 +138,7 @@ def parse_args() -> argparse.Namespace:
             "requires the repaired income-entry profile."
         ),
     )
+    parser.add_argument("--first-child-room-jump-upper", type=float, default=0.5)
     parser.add_argument("--outside-origin-entry-share", type=float, default=0.169)
     parser.add_argument(
         "--housing-supply-elasticity",
@@ -147,6 +149,7 @@ def parse_args() -> argparse.Namespace:
             "Omission retains the calibrated stationary value exactly."
         ),
     )
+    parser.add_argument("--joint-nested-choice", action="store_true", help="Experimental simultaneous tenure/attempt GEV")
     parser.add_argument(
         "--fixed-tenure-choice-kappa",
         type=float,
@@ -895,6 +898,15 @@ def first_birth_housing_response(
         raise ValueError(
             "The E5 transition calibration requires a one-period housing-event horizon"
         )
+    if calendar.joint_nested_enabled(P):
+        branch = begin_dated_first_birth_housing_branch(
+            evaluation, P, b_grid, shared, origin_period=0
+        )
+        return float(
+            finish_dated_first_birth_housing_branch(
+                branch, evaluation, P, b_grid, shared, destination_period=1
+            )["housing_response"]
+        )
     model = calendar.model
     policy = evaluation.policy
     fecundity = model.get_fecundity_by_age(P)
@@ -1021,19 +1033,31 @@ def begin_dated_first_birth_housing_branch(
     """
     model = calendar.model
     policy = evaluation.policy
+    joint = calendar.joint_nested_enabled(P)
     fecundity = model.get_fecundity_by_age(P)
     settled = model.readiness_settled_state(P)
-    treated = np.zeros_like(evaluation.g_pre)
-    control = np.zeros_like(evaluation.g_pre)
-    for j in range(int(P.J) - 1):
-        if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
-            continue
-        for zz in range(evaluation.g_pre.shape[4]):
-            childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
-            attempt = policy.fert_probs[:, :, :, j, zz, 1]
-            realized = float(fecundity[j]) * childless * attempt
-            treated[:, :, :, j, zz, 1, 1] = realized
-            control[:, :, :, j, zz, 0, settled] = realized
+    if joint:
+        treated, treated_tenure, _, _, _ = calendar.factor_joint_distribution(
+            evaluation.g_pre, policy, P, mode="first_birth_treated"
+        )
+        control, control_tenure, _, _, _ = calendar.factor_joint_distribution(
+            evaluation.g_pre, policy, P, mode="first_birth_control"
+        )
+        treated_policy = replace(policy, tenure_probs=treated_tenure)
+        control_policy = replace(policy, tenure_probs=control_tenure)
+    else:
+        treated = np.zeros_like(evaluation.g_pre)
+        control = np.zeros_like(evaluation.g_pre)
+        for j in range(int(P.J) - 1):
+            if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
+                continue
+            for zz in range(evaluation.g_pre.shape[4]):
+                childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
+                attempt = policy.fert_probs[:, :, :, j, zz, 1]
+                realized = float(fecundity[j]) * childless * attempt
+                treated[:, :, :, j, zz, 1, 1] = realized
+                control[:, :, :, j, zz, 0, settled] = realized
+        treated_policy = control_policy = policy
 
     origin_mass = float(np.sum(treated))
     if origin_mass <= 1e-14:
@@ -1050,7 +1074,7 @@ def begin_dated_first_birth_housing_branch(
     child_transition = P.Pi_child if stochastic_child_aging else None
 
     def advance(
-        branch: np.ndarray, label: str
+        branch: np.ndarray, label: str, selected_policy: calendar.PolicyBundle
     ) -> tuple[np.ndarray, float, dict[str, float | str]]:
         next_pre = np.zeros_like(branch)
         deaths = 0.0
@@ -1066,17 +1090,17 @@ def begin_dated_first_birth_housing_branch(
                 model.advance_cohort_one_period_markov_income(
                     survival * cohort,
                     j,
-                    policy.loc_probs,
-                    policy.tenure_choice,
-                    policy.tenure_probs,
-                    policy.bp_pol,
+                    selected_policy.loc_probs,
+                    selected_policy.tenure_choice,
+                    selected_policy.tenure_probs,
+                    selected_policy.bp_pol,
                     P,
                     b_grid,
                     shared,
-                    policy.maps.lmm_idx,
-                    policy.maps.lmm_wt,
-                    policy.maps.tmx_idx,
-                    policy.maps.tmx_wt,
+                    selected_policy.maps.lmm_idx,
+                    selected_policy.maps.lmm_wt,
+                    selected_policy.maps.tmx_idx,
+                    selected_policy.maps.tmx_wt,
                     stochastic_child_aging,
                     child_transition,
                     income_transition,
@@ -1090,8 +1114,12 @@ def begin_dated_first_birth_housing_branch(
         )
         return next_pre, deaths, mass_gate
 
-    treated_next, treated_deaths, treated_advance_gate = advance(treated, "treated")
-    control_next, control_deaths, control_advance_gate = advance(control, "control")
+    treated_next, treated_deaths, treated_advance_gate = advance(
+        treated, "treated", treated_policy
+    )
+    control_next, control_deaths, control_advance_gate = advance(
+        control, "control", control_policy
+    )
     treated_next_mass = float(np.sum(treated_next))
     control_next_mass = float(np.sum(control_next))
     if not math.isclose(
@@ -1167,12 +1195,25 @@ def finish_dated_first_birth_housing_branch(
     # Only the treated branch can take a continuation birth at the destination
     # date.  The empirical comparison group is confirmed childless, so the
     # otherwise identical control branch is held childless by construction.
-    treated_post, continuation_births, _ = transition.apply_sequential_fertility(
-        treated_pre,
-        evaluation.policy.fert_probs,
-        P,
-        calendar.policy_continuation_birth_probs(evaluation.policy, P),
-    )
+    if calendar.joint_nested_enabled(P):
+        treated_post, treated_tenure, birth_matrix, _, _ = calendar.factor_joint_distribution(
+            treated_pre, evaluation.policy, P, mode="natural"
+        )
+        control_post, control_tenure, _, _, _ = calendar.factor_joint_distribution(
+            control_pre, evaluation.policy, P, mode="wait"
+        )
+        treated_policy = replace(evaluation.policy, tenure_probs=treated_tenure)
+        control_policy = replace(evaluation.policy, tenure_probs=control_tenure)
+        continuation_births = float(np.sum(birth_matrix))
+    else:
+        treated_post, continuation_births, _ = transition.apply_sequential_fertility(
+            treated_pre,
+            evaluation.policy.fert_probs,
+            P,
+            calendar.policy_continuation_birth_probs(evaluation.policy, P),
+        )
+        control_post = control_pre
+        treated_policy = control_policy = evaluation.policy
     treated_post, treated_fertility_gate = normalize_distribution_mass_roundoff(
         treated_post,
         expected_mass=expected_destination_mass,
@@ -1183,24 +1224,24 @@ def finish_dated_first_birth_housing_branch(
         raise RuntimeError("The confirmed-childless control branch acquired parent mass")
     treated_current = calendar.model.realize_current_cross_section(
         treated_post,
-        evaluation.policy.loc_probs,
-        evaluation.policy.tenure_choice,
-        evaluation.policy.tenure_probs,
-        evaluation.policy.maps.lmm_idx,
-        evaluation.policy.maps.lmm_wt,
-        evaluation.policy.maps.tmx_idx,
-        evaluation.policy.maps.tmx_wt,
+        treated_policy.loc_probs,
+        treated_policy.tenure_choice,
+        treated_policy.tenure_probs,
+        treated_policy.maps.lmm_idx,
+        treated_policy.maps.lmm_wt,
+        treated_policy.maps.tmx_idx,
+        treated_policy.maps.tmx_wt,
         use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
     )
     control_current = calendar.model.realize_current_cross_section(
-        control_pre,
-        evaluation.policy.loc_probs,
-        evaluation.policy.tenure_choice,
-        evaluation.policy.tenure_probs,
-        evaluation.policy.maps.lmm_idx,
-        evaluation.policy.maps.lmm_wt,
-        evaluation.policy.maps.tmx_idx,
-        evaluation.policy.maps.tmx_wt,
+        control_post,
+        control_policy.loc_probs,
+        control_policy.tenure_choice,
+        control_policy.tenure_probs,
+        control_policy.maps.lmm_idx,
+        control_policy.maps.lmm_wt,
+        control_policy.maps.tmx_idx,
+        control_policy.maps.tmx_wt,
         use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
     )
     treated_current, treated_current_gate = normalize_distribution_mass_roundoff(
@@ -1715,6 +1756,34 @@ def main() -> None:
         fixed_jump=args.fixed_first_child_room_jump,
         estimate_jump=bool(args.estimate_first_child_room_jump),
     )
+    if not math.isfinite(args.first_child_room_jump_upper) or args.first_child_room_jump_upper <= 0:
+        raise ValueError("First-child room upper bound must be positive and finite")
+    if args.estimate_first_child_room_jump:
+        active_domain = tuple(
+            (name, low, float(args.first_child_room_jump_upper), kind) if name == "hbar_first_child_jump"
+            else (name, low, high, kind) for name, low, high, kind in active_domain)
+    if args.joint_nested_choice:
+        if args.fixed_tenure_choice_kappa is not None:
+            raise ValueError("Joint outer scale is estimated; do not pass fixed-tenure-choice-kappa")
+        replacements = {
+            "kappa_fert": ("tenure_choice_kappa", 0.005, 10.0, "log"),
+            "kappa_fert_continuation": ("joint_nest_lambda", 0.02, 1.0, "log"),
+        }
+        active_domain = tuple(replacements.get(row[0], row) for row in active_domain)
+        theta.pop("kappa_fert", None)
+        theta.pop("kappa_fert_continuation", None)
+        theta["tenure_choice_kappa"] = 2.0
+        theta["joint_nest_lambda"] = 0.8
+        profile_overrides.update(joint_nested_choice=True, normalize_transition_mass_roundoff=True)
+        model_profile["joint_nested"] = {
+            "status": "experimental_full_lifecycle",
+            "alternatives": "joint tenure and birth attempt, tenure nests",
+            "scale_status": "estimated outer scale and common birth-order dissimilarity",
+            "shock_normalization": "mean-zero marginal GEV shocks",
+            "product_choice": "deterministic within committed tenure after conception",
+            "removed_estimated_parameters": ["kappa_fert", "kappa_fert_continuation"],
+            "production_promoted": False,
+        }
     if args.fixed_first_birth_cost is not None:
         if str(args.model_profile) != REPAIRED_MODEL_PROFILE:
             raise ValueError("--fixed-first-birth-cost requires the repaired profile")
@@ -1746,8 +1815,8 @@ def main() -> None:
         "value": float(theta.get("tenure_choice_kappa", retained_tenure_choice_kappa)),
         "retained_value": retained_tenure_choice_kappa,
         "status": (
-            "externally_fixed_profile_not_estimated"
-            if args.fixed_tenure_choice_kappa is not None
+            "estimated_joint_gev_outer_scale" if args.joint_nested_choice
+            else "externally_fixed_profile_not_estimated" if args.fixed_tenure_choice_kappa is not None
             else "retained_model_value"
         ),
     }
@@ -2458,6 +2527,9 @@ def main() -> None:
             },
         ]
     )
+    if args.joint_nested_choice:
+        params = [row for row in params if not (
+            row["parameter"] == "tenure_choice_kappa" and not row["is_free_parameter"])]
     for row in params:
         if row["parameter"] == "psi_child_2007":
             row["value"] = old_psi_child
@@ -2515,8 +2587,9 @@ def main() -> None:
                 "tenure_choice_kappa"
             ]["status"],
             "identification": (
-                "both objects are externally fixed; the transition parameters "
-                f"are disciplined by {target_system.count} dated moments"
+                ("housing supply elasticity is externally fixed; joint GEV outer scale and dissimilarity are estimated" if args.joint_nested_choice
+                 else "both objects are externally fixed")
+                + f"; transition parameters are disciplined by {target_system.count} dated moments"
             ),
         },
         "candidate_psi_changes": candidate_psi_changes,

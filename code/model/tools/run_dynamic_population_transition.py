@@ -20,7 +20,7 @@ import os
 import shlex
 import sys
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -77,12 +77,33 @@ class PolicyBundle:
     price: np.ndarray
     maps: TransitionMaps
     fert2_probs: np.ndarray | None = None
+    joint_choice: Any | None = None
 
     def __post_init__(self) -> None:
         # The Bellman API returns continuation births on P. Own a snapshot so
         # another price solve cannot change this policy's forward operator.
         if self.fert2_probs is not None:
             self.fert2_probs = self.fert2_probs.copy()
+
+
+def joint_nested_enabled(P: SimpleNamespace) -> bool:
+    """Whether this policy must use its owned simultaneous-choice object."""
+    return bool(getattr(P, "joint_nested_choice", False))
+
+
+def factor_joint_distribution(
+    g_pre: np.ndarray,
+    policy: PolicyBundle,
+    P: SimpleNamespace,
+    *,
+    mode: str = "natural",
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Apply the owned joint plan kernel to this particular distribution."""
+    if policy.joint_choice is None:
+        raise RuntimeError("Joint-nested policy lacks its matching joint-choice object")
+    from intergen_eqscale_seq_optimized import joint_nested
+
+    return joint_nested.factor_distribution(g_pre, policy.joint_choice, P, mode=mode)
 
 
 def policy_continuation_birth_probs(
@@ -310,6 +331,7 @@ def policy_from_solution(
         np.asarray(price, dtype=float).reshape(-1).copy(),
         build_transition_maps(price, P, b_grid, shared),
         fert2_probs=getattr(solution, "fert2_probs", None),
+        joint_choice=getattr(solution, "joint_choice", None),
     )
 
 
@@ -339,6 +361,7 @@ def solve_policy(
         price.copy(),
         build_transition_maps(price, P, b_grid, shared),
         fert2_probs=getattr(P, "_fert2_probs", None),
+        joint_choice=getattr(P, "_joint_choice", None),
     )
 
 
@@ -451,11 +474,23 @@ def evaluate_period(
     supplied_policy: PolicyBundle | None = None,
 ) -> PeriodEvaluation:
     policy = supplied_policy or solve_policy(price, P, b_grid, shared, counter)
-    continuation = policy_continuation_birth_probs(policy, P)
     if not np.array_equal(np.asarray(price).reshape(-1), policy.price):
         raise ValueError("Supplied policy price does not match the requested price")
     gated, projected_mass = gate_pre_fertility_distribution(g_pre, policy, P, b_grid, shared)
-    g_post, births, births_by_loc = apply_fertility(gated, policy.fert_probs, P, continuation)
+    if joint_nested_enabled(P):
+        g_post, effective_tenure, birth_matrix, _, _ = factor_joint_distribution(
+            gated, policy, P
+        )
+        policy = replace(policy, tenure_probs=effective_tenure)
+        births = float(np.sum(birth_matrix))
+        if int(P.I) != 1:
+            raise NotImplementedError("Joint-nested dated evaluation currently requires one market")
+        births_by_loc = np.array([births], dtype=float)
+    else:
+        continuation = policy_continuation_birth_probs(policy, P)
+        g_post, births, births_by_loc = apply_fertility(
+            gated, policy.fert_probs, P, continuation
+        )
     g_current = model.realize_current_cross_section(
         g_post,
         policy.loc_probs,
@@ -612,9 +647,18 @@ def reconstruct_stationary_pre_fertility(
             P.Pi_child if stochastic else None,
             Pi_z,
         )
-    reconstructed_post, births, _ = apply_fertility(
-        g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P)
-    )
+    if joint_nested_enabled(P):
+        # The solution carries the stationary population's effective tenure
+        # kernel, so the inherited-age reconstruction above is already exact.
+        reconstructed_post, effective_tenure, birth_matrix, _, _ = factor_joint_distribution(
+            g_pre, policy, P
+        )
+        policy = replace(policy, tenure_probs=effective_tenure)
+        births = float(np.sum(birth_matrix))
+    else:
+        reconstructed_post, births, _ = apply_fertility(
+            g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P)
+        )
     diagnostics = {
         "stationary_post_fertility_nesting_l1": float(np.sum(np.abs(reconstructed_post - saved_post))),
         "stationary_post_fertility_nesting_max_abs": float(np.max(np.abs(reconstructed_post - saved_post))),

@@ -758,3 +758,15 @@ Its packet is under
 is a contemporaneous housing-cost index, not a forward-looking asset price.
 
 See `PLAN.md` for the full implementation and optimization plan.
+
+
+### Isolated simultaneous-choice calibration branch
+
+Branch `codex/joint-nested-full` adds the default-off `joint_nested_choice`
+operator and `--joint-nested-choice` calibration flag. Its joint policy object
+is authoritative; effective tenure probabilities depend on the distribution.
+The experiment design is in `docs/model/e5f_joint_nested_experiment.md`.
+Launch only through the frozen `run_e5f_joint_nested_long_search.py` contract
+and completed full-loop smoke. `run_e5f_joint_nested_finalize.py` creates the
+maintained closed-national dated policy paths and review packet. This branch
+has not replaced the production calibration.

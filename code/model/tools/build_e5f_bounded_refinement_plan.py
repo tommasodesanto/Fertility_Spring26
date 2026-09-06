@@ -44,6 +44,14 @@ def collect(plan_path, expected, require_complete=True):
         s, models, gates = adapter.validate_result(out, plan, case)
         import collect_e5f_transition_calibration as collector
         shared = {name: s[name] for name in ("target_measurements", "dated_measurement_contract", "renewal_accounting_contract", "external_closure_contract", "model_profile")}
+        shared["model_profile"] = copy.deepcopy(shared["model_profile"])
+        if shared["model_profile"].get("joint_nested"):
+            # Estimated scales vary across candidates; their classification and
+            # nesting law must agree, not their numerical estimates.
+            shared["model_profile"]["tenure_choice_kappa"].pop("value", None)
+            shared["model_profile"]["tenure_choice_kappa"].pop("retained_value", None)
+            shared["external_closure_contract"] = copy.deepcopy(shared["external_closure_contract"])
+            shared["external_closure_contract"].pop("tenure_choice_kappa", None)
         shared["population_bridge"] = collector.population_bridge_contract(s["population_bridge"])
         provenance.add(json.dumps(shared, sort_keys=True))
         rows.append({"id": case["id"], "label": case["label"], "loss": float(s["best_candidate"]["transition_loss"]),

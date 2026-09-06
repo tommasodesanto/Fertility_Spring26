@@ -125,6 +125,8 @@ def setup_parameters() -> SimpleNamespace:
     P.owner_size_cost = 0.0
     P.owner_size_cost_ref = 6.0
     P.owner_size_cost_power = 2.0
+    P.joint_nested_choice = False
+    P.joint_nest_lambda = 0.5
     P.tenure_choice_kappa = 0.01
     P.kappa_h_base = 0.40
     P.kappa_h_slope = 0.0

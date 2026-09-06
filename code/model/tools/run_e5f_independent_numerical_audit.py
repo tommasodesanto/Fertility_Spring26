@@ -114,6 +114,8 @@ def standard_diagnostics(packet, out, *, validate_production_young=True):
     for key in ("V", "c_pol", "hR_pol", "bp_pol", "tenure_choice", "tenure_probs", "loc_probs", "fert_probs", "fert_value"):
         setattr(stats, key, getattr(p, key))
     stats.fert2_probs = calendar.policy_continuation_birth_probs(p, P)
+    stats.joint_choice = getattr(p, "joint_choice", None)
+    stats.g_pre_choice = e.g_pre
     stats.g, stats.b_grid = g, bg
     stats.type_values,stats.type_weights,_=model.income_transition_values(P)
     stats.owner_asset_price = p.price

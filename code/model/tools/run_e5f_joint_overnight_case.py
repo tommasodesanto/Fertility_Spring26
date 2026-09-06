@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Observe and validate bounded E5F evaluations without changing scientific code.
+"""Experimental fork: validate full joint-nested E5F calibrations.
 
 Run this adapter from the frozen production snapshot. Every candidate invokes
 the unchanged dated calibration driver. An observer copies the terminal state
@@ -27,13 +27,13 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT / "code/model"), str(ROOT / "code/model/tools")]
 
-BUNDLE = "ce38de90a85de7102f4d462bd1f2618fbad17f649c5c57d840d5152e5917dff6"
+BUNDLE = "5020a3e77ec8a0f7ee2deb6cd4b642c67dcaa115f26b68df1f14a06e780f9766"
 SUPPORTED_BUNDLES = (BUNDLE,)
 TARGET = "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
 SOURCE = "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
 
 
-SEARCH_DOMAIN = [{'lower': 0.94, 'name': 'beta_annual', 'transform': 'discount', 'upper': 0.9995}, {'lower': 0.02, 'name': 'kappa_fert', 'transform': 'log', 'upper': 50.0}, {'lower': 0.02, 'name': 'kappa_fert_continuation', 'transform': 'log', 'upper': 50.0}, {'lower': 0.1, 'name': 'chi', 'transform': 'log', 'upper': 5.0}, {'lower': 0.2, 'name': 'H0', 'transform': 'log', 'upper': 80.0}, {'lower': 0.0, 'name': 'theta0', 'transform': 'softzero', 'upper': 8.0}, {'lower': 0.02, 'name': 'theta1', 'transform': 'log', 'upper': 16.0}, {'lower': 0.1, 'name': 'hbar_child_rooms', 'transform': 'log', 'upper': 1.8}, {'lower': 0.0, 'name': 'first_birth_fixed_cost', 'transform': 'softzero', 'upper': 8.0}, {'lower': 0.0, 'name': 'hbar_first_child_jump', 'transform': 'softzero', 'upper': 2.0}, {'lower': -1.5, 'name': 'psi_child_change_2023', 'transform': 'asinh', 'upper': 0.2}]
+SEARCH_DOMAIN = [{'lower': 0.94, 'name': 'beta_annual', 'transform': 'discount', 'upper': 0.9995}, {'lower': 0.005, 'name': 'tenure_choice_kappa', 'transform': 'log', 'upper': 10.0}, {'lower': 0.02, 'name': 'joint_nest_lambda', 'transform': 'log', 'upper': 1.0}, {'lower': 0.1, 'name': 'chi', 'transform': 'log', 'upper': 5.0}, {'lower': 0.2, 'name': 'H0', 'transform': 'log', 'upper': 80.0}, {'lower': 0.0, 'name': 'theta0', 'transform': 'softzero', 'upper': 8.0}, {'lower': 0.02, 'name': 'theta1', 'transform': 'log', 'upper': 16.0}, {'lower': 0.1, 'name': 'hbar_child_rooms', 'transform': 'log', 'upper': 1.8}, {'lower': 0.0, 'name': 'first_birth_fixed_cost', 'transform': 'softzero', 'upper': 8.0}, {'lower': 0.0, 'name': 'hbar_first_child_jump', 'transform': 'softzero', 'upper': 2.0}, {'lower': -1.5, 'name': 'psi_child_change_2023', 'transform': 'asinh', 'upper': 0.2}]
 
 def digest(path):
     h = hashlib.sha256()
@@ -69,7 +69,7 @@ def verify(path, expected):
 def load_plan(path, expected):
     verify(path, expected)
     plan = read_json(path)
-    if plan["schema"] != "e5f_joint_overnight_v1":
+    if plan["schema"] != "e5f_joint_nested_overnight_v1":
         raise RuntimeError("Unknown plan schema")
     if plan["source_sha256"] != SOURCE or plan["target_fingerprint"] != TARGET:
         raise RuntimeError("Plan changes the maintained source or target system")
@@ -92,9 +92,11 @@ def validate_result(out, plan, case):
         expected_code_bundle_sha256=plan["code_bundle_sha256"], expected_model_profile="e5f-income-entry",
         expected_panel_seed=case["panel_seed"], expected_center_sha256=case["center_sha256"],
         expected_panel_design=case["panel_design"], expected_local_radius=case["radius"],
-        expected_housing_supply_elasticity=.63, expected_tenure_choice_kappa=.005,
+        expected_housing_supply_elasticity=.63, expected_tenure_choice_kappa=float(read_json(out.parent / case["center"])["best_candidate"]["theta"]["tenure_choice_kappa"]),
     )
     collector.validate_expected_contract(s, s["panel_design"], expected)
+    if not s["model_profile"].get("joint_nested") or s["model_profile"]["tenure_choice_kappa"]["status"] != "estimated_joint_gev_outer_scale":
+        raise RuntimeError("Missing full joint-choice experimental contract")
     collector.validate_renewal_accounting(s)
     collector.validate_calibration_scope(s)
     if s["target_count"] != 12 or s["transition_free_parameter_count"] != 11:
@@ -106,6 +108,13 @@ def validate_result(out, plan, case):
             raise RuntimeError(f"Invalid bounded coordinate {name}")
     if s["panel_design"]["domain"] != SEARCH_DOMAIN:
         raise RuntimeError("Actual search domain differs from the pinned plan")
+    parameters = read_csv(out / "parameter_table.csv")
+    names = [row["parameter"] for row in parameters]
+    if len(names) != len(set(names)):
+        raise RuntimeError("Duplicate parameter table rows")
+    free_names = {row["parameter"] for row in parameters if row["is_free_parameter"].lower() == "true"}
+    if free_names != {row["name"] for row in SEARCH_DOMAIN}:
+        raise RuntimeError("Reported free parameters differ from search domain")
     models = collector.validate_target_fit(read_csv(out / "target_fit_long.csv"), s, b)
     collector.validate_dated_housing_ledger(out, s, b, models)
     collector.population_bridge_contract(s["population_bridge"])
@@ -264,16 +273,16 @@ def run_case(args):
             "--outdir", str(out), "--model-profile", "e5f-income-entry",
             "--estimate-first-child-room-jump", "--first-child-room-jump-upper", "2.0",
             "--housing-supply-elasticity", "0.63",
-            "--fixed-tenure-choice-kappa", "0.005", "--replacement-fertility", "2.1",
+            "--joint-nested-choice", "--replacement-fertility", "2.1",
             "--old-completed-fertility-target", "2.1", "--outside-origin-entry-share", "0.169",
-            "--market-tol", "0.0002", "--market-max-iter", "30", "--nb", "120",
+            "--market-tol", "0.0002", "--market-max-iter", "60", "--nb", "120",
             "--post-2023-periods", "0", "--policy-case", "none",
             "--panel-center-json", str(center), "--panel-task-id", str(case["panel_task_id"]),
             "--panel-size", str(case["panel_size"]), "--panel-design", case["panel_design"],
             "--panel-seed", str(case["panel_seed"]), "--panel-local-radius", str(case["radius"])]
         write_json(out / "execution_contract.json", {"argv": argv, "plan_sha256": args.plan_sha256,
                    "case": case, "adapter_sha256": digest(__file__), "start_epoch": start})
-        state["phase"] = "unchanged_scientific_driver"
+        state["phase"] = "experimental_joint_scientific_driver"
         previous_argv = sys.argv
         try:
             sys.argv = argv
@@ -304,6 +313,18 @@ def run_case(args):
             raise RuntimeError(f"Expected 17 standard PNGs, found {len(graphs)}")
         budget = audit.budget_audit(captured, out)
         policy_arrays = audit.policy_array_audit(captured, out)
+        if policy_arrays["occupied_negative_steps"]:
+            raise RuntimeError("Occupied value monotonicity failed")
+        if budget["budget_excess_mass"] > 2e-10:
+            raise RuntimeError("Material occupied realized-budget mass exceeds 2e-10")
+        joint_probability = captured["evaluation"].policy.joint_choice.probabilities
+        import numpy as np
+        occupied = captured["evaluation"].g_pre > 1e-12
+        joint_total = joint_probability.sum(axis=(-2, -1))
+        if not np.isfinite(joint_probability).all() or joint_probability.min() < 0 or joint_probability.max() > 1:
+            raise RuntimeError("Invalid full joint-plan probability array")
+        if np.max(np.abs(joint_total[occupied] - 1)) > 2e-14:
+            raise RuntimeError("Occupied joint-plan probabilities do not add to one")
         for name, bounds in policy_arrays["probabilities"].items():
             if bounds["nonfinite"] or bounds["minimum"] < 0 or bounds["maximum"] > 1:
                 raise RuntimeError(f"Invalid {name} probability array")
