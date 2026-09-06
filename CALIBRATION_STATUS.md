@@ -13,6 +13,13 @@ its scale/correlation restrictions. Preserve the distinction between a birth
 attempt and subsequent conception success; whether housing is a commitment
 or a success-contingent plan must be stated. Do not assume that revealing
 the current independent shocks simultaneously preserves the coded formulas.
+The author subsequently clarified that he means simultaneous choice with a
+nested-logit joint law and emphasized the link to the simplified theory.
+That theory already optimizes fertility, housing, consumption and saving
+jointly within tenure, then compares renter/owner values using an ownership
+taste. Exploring tenure nests gives a direct conceptual bridge; the nest
+grouping, scale restrictions and exact reduction remain to be derived, not
+author-adopted. Do not treat the earlier fertility-nest illustration as decided.
 
 Author instruction, September 6 before lunch: make the sequence of
 discrete-choice shocks the first quantitative issue for discussion before
