@@ -150,33 +150,36 @@ household and child-counting conventions.
 
 The model admits local equilibrium transitions in which a small permanent
 increase in the financed share raises initial fertility and final population.
-The result is established near an economy with all owners, zero child goods
-cost, and zero property tax. It permits heterogeneous entrant income and
-wealth and small positive renter shares and costs, provided the same household
-constraints continue to bind. The purchase limit remains restrictive, saving
-is positive, and physical owner, old retention, and estate bounds are slack.
-Convergence and the
-initial fertility sign require separate parameter conditions.\footnote{The
-conditions and proof are in Appendix B of the accompanying longer
-assessment and sections 5--10 of its supporting proof. The permitted reform
-size and positive-parameter neighborhood are local and have no numerical bound.}
+This result holds in a family of economies with almost half of households
+renting, positive child goods costs, and a positive rebated property tax.
+Tenure choice remains endogenous. Small changes in the primitives and small
+entrant income and wealth heterogeneity preserve the result, provided the
+same household constraints continue to bind.\footnote{The accompanying
+mixed-tenure appendix gives the primitive family and proof. Young owners
+remain at their purchase limits, renters at their physical caps, and saving
+is positive in both tenures. Old owners' retention and estate bounds are
+slack. The reform must be sufficiently small; no numerical reform-size bound
+is established. The proof combines exact algebra and rational interval
+bounds, independently checked against the original household equations.}
+
+Initial fertility and final population are separate comparisons. A larger
+final population depends on cumulative fertility, and does not require
+fertility to exceed replacement at every date.
 
 \begin{center}
-\includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/local_transition_analytical_figure.pdf}
+\includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/mixed_transition_analytical_figure.pdf}
 \end{center}
 {\small\textbf{Figure 2.} Analytical first-order equilibrium response in
-the illustrative all-owner limit, per unit increase in $d=b/(1-\phi)$.
-Fertility rises most in the second young cohort and returns to replacement;
-population converges to a higher level. All-date signs hold for small finite
-reforms in this example; the nearby mixed-tenure result establishes initial
-fertility and final population signs.}
+the mixed-tenure economy, per unit increase in $\phi$. Initial fertility
+rises and population ends higher. The damped oscillations also hold for
+sufficiently small finite reforms near this economy: fertility approaches
+replacement from both sides.}
 
-In this limit, the stationary price rises in proportion to borrowing capacity.
-Each young household's housing and fertility return to their original levels.
-Older households use less housing, and the stock accommodates more households.
-Stationary entrants of each type have lower lifetime utility. This transition
-illustrates a demographic response to credit; the compensated welfare gain
-in Proposition 1 is a separate comparison.
+In the illustrated economy, part of the increased borrowing capacity enters
+house prices. Conditional young owners buy larger homes, old owners use less
+housing, and ownership becomes less common. Average housing per household
+falls, allowing the fixed stock to accommodate more households. The welfare
+gain in Proposition 1 comes from a separately compensated reallocation.
 
 \newpage
 \section*{For discussion: how much theory to retain}
@@ -187,48 +190,48 @@ requires one short proof. The planner's borrowing permission is the one
 already accepted. A complete first-best allocation and a market-based
 implementation remain separate questions.
 
-\textbf{The transition proof is useful, but its supporting assumptions are
-substantive.} The stability inequality itself is fairly simple. It does not
-remove the following restrictions:
+\textbf{The transition result covers a mixed economy, but remains local.}
+It no longer requires almost universal ownership or a child goods cost close
+to zero. The following economic restrictions still matter:
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{@{}p{.29\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}p{.29\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 Assumption & Economic consequence\\
 \midrule
-Near-all ownership and small child goods costs
-& The proved neighborhood gives limited scope for tenure switching and the
-goods cost of children. Neither its width nor a large renter share is covered.\\
+Small reforms and unchanged binding constraints
+& The proof permits tenure switching but does not follow large reforms across
+changes in the conditional housing or saving constraints.\\
 Old owners can sell; estate bounds are slack
-& The interior formula requires slack retention and, at zero property tax,
-$(1-q)\omega_B>q\gamma$. A binding bound changes old housing demand.\\
+& The interior stationary formula requires slack retention and
+\mbox{$[1-q+q\tau^p]\omega_B>q\gamma$}. A binding bound changes old housing demand.\\
 Fixed entrant endowments and world bond price
 & Larger cohorts receive the same distribution of income and wealth. Wages,
 interest rates, and inherited wealth do not adjust to the larger population.\\
 \bottomrule
 \end{tabularx}
 
-A small reform is a reasonable scope for an illustrative result. Uniformly
-unchanged household constraints keep the local proof manageable. The stronger
-limitations are the economic starting point and the fixed income and wealth
-of new entrants. This is an existence result for a class of economies, with
-explicit conditions; its assumptions have not been disciplined by data.
+A small reform is a reasonable scope for an illustrative result. The fixed
+income and wealth of new entrants are a stronger limitation. The construction
+establishes a class of economies with the desired demographic response; it
+does not establish how common that response is empirically. The earlier
+all-owner example and its simpler primitive conditions remain available in
+the longer assessment.
 
-\textbf{The welfare loss is not peculiar to the plotted parameters.}
-At the all-owner limit with $\chi=\tau^p=0$, let $d_i=b_i/(1-\phi)$ and
-hold the entrant distribution fixed. For each type, the stationary owner value
-satisfies:
+\textbf{The demographic gain is not a welfare ranking.}
+Throughout the constructed mixed-tenure family, the stationary comparison
+has the following signs, holding both ownership-taste parameters fixed:
 \begin{equation}
- \frac{\dd W^{O*}(i)}{\dd\phi}
- =-\frac{(1-q)d_i/x_i^*+\beta\gamma}{1-\phi}<0.
+ \frac{\dd Y^*}{\dd\phi}>0,\qquad
+ \frac{\dd W^{O*}}{\dd\phi}<0,\qquad
+ \frac{\dd W^{R*}}{\dd\phi}<0.
  \label{eq:core_stationary_welfare}
 \end{equation}
-Higher prices use more of the household's resources without increasing its
-stationary young housing. Old-age housing also falls. The formula holds on
-the stated owner branch with fixed preferences; ownership tastes are held
-fixed in the comparison. It compares the same type in two steady states,
-without assigning a social value to the change in population or evaluating
-the transitional cohorts.
+Both conditional lifetime values fall, so the same entrant is worse off
+regardless of whether its fixed taste draw leads it to switch tenure. This
+compares that entrant in two steady states. It does not assign a social value
+to the change in population or evaluate every transitional cohort. Initial
+old owners may benefit from the appreciation of their inherited titles.
 
 \textbf{My recommendation.} Use the allocation result and the conditional
 fertility condition as the core. Keep both figures available, presenting the

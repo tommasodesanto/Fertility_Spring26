@@ -1,0 +1,562 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  11pt,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{microtype,amsmath,amssymb,booktabs}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setcounter{secnumdepth}{2}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={A transition with renters and owners},
+  colorlinks=true,
+  linkcolor={Maroon},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{A transition with renters and owners}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Supporting proof for the illustrative model}
+\author{}
+\date{}
+
+\begin{document}
+\begin{center}
+{\Large A transition with renters and owners}\par
+\smallskip
+{\small Supporting proof for the illustrative model}
+\end{center}
+
+\section{Result and scope}\label{result-and-scope}
+
+There is an open set of economies with endogenous ownership, substantial
+renting, positive child goods costs, and a positive rebated property tax
+in which a small permanent increase in the financed share has a locally
+unique converging competitive-equilibrium transition. Initial mean
+fertility rises and the final population is larger. The original initial
+old keep their pre-reform financial assets and housing titles.
+
+The construction below has an owner share of \(11/21\), so almost half
+the households rent. It proves local existence around an interior mixed
+economy, not just continuity from a zero-renter limit. The neighborhood
+and the permitted reform size are not given numerical lower bounds. It
+does not prove global convergence, arbitrary changes of binding
+constraints, or a general fertility sign. Its finite small reforms
+eventually oscillate around the new steady state: cumulative fertility
+can rise without fertility increasing at every date. The short
+direct-allocation welfare result remains separate.
+
+\section{Original choices and the maintained
+branch}\label{original-choices-and-the-maintained-branch}
+
+Keep the original flow utilities and value functions. Write
+\(x=c-\chi n\), \(s=h-\kappa n\), and \(u_t=qr_t\) only to shorten the
+proof. The primitives and the fertility weight \(\vartheta\) are
+constant after the reform. There is no capital-gains tax. Define \[
+ \rho_O=1+\beta(1+\gamma+\omega_B),\qquad
+ \rho_R=1+\beta(1+\omega_B),\qquad a=h_R^{\max}.
+\] We maintain the following uniformly strict conditional branches.
+Young owners are at their down-payment limit, below their physical owner
+cap, and save positively. Young and old renters are at their rental caps
+and young renters save positively. Old owners are interior, with slack
+retention and estate bounds. Adult goods, adult space, fertility and
+estates are positive. Every conditional young owned size exceeds \(a\).
+Conditional choices are evaluated in both tenures even when one is
+selected less often.
+
+Let \(F\) be the fixed entrant distribution of income and wealth, with
+compact support and uniform margins for these inequalities. Additive
+ownership tastes have a finite positive logistic scale \(\sigma_\xi\).
+Conditional policies are independent of that taste draw; ownership
+probabilities are not. The same probability must enter housing, births
+and subsequent old-age demand.
+
+At date \(t\), set \(w_i=y_i+b_i+T_t+qT_{t+1}\). The original dated
+budgets and first-order conditions imply \[
+ h_i^O=\frac{b_i}{(1-\phi)P_t},\quad h_i^R=a,\qquad
+ \rho_Ox_i^O+\chi n_i^O=w_i-u_th_i^O,
+\] \[
+ \rho_Rx_i^R+\chi n_i^R=w_i-u_ta-qu_{t+1}a,\qquad
+ \frac{\vartheta}{n_i^m}
+ =\frac{\chi}{x_i^m}+\frac{\alpha\kappa}{h_i^m-\kappa n_i^m}.
+\] Old choices for these young households satisfy \[
+ c_{t+1,i}^{2,m}=\frac{\beta x_{t,i}^m}{q},\quad
+ h_{t+1,i}^{2,O}=\frac{\beta\gamma x_{t,i}^O}{q u_{t+1}},\quad
+ h_{t+1,i}^{2,R}=a,\quad
+ e_{t+1,i}^m=\frac{\beta\omega_Bx_{t,i}^m}{q^2}.
+\] Saving and old net assets are reconstructed from the original young
+budget and mortgage repayment. In particular the estate is dated in
+next-period goods; the denominator above is \(q^2\).
+
+\section{Six variables suffice for aggregate
+equilibrium}\label{six-variables-suffice-for-aggregate-equilibrium}
+
+Use \(Z_t=(P_t,u_t,Y_t,O_t,M_t,R_t)\). The variables \(Y_t,O_t\) are
+cohort masses. The quantity \(M_t/u_t\) is total old-owner housing;
+\(M_t\) is not financial wealth. The variable \(R_t\) is total
+old-renter housing. For \(t\geq1\), \[
+ M_t=\frac{\beta\gamma}{q}Y_{t-1}
+       \int\pi_{t-1}^O(i)x_{t-1,i}^O\,dF,
+ \qquad
+ R_t=aY_{t-1}\int(1-\pi_{t-1}^O(i))\,dF.
+\] The user-cost identity and balanced tax rebate give \[
+ P_{t+1}=\frac{(1+q\tau^p)P_t-u_t}{q},\qquad
+ T_t=\frac{q\tau^pP_t\bar H}{Y_t+O_t}.
+\] Given \(Z_t\), take \(v=(u_{t+1},Y_{t+1})\) as two unknowns and set
+\(T_{t+1}=q\tau^pP_{t+1}\bar H/(Y_{t+1}+Y_t)\). Evaluate the preceding
+original conditional choices and the logistic tenure probability. Solve
+\[
+ F_1(Z_t,v)=Y_t\int[\pi_i h_i^O+(1-\pi_i)a]dF
+                    +M_t/u_t+R_t-\bar H=0,
+\] \[
+ F_2(Z_t,v)=Y_{t+1}-\nu Y_t
+                 \int[\pi_i n_i^O+(1-\pi_i)n_i^R]dF=0.
+\] The exact update is \[
+ Z_{t+1}=G(Z_t,v)=
+ \left(P_{t+1},u_{t+1},Y_{t+1},Y_t,
+ \frac{\beta\gamma}{q}Y_t\int\pi_i x_i^OdF,
+ aY_t\int(1-\pi_i)dF\right).
+\] Where \(F_v\) is nonsingular, the implicit function theorem gives a
+smooth local map \(Z_{t+1}=g(Z_t;\phi)\). This is a representation of
+the original equilibrium equations, including the future rental cost in
+tenure choice. It is not an assumed adjustment rule.
+
+\subsection{A simple sufficient condition for the forward
+solve}\label{a-simple-sufficient-condition-for-the-forward-solve}
+
+For homogeneous income and wealth, suppose also that each old owner
+occupies at least \(a\). These conditions imply nonsingularity of
+\(F_v\) even with a positive property tax; neither a small-tax nor a
+small-child-cost condition is needed for this particular step.
+
+To see this, housing clearing fixes the owner probability at the given
+state: \[
+ \pi=\frac{\bar H-M/u-R-Ya}{Y(h^O-a)}\in(0,1).
+\] Write \(z=u_{t+1}\) and let \(w\) vary with the future rebate. The
+envelope derivatives of \(\Delta=W^O-W^R\) are \[
+ \Delta_z=-\frac{\beta\gamma}{z}+\frac{qa}{x_R}<0,
+ \qquad \Delta_w=\frac1{x_O}-\frac1{x_R}.
+\] The strict inequality is exactly the old renter's cap condition.
+Holding \(\pi\) fixed therefore implies \[
+ \frac{dz}{dw}=\frac{1/x_O-1/x_R}
+                    {\beta\gamma/z-qa/x_R}.
+\] At fixed housing, fertility is increasing in resources when
+\(\chi>0\): \(n_{m,w}>0\). The renter's dependence on \(z\) is
+\(n_{R,z}=-qa n_{R,w}\); the owner's is zero at fixed \(w\). Hence along
+the fixed-tenure-probability equation, \[
+ \frac{d\bar n}{dw}=\pi n_{O,w}
+ +(1-\pi)n_{R,w}
+       \frac{\beta\gamma/z-qa/x_O}{\beta\gamma/z-qa/x_R}\geq0.
+\] The numerator in the fraction is nonnegative precisely when
+\(h^{2,O}\geq a\). Meanwhile \(w\) is nonincreasing in \(Y_{t+1}\)
+because the future tax revenue is rebated to \(Y_{t+1}+Y_t\) households.
+After solving housing for \(z\), the derivative of the birth-equation
+residual with respect to \(Y_{t+1}\) is
+\(1-\nu Y_t(d\bar n/dw)(dw/dY_{t+1})\geq1\). This proves local
+nonsingularity. At \(\chi=0\) the resource derivatives of fertility
+vanish and the same conclusion follows. This argument does not assert
+existence at distant states or global continuation across a branch
+change.
+
+\section{The actual initial old}\label{the-actual-initial-old}
+
+Keep the complete pre-reform old distribution \(G_0\) as exogenous data.
+Let \(B_0\) be its owner mass, \(A_0\) its aggregate owner net financial
+assets after the original mortgage repayment, and \(H_0\) its aggregate
+inherited owner title. The latter is inherited purchased housing, not
+housing retained after the old reoptimize. Let
+\(L=\gamma/(1+\gamma+\omega_B)\).
+
+The four initial restrictions are \[
+ Y=Y_0,\quad O=O_0,\quad R=a(O_0-B_0),\qquad
+ M=L[A_0+PH_0+T(P,Y_0,O_0)B_0].
+\] The initial owner coefficient varies with the surprising price and
+rebate; fixing it would wrongly suppress revaluation of existing title.
+These four aggregates suffice for date-zero housing clearing. The full
+\(G_0\) is still needed to reconstruct and check each old household's
+consumption and estate. Uniform slack at the initial equilibrium
+preserves those inequalities under a small reform.
+
+\section{A local nonlinear transition
+theorem}\label{a-local-nonlinear-transition-theorem}
+
+Suppose the local map and boundary operator are at least \(C^2\),
+\(Z^*\) is a stationary equilibrium on this branch, \(F_v\) is
+nonsingular, and \(J=g_Z(Z^*;\phi)\) has four eigenvalues strictly
+inside and two strictly outside the unit circle, counted with
+multiplicity. Let \(B\) be the derivative of the four initial
+restrictions with respect to \(Z_0\). Suppose \(B\) restricted to the
+four-dimensional stable generalized eigenspace is invertible. Then
+sufficiently small permanent changes of \(\phi\), starting from the
+original stationary population and claims, have a locally unique
+equilibrium sequence converging exponentially to the nearby stationary
+state.
+
+\textbf{Proof.} Since \(1\) is not an eigenvalue, \((I-J)\) is
+invertible and the stationary state is a smooth function of the reform.
+Center the sequence on this new state. Split the linear recurrence into
+its stable and unstable generalized eigenspaces. Propagate the stable
+part forward and obtain its initial value from \(B\); solve the unstable
+part backward using its inverse and the requirement that the sequence
+converge. Choose a weight \(\eta<1\) above all stable moduli and above
+the inverse unstable moduli. The resulting operator has a bounded
+inverse on sequences with norm \(\sup_t\eta^{-t}\|v_t\|\). The nonlinear
+residual and boundary conditions are smooth on a uniform neighborhood,
+so the sequence implicit function theorem applies. A zero stable
+eigenvalue is harmless: only the unstable block is inverted. Uniform
+household margins and differentiation under the fixed compact-support
+integral reconstruct the full original equilibrium. This proves
+uniqueness among nearby convergent sequences, not global uniqueness of
+equilibrium. \(\square\)
+
+\section{An exact mixed equilibrium}\label{an-exact-mixed-equilibrium}
+
+All the following primitive values are rational except the ownership
+taste location, which is specified by the exact value functions below:
+\[
+ q=\tfrac12,\quad\phi=\tfrac45,\quad b=\tfrac15,\quad
+ \alpha=\beta=\omega_B=\tfrac25,\quad\gamma=\tfrac3{10},
+\] \[
+ \chi=\tfrac3{20},\quad\kappa=\tfrac12,\quad
+ \vartheta=\tfrac{141}{400},\quad\nu=2,\quad
+ a=\tfrac14,\quad h_O^{\max}=2,\quad\sigma_\xi=1,
+\] \[
+ \tau^p=\tfrac{467}{9250},\quad
+ y=\tfrac{3521349281}{1677802000},\quad
+ \bar H=\tfrac{68104}{68019}.
+\] Set the logistic taste location to
+\(\bar\xi=\sigma_\xi\log(\pi/(1-\pi))-W^O+W^R\) at the allocations
+below, where \(\pi=11/21\). This is a primitive specification of a
+finite taste distribution, not an equilibrium-dependent policy rule.
+Hold it fixed during the credit reform. This construction is an
+analytical example, not a calibration.
+
+There is an exact steady state with \[
+ P=Y=O=1,\quad u=\tfrac{9717}{18500},\quad
+ T=\tfrac{3975571}{314587875},\quad\pi=\tfrac{11}{21},
+\] \[
+ (x_O,h_O,n_O)=(1,1,\tfrac34),\qquad
+ (x_R,h_R,n_R)=(\tfrac{99}{74},\tfrac14,\tfrac9{40}).
+\] Mean fertility is exactly \(1/2\). Old owner housing is
+\(1480/3239>a\), old owner consumption is \(4/5\), and its estate is
+\(16/25\). The strict original constraints are checked in the companion
+receipt. In particular the young owner's marginal value of space is
+\(.64>u\), whereas the interior old owner's equals \(u\). Thus this same
+equilibrium also satisfies the short housing misallocation proposition.
+
+\subsection{Exact differentiation}\label{exact-differentiation}
+
+Differentiate the two conditional resource and fertility equations. For
+\(A_n=\vartheta/n^2+\alpha\kappa^2/s^2\), \[
+ \begin{pmatrix}\rho_m&\chi\\-\chi/x_m^2&A_n\end{pmatrix}
+ \binom{dx_m}{dn_m}
+ =\binom{dw-h_mdu-u\,dh_m-\mathbf1_{m=R}qa\,du_{t+1}}
+              {\alpha\kappa\,dh_m/s_m^2}.
+\] The owner derivative is \(dh_O=h_Od\phi/(1-\phi)-h_OdP/P\) and
+\(dh_R=0\). Envelope derivatives give \[
+ dW_O=\frac{dw-h_Odu}{x_O}
+ +(\alpha/s_O-u/x_O)dh_O-\frac{\beta\gamma}{u_{t+1}}du_{t+1},
+ \quad dW_R=\frac{dw-a\,du-qa\,du_{t+1}}{x_R},
+\] and \(d\pi=\pi(1-\pi)(dW_O-dW_R)/\sigma_\xi\). All coefficients at
+the specified equilibrium are rational. Therefore \[
+ J=G_Z-G_vF_v^{-1}F_Z,\qquad
+ Q=g_\phi=G_\phi-G_vF_v^{-1}F_\phi
+\] are exact rational matrices. No numerical differentiation is used in
+their certificate. Separate complex-step differentiation of the original
+household helper checks the derivation.
+
+\subsection{Roots, initial conditions and
+signs}\label{roots-initial-conditions-and-signs}
+
+The characteristic polynomial is \(z p_5(z)\) up to a positive constant,
+with \[
+\begin{split}
+p_5(z)={}&11624093714366716003479040894500z^5\\
+&+258366763596378495144999871594252z^4\\
+&-1176628664469803650647365064033229z^3\\
+&+408376917290861767134959387855371z^2\\
+&-199454780254172995433079109028654z\\
+&+694085946210757308455013341344.
+\end{split}
+\] An exact Sturm count gives three real roots. Rational isolating
+intervals place them respectively near \(-26.1500318\), \(.003504813\),
+and \(3.5930940\). Vieta's formulas put the remaining pair's product
+near \(.18132116\) and sum near \(.32660224\). Rational inequalities
+prove that the pair is nonreal with modulus in \((.42,.44)\). There are
+exactly four stable roots including zero, and two unstable roots.
+
+To check the boundary without rounded complex eigenvectors, let \(p_6\)
+be the monic characteristic polynomial. A polynomial row \(\ell(z)\)
+constructed from \(J\) satisfies exactly \[
+ \ell(z)(J-zI)=-p_6(z)e_P^\top.
+\] It is nonzero at each unstable root. Those two left eigenvectors
+annihilate the stable generalized space. Rational interval Gaussian
+elimination proves that the determinant of the matrix whose rows are
+\(B\), \(\ell(r_-)\) and \(\ell(r_+)\) excludes zero. After the
+normalization specified in the accompanying verification file, its value
+is near \(.2580033\). This verifies the theorem's boundary condition.
+
+The stationary derivative \(Z_\phi^*=(I-J)^{-1}Q\) has \[
+ \frac{dY^*}{d\phi}
+ =\frac{38021133978224611827644635285}
+ {35866089542871200498536115024}>0.
+\] For the initial derivative \(dZ_0\), solve \(BdZ_0=0\) and
+\(\ell(r_\pm)dZ_0=\ell(r_\pm)Z_\phi^*\). Then \(dZ_1=JdZ_0+Q\). A
+rational enclosure proves \[
+ .0288<\frac{d\bar n_0}{d\phi}<.0289,\qquad
+ 1.0600<\frac{dY^*}{d\phi}<1.0602.
+\] The full exact enclosures are stored with the accompanying
+verification file receipt; the decimal bounds here are outward bounds
+for readability. Smoothness gives both signs for sufficiently small
+finite positive reforms. Strict margins, root counts, boundary
+transversality and strict response signs also persist in an open
+neighborhood of the primitives. Small nondegenerate compact-support
+perturbations of entrant income and wealth are included, retaining the
+uniform conditional branches. This is not a certified rectangular
+parameter box or a claim about arbitrary heterogeneity.
+
+\section{What happens after the initial fertility
+rise}\label{what-happens-after-the-initial-fertility-rise}
+
+The constructed transition need not be monotone. In fact every
+sufficiently small positive reform eventually places fertility on both
+sides of replacement, infinitely often; population similarly crosses its
+new steady level infinitely often. The crossings decay exponentially.
+
+Here is a finite-reform argument. At the baseline let
+\(v=dZ_0-Z_\phi^*\), \(w_1=Jv\), and \(w_2=J^2v\). If the young-cohort
+response had no component from the complex pair, then
+\(e_Y^\top w_2-r_s e_Y^\top w_1=0\), where \(r_s\) is the small real
+root; the zero mode has disappeared after one step. The rational
+interval check instead places this expression near \(-.1346566\),
+strictly below zero. Thus the complex modes occur in the
+young-population response.
+
+For a small reform \(\delta\), write the deviations from its new steady
+state in smooth local stable coordinates. Let \(\lambda(\delta)\) be one
+of the complex roots. Uniformly, \(|\lambda|\in(.42,.44)\) and the other
+two stable roots have modulus below \(.01\).
+
+\textbf{Uniform tail lemma.} The stable graph and its restricted map may
+be chosen \(C^2\) jointly in the state and \(\delta\). At zero state its
+nonlinear remainder and its state derivative are zero. On a sufficiently
+small common neighborhood Taylor's theorem therefore bounds the
+remainder by \(C\|v\|^2\), its state derivative by \(C\|v\|\), and its
+parameter derivative by \(C\|v\|^2\). For the last bound one may use
+\(C^3\) regularity; here the conditional formulas, implicit map and
+parameter-dependent stable graph can be taken at least \(C^3\). The
+fixed compact entrant support allows their first three derivatives to
+pass under the integral. Choose a stable-coordinate norm whose linear
+contraction is strictly below \(.5\). Shrinking the neighborhood
+preserves a nonlinear contraction by \(\eta=.5\). The initial stable
+coordinate is a \(C^2\) function of \(\delta\) and vanishes at zero, so
+iteration gives \(\|v_t\|\le C|\delta|\eta^t\). Differentiating that
+iteration, or using the weighted sequence IFT, gives
+\(\|\partial_\delta v_t\|\le C\eta^t\). Consequently its nonlinear
+forcing and derivative are bounded respectively by
+\(C\delta^2\eta^{2t}\) and \(C|\delta|\eta^{2t}\). Constants are uniform
+for all sufficiently small \(\delta\).
+
+The parameter-dependent graph can also be obtained directly by the
+one-sided sequence IFT, prescribing the stable initial coordinate and
+leaving the unstable initial coordinate free. That construction requires
+invertibility only on the unstable space, so the zero stable root causes
+no problem here either. This supplies the regularity used in the lemma.
+The complex coordinate therefore satisfies \[
+ a_{t+1}=\lambda a_t+r_t,\qquad
+ |r_t|\le C\delta^2\eta^{2t}.
+\] Since \(\eta^2<|\lambda|\), the convergent sum \[
+ A(\delta)=a_0+\sum_{s=0}^\infty\lambda^{-s-1}r_s
+\] gives \(a_t=A(\delta)\lambda^t+O(\delta^2\eta^{2t})\). The fast
+stable coordinates are \(O(|\delta|(.01)^t+\delta^2\eta^{2t})\);
+unstable coordinates on the local stable graph are quadratic in the
+stable coordinates. Consequently \[
+ Y_t-Y^*(\delta)=2\operatorname{Re}
+       [C_Y(\delta)\lambda(\delta)^t]
+       +O(|\delta|(.01)^t+\delta^2\eta^{2t}).
+\] The preceding nonzero linear signal implies \(C_Y'(0)\ne0\), so
+\(C_Y(\delta)\ne0\) for every sufficiently small nonzero \(\delta\).
+This differentiability follows from the lemma and differentiation of the
+uniform convergent sum. Differentiating \(\lambda^{-s-1}\) adds a factor
+proportional to \(s+1\), which remains summable because
+\(\eta^2/|\lambda|<1\). The nonlinear summands sum to \(O(\delta^2)\).
+
+A nonzero real projection of a rotating nonreal eigenmode has infinitely
+many strictly positive and negative values bounded away from zero after
+division by its modulus. For a rational rotation this follows over a
+period; for an irrational rotation it follows from density on the
+circle. The remainder above is smaller along both subsequences. Cohort
+population therefore crosses its limiting level infinitely often. Total
+household population has the same conclusion, since its leading
+coefficient is multiplied by \(1+1/\lambda\ne0\). Finally, \[
+ \bar n_t-\frac1\nu=
+ \frac{Y_{t+1}-Y_t}{\nu Y_t},
+\] whose leading complex coefficient is multiplied by
+\((\lambda-1)/(\nu Y^*)\ne0\). Fertility too approaches replacement from
+both sides. This result is compatible with higher initial fertility and
+a larger final population. It makes no all-date welfare claim.
+
+\section{A family of mixed economies}\label{a-family-of-mixed-economies}
+
+The same stationary allocation can be supported at different taste
+scales. Keep the listed primitives and stationary bundles, let
+\(\sigma=\sigma_\xi>0\), and specify
+\(\bar\xi(\sigma)=\sigma\log(11/10)-W^O+W^R\). This is a one-parameter
+family of primitive taste distributions with the same stationary
+allocation. Within each economy, both taste parameters are fixed during
+the credit reform. Comparing different \(\sigma\) here is not a policy
+experiment.
+
+\textbf{Proposition.} Every member with \(1\leq\sigma\leq4\) has a
+locally unique converging transition after a sufficiently small
+permanent credit relaxation. Initial fertility and final population
+rise. The result persists under small changes in the other primitives
+and small entrant heterogeneity with uniform branch margins. The
+constructed family's owner share is always \(11/21\); nearby economies
+need not have that exact share. The oscillation theorem in Section 7 is
+established near \(\sigma=1\), not on the entire interval. For every
+\(\sigma>0\), the stationary young-cohort derivative is positive and
+each tenure's stationary lifetime-value derivative is negative.
+
+The stability part is algebraic for the entire positive half-line. Exact
+differentiation gives \(J(\sigma)=J(0)+\sigma \mathbf a\mathbf b^\top\)
+for two constant vectors \(\mathbf a,\mathbf b\), and \(Q(\sigma)\)
+affine in \(\sigma\). Here \(J(0)\) is the algebraic limit of the
+matrices; a degenerate taste distribution is not assumed in the economic
+theorem. The nonzero-root polynomial is affine in \(\sigma\): \[
+ p_{5,\sigma}(z)=p_{5,1}(z)+(\sigma-1)p_1(z),
+\] where \(p_{5,1}\) is the integer polynomial in Section 6 and \[
+\begin{split}
+ p_1(z)={}&209842616525591903123960392500000z^4\\
+ &-1024713381846718023989705716419600z^3\\
+ &+426827306877372594433334439987600z^2\\
+ &-162673088007827714095534626813600z\\
+ &+495225810071736959616928665600.
+\end{split}
+\] Apply \(z=(1+w)/(1-w)\) to this quintic. The first column of the
+Routh array for \((1-w)^5p_{5,\sigma}((1+w)/(1-w))\) has signs \[
+ -\,,\quad-\,,\quad-\,,\quad+\,,\quad+\,,\quad-.
+\] Each sign follows because the corresponding rational function of
+\(\sigma\) has numerator coefficients all of the displayed sign and
+denominator coefficients all positive. The exact coefficients are
+provided with the reproducible proof. No row vanishes. Thus exactly two
+roots have positive real part in \(w\), and three have negative real
+part. There are two roots outside the unit circle in \(z\) and three
+inside, in addition to the zero root of \(J\). The quintic's
+discriminant is a degree-eight polynomial in \(\sigma\) with all
+coefficients negative. Together with the three-real-root count at one
+point, this proves three distinct real roots and one nonreal pair for
+every \(\sigma>0\). The signs at \(z=-1,1\) and at infinity identify one
+real root below \(-1\) and one above \(1\).
+
+For the boundary and initial fertility sign, the rational interval check
+covers the entire closed interval \([1,4]\) with 913 adjacent
+subintervals. At each subinterval's endpoints, exact root isolation
+brackets the two unstable real roots. A bracket whose polynomial signs
+agree at both parameter endpoints brackets the root for every
+intermediate parameter, since the polynomial is affine in \(\sigma\).
+This is an interval proof, not a grid of unchecked intermediate
+economies.
+
+The rank-one representation provides a polynomial left eigenvector
+independent of \(\sigma\). For \(A=J(0)\), take
+\(\ell(z)=\mathbf b^\top\operatorname{adj}(zI-A)\). The exact identity
+\[
+ \ell(z)(J(\sigma)-zI)=-p_{6,\sigma}(z)\mathbf b^\top
+\] follows from the determinant lemma and is also checked coefficient by
+coefficient. Interval elimination then establishes a nonzero
+initial-boundary determinant and a strictly positive initial fertility
+derivative throughout each parameter interval. Adjacent endpoints and
+full coverage are verified exactly. The family receipt gives uniform
+positive lower bounds; the allowed finite reform size is still not
+numerically quantified.
+
+There is a simpler direct calculation for the stationary comparison. The
+common denominator is positive: \[
+D(\sigma)=29694400415045569770000\sigma+7922531612096952274579>0.
+\] Exact differentiation yields \[
+ \frac{dY^*}{d\phi}=
+ \frac{55(625392361132072652215364400\sigma+
+                 65900983926556653741810787)}{953456D(\sigma)}>0,
+\] \[
+ \frac{dW^{O*}}{d\phi}=
+ -\frac{33(568192684411159099406576\sigma+
+                 7091548916248680863487)}{224D(\sigma)}<0,
+\] \[
+ \frac{dW^{R*}}{d\phi}=
+ -\frac{83313(49680061080395802000\sigma+
+                 2808938751889938767)}{224D(\sigma)}<0.
+\] These signs hold for every positive \(\sigma\). At \(\sigma=1\), the
+value derivatives are approximately \(-2.25302\) for owners and
+\(-.518979\) for renters. Since both conditional values fall and the
+additive ownership taste is fixed, the maximum of the two values falls
+for every fixed taste draw. This compares the same entrant in two steady
+states. It does not rank different populations socially or describe all
+transitional cohorts. In particular, the initial old may benefit from
+the rise in the value of their inherited titles. The competitive credit
+reform does not itself provide the compensation used in the
+housing-allocation proposition.
+
+The accompanying evidence index gives the exact calculations and
+regeneration command. The checks include rational root and sign bounds,
+complete interval coverage, and independent comparisons with the
+original dated household equations. Finite numerical paths check those
+equations; local convergence follows from the proof above. The earlier
+all-owner transition and its primitive conditions remain in the longer
+assessment.
+
+\end{document}

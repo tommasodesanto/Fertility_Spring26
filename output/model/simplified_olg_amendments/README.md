@@ -1,5 +1,86 @@
 # Simplified OLG amendment checks
 
+## September 6: transition with substantial renting and positive child costs
+
+Start with the revised **four-page** `output/pdf/simplified_olg_paper_core.pdf`.
+Its allocation and conditional-fertility pages are unchanged. Figure 2 now
+uses the analytical mixed-tenure response. The **eight-page** supporting proof
+is `output/pdf/simplified_olg_mixed_transition_proof.pdf`; both LaTeX sources
+are under `latex/JMP_DS_suggestions/`. The earlier limiting figure, ten-page
+assessment and all-owner proof are preserved below.
+
+The new exact six-variable representation retains original dated budgets,
+positive child costs, a positive rebated property tax, finite logistic tastes,
+endogenous tenure and the actual initial old's assets and housing titles.
+An explicit economy has `11/21` owners, child goods cost `3/20`, and property
+tax `467/9250`. The same stationary bundles support a family of taste scales.
+Within each credit reform both taste parameters remain fixed.
+
+- For every positive taste scale: four stable/two unstable roots, a positive
+  stationary population derivative, and negative stationary conditional
+  lifetime-value derivatives in both tenures. Exact polynomial coefficient
+  signs prove these statements throughout the positive half-line.
+- For every scale in `[1,4]`: the actual initial-old boundary is transverse
+  and initial fertility rises. Rational intervals cover the entire interval,
+  with 913 adjacent cells; this is not just a list of parameter-point solves.
+  The sequence implicit-function argument gives locally unique nonlinear
+  converging paths after small permanent credit relaxations.
+- Near scale `1`: a nonzero dominant complex mode and a uniform nonlinear
+  remainder bound prove that small finite reforms eventually approach
+  replacement fertility, and final population, from both sides. The initial
+  fertility increase and final population gain do not imply monotonicity.
+
+Small primitive and compact-support entrant-distribution changes preserve the
+strict conditions. The reform radius and a multidimensional parameter box are
+not quantified. This remains an illustrative local result, with fixed entrant
+endowments and world bond price. Population growth is distinct from the
+compensated allocation welfare gain and from a social population ranking.
+No planner permission, author convention, or quantitative-model change is made.
+
+Evidence:
+
+- `mixed_transition_proof.md`: full derivation, general local theorem,
+  positive-tax inversion lemma, exact construction, finite-reform oscillation
+  proof, and the wider family result.
+- `mixed_transition_map_review.md`, `mixed_transition_certificate_review.md`,
+  `mixed_transition_family_review.md`: three sequential bounded read-only
+  reviews of distinct new steps. The second requested an explicit uniform
+  tail lemma; the third confirms that the added lemma closes that issue.
+  The last review audited source and receipt but could not replay them in its
+  model environment because `sympy` was absent. The lead executed the complete
+  checks in the working Python environment.
+- `mixed_transition_certificate.json`: exact rational matrices, root bounds,
+  boundary determinant, response signs and complex-mode signal; also records
+  the analytical Figure 2 values.
+- `mixed_transition_family_certificate.json`: all-positive-scale Routh,
+  discriminant and stationary-value proofs; complete `[1,4]` interval coverage;
+  original-equation comparisons at four declared scales. Completed in about
+  91 seconds with a 600-second/12,000-subdivision fail limit.
+- `mixed_transition_smoke.json`, `mixed_transition_checks.json`: exact original
+  branch checks, four short original-equation paths, 24 household optimizations,
+  central derivatives and 24/40-date horizon comparison. Maximum equilibrium
+  residual is below `2.9e-15`, budget error below `1.6e-15`, and initial/final
+  derivative discrepancies below `3e-9`. Finite paths check arithmetic; they
+  do not supply the convergence proof or the plotted curves.
+
+One new driver reproduces the work; the old limiting driver is unchanged:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_mixed_transition.py --smoke
+python3 code/model/tools/verify_simplified_olg_mixed_transition.py
+python3 code/model/tools/verify_simplified_olg_mixed_transition.py --certificate-only --figure
+python3 code/model/tools/verify_simplified_olg_mixed_transition.py --family-only
+```
+
+The verified interpreter is `/Library/Developer/CommandLineTools/usr/bin/python3`,
+with NumPy 2.0.2, SciPy 1.13.1, SymPy 1.14.0 and Matplotlib 3.9.4. Use that
+interpreter for these commands if the active model virtual environment lacks
+SymPy. No package or environment changes were made for this proof.
+
+All four receipts match the final new source hash. The supplemental figure
+files are `mixed_transition_analytical_figure.pdf/png`; the compact note uses
+this response as Figure 2, with the allocation figure unchanged.
+
 ## September 5 late-evening scope and prose pass
 
 Start with `output/pdf/simplified_olg_paper_core.pdf`: **four pages**, comprising

@@ -7,14 +7,25 @@ into the protected draft by hand.
 Use clear, task-specific filenames. Do not overwrite or synchronize files in
 the protected draft directory.
 
-## Compact theory results (5 September 2026)
+## Compact theory results (6 September 2026)
 
 [`simplified_olg_paper_core.tex`](simplified_olg_paper_core.tex) is a four-page
 proposal: three pages of results to follow the existing household setup, with
-the two existing figures, and one separate page assessing the transition
-assumptions and stationary welfare. The short allocation proof, original
-notation and conditional fertility condition are retained. The general welfare
-derivative is derived and checked in the supporting proof's section 11.
+the allocation and analytical transition figures, and one separate page
+assessing the transition assumptions and stationary welfare. The allocation
+and conditional-fertility pages are unchanged. Figure 2 now uses a proved local
+mixed-tenure transition with substantial renting and positive child goods
+costs. The old limiting figure and its proof remain in the longer assessment.
+
+[`simplified_olg_mixed_transition_proof.tex`](simplified_olg_mixed_transition_proof.tex)
+is the new eight-page supporting appendix, with its
+[PDF](../../output/pdf/simplified_olg_mixed_transition_proof.pdf). It derives the
+exact original-equation map and initial-old boundary, proves local transitions
+for a nondegenerate mixed family, and distinguishes demographic and welfare
+signs. The general root and stationary signs hold at every positive taste
+scale in that family; initial fertility and the boundary are certified on
+the whole scale interval `[1,4]`. Finite-reform oscillations are proved near
+scale `1`. Reform sizes remain local and unquantified.
 
 PDF: [`output/pdf/simplified_olg_paper_core.pdf`](../../output/pdf/simplified_olg_paper_core.pdf).
 The longer ten-page assessment is
@@ -31,6 +42,12 @@ pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-direct
 pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_paper_core latex/JMP_DS_suggestions/simplified_olg_paper_core.tex
 cp tmp/pdfs/simplified_olg_paper_core/simplified_olg_paper_core.pdf output/pdf/simplified_olg_paper_core.pdf
 ```
+
+Compile the appendix similarly, using
+`tmp/pdfs/simplified_olg_mixed_transition` for all build products and
+`simplified_olg_mixed_transition_proof.tex` as the source. Compile twice and
+copy only the final PDF to `output/pdf/`. Neither build writes into the
+protected author draft.
 
 ## Independent theory review (4 September 2026)
 

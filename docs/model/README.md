@@ -4,12 +4,21 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
-- `../../output/pdf/simplified_olg_paper_core.pdf` -- four-page compact theory
-  proposal: three pages of results after the existing setup, retaining both
-  figures, plus one page assessing transition assumptions and the general
-  stationary owner-welfare loss in the all-owner zero-cost/tax limit.
+- `../../output/pdf/simplified_olg_paper_core.pdf` -- revised September 6
+  four-page theory proposal. Allocation and conditional fertility are unchanged;
+  Figure 2 uses a proved mixed-tenure transition with substantial renting and
+  positive child costs. The assessment separates population and welfare signs.
   Source: `../../latex/JMP_DS_suggestions/simplified_olg_paper_core.tex`.
-  This is the shorter starting point; the longer assessment remains below.
+  This is the shorter starting point; the earlier assessment remains below.
+
+- `../../output/pdf/simplified_olg_mixed_transition_proof.pdf` -- eight-page
+  supporting appendix: exact original-equation map and initial-old boundary,
+  local nonlinear transition for an interior mixed family, finite-reform
+  oscillations near the illustrated economy, and stationary welfare in both
+  tenures. The root and stationary signs cover every positive taste scale;
+  initial fertility and the boundary are certified throughout `[1,4]`.
+  Source: `../../latex/JMP_DS_suggestions/simplified_olg_mixed_transition_proof.tex`.
+  Evidence: `../../output/model/simplified_olg_amendments/README.md`.
 
 - `../../output/pdf/simplified_olg_simple_assessment.pdf` -- September 5
   assessment, ten pages: the short housing-allocation proof, distinct roles

@@ -1,5 +1,123 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6 ten-hour proof window — proof and verification completed
+
+Tommaso authorized a more ambitious proof while sleeping. Start 03:28 UTC
+September 6; hard stop 13:28 UTC (09:28 New York), or earlier when a meaningful
+result and its checks are complete. The target is an analytical local
+transition at an interior mixed-tenure economy with material renter mass and
+positive child goods costs, rather than only perturbations of the all-owner
+zero-cost limit. Retain original household equations, endogenous tenure,
+physical restrictions, actual initial old claims and the accepted author
+notation. No public-finance permission or preference change is inferred.
+
+Stages and stop conditions: (1) at most 90 minutes to derive and verify a
+finite-dimensional exact equilibrium map and its initial conditions;
+(2) at most three hours for a primitive or exact-certificate stability and
+boundary argument at a nondegenerate mixed economy; (3) at most three hours
+for fertility/population signs and a carefully delimited extension, only if
+the preceding proof is valid; (4) reserve at least 90 minutes for independent
+review, original-equation checks and a compact amendment to the existing
+reading material. At a failed stage, record the precise obstruction before
+changing method; do not repeat the same broad investigation. Long numerical
+searches would require a separate smoke-tested Torch design, but none is
+planned. This is primarily analytical work with short arithmetic checks.
+
+The lead owns the model reduction, construction, proof and synthesis. One
+bounded read-only reviewer at a time will check genuinely new steps, each
+with its default profile limit; no broad parallel duplicate proof search.
+Keep progress and all proved/conjectured distinctions in this record and the
+existing evidence folder. Preserve the short allocation result and all 18
+decision entries while this optional extension is explored.
+
+Completed the scientific work and PDF inspection by 04:44 UTC, about 76 minutes
+after starting. Stop early because the selected proof and checks are complete;
+the remaining paper-placement and institutional choices belong to the author.
+No continuing theory job or scheduled run is created. Final backup details
+are recorded in the daily memory.
+
+The result is materially broader than the earlier all-owner limiting proof.
+An exact six-variable equilibrium representation retains original positive
+child costs and rebated property tax, endogenous logistic tenure and the
+actual initial-old distribution. The initial old-owner housing coefficient
+must revalue inherited title and the surprise rebate; it cannot be fixed as
+if it were predetermined financial wealth. A positive-tax local inversion
+lemma applies when old owners occupy at least as much as capped old renters.
+
+The exact constructed economy has `11/21` owners, `chi=3/20`, positive tax
+`467/9250`, and a finite taste scale. It admits a locally unique converging
+transition with higher initial fertility and a larger final population after
+a small permanent credit relaxation. Exact rational roots and the initial
+boundary, followed by a one-sided sequence theorem, prove the nonlinear
+infinite-path claim. The noninvertible stable zero root causes no obstruction.
+An explicit uniform tail lemma also proves eventual fertility and population
+crossings for every sufficiently small finite reform near this economy.
+
+The family extension holds the same baseline bundles at different taste
+scales by specifying the corresponding taste location in primitives; both
+taste parameters are held fixed within each credit reform. A rank-one matrix
+identity yields four stable/two unstable roots at every positive scale.
+Rational intervals certify the full scale interval `[1,4]`, with 913 adjacent
+cells, for boundary transversality and positive initial fertility. Stationary
+population rises and both conditional lifetime values fall at every positive
+scale in this family. Thus the same stationary entrant loses welfare at any
+fixed taste draw, despite population growth. Initial-old and full-transition
+welfare remain separate. The reform radius and a general multidimensional
+parameter box are unquantified; branch changes and global transitions are open.
+
+Three sequential read-only reviews, each using the default 20-minute strong
+profile limit, checked distinct work: exact aggregate reduction and initial
+claims; rational one-point certificate and finite-reform argument; newly
+broadened family and stationary welfare signs. All completed within their
+limits. The second requested explicit uniform parameter/remainder bounds;
+the added lemma closes that issue, as confirmed by the third. The third
+reviewer audited source and saved receipts but could not replay them in its
+model environment because `sympy` was absent. The lead ran the entire checker
+in the working environment and independently checked the algebra and original
+equations.
+
+The initial full-family interval attempt and a compiled-arithmetic version
+each stopped at their four-minute bounds: direct repeated interval
+dependencies made the all-family oscillation test too conservative. A changed
+method used a scale-independent rank-one eigenvector polynomial and retained
+the oscillation claim near scale one, concentrating the family certificate
+on initial fertility and final population. That completed in 84 seconds in
+the prototype and about 91 seconds in the final driver, within its explicit
+600-second/12,000-subdivision fail limits. No calibration search was launched.
+
+One new driver, `code/model/tools/verify_simplified_olg_mixed_transition.py`,
+records all exact bounds and reproduction metadata. The four final receipts
+match source SHA-256
+`f22bdc662ca470b763805abe0adec28cb1548c0b921260e57636bd84be08daa4`.
+The old limiting driver is unchanged. Four short original-equation paths and
+24 independent household optimizations pass; maximum equilibrium residual
+is below `2.9e-15`, budget error below `1.6e-15`, and initial/final derivative
+discrepancies below `3e-9`. The 24/40-date price paths agree within `3.2e-15`.
+Four separate original stationary comparisons confirm the all-scale rational
+derivatives to `6.9e-9`. These numerical checks support the algebra; they do
+not supply the plotted curves or the infinite-path proof.
+
+The final backup check removed trailing whitespace from the new driver.
+Its complete parsed Python syntax tree is unchanged. All four receipt modes
+were replayed after this formatting-only change; numerical fields and the
+plotted PNG remain identical to the reviewed version. The final source hash
+above includes that cleanup.
+
+The revised `output/pdf/simplified_olg_paper_core.pdf` remains four pages;
+its first two source pages are unchanged. Figure 2 now uses the analytical
+mixed response, retaining the allocation/transition pair of figure roles.
+All earlier figures and limiting results are preserved. The new supporting
+appendix, `output/pdf/simplified_olg_mixed_transition_proof.pdf`, is eight pages.
+Both documents compile without warnings or overflowing boxes and every page
+was visually inspected. PDF hashes respectively:
+`e6298f04410475bb23eda9d1f34a239e77ef6059a0306697b0bb5d5d295feb62`
+and `b8b950597dc32bb0d9c1093e1f1d80741b53fc68cdbc9b04ec46427d812e7c7c`.
+All 18 decision rows remain unchanged. No author convention, preference,
+planner permission, quantitative-model source, or protected manuscript file
+is changed. Proofs, reviews and commands are indexed in the existing evidence
+folder. Recommend keeping the short allocation result central and deciding
+the transition's paper placement together.
+
 ## September 5 late-evening scope and prose pass — completed
 
 Authorized when Tommaso returned tired and asked for safe autonomous work.

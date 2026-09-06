@@ -1,6 +1,6 @@
 # Active Theory and Quantitative Decision Ledger
 
-Updated: 2026-08-19
+Updated: 2026-09-06
 
 This is the short working ledger for the current paper. It records decisions
 that can still change the theory, quantitative interpretation, or paper-facing
@@ -24,6 +24,39 @@ would be a welcome strengthening, not a prerequisite for stating the core
 allocation result. Public lending and repayment through taxation belong to a
 later discussion of remedies. The previous prompt to decide public collection
 powers is therefore deferred; those powers have not been accepted or rejected.
+
+**September 6: a broader mixed-tenure transition proof.**
+Tommaso authorized a ten-hour proof window. The completed extension removes
+near-all ownership and near-zero child goods costs from the constructed
+transition. The revised four-page `output/pdf/simplified_olg_paper_core.pdf`
+keeps the first two pages unchanged and uses the analytical mixed response
+as Figure 2. Its eight-page appendix is
+`output/pdf/simplified_olg_mixed_transition_proof.pdf`. Both sources remain
+outside the protected draft. The old limiting results and figure are preserved.
+
+An exact six-variable map retains endogenous tenure, positive child costs and
+property tax, actual initial-old assets/title revaluation, and the original
+household constraints. A family with `11/21` owners has four stable/two unstable
+roots at every positive taste scale. For the whole scale interval `[1,4]`, a
+rational interval certificate establishes the initial boundary and positive
+initial fertility; the local nonlinear theorem gives a converging path to a
+larger population after a small credit relaxation. Small primitive changes
+and small entrant heterogeneity preserve the result under uniform margins.
+Near scale `1`, finite reforms eventually oscillate around replacement and
+the new population level. Initial and final signs do not imply monotonicity.
+The allowed reform size and a general multidimensional parameter region are
+not quantified; global continuation across changing constraints remains open.
+
+At every positive scale in the constructed family, stationary conditional
+lifetime values fall in both tenures. Hence the same entrant with a fixed
+taste draw is worse off in the new steady state, despite higher population.
+This does not rank all transition cohorts or different population sizes, and
+is distinct from the compensated housing-allocation gain. Three bounded
+reviews and exact/original-equation checks are indexed in
+`output/model/simplified_olg_amendments/README.md`. All 18 discussion rows,
+planner permissions and author conventions are retained. The result is a
+proposed extension; choosing its paper placement and any constrained-finance
+institution remains for the author.
 
 **September 5 late-evening continuation: compact results and economic scope.**
 After returning tired, Tommaso authorized safe further autonomous work. Start
