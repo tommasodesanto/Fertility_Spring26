@@ -1,0 +1,77 @@
+{
+  "experiment": "one_date_simultaneous_tenure_nests_20260906b",
+  "scientific_bundle_sha256": "630ba20bca6a1b54eb4c46aca904c4a087afb8c808b9c7f4660d5fcd316a970e",
+  "checkpoint_sha256": "bbe10a21a843facaf2bceed56e89281e00992d632cddab640ff0c572d3eb494f",
+  "reference_target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "driver_hashes": {
+    "code/model/tools/e5f_joint_nested_choice.py": "215332a9b40dbf383153bb463075bd5c9327dea21faa6be78813b4560928898b",
+    "code/model/tools/run_e5f_joint_nested_experiment.py": "638da27635d8cdf7eb0b2c926a8e238b4846b588dbc96c04286f80935da78a74",
+    "code/model/tools/test_e5f_joint_nested_choice.py": "fc6eeee4607aae887e2265827c94ddc3e93ace468457bb471573949de261547c",
+    "code/cluster/submit_e5f_joint_nested_experiment.sh": "5738c2455da443e6f0c575f946708bdddcc78fe26b4232d5b1ae4c6b8ba060d2",
+    "code/model/tools/run_e5f_independent_numerical_audit.py": "ba0f94f52705f43fd0bf7a18ea8c2053f9897674abeb20b030eaf37c57de8623"
+  },
+  "cases": [
+    [
+      0.005,
+      0.05
+    ],
+    [
+      0.005,
+      0.5
+    ],
+    [
+      0.005,
+      1.0
+    ],
+    [
+      0.05,
+      0.05
+    ],
+    [
+      0.05,
+      0.5
+    ],
+    [
+      0.05,
+      1.0
+    ],
+    [
+      0.5,
+      0.05
+    ],
+    [
+      0.5,
+      0.5
+    ],
+    [
+      0.5,
+      1.0
+    ],
+    [
+      2.5,
+      0.05
+    ],
+    [
+      2.5,
+      0.5
+    ],
+    [
+      2.5,
+      1.0
+    ],
+    [
+      0.5,
+      1e-06
+    ]
+  ],
+  "smoke_seconds": 2055,
+  "panel_seconds": 1200,
+  "reference_bellman_calls": 2,
+  "diagnostic_cases": 26,
+  "production_changed": false,
+  "scientific_git_base": "ac676c2a2c6b27f92319625f77affde2fd6b4b74",
+  "parent_contract_sha256": "49a7b4dd542f79dd84cdf64e0ae1c602a595c86231d47b4ea630f7ecdba0cfcb",
+  "previous_smoke_job": "17067221",
+  "previous_elapsed_seconds": 43,
+  "budget_gate": "positive statewise additional violating mass <=2e-10; absolute benchmark exception reported"
+}

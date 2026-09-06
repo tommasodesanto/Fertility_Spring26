@@ -1,8 +1,51 @@
 # Calibration Status
 
-Updated: `2026-09-06` (recovery stopped at the market gate; completed evidence audited; provisional candidate preserved; production retained)
+Updated: `2026-09-06` (first simultaneous nested-choice diagnostic complete; production retained; full experimental lifecycle solution still outstanding)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 6, 20:17 UTC: author authorized an isolated numerical experiment.**
+The first stage evaluates simultaneous nested-logit plans with tenure nests
+on the retained September 4 benchmark's inherited 2023 population, holding
+prices and future values fixed. It commits tenure jointly with the attempt;
+housing size, consumption and saving respond to success within that tenure.
+This additional commitment restriction is explicit. Product-specific housing
+shocks are removed in the experimental block. The experiment is not an
+equilibrium, calibration, housing-event-study estimate or welfare comparison.
+All production economic files, targets, weights and gates remain unchanged.
+Design: `docs/model/e5f_joint_nested_experiment.md`; source/results receipt:
+`output/model/e5f_joint_nested_experiment_20260906a/`. Final Torch smoke
+`17068184` and panel `17068310` completed in the exclusive snapshot
+`Fertility_Spring26_joint_nested_experiment_20260906c`. All twelve reference
+arrays reproduce exactly twice; all 26 cases pass probability, mass, birth
+accounting and additional budget-exposure checks. Four smoke cases reproduce
+exactly in the panel; the flat-logit limit also agrees on full saved arrays.
+Seven pure mathematical/transition tests pass. All seventeen standard reference
+graphs and 26 supplemental choice plots were inspected. The independent design
+review validates the GEV law; its location/control questions are resolved.
+The first failed absolute-budget smoke is retained: its seven occupied
+reporting-floor exceptions exactly match the benchmark. No panel case adds
+budget-violating mass; the absolute inherited share remains `2.914e-9`.
+
+Within the common four-plan menu and frozen continuation, maximum rule-only
+differences are `0.00010634` birth units per 100 households over four years
+(about one per million) and `0.00000535` ownership percentage points. Changing
+scales has much larger effects. Keeping outer tenure dispersion `.005` makes
+current births essentially zero. At outer scale `2.5`, dissimilarity `1`,
+birth units are `9.784676` per 100 households versus reference `8.477610`;
+all-age ownership is `42.2869%` versus `63.5624%`. These are not the prime-age
+ownership or completed-fertility calibration moments. Large-scale cases have
+roughly 10% excess housing supply at the frozen price; none is an equilibrium.
+The current fertility scales exceed tenure dispersion and cannot be carried
+unchanged into these tenure nests. Full lifecycle continuation, market clearing
+and the complete original target/identification system must be reassessed next.
+No calibration improvement or new policy effect is established by this test.
+
+The five-page readout is `docs/model/e5f_joint_nested_readout.md`, rendered as
+`output/pdf/e5f_joint_nested_readout.pdf`, with complete reference fits and
+parameters. `final_contract.json` and `collection_checks.json` in the result
+folder pin and verify the final experiment. All four allocated jobs together
+took 6m35s, within the 55-minute cap; no experiment job remains running.
 
 **Latest author direction:** explore simultaneous revelation of fertility and
 housing taste shocks with a nested choice structure, to avoid imposing an
@@ -39,7 +82,8 @@ open; no author resolution was found in the bounded historical search. The
 September 14 assigned-parameter slide retains zero tenure dispersion and old
 estimates, while the maintained result explicitly overrides dispersion to .005;
 reconcile presentation and selected specification without silently adopting
-either shock restriction. No economic code, slide or model run changed.
+either shock restriction. That earlier discussion changed no economic code,
+slide or model run; the subsequently authorized experiment is recorded above.
 
 ## September 6 full joint overnight search - stopped, candidate provisional
 

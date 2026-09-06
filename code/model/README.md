@@ -22,6 +22,16 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_joint_nested_experiment.py` is an isolated one-date simultaneous
+nested-logit diagnostic, with tenure nests and a matched fertility-first
+sequential control. It requires a hash-pinned retained scientific snapshot;
+it cannot run as a production calibration. The pure operator and its tests are
+`tools/e5f_joint_nested_choice.py` and `tools/test_e5f_joint_nested_choice.py`.
+The read-only collector verifies saved states and plots the panel. Design,
+source reconstruction and receipts are indexed in
+`../../output/model/e5f_joint_nested_experiment_20260906a/README.md` and
+`../../docs/model/e5f_joint_nested_experiment.md`.
+
 `tools/run_e5f_joint_overnight_search.py` runs the hash-pinned full-objective
 search and the separately contracted smaller-step recovery. All eleven
 parameters, twelve targets, numerical gates and exact repetition requirements
