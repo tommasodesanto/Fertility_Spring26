@@ -41,9 +41,29 @@ without rebates. No perfect-foresight, stationary-endpoint or welfare claim.
 The cluster generates a provisional review PDF. Before delivering the final
 morning PDF under `output/pdf/`, collect the verified winner and policy ledgers,
 verify every displayed number, render every page and inspect it. Use the PDF
-skill and the existing ReportLab builder for the final user-facing PDF.
+skill and available document tools for the final user-facing PDF. The existing
+`build_e5f_independent_audit_pdf.py` uses Pandoc/XeLaTeX, not ReportLab.
 The protected author manuscript remains read-only.
 
 Review evidence: `integration_review.md`, `implementation_review.md`,
 `core_review.md`, `controller_review.md`. Delegated changes were reviewed and
 corrected by the lead; worker outputs alone are not certification.
+
+## Queued overnight run
+
+Source commit `4b4ba8e` is pushed on `codex/joint-nested-full`. Long job
+`17075663` waits on successful completion of smoke `17074777`, with
+cancellation on invalid dependency and independent receipt checks before
+searching. The existing finite monitor is active every fifteen minutes.
+Both anchor histories now pass and reproduce exactly; local `smoke_anchor/`
+contains the full target fit, all parameter bounds, receipts and seventeen
+standard graphs. The anchor is not a new searched calibration. Seventeen
+local reference/plumbing/controller tests pass. The other smoke stages
+and the long search still need to complete.
+
+Scheduler status: `ssh torch 'squeue -j 17074777,17075663'`.
+Remote search progress will be in `output/model/joint_nested_overnight/search/`.
+Remote final policy results will be in `output/model/joint_nested_overnight/equilibrium_path/`.
+The final PDF operation marker was run once on September 6 in the launching
+turn; do not repeat it for the same logical artifact. No final PDF has yet
+been produced for this full-calibration extension.

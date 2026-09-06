@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-09-06` (full simultaneous-choice experiment authorized; isolated lifecycle and overnight-loop verification in progress; production retained)
+Updated: `2026-09-06` (full simultaneous-choice experiment authorized; isolated full-loop smoke in progress; long run queued behind successful smoke; production retained)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
@@ -30,7 +30,23 @@ population-dependent computational tenure kernel.
 
 Corrected full-loop smoke `17074777` is running in the exclusive Torch snapshot
 `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260906b`.
-Its default-off ten-array baseline reproduction already passed exactly.
+Its default-off ten-array baseline reproduction already passed exactly. Both
+full-history anchors have now passed and reproduced exactly; two simultaneous
+all-coordinate probes and the four two-date policy paths remain in progress.
+The verified anchor is a starting point, not a searched calibration; complete
+fit and parameter tables are under
+`output/model/e5f_joint_nested_full_20260906a/smoke_anchor/`. Its very weak
+parent/nonparent ownership gap and flat ownership-policy graphs are visible
+starting-point limitations, not dismissed by passing numerical checks.
+
+Long job `17075663` is submitted with scheduler dependency
+`afterok:17074777` and cancellation on an invalid dependency. Thus it cannot
+start before the full smoke exits successfully; its controller independently
+rechecks all receipts before solving. The source is committed and pushed as
+`4b4ba8e` on `codex/joint-nested-full`. The finite fifteen-minute monitor
+`monitor-full-joint-fertility-calibration` is active for this new experiment,
+including collection, verification and the final morning PDF. The older
+failed search mentioned in prior monitor history is not being restarted.
 Scientific bundle: `5020a3e77ec8a0f7ee2deb6cd4b642c67dcaa115f26b68df1f14a06e780f9766`.
 Full contract: `output/model/joint_nested_overnight/contract.json` in that
 snapshot, SHA `7558feaf55ddae7058f481569cda72a8dba5e09a0d094300aa171b66806adb1d`.
