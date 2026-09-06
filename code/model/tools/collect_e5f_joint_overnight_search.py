@@ -75,12 +75,41 @@ def verify_collected():
     return count
 
 
+def final_evidence_tables():
+    """Include cases that finished while the fail-closed controller was stopping."""
+    path=OUT/'final_evidence_verification.json'
+    if not path.exists():return None
+    proof=read(path);inventory=[];fits=[];parameters=[]
+    for item in proof['case_ledger']:
+        base=local(item['case']);relative=base.relative_to(OUT)
+        if digest(base/'summary.json')!=item['summary_sha256']:
+            raise RuntimeError('Final evidence summary changed')
+        meta={'scope':relative.parts[0],'stage':relative.parts[1],'case':base.name}
+        inventory.append({**meta,**item})
+        fits.extend({**meta,**x} for x in rows(base/'target_fit_long.csv'))
+        parameters.extend({**meta,**x} for x in rows(base/'parameter_table.csv'))
+    if len(inventory)!=proof['completed_case_receipts'] or len(fits)!=12*len(inventory):
+        raise RuntimeError('Incomplete final evidence inventory')
+    for name,data in [('completed_case_inventory.csv',inventory),('final_target_fits.csv',fits),
+                      ('final_parameters.csv',parameters)]:
+        with (OUT/name).open('w',newline='') as f:
+            writer=csv.DictWriter(f,fieldnames=list(data[0]),lineterminator='\n')
+            writer.writeheader();writer.writerows(data)
+    return proof
+
+
 def build_report():
     state=read(OUT/'search/search_state.json')
     best=read(OUT/'search/best_so_far.json')['best']
     case=local(best['summary']).parent
     command(['rsync','-az',f"torch:{Path(best['summary']).parent/'standard_diagnostics'}/",str(case/'standard_diagnostics')+'/'])
     verified=verify_collected()
+    final_evidence=final_evidence_tables()
+    graph_review=read(OUT/'standard_graph_visual_review.json') if (OUT/'standard_graph_visual_review.json').exists() else None
+    graphs_reviewed=graph_review is not None and graph_review.get('status')=='reviewed'
+    if graphs_reviewed:
+        for name,sha in graph_review['graph_sha256'].items():
+            if digest(case/'standard_diagnostics'/name)!=sha:raise RuntimeError('Reviewed graph changed')
     s=read(case/'summary.json');r=read(case/'case_receipt.json')
     fit=rows(case/'target_fit_long.csv');params=rows(case/'parameter_table.csv')
     if len(fit)!=12 or sum(x['is_free_parameter']=='True' for x in params)!=11:
@@ -92,6 +121,7 @@ def build_report():
     moments={x['moment']:float(x['model']) for x in fit}
     contract=read(OUT/'contract.json')
     smoke_count=contract.get('smoke_histories',2)
+    completed_count=final_evidence['completed_case_receipts'] if final_evidence else state['completed_histories']
     text=['---','title: "Overnight calibration: results and remaining gaps"',
           'subtitle: "All eleven parameters searched under the unchanged twelve targets"',
           'author: "Prepared for Tommaso De Santo"','date: "6 September 2026"','---','',
@@ -105,9 +135,10 @@ def build_report():
           '| Housing-only starting diagnostic | 20.6953 | 0.5158 | 6.3491 |',
           f"| Overnight joint search | {best['loss']:.4f} | {moments['housing_increment_0to1']:.4f} | {moments['aggregate_mean_occupied_rooms_18_85']:.4f} |",'',
           'All eleven estimated parameters could move during the overnight search. The first-child housing term could range from 0 to 2 instead of 0 to 0.5; every other bound, all twelve empirical targets and all weights stayed fixed. The model equations and numerical gates were retained.',
-          '',f"The controller stopped with status `{state['status']}` after {state['completed_histories']} completed histories, counting the {smoke_count} initial smoke evaluations. Production remains the September 4 calibration. These results have not been used to update policy or population forecasts.",
+          '',f"The recovery stopped with status `{state['status']}`. There are {completed_count} checked histories, including {smoke_count} smoke evaluations. Production remains the September 4 calibration; policy results have not been refreshed.",
           '',('The first broad attempt stopped at candidate 17 when the housing-market residual exceeded the unchanged 0.0002 tolerance; none of its fourteen completed trials improved the seed. This separately recorded recovery uses smaller steps: each round probes all eleven parameters, then evaluates combinations of improving changes under the complete objective. It retains the original overnight cutoff.' if contract.get('schema')=='e5f_joint_local_recovery_v1' else 'The complete failure and status receipts accompany this attempt.'),
-          '', '**Next discussion:** assess the complete fit and parameter restrictions below before selecting the presentation calibration. This finite search does not establish a global optimum. The empirical childbirth housing target has not been lowered.',
+          '', '**The economic result:** the joint search improves overall fit, chiefly on ownership and other margins. Its first-birth room response remains below the housing-only starting point. It has not closed the childbirth-housing gap.',
+          '', '**For the presentation:** retain the reproduced benchmark until the new point has passed exact repetition. The next numerical task is to diagnose the failed market solve before considering another search. The empirical target and all weights stay fixed.',
           '', '\\clearpage', '', '# Complete target fit', '',
           'Every gap is model minus target; the loss contribution is weight times squared gap. Provisional weight scales mean the total is an optimization objective, not a chi-squared statistic.','',
           '| Moment | Target | Model | Gap | Weight | Loss |','|---|---:|---:|---:|---:|---:|']
@@ -126,11 +157,24 @@ def build_report():
         if x['is_free_parameter']!='True':text.append('| '+PARAMETER_LABELS.get(x['parameter'],x['parameter'])+f" | {float(x['value']):.6f} |")
     text+=['','Dated supply elasticity 0.63 and tenure dispersion 0.005 are externally fixed. Old initialization retains elasticity 1.75; old fertility is normalized to 2.1. The dated child-value change is estimated. The inherited household-entry/population closure is retained and remains a limitation for interpreting long forecasts.',
            '', '\\clearpage', '', '# Verification and evidence', '',
+           ('**Why the recovery stopped.** At the first moving historical date (2011), round 2 joint proposal 7 failed the market check. The 18-step attempt ended at relative residual 0.0002596; the existing 30-step retry ended at 0.001174, above the unchanged 0.0002 acceptance limit. The failed proposal differs from the best completed point. No failed point was accepted, and no third search was launched.' if final_evidence else ''), '',
+           ('The code had found a sign-changing price bracket and exhausted bisection without reaching the residual gate. The next diagnosis should inspect residuals and household choices inside that bracket. The saved log does not establish a discontinuity, coding error or nonexistence of equilibrium; it does not show that the empirical housing target is unreachable.' if final_evidence else ''), '',
            f"The source, target, history, market, accounting, feasibility and population checks passed for the selected point. Its occupied adjacent-wealth value screen flags **{r['policy_array_diagnostic']['occupied_negative_steps']} decreases**; the exposed pre-choice mass share is {r['policy_array_diagnostic']['share_pre_choice_mass_at_negative_steps']:.4g}. Its reported-budget excess share is {r['budget_diagnostic']['budget_excess_share']:.4g}.",'',
            ('Both final repetitions exactly match the twelve fit rows, physical parameters, numeric historical entries and all seventeen standard PNGs.' if verified_repeat else 'The best point is not certified by two final exact repetitions. Inspect the failure/status receipt before using it.'),'',
-           f"The local collector verified {verified} available original artifact hashes. Large dated checkpoints remain on Torch. All completed histories retain their standard seventeen-graph packet; the selected packet is collected locally. Visual review of this automatically generated PDF and the selected diagnostic plots remains pending.",'',
-           f"[Experiment design and reproducibility]({OUT/'README.md'}). [Complete case ledger]({OUT/'search/all_cases.csv'}). [All target fits]({OUT/'search/all_target_fits.csv'}). [All parameter tables]({OUT/'search/all_parameters.csv'}). [Selected diagnostics]({case/'standard_diagnostics/summary.json'}).",'',
+           (f"All {completed_count} completed cases passed a separate artifact and result audit: {final_evidence['original_artifact_hashes_verified']:,} original hashes checked on Torch. One case finished during cancellation, after the controller recorded 68; it is included in the final inventory and does not change the winner. The local collector checked {verified} available original hashes." if final_evidence else f"The local collector verified {verified} available original artifact hashes."), '',
+           'Large checkpoints remain on Torch. '+('The selected seventeen standard plots have been inspected. ' if graphs_reviewed else 'Visual inspection of the standard plots is pending. ')+
+           'They retain irregular tenure policies and nearly universal ownership at old ages; a zero occupied-value-drop screen does not certify all household policies. Inherited diagnostic summary statistics use different clocks and age windows from the calibration table, which remains authoritative.', '',
+           f"[Experiment design and reproducibility]({OUT/'README.md'}). [Completed inventory]({OUT/'completed_case_inventory.csv' if final_evidence else OUT/'search/all_cases.csv'}). [All target fits]({OUT/'final_target_fits.csv' if final_evidence else OUT/'search/all_target_fits.csv'}). [All parameter tables]({OUT/'final_parameters.csv' if final_evidence else OUT/'search/all_parameters.csv'}).",'',
            'The earlier local Jacobian had a weak bequest direction and a nonsmooth old wealth-to-income quantile. A lower loss alone does not resolve identification, age-window measurement, old-age ownership saturation or population-closure questions. These remain separate from the target-and-equation-preserving search.']
+    if final_evidence:
+        diagrams=case/'standard_diagnostics'
+        text+=['','\\clearpage','','# Selected standard diagnostics','',
+               'These are four views from the unchanged seventeen-plot packet. Ownership below uses the full age distribution; the calibration row uses ages 30--55. The fertility panel is an inherited statistic of childless households\' policies; the fitted completed-fertility target is a cohort stock.','']
+        for pair in [('ownership_by_age.png','fertility_by_age.png'),('housing_market.png','housing_prices.png')]:
+            text.append(' '.join('!['+name.removesuffix('.png').replace('_',' ')+']('+str(diagrams/name)+'){width=48%}' for name in pair))
+            text.append('')
+        text+=['','The market plot checks the selected 2023 equilibrium, not the failed 2011 proposal. The old-age ownership concentration remains an economic-fit concern. Full policy, wealth-distribution, income-state and tenure panels accompany this report. Housing policy panels display a single selected branch; aggregate housing uses the tenure probabilities.',
+               '', 'A visible age-42 fertility spike was traced to a wealth node with zero pre-choice and current childless-renter mass in the saved selected state. That checks its exposure at this solution; it is not a general guarantee about boundary policies.']
     source=OUT/'MORNING_REVIEW.md';source.write_text('\n'.join(text)+'\n')
     pdf=ROOT/'output/pdf'/PDF_NAME
     command([sys.executable,str(ROOT/'code/model/tools/build_e5f_independent_audit_pdf.py'),

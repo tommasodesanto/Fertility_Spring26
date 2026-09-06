@@ -1,8 +1,41 @@
 # Calibration Status
 
-Updated: `2026-09-06` (four-case recovery smoke passed; full eleven-parameter recovery running; production retained)
+Updated: `2026-09-06` (recovery stopped at the market gate; completed evidence audited; provisional candidate preserved; production retained)
 
-## September 6 full joint overnight search - recovery running
+## September 6 full joint overnight search - stopped, candidate provisional
+
+Recovery `17024465` FAILED after 49m36s at round 2 joint proposal 7, during the
+first moving historical date (2011). Its 18-step attempt ended at relative
+housing-market residual `2.596e-4`; the existing 30-step retry ended at
+`1.174e-3`, above the unchanged `2e-4` acceptance limit. A sign-changing price
+bracket had been found. The saved log does not establish a discontinuity,
+model error or nonexistence; the residual and household-policy behavior inside
+that bracket remain the next numerical question. No third search was launched.
+
+Best completed point: `recovery_01/search/polish_2_joint/task_002`, loss
+**19.2844399007**, first-birth rooms **0.5084473158** against **0.7202462624**,
+mean rooms **6.3361231209** against **5.7799704819**, prime-age ownership
+**0.5719854509** against **0.575472**. It improves the unchanged full objective
+relative to the 20.695274 starting diagnostic, but does not improve that seed's
+0.515778 first-birth room response. All twelve fit/weight/loss rows and all
+eleven estimates/bounds are in the selected case, the recovery's
+`final_target_fits.csv` and `final_parameters.csv`, and its morning PDF.
+
+All **69 completed recovery cases** (65 search, four smoke) pass an independent
+result audit and **1,449 original artifact hashes**. One case completed while
+the controller was stopping after recording 68; the final inventory includes
+it and the best point is unchanged. The selected point has zero occupied
+adjacent-wealth value decreases. All seventeen standard graphs were inspected;
+an isolated age-42 fertility-policy spike has zero exposure in its saved state.
+Irregular tenure policies and nearly universal old-age ownership remain visible.
+**Final exact repetitions were not reached; this point is not promoted.**
+The five-page `output/pdf/e5f_full_joint_recovery_review.pdf` is visually reviewed,
+with all twelve fit rows and all eleven parameter/bound rows checked against
+the source CSVs. PDF SHA `ca7b3ed48fa7b7e3bb219fe442b67c40d235ba4fc1127ce6986c161e185a81f0`.
+The finite collector has stopped and the monitor is paused. Production
+and existing policy results remain unchanged.
+
+### Failed broad attempt and recovery launch history
 
 **Live update, 03:39 UTC:** job `17023172` stopped after 14 completed search
 histories plus the two initial smokes. Candidate 17 failed the unchanged
@@ -27,10 +60,10 @@ finish remains binding. Contract SHA:
 The four-case smoke passed and was independently recollected before launch.
 Its seed pair matches all twelve fit rows, parameters, 253 numeric history
 entries and seventeen PNGs exactly; both joint probes pass all gates with zero
-occupied value decreases. Full recovery `17024465` is RUNNING on `cs619` as of
+occupied value decreases. Full recovery `17024465` was launched on `cs619` at
 04:00 UTC, using cpu_short/cpu48, 12 CPUs/96 GB and a five-hour Slurm cap, with
-the earlier absolute finish above still binding. The finite local collector
-follows this job. The smoke's best provisional loss is 20.3589601953; its full
+the earlier absolute finish above still binding. Its stop is recorded above.
+The smoke's best provisional loss was 20.3589601953; its full
 twelve-row fit and eleven-parameter/bound tables accompany
 `recovery_01/smoke/all_target_fits.csv` and `all_parameters.csv`. This is an
 interim evaluated point, not the final repeated recovery result.

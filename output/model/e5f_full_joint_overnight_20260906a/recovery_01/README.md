@@ -102,3 +102,50 @@ local_collection_process.json. The app heartbeat now follows this job and must
 not submit another calibration. Interim improvements remain provisional until
 final exact repetition and visual review. See prelaunch_verification.json for
 the independent smoke checks.
+
+## Final outcome and reviewed packet
+
+Recovery17024465 FAILED after49m36s (8h57m30s CPU), at round2 joint proposal7
+in2011. The tighter18-step attempt ended at residual2.596e-4 and the declared-
+tolerance30-step retry ended at1.174e-3, above the unchanged2e-4 gate. A sign-
+changing price bracket existed; the failure followed bisection. The residual
+shape and household policies inside the bracket need diagnosis. The logs do
+not establish a discontinuity, coding error, nonexistence or unreachable target.
+No third search or policy run was launched.
+
+Independent final audit verifies69 completed cases and1,449 original artifact
+hashes. Four are smoke and65 are search histories. The controller recorded68:
+search/polish_2_joint/task_010 finished during cancellation and was absent from
+its final ledger. It passes the same checks, has loss19.2945813516, and does not
+change the best point. The preserved controller ledger is not rewritten;
+completed_case_inventory.csv, final_target_fits.csv (828rows) and
+final_parameters.csv (1,035rows) include all69. final_evidence_verification.json
+pins every completed case's source-summary hash and the count reconciliation.
+
+Selected search/polish_2_joint/task_002 has loss19.2844399007, first-birth rooms
+.5084473158 against.7202462624, meanrooms6.3361231209 against5.7799704819, and
+prime-age ownership.5719854509 against.575472. Its11estimated parameters retain
+the agreed bounds; first-child term.606178 exceeds the old.5 ceiling but is
+inside the declared2.0 search interval. All12 fit/weight/loss rows and all11
+estimate/bound/near-bound rows are in its original CSVs and the final ledgers.
+The selected point passes its numerical and accounting checks, with zero
+occupied value decreases, but final exact repeats were never reached. It is
+provisional and is not promoted. Overall fit improves without closing the
+childbirth-housing gap; the room response is below the.515778 starting diagnostic.
+
+The stable17graphs were inspected without altering them. A visible age42
+fertility-policy spike at wealth-4.72093 and income-state7 has zero pre-choice
+and current childless-renter mass in this checkpoint (boundary_graph_review.json).
+Irregular tenure policies and old-age ownership near one remain. Legacy
+summary/figure fertility objects are conditional-policy or cross-sectional
+statistics, not the calibrated cohort/event moments; the full target table is
+authoritative. Standard policy housing panels select one branch, while
+aggregate quantities integrate tenure probabilities.
+
+The final five-page PDF is output/pdf/e5f_full_joint_recovery_review.pdf. All
+pages are visually checked; the12fit rows and11parameter/bound rows match the
+original CSVs, with zero TeX warnings or overflows. document_verification.json
+pins PDF SHA ca7b3ed48fa7b7e3bb219fe442b67c40d235ba4fc1127ce6986c161e185a81f0.
+The finite collector is stopped; the app monitor is paused after this review.
+Rebuild the PDF and tables using the collector's --recovery option; inspect
+newly rendered pages again before delivery. This does not run the model.

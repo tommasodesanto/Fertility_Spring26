@@ -176,3 +176,10 @@ free, source and gates unchanged, a210-history maximum and the original04:47
 Eastern stop. All four smoke cases subsequently passed; full recovery17024465 is now running. The app heartbeat
 monitor is `monitor-full-joint-fertility-calibration`, every15minutes, in the
 current calibration task; the older numerical-task automation stays paused.
+
+The full recovery subsequently stopped at another market-clearing failure.
+Its69 completed cases and1,449 original artifact hashes were independently
+checked, including one case completed during cancellation. The best loss is
+19.2844399007, but final exact repetition remains incomplete. The five-page
+reviewed PDF and all fit/parameter tables are indexed in recovery_01/README.md.
+No third search or production promotion occurred; monitoring ends after review.
