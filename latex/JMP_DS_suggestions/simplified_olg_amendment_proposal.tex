@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs,tabularx,enumitem,graphicx,needspace}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,booktabs,tabularx,enumitem,graphicx,needspace,placeins}
 \usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
 \newtheorem{proposition}{Proposition}
 \newtheorem{corollary}[proposition]{Corollary}
@@ -10,16 +10,22 @@
 \newcommand{\Rnet}{\mathcal R}
 \title{Housing Allocation, Fertility, and Population\\\large An illustrative model}
 \author{Working note for Tommaso De Santo}
-\date{September 4--5, 2026}
+\date{September 6, 2026}
 \begin{document}
-\maketitle
+\begin{center}
+{\Large Housing Allocation, Fertility, and Population}\par
+\smallskip
+{\large An illustrative model}\par
+\smallskip
+{\small Working note for Tommaso De Santo \quad September 6, 2026}
+\end{center}
+\medskip
 
-This two-period model illustrates how borrowing limits can keep housing
-with old owners even when young households would pay more to use it. We show
-when a planner can improve the allocation by arranging a sale and its
-financing, holding fertility fixed. We then give a separate condition for
-fertility to rise and illustrate how temporary fertility changes can leave
-a permanently larger population.
+Borrowing limits can keep housing with old owners even when young households
+would give up more consumption to use it. We show that a small reallocation
+can then improve welfare while holding fertility fixed. We also study housing
+policy during a demographic transition: an earlier decline in the desire for
+children starts the adjustment, and a later policy changes its course.
 
 \section{Environment}
 
@@ -28,9 +34,8 @@ At date $t$, the economy contains $Y_t$ young households and $O_t$ old
 households. A young household has income $y_i>0$, liquid wealth $b_i>0$, and
 chooses total nondurable expenditure $c$, total housing $h$, completed
 fertility $n>0$, saving $a'\geq0$, and tenure $m\in\{R,O\}$. Fertility is a
-continuous choice made once. The pair $(y_i,b_i)$ is drawn from a fixed
-distribution $F$ in each cohort; estates are warm-glow expenditures rather
-than the source of the next cohort's $b_i$.
+continuous choice made once. The pair $(y_i,b_i)$ is drawn from the same
+distribution $F$ in each cohort.
 
 \textbf{Preferences.}
 Each child uses $\chi>0$ units of goods and $\kappa>0$ units of housing. Define
@@ -48,7 +53,9 @@ Young and old flow utilities are
  \label{eq:amend_old_preferences}
 \end{align}
 Both child requirements reduce the bundle left for adults. All log arguments
-and preference weights are positive. The estate $e$ is valued in goods at
+and preference weights are positive. The weights $\alpha$ and $\gamma$ value
+young and old housing, $\vartheta_t$ values children, and $\omega_B$ values
+estates. The factor $\beta>0$ discounts old-age utility. The estate $e$ is valued in goods at
 the date after the old period. Parents value what they leave, but their
 children do not inherit it as entrant wealth in this model.
 
@@ -59,16 +66,16 @@ and household formation. Thus
  Y_{t+1}=\nu\bar n_tY_t,\qquad O_{t+1}=Y_t,
  \label{eq:amend_demography}
 \end{equation}
-where $\bar n_t$ is average fertility among the young. The conversion from
-model children to literal children is stated in Section~\ref{sec:amend_population}.
+where $\bar n_t$ is average fertility among the young. Population counts adult households; Appendix~\ref{app:amend_units} gives
+the conversion to resident persons.
 
 \textbf{Housing and asset markets.}
 The fixed housing stock is $\bar H$. Rental units satisfy
 $h\leq h_R^{\max}$, owner units satisfy $h\leq h_O^{\max}$, and
-$h_R^{\max}<h_O^{\max}$. The consumption good is the numeraire and trades
-through a one-period bond with price $q\in(0,1)$ and gross return
-$R_f=q^{-1}$; only housing clears domestically. The owner of record pays the
-property tax. A competitive rental intermediary buys a unit for $P_t>0$ at the
+$h_R^{\max}<h_O^{\max}$. The consumption good is the numeraire. Goods and one-period bonds trade
+with the rest of the world. The bond price is $q\in(0,1)$ and its gross
+return is $R_f=q^{-1}$; housing clears against the domestic stock. The owner
+of record pays property tax at rate $\tau^p$. A competitive rental intermediary buys a unit for $P_t>0$ at the
 beginning of date $t$, then collects $r_t$, pays $\tau^pP_t$, and holds a unit
 worth $P_{t+1}$ at the end of the period. Free entry therefore imposes
 \begin{equation}
@@ -78,8 +85,8 @@ worth $P_{t+1}$ at the end of the period. Free entry therefore imposes
  \label{eq:amend_usercost}
 \end{equation}
 Rent is paid in date-$(t+1)$ goods, so its date-$t$ value is $q r_t>0$;
-at a steady state, $r=(R_f-1+\tau^p)P$. There is no capital-gains tax in the
-core model. Property tax is retained.
+at a steady state, $r=(R_f-1+\tau^p)P$. There is no capital-gains tax. Property-tax revenue is rebated equally to
+all young and old households. The date-$t$ value of this rebate is $T_t$.
 
 \textbf{Home finance.}
 A young buyer finances the share $\phi_t\in(0,1)$ and posts
@@ -93,8 +100,7 @@ estate expenditure.
 \section{Household problems}
 
 Households take prices and transfers as given. Renters carry financial wealth
-into old age; owners carry the house and its mortgage. The transfer $T_t$
-is the date-$t$ value of the equal rebate of property-tax revenue.
+into old age; owners carry the house and its mortgage.
 
 \textbf{Young renters.}
 Conditional on renting, the young household solves
@@ -139,7 +145,7 @@ of housing eventually sold by the estate.
 
 \textbf{Tenure choice.}
 Each household draws once an idiosyncratic preference $\xi_i$ for ownership,
-independently of $(y_i,b_i)$, and observes it before choosing tenure. It owns
+independently of $(y_i,b_i)$, and observes it before making its choices. It owns
 when $W_t^O(i)+\xi_i\geq W_t^R(i)$. Assume $\xi_i$ is logistic with
 location $\bar\xi$ and scale $\sigma_\xi>0$, which gives the owner share
 \begin{equation}
@@ -156,7 +162,8 @@ renter or owner policies.
 Prices and transfers equate housing demand to the fixed stock and balance the
 government budget. Let $\bar h_t^Y$ and $\bar h_t^O$ denote average housing per
 young and old household, averaging over types and tenure choices. Let $G_t$
-be the old households' distribution over financial wealth, housing, and tenure.
+be the old cohort's normalized distribution over net financial wealth,
+inherited housing titles, and tenure, with separate mass $O_t$.
 Housing clearing and the government budget are
 \begin{equation}
  Y_t\bar h_t^Y+O_t\bar h_t^O=\bar H,\qquad
@@ -168,685 +175,720 @@ Goods and bonds trade externally; their markets do not impose an additional
 domestic clearing equation.
 
 \begin{definition}[Equilibrium]
-Given policies, $(Y_0,O_0,G_0)$, and the fixed entrant distribution, an
-equilibrium consists of price and transfer sequences, household choices,
-and cohort distributions such that households solve the stated lifetime and
-old-age problems using those prices; \eqref{eq:amend_usercost} and
-\eqref{eq:amend_clearing} hold; and cohort sizes and old states follow from
-\eqref{eq:amend_demography} and the preceding young cohort's choices.
-After an unexpected reform, the initial old cohort retains the assets and
-housing chosen under its earlier expectations.
+Given policies, fertility preferences, the initial state $(Y_0,O_0,G_0)$,
+and the fixed entrant distribution $F$, an equilibrium consists of price and
+transfer sequences $(P_t,r_t,T_t)$, household choices, tenure probabilities,
+and cohort states $(Y_t,O_t,G_t)$ satisfying:
+\begin{enumerate}[label=(\roman*),nosep,leftmargin=*]
+ \item Young and old households solve their stated problems, and tenure
+ follows \eqref{eq:amend_tenure}.
+ \item Rental entry satisfies \eqref{eq:amend_usercost}.
+ \item Housing clears and the government budget balances as in
+ \eqref{eq:amend_clearing}.
+ \item Cohort sizes follow \eqref{eq:amend_demography}; $G_{t+1}$ is the
+ distribution of assets, titles, and tenure chosen by the young at $t$.
+\end{enumerate}
+After an unexpected reform, old households keep their inherited assets and
+titles and reoptimize using the new price path. Existing contractual
+obligations remain fixed.
 \end{definition}
 
-\section{The conditional household problem}
+\section{Housing allocation}
 
-Fix a household, date, and tenure. Write $A=1+\gamma+\omega_B$ and
-$w_{it}=y_i+b_i+T_t+qT_{t+1}$. With no gains tax, the two tenure-specific
-user costs coincide: $u_t^R=u_t^O=q r_t$. For the following household
-comparisons, suppress the type, date, and tenure indices on
-$k_{t+1}^m$, $\widetilde w_{it}^m$, $u_t^m$, and $\widehat h_{it}^m$,
-and write $\vartheta=\vartheta_t$.
+We ask whether the planner can improve the use of the existing housing stock
+by moving space from old owners to young households. The planner chooses
+housing and consumption directly. It respects the physical limits on each
+tenure and can relax private financing restrictions. Fertility, tenure,
+estates, and all future real allocations remain fixed.
 
-When saving is positive and the same old-age constraints continue to bind,
-we can eliminate saving from the young household's problem. Using $s=h-\kappa n$,
-this gives:
+Let $i$ be a young owner and $j$ an old owner. Their marginal values of
+housing, measured in units of current consumption, are:
+\begin{equation}
+ MV_i^Y=\frac{\alpha(c_i-\chi n_i)}{h_i-\kappa n_i}
+       =\frac{\alpha x_i}{s_i},\qquad
+ MV_j^O=\frac{\gamma c_j^2}{h_j^2}.
+ \label{eq:amend_marginal_values}
+\end{equation}
+These values measure the consumption each household would give up for a
+little more housing. Comparing them requires no interpersonal comparison of
+utility levels.
+
+\begin{proposition}[Housing misallocation]
+\label{prop:amend_welfare}
+Suppose matched groups of young and old owners have equal positive mass
+and room for a small transfer of housing. Assume uniformly positive young
+saving, adult consumption, and room below the young physical housing cap.
+If $MV_i^Y-MV_j^O$ is uniformly positive on matched pairs, a sufficiently small reallocation toward the young can
+make them better off and leave every other household equally well off, in
+the absence of real reallocation costs.
+\end{proposition}
+
+\begin{proof}
+Give the young owner $\epsilon$ units of the old owner's housing. Keeping
+the old owner's utility fixed requires additional consumption:
+\begin{equation}
+ D_j(\epsilon)=c_j^2\left[
+ \left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1\right].
+ \label{eq:amend_direct_compensation}
+\end{equation}
+Take this amount from the young owner. Goods and housing balance. Since
+$D_j'(0)=MV_j^O$, the young owner's utility gain has derivative
+$(MV_i^Y-MV_j^O)/x_i>0$ at zero. A small change preserves feasibility.
+The seller replaces the lost estate title with a bond, and the buyer's
+later sale of the extra title repays its financing. These claims offset,
+so future allocations and existing creditors are unchanged.
+Appendix~\ref{app:amend_settlement} gives the payments.
+\end{proof}
+
+\textbf{Why the values can differ.}
+With positive saving and interior old-age choices, a young owner at a
+strictly restrictive down-payment limit has $MV_i^Y>q r_t$, provided the
+physical owner cap is slack. An old owner with slack retention and estate
+bounds instead satisfies:
+\begin{equation}
+ MV_j^O=\frac{\gamma c_j^2}{h_j^2}=q r_t.
+ \label{eq:amend_oldmrs}
+\end{equation}
+Young buyers need cash at purchase; old owners already hold their homes.
+The resulting value gap gives the reallocation in Proposition~\ref{prop:amend_welfare}.
+The argument applies at any date when these conditions hold, including
+during a demographic transition.
+
+
+
+The rental size limit restricts an alternative way to obtain space. A
+household can be unable to rent a larger home and unable to fund its
+purchase. The owner-to-owner comparison above holds tenure fixed; a renter
+already at its physical cap cannot receive more housing in that tenure.
+An ownership taste can make constrained ownership preferable even when
+larger rentals are available.
+
+If moving $\epsilon$ housing uses $C(\epsilon)$ goods, with $C(0)=0$ and
+$C'(0)=K_{ijt}\geq0$, the condition becomes $MV_i^Y>MV_j^O+K_{ijt}$.
+The young pays this real cost as well as the old owner's compensation.
+A fixed moving cost requires a finite gain large enough to cover it.
+
+The proposition establishes inefficiency relative to a planner who can
+relax private finance. It identifies a direction of improvement without
+solving the entire first-best allocation. A market-based reform with
+households choosing freely requires a separate welfare comparison.
+
+\begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=.73\textwidth]{output/model/simplified_olg_amendments/theory_slides_misallocation.pdf}
+ \caption{Housing moves from the old owner to the young buyer, with the old
+ owner compensated in consumption. Each curve uses the household's own
+ housing on the horizontal axis. The arrows describe the same transfer of
+ space. Fertility and future real allocations are fixed.}
+ \label{fig:amend_allocation}
+\end{figure}
+\FloatBarrier
+
+\section{Housing access and fertility}
+
+More space makes children easier to accommodate. Paying for that space
+reduces the goods available to the family. Fertility rises when the first
+effect dominates the second.
+
+Consider the young owner's conditional problem at a given date. Assume
+positive saving, a binding down payment, a slack physical housing cap, and
+interior old-age choices. Suppress household and date indices. Let
+$k=\beta(1+\gamma+\omega_B)$ and
+$w=y+b+T_t+qT_{t+1}$, lifetime resources before housing. Eliminating saving
+from the original problem gives:
+\begin{equation}
+ (1+k)x+\chi n+u h=w,\qquad u=q r_t.
+ \label{eq:amend_owner_resources}
+\end{equation}
+Current housing costs its user cost once the eventual sale is taken into
+account. The fertility first-order condition is:
+\begin{equation}
+ \frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{s},
+ \qquad s=h-\kappa n.
+ \label{eq:amend_fertility_foc}
+\end{equation}
+The marginal benefit of a child equals its goods and space requirements,
+valued by the household.
+
+Let $p$ be the net lifetime payment for a marginal unit of extra current
+housing, including any accompanying transfers. With prices and other
+resources fixed, $p=u$; compensation or a subsidy changes that payment.
+The budget response is $(1+k)\dd x=-\chi\dd n-p\dd h$.
+The implied fertility response is:
+
+\begin{proposition}[A fertility condition]
+\label{prop:amend_fertility}
+Under these household conditions, more housing increases fertility locally
+if and only if:
+\begin{equation}
+ \frac{\alpha\kappa}{(h-\kappa n)^2}
+ >\frac{\chi p}{[1+\beta(1+\gamma+\omega_B)](c-\chi n)^2}.
+ \label{eq:amend_fertility_condition}
+\end{equation}
+The comparison holds at any date, while tenure and the binding constraints
+remain unchanged and saving and old-age choices are reoptimized.
+\end{proposition}
+
+The condition uses household allocations and the net payment, with no
+borrowing multiplier. It is a conditional prediction of the household problem;
+a policy's equilibrium effect also includes changes in prices, transfers,
+and tenure. Appendix~\ref{app:amend_fertility} gives a sufficient restriction
+using only parameters in a stationary specialization, and its extension to
+dates with nonincreasing expected house prices. The fixed-fertility welfare
+comparison in Proposition~\ref{prop:amend_welfare} does not require this sign.
+
+\section{Fertility decline and policy during the transition}
+\label{sec:amend_transition}
+
+The economy need not be in a steady state when policy changes. Consider an
+initial steady state with fertility weight $\vartheta_0$ and financed share
+$\phi_0$. At date 0 an unexpected permanent fall to
+$\vartheta_1=\vartheta_0-\epsilon$, with $\epsilon>0$, starts a baseline
+transition. Explaining this initial change in preferences is outside the
+exercise.
+
+At a later date $t_p\geq1$, compare continued policy $\phi_0$ with a
+permanent increase to $\phi_1=\phi_0+\delta$, where $\delta>0$.
+The increase is announced and implemented at $t_p$. The two continuations
+therefore start from the same young and old cohorts and the same inherited
+assets and housing titles. They face the same $\vartheta_1$ and all other
+non-policy primitives. This construction represents a housing policy
+introduced during an adjustment already in progress.
+
+The unanticipated policy may cause prices to jump at $t_p$, while inherited
+assets and titles remain fixed. With earlier announcement, the two paths
+would begin to differ at that date.
+
+\subsection{Steady states and population}
+\label{sec:amend_population}
+
+For constant prices and policies, the household problems determine mean
+fertility and housing at any candidate $(P,T)$. The old distribution comes
+from repeating the young household choices. A positive steady state solves:
+\begin{equation}
+ \bar n(P,T;\vartheta,\phi)=\frac1\nu,\qquad
+ T=\frac{q\tau^pP}{2}\,[\bar h^Y(P,T)+\bar h^O(P,T)].
+ \label{eq:amend_stationary_system}
+\end{equation}
+The first condition is replacement; the second rebates property-tax revenue.
+Once a positive root exists, housing clearing determines population:
+\begin{equation}
+ N_{\rm hh}^*=Y^*+O^*=2Y^*
+ =\frac{2\bar H}{\bar h^{Y*}+\bar h^{O*}}.
+ \label{eq:amend_population_scale}
+\end{equation}
+Thus two steady states can have the same replacement fertility and different
+population levels. With the fixed stock, a larger population uses less
+housing per household on average.
+
+In the mixed-tenure economies used below, a small fall in $\vartheta$
+lowers stationary price and population. Housing per young and per old
+household rises. A small increase in $\phi$ raises stationary price,
+population, and young housing; old housing falls by more than young housing
+rises. These are local comparisons around an economy with both renters and
+owners. They do not give unrestricted policy signs for the model.
+
+\subsection{The two continuations}
+
+Let superscripts 0 and 1 denote the baseline and policy paths from $t_p$.
+Because their initial young cohorts are identical, the demographic law gives:
+\begin{equation}
+ \frac{Y_{t_p+k}^1}{Y_{t_p+k}^0}
+ =\prod_{j=0}^{k-1}
+       \frac{\bar n_{t_p+j}^1}{\bar n_{t_p+j}^0},\qquad
+ O_{t+1}^a=Y_t^a\quad(a=0,1).
+ \label{eq:amend_transition_population}
+\end{equation}
+Relative cohort size records the accumulated fertility differences.
+This identity is useful along the entire transition, without assuming
+that either path is stationary.
+
+\begin{proposition}[A decline followed by a housing policy]
+\label{prop:amend_combined}
+There is an open set of economies with positive child goods costs,
+positive rebated property tax, and positive masses of renters and owners
+for which the following holds. A sufficiently small permanent fall in
+$\vartheta$ produces a converging baseline transition with lower initial
+fertility and a smaller terminal population. A sufficiently small permanent
+increase in $\phi$, introduced at any later date on that baseline, has a
+converging continuation from the same inherited state and satisfies:
+\begin{equation}
+ \bar n_{t_p}^1>\bar n_{t_p}^0,\qquad
+ N_{{\rm hh},1}^*>N_{{\rm hh},0}^*.
+ \label{eq:amend_policy_comparison}
+\end{equation}
+The same constraints continue to bind along these local transitions.
+\end{proposition}
+
+Appendix~\ref{app:amend_transition} gives the assumptions and proof. The
+policy need not restore the original population or raise fertility above
+replacement.
+
+Both terminal fertility levels equal $1/\nu$. With exponential convergence,
+\eqref{eq:amend_transition_population} also implies:
+\begin{equation}
+ \sum_{t=t_p}^{\infty}\log\frac{\bar n_t^1}{\bar n_t^0}
+ =\log\frac{N_{{\rm hh},1}^*}{N_{{\rm hh},0}^*}>0.
+ \label{eq:amend_cumulative_fertility}
+\end{equation}
+The cumulative relative fertility effect is positive. Individual dates can
+have effects of either sign: the example admits damped oscillations as it
+approaches the new steady state.
+
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/combined_transition_figure.pdf}
+ \caption{A fertility decline followed by a housing policy. From the old
+ steady state $S_-$, the preference decline at $t=0$ starts the move toward
+ $S_0$. The policy changes
+ the intervention-date equilibrium from $I^0$ to $I^1$, with the same inherited
+ cohorts and claims, and leads to $S_1$. Dashed lines are constant-price
+ schedules. Arrows connect selected first-order equilibrium responses and
+ do not imply monotone adjustment. Appendix~\ref{app:amend_figure} defines
+ the comparison.}
+ \label{fig:amend_credit}
+\end{figure}
+
+The permanent policy changes the terminal household problem. A temporary
+reform that restores all final primitives cannot change a unique stationary
+endpoint if both paths converge to it. The population comparison also does
+not establish a welfare gain from the credit reform. The compensated
+allocation and the competitive policy answer different questions.
+
+\clearpage
+\appendix
+\section{Household arguments}
+\label{app:amend_households}
+
+\subsection{Financial settlement of the reallocation}
+\label{app:amend_settlement}
+
+The direct-allocation proof uses consumption and housing as resources.
+Prices enter only to check that inherited claims and future allocations can
+be respected. Set $u_t=q r_t$ and write the payment to the seller in excess
+of the title price as:
+\begin{equation}
+ L(\epsilon)=D_j(\epsilon)-u_t\epsilon.
+ \label{eq:amend_compensation}
+\end{equation}
+The seller receives $P_t\epsilon+L(\epsilon)$ and releases the tax reserve
+$q\tau^pP_t\epsilon$. After consuming $D_j(\epsilon)$, it buys a bond
+costing $qP_{t+1}\epsilon$, replacing the title lost from its estate.
+The young buyer spends $D_j(\epsilon)$ less on current consumption and
+finances the rest of the purchase and compensation. Its net borrowing is:
+\begin{equation}
+ (P_t+q\tau^pP_t)\epsilon+L(\epsilon)-D_j(\epsilon)
+ =qP_{t+1}\epsilon.
+ \label{eq:amend_settlement}
+\end{equation}
+The two new bond positions offset. At $t+1$ the buyer sells the extra title
+for $P_{t+1}\epsilon$ and repays the bond. The old seller's estate receives
+the same amount through its bond. The timing and quantity of future housing
+sales, estate expenditures, total tax receipts, and common rebates are unchanged.
+Existing loans retain their promised repayments. Positive saving provides
+room to adjust the original financial portfolio; the planner relaxes the
+private borrowing limit. Uniform strict margins on matched groups permit
+a common sufficiently small transfer.
+
+With a real cost $C(\epsilon)$, the young owner's exact gain is:
+\begin{equation}
+ \Delta U_i=
+ \log\!\left(1-\frac{D_j(\epsilon)+C(\epsilon)}{x_i}\right)
+ +\alpha\log\!\left(1+\frac{\epsilon}{s_i}\right).
+ \label{eq:amend_exact_gain}
+\end{equation}
+Its derivative at zero is $(MV_i^Y-MV_j^O-K_{ijt})/x_i$.
+If a fixed cost is present, the finite transfer must keep consumption
+positive and make this exact gain positive.
+
+\subsection{Fertility and a sufficient parameter restriction}
+\label{app:amend_fertility}
+
+For a fixed tenure, positive saving, and unchanged old-age constraints,
+let $\widetilde w$ denote lifetime resources net of any fixed old-age rent.
+Let $\widehat h$ be the current housing limit: $h_R^{\max}$ for a renter
+and $\min\{h_O^{\max},b/[(1-\phi)P_t]\}$ for an owner. The conditional
+problem, after eliminating saving and setting $s=h-\kappa n$, is:
 \begin{equation}
  \begin{aligned}
  \max_{x,s,n}\quad &(1+k)\log x+\alpha\log s+\vartheta\log n\\
  \text{s.t.}\quad &(1+k)x+u s+(\chi+\kappa u)n=\widetilde w,
- \quad s+\kappa n\leq\widehat h.
+ \qquad s+\kappa n\leq\widehat h.
  \end{aligned}
  \label{eq:amend_reduced_problem}
 \end{equation}
-The last budget term is the full resource cost of another child: $\chi$ units
-of goods plus $\kappa$ units of housing valued at user cost $u$.
-
-With interior old-age choices, $k=\beta A$ and $\widetilde w=w_{it}$.
-When an old renter's housing limit binds, $k=\beta(1+\omega_B)$ and the fixed
-future rent must instead be subtracted from resources:
+The goods and space used by each child cost $\chi+\kappa u$.
+For interior old owners, $k=\beta(1+\gamma+\omega_B)$ and
+$\widetilde w=y+b+T_t+qT_{t+1}$. For capped old renters,
+$k=\beta(1+\omega_B)$ and the old rent must be subtracted:
 \begin{equation}
- \widetilde w=w_{it}-q^2r_{t+1}h_R^{\max}.
+ \widetilde w=y+b+T_t+qT_{t+1}-q^2r_{t+1}h_R^{\max}.
  \label{eq:amend_capped_old}
 \end{equation}
-These expressions apply while tenure and the other binding constraints
-remain unchanged. An old owner facing a binding retention or estate constraint
-requires a different reduction.
+This reduction requires different formulas if an old owner's retention or
+estate bound binds.
 
-At a binding current housing limit, the fertility first-order condition is:
-\begin{equation}
- \frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{s}.
- \label{eq:amend_fertility_foc}
-\end{equation}
-An additional child uses both adult consumption and adult space. The young
-household's willingness to pay for another housing unit is $MV^Y=\alpha x/s$;
-the housing constraint binds strictly when $MV^Y>u$.
-
-\section{Housing reallocation at fixed fertility}
-
-We ask whether the planner can improve the allocation by moving housing
-from an old owner to a young buyer. Fertility and cohort sizes are fixed,
-so any gain comes from the use of housing by existing households.
-
-Consider an old owner $j$ with consumption $c_j^2$, retained housing $h_j^2$, and
-estate $e_j$. Suppose both its retention bound and estate-composition bound
-are slack. Its retention condition equates willingness to pay to user cost:
-\begin{equation}
- MV^O=\frac{\gamma c_j^2}{h_j^2}=q r_t.
- \label{eq:amend_oldmrs}
-\end{equation}
-Match it with a young buyer $i$ for whom the down-payment limit is the binding
-housing restriction and $MV^Y>q r_t$. Each value measures willingness to pay
-for a small increase in housing, in units of consumption. We compare these
-values, not marginal utility levels across people.
-
-Let $\epsilon>0$ be the housing transferred and let $C(\epsilon)\geq0$ be its
-real cost in date-$t$ goods. Initially assume $C(0)=0$ and the right derivative
-$C'(0)=K_{ijt}\geq0$. An exact compensating transfer to the old seller is:
-\begin{equation}
- L(\epsilon)=c_j^2\left[\left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1\right]
- -q r_t\epsilon.
- \label{eq:amend_compensation}
-\end{equation}
-After the sale, keeping its estate fixed leaves the seller $q r_t\epsilon$
-for consumption; adding $L(\epsilon)$ holds its utility exactly constant.
-The old retention condition implies $L(0)=L'(0)=0$ and
-$L(\epsilon)>0$ for sufficiently small positive $\epsilon$.
-
-The young buyer borrows to pay for the purchase, compensation, and real
-cost, then repays the loan when old using the resale proceeds and part of
-its consumption. The seller replaces the estate's missing housing with a
-bond. Appendix~\ref{app:amend_households} records each payment and shows
-that property-tax receipts and all other households' allocations can remain
-unchanged.
-
-\begin{proposition}[Local allocation gain with explicit compensation]
-\label{prop:amend_welfare}
-Maintain the stated interior old-owner conditions, the young buyer's positive
-saving and slack old-age housing and estate constraints, and slackness of its
-nonfinancial housing bound. Hold fertility, tenure, cohort masses, prices,
-common rebates, and other households' allocations fixed. If
-$MV^Y-q r_t>K_{ijt}$, the stated transaction is feasible for all sufficiently small
-$\epsilon>0$, leaves the old seller exactly indifferent, and makes the young
-buyer strictly better off. All other households, estates, and lenders can be
-left at their baseline allocations or returns.
-\end{proposition}
-
-The proof is in Appendix~\ref{app:amend_households}.
-
-
-The gain requires the planner to extend credit at purchase. The result does
-not establish an improvement under the original private credit limit or say
-that every old household should sell. Fertility is fixed in this comparison;
-children affect how much space is left for the young household's adults.
-
-\textbf{A simpler transfer.}
-The planner can also pay a small premium for each unit sold. Choose a uniform
-per-unit seller premium $a$ with
-$0<a<MV^Y-q r_t-K_{ijt}$. Replace $L(\epsilon)$ by $a\epsilon$, financed by the
-buyer. The old seller now gains to first order by $a\epsilon/c_j^2$, while
-the buyer still gains. For several pairs, the same premium works under a
-uniform positive surplus bound and uniform slackness and curvature bounds.
-An ordinary market-price sale with zero premium leaves the old seller
-indifferent only to first order and generally worse off at second order.
-The choice between exact compensation and this simpler premium affects
-how much information the planner needs about each seller.
-
-\textbf{Fixed moving costs.}
-A positive fixed cost $f\mathbf1\{\epsilon>0\}$ violates $C(0+)=0$.
-The marginal theorem does not cover it. A sufficient finite-trade test instead
-requires feasible positive consumption and:
-\begin{equation}
- q r_t\epsilon+L(\epsilon)+C(\epsilon)
- <q c_i^2\left[1-
- \left(1+\frac{\epsilon}{s_i}\right)^{-\alpha/\beta}\right].
- \label{eq:amend_fixedcost}
-\end{equation}
-This is the condition for a positive utility gain in
-\eqref{eq:amend_exact_gain}. The total benefit from the move must cover its fixed
-cost. The marginal comparison alone does not establish this.
-
-\section{A conditional fertility prediction}
-
-Let $\Rnet$ be the lifetime resources left after housing and compensating
-payments, so that $(1+k) x+\chi n=\Rnet$. The marginal net payment for additional
-housing is $p=-\dd\Rnet/\dd h$. For this fertility comparison, the young
-household reoptimizes its other choices after receiving the additional housing
-and paying the bill. Prices and the seller's fertility remain fixed.
-Implicit differentiation gives:
+Differentiating the fertility condition and using
+$(1+k)\dd x=-\chi\dd n-p\dd h$ gives:
 \begin{equation}
  \frac{\dd n}{\dd h}
- =\frac{\alpha\kappa/s^2-\chi p/((1+k) x^2)}{\Delta},\qquad
- \Delta=\frac{\vartheta}{n^2}+\frac{\chi^2}{(1+k) x^2}
-             +\frac{\alpha\kappa^2}{s^2}>0.
+ =\frac{\alpha\kappa/s^2-\chi p/((1+k)x^2)}{\Delta},\qquad
+ \Delta=\frac{\vartheta}{n^2}+\frac{\chi^2}{(1+k)x^2}
+              +\frac{\alpha\kappa^2}{s^2}>0.
  \label{eq:amend_fertility_sign}
 \end{equation}
-More space raises fertility if its benefit dominates the resources used to pay
-for the additional housing. The payment includes compensation and real costs
-when those are charged to the young household.
+The numerator separates the benefit of additional space from the cost of
+paying for it.
 
-\begin{proposition}[Fertility and the net payment]
-\label{prop:amend_fertility}
-For the reduced problem above, fertility increases locally exactly when
-$(1+k)\kappa (MV^Y)^2>\alpha\chi p$. If $\kappa u/\chi>\alpha/(1+k)$ and the
-young household is housing constrained, fertility increases for any marginal
-payment $p<MV^Y$ that leaves it better off. This includes a pure relaxation of
-the cap with $p=u$ and the compensated marginal allocation whenever
-$p=u+K_{ijt}<MV^Y$.
-\end{proposition}
-
-The proof is in Appendix~\ref{app:amend_households}.
-
-
-The sufficient condition uses user cost but no borrowing multiplier. The next result removes that price in a stationary
-specialization. Positive saving, the stated old-age choices, and strict down-payment binding
-are still required.
-
-\Needspace{10\baselineskip}
-\subsection{A sufficient condition entirely in primitives}
-
-At stationary prices, set $d=1-q+q\tau^p>0$, so $u=dP$. If the down-payment
-limit alone binds, $\widehat h=b/[(1-\phi)P]$. The lifetime share spent on
-housing at this limit is independent of $P$ when $\widetilde w$ is exogenous:
+Differentiating the resource and fertility equations, allowing prices,
+resources, and the preference weight to change, gives:
 \begin{equation}
- a_h=\frac{u\widehat h}{\widetilde w}
-     =\frac{d b}{(1-\phi)\widetilde w}.
- \label{eq:amend_capshare}
+ \Delta\,\dd n=\frac{\dd\vartheta}{n}
+ +\left(\frac{\alpha\kappa}{s^2}-\frac{\chi u}{(1+k)x^2}\right)\dd h
+ +\frac{\chi}{(1+k)x^2}(\dd\widetilde w-h\,\dd u).
+ \label{eq:amend_dated_fertility}
 \end{equation}
-For interior old choices, zero property tax, and the corresponding zero common
-rebate, $\widetilde w=y+b$. This is an explicitly labeled specialization of
-the property-tax model, not an assumption that its endogenous rebate is fixed
-in general equilibrium.
+This separates preference, space, and resource effects at any date.
+Equation~\eqref{eq:amend_fertility_sign} sets the preference weight fixed and
+collects the net resource change into the payment $p$.
 
-\begin{proposition}[A price-free sufficient restriction]
+For a sufficient condition without the borrowing multiplier, write
+$MV^Y=\alpha x/s$. If $\kappa u/\chi>\alpha/(1+k)$ and the housing cap
+binds, then $(1+k)\kappa MV^Y>\alpha\chi$. It follows that fertility rises
+for any $p<MV^Y$. A condition entirely in parameters can imply this inequality.
+
+\begin{proposition}[A sufficient parameter restriction]
 \label{prop:amend_primitive}
-Maintain the reduced problem, stationary prices, and a strictly binding
-down-payment limit; saving remains positive and old choices remain interior. If $\widetilde w$ is
-exogenous and
-\begin{equation}
- \frac{d b}{(1-\phi)\widetilde w}\geq\frac{\alpha}{1+k+\alpha},
- \label{eq:amend_primitive_condition}
-\end{equation}
-then $\kappa u/\chi>\alpha/(1+k)$. Consequently a marginal cap relaxation
-at fixed prices and resources raises fertility. More generally, any local
-increase in housing with net marginal payment $p<MV^Y$ raises fertility while the same constraints bind. In the zero-property-tax, interior-old specialization the
-restriction is
+Suppose property tax and rebates are zero, old-owner choices are interior,
+saving is positive, the physical owner cap is slack, and the down payment
+is strictly restrictive.
+At stationary prices, the following restriction is sufficient for fertility
+to rise after a local housing increase with net payment $p<MV^Y$:
 \begin{equation}
  \frac{(1-q)b}{(1-\phi)(y+b)}
- \geq \frac{\alpha}{1+\beta(1+\gamma+\omega_B)+\alpha}.
+ \geq\frac{\alpha}{1+\beta(1+\gamma+\omega_B)+\alpha}.
  \label{eq:amend_fully_primitive}
 \end{equation}
-It contains neither prices nor multipliers.
+It is also sufficient at a transition date if the household expects
+$P_{t+1}\leq P_t$.
 \end{proposition}
 
-The proof is in Appendix~\ref{app:amend_households}.
-
-
-This condition excludes households with very little liquid wealth relative
-to lifetime resources. A household example satisfying all the original owner
-constraints is given in Appendix~\ref{app:amend_households}. The appendix
-also gives a negative fertility response outside the condition and corrects
-the derivative when a rental limit changes both young and old housing.
-The price-free restriction concerns a stationary household comparison;
-prices, transfers, and tenure can also change in a policy equilibrium.
-
-\section{Population comparisons and units}
-\label{sec:amend_population}
-
-For two paths starting with the same young cohort, iteration of the cohort law
-gives an exact transition comparison:
-\begin{equation}
- \frac{Y_t^1}{Y_t^0}
- =\prod_{s=0}^{t-1}\frac{\bar n_s^1}{\bar n_s^0}.
- \label{eq:amend_transition_population}
-\end{equation}
-Thus cumulative relative fertility determines relative young-cohort size;
-the old-cohort comparison follows with a one-period lag. This identity does
-not prove that a policy raises fertility in every period or that either path
-converges.
-
-At stationary prices and transfers, the household problems determine average
-fertility and housing for each candidate $(P,T)$. A steady state solves the
-replacement condition $\bar n(P,T)=1/\nu$ and the rebate condition
-$T=q\tau^pP(\bar h^Y(P,T)+\bar h^O(P,T))/2$. Existence of such a root is
-a separate requirement; the identities below do not establish it.
-
-At a positive stationary population, fertility must be $\bar n^*=1/\nu$ and
-$Y^*=O^*$. Define $\bar h_{\rm hh}^*=(\bar h^{Y*}+\bar h^{O*})/2$, housing per
-adult household. Fixed-stock housing clearing gives:
-\begin{equation}
- N_{\rm hh}^*=Y^*+O^*=\frac{\bar H}{\bar h_{\rm hh}^*}.
- \label{eq:amend_population_scale}
-\end{equation}
-Two policies can therefore have the same replacement fertility but different
-terminal population levels. A larger level requires less housing per household
-at the terminal allocation when supply is fixed.
-
-\textbf{Child units.}
-Let $n^L=a_n n$ be literal children per household. The equivalent demographic
-coefficient is $\nu^L=\nu/a_n$, so replacement literal fertility is $a_n/\nu$.
-The equivalent household requirements are $\chi^L=\chi/a_n$ and
-$\kappa^L=\kappa/a_n$; replacing $\log n$ by $\log n^L$ changes utility only
-by a choice-independent constant. Thus the rescaling preserves behavior when
-all relevant objects are transformed together. With $\nu=2$, replacement is
-$n=0.5$. A conversion $a_n=2.1$ gives $1.05$ literal children, not $2.1$;
-to map $0.5$ to $2.1$ requires $a_n=4.2$ and $\nu^L=1/2.1$.
-This is a change of units, not a choice of demographic parameters.
-
-\textbf{Households and resident persons.}
-$N_{\rm hh}$ counts adult household units. Converting it to resident persons
-requires the number of adults per household and the timing and residence of
-children. If these are fixed coefficients $a_Y,a_O$ and children are counted
-as dependents in their birth period, a consistent illustration is
-$N_{\rm persons,t}=a_YY_t+a_OO_t+a_n\bar n_tY_t$.
-At a positive steady state the ratio $N_{\rm persons}^*/N_{\rm hh}^*$ is
-$(a_Y+a_O+a_n/\nu)/2$. Fixed common coefficients preserve the ordering of
-terminal household and person counts. Their empirical values and the
-within-period counting convention are not selected by this illustration.
-
-\textbf{A stationary housing-supply extension.}
-If the terminal stock is $S(P^*)>0$, the scale identity becomes
-$N_{\rm hh}^*=S(P^*)/\bar h_{\rm hh}^*$. Hence the exact comparison is:
-\begin{equation}
- \log\frac{N_{{\rm hh},1}^*}{N_{{\rm hh},0}^*}
- =\log\frac{S(P_1^*)}{S(P_0^*)}
- -\log\frac{\bar h_{{\rm hh},1}^*}{\bar h_{{\rm hh},0}^*}.
- \label{eq:amend_supply}
-\end{equation}
-When the only fiscal transfer is the property-tax rebate,
-$T^*=q\tau^pP^*\bar h_{\rm hh}^*$, the housing-stock scale cancels from the
-stationary household and fiscal equations. Supply may then change terminal
-population without changing their stationary price roots. This observation
-requires supplier profits, land income, and construction financing not to add
-new household-income or fiscal effects. A supply curve alone does not define
-the transition law or its resource costs.
-
-\section{Transitions after a housing policy}
-
-A higher borrowing limit lets some young households buy more housing. Prices
-and transfers then adjust, and changes in fertility alter the size of later
-cohorts. These responses must be solved together. The household result above compares the value of space with its cost.
-These additional equilibrium responses also affect fertility.
-
-Removing the gains tax removes one source of kinks. The transition argument
-also requires smooth aggregate choices: this must be checked when households
-cross a housing or borrowing limit. Smoothness alone does not ensure that a
-path exists or converges. Near a steady state, the conditions in the appendix give
-a converging path from nearby initial states. A finite reform can be covered
-by following that path as the reform is increased, provided no solution reaches
-a feasibility boundary or loses its local uniqueness. The precise statement
-and short continuation proof are in the appendix. The conditions concern feasibility and local uniqueness along the whole
-policy change.
-
-\subsection{An illustrative credit reform}
-
-Consider an unexpected permanent increase in the financed share from $80\%$,
-starting from the same steady state in each comparison. Property tax remains
-$5\%$, preferences are fixed, and housing supply is fixed. The numbers below
-are a constructed example of the theory; they are not estimates for an economy.
-
-\begin{center}
-\begin{tabular}{@{}rrrr@{}}
-\toprule
-Financed share & Initial fertility & Final price & Final households\\
- & (model units) & & (initial $=100$)\\
-\midrule
-$80\%$ & 0.5000 & 0.3427 & 100.00\\
-$81\%$ & 0.5019 & 0.3559 & 101.43\\
-$85\%$ & 0.5039 & 0.4152 & 105.97\\
-$90\%$ & 0.4992 & 0.4457 & 106.43\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-All three reforms lead to a larger terminal household population. Fertility
-returns to replacement, $0.5$, in each steady state. It need not rise at every
-date: the $90\%$ reform initially lowers average fertility slightly, and all
-three paths briefly fall below replacement later in the transition.
-
-In the $90\%$ case, fertility among owners rises initially from $0.5495$ to
-$0.5764$, but the owner share falls from $74.86\%$ to $65.83\%$.
-Renters have lower fertility, which also falls slightly. Holding initial tenure
-shares fixed would raise average fertility by $0.01956$ model units; the change
-in tenure shares subtracts $0.02040$. Their sum explains the initial decline.
-This is an accounting decomposition, not a causal separation of the price and
-credit effects. At $90\%$ financing the owner down-payment constraint is slack
-at the reported dates, so the strictly binding-cap derivative cannot describe
-that whole reform.
-
-\begin{figure}[htbp]
- \centering
- \includegraphics[width=\textwidth]{output/model/simplified_olg_amendments/credit_policy_summary.pdf}
- \caption{Fertility and population after a permanent credit reform. A period is
- a generation, not a year. All paths begin with the same young and old cohort
- sizes; date 0 is the reform date.}
- \label{fig:amend_credit}
-\end{figure}
-
-The example reallocates housing toward the young. Under $85\%$ financing,
-terminal housing per young household rises from $0.7685$ to $0.8066$, while
-old housing falls from $0.6058$ to $0.4903$. Average housing per household
-falls, allowing the fixed stock to accommodate a larger population.
-The credit reform itself has not been shown to make every household better
-off; Proposition~\ref{prop:amend_welfare} concerns a compensated transaction.
-
-The computed paths satisfy the household budgets, housing clearing, government
-budget, and cohort laws to small numerical errors. A longer horizon and a
-second solution method give the same $85\%$ path to the reported precision;
-direct optimization of the original household problem also agrees with the
-reduced choices. Appendix~\ref{app:amend_numerics} records the parameters and
-errors. These checks support the examples. They do not verify every condition
-of the finite-reform theorem throughout a policy interval.
-
-\textbf{Heterogeneity.}
-The two-period structure also limits how much history must be carried forward.
-For cohorts generated by this model, entrant income and liquid wealth have a
-fixed distribution. Once the prices,
-transfers, and policy rules facing a cohort when young are known, its distribution
-of old assets and housing is determined. Thus heterogeneous entrants do not by
-themselves require an unrestricted distribution as a dynamic state here.
-This argument uses the model's fixed entrant-wealth distribution and two-period
-life; actual inheritance or longer lives can change that conclusion.
-
-\appendix
-\section{Household derivations and the compensated sale}
-\label{app:amend_households}
-
-\subsection{Proof of Proposition~\ref{prop:amend_welfare}}
-
-The payments in the compensated sale are:
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}lXX@{}}
-\toprule
-Party & Date $t$ & Date $t+1$\\
-\midrule
-Young buyer & Borrows $(P_t+q\tau^pP_t)\epsilon+L(\epsilon)+C(\epsilon)$;
-buys title, places $q\tau^pP_t\epsilon$ in a bond reserve, pays compensation and real cost.
-& Sells the additional unit for $P_{t+1}\epsilon$ and repays the loan;
-the reserve returns $\tau^pP_t\epsilon$ and pays the tax.\\
-Old seller & Sells $\epsilon$, receives $P_t\epsilon+L$; consumes $c_j^2(h_j^2/(h_j^2-\epsilon))^\gamma$;
-keeps the estate fixed using the bond and its lower property-tax obligation.
-& Estate spending is unchanged. The estate no longer sells this unit.\\
-Lenders & Advance the loan at the market bond price.
-& Receive principal times $1/q$; no loss.\\
-Government & Ownership changes; the taxable stock does not.
-& Total property-tax receipts and common rebates are unchanged.\\
-\bottomrule
-\end{tabularx}
-\end{center}
-The seller sets aside $qP_{t+1}\epsilon$ of the sale proceeds in a bond.
-This replaces the housing sold from its estate. It also saves
-$q\tau^pP_t\epsilon$ in the amount set aside for property tax.
-Together, the sale and tax saving leave $q r_t\epsilon$ for consumption. The buyer sells the additional unit
-when old, at the same date the seller's estate would have sold it. Housing
-use after date $t$ can therefore stay unchanged. External borrowing finances
-the payments, and the loan is repaid in full.
-
 \begin{proof}
-The compensation in \eqref{eq:amend_compensation} leaves the seller's
-utility unchanged. Selling a small amount of housing relaxes its retention
-and estate constraints. For the buyer, keep young consumption, old housing,
-and the estate fixed, and pay the remaining bill from old consumption.
-The table shows that this reduces old consumption by
-$[q r_t\epsilon+L(\epsilon)+C(\epsilon)]/q$. For a sufficiently small sale,
-consumption stays positive and the other constraints remain slack. The
-buyer's lifetime utility gain is:
+Let $v=\kappa u/\chi$ and let $a_h=u\widehat h/\widetilde w$ be the
+housing expenditure share at the cap. Within the reduced problem, removing
+the current cap gives the optimal housing expenditure share:
 \begin{equation}
- \Delta U_i=\alpha\log\left(1+\frac{\epsilon}{s_i}\right)
- +\beta\log\left(1-
- \frac{q r_t\epsilon+L(\epsilon)+C(\epsilon)}{q c_i^2}\right).
- \label{eq:amend_exact_gain}
-\end{equation}
-The interior saving condition gives $c_i^2=\beta x_i/q$, so the right
-derivative at zero is $(MV^Y-q r_t-K_{ijt})/x_i>0$. The buyer therefore gains from a
-sufficiently small sale. Property-tax receipts, future housing supply, and other households' allocations stay
-unchanged, and lenders receive the market return.
-\end{proof}
-
-\Needspace{9\baselineskip}
-\subsection{Proof of Proposition~\ref{prop:amend_fertility}}
-
-\begin{proof}
-Differentiate $(1+k) x+\chi n=\Rnet(h)$ to obtain
-$(1+k) x'=-p-\chi n'$. Differentiating
-$\vartheta/n=\chi/x+\alpha\kappa/(h-\kappa n)$ and substituting for $x'$
-gives \eqref{eq:amend_fertility_sign}. Multiply its numerator by the positive
-number $(1+k) x^2$ and use $MV^Y=\alpha x/s$. For the sufficient condition,
-$MV^Y\geq u$ implies $(1+k)\kappa MV^Y>\alpha\chi$, hence
-$(1+k)\kappa (MV^Y)^2>\alpha\chi p$ whenever $p<MV^Y$.
-\end{proof}
-
-\subsection{Proof of Proposition~\ref{prop:amend_primitive}}
-
-\begin{proof}
-Let $D=1+k+\alpha+\vartheta$ and $v=\kappa u/\chi$. Without the current cap,
-the conditional problem spends the following fraction of resources on housing:
-\begin{equation}
- g(v)=\frac{\alpha+\vartheta v/(1+v)}{D}.
+ g(v)=\frac{\alpha+\vartheta v/(1+v)}{1+k+\alpha+\vartheta}.
  \label{eq:amend_unconstrained_share}
 \end{equation}
-Strict concavity implies that the current cap binds strictly exactly when
-$a_h<g(v)$ in this reduced problem. The function $g$ is strictly increasing,
-and direct substitution gives $g(\alpha/(1+k))=\alpha/(1+k+\alpha)$.
-Therefore \eqref{eq:amend_primitive_condition} and strict binding imply
-$g(v)>g(\alpha/(1+k))$ and hence $v>\alpha/(1+k)$.
-Proposition~\ref{prop:amend_fertility} supplies the fertility implication.
+Strict binding gives $a_h<g(v)$. The function is increasing, and
+$g(\alpha/(1+k))=\alpha/(1+k+\alpha)$. At stationary prices,
+$a_h=(1-q)b/[(1-\phi)(y+b)]$. The restriction therefore implies
+$v>\alpha/(1+k)$. If $P_{t+1}\leq P_t$, then
+$u/P_t=1-qP_{t+1}/P_t\geq1-q$, so the same lower bound on $a_h$
+holds at that date. The preceding sufficient condition gives the result.
 \end{proof}
 
-The condition can hold while the cap binds strictly: the housing expenditure
-share can lie in $\alpha/(1+k+\alpha)\leq a_h<(\alpha+\vartheta)/D$.
-This interval has positive length. The condition still excludes households
-with very little liquid wealth relative to lifetime resources.
-A constructed example also satisfies the original owner constraints.
-Set $q=0.8$, $\phi=0.7$, $P=4$, $y=4.8$, $b=2.4$, and $\tau^p=T=0$.
-Let $\beta=0.8$, $\gamma=0.5$, $\omega_B=3$, $\alpha=\chi=\kappa=1$,
-and $\vartheta=2$. Then $1+k=4.6$, $u=0.8$, $h=2$, and $x=s=n=1$.
-The share $a_h=2/9$ exceeds $\alpha/(1+k+\alpha)=5/28$, while
-$MV^Y=1>u$. Saving is $2.8$, old consumption is $1$, old housing is $0.625$,
-and the estate is $3.75>4(0.625)$. Thus positive saving and the two old-age
-slackness conditions are consistent with the restriction. The cap derivative
-is $19/74>0$. This is a conditional household example, not a complete
-equilibrium construction.
+This parameter restriction excludes very low liquid wealth relative to
+lifetime resources. More generally, welfare can increase while fertility
+falls: the exact sign still depends on both space and payment.
+If a common rental cap increases at both ages, it also raises future rent;
+under binding caps the appropriate net payment is $p=u_t+qu_{t+1}$.
 
-\subsection{A negative response and a common rental limit}
-
-\textbf{More housing can improve welfare and lower fertility.}
-Set $1+k=2$, $\alpha=\chi=x=s=n=1$, $\kappa=0.1$, $\vartheta=1.1$, and
-$u=0.5$. Then $h=1.1$, $\widetilde w=3.55$, $MV^Y=1$, and $\Delta=1.61$.
-At $p=u$, the household is better off with more housing but
-$\dd n/\dd h=-15/161$. If the added space is provided at zero marginal net
-payment, the same conditional derivative is $10/161>0$. This is a constructed
-household example, not a calibration or an equilibrium counterfactual.
-
-\textbf{A common rental limit changes future resources.}
-If both the young and old rental caps bind, raising their common limit changes
-current space and the old household's committed rent. At fixed prices and
-transfers its total derivative is:
+A lower preference weight weakly lowers an individual household's fertility
+when its full price and transfer sequence is fixed, even allowing tenure
+choice. To see this, write its objective as $A(z)+\vartheta\log n(z)$ for a
+feasible lifetime plan $z$. Adding the two optimality inequalities at
+weights $\vartheta_0$ and $\vartheta_1$ gives:
 \begin{equation}
- \frac{\dd n}{\dd h_R^{\max}}
- =\left.\frac{\partial n}{\partial\widehat h}\right|_{\widetilde w}
- -q^2r_{t+1}\frac{\partial n}{\partial\widetilde w},\qquad
- \frac{\partial n}{\partial\widetilde w}
- =\frac{\chi}{(1+k) x^2\Delta}>0.
- \label{eq:amend_commoncap}
+ (\vartheta_1-\vartheta_0)(\log n_1-\log n_0)\geq0.
+ \label{eq:amend_preference_fertility}
 \end{equation}
-Reporting the first term alone overstates the fertility response to the common
-cap change under these constraints.
+The feasible set is unchanged. The general-equilibrium sign also requires
+the price and tenure responses considered below.
 
-\section{Conditions for a converging transition}
+\subsection{Population units}
+\label{app:amend_units}
+
+Let $n^L=a_n n$ count literal children. Consistent rescaling uses
+$\nu^L=\nu/a_n$, $\chi^L=\chi/a_n$, and $\kappa^L=\kappa/a_n$.
+Replacement literal fertility is $a_n/\nu$; the change in $\log n$ is a
+choice-independent constant. If young and old households contain
+$a_Y$ and $a_O$ adults and children reside with parents in their birth
+period, resident population is:
+\begin{equation}
+ N_{{\rm persons},t}=a_YY_t+a_OO_t+a_n\bar n_tY_t.
+ \label{eq:amend_persons}
+\end{equation}
+At a positive steady state,
+$N_{\rm persons}^*/N_{\rm hh}^*=(a_Y+a_O+a_n/\nu)/2$.
+Common fixed counting coefficients therefore preserve the terminal
+population ranking. Their empirical values are not needed for this
+illustrative comparison.
+
+\section{The combined transition}
 \label{app:amend_transition}
 
-For each reform, we need initial prices that generate a feasible path to the
-new steady state. The conditions below allow us to follow those prices as the
-reform grows. We follow one continuous family of steady states; other steady
-states may exist.
+The proof uses the original equilibrium equations on a region where the
+same household constraints remain strictly binding or slack. Young owners
+are at their down-payment limits and below their physical caps; young and
+old renters are at their rental caps. Young households save positively.
+Old owners have slack retention and estate bounds. All consumption,
+usable space, fertility, and estate levels are positive. These conditions
+hold uniformly over the fixed compact support of entrant types.
 
-Let $\lambda\in[0,1]$ index the size of a permanent reform, with $\lambda=0$
-the initial policy. Let $s_t\in\mathbb R^d$ describe inherited cohort sizes and
-household choices, and let $j_t\in\mathbb R^k$ contain prices not fixed by those
-inherited choices. Write $z_t=(s_t,j_t)$. Suppose the equilibrium equations
-locally determine next period's variables as a twice continuously differentiable
-map, jointly smooth in the policy and the state:
-\begin{equation}
- z_{t+1}=g_\lambda(z_t),\qquad g_\lambda(z^*(\lambda))=z^*(\lambda).
- \label{eq:amend_dynamic_map}
-\end{equation}
-Aggregate differentiability requires either uniformly regular household choices
-with unchanged constraints or a separate argument permitting differentiation
-of the integrals across changing household choices.
-This representation requires a nonsingular derivative of the one-date equations
-with respect to next-date variables after redundant and static equations have
-been removed. It is an assumption to check, not a consequence of the two-period
-structure alone.
+\subsection{Equilibrium equations and inherited claims}
 
-\textbf{The local condition.}
-Suppose the derivative of $g_\lambda$ at the steady state has $d$ eigenvalues
-strictly inside the unit circle and $k$ strictly outside it. Suppose also that
-the stable subspace projects with full rank onto the inherited coordinates.
-The local stable-manifold theorem then gives a function $j=\Gamma_\lambda(s)$:
-initial points on this graph remain close to the steady state and converge to
-it. Choose the local graph inside a feasible neighborhood and forward invariant
-there, so every point on it supplies a feasible converging tail.
-The conclusion permits zero stable eigenvalues; only the unstable part is inverted in the proof.
-The version for possibly noninvertible maps is covered by
-\href{https://www-users.cse.umn.edu/~mcgehee/publications/McGehee1996a/GCG88.pdf}
-{McGehee and Sander (1996), Theorem 1}. Joint smoothness in the policy and the stated strict
-conditions give a continuously differentiable graph locally in $\lambda$.
-
-\begin{proposition}[Continuation to a finite reform]
-\label{prop:amend_continuation}
-Hold $s_0=\Pi_s z^*(0)$ fixed and let $j_0^*=\Pi_jz^*(0)$. Suppose a continuous family of
-positive steady states $z^*(\lambda)$ has the local stable graphs just described.
-There are a finite date $J$ and a bounded open set $B\subset\mathbb R^k$ of
-initial prices with the following properties. For every
-$(\lambda,j)\in[0,1]\times\overline B$, the first $J$ iterations from
-$(s_0,j)$ are defined and feasible, and their inherited coordinates lie in the
-domain of the final stable graph. Define their deviation from this graph by:
-\begin{equation}
- \mathcal F(\lambda,j)=\Pi_jg_\lambda^J(s_0,j)
- -\Gamma_\lambda\!\left(\Pi_sg_\lambda^J(s_0,j)\right).
- \label{eq:amend_shooting}
-\end{equation}
-Here $\Pi_s$ and $\Pi_j$ select inherited variables and prices. Assume $\mathcal F$ is
-continuously differentiable on an open neighborhood of
-$[0,1]\times\overline B$, has no zero on $[0,1]\times\partial B$, and its
-derivative with respect to $j$ is nonsingular at every zero. At $\lambda=0$,
-assume $j_0^*\in B$ is its only zero.
-Then for every $\lambda\in[0,1]$ there is exactly one such initial price vector
-in $B$. It varies continuously differentiably with $\lambda$ and generates an
-infinite equilibrium path converging to $z^*(\lambda)$.
-\end{proposition}
-
-\begin{proof}
-At any zero, the implicit-function theorem continues the initial prices
-uniquely for nearby policy values. The zeros form a compact set because $\mathcal F$
-is continuous, $\overline B$ is compact, and zeros cannot lie on its boundary.
-For a fixed policy, nonsingularity makes each zero isolated; compactness then
-makes their number finite. Near any policy value, each zero continues and no
-new zero can appear elsewhere: otherwise a sequence of such zeros would have
-a limit at that policy, contradicting its local uniqueness. The number of
-zeros is therefore locally constant on $[0,1]$. It equals one at zero, so it
-equals one throughout the interval. Patching the local functions gives the
-claimed smooth initial prices. At date $J$ the corresponding orbit lies on
-the local stable graph, which supplies the converging infinite tail.
-\end{proof}
-
-The reform need not be small. The restrictions instead prevent a path from
-reaching a feasibility boundary, prevent two solutions from merging, and
-require the tail to enter the region where local convergence is established.
-They have not been reduced to primitive inequalities for the full model.
-The result does not imply that all equilibria outside $B$ are absent. Checking
-only a few terminal horizons or the eigenvalues at one endpoint is insufficient
-to verify these assumptions for a whole policy interval.
-
-\textbf{Why a finite description of the old cohort is possible.}
-Let $i=(y,b)$ be a young household's type, drawn from the fixed distribution
-$F$. Let $\eta_t$ collect the finite list of prices, transfers, and policy
-parameters used in its lifetime problem at date $t$, including
-$(P_t,P_{t+1},P_{t+2},T_t,T_{t+1})$ and the current and anticipated policy rules.
-Assume its optimal choices are unique, measurable in type, and integrable. Its optimal financial
-assets and owner housing are functions $a_R(i;\eta_t)$,
-$a_O(i;\eta_t)$, and $H_O(i;\eta_t)$, and its ownership probability is
-$\pi^O(i;\eta_t)$. For any bounded test function $f$, the next old-cohort
-distribution is given by:
+Write $u_t=q r_t$, $a=h_R^{\max}$,
+$\rho_O=1+\beta(1+\gamma+\omega_B)$, and
+$\rho_R=1+\beta(1+\omega_B)$. Housing choices are
+$h_i^O=b_i/[(1-\phi)P_t]$ and $h_i^R=a$.
+The conditional resource equations and fertility conditions are:
 \begin{align}
- \int f\,\dd G_{t+1}=\int\bigl[&
- (1-\pi^O(i;\eta_t))f(a_R(i;\eta_t),0,R)\nonumber\\
- &+\pi^O(i;\eta_t)f(a_O(i;\eta_t),H_O(i;\eta_t),O)
- \bigr]\,\dd F(i).
- \label{eq:amend_finite_memory}
+ \rho_Ox_i^O+\chi n_i^O&=w_i-u_th_i^O,\nonumber\\
+ \rho_Rx_i^R+\chi n_i^R&=w_i-u_ta-qu_{t+1}a,\nonumber\\
+ \frac{\vartheta}{n_i^m}&=\frac{\chi}{x_i^m}
+  +\frac{\alpha\kappa}{h_i^m-\kappa n_i^m},\qquad
+ w_i=y_i+b_i+T_t+qT_{t+1}.
+ \label{eq:amend_transition_choices}
 \end{align}
-Thus the model-generated old distribution is indexed by $\eta_t$, even when
-$F$ is continuous. This describes distributions generated by the model,
-rather than arbitrary initial distributions. At an unexpected reform, the inherited distribution uses
-the expectations under which the old cohort actually chose when young:
-$G_0=K(\eta_{-1}^{\mathrm{pre}})$, where $K$ is the distribution defined by
-\eqref{eq:amend_finite_memory}. Later cohorts use the prices and policy rules
-anticipated when they make their young-period choices. This finite representation does not guarantee
-smooth aggregate choices or a nonsingular next-date derivative; those remain
-separate conditions in the transition argument.
+The future rent affects renter choices and therefore tenure probabilities.
+For the cohorts choosing under these prices, old-owner housing is
+$\beta\gamma x_i^O/(qu_{t+1})$ and old-renter housing is $a$.
 
+The aggregate state is $Z_t=(P_t,u_t,Y_t,O_t,M_t,R_t)$, where
+$M_t/u_t$ and $R_t$ are total old-owner and old-renter housing.
+Given this state, rental entry determines $P_{t+1}$ and fiscal balance
+determines $T_t$. The two remaining unknowns
+$v=(u_{t+1},Y_{t+1})$ solve:
+\begin{align}
+ F_1(Z_t,v)&=Y_t\int[\pi_i^Oh_i^O+(1-\pi_i^O)a]\,\dd F
+              +M_t/u_t+R_t-\bar H=0,\nonumber\\
+ F_2(Z_t,v)&=Y_{t+1}-\nu Y_t
+              \int[\pi_i^On_i^O+(1-\pi_i^O)n_i^R]\,\dd F=0.
+ \label{eq:amend_transition_residuals}
+\end{align}
+These are housing clearing and the cohort law. The next state is:
+\begin{equation}
+ G(Z_t,v)=\left(
+ P_{t+1},u_{t+1},Y_{t+1},Y_t,
+ \frac{\beta\gamma}{q}Y_t\int\pi_i^Ox_i^O\,\dd F,
+ aY_t\int(1-\pi_i^O)\,\dd F\right).
+ \label{eq:amend_transition_update}
+\end{equation}
+If $F_v$ is nonsingular, these equations give a smooth local map
+$Z_{t+1}=g(Z_t;\vartheta,\phi)$. It is derived from the original equilibrium,
+including old-state evolution.
 
-\section{Parameters and numerical checks}
-\label{app:amend_numerics}
+At an unexpected policy date, let $B,A,H$ denote the inherited old-owner
+mass, net financial claims, and purchased titles, respectively. Let
+$\mathcal I=(Y_{t_p},O_{t_p},B,A,H)$ and
+$L=\gamma/(1+\gamma+\omega_B)$. Initial housing demand satisfies:
+\begin{equation}
+ Y=Y_{t_p},\quad O=O_{t_p},\quad R=a(O_{t_p}-B),\quad
+ M=L[A+PH+T(P,Y,O)B].
+ \label{eq:amend_actual_boundary}
+\end{equation}
+The title price and rebate can change, so $M$ is not predetermined wealth.
+Financial claims include the original mortgage repayment; the new $\phi$
+does not rewrite that debt. The full conditional inherited states are also
+retained to check each old household's feasibility.
 
-The example has identical entrant income and liquid wealth, with heterogeneity
-only in the ownership taste. All parameters are chosen for illustration:
+Previously chosen saving and rent use the forecasts held before the shock.
+In particular, rental entry at $t_p-1$ uses the baseline expected price at
+$t_p$, and the old cohort's earlier saving condition need not hold at the
+surprisingly realized price. Equations~\eqref{eq:amend_transition_choices}--
+\eqref{eq:amend_transition_update} apply to the new continuation from $t_p$
+onward, with \eqref{eq:amend_actual_boundary} determining the initial old.
+
+\subsection{Local continuation and the two shocks}
+
+Let $Z^*$ be a positive stationary equilibrium satisfying the stated strict
+household conditions. Assume $g$ and the four initial restrictions $b$
+are smooth, $F_v$ is nonsingular, and $J=g_Z(Z^*)$ has four eigenvalues
+strictly inside and two strictly outside the unit circle. Let $B_0=b_Z$
+at the initial stationary data. Its restriction to the stable generalized
+eigenspace must be invertible. Finally, at this equilibrium the impact
+fertility and stationary population derivatives with respect to both
+$\vartheta$ and $\phi$ are strictly positive, holding inherited claims fixed
+in the impact comparisons.
+
+Here is the local argument. Write $\lambda=(\vartheta,\phi)$ for the two
+parameters. Since one is not an eigenvalue of $J$, the stationary state
+$Z^*(\lambda)$ is smooth. Center a continuation on it by
+$v_k=Z_{t_p+k}-Z^*(\lambda)$. The exact sequence equations are:
+\begin{equation}
+ b(Z^*(\lambda)+v_0;\mathcal I)=0,\qquad
+ v_{k+1}-g(Z^*(\lambda)+v_k;\lambda)+Z^*(\lambda)=0.
+ \label{eq:amend_sequence_equations}
+\end{equation}
+Centering removes the permanent parameter shift from the tail.
+Choose $\eta<1$ above the stable spectral radius and use the sequence norm
+$\sup_k\eta^{-k}\|v_k\|$. The derivative in $v$ is
+$(B_0v_0,\{v_{k+1}-Jv_k\})$. For a forcing $f_k$, its stable and
+unstable components are solved by:
+\begin{equation}
+ v_k^s=J_s^kc+\sum_{j=0}^{k-1}J_s^{k-1-j}f_j^s,
+ \qquad
+ v_k^u=-\sum_{j=k}^{\infty}J_u^{k-1-j}f_j^u.
+ \label{eq:amend_sequence_inverse}
+\end{equation}
+The boundary determines $c$ uniquely; both sums are bounded in this norm.
+Only the unstable block is inverted, so a zero stable root is allowed.
+Uniform household margins make the residual continuously differentiable.
+The sequence implicit-function theorem therefore gives a smooth,
+exponentially converging continuation for nearby parameters and inherited
+data. The same inverse on bounded sequences supplies uniqueness among
+continuations staying in a sufficiently small common neighborhood.
+
+For the initial preference decline, inherited data are the original
+stationary data. Smoothness gives a constant $C$ such that:
+\begin{equation}
+ \|Z_t^0(\epsilon)-Z^*(\vartheta_0-\epsilon,\phi_0)\|
+ \leq C\epsilon\eta^t,\qquad
+ \|Z^*(\vartheta_0-\epsilon,\phi_0)-Z^*(\vartheta_0,\phi_0)\|
+ \leq C\epsilon.
+ \label{eq:amend_uniform_baseline}
+\end{equation}
+The entire baseline stays uniformly close to the original equilibrium.
+The strict preference derivatives give lower initial fertility and a smaller
+endpoint for sufficiently small positive $\epsilon$.
+
+Original household budgets reconstruct assets, titles, and tenure
+probabilities smoothly on the fixed compact type support. Their deviations
+are therefore uniformly of order $\epsilon$, across every date and type.
+This controls individual feasibility as well as the aggregate inherited
+condition; closeness of aggregate moments alone would not suffice.
+At $\delta=0$, local uniqueness identifies the continuation at $t_p$ with
+the baseline tail. Continuity preserves the strict policy derivatives for
+all these inherited states in one neighborhood. Integrating them from
+$\phi_0$ to $\phi_0+\delta$ gives
+\eqref{eq:amend_policy_comparison}. The uniform bound permits common positive
+upper bounds on $\epsilon$ and $\delta$, independent of the chosen date $t_p$.
+This proves Proposition~\ref{prop:amend_combined} once an economy meeting the
+strict conditions is supplied.
+
+\subsection{An economy satisfying the conditions}
+
+Use the following primitive values, with homogeneous income and liquid
+wealth and a finite ownership-taste scale:
+\begin{align}
+ q&=\tfrac12,\quad\phi=\tfrac45,\quad b=\tfrac15,\quad
+ \alpha=\beta=\omega_B=\tfrac25,\quad\gamma=\tfrac3{10},\nonumber\\
+ \chi&=\tfrac3{20},\quad\kappa=\tfrac12,\quad
+ \vartheta=\tfrac{141}{400},\quad\nu=2,\quad
+ h_R^{\max}=\tfrac14,\quad h_O^{\max}=2,\quad\sigma_\xi=4,\nonumber\\
+ \tau^p&=\tfrac{467}{9250},\quad
+ y=\tfrac{3521349281}{1677802000},\quad
+ \bar H=\tfrac{68104}{68019}.
+ \label{eq:amend_example_primitives}
+\end{align}
+Set $\bar\xi=\sigma_\xi\log(\pi/(1-\pi))-W^O+W^R$ at
+$\pi=11/21$ and the allocation below, then hold both taste parameters fixed
+during the shocks. This specifies one preference distribution.
+
+There is an exact stationary equilibrium with $P=Y=O=1$,
+$u=9717/18500$, $T=3975571/314587875$, and:
+\begin{equation}
+ (x_O,h_O,n_O)=(1,1,\tfrac34),\qquad
+ (x_R,h_R,n_R)=(\tfrac{99}{74},\tfrac14,\tfrac9{40}).
+ \label{eq:amend_example_allocation}
+\end{equation}
+Mean fertility is $1/2$ and $11/21$ of households own. The young owner's
+housing value is $16/25$, exceeding the old owner's value $9717/18500$.
+All stated household inequalities have strict margins. Thus the allocation
+and transition results apply in the same economy.
+
+Differentiating \eqref{eq:amend_transition_choices} gives the two additional
+terms needed for the preference shock: $\dd\vartheta/n_i^m$ in the fertility
+condition and $\log n_i^m\,\dd\vartheta$ in the conditional value.
+Together with \eqref{eq:amend_tenure}, the latter accounts for endogenous
+tenure changes. Let $Q_a=g_a$ for $a\in\{\vartheta,\phi\}$; then:
+\begin{equation}
+ J=G_Z-G_vF_v^{-1}F_Z,\qquad
+ Q_a=G_a-G_vF_v^{-1}F_a,\qquad
+ Z_a^*=(I-J)^{-1}Q_a.
+ \label{eq:amend_example_derivatives}
+\end{equation}
+These expressions follow directly from the two implicit equations.
+
+Exact root bounds give one zero root, one real stable root in
+$(.00319,.00320)$, a nonreal pair with modulus in $(.41,.43)$, and
+unstable roots in $(-80.93,-80.92)$ and $(4.148,4.149)$.
+The four initial restrictions are independent on the stable space.
+Solving the linear recurrence and those restrictions gives:
 \begin{center}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lrr@{}}
 \toprule
-Object & Value\\
+Derivative at the reference equilibrium & $\vartheta$ increases & $\phi$ increases\\
 \midrule
-Bond price and property tax & $q=0.5$, $\tau^p=0.05$\\
-Housing, space, and goods parameters & $\alpha=0.4$, $\kappa=0.5$, $\chi=0.15$\\
-Lifetime and old-age weights & $\beta=0.4$, $\gamma=0.3$, $\omega_B=0.4$\\
-Fertility weight & $\vartheta=0.35$ throughout\\
-Entrant income and liquid wealth & $y=1$, $b=0.06$\\
-Demography and fixed housing stock & $\nu=2$, $\bar H=2$\\
-Rental and owner size limits & $h_R^{\max}=0.45$, $h_O^{\max}=2$\\
-Ownership taste & $\bar\xi=-0.15$, $\sigma_\xi=0.12$\\
-Financed share & Initial $0.80$; final $0.80$, $0.81$, $0.85$, $0.90$\\
+Initial mean fertility & $0.84713$ to $0.84714$ & $0.07966$ to $0.07968$\\
+Stationary adult households & $4.79728$ to $4.79729$ & $2.33786$ to $2.33788$\\
 \bottomrule
 \end{tabular}
 \end{center}
+The bounds are outward enclosures; all four derivatives are positive.
+The preference derivative uses $1<\log(10/3)<2$, with a tighter rational
+series bound for the displayed intervals. Strict inequalities persist in
+an open neighborhood. Uniformly small income and wealth variation on a
+fixed compact probability space preserves the argument as well. This does
+not impose zero renter mass, zero child goods costs, or zero property tax.
 
-Prices and transfers are set to their final steady-state values after date
-28. Household states at that date are generated by the preceding choices,
-not imposed at the endpoint. Across the four paths, the maximum housing error
-is $3.45\times10^{-10}$ units and the maximum government-budget error is
-$3.85\times10^{-12}$ goods. The largest terminal-state discrepancy, scaled
-by the larger of one and the relevant steady-state value, is
-$2.93\times10^{-10}$.
+The admissible neighborhood has no stated numerical radius. Larger shocks
+can change which constraints bind or eliminate the positive endpoint.
+For example, the fertility condition implies:
+\begin{equation}
+ n<\frac{\vartheta h}{\kappa(\alpha+\vartheta)}
+ \leq\frac{\vartheta h_O^{\max}}{\kappa(\alpha+\vartheta)}.
+ \label{eq:amend_endpoint_obstruction}
+\end{equation}
+If the last bound is at most $1/\nu$, a positive closed steady state is
+impossible. The local construction does not cover such a decline.
 
-For the $85\%$ policy, extending the terminal date from 28 to 40 changes
-reported prices, transfers, fertility, and cohort sizes by at most
-$2.13\times10^{-13}$ over their common dates. A second least-squares solution
-with a separately written market and fiscal residual agrees with the original
-log price and transfer paths to $1.10\times10^{-12}$.
+\subsection{The two-panel comparison}
+\label{app:amend_figure}
 
-The original two-budget household problem was also optimized directly for
-both tenures at dates 0, 2, and 28 under every policy: 24 comparisons. The
-largest difference in the seven choice variables is $1.07\times10^{-6}$.
-This checks the saving and old-age constraints independently of the reduced
-fertility equation. Original-equation residuals and binding constraints are checked at every
-computed date; the independent optimization comparison covers dates 0, 2, and 28.
+Figure~\ref{fig:amend_credit} uses the analytical first-order response at the
+economy above. Take a preference decline of size $\epsilon$, introduce the
+credit change at $t_p=1$, and set $\delta=\epsilon/2$. These choices specify
+a direction as $\epsilon$ tends to zero; they do not select a finite
+reform size or a historical date. If $z^a_k$ is the first-order response to
+a permanent unit increase in parameter $a$ from the reference equilibrium,
+the two displayed directions are:
+\begin{equation}
+ z_t^0=-z_t^{\vartheta},\qquad
+ z_t^1=\begin{cases}
+ z_t^0,&t<1,\\
+ z_t^0+\tfrac12 z_{t-1}^{\phi},&t\geq1.
+ \end{cases}
+ \label{eq:amend_figure_paths}
+\end{equation}
+Their interaction is of second order. The policy response at date 1
+satisfies the homogeneous version of \eqref{eq:amend_actual_boundary},
+so it preserves that date's inherited cohorts and claims.
 
-At each stationary endpoint, including the initial policy, the numerical
-linearization has seven stable and two unstable roots after eliminating the
-static transfer equation. Its stable directions project with full rank onto
-the inherited variables. The redundant acquisition-basis state is harmless
-when the gains tax is zero and contributes a zero root. These are local
-numerical diagnostics, not rigorous bounds over a policy interval. In
-particular, the owner borrowing constraint changes from binding to slack
-between the smaller reforms and the $90\%$ case.
+The dashed lines are tangents to housing and fertility schedules evaluated
+at constant prices and equal age-cohort masses. Write $N=N_{\rm hh}$. At a
+candidate $(P,N)$, set $T=q\tau^pP\bar H/N$, solve the household problems with repeated prices,
+and define:
+\begin{equation}
+ \mathcal H(P,N;\vartheta,\phi)
+ =\frac N2(\bar h^Y+\bar h^O)-\bar H.
+ \label{eq:amend_figure_schedules}
+\end{equation}
+The left panel solves $\mathcal H=0$ locally for price as a function of
+population; the right panel evaluates mean fertility on that same schedule.
+On the underlying exact schedules, an intersection with replacement
+fertility is a stationary equilibrium. The drawn tangent intersections give
+its first-order location. Other points on the schedules need not satisfy
+the demographic law.
 
-The household sign checks cover 4,280 binding-cap configurations, including
-796 satisfying the primitive sufficient condition. Every qualifying case has
-a positive response; 548 other cases have a negative response. Analytical and
-finite-difference derivatives differ by at most $6.69\times10^{-8}$.
-The financing checks cover 108 transactions, and the child rescaling,
-cohort-product formula, tenure decomposition, and stationary supply identities
-are checked separately. These calculations supplement the proofs; numerical
-agreement is not used to replace a mathematical assumption.
+The solid arrows connect selected transition equilibria. During adjustment,
+cohort proportions, inherited assets, and expected future prices differ
+from the stationary schedules, so a transition point need not lie on one
+of their dashed lines. The arrows compare initial, intervention-date, and
+limiting states; they do not impose monotone motion between them. Displayed coordinates are first-order changes per unit $\epsilon$ from the
+old equilibrium; symbolic labels refer to economic levels. Both axes use
+affine scales.
 
 \end{document}

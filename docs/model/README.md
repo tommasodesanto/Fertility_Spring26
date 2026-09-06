@@ -4,22 +4,25 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
-**Latest September 6 clarification:** today is a point on an ongoing transition
-after an externally specified fertility decline. Compare policy from that
-inherited state with the continuing baseline. The theory must combine this
-transition with housing constraints, allocation and fertility. The current
-seven-slide PDF shows a credit reform from a stationary baseline and does not
-yet implement that experiment. Reconcile the design before revising it; see
-`ACTIVE_DECISION_LEDGER.md`. No exact shock date, policy or new steady-state
-notion is chosen, and no claim that the actual 2007 economy was stationary is
-made. The model setup and conditional allocation result remain useful.
+**Start with the revised full theory note, September 6:**
+[`simplified_olg_amendment_proposal.pdf`](../../output/pdf/simplified_olg_amendment_proposal.pdf)
+has seven pages of main text and six appendix pages. It preserves the original
+utilities, all four household problems and tenure equation. The sequence is
+environment, equilibrium, compensated housing reallocation, conditional fertility,
+and an earlier fertility decline followed by a policy introduced during its
+transition. Both requested figure structures are included. The transition
+construction is local; its proof is in the appendix.
+Source: `../../latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex`.
+Rebuild: `python3 code/model/tools/build_simplified_olg_theory_note.py` from the
+project root. The work record is `simplified_olg_overnight_work.md`; checks are
+indexed in `../../output/model/simplified_olg_amendments/README.md`.
 
-September 6 author response: prioritize the main housing-allocation argument;
-the new mixed-tenure transition and stationary welfare work belong in the
-appendix for now. The earlier full-model note is
-`../../latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex`
-([PDF](../../output/pdf/simplified_olg_amendment_proposal.pdf)); incorporating
-the later discussion into that integrated note remains unfinished.
+This is the integrated proposal for discussion. The shock, policy, permanence,
+announcement assumption and acceptable theorem scope remain author choices;
+the ledger retains all 18 issue IDs and statuses. Earlier proofs and examples
+remain supporting material. The seven-slide PDF below still has the earlier
+credit-only comparison from a stationary baseline and remains set aside.
+No protected manuscript, slides or quantitative model are changed by this pass.
 
 - `../../output/pdf/simplified_olg_theory_slides.pdf` -- seven-slide theory
   review, identical to main-deck pages 6–12. Includes all four household problems,

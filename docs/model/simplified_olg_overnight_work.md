@@ -22,6 +22,126 @@ pre-polish checkout is recorded by this checkpoint. Preserve previous proof
 files and the decision tree. Stop when the note, economic checks, independent
 reviews and page-by-page PDF inspection are complete; no scheduled reruns.
 
+### Completed proposal and reading order
+
+The existing `output/pdf/simplified_olg_amendment_proposal.pdf` is now the
+integrated reading copy: seven pages of main text and six appendix pages.
+Its source remains under `latex/JMP_DS_suggestions/`. Read the original model
+and full equilibrium on pages 1–3, the allocation argument and its figure on
+pages 3–4, the conditional fertility result on page 5, and the combined
+transition on pages 5–7. The appendix supplies the settlement, fertility
+derivations, population units and local transition proof. Earlier proofs,
+examples and slides are preserved. No protected manuscript or quantitative
+source was edited, and no parked extension was developed.
+
+The two figures now serve the author's two questions. The allocation figure
+is unchanged. The new two-panel figure starts with the original steady state,
+shows the preference decline, compares policy and baseline at a common later
+inherited state, and marks their different limiting populations. Its dashed
+lines are constant-price stationary schedules, displayed to first order; they
+are not the transition itself. The connecting arrows select a few states and
+do not assert monotonic adjustment. The graph uses linear axes and the exact
+analytical derivatives of the existing mixed-tenure example, with no selected
+finite reform size or historical shock date.
+
+### What was corrected and what was kept
+
+- Original young and old utilities, all four W/V problems and the tenure
+  equation were checked against the pre-polish source and preserved. The
+  equilibrium definition now states the complete household, housing, rental,
+  fiscal, distributional and demographic conditions together.
+- The allocation proof consistently compensates the old in current goods.
+  The young gives up D(epsilon), the old receives it, and opposite bonds replace
+  the changed estate title and finance its eventual sale. Future real
+  allocations and inherited repayments are therefore fixed. The old proposal's
+  alternative payment through the young household's old-age consumption did
+  not support that same fixed-future-allocation description. This correction
+  changes the proof's settlement, not the planner's authorized ability to
+  relax private finance or the marginal-value comparison.
+- The main fertility condition is stated once, using household allocations
+  and net payment without a borrowing multiplier. The appendix keeps the full
+  derivative. Its parameter-only sufficient restriction explicitly retains
+  positive saving, slack physical owner capacity and interior old choices;
+  outside stationarity it also needs nonincreasing expected house prices.
+  A feasible original-household counterexample confirms that this price
+  qualification cannot simply be dropped. For a rental cap changed at both
+  ages, the full payment includes the future rent.
+- The combined theorem uses one neighborhood for the baseline preference
+  decline and a later credit reform. The actual inherited titles and financial
+  claims are fixed; their market value may jump. Pre-announcement choices use
+  their original forecasts. A weighted sequence argument gives converging
+  continuations, with uniform household feasibility across dates and types.
+- Both steady-state fertility levels are replacement. The terminal population
+  difference equals accumulated relative fertility along the paths. The policy
+  effect is positive at introduction and can be negative at another date; no
+  monotonicity or all-date ordering is claimed. Person counts preserve the
+  terminal ranking only under common fixed counting coefficients, whose
+  empirical values remain U0.
+
+### Independent reviews and lead verification
+
+Three first passes had 25-minute limits: household/allocation consistency,
+the combined sequence proof, and dated fertility/stationary population. After
+the integrated draft was written, the same agents completed distinct 12-minute
+passes on main-text readability, the new figure, and final stated conditions.
+All six reviews are preserved in `integrated_note_verification.json` in the
+existing amendments output folder, alongside the lead's verification record.
+No unresolved error was reported in the final proposed statements. Optional
+cuts removed duplicated estate, expectations, inequality and policy prose.
+
+The lead reread actual model prose by Menzio (2007, Section II) and the cached
+Fernández–Rogerson (1996) model introduction as style references: primitives
+first, ordinary sentences around equations, and modest claims. No preferences
+or institutions were borrowed from these references. The direct argument stays
+in the main text; numerical anchor details and the sequence proof stay in the
+appendix.
+
+The checks comprise three different forms of verification, rather than three
+identical executions:
+
+1. Algebra and proof: exact rational roots, initial-boundary rank and derivative
+   enclosures; symbolic fertility and compensation identities; the independent
+   sequence review; and original financial settlement identities. The lead
+   replayed `verify_simplified_olg_fertility_decline.py`. A short additional
+   exact recurrence check gives the credit-fertility derivative in
+   (0.07966, 0.07968) at introduction and (-0.01446, -0.01444) at date three.
+2. Original equations: stationary central differences, full household
+   optimizations, budget and market clearing checks, and independent evaluation
+   of the plotted fertility directions. The lead's baseline replay has maximum
+   equilibrium error below 1.2e-15, budget error below 1.5e-15 and household
+   optimizer discrepancies below 8.3e-7. The figure's recurrence errors are
+   below 2.2e-13; the independent original-household fertility check differs by
+   less than 5.2e-15. Finite paths validate arithmetic, not the convergence proof.
+3. Presentation: preservation of the original equation blocks, valid references,
+   two-pass compilation without overfull boxes or undefined references, and
+   visual inspection of all 13 final pages. The illustration's coordinates,
+   labels, schedule intersections and inherited-state comparison were reviewed
+   separately from its appearance.
+
+The single build command is:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/build_simplified_olg_theory_note.py
+```
+
+It builds only this note and the combined figure; `--figure-only` omits TeX.
+The proof and original household drivers remain unchanged. Detailed arrays and
+source hashes are in `integrated_note_figure_checks.json`.
+
+### Decisions still held for the discussion
+
+All 18 issue IDs and statuses are preserved. In particular, a local existence
+construction does not settle D1's desired breadth; no multidimensional
+primitive region or numerical shock radius is supplied. The illustrative
+choice of a permanent preference decline and permanent unexpected credit
+reform is proposed, not author-adopted. The direct planner proof does not
+establish constrained inefficiency of transfers followed by market clearing,
+nor welfare gains from the credit policy. W4/I1 institutions, U0 empirical
+counting conventions and the parked policy extensions retain their status.
+The next author discussion can assess the readable main argument before
+choosing further theory or integration. All review agents have completed;
+there is no continuing or scheduled theory run.
+
 ## September 6: three-agent assessment of the combined exercise
 
 The author authorized subagents for the four pieces and asked how to improve

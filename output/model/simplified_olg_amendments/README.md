@@ -1,13 +1,57 @@
 # Simplified OLG amendment checks
 
+## September 6: integrated note and two-stage illustration
+
+Start with `output/pdf/simplified_olg_amendment_proposal.pdf`: seven main-text
+pages and six appendix pages. Source:
+`latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex`.
+It combines the original model and compensation argument with a preference
+decline and a later credit reform from the inherited baseline state. The
+original separate utilities, all four W/V problems and tenure display are
+preserved. The detailed local sequence argument is in Appendix B.
+
+The existing allocation figure is reused unchanged. The new two-panel
+`combined_transition_figure.pdf/png` shows the old steady state, the baseline
+decline, the two policy-date equilibria and their different endpoints. It uses
+analytical first-order responses at the original mixed-tenure economy. Dashed
+lines are tangents to constant-price schedules, and arrows compare selected
+states; no finite reform, nonlinear axis transformation or monotone path is
+claimed. The shock direction is delta = epsilon/2 with intervention at date one.
+
+One command builds this note and its figure without rebuilding slides or proofs:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/build_simplified_olg_theory_note.py
+```
+
+`integrated_note_figure_checks.json` records the original-equation derivatives,
+common inherited-state boundary, pre-announcement forecasts, stationary
+intersections, full first-order arrays and source hashes.
+`integrated_note_verification.json` records the lead's exact sign checks,
+equation-preservation check, six bounded reviews, final two-pass compilation,
+page-by-page visual inspection and final hashes. The lead replayed the existing
+preference-shock checker; the stationary checker and original household
+optimizations were also checked in the independent first pass. See
+`docs/model/simplified_olg_overnight_work.md` for the concise synthesis.
+
+The direct proof compensates the old in current consumption and offsets the
+changed estate title with a bond, preserving all future real allocations.
+The conditional fertility inequality applies at a date; the fully primitive
+specialization additionally needs zero taxes and stationary or nonincreasing
+expected house prices. The combined equilibrium theorem remains local, with
+no stated shock-size radius, all-date fertility ordering or policy-welfare
+claim. All author decisions remain recorded; no new instrument or convention
+is adopted. Earlier work below is retained as supporting or historical evidence.
+
 ## September 6: first combined baseline-and-policy assessment
 
 The latest work record establishes a local route in the original mixed-tenure
 model: an initial preference decline and a permanent credit reform introduced
 later from the same inherited state. Read the newest section of
 `docs/model/simplified_olg_overnight_work.md` for assumptions, proof and limits.
-This supersedes the earlier preliminary baseline-sign status. The existing
-slides and PDFs below have not been revised to present this result.
+This supersedes the earlier preliminary baseline-sign status. The integrated
+note above now presents this result; the earlier slides and other PDFs below
+remain as they were at this assessment.
 
 The new stationary and baseline certificates can be replayed with:
 
@@ -22,7 +66,7 @@ was checked analytically; no finite paired-policy simulation was run. No broad
 primitive conditions, numerical reform radius, all-date fertility ordering or
 policy-welfare conclusion is established. Proposed shocks are not author-adopted.
 
-**Latest author clarification:** the desired illustration compares policy
+**Author clarification preceding the integrated note:** the desired illustration compares policy
 against a baseline already adjusting after a fertility decline, with today
 as an inherited point on that path. Explaining the initial decline is outside
 the exercise; the suggested historical date remains tentative. The current
