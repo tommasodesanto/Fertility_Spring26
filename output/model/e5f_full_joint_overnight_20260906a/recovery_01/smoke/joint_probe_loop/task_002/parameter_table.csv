@@ -1,0 +1,16 @@
+parameter,value,lower_bound,upper_bound,transform,is_free_parameter,status,near_bound
+beta_annual,0.9957481028607122,0.94,0.9995,discount,True,estimated_free_transition_parameter,False
+kappa_fert,2.2272776472202933,0.02,50.0,log,True,estimated_free_transition_parameter,False
+kappa_fert_continuation,1.7407215490503856,0.02,50.0,log,True,estimated_free_transition_parameter,False
+chi,1.04219686508978,0.1,5.0,log,True,estimated_free_transition_parameter,False
+H0,14.59025138786103,0.2,80.0,log,True,estimated_free_transition_parameter,False
+theta0,0.5531263449654853,0.0,8.0,softzero,True,estimated_free_transition_parameter,False
+theta1,0.10657929734316227,0.02,16.0,log,True,estimated_free_transition_parameter,True
+hbar_child_rooms,0.23247806408250452,0.1,1.8,log,True,estimated_free_transition_parameter,False
+first_birth_fixed_cost,4.547821764239695,0.0,8.0,softzero,True,estimated_free_transition_parameter,False
+hbar_first_child_jump,0.5993155421156183,0.0,2.0,softzero,True,estimated_free_transition_parameter,False
+psi_child_change_2023,-0.3264227999332593,-1.5,0.2,asinh,True,estimated_free_transition_parameter,False
+psi_child_2007,0.2986675688691904,nan,nan,derived,False,externally_normalized_to_old_completed_fertility,False
+psi_child_2023,-0.027755231064068908,nan,nan,derived,False,derived_from_old_intercept_and_transition_coordinate,False
+tenure_choice_kappa,0.005,nan,nan,external_profile,False,externally_fixed_profile_not_estimated,False
+housing_supply_elasticity,0.63,nan,nan,external_profile,False,externally_fixed_profile_not_estimated,False

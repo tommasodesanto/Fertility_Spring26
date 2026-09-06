@@ -84,3 +84,21 @@ unchanged state, and must pause after completion/review or the final cutoff.
 
 Production remains September 4 task_010. No policy runs, production promotion
 or author-owned manuscript edits are part of this continuation.
+
+## Verified launch, 04:00 UTC
+
+Smoke17023921 completed0:0 in17m46s, peak batch RSS4,591,880K. All four cases
+were independently recollected and checked against their hashes. The seed pair
+matches12fit rows, physical parameters,253numeric history entries and17PNGs
+exactly; both joint probes pass source/target/history/market/accounting gates
+with zero occupied adjacent-wealth value decreases. The full tables for every
+smoke point are smoke/all_target_fits.csv and smoke/all_parameters.csv.
+
+Full recovery17024465 was then submitted and confirmed RUNNING oncs619.
+It uses12CPUs/96GB, cpu_short/cpu48 and a five-hour allocation; the immutable
+04:47Eastern absolute stop still binds. search_submission.json records the exact
+command and receipt. The finite local collector process is recorded in
+local_collection_process.json. The app heartbeat now follows this job and must
+not submit another calibration. Interim improvements remain provisional until
+final exact repetition and visual review. See prelaunch_verification.json for
+the independent smoke checks.

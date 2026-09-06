@@ -173,6 +173,6 @@ and dated checkpoints remain. It is not evidence of an unreachable target.
 See [the separate recovery design](recovery_01/README.md). Smoke17023921 tests
 smaller full-objective coordinate and joint steps with all eleven parameters
 free, source and gates unchanged, a210-history maximum and the original04:47
-Eastern stop. Full recovery awaits its four-case smoke receipt. The app heartbeat
+Eastern stop. All four smoke cases subsequently passed; full recovery17024465 is now running. The app heartbeat
 monitor is `monitor-full-joint-fertility-calibration`, every15minutes, in the
 current calibration task; the older numerical-task automation stays paused.

@@ -1,8 +1,8 @@
 # Calibration Status
 
-Updated: `2026-09-06` (broad overnight attempt stopped at the market gate; smaller full-objective recovery smoke running; production retained)
+Updated: `2026-09-06` (four-case recovery smoke passed; full eleven-parameter recovery running; production retained)
 
-## September 6 full joint overnight search - recovery smoke
+## September 6 full joint overnight search - recovery running
 
 **Live update, 03:39 UTC:** job `17023172` stopped after 14 completed search
 histories plus the two initial smokes. Candidate 17 failed the unchanged
@@ -14,7 +14,7 @@ failed run, completed fits, checkpoints and original source snapshot remain.
 
 The author-authorized continuation is now a separate local-step recovery under
 `output/model/e5f_full_joint_overnight_20260906a/recovery_01/`. Smoke `17023921`
-is running in snapshot `Fertility_Spring26_full_joint_overnight_20260906b`.
+completed 0:0 in 17m46s in snapshot `Fertility_Spring26_full_joint_overnight_20260906b`.
 All 51 scientific files, the case adapter, targets, weights, parameter domains,
 seed and numerical gates are identical to the first attempt. The revised
 controller probes all eleven coordinates, then evaluates joint directions,
@@ -24,7 +24,16 @@ Maximum 210 histories: four smoke evaluations, six rounds of 22 coordinate and
 up to 12 joint proposals, and two exact final repeats. The original 04:47 Eastern
 finish remains binding. Contract SHA:
 `580723c437640677038966d5f5bcfb1638037446fc319bfb443e160f7832bd6e`.
-The full recovery must await the four-case smoke receipt; it is not yet launched.
+The four-case smoke passed and was independently recollected before launch.
+Its seed pair matches all twelve fit rows, parameters, 253 numeric history
+entries and seventeen PNGs exactly; both joint probes pass all gates with zero
+occupied value decreases. Full recovery `17024465` is RUNNING on `cs619` as of
+04:00 UTC, using cpu_short/cpu48, 12 CPUs/96 GB and a five-hour Slurm cap, with
+the earlier absolute finish above still binding. The finite local collector
+follows this job. The smoke's best provisional loss is 20.3589601953; its full
+twelve-row fit and eleven-parameter/bound tables accompany
+`recovery_01/smoke/all_target_fits.csv` and `all_parameters.csv`. This is an
+interim evaluated point, not the final repeated recovery result.
 This task has an active 15-minute heartbeat monitor, separate from the paused
 older numerical-task automation. Production and policy results stay retained.
 
