@@ -1,5 +1,27 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: integrated theory polishing pass
+
+Tommaso authorizes polishing the existing theory while away for a couple of
+hours, preserving his notation and prior results and emphasizing clarity and
+simplicity. Slides remain set aside; broad cleanup is for the later discussion.
+The current task still exposes three subagent slots despite the saved higher
+configuration ceiling. Three existing agents receive distinct 25-minute passes:
+original household/allocation consistency, combined-transition proof, and dated
+fertility/stationary-population exposition. The lead owns repository edits,
+the integrated note, figures, verification and final synthesis.
+
+Deliverable: revise the existing amendment-proposal TeX/PDF into one readable
+account of the environment, all four household problems, equilibrium, direct
+housing reallocation, conditional fertility, and the earlier-decline/later-policy
+experiment. Keep the detailed transition argument in the appendix. No new
+planner institution, author-selected shock or policy, empirical demographic
+convention, quantitative implementation or protected-draft edit is inferred.
+The initial source is clean and recoverable at commit 4ed3ee7; the full
+pre-polish checkout is recorded by this checkpoint. Preserve previous proof
+files and the decision tree. Stop when the note, economic checks, independent
+reviews and page-by-page PDF inspection are complete; no scheduled reruns.
+
 ## September 6: three-agent assessment of the combined exercise
 
 The author authorized subagents for the four pieces and asked how to improve
