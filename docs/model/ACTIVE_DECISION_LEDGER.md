@@ -25,9 +25,35 @@ allocation result. Public lending and repayment through taxation belong to a
 later discussion of remedies. The previous prompt to decide public collection
 powers is therefore deferred; those powers have not been accepted or rejected.
 
+**September 5 late-evening continuation: compact results and economic scope.**
+After returning tired, Tommaso authorized safe further autonomous work. Start
+with `output/pdf/simplified_olg_paper_core.pdf`: three pages of proposed results
+after the existing setup, with both figures, and a separate one-page assessment.
+The ten-page note remains supporting material. No author convention, preference,
+planner power, or issue status is changed.
+
+The new proof section 11 shows that the limiting steady-state welfare loss is
+general across its maintained heterogeneous-owner family. With zero child goods
+cost and property tax, fixed entrant income/wealth distribution and world bond
+price, a higher common financed share raises price proportionally, leaves each
+young type's housing and fertility unchanged in the new steady state, and
+reduces each old type's housing. Stationary population rises while each same-type
+entrant's owner lifetime utility falls. This is not a transitional-cohort or
+variable-population welfare comparison, nor a compensated allocation.
+
+One independent review and new symbolic/original-equation checks verify the
+result. The compact assessment identifies near-all ownership, small child goods
+costs, interior old housing demand, and fixed entrant endowments/world interest
+as substantive limitations. A simple stability inequality does not remove them.
+Recommend retaining allocation and conditional fertility as the core, with the
+transition as a separate illustrative extension and its proof in an appendix.
+Both figures remain available; final placement and planner choices await the
+author. Continue discussion in the existing order rather than opening a new
+public-finance or model-revision branch tonight.
+
 **September 5 assessment and analytical continuation completed; discussion pending.**
-The ten-page `output/pdf/simplified_olg_simple_assessment.pdf` is the next
-reading object. The direct compensation proof remains short and valid under
+The ten-page `output/pdf/simplified_olg_simple_assessment.pdf` provides the
+longer assessment. The direct compensation proof remains short and valid under
 the permitted finance relaxation, with physical restrictions, individual
 fertility and future allocations held fixed. Explicit mixed-tenure equilibria
 show that positive masses of eligible owner pairs can exist. This closes

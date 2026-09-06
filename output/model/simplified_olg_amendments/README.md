@@ -1,8 +1,47 @@
 # Simplified OLG amendment checks
 
+## September 5 late-evening scope and prose pass
+
+Start with `output/pdf/simplified_olg_paper_core.pdf`: **four pages**, comprising
+three pages of proposed results after the existing household setup and one page
+of economic assessment. Both existing figures are retained. Source:
+`latex/JMP_DS_suggestions/simplified_olg_paper_core.tex`. The ten-page assessment
+below remains the fuller reading note; neither document is an adopted paper edit.
+
+The new section 11 of `local_transition_proof.md` explains the limiting
+stationary credit result for heterogeneous entrants. Price rises in proportion
+to common borrowing capacity, each young type's housing and fertility remain
+unchanged, and every old type uses less housing. Stationary population rises,
+but conditional owner lifetime utility falls for every same-type entrant.
+This holds at the all-owner, zero-child-cost/tax limit with the original
+uniformly strict branches and fixed income, wealth distribution and world bond
+price. It is separate from transitional-cohort welfare, variable-population
+social welfare, and the compensated allocation result.
+
+- `local_transition_scope_review.md`: one bounded read-only second opinion,
+  independently deriving the general welfare formula and assessing the economic
+  assumptions. The lead qualifies its estate wording: the original estate
+  inequality is not a minimum-retention rule and does not prohibit a sale.
+- `local_transition_welfare_checks.json`: exact symbolic utility and housing
+  identities, original budgets and constraints for five fixed types at three
+  financed shares, ten original household optimizations, and utility derivatives
+  checked to `8.3e-9`. Regenerate with the existing driver:
+
+```sh
+python3 code/model/tools/verify_simplified_olg_local_transition.py --welfare-only
+```
+
+Recommendation, pending author discussion: retain the allocation and conditional
+fertility arguments as the core; treat the second figure as a separate local
+demographic extension, with the price and welfare interpretation explicit.
+Near-all ownership, small child goods cost, fixed entrant endowments and
+unchanged household constraints limit its economic coverage. The simple
+stability inequality does not make all these restrictions innocuous. No new
+planner power, ownership preference, population convention, or model is chosen.
+
 ## September 5 continuation: analytical transition and primitive conditions
 
-The latest reading note is now **ten pages**, at
+The longer reading note is **ten pages**, at
 `output/pdf/simplified_olg_simple_assessment.pdf`; its LaTeX source remains
 `latex/JMP_DS_suggestions/simplified_olg_simple_assessment.tex`. Pages 1–4 keep
 the allocation and conditional fertility arguments. Page 5 replaces the

@@ -4,6 +4,13 @@ Use root `CALIBRATION_STATUS.md` for live calibration state.
 
 Current notes kept here:
 
+- `../../output/pdf/simplified_olg_paper_core.pdf` -- four-page compact theory
+  proposal: three pages of results after the existing setup, retaining both
+  figures, plus one page assessing transition assumptions and the general
+  stationary owner-welfare loss in the all-owner zero-cost/tax limit.
+  Source: `../../latex/JMP_DS_suggestions/simplified_olg_paper_core.tex`.
+  This is the shorter starting point; the longer assessment remains below.
+
 - `../../output/pdf/simplified_olg_simple_assessment.pdf` -- September 5
   assessment, ten pages: the short housing-allocation proof, distinct roles
   of borrowing and rental restrictions, explicit mixed-tenure equilibria,

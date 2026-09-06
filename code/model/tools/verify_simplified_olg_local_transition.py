@@ -8,6 +8,7 @@ Run --smoke first, then the eight declared cases. Use --stationary-only for the
 positive-child-cost population condition, and --figure for the analytical plot.
 Use --heterogeneity-only for uniform type constraints and exact aggregation.
 Use --general-only for the general root identities and the negative initial response.
+Use --welfare-only for the general stationary credit and welfare comparison.
 All outputs stay in the existing simple-theory evidence folder. The numerical
 paths never supply the plotted curves; these come from the analytical formula.
 """
@@ -554,6 +555,82 @@ def general_transition_checks():
                                     original_equation_initial_fertility_derivative=actual,cases=cases))
 
 
+def stationary_credit_welfare_checks():
+    """Verify same-type stationary welfare from the original flow utilities."""
+    phi, q, b, y, bmean, alpha, theta, beta, gamma, omega, kappa, nu = sp.symbols(
+        "phi q b y bmean alpha theta beta gamma omega kappa nu", positive=True)
+    rho = 1+beta*(1+gamma+omega)
+    K = nu*theta/(kappa*(alpha+theta))
+    d = b/(1-phi)
+    price = K*bmean/(1-phi)
+    h = d/price
+    n = theta*h/(kappa*(alpha+theta))
+    x = (y+b-(1-q)*d)/rho
+    c2 = beta*x/q
+    h2 = gamma*c2/((1-q)*price)
+    estate = omega*c2/q
+    utility = (sp.log(x)+alpha*sp.log(h-kappa*n)+theta*sp.log(n)
+               +beta*(sp.log(c2)+gamma*sp.log(h2)+omega*sp.log(estate)))
+    wanted = -((1-q)*d/x+beta*gamma)/(1-phi)
+    assert sp.simplify(sp.diff(utility, phi)-wanted) == 0
+    assert sp.simplify(sp.diff(h, phi)) == 0
+    assert sp.simplify(sp.diff(n, phi)) == 0
+    assert sp.simplify(sp.diff(h2, phi)-h2*(
+        -(1-q)*d/(rho*x*(1-phi))-1/(1-phi))) == 0
+
+    # Five fixed types with the same means as the analytical figure. This is
+    # a finite-support probability distribution, not a mean-state substitute.
+    types = [(.95,.2),(.94,.195),(.96,.205),(.94,.205),(.96,.195)]
+    weights = np.full(len(types), 1/len(types))
+    baseline = parameters()
+    bbar = float(weights @ np.array([t[1] for t in types]))
+    Kvalue = baseline["nu"]*baseline["theta"]/(baseline["kappa"]*(baseline["alpha"]+baseline["theta"]))
+    step = 1e-5
+    cases = []
+    for direction in (-1,0,1):
+        financed = baseline["phi"]+direction*step
+        pricevalue = Kvalue*bbar/(1-financed)
+        rows = []
+        for income, wealth in types:
+            p = parameters(y=income,b=wealth,phi=financed)
+            hh = young_choices([pricevalue]*3,[0.,0.],p)
+            old = {tenure:old_choices(hh[tenure]["assets"],hh[tenure]["z"][1],
+                                     pricevalue,pricevalue,0.,p,tenure=="owner")
+                   for tenure in ("owner","renter")}
+            row = dict(t=0,hh=hh,u0=hh["u0"],price=pricevalue,prices=[pricevalue]*3,
+                       transfer=0.,transfers=[0.,0.],past=hh,old_choices=old)
+            check = check_path(dict(rows=[row]),p,(0,) if direction==0 else ())
+            z = hh["owner"]["z"]
+            di = wealth/(1-financed)
+            derivative = -((1-p["q"])*di/z[0]+p["beta"]*p["gamma"])/(1-financed)
+            rows.append(dict(income=income,wealth=wealth,owner_choices=z,
+                             original_utility=household_utility(z,p),
+                             predicted_utility_derivative=derivative,checks=check))
+        mean_h = float(weights @ np.array([r["owner_choices"][1] for r in rows]))
+        mean_h2 = float(weights @ np.array([r["owner_choices"][5] for r in rows]))
+        mean_n = float(weights @ np.array([r["owner_choices"][2] for r in rows]))
+        assert abs(baseline["nu"]*mean_n-1)<1e-12
+        cases.append(dict(financed_share=financed,price=pricevalue,types=rows,
+                          mean_young_housing=mean_h,mean_old_housing=mean_h2,
+                          mean_fertility=mean_n,
+                          stationary_household_population=2*baseline["Hbar"]/(mean_h+mean_h2)))
+    changes = []
+    for lower, center, upper in zip(*(c["types"] for c in cases)):
+        numeric = (upper["original_utility"]-lower["original_utility"])/(2*step)
+        error = abs(numeric-center["predicted_utility_derivative"])
+        assert error<2e-7, error
+        assert upper["original_utility"]<center["original_utility"]<lower["original_utility"]
+        assert np.max(abs(upper["owner_choices"][[1,2]]-lower["owner_choices"][[1,2]]))<1e-12
+        assert upper["owner_choices"][5]<center["owner_choices"][5]<lower["owner_choices"][5]
+        changes.append(dict(income=center["income"],wealth=center["wealth"],
+                            analytical=center["predicted_utility_derivative"],numeric=numeric,error=error))
+    assert cases[0]["price"]<cases[1]["price"]<cases[2]["price"]
+    assert cases[0]["stationary_household_population"]<cases[1]["stationary_household_population"]<cases[2]["stationary_household_population"]
+    return dict(scope="General symbolic identities and original-equation checks for a fixed five-type distribution in the all-owner chi=tau=0 demand limit. Same-type stationary owner lifetime utility; no transitional-cohort or variable-population welfare claim.",
+                symbolic_identities="Utility derivative, zero young-housing/fertility derivatives, and negative old-housing derivative verified exactly.",
+                weights=weights,phi_step=step,cases=cases,utility_derivatives=changes)
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--smoke",action="store_true")
@@ -561,9 +638,19 @@ def main():
     parser.add_argument("--figure",action="store_true")
     parser.add_argument("--heterogeneity-only",action="store_true")
     parser.add_argument("--general-only",action="store_true")
+    parser.add_argument("--welfare-only",action="store_true")
     args=parser.parse_args()
     start=time.monotonic()
     OUT.mkdir(parents=True,exist_ok=True)
+    if args.welfare_only:
+        report=stationary_credit_welfare_checks()
+        report["source_sha256"]=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+        report["original_specification_sha256"]=hashlib.sha256((ROOT/"latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest()
+        target=OUT/"local_transition_welfare_checks.json"
+        target.write_text(json.dumps(serializable(report),indent=2)+"\n")
+        print(json.dumps(dict(output=str(target),type_count=len(report["weights"]),
+                             maximum_derivative_error=max(r["error"] for r in report["utility_derivatives"])),indent=2))
+        return
     if args.general_only:
         report=general_transition_checks()
         report["source_sha256"]=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()

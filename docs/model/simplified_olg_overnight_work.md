@@ -1,5 +1,65 @@
 # Simplified OLG: development plan and overnight record
 
+## September 5 late-evening scope and prose pass — completed
+
+Authorized when Tommaso returned tired and asked for safe autonomous work.
+Start: approximately 02:23 UTC September 6 (September 5 in New York).
+Bounded objective: a three-page proposed results section plus one page of
+economic assessment, preserving the existing setup, notation, preferences and
+both figures. Assess the substantive transition assumptions and independently
+check whether the plotted stationary welfare loss extends across its limiting
+family. One read-only `reviewer_strong` pass has the profile's 20-minute limit;
+the lead owns the derivation, text, original-equation checks and final judgment.
+Stop when the compact text, checks and PDF inspection are complete, with a
+90-minute ceiling for this pass. No new calibration, global transition search,
+public-finance design, planner permission, or author-manuscript edit is planned.
+
+Completed at 02:49 UTC, about 26 minutes after starting. The deliverable is
+`output/pdf/simplified_olg_paper_core.pdf`, with source under
+`latex/JMP_DS_suggestions/`: three pages of proposed results after the
+unchanged household setup, followed by one page of assessment. Both existing
+figures are preserved. The longer ten-page note remains available for its
+proofs, counterexamples and institutional discussion.
+
+The new result explains the limiting steady-state welfare loss generally,
+including heterogeneous entrant income and wealth. At the all-owner
+zero-child-cost/property-tax limit, increasing the common financed share
+raises price proportionally, leaves every young type's housing and fertility
+unchanged, and lowers every old type's housing. Stationary population rises
+while each same-type entrant's owner lifetime utility falls. The full short
+derivation is section 11 of `local_transition_proof.md`; no claim is made
+about transitional-cohort welfare or a social ranking of different populations.
+
+The economic assessment separates the mild-looking stability inequality from
+near-all ownership, small child goods costs, interior old choices, fixed
+entrant endowments and a world bond price. The explicit estate restriction
+is stated in primitives. The independent review's phrase about estates
+requiring retention is qualified: the original estate inequality is not a
+minimum-retention rule. No change to it or to ownership tastes is proposed.
+Recommend the allocation and conditional fertility arguments as the core,
+with the transition presented as a separate illustrative extension. This is
+a recommendation, not acceptance of local scope as the author's final goal.
+
+Three checks cover the new welfare claim: direct derivation from the original
+dated budgets and separate flow utilities; one completed read-only independent
+review; and symbolic identities plus original-budget/inequality checks for
+five fixed types at three financed shares, including ten independent household
+optimizations. The utility derivative discrepancy is below `8.3e-9` and budget
+errors below `4.5e-16`. Every prior economic/numerical/plotting function is
+AST-identical. All five earlier numerical receipts reproduce exactly except
+for source hashes and elapsed time; all six current receipts match the final
+driver. Figures were not regenerated or redesigned.
+
+Revisited Menzio's JPE 2007 model exposition (pp. 751--753) and the actual
+Fernández--Rogerson QJE 1996 prose (pp. 137--138). No model assumptions were
+borrowed. Final TeX has no warnings, undefined references or overflowing
+boxes. All four pages were visually inspected; the final change is confined
+to page 4, with pages 1--3 byte-identical to the inspected renders. Final PDF
+SHA-256: `882ced5e6bd997a14d6a8cdba4e60bc8f192f17c66840ccc1eec8bd2088e8f5a`.
+All 18 decision rows are unchanged. Source and evidence backup is recorded
+in the daily memory. No worker or numerical job remains active from this pass,
+and no scheduled run was created.
+
 ## September 5 continuation before the author's 9pm return — completed
 
 Start: 21:33 UTC, authorized when Tommaso said he would not be back before

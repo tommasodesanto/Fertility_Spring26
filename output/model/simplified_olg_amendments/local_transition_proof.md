@@ -661,3 +661,88 @@ tenure lead. Uniqueness concerns nearby exponentially converging sequences,
 not global equilibria. The more convenient sufficient fertility inequality
 (T13) is retained with its stated extra restrictions \(q\ge1/2,r>1\). An all-date sign remains restricted to
 the particular example in sections 4–6.
+
+## 11. What credit changes in the limiting steady state
+
+The stationary welfare loss in the plotted example is general within the
+maintained all-owner, zero-child-goods-cost and zero-property-tax demand
+limit. This result is independent of the convergence proof. It compares a
+household of the same type entering each steady state, with the world bond
+price, preferences and entrant distribution fixed.
+
+Let \(d_i=b_i/(1-\phi)\), \(\bar d=E[d_i]\),
+\(\rho=1+\beta(1+\gamma+\omega_B)\), and
+\(K=\nu\vartheta/[\kappa(\alpha+\vartheta)]\). Retain positive saving,
+strictly restrictive purchase constraints, slack owner physical caps, and
+interior old choices with slack retention and estate constraints, uniformly
+over the compact type support as in section 9. The original
+fertility condition, purchase constraint and replacement fertility give
+\[
+ P^*=K\bar d,\qquad
+ h_i^*=\frac{d_i}{K\bar d},\qquad
+ n_i^*=\frac{b_i}{\nu E[b_i]},\qquad
+ x_i^*=\frac{y_i+b_i-(1-q)d_i}{\rho}. \tag{T15}
+\]
+To obtain the price, use \(n_i=\vartheta h_i/[\kappa(\alpha+\vartheta)]\)
+and integrate \(h_i=d_i/P\) against the fixed probability distribution
+\(F\). The condition \(\nu E[n_i]=1\) then gives \(P=K\bar d\).
+A common change in the financed share scales every \(d_i\) and its mean
+proportionally. It therefore leaves each young household's housing and
+fertility unchanged at the new steady state. It raises the housing price and
+reduces adult consumption:
+\[
+ \frac{\partial\log P^*}{\partial\phi}=\frac1{1-\phi},\qquad
+ \frac{\partial x_i^*}{\partial\phi}
+ =-\frac{(1-q)d_i}{\rho(1-\phi)}<0.
+\]
+These signs are stationary comparisons, not statements about prices or housing
+at every transitional date.
+
+From the original old budget \(c^2+qe+qr h^2=a+PH\), the interior solution is
+\[
+ c_i^{2*}=\frac{\beta x_i^*}{q},\qquad
+ h_i^{2*}=\frac{\beta\gamma x_i^*}{q(1-q)P^*},\qquad
+ e_i^*=\frac{\beta\omega_B x_i^*}{q^2}.
+\]
+In particular the estate is dated one period after old consumption; its
+denominator is \(q^2\), not \(q\). Substitution into the original separate
+flow utilities shows that all terms in \(W^{O*}(i)\) that vary with
+\(\phi\) are \(\rho\log x_i^*-\beta\gamma\log P^*\). Consequently
+\[
+ \boxed{\frac{\mathrm d W^{O*}(i)}{\mathrm d\phi}
+ =-\frac{(1-q)d_i/x_i^*+\beta\gamma}{1-\phi}<0.} \tag{T16}
+\]
+The same derivative applies to realized ownership utility when the household's
+taste \(\xi_i\) is held fixed. No finite limit of diverging taste levels is
+being taken. The comparison concerns conditional owner values and fixed
+individual tastes at the all-owner demand limit.
+
+Every old household type also uses less housing:
+\[
+ \frac{\mathrm d\log h_i^{2*}}{\mathrm d\phi}
+ =-\frac{1+(1-q)d_i/(\rho x_i^*)}{1-\phi}<0. \tag{T17}
+\]
+Mean young housing is unchanged and mean old housing falls. Housing clearing
+therefore gives a larger stationary household population. This is how price
+capitalization and old downsizing accompany the demographic gain in Figure 2.
+It is not an implementation of the compensated Pareto comparison in the
+allocation result. Neither a welfare statement about transitional cohorts nor
+a ranking of populations under a social objective follows from (T16).
+
+The derivative applies on a sufficiently small interval that preserves the
+original household conditions. Positive \(\chi\), positive property tax,
+and material tenure switching require separate welfare derivatives. The
+existing mixed-economy convergence theorem does not automatically establish
+the same uniform type-by-type welfare ordering there.
+
+Verification: `--welfare-only` in the existing transition driver differentiates
+the original separate utility terms symbolically, checks all dated budgets
+and inequalities for five fixed types at three financed shares, and compares
+the derivatives with central differences of the original utility. It performs
+ten independent original household optimizations at the central share.
+The maximum derivative discrepancy is below \(8.3\times10^{-9}\).
+`local_transition_scope_review.md` supplies the independent derivation and
+economic assessment. Its discussion of an estate restriction should be read
+as a qualification on the interior-demand formula: the original constraint
+\(e\geq P_{t+1}h^2\) is not a minimum-retention rule and does not physically
+prevent an old owner from selling housing.
