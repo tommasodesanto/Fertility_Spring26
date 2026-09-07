@@ -8,7 +8,7 @@ parser.add_argument('--outdir',type=Path,required=True)
 parser.add_argument('--finish-epoch',type=float,required=True)
 parser.add_argument('--expected-history-seconds',type=float,required=True)
 parser.add_argument('--runtime-estimate-status',choices=('measured','provisional'),required=True)
-parser.add_argument('--profile',choices=('v1','wide32','parallel32','parallel32_fixed'),required=True)
+parser.add_argument('--profile',choices=('v1','wide32','parallel32','parallel32_fixed','parallel32_overlap'),required=True)
 parser.add_argument('--policy-workers',type=int,choices=(1,4),default=1)
 parser.add_argument('--smoke-only',action='store_true',help='Authorize only the four-history and policy verification loop.')
 parser.add_argument('--parallel-policy-receipt',type=Path)
@@ -32,7 +32,8 @@ if (out/'contract.json').exists():raise RuntimeError('Refusing to replace an exi
 profile={'v1':dict(max_workers=12,max_histories=360,population_size=32,max_generations=8,polish_rounds=2),
          'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2,final_reserve_seconds=16200),
          'parallel32':dict(max_workers=32,max_histories=640,population_size=32,max_generations=8,polish_rounds=2,final_reserve_seconds=12600),
-         'parallel32_fixed':dict(max_workers=32,max_histories=640,population_size=32,max_generations=8,polish_rounds=2,final_reserve_seconds=9000)}[args.profile]
+         'parallel32_fixed':dict(max_workers=32,max_histories=640,population_size=32,max_generations=8,polish_rounds=2,final_reserve_seconds=9000),
+         'parallel32_overlap':dict(max_workers=32,max_histories=640,population_size=32,max_generations=8,polish_rounds=2,final_reserve_seconds=5400)}[args.profile]
 available_total_seconds=min(43200,max(0,args.finish_epoch-time.time()))
 final_reserve=profile.get('final_reserve_seconds',10800)
 available_search_seconds=min(32400,max(0,available_total_seconds-final_reserve))
@@ -43,7 +44,7 @@ projected_search_histories=min(profile['max_histories']-28,
  int(available_search_seconds/args.expected_history_seconds)*profile['max_workers'])
 imported_fields=(args.imported_smoke_root,args.imported_smoke_contract,args.imported_smoke_contract_sha256,
                  args.imported_smoke_verification_sha256,args.imported_policy_verification_sha256)
-if (args.profile in ('wide32','parallel32','parallel32_fixed') or any(imported_fields)) and not all(imported_fields):
+if (args.profile in ('wide32','parallel32','parallel32_fixed','parallel32_overlap') or any(imported_fields)) and not all(imported_fields):
  raise ValueError('Parallel search profiles require complete imported-smoke provenance')
 original=None; imported_smoke=None
 if all(imported_fields):
@@ -86,7 +87,7 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  imported_smoke=imported_smoke,
  authorized_mode='smoke' if args.smoke_only else 'search_and_smoke',
  final_selection_rule=('freeze best search candidate before concurrent Jacobian and exact repeats; final probes diagnostic only'
-                       if args.profile=='parallel32_fixed' else 'allow final Jacobian improvements before exact repeats'),
+                       if args.profile in ('parallel32_fixed','parallel32_overlap') else 'allow final Jacobian improvements before exact repeats'),
  closure={'expectations':'current-date prices treated as permanent; temporary equilibrium, not perfect foresight',
           'post2023_population':'maintained closed national: M=0,rho=1; inherited four-slot birth queue',
           'historical_population':'unchanged Census totals and ACS householder-age bridge 2007-2023',
@@ -97,13 +98,16 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
                   'occupied_value_negative_steps':0,'realized_budget_excess_mass':2e-10,'budget_gap_threshold':1e-9})
 for key in ('source_sha256','code_bundle_sha256','target_fingerprint','search_domain'):
  if original is not None and original.get(key)!=c[key]:raise RuntimeError(f'Imported smoke original contract has mixed {key}')
-if args.profile in ('parallel32','parallel32_fixed'):
+if args.profile in ('parallel32','parallel32_fixed','parallel32_overlap'):
  if args.parallel_policy_receipt is None:raise ValueError('A measured complete parallel policy smoke receipt is required')
  timing_path=args.parallel_policy_receipt.resolve(); timing=adapter.read_json(timing_path)
  c['parallel_policy_timing']={'receipt':str(timing_path),'receipt_sha256':adapter.digest(timing_path),
   'projected_full_policy_seconds':timing['elapsed_seconds']*44/8,
-  'reserved_history_waves_seconds':3600 if args.profile=='parallel32_fixed' else 7200,'buffer_seconds':1200,
-  'interpretation':'Linear projection of measured four-process eight-date smoke to forty-four dates; a runtime forecast, not a completion guarantee'}
+  'reserved_history_waves_seconds':3600 if args.profile in ('parallel32_fixed','parallel32_overlap') else 7200,'buffer_seconds':1200,
+  'policy_history_overlap':args.profile=='parallel32_overlap',
+  'frozen_selection_before_overlap':args.profile=='parallel32_overlap',
+  'interpretation':('The frozen selected history starts one four-process policy finalizer before the concurrent 24-history final wave; policy output remains experimental pending exact repeats.'
+                    if args.profile=='parallel32_overlap' else 'Linear projection of measured four-process eight-date smoke to forty-four dates; a runtime forecast, not a completion guarantee')}
  import run_e5f_joint_nested_long_search as search
  search.verify_parallel_policy_budget(c)
 elif args.parallel_policy_receipt is not None:

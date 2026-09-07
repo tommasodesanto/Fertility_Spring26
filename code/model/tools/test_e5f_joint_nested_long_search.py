@@ -4,7 +4,9 @@ import math
 import json
 import copy
 import random
+import subprocess
 import tempfile
+import time
 import unittest
 from unittest import mock
 from concurrent.futures import Future
@@ -14,6 +16,58 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_overlap_profile_exactly_reuses_fixed_initializer_and_budget(self):
+        center=[.5]*11; domain=search.adapter.SEARCH_DOMAIN
+        fixed=search.initial_population(center,domain,random.Random(20260906),'parallel32_fixed')
+        overlap=search.initial_population(center,domain,random.Random(20260906),'parallel32_overlap')
+        self.assertEqual(overlap,fixed)
+        self.assertEqual(search.RUN_PROFILES['parallel32_overlap']['final_reserve_seconds'],max(3600,4200)+1200)
+
+    def test_overlapped_finalizer_is_reused_after_batch_poll(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); driver=root/'finalizer.py'
+            driver.write_text('import time\ntime.sleep(.15)\n')
+            obj=object.__new__(search.Search); obj.root=root/'run'; obj.root.mkdir()
+            obj.c={'run_profile':'parallel32_overlap','finalizer_driver':str(driver),
+                   'finalizer_sha256':search.digest(driver),'output_root':str(root/'output'),
+                   'contract_path':'contract.json'}
+            obj.finish=time.time()+120; obj.lock=__import__('threading').Lock(); obj.active={}
+            obj.finalizer_proc=None; obj.finalizer_out=None
+            obj.start_overlapped_finalizer({'summary':'selected.json'})
+            pid=obj.finalizer_proc.pid
+            obj.poll_overlapped_finalizer()  # The short policy process may still be running.
+            time.sleep(.25); obj.poll_overlapped_finalizer()
+            with mock.patch.object(obj,'finish_finalizer') as finish:
+                obj.await_overlapped_finalizer()
+            finish.assert_called_once()
+            self.assertEqual(finish.call_args.args[0].pid,pid)
+            self.assertNotIn(pid,obj.active)
+
+    def test_overlapped_finalizer_crash_is_fatal_during_history_poll(self):
+        obj=object.__new__(search.Search); obj.finalizer_proc=mock.Mock(); obj.finalizer_proc.poll.return_value=1
+        with mock.patch.object(obj,'stop_active') as stop:
+            with self.assertRaisesRegex(RuntimeError,'failed during final history verification'):
+                obj.poll_overlapped_finalizer()
+        stop.assert_called_once()
+
+    def test_stop_active_kills_real_orphan_group_without_waiting_for_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); marker=root/'orphan-survived'; ready=root/'child-started'
+            child=root/'child.py'; child.write_text(
+                'import pathlib,sys,time,signal\nsignal.signal(signal.SIGTERM,signal.SIG_IGN)\npathlib.Path(sys.argv[2]).write_text("started")\ntime.sleep(.7)\npathlib.Path(sys.argv[1]).write_text("survived")\n')
+            parent=root/'parent.py'; parent.write_text(
+                'import subprocess,sys\nsubprocess.Popen([sys.executable,sys.argv[1],sys.argv[2],sys.argv[3]])\n')
+            proc=subprocess.Popen([sys.executable,str(parent),str(child),str(marker),str(ready)],start_new_session=True)
+            for _ in range(50):
+                if ready.exists(): break
+                time.sleep(.01)
+            self.assertTrue(ready.exists())
+            proc.wait(timeout=1)  # Its child is now an orphan in the same process group.
+            obj=object.__new__(search.Search); obj.stop_event=__import__('threading').Event()
+            obj.c={'run_profile':'parallel32_overlap'}; obj.lock=__import__('threading').Lock(); obj.active={proc.pid:proc}
+            obj.stop_active(); time.sleep(.9)
+            self.assertFalse(marker.exists())
+
     def test_fixed_final_records_better_probe_without_selecting_it(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);plan=out/'plan.json';obj=object.__new__(search.Search)
@@ -28,16 +82,41 @@ class ControllerTests(unittest.TestCase):
                 obj._record_completed(plan,'sha',{'id':1,'label':'initial_1'},out)
                 self.assertEqual(obj.best['loss'],5.)
 
+    def test_bad_exact_repeat_blocks_final_success_without_reselecting(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); obj=object.__new__(search.Search); obj.root=root
+            obj.c={**search.RUN_PROFILES['parallel32_overlap'],'run_profile':'parallel32_overlap'}
+            obj.completed=32; anchor={'loss':10.,'unit_vector':[.5]*11,'summary':str(root/'anchor/summary.json')}
+            obj.best=copy.deepcopy(anchor)
+            graphs=root/'anchor'/'standard_diagnostics'; graphs.mkdir(parents=True)
+            for i in range(17):(graphs/f'{i}.png').write_bytes(bytes([i]))
+            def batch(stage,vectors,labels,**kwargs):
+                rows=[{'label':'jacobian_0_minus','loss':1.,'summary':str(root/'probe/summary.json')}]
+                rows += [{'label':f'selected_repeat_{i}','loss':10.,'summary':str(root/f'repeat{i}/summary.json')}
+                         for i in (1,2)]
+                return rows
+            with mock.patch.object(obj,'can_fit',return_value=True),mock.patch.object(obj,'start_overlapped_finalizer') as start, \
+                    mock.patch.object(obj,'batch',side_effect=batch),mock.patch.object(obj,'write_jacobian'), \
+                    mock.patch.object(search.adapter,'compare_reference',side_effect=RuntimeError('bad repeat')), \
+                    mock.patch.object(obj,'run_finalizer_if_pinned') as finalizer,mock.patch.object(obj,'summary'):
+                with self.assertRaisesRegex(RuntimeError,'bad repeat'):obj.final_assessment()
+            start.assert_called_once_with(anchor); finalizer.assert_not_called()
+            self.assertEqual(obj.best,anchor)
+            self.assertFalse((root/'final_verification.json').exists())
+
     def test_combined_final_wave_requires_exact_repeats_and_discloses_better_probes(self):
-        for missing_repeat in (False,True):
+        for profile,missing_repeat in (('parallel32_fixed',False),('parallel32_fixed',True),('parallel32_overlap',False),('parallel32_overlap',True)):
             with tempfile.TemporaryDirectory() as tmp:
                 root=Path(tmp);obj=object.__new__(search.Search);obj.root=root
-                obj.c={**search.RUN_PROFILES['parallel32_fixed'],'run_profile':'parallel32_fixed'}
+                obj.c={**search.RUN_PROFILES[profile],'run_profile':profile}
                 obj.completed=32;obj.best={'loss':10.,'unit_vector':[.5]*11,'summary':str(root/'anchor/summary.json')}
                 for name in ('anchor','repeat1','repeat2'):
                     graphs=root/name/'standard_diagnostics';graphs.mkdir(parents=True)
                     for i in range(17):(graphs/f'{i}.png').write_bytes(bytes([i]))
+                order=[]
                 def batch(stage,vectors,labels,**kwargs):
+                    if profile=='parallel32_overlap': self.assertEqual(order,['start'])
+                    order.append('batch')
                     self.assertEqual(stage,'final_joint_verification');self.assertEqual(len(vectors),24)
                     self.assertEqual(vectors[-2:],[[.5]*11]*2)
                     rows=[{'label':'jacobian_0_minus','loss':9.,'summary':str(root/'probe/summary.json')}]
@@ -46,13 +125,15 @@ class ControllerTests(unittest.TestCase):
                     return rows
                 with mock.patch.object(obj,'can_fit',return_value=True),mock.patch.object(obj,'batch',side_effect=batch) as run, \
                         mock.patch.object(obj,'write_jacobian'),mock.patch.object(search.adapter,'compare_reference') as compare, \
-                        mock.patch.object(obj,'reports'),mock.patch.object(obj,'run_finalizer_if_pinned') as finalizer, \
+                        mock.patch.object(obj,'reports'),mock.patch.object(obj,'run_finalizer_if_pinned',side_effect=lambda:order.append('await')) as finalizer, \
+                        mock.patch.object(obj,'start_overlapped_finalizer',side_effect=lambda anchor:order.append('start')), \
                         mock.patch.object(obj,'summary'):
                     if missing_repeat:
                         with self.assertRaisesRegex(RuntimeError,'Two final repetitions'):obj.final_assessment()
                         finalizer.assert_not_called();self.assertFalse((root/'final_verification.json').exists())
                     else:
                         obj.final_assessment();self.assertEqual(compare.call_count,2);finalizer.assert_called_once()
+                        self.assertEqual(order,(['start'] if profile=='parallel32_overlap' else [])+['batch','await'])
                         proof=search.adapter.read_json(root/'final_verification.json')
                         self.assertEqual(proof['selected']['loss'],10.);self.assertEqual(proof['exact_repeats'],2)
                         diag=search.adapter.read_json(root/'fixed_selection_diagnostics.json')

@@ -45,6 +45,10 @@ RUN_PROFILES = {
                          "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
                          "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
                          "final_reserve_seconds": 9000},
+    "parallel32_overlap": {"max_workers": 32, "case_timeout_seconds": 3600, "max_histories": 640,
+                           "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
+                           "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
+                           "final_reserve_seconds": 5400},
 }
 
 
@@ -183,7 +187,7 @@ def initial_population(center, domain, rng, profile="v1"):
     # Convert diagnostic physical scales by a small monotone grid search.
     inverse = lambda value, s: math.log(value/s["lower"])/math.log(s["upper"]/s["lower"])
     result = [list(center)]
-    if profile == 'parallel32_fixed':
+    if profile in ('parallel32_fixed', 'parallel32_overlap'):
         # Cover small tenure scales as well as the nearly random-tenure
         # incumbent. Scale the initial historical taste shift with the inner
         # fertility scale, so small-scale starts do not all imply zero births.
@@ -280,7 +284,16 @@ def verify_contract(path, expected_sha):
     for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain"):
         if c.get(key) != base.get(key): raise RuntimeError(f"Mixed {key}")
     if c["target_fingerprint"] != adapter.TARGET or c["source_sha256"] != adapter.SOURCE: raise RuntimeError("Adapter/source target mismatch")
-    if profile in ("parallel32", "parallel32_fixed"): verify_parallel_policy_budget(c)
+    if profile in ("parallel32", "parallel32_fixed", "parallel32_overlap"): verify_parallel_policy_budget(c)
+    if profile == "parallel32_overlap":
+        timing = c.get("parallel_policy_timing", {})
+        if (timing.get("projected_full_policy_seconds", math.inf) > 4200
+                or timing.get("reserved_history_waves_seconds") != 3600
+                or timing.get("buffer_seconds") != 1200
+                or not timing.get("policy_history_overlap")
+                or not timing.get("frozen_selection_before_overlap")
+                or c.get("final_selection_rule") != "freeze best search candidate before concurrent Jacobian and exact repeats; final probes diagnostic only"):
+            raise RuntimeError("Overlap profile contract does not pin its frozen policy/history budget")
     c["run_profile"] = profile
     c["contract_path"] = str(Path(path).resolve())
     return c
@@ -301,6 +314,7 @@ class Search:
         self.stop_event = threading.Event(); self.lock = threading.Lock()
         self.completed = 0; self.consecutive_timeouts = 0; self.active = {}; self.phase = "initializing"
         self.search_stop_reason = None
+        self.finalizer_proc = None; self.finalizer_out = None
         self.state("running")
 
     def state(self, status, **more):
@@ -373,7 +387,12 @@ class Search:
         with self.lock:
             active = list(self.active.values())
         for proc in active:
-            if proc.poll() is None:
+            if self.c.get('run_profile') == 'parallel32_overlap':
+                # Kill the group even if its parent has exited: a spawned worker
+                # can otherwise survive after the controller loses its parent.
+                try: os.killpg(proc.pid, signal.SIGTERM)
+                except ProcessLookupError: pass
+            elif proc.poll() is None:
                 try: os.killpg(proc.pid, signal.SIGTERM)
                 except ProcessLookupError: pass
         for proc in active:
@@ -382,6 +401,12 @@ class Search:
                 try: os.killpg(proc.pid, signal.SIGKILL)
                 except ProcessLookupError: pass
                 proc.wait(timeout=10)
+            if self.c.get('run_profile') == 'parallel32_overlap':
+                # A reaped parent does not prove its descendants have exited.
+                # Every owned group has already received TERM; force cleanup
+                # even when an orphan ignores it. No other groups are touched.
+                try: os.killpg(proc.pid, signal.SIGKILL)
+                except ProcessLookupError: pass
 
     def _record_completed(self, plan, sha, case, out):
         receipt = adapter.read_json(out / "case_receipt.json")
@@ -398,7 +423,7 @@ class Search:
                "summary": str((out/"summary.json").resolve()), "plan": str(plan.resolve()), "plan_sha256": sha,
                "unit_vector": summary["panel_design"]["unit_vector"], "elapsed_seconds": receipt["elapsed_seconds"]}
         self.ledger.append(row); self.completed += 1; self.consecutive_timeouts = 0
-        diagnostic_only = (self.c.get('run_profile') == 'parallel32_fixed'
+        diagnostic_only = (self.c.get('run_profile') in ('parallel32_fixed', 'parallel32_overlap')
                            and case['label'].startswith('jacobian_'))
         if not diagnostic_only and (self.best is None or loss < self.best["loss"]): self.best = row
 
@@ -456,6 +481,7 @@ class Search:
             for _ in range(min(len(vectors), self.c["max_workers"])): submit()
             while futures:
                 done, _ = wait(futures, timeout=60, return_when=FIRST_COMPLETED)
+                self.poll_overlapped_finalizer()
                 if not done:
                     self.reports(); self.state("running")
                     if time.time() >= self.finish: raise RuntimeError("Absolute finish deadline reached")
@@ -469,6 +495,7 @@ class Search:
                         if typ is None: raise RuntimeError(f"Fatal candidate failure: {detail}")
                         self._reject(case, out, typ, detail)
                         if smoke: raise RuntimeError(f"Required verification case rejected: {typ}: {detail}")
+                self.poll_overlapped_finalizer()
                 self.reports(); self.state("running")
                 for _ in done: submit()
             unstarted = [{"plan": str(plan), "plan_sha256": sha, **case} for plan, sha, case in cases]
@@ -647,12 +674,18 @@ class Search:
             for sign, name in ((-1, "minus"), (1, "plus")):
                 u = list(base); u[j] = min(1., max(0., u[j] + sign * .00125))
                 vectors.append(u); labels.append(f"jacobian_{j}_{name}")
-        fixed = self.c.get('run_profile') == 'parallel32_fixed'
+        fixed = self.c.get('run_profile') in ('parallel32_fixed', 'parallel32_overlap')
+        overlap = self.c.get('run_profile') == 'parallel32_overlap'
         repeats = None
         if fixed:
             if not self.can_fit(FINAL_VERIFICATION_HISTORIES, final=True):
                 raise RuntimeError('Budget cannot fit the contracted combined final verification')
             self.repeat_origin = anchor
+            if overlap:
+                # The selected completed history is already receipt-certified.
+                # Its policy result remains experimental until the two exact
+                # repetitions below verify the frozen selection.
+                self.start_overlapped_finalizer(anchor)
             rows = self.batch('final_joint_verification', vectors+[base,base],
                               labels+['selected_repeat_1','selected_repeat_2'])
             probes = [r for r in rows if r['label'].startswith('jacobian_')]
@@ -664,6 +697,7 @@ class Search:
                 'selected':anchor, 'selection_rule':'lowest completed search loss; frozen before final diagnostics',
                 'unselected_lower_loss_probes':[r for r in probes if r['loss'] < anchor['loss']],
                 'reason':'diagnostic probes share the exact-repeat wave and are not independently repeated',
+                'policy_history_overlap': overlap,
                 'production_promoted':False})
         elif self.completed + FINAL_VERIFICATION_HISTORIES <= self.c["max_histories"] and self.can_fit(2*N, final=True):
             rows = self.batch("final_jacobian", vectors, labels)
@@ -723,7 +757,7 @@ class Search:
         write_csv(self.root/"jacobian_weighted_moments.csv", [{"moment": m, **{names[j]: float(matrix[i,j]) for j in range(N)}} for i,m in enumerate(moments)])
         meta = {"status": "complete" if np.isfinite(matrix).all() else "incomplete", "anchor": anchor,
                 "methods": dict(zip(names, methods)), "unit_widths": dict(zip(names, widths)),
-                "selected_may_include_better_jacobian_probe": self.c.get('run_profile') != 'parallel32_fixed',
+                "selected_may_include_better_jacobian_probe": self.c.get('run_profile') not in ('parallel32_fixed', 'parallel32_overlap'),
                 "derivative_units": "sqrt(weight) times model moment per transformed unit coordinate"}
         if np.isfinite(matrix).all():
             singular = np.linalg.svd(matrix, compute_uv=False)
@@ -742,9 +776,69 @@ class Search:
             fig.colorbar(im, ax=ax); fig.savefig(self.root/"jacobian_supplemental.png", dpi=180); plt.close(fig)
         write_json(self.root/"jacobian_diagnostics.json", meta)
 
+    def start_overlapped_finalizer(self, selected):
+        if self.c.get('run_profile') != 'parallel32_overlap':
+            return
+        if self.finalizer_proc is not None:
+            raise RuntimeError('Pinned finalizer was already started')
+        driver = self.c.get('finalizer_driver')
+        if not driver:
+            raise RuntimeError('Overlap profile requires a pinned finalizer')
+        adapter.verify(driver, self.c['finalizer_sha256'])
+        if self.finish - time.time() <= 60:
+            raise RuntimeError('Budget cannot start the overlapped pinned finalizer')
+        self.phase = 'final_assessment_overlap'
+        self.finalizer_out = Path(self.c['output_root'])/'equilibrium_path'
+        log = (self.root/'finalizer.log').open('w')
+        try:
+            proc = subprocess.Popen([sys.executable, driver, '--selected-summary', selected['summary'],
+                '--outdir', str(self.finalizer_out), '--contract', self.c['contract_path']],
+                stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        finally:
+            log.close()
+        self.finalizer_proc = proc
+        with self.lock:
+            self.active[proc.pid] = proc
+
+    def poll_overlapped_finalizer(self):
+        proc = getattr(self, 'finalizer_proc', None)
+        if proc is not None and proc.poll() not in (None, 0):
+            self.stop_active()
+            raise RuntimeError('Pinned overlapped finalizer failed during final history verification')
+
+    def finish_finalizer(self, proc, out):
+        receipt_path = out/'equilibrium_receipt.json'
+        receipt = adapter.read_json(receipt_path) if receipt_path.exists() else {}
+        write_json(self.root/'finalizer_status.json', {'status': receipt.get('status', 'failed'),
+            'returncode': proc.returncode, 'receipt': str(receipt_path),
+            'receipt_sha256': digest(receipt_path) if receipt_path.exists() else None})
+        if proc.returncode:
+            raise RuntimeError('Pinned finalizer failed')
+        validate_policy_receipt(receipt, self.c, smoke=False,
+            selected_hashes={digest(self.best['summary'])})
+
+    def await_overlapped_finalizer(self):
+        proc = self.finalizer_proc
+        if proc is None:
+            raise RuntimeError('Overlapped pinned finalizer was not started')
+        try:
+            while proc.poll() is None:
+                self.state('running')
+                if time.time() > self.finish - 30:
+                    raise RuntimeError('Finalizer exhausted remaining time')
+                try: proc.wait(timeout=min(60, max(1, self.finish-time.time()-30)))
+                except subprocess.TimeoutExpired: pass
+            self.finish_finalizer(proc, self.finalizer_out)
+        except BaseException:
+            self.stop_active(); raise
+        finally:
+            with self.lock: self.active.pop(proc.pid, None)
+
     def run_finalizer_if_pinned(self):
         driver = self.c.get("finalizer_driver")
         if not driver: return
+        if self.c.get('run_profile') == 'parallel32_overlap':
+            self.await_overlapped_finalizer(); return
         adapter.verify(driver, self.c["finalizer_sha256"])
         remaining = self.finish - time.time()
         if remaining <= 60:
@@ -766,14 +860,7 @@ class Search:
                 self.stop_active(); raise
             finally:
                 with self.lock: self.active.pop(proc.pid, None)
-        receipt_path = out/"equilibrium_receipt.json"
-        receipt = adapter.read_json(receipt_path) if receipt_path.exists() else {}
-        write_json(self.root/"finalizer_status.json", {"status": receipt.get("status", "failed"),
-            "returncode": proc.returncode, "receipt": str(receipt_path),
-            "receipt_sha256": digest(receipt_path) if receipt_path.exists() else None})
-        if proc.returncode: raise RuntimeError("Pinned finalizer failed")
-        validate_policy_receipt(receipt, self.c, smoke=False,
-            selected_hashes={digest(self.best["summary"])})
+        self.finish_finalizer(proc, out)
 
     def summary(self,status):
         self.reports(); lines=["# Morning summary","",f"Status: {status}. No estimate is promoted.",""]
