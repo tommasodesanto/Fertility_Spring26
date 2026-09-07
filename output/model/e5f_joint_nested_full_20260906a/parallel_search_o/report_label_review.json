@@ -1,0 +1,13 @@
+{
+  "status": "model_side_label_clarified",
+  "old_label": "New-parent/nonparent ownership gap, ages30-55",
+  "new_label": "Parent/nonparent ownership gap, ages30-55",
+  "definition": "Active independent-child-maturation model includes n>=1 and current child count>=1 in the parent group; nonparents have n=0. The legacy own_gap_newparent_nonparent_3055 name does not define a recent-birth window in this architecture.",
+  "code_evidence": [
+    "intergen_eqscale_seq_optimized/solver.py:6301",
+    "intergen_eqscale_seq_optimized/solver.py:6494",
+    "intergen_eqscale_seq_optimized/calibration.py:1329"
+  ],
+  "caution": "The generic all-age stats.own_family_gap is not the active calibrated quantity. The calibration adapter overrides it with the ages30-55 child-at-home comparison. No empirical target, weight, estimator or sample was changed. Existing empirical metadata still calls the group new-parent; reconcile precise empirical grouping before any production adoption.",
+  "numerical_change": false
+}

@@ -1042,3 +1042,49 @@ also vary across these starts, so this is not a controlled scale experiment,
 an optimized frontier or proof of an unreachable target. It identifies a
 restriction to discuss and test, not a reason to drop targets or to reject
 simultaneous choice itself. The nesting, model and production code are unchanged.
+
+
+**September 7, 11:57 UTC: initial wave closed; final histories and full policy paths running.**
+The32-case initial wave ended with27 valid histories, three market-nonconvergence
+rejections (cases23,24,27) and two one-hour timeouts (cases5,10). Four imported
+smoke histories remain separately identified. The controller's completed count
+of36 includes these five rejections; it is not36 valid solutions. No initial
+candidate improved loss450.7052931460765. No DE or polishing stage ran.
+
+The frozen selected history is the original best m probe. Two exact repetitions
+and22 local sensitivity histories began around11:33:33 UTC, concurrently with
+four full policy branches. Job17106283 remains healthy. At11:55,24 of44 policy
+dates had budget packets, all with zero violations; the full receipt and final
+history certification are still pending. The13:35 UTC cutoff and all numerical
+gates remain unchanged. Complete case fits and all parameter/bound tables stay
+in the previously linked `parallel_search_o/.../search/` folder.
+
+A bounded worker_fast read-only diagnosis of the three market rejections is
+complete and was checked by the lead against the cited solver and retry lines.
+Cases23/24 failed at t=1 after t=0; case27 at t=3 after t=2. All found a signed
+price bracket, then exhausted the60-bisection fallback above the2e-4 gate.
+Final residuals were.004361,.001286 and.002696. A failed bracket, nonfinite
+solution, market nonexistence or coding defect is not established by these
+records. No per-iteration price/signed-demand trace was saved, so the remaining
+mechanism cannot be certified. At ordinary price magnitudes,60 bisections
+already approach floating-point resolution; simply adding iterations is not
+a supported remedy. Future diagnosis should record that compact signed-demand
+trace. No additional model run or source change was made for this review.
+See `parallel_search_o/market_rejections_review.md` and its saved prompt.
+
+The PDF builder received a small model-side label clarification, committed and
+pushed as07d78ebf on the experimental branch. It now says parent/nonparent,
+with a note that active model parents have at least one child at home and
+nonparents have no previous birth. The legacy new-parent variable name is
+retained in the model; the calibration adapter uses its ages30–55 comparison,
+not the separate all-age generic own_family_gap statistic. The source lines
+were checked before editing; no target, weight, empirical sample or model
+calculation changed. Existing empirical metadata wording remains a source to
+reconcile before adoption, not evidence here of a newly established target
+mismatch. Six report validation tests passed. Running snapshot o still uses
+its immutable numerical source62c0355f and cb18 scientific bundle.
+
+A15-page draft PDF exists at `output/pdf/joint_nested_morning_preview_20260907_v2.pdf`;
+its first two pages were visually inspected. It is explicitly preliminary and
+has not been delivered. Final production must supply only certified repetitions
+and completed policies, update the narrative, and inspect every rendered page.
