@@ -1,5 +1,104 @@
 # Full simultaneous-choice experiment
 
+**September 7, 07:05 UTC: parallel search preparation is complete; full scientific checks still running.**
+The independent review of final policy multiprocessing found no blocker in
+source09beb3b3. Local and Torch real-spawn tests passed; the review itself was
+static. The full smoke17095586 and original-case replay17095539 remain running.
+
+Prepared sourcef8b0f6bd is committed/pushed on the experimental branch. The NEW
+snapshot `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907i`
+contains the same88d4 scientific bundle and a `parallel32` operational profile:
+32workers,32population, unchanged v1 initial proposals and all11free coordinates,
+640attempt ceiling,8generation maximum,2polish rounds and original1hcase caps.
+The profile requires a measured complete four-process policy smoke whose
+44-date forecast fits70minutes. Only then does its3.5hfinal reserve apply:
+1hJacobian +1hexact repetitions +at most70minutes policies +20minutes buffer.
+The hard13:35UTCcutoff is unchanged. No i contract or large restart exists.
+
+Run `python3 verify_and_prepare.py` in snapshoti only after h smoke and original
+case replay finish. The helper verifies original-state causality, the completed
+replay or unchanged controlled support rejection, all four full histories,
+exact preceding-source tables/history/68historical graphs, all136policy graphs,
+170policyartifact hashes including8datedpickles, and actual `Search.require_smoke`
+preflight before declaring readiness. The source-only mode verifies70source
+files and18controller tests without creating a scientific contract. This is
+preparation, not completed calibration. Recipe and manifest:
+`output/model/e5f_joint_nested_full_20260906a/parallel_search_i/`.
+
+
+**September 7, 06:55 UTC: tiny-cohort repair verified on the exact failed state; fresh full verification running.**
+Instrumentation job `17094768` completed in 27 minutes and reproduced the
+original failure exactly. Absolute pruning of positive masses below 1e-15
+caused the loss. Keeping those positive fragments reduced the relative error
+from 1.745e-5 to 8.146e-16, passing the unchanged 5e-9 gate. The original
+exception, seven age-cohort comparisons and failed state remain preserved.
+
+Experimental source `09beb3b3` is committed and pushed. It preserves every
+already-passing transport exactly. Only a failed joint matched-branch transport
+can be recomputed without positive-mass pruning, after which the same original
+mass gate must pass. Negative, nonfinite and wrong-shaped results still fail.
+No target, weight, bound, model equation or numerical tolerance was changed.
+Nine focused small-mass tests, twenty accounting tests, seven choice-operator
+tests, four integration tests and sixteen controller tests pass. Five policy
+concurrency tests also pass, including actual separate spawned processes.
+
+Replay `17095539` is running on one CPU/32GB with a one-hour process cap.
+Its first stage already verified the implemented repair on the exact saved
+state: treated relative error 8.146e-16 and control error 4.655e-16. It is now
+rerunning original case18 through the full normalized history. Full smoke
+`17095586` runs on four CPUs/96GB with a 100-minute ceiling. It requires the
+same two exact anchors, two all-eleven-coordinate probes and four two-date
+policy paths. The unchanged default-off model has already reproduced all ten
+reference arrays exactly. The four histories share one concurrent batch;
+policy paths use four isolated processes with model setup performed in each.
+An independent bounded review of the final process orchestration is ongoing.
+
+The new immutable snapshot is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907h`.
+Its 70 pinned source/helper/test files match; missing import dependencies were
+copied unchanged from snapshot g before any scientific job. Scientific bundle
+is `88d4abfcb50f32cd30edffd05245ec0627a8f5dfc7892943fd795a6ee23a39ef`;
+smoke contract SHA is
+`117169ecdc8deaca8aa29433a10464e0b32384c4b10dfde0734464914ce021f5`.
+Evidence, source manifest, replay driver and original-state proof are indexed
+under `output/model/e5f_joint_nested_full_20260906a/branch_mass_repair_h/`.
+Original diagnosis is in the adjacent `branch_mass_diagnosis/replay/`.
+
+The full fresh smoke and full case18 replay remain incomplete. No new searched
+calibration is yet available; the four prior completed receipts are imported
+smoke cases. The 13:35 UTC hard cutoff is retained. The next search design must
+use measured parallel-policy time to reserve final checks and simulations,
+or use a smaller population that fits; no revised search reserve or large
+restart has yet been adopted. Production and the protected manuscript are
+unchanged. The earlier delivered PDF remains stale pending the morning readout.
+
+
+**September 7, 06:20 UTC: broad search stopped on a tiny-cohort mass failure.**
+Job `17093420` failed after 33m14s, before any new candidate received its complete verification receipt;
+its four completed receipts are imported smoke cases. Original case18 passed
+old-fertility normalization at 2.10019528 and completed 2007/2011, then failed
+while advancing the 2015-origin first-birth treated cohort. Actual surviving
+mass was 3.5540670288250579e-9 versus 3.5541290338151895e-9, a relative gap of
+1.745e-5 against the unchanged 5e-9 gate. All other processes stopped.
+
+The lead found absolute 1e-15 pruning in the transition kernel and a closed-form
+small-cohort fixture demonstrating loss of a positive tenure branch. This is
+a plausible explanation, not yet a reproduction of the exact failed state.
+A bounded independent historical review dates pruning to the earlier Markov
+implementation and confirms the September2 gate was deliberately fail-closed.
+No gate is being relaxed or failure reclassified.
+
+Instrumentation-only replay `17094768` is submitted on one CPU/32GB, with a
+one-hour process cap, from the unchanged snapshot g. Its separate output root
+is `/scratch/td2248/projects/Fertility_Spring26_joint_nested_mass_diagnosis_20260907`.
+Original plan/center/source checks and the instrumentation preflight pass. It
+will retain the original exception, compare the same transition with positive
+mass retained and with unit-scaled input, and save the failed branch state.
+Latest original runtime was 1,958.57 seconds; only one full case is planned.
+Evidence and driver: `output/model/e5f_joint_nested_full_20260906a/branch_mass_diagnosis/`.
+The large search, final repetitions and full policies remain incomplete.
+
+
 **September 7, 05:52 UTC: broad calibration running on all 32 workers.**
 Torch job `17093420` started at **05:36:38 UTC** on `cs749`, using 32 CPUs
 and 384GB with a 12-hour Slurm ceiling. At the latest check all 32 worker

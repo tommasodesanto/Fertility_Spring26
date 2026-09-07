@@ -1,0 +1,75 @@
+TRANSITION_CALIBRATION_OLD_STEADY_STATE
+OLD_SS_NORMALIZATION_EVAL psi=0.10620000 tfr=0.00000000 seconds=172.13
+OLD_SS_NORMALIZATION_EVAL psi=0.35620000 tfr=0.59025865 seconds=154.66
+OLD_SS_NORMALIZATION_EVAL psi=0.60620000 tfr=3.11386468 seconds=154.24
+OLD_SS_NORMALIZATION_EVAL psi=0.44340155 tfr=2.62867195 seconds=175.40
+OLD_SS_NORMALIZATION_EVAL psi=0.37558442 tfr=0.79835846 seconds=174.76
+OLD_SS_NORMALIZATION_EVAL psi=0.42381309 tfr=2.24141185 seconds=175.53
+OLD_SS_NORMALIZATION_EVAL psi=0.41908693 tfr=2.10976533 seconds=174.94
+OLD_SS_NORMALIZATION_EVAL psi=0.41691180 tfr=2.04462171 seconds=178.02
+OLD_SS_NORMALIZATION_EVAL psi=0.41876087 tfr=2.10019528 seconds=178.21
+STATIONARY_AGE_SURVIVAL_DIAGNOSTIC max_implied=1 max_gap=1.728e-13
+TRANSITION_CALIBRATION_CASE 1/1 new_psi=0.050161
+task_001 t=00 p=0.702930 pop=1.000000 births=0.126047 queue_B=0.061739 market=0.00e+00
+task_001 t=01 p=0.726654 pop=1.029609 births=0.094115 queue_B=0.061739 market=1.72e-05
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_joint_overnight_case.py", line 363, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_joint_overnight_case.py", line 359, in main
+    run_case(parser.parse_args())
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_joint_overnight_case.py", line 291, in run_case
+    calibration.main()
+    ~~~~~~~~~~~~~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_transition_calibration.py", line 2220, in main
+    paths, ages, children, scenario_summary = transition.run_birth_vintage_scenario(
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        label=label,
+        ^^^^^^^^^^^^
+    ...<24 lines>...
+        period_observer=observer,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_joint_overnight_case.py", line 270, in observed_scenario
+    return original(**kwargs)
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_open_population_transition.py", line 1402, in run_birth_vintage_scenario
+    period_observer(period, evaluation, P, b_grid, shared)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_joint_overnight_case.py", line 264, in observer
+    original_observer(period, evaluation, parameters, grid, shared)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_transition_calibration.py", line 2201, in observer
+    begin_dated_first_birth_housing_branch(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        evaluation,
+        ^^^^^^^^^^^
+    ...<3 lines>...
+        origin_period=int(period),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_transition_calibration.py", line 1127, in begin_dated_first_birth_housing_branch
+    treated_next, treated_deaths, treated_advance_gate = advance(
+                                                         ~~~~~~~^
+        treated, "treated", treated_policy
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_transition_calibration.py", line 1120, in advance
+    next_pre, mass_gate = normalize_distribution_mass_roundoff(
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        next_pre,
+        ^^^^^^^^^
+        expected_mass=expected_survivor_mass,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        stage=f"{label}_branch_advancement",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/code/model/tools/run_e5f_transition_calibration.py", line 598, in normalize_distribution_mass_roundoff
+    raise RuntimeError(
+    ...<3 lines>...
+    )
+RuntimeError: treated_branch_advancement mass gate failed: actual=3.5540670288250579e-09, expected=3.5541290338151895e-09, relative_gap=1.745e-05, tolerance=5.000e-09
