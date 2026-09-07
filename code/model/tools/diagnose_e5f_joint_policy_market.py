@@ -61,6 +61,53 @@ def evaluate(price):
                 elapsed_seconds=time.time()-start)
 
 
+def endpoint_replay(args):
+    trace = adapter.read_json(args.endpoint_trace)
+    assert trace["status"] == "bounded_trace_complete"
+    assert trace["checkpoint_sha256"] == args.checkpoint_sha256
+    initialize(args.checkpoint, args.progress, args.checkpoint_sha256)
+    p = STATE["packet"]; P = p["parameters"]; results = []; evaluations = []
+    for label, row in zip(("lower", "upper"), trace["bracket"]):
+        folder = args.outdir / label; folder.mkdir(parents=True, exist_ok=True)
+        e = finalizer.policy.calendar.evaluate_period(
+            np.array([row["price"]]), STATE["g"], P, p["b_grid"], p["shared"],
+            finalizer.policy.calendar.SolveCounter(), supply_rule=p["supply_rule"])
+        assert e.relative_market_residual == row["relative_residual"]
+        packet = dict(p, evaluation=e)
+        with gzip.open(folder/"dated_state.pkl.gz", "wb", compresslevel=1) as stream:
+            pickle.dump(packet, stream, protocol=5)
+        finalizer.audit.standard_diagnostics(packet, folder, validate_production_young=False)
+        budget = finalizer.audit.budget_audit(packet, folder)
+        arrays = finalizer.audit.policy_array_audit(packet, folder)
+        assert budget["budget_excess_mass"] <= 2e-10 and arrays["occupied_negative_steps"] == 0
+        component = [float(np.sum(e.g_current[:,0] * e.policy.hR_pol[:,0]))]
+        component += [float(np.sum(e.g_current[:,k+1]))*float(h) for k,h in enumerate(P.H_own)]
+        assert abs(sum(component)-float(e.demand_by_loc.sum())) < 2e-10
+        results.append(dict(label=label, price=row["price"], housing_by_product=component,
+            budget_excess_mass=budget["budget_excess_mass"], occupied_value_drops=arrays["occupied_negative_steps"],
+            checkpoint_sha256=adapter.digest(folder/"dated_state.pkl.gz")))
+        evaluations.append(e)
+    low, high = evaluations
+    diff = np.max(np.abs(high.policy.joint_choice.probabilities-low.policy.joint_choice.probabilities),axis=(-2,-1))*STATE["g"]
+    largest = []
+    for flat in np.argsort(diff.ravel())[-12:][::-1]:
+        index = np.unravel_index(int(flat), diff.shape)
+        largest.append(dict(index=[int(x) for x in index], wealth=float(p["b_grid"][index[0]]),
+            age=float(P.age_start+index[3]*P.da), inherited_mass=float(STATE["g"][index]),
+            weighted_maximum_plan_probability_change=float(diff[index]),
+            lower_probabilities=low.policy.joint_choice.probabilities[index].tolist(),
+            upper_probabilities=high.policy.joint_choice.probabilities[index].tolist(),
+            lower_products=low.policy.joint_choice.products[index].tolist(),
+            upper_products=high.policy.joint_choice.products[index].tolist()))
+    result=dict(status="exact_endpoint_replay", checkpoint_sha256=args.checkpoint_sha256,
+        progress_sha256=adapter.digest(args.progress), trace_sha256=adapter.digest(args.endpoint_trace),
+        fixed_population_mass=float(STATE["g"].sum()), owner_products=np.asarray(P.H_own).tolist(),
+        phi=float(P.phi), endpoints=results, largest_occupied_plan_changes=largest,
+        interpretation="These are non-clearing diagnostic endpoints, not equilibrium solutions.", production_promoted=False)
+    adapter.write_json(args.outdir/"endpoint_replay.json", result)
+    print(json.dumps(result), flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--checkpoint", type=Path, required=True)
@@ -70,10 +117,15 @@ def main():
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--max-rounds", type=int, default=10)
     ap.add_argument("--seconds", type=int, default=1500)
+    ap.add_argument("--endpoint-trace", type=Path, help="Replay a completed trace's two boundary prices without searching.")
     args = ap.parse_args()
     out = args.outdir; out.mkdir(parents=True, exist_ok=True)
     if (out / "trace.csv").exists():
         raise RuntimeError("Refusing to overwrite a diagnostic trace")
+    if args.endpoint_trace:
+        if (out/"endpoint_replay.json").exists():
+            raise RuntimeError("Refusing to overwrite an endpoint replay")
+        endpoint_replay(args); return
     assert 1 <= args.workers <= 8 and 1 <= args.max_rounds <= 10 and args.seconds <= 1500
     start = time.time(); rows = []
     def save(status, **extra):
