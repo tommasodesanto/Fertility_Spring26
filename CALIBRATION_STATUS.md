@@ -8,7 +8,10 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 The fixed-price comparison below does not answer whether the new model can fit.
 Torch access restored. Array17125770 now contains two identical retained-anchor
 full historical objective evaluations, each capped at six hours, one core/24GB.
-At submission both are pending priority. No completed two-shock fit exists yet.
+Both started around19:40 UTC and are RUNNING as of19:46 UTC. Cluster contract
+and operator tests passed in both cases, including fresh and cached processes;
+both are in old-steady-state normalization with updating heartbeats. No completed
+two-shock objective or target-fit table exists yet.
 After exact-loop/reproducibility checks, report the full objective and all twelve
 fit rows at the retained parameter vector. STOP there for discussion with Tommaso.
 Do not launch a search, recalibration or policies. The previous instruction to
