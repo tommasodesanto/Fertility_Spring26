@@ -1478,3 +1478,9 @@ and results retain their earlier hashes; no numerical model was rerun.
 The correction is recorded in the live discussion map, writing guide, and
 cross-session memory. Future economic amendments must preserve the author's
 existing conventions unless a specific necessary change is proposed separately.
+
+## September 7: appendix bound and Claude CLI test
+
+At the author's request, the main suggestion note now reports the verified reference-economy bound of 1/20000 for each shock, uniformly in the policy date, and distinguishes it from the open-set local theorem. Two LaTeX passes passed; final pages 12–13 were visually inspected. Equations and figures were unchanged.
+
+A tool-free Claude Code availability test requested model `fable-5.1`. It stopped before an API call with `Not logged in`; no review ran and the model identifier remains unverified. The user needs to authenticate Claude Code before retrying.
