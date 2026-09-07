@@ -76,7 +76,6 @@ class ControllerTests(unittest.TestCase):
         original=search.initial_population(center,domain,random.Random(20260906),'v1')
         parallel=search.initial_population(center,domain,random.Random(20260906),'parallel32')
         self.assertEqual(parallel,original)
-        self.assertEqual(search.initial_population(center,domain,random.Random(20260906),'parallel32_fixed'),original)
         self.assertEqual(search.RUN_PROFILES['parallel32_fixed']['final_reserve_seconds'],3600+4200+1200)
         self.assertEqual(len(parallel),32)
         self.assertTrue(all(any(u[j]!=center[j] for u in parallel) for j in range(11)))
@@ -85,6 +84,22 @@ class ControllerTests(unittest.TestCase):
         with mock.patch.object(search.time,'time',return_value=6400.):self.assertTrue(obj.can_fit(32))
         with mock.patch.object(search.time,'time',return_value=6400.1):self.assertFalse(obj.can_fit(32))
         self.assertEqual(obj.c['final_reserve_seconds'],7200+4200+1200)
+
+    def test_fixed_profile_covers_small_scales_with_a_bounded_preference_shift(self):
+        domain=search.adapter.SEARCH_DOMAIN;center=[.5]*11
+        names=[d['name'] for d in domain];ki=names.index('tenure_choice_kappa');pi=names.index('psi_child_change_2023')
+        center[ki]=math.log(2/.005)/math.log(10/.005)
+        center[names.index('joint_nest_lambda')]=1.
+        pop=search.initial_population(center,domain,random.Random(20260906),'parallel32_fixed')
+        self.assertEqual(pop,search.initial_population(center,domain,random.Random(20260906),'parallel32_fixed'))
+        self.assertEqual(len(pop),32);self.assertEqual(pop[0],center)
+        self.assertTrue(all(0<=v<=1 for u in pop for v in u))
+        scales={round(search.transform(u[ki],domain[ki]),6) for u in pop[1:]}
+        self.assertEqual(scales,{.01,.03,.1,.3,.5,1.,2.,4.})
+        self.assertTrue(all(any(u[j]!=center[j] for u in pop) for j in range(11)))
+        for u in pop[1:]:
+            if search.transform(u[ki],domain[ki]) <= .03:
+                self.assertLess(abs(search.transform(u[pi],domain[pi])),.1)
 
     def test_parallel_reserve_requires_matching_complete_measured_policy_smoke(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -183,6 +183,26 @@ def initial_population(center, domain, rng, profile="v1"):
     # Convert diagnostic physical scales by a small monotone grid search.
     inverse = lambda value, s: math.log(value/s["lower"])/math.log(s["upper"]/s["lower"])
     result = [list(center)]
+    if profile == 'parallel32_fixed':
+        # Cover small tenure scales as well as the nearly random-tenure
+        # incumbent. Scale the initial historical taste shift with the inner
+        # fertility scale, so small-scale starts do not all imply zero births.
+        # This is an initializer only: DE still varies all eleven coordinates.
+        psi = next(i for i,d in enumerate(domain) if d['name']=='psi_child_change_2023')
+        spec = domain[psi]
+        if spec['transform'] != 'asinh' or not spec['lower'] < 0 < spec['upper']:
+            raise ValueError('Expected the maintained signed preference-change domain')
+        anchor_inner = transform(center[kappa],domain[kappa])*transform(center[lam],domain[lam])
+        for scale in (.01,.03,.1,.3,.5,1.,2.,4.):
+            for dissimilarity in (.05,.2,.5,1.):
+                if (scale,dissimilarity)==(2.,1.): continue  # Replaced by the nearby verified seed.
+                u = bounded_perturbation(center,.08,rng)
+                u[kappa]=inverse(scale,domain[kappa]);u[lam]=inverse(dissimilarity,domain[lam])
+                delta=transform(u[psi],spec)*min(1.,scale*dissimilarity/anchor_inner)
+                u[psi]=(math.asinh(delta)-math.asinh(spec['lower']))/(math.asinh(spec['upper'])-math.asinh(spec['lower']))
+                result.append(u)
+        if len(result)!=32: raise RuntimeError('Expected exactly thirty-two starting proposals')
+        return result
     if profile == "wide32":
         kappa_grid = (.01, .03, .1, .3, 1., 2., 4., 8.)
         lambda_grid = (.02, .05, .2, .5, .8, 1.)
