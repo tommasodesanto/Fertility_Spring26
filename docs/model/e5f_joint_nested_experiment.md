@@ -341,3 +341,38 @@ Evidence: `output/model/e5f_joint_nested_full_20260906a/support_repair_e/`,
 `stationary_support_diagnosis/`, and `stationary_support_diff_review.md`.
 Job `17089711` remains FAILED, with no new complete calibration case. Production
 and the protected manuscript are unchanged. Original c/d snapshots are preserved.
+
+
+### Small-decline coverage revision prepared, September7 04:40UTC
+
+**September 7, 04:40 UTC: all four fresh histories verified; policy checks running.**
+All 84 original artifact hashes pass. Both anchors and both all-parameter probes
+exactly match the corresponding snapshot-c target tables, parameters, 253 numeric
+historical entries and seventeen standard graphs. Completed histories took
+1,970.42, 1,969.84, 1,488.41 and 1,415.85 seconds. The baseline policy passes
+2023/2027; three other two-date policies remain in smoke17090362. The small-shock
+canary17091265 remains in old-fertility normalization, with a valid bracket now
+found. No broad search is running.
+
+A bounded worker and lead check found that the original starting population
+omits small preference declines. The prepared controller revision preserves
+the exact anchor and47original grid points, replacing16nearby random proposals
+with16paired grid proposals having smaller declines. The multiplier is
+min(0.5,lambda*kappa/1.6), where1.6 is the anchor's inner taste scale. This is
+an initialization heuristic, not an estimated restriction; later search still
+varies all11parameters freely. Every target, weight, bound and numerical gate,
+as well as the three-timeout stop rule, is unchanged. The paired declines range
+from -0.1877535624 to -0.00003064868496. No inference that a target or parameter
+region is infeasible follows from this design check.
+
+Experimental source5c70aa1 is committed/pushed. Twelve controller tests pass
+locally and onTorch; only initial_population differs in the controller's AST.
+The NEW prepared snapshot is `Fertility_Spring26_joint_nested_full_20260907g`,
+with68verified files and the same scientific bundle50b434. No contract/search
+is created. Use `wide32_support_g/prepare_repaired_wide.py`, indexed in the
+experiment README; the old f preparation helper is obsolete. The g helper
+also requires a lead canary assessment with verified original evidence before
+it will build a contract. Inspect the canary, finish all smoke policies, adopt
+or revise the preparation as evidence warrants, then execute full preflight
+and launch autonomously. Original e/f source and running jobs are unchanged.
+The13:35UTC cutoff and4.5-hour final reserve remain; monitoring is active.
