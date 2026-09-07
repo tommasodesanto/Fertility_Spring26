@@ -1,5 +1,20 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6: efficiency-status clarification
+
+The constrained branch is not entirely unproved. The September 5
+`simplified_olg_constrained_efficiency.tex` proves a local improving market
+allocation with fixed individual fertility, committed household-specific
+closing cash and future taxes/transfers, and an explicitly financed and fully
+accounted initial title owner. Every future housing market clears. Its theorem,
+verifier and original review-source hashes still match the saved checks.
+Author acceptance of those planner/ownership powers and broader applicability
+remain open; the same example has a local obstruction to one-time gifts.
+This result remains separate from the new main note's direct-allocation proof
+and from welfare effects of the credit-policy transition. A recent chat summary
+understated this existing result; it did not overturn it. No new theorem,
+numerical result, paper edit or author decision is made in this clarification.
+
 ## September 6: author reminder on notation and prose
 
 Tommaso reiterates that the full note must follow his previous notation and
