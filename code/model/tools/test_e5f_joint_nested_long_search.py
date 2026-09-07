@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pure controller tests; intentionally do not run the model."""
 import math
+import json
 import copy
 import random
 import tempfile
@@ -13,6 +14,52 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_parallel_population_keeps_v1_proposals_and_fits_one_wave(self):
+        center=[.5]*11; domain=search.adapter.SEARCH_DOMAIN
+        original=search.initial_population(center,domain,random.Random(20260906),'v1')
+        parallel=search.initial_population(center,domain,random.Random(20260906),'parallel32')
+        self.assertEqual(parallel,original)
+        self.assertEqual(len(parallel),32)
+        self.assertTrue(all(any(u[j]!=center[j] for u in parallel) for j in range(11)))
+        obj=object.__new__(search.Search);obj.completed=4;obj.c=search.RUN_PROFILES['parallel32']
+        obj.finish=20000.;obj.search_finish=10000.
+        with mock.patch.object(search.time,'time',return_value=6400.):self.assertTrue(obj.can_fit(32))
+        with mock.patch.object(search.time,'time',return_value=6400.1):self.assertFalse(obj.can_fit(32))
+        self.assertEqual(obj.c['final_reserve_seconds'],7200+4200+1200)
+
+    def test_parallel_reserve_requires_matching_complete_measured_policy_smoke(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp);path=folder/'equilibrium_receipt.json';proof_path=folder/'policy_loop_verification.json'
+            names=('baseline','supply-plus-20','dependent-child-ltv95','property-tax-2pct-no-rebate')
+            branch={'status':'complete','dates':2,'source_summary_sha256':'selected',
+                'gates':{'maximum_market_residual':1e-5,'maximum_mass_residual':1e-15}}
+            receipt={'status':'complete','smoke':True,'failures':{},'scientific_bundle':'bundle',
+                'target_fingerprint':'target','selected_summary_sha256':'selected','policy_workers':4,
+                'elapsed_seconds':400.,'cases':{name:copy.deepcopy(branch) for name in names}}
+            contract={'code_bundle_sha256':'bundle','target_fingerprint':'target','policy_workers':4}
+            def write_evidence(value):
+                path.write_text(json.dumps(value))  # Includes deliberately malformed nonfinite timing.
+                search.write_json(proof_path,{'receipt':str(path),'sha256':search.digest(path)})
+                contract['imported_smoke']={'root':str(folder),'policy_loop_verification_sha256':search.digest(proof_path)}
+                contract['parallel_policy_timing']={'receipt':str(path),'receipt_sha256':search.digest(path),
+                    'projected_full_policy_seconds':value['elapsed_seconds']*44/8}
+            write_evidence(receipt)
+            self.assertEqual(search.verify_parallel_policy_budget(contract),2200.)
+            for mutation in ('slow','partial','mixed_bundle','serial','nan','nonpositive'):
+                bad=copy.deepcopy(receipt)
+                if mutation=='slow':bad['elapsed_seconds']=800.
+                elif mutation=='partial':bad['status']='partial_policy_failures'
+                elif mutation=='mixed_bundle':bad['scientific_bundle']='other'
+                elif mutation=='serial':bad['policy_workers']=1
+                elif mutation=='nan':bad['elapsed_seconds']=float('nan')
+                else:bad['elapsed_seconds']=0.
+                write_evidence(bad)
+                with self.subTest(mutation=mutation),self.assertRaises(RuntimeError):search.verify_parallel_policy_budget(contract)
+            write_evidence(receipt)
+            search.write_json(proof_path,{'receipt':str(folder/'other.json'),'sha256':search.digest(path)})
+            contract['imported_smoke']['policy_loop_verification_sha256']=search.digest(proof_path)
+            with self.assertRaisesRegex(RuntimeError,'imported complete smoke'):search.verify_parallel_policy_budget(contract)
+
     def test_smoke_runs_four_required_histories_in_one_bounded_batch(self):
         with tempfile.TemporaryDirectory() as tmp:
             obj=object.__new__(search.Search);obj.root=Path(tmp);obj.c={}

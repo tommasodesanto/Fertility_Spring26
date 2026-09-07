@@ -297,3 +297,31 @@ a source-copy race left an incomplete package. The replacement snapshot is
 built sequentially, then all55 scientific/helper files are hash-checked before
 submission. No source is repaired underneath a running job. The root result
 README and canonical status own job and validation outcomes.
+
+
+### Prepared parallel search after the tiny-cohort repair (September 7)
+
+The optional `parallel32` controller profile preserves the original `v1`
+32-member initial population exactly, including all eleven perturbed coordinates,
+and raises concurrent workers from twelve to thirty-two. It retains the
+original parameter bounds, objective, DE proposals, eight-generation ceiling,
+two refinement rounds, one-hour case caps and all failure rules. The 640-case
+attempt ceiling does not promise that many completed histories. This is
+preparation only until the new scientific smoke and failed-case replay pass.
+
+The fixed 13:35 UTC computation cutoff remains. This profile reserves 3.5 hours:
+two one-hour waves for the 22-coordinate Jacobian and two exact repetitions,
+at most 70 minutes projected for the four simultaneous eleven-date policy
+paths, and twenty minutes of buffer. It can be built and validated only from
+the hash-matched complete four-process policy smoke imported by that contract.
+Measured eight-date elapsed time times 44/8 must not exceed 4,200 seconds.
+Thus the shorter reserve is conditional on observed concurrency performance;
+there is no assumption that four processes deliver exactly fourfold speedup.
+The policy projection is a forecast, not a guarantee for new parameters.
+
+A 32-case search stage must fit one complete one-hour timeout wave before
+10:05 UTC; later stages are admitted using their actual start times. At the
+previous 1,970-second supported-history timing, two or three such waves may
+fit after verification, but rejected or slower candidates and the unchanged
+three-consecutive-timeout stop can reduce that coverage. Allocation remains
+32 CPUs and 384GB. Existing `v1` and `wide32` contracts are unchanged.

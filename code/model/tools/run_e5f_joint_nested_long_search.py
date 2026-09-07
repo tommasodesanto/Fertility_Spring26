@@ -37,6 +37,10 @@ RUN_PROFILES = {
                "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 64,
                "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
                "final_reserve_seconds": 16200},
+    "parallel32": {"max_workers": 32, "case_timeout_seconds": 3600, "max_histories": 640,
+                   "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
+                   "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
+                   "final_reserve_seconds": 12600},
 }
 
 
@@ -130,6 +134,35 @@ def validate_policy_receipt(receipt, contract, *, smoke, selected_hashes):
                 raise RuntimeError("Policy receipt violates unchanged market or mass gates")
 
 
+
+def verify_parallel_policy_budget(contract):
+    """Require measured complete four-process smoke before using its shorter reserve."""
+    if contract.get("policy_workers") != 4:
+        raise RuntimeError("Parallel search requires four contracted policy workers")
+    evidence = contract.get("parallel_policy_timing", {})
+    path = Path(evidence.get("receipt", ""))
+    adapter.verify(path, evidence.get("receipt_sha256", ""))
+    receipt = adapter.read_json(path)
+    validate_policy_receipt(receipt, contract, smoke=True,
+                            selected_hashes={receipt.get("selected_summary_sha256")})
+    elapsed = receipt.get("elapsed_seconds")
+    if not isinstance(elapsed, (int, float)) or not math.isfinite(elapsed) or elapsed <= 0:
+        raise RuntimeError("Parallel policy smoke has no positive finite elapsed time")
+    projected = elapsed * 44 / 8
+    # Two one-hour historical waves, a measured 44-date policy forecast, and
+    # twenty minutes of buffer must fit the fixed three-and-a-half-hour reserve.
+    if projected > 4200 or evidence.get("projected_full_policy_seconds") != projected:
+        raise RuntimeError("Measured policies do not fit the declared final reserve")
+    imported = contract.get("imported_smoke") or {}
+    proof_path = Path(imported.get("root", "")) / "policy_loop_verification.json"
+    adapter.verify(proof_path, imported.get("policy_loop_verification_sha256", ""))
+    proof = adapter.read_json(proof_path)
+    if (Path(proof.get("receipt", "")).resolve() != path.resolve()
+            or proof.get("sha256") != evidence["receipt_sha256"]):
+        raise RuntimeError("Policy timing must come from the imported complete smoke")
+    return projected
+
+
 def initial_population(center, domain, rng, profile="v1"):
     if profile not in RUN_PROFILES:
         raise ValueError(f"Unsupported run profile: {profile}")
@@ -216,6 +249,7 @@ def verify_contract(path, expected_sha):
     for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain"):
         if c.get(key) != base.get(key): raise RuntimeError(f"Mixed {key}")
     if c["target_fingerprint"] != adapter.TARGET or c["source_sha256"] != adapter.SOURCE: raise RuntimeError("Adapter/source target mismatch")
+    if profile == "parallel32": verify_parallel_policy_budget(c)
     c["run_profile"] = profile
     c["contract_path"] = str(Path(path).resolve())
     return c

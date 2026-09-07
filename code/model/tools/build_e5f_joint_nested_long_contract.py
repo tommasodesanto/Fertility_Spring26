@@ -8,8 +8,9 @@ parser.add_argument('--outdir',type=Path,required=True)
 parser.add_argument('--finish-epoch',type=float,required=True)
 parser.add_argument('--expected-history-seconds',type=float,required=True)
 parser.add_argument('--runtime-estimate-status',choices=('measured','provisional'),required=True)
-parser.add_argument('--profile',choices=('v1','wide32'),required=True)
+parser.add_argument('--profile',choices=('v1','wide32','parallel32'),required=True)
 parser.add_argument('--policy-workers',type=int,choices=(1,4),default=1)
+parser.add_argument('--parallel-policy-receipt',type=Path)
 parser.add_argument('--imported-smoke-root',type=Path)
 parser.add_argument('--imported-smoke-contract',type=Path)
 parser.add_argument('--imported-smoke-contract-sha256')
@@ -28,7 +29,8 @@ if bundle != adapter.BUNDLE:raise RuntimeError('Scientific bundle changed; revie
 out=args.outdir.resolve();out.mkdir(parents=True,exist_ok=True)
 if (out/'contract.json').exists():raise RuntimeError('Refusing to replace an existing run contract')
 profile={'v1':dict(max_workers=12,max_histories=360,population_size=32,max_generations=8,polish_rounds=2),
-         'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2,final_reserve_seconds=16200)}[args.profile]
+         'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2,final_reserve_seconds=16200),
+         'parallel32':dict(max_workers=32,max_histories=640,population_size=32,max_generations=8,polish_rounds=2,final_reserve_seconds=12600)}[args.profile]
 available_total_seconds=min(43200,max(0,args.finish_epoch-time.time()))
 final_reserve=profile.get('final_reserve_seconds',10800)
 available_search_seconds=min(32400,max(0,available_total_seconds-final_reserve))
@@ -38,8 +40,8 @@ projected_search_histories=min(profile['max_histories']-28,
  int(available_search_seconds/args.expected_history_seconds)*profile['max_workers'])
 imported_fields=(args.imported_smoke_root,args.imported_smoke_contract,args.imported_smoke_contract_sha256,
                  args.imported_smoke_verification_sha256,args.imported_policy_verification_sha256)
-if (args.profile=='wide32' or any(imported_fields)) and not all(imported_fields):
- raise ValueError('The wide profile requires complete imported-smoke provenance')
+if (args.profile in ('wide32','parallel32') or any(imported_fields)) and not all(imported_fields):
+ raise ValueError('Parallel search profiles require complete imported-smoke provenance')
 original=None; imported_smoke=None
 if all(imported_fields):
  smoke_root=args.imported_smoke_root.resolve(); original_contract=args.imported_smoke_contract.resolve()
@@ -89,5 +91,16 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
                   'occupied_value_negative_steps':0,'realized_budget_excess_mass':2e-10,'budget_gap_threshold':1e-9})
 for key in ('source_sha256','code_bundle_sha256','target_fingerprint','search_domain'):
  if original is not None and original.get(key)!=c[key]:raise RuntimeError(f'Imported smoke original contract has mixed {key}')
+if args.profile == 'parallel32':
+ if args.parallel_policy_receipt is None:raise ValueError('A measured complete parallel policy smoke receipt is required')
+ timing_path=args.parallel_policy_receipt.resolve(); timing=adapter.read_json(timing_path)
+ c['parallel_policy_timing']={'receipt':str(timing_path),'receipt_sha256':adapter.digest(timing_path),
+  'projected_full_policy_seconds':timing['elapsed_seconds']*44/8,
+  'reserved_history_waves_seconds':7200,'buffer_seconds':1200,
+  'interpretation':'Linear projection of measured four-process eight-date smoke to forty-four dates; a runtime forecast, not a completion guarantee'}
+ import run_e5f_joint_nested_long_search as search
+ search.verify_parallel_policy_budget(c)
+elif args.parallel_policy_receipt is not None:
+ raise ValueError('Parallel timing evidence is only accepted for the parallel32 profile')
 adapter.write_json(out/'contract.json',c)
 print(json.dumps(dict(bundle=bundle,contract_sha256=adapter.digest(out/'contract.json'),remote=remote,finish_epoch=c['absolute_finish_epoch'])))
