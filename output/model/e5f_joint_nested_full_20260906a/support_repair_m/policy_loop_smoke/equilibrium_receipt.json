@@ -1,0 +1,72 @@
+{
+  "cases": {
+    "baseline": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 0.00019107669912326252,
+        "maximum_mass_residual": 8.881784197001252e-16,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 33
+      },
+      "source_summary_sha256": "a0cecb25d58734d0097e44a79ac11a4d56bba8ede84018da2b800d4b840c0b49",
+      "status": "complete"
+    },
+    "dependent-child-ltv95": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 3.221265328091839e-05,
+        "maximum_mass_residual": 1.3322676295501878e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 25
+      },
+      "source_summary_sha256": "a0cecb25d58734d0097e44a79ac11a4d56bba8ede84018da2b800d4b840c0b49",
+      "status": "complete"
+    },
+    "property-tax-2pct-no-rebate": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 3.0922035372243146e-05,
+        "maximum_mass_residual": 1.3322676295501878e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 19
+      },
+      "source_summary_sha256": "a0cecb25d58734d0097e44a79ac11a4d56bba8ede84018da2b800d4b840c0b49",
+      "status": "complete"
+    },
+    "supply-plus-20": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 1.9520519371144785e-05,
+        "maximum_mass_residual": 1.1102230246251565e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 3.15087525172175e-08,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 27
+      },
+      "source_summary_sha256": "a0cecb25d58734d0097e44a79ac11a4d56bba8ede84018da2b800d4b840c0b49",
+      "status": "complete"
+    }
+  },
+  "elapsed_seconds": 511.24958872795105,
+  "expectations": "temporary equilibrium: each current price treated as permanent",
+  "failures": {},
+  "fiscal_closure": "tax revenue discarded; no rebate or grant",
+  "inherited_state_verification_sha256": "6342a06dddb52b0d0ca3e46bfb70e8af8e8fcbb22b3cd80a15190e9bced3874c",
+  "policy_workers": 4,
+  "population_closure": "closed national: M=0, rho=1",
+  "production_promoted": false,
+  "replacement_conversion": 0.47619047619047616,
+  "scientific_bundle": "cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760",
+  "selected_summary": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907m/output/model/joint_nested_overnight/smoke/smoke_histories/task_001/summary.json",
+  "selected_summary_sha256": "a0cecb25d58734d0097e44a79ac11a4d56bba8ede84018da2b800d4b840c0b49",
+  "smoke": true,
+  "status": "complete",
+  "supply_elasticity": 0.63,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+}

@@ -1810,3 +1810,33 @@ artifact/result checks but supplied a summary path where compare_reference
 expects a directory; that invocation wrote no certificate. The corrected,
 saved verification script then passed. This was a diagnostic-call mistake,
 not a model failure. The production calibration is unchanged.
+
+
+**September 7, 10:47 UTC: complete repaired smoke passed; 32-core calibration running.**
+Verification job `17105914` completed successfully at10:32:08 UTC after40minutes.
+All four current-source histories and all eight policy dates passed. Every
+policy-date realized budget violation is zero. All170 dated policy artifact
+hashes and70 source hashes were checked again independently. The eight-date,
+four-process policy smoke took511.25seconds, implying a linear44-date forecast
+of2811.87seconds (46.86minutes), within the unchanged70-minute policy reserve.
+This remains a forecast; full policies at the eventual estimate are not complete.
+
+Search job `17106283` started automatically at10:32:09 UTC on cs646, with32 CPUs
+and352GB. Its complete preflight passed before any calibration case began.
+Contract SHA is `5c1a3c20065af50e313e07e245e8254f4752cbf2b880448464882ad5e2b39baa`.
+The scientific bundle remains cb18d8f1 and experimental source62c0355f. The
+first32-case population is active; four imported smoke histories are certified,
+with no new complete history yet at10:46. All32 case heartbeats were younger
+than54seconds, and cluster CPU use confirms the worker processes are computing.
+Peak allocation RSS is about124GiB, below the352GB request. The search still
+reserves90minutes for final checks/policies and stops by13:35 UTC. Further DE
+waves require their full one-hour timeout to fit before the reserve begins;
+the contract's96-case rate forecast is not a guaranteed completion count.
+
+Evidence is in `parallel_search_o/preflight_verification.json`, its pinned
+`output/model/joint_nested_overnight/contract.json`, and `health_verification.json`.
+The complete two-date policy smoke packet is under `support_repair_m/policy_loop_smoke/`.
+It uses the repeated anchor, not the best probe or a new calibrated estimate;
+do not present its2027 endpoint as the full2063 policy exercise. The best m
+probe's entire21-artifact packet, including its checkpoint, is now verified
+locally for the fallback PDF. Production remains unchanged.
