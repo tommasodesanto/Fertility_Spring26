@@ -262,4 +262,45 @@ verified through the complete historical/policy loop before launching the
 experimental calibration. Its full-history runtime remains unmeasured.
 The original gates, economic parameters and empirical targets remain intact.
 Read the five-page discussion PDF and receipts indexed in the experiment
-README; the full overnight search is held for the author discussion.
+README for that earlier diagnostic and review hold.
+
+### September 7: verified saving integration and overnight search design
+
+The author subsequently authorized completion of correctness verification,
+followed autonomously by a full experimental calibration and policy paths.
+Exhaustive saving is integrated only in the experimental joint-choice mode.
+The separate production solver remains unchanged. Two complete starting
+histories now reproduce the target fit, parameters, historical path and all
+seventeen diagnostic plots exactly; they take about39.4minutes each. The two
+all-parameter probes and four two-date policy branches must also pass before
+the broad search starts. Their live receipts are indexed in the experiment
+README and canonical calibration status.
+
+The reviewed `wide32` controller requests32CPUs and384GB. Its population has
+64 parameter vectors: the exact starting vector,47 combinations spanning
+eight outer taste scales and six nesting coefficients, and16 nearby joint
+perturbations. The remaining nine parameters also vary at every scale-grid
+point. Subsequent differential-evolution proposals vary all eleven parameters
+against all twelve unchanged targets. The domain and objective are identical
+across stages. Sixty-four candidates are stored in two bounded plans, with
+global population indices retained across a shared32-worker queue.
+
+The640 attempted-history limit is a ceiling, not a planned completion count:
+at the measured starting-vector speed it would require13.1hours even before
+policy paths. Each immutable contract records the measured speed, remaining
+time and projected capacity. The controller permits up to eight generations
+and two local refinement rounds but starts a stage only if all its full
+one-hour case-limit waves fit before the search deadline. Three hours are
+reserved for22 local sensitivity histories, two exact repetitions and the
+four eleven-date policy paths. Total execution is capped at12hours and the
+September7 13:35UTC absolute cutoff. Every case writes a heartbeat and saved
+diagnostic packet; latest-case and best-so-far summaries remain available.
+
+The wider scheduler accepts the earlier complete smoke only through the
+original hash-pinned contract, plans and receipts. It checks the unchanged
+scientific source, target system, domain, helpers, numerical gates, closure,
+exact historical repetitions and selected-state policy receipt. Independently
+executed historical and policy components must be identified as such; they
+cannot be relabeled as a completed single controller run. Incomplete policy
+finalization cannot produce a full-completion status. A successful search
+still does not constitute author adoption of the nesting specification.

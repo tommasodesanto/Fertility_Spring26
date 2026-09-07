@@ -4,6 +4,40 @@ Updated: `2026-09-07` (exhaustive saving integrated; full correctness smoke runn
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 7, 02:46 UTC: repeated full histories independently verified.**
+Both starting histories in smoke17087058 pass every unchanged gate and
+reproduce all12 target rows, all parameters,253 numeric historical entries
+and17 standard PNGs exactly. The lead checked42 original artifact hashes,
+replayed the target/measurement validators and inspected all17 graphs.
+No occupied value decreases remain; budget excess mass is5.6441e-12.
+The starting loss is485.2815288403; this is an unoptimized experiment,
+not a new calibration. Complete fit and parameter/bound tables are in
+`exhaustive_smoke_c/smoke/smoke_anchor/task_001/` beneath the experiment output.
+The very weak parent ownership gap remains the main starting-point miss.
+
+Measured complete-history runtimes are2364.0 and2368.1 seconds. The two
+all-eleven-coordinate probes are now running. Independent policy smoke17088152
+uses the same immutable snapshot, finalizer, contract and completed anchor1,
+with1CPU/32GB/45minutes; baseline and supply both passed2023 and2027.
+LTV and tax are still pending. Main smoke retains its90-minute cap; a requested
+extension was refused, so no extension is assumed. No large calibration has
+started and no partial receipt authorizes one.
+
+The reviewed wide controller uses32CPUs/384GB,64 population members and a
+640-attempt hard ceiling, with up to8 generations and2 polish rounds. At the
+measured runtime640 histories would take13.1hours before policies, so this
+is a ceiling, not a promised run count. Deadline-aware stages reserve3hours
+for22 Jacobian probes,2 exact repetitions and4 full policy paths; the absolute
+morning cutoff remains September7 13:35UTC. The new scheduler splits64cases
+into two bounded plans, preserving global candidate IDs and the unchanged
+case reader. Ten focused tests pass, including the actual adapter's plan
+validation and incomplete-policy status checks. A bounded independent reviewer
+was reconciled against the final diff. New snapshot20260907d is preparation
+only; the running correctness snapshot20260907c is unchanged.
+
+
+**September 7, 02:21 UTC: full overnight authority restored.** Tommaso confirms cluster access is restored and explicitly authorizes the lead to finish correctness verification, then proceed autonomously to simulations and large-scale calibration. This supersedes the earlier instruction to report readiness before expansion. Preserve the original targets/weights and numerical gates, production isolation and full-loop prerequisites. Cluster job17087058 is running at31minutes; its two anchors are in the historical loop, after old-steady-state normalization. The latest completed dated row is2011 with market residual2.19e-5. Source and budget preparation may proceed while it runs; no full search starts before complete verification.
+
 **Connection update, September 7 around 01:55 UTC.** The last retrieved
 17087058 log confirms contract validation, compiled checks and exact default-off
 reproduction. Subsequent SSH reads lost their shared connection; a fresh
