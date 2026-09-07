@@ -1,0 +1,53 @@
+{
+  "status": "integration_passed_full_smoke_running",
+  "job": 17087058,
+  "scientific_bundle": "733ccb1b975e55d5baf1a46d7733affe0b0272dd9e5cfc4d4e38e25a32d1e387",
+  "contract_sha256": "ccffc589d7ccbe7c1147c0b5110ffc4113b2b9be85710cefa3a7a4abaea7646e",
+  "fixed_price_integration_receipt": "output/model/e5f_joint_nested_full_20260906a/exhaustive_smoke/saving_integration/comparison/saving_integration.json",
+  "fixed_price_integration_sha256": "75729f5b0d45af06b8cf49135f16db584f9d07e4b0c306fc37f36cf8074f1c3b",
+  "exact_policy_population_joint_arrays": 15,
+  "maximum_array_difference": 1.7763568394002505e-15,
+  "exact_old_global_pngs": {
+    "fertility_by_age.png": true,
+    "fertility_policy_by_age_income_state.png": true,
+    "housing_by_age_income_state.png": true,
+    "housing_market.png": true,
+    "housing_prices.png": true,
+    "income_state_outcomes.png": true,
+    "liquid_wealth_by_age_income_state.png": true,
+    "market_clearing_by_market.png": true,
+    "market_clearing_residuals.png": true,
+    "owner_rungs.png": true,
+    "ownership_by_age.png": true,
+    "ownership_by_age_income_state.png": true,
+    "policy_childless_renter_age30.png": true,
+    "policy_childless_renter_age42.png": true,
+    "tenure_services.png": true,
+    "wealth_dist_childless_renter_age30.png": true,
+    "wealth_dist_childless_renter_age42.png": true
+  },
+  "independent_review_sha256": "362d8c89944a5826398a9307f642fa30e280e93566029f1059ed3fec6589962b",
+  "source_manifest_sha256": "28de04525b44654e3c8860816532972858ea286c6c80944755008de226bde2b5",
+  "local_test_count": 26,
+  "cluster_cache_reload_required": true,
+  "setup_failures": [
+    {
+      "job": 17086910,
+      "reason": "Source-copy race: missing package before any model solve"
+    },
+    {
+      "job": 17086998,
+      "reason": "Dynamic test import produced nonportable Numba cache; fixed canonical import"
+    },
+    {
+      "job": 17087033,
+      "reason": "Cancelled before model solve: missing contract upload"
+    }
+  ],
+  "full_history_and_policy_receipts": "pending",
+  "calibration_submitted": false,
+  "production_changed": false,
+  "experimental_source_commit": "3e48fe3",
+  "experimental_source_pushed": true,
+  "latest_transport_status": "SSH connection timed out after startup tests and exact default-off reproduction; current history status unconfirmed"
+}

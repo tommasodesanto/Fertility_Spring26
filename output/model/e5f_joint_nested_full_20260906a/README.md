@@ -1,5 +1,57 @@
 # Full simultaneous-choice experiment
 
+**Connection update, September 7 around 01:55 UTC.** The last retrieved
+17087058 log confirms contract validation, compiled checks and exact default-off
+reproduction. Subsequent SSH reads lost their shared connection; a fresh
+connection also timed out. Current historical-loop progress is therefore not
+confirmed. The remote job retains its 90-minute cap. The active finite monitor
+will retry access and verify complete receipts before declaring readiness. No
+large calibration has been launched. This is a transport limitation, not
+evidence that the remote model job failed.
+
+**September 7, 01:50 UTC: exhaustive saving integrated; full correctness smoke running.**
+The author reaffirmed correctness first before scaling overnight computation.
+Only the isolated joint-choice experiment uses exhaustive conditional saving;
+the objective, feasible intervals, targets, weights and gates are unchanged.
+The lead reviewed the mathematics and call sites, and a bounded independent
+review found no mathematical blocker. Twenty-six local tests pass.
+
+Fixed-price integration job `17086926` completed in 77 seconds. Fifteen of
+sixteen complete policy, distribution and joint-choice arrays exactly match
+the previously audited independent optimizer, including values and saving.
+Renter housing differs by at most `1.7763568394e-15`. All occupied value drops
+are removed; budget excess mass remains `9.6764e-13`, below `2e-10`. All
+seventeen plots exactly match the previously visually audited global diagnostic.
+The old model's ten arrays also reproduce exactly with joint mode switched off.
+This remains a fixed-price comparison; full market-clearing verification follows.
+
+Full smoke `17087058` is running on two Torch CPUs, 64GB, with a 90-minute cap
+in `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907c`.
+Scientific bundle: `733ccb1b975e55d5baf1a46d7733affe0b0272dd9e5cfc4d4e38e25a32d1e387`.
+Contract SHA: `ccffc589d7ccbe7c1147c0b5110ffc4113b2b9be85710cefa3a7a4abaea7646e`.
+It requires two exactly repeated full histories, two all-eleven-coordinate
+perturbations, and all four two-date policy branches. The unchanged 120-wealth,
+6-housing, 17-age, 15-income, 4-parity, 4-dependent-child grid is retained.
+Allow roughly 1,600 seconds per complete history provisionally (the preceding
+local method took 706–804 seconds), two parallel waves plus policy tests;
+measure actual runtime before any large search budget. Every case writes a
+heartbeat, saved state, all targets/parameters and the standard diagnostic packet.
+No calibration job is submitted or dependent on this smoke.
+
+All 55 scientific/helper files, the contract and both seed files were hash-checked
+before launch. Setup failures are preserved: 17086910 stopped on an incomplete
+source copy; 17086998 stopped on a test-harness dynamic-import cache error;
+17087033 was cancelled before model solving after a missing contract upload.
+The replacement snapshot uses a sequential source copy, a canonical test import,
+two-process cache reload test and contract preflight before model execution.
+These are setup failures, not failed calibrations. The current job has passed
+its tests and exact default-off reproduction; later loop status awaits access.
+
+Evidence and instructions: `output/model/e5f_joint_nested_full_20260906a/exhaustive_smoke_c/`.
+The 15-minute monitor is active for correctness verification only; it reports
+readiness before a broad calibration, and stays quiet without a material change.
+Production and the prior discussion PDF are unchanged.
+
 **Review packet ready, September 7 at 00:00 UTC (September 6, 20:00 New York).**
 The full overnight search remains stopped pending the author discussion. Smoke
 `17080053` completed all four histories, independently verified against their

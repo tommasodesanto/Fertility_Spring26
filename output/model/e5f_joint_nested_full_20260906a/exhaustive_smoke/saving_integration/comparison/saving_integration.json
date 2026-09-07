@@ -1,0 +1,168 @@
+{
+  "checkpoint_sha256": "bae769e9f08434c3d21b84d7f4e01573e6fa79ddd8c4f3cf4fa65d77a570513e",
+  "driver_sha256": "3ee555ff6335b00f0922f143e2e9b1424eeae880e62c4c70c206e9b34d725468",
+  "exact_arrays": {
+    "V": true,
+    "bp_pol": true,
+    "c_pol": true,
+    "fert2_probs": true,
+    "fert_probs": true,
+    "fert_value": true,
+    "g_current": true,
+    "g_post_fertility": true,
+    "g_pre": true,
+    "hR_pol": false,
+    "joint_probabilities": true,
+    "joint_products": true,
+    "joint_wait_probabilities": true,
+    "loc_probs": true,
+    "tenure_choice": true,
+    "tenure_probs": true
+  },
+  "global_helper_sha256": "0e89d55a6cd3d0432dcff39b24683a7f6233ac0820a03b47a94eda8e2a924586",
+  "maximum_absolute_differences": {
+    "V": 0.0,
+    "bp_pol": 0.0,
+    "c_pol": 0.0,
+    "fert2_probs": 0.0,
+    "fert_probs": 0.0,
+    "fert_value": 0.0,
+    "g_current": 0.0,
+    "g_post_fertility": 0.0,
+    "g_pre": 0.0,
+    "hR_pol": 1.7763568394002505e-15,
+    "joint_probabilities": 0.0,
+    "joint_products": 0.0,
+    "joint_wait_probabilities": 0.0,
+    "loc_probs": 0.0,
+    "tenure_choice": 0.0,
+    "tenure_probs": 0.0
+  },
+  "oracle_helper_sha256": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+  "policy_absolute_tolerance": 2e-10,
+  "population_absolute_tolerance": 2e-12,
+  "production_changed": false,
+  "rows": [
+    {
+      "budget": {
+        "budget_excess_mass": 9.676404799789455e-13,
+        "budget_excess_share": 8.468580090032274e-13,
+        "budget_tolerance": 1e-09,
+        "household_mass": 1.1426242294359146,
+        "maximum_occupied_excess": 3.552713678800501e-15,
+        "occupancy_threshold_for_maximum": 1e-12,
+        "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+        "weighted_positive_budget_gap": 9.979517103134188e-15
+      },
+      "elapsed_seconds": 24.384360313415527,
+      "method": "integrated",
+      "min_occupied_value_gain": 2.169784352190618e-10,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.07926061822872535,
+        "adult_households": 1.1426242294359534,
+        "asset_price": 0.5430473737357197,
+        "births_per_household": 0.06936717792852307,
+        "dependent_renter_at_cap_share": 0.7909810369201501,
+        "explicit_births": 0.0687456252845848,
+        "feasibility_projection": 0.0,
+        "market_residual": 0.0006163872468669338,
+        "ownership": 0.47778535124287513,
+        "renter_at_cap_share": 0.660034342056218,
+        "renter_mass": 0.5966951106362572,
+        "rooms_per_household": 5.96995355863596
+      }
+    },
+    {
+      "budget": {
+        "budget_excess_mass": 9.676404799789455e-13,
+        "budget_excess_share": 8.468580090032274e-13,
+        "budget_tolerance": 1e-09,
+        "household_mass": 1.1426242294359146,
+        "maximum_occupied_excess": 3.552713678800501e-15,
+        "occupancy_threshold_for_maximum": 1e-12,
+        "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+        "weighted_positive_budget_gap": 9.979518049515282e-15
+      },
+      "elapsed_seconds": 45.76127076148987,
+      "method": "audited_reference",
+      "min_occupied_value_gain": 2.169784352190618e-10,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.07926061822872535,
+        "adult_households": 1.1426242294359534,
+        "asset_price": 0.5430473737357197,
+        "births_per_household": 0.06936717792852307,
+        "dependent_renter_at_cap_share": 0.7909810369201501,
+        "explicit_births": 0.0687456252845848,
+        "feasibility_projection": 0.0,
+        "market_residual": 0.0006163872468669338,
+        "ownership": 0.47778535124287513,
+        "renter_at_cap_share": 0.660034342056218,
+        "renter_mass": 0.5966951106362572,
+        "rooms_per_household": 5.96995355863596
+      }
+    }
+  ],
+  "scientific_bundle": "733ccb1b975e55d5baf1a46d7733affe0b0272dd9e5cfc4d4e38e25a32d1e387",
+  "scope": "Full lifecycle at the previously failed policy price; prices not recleared. Required history/policy smoke is separate.",
+  "status": "pass"
+}
