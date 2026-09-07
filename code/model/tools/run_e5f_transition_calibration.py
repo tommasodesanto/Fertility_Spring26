@@ -152,6 +152,8 @@ def parse_args() -> argparse.Namespace:
     choice = parser.add_mutually_exclusive_group()
     choice.add_argument("--joint-nested-choice", action="store_true", help="Experimental simultaneous tenure/attempt GEV")
     choice.add_argument("--two-shock-choice", action="store_true", help="Independent contemporaneous housing and fertility logistic differences")
+    choice.add_argument("--fertility-nest-choice", action="store_true", help="Simple simultaneous fertility nests over all contingent housing plans")
+    choice.add_argument("--exhaustive-saving-control", action="store_true", help="Diagnostic sequential control with the experimental exhaustive saving kernels")
     parser.add_argument("--validate-only", action="store_true", help="Write validated input contract without solving")
     parser.add_argument("--no-plots", action="store_true", help="Suppress diagnostic illustrations at author request")
     parser.add_argument(
@@ -358,6 +360,8 @@ def panel_candidate(
             center_terminal_coordinate = float(candidate_payload["new_psi_child"])
         center_status = str(center_path)
         center_sha256 = source_sha256(center_path)
+    if getattr(args, "fertility_nest_choice", False):
+        validate_fertility_nest_scales({**center_theta, "tenure_choice_kappa": args.fixed_tenure_choice_kappa})
     center = transition_unit_from_candidate(center_theta, center_terminal_coordinate)
 
     if task == 1:
@@ -495,6 +499,75 @@ def configure_two_shock_calibration(args, profile_overrides, model_profile):
         "product_choice": "deterministic within committed tenure after conception",
         "production_promoted": False,
     }
+
+
+def configure_fertility_nest_calibration(args, profile_overrides, model_profile):
+    """Enable simple fertility nests without changing the eleven coordinates."""
+    if not args.fertility_nest_choice:
+        return
+    if args.fixed_tenure_choice_kappa != 0.005 or args.housing_supply_elasticity != 0.63:
+        raise ValueError("Fertility-nest evaluation keeps external housing scale .005 and elasticity .63")
+    if args.model_profile != REPAIRED_MODEL_PROFILE or not args.estimate_first_child_room_jump:
+        raise ValueError("Fertility-nest evaluation requires the maintained eleven-parameter repaired profile")
+    if args.target_profile != E5_BASELINE_TARGET_PROFILE or args.first_child_room_jump_upper != 0.5:
+        raise ValueError("Fertility-nest evaluation requires the original twelve targets and room-jump bound .5")
+    profile_overrides.update(joint_nested_choice=True, fertility_nest_choice=True,
+                             two_shock_choice=False, exhaustive_saving_control=False,
+                             normalize_transition_mass_roundoff=True)
+    model_profile["fertility_nest"] = {
+        "status": "experimental_full_lifecycle",
+        "saving_maximization": "exhaustive_piecewise_linear_continuation",
+        "alternatives": {"wait": "one housing product h", "attempt": "contingent pair (h_failure, h_success)"},
+        "housing_products": 6,
+        "nests": ["wait", "attempt"],
+        "inner_housing_scale": "single common kappa = externally fixed 0.005",
+        "outer_fertility_scales": ["kappa_fert", "kappa_fert_continuation"],
+        "scale_ordering": "each outer fertility scale sigma_F >= inner housing scale kappa; reject violations",
+        "shock_normalization": "mean-zero marginal GEV shocks",
+        "product_choice": "all feasible rental and owner products; no deterministic owner maximum",
+        "tenure_committed_across_conception": False,
+        "conception": "independent biological outcome with known probability p",
+        "aggregation": "closed-form logsum factorization of contingent plans; no quadrature or outcome subnests",
+        "old_fertility_normalization": "derived to match retained replacement-fertility target 2.1",
+        "removed_estimated_parameters": [],
+        "production_promoted": False,
+    }
+
+
+def configure_exhaustive_saving_control(args, profile_overrides, model_profile):
+    """Hold sequential choice fixed while matching the saving implementation."""
+    if not args.exhaustive_saving_control:
+        return
+    if args.fixed_tenure_choice_kappa != 0.005 or args.housing_supply_elasticity != 0.63:
+        raise ValueError("Sequential exhaustive control keeps external housing scale .005 and elasticity .63")
+    if args.model_profile != REPAIRED_MODEL_PROFILE or not args.estimate_first_child_room_jump:
+        raise ValueError("Sequential exhaustive control requires the maintained eleven-parameter repaired profile")
+    if args.target_profile != E5_BASELINE_TARGET_PROFILE or args.first_child_room_jump_upper != 0.5:
+        raise ValueError("Sequential exhaustive control requires the original twelve targets and room-jump bound .5")
+    profile_overrides.update(exhaustive_saving_control=True, joint_nested_choice=False,
+                             fertility_nest_choice=False, two_shock_choice=False,
+                             normalize_transition_mass_roundoff=True)
+    model_profile["sequential_exhaustive"] = {
+        "status": "diagnostic_matched_saving_control_full_lifecycle",
+        "choice_model": "retained sequential fertility and housing choice",
+        "saving_maximization": "exhaustive_piecewise_linear_continuation",
+        "consumption_reporting": "budget-consistent experimental reporting repair",
+        "purpose": "separate saving-implementation effects from the change in choice shocks",
+        "fertility_scales": ["kappa_fert", "kappa_fert_continuation"],
+        "housing_scale": "externally_fixed_0.005",
+        "removed_estimated_parameters": [],
+        "old_fertility_normalization": "derived to match retained replacement-fertility target 2.1",
+        "production_promoted": False,
+    }
+
+
+def validate_fertility_nest_scales(theta):
+    """Reject an inadmissible retained/candidate vector without modifying it."""
+    housing_scale = float(theta["tenure_choice_kappa"])
+    for name in ("kappa_fert", "kappa_fert_continuation"):
+        value = float(theta[name])
+        if not math.isfinite(value) or value < housing_scale:
+            raise ValueError(f"Fertility-nest scale {name}={value} must be >= housing kappa={housing_scale}")
 
 
 def configure_first_child_room_jump(
@@ -1844,6 +1917,8 @@ def main() -> None:
             (name, low, float(args.first_child_room_jump_upper), kind) if name == "hbar_first_child_jump"
             else (name, low, high, kind) for name, low, high, kind in active_domain)
     configure_two_shock_calibration(args, profile_overrides, model_profile)
+    configure_fertility_nest_calibration(args, profile_overrides, model_profile)
+    configure_exhaustive_saving_control(args, profile_overrides, model_profile)
     if args.joint_nested_choice:
         if args.fixed_tenure_choice_kappa is not None:
             raise ValueError("Joint outer scale is estimated; do not pass fixed-tenure-choice-kappa")
@@ -1894,6 +1969,8 @@ def main() -> None:
         profile_overrides["tenure_choice_kappa"] = float(
             args.fixed_tenure_choice_kappa
         )
+    if args.fertility_nest_choice:
+        validate_fertility_nest_scales(theta)
     model_profile["tenure_choice_kappa"] = {
         "value": float(theta.get("tenure_choice_kappa", retained_tenure_choice_kappa)),
         "retained_value": retained_tenure_choice_kappa,
@@ -1940,7 +2017,7 @@ def main() -> None:
             "theta": theta, "panel_metadata": panel_metadata,
             "targets": [{"moment": n, "target": t, "weight": w} for n,t,w in zip(
                 target_system.moment_names,target_system.target_values,target_system.weights)],
-            "base_choice_flags": {key: base.get(key) for key in ("joint_nested_choice","two_shock_choice")},
+            "base_choice_flags": {key: base.get(key) for key in ("joint_nested_choice","two_shock_choice","fertility_nest_choice","exhaustive_saving_control")},
         }))
         print("INPUT_CONTRACT_VALIDATED_NO_SOLVE", flush=True)
         return

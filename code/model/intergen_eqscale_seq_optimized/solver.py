@@ -2400,9 +2400,12 @@ def solve_bellman_full_markov_income(
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
     joint_active = bool(getattr(P, "joint_nested_choice", False))
+    exhaustive_saving = joint_active or bool(getattr(P, "exhaustive_saving_control", False))
     if getattr(P, "two_shock_choice", False) and not joint_active:
         raise ValueError("Two-shock experiment requires joint choice mass accounting")
-    if joint_active and not use_full_kernel:
+    if getattr(P, "fertility_nest_choice", False) and not joint_active:
+        raise ValueError("Fertility-nest experiment requires joint choice mass accounting")
+    if exhaustive_saving and not use_full_kernel:
         raise ValueError("Joint nested choice requires exhaustive compiled saving kernels")
     joint = joint_nested.allocate(V.shape, P) if joint_active else None
     if continuation_V is not None:
@@ -2532,7 +2535,7 @@ def solve_bellman_full_markov_income(
                         cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
-                        int(joint_active),
+                        int(exhaustive_saving),
                     )
                 else:
                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
@@ -2591,7 +2594,7 @@ def solve_bellman_full_markov_income(
                             cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
-                            strict_owner_hbar_feasibility, int(joint_active),
+                            strict_owner_hbar_feasibility, int(exhaustive_saving),
                         )
                     else:
                         for c in range(nc):
@@ -2617,7 +2620,7 @@ def solve_bellman_full_markov_income(
                             bp_nc[:, c] = bp
                             Vo_nc[:, c] = val
                         co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
-                    if joint_active:
+                    if exhaustive_saving:
                         resources = Rv + np.clip(SD.gb_flat - Rv_test, 0.0, SD.gb_flat)
                         co_nc = joint_nested.owner_consumption_from_solution(
                             resources, oc, bp_nc, SD.cb_flat, Vo_nc, co_nc)
@@ -2635,10 +2638,13 @@ def solve_bellman_full_markov_income(
                 dp_choice = pti_adjusted_downpayment(dp_arr, hcost, income_j, P, b_grid)
 
             if joint_active:
-                value, joint_prob, product, wait_prob = joint_nested.bellman_block(
+                joint_result = joint_nested.bellman_block(
                     Vd, (b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant),
                     P, j, fec, tenure_choice_kernel,
                 )
+                value, joint_prob, product, wait_prob = joint_result[:4]
+                if getattr(P, "fertility_nest_choice", False):
+                    joint.failure_probabilities[:, :, :, j, zz] = joint_result[4]
                 V[:, :, :, j, zz] = value
                 joint.probabilities[:, :, :, j, zz] = joint_prob
                 joint.products[:, :, :, j, zz] = product
@@ -2649,7 +2655,8 @@ def solve_bellman_full_markov_income(
                     tenure_probs[:, :, :, j, zz, :, :, product_index] = np.sum(
                         wait_prob * (product == product_index), axis=-1
                     )
-                tenure_choice[:, :, :, j, zz] = product[..., 0]
+                tenure_choice[:, :, :, j, zz] = (np.argmax(wait_prob, axis=-1)
+                    if getattr(P, "fertility_nest_choice", False) else product[..., 0])
                 loc_probs[:, :, 0, 0, j, zz] = (value[:, :, 0] > DEAD_VALUE_CUTOFF)
                 fert_probs[:, :, :, j, zz, :2] = joint_nested.action_marginals(joint_prob[..., 0, 0, :, :])
                 fert_value[:, :, :, j, zz] = value[..., 0, 0]

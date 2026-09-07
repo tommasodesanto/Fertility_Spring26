@@ -22,6 +22,12 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+The isolated simple fertility-nest experiment is described in
+[`../../docs/model/e5f_simple_fertility_nest.md`](../../docs/model/e5f_simple_fertility_nest.md).
+It retains all six products and conception-contingent housing plans. Its
+23 focused tests and bounded lifecycle probe precede a retained-parameter
+objective comparison; it does not authorize recalibration.
+
 The isolated full joint-choice branch also has a rare-cohort transport precision
 repair under validation. Passing transports retain their exact original result;
 only a failed joint matched-cohort advancement or current-choice mass check may

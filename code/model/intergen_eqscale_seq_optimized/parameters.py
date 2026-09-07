@@ -127,6 +127,8 @@ def setup_parameters() -> SimpleNamespace:
     P.owner_size_cost_power = 2.0
     P.joint_nested_choice = False
     P.two_shock_choice = False  # Experimental independent contemporaneous differences
+    P.fertility_nest_choice = False  # Simple fertility groups over complete housing plans
+    P.exhaustive_saving_control = False  # Diagnostic matched sequential numerical control
     P.joint_nest_lambda = 0.5
     P.tenure_choice_kappa = 0.01
     P.kappa_h_base = 0.40

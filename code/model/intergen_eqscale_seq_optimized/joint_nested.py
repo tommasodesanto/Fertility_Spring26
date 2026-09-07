@@ -54,6 +54,18 @@ def allocate(shape, P):
     if readiness_gate_active(P):
         raise NotImplementedError('Readiness extension is outside this joint experiment')
     kappa = float(P.tenure_choice_kappa)
+    if getattr(P, 'fertility_nest_choice', False):
+        if getattr(P, 'two_shock_choice', False):
+            raise ValueError('Fertility nests and additive shocks are mutually exclusive')
+        later = getattr(P, 'kappa_fert_continuation', None)
+        scales = (float(P.kappa_fert), float(P.kappa_fert if later is None else later))
+        if not np.isfinite(kappa) or kappa <= 0 or any(not np.isfinite(s) or s < kappa for s in scales):
+            raise ValueError('Fertility GEV requires both fertility scales >= housing scale > 0')
+        nt = 1 + P.n_house
+        return SimpleNamespace(probabilities=np.zeros(shape + (nt, 2)),
+                               products=np.zeros(shape + (nt,), dtype=np.int16),
+                               wait_probabilities=np.zeros(shape + (nt,)),
+                               failure_probabilities=np.zeros(shape + (nt,)))
     lam = 1.0 if getattr(P, 'two_shock_choice', False) else float(P.joint_nest_lambda)
     if getattr(P, 'two_shock_choice', False):
         scales = (kappa, float(P.kappa_fert), float(P.kappa_fert if getattr(P, "kappa_fert_continuation", None) is None else P.kappa_fert_continuation))
@@ -68,6 +80,9 @@ def allocate(shape, P):
 
 def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
     """Return EV, p(tenure,attempt), product plans, restricted-wait tenure law."""
+    if getattr(P, 'fertility_nest_choice', False):
+        from .fertility_nested import bellman_block as simple_block
+        return simple_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel)
     if np.any(kernel_args[-1]):
         raise NotImplementedError("Joint experimental entry grants are not implemented")
     rental = Vd.copy(); rental[:, 1:] = -1e10
@@ -110,6 +125,9 @@ def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
 
 def factor_age(g_pre, joint, P, j, mode='natural'):
     """Compress selected joint-plan mass before transaction at a single age."""
+    if getattr(P, 'fertility_nest_choice', False):
+        from .fertility_nested import factor_age as simple_factor
+        return simple_factor(g_pre, joint, P, j, mode)
     if bool(getattr(P, 'birth_entry_grant', False)):
         raise NotImplementedError('Joint experimental entry grants are not implemented')
     modes = ('natural', 'wait', 'first_birth_treated', 'first_birth_control')
