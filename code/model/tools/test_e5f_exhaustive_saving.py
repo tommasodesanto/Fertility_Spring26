@@ -24,6 +24,30 @@ def oracle_reference():
 
 
 class ExhaustiveSavingTests(unittest.TestCase):
+    def test_strict_interpolation_rejects_positive_dead_endpoint_weight(self):
+        bg=np.array([0.,1.,2.]);v=np.array([-1e10,-10.,-5.])
+        self.assertGreater(k._interp_with_clip(bg,v,.99),-1e9)
+        self.assertEqual(k._interp_with_clip(bg,v,.99,True),-1e10)
+        for x in (0.,1.,2.,3.,-1.):
+            self.assertEqual(k._interp_with_clip(bg,v,x,True),k._interp_with_clip(bg,v,x))
+        live=np.array([-20.,-10.,-5.])
+        for x in np.linspace(-1.,3.,51):
+            self.assertEqual(k._interp_with_clip(bg,live,x,True),k._interp_with_clip(bg,live,x))
+
+    def test_strict_tenure_kernel_rejects_unsupported_sale_buy_and_switch(self):
+        bg=np.array([0.,1.,2.]);v=np.full((3,3,1,1,1),-1e10)
+        heq=np.array([[0.,.99,2.]]);hc=np.array([[0.,1.01,2.]])
+        dp=(.2*hc)[:,:,None,None];bm=(-.8*hc)[:,:,None,None]
+        birth=np.zeros((1,1,3,3),dtype=np.bool_);grants=np.zeros((1,3,1,1))
+        args=(bg,heq,hc,dp,bm,birth,grants)
+        for destination,origin_b,origin_tenure in ((0,0,1),(1,2,0),(1,0,2)):
+            values=v.copy();values[:,destination,0,0,0]=[-1e10,-10.,-5.]
+            legacy,_=k.tenure_choice_kernel(values,*args)
+            strict,_=k.tenure_choice_kernel(values,*args,True)
+            idx=(origin_b,origin_tenure,0,0,0)
+            self.assertGreater(legacy[idx],-1e9)
+            self.assertEqual(strict[idx],-1e10)
+
     def setUp(self):
         self.bg = np.array([-3., -2., 0., .3, 1., 3., 6.])
         self.v = np.array([0., 1., 0., 4., 2., 7., 5.])

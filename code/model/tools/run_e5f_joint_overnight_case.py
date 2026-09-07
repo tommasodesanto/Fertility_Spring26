@@ -27,7 +27,7 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT / "code/model"), str(ROOT / "code/model/tools")]
 
-BUNDLE = "4afac38564522c252bf438c2ab3b7c968c722c9738b95193aaf9173c3c8ba001"
+BUNDLE = "cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760"
 SUPPORTED_BUNDLES = (BUNDLE,)
 TARGET = "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
 SOURCE = "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"

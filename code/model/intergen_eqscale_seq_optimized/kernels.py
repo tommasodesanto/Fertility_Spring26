@@ -570,7 +570,7 @@ def eval_renter_block_kernel(
 
 
 @njit(cache=True)
-def _interp_with_clip(bg, V, x):
+def _interp_with_clip(bg, V, x, strict_interpolated_support=False):
     nb = bg.size
     if x <= bg[0]:
         return V[0]
@@ -589,6 +589,12 @@ def _interp_with_clip(bg, V, x):
         w = 0.0
     elif w > 1.0:
         w = 1.0
+    if strict_interpolated_support:
+        # A finite infeasibility sentinel must never become a feasible
+        # interpolant when its destination receives positive scatter mass.
+        if ((1.0-w > 0.0 and V[lo] <= -1e9)
+                or (w > 0.0 and V[lo+1] <= -1e9)):
+            return -1e10
     return (1.0 - w) * V[lo] + w * V[lo + 1]
 
 
@@ -602,6 +608,7 @@ def tenure_choice_kernel(
     bmo,                 # (I, nt, npar, ncs)
     birth_dp,            # (npar, ncs, nt, nt) bool
     birth_entry_grant,   # (I, nt, npar, ncs)
+    strict_interpolated_support=False,
 ):
     # Discrete tenure-choice argmax over `tn` given conditional values Vd
     # for each (origin tenure `to`, location, parity, child-state, b).
@@ -628,7 +635,7 @@ def tenure_choice_kernel(
                             v0 = Vd[b, 0, id_, nn, cs]
                         else:
                             ba = bg_b + sp
-                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba)
+                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support)
                         if v0 > best_v:
                             best_v = v0
                             best_tn = 0
@@ -643,20 +650,20 @@ def tenure_choice_kernel(
                                 bab = bg_b - hc
                                 if birth_dp[nn, cs, to, tn]:
                                     bag = bab if bab > bmn else bmn
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag, strict_interpolated_support)
                                 elif birth_entry_grant[id_, tn, nn, cs] > 0:
                                     gfix = birth_entry_grant[id_, tn, nn, cs]
                                     babg = bab + gfix
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg, strict_interpolated_support)
                                     if (bg_b + gfix) < dpn or babg < bmn:
                                         v_tn = NEG_INF
                                 else:
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab, strict_interpolated_support)
                                     if bg_b < dpn or bab < bmn:
                                         v_tn = NEG_INF
                             else:
                                 bar = bg_b + sp - hc
-                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar)
+                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar, strict_interpolated_support)
                                 dpc = dpn - sp
                                 if bg_b < dpc or bar < bmn:
                                     v_tn = NEG_INF
