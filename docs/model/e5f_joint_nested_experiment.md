@@ -248,3 +248,18 @@ unchanged \(2\times10^{-10}\) gate. The standalone checker is
 `run_e5f_joint_nested_reporting_check.py`; snapshot e and its receipts are
 indexed in the full experiment README. A complete history/policy smoke must
 still pass after this source revision. The production solver is unchanged.
+
+### Saving maximization before a full calibration
+
+The subsequent full-loop smoke failed the occupied value check at the 2027
+supply-policy state. A same-price, same-population replay exactly reproduces
+the local solution; replacing its two conditional saving kernels by the
+previously audited exhaustive kernels removes the value decrease. Births
+change by -0.03007% at fixed prices. This is a numerical-method comparison,
+not a calibrated policy effect or a new equilibrium: the improved policies
+require market clearing again. Exhaustive saving must be integrated and
+verified through the complete historical/policy loop before launching the
+experimental calibration. Its full-history runtime remains unmeasured.
+The original gates, economic parameters and empirical targets remain intact.
+Read the five-page discussion PDF and receipts indexed in the experiment
+README; the full overnight search is held for the author discussion.

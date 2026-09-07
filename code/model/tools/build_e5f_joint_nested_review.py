@@ -26,6 +26,8 @@ def main():
     ap.add_argument('--history-results', type=Path, required=True)
     ap.add_argument('--policy-results', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--partial-policy-review', action='store_true')
+    ap.add_argument('--saving-diagnosis', type=Path)
     a = ap.parse_args()
     hist, policies = a.history_results.resolve(), a.policy_results.resolve()
     anchor = hist/'smoke/smoke_anchor/task_001'
@@ -34,7 +36,10 @@ def main():
     summary = layout.read_json(anchor/'summary.json')
     cross = layout.read_json(hist/'smoke/cross_snapshot_verification.json')
     smoke = layout.read_json(hist/'smoke/smoke_verification.json')
-    verification = layout.read_json(policies/'equilibrium_receipt.json')
+    verification = None if a.partial_policy_review else layout.read_json(policies/'equilibrium_receipt.json')
+    saving = layout.read_json(a.saving_diagnosis) if a.saving_diagnosis else None
+    if saving and (saving['status'] != 'comparison_complete' or not saving['local_thirteen_arrays_exact']):
+        raise RuntimeError('Saving diagnosis has not completed its reference check')
     handoff = layout.read_json(policies/'inherited_state_verification.json')
     reporting = layout.read_json(hist/'reporting_after/reporting_check.json')
     reporting_before = layout.read_json(hist/'reporting_before/reporting_check.json')
@@ -49,18 +54,26 @@ def main():
     if cross['status'] != 'pass' or smoke['status'] != 'pass':
         raise RuntimeError('Verified historical repetitions are required')
     expected_policies = {'baseline','supply-plus-20','dependent-child-ltv95','property-tax-2pct-no-rebate'}
-    if (not verification['smoke'] or verification['status'] != 'complete' or verification['failures'] or
-        set(verification['cases']) != expected_policies or handoff['status'] != 'exact_feasibility_replay'):
-        raise RuntimeError('This report requires the verified two-date policy experiment')
-    for result in verification['cases'].values():
-        if (result['status'] != 'complete' or result['dates'] != 2 or
-            result['gates']['maximum_market_residual'] > 2e-4 or
-            result['gates']['maximum_mass_residual'] > 2e-10):
-            raise RuntimeError('Incomplete or invalid policy-path gates')
-    if verification['selected_summary_sha256'] != digest(anchor/'summary.json'):
-        raise RuntimeError('Policy paths belong to a different anchor')
-    if digest(policies/'inherited_state_verification.json') != verification['inherited_state_verification_sha256']:
-        raise RuntimeError('Policy handoff receipt changed')
+    if a.partial_policy_review:
+        failure = layout.read_json(policies/'supply-plus-20/failure.json')
+        failed = layout.read_json(policies/'supply-plus-20/date_2027/policy_array_summary.json')
+        if failure['error'] != 'Occupied value monotonicity failed on policy path' or failed['occupied_negative_steps'] < 1:
+            raise RuntimeError('The partial report does not match the observed failure')
+        if handoff['status'] != 'exact_feasibility_replay' or handoff['source_summary_sha256'] != digest(anchor/'summary.json'):
+            raise RuntimeError('Partial policy handoff source changed')
+    else:
+        if (not verification['smoke'] or verification['status'] != 'complete' or verification['failures'] or
+            set(verification['cases']) != expected_policies or handoff['status'] != 'exact_feasibility_replay'):
+            raise RuntimeError('This report requires the verified two-date policy experiment')
+        for result in verification['cases'].values():
+            if (result['status'] != 'complete' or result['dates'] != 2 or
+                result['gates']['maximum_market_residual'] > 2e-4 or
+                result['gates']['maximum_mass_residual'] > 2e-10):
+                raise RuntimeError('Incomplete or invalid policy-path gates')
+        if verification['selected_summary_sha256'] != digest(anchor/'summary.json'):
+            raise RuntimeError('Policy paths belong to a different anchor')
+        if digest(policies/'inherited_state_verification.json') != verification['inherited_state_verification_sha256']:
+            raise RuntimeError('Policy handoff receipt changed')
     loss = float(summary['best_candidate']['transition_loss'])
     if len(fit) != 12 or sum(p['is_free_parameter'].lower() == 'true' for p in pars) != 11:
         raise RuntimeError('Changed moment or free-parameter count')
@@ -77,6 +90,39 @@ def main():
         if not path.exists() or digest(path) != sha:
             raise RuntimeError(f'Missing or changed selected artifact: {path}')
         checked += 1
+    policy_checks = []
+    paths = {}
+    for name in (['baseline'] if a.partial_policy_review else sorted(expected_policies)):
+        folder = policies/name
+        case_receipt = layout.read_json(folder/'receipt.json')
+        if (not a.partial_policy_review and case_receipt != verification['cases'][name]) or case_receipt['source_summary_sha256'] != digest(anchor/'summary.json'):
+            raise RuntimeError('Policy case receipt or source changed')
+        paths[name] = layout.read_csv(folder/'policy_path.csv')
+        if [int(float(r['calendar_year'])) for r in paths[name]] != [2023,2027]:
+            raise RuntimeError('Unexpected policy dates')
+        for year in (2023,2027):
+            date = folder/f'date_{year}'
+            budget = layout.read_json(date/'budget_summary.json')
+            arrays = layout.read_json(date/'policy_array_summary.json')
+            graphs = sorted((date/'standard_diagnostics').glob('*.png'))
+            if budget['budget_excess_mass'] > 2e-10 or arrays['occupied_negative_steps'] != 0 or len(graphs) != 17:
+                raise RuntimeError('Missing or failed dated policy diagnostic')
+            for bounds in arrays['probabilities'].values():
+                if bounds['nonfinite'] or bounds['minimum'] < 0 or bounds['maximum'] > 1:
+                    raise RuntimeError('Policy probability range failed')
+            policy_checks.append(dict(policy=name,year=year,budget_excess_mass=budget['budget_excess_mass'],
+                                      standard_graphs=17,path_sha256=digest(folder/'policy_path.csv')))
+    if a.partial_policy_review:
+        for year in (2023,2027):
+            date = policies/'supply-plus-20'/f'date_{year}'
+            budget = layout.read_json(date/'budget_summary.json')
+            arrays = layout.read_json(date/'policy_array_summary.json')
+            if budget['budget_excess_mass'] > 2e-10 or len(list((date/'standard_diagnostics').glob('*.png'))) != 17:
+                raise RuntimeError('Supply diagnostic missing or budget evidence changed')
+            if (year == 2023 and arrays['occupied_negative_steps'] != 0) or (year == 2027 and arrays != failed):
+                raise RuntimeError('Supply path no longer matches the described partial result')
+            policy_checks.append(dict(policy='supply-plus-20',year=year,budget_excess_mass=budget['budget_excess_mass'],
+                occupied_negative_steps=arrays['occupied_negative_steps'],standard_graphs=17,status='passed' if year==2023 else 'failed'))
 
     fonts = Path('/System/Library/Fonts/Supplemental')
     pdfmetrics.registerFont(TTFont('Review', str(fonts/'Arial.ttf')))
@@ -100,7 +146,7 @@ def main():
         story.append(layout.table(body,widths,font_size=8))
     moments = {r['moment']:r for r in fit}
     own = moments['own_family_gap']; birth = moments['housing_increment_0to1']
-    status = verification['status']
+    status = 'stopped at supply expansion, 2027' if a.partial_policy_review else verification['status']
     add('Simultaneous choice:<br/>review before calibration','ReviewTitle')
     add('6 September 2026 | Experimental specification | Full overnight search stopped','ReviewSmall')
     add('<b>The lifecycle calculation is reproducible. A successful recalibration has not yet been established.</b> '
@@ -115,15 +161,23 @@ def main():
         'For example, κ = 2 and λ = 0.8 imply an inner scale of 1.6. '
         'This links tenure and fertility dispersion. Both must be re-estimated jointly with the other nine parameters.')
     add('<b>Simultaneous tastes still require a conception contract.</b> The household chooses tenure and whether to attempt a birth '
-        'together, after observing the joint tastes. Conception succeeds afterward. Housing size, consumption and saving may adjust '
+        'together, after observing the joint tastes. Whether conception succeeds is learned afterward. Housing size, consumption and saving may adjust '
         'within the chosen tenure. The same nesting parameter applies across birth orders; this is an experimental restriction.')
     add(f'<b>Policy-stage verification:</b> {escape(status.replace("_"," "))}. '
-        'The experiment checks 2023 and 2027 for the baseline, additional supply, relaxed parental LTV and higher property tax. '
-        'These short paths test the workflow; they are not calibrated policy estimates or a 2063 forecast.')
-    add('<b>Proposed next step after our discussion:</b> search all eleven parameters against the unchanged twelve targets and weights; '
+        + ('The baseline passes both dates. Supply passes 2023, then fails an occupied-value check in 2027. LTV and tax have not run. '
+           'The exhaustive-saving diagnosis is on page 5.' if a.partial_policy_review else
+           'All four two-date paths pass. These test the workflow; they are not calibrated policy estimates or a 2063 forecast.'))
+    add('<b>Proposed next step after numerical verification and our specification discussion:</b> search all eleven parameters against the unchanged twelve targets and weights; '
         'reserve time for a local sensitivity matrix, two exact final repetitions and full policy paths. '
         'Having twelve moments for eleven parameters is not an identification test. Retain the current expectation method for this run and discuss '
         'perfect foresight separately. No production replacement has been made.')
+    if a.partial_policy_review:
+        add('<b>Recommendation:</b> use exhaustive saving in the isolated experiment and repeat the complete history/policy smoke '
+            'before launching the calibration. The fixed-price diagnosis establishes a promising repair, not a verified equilibrium path.','ReviewSmall')
+    add('Proposed resource limit: twelve cluster workers, at most 360 historical cases including final checks, '
+        'up to nine hours searching within twelve hours total. The current optimizer takes 12-14 minutes per history, '
+        'implying roughly 6-7 hours for 360 cases with twelve workers. Exhaustive saving must be timed on a complete history; '
+        'the case count may need to fall to preserve final checks and the morning cutoff.','ReviewSmall')
 
     heading('Complete target fit at the starting point')
     add('Every original target is retained. Shares and share gaps are fractions: 0.01 equals one percentage point. '
@@ -165,17 +219,49 @@ def main():
         story.append(layout.image_fit(anchor/'standard_diagnostics'/name,523,282));story.append(Spacer(1,10))
 
     heading('Policy-loop check and limits of the current evidence')
-    effects = layout.read_csv(policies/'policy_effects.csv')
-    if len(effects) != 6 or {(r['policy'],int(r['year'])) for r in effects} != {
-        (name,year) for name in expected_policies-{'baseline'} for year in (2023,2027)}:
-        raise RuntimeError('Missing or duplicated policy-effect rows')
-    names = {'supply-plus-20':'Housing supply +20%','dependent-child-ltv95':'Dependent-child LTV 95%',
-             'property-tax-2pct-no-rebate':'Property tax doubled'}
-    add('The table below is a workflow check at uncalibrated starting parameters. Each row compares the policy against its '
-        'same-date baseline, starting from the same original 2023 population. Do not put these values into the presentation as policy estimates.','ReviewSmall')
-    table([['Policy','Year','Births (%)','Ownership (pp)','Rooms (%)']]+[
-        [names[r['policy']],r['year'],fmt(r['births_percent']),fmt(r['ownership_pp']),fmt(r['rooms_percent'])] for r in effects],
-        [195,48,88,102,90])
+    if a.partial_policy_review:
+        add('The verification stopped, so a complete policy comparison is unavailable. The completed history is reproducible; '
+            'the policy path is not certified. No gate has been relaxed.','ReviewSmall')
+        table([['Policy','2023','2027'],['Baseline','Passed','Passed'],['Housing supply +20%','Passed','Occupied-value check failed'],
+               ['Dependent-child LTV 95%','Not run','Not run'],['Property tax doubled','Not run','Not run']],[195,120,208])
+        story.append(Spacer(1,12))
+        add('<b>The new failure.</b> At age 18, a childless renter in income state 8 gains wealth from -1.79070 to -1.65116, '
+            f'but its computed value falls by {failed["maximum_occupied_value_drop"]:.6f}. The lower state contains '
+            f'{100*failed["share_pre_choice_mass_at_negative_steps"]:.4f}% of pre-choice household mass. '
+            'The budget audit passes. This is separate from the corrected consumption-reporting floor.','ReviewSmall')
+        if saving:
+            global_row = next(r for r in saving['rows'] if r['method']=='global')
+            add('<b>Bounded numerical diagnosis.</b> The local replay reproduces all thirteen policy/population arrays exactly. '
+                f'Exhaustive saving leaves {global_row["policy_arrays"]["occupied_negative_steps"]} occupied value decreases. '
+                f'At the same prices and inherited population, births change by {saving["births_global_minus_local_percent"]:.6g}%, '
+                f'ownership by {saving["ownership_global_minus_local_pp"]:.6g} percentage points and rooms by '
+                f'{saving["rooms_global_minus_local_percent"]:.6g}%. These are optimizer comparisons, not policy effects. '
+                f'The resulting market residual is {global_row["quantities"]["market_residual"]:.3g}, above the 2e-4 clearing tolerance; '
+                'prices must be solved again. Full historical and policy-path verification remains required.','ReviewSmall')
+        else:
+            add('A bounded comparison with the existing exhaustive saving routine is pending. Earlier project audits found '
+                'similar local-optimizer failures, but that history alone does not establish the cause here.','ReviewSmall')
+    else:
+        effects = layout.read_csv(policies/'policy_effects.csv')
+        if len(effects) != 6 or {(r['policy'],int(r['year'])) for r in effects} != {
+            (name,year) for name in expected_policies-{'baseline'} for year in (2023,2027)}:
+            raise RuntimeError('Missing or duplicated policy-effect rows')
+        for row in effects:
+            k = (int(row['year'])-2023)//4
+            baseline, policy = paths['baseline'][k], paths[row['policy']][k]
+            expected = dict(
+                births_percent=100*(float(policy['birth_children_topcode_adjusted'])/float(baseline['birth_children_topcode_adjusted'])-1),
+                ownership_pp=100*(float(policy['owner_rate'])-float(baseline['owner_rate'])),
+                rooms_percent=100*(float(policy['housing_demand_per_adult'])/float(baseline['housing_demand_per_adult'])-1))
+            if any(abs(float(row[key])-value)>1e-10 for key,value in expected.items()):
+                raise RuntimeError('Policy effects do not reproduce the dated paths')
+        names = {'supply-plus-20':'Housing supply +20%','dependent-child-ltv95':'Dependent-child LTV 95%',
+                 'property-tax-2pct-no-rebate':'Property tax doubled'}
+        add('The table below is a workflow check at uncalibrated starting parameters. Each row compares the policy against its '
+            'same-date baseline, starting from the same original 2023 population. Do not put these values into the presentation as policy estimates.','ReviewSmall')
+        table([['Policy','Year','Births (%)','Ownership (pp)','Rooms (%)']]+[
+            [names[r['policy']],r['year'],fmt(r['births_percent']),fmt(r['ownership_pp']),fmt(r['rooms_percent'])] for r in effects],
+            [195,48,88,102,90])
     story.append(Spacer(1,12))
     add('<b>Maintained closures.</b> Markets clear separately at each date; households treat each current price as permanent. '
         'This is temporary equilibrium, not perfect foresight. After 2023 the national population is closed: no outside entry, '
@@ -192,7 +278,7 @@ def main():
     add('<b>Still outstanding.</b> Full calibration; local identification and parameter trade-offs; exact final repetitions of a '
         'selected optimum; calibrated 2023-2063 policy paths; and author adoption of the nesting/commitment restrictions. '
         'No completed smoke settles those questions.','ReviewSmall')
-    add('Evidence: the adjacent experiment README indexes both smoke revisions, immutable contracts, numerical checks, full tables '
+    add('Evidence: output/model/e5f_joint_nested_full_20260906a/README.md indexes the revisions, immutable contracts, numerical checks, full tables '
         'and all seventeen unchanged standard graphs. Rebuild this PDF with build_e5f_joint_nested_review.py and the same collected '
         'history/policy directories.','ReviewSmall')
 
@@ -201,11 +287,15 @@ def main():
         canvas.drawString(36,20,'Simultaneous-choice experiment | Discussion copy | Production unchanged')
         canvas.drawRightString(A4[0]-36,20,str(doc.page));canvas.restoreState()
     a.output.parent.mkdir(parents=True,exist_ok=True)
-    SimpleDocTemplate(str(a.output),pagesize=A4,rightMargin=36,leftMargin=36,topMargin=36,bottomMargin=36).build(story,onFirstPage=footer,onLaterPages=footer)
+    SimpleDocTemplate(str(a.output),pagesize=A4,rightMargin=36,leftMargin=36,topMargin=36,bottomMargin=36,
+                      title='Simultaneous choice: review before calibration',author='Research discussion draft').build(story,onFirstPage=footer,onLaterPages=footer)
     checks = dict(status='numerical_source_checks_passed_visual_review_pending',pdf=str(a.output.resolve()),pdf_sha256=digest(a.output),
                   fit_rows=len(fit),free_parameters=len(free),verified_selected_artifacts=checked,loss=loss,
                   history_results=str(hist),policy_results=str(policies),builder_sha256=digest(__file__),production_promoted=False,
                   reporting_check_sha256=digest(hist/'reporting_after/reporting_check.json'))
+    checks['verified_policy_dates'] = policy_checks
+    checks['partial_policy_review'] = a.partial_policy_review
+    checks['saving_diagnosis_sha256'] = digest(a.saving_diagnosis) if saving else None
     (a.output.parent/(a.output.stem+'_verification.json')).write_text(json.dumps(checks,indent=2)+'\n')
     print(a.output)
 

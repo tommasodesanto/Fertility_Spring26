@@ -1,8 +1,52 @@
 # Calibration Status
 
-Updated: `2026-09-06` (two-hour review checkpoint; policy reporting-floor repair under bounded verification; full search stopped)
+Updated: `2026-09-06` (discussion PDF ready; policy smoke failed and saving diagnosis completed; full search stopped)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**Review packet ready, September 7 at 00:00 UTC (September 6, 20:00 New York).**
+The full overnight search remains stopped pending the author discussion. Smoke
+`17080053` completed all four histories, independently verified against their
+original plans, inputs, scientific/helper hashes and 84 artifact hashes. Both
+anchors reproduce all twelve fit rows, parameters, 253 numeric historical
+entries and seventeen PNGs from snapshot c exactly. However, the complete smoke
+FAILED at the supply expansion in 2027: one occupied age-18 childless renter
+state has a value decrease of `0.2567960565` as wealth rises from `-1.7906976744`
+to `-1.6511627907`. Its lower-node mass is `0.0014997479`, or `0.1312547%` of
+pre-choice household mass. Budget and probability checks pass. Baseline 2023
+and 2027 and supply 2023 pass; LTV and tax have not run. No complete policy-loop
+receipt exists, so this snapshot cannot authorize a full calibration search.
+
+A bounded two-Bellman comparison (`17082550`, completed 0:0 in 56 seconds)
+reuses the previously audited exhaustive saving kernels. The local method
+exactly reproduces thirteen policy/population arrays. Exhaustive saving
+eliminates the occupied value drop and weakly improves every occupied value
+(minimum gain `2.17e-10`). At the same inherited population and prices, adjusted
+births change `-0.0300700832%`, ownership `-0.000226077` percentage points, and
+rooms `-0.0583627828%`. This diagnoses a saving-optimizer failure, distinct from
+the repaired owner-consumption reporting floor. The exhaustive result's market
+residual is `6.163872e-4`, above `2e-4`: it is a fixed-price diagnostic, not a
+verified equilibrium or full policy-path repair. Earlier comparable diagnoses
+are reconciled in the existing September 5 quantitative audit and status notes.
+
+The recommendation is to use exhaustive saving in the isolated experiment,
+rerun the full history/policy smoke and measure its runtime before recalibrating.
+Do not relax the value or market gates. The nesting and conception/tenure
+commitment restrictions still require discussion. No source change to the
+production optimizer, target, weight, population or fiscal contract was made.
+
+The five-page discussion PDF `output/pdf/e5f_joint_nested_full_readout.pdf`
+is rendered and visually checked, with every target and parameter table cell
+matched to the collected source. PDF SHA
+`32b4d544ee7272e52c44f4d472d52d0774949820a97ac12b92570c46e5a16a66`.
+It explicitly reports a partial policy verification, not a new calibration.
+Evidence: `output/model/e5f_joint_nested_full_20260906a/README.md`,
+`reporting_smoke_e/smoke/cross_snapshot_verification.json`,
+`saving_diagnosis/results/saving_diagnosis.json`, and the adjacent PDF
+verification JSON. The seventeen standard anchor graphs, four saved policy-date
+packets and both saving-diagnosis packets were inspected; weak ownership
+gradients remain, and no broad policy-optimality claim is made. All jobs ended;
+the finite review monitor is paused. Full overnight work awaits discussion.
 
 **Latest verification, September 6 at 23:24 UTC.** The fixed-price comparison
 `17080030` completed successfully in 47 seconds. Correcting owner consumption
