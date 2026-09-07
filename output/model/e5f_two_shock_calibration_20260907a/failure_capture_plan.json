@@ -1,0 +1,107 @@
+{
+  "adapter_sha256": "5dea8ba47cdb13a87ad6c1fe7291c4752982732cbbf5f5c8383a57239f0e76bb",
+  "cases": [
+    {
+      "center": "center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 1,
+      "label": "retained_anchor_failure_capture",
+      "output": "failure_replay_001",
+      "panel_design": "mixed",
+      "panel_seed": 20260907,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.02
+    }
+  ],
+  "choice_model": "two_shock",
+  "code_bundle_sha256": "826a2d26d63a5278d08b95d517bdadd693c999c40b746baae68c870ddc964e4c",
+  "diagnostic_wrapper_sha256": "08d17aaee1990979b696e2761a4ec80b7c6e64ddefada6be5d737557504e0e01",
+  "estimated_run_size": "2 normalized old steady states and 2 five-date histories; roughly 50-100 price solves per case plus normalization; 2-4 hours per case at observed 105-second additive Bellman; 6-hour hard cap",
+  "helper_sha256": {
+    "collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "run_e5f_independent_numerical_audit.py": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528"
+  },
+  "input_sha256": {
+    "center.json": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+    "source.json": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
+  },
+  "launch_deadline_epoch": 1788891573.4522061,
+  "schema": "e5f_bounded_refinement_v1",
+  "search_domain": [
+    {
+      "lower": 0.94,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert_continuation",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.1,
+      "name": "hbar_child_rooms",
+      "transform": "log",
+      "upper": 1.8
+    },
+    {
+      "lower": 0.0,
+      "name": "first_birth_fixed_cost",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "hbar_first_child_jump",
+      "transform": "softzero",
+      "upper": 0.5
+    },
+    {
+      "lower": -1.5,
+      "name": "psi_child_change_2023",
+      "transform": "asinh",
+      "upper": 0.2
+    }
+  ],
+  "source": "/scratch/td2248/projects/Fertility_Spring26_two_shock_calibration_20260907a/output/model/e5f_two_shock_calibration_20260907a/source.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "diagnostic_only_identical_history_failure_capture",
+  "stop_criteria": "Replay one original retained-parameter history, capture failing operator arrays, retain original exception and gates; no search.",
+  "suppress_plots": true,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817",
+  "time_budget_seconds_per_case": 21600
+}
