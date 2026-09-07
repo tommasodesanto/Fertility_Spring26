@@ -95,6 +95,17 @@ class ReportValidationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'inconsistent dates'):
                 report.validate_policy(root,self.selected_sha,self.summary)
 
+    def test_benchmark_requires_complete_comparable_fit_and_parameters(self):
+        root=FIXTURE.parents[1]/'e5f_joint_nested_experiment_20260906a'
+        fit=report.read_csv(self.selected/'target_fit_long.csv')
+        ref=report.validate_reference(root/'reference_target_fits.csv',root/'reference_parameters.csv',fit)
+        self.assertAlmostEqual(ref['loss'],30.482966707698903,places=10)
+        with self.assertRaisesRegex(RuntimeError,'complete fit and parameter'):
+            report.validate_reference(root/'reference_target_fits.csv',None,fit)
+        fit[0]['weight']=str(2*float(fit[0]['weight']))
+        with self.assertRaisesRegex(RuntimeError,'target or weight differs'):
+            report.validate_reference(root/'reference_target_fits.csv',root/'reference_parameters.csv',fit)
+
     def test_policy_rejects_duplicate_effect_rows(self):
         original=report.read_csv
         def altered(path):

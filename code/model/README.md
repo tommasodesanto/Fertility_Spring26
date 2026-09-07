@@ -25,6 +25,8 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 `tools/build_e5f_joint_nested_review.py` builds the experimental morning PDF
 from a complete collected candidate (`--selected-dir`), optional completed
 `--policy-results`, `--search-verification`, and lead-written `--narrative`.
+The paired `--reference-fit` and `--reference-parameters` options add the
+retained benchmark, requiring exactly matching target values and weights.
 It validates full fit/parameter tables, numerical gates, artifact and source
 hashes, policy dates and the original inherited-state receipt. Smoke inputs
 require an explicit `--fixture-label`; no numerical model runs in the builder.

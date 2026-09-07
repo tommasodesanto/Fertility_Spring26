@@ -43,6 +43,7 @@ MOMENT_LABELS = {**layout.MOMENT_LABELS,
     "old_total_wealth_to_annual_income_p90_p50_7684": "Wealth/income p90/p50, ages 76-84",
 }
 PARAMETER_LABELS = {
+    "kappa_fert": "First-birth taste dispersion", "kappa_fert_continuation": "Later-birth taste dispersion",
     "beta_annual": "Annual discount factor", "tenure_choice_kappa": "Outer taste scale",
     "joint_nest_lambda": "Nest dissimilarity", "chi": "Owner housing-service premium",
     "H0": "Housing-supply normalization", "theta0": "Bequest utility weight",
@@ -101,6 +102,39 @@ def load_narrative(path: Path | None) -> dict[str, str]:
             raise RuntimeError("Narrative JSON must be an object of string fields")
         return value
     return {"interpretation": raw}
+
+
+def validate_reference(fit_path, parameter_path, selected_fit):
+    if fit_path is None and parameter_path is None:
+        return None
+    if fit_path is None or parameter_path is None:
+        raise RuntimeError("A benchmark comparison requires its complete fit and parameter tables")
+    fit, parameters = read_csv(fit_path), read_csv(parameter_path)
+    targets = {row["moment"]: row for row in selected_fit}
+    if len(fit) != 12 or {row["moment"] for row in fit} != set(targets):
+        raise RuntimeError("Benchmark moment set differs")
+    loss = 0.
+    for row in fit:
+        for key in ("target", "weight"):
+            if finite(row[key], key) != finite(targets[row["moment"]][key], key):
+                raise RuntimeError("Benchmark target or weight differs")
+        gap = finite(row["model"], "benchmark model") - float(row["target"])
+        if not math.isclose(gap, finite(row["gap"], "benchmark gap"), rel_tol=0., abs_tol=1e-10):
+            raise RuntimeError("Benchmark gap does not reproduce")
+        contribution = float(row["weight"]) * gap**2
+        if not math.isclose(contribution, finite(row["loss_contribution"], "benchmark contribution"), rel_tol=0., abs_tol=1e-8):
+            raise RuntimeError("Benchmark objective does not reproduce")
+        loss += contribution
+    if (len(parameters) != 15 or len({r["parameter"] for r in parameters}) != 15
+            or sum(bool_value(r["is_free_parameter"]) for r in parameters) != 11):
+        raise RuntimeError("Retained benchmark requires all eleven free and four restricted entries")
+    for row in parameters:
+        value = finite(row["value"], "benchmark parameter")
+        if bool_value(row["is_free_parameter"]):
+            if not finite(row["lower_bound"], "bound") <= value <= finite(row["upper_bound"], "bound"):
+                raise RuntimeError("Benchmark parameter lies outside its reported bounds")
+    return dict(fit=fit, parameters=parameters, loss=loss,
+                fit_sha256=sha(fit_path), parameters_sha256=sha(parameter_path))
 
 
 def validate_arrays_and_budget(arrays, budget, label):
@@ -277,6 +311,8 @@ def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--selected-dir", type=Path, required=True, help="Complete selected candidate directory.")
+    parser.add_argument("--reference-fit", type=Path, help="Optional complete retained-benchmark target table; requires its parameters.")
+    parser.add_argument("--reference-parameters", type=Path, help="Complete retained-benchmark free and restricted parameters.")
     parser.add_argument("--output", type=Path, required=True, help="New PDF path; refuses to overwrite.")
     parser.add_argument("--policy-results", type=Path, help="Optional root containing four policy cases and receipt.")
     parser.add_argument("--search-verification", type=Path, help="Optional completed search/final verification JSON; hashed in receipt.")
@@ -287,6 +323,7 @@ def main() -> None:
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite {output}")
     fit, parameters, summary, _, selected_artifacts = validate_selected(selected)
+    reference = validate_reference(args.reference_fit, args.reference_parameters, fit)
     selected_summary_sha = sha(selected / "summary.json")
     search = read_json(args.search_verification.resolve()) if args.search_verification else None
     if search:
@@ -329,6 +366,8 @@ def main() -> None:
     add((fixture + " | " if fixture else "") + "Experimental simultaneous tenure and birth-attempt choice", "RSmall")
     if narrative.get("summary"): add(escape(narrative["summary"]))
     add(f"<b>Selected objective: {loss:.3f}.</b> All twelve target rows and eleven free parameters appear in the following tables.")
+    if reference:
+        add(f"<b>Retained benchmark objective: {reference['loss']:.3f}.</b> The target and weight rows match exactly. Its full fit and parameter tables appear in the appendix; the shock specification differs.")
     add("<b>Reproduction:</b> " + ("Two final histories reproduce the selected fit and all seventeen standard graphs exactly." if search else "Final repetitions of a searched candidate are not yet certified."))
     add(f"<b>Policy status:</b> {escape(policy_status)}")
     if narrative.get("interpretation"): add("<b>Interpretation:</b> " + escape(narrative["interpretation"]))
@@ -363,6 +402,20 @@ def main() -> None:
     if policy_checks:
         add(f"All {len(policy_checks)} dated packets contain the unchanged seventeen graphs and pass the occupied-value, budget and probability checks. Maximum budget-violating mass: {max(x['budget_excess_mass'] for x in policy_checks):.3g}, below 2e-10.", "RSmall")
 
+    if reference:
+        heading("Retained benchmark: complete target fit")
+        table([["Moment", "Target", "Model", "Gap", "Weight", "Loss contribution"]] + [
+            [MOMENT_LABELS[row["moment"]], *[fmt(row[k]) for k in ("target", "model", "gap", "weight", "loss_contribution")]]
+            for row in reference["fit"]], [180, 60, 60, 62, 70, 76])
+        add(f"Complete-table objective: {reference['loss']:.9f}. This is the retained production comparison; experimental search does not promote a replacement.", "RSmall")
+        heading("Retained benchmark: all parameters and restrictions")
+        table([["Parameter", "Value", "Lower", "Upper", "Free?", "Near bound?"]] + [
+            [{"tenure_choice_kappa": "Tenure taste dispersion"}.get(row["parameter"], PARAMETER_LABELS.get(row["parameter"], row["parameter"])), fmt(row["value"]),
+             fmt(row["lower_bound"]) if bool_value(row["is_free_parameter"]) else "-",
+             fmt(row["upper_bound"]) if bool_value(row["is_free_parameter"]) else "-",
+             row["is_free_parameter"], row["near_bound"]] for row in reference["parameters"]], [190, 70, 65, 65, 57, 75])
+        add("The old child-value intercept is normalized to completed fertility 2.1; its 2023 level follows from the estimated change. Housing-supply elasticity and the tenure taste scale are externally fixed. The original model estimates separate first- and later-birth taste scales.", "RSmall")
+
     graph_dir = selected / "standard_diagnostics"
     graphs = sorted(graph_dir.glob("*.png"))
     if graphs:
@@ -379,7 +432,7 @@ def main() -> None:
         canvas.drawRightString(A4[0] - 36, 20, f"Page {doc.page}"); canvas.restoreState()
     output.parent.mkdir(parents=True, exist_ok=True)
     SimpleDocTemplate(str(output), pagesize=A4, rightMargin=36, leftMargin=36, topMargin=34, bottomMargin=34, title="Simultaneous-choice calibration readout", author="Research discussion draft").build(story, onFirstPage=footer, onLaterPages=footer)
-    verification = {"status": "numerical_source_checks_passed_visual_review_pending", "pdf": str(output), "pdf_sha256": sha(output), "selected_dir": str(selected), "selected_summary_sha256": selected_summary_sha, "selected_artifacts_checked": selected_artifacts, "fit_rows": len(fit), "fit_cells": fit, "parameter_cells": parameters, "selected_receipt_sha256": sha(selected / "case_receipt.json"), "policy_receipt_sha256": sha(args.policy_results.resolve() / "equilibrium_receipt.json") if policy else None, "free_parameters": len(free), "fixed_or_derived_parameters": len(fixed), "loss": loss, "fixture_label": fixture or None, "policy_status": policy_status, "policy_date_checks": policy_checks, "search_verification_sha256": sha(args.search_verification.resolve()) if args.search_verification else None, "narrative_sha256": sha(args.narrative.resolve()) if args.narrative else None, "builder_sha256": sha(Path(__file__).resolve()), "production_promoted": False}
+    verification = {"status": "numerical_source_checks_passed_visual_review_pending", "pdf": str(output), "pdf_sha256": sha(output), "selected_dir": str(selected), "selected_summary_sha256": selected_summary_sha, "selected_artifacts_checked": selected_artifacts, "reference": reference, "fit_rows": len(fit), "fit_cells": fit, "parameter_cells": parameters, "selected_receipt_sha256": sha(selected / "case_receipt.json"), "policy_receipt_sha256": sha(args.policy_results.resolve() / "equilibrium_receipt.json") if policy else None, "free_parameters": len(free), "fixed_or_derived_parameters": len(fixed), "loss": loss, "fixture_label": fixture or None, "policy_status": policy_status, "policy_date_checks": policy_checks, "search_verification_sha256": sha(args.search_verification.resolve()) if args.search_verification else None, "narrative_sha256": sha(args.narrative.resolve()) if args.narrative else None, "builder_sha256": sha(Path(__file__).resolve()), "production_promoted": False}
     verification_path = output.parent / f"{output.stem}_verification.json"
     verification_path.write_text(json.dumps(verification, indent=2) + "\n", encoding="utf-8")
     print(output)
