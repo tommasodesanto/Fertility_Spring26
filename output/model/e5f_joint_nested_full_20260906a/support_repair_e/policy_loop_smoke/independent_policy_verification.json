@@ -1,0 +1,84 @@
+{
+  "status": "pass",
+  "scope": "All completed new-source two-date policy paths; no full2023\u20132063 paths implied",
+  "receipt_sha256": "fc1b4106a67061d9cc781490a7c26988777b23591bb781f360138e5ac3f1946b",
+  "policy_validation": "Complete two-date smoke verified; this is not a 44-date full path.",
+  "checks": [
+    {
+      "policy": "baseline",
+      "year": 2023,
+      "budget_excess_mass": 5.644069099307502e-12,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2027,
+      "budget_excess_mass": 4.213433780147512e-12,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2023,
+      "budget_excess_mass": 5.644069099307502e-12,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2027,
+      "budget_excess_mass": 3.743030181795082e-12,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2023,
+      "budget_excess_mass": 2.0400964056270457e-11,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2027,
+      "budget_excess_mass": 1.3343982629670433e-11,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2023,
+      "budget_excess_mass": 1.0989935527956352e-12,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2027,
+      "budget_excess_mass": 9.939122683419585e-13,
+      "standard_graphs": 17
+    }
+  ],
+  "cross_source_comparisons": [
+    {
+      "policy": "baseline",
+      "exact_numeric_path_entries": 90,
+      "exact_standard_pngs": 34
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "exact_numeric_path_entries": 90,
+      "exact_standard_pngs": 34
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "exact_numeric_path_entries": 90,
+      "exact_standard_pngs": 34
+    },
+    {
+      "policy": "supply-plus-20",
+      "exact_numeric_path_entries": 90,
+      "exact_standard_pngs": 34
+    }
+  ],
+  "all136standard_pngs_exact": true,
+  "dated_pickles": "All eight original dated pickles hashed successfully onTorch in the complete170-artifact launch preflight; preserved there.",
+  "recorded_at": "2026-09-07T04:59:11.856332+00:00",
+  "remote_artifact_inventory_sha256": "9c47c9852774a5cc25ac07cbcff1a312dc6c905793bc69877ea130aab570c058",
+  "complete_preflight_contract_sha256": "c5524a0fcf68e78e150da334a98d7b18143af2c9753fa37871a3ada379da36e6",
+  "final_preflight_verified_at": "2026-09-07T05:32:10.032393+00:00"
+}

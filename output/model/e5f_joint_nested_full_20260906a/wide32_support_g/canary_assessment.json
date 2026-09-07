@@ -1,0 +1,120 @@
+{
+  "recorded_at": "2026-09-07T05:24:35.255765+00:00",
+  "job_id": 17091265,
+  "status": "bounded_runtime_timeout_during_old_fertility_normalization",
+  "ready_for_wide_search": true,
+  "source_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
+  "plan_sha256": "11ca73d79cb407b4dc1c0f28714b976d3eac09f1b76fb1431401bb155ee24753",
+  "original_center_sha256": "c4186bc5cd5e600d24210f425926a353dbd748212765236c11601d9731e1e19f",
+  "slurm_state": "FAILED",
+  "exit_code": "124:0",
+  "elapsed_seconds": 3603,
+  "process_cap_seconds": 3600,
+  "peak_rss_kib": 9702156,
+  "normalization_target": 2.1,
+  "normalization_tolerance": 0.0005,
+  "completed_stationary_evaluations": [
+    {
+      "psi": 0.1062,
+      "completed_fertility": 0.0,
+      "seconds": 546.85
+    },
+    {
+      "psi": 0.3562,
+      "completed_fertility": 0.0,
+      "seconds": 562.47
+    },
+    {
+      "psi": 0.6062,
+      "completed_fertility": 2.89827339,
+      "seconds": 180.49
+    },
+    {
+      "psi": 0.46848466,
+      "completed_fertility": 0.00743783,
+      "seconds": 246.16
+    },
+    {
+      "psi": 0.56817138,
+      "completed_fertility": 2.40221844,
+      "seconds": 189.19
+    },
+    {
+      "psi": 0.55559104,
+      "completed_fertility": 1.85663081,
+      "seconds": 187.59
+    },
+    {
+      "psi": 0.56120272,
+      "completed_fertility": 2.30620872,
+      "seconds": 186.73
+    },
+    {
+      "psi": 0.5586288,
+      "completed_fertility": 2.12333863,
+      "seconds": 193.01
+    },
+    {
+      "psi": 0.55836298,
+      "completed_fertility": 2.12059922,
+      "seconds": 191.97
+    },
+    {
+      "psi": 0.55814666,
+      "completed_fertility": 2.11622037,
+      "seconds": 194.26
+    },
+    {
+      "psi": 0.55798698,
+      "completed_fertility": 2.11034676,
+      "seconds": 194.57
+    },
+    {
+      "psi": 0.55786718,
+      "completed_fertility": 2.10300326,
+      "seconds": 195.02
+    },
+    {
+      "psi": 0.55775337,
+      "completed_fertility": 2.08775162,
+      "seconds": 193.99
+    },
+    {
+      "psi": 0.55784477,
+      "completed_fertility": 2.10136049,
+      "seconds": 195.47
+    }
+  ],
+  "best_observed_fertility_gap": 0.0013604899999997144,
+  "old_normalization_passed": false,
+  "historical_periods_completed": 0,
+  "full_history_complete": false,
+  "valid_calibration_score": false,
+  "known_scientific_exception": null,
+  "interpretation": "Fresh heartbeats and successive bounded normalization evaluations; the worst small-scale corner exhausted its one-hour budget before normalization passed. This neither proves a target is unreachable nor supplies a valid loss. Other parameter combinations have completed the full unchanged smoke.",
+  "memory_plan": "Peak9.253GiB per canary implies about296.1GiB for32equivalent workers, below384GiB allocation; not a guarantee of every proposal peak.",
+  "runtime_plan": "Keep one-hourcasecaps and640attemptceiling. Keep threeconsecutive timeoutstop for new search; allow activecases tofinish under existing caps, then exactrepeats/policies for a valid incumbent. Unexpectedsciencefailure and finalrepeatrejection remainfatal.",
+  "expected_missing_files": [
+    "replay_provenance.json",
+    "task_002/adapter_failure.json",
+    "task_002/case_receipt.json"
+  ],
+  "missing_explanation": "timeout SIGTERM ended the process before its finally block; no completion or failure receipt is fabricated.",
+  "evidence_sha256": {
+    "plan.json": "11ca73d79cb407b4dc1c0f28714b976d3eac09f1b76fb1431401bb155ee24753",
+    "center_002.json": "c4186bc5cd5e600d24210f425926a353dbd748212765236c11601d9731e1e19f",
+    "unavailable_intermediate_support.json": "aa0dd514da1524dd604c3362851f7beff5f428d1cb2a9326363d542844a4116a",
+    "task_002/heartbeat.json": "f5c74858688b2cb1622fd15fd84a1a364d729113fadf5feffbba4b516189b985",
+    "task_002/execution_contract.json": "2dfdb7dd32ff2db678452349d1f37e1731a106cf95f5796b4b12a022ad06569a"
+  },
+  "external_evidence_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f/logs/corner_17091265.out": "b8e18332437942bde3b2ba62710da8be780f11e3686a3a87fa7fa1f9e5b72cd1",
+    "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f/logs/corner_17091265.err": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "production_promoted": false,
+  "readiness_basis": "Complete fresh scientific smoke passed; operational timeout diagnosed from original evidence. The same one-hourcasecaps and triple-timeoutstop for newsearch remain, while active results and finalverification are preserved. This does not turn the timed-outcanary into a successfulcase.",
+  "controller_sha256": "c1294e43767e6f92b7549cfd45415226314c1fe3529fefd7c0c43e02e254c391",
+  "source_commit": "7d17162",
+  "controller_tests_passed": 14,
+  "source_verification_sha256": "b79f2726db118866a76448c5d018661c6611233b4a72c132498dc652bb3803e4"
+}

@@ -1,36 +1,53 @@
 # Full simultaneous-choice experiment
 
-**September 7, 04:40 UTC: all four fresh histories verified; policy checks running.**
-All 84 original artifact hashes pass. Both anchors and both all-parameter probes
-exactly match the corresponding snapshot-c target tables, parameters, 253 numeric
-historical entries and seventeen standard graphs. Completed histories took
-1,970.42, 1,969.84, 1,488.41 and 1,415.85 seconds. The baseline policy passes
-2023/2027; three other two-date policies remain in smoke17090362. The small-shock
-canary17091265 remains in old-fertility normalization, with a valid bracket now
-found. No broad search is running.
+**September 7, 05:34 UTC: full verification passed; broad calibration submitted.**
+Torch job `17093420` is submitted on `cs` for 32 CPUs and 384GB, with a
+12-hour Slurm ceiling; the last queue check shows PENDING for resources.
+The frozen snapshot is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g`.
+Contract SHA is `c5524a0fcf68e78e150da334a98d7b18143af2c9753fa37871a3ada379da36e6`.
+Experimental source `7d17162` is pushed; scientific bundle remains `50b434...`.
+The 68-file source check, fourteen local/remote controller tests and actual
+complete smoke-import preflight all passed before submission.
 
-A bounded worker and lead check found that the original starting population
-omits small preference declines. The prepared controller revision preserves
-the exact anchor and47original grid points, replacing16nearby random proposals
-with16paired grid proposals having smaller declines. The multiplier is
-min(0.5,lambda*kappa/1.6), where1.6 is the anchor's inner taste scale. This is
-an initialization heuristic, not an estimated restriction; later search still
-varies all11parameters freely. Every target, weight, bound and numerical gate,
-as well as the three-timeout stop rule, is unchanged. The paired declines range
-from -0.1877535624 to -0.00003064868496. No inference that a target or parameter
-region is infeasible follows from this design check.
+Fresh smoke `17090362` completed 0:0 in 1h22m10s. Both full-history anchors,
+both all-eleven-parameter probes and all four two-date policy paths pass in
+one controller. Independent verification covers 84 historical artifact hashes,
+all target/parameter/history rows, 170 policy artifacts including all eight
+dated pickles, and exact matching of all 360 policy numbers and 136 graphs to
+the preceding source. Policy smoke took 1,433.53 seconds, projecting about
+2.19 hours for the four full eleven-date paths. No full new policy path or
+searched calibration is yet complete.
 
-Experimental source5c70aa1 is committed/pushed. Twelve controller tests pass
-locally and onTorch; only initial_population differs in the controller's AST.
-The NEW prepared snapshot is `Fertility_Spring26_joint_nested_full_20260907g`,
-with68verified files and the same scientific bundle50b434. No contract/search
-is created. Use `wide32_support_g/prepare_repaired_wide.py`, indexed in the
-experiment README; the old f preparation helper is obsolete. The g helper
-also requires a lead canary assessment with verified original evidence before
-it will build a contract. Inspect the canary, finish all smoke policies, adopt
-or revise the preparation as evidence warrants, then execute full preflight
-and launch autonomously. Original e/f source and running jobs are unchanged.
-The13:35UTC cutoff and4.5-hour final reserve remain; monitoring is active.
+Small-shock canary `17091265` exhausted its one-hour process cap during old
+fertility normalization: fourteen stationary evaluations, best completed
+fertility 2.10136049 versus 2.1, above the unchanged 0.0005 tolerance. It has
+no normalized-old pass, completed history or valid loss. Its peak 9.253GiB
+implies about 296.1GiB for 32 equivalent workers, below the allocation, subject
+to monitoring. A timeout does not establish that a target or region is infeasible.
+
+The adopted initialization preserves the anchor and 47 original grid points,
+with sixteen paired proposals adding smaller preference declines. Later search
+still varies all eleven coordinates freely. The three-consecutive-timeout
+threshold still stops new search; active cases now finish within existing
+caps, and final verification proceeds from a valid saved incumbent. Unstarted
+cases are recorded without a fabricated loss or completion count. Unexpected
+scientific failures and rejected required repetitions remain fatal. No model,
+target, weight, parameter bound or numerical gate was relaxed.
+
+Search stages must fit before **09:05 UTC**, with **4.5 hours reserved** for
+22 Jacobian probes, two exact repetitions and full policies; hard cutoff is
+**13:35 UTC**. The contract projects about 192 search histories at the measured
+supported-case rate; 640 is an attempt ceiling, not promised completions.
+Queue delays, slow cases and the timeout stop can reduce coverage. The monitor
+will collect and assess actual results and refresh the morning PDF; the old
+delivered discussion PDF remains stale. Evidence, complete smoke fit and
+parameter tables, preflight and submission receipt are under
+`output/model/e5f_joint_nested_full_20260906a/`, especially `support_repair_e/`
+and `wide32_support_g/`. Use task-private `g/tmp` for TMPDIR: the shared
+login-node /tmp filled during testing; nothing was deleted. Production and
+the author-controlled manuscript remain unchanged.
+
 
 **September 7, 04:22 UTC: normalization repair succeeds; replay ends in a declared candidate rejection.**
 Replay `17090361` ended after 30m53s: old fertility normalized to 2.10000344,

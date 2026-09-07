@@ -1,12 +1,22 @@
 {
-  "all_other_controller_ast_exact": true,
-  "canary_pending": true,
-  "controller_sha256": "787f14196f9ca145f41d98d7d84f35b983f4810955de1d861cfc9819cd6a91ee",
-  "controller_tests": 12,
+  "changed_functions_from_original_e": [
+    "Search.__init__",
+    "Search._reject",
+    "Search.batch",
+    "Search.can_fit",
+    "Search.state",
+    "Search.summary",
+    "initial_population"
+  ],
+  "controller_sha256": "c1294e43767e6f92b7549cfd45415226314c1fe3529fefd7c0c43e02e254c391",
   "files_verified": 68,
-  "full_smoke_pending": true,
+  "initial_check_issue": "login-node /tmp was100percentfull; rerun uses task-private scratch without deleting anything",
+  "recorded_at_epoch": 1788758635.9310603,
   "scientific_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
   "search_submitted": false,
-  "source_commit": "5c70aa1",
-  "status": "prepared_source_and_scheduler_verified_not_launch_preflight"
+  "smoke_complete": true,
+  "source_commit": "7d17162",
+  "status": "prepared_source_and_scheduler_verified_not_launch_preflight",
+  "temporary_directory": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/tmp",
+  "test_methods": 14
 }

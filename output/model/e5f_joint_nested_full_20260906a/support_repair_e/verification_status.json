@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-09-07T04:39:59.994765+00:00",
+  "recorded_at": "2026-09-07T05:32:10.032393+00:00",
   "source_commit": "42e0b97",
   "scientific_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
   "contract_sha256": "9f512dfcaf7dc85b359e0b65d4f8f1543221f4c59f88d82888b91a1ebf4d3e41",
@@ -18,15 +18,19 @@
     },
     "full_smoke": {
       "id": 17090362,
-      "status": "RUNNING",
+      "status": "COMPLETED",
       "cpus": 2,
       "memory_gib": 64,
       "limit_minutes": 140,
       "completed_histories": 4,
-      "phase": "policy_loop_smoke"
+      "phase": "complete",
+      "elapsed": "01:22:10",
+      "exit_code": "0:0",
+      "peak_rss_kib": 17994816,
+      "completed_policy_dates": 8
     }
   },
-  "full_search_submitted": false,
+  "full_search_submitted": true,
   "production_promoted": false,
   "original_diagnostic": {
     "job": 17090114,
@@ -40,14 +44,17 @@
     "integration_tests": 4,
     "controller_tests": 11,
     "default_off_exact_arrays": 10,
-    "full_history_policy_loop": "all four histories independently verified; baseline2policy dates complete; other6dates pending",
+    "full_history_policy_loop": "All four full histories and all four two-date policies completed successfully in controller17090362; independent original artifact checks pass.",
     "failed_case_replay": "normalization repaired; original historical support gate rejects candidate at inferred2015origin; no valid loss",
-    "history_artifact_hashes": 84
+    "history_artifact_hashes": 84,
+    "policy_artifact_hashes": 170,
+    "policy_cross_source_exact_numeric_entries": 360,
+    "policy_cross_source_exact_pngs": 136
   },
   "absolute_finish_utc": "2026-09-07T13:35:00Z",
   "pdf_builder_commit": "b313e3a",
   "prepared_wide_snapshot": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g",
-  "prepared_wide_status": "68 files and12scheduler tests verified; source5c70aa1; no contract/search; await canary assessment and complete smoke",
+  "prepared_wide_status": "Source7d17162 and14scheduler tests verified locally and onTorch; complete smoke-import preflight passed; contract c5524a0f submitted in job17093420. Snapshot g is now frozen.",
   "canary": {
     "job_id": 17091265,
     "snapshot": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f",
@@ -56,10 +63,19 @@
     "memory_gib": 32,
     "slurm_limit_minutes": 65,
     "process_cap_seconds": 3600,
-    "status": "RUNNING"
+    "status": "FAILED",
+    "exit_code": "124:0",
+    "elapsed_seconds": 3603,
+    "adjudication": "bounded_runtime_timeout_during_old_fertility_normalization",
+    "peak_rss_kib": 9702156,
+    "old_normalization_passed": false,
+    "completed_histories": 0,
+    "valid_calibration_loss": false,
+    "assessment": "../wide32_support_g/canary_assessment.json"
   },
   "normalization_repair_evidence": "Original case26 normalized to2.10000344, every normalized-old identity passed,2007/2011 complete,2015origin below treated-support threshold. Active2019\u20132023 target not reached.",
   "replay_assessment": "replay_assessment.json",
-  "restart_helper_sync_required": "g helper/manifest/replay assessment already synchronized; canary assessment pending. Earlier f helper obsolete.",
-  "coverage_revision": "../search_coverage_preparation.json"
+  "restart_helper_sync_required": "None: all required evidence synchronized, complete preflight passed, g source frozen after submission.",
+  "coverage_revision": "../search_coverage_preparation.json",
+  "wide_search_job": 17093420
 }

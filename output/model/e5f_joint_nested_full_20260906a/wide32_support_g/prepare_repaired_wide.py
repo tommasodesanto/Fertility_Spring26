@@ -20,9 +20,15 @@ assert canary_assessment['source_bundle']==original['code_bundle_sha256']
 a.verify(canary/'plan.json',canary_assessment['plan_sha256'])
 for rel,sha in canary_assessment['evidence_sha256'].items():a.verify(canary/rel,sha)
 assert canary_assessment['evidence_sha256']
+for path,sha in canary_assessment['external_evidence_sha256'].items():a.verify(Path(path),sha)
+assert canary_assessment['status']=='bounded_runtime_timeout_during_old_fertility_normalization'
+assert not (canary/'task_002/case_receipt.json').exists()
 
 hist=Path(original['output_root'])/'smoke'
 policy=Path(original['output_root'])/'policy_loop_smoke'
+inventory=a.read_json(root/'policy_source_artifact_hashes.json')
+assert len(inventory['artifact_sha256'])==170
+for rel,sha in inventory['artifact_sha256'].items():a.verify(policy/rel,sha)
 proof=a.read_json(hist/'smoke_verification.json')
 assert proof['status']=='pass' and len(proof['anchor_receipts'])==len(proof['probe_receipts'])==2
 elapsed=[]; case_hashes={}
@@ -116,6 +122,9 @@ subprocess.run([sys.executable,str(root/'code/model/tools/build_e5f_joint_nested
     '--imported-smoke-verification-sha256',a.digest(imported/'smoke_verification.json'),
     '--imported-policy-verification-sha256',a.digest(imported/'policy_loop_verification.json')],check=True)
 contract=out/'contract.json';c=search.verify_contract(contract,a.digest(contract))
-run=search.Search(c,'preflight');run.require_smoke();run.summary('imported_components_verified')
+run=search.Search(c,'preflight');run.require_smoke()
+assert run.best is not None and run.completed==4 and len(run.ledger)==4
+assert c['case_timeout_seconds']==3600 and c['final_reserve_seconds']==16200
+run.summary('imported_components_verified')
 print(json.dumps(dict(status='preflight_passed',contract=str(contract),contract_sha256=a.digest(contract),
     budget=c['budget_estimate'],history_cases=run.completed,production_promoted=False)),flush=True)

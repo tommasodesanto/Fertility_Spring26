@@ -1,0 +1,40 @@
+{
+  "recorded_at": "2026-09-07T05:32:10.032393+00:00",
+  "job_id": 17093420,
+  "last_observed_state": "PENDING",
+  "pending_reason": "Resources",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g",
+  "source_commit": "7d17162",
+  "controller_sha256": "c1294e43767e6f92b7549cfd45415226314c1fe3529fefd7c0c43e02e254c391",
+  "scientific_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
+  "contract_sha256": "c5524a0fcf68e78e150da334a98d7b18143af2c9753fa37871a3ada379da36e6",
+  "preflight_log_sha256": "91d4ff2e368a26ce58cb27ad412e4bfac0f36a75025200290e198e754129ab87",
+  "source_verification_sha256": "b79f2726db118866a76448c5d018661c6611233b4a72c132498dc652bb3803e4",
+  "canary_assessment_sha256": "c79599dda67e020bc5fc1e116b80615cf4a6af1ff765fbf1ad91ef0cd961ddbb",
+  "cpus": 32,
+  "memory_gib": 384,
+  "slurm_hours": 12,
+  "partition": "cs",
+  "temporary_directory": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g/tmp",
+  "search_deadline_utc": "2026-09-07T09:05:00Z",
+  "hard_cutoff_utc": "2026-09-07T13:35:00Z",
+  "budget_estimate": {
+    "at_contract_creation_epoch": 1788758942.8721435,
+    "available_search_seconds": 12957.272076845169,
+    "available_total_seconds": 29157.27207684517,
+    "interpretation": "640/360 is a hard attempt ceiling, not a planned completion count; actual stages require their full timeout waves before the fixed cutoff",
+    "projected_search_histories_at_measured_rate": 192,
+    "reserved_final_seconds": 16200
+  },
+  "production_promoted": false,
+  "coverage_revision_adopted": true,
+  "timeout_completion_revision_adopted": true,
+  "queue_followup": {
+    "recorded_at": "2026-09-07T05:34:10.019010+00:00",
+    "job_still_pending": true,
+    "attempted_partition_update": "cs,cl refused by Slurm; no change",
+    "cl_test_only": "Predicted September8 06:09 local start; no job submitted",
+    "attempted_walltime_update": "08:10:00 refused by Slurm;12hour limit unchanged",
+    "decision": "Keep single original cs job; monitor queue, do not submit duplicates."
+  }
+}
