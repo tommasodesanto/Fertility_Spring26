@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "epoch": 1788738369.324397,
+  "cases": [
+    {
+      "case": "smoke/smoke_all_coordinate_probes/task_001",
+      "case_receipt_sha256": "717f4689e76791bb3d424c9e2dc282de42509719d53b17291cc1df72838b6757",
+      "loss": 489.07335200032645,
+      "verified_remote_artifacts": 21
+    },
+    {
+      "case": "smoke/smoke_all_coordinate_probes/task_002",
+      "case_receipt_sha256": "199f32639a31ab48cf32966060e9cca1d334886f505e1654963e3ec26808293f",
+      "loss": 479.5997910991456,
+      "verified_remote_artifacts": 21
+    },
+    {
+      "case": "smoke/smoke_anchor/task_001",
+      "case_receipt_sha256": "d57f3b7973731f0c9c58486a906296793fcd9d522da5320ba194d2b1bbb56b6b",
+      "loss": 485.4592470360449,
+      "verified_remote_artifacts": 21,
+      "exact_standard_pngs": 17,
+      "exact_numeric_history_entries": 253,
+      "exact_twelve_row_fit": true,
+      "exact_parameters": true,
+      "reference_sha256": "2673a5514566b8044f167e9bdad3b462ba37023f3263076cd72286ae71af3d78"
+    },
+    {
+      "case": "smoke/smoke_anchor/task_002",
+      "case_receipt_sha256": "d836d936bd414bd6f5cddad874b94515b8584e5ca64d59f83f4c9e6a9bd56466",
+      "loss": 485.4592470360449,
+      "verified_remote_artifacts": 21,
+      "exact_standard_pngs": 17,
+      "exact_numeric_history_entries": 253,
+      "exact_twelve_row_fit": true,
+      "exact_parameters": true,
+      "reference_sha256": "2673a5514566b8044f167e9bdad3b462ba37023f3263076cd72286ae71af3d78"
+    }
+  ],
+  "remote_independent_verification_epoch": 1788738305.5288255,
+  "contract_sha256": "59fb3a15911cf8692b30402d3d867b145c0c851479cac59f0fef720194b4e8c4",
+  "scope": "All four completed histories independently validated with snapshot e adapter against pinned source, targets, original plan/input/helper/artifact hashes and numerical gates. Two anchors exactly reproduce snapshot c fit, parameters, 253 numeric history entries and 17 standard PNGs. Policy-loop verification is separate."
+}

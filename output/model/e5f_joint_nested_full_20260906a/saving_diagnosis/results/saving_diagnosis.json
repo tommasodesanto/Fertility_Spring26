@@ -1,0 +1,135 @@
+{
+  "births_global_minus_local_percent": -0.030070083187372365,
+  "checkpoint_sha256": "bae769e9f08434c3d21b84d7f4e01573e6fa79ddd8c4f3cf4fa65d77a570513e",
+  "driver_sha256": "56dc888cd6c303e7828b9575ace0a5f65540641d37fdf837f19d13f2d0e2c8f2",
+  "global_helper_sha256": "0e89d55a6cd3d0432dcff39b24683a7f6233ac0820a03b47a94eda8e2a924586",
+  "local_thirteen_arrays_exact": true,
+  "oracle_helper_sha256": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+  "original_population_preserved": true,
+  "ownership_global_minus_local_pp": -0.0002260769874862234,
+  "production_changed": false,
+  "rooms_global_minus_local_percent": -0.05836278279990337,
+  "rows": [
+    {
+      "budget": {
+        "budget_excess_mass": 9.676404799789455e-13,
+        "budget_excess_share": 8.468580090032277e-13,
+        "budget_tolerance": 1e-09,
+        "household_mass": 1.1426242294359141,
+        "maximum_occupied_excess": 3.552713678800501e-15,
+        "occupancy_threshold_for_maximum": 1e-12,
+        "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+        "weighted_positive_budget_gap": 9.981940651124745e-15
+      },
+      "elapsed_seconds": 17.525384664535522,
+      "method": "local",
+      "min_occupied_value_gain": null,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.001499747896840279,
+        "maximum_occupied_value_drop": 0.2567960565367393,
+        "occupied_negative_steps": 1,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0013125469058017582,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.07928445913154086,
+        "adult_households": 1.1426242294359534,
+        "asset_price": 0.5430473737357197,
+        "births_per_household": 0.06938804297076646,
+        "dependent_renter_at_cap_share": 0.7933419337817619,
+        "explicit_births": 0.06876951326157085,
+        "feasibility_projection": 0.0,
+        "market_residual": 3.2778549341437584e-05,
+        "ownership": 0.47778761201275,
+        "renter_at_cap_share": 0.6618663511245839,
+        "renter_mass": 0.596692527425821,
+        "rooms_per_household": 5.973439824346326
+      }
+    },
+    {
+      "budget": {
+        "budget_excess_mass": 9.676404799789455e-13,
+        "budget_excess_share": 8.468580090032274e-13,
+        "budget_tolerance": 1e-09,
+        "household_mass": 1.1426242294359146,
+        "maximum_occupied_excess": 3.552713678800501e-15,
+        "occupancy_threshold_for_maximum": 1e-12,
+        "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+        "weighted_positive_budget_gap": 9.979518049515282e-15
+      },
+      "elapsed_seconds": 45.00873112678528,
+      "method": "global",
+      "min_occupied_value_gain": 2.169784352190618e-10,
+      "policy_arrays": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "quantities": {
+        "adjusted_births": 0.07926061822872535,
+        "adult_households": 1.1426242294359534,
+        "asset_price": 0.5430473737357197,
+        "births_per_household": 0.06936717792852307,
+        "dependent_renter_at_cap_share": 0.7909810369201501,
+        "explicit_births": 0.0687456252845848,
+        "feasibility_projection": 0.0,
+        "market_residual": 0.0006163872468669338,
+        "ownership": 0.47778535124287513,
+        "renter_at_cap_share": 0.660034342056218,
+        "renter_mass": 0.5966951106362572,
+        "rooms_per_household": 5.96995355863596
+      }
+    }
+  ],
+  "scientific_bundle": "85450db0d7611f7206fba933a74c0f962c18990917a926f9bb2888057494ff39",
+  "scope": "Same inherited population and prices; full lifecycle continuation is solved under each saving method. Global prices are not recleared. No repaired history or policy path is certified.",
+  "status": "comparison_complete"
+}

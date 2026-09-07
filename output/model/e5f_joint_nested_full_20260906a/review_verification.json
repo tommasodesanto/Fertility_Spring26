@@ -1,0 +1,54 @@
+{
+  "status": "review_complete_full_smoke_failed",
+  "epoch": 1788739351.041694,
+  "pdf_sha256": "32b4d544ee7272e52c44f4d472d52d0774949820a97ac12b92570c46e5a16a66",
+  "pdf_verification_sha256": "f983eb263810d5ff10a7e84aecace34f073712561359c7d705fcbbe40d0dda86",
+  "cross_snapshot_verification_sha256": "6627655987c48e02fd4fe9379ebf0ae15364ba2c62ebc3f3399afb21937568b4",
+  "saving_diagnosis_sha256": "2386cb0c9278742d5fe271e064644db51c754a64e0846bd9b1cf40d37ab17972",
+  "independent_remote_artifact_hashes": 84,
+  "local_tests_passed": 20,
+  "source_branch": "codex/joint-nested-full",
+  "full_calibration_launched": false,
+  "production_promoted": false,
+  "monitor_status": "PAUSED",
+  "jobs": {
+    "17080053": {
+      "state": "FAILED",
+      "exit": "1:0",
+      "elapsed": "00:30:48"
+    },
+    "17082550": {
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "elapsed": "00:00:56"
+    }
+  },
+  "visual_review": {
+    "pdf_pages": 5,
+    "standard_graphs_per_packet": 17,
+    "packets": [
+      "selected_anchor",
+      "baseline2023",
+      "baseline2027",
+      "supply2023",
+      "failed_supply2027",
+      "saving_local",
+      "saving_global"
+    ],
+    "duplicate_graph_checks": [
+      "baseline2023 equals selected anchor",
+      "saving_local equals failed_supply2027"
+    ]
+  },
+  "boundary_read_only_check": {
+    "anchor_checkpoint_sha256": "6271208617a55dd036cf1049521b8f9e6166c1905141980ff3db5d52600f7a95",
+    "age30_plotted_valid_first_attempt_probabilities_above_half": 0,
+    "age42_plotted_valid_first_attempt_probabilities_above_half": 2,
+    "age42_wealths": [
+      -7.800000000000001,
+      -4.72093023255814
+    ],
+    "pre_choice_and_current_mass_at_age42_spikes": 0.0,
+    "scope": "Selected anchor only; not a policy-optimality proof."
+  }
+}

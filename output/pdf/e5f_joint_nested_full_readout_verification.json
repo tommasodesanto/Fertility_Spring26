@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "pdf": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/pdf/e5f_joint_nested_full_readout.pdf",
+  "pdf_sha256": "32b4d544ee7272e52c44f4d472d52d0774949820a97ac12b92570c46e5a16a66",
+  "fit_rows": 12,
+  "free_parameters": 11,
+  "verified_selected_artifacts": 21,
+  "loss": 485.4592470360449,
+  "history_results": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_joint_nested_full_20260906a/reporting_smoke_e",
+  "policy_results": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_joint_nested_full_20260906a/reporting_smoke_e/policy_loop_smoke",
+  "builder_sha256": "2e5f13d7b85f458008dd67d393e65fac7a4a508daeac11550b0d7ef9a6df73f6",
+  "production_promoted": false,
+  "reporting_check_sha256": "0cfd52f50b7ef023f8cb080f8549b0630e42d231d6de417203346a25245c4987",
+  "verified_policy_dates": [
+    {
+      "policy": "baseline",
+      "year": 2023,
+      "budget_excess_mass": 5.5303448044654614e-12,
+      "standard_graphs": 17,
+      "path_sha256": "0f0b816f1c9da5326f55e5f070280219382f2389518bcf98821f7ab07ddbfcf7"
+    },
+    {
+      "policy": "baseline",
+      "year": 2027,
+      "budget_excess_mass": 3.858094862105465e-12,
+      "standard_graphs": 17,
+      "path_sha256": "0f0b816f1c9da5326f55e5f070280219382f2389518bcf98821f7ab07ddbfcf7"
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2023,
+      "budget_excess_mass": 1.1649367417736448e-12,
+      "occupied_negative_steps": 0,
+      "standard_graphs": 17,
+      "status": "passed"
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2027,
+      "budget_excess_mass": 9.676404799789455e-13,
+      "occupied_negative_steps": 1,
+      "standard_graphs": 17,
+      "status": "failed"
+    }
+  ],
+  "partial_policy_review": true,
+  "saving_diagnosis_sha256": "2386cb0c9278742d5fe271e064644db51c754a64e0846bd9b1cf40d37ab17972",
+  "pages_visually_reviewed": 5,
+  "all_target_cells_matched_to_source": true,
+  "all_parameter_cells_matched_to_source": true,
+  "no_clipped_pdf_text": true,
+  "visual_review_epoch": 1788739176.685475,
+  "graph_review": "All 17 anchor graphs, four policy-date packets and local/global saving packets inspected; baseline2023 exactly matches anchor, local saving graphs exactly match failed supply2027. Dense original legends preserved.",
+  "standard_graph_files_preserved": true,
+  "full_policy_loop_passed": false,
+  "full_calibration_launched": false
+}
