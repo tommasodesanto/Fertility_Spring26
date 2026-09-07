@@ -1,0 +1,315 @@
+{
+  "scope": "Supporting theory only. No calibration, finite-horizon simulation, new planner power, or main-note revision.",
+  "symbolic_original_equation_checks": {
+    "owner_value_minus_renter_value_h": "exact zero after differentiation of the original budgets/utilities",
+    "owner_value_minus_renter_value_d": "exact zero after differentiation of the original budgets/utilities",
+    "owner_value_minus_renter_value_theta": "exact zero after differentiation of the original budgets/utilities",
+    "old_housing_ratio_derivative": "exact zero after differentiation of the original budgets/utilities",
+    "actual_old_initial_x": "exact zero after differentiation of the original budgets/utilities",
+    "actual_old_initial_c": "exact zero after differentiation of the original budgets/utilities",
+    "actual_old_preference_shift": "exact zero after differentiation of the original budgets/utilities",
+    "finite_interior_housing_clearing": "exact zero after differentiation of the original budgets/utilities",
+    "finite_actual_old_housing_clearing": "exact zero after differentiation of the original budgets/utilities",
+    "baseline_generated_assets": "exact zero after differentiation of the original budgets/utilities",
+    "finite_interior_credit_forcing": "exact zero after differentiation of the original budgets/utilities",
+    "finite_initial_credit_forcing": "exact zero after differentiation of the original budgets/utilities"
+  },
+  "finite_transition_certificate": {
+    "theta1": "1998/15005",
+    "phi1_max": "81/101",
+    "baseline_box": [
+      0.9989614726027397,
+      1.0
+    ],
+    "policy_box": [
+      0.997,
+      1.004
+    ],
+    "baseline": {
+      "row_bound": 0.6591843625509116,
+      "slacks": {
+        "user_cost": 0.19812978695660208,
+        "E_b": 0.20235668103448276,
+        "self_lower": 0.0,
+        "self_upper": 0.0002513504886041568,
+        "adult_consumption": 0.4087669047395291,
+        "saving": 0.539799898310973,
+        "purchase": 0.016275589399988195,
+        "physical_owner_cap": 0.9979583512936215,
+        "old_retention": 0.10911520679302421,
+        "old_estate": 0.15617225738735163
+      },
+      "renter_cap_margins": [
+        1.059249148654073,
+        0.4538269238712373,
+        0.038375732078026636
+      ]
+    },
+    "policy": {
+      "row_bound": 0.6886158713435483,
+      "slacks": {
+        "user_cost": 0.18816068204613842,
+        "E_b": 0.19794288793103448,
+        "self_lower": 0.00045495689655172415,
+        "self_upper": 0.000505259900990099,
+        "adult_consumption": 0.4037811831394028,
+        "saving": 0.5356581304457071,
+        "purchase": 0.0020505498227829317,
+        "physical_owner_cap": 0.9919709077181494,
+        "old_retention": 0.09916248543904381,
+        "old_estate": 0.13407178405829323
+      },
+      "renter_cap_margins": [
+        1.0534704931523655,
+        0.4436832000757821,
+        0.03203205248281898
+      ]
+    },
+    "initial_boundary": {
+      "baseline_lower": 0.0002615017266168628,
+      "baseline_upper": -0.00017051332288401253,
+      "policy_lower": 0.00048790071015963714,
+      "policy_upper": -0.0018582394530231997,
+      "actual_total_assets_range": [
+        -0.32491234594331636,
+        -0.32345863092441135
+      ]
+    },
+    "baseline_boundary_row": 0.3735760918076807,
+    "policy_boundary_row": 0.3913808407773867,
+    "baseline_actual_old": {
+      "resource_min": 0.6746465517241379,
+      "retention_slack": 0.6912791699232584,
+      "estate_slack": 0.15792903589086954
+    },
+    "policy_actual_old": {
+      "resource_min": 0.6686981037100651,
+      "retention_slack": 0.6533272970446877,
+      "estate_slack": 0.11839663385364575
+    },
+    "policy_impact_derivative": {
+      "coefficient_row_bound": 0.6886158713435483,
+      "derivative_norm_bound": 0.3557370587740745,
+      "dY1_dd_interval": [
+        0.017611228642996656,
+        0.050654096048768534
+      ],
+      "claimed_exact_enclosure": [
+        "17/1000",
+        "51/1000"
+      ],
+      "iterations": 100,
+      "retained_dates": 100,
+      "outward_dyadic_bits": 80,
+      "exact_dY1_dd_interval": [
+        "10645334510827683123859/604462909807314587353088",
+        "15309261145648912921929/302231454903657293676544"
+      ]
+    },
+    "stationary_young_population": {
+      "pre": 1.0,
+      "baseline": 0.999,
+      "largest_certified_credit": 1.0018211561128938
+    },
+    "exact_population_boxes": {
+      "baseline": [
+        "1166787/1168000",
+        "1"
+      ],
+      "policy": [
+        "997/1000",
+        "251/250"
+      ]
+    }
+  },
+  "limiting_branch_witnesses": {
+    "convergent_with_w_less_than_d": {
+      "maximum_original_equation_residual": 2.220446049250313e-16,
+      "strict_margins": {
+        "owner_positive_bundle": 0.12931034482758622,
+        "owner_young_housing_gap": 0.1103448275862069,
+        "owner_physical": 0.9999999999999998,
+        "owner_retention": 0.8060344827586209,
+        "owner_estate": 0.12931034482758616,
+        "renter_positive_bundle": 0.025,
+        "renter_young_housing_gap": 8.330909090909088,
+        "old_renter_housing_gap": 0.866363636363636
+      },
+      "parameters": {
+        "q": 0.8,
+        "phi": 0.8,
+        "b": 0.2,
+        "y": 0.6,
+        "alpha": 0.9,
+        "beta": 0.4,
+        "gamma": 0.3,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 0.3,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.05,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.1939655172413792
+      },
+      "r": 0.7999999999999998,
+      "C": 0.19396551724137928,
+      "exact_convergence_gap": "847/1160",
+      "stable_root_count": 2
+    },
+    "feasible_but_wrong_stable_dimension": {
+      "maximum_original_equation_residual": 1.7763568394002505e-15,
+      "strict_margins": {
+        "owner_positive_bundle": 0.016666666666666646,
+        "owner_young_housing_gap": 0.03333333333333244,
+        "owner_physical": 0.9999999999999998,
+        "owner_retention": 0.9666666666666669,
+        "owner_estate": 0.03333333333333329,
+        "renter_positive_bundle": 0.005,
+        "renter_young_housing_gap": 693.9000000000001,
+        "old_renter_housing_gap": 21.200000000000003
+      },
+      "parameters": {
+        "q": 0.5,
+        "phi": 0.8,
+        "b": 0.2,
+        "y": 0.35,
+        "alpha": 24.0,
+        "beta": 0.5,
+        "gamma": 1.0,
+        "omega": 2.0,
+        "kappa": 0.5,
+        "theta": 8.0,
+        "nu": 2.0,
+        "chi": 0.0,
+        "tau": 0.0,
+        "rental_cap": 0.01,
+        "owner_cap": 2.0,
+        "sigma": 1.0,
+        "taste_weight": 0.0,
+        "Hbar": 1.0333333333333334
+      },
+      "r": 0.5499999999999999,
+      "C": 0.033333333333333284,
+      "exact_convergence_gap": "-1/20",
+      "stable_root_count": 1
+    }
+  },
+  "mixed_stationary_original_equation_checks": [
+    {
+      "maximum_original_equation_residual": 1.7763568394002505e-15,
+      "strict_margins": {
+        "owner_positive_bundle": 0.30000000000000004,
+        "owner_young_housing_gap": 0.16666666666666663,
+        "owner_physical": 0.9999999999999998,
+        "owner_retention": 0.5200000000000002,
+        "owner_estate": 0.16000000000000014,
+        "renter_positive_bundle": 0.07500000000000004,
+        "renter_young_housing_gap": 2.9059829059829045,
+        "old_renter_housing_gap": 0.7261538461538464
+      },
+      "taste_scale": 0.25,
+      "taste_location": -0.6207365388149283,
+      "owner_share": 0.5,
+      "derivatives": {
+        "phi": {
+          "N": 2.8286835901627616,
+          "hOwner": 1.8108978462956782,
+          "hYoung": 0.0,
+          "hOld": -1.4001983771305673,
+          "pi": -1.207265230863788,
+          "P": 3.189102153704322
+        },
+        "theta": {
+          "N": 1.3181681289559408,
+          "hOwner": -1.4710756596137275,
+          "hYoung": -0.4017857142857151,
+          "hOld": -0.25070750954747584,
+          "pi": 0.4450028206948662,
+          "P": 1.4710756596137275
+        }
+      }
+    },
+    {
+      "maximum_original_equation_residual": 1.7763568394002505e-15,
+      "strict_margins": {
+        "owner_positive_bundle": 0.30000000000000004,
+        "owner_young_housing_gap": 0.16666666666666663,
+        "owner_physical": 0.9999999999999998,
+        "owner_retention": 0.5200000000000002,
+        "owner_estate": 0.16000000000000014,
+        "renter_positive_bundle": 0.07500000000000004,
+        "renter_young_housing_gap": 2.9059829059829045,
+        "old_renter_housing_gap": 0.7261538461538464
+      },
+      "taste_scale": 1.0,
+      "taste_location": -0.6207365388149283,
+      "owner_share": 0.5,
+      "derivatives": {
+        "phi": {
+          "N": 3.0204612447286308,
+          "hOwner": 0.7155523961790645,
+          "hYoung": -6.938893903907228e-17,
+          "hOld": -1.4951283161406725,
+          "pi": -0.4770349307860443,
+          "P": 4.284447603820936
+        },
+        "theta": {
+          "N": 1.2474781139979199,
+          "hOwner": -1.0673269203342672,
+          "hYoung": -0.40178571428571475,
+          "hOld": -0.21571595214325567,
+          "pi": 0.17583699450855894,
+          "P": 1.0673269203342672
+        }
+      }
+    },
+    {
+      "maximum_original_equation_residual": 1.7763568394002505e-15,
+      "strict_margins": {
+        "owner_positive_bundle": 0.30000000000000004,
+        "owner_young_housing_gap": 0.16666666666666663,
+        "owner_physical": 0.9999999999999998,
+        "owner_retention": 0.5200000000000002,
+        "owner_estate": 0.16000000000000014,
+        "renter_positive_bundle": 0.07500000000000004,
+        "renter_young_housing_gap": 2.9059829059829045,
+        "old_renter_housing_gap": 0.7261538461538464
+      },
+      "taste_scale": 4.0,
+      "taste_location": -0.6207365388149286,
+      "owner_share": 0.5,
+      "derivatives": {
+        "phi": {
+          "N": 3.1091051484838266,
+          "hOwner": 0.20925933050034756,
+          "hYoung": -1.734723475976807e-16,
+          "hOld": -1.5390070484994942,
+          "pi": -0.13950622033356622,
+          "P": 4.790740669499653
+        },
+        "theta": {
+          "N": 1.214803614476184,
+          "hOwner": -0.8807052596043556,
+          "hYoung": -0.4017857142857146,
+          "hOld": -0.1995420748799966,
+          "pi": 0.05142255402195115,
+          "P": 0.8807052596043556
+        }
+      }
+    }
+  ],
+  "source_sha256": "8b8b60a957f605720496ce458a05540da055772271367b4381125b0c91def09d",
+  "evidence_sha256": {
+    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "62432cae649237379f3b32726995d70cba1c7d1f4a75b69863f76a72fdf5398e",
+    "output/pdf/simplified_olg_amendment_proposal.pdf": "269f83f4c1d6f427f4f8c5bdd407c12df719a1ba3c2f42c7f9f423678c32d3f7",
+    "output/model/simplified_olg_amendments/theory_slides_misallocation.pdf": "69f479fb3966c5bcb8be41c9f7f278a5dc28fa36f951ef125dafb2f7b9406da4",
+    "output/model/simplified_olg_amendments/combined_transition_figure.pdf": "d3cff69305eb6935cfd0474b3660d2886eefa078c1b31166411c2784aa2a67b9",
+    "output/model/simplified_olg_amendments/transition_extensions.md": "3b5b11a7d9a6cacf0f346e14d61e41ace5fb573d2e42df6c9d33754108f1130f",
+    "output/model/simplified_olg_amendments/transition_extension_reviews.json": "4bffb5da00772443c533d5b9909f53674a5316c93113e1a8afc95a1ba9f1cb18",
+    "code/model/tools/verify_simplified_olg_local_transition.py": "d36f98a38d4f7f39b872830449fffb9aad880f7379bace2ba12265dfbca1c65d"
+  }
+}

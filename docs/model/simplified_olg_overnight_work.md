@@ -1,5 +1,50 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6–7: broader conditions and a finite transition
+
+Tommaso deferred workflow reorganization and invited further theory work.
+The main reading copy and its figures remain unchanged. New supporting
+results are in
+[Housing allocation and demographic adjustment](../../output/model/simplified_olg_amendments/transition_extensions.md).
+
+- **Stationary population:** a short proof covers any interior owner share
+  and positive taste scale, with homogeneous entrants, zero child goods costs
+  and tax, the original strict household constraints, and old-owner housing
+  at least as large as the rental cap. More credit raises stationary price
+  and population; a lower fertility weight lowers both. No extra restriction
+  on preference weights is needed. Strict signs persist under small positive
+  costs and tax, with no quantified neighborhood.
+- **Local convergence:** on the existing all-owner limiting branch,
+  \(\alpha+\vartheta\le1+\beta(1+\gamma+\omega_B)\) makes the earlier
+  stability condition automatic. All household restrictions are expressed
+  in primitives. A valid example with resources below purchase expenditure
+  widens the earlier sufficient family; a separate feasible counterexample
+  shows that convergence is not automatic. The preference decline has the
+  correct initial fertility sign throughout the stated stable region.
+- **Finite two-stage comparison:** in the existing all-owner, zero-cost/tax
+  example, a specified finite preference decline and every credit change
+  \(d_1/d_0\in(1,101/100]\), introduced at any later baseline date, have
+  converging continuations. Baseline initial fertility falls; policy-date
+  fertility and terminal population rise relative to baseline. An infinite
+  contraction and exact interval bounds prove this; no terminally closed
+  simulation is used. This does not supply a broad finite theorem with
+  substantial renting and general positive child costs.
+
+The strict housing-value gap is preserved along these paths, so the existing
+direct-allocation argument applies at any chosen date. That dated Pareto
+comparison remains separate from welfare effects of the credit reform.
+Planner permissions, author notation, the constrained-transfer theorem and
+all existing decision statuses are unchanged.
+
+Three bounded mathematical passes were combined with independent lead
+derivations, symbolic original-budget/value checks and original-household
+checks. A separate review verified the finite proof's inherited claims,
+household constraints and infinite derivative enclosure. The consolidated
+checker is
+[verify_simplified_olg_transition_extensions.py](../../code/model/tools/verify_simplified_olg_transition_extensions.py);
+its receipt and all four full reports are in the existing amendments folder.
+All agents have finished this pass. No new scheduled theory run was created.
+
 ## September 6: efficiency-status clarification
 
 The constrained branch is not entirely unproved. The September 5

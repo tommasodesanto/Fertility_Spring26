@@ -1,5 +1,29 @@
 # Simplified OLG amendment checks
 
+## September 6–7: supporting extensions
+
+[Housing allocation and demographic adjustment](transition_extensions.md)
+contains a wider mixed-tenure stationary theorem, a simple primitive
+sufficient condition for local convergence, and an explicit finite
+preference-decline/later-credit comparison in the all-owner limit. It also
+states why the dated housing-misallocation comparison applies along the
+paths. The main note, both figures and earlier proof files are unchanged.
+These results do not select a planner institution or a paper specification.
+
+One command checks the new results without an equilibrium simulation:
+
+~~~sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/verify_simplified_olg_transition_extensions.py
+~~~
+
+The receipt is [transition_extension_checks.json](transition_extension_checks.json).
+It includes symbolic original-equation checks, exact finite interval bounds,
+original household checks and source hashes. Three research reports and the
+independent financial/interval review are preserved in
+[transition_extension_reviews.json](transition_extension_reviews.json).
+The finite proof still concerns homogeneous all-owner demands with zero
+child goods costs and tax; the broad finite mixed-model case remains open.
+
 ## September 6: integrated note and two-stage illustration
 
 Start with `output/pdf/simplified_olg_amendment_proposal.pdf`: seven main-text
