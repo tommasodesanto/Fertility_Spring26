@@ -4,6 +4,18 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 7, 20:54 UTC: specification hold supersedes the continuation instructions below.**
+The author questioned numerical integration because the intended simultaneous
+nested-logit specification has closed-form probabilities. The implemented
+independent additive logistic shocks are a different distribution. Reconcile
+the shock law and nesting before any repair or further model evaluation.
+Only collect and preserve diagnostic replay17132977, then pause the monitor.
+At this check the replay is RUNNING after 27 minutes; normalization and the
+first historical date have completed. No new objective is available.
+An independent review found an embedded-quadrature probability-mass defect in
+constructed analytic examples; historical failure attribution awaits the capture.
+Temporary evidence: `tmp/two_shock_failure_review/REVIEW.md`. No repair adopted.
+
 **September7 latest author clarification: code checks, then preliminary objective inspection, then discussion.**
 The fixed-price comparison below does not answer whether the new model can fit.
 Torch access restored. Array17125770 now contains two identical retained-anchor
