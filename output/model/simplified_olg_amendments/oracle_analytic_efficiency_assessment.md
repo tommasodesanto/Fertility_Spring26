@@ -55,3 +55,24 @@ No numerical equilibrium, parameter sweep or computer-assisted neighborhood was 
 ## Next decision
 
 Discuss whether the homogeneous, zero-property-tax specialization is an acceptable main illustrative theorem. If so, present the simpler positive-financial-estate case first, with the demographic restriction stated honestly and derived in the proof. Keep the old estate-binding extension separate. Preserve the author's notation when drafting. The existing transition work remains separate and has not been replaced.
+
+
+## Plausibility against saved examples and retained calibration
+
+The author asked for an economic assessment using existing simulations and calibration, rather than stopping at the distinction between sufficient conditions and empirical validation. A bounded independent max review and lead arithmetic check give a sharper conclusion: the mechanism occurs in saved examples, while the new all-equilibria demographic condition excludes those examples.
+
+In the exact mixed-tenure reference, owner fertility is 0.75, renter fertility 0.225, ownership is 11/21 and replacement fertility is 0.5 (the theory's units). Their weighted mean is exactly 0.5. Young owner housing value is 0.64 and old owner housing value is 9717/18500 = 0.525243, giving a positive gap of 0.114757. Source: `code/model/tools/verify_simplified_olg_mixed_transition.py`; exact primitives and checks: `oracle_transition_math_checks.json` in this folder. The reference has positive property tax, so it is not directly within the new zero-tax theorem.
+
+Evaluating A at the same non-tax primitives yields the required ratio interval (0.125, 0.164440), versus actual ell/w = 0.217506. This is an arithmetic comparison, not a new zero-tax equilibrium solve. In the older mixed-tenure construction, the ratio is 0.141509, inside A for both saved fertility-preference values. That older model also has property and capital-gains taxes and is not an exact theorem application. Sources: `output/model/simplified_olg_mixed_tenure_theory/verification.json` and `steady_states.csv`. These comparisons suggest A is selective and can be conservative; neither a pass nor a failure validates an entire theorem with a different tax specification.
+
+The decisive demographic issue does not depend on taxes. The fertility first-order condition and physical rental cap imply
+
+\[
+n_R<\frac{\vartheta h_R^{\max}}{\kappa(\alpha+\vartheta)}.
+\]
+
+This ceiling is 0.234219 in the exact reference, below replacement 0.5. In the older initial/final examples it is 0.42 and 0.5 respectively, with strict inequality for actual fertility. Thus renters cannot exceed replacement at any price, whereas C requires them to do so at the lower endpoint. C excludes the intended pattern in which higher owner fertility offsets below-replacement renter fertility. Consistent rescaling of fertility units cannot change that conclusion. The proof remains mathematically valid; this is a limitation of its usefulness for the existing examples.
+
+The retained September 4 quantitative calibration offers qualified support for the young-household mechanism: 20.4004% of renters with dependent children use the rental cap. This is a cap-exposure statistic, not a positive-multiplier test or a measure of the welfare gap. Housing/wealth cross-sections and the large late-life ownership miss make the old-donor condition less secure. A rising age profile is not evidence of individual non-downsizing; household transitions and compensated housing values would need direct examination. Full benchmark fits, all parameter bounds and calibration limitations are in `docs/model/e5f_bounded_calibration_refinement_review.md` (retained-production tables). Cap exposure is from `output/model/e5f_overnight_independent_verification_20260905a/boundary_exposure_summary.json`; age profiles from `numerical_full/lifecycle_2023.csv` and measurement qualifications from `docs/model/e5f_independent_quantitative_audit.md`.
+
+The maintained quantitative demographic construction fixes birth-to-household conversion at 1/2.1 and derives the initial fertility intercept to reproduce replacement. This is a normalization, not an independent estimate validating C. Current population/headship issues are separately recorded in `CALIBRATION_STATUS.md`. The correct next theoretical target should permit below-replacement renter fertility and establish replacement for the aggregate, while retaining income/wealth heterogeneity. No numerical model, calibration, manuscript or PDF was changed or rerun for this assessment.
