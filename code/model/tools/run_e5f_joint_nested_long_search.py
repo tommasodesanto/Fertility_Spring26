@@ -230,15 +230,18 @@ class Search:
         self.seed = adapter.read_json(contract["seed_center"]); self.ledger, self.rejects, self.best = [], [], None
         self.stop_event = threading.Event(); self.lock = threading.Lock()
         self.completed = 0; self.consecutive_timeouts = 0; self.active = {}; self.phase = "initializing"
+        self.search_stop_reason = None
         self.state("running")
 
     def state(self, status, **more):
         write_json(self.root / "search_state.json", {"status": status, "phase": self.phase,
             "elapsed_seconds": time.monotonic()-self.started, "completed_histories": self.completed,
             "max_histories": self.c["max_histories"], "best_loss": self.best["loss"] if self.best else None,
+            "search_stop_reason": self.search_stop_reason,
             "absolute_finish_epoch": self.finish, "epoch": time.time(), "production_promoted": False, **more})
 
     def can_fit(self, n, final=False):
+        if not final and getattr(self, "search_stop_reason", None): return False
         if self.completed + n + (0 if final else FINAL_VERIFICATION_HISTORIES) > self.c["max_histories"]: return False
         # A conservative full timeout is required per wave; final steps may use reserved time.
         cutoff = self.finish if final else self.search_finish
@@ -333,7 +336,11 @@ class Search:
         self.rejects.append({"stage": self.phase, "case_id": case["id"], "label": case["label"], "rejection_type": kind,
             "error": str(error), "unit_vector": unit, "source_sha256": self.c["source_sha256"],
             "target_fingerprint": self.c["target_fingerprint"], "elapsed_seconds": time.monotonic()-self.started})
-        if self.consecutive_timeouts >= 3: raise RuntimeError("Unhealthy run: three consecutive timeouts")
+        if self.consecutive_timeouts >= 3 and not getattr(self, "search_stop_reason", None):
+            self.search_stop_reason = {"reason": "three_consecutive_timeouts", "stage": self.phase,
+                "action": "stop new search proposals; finish active cases under existing caps; verify the valid incumbent",
+                "elapsed_seconds": time.monotonic()-self.started, "consecutive_timeouts": self.consecutive_timeouts}
+            write_json(self.root/"search_stop.json", self.search_stop_reason)
 
     def reports(self):
         if self.ledger:
@@ -366,6 +373,8 @@ class Search:
             cases = iter((plan, sha, case) for plan, sha in plans
                          for case in adapter.load_plan(plan, sha)["cases"])
             def submit():
+                if getattr(self, "search_stop_reason", None) and not stage.startswith("final"):
+                    return
                 entry = next(cases, None)
                 if entry is not None:
                     plan, sha, case = entry
@@ -388,6 +397,10 @@ class Search:
                         if smoke: raise RuntimeError(f"Required verification case rejected: {typ}: {detail}")
                 self.reports(); self.state("running")
                 for _ in done: submit()
+            unstarted = [{"plan": str(plan), "plan_sha256": sha, **case} for plan, sha, case in cases]
+            if unstarted:
+                write_json(self.root/f"{stage}_unstarted.json", {"status": "not_run_after_timeout_stop",
+                    "cases": unstarted, "counted_as_completed_or_rejected": False, "search_stop_reason": self.search_stop_reason})
             for plan, sha in plans:
                 planner.collect(plan, sha, require_complete=len(self.rejects) == rejected_before)
         except BaseException:
@@ -668,6 +681,9 @@ class Search:
         self.reports(); lines=["# Morning summary","",f"Status: {status}. No estimate is promoted.",""]
         if self.best: lines += [f"Best actual completed calibrated loss: {self.best['loss']:.10g}.",f"Selected receipt source: `{Path(self.best['summary']).parent / 'case_receipt.json'}`.","Complete target-fit and parameter tables: `all_target_fits.csv`, `all_parameters.csv`."]
         if self.rejects: lines += ["",f"Outstanding rejected numerical/economic proposals: {len(self.rejects)}; see `rejects_ledger.csv`."]
+        if self.search_stop_reason:
+            lines += ["", "Search proposals stopped after three consecutive timeouts; see `search_stop.json`.",
+                "Completed cases remain eligible for exact repetition and policy verification. Unstarted proposals have no loss."]
         (self.root/"MORNING_SUMMARY.md").write_text("\n".join(lines)+"\n")
         self.state(status)
 

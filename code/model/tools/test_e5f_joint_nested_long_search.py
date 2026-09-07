@@ -6,12 +6,82 @@ import random
 import tempfile
 import unittest
 from unittest import mock
+from concurrent.futures import Future
 from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_three_timeouts_stop_new_search_but_drain_an_active_valid_case(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            obj=object.__new__(search.Search);obj.root=Path(tmp)
+            obj.c={**search.RUN_PROFILES['wide32'],'max_workers':4,
+                'controller_sha256':'controller','adapter_sha256':'adapter','planner_sha256':'planner',
+                'search_domain':search.adapter.SEARCH_DOMAIN,'source_sha256':search.adapter.SOURCE,
+                'target_fingerprint':search.adapter.TARGET,
+                'base_plan':{'schema':'e5f_joint_nested_overnight_v1','source_sha256':search.adapter.SOURCE,
+                    'target_fingerprint':search.adapter.TARGET,'code_bundle_sha256':search.adapter.BUNDLE,
+                    'search_domain':search.adapter.SEARCH_DOMAIN,'first_child_jump_upper':2.}}
+            obj.seed={'old_psi_child':.3,'best_candidate':{'theta':{},'new_psi_child':.1}}
+            obj.finish=obj.search_finish=1e20;obj.started=search.time.monotonic()
+            obj.ledger=[];obj.rejects=[];obj.completed=4;obj.consecutive_timeouts=0;obj.search_stop_reason=None
+            launched=[];pending=[]
+            class Pool:
+                def submit(self,fn,plan,sha,case):
+                    launched.append(case['id']);future=Future();out=plan.parent/case['output']
+                    if case['id']==4:pending.append((future,(case,out,'complete','')))
+                    else:future.set_result((case,out,'timeout','case timeout'))
+                    return future
+                def shutdown(self,**kwargs):pass
+            original_reject=obj._reject
+            def reject(*args):
+                original_reject(*args)
+                if obj.search_stop_reason and pending:
+                    future,result=pending.pop();future.set_result(result)
+            def record(plan,sha,case,out):
+                obj.ledger.append({'id':case['id'],'label':case['label'],'plan_sha256':sha,'loss':1.})
+                obj.completed+=1;obj.consecutive_timeouts=0
+            with mock.patch.object(search,'ThreadPoolExecutor',return_value=Pool()), \
+                    mock.patch.object(obj,'_reject',side_effect=reject), \
+                    mock.patch.object(obj,'_record_completed',side_effect=record), \
+                    mock.patch.object(obj,'reports'),mock.patch.object(obj,'state'), \
+                    mock.patch.object(search.planner,'collect') as collect:
+                rows=obj.batch('initial_population',[[.5]*11 for _ in range(8)],[f'case_{i}' for i in range(8)])
+            self.assertEqual(launched,[1,2,3,4])
+            self.assertEqual([r['id'] for r in rows],[4])
+            self.assertEqual(obj.completed,8)  # Four inherited cases plus four actually attempted.
+            self.assertEqual(len(obj.rejects),3)
+            self.assertTrue(all('loss' not in r for r in obj.rejects))
+            unstarted=search.adapter.read_json(obj.root/'initial_population_unstarted.json')
+            self.assertEqual([r['id'] for r in unstarted['cases']],[5,6,7,8])
+            self.assertFalse(unstarted['counted_as_completed_or_rejected'])
+            self.assertFalse(collect.call_args.kwargs['require_complete'])
+            self.assertEqual(obj.consecutive_timeouts,0)
+            self.assertEqual(obj.search_stop_reason['reason'],'three_consecutive_timeouts')
+            self.assertFalse(obj.can_fit(1))  # A later success does not silently resume search.
+            self.assertTrue(obj.can_fit(22,final=True))
+            self.assertTrue(obj.can_fit(2,final=True))
+
+    def test_timeout_stop_does_not_change_final_repeat_rejection(self):
+        for stage,status,detail,smoke in (
+                ('final_repeats','timeout','case timeout',True),
+                ('initial_population','failed',{'type':'RuntimeError','error':'mass accounting gate failed'},False)):
+            with self.subTest(stage=stage),tempfile.TemporaryDirectory() as tmp:
+                obj=object.__new__(search.Search);obj.root=Path(tmp);obj.rejects=[]
+                obj.c={'max_workers':1};obj.finish=1e20
+                obj.search_stop_reason={'reason':'three_consecutive_timeouts'} if smoke else None
+                case={'id':1,'output':'task_001'};plan=obj.root/'plan.json'
+                with mock.patch.object(obj,'can_fit',return_value=True), \
+                        mock.patch.object(obj,'new_plan',return_value=(plan,'sha')), \
+                        mock.patch.object(search.adapter,'load_plan',return_value={'cases':[case]}), \
+                        mock.patch.object(obj,'_child',return_value=(case,obj.root/'task_001',status,detail)), \
+                        mock.patch.object(obj,'_reject') as reject,mock.patch.object(obj,'stop_active') as stop:
+                    with self.assertRaisesRegex(RuntimeError,'Required verification case rejected|Fatal candidate failure'):
+                        obj.batch(stage,[[.5]*11],['case'],smoke=smoke)
+                stop.assert_called_once()
+                self.assertEqual(reject.call_count,1 if smoke else 0)
+
     def test_wide_reserve_reduces_search_time_before_hard_cutoff(self):
         with tempfile.TemporaryDirectory() as tmp:
             seed=Path(tmp)/'seed.json';search.write_json(seed,{})

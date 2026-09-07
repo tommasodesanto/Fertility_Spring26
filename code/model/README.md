@@ -63,6 +63,12 @@ proposals remain free in all eleven coordinates. The exact design, physical
 proposal table and current launch status are indexed in
 `../../output/model/e5f_joint_nested_full_20260906a/README.md`.
 
+Three consecutive case timeouts stop new search proposals. Already active cases
+finish under their existing caps, then the valid incumbent can receive the
+reserved exact repetitions and policy checks. Unstarted cases retain their
+plan metadata and have no loss or completed-case count. Unexpected scientific
+failures and rejected required verification cases still abort the run.
+
 `tools/run_e5f_joint_overnight_search.py` runs the hash-pinned full-objective
 search and the separately contracted smaller-step recovery. All eleven
 parameters, twelve targets, numerical gates and exact repetition requirements
