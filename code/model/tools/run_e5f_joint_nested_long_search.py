@@ -477,7 +477,14 @@ class Search:
             receipt = adapter.read_json(policy_proof["receipt"])
             validate_policy_receipt(receipt, self.c, smoke=True,
                 selected_hashes={digest(path/"summary.json") for path in paths})
-            adapter.verify(receipt["selected_summary"], receipt["selected_summary_sha256"])
+            selected_path = Path(receipt["selected_summary"])
+            if not selected_path.is_absolute():
+                if "receipt_working_directory" not in policy_proof:
+                    raise RuntimeError("Relative policy source requires its original working directory")
+                selected_path = Path(policy_proof["receipt_working_directory"])/selected_path
+            if selected_path.resolve() not in {(path/"summary.json").resolve() for path in paths}:
+                raise RuntimeError("Policy receipt does not refer to an original smoke anchor")
+            adapter.verify(selected_path, receipt["selected_summary_sha256"])
             adapter.verify(Path(policy_proof["receipt"]).parent/"inherited_state_verification.json",
                            receipt["inherited_state_verification_sha256"])
         record = {"path": str(proof_path), "sha256": digest(proof_path), "case_count": self.completed}
