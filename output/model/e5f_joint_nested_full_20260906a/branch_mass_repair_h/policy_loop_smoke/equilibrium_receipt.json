@@ -1,0 +1,72 @@
+{
+  "cases": {
+    "baseline": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 2.347175414146471e-05,
+        "maximum_mass_residual": 8.881784197001252e-16,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 7
+      },
+      "source_summary_sha256": "1f75523f3b8584d95169c8534ca3aa74bc6c162b3b1cfb49b3b95dcf27831944",
+      "status": "complete"
+    },
+    "dependent-child-ltv95": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 4.177019239564993e-05,
+        "maximum_mass_residual": 1.5543122344752192e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 24
+      },
+      "source_summary_sha256": "1f75523f3b8584d95169c8534ca3aa74bc6c162b3b1cfb49b3b95dcf27831944",
+      "status": "complete"
+    },
+    "property-tax-2pct-no-rebate": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 4.439767694498832e-05,
+        "maximum_mass_residual": 1.7763568394002505e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 23
+      },
+      "source_summary_sha256": "1f75523f3b8584d95169c8534ca3aa74bc6c162b3b1cfb49b3b95dcf27831944",
+      "status": "complete"
+    },
+    "supply-plus-20": {
+      "dates": 2,
+      "gates": {
+        "maximum_market_residual": 2.9623250713584832e-05,
+        "maximum_mass_residual": 1.1102230246251565e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 23
+      },
+      "source_summary_sha256": "1f75523f3b8584d95169c8534ca3aa74bc6c162b3b1cfb49b3b95dcf27831944",
+      "status": "complete"
+    }
+  },
+  "elapsed_seconds": 530.0708901882172,
+  "expectations": "temporary equilibrium: each current price treated as permanent",
+  "failures": {},
+  "fiscal_closure": "tax revenue discarded; no rebate or grant",
+  "inherited_state_verification_sha256": "17231863d0f21e8a245e5c3756cf174a79192a43a6a3fe77d6610edc5f31024a",
+  "policy_workers": 4,
+  "population_closure": "closed national: M=0, rho=1",
+  "production_promoted": false,
+  "replacement_conversion": 0.47619047619047616,
+  "scientific_bundle": "88d4abfcb50f32cd30edffd05245ec0627a8f5dfc7892943fd795a6ee23a39ef",
+  "selected_summary": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907h/output/model/joint_nested_overnight/smoke/smoke_histories/task_001/summary.json",
+  "selected_summary_sha256": "1f75523f3b8584d95169c8534ca3aa74bc6c162b3b1cfb49b3b95dcf27831944",
+  "smoke": true,
+  "status": "complete",
+  "supply_elasticity": 0.63,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+}

@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-09-07T07:56:46.244113+00:00",
+  "status": "complete_smoke_independently_verified",
+  "job_id": 17095586,
+  "slurm_state": "COMPLETED",
+  "exit_code": "0:0",
+  "slurm_wall_seconds": 3188,
+  "peak_rss_kib": 24967784,
+  "original_contract_sha256": "117169ecdc8deaca8aa29433a10464e0b32384c4b10dfde0734464914ce021f5",
+  "source_bundle": "88d4abfcb50f32cd30edffd05245ec0627a8f5dfc7892943fd795a6ee23a39ef",
+  "historical_receipts": [
+    {
+      "case": "task_002",
+      "receipt_sha256": "dd29baf01bddd13cac9d70b9b2fe90684ebd2564fca8bd66aa41bd78ad7eec68",
+      "elapsed_seconds": 2594.7669405937195,
+      "artifact_count": 21
+    },
+    {
+      "case": "task_001",
+      "receipt_sha256": "b40e5c4473e15379253a1e94a65dec63d3dcf05e75bfcab6b7a37aa8841e74a5",
+      "elapsed_seconds": 2601.389975786209,
+      "artifact_count": 21
+    },
+    {
+      "case": "task_004",
+      "receipt_sha256": "7077f6dc4546f4ef90fddc8b608ec5e0fda51ad4fb774bdeaeb270264fd95d84",
+      "elapsed_seconds": 1894.1889374256134,
+      "artifact_count": 21
+    },
+    {
+      "case": "task_003",
+      "receipt_sha256": "4a3a0e3e5bd9596d72d2a66b52abb9f79ec0802a2ac853aa1efd18e9480f5a60",
+      "elapsed_seconds": 2107.1923439502716,
+      "artifact_count": 21
+    }
+  ],
+  "historical_original_artifacts_verified_remotely": 84,
+  "historical_exact_reference_pngs": 68,
+  "exact_target_rows_each": 12,
+  "exact_all_parameters": true,
+  "exact_numeric_history_entries_each": 253,
+  "policy_artifacts_verified_remotely": 170,
+  "policy_exact_reference_pngs": 136,
+  "policy_exact_csv_rows": true,
+  "policy_exact_numeric_entries": 360,
+  "policy_workers": 4,
+  "policy_smoke_seconds": 530.0708901882172,
+  "full_policy_projected_seconds": 2915.3898960351944,
+  "policy_receipt_sha256": "1f830f08bdfd09a7b15b8a5f7206653dadd9073a2e0cb06b6e2edad732d2f130",
+  "verification_method": "Lead executed the read-only prefix of frozen i verify_and_prepare.py through policy artifact hashing; stopped before output creation or contract build. Every original artifact, previous e table/history/PNG comparison and policy budget/probability check passed.",
+  "production_promoted": false
+}

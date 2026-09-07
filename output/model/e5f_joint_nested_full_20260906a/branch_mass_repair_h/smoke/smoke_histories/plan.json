@@ -1,0 +1,139 @@
+{
+  "adapter_sha256": "dbcfdf5655ab4917b9c4d4b2d3e9b7049d793c0270561f4e49e042b8eb48b234",
+  "cases": [
+    {
+      "center": "center_001.json",
+      "center_sha256": "69f099dea87973f2d362288148662a955e5868a4646439ce512a50954afd587a",
+      "id": 1,
+      "label": "anchor_1",
+      "output": "task_001",
+      "panel_design": "mixed",
+      "panel_seed": 20260906,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.05
+    },
+    {
+      "center": "center_002.json",
+      "center_sha256": "0cae44f510b56f99576b972b6ae79a4242582608173cd8b7e4069ca2c7547e5f",
+      "id": 2,
+      "label": "anchor_2",
+      "output": "task_002",
+      "panel_design": "mixed",
+      "panel_seed": 20260906,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.05
+    },
+    {
+      "center": "center_003.json",
+      "center_sha256": "5a0a64cc109e3397a4c2c81bff7baef5923d6a094f9840611969e47b00f676b4",
+      "id": 3,
+      "label": "all_minus",
+      "output": "task_003",
+      "panel_design": "mixed",
+      "panel_seed": 20260906,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.05
+    },
+    {
+      "center": "center_004.json",
+      "center_sha256": "34e8420e93cc51da39ee775dd02d1685084a2eb9961a947ba7c81da37d03c9f0",
+      "id": 4,
+      "label": "all_plus",
+      "output": "task_004",
+      "panel_design": "mixed",
+      "panel_seed": 20260906,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.05
+    }
+  ],
+  "code_bundle_sha256": "88d4abfcb50f32cd30edffd05245ec0627a8f5dfc7892943fd795a6ee23a39ef",
+  "controller_sha256": "9d6705a42e940ae9a3a81f7bebf52bd0e2ec895f40d5db02130fc519992e44dd",
+  "first_child_jump_upper": 2.0,
+  "helper_sha256": {
+    "run_e5f_independent_numerical_audit.py": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+    "run_e5f_post2023_no_policy_continuations.py": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+    "run_e5f_post2023_policy_mechanisms.py": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8"
+  },
+  "input_sha256": {},
+  "launch_deadline_epoch": 1788777300.0,
+  "planner_sha256": "f57144f4e2cb9c24518e621da1319c1ca563e7af95e9f887f2047e8a6f979696",
+  "production_promoted": false,
+  "schema": "e5f_joint_nested_overnight_v1",
+  "search_domain": [
+    {
+      "lower": 0.94,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.005,
+      "name": "tenure_choice_kappa",
+      "transform": "log",
+      "upper": 10.0
+    },
+    {
+      "lower": 0.02,
+      "name": "joint_nest_lambda",
+      "transform": "log",
+      "upper": 1.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.1,
+      "name": "hbar_child_rooms",
+      "transform": "log",
+      "upper": 1.8
+    },
+    {
+      "lower": 0.0,
+      "name": "first_birth_fixed_cost",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "hbar_first_child_jump",
+      "transform": "softzero",
+      "upper": 2.0
+    },
+    {
+      "lower": -1.5,
+      "name": "psi_child_change_2023",
+      "transform": "asinh",
+      "upper": 0.2
+    }
+  ],
+  "source": "/scratch/td2248/projects/Fertility_Spring26_pf_20260823/output/model/intergen_e5f_child_room_floor_psinneg_extended_20260806/report/results.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "smoke_histories",
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817"
+}

@@ -1,8 +1,50 @@
 # Calibration Status
 
-Updated: `2026-09-07` (exact tiny-cohort repair verified; fresh historical/policy smoke and full case replay running)
+Updated: `2026-09-07` (full repaired historical/policy verification passed;32-worker calibration running)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7, 08:03 UTC: all verification passed; 32-worker calibration is running.**
+Torch job `17100904` started at07:59:24UTC oncs747. It completed the full
+independent preflight and is running the initial32-case population. The four
+completed receipts currently counted in its ledger are imported smoke cases;
+no new search candidate has completed yet. Snapshoti remains immutable, source
+f8b0f6bd and scientific bundle88d4. New contract SHA is
+`a2869d845a5a17d23c43004d830743df22d6ac1387ed09e70f69b4da6d3920b1`.
+
+Full smoke17095586 completed0:0 in53m08s. Independent checks verified all84
+historical artifact hashes, all12target rows/allparameters/253numeric history
+entries and68standard graphs exactly against the preceding source. All170
+policy artifacts, all360numeric policy entries and136graphs also pass exact
+comparison. The four-process eight-date policy smoke took530.07seconds,
+projecting48.59minutes for all44dates. The measured budget therefore supports
+the unchanged prepared3.5hfinal reserve. Original failed-case replay17095539
+also completed allfivehistorical dates and every gate; its poor fit remains
+diagnostic, not an incumbent. No tolerance, target, weight or economic object
+was relaxed.
+
+Resources are32CPUs/352GB with a6hSlurm ceiling and the same13:35UTChardcutoff.
+The original12h/384GB pending job17099327 was cancelled without running when
+a direct scheduler update failed. Its6h/384GB replacement17100729 was also
+cancelled while pending. A resource inspection found sufficient freecores but
+no node with384GB free;352GB fits available capacity and exceeds32times the
+largest observed9.253GiBworker peak by about19%. Initial observed job memory
+is about50GiB; monitor the later peaks. Both cancelled requests had zero runtime
+and produced no contract or model solve. The completed smoke had disappeared
+from Slurm's dependency lookup, so the final submission relies on the same
+fail-closed complete preflight inside its allocation. No duplicate job exists.
+
+Search stages require a full one-hour timeout wave before10:05UTC. The current
+contract projects64search histories at the latest measured2,601-second rate;
+640remains only an attempt ceiling. All11parameters remain free, with32initial
+proposals, bounded DE generations and refinement,22finalJacobian probes,
+two exact repetitions and four fullpolicy paths. Queueing, actual solve times
+and the unchanged timeout stop can reduce coverage. Current source/contract,
+complete preflight, smoke evidence and submission are indexed in
+`output/model/e5f_joint_nested_full_20260906a/parallel_search_i/` and
+`branch_mass_repair_h/`. The morningPDF remains pending actual calibration
+and fullpolicy results. Production and the protected manuscript are unchanged.
+
 
 **September 7, 07:33 UTC: original failed case now fully verified; large search queued behind final smoke.**
 Replay `17095539` completed 0:0 in32m55s. Original case18 now passes all five
