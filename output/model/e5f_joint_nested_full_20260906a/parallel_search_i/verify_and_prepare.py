@@ -1,4 +1,8 @@
-"""Verify completed repaired smoke and original-case replay, then prepare; never submit."""
+"""Verify completed repaired smoke and replay; optionally run an already allocated search.
+
+This helper never submits jobs. --run-search-after-verification executes the
+pinned launcher only after every original artifact and contract check passes.
+"""
 from pathlib import Path
 import json,math,subprocess,sys
 root=Path('/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907i')
@@ -23,7 +27,6 @@ a.verify(original_path,original_sha);original=a.read_json(original_path)
 assert original['policy_workers']==4
 assert original['code_bundle_sha256']==a.BUNDLE
 hist=Path(original['output_root'])/'smoke';policy=hist.parent/'policy_loop_smoke'
-assert a.read_json(hist/'search_state.json')['status']=='smoke_passed'
 # The implemented fix must have passed the exact original failed state.
 replay=hist.parent/'mass_repair_replay';repair=a.read_json(replay/'saved_state_repair_verification.json')
 assert repair['status']=='pass_saved_original_failure_state' and repair['new_bundle']==a.BUNDLE
@@ -38,13 +41,20 @@ replay_assessment={'original_state_verified':True,'provenance_sha256':a.digest(r
 if provenance['complete']:
     rp=a.load_plan(replay/'plan.json',provenance['new_plan_sha256']);case=rp['cases'][0]
     rr=a.read_json(replay/'task_018/case_receipt.json');assert rr['status']=='complete'
+    assert rr['plan_sha256']==provenance['new_plan_sha256']
+    assert rr['budget_diagnostic']['budget_excess_mass']<=2e-10
+    assert rr['policy_array_diagnostic']['occupied_negative_steps']==0
     for rel,sha in rr['artifact_sha256'].items():a.verify(replay/'task_018'/rel,sha)
     summary,_,_=a.validate_result(replay/'task_018',rp,case)
-    replay_assessment.update(status='complete_valid_original_case',loss=summary['best_candidate']['transition_loss'])
+    replay_assessment.update(status='complete_valid_original_case',loss=summary['best_candidate']['transition_loss'],receipt_sha256=a.digest(replay/'task_018/case_receipt.json'),artifact_count=len(rr['artifact_sha256']),elapsed_seconds=rr['elapsed_seconds'])
 else:
     failure=a.read_json(replay/'task_018/adapter_failure.json')
     assert search.classify_failure(failure['error'],failure['type'])=='undefined_first_birth_support'
     replay_assessment.update(status='original_controlled_historical_support_rejection_after_repair',failure=failure)
+if '--replay-only' in sys.argv:
+    a.write_json(root/'replay_preflight.json',replay_assessment)
+    print(json.dumps(replay_assessment));sys.exit(0)
+assert a.read_json(hist/'search_state.json')['status']=='smoke_passed'
 # Preserve and verify every original historical artifact, then compare numeric
 # results and the stable graph set with the preceding complete source.
 proof=a.read_json(hist/'smoke_verification.json')
@@ -120,3 +130,12 @@ report=dict(status='preflight_passed',contract_sha256=a.digest(contract),source_
  policy_exact_pngs=136,policy_exact_numeric_entries=numeric,policy_smoke_seconds=pr['elapsed_seconds'],
  policy_full_projection_seconds=pr['elapsed_seconds']*44/8,budget_estimate=c['budget_estimate'],production_promoted=False)
 a.write_json(out/'preflight_verification.json',report);print(json.dumps(report),flush=True)
+
+if '--run-search-after-verification' in sys.argv:
+    import os
+    assert os.environ.get('SLURM_JOB_ID'), 'Search requires an allocated cluster job'
+    assert int(os.environ.get('SLURM_CPUS_PER_TASK','0')) >= c['max_workers']
+    env=dict(os.environ,E5F_JOINT_MODE='search',E5F_JOINT_CONTRACT=str(contract),
+             E5F_JOINT_CONTRACT_SHA256=a.digest(contract))
+    subprocess.run(['bash',str(root/'code/cluster/submit_e5f_joint_nested_long.sh')],
+                   cwd=root,env=env,check=True)

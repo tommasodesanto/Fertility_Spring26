@@ -1,5 +1,39 @@
 # Full simultaneous-choice experiment
 
+**September 7, 07:33 UTC: original failed case now fully verified; large search queued behind final smoke.**
+Replay `17095539` completed 0:0 in32m55s. Original case18 now passes all five
+historical dates, its twelve target rows and every final validation gate.
+All21 original artifacts were independently hash-verified locally and onTorch;
+all17standard graphs were inspected. No occupied value decreases remain;
+budget-excess mass is5.99e-31. The original mass error is fixed without changing
+the gate. This proposal is a poor fit, not a new incumbent: loss2113.33328561.
+Complete target/model/gap/weight/loss and all11estimate/bound tables are in
+`branch_mass_repair_h/replay/task_018/target_fit_long.csv` and
+`parameter_table.csv` beneath the experiment output. Its large childlessness
+and first-birth timing misses outweigh its smaller parent-ownership-gap miss.
+This is one joint parameter proposal, not an isolated causal scale comparison.
+
+Full smoke `17095586` remains running. Both all-parameter probes have completed;
+the repeated anchors are progressing through the historical dates. The four
+parallel two-date policy paths still must finish. No new large search is running.
+
+Dependent job `17099327` is submitted on32CPUs/384GB with afterok:17095586 and
+kill-on-invalid-dependency. It runs in the prepared immutable snapshoti.
+When allocated, `verify_and_prepare.py --run-search-after-verification` first
+verifies the full h historical/policy evidence, exact preceding-source tables
+and graphs, source/target hashes, actual original-case replay and measured
+policy runtime. Only a successful complete preflight creates and verifies the
+new contract, then invokes the existing pinned search launcher. A failed
+verification or incompatible runtime aborts before calibration starts. The
+contract and model search do not exist yet. Do not launch a duplicate or run
+the contract builder manually while this dependent job is pending.
+
+The conditional parallel32 design and fixed13:35UTCcutoff are unchanged from
+07:05. Sourcef8b0f6bd, same88d4 scientific bundle, remains pinned. Submission,
+full replay evidence and recipe are in `parallel_search_i/` and
+`branch_mass_repair_h/`. Production and the author manuscript are unchanged.
+
+
 **September 7, 07:05 UTC: parallel search preparation is complete; full scientific checks still running.**
 The independent review of final policy multiprocessing found no blocker in
 source09beb3b3. Local and Torch real-spawn tests passed; the review itself was
