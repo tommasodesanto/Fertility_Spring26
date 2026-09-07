@@ -3538,6 +3538,7 @@ def realize_current_choices(
     tmx_wt: np.ndarray,
     *,
     use_compiled_scatter: bool = False,
+    mass_pruning_tolerance: float = 1e-15,
 ) -> np.ndarray:
     """Apply location, tenure, and housing transactions without aging.
 
@@ -3553,7 +3554,7 @@ def realize_current_choices(
     for io in range(I):
         for to in range(nt):
             origin = flat_nc(cohort[:, to, io, :, :], Nb, nc)
-            if np.sum(origin) < 1e-15:
+            if np.sum(origin) == 0.0 or np.sum(origin) < mass_pruning_tolerance:
                 continue
             probs = np.reshape(loc_probs[:, to, io, :, j, :, :], (Nb, I, nc), order="F")
             after_location[:, to, io, :, :] += unflat_nc(origin * probs[:, io, :], Nb, npar, ncs)
@@ -3566,7 +3567,7 @@ def realize_current_choices(
                 if use_compiled_scatter:
                     moved = scatter_cols_sameidx_kernel(idx, wt, moved, Nb)
                 else:
-                    moved = scatter_redistribute_cols_sameidx(idx, wt, moved, Nb)
+                    moved = scatter_redistribute_cols_sameidx(idx, wt, moved, Nb, mass_pruning_tolerance=mass_pruning_tolerance)
                 after_location[:, 0, id_, :, :] += unflat_nc(moved, Nb, npar, ncs)
 
     realized = np.zeros_like(cohort)
@@ -3574,7 +3575,7 @@ def realize_current_choices(
         for id_ in range(I):
             for to in range(nt):
                 source = after_location[:, to, id_, nn, :]
-                if np.sum(source) < 1e-15:
+                if np.sum(source) == 0.0 or np.sum(source) < mass_pruning_tolerance:
                     continue
                 normalized_probs = None
                 if tenure_probs is not None:
@@ -3592,7 +3593,7 @@ def realize_current_choices(
                         mass = source * selected
                     else:
                         mass = source * normalized_probs[:, :, tn]
-                    if np.sum(mass) < 1e-15:
+                    if np.sum(mass) == 0.0 or np.sum(mass) < mass_pruning_tolerance:
                         continue
                     redistributed = np.zeros((Nb, ncs))
                     for cs in range(ncs):
@@ -3618,6 +3619,7 @@ def realize_current_choices_markov_income(
     tmx_wt: np.ndarray,
     *,
     use_compiled_scatter: bool = False,
+    mass_pruning_tolerance: float = 1e-15,
 ) -> np.ndarray:
     """Markov-income counterpart of :func:`realize_current_choices`."""
 
@@ -3635,6 +3637,7 @@ def realize_current_choices_markov_income(
             tmx_idx,
             tmx_wt,
             use_compiled_scatter=use_compiled_scatter,
+            mass_pruning_tolerance=mass_pruning_tolerance,
         )
     return realized
 
@@ -3650,6 +3653,7 @@ def realize_current_cross_section(
     tmx_wt: np.ndarray,
     *,
     use_compiled_scatter: bool = False,
+    mass_pruning_tolerance: float = 1e-15,
 ) -> np.ndarray:
     """Build the realized current cross-section from beginning-of-period mass."""
 
@@ -3667,6 +3671,7 @@ def realize_current_cross_section(
                 tmx_idx,
                 tmx_wt,
                 use_compiled_scatter=use_compiled_scatter,
+                mass_pruning_tolerance=mass_pruning_tolerance,
             )
     elif g.ndim == 7:
         for j in range(g.shape[3]):
@@ -3681,6 +3686,7 @@ def realize_current_cross_section(
                 tmx_idx,
                 tmx_wt,
                 use_compiled_scatter=use_compiled_scatter,
+                mass_pruning_tolerance=mass_pruning_tolerance,
             )
     else:
         raise ValueError(f"unsupported distribution rank: {g.ndim}")
@@ -5280,6 +5286,8 @@ def advance_cohort_one_period_markov_income(
     ust,
     Pia,
     Pi_z,
+    *,
+    mass_pruning_tolerance: float = 1e-15,
 ):
     Nb = len(b_grid)
     nt = 1 + P.n_house
@@ -5298,7 +5306,7 @@ def advance_cohort_one_period_markov_income(
         for io in range(I):
             for to in range(nt):
                 go = flat_nc(gj[:, to, io, zz, :, :], Nb, nc)
-                if np.sum(go) < 1e-15:
+                if np.sum(go) == 0.0 or np.sum(go) < mass_pruning_tolerance:
                     continue
                 po = np.reshape(loc_probs[:, to, io, :, j, zz, :, :], (Nb, I, nc), order="F")
                 sp = po[:, io, :]
@@ -5312,7 +5320,7 @@ def advance_cohort_one_period_markov_income(
                     if use_compiled_scatter:
                         moved = scatter_cols_sameidx_kernel(idx, wt, mp, Nb)
                     else:
-                        moved = scatter_redistribute_cols_sameidx(idx, wt, mp, Nb)
+                        moved = scatter_redistribute_cols_sameidx(idx, wt, mp, Nb, mass_pruning_tolerance=mass_pruning_tolerance)
                     gpl[:, 0, id_, zz, :, :] += unflat_nc(moved, Nb, npar, ncs)
 
     gpt = np.zeros((Nb, nt, I, Nz, npar, ncs))
@@ -5321,7 +5329,7 @@ def advance_cohort_one_period_markov_income(
             for id_ in range(I):
                 for to in range(nt):
                     gs = gpl[:, to, id_, zz, nn, :]
-                    if np.sum(gs) < 1e-15:
+                    if np.sum(gs) == 0.0 or np.sum(gs) < mass_pruning_tolerance:
                         continue
                     for tn in range(nt):
                         if tenure_probs is None:
@@ -5333,7 +5341,7 @@ def advance_cohort_one_period_markov_income(
                         else:
                             pr = tenure_probs[:, to, id_, j, zz, nn, :, tn]
                             mt = gs * pr
-                        if np.sum(mt) < 1e-15:
+                        if np.sum(mt) == 0.0 or np.sum(mt) < mass_pruning_tolerance:
                             continue
                         rd = np.zeros((Nb, ncs))
                         for cs in range(ncs):
@@ -5355,7 +5363,7 @@ def advance_cohort_one_period_markov_income(
                 if use_compiled_scatter:
                     g_new = scatter_cols_kernel(idx, wt, gf, Nb)
                 else:
-                    g_new = scatter_redistribute_cols(idx, wt, gf, Nb)
+                    g_new = scatter_redistribute_cols(idx, wt, gf, Nb, mass_pruning_tolerance=mass_pruning_tolerance)
                 gps[:, ten, i, zz, :, :] = unflat_nc(g_new, Nb, npar, ncs)
 
     g_next = np.zeros_like(gj)

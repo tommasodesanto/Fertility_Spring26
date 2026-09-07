@@ -6,7 +6,8 @@ the maintained finite-horizon closed-national experiment (M=0, rho=1), with
 current prices treated as permanent at each date. No perfect-foresight claim.
 """
 from __future__ import annotations
-import argparse, copy, gzip, json, math, pickle, sys, time, traceback, textwrap
+import argparse, copy, gzip, json, math, multiprocessing as mp, pickle, sys, time, traceback, textwrap
+from queue import Empty
 from pathlib import Path
 from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[3]
@@ -19,6 +20,21 @@ import run_e5f_transition_calibration as calibration
 from intergen_eqscale_seq_optimized import solver
 
 CASES=('baseline','supply-plus-20','dependent-child-ltv95','property-tax-2pct-no-rebate')
+
+
+def policy_worker_count(contract):
+    """Return the explicitly contracted policy concurrency (serial by default)."""
+    workers=contract.get('policy_workers',1)
+    if type(workers) is not int or workers not in (1,4):
+        raise RuntimeError("Contract policy_workers must be exactly 1 or 4")
+    return workers
+
+
+def configure_policy_model():
+    """Initialize the same sequential hooks in the parent and each spawned child."""
+    policy.transition.configure_sequential_model()
+    policy.calendar.apply_fertility=policy.transition.apply_sequential_fertility
+    policy.calendar.advance_calendar_distribution=policy.transition.advance_sequential_calendar_distribution
 
 
 def selected_path(path):
@@ -70,6 +86,109 @@ def prepare(path,s):
     initial_mass=float(rows[0]['adult_population'])
     prepared=SimpleNamespace(b_grid=packet['b_grid'],supply_rule=packet['supply_rule'],initial_mass_2007=initial_mass)
     return packet,prepared,state,rows
+
+
+def run_policy_case(name,folder,prepared,state,packet,selected,post):
+    """Run one policy path, retaining the serial loop's numerical body verbatim."""
+    folder.mkdir(parents=True,exist_ok=True);count=0
+    original=policy.baseline.evaluate_state
+    def observed(*args,**kwargs):
+        nonlocal count
+        evaluation,shared,fallback=original(*args,**kwargs)
+        P=args[1];year=2023+4*count;target=folder/f'date_{year}';target.mkdir(parents=True,exist_ok=True)
+        current=dict(parameters=P,b_grid=prepared.b_grid,evaluation=evaluation,shared=shared,supply_rule=policy.policy_supply_rule(prepared.supply_rule,policy.POLICIES[name]))
+        if name=='baseline' and count==0:
+            gap=float(np.abs(evaluation.g_current-packet['evaluation'].g_current).sum())
+            if gap>2e-10:raise RuntimeError(f'Baseline does not reproduce selected 2023 state: {gap}')
+        # Preserve an inspectable state even when a subsequent audit fails.
+        with gzip.open(target/'dated_state.pkl.gz','wb',compresslevel=1) as stream:pickle.dump(current,stream,protocol=5)
+        audit.standard_diagnostics(current,target,validate_production_young=False)
+        arrays=audit.policy_array_audit(current,target);budget=audit.budget_audit(current,target)
+        if arrays['occupied_negative_steps'] != 0:raise RuntimeError('Occupied value monotonicity failed on policy path')
+        for bounds in arrays['probabilities'].values():
+            if bounds['nonfinite'] or bounds['minimum']<0 or bounds['maximum']>1:raise RuntimeError('Policy probability gate failed')
+        if budget['budget_excess_mass']>2e-10:raise RuntimeError('Material occupied budget violation on policy path')
+        count+=1
+        return evaluation,shared,fallback
+    policy.baseline.evaluate_state=observed
+    try:
+        rows,gates=policy.run_policy_path(prepared,state,packet['parameters'],float(state.g_pre.sum()),policy.POLICIES[name],
+            post_2023_periods=post,market_tol=2e-4,market_max_iter=60,progress_dir=folder)
+        if gates['maximum_market_residual']>2e-4 or gates['maximum_mass_residual']>2e-10:
+            raise RuntimeError('Equilibrium-path market or mass gate failed')
+        policy.baseline.write_csv(folder/'policy_path.csv',rows);policy.make_case_figure(rows,folder)
+        receipt=dict(status='complete',dates=len(rows),gates=gates,source_summary_sha256=adapter.digest(selected))
+        adapter.write_json(folder/'receipt.json',receipt)
+        return receipt,None
+    except Exception as error:
+        failure=dict(error=str(error),traceback=traceback.format_exc())
+        adapter.write_json(folder/'failure.json',failure)
+        if 'Housing market did not clear' not in str(error) and 'market gate failed' not in str(error):raise
+        return None,failure
+    finally:
+        policy.baseline.evaluate_state=original
+
+
+def _policy_process_entry(name,folder,prepared,state,packet,selected,post,result_queue,case_runner):
+    try:
+        configure_policy_model()
+        receipt,failure=case_runner(name,folder,prepared,state,packet,selected,post)
+        result_queue.put((name,receipt,failure,None))
+    except BaseException:
+        result_queue.put((name,None,None,traceback.format_exc()))
+
+
+def _terminate_and_reap(processes):
+    started=[process for process in processes.values() if process.pid is not None]
+    for process in started:
+        if process.is_alive():process.terminate()
+    for process in started:process.join(timeout=5)
+    for process in started:
+        if process.is_alive():
+            process.kill()
+            process.join()
+
+
+def run_policy_cases(out,prepared,state,packet,selected,post,workers,*,process_context=None,case_runner=run_policy_case):
+    """Run independent cases serially or in isolated spawned processes."""
+    if workers==1:
+        completed={};failures={}
+        for name in CASES:
+            receipt,failure=case_runner(name,out/name,prepared,state,packet,selected,post)
+            if receipt is not None:completed[name]=receipt
+            if failure is not None:failures[name]=failure
+        return ({name:completed[name] for name in CASES if name in completed},
+                {name:failures[name] for name in CASES if name in failures})
+    if workers != 4:raise RuntimeError('Policy worker count must be one or four')
+    context=process_context or mp.get_context('spawn');result_queue=context.Queue();processes={}
+    try:
+        for name in CASES:
+            process=context.Process(target=_policy_process_entry,
+                args=(name,out/name,prepared,state,packet,selected,post,result_queue,case_runner))
+            processes[name]=process;process.start()
+        completed={};failures={};pending=set(CASES)
+        while pending:
+            try:name,receipt,failure,fatal=result_queue.get(timeout=.2)
+            except Empty:
+                crashed=[name for name in pending if not processes[name].is_alive() and processes[name].exitcode is not None]
+                if crashed:raise RuntimeError(f'Policy child exited before reporting: {crashed}')
+                continue
+            if name not in pending:raise RuntimeError(f'Duplicate policy-child result: {name}')
+            if fatal:raise RuntimeError(f'Policy child {name} failed unexpectedly:\n{fatal}')
+            pending.remove(name)
+            if receipt is not None:completed[name]=receipt
+            if failure is not None:failures[name]=failure
+        for process in processes.values():process.join()
+        bad=[name for name,process in processes.items() if process.exitcode not in (0,None)]
+        if bad:raise RuntimeError(f'Policy children exited unsuccessfully: {bad}')
+        return ({name:completed[name] for name in CASES if name in completed},
+                {name:failures[name] for name in CASES if name in failures})
+    except BaseException:
+        _terminate_and_reap(processes)
+        raise
+    finally:
+        if hasattr(result_queue,'close'):result_queue.close()
+        if hasattr(result_queue,'join_thread'):result_queue.join_thread()
 
 
 def report(out,selected,contract,smoke=False):
@@ -163,15 +282,13 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--selected-summary',type=Path,required=True);ap.add_argument('--outdir',type=Path,required=True)
     ap.add_argument('--contract',type=Path,required=True);ap.add_argument('--smoke',action='store_true');ap.add_argument('--report-only',action='store_true')
     a=ap.parse_args();out=a.outdir.resolve();out.mkdir(parents=True,exist_ok=True)
-    contract=adapter.read_json(a.contract);selected=selected_path(a.selected_summary)
+    contract=adapter.read_json(a.contract);workers=policy_worker_count(contract);selected=selected_path(a.selected_summary)
     adapter.verify(__file__, contract['finalizer_sha256'])
     adapter.verify(adapter.__file__, contract['adapter_sha256'])
     summary,selected_receipt=verify_selected(selected,contract)
     if a.report_only:report(out,selected,contract,a.smoke);return
     if (out/'equilibrium_receipt.json').exists():raise RuntimeError('Refusing to overwrite completed equilibrium paths')
-    policy.transition.configure_sequential_model()
-    policy.calendar.apply_fertility=policy.transition.apply_sequential_fertility
-    policy.calendar.advance_calendar_distribution=policy.transition.advance_sequential_calendar_distribution
+    configure_policy_model()
     packet,prepared,state,history=prepare(selected,summary)
     adapter.write_json(out/'inherited_state_verification.json', dict(
         status='exact_feasibility_replay', source_summary_sha256=adapter.digest(selected),
@@ -181,43 +298,9 @@ def main():
         fitted_projection_mass=float(packet['evaluation'].feasibility_projection_mass),
         birth_queue_source_year=2019, scheduled_entries=state.scheduled_entries,
         scheduled_raw_entries=state.scheduled_raw_entries))
-    post=1 if a.smoke else 10;start=time.time();receipts={};failures={}
-    for name in CASES:
-        folder=out/name;folder.mkdir(parents=True,exist_ok=True);count=0
-        original=policy.baseline.evaluate_state
-        def observed(*args,**kwargs):
-            nonlocal count
-            evaluation,shared,fallback=original(*args,**kwargs)
-            P=args[1];year=2023+4*count;target=folder/f'date_{year}';target.mkdir(parents=True,exist_ok=True)
-            current=dict(parameters=P,b_grid=prepared.b_grid,evaluation=evaluation,shared=shared,supply_rule=policy.policy_supply_rule(prepared.supply_rule,policy.POLICIES[name]))
-            if name=='baseline' and count==0:
-                gap=float(np.abs(evaluation.g_current-packet['evaluation'].g_current).sum())
-                if gap>2e-10:raise RuntimeError(f'Baseline does not reproduce selected 2023 state: {gap}')
-            # Preserve an inspectable state even when a subsequent audit fails.
-            with gzip.open(target/'dated_state.pkl.gz','wb',compresslevel=1) as stream:pickle.dump(current,stream,protocol=5)
-            audit.standard_diagnostics(current,target,validate_production_young=False)
-            arrays=audit.policy_array_audit(current,target);budget=audit.budget_audit(current,target)
-            if arrays['occupied_negative_steps'] != 0:raise RuntimeError('Occupied value monotonicity failed on policy path')
-            for bounds in arrays['probabilities'].values():
-                if bounds['nonfinite'] or bounds['minimum']<0 or bounds['maximum']>1:raise RuntimeError('Policy probability gate failed')
-            if budget['budget_excess_mass']>2e-10:raise RuntimeError('Material occupied budget violation on policy path')
-            count+=1
-            return evaluation,shared,fallback
-        policy.baseline.evaluate_state=observed
-        try:
-            rows,gates=policy.run_policy_path(prepared,state,packet['parameters'],float(state.g_pre.sum()),policy.POLICIES[name],
-                post_2023_periods=post,market_tol=2e-4,market_max_iter=60,progress_dir=folder)
-            if gates['maximum_market_residual']>2e-4 or gates['maximum_mass_residual']>2e-10:
-                raise RuntimeError('Equilibrium-path market or mass gate failed')
-            policy.baseline.write_csv(folder/'policy_path.csv',rows);policy.make_case_figure(rows,folder)
-            receipts[name]=dict(status='complete',dates=len(rows),gates=gates,source_summary_sha256=adapter.digest(selected))
-            adapter.write_json(folder/'receipt.json',receipts[name])
-        except Exception as error:
-            failures[name]=dict(error=str(error),traceback=traceback.format_exc())
-            adapter.write_json(folder/'failure.json',failures[name])
-            if 'Housing market did not clear' not in str(error) and 'market gate failed' not in str(error):raise
-        finally:policy.baseline.evaluate_state=original
-    receipt=dict(status='complete' if not failures else 'partial_policy_failures',smoke=a.smoke,elapsed_seconds=time.time()-start,
+    post=1 if a.smoke else 10;start=time.time()
+    receipts,failures=run_policy_cases(out,prepared,state,packet,selected,post,workers)
+    receipt=dict(status='complete' if not failures else 'partial_policy_failures',smoke=a.smoke,elapsed_seconds=time.time()-start,policy_workers=workers,
         inherited_state_verification_sha256=adapter.digest(out/'inherited_state_verification.json'),
         cases=receipts,failures=failures,selected_summary=str(selected),selected_summary_sha256=adapter.digest(selected),
         scientific_bundle=contract['code_bundle_sha256'],target_fingerprint=adapter.TARGET,

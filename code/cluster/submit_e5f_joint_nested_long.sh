@@ -24,6 +24,8 @@ python3 code/model/tools/test_e5f_exhaustive_saving.py
 python3 code/model/tools/test_e5f_joint_nested_full.py
 PYTHONPATH=code/model:code/model/tools python3 code/model/tools/test_e5f_joint_nested_integration.py
 python3 code/model/tools/test_e5f_joint_nested_long_search.py
+python3 code/model/tools/test_e5f_small_mass_transport.py
+python3 code/model/tools/test_e5f_joint_nested_finalize_parallel.py
 if [[ "$E5F_JOINT_MODE" == smoke ]]; then
  python3 -u code/model/tools/run_e5f_joint_nested_full_smoke.py \
   --checkpoint /scratch/td2248/projects/Fertility_Spring26_independent_audit_20260905/output/model/independent_numerical_smoke/dated_state.pkl \

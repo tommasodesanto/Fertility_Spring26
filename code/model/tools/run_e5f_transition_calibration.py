@@ -610,6 +610,47 @@ def normalize_distribution_mass_roundoff(
     }
 
 
+def normalize_branch_transport_mass(
+    distribution: np.ndarray,
+    *,
+    expected_mass: float,
+    stage: str,
+    retry_without_pruning=None,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Retry a failed pure transport at full positive-mass precision.
+
+    Passing calculations retain their exact original result. A retry changes
+    only absolute-mass pruning; it must pass the same relative accounting gate.
+    """
+    try:
+        return normalize_distribution_mass_roundoff(
+            distribution, expected_mass=expected_mass, stage=stage
+        )
+    except RuntimeError:
+        values = np.asarray(distribution, dtype=float)
+        if (
+            retry_without_pruning is None
+            or not math.isfinite(float(expected_mass))
+            or expected_mass <= 0.0
+            or not np.isfinite(values).all()
+            or np.any(values < 0.0)
+        ):
+            raise
+        precise = np.asarray(retry_without_pruning(), dtype=float)
+        if precise.shape != values.shape or not np.isfinite(precise).all() or np.any(precise < 0.0):
+            raise RuntimeError("Positive-mass transport replay produced invalid distribution")
+        repaired, gate = normalize_distribution_mass_roundoff(
+            precise, expected_mass=expected_mass, stage=stage
+        )
+        gate.update(
+            transport_precision="positive_mass_retained_after_original_gate_failure",
+            initial_actual_mass=float(values.sum()),
+            initial_relative_gap=abs(float(values.sum()) - expected_mass)
+            / max(abs(expected_mass), 1e-15),
+        )
+        return repaired, gate
+
+
 def stationary_measurement_nesting_gaps(transition_moments, stationary_moments, names):
     """Require all normalized-old target rows to be defined before comparing."""
     undefined = [name for name in names if not np.isfinite(
@@ -1086,41 +1127,47 @@ def begin_dated_first_birth_housing_branch(
     def advance(
         branch: np.ndarray, label: str, selected_policy: calendar.PolicyBundle
     ) -> tuple[np.ndarray, float, dict[str, float | str]]:
-        next_pre = np.zeros_like(branch)
-        deaths = 0.0
-        for j in range(int(P.J) - 1):
-            cohort = branch[:, :, :, j, :, :, :]
-            survival = (
-                float(P.survival_probs[j])
-                if bool(getattr(P, "use_age_survival", False))
-                else 1.0
-            )
-            deaths += (1.0 - survival) * float(np.sum(cohort))
-            next_pre[:, :, :, j + 1, :, :, :] = (
-                model.advance_cohort_one_period_markov_income(
-                    survival * cohort,
-                    j,
-                    selected_policy.loc_probs,
-                    selected_policy.tenure_choice,
-                    selected_policy.tenure_probs,
-                    selected_policy.bp_pol,
-                    P,
-                    b_grid,
-                    shared,
-                    selected_policy.maps.lmm_idx,
-                    selected_policy.maps.lmm_wt,
-                    selected_policy.maps.tmx_idx,
-                    selected_policy.maps.tmx_wt,
-                    stochastic_child_aging,
-                    child_transition,
-                    income_transition,
+        def carry(pruning_tolerance=None):
+            next_pre = np.zeros_like(branch)
+            deaths = 0.0
+            for j in range(int(P.J) - 1):
+                cohort = branch[:, :, :, j, :, :, :]
+                survival = (
+                    float(P.survival_probs[j])
+                    if bool(getattr(P, "use_age_survival", False))
+                    else 1.0
                 )
-            )
+                deaths += (1.0 - survival) * float(np.sum(cohort))
+                next_pre[:, :, :, j + 1, :, :, :] = (
+                    model.advance_cohort_one_period_markov_income(
+                        survival * cohort,
+                        j,
+                        selected_policy.loc_probs,
+                        selected_policy.tenure_choice,
+                        selected_policy.tenure_probs,
+                        selected_policy.bp_pol,
+                        P,
+                        b_grid,
+                        shared,
+                        selected_policy.maps.lmm_idx,
+                        selected_policy.maps.lmm_wt,
+                        selected_policy.maps.tmx_idx,
+                        selected_policy.maps.tmx_wt,
+                        stochastic_child_aging,
+                        child_transition,
+                        income_transition,
+                        **({} if pruning_tolerance is None else {"mass_pruning_tolerance": pruning_tolerance}),
+                    )
+                )
+            return next_pre, deaths
+
+        next_pre, deaths = carry()
         expected_survivor_mass = float(np.sum(branch)) - deaths
-        next_pre, mass_gate = normalize_distribution_mass_roundoff(
+        next_pre, mass_gate = normalize_branch_transport_mass(
             next_pre,
             expected_mass=expected_survivor_mass,
             stage=f"{label}_branch_advancement",
+            retry_without_pruning=(lambda: carry(0.0)[0]) if joint else None,
         )
         return next_pre, deaths, mass_gate
 
@@ -1232,37 +1279,33 @@ def finish_dated_first_birth_housing_branch(
     control_parent_mass = float(np.sum(control_pre[..., 1:, :]))
     if control_parent_mass > 2e-13:
         raise RuntimeError("The confirmed-childless control branch acquired parent mass")
-    treated_current = calendar.model.realize_current_cross_section(
-        treated_post,
-        treated_policy.loc_probs,
-        treated_policy.tenure_choice,
-        treated_policy.tenure_probs,
-        treated_policy.maps.lmm_idx,
-        treated_policy.maps.lmm_wt,
-        treated_policy.maps.tmx_idx,
-        treated_policy.maps.tmx_wt,
-        use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
+    def realize_branch(post, selected_policy, label):
+        def realize(pruning_tolerance=None):
+            return calendar.model.realize_current_cross_section(
+                post,
+                selected_policy.loc_probs,
+                selected_policy.tenure_choice,
+                selected_policy.tenure_probs,
+                selected_policy.maps.lmm_idx,
+                selected_policy.maps.lmm_wt,
+                selected_policy.maps.tmx_idx,
+                selected_policy.maps.tmx_wt,
+                use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
+                **({} if pruning_tolerance is None else {"mass_pruning_tolerance": pruning_tolerance}),
+            )
+        return normalize_branch_transport_mass(
+            realize(),
+            expected_mass=expected_destination_mass,
+            stage=f"{label}_destination_current_choice",
+            retry_without_pruning=(lambda: realize(0.0))
+            if calendar.joint_nested_enabled(P) else None,
+        )
+
+    treated_current, treated_current_gate = realize_branch(
+        treated_post, treated_policy, "treated"
     )
-    control_current = calendar.model.realize_current_cross_section(
-        control_post,
-        control_policy.loc_probs,
-        control_policy.tenure_choice,
-        control_policy.tenure_probs,
-        control_policy.maps.lmm_idx,
-        control_policy.maps.lmm_wt,
-        control_policy.maps.tmx_idx,
-        control_policy.maps.tmx_wt,
-        use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
-    )
-    treated_current, treated_current_gate = normalize_distribution_mass_roundoff(
-        treated_current,
-        expected_mass=expected_destination_mass,
-        stage="treated_destination_current_choice",
-    )
-    control_current, control_current_gate = normalize_distribution_mass_roundoff(
-        control_current,
-        expected_mass=expected_destination_mass,
-        stage="control_destination_current_choice",
+    control_current, control_current_gate = realize_branch(
+        control_post, control_policy, "control"
     )
     treated_mass = float(np.sum(treated_current))
     control_mass = float(np.sum(control_current))

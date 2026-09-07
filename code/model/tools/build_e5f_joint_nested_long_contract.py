@@ -9,6 +9,7 @@ parser.add_argument('--finish-epoch',type=float,required=True)
 parser.add_argument('--expected-history-seconds',type=float,required=True)
 parser.add_argument('--runtime-estimate-status',choices=('measured','provisional'),required=True)
 parser.add_argument('--profile',choices=('v1','wide32'),required=True)
+parser.add_argument('--policy-workers',type=int,choices=(1,4),default=1)
 parser.add_argument('--imported-smoke-root',type=Path)
 parser.add_argument('--imported-smoke-contract',type=Path)
 parser.add_argument('--imported-smoke-contract-sha256')
@@ -72,7 +73,7 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  expected_history_seconds=args.expected_history_seconds,expected_history_solve_count_upper=160,
  runtime_estimate_status=args.runtime_estimate_status,
  run_size=f'120 wealth x6 housing x1 market x17 ages x15 income x4 parity x4 child counts; up to{profile["max_histories"]} attempted complete histories (including4 imported smoke histories), each five cleared historical dates and normalized old steady state; 22 final Jacobian probes and2 exact repeats are reserved',
- estimated_history_wall_hours=profile['max_histories']*args.expected_history_seconds/profile['max_workers']/3600,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
+ estimated_history_wall_hours=profile['max_histories']*args.expected_history_seconds/profile['max_workers']/3600,policy_path_dates=11,policy_path_cases=4,policy_workers=args.policy_workers,production_promoted=False,
  budget_estimate={'at_contract_creation_epoch':time.time(),'available_total_seconds':available_total_seconds,
   'available_search_seconds':available_search_seconds,'reserved_final_seconds':final_reserve,
   'projected_search_histories_at_measured_rate':projected_search_histories,

@@ -13,6 +13,35 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_smoke_runs_four_required_histories_in_one_bounded_batch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            obj=object.__new__(search.Search);obj.root=Path(tmp);obj.c={}
+            u=[.5]*11;obj.seed={'panel_design':{'unit_vector':u}}
+            def batch(stage,vectors,labels,**kwargs):
+                self.assertEqual(stage,'smoke_histories');self.assertTrue(kwargs['smoke'])
+                self.assertEqual(labels,['anchor_1','anchor_2','all_minus','all_plus'])
+                self.assertEqual(vectors[:2],[u,u])
+                self.assertTrue(all(sum(a!=b for a,b in zip(v,u))==11 for v in vectors[2:]))
+                rows=[]
+                for i,(vector,label) in enumerate(zip(vectors,labels),1):
+                    folder=obj.root/f'task_{i:03d}';graphs=folder/'standard_diagnostics';graphs.mkdir(parents=True)
+                    for k in range(17):(graphs/f'graph_{k:02d}.png').write_bytes(bytes([k]))
+                    rows.append({'id':i,'label':label,'unit_vector':vector,'summary':str(folder/'summary.json')})
+                return list(reversed(rows))
+            with mock.patch.object(obj,'batch',side_effect=batch) as launch, \
+                    mock.patch.object(search.adapter,'compare_reference',return_value={'exact':True}) as exact, \
+                    mock.patch.object(obj,'summary') as summary:
+                obj.smoke()
+            launch.assert_called_once();exact.assert_called_once();summary.assert_called_once_with('smoke_passed')
+            proof=search.adapter.read_json(obj.root/'smoke_verification.json')
+            self.assertEqual(len(proof['anchor_receipts']),2);self.assertEqual(len(proof['probe_receipts']),2)
+            self.assertEqual(proof['exact_standard_pngs'],17)
+
+    def test_smoke_rejects_an_incomplete_four_case_batch(self):
+        obj=object.__new__(search.Search);obj.seed={'panel_design':{'unit_vector':[.5]*11}}
+        with mock.patch.object(obj,'batch',return_value=[{'label':'anchor_1'}]):
+            with self.assertRaisesRegex(RuntimeError,'Four completed smoke histories required'):obj.smoke()
+
     def test_three_timeouts_stop_new_search_but_drain_an_active_valid_case(self):
         with tempfile.TemporaryDirectory() as tmp:
             obj=object.__new__(search.Search);obj.root=Path(tmp)
@@ -138,11 +167,12 @@ class ControllerTests(unittest.TestCase):
             'cases':{name:copy.deepcopy(branch) for name in names}}
         contract={'code_bundle_sha256':'bundle','target_fingerprint':'target'}
         search.validate_policy_receipt(receipt,contract,smoke=True,selected_hashes={'selected'})
-        for mutation in ('partial','wrong_source','short','nan'):
+        for mutation in ('partial','wrong_source','short','nan','concurrency'):
             bad=copy.deepcopy(receipt)
             if mutation=='partial':bad['status']='partial_policy_failures'
             elif mutation=='wrong_source':bad['selected_summary_sha256']='other'
             elif mutation=='short':bad['cases']['baseline']['dates']=1
+            elif mutation=='concurrency':bad['policy_workers']=4
             else:bad['cases']['baseline']['gates']['maximum_market_residual']=float('nan')
             with self.assertRaises(RuntimeError):
                 search.validate_policy_receipt(bad,contract,smoke=True,selected_hashes={'selected'})

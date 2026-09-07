@@ -114,6 +114,8 @@ def validate_policy_receipt(receipt, contract, *, smoke, selected_hashes):
     if (receipt.get("status") != "complete" or receipt.get("failures")
             or receipt.get("smoke") is not smoke or set(receipt.get("cases", {})) != expected_cases):
         raise RuntimeError("Incomplete policy-loop receipt")
+    if receipt.get("policy_workers", 1) != contract.get("policy_workers", 1):
+        raise RuntimeError("Policy receipt has different contracted concurrency")
     if (receipt.get("scientific_bundle") != contract["code_bundle_sha256"]
             or receipt.get("target_fingerprint") != contract["target_fingerprint"]
             or receipt.get("selected_summary_sha256") not in selected_hashes):
@@ -414,15 +416,19 @@ class Search:
 
     def smoke(self):
         u=list(self.seed["panel_design"]["unit_vector"])
-        anchors=self.batch("smoke_anchor", [u,u], ["anchor_1","anchor_2"], smoke=True)
+        paired=[]
+        for sign in (-1,1): paired.append([min(1.,max(0.,x+sign*.00125)) for x in u])
+        rows=self.batch("smoke_histories", [u,u,*paired],
+            ["anchor_1","anchor_2","all_minus","all_plus"], smoke=True)
+        anchors=[r for r in rows if r["label"] in ("anchor_1","anchor_2")]
+        probes=[r for r in rows if r["label"] in ("all_minus","all_plus")]
+        if len(anchors)!=2 or len(probes)!=2:
+            raise RuntimeError("Four completed smoke histories required")
         paths=[Path(r["summary"]).parent for r in sorted(anchors,key=lambda r:r["id"])]
         exact=adapter.compare_reference(paths[1], paths[0]/"summary.json")
         graphs=sorted((paths[0]/"standard_diagnostics").glob("*.png"))
         if len(graphs)!=17: raise RuntimeError("Missing standard diagnostic packet")
         for p in graphs: adapter.verify(paths[1]/"standard_diagnostics"/p.name, digest(p))
-        paired=[]
-        for sign in (-1,1): paired.append([min(1.,max(0.,x+sign*.00125)) for x in u])
-        probes=self.batch("smoke_all_coordinate_probes", paired, ["all_minus","all_plus"], smoke=True)
         if any(sum(a!=b for a,b in zip(r["unit_vector"],u)) != N for r in probes): raise RuntimeError("Smoke probes did not move all eleven dimensions")
         write_json(self.root/"smoke_verification.json", {"status":"pass", "exact":exact, "exact_standard_pngs":17,
             "anchor_receipts":[str(Path(r["summary"]).parent/"case_receipt.json") for r in anchors],
@@ -458,6 +464,8 @@ class Search:
                         "adapter_sha256", "planner_sha256", "finalizer_sha256", "numerical_gates", "closure"):
                 if original.get(key) != self.c.get(key):
                     raise RuntimeError(f"Imported smoke original contract has mixed {key}")
+            if original.get("policy_workers", 1) != self.c.get("policy_workers", 1):
+                raise RuntimeError("Imported smoke has different contracted policy concurrency")
             proof_path = root/"smoke_verification.json"
             adapter.verify(proof_path, imported["smoke_verification_sha256"])
         else:

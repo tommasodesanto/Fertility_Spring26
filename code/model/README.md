@@ -22,6 +22,23 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+The isolated full joint-choice branch also has a rare-cohort transport precision
+repair under validation. Passing transports retain their exact original result;
+only a failed joint matched-cohort advancement or current-choice mass check may
+retry retaining every positive mass, and the original relative gate still
+applies. `tools/test_e5f_small_mass_transport.py` checks conservation, scaling,
+backend parity and rejection behavior. Complete source/replay status is in the
+root calibration note, not inferred from these focused tests.
+
+The full smoke sends its same two anchors and two all-coordinate probes in one
+bounded batch. Policy finalization supports the explicit contract field
+`policy_workers` equal to 1 or 4 (missing means 1), using isolated spawned
+processes with identical model initialization and per-case calculations.
+`tools/test_e5f_joint_nested_finalize_parallel.py` checks real process isolation,
+initialization and cleanup. New numerical equivalence and runtime must be
+measured in the complete policy smoke before adopting a shorter final reserve.
+
+
 `tools/build_e5f_joint_nested_review.py` builds the experimental morning PDF
 from a complete collected candidate (`--selected-dir`), optional completed
 `--policy-results`, `--search-verification`, and lead-written `--narrative`.
