@@ -53,11 +53,11 @@ Young and old flow utilities are
  \label{eq:amend_old_preferences}
 \end{align}
 Both child requirements reduce the bundle left for adults. All log arguments
-and preference weights are positive. The weights $\alpha$ and $\gamma$ value
-young and old housing, $\vartheta_t$ values children, and $\omega_B$ values
-estates. The factor $\beta>0$ discounts old-age utility. The estate $e$ is valued in goods at
-the date after the old period. Parents value what they leave, but their
-children do not inherit it as entrant wealth in this model.
+and preference weights are positive. The factor $\beta>0$ discounts old-age utility.
+The estate $e$ consists of financial assets and the proceeds from selling
+retained housing at death, at the end of old age. The weight $\omega_B$
+measures how much households value the estate they leave. Estates do not
+enter their children's initial wealth in this model.
 
 Each household draws once an idiosyncratic preference $\xi_i$ for ownership,
 independently of $(y_i,b_i)$, and observes it before making its choices.
@@ -133,7 +133,27 @@ household becomes old, leaving financial wealth $a_{t+1}$ and title $H=h$.
 
 \textbf{Old households.}
 An old household has financial wealth $a$. An owner also carries housing $H$
-from young age. Renters and owners solve, respectively,
+from young age and retains $h^2\leq H$ for use while old. Let $a^e\geq0$
+denote financial saving during old age. For a household old at date $t$,
+the estate left at death is
+\begin{equation}
+ e=\begin{cases}
+ R_f a^e, & \text{renter},\\
+ R_f a^e+P_{t+1}h^2, & \text{owner}.
+ \end{cases}
+ \label{eq:amend_estate_components}
+\end{equation}
+Financial saving earns the bond return, and the owner's retained housing
+is sold at the end of old age. Housing sold at the beginning of old age,
+$H-h^2$, instead provides current funds. The owner's budget before
+substituting for financial saving is
+\begin{equation}
+ c^2+a^e+q\tau^pP_t h^2=a+P_t(H-h^2)+T_t.
+ \label{eq:amend_old_cash_budget}
+\end{equation}
+Substituting $a^e=q(e-P_{t+1}h^2)$ and using
+\eqref{eq:amend_usercost} gives the owner's budget below.
+Renters and owners solve, respectively,
 \begin{align}
  V_t^R(a)&=\max_{c^2,h^2,e}u^o(c^2,h^2,e),\nonumber\\
  &c^2+qe+q\,r_th^2=a+T_t,\quad 0<h^2\leq h_R^{\max},
@@ -143,9 +163,8 @@ from young age. Renters and owners solve, respectively,
  0<h^2\leq H,\quad e\geq P_{t+1}h^2.
  \label{eq:amend_old_budget}
 \end{align}
-The owner may sell part of its house, and retained housing must be included
-in its estate. The budget includes sale receipts, property tax, and the value
-of housing eventually sold by the estate.
+The owner's estate bound $e\geq P_{t+1}h^2$ is equivalent to
+nonnegative financial saving $a^e\geq0$.
 
 \textbf{Tenure choice.}
 A household owns when $W_t^O(i)+\xi_i\geq W_t^R(i)$. The logistic ownership

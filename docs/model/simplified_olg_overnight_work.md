@@ -1494,3 +1494,7 @@ A subsequent tool-free review at max effort, limited to the current note and ver
 ## September 7: completed Fable assessment
 
 The narrower tool-free review at high effort completed successfully in about 6.5 minutes. Report and lead assessment: `output/model/simplified_olg_amendments/claude_fable_review.md`; provenance: `claude_fable_review_receipt.json`. Fable found no decisive error in the three core results, conditional on supplied numerical bounds. It suggested several exposition changes. The lead retains the saving assumption and rejects assigning intermediary losses to bondholders without an ownership contract. The reviewer's claim that a loosened retention bound leaves optimized value exactly unchanged is too strong; the original allocation remains feasible, which is enough for the direct proof. No revisions adopted.
+
+## Live reading: explicit estate accounting
+
+At the author's request, removed the redundant sentence listing preference weights, defined estate timing and omega_B, and added explicit renter/owner estate components using old-age financial saving a^e. The unreduced owner budget shows exactly how the existing budget and estate bound follow. No household choices or economic restrictions changed. Two compile passes passed; pages 1–3 visually reviewed. PDF rebuilt without opening a preview.
