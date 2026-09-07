@@ -29,6 +29,7 @@ sys.path[:0] = [str(ROOT / "code/model"), str(ROOT / "code/model/tools")]
 
 BUNDLE = "630ba20bca6a1b54eb4c46aca904c4a087afb8c808b9c7f4660d5fcd316a970e"
 VERIFIED_REPAIR_BUNDLE = "33167d84113e2bd38d9ee48dcd9ab0403790348610d998d4032fb8c1797ad3e3"
+TWO_SHOCK_BUNDLE = "826a2d26d63a5278d08b95d517bdadd693c999c40b746baae68c870ddc964e4c"
 SUPPORTED_BUNDLES = (BUNDLE, VERIFIED_REPAIR_BUNDLE)
 TARGET = "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
 SOURCE = "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
@@ -72,8 +73,13 @@ def load_plan(path, expected):
         raise RuntimeError("Unknown plan schema")
     if plan["source_sha256"] != SOURCE or plan["target_fingerprint"] != TARGET:
         raise RuntimeError("Plan changes the maintained source or target system")
-    if plan["code_bundle_sha256"] not in SUPPORTED_BUNDLES:
+    if plan["code_bundle_sha256"] not in (*SUPPORTED_BUNDLES, TWO_SHOCK_BUNDLE):
         raise RuntimeError("Plan requests an unverified scientific bundle")
+    if plan.get("choice_model") == "two_shock":
+        if plan["code_bundle_sha256"] != TWO_SHOCK_BUNDLE or not plan.get("suppress_plots"):
+            raise RuntimeError("Two-shock scientific/illustration contract mismatch")
+    elif plan["code_bundle_sha256"] == TWO_SHOCK_BUNDLE:
+        raise RuntimeError("Two-shock bundle requires explicit model classification")
     if len(plan["cases"]) > 23 or len({c["id"] for c in plan["cases"]}) != len(plan["cases"]):
         raise RuntimeError("Unbounded or duplicated case list")
     return plan
@@ -92,6 +98,11 @@ def validate_result(out, plan, case):
         expected_housing_supply_elasticity=.63, expected_tenure_choice_kappa=.005,
     )
     collector.validate_expected_contract(s, s["panel_design"], expected)
+    if plan.get("choice_model") == "two_shock":
+        if not s["model_profile"].get("two_shock") or s["model_profile"].get("joint_nested"):
+            raise RuntimeError("Wrong shock model in calibration result")
+        if s["panel_design"]["domain"] != plan["search_domain"]:
+            raise RuntimeError("Two-shock parameter domain changed")
     collector.validate_renewal_accounting(s)
     collector.validate_calibration_scope(s)
     if s["target_count"] != 12 or s["transition_free_parameter_count"] != 11:
@@ -213,6 +224,9 @@ def run_case(args):
             "--panel-center-json", str(center), "--panel-task-id", str(case["panel_task_id"]),
             "--panel-size", str(case["panel_size"]), "--panel-design", case["panel_design"],
             "--panel-seed", str(case["panel_seed"]), "--panel-local-radius", str(case["radius"])]
+        if plan.get("choice_model") == "two_shock":
+            argv += ["--two-shock-choice", "--no-plots", "--first-child-room-jump-upper", "0.5"]
+            argv[argv.index("--market-max-iter")+1] = "60"
         write_json(out / "execution_contract.json", {"argv": argv, "plan_sha256": args.plan_sha256,
                    "case": case, "adapter_sha256": digest(__file__), "start_epoch": start})
         state["phase"] = "unchanged_scientific_driver"
@@ -236,12 +250,16 @@ def run_case(args):
         checkpoint = out / "dated_state.pkl.gz"
         with gzip.open(checkpoint, "wb", compresslevel=1) as stream:
             pickle.dump(captured, stream, protocol=5)
-        audit.standard_diagnostics(captured, out, validate_production_young=False)
+        if not plan.get("suppress_plots", False):
+            audit.standard_diagnostics(captured, out, validate_production_young=False)
         graphs = sorted((out / "standard_diagnostics").glob("*.png"))
-        if len(graphs) != 17:
+        if len(graphs) != (0 if plan.get("suppress_plots",False) else 17):
             raise RuntimeError(f"Expected 17 standard PNGs, found {len(graphs)}")
         budget = audit.budget_audit(captured, out)
         policy_arrays = audit.policy_array_audit(captured, out)
+        if plan.get("choice_model") == "two_shock":
+            if policy_arrays["occupied_negative_steps"] or budget["budget_excess_mass"] > 2e-10:
+                raise RuntimeError("Two-shock value or budget gate failed")
         for name, bounds in policy_arrays["probabilities"].items():
             if bounds["nonfinite"] or bounds["minimum"] < 0 or bounds["maximum"] > 1:
                 raise RuntimeError(f"Invalid {name} probability array")

@@ -149,7 +149,11 @@ def parse_args() -> argparse.Namespace:
             "Omission retains the calibrated stationary value exactly."
         ),
     )
-    parser.add_argument("--joint-nested-choice", action="store_true", help="Experimental simultaneous tenure/attempt GEV")
+    choice = parser.add_mutually_exclusive_group()
+    choice.add_argument("--joint-nested-choice", action="store_true", help="Experimental simultaneous tenure/attempt GEV")
+    choice.add_argument("--two-shock-choice", action="store_true", help="Independent contemporaneous housing and fertility logistic differences")
+    parser.add_argument("--validate-only", action="store_true", help="Write validated input contract without solving")
+    parser.add_argument("--no-plots", action="store_true", help="Suppress diagnostic illustrations at author request")
     parser.add_argument(
         "--fixed-tenure-choice-kappa",
         type=float,
@@ -467,6 +471,30 @@ def activate_model_profile(
             ),
         }
     raise ValueError(f"Unknown model profile: {name}")
+
+
+def configure_two_shock_calibration(args, profile_overrides, model_profile):
+    """Enable additive shocks without substituting any estimated coordinate."""
+    if not args.two_shock_choice:
+        return
+    if args.fixed_tenure_choice_kappa != 0.005 or args.housing_supply_elasticity != 0.63:
+        raise ValueError("Two-shock calibration keeps external housing scale .005 and elasticity .63")
+    if args.model_profile != REPAIRED_MODEL_PROFILE or not args.estimate_first_child_room_jump:
+        raise ValueError("Two-shock calibration requires the maintained eleven-parameter repaired profile")
+    if args.target_profile != E5_BASELINE_TARGET_PROFILE:
+        raise ValueError("Two-shock calibration requires the maintained twelve E5 targets")
+    profile_overrides.update(joint_nested_choice=True, two_shock_choice=True,
+                             normalize_transition_mass_roundoff=True)
+    model_profile["two_shock"] = {
+        "status": "experimental_full_lifecycle",
+        "saving_maximization": "exhaustive_piecewise_linear_continuation",
+        "shocks": "independent centered logistic housing and fertility differences",
+        "fertility_scales": ["kappa_fert", "kappa_fert_continuation"],
+        "housing_scale": "externally_fixed_0.005",
+        "scale_ordering": "none",
+        "product_choice": "deterministic within committed tenure after conception",
+        "production_promoted": False,
+    }
 
 
 def configure_first_child_room_jump(
@@ -1815,6 +1843,7 @@ def main() -> None:
         active_domain = tuple(
             (name, low, float(args.first_child_room_jump_upper), kind) if name == "hbar_first_child_jump"
             else (name, low, high, kind) for name, low, high, kind in active_domain)
+    configure_two_shock_calibration(args, profile_overrides, model_profile)
     if args.joint_nested_choice:
         if args.fixed_tenure_choice_kappa is not None:
             raise ValueError("Joint outer scale is estimated; do not pass fixed-tenure-choice-kappa")
@@ -1902,6 +1931,19 @@ def main() -> None:
     ):
         base["normalize_transition_mass_roundoff"] = True
 
+    if args.validate_only:
+        calendar.write_json_atomic(outdir / "validated_inputs.json", calendar.jsonable({
+            "status": "inputs_validated_no_model_solve", "source_sha256": actual_source_sha256,
+            "code_fingerprints": code_contract, "model_profile": model_profile,
+            "target_set": target_system.name, "target_fingerprint": target_system.fingerprint,
+            "target_count": target_system.count, "search_domain": TRANSITION_SEARCH_DOMAIN,
+            "theta": theta, "panel_metadata": panel_metadata,
+            "targets": [{"moment": n, "target": t, "weight": w} for n,t,w in zip(
+                target_system.moment_names,target_system.target_values,target_system.weights)],
+            "base_choice_flags": {key: base.get(key) for key in ("joint_nested_choice","two_shock_choice")},
+        }))
+        print("INPUT_CONTRACT_VALIDATED_NO_SOLVE", flush=True)
+        return
     print("TRANSITION_CALIBRATION_OLD_STEADY_STATE", flush=True)
     (
         old_solution,
@@ -2589,12 +2631,8 @@ def main() -> None:
         elif row["parameter"] == "psi_child_2023":
             row["value"] = float(best["new_psi_child"])
     calendar.write_csv(outdir / "parameter_table.csv", params)
-    make_diagnostic_plot(
-        summaries,
-        all_fit_rows,
-        outdir,
-        target_count=target_system.count,
-    )
+    if not args.no_plots:
+        make_diagnostic_plot(summaries, all_fit_rows, outdir, target_count=target_system.count)
     summary = {
         "status": (
             "complete_transition_calibration_panel_task"
