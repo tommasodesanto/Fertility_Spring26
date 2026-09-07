@@ -2400,6 +2400,8 @@ def solve_bellman_full_markov_income(
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
     joint_active = bool(getattr(P, "joint_nested_choice", False))
+    if getattr(P, "two_shock_choice", False) and not joint_active:
+        raise ValueError("Two-shock experiment requires joint choice mass accounting")
     if joint_active and not use_full_kernel:
         raise ValueError("Joint nested choice requires exhaustive compiled saving kernels")
     joint = joint_nested.allocate(V.shape, P) if joint_active else None

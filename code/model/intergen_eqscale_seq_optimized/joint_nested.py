@@ -54,7 +54,11 @@ def allocate(shape, P):
     if readiness_gate_active(P):
         raise NotImplementedError('Readiness extension is outside this joint experiment')
     kappa, lam = float(P.tenure_choice_kappa), float(P.joint_nest_lambda)
-    if not (np.isfinite(kappa) and kappa > 0 and np.isfinite(lam) and 0 < lam <= 1):
+    if getattr(P, 'two_shock_choice', False):
+        scales = (kappa, float(P.kappa_fert), float(P.kappa_fert if getattr(P, "kappa_fert_continuation", None) is None else P.kappa_fert_continuation))
+        if any(not np.isfinite(x) or x <= 0 for x in scales):
+            raise ValueError('Two-shock scales must be positive')
+    elif not (np.isfinite(kappa) and kappa > 0 and np.isfinite(lam) and 0 < lam <= 1):
         raise ValueError('Require kappa>0 and 0<lambda<=1')
     return SimpleNamespace(probabilities=np.zeros(shape + (2, 2)),
                            products=np.zeros(shape + (2,), dtype=np.int16),
@@ -90,6 +94,12 @@ def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
                     cost = float(P.first_birth_fixed_cost) if nn == 0 else 0.0
                     attempt += pi * (yes - cost)
                 plans[..., nn, cs, :, 1] = attempt
+    if getattr(P, 'two_shock_choice', False):
+        from .two_shock_choice import choose
+        scales = np.full(plans.shape[:-2], float(P.kappa_fert if getattr(P, "kappa_fert_continuation", None) is None else P.kappa_fert_continuation))
+        scales[..., 0, :] = float(P.kappa_fert)
+        value, probability = choose(plans, kappa, scales)
+        return np.where(np.isfinite(value), value, -1e10), probability, products, wait
     inclusive, action = logsum_prob(plans, kappa * lam)
     value, tenure = logsum_prob(inclusive, kappa)
     probability = tenure[..., :, None] * action

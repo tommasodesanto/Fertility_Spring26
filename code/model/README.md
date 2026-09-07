@@ -824,3 +824,10 @@ Launch only through the frozen `run_e5f_joint_nested_long_search.py` contract
 and completed full-loop smoke. `run_e5f_joint_nested_finalize.py` creates the
 maintained closed-national dated policy paths and review packet. This branch
 has not replaced the production calibration.
+
+## Isolated two-shock test (7 September 2026)
+
+The default-off `two_shock_choice` experiment is documented in
+`docs/model/e5f_two_shock_test.md`. It requires `joint_nested_choice=True` for
+the existing exact joint mass accounting, but does not use the GEV nest scale.
+The test driver is `tools/run_e5f_two_shock_probe.py`; it is not a calibration launcher.
