@@ -290,7 +290,7 @@ at the measured starting-vector speed it would require13.1hours even before
 policy paths. Each immutable contract records the measured speed, remaining
 time and projected capacity. The controller permits up to eight generations
 and two local refinement rounds but starts a stage only if all its full
-one-hour case-limit waves fit before the search deadline. Three hours are
+one-hour case-limit waves fit before the search deadline. Four and a half hours are
 reserved for22 local sensitivity histories, two exact repetitions and the
 four eleven-date policy paths. Total execution is capped at12hours and the
 September7 13:35UTC absolute cutoff. Every case writes a heartbeat and saved
@@ -304,3 +304,40 @@ executed historical and policy components must be identified as such; they
 cannot be relabeled as a completed single controller run. Incomplete policy
 finalization cannot produce a full-completion status. A successful search
 still does not constitute author adoption of the nesting specification.
+
+
+**September 7, 03:40 UTC: zero-support diagnosis confirmed; repaired verification running.**
+Instrumentation-only job `17090114` completed and reproduced exactly zero
+first-birth mass in both stationary comparison branches, with finite valid
+probabilities and zero mass difference, at the initial preference guess 0.1062.
+This intermediate trial cannot define a conditional birth housing response;
+its completed-fertility level remains measurable and can guide normalization.
+
+The isolated repair catches only a typed missing-support exception and records
+the auxiliary response as unavailable. Unequal, negative or nonfinite branch
+mass still fails. Every normalized-old target row must now explicitly be finite
+before the original stationary/dated identity comparison; no row is excluded.
+Actual 2019–2023 target support, weights and all original gates are unchanged.
+The lead verified the diff and an independent bounded reviewer found no blocker.
+Seven operator, twenty accounting, four integration and eleven controller tests
+pass. The unchanged old model reproduces all ten reference arrays exactly.
+
+Source `42e0b97` is committed on `codex/joint-nested-full`. The immutable fresh
+snapshot `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907e`
+has bundle `50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb`
+and contract `9f512dfcaf7dc85b359e0b65d4f8f1543221f4c59f88d82888b91a1ebf4d3e41`.
+Failed-case replay `17090361` runs on one CPU/24GB with a 60-minute process cap;
+full smoke `17090362` runs on two CPUs/64GB with a 140-minute cap. The latter
+requires two exact full histories, two all-eleven-coordinate probes and four
+two-date policy paths. At the prior 1,886–2,368-second history and 1,526-second
+policy-smoke timings, roughly 100–110 minutes is allowed before queue overhead.
+The repaired source has not yet passed these complete checks. Broad calibration
+is stopped until it does; the cutoff remains 13:35 UTC, and a new wide contract
+must reserve 4.5 hours for final checks/policies. Old smoke cannot certify this
+new bundle. A bounded worker is preparing the morning PDF builder concurrently;
+the delivered PDF remains the earlier discussion copy until explicitly refreshed.
+
+Evidence: `output/model/e5f_joint_nested_full_20260906a/support_repair_e/`,
+`stationary_support_diagnosis/`, and `stationary_support_diff_review.md`.
+Job `17089711` remains FAILED, with no new complete calibration case. Production
+and the protected manuscript are unchanged. Original c/d snapshots are preserved.

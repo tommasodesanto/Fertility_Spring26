@@ -1,0 +1,17 @@
+No blocking defect found in the reviewed repair.
+
+Checked cases:
+
+- Diagnosed failure is specifically equal zero support: `masses=[0,0]`, mass difference `0`, finite probabilities, and `unequal_mass_condition=false` in [support_trace.json](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_joint_nested_full_20260906a/stationary_support_diagnosis/support_trace.json:4).
+- Low support now raises only `UndefinedStationaryFirstBirthSupport`; nonfinite, negative, or materially unequal masses still raise the original `RuntimeError` first ([joint_nested.py](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/intergen_eqscale_seq_optimized/joint_nested.py:198)).
+- Catch scope is narrow: only that custom support exception is caught, inside the joint-nested and non-fast-statistics branch ([solver.py](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/intergen_eqscale_seq_optimized/solver.py:5165)). Accounting failures remain fail-closed.
+- All normalized-old identity rows now require finite transition and stationary values before gap calculation ([run_e5f_transition_calibration.py](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/run_e5f_transition_calibration.py:614)); this guard is invoked on the complete active target-name set ([line 1966](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/run_e5f_transition_calibration.py:1966)).
+- Active dated target rows are finite-gated in the driver ([line 1374](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/run_e5f_transition_calibration.py:1374)); final joint-case acceptance independently rejects any nonfinite target-fit field ([collector](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/collect_e5f_transition_calibration.py:318)). Thus unavailable intermediate support cannot be accepted as a final target result.
+- Supported/default-off paths are unchanged by the diff; the altered solver path is guarded by `joint_nested_choice`.
+
+Test coverage gaps, not blockers:
+
+- The low-support/unequal-mass unit test covers equal zero/tiny support and clear unequal, negative, and NaN mass cases ([test_e5f_joint_nested_full.py](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/test_e5f_joint_nested_full.py:87)). It does not exercise the solver’s catch-and-status path.
+- The normalization test fabricates a NaN auxiliary moment but does not invoke the new support exception or `compute_markov_statistics`; it verifies that the root finder uses only TFR ([test_e5f_transition_accounting.py](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/test_e5f_transition_accounting.py:874)). The separate finite-row test does cover NaN and infinities on both normalized-old sides ([line 891](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_joint_nested_full_20260906a/code/model/tools/test_e5f_transition_accounting.py:891)).
+
+`git diff --check` passed. Targeted tests could not run because this shell lacks `numpy` (`ModuleNotFoundError`); no model solve was run.

@@ -1,13 +1,13 @@
 {
-  "status": "controller_checks_passed_scientific_smoke_pending",
-  "commit": "2eeff99",
-  "local_tests": 10,
-  "remote_tests": 10,
+  "status": "controller_and_imported_scientific_components_passed",
+  "commit": "a41b0c9",
+  "local_tests": 11,
+  "remote_tests": 11,
   "scientific_bundle_unchanged": "733ccb1b975e55d5baf1a46d7733affe0b0272dd9e5cfc4d4e38e25a32d1e387",
   "source_sha256": {
-    "code/model/tools/run_e5f_joint_nested_long_search.py": "7c7ce8a13bf263b110e522ddadd52d1fc82dea157736fad0fd4d98c7432d58dd",
-    "code/model/tools/test_e5f_joint_nested_long_search.py": "421f84e973b697fda900100996ca4d88f6eedea1ef11bf20b92204bca1047152",
-    "code/model/tools/build_e5f_joint_nested_long_contract.py": "71bdfcb8a63e30a2ed2468ebce58300b94c74c384bdb549293d3c6562ac4cf4c",
+    "code/model/tools/run_e5f_joint_nested_long_search.py": "c0f7a16c74e85be8afa491d20ad629f0a2898e2c8ee07f3d2d21a62d93bce35c",
+    "code/model/tools/test_e5f_joint_nested_long_search.py": "b61007667df2d57e00a2ceb71893901fd5324152e163edf65cee5146c3002e38",
+    "code/model/tools/build_e5f_joint_nested_long_contract.py": "d39bf5f4905597ed1ee79662c6eda9a184a32fe15f3ca1e806d948cfde5d29d8",
     "code/cluster/submit_e5f_joint_nested_long.sh": "86593314cc2ff1d48235f2f2c97261c21d55812b3ec2c490ef871e7d72710e40"
   },
   "reviewer_report_sha256": "dd0ef5895ff290277eadd0fb11c3da7436ca8329e64caa15a53f811e79eff765",
@@ -16,7 +16,10 @@
     "policy_names": "Canonical finalizer names corrected during review; semantic receipt tests cover missing dates, wrong source, partial status and nonfinite gates",
     "640_histories": "Hard ceiling only; measured rate implies13.1h and cannot fit all within12h; deadline-aware stages and builder time estimate explicitly distinguish this from projected attempt count",
     "incomplete_finalizer": "Exact calibration repetitions no longer imply full completion if policies are skipped/incomplete",
-    "imported_plan_provenance": "Original contract, controller/adapter/planner/helper hashes, scientific source, target set/fingerprint, domain, gates/closure and selected-state policy receipt all checked"
+    "imported_plan_provenance": "Original contract, controller/adapter/planner/helper hashes, scientific source, target set/fingerprint, domain, gates/closure and selected-state policy receipt all checked",
+    "measured_policy_time": "1525.659seconds for8smoke dates projects8391.1seconds for44full dates; reserve16200seconds covers this plus two3600second history waves with margin",
+    "relative_policy_receipt_source": "Original relative selected-summary path resolved through hash-pinned proof working directory; canonical path must match an original verified anchor; unchanged receipt preserved"
   },
-  "production_promoted": false
+  "production_promoted": false,
+  "final_reserve_seconds": 16200
 }

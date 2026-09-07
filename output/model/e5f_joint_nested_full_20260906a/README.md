@@ -1,5 +1,110 @@
 # Full simultaneous-choice experiment
 
+**September 7, 03:40 UTC: zero-support diagnosis confirmed; repaired verification running.**
+Instrumentation-only job `17090114` completed and reproduced exactly zero
+first-birth mass in both stationary comparison branches, with finite valid
+probabilities and zero mass difference, at the initial preference guess 0.1062.
+This intermediate trial cannot define a conditional birth housing response;
+its completed-fertility level remains measurable and can guide normalization.
+
+The isolated repair catches only a typed missing-support exception and records
+the auxiliary response as unavailable. Unequal, negative or nonfinite branch
+mass still fails. Every normalized-old target row must now explicitly be finite
+before the original stationary/dated identity comparison; no row is excluded.
+Actual 2019–2023 target support, weights and all original gates are unchanged.
+The lead verified the diff and an independent bounded reviewer found no blocker.
+Seven operator, twenty accounting, four integration and eleven controller tests
+pass. The unchanged old model reproduces all ten reference arrays exactly.
+
+Source `42e0b97` is committed on `codex/joint-nested-full`. The immutable fresh
+snapshot `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907e`
+has bundle `50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb`
+and contract `9f512dfcaf7dc85b359e0b65d4f8f1543221f4c59f88d82888b91a1ebf4d3e41`.
+Failed-case replay `17090361` runs on one CPU/24GB with a 60-minute process cap;
+full smoke `17090362` runs on two CPUs/64GB with a 140-minute cap. The latter
+requires two exact full histories, two all-eleven-coordinate probes and four
+two-date policy paths. At the prior 1,886–2,368-second history and 1,526-second
+policy-smoke timings, roughly 100–110 minutes is allowed before queue overhead.
+The repaired source has not yet passed these complete checks. Broad calibration
+is stopped until it does; the cutoff remains 13:35 UTC, and a new wide contract
+must reserve 4.5 hours for final checks/policies. Old smoke cannot certify this
+new bundle. A bounded worker is preparing the morning PDF builder concurrently;
+the delivered PDF remains the earlier discussion copy until explicitly refreshed.
+
+Evidence: `output/model/e5f_joint_nested_full_20260906a/support_repair_e/`,
+`stationary_support_diagnosis/`, and `stationary_support_diff_review.md`.
+Job `17089711` remains FAILED, with no new complete calibration case. Production
+and the protected manuscript are unchanged. Original c/d snapshots are preserved.
+
+
+**September 7, 03:17 UTC: broad search stopped safely on a new measurement exception.**
+Job17089711 failed after3m06s, before any new full history completed.
+The preserved incumbent remains a smoke probe, not a calibration result.
+Initial case26 (outer taste scale about1, nesting coefficient0.02) raised
+`Invalid stationary matched joint branch mass` during the first old-steady-state
+fertility normalization evaluation. The controller correctly stopped all workers.
+This exception combines unequal branch masses and effectively zero support;
+the lead is instrumenting the exact failed case to distinguish them before
+any restart. The stationary housing comparison is computed during normalization,
+so zero support at an intermediate preference value need not imply the final
+candidate or its active dated target is undefined. That is a hypothesis to check,
+not yet a reason to change the gate. No source/gate change or retry has occurred.
+All earlier complete historical/policy smoke evidence remains valid.
+
+
+**September 7, 03:15 UTC: full verification passed; large calibration running.**
+Torch job `17089711` started at 03:11:39 UTC on `cs776`, with 32 CPUs,
+384GB and a 12-hour Slurm limit. All 32 initial workers are reporting healthy
+heartbeats. The immutable snapshot is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907d`;
+contract SHA `8ade7d1a6188eb503d87cf9ba559e35d2b76915a6a7e2281a2fb2e9afd104f68`.
+Scientific bundle remains `733ccb1b975e55d5baf1a46d7733affe0b0272dd9e5cfc4d4e38e25a32d1e387`.
+The isolated source is pushed through `a41b0c9` on `codex/joint-nested-full`.
+
+All four historical cases pass; the two anchors exactly reproduce all twelve
+fit rows, parameters, 253 numeric historical entries and seventeen PNGs.
+The lead independently checked 84 original historical artifact hashes and
+read every fit/parameter/bound row. Independent policy smoke `17088152`
+completed 0:0 in 25m35s: baseline, supply, LTV and unrebated tax all pass
+2023 and 2027, including value, budget, probability, market and population
+checks. All 136 dated graphs exist; 170 policy files were independently
+hashed. The full anchor packet and each policy's 2027 packet were visually
+inspected. Historical smoke `17087058` was intentionally cancelled after
+1h19m32s only to stop its redundant policy rerun. This is a verified combination
+of completed components from two jobs, not a completed single controller job.
+The original evidence is preserved, and the new controller's complete import
+preflight passed before submission. No numerical gate was relaxed.
+
+The search varies all eleven parameters against the same twelve targets and
+weights. Its 64-member population, bounded generations/refinement rounds and
+640-attempt ceiling are described in `docs/model/e5f_joint_nested_experiment.md`.
+Measured histories took 1,886–2,368 seconds. The eight-date policy smoke took
+1,525.7 seconds, projecting about 2.33 hours for 44 policy dates. Consequently
+**4.5 hours**, superseding the earlier three-hour estimate, are reserved for
+the Jacobian, two exact repetitions and full policy paths. Search stages must
+fit before **09:05 UTC**; the hard computation cutoff remains **13:35 UTC**.
+The contract's initial capacity estimate is 288 search attempts, subject to
+actual runtime/rejections and stage granularity; 640 is only a hard ceiling.
+
+Evidence: `output/model/e5f_joint_nested_full_20260906a/wide32/` contains the
+immutable contract, explicit combined-component proof, preflight, preparation
+recipe and submission receipt. Full smoke tables are
+`exhaustive_smoke_c/smoke/all_target_fits.csv` and `all_parameters.csv` under
+the same experiment output. Search progress lives in snapshot d's
+`output/model/joint_nested_overnight/search/`; final policy paths are written
+to `equilibrium_path/`. The 15-minute monitor is active and will collect,
+verify and prepare the morning PDF, including incomplete results if necessary.
+The existing discussion PDF still describes the earlier failed verification;
+it has not yet been refreshed with a completed calibration. Production,
+targets, weights and the protected manuscript are unchanged.
+
+Operational note: the original cs partition allocated the job after a short
+resource wait. A partition-update attempt was refused after it started; the
+job remains on cs. The broader cpu_short partition has a six-hour partition-QoS
+limit even though its partition MaxTime says unlimited. Do not move this job
+there or submit a duplicate.
+
+
 **September 7, 02:46 UTC: repeated full histories independently verified.**
 Both starting histories in smoke17087058 pass every unchanged gate and
 reproduce all12 target rows, all parameters,253 numeric historical entries

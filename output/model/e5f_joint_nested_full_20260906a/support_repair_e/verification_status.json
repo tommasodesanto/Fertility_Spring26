@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-09-07T03:39:09.485057+00:00",
+  "source_commit": "42e0b97",
+  "scientific_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
+  "contract_sha256": "9f512dfcaf7dc85b359e0b65d4f8f1543221f4c59f88d82888b91a1ebf4d3e41",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907e",
+  "jobs": {
+    "failed_case_replay": {
+      "id": 17090361,
+      "status": "RUNNING",
+      "cpus": 1,
+      "memory_gib": 24,
+      "limit_minutes": 65
+    },
+    "full_smoke": {
+      "id": 17090362,
+      "status": "RUNNING",
+      "cpus": 2,
+      "memory_gib": 64,
+      "limit_minutes": 140
+    }
+  },
+  "full_search_submitted": false,
+  "production_promoted": false,
+  "original_diagnostic": {
+    "job": 17090114,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:02:36"
+  },
+  "verification": {
+    "joint_operator_tests": 7,
+    "transition_accounting_tests": 20,
+    "integration_tests": 4,
+    "controller_tests": 11,
+    "default_off_exact_arrays": 10,
+    "full_history_policy_loop": "pending",
+    "failed_case_replay": "pending"
+  },
+  "absolute_finish_utc": "2026-09-07T13:35:00Z"
+}
