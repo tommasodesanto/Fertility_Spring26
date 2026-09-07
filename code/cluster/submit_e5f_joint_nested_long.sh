@@ -14,7 +14,11 @@ export MPLCONFIGDIR="${TMPDIR:-/tmp}/joint_nested_long_mpl_${SLURM_JOB_ID}"
 cd "${SLURM_SUBMIT_DIR:?}"
 : "${E5F_JOINT_MODE:?smoke or search required}"
 CONTRACT=output/model/joint_nested_overnight/contract.json
-SHA=59fb3a15911cf8692b30402d3d867b145c0c851479cac59f0fef720194b4e8c4
+SHA=ccffc589d7ccbe7c1147c0b5110ffc4113b2b9be85710cefa3a7a4abaea7646e
+printf '%s  %s\n' "$SHA" "$CONTRACT" | sha256sum --check -
+python3 code/model/tools/test_e5f_exhaustive_saving.py
+# A second process must also load the compiled kernel cache correctly.
+python3 code/model/tools/test_e5f_exhaustive_saving.py
 python3 code/model/tools/test_e5f_joint_nested_full.py
 PYTHONPATH=code/model:code/model/tools python3 code/model/tools/test_e5f_joint_nested_integration.py
 python3 code/model/tools/test_e5f_joint_nested_long_search.py

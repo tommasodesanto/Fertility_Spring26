@@ -6,7 +6,9 @@ parser.add_argument('--remote-root',required=True)
 parser.add_argument('--seed-summary',type=Path,required=True)
 parser.add_argument('--outdir',type=Path,required=True)
 parser.add_argument('--finish-epoch',type=float,required=True)
+parser.add_argument('--expected-history-seconds',type=float,required=True)
 args=parser.parse_args()
+if not 0 < args.expected_history_seconds <= 3600:raise ValueError('Expected history time must fit the per-case cap')
 sys.path[:0]=[str(root/'code/model'),str(root/'code/model/tools')]
 import run_e5f_transition_calibration as cal
 from intergen_eqscale_seq_optimized import solver
@@ -37,14 +39,16 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  code_bundle_sha256=bundle,search_domain=adapter.SEARCH_DOMAIN,max_workers=12,case_timeout_seconds=3600,max_histories=360,
  max_search_seconds=32400,max_total_seconds=43200,population_size=32,max_generations=8,polish_rounds=2,smoke_histories=4,
  random_seed=20260906,absolute_finish_epoch=args.finish_epoch,
- expected_history_seconds=660,expected_history_solve_count_upper=160,
+ expected_history_seconds=args.expected_history_seconds,expected_history_solve_count_upper=160,
+ runtime_estimate_status="provisional until complete exhaustive-saving smoke is measured",
  run_size='120 wealth x6 housing x1 market x17 ages x15 income x4 parity x4 child counts; up to360 complete histories (including4smoke), each five cleared historical dates and normalized old steady state; 22 final Jacobian probes and2 exact repeats are within360',
- estimated_search_wall_hours=5.5,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
+ estimated_search_wall_hours=360*args.expected_history_seconds/12/3600,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
  closure={'expectations':'current-date prices treated as permanent; temporary equilibrium, not perfect foresight',
           'post2023_population':'maintained closed national: M=0,rho=1; inherited four-slot birth queue',
           'historical_population':'unchanged Census totals and ACS householder-age bridge 2007-2023',
           'fixed_supply_elasticity':.63,'replacement_conversion':1/2.1,'fiscal':'tax revenue discarded; no grants or rebates',
           'outstanding':['author adoption of nesting and common lambda','perfect-foresight expectation extension','final production promotion']},
+ saving_maximization='exhaustive_piecewise_linear_continuation',
  numerical_gates={'market':2e-4,'mass':2e-10,'population':2e-10,'stationary_measurement':2e-8,'childless_identity':2e-10,
                   'occupied_value_negative_steps':0,'realized_budget_excess_mass':2e-10,'budget_gap_threshold':1e-9})
 adapter.write_json(out/'contract.json',c)

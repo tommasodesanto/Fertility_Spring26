@@ -757,6 +757,74 @@ def tenure_logit_kernel(
     return VH, tcj, probs
 
 
+@njit(cache=True)
+def exhaustive_saving_scalar(lo, hi, resources, continuation, bg, rent, hb, cb, pc,
+                   hmax, alpha, oms, beta, es, owner_cost, owner_K, owner):
+    """Global maximum for the existing clipped-linear continuation objective.
+
+    Utility is concave on each continuation-grid / renter-cap segment.
+    Endpoints plus the interior first-order candidate therefore exhaust the
+    segment maximum, even when continuation slopes are globally nonconcave.
+    Formula and candidate ordering reproduce the September 5 audited oracle.
+    """
+    if not (0.0 < alpha < 1.0 and oms < 1.0 and oms != 0.0
+            and beta > 0.0 and es > 0.0 and rent > 0.0 and hi >= lo):
+        raise ValueError("Unsupported exhaustive-saving objective or interval")
+    dc=cb+rent*hb
+    cap=rent*(hmax-hb)/(1-alpha)
+    hcap=max(hmax-hb,1e-10)
+    Kr=(alpha**alpha*((1-alpha)/rent)**(1-alpha))**oms
+    points=np.empty(bg.size+3)
+    n=0
+    points[n]=lo; n+=1
+    for x in bg:
+        if lo < x < hi:
+            points[n]=x; n+=1
+    if not owner:
+        kink=resources-dc-cap
+        if lo < kink < hi:
+            points[n]=kink; n+=1
+    points[n]=hi; n+=1
+    points=np.sort(points[:n])
+    best=-1e300; bpbest=lo
+    for k in range(n):
+        x=points[k]
+        if owner:
+            value=eval_owner_scalar(x,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
+        else:
+            value=eval_renter_scalar(x,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
+        if value>best:
+            best=value;bpbest=x
+        if k==n-1 or points[k+1]-x<1e-14:
+            continue
+        mid=(x+points[k+1])/2
+        if mid<=bg[0] or mid>=bg[-1]:
+            slope=0.0
+        else:
+            ix=np.searchsorted(bg,mid)-1
+            slope=(continuation[ix+1]-continuation[ix])/(bg[ix+1]-bg[ix])
+        if slope<=0:
+            continue
+        if owner:
+            optimal_c=(beta*slope/(es*owner_K*alpha))**(1/(alpha*oms-1))
+            candidate=resources-owner_cost-cb-optimal_c
+        elif resources-dc-mid>cap:
+            K=hcap**((1-alpha)*oms)
+            optimal_c=(beta*slope/(es*K*alpha))**(1/(alpha*oms-1))
+            candidate=resources-cb-rent*hmax-optimal_c
+        else:
+            optimal_surplus=(beta*slope/(es*Kr))**(1/(oms-1))
+            candidate=resources-dc-optimal_surplus
+        if x<candidate<points[k+1]:
+            if owner:
+                value=eval_owner_scalar(candidate,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
+            else:
+                value=eval_renter_scalar(candidate,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
+            if value>best:
+                best=value;bpbest=candidate
+    return bpbest,best
+
+
 @njit(cache=True, parallel=True)
 def full_renter_block_kernel(
     Rv1d,           # (Nb,)
@@ -784,6 +852,7 @@ def full_renter_block_kernel(
     gs_alpha1,
     gs_alpha2,
     gs_tol,
+    exhaustive_saving=0,
 ):
     # Full-Bellman renter block: golden-section search for bp + post-search
     # consumption / housing arithmetic, fused into one kernel per (i, j).
@@ -791,6 +860,8 @@ def full_renter_block_kernel(
     # [bp_prev - 2, bp_prev + 2] as a soft monotonicity prior — a
     # heuristic that mirrors the MATLAB implementation, not a strict
     # invariant of the model.
+    if exhaustive_saving and has_prev:
+        raise ValueError("Exhaustive saving requires the full feasible interval")
     Nb, nc = Vc_flat.shape
     Vo = np.empty((Nb, nc))
     bp_out = np.empty((Nb, nc))
@@ -852,38 +923,43 @@ def full_renter_block_kernel(
                 if hi < lo:
                     hi = lo
 
-            d = hi - lo
-            x1 = lo + gs_alpha1 * d
-            x2 = lo + gs_alpha2 * d
-            f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
-            f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
-            d = gs_alpha1 * gs_alpha2 * d
-            while d > gs_tol:
-                if f2 >= f1:
-                    xe = x2 + d
-                    if xe > hi:
-                        xe = hi
-                    fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
-                    x1 = x2
-                    f1 = f2
-                    x2 = xe
-                    f2 = fe
-                else:
-                    xe = x1 - d
-                    if xe < lo:
-                        xe = lo
-                    fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
-                    x2 = x1
-                    f2 = f1
-                    x1 = xe
-                    f1 = fe
-                d = d * gs_alpha2
-            if f2 >= f1:
-                bp_best = x2
-                v_best = f2
+            if exhaustive_saving:
+                bp_best, v_best = exhaustive_saving_scalar(
+                    lo, hi, Rvb, Vc_flat[:, c], b_grid, ri, hbc, cbc, psic,
+                    hR_max, al, oms, beta, es, 0.0, 0.0, False)
             else:
-                bp_best = x1
-                v_best = f1
+                d = hi - lo
+                x1 = lo + gs_alpha1 * d
+                x2 = lo + gs_alpha2 * d
+                f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                d = gs_alpha1 * gs_alpha2 * d
+                while d > gs_tol:
+                    if f2 >= f1:
+                        xe = x2 + d
+                        if xe > hi:
+                            xe = hi
+                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                        x1 = x2
+                        f1 = f2
+                        x2 = xe
+                        f2 = fe
+                    else:
+                        xe = x1 - d
+                        if xe < lo:
+                            xe = lo
+                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                        x2 = x1
+                        f2 = f1
+                        x1 = xe
+                        f1 = fe
+                    d = d * gs_alpha2
+                if f2 >= f1:
+                    bp_best = x2
+                    v_best = f2
+                else:
+                    bp_best = x1
+                    v_best = f1
             bp_out[b, c] = bp_best
             Vo[b, c] = v_best
 
@@ -939,7 +1015,10 @@ def full_owner_block_kernel(
     gs_alpha2,
     gs_tol,
     strict_hbar_feasibility=0,
+    exhaustive_saving=0,
 ):
+    if exhaustive_saving and has_prev:
+        raise ValueError("Exhaustive saving requires the full feasible interval")
     Nb, nc = Vco_flat.shape
     Vo = np.empty((Nb, nc))
     bp_out = np.empty((Nb, nc))
@@ -1003,38 +1082,43 @@ def full_owner_block_kernel(
                 if hi < lo:
                     hi = lo
 
-            d = hi - lo
-            x1 = lo + gs_alpha1 * d
-            x2 = lo + gs_alpha2 * d
-            f1 = eval_owner_scalar(x1, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
-            f2 = eval_owner_scalar(x2, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
-            d = gs_alpha1 * gs_alpha2 * d
-            while d > gs_tol:
-                if f2 >= f1:
-                    xe = x2 + d
-                    if xe > hi:
-                        xe = hi
-                    fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
-                    x1 = x2
-                    f1 = f2
-                    x2 = xe
-                    f2 = fe
-                else:
-                    xe = x1 - d
-                    if xe < lo:
-                        xe = lo
-                    fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
-                    x2 = x1
-                    f2 = f1
-                    x1 = xe
-                    f1 = fe
-                d = d * gs_alpha2
-            if f2 >= f1:
-                bp_best = x2
-                v_best = f2
+            if exhaustive_saving:
+                bp_best, v_best = exhaustive_saving_scalar(
+                    lo, hi, Rvb, Vco_flat[:, c], b_grid, 1.0, 0.0, cbc, psic,
+                    1.0, al, oms, beta, es, oc, Ko_c, True)
             else:
-                bp_best = x1
-                v_best = f1
+                d = hi - lo
+                x1 = lo + gs_alpha1 * d
+                x2 = lo + gs_alpha2 * d
+                f1 = eval_owner_scalar(x1, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
+                f2 = eval_owner_scalar(x2, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
+                d = gs_alpha1 * gs_alpha2 * d
+                while d > gs_tol:
+                    if f2 >= f1:
+                        xe = x2 + d
+                        if xe > hi:
+                            xe = hi
+                        fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
+                        x1 = x2
+                        f1 = f2
+                        x2 = xe
+                        f2 = fe
+                    else:
+                        xe = x1 - d
+                        if xe < lo:
+                            xe = lo
+                        fe = eval_owner_scalar(xe, Rvb, Vco_flat[:, c], b_grid, oc, cbc, psic, Ko_c, al, oms, beta, es)
+                        x2 = x1
+                        f2 = f1
+                        x1 = xe
+                        f1 = fe
+                    d = d * gs_alpha2
+                if f2 >= f1:
+                    bp_best = x2
+                    v_best = f2
+                else:
+                    bp_best = x1
+                    v_best = f1
             bp_out[b, c] = bp_best
             Vo[b, c] = v_best
 

@@ -263,3 +263,37 @@ experimental calibration. Its full-history runtime remains unmeasured.
 The original gates, economic parameters and empirical targets remain intact.
 Read the five-page discussion PDF and receipts indexed in the experiment
 README; the full overnight search is held for the author discussion.
+
+
+### Integrated exhaustive saving (September 7)
+
+The author renewed overnight preparation with correctness as the prerequisite.
+Joint Markov solves now activate exhaustive saving within the existing renter
+and owner block kernels; the default-off path retains its exact old method.
+For piecewise-linear continuation, the conditional objective is concave on
+every interpolation segment, additionally split at the renter housing cap.
+The new kernel evaluates every endpoint and each feasible interior stationary
+point. This gives the global maximum of the existing interpolated objective,
+including flat continuation outside the asset grid; it does not change the
+underlying economic objective, borrowing interval or the asset grid.
+
+The new numerical mode rejects the old previous-policy interval heuristic and
+unsupported curvature. Joint solves require the compiled linear-interpolation
+path, so they cannot silently fall back to a different saving method. The
+existing owner budget reconstruction remains after optimization. Metadata and
+the case adapter require the exhaustive-saving contract.
+
+The lead verified the formulas and default-off call sites; an independent
+read-only review found no mathematical blocker. The focused
+`test_e5f_exhaustive_saving.py` checks the maximum against independent dense
+objectives with nonconcave continuation, the audited oracle, borrowing and
+interpolation boundaries, and the rental cap. The existing reporting checker
+adds `--saving-integration`: it compares both full lifecycle implementations
+at the failed supply2027 price and original inherited population. Full
+historical and policy-loop certification remains a separate required stage.
+
+The first September7 packaging preflight stopped before any model solve because
+a source-copy race left an incomplete package. The replacement snapshot is
+built sequentially, then all55 scientific/helper files are hash-checked before
+submission. No source is repaired underneath a running job. The root result
+README and canonical status own job and validation outcomes.

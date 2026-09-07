@@ -1777,6 +1777,7 @@ def main() -> None:
         profile_overrides.update(joint_nested_choice=True, normalize_transition_mass_roundoff=True)
         model_profile["joint_nested"] = {
             "status": "experimental_full_lifecycle",
+            "saving_maximization": "exhaustive_piecewise_linear_continuation",
             "alternatives": "joint tenure and birth attempt, tenure nests",
             "scale_status": "estimated outer scale and common birth-order dissimilarity",
             "shock_normalization": "mean-zero marginal GEV shocks",

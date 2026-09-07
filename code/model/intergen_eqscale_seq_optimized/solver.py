@@ -2400,6 +2400,8 @@ def solve_bellman_full_markov_income(
 
     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
     joint_active = bool(getattr(P, "joint_nested_choice", False))
+    if joint_active and not use_full_kernel:
+        raise ValueError("Joint nested choice requires exhaustive compiled saving kernels")
     joint = joint_nested.allocate(V.shape, P) if joint_active else None
     if continuation_V is not None:
         continuation_V = np.asarray(continuation_V, dtype=float)
@@ -2528,6 +2530,7 @@ def solve_bellman_full_markov_income(
                         cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v,
                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
+                        int(joint_active),
                     )
                 else:
                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
@@ -2586,7 +2589,7 @@ def solve_bellman_full_markov_income(
                             cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v, bf_v,
                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
                             alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
-                            strict_owner_hbar_feasibility,
+                            strict_owner_hbar_feasibility, int(joint_active),
                         )
                     else:
                         for c in range(nc):
