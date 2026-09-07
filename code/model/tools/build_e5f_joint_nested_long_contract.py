@@ -1,4 +1,4 @@
-import sys,json,hashlib,time,re,argparse
+import sys,json,hashlib,time,re,argparse,math
 from pathlib import Path
 root=Path(__file__).resolve().parents[3]
 parser=argparse.ArgumentParser(description="Build an immutable experimental run contract after scientific source review")
@@ -7,6 +7,13 @@ parser.add_argument('--seed-summary',type=Path,required=True)
 parser.add_argument('--outdir',type=Path,required=True)
 parser.add_argument('--finish-epoch',type=float,required=True)
 parser.add_argument('--expected-history-seconds',type=float,required=True)
+parser.add_argument('--runtime-estimate-status',choices=('measured','provisional'),required=True)
+parser.add_argument('--profile',choices=('v1','wide32'),required=True)
+parser.add_argument('--imported-smoke-root',type=Path)
+parser.add_argument('--imported-smoke-contract',type=Path)
+parser.add_argument('--imported-smoke-contract-sha256')
+parser.add_argument('--imported-smoke-verification-sha256')
+parser.add_argument('--imported-policy-verification-sha256')
 args=parser.parse_args()
 if not 0 < args.expected_history_seconds <= 3600:raise ValueError('Expected history time must fit the per-case cap')
 sys.path[:0]=[str(root/'code/model'),str(root/'code/model/tools')]
@@ -19,6 +26,28 @@ remote=args.remote_root.rstrip('/')
 if bundle != adapter.BUNDLE:raise RuntimeError('Scientific bundle changed; review before pinning the case adapter')
 out=args.outdir.resolve();out.mkdir(parents=True,exist_ok=True)
 if (out/'contract.json').exists():raise RuntimeError('Refusing to replace an existing run contract')
+profile={'v1':dict(max_workers=12,max_histories=360,population_size=32,max_generations=8,polish_rounds=2),
+         'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2)}[args.profile]
+available_total_seconds=min(43200,max(0,args.finish_epoch-time.time()))
+available_search_seconds=min(32400,max(0,available_total_seconds-10800))
+if available_search_seconds < math.ceil(profile['population_size']/profile['max_workers'])*3600:
+ raise RuntimeError('Deadline cannot fit the initial population and reserved final verification')
+projected_search_histories=min(profile['max_histories']-28,
+ int(available_search_seconds/args.expected_history_seconds)*profile['max_workers'])
+imported_fields=(args.imported_smoke_root,args.imported_smoke_contract,args.imported_smoke_contract_sha256,
+                 args.imported_smoke_verification_sha256,args.imported_policy_verification_sha256)
+if (args.profile=='wide32' or any(imported_fields)) and not all(imported_fields):
+ raise ValueError('The wide profile requires complete imported-smoke provenance')
+original=None; imported_smoke=None
+if all(imported_fields):
+ smoke_root=args.imported_smoke_root.resolve(); original_contract=args.imported_smoke_contract.resolve()
+ adapter.verify(original_contract,args.imported_smoke_contract_sha256)
+ original=adapter.read_json(original_contract)
+ # Check proof bytes before producing any launchable contract.
+ adapter.verify(smoke_root/'smoke_verification.json',args.imported_smoke_verification_sha256)
+ adapter.verify(smoke_root/'policy_loop_verification.json',args.imported_policy_verification_sha256)
+ imported_smoke={'root':str(smoke_root),'original_contract':str(original_contract),'original_contract_sha256':args.imported_smoke_contract_sha256,
+                 'smoke_verification_sha256':args.imported_smoke_verification_sha256,'policy_loop_verification_sha256':args.imported_policy_verification_sha256}
 raw=args.seed_summary.resolve();s=adapter.read_json(raw)
 seed={'status':'uncertified starting parameters; require fresh full-loop verification','old_psi_child':s['old_psi_child'],
       'best_candidate':{k:s['best_candidate'][k] for k in ('theta','new_psi_child')},'panel_design':{'unit_vector':s['panel_design']['unit_vector']}}
@@ -36,13 +65,18 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  seed_center=remote+'/output/model/joint_nested_overnight/seed_center.json',seed_center_sha256=adapter.digest(out/'seed_center.json'),
  seed_reference=remote+'/output/model/joint_nested_overnight/seed_reference.json',seed_reference_sha256=adapter.digest(out/'seed_reference.json'),
  output_root=remote+'/output/model/joint_nested_overnight',source_sha256=adapter.SOURCE,target_fingerprint=adapter.TARGET,
- code_bundle_sha256=bundle,search_domain=adapter.SEARCH_DOMAIN,max_workers=12,case_timeout_seconds=3600,max_histories=360,
- max_search_seconds=32400,max_total_seconds=43200,population_size=32,max_generations=8,polish_rounds=2,smoke_histories=4,
+ code_bundle_sha256=bundle,search_domain=adapter.SEARCH_DOMAIN,run_profile=args.profile,case_timeout_seconds=3600,
+ max_search_seconds=32400,max_total_seconds=43200,smoke_histories=4,**profile,
  random_seed=20260906,absolute_finish_epoch=args.finish_epoch,
  expected_history_seconds=args.expected_history_seconds,expected_history_solve_count_upper=160,
- runtime_estimate_status="provisional until complete exhaustive-saving smoke is measured",
- run_size='120 wealth x6 housing x1 market x17 ages x15 income x4 parity x4 child counts; up to360 complete histories (including4smoke), each five cleared historical dates and normalized old steady state; 22 final Jacobian probes and2 exact repeats are within360',
- estimated_search_wall_hours=360*args.expected_history_seconds/12/3600,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
+ runtime_estimate_status=args.runtime_estimate_status,
+ run_size=f'120 wealth x6 housing x1 market x17 ages x15 income x4 parity x4 child counts; up to{profile["max_histories"]} attempted complete histories (including4 imported smoke histories), each five cleared historical dates and normalized old steady state; 22 final Jacobian probes and2 exact repeats are reserved',
+ estimated_history_wall_hours=profile['max_histories']*args.expected_history_seconds/profile['max_workers']/3600,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
+ budget_estimate={'at_contract_creation_epoch':time.time(),'available_total_seconds':available_total_seconds,
+  'available_search_seconds':available_search_seconds,'reserved_final_seconds':10800,
+  'projected_search_histories_at_measured_rate':projected_search_histories,
+  'interpretation':'640/360 is a hard attempt ceiling, not a planned completion count; actual stages require their full timeout waves before the fixed cutoff'},
+ imported_smoke=imported_smoke,
  closure={'expectations':'current-date prices treated as permanent; temporary equilibrium, not perfect foresight',
           'post2023_population':'maintained closed national: M=0,rho=1; inherited four-slot birth queue',
           'historical_population':'unchanged Census totals and ACS householder-age bridge 2007-2023',
@@ -51,5 +85,7 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  saving_maximization='exhaustive_piecewise_linear_continuation',
  numerical_gates={'market':2e-4,'mass':2e-10,'population':2e-10,'stationary_measurement':2e-8,'childless_identity':2e-10,
                   'occupied_value_negative_steps':0,'realized_budget_excess_mass':2e-10,'budget_gap_threshold':1e-9})
+for key in ('source_sha256','code_bundle_sha256','target_fingerprint','search_domain'):
+ if original is not None and original.get(key)!=c[key]:raise RuntimeError(f'Imported smoke original contract has mixed {key}')
 adapter.write_json(out/'contract.json',c)
 print(json.dumps(dict(bundle=bundle,contract_sha256=adapter.digest(out/'contract.json'),remote=remote,finish_epoch=c['absolute_finish_epoch'])))

@@ -28,6 +28,15 @@ planner.adapter = adapter
 
 N, RNG_SEED = 11, 20260906
 ROOT = Path(__file__).resolve().parents[3]
+FINAL_VERIFICATION_HISTORIES = 24  # 22 Jacobian probes plus two exact repeats.
+RUN_PROFILES = {
+    "v1": {"max_workers": 12, "case_timeout_seconds": 3600, "max_histories": 360,
+           "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
+           "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4},
+    "wide32": {"max_workers": 32, "case_timeout_seconds": 3600, "max_histories": 640,
+               "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 64,
+               "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4},
+}
 
 
 def digest(path):
@@ -62,12 +71,12 @@ def transform(u, spec):
 
 
 def unit_to_payload(seed, domain, unit, label):
-    if len(unit) != N or any(not math.isfinite(x) or not 0 <= x <= 1 for x in unit):
+    if len(domain) != N or len(unit) != N or any(not math.isfinite(x) or not 0 <= x <= 1 for x in unit):
         raise ValueError("Invalid eleven-dimensional proposal")
     out = {"old_psi_child": seed["old_psi_child"], "best_candidate": {
         "theta": copy.deepcopy(seed["best_candidate"]["theta"]),
         "old_psi_child": seed["old_psi_child"], "new_psi_child": seed["best_candidate"]["new_psi_child"]}}
-    for spec, u in zip(domain, unit, strict=True):
+    for spec, u in zip(domain, unit):
         value, name = transform(float(u), spec), spec["name"]
         if name == "beta_annual": out["best_candidate"]["theta"]["beta"] = value ** 4
         elif name == "psi_child_change_2023": out["best_candidate"]["new_psi_child"] = out["old_psi_child"] + value
@@ -99,14 +108,52 @@ def best_completed(rows):
     return min(rows, key=lambda row: row["loss"]) if rows else None
 
 
-def initial_population(center, domain, rng):
+def validate_policy_receipt(receipt, contract, *, smoke, selected_hashes):
+    expected_cases = {"baseline", "supply-plus-20", "dependent-child-ltv95", "property-tax-2pct-no-rebate"}
+    if (receipt.get("status") != "complete" or receipt.get("failures")
+            or receipt.get("smoke") is not smoke or set(receipt.get("cases", {})) != expected_cases):
+        raise RuntimeError("Incomplete policy-loop receipt")
+    if (receipt.get("scientific_bundle") != contract["code_bundle_sha256"]
+            or receipt.get("target_fingerprint") != contract["target_fingerprint"]
+            or receipt.get("selected_summary_sha256") not in selected_hashes):
+        raise RuntimeError("Policy receipt source or selected history changed")
+    for case in receipt["cases"].values():
+        if (case.get("status") != "complete" or case.get("dates") != (2 if smoke else 11)
+                or case.get("source_summary_sha256") != receipt["selected_summary_sha256"]):
+            raise RuntimeError("Incomplete policy branch or mixed selected history")
+        gates = case["gates"]
+        for key, limit in (("maximum_market_residual", 2e-4), ("maximum_mass_residual", 2e-10)):
+            if not math.isfinite(gates[key]) or gates[key] > limit:
+                raise RuntimeError("Policy receipt violates unchanged market or mass gates")
+
+
+def initial_population(center, domain, rng, profile="v1"):
+    if profile not in RUN_PROFILES:
+        raise ValueError(f"Unsupported run profile: {profile}")
     jump = next(i for i, d in enumerate(domain) if d["name"] == "hbar_first_child_jump")
     kappa = next(i for i, d in enumerate(domain) if d["name"] == "tenure_choice_kappa")
     lam = next(i for i, d in enumerate(domain) if d["name"] == "joint_nest_lambda")
     # Convert diagnostic physical scales by a small monotone grid search.
     inverse = lambda value, s: math.log(value/s["lower"])/math.log(s["upper"]/s["lower"])
     result = [list(center)]
-    for i in range(31):
+    if profile == "wide32":
+        kappa_grid = (.01, .03, .1, .3, 1., 2., 4., 8.)
+        lambda_grid = (.02, .05, .2, .5, .8, 1.)
+        omitted = (2., .8)  # The exact anchor replaces this nearest grid row.
+        for kappa_value in kappa_grid:
+            for lambda_value in lambda_grid:
+                if (kappa_value, lambda_value) == omitted:
+                    continue
+                u = bounded_perturbation(center, .08, rng)
+                u[kappa] = inverse(kappa_value, domain[kappa])
+                u[lam] = inverse(lambda_value, domain[lam])
+                result.append(u)
+        for _ in range(16):
+            result.append(bounded_perturbation(center, .12, rng))
+        if len(result) != RUN_PROFILES[profile]["population_size"]:
+            raise RuntimeError("wide32 initial population does not match its profile")
+        return result
+    for i in range(RUN_PROFILES[profile]["population_size"] - 1):
         u = bounded_perturbation(center, .05, rng)
         u[kappa] = inverse((.5, 1., 2., 4.)[i % 4], domain[kappa])
         u[lam] = inverse((.2, .5, .8, 1.)[(i // 4) % 4], domain[lam])
@@ -136,9 +183,10 @@ def verify_contract(path, expected_sha):
     for name, sha in c.get("reused_helper_sha256", {}).items(): adapter.verify(ROOT / "code/model/tools" / name, sha)
     for key in ("seed_center", "seed_reference"):
         adapter.verify(c[key], c[f"{key}_sha"] if f"{key}_sha" in c else c[f"{key}_sha256"])
-    expected = {"max_workers": 12, "case_timeout_seconds": 3600, "max_histories": 360,
-                "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
-                "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4, "random_seed": RNG_SEED}
+    profile = c.get("run_profile", "v1")
+    if profile not in RUN_PROFILES:
+        raise RuntimeError("Unsupported bounded controller profile")
+    expected = {**RUN_PROFILES[profile], "random_seed": RNG_SEED}
     if any(c.get(k) != v for k, v in expected.items()): raise RuntimeError("Changed bounded controller design")
     if c["search_domain"] != adapter.SEARCH_DOMAIN: raise RuntimeError("Changed parameter domain")
     base = c["base_plan"]
@@ -151,6 +199,7 @@ def verify_contract(path, expected_sha):
     for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain"):
         if c.get(key) != base.get(key): raise RuntimeError(f"Mixed {key}")
     if c["target_fingerprint"] != adapter.TARGET or c["source_sha256"] != adapter.SOURCE: raise RuntimeError("Adapter/source target mismatch")
+    c["run_profile"] = profile
     c["contract_path"] = str(Path(path).resolve())
     return c
 
@@ -174,17 +223,19 @@ class Search:
             "absolute_finish_epoch": self.finish, "epoch": time.time(), "production_promoted": False, **more})
 
     def can_fit(self, n, final=False):
-        if self.completed + n + (0 if final else 24) > self.c["max_histories"]: return False
+        if self.completed + n + (0 if final else FINAL_VERIFICATION_HISTORIES) > self.c["max_histories"]: return False
         # A conservative full timeout is required per wave; final steps may use reserved time.
         cutoff = self.finish if final else self.search_finish
         return time.time() + math.ceil(n/self.c["max_workers"]) * self.c["case_timeout_seconds"] <= cutoff
 
-    def new_plan(self, stage, vectors, labels):
+    def new_plan(self, stage, vectors, labels, case_offset=0):
+        if len(vectors) != len(labels):
+            raise ValueError("Every proposal requires exactly one label")
         dest = self.root / stage; dest.mkdir(parents=True, exist_ok=False); plan = copy.deepcopy(self.c["base_plan"])
         plan.update(stage=stage, cases=[], input_sha256={}, controller_sha256=self.c["controller_sha256"],
                     adapter_sha256=self.c["adapter_sha256"], planner_sha256=self.c["planner_sha256"],
                     launch_deadline_epoch=(self.finish-60 if stage.startswith("final") else min(self.search_finish, self.finish-60)))
-        for i, (u, label) in enumerate(zip(vectors, labels, strict=True), 1):
+        for i, (u, label) in enumerate(zip(vectors, labels), case_offset + 1):
             center = dest / f"center_{i:03d}.json"; adapter.write_json(center, unit_to_payload(self.seed, self.c["search_domain"], u, label))
             plan["cases"].append({"id": i, "label": label, "center": center.name, "center_sha256": digest(center),
                 "panel_task_id": 1, "panel_size": 1, "panel_design": "mixed", "panel_seed": RNG_SEED,
@@ -284,15 +335,25 @@ class Search:
         if not self.can_fit(len(vectors), final=stage.startswith("final")):
             raise RuntimeError("Budget/deadline cannot fit declared stage")
         self.phase = stage
-        plan, sha = self.new_plan(stage, vectors, labels)
+        # The unchanged adapter accepts at most forty cases in a plan.
+        # Preserve global population IDs across bounded plans in one worker queue.
+        plans = []
+        if len(vectors) > 40:
+            for start in range(0, len(vectors), 32):
+                plans.append(self.new_plan(f"{stage}_part_{start // 32 + 1:02d}",
+                    vectors[start:start+32], labels[start:start+32], case_offset=start))
+        else:
+            plans.append(self.new_plan(stage, vectors, labels))
         futures = {}; rejected_before = len(self.rejects)
         pool = ThreadPoolExecutor(max_workers=self.c["max_workers"])
         try:
-            cases = iter(adapter.load_plan(plan, sha)["cases"])
+            cases = iter((plan, sha, case) for plan, sha in plans
+                         for case in adapter.load_plan(plan, sha)["cases"])
             def submit():
-                case = next(cases, None)
-                if case is not None:
-                    futures[pool.submit(self._child, plan, sha, case)] = case
+                entry = next(cases, None)
+                if entry is not None:
+                    plan, sha, case = entry
+                    futures[pool.submit(self._child, plan, sha, case)] = (plan, sha)
             for _ in range(min(len(vectors), self.c["max_workers"])): submit()
             while futures:
                 done, _ = wait(futures, timeout=60, return_when=FIRST_COMPLETED)
@@ -301,7 +362,7 @@ class Search:
                     if time.time() >= self.finish: raise RuntimeError("Absolute finish deadline reached")
                     continue
                 for future in done:
-                    futures.pop(future)
+                    plan, sha = futures.pop(future)
                     case, out, status, detail = future.result()
                     if status == "complete": self._record_completed(plan, sha, case, out)
                     else:
@@ -311,14 +372,16 @@ class Search:
                         if smoke: raise RuntimeError(f"Required verification case rejected: {typ}: {detail}")
                 self.reports(); self.state("running")
                 for _ in done: submit()
-            planner.collect(plan, sha, require_complete=len(self.rejects) == rejected_before)
+            for plan, sha in plans:
+                planner.collect(plan, sha, require_complete=len(self.rejects) == rejected_before)
         except BaseException:
             for future in futures: future.cancel()
             self.stop_active()
             raise
         finally:
             pool.shutdown(wait=True, cancel_futures=True)
-        return [r for r in self.ledger if r["plan_sha256"] == sha]
+        hashes = {sha for _, sha in plans}
+        return [r for r in self.ledger if r["plan_sha256"] in hashes]
 
     def smoke(self):
         u=list(self.seed["panel_design"]["unit_vector"])
@@ -353,7 +416,27 @@ class Search:
         self.summary("smoke_passed")
 
     def require_smoke(self):
-        proof_path = Path(self.c["output_root"])/"smoke"/"smoke_verification.json"
+        imported = self.c.get("imported_smoke")
+        if imported:
+            required = ("root", "original_contract", "original_contract_sha256", "smoke_verification_sha256")
+            if any(key not in imported for key in required):
+                raise RuntimeError("Incomplete imported smoke provenance")
+            root = Path(imported["root"])
+            original_contract = Path(imported["original_contract"])
+            adapter.verify(original_contract, imported["original_contract_sha256"])
+            original = adapter.read_json(original_contract)
+            for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain",
+                        "adapter_sha256", "planner_sha256", "finalizer_sha256", "numerical_gates", "closure"):
+                if original.get(key) != self.c.get(key):
+                    raise RuntimeError(f"Imported smoke original contract has mixed {key}")
+            proof_path = root/"smoke_verification.json"
+            adapter.verify(proof_path, imported["smoke_verification_sha256"])
+        else:
+            if self.c["run_profile"] != "v1":
+                raise RuntimeError("Hash-pinned imported full-loop smoke is required")
+            root = Path(self.c["output_root"])/"smoke"
+            original_contract = None
+            proof_path = root/"smoke_verification.json"
         proof = adapter.read_json(proof_path)
         if proof.get("status") != "pass" or proof.get("exact_standard_pngs") != 17:
             raise RuntimeError("Unchanged full-loop smoke required")
@@ -362,8 +445,16 @@ class Search:
         for value in proof["anchor_receipts"] + proof["probe_receipts"]:
             receipt = adapter.read_json(value); out = Path(value).parent; plan_path = out.parent/"plan.json"
             plan = adapter.load_plan(plan_path, receipt["plan_sha256"])
-            if plan["code_bundle_sha256"] != self.c["code_bundle_sha256"]:
-                raise RuntimeError("Smoke belongs to different scientific source")
+            for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain"):
+                if plan.get(key) != self.c.get(key):
+                    raise RuntimeError(f"Smoke plan belongs to different {key}")
+            if imported:
+                for key in ("controller_sha256", "adapter_sha256", "planner_sha256"):
+                    if plan.get(key) != original.get(key):
+                        raise RuntimeError(f"Smoke plan differs from original contract {key}")
+                for key in ("helper_sha256", "target_set", "first_child_jump_upper"):
+                    if plan.get(key) != original["base_plan"].get(key):
+                        raise RuntimeError(f"Smoke plan differs from original base plan {key}")
             case = next(c for c in plan["cases"] if c["id"] == receipt["case_id"])
             self._record_completed(plan_path, receipt["plan_sha256"], case, out)
         paths = [Path(p).parent for p in proof["anchor_receipts"]]
@@ -372,34 +463,48 @@ class Search:
         if len(graphs) != 17: raise RuntimeError("Incomplete smoke graphs")
         for graph in graphs: adapter.verify(paths[1]/"standard_diagnostics"/graph.name, digest(graph))
         if self.c.get("finalizer_driver"):
-            policy_proof = adapter.read_json(Path(self.c["output_root"])/"smoke"/"policy_loop_verification.json")
+            policy_path = root/"policy_loop_verification.json"
+            if imported:
+                if "policy_loop_verification_sha256" not in imported:
+                    raise RuntimeError("Missing imported policy smoke provenance")
+                adapter.verify(policy_path, imported["policy_loop_verification_sha256"])
+            policy_proof = adapter.read_json(policy_path)
             adapter.verify(policy_proof["receipt"], policy_proof["sha256"])
             if policy_proof["status"] != "pass" or policy_proof["driver_sha256"] != self.c["finalizer_sha256"]:
                 raise RuntimeError("Policy-loop smoke source changed")
-        write_json(self.root/"inherited_smoke.json", {"path": str(proof_path), "sha256": digest(proof_path), "case_count": self.completed})
+            receipt = adapter.read_json(policy_proof["receipt"])
+            validate_policy_receipt(receipt, self.c, smoke=True,
+                selected_hashes={digest(path/"summary.json") for path in paths})
+            adapter.verify(receipt["selected_summary"], receipt["selected_summary_sha256"])
+            adapter.verify(Path(policy_proof["receipt"]).parent/"inherited_state_verification.json",
+                           receipt["inherited_state_verification_sha256"])
+        record = {"path": str(proof_path), "sha256": digest(proof_path), "case_count": self.completed}
+        if imported:
+            record.update(original_contract=str(original_contract), original_contract_sha256=imported["original_contract_sha256"])
+        write_json(self.root/"inherited_smoke.json", record)
 
     def search(self):
         self.require_smoke(); rng=random.Random(RNG_SEED); center=list(self.seed["panel_design"]["unit_vector"])
-        pop=initial_population(center,self.c["search_domain"],rng)
-        initial=self.batch("initial_population",pop,["seed"]+[f"initial_{i}" for i in range(1,32)])
+        pop=initial_population(center,self.c["search_domain"],rng,self.c["run_profile"])
+        initial=self.batch("initial_population",pop,["seed"]+[f"initial_{i}" for i in range(1,len(pop))])
         # Every slot starts from an actually evaluated feasible point. A
         # rejected initial proposal inherits a valid point, never a fake loss.
         available = sorted(initial, key=lambda row: row["loss"]) or [self.best]
         by_id = {row["id"]: row for row in initial}
-        seeded = [by_id.get(i + 1, available[i % len(available)]) for i in range(32)]
+        seeded = [by_id.get(i + 1, available[i % len(available)]) for i in range(self.c["population_size"])]
         pop = [list(row["unit_vector"]) for row in seeded]
         losses = [row["loss"] for row in seeded]
-        for gen in range(1,9):
-            if not self.can_fit(32): break
-            trials=de_trials(pop,losses,rng); results=self.batch(f"de_generation_{gen:02d}",trials,[f"de_{gen}_{i}" for i in range(32)])
+        for gen in range(1, self.c["max_generations"] + 1):
+            if not self.can_fit(self.c["population_size"]): break
+            trials=de_trials(pop,losses,rng); results=self.batch(f"de_generation_{gen:02d}",trials,[f"de_{gen}_{i}" for i in range(self.c["population_size"])])
             lookup = {row["id"]: row for row in results}
             for i in range(len(trials)):
                 trial = lookup.get(i + 1)
                 if trial and trial["loss"] < losses[i]:
                     pop[i], losses[i] = list(trial["unit_vector"]), trial["loss"]
             write_json(self.root/"population.json", {"generation":gen,"unit_vectors":pop,"evaluated_actual_losses":losses})
-        for round_ in range(1,3):
-            if not self.can_fit(22): break
+        for round_ in range(1, self.c["polish_rounds"] + 1):
+            if not self.can_fit(2*N): break
             anchor_loss = self.best["loss"]
             base=list(self.best["unit_vector"]); radius=.00125/(2**(round_-1)); vectors=[]; labels=[]
             for j in range(N):
@@ -427,7 +532,7 @@ class Search:
             for sign, name in ((-1, "minus"), (1, "plus")):
                 u = list(base); u[j] = min(1., max(0., u[j] + sign * .00125))
                 vectors.append(u); labels.append(f"jacobian_{j}_{name}")
-        if self.completed + 24 <= self.c["max_histories"] and self.can_fit(22, final=True):
+        if self.completed + FINAL_VERIFICATION_HISTORIES <= self.c["max_histories"] and self.can_fit(2*N, final=True):
             rows = self.batch("final_jacobian", vectors, labels)
             self.write_jacobian(rows, anchor)
         else:
@@ -448,7 +553,16 @@ class Search:
                 "exact_standard_pngs": 17, "selected": selected, "production_promoted": False})
         self.reports()
         self.run_finalizer_if_pinned()
-        self.summary("complete_verified" if (self.root/"final_verification.json").exists() else "best_valid_without_final_repeats")
+        self.summary(self.completion_status())
+
+    def completion_status(self):
+        if not (self.root/"final_verification.json").exists():
+            return "best_valid_without_final_repeats"
+        if self.c.get("finalizer_driver"):
+            path = self.root/"finalizer_status.json"
+            if not path.exists() or adapter.read_json(path).get("status") != "complete":
+                return "calibration_verified_policy_incomplete"
+        return "complete_verified"
 
     def write_jacobian(self, rows, anchor):
         import numpy as np
@@ -524,6 +638,8 @@ class Search:
             "returncode": proc.returncode, "receipt": str(receipt_path),
             "receipt_sha256": digest(receipt_path) if receipt_path.exists() else None})
         if proc.returncode: raise RuntimeError("Pinned finalizer failed")
+        validate_policy_receipt(receipt, self.c, smoke=False,
+            selected_hashes={digest(self.best["summary"])})
 
     def summary(self,status):
         self.reports(); lines=["# Morning summary","",f"Status: {status}. No estimate is promoted.",""]

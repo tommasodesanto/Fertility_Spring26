@@ -5,16 +5,18 @@
 #SBATCH --account=torch_pr_570_general
 #SBATCH --time=12:00:00
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=12
-#SBATCH --mem=144G
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=384G
 set -euo pipefail
 module load anaconda3/2025.06
 export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 export MPLCONFIGDIR="${TMPDIR:-/tmp}/joint_nested_long_mpl_${SLURM_JOB_ID}"
 cd "${SLURM_SUBMIT_DIR:?}"
 : "${E5F_JOINT_MODE:?smoke or search required}"
-CONTRACT=output/model/joint_nested_overnight/contract.json
-SHA=ccffc589d7ccbe7c1147c0b5110ffc4113b2b9be85710cefa3a7a4abaea7646e
+: "${E5F_JOINT_CONTRACT:?required contract path}"
+: "${E5F_JOINT_CONTRACT_SHA256:?required contract hash}"
+CONTRACT="$E5F_JOINT_CONTRACT"
+SHA="$E5F_JOINT_CONTRACT_SHA256"
 printf '%s  %s\n' "$SHA" "$CONTRACT" | sha256sum --check -
 python3 code/model/tools/test_e5f_exhaustive_saving.py
 # A second process must also load the compiled kernel cache correctly.
