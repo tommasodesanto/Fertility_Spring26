@@ -4,6 +4,26 @@ Updated: `2026-09-07 16:36 UTC` (two-shock fixed-price computational test passed
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September7 afternoon: author corrected priority to calibration; full-history smoke submitted.**
+The fixed-price comparison below does not answer whether the new model can fit.
+Torch access restored. Array17125770 now contains two identical retained-anchor
+full historical objective evaluations, each capped at six hours, one core/24GB.
+At submission both are pending priority. No completed two-shock fit exists yet.
+After exact-loop/reproducibility checks, proceed to a bounded recalibration of
+all eleven parameters using the observed runtime; do not stop at the initial score.
+
+Source branch `codex/two-contemporaneous-shocks`, revision25ab08c4; evidence5c60e957.
+Remote `/scratch/td2248/projects/Fertility_Spring26_two_shock_calibration_20260907a`.
+Plan SHA256 `19d96150d356fde8ee5b8532fee1aecfac3a2e8f5c7d61b4ec7ec42720df7a7e`.
+Scientific bundle `826a2d26d63a5278d08b95d517bdadd693c999c40b746baae68c870ddc964e4c`.
+Inputs/plan: `output/model/e5f_two_shock_calibration_20260907a/README.md`.
+Preflight pins all12 targets and11 original domains; fertility scales remain
+estimated, housing scale.005/supply elasticity.63 externally fixed, and room-jump
+upper.5 (not the overnight GEV expansion to2). No policy or illustration runs.
+Monitor `monitor-full-joint-fertility-calibration` is ACTIVE every10minutes with
+this new specification and job, replacing the completed overnight GEV prompt.
+
+
 **2026-09-07 16:36 UTC: independent contemporaneous two-shock test passed.**
 This is a different specification from the overnight tenure-nested GEV below:
 U[d,a] = Q[d,a] + d H + a F, with independent centered logistic differences,
