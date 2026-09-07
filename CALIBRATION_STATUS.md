@@ -4,6 +4,27 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 7, return from commute: both retained-parameter objectives complete.**
+Simple fertility nests17142457 completed in38m10s, loss36.37166360862253;
+sequential exhaustive-saving control17142458 completed in22m06s,
+loss30.408527701170645. New loss is19.6101% higher at the identical11 retained
+coordinates. All12 targets and weights, source bundle and plans verified;
+all24 fit-row losses independently recomputed. The old-state fertility intercept
+is separately normalized to2.1 as maintained. No recalibration or policy run.
+
+Both five-date histories pass recorded market/measurement/mass/population gates;
+terminal budget-violating mass and occupied negative value steps are zero.
+New first-birth housing response0.421118 versus control0.439708, target0.720246.
+The3+- versus1–2-child rooms gap rises0.404567 to0.419762, target0.367700;
+this contributes4.00 of the5.96 additional loss. TFR and childlessness barely
+change. Interpretation: functional, tractable experiment with worse housing
+fit at retained parameters; neither optimal attainable fit nor policy validity
+has been established. No exact repeated full history yet. Controls share
+exhaustive saving but interpolation support/storage differs. Large checkpoints
+remain remote; six collected summary/fit/parameter artifact hashes verified.
+All jobs ended; no automatic monitor. Full tables and verification:
+`output/model/e5f_simple_fertility_nest_20260907a/RESULTS.md`.
+
 **September 7, 22:44 UTC: simple fertility-nest computation launched on author request.**
 The author explicitly rejected the equivalence construction with extra outcome
 subnests and authorized the simple fertility grouping, followed by a request to
