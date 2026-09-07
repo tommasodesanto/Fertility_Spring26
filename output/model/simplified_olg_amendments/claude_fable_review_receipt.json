@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-07",
+  "requested_model": "claude-fable-5-1",
+  "effort": "high",
+  "tool_access": false,
+  "timeout_seconds": 1800,
+  "duration_ms": 389079,
+  "is_error": false,
+  "model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 14972,
+      "outputTokens": 17,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.015057,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 33710,
+      "cacheReadInputTokens": 3901,
+      "cacheCreationInputTokens": 19000,
+      "webSearchRequests": 0,
+      "costUSD": 2.0664952499999996,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 30870,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "source_sha256": {
+    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "7c7188208e1dab3cbef03dbce28c59ae3840689a7a4844f545744d688fe27bbe",
+    "tmp/claude_theory_review/focused_prompt.txt": "7b1dfe722e63bc8e71e4c9c1277cf4517cf12836a822955a4ffbb55b5103c777"
+  },
+  "report": "claude_fable_review.md",
+  "scope": "Focused review of proof logic and algebra, conditional on supplied numerical bounds; no numerical verification or document edits."
+}
