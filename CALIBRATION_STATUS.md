@@ -1,8 +1,101 @@
 # Calibration Status
 
-Updated: `2026-09-07` (renter budget repair verified on original state; fresh full verification running)
+Updated: `2026-09-07` (support repair verification running; reviewed 32-core search queued at 10:06 UTC)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7, 10:06 UTC: repaired model verification running; reviewed 32-core search queued.**
+Verification job `17105914` remains healthy in immutable snapshot m. The exact
+failed policy state passes after the interpolation-support repair, and the
+unchanged sequential reference reproduces all ten arrays exactly. Four fresh
+historical runs and eight policy dates remain to be completed.
+
+Search job `17106283` is pending with `afterok:17105914` and cancellation on
+an invalid dependency. Immutable snapshot o is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o`.
+Experimental source `62c0355f` is committed and pushed. The scientific bundle
+remains `cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760`.
+The request is 32 CPUs, 352 GB and four hours; the internal hard cutoff remains
+13:35 UTC. No search contract is created until the complete m verification and
+its artifact hashes pass the queued preflight.
+
+The lead reviewed the new `parallel32_overlap` controller profile. It freezes
+the selected, completed history before running 22 sensitivity histories and
+two exact repetitions alongside four policy paths, at most 28 workers. The
+finalizer starts once, is polled for early failures, and is awaited after the
+exact repetitions. Better sensitivity probes remain explicitly unselected.
+The final reserve is 90 minutes: max(60 minutes for the historical wave,
+70 minutes for policy paths) plus a 20-minute buffer. Launch requires measured
+current-source policy timing consistent with that reserve and one full-hour
+initial search wave before it. These timings are forecasts, not guarantees.
+All eleven parameters, twelve targets, weights and numerical gates are unchanged.
+
+Twenty-eight controller tests and five parallel-finalizer tests pass locally;
+all 28 controller tests also pass on Torch, including fatal policy errors,
+exact-repetition failures, single-process reuse and orphan cleanup. The first
+source-only check in snapshot n exposed test-harness process-startup assumptions
+on Torch's shared filesystem; those fixtures were repaired and retested in o.
+Snapshot n ran no model or calibration job. The lead review, source manifest,
+preflight, submission and Torch test log are in `parallel_search_o/` under
+`output/model/e5f_joint_nested_full_20260906a/`. Production remains unchanged.
+
+
+**September 7, 09:54 UTC: interpolation support failure traced and repaired; fresh verification running.**
+Verification `17103472` failed in the supply-policy smoke after 48m04s; dependent
+search `17104087` was cancelled without running. Its four historical cases
+passed (including exact repeated anchors), and original renter-floor case17
+also completed its full history. The policy failure is a distinct numerical
+support error, not a recurrence of the corrected feasible-consumption floor.
+No full policy packet or new large search is complete.
+
+The saved supply-policy state contains infeasible renter mass of
+3.7279965543e-10 at ages 58 and 62. An exact origin-to-destination trace explains
+all of it: owners sell their houses, and interpolation gives roughly 1–3%
+weight to an infeasible renter wealth node. Because the sentinel value is
+finite, the weighted value falsely passes the feasibility cutoff. The forward
+scatter then puts positive mass on that infeasible node. Diagnostic job17105800
+reconstructs both masses exactly. Earlier trace17105795 failed because the
+instrumentation incorrectly applied a location transaction within the same
+market; that diagnostic mistake was corrected and both scripts/logs preserved.
+
+Experimental source `dc303115`, committed and pushed, adds a default-off strict
+interpolation-support option used only by joint tenure choice. A proposed
+transaction is rejected if any positive interpolation weight lands on an
+infeasible conditional-value node. Exact-node and clipped-endpoint zero
+weights remain admissible when their occupied endpoint is feasible. The
+existing down-payment thresholds, borrowing limits, targets, weights and all
+numerical gates remain unchanged. This aligns the Bellman interpolation with
+its discrete-grid forward scatter; it is not an added economic primitive.
+Nine compiled saving/support tests and seven joint operator tests pass. An
+independent static review corroborates the mechanism and the proposed scope.
+
+Job `17105914` is running on cs612 with four CPUs, 96 GB and a 100-minute cap.
+Its first check passed on the exact failed policy state in25.12seconds:
+budget-excess mass becomes zero and occupied value drops remain zero. The
+existing, unchanged inherited-feasibility projection moves3.63654e-8 of mass,
+below its1e-6 gate. Births are exactly unchanged at fixed prices; housing demand
+changes by1.37381e-8 model units. This does not certify a recleared equilibrium.
+The job now runs the default-off reproduction, four full histories (two exact
+anchors and two all-coordinate probes), and four two-date policy paths.
+The anchor is the best completed j probe, still an experimental starting point.
+
+Immutable snapshotm is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907m`.
+Scientific bundle `cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760`;
+contract SHA `cb22a9d7ee19da10e558eada48cd5fad5bb1055eb8dc7e01220699481c426c15`.
+Local trace/review is in `policy_feasibility_diagnosis/`; current verification
+source, proof and submission are in `support_repair_m/`, both under
+`output/model/e5f_joint_nested_full_20260906a/`.
+
+A bounded worker is implementing an operational overlap profile in three
+experimental controller/builder/test files only. The frozen selected candidate
+allows its22 Jacobian probes, two exact repetitions and four policy paths to
+run independently together (28 workers within32 CPUs). Proposed final reserve
+is90minutes, conditional on measured policy time, with the same13:35UTC cutoff.
+This implementation is not yet reviewed, pinned or queued; no new calibration
+job exists. The lead must review it and its tests, then verify the complete m
+smoke before any launch. Production and the protected manuscript are unchanged.
+
 
 **September 7, 09:05 UTC: repair verification running; broader search queued behind it.**
 Verification job `17103472` remains healthy on five CPUs and 96 GB. Its
