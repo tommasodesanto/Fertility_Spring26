@@ -9,9 +9,15 @@ The author questioned numerical integration because the intended simultaneous
 nested-logit specification has closed-form probabilities. The implemented
 independent additive logistic shocks are a different distribution. Reconcile
 the shock law and nesting before any repair or further model evaluation.
-Only collect and preserve diagnostic replay17132977, then pause the monitor.
-At this check the replay is RUNNING after 27 minutes; normalization and the
-first historical date have completed. No new objective is available.
+Diagnostic replay17132977 finished FAILED after39:40; collected at21:38 UTC.
+Original exception inputs/outputs and log are preserved under
+`output/model/e5f_two_shock_calibration_20260907a/failure_capture/` and the
+adjacent `failure_capture_17132977.out`. One occupied menu has probability-sum
+error1.7564536491931904e-9 versus tolerance2e-11; individual probabilities remain
+in[0,1]. No complete objective is available. The monitor is now PAUSED.
+The author is discussing a fertility-nest candidate; the complete menu,
+conception recourse and housing-product treatment must be reconciled first.
+No new implementation, repair or model evaluation follows from this monitor.
 An independent review found an embedded-quadrature probability-mass defect in
 constructed analytic examples; historical failure attribution awaits the capture.
 Temporary evidence: `tmp/two_shock_failure_review/REVIEW.md`. No repair adopted.
