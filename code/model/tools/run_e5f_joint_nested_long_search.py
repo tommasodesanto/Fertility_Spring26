@@ -113,6 +113,13 @@ def best_completed(rows):
     return min(rows, key=lambda row: row["loss"]) if rows else None
 
 
+def smoke_probes(center):
+    """Two all-coordinate probes, with distinct inward steps at a bound."""
+    return [[min(1.,max(0.,x+sign*.00125))
+             if min(1.,max(0.,x+sign*.00125)) != x
+             else x-sign*.0025 for x in center] for sign in (-1,1)]
+
+
 def validate_policy_receipt(receipt, contract, *, smoke, selected_hashes):
     expected_cases = {"baseline", "supply-plus-20", "dependent-child-ltv95", "property-tax-2pct-no-rebate"}
     if (receipt.get("status") != "complete" or receipt.get("failures")
@@ -257,12 +264,15 @@ def verify_contract(path, expected_sha):
 
 class Search:
     def __init__(self, contract, mode):
+        if contract.get('authorized_mode') == 'smoke' and mode != 'smoke':
+            raise RuntimeError('This contract authorizes verification only')
         self.c, self.mode = contract, mode; self.root = Path(contract["output_root"]) / mode
         if self.root.exists(): raise RuntimeError(f"Refusing existing run directory: {self.root}")
         self.root.mkdir(parents=True); self.started = time.monotonic(); self.wall = time.time()
         self.finish = min(self.wall + contract["max_total_seconds"], contract["absolute_finish_epoch"])
-        self.search_finish = min(self.wall + contract["max_search_seconds"],
-                                 self.finish - contract.get("final_reserve_seconds", 10800))
+        self.search_finish = (self.finish if mode == 'smoke' else
+            min(self.wall + contract["max_search_seconds"],
+                self.finish - contract.get("final_reserve_seconds", 10800)))
         self.seed = adapter.read_json(contract["seed_center"]); self.ledger, self.rejects, self.best = [], [], None
         self.stop_event = threading.Event(); self.lock = threading.Lock()
         self.completed = 0; self.consecutive_timeouts = 0; self.active = {}; self.phase = "initializing"
@@ -450,8 +460,7 @@ class Search:
 
     def smoke(self):
         u=list(self.seed["panel_design"]["unit_vector"])
-        paired=[]
-        for sign in (-1,1): paired.append([min(1.,max(0.,x+sign*.00125)) for x in u])
+        paired=smoke_probes(u)
         rows=self.batch("smoke_histories", [u,u,*paired],
             ["anchor_1","anchor_2","all_minus","all_plus"], smoke=True)
         anchors=[r for r in rows if r["label"] in ("anchor_1","anchor_2")]

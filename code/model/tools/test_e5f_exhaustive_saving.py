@@ -91,6 +91,27 @@ class ExhaustiveSavingTests(unittest.TestCase):
     def test_rejects_uncovered_objective(self):
         args=list(self.arguments(False));args[11]=0.
         with self.assertRaises(ValueError):plain(k.exhaustive_saving_scalar)(*args)
+
+    def test_renter_reports_budget_and_objective_below_legacy_floors(self):
+        # Independent intratemporal checks, including the housing cap,
+        # nonzero subsistence, a means-tested transfer and state-specific alpha.
+        for resources, rent, hmax, cb, hb, al, grant in (
+                (.03, 1., 2., 0., 0., .7, 0.),
+                (.10, 10., 2., .01, .002, .8, 0.),
+                (.20, 1., .025, .01, .02, .6, .1)):
+            bg=np.array([0., 1.]); ones=np.ones(1); zeros=np.zeros((2,1))
+            args=(np.full(2,resources),np.zeros(2),zeros,zeros,0,bg,
+                  ones*cb,ones*hb,ones*.04,ones*grant,ones*al,ones*1.13,
+                  rent,hmax,.04,0.,0.,.64,-.7,.96,0.,0.,.381966,.618034,1e-3,1)
+            value,saving,c,h=k.full_renter_block_kernel(*args)
+            available=resources+grant
+            surplus=available-cb-rent*hb-saving
+            expected_h=hb+np.minimum((1-al)*surplus/rent,hmax-hb)
+            expected_c=available-rent*expected_h-saving
+            np.testing.assert_allclose(h,expected_h,rtol=0,atol=1e-16)
+            np.testing.assert_allclose(c,expected_c,rtol=0,atol=1e-16)
+            utility=1.13*((c-cb)**al*(h-hb)**(1-al))**(-.7)/(-.7)+.04
+            np.testing.assert_allclose(value,utility,rtol=2e-15,atol=1e-13)
         args=list(self.arguments(False));args[1]=args[0]-1
         with self.assertRaises(ValueError):plain(k.exhaustive_saving_scalar)(*args)
 

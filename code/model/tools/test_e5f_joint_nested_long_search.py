@@ -14,6 +14,18 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_smoke_only_contract_rejects_search_before_writing(self):
+        with self.assertRaisesRegex(RuntimeError, 'verification only'):
+            search.Search({'authorized_mode':'smoke'}, 'search')
+
+    def test_smoke_probes_move_every_coordinate_at_bounds(self):
+        center=[0.,1.,.5,.0001,.9999,.2,.3,.4,.6,.7,.8]
+        lo,hi=search.smoke_probes(center)
+        for j,x in enumerate(center):
+            self.assertTrue(0 <= lo[j] <= 1 and 0 <= hi[j] <= 1)
+            self.assertNotEqual(lo[j],x);self.assertNotEqual(hi[j],x)
+            self.assertNotEqual(lo[j],hi[j])
+
     def test_parallel_population_keeps_v1_proposals_and_fits_one_wave(self):
         center=[.5]*11; domain=search.adapter.SEARCH_DOMAIN
         original=search.initial_population(center,domain,random.Random(20260906),'v1')

@@ -975,12 +975,20 @@ def full_renter_block_kernel(
                         ct = 1e-10
                     ct_eff = ct if ct > c_min else c_min
                     ht_eff = ht_cap_c if ht_cap_c > 0.01 else 0.01
+                    if exhaustive_saving and v_best > -1e9:
+                        # Report the intratemporal allocation used by the
+                        # objective, without the legacy output-only floors.
+                        ct_eff = ct
+                        ht_eff = ht_cap_c
                     co[b, c] = cbc + ct_eff
                     ho[b, c] = hbc + ht_eff
                 else:
                     ct = al * surplus
                     ct_eff = ct if ct > c_min else c_min
                     ht_eff = ht_unc if ht_unc > 0.01 else 0.01
+                    if exhaustive_saving and v_best > -1e9:
+                        ct_eff = ct
+                        ht_eff = ht_unc
                     co[b, c] = cbc + ct_eff
                     ho[b, c] = hbc + ht_eff
     return Vo, bp_out, co, ho
