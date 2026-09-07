@@ -4,6 +4,26 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 7: author approves testing fertility groups, with sequential fallback.**
+The first complete-menu checkpoint identifies an exact simultaneous GEV
+representation of the retained sequential recursion, using contingent housing
+plans and additional outcome-dependent housing subnests. Those extra correlations
+are NOT adopted: they require explicit discussion beyond the simple four-plan
+fertility grouping. All six housing products and adjustment after conception
+are retained in the construction. A 1,320-case independent enumeration check
+matches values and realized product/family probabilities to below2e-15.
+This is arithmetic evidence only; no new Bellman, equilibrium, objective,
+recalibration or policy run. It does not prove invariance when the original
+literal housing shocks are simply revealed earlier. Sequential remains live.
+Isolated branch `codex/fertility-nest-test`, worktree
+`tmp/e5f_fertility_nest_test_20260907a`; specification
+`docs/model/e5f_fertility_nest_menu.md` and test receipt
+`output/model/fertility_nest_menu_check/summary.json` within that worktree.
+Two read-only reviewers checked the mathematical construction and actual
+production menu/cohort code. The old routine
+`monitor-full-joint-fertility-calibration` was DELETED at the author's request;
+do not recreate it. Older active/paused monitor references below are history.
+
 **September 7, 20:54 UTC: specification hold supersedes the continuation instructions below.**
 The author questioned numerical integration because the intended simultaneous
 nested-logit specification has closed-form probabilities. The implemented
