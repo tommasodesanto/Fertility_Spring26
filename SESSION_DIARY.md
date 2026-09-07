@@ -1584,3 +1584,104 @@ and housing-cost indices are `0.56998` and `0.79334`, but remain in motion.
 A dependent-child LTV95 diagnostic raises family ownership `5.132` percentage
 points while moving the birth rate only `0.031%`; the paper's funded tax/grant
 policy has not yet been migrated to this transition.
+
+
+**September 7, 08:57 UTC: renter budget failure reproduced and repaired; fresh full verification running.**
+Job `17100904` stopped safely after30m30s on a budget error in original case17.
+Its ledger contains five new fully checked search cases and four imported smoke
+cases, not nine new search completions. Best completed search case16 has loss
+455.2715682753; this is preliminary, without final repetitions or full policies.
+Its complete twelve-row fit and all eleven estimates/bounds are preserved in
+`parallel_search_i/search/initial_population/task_016/target_fit_long.csv` and
+`parameter_table.csv` under the experiment output. No production promotion.
+Peak job memory was about148.3GiB, below the352GB allocation.
+
+The original saved state proves the previously documented renter output-floor
+inconsistency: one occupied state reports consumption0.04 although the optimizer
+uses0.03857717369. Its excess-budget mass2.42637267078e-10 exceeds the unchanged
+2e-10 gate. Experimental source885cc2d3, committed and pushed, removes only the
+legacy post-optimization renter consumption/housing floors on feasible joint
+branches. The objective, saving, targets, weights and gates remain unchanged.
+A bounded independent static review agrees with the mathematical correction.
+Seven exhaustive-saving/budget tests and twenty controller tests pass.
+
+Torch job `17103472` started08:51UTC on5CPUs/96GB, with100minutes maximum. The
+exact original-state fixed-price replay passed in23.54seconds: budget-excess
+mass is zero; all fourteen value/saving/choice/population arrays reproduce
+exactly. Housing changes only in3,660 unoccupied cells in this saved state;
+realized demand is unchanged. This is not a blanket equilibrium-invariance
+claim, so fresh historical and policy verification is mandatory. All ten
+default-off sequential arrays also reproduce exactly. The job is now running
+four complete five-date histories (two repeated anchors plus two probes moving
+all eleven coordinates), the exact failed-case17 history, and four two-date
+policy paths. The anchor uses the improved case16 parameters, including the
+lambda=1 bound; the smoke uses distinct inward probes there.
+
+Immutable snapshotj is
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907j`.
+Scientific bundle4afac38564522c252bf438c2ab3b7c968c722c9738b95193aaf9173c3c8ba001;
+verification-only contract SHA90868bcb9a5bd0da9f2100eb28cdd947c283dfbdb7bf93510c63d76972f0e60a.
+Local evidence and exact-state replay driver are in `renter_repair_j/` beneath
+`output/model/e5f_joint_nested_full_20260906a/`. The independent review is in
+`parallel_search_i/renter_reporting_independent_review.md`.
+
+The next32-worker search is being prepared, not launched. To preserve the
+13:35UTC cutoff, a new operational profile freezes the lowest-loss searched
+candidate before running22 diagnostic Jacobian probes and its two exact
+repetitions concurrently. Better final diagnostic probes remain visibly
+unselected and unrepeated. Its reserved final budget is one1h historical wave,
+up to70minutes for measured parallel policies, and20minutes buffer. All32
+initial proposals and all11 free coordinates remain. This controller revision
+needs independent review and complete fresh smoke before any launch. No change
+to the current running snapshotj. Full calibration/policies and morningPDF
+remain unfinished. Production and the protected author manuscript are unchanged.
+
+
+**September 7, 09:05 UTC: repair verification running; broader search queued behind it.**
+Verification job `17103472` remains healthy on five CPUs and 96 GB. Its
+original-state budget check and ten-array default-off reproduction have passed;
+the four full histories, original failed-case replay, and eight policy dates
+are still running. Do not describe this as completed calibration.
+
+Job `17104087` is queued with `afterok:17103472` and cancellation on an invalid
+dependency. It uses immutable snapshot
+`/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907l`,
+source `34761822` (pushed), with the same repaired scientific bundle `4afac385`.
+The request is 32 CPUs, 352 GB, and four hours, with the unchanged 13:35 UTC
+internal hard cutoff. Its entry point independently verifies all original
+repair, history, policy and source evidence before creating a contract or
+starting calibration. No l contract exists yet. The unused k request `17103863`
+was cancelled while pending, with zero model runtime, to adopt the broader
+starting design. Neither queued nor running source was edited.
+
+The new `parallel32_fixed` profile retains all eleven free parameters, twelve
+targets, weights and numerical gates. Its 32 initial proposals span tenure
+scales 0.01, 0.03, 0.1, 0.3, 0.5, 1, 2 and 4, and nest dissimilarities 0.05,
+0.2, 0.5 and 1; the nearby verified seed replaces the (2,1) grid point. Other
+coordinates vary by up to 0.08 in transformed units. The initial historical
+preference change scales with the relative inner fertility-shock scale. This
+is an initialization heuristic, not a parameter restriction or identification
+claim. All eleven coordinates remain free during search. The broader starts
+respond to the inspected case16 graphs, which show nearly flat ownership
+around one half and a large parent-ownership-gap miss. This changes starting
+proposals, so do not call them the exact old i population.
+
+The profile reserves 9,000 seconds: one concurrent wave of 22 diagnostic
+Jacobian histories and two exact repetitions, up to 70 minutes for measured
+parallel policies, and 20 minutes of buffer. Selection freezes at the best
+searched candidate before that final wave. Any better diagnostic probe is
+recorded explicitly but remains unselected and unrepeated. The unchanged
+one-hour per-case cap and stage-budget checks apply. At most one new 32-case
+search wave may fit after fresh verification; 640 is only an attempt ceiling.
+Independent static controller review found no blocker. Twenty-three local and
+Torch controller tests pass, including combined-wave repetition provenance,
+nonselection of better diagnostic probes, missing-repeat failure, and the
+broader deterministic starting design. The grid initialization itself was
+reviewed by the lead after the independent controller review.
+
+Local launch recipes, source pins and submission receipts are in
+`output/model/e5f_joint_nested_full_20260906a/parallel_search_l/`.
+Original failure and repair evidence remain in `parallel_search_i/` and
+`renter_repair_j/` in that folder. The monitor is updated. Final calibration,
+policy simulations and the morning PDF remain pending; production and the
+protected author manuscript are unchanged.

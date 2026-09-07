@@ -1,0 +1,100 @@
+{
+  "budget_after": {
+    "budget_excess_mass": 0.0,
+    "budget_excess_share": 0.0,
+    "budget_tolerance": 1e-09,
+    "household_mass": 1.1292476712477404,
+    "maximum_occupied_excess": 7.105427357601002e-15,
+    "occupancy_threshold_for_maximum": 1e-12,
+    "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+    "weighted_positive_budget_gap": 6.60969359272776e-17
+  },
+  "budget_before": {
+    "budget_excess_mass": 2.426372670781678e-10,
+    "budget_excess_share": 2.1486629838259523e-10,
+    "budget_tolerance": 1e-09,
+    "household_mass": 1.1292476712477404,
+    "maximum_occupied_excess": 0.0014228263061676072,
+    "occupancy_threshold_for_maximum": 1e-12,
+    "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+    "weighted_positive_budget_gap": 3.4529678339135337e-13
+  },
+  "demand_after": [
+    5.958214745642186
+  ],
+  "demand_before": [
+    5.958214745642186
+  ],
+  "elapsed_seconds": 23.535895586013794,
+  "exact_unchanged_arrays": {
+    "V": true,
+    "bp_pol": true,
+    "fert2_probs": true,
+    "fert_probs": true,
+    "fert_value": true,
+    "g_current": true,
+    "g_post_fertility": true,
+    "g_pre": true,
+    "loc_probs": true,
+    "probabilities": true,
+    "products": true,
+    "tenure_choice": true,
+    "tenure_probs": true,
+    "wait_probabilities": true
+  },
+  "housing_changed_cells": 3660,
+  "housing_changed_current_mass": 0.0,
+  "new_bundle": "4afac38564522c252bf438c2ab3b7c968c722c9738b95193aaf9173c3c8ba001",
+  "old_checkpoint": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907i/output/model/joint_nested_overnight/search/initial_population/task_017/dated_state.pkl.gz",
+  "old_checkpoint_sha256": "e7d074c330672d8bd95c213f5d8f076de56d6203db0d5076965c6578e7ab9e80",
+  "original_worst_state": {
+    "age": "46.0",
+    "consumption": "0.04",
+    "dependent_children": "3",
+    "excess_expenditure": "0.0014228263061676072",
+    "income_index": "0",
+    "mass": "2.426372670781678e-10",
+    "optimizer_consumption": 0.0385771736938324,
+    "optimizer_housing": 1.397631746550248,
+    "parity": "3",
+    "reported_consumption_after": 0.038577173693832414,
+    "reported_housing_before": 1.397631746550248,
+    "resources": "-0.03030038318995104",
+    "saving": "-0.23720930232558127",
+    "tenure": "0",
+    "wealth": "-0.39534883720930214"
+  },
+  "policy_arrays": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "scope": "Fixed-price diagnostic only. Fresh histories and recleared policies required; no production promotion.",
+  "status": "pass_original_state_fixed_prices",
+  "weighted_absolute_housing_change": 0.0
+}
