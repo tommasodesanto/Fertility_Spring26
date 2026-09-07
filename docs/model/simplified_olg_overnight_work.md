@@ -1484,3 +1484,9 @@ existing conventions unless a specific necessary change is proposed separately.
 At the author's request, the main suggestion note now reports the verified reference-economy bound of 1/20000 for each shock, uniformly in the policy date, and distinguishes it from the open-set local theorem. Two LaTeX passes passed; final pages 12–13 were visually inspected. Equations and figures were unchanged.
 
 A tool-free Claude Code availability test requested model `fable-5.1`. It stopped before an API call with `Not logged in`; no review ran and the model identifier remains unverified. The user needs to authenticate Claude Code before retrying.
+
+## September 7: Fable availability resolved
+
+Official Anthropic model documentation identifies `claude-fable-5-1`: https://platform.claude.com/docs/en/models/fable-5-1/overview . The first authenticated test used the wrong identifier (`fable-5.1`). Retrying the documented identifier returned an explicit minimum-version error: Claude Code 2.1.251 required; installed version was 2.1.101. The npm updater installed 2.1.263 but its native dependency was absent under the active Node 20 installation. Anthropic's native installer succeeded at `~/.local/bin/claude`, version 2.1.263. A PATH entry was appended to `~/.zshrc`; a new interactive shell resolves this launcher. A tool-free smoke call returned READY with canonical model `claude-fable-5-1`.
+
+A subsequent tool-free review at max effort, limited to the current note and verification assessment, reached its ten-minute process timeout without a completed report. It was stopped; no reviewer findings are available or adopted. The review packet remains in `tmp/claude_theory_review/prompt.txt`. Login and model access work; the review itself is incomplete.
