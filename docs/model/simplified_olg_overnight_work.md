@@ -1498,3 +1498,7 @@ The narrower tool-free review at high effort completed successfully in about 6.5
 ## Live reading: explicit estate accounting
 
 At the author's request, removed the redundant sentence listing preference weights, defined estate timing and omega_B, and added explicit renter/owner estate components using old-age financial saving a^e. The unreduced owner budget shows exactly how the existing budget and estate bound follow. No household choices or economic restrictions changed. Two compile passes passed; pages 1–3 visually reviewed. PDF rebuilt without opening a preview.
+
+## Live reading: common next-period asset notation
+
+Author requested a prime as next-period financial wealth and harmonized young renter/owner problems. Both continuation values now take a prime directly; both budgets use q times a prime. Owner assets are net of mortgage debt, with q a prime + phi P h >= 0 preserving the original nonnegative bond constraint. The exact mapping from original saving s is a prime = s/q for renters and (s-phi P h)/q for owners. Positive-saving assumptions still mean positive gross bond holdings. Verified algebra, exact boundary checks, compilation, and rendered pages 1–3. Mathematical code retains original coordinates. Also incorporated the previously requested discounting and rent/rebate wording.

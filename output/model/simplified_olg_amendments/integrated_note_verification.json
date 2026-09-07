@@ -168,8 +168,8 @@
     "Protected manuscript, slides, quantitative model and prior proof/example sources are outside this edit."
   ],
   "sha256": {
-    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "23e9808d94ed6e22e7e7e014e1a6369356c067b549b95982665ef37462b9899f",
-    "output/pdf/simplified_olg_amendment_proposal.pdf": "8653529ee64f48c45615a75e322ef13ff22a05770ed98bc8c2a84420f58a6f92",
+    "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex": "a32fd113d95ee5a2f8ef0fda6e2d1a7dbcdffb2ec4f35a77a05c9dddf86e8aac",
+    "output/pdf/simplified_olg_amendment_proposal.pdf": "1b73dd9cebfa99d2b1c42b73a45b25ab3f8f2f42c3dd4816ff1741cd2d8e7a19",
     "code/model/tools/build_simplified_olg_theory_note.py": "cdfdab381c6ea8ff72f6e273ea71d8fce52df5b7413e130af9e634ff6369494c",
     "output/model/simplified_olg_amendments/combined_transition_figure.pdf": "d3cff69305eb6935cfd0474b3660d2886eefa078c1b31166411c2784aa2a67b9",
     "output/model/simplified_olg_amendments/combined_transition_figure.png": "1ce5f603136653aad45f45ad003d7a644a3e3c366280de462b961df780b39bd9",
@@ -261,5 +261,14 @@
     ],
     "overflow_or_reference_errors": false,
     "previous_records": "Prior text-preservation and reference-count checks describe earlier revisions."
+  },
+  "young_asset_notation_update": {
+    "date": "2026-09-07",
+    "convention": "a prime is next-period net financial wealth in both tenures.",
+    "exact_mapping_from_original_saving_s": "Renter: a_prime=s/q. Owner: a_prime=(s-phi*P*h)/q.",
+    "owner_budget": "c+q*a_prime+(1+q*tau)*P*h=y+b+T",
+    "portfolio_constraint": "q*a_prime+phi*P*h>=0 is exactly original s>=0; positive saving continues to mean s>0.",
+    "verification": "Algebra checked by substitution; exact rational checks include the zero-saving boundary. Two final compilation passes and visual review of pages 1\u20133.",
+    "computation_sources": "Existing model and certificate sources retain original saving coordinates; no economic change or numerical replay. Older source-hash and equation-preservation checks describe historical versions."
   }
 }
