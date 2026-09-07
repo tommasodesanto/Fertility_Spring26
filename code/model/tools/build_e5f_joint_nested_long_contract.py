@@ -27,9 +27,10 @@ if bundle != adapter.BUNDLE:raise RuntimeError('Scientific bundle changed; revie
 out=args.outdir.resolve();out.mkdir(parents=True,exist_ok=True)
 if (out/'contract.json').exists():raise RuntimeError('Refusing to replace an existing run contract')
 profile={'v1':dict(max_workers=12,max_histories=360,population_size=32,max_generations=8,polish_rounds=2),
-         'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2)}[args.profile]
+         'wide32':dict(max_workers=32,max_histories=640,population_size=64,max_generations=8,polish_rounds=2,final_reserve_seconds=16200)}[args.profile]
 available_total_seconds=min(43200,max(0,args.finish_epoch-time.time()))
-available_search_seconds=min(32400,max(0,available_total_seconds-10800))
+final_reserve=profile.get('final_reserve_seconds',10800)
+available_search_seconds=min(32400,max(0,available_total_seconds-final_reserve))
 if available_search_seconds < math.ceil(profile['population_size']/profile['max_workers'])*3600:
  raise RuntimeError('Deadline cannot fit the initial population and reserved final verification')
 projected_search_histories=min(profile['max_histories']-28,
@@ -73,7 +74,7 @@ c=dict(schema='e5f_joint_nested_long_v1',base_plan=base,base_plan_sha256=hashlib
  run_size=f'120 wealth x6 housing x1 market x17 ages x15 income x4 parity x4 child counts; up to{profile["max_histories"]} attempted complete histories (including4 imported smoke histories), each five cleared historical dates and normalized old steady state; 22 final Jacobian probes and2 exact repeats are reserved',
  estimated_history_wall_hours=profile['max_histories']*args.expected_history_seconds/profile['max_workers']/3600,policy_path_dates=11,policy_path_cases=4,production_promoted=False,
  budget_estimate={'at_contract_creation_epoch':time.time(),'available_total_seconds':available_total_seconds,
-  'available_search_seconds':available_search_seconds,'reserved_final_seconds':10800,
+  'available_search_seconds':available_search_seconds,'reserved_final_seconds':final_reserve,
   'projected_search_histories_at_measured_rate':projected_search_histories,
   'interpretation':'640/360 is a hard attempt ceiling, not a planned completion count; actual stages require their full timeout waves before the fixed cutoff'},
  imported_smoke=imported_smoke,

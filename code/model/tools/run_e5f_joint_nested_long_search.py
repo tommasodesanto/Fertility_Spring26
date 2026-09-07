@@ -35,7 +35,8 @@ RUN_PROFILES = {
            "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4},
     "wide32": {"max_workers": 32, "case_timeout_seconds": 3600, "max_histories": 640,
                "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 64,
-               "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4},
+               "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
+               "final_reserve_seconds": 16200},
 }
 
 
@@ -210,7 +211,8 @@ class Search:
         if self.root.exists(): raise RuntimeError(f"Refusing existing run directory: {self.root}")
         self.root.mkdir(parents=True); self.started = time.monotonic(); self.wall = time.time()
         self.finish = min(self.wall + contract["max_total_seconds"], contract["absolute_finish_epoch"])
-        self.search_finish = min(self.wall + contract["max_search_seconds"], self.finish - 10800)
+        self.search_finish = min(self.wall + contract["max_search_seconds"],
+                                 self.finish - contract.get("final_reserve_seconds", 10800))
         self.seed = adapter.read_json(contract["seed_center"]); self.ledger, self.rejects, self.best = [], [], None
         self.stop_event = threading.Event(); self.lock = threading.Lock()
         self.completed = 0; self.consecutive_timeouts = 0; self.active = {}; self.phase = "initializing"

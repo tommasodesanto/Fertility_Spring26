@@ -12,6 +12,17 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_wide_reserve_reduces_search_time_before_hard_cutoff(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            seed=Path(tmp)/'seed.json';search.write_json(seed,{})
+            contract={**search.RUN_PROFILES['wide32'],'output_root':tmp,'seed_center':str(seed),
+                      'absolute_finish_epoch':31000.}
+            with mock.patch.object(search.time,'time',return_value=1000.):
+                obj=search.Search(contract,'test')
+            self.assertEqual(obj.finish,31000.)
+            self.assertEqual(obj.search_finish,14800.)
+            self.assertEqual(obj.finish-obj.search_finish,16200.)
+
     def test_final_repeats_do_not_hide_skipped_policy_finalization(self):
         with tempfile.TemporaryDirectory() as tmp:
             obj=object.__new__(search.Search);obj.root=Path(tmp);obj.c={'finalizer_driver':'pinned.py'}
