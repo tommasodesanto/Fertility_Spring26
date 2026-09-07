@@ -1,5 +1,32 @@
 # Full simultaneous-choice experiment
 
+**September 7, 04:22 UTC: normalization repair succeeds; replay ends in a declared candidate rejection.**
+Replay `17090361` ended after 30m53s: old fertility normalized to 2.10000344,
+and every normalized-old identity check passed. The case completed 2007 and
+2011, then its 2015-origin historical first-birth branch lacked treated support.
+The unchanged controller already classifies the exact error as
+`undefined_first_birth_support`, rejecting the proposal without a fabricated
+loss. This is not a new code exception or a completed calibration. The active
+2019–2023 target was never reached; its support is not established by this run.
+No historical support requirement, target, weight or numerical gate is relaxed.
+The adjudication and original hashes are in `support_repair_e/replay_assessment.json`.
+
+Full smoke `17090362` has completed both full anchors and is running its two
+all-eleven-coordinate probes. All four two-date policy paths remain required.
+Small-shock canary `17091265` is running one original case (outer scale 0.01,
+nesting coefficient 0.02) in prepared snapshot `20260907f`; inspect its outcome,
+runtime and peak memory before scaling. The 68-file source manifest matches;
+no wide contract or search job exists yet. The LOCAL preparation helper now
+accepts only the documented replay rejection after checking original evidence.
+Its remote copy is stale: synchronize the local helper and replay assessment
+to snapshot f after the canary ends, then run the full smoke/import preflight.
+
+The PDF builder is complete and pushed through `b313e3a`; six focused tests,
+193 table cells and a 15-page preview have been checked. The delivered PDF
+remains the earlier discussion copy. Large calibration, final repetitions,
+full policy paths and a refreshed morning PDF remain pending. The hard cutoff
+is 13:35 UTC, with 4.5 hours reserved for final verification and policies.
+
 **September 7, 03:40 UTC: zero-support diagnosis confirmed; repaired verification running.**
 Instrumentation-only job `17090114` completed and reproduced exactly zero
 first-birth mass in both stationary comparison branches, with finite valid
@@ -415,3 +442,70 @@ Bellmans use one CPU, 32GB, a 15-minute cap and explicit driver/source/checkpoin
 hashes. The verified driver hash is
 `56dc888cd6c303e7828b9575ace0a5f65540641d37fdf837f19d13f2d0e2c8f2`.
 No additional long computation is queued.
+
+
+## Morning PDF builder and restart preparation
+
+The experimental builder `code/model/tools/build_e5f_joint_nested_review.py`
+is revised and lead-checked on branch `codex/joint-nested-full`, commits `b01613a` and `b313e3a`.
+It accepts `--selected-dir`, optional `--policy-results`, `--search-verification`,
+and a lead-written `--narrative` JSON of strings. Smoke inputs require an
+explicit `--fixture-label`. Six tests cover the collected smoke and deliberately
+invalid evidence, including the full writer's eleven dates and endpoint-only
+effect table. The test fixture is not a new economic solution. 193
+experimental and retained-benchmark fit/parameter cells were checked in the temporary rendered preview. The first
+four pages contain the readout and full tables; all seventeen standard graphs
+are retained on nine appendix pages. Two optional appendix pages contain
+the retained benchmark's full tables; its exact target/weight comparison is checked. See `morning_pdf_builder_verification.json`.
+The current delivered PDF is unchanged. A final report still requires the new
+selected result, economic interpretation, old-benchmark comparison, independent
+repetition/policy verification and fresh visual review of every delivered page.
+
+Snapshot `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f`
+has no wide contract or search job; the bounded corner canary below is running. It copies immutable e scientific
+source, excludes runtime caches and includes the revised local report builder.
+`support_repair_e/prepared_wide_source_manifest.json` pins 68 scientific/helper
+files, all independently verified on Torch. The LOCAL
+`support_repair_e/prepare_repaired_wide.py` is updated; its remote copy is stale.
+After the canary ends, synchronize it and `replay_assessment.json` to snapshot f.
+Run the helper only after the complete smoke and canary outcomes are inspected.
+It requires all four fresh histories and four two-date policy paths, validates
+the original receipts and all artifacts, and accepts only the specifically
+documented replay26 historical-support rejection after checking its exact error,
+controller classification, original plan/center, provenance, latest date and log
+hashes. It does not fabricate a completion receipt or relax a support check.
+It also requires exact supported-anchor fit, parameters, history and seventeen
+PNGs against snapshot c. Only then does it build the new wide32 contract and run
+the actual import preflight. It submits no job.
+
+The measured old two-history smoke peak was 18,018,352 KB. Retain the prepared
+32-worker/384GB single-node design; doubling workers at the same per-worker
+peak would exceed the 513,000 MB node size. The 640-case number is a ceiling,
+not a completion promise. Keep the original 13:35 UTC cutoff and 4.5-hour
+final reserve unless a new design is explicitly justified and recorded.
+
+
+**September 7, 04:08 UTC: repaired normalization has passed.** Replay17090361
+normalized the formerly failing case to completed fertility2.10000344 and passed
+every normalized-old consistency gate before entering the historical dates.
+Full completion is still pending. Smoke17090362 has reached2019 with unchanged
+anchor values; both jobs have fresh heartbeats. No broad search is running.
+
+Small-shock canary17091265 uses one CPU/32GB in the prepared f snapshot, with
+a60-minute process limit and65-minute Slurm limit. It replays original wide
+case2 (outer scale0.01,nesting0.02), unchanged center bytes and exact case loop.
+At up to160stationary/date solves and the prior observed solve timings, allow
+roughly40–60minutes; the60-minute cap is binding if normalization is difficult.
+It writes a per-minute heartbeat, complete checkpoint/tables/seventeengraphs on
+success, and a typed failure/provenance otherwise. The purpose is to measure
+memory/runtime and distinguish declared numerical rejection from an unexpected
+accounting defect before32-worker launch; it is not another search. Inspect the
+result before scaling and preserve any failure. Scripts are in support_repair_e.
+No model, target, weight, gate or search-domain change accompanies this canary.
+
+The PDF worker finished. Lead review added missing fail-closed source, receipt,
+probability, inherited-state, date and effect-row checks; the delegated initial
+claims alone were insufficient. Six tests and a15-page temporary preview pass;
+all193numeric table cells are present. The final morning document still awaits
+actual search results, full paths, economic assessment and final visual review.
+The source and tests are pushed through b313e3a; no new PDF has been delivered.

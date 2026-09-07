@@ -1,8 +1,49 @@
 # Calibration Status
 
-Updated: `2026-09-07` (zero-support repair verified locally; fresh complete smoke and failed-case replay running)
+Updated: `2026-09-07` (normalization repair verified; candidate support rejection diagnosed; complete smoke running)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7, 04:22 UTC: normalization repair succeeds; replay ends in a declared candidate rejection.**
+Replay `17090361` ended after 30m53s: old fertility normalized to 2.10000344,
+and every normalized-old identity check passed. The case completed 2007 and
+2011, then its 2015-origin historical first-birth branch lacked treated support.
+The unchanged controller already classifies the exact error as
+`undefined_first_birth_support`, rejecting the proposal without a fabricated
+loss. This is not a new code exception or a completed calibration. The active
+2019–2023 target was never reached; its support is not established by this run.
+No historical support requirement, target, weight or numerical gate is relaxed.
+The adjudication and original hashes are in `support_repair_e/replay_assessment.json`.
+
+Full smoke `17090362` has completed both full anchors and is running its two
+all-eleven-coordinate probes. All four two-date policy paths remain required.
+Small-shock canary `17091265` is running one original case (outer scale 0.01,
+nesting coefficient 0.02) in prepared snapshot `20260907f`; inspect its outcome,
+runtime and peak memory before scaling. The 68-file source manifest matches;
+no wide contract or search job exists yet. The LOCAL preparation helper now
+accepts only the documented replay rejection after checking original evidence.
+Its remote copy is stale: synchronize the local helper and replay assessment
+to snapshot f after the canary ends, then run the full smoke/import preflight.
+
+The PDF builder is complete and pushed through `b313e3a`; six focused tests,
+193 table cells and a 15-page preview have been checked. The delivered PDF
+remains the earlier discussion copy. Large calibration, final repetitions,
+full policy paths and a refreshed morning PDF remain pending. The hard cutoff
+is 13:35 UTC, with 4.5 hours reserved for final verification and policies.
+
+
+**September 7, 04:08 UTC update.** The failed-case replay17090361 now passes
+old-fertility normalization (2.10000344) and all stationary consistency gates;
+its full dated history remains running. Smoke17090362 has reached2019 with
+unchanged anchor values. Small-shock canary17091265 is separately checking
+original case2 (kappa0.01,lambda0.02) on1CPU32GB with a60-minute process cap.
+It runs in prepared snapshot20260907f, whose68scientific/helper hashes and
+bundle50b434... match locally; no wide contract or search is launched. Require
+complete smoke/replay evidence and inspect the canary before scaling. The
+prepared restart helper is indexed in the experiment output README. PDF worker
+finished; lead tightened its validation and verified6tests/193table cells/15-page
+layout including old-benchmark tables. Builder source b313e3a is pushed; final
+calibration, full policies and refreshed delivered PDF remain pending.
 
 **September 7, 03:40 UTC: zero-support diagnosis confirmed; repaired verification running.**
 Instrumentation-only job `17090114` completed and reproduced exactly zero

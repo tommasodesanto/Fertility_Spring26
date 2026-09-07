@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-09-07T03:39:09.485057+00:00",
+  "recorded_at": "2026-09-07T04:20:43.552396+00:00",
   "source_commit": "42e0b97",
   "scientific_bundle": "50b4342797eb271e71b15651c60f4e45c6c740eb6205dd609fcd32501c7428eb",
   "contract_sha256": "9f512dfcaf7dc85b359e0b65d4f8f1543221f4c59f88d82888b91a1ebf4d3e41",
@@ -7,17 +7,23 @@
   "jobs": {
     "failed_case_replay": {
       "id": 17090361,
-      "status": "RUNNING",
+      "status": "FAILED",
       "cpus": 1,
       "memory_gib": 24,
-      "limit_minutes": 65
+      "limit_minutes": 65,
+      "elapsed": "00:30:53",
+      "exit_code": "1:0",
+      "adjudication": "expected_controlled_history_support_rejection_after_repair",
+      "peak_rss_kib": 7661580
     },
     "full_smoke": {
       "id": 17090362,
       "status": "RUNNING",
       "cpus": 2,
       "memory_gib": 64,
-      "limit_minutes": 140
+      "limit_minutes": 140,
+      "completed_histories": 2,
+      "phase": "smoke_all_coordinate_probes"
     }
   },
   "full_search_submitted": false,
@@ -35,7 +41,23 @@
     "controller_tests": 11,
     "default_off_exact_arrays": 10,
     "full_history_policy_loop": "pending",
-    "failed_case_replay": "pending"
+    "failed_case_replay": "normalization repaired; original historical support gate rejects candidate at inferred2015origin; no valid loss"
   },
-  "absolute_finish_utc": "2026-09-07T13:35:00Z"
+  "absolute_finish_utc": "2026-09-07T13:35:00Z",
+  "pdf_builder_commit": "b313e3a",
+  "prepared_wide_snapshot": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f",
+  "prepared_wide_status": "all68scientific/helper hashes and bundle verified; no wide contract or search job",
+  "canary": {
+    "job_id": 17091265,
+    "snapshot": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907f",
+    "purpose": "One original small-shock case2: runtime/memory and controlled-rejection canary",
+    "cpus": 1,
+    "memory_gib": 32,
+    "slurm_limit_minutes": 65,
+    "process_cap_seconds": 3600,
+    "status": "RUNNING"
+  },
+  "normalization_repair_evidence": "Original case26 normalized to2.10000344, every normalized-old identity passed,2007/2011 complete,2015origin below treated-support threshold. Active2019\u20132023 target not reached.",
+  "replay_assessment": "replay_assessment.json",
+  "restart_helper_sync_required": "Local prepare_repaired_wide.py updated; remote f copy stale. Sync helper and assessment after canary ends, before preflight."
 }
