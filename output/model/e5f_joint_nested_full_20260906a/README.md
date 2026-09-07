@@ -1,8 +1,10 @@
 # Full simultaneous-choice experiment
 
-**September 7, 05:34 UTC: full verification passed; broad calibration submitted.**
-Torch job `17093420` is submitted on `cs` for 32 CPUs and 384GB, with a
-12-hour Slurm ceiling; the last queue check shows PENDING for resources.
+**September 7, 05:52 UTC: broad calibration running on all 32 workers.**
+Torch job `17093420` started at **05:36:38 UTC** on `cs749`, using 32 CPUs
+and 384GB with a 12-hour Slurm ceiling. At the latest check all 32 worker
+heartbeats are fresh, CPU use is high and peak memory is about 126GiB. The
+first batch is in old-fertility normalization; no new full history is complete.
 The frozen snapshot is
 `/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907g`.
 Contract SHA is `c5524a0fcf68e78e150da334a98d7b18143af2c9753fa37871a3ada379da36e6`.
