@@ -1,0 +1,546 @@
+{
+  "scope": "Nine independent household evaluations and stationary derivatives; no equilibrium path simulation.",
+  "original_anchor_primitives_match": true,
+  "primitive_name_mapping": {
+    "q": "q",
+    "beta": "beta",
+    "alpha": "alpha",
+    "omega": "omega",
+    "gamma": "gamma",
+    "chi": "chi",
+    "kap": "kappa",
+    "theta0": "theta",
+    "phi0": "phi",
+    "b": "b",
+    "y": "y",
+    "stock": "Hbar",
+    "tax": "tau",
+    "a": "rental_cap",
+    "nu": "nu",
+    "sigma": "sigma"
+  },
+  "maximum_policy_difference": 3.3306690738754696e-16,
+  "maximum_tenure_probability_difference": 1.1102230246251565e-16,
+  "household_cases": [
+    {
+      "case": 0,
+      "theta_decline": "0",
+      "credit_change": "0",
+      "price_population_corner": 0,
+      "original_checks": {
+        "maximum_original_budget_error": 4.440892098500626e-16,
+        "maximum_fertility_foc_error": 1.6653345369377348e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8085258974737983,
+          "retention": 0.5430688484100034,
+          "estate": 0.18306884841000315,
+          "owner_cap": 0.9999999999999998,
+          "owner_housing_wedge": 0.11475675675675656,
+          "renter_young_wedge": 3.366648648648649,
+          "renter_old_wedge": 0.7590810810810813,
+          "actual_old_renter_wedge": 0.7590810810810817
+        },
+        "original_optimizations": [
+          {
+            "date": 0,
+            "tenure": "owner",
+            "maximum_choice_error": 8.01249016024741e-07
+          },
+          {
+            "date": 0,
+            "tenure": "renter",
+            "maximum_choice_error": 2.5821227778166644e-07
+          }
+        ]
+      }
+    },
+    {
+      "case": 1,
+      "theta_decline": "0",
+      "credit_change": "0",
+      "price_population_corner": -1,
+      "original_checks": {
+        "maximum_original_budget_error": 5.065392549852277e-16,
+        "maximum_fertility_foc_error": 2.220446049250313e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8086511301579089,
+          "retention": 0.544110231146463,
+          "estate": 0.18400838042697076,
+          "owner_cap": 0.9994997498749372,
+          "owner_housing_wedge": 0.11534912236971884,
+          "renter_young_wedge": 3.3675887487326412,
+          "renter_old_wedge": 0.7583751411679766,
+          "actual_old_renter_wedge": 0.7600017055955187
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 2,
+      "theta_decline": "0",
+      "credit_change": "0",
+      "price_population_corner": 1,
+      "original_checks": {
+        "maximum_original_budget_error": 8.673617379884035e-16,
+        "maximum_fertility_foc_error": 6.661338147750939e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8084006647915895,
+          "retention": 0.5420262688645615,
+          "estate": 0.18212724982860867,
+          "owner_cap": 1.0004997501249373,
+          "owner_housing_wedge": 0.11416439599426176,
+          "renter_young_wedge": 3.3657085485960656,
+          "renter_old_wedge": 0.7597870209974454,
+          "actual_old_renter_wedge": 0.7581604565666448
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 3,
+      "theta_decline": "0",
+      "credit_change": "1/20000",
+      "price_population_corner": -1,
+      "original_checks": {
+        "maximum_original_budget_error": 5.065392549852277e-16,
+        "maximum_fertility_foc_error": 2.220446049250313e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8086511301579089,
+          "retention": 0.5444013456423134,
+          "estate": 0.18399187943051537,
+          "owner_cap": 0.9992495622655035,
+          "owner_housing_wedge": 0.11510225566325838,
+          "renter_young_wedge": 3.3675887487326412,
+          "renter_old_wedge": 0.7583751411679766,
+          "actual_old_renter_wedge": 0.7600017055955187
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 4,
+      "theta_decline": "0",
+      "credit_change": "1/20000",
+      "price_population_corner": 1,
+      "original_checks": {
+        "maximum_original_budget_error": 1.0894063429134349e-15,
+        "maximum_fertility_foc_error": 6.661338147750939e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8084006647915895,
+          "retention": 0.5423173154862126,
+          "estate": 0.18211088368966666,
+          "owner_cap": 1.0002498125780819,
+          "owner_housing_wedge": 0.11391727145235575,
+          "renter_young_wedge": 3.3657085485960656,
+          "renter_old_wedge": 0.7597870209974454,
+          "actual_old_renter_wedge": 0.7581604565666448
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 5,
+      "theta_decline": "1/20000",
+      "credit_change": "0",
+      "price_population_corner": -1,
+      "original_checks": {
+        "maximum_original_budget_error": 2.220446049250313e-16,
+        "maximum_fertility_foc_error": 0.0,
+        "minimum_branch_margins": {
+          "saving": 0.8086521062008333,
+          "retention": 0.5441071985979119,
+          "estate": 0.18400960309688952,
+          "owner_cap": 0.9994997498749372,
+          "owner_housing_wedge": 0.11531529305484645,
+          "renter_young_wedge": 3.3673372911453905,
+          "renter_old_wedge": 0.7583768143844188,
+          "actual_old_renter_wedge": 0.7600017055955187
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 6,
+      "theta_decline": "1/20000",
+      "credit_change": "0",
+      "price_population_corner": 1,
+      "original_checks": {
+        "maximum_original_budget_error": 4.440892098500626e-16,
+        "maximum_fertility_foc_error": 1.1102230246251565e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8084016408363979,
+          "retention": 0.5420232304763095,
+          "estate": 0.1821284594565203,
+          "owner_cap": 1.0004997501249373,
+          "owner_housing_wedge": 0.11413054358259211,
+          "renter_young_wedge": 3.365457114657312,
+          "renter_old_wedge": 0.7597886942171174,
+          "actual_old_renter_wedge": 0.7581604565666448
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 7,
+      "theta_decline": "1/20000",
+      "credit_change": "1/20000",
+      "price_population_corner": -1,
+      "original_checks": {
+        "maximum_original_budget_error": 2.8449465006019636e-16,
+        "maximum_fertility_foc_error": 1.6653345369377348e-16,
+        "minimum_branch_margins": {
+          "saving": 0.8086521062008333,
+          "retention": 0.5443983123793861,
+          "estate": 0.18399310238845795,
+          "owner_cap": 0.9992495622655035,
+          "owner_housing_wedge": 0.1150684430929183,
+          "renter_young_wedge": 3.3673372911453905,
+          "renter_old_wedge": 0.7583768143844188,
+          "actual_old_renter_wedge": 0.7600017055955187
+        },
+        "original_optimizations": []
+      }
+    },
+    {
+      "case": 8,
+      "theta_decline": "1/20000",
+      "credit_change": "1/20000",
+      "price_population_corner": 1,
+      "original_checks": {
+        "maximum_original_budget_error": 1.0894063429134349e-15,
+        "maximum_fertility_foc_error": 0.0,
+        "minimum_branch_margins": {
+          "saving": 0.8084016408363979,
+          "retention": 0.5423142763821394,
+          "estate": 0.18211209360255748,
+          "owner_cap": 1.0002498125780819,
+          "owner_housing_wedge": 0.11388343580282467,
+          "renter_young_wedge": 3.365457114657312,
+          "renter_old_wedge": 0.7597886942171174,
+          "actual_old_renter_wedge": 0.7581604565666448
+        },
+        "original_optimizations": [
+          {
+            "date": 8,
+            "tenure": "owner",
+            "maximum_choice_error": 8.046481078105572e-07
+          },
+          {
+            "date": 8,
+            "tenure": "renter",
+            "maximum_choice_error": 2.7352631581933906e-07
+          }
+        ]
+      }
+    }
+  ],
+  "stationary_original_jacobian": [
+    [
+      -0.7845635752420409,
+      0.9983037480275085,
+      0.04004555957480178,
+      2.223675990382968
+    ],
+    [
+      0.6371723798794867,
+      0.0023713141799030263,
+      -1.9829302924651466,
+      -2.7564234724496437
+    ]
+  ],
+  "maximum_stationary_derivative_difference": 1.7763568394002505e-15,
+  "stationary_response_rows": [
+    "price",
+    "young_cohort"
+  ],
+  "stationary_response_columns": [
+    "theta",
+    "phi"
+  ],
+  "stationary_response": [
+    [
+      3.1031513911654085,
+      4.321674396045535
+    ],
+    [
+      2.3986426927941986,
+      1.168935133336141
+    ]
+  ],
+  "stationary_total_population_response": [
+    4.797285385588397,
+    2.337870266672282
+  ],
+  "exact_summed_tail_A": [
+    [
+      "-261565807425/70368744177664",
+      "13764628571401/8796093022208"
+    ],
+    [
+      "70282746471833/70368744177664",
+      "21635151094413/17592186044416"
+    ]
+  ],
+  "exact_summed_tail_L": [
+    [
+      "-1018983212588794836599/1298789855588739326400",
+      "6482933903671724119/6493949277943696632"
+    ],
+    [
+      "3378758142378269308219/5302737923161892976000",
+      "1571807203688185693/662842240395236622000"
+    ]
+  ],
+  "summed_tail_inverse_defect": "535560871507089781596181/560280793327592414060325371904000",
+  "source_sha256": "eeba2e9a2a67312996bc32c3523861530caecd49f5bf49bd10c7fa82830a38a0",
+  "pro_verifier_sha256": "bf24eea75126ec81502aa0fe578ae5e87bf016d08ada41f2778c2ea657b9962f",
+  "original_helper_sha256": "d36f98a38d4f7f39b872830449fffb9aad880f7379bace2ba12265dfbca1c65d",
+  "original_anchor_helper_sha256": "f22bdc662ca470b763805abe0adec28cb1548c0b921260e57636bd84be08daa4",
+  "exact_certificate": {
+    "result": "all exact rational checks passed",
+    "scope": "infinite half-line equilibrium operator; not a finite-horizon simulation",
+    "primitives": {
+      "q": "1/2",
+      "beta": "2/5",
+      "alpha": "2/5",
+      "omega": "2/5",
+      "gamma": "3/10",
+      "chi": "3/20",
+      "kap": "1/2",
+      "theta0": "141/400",
+      "phi0": "4/5",
+      "b": "1/5",
+      "y": "3521349281/1677802000",
+      "stock": "68104/68019",
+      "tax": "467/9250",
+      "a": "1/4",
+      "nu": "2",
+      "sigma": "4"
+    },
+    "taste": "location = 4 log(11/10) - W_O(reference) + W_R(reference); fixed across shocks",
+    "maximum_each_shock": "1/20000",
+    "sequence_radii": {
+      "common": "1/2000",
+      "baseline": "1/5000",
+      "policy_about_baseline_tail": "1/4000"
+    },
+    "inherited_order": [
+      "Y0",
+      "O0",
+      "old_owner_share",
+      "old_owner_net_assets",
+      "old_owner_purchased_title",
+      "old_renter_assets"
+    ],
+    "inherited_box": [
+      {
+        "lower": "4999/5000",
+        "upper": "5001/5000"
+      },
+      {
+        "lower": "4999/5000",
+        "upper": "5001/5000"
+      },
+      {
+        "lower": "52349/100000",
+        "upper": "52413/100000"
+      },
+      {
+        "lower": "34569/100000",
+        "upper": "4363/12500"
+      },
+      {
+        "lower": "4999/5000",
+        "upper": "100021/100000"
+      },
+      {
+        "lower": "16167/10000",
+        "upper": "8087/5000"
+      }
+    ],
+    "generated_baseline_inherited_enclosure": [
+      {
+        "lower": "4999/5000",
+        "upper": "5001/5000"
+      },
+      {
+        "lower": "4999/5000",
+        "upper": "5001/5000"
+      },
+      {
+        "lower": "324027727111052810967111995/618970019642690137449562112",
+        "upper": "324414802832654247222498739/618970019642690137449562112"
+      },
+      {
+        "lower": "13373565106764407410310505/38685626227668133590597632",
+        "upper": "216042477355431160967832575/618970019642690137449562112"
+      },
+      {
+        "lower": "154711562598152903781634201/154742504910672534362390528",
+        "upper": "1238187676820744423783881007/1237940039285380274899124224"
+      },
+      {
+        "lower": "500347048426771735268490831/309485009821345068724781056",
+        "upper": "250280068315781221136732285/154742504910672534362390528"
+      }
+    ],
+    "exact_operator_bounds": {
+      "I_minus_A_L": "22006701862773649842563313192247/12690543180689386301185767400022212608000",
+      "I_minus_L_A": "126953145164640764512732759/45697105544234583922745912642764800",
+      "A_norm": "282155040261593/70368744177664",
+      "nonlinear_contraction": "11940383797333587939477873257856483517390510149441765094203574927/245470805057116150407817468787945367897223464774168188842672128000",
+      "first_population_row": "66452650170314229870737835267263498027789291492550788942404025053/4173003685970974556932896969395071254252798901160859210325426176000"
+    },
+    "advertised_operator_bounds": {
+      "I_minus_A_L": "2/1000000000",
+      "I_minus_L_A": "3/1000000000",
+      "A_norm": "401/100",
+      "nonlinear_contraction": "1/20",
+      "first_population_row": "2/125"
+    },
+    "preconditioned_parameter_forcing_bounds": {
+      "theta": "10/3",
+      "phi": "451/100"
+    },
+    "first_population_forcing_intervals": {
+      "theta": {
+        "lower": "2078112704644947734020859127/1237940039285380274899124224",
+        "upper": "529353334591677812902989101/309485009821345068724781056"
+      },
+      "phi": {
+        "lower": "35905038558855117566744441/309485009821345068724781056",
+        "upper": "250311475454185061627553019/1237940039285380274899124224"
+      }
+    },
+    "tail_population_forcing_intervals": {
+      "theta": {
+        "lower": "1468450672905958960614643001/618970019642690137449562112",
+        "upper": "3002913746088552739185842313/1237940039285380274899124224"
+      },
+      "phi": {
+        "lower": "339279181938822421022752621/309485009821345068724781056",
+        "upper": "768433826789463206340641129/618970019642690137449562112"
+      }
+    },
+    "certified_first_population_derivative_lower": {
+      "theta": "46223/28500",
+      "phi": "951/23750"
+    },
+    "certified_stationary_young_population_derivative_lower": {
+      "theta": "12509/5700",
+      "phi": "81/95"
+    },
+    "ownership_probability": {
+      "lower": "647463221047343501853037915/1237940039285380274899124224",
+      "upper": "81178094058244504227414317/154742504910672534362390528"
+    },
+    "household_margins": {
+      "price": {
+        "lower": "1999/2000",
+        "upper": "2001/2000"
+      },
+      "user_cost": {
+        "lower": "649275561334690937491155447/1237940039285380274899124224",
+        "upper": "651163721015151238854227265/1237940039285380274899124224"
+      },
+      "adult_goods_owner": {
+        "lower": "1236864988338458256851319927/1237940039285380274899124224",
+        "upper": "619455286812067990835818287/618970019642690137449562112"
+      },
+      "adult_goods_renter": {
+        "lower": "1655911266402664513128354083/1237940039285380274899124224",
+        "upper": "207052119074932419812581749/154742504910672534362390528"
+      },
+      "fertility_owner": {
+        "lower": "926198602381529329473412031/1237940039285380274899124224",
+        "upper": "930787650436814125103944685/1237940039285380274899124224"
+      },
+      "fertility_renter": {
+        "lower": "139206194273023959267758643/618970019642690137449562112",
+        "upper": "139319119493431902296915981/618970019642690137449562112"
+      },
+      "adult_space_owner": {
+        "lower": "771927553377675171230260763/1237940039285380274899124224",
+        "upper": "775769735013139012432335349/1237940039285380274899124224"
+      },
+      "adult_space_renter": {
+        "lower": "170165890327913166427865075/1237940039285380274899124224",
+        "upper": "170278815548321109457022413/1237940039285380274899124224"
+      },
+      "saving_owner": {
+        "lower": "300918558154064671167007589/309485009821345068724781056",
+        "upper": "1207128770925568914917655189/1237940039285380274899124224"
+      },
+      "saving_renter": {
+        "lower": "1000385738212672341124933953/1237940039285380274899124224",
+        "upper": "1001428630576174619987341497/1237940039285380274899124224"
+      },
+      "owner_cap": {
+        "lower": "309252760591714218157301771/309485009821345068724781056",
+        "upper": "619279349987339158008007671/618970019642690137449562112"
+      },
+      "owner_purchase_gap": {
+        "lower": "138330698861122736993253781/1237940039285380274899124224",
+        "upper": "145460679118151426242102485/1237940039285380274899124224"
+      },
+      "young_renter_cap_gap": {
+        "lower": "2082138502806673196700611953/618970019642690137449562112",
+        "upper": "130338509604369325459152671/38685626227668133590597632"
+      },
+      "generated_old_retention": {
+        "lower": "670401409750592849651526665/1237940039285380274899124224",
+        "upper": "674526284479086852814461365/1237940039285380274899124224"
+      },
+      "generated_old_estate_gap": {
+        "lower": "224390163706701155562072957/1237940039285380274899124224",
+        "upper": "228842186770492612327444699/1237940039285380274899124224"
+      },
+      "generated_old_renter_cap_gap": {
+        "lower": "938511094731406693748992651/1237940039285380274899124224",
+        "upper": "940884713160790046669472389/1237940039285380274899124224"
+      },
+      "old_goods_owner": {
+        "lower": "247372997667691651370263985/309485009821345068724781056",
+        "upper": "247782114724827196334327315/309485009821345068724781056"
+      },
+      "old_goods_renter": {
+        "lower": "662364506561065805251341633/618970019642690137449562112",
+        "upper": "662566781039783743400261597/618970019642690137449562112"
+      },
+      "estate_owner": {
+        "lower": "49474599533538330274052797/77371252455336267181195264",
+        "upper": "49556422944965439266865463/77371252455336267181195264"
+      },
+      "estate_renter": {
+        "lower": "264945802624426322100536653/309485009821345068724781056",
+        "upper": "265026712415913497360104639/309485009821345068724781056"
+      },
+      "initial_owner_resources": {
+        "lower": "420162621177673126437725603/309485009821345068724781056",
+        "upper": "1686564987559120658741674545/1237940039285380274899124224"
+      },
+      "initial_owner_retention": {
+        "lower": "20944326651429330753082663/38685626227668133590597632",
+        "upper": "674355761856125859683735617/1237940039285380274899124224"
+      },
+      "initial_owner_estate_gap": {
+        "lower": "223136610315207730947552731/1237940039285380274899124224",
+        "upper": "230115318489206481801383629/1237940039285380274899124224"
+      },
+      "initial_renter_goods": {
+        "lower": "1324442941955093887137256533/1237940039285380274899124224",
+        "upper": "1325414727683197021414791013/1237940039285380274899124224"
+      },
+      "initial_renter_cap_gap": {
+        "lower": "938167809330961425710480571/1237940039285380274899124224",
+        "upper": "941222111885145488206593769/1237940039285380274899124224"
+      }
+    },
+    "tail_bound": "sup_{s>=t} ||X_s-X_star||_infty <= (1/1000)*(1/20)**floor(t/27)",
+    "arithmetic": "rational endpoints; outward dyadic rounding at 90 bits; rational Taylor remainders for log/exp; integer square-root bounds",
+    "operator_representation": "24 exceptional initial block rows; thereafter a fixed +/-24 block stencil; both inverse defects verified exactly through 56 block rows, after which rows are translations",
+    "preconditioner_sha256": "72a8240a6adb195f61214a3eb85074fb84817b487e10b4719c405e83b103ff3b",
+    "verifier_sha256": "bf24eea75126ec81502aa0fe578ae5e87bf016d08ada41f2778c2ea657b9962f"
+  },
+  "matches_original_certificate_except_packaged_source_hash": true
+}

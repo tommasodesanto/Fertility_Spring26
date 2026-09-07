@@ -9,18 +9,61 @@ renting and positive child goods costs. The
 and five named mathematical sources. No quantitative data or session history
 is included. Source hashes and the delivery state are recorded in
 [oracle_transition_math_status.json](oracle_transition_math_status.json).
-The packet is prepared and copied to the clipboard, but has not been submitted:
-Chrome control is unavailable and the in-app browser requires user sign-in.
-No Pro response has been received or verified.
+After the user signed in, the packet was submitted in the in-app browser
+with the visible model set to 6 Pro. Its
+[completed answer](oracle_transition_math_response.md) proposes a finite
+mixed-tenure certificate using an infinite boundary-value operator.
+The retrieved exact verifier passes locally, with output identical to its
+archived certificate. The proof, code and original household problems are
+checked separately. Read the
+[short assessment](oracle_transition_math_assessment.md) first.
+
+The result covers every preference decline and later credit rise up to
+\(1/20000\), at any actual baseline intervention date. It retains positive
+child goods costs, the rebated property tax and more than 47.5% renting.
+Both infinite paths converge; initial fertility and terminal population
+have the stated signs. This remains a small reform: at most 80% to 80.005%
+financing. It does not imply a welfare gain or higher fertility at every date.
+
+One command replays the exact bounds and checks the original household
+problems and stationary derivatives:
+
+~~~sh
+PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/verify_simplified_olg_pro_transition.py
+~~~
+
+The [receipt](oracle_transition_math_checks.json) matches Pro's
+[archived certificate](oracle_transition_math_expected.json), apart from the
+source hash changed by packaging. The
+[original source](oracle_transition_math_source.md),
+[fixed coefficients](oracle_transition_math_coefficients.json),
+[reviews](oracle_transition_math_reviews.json), and
+[delivery and verification record](oracle_transition_math_status.json)
+are preserved. The reviews explain the boundary rows and the summed tail
+matrix used for stationary derivatives. The original source also replayed
+under Python 3.11.9; the packaged driver passed under Python 3.9.6.
 
 ## September 6–7: supporting extensions
 
 [Housing allocation and demographic adjustment](transition_extensions.md)
 contains a wider mixed-tenure stationary theorem, a simple primitive
-sufficient condition for local convergence, and an explicit finite
-preference-decline/later-credit comparison in the all-owner limit. It also
-states why the dated housing-misallocation comparison applies along the
-paths. The main note, both figures and earlier proof files are unchanged.
+sufficient condition for local convergence, an explicit finite comparison
+in the all-owner limit, and an exact finite household fertility condition.
+It also states why the dated housing-misallocation comparison applies along
+the paths. Two new supporting proofs extend the positive-cost and finite
+mixed-tenure results:
+
+- [Positive child goods costs](positive_child_costs.md) gives explicit
+  stationary sufficient conditions and a feasible counterexample in which
+  more credit lowers terminal population. The conditions use household
+  ratios, with no borrowing multiplier; they are not purely primitive.
+- [Finite mixed-tenure transition](mixed_finite_transition_proof.md) proves
+  a preference decline and a credit reform at any later baseline date with
+  positive costs, tax and about 47.6% renting. Its certified shock bounds,
+  \(10^{-11}\) and \(10^{-8}\), are very small. This is an explicit existence
+  result, not an economically large reform.
+
+The main note, both figures and earlier proof files are unchanged.
 These results do not select a planner institution or a paper specification.
 
 One command checks the new results without an equilibrium simulation:
@@ -31,11 +74,13 @@ PYTHONDONTWRITEBYTECODE=1 python3 code/model/tools/verify_simplified_olg_transit
 
 The receipt is [transition_extension_checks.json](transition_extension_checks.json).
 It includes symbolic original-equation checks, exact finite interval bounds,
-original household checks and source hashes. Three research reports and the
-independent financial/interval review are preserved in
+original household checks and source hashes. The consolidated driver also
+runs [the positive-cost checks](../../../code/model/tools/verify_simplified_olg_positive_costs.py)
+and [the finite mixed-tenure certificate](../../../code/model/tools/verify_simplified_olg_mixed_finite.py).
+The research reports, independent reviews and lead checks are preserved in
 [transition_extension_reviews.json](transition_extension_reviews.json).
-The finite proof still concerns homogeneous all-owner demands with zero
-child goods costs and tax; the broad finite mixed-model case remains open.
+Broad conditions and economically large mixed-model reforms remain open.
+The stronger Pro bounds above have their own verification receipt.
 
 ## September 6: integrated note and two-stage illustration
 

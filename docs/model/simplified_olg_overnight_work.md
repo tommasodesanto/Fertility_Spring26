@@ -1,5 +1,66 @@
 # Simplified OLG: development plan and overnight record
 
+## September 6–7: positive costs, finite comparisons and Pro review
+
+The additional local checks pass. The main reading note, figures, author
+notation and planner decisions are unchanged. New work stays in the supporting
+[transition extensions](../../output/model/simplified_olg_amendments/transition_extensions.md).
+
+The household fertility comparison now has an exact finite form. It compares
+the extra payment for a larger home, net of changed resources, with the space
+benefit at the old fertility choice. It has no borrowing multiplier. A fully
+feasible fixed-price example shows why the condition is needed: relaxing the
+down payment raises housing and welfare but lowers chosen fertility.
+
+The stationary analysis now treats positive child goods costs directly.
+With zero tax and the stated strict branches, household ratios give
+sufficient conditions for credit to raise population and a preference decline
+to lower it. These conditions are explicit but are not purely primitive.
+The positive example allows every positive taste scale, with tastes fixed
+within each comparison. A separate exact admissible economy has
+\(N_\phi<0\), ruling out an unconditional positive-cost credit result.
+The full proof is
+[positive_child_costs.md](../../output/model/simplified_olg_amendments/positive_child_costs.md).
+
+The finite mixed-tenure proof keeps the original positive costs, rebated tax,
+and roughly 47.6% renting. It covers a preference decline up to \(10^{-11}\)
+and a credit change up to \(10^{-8}\) at any later baseline date. Both infinite
+paths converge; the initial fertility and terminal population comparisons
+have the intended signs. The proof verifies all original private constraints
+and the actual inherited mortgages and saving. These radii are explicit but
+very small. It is supporting existence material, not evidence for large
+reforms. See
+[mixed_finite_transition_proof.md](../../output/model/simplified_olg_amendments/mixed_finite_transition_proof.md).
+
+The lead independently derived the finite fertility threshold and stationary
+formulas, checked original budgets, and replayed both packaged verification
+modules. A separate reviewer checked the finite household example and the
+entire mixed certificate, including the unrestricted infinite derivative tail.
+Exact rational anchor identities supplement interval containment. The full
+consolidated command passed; its receipt and the complete reviews are saved
+in the existing amendments folder. Two attempted wider all-owner boxes failed
+their bounds and were not accepted.
+
+After Tommaso signed in, the prepared five-source packet was submitted to
+6 Pro. Its completed answer reports no substantive error in the original
+reduction or inherited-state boundary. It proposes a different infinite
+boundary-value proof with both shock bounds \(1/20000\). The exact verifier
+and fixed coefficients were retrieved, and the local run reproduced its
+archived certificate byte for byte. The proof's logic, interval arithmetic,
+whole infinite operator and original household equations were checked
+separately. These wider finite bounds are accepted for the stated example;
+the largest credit change is still only 80% to 80.005% financing.
+The original response is preserved in
+[oracle_transition_math_response.md](../../output/model/simplified_olg_amendments/oracle_transition_math_response.md);
+its browser copy and local text have matching length and content fingerprint.
+The review spells out the initial 27 dates and the summed tail matrix used
+for stationary derivatives. The packaged command
+`python3 code/model/tools/verify_simplified_olg_pro_transition.py` reproduces
+all exact bounds and adds original-household and stationary checks.
+Its separate receipt, full reviews and source hashes are in the same folder.
+Start with the
+[short assessment](../../output/model/simplified_olg_amendments/oracle_transition_math_assessment.md).
+
 ## September 6–7: broader conditions and a finite transition
 
 Tommaso deferred workflow reorganization and invited further theory work.
