@@ -610,6 +610,16 @@ def normalize_distribution_mass_roundoff(
     }
 
 
+def stationary_measurement_nesting_gaps(transition_moments, stationary_moments, names):
+    """Require all normalized-old target rows to be defined before comparing."""
+    undefined = [name for name in names if not np.isfinite(
+        [float(transition_moments[name]), float(stationary_moments[name])]).all()]
+    if undefined:
+        raise RuntimeError(f"Nonfinite normalized-old target moments: {undefined}")
+    return {name: float(transition_moments[name]) - float(stationary_moments[name])
+            for name in names}
+
+
 def solve_old_steady_state(
     chain: Any,
     base_overrides: dict[str, Any],
@@ -1952,10 +1962,9 @@ def main() -> None:
         target_system.moment_names,
     )
     old_stationary_moments = chain.extract_moments(old_solution, old_parameters)
-    stationary_measurement_gaps = {
-        name: float(old_transition_moments[name]) - float(old_stationary_moments[name])
-        for name in target_system.moment_names
-    }
+    stationary_measurement_gaps = stationary_measurement_nesting_gaps(
+        old_transition_moments, old_stationary_moments, target_system.moment_names
+    )
     max_stationary_measurement_gap = max(
         abs(value) for value in stationary_measurement_gaps.values()
     )

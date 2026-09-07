@@ -9,6 +9,13 @@ from types import SimpleNamespace
 import numpy as np
 
 
+class UndefinedStationaryFirstBirthSupport(RuntimeError):
+    """A conditional auxiliary moment has no selected first-birth population."""
+    def __init__(self, masses):
+        self.masses = tuple(float(mass) for mass in masses)
+        super().__init__(f"Undefined stationary first-birth support: {self.masses}")
+
+
 def owner_consumption_from_solution(resources, owner_cost, saving, subsistence, value, reported):
     """Report the consumption used by the existing owner objective.
 
@@ -188,8 +195,11 @@ def stationary_first_birth_response(g_pre, joint, P, bg, SD, lp, tc, bp, hr, map
         for ten in range(1, 1 + P.n_house):
             housing += float(current[:, ten].sum()) * float(P.H_own[ten - 1])
         means.append(housing / max(mass, 1e-300))
-    if abs(masses[0] - masses[1]) > 2e-10 or min(masses) <= 1e-14:
+    if (not np.isfinite(masses).all() or min(masses) < 0
+            or abs(masses[0] - masses[1]) > 2e-10):
         raise RuntimeError('Invalid stationary matched joint branch mass')
+    if min(masses) <= 1e-14:
+        raise UndefinedStationaryFirstBirthSupport(masses)
     return means[0] - means[1]
 
 

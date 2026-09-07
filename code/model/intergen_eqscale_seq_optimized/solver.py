@@ -5168,10 +5168,18 @@ def forward_distribution_markov_income(
             setattr(stats, name, float("nan"))
         stats.stationary_eventstudy_status = "not_measured_fast_statistics"
         if not fast_stats:
-            stats.housing_increment_0to1_eventstudy_t3 = joint_nested.stationary_first_birth_response(
-                joint_pre, P._joint_choice, P, b_grid, SD, loc_probs, tenure_choice,
-                bp_pol, hR_pol, (lmm_idx, lmm_wt, tmx_idx, tmx_wt))
-            stats.stationary_eventstudy_status = "joint_matched_one_period_branch"
+            try:
+                stats.housing_increment_0to1_eventstudy_t3 = joint_nested.stationary_first_birth_response(
+                    joint_pre, P._joint_choice, P, b_grid, SD, loc_probs, tenure_choice,
+                    bp_pol, hR_pol, (lmm_idx, lmm_wt, tmx_idx, tmx_wt))
+            except joint_nested.UndefinedStationaryFirstBirthSupport as error:
+                # Intermediate fertility-normalization trials may have no births.
+                # Keep this conditional moment unavailable; final target and
+                # stationary-nesting validation still require every row finite.
+                stats.stationary_eventstudy_status = "undefined_first_birth_support"
+                stats.stationary_eventstudy_branch_masses = error.masses
+            else:
+                stats.stationary_eventstudy_status = "joint_matched_one_period_branch"
     return g_current, stats
 
 

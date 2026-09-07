@@ -871,7 +871,42 @@ def test_calendar_mass_normalization_is_default_off_and_fail_closed() -> None:
         raise AssertionError("calendar normalization accepted a material mass error")
 
 
+def test_normalization_can_advance_past_unavailable_auxiliary_trial() -> None:
+    from unittest.mock import patch
+    evaluated = []
+    def solve(chain, overrides):
+        psi = overrides['psi_child']
+        evaluated.append(psi)
+        return {'tfr': psi, 'housing_increment_0to1': float('nan') if psi == 0 else .7}, SimpleNamespace(psi_child=psi), np.ones(1), 0.
+    chain = SimpleNamespace(extract_moments=lambda solution, parameters: solution)
+    with patch.object(calibration.closure, 'solve_ge', side_effect=solve):
+        solution, parameters, price, seconds, status = calibration.solve_old_steady_state(
+            chain, {}, initial_psi=0., completed_fertility_target=2.1,
+            completed_fertility_tolerance=1e-8, normalize=True)
+    assert evaluated[0] == 0. and len(evaluated) > 1
+    assert abs(solution['tfr'] - 2.1) < 1e-8
+    assert np.isfinite(solution['housing_increment_0to1'])
+
+
+def test_normalized_stationary_identity_requires_every_finite_row() -> None:
+    names = ['tfr', 'housing_increment_0to1']
+    valid = dict(tfr=2.1, housing_increment_0to1=.7)
+    assert calibration.stationary_measurement_nesting_gaps(valid, valid, names) == dict.fromkeys(names, 0.)
+    for side in range(2):
+        for bad in (float('nan'), float('inf'), -float('inf')):
+            objects = [valid.copy(), valid.copy()]
+            objects[side]['housing_increment_0to1'] = bad
+            try:
+                calibration.stationary_measurement_nesting_gaps(*objects, names)
+            except RuntimeError as error:
+                assert 'Nonfinite normalized-old target moments' in str(error)
+            else:
+                raise AssertionError('An undefined target escaped the stationary identity gate')
+
+
 if __name__ == "__main__":
+    test_normalization_can_advance_past_unavailable_auxiliary_trial()
+    test_normalized_stationary_identity_requires_every_finite_row()
     test_replacement_conversion_and_old_stationary_identity()
     test_historical_bridge_is_invariant_to_open_share()
     test_collector_rejects_wrong_replacement_contract()
@@ -890,4 +925,4 @@ if __name__ == "__main__":
     test_structural_age_recursion_removes_only_solver_roundoff()
     test_branch_mass_normalization_is_strict_and_mass_preserving()
     test_calendar_mass_normalization_is_default_off_and_fail_closed()
-    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=18")
+    print("E5F_TRANSITION_ACCOUNTING_TESTS_PASS tests=20")

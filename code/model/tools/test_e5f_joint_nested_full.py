@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 import numpy as np
 ROOT=Path(__file__).resolve().parents[3]
 sys.path[:0]=[str(ROOT/'code/model'),str(ROOT/'code/model/tools')]
@@ -82,6 +83,27 @@ class JointFullTests(unittest.TestCase):
         np.testing.assert_array_equal(marginal.sum(axis=-1),[1.])
         self.assertEqual(marginal[0,1],.1)
         with self.assertRaises(RuntimeError):joint.action_marginals(probability*4)
+
+    def test_stationary_support_is_distinct_from_accounting_failure(self):
+        from intergen_eqscale_seq_optimized import solver
+        g = np.ones((1, 1, 1, 1, 1, 1, 1))
+        P = SimpleNamespace(J=1, use_stochastic_aging=False, n_house=0)
+        def evaluate(masses):
+            with patch.object(solver, 'income_transition_values', return_value=(None,None,None)), \
+                 patch.object(joint, 'factor_distribution', return_value=(g,None)), \
+                 patch.object(solver, 'realize_current_cross_section',
+                              side_effect=[g*m for m in masses]):
+                return joint.stationary_first_birth_response(
+                    g, None, P, None, None, None, None, None, g,
+                    (None,None,None,None))
+        self.assertEqual(evaluate([1.,1.]), 0.)
+        for masses in ([0.,0.], [1e-15,1e-15]):
+            with self.assertRaises(joint.UndefinedStationaryFirstBirthSupport) as error:
+                evaluate(masses)
+            self.assertEqual(error.exception.masses, tuple(masses))
+        for masses in ([0.,1e-4], [-1.,-1.], [np.nan,np.nan]):
+            with self.assertRaisesRegex(RuntimeError, 'Invalid stationary matched'):
+                evaluate(masses)
 
     def test_wait_has_no_births(self):
         g,obj=self.fixture();post,k,b,a,r=joint.factor_distribution(g,obj,self.P,'wait')
