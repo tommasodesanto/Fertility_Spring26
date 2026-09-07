@@ -1,5 +1,18 @@
 # Simplified OLG amendment checks
 
+## ChatGPT Pro mathematical review
+
+The [review prompt](../../../docs/prompts/oracle_simplified_olg_transition_math.md)
+asks whether the finite two-stage transition can be proved with substantial
+renting and positive child goods costs. The
+[complete Oracle bundle](oracle_transition_math_bundle.md) contains that prompt
+and five named mathematical sources. No quantitative data or session history
+is included. Source hashes and the delivery state are recorded in
+[oracle_transition_math_status.json](oracle_transition_math_status.json).
+The packet is prepared and copied to the clipboard, but has not been submitted:
+Chrome control is unavailable and the in-app browser requires user sign-in.
+No Pro response has been received or verified.
+
 ## September 6–7: supporting extensions
 
 [Housing allocation and demographic adjustment](transition_extensions.md)

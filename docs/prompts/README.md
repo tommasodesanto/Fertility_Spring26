@@ -4,6 +4,10 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `oracle_simplified_olg_transition_math.md`: focused ChatGPT Pro question
+  about a finite demographic transition with substantial renting and positive
+  child goods costs; preserves the original household problem and inherited
+  claims, and distinguishes existing local proofs from the remaining gap.
 - `HANDOFF_simplified_olg_planner_discussion.md`: filesystem-only handoff for
   an independent conversation about the simplified housing/fertility theory,
   the literature-based planner benchmark, and the conditional constrained-

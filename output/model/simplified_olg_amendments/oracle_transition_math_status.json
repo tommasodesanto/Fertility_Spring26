@@ -1,0 +1,45 @@
+{
+  "prepared_at_utc": "2026-09-07T03:12:02.864339+00:00",
+  "status": "prepared_not_submitted",
+  "destination_requested": "A new chat in the user's ChatGPT Pro account",
+  "browser_status": "Chrome control unavailable; in-app ChatGPT is logged out; user sign-in requested.",
+  "oracle_cli_version": "0.13.0",
+  "oracle_operations": [
+    "dry-run summary with exact file list",
+    "render and copy; no API or native browser run"
+  ],
+  "prompt_path": "docs/prompts/oracle_simplified_olg_transition_math.md",
+  "prompt_sha256": "110c62dd990d08d89a859826e8f98c50a7dc6dcd4aa2fba7f2f578e4c4506c45",
+  "bundle_path": "output/model/simplified_olg_amendments/oracle_transition_math_bundle.md",
+  "bundle_sha256": "f2b8902551be4ef5c52cce5c781d57cd7e45a38800a3bf4449ba4ad68cb78c51",
+  "bundle_bytes": 148289,
+  "verification": "Prompt preserved verbatim; exactly five named files; every nonblank source line preserved. Oracle condensed consecutive blank lines. CLI banner and copy-status line excluded from saved bundle.",
+  "sources": [
+    {
+      "path": "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
+      "sha256": "62432cae649237379f3b32726995d70cba1c7d1f4a75b69863f76a72fdf5398e",
+      "nonblank_source_lines_preserved": true
+    },
+    {
+      "path": "output/model/simplified_olg_amendments/mixed_transition_proof.md",
+      "sha256": "a2be7e7ce7e194030842976ad16bbc00b69f42dc145d6ed5343e4ad896f45387",
+      "nonblank_source_lines_preserved": true
+    },
+    {
+      "path": "output/model/simplified_olg_amendments/transition_extensions.md",
+      "sha256": "3b5b11a7d9a6cacf0f346e14d61e41ace5fb573d2e42df6c9d33754108f1130f",
+      "nonblank_source_lines_preserved": true
+    },
+    {
+      "path": "output/model/simplified_olg_amendments/local_transition_proof.md",
+      "sha256": "bc88134817c395567c1f94c2d338fa4a2f91560960ddb086644c5d4b827cab09",
+      "nonblank_source_lines_preserved": true
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_transition_extensions.py",
+      "sha256": "8b8b60a957f605720496ce458a05540da055772271367b4381125b0c91def09d",
+      "nonblank_source_lines_preserved": true
+    }
+  ],
+  "response_received": false
+}
