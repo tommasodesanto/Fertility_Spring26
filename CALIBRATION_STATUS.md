@@ -4,6 +4,48 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 7, 22:44 UTC: simple fertility-nest computation launched on author request.**
+The author explicitly rejected the equivalence construction with extra outcome
+subnests and authorized the simple fertility grouping, followed by a request to
+launch useful computation during a one-hour commute. This supersedes the older
+menu checkpoint and specification hold below. The implemented simultaneous GEV
+has wait and attempt nests over all six housing products, including success/
+failure contingent plans; one inner housing scale, no outcome subnests and no
+numerical integration. Probability weighting changes conditional housing
+ dispersion; it is deliberately a new model, not an old-formula reproduction.
+
+Isolated source88b21439 on `codex/fertility-nest-computation`, worktree
+`tmp/e5f_fertility_nest_compute_20260907a`; production source untouched.
+Scientific bundle4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8.
+All23 focused tests pass locally and on Torch. Exact default-off reproduction
+passes10 arrays locally. Local lifecycle harness first required sequential
+calendar wiring, then reached its600-second cap without a full pass. Preserve
+both receipts; do not claim that the lifecycle is already verified. The cluster
+harness adds phase/stack diagnostics and tests the new model first.
+
+Verification17142456 RUNNING oncs606; objective17142457 and sequential control
+17142458 PENDING afterok dependencies. Verification capped30min internally/35min
+Slurm; each objective2h. Only two retained-parameter full historical evaluations,
+original12targets/11coordinates/bounds, kappa=.005, supply elasticity=.63, jump
+upper=.5. Recompute maintained old-state fertility normalization2.1. The control
+shares exhaustive saving; strict interpolation support/storage still differs.
+No complete objective yet. No recalibration, policies or figures authorized at
+this stage. The deleted monitoring routine stays deleted.
+Evidence, plans, specification and remote paths:
+`output/model/e5f_simple_fertility_nest_20260907a/README.md`.
+
+
+**Commute launch update:** verification17142456 COMPLETED successfully. All23
+cluster tests and both full-grid fixed-price lifecycle/accounting/budget/value
+checks pass. New solve28.14s, sequential exhaustive21.24s; current-population
+L1 errors1.55e-14 and1.85e-14, birth gaps below1.1e-15. Neither fixed price
+clears the housing market; these are code checks, not calibration fits. Both
+objective dependencies released, waiting for scheduling at last check. At the
+observed cluster timing,50–100price evaluations are roughly24–47minutes for
+the new model, plus history/audit overhead; the2-hour caps remain unchanged.
+Local slowness was not reproduced on the cluster; its specific cause remains
+unresolved. Collected receipts: same output folder, `cluster_probe/`.
+
 **September 7: author approves testing fertility groups, with sequential fallback.**
 The first complete-menu checkpoint identifies an exact simultaneous GEV
 representation of the retained sequential recursion, using contingent housing

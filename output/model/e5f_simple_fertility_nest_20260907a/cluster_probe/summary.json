@@ -1,0 +1,58 @@
+{
+  "cases": [
+    {
+      "births": 0.07753447373884159,
+      "case": "fertility_nest_fixed_price",
+      "elapsed_seconds": 28.135228578932583,
+      "market_residual": 0.2705122155993803,
+      "mass": 0.9999999999996781,
+      "mean_parity": 1.2559554986130559,
+      "ownership": 0.5933773441795068,
+      "reconstruction": {
+        "reconstructed_baseline_births": 0.07753447373884198,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 1.6572410537433757e-14,
+        "stationary_post_fertility_nesting_max_abs": 1.9289735391114803e-16
+      },
+      "stationary_birth_gap": 3.885780586188048e-16,
+      "stationary_current_l1": 1.547730923941411e-14,
+      "timings": {
+        "bellman_full": 24.26408246997744,
+        "bellman_mode": "full_only",
+        "distribution": 3.8589369524270296,
+        "income_process": "markov",
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1
+      }
+    },
+    {
+      "births": 0.07745414454148597,
+      "case": "sequential_exhaustive_fixed_price",
+      "elapsed_seconds": 21.244169532321393,
+      "market_residual": 0.2698333160971111,
+      "mass": 0.9999999999997369,
+      "mean_parity": 1.25465427268634,
+      "ownership": 0.5964367408019251,
+      "reconstruction": {
+        "reconstructed_baseline_births": 0.07745414454148705,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 1.8504604407246745e-14,
+        "stationary_post_fertility_nesting_max_abs": 2.5627162043739756e-16
+      },
+      "stationary_birth_gap": 1.0824674490095276e-15,
+      "stationary_current_l1": 1.8494285636909303e-14,
+      "timings": {
+        "bellman_full": 14.207423904910684,
+        "bellman_mode": "full_only",
+        "distribution": 7.027239257469773,
+        "income_process": "markov",
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1
+      }
+    }
+  ],
+  "elapsed_seconds": 56.94615051988512,
+  "status": "complete"
+}

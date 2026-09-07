@@ -1,0 +1,107 @@
+{
+  "adapter_sha256": "b7ad60d11c31d3d2e81fd70bdac0b889adfa1663b0877248c711d803a4ae1408",
+  "cases": [
+    {
+      "center": "center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 1,
+      "label": "simple_fertility_retained_anchor",
+      "output": "simple_fertility",
+      "panel_design": "mixed",
+      "panel_seed": 20260907,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.02
+    }
+  ],
+  "choice_model": "fertility_nest",
+  "code_bundle_sha256": "4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8",
+  "estimated_run_size": "One retained-parameter history: old-state fertility normalization (historically about five equilibria), then five dated equilibria; roughly 50-100 price evaluations. Observed local exhaustive sequential lifecycle about60 seconds; new full-product timing must pass preceding cluster verification. Budget roughly50-100minutes at sequential timing, two-hour hard cap per case; slower new model stops at cap. No search or policies.",
+  "helper_sha256": {
+    "collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "run_e5f_independent_numerical_audit.py": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528"
+  },
+  "input_sha256": {
+    "center.json": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+    "source.json": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6"
+  },
+  "launch_deadline_epoch": 1788907181.9472158,
+  "schema": "e5f_bounded_refinement_v1",
+  "search_domain": [
+    {
+      "lower": 0.94,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert_continuation",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.1,
+      "name": "hbar_child_rooms",
+      "transform": "log",
+      "upper": 1.8
+    },
+    {
+      "lower": 0.0,
+      "name": "first_birth_fixed_cost",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "hbar_first_child_jump",
+      "transform": "softzero",
+      "upper": 0.5
+    },
+    {
+      "lower": -1.5,
+      "name": "psi_child_change_2023",
+      "transform": "asinh",
+      "upper": 0.2
+    }
+  ],
+  "source": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_20260907a/output/model/e5f_simple_fertility_nest_20260907a/source.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "one_retained_parameter_full_history_smoke",
+  "stop_criteria": "Stop on unchanged source, target, market, accounting, population, budget or value gates; save failure. One full history only; no automatic search, repeats, policies or monitoring automation.",
+  "suppress_plots": true,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817",
+  "time_budget_seconds_per_case": 7200,
+  "verification_dependency": "Required cluster probe checks new nest and sequential control, 1800-second cap. Local exact ten-array default-off reference passed; subsequent local integration attempt hit600-second cap and remains unverified. Cluster diagnostic adds phase and stack evidence."
+}
