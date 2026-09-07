@@ -38,7 +38,7 @@ POLICY_LABELS = {
     "property-tax-2pct-no-rebate": "Property tax doubled",
 }
 MOMENT_LABELS = {**layout.MOMENT_LABELS,
-    "own_family_gap": "New-parent/nonparent ownership gap, ages 30-55",
+    "own_family_gap": "Parent/nonparent ownership gap, ages 30-55",
     "own_rate": "Ownership, ages 30-55",
     "old_total_wealth_to_annual_income_p90_p50_7684": "Wealth/income p90/p50, ages 76-84",
 }
@@ -381,6 +381,7 @@ def main() -> None:
     rows += [[MOMENT_LABELS.get(row["moment"], row["moment"]), *[fmt(row[x]) for x in ("target", "model", "gap", "weight", "loss_contribution")]] for row in fit]
     table(rows, [180, 60, 60, 62, 70, 76])
     add(f"Full-table objective check: sum of contributions = {loss:.9f}.", "RSmall")
+    add("For the ownership gap, the active model parent group has at least one child at home; the nonparent group has no previous birth. The code retains a legacy new-parent variable name.", "RSmall")
 
     heading("Free parameters, bounds, and fixed/derived entries")
     free = [row for row in parameters if bool_value(row.get("is_free_parameter"))]
