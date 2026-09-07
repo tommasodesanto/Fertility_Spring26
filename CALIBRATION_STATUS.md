@@ -1,8 +1,43 @@
 # Calibration Status
 
-Updated: `2026-09-07` (full repaired smoke passed; 32-core calibration running at 10:47 UTC)
+Updated: `2026-09-07` (24 new histories verified; initial search still running at 11:27 UTC)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7, 11:27 UTC:24 new histories verified; no improvement over the starting point.**
+Job17106283 remains in its first32-case population. Twenty-four new histories
+are complete, alongside four imported smoke histories; no numerical rejection
+has occurred. Local verification checked480 non-checkpoint artifacts from the
+24 complete receipts, including all fit tables, parameter tables and diagnostic
+PNGs. Each complete case passes the budget and occupied-value gates. The best
+new result exactly reproduces the starting loss450.7052931460765; no new
+candidate has improved it. The remaining cases retain their original one-hour
+caps. Full final repetitions, local sensitivity checks and policy simulations
+will follow selection. No DE or polishing round has run, and the remaining
+stage budget cannot accommodate another full-hour search wave before12:05 UTC.
+This is a bounded initial-population search, not a fully optimized calibration.
+
+Complete twelve-moment fits for every completed case, including targets,
+weights, gaps and loss contributions, are in
+`parallel_search_o/output/model/joint_nested_overnight/search/all_target_fits.csv`;
+all eleven free estimates, bounds and fixed restrictions are in sibling
+`all_parameters.csv`, beneath `output/model/e5f_joint_nested_full_20260906a/`.
+`parallel_search_o/scale_tradeoff.csv` summarizes the completed initial cases;
+`completed_case_review.json` records the480 checked artifacts.
+
+The descriptive trade-off agrees with the shock-scale concern already recorded
+in `docs/model/e5f_joint_nested_readout.md`. The specified tenure nests require
+$\sigma_F=\lambda\kappa\leq\kappa=\sigma_T$: the conditional fertility shock
+cannot have a larger scale than the outer tenure shock. For example, completed
+case12 uses $\kappa=0.1$, $\lambda=0.5$, and fits a13.29pp parent ownership gap
+(target16.77pp), but childlessness is41.42% (target18.8%) and mean first-birth
+age23.15 (target26.04). The high-scale starting point fits fertility better but
+has a parent ownership gap below half a percentage point. Other parameters
+also vary across these starts, so this is not a controlled scale experiment,
+an optimized frontier or proof of an unreachable target. It identifies a
+restriction to discuss and test, not a reason to drop targets or to reject
+simultaneous choice itself. The nesting, model and production code are unchanged.
+
 
 **September 7, 10:47 UTC: complete repaired smoke passed; 32-core calibration running.**
 Verification job `17105914` completed successfully at10:32:08 UTC after40minutes.
