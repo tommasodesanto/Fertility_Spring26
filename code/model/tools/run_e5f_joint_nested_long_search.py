@@ -149,8 +149,22 @@ def initial_population(center, domain, rng, profile="v1"):
                 u[kappa] = inverse(kappa_value, domain[kappa])
                 u[lam] = inverse(lambda_value, domain[lam])
                 result.append(u)
-        for _ in range(16):
-            result.append(bounded_perturbation(center, .12, rng))
+        # Retain the original grid and pair its small-inner-scale rows with
+        # smaller preference declines. This changes starting points only:
+        # all eleven coordinates remain unrestricted in subsequent DE.
+        psi = next(i for i, d in enumerate(domain) if d["name"] == "psi_child_change_2023")
+        psi_spec = domain[psi]
+        if psi_spec["transform"] != "asinh" or not psi_spec["lower"] < 0 < psi_spec["upper"]:
+            raise ValueError("Preference-change proposals require the declared signed asinh domain")
+        anchor_inner = transform(center[kappa], domain[kappa]) * transform(center[lam], domain[lam])
+        for row in result[1:]:
+            inner = transform(row[kappa], domain[kappa]) * transform(row[lam], domain[lam])
+            if not any(math.isclose(transform(row[lam], domain[lam]), value) for value in (.02, .2)):
+                continue
+            u = list(row)
+            delta = transform(row[psi], psi_spec) * min(.5, inner / anchor_inner)
+            u[psi] = (math.asinh(delta) - math.asinh(psi_spec["lower"])) / (math.asinh(psi_spec["upper"]) - math.asinh(psi_spec["lower"]))
+            result.append(u)
         if len(result) != RUN_PROFILES[profile]["population_size"]:
             raise RuntimeError("wide32 initial population does not match its profile")
         return result

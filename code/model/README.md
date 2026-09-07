@@ -50,8 +50,18 @@ The full simultaneous-choice extension is isolated on `codex/joint-nested-full`.
 `tools/run_e5f_joint_nested_reporting_check.py` verifies owner-consumption
 reporting at the exact previously failed policy price, before and after the
 experimental repair. `tools/build_e5f_joint_nested_review.py` builds the
-discussion PDF only from complete history/policy receipts, all target and
-parameter rows, and the independently verified reporting comparison.
+discussion PDF from complete selected-case receipts and every target and
+parameter row; supplied policy and final-repetition evidence is verified separately.
+
+`tools/run_e5f_joint_nested_long_search.py` keeps the full eleven-parameter
+objective and twelve targets. Its 64 starting vectors retain the exact anchor
+and all 47 original scale-grid points. Sixteen paired proposals replace the
+older sixteen nearby random proposals: they retain the other coordinates and
+scale the fertility-preference decline toward zero using the inner taste scale.
+This is an initialization heuristic, not an estimation restriction. All later
+proposals remain free in all eleven coordinates. The exact design, physical
+proposal table and current launch status are indexed in
+`../../output/model/e5f_joint_nested_full_20260906a/README.md`.
 
 `tools/run_e5f_joint_overnight_search.py` runs the hash-pinned full-objective
 search and the separately contracted smaller-step recovery. All eleven

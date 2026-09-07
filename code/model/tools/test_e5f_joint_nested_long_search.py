@@ -95,6 +95,7 @@ class ControllerTests(unittest.TestCase):
     def test_wide32_population_is_deterministic_and_covers_unique_grid(self):
         domain=[{"name":f"x{i}","lower":.001,"upper":10.,"transform":"log"} for i in range(11)]
         domain[1]["name"]="tenure_choice_kappa"; domain[2]["name"]="joint_nest_lambda"; domain[9]["name"]="hbar_first_child_jump"
+        domain[10]={"name":"psi_child_change_2023","lower":-1.5,"upper":.2,"transform":"asinh"}
         center=[.5]*11
         first=search.initial_population(center,domain,random.Random(20260906),"wide32")
         second=search.initial_population(center,domain,random.Random(20260906),"wide32")
@@ -106,7 +107,31 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(grid,{(round(k,8),round(l,8)) for k,l in expected})
         self.assertNotIn((2.,.8),grid)
         self.assertTrue(all(abs(u[j]-center[j])<=.08 for u in first[1:48] for j in range(11) if j not in (1,2)))
-        self.assertTrue(all(abs(u[j]-center[j])<=.12 for u in first[48:] for j in range(11)))
+        paired=[u for u in first[1:48] if any(math.isclose(search.transform(u[2],domain[2]),l) for l in (.02,.2))]
+        self.assertEqual(len(paired),16)
+        self.assertEqual(len({tuple(u) for u in first}),64)
+        for original,proposal in zip(paired,first[48:]):
+            self.assertEqual(original[:10],proposal[:10])
+            old_delta=search.transform(original[10],domain[10]); new_delta=search.transform(proposal[10],domain[10])
+            self.assertLess(abs(new_delta),abs(old_delta))
+            self.assertEqual(math.copysign(1,new_delta),math.copysign(1,old_delta))
+
+    def test_wide_proposals_cover_small_changes_without_removing_original_grid(self):
+        domain=search.adapter.SEARCH_DOMAIN
+        center=[.5]*11
+        center[1]=math.log(2./.005)/math.log(10./.005)
+        center[2]=math.log(.8/.02)/math.log(1./.02)
+        center[10]=(math.asinh(-.32871390689556357)-math.asinh(-1.5))/(math.asinh(.2)-math.asinh(-1.5))
+        population=search.initial_population(center,domain,random.Random(20260906),"wide32")
+        original_changes=[search.transform(u[10],domain[10]) for u in population[1:48]]
+        paired_changes=[search.transform(u[10],domain[10]) for u in population[48:]]
+        self.assertTrue(all(delta < -.2 for delta in original_changes))
+        self.assertTrue(any(-.0001 < delta < 0 for delta in paired_changes))
+        self.assertTrue(all(-.23 < delta < 0 for delta in paired_changes))
+        # A subsequent DE proposal still varies the preference coordinate;
+        # it is not constrained to the starting-point scaling relation.
+        trials=search.de_trials(population,list(range(64)),random.Random(17))
+        self.assertTrue(any(u[10] != p[10] for u,p in zip(trials,population)))
 
     def test_profiles_and_wide_budget_reserve_final_verification(self):
         self.assertEqual(search.RUN_PROFILES["wide32"]["max_workers"],32)
