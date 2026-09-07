@@ -115,6 +115,68 @@ class ReportValidationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'incomplete or duplicated'):
                 report.validate_policy(self.policy,self.selected_sha,self.summary)
 
+    def _partial_policy_fixture(self, root):
+        """Copied synthetic evidence; the bundled scientific fixture stays read-only."""
+        overall=copy.deepcopy(report.read_json(self.policy/'equilibrium_receipt.json'))
+        overall['smoke']=False
+        overall['status']='partial_policy_failures'
+        overall['failures']={'property-tax-2pct-no-rebate': {'error': 'Housing market did not clear: residual=2.791e-04.'}}
+        (root/'inherited_state_verification.json').write_bytes((self.policy/'inherited_state_verification.json').read_bytes())
+        def write_rows(path,rows):
+            with path.open('w',newline='') as stream:
+                writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+        for name in report.EXPECTED_POLICIES:
+            folder=root/name;folder.mkdir()
+            original=report.read_csv(self.policy/name/'policy_path.csv')
+            if name == 'property-tax-2pct-no-rebate':
+                rows=[]
+                for year in range(2023,2048,4):
+                    row=dict(original[0 if year==2023 else 1],calendar_year=str(year),policy_case=name,
+                             relative_market_residual='0.00001',mass_accounting_residual='0',nonfinite_distribution_count='0')
+                    rows.append(row)
+                    (folder/f'date_{year}').symlink_to(self.policy/name/f'date_{2023 if year==2023 else 2027}',target_is_directory=True)
+                write_rows(folder/'policy_path_progress.csv',rows)
+                (folder/'failure.json').write_text(json.dumps(overall['failures'][name]))
+                continue
+            overall['cases'][name]['dates']=11
+            (folder/'receipt.json').write_text(json.dumps(overall['cases'][name]))
+            rows=[]
+            for year in range(2023,2064,4):
+                source_year=2023 if year==2023 else 2027
+                rows.append(dict(original[0 if year==2023 else 1],calendar_year=str(year)))
+                (folder/f'date_{year}').symlink_to(self.policy/name/f'date_{source_year}',target_is_directory=True)
+            write_rows(folder/'policy_path.csv',rows)
+        del overall['cases']['property-tax-2pct-no-rebate']
+        (root/'equilibrium_receipt.json').write_text(json.dumps(overall))
+        effects=[row for row in report.read_csv(self.policy/'policy_effects.csv') if row['policy'] != 'property-tax-2pct-no-rebate']
+        for row in effects:
+            if int(row['year'])==2027:row['year']='2063'
+        write_rows(root/'policy_effects.csv',effects)
+
+    def test_partial_policy_requires_opt_in_and_validates_failure_prefix_and_gates(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);self._partial_policy_fixture(root)
+            with self.assertRaisesRegex(RuntimeError,'allow-partial-policies'):
+                report.validate_policy(root,self.selected_sha,self.summary)
+            _,checks,status=report.validate_policy(root,self.selected_sha,self.summary,allow_partial_policies=True)
+            self.assertEqual(len(checks),40);self.assertIn('33 certified full-branch dates plus 7 valid property-tax prefix dates, 40 total, 4 unavailable',status)
+            for mutation, expected in (('missing_failure','failure.json'),('incorrect_failure','does not match'),('hash','different selected'),('dated_gate','dated gate'),('prefix','strict consecutive')):
+                with self.subTest(mutation=mutation):
+                    with tempfile.TemporaryDirectory() as altered_temp:
+                        altered=Path(altered_temp);self._partial_policy_fixture(altered)
+                        if mutation=='missing_failure': (altered/'property-tax-2pct-no-rebate/failure.json').unlink()
+                        elif mutation=='incorrect_failure': (altered/'property-tax-2pct-no-rebate/failure.json').write_text('{}')
+                        elif mutation=='hash':
+                            receipt=report.read_json(altered/'equilibrium_receipt.json');receipt['selected_summary_sha256']='wrong';(altered/'equilibrium_receipt.json').write_text(json.dumps(receipt))
+                        else:
+                            path=altered/'property-tax-2pct-no-rebate/policy_path_progress.csv';rows=report.read_csv(path)
+                            if mutation=='dated_gate':rows[0]['relative_market_residual']='0.0003'
+                            else:rows[-1]['calendar_year']='2051'
+                            with path.open('w',newline='') as stream:
+                                writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
+                        with self.assertRaisesRegex(RuntimeError,expected):
+                            report.validate_policy(altered,self.selected_sha,self.summary,allow_partial_policies=True)
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--fixture-root',type=Path,required=True)

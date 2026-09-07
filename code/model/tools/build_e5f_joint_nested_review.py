@@ -90,6 +90,48 @@ def bool_value(value: Any) -> bool:
     return str(value).strip().lower() == "true"
 
 
+def policy_rows(policy_root: Path, name: str) -> list[dict[str, str]]:
+    """Return recorded path rows, including the validated prefix of a failed case."""
+    case_dir = policy_root / name
+    path = case_dir / "policy_path.csv"
+    if not path.is_file():
+        path = case_dir / "policy_path_progress.csv"
+    return read_csv(path)
+
+
+def policy_overview(policy_root: Path, destination: Path) -> None:
+    """Plot the validated dated CSVs; preserve the standard diagnostic set."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    paths = {name: policy_rows(policy_root, name) for name in EXPECTED_POLICIES}
+    baseline = paths["baseline"]
+    years = [int(row["calendar_year"]) for row in baseline]
+    baseline_by_year = {int(row["calendar_year"]): row for row in baseline}
+    panels = [("birth_children_topcode_adjusted", "Total births (%)", False),
+              ("topcode_adjusted_births_per_adult", "Births per household unit (%)", False),
+              ("owner_rate", "Ownership (percentage points)", True),
+              ("housing_demand_per_adult", "Rooms per household unit (%)", False),
+              ("asset_price", "House price (%)", False),
+              ("population_index_2023", "Adult-household units (%)", False)]
+    fig, axes = plt.subplots(3, 2, figsize=(10, 10), constrained_layout=True)
+    for name, color in (("supply-plus-20", "#266b94"), ("dependent-child-ltv95", "#d28528"),
+                        ("property-tax-2pct-no-rebate", "#984e68")):
+        rows = paths[name]
+        for ax, (key, label, pp) in zip(axes.flat, panels):
+            path_years = [int(row["calendar_year"]) for row in rows]
+            effects = [100 * (float(p[key]) - float(baseline_by_year[year][key]) if pp else float(p[key]) / float(baseline_by_year[year][key]) - 1)
+                       for p, year in zip(rows, path_years)]
+            ax.plot(path_years, effects, color=color, label=POLICY_LABELS[name], linewidth=2)
+            ax.set_title(label, fontsize=11)
+    for ax in axes.flat:
+        ax.axhline(0, color="#999999", linewidth=.6)
+        ax.set_xticks(years[::2]); ax.tick_params(labelsize=9)
+        ax.grid(alpha=.15); ax.spines[["top", "right"]].set_visible(False)
+    axes[0, 0].legend(fontsize=8, loc="best")
+    fig.savefig(destination, dpi=180); plt.close(fig)
+
+
 def load_narrative(path: Path | None) -> dict[str, str]:
     if path is None:
         return {}
@@ -224,14 +266,26 @@ def validate_selected(selected: Path) -> tuple[list[dict[str, str]], list[dict[s
     return fit, parameters, summary, receipt, checked
 
 
-def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary: dict) -> tuple[dict[str, Any] | None, list[dict[str, Any]], str]:
+def effect_values(policy: dict[str, str], baseline: dict[str, str]) -> dict[str, float]:
+    return {
+        "births_percent": 100 * (finite(policy["birth_children_topcode_adjusted"], "births") / finite(baseline["birth_children_topcode_adjusted"], "baseline births") - 1),
+        "ownership_pp": 100 * (finite(policy["owner_rate"], "ownership") - finite(baseline["owner_rate"], "baseline ownership")),
+        "rooms_percent": 100 * (finite(policy["housing_demand_per_adult"], "rooms") / finite(baseline["housing_demand_per_adult"], "baseline rooms") - 1),
+    }
+
+
+def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary: dict,
+                    allow_partial_policies: bool = False) -> tuple[dict[str, Any] | None, list[dict[str, Any]], str]:
     if policy_root is None:
         return None, [], "Not supplied: no policy result is represented as passed."
     receipt_path = policy_root / "equilibrium_receipt.json"
     if not receipt_path.is_file():
         raise RuntimeError("Policy directory is missing equilibrium_receipt.json")
     overall = read_json(receipt_path)
-    if overall.get("status") != "complete" or overall.get("failures") != {}:
+    partial = overall.get("status") == "partial_policy_failures"
+    if partial and not allow_partial_policies:
+        raise RuntimeError("Policy experiment is incomplete; use --allow-partial-policies to report its validated prefix")
+    if not partial and (overall.get("status") != "complete" or overall.get("failures") != {}):
         raise RuntimeError("Policy experiment is incomplete; report failure separately")
     if (overall.get("scientific_bundle") != summary["code_fingerprints"]["bundle_sha256"]
             or overall.get("target_fingerprint") != summary["target_fingerprint"]):
@@ -247,14 +301,28 @@ def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary
         raise RuntimeError("Missing policy horizon classification")
     expected_years = [2023, 2027] if overall["smoke"] else list(range(2023, 2064, 4))
     cases = overall.get("cases")
-    if not isinstance(cases, dict) or set(cases) != EXPECTED_POLICIES:
+    failures = overall.get("failures")
+    failed_name = "property-tax-2pct-no-rebate"
+    if partial:
+        if overall.get("smoke") or not isinstance(cases, dict) or set(cases) != EXPECTED_POLICIES - {failed_name}:
+            raise RuntimeError("Partial policy receipt must contain exactly the three completed full-horizon cases")
+        if not isinstance(failures, dict) or set(failures) != {failed_name}:
+            raise RuntimeError("Partial policy receipt must identify only the failed property-tax case")
+        failure_path = policy_root / failed_name / "failure.json"
+        if not failure_path.is_file() or read_json(failure_path) != failures[failed_name]:
+            raise RuntimeError("Partial policy failure.json does not match the overall receipt")
+        if "Housing market did not clear" not in str(failures[failed_name].get("error", "")):
+            raise RuntimeError("Partial policy failure is not the recorded market-clearing failure")
+    elif not isinstance(cases, dict) or set(cases) != EXPECTED_POLICIES:
         raise RuntimeError("Policy receipt must contain the four standard policy cases")
     if overall.get("selected_summary_sha256") != selected_summary_sha:
         raise RuntimeError("Policy evidence belongs to a different selected candidate")
     checks: list[dict[str, Any]] = []
     all_years: set[int] = set()
     expected_dates: int | None = None
-    for name in sorted(EXPECTED_POLICIES):
+    complete_names = sorted(cases)
+    path_rows: dict[str, list[dict[str, str]]] = {}
+    for name in complete_names:
         case_dir, case = policy_root / name, cases[name]
         local = read_json(case_dir / "receipt.json")
         if local != case or case.get("status") != "complete":
@@ -274,6 +342,7 @@ def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary
         if len(rows) != dates or years != expected_years:
             raise RuntimeError(f"Policy path has inconsistent dates: {name}")
         all_years.update(years)
+        path_rows[name] = rows
         for row in rows:
             for field in ("birth_children_topcode_adjusted", "owner_rate", "housing_demand_per_adult",
                           "asset_price", "topcode_adjusted_births_per_adult", "population_index_2023"):
@@ -286,25 +355,49 @@ def validate_policy(policy_root: Path | None, selected_summary_sha: str, summary
             if len(graphs) != 17:
                 raise RuntimeError(f"Policy date lacks the 17 standard graphs: {name}, {year}")
             checks.append({"policy": name, "year": year, "budget_excess_mass": budget["budget_excess_mass"], "standard_graphs": 17})
+    if partial:
+        tax_dir = policy_root / failed_name
+        rows = policy_rows(policy_root, failed_name)
+        prefix_years = list(range(2023, 2048, 4))
+        years = [int(finite(row.get("calendar_year"), "partial policy calendar year")) for row in rows]
+        if years != prefix_years:
+            raise RuntimeError("Partial property-tax path must be the strict consecutive 2023--2047 prefix")
+        for row in rows:
+            year = int(row["calendar_year"])
+            for field in ("birth_children_topcode_adjusted", "owner_rate", "housing_demand_per_adult",
+                          "asset_price", "topcode_adjusted_births_per_adult", "population_index_2023"):
+                finite(row.get(field), f"partial tax dated {field}")
+            if (str(row.get("policy_case")) != failed_name or
+                    finite(row.get("relative_market_residual"), "partial market residual") > 2e-4 or
+                    abs(finite(row.get("mass_accounting_residual"), "partial mass residual")) > 2e-10 or
+                    int(finite(row.get("nonfinite_distribution_count"), "partial nonfinite count")) != 0):
+                raise RuntimeError(f"Partial property-tax dated gate failed: {year}")
+            date_dir = tax_dir / f"date_{year}"
+            budget, arrays = read_json(date_dir / "budget_summary.json"), read_json(date_dir / "policy_array_summary.json")
+            validate_arrays_and_budget(arrays, budget, f"{failed_name}, {year}")
+            if len(list((date_dir / "standard_diagnostics").glob("*.png"))) != 17:
+                raise RuntimeError(f"Policy date lacks the 17 standard graphs: {failed_name}, {year}")
+            checks.append({"policy": failed_name, "year": year, "budget_excess_mass": budget["budget_excess_mass"], "standard_graphs": 17})
+        path_rows[failed_name] = rows
     effects_path = policy_root / "policy_effects.csv"
     if not effects_path.is_file():
         raise RuntimeError("Policy effects table is missing")
     if effects_path.is_file():
         effects = read_csv(effects_path)
-        paths = {name: {int(finite(row["calendar_year"], "year")): row for row in read_csv(policy_root / name / "policy_path.csv")} for name in EXPECTED_POLICIES}
-        expected = {(name, year) for name in EXPECTED_POLICIES - {"baseline"} for year in (min(all_years), max(all_years))}
+        paths = {name: {int(finite(row["calendar_year"], "year")): row for row in rows} for name, rows in path_rows.items()}
+        expected = {(name, year) for name in set(complete_names) - {"baseline"} for year in (min(all_years), max(all_years))}
         if len(effects) != len(expected) or {(r.get("policy"), int(finite(r.get("year"), "effect year"))) for r in effects} != expected:
             raise RuntimeError("Policy effect rows are incomplete or duplicated")
         for row in effects:
             base, policy = paths["baseline"][int(row["year"])], paths[row["policy"]][int(row["year"])]
-            recomputed = {
-                "births_percent": 100 * (finite(policy["birth_children_topcode_adjusted"], "births") / finite(base["birth_children_topcode_adjusted"], "baseline births") - 1),
-                "ownership_pp": 100 * (finite(policy["owner_rate"], "ownership") - finite(base["owner_rate"], "baseline ownership")),
-                "rooms_percent": 100 * (finite(policy["housing_demand_per_adult"], "rooms") / finite(base["housing_demand_per_adult"], "baseline rooms") - 1),
-            }
+            recomputed = effect_values(policy, base)
             if any(not math.isclose(finite(row[key], key), value, abs_tol=1e-10) for key, value in recomputed.items()):
                 raise RuntimeError("Recorded policy effect does not reproduce paths")
-    status = "Complete 44-date policy paths verified." if expected_dates == 11 else "Complete two-date smoke verified; this is not a 44-date full path."
+    if partial:
+        status = ("PARTIAL policy evidence: 33 certified full-branch dates plus 7 valid property-tax prefix dates, "
+                  "40 total, 4 unavailable after the property-tax branch fails market clearing in 2051. No overall pass is asserted.")
+    else:
+        status = "Complete 44-date policy paths verified." if expected_dates == 11 else "Complete two-date smoke verified; this is not a 44-date full path."
     return overall, checks, status
 
 
@@ -315,8 +408,11 @@ def main() -> None:
     parser.add_argument("--reference-parameters", type=Path, help="Complete retained-benchmark free and restricted parameters.")
     parser.add_argument("--output", type=Path, required=True, help="New PDF path; refuses to overwrite.")
     parser.add_argument("--policy-results", type=Path, help="Optional root containing four policy cases and receipt.")
+    parser.add_argument("--allow-partial-policies", action="store_true", help="Report only the strictly validated prefix in an original partial-policy-failures receipt.")
     parser.add_argument("--search-verification", type=Path, help="Optional completed search/final verification JSON; hashed in receipt.")
     parser.add_argument("--narrative", type=Path, help="Optional lead-supplied .txt or JSON strings: summary, interpretation, outstanding.")
+    parser.add_argument("--market-diagnostic-figure", type=Path, help="Optional separately reviewed fixed-state price trace; never certifies a policy path.")
+    parser.add_argument("--display-diagnostics", type=Path, help="Optional same-data layout copies with a manifest tied to all seventeen original graph hashes.")
     parser.add_argument("--fixture-label", default="", help="Required label for smoke/preview use, e.g. 'SMOKE PREVIEW - NOT A SEARCH'.")
     args = parser.parse_args()
     selected, output = args.selected_dir.resolve(), args.output.resolve()
@@ -340,7 +436,9 @@ def main() -> None:
         if origin.get("plan_sha256") != read_json(selected / "case_receipt.json")["plan_sha256"]:
             raise RuntimeError("Final repetitions concern another source plan")
     narrative = load_narrative(args.narrative.resolve() if args.narrative else None)
-    policy, policy_checks, policy_status = validate_policy(args.policy_results.resolve() if args.policy_results else None, selected_summary_sha, summary)
+    policy, policy_checks, policy_status = validate_policy(
+        args.policy_results.resolve() if args.policy_results else None, selected_summary_sha, summary,
+        allow_partial_policies=args.allow_partial_policies)
     loss = finite(summary["best_candidate"].get("transition_loss", summary["best_candidate"].get("loss")), "loss")
     fixture = args.fixture_label.strip()
     if ("smoke" in {part.lower() for part in selected.parts} or (policy and policy["smoke"])) and not fixture:
@@ -372,7 +470,7 @@ def main() -> None:
     add(f"<b>Policy status:</b> {escape(policy_status)}")
     if narrative.get("interpretation"): add("<b>Interpretation:</b> " + escape(narrative["interpretation"]))
     if narrative.get("outstanding"): add("<b>Outstanding issues:</b> " + escape(narrative["outstanding"]))
-    add("<b>Economic specification.</b> Tenure and birth attempts are chosen jointly after the taste shocks are observed. Tenure is committed before conception success; housing size, consumption and saving can adapt within tenure afterward. The inner taste scale is λκ, with 0 &lt; λ ≤ 1. This restriction is experimental.", "RSmall")
+    add("<b>Economic specification.</b> Tenure and birth attempts are chosen jointly after the taste shocks are observed. Tenure is committed before conception success; housing size, consumption and saving can adapt within tenure afterward. Products within tenure are chosen deterministically. The inner taste scale is λκ, with 0 &lt; λ ≤ 1. The experiment changes shock structure as well as timing.", "RSmall")
     add("<b>Policy closure.</b> Each date clears housing markets with current prices treated as permanent. After 2023, outside entry is zero, retention is one, and the inherited four-slot birth queue converts births to new households at 1/2.1. Supply elasticity is fixed at 0.63. Tax revenue is discarded. These are finite paths under temporary equilibrium.", "RSmall")
 
     heading("Complete target fit")
@@ -390,18 +488,43 @@ def main() -> None:
     add("Near-bound flags use the existing convention: within 2% of the full physical parameter range, rather than distance in the transformed search coordinate.", "RSmall")
     story.append(Spacer(1, 10))
     table([["Fixed/derived entry", "Value", "Recorded status"]] + [[PARAMETER_LABELS.get(row["parameter"], row["parameter"]), fmt(row["value"]), {"psi_child_2007": "Normalized to old completed fertility 2.1", "psi_child_2023": "Old level plus fitted 2007–23 change", "housing_supply_elasticity": "Externally fixed"}[row["parameter"]]] for row in fixed], [180, 90, 252])
+    if narrative.get("local_sensitivity"):
+        add(escape(narrative["local_sensitivity"]), "RSmall")
 
     heading("Policy outcomes and verification coverage")
     if policy is None:
         add("No policy directory was supplied. Policy outcomes are unavailable and are not represented as passed.")
     else:
         effects = read_csv(args.policy_results.resolve() / "policy_effects.csv") if (args.policy_results.resolve() / "policy_effects.csv").is_file() else []
-        shown_years = {min(int(row["year"]) for row in effects), max(int(row["year"]) for row in effects)}
-        table([["Policy", "Year", "Births (%)", "Ownership (pp)", "Rooms (%)"]] + [[POLICY_LABELS.get(row["policy"], row["policy"]), row["year"], fmt(row["births_percent"]), fmt(row["ownership_pp"]), fmt(row["rooms_percent"])] for row in effects if int(row["year"]) in shown_years], [190, 55, 85, 100, 85])
-        add("Each effect compares the policy with the baseline at the same date and inherited starting population. The table shows the first and last computed dates; complete dated results are retained in each policy's policy_path.csv.", "RSmall")
+        if policy.get("status") == "partial_policy_failures":
+            paths = {name: {int(row["calendar_year"]): row for row in policy_rows(args.policy_results.resolve(), name)} for name in EXPECTED_POLICIES}
+            for year in (2023, 2047):
+                derived = effect_values(paths["property-tax-2pct-no-rebate"][year], paths["baseline"][year])
+                effects.append({"policy": "property-tax-2pct-no-rebate", "year": str(year), **{key: str(value) for key, value in derived.items()}})
+        endpoint_years = {name: {min(int(row["year"]) for row in effects if row["policy"] == name), max(int(row["year"]) for row in effects if row["policy"] == name)} for name in {row["policy"] for row in effects}}
+        table([["Policy", "Year", "Births (%)", "Ownership (pp)", "Rooms (%)"]] + [[POLICY_LABELS.get(row["policy"], row["policy"]), row["year"], fmt(row["births_percent"]), fmt(row["ownership_pp"]), fmt(row["rooms_percent"])] for row in effects if int(row["year"]) in endpoint_years[row["policy"]]], [190, 55, 85, 100, 85])
+        add("Each effect compares the policy with the baseline at the same date and inherited starting population. The table shows each policy's first and last available date; complete dated results are retained in its recorded path file.", "RSmall")
         add(policy_status, "RSmall")
     if policy_checks:
         add(f"All {len(policy_checks)} dated packets contain the unchanged seventeen graphs and pass the occupied-value, budget and probability checks. Maximum budget-violating mass: {max(x['budget_excess_mass'] for x in policy_checks):.3g}, below 2e-10.", "RSmall")
+    if narrative.get("policy_interpretation"):
+        add(escape(narrative["policy_interpretation"]))
+    if narrative.get("market_diagnostic"):
+        add(escape(narrative["market_diagnostic"]))
+
+    supplemental_policy_graph = None
+    if policy:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        supplemental_policy_graph = output.parent / f"{output.stem}_policy_paths.png"
+        policy_overview(args.policy_results.resolve(), supplemental_policy_graph)
+        heading("Supplemental: policy paths")
+        add("Effects relative to the baseline at each date. Total births include changes in adult-household units; births per household unit isolate the flow per unit. These units are not resident-person counts. Ownership is a percentage-point difference; the other panels show percent changes. The paths use temporary equilibrium and the experimental vector.", "RSmall")
+        story.append(layout.image_fit(supplemental_policy_graph, 515, 610))
+
+    if args.market_diagnostic_figure:
+        heading("Supplemental: market-clearing diagnostic")
+        add("This price trace holds the inherited 2051 tax-policy population and parameters fixed. It diagnoses the rejected market solve and does not complete or replace the policy path.", "RSmall")
+        story.append(layout.image_fit(args.market_diagnostic_figure.resolve(), 515, 500))
 
     if reference:
         heading("Retained benchmark: complete target fit")
@@ -419,13 +542,32 @@ def main() -> None:
 
     graph_dir = selected / "standard_diagnostics"
     graphs = sorted(graph_dir.glob("*.png"))
+    display_manifest = None
+    if args.display_diagnostics:
+        display_root = args.display_diagnostics.resolve()
+        display_manifest = read_json(display_root / "display_manifest.json")
+        if (display_manifest.get("status") != "same_plot_data_legibility_edits" or
+                display_manifest.get("selected_summary_sha256") != selected_summary_sha or
+                set(display_manifest.get("graphs", {})) != {p.name for p in graphs}):
+            raise RuntimeError("Display graph manifest differs from the selected seventeen-graph packet")
+        for graph in graphs:
+            entry = display_manifest["graphs"][graph.name]
+            display = display_root / "standard_diagnostics" / graph.name
+            if (entry.get("data_unchanged") is not True or entry.get("original_sha256") != sha(graph)
+                    or entry.get("display_sha256") != sha(display)):
+                raise RuntimeError("Display graph changed source or lacks its data-preservation check")
+        graphs = [display_root / "standard_diagnostics" / p.name for p in graphs]
     if graphs:
         heading("Standard diagnostic graphs")
-        add("The established standard graph set is reproduced without redesign. These are selected-candidate diagnostics, not additional policy conclusions.", "RSmall")
+        add("The established seventeen-graph set and its data are preserved. Crowded legends and axis labels have been repositioned for legibility; the original files remain in the verified source packet. These are selected-candidate diagnostics." if display_manifest else "The established standard graph set is reproduced without redesign. These are selected-candidate diagnostics, not additional policy conclusions.", "RSmall")
+        plots_on_page = 0
         for index, graph in enumerate(graphs):
+            multi_panel = graph.stem.startswith("policy_childless_renter_")
+            if plots_on_page >= 2 or (multi_panel and plots_on_page):
+                story.append(PageBreak()); plots_on_page = 0
             add(escape(graph.stem.replace("_", " ")), "RSmall")
-            story.append(layout.image_fit(graph, 515, 300))
-            if index % 2 == 1 and index != len(graphs) - 1: story.append(PageBreak())
+            story.append(layout.image_fit(graph, 515, 600 if multi_panel else 300))
+            plots_on_page += 2 if multi_panel else 1
 
     def footer(canvas: Any, doc: Any) -> None:
         canvas.saveState(); canvas.setFont("Review", 7); canvas.setFillColor(layout.MID_GREY)
@@ -433,8 +575,17 @@ def main() -> None:
         canvas.drawRightString(A4[0] - 36, 20, f"Page {doc.page}"); canvas.restoreState()
     output.parent.mkdir(parents=True, exist_ok=True)
     SimpleDocTemplate(str(output), pagesize=A4, rightMargin=36, leftMargin=36, topMargin=34, bottomMargin=34, title="Simultaneous-choice calibration readout", author="Research discussion draft").build(story, onFirstPage=footer, onLaterPages=footer)
-    verification = {"status": "numerical_source_checks_passed_visual_review_pending", "pdf": str(output), "pdf_sha256": sha(output), "selected_dir": str(selected), "selected_summary_sha256": selected_summary_sha, "selected_artifacts_checked": selected_artifacts, "reference": reference, "fit_rows": len(fit), "fit_cells": fit, "parameter_cells": parameters, "selected_receipt_sha256": sha(selected / "case_receipt.json"), "policy_receipt_sha256": sha(args.policy_results.resolve() / "equilibrium_receipt.json") if policy else None, "free_parameters": len(free), "fixed_or_derived_parameters": len(fixed), "loss": loss, "fixture_label": fixture or None, "policy_status": policy_status, "policy_date_checks": policy_checks, "search_verification_sha256": sha(args.search_verification.resolve()) if args.search_verification else None, "narrative_sha256": sha(args.narrative.resolve()) if args.narrative else None, "builder_sha256": sha(Path(__file__).resolve()), "production_promoted": False}
+    partial_policy = bool(policy and policy.get("status") == "partial_policy_failures")
+    verification = {"status": "partial_policy_evidence_validated_visual_review_pending" if partial_policy else "numerical_source_checks_passed_visual_review_pending", "pdf": str(output), "pdf_sha256": sha(output), "selected_dir": str(selected), "selected_summary_sha256": selected_summary_sha, "selected_artifacts_checked": selected_artifacts, "reference": reference, "fit_rows": len(fit), "fit_cells": fit, "parameter_cells": parameters, "selected_receipt_sha256": sha(selected / "case_receipt.json"), "policy_receipt_sha256": sha(args.policy_results.resolve() / "equilibrium_receipt.json") if policy else None, "policy_receipt_status": policy.get("status") if policy else None, "allow_partial_policies": args.allow_partial_policies, "free_parameters": len(free), "fixed_or_derived_parameters": len(fixed), "loss": loss, "fixture_label": fixture or None, "policy_status": policy_status, "policy_date_checks": policy_checks, "search_verification_sha256": sha(args.search_verification.resolve()) if args.search_verification else None, "narrative_sha256": sha(args.narrative.resolve()) if args.narrative else None, "builder_sha256": sha(Path(__file__).resolve()), "production_promoted": False}
     verification_path = output.parent / f"{output.stem}_verification.json"
+    if supplemental_policy_graph:
+        verification["supplemental_policy_graph"] = str(supplemental_policy_graph)
+        verification["supplemental_policy_graph_sha256"] = sha(supplemental_policy_graph)
+    if args.market_diagnostic_figure:
+        verification["market_diagnostic_figure_sha256"] = sha(args.market_diagnostic_figure.resolve())
+    if display_manifest:
+        verification["display_manifest_sha256"] = sha(args.display_diagnostics.resolve() / "display_manifest.json")
+        verification["display_graphs"] = display_manifest["graphs"]
     verification_path.write_text(json.dumps(verification, indent=2) + "\n", encoding="utf-8")
     print(output)
 

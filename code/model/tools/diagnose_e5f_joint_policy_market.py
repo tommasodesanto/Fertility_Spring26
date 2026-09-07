@@ -69,16 +69,29 @@ def endpoint_replay(args):
     p = STATE["packet"]; P = p["parameters"]; results = []; evaluations = []
     for label, row in zip(("lower", "upper"), trace["bracket"]):
         folder = args.outdir / label; folder.mkdir(parents=True, exist_ok=True)
-        e = finalizer.policy.calendar.evaluate_period(
-            np.array([row["price"]]), STATE["g"], P, p["b_grid"], p["shared"],
-            finalizer.policy.calendar.SolveCounter(), supply_rule=p["supply_rule"])
+        if args.reuse_endpoint_checkpoints:
+            with gzip.open(folder/"dated_state.pkl.gz", "rb") as stream:
+                saved = pickle.load(stream)
+            e = saved["evaluation"]
+            assert np.array_equal(e.inherited_g_pre, STATE["g"])
+            assert np.array_equal(saved["b_grid"], p["b_grid"])
+            assert float(e.policy.price[0]) == row["price"]
+        else:
+            e = finalizer.policy.calendar.evaluate_period(
+                np.array([row["price"]]), STATE["g"], P, p["b_grid"], p["shared"],
+                finalizer.policy.calendar.SolveCounter(), supply_rule=p["supply_rule"])
         assert e.relative_market_residual == row["relative_residual"]
         packet = dict(p, evaluation=e)
-        with gzip.open(folder/"dated_state.pkl.gz", "wb", compresslevel=1) as stream:
-            pickle.dump(packet, stream, protocol=5)
-        finalizer.audit.standard_diagnostics(packet, folder, validate_production_young=False)
-        budget = finalizer.audit.budget_audit(packet, folder)
-        arrays = finalizer.audit.policy_array_audit(packet, folder)
+        if args.reuse_endpoint_checkpoints:
+            budget = adapter.read_json(folder/"budget_summary.json")
+            arrays = adapter.read_json(folder/"policy_array_summary.json")
+            assert len(list((folder/"standard_diagnostics").glob("*.png"))) == 17
+        else:
+            with gzip.open(folder/"dated_state.pkl.gz", "wb", compresslevel=1) as stream:
+                pickle.dump(packet, stream, protocol=5)
+            finalizer.audit.standard_diagnostics(packet, folder, validate_production_young=False)
+            budget = finalizer.audit.budget_audit(packet, folder)
+            arrays = finalizer.audit.policy_array_audit(packet, folder)
         assert budget["budget_excess_mass"] <= 2e-10 and arrays["occupied_negative_steps"] == 0
         component = [float(np.sum(e.g_current[:,0] * e.policy.hR_pol[:,0]))]
         component += [float(np.sum(e.g_current[:,k+1]))*float(h) for k,h in enumerate(P.H_own)]
@@ -102,7 +115,7 @@ def endpoint_replay(args):
     result=dict(status="exact_endpoint_replay", checkpoint_sha256=args.checkpoint_sha256,
         progress_sha256=adapter.digest(args.progress), trace_sha256=adapter.digest(args.endpoint_trace),
         fixed_population_mass=float(STATE["g"].sum()), owner_products=np.asarray(P.H_own).tolist(),
-        phi=float(P.phi), endpoints=results, largest_occupied_plan_changes=largest,
+        phi=np.asarray(P.phi).tolist(), endpoints=results, largest_occupied_plan_changes=largest,
         interpretation="These are non-clearing diagnostic endpoints, not equilibrium solutions.", production_promoted=False)
     adapter.write_json(args.outdir/"endpoint_replay.json", result)
     print(json.dumps(result), flush=True)
@@ -118,6 +131,7 @@ def main():
     ap.add_argument("--max-rounds", type=int, default=10)
     ap.add_argument("--seconds", type=int, default=1500)
     ap.add_argument("--endpoint-trace", type=Path, help="Replay a completed trace's two boundary prices without searching.")
+    ap.add_argument("--reuse-endpoint-checkpoints", action="store_true", help="Read and verify existing endpoint packets; perform no new solve or overwrite.")
     args = ap.parse_args()
     out = args.outdir; out.mkdir(parents=True, exist_ok=True)
     if (out / "trace.csv").exists():
