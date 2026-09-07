@@ -1,0 +1,1509 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "You said:" [level=4]
+  - group "oracle_analytic_efficiency_bundle.md":
+    - button "oracle_analytic_efficiency_bundle.md"
+    - generic: oracle_analytic_efficiency_bundle.md
+    - generic: File
+  - generic: Please solve the analytical equilibrium-efficiency question in the attached packet. It contains the full request followed by exact excerpts of the original model. First test the general claim; if it fails, derive explicit, economically interpretable sufficient inequalities on primitives. Establish which constraints bind in equilibrium rather than assuming the desired pattern. No numerical reference example, small-open-neighborhood argument, or computer-assisted transition certificate. Give the strongest theorem you can actually prove and a readable proof, and state any unresolved step honestly.
+  - group "Your message actions":
+    - button "Copy message":
+    - button "Share prompt":
+    - button "Edit message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 24m 16s":
+    - text: Worked for 24m 16s
+  - heading "Verdict" [level=2]
+  - paragraph:
+    - strong: The unrestricted claim is false.
+    - text: The model admits stationary equilibria that are efficient for the packet’s fixed-fertility, fixed-tenure, datewise welfare comparison.
+  - paragraph:
+    - text: "However, a stronger result is available than existence of one inefficient equilibrium:"
+    - strong: under explicit primitive inequalities, every stationary equilibrium is inefficient.
+    - text: The result below retains endogenous fertility, positive child goods and space costs, finite housing caps, and finite-scale logistic tenure choice. It uses homogeneous income and wealth and zero property tax. It also covers old owners whose estate constraint binds—not only those leaving positive financial assets.
+  - separator
+  - heading "1. Setup and an analytical efficient class" [level=2]
+  - paragraph:
+    - text: Set
+    - math "\\tau^p=0":
+      - text: τ
+      - generic: p
+      - text: =
+      - generic: "0"
+    - text: ", let all entrants have the same"
+    - math "(y,b)":
+      - generic: (y, b)
+    - text: ", and keep all preference weights and child costs strictly positive. Write"
+  - 'math "\\begin{gathered} w=y+b,\\qquad d=1-q,\\qquad u=qr=dP,\\\\ A=1+\\gamma+\\omega_B,\\qquad M=1+\\beta A,\\qquad D=M+\\alpha+\\vartheta,\\\\ \\rho=h_R^{\\max},\\qquad \\bar h=h_O^{\\max},\\qquad B=\\frac{b}{1-\\phi}. \\end{gathered}"':
+    - generic: w = y + b, d = 1 − q, u = qr = dP,
+    - text: A = 1 + γ +
+    - text: ω
+    - generic: B
+    - text: ", M = 1 + βA, D = M + α + ϑ,"
+    - text: ρ =
+    - text: h
+    - generic: R
+    - generic: max
+    - text: ","
+    - generic: h
+    - text: ˉ
+    - text: =
+    - text: h
+    - generic: O
+    - generic: max
+    - text: ", B ="
+    - generic: 1 − ϕ
+    - generic: b
+    - text: .
+  - paragraph:
+    - text: Thus
+    - math "Ph\\le B":
+      - generic: Ph ≤
+      - generic: B
+    - text: is the down-payment constraint. Importantly, the owner’s gross bond holdings are
+    - math "qa'+\\phi Ph":
+      - text: q
+      - text: a
+      - generic: ′
+      - text: +
+      - generic: ϕPh
+    - text: ", not"
+    - math "qa'":
+      - text: q
+      - text: a
+      - generic: ′
+    - text: .
+    - button "oracle_analytic_efficiency_bund…":
+      - paragraph: oracle_analytic_efficiency_bund…
+  - paragraph:
+    - text: I use
+    - strong: stationarity in levels
+    - text: ":"
+    - math "Y=O=N>0":
+      - generic: Y =
+      - generic: O =
+      - generic: N >
+      - generic: "0"
+    - text: and
+  - math "\\nu\\bar n=1.":
+    - text: ν
+    - generic: "n"
+    - text: ˉ
+    - text: =
+    - generic: "1."
+  - paragraph:
+    - text: Individual fertility remains a household choice; this is an equilibrium consistency condition. The stationary population
+    - math "N":
+      - generic: "N"
+    - text: is part of the stationary state, with its scale determined by housing clearing.
+    - button "oracle_analytic_efficiency_bund… +1":
+      - paragraph: oracle_analytic_efficiency_bund… +1
+  - heading "A class of efficient stationary equilibria" [level=3]
+  - paragraph: Define, entirely from primitives,
+  - 'math "u_*=\\frac{\\nu\\vartheta w/D-\\chi}{\\kappa}, \\qquad P_*=\\frac{u_*}{d}, \\qquad x_*=\\frac wD, \\qquad n_*=\\frac1\\nu,"':
+    - text: u
+    - generic: ∗
+    - text: =
+    - generic: κ
+    - generic: νϑw/D − χ
+    - text: ","
+    - text: P
+    - generic: ∗
+    - text: =
+    - generic: d
+    - text: u
+    - generic: ∗
+    - text: ","
+    - text: x
+    - generic: ∗
+    - text: =
+    - generic: D
+    - generic: w
+    - text: ","
+    - text: "n"
+    - generic: ∗
+    - text: =
+    - generic: ν
+    - generic: "1"
+    - text: ","
+  - paragraph: and
+  - 'math "\\begin{aligned} h_*^Y&=\\frac{\\alpha x_*}{u_*}+\\frac{\\kappa}{\\nu}, & z_*&=\\frac{\\beta A x_*}{q},\\\\ c_*^2&=\\frac{\\beta x_*}{q}, & h_*^2&=\\frac{\\beta\\gamma x_*}{q u_*}, & e_*&=\\frac{\\beta\\omega_B x_*}{q^2}. \\end{aligned}"':
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: c
+    - generic: ∗
+    - generic: "2"
+    - text: =
+    - text: u
+    - generic: ∗
+    - text: α
+    - text: x
+    - generic: ∗
+    - text: +
+    - generic: ν
+    - generic: κ
+    - text: ","
+    - text: =
+    - generic: q
+    - text: β
+    - text: x
+    - generic: ∗
+    - text: ","
+    - text: z
+    - generic: ∗
+    - text: h
+    - generic: ∗
+    - generic: "2"
+    - text: =
+    - generic: q
+    - text: βA
+    - text: x
+    - generic: ∗
+    - text: ","
+    - text: =
+    - text: q
+    - text: u
+    - generic: ∗
+    - text: βγ
+    - text: x
+    - generic: ∗
+    - text: ","
+    - text: e
+    - generic: ∗
+    - text: =
+    - text: q
+    - generic: "2"
+    - text: β
+    - text: ω
+    - generic: B
+    - text: x
+    - generic: ∗
+    - text: .
+  - paragraph: "Suppose the following explicit inequalities hold:"
+  - 'math "\\boxed{ \\begin{gathered} u_*>0,\\qquad d\\omega_B>q\\gamma,\\\\ h_*^2<h_*^Y<\\rho<\\bar h,\\\\ P_*h_*^Y<B,\\qquad qz_*+(\\phi-q)P_*h_*^Y>0. \\end{gathered}} \\tag{E}"':
+    - text: u
+    - generic: ∗
+    - text: "> 0, d"
+    - text: ω
+    - generic: B
+    - text: "> qγ,"
+    - text: h
+    - generic: ∗
+    - generic: "2"
+    - text: <
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: < ρ <
+    - generic: h
+    - text: ˉ
+    - text: ","
+    - text: P
+    - generic: ∗
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: < B, q
+    - text: z
+    - generic: ∗
+    - text: + (ϕ − q)
+    - text: P
+    - generic: ∗
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: "> 0."
+    - text: (
+    - generic: E
+    - text: )
+  - paragraph: These formulas solve the relaxed household problems, and (E) verifies that the omitted constraints are slack. Both tenures therefore choose the displayed real allocations, with
+  - math "a_R'=z_*, \\qquad a_O'=z_*-P_*h_*^Y.":
+    - text: a
+    - generic: R
+    - generic: ′
+    - text: =
+    - text: z
+    - generic: ∗
+    - text: ","
+    - text: a
+    - generic: O
+    - generic: ′
+    - text: =
+    - text: z
+    - generic: ∗
+    - text: −
+    - text: P
+    - generic: ∗
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: .
+  - paragraph: Their conditional values coincide, so finite logistic tastes produce strictly positive shares of both tenures. Setting
+  - 'math "N=\\frac{\\bar H}{h_*^Y+h_*^2}"':
+    - generic: N =
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: +
+    - text: h
+    - generic: ∗
+    - generic: "2"
+    - generic: H
+    - text: ˉ
+  - paragraph: completes the stationary equilibrium.
+  - paragraph:
+    - text: This allocation is
+    - strong: globally efficient within the specified datewise feasible set
+    - text: ", not merely immune to one old-to-young transfer. At fixed fertility and estates,"
+  - 'math "\\frac{\\alpha x_*}{h_*^Y-\\kappa n_*} = \\frac{\\gamma c_*^2}{h_*^2} =u_*."':
+    - text: h
+    - generic: ∗
+    - generic: "Y"
+    - text: − κ
+    - text: "n"
+    - generic: ∗
+    - text: α
+    - text: x
+    - generic: ∗
+    - text: =
+    - text: h
+    - generic: ∗
+    - generic: "2"
+    - text: γ
+    - text: c
+    - generic: ∗
+    - generic: "2"
+    - text: =
+    - text: u
+    - generic: ∗
+    - text: .
+  - paragraph: Concavity gives, for each young household,
+  - math "x_*\\Delta U_i^Y\\le \\Delta c_i+u_*\\Delta h_i,":
+    - text: x
+    - generic: ∗
+    - text: Δ
+    - text: U
+    - generic: i
+    - generic: "Y"
+    - text: ≤
+    - text: Δ
+    - text: c
+    - generic: i
+    - text: +
+    - text: u
+    - generic: ∗
+    - text: Δ
+    - text: h
+    - generic: i
+    - text: ","
+  - paragraph: and, for each old household,
+  - math "c_*^2\\Delta U_j^O\\le \\Delta c_j^2+u_*\\Delta h_j^2.":
+    - text: c
+    - generic: ∗
+    - generic: "2"
+    - text: Δ
+    - text: U
+    - generic: j
+    - generic: O
+    - text: ≤
+    - text: Δ
+    - text: c
+    - generic: j
+    - generic: "2"
+    - text: +
+    - text: u
+    - generic: ∗
+    - text: Δ
+    - text: h
+    - generic: j
+    - generic: "2"
+    - text: .
+  - paragraph: Summing over households makes the right-hand side zero for any consumption- and housing-preserving reallocation. A Pareto improvement on a positive-measure set is therefore impossible.
+  - paragraph:
+    - text: Thus the
+    - strong: presence
+    - text: of credit and rental-size limits does not establish inefficiency. The next result makes both young-household limits bind with strictly positive multipliers.
+  - separator
+  - heading "2. Primitive sufficient conditions for inefficiency of every stationary equilibrium" [level=2]
+  - paragraph: Define
+  - 'math "v=\\max\\left\\{d,\\frac{\\gamma}{\\gamma+\\omega_B}\\right\\}, \\qquad \\ell=dB,\\qquad E=w-\\ell,"':
+    - generic: v =
+    - text: max
+    - generic: "{"
+    - text: d,
+    - text: γ +
+    - text: ω
+    - generic: B
+    - generic: γ
+    - generic: "}"
+    - text: ", ℓ ="
+    - generic: dB, E =
+    - generic: w −
+    - generic: ℓ,
+  - paragraph: and
+  - 'math "\\underline\\ell=\\frac{\\beta\\gamma w}{qM+\\beta\\gamma}."':
+    - generic: ℓ
+    - text: =
+    - generic: qM + βγ
+    - generic: βγw
+    - text: .
+  - paragraph: The central restrictions are
+  - 'math "\\boxed{ \\underline\\ell<\\ell< \\frac{\\alpha d\\,w}{\\alpha d+v(M+\\vartheta)} } \\tag{A}"':
+    - generic: ℓ
+    - text: < ℓ <
+    - generic: αd + v(M + ϑ)
+    - generic: αd w
+    - text: (
+    - generic: A
+    - text: )
+  - paragraph: and
+  - 'math "\\boxed{ \\frac{\\beta A E}{M+\\vartheta}>(q-\\phi)_+B. } \\tag{B}"':
+    - generic: M + ϑ
+    - generic: βAE
+    - text: "> (q − ϕ"
+    - text: )
+    - generic: +
+    - text: B.
+    - text: (
+    - generic: B
+    - text: )
+  - paragraph:
+    - text: Condition (B) is automatic when
+    - math "\\phi\\ge q":
+      - generic: ϕ ≥
+      - generic: q
+    - text: ", but that restriction on"
+    - math "\\phi":
+      - generic: ϕ
+    - text: is not required.
+  - paragraph: We next give a demographic restriction using only explicit functions of primitives.
+  - heading "An explicit fertility function" [level=3]
+  - paragraph:
+    - text: For
+    - math "m,E,H>0":
+      - generic: m, E, H >
+      - generic: "0"
+    - text: ", define"
+  - 'math "\\mathcal N_m(E,H)= \\frac{2\\vartheta EH} {K_m(E,H)+ \\sqrt{K_m(E,H)^2- 4\\chi\\kappa(m+\\alpha+\\vartheta)\\vartheta EH}},"':
+    - text: "N"
+    - generic: m
+    - text: (E, H) =
+    - text: K
+    - generic: m
+    - text: (E, H) +
+    - text: K
+    - generic: m
+    - text: (E, H
+    - text: )
+    - generic: "2"
+    - text: − 4χκ(m + α + ϑ)ϑEH
+    - generic: 2ϑEH
+    - text: ","
+  - paragraph: where
+  - math "K_m(E,H) =\\kappa E(\\alpha+\\vartheta)+\\chi H(m+\\vartheta).":
+    - text: K
+    - generic: m
+    - text: (E, H) =
+    - generic: κE(α +
+    - generic: ϑ) +
+    - generic: χH(m +
+    - generic: ϑ).
+  - paragraph: It is the unique feasible solution of
+  - 'math "mx+\\chi n=E, \\qquad \\frac{\\vartheta}{n} =\\frac{\\chi}{x}+\\frac{\\alpha\\kappa}{H-\\kappa n}. \\tag{1}"':
+    - generic: mx +
+    - generic: χn =
+    - text: E,
+    - generic: "n"
+    - generic: ϑ
+    - text: =
+    - generic: x
+    - generic: χ
+    - text: +
+    - generic: H − κn
+    - generic: ακ
+    - text: .
+    - text: (
+    - generic: "1"
+    - text: )
+  - paragraph:
+    - text: It is strictly increasing in both
+    - math "E":
+      - generic: E
+    - text: and
+    - math "H":
+      - generic: H
+    - text: .
+  - heading "Primitive price endpoints" [level=3]
+  - paragraph: Set
+  - 'math "t_-=\\max\\left\\{\\underline\\ell,\\frac{\\ell\\rho}{\\bar h}\\right\\}, \\qquad g=\\frac{\\chi\\rho}{\\kappa},"':
+    - text: t
+    - generic: −
+    - text: =
+    - text: max
+    - generic: "{"
+    - generic: ℓ
+    - text: ","
+    - generic: h
+    - text: ˉ
+    - generic: ℓρ
+    - generic: "}"
+    - text: ", g ="
+    - generic: κ
+    - generic: χρ
+    - text: ","
+  - paragraph: and
+  - 'math "t_+= \\frac{(\\alpha+\\vartheta)w-Dg+ \\sqrt{\\big[(\\alpha+\\vartheta)w-Dg\\big]^2+4D\\alpha wg}} {2D}."':
+    - text: t
+    - generic: +
+    - text: =
+    - generic: 2D
+    - text: (α + ϑ)w − Dg +
+    - generic: "["
+    - text: (α + ϑ)w − Dg
+    - generic: "]"
+    - generic: "2"
+    - text: + 4Dαwg
+    - text: .
+  - paragraph: Define
+  - 'math "P_-=\\frac{t_-}{d\\rho}, \\qquad P_+=\\frac{t_+}{d\\rho},"':
+    - text: P
+    - generic: −
+    - text: =
+    - generic: dρ
+    - text: t
+    - generic: −
+    - text: ","
+    - text: P
+    - generic: +
+    - text: =
+    - generic: dρ
+    - text: t
+    - generic: +
+    - text: ","
+  - paragraph: and the four endpoint fertilities
+  - 'math "n_O^\\pm=\\mathcal N_M\\!\\left(E,\\frac{\\ell\\rho}{t_\\pm}\\right), \\qquad n_R^\\pm=\\mathcal N_M(w-t_\\pm,\\rho)."':
+    - text: "n"
+    - generic: O
+    - generic: ±
+    - text: =
+    - text: "N"
+    - generic: M
+    - generic: (
+    - text: E,
+    - text: t
+    - generic: ±
+    - generic: ℓρ
+    - generic: )
+    - text: ","
+    - text: "n"
+    - generic: R
+    - generic: ±
+    - text: =
+    - text: "N"
+    - generic: M
+    - text: (w −
+    - text: t
+    - generic: ±
+    - text: ", ρ)."
+  - paragraph: The final restriction is
+  - 'math "\\boxed{ \\max\\{n_O^+,n_R^+\\} < \\frac1\\nu < \\min\\{n_O^-,n_R^-\\}. } \\tag{C}"':
+    - text: "max{"
+    - text: "n"
+    - generic: O
+    - generic: +
+    - text: ","
+    - text: "n"
+    - generic: R
+    - generic: +
+    - text: "} <"
+    - generic: ν
+    - generic: "1"
+    - text: "< min{"
+    - text: "n"
+    - generic: O
+    - generic: −
+    - text: ","
+    - text: "n"
+    - generic: R
+    - generic: −
+    - text: "}."
+    - text: (
+    - generic: C
+    - text: )
+  - paragraph:
+    - text: This is an
+    - strong: analytical root-bracketing condition
+    - text: ", rather than a closed-form equilibrium price. Its endpoints and inequalities contain no unknown equilibrium quantities."
+  - heading "Proposition" [level=3]
+  - paragraph:
+    - text: Under (A)–(C), with
+    - math "0<\\rho<\\bar h<\\infty":
+      - generic: 0 <
+      - generic: ρ <
+      - generic: h
+      - text: ˉ
+      - text: <
+      - generic: ∞
+    - text: ","
+    - math "\\bar H>0":
+      - generic: H
+      - text: ˉ
+      - text: ">"
+      - generic: "0"
+    - text: ", finite"
+    - math "\\bar\\xi":
+      - generic: ξ
+      - text: ˉ
+    - text: ", and"
+    - math "0<\\sigma_\\xi<\\infty":
+      - generic: 0 <
+      - text: σ
+      - generic: ξ
+      - text: <
+      - generic: ∞
+    - text: ":"
+  - paragraph:
+    - strong:
+      - text: A stationary state exists. Every stationary equilibrium has
+      - math "P\\in(P_-,P_+)":
+        - generic: P ∈
+        - text: (
+        - text: P
+        - generic: −
+        - text: ","
+        - text: P
+        - generic: +
+        - text: )
+      - text: ", and every such equilibrium is Pareto inefficient for the packet’s datewise comparison."
+  - paragraph: "In every such equilibrium:"
+  - list:
+    - paragraph: Young owners have a strictly binding down-payment constraint, a slack physical cap, and positive gross bond holdings.
+    - paragraph: Young renters have a strictly binding rental-size cap.
+    - paragraph: Old owners sell part of their inherited housing; old renters’ housing caps are slack.
+    - paragraph: Both tenures have positive measure.
+  - paragraph:
+    - text: The old owner’s financial estate is positive when
+    - math "d\\omega_B>q\\gamma":
+      - text: d
+      - text: ω
+      - generic: B
+      - text: ">"
+      - generic: qγ
+    - text: ", zero with a strictly binding estate constraint when"
+    - math "d\\omega_B<q\\gamma":
+      - text: d
+      - text: ω
+      - generic: B
+      - text: <
+      - generic: qγ
+    - text: ", and zero with a zero estate-constraint multiplier at equality."
+  - separator
+  - 'heading "3. Proof: establish the constraints rather than assume them" [level=2]'
+  - heading "Old owners and the relevant housing value" [level=3]
+  - paragraph: Let
+  - math "z=a'+Ph":
+    - generic: z =
+    - text: a
+    - generic: ′
+    - text: +
+    - generic: Ph
+  - paragraph: be the young owner’s total wealth entering old age, including the inherited house. Its lifetime budget becomes
+  - 'math "c+qz+uh=w. \\tag{2}"':
+    - generic: c +
+    - generic: qz +
+    - generic: uh =
+    - generic: w.
+    - text: (
+    - generic: "2"
+    - text: )
+  - paragraph:
+    - text: The old problem has resources
+    - math "z":
+      - generic: z
+    - text: ", housing-retention limit"
+    - math "h^2\\le h":
+      - text: h
+      - generic: "2"
+      - text: ≤
+      - generic: h
+    - text: ", and estate bound"
+    - math "e\\ge Ph^2":
+      - generic: e ≥
+      - text: P
+      - text: h
+      - generic: "2"
+    - text: ", exactly as obtained from the packet’s budgets."
+    - button "oracle_analytic_efficiency_bund…":
+      - paragraph: oracle_analytic_efficiency_bund…
+  - paragraph: When retention is slack, solving the old problem gives
+  - 'math "c^2=\\frac zA, \\qquad h^2=\\frac{\\gamma z}{AvP}, \\tag{3}"':
+    - text: c
+    - generic: "2"
+    - text: =
+    - generic: A
+    - generic: z
+    - text: ","
+    - text: h
+    - generic: "2"
+    - text: =
+    - generic: AvP
+    - generic: γz
+    - text: ","
+    - text: (
+    - generic: "3"
+    - text: )
+  - paragraph: and
+  - 'math "e= \\begin{cases} \\displaystyle\\frac{\\omega_B z}{Aq}, &d\\omega_B\\ge q\\gamma,\\\\[5pt] \\displaystyle Ph^2, &d\\omega_B<q\\gamma. \\end{cases} \\tag{4}"':
+    - generic: e =
+    - generic: ⎩
+    - generic: ⎨
+    - generic: ⎧
+    - generic: Aq
+    - text: ω
+    - generic: B
+    - text: z
+    - text: ","
+    - text: P
+    - text: h
+    - generic: "2"
+    - text: ","
+    - text: d
+    - text: ω
+    - generic: B
+    - text: ≥ qγ,
+    - text: d
+    - text: ω
+    - generic: B
+    - text: < qγ.
+    - text: (
+    - generic: "4"
+    - text: )
+  - paragraph: Consequently,
+  - 'math "MV^O=\\frac{\\gamma c^2}{h^2}=vP. \\tag{5}"':
+    - text: M
+    - text: V
+    - generic: O
+    - text: =
+    - text: h
+    - generic: "2"
+    - text: γ
+    - text: c
+    - generic: "2"
+    - text: =
+    - generic: vP.
+    - text: (
+    - generic: "5"
+    - text: )
+  - paragraph:
+    - text: Thus the donor’s fixed-estate housing value equals user cost only in the financially slack branch. When the estate bound binds strictly,
+    - math "v>d":
+      - generic: v >
+      - generic: d
+    - text: ": compensation must cover a higher housing value."
+  - heading "The owner chooses the largest privately admissible house" [level=3]
+  - paragraph:
+    - text: Temporarily drop the nonnegative-gross-bond constraint, retaining all other constraints. Write
+    - math "K=Ph\\le B":
+      - generic: K =
+      - generic: Ph ≤
+      - generic: B
+    - text: .
+  - paragraph: The fertility first-order condition implies
+  - 'math "\\chi n<\\vartheta x. \\tag{6}"':
+    - generic: χn <
+    - generic: ϑx.
+    - text: (
+    - generic: "6"
+    - text: )
+  - paragraph: Homogeneity of the old problem, together with the saving first-order condition, gives
+  - math "qz\\le\\beta A x,":
+    - generic: qz ≤
+    - generic: βAx,
+  - paragraph: with equality when old housing retention is slack. Combining this with (2),
+  - math "w-dK=x+\\chi n+qz<(M+\\vartheta)x.":
+    - generic: w −
+    - generic: dK =
+    - generic: x +
+    - generic: χn +
+    - generic: qz <
+    - generic: (M +
+    - generic: ϑ)x.
+  - paragraph: Therefore
+  - 'math "x>\\frac{w-dK}{M+\\vartheta}. \\tag{7}"':
+    - generic: x >
+    - generic: M + ϑ
+    - generic: w − dK
+    - text: .
+    - text: (
+    - generic: "7"
+    - text: )
+  - paragraph:
+    - text: Since
+    - math "s<h":
+      - generic: s <
+      - generic: h
+    - text: ", condition (A) now implies"
+  - 'math "\\begin{aligned} MV^Y =\\frac{\\alpha x}{s} &> \\frac{\\alpha(w-dK)P}{(M+\\vartheta)K}\\\\ &\\ge \\frac{\\alpha E P}{(M+\\vartheta)B} >vP\\ge u. \\end{aligned} \\tag{8}"':
+    - text: M
+    - text: V
+    - generic: "Y"
+    - text: =
+    - generic: s
+    - generic: αx
+    - text: ">"
+    - generic: (M + ϑ)K
+    - generic: α(w − dK)P
+    - text: ≥
+    - generic: (M + ϑ)B
+    - generic: αEP
+    - text: "> vP ≥ u."
+    - text: (
+    - generic: "8"
+    - text: )
+  - paragraph:
+    - text: Increasing current housing also weakly relaxes the future retention limit. Hence the household’s optimized value is strictly increasing in
+    - math "h":
+      - generic: h
+    - text: "up to its current limits:"
+  - 'math "\\boxed{h_O^Y(P)=\\min\\{\\bar h,B/P\\}.} \\tag{9}"':
+    - text: h
+    - generic: O
+    - generic: "Y"
+    - text: "(P) = min{"
+    - generic: h
+    - text: ˉ
+    - text: ", B/P}."
+    - text: (
+    - generic: "9"
+    - text: )
+  - paragraph: The omitted gross-bond constraint is indeed slack. If retention is slack,
+  - math "qa'+\\phi Ph =qz+(\\phi-q)K =\\beta A x+(\\phi-q)K>0":
+    - text: q
+    - text: a
+    - generic: ′
+    - text: +
+    - generic: ϕPh =
+    - generic: qz +
+    - generic: (ϕ −
+    - generic: q)K =
+    - generic: βAx +
+    - generic: (ϕ −
+    - generic: q)K >
+    - generic: "0"
+  - paragraph:
+    - text: by (7) and (B). If retention binds,
+    - math "h^2=h":
+      - text: h
+      - generic: "2"
+      - text: =
+      - generic: h
+    - text: ", the old budget and"
+    - math "e\\ge Ph":
+      - generic: e ≥
+      - generic: Ph
+    - text: imply
+  - math "z=c^2+qe+uh>Ph=K,":
+    - generic: z =
+    - text: c
+    - generic: "2"
+    - text: +
+    - generic: qe +
+    - generic: uh >
+    - generic: Ph =
+    - generic: K,
+  - paragraph:
+    - text: so
+    - math "a'=z-K>0":
+      - text: a
+      - generic: ′
+      - text: =
+      - generic: z −
+      - generic: K >
+      - generic: "0"
+    - text: ", which also gives positive gross bonds. Thus dropping that constraint changed nothing."
+  - heading "Policies inside the bracket" [level=3]
+  - paragraph:
+    - text: For
+    - math "P\\ge B/\\bar h":
+      - generic: P ≥
+      - text: B/
+      - generic: h
+      - text: ˉ
+    - text: ", consider"
+  - 'math "h_O^Y=B/P,\\qquad n_O=\\mathcal N_M(E,B/P),\\qquad x_O=\\frac{E-\\chi n_O}{M}. \\tag{10}"':
+    - text: h
+    - generic: O
+    - generic: "Y"
+    - text: =
+    - text: B/P,
+    - text: "n"
+    - generic: O
+    - text: =
+    - text: "N"
+    - generic: M
+    - text: (E, B/P),
+    - text: x
+    - generic: O
+    - text: =
+    - generic: M
+    - text: E − χ
+    - text: "n"
+    - generic: O
+    - text: .
+    - text: (
+    - generic: "10"
+    - text: )
+  - paragraph: "The lower inequality in (A) verifies old retention slack:"
+  - 'math "\\frac{h_O^2}{h_O^Y} =\\frac{\\beta\\gamma x_O}{qvB} \\le\\frac{\\beta\\gamma x_O}{q\\ell} < \\frac{\\beta\\gamma E}{qM\\ell}<1. \\tag{11}"':
+    - text: h
+    - generic: O
+    - generic: "Y"
+    - text: h
+    - generic: O
+    - generic: "2"
+    - text: =
+    - generic: qvB
+    - text: βγ
+    - text: x
+    - generic: O
+    - text: ≤
+    - generic: qℓ
+    - text: βγ
+    - text: x
+    - generic: O
+    - text: <
+    - generic: qMℓ
+    - generic: βγE
+    - text: <
+    - generic: "1."
+    - text: (
+    - generic: "11"
+    - text: )
+  - paragraph: Hence (10) is the actual owner solution, with
+  - 'math "z_O=\\frac{\\beta A x_O}{q}, \\qquad c_O^2=\\frac{\\beta x_O}{q}, \\qquad h_O^2=\\frac{\\beta\\gamma x_O}{qvP}. \\tag{12}"':
+    - text: z
+    - generic: O
+    - text: =
+    - generic: q
+    - text: βA
+    - text: x
+    - generic: O
+    - text: ","
+    - text: c
+    - generic: O
+    - generic: "2"
+    - text: =
+    - generic: q
+    - text: β
+    - text: x
+    - generic: O
+    - text: ","
+    - text: h
+    - generic: O
+    - generic: "2"
+    - text: =
+    - generic: qvP
+    - text: βγ
+    - text: x
+    - generic: O
+    - text: .
+    - text: (
+    - generic: "12"
+    - text: )
+  - paragraph: For renters inside the proposed bracket,
+  - 'math "h_R^Y=\\rho,\\qquad n_R=\\mathcal N_M(w-dP\\rho,\\rho),\\qquad x_R=\\frac{w-dP\\rho-\\chi n_R}{M}. \\tag{13}"':
+    - text: h
+    - generic: R
+    - generic: "Y"
+    - text: =
+    - text: ρ,
+    - text: "n"
+    - generic: R
+    - text: =
+    - text: "N"
+    - generic: M
+    - text: (w −
+    - text: dPρ, ρ),
+    - text: x
+    - generic: R
+    - text: =
+    - generic: M
+    - text: w − dPρ − χ
+    - text: "n"
+    - generic: R
+    - text: .
+    - text: (
+    - generic: "13"
+    - text: )
+  - paragraph: Their old housing is
+  - 'math "h_R^2=\\frac{\\beta\\gamma x_R}{qdP}<\\rho, \\tag{14}"':
+    - text: h
+    - generic: R
+    - generic: "2"
+    - text: =
+    - generic: qdP
+    - text: βγ
+    - text: x
+    - generic: R
+    - text: <
+    - generic: ρ,
+    - text: (
+    - generic: "14"
+    - text: )
+  - paragraph:
+    - text: because
+    - math "dP\\rho\\ge t_-\\ge\\underline\\ell":
+      - generic: dPρ ≥
+      - text: t
+      - generic: −
+      - text: ≥
+      - generic: ℓ
+    - text: .
+  - paragraph: Finally, without the young rental cap, renter housing demand is
+  - 'math "h_{R,\\mathrm{free}}^Y(P) =\\frac wD\\left[ \\frac{\\alpha}{dP} +\\frac{\\kappa\\vartheta}{\\chi+\\kappa dP} \\right]. \\tag{15}"':
+    - text: h
+    - text: R,
+    - generic: free
+    - generic: "Y"
+    - text: (P) =
+    - generic: D
+    - generic: w
+    - generic: "["
+    - generic: dP
+    - generic: α
+    - text: +
+    - generic: χ + κdP
+    - generic: κϑ
+    - generic: "]"
+    - text: .
+    - text: (
+    - generic: "15"
+    - text: )
+  - paragraph:
+    - text: The equation
+    - 'math "h_{R,\\mathrm{free}}^Y=\\rho"':
+      - text: h
+      - text: R,
+      - generic: free
+      - generic: "Y"
+      - text: =
+      - generic: ρ
+    - text: has the explicit solution
+    - math "dP\\rho=t_+":
+      - generic: dPρ =
+      - text: t
+      - generic: +
+    - text: . Thus the young rental cap binds with positive multiplier whenever
+    - math "P<P_+":
+      - generic: P <
+      - text: P
+      - generic: +
+    - text: .
+  - paragraph:
+    - text: At an interior-bracket price, the owner’s physical cap is slack, its gross bonds are positive, and old retention is slack. Its down-payment multiplier
+    - math "\\mu":
+      - generic: μ
+    - text: therefore satisfies
+  - math "MV_O^Y-u=(1-\\phi)P\\mu x_O.":
+    - text: M
+    - text: V
+    - generic: O
+    - generic: "Y"
+    - text: −
+    - generic: u =
+    - generic: (1 −
+    - text: ϕ)Pμ
+    - text: x
+    - generic: O
+    - text: .
+  - paragraph:
+    - text: Equation (8) proves
+    - math "\\mu>0":
+      - generic: μ >
+      - generic: "0"
+    - text: .
+    - strong: No assumption that the future estate bound is slack enters this envelope calculation.
+  - separator
+  - heading "4. Why the bracket captures every stationary equilibrium" [level=2]
+  - paragraph: "The crucial global fact is:"
+  - 'math "\\boxed{\\text{Conditional owner and renter fertility each decrease strictly with }P.}"':
+    - generic: Conditional owner and renter fertility each decrease strictly with
+    - text: P.
+  - paragraph: Their logistic mixture need not be monotone.
+  - paragraph:
+    - text: For owners above
+    - math "B/\\bar h":
+      - text: B/
+      - generic: h
+      - text: ˉ
+    - text: ", this follows from (10):"
+    - math "E":
+      - generic: E
+    - text: is constant and
+    - math "B/P":
+      - generic: B/P
+    - text: decreases. Below that price, (9) gives
+    - math "h=\\bar h":
+      - generic: h =
+      - generic: h
+      - text: ˉ
+    - text: . Depending on the old constraints, fertility is one of
+  - 'math "\\begin{aligned} &\\mathcal N_M(w-dP\\bar h,\\bar h),\\\\ &\\mathcal N_{M_0}(w-(1+q)dP\\bar h,\\bar h), \\qquad M_0=1+\\beta(1+\\omega_B),\\\\ &\\mathcal N_{1+\\beta}(w-P\\bar h,\\bar h). \\end{aligned} \\tag{16}"':
+    - text: "N"
+    - generic: M
+    - text: (w − dP
+    - generic: h
+    - text: ˉ
+    - text: ","
+    - generic: h
+    - text: ˉ
+    - text: ),
+    - text: "N"
+    - text: M
+    - generic: "0"
+    - text: (w − (1 + q)dP
+    - generic: h
+    - text: ˉ
+    - text: ","
+    - generic: h
+    - text: ˉ
+    - text: ),
+    - text: M
+    - generic: "0"
+    - text: = 1 + β(1 +
+    - text: ω
+    - generic: B
+    - text: ),
+    - text: "N"
+    - generic: 1+β
+    - text: (w − P
+    - generic: h
+    - text: ˉ
+    - text: ","
+    - generic: h
+    - text: ˉ
+    - text: ).
+    - text: (
+    - generic: "16"
+    - text: )
+  - paragraph: These correspond respectively to slack retention; binding retention with slack estate bound; and both old constraints binding. Each decreases strictly on its applicable range. The branches join continuously. The relevant wealth-to-house-value ratios decrease along each branch, so the old regimes cannot switch back and forth.
+  - paragraph:
+    - text: For renters, (A) implies
+    - math "\\alpha>\\beta\\gamma/q":
+      - generic: α >
+      - generic: βγ/q
+    - text: . An old rental cap therefore cannot bind while the young rental cap is slack. The successive fertility schedules are
+  - 'math "\\mathcal N_{M_0}(w-(1+q)dP\\rho,\\rho),\\qquad \\mathcal N_M(w-dP\\rho,\\rho),\\qquad \\frac{\\vartheta w}{D(\\chi+\\kappa dP)}. \\tag{17}"':
+    - text: "N"
+    - text: M
+    - generic: "0"
+    - text: (w −
+    - generic: (1 +
+    - text: q)dPρ, ρ),
+    - text: "N"
+    - generic: M
+    - text: (w −
+    - text: dPρ, ρ),
+    - generic: D(χ + κdP)
+    - generic: ϑw
+    - text: .
+    - text: (
+    - generic: "17"
+    - text: )
+  - paragraph: Again, each decreases strictly and the branches join continuously.
+  - paragraph: Now observe
+  - 'math "t_-<\\ell<\\frac{\\alpha w}{D}<t_+<w."':
+    - text: t
+    - generic: −
+    - text: <
+    - generic: ℓ <
+    - generic: D
+    - generic: αw
+    - text: <
+    - text: t
+    - generic: +
+    - text: <
+    - generic: w.
+  - paragraph: At the intermediate price
+  - math "P_0=\\frac B\\rho,":
+    - text: P
+    - generic: "0"
+    - text: =
+    - generic: ρ
+    - generic: B
+    - text: ","
+  - paragraph: "both tenures choose the same current housing, consumption, and fertility:"
+  - math "n_O(P_0)=n_R(P_0)=n_0:=\\mathcal N_M(E,\\rho).":
+    - text: "n"
+    - generic: O
+    - text: (
+    - text: P
+    - generic: "0"
+    - text: ) =
+    - text: "n"
+    - generic: R
+    - text: (
+    - text: P
+    - generic: "0"
+    - text: ) =
+    - text: "n"
+    - generic: "0"
+    - text: :=
+    - text: "N"
+    - generic: M
+    - text: (E, ρ).
+  - paragraph: Consequently,
+  - 'math "\\max\\{n_O^+,n_R^+\\} <n_0< \\min\\{n_O^-,n_R^-\\}. \\tag{18}"':
+    - text: "max{"
+    - text: "n"
+    - generic: O
+    - generic: +
+    - text: ","
+    - text: "n"
+    - generic: R
+    - generic: +
+    - text: "} <"
+    - text: "n"
+    - generic: "0"
+    - text: <
+    - text: "min{"
+    - text: "n"
+    - generic: O
+    - generic: −
+    - text: ","
+    - text: "n"
+    - generic: R
+    - generic: −
+    - text: "}."
+    - text: (
+    - generic: "18"
+    - text: )
+  - paragraph: This also proves that the demographic interval in (C) is nonempty.
+  - paragraph:
+    - text: Let
+    - math "\\pi(P)":
+      - generic: π(P)
+    - text: be the logistic owner share and set
+  - math "\\bar n(P)=\\pi(P)n_O(P)+(1-\\pi(P))n_R(P).":
+    - generic: "n"
+    - text: ˉ
+    - text: (P) =
+    - text: π(P)
+    - text: "n"
+    - generic: O
+    - text: (P) +
+    - generic: (1 −
+    - text: π(P))
+    - text: "n"
+    - generic: R
+    - text: (P).
+  - paragraph: It is continuous. Condition (C) gives
+  - 'math "\\bar n(P_-)>\\nu^{-1}>\\bar n(P_+),"':
+    - generic: "n"
+    - text: ˉ
+    - text: (
+    - text: P
+    - generic: −
+    - text: ) >
+    - text: ν
+    - generic: −1
+    - text: ">"
+    - generic: "n"
+    - text: ˉ
+    - text: (
+    - text: P
+    - generic: +
+    - text: ),
+  - paragraph: so a stationary fertility root exists. Global conditional monotonicity also gives
+  - 'math "P\\le P_-\\implies\\bar n(P)>\\nu^{-1}, \\qquad P\\ge P_+\\implies\\bar n(P)<\\nu^{-1}."':
+    - generic: P ≤
+    - text: P
+    - generic: −
+    - text: ⟹
+    - generic: "n"
+    - text: ˉ
+    - text: (P) >
+    - text: ν
+    - generic: −1
+    - text: ", P ≥"
+    - text: P
+    - generic: +
+    - text: ⟹
+    - generic: "n"
+    - text: ˉ
+    - text: (P) <
+    - text: ν
+    - generic: −1
+    - text: .
+  - paragraph:
+    - strong: Every stationary root is therefore inside the bracket.
+  - paragraph:
+    - text: For any root, let
+    - math "\\pi=\\pi(P)":
+      - generic: π =
+      - generic: π(P)
+    - text: and set
+  - 'math "N= \\frac{\\bar H} {\\pi(h_O^Y+h_O^2)+(1-\\pi)(\\rho+h_R^2)}. \\tag{19}"':
+    - generic: N =
+    - text: π(
+    - text: h
+    - generic: O
+    - generic: "Y"
+    - text: +
+    - text: h
+    - generic: O
+    - generic: "2"
+    - text: ) + (1 − π)(ρ +
+    - text: h
+    - generic: R
+    - generic: "2"
+    - text: )
+    - generic: H
+    - text: ˉ
+    - text: .
+    - text: (
+    - generic: "19"
+    - text: )
+  - paragraph:
+    - text: Together with the induced asset distribution, this satisfies housing clearing and stationary demography. Finite logistic tastes give
+    - math "0<\\pi<1":
+      - generic: 0 <
+      - generic: π <
+      - generic: "1"
+    - text: .
+    - button "oracle_analytic_efficiency_bund…":
+      - paragraph: oracle_analytic_efficiency_bund…
+  - separator
+  - heading "5. The compensated Pareto improvement" [level=2]
+  - paragraph: At every covered equilibrium,
+  - 'math "MV_O^Y>vP=MV_O^O. \\tag{20}"':
+    - text: M
+    - text: V
+    - generic: O
+    - generic: "Y"
+    - text: ">"
+    - generic: vP =
+    - text: M
+    - text: V
+    - generic: O
+    - generic: O
+    - text: .
+    - text: (
+    - generic: "20"
+    - text: )
+  - paragraph: Select a common positive submass of young and old owners. This is a proof device, not an assumption about matching or cohort shares.
+  - paragraph:
+    - text: Give each selected young owner
+    - math "\\epsilon":
+      - generic: ϵ
+    - text: additional housing and take it from a selected old owner. Keep fertility, tenure, and the old estate fixed. The donor’s exact consumption compensation is
+  - 'math "D(\\epsilon) =c^2\\left[ \\left(\\frac{h^2}{h^2-\\epsilon}\\right)^\\gamma-1 \\right]."':
+    - generic: D(ϵ) =
+    - text: c
+    - generic: "2"
+    - generic: "["
+    - generic: (
+    - text: h
+    - generic: "2"
+    - text: − ϵ
+    - text: h
+    - generic: "2"
+    - generic: )
+    - generic: γ
+    - text: − 1
+    - generic: "]"
+    - text: .
+  - paragraph: It preserves the donor’s utility exactly, and
+  - 'math "D''(0)=\\frac{\\gamma c^2}{h^2}=vP."':
+    - text: D
+    - generic: ′
+    - text: (0) =
+    - text: h
+    - generic: "2"
+    - text: γ
+    - text: c
+    - generic: "2"
+    - text: =
+    - generic: vP.
+  - paragraph: The young owner’s gain is
+  - 'math "\\Delta U^Y = \\log\\!\\left(1-\\frac{D(\\epsilon)}x\\right) +\\alpha\\log\\!\\left(1+\\frac{\\epsilon}{s}\\right),"':
+    - text: Δ
+    - text: U
+    - generic: "Y"
+    - text: =
+    - generic: log
+    - generic: (
+    - text: 1 −
+    - generic: x
+    - generic: D(ϵ)
+    - generic: )
+    - text: +
+    - text: α
+    - generic: log
+    - generic: (
+    - text: 1 +
+    - generic: s
+    - generic: ϵ
+    - generic: )
+    - text: ","
+  - paragraph: so
+  - 'math "\\left.\\frac{d\\Delta U^Y}{d\\epsilon}\\right|_{\\epsilon=0} =\\frac{MV_O^Y-vP}{x}>0."':
+    - generic: dϵ
+    - text: dΔ
+    - text: U
+    - generic: "Y"
+    - generic: ϵ=0
+    - text: =
+    - generic: x
+    - text: M
+    - text: V
+    - generic: O
+    - generic: "Y"
+    - text: − vP
+    - text: ">"
+    - generic: "0."
+  - paragraph: A sufficiently small positive transfer therefore benefits the young strictly while respecting their physical cap and keeping all consumption positive.
+  - paragraph: The packet’s settlement applies unchanged. Set
+  - math "L(\\epsilon)=D(\\epsilon)-u\\epsilon.":
+    - generic: L(ϵ) =
+    - generic: D(ϵ) −
+    - generic: uϵ.
+  - paragraph:
+    - text: The old owner receives
+    - math "P\\epsilon+L(\\epsilon)":
+      - generic: Pϵ +
+      - generic: L(ϵ)
+    - text: ", consumes"
+    - math "D(\\epsilon)":
+      - generic: D(ϵ)
+    - text: ", and buys a bond costing"
+    - math "qP\\epsilon":
+      - generic: qPϵ
+    - text: ", replacing the title removed from its estate. The young owner’s new borrowing proceeds are also"
+    - math "qP\\epsilon":
+      - generic: qPϵ
+    - text: ; next period it sells the additional title for
+    - math "P\\epsilon":
+      - generic: Pϵ
+    - text: and repays that new debt. Existing estates, future real allocations, and promised repayments on existing loans remain unchanged.
+    - button "oracle_analytic_efficiency_bund…":
+      - paragraph: oracle_analytic_efficiency_bund…
+  - paragraph:
+    - text: This also works when the old owner initially has
+    - strong: zero
+    - text: "financial saving: the settlement creates positive financial saving to replace the transferred estate housing."
+  - separator
+  - heading "6. Economic meaning and scope" [level=2]
+  - paragraph:
+    - text: The lower bound on
+    - math "\\ell":
+      - generic: ℓ
+    - text: prevents the inherited owner house from being so small that the old household wants to retain all of it. The upper bound makes liquid wealth sufficiently scarce relative to income and young housing preferences that young owners value additional housing more than eligible old donors do. Condition (B) ensures positive
+    - strong: gross
+    - text: saving; it does not require positive net
+    - math "a'":
+      - text: a
+      - generic: ′
+    - text: .
+  - paragraph:
+    - text: The factor
+    - math "v":
+      - generic: v
+    - text: is important. When the estate constraint binds, old housing is worth more than ordinary user cost at fixed estate. The upper liquidity bound automatically becomes tighter rather than incorrectly treating such donors as having marginal value
+    - math "u":
+      - generic: u
+    - text: .
+  - paragraph: The region is demonstrably nonempty. For arbitrary positive old-age preference weights, choose
+  - 'math "\\alpha> \\frac{\\beta\\gamma v(M+\\vartheta)}{dqM}."':
+    - generic: α >
+    - generic: dqM
+    - generic: βγv(M + ϑ)
+    - text: .
+  - paragraph:
+    - text: Then the interval in (A) is nonempty. Choosing
+    - math "\\phi\\ge q":
+      - generic: ϕ ≥
+      - generic: q
+    - text: makes (B) automatic; for any admissible
+    - math "\\ell":
+      - generic: ℓ
+    - text: and
+    - math "w>0":
+      - generic: w >
+      - generic: "0"
+    - text: ", set"
+  - 'math "b=\\frac{(1-\\phi)\\ell}{d}, \\qquad y=w-b>0."':
+    - generic: b =
+    - generic: d
+    - generic: (1 − ϕ)ℓ
+    - text: ", y ="
+    - generic: w −
+    - generic: b >
+    - generic: "0."
+  - paragraph:
+    - text: Positive
+    - math "\\chi,\\kappa":
+      - generic: χ, κ
+    - text: and any finite ordered caps are admissible, and (18) supplies a nonempty interval for
+    - math "\\nu":
+      - generic: ν
+    - text: .
+  - paragraph:
+    - text: For
+    - strong: existence alone
+    - text: ", (C) can be weakened to the taste-dependent endpoint condition"
+  - 'math "\\bar n(P_+)<\\nu^{-1}<\\bar n(P_-),"':
+    - generic: "n"
+    - text: ˉ
+    - text: (
+    - text: P
+    - generic: +
+    - text: ) <
+    - text: ν
+    - generic: −1
+    - text: <
+    - generic: "n"
+    - text: ˉ
+    - text: (
+    - text: P
+    - generic: −
+    - text: ),
+  - paragraph: using the explicit endpoint policies in the logistic rule. That weaker condition guarantees an inefficient stationary state but does not exclude other stationary equilibria.
+  - paragraph:
+    - text: The proved result is for homogeneous entrants and zero property tax. It does not establish price uniqueness, convergence from arbitrary initial states, or inefficiency outside the displayed region. If the stationary cohort mass
+    - math "N":
+      - generic: "N"
+    - text: is prescribed independently, housing-clearing compatibility in (19) must additionally hold. No unresolved step remains inside the proposition; heterogeneous entrants and positive, price-dependent tax rebates require a separate equilibrium argument.
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response" [active]:
+    - button "Pro feedback":
+    - button "Share":
+    - button "Switch model":
+    - button "More actions":
+  - generic: ChatGPT is AI and can make mistakes. Check important info.
+  - button:
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT":
+    - paragraph: Ask ChatGPT
+  - button "6 Pro":
+    - generic: "6"
+    - generic: Pro
+  - button "Start dictation":
+  - button "Start Voice":
+  - button
+  - button
+  - button
+- alert
+- status
+- generic: Copy response
+- tooltip "Copy response":
+  - generic: Copy response
