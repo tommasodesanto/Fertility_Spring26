@@ -8,10 +8,20 @@ Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; 
 The fixed-price comparison below does not answer whether the new model can fit.
 Torch access restored. Array17125770 now contains two identical retained-anchor
 full historical objective evaluations, each capped at six hours, one core/24GB.
-Both started around19:40 UTC and are RUNNING as of19:46 UTC. Cluster contract
-and operator tests passed in both cases, including fresh and cached processes;
-both are in old-steady-state normalization with updating heartbeats. No completed
-two-shock objective or target-fit table exists yet.
+Both original cases FAILED after about40 minutes, detected20:22 UTC, at the same
+`Two-shock probability accounting failed` check during market clearing in the
+third historical period. Two historical periods completed; there is NO complete
+objective or target-fit table. Earlier operator/lifecycle tests did not cover
+this failing historical state. This is an implementation failure, not a fit result.
+
+Diagnostic-only replay17132977 repeats one identical history and captures original
+operator inputs/outputs on the unchanged exception. Same immutable numerical source;
+no tolerance or model changes. Wrapper `tools/capture_e5f_two_shock_failure.py`,
+replay plan `failure_capture_plan.json` in the existing output folder, SHA256
+`47caa310ea0a5b54cbb4c143313bb23ab6ed702203cbc9e87d1649c26cfb4048`.
+One core/24GB, two-hour cap versus observed40-minute history. Original failures
+are preserved. Monitor this replay and investigate before another objective run.
+A bounded independent Astra/max numerical review is also underway.
 After exact-loop/reproducibility checks, report the full objective and all twelve
 fit rows at the retained parameter vector. STOP there for discussion with Tommaso.
 Do not launch a search, recalibration or policies. The previous instruction to
