@@ -1,0 +1,50 @@
+{
+  "cases": [
+    {
+      "births": 0.07745347107248202,
+      "case": "old_fixed_price",
+      "elapsed_seconds": 16.462755604996346,
+      "market_residual": 0.2699510358018253,
+      "mass": 0.9999999999997385,
+      "mean_parity": 1.2546433637369256,
+      "ownership": 0.5962001660973334,
+      "timings": {
+        "bellman_full": 4.32431437401101,
+        "bellman_mode": "full_only",
+        "distribution": 12.125916638993658,
+        "income_process": "markov",
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1
+      }
+    },
+    {
+      "births": 0.07746088527365698,
+      "case": "two_shock_fixed_price",
+      "elapsed_seconds": 111.02487372094765,
+      "market_residual": 0.2665417550690422,
+      "mass": 0.9999999999998967,
+      "mean_parity": 1.2547634632146498,
+      "ownership": 0.58938380287995,
+      "reconstruction": {
+        "reconstructed_baseline_births": 0.07746088527365722,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 4.295581642215311e-15,
+        "stationary_post_fertility_nesting_max_abs": 3.360910383480102e-16
+      },
+      "stationary_birth_gap": 2.3592239273284576e-16,
+      "stationary_current_l1": 4.296607168096509e-15,
+      "timings": {
+        "bellman_full": 104.87763137399452,
+        "bellman_mode": "full_only",
+        "distribution": 6.112811027967837,
+        "income_process": "markov",
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1
+      }
+    }
+  ],
+  "elapsed_seconds": 139.33427332201973,
+  "status": "complete"
+}
