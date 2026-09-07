@@ -1,5 +1,16 @@
 # Simplified OLG: development plan and overnight record
 
+## September 7: utility age labels
+
+Tommaso objected to mixing young utility u^Y with old utility u^2. The main
+note now uses lowercase u^y and u^o, as the author subsequently specified.
+Exactly six function labels changed; all other
+source text, equations and figures are unchanged. Two compilations pass.
+Rendered pages 1 and 2 were inspected; the other eleven pages are pixel-identical.
+The integrated verification record contains the old and new source/PDF hashes.
+This supersedes the overnight statement that the main note is byte-unchanged;
+the mathematical results and their archived evidence are unchanged.
+
 ## September 6–7: positive costs, finite comparisons and Pro review
 
 The additional local checks pass. The main reading note, figures, author

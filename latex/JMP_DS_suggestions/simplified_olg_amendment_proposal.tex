@@ -46,10 +46,10 @@ the parts of the household bundle available to the adults as
 \end{equation}
 Young and old flow utilities are
 \begin{align}
- u_t^Y(c,h,n)&=\log(c-\chi n)+\alpha\log(h-\kappa n)
+ u_t^y(c,h,n)&=\log(c-\chi n)+\alpha\log(h-\kappa n)
  +\vartheta_t\log n,
  \label{eq:amend_preferences}\\
- u^2(c^2,h^2,e)&=\log c^2+\gamma\log h^2+\omega_B\log e.
+ u^o(c^2,h^2,e)&=\log c^2+\gamma\log h^2+\omega_B\log e.
  \label{eq:amend_old_preferences}
 \end{align}
 Both child requirements reduce the bundle left for adults. All log arguments
@@ -109,7 +109,7 @@ into old age; owners carry the house and its mortgage.
 \textbf{Young renters.}
 Conditional on renting, the young household solves
 \begin{align}
- W_t^R(i)=\max_{c,h,n,a'}\;&u_t^Y(c,h,n)+\beta V_{t+1}^R(R_fa') \nonumber\\
+ W_t^R(i)=\max_{c,h,n,a'}\;&u_t^y(c,h,n)+\beta V_{t+1}^R(R_fa') \nonumber\\
  \text{s.t.}\quad&
  c+a'+q\,r_th=y_i+b_i+T_t,\nonumber\\[-2pt]
  &h\leq h_R^{\max},\qquad a'\geq0.
@@ -120,7 +120,7 @@ The renter enters old age with financial wealth $R_fa'$.
 \textbf{Young owners.}
 Conditional on owning, the young household solves
 \begin{align}
- W_t^O(i)=\max_{c,h,n,a'}\;&u_t^Y(c,h,n)+\beta V_{t+1}^O(a_{t+1},h) \nonumber\\
+ W_t^O(i)=\max_{c,h,n,a'}\;&u_t^y(c,h,n)+\beta V_{t+1}^O(a_{t+1},h) \nonumber\\
  \text{s.t.}\quad&
  c+a'+[(1-\phi_t)+q\tau^p]P_th=y_i+b_i+T_t,\nonumber\\[-2pt]
  &a_{t+1}=R_fa'-R_f\phi_tP_th,\qquad
@@ -135,10 +135,10 @@ household becomes old, leaving financial wealth $a_{t+1}$ and title $H=h$.
 An old household has financial wealth $a$. An owner also carries housing $H$
 from young age. Renters and owners solve, respectively,
 \begin{align}
- V_t^R(a)&=\max_{c^2,h^2,e}u^2(c^2,h^2,e),\nonumber\\
+ V_t^R(a)&=\max_{c^2,h^2,e}u^o(c^2,h^2,e),\nonumber\\
  &c^2+qe+q\,r_th^2=a+T_t,\quad 0<h^2\leq h_R^{\max},
  \label{eq:amend_old_renter}\\
- V_t^O(a,H)&=\max_{c^2,h^2,e}u^2(c^2,h^2,e),\nonumber\\
+ V_t^O(a,H)&=\max_{c^2,h^2,e}u^o(c^2,h^2,e),\nonumber\\
  &c^2+qe+q\,r_th^2=a+P_tH+T_t,\quad
  0<h^2\leq H,\quad e\geq P_{t+1}h^2.
  \label{eq:amend_old_budget}
