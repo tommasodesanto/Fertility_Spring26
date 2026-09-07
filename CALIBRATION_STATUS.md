@@ -1,8 +1,35 @@
 # Calibration Status
 
-Updated: `2026-09-07 13:20 UTC` (final PDF verified; poor experimental fit and partial tax path remain)
+Updated: `2026-09-07 16:36 UTC` (two-shock fixed-price computational test passed; production unchanged)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**2026-09-07 16:36 UTC: independent contemporaneous two-shock test passed.**
+This is a different specification from the overnight tenure-nested GEV below:
+U[d,a] = Q[d,a] + d H + a F, with independent centered logistic differences,
+no scale ordering, and retained first/later fertility scales. Author authorized
+the bounded lunch computation; production remains unchanged. Isolated branch
+`codex/two-contemporaneous-shocks`, numerical revision `910a9464`, evidence
+revision `41f25e91`; local worktree `tmp/e5f_two_shock_test_20260907a/`.
+
+Sixteen numerical/Bellman/accounting tests pass. The default-off model reproduces
+all ten pristine-parent arrays exactly in the same local runtime. A full-grid
+fixed-price lifecycle comparison at unchanged parameters finds births +0.009572%
+and all-adult ownership -0.681636 percentage points. No occupied budget violations
+or downward value steps; population reconstruction L1 4.297e-15 and birth gap
+2.359e-16. These are diagnostic quantities, not calibration moments or a new loss.
+Both freshly computed populations have roughly 27% housing-market residuals at
+the inherited historical price, so neither solve is a market-cleared equilibrium.
+The joint menu retains committed tenure across conception and deterministic
+within-tenure product choice; those differences from production remain explicit.
+
+Receipts and limitations: `output/model/e5f_two_shock_test_20260907a/README.md`.
+Final three-case probe completed in 139.3 seconds locally; no new cluster job
+because authentication was rejected. No illustrations generated at the author's
+request. The unchanged twelve-moment fit, market clearing, recalibration and
+policy runs for this two-shock formulation remain outstanding. The poor fit
+of the overnight GEV version below is not evidence about its calibrated fit.
+
 
 **2026-09-07 13:20 UTC: overnight readout finalized; experimental calibration remains incomplete.**
 The final discussion PDF is `output/pdf/joint_nested_review_20260907_final.pdf`
