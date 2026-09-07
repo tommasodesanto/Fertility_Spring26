@@ -32,11 +32,12 @@ class ControllerTests(unittest.TestCase):
                    'finalizer_sha256':search.digest(driver),'output_root':str(root/'output'),
                    'contract_path':'contract.json'}
             obj.finish=time.time()+120; obj.lock=__import__('threading').Lock(); obj.active={}
+            obj.state=mock.Mock(); obj.stop_event=__import__('threading').Event()
             obj.finalizer_proc=None; obj.finalizer_out=None
             obj.start_overlapped_finalizer({'summary':'selected.json'})
             pid=obj.finalizer_proc.pid
             obj.poll_overlapped_finalizer()  # The short policy process may still be running.
-            time.sleep(.25); obj.poll_overlapped_finalizer()
+            obj.poll_overlapped_finalizer()
             with mock.patch.object(obj,'finish_finalizer') as finish:
                 obj.await_overlapped_finalizer()
             finish.assert_called_once()
@@ -52,21 +53,25 @@ class ControllerTests(unittest.TestCase):
 
     def test_stop_active_kills_real_orphan_group_without_waiting_for_parent(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp); marker=root/'orphan-survived'; ready=root/'child-started'
+            root=Path(tmp); marker=root/'orphan-survived'; ready=root/'child-started'; release=root/'release-child'
             child=root/'child.py'; child.write_text(
-                'import pathlib,sys,time,signal\nsignal.signal(signal.SIGTERM,signal.SIG_IGN)\npathlib.Path(sys.argv[2]).write_text("started")\ntime.sleep(.7)\npathlib.Path(sys.argv[1]).write_text("survived")\n')
+                'import pathlib,sys,time,signal\nsignal.signal(signal.SIGTERM,signal.SIG_IGN)\npathlib.Path(sys.argv[2]).write_text("started")\ndeadline=time.time()+30\nwhile not pathlib.Path(sys.argv[3]).exists() and time.time()<deadline:time.sleep(.02)\npathlib.Path(sys.argv[1]).write_text("survived")\n')
             parent=root/'parent.py'; parent.write_text(
-                'import subprocess,sys\nsubprocess.Popen([sys.executable,sys.argv[1],sys.argv[2],sys.argv[3]])\n')
-            proc=subprocess.Popen([sys.executable,str(parent),str(child),str(marker),str(ready)],start_new_session=True)
-            for _ in range(50):
-                if ready.exists(): break
-                time.sleep(.01)
-            self.assertTrue(ready.exists())
-            proc.wait(timeout=1)  # Its child is now an orphan in the same process group.
+                'import subprocess,sys\nsubprocess.Popen([sys.executable,sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4]])\n')
+            proc=subprocess.Popen([sys.executable,str(parent),str(child),str(marker),str(ready),str(release)],start_new_session=True)
             obj=object.__new__(search.Search); obj.stop_event=__import__('threading').Event()
             obj.c={'run_profile':'parallel32_overlap'}; obj.lock=__import__('threading').Lock(); obj.active={proc.pid:proc}
-            obj.stop_active(); time.sleep(.9)
-            self.assertFalse(marker.exists())
+            try:
+                deadline=time.time()+15
+                while not ready.exists() and time.time()<deadline: time.sleep(.05)
+                self.assertTrue(ready.exists())
+                proc.wait(timeout=5)  # Its child is now an orphan in the same process group.
+                obj.stop_active()
+                release.write_text('go')
+                time.sleep(1)
+                self.assertFalse(marker.exists())
+            finally:
+                obj.stop_active()
 
     def test_fixed_final_records_better_probe_without_selecting_it(self):
         with tempfile.TemporaryDirectory() as tmp:
