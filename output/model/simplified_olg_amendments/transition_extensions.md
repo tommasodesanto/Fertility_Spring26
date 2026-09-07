@@ -4,12 +4,17 @@ Supporting results, September 6–7, 2026. The main theory note remains the
 reading copy for discussion. These results retain its preferences, budgets,
 tenure constraints and treatment of inherited claims.
 
-There are three additions. The stationary population signs hold over a wider
+The first three additions concern equilibrium. The stationary population signs hold over a wider
 class of mixed-tenure economies. A simple preference restriction guarantees
 local convergence in the all-owner limit. Finally, an explicit finite
 fertility decline followed by a later credit reform admits converging paths,
 with the intended fertility and population comparisons. The last result is
 still restricted to the all-owner limit with zero child goods costs and tax.
+A household calculation gives an exact fertility condition for a finite
+housing increase, including a simple example in which welfare and fertility
+move in opposite directions.
+Sections 6 and 7 summarize the subsequent positive-cost stationary result and
+an explicit, very small finite neighborhood in the genuine mixed economy.
 
 ## 1. Housing misallocation along the paths
 
@@ -334,6 +339,130 @@ costs remains open. The stationary result in section 2 does not close that
 gap. Neither result proves an all-date fertility ordering or a welfare gain
 from the competitive credit reform.
 
+## 5. A finite version of the household fertility condition
+
+Compare a young owner's choices in two environments at the same decision
+date. Keep preferences fixed, with \(\chi>0\), positive saving and interior
+old-age choices in both environments. Prices and rebates may differ. Write
+\(\rho=1+\beta(1+\gamma+\omega_B)\). The original reduced budget is:
+\[
+ \rho x^j+\chi n^j+u^jh^j=w^j,\qquad j\in\{0,1\}.
+\]
+Suppose housing increases by \(\Delta h=h^1-h^0>0\). The additional housing
+payment, after accounting for changes in lifetime resources, is:
+\[
+ \mathcal C=(u^1h^1-u^0h^0)-(w^1-w^0).
+\]
+Thus \(\mathcal C\) includes both the price change and any offsetting rebate
+or transfer. With \(x^0=c^0-\chi n^0\) and \(s^0=h^0-\kappa n^0\), the
+exact comparison is:
+\[
+ \boxed{\quad n^1>n^0\quad\Longleftrightarrow\quad
+ \mathcal C<
+ \frac{\rho\alpha\kappa(x^0)^2\Delta h}
+      {\alpha\kappa x^0\Delta h+\chi s^0(s^0+\Delta h)}.\quad}
+\]
+This is a finite version of the main note's local condition. It uses the
+initial household bundle and the total payment, without a borrowing multiplier.
+It does not include changes in the share of households choosing each tenure.
+
+**Proof.** The fertility first-order condition has a residual that decreases
+strictly with \(n\) wherever adult goods and space are positive. If
+\(\mathcal C<\rho x^0\), it can be evaluated at the old fertility in the new
+environment. The difference of residuals at \(n^0\) is:
+\[
+ \frac{\alpha\kappa\Delta h}{s^0(s^0+\Delta h)}
+ -\frac{\chi\mathcal C}{x^0(\rho x^0-\mathcal C)}.
+\]
+Its sign therefore orders the two roots. Multiplying by the positive
+denominators gives the stated condition. The argument compares the two
+first-order conditions; the saving and old-age conditions are required at
+the two chosen bundles.
+If \(\mathcal C\geq\rho x^0\), positive adult goods instead require
+\(n^1<n^0\). The displayed payment threshold is strictly below
+\(\rho x^0\), so the equivalence covers that case as well.
+
+Dividing the threshold by \(\Delta h\) and taking the limit gives:
+\[
+ p<\frac{\rho\alpha\kappa(x^0)^2}{\chi(s^0)^2},
+\]
+which is the existing local condition. The allowed average payment decreases
+as \(\Delta h\) increases. A local fertility increase therefore need not
+extend to a large housing change.
+
+**An example at fixed prices.** Let
+\[
+ (q,\beta,\gamma,\omega_B)=(1/2,1/4,1,2),\quad
+ (\alpha,\kappa,\chi,\vartheta)=(1,1,4,5),
+\]
+and take \(b=3/5\), \(y=69/10\), zero tax, and prices \(P=3/2\) at all
+relevant dates. The owner size limit is four. At \(\phi=4/5\), the owner
+chooses \(h=2\) and \(n=x=s=1\). Raising \(\phi\) to \(17/21\) increases
+its home to \(21/10\). The extra housing payment is \(3/40\), exceeding
+the fertility threshold \(2/45\). Fertility falls to approximately
+\(0.995491\).
+
+The household is nevertheless better off. At the new housing limit, keeping
+\(n=1\), taking \(x=77/80\), and adjusting saving and old spending is
+feasible. That plan alone raises lifetime utility by:
+\[
+ \log\!\left[(77/80)^2(11/10)\right]
+ =\log(65219/64000)>0.
+\]
+Optimal choices improve on this plan. The checker verifies both original
+budgets and all owner inequalities, and isolates the new fertility between
+\(0.99549\) and \(0.99550\) using rational arithmetic. The example holds
+prices fixed to isolate the household response; it makes no equilibrium or
+population comparison.
+
+## 6. Stationary population with positive child costs
+
+The [positive-cost proof](positive_child_costs.md) retains both tenures,
+homogeneous entrants and the original strict household constraints, with zero
+tax. It gives sufficient conditions for the two stationary population signs
+using household ratios. The credit condition bounds the extra housing needed
+by the young to maintain replacement fertility and the housing released by
+the old. It holds in an exact economy with \(\chi=3/20\), owner share
+\(11/21\), and every positive taste scale. Both taste parameters remain
+fixed within each economy during the comparisons.
+
+The same proof gives a counterexample at \(\chi=2\) and owner share
+\(33/83\). Old owners occupy more housing than capped renters, and every
+original household inequality remains strict. Credit nevertheless raises
+stationary price and lowers population. Both conditional fertility choices
+fall; replacement is maintained by a shift toward the higher-fertility owner
+tenure. Young housing rises by more than old housing falls.
+
+Thus positive goods costs need an explicit condition. The sufficient bound is
+valid at a material renter share and positive cost, but it is a condition on
+household ratios, not solely on primitive parameters. General positive-tax
+and heterogeneous comparisons remain open beyond local persistence. The full
+inequalities and both exact examples are in the linked proof.
+
+## 7. An explicit finite neighborhood with both tenures
+
+The [mixed finite-transition proof](mixed_finite_transition_proof.md) now
+quantifies a neighborhood in the original positive-cost, positive-tax economy
+at taste scale four. Roughly 47.6 percent rent throughout. It covers an earlier
+preference decline and a later credit reform at any baseline date:
+\[
+ 0<\vartheta_0-\vartheta_1\le10^{-11},\qquad
+ 0<\phi_1-\phi_0\le10^{-8}.
+\]
+Both infinite paths exist and converge. The baseline decline lowers initial
+fertility and terminal population; the later credit reform raises fertility
+at intervention and terminal population relative to the continuing baseline.
+The proof preserves the actual inherited mortgages, titles and forecasts at
+every possible intervention date.
+
+These bounds are extremely small. Their purpose is to verify an explicit
+finite neighborhood with material renting and child costs; they provide no
+support for a sizeable policy claim. The argument validates the original
+forward equations, an infinite-sequence contraction, the stationary endpoint,
+the entire tail, and every household inequality with rational intervals.
+It imposes no finite terminal allocation. Broader parameter conditions and
+useful finite reform ranges remain open.
+
 ## Verification
 
 Run from the project root:
@@ -348,6 +477,10 @@ floating-point checks against the original household helper.
 The [review record](transition_extension_reviews.json) preserves the three
 bounded research reports and the separate review of the finite proof's
 financial settlement and infinite derivative calculation.
+It also preserves the subsequent positive-cost and finite mixed proofs, the
+independent reviews of the finite mixed and household fertility arguments,
+and the lead's original-equation checks. The same command runs all supporting
+checks, including both new mathematical modules.
 
 The main TeX/PDF, its two figures, earlier proofs, quantitative code and
 author decisions are unchanged.

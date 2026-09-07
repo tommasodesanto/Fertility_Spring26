@@ -7,6 +7,8 @@ against the original household equations.
 """
 
 import hashlib
+import contextlib
+import io
 import json
 import sys
 from pathlib import Path
@@ -374,13 +376,104 @@ def finite_transition_certificate():
     return report
 
 
+def finite_fertility_comparison():
+    """Check a finite household comparison against the original budgets."""
+    from fractions import Fraction as F
+
+    rr, aa, kk, xx, ss, cc, dh, payment = sp.symbols(
+        "rho alpha kappa x s chi dh payment", positive=True
+    )
+    critical = rr*aa*kk*xx**2*dh/(aa*kk*xx*dh+cc*ss*(ss+dh))
+    foc_change = aa*kk*dh/(ss*(ss+dh))-cc*payment/(xx*(rr*xx-payment))
+    denominator = aa*kk*xx*dh+cc*ss*(ss+dh)
+    assert sp.simplify(
+        foc_change*ss*(ss+dh)*xx*(rr*xx-payment)
+        - denominator*(critical-payment)
+    ) == 0
+    assert sp.simplify(sp.limit(critical/dh, dh, 0)
+                       - rr*aa*kk*xx**2/(cc*ss**2)) == 0
+    assert sp.simplify(sp.diff(critical/dh, dh)
+                       + rr*aa*kk*xx**2*(aa*kk*xx+cc*ss)/denominator**2) == 0
+
+    # This is a fixed-price household example, not an equilibrium experiment.
+    q, beta, gamma, omega = F(1,2), F(1,4), F(1), F(2)
+    alpha, kappa, chi, theta = F(1), F(1), F(4), F(5)
+    b, y, price, rho = F(3,5), F(69,10), F(3,2), F(2)
+    w, user_cost, h0, h1 = y+b, (1-q)*price, F(2), F(21,10)
+    net_payment, critical_payment = F(3,40), F(2,45)
+    assert user_cost*(h1-h0) == net_payment > critical_payment
+    assert critical.subs({rr:rho, aa:alpha, kk:kappa, xx:1, ss:1,
+                           cc:chi, dh:h1-h0}) == sp.Rational(2,45)
+
+    def residual(n):
+        x = (w-user_cost*h1-chi*n)/rho
+        return theta/n-chi/x-alpha*kappa/(h1-kappa*n)
+
+    nlo, nhi = F(99549,100000), F(99550,100000)
+    assert residual(nlo)>0>residual(nhi)
+    xmin = (w-user_cost*h1-chi*nhi)/rho
+    xmax = (w-user_cost*h1-chi*nlo)/rho
+    saving_min = y-(w-user_cost*h1)/rho-chi*(1-1/rho)*nhi
+    interval_margins = {
+        "adult_goods":xmin, "adult_space":h1-kappa*nhi,
+        "saving":saving_min, "physical_cap":F(4)-h1,
+        "purchase":alpha*xmin/(h1-kappa*nlo)-user_cost,
+        "retention":h1-beta*gamma*xmax/(q*user_cost),
+        "estate":beta*omega*xmin/q**2-price*beta*gamma*xmax/(q*user_cost),
+    }
+    assert min(interval_margins.values())>0
+
+    # A feasible plan at the old fertility already strictly raises lifetime utility.
+    xt, nt = F(77,80), F(1)
+    saving = w-xt-chi*nt-b
+    phi1 = F(17,21)
+    assets = saving/q-phi1*price*h1/q
+    c2, h2, estate = beta*xt/q, beta*gamma*xt/(q*user_cost), beta*omega*xt/q**2
+    assert (1-phi1)*price*h1 == b
+    assert c2+q*estate+user_cost*h2 == assets+price*h1
+    assert min(saving, xt, h1-kappa*nt, h1-h2, estate-price*h2)>0
+    welfare_ratio = xt**2*(h1-kappa*nt)
+    assert welfare_ratio == F(65219,64000)>1
+
+    p = parameters(q=.5, phi=.8, b=.6, y=6.9, alpha=1., beta=.25,
+                   gamma=1., omega=2., kappa=1., theta=5., chi=4., owner_cap=4.)
+    rows=[]
+    for phi in (.8,17/21):
+        pp=dict(p,phi=phi)
+        hh=young_choices([1.5]*3,[0.,0.],pp)
+        x,h,n,saving,c2,h2,estate=hh["owner"]["z"]
+        budgets=[x+4*n+saving+(1-phi)*1.5*h-7.5,
+                 c2+.5*estate+.75*h2-hh["owner"]["assets"]-1.5*h]
+        assert max(map(abs,budgets))<3e-14
+        assert min(x,h-n,saving,4-h,x/(h-n)-.75,h-h2,estate-1.5*h2)>0
+        rows.append({"phi":phi,"housing":float(h),"fertility":float(n),
+                     "adult_consumption":float(x),"conditional_value":float(hh["owner"]["utility"]),
+                     "maximum_original_budget_error":float(max(map(abs,budgets)))})
+    assert float(nlo)<rows[1]["fertility"]<float(nhi)<rows[0]["fertility"]
+    assert rows[1]["conditional_value"]>rows[0]["conditional_value"]
+    return {"scope":"Fixed-price conditional household comparison; no equilibrium or population claim.",
+            "symbolic_identities":"Exact FOC comparison, local limit, and declining average payment threshold.",
+            "exact_extra_payment":str(net_payment),"exact_critical_payment":str(critical_payment),
+            "exact_fertility_bracket":list(map(str,(nlo,nhi))),
+            "exact_trial_welfare_ratio":str(welfare_ratio),
+            "exact_household_margin_bounds":{key:str(val) for key,val in interval_margins.items()},
+            "original_household_checks":rows}
+
+
 def main():
+    from verify_simplified_olg_positive_costs import run as positive_cost_checks
+    with contextlib.redirect_stdout(io.StringIO()):
+        from verify_simplified_olg_mixed_finite import run as mixed_finite_checks
+        mixed_finite = mixed_finite_checks()
     report = {
         "scope": "Supporting theory only. No calibration, finite-horizon simulation, new planner power, or main-note revision.",
         "symbolic_original_equation_checks": symbolic_checks(),
         "finite_transition_certificate": finite_transition_certificate(),
         "limiting_branch_witnesses": limiting_witnesses(),
         "mixed_stationary_original_equation_checks": mixed_stationary_checks(),
+        "finite_fertility_comparison": finite_fertility_comparison(),
+        "positive_child_cost_stationary_checks": positive_cost_checks(),
+        "mixed_finite_transition_certificate": mixed_finite,
     }
     report["source_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     evidence = [
@@ -391,6 +484,11 @@ def main():
         "output/model/simplified_olg_amendments/transition_extensions.md",
         "output/model/simplified_olg_amendments/transition_extension_reviews.json",
         "code/model/tools/verify_simplified_olg_local_transition.py",
+        "code/model/tools/verify_simplified_olg_mixed_transition.py",
+        "code/model/tools/verify_simplified_olg_positive_costs.py",
+        "code/model/tools/verify_simplified_olg_mixed_finite.py",
+        "output/model/simplified_olg_amendments/positive_child_costs.md",
+        "output/model/simplified_olg_amendments/mixed_finite_transition_proof.md",
     ]
     report["evidence_sha256"] = {
         name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in evidence
