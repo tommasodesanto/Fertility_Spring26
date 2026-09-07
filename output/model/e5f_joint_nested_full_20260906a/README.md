@@ -945,3 +945,35 @@ on Torch's shared filesystem; those fixtures were repaired and retested in o.
 Snapshot n ran no model or calibration job. The lead review, source manifest,
 preflight, submission and Torch test log are in `parallel_search_o/` under
 `output/model/e5f_joint_nested_full_20260906a/`. Production remains unchanged.
+
+
+**September 7, 10:27 UTC: all four current-source histories passed; policy smoke running.**
+Job `17105914` has completed all four historical verification cases. Independent
+verification checked all 84 receipt artifact hashes and unchanged source,
+target, market, accounting, population, budget and occupied-value gates.
+The two anchors reproduce loss451.3564277560195, all twelve fit rows, all
+parameters,253 historical entries and17 diagnostic PNGs exactly. They took
+1774.48 and1782.49 seconds. The minus and plus probes took1508.22 and1547.47
+seconds. The complete four-policy/eight-date smoke is now running; search
+`17106283` still awaits successful completion through its automatic dependency.
+
+Best smoke probe4 has loss450.7052931460765. It is a starting point, not a
+finished calibration. Its complete twelve-row fit and all eleven estimates,
+bounds and fixed restrictions are in
+`output/model/e5f_joint_nested_full_20260906a/support_repair_m/smoke/smoke_histories/task_004/target_fit_long.csv`
+and sibling `parameter_table.csv`. All17 standard figures were inspected.
+The parent ownership gap contributes379.205 of the loss; ownership flattens
+near one half, births remain too early, and the first-birth room response is
+still too small. These are fit deficiencies the broad search must address.
+Lambda and theta1 are flagged near bounds. Conditional policies at negative
+wealth remain irregular, but the realized budget and occupied-value checks
+pass; no new numerical violation was established. High-income wealth reaches
+the upper plotted boundary and remains a limitation to inspect at selection.
+
+Independent receipt: `support_repair_m/completed_history_verification.json`;
+visual review: `support_repair_m/visual_review/review.json`, relative to the
+output folder above. A first supplemental receipt-check invocation passed
+artifact/result checks but supplied a summary path where compare_reference
+expects a directory; that invocation wrote no certificate. The corrected,
+saved verification script then passed. This was a diagnostic-call mistake,
+not a model failure. The production calibration is unchanged.
