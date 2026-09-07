@@ -22,6 +22,18 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/build_e5f_joint_nested_review.py` builds the experimental morning PDF
+from a complete collected candidate (`--selected-dir`), optional completed
+`--policy-results`, `--search-verification`, and lead-written `--narrative`.
+It validates full fit/parameter tables, numerical gates, artifact and source
+hashes, policy dates and the original inherited-state receipt. Smoke inputs
+require an explicit `--fixture-label`; no numerical model runs in the builder.
+`tools/test_build_e5f_joint_nested_review.py --fixture-root <collected-smoke>`
+checks report acceptance/rejection and the two-date/full-path writer schemas.
+Build to a new PDF, then render and inspect it before replacing a discussion
+copy. Root output evidence and final discussion status remain canonical.
+
+
 `tools/run_e5f_joint_nested_experiment.py` is an isolated one-date simultaneous
 nested-logit diagnostic, with tenure nests and a matched fertility-first
 sequential control. It requires a hash-pinned retained scientific snapshot;
