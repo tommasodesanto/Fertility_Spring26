@@ -1,0 +1,64 @@
+{
+  "cases": {
+    "baseline": {
+      "dates": 11,
+      "gates": {
+        "maximum_market_residual": 3.9252688255918725e-05,
+        "maximum_mass_residual": 1.3322676295501878e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 0.0,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 104
+      },
+      "source_summary_sha256": "c7487cafebdad76ddb7eef5d632eb72eb39b78bff1bc44a0ad57c0b7b539d9a9",
+      "status": "complete"
+    },
+    "dependent-child-ltv95": {
+      "dates": 11,
+      "gates": {
+        "maximum_market_residual": 4.708269954068673e-05,
+        "maximum_mass_residual": 1.2212453270876722e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 3.0535646311623325e-08,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 114
+      },
+      "source_summary_sha256": "c7487cafebdad76ddb7eef5d632eb72eb39b78bff1bc44a0ad57c0b7b539d9a9",
+      "status": "complete"
+    },
+    "supply-plus-20": {
+      "dates": 11,
+      "gates": {
+        "maximum_market_residual": 3.528396470783161e-05,
+        "maximum_mass_residual": 1.3322676295501878e-15,
+        "maximum_nonfinite_count": 0,
+        "maximum_projection_mass": 2.7278591663942604e-08,
+        "minimum_distribution_mass": 0.0,
+        "solve_count": 121
+      },
+      "source_summary_sha256": "c7487cafebdad76ddb7eef5d632eb72eb39b78bff1bc44a0ad57c0b7b539d9a9",
+      "status": "complete"
+    }
+  },
+  "elapsed_seconds": 3190.4981665611267,
+  "expectations": "temporary equilibrium: each current price treated as permanent",
+  "failures": {
+    "property-tax-2pct-no-rebate": {
+      "error": "Housing market did not clear: residual=2.791e-04.",
+      "traceback": "Traceback (most recent call last):\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_post2023_no_policy_continuations.py\", line 892, in clear_market\n    evaluation = calendar.clear_scalar_housing_market(\n        state.g_pre,\n    ...<8 lines>...\n        initial_policy=state.initial_policy,\n    )\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_dynamic_population_transition.py\", line 613, in clear_scalar_housing_market\n    raise RuntimeError(\n        f\"Housing market did not clear: residual={final.relative_market_residual:.3e}.\"\n    )\nRuntimeError: Housing market did not clear: residual=2.792e-04.\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_joint_nested_finalize.py\", line 115, in run_policy_case\n    rows,gates=policy.run_policy_path(prepared,state,packet['parameters'],float(state.g_pre.sum()),policy.POLICIES[name],\n               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        post_2023_periods=post,market_tol=2e-4,market_max_iter=60,progress_dir=folder)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_post2023_policy_mechanisms.py\", line 350, in run_policy_path\n    evaluation, shared, fallback = baseline.evaluate_state(\n                                   ~~~~~~~~~~~~~~~~~~~~~~~^\n        state,\n        ^^^^^^\n    ...<5 lines>...\n        market_max_iter,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_joint_nested_finalize.py\", line 97, in observed\n    evaluation,shared,fallback=original(*args,**kwargs)\n                               ~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_post2023_no_policy_continuations.py\", line 936, in evaluate_state\n    evaluation, fallback = clear_market(\n                           ~~~~~~~~~~~~^\n        state,\n        ^^^^^^\n    ...<6 lines>...\n        market_max_iter,\n        ^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_e5f_post2023_no_policy_continuations.py\", line 911, in clear_market\n    evaluation = calendar.clear_scalar_housing_market(\n        state.g_pre,\n    ...<8 lines>...\n        initial_policy=state.initial_policy,\n    )\n  File \"/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907o/code/model/tools/run_dynamic_population_transition.py\", line 613, in clear_scalar_housing_market\n    raise RuntimeError(\n        f\"Housing market did not clear: residual={final.relative_market_residual:.3e}.\"\n    )\nRuntimeError: Housing market did not clear: residual=2.791e-04.\n"
+    }
+  },
+  "fiscal_closure": "tax revenue discarded; no rebate or grant",
+  "inherited_state_verification_sha256": "e6f818ce5777fc822111689735c11c4154257ac54c5be7f235bc45bd30f89739",
+  "policy_workers": 4,
+  "population_closure": "closed national: M=0, rho=1",
+  "production_promoted": false,
+  "replacement_conversion": 0.47619047619047616,
+  "scientific_bundle": "cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760",
+  "selected_summary": "/scratch/td2248/projects/Fertility_Spring26_joint_nested_full_20260907m/output/model/joint_nested_overnight/smoke/smoke_histories/task_004/summary.json",
+  "selected_summary_sha256": "c7487cafebdad76ddb7eef5d632eb72eb39b78bff1bc44a0ad57c0b7b539d9a9",
+  "smoke": false,
+  "status": "partial_policy_failures",
+  "supply_elasticity": 0.63,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497"
+}

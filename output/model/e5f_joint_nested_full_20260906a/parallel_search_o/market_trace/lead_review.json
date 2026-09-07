@@ -1,0 +1,163 @@
+{
+  "status": "finite_grid_affordability_jump_confirmed_for_observed_states",
+  "wealth": 0.44186046511627897,
+  "financed_share": 0.8,
+  "house_size": 4.0,
+  "downpayment_price_threshold": 0.5523255813953488,
+  "price_interval": [
+    0.5523255813169656,
+    0.5523255813988259
+  ],
+  "relative_signed_excess": [
+    0.0005826403175339823,
+    -0.0002790756538894966
+  ],
+  "housing_demand_change_by_product": [
+    -0.0017401959240590514,
+    0.00257830525742192,
+    -0.004628746205755818,
+    -0.0006154864648508784,
+    2.473980176720403e-06,
+    2.0870288408580961e-07
+  ],
+  "observed_switch_examples": [
+    {
+      "age": 18.0,
+      "index": [
+        49,
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "inherited_mass": 0.00028793982223190823,
+      "lower_probabilities": [
+        [
+          0.40309512183394836,
+          0.0966479898198281
+        ],
+        [
+          0.4040674054716144,
+          0.09618948287460914
+        ]
+      ],
+      "lower_products": [
+        0,
+        2
+      ],
+      "upper_probabilities": [
+        [
+          0.40783004058956596,
+          0.09778113522826443
+        ],
+        [
+          0.4010308053225114,
+          0.0933580188596581
+        ]
+      ],
+      "upper_products": [
+        0,
+        1
+      ],
+      "wealth": 0.44186046511627897,
+      "weighted_maximum_plan_probability_change": 1.3633716647750602e-06
+    },
+    {
+      "age": 22.0,
+      "index": [
+        49,
+        0,
+        0,
+        1,
+        7,
+        0,
+        0
+      ],
+      "inherited_mass": 0.00019050404175759335,
+      "lower_probabilities": [
+        [
+          0.4107083776844751,
+          0.08787680793860243
+        ],
+        [
+          0.41309640697342165,
+          0.08831840740350078
+        ]
+      ],
+      "lower_products": [
+        0,
+        2
+      ],
+      "upper_probabilities": [
+        [
+          0.4152528454497992,
+          0.0884534773061812
+        ],
+        [
+          0.41105042904603,
+          0.08524324819798974
+        ]
+      ],
+      "upper_products": [
+        0,
+        1
+      ],
+      "wealth": 0.44186046511627897,
+      "weighted_maximum_plan_probability_change": 8.657394769313351e-07
+    },
+    {
+      "age": 18.0,
+      "index": [
+        49,
+        0,
+        0,
+        0,
+        11,
+        0,
+        0
+      ],
+      "inherited_mass": 0.00015010907862823578,
+      "lower_probabilities": [
+        [
+          0.3967359200333853,
+          0.10423362115929562
+        ],
+        [
+          0.39556592006185576,
+          0.10346453874546345
+        ]
+      ],
+      "lower_products": [
+        0,
+        2
+      ],
+      "upper_probabilities": [
+        [
+          0.4012577734714442,
+          0.10541531643342444
+        ],
+        [
+          0.3926667207352646,
+          0.10066018935986665
+        ]
+      ],
+      "upper_products": [
+        0,
+        1
+      ],
+      "wealth": 0.44186046511627897,
+      "weighted_maximum_plan_probability_change": 6.787712532789398e-07
+    }
+  ],
+  "source_lines": {
+    "solver.py": 2457,
+    "kernels.py": 666
+  },
+  "endpoint_graphs": 34,
+  "model_solve_count": 2,
+  "original_endpoint_reporting_failure": "After both exact solves and diagnostic packets passed, receipt writing tried to cast the four-entry phi array to float. The corrected receipt-only job read the saved endpoints, verified their exact inherited distributions/prices/residuals, and performed no new solve.",
+  "caution": "Local finite-grid diagnostic, not a proof of economic nonexistence or a completed 2051 policy solution. No change to the down-payment rule, gates or model.",
+  "production_promoted": false
+}

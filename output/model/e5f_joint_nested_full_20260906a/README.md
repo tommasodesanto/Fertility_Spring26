@@ -1,5 +1,149 @@
 # Full simultaneous-choice experiment
 
+**2026-09-07 13:20 UTC: overnight readout finalized; experimental calibration remains incomplete.**
+The final discussion PDF is `output/pdf/joint_nested_review_20260907_final.pdf`
+(18 pages; SHA-256 `ed111a67fd2b83e325e19e57f7715d35959fa1d0d2bcb831b443e0e40a6eca5e`).
+All pages were visually inspected. All 193 calibration numeric cells and 18
+policy-effect cells match the validated source tables and independently
+recomputed dated comparisons. Both full target-fit tables, all free parameters
+and bounds, the stable 17 diagnostics, partial policy paths and market diagnosis
+are included. Its sidecar and `parallel_search_o/final_pdf_qa.json` record QA.
+This verifies the report, not a complete calibration or an overall policy pass.
+
+Final search evidence remains 54 valid histories and six rejected proposals,
+two exact repetitions, no DE or polishing stage, and selected loss
+450.7052931460765 versus retained benchmark 30.482966707698903. Selection froze
+before sensitivity probes; slightly improving probes are unselected and are
+not independently repeated. The selected point is not a local optimum.
+The first-birth rooms target remains 0.7202462623815278; no target, weight or
+numerical gate changed. Full case fits and parameter restrictions are in
+`parallel_search_o/output/model/joint_nested_overnight/search/all_target_fits.csv`
+and `all_parameters.csv`, beneath `output/model/e5f_joint_nested_full_20260906a/`.
+Baseline, supply +20%, and dependent-child LTV95% finish in 2063. Tax has seven
+valid dates through 2047, then fails the unchanged market gate in 2051.
+There are 40 validated policy dates, not 44. Household-unit counts are not
+resident-person counts; these paths are temporary equilibria, not perfect
+foresight or population forecasts.
+
+Endpoint diagnostics now identify the tax failure at a finite-grid affordability
+threshold. Occupied renters with wealth 0.44186046511627897 switch the preferred
+owner product from four to two rooms across price 0.5523255813953488, equal to
+wealth / [(1 - 0.8) x 4]. This price lies strictly inside the 8.19e-11-wide
+traced interval. Relative signed excess demand jumps from +5.8264e-4 to
+-2.7908e-4, skipping the 2e-4 gate. The down-payment formula is correct.
+No evaluated price clears; this is not proof of economic nonexistence.
+Further bisection is not a supported fix. A numerical remedy must examine the
+wealth-distribution/grid representation at the affordability boundary without
+relaxing the gate; arbitrary mixing of strictly preferred/infeasible choices
+has not been justified. See `parallel_search_o/market_trace/lead_review.json`.
+
+Endpoint job 17110298 completed both exact solves and 34 standard graphs, then
+failed only while serializing the four-entry financed-share array as a scalar.
+The reporting correction and receipt-only job 17110396 verified the saved
+endpoints without new solves or overwrites. Both have zero budget violations
+and occupied-value drops. Independent artifact verification checked 40 endpoint
+files. Trace job 17109894 completed 72 prices after its exact-loop smoke.
+Three display-only plotting jobs were cancelled while pending, with zero runtime;
+all 17 display copies were rendered locally with numerical artist-data equality
+checks and hashes. Original certified graphs are untouched. Torch's user queue
+was empty at the final check. No scientific computation remains active.
+
+Before another large search, reconcile the chosen tenure nests: inner fertility
+scale is lambda times the outer tenure scale, with lambda <= 1. Simultaneous
+shock realization alone does not impose that ordering. Deterministic products
+within tenure also change the shock specification. Preserve all identifying
+targets. Review this restriction, the affordability-grid treatment, weak local
+bequest identification, occupied wealth boundaries and empirical parent-group
+metadata before adopting a replacement. Production task_010 remains retained.
+Experimental source/reporting changes are committed and pushed as aa2c71de on
+`codex/joint-nested-full`; running numerical snapshot o remains 62c0355f with
+science bundle cb18d8f1a5af71d48cf5e6b8d45f158df8e6d54d7de2f341806495dfd4166760.
+Seven report validation tests and Python compilation pass. No production code
+or protected author draft was edited for this finalization.
+
+
+### Final readout reproduction
+
+Open `../../pdf/joint_nested_review_20260907_final.pdf`; pages 1–4 give the
+assessment, complete fit, parameter restrictions and policy outcomes. Pages
+5–8 contain supplemental diagnostics and the full retained benchmark; pages
+9–18 contain the unchanged standard graph set with readable display geometry.
+
+From the repository root, regenerate into a **new** path (the builder refuses
+to overwrite an existing PDF):
+
+```bash
+bash output/model/e5f_joint_nested_full_20260906a/parallel_search_o/build_readout.sh /tmp/joint_nested_review_rebuilt.pdf
+```
+
+The recipe uses the bundled Python runtime and isolated local plotting
+libraries in `tmp/pdfs/plot_dependencies`. Its builder is versioned on
+`codex/joint-nested-full`, commit `aa2c71de`. Saved verified inputs are local;
+large original checkpoints also remain in the immutable Torch snapshots.
+`parallel_search_o/render_display_graphs.py` regenerates the seventeen display
+copies from the selected checkpoint and records unchanged plotted data plus
+original/display hashes in `display_graphs_readout_final/display_manifest.json`.
+It changes legend placement and crowded tick labels only. This rendering
+performs no model solve. The original standard packet remains hash-identical
+to both exact historical reproductions.
+
+`final_pdf_qa.json` and the PDF verification sidecar distinguish passed report
+checks from the unchanged `partial_policy_failures` scientific receipt. The
+first/last tax dates are 2023 and 2047; no missing 2051–2063 result is imputed.
+`market_trace/` preserves original trace/replay launch recipes, the serialization
+failure and receipt-only recovery, and the independently checked affordability
+threshold. Full source/reporting changes are isolated from the production tree.
+
+### Earlier progress records
+
+**2026-09-07 12:43 UTC: historical verification finished; tax-policy market failure diagnosed.**
+Search job `17106283` finished with two exact selected reproductions but an
+incomplete policy receipt. The frozen selection remains loss 450.7052931460765.
+There are 54 valid historical evaluations: four imported smokes, 27 initial
+starts, 21 sensitivity probes and two final repetitions. Six proposals were
+rejected: four market failures, including the negative H0 sensitivity probe,
+and two one-hour timeouts. No DE or polishing round ran. Complete 648-row
+fit and 756-row parameter/bounds tables are in `parallel_search_o/output/model/
+joint_nested_overnight/search/all_target_fits.csv` and `all_parameters.csv`
+beneath `output/model/e5f_joint_nested_full_20260906a/`.
+
+The local 12-by-11 weighted Jacobian has numerical rank 11 and condition number
+1270.5 in transformed coordinates, with a one-sided H0 column. This does not
+establish global identification. The least-sensitive combination is dominated
+by theta1, the bequest wealth shift. Some final diagnostic probes improve the
+objective slightly, but remain unselected because selection froze before their
+wave; they are not independently reproduced. The selected point is not a local
+optimum. Final verification and all 17 standard graphs reproduce exactly.
+
+Baseline, supply +20%, and dependent-child LTV95% paths all finish in 2063.
+The unrebated tax branch has seven valid dates through 2047, then fails at 2051:
+residual 2.791e-4 exceeds the unchanged 2e-4 gate. All 40 completed date packets
+pass budget, value and probability checks; four tax dates remain unavailable.
+The complete branch effects and tax prefix must be reported as PARTIAL policy
+evidence, never a completed 44-date run. Independently verified artifact hashes
+are recorded in `parallel_search_o/lead_completed_evidence.json` (1,934 files).
+
+Bounded fixed-state diagnostic job `17109894` completed 72 price evaluations
+in 253 seconds after its exact two-endpoint loop smoke. It reconstructs the
+2051 inherited population from the hashed 2047 tax checkpoint and the unchanged
+transition/entry law. Across a price interval only 8.19e-11 wide, relative
+signed excess demand changes from +5.8264e-4 to -2.7908e-4. No evaluated price
+meets the gate. This identifies a sharp aggregate demand jump at the numerical
+resolution; increasing bisection iterations is not a supported remedy. It does
+not establish economic nonexistence. Two-endpoint replay job `17110298` is
+queued to isolate the changed household choices and save standard graphs.
+No target, gate, production source, or original failed output was changed.
+
+A scoped worker added explicit opt-in partial-policy PDF validation, preserving
+default rejection of incomplete receipts. The lead reviewed the diff and
+re-ran seven passing report tests. A supplemental six-panel policy-path chart
+keeps the stable 17 diagnostics intact. Preview v3 builds and its first page
+was visually inspected; the final PDF still awaits endpoint evidence and full
+page QA. Source is exclusively on `codex/joint-nested-full` in the isolated
+worktree. Diagnostic output and exact launch recipes are under
+`parallel_search_o/market_trace/`. The 13:35 UTC hard cutoff remains in force.
+
+
 **September 7, 08:03 UTC: all verification passed; 32-worker calibration is running.**
 Torch job `17100904` started at07:59:24UTC oncs747. It completed the full
 independent preflight and is running the initial32-case population. The four

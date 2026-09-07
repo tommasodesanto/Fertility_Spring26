@@ -1,0 +1,936 @@
+{
+  "status": "partial_policy_evidence_validated_visual_review_passed",
+  "pdf": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/pdf/joint_nested_review_20260907_final.pdf",
+  "pdf_sha256": "ed111a67fd2b83e325e19e57f7715d35959fa1d0d2bcb831b443e0e40a6eca5e",
+  "selected_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_joint_nested_full_20260906a/support_repair_m/smoke/smoke_histories/task_004",
+  "selected_summary_sha256": "c7487cafebdad76ddb7eef5d632eb72eb39b78bff1bc44a0ad57c0b7b539d9a9",
+  "selected_artifacts_checked": 21,
+  "reference": {
+    "fit": [
+      {
+        "candidate": "task_010",
+        "moment": "tfr",
+        "target": "1.918",
+        "model": "1.922907297694601",
+        "gap": "0.004907297694600965",
+        "weight": "1425.7389910084596",
+        "loss_contribution": "0.03433403425958609",
+        "standardized_gap": "0.18529445285702995"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "childless_rate",
+        "target": "0.188",
+        "model": "0.18940702462487113",
+        "gap": "0.0014070246248711338",
+        "weight": "17180.743822072007",
+        "loss_contribution": "0.034013032866156874",
+        "standardized_gap": "0.18442622608012363"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "mean_age_first_birth",
+        "target": "26.0446272574833",
+        "model": "26.256031541823507",
+        "gap": "0.2114042843402082",
+        "weight": "44.44444444444444",
+        "loss_contribution": "1.9863009527731377",
+        "standardized_gap": "1.409361895601388"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "share_first_births_age30plus",
+        "target": "0.260327401666964",
+        "model": "0.2375792414210984",
+        "gap": "-0.022748160245865595",
+        "weight": "10000.0",
+        "loss_contribution": "5.174787945715799",
+        "standardized_gap": "-2.27481602458656"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "housing_increment_0to1",
+        "target": "0.7202462623815278",
+        "model": "0.4364179208112562",
+        "gap": "-0.2838283415702716",
+        "weight": "137.5652749002964",
+        "loss_contribution": "11.082055978147165",
+        "standardized_gap": "-3.32897221047986"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+        "target": "0.36769955881",
+        "model": "0.4034409231344638",
+        "gap": "0.03574136432446379",
+        "weight": "2958.514988007638",
+        "loss_contribution": "3.7793405450428073",
+        "standardized_gap": "1.9440526086098615"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "own_family_gap",
+        "target": "0.16766167",
+        "model": "0.1616985236814279",
+        "gap": "-0.005963146318572116",
+        "weight": "14229.590955975675",
+        "loss_contribution": "0.5059916472145447",
+        "standardized_gap": "-0.7113308985377654"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "own_rate",
+        "target": "0.575472",
+        "model": "0.5444878258053526",
+        "gap": "-0.030984174194647385",
+        "weight": "1207.8460856134493",
+        "loss_contribution": "1.1595552522900592",
+        "standardized_gap": "-1.0768264726918906"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "aggregate_mean_occupied_rooms_18_85",
+        "target": "5.779970481941968",
+        "model": "6.3172910685440815",
+        "gap": "0.5373205866021138",
+        "weight": "11.973159013172177",
+        "loss_contribution": "3.4568116005276597",
+        "standardized_gap": "1.8592502791522338"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+        "target": "6.8731",
+        "model": "6.932652211829002",
+        "gap": "0.05955221182900239",
+        "weight": "6.287669427540395",
+        "loss_contribution": "0.02229900542730481",
+        "standardized_gap": "0.14932851511785955"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "annual_bequest_flow_to_aggregate_wealth",
+        "target": "0.0088",
+        "model": "0.008432624197135676",
+        "gap": "-0.000367375802864325",
+        "weight": "5165289.256198346",
+        "loss_contribution": "0.6971331638956991",
+        "standardized_gap": "-0.8349450065098294"
+      },
+      {
+        "candidate": "task_010",
+        "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+        "target": "3.44811075444552",
+        "model": "3.2365109696119956",
+        "gap": "-0.21159978483352448",
+        "weight": "56.95977216091135",
+        "loss_contribution": "2.5503435495389875",
+        "standardized_gap": "-1.596979508177543"
+      }
+    ],
+    "parameters": [
+      {
+        "parameter": "beta_annual",
+        "value": "0.995116569194981",
+        "lower_bound": "0.94",
+        "upper_bound": "0.9995",
+        "transform": "discount",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "kappa_fert",
+        "value": "2.1681730392479377",
+        "lower_bound": "0.02",
+        "upper_bound": "50.0",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "kappa_fert_continuation",
+        "value": "1.7364706586958831",
+        "lower_bound": "0.02",
+        "upper_bound": "50.0",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "chi",
+        "value": "1.0434717373613915",
+        "lower_bound": "0.1",
+        "upper_bound": "5.0",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "H0",
+        "value": "14.562959141565095",
+        "lower_bound": "0.2",
+        "upper_bound": "80.0",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "theta0",
+        "value": "0.5284284711333161",
+        "lower_bound": "0.0",
+        "upper_bound": "8.0",
+        "transform": "softzero",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "theta1",
+        "value": "0.10724930821495539",
+        "lower_bound": "0.02",
+        "upper_bound": "16.0",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "True"
+      },
+      {
+        "parameter": "hbar_child_rooms",
+        "value": "0.2822101230841891",
+        "lower_bound": "0.1",
+        "upper_bound": "1.8",
+        "transform": "log",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "first_birth_fixed_cost",
+        "value": "4.5591384147193255",
+        "lower_bound": "0.0",
+        "upper_bound": "8.0",
+        "transform": "softzero",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "hbar_first_child_jump",
+        "value": "0.3649311350610432",
+        "lower_bound": "0.0",
+        "upper_bound": "0.5",
+        "transform": "softzero",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "psi_child_change_2023",
+        "value": "-0.32871390689556357",
+        "lower_bound": "-1.5",
+        "upper_bound": "0.2",
+        "transform": "asinh",
+        "is_free_parameter": "True",
+        "status": "estimated_free_transition_parameter",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "psi_child_2007",
+        "value": "0.288016852719851",
+        "lower_bound": "nan",
+        "upper_bound": "nan",
+        "transform": "derived",
+        "is_free_parameter": "False",
+        "status": "externally_normalized_to_old_completed_fertility",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "psi_child_2023",
+        "value": "-0.040697054175712566",
+        "lower_bound": "nan",
+        "upper_bound": "nan",
+        "transform": "derived",
+        "is_free_parameter": "False",
+        "status": "derived_from_old_intercept_and_transition_coordinate",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "tenure_choice_kappa",
+        "value": "0.005",
+        "lower_bound": "nan",
+        "upper_bound": "nan",
+        "transform": "external_profile",
+        "is_free_parameter": "False",
+        "status": "externally_fixed_profile_not_estimated",
+        "near_bound": "False"
+      },
+      {
+        "parameter": "housing_supply_elasticity",
+        "value": "0.63",
+        "lower_bound": "nan",
+        "upper_bound": "nan",
+        "transform": "external_profile",
+        "is_free_parameter": "False",
+        "status": "externally_fixed_profile_not_estimated",
+        "near_bound": "False"
+      }
+    ],
+    "loss": 30.482966707698903,
+    "fit_sha256": "950fe7c4e79833298080ffa2ab18321409568038dcb5e7484751e94361a951ee",
+    "parameters_sha256": "ebc3f0c049cca2e890a71d3753e6e81cfab4f1c3b96957da535d8ba720bf2feb"
+  },
+  "fit_rows": 12,
+  "fit_cells": [
+    {
+      "candidate": "task_001",
+      "moment": "tfr",
+      "target": "1.918",
+      "model": "1.9133352895164544",
+      "gap": "-0.004664710483545553",
+      "weight": "1425.7389910084596",
+      "loss_contribution": "0.031023401643309186",
+      "standardized_gap": "-0.1761346122808041"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "childless_rate",
+      "target": "0.188",
+      "model": "0.19116019885322164",
+      "gap": "0.003160198853221635",
+      "weight": "17180.743822072007",
+      "loss_contribution": "0.17158162812941113",
+      "standardized_gap": "0.41422412789383856"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "mean_age_first_birth",
+      "target": "26.0446272574833",
+      "model": "25.75639490192344",
+      "gap": "-0.2882323555598596",
+      "weight": "44.44444444444444",
+      "loss_contribution": "3.6923507018482367",
+      "standardized_gap": "-1.9215490370657307"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "share_first_births_age30plus",
+      "target": "0.260327401666964",
+      "model": "0.20458678024129062",
+      "gap": "-0.055740621425673376",
+      "weight": "10000.0",
+      "loss_contribution": "31.070168769202375",
+      "standardized_gap": "-5.574062142567337"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "housing_increment_0to1",
+      "target": "0.7202462623815278",
+      "model": "0.36548427309297793",
+      "gap": "-0.35476198928854985",
+      "weight": "137.5652749002964",
+      "loss_contribution": "17.3134247359043",
+      "standardized_gap": "-4.160940366780603"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "target": "0.36769955881",
+      "model": "0.36306163385313095",
+      "gap": "-0.004637924956869044",
+      "weight": "2958.514988007638",
+      "loss_contribution": "0.06363868667582459",
+      "standardized_gap": "-0.2522670939219473"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "own_family_gap",
+      "target": "0.16766167",
+      "model": "0.004416309412494712",
+      "gap": "-0.1632453605875053",
+      "weight": "14229.590955975675",
+      "loss_contribution": "379.2050488963566",
+      "standardized_gap": "-19.473187948981455"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "own_rate",
+      "target": "0.575472",
+      "model": "0.5016454522974882",
+      "gap": "-0.07382654770251174",
+      "weight": "1207.8460856134493",
+      "loss_contribution": "6.583194959286472",
+      "standardized_gap": "-2.5657737545010613"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "target": "5.779970481941968",
+      "model": "5.324311933113574",
+      "gap": "-0.45565854882839396",
+      "weight": "11.973159013172177",
+      "loss_contribution": "2.4859237052547796",
+      "standardized_gap": "-1.576681231338402"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "target": "6.8731",
+      "model": "7.1630495970278565",
+      "gap": "0.2899495970278565",
+      "weight": "6.287669427540395",
+      "loss_contribution": "0.5286092028380552",
+      "standardized_gap": "0.7270551580437726"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "annual_bequest_flow_to_aggregate_wealth",
+      "target": "0.0088",
+      "model": "0.008254268687589699",
+      "gap": "-0.0005457313124103014",
+      "weight": "5165289.256198346",
+      "loss_contribution": "1.5383402135592457",
+      "standardized_gap": "-1.2402984372961394"
+    },
+    {
+      "candidate": "task_001",
+      "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "target": "3.44811075444552",
+      "model": "3.0728294850849043",
+      "gap": "-0.3752812693606158",
+      "weight": "56.95977216091135",
+      "loss_contribution": "8.02198824537786",
+      "standardized_gap": "-2.832311466872572"
+    }
+  ],
+  "parameter_cells": [
+    {
+      "parameter": "beta_annual",
+      "value": "0.9963075646657805",
+      "lower_bound": "0.94",
+      "upper_bound": "0.9995",
+      "transform": "discount",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "tenure_choice_kappa",
+      "value": "2.0383678960910228",
+      "lower_bound": "0.005",
+      "upper_bound": "10.0",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "joint_nest_lambda",
+      "value": "0.9951219079689325",
+      "lower_bound": "0.02",
+      "upper_bound": "1.0",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "True"
+    },
+    {
+      "parameter": "chi",
+      "value": "1.251672493395819",
+      "lower_bound": "0.1",
+      "upper_bound": "5.0",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "H0",
+      "value": "11.504738714387747",
+      "lower_bound": "0.2",
+      "upper_bound": "80.0",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "theta0",
+      "value": "0.5954891250484261",
+      "lower_bound": "0.0",
+      "upper_bound": "8.0",
+      "transform": "softzero",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "theta1",
+      "value": "0.0928750306307684",
+      "lower_bound": "0.02",
+      "upper_bound": "16.0",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "True"
+    },
+    {
+      "parameter": "hbar_child_rooms",
+      "value": "0.29312885140894224",
+      "lower_bound": "0.1",
+      "upper_bound": "1.8",
+      "transform": "log",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "first_birth_fixed_cost",
+      "value": "4.9199969296692725",
+      "lower_bound": "0.0",
+      "upper_bound": "8.0",
+      "transform": "softzero",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "hbar_first_child_jump",
+      "value": "0.39544482702557116",
+      "lower_bound": "0.0",
+      "upper_bound": "2.0",
+      "transform": "softzero",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "psi_child_change_2023",
+      "value": "-0.3789332632682017",
+      "lower_bound": "-1.5",
+      "upper_bound": "0.2",
+      "transform": "asinh",
+      "is_free_parameter": "True",
+      "status": "estimated_free_transition_parameter",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "psi_child_2007",
+      "value": "0.2585716340454145",
+      "lower_bound": "nan",
+      "upper_bound": "nan",
+      "transform": "derived",
+      "is_free_parameter": "False",
+      "status": "externally_normalized_to_old_completed_fertility",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "psi_child_2023",
+      "value": "-0.1203616292227872",
+      "lower_bound": "nan",
+      "upper_bound": "nan",
+      "transform": "derived",
+      "is_free_parameter": "False",
+      "status": "derived_from_old_intercept_and_transition_coordinate",
+      "near_bound": "False"
+    },
+    {
+      "parameter": "housing_supply_elasticity",
+      "value": "0.63",
+      "lower_bound": "nan",
+      "upper_bound": "nan",
+      "transform": "external_profile",
+      "is_free_parameter": "False",
+      "status": "externally_fixed_profile_not_estimated",
+      "near_bound": "False"
+    }
+  ],
+  "selected_receipt_sha256": "efdd95cfbc0bbcf8dc9f919c2dd70320210416a8fcc2c6c6844f0ce16c02aaa8",
+  "policy_receipt_sha256": "33e393bfdd5ff3431bc1a1b2401dce7fd2a070a18a305564cba53ea5aeb38a01",
+  "policy_receipt_status": "partial_policy_failures",
+  "allow_partial_policies": true,
+  "free_parameters": 11,
+  "fixed_or_derived_parameters": 3,
+  "loss": 450.7052931460765,
+  "fixture_label": "EXPERIMENTAL - RETAINED STARTING POINT",
+  "policy_status": "PARTIAL policy evidence: 33 certified full-branch dates plus 7 valid property-tax prefix dates, 40 total, 4 unavailable after the property-tax branch fails market clearing in 2051. No overall pass is asserted.",
+  "policy_date_checks": [
+    {
+      "policy": "baseline",
+      "year": 2023,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2027,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2031,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2035,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2039,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2043,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2047,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2051,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2055,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2059,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "baseline",
+      "year": 2063,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2023,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2027,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2031,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2035,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2039,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2043,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2047,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2051,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2055,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2059,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "dependent-child-ltv95",
+      "year": 2063,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2023,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2027,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2031,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2035,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2039,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2043,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2047,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2051,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2055,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2059,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "supply-plus-20",
+      "year": 2063,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2023,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2027,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2031,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2035,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2039,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2043,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    },
+    {
+      "policy": "property-tax-2pct-no-rebate",
+      "year": 2047,
+      "budget_excess_mass": 0.0,
+      "standard_graphs": 17
+    }
+  ],
+  "search_verification_sha256": "94fb4b23977a4720e01f0ce53e8407381ede850645b1db3f030fdb1b801c0cee",
+  "narrative_sha256": "58a53b740e7d4de66f5d5f0d410e847188473cd372c4c70be02463d598c6808e",
+  "builder_sha256": "99b8715ac2e6b67bc9984b44fcd1b8248a484c5bded8cbf108cf756132deeb67",
+  "production_promoted": false,
+  "supplemental_policy_graph": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/pdf/joint_nested_review_20260907_final_policy_paths.png",
+  "supplemental_policy_graph_sha256": "e7f7096dc524445825eb55558ee00c6e266656a1beda6d8aeb920d38c9320a26",
+  "market_diagnostic_figure_sha256": "8d78c4c9473759bd9fba19627932180cdcccdc0ba374b866b5f55b776a7885af",
+  "display_manifest_sha256": "c84204a23b5c8af91cf2527c7c51a0b5c26707ee1ace4c8e0e4a8a9fe6d5d9c1",
+  "display_graphs": {
+    "fertility_by_age.png": {
+      "data_hash": "89ab9749a1f375e7d35fd66d74473590715ecf0e426c9601a5f1c26bf77caec5",
+      "data_unchanged": true,
+      "display_sha256": "f87475cf3b0895be78cb60c836e4a77d4901fe7a10a28e56df64b324c14a6d01",
+      "original_sha256": "18f20b71db1646e8d06fdc7f69012e4465691f2eba5ea8570035a372ec6fb5df"
+    },
+    "fertility_policy_by_age_income_state.png": {
+      "data_hash": "626772d83337c74acc0c056179f29d1addc3c4674cd91f8d820b61a02415f654",
+      "data_unchanged": true,
+      "display_sha256": "bba3085b054ff1cb62bafe489adbc1445d22743daf767416170873d728d998df",
+      "original_sha256": "8c780dbed09720c6e0d1cf859dfd7c36bcc93c52a8baa36c1310933059d499d2"
+    },
+    "housing_by_age_income_state.png": {
+      "data_hash": "5c94d6d6e59b0ac93276f7810593352b498999a41eb1f647f3fd6c329216c08b",
+      "data_unchanged": true,
+      "display_sha256": "ac3974a2106f46f0f0b15933e72d34c314c188d8e1f90c6f8835be751632c88a",
+      "original_sha256": "5b7505dcf97ccff09462e5b46accff8647e24d743bd32554c2ecc0fc95f9c593"
+    },
+    "housing_market.png": {
+      "data_hash": "4cda1247b1318b0f88d44949bb6561980b6ff0ce12f7c383a2c652c84d1cbae8",
+      "data_unchanged": true,
+      "display_sha256": "69c5ae60d6a256fda758c568b2b7184e2f9601877e072fcef8a2d2c5467133e5",
+      "original_sha256": "f9249362331a9fa21cb20cea7d2ad4284f0b524a15381261593cd55a582f23ff"
+    },
+    "housing_prices.png": {
+      "data_hash": "c629aa74cce1a30a42406e5da857b5a5fd1e6a8404ae56b9f0e34659b012c23a",
+      "data_unchanged": true,
+      "display_sha256": "b6aed0eb56013e62865bfcc2fd15911602e149ddca9f88b2b2b90cc032cfb998",
+      "original_sha256": "9741913f032abb847f82756ce8eef5341acaee965497ff2d1a4e7d2adf3770b7"
+    },
+    "income_state_outcomes.png": {
+      "data_hash": "af199983707f085222820b7d32320bf0a3c5a617abb13083b2fcb0e15bd9ad32",
+      "data_unchanged": true,
+      "display_sha256": "9d342b2b005491eb6e2395e65bdd7d99ad2f906b90e351604ec5657487a80929",
+      "original_sha256": "66f8abf5b74e13df70a6109920e52270003dffb5bcc7429a101c9dbe37c383d5"
+    },
+    "liquid_wealth_by_age_income_state.png": {
+      "data_hash": "b7381118b0d6e415fece4208cd8809817b7ea67216c98580aedf770a1d91f79b",
+      "data_unchanged": true,
+      "display_sha256": "c72fff29a2590b821b244d8f36de7f2669fcc0b34b7fb24dcaf7925c211c7770",
+      "original_sha256": "1e68bbe1fd6d552a4b32ec9a4349addc79e2d54827abd17317b163ebf5ab071c"
+    },
+    "market_clearing_by_market.png": {
+      "data_hash": "70b2b2a56f3c75ddcc8e1f058e5e94b26769a22d23ddadb95a69835e241d8aed",
+      "data_unchanged": true,
+      "display_sha256": "228ed6cd2adbf273ed20e6864c4a6ae01a7f15458a2b4f7ff34c12d520e855b7",
+      "original_sha256": "6a2a59013a178bb860d1e40b4167f91857521c4e03641e708e04d6250c0ea342"
+    },
+    "market_clearing_residuals.png": {
+      "data_hash": "25bbfaca2c8fc3fec3c8d3f1c1d04f2cb9d2f0cd3ff796abb1e725a8607d6640",
+      "data_unchanged": true,
+      "display_sha256": "3469c148e0d6386a70159814edc4f56e75fc212c40f0e00385c54fc50b10025e",
+      "original_sha256": "0b6551f6a6a8cca25c829c80316f622f796520213754a40d44ea5e4ed6d783ab"
+    },
+    "owner_rungs.png": {
+      "data_hash": "f434009e19279820277ebeae9f2493b08ea65c766b21bbf281fd0649f8eb052f",
+      "data_unchanged": true,
+      "display_sha256": "5c1d9b3218c8ed9a2ef0649566c9358a7151fb9fd758e5fbe8fb22d92bdce9b2",
+      "original_sha256": "1d18003949fe78a9ed6094648f4e8e83f39f0831c54f232c9e706889ebebb3e9"
+    },
+    "ownership_by_age.png": {
+      "data_hash": "6db972b755e3f145ce927093c8d6c5b7856f7c89be841ef49d61f610e758e248",
+      "data_unchanged": true,
+      "display_sha256": "6aabcdfb573f695e4902bae497804c4ded33c7db31a184e3b7b217bb1604ea25",
+      "original_sha256": "5ede1a0e186a19a628b8e1d35dd273dd3691971fb695b48e778dadf69b273d1e"
+    },
+    "ownership_by_age_income_state.png": {
+      "data_hash": "7c116ee5c6b53c25acca221255ea2b528b25fff66d28d1b7e54f400c7c38bb6e",
+      "data_unchanged": true,
+      "display_sha256": "33a36689694d9dedf4f3ea4b5b92436b70078aab3be3d9c2d74bf2e24a8f7d36",
+      "original_sha256": "11bba9c12ab28e4a9c348d97fe3493b6a652530dd8c6473848c8d7eb85117299"
+    },
+    "policy_childless_renter_age30.png": {
+      "data_hash": "899c65d376e88527609b91d336beb1eeb0b4ae12cadc9d907456eca5688a5a8c",
+      "data_unchanged": true,
+      "display_sha256": "a77975b315a29db3d4bb3adebc42429d371fba002138871510381230b1063634",
+      "original_sha256": "2a953f4ca72ed8255af112ca9b5b25bd268f87075bd25e7a6dea8dcb3c6f6e4b"
+    },
+    "policy_childless_renter_age42.png": {
+      "data_hash": "a8b90e16b3c9230440518b2c639296be282d62aa8d2663cd239b2b5ae429b84a",
+      "data_unchanged": true,
+      "display_sha256": "1b87600f9972d1a3b6e0e50a0ae7b1956616855ad791c6fd09ffb322b4791052",
+      "original_sha256": "a92fca4ee0897605ee22f04fe504aafc67c77f0e0739f50d8122baffa5420337"
+    },
+    "tenure_services.png": {
+      "data_hash": "433e2023038f3fe4a63227f90a182e4d0b06a5a5bdcf71d64ff8911e168c4314",
+      "data_unchanged": true,
+      "display_sha256": "8c9c45e47db2652c78d8f0f7da323c60c3600ba99c3c38bc9c320b154ed732d8",
+      "original_sha256": "585f6636efd58c4afa99700134642d8f6a252811d646328abbe762e79e60ffa1"
+    },
+    "wealth_dist_childless_renter_age30.png": {
+      "data_hash": "2653718f2534b90728b33dfaccca43aced10486108ad75f8f67c02dbd6c5fdf1",
+      "data_unchanged": true,
+      "display_sha256": "d9a6fb514e3de5cde0465693f3561ef5b4482ac4c8b9eddc6df78f685cd8475f",
+      "original_sha256": "2088f68d8507b4f30b80db2460200a2bcd150d1ff428bc9f2ff25ec828ac9367"
+    },
+    "wealth_dist_childless_renter_age42.png": {
+      "data_hash": "82db54de9be0a8b59d935d56f05d8ccf9f25cc32580c7914bd925a2c18148bc5",
+      "data_unchanged": true,
+      "display_sha256": "a7c6312685b24e5eeede6cbcaaec35df1b4a6a9dc9e9b8dccb381fda0dc57349",
+      "original_sha256": "b6a05875ce88b99d6075bd76d74b2f475d7d5087dab2a74009ce8a8facfe4c45"
+    }
+  },
+  "pages_visually_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "visual_review": "All eighteen rendered pages passed. Model/policy status remains partial_policy_failures."
+}
