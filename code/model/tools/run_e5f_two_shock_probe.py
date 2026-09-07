@@ -15,6 +15,7 @@ from intergen_eqscale_seq_optimized import solver as model
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--checkpoint',type=Path,required=True);ap.add_argument('--output',type=Path,required=True)
     ap.add_argument('--seconds',type=int,default=1200)
+    ap.add_argument('--local-reference',type=Path,help='Pristine parent arrays generated in this same runtime')
     args=ap.parse_args();args.output.mkdir(parents=True,exist_ok=True)
     start=time.monotonic();state={'phase':'loading','completed':[]}
     def save(name,obj):audit.save_json(args.output/name,obj)
@@ -28,6 +29,7 @@ def main():
     threading.Thread(target=heartbeat,daemon=True).start()
     packet=audit.load_checkpoint(args.checkpoint);P0=packet['parameters'];bg=packet['b_grid'];price=packet['evaluation'].policy.price
     save('contract.json',dict(status='diagnostic_only_no_calibration_no_market_clearing',checkpoint_sha256=audit.digest(args.checkpoint),
+        local_reference_sha256=audit.digest(args.local_reference) if args.local_reference else None,
         price=price,grid=list(packet['evaluation'].policy.V.shape),time_budget_seconds=args.seconds,
         cases=['default_off_reference','old_fixed_price','two_shock_fixed_price'],
         shocks='independent centered logistic housing and fertility differences',
@@ -41,10 +43,15 @@ def main():
     expected_second=P._fert2_probs.copy()
     result=model.solve_bellman_full_markov_income(P.user_cost_rate*price,price,P,bg,sd,continuation_V=ref.V)
     fields=('V','c_pol','hR_pol','bp_pol','tenure_choice','tenure_probs','loc_probs','fert_probs','fert_value')
+    local=np.load(args.local_reference) if args.local_reference else None
+    differences={}
     for field,value in zip(fields,result[:9]):
-        if not np.array_equal(value,getattr(ref,field)):raise RuntimeError('Baseline changed: '+field)
-    if not np.array_equal(P._fert2_probs,expected_second):raise RuntimeError('Baseline continuation fertility changed')
-    save('baseline_reference.json',dict(status='exact',arrays=list(fields)+['fert2_probs'],elapsed_seconds=time.monotonic()-start))
+        differences[field]=float(np.max(abs(value-getattr(ref,field))))
+        expected=local[field] if local is not None else getattr(ref,field)
+        if not np.array_equal(value,expected):raise RuntimeError('Baseline changed: '+field)
+    expected=local['fert2_probs'] if local is not None else expected_second
+    if not np.array_equal(P._fert2_probs,expected):raise RuntimeError('Baseline continuation fertility changed')
+    save('baseline_reference.json',dict(status='exact_same_runtime_parent' if local is not None else 'exact_checkpoint',checkpoint_max_abs_differences=differences,arrays=list(fields)+['fert2_probs'],elapsed_seconds=time.monotonic()-start))
     state['completed'].append('default_off_reference')
     cases=[]
     for name,active in (('old_fixed_price',False),('two_shock_fixed_price',True)):

@@ -74,7 +74,7 @@ class TwoShockTests(unittest.TestCase):
         from types import SimpleNamespace
         from intergen_eqscale_seq_optimized import joint_nested as joint
         P=SimpleNamespace(E_loc=np.array([0.]),mu_stay=0.,tenure_choice_kappa=.13,
-            joint_nest_lambda=.5,two_shock_choice=True,kappa_fert=.8,
+            two_shock_choice=True,kappa_fert=.8,
             kappa_fert_continuation=None,A_f_start=1,A_f_end=2,
             n_parity=3,first_birth_fixed_cost=.2)
         q=np.array([[[[[.1,.2],[.3,.4],[.1,.7]],[[.3,.9],[.8,.5],[.3,.6]],[[.6,.4],[.9,.7],[.5,.9]]]]])

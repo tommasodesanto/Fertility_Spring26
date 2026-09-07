@@ -53,7 +53,8 @@ def allocate(shape, P):
     from .parameters import readiness_gate_active
     if readiness_gate_active(P):
         raise NotImplementedError('Readiness extension is outside this joint experiment')
-    kappa, lam = float(P.tenure_choice_kappa), float(P.joint_nest_lambda)
+    kappa = float(P.tenure_choice_kappa)
+    lam = 1.0 if getattr(P, 'two_shock_choice', False) else float(P.joint_nest_lambda)
     if getattr(P, 'two_shock_choice', False):
         scales = (kappa, float(P.kappa_fert), float(P.kappa_fert if getattr(P, "kappa_fert_continuation", None) is None else P.kappa_fert_continuation))
         if any(not np.isfinite(x) or x <= 0 for x in scales):
@@ -76,7 +77,8 @@ def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
     q = np.stack((qr, qo), axis=-1)
     q = np.where(q > -1e9, q + float(P.E_loc[0] - P.mu_stay), -np.inf)
     products = np.stack((cr, co), axis=-1)
-    kappa, lam = float(P.tenure_choice_kappa), float(P.joint_nest_lambda)
+    kappa = float(P.tenure_choice_kappa)
+    lam = 1.0 if getattr(P, 'two_shock_choice', False) else float(P.joint_nest_lambda)
     _, wait = logsum_prob(q, kappa)
     plans = np.full(q.shape + (2,), -np.inf)
     plans[..., 0] = q

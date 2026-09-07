@@ -59,3 +59,18 @@ Independent Astra/max review confirmed the operator and mass-factorization
 reuse; its flagged continuation-scale fallback, incompatible flags, nonfinite
 result checks and thin-layer resolution were incorporated. It did not certify
 numerical results or calibration.
+
+## Local reference discipline
+
+The pristine parent source differs from the saved cluster checkpoint only at
+floating-point roundoff (maximum 3.553e-15 in V). It is therefore recomputed
+in the same isolated runtime using `tools/check_e5f_two_shock_local_reference.py`.
+The new code with both experimental flags off must reproduce all ten of those
+pristine-parent arrays bit for bit. This check passed. Cross-platform differences
+remain reported separately; no tolerance was relaxed to hide a code difference.
+Pass its `reference_arrays.npz` with `--local-reference` to the probe.
+
+The first full experimental call exposed an unnecessary dependency on the old
+GEV lambda field in a production checkpoint. The additive branch no longer reads
+that field; its Bellman wiring test deliberately omits it. All sixteen operator,
+Bellman and mass-accounting tests pass in the final isolated runtime.
