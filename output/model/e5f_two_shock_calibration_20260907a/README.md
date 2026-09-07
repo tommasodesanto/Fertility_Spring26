@@ -1,11 +1,12 @@
 # Two-shock calibration test — active
 
-The author clarified that the priority is actual calibration fit and parameter
-re-estimation, not additional fixed-price diagnostics. The first full historical
+The author clarified the sequence: verify code, inspect the objective at retained
+parameters, then discuss whether to recalibrate. No parameter search is authorized
+as an automatic next step. The first full historical
 objective evaluations are Torch array17125770 (cases1–2), pending priority at
 submission on September7. Each case runs the normalized old steady state and
 five historical dates; no policy counterfactuals. These are two identical retained
-anchors for an exact-loop/reproducibility smoke before the bounded search.
+anchors for the preliminary objective comparison and a reproducibility check.
 
 Source: experimental branch codex/two-contemporaneous-shocks,25ab08c4.
 Remote snapshot: /scratch/td2248/projects/Fertility_Spring26_two_shock_calibration_20260907a.
@@ -25,7 +26,7 @@ measurement. Do not claim an objective value until the historical gates pass.
 Every candidate writes a heartbeat, full fit/parameter tables and terminal
 checkpoint. No figures under the author's explicit instruction.
 
-Once both histories pass and exactly reproduce, compare all twelve fit rows
-with retained task010; use observed runtime to budget and launch the bounded
-recalibration of all eleven parameters. A restored10-minute thread heartbeat
-monitors this work. No production changes or policy runs.
+Once both histories pass and exactly reproduce, compare the objective and all
+twelve fit rows with retained task010, then STOP for discussion. No parameter
+search, recalibration or policy runs. The10-minute monitor has been corrected
+to pause after delivering this preliminary comparison. Production is unchanged.
