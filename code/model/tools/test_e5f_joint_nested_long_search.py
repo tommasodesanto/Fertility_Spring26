@@ -14,6 +14,51 @@ sys.path.insert(0, str(Path(__file__).parent))
 import run_e5f_joint_nested_long_search as search
 
 class ControllerTests(unittest.TestCase):
+    def test_fixed_final_records_better_probe_without_selecting_it(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);plan=out/'plan.json';obj=object.__new__(search.Search)
+            obj.c={'run_profile':'parallel32_fixed'};obj.best={'loss':10.};obj.ledger=[];obj.completed=0
+            receipt={'status':'complete','plan_sha256':'sha','artifact_sha256':{},'case_id':1,'loss':5.,'elapsed_seconds':10.}
+            summary={'best_candidate':{'transition_loss':5.},'panel_design':{'unit_vector':[.5]*11}}
+            search.write_json(out/'case_receipt.json',receipt)
+            with mock.patch.object(search.adapter,'validate_result',return_value=(summary,None,None)), \
+                    mock.patch.object(search.adapter,'load_plan',return_value={}):
+                obj._record_completed(plan,'sha',{'id':1,'label':'jacobian_0_minus'},out)
+                self.assertEqual(obj.best,{'loss':10.});self.assertEqual(obj.ledger[0]['loss'],5.)
+                obj._record_completed(plan,'sha',{'id':1,'label':'initial_1'},out)
+                self.assertEqual(obj.best['loss'],5.)
+
+    def test_combined_final_wave_requires_exact_repeats_and_discloses_better_probes(self):
+        for missing_repeat in (False,True):
+            with tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);obj=object.__new__(search.Search);obj.root=root
+                obj.c={**search.RUN_PROFILES['parallel32_fixed'],'run_profile':'parallel32_fixed'}
+                obj.completed=32;obj.best={'loss':10.,'unit_vector':[.5]*11,'summary':str(root/'anchor/summary.json')}
+                for name in ('anchor','repeat1','repeat2'):
+                    graphs=root/name/'standard_diagnostics';graphs.mkdir(parents=True)
+                    for i in range(17):(graphs/f'{i}.png').write_bytes(bytes([i]))
+                def batch(stage,vectors,labels,**kwargs):
+                    self.assertEqual(stage,'final_joint_verification');self.assertEqual(len(vectors),24)
+                    self.assertEqual(vectors[-2:],[[.5]*11]*2)
+                    rows=[{'label':'jacobian_0_minus','loss':9.,'summary':str(root/'probe/summary.json')}]
+                    rows += [{'label':f'selected_repeat_{i}','loss':10.,'summary':str(root/f'repeat{i}/summary.json')}
+                             for i in range(1,2 if missing_repeat else 3)]
+                    return rows
+                with mock.patch.object(obj,'can_fit',return_value=True),mock.patch.object(obj,'batch',side_effect=batch) as run, \
+                        mock.patch.object(obj,'write_jacobian'),mock.patch.object(search.adapter,'compare_reference') as compare, \
+                        mock.patch.object(obj,'reports'),mock.patch.object(obj,'run_finalizer_if_pinned') as finalizer, \
+                        mock.patch.object(obj,'summary'):
+                    if missing_repeat:
+                        with self.assertRaisesRegex(RuntimeError,'Two final repetitions'):obj.final_assessment()
+                        finalizer.assert_not_called();self.assertFalse((root/'final_verification.json').exists())
+                    else:
+                        obj.final_assessment();self.assertEqual(compare.call_count,2);finalizer.assert_called_once()
+                        proof=search.adapter.read_json(root/'final_verification.json')
+                        self.assertEqual(proof['selected']['loss'],10.);self.assertEqual(proof['exact_repeats'],2)
+                        diag=search.adapter.read_json(root/'fixed_selection_diagnostics.json')
+                        self.assertEqual(diag['unselected_lower_loss_probes'][0]['loss'],9.)
+                    run.assert_called_once()
+
     def test_smoke_only_contract_rejects_search_before_writing(self):
         with self.assertRaisesRegex(RuntimeError, 'verification only'):
             search.Search({'authorized_mode':'smoke'}, 'search')
@@ -31,6 +76,8 @@ class ControllerTests(unittest.TestCase):
         original=search.initial_population(center,domain,random.Random(20260906),'v1')
         parallel=search.initial_population(center,domain,random.Random(20260906),'parallel32')
         self.assertEqual(parallel,original)
+        self.assertEqual(search.initial_population(center,domain,random.Random(20260906),'parallel32_fixed'),original)
+        self.assertEqual(search.RUN_PROFILES['parallel32_fixed']['final_reserve_seconds'],3600+4200+1200)
         self.assertEqual(len(parallel),32)
         self.assertTrue(all(any(u[j]!=center[j] for u in parallel) for j in range(11)))
         obj=object.__new__(search.Search);obj.completed=4;obj.c=search.RUN_PROFILES['parallel32']
@@ -335,6 +382,14 @@ class ControllerTests(unittest.TestCase):
             self.assertEqual((plan_path.parent/plan["cases"][0]["center"]).read_bytes(),original_center.read_bytes())
             self.assertEqual(plan["cases"][0]["panel_task_id"],3)
             self.assertEqual(plan["cases"][1]["panel_seed"],17)
+            with mock.patch.object(search.adapter,'load_plan',return_value=source_plan):
+                combined,_=obj.new_plan('final_joint_verification',[[.2]*11,[.1]*11,[.1]*11],
+                    ['jacobian_0_minus','selected_repeat_1','selected_repeat_2'])
+            cp=search.adapter.read_json(combined)
+            self.assertNotEqual((combined.parent/cp['cases'][0]['center']).read_bytes(),original_center.read_bytes())
+            for case in cp['cases'][1:]:
+                self.assertEqual((combined.parent/case['center']).read_bytes(),original_center.read_bytes())
+                self.assertEqual(case['panel_task_id'],3)
 
     def test_budget_and_valid_incumbent_logic(self):
         obj=object.__new__(search.Search); obj.completed=358; obj.c={"max_histories":360,"max_workers":12,"case_timeout_seconds":3600}; obj.finish=1e20; obj.search_finish=1e20

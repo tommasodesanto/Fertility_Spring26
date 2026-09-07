@@ -41,6 +41,10 @@ RUN_PROFILES = {
                    "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
                    "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
                    "final_reserve_seconds": 12600},
+    "parallel32_fixed": {"max_workers": 32, "case_timeout_seconds": 3600, "max_histories": 640,
+                         "max_search_seconds": 32400, "max_total_seconds": 43200, "population_size": 32,
+                         "max_generations": 8, "polish_rounds": 2, "smoke_histories": 4,
+                         "final_reserve_seconds": 9000},
 }
 
 
@@ -156,8 +160,8 @@ def verify_parallel_policy_budget(contract):
     if not isinstance(elapsed, (int, float)) or not math.isfinite(elapsed) or elapsed <= 0:
         raise RuntimeError("Parallel policy smoke has no positive finite elapsed time")
     projected = elapsed * 44 / 8
-    # Two one-hour historical waves, a measured 44-date policy forecast, and
-    # twenty minutes of buffer must fit the fixed three-and-a-half-hour reserve.
+    # With selection frozen before final diagnostics, the Jacobian and exact
+    # repeats fit one parallel wave. Other profiles retain two waves.
     if projected > 4200 or evidence.get("projected_full_policy_seconds") != projected:
         raise RuntimeError("Measured policies do not fit the declared final reserve")
     imported = contract.get("imported_smoke") or {}
@@ -256,7 +260,7 @@ def verify_contract(path, expected_sha):
     for key in ("source_sha256", "code_bundle_sha256", "target_fingerprint", "search_domain"):
         if c.get(key) != base.get(key): raise RuntimeError(f"Mixed {key}")
     if c["target_fingerprint"] != adapter.TARGET or c["source_sha256"] != adapter.SOURCE: raise RuntimeError("Adapter/source target mismatch")
-    if profile == "parallel32": verify_parallel_policy_budget(c)
+    if profile in ("parallel32", "parallel32_fixed"): verify_parallel_policy_budget(c)
     c["run_profile"] = profile
     c["contract_path"] = str(Path(path).resolve())
     return c
@@ -305,12 +309,14 @@ class Search:
             plan["cases"].append({"id": i, "label": label, "center": center.name, "center_sha256": digest(center),
                 "panel_task_id": 1, "panel_size": 1, "panel_design": "mixed", "panel_seed": RNG_SEED,
                 "radius": .05, "output": f"task_{i:03d}"})
-        if stage == "final_repeats":
+        if stage in ("final_repeats", "final_joint_verification"):
             origin = self.repeat_origin
             source_plan_path = Path(origin["plan"])
             source_plan = adapter.load_plan(source_plan_path, origin["plan_sha256"])
             original = next(c for c in source_plan["cases"] if c["id"] == origin["id"])
             for case in plan["cases"]:
+                if not case['label'].startswith('selected_repeat_'):
+                    continue
                 center = dest/case["center"]
                 center.write_bytes((source_plan_path.parent/original["center"]).read_bytes())
                 for name in ("panel_task_id", "panel_size", "panel_design", "panel_seed", "radius"):
@@ -372,7 +378,9 @@ class Search:
                "summary": str((out/"summary.json").resolve()), "plan": str(plan.resolve()), "plan_sha256": sha,
                "unit_vector": summary["panel_design"]["unit_vector"], "elapsed_seconds": receipt["elapsed_seconds"]}
         self.ledger.append(row); self.completed += 1; self.consecutive_timeouts = 0
-        if self.best is None or loss < self.best["loss"]: self.best = row
+        diagnostic_only = (self.c.get('run_profile') == 'parallel32_fixed'
+                           and case['label'].startswith('jacobian_'))
+        if not diagnostic_only and (self.best is None or loss < self.best["loss"]): self.best = row
 
     def _reject(self, case, out, kind, error):
         self.completed += 1
@@ -619,15 +627,34 @@ class Search:
             for sign, name in ((-1, "minus"), (1, "plus")):
                 u = list(base); u[j] = min(1., max(0., u[j] + sign * .00125))
                 vectors.append(u); labels.append(f"jacobian_{j}_{name}")
-        if self.completed + FINAL_VERIFICATION_HISTORIES <= self.c["max_histories"] and self.can_fit(2*N, final=True):
+        fixed = self.c.get('run_profile') == 'parallel32_fixed'
+        repeats = None
+        if fixed:
+            if not self.can_fit(FINAL_VERIFICATION_HISTORIES, final=True):
+                raise RuntimeError('Budget cannot fit the contracted combined final verification')
+            self.repeat_origin = anchor
+            rows = self.batch('final_joint_verification', vectors+[base,base],
+                              labels+['selected_repeat_1','selected_repeat_2'])
+            probes = [r for r in rows if r['label'].startswith('jacobian_')]
+            repeats = [r for r in rows if r['label'].startswith('selected_repeat_')]
+            self.write_jacobian(probes, anchor)
+            if self.best != anchor:
+                raise RuntimeError('Final diagnostic probes changed the frozen selection')
+            write_json(self.root/'fixed_selection_diagnostics.json', {
+                'selected':anchor, 'selection_rule':'lowest completed search loss; frozen before final diagnostics',
+                'unselected_lower_loss_probes':[r for r in probes if r['loss'] < anchor['loss']],
+                'reason':'diagnostic probes share the exact-repeat wave and are not independently repeated',
+                'production_promoted':False})
+        elif self.completed + FINAL_VERIFICATION_HISTORIES <= self.c["max_histories"] and self.can_fit(2*N, final=True):
             rows = self.batch("final_jacobian", vectors, labels)
             self.write_jacobian(rows, anchor)
         else:
             write_json(self.root/"jacobian_diagnostics.json", {"status": "not_run_budget", "anchor": anchor})
         selected = copy.deepcopy(self.best); base = list(selected["unit_vector"])
-        if self.can_fit(2, final=True):
+        if repeats is not None or self.can_fit(2, final=True):
             self.repeat_origin = selected
-            repeats = self.batch("final_repeats", [base, base], ["selected_repeat_1", "selected_repeat_2"], smoke=True)
+            if repeats is None:
+                repeats = self.batch("final_repeats", [base, base], ["selected_repeat_1", "selected_repeat_2"], smoke=True)
             if len(repeats) != 2: raise RuntimeError("Two final repetitions required")
             origin = Path(selected["summary"]).parent
             graphs = sorted((origin/"standard_diagnostics").glob("*.png"))
@@ -676,7 +703,7 @@ class Search:
         write_csv(self.root/"jacobian_weighted_moments.csv", [{"moment": m, **{names[j]: float(matrix[i,j]) for j in range(N)}} for i,m in enumerate(moments)])
         meta = {"status": "complete" if np.isfinite(matrix).all() else "incomplete", "anchor": anchor,
                 "methods": dict(zip(names, methods)), "unit_widths": dict(zip(names, widths)),
-                "selected_may_include_better_jacobian_probe": True,
+                "selected_may_include_better_jacobian_probe": self.c.get('run_profile') != 'parallel32_fixed',
                 "derivative_units": "sqrt(weight) times model moment per transformed unit coordinate"}
         if np.isfinite(matrix).all():
             singular = np.linalg.svd(matrix, compute_uv=False)
