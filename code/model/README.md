@@ -22,6 +22,12 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_simple_fertility_search.py` runs the bounded recalibration
+through the existing planner and verified adapter. Two exact-reference smokes
+precede all-coordinate and joint proposals; final exact repeats and complete
+sequential-comparison tables are required. The run contract and limits are in
+`../../output/model/e5f_simple_fertility_recalibration_20260907a/README.md`.
+
 The isolated simple fertility-nest experiment is described in
 [`../../docs/model/e5f_simple_fertility_nest.md`](../../docs/model/e5f_simple_fertility_nest.md).
 It retains all six products and conception-contingent housing plans. Its
