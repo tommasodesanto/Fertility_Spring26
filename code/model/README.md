@@ -854,3 +854,10 @@ The 12-hour run uses up to 23 cluster workers, gates search on two full-history
 smokes, preserves all eleven parameter bounds and twelve target weights, and
 reserves final exact repeats plus local sensitivity checks. No production
 promotion, policy simulations, figures or monitoring automation.
+
+The September 8 impact-only follow-up uses
+`tools/run_e5f_simple_fertility_policy_impact.py` and the frozen contract under
+`../../output/model/e5f_simple_fertility_policy_impact_20260908a/`. It starts
+with an exact baseline replay, then tests family LTV95 and supply +20% at the
+same inherited 2023 population. It does not run a future transition or render
+figures. See the output README for budgets and numerical acceptance gates.
