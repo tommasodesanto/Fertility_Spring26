@@ -4,6 +4,21 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8 young-ownership validation (selected overnight candidate).**
+Verified checkpoint extraction, no solve, Torch job 17221903: unchanged
+whole-node young-ownership statistic is **33.1957%**, versus inherited ACS
+25–34 head reference **34.1166%** (0.9209 pp gap; untargeted).
+Whole-node selection includes nodes 26, 30 and 34. Uniform four-year-cell
+alternatives give 29.0131% with start-node bins and 33.1364% with centered bins.
+These are measurement alternatives, not uncertainty bounds. Annual-age ACS
+weights, model clock, geography and date alignment remain to reconcile before
+claiming the validation issue closed. The previous 31.0984% is historical,
+not the immediate overnight starting candidate. The 57.3005% headline fit is
+prime-age ownership; all-age model ownership is 65.6183%. Age-82 ownership
+remains 99.6772%, so late-life tenure validation is still outstanding.
+Full extraction and proposed September 14 presentation schedule are in the
+morning review linked below. No new calibration or policy run was launched.
+
 **September 8 morning: overnight job 17155429 completed and final repeats passed.**
 Finished at 09:11:41 EDT after 8h 58m 54s. Both prerequisite repeats also
 completed. Selected `polish_2_combined/task_010` loss **23.791955301663187**:

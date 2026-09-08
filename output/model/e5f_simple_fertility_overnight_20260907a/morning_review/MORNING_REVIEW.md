@@ -4,7 +4,7 @@ Job 17155429 completed at 09:11 EDT after 8h 58m 54s. Selected loss **23.791955*
 
 The accepted simultaneous fertility-nest specification, all twelve targets and weights, and all eleven free-parameter bounds are unchanged. No policy simulations were run; no production promotion occurred.
 
-Ownership is now 57.301% against 57.547%. The first-birth housing response remains 0.443859 rooms against 0.720246: it is slightly above the sequential control (0.439708), but below the previous nested candidate (0.457034). Births after age 30 remain too infrequent (23.563% versus 26.033%). Mean rooms remain too high (6.216 versus 5.780).
+Prime-age ownership is now 57.301% against 57.547%. The first-birth housing response remains 0.443859 rooms against 0.720246: it is slightly above the sequential control (0.439708), but below the previous nested candidate (0.457034). Births after age 30 remain too infrequent (23.563% versus 26.033%). Mean rooms remain too high (6.216 versus 5.780).
 
 There were 162 attempted full histories: 155 valid and seven rejected for market nonconvergence, with no gate relaxation. All 22 final sensitivity probes passed. The best diagnostic probe has loss 23.675506 (final_jacobian_9_plus); it has not received two final exact repeats and does not replace the frozen selection. Further local improvement remains possible.
 
@@ -67,3 +67,48 @@ The first-child housing jump is 0.469765 against an upper bound of 0.5 (6.05% of
   "final_wave_1": 23,
   "final_wave_2": 1
 }
+
+## Young ownership validation (8 September)
+
+A read-only extraction from the selected 2023 checkpoint, with its SHA256
+verified, gives young ownership **33.1957%**, against the inherited ACS
+household-head ages 25–34 reference **34.1166%**: a 0.9209 percentage-point gap.
+This row was not included in the twelve-moment objective. The unchanged model
+statistic aggregates whole nodes at ages 26, 30 and 34. This is encouraging,
+but does not settle the previously documented annual-age alignment issue.
+
+Uniform-within-cell diagnostics yield **29.0131%** if nodes denote cell starts
+and **33.1364%** if nodes denote cell centers. These are alternative measurement
+conventions, not a confidence interval or a change to the calibrated solution.
+The definitive presentation comparison must align the model clock, annual ACS
+age weights, sample geography and dates. Do not pick the convention by fit.
+The earlier 31.0984% belongs to a historical calibration, not the overnight
+starting candidate. It uses the same whole-node statistic.
+
+The 57.3005% ownership fit reported above refers to the maintained prime-age
+ownership row, not ownership across all ages. The saved distribution has
+65.6183% ownership across all model ages; no matched all-age data comparator
+was established in this check. The age-82 node still has 99.6772% ownership,
+so young-ownership progress should not be described as resolving all lifecycle
+tenure validation. Detailed masses and definitions are preserved in
+`young_ownership_validation.json`. No model solve, parameter edit or target
+change was needed; extraction ran on one Torch core in job 17221903.
+
+## Proposed presentation schedule (September 14)
+
+- September 8–9: settle age-aligned ownership validation and inspect the
+  birth-housing/timing trade-off using existing search and sensitivity results.
+  Freeze a benchmark after any strictly bounded, verified refinement.
+- September 9–11: reconcile current population, fiscal and housing-supply
+  contracts; test core policies on the selected simultaneous-choice calibration
+  and verify market clearing, budgets, population accounting and equilibrium
+  behavior. Historical policy numbers are not new-model results.
+- September 12–13: freeze numerical tables and policy results, reconcile choice
+  equations and parameter values with slides, and rehearse the mechanism and
+  remaining misses. No further specification changes unless correctness demands
+  them. This is a proposed schedule, not a record of launched policy jobs.
+
+A credible presentation by September 14 is feasible if these checks pass;
+a claim that calibration and lifecycle validation are fully resolved is not
+supported yet. The main near-term bottleneck is validating the new policy
+results and the remaining measurement comparisons, not another broad search.
