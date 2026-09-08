@@ -1522,3 +1522,8 @@ Submission is NOT confirmed. The prior in-app browser disconnected. A new Brave 
 ## Pro heterogeneity response: received and initial discussion review
 
 User supplied the completed answer; live in-app browser now works at https://chatgpt.com/c/6a9f3f09-df88-83ea-9736-90fe83c2f799 and matches the attachment. Response and discussion assessment are `output/model/simplified_olg_amendments/oracle_heterogeneity_transition_response.md` and `oracle_heterogeneity_transition_assessment.md`. Bounded max reviews support heterogeneous positive-tax stationary existence with aggregate replacement and the dated household eligibility test. The carry-forward extension must cover the formation date of the initial old cohort, or check it separately. Neither full transition existence/convergence nor policy welfare is established. Discuss recipient/donor separation first, then economic restrictions, then the missing path argument. No manuscript or quantitative model changed.
+
+
+## High-beta and Coven follow-up prepared
+
+Author requested a focused follow-up in the existing Theorem Construction Pro chat. Prompt: `docs/prompts/simplified_olg_high_beta_coven_followup_pro.md`. Maintain equilibrium existence, retain heterogeneity and fixed economically relevant beta, distinguish conservative proof bounds from real obstacles, and compare Coven's simple household structure. Full transitions deferred. Exact Oracle render and submission status use `oracle_high_beta_coven_*` in the amendments output folder. **Not submitted:** existing chat was readable, but input and subsequent browser reads timed out. Oracle copied the rendered follow-up for manual paste. No main theory note changed.
