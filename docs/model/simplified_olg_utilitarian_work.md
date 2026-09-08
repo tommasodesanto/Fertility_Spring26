@@ -506,3 +506,14 @@ static lemma and conservative income bounds, and asks for one stronger
 primitive equilibrium theorem. The current household model and note/slides
 remain unchanged. The follow-up is prepared for manual submission, not yet
 sent, and the completed previous-run monitor remains paused.
+
+Author update: prioritize an INDIVIDUAL comparison of a young household's
+housing in the competitive and full dated planner allocations, and report
+the aggregate comparison separately. The Pro follow-up now makes this
+explicit. Identify the affected young households through economic conditions;
+do not assume every young household strictly gains space, especially at a
+retained physical cap. Aggregate young housing growth and individual growth
+for a subset do not imply one another. A local improving transfer and
+young-versus-old housing within the planner are also different statements.
+The revised packet replaces the previous clipboard version; it is still for
+manual submission, with no Pro message sent by the agent.

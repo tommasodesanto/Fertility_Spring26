@@ -1,4 +1,4 @@
-Please treat the attached follow-up as the active task, superseding the previous stationary-cohort welfare question. Use the exact household-model attachment already provided in this chat.
+Please treat the attached follow-up as the active task, superseding the previous stationary-cohort welfare question. The individual housing comparison is now primary; derive the aggregate result separately. Use the exact household-model attachment already provided in this chat.
 
 ### File: docs/prompts/oracle_simplified_olg_dated_allocation.md
 ```md
@@ -9,6 +9,38 @@ in this chat. Your previous answer compares stationary cohort welfare and
 obtains a general gain from permanent old-to-young transfers. That is not the
 question I want answered. I want a simple analytical statement that a planner
 would assign MORE HOUSING TO THE CURRENT YOUNG than they receive in equilibrium.
+The author now prefers an INDIVIDUAL result as the main statement, with an
+aggregate statement alongside it when justified.
+
+## Individual first, aggregate separately
+
+The primary target compares the SAME young household in the market and full
+dated planner allocations:
+\[
+h_i^{y,SP}>h_i^{y,eq}\qquad\text{for }i\in\mathcal I.
+\]
+Identify the economically relevant set \(\mathcal I\), preferably through
+primitive wealth/income restrictions that also establish binding young
+financing, rather than by assuming the desired marginal-utility inequality.
+Try for a broad result but do not require every young household to receive
+strictly more housing: a household already at its retained physical cap
+cannot do so, and redistribution across heterogeneous young households can
+give some less. State the set's positive mass from the type distribution.
+
+Then separately seek
+\[
+H_Y^{SP}>H_Y^{eq}.
+\]
+More total young housing does not imply more housing for every young household.
+Conversely, more housing for a subset does not establish the aggregate sign.
+Either derive the additional aggregation conditions or identify that part as
+unproved. If all young weakly gain housing and a positive mass strictly gains,
+aggregation follows; otherwise account for the households whose housing falls.
+
+Do not confuse the primary comparison with young-versus-old housing INSIDE
+the planner allocation. Both claims above concern the full planner optimum,
+not just a feasible local transfer or its welfare derivative. A local
+individual result can be reported as a fallback, but must be labeled as such.
 
 ## The precise comparison
 
@@ -84,8 +116,8 @@ Thus \(H_Y^{eq}\le H_O^{eq}\) is a sufficient market-allocation condition for
 \(H_Y^{SP}>H_Y^{eq}\). This allows individual caps to bind.
 
 This is a useful intermediate lemma, NOT the final equilibrium theorem.
-The missing task is to derive the market ordering, or a weaker direct
-comparison to the static optimum, from economically intelligible primitives.
+The missing task is to derive the individual comparison and, separately, the
+aggregate ordering from economically intelligible primitives.
 Do not merely ASSUME that young marginal utility is higher or that equilibrium
 lies below the planner target. Also do not infer the full aggregate housing
 direction from a positive local welfare derivative: with heterogeneity and
@@ -129,10 +161,12 @@ binds or isolate its contribution from ordinary redistribution.
 ## What I need from this run
 
 1. Verify the dated planner and feasibility, preserving the question above.
-2. Determine whether the desired direction is general. If not, give explicit,
-   interpretable parameter/endowment-distribution inequalities under which
-   EVERY reference competitive equilibrium satisfying those primitive
-   restrictions has \(H_Y^{SP}>H_Y^{eq}\). Conditional existence must be
+2. Make the INDIVIDUAL housing comparison primary. Determine its scope and give
+   explicit, interpretable parameter/endowment-distribution inequalities under
+   which the specified young households receive larger homes in the full
+   planner allocation. Then derive the aggregate result separately where
+   possible. State whether the conclusions hold in every reference competitive
+   equilibrium satisfying the restrictions. Conditional existence must be
    distinguished from an equilibrium-existence theorem.
 3. Try to improve substantially on the conservative income bounds: exploit
    household optimality, permit aggregate rather than all-type restrictions,
@@ -144,7 +178,8 @@ binds or isolate its contribution from ordinary redistribution.
    label all such redistribution a borrowing distortion. A stronger claim
    specifically attributable to a binding young constraint requires proof.
 
-Deliver ONE main proposition, its proof, and a short interpretation of the
+Deliver ONE main proposition, with an individual part and a separately
+qualified aggregate part if proved, its proof, and a short interpretation of the
 assumptions. Show the exact condition before discussing how mild it might be.
 State clearly what the model implies versus what the theorem requires. If a
 stronger conjecture fails, give the precise obstruction and the best valid
