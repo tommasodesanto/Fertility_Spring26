@@ -517,3 +517,111 @@ for a subset do not imply one another. A local improving transfer and
 young-versus-old housing within the planner are also different statements.
 The revised packet replaces the previous clipboard version; it is still for
 manual submission, with no Pro message sent by the agent.
+
+## September 8: completed Pro review of the individual dated comparison
+
+The author submitted the follow-up in the existing Pro chat. Its completed
+response (23 minutes 41 seconds) was captured from the browser as
+`output/model/simplified_olg_amendments/oracle_dated_allocation_response.md`.
+All 125 mathematical expressions were checked against the browser's visible
+math source labels. The capture SHA256 is
+`bb89961c71c978759cc96967143c1f3e5892908059a2cc7e0772f9ba89a7db18`.
+The full dated planner and individual-first question are respected in this
+response. No paper, slide or household-model changes have been adopted.
+
+### What the sufficient theorem establishes
+
+The planner's housing formulas remain
+\[
+h_i^{y,SP}=\min\{h_{d_i}^{\max},\kappa n_i+\alpha/\lambda\},\qquad
+h_i^{o,SP}=\min\{h_{d_i}^{\max},\gamma/\lambda\}.
+\]
+Consumption is also optimized; its separability makes these the housing
+choices of the full optimum. Pro's first condition (I) bounds a young
+household's current cash relative to aggregate resources and its tenure cap.
+It alone implies both an uncapped market home and strictly more housing for
+that same household at the full optimum. The second condition (I) separately
+establishes a strictly positive young-financing multiplier by requiring
+sufficient future income relative to current cash. The aggregate condition
+(A) is additional and includes possible losses among other young households.
+The result does not attribute the entire utilitarian housing gain to finance:
+equal-weight redistribution also reallocates among households without a
+financing distortion. The lead checked the inequalities in (9)–(15).
+A separate bounded Astra/max check confirms those inequalities and the
+individual proof. It also supplies an explicit primitive example satisfying
+(18) and (A), so the aggregate certificate is not algebraically vacuous.
+This does not establish mildness, and is not being used as the economic
+proof or as a calibration.
+
+### The claimed absence of a beta restriction needs correction
+
+Let \(\bar w_0=\int(y^y+b)dF\),
+\(E=1+\alpha+\vartheta\), \(K=1+\gamma+\omega_B\), and
+\(D=E+\beta K\). The integral in the lower-price condition (18) is at most
+\(\vartheta\bar w_0/[D(\chi+\underline p\kappa)]\). Therefore its
+strict replacement-fertility inequality necessarily implies
+\[
+\beta<\frac{\nu\vartheta\bar w_0/\chi-E}{K}.
+\]
+This follows for every positive choice of the proposed price bound. Thus
+there is no separate imposed numerical ceiling on beta, but for fixed other
+primitives the sufficient conditions themselves imply a finite ceiling.
+This is a limitation of this conservative proof, not a necessary condition
+for the desired housing effect or for equilibrium existence. It has not
+been assessed against the quantitative calibration. Do not say the author's
+high-beta concern has been resolved.
+The independent check confirms this ceiling and constructs stationary
+equilibria above it: the price certificate can fail even when stationarity
+and the desired direction are feasible. Its ceiling is therefore not just
+a restatement of equilibrium existence.
+
+### Analytical reversal: independently checked
+
+A bounded Astra/max review and the lead independently checked section4.
+Its explicit subcase sets \(\tau^p=0\), \(\phi=q\), \(\beta=q\),
+and \(\omega_B(1-q)<q\gamma\), with finite caps large enough to be
+slack in both the competitive allocation and the dated optimum. Let
+\(w_i=y_i^y+b_i\) be heterogeneous on bounded positive support and
+\(y_i^o=rw_i\). Define
+\[
+\Gamma=(\gamma+\omega_B)(1-q)<\gamma,\qquad
+\bar\Gamma=(1-\pi)\gamma+\pi\Gamma,
+\]
+where the endowment-independent tenure-value difference and logistic taste
+location deliver a constant owner share \(0<\pi<1\).
+Every young household is strictly constrained when \(r>K/E\), with
+\[
+c_i-\chi n_i=w_i/E,\qquad
+p(h_i^y-\kappa n_i)=\alpha w_i/E,\qquad z_i=rw_i.
+\]
+For owners, the original mortgage is implemented by principal \(qPh_i^y\)
+and repayment \(Ph_i^y\); this exactly offsets resale wealth on entering
+old age. Their old financial-estate constraint binds. Old rental housing
+has coefficient gamma, whereas old owner housing has coefficient Gamma.
+Consequently
+\[
+H_Y^{SP}-H_Y^{eq}
+=\frac{N\alpha\bar w}{p(\alpha+\gamma)}
+\left(\frac{\bar\Gamma r}{K}-\frac\gamma E\right).
+\]
+The interval \(K/E<r<\gamma K/(E\bar\Gamma)\) is nonempty and gives
+strictly binding young finance but less aggregate young housing at the
+planner optimum. Choose \(0<\chi<\vartheta\nu\bar w/E\), set
+\(p=(\vartheta\nu\bar w/E-\chi)/\kappa\), and let housing clearing
+determine N. This completes stationarity analytically. This is an admitted
+subcase, not a proposal to drop taxes or make the caps inactive in the paper.
+
+The economic obstruction is that the planner relaxes the old financial
+restriction too. Constrained young households need not be the only, or the
+aggregate net, recipients of housing. The counterexample is about aggregate
+housing; it does not rule out gains for particular poor young households.
+Indeed in this same subcase the individual comparison is exactly
+\[
+h_i^{y,SP}>h_i^{y,eq}
+\quad\Longleftrightarrow\quad
+\frac{w_i}{\bar w}
+<\frac{\alpha+E\bar\Gamma r/K}{\alpha+\gamma}.
+\]
+These formulas help interpret the review. They do not establish its empirical
+relevance or substitute for deciding which economically useful sufficient
+conditions should appear in the main note.

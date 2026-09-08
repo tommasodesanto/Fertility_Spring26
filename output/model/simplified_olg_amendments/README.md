@@ -10,8 +10,19 @@ is intended for the existing Pro chat, which already contains the exact model
 source. Equal cohort tenure shares follow from a stationary competitive
 reference; they do not impose equal housing quantities. The main remaining
 task is to derive the competitive housing ordering or a sharper planner
-comparison from primitives. Preparation is not submission; the monitor remains
-paused until a new run is launched and monitoring is requested.
+comparison from primitives.
+
+The author submitted this follow-up in the existing chat. Pro completed it
+in 23 minutes 41 seconds; the [complete response](oracle_dated_allocation_response.md)
+was captured from the browser on September 8, preserving all 125 mathematical
+expressions. It gives separate individual and aggregate sufficient conditions
+and an analytical counterexample to an unconditional aggregate claim. The
+lead's assessment and independent checks are recorded in
+[the work record](../../../docs/model/simplified_olg_utilitarian_work.md).
+In particular, its claim of unrestricted beta needs qualification: the price
+bound used in its sufficient conditions implies an upper bound when other
+primitives are fixed. These are discussion results; the model, note and slides
+have not been revised. The previous monitor remains paused.
 
 ## September 8: full stationary planner under discussion
 
