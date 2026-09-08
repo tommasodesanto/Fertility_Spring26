@@ -1,5 +1,20 @@
 # Simplified OLG amendment checks
 
+## Conventional finance proposal for discussion
+
+The [household specification and analytical financing conditions](../../../docs/model/simplified_olg_conventional_finance_proposal.md)
+develop the author's September 7 request to let current income fund the down
+payment and add old-age income. They propose allowing old owners to resize,
+while retaining lifetime tenure, both physical size limits, and the existing
+fertility and estate preferences. These are proposed changes, not an adopted
+replacement for the main note. The document gives the mortgage budget,
+an explicit conditional income test, the rental alternative, sufficient
+housing conditions, and an exact counterexample to an unconditional housing
+response. It has received an independent analytical review; its counterexample
+budgets, first-order conditions, and derivative were also checked with exact
+rational arithmetic. Equilibrium welfare and the policy fertility response
+remain subsequent work.
+
 ## ChatGPT Pro mathematical review
 
 The [review prompt](../../../docs/prompts/oracle_simplified_olg_transition_math.md)

@@ -1532,3 +1532,36 @@ Author requested a focused follow-up in the existing Theorem Construction Pro ch
 ## High-beta follow-up received and checked
 
 The author submitted the prepared follow-up manually. Pro completed after 30m 26s. Read the assessment at `output/model/simplified_olg_amendments/oracle_high_beta_coven_assessment.md`; exact rendered equation strings and response text are saved alongside it. Main positive-tax allocation theorem accommodates fixed high beta via income/liquid-wealth separation, including donors with binding retention. Two Astra/max reviews pass the main proof, dated extension, analytical compatibility and counterexample, with an explicit physical-owner-cap completion and narrow no-transfer scope. P and T remain equilibrium inputs. Compatibility constructs F and rescales child costs; it is not a claim for calibrated primitives. Main note unchanged. Correction to prior literature summary: Coven August2026 Section3.1 contains a capitalization lemma and tax redistribution proposition; neither is the desired compensated Pareto result.
+
+## September 7 evening: conventional finance, steps 1 and 2
+
+The author requested a concrete proposed household problem and analysis of
+when financing restricts housing, before subsequent efficiency and fertility
+work. The discussion proposal is
+`docs/model/simplified_olg_conventional_finance_proposal.md`. It lets current
+income and wealth fund the down payment, adds known heterogeneous old income,
+and proposes that old owners may resize within the owner cap. Lifetime tenure,
+the rental cap, estate floor, and existing fertility preferences are retained.
+These changes have not been adopted; the main note remains unchanged.
+
+Lead derivation and an independent Astra/max read-only review agree on the
+ordinary mortgage/net-asset equivalence, exact cap-inclusive relaxed-choice
+test, explicit income-timing inequality when old housing caps are slack,
+rental alternative, and monotone fixed-price ownership value. In the uncapped
+case, q P_next >= phi P suffices both for constrained housing below the
+unrestricted-finance choice and for housing to rise locally with phi, allowing
+fertility to adjust. This sufficient condition is not necessary. At constant
+prices it is q >= phi; the generational maturity convention matters.
+
+A fully analytical household counterexample with constant prices, q=1/2,
+positive child goods and space costs, old income, beta=1/2, and strictly slack
+old estate floor shows why binding credit alone is insufficient: actual h=2,
+unrestricted h=76/39, and dh/dphi=-8280/25271. Lead separately checked all
+budgets, first-order conditions, and the six-equation implicit derivative
+with exact Fraction arithmetic. This is a fixed-price counterexample, not
+a simulated equilibrium or numerical existence proof. The reviewer and lead
+also checked cap qualifications and the complete local sufficient-sign proof.
+No model simulation, PDF build, or change to the protected manuscript was made.
+The proposed specification and its remaining choices are ready for discussion;
+general-equilibrium housing efficiency and the financed fertility response
+are not established by this work.
