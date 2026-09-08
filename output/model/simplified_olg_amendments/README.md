@@ -1,5 +1,62 @@
 # Simplified OLG amendment checks
 
+## September 8: separate utilitarian note
+
+Read the [utilitarian discussion PDF](../../pdf/simplified_olg_utilitarian.pdf)
+([LaTeX](../../../latex/JMP_DS_suggestions/simplified_olg_utilitarian.tex)):
+seven pages of main text and seven pages of proofs/extensions. The environment,
+household problems and notation are preserved from the conventional-finance
+note below. That note and the author manuscript remain unchanged.
+
+The main direct-allocation result uses \(\beta\ge q\), equal weights on
+living households' remaining utility, and explicit primitive sufficient bounds
+for constrained owners. It reallocates housing from old to young and raises
+utilitarian welfare. The proof does not require compensation. The conditional
+aggregate housing optimum requires additional cap/floor restrictions.
+
+The note distinguishes three transfer results: simple welfare-improving
+redistribution within old age under the original private choices; a
+young-directed program conditional on committed fertility and tenure; and an
+Appendix E construction allowing both choices to remain private at
+\(\phi=q\). The last uses individual, taste-informed targeting and offsets
+births within the young cohort, so aggregate fertility remains unchanged.
+
+The original young-directed grant pair raises a treated owner's fertility
+after reoptimization at fixed prices and rebates. The all-date equilibrium
+fertility effect and higher limiting population remain open. Dated fertility
+tests and finite-date population accounting do not require convergence;
+endpoint comparisons require positive stationary limits. Welfare weights and
+the authority's information/timing remain proposals for author discussion.
+
+The [work record](../../../docs/model/simplified_olg_utilitarian_work.md) and
+[verification receipt](utilitarian_checks.json) separate these conclusions.
+Independent derivations and hostile reviews cover:
+
+- [Direct allocation](utilitarian_direct_review.md).
+- [Transfers](utilitarian_transfers_review.md),
+  [hostile check](utilitarian_transfers_hostile_review.md), and
+  [assembled statement](utilitarian_assembled_transfer_review.md).
+- [Fertility and paths](utilitarian_fertility_path_review.md),
+  [hostile check](utilitarian_fertility_hostile_review.md), and
+  [assembled statement](utilitarian_assembled_fertility_review.md).
+- [Old-only redistribution](utilitarian_old_redistribution_review.md).
+- [Full-choice four-group construction](utilitarian_free_choice_transfer_review.md)
+  and its [independent hostile review](utilitarian_free_choice_hostile_review.md).
+- [Completed Pro response](oracle_utilitarian_response_capture.txt) and
+  [assessment of what was adopted](oracle_utilitarian_review.md). Pro's cap
+  simplification and exact-grant fertility proof were independently checked;
+  Pro did not review the later four-group construction.
+
+Reproduce the 47 exact symbolic and source-preservation checks with:
+
+~~~sh
+python3 code/model/tools/verify_simplified_olg_utilitarian.py
+~~~
+
+The checker regenerates the algebra receipt; the archived receipt additionally
+records final compilation and visual inspection. No numerical equilibrium or
+parameter-neighborhood certificate is used for this note.
+
 ## September 8: conventional-finance results
 
 Read the new
