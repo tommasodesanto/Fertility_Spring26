@@ -11,6 +11,17 @@ the exact current note as background. Its existing dated welfare criterion is
 explicitly subject to review. The author will submit the packet manually.
 This handoff is not an adopted model revision or a new theorem.
 
+Pro completed the review in the new chat on September 8. The
+[complete response](oracle_stationary_planner_response.md) was captured from
+the browser, preserving all 31 numbered equations. It proposes a full planner
+with outside estate recipients and entrant remittances, domestic intermediaries,
+and fixed external wealth measured before estate payouts. It distinguishes
+general failure of stationary utilitarian optimality from a conditional
+increase in young housing, and includes a proposed analytical reversal.
+These are advisory results; the accounting choices are not adopted and the
+full argument has not yet received independent verification. Monitoring is
+paused after completion. The note and slides are unchanged.
+
 ## September 8: theory slides for the September 10 deadline
 
 Read the [seven-slide theory extract](../../pdf/simplified_olg_theory_slides.pdf)

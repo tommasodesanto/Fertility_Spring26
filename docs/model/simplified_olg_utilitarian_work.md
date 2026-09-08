@@ -305,3 +305,50 @@ state both renter and owner estate definitions, and qualify internal property
 tax transfers by domestic ownership/consolidation when rental title ownership
 is still unresolved. This review validates the handoff's stated distinctions,
 not the existence or solution of a completed planner problem.
+
+## September 8: Pro response captured; first assessment only
+
+The Pro chat at
+`https://chatgpt.com/c/6aa06dde-50d0-83ea-ab19-bf66d86b0354` completed after
+20m32s. Its full response is preserved as
+`output/model/simplified_olg_amendments/oracle_stationary_planner_response.md`.
+The browser's completed-response controls confirmed completion. Capture checks
+preserved all 31 numbered equations and 128 mathematical expressions; display
+formatting was reconstructed from visible text and DOM equation labels.
+
+Pro recommends stationary cohort lifetime welfare, with a discounted sequence
+of cohort lifetimes as the comparator. Its proposed accounting treats entrant
+wealth as outside remittances and estates as real goods paid to outside
+recipients, with domestic zero-equity rental intermediaries. It fixes aggregate
+external wealth before estate remittances. These are explicit new accounting
+assumptions for discussion, not decisions already adopted by the author.
+
+Under that completion, Pro derives the full goods allocation and claims a
+general stationary utilitarian welfare gap for q<1, including with slack
+financial constraints. Its consumption comparison follows from
+\[
+\frac{1}{c_i-\chi n_i}-\frac{\beta}{c_i^2}
+=\beta(q^{-1}-1)\frac{1}{c_i^2}+\mu_i>0.
+\]
+The lead checked this immediate first-order-condition subtraction and the
+stationary accounting substitution; a full independent audit is outstanding.
+
+For the full optimum to have strictly greater total young housing, its main
+proposition additionally requires the uncapped planner candidate to respect
+the actual tenure caps, all competitive old housing caps to be slack, and
+\[
+(\gamma+\omega_B)(1-q+q\tau^p)>q\gamma(1+q\tau^p).
+\]
+This has no upper bound on beta, but the cap restrictions are substantive.
+The lead checked how the inequality signs the old-owner marginal housing
+comparison in both estate regimes. No claim of mildness or calibration
+compatibility is made. Pro also supplies a proposed heterogeneous analytical
+family with less young housing under the planner when old financial estates
+are zero; its equilibrium construction remains to be checked. This reinforces
+the need to separate the welfare criterion's redistribution from an effect
+specifically caused by young mortgage constraints.
+
+The `watch-pro-planner-review` heartbeat was paused after capture. No follow-up
+was sent to Pro and no note, slide, PDF, household equation or protected draft
+was changed. Next discussion should settle the proposed accounting and welfare
+criterion before adopting or extending a theorem.
