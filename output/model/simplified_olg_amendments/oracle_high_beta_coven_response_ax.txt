@@ -1,0 +1,518 @@
+700 heading 4
+						701 container
+							702 button (collapsed) Worked for 30m 26s, Secondary Actions: Expand
+							703 container
+								704 text Small 
+								705 container \beta
+								706 text  is not necessary for the requested reallocation.  In the unchanged positive-tax model, a sufficient condition can instead be placed on  income–liquid-wealth differences across households . The theorem below works at every fixed finite 
+								707 container \beta>0
+								708 text , including 
+								709 container \beta=1
+								710 text . It does not require old donors to downsize voluntarily, small bequest motives, or negligible child costs.
+							711 container
+								712 text There is, however, a genuine patience-related obstacle: a constrained young owner can value  current  housing less than its own old-age counterpart. The purchase constraint restricts future housing access as well as current consumption. Comparing different income–wealth groups avoids making that within-household comparison carry the entire argument.
+							713 container
+								714 text The remaining equilibrium dependence is explicit: the theorem uses the equilibrium price 
+								715 container P
+								716 text  and rebate 
+								717 container T
+								718 text . It is not a price-free characterization of an arbitrary given 
+								719 container F
+								720 text . An analytical construction below verifies that its conditions are jointly compatible with  all  stationary equilibrium equations at fixed 
+								721 container \beta
+								722 text .
+							723 heading 1. Main proposition, Value: 2
+								724 text 1. Main proposition
+							725 container
+								726 text Maintain a level-stationary equilibrium, 
+								727 container Y=O=N>0
+								728 text , of the original model. All preference weights and both child costs remain positive; 
+								729 container q,\phi\in(0,1)
+								730 text ; 
+								731 container \tau^p>0
+								732 text ; housing caps and logistic taste parameters are finite. Let 
+								733 container F(y,b)
+								734 text  have compact, genuinely heterogeneous support in income and liquid wealth. Entrant wealth remains exogenous—not replenished by estates. The original closing rule, net-
+								735 container a'
+								736 text  accounting, retention constraint and estate floor are unchanged. 
+								737 button Pasted text +1
+									738 text Pasted text +1
+							739 text Define
+							740 container \begin{aligned} D&=1+\alpha+\vartheta+\beta(1+\gamma+\omega_B),\\ d&=1-q+q\tau^p,\qquad u=dP,\\ v&=\max\left\{d,\frac{\gamma(1+q\tau^p)}{\gamma+\omega_B}\right\}, \end{aligned}
+							741 text and, for each entrant type,
+							742 container B_i=\frac{b_i}{1-\phi},\qquad W_i=y_i+b_i+(1+q)T,\qquad \ell_i=\frac{W_i}{B_i}.
+							743 container
+								744 text Here 
+								745 container B_i/P
+								746 text  is the largest house permitted by the down payment; 
+								747 container W_i
+								748 text  is lifetime resources including rebates; and 
+								749 container \ell_i
+								750 text  measures resources relative to purchasing capacity.
+							751 heading Proposition: cross-group old-to-young reallocation, Value: 3
+								752 text Proposition: cross-group old-to-young reallocation
+							753 container
+								754 text Suppose there are positive-
+								755 container F
+								756 text -mass sets 
+								757 container S_Y
+								758 text  and 
+								759 container S_D
+								760 text , representing young recipients and the entrant types that generated old donors.
+							761 container
+								762 text For every 
+								763 container k\in S_Y\cup S_D
+								764 text , require
+							765 container \boxed{ B_k<P h_O^{\max}, \qquad qT+(q-\phi)_+B_k < \frac{\beta(1+\omega_B)}{D}W_k. } \tag{F}
+							766 container
+								767 text For every 
+								768 container i\in S_Y
+								769 text  and 
+								770 container j\in S_D
+								771 text , require
+							772 container \boxed{ \ell_j>\frac{dD}{\alpha}, \qquad \frac{\alpha(\ell_i-d)}{D-\alpha} > \max\left\{ v,\, \frac{\beta\gamma[\ell_j-(1+q)d]} {q[1+\beta(1+\omega_B)]} \right\}. } \tag{R}
+							773 container
+								774 text Then the equilibrium admits a  positive-mass compensated Pareto improvement that transfers housing from old owners to young owners , holding fertility, tenure, estates, existing obligations and the rest of the real path fixed.
+							775 container
+								776 text The selected types’ young-owner decisions have a strictly binding down-payment constraint, a slack physical cap, and positive gross bond holdings. These properties are conclusions, not assumed constraint patterns.  Neither old retention nor old financial-estate slackness is required.
+							777 heading What the restrictions mean, Value: 3
+								778 text What the restrictions mean
+							779 container
+								780 text Condition (F) supplies physical headroom and verifies that the household wants positive  gross  bonds after accounting for future rebates and mortgage repayment. It does not require 
+								781 container a'>0
+								782 text .
+							783 text Condition (R) identifies two groups through their endowments. The first inequality is a sufficient way to establish the donor source types’ original purchases, so their inherited houses are known rather than freely specified. The second says that recipients have sufficiently greater resources relative to down-payment purchasing capacity.
+							784 container
+								785 text Holding total resources approximately fixed, lower 
+								786 container b
+								787 text  means a smaller financed house. Alternatively, increasing income at fixed 
+								788 container b
+								789 text  raises consumption and fertility demand without increasing the down-payment ceiling. These are the useful dimensions of heterogeneity—not simply differences in total wealth.
+							790 container
+								791 text Equilibrium-state versus primitive restrictions.  Only 
+								792 container P
+								793 text  and 
+								794 container T
+								795 text  are unidentified equilibrium objects in these tests. In particular, 
+								796 container T
+								797 text  inside 
+								798 container \ell_i
+								799 text  is not a primitive. Housing clearing, aggregate replacement and
+							800 container T=\frac{q\tau^pP\bar H}{2N}
+							801 container
+								802 text continue to hold. No price endpoint is being substituted for equilibrium. 
+								803 button Pasted text
+									804 text Pasted text
+							805 heading 2. Proof, Value: 2
+								806 text 2. Proof
+							807 heading Step 1: verify saving without assuming an old-age regime, Value: 3
+								808 text Step 1: verify saving without assuming an old-age regime
+							809 text Temporarily remove only the young owner’s gross-bond restriction. Set
+							810 container z=a'+Ph+T.
+							811 text Combining the two age-specific budgets gives the equivalent lifetime problem
+							812 container \max\; u^y(x+\chi n,h,n)+\beta u^o(c^2,h^2,e)
+							813 text subject to
+							814 container x+\chi n+dPh+qc^2+qdPh^2+q^2e=W, \tag{1}
+							815 container h\le B/P,\quad h\le h_O^{\max},\quad h^2\le h,\quad e\ge Ph^2.
+							816 container
+								817 text These are the original retention and estate restrictions, not replacements for them. 
+								818 button Pasted text
+									819 text Pasted text
+							820 text The consumption first-order conditions and the estate constraint imply
+							821 container c^2=\frac{\beta x}{q}, \qquad q^2e\ge\beta\omega_Bx. \tag{2}
+							822 text Consequently,
+							823 container qz=qc^2+qdPh^2+q^2e \ge\beta(1+\omega_B)x. \tag{3}
+							824 container
+								825 text The objective is logarithmically homogeneous, with total weight 
+								826 container D
+								827 text . All restrictions except the two current housing ceilings are homogeneous in choices. Its scaling identity therefore gives
+							828 container D=\frac Wx+\text{nonnegative housing-cap terms}, \qquad\text{so}\qquad x\ge\frac WD. \tag{4}
+							829 container
+								830 text Actual gross bonds—not net 
+								831 container a'
+								832 text —are
+							833 container qa'+\phi Ph=qz-qT+(\phi-q)Ph.
+							834 container
+								835 text Using 
+								836 container Ph\le B
+								837 text , (3)–(4), and (F),
+							838 container qa'+\phi Ph \ge \frac{\beta(1+\omega_B)}D W-qT-(q-\phi)_+B >0. \tag{5}
+							839 text Thus the relaxed solution satisfies the omitted restriction strictly. It is the original household optimum, and the Euler relation in (2) is valid.
+							840 heading Step 2: establish the down payment and bound current housing demand, Value: 3
+								841 text Step 2: establish the down payment and bound current housing demand
+							842 text At any solution,
+							843 container MV^Y=\frac{\alpha x}{h-\kappa n} > \frac{\alpha x}{h} \ge \frac{\alpha W}{Dh} \ge \frac{\alpha\ell}{D}P. \tag{6}
+							844 container
+								845 text The donor inequality in (R) makes this exceed 
+								846 container dP
+								847 text . The recipient inequality does so as well: its right side is at least 
+								848 container v\ge d
+								849 text , hence it implies 
+								850 container \ell_i>dD/\alpha
+								851 text .
+							852 container
+								853 text An additional unit of current housing also weakly relaxes future retention. Therefore, when 
+								854 container MV^Y>dP
+								855 text , the household cannot optimally stop below both current housing ceilings. By (F),
+							856 container h=\frac BP<h_O^{\max}. \tag{7}
+							857 text The down-payment multiplier is strictly positive because current housing benefits alone exceed user cost.
+							858 container
+								859 text A sharper consumption bound is useful for the welfare comparison. Write the old value in resources and inherited housing as 
+								860 container \mathcal V(z,h)
+								861 text . Homogeneity and the saving first-order condition give
+							862 container z\mathcal V_z+h\mathcal V_h=1+\gamma+\omega_B, \qquad qz=\beta x\bigl(1+\gamma+\omega_B-h\mathcal V_h\bigr) \le\beta(1+\gamma+\omega_B)x. \tag{8}
+							863 container
+								864 text Here 
+								865 container \mathcal V_h\ge0
+								866 text ; future retention need not be slack.
+							867 text The fertility first-order condition is
+							868 container \frac{\vartheta}{n} = \frac{\chi}{x}+\frac{\alpha\kappa}{h-\kappa n},
+							869 container
+								870 text so 
+								871 container \chi n<\vartheta x
+								872 text . Combining this with 
+								873 container h=B/P
+								874 text  and the budget,
+							875 container W-dB=x+\chi n+qz<(D-\alpha)x.
+							876 text Thus
+							877 container \boxed{ MV_i^Y> P\,\frac{\alpha(\ell_i-d)}{D-\alpha}. } \tag{9}
+							878 text This lower bound permits arbitrary positive child goods and space costs and either future-retention regime.
+							879 heading Step 3: bound old donors, including those retaining their entire house, Value: 3
+								880 text Step 3: bound old donors, including those retaining their entire house
+							881 container
+								882 text Let an old owner have resources 
+								883 container Z=a+PH+T
+								884 text , and write 
+								885 container A=1+\gamma+\omega_B
+								886 text . Solving the old problem gives
+							887 container h^2=\min\left\{H,\frac{\gamma Z}{AvP}\right\}, \tag{10}
+							888 text with consumption
+							889 container c^2= \min\left\{ \frac{Z-dPh^2}{1+\omega_B}, \ Z-(1+q\tau^p)Ph^2 \right\}. \tag{11}
+							890 container
+								891 text To see the two branches, without the retention cap the estate-slack solution spends at housing user cost 
+								892 container dP
+								893 text . When the estate floor binds, housing and its required estate cost 
+								894 container (1+q\tau^p)P
+								895 text  and carry combined utility weight 
+								896 container \gamma+\omega_B
+								897 text . Both branches have 
+								898 container c^2=Z/A
+								899 text , producing (10). Conditional consumption is (11).
+							900 text It follows that
+							901 container \boxed{ MV^O=\max\left\{vP,\frac{\gamma c^2}{H}\right\}. } \tag{12}
+							902 container
+								903 text With slack retention, the first term applies. With binding retention, 
+								904 container h^2=H
+								905 text , and the second is at least the first.
+							906 container
+								907 text For an old donor generated by type 
+								908 container j
+								909 text ’s stationary owner plan,
+							910 container H_j=B_j/P,\qquad c_j^2=\beta x_j/q.
+							911 container
+								912 text If retention is slack, 
+								913 container MV_j^O=vP
+								914 text .
+							915 text If retention binds, the old budget and (2) give
+							916 container qz_j\ge\beta(1+\omega_B)x_j+qdB_j.
+							917 text Hence
+							918 container W_j > [1+\beta(1+\omega_B)]x_j+(1+q)dB_j,
+							919 text and
+							920 container MV_j^O = \frac{\beta\gamma x_j}{qH_j} < P\, \frac{\beta\gamma[\ell_j-(1+q)d]} {q[1+\beta(1+\omega_B)]}.
+							921 text In either case,
+							922 container \boxed{ MV_j^O\le P\max\left\{ v,\, \frac{\beta\gamma[\ell_j-(1+q)d]} {q[1+\beta(1+\omega_B)]} \right\}. } \tag{13}
+							923 text Equations (9), (13), and (R) establish the required strict valuation gap.
+							924 text Crucially, the old donor is the actual old-age realization of an earlier stationary household decision. No independent old wealth distribution has been chosen.
+							925 heading Step 4: compensate the old and settle the transaction, Value: 3
+								926 text Step 4: compensate the old and settle the transaction
+							927 container
+								928 text Finite logistic tastes imply positive owner mass in both selected groups. Select equal positive  submasses , restricting them further where necessary to obtain uniform strict margins.
+							929 container
+								930 text Give a young recipient 
+								931 container \epsilon
+								932 text  units taken from an old donor. Preserve the donor’s estate and compensate it by
+							933 container D_j(\epsilon) = c_j^2 \left[ \left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1 \right].
+							934 container
+								935 text This keeps 
+								936 container u^o
+								937 text  exactly unchanged, and
+							938 container D_j'(0)=MV_j^O.
+							939 text The young recipient, with fertility fixed, gains
+							940 container \Delta U_i = \log\left(1-\frac{D_j(\epsilon)}{x_i}\right) + \alpha\log\left(1+\frac{\epsilon}{h_i-\kappa n_i}\right).
+							941 text Its derivative at zero is
+							942 container \Delta U_i'(0) = \frac{MV_i^Y-MV_j^O}{x_i}>0.
+							943 text A common sufficiently small positive transfer respects physical headroom and benefits a positive mass of young households.
+							944 text For financial settlement, set
+							945 container L(\epsilon)=D_j(\epsilon)-dP\epsilon.
+							946 text The seller’s title proceeds, supplementary payment and released tax reserve, after consumption compensation, leave
+							947 container P\epsilon+L(\epsilon)+q\tau^pP\epsilon-D_j(\epsilon) =qP\epsilon.
+							948 container
+								949 text The seller buys a bond with these funds. The buyer’s additional borrowing is exactly 
+								950 container qP\epsilon
+								951 text . Next period the buyer sells the additional title for 
+								952 container P\epsilon
+								953 text  and repays that bond; the donor’s estate receives the same amount in place of the lost title. Existing obligations, estates, subsequent real allocations and aggregate tax receipts remain unchanged. This is the packet’s settlement, including its positive-tax accounting. 
+								954 button Pasted text
+									955 text Pasted text
+							956 container \square
+							957 heading 3. What high \beta changes, Value: 2
+								958 text 3. What high 
+								959 container \beta
+								960 text  changes
+							961 heading The admissible region has no upper bound on \beta, Value: 3
+								962 text The admissible region has no upper bound on 
+								963 container \beta
+							964 container
+								965 text Whenever 
+								966 container \ell_j>(1+q)d
+								967 text , the donor-retention part of (R) can be written
+							968 container \frac{\ell_i-d}{\ell_j-(1+q)d} > \frac{\beta\gamma}{q\alpha} \frac{D-\alpha}{1+\beta(1+\omega_B)}. \tag{14}
+							969 container
+								970 text This is the explicit tradeoff: greater patience can require greater separation in resources per unit of purchasing capacity. It does  not  require 
+								971 container \beta
+								972 text  to be small.
+							973 container
+								974 text For example, at 
+								975 container \beta=1
+								976 text , the recipient restriction is
+							977 container \ell_i> d+ \frac{2+\gamma+\omega_B+\vartheta}{\alpha} \max\left\{ v,\, \frac{\gamma[\ell_j-(1+q)d]}{q(2+\omega_B)} \right\}. \tag{15}
+							978 container
+								979 text All thresholds are finite with the other preference weights held fixed. The relevant intertemporal comparison is 
+								980 container \beta/q
+								981 text , because the model’s Euler equation is 
+								982 container c^2/x=\beta/q
+								983 text ; both objects refer to the same young-to-old interval.
+							984 container
+								985 text These bounds are sufficient, not necessary. For particular parameters they may require substantial income–wealth separation.  Finite admissibility is not evidence of empirical plausibility.  But nothing must approach an extreme as 
+								986 container \beta\uparrow1
+								987 text ; the compatibility construction below works with fixed positive preference weights and a fixed positive tax rate.
+							988 heading The within-type obstacle is real, Value: 3
+								989 text The within-type obstacle is real
+							990 text For a stationary owner with positive gross saving, (12) gives the exact identity
+							991 container MV_i^O = \max\left\{ vP,\frac{\beta\gamma x_i}{qh_i} \right\}. \tag{16}
+							992 text Meanwhile, the fertility first-order condition implies
+							993 container MV_i^Y = \frac{x_i}{h_i} \left( \alpha+\vartheta-\frac{\chi n_i}{x_i} \right) < \frac{x_i}{h_i}(\alpha+\vartheta). \tag{17}
+							994 text Therefore,
+							995 container \boxed{ \beta\gamma\ge q(\alpha+\vartheta) \quad\Longrightarrow\quad MV_i^Y<MV_i^O. } \tag{18}
+							996 container
+								997 text This is an actual impossibility result for the  same-type  comparison—not for cross-group reallocation. The positive-tax compatibility construction below also works under (18), so it supplies equilibria with binding down payments and this reversed within-type ordering.
+							998 container
+								999 text The mechanism is the prohibition on old-age upsizing. A young purchase creates both current housing services and future housing access. A positive purchase-constraint multiplier does not distinguish those benefits. The original model expressly imposes that restriction. 
+								1000 button Pasted text
+									1001 text Pasted text
+							1002 heading 4. Analytical compatibility at fixed \beta , with all markets respected, Value: 2
+								1003 text 4. Analytical compatibility at fixed 
+								1004 container \beta
+								1005 text , with all markets respected
+							1006 text Here is a construction of admissible primitives, not a freely chosen price for an already specified economy.
+							1007 container
+								1008 text Fix  any finite 
+								1009 container \beta>0
+								1010 text , positive 
+								1011 container \alpha,\gamma,\omega_B,\vartheta,\tau^p
+								1012 text , 
+								1013 container q,\phi\in(0,1)
+								1014 text , the demographic parameter 
+								1015 container \nu>0
+								1016 text , housing stock 
+								1017 container \bar H>0
+								1018 text , and any finite logistic taste parameters. No preference weight or tax rate is sent to zero.
+							1019 container
+								1020 text Choose 
+								1021 container 0<W_{\mathrm{low}}<W_{\mathrm{high}}<\infty
+								1022 text  and any 
+								1023 container g>0
+								1024 text . Choose a donor resource-ratio interval with lower endpoint satisfying
+							1025 container \ell_{D,\mathrm{low}}> \max\left\{ \frac{dD}{\alpha},\ \frac{W_{\mathrm{high}}}{W_{\mathrm{low}}} \bigl[(1-\phi)+(1+q)q\tau^p\bigr],\ \frac{D W_{\mathrm{high}}} {\beta(1+\omega_B)W_{\mathrm{low}}} \bigl[q^2\tau^p+(q-\phi)_+\bigr] \right\}. \tag{19}
+							1026 container
+								1027 text Choose any finite 
+								1028 container \ell_{D,\mathrm{high}}>\ell_{D,\mathrm{low}}
+								1029 text .
+							1030 container
+								1031 text Choose a recipient interval whose lower endpoint exceeds both 
+								1032 container \ell_{D,\mathrm{high}}
+								1033 text  and
+							1034 container d+\frac{D-\alpha}{\alpha} \max\left\{ v,\, \frac{\beta\gamma[\ell_{D,\mathrm{high}}-(1+q)d]} {q[1+\beta(1+\omega_B)]} \right\}. \tag{20}
+							1035 text Its upper endpoint can be any larger finite number.
+							1036 container
+								1037 text Put a positive density on each of the two rectangles in 
+								1038 container (W,\ell)
+								1039 text , using the resource interval and these ratio intervals. Set
+							1040 container B=W/\ell,
+							1041 text and choose finite caps satisfying
+							1042 container 0<h_R^{\max}<\frac{W_{\mathrm{low}}}{\ell_{Y,\mathrm{high}}}, \qquad h_O^{\max}>\frac{W_{\mathrm{high}}}{\ell_{D,\mathrm{low}}}. \tag{21}
+							1043 container
+								1044 text Now construct allocations at the candidate price 
+								1045 container P=1
+								1046 text .
+							1047 container
+								1048 text First solve the household problems in lifetime resources 
+								1049 container W
+								1050 text , with auxiliary child costs 
+								1051 container \kappa=1,\chi=g
+								1052 text , temporarily omitting young financial lower bounds. These strictly concave problems have well-defined solutions. The preceding proof establishes 
+								1053 container h^Y_O=B
+								1054 text . Use the prescribed finite tastes to determine tenure probabilities.
+							1055 container
+								1056 text Let 
+								1057 container \bar h_{\mathrm{life}}
+								1058 text  be mean young-plus-old housing, and let 
+								1059 container \bar n_{\mathrm{aux}}>0
+								1060 text  be mean auxiliary fertility. Since owners retain no more than they purchase and both renter ages face their cap,
+							1061 container 0<\bar h_{\mathrm{life}} \le \frac{2W_{\mathrm{high}}}{\ell_{D,\mathrm{low}}}.
+							1062 text Define
+							1063 container T=\frac{q\tau^p}{2}\bar h_{\mathrm{life}}, \qquad b=(1-\phi)B, \qquad y=W-(1+q)T-b. \tag{22}
+							1064 container
+								1065 text The second bound in (19) ensures 
+								1066 container y>0
+								1067 text . The third ensures (F) for every owner type. It also verifies renters’ 
+								1068 container a'\ge0
+								1069 text : their analogous homogeneity bound is 
+								1070 container x_R\ge W/D
+								1071 text , and their old-age resources satisfy
+							1072 container qz_R\ge\beta(1+\omega_B)x_R>qT.
+							1073 text Thus none of the omitted financial constraints changes the constructed policies.
+							1074 container
+								1075 text Finally choose the  actual , positive child costs
+							1076 container \kappa=\nu\bar n_{\mathrm{aux}}, \qquad \chi=g\kappa. \tag{23}
+							1077 container
+								1078 text This preserves child space 
+								1079 container \kappa n
+								1080 text , child goods expenditure 
+								1081 container \chi n
+								1082 text , all other real allocations, and tenure probabilities. It subtracts the same constant 
+								1083 container \vartheta\log\kappa
+								1084 text  from both conditional young values. Actual fertility satisfies
+							1085 container \nu\bar n = \nu\frac{\bar n_{\mathrm{aux}}}{\kappa} =1.
+							1086 text Set
+							1087 container N=\frac{\bar H}{\bar h_{\mathrm{life}}}, \qquad Y=O=N,
+							1088 container
+								1089 text and take the old distribution generated by these young decisions. Housing clears, the government budget holds by (22), and demography is stationary. The mapping from the two-dimensional 
+								1090 container (W,\ell)
+								1091 text  distribution to 
+								1092 container (y,b)
+								1093 text  is nonsingular, so this is genuine income–wealth heterogeneity. Estates do not enter the construction of subsequent entrants’ wealth. These are precisely the maintained equilibrium requirements. 
+								1094 button Pasted text
+									1095 text Pasted text
+							1096 container
+								1097 text This proves joint compatibility analytically. The bounds remain uniformly finite as 
+								1098 container \beta
+								1099 text  ranges over any closed interval bounded away from zero and ending at one. No numerical reference equilibrium, vanishing neighborhood, limiting tenure share, or small-tax argument is involved.
+							1100 heading 5. A stronger falsification check: binding purchases can reflect future housing needs, Value: 2
+								1101 text 5. A stronger falsification check: binding purchases can reflect future housing needs
+							1102 container
+								1103 text The within-type result already identifies the obstacle. The following  zero-tax specialization  shows something stronger: current young-owner housing values can lie below  every  old household’s housing value despite strictly binding down payments.
+							1104 container
+								1105 text Set 
+								1106 container \tau^p=0
+								1107 text , 
+								1108 container d=1-q
+								1109 text , and suppose
+							1110 container \beta\gamma>q(\alpha+\vartheta), \qquad d\omega_B>q\gamma, \qquad \phi>q^2. \tag{24}
+							1111 container
+								1112 text Choose any positive 
+								1113 container g=\chi/\kappa
+								1114 text , and choose 
+								1115 container m
+								1116 text  in the nonempty interval
+							1117 container \frac{(1+q)d(\alpha+\vartheta)} {\alpha+\vartheta+\beta\gamma} <m<d. \tag{25}
+							1118 text Define
+							1119 container r(m)= \left[ \frac{\alpha}{m}+\frac{\vartheta}{g+m} \right]^{-1}.
+							1120 container
+								1121 text At 
+								1122 container P=1
+								1123 text , choose a down-payment-limited house 
+								1124 container H
+								1125 text , and set
+							1126 container x=r(m)H,\qquad n=\frac{\vartheta r(m)H}{\kappa(g+m)},
+							1127 container c^2=\frac{\beta x}{q},\qquad h^2=H,\qquad e=\frac{\beta\omega_Bx}{q^2}.
+							1128 text Support these choices with
+							1129 container b=(1-\phi)H,
+							1130 container y+b=(1+q)dH+[1+\beta(1+\omega_B)]x+\chi n. \tag{26}
+							1131 container
+								1132 text The young consumption and fertility first-order conditions give 
+								1133 container MV^Y=m
+								1134 text . Moreover,
+							1135 container r(m)>\frac{m}{\alpha+\vartheta},
+							1136 text so (25) implies
+							1137 container m+\beta\gamma r(m)>(1+q)d. \tag{27}
+							1138 text This is exactly the strictly positive purchase-ceiling derivative when future retention binds and the financial estate is positive.
+							1139 container
+								1140 text It also implies 
+								1141 container \beta\gamma r(m)>qd
+								1142 text . Together with (24), this verifies both strict retention binding and estate-floor slackness. Gross bonds are
+							1143 container qa'+\phi H = \beta(1+\omega_B)x+(\phi-q^2)H>0.
+							1144 container
+								1145 text Income is positive because 
+								1146 container (1+q)d=1-q^2>1-\phi
+								1147 text . Thus these are actual optimal constrained-owner choices, not an assumed pattern.
+							1148 container
+								1149 text Choose nondegenerate intervals of 
+								1150 container m
+								1151 text  and 
+								1152 container H
+								1153 text  inside these explicit bounds. A rental cap satisfying
+							1154 container 0<h_R^{\max}< \min\left\{ H_{\mathrm{low}}, \frac{\alpha W_{\mathrm{low}}}{dD} \right\}
+							1155 text makes young renters physically capped. Complete stationary demography and housing clearing as in the preceding construction.
+							1156 text Then
+							1157 container MV^Y_O=m<d,
+							1158 container
+								1159 text whereas every old renter has 
+								1160 container MV^O_R\ge d
+								1161 text , and these old owners have 
+								1162 container MV^O_O>d
+								1163 text . Young renters cannot receive more housing because they are already at their physical cap. Concavity therefore rules out the proposed compensated transfer  from old housing to young housing  in this family.
+							1164 container
+								1165 text This does not establish global efficiency; other reallocations may exist. It establishes that  financing constraints and tenure segmentation alone do not determine the desired direction . The cross-group separation in the main proposition is doing genuine economic work.
+							1166 heading 6. What Coven et al. do—and do not—supply, Value: 2
+								1167 text 6. What Coven et al. do—and do not—supply
+							1168 container
+								1169 text Your reading of  January 31, 2025  is correct. Sections 2.2–2.4, pp. 9–11, give welfare-derivative decompositions, not the requested primitive-parameter compensated Pareto theorem. In §2.1, pp. 7–9, old-age utility is a function of bequeathed total wealth, not your separate old consumption–retention–estate problem. Their equation (2) restricts initial income, assets and housing; footnote 2 explicitly identifies it as an initial-state restriction. Equation (3) imposes a collateral borrowing bound. That differs from your separate, pre-income 
+								1170 container b
+								1171 text -only closing constraint . 
+								1172 link Description: BWL Mannheim +4 BWL Mannheim +4 BWL Mannheim +4, Value: bwl.uni-mannheim.de/media/Lehrstuehle/bwl/Area_Finance/Finance_Area_Seminar/FSS_2025/Arpit_Paper.pdf
+							1173 container
+								1174 text The  August 1, 2026 text also contains analytical results : §3.1, pp. 15–18, has Lemma 1 and Proposition 2. Its baseline utility is 
+								1175 container \log C+\beta\log C'
+								1176 text ; housing is an asset, the old sell it, and borrowing satisfies 
+								1177 container B\le\lambda PH
+								1178 text . Proposition 2 studies an uncompensated tax change and explicitly has the old lose. It is not a fixed-estate Pareto result. 
+								1179 link Description: Abdou Econ +1, Value: abdouecon.github.io/research/papers/Property_Tax.pdf
+							1180 container
+								1181 text Their quantitative model allows repeated housing adjustment and tenure choice, with origination LTV and payment-to-income limits, an  owner minimum size , and uncapped renter quantities—rather than your owner/renter upper caps and prohibition on old-age purchases. Bequest incentives also interact with sale taxation and step-up basis. 
+								1182 link Description: Abdou Econ, Value: abdouecon.github.io/research/papers/Property_Tax.pdf
+							1183 text Thus your simplification introduced a substantive difficulty: current purchases limit later housing access even when gross financial saving is positive. Their tax-envelope results do not resolve that current-flow valuation problem. The main proposition resolves it without changing your model, by comparing different income–wealth groups.
+							1184 heading 7. Dated use along a transition, Value: 2
+								1185 text 7. Dated use along a transition
+							1186 container
+								1187 text At date 
+								1188 container t
+								1189 text , the stationary donor-source calculation must be replaced by a check on  actual inherited households .
+							1190 text Define
+							1191 container u_t=(1+q\tau^p)P_t-qP_{t+1}, \qquad v_t= \max\left\{ u_t,\frac{\gamma}{\gamma+\omega_B}(1+q\tau^p)P_t \right\}.
+							1192 container
+								1193 text For any compensation cutoff 
+								1194 container C_t\ge v_t
+								1195 text , an actual old owner satisfies 
+								1196 container MV^O\le C_t
+								1197 text  exactly when
+							1198 container \boxed{ \frac{a+P_tH+T_t}{H} \le \max\left\{ u_t+\frac{1+\omega_B}{\gamma}C_t,\, (1+q\tau^p)P_t+\frac{C_t}{\gamma} \right\}. } \tag{28}
+							1199 text This follows from the same old solution and includes binding-retention donors.
+							1200 text For current young recipients, put
+							1201 container H_i^{\mathrm{dp}}=\frac{b_i}{(1-\phi_t)P_t}, \quad W_{it}=y_i+b_i+T_t+qT_{t+1}, \quad D_t=1+\alpha+\vartheta_t+\beta(1+\gamma+\omega_B).
+							1202 text The corresponding sufficient checks are
+							1203 container H_i^{\mathrm{dp}}<h_O^{\max}, \qquad \frac{\alpha(W_{it}-u_tH_i^{\mathrm{dp}})} {(D_t-\alpha)H_i^{\mathrm{dp}}}>C_t, \tag{29}
+							1204 text and
+							1205 container qT_{t+1} +(qP_{t+1}-\phi_tP_t)_+H_i^{\mathrm{dp}} < \frac{\beta(1+\omega_B)}{D_t}W_{it}. \tag{30}
+							1206 text The proof above then establishes the dated improvement.
+							1207 container
+								1208 text The remaining inputs are actual inherited 
+								1209 container a,H
+								1210 text , current and expected prices, and rebates—not a newly solved stationary old cohort. Initial donor eligibility must likewise be checked directly, or established from the decision date that generated the initial old cohort. Unexpected reforms preserve inherited contracts, as required by the packet. 
+								1211 button Pasted text
+									1212 text Pasted text
+							1213 container
+								1214 text The completed result is an allocation theorem at high 
+								1215 container \beta
+								1216 text , with explicit income–wealth separation and financial-feasibility checks. It does not establish that a tax or credit policy implements the transfer, or that the eventual population level rises.
+							

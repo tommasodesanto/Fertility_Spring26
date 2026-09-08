@@ -1527,3 +1527,8 @@ User supplied the completed answer; live in-app browser now works at https://cha
 ## High-beta and Coven follow-up prepared
 
 Author requested a focused follow-up in the existing Theorem Construction Pro chat. Prompt: `docs/prompts/simplified_olg_high_beta_coven_followup_pro.md`. Maintain equilibrium existence, retain heterogeneity and fixed economically relevant beta, distinguish conservative proof bounds from real obstacles, and compare Coven's simple household structure. Full transitions deferred. Exact Oracle render and submission status use `oracle_high_beta_coven_*` in the amendments output folder. **Not submitted:** existing chat was readable, but input and subsequent browser reads timed out. Oracle copied the rendered follow-up for manual paste. No main theory note changed.
+
+
+## High-beta follow-up received and checked
+
+The author submitted the prepared follow-up manually. Pro completed after 30m 26s. Read the assessment at `output/model/simplified_olg_amendments/oracle_high_beta_coven_assessment.md`; exact rendered equation strings and response text are saved alongside it. Main positive-tax allocation theorem accommodates fixed high beta via income/liquid-wealth separation, including donors with binding retention. Two Astra/max reviews pass the main proof, dated extension, analytical compatibility and counterexample, with an explicit physical-owner-cap completion and narrow no-transfer scope. P and T remain equilibrium inputs. Compatibility constructs F and rescales child costs; it is not a claim for calibrated primitives. Main note unchanged. Correction to prior literature summary: Coven August2026 Section3.1 contains a capitalization lemma and tax redistribution proposition; neither is the desired compensated Pareto result.
