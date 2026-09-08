@@ -861,3 +861,10 @@ The September 8 impact-only follow-up uses
 with an exact baseline replay, then tests family LTV95 and supply +20% at the
 same inherited 2023 population. It does not run a future transition or render
 figures. See the output README for budgets and numerical acceptance gates.
+
+The priority rebated-property-tax check is
+`tools/run_e5f_simple_fertility_tax_impact.py`, with the frozen launch contract
+under `../../output/model/e5f_simple_fertility_rebated_tax_20260908a/`. It compares
+rebated 1% and rebated 2% taxes on the same inherited population, solves price
+and rebate jointly, restores the selected transfer, and independently replays
+and audits each endpoint without figures or a future transition.
