@@ -4,6 +4,12 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `oracle_simplified_olg_dated_allocation.md`: follow-up for the existing Pro
+  chat, superseding the stationary-cohort objective with a one-date full
+  consumption/housing comparison. Records the cap-robust planner result and
+  conservative primitive market bounds, and asks for a sharper equilibrium
+  theorem. Paste-ready copy:
+  `output/model/simplified_olg_amendments/oracle_dated_allocation_bundle.md`.
 - `oracle_simplified_olg_stationary_planner.md`: focused September 8 Pro
   handoff to settle welfare weights and complete resource accounting for a full
   planner with fixed fertility and cohort masses. Separates stationary welfare

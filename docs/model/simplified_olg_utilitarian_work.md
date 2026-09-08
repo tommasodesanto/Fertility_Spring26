@@ -489,3 +489,20 @@ settlement. No model solve, paper/slide revision or new welfare convention was
 implemented. The open task is to sharpen the conservative equilibrium
 conditions and decide whether this static statement captures the author's
 intended claim; do not replace it with the rejected permanent-transfer result.
+
+The author correctly emphasizes that common tenure shares need not be imposed
+as a separate assumption when evaluating a stationary equilibrium of the
+maintained model: tenure persistence plus the common stationary cohort law
+implies them. This does not hold for every nonstationary equilibrium date.
+Equal ownership shares also do not imply equal home sizes. Future statements
+must distinguish model implications from extra theorem restrictions.
+
+The new focused Pro follow-up is
+`docs/prompts/oracle_simplified_olg_dated_allocation.md`, with a paste-ready
+copy at `output/model/simplified_olg_amendments/oracle_dated_allocation_bundle.md`.
+It belongs in the existing Pro chat, which already has the exact household
+source. It supersedes the stationary-cohort objective, includes the cap-robust
+static lemma and conservative income bounds, and asks for one stronger
+primitive equilibrium theorem. The current household model and note/slides
+remain unchanged. The follow-up is prepared for manual submission, not yet
+sent, and the completed previous-run monitor remains paused.

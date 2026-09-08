@@ -1,5 +1,18 @@
 # Simplified OLG amendment checks
 
+## September 8: dated allocation is now the active question
+
+The author rejects the stationary-cohort/permanent-transfer result as an answer
+to the housing question. The [new follow-up](../../../docs/prompts/oracle_simplified_olg_dated_allocation.md)
+asks for a full one-date consumption/housing comparison with fixed fertility,
+tenure and future real opportunities. The [paste-ready packet](oracle_dated_allocation_bundle.md)
+is intended for the existing Pro chat, which already contains the exact model
+source. Equal cohort tenure shares follow from a stationary competitive
+reference; they do not impose equal housing quantities. The main remaining
+task is to derive the competitive housing ordering or a sharper planner
+comparison from primitives. Preparation is not submission; the monitor remains
+paused until a new run is launched and monitoring is requested.
+
 ## September 8: full stationary planner under discussion
 
 The author paused further note/slide changes to settle the full planner with
