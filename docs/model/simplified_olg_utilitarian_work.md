@@ -237,3 +237,11 @@ extracted text and layout to the previously inspected version. No PDF preview
 was opened. The estate-regime issue, welfare weights, transfer timing and
 information, and the equilibrium policy transition remain discussion items;
 this slide revision does not close them.
+
+The author requests that subsequent theory changes be made in both the
+discussion note and the theory slides. Pure LaTeX changes go to a fast
+subagent; the lead checks the scope and equations. Cross-sectional averages
+use bars, with integrals where an explicit aggregation operator is needed.
+Expectation notation is reserved for uncertainty. This convention applies
+throughout the current note and the deck's theory appendix, as well as the
+main equilibrium slide.

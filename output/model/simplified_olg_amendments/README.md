@@ -24,9 +24,9 @@ python3 code/model/tools/build_simplified_olg_theory_slides.py
 
 The [slide verification receipt](theory_slides_utilitarian_checks.json)
 records the illustration checks, source preservation, builds, and visual
-inspection. The separate utilitarian note adds one sentence explaining that
-the equilibrium expectations are cohort averages. Its household equations
-and analytical results are unchanged.
+inspection. The note and theory slides use bars for cohort averages and
+integrals for aggregation. Their household equations and analytical results
+are unchanged by this notation revision.
 
 ## September 8: separate utilitarian note
 

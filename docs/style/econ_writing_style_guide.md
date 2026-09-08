@@ -95,6 +95,8 @@ Corollaries of the rule:
 - Keep equation labels stable across revisions. Avoid notation collisions (x vs X, y vs
   Y); if a local construction needs symbols that collide, scope them explicitly in a
   footnote.
+- Use bars for cross-sectional averages and integrals for aggregation. Reserve
+  expectation notation for uncertainty; do not use it merely to average households.
 - Assumptions stated where used; iff results get both directions discussed; proofs
   include the nontrivial computation (no "it is easy to see").
 
