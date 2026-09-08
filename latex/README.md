@@ -3,12 +3,16 @@
 Active documents:
 
 - `september_14_presentation.tex` / `september_14_presentation.pdf`: main
-  September 14 seminar deck. Following the author's September 6 correction,
-  the main theory is seven slides (PDF pages 6–12), including a marginal-value
-  reallocation diagram and a two-panel equilibrium transition. Start with the
+  September 14 seminar deck, with the theory revision due Thursday, September
+  10. The September 8 update has seven main theory slides (PDF pages 6–12):
+  households, equilibrium, utilitarian housing allocation, fertility, and
+  population paths. Start with the
   standalone `../output/pdf/simplified_olg_theory_slides.pdf`, generated from
-  those same seven frames. Full household problems and supporting theory are
-  on main-deck pages 44–55. The original utilities and notation are preserved.
+  those same seven frames. Nine supporting theory slides are on main-deck
+  pages 44–52. The model and notation follow the separate conventional-finance
+  and utilitarian notes. The allocation diagram illustrates the proved local
+  utility gain; the two demographic panels assume fertility paths and apply
+  cohort accounting, without asserting policy-equilibrium or convergence results.
   The full reader copy, `../output/pdf/september_14_presentation.pdf`, matches
   the adjacent PDF. Quantitative sections were not changed or refreshed.
   Build and verification: `../output/model/simplified_olg_amendments/README.md`.

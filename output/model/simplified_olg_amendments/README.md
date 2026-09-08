@@ -1,5 +1,33 @@
 # Simplified OLG amendment checks
 
+## September 8: theory slides for the September 10 deadline
+
+Read the [seven-slide theory extract](../../pdf/simplified_olg_theory_slides.pdf)
+or [full seminar deck](../../pdf/september_14_presentation.pdf). Both use
+[the same source](../../../latex/september_14_presentation.tex). The seven
+main theory slides and nine theory appendix slides are the only revised
+deck sections; quantitative material is unchanged.
+
+The allocation diagram shows raw marginal housing utility and the local
+utilitarian transfer. The two demographic panels show an assumed fertility
+decline followed by an assumed positive policy fertility effect, with
+population computed from the exact cohort law. They do not establish an
+equilibrium policy path, convergence, or positive stationary equilibria for
+the revised household model. The earlier model's figures remain historical
+artifacts and are not inputs to this deck revision.
+
+Rebuild the diagrams, full deck, and extract without running a model solver:
+
+~~~sh
+python3 code/model/tools/build_simplified_olg_theory_slides.py
+~~~
+
+The [slide verification receipt](theory_slides_utilitarian_checks.json)
+records the illustration checks, source preservation, builds, and visual
+inspection. The separate utilitarian note adds one sentence explaining that
+the equilibrium expectations are cohort averages. Its household equations
+and analytical results are unchanged.
+
 ## September 8: separate utilitarian note
 
 Read the [utilitarian discussion PDF](../../pdf/simplified_olg_utilitarian.pdf)

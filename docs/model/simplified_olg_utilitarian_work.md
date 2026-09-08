@@ -168,3 +168,72 @@ The result that a policy raises fertility at every date in a market-clearing
 demographic transition, and consequently raises limiting population, remains
 open. The finite bundle test and population accounting are valid conditional
 comparisons on existing paths; they do not supply that missing policy result.
+
+## September 8 discussion and theory-slide revision
+
+The author requests parallel development of the discussion draft and the
+existing theory slides. The deadline is **Thursday, September 10**, confirmed
+explicitly. The active seminar source remains
+`latex/september_14_presentation.tex`; only its seven main theory frames and
+contiguous theory appendix are in scope. Quantitative sections are preserved.
+The author-controlled manuscript remains read-only.
+
+Two presentation clarifications are immediate: \(T_t\) in the household
+budgets is the common property-tax rebate, not the later policy grants;
+\(\mathbb E_t h\) denotes a cross-sectional cohort average over endowments
+and tenure, not a forecast. One explanatory sentence was added to the
+discussion note's equilibrium definition. Its notation and household equations
+are preserved.
+
+The old-estate condition remains an open substantive issue. With old housing
+uncapped, put \(A=p+qP\), \(K=1+\gamma+\omega_B\) and \(m=K/z\).
+When \(e=Ph^o\), optimal old housing is
+\[
+h^o=\frac{(\gamma+\omega_B)z}{KA},
+\qquad
+\frac\alpha s-\frac\gamma{h^o}
+=\left(\frac\beta q-1\right)pm+\mu L
+-m\frac{q\gamma P-\omega_Bp}{\gamma+\omega_B}.
+\]
+Thus \(\beta\ge q\) and binding young finance alone do not sign the gap.
+Zero financial estate is a regular parameter regime, not an exceptional
+boundary. An independent Astra/max check verified both old regimes and a
+matched-household limiting counterexample; no full-equilibrium counterexample
+or new primitive theorem is asserted. Weak bequest tastes reduce old housing
+within the binding-estate regime; strong tastes instead reduce housing within
+the financial-estate regime as saving shifts to financial assets.
+
+Liquidation costs were discussed but **not adopted**. A hypothetical loss of
+fraction \(\delta\) at death changes the financial-estate threshold to
+\(\omega_B/\gamma>(1-\delta)/(R_f-1+\tau^p+\delta)\).
+That is not the same specification as a cost of downsizing while alive.
+Death-only costs also make young and old service costs differ, and real losses
+must enter planner feasibility; the previous welfare theorem cannot simply
+reuse the easier threshold. The independent reviewer checked this distinction.
+
+The updated diagrams use raw housing utility for the allocation comparison
+and two conditional fertility/population panels for demographic adjustment.
+The latter assumes the policy fertility ordering and applies cohort accounting;
+it does not import the earlier financing model's equilibrium transition or
+assert new stationary equilibria. Earlier figure files and supporting notes
+are retained. The existing build driver now generates these explicit
+illustrations without running an equilibrium solver.
+
+The completed first slide revision contains seven main theory frames (PDF
+pages 6–12) and nine supporting appendix frames (pages 44–52) in the existing
+71-page deck. The seven-frame review extract is
+`output/pdf/simplified_olg_theory_slides.pdf`; the full reader copy is
+`output/pdf/september_14_presentation.pdf`. Source outside the two authorized
+theory spans is byte-for-byte unchanged. All internal links resolve. Both
+decks were compiled twice after final edits; all changed frames were rendered
+and inspected, with no layout overflow. The full deck retains its existing
+non-visible appendix-bookmark warning. The slide receipt records final hashes
+and the scope of the schematic figures.
+
+The discussion-note checker again passed all 47 exact identities and source
+checks. Its clarification changes only page 3; that page was rendered and
+inspected after two compilation passes. The remaining pages have identical
+extracted text and layout to the previously inspected version. No PDF preview
+was opened. The estate-regime issue, welfare weights, transfer timing and
+information, and the equilibrium policy transition remain discussion items;
+this slide revision does not close them.

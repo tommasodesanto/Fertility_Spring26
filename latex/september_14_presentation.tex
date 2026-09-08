@@ -99,184 +99,147 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 % Seven main theory frames. The standalone review PDF is built from this block.
 \begin{frame}{Environment and Preferences}
 A two-period OLG economy: $Y_t$ young and $O_t$ old share a fixed housing stock $\bar H$.
-\begin{itemize}\setlength\itemsep{0.4em}
-  \item Entrants draw income and liquid wealth, $(y_i,b_i)$, from a fixed distribution $F$.
-  \item Young choose consumption, housing, fertility, saving, and tenure.
-  \item Old choose consumption, housing, and an estate.
-\end{itemize}
-
-\medskip
-Flow utilities are
-\[
-\begin{aligned}
-u_t^Y(c,h,n)&=\log(c-\chi n)+\alpha\log(h-\kappa n)+\vartheta_t\log n,\\[0.3em]
-u^2(c^2,h^2,e)&=\log c^2+\gamma\log h^2+\omega_B\log e.
-\end{aligned}
-\]
-Each child needs $\chi$ goods and $\kappa$ housing; $e$ gives warm-glow utility and does not determine entrant wealth.
-
-\vfill
-Old-age utility is discounted by $\beta$; owning adds an independent taste $\xi_i\sim\operatorname{Logistic}(\bar\xi,\sigma_\xi)$.
-\end{frame}
-
-\begin{frame}{Housing and Finance}
-A mortgage finances share $\phi_t$ of a home bought at price $P_t$:
-\[
-\underbrace{h\le h_R^{\max}<h_O^{\max}}_{\text{rent}}
-\qquad\qquad
-\underbrace{h\le h_O^{\max},\quad (1-\phi_t)P_t h\le b_i}_{\text{own}}.
-\]
-A buyer may afford the cost of using a home but lack its down payment.
-
-\medskip
-Goods and bonds trade externally at bond price $q$, with $R_f=q^{-1}$. Rent $r_t$ is paid next period; property tax is $\tau^pP_t$. Rental entry implies
-\[
-q r_t=(1+q\tau^p)P_t-qP_{t+1}>0.
-\]
-
 \begin{itemize}\setlength\itemsep{0.3em}
-  \item Income and rebates arrive after closing; unsecured borrowing is unavailable.
-  \item Old owners may downsize, but cannot buy more or let retained housing.
+  \item Entrants draw $(y_i^y,b_i,y_i^o)$ from $F$: young income, liquid wealth, and old income.
+  \item Young choose consumption, housing, completed fertility, saving, and lifetime tenure.
+  \item Old choose consumption, housing, and an estate; future income is known.
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Household Choices}
-{\small\color{black} Taking prices and rebates $T_t$ as given, households choose within each tenure.}
 
 \smallskip
-\begin{columns}[T,onlytextwidth]
-\column{0.50\textwidth}
-{\small\textbf{Young households}}
-{\footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{3pt}
+Flow utilities are:
 \[
 \begin{aligned}
-W_t^R(i)=\max_{c,h,n,a'}\;&u_t^Y+\beta V_{t+1}^R(R_fa')\\
-&c+a'+q r_t h=y_i+b_i+T_t,\\
-&h\le h_R^{\max},\qquad a'\ge0.
+u_t^y(c,h,n)&=\log(c-\chi n)+\alpha\log(h-\kappa n)+\vartheta_t\log n,\\[0.2em]
+u^o(c^2,h^2,e)&=\log c^2+\gamma\log h^2+\omega_B\log e.
 \end{aligned}
 \]
-\[
-\begin{aligned}
-W_t^O(i)=\max_{c,h,n,a'}\;&u_t^Y+\beta V_{t+1}^O(a_{t+1},h)\\
-&c+a'+[(1-\phi_t)+q\tau^p]P_th\\
-&\hspace{6em}=y_i+b_i+T_t,\\
-&a_{t+1}=R_fa'-R_f\phi_tP_th.
-\end{aligned}
-\]
-Owners also satisfy the down payment, $h\le h_O^{\max}$, and $a'\ge0$.
-}
-\column{0.46\textwidth}
-{\small\textbf{Old households}}
-{\footnotesize
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-\setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{3pt}
-\[
-\begin{aligned}
-V_t^R(a)=\max_{c^2,h^2,e}\;&u^2\\
-&c^2+qe+q r_t h^2=a+T_t,\\
-&0<h^2\le h_R^{\max}.
-\end{aligned}
-\]
-\[
-\begin{aligned}
-V_t^O(a,H)=\max_{c^2,h^2,e}\;&u^2\\
-&c^2+qe+q r_t h^2\\
-&\hspace{3em}=a+P_tH+T_t,\\
-&0<h^2\le H,\quad e\ge P_{t+1}h^2.
-\end{aligned}
-\]
-Here $a$ is financial wealth, $H$ inherited housing, and $e$ the estate in next-period goods.
-}
-\end{columns}
+{\small Each child needs $\chi$ goods and $\kappa$ housing; $n>0$ is continuous. All utility weights are positive. Households discount future utility by $\beta$.}
 
 \vfill
-{\small Own if $W_t^O(i)+\xi_i\ge W_t^R(i)$; this determines the owner share $\pi_t^O(i)$.}
+{\small Owning adds $\xi_i\sim\operatorname{Logistic}(\bar\xi,\sigma_\xi)$, independent of endowments. The warm-glow estate $e$ does not determine entrant wealth.}
+\end{frame}
+
+\begin{frame}{Young Households}
+\relax
+{\small Goods and bonds trade externally at bond price $q\in(0,1)$. Housing costs $P_t$; mortgages finance at most share $\phi_t\in(0,1)$; the property-tax rate is $\tau^p$.}
+
+\smallskip
+{\small Taking prices and the property-tax rebate $T_t$ as given:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+\begin{aligned}
+W_t^R(i)=\max_{c,h,n,a'}\;&u_t^y(c,h,n)+\beta V_{t+1}^R(a';i)\\
+&c+qa'+qr_t h=y_i^y+b_i+T_t,\qquad a'\ge0,\quad h\le h_R^{\max},\\[0.6em]
+W_t^O(i)=\max_{c,h,n,a'}\;&u_t^y(c,h,n)+\beta V_{t+1}^O(a',h;i)\\
+&c+qa'+(1+q\tau^p)P_t h=y_i^y+b_i+T_t,\\
+&qa'+\phi_tP_t h\ge0,\qquad h\le h_O^{\max}.
+\end{aligned}
+\]
+}
+{\small Here $a'$ is next-period net financial wealth, including mortgage repayment. Rent $r_t$ is paid at period end; $h_R^{\max}<h_O^{\max}$.}
+
+\vfill
+{\small The equal property-tax rebate $T_t$, current income, and wealth are available before purchase.}
+\end{frame}
+
+\begin{frame}{Old Households and Tenure}
+\relax
+{\small An old household has net financial wealth $a$ and income $y_i^o$; an owner also holds title to $H$ units. Taking prices and rebates as given:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+\begin{aligned}
+V_t^R(a;i)=\max_{c^2,h^2,e}\;&u^o(c^2,h^2,e)\\
+&c^2+qe+qr_t h^2=a+y_i^o+T_t,\qquad h^2\le h_R^{\max},\\[0.5em]
+V_t^O(a,H;i)=\max_{c^2,h^2,e}\;&u^o(c^2,h^2,e)\\
+&c^2+qe+qr_t h^2=a+P_tH+y_i^o+T_t,\\
+&h^2\le h_O^{\max},\qquad e\ge P_{t+1}h^2.
+\end{aligned}
+\]
+}
+{\small Financial saving $a^e\ge0$ gives $e=q^{-1}a^e$ for renters and $e=q^{-1}a^e+P_{t+1}h^2$ for owners. Owners may buy or sell within $h_O^{\max}$.}
+
+\medskip
+{\small Young own if $W_t^O(i)+\xi_i\ge W_t^R(i)$; this determines the owner probability $\pi_t^O(i)$. Tenure remains fixed thereafter.}
 \end{frame}
 
 \begin{frame}{Competitive Equilibrium}
-{\small\color{black}
-Given policies, $F$, and $(Y_0,O_0,G_0)$, an equilibrium is a sequence of prices $(P_t,r_t)$, rebates $T_t$, household choices, cohort sizes and old distributions satisfying:
-
-\begin{enumerate}\setlength\itemsep{0.25em}
-  \item \color{black} Young and old optimize using equilibrium prices; tenure follows the value comparison.
-  \item \color{black} Rental entry: $q r_t=(1+q\tau^p)P_t-qP_{t+1}>0$.
-  \item \color{black} Housing clears and property-tax revenue is rebated:
+\relax
+{\small
+Given policies, $F$, and $(Y_0,O_0,G_0)$, an equilibrium is a sequence of prices $(P_t,r_t)$, rebates $T_t$, household choices, cohort sizes, and old distributions satisfying:
+\begin{enumerate}\setlength\itemsep{0.2em}
+  \item Young and old optimize at equilibrium prices; tenure follows the value comparison.
+  \item Rental entry: $qr_t=(1+q\tau^p)P_t-qP_{t+1}>0$.
+  \item Housing clears and property-tax revenue is rebated equally:
 \[
-Y_t\bar h_t^Y+O_t\bar h_t^O=\bar H,\qquad
+Y_t\bar h_t^y+O_t\bar h_t^o=\bar H,\qquad
 (Y_t+O_t)T_t=q\tau^pP_t\bar H.
 \]
-  \item \color{black} Cohorts follow $Y_{t+1}=\nu\bar n_tY_t$ and $O_{t+1}=Y_t$.
-  \item \color{black} $G_{t+1}$ follows from young saving, mortgage debt, housing, and tenure.
+  \item Cohorts follow $Y_{t+1}=\nu\bar n_tY_t$ and $O_{t+1}=Y_t$.
+  \item $G_{t+1}$ is generated by young choices of $(a',h)$ and tenure, together with $y_i^o$.
 \end{enumerate}
-Bars denote averages across types and tenure; $\nu$ converts children to entrants. $G_t$ records old wealth, housing and tenure. Goods and bonds trade externally.
+Bars are cross-sectional averages over endowments and tenure; $\nu$ converts children to entrants. $G_t$ is the old distribution of financial wealth, inherited housing, income, and tenure.
 
 \vfill
-A positive steady state has constant prices, choices and distributions, $Y^*=O^*$, and $\bar n^*=1/\nu$.
+A positive steady state has constant prices, choices, distributions and cohort sizes, with $Y^*=O^*$ and replacement fertility $\bar n^*=1/\nu$.
 }
 \end{frame}
 
-\begin{frame}[label=theory-allocation]{Housing Misallocation}
-For eligible young buyers, only the down-payment constraint binds.
+\begin{frame}[label=theory-allocation]{Housing Allocation and Welfare}
+\relax
+{\small At a stationary equilibrium, give each living household equal weight on its remaining utility.}
 
 \smallskip
 \begin{columns}[c,onlytextwidth]
   \column{0.56\textwidth}
-  \includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/theory_slides_misallocation.pdf}
+  \includegraphics[width=\textwidth,height=0.47\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/theory_slides_utilitarian_allocation.pdf}
   \column{0.40\textwidth}
   {\small
-  \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-  \setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{3pt}
-  Marginal values in goods:
+  With $s=h-\kappa n$, marginal housing utility is higher for a constrained young owner than for its stationary old counterpart:
   \[
-  \begin{aligned}
-  MV_i^Y&=\frac{\alpha(c_i-\chi n_i)}{h_i-\kappa n_i},\\[0.3em]
-  MV_j^O&=\frac{\gamma c_j^2}{h_j^2}.
-  \end{aligned}
-  \]
-  For an old owner with interior choices:
-  \[
-  MV_i^Y>q r_t=MV_j^O.
+  \frac{\alpha}{s}>\frac{\gamma}{h^2}.
   \]
   }
 \end{columns}
 
 \smallskip
-{\small\textbf{Inefficiency.} Move a little housing to the young and compensate the old in goods: some young gain and everyone else is equally well off.}
+{\small\textbf{Utilitarian gain.} Move a little housing from old to young, holding consumption, fertility, tenure, estates, and future allocations fixed. Old housing utility falls; total welfare rises.}
 
 \vfill
-{\footnotesize Eligible pairs have positive mass; no moving cost. The planner relaxes finance while preserving physical limits, resources, fertility, tenure, estates, future allocations and existing claims.}
+{\footnotesize Requires $\beta\ge q$, a positive share of owners with strictly binding mortgages, slack young and old housing caps, and positive old financial saving. The direct planner may relax finance.\hfill\hyperlink{theory-primitives}{\beamerbutton{Conditions}}\ \hyperlink{theory-compensation}{\beamerbutton{Proof}}}
 \end{frame}
 
 \begin{frame}[label=theory-fertility]{Housing and Fertility}
-Relax a young buyer's binding housing limit. Allow fertility to adjust, holding prices and tenure fixed.
+At fixed tenure, prices, and other transfers, a current cash gift raises fertility. More space lowers the housing cost of children; consumption also matters.
 
 \medskip
-Fertility rises if and only if the space benefit exceeds the resource cost:
+For two chosen bundles at the same $\vartheta$, if $(c_1,h_1)$ can accommodate $n_0$:
 \[
-\underbrace{\frac{\alpha\kappa}{(h-\kappa n)^2}}_{\text{space benefit}}
->
-\underbrace{\frac{\chi q r_t}{[1+\beta(1+\gamma+\omega_B)](c-\chi n)^2}}_{\text{resource cost}}.
+n_1\ge n_0\quad\Longleftrightarrow\quad
+\frac{\chi}{c_1-\chi n_0}+\frac{\alpha\kappa}{h_1-\kappa n_0}
+\le
+\frac{\chi}{c_0-\chi n_0}+\frac{\alpha\kappa}{h_0-\kappa n_0}.
 \]
-More space helps accommodate children; paying for it uses other resources.
+A rise in both consumption and housing is sufficient; otherwise their effects must be compared.
 
 \vfill
-{\small Positive saving and interior old-age choices; the same constraints bind and no transfers accompany the change.}
+{\small The current and old-age grants in the appendix raise treated owners' fertility at fixed prices and rebates. Aggregate effects also depend on tenure choices, housing-market clearing, and future cohort sizes.\hfill\hyperlink{theory-fertility-proof}{\beamerbutton{Details}}}
 \end{frame}
 
-\begin{frame}{Equilibrium Transition}
-Illustration: a small permanent credit relaxation, $\phi_1>\phi_0$.
+\begin{frame}{Fertility and Population Paths}
+\relax
+{\small An exogenous fall in $\vartheta_t$ at $t_0$ starts demographic adjustment. At $t_p$, a housing policy branches from the same inherited state as the baseline.}
 
 \smallskip
 {\centering
-\includegraphics[width=\textwidth,height=0.54\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/theory_slides_transition.pdf}\par}
+\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/theory_slides_utilitarian_transition.pdf}\par}
 
 \smallskip
-{\small Fertility rises at impact and returns to replacement with more households.}
+{\small Higher fertility along the policy path makes later cohorts larger: $Y_{t+1}=\nu\bar n_tY_t$.}
 
 \vfill
-{\footnotesize Initial/impact: inherited assets and corresponding expectations. Long run: stationary choices. Local schematic curves; adjustment may overshoot.}
+{\footnotesize Fertility paths are assumed. Both approach replacement and yield positive population limits by cohort accounting; equilibrium housing and fiscal conditions remain to be established.\hfill\hyperlink{theory-transition-curves}{\beamerbutton{Dated comparisons}}}
 \end{frame}
 
 \section{Quantitative Model}
@@ -960,212 +923,256 @@ All effects are general equilibrium: prices, tenure, births, population, and the
 \vfill
 \end{frame}
 
-% Full theory household problems, retained with the original notation.
-\begin{frame}{Young Renters}
-Taking prices and the equal property-tax rebate $T_t$ as given, a young renter solves:
-\[
-\begin{aligned}
-W_t^R(i)=\max_{c,h,n,a'}\quad
-&u_t^Y(c,h,n)+\beta V_{t+1}^R(R_fa')\\[0.4em]
-\text{s.t.}\quad
-&c+a'+q r_t h=y_i+b_i+T_t,\\
-&h\le h_R^{\max},\qquad a'\ge0.
-\end{aligned}
-\]
-The renter pays for housing services and carries financial saving into old age.
-
-\vfill
-The physical rental limit can restrict family space even when the household has additional resources.
-\end{frame}
-
-\begin{frame}{Young Owners}
-A young owner carries housing and mortgage debt into old age:
-\[
-\begin{aligned}
-W_t^O(i)=\max_{c,h,n,a'}\quad
-&u_t^Y(c,h,n)+\beta V_{t+1}^O(a_{t+1},h)\\[0.3em]
-\text{s.t.}\quad
-&c+a'+[(1-\phi_t)+q\tau^p]P_t h=y_i+b_i+T_t,\\
-&a_{t+1}=R_fa'-R_f\phi_tP_t h,\\
-&(1-\phi_t)P_t h\le b_i,\qquad h\le h_O^{\max},\qquad a'\ge0.
-\end{aligned}
-\]
-The mortgage is repaid next period; $a_{t+1}$ is financial wealth after repayment.
-
-\vfill
-The household owns if $W_t^O(i)+\xi_i\ge W_t^R(i)$. The ownership taste is logistic and independent of income and wealth.
-\end{frame}
-
-\begin{frame}{Old Households}
-An old household holds financial wealth $a$; an owner also holds a house of size $H$:
+% Full theory household problems and supporting utilitarian results.
+\begin{frame}{Young Household Problems and Finance}
+\relax
+{\small A prime denotes next-period net financial wealth. Let $p_t=qr_t$ denote the current cost of housing services. The two conditional problems are:}
 {\small
 \[
 \begin{aligned}
-V_t^R(a)&=\max_{c^2,h^2,e}\ u^2(c^2,h^2,e)\\[-0.1em]
-&\quad\text{s.t. }c^2+qe+q r_t h^2=a+T_t,\qquad 0<h^2\le h_R^{\max},\\[0.7em]
-V_t^O(a,H)&=\max_{c^2,h^2,e}\ u^2(c^2,h^2,e)\\[-0.1em]
-&\quad\text{s.t. }c^2+qe+q r_t h^2=a+P_tH+T_t,\\
-&\hspace{3.8em}0<h^2\le H,\qquad e\ge P_{t+1}h^2.
+W_t^R(i)&=\max_{c,h,n,a'}\ u_t^y(c,h,n)+\beta V_{t+1}^R(a';i),\\
+&c+qa'+p_th=y_i^y+b_i+T_t,\quad a'\ge0,\quad h\le h_R^{\max},\\[0.5em]
+W_t^O(i)&=\max_{c,h,n,a'}\ u_t^y(c,h,n)+\beta V_{t+1}^O(a',h;i),\\
+&c+qa'+(1+q\tau^p)P_th=y_i^y+b_i+T_t,\\
+&qa'+\phi_tP_th\ge0,\quad h\le h_O^{\max}.
 \end{aligned}
 \]
 }
-The estate is measured in next-period goods and includes the retained house.
+{\small If $d$ is mortgage principal and $k$ is current bond investment, then $0\le d\le\phi_tP_th$, $k\ge0$, and $a'=(k-d)/q$. Eliminating $k,d$ gives the owner's constraint.}
 
 \vfill
-Owners can release space while preserving estate value through financial saving.
+{\small Current income, wealth, and the rebate can finance purchase. All choices satisfy $c>\chi n$, $h>\kappa n$, and $n>0$.}
 \end{frame}
 
-\begin{frame}{Tenure and Housing Access}
-The two restrictions affect different ways of obtaining more space.
-
-\begin{itemize}\setlength\itemsep{0.8em}
-  \item The rental limit restricts the size of a home available without a purchase.
-  \item The down payment can restrict a young buyer below the physical owner limit.
-  \item An ownership taste can sustain constrained ownership even when larger rentals are available.
-\end{itemize}
-
-\vfill
-The allocation result moves housing between owners. A renter at a physical cap cannot receive more housing in that tenure under the same planner restrictions.
-\end{frame}
-
-\begin{frame}[label=theory-compensation]{Compensated Housing Reallocation}
-Move $\epsilon$ housing from old owner $j$ to young owner $i$. Keeping the old owner's utility and estate fixed requires extra consumption:
+\begin{frame}{Old Household Problems and Financial Estates}
+\relax
+{\small Write $z_R=a+y_i^o+T_t$, $z_O=a+P_tH+y_i^o+T_t$, and $p_t=qr_t$. The old household solves:}
+{\small
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 \[
-D_j(\epsilon)=c_j^2\left[\left(\frac{h_j^2}{h_j^2-\epsilon}\right)^\gamma-1\right].
+\begin{aligned}
+V_t^R(a;i)&=\max_{c^2,h^2,e}\ u^o(c^2,h^2,e),\quad
+c^2+qe+p_th^2=z_R,\quad h^2\le h_R^{\max},\\[0.3em]
+V_t^O(a,H;i)&=\max_{c^2,h^2,e}\ u^o(c^2,h^2,e),\quad
+c^2+qe+p_th^2=z_O,\\
+&h^2\le h_O^{\max},\qquad e\ge P_{t+1}h^2.
+\end{aligned}
 \]
-Transfer this amount from the young household; goods and housing balance.
+}
+{\small The owner's cash budget is $c^2+a^e+(1+q\tau^p)P_th^2=z_O$, with $a^e=q(e-P_{t+1}h^2)\ge0$. At stationary prices, put $K=1+\gamma+\omega_B$ and $p=(1-q+q\tau^p)P$. If both owner restrictions are slack:}
+{\small
+\[
+c^2=\frac zK,\qquad h^2=\frac{\gamma z}{Kp},\qquad
+ e=\frac{\omega_Bz}{Kq},\qquad
+a^e=\frac zK\left(\omega_B-\frac{qP\gamma}{p}\right)>0.
+\]
+}
+{\small Positive financial saving requires $\omega_B(1-q+q\tau^p)>q\gamma$. Without a binding size cap, failure of this inequality makes the estate floor bind. The housing-welfare proof uses the positive-saving regime.}
+\end{frame}
+
+\begin{frame}{Stationary Existence and Price Bounds}
+\relax
+{\footnotesize Assume bounded endowments $w_{0i}=y_i^y+b_i\ge\underline w>0$, $v_{0i}=y_i^o\ge0$, and $0\le\tau^p<2$. Define the cost coefficients and resource bounds:}
+{\footnotesize
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\[
+\begin{gathered}
+d_p=1-q+q\tau^p,\quad d_L=1-\phi+q\tau^p,\quad d_{\max}=\max\{d_p,d_L\},\\
+K=1+\gamma+\omega_B,\quad D=1+\alpha+\vartheta+\beta K,\\
+\bar M_0=\mathbb E_F(w_0+qv_0),\quad
+\bar T=\frac{\tau^p\bar M_0}{(1-q)(2-\tau^p)},\quad
+\bar M=\bar M_0+(1+q)\bar T.
+\end{gathered}
+\]
+}
+{\small Sufficient fertility at low housing prices is ensured by:}
+{\small
+\[
+h_R^{\max}>\frac\kappa\nu,\qquad
+\vartheta\nu>\frac{\chi D}{\underline w}
++\frac{\alpha\kappa}{h_R^{\max}-\kappa/\nu}.
+\]
+}
+{\small A positive stationary equilibrium then exists, and every such equilibrium obeys:}
+{\small
+\[
+0\le T\le\bar T,\qquad
+P_-\equiv\frac{\alpha\underline w}{D d_{\max}h_R^{\max}}
+<P<P_+\equiv\frac{\nu\bar M}{d_p\kappa}.
+\]
+}
+{\footnotesize Fertility is above replacement at the lower price and below it at the upper price. Continuity and the bounded rebate map give a stationary fixed point; these bounds do not require uniqueness.}
+\end{frame}
+
+\begin{frame}[label=theory-primitives]{Constrained Owners: Primitive Conditions}
+\relax
+{\small Use the preceding bounds, and let $\mathcal S$ be a positive-mass endowment group. Define:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+\ell=\frac{d_L}{d_p},\qquad
+C_{\min}=1+\alpha\ell+\vartheta\min\{1,\ell\},\qquad
+k=\frac D{C_{\min}}-1.
+\]
+}
+{\small A sufficiently steep income profile makes its mortgage strictly restrictive:}
+{\small
+\[
+qv_{0i}>kw_{0i}+\max\{k-q,0\}\bar T\qquad(i\in\mathcal S).
+\]
+}
+{\small Let $M_{\mathcal S}\ge\sup_{i\in\mathcal S}\{w_{0i}+qv_{0i}+(1+q)\bar T\}$. Require:}
+{\small
+\[
+\omega_Bd_p>q\gamma,\qquad
+h_O^{\max}>\frac{M_{\mathcal S}}{d_pP_-}
+\max\!\left\{1,\frac\gamma{qK}\right\}.
+\]
+}
+{\small These inequalities make old financial saving positive and both owner housing caps slack. Logistic tastes give $\mathcal S$ positive owner mass.}
+
+\vfill
+{\footnotesize Without the mortgage constraint, desired cash expenditure is at least $(w+qv)C_{\min}/D>w$. The household cannot bring enough of its old resources forward. With $\beta\ge q$, these primitive restrictions imply the welfare result.\hfill\hyperlink{theory-allocation}{\beamerbutton{Back}}}
+\end{frame}
+
+\begin{frame}[label=theory-compensation]{Direct Utilitarian Reallocation}
+\relax
+{\small At stationarity, let $x=c-\chi n$, $s=h-\kappa n$, $p=d_pP$, $L=d_LP$, $w=y^y+b+T$, $v=y^o+T$, and $z=a'+Ph+v$. The young owner's restrictions are:}
+{\small
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
+\[
+c+ph+qz=w+qv,\qquad c+Lh\le w.
+\]
+}
+{\small Let $\mu>0$ be the cash-constraint multiplier and $m=K/z=1/c^2$ the marginal utility of old resources. The household conditions imply:}
+{\small
+\[
+\frac\alpha s-\frac\gamma{h^2}
+=\left(\frac\beta q-1\right)pm+\mu L>0.
+\]
+}
+{\small A transfer of $\varepsilon$ housing from the matched old owner to the young changes equal-weight welfare by:}
+{\small
+\[
+\Delta\mathcal W=\alpha\log(1+\varepsilon/s)
++\gamma\log(1-\varepsilon/h^2)>0\quad\text{for small }\varepsilon>0.
+\]
+}
+{\footnotesize Set $\Delta a'=-P\varepsilon$, $\Delta a^e=qP\varepsilon$, with cash $p\varepsilon$ from old to young. This preserves estates, young future resources, and aggregate bonds. Match owners by endowment across equal stationary cohorts. The planner relaxes private finance; the gain is local.\hfill\hyperlink{theory-allocation}{\beamerbutton{Back}}}
+\end{frame}
+
+\begin{frame}[label=theory-transfers]{Transfers with Committed Fertility and Tenure}
+\relax
+{\small Start from the constrained stationary owner group with $\beta\ge q$. An unexpected intervention occurs after fertility and tenure are committed, before housing purchase. Suppose:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+\phi\ge q,\qquad
+\alpha(1+\omega_B)\le\gamma\frac{1-\phi+q\tau^p}{1-q+q\tau^p}.
+\]
+}
+{\small With $\lambda=\beta K/(qz)$, the following choices add $\varepsilon$ adult space:}
+{\small
+\[
+s_\varepsilon=s+\varepsilon,\qquad
+x_\varepsilon=\frac L{\alpha/(s+\varepsilon)-(p-L)\lambda}.
+\]
+}
+{\small Implement them with current grant $G$ and promised old-age grant $J$:}
+{\small
+\[
+G=x_\varepsilon-x+L\varepsilon,\qquad qJ=(p-L)\varepsilon.
+\]
+}
+{\small These lump-sum grants, additional to $T$, are nonnegative. Under the original mortgage rule, the young choose more housing and consumption; old resources $z$ stay fixed.}
+
+\vfill
+{\footnotesize The intervention requires fertility and tenure to be committed before housing choice.}
+\end{frame}
+
+\begin{frame}{Transfer Funding and Welfare}
+\relax
+{\small An uncapped old owner's housing demand is $gz$, where $g=\gamma/(Kp)$. Tax its matched counterpart $\varepsilon/g$ to release exactly $\varepsilon$ housing. Additional old owners strictly at their housing cap pay the residual:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+R=G+qJ-\varepsilon/g
+=x_\varepsilon-x+p\varepsilon-\varepsilon/g\ge0.
+\]
+}
+{\small The capped funders have lower marginal utility of cash: $m_F<\gamma/(ph_O^{\max})<m$. A primitive sufficient income bound is:}
+{\small
+\[
+y_f^o>(\phi/q-1)P_+h_O^{\max}
++\frac{Kd_pP_+h_O^{\max}}\gamma.
+\]
+}
+{\small With $A=\left.\mathrm dx_\varepsilon/\mathrm d\varepsilon\right|_0$ and $\Lambda=1/x$, the welfare gain is:}
+{\small
+\[
+\mathcal W'(0)=(\Lambda-m)A+(\alpha/s-pm)
++(m-m_F)(A+p-1/g)>0.
+\]
+}
+{\footnotesize Positive funder mass and uniform strict margins are required. The government saves $qJ$ to pay $J$. At the original price, housing clears and old estates finance higher consumption. Young old-age choices and subsequent cohorts are unchanged.}
+\end{frame}
+
+\begin{frame}[label=theory-fertility-proof]{Fertility after a Grant}
+\relax
+{\small Private fertility satisfies the balance between its utility and goods-and-space costs:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
+\[
+\frac\vartheta n=\frac\chi{c-\chi n}+\frac{\alpha\kappa}{h-\kappa n}.
+\]
+}
+{\small For the same grant pair $(G,J)$, reoptimize all other choices at baseline fertility $n_0$. Adult consumption and space both rise. If $W_\varepsilon(n)$ is the profiled owner value:}
+{\small
+\[
+W_\varepsilon'(n_0)=
+\chi\left(\frac1{x_0}-\frac1{x_\varepsilon}\right)
++\alpha\kappa\left(\frac1{s_0}-\frac1{s_\varepsilon}\right)>0.
+\]
+}
+{\small Concavity therefore implies higher optimal fertility at fixed prices, rebates, and tenure. A current cash gift alone also raises conditional fertility across mortgage and old-estate regimes.}
 
 \medskip
-With $x_i=c_i-\chi n_i$ and $s_i=h_i-\kappa n_i$, its utility gain satisfies:
+{\small Across tenures, mean fertility for endowment type $i$ changes by:}
+{\footnotesize
 \[
-\Delta U_i=\log\left(1-\frac{D_j(\epsilon)}{x_i}\right)
-+\alpha\log\left(1+\frac{\epsilon}{s_i}\right),
-\qquad
-\Delta U_i'(0)=\frac{MV_i^Y-MV_j^O}{x_i}>0.
+\Delta\bar n_i=\pi_1^O\Delta n_i^O+(1-\pi_1^O)\Delta n_i^R
++(\pi_1^O-\pi_0^O)(n_{i0}^O-n_{i0}^R).
 \]
-A sufficiently small move preserves feasibility and makes the young better off.
-\hfill\hyperlink{theory-allocation}{\beamerbutton{Back}}
+}
+{\footnotesize Tenure composition can offset conditional gains. Once fertility is freed, the earlier tax-and-grant construction need not clear housing or preserve future cohorts.\hfill\hyperlink{theory-fertility}{\beamerbutton{Back}}}
 \end{frame}
 
-\begin{frame}{Financial Claims and Reallocation Costs}
-The allocation comparison preserves existing claims and future real allocations.
-
-\begin{itemize}\setlength\itemsep{0.6em}
-  \item Replace the old seller's lost estate title with a bond of equal value.
-  \item The young buyer's later sale of the additional title offsets its title financing.
-  \item Existing creditors and aggregate external assets remain unchanged.
-\end{itemize}
-
-\medskip
-If moving $\epsilon$ housing uses $C(\epsilon)$ goods, with $C(0)=0$ and $C'(0)=K\ge0$, the gain condition becomes:
+\begin{frame}[label=theory-transition-curves]{Dated Welfare and Population Comparisons}
+\relax
+{\small Let $m_{i,t+1}$ and $m_{j,t}$ be future and current old marginal utilities of cash. With housing caps and old estate floors slack, the dated housing gain requires:}
+{\small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
 \[
-MV_i^Y>MV_j^O+K.
+p_t\left(\frac\beta q m_{i,t+1}-m_{j,t}\right)+\mu_{i,t}L_t>0,
+\qquad p_t=qr_t,\quad L_t=(1-\phi_t+q\tau^p)P_t.
 \]
-A positive fixed moving cost instead requires a finite gain large enough to cover it.
-\end{frame}
-
-\begin{frame}{Conditional Fertility Response}
-For a young owner at a binding housing limit, let $p$ be the net marginal payment for housing. With positive saving and interior old choices:
+}
+{\small The gap must be checked along the path. With identical initial cohorts:}
+{\small
 \[
-(1+k)\mathrm dx=-\chi\mathrm dn-p\mathrm dh,
-\qquad
-\frac{\vartheta}{n}=\frac{\chi}{x}+\frac{\alpha\kappa}{s}.
+\frac{Y_t^{\rm policy}}{Y_t^{\rm baseline}}
+=\prod_{s=t_0}^{t-1}\frac{\bar n_s^{\rm policy}}{\bar n_s^{\rm baseline}},
+\qquad O_{t+1}^j=Y_t^j.
 \]
-Here $x=c-\chi n$, $s=h-\kappa n$, and $k=\beta(1+\gamma+\omega_B)$.
-
-\medskip
-Differentiation yields the response while prices, tenure, and the binding constraints remain unchanged:
+}
+{\small All-date fertility ordering implies larger subsequent cohorts. At positive stationary limits:}
+{\small
 \[
-\frac{\mathrm dn}{\mathrm dh}
-=\frac{\alpha\kappa/s^2-\chi p/[(1+k)x^2]}
-{\vartheta/n^2+\chi^2/[(1+k)x^2]+\alpha\kappa^2/s^2}.
+\bar n^*=1/\nu,\qquad
+Y^*+O^*=\frac{2\bar H}{\bar h^{y*}+\bar h^{o*}}.
 \]
-The denominator is positive. Without accompanying transfers, $p=q r_t$.
-\end{frame}
-
-\begin{frame}[label=theory-primitives]{A Fertility Condition in Primitives}
-At stationary prices with zero property tax, consider a young owner at a strictly binding down-payment limit, with positive saving and interior old choices.
-
-\medskip
-A sufficient condition for fertility to rise with more housing is:
-\[
-\frac{(1-q)b}{(1-\phi)(y+b)}
-\ge
-\frac{\alpha}{1+\beta(1+\gamma+\omega_B)+\alpha}.
-\]
-The left side is housing expenditure at the purchase limit relative to lifetime resources; the house price cancels.
-
-\vfill
-The condition ensures a positive fertility response for a net marginal payment $p<MV^Y$, while the same constraints continue to bind.
-\hfill\hyperlink{theory-fertility}{\beamerbutton{Back}}
-\end{frame}
-
-\begin{frame}{Fertility and Population}
-For two paths starting from the same young cohort, cumulative fertility differences determine cohort sizes:
-\[
-\frac{Y_t^1}{Y_t^0}=\prod_{s=0}^{t-1}\frac{\bar n_s^1}{\bar n_s^0},
-\qquad O_{t+1}=Y_t.
-\]
-A temporary fertility increase can leave a permanently larger population.
-
-\medskip
-Both positive steady states have replacement fertility, $\bar n^*=1/\nu$. Housing clearing gives total adult households:
-\[
-N_{\mathrm{hh}}^*=2Y^*=\frac{2\bar H}{\bar h^{Y*}+\bar h^{O*}}.
-\]
-A larger stationary population uses less housing per household on average, under an unchanged population-counting convention.
-\end{frame}
-
-\begin{frame}{A Credit Relaxation}
-\begin{center}
-\includegraphics[width=0.98\textwidth,height=0.67\textheight,keepaspectratio]{../output/model/simplified_olg_amendments/mixed_transition_analytical_figure.pdf}
-\end{center}
-\small
-Analytical first-order response to a permanent rise in the financed share. Initial fertility rises and final population is higher. Near this economy, sufficiently small finite reforms also produce oscillations around the new steady state.
-\end{frame}
-
-\begin{frame}{Local Credit Transitions}
-The illustrated economy has both tenures, positive child goods costs, and a rebated property tax. Tenure choice remains endogenous.
-
-\begin{itemize}\setlength\itemsep{0.6em}
-  \item A sufficiently small credit relaxation admits a converging equilibrium path with higher initial fertility and final population.
-  \item The result holds in an explicit primitive family and survives small changes in primitives and entrant heterogeneity.
-  \item Young purchase limits and rental caps remain binding; saving is positive and old-owner retention and estate bounds are slack.
-\end{itemize}
-
-\vfill
-In this family, stationary lifetime values fall in both tenures. A larger population therefore need not mean a welfare gain for a stationary entrant.
-\end{frame}
-
-\begin{frame}[label=theory-transition-curves]{Equilibrium Curves}
-\small
-Both panels use the same housing-clearing allocation. Write $N=Y+O$ and hold the young and old shares at one half:
-\[
-\frac{N}{2}\bigl[\bar h^Y+\bar h^O\bigr]=\bar H,
-\qquad T=\frac{q\tau^pP\bar H}{N}.
-\]
-The left panel solves these equations for $P$ against $N$; the right plots mean fertility along that same market-clearing curve.
-
-\begin{itemize}\setlength\itemsep{0.55em}
-  \item \textbf{Initial and impact:} keep the initial old distribution $G_0$. Hold $(P_1,P_2,T_1)$ at their respective equilibrium values and vary $(P_0,N_0)$.
-  \item \textbf{Long run:} use constant prices and rebates, with old assets and tenure generated by the same lifetime choices as the young. Replacement fertility selects the steady state.
-\end{itemize}
-
-\vfill
-The plotted curves are local; only $A$, $I$, and $A'$ impose all equilibrium conditions. Connecting arrows summarize the change between states, not the entire adjustment path.
-\end{frame}
-
-\begin{frame}{Committed Transfers Across Ages}
-Suppose an authority can commit to household-specific transfers across ages, with households choosing at market-clearing prices.
-
-\begin{itemize}\setlength\itemsep{0.6em}
-  \item Purchase cash arrives before closing; old-age payments or taxes are announced and enforceable.
-  \item Include every initial property owner in welfare and funding accounts, with access to outside bond finance.
-  \item Hold individual fertility fixed and account for all cohorts along the path.
-\end{itemize}
-
-\vfill
-Under explicit conditions in a stationary case, such transfers support a small Pareto improvement. The authority supplies financing across ages while retaining the private mortgage rule.
+}
+{\footnotesize Larger stationary population requires less housing per adult household. This comparison requires equilibrium housing and fertility on both paths, separately from fixed-fertility welfare.}
 \end{frame}
 
 \begin{frame}{Bellman Timing}
