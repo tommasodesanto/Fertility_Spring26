@@ -352,3 +352,140 @@ The `watch-pro-planner-review` heartbeat was paused after capture. No follow-up
 was sent to Pro and no note, slide, PDF, household equation or protected draft
 was changed. Next discussion should settle the proposed accounting and welfare
 criterion before adopting or extending a theorem.
+
+## September 8: author redirects to one dated allocation
+
+The author rejected the stationary-cohort/permanent-transfer argument as the
+answer to the housing question. The active exercise is now a one-date
+utilitarian comparison of current young and old households, with fertility
+fixed and both current consumption and housing free. Pro's stationary
+criterion and outside-estate accounting have NOT been adopted. Do not resume
+that branch as though the author accepted it.
+
+The dated benchmark proposed in discussion fixes current tenure and preserves
+young continuation resources and old estate payments. Equal weights apply to
+current utility. Housing and current goods are separately conserved. Individual
+financial positions may adjust to preserve those future real entitlements;
+individual financing restrictions can be relaxed. For an owner housing change,
+use changes in young next-period wealth and old financial saving of
+\(-P_{t+1}\Delta h^y\) and \(-qP_{t+1}\Delta h^o\), respectively.
+Current transfers are \(\Delta c+u_t\Delta h\), which sum to zero.
+This is a full current-consumption/current-housing allocation problem
+conditional on the fixed objects, not a full dynamic planner.
+
+### A proved static housing ordering with binding caps allowed
+
+Normalize the same type measure Q to one in each age group, each of mass N.
+Only a common tenure/cap distribution is needed for the planner argument;
+income heterogeneity is unrestricted. Let \(\bar h_i\) be the type's cap,
+identical across its two ages, and \(\kappa n_i<\bar h_i\) its child-space
+requirement. Assume \(n_i>0\), \(\alpha\ge\gamma>0\), and
+\[
+\kappa N\int n_i\,dQ<\bar H<2N\int\bar h_i\,dQ.
+\]
+The upper inequality says the stock does not exhaust every household's cap.
+Some individual caps may bind in either allocation.
+
+With fixed fertility, utility is additively separable between goods and space,
+so optimizing consumption jointly does not change the housing solution. For
+the housing-resource multiplier \(\lambda>0\), that solution is
+\[
+h_i^{y*}=\min\{\bar h_i,\kappa n_i+\alpha/\lambda\},\qquad
+h_i^{o*}=\min\{\bar h_i,\gamma/\lambda\}.
+\]
+The common multiplier clears the housing market. Therefore
+\(h_i^{y*}\ge h_i^{o*}\), strictly wherever the old household is below its cap.
+If all old households were at their caps, all young households would also be
+at their caps, contradicting the strict aggregate capacity inequality. Hence
+\[
+H_Y^*>\bar H/2.
+\]
+Consequently the following is a sufficient, interpretable cross-sectional
+condition for the FULL dated optimum to increase total young housing:
+\[
+H_Y^{\rm eq}\le H_O^{\rm eq}
+\quad\Longrightarrow\quad H_Y^*>H_Y^{\rm eq}.
+\]
+It compares total housing with equal cohort masses, or average home sizes.
+It is a theorem conditional on the observed equilibrium ordering, not yet a
+generic implication of mortgage constraints. The assumption alpha>=gamma is
+explicit: young adults value housing at least as strongly as old adults,
+before accounting for their children's space. No high-estate-taste condition,
+bound on beta, or universally slack housing caps is needed for this planner
+ordering. It establishes utilitarian improvement, not a Pareto improvement.
+
+### Primitive sufficient conditions that deliver the market ordering
+
+A separate Astra/max derivation, checked by the lead against both old estate
+regimes, gives a conservative primitive route in a stationary competitive
+reference. Stationarity is used only to match the current young/old type and
+tenure distributions; welfare remains entirely one-date.
+
+Let \(d_p=1-q+q\tau^p\), \(a_p=1+q\tau^p\),
+\(d_L=1-\phi+q\tau^p\), \(K=1+\gamma+\omega_B\), and
+\(J=\gamma+\omega_B\). Old housing is exactly
+\[
+h_o^d=\min\{h_d^{\max},g_d z/P\},\qquad
+g_R=\frac{\gamma}{K d_p},\qquad
+g_O=\frac1K\min\left\{\frac{\gamma}{d_p},\frac{J}{a_p}\right\}.
+\]
+The owner coefficient covers both financial-estate regimes. Clipping the
+uncapped optimum at the physical cap is valid by concavity even if that
+changes the estate regime at the capped choice.
+
+For owners, the original cash constraint gives \(Ph_y<w/d_L\), and mortgage
+repayment gives \(z\ge v+(1-\phi/q)Ph_y\). Since \(g_O<1\), the coefficient
+\(g_O^{-1}-1+\phi/q\) is positive. It follows that
+\[
+\frac vw\ge A_O\equiv\frac{g_O^{-1}-1+\phi/q}{d_L}
+\quad\Longrightarrow\quad g_Oz/P>h_y.
+\]
+Clipping old housing at the shared cap preserves \(h_o\ge h_y\).
+For renters, \(Ph_y<w/d_p\), \(z\ge v\), and the corresponding sufficient
+threshold is \(A_R=K/\gamma\). Thus requiring \(v_i/w_i\ge A\), where
+\(A=\max\{A_R,A_O\}>1\), for all endowment types gives the market ordering
+in both tenures. Logistic ownership tastes are fully retained.
+
+In the explicitly identified zero-tax subcase, prices and rebates disappear:
+\[
+\frac{y_i^o}{y_i^y+b_i}\ge
+\max\left\{\frac K\gamma,
+\frac{\max\{K(1-q)/\gamma,K/J\}-1+\phi/q}{1-\phi}\right\}.
+\]
+This is a sufficient restriction on primitive income/wealth and parameters,
+not a numerical-neighborhood proof. It can demand high old income relative
+to young cash; it has not been shown mild or quantitatively relevant.
+
+For retained positive property tax, the current note's existing bound
+\[
+\bar T=\frac{\tau^p\int(y^y+b+qy^o)\,dF}{(1-q)(2-\tau^p)}
+\]
+is valid for \(0\le\tau^p<2\). A fully primitive sufficient restriction is
+\[
+y_i^o\ge A(y_i^y+b_i)+(A-1)\bar T.
+\]
+Indeed it implies \((y_i^o+T)/(y_i^y+b_i+T)\ge A\) for every
+\(T\le\bar T\). The lead checked the bound from the lifetime budget and
+rebate identity. It can be stringent or even vacuous at large taxes; it must
+not be presented as necessary. These restrictions do not independently
+establish a binding young multiplier or isolate its causal contribution.
+
+### Verification limit that must survive future rewrites
+
+The cap audit also disproves the inference that paired marginal housing
+utility gaps always imply MORE aggregate young housing in the full optimum.
+As a purely allocation-level counterexample, take two types of unit mass at
+each age, alpha=gamma=1, common cap4, child-space needs (3,1), young housing
+(3.9,3.5), old housing (1,2.6). Each paired young marginal housing utility is
+larger. With total housing11, the static optimum is young(4,3), old(2,2), so
+young aggregate housing falls from7.4 to7. This example is not asserted to be
+a competitive equilibrium of the household model. It demonstrates why a
+local improving variation is insufficient to establish the full aggregate
+direction when heterogeneous households meet housing caps.
+
+Two independent bounded Astra/max checks supplied the cap proof and the
+competitive bounds. The lead verified the formulas, strictness and financial
+settlement. No model solve, paper/slide revision or new welfare convention was
+implemented. The open task is to sharpen the conservative equilibrium
+conditions and decide whether this static statement captures the author's
+intended claim; do not replace it with the rejected permanent-transfer result.
