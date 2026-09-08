@@ -1,8 +1,45 @@
 # Calibration Status
 
-Updated: `2026-09-07` (author authorized bounded fertility-nest recalibration)
+Updated: `2026-09-07` (author authorized full overnight fertility-nest search)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7, 22:50 EDT: full overnight search authorized and submitted.**
+Job **17155429** is queued with `afterok:17152974` and automatic cancellation
+if that dependency fails. Both prior exact repeats must succeed before this
+job starts. It requests 23 CPUs, 322 GiB and a 12-hour runtime budget (queue
+waiting is additional): 9 hours for smoke/search and 3 hours reserved for final
+verification. At most 300 new full histories; each search case has a 90-minute
+cap. Selection stays provisional until its two final exact repeats pass.
+
+Source commit `11f0f525` on isolated `codex/fertility-nest-computation`; scientific
+bundle `4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8`
+is unchanged. Contract SHA256
+`a483fb6bd65230409062f82403038f3218a35a03e5b4e13c1f73d6846ac10f0c`.
+All 11 estimated coordinates, original bounds, 12 moments and weights remain
+fixed as a system; housing taste scale is externally fixed at 0.005 and supply
+elasticity at 0.63. Each candidate re-normalizes old-state fertility to 2.1.
+
+The frozen previous best is the starting point. Two fresh full-loop smokes
+must pass before 23 broader starts, up to six differential-evolution generations
+and two rounds of local refinement. Declared numerical failures are recorded
+as inadmissible proposals; source/target/accounting/unexpected failures halt
+the controller. Per-case heartbeats and launch timeouts protect against hangs.
+Repeated high rejection rates stop new search while preserving final checks.
+Selection freezes before two exact repeats and 22 local sensitivity probes.
+Missing probes are reported explicitly. No production promotion, policy runs,
+figures, PDF or monitoring automation. This supersedes the previous bounded-only
+search authorization; it does not change the accepted choice specification.
+
+Local and cluster startup checks: **53 tests passed**; all immutable code/input
+hashes and the scientific bundle verified on Torch. Real full-loop numerical
+smoke remains pending behind job 17152974. Queue priority may delay completion.
+Run design, launch contract, input references and submission receipt:
+`output/model/e5f_simple_fertility_overnight_20260907a/README.md`.
+Final remote artifacts will be under
+`/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_overnight_20260907a/run/`:
+`FINAL_READOUT.md`, `comparison_target_fits.csv`, `selected_parameter_table.csv`,
+`final_receipt.json`, and `jacobian_diagnostic.json`.
 
 **Latest recalibration check: improved candidate; final verification submitted.**
 Job17145615 stopped after1h56m37s:36 valid full histories (2 exact anchor smokes,
@@ -30,7 +67,7 @@ histories remain<=39. Immutable repeatplanSHA
 No monitor or policies. Full provisional fits/parameter tables and artifacts:
 `output/model/e5f_simple_fertility_recalibration_20260907a/PROVISIONAL_RESULTS.md`.
 
-**September 7: author now authorizes recalibration and comparison with sequential.**
+**Earlier September 7 launch record (superseded by completion above).**
 This supersedes the earlier stop-before-recalibration instruction. Bounded job
 17145615 RUNNING oncs716 on23 CPUs/322GiB with8h wall cap,100min/case,maximum39
 full historical evaluations. Scientific bundle4199e948 remains unchanged;
