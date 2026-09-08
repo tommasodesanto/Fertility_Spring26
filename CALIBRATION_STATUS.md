@@ -4,6 +4,34 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8 policy priority correction: rebated property-tax reform.**
+The author corrected the focus to the property-tax reform. The maintained
+comparison is annual 1% with equal rebates versus 2% with equal rebates,
+not an unrebated-tax comparison or an assumed tax cut. The new calibrated
+population is inherited unchanged across both impact equilibria.
+Completed baseline smoke 17222216 reproduced the selected unrebated benchmark
+through the policy path in 59 seconds. Rebated tax1 exact-loop smoke **17222674**
+was submitted; tax2 **17222675** requires its success; collector **17222676**
+requires tax2 success. No tax effect has been established yet.
+
+The unchanged coupled root solves price and household rebate together. The
+thin wrapper restores the returned transfer, independently recomputes the
+fiscal ledger and requires a fresh full-policy replay before acceptance.
+Joint root gate 1e-4, absolute fiscal gap 2.5e-5, market 2e-4; existing stronger
+mass, budget, probability, feasibility and occupied-value checks retained.
+Revenue covers occupied rental and owner housing; equal transfers are per
+household decision unit. No future demographic closure or transition is run.
+Young ownership, rooms, lifecycle and dependent-child group quantities are
+saved with the existing whole-node age definitions, without claiming ACS age
+alignment. No figures, target changes, production promotion or monitoring.
+
+Each tax job reserves eight CPUs and 128 GiB (one numerical thread), with a
+30-minute hard cap and 35-minute Slurm limit. The initial one-CPU/128-GiB
+request was rejected before job creation; revised resources were validated
+before submission. Root cache holds full policies, motivating memory reserve.
+Contract `931def1c35d3a6b4575bcb9e8cd65e345f71804d1b25d74f3671a8719b680a7d`.
+See `output/model/e5f_simple_fertility_rebated_tax_20260908a/README.md`.
+
 **September 8: policy impact tests submitted from the verified new benchmark.**
 Author emphasizes that improving the benchmark was intended to improve the
 credibility, and potentially size, of policy responses. No larger effect is

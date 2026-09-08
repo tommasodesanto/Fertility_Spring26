@@ -1,0 +1,16 @@
+{
+  "tax1_smoke_job": "17222674",
+  "tax2_reform_job": "17222675",
+  "collector_job": "17222676",
+  "submission_date": "2026-09-08",
+  "status_at_submission": "queued",
+  "comparison": "1 percent equal rebate versus 2 percent equal rebate",
+  "contract_sha256": "931def1c35d3a6b4575bcb9e8cd65e345f71804d1b25d74f3671a8719b680a7d",
+  "reserved_cpus": 8,
+  "numerical_threads": 1,
+  "memory_gib": 128,
+  "case_cap_seconds": 1800,
+  "slurm_cap_seconds": 2100,
+  "resource_note": "one-CPU/128-GiB request rejected by scheduler before job creation; eight-CPU request accepted by test-only validation then submitted",
+  "dependency": "tax1 success -> tax2 -> collector; invalid dependencies cancel"
+}
