@@ -1,5 +1,44 @@
 # Simplified OLG amendment checks
 
+## September 8: conventional-finance results
+
+Read the new
+[discussion PDF](../../pdf/simplified_olg_conventional_finance.pdf)
+([LaTeX](../../../latex/JMP_DS_suggestions/simplified_olg_conventional_finance.tex))
+for the complete proposed household model, equilibrium, lifetime housing
+reallocation, fertility conditions and transition limitations. This is a
+separate proposal; the existing reading note and author manuscript are unchanged.
+
+The stationary welfare condition
+\(\beta(1+\gamma+\omega_B)(1-\phi+q\tau^p)\ge\phi-q\)
+allows conventional mortgage finance and high patience. Explicit primitive
+income and capacity inequalities deliver eligible owners in equilibrium.
+The Pareto comparison adjusts the selected young households' own future
+consumption, housing and estates while fixing individual fertility and tenure.
+It does not establish higher current consumption-equivalent housing marginal
+values for the young. Fixed-price fertility results, including tenure choice,
+are separate. A convergent policy transition and a higher final population
+remain unproved for this revised model.
+
+The six bounded analytical reports are:
+
+- [Lifetime housing and welfare](conventional_efficiency_review.md).
+- [Hostile welfare review and required repairs](conventional_welfare_hostile_review.md).
+  Its heterogeneity and individual-finance repairs are incorporated in the
+  new LaTeX appendix. Its warning that the household algebra alone does not
+  prove primitive equilibrium coverage is addressed by the separate next report.
+- [Primitive stationary existence and owner coverage](conventional_stationary_primitives_review.md),
+  including an explicit nonempty heterogeneous parameter family.
+- [Fertility, physical caps and tenure](conventional_fertility_review.md).
+- [Mortgage repayment timing](conventional_mortgage_timing_review.md), including
+  alternatives that have not been adopted.
+- [Transitions and remaining proof requirements](conventional_transition_review.md).
+
+The [verification receipt](conventional_finance_checks.json) records independent
+reviews, exact lead algebra checks, source hashes and the ten-page PDF inspection.
+The [work record](../../../docs/model/simplified_olg_overnight_work.md) separates
+proved results from specification choices and unfinished transition work.
+
 ## Conventional finance proposal for discussion
 
 The [household specification and analytical financing conditions](../../../docs/model/simplified_olg_conventional_finance_proposal.md)
@@ -12,8 +51,9 @@ an explicit conditional income test, the rental alternative, sufficient
 housing conditions, and an exact counterexample to an unconditional housing
 response. It has received an independent analytical review; its counterexample
 budgets, first-order conditions, and derivative were also checked with exact
-rational arithmetic. Equilibrium welfare and the policy fertility response
-remain subsequent work.
+rational arithmetic. The September 8 results above supply subsequent
+stationary welfare and fixed-price fertility analysis; the original proposal
+is retained as the preceding discussion step.
 
 ## ChatGPT Pro mathematical review
 

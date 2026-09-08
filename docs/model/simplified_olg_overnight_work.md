@@ -1,5 +1,73 @@
 # Simplified OLG: development plan and overnight record
 
+## September 8: conventional finance, stationary welfare and fertility
+
+The new discussion draft is
+[Housing over the Life Cycle and Fertility](../../output/pdf/simplified_olg_conventional_finance.pdf),
+with [LaTeX source](../../latex/JMP_DS_suggestions/simplified_olg_conventional_finance.tex).
+It has six pages of main text and four appendix pages. The existing amendment
+note and protected author manuscript are unchanged. The three proposed model
+changes remain for discussion: current income available at purchase, known
+old-age income, and old owners able to resize within the owner cap. The
+original mortgage, with principal and accumulated interest repaid on entering
+old age, is retained. No additional repayment covenant is adopted.
+
+The main new sufficient condition is
+\[
+\beta(1+\gamma+\omega_B)(1-\phi+q\tau^p)\ge\phi-q.
+\]
+For a strictly constrained young owner with slack housing caps and old estate
+floor, removing the financing constraint at fixed fertility raises desired
+young housing and lowers old housing. It permits \(q<\phi\), and greater
+patience helps. Selected young households can make a small lifetime adjustment;
+current old donors and next-period old recipients are compensated. Individual
+private mortgages are preserved, new loans are repaid, and continuous income
+heterogeneity and unequal group masses are covered by uniform bounds. Every
+household is weakly better off and selected young households gain strictly.
+
+This is a lifetime Pareto housing reallocation. It is not the earlier proposed
+comparison of current consumption-equivalent housing marginal values: with
+\(q<\phi\), that young-versus-old marginal-value gap has the opposite sign.
+It does not characterize the global first best or a uniform policy's welfare.
+
+A separate analytic proof supplies explicit primitive sufficient conditions
+for stationary existence and positive mass of eligible owners at every
+stationary equilibrium. It includes an explicit nonempty heterogeneous family
+for any fixed positive \(\beta\), while selecting other primitives. The bounds
+are conservative; neither empirical mildness nor calibration compatibility has
+been established. No numerical equilibrium or unspecified open neighborhood
+is used to prove these statements.
+
+Fertility now has an explicit sufficient condition without a borrowing
+multiplier. With \(B=\beta(1+\gamma+\omega_B)\), service cost \(p\), cash cost
+\(L<p\), and slack old caps, it is
+\(Bp(L+\chi/\kappa)\ge(p-L)(p-\alpha\chi/\kappa)\).
+The simpler interval
+\(p/(\alpha+B)\le\chi/\kappa\le p/\alpha\) also orders owner and renter
+fertility, delivering a fixed-cohort fertility increase including tenure
+changes for reforms with \(L\le p\). These conditions still contain the
+equilibrium service price. They are not general-equilibrium policy signs, nor
+are fertility changes part of the fixed-fertility welfare proof.
+
+The transition review derives the exact dated system, inherited debt and title
+accounting, finite population bounds, and stationary endpoint derivatives.
+When old caps are slack, five old-cohort statistics suffice despite general
+entrant heterogeneity. Preference declines lower fertility at fixed prices,
+including tenure selection. Transition existence, convergence, the fertility
+sign at every policy date, and higher final population remain unproved in this
+revised model. Earlier model-specific transition proofs cannot be carried over
+unchanged. These are the outstanding research decisions, not completed claims.
+
+Six distinct mathematical reports, including a hostile welfare review, are
+indexed in the
+[amendments README](../../output/model/simplified_olg_amendments/README.md).
+The lead checked the household reduction, housing identity, primitive
+stationary proof, dated finance repair, and fertility arguments. Exact symbolic
+checks pass; the final PDF compiles without warnings and all ten pages were
+visually inspected. The receipt records source and review hashes. No model
+simulation, calibration change, scheduled rerun, or automatic PDF preview was
+used for this pass.
+
 ## September 7: utility age labels
 
 Tommaso objected to mixing young utility u^Y with old utility u^2. The main
