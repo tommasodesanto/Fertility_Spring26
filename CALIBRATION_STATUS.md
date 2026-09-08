@@ -1,8 +1,34 @@
 # Calibration Status
 
-Updated: `2026-09-07` (author clarification: inspect fixed-parameter objective; no recalibration authorized next)
+Updated: `2026-09-07` (author authorized bounded fertility-nest recalibration)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 7: author now authorizes recalibration and comparison with sequential.**
+This supersedes the earlier stop-before-recalibration instruction. Bounded job
+17145615 RUNNING oncs716 on23 CPUs/322GiB with8h wall cap,100min/case,maximum39
+full historical evaluations. Scientific bundle4199e948 remains unchanged;
+controller9353a003 on isolated `codex/fertility-nest-computation`.
+ContractSHA fac7694e8ccf20a9b3c7f243e31f57bc17e804b5469180597e7b23ebe7e5a174.
+
+Two exact repeats of the successful new-model history smoke-test the same loop
+before search. Then23 all-coordinate cases (anchor and ±.005 normalized units),
+at most12 joint/direct housing-rebalance proposals, and2 exact repeats of the
+cross-stage best. Existing planner reused;11 coordinates/12targets/allweights/
+bounds unchanged,κ=.005,supply elasticity=.63,jumpupper=.5. No policies or
+figures. Expected3–4h at38min/history in4waves;8h global cap. Failed cases block
+subsequent stages; already-running independent cases finish under their caps.
+No automatic retries, production promotion, or monitoring automation.
+
+Local3 subprocess success/failure/timeout tests and5 planner tests pass. Scoped
+independent review of correct active worktree found no model, provenance,
+reference-copy or selection blocker; stage-stop interpretation explicitly
+preserves concurrently running candidates. All26 cluster startup tests pass; both real full-loop exact-reference smokes started.
+Heartbeat everyminute; latest completed and best-so-far files percase; stale
+case heartbeat30min stops run. Final exact-repeat receipt and full comparison
+fit/parameter tables compare against verified sequential control loss30.4085.
+Recalibration starting new loss36.3717. No new search result yet.
+Full frozen launch recipe: `output/model/e5f_simple_fertility_recalibration_20260907a/README.md`.
 
 **September 7, return from commute: both retained-parameter objectives complete.**
 Simple fertility nests17142457 completed in38m10s, loss36.37166360862253;

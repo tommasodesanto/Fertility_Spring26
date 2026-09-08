@@ -1,0 +1,125 @@
+{
+  "adapter_sha256": "b7ad60d11c31d3d2e81fd70bdac0b889adfa1663b0877248c711d803a4ae1408",
+  "cases": [
+    {
+      "center": "center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 1,
+      "label": "exact_anchor_smoke_1",
+      "output": "task_001",
+      "panel_design": "mixed",
+      "panel_seed": 20260907,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.02,
+      "reference": "reference/summary.json",
+      "reference_sha256": "8309c088344f17df63d9bf17da1f4f4dd6e991df15ec54b61a7752488a18de8b"
+    },
+    {
+      "center": "center.json",
+      "center_sha256": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+      "id": 2,
+      "label": "exact_anchor_smoke_2",
+      "output": "task_002",
+      "panel_design": "mixed",
+      "panel_seed": 20260907,
+      "panel_size": 1,
+      "panel_task_id": 1,
+      "radius": 0.02,
+      "reference": "reference/summary.json",
+      "reference_sha256": "8309c088344f17df63d9bf17da1f4f4dd6e991df15ec54b61a7752488a18de8b"
+    }
+  ],
+  "choice_model": "fertility_nest",
+  "code_bundle_sha256": "4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8",
+  "estimated_run_size": "2 exact smokes +23 coordinate cases +at most12 joint patterns +2 final exact repeats: <=39 histories,11 varied coordinates, unchanged120 wealth nodes. About38min/history observed;23 concurrent workers; typical3\u20134h across4 waves,8h global cap,100min/case. New old-state normalization each case; no policy run.",
+  "helper_sha256": {
+    "collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "run_e5f_independent_numerical_audit.py": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528"
+  },
+  "input_sha256": {
+    "center.json": "7f4ad73e05b5bed319532fae406456aa0f232dd2e47e2d99d8044ac7f5f55fdd",
+    "reference/cases/task_001/transition_path.csv": "7e75146c039095c7d04ebd84ba15c903a2aac8939e06fb334ee9a9728699b48d",
+    "reference/summary.json": "8309c088344f17df63d9bf17da1f4f4dd6e991df15ec54b61a7752488a18de8b",
+    "reference/target_fit_long.csv": "1d3e28fce6f1245566df5b23fc9d8f4d8ceb1af28393a00c2c36d592ebde4480"
+  },
+  "launch_deadline_epoch": 1788912258.246089,
+  "schema": "e5f_bounded_refinement_v1",
+  "search_domain": [
+    {
+      "lower": 0.94,
+      "name": "beta_annual",
+      "transform": "discount",
+      "upper": 0.9995
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.02,
+      "name": "kappa_fert_continuation",
+      "transform": "log",
+      "upper": 50.0
+    },
+    {
+      "lower": 0.1,
+      "name": "chi",
+      "transform": "log",
+      "upper": 5.0
+    },
+    {
+      "lower": 0.2,
+      "name": "H0",
+      "transform": "log",
+      "upper": 80.0
+    },
+    {
+      "lower": 0.0,
+      "name": "theta0",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.02,
+      "name": "theta1",
+      "transform": "log",
+      "upper": 16.0
+    },
+    {
+      "lower": 0.1,
+      "name": "hbar_child_rooms",
+      "transform": "log",
+      "upper": 1.8
+    },
+    {
+      "lower": 0.0,
+      "name": "first_birth_fixed_cost",
+      "transform": "softzero",
+      "upper": 8.0
+    },
+    {
+      "lower": 0.0,
+      "name": "hbar_first_child_jump",
+      "transform": "softzero",
+      "upper": 0.5
+    },
+    {
+      "lower": -1.5,
+      "name": "psi_child_change_2023",
+      "transform": "asinh",
+      "upper": 0.2
+    }
+  ],
+  "source": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_recalibration_20260907a/output/model/e5f_simple_fertility_recalibration_20260907a/source.json",
+  "source_sha256": "0afcb82d4735bd15aaa143ea04e3105a5d43df152122d02b983372102f20eef6",
+  "stage": "two_exact_reference_smokes",
+  "stop_criteria": "Stop before search unless two full-loop exact-reference smokes pass. Any failed case stops subsequent stages; retain completed results.100min/case,39case maximum,8h total. Two exact final repetitions required. No target,weight,bound or scientific-gate relaxation.",
+  "suppress_plots": true,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "target_set": "e5_fullhistory_roomsfix_h1_20260817",
+  "time_budget_seconds_per_case": 6000,
+  "verification_dependency": "Two exact-reference histories inside the same search execution and collection loop precede parameter variation."
+}
