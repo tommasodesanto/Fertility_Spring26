@@ -4,6 +4,23 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8: policy impact tests submitted from the verified new benchmark.**
+Author emphasizes that improving the benchmark was intended to improve the
+credibility, and potentially size, of policy responses. No larger effect is
+established yet. Thin observer driver reuses existing policy definitions and
+model operators, with new choice flags and saved-checkpoint provenance pinned.
+Smoke **17222216** replays the selected fixed-price and cleared baseline;
+array **17222217** then runs baseline, dependent-child LTV95 and supply +20%;
+collector **17222218** requires all cases to pass. These are one-date 2023
+impact tests from the same inherited population within the new calibration.
+They choose no future population/fiscal closure and do not run a 2063 path.
+No figures, changed targets or model equations, promotion, or monitor.
+Each CLI case has a 30-minute cap, Slurm 35 minutes, one CPU and 24 GiB;
+smoke failure cancels dependent jobs. Source/contract hashes verified on Torch;
+local specification and joint-probability gate checks pass. Real smoke pending.
+Contract `1f7beed6c5ededada14cce5b7b480aee7fcc4619a3963fb09b0b6b7620ccd3ca`.
+Design and submission: `output/model/e5f_simple_fertility_policy_impact_20260908a/README.md`.
+
 **September 8 young-ownership validation (selected overnight candidate).**
 Verified checkpoint extraction, no solve, Torch job 17221903: unchanged
 whole-node young-ownership statistic is **33.1957%**, versus inherited ACS
