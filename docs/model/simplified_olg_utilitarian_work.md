@@ -245,3 +245,63 @@ use bars, with integrals where an explicit aggregation operator is needed.
 Expectation notation is reserved for uncertainty. This convention applies
 throughout the current note and the deck's theory appendix, as well as the
 main equilibrium slide.
+
+## September 8: full planner and stationary comparison
+
+The author stopped further note/slide revisions to settle the planner itself.
+The intended direct planner chooses the full allocation, including consumption;
+the housing-only variation belongs in a proof and does not define its choice
+set. The author favors holding fertility fixed for the first comparison of
+competitive and planner stationary allocations, and is open to two welfare
+criteria informed by dynastic OLG literature.
+
+The handoff recommends freezing each type's competitive fertility and the same
+cohort mass N. These precise restrictions are proposals for the benchmark,
+not a newly implemented household problem. Stationarity requires average
+fertility 1/nu but does not determine N. A stationary cohort lifetime objective
+weights old utility by beta; the old note's current-living remaining-utility
+sum is a different object. Neither automatically represents welfare over an
+attainable transition from a common inherited state. The model has warm-glow
+estate utility, not descendants' continuation utility; importing dynastic
+altruism would require new household/inheritance equations.
+
+An independent Astra/max audit verified the permanent matched-owner variation:
+young housing rises by epsilon, old housing falls by epsilon, young next-period
+net wealth falls by P epsilon, and old financial saving rises by q P epsilon.
+Age transfers +p epsilon to young and -p epsilon to old settle the budgets at
+reference prices; estates and consumption remain fixed. Entering old total
+resources and aggregate bond investment are unchanged. With slack relevant
+caps and a positive financial estate, the stationary lifetime-welfare
+derivative is
+\[
+\frac{\alpha}{s}-\beta\frac{\gamma}{h^2}
+=\beta(1/q-1)pm+\mu L.
+\]
+This is positive even with a slack mortgage when q<1. It therefore does not
+isolate a mortgage-induced inefficiency, nor characterize the direction of
+housing in the full optimum. No stronger theorem is promoted.
+
+Full resource accounting remains unresolved: estate recipients, the source of
+entrant wealth, rental-intermediary/title ownership, and the real definition
+of bequests for a direct planner. The individual estate floor is a financial
+restriction, not a physical housing cap. Free choice of endowed aggregate
+external wealth would invalidate a welfare comparison. The Pro packet asks
+for the smallest explicit completion, with every new assumption distinguished
+from the maintained household model.
+
+The focused prompt is `docs/prompts/oracle_simplified_olg_stationary_planner.md`;
+the self-contained packet is
+`output/model/simplified_olg_amendments/oracle_stationary_planner_bundle.md`.
+It includes the exact current note but supersedes its welfare agenda for this
+review. Primary source pointers include Becker–Barro, Golosov–Jones–Tertilt
+Section 3.4, and Farhi–Werning. Transfers, fertility welfare and demographic
+transition proofs are deferred. The author will paste the packet manually;
+preparation does not mean a Pro run has been launched. No note, slide, PDF,
+household equation or protected author draft was edited in this step.
+
+A bounded independent Astra/max handoff review found no wrong equations or
+scope contradictions. Its two accounting corrections were incorporated:
+state both renter and owner estate definitions, and qualify internal property
+tax transfers by domestic ownership/consolidation when rental title ownership
+is still unresolved. This review validates the handoff's stated distinctions,
+not the existence or solution of a completed planner problem.

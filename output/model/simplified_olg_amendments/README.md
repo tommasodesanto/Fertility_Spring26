@@ -1,5 +1,16 @@
 # Simplified OLG amendment checks
 
+## September 8: full stationary planner under discussion
+
+The author paused further note/slide changes to settle the full planner with
+consumption free and fertility fixed. The [new Pro handoff](../../../docs/prompts/oracle_simplified_olg_stationary_planner.md)
+asks for a literature-grounded choice of welfare weights, complete estate and
+external-resource accounting, and a stationary comparison at the same cohort
+masses. The [paste-ready packet](oracle_stationary_planner_bundle.md) includes
+the exact current note as background. Its existing dated welfare criterion is
+explicitly subject to review. The author will submit the packet manually.
+This handoff is not an adopted model revision or a new theorem.
+
 ## September 8: theory slides for the September 10 deadline
 
 Read the [seven-slide theory extract](../../pdf/simplified_olg_theory_slides.pdf)

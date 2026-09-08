@@ -4,6 +4,12 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `oracle_simplified_olg_stationary_planner.md`: focused September 8 Pro
+  handoff to settle welfare weights and complete resource accounting for a full
+  planner with fixed fertility and cohort masses. Separates stationary welfare
+  rankings from a dynamic planner's long-run allocation, and warm-glow estates
+  from dynastic altruism. The paste-ready bundle, including the exact current
+  note, is `output/model/simplified_olg_amendments/oracle_stationary_planner_bundle.md`.
 - `oracle_simplified_olg_transition_math.md`: focused ChatGPT Pro question
   about a finite demographic transition with substantial renting and positive
   child goods costs; preserves the original household problem and inherited
