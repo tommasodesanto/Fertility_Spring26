@@ -843,3 +843,14 @@ The default-off `two_shock_choice` experiment is documented in
 `docs/model/e5f_two_shock_test.md`. It requires `joint_nested_choice=True` for
 the existing exact joint mass accounting, but does not use the GEV nest scale.
 The test driver is `tools/run_e5f_two_shock_probe.py`; it is not a calibration launcher.
+
+## Simple fertility-nest overnight search (7 September 2026)
+
+The isolated branch controller `tools/run_e5f_simple_fertility_overnight.py`
+runs the frozen simultaneous fertility-nest specification through the existing
+validated adapter. Its immutable contract, input plans, budgets and launch recipe
+are in `../../output/model/e5f_simple_fertility_overnight_20260907a/`.
+The 12-hour run uses up to 23 cluster workers, gates search on two full-history
+smokes, preserves all eleven parameter bounds and twelve target weights, and
+reserves final exact repeats plus local sensitivity checks. No production
+promotion, policy simulations, figures or monitoring automation.
