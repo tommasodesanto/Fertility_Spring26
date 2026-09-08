@@ -1,5 +1,9 @@
 # Full overnight recalibration: simple fertility nests
 
+Completed September 8 at 09:11 EDT. Selected result reproduced twice. See
+[morning review](morning_review/MORNING_REVIEW.md) for all fits, bounds,
+verification, search coverage and remaining issues.
+
 Author requested a full overnight search without waiting for another review.
 This experiment remains isolated on `codex/fertility-nest-computation`; no
 production model or protected manuscript changes. The mathematical choice law,

@@ -1,8 +1,34 @@
 # Calibration Status
 
-Updated: `2026-09-07` (author authorized full overnight fertility-nest search)
+Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 8 morning: overnight job 17155429 completed and final repeats passed.**
+Finished at 09:11:41 EDT after 8h 58m 54s. Both prerequisite repeats also
+completed. Selected `polish_2_combined/task_010` loss **23.791955301663187**:
+9.3629% below the previous nested candidate and 21.7589% below the sequential
+control. All targets, weights, bounds, mathematical specification and numerical
+gates unchanged. Two final exact repeats passed; no production promotion or
+policy simulations. Current jobs are complete, not pending/running.
+
+162 attempted full histories, 155 valid, seven market-nonconvergence rejections.
+Coverage: two smoke cases, 23 initial proposals, two DE generations (22 and 23),
+two local rounds (22 coordinate plus 12 combined each), and 24 final checks.
+All 22 sensitivity probes passed. Selected ownership 0.573005 versus target
+0.575472. First-birth room response 0.443859 versus 0.720246 remains the main
+miss and is below the previous nested result 0.457034. First births at age 30+
+are 0.235629 versus 0.260327; these two misses account for 69.81% of total loss.
+The jump parameter is 0.469765 below its unchanged 0.5 upper bound.
+
+The best final diagnostic probe has loss 23.675506 (slightly higher first-child
+jump); it is not repeat-certified and does not replace the frozen selection.
+Further local improvements remain possible. Numerical Jacobian rank 11 and
+condition number 415.67 are local diagnostics, not strong/global identification.
+Lead morning check verified selected and repeat summary/fit/parameter hashes,
+byte equality of repeat fit tables, reference receipts, all 24 comparison loss
+cells and both totals. Full tables, bounds and comparison caveat:
+`output/model/e5f_simple_fertility_overnight_20260907a/morning_review/MORNING_REVIEW.md`.
 
 **September 7, 22:50 EDT: full overnight search authorized and submitted.**
 Job **17155429** is queued with `afterok:17152974` and automatic cancellation
