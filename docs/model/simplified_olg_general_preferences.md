@@ -1,261 +1,230 @@
 # General preferences: housing allocation and fertility
 
-Working mathematical memo, September 8, 2026. This is a separate exploration,
-not a change to the household specification or a policy-transition theorem.
-The maintained planner is the dated benchmark recorded in
-`simplified_olg_utilitarian_work.md`: it reallocates **all current consumption
-and housing**, first fixing individual fertility and tenure. It preserves
-future real continuation opportunities and net estates, relaxes young and old
-financing restrictions while honoring obligations, and retains physical caps.
-The narrower planner discussion in the existing LaTeX note is superseded for
-this exercise.
+Working memo, September 8, 2026. This separate branch starts from unspecified
+preferences over **gross** goods, housing, and fertility. It changes neither
+the household model nor the dated planner agreed in
+`simplified_olg_utilitarian_work.md`. Linear child needs enter only
+the final special case.
 
-## 1. Primitives and the planner
+## 1. Unspecified utility and the maintained benchmark
 
-Let young utility be \(U^y(x,s,n)\), where \(x=c-\chi n>0\) and
-\(s=h-\kappa n>0\), with \(\chi,\kappa>0\). Let old utility be
-\(U^o(c_o,h_o,e)\). Both are increasing and jointly concave in their arguments;
-assume differentiability and interior goods choices for the formulas below.
-Strict concavity gives uniqueness where imposed. The induced gross-bundle
-utility \(u^y(c,h,n)=U^y(c-\chi n,h-\kappa n,n)\) remains concave, but
-\(u^y_n=U^y_n-\chi U^y_x-\kappa U^y_s\) need not be positive.
-All comparisons use the specified **cardinal** utility scales.
+Let young utility be \(U^y(c,h,n)\). Consumption \(c\) and housing \(h\) are
+the gross resources in the existing budgets. Specify its domain as a primitive;
+do not initially impose \(c>\chi n\) or \(h>\kappa n\). Assume twice continuous
+differentiability, joint concavity, and \(U^y_c,U^y_h>0\). Old utility
+\(U^o(c_o,h_o,e)\) is increasing and jointly concave. All comparisons retain
+the specified cardinal utility scales.
 
-Each age has mass \(N\) and the same probability law \(Q\) of paired types
-and retained tenures. Write \(H_i\in\{H_R,H_O\}\), \(H_R<H_O\), for a
-household's physical cap. Suppressing constant continuation and taste terms,
-the planner maximizes
+**Do not assume \(U^y_n>0\) everywhere at fixed \(c,h\).** Without a separate
+fertility resource cost or an upper domain bound, that assumption rules out
+a finite interior fertility optimum. Net marginal utility of children may
+become negative because of costs or crowding represented inside \(U^y\).
+Concavity alone does not guarantee existence on an unbounded fertility domain.
+The derivative results below concern an existing regular interior optimum;
+active domain restrictions would add their own multipliers.
+
+Each current age group has mass \(N\) and the same stationary probability law
+\(Q\) of paired types and retained tenures. The physical cap is
+\(H_i\in\{H_R,H_O\}\), with \(H_R<H_O\). First fix individual fertility and
+tenure. The planner chooses **all current consumption and housing**, fixes
+future real continuation opportunities and old net estates, and relaxes
+individual financing restrictions while honoring obligations. It maximizes
 \[
-N\int[U^y(c_i^y-\chi n_i,h_i^y-\kappa n_i,n_i)
-+U^o(c_i^o,h_i^o,e_i)]\,dQ
+N\int[U^y(c_i^y,h_i^y,n_i)+U^o(c_i^o,h_i^o,e_i)]\,dQ
 \]
 subject to
 \[
 N\int(c_i^y+c_i^o)dQ=C,\qquad
 N\int(h_i^y+h_i^o)dQ=\bar H,\qquad h_i^a\le H_i.
 \]
-Fertility \(n_i>0\), estates \(e_i>0\), \(C\), and \(\bar H\) are fixed at
-the competitive reference. The owner estate floor is a financing restriction,
-so it is relaxed here; the promised estate itself is unchanged.
+Here \(C,\bar H\) are the reference resource totals. Write
+\(H_Y=N\int h_i^y\,dQ\), \(H_O=N\int h_i^o\,dQ\); superscripts \(eq,*\)
+denote the competitive reference and planner allocation.
+Continuation and fixed-tenure taste terms are constant. The owner's financial
+estate floor is relaxed; the promised net estate is unchanged.
 
-For resource multipliers \(\lambda_C,\lambda_H\) and cap multipliers
-\(\eta_i^{a*}\ge0\), optimality requires
+With resource multipliers \(\lambda_C,\lambda_H\) and planner cap multipliers
+\(\eta_i^{a*}\ge0\), interior-domain optimality requires
 \[
-U^y_x=U^o_c=\lambda_C,\qquad
-U^y_s=\lambda_H+\eta_i^{y*},\qquad
+U^y_c=U^o_c=\lambda_C,\qquad
+U^y_h=\lambda_H+\eta_i^{y*},\qquad
 U^o_h=\lambda_H+\eta_i^{o*}.
 \]
-Together with complementary slackness, these conditions are sufficient
-under concavity and feasibility. With
-nonseparable utility, consumption changes housing marginal utilities, so
-solving housing alone generally does not solve this planner.
+Together with feasibility and complementary slackness these characterize an
+optimum under concavity, if one exists. Strict concavity ensures uniqueness.
+Without separability, consumption changes housing marginal utilities.
 
-## 2. The competitive wedge needs no logarithms
+## 2. The competitive wedge is fully general
 
-At stationarity, \(q=1/R_f\), \(p=(1-q+q\tau^p)P\),
-\(L_R=p\), and \(L_O=(1-\phi+q\tau^p)P\). Here \(p\) is the cost
-of housing services, and \(L_d\) is housing's coefficient in the current
-financing constraint. Define current resources \(w=y^y+b+T\) and old income
-plus rebate \(v=y^o+T\); \(z\) denotes resources in the old-age budget,
-after repayment of any mortgage from youth. Conditional young choices satisfy
+At a positive stationary equilibrium, let \(q=1/R_f\),
+\(p=(1-q+q\tau^p)P\), \(L_R=p\), and
+\(L_O=(1-\phi+q\tau^p)P\). Here \(p\) is housing's service cost and \(L_d\)
+its coefficient in the current financing constraint. Current cash is
+\(w_i=y_i^y+b_i+T\), old income including rebate is \(v_i^o=y_i^o+T\), and
+\(z_i\) is total old-age resources after repayment of the young mortgage.
+The reduced budgets remain
 \[
-c+ph+qz=w+qv,\qquad c+L_dh\le w.
+c+ph+qz=w_i+qv_i^o,\qquad c+L_dh\le w_i.
 \]
-Let \(\Lambda_i,\mu_i\) be their budget and financing multipliers, and
-\(\eta_i^y\) their housing-cap multiplier. Write \(V_d(z)\) for optimized
-old utility and \(m_i=V_d'(z_i)>0\). The envelope theorem and young
+The young objective is \(U^y(c,h,n)+\beta V_d(z)\). The maintained continuation
+value has **no direct dependence on \(n\)**; \(\beta\) discounts the parent's
+own old age. For budget and financing multipliers \(\Lambda_i,\mu_i\), and
+competitive young cap multiplier \(\eta_i^y\),
+\[
+q\Lambda_i=\beta m_i,\qquad
+U^y_c=\Lambda_i+\mu_i,\qquad
+U^y_h=p\Lambda_i+L_d\mu_i+\eta_i^y,
+\quad m_i=V_d'(z_i)>0.
+\]
+For the old budget \(c_o+ph_o+qe=z\), put \(\rho_i\ge0\) on the owner's
+floor \(e-Ph_o\ge0\), and set \(\rho_i=0\) for renters. Let \(\eta_i^o\)
+be the competitive old housing-cap multiplier. The envelope and old
 first-order conditions give
-\[
-q\Lambda_i=\beta m_i,\quad
-U^y_x=\Lambda_i+\mu_i,\quad
-U^y_s=p\Lambda_i+L_d\mu_i+\eta_i^y.
-\]
-These identities hold even when old choices meet their cap or estate floor.
-
-The old budget is \(c_o+ph_o+qe=z\). Put \(\rho_i\ge0\) on the owner's
-constraint \(e-Ph_o\ge0\), with \(\rho_i=0\) for renters, and let
-\(\eta_i^o\ge0\) be the old housing-cap multiplier. Then
 \[
 U^o_c=m_i,\qquad U^o_e=qm_i-\rho_i,\qquad
 U^o_h=pm_i+P\rho_i+\eta_i^o.
 \]
-Stationarity matches this future old household with a current old counterpart.
-Their **direct current housing-utility gap** is exactly
+Stationarity matches the young household's future old allocation with its
+current old counterpart. Consequently
 \[
-\boxed{U^y_s-U^o_h
-=\left(\frac\beta q-1\right)pm_i
+\boxed{U^y_h-U^o_h
+=\left(\frac{\beta}{q}-1\right)pm_i
 +L_d\mu_i+\eta_i^y-P\rho_i-\eta_i^o.}
 \]
-The estate floor raises old direct housing marginal utility. Omitting its
-negative contribution to the age gap silently excludes a regular regime.
-No restriction on \(\beta R_f\) was used. Its threshold in earlier sufficient
-proofs therefore does not originate in logarithmic utility.
+This uses neither logarithms nor linear child costs. The old estate floor
+raises old direct housing marginal utility. No restriction on \(\beta R_f\)
+has been imposed. A bound used to sign this identity is an additional
+sufficient restriction, not a consequence of logarithmic utility.
 
-A positive gap supports a small housing transfer to an **uncapped** young
-recipient from its old counterpart, with current consumption unchanged.
-This proves an improving direction, not the full optimum's aggregate
-direction. A positive young cap multiplier is not transferable room.
+A positive gap permits a small improving transfer to an **uncapped** young
+recipient, holding consumption fixed. It does not establish the full
+optimum's aggregate direction. Young finance need not dominate old finance
+or the age-weight term.
 
-## 3. What concavity cannot establish
+Cardinal comparison matters independently of curvature: replacing \(U^o\)
+by \(A U^o\) and \(\beta\) by \(\beta/A\) leaves all competitive choices
+unchanged but multiplies the planner's weight on old utility by \(A>0\).
+Thus concavity alone cannot establish a universal age direction. This is a
+family of different social comparisons, not a normalization of one fixed
+criterion.
 
-Increasing concavity alone orders neither age's housing marginal utility nor
-its aggregate housing gain. Both \(\beta/q-1\) and the old financial wedge
-can oppose the young financing wedge. Even with fixed cardinal scales,
-concavity imposes no cross-age ordering of marginal utilities.
+## 3. Fertility and a useful intermediate class
 
-The normalization issue is substantive: replace \(U^o\) by \(A U^o\) and
-\(\beta\) by \(\beta/A\), for any \(A>0\). All competitive choices and
-young lifetime utilities remain unchanged, while the equally weighted
-current-household planner assigns \(A\) times the previous weight to old
-utility. This gives an admissible family under unrestricted preferences and
-patience with identical market allocations but different planner objectives.
-It is not an innocuous normalization of a fixed social criterion.
-For uncapped log housing this gives
+Given a gross bundle and fixed continuation opportunities, an interior
+fertility choice satisfies \(U^y_n=0\). If \(U^y_{nn}<0\), then
 \[
-H_Y^*(A)=C_n+\frac{\alpha}{\alpha+A\gamma}(\bar H-C_n),
-\qquad C_n=\kappa N\bar n.
+dn=-\frac{U^y_{nc}\,dc+U^y_{nh}\,dh}{U^y_{nn}}.
 \]
-With sufficiently large finite caps, varying \(A\) moves this allocation
-across any interior reference young housing total.
+Positive consumption and housing responses therefore require positive
+cross-partials with fertility. Joint concavity does not sign them.
 
-## 4. A useful nonlogarithmic housing theorem
-
-Consider the more structured class
+For a counterexample with no linear resource offsets, take
 \[
-U^y=f(x)+\alpha g(s)+v(n),\qquad
-U^o=f_o(c_o)+\gamma g(h_o)+b(e),
+U^y(c,h,n)=\sqrt c+\sqrt{h+n}+A\sqrt n-kn,\qquad A,k>0.
 \]
-with \(\alpha,\gamma>0\), increasing concave components, and strictly
-concave \(g\). Housing
-separates from consumption at fixed fertility. For an interior adult-space
-solution, define \(r_y=(g')^{-1}(\lambda_H/\alpha)\) and
-\(r_o=(g')^{-1}(\lambda_H/\gamma)\). Then
+This is strictly concave and increasing in \(c,h\). At each positive bundle
+there is a unique interior fertility optimum: \(U_n\) decreases from
+\(+\infty\) to \(-k\). Yet
+\(U_{nh}=-[4(h+n)^{3/2}]^{-1}<0\), so more housing lowers fertility.
+
+An intermediate specification separates the two interactions:
 \[
-h_i^{y*}=\min\{H_i,\kappa n_i+r_y\},\qquad
-h_i^{o*}=\min\{H_i,r_o\}.
+\boxed{U^y(c,h,n)=a(c,n)+b(h,n)+v(n).}
 \]
-Assume interior positive adult space exists. Extend the inverse to
-\(+\infty\) below the derivative range, so a household demanding beyond its
-cap is correctly clipped. The standard conditions \(g'(0+)=\infty\) and
-\(g'(\infty)=0\) avoid inverse-range qualifications.
-
-If \(\alpha=\gamma\) and planner caps are slack, adult space is identical
-across both ages **for every such \(g\)**:
+Assume \(a_c,b_h,v'>0\); \(a_n,b_n\) may be negative due to goods costs and
+crowding. Require joint concavity and an existing interior optimum. Define
+\(D=a_{nn}+b_{nn}+v''<0\). Its fertility condition and response are
 \[
-r=\frac{\bar H/N-\kappa\bar n}{2},\qquad
-H_Y^*=\frac{\bar H+\kappa N\bar n}{2},\qquad
-\bar n=\int n_i\,dQ.
+a_n+b_n+v'=0,\qquad
+dn=-\frac{a_{cn}\,dc+b_{hn}\,dh}{D}.
 \]
-Thus \(H_Y^*>H_Y^{eq}\) exactly when old mean reference housing exceeds
-young mean reference adult space. An individual young household receives
-more housing exactly when \(s_i^{eq}<r\).
+Thus \(a_{cn}>0\) and \(b_{hn}>0\) suffice for both resource effects to be
+positive, without a shift specification. They say that additional resources
+raise the marginal utility of children. If consumption falls while housing
+rises, this numerator gives the local tradeoff.
 
-More generally, \(\alpha\ge\gamma\) implies \(r_y\ge r_o\), hence
-\(h_i^{y*}\ge h_i^{o*}\), strictly wherever the old counterpart is uncapped.
-If
+At fixed fertility this class also separates the planner's consumption and
+housing problems. A useful **additional age-comparison restriction** is
 \[
-\kappa N\bar n<\bar H<2N\int H_i\,dQ,
+U^o=f_o(c_o)+b(h_o,0)+B(e),\qquad b_{hh}<0,\quad b_{hn}>0.
 \]
-not everyone can be capped, giving \(H_Y^*>\bar H/2\). Consequently the
-reference ordering \(H_Y^{eq}\le H_O^{eq}\) is sufficient for a strict
-aggregate young gain, allowing binding planner caps. It remains a condition
-on the reference, not an implication of borrowing restrictions alone.
-
-For the same class, the paired ordering \(h_i^{o,eq}\ge h_i^{y,eq}\)
-and \(n_i>0\) directly imply
+The old housing component is cardinally matched to the childless young
+component. Suppose the cross-partial restriction holds between \(0\) and
+each \(n_i>0\), on a common feasible housing domain, and positive solutions
+exist. Then \(b_h(h,n_i)>b_h(h,0)\). A common planner housing multiplier
+therefore yields
 \[
-\alpha g'(s_i^{eq})>\gamma g'(h_i^{o,eq})
-\quad(\alpha\ge\gamma).
+h_i^{y*}\ge h_i^{o*},
 \]
-This local child-space result still requires an uncapped young recipient.
+strictly wherever the old counterpart is uncapped. If
+\(\bar H<2N\int H_i\,dQ\), not all old households can be capped, so
+\(H_Y^*>\bar H/2\). Hence \(H_Y^{eq}\le H_O^{eq}\) suffices for a strict
+aggregate young housing gain. This is a theorem under explicit preference
+and reference-allocation restrictions, not a generic implication of finance.
+Neither this result nor \(b_{hn}>0\) proves that every young household gains.
 
-## 5. Mapping and remaining gaps
+## 4. Joint fertility choice by the dated planner
 
-The existing specification sets \(f=f_o=g=\log\),
-\(v(n)=\vartheta\log n\), and \(b(e)=\omega_B\log e\).
-The wedge and common-housing-utility results survive; logarithms additionally
-give constant expenditure shares and explicit old-estate regime boundaries.
-General primitives delivering the competitive age ordering, stationary
-existence, and policy implementation are not established here. Neither an
-aggregate housing gain nor a utilitarian gain implies every young household
-receives more housing.
-
-## 6. Fertility without logarithms
-
-This section is the lead's derivation. Hold a parent's gross goods and housing
-bundle, tenure and continuation opportunities fixed when defining its fertility
-choice, and assume \(U^y\) is twice continuously differentiable. Write
+If the planner also chooses \(n_i\), the gross-variable conditions are simply
 \[
-\widetilde U(c,h,n)=U^y(c-\chi n,h-\kappa n,n).
+U^y_c=\lambda_C,\qquad
+U^y_h=\lambda_H+\eta_i^{y*},\qquad U^y_n=0
 \]
-Increasing utility in children is imposed on the primitive net-resource
-utility, before paying their goods and space costs. It need not hold for
-\(\widetilde U\) when gross goods and housing are held fixed.
+at an interior choice. There is no additional fertility resource term in
+the maintained gross budgets. The planner values children through currently
+living parents; it attaches no new welfare weight to future people.
+Conditional fertility responses do not establish greater average fertility
+at this joint optimum. Changing births also changes future entrant masses,
+so this is not a completed dynamic allocation holding every future
+population fixed.
 
-At an interior choice the fertility condition is
+Separate explicit child-resource constraints would constitute another model
+architecture. They require their own definitions and are not adopted here.
+The same child goods or space already included in gross \(c,h\) must not be
+charged again as an additional aggregate resource requirement.
+
+## 5. Restricted mapping: the existing shifted specification
+
+Only now impose the existing form
 \[
-F:=U_n^y-\chi U_x^y-\kappa U_s^y=0.
+a(c,n)=\log(c-\chi n),\qquad
+b(h,n)=\alpha\log(h-\kappa n),\qquad
+v(n)=\vartheta\log n.
 \]
-At a regular optimum, \(\widetilde U_{nn}<0\). Implicit differentiation gives
+Its domain \(c>\chi n,\ h>\kappa n,\ n>0\) belongs to **this special case**.
+Old utility is \(\log c_o+\gamma\log h_o+\omega_B\log e\).
+Here \(a_{cn}=\chi/(c-\chi n)^2>0\) and
+\(b_{hn}=\alpha\kappa/(h-\kappa n)^2>0\), so the intermediate fertility result
+reproduces the existing positive conditional responses. The gross condition
+\(U^y_n=0\) becomes exactly
 \[
-dn=-\frac{A\,dc+B\,dh}{\widetilde U_{nn}},\qquad
-A=U_{nx}^y-\chi U_{xx}^y-\kappa U_{sx}^y,\quad
-B=U_{ns}^y-\chi U_{xs}^y-\kappa U_{ss}^y.
+\frac{\vartheta}{n}
+=\frac{\chi}{c-\chi n}+\frac{\alpha\kappa}{h-\kappa n}.
 \]
-Thus \(A\ge0\) and \(B\ge0\) are exactly the local conditions for fertility
-to respond weakly positively to each resource separately. Concavity supplies
-the denominator's weak sign, but a strictly negative second derivative is
-needed for this derivative formula. Increasingness and joint concavity alone
-do not determine the signs of \(A\) and \(B\).
 
-For example, take any increasing, strictly concave functions \(f,g,v\) with
-strictly negative second derivatives and set
+A still-restricted nonlogarithmic extension replaces the two logarithms by
+\(f(c-\chi n)\) and \(\alpha g(h-\kappa n)\), with increasing, strictly
+concave functions. With additively separable old housing utility
+\(\gamma g(h_o)\), fixed-fertility planner housing is
 \[
-U^y(x,s,n)=f(x)+g(s+a n)+v(n),\qquad a>\kappa.
+h_i^{y*}=\min\{H_i,\kappa n_i+r_y\},\quad
+h_i^{o*}=\min\{H_i,r_o\},\quad
+r_y=(g')^{-1}(\lambda_H/\alpha),\quad
+r_o=(g')^{-1}(\lambda_H/\gamma).
 \]
-This utility is increasing and jointly strictly concave. Yet
-\(\widetilde U_{nh}=(a-\kappa)g''<0\), so fertility falls with additional
-housing at every regular interior optimum. Children and space enter the
-same utility component as substitutes. An interior example can be obtained
-with square-root functions; no logarithmic functional form is needed for
-this counterexample.
-
-### A useful generalization of the existing preferences
-
-The additive class
+Assume positive solutions and the appropriate derivative range, extending
+the inverse to infinity when desired housing exceeds every finite cap.
+Let \(\bar n=\int n_i\,dQ\). For \(\alpha=\gamma\) and slack planner caps,
 \[
-U^y(x,s,n)=f(x)+\alpha g(s)+v(n)
+r_y=r_o=\frac{\bar H/N-\kappa\bar n}{2},\qquad
+H_Y^*=\frac{\bar H+\kappa N\bar n}{2}.
 \]
-with increasing functions and \(f'',g'',v''<0\) gives
-\[
-dn=
-\frac{-\chi f''(x)\,dc-\alpha\kappa g''(s)\,dh}
-{-v''(n)-\chi^2f''(x)-\alpha\kappa^2g''(s)}.
-\]
-Both individual resource effects are strictly positive. When consumption
-falls and housing rises, the numerator supplies the precise local tradeoff.
-This result requires additive separability and curvature, not logarithms.
-The current specification is the special case
-\(f(x)=\log x\), \(g(s)=\log s\), and \(v(n)=\vartheta\log n\).
-It reproduces the existing conditional fertility differential exactly.
+This equalizes **adult space**, a concept specific to the shifted class.
+Young household \(i\) gains housing exactly when
+\(h_i^{y,eq}-\kappa n_i<r_y\). Aggregate young housing increases exactly when
+old mean reference housing exceeds young mean reference adult space.
+For \(\alpha\ge\gamma\), the paired planner housing ordering survives binding
+caps. These formulas are not conclusions for unspecified \(U^y(c,h,n)\).
 
-### Joint choice by the planner
-
-When the dated planner chooses fertility too, its young-household conditions
-in net resources are
-\[
-U_x^y=\lambda_C,\qquad
-U_s^y=\lambda_H+\eta_i^{y*},\qquad
-U_n^y=\chi\lambda_C+\kappa(\lambda_H+\eta_i^{y*}),
-\]
-where \(\lambda_C,\lambda_H\) are the resource multipliers and \(\eta_i^{y*}\)
-is the multiplier on \(s_i+\kappa n_i\le H_{d_i}\). This values children
-through currently living parents only. The conditional derivative above does
-not by itself establish greater average fertility at this joint optimum.
-The logarithmic proof's explicit allocations and aggregation inequalities
-require a new argument under general preferences. A policy transition also
-requires the actual funded equilibrium changes in bundles and distributions.
-
-Lead verification checked the implicit derivatives, the substitute example
-and the specialization back to the current logarithmic formula algebraically.
-No simulation, model revision or paper/slides edit was performed.
+The fully general competitive age ordering, equilibrium existence, aggregate
+fertility comparison, and funded policy transition remain unproved.

@@ -871,3 +871,28 @@ equilibrium conditions, existence/uniqueness and policy transitions remain
 unproved in this branch. The next main Pro review should remain distinct
 from this exploration; neither arbitrary preferences nor a new patience
 restriction has been adopted.
+
+## Corrected general-preferences starting point and consolidated Pro packet
+
+The author rejected the shifted arguments as the starting point for a general
+utility investigation. The separate memo now begins with gross
+\(U^y(c,h,n)\), then considers \(a(c,n)+b(h,n)+v(n)\); the linear child-needs
+form appears only as a restricted mapping at the end. This supersedes the
+description of the branch's starting point immediately above. Monotonicity is
+imposed in goods and housing; total utility need not increase in fertility at
+a fixed gross bundle, since that would rule out an interior optimum without
+some additional cost or domain restriction. An Astra/max reviewer corrected
+the memo and the lead checked its derivative signs and scope.
+
+`docs/prompts/oracle_simplified_olg_consolidated_theory.md` now gives a new
+Pro review a fixed sequence: dated full consumption/housing allocation;
+private and joint-planner fertility; a constrained market reform and common
+inherited-state transition; and the separate general-utility investigation.
+The exact model and curated decision history, prior responses, and style
+guides are assembled in
+`output/model/simplified_olg_amendments/oracle_consolidated_theory_bundle.md`.
+This packet does not impose beta R on either side of one, claim convergence,
+or adopt a model extension. It asks for complete analytical results and three
+distinct proof/accounting checks, without promising a controllable Pro runtime.
+The author asked to paste it manually. The agent has not submitted this review
+or started a new monitor. The current paper and slides remain unchanged.

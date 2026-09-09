@@ -1,5 +1,21 @@
 # Simplified OLG amendment checks
 
+## Consolidated review packet, prepared for manual submission
+
+The [complete packet](oracle_consolidated_theory_bundle.md) combines
+[the new prompt](../../../docs/prompts/oracle_simplified_olg_consolidated_theory.md),
+[current context and model excerpts](oracle_consolidated_theory_context.md),
+the corrected general-preferences memo, two prior Pro responses, and the
+author's writing conventions. The general branch now starts from gross
+utility, with linear child needs treated only as a later specialization.
+
+The packet asks for the full dated planner comparison, fertility effects,
+and a funded equilibrium transition without adopting a standalone patience
+restriction. It records existing partial proofs and unresolved cap, estate,
+existence and convergence issues. The author requested the packet for manual
+submission; this review has not been launched by the agent. No main model,
+paper, or slide specification was changed to prepare it.
+
 ## September 8: housing restrictions and fertility follow-up completed
 
 The [third Pro packet](oracle_housing_fertility_bundle.md), from

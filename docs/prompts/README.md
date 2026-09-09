@@ -4,6 +4,14 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `oracle_simplified_olg_consolidated_theory.md`: consolidated new-chat Pro
+  packet for the dated full planner, housing and fertility results, a funded
+  demographic transition, and the separate general-preferences branch.
+  Includes the exact household model, curated author decisions, checked
+  corrections, prior mathematical reviews, and writing conventions.
+  Prepared for the author to submit manually; not submitted by the agent.
+  Complete paste-ready packet:
+  `output/model/simplified_olg_amendments/oracle_consolidated_theory_bundle.md`.
 - `oracle_simplified_olg_housing_fertility.md`: third follow-up in the existing
   Pro chat, submitted September 8 at 7:53 PM Eastern. Keeps the dated planner
   benchmark fixed and asks for interpretable housing restrictions, private
