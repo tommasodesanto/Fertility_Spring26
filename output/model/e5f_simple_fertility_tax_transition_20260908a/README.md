@@ -4,6 +4,7 @@ Both paths completed all11dates2023–2063. Annual1% versus2%, each rebating its
 
 ## Read first
 
+- September 9 household/child-count review: `households_children_review/OVERVIEW.md`, with verified policy counts, fresh ACS household-share validation, child-state/entry accounting and unresolved empirical group mappings. This qualifies demographic and family-group interpretation without changing the numerical experiment.
 - Morning PDF: `../../pdf/rebated_property_tax_morning_20260909.pdf` (27pages:8readout/calibration pages,19standard diagnostic appendix pages).
 - Complete374standard PNGs and receipts: `../../pdf/rebated_tax_complete_graphs_20260909.zip`.
 - `morning_packet/READOUT_VERIFIED.md`: all11dated effects.

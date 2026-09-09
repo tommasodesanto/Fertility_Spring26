@@ -1,8 +1,49 @@
 # Calibration Status
 
-Updated: `2026-09-09` (rebated tax paths and morning graph packet verified)
+Updated: `2026-09-09` (rebated tax paths verified; household-with-children review)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 9: requested household-with-children accounting and measurement review.**
+The completed tax experiment has 0.092922% more households with dependent
+children on impact and 0.897161% more in 2063 under reform. The 2063 share
+effect is +0.183478pp; total households rise 0.199542% relative to baseline.
+The baseline dependent-household count falls 46.38% from 2023 to 2063.
+These are model-dependent-state counts, not literal under-18 or resident-person
+forecasts. All 44 case/date/age-group records reconcile; 94 input files and
+750 checks cover partitions and the entry handoff. The youngest cell jumps
+4.45 times across the empirical-2023 to queued-2027 handoff, with exact mass
+accounting. Total household count peaks in 2027; dependent-household count
+declines throughout. No source, target, weight, gate or policy changed.
+
+Outstanding family measurement: active ownership maps all m>0 households
+against n=0 to an ACS target whose oldest resident own child is under four,
+against no resident own children (including empty nesters). This was documented
+in July and remained open in September 7 reporting; the scoped history check
+does not establish author acceptance of this approximation. Active family-room
+groups use dependent m=3 versus m=1/2, while the data use any-age resident
+NCHILD>=3 versus 1/2 conditional on YNGCH<18. Both empirical target scalars
+reproduce from the pinned cache; model measurement alignment is unresolved.
+This does not reassess or invalidate the separate PSID event-study estimator.
+
+New validation only: 2023 MMS42-metro household heads18–85, HHWT, owner/renter
+with positive rooms have 39.5592% any resident own child, 26.9173% an own child
+under18, and 3.6272% oldest own child under4. These are not national shares or
+new calibration targets. The model's dependent-state share36.4149% is not yet
+an exactly matched empirical comparison. Full samples, denominators and hashes
+are in `households_children_review/acs_validation_receipt.json` under the
+current tax output folder.
+
+The August5 authorized independent departure hazard2/9 per four-year step
+is an expected18-year approximation, not a literal age18 exit. It remains
+separate from adjusted births/2.1 entering households20years later; top-code
+extra births do not add explicit dependent states. Annual person/headship code
+and August26 packets already exist, and a separate experimental driver uses
+them; this tax driver does not. Fixed headship and proportional within-age
+family composition remain assumptions even in that alternative. No new
+resident-population forecast or effect of changing maturation was calculated.
+Read `output/model/e5f_simple_fertility_tax_transition_20260908a/households_children_review/OVERVIEW.md`
+before interpreting the morning packet's family-group or population results.
 
 **September 9 morning: complete rebated-tax paths and graph packet verified.**
 Both eleven-date paths2023–2063 completed (full17250630; collector17250631).

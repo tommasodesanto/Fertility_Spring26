@@ -1,0 +1,143 @@
+{
+  "status": "complete_lead_reviewed",
+  "cache_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/moment_standard_errors/cache/acs_analysis_samples.rds",
+  "cache_sha256": "0eae9aaed4e1d3b9655235be967378c1d389f29ec9b64f005a811c2f0ced7df0",
+  "cache_read_count": 1,
+  "threads": 1,
+  "cache_rows": 4103889,
+  "metro_count": 42,
+  "sample": "MMS42-metro household-head cache; owner/renter with positive rooms and HHWT; not a national sample; no sex restriction",
+  "pooling": "Pooled estimates weight all household-year records by HHWT; not an average of annual shares or a unique-household panel count",
+  "age_windows": "Exact empirical integer ages inclusive, not model-node rebinning",
+  "unknown_rule": "NCHILD==0 establishes false for child presence/recent parent; positive NCHILD plus child age NA/99/outside0..98 is unknown. Valid-denominator share and full-denominator bounds both reported.",
+  "nchild_semantics": "Co-resident own children of any age; biological/adopted/step; not children ever born",
+  "yngch99_semantics": "No own child present; compatible with NCHILD0, inconsistent/unknown with NCHILD>0",
+  "denominator_audit": {
+    "pooled_2012_2023/all_18_85": {
+      "n_records": 3986589,
+      "hhwt_sum": 419883313,
+      "metro_count": 42,
+      "years": [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    },
+    "pooled_2012_2023/young_25_34": {
+      "n_records": 549234,
+      "hhwt_sum": 68175160,
+      "metro_count": 42,
+      "years": [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    },
+    "pooled_2012_2023/prime_30_55": {
+      "n_records": 1845418,
+      "hhwt_sum": 212231640,
+      "metro_count": 42,
+      "years": [
+        2012,
+        2013,
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    },
+    "year_2023/all_18_85": {
+      "n_records": 558463,
+      "hhwt_sum": 61250563,
+      "metro_count": 42,
+      "years": 2023,
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    },
+    "year_2023/young_25_34": {
+      "n_records": 77624,
+      "hhwt_sum": 10185229,
+      "metro_count": 42,
+      "years": 2023,
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    },
+    "year_2023/prime_30_55": {
+      "n_records": 248087,
+      "hhwt_sum": 30010523,
+      "metro_count": 42,
+      "years": 2023,
+      "missing_nchild_records": 0,
+      "positive_nchild_yngch_missing_records": 0,
+      "positive_nchild_yngch99_records": 0,
+      "positive_nchild_eldch_missing_records": 0,
+      "positive_nchild_eldch99_records": 0
+    }
+  },
+  "target_reproduction": {
+    "own_family_gap": {
+      "target": 0.16766167,
+      "reproduced": 0.16766167060009907,
+      "absolute_gap": 6.000990537824435e-10
+    },
+    "room_gap": {
+      "target": 0.36769955881,
+      "reproduced": 0.36769955881382277,
+      "absolute_gap": 3.82277542954057e-12
+    }
+  },
+  "elapsed_seconds": 11.566,
+  "no_se_no_new_target_no_parameter_changes": true,
+  "artifact_sha256": {
+    "acs_validation.R": "5eff892d996d49f70fcf20da155971020646c28024899148918bb30d5ea0e7de",
+    "acs_validation.csv": "b46b15b54ee9eed81adba7f70b17fbde96484f4ace6adbece4e1aaa283aa00fa"
+  },
+  "aggregate_verification": "24 rows; presence/absence partition, nested child definitions and all denominator identities pass; all unknown weighted shares zero.",
+  "startup_note": "First invocation halted before readRDS because locale warnings obscured hash parsing; corrected SHA-line selection and C locale, then exactly one successful readRDS. No raw data read.",
+  "lead_review": "Reviewed extraction line by line against pinned empirical builder; verified artifact hashes, all24 row denominators/shares, nested-definition and presence/absence identities. No second cache read or raw-data re-estimation."
+}

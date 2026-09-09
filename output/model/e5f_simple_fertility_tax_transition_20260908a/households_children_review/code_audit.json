@@ -1,0 +1,140 @@
+{
+  "status": "read_only_source_and_saved_csv_audit_complete",
+  "scope": "Frozen simple-fertility-nest rebated-tax diagnostic; no model solve or source edit; older person law reviewed separately only for reuse",
+  "worktree": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a",
+  "source_hashes": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/intergen_eqscale_seq_optimized/parameters.py": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/intergen_eqscale_seq_optimized/e5_profile.py": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/intergen_eqscale_seq_optimized/fertility_nested.py": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/intergen_eqscale_seq_optimized/solver.py": "1a25a77ab9d8316a56101848615486d5c297f0f52665c52098fafc178df51d27",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_e5f_simple_fertility_tax_transition.py": "afc41253ae39191d67dc2215d5213e6454e99cfe76c00caebc2a72ebc57c684a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_e5f_simple_fertility_tax_impact.py": "d1d25a391c0a8aa10a358d1766c0500b5d1893b6e562a90e7051e1647a848aa6",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_e5f_post2023_no_policy_continuations.py": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_e5f_open_population_transition.py": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_dynamic_population_transition.py": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/demographic_transition/person_cohort_law.py": "d923898340a41f844e5618b65cf9c9c95abe6e609d2e1c729a90608aed039857",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/demographic_transition/four_year_bridge.py": "720f3410c918d36508fb79700f1b50da65241eb28038d8ad93473dcff0fa30c0",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/demographic_transition/household_person_coupling.py": "fd9826cd1b40c3dda224f93c6e6ba2227865848074d6763fadf6ab64756b104a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/demographic_transition/household_head_bridge.py": "ccc15523fea69df11adf4e2b9c00c77ad20c99d9ac10a4072233b1bfebe72f9a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_fertility_nest_compute_20260907a/code/model/tools/run_e5f_perfect_foresight_person_demography.py": "fd1c4b7b2acdd3cc580e250d3221d0653ca610559e6c068af8a3e8f86a4f4b6e"
+  },
+  "parameters": {
+    "period_years": 4,
+    "youngest_age_node": 18,
+    "parity_states": [
+      0,
+      1,
+      2,
+      "3+"
+    ],
+    "dependent_count_states": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "mean_dependency_years": 18,
+    "dependency_exit_probability_per_period": 0.2222222222222222,
+    "top_parity_weight": 3.602359422009,
+    "entry_conversion": 0.47619047619047616,
+    "birth_to_entry_years": 20
+  },
+  "households_with_children": [
+    {
+      "year": 2023,
+      "case": "tax1-equal-rebate",
+      "household_mass": 1.129247671247481,
+      "dependent_household_mass": 0.4112146993029965,
+      "dependent_household_share": 0.36414925598095516,
+      "ever_parent_household_mass": 0.8514381924560996,
+      "childless_household_mass": 0.27780947879138135,
+      "input": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_simple_fertility_tax_transition_20260908a/results/full/tax1-equal-rebate/date_2023/family_group_quantities.csv",
+      "input_sha256": "a55a39b7aafad3c1b69ed5ff3403ca3fe522c595549826799e79e6ef54129ce5"
+    },
+    {
+      "year": 2023,
+      "case": "tax2-equal-rebate",
+      "household_mass": 1.129247671247484,
+      "dependent_household_mass": 0.41159680821953454,
+      "dependent_household_share": 0.36448763074697516,
+      "ever_parent_household_mass": 0.8517617902760249,
+      "childless_household_mass": 0.277485880971459,
+      "input": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_simple_fertility_tax_transition_20260908a/results/full/tax2-equal-rebate/date_2023/family_group_quantities.csv",
+      "input_sha256": "ba73eda68a7f8b38bb7c311b3a6562524e6f2d12423d08c16da139edbbd18907",
+      "dependent_household_mass_pct_change": 0.09292199845620797,
+      "dependent_household_share_pp_change": 0.03383747660199998
+    },
+    {
+      "year": 2063,
+      "case": "tax1-equal-rebate",
+      "household_mass": 0.8366144668956204,
+      "dependent_household_mass": 0.22047392386301326,
+      "dependent_household_share": 0.26353109178366685,
+      "ever_parent_household_mass": 0.5433079287309268,
+      "childless_household_mass": 0.2933065381646935,
+      "input": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_simple_fertility_tax_transition_20260908a/results/full/tax1-equal-rebate/date_2063/family_group_quantities.csv",
+      "input_sha256": "c5f9ed4f4e761ab646399114be4045cdc929f5db553838230b441f379515d406"
+    },
+    {
+      "year": 2063,
+      "case": "tax2-equal-rebate",
+      "household_mass": 0.8382838651498562,
+      "dependent_household_mass": 0.22245192963516572,
+      "dependent_household_share": 0.2653658729258722,
+      "ever_parent_household_mass": 0.54635013158513,
+      "childless_household_mass": 0.2919337335647262,
+      "input": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_simple_fertility_tax_transition_20260908a/results/full/tax2-equal-rebate/date_2063/family_group_quantities.csv",
+      "input_sha256": "f62e1c2bbf68dee272e65b68c3dd04ad3460be31bb0d136aa90eef0efbcbf577",
+      "dependent_household_mass_pct_change": 0.8971608694103184,
+      "dependent_household_share_pp_change": 0.18347811422053661
+    }
+  ],
+  "findings": [
+    {
+      "classification": "maintained_stylization",
+      "finding": "Memoryless dependent-child departure; no child ages, sibling birth dates, marriage, spouse or nonhead-adult state."
+    },
+    {
+      "classification": "maintained_household_closure_not_person_identity",
+      "finding": "Birth-vintage entry queue is independent of dependent-child departures; no person-conserving transition links them."
+    },
+    {
+      "classification": "measurement_bridge",
+      "finding": "Third-parity entrants add 0.602359422009 measured children beyond the one explicit state birth, only in adjusted birth reporting/renewal; these extra children do not enter m."
+    },
+    {
+      "classification": "unresolved_demographic_closure",
+      "finding": "Resident totals require persons/sex/age survival migration and headship; cannot infer them as H+C or 2H+C from these checkpoints."
+    },
+    {
+      "classification": "historical_reusable_implementation",
+      "finding": "Separate annual person/head law and household coupling already exist, with provisional fixed headship and proportional within-age composition. Current tax wrapper does not call them."
+    },
+    {
+      "classification": "historical_documentation_staleness",
+      "finding": "demographic_transition/README says not imported by PF solver, but run_e5f_perfect_foresight_person_demography.py imports and invokes it; canonical status describes this integration."
+    }
+  ],
+  "worked_identities": {
+    "H_current": 100,
+    "household_exits": 3,
+    "entrants_next": 5,
+    "H_next": 102,
+    "dependent_children_before": 200,
+    "dependent_children_after_one_step_no_death_no_new_birth": 155.55555555555557,
+    "households_with_children_after_one_step_starting_two_each": 95.06172839506173,
+    "adjusted_birth_flow": 21,
+    "induced_entrant_households_twenty_years_later": 10.0,
+    "probability_child_still_at_home_after_twenty_years": 0.28462802079628785
+  },
+  "limitations": [
+    "No current checkpoint was unpickled and no new solve was run in this audit. Saved family-group CSVs already suffice for household counts with dependents.",
+    "Absolute physical household totals need the approved common mass scale; do not interpret model mass units as millions without applying that scale.",
+    "Historical person-law parameter values, old supply elasticity, PF terminal conditions and the historical 4.46 youngest-cell/entry discrepancy were not transferred to current results."
+  ],
+  "newborn_first_transition_protection": false,
+  "parent_exit_child_handling": "Entire household child-state mass removed; no orphan routing or person-flow ledger",
+  "dependency_departure_by_16_years": 0.6340496875476299,
+  "empirical_parent_age_definition": "Not verified in this bounded audit; do not assume under 18"
+}
