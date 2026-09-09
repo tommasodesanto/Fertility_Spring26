@@ -4,6 +4,22 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8: eight-cell tax-channel diagnostic completed.**
+Both endpoint replays (17250311), all six conditional cells (17250312) and
+collector (17250315) completed. All 17 metric decompositions add up within
+1e-12; lead checked collected report hashes and all component sums.
+Young rooms: direct tax −10.843343%, asset-price channel +2.883385%,
+rebate +3.678051%, net −4.281907%. Births per household: tax −1.388670%,
+price +0.305363%, rebate +1.592571%, net +0.509263%. Contributions are
+Shapley allocations, averaged over six orders, expressed relative to baseline;
+mixed cells are conditional household responses, not equilibria.
+Saved-checkpoint extraction finds rental/unit user cost rises 18.1777%
+while asset prices fall 4.8016%. Young renter mean rooms 4.30239→4.02934;
+young owner mean rooms 7.65470→7.38020. These conditional means include
+selection; they are not same-household switcher estimates.
+Verified readout: `output/model/e5f_simple_fertility_tax_channels_20260908a/results/READOUT.md`.
+No additional model jobs were launched for this readout.
+
 **September 8 late evening: rebated property-tax impacts verified complete.**
 Cluster access restored. Jobs 17222674/17222675/17222676 all completed; both
 rebated equilibria pass the coupled root, independent fiscal ledger, fresh

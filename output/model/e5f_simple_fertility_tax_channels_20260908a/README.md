@@ -9,3 +9,5 @@ Budget: eight solves, two endpoint cells then six mixed cells, at roughly 20–6
 Source: isolated codex/fertility-nest-computation. Scientific bundle unchanged. Contract SHA256: `de767353697c706dec4a7d960d1f3314dfb5cf2debad4c17e8438ce021966288`.
 
 Invocation is frozen in cells.sbatch and collect.sbatch. Submit cells 0,7 first, cells 1-6 with afterok dependency, then collector afterok. Submission receipt records actual IDs.
+
+Completed: all eight cells and collector pass. See [channel results](results/READOUT.md), with all 17 metric decompositions in the companion CSV and JSON. Lead independently verified report hashes and component add-up.
