@@ -1,0 +1,84 @@
+{
+  "arm": "sequential",
+  "artifact_sha256": {
+    "final_state.npz": "0bc3872134fdbbf5edcd8adeb3a80a8ea96a98d3c9e8f63f5fbbd94f6f2a5617",
+    "initial_states.npz": "6eef243aac3f006b70cf80cd47f311dd7b7945c33a5594542cb860196af0d1f1",
+    "initialization.json": "6ebe8469b947c2a39edc931d78f13061805b06cbdc065e3a467eb16c0785ca7e",
+    "observed_dates.json": "ba787c6d8bfa4cdcf5fd8ce98f34773ff06700e75f4f235958c4967b16c3ff30",
+    "transition_path.csv": "e0dad15e673dae5324a70fafb22f373bf363835d299a838120f8a3f9f0ec6b6a"
+  },
+  "bellman_solves": 12,
+  "calibrated_history": false,
+  "completed_dates": 6,
+  "contract_sha256": "ab9058de1bd67b442c8ee274cd1f74648a0d7a7927b3d4db75c21741c73d0999",
+  "elapsed_seconds": 188.08697181753814,
+  "equilibrium_verified": false,
+  "final_household_mass": 1.198065341768098,
+  "final_persons": 2.994829298355376,
+  "final_state_year": 2031,
+  "gates": {
+    "age_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 3.0531133177191805e-16
+    },
+    "head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 4.440892098500626e-16
+    },
+    "historical_mass": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 4.440892098500626e-16
+    },
+    "historical_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "historical_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "household_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 1.5543122344752192e-15
+    },
+    "initial_2023_age_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 3.0531133177191805e-16
+    },
+    "person_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 8.881784197001252e-16
+    },
+    "person_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "person_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "raw_household_mass_2023": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 8.881784197001252e-16
+    },
+    "raw_household_mass_2027": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    }
+  },
+  "market_residual_reported_not_gated": 0.15826207918363341,
+  "status": "passed_conditional_history_smoke_only",
+  "terminal_convergence_tested": false
+}

@@ -1,0 +1,111 @@
+{
+  "conditioning": {
+    "cells_above_2e10": 1374,
+    "max_absolute": 4.9630328365801724e-05,
+    "maximum_post_mass_on_mismatches": 2.85008037686872e-10,
+    "maximum_weighted_product_mass": 3.37703253357691e-19,
+    "post_mass_on_mismatches": 8.629844279871257e-10,
+    "post_states_above_2e10": 508,
+    "support": [
+      {
+        "bad_count": 508,
+        "count": 923168,
+        "max_probability_gap": 4.9630328365801724e-05,
+        "min_post_mass": 0.0
+      },
+      {
+        "bad_count": 381,
+        "count": 809702,
+        "max_probability_gap": 4.9630328365801724e-05,
+        "min_post_mass": 1e-16
+      },
+      {
+        "bad_count": 105,
+        "count": 773474,
+        "max_probability_gap": 6.771545479233865e-06,
+        "min_post_mass": 1e-14
+      },
+      {
+        "bad_count": 36,
+        "count": 708823,
+        "max_probability_gap": 1.5644181838858628e-07,
+        "min_post_mass": 1e-12
+      },
+      {
+        "bad_count": 2,
+        "count": 594909,
+        "max_probability_gap": 4.993668811792418e-10,
+        "min_post_mass": 1e-10
+      },
+      {
+        "bad_count": 0,
+        "count": 377571,
+        "max_probability_gap": 5.2865073429941845e-12,
+        "min_post_mass": 1e-08
+      }
+    ],
+    "weighted_product_mass_l1": 8.503170072356166e-17,
+    "worst_dated": 0.6481459071872675,
+    "worst_index": [
+      34,
+      4,
+      0,
+      6,
+      4,
+      3,
+      1,
+      0
+    ],
+    "worst_post_mass": 2.4117826987017852e-15,
+    "worst_reference": 0.6481955375156333
+  },
+  "contract_sha256": "4829b84c3db060407d85174467e6cf33c843bda09758470de458d7e9e461d58f",
+  "dated_budget": {
+    "actual_rent": 0.11775578943212463,
+    "budget_excess_mass": 0.0,
+    "budget_tolerance": 1e-09,
+    "maximum_occupied_excess": 7.105427357601002e-15
+  },
+  "dated_invariants": {
+    "births": 0.07843216697795002,
+    "current_l1": 2.2437964639793603e-14,
+    "deaths": 0.061733456180570086,
+    "feasibility_projection_mass": 0.0,
+    "invariant_l1": 3.160713647366935e-13,
+    "mass_residual": 1.1102230246251565e-15
+  },
+  "elapsed_seconds": 33.29178498778492,
+  "inputs_unchanged": true,
+  "native_array_gaps": {
+    "V": 0.0,
+    "bp_pol": 0.0,
+    "c_pol": 0.0,
+    "fert2_probs": 0.0,
+    "fert_probs": 0.0,
+    "fert_value": 0.0,
+    "hR_pol": 0.0,
+    "joint_failure_probabilities": 0.0,
+    "joint_probabilities": 0.0,
+    "joint_products": 0.0,
+    "joint_wait_probabilities": 0.0,
+    "loc_probs": 0.0,
+    "tenure_choice": 0.0
+  },
+  "same_pool_reference": {
+    "births_gap": 0.0,
+    "effective_max": 0.0,
+    "post_max": 0.0
+  },
+  "saved_arrays_sha256": "16cd54647e2d2ec3b695fcc7bc79c72c084be4562a00f816baab35b46ff991eb",
+  "saved_policy_kfe": {
+    "births": 0.07843216697794897,
+    "births_gap_to_dated": 1.0547118733938987e-15,
+    "current_l1_to_saved": 0.0,
+    "effective_max_to_saved": 0.0,
+    "post_l1_to_dated": 2.1701142257100552e-14,
+    "post_max_to_dated": 2.9766215731475593e-16
+  },
+  "scope": "one Bellman replay and saved-policy KFE; no gates changed",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_20260909e",
+  "stage": "complete"
+}

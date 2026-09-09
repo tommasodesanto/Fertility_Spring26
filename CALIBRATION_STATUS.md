@@ -18,7 +18,8 @@ Common exhaustive saving alone does not guarantee a comparison isolated to
 choice structure: interpolation and probability storage also differ and require
 a controlled numerical check. Historical H128 convergence times are not runtime
 forecasts for these updated arms; time the actual short backward/forward loop.
-No new model solve, calibration or policy job has been launched for this plan.
+No new calibration or production policy run has been launched for this plan;
+bounded household-level numerical pilots are tracked in the urgent update below.
 
 Proposed common design: the same person/head demographic law, dated housing-
 supply rule, fiscal policy, household-state primitives, empirical target/weight
@@ -28,13 +29,63 @@ framework. Taste dispersions must be labeled estimated versus externally fixed;
 the nested GEV scale restrictions are part of its economic specification.
 Do not label a changed information/correlation structure as just a code rewrite.
 
-PF policy paths are required for both intended arms. Whether PF also applies
-throughout historical calibration is explicitly pending an author answer; the
-lead recommends that as the end objective, using existing estimates only for
-initial solver tests. The ownership parent/control definition and empirical date
+The author has now clarified and authorized the intended architecture: an
+approximate initial steady-state distribution, immediate knowledge of the full
+transition at its onset, and calibration to observations along a PF transition.
+PF is required in historical calibration and policies for both intended arms.
+Immediate learning does not imply an immediate full change in the fertility
+preference intercept; preserve the dated preference path in initial diagnostics.
+Existing estimates are starting points for solver tests. The ownership
+parent/control definition and empirical date
 window likewise remain unresolved before a fresh target fingerprint/search.
 The expected18-year children-at-home approximation stays fixed for this first
 comparison. Preserve the earlier verified PF pair as a fallback artifact.
+
+**Urgent implementation, September 9.** Work is isolated at
+`tmp/e5f_matched_pf`, branch `codex/matched-perfect-foresight`, based on clean
+nested source `d122eb52`. The dated joint-policy adapter, historical age bridge,
+and historical-to-person-demographic composition are implemented. The latter
+solves the future tail first, lets those values enter historical choices, and
+processes 2023 exactly once. Thirty-one affected regression tests pass; the
+joined diagnostic CLI also passes eight tests.
+
+Full-grid pilot17276750: the sequential arm passed all six household solves
+in172seconds, with exact choice-array reproduction, dated-budget feasibility,
+and mass/invariant checks. This is a prescribed-price household test, not a
+converged equilibrium. The nested arm reproduces its values and native joint
+choice arrays but fails the distribution-conditioned tenure-probability check;
+independent replay17276871 traced this to roundoff differences in the
+conditioning population. On identical inherited populations, effective tenure
+probabilities reproduce exactly, with aggregate product-mass error8.50e-17.
+The corrected strict comparison passed in nested pilot17276953, completing
+all six household solves in207seconds with exact reproduction, budget and mass
+checks. Both arms now pass the household primitive test.
+No numerical gate is relaxed. Six-date sequential joined-history/person
+test17276868 passed all accounting and reproduction gates in188seconds
+(twelve Bellman calls). It used a synthetic
+current-preference stationary seed and supplied terminal value, explicitly not
+the normalized old history or a fitted transition. The corresponding nested
+joined-history test17277058 also passed all12 gates, in247seconds. Both arms
+therefore pass this six-date integration test; neither is a converged market
+equilibrium or calibrated PF history. No pilot jobs remain running.
+
+Earlier reduced-grid failures were stationary feasibility failures before PF
+choices. The original-grid checks then identified cancellation in dated rental
+arithmetic: an algebraically equivalent rent formula restores exact stationary
+rents and values. The saved supply-rule guard also now reads the authoritative
+rule rather than legacy parameter fields. These scoped fixes and all failed
+receipts are preserved. No production code, target, or calibration was changed.
+See `output/model/e5f_matched_pf_20260909a/README.md` for evidence and limitations.
+
+Retain stationary conditional household states reweighted to observed 2007
+age margins as the initial *approximation*, then retain the observed historical
+age bridge in the first conditional-history diagnostic. Do not apply 2023
+person/headship inputs to 2007. A completed historical PF objective must append
+a consistent post-2023 continuation; 2023 remains a measurement date, never a
+forced terminal steady state. Supplied-boundary short tests do not settle that
+continuation or certify the final objective. Preserve the unchanged target
+measurement code for diagnostics, including the 2019-to-2023 birth-housing
+branch; unresolved group/date alignment remains outstanding for production.
 
 **September 9 control clarification: exact operational divergence and claims.**
 All times in this paragraph are New York (EDT). The earliest documented

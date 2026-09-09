@@ -1,0 +1,96 @@
+{
+  "arm": "sequential",
+  "completed": [
+    {
+      "elapsed_seconds": 46.46168132964522,
+      "reconstruction": {
+        "reconstructed_baseline_births": 0.07835413337974252,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 7.32422498468088e-15,
+        "stationary_post_fertility_nesting_max_abs": 1.716812717186907e-16
+      },
+      "stage": "stationary_fixed_price",
+      "timings": {
+        "bellman_full": 27.441011202521622,
+        "bellman_mode": "full_only",
+        "distribution": 9.569750596769154,
+        "income_process": "markov",
+        "n_dist": 1,
+        "n_eval": 0,
+        "n_full": 1
+      }
+    },
+    {
+      "births_absolute": 4.85722573273506e-16,
+      "budget": {
+        "actual_rent": 0.11775578943212463,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 7.105427357601002e-15
+      },
+      "current_l1": 7.318046229756252e-15,
+      "deaths": 0.06173345653127444,
+      "elapsed_seconds": 28.913544859737158,
+      "invariant_l1": 6.979116101490449e-10,
+      "market_residual_diagnostic_only": 0.0,
+      "mass_accounting_error": 4.440892098500626e-16,
+      "projection_mass": 0.0,
+      "reproduction": {
+        "V": 0.0,
+        "bp_pol": 0.0,
+        "c_pol": 0.0,
+        "fert2_probs": 0.0,
+        "fert_probs": 0.0,
+        "fert_value": 0.0,
+        "hR_pol": 0.0,
+        "loc_probs": 0.0,
+        "tenure_choice": 0.0,
+        "tenure_probs": 0.0
+      },
+      "stage": "constant_continuation"
+    },
+    {
+      "elapsed_seconds": 17.045653447508812,
+      "next_value_sha256": "64d8e516bc524190287a7ac86f16b89b583e5e1a7e35e66a2b7d836e2103e87a",
+      "price": 0.7141603947938066,
+      "rent": 0.12189760516930408,
+      "stage": "backward_1"
+    },
+    {
+      "elapsed_seconds": 17.458388095721602,
+      "next_value_sha256": "0ff56c447c63e0e1562731ed62a82e08ec0e20358037b011c3505fc9ccdf09cb",
+      "price": 0.7177134315838256,
+      "rent": 0.12248638411646494,
+      "stage": "backward_0"
+    },
+    {
+      "births": 0.07823152985974655,
+      "budget": {
+        "actual_rent": 0.12248638411646494,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 7.105427357601002e-15
+      },
+      "deaths": 0.06173345653127444,
+      "elapsed_seconds": 29.163560249842703,
+      "market_residual_diagnostic_only": 0.015506227659823834,
+      "mass_accounting_error": 2.220446049250313e-16,
+      "projection_mass": 0.0,
+      "reproduction": {
+        "V": 0.0,
+        "bp_pol": 0.0,
+        "c_pol": 0.0,
+        "fert2_probs": 0.0,
+        "fert_probs": 0.0,
+        "fert_value": 0.0,
+        "hR_pol": 0.0,
+        "loc_probs": 0.0,
+        "tenure_choice": 0.0,
+        "tenure_probs": 0.0
+      },
+      "stage": "forward_0"
+    }
+  ],
+  "elapsed_seconds": 165.1634024027735,
+  "phase": "forward_1"
+}

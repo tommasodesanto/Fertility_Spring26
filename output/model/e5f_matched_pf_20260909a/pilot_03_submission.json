@@ -1,0 +1,26 @@
+{
+  "job_id": "17276230",
+  "arms": [
+    "sequential",
+    "nested"
+  ],
+  "array": "0-1%2",
+  "cpus_per_task": 1,
+  "memory_per_task": "32G",
+  "walltime": "00:15:00",
+  "process_seconds": 840,
+  "wealth_points": 120,
+  "total_expected_bellman_calls": 12,
+  "contract_sha256": "6d6bad035bf887ac063adac13f6d9edb1517cc7270859e072ed4ddf850af8110",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_20260909c",
+  "status": "failed_constant_price_strict_reproduction",
+  "verification": {
+    "focused_tests": 20,
+    "existing_pf_tests": 14,
+    "updated_smoke_guard_tests": 5,
+    "all_passed": true
+  },
+  "production_ready": false,
+  "diagnosis_job": "17276528",
+  "interpretation": "Rent-expression roundoff only: maxVgap3.7253e-9 on six unoccupied states; stationary rental arithmetic yields exactVreproduction."
+}
