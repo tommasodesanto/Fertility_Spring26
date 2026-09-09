@@ -769,3 +769,78 @@ The housing aggregate theorem survives endogenous fertility with caps under
 the same stock and alpha>=gamma restrictions; the stronger average-fertility
 claim must retain its additional uncapped-J qualification. None of these
 dated results supplies a funded general-equilibrium policy transition.
+
+## Equality case, existence, and rental-size extension
+
+The author accepts investigating the weaker adult-space comparison while
+retaining larger old homes as an empirical/model prediction to assess. Two
+bounded independent mathematical reviews and lead checks establish the
+following refinement; it is not yet integrated into the note or slides.
+
+With alpha >= gamma, globally slack old-owner financial-estate restrictions,
+and housing caps slack at the relevant planner optima, beta >= q gives weak
+aggregate housing and joint-planner average fertility gains. A primitive
+sufficient estate restriction is
+\[
+\omega_B(1-q+q\tau^p)>q\gamma.
+\]
+At beta=q, positive mass of young households who strictly desire additional
+borrowing makes BOTH gains strict. For an uncapped old household, the
+first-order conditions give
+\[
+\alpha h_i^o-\gamma s_i
+=(\mu_iL_{d_i}+\eta_i^y)s_i h_i^o\ge0,
+\qquad
+c_i^o=x_i(1+\mu_i/\Lambda_i).
+\]
+Here mu is the young financing multiplier, eta the young housing-cap
+multiplier, and Lambda the lifetime-resource multiplier. Capped old housing
+equals the shared tenure cap and exceeds young adult space sufficiently to
+preserve the housing comparison. Thus competitive caps may bind; binding
+PLANNER caps remain outside this refinement. The mean resource comparisons
+and the already checked Cauchy-Schwarz argument give the joint-fertility sign.
+Strict patience alone is unnecessary. Merely reaching a borrowing boundary
+is insufficient; the household must strictly benefit from relaxing it.
+
+In the solved phi=q, zero-tax subcase, with computed market demands below
+their caps, define E=1+alpha+vartheta and K=1+gamma+omega_B. At beta=q,
+\[
+F\{v_0>(K/E)w_0\}>0
+\]
+is a primitive sufficient condition for positive constrained mass. The
+below-average-wealth requirement for individual recipients is unnecessary
+for aggregate strictness. If finance, caps and estate restrictions are all
+slack at beta=q, aggregate housing and average fertility can be unchanged
+even with heterogeneous endowments; welfare redistribution may still help.
+
+The beta-R comparison must use the same time horizon. In the standard
+infinite-lived precautionary-saving model the stationary restriction runs
+in the other direction: beta R < 1. See Aiyagari (1994), pp. 668--670,
+https://www.liuyanecon.com/wp-content/uploads/Aiyagari-1994.pdf . This does
+not impose that restriction on our finite-lived model with exogenous entrant
+wealth and warm-glow estates.
+
+The existing positive stationary equilibrium existence argument in
+`latex/JMP_DS_suggestions/simplified_olg_utilitarian.tex`, lines 522--581,
+was rechecked: the low/high-price fertility bounds, bounded tax-rebate map,
+continuity and Brouwer step apply to the current competitive model, including
+both estate regimes and beta >= q when its own fertility certificate holds.
+That certificate is conservative and has a finite beta ceiling at fixed other
+primitives because D=E+beta K enters it. It is not a beta R < 1 restriction.
+The proof establishes neither global uniqueness nor transition convergence.
+
+Conditional household real allocations and the fixed-tenure dated planner
+allocation are unique by strict concavity. In the explicit phi=q, zero-tax,
+market-cap-slack subcase, x_i=min{w_i/E,(w_i+qv_i)/D} is price-independent and
+mean fertility is vartheta times mean x divided by chi+p kappa. This gives
+a unique positive price within that regime when nu vartheta mean x > chi,
+and housing clearing determines N. It does not exclude additional equilibria
+with binding caps. General stationary uniqueness and deterministic transition
+existence, uniqueness and convergence remain open checks.
+
+The author clarified that the caps mean the rental and owner maximum home
+sizes, h_R^max < h_O^max, and suggested a future planner extension allowing
+larger rental homes. Bank this as an OPTION, not an adopted change: specify
+which rental-size/tenure-conversion restriction is relaxed and preserve the
+housing resource constraint and any real conversion costs. The current
+benchmark still retains both caps.
