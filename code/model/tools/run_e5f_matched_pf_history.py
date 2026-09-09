@@ -120,15 +120,17 @@ def evaluate_history_and_person_tail(
 HISTORY_SMOKE_SCHEMA = 'e5f_matched_history_smoke_v1'
 
 
-def load_smoke_contract(path, expected_sha256, arm):
+def load_smoke_contract(path, expected_sha256, arm, *, maximum_seconds=840):
     """Validate all current source/data pins without invoking a model solve."""
     import json
     from pathlib import Path
     import run_e5f_matched_pf_smoke as primitive
     primitive.verify(path, expected_sha256)
     c = json.loads(Path(path).read_text())
-    if c['schema'] != HISTORY_SMOKE_SCHEMA or not 1 <= int(c['seconds']) <= 840:
-        raise ValueError('Expected joined smoke schema and at most 840 seconds')
+    if (type(maximum_seconds) is not int or not 1 <= maximum_seconds <= 7200
+            or c['schema'] != HISTORY_SMOKE_SCHEMA
+            or not 1 <= int(c['seconds']) <= maximum_seconds):
+        raise ValueError(f'Expected joined smoke schema and at most {maximum_seconds} seconds')
     for name in ('checkpoint', 'selected_summary', 'stationary_arrays', 'primitive_summary', 'primitive_contract'):
         if not Path(c[name]).is_absolute():
             raise ValueError(f'{name} must be absolute')
@@ -190,7 +192,7 @@ def load_smoke_contract(path, expected_sha256, arm):
     return c, old
 
 
-def check_smoke_gates(result):
+def check_smoke_gates(result, expected_years=(2007, 2011, 2015, 2019, 2023, 2027)):
     """Accounting gates only: prescribed prices do not imply market clearing."""
     gates = dict(historical_mass=(result.history.maximum_mass_accounting_error, 2e-8),
         historical_reproduction=(result.history.maximum_policy_reproduction_error, 2e-10),
@@ -207,8 +209,9 @@ def check_smoke_gates(result):
     for name, (actual, tolerance) in gates.items():
         if not np.isfinite(actual) or abs(actual) > tolerance:
             raise RuntimeError(f'Joined conditional smoke gate failed: {name}={actual}; limit={tolerance}')
-    if result.bellman_solves != 12 or [r['calendar_year'] for r in result.rows] != [2007, 2011, 2015, 2019, 2023, 2027]:
-        raise RuntimeError('Expected exactly six dates and twelve Bellman calls')
+    if (result.bellman_solves != 2 * len(expected_years)
+            or [r['calendar_year'] for r in result.rows] != list(expected_years)):
+        raise RuntimeError('Expected all supplied dates and exactly two Bellman calls per date')
     return {name: dict(value=float(value), tolerance=tolerance, passed=True)
             for name, (value, tolerance) in gates.items()}
 

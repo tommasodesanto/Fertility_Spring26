@@ -162,10 +162,20 @@ class DiagnosticSmokeGateTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'person_projection'):
             joined.check_smoke_gates(result)
 
+    def test_explicit_longer_horizon_preserves_count_gate(self):
+        result = self.fixture()
+        dates = list(range(2007, 2052, 4))
+        result.rows = [dict(calendar_year=y) for y in dates]
+        result.bellman_solves = 2 * len(dates)
+        self.assertTrue(all(r['passed'] for r in joined.check_smoke_gates(result, dates).values()))
+        result.bellman_solves -= 1
+        with self.assertRaisesRegex(RuntimeError, 'two Bellman calls'):
+            joined.check_smoke_gates(result, dates)
+
     def test_missing_date_cannot_pass(self):
         result = self.fixture()
         result.rows.pop()
-        with self.assertRaisesRegex(RuntimeError, 'six dates'):
+        with self.assertRaisesRegex(RuntimeError, 'all supplied dates'):
             joined.check_smoke_gates(result)
 
 

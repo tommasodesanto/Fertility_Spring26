@@ -37,6 +37,22 @@ processing2023 once. It accepts supplied paths and a terminal boundary; it
 does not find equilibrium or estimate parameters. Cached tail values avoid
 duplicating backward solves and must pass fresh dated forward reproduction.
 
+The isolated matched-PF baseline stages are in
+`tools/run_e5f_matched_pf_baseline.py`: restore the normalized old state,
+solve a stationary terminal price/person fixed point, and evaluate a complete
+historical/person path with the unchanged twelve-target observer. Each stage
+requires an explicit hash-pinned contract and writes checkpoints and gates.
+`tools/collect_e5f_matched_pf_price_jacobian.py` validates complete coordinate
+probes against signed excess demand in their saved market rows.
+`tools/run_e5f_matched_pf_historical_root.py` uses that matrix in a bounded
+log-price Broyden solve with a fresh final replay. It distinguishes finite-
+horizon market convergence from demographic terminal distance and horizon
+extension. These are experimental tools, not a promoted calibration or policy
+pipeline. The focused matched-PF suite has83 passing tests on Torch; exact
+normalized-old, terminal-root and conditional-path receipts are indexed by the
+main workspace's matched-PF result README. The baseline retains the explicit
+one-percent annual tax with zero transfers; no future rebate is inferred.
+
 `tools/run_e5f_simple_fertility_search.py` runs the bounded recalibration
 through the existing planner and verified adapter. Two exact-reference smokes
 precede all-coordinate and joint proposals; final exact repeats and complete
