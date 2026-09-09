@@ -4,6 +4,22 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8 night: author requests active monitoring and morning graphs.**
+An explicit goal is active for overnight supervision, verified results and the
+established diagnostic graph set plus a morning PDF. This supersedes the prior
+no-figures/no-monitor restriction for this work. Heartbeat automation
+`overnight-rebated-tax-results-and-graphs` checks this task every15minutes,
+finishes or reports an honest partial packet by08:00 America/New_York Sept9,
+and pauses when done. Local caffeinate PID64940 prevents idle/system sleep
+for12hours; macOS assertions verified. Lid must stay open and power connected.
+Both smoke paths passed2023/2027, including exact impact reproductions and
+cohort accounting. Full array17250630 is running; no full2063 result yet.
+Graph exports will read saved checkpoints into a separate output folder, without
+changing numerical-run manifests or repeating model solves.
+Graph smoke17250947 passed all17figures in16s; full graph array17250948
+will export22date/case packets (374PNGs) with concurrency4 after numerical
+completion. Graphics/report source f916ac74; no new modelsolves.
+
 **September 8 overnight: rebated-tax diagnostic paths submitted through2063.**
 Author requests useful overnight work before tomorrow's review. Smoke array
 **17250629** runs both tax cases through2023/2027 using the exact intended
