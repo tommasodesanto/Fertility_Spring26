@@ -1,0 +1,1131 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,longtable}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Housing, finance, and fertility}}
+\usepackage{enumitem}
+\usepackage{needspace}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\setlist{nosep,leftmargin=1.5em}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newcommand{\dd}{\,d}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\eq}{\mathrm{eq}}
+\newcommand{\HH}{\bar H}
+\newcommand{\tht}{\vartheta}
+\newcommand{\Welf}{\mathcal W}
+\newcommand{\logit}{\operatorname{logit}^{-1}}
+\newcommand{\Mmax}{\operatorname*{ess\,sup}}
+\newcommand{\Mmin}{\operatorname*{ess\,inf}}
+\allowdisplaybreaks[2]
+\title{Housing, finance, and fertility}
+\author{}
+\date{}
+\begin{document}
+\maketitle
+\vspace{-2em}
+\section*{Assessment}
+\textbf{Housing.} The useful comparison is old housing against young \emph{adult space}, not old total housing against young total housing. At fixed fertility, an uncapped dated planner increases aggregate young housing exactly when
+\[
+\alpha\bar h^{o,\eq}>\gamma\bar s,\qquad s_i=h_i^{y,\eq}-\kappa n_i.
+\]
+The comparison also survives binding planner caps under a weaker capacity condition given below. An explicit heterogeneous stationary benchmark generates this inequality from a single weighted restriction combining patience, current cash, old income, and estate preferences. It works on either side of $\beta/q=1$. A separate construction permits strictly binding rental caps and strictly binding young finance.
+
+\textbf{Fertility.} The joint dated planner raises average fertility if old mean consumption is at least young mean adult consumption, old mean housing is at least $(\gamma/\alpha)$ times young mean adult space, and the smallest retained cap exceeds the reference \emph{mean} young home. This does not require the joint optimum to be uncapped. By contrast, average private fertility after the fixed-fertility allocation can fall. An analytical counterfamily establishes this even with strictly binding young finance and an increase in aggregate young housing.
+
+\textbf{Transition.} There is a local perfect-foresight tax-transition theorem, rather than an imposed fertility path. In an explicit heterogeneous regime with $\phi=q$, slack physical caps and old financial-estate floors, and strictly constrained young households, primitive inequalities give a unique local convergent equilibrium path. A small exogenous fertility-taste decline starts the baseline transition. An unexpected small permanent property-tax increase introduced along that path raises fertility on impact and raises the terminal number of adult households. The proof derives the saddle structure and the impact derivatives. It neither proves global convergence nor covers transitions through cap or estate-regime changes.
+
+\textbf{Interpretation.} The dated result is an equally weighted utilitarian allocation comparison, not a Pareto theorem. The tax preserves private borrowing restrictions and does not implement that planner. In the solved tax regime, the young receive a larger aggregate share of housing in the new stationary equilibrium, but each young household's mean home becomes smaller. The general tax-welfare sign is not asserted; the appendix supplies the complete living-household envelope and a nonempty sufficient welfare-improvement condition.
+
+\textbf{Recommended main argument.} Use the adult-space housing result and the cap-valid joint-fertility proposition as the central illustration. Present the tax-transition theorem as a separate local result. Do not describe its fertility effect as necessarily operating through larger homes, or extrapolate it to a large transition with binding rental caps.
+
+The supplied packet defines the maintained model and dated welfare comparison. Complete proofs follow the proposed theory section.
+\clearpage
+\section{Environment}\label{sec:environment}
+\textbf{Households.} At date $t$, there are $Y_t$ young and $O_t$ old household decision units. Each entering household draws $(y_i^y,b_i,y_i^o)$ from a common distribution $F$, with $y_i^y,b_i>0$ and $y_i^o\ge0$. Current income and liquid wealth are both available for a down payment. Future income is known. A young household chooses fertility and tenure, and retains its tenure when old. Its independent ownership taste $\xi_i$ is logistic with location $\bar\xi$ and scale $\sigma_\xi>0$.
+
+\textbf{Preferences.} Each child requires $\chi>0$ units of goods and $\kappa>0$ units of space. Gross consumption and housing are $c$ and $h$. Adult consumption and space are $x=c-\chi n$ and $s=h-\kappa n$. Utilities are
+\begin{align}
+ u_t^y(c,h,n)&=\log x+\alpha\log s+\tht_t\log n,\label{eq:uy}\\
+ u^o(c^o,h^o,e)&=\log c^o+\gamma\log h^o+\omega_B\log e.\label{eq:uo}
+\end{align}
+All weights are positive, and all logarithm arguments must be positive. A household discounts its own old-age utility by $\beta>0$. The estate $e$ enters the parent's utility; it does not determine the exogenous wealth of subsequent entrants.
+
+\textbf{Markets and institutions.} The housing stock is $\HH>0$. Rental and owner homes have physical maxima $H_R<H_O$. Goods and bonds trade with the rest of the world. The bond price is $q\in(0,1)$, with gross return $R_f=1/q$. House prices are $P_t>0$. Owners pay property tax $\tau_t^p$, and competitive rental intermediaries charge a beginning-of-period service cost
+\begin{equation}
+ u_t=(1+q\tau_t^p)P_t-qP_{t+1}>0.\label{eq:usercost}
+\end{equation}
+A mortgage finances at most the fraction $\phi\in(0,1)$ of the purchase price. Unsecured borrowing is unavailable. Old owners can sell and resize their houses, but cannot take a new loan. Tax receipts are rebated equally to current young and old decision units.
+
+\textbf{Demography.} A child produces $\nu>0$ new young households after survival and household formation. Thus
+\begin{equation}
+ Y_{t+1}=\nu\bar n_tY_t,\qquad O_{t+1}=Y_t.\label{eq:demog}
+\end{equation}
+Population in this exercise counts adult households. Its total is $Y_t+O_t$, not the number of resident persons.
+
+\section{Households and equilibrium}
+\textbf{Young households.} Put $w_{it}=y_i^y+b_i+T_t$. Conditional on renting, the household solves
+\begin{equation}
+ W_t^R(i)=\max\{u_t^y(c,h,n)+\beta V_{t+1}^R(a';i):
+ c+qa'+u_th=w_{it},\ a'\ge0,\ h\le H_R\}.\label{eq:youngR}
+\end{equation}
+For an owner, $a'$ is financial wealth net of mortgage repayment. Its problem is
+\begin{equation}
+\begin{split}
+ W_t^O(i)=\max\ &u_t^y(c,h,n)+\beta V_{t+1}^O(a',h;i),\\
+ &c+qa'+(1+q\tau_t^p)P_th=w_{it},\quad
+ qa'+\phi P_th\ge0,\quad h\le H_O.\label{eq:youngO}
+\end{split}
+\end{equation}
+The household owns when $W_t^O(i)+\xi_i\ge W_t^R(i)$. Its ownership probability is $\pi_t^O(i)=\logit((W_t^O(i)-W_t^R(i)+\bar\xi)/\sigma_\xi)$.
+
+\textbf{Old households.} An old renter has financial wealth $a$. An old owner also has title to $H$ units of housing. Their problems are
+\begin{align}
+ V_t^R(a;i)&=\max\{u^o(c^o,h^o,e):c^o+qe+u_th^o=a+y_i^o+T_t,\ h^o\le H_R\},\label{eq:oldR}\\
+ V_t^O(a,H;i)&=\max\{u^o(c^o,h^o,e):c^o+qe+u_th^o=a+P_tH+y_i^o+T_t,\nonumber\\
+ &\hspace{40mm}h^o\le H_O,\ e\ge P_{t+1}h^o\}.\label{eq:oldO}
+\end{align}
+The last restriction is nonnegative old financial saving: $e=a^e/q+P_{t+1}h^o$, with $a^e\ge0$. It does not prevent the sale of the inherited house or impose $h^o\le H$.
+
+\begin{definition}
+An equilibrium consists of household choices, tenure decisions, prices, rebates, and cohort masses satisfying household optimality, rental pricing, demography, and
+\begin{equation}
+ Y_t\bar h_t^y+O_t\bar h_t^o=\HH,\qquad
+ (Y_t+O_t)T_t=q\tau_t^pP_t\HH.\label{eq:markets}
+\end{equation}
+The old distribution is generated by the preceding young cohort. In a positive stationary equilibrium, $Y=O=N$, $\bar n=1/\nu$, and $N=\HH/(\bar h^y+\bar h^o)$.
+\end{definition}
+
+At stationarity, put $w=y^y+b+T$, $v=y^o+T$, and define
+\[
+ p=(1-q+q\tau^p)P,\quad L_R=p,\quad L_O=(1-\phi+q\tau^p)P,
+ \quad E=1+\alpha+\tht,\quad K=1+\gamma+\omega_B,\quad D=E+\beta K.
+\]
+Writing $z$ for total resources on entering old age reduces either young budget to
+\begin{equation}
+ c+ph+qz=w+qv,\qquad c+L_dh\le w.\label{eq:stationarybudget}
+\end{equation}
+When old housing is uncapped, both old-estate regimes give
+\begin{equation}
+ c^o=z/K,\qquad ph^o=\Gamma_dc^o,\qquad
+ \Gamma_R=\gamma,\quad
+ \Gamma_O=\min\left\{\gamma,
+ \frac{(\gamma+\omega_B)(1-q+q\tau^p)}{1+q\tau^p}\right\}.\label{eq:Gamma}
+\end{equation}
+The old financial-estate floor is slack in the uncapped solution when
+$\omega_B(1-q+q\tau^p)>q\gamma$. When it binds, $\Gamma_O<\gamma$: the restriction changes the joint housing--estate choice even though the old can sell their houses.
+
+\section{A dated housing allocation}
+The comparison starts from a positive stationary equilibrium. Let $Q$ be the common distribution of matched endowments and retained tenure in the two current cohorts. Each living household receives weight one on remaining utility. Fix individual fertility, tenure, old net estates, and the young households' future real opportunities. The young continuation term, old estate term, and tenure tastes are then constants.
+
+The planner chooses \emph{all} current consumption and housing. It can redistribute current resources and relax both young finance and the old financial-saving floor, while honoring inherited claims. It solves
+\begin{equation}
+\begin{split}
+ \max\quad&N\int[\log(c_i^y-\chi n_i)+\alpha\log(h_i^y-\kappa n_i)
+                  +\log c_i^o+\gamma\log h_i^o]\dd Q,\\
+ \text{subject to}\quad&N\int(c_i^y+c_i^o)\dd Q=C^{\eq},\quad
+ N\int(h_i^y+h_i^o)\dd Q=\HH,\quad h_i^y,h_i^o\le H_{d_i}.
+\end{split}\label{eq:plannerF}
+\end{equation}
+This is an allocation comparison at one date, not a stationary lifetime comparison that omits the initial old.
+
+The fixed-fertility solution, denoted $F$, is
+\begin{align}
+ x^F=c^{o,F}&=(\bar x+\bar c^{o,\eq})/2,\nonumber\\
+ h_i^{y,F}&=\min\{H_{d_i},\kappa n_i+\alpha/\lambda_F\},\qquad
+ h_i^{o,F}=\min\{H_{d_i},\gamma/\lambda_F\},\label{eq:plannerFsol}
+\end{align}
+where $\lambda_F$ clears housing. Consumption and housing separate only because fertility is fixed and the log components are additive.
+
+\begin{proposition}[Housing and retained capacity]\label{prop:resource}
+Suppose the reference allocation satisfies
+\begin{equation}
+ \bar h^{o,\eq}>\frac\gamma\alpha\bar s,\qquad
+ H_{d_i}-\kappa n_i\ge\bar s\quad Q\text{-a.e.},\qquad
+ Q\{H_{d_i}-\kappa n_i>\bar s\}>0.\label{eq:CF}
+\end{equation}
+Then $H_Y^F>H_Y^{\eq}$, where $H_Y=N\int h_i^y\dd Q$. Planner caps may bind. Individually,
+\begin{equation}
+ h_i^{y,F}>h_i^{y,\eq}
+ \quad\Longleftrightarrow\quad
+ h_i^{y,\eq}<H_{d_i}\ \text{and}\ s_i<\alpha/\lambda_F.\label{eq:individual}
+\end{equation}
+In particular, every reference-uncapped young household with $s_i\le\bar s$ gains housing. If planner caps are slack, the aggregate comparison is exactly
+\begin{equation}
+ H_Y^F-H_Y^{\eq}=\frac{N}{\alpha+\gamma}
+       (\alpha\bar h^{o,\eq}-\gamma\bar s).\label{eq:adultgap}
+\end{equation}
+\end{proposition}
+
+The housing gap in this proposition can be derived from primitives. Consider the explicit benchmark $\tau^p=0$, $\phi=q$. For each endowment type define
+\begin{equation}
+ x_i=\min\left\{\frac{w_i}{E},\frac{w_i+qv_i}{D}\right\},\qquad
+ \bar x=\int x_i\dd F,\qquad
+ p=\frac{\nu\tht\bar x-\chi}{\kappa},\qquad
+ c_i^o=\frac{w_i+qv_i-Ex_i}{qK}.\label{eq:explicit}
+\end{equation}
+Here $w_i=y_i^y+b_i$ and $v_i=y_i^o$. Require $p>0$ and check that the computed competitive demands
+\[
+ n_i=\frac{\tht x_i}{\chi+p\kappa},\qquad
+ h_i^y=\frac{\alpha x_i}{p}+\kappa n_i,\qquad
+ h_i^{o,d}=\frac{\Gamma_dc_i^o}{p}
+\]
+lie strictly below their finite tenure caps. Conditional young choices coincide across tenures; the old value difference is constant across endowments. Thus the logistic rule gives a constant owner share $\pi\in(0,1)$. Put $\bar\Gamma=(1-\pi)\gamma+\pi\Gamma_O$.
+
+\begin{corollary}[A combined primitive restriction]\label{cor:primitive}
+Under these benchmark and cap restrictions, a positive stationary equilibrium in this regime exists and is unique within the regime. Suppose
+\begin{equation}
+ \frac{\displaystyle\int x_i
+       \max\left\{\frac\beta q,\frac{Ev_i}{Kw_i}\right\}\dd F}{\bar x}
+       >\frac\gamma{\bar\Gamma},\qquad
+ F\{qEv_i>\beta Kw_i\}>0.\label{eq:primitivegap}
+\end{equation}
+Then $\bar c^{o,\eq}>\bar x$, $\bar h^{o,\eq}>(\gamma/\alpha)\bar s$, and the planner increases aggregate young housing. Young finance is strictly restrictive on the displayed positive-mass set. A strictly constrained group that gains both consumption and housing has positive mass whenever
+\begin{equation}
+ F\{w_i<E\bar x,\ qEv_i>\beta Kw_i\}>0.\label{eq:recipientgroup}
+\end{equation}
+Neither result requires a standalone inequality on $\beta/q$.
+\end{corollary}
+
+The maximum in \eqref{eq:primitivegap} has a direct interpretation. Old resources relative to current adult consumption are high because the household is patient, because old income is high relative to current cash, or both. A binding old-estate floor raises the required threshold through $\gamma/\bar\Gamma$. The condition is not empty: take genuinely heterogeneous bounded $w$, let $v=aw$, and choose
+$a>\max\{\beta K/(qE),\gamma K/(\bar\Gamma E)\}$, $0<\chi<\nu\tht\bar w/E$, and finite caps above the explicit demands. Every young household then strictly wants more borrowing.
+
+This solved benchmark has both tenures, but inactive competitive rental caps. Appendix~\ref{app:activecaps} constructs economies with an active rental cap, heterogeneous endowments, and strictly binding finance that also satisfy Proposition~\ref{prop:resource}. The capacity restrictions in \eqref{eq:CF} concern the planner's retained menu; they cannot simply be dropped.
+
+The result is utilitarian. Unequal endowments alone can justify redistribution under equal cardinal weights. At $\beta=q$, with slack old-estate and physical constraints, the additional paired housing wedge is exactly the young financing wedge. With all finance slack, the uncapped benchmark has no aggregate young-housing gap even when individual redistribution raises utilitarian welfare. Conversely, binding young finance alone does not guarantee the direction: Appendix~\ref{app:counter} gives an exact stationary counterfamily with $H_Y^F<H_Y^{\eq}$.
+
+\section{Fertility at the dated comparison}
+\textbf{Private adjustment.} Given a gross bundle, private fertility is the unique solution $\mathfrak n(c,h)$ of
+\begin{equation}
+ \frac\tht n=\frac\chi{c-\chi n}+\frac{\alpha\kappa}{h-\kappa n}.\label{eq:fertilityFOC}
+\end{equation}
+At an interior optimum its change is
+\begin{equation}
+ dn=\frac{\chi\,dc/x^2+\alpha\kappa\,dh/s^2}
+ {\tht/n^2+\chi^2/x^2+\alpha\kappa^2/s^2}.\label{eq:fertilityderivative}
+\end{equation}
+More housing raises fertility holding consumption fixed, but a funded housing increase may reduce consumption. For the actual fixed-fertility allocation, put $s_i^F=h_i^{y,F}-\kappa n_i$. Fertility after private readjustment, denoted $n_i^S$, satisfies
+\begin{equation}
+ n_i^S>n_i\quad\Longleftrightarrow\quad
+ \frac\chi{x^F}+\frac{\alpha\kappa}{s_i^F}<\frac\tht{n_i}.\label{eq:sequential}
+\end{equation}
+The recipients in \eqref{eq:recipientgroup} satisfy this inequality. Average fertility need not rise: the appendix supplies a heterogeneous analytical counterexample, including strictly binding finance.
+
+\textbf{Joint choice.} Now let the same dated planner choose fertility through current parents' utility. Writing the resource constraints in adult units gives
+\[
+ \int(x_i+\chi n_i+c_i^o)\dd Q=C^{\eq}/N,\qquad
+ \int(s_i+\kappa n_i+h_i^o)\dd Q=\HH/N.
+\]
+These are the original gross-resource constraints, not an additional charge for children. Let $\lambda_C,\lambda_H$ be their multipliers. The joint optimum, denoted $J$, is common within each retained tenure $d$ and satisfies
+\begin{equation}
+ \begin{gathered}
+ x^J=c^{o,J}=1/\lambda_C,\qquad
+ n_d^J=\frac\tht{\chi\lambda_C+\kappa r_d},\qquad
+ h_d^{y,J}=\frac\alpha{r_d}+\kappa n_d^J,\\
+ r_d=\lambda_H+\eta_d,\quad \eta_d\ge0,\qquad
+ h_d^{o,J}=\min\{H_d,\gamma/\lambda_H\}.
+ \end{gathered}\label{eq:jointKKT}
+\end{equation}
+A binding young cap determines $r_d$ from $h_d^{y,J}=H_d$.
+
+\begin{proposition}[Average fertility with retained caps]\label{prop:joint}
+Suppose the competitive reference satisfies
+\begin{equation}
+ \bar c^{o,\eq}\ge\bar x,\qquad
+ \bar h^{o,\eq}\ge\frac\gamma\alpha\bar s,\qquad
+ H_R>\bar h^{y,\eq},\label{eq:CJ}
+\end{equation}
+with at least one of the first two inequalities strict. Then
+\begin{equation}
+ \bar n^J>\bar n=1/\nu,\qquad H_Y^J>H_Y^{\eq}.\label{eq:jointresult}
+\end{equation}
+The joint optimum may have binding physical caps. Corollary~\ref{cor:primitive} implies all these restrictions. Individual fertility rises exactly for households with $n_i<n_{d_i}^J$; there is no claim that all young households gain.
+\end{proposition}
+
+The aggregation step is important. Multiplying \eqref{eq:fertilityFOC} by $n_i^2$ and using Cauchy--Schwarz gives
+\begin{equation}
+ \frac\tht{\bar n}\ge\frac\chi{\bar x}+\frac{\alpha\kappa}{\bar s}.\label{eq:CS}
+\end{equation}
+The proof compares this inequality with \eqref{eq:jointKKT}, not with a representative household substituted for the heterogeneous reference. If joint fertility did not rise, adult consumption would be at least $\bar x$ and some tenure's adult space would be at most $\bar s$. The last condition in \eqref{eq:CJ} makes that tenure uncapped; the common uncapped fertility choice then makes every tenure uncapped under the supposed ordering. Housing clearing yields a contradiction. The full argument is in Appendix~\ref{app:joint}.
+
+This is a dated parental-welfare result. Changing births changes future entrant masses, so it is not a dynamic comparison holding every future population fixed.
+
+\section{Property taxes and population}\label{sec:policy}
+The authority now changes only the permanent property-tax rate and rebates receipts equally as in \eqref{eq:markets}. Private borrowing restrictions remain. At an intervention date $t_p$, the baseline and policy paths have the same inherited populations, assets, housing titles, and obligations. The tax change is unexpected at $t_p$ and known thereafter. Prices, tenure, saving, and estates reoptimize.
+
+A tractable local result uses $\phi=q$, a zero-tax reference, uncapped competitive housing, and a slack old financial-estate floor. Let $W=\int(y^y+b)\dd F$, $V=\int y^o\dd F$, and require $qEv_i>\beta Kw_i$ uniformly on the compact endowment support. This primitive inequality makes every young household strictly finance-constrained. Define, from the explicit stationary solution,
+\begin{equation}
+ \epsilon=\frac{p\kappa}{\chi+p\kappa},\qquad
+ A=\alpha+\tht\epsilon,\qquad
+ \zeta=\frac{\bar h^o}{\bar h^y}=\frac{\gamma EV}{KWA},\qquad
+ \pi=\logit(\bar\xi/\sigma_\xi).\label{eq:dynamicprimitive}
+\end{equation}
+All objects in the following restrictions are functions of primitives:
+\begin{equation}
+ \begin{gathered}
+ V\ge W,\quad
+ \frac\alpha{1+\alpha}<\epsilon<q,\quad
+ 1<\zeta<\frac{2E\epsilon}{A}-1,\\
+ \omega_B(1-q)>q\gamma,\qquad
+ \frac{\pi\gamma}{K}<\min\{(1-q)^2,q\zeta\}.
+ \end{gathered}\label{eq:transitionconditions}
+\end{equation}
+The appendix gives an analytical nonempty family satisfying these restrictions and the strict borrowing and finite-cap inequalities; $\beta$ can lie on either side of $q$.
+
+\begin{proposition}[A local tax transition]\label{prop:transition}
+Under these restrictions, sufficiently small permanent fertility-taste and tax changes have unique local bounded perfect-foresight equilibrium paths, converging geometrically to the corresponding stationary equilibrium. A small exogenous decline in $\tht$ lowers fertility on impact and starts a transition to a lower stationary number of adult households. Introduce an unexpected small permanent tax increase at a finite date along that baseline transition. Relative to the baseline, policy fertility is higher on impact and the terminal cohort mass is higher. Both terminal fertility rates equal $1/\nu$.
+
+This is local uniqueness and convergence within the specified regime, not global uniqueness or convergence through changes in which constraints bind. Later fertility differences need not have one sign.
+\end{proposition}
+
+The terminal effect has a simple closed form. Write $\tau=\tau^p$ and define
+\[
+ B_0=\frac{(\alpha+\tht)W}{E}+\frac{\gamma V}{K}-\frac\chi\nu,
+ \qquad b_0=\frac{\alpha+\tht}{E}+\frac\gamma K.
+\]
+As long as this stationary regime continues, the tax equilibrium is
+\begin{equation}
+ T(\tau)=\frac{q\tau B_0}{2(1-q)+q\tau(2-b_0)},\quad
+ p(\tau)=\frac{\nu\tht(W+T)/E-\chi}{\kappa},\quad
+ N(\tau)=\frac{\HH p(\tau)}{B_0+b_0T(\tau)}.\label{eq:taxstationary}
+\end{equation}
+In particular, $T'(\tau)>0$, and
+\begin{equation}
+ \frac{\partial N}{\partial T}
+ =\frac{\HH}{\kappa(B_0+b_0T)^2}
+ \left[\frac{\nu\tht\gamma}{EK}(V-W)+\chi\left(\frac\alpha E+\frac\gamma K\right)\right]>0.\label{eq:Ntau}
+\end{equation}
+The tax also increases the stationary aggregate housing allocated to the young when $V\ge W$. However, their mean home satisfies
+\begin{equation}
+ \bar h^y=\frac\kappa\nu+\frac{\alpha(W+T)}{Ep},\qquad
+ \frac{d\bar h^y}{dT}=-\frac{\alpha\chi}{E\kappa p^2}<0.\label{eq:peryoungfall}
+\end{equation}
+More young households occupy a larger aggregate share of the stock, but a smaller home on average. The tax is therefore not an implementation of the dated planner's housing assignment. Its impact home-size derivative is reported separately in the appendix.
+
+For common initial young mass, demographic accounting gives
+\begin{equation}
+ \frac{Y_T^P}{Y_T^B}=\prod_{t=t_p}^{T-1}\frac{\bar n_t^P}{\bar n_t^B},\qquad
+ \sum_{t=t_p}^{\infty}\log\frac{\bar n_t^P}{\bar n_t^B}
+ =\log\frac{N_1}{N_0}>0.\label{eq:populationproduct}
+\end{equation}
+The second equality uses the convergence proved in Proposition~\ref{prop:transition}. A temporary reform returning to the same primitives and local terminal equilibrium has zero terminal population effect; its cumulative fertility gap must eventually be offset.
+
+For welfare at $t_p$, sum the remaining utilities of current young and old with equal unit weights. Young continuation prices and old estate consequences are included. The housing and fertility signs do not alone sign this welfare sum. Appendix~\ref{app:welfare} gives its exact envelope, a sufficient condition for a local tax improvement, and the distinction from outcomes of later cohorts. The tax cannot deliver the desired signs generally: even within the explicit stationary regime, sufficiently low old income can make $N'(\tau)<0$.
+
+\label{endmain}
+\clearpage
+\appendix
+\section{Budgets, estate regimes, and financial settlement}\label{app:budgets}
+\subsection{Stationary reduction and first-order conditions}
+For a young owner define $z=a'+Ph+v$; for a renter define $z=a'+v$. Substituting either expression into the original young budget gives \eqref{eq:stationarybudget}. In particular, the owner cash constraint is $c+(1-\phi+q\tau^p)Ph\le w$. The income $y^y$ is part of $w$, not excluded from the purchase budget.
+
+For old renters the budget is $c^o+ph^o+qe=z$. For owners add $e\ge Ph^o$. If neither restriction binds, ordinary log expenditure shares give
+\[
+ c^o=z/K,\quad h^o=\gamma z/(Kp),\quad e=\omega_Bz/(Kq).
+\]
+The estate floor is feasible in this allocation if $\omega_Bp\ge q\gamma P$. If it is violated, set $e=Ph^o$ and maximize
+$\log c^o+(\gamma+\omega_B)\log h^o+\omega_B\log P$
+subject to $c^o+(p+qP)h^o=z$. The solution is
+\[
+ c^o=z/K,\qquad h^o=\frac{(\gamma+\omega_B)z}{K(p+qP)}.
+\]
+These two cases prove \eqref{eq:Gamma}. Equality of the estate-floor inequality gives the same real allocation in both formulas and a zero floor multiplier. Strictness must not be inferred from equality.
+
+For a finite old cap the housing choice is
+\begin{equation}
+ h^{o,d}=\min\{H_d,\Gamma_dz/(Kp)\},\qquad c^{o,d}\ge z/K.\label{eq:oldcap}
+\end{equation}
+To verify the consumption bound, if the floor is slack at the cap then
+$c^o=(z-pH_d)/(1+\omega_B)\ge z/K$ because $pH_d\le\gamma z/K$. If the floor binds, $c^o=z-(p+qP)H_d\ge z/K$. A cap can make the estate floor slack even when the uncapped floor would bind. Formula \eqref{eq:oldcap}, rather than an assumption that the old must keep their previous home, handles both possibilities.
+
+Let $\Lambda_i$ and $\mu_i$ be the young lifetime-budget and cash multipliers, and let $\eta_i^y$ be the young housing-cap multiplier. Let $m_i=\partial V_d(z_i)/\partial z_i=1/c_i^o$. The young conditions are
+\begin{equation}
+ q\Lambda_i=\beta m_i,\quad
+ \frac1{x_i}=\Lambda_i+\mu_i,\quad
+ \frac\alpha{s_i}=p\Lambda_i+L_d\mu_i+\eta_i^y,\quad
+ \frac\tht{n_i}=\frac\chi{x_i}+\frac{\alpha\kappa}{s_i}.\label{eq:youngFOC}
+\end{equation}
+Thus
+\begin{equation}
+ \frac{c_i^o}{x_i}=\frac\beta q\left(1+\frac{\mu_i}{\Lambda_i}\right).\label{eq:Euler}
+\end{equation}
+This identity remains valid with an old cap or a binding old estate floor.
+
+Let $\eta_i^o$ denote the old cap multiplier in the old problem. Multiplying all first-order conditions by their quantities, using complementary slackness, and adding gives
+\begin{equation}
+ D=\Lambda_i(w_i+qv_i)+\mu_iw_i+\eta_i^yH_d+\beta\eta_i^oH_d.\label{eq:scaling}
+\end{equation}
+The estate floor is homogeneous and contributes zero to this sum. Consequently
+$\Lambda_i\le D/(w_i+qv_i)$ and $x_i\ge w_i/D$.
+
+For uncapped old housing, \eqref{eq:youngFOC} and \eqref{eq:Gamma} imply
+\begin{equation}
+ \frac{\alpha h_i^o}{\gamma s_i}
+ =\frac{\beta\Gamma_d}{q\gamma}
+ \left(1+\frac{L_d\mu_i+\eta_i^y}{p\Lambda_i}\right).\label{eq:ageadult}
+\end{equation}
+Therefore $\alpha\ge\gamma$ and $\beta\Gamma_O/q\ge\gamma$ imply
+$c_i^o\ge x_i$ and $h_i^o\ge(\gamma/\alpha)s_i$, including capped old households: at an old cap $h_i^o=H_d>s_i\ge(\gamma/\alpha)s_i$. Positive constrained mass makes the mean comparisons strict. This is a useful general-finance sufficient result, but not the only route: the old-income restriction in Corollary~\ref{cor:primitive} permits $\beta<q$.
+
+Total old housing need not exceed total young housing. A stronger sufficient condition is $\beta\Gamma_O/q\ge\alpha+\tht$, since
+\[
+ h_i^y=\frac{\alpha}{p\Lambda_i+L_d\mu_i+\eta_i^y}
+ +\frac{\kappa\tht}{\chi(\Lambda_i+\mu_i)+\kappa(p\Lambda_i+L_d\mu_i+\eta_i^y)}
+ <\frac{\alpha+\tht}{p\Lambda_i}.
+\]
+For an uncapped old household this is at most $h_i^o$; a capped old household already occupies the common retained maximum. This stronger age-profile restriction is not needed in the dated adult-space result.
+
+\subsection{Dated settlement, including rental intermediaries}
+Hold the price path and the tax rate fixed in the dated allocation experiment. For a young owner set
+$\Delta a'=-P_{t+1}\Delta h^y$. This preserves $a'+P_{t+1}h^y$, hence the incumbent's future real budget set. For an old owner set
+$\Delta a^e=-qP_{t+1}\Delta h^o$, preserving its net estate $a^e/q+P_{t+1}h^o$. For young and old renters keep their respective financial positions unchanged. The current household transfer required in every case is
+\begin{equation}
+ t_k=\Delta c_k+u_t\Delta h_k.\label{eq:settlement}
+\end{equation}
+For an owner this follows by substituting its financial adjustment into the purchase budget. For a renter it follows directly from the rental budget.
+
+The rental intermediary's per-unit purchase and tax expenditure is $(1+q\tau_t^p)P_t$. It collects current service revenue $u_t$ and can finance the residual $qP_{t+1}$ by a bond that is repaid from the terminal resale proceeds $P_{t+1}$. Therefore a change $\Delta H^{\rm rent}$ changes its terminal financial payoff by $-P_{t+1}\Delta H^{\rm rent}$. Owner households' terminal financial payoffs change by $-P_{t+1}\Delta H^{\rm own}$, counting old financial saving at terminal value $\Delta a^e/q$. Their sum is zero because the total housing stock is unchanged. Current transfers also sum to zero by fixed aggregate goods and housing. Tax receipts are unchanged at fixed $P_t$ and stock.
+
+Thus the direct allocation requires neither new net external resources nor forgiveness of inherited claims. Some new financial positions violate competitive borrowing limits, including old $a^e\ge0$; that is precisely the authority granted to this planner. None of these identities establishes implementation by a property tax.
+
+\section{The full fixed-fertility allocation}\label{app:fixed}
+For fixed $n_i$, current consumption and housing enter separate strictly concave problems. Consumption optimality equalizes $1/(c_i^y-\chi n_i)$ and $1/c_i^o$, proving the first line of \eqref{eq:plannerFsol}. Housing optimality gives its second line. The housing multiplier is unique when the stock is strictly below total retained capacity. Full capacity leaves no room for a strict aggregate housing gain.
+
+A useful exact capped test is available. Put
+\[
+ A_i^F=H_{d_i}-\kappa n_i,\qquad r=\gamma/\alpha,\qquad
+ F_y(t)=\int\min\{A_i^F,t\}\dd Q,\quad F_o(t)=\int\min\{H_{d_i},rt\}\dd Q.
+\]
+Then $t_F=\alpha/\lambda_F$ solves
+$F_y(t_F)+F_o(t_F)=\bar s+\bar h^{o,\eq}$.
+If $\bar s<\int A_i^F\dd Q$, let $t_y$ be the unique solution to $F_y(t_y)=\bar s$. Monotonicity gives the exact equivalence
+\begin{equation}
+ H_Y^F>H_Y^{\eq}\quad\Longleftrightarrow\quad
+ \bar h^{o,\eq}>F_o(t_y).\label{eq:exactcaptest}
+\end{equation}
+If every young household is already capped, strict gain is impossible.
+
+Under \eqref{eq:CF}, $t_y=\bar s$, and
+$F_o(\bar s)\le r\bar s<\bar h^{o,\eq}$. Hence $t_F>\bar s$. The positive mass with $A_i^F>\bar s$ implies $F_y(t_F)>\bar s$. This proves the aggregate part of Proposition~\ref{prop:resource}. Individually,
+\begin{equation}
+ h_i^{y,F}-h_i^{y,\eq}
+ =\min\{H_{d_i}-h_i^{y,\eq},\ t_F-s_i\},\label{eq:individualdiff}
+\end{equation}
+which proves \eqref{eq:individual}. If caps are slack,
+$t_F=(\bar s+\bar h^{o,\eq})/(1+r)$, yielding \eqref{eq:adultgap}. These are full-optimum statements, not just local directions.
+
+For comparison, the derivative of welfare along a matched housing transfer $dh_i^y=-dh_i^o>0$ at fixed consumption is
+$(\alpha/s_i-\gamma/h_i^o)dh_i^y$. A positive derivative is an improving local direction only if the young recipient has room below its cap. A positive paired derivative by itself does not sign the full optimum's aggregate reallocation.
+
+\subsection{Why a capacity condition matters}
+The two resource means alone do not establish the capped result. A simple feasible two-type reference, with equal type masses and $\alpha=\gamma=\kappa=1$, has
+\[
+ (H_1,H_2)=(1,2),\quad(n_1,n_2)=(9/10,1/10),\quad
+ (s_1,s_2)=(1/10,1),\quad(h_1^o,h_2^o)=(3/5,3/5).
+\]
+Here $\bar h^o=3/5>11/20=\bar s$, but the planner solves
+$1/20+3t_F/2=23/20$, so $t_F=11/15$ and mean young adult space falls to $5/12$. The small residual capacity of the first young type diverts the redistribution toward the old. Positive consumption satisfying the reference fertility first-order condition exists, for example with $\tht=10$ and $\chi=1$. This is a capacity counterexample to a claim about arbitrary reference allocations, not a claimed competitive equilibrium. Equilibrium-compatible constructions are given next.
+
+\section{Primitive restrictions and active competitive caps}\label{app:primitive}
+\subsection{Proof of Corollary \ref{cor:primitive}}
+For $\phi=q$ the current cash coefficient equals $p$ in either tenure. With all competitive caps slack, static expenditure in $x,s,n$ is $Ex$, while the old value is $K\log z+C_d$. Thus the unrestricted solution has $x=(w+qv)/D$; the cash restriction imposes $x\le w/E$. Strict concavity gives \eqref{eq:explicit} and
+\begin{equation}
+ \frac{c_i^o}{x_i}=\max\left\{\frac\beta q,\frac{Ev_i}{Kw_i}\right\},\qquad
+ \mu_i>0\quad\Longleftrightarrow\quad qEv_i>\beta Kw_i.\label{eq:exactratio}
+\end{equation}
+At equality the cash constraint binds with zero multiplier. Replacement fertility determines $p$ uniquely in this regime, and housing clearing then determines $N$.
+
+At zero tax the old owner-minus-renter value constant is zero when the estate floor is slack. If it binds, put $J=\gamma+\omega_B$; the difference is
+\begin{equation}
+ \Delta=J\log J+\gamma\log\frac{1-q}{\gamma}
+                  +\omega_B\log\frac q{\omega_B}.\label{eq:tenuredifference}
+\end{equation}
+Therefore $\pi=\logit((\bar\xi+\beta\Delta)/\sigma_\xi)$. It is independent of $i$ and $p$. Consequently
+\[
+ \bar s=\alpha\bar x/p,\qquad
+ \bar h^{o,\eq}=\bar\Gamma\bar c^o/p.
+\]
+Condition \eqref{eq:primitivegap} implies both resource gaps, since $\bar\Gamma\le\gamma$. All young conditional demands are proportional to $x_i$, and renting has positive probability at every endowment type. The competitive cap test therefore implies
+\[
+ H_R>\sup_i h_i^y,\qquad
+ H_{d_i}-\kappa n_i\ge H_R-\kappa\sup_i n_i
+ >\sup_i s_i\ge\bar s.
+\]
+Thus \eqref{eq:CF} and $H_R>\bar h^{y,\eq}$ hold without requiring planner caps to be slack. Proposition~\ref{prop:resource} applies. If \eqref{eq:recipientgroup} holds, strict finance gives $x_i=w_i/E<\bar x$ on that set, so these households gain both goods and housing. Logistic tenure probabilities preserve its positive mass in both tenures.
+
+\subsection{A price-independent high-old-income certificate}
+For a useful active-cap construction retain $\tau^p=0$, $\phi=q$, but do not assume slack competitive caps. Let $w_{\max}=\sup_i w_i$ and $v_{\min}=\inf_i v_i$. If $\alpha\ge\gamma$ and
+\begin{equation}
+ \frac{v_{\min}}{w_{\max}}
+ >K\max\left\{\frac\beta q,\,1,\,\frac\gamma{\Gamma_OE}\right\},\label{eq:highincome}
+\end{equation}
+then every young household has a strictly positive cash multiplier and
+$c_i^o>x_i$, $h_i^o>(\gamma/\alpha)s_i$, at every stationary price.
+
+To prove strict finance, write current spending $B=c+ph\le w$ and $z=v+(w-B)/q$. At any current optimum, its marginal value of $B$ is $1/x>1/B\ge1/w$. The marginal continuation benefit of saving is at most $\beta K/(qv)$ by \eqref{eq:oldcap}. Condition \eqref{eq:highincome} makes spending all $w$ strictly optimal. Hence $z=v$ and $c^o\ge v/K>w>x$.
+
+The current static problem, with a possible cap, satisfies
+\begin{equation}
+ ps\le\alpha w/E.\label{eq:staticspacebound}
+\end{equation}
+For example, its first-order conditions imply
+$E=\lambda w+\eta H_d$, $\lambda=1/x$, and
+$\alpha/s=p\lambda+\eta=pE/w+\eta(1-pH_d/w)\ge pE/w$.
+If old housing is uncapped, \eqref{eq:highincome} and \eqref{eq:staticspacebound} give $h^o>(\gamma/\alpha)s$. If old housing is capped, $H_d>s\ge(\gamma/\alpha)s$. This proves the stated resource comparisons without a price lower bound.
+
+\subsection{An analytical family with binding rental caps}\label{app:activecaps}
+Fix $p,\chi,\kappa,\alpha,\tht,H_R>0$, with $\alpha\ge\gamma$. Choose
+\begin{equation}
+ \begin{gathered}
+ \frac{\tht pH_R}{\alpha\chi+p\kappa(\alpha+\tht)}
+ <n_H<\frac{\tht H_R}{\kappa(\alpha+\tht)},\qquad s_H=H_R-\kappa n_H,\\
+ x_H=\frac\chi{\tht/n_H-\alpha\kappa/s_H},\qquad
+ w_H=x_H+\chi n_H+pH_R.
+ \end{gathered}\label{eq:highcappedtype}
+\end{equation}
+The interval is nonempty because $\chi>0$. These choices make the high-type renter's cap multiplier strictly positive: $\alpha/s_H>p/x_H$. Its uncapped owner choice at the same cash endowment is
+\[
+ s_H^O=\frac{\alpha w_H}{Ep},\quad
+ n_H^O=\frac{\tht w_H}{E(\chi+p\kappa)},\quad
+ h_H^O=s_H^O+\kappa n_H^O>H_R.
+\]
+Moreover $s_H^O>s_H$, by \eqref{eq:staticspacebound} with a strict cap multiplier. Choose $H_O>h_H^O$.
+
+Choose $0<w_L<w_H$ sufficiently small that its uncapped choices satisfy
+$s_L<s_H$, $n_L<n_H$, and $h_L<H_R$. Give the high endowment type mass $\delta$ satisfying the explicit inequalities
+\begin{equation}
+ 0<\delta<\min\left\{
+ \frac{s_H-s_L}{s_H^O-s_L},\,
+ \frac{H_R-h_L}{h_H^O-h_L}\right\}.\label{eq:typemass}
+\end{equation}
+Select old incomes satisfying \eqref{eq:highincome} and
+$\Gamma_Ov_i/(Kp)>H_O$. Every young household then strictly exhausts current cash and every old household is capped. Old continuation utility affects the endogenous logistic tenure probabilities, but not these current conditional choices, since $z=v_i$.
+
+All tenure probabilities are strictly between zero and one. Regardless of their exact values, \eqref{eq:typemass} gives
+$\bar s<s_H=\min_i(H_{d_i}-\kappa n_i)$ and $\bar h^y<H_R$. Thus both planner capacity conditions hold. Set $\nu=1/\bar n$ using the resulting actual tenure-weighted fertility, and set $N=\HH/(\bar h^y+\bar h^o)$. Together with $P=p/(1-q)$, these choices give an exact positive stationary equilibrium with strictly constrained young households, a positive mass of strictly capped renters, uncapped young owners, and genuine income--wealth heterogeneity. Split each $w_i$ into positive $y_i^y$ and $b_i$ as desired; their joint distribution need not be degenerate. This is a family defined by inequalities, not a numerical reference allocation plus continuity.
+
+\section{Fertility and joint optimization}\label{app:joint}
+\subsection{Private finite changes}
+For fixed $c,h>0$, define
+$f(n;c,h)=\tht/n-\chi/(c-\chi n)-\alpha\kappa/(h-\kappa n)$.
+It decreases strictly from $+\infty$ to $-\infty$ on
+$(0,\min\{c/\chi,h/\kappa\})$. Its unique zero defines $\mathfrak n$ and the implicit-function theorem gives \eqref{eq:fertilityderivative}.
+
+If a new gross bundle accommodates $n_0$, strict monotonicity gives
+\begin{equation}
+ n_1\ge n_0\quad\Longleftrightarrow\quad
+ \frac\chi{c_1-\chi n_0}+\frac{\alpha\kappa}{h_1-\kappa n_0}
+ \le\frac\tht{n_0}.\label{eq:finitefertility}
+\end{equation}
+If it cannot accommodate $n_0$, the new optimum is below $n_0$. For a housing gain $\Delta h\ge0$ and a consumption loss $\delta\ge0$, subtract the old first-order condition from \eqref{eq:finitefertility} and cross-multiply positive denominators. The resulting exact tradeoff is
+\begin{equation}
+ \delta\le
+ \frac{\alpha\kappa x^2\Delta h}
+ {\chi s(s+\Delta h)+\alpha\kappa x\Delta h}.\label{eq:finitecost}
+\end{equation}
+Use strict inequalities for strict fertility gains. At the fixed-fertility optimum this test reduces to \eqref{eq:sequential}; the adult bundles after fertility changes are
+$x_i^S=x^F-\chi(n_i^S-n_i)$ and
+$s_i^S=s_i^F-\kappa(n_i^S-n_i)$, not $x^F,s_i^F$ themselves.
+
+\subsection{Joint optimum and proof of Proposition \ref{prop:joint}}
+In variables $(x,s,n,c^o,h^o)$ the joint objective is strictly concave and all resource and cap constraints are affine. Averaging choices within each retained tenure preserves feasibility and weakly raises utility. The positive reference allocation supplies a feasible point; after this averaging the problem is finite-dimensional, bounded by the resource totals and caps, and its log objective excludes relevant zero boundaries. Therefore a unique real optimum exists. Its conditions are \eqref{eq:jointKKT} and
+\begin{equation}
+ 2x^J+\chi\sum_d\pi_dn_d^J=C^{\eq}/N,\qquad
+ \sum_d\pi_d(h_d^{y,J}+h_d^{o,J})=\HH/N,\label{eq:jointresources}
+\end{equation}
+where $\pi_d=Q(d)$. If a young tenure is capped, $r_d>\lambda_H$ is the unique root of
+$\alpha/r_d+\kappa\tht/(\chi\lambda_C+\kappa r_d)=H_d$.
+
+Let $m=\bar n$, $X=\bar x$, and $S=\bar s$. The reference condition multiplied by $n_i^2$ gives
+\[
+ \tht m=\chi\int\frac{n_i^2}{x_i}\dd Q
+       +\alpha\kappa\int\frac{n_i^2}{s_i}\dd Q
+ \ge m^2\left(\frac\chi X+\frac{\alpha\kappa}S\right).
+\]
+Cauchy--Schwarz applies separately to the two integrals. Equality requires $n_i/x_i$ and $n_i/s_i$ to be constant almost everywhere. Multiplying only by $n_i$ would not yield this argument.
+
+Suppose, for contradiction, that $\bar n^J\le m$. Goods clearing and $\bar c^{o,\eq}\ge X$ imply $x^J\ge X$. At least one tenure has $n_d^J\le m$. Its fertility condition and the previous inequality imply $s_d^J\le S$. Hence
+$h_d^{y,J}\le S+\kappa m<H_R$: this tenure is uncapped. All uncapped young tenures choose the same $n_u$, and capped tenures choose no more because $r_d\ge\lambda_H$. Thus every tenure has $n_d^J\le m$ and, by the same reasoning, $s_d^J\le S$. Every young tenure is therefore uncapped.
+
+Write their common choices as $n_u,s_u$. Old mean housing is at most $(\gamma/\alpha)s_u$. If the reference old-housing inequality is strict, total joint housing is at most
+$S+\kappa m+(\gamma/\alpha)S<\bar h^{y,\eq}+\bar h^{o,\eq}$, contradicting clearing. If only the consumption inequality is strict, $x^J>X$ makes $s_u<S$ and gives the same contradiction. Therefore $\bar n^J>m$.
+
+For young housing, $h_d^{y,J}=\min\{H_d,h_u\}$, where $h_u$ is the unconstrained choice at $(\lambda_C,\lambda_H)$. If any young tenure is capped, all young homes are at least $H_R>\bar h^{y,\eq}$, proving the aggregate gain. Otherwise $s_u$ is common and old mean housing is at most $(\gamma/\alpha)s_u$. Writing $r=\gamma/\alpha$, housing clearing implies
+\[
+ \bar h^{y,J}\ge\frac{\bar h^{y,\eq}+\bar h^{o,\eq}+r\kappa\bar n^J}{1+r}
+ >\bar h^{y,\eq}.
+\]
+The last strict inequality uses $\bar h^{o,\eq}\ge rS$ and $\bar n^J>m$. This completes the proof with binding joint caps allowed.
+
+When the joint optimum is uncapped, its common fertility is the unique root
+\begin{equation}
+ \frac\tht{n^J}=\frac{2\chi}{C^{\eq}/N-\chi n^J}
+ +\frac{\kappa(\alpha+\gamma)}{\HH/N-\kappa n^J}.\label{eq:jointscalar}
+\end{equation}
+Evaluating its decreasing left-minus-right side at $m$ gives the exact mean-fertility comparison in that special case. Formula \eqref{eq:jointscalar} must not be used when its solution violates a retained cap.
+
+\section{Analytical counterexamples and equality cases}\label{app:counter}
+\subsection{Strict young finance, but less young housing}
+Set $\tau^p=0$, $\phi=q$, $\beta=q$, and choose
+$\omega_B(1-q)<q\gamma$. Then $\Gamma_O=(\gamma+\omega_B)(1-q)<\gamma$. Choose any constant owner share $\pi\in(0,1)$ using its logistic location, and put $\bar\Gamma=(1-\pi)\gamma+\pi\Gamma_O$. Take bounded nondegenerate $w>0$, let $v=aw$, and choose
+\begin{equation}
+ \frac KE<a<\frac{\gamma K}{E\bar\Gamma},\qquad
+ 0<\chi<\frac{\nu\tht\bar w}{E}.\label{eq:estatecounter}
+\end{equation}
+The interval for $a$ is nonempty. Choose finite caps large enough that the displayed competitive and planner allocations are uncapped. Every young household has $x=w/E$, $c^o=aw/K$, and $\mu>0$. The explicit positive stationary price is
+$p=(\nu\tht\bar w/E-\chi)/\kappa$. Nevertheless,
+\begin{equation}
+ H_Y^F-H_Y^{\eq}
+ =\frac{N\alpha\bar w}{p(\alpha+\gamma)}
+ \left(\frac{\bar\Gamma a}{K}-\frac\gamma E\right)<0.\label{eq:counterhousing}
+\end{equation}
+The obstruction is the old financial-estate floor, not an inability to sell an inherited home. This counterexample is compatible with $\alpha\ge\gamma$.
+
+It can also reverse joint fertility. Put $A_c=aE/K>1$ and $g=\bar\Gamma/\gamma<1$. By \eqref{eq:estatecounter}, $gA_c<1$. The sign of the uncapped joint-fertility test, multiplied by $\bar x$, is
+\[
+ \chi\frac{A_c-1}{A_c+1}
+ +p\kappa\frac{\gamma(gA_c-1)}{\alpha+\gamma gA_c}.
+\]
+It is negative whenever
+\begin{equation}
+ \frac\chi{p\kappa}<
+ \frac{\gamma(1-gA_c)(1+A_c)}{(\alpha+\gamma gA_c)(A_c-1)}.\label{eq:counterjoint}
+\end{equation}
+Sufficiently small positive $\chi$ satisfies this explicit condition along the same stationary family. Thus strictly binding young finance does not, by itself, sign either requested aggregate comparison.
+
+\subsection{Sequential fertility can fall while joint fertility rises}
+The private fertility function $\mathfrak n(c,h)$ is homogeneous of degree one and concave. To prove concavity, its upper contour set at any $n_0>0$ is the sublevel set of the strictly convex reciprocal sum in \eqref{eq:finitefertility}. Homogeneity turns convex upper contour sets into concavity by normalizing two bundles to have the same fertility and mixing them. The inequality is strict unless the bundles lie on the same ray.
+
+Set $\alpha=\gamma$, $\tau^p=0$, $\phi=q$, $\beta=q$, and choose a slack old financial-estate floor. Take nondegenerate bounded $w$ and
+\[
+ v_i=(K/E)(1+\delta)w_i,\qquad \delta>0.
+\]
+Then $x_i=w_i/E$, $c_i^o=(1+\delta)x_i$, and
+$\mu_i=\delta/[(1+\delta)x_i]>0$. Let $X=\bar x$, $S=\alpha X/p$, $m=\bar n$, and require $p\kappa\ne\alpha\chi$. Define
+\[
+ g(n)=\mathfrak n(X+\chi n,S+\kappa n),\qquad G=\int g(n_i)\dd F.
+\]
+The displayed affine line crosses distinct rays because $p\kappa\ne\alpha\chi$. Hence $g$ is strictly concave, $g(m)=m$, and $G<m$. Choose the nonempty explicit interval
+\begin{equation}
+ 0<\delta<2(m/G-1).\label{eq:sequentialcounter}
+\end{equation}
+Take finite caps above all allocations in this bounded interval. The fixed-fertility planner assigns adult bundles $\lambda X,\lambda S$, where $\lambda=1+\delta/2$. By homogeneity and monotonicity,
+\[
+ n_i^S=\lambda g(n_i/\lambda)\le\lambda g(n_i),\qquad
+ \bar n^S\le\lambda G<m.
+\]
+Yet $H_Y^F>H_Y^{\eq}$ and Proposition~\ref{prop:joint} gives $\bar n^J>m$. This finite analytical family rules out replacing the joint-planner comparison with an assertion about mean private readjustment.
+
+\subsection{Redistribution without an aggregate age gap}
+With $\beta=q$, slack finance, slack old estate floors, and slack caps, $c_i^o=x_i$, $s_i=\alpha x_i/p$, and $n_i=\tht x_i/(\chi+p\kappa)$. The uncapped fixed-fertility planner changes young housing by $\alpha(\bar x-x_i)/p$, which integrates to zero. Its equalization can still raise utilitarian welfare. Equation \eqref{eq:jointscalar} also gives $\bar n^J=\bar n$. This separates heterogeneous redistribution from a finance-generated aggregate gap.
+
+\section{Stationary existence and the scope of uniqueness}\label{app:existence}
+The supplied sufficient stationary existence certificate is valid under bounded endowments and $w_{0i}=y_i^y+b_i\ge\underline w>0$, $v_{0i}=y_i^o\ge0$. For $0\le\tau^p<2$, define
+\[
+ \begin{gathered}
+ d_p=1-q+q\tau^p,\quad d_L=1-\phi+q\tau^p,\quad d_{\max}=\max\{d_p,d_L\},\\
+ \bar M_0=\int(w_0+qv_0)\dd F,\qquad
+ \bar T=\frac{\tau^p\bar M_0}{(1-q)(2-\tau^p)},\qquad
+ \bar M=\bar M_0+(1+q)\bar T.
+ \end{gathered}
+\]
+Assume
+\begin{equation}
+ H_R>\kappa/\nu,\qquad
+ \tht\nu>\frac{\chi D}{\underline w}
+       +\frac{\alpha\kappa}{H_R-\kappa/\nu}.\label{eq:existcertificate}
+\end{equation}
+Then a positive stationary equilibrium exists, and every such equilibrium obeys
+\begin{equation}
+ 0\le T\le\bar T,\qquad
+ P_-<P<P_+,\quad
+ P_- =\frac{\alpha\underline w}{D d_{\max}H_R},\quad
+ P_+=\frac{\nu\bar M}{d_p\kappa}.\label{eq:pricecertificate}
+\end{equation}
+
+To prove this, combine both ages' budgets:
+\begin{equation}
+ x+ps+(\chi+p\kappa)n+qc^o+qph^o+q^2e=w+qv.\label{eq:lifetime}
+\end{equation}
+Scaling \eqref{eq:scaling} implies $x\ge w/D\ge\underline w/D$. If young housing is uncapped,
+$\alpha x/s=(p\Lambda+L_d\mu)/(\Lambda+\mu)\le d_{\max}P$.
+At $P\le P_-$ this implies $h\ge H_R$; a capped choice also has $h\ge H_R$. If $n\le1/\nu$, the fertility condition would imply
+\[
+ \tht\nu\le\tht/n
+ =\chi/x+\alpha\kappa/s
+ \le\chi D/\underline w+\alpha\kappa/(H_R-\kappa/\nu),
+\]
+contrary to \eqref{eq:existcertificate}. Thus all conditional fertility choices exceed replacement at the low-price boundary. At $P\ge P_+$, positivity of the other terms in \eqref{eq:lifetime} implies mean fertility below replacement, uniformly for $T\le\bar T$.
+
+The rebate map, using the sum of per-cohort housing means, satisfies
+\[
+ \mathcal T(P,T)=q\tau^pP(\bar h^y+\bar h^o)/2
+ \le\frac{\tau^p}{2d_p}[\bar M_0+(1+q)T]\le\bar T.
+\]
+The final bound uses $2d_p-\tau^p(1+q)=(1-q)(2-\tau^p)>0$. Conversely, the same inequality at a fixed point proves the claimed upper rebate bound. Conditional real choices are unique and continuous by strict concavity; tenure probabilities are continuous. On the compact price--rebate rectangle, update the rebate by $\mathcal T$ and move the price in the direction $\nu\bar n-1$, clipping it to the rectangle. Brouwer supplies a fixed point. Strict boundary signs make its price interior, so fertility is replacement. Set $N=\HH/(\bar h^y+\bar h^o)$.
+
+The certificate is sufficient, not necessary. In particular, because $D=E+\beta K$, \eqref{eq:existcertificate} places a finite upper bound on $\beta$ when all other primitives are fixed. This is not a finite-life necessity or an infinite-lived precautionary-saving restriction. The explicit construction in Appendix~\ref{app:primitive} permits any chosen $\beta>0$ by adjusting old income and the positive-price condition.
+
+Compatibility can be checked directly rather than inferred from the existence certificate. In the all-constrained zero-tax family, choose $0<\chi<\nu\tht\underline w/(2D)$ and then finite caps sufficiently large that $\alpha\kappa/(H_R-\kappa/\nu)<\nu\tht/2$ and all displayed demands are feasible. The certificate and the strict borrowing inequalities then hold jointly. For the local-transition family below, where $\chi=(1-\epsilon)\nu\tht W/E$, the certificate can be added whenever $(1-\epsilon)WD/(E\underline w)<1$ by enlarging finite caps. It can fail for other members of that family; their stationary existence follows instead from the exact formulas. Failure of this conservative certificate is not nonexistence.
+
+Conditional household real choices and the dated planner allocation are unique. The explicit uncapped stationary price is unique \emph{within that regime}. None of these statements establishes global stationary uniqueness, and the Brouwer argument proves neither deterministic transition uniqueness nor convergence. The next appendix establishes those properties locally for the separately stated reform regime.
+\clearpage
+\section{The local equilibrium transition}\label{app:transition}
+This appendix proves Proposition~\ref{prop:transition}. Throughout it writes $\tau=\tau^p$ and $d=1-q$. The reference has $\tau=0$, $\phi=q$, a compact endowment support with $w_i,v_i>0$, strictly slack conditional housing caps, and $\omega_Bd>q\gamma$. Strict inequalities on the support provide uniform margins. The primitive restriction $qEv_i>\beta Kw_i$ implies strictly binding young finance, rather than assuming its multiplier is positive.
+
+\subsection{An exact finite-dimensional equilibrium system}
+At an arbitrary nearby date put
+\[
+ L_t=(1-q+q\tau_t)P_t,\qquad \Delta P_t=P_{t+1}-P_t,
+ \qquad u_t=L_t-q\Delta P_t,\qquad w_{it}=w_i+T_t.
+\]
+A cash-constrained renter has $a'=0$ and
+\begin{equation}
+ x_{it}^R=\frac{w_{it}}{E_t},\quad
+ s_{it}^R=\frac{\alpha x_{it}^R}{u_t},\quad
+ n_{it}^R=\frac{\tht_t x_{it}^R}{\chi+\kappa u_t},\quad
+ E_t=1+\alpha+\tht_t.\label{eq:demandRdynamic}
+\end{equation}
+A cash-constrained owner has $a'=-P_th_{it}^O$. Its next-period resources are
+\begin{equation}
+ z_{i,t+1}=v_i+T_{t+1}+\Delta P_t h_{it}^O.\label{eq:dynamicz}
+\end{equation}
+Apart from an additive common future-price term, it maximizes
+\[
+ \log x+\alpha\log s+\tht_t\log n+\beta K\log z_{i,t+1}
+ \quad\text{subject to}\quad c+L_th=w_{it}.
+\]
+Its first-order conditions are
+\begin{equation}
+ \frac1x=\lambda,\qquad
+ \frac\alpha s=L_t\lambda-\frac{\beta K\Delta P_t}{z_{i,t+1}},\qquad
+ \frac{\tht_t}n=\frac\chi x+\frac{\alpha\kappa}s.\label{eq:demandOdynamic}
+\end{equation}
+Old indirect utility is $K\log z-\gamma\log u+\text{constant}$. The future $-\beta\gamma\log u_{t+1}$ term is identical across tenures: it affects welfare but cancels from conditional current choices and from the tenure value difference. No expectation operator is needed.
+
+Let
+$B_{t-1}=\int\pi_{i,t-1}^O h_{i,t-1}^O\dd F$
+be owner titles per member of the preceding entering cohort. Average current old resources are exactly
+$V+T_t+(P_t-P_{t-1})B_{t-1}$, so
+\begin{equation}
+ \bar h_t^o=\frac\gamma{K u_t}
+       [V+T_t+(P_t-P_{t-1})B_{t-1}].\label{eq:oldaggregate}
+\end{equation}
+Integrate the current conditional choices using the endogenous logistic tenure probabilities to obtain $\bar h_t^y$, $\bar n_t$, and $B_t$. These quantities, housing clearing, demography, and
+\[
+ T_t=\frac{q\tau_tP_t\HH}{Y_t+O_t},\qquad
+ T_{t+1}=\frac{q\tau_{t+1}P_{t+1}\HH}{Y_{t+1}+Y_t}
+\]
+form an exact system with predetermined state $(Y_t,O_t,P_{t-1},B_{t-1})$ and current price $P_t$ as a jump variable. At zero tax the equation determining next rebate has zero feedback derivative through $Y_{t+1}$; it therefore remains uniquely solvable for small tax changes. The housing derivative identified below similarly determines $P_{t+1}$ locally. Old distributions are not held fixed: their asset and tenure histories are summarized by $B_{t-1}$ for market clearing because old demand is linear in resources in this regime.
+
+\subsection{Stationary endpoints and the tax obstruction}
+At stationarity $\Delta P=0$. Both tenures spend all $w_i+T$ on the static bundle, and old resources are $v_i+T$. Replacement fertility, housing clearing, and the tax budget give \eqref{eq:taxstationary}. The denominator of its rebate expression is positive since $b_0<2$ and $B_0>0$. Differentiation gives \eqref{eq:Ntau}. Also,
+\begin{equation}
+ H_Y(\tau)=\HH\frac{(\alpha+\tht)(W+T)/E-\chi/\nu}{B_0+b_0T},\quad
+ \frac{\partial H_Y}{\partial T}
+ =\frac{\HH\gamma}{K(B_0+b_0T)^2}
+ \left[\frac{\alpha+\tht}{E}(V-W)+\frac\chi\nu\right].\label{eq:HYtax}
+\end{equation}
+This proves the stationary young-stock-share result for $V\ge W$, while direct differentiation proves \eqref{eq:peryoungfall}.
+
+At zero tax the sign of $N_{\tht}$ is the sign of
+\[
+ \nu\alpha W+\nu(1+\alpha)\gamma V/K-\alpha\chi>0.
+\]
+Positivity follows from the positive-price condition $\chi<\nu\tht W/E<\nu W$. Thus a taste decline lowers the stationary adult cohort mass, not merely fertility at fixed prices.
+
+The tax's population sign is not general, even with strict young finance. For a counterfamily take $v_i=aw_i$ with
+$\beta K/(qE)<a<1$, a slack old financial-estate floor, and finite inactive caps. Choose
+\begin{equation}
+ 0<\chi<\min\left\{
+ \frac{\nu\tht W}{E},\,
+ \frac{\nu\tht\gamma W(1-a)}{\alpha K+\gamma E}
+ \right\}.\label{eq:taxcounter}
+\end{equation}
+Every young household is strictly constrained and the stationary price is positive, but \eqref{eq:Ntau} is negative. This is an exact family of stationary equilibria, not a numerical sign check. It locates the obstruction in old income relative to the young rebate recipients and in the goods--space composition of child costs.
+
+\subsection{Linearization from the budgets}
+Write $\ell_t=\delta Y_t/N$ and $z_t=\delta P_t/P$ for first-order normalized deviations from a reference stationary equilibrium. Thus $\delta O_t/N=\ell_{t-1}$. Define $\epsilon,A,\zeta$ by \eqref{eq:dynamicprimitive}, and put
+\begin{equation}
+ B=\alpha+\tht\epsilon^2,\quad
+ r_i=\frac{\beta K w_i}{qEv_i}\in(0,1),\quad
+ R=\pi\frac{\int w_ir_i\dd F}{W}.\label{eq:Rdynamic}
+\end{equation}
+Here $r_i$ measures the marginal continuation return relative to current cash utility, and $0<R<\pi$. The three letters $A,B,R$ are used only to shorten the derivative formulas in this appendix.
+
+A first-order change in an owner's effective current housing price is
+$dL-q r_i\,d\Delta P$. Its cash budget still uses $L$, so
+$dx= dT/E-(q r_i/E)h_i^y\,d\Delta P$ when $\tht$ is fixed. A renter instead faces $u=L-q\Delta P$. Differentiating the explicit static formulas and integrating gives
+\begin{align}
+ \frac{\delta\bar n_t}{\bar n}
+ &=\frac{\delta T_t}{W}-\epsilon\frac{\delta L_t}{p}
+ +\frac qd[(1-\pi+R)\epsilon-RA/E](z_{t+1}-z_t),\label{eq:linfert}\\
+ \frac{\delta\bar h_t^y}{\bar h^y}
+ &=\frac{\delta T_t}{W}-\frac BA\frac{\delta L_t}{p}
+ +\frac qd[(1-\pi+R)B/A-RA/E](z_{t+1}-z_t),\label{eq:linhy}\\
+ \frac{\delta\bar h_t^o}{\bar h^o}
+ &=\frac{\delta T_t}{V}-\frac{\delta u_t}{p}
+ +\frac{\pi A W}{EdV}(z_t-z_{t-1}).\label{eq:linho}
+\end{align}
+The derivative of tenure probabilities makes no first-order contribution to mean fertility or housing at this reference because the two conditional real choices coincide there. It is included in the nonlinear system and generally matters away from stationarity. Its derivative also affects $B_t$, whose first-order effect on next aggregate old wealth is zero at a stationary price.
+
+Define the following positive or nonnegative coefficients:
+\begin{equation}
+\begin{split}
+ \mathsf f&=\frac qd[(1-\pi+R)\epsilon-RA/E],\\
+ \mathsf a&=\frac qd[(1-\pi+R)B/A-RA/E+\zeta],\\
+ \mathsf b&=B/A+\zeta,\qquad
+ \mathsf c=\frac{\pi\gamma}{Kd}.
+\end{split}\label{eq:abcdynamic}
+\end{equation}
+For a permanent parameter perturbation, let $g$ and $C$ denote its direct effects on fertility growth and housing clearing. The linearized equilibrium system is
+\begin{align}
+ \ell_{t+1}-\ell_t&=-\epsilon z_t+\mathsf f(z_{t+1}-z_t)+g,\label{eq:lindemog}\\
+ \ell_t+\zeta\ell_{t-1}-\mathsf b z_t
+ +\mathsf a(z_{t+1}-z_t)+\mathsf c(z_t-z_{t-1})+C&=0.\label{eq:linhousing}
+\end{align}
+A unit tax-rate change at zero tax has
+\begin{equation}
+\begin{split}
+ J&=A(1+\zeta)/E,\qquad
+ g_\tau=\frac qd(J/2-\epsilon),\\
+ C_\tau&=\frac qd\left[\frac{1+\zeta}{2}\left(\frac AE+\frac\gamma K\right)
+                         -\left(\frac BA+\zeta\right)\right],\qquad
+ T'_0/W=\frac qd\frac J2.
+\end{split}\label{eq:taxforcing}
+\end{equation}
+A unit change in the fertility taste has
+\begin{equation}
+ g_{\tht}=1/\tht-1/E>0,\qquad C_{\tht}=\epsilon/A-1/E.\label{eq:tasteforcing}
+\end{equation}
+These formulas include the endogenous balanced rebate, not a grant from outside the economy.
+
+\subsection{Stability and local nonlinear existence}
+For a homogeneous mode with factor $z$, eliminate the two deviations in \eqref{eq:lindemog}--\eqref{eq:linhousing}. The nonzero characteristic roots solve
+\begin{equation}
+ \mathcal P(z)=(z+\zeta)[\mathsf f(z-1)-\epsilon]
+ +(z-1)[-\mathsf b z+\mathsf a z(z-1)+\mathsf c(z-1)]=0.\label{eq:characteristic}
+\end{equation}
+The full five-dimensional map has these three roots and two zero roots. One zero is evident from the linear dependence of the lagged population--price rows; the other comes from the title state $B_{t-1}$, which has no first-order feedback at a stationary price.
+
+Here are sufficient inequalities that derive, rather than assume, the required saddle structure:
+\begin{equation}
+ \zeta\ge1,\qquad \alpha/(1+\alpha)\le\epsilon<q,
+ \qquad \mathsf a\ge\mathsf c.\label{eq:stabilitysimple}
+\end{equation}
+They imply $0\le\mathsf f\le q\epsilon/d$ and $\mathsf a\ge q\zeta/d>0$. The second bound follows from
+$EB-A^2=\alpha+\alpha\tht(1-\epsilon)^2+\tht\epsilon^2>0$.
+Under \eqref{eq:transitionconditions}, $qK\zeta>\pi\gamma$ guarantees $\mathsf a>\mathsf c$.
+
+Now $\mathcal P(1)=-(1+\zeta)\epsilon<0$, and the leading coefficient is $\mathsf a>0$. Hence there is a real root $r_u>1$. Also
+\[
+ \mathcal P(-1)=(1-\zeta)(2\mathsf f+\epsilon)
+               -2\mathsf b-4\mathsf a+4\mathsf c<0.
+\]
+Factor $\mathcal P(z)=\mathsf a(z-r_u)(z^2+b_qz+c_q)$. The quadratic is positive at both $1$ and $-1$, and
+\[
+ c_q=\frac{\zeta(\epsilon+\mathsf f)-\mathsf c}{\mathsf a r_u}<1,
+\]
+because $\zeta(\epsilon+\mathsf f)\le\zeta\epsilon/d<q\zeta/d\le\mathsf a$.
+Positivity at $\pm1$ also implies $c_q>-1$ and $|b_q|<1+c_q$. These elementary quadratic inequalities place both roots strictly inside the unit disk. For real roots, evaluate the products $(1-r_1)(1-r_2)$ and $(1+r_1)(1+r_2)$ and use $r_1r_2<1$; for a complex conjugate pair, $c_q$ is their squared modulus. Thus $r_u$ is the unique unstable root.
+
+The stable manifold has the correct projection onto inherited states. In the four-dimensional population--price block, order coordinates as $(\ell_t,\ell_{t-1},z_{t-1},z_t)$. If a left eigenvector for $r_u$ had zero coefficient on the current jump price, its first coordinate would be nonzero and its first two eigenvector equations would imply
+\[
+ r_u-1=-\frac{\mathsf f}{\mathsf a}\left(1+\frac\zeta{r_u}\right)\le0,
+\]
+a contradiction. Its coefficient on the independent title state is zero. Therefore the four-dimensional stable manifold projects invertibly onto the four predetermined coordinates.
+
+For completeness, local existence does not require an invertible full map despite the zero stable roots. Split its linearization into stable and unstable coordinates, with matrices $A_s$ and scalar $r_u>1$. For a small nonlinear remainder $R$, a bounded trajectory solves
+\[
+ x_t=A_s^t x_0+\sum_{j=0}^{t-1}A_s^{t-1-j}R_s(x_j,u_j),\qquad
+ u_t=-\sum_{j=t}^{\infty}r_u^{t-1-j}R_u(x_j,u_j).
+\]
+On a sufficiently small neighborhood, these equations are a contraction in a geometrically weighted sequence norm, using a weight between the stable spectral radius and one. They define the local stable manifold; its graph over inherited coordinates follows from the nonzero jump-price coefficient and the implicit-function theorem. Smooth conditional demand and the uniform strict regime margins make the nonlinear equilibrium map continuously differentiable. This proves existence, local uniqueness among paths that stay nearby, and geometric convergence after sufficiently small permanent shocks. It does not prove global convergence or exclude paths outside this neighborhood.
+
+\subsection{Impact signs at a common inherited state}
+All derivatives in this subsection are evaluated for an unexpected permanent perturbation of a stationary reference. Let
+\begin{equation}
+ z_* =g/\epsilon,\qquad
+ \ell_*=(\mathsf b z_*-C)/(1+\zeta),\qquad
+ B_u=1+\zeta/r_u,\qquad
+ D_u=\mathsf a(r_u-1)+\mathsf f B_u>0.\label{eq:impactobjects}
+\end{equation}
+The star denotes the derivative of the terminal stationary level. The inherited values satisfy $\ell_0=\ell_{-1}=z_{-1}=0$. Eliminating the unstable mode gives
+\begin{align}
+ z_0&=\frac{B_u g/(r_u-1)+C}{D_u}
+ =\left[1+\frac{\mathsf c(r_u-1)}{D_u r_u}\right]z_*
+       -\frac{1+\zeta}{D_u}\ell_*,\label{eq:impactprice}\\
+ \Delta z_0&=z_1-z_0
+       =\frac{(\mathsf b-\mathsf c)z_0-C}{\mathsf a}.\label{eq:impactrecovery}
+\end{align}
+These equations can be checked directly from the left unstable eigenvector of the linear map and \eqref{eq:linhousing}; no fertility path is imposed.
+
+The first cohort response, equal to the initial percentage fertility response, is
+\begin{equation}
+ \ell_1=L_N\ell_*-L_Pz_*,\label{eq:impactfertility}
+\end{equation}
+where
+\begin{align}
+ L_N&=(1+\zeta)\left[\frac\epsilon{\mathsf a(r_u-1)}
+               +\frac{\mathsf f\mathsf c}{\mathsf a r_uD_u}\right]>0,\nonumber\\
+ L_P&=\frac{\mathsf c}{\mathsf a r_u}
+ \left[\mathsf f+\epsilon+
+       \frac{\mathsf f\mathsf c(r_u-1)}{r_uD_u}\right]\ge0.\label{eq:impactcoeff}
+\end{align}
+To derive this, substitute \eqref{eq:impactprice}--\eqref{eq:impactrecovery} into
+$\ell_1=g-\epsilon z_0+\mathsf f\Delta z_0$ and use
+\begin{equation}
+ D_u-\mathsf b+\mathsf c
+ =\frac{\mathsf c}{r_u}+\frac{\epsilon B_u}{r_u-1}.\label{eq:rootidentity}
+\end{equation}
+Equation \eqref{eq:rootidentity} is just $\mathcal P(r_u)=0$ rearranged, and verifies the nontrivial cancellation.
+
+For a tax increase, $V\ge W$ gives $\ell_*>0$ by \eqref{eq:Ntau}. The upper bound on $\zeta$ in \eqref{eq:transitionconditions} gives $J<2\epsilon$, so $z_*<0$. Therefore \eqref{eq:impactfertility} gives $\ell_1>0$. The purchase price also falls on impact. In fact $z_0<z_*<0$ and the first price change is a recovery: $\Delta z_0>0$. To verify the latter, use \eqref{eq:rootidentity} in \eqref{eq:impactrecovery}; it gives
+\[
+ \mathsf aD_u\Delta z_0
+ =(1+\zeta)(D_u-\mathsf b+\mathsf c)\ell_*
+ -\frac{\mathsf c}{r_u}
+   [D_u+(r_u-1)(D_u-\mathsf b+\mathsf c)]z_*>0.
+\]
+This does not imply a monotone subsequent price path.
+
+For a fertility-taste increase, $g_{\tht}>0$ and $C_{\tht}>0$ under
+$\epsilon>\alpha/(1+\alpha)$. Put $k=\mathsf c(r_u-1)/r_u$. The ratio relevant for the sign in \eqref{eq:impactfertility} satisfies
+\[
+ \frac{L_P}{L_N/(1+\zeta)}
+ =k\left[1+\frac{\mathsf f}{\epsilon+\mathsf f k/D_u}\right]
+ <\mathsf c\left(1+\frac{\mathsf f}\epsilon\right)
+ \le\frac{\mathsf c}{d}<1.
+\]
+Here the final inequality is $\pi\gamma/K<d^2$. On the other hand,
+\[
+ \mathsf b-\frac{\epsilon C_{\tht}}{g_{\tht}}
+ =\zeta+\frac{\alpha(1+\alpha+\tht\epsilon)}{(1+\alpha)A}>\zeta>1.
+\]
+Combining these two inequalities in \eqref{eq:impactfertility} gives a positive impact response to $\tht$. A small decline therefore lowers fertility initially. Since $N_{\tht}>0$, it also lowers the endpoint.
+
+By smoothness of the local stable manifold, these strict impact signs continue to hold for sufficiently small shocks introduced at nearby inherited states. In particular, start in the stationary equilibrium of $\tht_->\tht_0$, with their difference sufficiently small. The unexpected decline to $\tht_0$ generates the baseline convergent transition. At any finite $t_p$ on that local path, introduce a sufficiently small unexpected permanent tax increase, beginning from exactly the same inherited state. The policy and baseline equilibria are both locally well defined; the policy's fertility impact relative to baseline is positive, and its terminal $N$ is higher. This is a local theorem based on an explicit analytical parameter region, not continuity around a numerical example.
+
+\subsection{Impact housing is a separate derivative}
+At the intervention date cohort masses are fixed, so the changes in aggregate housing across ages sum to zero. Define
+$U_0=\delta u_0/p=z_0+(q/d)-(q/d)\Delta z_0$ for a unit tax increase. Then
+\begin{equation}
+ \widehat h^o_0=\frac{T'_0}{V}-U_0+\frac{\mathsf c}{\zeta}z_0,
+ \qquad \widehat h^y_0=-\zeta\widehat h^o_0.\label{eq:impacthousing}
+\end{equation}
+Hats denote proportional changes in the age-specific mean home. Consequently, an impact movement of housing toward young households requires the explicit additional inequality
+$U_0>T'_0/V+(\mathsf c/\zeta)z_0$.
+All terms are determined by the primitive coefficients and the unique root $r_u$. Proposition~\ref{prop:transition} does not impose this inequality. The price-level fall, an anticipated subsequent price recovery, rent, the equal rebate, and old title losses are distinct effects; the positive fertility result must not be relabeled as an unconditional impact home-size result.
+
+\subsection{A nonempty primitive region and the demographic accounting}
+One entirely analytical family is as follows. Choose $\alpha\ge\gamma>0$, $\tht>0$, and
+$q>\alpha/(1+\alpha)$. Choose
+\[
+ \alpha/(1+\alpha)<\epsilon<q,\quad
+ 1<\zeta<2E\epsilon/A-1,\quad \pi\in(0,1).
+\]
+The interval for $\zeta$ is nonempty. Choose $K=1+\gamma+\omega_B$ sufficiently large to satisfy
+\[
+ (K-1-\gamma)d>q\gamma,\quad
+ \pi\gamma/K<\min\{d^2,q\zeta\},\quad
+ a_v:=KA\zeta/(\gamma E)>1.
+\]
+Choose $0<\beta<qA\zeta/\gamma$, any bounded nondegenerate distribution of $w>0$, and let $v=a_vw$. For any $\nu,\kappa>0$, set
+\[
+ \chi=(1-\epsilon)\nu\tht W/E>0,\qquad
+ p=\epsilon\nu\tht W/(E\kappa)>0,
+ \qquad \bar\xi=\sigma_\xi\log[\pi/(1-\pi)].
+\]
+These choices give $n_i=w_i/(\nu W)$ and
+$r_i=\beta\gamma/(qA\zeta)<1$. Choose finite $H_R$ above all explicit conditional young and old demands, and $H_O>H_R$. All theorem inequalities hold. Because $A\zeta>\gamma$, the admissible interval for $\beta$ includes values below and above $q$.
+
+The theorem itself allows arbitrary heterogeneous $F$ satisfying its strict income-ratio, moment, and cap inequalities; proportional old income is only a convenient demonstration of nonemptiness. The joint distribution of current income and entry wealth is retained. This local transition family has both tenures but inactive physical caps. The active-rental-cap construction in Appendix~\ref{app:activecaps} proves the dated results, not this transition result.
+
+From common initial $Y_{t_p}$, iterative use of \eqref{eq:demog} gives the finite product in \eqref{eq:populationproduct}. Local geometric convergence implies absolute convergence of the tail log differences and gives its infinite version. Both stationary endpoints have replacement fertility, so the positive terminal population effect reflects the cumulative transition gap, not permanent fertility above replacement. Old cohorts lag young cohorts by one date, hence terminal total adult households are $2N$.
+
+If policy is announced before implementation, households reoptimize at announcement; inherited titles and obligations at implementation generally differ. Such a comparison must start from common states at announcement. The terminal comparison remains the stationary one within this unique local regime, but the impact and welfare formulas for an unexpected implementation cannot be reused unchanged. A temporary reform returning to the same primitives and local terminal equilibrium has equal terminal $N$ and therefore zero cumulative log gap. None of these accounting identities proves existence outside the local regime.
+
+\section{Living-household welfare under the tax}\label{app:welfare}
+The authority's admissible instrument is a permanent change in $\tau^p$ with the equal per-decision-unit rebate; it cannot issue the direct planner's compensating credit assignments. Define intervention welfare as the sum of the remaining utilities of the current young and old, including current young tenure tastes. Later cohorts' outcomes are reported separately, not added with new welfare weights.
+
+For the general model, let $m_t=U_c^o$, and put $\rho_t\ge0$ on the old owner's estate floor, with $\rho_t=0$ for renters. For an incumbent old household with inherited title $H$ (zero for a renter), the envelope is
+\begin{equation}
+ dV_t^o=m_t[dT_t+H\,dP_t-h_t^o\,du_t]-\rho_t h_t^o\,dP_{t+1}.\label{eq:oldwelfare}
+\end{equation}
+Let $\Lambda_t,\mu_t$ be the young lifetime and cash multipliers, and define
+$L_{R,t}=u_t$, $L_{O,t}=(1-\phi+q\tau_t^p)P_t$. The young envelope is
+\begin{equation}
+\begin{split}
+ dW_t^y={}&(\Lambda_t+\mu_t)dT_t+q\Lambda_t dT_{t+1}
+ -\Lambda_t h_t^ydu_t-\mu_t h_t^y dL_{d,t}\\
+ &-\beta m_{t+1}h_{t+1}^o\,du_{t+1}
+ -\beta\rho_{t+1}h_{t+1}^o\,dP_{t+2}.\label{eq:youngwelfare}
+\end{split}
+\end{equation}
+The negative estate-floor terms follow by differentiating the constraint $e-P_{t+1}h^o\ge0$, not by fixing the estate when policy changes. The positive title term for the initial old is indispensable. At tenure indifference, the two maximized utilities including $\xi$ agree, so the boundary term cancels in the average utility envelope. It does not generally cancel in average fertility away from the symmetric reference.
+
+Equations \eqref{eq:oldwelfare}--\eqref{eq:youngwelfare}, integrated with the actual current age distributions, give the exact local welfare test. Their sign is not established by $\bar n$ or $H_Y$ alone.
+
+There is nevertheless a nonempty explicit sufficient welfare-improvement condition within the local transition family. Specialize only for this calculation to $v_i=a_vw_i$, and define
+\[
+ M=W\int w_i^{-1}\dd F\ge1,\quad
+ r=\frac{\beta K}{qEa_v},\quad
+ U_j=z_j+q/d-(q/d)(z_{j+1}-z_j).
+\]
+Here $z_j$ are the unit-tax price derivatives from the proved bounded path. $z_0,z_1$ are given above, and $z_2$ follows directly from \eqref{eq:linhousing} at date one. Let
+\begin{align}
+ A_W&=\frac qd\frac{A(1+\zeta)}{2E}
+           \left[E+\frac{(1+\beta)K}{a_v}\right]>0,\nonumber\\
+ B_W&=(A+\gamma)U_0+\frac qd\pi A(1-r)\Delta z_0
+              +\beta\gamma U_1-\frac{\pi\gamma}{\zeta d}z_0.\label{eq:welfarethreshold}
+\end{align}
+Substitution in the two envelopes yields the exact derivative
+\begin{equation}
+ \frac1N\frac{d\Welf_{t_p}}{d\tau}=M A_W-B_W.\label{eq:welfaresufficient}
+\end{equation}
+Thus $M>B_W/A_W$ is sufficient for a small permanent tax increase to improve the specified welfare of the living while producing the local fertility and population effects. The factor $M$ measures heterogeneity in marginal utility of cash, not extra future-cohort welfare.
+
+This condition is analytically nonempty. Fix all aggregate and preference primitives in the proportional-income family, including $W$. Take a two-point nondegenerate distribution of $w$ with equal masses, one value tending to zero and the other tending to $2W$. For each economy the lower endowment remains strictly positive; the strict finance ratios, aggregate coefficients, and finite-cap tests are unchanged, while $M$ can be made arbitrarily large. The finite quantity $B_W/A_W$ is therefore exceeded. This is a local improvement under the stated feasible tax instrument, not a Pareto improvement or a proof that the tax implements the unrestricted dated optimum. Without \eqref{eq:welfaresufficient}'s sign restriction no tax-welfare claim is made.
+\clearpage
+\section{Separate investigation: general gross-bundle preferences}\label{app:general}
+This section changes preferences only for the stated exploration. The budgets, tenure rule, physical caps, warm-glow estate architecture, and dated planner's financial powers remain those in Sections 1--3. It does not impose child-needs shifts at the outset.
+
+\subsection{Unspecified preferences and the surviving conditions}
+Let young utility be $U^y(c,h,n)$ and old utility be $U^o(c^o,h^o,e)$. Specify their convex domains as primitives. Assume twice continuous differentiability, concavity, and strictly positive consumption and housing derivatives; old estate utility is increasing. Assume that the conditional fertility problem is attained at a regular interior optimum with $U^y_{nn}<0$. For example, opposite signs of $U_n$ at the two ends of its feasible interval suffice. It is not appropriate to assume $U_n>0$ everywhere while providing neither a fertility bound nor a cost: that generally eliminates a finite interior optimum.
+
+At fixed individual fertility and net estates, the dated planner has resource multipliers $\lambda_C,\lambda_H$ and satisfies
+\begin{equation}
+ U_c^y=U_c^o=\lambda_C,\qquad
+ U_h^y=\lambda_H+\eta^{y,F},\qquad
+ U_h^o=\lambda_H+\eta^{o,F}.\label{eq:generalplanner}
+\end{equation}
+Under concavity, feasibility and complementary slackness make these conditions sufficient. Strict concavity gives uniqueness where an optimum exists. A fixed estate is a fixed argument of $U^o$, not necessarily an additive constant if old preferences are nonseparable. Likewise, without consumption--housing separability, consumption redistribution changes housing marginal utility and the housing problem does not separate.
+
+The stationary reduced budgets are unchanged. Let $m_i=V_d'(z_i)=U_c^o$. Put $\rho_i\ge0$ on the old-owner floor $e-Ph^o\ge0$, zero for renters. The competitive conditions are
+\[
+ q\Lambda_i=\beta m_i,\quad U_c^y=\Lambda_i+\mu_i,\quad
+ U_h^y=p\Lambda_i+L_d\mu_i+\eta_i^y,
+\]
+\[
+ U_e^o=qm_i-\rho_i,\qquad U_h^o=pm_i+P\rho_i+\eta_i^o.
+\]
+Subtracting gives the fully general identity
+\begin{equation}
+ U_h^y-U_h^o=(\beta/q-1)pm_i+L_d\mu_i+\eta_i^y-P\rho_i-\eta_i^o.\label{eq:generalwedge}
+\end{equation}
+A positive gap supports a small improving housing transfer to an uncapped young recipient at fixed consumption. It is not, by itself, a full-optimum aggregate theorem. The old financial floor and cardinal age weighting remain relevant without logarithms.
+
+A cardinal counterexample is immediate. Replace $U^o$ by $A_oU^o$ and $\beta$ by $\beta/A_o$, with $A_o>0$. All competitive real choices, tenure decisions, and prices are unchanged, but the dated planner's current-old utility is multiplied by $A_o$. Increasing concavity alone therefore cannot determine an age direction. This compares different cardinal preference specifications; it is not permission to renormalize the fixed welfare criterion.
+
+\subsection{Fertility and a nonshift intermediate class}
+At a regular interior optimum, $U_n^y=0$ and
+\begin{equation}
+ dn=-\frac{U_{nc}^y\,dc+U_{nh}^y\,dh}{U_{nn}^y}.\label{eq:generaln}
+\end{equation}
+Positive cross-partials are additional complementarity assumptions, not implications of joint concavity. For a finite change with common feasibility, $n_1\ge n_0$ exactly when $U_n^y(c_1,h_1,n_0)\ge0$.
+
+For a counterexample without shifts, take
+\[
+ U^y(c,h,n)=\sqrt c+\sqrt{h+n}+A_n\sqrt n-kn,\qquad A_n,k>0.
+\]
+This utility is strictly concave and increasing in goods and housing. Its fertility marginal utility decreases from $+\infty$ to $-k$, giving a unique interior optimum. But $U_{nh}^y=-1/[4(h+n)^{3/2}]<0$, so more housing reduces fertility.
+
+An intermediate class is
+\begin{equation}
+ U^y(c,h,n)=a(c,n)+b(h,n)+v(n).\label{eq:generalclass}
+\end{equation}
+Require $a_c,b_h>0$, joint concavity, an attained fertility optimum, and $a_{cn},b_{hn}>0$ for positive conditional resource effects. Fertility costs may enter $a_n$ or $b_n$; they need not be linear offsets. At fixed $n$, the consumption and housing problems separate if old utility also separates them.
+
+Suppose additionally that
+\begin{equation}
+ U^o(c^o,h^o,e)=f_o(c^o)+b(h^o,0)+B_o(e),\quad
+ b_{hh}<0,\quad b_{hn}>0.\label{eq:generalageclass}
+\end{equation}
+The old housing component is cardinally matched to that of a childless young household. At a common planner housing multiplier, $b_h(h,n_i)>b_h(h,0)$ implies $h_i^{y,F}\ge h_i^{o,F}$, strictly whenever the old counterpart is uncapped. If the stock is below total retained capacity, some old household is uncapped, so the planner assigns more than half the stock to the young. This remains a planner ordering until an equilibrium comparison is supplied.
+
+Here is one such comparison, with its additional assumptions explicit. Suppose there is a finite primitive bound $A_b\ge1$ such that
+\begin{equation}
+ b_h(h,n)\le A_b b_h(h,0)\quad\text{on the relevant domain},\qquad
+ \beta/q\ge A_b,\label{eq:boundedchildpremium}
+\end{equation}
+and old financial-estate floors are slack. For an uncapped old household, competitive optimality gives
+\[
+ A_b b_h(h_i^y,0)\ge b_h(h_i^y,n_i)
+ \ge (\beta/q)p m_i\ge A_b b_h(h_i^o,0).
+\]
+Thus $h_i^y\le h_i^o$. A capped old household already occupies the common physical maximum. Combining this equilibrium ordering with the planner's strict half-stock ordering proves an aggregate young-housing gain, with heterogeneous endowments and binding physical caps allowed. It is an age-preference sufficient theorem, not a claim that finance alone caused the gap; a binding estate floor requires an additional restriction because of the term $-P\rho_i$ in \eqref{eq:generalwedge}.
+
+The class is not empty and need not hide a shift. For example, with $0<\delta_c,\delta_h\le1/2$ and $k,A_n>0$, take
+\[
+\begin{split}
+ a(c,n)&=\sqrt c+\delta_c(1-e^{-c})(1-e^{-n})-kn,\\
+ b(h,n)&=\sqrt h+\delta_h(1-e^{-h})(1-e^{-n}),\qquad
+ v(n)=A_n\sqrt n.
+\end{split}
+\]
+Both interaction cross-partials are positive, fertility is interior, and the components are jointly concave. For the latter, the Hessian determinant of
+$\sqrt z+\delta(1-e^{-z})(1-e^{-n})$ is bounded below by
+$\delta e^{-n}[(1-e^{-z})/(4z^{3/2})-\delta e^{-2z}]\ge0$;
+use $e^z(e^z-1)\ge\sqrt{2e}\,z^{3/2}$ and $\delta\le1/2$.
+Also $b_h(h,n)/b_h(h,0)\le1+\delta_h\sqrt{2/e}$, giving a finite $A_b$. This example only establishes the preference restrictions; stationary existence and the old estate regime must still be checked with its specified endowments.
+
+\subsection{Mapping back to the maintained specification}
+Only now set
+\[
+ a(c,n)=\log(c-\chi n),\quad
+ b(h,n)=\alpha\log(h-\kappa n),\quad
+ v(n)=\tht\log n.
+\]
+The shifted domain belongs to this specialization. Its cross-partials are
+$a_{cn}=\chi/(c-\chi n)^2>0$ and
+$b_{hn}=\alpha\kappa/(h-\kappa n)^2>0$, so \eqref{eq:generaln} becomes \eqref{eq:fertilityderivative}. Exact cardinal matching in \eqref{eq:generalageclass} requires $\alpha=\gamma$; $\alpha\ge\gamma$ also gives the same-housing young marginal-utility ordering. However,
+$b_h(h,n)/b_h(h,0)=h/(h-\kappa n)$ is unbounded near the needs boundary. Thus \eqref{eq:boundedchildpremium} is not a global theorem for the maintained shifted-log domain. The adult-space result avoids this unnecessary bound.
+
+For the broader shifted class $f(c-\chi n)+\alpha g(h-\kappa n)+v(n)$ with old housing term $\gamma g(h^o)$, fixed-fertility housing uses inverse marginal utility:
+\[
+ h_i^{y,F}=\min\{H_i,\kappa n_i+(g')^{-1}(\lambda_H/\alpha)\},\quad
+ h_i^{o,F}=\min\{H_i,(g')^{-1}(\lambda_H/\gamma)\}.
+\]
+When $\alpha=\gamma$, equal adult space and the corresponding cap test do not need logarithms. The constant ratio $\gamma/\alpha$ for unequal housing weights, the explicit cash-income shares, and the Cauchy--Schwarz fertility comparison use more specific functional structure. General resource complementarity alone does not prove an increase in mean fertility at the joint optimum. No general-preferences tax-transition or global-existence theorem is asserted here.
+
+\section{Six-slide theory outline}\label{app:slides}
+\textbf{Slide 1: Household environment.} Show the two ages, gross bundles and the adult residuals $x=c-\chi n$, $s=h-\kappa n$. Give the two physical caps and one cash constraint, explicitly including current income. Explain that tenure persists, the old can resize, and the estate is warm glow. One compact demographic equation is sufficient; all quantities count adult households.
+
+\textbf{Slide 2: Competitive housing and the dated allocation.} State the reference equilibrium and equal remaining-utility weights. Show the primitive old-resource/current-cash maximum in \eqref{eq:primitivegap} and the adult-space gap $\alpha\bar h^o-\gamma\bar s$. State that the planner chooses both current consumption and housing and relaxes both financial restrictions. Do not label the result Pareto efficiency.
+
+\textbf{Slide 3: Housing allocation.} Use the first illustration. In an uncapped two-household slice with fixed fertility and fixed pair housing $\mathcal H$, put young gross housing $h^y$ on the horizontal axis and marginal utility on the vertical axis. Draw the downward young curve $\alpha/(h^y-\kappa n)$ and the upward old curve $\gamma/(\mathcal H-h^y)$. Label the market point to the left of their crossing only for a pair satisfying the proved marginal gap; mark the rightward improving direction and the pairwise optimum. Shade forbidden housing beyond the young physical cap. The full-population aggregate claim is the adult-space/cap proposition, not an inference from that one pair. If the graphic instead depicts the full uncapped population, label the horizontal axis mean young housing and use the aggregate planner formula, not heterogeneous marginal utilities replaced by their means.
+
+\textbf{Slide 4: Fertility through current parents.} Display the numerator of \eqref{eq:fertilityderivative} to make the consumption--housing tradeoff visible. Then state Proposition~\ref{prop:joint}: the two resource comparisons and $H_R>\bar h^{y,\eq}$ imply higher average joint-planner fertility even with binding planner caps. Distinguish private fertility after the fixed-fertility allocation; its mean sign is not generally positive.
+
+\textbf{Slide 5: A funded local reform.} Introduce an unexpected permanent increase in the existing property tax, rebated equally to all current adults. State the restricted regime of Proposition~\ref{prop:transition}; show either the terminal derivative \eqref{eq:Ntau} or the impact identity \eqref{eq:impactfertility}, not the entire stability calculation. Explain that the borrowing constraints remain and future prices and estates reoptimize. The funded equilibrium result is not the dated settlement.
+
+\textbf{Slide 6: Demographic transition.} Use the second illustration with two aligned panels and calendar date on both horizontal axes. The upper panel is mean completed fertility, with a horizontal line at $1/\nu$. Start in $S_-$; at $t_0$ the exogenous taste decline produces the proved initial fall and the baseline eventually returns to replacement. At $t_p>t_0$, add the proved upward policy fertility difference at a common inherited state; both final paths return to replacement. The lower panel is $Y_t+O_t$, starting at $2N_-$, with destinations $2N_0$ for baseline and $2N_1>2N_0$ for policy. Both curves pass through the same population at $t_p$; the first population difference appears at $t_p+1$. A sufficiently small tax relative to the initial taste change can keep $2N_1<2N_-$. Mark only the proved impact and endpoint arrows. Intervening dashed connectors must be labeled schematic: the analytical theorem permits overshooting and damped oscillation, and does not order fertility at every date. End with the cumulative log-gap identity. Do not present a hand-chosen smooth path as a solved transition or place transition points on a stationary schedule.
+
+\section{Decisions and remaining scope}
+The main mathematical question does not require a new model amendment. Two author choices remain. First, whether the explicit $\phi=q$ benchmark and its locally inactive physical caps are acceptable for the market-reform illustration; the dated allocation results already have a separate genuinely capped construction. Second, whether the paper's policy claim is the proved fertility/population result or the stronger claim that reform raises individual young home sizes and living-household welfare. The latter needs the additional impact-housing and welfare tests, rather than a change in welfare weights.
+
+A large transition crossing tenure-cap or estate regimes remains outside the local theorem. The maintained model does not establish an unconditional property-tax welfare or housing-size effect. If retaining a direct larger-home reform mechanism is essential, testing larger rental homes is the smallest explicitly unadopted institutional extension: it changes one existing physical limit, but still requires funding, price adjustment, and a transition analysis. Adding real moving costs would change household and planner resource feasibility; a third age would change the lifecycle and inherited-state structure. Neither should be adopted merely to rescue a sign before the present local theorem is assessed.
+
+\section*{Sources checked}
+The connection to this literature is specific. Coven et al.'s two-period benchmark uses consumption utility and public-goods revenue, not the equal-cash-rebate parental-fertility problem here. Van Doornik et al. combine goods, education, fertility, and a space requirement, but not the present mortgage and persistent-tenure architecture. Neither supplies the dated welfare or demographic-transition theorem proved above.
+
+
+The supplied packet, \emph{Resolve the illustrative housing--fertility theory}, September 8--9, 2026, is the source of the maintained model, current welfare definition, earlier arguments to audit, and exposition instructions. Relevant supplied ranges are lines 21--48 (welfare and authority), 300--465 (households and equilibrium), 468--529 (existence certificate), and 533--764 (general-preferences memo). Earlier Pro responses in the packet are not treated as certified proofs.
+
+Joshua Coven, Sebastian Golder, Arpit Gupta, and Abdoulaye Ndiaye. \emph{Property Taxes and Housing Allocation Under Financial Constraints}. August 1, 2026 version. The two-period model and its propositions were checked, including the use of public goods in its revenue treatment.\par
+\url{https://abdouecon.github.io/research/papers/Property_Tax.pdf}
+
+Bernardus van Doornik, Dimas Fazio, Tarun Ramadorai, and Janis Skrastins. \emph{Housing and Fertility}. Banco Central do Brasil Working Paper 612, December 6, 2024 version. Section 2's goods, education, fertility, and space restrictions were checked.\par
+\url{https://bcb.gov.br/content/publicacoes/WorkingPaperSeries/WP612.pdf}
+
+Matthias Doepke, Anne Hannusch, Fabian Kindermann, and Mich\`ele Tertilt. \emph{The Economics of Fertility: A New Era}. NBER Working Paper 29948, 2022; published handbook chapter, 2023. The author/institutional abstract was consulted for broad positioning only; no efficiency or transition proposition above is attributed to this survey.\par
+\url{https://www.ipr.northwestern.edu/our-work/working-papers/2022/wp-22-18.html}
+
+\end{document}

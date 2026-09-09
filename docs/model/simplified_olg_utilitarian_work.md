@@ -1,5 +1,18 @@
 # Utilitarian housing note: work record
 
+## September 9: consolidated proposal
+
+The author-approved dated planner and the overnight consolidated review now
+have a single proposed note and seven slides, indexed in
+`latex/JMP_DS_suggestions/README.md`. The current assessment is
+`output/model/simplified_olg_amendments/overnight_review.md`.
+The proposal replaces the earlier standalone patience condition with an
+explicit old-income/current-cash benchmark. It preserves separate fixed-n,
+private-fertility and joint-planner comparisons. A local deterministic tax
+transition is proved with strict young finance; its cap and welfare
+restrictions remain explicit. The general-preferences branch remains separate.
+Older entries below record the route taken and are not current theorem claims.
+
 ## Scope and time budget
 
 September 8, 2026, starting 15:26 UTC. A focused two-hour pass, with research

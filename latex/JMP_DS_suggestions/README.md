@@ -7,6 +7,29 @@ into the protected draft by hand.
 Use clear, task-specific filenames. Do not overwrite or synchronize files in
 the protected draft directory.
 
+## Consolidated theory proposal (9 September 2026)
+
+The new [full note](../../output/pdf/simplified_olg_consolidated_theory.pdf)
+starts from the maintained household model, states the full dated utilitarian
+planner, derives a primitive income condition for more young housing, separates
+private from jointly chosen fertility, and proves a local tax transition from
+a common inherited state. The appendix includes an analytical equilibrium
+family with binding rental caps and a separate general-preferences discussion.
+Source: [simplified_olg_consolidated_theory.tex](simplified_olg_consolidated_theory.tex).
+
+The accompanying [seven-slide proposal](../../output/pdf/simplified_olg_consolidated_slides.pdf)
+contains the household problems, equilibrium, planner, housing-allocation
+figure, fertility conditions and the two-panel transition illustration.
+Source: [simplified_olg_consolidated_slides.tex](simplified_olg_consolidated_slides.tex).
+The last figure is explicitly a first-order illustration of the analytical
+transition, not a calibrated or nonlinear simulated path.
+
+The [morning assessment and verification record](../../output/model/simplified_olg_amendments/overnight_review.md)
+separates established results from their restrictions. These are proposals;
+neither the protected manuscript nor the main seminar deck was overwritten.
+The new note supersedes the September 6 statement below that consolidation
+remains to be done. Earlier documents are retained as historical alternatives.
+
 ## Current full-note status (6 September 2026)
 
 Tommaso has placed the new mixed-tenure transition and stationary welfare

@@ -1,13 +1,39 @@
 # Simplified OLG amendment checks
 
+## September 9 consolidated deliverables
+
+- [Theory note](../../pdf/simplified_olg_consolidated_theory.pdf), with
+  [source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_theory.tex).
+- [Seven-slide proposal](../../pdf/simplified_olg_consolidated_slides.pdf), with
+  [source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_slides.tex).
+- [Morning assessment](overnight_review.md) and [PDF verification](consolidated_pdf_qa.md).
+- [Full captured Pro answer](oracle_consolidated_theory_response.md) and
+  [original proof source](oracle_consolidated_theory_source.tex).
+- Independent final Pro checks: [static](overnight_pro_static_review.md) and
+  [transition and welfare](overnight_pro_transition_review.md).
+- Separate working extension: [arbitrary positive ownership shares](overnight_binding_ownership_extension.md),
+  [welfare](overnight_binding_welfare_independent.md), and
+  [second review](overnight_allshare_second_review.md).
+
+Reproduce the two-panel analytical illustration from the project root with
+`MPLCONFIGDIR=/private/tmp/theory-matplotlib python3 code/model/tools/build_simplified_olg_theory_figures.py`.
+It requires NumPy and Matplotlib. The driver verifies the chosen primitive
+region and the linear equilibrium residuals; numerical roots are used only to
+draw the proved first-order solution. The parameter and endpoint receipt is
+`consolidated_transition_figure.json`.
+
+Compile each TeX source twice, sequentially, from `latex/JMP_DS_suggestions/`
+with `pdflatex`, directing build files outside the protected draft. Copy only
+final PDFs to `output/pdf/`. No quantitative-model or calibration run is needed.
+
 ## Overnight continuation — September 8–9
 
 The author submitted the consolidated review in
 [this Pro chat](https://chatgpt.com/c/6aa0cfc4-2494-83e9-a1a7-99f5317cab64)
 and authorized focused overnight iteration. The live
 [work record](overnight_review.md) identifies the active response, independent
-proof checks, next action, and morning deliverables. The existing heartbeat
-is active through the morning assessment. The packet-preparation status below
+proof checks, next action, and morning deliverables. The overnight heartbeat was paused at 12:19 UTC after its morning cutoff.
+The completed Pro response and independent proof reviews are preserved here. The packet-preparation status below
 describes the earlier handoff, not the current running status.
 
 ## Consolidated review packet, prepared for manual submission
