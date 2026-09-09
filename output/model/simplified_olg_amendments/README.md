@@ -1,5 +1,45 @@
 # Simplified OLG amendment checks
 
+## September 9 bounded test of an additional working-age stage
+
+The author requested an analytical tractability test before adopting the proposed
+young--mature--old model. The [four-page calculation](../../pdf/three_stage_tractability_test.pdf)
+and [source](three_stage_tractability_test.tex) summarize the result. All budgets,
+derivations, finite primitive bounds and independent checks are consolidated in
+[one supporting record](three_stage_tractability_evidence.md). This is a model
+experiment; the September 14 deck and the maintained two-age model are unchanged.
+
+An intermediate earning stage permits full mortgage repayment and saving before
+retirement with 80% origination LTV. Fixed-fertility owner choices reduce to a
+quadratic; chosen fertility gives a unique relevant cubic root and a decreasing
+explicit map from that root to mature/young resources. The saving condition
+\(\beta(1+\gamma+\omega_B)D>\alpha q\) and old estate condition remain
+substantive. Positive mature saving makes the candidate's additional mature
+credit restriction slack in the verified family.
+
+There is a finite, primitive, heterogeneous stationary-existence construction
+with endogenous logistic tenure at every fixed \(\phi\in(0,1)\), initially
+at zero tax and then for a sufficiently small positive-tax interval. It gives
+young competitive housing below one third of the stock and full fixed-fertility
+planner young housing above one third. The proof uses high mature income,
+sufficient estate demand and housing capacity; young rental caps are slack,
+while mature and old rental caps bind. Its income bounds can be large. The
+tax extension has no explicit maximal tax rate, and the construction establishes
+existence inside its price bracket, not uniqueness or every equilibrium globally.
+
+A further finite strengthening makes every young household gain current goods
+and housing under the planner. Each then prefers higher fertility at the same
+continuation opportunities. That is a conditional private fertility result;
+future aggregate feasibility, a joint-fertility planner and a policy transition
+are not established. The separate conditional 2.5--2.8 mature/young income-ratio
+example is not an equilibrium proof. No numerical model runs were used.
+
+Four bounded independent scopes checked the household, finance, planner and
+equilibrium arguments; a second review checked the equilibrium inequalities and
+closure. The four-page PDF was compiled and every page visually inspected.
+No main slide or manuscript edit was made. The author has not adopted the extra
+stage, child needs in both family ages, or the mature financial lower bound.
+
 ## September 9 integration into the Monday seminar deck
 
 The presentation reference is now the full

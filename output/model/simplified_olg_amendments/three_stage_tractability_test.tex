@@ -1,0 +1,258 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\newcommand{\E}{\mathbb E}
+\begin{document}
+\begin{center}
+{\Large Housing over three stages of life}\\[4pt]
+{\large A test of the proposed change}\\[3pt]
+September 9, 2026
+\end{center}
+
+Adding a mature working period can generate the intended housing comparison
+with an 80\% mortgage. It also permits analytical household solutions. It
+does not, by itself, deliver a simple formula for equilibrium prices or a
+fertility result along a policy transition. This calculation tests the change;
+it does not replace the model in the seminar deck.
+
+\textbf{1. What changes.}
+A household is young, mature, then old. Its incomes are $y^y,y^m,y^o$,
+and its initial financial endowment is $b$; write $w=y^y+b$.
+Income and wealth may differ across households. Fertility $n$ is chosen when
+young. Children require goods and space in both family stages:
+\begin{align*}
+u^y&=\log(c^y-\chi n)+\alpha\log(h^y-\kappa n)+\vartheta\log n,\\
+u^m&=\log(c^m-\chi n)+\alpha\log(h^m-\kappa n),\\
+u^o&=\log c^o+\gamma\log h^o+\omega_B\log e.
+\end{align*}
+Lifetime utility is $u^y+\beta u^m+\beta^2u^o$, plus the existing tenure
+taste. Here $e$ is the estate, including the retained home's liquidation value.
+Tenure is retained, homes can be resized, and each home's size is bounded by
+$H_R$ or $H_O$, with $H_R<H_O$.
+
+At a stationary price $P$, let $q$ be the price of a bond paying one unit next
+stage, $\tau$ the property-tax rate, and $T$ the common rebate. The current
+cost of housing services is $p=DP$, where $D=1-q+q\tau$.
+Net financial assets entering maturity and old age are $a_m$ and $a_o$.
+An owner's budgets are
+\begin{align*}
+c^y+qa_m+(1+q\tau)Ph^y&=w+T,
+&qa_m+\phi Ph^y&\ge0,\\
+c^m+qa_o+(1+q\tau)Ph^m&=a_m+Ph^y+y^m+T,
+&a_o&\ge0,\\
+c^o+qe+ph^o&=a_o+Ph^m+y^o+T,
+&e&\ge Ph^o.
+\end{align*}
+A renter pays $ph$ at each age, has no housing-sale receipts, and faces
+$a_m,a_o\ge0$. Its old budget is $c^o+qe+ph^o=a_o+y^o+T$.
+The original logistic tenure choice and the common rebate are retained.
+
+\textbf{The economic difference is the repayment date.}
+When the young mortgage binds, resources on entry to maturity are
+\[
+\boxed{\quad y^m+T+(1-\phi/q)Ph^y.\quad}
+\]
+The entire mortgage is repaid, including interest. Mature earnings can cover
+that repayment before retirement. The tested restriction $a_o\ge0$ forbids
+negative net financial wealth at retirement; it is an additional institutional
+choice. Where the derived $a_o$ is strictly positive, permitting mature
+refinancing leaves the household optimum unchanged.
+
+\newpage
+\textbf{2. How much can be solved explicitly?}
+
+Consider an owner whose young mortgage binds, who saves when mature, and whose
+housing caps and old estate floor are slack. Let $x=c^y-\chi n$ and
+$s=h^y-\kappa n$ be young consumption and space after child needs. Define
+\begin{gather*}
+W=w+T,\qquad U=y^m+qy^o+(1+q)T,\\
+L=(1-\phi+q\tau)P,\quad \delta=(1-\phi/q)P,\quad
+t=\chi+\kappa p,\quad t_L=\chi+\kappa L,\quad d=t-\kappa\delta,\\
+K=1+\gamma+\omega_B,\qquad G=1+\alpha+\beta K.
+\end{gather*}
+Let $x^m=c^m-\chi n$ and $s^m=h^m-\kappa n$ denote mature adult consumption
+and space. Mature resources after child needs are $B=U+\delta s-dn$.
+The continuation choices are
+\[
+x^m=\frac BG,\quad s^m=\frac{\alpha x^m}{p},\quad
+c^o=\frac{\beta x^m}{q},\quad h^o=\frac{\gamma\beta x^m}{qp},\quad
+e=\frac{\omega_B\beta x^m}{q^2}.
+\]
+
+\textit{Fixed fertility.} Set $A_y=W-t_Ln$ and $A_m=U-dn$.
+Young space solves a strictly concave, one-variable problem:
+\[
+\max_s\ \log(A_y-Ls)+\alpha\log s+\beta G\log(A_m+\delta s).
+\]
+Its first-order condition is the quadratic
+\[
+\boxed{\begin{aligned}
+0={}&\alpha A_yA_m+
+\big[\delta A_y(\alpha+\beta G)-(1+\alpha)LA_m\big]s\\
+&-\delta L(1+\alpha+\beta G)s^2.
+\end{aligned}}
+\]
+Select the root with $s>0$, $A_y-Ls>0$, and $A_m+\delta s>0$.
+This holds at general $\phi$, including $\phi=.8$.
+
+\textit{Chosen fertility.} Put $r=\beta x/x^m$ and $E=1+\alpha+\vartheta$.
+Then
+\[
+s=\frac{\alpha x}{L-\delta r},\qquad
+n=\frac{\vartheta x}{t_L+dr},\qquad
+x=\frac{W+Ur}{E+\beta G},
+\]
+where $r$ solves
+\[
+\left(1+\frac UW r\right)
+\left(1+\frac{\alpha L}{L-\delta r}
++\frac{\vartheta t_L}{t_L+dr}\right)=E+\beta G.
+\]
+Clearing denominators gives a cubic. Its economically relevant root is unique.
+The income ratio $U/W$ is strictly decreasing in that root: higher mature
+resources relative to young cash lower $r$. Thus a condition $r<r_*$ can be
+written as an explicit income-ratio inequality without solving the cubic.
+
+These formulas must satisfy $0<r<q$, the housing limits, and
+\[
+a_o=\left(\frac{\beta K}{q}-\frac\alpha D\right)x^m
+-(y^o+T)-\kappa Pn>0,\qquad \omega_BD>q\gamma.
+\]
+In particular, $\beta KD>\alpha q$ is necessary for this saving regime.
+Higher mature earnings alone cannot repair a failure of that inequality.
+
+\newpage
+\textbf{3. The planner and fertility comparisons remain short.}
+
+At the stationary reference, match the common distribution of types and tenure
+across the three current ages. Bars denote means under this distribution.
+Hold fertility, future real opportunities and old estates fixed. The planner
+chooses all current consumption and housing, giving equal weight to the
+remaining utility of each current household. It respects both current resource
+constraints and each household's tenure cap, and may relax private finance limits.
+
+After subtracting the fixed child needs, total current goods are
+$\bar x^y+\bar x^m+\bar c^o$. Hence every household receives adult consumption
+\[
+X=\frac{\bar x^y+\bar x^m+\bar c^o}{3}.
+\]
+For a type with fertility $n_i$ and cap $H_i$, planner housing is
+\[
+h_i^{y,F}=h_i^{m,F}=\min\{H_i,\kappa n_i+z\},\qquad
+h_i^{o,F}=\min\{H_i,(\gamma/\alpha)z\},
+\]
+where $z$ clears the housing stock. Title and financial-claim adjustments keep
+future entering resources and net estates fixed. The required current transfers
+sum to zero because current goods and housing totals are unchanged.
+
+When planner caps are slack, the young receive more housing exactly when
+\[
+\boxed{\quad
+\alpha(\bar s^m+\bar h^o)>(\alpha+\gamma)\bar s^y.
+\quad}
+\]
+At $\alpha=\gamma$, mature and old adult space together must exceed twice
+young adult space. The mature cohort is part of the comparison.
+
+A particularly simple sufficient statement also allows binding caps. If
+$\alpha\ge\gamma$, fertility is positive and some total capacity is unused,
+the planner gives each family age more than one third of the housing stock.
+Therefore, if the competitive young hold at most one third, their aggregate
+housing rises. This is a utilitarian allocation comparison, not a Pareto claim.
+
+\textit{Private fertility after a current allocation change.}
+Children still require goods and housing when mature. The private condition is
+\[
+\frac{\vartheta}{n_i}
+=\frac\chi{x_i^y}+\frac{\alpha\kappa}{s_i^y}
++\beta\left(\frac\chi{x_i^m}+\frac{\alpha\kappa}{s_i^m}\right).
+\]
+Give a parent its new current consumption and housing bundle, while preserving
+its continuation problem. At the original fertility, the future marginal cost
+is the same in both comparisons. Strict concavity then gives
+\[
+\boxed{\quad n_i^{\rm new}>n_i
+\quad\Longleftrightarrow\quad
+\chi\left(\frac1{x_i^y}-\frac1X\right)
++\alpha\kappa\left(\frac1{s_i^y}-\frac1{s_i^{y,F}}\right)>0.\quad}
+\]
+Thus more housing and weakly more adult consumption increase fertility.
+A housing gain alone need not do so. This is a household comparison at the
+same continuation opportunities; a market policy changes prices and future
+choices as well, and needs its own argument.
+
+\newpage
+\textbf{4. What the equilibrium check establishes.}
+
+There is an analytical stationary-equilibrium construction with arbitrary
+fixed $\phi\in(0,1)$, including $.8$. Young and old endowments have bounded
+heterogeneous support. Mature earnings are sufficiently high relative to
+young cash resources. Take $\alpha\ge\gamma$. At zero tax, also require
+\[
+\omega_B(1-q)>q\gamma,\qquad
+\beta(1+\gamma+\omega_B)(1-q)>q\alpha.
+\]
+Finite inequalities bound the required mature earnings, rental capacity and
+owner capacity. On an explicit positive price interval they imply: young
+owners borrow maximally; mature owners save; both later owner homes exceed
+the young home; and mature and old renters occupy their rental cap while
+young renters remain below it. The cap still affects young fertility through
+the family's future mature housing needs.
+
+Both tenure-specific fertility choices exceed replacement at the lower price
+and fall below it at the upper price. These inequalities hold type by type,
+so endogenous logistic tenure shares preserve them after aggregation.
+Continuity gives a stationary equilibrium inside that interval. At such an
+equilibrium the young hold less than one third of housing. The fixed-fertility
+planner described on page 3 gives them more than one third.
+
+This is an analytical existence proof with finite primitive bounds, not a
+numerical equilibrium followed by a neighbourhood argument. It is nevertheless
+a deliberately strong sufficient construction: the earnings bounds can be
+large, and it does not establish the ordering in every possible equilibrium
+outside the constructed price interval.
+
+Further finite bounds on mature earnings and rental capacity make every young
+household receive both more consumption and more housing under the dated planner.
+The private fertility test on page 3 is then strictly positive for every young
+parent. This establishes a conditional fertility response at unchanged
+continuation opportunities, not a future market-clearing allocation.
+
+\textit{Taxes.} The strict construction extends to sufficiently small positive
+rebated property taxes. That extension uses continuity and a two-variable
+fixed-point argument; the maximal admissible tax rate has not been derived.
+Independently, every stationary equilibrium obeys the explicit rebate bound
+\[
+T\le
+\frac{\tau(\bar w+q\bar y^m+q^2\bar y^o)}
+{(1-q)[3q-\tau(1+2q)]},
+\qquad \tau<\frac{3q}{1+2q}.
+\]
+This bound alone does not establish the desired household regime at a chosen tax.
+
+\textit{A less extreme household check.} With $q=.5$, $\tau=.1$, $\phi=.8$,
+$\alpha=\gamma=\vartheta=\kappa=1$, $\omega_B=2$, and
+$\beta\in[.49,.5]$, an explicit conditional income interval delivers binding
+young credit, mature saving and larger old homes with mature resources between
+$2.5$ and $2.8$ times young resources. This check also requires
+$\chi/(\kappa p)\ge10$ and comparable young and old cash resources.
+It verifies household feasibility; it is not the stationary construction above.
+
+\textbf{Assessment.} The extra earning stage can generate the intended housing
+mechanism with conventional origination finance. Fixed-fertility household
+choices are quadratic; endogenous fertility is cubic. With heterogeneous types
+and tenure choice, stationary prices still solve aggregate clearing equations,
+and have no demonstrated closed-form solution. A short general primitive
+condition covering housing, fertility and a policy transition has not been
+obtained. The model change therefore merits consideration, but this calculation
+does not justify replacing the seminar theory wholesale.
+
+\small Full budgets, derivative checks and the finite equilibrium inequalities
+are retained together in the existing simplified-OLG evidence folder,
+in \nolinkurl{three_stage_tractability_evidence.md}. No numerical model runs were used.
+\end{document}
