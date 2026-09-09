@@ -5,6 +5,39 @@ learn the entire transition immediately at its onset; calibrate observations
 along the transition; pursue sequential and simultaneous fertility nests in
 parallel under the presentation time constraint.
 
+## Read first: what is established and what remains
+
+Both the sequential model and the simultaneous fertility-nest model pass the
+full historical perfect-foresight calculation at supplied prices. The old
+steady-state normalization, stationary terminal equilibrium, twelve target
+measurements, and household/person accounting have also passed. This establishes
+that the matched calculation works; it does not yet establish a calibrated
+historical equilibrium. All eleven inherited parameter values and all target
+weights are unchanged. Households know the transition from 2007. Historical
+age composition is imposed from the observed age profiles through 2023; the
+person-demographic model advances the population afterward. Thus this is a
+conditional historical fit, not yet a fit to the historical population path.
+
+The current numerical priority is to clear markets at every date and test the
+endpoint assumption. The short sequential run reduced its largest market gap
+from 71.08% to 0.0312%, reproduced all its tables exactly, and is continuing toward
+the unchanged 0.02% tolerance. A separate 28-date sequential root is running.
+The nested short root runs alongside it. Job identifiers and output locations
+are in `execution_20260909_meeting.json`; the detailed records below are dated
+checkpoints, not claims that every earlier job remains active.
+
+The main remaining empirical decision concerns two ACS family-group definitions
+and the comparison of four pooled ACS rows with a 2023 model cross-section.
+The new date comparison preserves the original samples and weights. It finds
+material changes in the two family gaps, smaller changes in aggregate ownership
+and rooms. It does not change the calibration contract or reopen the
+Sun–Abraham childbirth regression.
+
+The historical baseline has a 1% annual property tax and no rebate. Holding the
+2023 fertility-preference intercept constant afterward is an explicit diagnostic
+continuation. Neither this continuation nor a new matched policy comparison
+has been promoted as a final benchmark.
+
 ## Meeting work, September 9
 
 Normalized old states passed in both arms (jobs17277586/17277587). Terminal
@@ -348,3 +381,49 @@ Nested short root17279843 remains in its original snapshot C; its second
 valid mapping reduced the maximum gap from0.709334to0.293138. It is separate
 from these sequential continuations. No parameter calibration, new production
 policy, or benchmark promotion has been launched.
+
+The first D restart mapping reproduces the C best market residual exactly.
+All twelve target rows, eleven parameter rows and measurement records are
+byte-identical across versions. Every dated economic value also agrees; the
+only four path-file differences are source-location labels in historical age
+audit records, with identical input hashes. The optional inherited2023 stock
+checkpoint was written and reloaded successfully (13.5MB, kept on Torch).
+Receipt: `meeting_receipts/restart_driver_reproduction.json`. This checks the
+updated driver in the real full-grid loop, not just unit tests.
+
+## Latest handoff, 19:52 UTC
+
+The short sequential continuation17281783 finished four calls with exact full
+fit/parameter/market/measurement replay. Its gap0.00031196 remains above the
+0.0002gate. Further continuation17282612 has four fresh paths, a30-minute
+watchdog and35-minute allocation. Nested root17279843 finished five calls
+with the same complete replay checks; its gap is0.01576076. Continuation
+17282613 permits six fresh paths, expected about58minutes,70-minute watchdog
+and75-minute allocation. Both run from hash-pinned completed receipts and
+unchanged source D. The longer sequential root17281784 has completed two
+valid mappings, reducing its maximum gap from0.396347to0.195309.
+
+The corrected fixed-policy tail-sizing diagnostic17282572 passed two actual
+stationary updates (maximum distribution/person difference below1e-8), two
+anchor updates, and an exactly matching start of the full forecast. It required
+zero Bellman solves. Starting from the supplied-price2119anchor, the existing
+terminal level/distribution thresholds first pass in2387 after67additional
+four-year updates (95dates from2007), taking109.55seconds. This is conditional
+on fixed terminal policy/prices, not a prediction of the horizon needed by a
+re-cleared equilibrium. It confirms that terminal population adjustment can
+be much slower than household lifetimes; historical price/moment stability
+still needs its separate controlled check. Receipts and verification:
+`meeting_receipts/tail_sizing_02/`.
+
+The first tail-sizing job17282386 is invalid and must not be used: its extra
+diagnostic wrapper omitted activation of the sequential calendar routines.
+The corrected wrapper matches the maintained forward block line by line and
+adds the stationary check. Main market-root drivers already performed the
+required activation and are unaffected. The first invalid script/output stays
+on Torch under tail_sizing_01; the local exclusion receipt records the cause.
+Before accepting a reused smoke launcher, verify both smoke receipts contain
+exactly two completed updates; bounded timeout exit alone is insufficient.
+
+No calibrated PF benchmark or matched production policy result is claimed.
+Current decisions remain empirical family-group/calendar alignment and the
+future preference continuation; no target or weight has changed.

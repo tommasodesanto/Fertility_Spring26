@@ -1,0 +1,112 @@
+{
+  "arm": "nested",
+  "best": {
+    "mapping_valid": true,
+    "payload": {
+      "directory": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909a/output/historical_root_01/nested/evaluation_004",
+      "loss": 129.3033438020599,
+      "summary_sha256": "f7eb913e87d7c66e6cadd7eb39395d185d869ce0f7732321061e31c5c32aae5f",
+      "terminal_distance": {
+        "all_checks_pass": false,
+        "candidate_household_heads_model_units": 1.2398938559662394,
+        "candidate_resident_persons_model_units": 2.9597381213841296,
+        "candidate_terminal_year": 2055,
+        "checks": {
+          "asset_price_relative_gap": false,
+          "equal_transfer_relative_gap": true,
+          "household_heads_relative_gap": false,
+          "normalized_head_age_sex_l1": false,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": false,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": false,
+          "resident_persons_relative_gap": false
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.20902309276413267,
+          "equal_transfer_relative_gap": 0.0,
+          "household_heads_relative_gap": 0.8250765813533427,
+          "normalized_head_age_sex_l1": 0.11081209188761051,
+          "normalized_household_distribution_l1": 1.226471745509354,
+          "normalized_person_age_sex_l1": 0.11452076979043044,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 1.4703907794587792,
+          "resident_persons_relative_gap": 0.7947713368707654
+        },
+        "reference_household_heads_model_units": 0.6793653858879857,
+        "reference_resident_persons_model_units": 1.6490892519737455,
+        "reference_terminal_year_label": 2100,
+        "status": "not_converged",
+        "tolerances": {
+          "asset_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_head_age_sex_l1": 0.02,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "psi_absolute_gap": 0.001,
+          "renter_price_relative_gap": 0.01,
+          "resident_persons_relative_gap": 0.01
+        }
+      }
+    },
+    "prices": [
+      0.6492884703766373,
+      0.6703550728343192,
+      0.6883741312242827,
+      0.7003007012243351,
+      0.7074942732225027,
+      0.7151527680271063,
+      0.713352405923912,
+      0.7047230219049209,
+      0.6873110446662188,
+      0.658826925146138,
+      0.6182122433019777,
+      0.5608783339867233
+    ],
+    "residual": [
+      0.0002108342712852987,
+      0.0003729154105216618,
+      0.0006554023151041693,
+      0.000744295598508151,
+      0.0020888257132256147,
+      -0.001083120692324455,
+      0.0008358258244774291,
+      -0.002176555188772311,
+      -0.0034249134851075474,
+      0.0016049902749256228,
+      0.01183952978018221,
+      0.015760764109735384
+    ],
+    "score": 0.015760764109735384,
+    "x": [
+      -0.4318781766303784,
+      -0.3999477475218346,
+      -0.3734227934677908,
+      -0.3562454630012533,
+      -0.3460257438826593,
+      -0.33525909753414085,
+      -0.337779722715272,
+      -0.3499504300967596,
+      -0.3749683313398418,
+      -0.41729441152877644,
+      -0.4809234447212912,
+      -0.5782512704438425
+    ]
+  },
+  "calibrated_history": false,
+  "elapsed_seconds": 2834.5449206586927,
+  "evaluations": 5,
+  "final_reproduction_max_abs": 0.0,
+  "finite_horizon_market_converged": false,
+  "historical_equilibrium_certified": false,
+  "horizon_extension_verified": false,
+  "outstanding": [
+    "horizon extension and terminal convergence",
+    "production empirical group/date alignment",
+    "matched recalibration"
+  ],
+  "production_promoted": false,
+  "status": "evaluation_budget",
+  "terminal_distance_passed": false
+}

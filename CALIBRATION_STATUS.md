@@ -100,6 +100,19 @@ solves, not new parameter calibrations. Full receipts and launch contracts:
 `output/model/e5f_matched_pf_20260909a/`; live job index
 `execution_20260909_meeting.json`.
 
+**19:52UTC live handoff.** Short sequential continuation17281783 ends at
+maximum gap0.00031196 with exact full-fit replay; next continuation17282612
+has four calls/30minutes. Nested17279843 ends at0.01576076 with exact full-fit
+replay; continuation17282613 has six calls/70minutes. Long sequential17281784
+has two completed mappings, latest gap0.195309. All original gates remain.
+A separate cached-terminal-policy calendar forecast17282572 passes stationary
+invariance and exact-loop checks; from the2119anchor it first meets existing
+terminal level/distribution thresholds in2387 (67more periods, zero Bellman
+solves). This is conditional horizon sizing, not equilibrium certification.
+The initial sizing wrapper17282386 omitted the sequential-model activation and
+is explicitly invalid; main root drivers already activate it and are unaffected.
+Readout, exclusion receipt and complete verification are in the task output.
+
 **Urgent implementation, September 9.** Work is isolated at
 `tmp/e5f_matched_pf`, branch `codex/matched-perfect-foresight`, based on clean
 nested source `d122eb52`. The dated joint-policy adapter, historical age bridge,
