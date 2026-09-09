@@ -844,3 +844,30 @@ larger rental homes. Bank this as an OPTION, not an adopted change: specify
 which rental-size/tenure-conversion restriction is relaxed and preserve the
 housing resource constraint and any real conversion costs. The current
 benchmark still retains both caps.
+
+## Separate general-preferences branch
+
+At the author's request, `simplified_olg_general_preferences.md` explores
+the same dated planner and household budgets under general increasing,
+concave utility. This is a separate analytical branch; no main-model, paper,
+slide or policy specification changed. An Astra/max reviewer derived the
+general housing conditions and common-housing-function results; the lead
+checked them and added the general fertility derivation and functional-form
+comparison.
+
+The competitive marginal housing gap, including old estate-floor and
+housing-cap terms, does not require logarithms. Arbitrary concavity alone
+does not establish an age ordering or a positive fertility response to more
+housing. The additive class f(x)+alpha g(s)+v(n), with increasing strictly
+concave components, preserves both positive conditional resource effects on
+fertility; the current logarithmic form is one member. A common strictly
+concave housing function also preserves equal adult space at the uncapped
+planner optimum when alpha=gamma, and the half-stock housing lemma when
+alpha>=gamma with retained caps. Those allocation lemmas do not derive the
+competitive reference ordering from primitives.
+
+Generic aggregation for joint-planner fertility, sufficient primitive
+equilibrium conditions, existence/uniqueness and policy transitions remain
+unproved in this branch. The next main Pro review should remain distinct
+from this exploration; neither arbitrary preferences nor a new patience
+restriction has been adopted.
