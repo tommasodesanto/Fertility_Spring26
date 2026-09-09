@@ -1,40 +1,48 @@
-# Rebated property-tax paths through 2063
+# Rebated property-tax paths: completed morning packet
 
-Purpose: establish persistence of the new calibration's tax-policy fertility and housing responses, with special attention to young parents. Annual 1% versus 2%, equal rebates in both paths. No calibration or production promotion.
+Both paths completed all11dates2023–2063. Annual1% versus2%, each rebating its own revenue equally per household. Selected simultaneous fertility-nest calibration fixed at loss23.791955; all12targets and11estimated parameters unchanged. No production promotion.
 
-Both paths begin with the same verified 2023 inherited population, selected parameters, historical queue and dated supply rule (elasticity 0.63). Preferences stay at the selected 2023 values. Closed-national diagnostic: no outside entries, full retention, adjusted births converted to household entrants using 1/2.1 with the maintained twenty-year lag. No future Census reweighting, person-demography replacement, supply reanchoring or fiscal changes. This is a path of household-unit temporary equilibria, not a resident population forecast or perfect-foresight transition.
+## Read first
 
-Outstanding assumptions remain visible: household formation/headship and the transition from historical empirical age weights to endogenous entrants are unresolved. Record entry cohorts and queue explicitly. Policy-induced household-mass differences must be zero before 2043.
+- Morning PDF: `../../pdf/rebated_property_tax_morning_20260909.pdf` (27pages:8readout/calibration pages,19standard diagnostic appendix pages).
+- Complete374standard PNGs and receipts: `../../pdf/rebated_tax_complete_graphs_20260909.zip`.
+- `morning_packet/READOUT_VERIFIED.md`: all11dated effects.
+- `morning_packet/report_manifest.json`: complete report content, target/parameter tables, source/image hashes.
+- `morning_packet/verification.json`: independent numerical/result checks.
+- `morning_packet/graph_verification.json`: all22dated graph packets and374images verified.
+- `results/`: complete collected tables/receipts;52large checkpoints remain onTorch.
+- `graphs/v2/full/`: complete final standard graphs. Original `graphs/smoke/` is superseded and must not be used.
 
-## Run design and stop rules
+## Main result
 
-Two parallel smoke paths through 2023 and 2027 use the exact intended solve/replay/audit/advance loop. Each2023 endpoint must reproduce the independently verified tax equilibrium. Only after BOTH smokes pass, run the two full paths at eleven dates (2023–2063). Full paths repeat their own 2023/2027 smoke checkpoints and quantities. A final collector requires both full paths.
+By2063, births per household rise1.049670%, total births1.251306%, young ownership2.154084percentage points, and young-parent ownership1.745674points. Young rooms fall4.497144%; young-parent rooms fall4.183808%. Thus the fertility gain persists while occupied housing space contracts. Initial purchase prices fall4.801637%, yet ongoing rent/user cost rises18.177669%. The verified impact decomposition is in `../e5f_simple_fertility_tax_channels_20260908a/results/`.
 
-26 coupled equilibrium solves plus26 fresh fixed-price replays, including four smoke dates and22 full dates. Observed tax endpoint time:2m28s–2m45s, peak memory6.49–6.79GiB. Expected elapsed compute roughly35–45minutes with the two paths parallel, allowing extra checkpoint/advance costs; queue time additional. Each path reserves two CPUs and48GiB, with one numerical thread and memory headroom for harder roots. Each date has30minutes; each stage has4hours and a4h05 Slurm cap. Failed numerical gates stop that path and dependent jobs cancel; no retries, threshold relaxation or parameter changes.
+Young uses age nodes26,30,34; exact annual-age ACS alignment is unresolved. Parent groups have dependent children and their means include composition effects. Birth flows differ from the cohort completed-fertility calibration moment.
 
-Every date restores the selected fiscal transfer after the cached root, independently checks the ledger, performs a fresh full-policy replay, checks distribution/budget/feasibility/probabilities/value monotonicity, advances the existing cohort law and verifies mass/queue accounting. Save the complete dated state, next state, lifecycle/family tables, heartbeat every30seconds, latest completed date and selected-calibration summary. No new figures or monitoring automation.
+## Scientific contract and outstanding items
 
-The morning report compares births per household AND total births, household mass, entrants, rooms, ownership, prices and rebates, including young/dependent-child groups. If a path fails, retain and label the completed prefix. Complete calibration fit and parameter tables remain in `../e5f_simple_fertility_overnight_20260907a/morning_review/MORNING_REVIEW.md`.
+Same verified selected2023inherited population,2019post-advance entryqueue and dated supply elasticity0.63, without reanchoring. Closed national household-unit diagnostic: no outside entries, full retention, adjusted births/2.1, twenty-year lag. No future Census reweighting, person-demographic replacement, perfect-foresight transition or welfare calculation. Prices are perceived permanent at each temporary-equilibrium date. Household formation/headship and the historical-to-endogenous-entry handoff remain unresolved.
 
-Frozen contract SHA256: `ce80b6ad241bec9556d2f3d3cdccb9f89e0ccfdd5b2e80ddcd167ed5156b5b68`. Model/source/closure and both verified impact receipts are pinned in contract.json.
+Calibration still misses first-birth housing:0.443859versus0.720246rooms. Late-life ownership is almost universal. `income_audit/` independently confirms positive income–housing gradients. `owner_shape_audit/` traces ownership dips to rental/four-room value crossings, with six-room ownership notyet attractive. All inspected origin states havezero mass; grid sensitivity remains untested. The extraction wrote verified CSVs but metadata serialization failed; see its explicit partial receipt. No numerical problem was repaired by relabeling graphs.
 
-## Submitted jobs
+Frozen contractSHA256: `ce80b6ad241bec9556d2f3d3cdccb9f89e0ccfdd5b2e80ddcd167ed5156b5b68`.
+Scientific bundleSHA256: `4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8`.
+Targetfingerprint: `3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497`.
 
-Smoke array **17250629** runs both tax paths through2027. Full array **17250630** depends on both smoke tasks succeeding; collector **17250631** depends on both full paths. Invalid dependencies cancel automatically. Source `e483254a` on isolated `codex/fertility-nest-computation`. Compilation, CLI import and nine pure queue/policy/failure checks pass; lead reviewed the numerical loop and independent review checked cohort routing. All source/contract/endpoint artifact hashes and twenty-year lag verified on Torch. Actual two-date numerical smoke pending at submission.
+## Execution and validation
 
-Login-node `/tmp` was full during a harmless font-cache attempt; scratch has ample capacity. Job temporary files and Matplotlib cache explicitly use scratch. No user data was deleted.
+Smoke17250629 completed two exact-loop dates per policy; full17250630 completed eleven dates per policy; collector17250631 completed. Total26coupled roots plus26fresh fixed-price replays. Each branch2CPUs/48GiB with one numericalthread;4hour stage cap and30minutes per date. Checkpoints/queues/latest summaries per date and heartbeat30seconds. Numerical failures would stop the run without retry or relaxed tolerance. Both paths completed within the planned35–45minute compute envelope, with queue time additional.
 
-## Overnight supervision and morning packet
+Independent verification checked26dated packets,324collected artifact hashes and1,639conditions. All11effect rows recompute exactly. Max market residual1.50843e-5 (gate2e-4); fiscal imbalance2.42821e-5 (gate2.5e-5); mass error1.11022e-15. Occupied budget-violation masszero. Both2023impact equilibria and2023/27smoke paths reproduced. Initial states/queues agree; policy household mass cannot differ before2043 and passes that gate.
 
-The author explicitly requested overnight monitoring, a goal, complete results and the standard graphs. Active heartbeat `overnight-rebated-tax-results-and-graphs` runs every15minutes until the work is complete or08:00EDT Sept9. Sleep assertion PID64940 is recorded in awake_receipt.json and expires after12hours. Both smoke paths completed; full paths running. No figures will be written inside numerical run folders, preserving their manifests. Graph source and report builder are being prepared in the isolated worktree; no numerical model changes.
+Graph smoke17251384 and full17251389 completed. Each graph job1CPU/24GiB/20minutes, max4parallel, zero numericalsolves. The obsolete pending17250948 was cancelled after reporting QA. Reporting-only adapter corrects all-owner-product/conception probabilities and pre-choice first-birth risk weights; preserves17standard filenames; verifies native operator identities and unchanged inputs. Original scientific code and numerical manifests stay frozen. Source2803e5fa on `codex/fertility-nest-computation`; PDF builderd122eb52.
 
-Graph smoke **17250947** completed in16seconds with all17standard plots and zero modelsolves. Full graph array **17250948** exports22date/case packets after both numerical paths, at most4workers concurrently,20min/job. Figures and manifests remain separate from numerical outputs. The initial dependency on the already-completed numerical smoke was rejected because it had expired from Slurm's registry; no job was created. The graph driver independently verifies its completed receipt. A replacementgraphsmoke passed and fullgrapharray requires that success.
+## Reproduce and inspect
 
-## Next actions for the active goal
+The isolated worktree is `tmp/e5f_fertility_nest_compute_20260907a` under projectroot. PDF renderer: `code/model/tools/build_e5f_rebated_tax_morning_report.py --manifest <absolute morning_packet/report_manifest.json> --output <new absolute PDF path>`. Use bundled document Python; the manifest pins all content/images. Supplemental source recipe is retained in `morning_packet/build_manifest_and_supplemental.py`; graph verifier/packager in `morning_packet/verify_and_package_graphs.py`. The committed report manifest is authoritative for final captions and formatting changes.
 
-1. Monitor numerical full array17250630 and collector17250631. Latest observed successful dates were2023/2027/2031, with2035inprogress on the baseline branch. Stop and diagnose saved failures; do not treat incomplete paths as results through2063.
-2. After completion, collect `run/` with rsync excluding `*.pkl.gz`; retain checkpoints onTorch. Check local collected artifact hashes against receipts and independently recompute all comparison arithmetic. Verify full target/parameter tables against selected morning-review files and sums.
-3. Collect `graphs/full/` after graph array17250948 completes; verify all22manifests and374PNGs. The preserved17graphset exists for everydate and bothcases. Inspect endpoint diagnostics and transition summaries; no graph may silently change numeric source or units.
-4. Build the morning PDF with isolatedworktree `code/model/tools/build_e5f_rebated_tax_morning_report.py`, whose schema/CLI are in its source. Full verified calibration inputs are under `output/model/e5f_simple_fertility_overnight_20260907a/morning_review/selected/`; current taxchannels under `output/model/e5f_simple_fertility_tax_channels_20260908a/results/`. Narrative is lead-authored after finalresults. Include all12fits and11freeparameter bounds, channeldecomposition, all11datedeffects, youngparents, householdentrylaw limits, and establishedgraphappendix orcompletecompaniongraphset. Supplemental trajectory plots should be labeledsupplemental.
-5. PDFskill already read; artifact-start marker successfullyrun exactlyonce for onePDF inthisgoal. Use bundledruntime Python `/Users/tommasodesanto/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3`; PDFoutputunder`output/pdf/`. Render andvisuallyinspectbefore delivery. Do not rerun marker justbecause of contextcompaction. Do notwriteinside author-ownedJMP_DS_draft.
-6. Deliver completeorhonestpartial morningpacket, pause heartbeat`overnight-rebated-tax-results-and-graphs`, andmarkgoalcomplete onlywhenrequiredworkisactuallydone. CaffeinatePID64940 expiresin12h; neverstopanotherprocess. No duplicatejob/agent/automation.
+Complete graph regeneration from saved states uses `code/model/tools/run_e5f_simple_fertility_tax_graphs.py` and the recorded `graphs_v2_full.sbatch`, under the frozen Torch snapshot `/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a`. Use a fresh graph output root; never write plots inside numerical run folders. All scientific/target contract hashes and source pins must pass before reads. No new calibration is required to regenerate diagnostics.
+
+## Monitoring completion
+
+The author explicitly requested a goal, overnight monitoring, graphs and sleep prevention. Heartbeat `overnight-rebated-tax-results-and-graphs` is paused because the completed PDF is ready for delivery. CaffeinatePID64940 prevents idle/system sleep for12hours from its recorded start; it expires automatically. Keep power connected and lidopen for the assertion to serve its purpose. No additional computation is needed merely to fill the night.

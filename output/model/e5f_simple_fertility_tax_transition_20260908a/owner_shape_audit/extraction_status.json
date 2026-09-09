@@ -1,0 +1,56 @@
+{
+  "status": "csv_extraction_complete_metadata_serialization_failed",
+  "job_id": "17251510",
+  "checkpoint_sha256": "64e0357e1dc5c6911d4e349d4d71f437ad1b2b2b3bce7d86796497687c596ddd",
+  "input_hash_verified_before_and_after": true,
+  "hash_evidence": "extract.sbatch Python line 40 assertion preceded metadata failure at line 41, as recorded in extract-17251510.out",
+  "no_solves": true,
+  "rows": 33,
+  "inspected_origin_mass_sum": 0.0,
+  "selected_states": [
+    {
+      "wealth": "6.720930232558139",
+      "origin_mass": "0.0",
+      "wait_probability": "0.8359579254225042",
+      "attempt_probability": "0.16404207457749576",
+      "owner": "0.7004436719722225",
+      "renter": "0.2995563280277773",
+      "wait_owner": "0.5884725236216177",
+      "failure_owner_conceptionweighted": "0.009875199746601452",
+      "success_owner_conceptionweighted": "0.10209594860400344",
+      "conditional_wait_owner": "0.7039499306429758",
+      "conditional_attempt_owner": "0.6825757881872444",
+      "attempt_minus_wait_inclusive_value": "-3.5307729554687897"
+    },
+    {
+      "wealth": "9.857142857142858",
+      "origin_mass": "0.0",
+      "wait_probability": "0.8243960826124",
+      "attempt_probability": "0.1756039173875998",
+      "owner": "0.18281163892447658",
+      "renter": "0.8171883610755233",
+      "wait_owner": "0.10284962393963716",
+      "failure_owner_conceptionweighted": "0.011456039975691347",
+      "success_owner_conceptionweighted": "0.06850597500914807",
+      "conditional_wait_owner": "0.12475753598163707",
+      "conditional_attempt_owner": "0.4553543917152152",
+      "attempt_minus_wait_inclusive_value": "-3.3529063847856935"
+    }
+  ],
+  "ownership_drop_by_plan": {
+    "owner": -0.5176320330477459,
+    "wait_owner": -0.4856228996819806,
+    "failure_owner_conceptionweighted": 0.0015808402290898946,
+    "success_owner_conceptionweighted": -0.03358997359485537
+  },
+  "artifacts": {
+    "product_decomposition.csv": "372eead6ad522e98b59e86e7371641aa842419e33ae68024b724cd3c47c74811",
+    "saved_policy_brackets.csv": "9a67f8f84a87b75dbd2f35d58b65152a78fad7175c2e338b334f4a7656ffe793",
+    "state_decomposition.csv": "f384dc58ff3c81be818b2b122048535ef4f219f1be1c9e57d5706d5da6484342"
+  },
+  "limitations": [
+    "Absolute branch values Vd are not stored in the extracted policy object; reported branch gaps are recovered from positive GEV odds.",
+    "No grid refinement or Bellman optimization was performed; economic versus numerical origin remains unresolved.",
+    "All inspected z0 age30 childless renter origin grid states have zero saved pre-choice mass."
+  ]
+}

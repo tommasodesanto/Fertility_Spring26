@@ -1,8 +1,72 @@
 # Calibration Status
 
-Updated: `2026-09-08` (overnight search completed; selected result verified)
+Updated: `2026-09-09` (rebated tax paths and morning graph packet verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
+
+**September 9 morning: complete rebated-tax paths and graph packet verified.**
+Both eleven-date paths2023–2063 completed (full17250630; collector17250631).
+Independent audit:26dated packets including smokes,324local artifact hashes,
+1,639checks, exact recomputation of all11effect rows. Max market residual
+1.50843e-5<2e-4; fiscal imbalance2.42821e-5<2.5e-5; mass error1.11022e-15;
+occupied budget-violation masszero. Same inherited population, smoke reproductions,
+unchanged supply and entry queues; no household-mass divergence before2043.
+
+Annual2% versus1%, **equal household rebates in both paths**:
+
+| Outcome | 2023 | 2063 |
+|---|---:|---:|
+| Births per household | +0.509263% | +1.049670% |
+| Total adjusted births | +0.509263% | +1.251306% |
+| Young ownership | +1.235959pp | +2.154084pp |
+| Young occupied rooms | −4.281907% | −4.497144% |
+| Young-parent ownership | +0.106470pp | +1.745674pp |
+| Young-parent occupied rooms | −3.476742% | −4.183808% |
+| Asset price | −4.801637% | −7.591092% |
+| Household mass | 0% | +0.199542% |
+
+The selected calibration remains loss23.791955, with all12unchanged target fits
+and11free parameter bounds in the morning report. This is the maintained closed
+household-unit temporary-equilibrium diagnostic, not a resident forecast or
+production promotion. Headship/entry closure, annual-age alignment, first-birth
+rooms underfit and near-universal late-life ownership remain outstanding.
+
+Corrected full graph array17251389 completed:22packets,374standard PNGs, all
+hashes and native-operator reporting identities verified. Graph source2803e5fa;
+PDF builderd122eb52 on isolatedbranch. The corrected ownership dips are a saved
+rent-versus-four-room relative-value crossover before six-room ownership becomes
+attractive, not fertility weights or disappearing feasible products. All inspected
+origin states have zero population mass; numerical-grid sensitivity is untested.
+Read-only extraction17251510 wrote and hashed its CSVs but failed afterward in
+metadata serialization; its partial status is recorded, with no model solve.
+
+Morning PDF: `output/pdf/rebated_property_tax_morning_20260909.pdf`.
+Complete graphs: `output/pdf/rebated_tax_complete_graphs_20260909.zip`.
+Verified data, report manifest and audit records:
+`output/model/e5f_simple_fertility_tax_transition_20260908a/README.md`.
+The requested goal packet is complete; heartbeat supervision is paused. The
+12hour sleep assertion expires automatically.
+Earlier entries below are chronological submission/progress records, superseded
+by this completed readout where their running/pending labels differ.
+
+**September 9 reporting QA: corrections verified; numerical paths unchanged.**
+Corrected graph-only adapter `2803e5fa` is committed on the isolated computation
+branch. Smoke17251384 passed all17figures; full22-date export17251389 waits for
+numerical17250630. The obsolete pending17250948 was cancelled withzero runtime.
+Use graphs/v2 only. Ownership now integrates allfive owned products and
+conception outcomes, and first-birth hazards use the pre-choice population at
+risk. Native-operator comparisons and aggregate birth/housing identities pass;
+all25smoke artifacts match the graph manifest. Original scientific files,
+calibration and policies remain unchanged.
+
+Independent saved-state audit establishes a positive permanent-income housing
+gradient: all-age rooms2.999,6.379,9.438 across thethree groups. Distinct colors
+and external legends resolve the misleading visual interpretation. A separate
+real issue remains: ownership can fall sharply with wealth in the saved choice
+operator (age30,lowest income,0.70044 at wealth6.72093 versus0.18281 at9.85714).
+This is not the legacy plotting error. A bounded saved-state extraction is
+checking product and rental-plan composition; do not call it economically
+benign or a proven solver bug without further evidence.
 
 **September 8 night: author requests active monitoring and morning graphs.**
 An explicit goal is active for overnight supervision, verified results and the

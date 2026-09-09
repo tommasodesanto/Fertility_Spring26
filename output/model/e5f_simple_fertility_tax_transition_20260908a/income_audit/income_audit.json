@@ -1,0 +1,193 @@
+{
+  "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_tax_transition_20260908a/run/smoke/tax1-equal-rebate/date_2023/dated_state.pkl.gz",
+  "parameters": {
+    "alpha_cons": 0.733,
+    "sigma": 2.0,
+    "chi": 1.0537270178404272,
+    "theta0": 0.570349890219075,
+    "theta1": 0.10372395059042462,
+    "eqscale_form": "power",
+    "preference_spec": "eqscale",
+    "child_room_floor": true,
+    "hbar_child_rooms": 0.24708490545163003,
+    "hbar_first_child_jump": 0.4697651033802434,
+    "delta_alpha": 0.0,
+    "delta_alpha_jump": 0.0,
+    "beta": 0.981239759614208,
+    "hR_max": 6.0,
+    "property_tax_lump_sum_transfer": 0.18482603710262005,
+    "J_R": 12,
+    "q": 0.08243215999999998,
+    "phi": [
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "tau_H": 0.04,
+    "income_type_transition": "markov",
+    "retirement_income_z_scale": 0.0
+  },
+  "global_household_mass": 1.1292476712474808,
+  "global_housing_demand": 7.14277199144726,
+  "reconstructed_housing_demand": 7.14277199144726,
+  "housing_identity_gap": 0.0,
+  "mass_identity_gap": 0.0,
+  "z": [
+    0.11089068477824145,
+    0.1680514187563014,
+    0.25467675127520867,
+    0.3859547757472442,
+    0.5849025801382837,
+    0.32846680176271387,
+    0.4977813254644079,
+    0.7543722733967643,
+    1.1432279552449633,
+    1.7325267692681683,
+    0.9729441212847109,
+    1.4744668614814156,
+    2.234509133716906,
+    3.3863297976379867,
+    5.131878552358484
+  ],
+  "group_index": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "levels": [
+    0.2774924094113725,
+    0.8219540208905596,
+    2.43469150702639
+  ],
+  "status": "read_only_extraction_complete",
+  "csv_rows": 45,
+  "permanent_group_aggregates": [
+    {
+      "age_group": "all",
+      "permanent_group": 0,
+      "mean_rooms": 2.9988947744525083,
+      "ownership": 0.24370098284791125,
+      "current_period_income": 1.3149281261795167
+    },
+    {
+      "age_group": "all",
+      "permanent_group": 1,
+      "mean_rooms": 6.37861231204938,
+      "ownership": 0.6930268112800974,
+      "current_period_income": 2.7187872580097046
+    },
+    {
+      "age_group": "all",
+      "permanent_group": 2,
+      "mean_rooms": 9.438146194998838,
+      "ownership": 0.9172012493347607,
+      "current_period_income": 6.877126798243967
+    },
+    {
+      "age_group": "age30",
+      "permanent_group": 0,
+      "mean_rooms": 2.278308438445433,
+      "ownership": 0.014983097729942317,
+      "current_period_income": 1.0434964980330634
+    },
+    {
+      "age_group": "age30",
+      "permanent_group": 1,
+      "mean_rooms": 5.290345559737223,
+      "ownership": 0.28629787300796133,
+      "current_period_income": 2.728274484859381
+    },
+    {
+      "age_group": "age30",
+      "permanent_group": 2,
+      "mean_rooms": 8.97078234148463,
+      "ownership": 0.8115785174421815,
+      "current_period_income": 7.718717443343771
+    },
+    {
+      "age_group": "age42",
+      "permanent_group": 0,
+      "mean_rooms": 2.835693358773454,
+      "ownership": 0.09324490292486252,
+      "current_period_income": 1.1950265793733492
+    },
+    {
+      "age_group": "age42",
+      "permanent_group": 1,
+      "mean_rooms": 6.208221983636163,
+      "ownership": 0.6476481896029316,
+      "current_period_income": 3.1771183285811775
+    },
+    {
+      "age_group": "age42",
+      "permanent_group": 2,
+      "mean_rooms": 9.555576386397549,
+      "ownership": 0.9594657014850884,
+      "current_period_income": 9.048227691504213
+    }
+  ],
+  "selected_same_state_renter_examples": [
+    {
+      "age": 30,
+      "b": 1.0,
+      "z": 0.11089068477824145,
+      "c": 0.61842602888576,
+      "h": 1.860824448596774,
+      "bp": 0.766705795121901
+    },
+    {
+      "age": 30,
+      "b": 1.0,
+      "z": 0.32846680176271387,
+      "c": 1.247762511561835,
+      "h": 3.754478109112204,
+      "bp": 0.5813953488372094
+    },
+    {
+      "age": 30,
+      "b": 1.0,
+      "z": 0.9729441212847109,
+      "c": 3.180949127278278,
+      "h": 6.0,
+      "bp": 0.37063860920410496
+    },
+    {
+      "age": 30,
+      "b": 1.0,
+      "z": 5.131878552358484,
+      "c": 7.122090594966767,
+      "h": 6.0,
+      "bp": 9.29887310925621
+    }
+  ],
+  "established": [
+    "Direct realized housing sum equals the saved global housing demand exactly; all type masses sum exactly.",
+    "At ages30 and42 and allages, the permanent-high group has more occupied rooms and ownership than permanent-low.",
+    "In the inspected samewealth childless renter examples, housing rises with income until the six-room rental cap binds.",
+    "Shared preferences have alpha_cons=0.733 for all income types; the active child-room floor does not introduce income-type preference normalization."
+  ],
+  "remaining_uncertainty": [
+    "The reported reversed graph pattern conflicts with the checkpoint quantities. This read-only audit does not locate a graph code defect; the graph legend, curve identification, and exact graph input must be rechecked.",
+    "This is not a full solver optimality or global comparative-statics proof. Liquid wealth is the post-choice grid state, not a household total-wealth estimate."
+  ],
+  "source_anchors": {
+    "income_type_values": "code/model/intergen_eqscale_seq_optimized/solver.py:203",
+    "income_budget": "code/model/intergen_eqscale_seq_optimized/solver.py:228",
+    "shared_preferences": "code/model/intergen_eqscale_seq_optimized/solver.py:2228",
+    "income_specific_resources": "code/model/intergen_eqscale_seq_optimized/solver.py:2520",
+    "income_index_policy_storage": "code/model/intergen_eqscale_seq_optimized/solver.py:2630"
+  }
+}
