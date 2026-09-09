@@ -177,7 +177,7 @@ class Builder:
         for table in spec.get('tables', []):
             story.extend(self.table(table))
         for figure in spec.get('figures', []):
-            story.extend((Spacer(1, 5), self.image(figure, WIDTH, 285, supplemental=True)))
+            story.extend((Spacer(1, 5), self.image(figure, WIDTH, 360, supplemental=True)))
         return story
 
     def target_table(self):
