@@ -4,6 +4,34 @@ Updated: `2026-09-09` (rebated tax paths verified; household-with-children revie
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 9 urgent author correction: reconcile the perfect-foresight handoff.**
+Recovered conversation evidence materially sharpens this correction: the
+September3 21:18 UTC assistant message explicitly designated coherent person-
+cohort demography, rebated tax and H128 as the main specification, and relegated
+earlier population queues to diagnostics. The next overnight exchange deferred
+another H128 attempt for calibration/mechanism work; it does not establish a
+decision to abandon PF. This intended hierarchy was not carried forward into
+the recent simple-nest policy route. See the review's PF handoff/result audits.
+
+The author explicitly recalls the two-week perfect-foresight effort and objects
+to treating temporary-equilibrium paths as its continuation. The September1
+positive-tenure-taste sensitivity DID have a verified paired H128 perfect-
+foresight result with person/head demographics; both saved summaries and paths
+still match their recorded hashes. Under later September3 parameters, the
+reform passed but the baseline failed market/fiscal convergence; the paired
+comparison was not accepted. The recent simple-fertility-nest policy runs use
+the older temporary-equilibrium birth-queue driver, not that PF stack.
+Preservation of the PF code and labeling newer runs diagnostic do not establish
+an author decision to abandon PF or meet the intended PF deliverable.
+
+The current nested specification has not been verified through the PF policy
+adapter. Backward induction and person/head code already exist; integrating
+and reproducing the new joint choice in that route remains real outstanding
+work. Treat reconciliation and restoration of the intended PF exercise as the
+priority before another final-policy claim or broad calibration search.
+The earlier statement that2023 is on a historical path remains true, but does
+not answer whether households anticipate future equilibrium prices.
+
 **September 9 discussion clarification: 2023 is already on the calibrated path.**
 The author reaffirms the expected18-year children-at-home approximation; retain
 it while reconciling measurement, without silently redefining the category as

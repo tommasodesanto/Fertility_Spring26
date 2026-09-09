@@ -1,5 +1,7 @@
 # Rebated property-tax paths: completed morning packet
 
+**September 9 clarification:** this packet does not complete the author's intended perfect-foresight policy exercise. It uses temporary equilibria and the household birth queue. Earlier verified perfect-foresight/person-demographic work remains preserved but was not integrated with the new fertility-nest specification for these runs. Resolve that handoff before treating this packet as the final quantitative transition.
+
 Both paths completed all11dates2023–2063. Annual1% versus2%, each rebating its own revenue equally per household. Selected simultaneous fertility-nest calibration fixed at loss23.791955; all12targets and11estimated parameters unchanged. No production promotion.
 
 ## Read first

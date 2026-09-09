@@ -2,6 +2,8 @@
 
 September 9, 2026. Bounded review requested by Tommaso, starting 08:38 EDT. This is an accounting and measurement review of the completed rebated-property-tax experiment. No calibration, target, numerical gate or policy specification was changed.
 
+**Subsequent author correction:** the intended final policy exercise is perfect foresight with the developed person/head demographics. The recent temporary-equilibrium tax packet did not carry that work forward. A verified paired perfect-foresight result existed under the September1 sensitivity; a later parameter configuration had an unresolved baseline convergence failure. The September3 conversation explicitly made the person-demography/H128 specification primary. Resolving this handoff now takes priority over the measurement sequence proposed below. See [perfect_foresight_result_audit.md](perfect_foresight_result_audit.md). The statement that2023 lies on the historical calibration path does not establish perfect-foresight household expectations.
+
 **The model can count its households with dependent children consistently. The unresolved problem is how that category maps into observed families and into future resident persons and household formation.** Those are economically substantive assumptions, not just alternative labels for the same number.
 
 ## 1. Four different objects
