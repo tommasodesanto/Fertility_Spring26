@@ -10,9 +10,11 @@ They cover household problems, equilibrium, the dated planner choosing
 consumption and housing, the allocation comparison, fertility, and the local
 demographic transition. Both established graph layouts are included. The
 income benchmark and transition restrictions are stated in the appendix;
-this integration does not settle the outstanding primitive equilibrium
-question being reviewed by Pro. Earlier standalone theory slide proposals
-are superseded by this main deck.
+this integration does not settle the primitive equilibrium
+question assessed below. Earlier standalone theory slide proposals
+are superseded by this main deck. The author reaffirmed that subsequent work
+should proceed in this packet, given the presentation deadline; do not start
+another parallel theory draft.
 
 Verification: two sequential compilations of the final source; all 16 changed
 pages rendered and visually checked at 1600-pixel width; no overflow or
@@ -23,19 +25,85 @@ byte-identical to the previous committed version. The adjacent LaTeX PDF and
 reader PDF are identical copies. No quantitative-model run or figure refresh
 was performed, and no file in the author-controlled manuscript was edited.
 
-## September 9 focused Pro follow-up
+## September 9 completed Pro review: a tight-credit equilibrium theorem
 
-A new Pro review was submitted in the in-app browser after the Claude
-assessment. Its [prompt](../../../docs/prompts/oracle_simplified_olg_equilibrium_mechanism.md)
-asks for one primitive equilibrium proposition with meaningful mortgage and
-rental-size constraints, preserving the current model and dated planner.
-The exact current theory source and checked Claude assessment were attached
-in one rendered packet. Pro was visibly answering at submission in
-[the review chat](https://chatgpt.com/c/6aa17908-01cc-83ea-ac9b-6193f4658c66).
-The first discussion of fertility continues in the author conversation;
-no new theory draft or slide revision was made. The attachment operation
-stalled for about 26 minutes before succeeding; this was browser latency,
-not research or model-computation time.
+The [completed response](oracle_equilibrium_mechanism_response.md) was captured
+from [the review chat](https://chatgpt.com/c/6aa17908-01cc-83ea-ac9b-6193f4658c66)
+after 33m35s of work. The
+[prompt](../../../docs/prompts/oracle_simplified_olg_equilibrium_mechanism.md)
+and original packet preserve the exact model and checked Claude assessment.
+
+With equal adult housing weights, heterogeneous lifecycle resources, positive
+rebated property taxes, tight mortgage finance, small rental units and enough
+owner capacity, Pro proves stationary existence. Every positive stationary
+equilibrium in its region has saving renters capped in both ages, positive
+mass of uncapped young owners borrowing maximally, and larger mean old homes.
+The maintained fixed-fertility planner therefore gives the young more than
+half the housing stock, compared with less than half in equilibrium. Old
+owners resize freely. This is a conditional utilitarian allocation result;
+equilibrium uniqueness and tax implementation are not established.
+
+Independent checks passed the owner choice and multiplier arguments, capped
+old estate calculation, exact renter regime, analytical nonemptiness,
+ownership and consumption bounds, and equilibrium existence. For the latter,
+an explicit lower price boundary is
+\(p_L=\min\{p_*/2,\alpha x_*/(2\ell H_O)\}\); the positive- and
+negative-fertility boundary signs and the rebate self-map give the stated
+Brouwer argument. The planner gain uses the existing resource settlement,
+including its permission to relax both private financial lower bounds.
+
+**Economic restriction, sharpened in the local review.** Write
+\(D=1-q+q\tau\), \(K=1+\alpha+\omega_B\), and
+\(\rho=\rho_-<1\). Combining Pro's estate condition
+\(\omega_BD>q\alpha\) with its LTV inequality gives
+
+\[
+\phi<
+\frac{\rho-(1-\rho)q\tau-D/\alpha}{\rho+1/q}
+<\frac{q}{1+q}<\frac12.
+\]
+
+Thus every case covered by this sufficient theorem requires an origination
+down payment above 50%. An 80% LTV cannot satisfy it. This is a restriction of
+the theorem, not an impossibility claim about the model. The assumption
+remains economically strong even though the proof is analytical and does not
+require unusually high old income relative to young cash resources.
+
+The response leaves the fertility direction unresolved. Its active rental
+limits invalidate the earlier sufficient joint-planner capacity test; failure
+of that test does not establish a fertility decline. The exact private
+fertility test remains valid. The existing transition theorem instead uses
+\(\phi=q\) and slack competitive housing limits, so it cannot be appended
+to this new region as though the two results shared their assumptions.
+
+The local fertility review adds two checked observations. First, the joint
+planner still assigns the young more than half the housing stock: the same
+matched-age housing formulas apply with optimally chosen positive fertility.
+This does not determine the fertility direction. Second, Pro's particularly
+small-rental bounds imply \(\eta_R<\alpha/E\) and
+\(\bar H/N>2H_R+\kappa/\nu\). Both rental homes therefore remain capped
+under the fixed-fertility planner. A renter's private fertility response then
+has exactly the sign of \(X-x_i\), where
+\(X=(\bar x+\bar c^o)/2\).
+
+A separate conditional argument for joint fertility survives these binding
+rental caps if \(X\ge\max\{\bar x_R,\bar x_O\}\), using tenure-conditional
+competitive means. Suppose joint mean fertility were no larger than its
+reference value. Then joint adult consumption is at least \(X\), both rental
+homes remain capped, and concavity of renter fertility in adult consumption
+implies mean renter fertility cannot fall. Mean owner fertility must then
+weakly fall. Concavity of
+\(\vartheta xs/(\chi s+\alpha\kappa x)\) implies owner adult space also
+weakly falls; young owner housing does not increase and old owner housing
+strictly falls, contradicting housing clearing. **Compatibility of this
+additional consumption condition with all Pro primitive restrictions has not
+been established.** It is not a completed primitive fertility theorem and has
+not been put in the deck.
+
+The Pro result has not replaced the Monday deck's main statement. This review
+preserves the proof as supporting evidence without adopting a new model or
+creating another paper-facing note. The initial browser attachment operation
+stalled for about 26 minutes before succeeding; this was browser latency.
 
 ## September 9 Claude economic review
 
