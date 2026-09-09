@@ -6,7 +6,7 @@
 #SBATCH --time=00:15:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=8G
+#SBATCH --mem=32G
 #SBATCH --account=torch_pr_570_general
 #SBATCH --array=0-1%2
 

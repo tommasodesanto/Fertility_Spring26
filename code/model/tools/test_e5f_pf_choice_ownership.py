@@ -51,6 +51,21 @@ def choice_object(P, attempt):
 
 
 class DatedChoiceOwnershipTests(unittest.TestCase):
+    def test_rent_identity_preserves_stationary_arithmetic_exactly(self):
+        P = SimpleNamespace(R_gross=1.04, delta=.07763184, tau_H=.04,
+                            user_cost_rate=.04 + .07763184 + .04)
+        price = .7106073580037877
+        np.testing.assert_array_equal(pf.rents_from_asset_prices([price, price], price, P),
+                                      np.full(2, P.user_cost_rate * price))
+        prices = np.array([price * 1.01, price * 1.005])
+        rents = pf.rents_from_asset_prices(prices, price, P)
+        np.testing.assert_allclose(rents + np.r_[prices[1:], price],
+                                   (P.R_gross + P.delta + P.tau_H) * prices,
+                                   rtol=0, atol=2e-16)
+        P.user_cost_rate += .01
+        with self.assertRaisesRegex(ValueError, 'user cost disagrees'):
+            pf.rents_from_asset_prices([price], price, P)
+
     def setUp(self):
         self.maps = object()
         self.map_patch = patch.object(pf.calendar, "build_transition_maps", return_value=self.maps)

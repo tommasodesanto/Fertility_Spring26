@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hash-pinned small-grid PF primitives, not an equilibrium or calibration.
+"""Hash-pinned PF household primitives, not an equilibrium or calibration.
 
 Both arms use the same checkpoint parameters and wealth grid. Stationary entry
 is retained solely for a constant-policy invariant test; this does not implement
@@ -68,8 +68,8 @@ def load_contract(path, expected):
         if p.is_absolute() or '..' in p.parts:
             raise ValueError('Source pins must be repository-relative')
         verify(ROOT / p, expected_hash)
-    if not 8 <= int(c['wealth_points']) <= 24:
-        raise ValueError('This primitive smoke requires 8–24 wealth grid points')
+    if not (8 <= int(c['wealth_points']) <= 24 or int(c['wealth_points']) == 120):
+        raise ValueError('Use 8–24 diagnostic nodes or the original 120-node grid')
     if not 1 <= int(c['seconds']) <= 840:
         raise ValueError('Stage budget must be at most 840 seconds (15-minute job)')
     if not 0 < float(c['price_relative_change']) <= .02:
@@ -112,8 +112,12 @@ def compare_arrays(left, right, tolerance=2e-10):
     result = {}
     for name, value in left.items():
         other = right[name]
-        if value.shape != other.shape or not np.allclose(value, other, rtol=0, atol=tolerance, equal_nan=False):
-            raise RuntimeError(f'Policy reproduction failed: {name}')
+        if value.shape != other.shape:
+            raise RuntimeError(f'Policy reproduction failed: {name}; shapes {value.shape} vs {other.shape}')
+        if not np.allclose(value, other, rtol=0, atol=tolerance, equal_nan=False):
+            difference = np.abs(value - other)
+            raise RuntimeError(f'Policy reproduction failed: {name}; max_abs={difference.max():.17g}; '
+                               f'cells_above_tolerance={int((difference > tolerance).sum())}; tolerance={tolerance}')
         finite = np.isfinite(value) & np.isfinite(other)
         result[name] = float(np.max(np.abs(value[finite] - other[finite]))) if np.any(finite) else 0.
     return result
@@ -207,8 +211,10 @@ def execute(args):
     original_transfer = float(getattr(P, 'property_tax_lump_sum_transfer', 0.))
     P.property_tax_lump_sum_transfer = 0.
     original_grid = np.asarray(packet['b_grid'], dtype=float)
-    # Preserve low-wealth resolution with an explicit common subset of the
-    # selected grid. This is not a production-grid precision check.
+    if int(c['wealth_points']) == 120 and len(original_grid) != 120:
+        raise RuntimeError('Original-grid pilot requires the saved 120-node grid')
+    # Reduced diagnostics take an evenly spaced subset. At 120 nodes this
+    # retains the selected grid exactly, including its low-wealth resolution.
     indices = np.unique(np.linspace(0, len(original_grid) - 1, int(c['wealth_points'])).round().astype(int))
     grid = original_grid[indices].copy()
     P.Nb = len(grid)
@@ -227,7 +233,7 @@ def execute(args):
         first_fertility_scale=P.kappa_fert, continuation_fertility_scale=P.kappa_fert_continuation,
         housing_scale=P.tenure_choice_kappa, household_state_shape=[len(grid), P.J, len(P.z_grid), P.n_parity, P.n_child_states],
         expected_bellman_solves=6,
-        scope='small-grid household PF primitives only; no price iteration',
+        scope='household PF primitives only; no price iteration or calibration',
         absent_gates=['person_head_closure', 'fiscal_balance', 'terminal_equilibrium', 'historical_fit', 'production_grid_precision'],
         stationary_entry='fixed stationary entrant cohort for invariant test only',
         wall_time_estimate='unmeasured updated arms; capped pilot measures stationary and dated solves'))
@@ -263,14 +269,17 @@ def execute(args):
     begin = stage('constant_continuation')
     rent = float(pf.rents_from_asset_prices([price], price, P)[0])
     const = pf.solve_date_policy(price=price, rent=rent, P=P, b_grid=grid, shared=shared, continuation_V=stationary.V)
-    gaps = compare_arrays(reference_arrays, policy_arrays(const))
     ev, nxt, metrics = evaluate(const, pre, P, shared, rent)
+    # The stationary KFE stores distribution-conditioned tenure probabilities.
+    # Compare the dated policy after the same conditioning, retaining checks
+    # of every native joint probability array as well as realized distributions.
+    gaps = compare_arrays(reference_arrays, policy_arrays(ev.policy))
     current_gap = float(np.abs(ev.g_current - sol.g).sum())
     invariant_gap = float(np.abs(nxt - pre).sum())
     birth_gap = abs(float(ev.births) - float(sol.total_births_kfe))
     if current_gap > 2e-8 or invariant_gap > 2e-8 or birth_gap > 2e-10:
         raise RuntimeError(f'Stationary invariant failed: {current_gap}, {invariant_gap}, {birth_gap}')
-    save_arrays(out / 'constant_arrays.npz', **policy_arrays(const), g_pre=pre, g_current=ev.g_current, next_pre=nxt)
+    save_arrays(out / 'constant_arrays.npz', **policy_arrays(ev.policy), g_pre=pre, g_current=ev.g_current, next_pre=nxt)
     done('constant_continuation', begin, reproduction=gaps, current_l1=current_gap, invariant_l1=invariant_gap, births_absolute=birth_gap, **metrics)
 
     prices = price * np.array([1 + c['price_relative_change'], 1 + c['price_relative_change'] / 2])

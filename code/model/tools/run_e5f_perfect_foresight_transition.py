@@ -311,7 +311,12 @@ def rents_from_asset_prices(
         raise ValueError("The terminal asset price must be finite and positive.")
     next_prices = np.r_[current[1:], terminal]
     carrying_factor = float(P.R_gross) + float(P.delta) + float(P.tau_H)
-    rents = carrying_factor * current - next_prices
+    user_cost = float(getattr(P, "user_cost_rate", carrying_factor - 1.0))
+    if not math.isclose(user_cost, carrying_factor - 1.0, rel_tol=0.0, abs_tol=2e-14):
+        raise ValueError("Stationary user cost disagrees with interest, depreciation and tax")
+    # The equivalent expression avoids subtracting two price-sized terms.
+    # Constant paths reproduce the stationary Bellman's rent bit for bit.
+    rents = user_cost * current + (current - next_prices)
     if np.any(~np.isfinite(rents)) or np.any(rents <= 0.0):
         raise ValueError(
             "The candidate asset-price path implies a nonpositive renter price."
