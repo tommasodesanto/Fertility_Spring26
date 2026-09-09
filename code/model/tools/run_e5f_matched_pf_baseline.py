@@ -305,6 +305,30 @@ def run_history_probe(seed, c, args, out, progress, save, started, *, prices_ove
         calibrated_history=False, production_promoted=False,
         artifact_sha256={name: primitive.digest(out/name) for name in
             ('target_fit.csv','parameters.csv','transition_path.csv','measurement.json','final_state.npz')})
+    if c.get('save_initial_2023_state', False):
+        if c['save_initial_2023_state'] is not True:
+            raise ValueError('Dated-state saving flag must be explicitly Boolean')
+        P2023 = copy.deepcopy(old.parameters)
+        P2023.psi_child = float(old.psi_path[-1])
+        initial2023 = person.PersonPFState(g_pre=result.history.terminal_state.g_pre.copy(),
+                                         persons=demographics.initial_person_state)
+        checkpoint = out/'initial_2023.pkl.gz'
+        with gzip.open(checkpoint, 'wb', compresslevel=1) as stream:
+            pickle.dump(dict(parameters=P2023, b_grid=old.b_grid, initial_state=initial2023,
+                demographic_primitives=demographics, supply_rule=old.supply_rule,
+                contract_sha256=args.contract_sha256,
+                state_timing='before 2023 fertility/tenure choices; after observed historical age bridge',
+                equilibrium_certified=False, policy_announcement_included=False),
+                stream, protocol=pickle.HIGHEST_PROTOCOL)
+        with gzip.open(checkpoint, 'rb') as stream:
+            loaded = pickle.load(stream)
+        if (not np.array_equal(loaded['initial_state'].g_pre, initial2023.g_pre)
+                or not np.array_equal(loaded['initial_state'].persons.persons, initial2023.persons.persons)
+                or not np.array_equal(loaded['initial_state'].persons.heads, initial2023.persons.heads)
+                or loaded['initial_state'].persons.year != 2023
+                or loaded['contract_sha256'] != args.contract_sha256):
+            raise RuntimeError('2023 inherited-state checkpoint reload failed')
+        summary['artifact_sha256']['initial_2023.pkl.gz'] = primitive.digest(checkpoint)
     save('summary.json', summary)
     save('best_so_far.json', summary)
     return summary

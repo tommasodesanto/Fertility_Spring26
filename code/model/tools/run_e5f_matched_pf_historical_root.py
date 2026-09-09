@@ -29,7 +29,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
     c, originating = joined.load_smoke_contract(args.contract, args.contract_sha256,
-                                               args.arm, maximum_seconds=3600)
+                                               args.arm, maximum_seconds=7200)
     if (c['experiment'] != 'normalized_historical_path_root' or c['probe_coordinate'] != -1
             or type(c['maximum_path_evaluations']) is not int
             or not 2 <= c['maximum_path_evaluations'] <= 6):
@@ -38,6 +38,7 @@ def main():
     packet = json.loads(Path(c['jacobian_packet']).read_text())
     # The remaining packet/scientific-source checks live below, before any solve.
     validate_jacobian_packet(packet, c, args.arm)
+    initial_prices, initial_jacobian = load_restart(c, packet, args.arm)
     out = args.output.resolve()
     if out.exists() and any(out.iterdir()):
         raise FileExistsError(out)
@@ -86,12 +87,12 @@ def main():
             save('latest_completed.json', value)
             if value.get('new_best'):
                 save('best_so_far.json', value)
-        result = root.solve_price_path(initial_prices=packet['prices'], evaluate=evaluate,
+        result = root.solve_price_path(initial_prices=initial_prices, evaluate=evaluate,
             project=project, slope=1.63, market_tolerance=2e-4, max_log_step=.10,
             damping=1., max_evaluations=c['maximum_path_evaluations'],
             deadline_monotonic=started+c['seconds'], max_condition_number=1e10,
             worsening_factor=1.5, final_reproduction_tolerance=2e-10,
-            initial_jacobian=packet['jacobian'], callback=record)
+            initial_jacobian=initial_jacobian, callback=record)
         best = result['final'] if result['converged'] else result['best']
         tail_pass = bool(best is not None and best['payload']['terminal_distance']['all_checks_pass'])
         save('root_history.json', result)
@@ -109,6 +110,65 @@ def main():
         raise
     finally:
         stop.set()
+
+
+def load_restart(c, packet, arm):
+    """Resume only a completed, reproduced root under the same economic inputs."""
+    names = ('restart_contract', 'restart_history', 'restart_summary')
+    if not any(name in c or name+'_sha256' in c for name in names):
+        return packet['prices'], packet['jacobian']
+    if not all(name in c and name+'_sha256' in c for name in names):
+        raise ValueError('A restart requires all three pinned root receipts')
+    parent = Path(c['restart_contract']).parent
+    for name, filename in zip(names, ('contract.json', 'root_history.json', 'summary.json')):
+        if Path(c[name]) != parent/filename:
+            raise ValueError('Restart receipts must belong to one completed root directory')
+    for name in names:
+        if not Path(c[name]).is_absolute():
+            raise ValueError('Restart receipt paths must be absolute')
+        primitive.verify(c[name], c[name+'_sha256'])
+    previous = json.loads(Path(c['restart_contract']).read_text())
+    history = json.loads(Path(c['restart_history']).read_text())
+    summary = json.loads(Path(c['restart_summary']).read_text())
+    keys = ('arm', 'checkpoint_sha256', 'selected_summary_sha256',
+        'normalized_checkpoint_sha256', 'normalized_summary_sha256', 'normalized_contract_sha256',
+        'terminal_checkpoint_sha256', 'terminal_summary_sha256', 'terminal_contract_sha256',
+        'demographic_sources', 'target_fingerprint', 'path_date_count',
+        'initial_price_rule', 'terminal_preference_rule', 'probe_log_step', 'jacobian_packet_sha256')
+    if any(previous[name] != c[name] for name in keys) or summary['arm'] != arm:
+        raise ValueError('Restart scientific inputs differ')
+    # These reviewed driver/test changes only add state saving, longer budgets
+    # and receipt-based warm starts. All economic and numerical kernels agree.
+    wrappers = {'code/model/tools/run_e5f_matched_pf_baseline.py',
+        'code/model/tools/run_e5f_matched_pf_historical_root.py',
+        'code/model/tools/test_run_e5f_matched_pf_historical_root.py'}
+    for name, expected in previous['source_sha256'].items():
+        if name not in wrappers and c['source_sha256'].get(name) != expected:
+            raise ValueError(f'Restart economic source changed: {name}')
+    best, final = history.get('best'), history.get('final')
+    if (best is None or final is None or not best['mapping_valid'] or not final['mapping_valid']
+            or summary.get('finite_horizon_market_converged') is not False
+            or summary.get('final_reproduction_max_abs') is None
+            or not np.isfinite(summary['final_reproduction_max_abs'])
+            or summary['final_reproduction_max_abs'] > 2e-10
+            or summary['best'] != best or history['evaluations'] != summary['evaluations']):
+        raise ValueError('Restart must be a complete reproduced unfinished market root')
+    n = c['path_date_count']
+    prices = np.asarray(best['prices'], dtype=float)
+    residual = np.asarray(best['residual'], dtype=float)
+    matrix = np.asarray(history['final_jacobian'], dtype=float)
+    final_residual = np.asarray(final['residual'], dtype=float)
+    if (final_residual.shape != (n,) or not np.isfinite(final_residual).all()
+            or prices.shape != (n,) or residual.shape != (n,) or matrix.shape != (n,n)
+            or not np.isfinite(prices).all() or np.any(prices <= 0)
+            or not np.isfinite(residual).all() or not np.isfinite(matrix).all()
+            or not np.array_equal(prices, np.asarray(final['prices']))
+            or not np.allclose(residual, final_residual, rtol=0, atol=2e-10)
+            or not np.isclose(best['score'], np.max(np.abs(residual)), rtol=0, atol=1e-12)):
+        raise ValueError('Restart price/residual/Jacobian or replay mismatch')
+    # The prior approximate Jacobian is a preconditioner. The new root still
+    # evaluates these prices afresh and reserves another final reproduction.
+    return prices, matrix
 
 
 def validate_jacobian_packet(packet, c, arm):
@@ -136,7 +196,7 @@ def validate_jacobian_packet(packet, c, arm):
     reviewed = c['reviewed_evaluator_driver_change']
     if reviewed != dict(path=driver, from_sha256=shared['source_sha256'][driver],
                         to_sha256=c['source_sha256'][driver],
-                        scope='explicit supplied-price hook only; unchanged economic evaluator'):
+                        scope='explicit supplied-price hook and optional dated-state checkpoint; unchanged economic evaluator'):
         raise ValueError('Explicit reviewed probe-to-root driver change required')
     for name, expected in shared['source_sha256'].items():
         if name != driver and c['source_sha256'].get(name) != expected:

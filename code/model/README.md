@@ -52,6 +52,13 @@ pipeline. The focused matched-PF suite has83 passing tests on Torch; exact
 normalized-old, terminal-root and conditional-path receipts are indexed by the
 main workspace's matched-PF result README. The baseline retains the explicit
 one-percent annual tax with zero transfers; no future rebate is inferred.
+Later root contracts may explicitly save the inherited 2023 household/person
+state before that date's fertility and tenure choices. Intermediate states
+remain uncertified. An unfinished root can restart only from three matching,
+hash-pinned completed receipts with a passed same-price replay and unchanged
+economic inputs. It still performs fresh initial and final mappings; prior
+Jacobians are numerical starting guesses. Longer-path contracts may budget
+up to7200seconds, with an explicit case cap and outer watchdog.
 
 `tools/run_e5f_simple_fertility_search.py` runs the bounded recalibration
 through the existing planner and verified adapter. Two exact-reference smokes
