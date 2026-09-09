@@ -1,5 +1,18 @@
 # Simplified OLG amendment checks
 
+## September 9 Claude economic review
+
+The [lead assessment](claude_economic_assessment.md) records three completed
+Claude Fable 5.1 reviews and the independently checked corrections. The
+all-constrained, zero-equity benchmark is mathematically valid but does not
+adequately illustrate both intended housing frictions. Claude's proposed
+replacement theorem was not adopted; its claimed necessity of
+\(\beta R_f\ge1\) was refuted by an exact stationary equilibrium family.
+The assessment separates the existing allocation identity from the remaining
+primitive equilibrium question. No model, planner, manuscript or slide
+specification was changed. Prompts, final responses and a sanitized completion
+receipt are linked in the assessment; raw execution logs are not deliverables.
+
 ## September 9 consolidated deliverables
 
 - [Theory note](../../pdf/simplified_olg_consolidated_theory.pdf), with
