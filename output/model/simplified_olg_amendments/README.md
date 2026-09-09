@@ -1,6 +1,6 @@
 # Simplified OLG amendment checks
 
-## September 8: housing restrictions and fertility follow-up running
+## September 8: housing restrictions and fertility follow-up completed
 
 The [third Pro packet](oracle_housing_fertility_bundle.md), from
 [this prompt](../../../docs/prompts/oracle_simplified_olg_housing_fertility.md),
@@ -17,9 +17,20 @@ old-age restriction was not adopted. The author expects old households to
 occupy larger homes, but that competitive ordering remains a result to prove.
 A bounded Astra/max preflight checked the fertility differential, child-cost
 resource accounting and incumbent-commitment scope. It did not solve the new
-tasks. The existing monitor was updated and resumed for this latest response;
-it will save `oracle_housing_fertility_response.md` and pause on completion.
-No model, note or slide revision was made.
+tasks. Pro completed the third response in 22 minutes 19 seconds. The
+[full response](oracle_housing_fertility_response.md) was captured, preserving
+all 130 mathematical expressions, and the monitor is now paused.
+
+Its simpler sufficient housing restriction is alpha>=gamma and
+beta Gamma/q >= alpha+vartheta, with Gamma covering both old-estate regimes.
+The lead checked the main housing comparison, conditional fertility
+differential, joint-planner optimality conditions, and the uncapped joint
+fertility argument. This is an initial assessment, not adoption or an
+independent audit of every auxiliary claim. The strongest average-fertility
+result additionally requires the joint planner solution to be uncapped;
+the core housing theorem allows binding caps. The work record contains the
+exact conditions and verification limits. No model, note or slide revision
+was made.
 
 ## September 8: dated allocation is now the active question
 

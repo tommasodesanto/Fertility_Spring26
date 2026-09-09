@@ -675,3 +675,97 @@ two completed answers are not the new result. Save the new result to
 `output/model/simplified_olg_amendments/oracle_housing_fertility_response.md`
 and pause the monitor after completion. The model, note and slides are
 unchanged; this is a review request, not adoption of new findings.
+
+## September 8 late evening: third Pro response captured and initially checked
+
+The monitor found the completed THIRD response, marked 22 minutes 19 seconds,
+following attachment `Pasted text(20260908-235319).txt`. The full response is
+`output/model/simplified_olg_amendments/oracle_housing_fertility_response.md`.
+All 130 mathematical expressions match the visible browser math source
+labels. SHA256:
+`edc6b2c1974af021b21ff6a8981cd1ab07ded85b745d402edfac5bdbba2903be`.
+The existing monitor was paused after capture. No further Pro message,
+numerical run, PDF preview, or model/note/slide revision was made.
+
+The main new preference restriction is
+\[
+\alpha\ge\gamma,\qquad \frac{\beta\Gamma}{q}\ge\alpha+\vartheta,
+\qquad
+\Gamma=\min\left\{\gamma,
+\frac{(\gamma+\omega_B)(1-q+q\tau^p)}{1+q\tau^p}\right\}.
+\tag{H}
+\]
+For any positive stationary equilibrium under (H), household first-order
+conditions imply, with lifetime-budget multiplier Lambda,
+\[
+h_i^{y,eq}\le
+\frac{\alpha+\vartheta p\kappa/(\chi+p\kappa)}{p\Lambda_i}
+<\frac{\alpha+\vartheta}{p\Lambda_i}.
+\]
+When the old cap is slack,
+\(h_i^{o,eq}=\beta\Gamma_{d_i}/(q p\Lambda_i)\), with
+\(\Gamma_R=\gamma\) and \(\Gamma_O=\Gamma\). If it is capped,
+old housing is the same retained cap available to the paired young household.
+Thus (H) gives paired old housing weakly above young housing, without a
+separate high-old-income assumption or slack cap/floor assumption. Combining
+with the previously checked static lemma gives the aggregate young housing
+gain when the stock is below total cap capacity. Uncapped young households
+with reference adult space no greater than mean adult young space also
+receive strictly more housing at the full fixed-fertility optimum.
+
+The lead checked this main derivation. The restriction is sufficient and
+can be demanding: since Gamma<=gamma<=alpha and vartheta>0, it implies
+beta/q>1. It is a lower patience restriction, not the previous price-bound
+ceiling. Equilibrium existence remains conditional; no claim of compatibility
+with the quantitative calibration is established. The allocation gap includes
+ordinary redistribution and age preferences and is not wholly attributable
+to binding young finance. The response acknowledges its earlier misleading
+beta-unrestricted statement.
+
+The conditional fertility differential is the same verified identity supplied
+in the prompt. More housing and more consumption imply greater privately
+chosen fertility within the assigned bundle. The response also gives the
+exact finite tradeoff when housing rises by Delta h and consumption falls
+by delta, evaluated at initial adult goods x and space s:
+\[
+\delta\le
+\frac{\alpha\kappa x^2\Delta h}
+{\chi s(s+\Delta h)+\alpha\kappa x\Delta h}
+\quad\Longleftrightarrow\quad n_1\ge n_0.
+\]
+This follows directly from comparing the two fertility first-order conditions;
+strict inequality gives strictly higher fertility. It does not establish a
+market-policy response without funding, price clearing and any tenure changes.
+
+For the parent-only planner jointly choosing fertility, the current resource
+conditions and first-order conditions were checked. The response's strongest
+average-fertility theorem assumes the JOINT optimum is uncapped and yields
+common fertility n^J solving
+\[
+\frac{\vartheta}{n^J}
+=\frac{2\chi}{\bar c-\chi n^J}
++\frac{\kappa(\alpha+\gamma)}{\bar h-\kappa n^J},
+\qquad \bar c=C^{eq}/N,\quad\bar h=\bar H/N.
+\]
+Under (H), old consumption exceeds young adult consumption, and old housing
+is weakly greater than young total housing. These imply that the right side
+at reference mean fertility is strictly below
+\(\chi/\bar x+\alpha\kappa/\bar s\). Household fertility optimality gives
+\(\vartheta/\bar n\ge\chi/\bar x+\alpha\kappa/\bar s\), so
+\(n^J>\bar n\). For a precise Cauchy-Schwarz proof of this last inequality,
+multiply each fertility condition by n_i squared before integrating:
+\[
+\vartheta\bar n
+=\chi\int\frac{n_i^2}{x_i}dQ
++\alpha\kappa\int\frac{n_i^2}{s_i}dQ
+\ge\bar n^2\left(\frac\chi{\bar x}
++\frac{\alpha\kappa}{\bar s}\right).
+\]
+The response's prose says multiply by n_i; the squared version above makes
+the intended step explicit. This supports the main theorem but is not a
+full independent verification of all auxiliary bounds, benchmark formulas,
+or sequential-versus-joint fertility comparisons. Those remain to review.
+The housing aggregate theorem survives endogenous fertility with caps under
+the same stock and alpha>=gamma restrictions; the stronger average-fertility
+claim must retain its additional uncapped-J qualification. None of these
+dated results supplies a funded general-equilibrium policy transition.
