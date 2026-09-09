@@ -31,6 +31,11 @@ certifies a historical PF objective: terminal and person/head integration remain
 separate requirements. Run the focused ownership, historical-bridge and pilot
 guard tests before numerical use. Execution is indexed in the main workspace's
 `output/model/e5f_matched_pf_20260909a/README.md`.
+`tools/run_e5f_matched_pf_history.py` composes the historical evaluator and
+person continuation, using the future value at2023 in all earlier choices and
+processing2023 once. It accepts supplied paths and a terminal boundary; it
+does not find equilibrium or estimate parameters. Cached tail values avoid
+duplicating backward solves and must pass fresh dated forward reproduction.
 
 `tools/run_e5f_simple_fertility_search.py` runs the bounded recalibration
 through the existing planner and verified adapter. Two exact-reference smokes
