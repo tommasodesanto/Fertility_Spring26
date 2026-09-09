@@ -1,5 +1,57 @@
 # Simplified OLG amendment checks
 
+
+## September 9 two-hour model-design comparison — proposed, not adopted
+
+The author asked for several analytical designs while away for a meeting. Read
+[the eight-page comparison](../../pdf/theory_design_comparison.pdf), with
+[source](theory_design_comparison.tex). All derivations and independent reviews
+are consolidated in [one supporting record](theory_design_comparison_evidence.md).
+The September 14 seminar deck and the maintained two-age model are unchanged.
+This is a decision packet, not a new parallel manuscript.
+
+The preferred candidate distinguishes purchase cash from working income received
+later in the period and gives both current ages a common consumption date. It
+retains two utility ages, the original log preferences, 80% LTV, positive rebated
+property taxes, heterogeneous cash/income, and the original common-stock size
+menus. Tenure can change with age; the first illustration omits ownership tastes
+and requires full mortgage repayment before retirement. All young rent and save
+in the verified family; all old freely choose larger owned homes and have zero
+financial estates. No owner minimum or positive old liquid estate is imposed.
+
+The fixed-fertility stationary price is explicit and every tenure deviation is
+checked over a finite primitive family, including beta in [.3,1] and q=.5.
+Endogenous household fertility is quadratic; a unique implicit scalar calibration
+of the fertility preference enforces replacement at the chosen cohort size.
+The full dated utilitarian planner chooses current consumption, housing and
+tenure, fixes individual future opportunities and net estates, and allocates more
+housing to the young. A further explicit goods-versus-space condition gives higher
+mean fertility when the planner also chooses it. The finite endogenous family
+satisfies a stronger condition without a beta R restriction. The small cash,
+resource-dispersion and child-goods assumptions remain sufficient restrictions,
+not an empirical plausibility assessment or a global uniqueness claim.
+
+The same model now also has a checked heterogeneous local perfect-foresight
+transition. A small permanent fertility-taste decline lowers impact mean fertility
+and terminal population. A small permanent rebated tax increase introduced at a
+finite date along the nearby baseline raises fertility on impact and raises the
+terminal population. Both endpoints have replacement fertility. Tax lowers the
+impact price but raises the destination price in the stated family. Young homes
+remain at the rental limit, so this policy result does not implement the planner's
+housing upgrades or establish all-date fertility domination. Population means
+adult households. Entrant types remain exogenous with no endogenous estate or
+fertility-based type transmission; a nearby full initial savings profile is
+required. Global dynamics and policies implementing larger young homes are open.
+
+The independent reviews passed household and fiscal accounts, global tenure
+verification, primitive existence, the full joint-fertility planner, and the local
+transition including its heterogeneous aggregation. Exact algebra and rational
+bounds support the claims; no numerical equilibrium or simulation proves them.
+The PDF was compiled twice and all eight pages visually inspected. The original
+income-timing, owner-minimum, three-age, and moving-cost designs are compared in
+the packet rather than adopted. The author must choose the financial timing,
+tenure specification and repayment convention before integration into the deck.
+
 ## September 9 bounded test of an additional working-age stage
 
 The author requested an analytical tractability test before adopting the proposed
