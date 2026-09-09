@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=e5f_price_probe
+#SBATCH --output=logs/price_probe_%A_%a.out
+#SBATCH --error=logs/price_probe_%A_%a.err
+#SBATCH --partition=cpu_short
+#SBATCH --account=torch_pr_570_general
+#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=16G
+#SBATCH --array=0-11%12
+set -euo pipefail
+module load anaconda3/2025.06
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1
+cd /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b
+export MPLCONFIGDIR=/scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/cache/mpl_probe_nested_${SLURM_ARRAY_TASK_ID}
+export NUMBA_CACHE_DIR=/scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/cache/numba_probe_nested_${SLURM_ARRAY_TASK_ID}
+mkdir -p "$MPLCONFIGDIR" "$NUMBA_CACHE_DIR"
+contract_hashes=(f9f65d02598756e06f0674f38f1ea4cca712465fade7fea159939c1ac41b8db3 4ffb452fbcd519e4083f759a84b56c46eef78fbbea89633710a0733e19ff2643 da140329aa548929f13d77a862a19ccdc170ebbfea5dd107bef0dc2b07606f47 e31ed2260fc5ce5d7e0e80a2a95de9bd8d19d8d59c0fe4981838e926ee2ffb37 45aa4fc57b4b7901263b47be2d35fe58a8d748d237e37aa1394200873b335b7a 843c6625e83d81def3b2286ec1e871a1207bff01f56b4c10795a920bbb8a96e6 57d7e12ba2ed679e14b9c8e15ac464f4164e817b6da33df666852263ffed75b6 5fe099fc80a3a0da6696d72eaf0ab3f1b6a81c9fcd3fe747b9c0fba17a7922fa 1be90f6be512f9019f138948d0ec8b8a7f3d40545953df416be9ab3eb88a545f 0bb09c60bd1db2ff37898915a001d9716a728d32f122172a3441fe847373ebad 5e5eaa05ac925427d6bdc4e74a98dde1db082151b5374a2dc39a557471484898 05f5eb0688e518e22a324a44d62178ba1a11fe094a4f8a79bed3bc7fa41141f4)
+python code/model/tools/run_e5f_matched_pf_baseline.py --contract /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/path_probe_nested_${SLURM_ARRAY_TASK_ID}_contract.json --contract-sha256 "${contract_hashes[$SLURM_ARRAY_TASK_ID]}" --arm nested --output /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/price_probe_01/nested/${SLURM_ARRAY_TASK_ID}

@@ -1,0 +1,92 @@
+{
+  "scope": "Matched sequential/nested normalized historical perfect foresight diagnostics",
+  "source_branch": "codex/matched-perfect-foresight",
+  "source_commit": "883b49f9",
+  "current_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909a",
+  "initial_states": {
+    "sequential": 17277586,
+    "nested": 17277587
+  },
+  "terminal_roots": {
+    "sequential": 17277907,
+    "nested": 17277683
+  },
+  "historical_anchor": {
+    "sequential": 17278316,
+    "nested": 17278317
+  },
+  "price_panels": {
+    "sequential": 17278556,
+    "nested": 17278629
+  },
+  "longer_horizon": {
+    "sequential": 17278557,
+    "nested": 17278633
+  },
+  "collectors": {
+    "sequential": 17278711,
+    "nested": 17278712
+  },
+  "root_regression_tests": 17278618,
+  "root_tests_passed": 83,
+  "sequential": {
+    "anchor_seconds": 420.6819053320214,
+    "conditional_loss": 121.22293804209397,
+    "maximum_market_gap": 0.7108090522960108
+  },
+  "nested": {
+    "anchor_seconds": 631.5918291667476,
+    "conditional_loss": 139.51717151526736,
+    "maximum_market_gap": 0.7093339734223855
+  },
+  "contracts": {
+    "historical_tax_annual": 0.01,
+    "historical_transfer": 0.0,
+    "tenure_dispersion": 0.005,
+    "supply_elasticity": 0.63,
+    "target_count": 12,
+    "estimated_coordinates_inherited": 11,
+    "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+    "terminal_preference": "hold_normalized_2023_intercept_diagnostic",
+    "demography": "existing_inputs_frozen_after2100"
+  },
+  "classifications": {
+    "initialization_passed_both": true,
+    "terminal_roots_passed_both": true,
+    "historical_conditional_mapping_passed_both": true,
+    "dated_markets_converged": false,
+    "horizon_extension_verified": false,
+    "new_calibration": false,
+    "production_promoted": false,
+    "long_conditional_mapping_passed_both": true
+  },
+  "historical_roots": {
+    "sequential": 17279004,
+    "nested": 17279843
+  },
+  "price_jacobian_sequential_condition_number": 3.680821099853706,
+  "long_price_panel_sequential": 17279762,
+  "long_price_collector_sequential": 17279797,
+  "price_jacobian_nested_condition_number": 3.6339592201422235,
+  "next_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909b",
+  "restart_regression_job": 17280998,
+  "restart_tests_passed": 95,
+  "updated_utc": "2026-09-09 19:23 UTC",
+  "historical_root_progress": {
+    "sequential": {
+      "completed_evaluations": 6,
+      "maximum_market_gap": 0.00310721127718011,
+      "phase": "six_completed_exact_replay_above_tolerance",
+      "continuation_job": 17281783
+    },
+    "nested": {
+      "completed_evaluations": 1,
+      "maximum_market_gap": 0.7093339734223855,
+      "phase": "iterating"
+    }
+  },
+  "long_price_jacobian_condition_number": 2.255686009553156,
+  "historical_root_restart_sequential": 17281783,
+  "historical_root_long_sequential": 17281784,
+  "long_price_panel_status": "all28_passed_collector_complete"
+}

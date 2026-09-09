@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=e5f_price_probe
+#SBATCH --output=logs/price_probe_%A_%a.out
+#SBATCH --error=logs/price_probe_%A_%a.err
+#SBATCH --partition=cpu_short
+#SBATCH --account=torch_pr_570_general
+#SBATCH --time=00:30:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=32G
+#SBATCH --array=0-11%12
+set -euo pipefail
+module load anaconda3/2025.06
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1
+cd /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b
+export MPLCONFIGDIR=/scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/cache/mpl_probe_sequential_${SLURM_ARRAY_TASK_ID}
+export NUMBA_CACHE_DIR=/scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/cache/numba_probe_sequential_${SLURM_ARRAY_TASK_ID}
+mkdir -p "$MPLCONFIGDIR" "$NUMBA_CACHE_DIR"
+contract_hashes=(981bfb2590c559f733f50d245b84e505a5c36b0d47eca07b601fcbfadcd3330c 0acf5e03c91c180f7eafa5bd36f9f22d63afcfe90ae74c336b6d0e5e62c6cd6b 3116ecedbd8a59a5385ccfc0954d06a679fed1383a7e0df6ef525ee7157afac2 b90683bf0574242a9db9cf9480ef47862a876cd312c72846b95007e946c30e81 4ebfe5adb517e99fb39d3a0282ed33840fd2a89072918a57653b1acafa8202ff 235395bd507e381fd95a183bd9d00fc211769f65f64c6b58f13e24fb40882f73 a437d92623dab51e1b7dd870aa3ec6ac1c89296ef8f47ab0c376d75f5a7a6f7a 4231ea97a780d8dc534716fea46d97e7d673d1dbb2c44d6192dcfcc22fcd9042 09f85fd77a26f42db5139b95c094324316e169a932894695de019a685b6a0aae 1d9ad0bc68b624ac90765aafbbe798c288cbe486c8a8452de1b6da7b676627ab 56c540f8d5f4e64955b2236a27f3175dad4bf20e9d63f88d1b443f3d97bfb7b0 b63f9ed2383db9bbb5a830c4e64701f8aa02a1c580d7377c833d2563b0e6221c)
+python code/model/tools/run_e5f_matched_pf_baseline.py --contract /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/path_probe_sequential_${SLURM_ARRAY_TASK_ID}_contract.json --contract-sha256 "${contract_hashes[$SLURM_ARRAY_TASK_ID]}" --arm sequential --output /scratch/td2248/projects/Fertility_Spring26_matched_pf_paths_20260909b/output/price_probe_01/sequential/${SLURM_ARRAY_TASK_ID}

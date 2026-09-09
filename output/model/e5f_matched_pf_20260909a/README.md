@@ -5,6 +5,123 @@ learn the entire transition immediately at its onset; calibrate observations
 along the transition; pursue sequential and simultaneous fertility nests in
 parallel under the presentation time constraint.
 
+## Meeting work, September 9
+
+Normalized old states passed in both arms (jobs17277586/17277587). Terminal
+price/person roots also passed (sequential17277907, nested17277683): eight fresh
+endpoint evaluations per arm, including exact final replay. Prices0.46420547 and
+0.46391036, signed housing residuals4.619e-6 and−1.991e-5, all population gates
+passed. These retain annual1%tax, zero transfer and the inherited2007 supply
+normalization. The terminal preference holds normalized2023psi constant; the
+post2100 demographic primitives are frozen. These are explicit diagnostic
+assumptions, not an estimated continuation or a complete historical equilibrium.
+
+See `meeting_receipts/READOUT_VERIFIED.md` and `verification.json` for small
+receipts and independent checks. The next stage measures all12 historical
+targets along a normalized PF path. The first horizon has12dates2007–2051,
+24 Bellman solves, with terminal distribution2055. Expected6–8minutes per
+prescribed-price arm from prior measured timings; watchdog28minutes/onecore32GB.
+This short horizon is an exact-loop smoke and finite-boundary diagnostic,
+not a horizon-converged historical objective. Conditional price probes will
+follow only after it passes; each writes complete fit/parameter tables,
+all dated markets and terminal-distance checks. No target or parameter search
+has changed. Initial startup17278252/17278253 stopped before model work on a
+stale test-message assertion; source and failed logs remain in snapshot
+`...matched_pf_paths_20260909a`. The corrected retry also records signed excess
+demand for the forthcoming price Jacobian.
+
+The corrected paired paths17278316/17278317 passed in420.68/631.59seconds,
+including all12target rows and every inherited coordinate/bound. Receipts:
+`meeting_receipts/path_anchor_02/{sequential,nested}/`. Table hashes and summed
+loss contributions were verified after collection. These prescribed-price
+losses121.223/139.517 are **not equilibrium calibration comparisons**: maximum
+market gaps are71.08%/70.93%, and the2055 population is far from the endpoint.
+
+Released after these exact-loop passes:
+
+| Arm | 12-coordinate price panel | 28-date horizon check | Dependent collector |
+|---|---:|---:|---:|
+| Sequential |17278556|17278557|17278711|
+| Nested |17278629|17278633|17278712|
+
+Each panel changes exactly one log asset price by0.01 with fixed parameters,
+initial state, supply, demographic inputs and terminal endpoint. Per arm:
+12×24=288 Bellman solves; expected7.0/10.5minutes per case, with independent
+cases parallelized. Each horizon check has56 Bellman solves, expected16.4/24.6
+minutes. Every job has a28-minute watchdog and writes progress during the
+forward pass plus a15-second health heartbeat. Queues can add wall time.
+The original sequential jobs reserved32GB; measured peak was3.1GB. A pending
+memory-update attempt raced with scheduling and was rejected once the jobs
+started; no running job was interrupted. Newly submitted nested probes reserve
+16GB (measured peak about7.4GB), and the longer nested path20GB.
+
+The collector requires all coordinates and verifies signed excess demand from
+hash-pinned market CSVs; it rejects mixed source/target/input fingerprints. It
+cannot launch calibration. The subsequent bounded Broyden root uses a reserved
+fresh final replay and maintains separate market, terminal-distance and horizon
+extension classifications. Source commit595690e9 is backed up on the isolated
+branch. All83 focused tests pass on Torch job17278618;49 root/collector tests
+also passed locally with `/usr/bin/python3` (plain `python` lacks NumPy here).
+
+Sequential panel17278556 and collector17278711 completed successfully. Its
+log-price market Jacobian has condition number3.681 and negative own-price
+entries at all12dates; the reviewed first Newton step is clipped at0.10 in
+absolute log-price change. Bounded sequential historical root17279004 uses
+at most six full paths (144 Bellman solves including its reserved final replay),
+expected42minutes at measured anchor timing, with a60-minute watchdog.
+It writes every trial's complete fit/parameters/markets separately and saves
+latest and best residuals. Contract: `historical_root_sequential_contract.json`;
+validated matrix: `meeting_receipts/jacobian_sequential.json`.
+
+Nested panel17278629 and collector17278712 also passed: condition number3.634,
+with a closely similar local price response. Nested root17279843 permits five
+full paths (120 Bellman solves), estimated53minutes with a60-minute watchdog;
+it was submitted at18:51UTC and initially queued for memory. Its saved matrix
+is `meeting_receipts/jacobian_nested.json`.
+
+The28-date sequential anchor17278557 passed in898.78seconds (15minutes),
+with measured peak memory3.41GiB. It remains off-equilibrium (maximum gap39.63%)
+and its2119person total is40.67%above the stationary endpoint. Its conditional
+loss87.555 has complete fit/parameter tables in
+`meeting_receipts/path_long_anchor_01/sequential/`. The longer numerical seed
+also changes provisional post2023prices, so this is **not a controlled horizon
+comparison** and the loss change is not attributed solely to horizon length.
+Longer sequential price panel17279762 has28cases×56=1568Bellman solves, initially at
+most16concurrent one-core/8GB jobs, expected15minutes each (two waves plus
+queue overhead), and28-minute case watchdogs. Collector17279797 waits for
+all28cases. No longer-horizon market root or parameter calibration was launched
+yet. The short roots and longer panel use distinct saved output paths.
+
+The four ACS pooled-versus2023 diagnostics are now complete in
+`meeting_receipts/acs_date_diagnostic/`. A single110MBcache read in7.4seconds
+reproduced the authoritative pooled room counts, weights and points before
+extracting2023means. Original family/sample definitions and all calibration
+weights are unchanged. This resolves missing descriptive evidence, not the
+author's choice about model/empirical groups or calendar alignment.
+
+## Conditional next calibration design—not launched
+
+Once a baseline price path is accepted, write equilibrium residuals as
+F(x,theta)=0 with x=logprices. The price panel supplies F_x; the same saved
+moment tables can supply M_x. At fixed **absolute solved prices**, eleven
+parameter probes would rebuild the old2.1normalization, old cohort prehistory,
+2007supply anchor, mechanically implied demographic alignment and consistent
+terminal endpoint. Then solve F_x Z=F_theta and use G=M_theta−M_x Z for the
+local equilibrium moment derivative. This saves complete price roots for
+actual candidate tests rather than every derivative column. A rent projection
+must not silently move prices inside a parameter derivative. The current
+price panel is off-equilibrium and is a root preconditioner; it requires a
+locality check or refresh before use as an equilibrium derivative.
+
+A future round must inspect rank/conditioning of the weighted12×11moment
+matrix, use bounded steps in the existing parameter coordinates and verify
+actual complete equilibrium candidates before accepting any improvement.
+Estimated post-baseline runtime at current short horizon: up to19minutes for
+parallel normalized parameter probes and about59minutes per candidate allowing
+six full price mappings, with three step lengths parallel if resources permit.
+This is a recoverable proposal, not a launched calibration, identified global
+result, production target approval, or horizon-convergence certificate.
+
 ## Delivery order
 
 1. Verify dated household choices and forward accounting in both arms at common
@@ -148,7 +265,7 @@ PF objective or matched production policy effect is claimed.
 The earlier verified sequential PF pair remains a separate fallback artifact;
 current temporary-expectations results are not relabeled as perfect foresight.
 
-## Final verification state
+## Earlier implementation-pass verification state
 
 All numerical jobs listed above have finished. Both arms pass the original-grid
 household primitives and the six-date conditional historical/person composition.
@@ -157,3 +274,77 @@ hashes in their successful receipts. The isolated branch is clean and pushed.
 No estimation, converged baseline, production policy run, or figure refresh was
 launched in this implementation pass. The remaining delivery gates above are
 substantive work, not a claim that the desired research result is already done.
+
+## Meeting checkpoint, 19:15 UTC
+
+Sequential short root17279004 has five valid evaluations: maximum market gap
+0.710809,0.291869,0.071806,0.016467,0.003107. The reserved sixth path is an
+uncached replay. This is still above the unchanged0.0002 acceptance tolerance;
+a bounded restart can retain the verified prices and approximate Jacobian.
+Nested root17279843 began at19:00UTC; its first mapping exactly reproduces the
+original supplied-price residual. Both are finite-horizon diagnostics.
+
+The updated root driver supports a verified completed-root restart and an
+optional pre-choice2023 stock checkpoint. It changes no economic kernel or
+numerical tolerance. Source883b49f9 is pushed, and all95 focused checks passed
+on Torch17280998. The checkpoint distinguishes the inherited stock from2023
+choices and remains uncertified until its parent baseline passes. New work
+uses the immutable source snapshot `...matched_pf_path_roots_20260909b`;
+running roots retain snapshot A.
+
+Both longer anchors passed. The nested28-date anchor took1270.84seconds; its
+complete twelve-target and eleven-parameter tables are saved beside the
+sequential long anchor. Long sequential panel17279762 has completed its first
+sixteen cases; the remaining twelve are running. The concurrency limit was
+raised to28 after measured memory use supported it; no numerical case was
+interrupted. All per-case budgets, thread limits and scientific inputs remain
+unchanged.
+
+Endpoint interpretation: the28-date final population gap does not by itself
+measure historical moment bias. The active household has17four-year age cells
+and direct utility from its own bequest, without dynastic continuation. At
+fixed dated prices/primitives, a2023age18household's last decision is2087 and
+the last rental price also involves the2091asset price. A2119terminal value
+therefore cannot directly enter its value. Equilibrium prices can nevertheless
+transmit population/tail changes backward through overlapping lifetimes. A
+controlled horizon extension must preserve all shared prices and primitives
+first, then re-clear the extended path and compare all historical moments.
+Population closeness and historical horizon stability remain separate checks;
+no terminal gate is waived. The first minimal extension after a solved28-date
+path can append one four-year period, with broader extensions if sensitivity
+remains. Source review: optimized solver age recursion and direct bequest
+utility; dated PF rental identity.
+
+## Verified continuation launches, 19:23 UTC
+
+Short sequential root17279004 finished its six-call budget at maximum signed
+market gap0.0031072113, above tolerance0.0002. Evaluations5and6 have exactly
+identical full target, parameter, market and measurement files. Complete tables
+and verification are in `meeting_receipts/historical_root_01/sequential/`.
+The conditional loss129.480313 is not a converged calibration result. The
+last state arrays remain remote; their hash was not recomputed locally.
+
+Continuation17281783 uses the verified best prices and approximate Jacobian
+from that completed run. It has four fresh paths including another final
+replay, expected26minutes,30-minute watchdog,35-minute allocation,onecore8GB.
+The original scientific inputs,12dates,tolerances and target system are
+unchanged. Its three restart receipts are hash-pinned; source D adds only
+checkpoint saving, restart validation and budget controls. Contract:
+`historical_root_restart_sequential_contract.json`. Output: source D
+`output/historical_root_restart_01/sequential/`.
+
+Long panel17279762 and collector17279797 completed all28cases successfully.
+The28×28log-price Jacobian has condition number2.256; all own-price derivatives
+are negative (−2.076to−1.742). Long sequential root17281784 now solves28dates
+using that verified matrix: six paths including final replay,336Bellman
+solves,expected90minutes,110-minute watchdog,two-hour allocation,onecore8GB.
+Contract: `historical_root_long_sequential_contract.json`; output in source D
+`output/historical_root_long_01/sequential/`. This work can continue beyond
+the meeting. Both new jobs preserve the source snapshot and write individual
+case tables,latest/best summaries and15-second heartbeats. If a mapping fails,
+the run stops; no target, parameter or tolerance is relaxed.
+
+Nested short root17279843 remains in its original snapshot C; its second
+valid mapping reduced the maximum gap from0.709334to0.293138. It is separate
+from these sequential continuations. No parameter calibration, new production
+policy, or benchmark promotion has been launched.

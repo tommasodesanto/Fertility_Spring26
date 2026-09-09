@@ -1,0 +1,214 @@
+{
+  "anchor_prices": [
+    0.6255166407069571,
+    0.6457829519244266,
+    0.6667058777603324,
+    0.688306692079095,
+    0.7106073580037877,
+    0.6686712278530715,
+    0.6292099369961084,
+    0.5920774340564863,
+    0.5571362868051479,
+    0.5242571735058132,
+    0.4933184042783925,
+    0.46420547070889234
+  ],
+  "arm": "sequential",
+  "artifact_sha256": {
+    "final_state.npz": "9df3347e9b80aae7d6d9804b95d94509b8115391b92163e1d33ffacf4f726326",
+    "measurement.json": "b9305bb01e62b7fd1a6b7a037c3aa4c78e042e5f9da8e922edea087391dbfa16",
+    "parameters.csv": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f",
+    "target_fit.csv": "66f07c3e4ed4c9141885f7707393e8b5a8787cc3db25043a855fe29556cdefbf",
+    "transition_path.csv": "5fb71e52050e97d1e2be3676d8483abdb318d3bcab8ad663b055f0bafea158ca"
+  },
+  "bellman_solves": 24,
+  "calibrated_history": false,
+  "contract_sha256": "68dd56ef25ab0c57b04c1503ced07fb3fef9b8e50657342da360dbeb2a340570",
+  "elapsed_seconds": 396.2348925527185,
+  "estimated_parameter_count": 11,
+  "gates": {
+    "age_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 3.3306690738754696e-16
+    },
+    "head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 4.440892098500626e-16
+    },
+    "historical_mass": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 6.661338147750939e-16
+    },
+    "historical_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "historical_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "household_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 1.1102230246251565e-15
+    },
+    "initial_2023_age_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 3.3306690738754696e-16
+    },
+    "person_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 8.881784197001252e-16
+    },
+    "person_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "person_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "raw_household_mass_2023": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2027": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2031": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 0.0
+    },
+    "raw_household_mass_2035": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-15
+    },
+    "raw_household_mass_2039": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 1.7763568394002505e-15
+    },
+    "raw_household_mass_2043": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 6.661338147750939e-16
+    },
+    "raw_household_mass_2047": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 8.881784197001252e-16
+    },
+    "raw_household_mass_2051": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 0.0
+    }
+  },
+  "loss": 135.72577903252872,
+  "mapping_valid": true,
+  "market_equilibrium_verified": false,
+  "maximum_market_residual": 0.07180596863512323,
+  "prices": [
+    0.6490760604746664,
+    0.670434755701113,
+    0.6891207069399456,
+    0.7017632190600676,
+    0.7094838809075376,
+    0.7133368894152511,
+    0.7134467065676462,
+    0.698320184845943,
+    0.6736595769400033,
+    0.640329157705255,
+    0.5993920276689817,
+    0.5491782817453378
+  ],
+  "production_promoted": false,
+  "residual": [
+    0.00047833461207384275,
+    0.00045363211213406276,
+    -0.0004126032078845126,
+    -0.002113625091136964,
+    -0.008499018487708296,
+    0.00010829885977246802,
+    -0.01095836170945208,
+    -0.0066237876081645395,
+    0.006754895215885829,
+    0.029853773057548903,
+    0.06071101467296334,
+    0.07180596863512323
+  ],
+  "status": "passed_conditional_historical_price_probe",
+  "target_count": 12,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "terminal_distance": {
+    "all_checks_pass": false,
+    "candidate_household_heads_model_units": 1.2398319584334487,
+    "candidate_resident_persons_model_units": 2.960375906993087,
+    "candidate_terminal_year": 2055,
+    "checks": {
+      "asset_price_relative_gap": false,
+      "equal_transfer_relative_gap": true,
+      "household_heads_relative_gap": false,
+      "normalized_head_age_sex_l1": false,
+      "normalized_household_distribution_l1": false,
+      "normalized_person_age_sex_l1": false,
+      "psi_absolute_gap": true,
+      "renter_price_relative_gap": false,
+      "resident_persons_relative_gap": false
+    },
+    "metrics": {
+      "asset_price_relative_gap": 0.1830499991882532,
+      "equal_transfer_relative_gap": 0.0,
+      "household_heads_relative_gap": 0.8252763758367813,
+      "normalized_head_age_sex_l1": 0.11087284026105106,
+      "normalized_household_distribution_l1": 1.197099915526792,
+      "normalized_person_age_sex_l1": 0.11480626066559593,
+      "psi_absolute_gap": 0.0,
+      "renter_price_relative_gap": 1.287680836729683,
+      "resident_persons_relative_gap": 0.7954739278943346
+    },
+    "reference_household_heads_model_units": 0.6792571113320081,
+    "reference_resident_persons_model_units": 1.6487991616034805,
+    "reference_terminal_year_label": 2100,
+    "status": "not_converged",
+    "tolerances": {
+      "asset_price_relative_gap": 0.01,
+      "equal_transfer_relative_gap": 0.01,
+      "household_heads_relative_gap": 0.01,
+      "normalized_head_age_sex_l1": 0.02,
+      "normalized_household_distribution_l1": 0.02,
+      "normalized_person_age_sex_l1": 0.02,
+      "psi_absolute_gap": 0.001,
+      "renter_price_relative_gap": 0.01,
+      "resident_persons_relative_gap": 0.01
+    }
+  },
+  "years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023,
+    2027,
+    2031,
+    2035,
+    2039,
+    2043,
+    2047,
+    2051
+  ]
+}

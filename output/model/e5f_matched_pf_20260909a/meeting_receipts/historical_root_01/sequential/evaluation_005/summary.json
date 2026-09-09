@@ -1,0 +1,214 @@
+{
+  "anchor_prices": [
+    0.6255166407069571,
+    0.6457829519244266,
+    0.6667058777603324,
+    0.688306692079095,
+    0.7106073580037877,
+    0.6686712278530715,
+    0.6292099369961084,
+    0.5920774340564863,
+    0.5571362868051479,
+    0.5242571735058132,
+    0.4933184042783925,
+    0.46420547070889234
+  ],
+  "arm": "sequential",
+  "artifact_sha256": {
+    "final_state.npz": "a854f4fbdc1f2f5ea39b2d9e9f7e9857c46b433406b54d4f2cdace68fc2b5219",
+    "measurement.json": "3709f2214e9066f1f09b844be7ef029527e1013e72a38960a0b88adae35a8c56",
+    "parameters.csv": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f",
+    "target_fit.csv": "49e727dfa54dd979fb31ee61abf74a7ba76530e827b7b037400ba82d4cd63e84",
+    "transition_path.csv": "b9ba1c543ee0aa827b76ce3713e5fafbf84e5fa13979a95dec509c6ab36010b0"
+  },
+  "bellman_solves": 24,
+  "calibrated_history": false,
+  "contract_sha256": "68dd56ef25ab0c57b04c1503ced07fb3fef9b8e50657342da360dbeb2a340570",
+  "elapsed_seconds": 397.7388374041766,
+  "estimated_parameter_count": 11,
+  "gates": {
+    "age_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 2.7755575615628914e-16
+    },
+    "head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 4.440892098500626e-16
+    },
+    "historical_mass": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 0.0
+    },
+    "historical_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "historical_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "household_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 8.881784197001252e-16
+    },
+    "initial_2023_age_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 2.7755575615628914e-16
+    },
+    "person_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 8.881784197001252e-16
+    },
+    "person_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "person_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "raw_household_mass_2023": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 8.881784197001252e-16
+    },
+    "raw_household_mass_2027": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 0.0
+    },
+    "raw_household_mass_2031": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2035": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2039": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 8.881784197001252e-16
+    },
+    "raw_household_mass_2043": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 4.440892098500626e-16
+    },
+    "raw_household_mass_2047": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 8.881784197001252e-16
+    },
+    "raw_household_mass_2051": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    }
+  },
+  "loss": 129.48031301795942,
+  "mapping_valid": true,
+  "market_equilibrium_verified": false,
+  "maximum_market_residual": 0.00310721127718011,
+  "prices": [
+    0.649639693331934,
+    0.6708965820904228,
+    0.6891385268569991,
+    0.7011598939782487,
+    0.7084037061430181,
+    0.7150092888337282,
+    0.714212902896201,
+    0.7052660999724357,
+    0.6891452079685942,
+    0.6629775287009749,
+    0.623312873264875,
+    0.5641226645270668
+  ],
+  "production_promoted": false,
+  "residual": [
+    -8.549129340521691e-05,
+    -0.00020225031279610332,
+    -0.0003469105454929749,
+    -0.00047727825397852667,
+    -0.0005857051384807354,
+    0.0006161241583155847,
+    0.00014709811406688527,
+    -0.00018051415752177037,
+    -0.0016129716262313417,
+    -0.001894788580527879,
+    0.001408135853368035,
+    0.00310721127718011
+  ],
+  "status": "passed_conditional_historical_price_probe",
+  "target_count": 12,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "terminal_distance": {
+    "all_checks_pass": false,
+    "candidate_household_heads_model_units": 1.239886769598781,
+    "candidate_resident_persons_model_units": 2.9594499460055053,
+    "candidate_terminal_year": 2055,
+    "checks": {
+      "asset_price_relative_gap": false,
+      "equal_transfer_relative_gap": true,
+      "household_heads_relative_gap": false,
+      "normalized_head_age_sex_l1": false,
+      "normalized_household_distribution_l1": false,
+      "normalized_person_age_sex_l1": false,
+      "psi_absolute_gap": true,
+      "renter_price_relative_gap": false,
+      "resident_persons_relative_gap": false
+    },
+    "metrics": {
+      "asset_price_relative_gap": 0.21524346463558486,
+      "equal_transfer_relative_gap": 0.0,
+      "household_heads_relative_gap": 0.8253570686472324,
+      "normalized_head_age_sex_l1": 0.11081591492685663,
+      "normalized_household_distribution_l1": 1.2411262286048863,
+      "normalized_person_age_sex_l1": 0.114474988058198,
+      "psi_absolute_gap": 0.0,
+      "renter_price_relative_gap": 1.5141485160975203,
+      "resident_persons_relative_gap": 0.794912330697329
+    },
+    "reference_household_heads_model_units": 0.6792571113320081,
+    "reference_resident_persons_model_units": 1.6487991616034805,
+    "reference_terminal_year_label": 2100,
+    "status": "not_converged",
+    "tolerances": {
+      "asset_price_relative_gap": 0.01,
+      "equal_transfer_relative_gap": 0.01,
+      "household_heads_relative_gap": 0.01,
+      "normalized_head_age_sex_l1": 0.02,
+      "normalized_household_distribution_l1": 0.02,
+      "normalized_person_age_sex_l1": 0.02,
+      "psi_absolute_gap": 0.001,
+      "renter_price_relative_gap": 0.01,
+      "resident_persons_relative_gap": 0.01
+    }
+  },
+  "years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023,
+    2027,
+    2031,
+    2035,
+    2039,
+    2043,
+    2047,
+    2051
+  ]
+}

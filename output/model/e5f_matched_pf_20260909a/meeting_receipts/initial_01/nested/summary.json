@@ -1,0 +1,116 @@
+{
+  "arm": "nested",
+  "calibrated_history": false,
+  "checkpoint_sha256": "1dc1825c92cccd54e7123a2984623cb8d9f7e087bd3d86b2741080635897d1ba",
+  "diagnostics": {
+    "announcement": "All historical preference and equilibrium paths are known at 2007; PF caller must solve date0 using future continuation",
+    "arm": "nested",
+    "choice_flags": {
+      "exhaustive_saving_control": true,
+      "fertility_nest_choice": true,
+      "joint_nested_choice": true,
+      "normalize_transition_mass_roundoff": true,
+      "two_shock_choice": false
+    },
+    "dated_supply_elasticity": 0.63,
+    "fiscal_contract": {
+      "annual_property_tax": 0.01,
+      "closure": "retained_calibration_unrebated",
+      "period_property_tax": 0.04,
+      "transfer": 0.0
+    },
+    "historical_equilibrium_solved": false,
+    "normalization": {
+      "absolute_gap": 1.976350365362478e-05,
+      "completed_fertility": 2.1000197635036537,
+      "psi_child": 0.28938762559349523,
+      "stationary_solve_seconds": 73.656463554129,
+      "stationary_solves": 1,
+      "status": "normalized_at_initial_guess",
+      "target": 2.1
+    },
+    "old_stationary_supply_elasticity": 1.75,
+    "preference_change_2023": -0.3213877962199821,
+    "production_policy_fiscal_baseline": "Outstanding separate rebated-price/transfer equilibrium; initializer uses retained calibration fiscal contract",
+    "renewal": {
+      "entry_flow_E": 0.06173345618085916,
+      "identity_residual": 0.0,
+      "outside_flow_M": 0.010432954094565199,
+      "queue_B_over_E": 1.000009411191604,
+      "queue_mature_flow_B": 0.061734037166243656,
+      "retention_rho": 0.8309921793733784
+    },
+    "selected_reference_anchor": {
+      "elasticity": 0.63,
+      "initial_price": 0.6250945550338646,
+      "initial_stock": 6.4746258904452265
+    },
+    "stationary_operator_gates": {
+      "birth_flow": 0.1162253154399345,
+      "birth_flow_abs_error": 6.800116025829084e-16,
+      "effective_mature_flow_B": 0.05504704120203194,
+      "entry_flow_E": 0.06173345618085916,
+      "mature_flow_abs_error": 1.469657728847551e-14,
+      "one_step_constant_path_nesting_l1": 2.528072584572196e-13,
+      "reconstructed_baseline_births": 0.1162253154399345,
+      "reconstructed_effective_mature_flow_B": 0.05504704120201724,
+      "stationary_birth_flow": 0.11622531543993382,
+      "stationary_feasibility_projection_mass": 0.0,
+      "stationary_post_fertility_nesting_l1": 1.456006645847647e-14,
+      "stationary_post_fertility_nesting_max_abs": 2.0775981778686895e-16,
+      "stationary_topcode_adjusted_birth_flow": 0.1296414780491117,
+      "top_bin_entry_birth_flow": 0.02227268657047371,
+      "topcode_adjusted_birth_flow": 0.12964147804911266,
+      "topcode_adjusted_birth_flow_abs_error": 9.71445146547012e-16,
+      "zero_entry_mass_accounting_residual": 1.1102230246251565e-16
+    },
+    "stationary_solves": [
+      {
+        "asset_price": 0.6250912350479297,
+        "elapsed_seconds": 73.14810561295599,
+        "index": 0,
+        "market_error": 9.260877842185684e-09,
+        "psi_child": 0.28938762559349523,
+        "status": "complete"
+      }
+    ],
+    "structural_age_gate": {
+      "max_abs_mass_gap": 1.861427678662153e-13,
+      "max_relative_mass_gap_to_entry": 3.0152656174129777e-12,
+      "relative_tolerance": 1e-08,
+      "status": "structural_survival_recursion_after_kfe_roundoff_gate"
+    },
+    "supply_anchor": "Arm-specific normalized old policy after ACS2007 age reweight; never rebased at2023",
+    "supply_normalization": {
+      "date0_housing_demand": 6.474646507806808,
+      "date0_market_residual_after_normalization": 0.0,
+      "date0_normalized_housing_stock": 6.474646507806808,
+      "elasticity_status": "externally_fixed_profile_not_estimated",
+      "housing_supply_mode": "static-elastic",
+      "original_stationary_supply_at_date0_price": 6.408952047495586,
+      "retained_date0_asset_price": 0.6250912350479297,
+      "retained_housing_supply_elasticity": 1.75,
+      "rule": "rescale the static supply intercept so supply at p0 equals date-0 demand",
+      "static_supply_intercept_scale": 1.0102504215703865,
+      "status": "empirical_initialization_normalization_not_recalibration",
+      "transition_housing_supply_elasticity": 0.63
+    }
+  },
+  "elapsed_seconds": 97.59923238959163,
+  "historical_equilibrium_verified": false,
+  "historical_psi": [
+    0.28938762559349523,
+    0.20904067653849973,
+    0.1286937274835042,
+    0.04834677842850865,
+    -0.03200017062648686
+  ],
+  "historical_years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023
+  ],
+  "status": "passed_normalized_old_initialization"
+}

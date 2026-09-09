@@ -1,6 +1,6 @@
 # Calibration Status
 
-Updated: `2026-09-09` (rebated tax paths verified; household-with-children review)
+Updated: `2026-09-09` (matched PF initialization verified; dated market roots running)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
@@ -35,11 +35,70 @@ transition at its onset, and calibration to observations along a PF transition.
 PF is required in historical calibration and policies for both intended arms.
 Immediate learning does not imply an immediate full change in the fertility
 preference intercept; preserve the dated preference path in initial diagnostics.
-Existing estimates are starting points for solver tests. The ownership
-parent/control definition and empirical date
-window likewise remain unresolved before a fresh target fingerprint/search.
+Existing estimates are starting points for solver tests. Two ACS family-group mappings and the use of four pooled ACS rows at a
+single2023 model date remain unresolved for production. The previously
+approved CPS/NCHS cohort choices and PSID wealth vintages are not reopened.
 The expected18-year children-at-home approximation stays fixed for this first
 comparison. Preserve the earlier verified PF pair as a fallback artifact.
+
+**September 9 meeting work: normalized initial states and terminal roots pass.**
+Both choice arms now restore the retained old completed-fertility normalization
+of2.1 (tolerance0.0005), with the original historical preference decline and an
+arm-specific2007 supply anchor. Jobs17277586/17277587 passed33 startup tests and
+the full initialization loop. Terminal price/population roots17277907 sequential
+and17277683 nested then passed all population/accounting and housing-market
+gates, each with eight evaluations including an uncached identical-price replay.
+Sequential endpoint price0.46420547, signed housing residual4.619e-6; nested
+price0.46391036, residual−1.991e-5; replay differences zero. These are stationary
+endpoints, not a solved historical PF equilibrium or a new calibration.
+
+The baseline retains1%annual property tax and zero transfers; the fiscal surplus
+is intentional and reported. The diagnostic continuation holds the normalized
+2023 preference intercept constant afterward and retains the existing frozen2100
+demographic inputs. Neither continuation is silently promoted as estimated.
+Full small receipts and independent source/arithmetic verification are under
+`output/model/e5f_matched_pf_20260909a/meeting_receipts/`. Normalized historical
+path smokes17278316 sequential and17278317 nested now pass all accounting,
+reproduction, actual-rent budget and12-target measurement gates. They cover
+12dates2007–2051 (24 Bellman solves), taking420.68/631.59seconds respectively.
+Their supplied prices do not clear markets: maximum absolute gaps71.08%/70.93%.
+The conditional losses121.223/139.517 are not calibrated equilibrium losses;
+complete12-row fits and all11 coordinates/bounds are in each arm's
+`meeting_receipts/path_anchor_02/` folder. No target or parameter changed.
+Both2055 final populations are far from their stationary endpoints, so this
+short horizon is explicitly uncertified. Both twelve-coordinate price panels17278556/17278629 and collectors
+17278711/17278712 passed; their log-price Jacobian condition numbers are3.681
+and3.634. Finite-horizon market roots17279004 sequential and17279843 nested
+are running. At19:15UTC the sequential maximum gap fell from71.08% to0.3107%
+in five valid mappings; its strict tolerance is0.02%, so it is not yet accepted.
+Both28-date supplied-price horizon checks17278557/17278633 also passed, taking
+898.78/1270.84seconds. Their complete tables are in
+`meeting_receipts/path_long_anchor_01/{sequential,nested}/`; they remain
+non-equilibrium diagnostics. The longer sequential final population is40.67%
+above its stationary endpoint. The longer seed changes tail prices as well as
+horizon, so it is not a controlled comparison of horizon length alone.
+Long sequential price panel17279762 and dependent collector17279797 prepare
+a separate longer market root. The updated checkpoint/restart suite passes95
+tests on Torch (17280998). Isolated source commits595690e9 and883b49f9 are
+pushed; no production promotion or re-estimation occurred.
+An initial12-date startup17278252/17278253 stopped before solving on a stale
+error-message assertion after generalizing the date-count gate; its frozen
+snapshot is preserved. The observer's root residual is explicitly signed excess
+demand; the older absolute-error diagnostic cannot be used as a Newton residual.
+
+**19:23UTC continuation update.** Short sequential root17279004 completed
+six calls with zero residual replay difference; full twelve-target, eleven-
+parameter, market and measurement files also reproduce byte-for-byte.
+Its best gap0.0031072113 exceeds the0.0002gate. Verified continuation17281783
+has four fresh mappings (30-minute internal budget). Long sequential panel
+17279762 and collector17279797 passed all28cases; condition number2.256.
+Long sequential root17281784 is launched with six28-date mappings, expected
+90minutes and110-minute internal budget. Both run in immutable source
+`...matched_pf_path_roots_20260909b`, with unchanged economics/targets/gates.
+Nested short root17279843 continues separately. These are diagnostic equilibrium
+solves, not new parameter calibrations. Full receipts and launch contracts:
+`output/model/e5f_matched_pf_20260909a/`; live job index
+`execution_20260909_meeting.json`.
 
 **Urgent implementation, September 9.** Work is isolated at
 `tmp/e5f_matched_pf`, branch `codex/matched-perfect-foresight`, based on clean
