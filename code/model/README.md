@@ -22,6 +22,16 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+The isolated matched-PF work adds `tools/run_e5f_matched_pf_smoke.py` for
+hash-pinned sequential/nested household primitive checks. Its cluster launcher
+is `../cluster/submit_e5f_matched_pf_smoke.sh`. The optional
+`HistoricalConditioning` argument to the PF path evaluator retains observed
+2007--2023 household age margins and a measurement callback. Neither feature
+certifies a historical PF objective: terminal and person/head integration remain
+separate requirements. Run the focused ownership, historical-bridge and pilot
+guard tests before numerical use. Execution is indexed in the main workspace's
+`output/model/e5f_matched_pf_20260909a/README.md`.
+
 `tools/run_e5f_simple_fertility_search.py` runs the bounded recalibration
 through the existing planner and verified adapter. Two exact-reference smokes
 precede all-coordinate and joint proposals; final exact repeats and complete

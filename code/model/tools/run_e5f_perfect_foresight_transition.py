@@ -77,6 +77,69 @@ class PFInitialState:
     scheduled_raw_entries: list[float]
 
 
+@dataclass(frozen=True)
+class HistoricalConditioning:
+    """Observed 2007--2023 head marginals for a conditional PF evaluation.
+
+    ``initial_mass`` is the 2007 normalization, including when start_year is
+    later. Keys of next_age_targets are local next-period indices. The final
+    advance after 2023 has no observed bridge and is only a boundary output;
+    this object supplies neither a demographic tail nor its terminal value.
+    """
+
+    start_year: int
+    initial_mass: float
+    next_age_targets: dict[int, int]
+    outside_flow: float
+    retention: float
+    observer: Callable[[int, calendar.PeriodEvaluation, SimpleNamespace,
+                        np.ndarray, SimpleNamespace], None] | None = None
+
+    def validate(self, P: SimpleNamespace, periods: int, state: PFInitialState,
+                 conversion: float) -> None:
+        if self.start_year not in (2007, 2011, 2015, 2019, 2023):
+            raise ValueError("Historical start_year must be a 2007--2023 model date")
+        if float(P.period_years) != 4.0 or periods < 1 or self.start_year + 4 * (periods - 1) > 2023:
+            raise ValueError("Historical conditioning supports four-year evaluations through 2023 only")
+        ages = float(P.age_start) + np.arange(int(P.J)) * float(P.da)
+        if not np.array_equal(ages, np.arange(18., 86., 4.)):
+            raise ValueError("Observed head-age targets require the 17 model ages 18--82")
+        if not math.isfinite(self.initial_mass) or self.initial_mass <= 0:
+            raise ValueError("Historical initial_mass must be finite and positive")
+        if not math.isfinite(self.outside_flow) or self.outside_flow < 0:
+            raise ValueError("Historical outside_flow must be finite and nonnegative")
+        if not math.isfinite(self.retention) or not 0 <= self.retention <= 1:
+            raise ValueError("Historical retention must be finite and in [0,1]")
+        if not math.isfinite(conversion) or conversion <= 0:
+            raise ValueError("Birth-to-entry conversion must be finite and positive")
+        if self.observer is not None and not callable(self.observer):
+            raise ValueError("Historical observer must be callable")
+        for index, year in self.next_age_targets.items():
+            if (not isinstance(index, int) or isinstance(index, bool) or index < 1
+                    or not isinstance(year, int) or isinstance(year, bool)
+                    or year != self.start_year + 4 * index
+                    or year not in transition.CENSUS_HH3_HOUSEHOLDS_THOUSANDS
+                    or year > 2023):
+                raise ValueError("Historical next-age target has an invalid index or observed year")
+        required = {i for i in range(1, periods + 1) if self.start_year + 4 * i <= 2023}
+        if not required.issubset(self.next_age_targets):
+            raise ValueError("Historical conditioning is missing an in-window next-age target")
+        g = np.asarray(state.g_pre)
+        if (g.ndim != 7 or g.shape[2] != int(P.I) or g.shape[3] != int(P.J)
+                or not np.isfinite(g).all() or np.any(g < 0)
+                or np.any(g.sum(axis=(0, 1, 2, 4, 5, 6)) <= 0)):
+            raise ValueError("Historical initial distribution must have positive mass in every age cell")
+        shares = np.asarray(P.entry_shares, dtype=float)
+        if (shares.shape != (int(P.I),) or not np.isfinite(shares).all()
+                or np.any(shares < 0) or shares.sum() <= 0):
+            raise ValueError("Historical entry shares must be finite nonnegative market weights")
+        queues = [np.asarray(q, dtype=float) for q in
+                  (state.scheduled_entries, state.scheduled_raw_entries)]
+        if (any(q.ndim != 1 or q.size == 0 or not np.isfinite(q).all() or np.any(q < 0)
+                for q in queues) or queues[0].shape != queues[1].shape):
+            raise ValueError("Historical birth queues must be matching nonnegative vectors")
+
+
 @dataclass
 class TerminalSteadyState:
     psi_child: float
@@ -410,6 +473,9 @@ def policy_from_objects(
         price=price_array,
         maps=calendar.build_transition_maps(price_array, P, b_grid, shared),
         fert2_probs=getattr(P, "_fert2_probs", None),
+        # Each full Bellman call allocates a fresh joint object, then replaces
+        # P._joint_choice. Retain this date's object for forward accounting.
+        joint_choice=getattr(P, "_joint_choice", None),
     )
 
 
@@ -493,10 +559,16 @@ def evaluate_path_at_prices(
     supply_rule: calendar.HousingSupplyRule,
     birth_to_entry_conversion: float,
     transfer_path: Sequence[float] | None = None,
+    historical_conditioning: HistoricalConditioning | None = None,
 ) -> PathEvaluation:
     started = time.perf_counter()
     price_path = np.asarray(prices, dtype=float).reshape(-1)
     psi_values = np.asarray(psi_path, dtype=float).reshape(-1)
+    if historical_conditioning is not None:
+        historical_conditioning.validate(base_parameters, len(price_path), initial_state,
+                                         birth_to_entry_conversion)
+        if psi_values.shape != price_path.shape or not np.isfinite(psi_values).all():
+            raise ValueError("Historical preference path must match the finite price path")
     transfer_values = (
         np.zeros_like(price_path)
         if transfer_path is None
@@ -555,6 +627,8 @@ def evaluate_path_at_prices(
             supply_rule=supply_rule,
             supplied_policy=policy,
         )
+        if historical_conditioning is not None and historical_conditioning.observer is not None:
+            historical_conditioning.observer(period, evaluation, parameters, b_grid, shared)
         accounting = transition.calendar_topcode_birth_accounting(
             evaluation.g_pre,
             evaluation.g_post_fertility,
@@ -584,14 +658,27 @@ def evaluate_path_at_prices(
         entry_shares = np.asarray(parameters.entry_shares, dtype=float).reshape(-1)
         entry_shares /= float(np.sum(entry_shares))
         entrants_next = float(due_entry) * entry_shares
+        bridge_audit = None
+        if historical_conditioning is not None:
+            entrants_next = historical_conditioning.outside_flow * entry_shares
+            entrants_next[0] += historical_conditioning.retention * float(due_entry)
         empty_next[:, :, :, 0, :, :, :] = calendar.entrant_cohort(
             entrants_next, parameters, b_grid
         )
+        if historical_conditioning is not None:
+            next_year = historical_conditioning.next_age_targets.get(period + 1)
+            if next_year is not None:
+                ages = float(parameters.age_start) + np.arange(int(parameters.J)) * float(parameters.da)
+                empty_next, bridge_audit = transition.reweight_distribution_to_observed_age_path(
+                    empty_next, ages, year=next_year, initial_mass=historical_conditioning.initial_mass,
+                )
         expected_mass = (
             float(np.sum(evaluation.g_post_fertility))
             - float(deaths)
             + float(np.sum(entrants_next))
         )
+        if bridge_audit is not None:
+            expected_mass += float(bridge_audit["net_residual"])
         mass_error = float(np.sum(empty_next)) - expected_mass
         maximum_mass_error = max(maximum_mass_error, abs(mass_error))
         maximum_projection = max(
@@ -630,7 +717,8 @@ def evaluate_path_at_prices(
         rows.append(
             {
                 "period": period,
-                "calendar_year": CALENDAR_START_YEAR
+                "calendar_year": (CALENDAR_START_YEAR if historical_conditioning is None
+                                  else historical_conditioning.start_year)
                 + period * int(parameters.period_years),
                 "psi_child": float(psi),
                 "asset_price": float(price),
@@ -682,6 +770,16 @@ def evaluate_path_at_prices(
                 ),
             }
         )
+        if historical_conditioning is not None:
+            rows[-1].update(
+                historical_conditioning_scope="Conditional historical PF evaluation; supplied terminal boundary",
+                historical_outside_flow=float(historical_conditioning.outside_flow),
+                historical_retained_due_entry=historical_conditioning.retention * float(due_entry),
+                historical_next_bridge_year=historical_conditioning.next_age_targets.get(period + 1),
+                historical_bridge_audit=bridge_audit,
+                historical_bridge_net_residual=(float(bridge_audit["net_residual"])
+                                               if bridge_audit is not None else 0.0),
+            )
         state = PFInitialState(
             g_pre=empty_next,
             scheduled_entries=list(next_queue),
