@@ -896,3 +896,18 @@ or adopt a model extension. It asks for complete analytical results and three
 distinct proof/accounting checks, without promising a controllable Pro runtime.
 The author asked to paste it manually. The agent has not submitted this review
 or started a new monitor. The current paper and slides remain unchanged.
+
+## Overnight iteration authorized
+
+The author has now submitted the packet in
+https://chatgpt.com/c/6aa0cfc4-2494-83e9-a1a7-99f5317cab64 and requested
+continued overnight iteration. The browser confirmed attachment
+`Pasted text(20260909-031717).txt`, 6 Pro, and an active generation.
+The existing heartbeat was updated and confirmed active, with a morning
+assessment planned for September 9 at 8 AM Eastern. It can capture responses,
+verify them and send focused follow-ups within the frozen specification.
+Two independent Astra/max checks cover primitive housing conditions and local
+tax-transition equations, with 20-minute limits and separate artifacts.
+The concise live record is
+`output/model/simplified_olg_amendments/overnight_review.md`.
+No new theorem is accepted solely because Pro or an independent agent states it.

@@ -1,5 +1,15 @@
 # Simplified OLG amendment checks
 
+## Overnight continuation — September 8–9
+
+The author submitted the consolidated review in
+[this Pro chat](https://chatgpt.com/c/6aa0cfc4-2494-83e9-a1a7-99f5317cab64)
+and authorized focused overnight iteration. The live
+[work record](overnight_review.md) identifies the active response, independent
+proof checks, next action, and morning deliverables. The existing heartbeat
+is active through the morning assessment. The packet-preparation status below
+describes the earlier handoff, not the current running status.
+
 ## Consolidated review packet, prepared for manual submission
 
 The [complete packet](oracle_consolidated_theory_bundle.md) combines
