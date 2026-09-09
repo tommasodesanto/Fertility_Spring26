@@ -1,5 +1,26 @@
 # Simplified OLG amendment checks
 
+## September 9 essential-theory Pro review — running
+
+The author rejected treating the verified parameter family below as completion of
+the paper's theoretical argument. The required result remains a simple allocation
+proposition under economically interpretable primitive conditions, followed by
+fertility and a consistent demographic transition. The model-design comparison
+remains an unadopted proposal; its algebraic checks do not settle that requirement.
+
+A fresh GPT-6 Pro review is running in
+[this chat](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
+The [research brief](../../../docs/prompts/oracle_essential_theory_reconsideration.md)
+and [exact submitted packet](oracle_essential_theory_packet.md) record today's
+discussion, the final common-payment-order proposal, the comparison with
+Coven–Golder–Gupta–Ndiaye, and the welfare and fertility requirements. Pro is
+explicitly free to explore alternative minimal timings, age structures, income
+profiles, preferences and housing markets. The requested first comparison is a
+dated utilitarian planner choosing consumption and housing, initially with fixed
+fertility. Joint fertility and policy transitions must be distinguished from that
+comparison and derived consistently. Submission and active generation were
+verified in the signed-in browser. No response has yet been assessed or adopted.
+
 
 ## September 9 two-hour model-design comparison — proposed, not adopted
 
