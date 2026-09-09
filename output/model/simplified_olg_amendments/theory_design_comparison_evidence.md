@@ -20,7 +20,7 @@ The same financial and tenure model also has a local perfect-foresight transitio
 
 1. Initial cash includes every receipt already received. Labor income Y genuinely arrives after the housing decision; the household cannot revisit the same period's home purchase after receiving it.
 2. Tenure can change between ages. The first illustration omits ownership tastes, while retaining heterogeneous cash, income and fertility. All young rent in the verified example; it does not have a positive realized young mortgage share.
-3. A young mortgage must be fully repaid before retirement with nonnegative remaining financial assets. This is stronger than allowing a house sale at that boundary to fund repayment, although actual young households rent and save in this branch.
+3. Current consumption and property taxes are paid from liquid receipts before title liquidation for BOTH ages. A young mortgage can then be repaid using house-sale proceeds; total wealth after settlement must be nonnegative before the next rebate. The final reader uses the exact two solvency inequalities below, weakening the initial calculation's stronger before-sale financial-asset bound without changing the verified equilibrium. All young rent in that equilibrium.
 4. The physical environment has a common divisible housing stock and tenure-specific upper size menus. The planner may reassign tenure; it is not confined to immutable rental and owner inventories.
 5. This is a small open economy with outside bond and intermediary finance. Estates provide warm-glow utility and do not endogenously finance the next entrants' cash. The distribution of entrant income and cash is the same exogenous distribution each date. Fertility-based type transmission and an internal bequest distribution would require a different transition state.
 6. The finite existence example restricts gross resource dispersion to 1% for the joint-fertility and heterogeneous-transition result and child goods costs to 2% of mean lifetime stage resources at the maximum rental-space fertility. It also requires low purchase cash relative to later resources. These are sufficient analytical restrictions, not an empirical assessment.
@@ -47,9 +47,32 @@ The lead checked the household and settlement accounts, the complete tenure comp
 - Part I: dated accounts, explicit stationary price, global tenure verification, finite primitive family, full fixed-fertility planner.
 - Part II: full joint-fertility planner, quadratic private fertility, endogenous heterogeneous stationary closure.
 - Part III: endogenous-price transition, stationary endpoints, local stability and shock signs, then exact heterogeneous extension.
-- Part IV: independent audits, including corrections and scope restrictions.
+- Part IV: alternative repayment calendars, followed by the final common-order settlement specified here and audited in Section 12.4.
+- Part V: independent audits, including corrections and scope restrictions.
 
 Cross-sectional means in these calculations are integrals over a fixed type distribution; expectation notation appearing in a derivation is not uncertainty or stochastic perfect foresight.
+
+
+## Final financing specification in the reader
+
+The initial stationary derivation imposed \(a'_O\ge0\). This is sufficient but unnecessarily strong. The final reader keeps the same consumption-before-title-sale order for both ages and uses, in addition to the origination deposit constraint,
+
+\[
+a'_O+P_{t+1}h_y\ge0,\qquad qa'_O+\phi P_t h_y\ge0.
+\]
+
+Here \(a'_O\) is the young owner's net financial position just before title liquidation, after subtracting the matured mortgage. The first inequality requires nonnegative total wealth after repayment; the second permits consumption and property taxes to be paid from liquid receipts before the house is sold. These are financial feasibility conditions, not additional conditions on the theorem's parameter family.
+
+Given a candidate satisfying the consolidated budget and these constraints, choose
+
+\[
+d=\max\{0,P_t h_y-w-T_t,-qa'_O\},\qquad
+k=w+T_t+d-P_t h_y.
+\]
+
+The deposit and second solvency conditions imply \(d\le\phi P_t h_y\) and \(k\ge0\). Young liquid income and bond receipts first cover consumption and taxes; their remaining liquid assets equal \(a'_O+d/q\ge0\). Sell the title if needed and repay \(d/q\), leaving \(a'_O+P_{t+1}h_y\ge0\). The next entry rebate arrives after this clearing. Old households take no new loan and use the same consumption-before-sale ordering, so their old financial-estate floor remains unchanged. This avoids granting young households special access to house-sale receipts for current consumption.
+
+A renter replicates every such owner plan with financial saving \(a'_R=a'_O+P_{t+1}h_y\). Its present housing cost is \((1+q\tau_t)P_t-qP_{t+1}\), giving identical current consumption, fertility, and old resources. All owned homes affordable to the young are below the rental cap in the verified family. Enlarging the young-owner feasible set this way therefore leaves every equilibrium, planner, fertility and local-transition result unchanged. Section 12.4 below independently verifies this implementation. The earlier terminal-only relaxation described in Part IV is an alternative, not the final reader's preferred ordering.
 
 
 ---
@@ -1423,7 +1446,229 @@ Additional verification: exact rational arithmetic checked (H6)–(H7), and symb
 
 ---
 
-# Part IV. Independent review
+# Part IV. Alternative repayment calendars
+
+# Mortgage repayment with boundary title settlement
+
+September 9, 2026. Bounded accounting appendix to
+`common_calendar_model.md`. No original source or earlier scratch memo is
+edited by this task.
+
+## Verdict
+
+Yes. The extra requirement of nonnegative financial wealth **before**
+liquidating the young home can be replaced by nonnegative wealth **after**
+its sale and full mortgage repayment. This gives an exact feasible financing
+problem, without debt forgiveness or a new old-age loan. Every expanded
+young-owner plan remains replicable by a renter when its origination cap
+lies below the rental size ceiling. Consequently the verified all-young-
+renter equilibrium and its global tenure proof survive unchanged.
+
+The required timing statement is explicit: stage-end young consumption,
+property tax, mortgage repayment, and sale of the young home clear together.
+Sale proceeds may finance consumption as well as repay debt. A requirement
+that consumption be paid before this sale would instead retain an additional
+liquidity inequality. The common calendar permits simultaneous settlement;
+it does not make the payment ordering irrelevant without stating it.
+
+## 1. Exact nonstationary accounts
+
+Let \(W_t=w_i+T_t\) include all cash already received at the beginning of
+the young stage. The household receives genuinely later working income
+\(Y_{i,t}\) at its end. The initial mortgage and bond account is unchanged:
+\[
+k+P_t h=W_t+d,
+\qquad k\ge0,\quad 0\le d\le\phi P_t h.
+\tag{1}
+\]
+The home provides current housing services before being sold at the age
+boundary for \(P_{t+1}h\). At that boundary, the household receives its labor
+income and matured bonds, fully repays the mortgage including interest,
+pays current consumption and property tax, and retains wealth
+\[
+\boxed{\widetilde a
+=Y_{i,t}+\frac{k}{q}+P_{t+1}h
+-c-\tau_tP_t h-\frac dq\ge0.}
+\tag{2}
+\]
+There is no mortgage balance after this settlement. Define the accounting
+balance before title liquidation by
+\[
+a'_O\equiv\widetilde a-P_{t+1}h.
+\tag{3}
+\]
+It can be negative; that number is not an unsecured loan carried into old
+age. It records the remaining mortgage and other contemporaneous payments
+net of nonhousing receipts before the house proceeds are included.
+
+Eliminating the initial bond and loan positions gives
+\[
+qc+qa'_O+(1+q\tau_t)P_t h=W_t+qY_{i,t},
+\qquad a'_O+P_{t+1}h\ge0,
+\tag{4}
+\]
+together with the original deposit restriction
+\[
+\boxed{(1-\phi)P_t h\le W_t.}
+\tag{5}
+\]
+Equivalently, put
+\(u_t=(1+q\tau_t)P_t-qP_{t+1}>0\). The complete reduced constraint is
+\[
+\boxed{qc+q\widetilde a+u_t h=W_t+qY_{i,t},
+\qquad\widetilde a\ge0,}
+\tag{6}
+\]
+with (5), the physical owner size cap, and the utility domains.
+
+These conditions are sufficient as well as necessary. Given a reduced
+feasible allocation, choose
+\[
+d=\max\{0,P_t h-W_t\},\qquad k=W_t+d-P_t h.
+\tag{7}
+\]
+The deposit condition ensures \(d\le\phi P_t h\), while \(k\ge0\).
+Equation (6) then gives (2) exactly, so all the mortgage principal, interest,
+tax, and consumption bills can be paid from the contemporaneous receipts.
+There is no missing interim credit line. At a binding deposit cap,
+\(d=\phi P_t h\) and \(k=0\), as expected.
+
+## 2. Old-age entry and exact renter replication
+
+After settlement the old household receives its new stage's upfront rebate
+and starts with
+\[
+Z_{t+1}=\widetilde a+T_{t+1}
+=a'_O+P_{t+1}h+T_{t+1}.
+\tag{8}
+\]
+It can rent or buy within the original size menus, using the unchanged
+old-age budget and estate floor. Sale and repurchase have no real resource
+cost in this frictionless title market. The household can repurchase its
+previous home if that home is affordable; the old no-borrowing restriction
+still governs its selected bundle. The argument does not guarantee that
+retaining the previous size is feasible.
+
+The young renter budget is
+\[
+qc+qa'_R+u_t h=W_t+qY_{i,t},\qquad a'_R\ge0.
+\tag{9}
+\]
+For every feasible young-owner plan with \(h\le H_R\), set
+\[
+\boxed{a'_R=\widetilde a=a'_O+P_{t+1}h.}
+\tag{10}
+\]
+Equations (6) and (9) coincide; current consumption, housing, fertility,
+and future old resources are identical. The future tenure menu is shared.
+Thus, with no current ownership taste, a renter replicates every owner
+plan whenever
+\[
+\frac{W_t}{(1-\phi)P_t}<H_R.
+\tag{11}
+\]
+The same identity holds at nonstationary prices. It uses the future sale
+price \(P_{t+1}\), not \(P_t\), in (3), (4), and (10).
+
+## 3. Consequences and boundary cases
+
+The stationary family in `common_calendar_model.md` satisfies (11) strictly.
+Its chosen households all rent, save strictly, and later select ownership.
+Its renter optimum, old value functions, price/rebate formulas, housing
+clearing, and exact RO-versus-RR value comparison are unchanged. Enlarging
+the young-owner menu cannot defeat that optimum, because every additional
+owner plan is covered by (10). The uniform fertility-deviation comparison
+is also unchanged: replication keeps the same \(n\).
+
+The same conclusion applies to a previously verified deterministic path
+that remains in this certified regime: its reduced equations and global
+tenure argument are unaffected. This appendix proves no new transition and
+makes no claim about paths on which the owner origination cap rises above
+\(H_R\), or where another maintained strict regime condition fails.
+
+The common-date planner's consolidated account is also unchanged. Fixing
+future \(Z\) and the future rebate fixes \(\widetilde a\); (6) then gives
+\(q\Delta c+u_t\Delta h\) as the required current transfer. In the
+pre-liquidation notation, \(\Delta a'_O=-P_{t+1}\Delta h\). The rental
+intermediary and old estate ledgers still have to be included as in the
+common-calendar memo. Changing this private repayment restriction supplies
+no new aggregate goods or fiscal resources.
+
+The relevant corners are:
+
+- **Zero remaining wealth:** \(\widetilde a=0\) is feasible settlement.
+  If \(T_{t+1}=0\) as well, positive old consumption, housing, and estate
+  cannot all be financed; the old utility domain then excludes that plan.
+- **A price decline or mortgage larger than the sale receipt:** other
+  stage-end income may cover the shortfall. If total receipts do not cover
+  every payment, (2) fails; no default is being allowed.
+- **The next rebate:** (2) imposes solvency before crediting
+  \(T_{t+1}\). This preserves the renter's same pre-rebate saving condition.
+  If that next rebate is instead spendable in the very same debt settlement,
+  both renter and owner solvency permissions must be changed symmetrically;
+  imposing only \(Z_{t+1}\ge0\) on owners would invalidate (10)'s renter
+  feasibility at negative \(\widetilde a\).
+- **Payment ordering:** if consumption, tax, or mortgage repayment must
+  precede the sale, the corresponding payment-liquidity restriction returns.
+  The relaxation requires simultaneous settlement or costless netting of
+  these same-date claims. If consumption and tax precede the sale but the
+  mortgage can use its proceeds, then
+  \(c+\tau_tP_t h\le Y_{i,t}+k/q\), equivalently
+  \(a'_O\ge-d/q\); eliminating the permitted origination debt adds
+  \(qa'_O+\phi P_t h\ge0\). If the mortgage must also be repaid before
+  title sale, the stronger \(a'_O\ge0\) returns. Neither extra inequality
+  is needed under the simultaneous settlement specified in (2).
+
+The substantive assumption that a young owner must retain nonnegative
+financial assets before title realization can therefore be removed. The
+remaining model still requires the early home commitment, genuinely later
+income, and an explicit boundary-settlement convention.
+
+## Retained asymmetry at death and the modeling tradeoff
+
+The simultaneous liquidation permission above applies to a **living young
+household entering old age**. It does not extend to the old household's
+terminal home sale. In the maintained old problem,
+\[
+e=a_e+P_{t+1}h_o,\qquad a_e\ge0,
+\]
+the retained home's proceeds at death are earmarked for the estate. Old
+consumption and tax must be financed without those terminal sale proceeds;
+the household cannot use them in the same boundary settlement to finance
+current consumption. Old households can still sell and resize at the
+beginning of their stage, as already allowed.
+
+Thus the two ages share a stage-end goods-delivery date but **do not share
+the same access to terminal liquidation receipts**. Young sale proceeds
+may fund current consumption; old death-sale proceeds may fund only the
+estate. This is an explicit restriction on settlement and pledgeability,
+not a consequence of logarithmic warm-glow preferences alone. If old
+households were given the same terminal sale-financing permission, the
+estate floor would cease to follow from these accounts, and the existing
+old-value formulas and theorems would require a new derivation.
+
+Removing the young pre-sale solvency condition is therefore not an
+unqualified simplification. It permits sale-funded mortgage repayment but
+retains an age-specific estate-earmarking rule. Keeping the original rule
+that current consumption, tax, and mortgage payments precede title
+liquidation is a cleaner uniform ordering for a short first illustration,
+although it explicitly imposes repayment from nonhousing receipts on young
+owners. Neither choice changes the verified all-young-renter branch, where
+the stronger young condition is already strictly slack. If the relaxed
+version is used, the old terminal-earmarking restriction must appear beside
+the young settlement permission, rather than being left in an appendix or
+described as fully symmetric timing.
+
+## Verification
+
+The forward derivation, constructive reverse implementation (7), and renter
+replication (10) were checked directly. No numerical model run is needed
+for these accounting identities.
+
+
+---
+
+# Part V. Independent review
 
 ## 8. Updated review: synchronized common-calendar candidate
 
@@ -2356,3 +2601,221 @@ later fertility differences, and convergence need not be monotone.
 No claim about endogenous entrant selection, large shocks or global
 equilibrium uniqueness is added. No model run, root search, simulation,
 build, browser, or other-file edit was used in this check.
+
+## 12. Independent audit of repayment from boundary sale receipts
+
+September 9, 2026. This checks the proposed relaxation of the young
+owner's separate nonnegative financial-asset condition, directly from
+the dated purchase and settlement accounts. Only this audit section is
+edited; the proposed implementation is being documented separately in
+`repayment_relaxation.md`.
+
+**Verdict: conditional pass; the age-specific terminal restriction must
+also be explicit.** The condition
+`a'_O >= 0` is unnecessary for the verified all-young-rental equilibrium,
+global tenure comparisons, dated planner results and local transitions.
+It can be replaced by `a'_O+P_next h >= 0` if income, bond payoffs, house
+sale, consumption, taxes and debt repayment clear at the same boundary.
+This netting permission is for the young; retaining the old estate floor
+requires a different terminal spendability restriction, detailed in
+Section 12.4 below. There is no new borrowing in old age. This is a genuine enlargement of
+the off-equilibrium young-owner opportunity set, not a claim that every
+other regime of the expanded model has unchanged equilibria.
+
+### 12.1 Exact projection and a constructive implementation
+
+Let `P_t h` be the house purchased before young housing services are
+delivered. Initial cash is `w+T_t`, mortgage debt is `d`, and initial bond
+holdings are `k`. The closing conditions remain
+
+\[
+ k+P_t h=w+T_t+d,\qquad
+ k\ge0,\qquad 0\le d\le\phi P_t h.
+\]
+
+At the end of the young stage, allow sale of the occupied house for
+`P_{t+1}h`. Define the cash left after all boundary obligations by
+
+\[
+ b^+=Y_t+k/q+P_{t+1}h-c-\tau_tP_t h-d/q\ge0.
+\]
+
+This is the actual nonnegative financial position entering retirement,
+before the next rebate. Define only for consolidated accounting
+
+\[
+ a'_O=b^+-P_{t+1}h.
+\]
+
+This quantity can be negative; it is not an unsecured loan remaining
+after settlement. Eliminating the initial bond and mortgage gives
+
+\[
+ qc+qa'_O+A_tP_t h=w+T_t+qY_t,
+ \qquad a'_O+P_{t+1}h\ge0,
+\]
+
+or, equivalently, with `u_t=A_tP_t-qP_{t+1}`,
+
+\[
+ qc+qb^++u_t h=w+T_t+qY_t.
+\]
+
+The origination condition is unchanged:
+`(1-phi)P_t h <= w+T_t`. It cannot be financed by income or sale receipts
+that arrive only at the boundary.
+
+These projected conditions are sufficient as well as necessary. Given a
+feasible allocation, choose
+
+\[
+ d=\max\{0,P_t h-w-T_t\},\qquad
+ k=w+T_t+d-P_t h.
+\]
+
+The deposit condition gives `d<=phi P_t h`, and `k>=0` by construction.
+At the boundary, full liquidation produces enough combined resources to
+pay consumption, tax and the full mortgage face value, leaving exactly
+`b^+>=0`. Full sale and repurchase, if desired in old age, are a feasible
+normalization under the model's costless trade and freely reselected
+tenure. Partial sale is unnecessary for this implementation. The old
+household then starts with `Z=b^++T_{t+1}` and chooses its old home under
+the unchanged no-new-borrowing and estate-floor restrictions.
+
+### 12.2 The settlement timing must be stated, not inferred
+
+The exact terminal-only projection permits sale receipts to fund current
+end-stage consumption and property tax as well as mortgage repayment.
+That is coherent with the synchronized common calendar, provided these
+items clear together after the current housing service has been delivered.
+It does not require an interim bridge loan or old-age debt.
+
+If consumption and tax instead had to be paid before any sale receipts
+were available, one would also require
+
+\[
+ c+\tau_tP_t h\le Y_t+k/q,
+ \quad\text{equivalently}\quad a'_O\ge-d/q
+\]
+
+for the selected initial mortgage. The terminal collateral condition
+alone would then not be an exact projection. If mortgage repayment also
+preceded sale, still stronger interim cash conditions would arise.
+Accordingly the proposed relaxation should name simultaneous boundary
+netting explicitly. It must not quietly impose consumption-before-sale
+liquidity after deriving the less restrictive budget.
+
+### 12.3 Renter replication and all previously verified results
+
+A young renter can reproduce any feasible owner allocation at the same
+current `c,h,n` by saving
+
+\[
+ a'_R=b^+=a'_O+P_{t+1}h\ge0.
+\]
+
+Its budget is exactly the owner's projected budget because
+
+\[
+ qc+qa'_R+(A_tP_t-qP_{t+1})h
+ =qc+qa'_O+A_tP_t h.
+\]
+
+The renter and owner enter old age with identical total resources
+`b^++T_{t+1}` and face the same future tenure menu. This argument uses
+the dated next sale price, not a stationary substitution. It also
+preserves fertility and both ages' utility because no ownership taste
+or transaction cost is present.
+
+The existing origination bounds keep every affordable owner home
+strictly below the rental ceiling `r`. The renter replication therefore
+remains physically feasible for every newly admitted owner plan. The
+already verified global renter optimum reaches `r` and strictly dominates
+all such owner plans; its uniform comparison over fertility deviations
+is unchanged. No newly feasible owner plan invalidates the global
+tenure argument.
+
+Every household in the constructed competitive reference and local
+transition already rents when young and saves strictly. Its realized
+policy and every aggregate equilibrium equation are therefore unchanged.
+Old no-borrowing and the binding old estate floor are retained. The dated
+planner already relaxed individual finance and used the same net title
+and claim settlement, so its feasible comparisons are unchanged as well.
+
+This conclusion is specific to the verified all-young-rental branch
+and its sufficiently small paths. The expanded private model can have
+different choices or equilibria in other regimes. In particular, no
+general default or unanticipated-price-solvency theorem for actual
+young mortgage borrowers is supplied here. No model run, root search,
+simulation, build, browser, or reader/source edit was used in this check.
+
+### 12.4 Late consistency qualification: old estate protection is substantive
+
+The unrestricted young-boundary netting above cannot be described as a
+uniform settlement rule for both ages while preserving the existing old
+solution. That solution retains
+
+\[
+ e=a_e+P_{t+1}h_o,\qquad a_e\ge0.
+\]
+
+It therefore prevents housing proceeds from funding the old household's
+end-stage consumption. If old households could also liquidate after
+receiving the full housing service and use the receipts to consume before
+leaving the estate, this floor would disappear. An initial old purchase
+cash constraint could remain, but the old policies, values and subsequent
+proofs would require a new derivation. No such change has been verified.
+
+Equal consumption delivery dates do not by themselves justify permitting
+young consumption to use terminal sale receipts while forbidding old
+consumption from doing so. The terminal-only young relaxation is coherent
+if the model explicitly makes young title proceeds spendable at retirement
+but protects the old occupied house for the estate. That is an
+age-specific terminal restriction, not a consequence of merely saying
+that old households take no new loans. Old households can still sell or
+downsize at the beginning of their final stage; this restriction concerns
+the house retained during that final stage.
+
+There is a cleaner intermediate relaxation if a common payment order is
+preferred. For both ages, pay consumption and property tax from liquid
+receipts first; then liquidate titles, repay any existing young mortgage,
+and enter retirement or distribute the old estate. The young must satisfy
+
+\[
+ c+\tau_tP_t h\le Y_t+k/q,
+ \qquad b^+=a'_O+P_{t+1}h\ge0.
+\]
+
+For some admissible initial mortgage, the first condition is equivalent
+to `a'_O>=-d/q`. Eliminating that mortgage gives the exact additional
+inequality
+
+\[
+ qa'_O+\phi P_t h\ge0.
+\]
+
+Thus the complete projected owner conditions under this common ordering
+are the consolidated budget, the original deposit cap, terminal solvency
+`a'_O+P_{t+1}h>=0`, and `qa'_O+phi P_t h>=0`. Sufficiency follows by choosing
+
+\[
+ d=\max\{0,P_t h-w-T_t,-qa'_O\},\qquad
+ k=w+T_t+d-P_t h.
+\]
+
+The two origination inequalities ensure `d<=phi P_t h`. Consumption and
+tax can be paid before the sale, and terminal solvency then permits full
+mortgage repayment from remaining cash and title proceeds. There is no
+loan entering old age. For an old household with no initial loan, the
+same consumption-before-liquidation order yields nonnegative financial
+estate and the retained housing-estate floor.
+
+This intermediate option strictly weakens `a'_O>=0` while preserving a
+common payment order and the current old-age restriction. Its owner set
+is contained in the terminal-solvent set already covered by renter
+replication, so every previously verified all-young-rental result remains
+unchanged. It is the cleaner recommendation if the packet seeks to remove
+the unnecessary young asset bound without adding age-specific permission
+to finance consumption from end-stage title proceeds. The unrestricted
+terminal-only relaxation remains an admissible explicitly asymmetric
+alternative, rather than an unqualified simplification.

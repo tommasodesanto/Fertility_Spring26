@@ -51,10 +51,11 @@ nonconvertible rental and owner units.
 A young household has cash $w_i$ at purchase, including every receipt already
 received. Its later working income is $Y_i$. These may differ across
 households. A mortgage finances at most the fraction $\phi$ of the purchase.
-It is repaid from working income before the household enters old age;
-financial assets at that boundary must be nonnegative. Retirement labor
-income is zero in the example below. Old households can sell their homes and
-choose either tenure.
+It is repaid at the end of the young stage using working income and house-sale
+proceeds after current consumption and taxes are paid from liquid receipts;
+total wealth after repayment must be nonnegative. Retirement labor income is
+zero in the example below. Old households can sell their homes and choose
+either tenure.
 
 Both current ages consume at the end of the same period. Old households
 leave their estates at that date. A young household's own old consumption
@@ -82,25 +83,36 @@ T=\frac{q\tau P\bar H}{2N}.
 The government finances this rebate against the period-end property-tax
 receipts. It introduces no additional goods.
 
-A young owner chooses consumption, housing and next-period financial wealth
-$a'$ subject to
+A young owner chooses consumption, housing, and next-period net financial
+position $a'$, measured immediately before the boundary sale of the house.
+The choice is subject to
 \[
 \boxed{\begin{aligned}
 qc^y+qa'+(1+q\tau)Ph^y&=w_i+T+qY_i,\\
-(1-\phi)Ph^y&\le w_i+T,\qquad a'\ge0.
+(1-\phi)Ph^y&\le w_i+T,\qquad a'+Ph^y\ge0,\\
+qa'+\phi Ph^y&\ge0.
 \end{aligned}}
 \]
-The second line is the deposit requirement. In particular, $\phi=.8$ means
-that cash must cover 20\% of the purchase. A young renter instead has
+The deposit requirement says cash covers 20\% when $\phi=.8$. The condition
+$qa'+\phi Ph^y\ge0$ permits current consumption and property tax before
+sale; $a'+Ph^y\ge0$ requires nonnegative wealth after repayment. A young
+renter instead has
 \[
 qc^y+qa'+DP h^y=w_i+T+qY_i,
 \qquad a'\ge0,\quad h^y\le H_R.
 \]
 This timing requires the home to be chosen before the later earnings arrive.
-A purchase after that receipt would be a subsequent housing decision.
+A purchase after that receipt would be a subsequent housing decision. At
+either age, current consumption and property tax are paid from liquid receipts
+before the house is liquidated. For a young household, house-sale proceeds may
+then repay the mortgage, and the next old-entry rebate is credited after
+settlement. For an old household, sale proceeds form the estate after current
+consumption and taxes have been paid.
+An old household may sell and repurchase under the unchanged old no-borrowing
+problem.
 
-An old household's initial resources include its financial wealth, any
-inherited title, and the rebate:
+An old household's initial resources include its financial wealth, the house
+carried from youth, and the rebate:
 \[
 Z=a'+P h^y\mathbf 1\{\text{previously owner}\}+T.
 \]
@@ -121,8 +133,9 @@ If
 \]
 every home the young household can buy is smaller than the largest rental.
 A renter can replicate such an owner's consumption and future total wealth
-by saving the house's value in bonds. With mobile future tenure and no
-ownership taste, buying that smaller home has no advantage. If rental demand
+by increasing financial saving by the house's sale value. With mobile future
+tenure and no ownership taste, buying that smaller home has no advantage. If
+rental demand
 reaches $H_R$, the young household rents there and would like more space.
 This is the joint role of the deposit and rental-size constraints.
 
@@ -439,10 +452,11 @@ end. This is a change in financial timing, not a change of letters.
 \item Let tenure change with age. The first illustration has no ownership
 taste; income and wealth still differ across households. The planner may
 reassign tenure and works with the original common divisible stock.
-\item Repay mortgages before entry into old age, with nonnegative financial
-assets at that boundary. This is stronger than permitting a house sale at
-that date to finance repayment. The equilibrium constructed here has saving
-young renters, rather than a positive mass of realized young mortgages.
+\item Use the same settlement ordering at both ages: pay current consumption
+and property tax from liquid receipts, then liquidate the house; young
+house-sale proceeds may repay the mortgage, and the next old-entry rebate
+arrives after settlement. Require pre-sale liquidity and post-settlement
+solvency. All young households rent in the proved family.
 \end{enumerate}
 
 The older calculations remain useful alternatives:

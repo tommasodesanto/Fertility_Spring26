@@ -15,7 +15,11 @@ later in the period and gives both current ages a common consumption date. It
 retains two utility ages, the original log preferences, 80% LTV, positive rebated
 property taxes, heterogeneous cash/income, and the original common-stock size
 menus. Tenure can change with age; the first illustration omits ownership tastes
-and requires full mortgage repayment before retirement. All young rent and save
+and requires full mortgage repayment before retirement, allowing sale proceeds
+to repay the debt after current consumption and taxes have been paid. The final
+reader weakens the original before-sale asset restriction using two exact
+liquidity and solvency conditions; both ages retain the same payment ordering.
+All young rent and save
 in the verified family; all old freely choose larger owned homes and have zero
 financial estates. No owner minimum or positive old liquid estate is imposed.
 
