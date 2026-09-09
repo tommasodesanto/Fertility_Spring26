@@ -3,19 +3,20 @@
 Active documents:
 
 - `september_14_presentation.tex` / `september_14_presentation.pdf`: main
-  September 14 seminar deck, with the theory revision due Thursday, September
-  10. The September 8 update has seven main theory slides (PDF pages 6–12):
-  households, equilibrium, utilitarian housing allocation, fertility, and
-  population paths. Start with the
-  standalone `../output/pdf/simplified_olg_theory_slides.pdf`, generated from
-  those same seven frames. Nine supporting theory slides are on main-deck
-  pages 44–52. The model and notation follow the separate conventional-finance
-  and utilitarian notes. The allocation diagram illustrates the proved local
-  utility gain; the two demographic panels assume fertility paths and apply
-  cohort accounting, without asserting policy-equilibrium or convergence results.
-  The full reader copy, `../output/pdf/september_14_presentation.pdf`, matches
-  the adjacent PDF. Quantitative sections were not changed or refreshed.
-  Build and verification: `../output/model/simplified_olg_amendments/README.md`.
+  September 14 seminar deck. The September 9 theory update has seven main
+  slides (PDF pages 6–12): environment, household choices, equilibrium,
+  the full dated planner, housing allocation, fertility, and demographic
+  transition. Nine supporting theory slides occupy pages 44–52. The planner
+  chooses current consumption and housing; the housing result is stated with
+  its allocation condition, and a sufficient income benchmark is in the
+  appendix. The transition figure displays the proved local equilibrium
+  response to a fertility decline followed by a rebated tax reform, with the
+  required conditions in the appendix. Old-age notation uses lowercase `o`.
+  The full reader copy is `../output/pdf/september_14_presentation.pdf` and
+  matches the adjacent PDF. This main deck is the presentation reference;
+  earlier standalone theory extracts are superseded. Quantitative sections
+  were not changed or refreshed in this pass. Verification is recorded in
+  `../output/model/simplified_olg_amendments/README.md`.
 
 - `JMP_DS_draft/`: author-controlled source for the new job-market-paper draft.
   Its main file is `JMP_DS_draft/JMP_DS_draft.tex`, with separate section and

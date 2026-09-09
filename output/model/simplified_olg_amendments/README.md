@@ -1,5 +1,28 @@
 # Simplified OLG amendment checks
 
+## September 9 integration into the Monday seminar deck
+
+The presentation reference is now the full
+[September 14 packet](../../pdf/september_14_presentation.pdf), with
+[source](../../../latex/september_14_presentation.tex). Its seven main theory
+slides occupy PDF pages 6–12; nine supporting slides occupy pages 44–52.
+They cover household problems, equilibrium, the dated planner choosing
+consumption and housing, the allocation comparison, fertility, and the local
+demographic transition. Both established graph layouts are included. The
+income benchmark and transition restrictions are stated in the appendix;
+this integration does not settle the outstanding primitive equilibrium
+question being reviewed by Pro. Earlier standalone theory slide proposals
+are superseded by this main deck.
+
+Verification: two sequential compilations of the final source; all 16 changed
+pages rendered and visually checked at 1600-pixel width; no overflow or
+undefined-reference warnings; theory navigation targets checked. The only
+remaining warning concerns an existing appendix-divider PDF bookmark. The
+71-page count is unchanged. All source outside the two theory sections is
+byte-identical to the previous committed version. The adjacent LaTeX PDF and
+reader PDF are identical copies. No quantitative-model run or figure refresh
+was performed, and no file in the author-controlled manuscript was edited.
+
 ## September 9 focused Pro follow-up
 
 A new Pro review was submitted in the in-app browser after the Claude
