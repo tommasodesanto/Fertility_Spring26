@@ -1,5 +1,19 @@
 # Simplified OLG amendment checks
 
+## September 9 focused Pro follow-up
+
+A new Pro review was submitted in the in-app browser after the Claude
+assessment. Its [prompt](../../../docs/prompts/oracle_simplified_olg_equilibrium_mechanism.md)
+asks for one primitive equilibrium proposition with meaningful mortgage and
+rental-size constraints, preserving the current model and dated planner.
+The exact current theory source and checked Claude assessment were attached
+in one rendered packet. Pro was visibly answering at submission in
+[the review chat](https://chatgpt.com/c/6aa17908-01cc-83ea-ac9b-6193f4658c66).
+The first discussion of fertility continues in the author conversation;
+no new theory draft or slide revision was made. The attachment operation
+stalled for about 26 minutes before succeeding; this was browser latency,
+not research or model-computation time.
+
 ## September 9 Claude economic review
 
 The [lead assessment](claude_economic_assessment.md) records three completed
