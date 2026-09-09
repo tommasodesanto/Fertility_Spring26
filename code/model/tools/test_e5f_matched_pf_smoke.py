@@ -6,6 +6,22 @@ import run_e5f_matched_pf_smoke as smoke
 
 
 class PrimitiveGuards(unittest.TestCase):
+    def test_nested_reference_uses_same_pool_and_still_rejects_changed_choices(self):
+        from test_e5f_pf_choice_ownership import parameters, choice_object, SHAPE
+        P = parameters()
+        reference = SimpleNamespace(joint_choice=choice_object(P, .6),
+                                    tenure_probs=np.full(SHAPE + (2,), .9))
+        pre = np.zeros(SHAPE)
+        pre[0, 0, 0, 0, 0, 0, 0] = 1.
+        post, effective, births, _, _ = smoke.calendar.factor_joint_distribution(pre, reference, P)
+        ev = SimpleNamespace(g_pre=pre, g_post_fertility=post, births=float(births.sum()))
+        arrays = smoke.same_population_reference(reference, ev, P)
+        np.testing.assert_array_equal(arrays['tenure_probs'], effective)
+        self.assertTrue(np.all(reference.tenure_probs == .9))
+        reference.joint_choice = choice_object(P, .2)
+        with self.assertRaisesRegex(RuntimeError, 'mass/birth'):
+            smoke.same_population_reference(reference, ev, P)
+
     def test_supply_pin_uses_saved_rule_not_legacy_parameter_fields(self):
         P = SimpleNamespace(tenure_choice_kappa=.005, psi_child=-.03,
                             eta_supply=np.array([1.75]), xi_supply=np.array([1.75]))

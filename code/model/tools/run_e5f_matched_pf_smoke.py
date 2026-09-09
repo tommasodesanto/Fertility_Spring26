@@ -35,6 +35,25 @@ FIELDS = ('V', 'c_pol', 'hR_pol', 'bp_pol', 'tenure_choice', 'tenure_probs',
 JOINT_FIELDS = ('probabilities', 'wait_probabilities', 'failure_probabilities', 'products')
 
 
+def same_population_reference(policy, evaluation, parameters):
+    """Condition saved native choices on the exact dated inherited population.
+
+    Effective tenure ratios depend on the conditioning pool. Stationary KFE
+    and reconstructed pre-choice pools can differ at roundoff, which ratio
+    normalization magnifies in almost empty states. Native choices, realized
+    masses, and births still retain their separate strict checks.
+    """
+    arrays = {name: value.copy() for name, value in policy_arrays(policy).items()}
+    if bool(getattr(parameters, 'joint_nested_choice', False)):
+        post, effective, births, _, _ = calendar.factor_joint_distribution(
+            evaluation.g_pre, policy, parameters)
+        if (float(np.abs(post - evaluation.g_post_fertility).sum()) > 2e-10
+                or abs(float(births.sum()) - float(evaluation.births)) > 2e-10):
+            raise RuntimeError('Same-population native choice mass/birth reproduction failed')
+        arrays['tenure_probs'] = effective
+    return arrays
+
+
 def digest(path):
     h = hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -273,7 +292,7 @@ def execute(args):
     # The stationary KFE stores distribution-conditioned tenure probabilities.
     # Compare the dated policy after the same conditioning, retaining checks
     # of every native joint probability array as well as realized distributions.
-    gaps = compare_arrays(reference_arrays, policy_arrays(ev.policy))
+    gaps = compare_arrays(same_population_reference(stationary, ev, P), policy_arrays(ev.policy))
     current_gap = float(np.abs(ev.g_current - sol.g).sum())
     invariant_gap = float(np.abs(nxt - pre).sum())
     birth_gap = abs(float(ev.births) - float(sol.total_births_kfe))
