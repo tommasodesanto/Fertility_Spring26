@@ -18,13 +18,11 @@ age composition is imposed from the observed age profiles through 2023; the
 person-demographic model advances the population afterward. Thus this is a
 conditional historical fit, not yet a fit to the historical population path.
 
-The current numerical priority is to clear markets at every date and test the
-endpoint assumption. The short sequential run reduced its largest market gap
-from 71.08% to 0.0312%, reproduced all its tables exactly, and is continuing toward
-the unchanged 0.02% tolerance. A separate 28-date sequential root is running.
-The nested short root runs alongside it. Job identifiers and output locations
-are in `execution_20260909_meeting.json`; the detailed records below are dated
-checkpoints, not claims that every earlier job remains active.
+Both short paths now clear markets and reproduce exactly. The complete result,
+including all twelve targets and every parameter restriction, is in
+[SHORT_EQUILIBRIA.md](SHORT_EQUILIBRIA.md). The longer sequential root is close
+but still above tolerance; continuation17289375 is running. None is a newly
+estimated calibration, and terminal/horizon checks remain outstanding.
 
 The main remaining empirical decision concerns two ACS family-group definitions
 and the comparison of four pooled ACS rows with a 2023 model cross-section.

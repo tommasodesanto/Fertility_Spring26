@@ -58,7 +58,9 @@
     "horizon_extension_verified": false,
     "new_calibration": false,
     "production_promoted": false,
-    "long_conditional_mapping_passed_both": true
+    "long_conditional_mapping_passed_both": true,
+    "short_finite_horizon_markets_converged_both": true,
+    "dated_markets_converged_scope": "short12datearms yes; longer28datebaseline notyet"
   },
   "historical_roots": {
     "sequential": 17279004,
@@ -71,27 +73,22 @@
   "next_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909b",
   "restart_regression_job": 17280998,
   "restart_tests_passed": 95,
-  "updated_utc": "2026-09-09 19:52 UTC",
+  "updated_utc": "2026-09-09 22:00 UTC",
   "historical_root_progress": {
     "sequential": {
-      "completed_root_jobs": [
-        17279004,
-        17281783
-      ],
-      "maximum_market_gap": 0.000311959600581953,
-      "continuation_job": 17282612
+      "completed_job": 17282612,
+      "converged": true,
+      "maximum_market_gap": 9.987028168499285e-05
     },
     "nested": {
-      "completed_root_jobs": [
-        17279843
-      ],
-      "maximum_market_gap": 0.015760764109735384,
-      "continuation_job": 17282613
+      "completed_job": 17282613,
+      "converged": true,
+      "maximum_market_gap": 9.617397452256101e-05
     },
     "sequential_long": {
-      "job": 17281784,
-      "completed_evaluations": 2,
-      "maximum_market_gap": 0.1953091011616356
+      "completed_job": 17281784,
+      "maximum_market_gap": 0.0007102254859271457,
+      "continuation_job": 17289375
     }
   },
   "long_price_jacobian_condition_number": 2.255686009553156,
@@ -102,5 +99,6 @@
   "historical_root_restart_nested": 17282613,
   "tail_sizing_corrected_job": 17282572,
   "tail_sizing_first_threshold_year": 2387,
-  "tail_sizing_equilibrium_certified": false
+  "tail_sizing_equilibrium_certified": false,
+  "historical_root_long_restart_sequential": 17289375
 }

@@ -1,0 +1,215 @@
+{
+  "anchor_prices": [
+    0.6250912350479297,
+    0.6454535325311371,
+    0.666479130242451,
+    0.6881896351342778,
+    0.7106073580037877,
+    0.668610482534578,
+    0.6290956212597202,
+    0.5919160872080494,
+    0.5569338626043945,
+    0.5240190865203309,
+    0.49304957280476075,
+    0.4639103565047823
+  ],
+  "arm": "nested",
+  "artifact_sha256": {
+    "final_state.npz": "e8c421a5b036dc8d76dfef9e75fae8ea81d24a6099246718387b187864591aa3",
+    "initial_2023.pkl.gz": "7b3c34c03bcb4202894a4dd8998ebd7dee95a6bec5ef08f0190eeafcc2680f4b",
+    "measurement.json": "214d2f53c26c95ce32d6a1deb1df3d7128e940ddb072354d1061bc99ab8052f7",
+    "parameters.csv": "4baa52591aab3ed72514f37da0658f08588b834a046e404407a97cfe3ac18e5e",
+    "target_fit.csv": "86531a4b99c513ea65dbed828c7b4d804fcc241db2cdc14e4ff4667a51f4ed5d",
+    "transition_path.csv": "6637f46d731364607052698cad7ea4b9d76df1f88f2f31fd430914d5bfe1486a"
+  },
+  "bellman_solves": 24,
+  "calibrated_history": false,
+  "contract_sha256": "4ae5956de4c4320099c355f57262c67182d06b7f946f0fa5fa3f6eca78d77726",
+  "elapsed_seconds": 480.99348582001403,
+  "estimated_parameter_count": 11,
+  "gates": {
+    "age_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 2.498001805406602e-16
+    },
+    "head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 4.440892098500626e-16
+    },
+    "historical_mass": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "historical_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "historical_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "household_head_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 1.9984014443252818e-15
+    },
+    "initial_2023_age_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 2.0122792321330962e-16
+    },
+    "person_identity": {
+      "passed": true,
+      "tolerance": 2e-09,
+      "value": 1.3322676295501878e-15
+    },
+    "person_projection": {
+      "passed": true,
+      "tolerance": 1e-06,
+      "value": 0.0
+    },
+    "person_reproduction": {
+      "passed": true,
+      "tolerance": 2e-10,
+      "value": 0.0
+    },
+    "raw_household_mass_2023": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2027": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 6.661338147750939e-16
+    },
+    "raw_household_mass_2031": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 1.9984014443252818e-15
+    },
+    "raw_household_mass_2035": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 1.3322676295501878e-15
+    },
+    "raw_household_mass_2039": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 2.220446049250313e-16
+    },
+    "raw_household_mass_2043": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 6.661338147750939e-16
+    },
+    "raw_household_mass_2047": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 1.3322676295501878e-15
+    },
+    "raw_household_mass_2051": {
+      "passed": true,
+      "tolerance": 2e-08,
+      "value": 4.440892098500626e-16
+    }
+  },
+  "loss": 130.51254832752832,
+  "mapping_valid": true,
+  "market_equilibrium_verified": false,
+  "maximum_market_residual": 0.002846974144817598,
+  "prices": [
+    0.6497086627966593,
+    0.670944008185867,
+    0.6891167169714466,
+    0.701076703984236,
+    0.7082308278714469,
+    0.7147916810778177,
+    0.7138624602699347,
+    0.7048183786322434,
+    0.6886228610926795,
+    0.662458342739511,
+    0.6229687360761393,
+    0.563881723325759
+  ],
+  "production_promoted": false,
+  "residual": [
+    -7.004435293239743e-05,
+    -0.00015476793622476621,
+    -0.00027225680040467555,
+    -0.0003722647129942582,
+    -0.0004410472622309963,
+    0.0005497318126789011,
+    6.724513736015561e-05,
+    -0.00015775807848907028,
+    -0.0015165315418801464,
+    -0.0016961927647942483,
+    0.0011799017481375954,
+    0.002846974144817598
+  ],
+  "status": "passed_conditional_historical_price_probe",
+  "target_count": 12,
+  "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+  "terminal_distance": {
+    "all_checks_pass": false,
+    "candidate_household_heads_model_units": 1.2398930036396325,
+    "candidate_resident_persons_model_units": 2.959577588563869,
+    "candidate_terminal_year": 2055,
+    "checks": {
+      "asset_price_relative_gap": false,
+      "equal_transfer_relative_gap": true,
+      "household_heads_relative_gap": false,
+      "normalized_head_age_sex_l1": false,
+      "normalized_household_distribution_l1": false,
+      "normalized_person_age_sex_l1": false,
+      "psi_absolute_gap": true,
+      "renter_price_relative_gap": false,
+      "resident_persons_relative_gap": false
+    },
+    "metrics": {
+      "asset_price_relative_gap": 0.21549716538812852,
+      "equal_transfer_relative_gap": 0.0,
+      "household_heads_relative_gap": 0.8250753267610061,
+      "normalized_head_age_sex_l1": 0.11081297704140423,
+      "normalized_household_distribution_l1": 1.233850709746859,
+      "normalized_person_age_sex_l1": 0.11448416462400074,
+      "psi_absolute_gap": 0.0,
+      "renter_price_relative_gap": 1.515933195686502,
+      "resident_persons_relative_gap": 0.7946739905203065
+    },
+    "reference_household_heads_model_units": 0.6793653858879857,
+    "reference_resident_persons_model_units": 1.6490892519737455,
+    "reference_terminal_year_label": 2100,
+    "status": "not_converged",
+    "tolerances": {
+      "asset_price_relative_gap": 0.01,
+      "equal_transfer_relative_gap": 0.01,
+      "household_heads_relative_gap": 0.01,
+      "normalized_head_age_sex_l1": 0.02,
+      "normalized_household_distribution_l1": 0.02,
+      "normalized_person_age_sex_l1": 0.02,
+      "psi_absolute_gap": 0.001,
+      "renter_price_relative_gap": 0.01,
+      "resident_persons_relative_gap": 0.01
+    }
+  },
+  "years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023,
+    2027,
+    2031,
+    2035,
+    2039,
+    2043,
+    2047,
+    2051
+  ]
+}

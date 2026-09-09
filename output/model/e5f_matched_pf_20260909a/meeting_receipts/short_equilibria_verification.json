@@ -1,0 +1,1302 @@
+{
+  "status": "verified_short_conditional_market_equilibria_only",
+  "arms": {
+    "sequential": {
+      "checks": {
+        "best_hash_target_fit.csv": true,
+        "best_hash_parameters.csv": true,
+        "best_hash_transition_path.csv": true,
+        "best_hash_measurement.json": true,
+        "final_hash_target_fit.csv": true,
+        "final_hash_parameters.csv": true,
+        "final_hash_transition_path.csv": true,
+        "final_hash_measurement.json": true,
+        "best_final_identical_target_fit.csv": true,
+        "best_final_identical_parameters.csv": true,
+        "best_final_identical_transition_path.csv": true,
+        "best_final_identical_measurement.json": true,
+        "final_payload_hash": true,
+        "final_residual_replay_zero": true,
+        "root_status": true,
+        "no_production_claim": true,
+        "12_unique_targets": true,
+        "canonical_targets_weights": true,
+        "row_arithmetic": true,
+        "full_loss_sum": true,
+        "measurement_moments": true,
+        "11_parameters": true,
+        "bounds": true,
+        "external_scales": true,
+        "12_dates_24_solves": true,
+        "dated_prices_psi": true,
+        "all_mapping_gates": true,
+        "zero_choice_reproduction_projection": true,
+        "all_dated_budgets": true,
+        "market_root_arithmetic": true,
+        "zero_transfers_fiscal_arithmetic": true,
+        "terminal_failure_reported_consistently": true,
+        "2023_requested_and_hash_recorded": true
+      },
+      "all_checks_pass": true,
+      "best_evaluation": 2,
+      "final_replay_evaluation": 3,
+      "artifacts": {
+        "best": {
+          "target_fit.csv": {
+            "actual": "c20a35506aaf301cd5b668c78e421e4a53ac140fe8674e5f8ba89d6ef255afc7",
+            "expected": "c20a35506aaf301cd5b668c78e421e4a53ac140fe8674e5f8ba89d6ef255afc7"
+          },
+          "parameters.csv": {
+            "actual": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f",
+            "expected": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f"
+          },
+          "transition_path.csv": {
+            "actual": "d7e11d9bde11d7a5e0e44ca08f59853bb11d79da13763184d3cc07b76e528aca",
+            "expected": "d7e11d9bde11d7a5e0e44ca08f59853bb11d79da13763184d3cc07b76e528aca"
+          },
+          "measurement.json": {
+            "actual": "7b8794faee0505346c6a0472cf5b32fc19c57d5e1b015df75e9aa35fbf8e3793",
+            "expected": "7b8794faee0505346c6a0472cf5b32fc19c57d5e1b015df75e9aa35fbf8e3793"
+          }
+        },
+        "final": {
+          "target_fit.csv": {
+            "actual": "c20a35506aaf301cd5b668c78e421e4a53ac140fe8674e5f8ba89d6ef255afc7",
+            "expected": "c20a35506aaf301cd5b668c78e421e4a53ac140fe8674e5f8ba89d6ef255afc7"
+          },
+          "parameters.csv": {
+            "actual": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f",
+            "expected": "7ed5a7df258c08ea39758640d953c5399d657d45192fe7cc04fe31f9a0e0872f"
+          },
+          "transition_path.csv": {
+            "actual": "d7e11d9bde11d7a5e0e44ca08f59853bb11d79da13763184d3cc07b76e528aca",
+            "expected": "d7e11d9bde11d7a5e0e44ca08f59853bb11d79da13763184d3cc07b76e528aca"
+          },
+          "measurement.json": {
+            "actual": "7b8794faee0505346c6a0472cf5b32fc19c57d5e1b015df75e9aa35fbf8e3793",
+            "expected": "7b8794faee0505346c6a0472cf5b32fc19c57d5e1b015df75e9aa35fbf8e3793"
+          }
+        }
+      },
+      "root_summary_sha256": "5c4770b3a7b062cbf25934a77deb545c994f559aa96753f235bd0588fe2a09e7",
+      "final_summary_sha256": "1ea6181e014899fbd80dc023fdd265c36f2fef593060cd757baadcfd7679723e",
+      "loss_sum": 129.24310527075556,
+      "loss_sum_gap": 2.842170943040401e-14,
+      "maximum_target_arithmetic_error": 8.881784197001252e-16,
+      "full12_target_fit": [
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "tfr",
+          "target": "1.918",
+          "model": "1.7733861650631675",
+          "gap": "-0.14461383493683244",
+          "weight": "1425.7389910084596",
+          "loss_contribution": "29.816709426696832",
+          "standardized_gap": "-5.460467876171128"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "childless_rate",
+          "target": "0.188",
+          "model": "0.2347174598932226",
+          "gap": "0.046717459893222596",
+          "weight": "17180.743822072007",
+          "loss_contribution": "37.49733519880634",
+          "standardized_gap": "6.123506772986076"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "mean_age_first_birth",
+          "target": "26.0446272574833",
+          "model": "26.225807599712347",
+          "gap": "0.1811803422290481",
+          "weight": "44.44444444444444",
+          "loss_contribution": "1.458947396010444",
+          "standardized_gap": "1.207868948193654"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "share_first_births_age30plus",
+          "target": "0.260327401666964",
+          "model": "0.24368542415329972",
+          "gap": "-0.01664197751366428",
+          "weight": "10000.0",
+          "loss_contribution": "2.7695541556530756",
+          "standardized_gap": "-1.6641977513664281"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "housing_increment_0to1",
+          "target": "0.7202462623815278",
+          "model": "0.45529268436072545",
+          "gap": "-0.2649535780208023",
+          "weight": "137.5652749002964",
+          "loss_contribution": "9.65713711859174",
+          "standardized_gap": "-3.1075934609584537"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+          "target": "0.36769955881",
+          "model": "0.37175059084875794",
+          "gap": "0.004051032038757951",
+          "weight": "2958.514988007638",
+          "loss_contribution": "0.04855177698920361",
+          "standardized_gap": "0.22034467769656615"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "own_family_gap",
+          "target": "0.16766167",
+          "model": "0.11168161484925887",
+          "gap": "-0.05598005515074114",
+          "weight": "14229.590955975675",
+          "loss_contribution": "44.59221650920568",
+          "standardized_gap": "-6.677740374498374"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "own_rate",
+          "target": "0.575472",
+          "model": "0.5749686495678686",
+          "gap": "-0.0005033504321313442",
+          "weight": "1207.8460856134493",
+          "loss_contribution": "0.00030602188628829397",
+          "standardized_gap": "-0.01749348125126311"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "aggregate_mean_occupied_rooms_18_85",
+          "target": "5.779970481941968",
+          "model": "6.2102655915318925",
+          "gap": "0.4302951095899248",
+          "weight": "11.973159013172177",
+          "loss_contribution": "2.2168768631539777",
+          "standardized_gap": "1.4889180176067378"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+          "target": "6.8731",
+          "model": "7.040210076081304",
+          "gap": "0.16711007608130402",
+          "weight": "6.287669427540395",
+          "loss_contribution": "0.1755880576024665",
+          "standardized_gap": "0.41903228706445345"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "annual_bequest_flow_to_aggregate_wealth",
+          "target": "0.0088",
+          "model": "0.008363095156123131",
+          "gap": "-0.00043690484387686954",
+          "weight": "5165289.256198346",
+          "loss_contribution": "0.985980591958015",
+          "standardized_gap": "-0.9929655542656125"
+        },
+        {
+          "candidate": "matched_pf_sequential",
+          "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+          "target": "3.44811075444552",
+          "model": "3.427625828409527",
+          "gap": "-0.020484926035992945",
+          "weight": "56.95977216091135",
+          "loss_contribution": "0.02390215420150098",
+          "standardized_gap": "-0.15460321536598448"
+        }
+      ],
+      "free11_parameters": [
+        {
+          "parameter": "beta_annual",
+          "value": "0.9952765791045264",
+          "lower_bound": "0.94",
+          "upper_bound": "0.9995",
+          "transform": "discount",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert",
+          "value": "2.1681730392479377",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "value": "1.7707705862013274",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "chi",
+          "value": "1.0537270178404272",
+          "lower_bound": "0.1",
+          "upper_bound": "5.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "H0",
+          "value": "13.71604910051014",
+          "lower_bound": "0.2",
+          "upper_bound": "80.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta0",
+          "value": "0.570349890219075",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta1",
+          "value": "0.10372395059042462",
+          "lower_bound": "0.02",
+          "upper_bound": "16.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "True"
+        },
+        {
+          "parameter": "hbar_child_rooms",
+          "value": "0.24708490545163003",
+          "lower_bound": "0.1",
+          "upper_bound": "1.8",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "value": "4.619731383944025",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "hbar_first_child_jump",
+          "value": "0.4697651033802434",
+          "lower_bound": "0.0",
+          "upper_bound": "0.5",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_change_2023",
+          "value": "-0.3213877962199821",
+          "lower_bound": "-1.5",
+          "upper_bound": "0.2",
+          "transform": "asinh",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        }
+      ],
+      "all_parameter_rows": [
+        {
+          "parameter": "beta_annual",
+          "value": "0.9952765791045264",
+          "lower_bound": "0.94",
+          "upper_bound": "0.9995",
+          "transform": "discount",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert",
+          "value": "2.1681730392479377",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "value": "1.7707705862013274",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "chi",
+          "value": "1.0537270178404272",
+          "lower_bound": "0.1",
+          "upper_bound": "5.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "H0",
+          "value": "13.71604910051014",
+          "lower_bound": "0.2",
+          "upper_bound": "80.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta0",
+          "value": "0.570349890219075",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta1",
+          "value": "0.10372395059042462",
+          "lower_bound": "0.02",
+          "upper_bound": "16.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "True"
+        },
+        {
+          "parameter": "hbar_child_rooms",
+          "value": "0.24708490545163003",
+          "lower_bound": "0.1",
+          "upper_bound": "1.8",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "value": "4.619731383944025",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "hbar_first_child_jump",
+          "value": "0.4697651033802434",
+          "lower_bound": "0.0",
+          "upper_bound": "0.5",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_change_2023",
+          "value": "-0.3213877962199821",
+          "lower_bound": "-1.5",
+          "upper_bound": "0.2",
+          "transform": "asinh",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_2007",
+          "value": "0.2900515293650047",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "derived",
+          "is_free_parameter": "False",
+          "status": "externally_normalized_to_old_completed_fertility",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_2023",
+          "value": "-0.03133626685497737",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "derived",
+          "is_free_parameter": "False",
+          "status": "derived_from_old_intercept_and_transition_coordinate",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "tenure_choice_kappa",
+          "value": "0.005",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "external_profile",
+          "is_free_parameter": "False",
+          "status": "externally_fixed_profile_not_estimated",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "housing_supply_elasticity",
+          "value": "0.63",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "external_profile",
+          "is_free_parameter": "False",
+          "status": "externally_fixed_profile_not_estimated",
+          "near_bound": "False"
+        }
+      ],
+      "maximum_signed_market_residual": 9.987028168499285e-05,
+      "residual_recalculation_gap": 0.0,
+      "mapping_gates": {
+        "age_head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 2.7755575615628914e-16
+        },
+        "head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 4.440892098500626e-16
+        },
+        "historical_mass": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 1.1102230246251565e-15
+        },
+        "historical_projection": {
+          "passed": true,
+          "tolerance": 1e-06,
+          "value": 0.0
+        },
+        "historical_reproduction": {
+          "passed": true,
+          "tolerance": 2e-10,
+          "value": 0.0
+        },
+        "household_head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 1.1102230246251565e-15
+        },
+        "initial_2023_age_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 2.7755575615628914e-16
+        },
+        "person_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 8.881784197001252e-16
+        },
+        "person_projection": {
+          "passed": true,
+          "tolerance": 1e-06,
+          "value": 0.0
+        },
+        "person_reproduction": {
+          "passed": true,
+          "tolerance": 2e-10,
+          "value": 0.0
+        },
+        "raw_household_mass_2023": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 6.661338147750939e-16
+        },
+        "raw_household_mass_2027": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2031": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 2.220446049250313e-15
+        },
+        "raw_household_mass_2035": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2039": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2043": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 2.220446049250313e-16
+        },
+        "raw_household_mass_2047": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2051": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 1.7763568394002505e-15
+        }
+      },
+      "terminal_distance": {
+        "all_checks_pass": false,
+        "candidate_household_heads_model_units": 1.2398878527601007,
+        "candidate_resident_persons_model_units": 2.959451656960028,
+        "candidate_terminal_year": 2055,
+        "checks": {
+          "asset_price_relative_gap": false,
+          "equal_transfer_relative_gap": true,
+          "household_heads_relative_gap": false,
+          "normalized_head_age_sex_l1": false,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": false,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": false,
+          "resident_persons_relative_gap": false
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.21706025446740676,
+          "equal_transfer_relative_gap": 0.0,
+          "household_heads_relative_gap": 0.8253586632736288,
+          "normalized_head_age_sex_l1": 0.11081479003669695,
+          "normalized_household_distribution_l1": 1.242255476526612,
+          "normalized_person_age_sex_l1": 0.11447344189605935,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 1.5269288791741489,
+          "resident_persons_relative_gap": 0.7949133683946804
+        },
+        "reference_household_heads_model_units": 0.6792571113320081,
+        "reference_resident_persons_model_units": 1.6487991616034805,
+        "reference_terminal_year_label": 2100,
+        "status": "not_converged",
+        "tolerances": {
+          "asset_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_head_age_sex_l1": 0.02,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "psi_absolute_gap": 0.001,
+          "renter_price_relative_gap": 0.01,
+          "resident_persons_relative_gap": 0.01
+        }
+      },
+      "initial_2023_checkpoint": {
+        "status": "writer_reload_completed_receipt_present_binary_not_locally_verified",
+        "recorded_sha256": "ffc4ffb2e309073eea4f8712cb58375bc6a57489610b3c7376575b3664d596e4",
+        "locally_present": false,
+        "writer_source_matches_pin": true,
+        "writer_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_matched_pf/code/model/tools/run_e5f_matched_pf_baseline.py",
+        "writer_lines": "308-331; writes and reloads g_pre/persons/heads/year/contract before adding hash and writing completed summary",
+        "state_timing": "before2023 fertility/tenure choices; after observed historical age bridge",
+        "equilibrium_certified_field": false,
+        "policy_announcement_included": false
+      },
+      "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+      "years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023,
+        2027,
+        2031,
+        2035,
+        2039,
+        2043,
+        2047,
+        2051
+      ],
+      "elapsed_root_seconds": 1130.6002396475524,
+      "absent_local_artifacts": [
+        "final_state.npz",
+        "initial_2023.pkl.gz"
+      ]
+    },
+    "nested": {
+      "checks": {
+        "best_hash_target_fit.csv": true,
+        "best_hash_parameters.csv": true,
+        "best_hash_transition_path.csv": true,
+        "best_hash_measurement.json": true,
+        "final_hash_target_fit.csv": true,
+        "final_hash_parameters.csv": true,
+        "final_hash_transition_path.csv": true,
+        "final_hash_measurement.json": true,
+        "best_final_identical_target_fit.csv": true,
+        "best_final_identical_parameters.csv": true,
+        "best_final_identical_transition_path.csv": true,
+        "best_final_identical_measurement.json": true,
+        "final_payload_hash": true,
+        "final_residual_replay_zero": true,
+        "root_status": true,
+        "no_production_claim": true,
+        "12_unique_targets": true,
+        "canonical_targets_weights": true,
+        "row_arithmetic": true,
+        "full_loss_sum": true,
+        "measurement_moments": true,
+        "11_parameters": true,
+        "bounds": true,
+        "external_scales": true,
+        "12_dates_24_solves": true,
+        "dated_prices_psi": true,
+        "all_mapping_gates": true,
+        "zero_choice_reproduction_projection": true,
+        "all_dated_budgets": true,
+        "market_root_arithmetic": true,
+        "zero_transfers_fiscal_arithmetic": true,
+        "terminal_failure_reported_consistently": true,
+        "2023_requested_and_hash_recorded": true
+      },
+      "all_checks_pass": true,
+      "best_evaluation": 5,
+      "final_replay_evaluation": 6,
+      "artifacts": {
+        "best": {
+          "target_fit.csv": {
+            "actual": "8133f95490b39c6ae3a342ee6b4fa06380752cc0a349ba9505096f05bc4bc41f",
+            "expected": "8133f95490b39c6ae3a342ee6b4fa06380752cc0a349ba9505096f05bc4bc41f"
+          },
+          "parameters.csv": {
+            "actual": "4baa52591aab3ed72514f37da0658f08588b834a046e404407a97cfe3ac18e5e",
+            "expected": "4baa52591aab3ed72514f37da0658f08588b834a046e404407a97cfe3ac18e5e"
+          },
+          "transition_path.csv": {
+            "actual": "590bef9515c40d36aaaba7f5b72de03650bbd4cd68d49cf1245f52c94fb82106",
+            "expected": "590bef9515c40d36aaaba7f5b72de03650bbd4cd68d49cf1245f52c94fb82106"
+          },
+          "measurement.json": {
+            "actual": "2c480a1e4ca9413f1c328985a0fb7c4196f2e1a3e28f0a7d395f27829622ebb2",
+            "expected": "2c480a1e4ca9413f1c328985a0fb7c4196f2e1a3e28f0a7d395f27829622ebb2"
+          }
+        },
+        "final": {
+          "target_fit.csv": {
+            "actual": "8133f95490b39c6ae3a342ee6b4fa06380752cc0a349ba9505096f05bc4bc41f",
+            "expected": "8133f95490b39c6ae3a342ee6b4fa06380752cc0a349ba9505096f05bc4bc41f"
+          },
+          "parameters.csv": {
+            "actual": "4baa52591aab3ed72514f37da0658f08588b834a046e404407a97cfe3ac18e5e",
+            "expected": "4baa52591aab3ed72514f37da0658f08588b834a046e404407a97cfe3ac18e5e"
+          },
+          "transition_path.csv": {
+            "actual": "590bef9515c40d36aaaba7f5b72de03650bbd4cd68d49cf1245f52c94fb82106",
+            "expected": "590bef9515c40d36aaaba7f5b72de03650bbd4cd68d49cf1245f52c94fb82106"
+          },
+          "measurement.json": {
+            "actual": "2c480a1e4ca9413f1c328985a0fb7c4196f2e1a3e28f0a7d395f27829622ebb2",
+            "expected": "2c480a1e4ca9413f1c328985a0fb7c4196f2e1a3e28f0a7d395f27829622ebb2"
+          }
+        }
+      },
+      "root_summary_sha256": "17edbf79e65c77baedf45dfe989d9a14794e5f0a36cccc55b2d2a13c9e457f9e",
+      "final_summary_sha256": "bcff24eed375caa560b26004ecd59001ebab023d757fc08451e72cea0a06aeb3",
+      "loss_sum": 130.2538818553511,
+      "loss_sum_gap": 2.842170943040401e-14,
+      "maximum_target_arithmetic_error": 8.881784197001252e-16,
+      "full12_target_fit": [
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "tfr",
+          "target": "1.918",
+          "model": "1.7732685721826646",
+          "gap": "-0.14473142781733528",
+          "weight": "1425.7389910084596",
+          "loss_contribution": "29.865220114466343",
+          "standardized_gap": "-5.464908060934452"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "childless_rate",
+          "target": "0.188",
+          "model": "0.23474135140938135",
+          "gap": "0.04674135140938135",
+          "weight": "17180.743822072007",
+          "loss_contribution": "37.53569761265945",
+          "standardized_gap": "6.126638361504574"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "mean_age_first_birth",
+          "target": "26.0446272574833",
+          "model": "26.227061416634342",
+          "gap": "0.18243415915104322",
+          "weight": "44.44444444444444",
+          "loss_contribution": "1.4792098855621407",
+          "standardized_gap": "1.2162277276736215"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "share_first_births_age30plus",
+          "target": "0.260327401666964",
+          "model": "0.24373589912175483",
+          "gap": "-0.016591502545209164",
+          "weight": "10000.0",
+          "loss_contribution": "2.7527795670768214",
+          "standardized_gap": "-1.6591502545209162"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "housing_increment_0to1",
+          "target": "0.7202462623815278",
+          "model": "0.44023037438673196",
+          "gap": "-0.2800158879947958",
+          "weight": "137.5652749002964",
+          "loss_contribution": "10.78634154327677",
+          "standardized_gap": "-3.284256619583307"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+          "target": "0.36769955881",
+          "model": "0.3907896598984735",
+          "gap": "0.02309010108847348",
+          "weight": "2958.514988007638",
+          "loss_contribution": "1.5773404558420847",
+          "standardized_gap": "1.2559221535756444"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "own_family_gap",
+          "target": "0.16766167",
+          "model": "0.11280305221307818",
+          "gap": "-0.05485861778692183",
+          "weight": "14229.590955975675",
+          "loss_contribution": "42.82349785946563",
+          "standardized_gap": "-6.543966523406552"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "own_rate",
+          "target": "0.575472",
+          "model": "0.5689982830088054",
+          "gap": "-0.006473716991194589",
+          "weight": "1207.8460856134493",
+          "loss_contribution": "0.05061963571213049",
+          "standardized_gap": "-0.2249880790444918"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "aggregate_mean_occupied_rooms_18_85",
+          "target": "5.779970481941968",
+          "model": "6.20275025084011",
+          "gap": "0.42277976889814184",
+          "weight": "11.973159013172177",
+          "loss_contribution": "2.1401151645330527",
+          "standardized_gap": "1.462913245730263"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+          "target": "6.8731",
+          "model": "7.038678304879605",
+          "gap": "0.16557830487960512",
+          "weight": "6.287669427540395",
+          "loss_contribution": "0.172383845661882",
+          "standardized_gap": "0.4151913362076357"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "annual_bequest_flow_to_aggregate_wealth",
+          "target": "0.0088",
+          "model": "0.008365000275448389",
+          "gap": "-0.00043499972455161157",
+          "weight": "5165289.256198346",
+          "loss_contribution": "0.9774006216941007",
+          "standardized_gap": "-0.988635737617299"
+        },
+        {
+          "candidate": "matched_pf_nested",
+          "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+          "target": "3.44811075444552",
+          "model": "3.407643868425392",
+          "gap": "-0.04046688602012827",
+          "weight": "56.95977216091135",
+          "loss_contribution": "0.09327554940070074",
+          "standardized_gap": "-0.3054104605292699"
+        }
+      ],
+      "free11_parameters": [
+        {
+          "parameter": "beta_annual",
+          "value": "0.9952765791045264",
+          "lower_bound": "0.94",
+          "upper_bound": "0.9995",
+          "transform": "discount",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert",
+          "value": "2.1681730392479377",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "value": "1.7707705862013274",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "chi",
+          "value": "1.0537270178404272",
+          "lower_bound": "0.1",
+          "upper_bound": "5.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "H0",
+          "value": "13.71604910051014",
+          "lower_bound": "0.2",
+          "upper_bound": "80.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta0",
+          "value": "0.570349890219075",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta1",
+          "value": "0.10372395059042462",
+          "lower_bound": "0.02",
+          "upper_bound": "16.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "True"
+        },
+        {
+          "parameter": "hbar_child_rooms",
+          "value": "0.24708490545163003",
+          "lower_bound": "0.1",
+          "upper_bound": "1.8",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "value": "4.619731383944025",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "hbar_first_child_jump",
+          "value": "0.4697651033802434",
+          "lower_bound": "0.0",
+          "upper_bound": "0.5",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_change_2023",
+          "value": "-0.3213877962199821",
+          "lower_bound": "-1.5",
+          "upper_bound": "0.2",
+          "transform": "asinh",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        }
+      ],
+      "all_parameter_rows": [
+        {
+          "parameter": "beta_annual",
+          "value": "0.9952765791045264",
+          "lower_bound": "0.94",
+          "upper_bound": "0.9995",
+          "transform": "discount",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert",
+          "value": "2.1681730392479377",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "value": "1.7707705862013274",
+          "lower_bound": "0.02",
+          "upper_bound": "50.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "chi",
+          "value": "1.0537270178404272",
+          "lower_bound": "0.1",
+          "upper_bound": "5.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "H0",
+          "value": "13.71604910051014",
+          "lower_bound": "0.2",
+          "upper_bound": "80.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta0",
+          "value": "0.570349890219075",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "theta1",
+          "value": "0.10372395059042462",
+          "lower_bound": "0.02",
+          "upper_bound": "16.0",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "True"
+        },
+        {
+          "parameter": "hbar_child_rooms",
+          "value": "0.24708490545163003",
+          "lower_bound": "0.1",
+          "upper_bound": "1.8",
+          "transform": "log",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "value": "4.619731383944025",
+          "lower_bound": "0.0",
+          "upper_bound": "8.0",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "hbar_first_child_jump",
+          "value": "0.4697651033802434",
+          "lower_bound": "0.0",
+          "upper_bound": "0.5",
+          "transform": "softzero",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_change_2023",
+          "value": "-0.3213877962199821",
+          "lower_bound": "-1.5",
+          "upper_bound": "0.2",
+          "transform": "asinh",
+          "is_free_parameter": "True",
+          "status": "fixed_or_bounded_pilot_transition_parameter",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_2007",
+          "value": "0.28938762559349523",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "derived",
+          "is_free_parameter": "False",
+          "status": "externally_normalized_to_old_completed_fertility",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "psi_child_2023",
+          "value": "-0.03200017062648686",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "derived",
+          "is_free_parameter": "False",
+          "status": "derived_from_old_intercept_and_transition_coordinate",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "tenure_choice_kappa",
+          "value": "0.005",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "external_profile",
+          "is_free_parameter": "False",
+          "status": "externally_fixed_profile_not_estimated",
+          "near_bound": "False"
+        },
+        {
+          "parameter": "housing_supply_elasticity",
+          "value": "0.63",
+          "lower_bound": "",
+          "upper_bound": "",
+          "transform": "external_profile",
+          "is_free_parameter": "False",
+          "status": "externally_fixed_profile_not_estimated",
+          "near_bound": "False"
+        }
+      ],
+      "maximum_signed_market_residual": 9.617397452256101e-05,
+      "residual_recalculation_gap": 0.0,
+      "mapping_gates": {
+        "age_head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 2.498001805406602e-16
+        },
+        "head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 4.440892098500626e-16
+        },
+        "historical_mass": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 6.661338147750939e-16
+        },
+        "historical_projection": {
+          "passed": true,
+          "tolerance": 1e-06,
+          "value": 0.0
+        },
+        "historical_reproduction": {
+          "passed": true,
+          "tolerance": 2e-10,
+          "value": 0.0
+        },
+        "household_head_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 1.1102230246251565e-15
+        },
+        "initial_2023_age_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 2.3592239273284576e-16
+        },
+        "person_identity": {
+          "passed": true,
+          "tolerance": 2e-09,
+          "value": 8.881784197001252e-16
+        },
+        "person_projection": {
+          "passed": true,
+          "tolerance": 1e-06,
+          "value": 0.0
+        },
+        "person_reproduction": {
+          "passed": true,
+          "tolerance": 2e-10,
+          "value": 0.0
+        },
+        "raw_household_mass_2023": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 8.881784197001252e-16
+        },
+        "raw_household_mass_2027": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 0.0
+        },
+        "raw_household_mass_2031": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 1.1102230246251565e-15
+        },
+        "raw_household_mass_2035": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2039": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 1.7763568394002505e-15
+        },
+        "raw_household_mass_2043": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 4.440892098500626e-16
+        },
+        "raw_household_mass_2047": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 0.0
+        },
+        "raw_household_mass_2051": {
+          "passed": true,
+          "tolerance": 2e-08,
+          "value": 1.7763568394002505e-15
+        }
+      },
+      "terminal_distance": {
+        "all_checks_pass": false,
+        "candidate_household_heads_model_units": 1.2398938436746496,
+        "candidate_resident_persons_model_units": 2.959578620874917,
+        "candidate_terminal_year": 2055,
+        "checks": {
+          "asset_price_relative_gap": false,
+          "equal_transfer_relative_gap": true,
+          "household_heads_relative_gap": false,
+          "normalized_head_age_sex_l1": false,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": false,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": false,
+          "resident_persons_relative_gap": false
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.21717327275895654,
+          "equal_transfer_relative_gap": 0.0,
+          "household_heads_relative_gap": 0.8250765632605903,
+          "normalized_head_age_sex_l1": 0.11081210465260008,
+          "normalized_household_distribution_l1": 1.2348966767420897,
+          "normalized_person_age_sex_l1": 0.11448273194304895,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 1.527723915988538,
+          "resident_persons_relative_gap": 0.7946746165088918
+        },
+        "reference_household_heads_model_units": 0.6793653858879857,
+        "reference_resident_persons_model_units": 1.6490892519737455,
+        "reference_terminal_year_label": 2100,
+        "status": "not_converged",
+        "tolerances": {
+          "asset_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_head_age_sex_l1": 0.02,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "psi_absolute_gap": 0.001,
+          "renter_price_relative_gap": 0.01,
+          "resident_persons_relative_gap": 0.01
+        }
+      },
+      "initial_2023_checkpoint": {
+        "status": "writer_reload_completed_receipt_present_binary_not_locally_verified",
+        "recorded_sha256": "620915191e5bb50636c5638cea6ea6931c6fa4f58186d89a6e314015d84bf660",
+        "locally_present": false,
+        "writer_source_matches_pin": true,
+        "writer_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_matched_pf/code/model/tools/run_e5f_matched_pf_baseline.py",
+        "writer_lines": "308-331; writes and reloads g_pre/persons/heads/year/contract before adding hash and writing completed summary",
+        "state_timing": "before2023 fertility/tenure choices; after observed historical age bridge",
+        "equilibrium_certified_field": false,
+        "policy_announcement_included": false
+      },
+      "target_fingerprint": "3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497",
+      "years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023,
+        2027,
+        2031,
+        2035,
+        2039,
+        2043,
+        2047,
+        2051
+      ],
+      "elapsed_root_seconds": 3008.2039399612695,
+      "absent_local_artifacts": [
+        "final_state.npz",
+        "initial_2023.pkl.gz"
+      ]
+    }
+  },
+  "limitations": [
+    "No new parameter estimation or policy comparison. Same twelve targets and eleven free-parameter coordinates are retained.",
+    "These are12-date2007\u20132051 conditional PF market roots with a supplied terminal boundary; terminal convergence and horizon robustness fail/not established.",
+    "initial_2023.pkl.gz and final_state.npz are recorded in receipts but absent locally. Their bytes cannot be independently verified here; the2023 save/reload status is supported by pinned writer logic and completed receipts only.",
+    "Arm-specific old intercepts, supply normalizations and terminal endpoints remain distinct; this is not an identical-inherited-state comparison."
+  ],
+  "cross_arm_common_contract": {
+    "years": true,
+    "target_fingerprint": true,
+    "transfer_path": true,
+    "source_sha256": true,
+    "demographic_sources": true,
+    "selected_summary_sha256": true,
+    "checkpoint_sha256": true,
+    "terminal_preference_rule": true,
+    "all11_free_parameters_bounds": true,
+    "all12_target_values_weights": true
+  },
+  "conclusions": [
+    "Both short12-date conditional market roots pass the1e-4 market criterion with exact best-to-final residual and CSV/measurement reproduction.",
+    "This establishes short finite-horizon market-clearing diagnostics, not horizon-independent historical equilibrium. Terminal2055 differs materially from supplied stationary endpoints.",
+    "Conditional target fits are saved and complete; they are not results of a new calibration."
+  ]
+}

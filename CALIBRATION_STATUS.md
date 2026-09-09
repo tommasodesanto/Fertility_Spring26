@@ -1,6 +1,23 @@
 # Calibration Status
 
-Updated: `2026-09-09` (matched PF initialization verified; dated market roots running)
+Updated: `2026-09-09` (both short PF market roots verified; longer root continuing)
+
+**Latest verified update, September 9, 22:00 UTC.** Both short matched PF
+market roots converge and reproduce exactly: sequential17282612 maximum gap
+9.987028e-5, nested17282613 gap9.617397e-5, below2e-4. Full target/parameter,
+market and measurement files reproduce byte-for-byte. All accounting/budget
+and mapping gates pass. These12-date2007–2051 paths have an uncertified2055
+boundary; they are not completed calibrated histories. At the same inherited
+11coordinates, objective129.24310527 sequential and130.25388186 nested.
+Complete12-row fit tables and every estimate/bound/external restriction:
+`output/model/e5f_matched_pf_20260909a/SHORT_EQUILIBRIA.md`.
+
+Longer28-date sequential root17281784 ends its six-call budget at gap
+0.0007102255 with exact full replay, still above tolerance. Continuation17289375
+has four fresh mappings, estimated52minutes,70-minute watchdog and75-minute
+allocation. It preserves source D, target/weight fingerprint, parameters and
+all gates. The dated paragraphs below are historical checkpoints, not current
+queue statements. No new re-estimation or production policy is claimed.
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
