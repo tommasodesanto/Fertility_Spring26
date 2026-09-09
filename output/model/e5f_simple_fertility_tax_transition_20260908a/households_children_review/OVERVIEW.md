@@ -91,13 +91,25 @@ That existing system is reusable, but its fixed headship rates are an accounting
 
 ## 6. Recommended next decision
 
-Use **households with at least one resident own child under 18** as the primary empirical validation concept for this model, with any-age resident own children and recent parenthood shown separately. State the household-head age range and geography explicitly. Do not use person-weighted descriptive shares as household shares.
+**Discussion clarification, September 9:** Tommaso confirms that the expected 18-year duration was chosen as an approximation to children living at home. Retain that approximation while resolving measurement. The earlier recommendation to make under-18 children the primary definition was a proposal, not an adopted author decision. “Children at home” remains the intended economic object; show any-age resident children and under-18 resident children as explicit empirical comparisons, without silently equating either to recent parenthood. State household-head ages and geography, and use household weights.
 
 First align and validate those measurement definitions. If the child-age profile is materially wrong, test a child-age representation in an isolated version; an age of the youngest child alone is insufficient to know when each older sibling leaves. Preserve the current specification as the comparison and assess runtime before a full recalibration. Merely changing the label or adding an aggregate population series will not repair this mechanism.
 
 For resident-population reporting, reuse the existing annual person/headship implementation. An accounting-only calculation using saved births can answer a conditional population question; feeding revised household counts back into housing markets requires a new equilibrium path. Keep that distinction explicit.
 
 The immediate priority is thus a **consistent family definition and validation**, followed by a decision on the child-age and household-formation approximations. Another large calibration search with these mappings unresolved would leave the central question unanswered.
+
+## 7. Is 2023 currently a steady state?
+
+**No.** The active calibration already places 2023 on the simulated 2007–2023 path. Each candidate first constructs an old stationary economy with completed fertility normalized to 2.1. Its age distribution is then reweighted to the observed 2007 household-head distribution. Preferences change over 2007, 2011, 2015, 2019 and 2023; wealth and family states propagate, and the dated household totals and age marginals are imposed from Census/ACS. The ownership target is measured on the resulting 2023 cross-section. The first-birth housing target uses the separate 2019–2023 matched branch.
+
+This does not impose a stationary 2023 distribution. It does retain static expectations: at each date, households choose using current prices and primitives as if those will persist. Actual market prices change along the computed path. A fully anticipated future-price transition is a separate specification. The post-2023 switch from imposed demographic age masses to the birth queue is another distinct assumption.
+
+The historical fit was difficult, but the current method does not force 2023 to be stationary to improve that fit. Nor are all empirical targets 2023 observations: the ownership target pools 2012–2023 data. Its time window should be reconciled with model measurement alongside the parent/control definitions. Do not silently substitute a 2023-only estimate.
+
+The bounded follow-up reproduces a pooled recent-parent ownership gap of 16.7662pp, versus 15.2117pp for any resident own child and 15.0155pp for at least one under-18 own child, all against the same no-resident-child control. The latter two are diagnostic alternatives, not adopted targets, and neither fixes the model's never-parent comparator by changing the scalar alone. See [ownership_target_followup.md](ownership_target_followup.md) for dates, definitions, the corresponding 2023-only rows and positive source verification.
+
+Source check: frozen `run_e5f_transition_calibration.py` lines 2031, 2241, 2344, 2387 and 2600; `run_dynamic_population_transition.py` lines 469 and 1783. The selected summary also explicitly describes remaining targets as the 2023 transition cross-section.
 
 ## Evidence and limits
 

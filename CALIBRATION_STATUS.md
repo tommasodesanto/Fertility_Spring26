@@ -4,6 +4,25 @@ Updated: `2026-09-09` (rebated tax paths verified; household-with-children revie
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 9 discussion clarification: 2023 is already on the calibrated path.**
+The author reaffirms the expected18-year children-at-home approximation; retain
+it while reconciling measurement, without silently redefining the category as
+strictly under18. Source and selected receipt confirm the active calibration
+constructs an old stationary normalization, reweights to2007 household ages,
+and propagates five dates through2023. The 2023 cross-section is not stationary.
+Households nevertheless treat each date's current prices/primitives as permanent;
+this is a separate expectations assumption. Historical household totals/age
+marginals are imposed through2023; the later switch to the birth queue remains
+outstanding. The ownership target is pooled2012–2023, not2023-only.
+
+Same-sample ownership diagnostics reproduce16.7662pp for recent parents,
+15.2117pp for any resident own child and15.0155pp for any under18 own child,
+all against no resident own children. No alternative is adopted, and simply
+changing the scalar would leave the model's never-parent control mismatched.
+Read the current tax review's `ownership_target_followup.md` and updated
+`OVERVIEW.md` sections6–7. Resolving the intended group and sample dates is
+the immediate author discussion; no calibration or model change was launched.
+
 **September 9: requested household-with-children accounting and measurement review.**
 The completed tax experiment has 0.092922% more households with dependent
 children on impact and 0.897161% more in 2063 under reform. The 2063 share
