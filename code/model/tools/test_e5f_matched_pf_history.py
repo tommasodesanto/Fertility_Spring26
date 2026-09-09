@@ -126,5 +126,48 @@ class JoinedHistoryTests(unittest.TestCase):
         self.assertEqual(result.rows[0]['calendar_year'], 2023)
 
 
+class DiagnosticSmokeGateTests(unittest.TestCase):
+    def fixture(self):
+        history = SimpleNamespace(maximum_mass_accounting_error=0.,
+            maximum_policy_reproduction_error=0., maximum_feasibility_projection_mass=0.)
+        tail = SimpleNamespace(maximum_policy_reproduction_error=0.,
+            maximum_person_identity_error=0., maximum_head_identity_error=0.,
+            maximum_household_person_head_gap=0., maximum_age_head_gap=0.,
+            maximum_feasibility_projection_mass=0.,
+            rows=[{'calendar_year': 2023, 'raw_household_mass_residual': 0.},
+                  {'calendar_year': 2027, 'raw_household_mass_residual': 0.}])
+        return SimpleNamespace(history=history, person_tail=tail,
+            initial_2023_age_head_gap=0., bellman_solves=12,
+            rows=[dict(calendar_year=y, relative_market_residual=.9)
+                  for y in (2007, 2011, 2015, 2019, 2023, 2027)])
+
+    def test_conditional_prices_do_not_claim_market_clearing(self):
+        gates = joined.check_smoke_gates(self.fixture())
+        self.assertTrue(all(row['passed'] for row in gates.values()))
+        self.assertFalse(any('market' in key for key in gates))
+
+    def test_person_ledger_error_cannot_pass_smoke(self):
+        result = self.fixture()
+        result.person_tail.maximum_person_identity_error = 1e-5
+        with self.assertRaisesRegex(RuntimeError, 'person_identity'):
+            joined.check_smoke_gates(result)
+
+    def test_nan_and_projection_fail(self):
+        result = self.fixture()
+        result.history.maximum_mass_accounting_error = np.nan
+        with self.assertRaisesRegex(RuntimeError, 'historical_mass'):
+            joined.check_smoke_gates(result)
+        result = self.fixture()
+        result.person_tail.maximum_feasibility_projection_mass = 2e-6
+        with self.assertRaisesRegex(RuntimeError, 'person_projection'):
+            joined.check_smoke_gates(result)
+
+    def test_missing_date_cannot_pass(self):
+        result = self.fixture()
+        result.rows.pop()
+        with self.assertRaisesRegex(RuntimeError, 'six dates'):
+            joined.check_smoke_gates(result)
+
+
 if __name__ == '__main__':
     unittest.main()
