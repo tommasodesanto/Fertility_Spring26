@@ -1,0 +1,71 @@
+{
+  "baseline_smoke_receipt": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_policy_impact_20260908a/run/smoke/receipt.json",
+  "baseline_smoke_receipt_sha256": "7d60472c2ca639290319cf7d86790defa52242f597182588b62a54aba5b6917b",
+  "case_seconds": 1800,
+  "checkpoint_sha256": "e296c54ea8b4d832c89220c080e5d721cbcd530714a82722a5618db035d68fdb",
+  "closure": {
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "next_bridge_year": null,
+    "outside_flow": 0.0,
+    "retention": 1.0
+  },
+  "closure_classifications": {
+    "birth_to_household_conversion": "externally fixed 1/2.1; twenty-year queue lag",
+    "calibrated_parameters": "estimated; selected fixed 2023 values",
+    "expectations": "maintained current prices perceived permanent at each date; temporary equilibria",
+    "household_formation_and_person_demography": "outstanding; this household-unit law is not a resident population forecast",
+    "housing_supply_elasticity": "externally fixed 0.63; saved stock/price normalization unchanged",
+    "initial_age_population": "empirically normalized historical Census bridge; within-age states model generated",
+    "initial_birth_queue": "model implied; inherited from 2019 post-advance record",
+    "outside_flow_and_retention": "externally fixed diagnostic closed-national M=0,rho=1",
+    "property_tax_rates": "author chosen annual 1% and2%",
+    "rebate": "endogenous equal transfer per household, all occupied rental and owner tax revenue returned"
+  },
+  "code_bundle_sha256": "4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8",
+  "date_seconds": 1800,
+  "impact_receipts": {
+    "tax1-equal-rebate": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_rebated_tax_20260908a/run/tax1-equal-rebate/receipt.json",
+      "sha256": "220977a7ea2532dce8e6cdfee19846a12c066131ba9813e20a230e7cff4d92b8"
+    },
+    "tax2-equal-rebate": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_rebated_tax_20260908a/run/tax2-equal-rebate/receipt.json",
+      "sha256": "7dea8676c85836dadbbcfd6d2a25f59827c5ddb505bd99e9961acc1c8127fad2"
+    }
+  },
+  "launch_deadline_epoch": 1789010341.700463,
+  "output_root": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_tax_transition_20260908a/run",
+  "schema": "e5f_simple_fertility_tax_transition_v1",
+  "selected_summary": "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/output/model/e5f_simple_fertility_overnight_20260907a/run/polish_2_combined/task_010/summary.json",
+  "selected_summary_sha256": "19022673b0f03576d7a211e5d2b79c6e664a998b103a36dab34016a15782a8e0",
+  "source_hashes": {
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/collect_e5f_transition_calibration.py": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_dynamic_population_transition.py": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_bounded_calibration_refinement.py": "b7ad60d11c31d3d2e81fd70bdac0b889adfa1663b0877248c711d803a4ae1408",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_global_saving_quantification.py": "0e89d55a6cd3d0432dcff39b24683a7f6233ac0820a03b47a94eda8e2a924586",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_independent_numerical_audit.py": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_joint_nested_finalize.py": "c934a13f29368c3cbdc309985f9f32c5c133c973c38ee5adbc33490a134859df",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_joint_overnight_case.py": "cdd3ed363ec170443513cf6f49db23b5f4af87358e5f65797efceffafae62239",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_open_population_transition.py": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_post2023_no_policy_continuations.py": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_post2023_policy_mechanisms.py": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_post2023_rebated_property_tax_smoke.py": "adc722ec2b908dc6209a91448eb8936a3c4bb6a79f5d9c592b96298bc09219a1",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_simple_fertility_policy_impact.py": "c5006bf4f4d9fe42b3bf795d83ae9d4f28de09960cbb48772014dc06dc39d1bc",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_simple_fertility_tax_impact.py": "d1d25a391c0a8aa10a358d1766c0500b5d1893b6e562a90e7051e1647a848aa6",
+    "/scratch/td2248/projects/Fertility_Spring26_simple_fertility_overnight_20260907a/code/model/tools/run_e5f_simple_fertility_tax_transition.py": "afc41253ae39191d67dc2215d5213e6454e99cfe76c00caebc2a72ebc57c684a"
+  },
+  "stage_seconds": 14400,
+  "years": [
+    2023,
+    2027,
+    2031,
+    2035,
+    2039,
+    2043,
+    2047,
+    2051,
+    2055,
+    2059,
+    2063
+  ]
+}

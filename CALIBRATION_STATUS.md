@@ -4,6 +4,37 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8 overnight: rebated-tax diagnostic paths submitted through2063.**
+Author requests useful overnight work before tomorrow's review. Smoke array
+**17250629** runs both tax cases through2023/2027 using the exact intended
+loop. Full array **17250630** requires both smokes; collector **17250631**
+requires both full paths. These jobs are submitted, not verified results.
+Annual1% vs2%, equal household rebates in both; selected calibration/parameters,
+2023 inherited population, 2019 post-advance queue and saved .63 supply rule
+unchanged. Closed-national household-unit diagnostic: M=0,rho=1,births/2.1,
+twenty-year entry lag, no future empirical bridge. No person-population forecast,
+perfect-foresight interpretation, recalibration, figures or production promotion.
+
+26 coupled roots plus26 fresh fixed-price replays including four smoke dates
+and22 full dates. Observed impact runtime2m28–2m45; expected35–45minutes with
+two paths parallel, queue and harder future roots additional. Each date30min,
+stage4h, Slurm4h05; each path2CPU/48GiB, numerical threads1. Heartbeat30s,
+checkpoints/entryqueues/latest summaries perdate; fail closed with no retries
+or relaxed gates. Full paths reproduce their2023/2027 smokes; every2023 point
+reproduces verified impact. Restore root transfer, independent ledger, full
+policy replay, household and finite2e-10 mass/queue gates at each date.
+Collector checks all11dates and common initialstate, with householdmass equal
+between policies before2043. Reports fertility perhousehold AND totalbirths,
+mass, entries, prices, space and ownership including young dependent-child units.
+
+Source `e483254a` isolatedbranch. Contract
+`ce80b6ad241bec9556d2f3d3cdccb9f89e0ccfdd5b2e80ddcd167ed5156b5b68`.
+Compilation/import and9purechecks pass; source/input hashes and cohortlag verified
+onTorch. Actual two-date numerical smoke remains pending. Future household
+formation/headship, historical-to-endogenous-entry discontinuity and annual-age
+alignment remain outstanding. Full design/submission: 
+`output/model/e5f_simple_fertility_tax_transition_20260908a/README.md`.
+
 **September 8: eight-cell tax-channel diagnostic completed.**
 Both endpoint replays (17250311), all six conditional cells (17250312) and
 collector (17250315) completed. All 17 metric decompositions add up within
