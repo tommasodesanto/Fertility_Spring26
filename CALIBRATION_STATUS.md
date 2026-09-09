@@ -4,6 +4,68 @@ Updated: `2026-09-09` (rebated tax paths verified; household-with-children revie
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 9 author proposes parallel sequential/nested comparison.**
+Tommaso is open to returning to sequential choice and testing simultaneous
+fertility nests as a robustness arm, using cluster parallelism. Neither arm is
+promoted by this discussion. Two bounded read-only readiness checks identify
+shared PF infrastructure and the required adapters: preserve sequential
+exhaustive-saving flags throughout; retain each nested policy's owned joint
+choice object; initialize the selected distribution with explicit person/head
+alignment; rebuild matched terminal endpoints; audit using actual dated rent.
+The existing generic static-rent audit cannot be reused unchanged for PF.
+This is an adaptation requirement, not a finding that old PF audits were wrong.
+Common exhaustive saving alone does not guarantee a comparison isolated to
+choice structure: interpolation and probability storage also differ and require
+a controlled numerical check. Historical H128 convergence times are not runtime
+forecasts for these updated arms; time the actual short backward/forward loop.
+No new model solve, calibration or policy job has been launched for this plan.
+
+Proposed common design: the same person/head demographic law, dated housing-
+supply rule, fiscal policy, household-state primitives, empirical target/weight
+contract and numerical gates in both arms. First compare choice structures at
+common parameters, then re-estimate each separately under one agreed estimation
+framework. Taste dispersions must be labeled estimated versus externally fixed;
+the nested GEV scale restrictions are part of its economic specification.
+Do not label a changed information/correlation structure as just a code rewrite.
+
+PF policy paths are required for both intended arms. Whether PF also applies
+throughout historical calibration is explicitly pending an author answer; the
+lead recommends that as the end objective, using existing estimates only for
+initial solver tests. The ownership parent/control definition and empirical date
+window likewise remain unresolved before a fresh target fingerprint/search.
+The expected18-year children-at-home approximation stays fixed for this first
+comparison. Preserve the earlier verified PF pair as a fallback artifact.
+
+**September 9 control clarification: exact operational divergence and claims.**
+All times in this paragraph are New York (EDT). The earliest documented
+separation in this task is September5,17:13: the assistant chose the older
+policy comparison and called the person-demographic model a separate branch.
+September6,17:37/18:29 explicitly retained temporary-equilibrium expectations
+for the then-experimental nested model. September8,23:24:47 submitted the
+latest simple-nest rebated-tax paths through that older driver (e483254a).
+The earlier one-night H128 deferral was approved September3 at21:48 local,
+not September4 local; earlier chronology used UTC. No single deletion or
+explicit abandonment decision is established. The actual failure was allowing
+the diagnostic pipeline to become the stream of headline progress while the
+intended PF/person-demographic integration remained incomplete.
+
+Documented operational reasons were source comparability, a reproduced existing
+pipeline and bounded runtime. No new PF failure under the simple nest justified
+this substitution: that integration was not tested. “Assumptions stay fixed”
+in the latest launch referred to the diagnostic's own contract, not continuity
+with the earlier intended PF contract. Reconcile both expectations and population
+law; fixing only one would not restore the intended exercise.
+
+Supported claims: the current simple-nest choice implementation passes its
+recorded tests; its historical temporary-expectations calibration is numerically
+reproduced against the retained twelve-row objective (complete fits/bounds in
+the September8 morning review); the older September1 sensitivity has a verified
+paired PF result; the latest tax paths pass their temporary-equilibrium gates.
+Not established: a current-parameter simple-nest PF comparison, a corresponding
+resident-population forecast, a welfare result, or fully aligned empirical
+parent-group targets. Current calibration is not a jointly estimated PF history.
+These distinct results must not be assembled into one claimed solved benchmark.
+
 **September 9 urgent author correction: reconcile the perfect-foresight handoff.**
 Recovered conversation evidence materially sharpens this correction: the
 September3 21:18 UTC assistant message explicitly designated coherent person-

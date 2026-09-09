@@ -115,6 +115,17 @@ Source check: frozen `run_e5f_transition_calibration.py` lines 2031, 2241, 2344,
 
 ## Evidence and limits
 
+The verified claims form separate pieces:
+
+| Object | Established | Limit |
+|---|---|---|
+| Current simultaneous fertility nests | Implemented and passed recorded numerical/choice checks | Not verified through the PF transition adapter |
+| Current calibration | Reproduced historical temporary-expectations fit against the retained objective | Not a jointly calibrated PF history; parent-group measurement remains unresolved |
+| Earlier perfect-foresight work | September1 paired policy sensitivity passed; code and results preserved | Different configuration; later September3 baseline did not converge |
+| Latest rebated-tax paths | Both temporary-equilibrium paths pass their declared numerical gates | Neither the current PF exercise nor a resident-population or welfare result |
+
+The operational divergence predates the final simple nest: September5,17:13 New York, the task chose the older policy route and called the person-demographic implementation a separate branch; September6 retained temporary expectations explicitly. The latest extension was submitted September8 at23:24:47 New York under sourcee483254a. The documented rationale was a reproduced pipeline, comparability and bounded runtime. No new PF failure demonstrated a need to abandon PF under the new nest. See [the exact conversation chronology](perfect_foresight_handoff_audit.md). A launch statement that assumptions stayed fixed referred to continuity within the diagnostic pipeline, not to the intended PF/person-demographic specification.
+
 The numerical interpretation uses the frozen `tmp/e5f_fertility_nest_compute_20260907a` source, not unrelated working-tree changes. [code_audit.md](code_audit.md) and [code_audit.json](code_audit.json) provide exact paths and hashes. The current transition contract hash is `ce80b6ad241bec9556d2f3d3cdccb9f89e0ccfdd5b2e80ddcd167ed5156b5b68`.
 
 The existing [morning PDF](../../../pdf/rebated_property_tax_morning_20260909.pdf) contains the complete twelve target fits and eleven parameter estimates/bounds. This review qualifies their group interpretation; it does not alter the saved objective or verified arithmetic. No raw-data re-estimation, model solve, causal claim about the effect of changing maturation, or new national demographic forecast is claimed here.

@@ -35,3 +35,36 @@ A targeted search of natural user messages in A and B for perfect foresight, H12
 ## Decision-relevant conclusion
 
 The defensible account is a handoff failure: the new choice specification and calibration advanced through the available temporary-equilibrium policy driver, while the earlier PF objective was neither completed for the new specification nor explicitly reconciled with the user. Preserving PF code or marking the newer numerical packet diagnostic does not establish informed agreement to the methodological substitution. The independent numerical audit should determine the last verified PF pair and the precise adaptation needed; this note does not infer those facts from assistant prose.
+
+
+## Follow-up: where the operational divergence occurred
+
+All times in this supplement are **America/New_York (EDT, UTC−4)**. The source identifiers A/B are defined above. This follow-up examines only bounded current-thread response records; it does not re-audit historical numerical results.
+
+There is no single transcript event in which PF was deleted or the user agreed to abandon it. The clearest chain is a temporary pause followed by reuse of the earlier policy pipeline, then that pipeline being carried into the new shock specification.
+
+| New York time | Exact record | What was said and what it establishes |
+|---|---|---|
+| Sep 5, 5:10 p.m. | B:8275, assistant | “I’ll use the next three hours to compare the verified candidate’s policy results with the current benchmark.” This sets the short, comparative task. |
+| **Sep 5, 5:13 p.m.** | **B:8376, assistant** | “the five-policy comparison uses the inherited household-entry rule, while the later demographic model is a separate branch” and “I’ll preserve those comparisons”. This is the earliest explicit operational separation located in this bounded follow-up. The assistant chose comparability with the inherited policy packet rather than integrating the later demographic branch. It does not expressly discuss PF here. |
+| Sep 5, 5:16 p.m. | B:8415, assistant | “I’ll use that verified source snapshot. The planned run is five short transition tests, then five paths through 2063 and the separate rebated-tax decomposition, with a firm stop within your three-hour window.” The stated rationale is a reproduced source, comparable experiments, and the time window. |
+| Sep 5, 5:56 p.m. | B:8979, assistant | “the policy definitions and population assumptions match.” This reassures consistency with the older comparison, without resolving consistency with the separate PF/person-cohort objective. |
+| Sep 6, 5:08 p.m. | B:13653, user | “try a full long run on this. basically getting new calibration and sequential eq. done ... tomorrow ... final version.” In this exchange the user requests the new choice experiment and equilibrium work. This does not specify that prices should be expected to remain at current levels. |
+| **Sep 6, 5:37 p.m.** | **B:14050, assistant** | “For tonight’s path, I’ll retain the current market-clearing expectation method and label it explicitly as temporary equilibrium.” This is a direct author-facing disclosure of the fallback, earlier than the Sep 7–9 window searched in the original note. It documents the assistant's decision, not explicit acceptance of abandoning PF. |
+| **Sep 6, 6:29 p.m.** | **B:14561, assistant** | Promises baseline and policy paths through 2063 and says: “Tonight’s paths retain the existing expectation assumption—households treat current prices as permanent.” This clearly states the experimental assumption, but does not explain how or when the outstanding PF objective will resume. |
+| Sep 6, 6:29 p.m. | B:14568, user | “i am going out for two hours, and then we can hopefully discuss ... before a full overnight run”. This asks for later review. It does not expressly close the PF objective. |
+| **Sep 8, 3:25 p.m.** | **B:26074, assistant** | Presents core policies under the new calibration as the next presentation milestone, aiming for a freeze by the 12th. This links the policy work to the final quantitative package without reconciling the earlier PF objective. |
+| Sep 8, 3:26 p.m. | B:26081, user | Asks whether repairing the benchmark improves the policy. |
+| **Sep 8, 3:35 p.m.** | **B:26330 user; B:26359 assistant** | User specifies “the property tax release!”; assistant identifies “The property-tax reform with equal rebates—the experiment we discussed earlier.” This is the pivotal connection to the prior substantive policy exercise. No change in expectations or demographic closure is stated here. |
+| Sep 8, 3:36 p.m. | B:26395, assistant | Confirms rebated 1% versus rebated 2% and a joint solution for prices and rebates using the new calibrated population. This describes impact computations, not a PF path. |
+| **Sep 8, 11:09 p.m.** | **B:26689, assistant** | Asks a reviewer whether “the existing longer tax transition can preserve the agreed population assumptions.” This is the identifiable decision to extend the available driver. The phrase “agreed population assumptions” does not itself establish author approval of that inherited closure over the later PF/person-cohort contract. |
+| Sep 8, 11:17 p.m. | B:26887, assistant | Proposes rebated-tax paths through 2063 “with the same population and supply assumptions,” conditional on two-date checks. No PF comparison or restoration plan is stated. |
+| **Sep 8, 11:25 p.m.** | **B:27191, assistant** | Announces the overnight 1%/2% rebated paths through 2063: “Calibration and assumptions stay fixed”. This fixes assumptions within the newly chosen run; it is not evidence that the run preserves the earlier PF specification. |
+
+### Evidence versus inference about why
+
+**Directly documented reasons:** preserve comparability with the inherited policy packet; use the reproduced source snapshot; fit the three-hour candidate comparison; retain the existing expectations method for the experimental new-choice run; require exact-loop checks and unchanged within-run assumptions for the latest extension.
+
+**Not established by these records:** that the user chose to abandon PF, that PF was impossible under the new choice specification, or that a fresh PF failure compelled the Sep 8 fallback. The narrower interpretation supported by the evidence is that reuse of an available and verified diagnostic pipeline became operational continuity, while the separate PF work was left pending. Calling this convenience-driven drift is an inference from the stated reuse decisions, not a quoted admission or established technical necessity.
+
+**Most precise short answer:** the drift was visible by **Sep 5 at 5:13 p.m.** in the choice to preserve the older comparison; temporary expectations were explicitly retained for the new nested experiment on **Sep 6 at 5:37 p.m.**; the latest tax extension was selected on **Sep 8 at 11:09–11:17 p.m.** and announced launched at **11:25 p.m.** The unresolved issue is not deletion of PF work but failure to reconnect these diagnostics to the user's final PF-policy objective.
