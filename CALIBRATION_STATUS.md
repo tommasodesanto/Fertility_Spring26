@@ -4,6 +4,29 @@ Updated: `2026-09-08` (overnight search completed; selected result verified)
 
 ## Absolute priority: order and information timing of discrete-choice shocks
 
+**September 8 late evening: rebated property-tax impacts verified complete.**
+Cluster access restored. Jobs 17222674/17222675/17222676 all completed; both
+rebated equilibria pass the coupled root, independent fiscal ledger, fresh
+full-policy replay and household accounting gates. All remote artifact hashes
+were verified before collection. Annual 2% versus 1%, both equally rebated:
+births per household **+0.509263%**, young ownership **+1.235959 pp**, young
+rooms **−4.281907%**, all-age ownership **+0.021629 pp**, mean rooms
+**−3.053938%**, price **−4.801637%**. Young parents gain only **0.106470 pp**
+ownership. Conditional family groups combine behavior and composition.
+These are same-inherited-population 2023 impacts, not long-run results.
+Eight fixed tax/price/rebate combinations submitted: endpoint replay array
+**17250311**, conditional cells **17250312** after both replays, collector
+**17250315** after all cells. Mixed combinations are diagnostics, not equilibria.
+Contract `de767353697c706dec4a7d960d1f3314dfb5cf2debad4c17e8438ce021966288`;
+eight fresh solves, 30min/case watchdog, 35min Slurm cap, 1CPU/24GiB each.
+No retry or gate relaxation; invalid dependencies cancel automatically.
+Full design: `output/model/e5f_simple_fertility_tax_channels_20260908a/README.md`. No additional
+calibration is launched. The old transition launcher cannot be used unchanged
+because it reanchors supply and omits the cached-root transfer restoration.
+Verified endpoint levels, family groups and gates:
+`output/model/e5f_simple_fertility_rebated_tax_20260908a/results/RESULTS.md`.
+This completion supersedes the pending tax status below.
+
 **September 8 policy priority correction: rebated property-tax reform.**
 The author corrected the focus to the property-tax reform. The maintained
 comparison is annual 1% with equal rebates versus 2% with equal rebates,

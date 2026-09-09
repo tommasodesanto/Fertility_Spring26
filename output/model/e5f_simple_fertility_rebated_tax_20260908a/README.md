@@ -49,3 +49,7 @@ Submitted September 8: rebated-baseline smoke **17222674**, tax2 reform
 **17222675**, collector **17222676**. All were queued at submission; no new
 tax effect is established yet. The first single-CPU/high-memory request was
 rejected before job creation; the eight-CPU allocation passed scheduler validation.
+
+## Verified completion
+
+All three jobs completed. [Verified results](results/RESULTS.md) contain endpoint levels, family groups and numerical checks. The follow-up eight-cell decomposition is indexed in `../e5f_simple_fertility_tax_channels_20260908a/README.md`.

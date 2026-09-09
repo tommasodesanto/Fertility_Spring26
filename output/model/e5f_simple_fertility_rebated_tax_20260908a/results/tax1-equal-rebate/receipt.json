@@ -1,0 +1,217 @@
+{
+  "artifact_sha256": {
+    "age_measurement.json": "9c21bddeede0910fbebcfecfe851ae551c58cd30a6734c6c964d6e45fd4a83ff",
+    "best_so_far.json": "1a6a64619f5344896ffdf07cb4d937ee59e31475d97015a49577db54278b3d5f",
+    "budget_by_age_tenure.csv": "361bf9eeddb016229a46421ee5a0c31d7725dc75c7ef46f9a344c326c9ba3fdc",
+    "budget_summary.json": "f51bc777d8118879b87dff475a8324ceda14894e551fb8270263ea883001b892",
+    "coupled_root.json": "8c23327f6c299ee539e22cd65ee9778d31839c3746d63a598ef54145ecf67a22",
+    "dated_state.pkl.gz": "a172b8faaf5d5ff99169ab0aef8a1a015d31d4c3c81228404693f2d0411f8c6c",
+    "endpoint_receipt.json": "13be723791d3a65226010dd9f1fe9abf3bf0407dd7e1183e5cd54acf5b1e186f",
+    "family_group_quantities.csv": "a55a39b7aafad3c1b69ed5ff3403ca3fe522c595549826799e79e6ef54129ce5",
+    "fiscal_ledger.json": "134ba78b74f0889ca7afec2ebad7988a8b877acf767bfa10364f9116a3432177",
+    "latest_completed_case.json": "13be723791d3a65226010dd9f1fe9abf3bf0407dd7e1183e5cd54acf5b1e186f",
+    "lifecycle.csv": "2442ae0b778847ef3e1d397bb0cfce3840ab61747f83bc8e39c3c39d37de7813",
+    "policy_array_summary.json": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9",
+    "quantities.json": "00c87e4151797f507815c4304d52b7729f6422d3e187cfc53ae19f599412828e"
+  },
+  "baseline_smoke_receipt_sha256": "7d60472c2ca639290319cf7d86790defa52242f597182588b62a54aba5b6917b",
+  "case": "tax1-equal-rebate",
+  "contract_sha256": "931def1c35d3a6b4575bcb9e8cd65e345f71804d1b25d74f3671a8719b680a7d",
+  "elapsed_seconds": 139.5763261858374,
+  "endpoint": {
+    "age_measurement": {
+      "age_nodes": [
+        26.0,
+        30.0,
+        34.0
+      ],
+      "definition": "unchanged model.age_to_index(P,25) through model.age_to_index(P,34), inclusive",
+      "family_definition": "no dependent children includes empty nesters; parity-zero childlessness separately reported",
+      "no_annual_age_acs_realignment": true
+    },
+    "annual_property_tax_rate": 0.01,
+    "bellman_solves": 6,
+    "budget": {
+      "budget_excess_mass": 0.0,
+      "budget_excess_share": 0.0,
+      "budget_tolerance": 1e-09,
+      "household_mass": 1.1292476712474808,
+      "maximum_occupied_excess": 7.105427357601002e-15,
+      "occupancy_threshold_for_maximum": 1e-12,
+      "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+      "weighted_positive_budget_gap": 1.0119818150265209e-16
+    },
+    "checkpoint_sha256": "a172b8faaf5d5ff99169ab0aef8a1a015d31d4c3c81228404693f2d0411f8c6c",
+    "family_group_quantities": [
+      {
+        "age_group": "all_ages",
+        "family_group": "dependent_children",
+        "household_mass": "0.4112146993029965",
+        "mean_rooms": "6.607689859759585",
+        "owner_rate": "0.6193737626221466"
+      },
+      {
+        "age_group": "all_ages",
+        "family_group": "no_dependent_children",
+        "household_mass": "0.7180329719444847",
+        "mean_rooms": "6.1634952231983755",
+        "owner_rate": "0.6761918402430224"
+      },
+      {
+        "age_group": "all_ages",
+        "family_group": "childless_parity_zero",
+        "household_mass": "0.27780947879138135",
+        "mean_rooms": "5.1662901117715005",
+        "owner_rate": "0.45570950775141306"
+      },
+      {
+        "age_group": "young_whole_nodes_25_34",
+        "family_group": "dependent_children",
+        "household_mass": "0.10698445827441977",
+        "mean_rooms": "6.042318447612305",
+        "owner_rate": "0.38666459882571036"
+      },
+      {
+        "age_group": "young_whole_nodes_25_34",
+        "family_group": "no_dependent_children",
+        "household_mass": "0.11749428916156514",
+        "mean_rooms": "4.855093912595276",
+        "owner_rate": "0.2853925146028811"
+      },
+      {
+        "age_group": "young_whole_nodes_25_34",
+        "family_group": "childless_parity_zero",
+        "household_mass": "0.09202161152411366",
+        "mean_rooms": "4.705712616175566",
+        "owner_rate": "0.26667156346275983"
+      }
+    ],
+    "fiscal_absolute_tolerance": 2.5e-05,
+    "fiscal_denominator": "current household decision-unit mass, including renters and owners",
+    "fiscal_revenue_base": "all occupied rental and owner housing services at current asset price",
+    "fresh_fixed_price_reproduction": {
+      "all_policy_arrays_within_2e_10": true,
+      "births_absolute": 0.0,
+      "g_current_l1": 0.0,
+      "g_post_fertility_l1": 0.0,
+      "g_pre_l1": 0.0,
+      "price_max_absolute": 0.0
+    },
+    "gates": {
+      "distribution_health": {
+        "min_distribution_mass": 0.0,
+        "minimum_by_array": {
+          "current": 0.0,
+          "post": 0.0,
+          "pre": 0.0
+        },
+        "nonfinite_by_array": {
+          "current": 0,
+          "post": 0,
+          "pre": 0
+        },
+        "nonfinite_distribution_count": 0
+      },
+      "joint_probabilities": {
+        "failure_probabilities": {
+          "maximum": 0.48290273724491756,
+          "minimum": 0.0
+        },
+        "occupied_menu_sum_max_gap": 5.551115123125783e-16,
+        "probabilities": {
+          "maximum": 1.0,
+          "minimum": 0.0
+        },
+        "scope": "All joint probability ranges and occupied wait/attempt marginal normalization; natural conception/product factorization also checks occupied mass internally.",
+        "wait_probabilities": {
+          "maximum": 1.0,
+          "minimum": 0.0
+        }
+      },
+      "mass_gaps": {
+        "g_current": 2.986499936241671e-13,
+        "g_post_fertility": 0.0,
+        "g_pre": 0.0
+      }
+    },
+    "joint_iterations": 2,
+    "joint_model_evaluations": 5,
+    "ledger": {
+      "equal_transfer_outlays": 0.20871437198403417,
+      "equal_transfer_period_units": 0.18482603710262005,
+      "government_budget_residual": 5.525927037314249e-06,
+      "implied_equal_transfer": 0.1848309305614936,
+      "property_tax_revenue": 0.20871989791107148,
+      "scaled_government_budget_residual": 2.6475324550362994e-05
+    },
+    "market_tolerance": 0.0002,
+    "model_flags": {
+      "exhaustive_saving_control": false,
+      "fertility_nest_choice": true,
+      "joint_nested_choice": true,
+      "two_shock_choice": false
+    },
+    "normalized_root_residuals": [
+      1.5084310151580914e-05,
+      2.6475324550362994e-05
+    ],
+    "policy": "tax1-equal-rebate",
+    "policy_arrays": {
+      "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+      "lower_node_mass_at_negative_steps": 0.0,
+      "maximum_occupied_value_drop": 0.0,
+      "occupied_negative_steps": 0,
+      "probabilities": {
+        "continuation_birth": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "first_birth": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "location": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "tenure": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        }
+      },
+      "share_pre_choice_mass_at_negative_steps": 0.0,
+      "value_drop_tolerance": 1e-07
+    },
+    "property_tax_rate_period_units": 0.04,
+    "quantities": {
+      "adjusted_births": 0.09901100109807542,
+      "adult_households": 1.1292476712477795,
+      "asset_price": 0.7305283514614223,
+      "births_per_household": 0.08767872949312501,
+      "dependent_renter_at_cap_share": 0.22517707037242415,
+      "explicit_births": 0.08640126766021197,
+      "feasibility_projection": 0.0,
+      "market_residual": 1.5084310151580914e-05,
+      "ownership": 0.6555015795511123,
+      "renter_at_cap_share": 0.14301541361142425,
+      "renter_mass": 0.38902403904034194,
+      "rooms_per_household": 6.325248369611199,
+      "young_mean_rooms_whole_nodes": 5.420913952040736,
+      "young_ownership_whole_nodes": 0.3336578367888509
+    },
+    "root_tolerance": 0.0001,
+    "status": "complete"
+  },
+  "figures": "suppressed_at_author_request",
+  "primary_comparison": "rebated annual2percent versus rebated annual1percent, common inherited2023 population",
+  "production_promoted": false,
+  "scientific_bundle_sha256": "4199e948c5f3625c4a2af106623344ddd8f0b032262f26a8d3973223f5bd63c8",
+  "scope": "impact only; no forward transition or population closure",
+  "selected_checkpoint_sha256": "e296c54ea8b4d832c89220c080e5d721cbcd530714a82722a5618db035d68fdb",
+  "selected_summary_sha256": "19022673b0f03576d7a211e5d2b79c6e664a998b103a36dab34016a15782a8e0",
+  "status": "complete"
+}

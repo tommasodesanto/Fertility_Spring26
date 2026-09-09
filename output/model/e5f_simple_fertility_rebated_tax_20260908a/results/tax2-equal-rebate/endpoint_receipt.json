@@ -1,0 +1,188 @@
+{
+  "age_measurement": {
+    "age_nodes": [
+      26.0,
+      30.0,
+      34.0
+    ],
+    "definition": "unchanged model.age_to_index(P,25) through model.age_to_index(P,34), inclusive",
+    "family_definition": "no dependent children includes empty nesters; parity-zero childlessness separately reported",
+    "no_annual_age_acs_realignment": true
+  },
+  "annual_property_tax_rate": 0.02,
+  "bellman_solves": 7,
+  "budget": {
+    "budget_excess_mass": 0.0,
+    "budget_excess_share": 0.0,
+    "budget_tolerance": 1e-09,
+    "household_mass": 1.1292476712474848,
+    "maximum_occupied_excess": 7.105427357601002e-15,
+    "occupancy_threshold_for_maximum": 1e-12,
+    "scope": "exact post-tenure grid mass; no changed policies or equilibrium",
+    "weighted_positive_budget_gap": 3.497914431728483e-17
+  },
+  "checkpoint_sha256": "629650ed20c43d719c882610f5f54d08ed22799ffd1d98a9b6114ddf22ac702e",
+  "family_group_quantities": [
+    {
+      "age_group": "all_ages",
+      "family_group": "dependent_children",
+      "household_mass": "0.41159680821953454",
+      "mean_rooms": "6.415638575654729",
+      "owner_rate": "0.6175966290601805"
+    },
+    {
+      "age_group": "all_ages",
+      "family_group": "no_dependent_children",
+      "household_mass": "0.7176508630279494",
+      "mean_rooms": "5.969448364873626",
+      "owner_rate": "0.677581683548809"
+    },
+    {
+      "age_group": "all_ages",
+      "family_group": "childless_parity_zero",
+      "household_mass": "0.277485880971459",
+      "mean_rooms": "4.959526127582801",
+      "owner_rate": "0.4681733614239862"
+    },
+    {
+      "age_group": "young_whole_nodes_25_34",
+      "family_group": "dependent_children",
+      "household_mass": "0.10719723788057134",
+      "mean_rooms": "5.8322426421686195",
+      "owner_rate": "0.3877292979912376"
+    },
+    {
+      "age_group": "young_whole_nodes_25_34",
+      "family_group": "no_dependent_children",
+      "household_mass": "0.11728150955542227",
+      "mean_rooms": "4.600674048293909",
+      "owner_rate": "0.3078920885360026"
+    },
+    {
+      "age_group": "young_whole_nodes_25_34",
+      "family_group": "childless_parity_zero",
+      "household_mass": "0.09184335229043626",
+      "mean_rooms": "4.456787043379084",
+      "owner_rate": "0.29143781550441245"
+    }
+  ],
+  "fiscal_absolute_tolerance": 2.5e-05,
+  "fiscal_denominator": "current household decision-unit mass, including renters and owners",
+  "fiscal_revenue_base": "all occupied rental and owner housing services at current asset price",
+  "fresh_fixed_price_reproduction": {
+    "all_policy_arrays_within_2e_10": true,
+    "births_absolute": 0.0,
+    "g_current_l1": 0.0,
+    "g_post_fertility_l1": 0.0,
+    "g_pre_l1": 0.0,
+    "price_max_absolute": 0.0
+  },
+  "gates": {
+    "distribution_health": {
+      "min_distribution_mass": 0.0,
+      "minimum_by_array": {
+        "current": 0.0,
+        "post": 0.0,
+        "pre": 0.0
+      },
+      "nonfinite_by_array": {
+        "current": 0,
+        "post": 0,
+        "pre": 0
+      },
+      "nonfinite_distribution_count": 0
+    },
+    "joint_probabilities": {
+      "failure_probabilities": {
+        "maximum": 0.48285203258552106,
+        "minimum": 0.0
+      },
+      "occupied_menu_sum_max_gap": 5.551115123125783e-16,
+      "probabilities": {
+        "maximum": 1.0,
+        "minimum": 0.0
+      },
+      "scope": "All joint probability ranges and occupied wait/attempt marginal normalization; natural conception/product factorization also checks occupied mass internally.",
+      "wait_probabilities": {
+        "maximum": 1.0,
+        "minimum": 0.0
+      }
+    },
+    "mass_gaps": {
+      "g_current": 2.9465319073551655e-13,
+      "g_post_fertility": 0.0,
+      "g_pre": 0.0
+    }
+  },
+  "joint_iterations": 3,
+  "joint_model_evaluations": 6,
+  "ledger": {
+    "equal_transfer_outlays": 0.3852549452462882,
+    "equal_transfer_period_units": 0.3411607170468595,
+    "government_budget_residual": 4.6835706140058164e-06,
+    "implied_equal_transfer": 0.3411648645609375,
+    "property_tax_revenue": 0.38525962881690223,
+    "scaled_government_budget_residual": 1.2156920330294254e-05
+  },
+  "market_tolerance": 0.0002,
+  "model_flags": {
+    "exhaustive_saving_control": false,
+    "fertility_nest_choice": true,
+    "joint_nested_choice": true,
+    "two_shock_choice": false
+  },
+  "normalized_root_residuals": [
+    3.402875095796245e-07,
+    1.2156920330294254e-05
+  ],
+  "policy": "tax2-equal-rebate",
+  "policy_arrays": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "property_tax_rate_period_units": 0.08,
+  "quantities": {
+    "adjusted_births": 0.09951522794958113,
+    "adult_households": 1.1292476712477795,
+    "asset_price": 0.6954510343808845,
+    "births_per_household": 0.08812524522598329,
+    "dependent_renter_at_cap_share": 0.1290406128410451,
+    "explicit_births": 0.08688377252346575,
+    "feasibility_projection": 0.0,
+    "market_residual": 3.402875095796245e-07,
+    "ownership": 0.6557178731580205,
+    "renter_at_cap_share": 0.09268231458222326,
+    "renter_mass": 0.38877978998843665,
+    "rooms_per_household": 6.132079177662121,
+    "young_mean_rooms_whole_nodes": 5.18879543186262,
+    "young_ownership_whole_nodes": 0.34601742748878717
+  },
+  "root_tolerance": 0.0001,
+  "status": "complete"
+}
