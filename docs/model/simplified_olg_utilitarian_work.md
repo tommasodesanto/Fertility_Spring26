@@ -625,3 +625,53 @@ h_i^{y,SP}>h_i^{y,eq}
 These formulas help interpret the review. They do not establish its empirical
 relevance or substitute for deciding which economically useful sufficient
 conditions should appear in the main note.
+
+## September 8 evening: housing restrictions and fertility sent to Pro
+
+The author clarified the old-age issue through discussion. Competitive old
+households can sell and resize housing but cannot take new loans; the
+counterexample relies on the direct planner relaxing that borrowing rule.
+The lead's suggestion to retain the rule in the planner was NOT adopted.
+The author objects to changing the benchmark in response to an inconvenient
+sign. The new task therefore preserves the existing dated planner exactly.
+
+The author expects old households to occupy weakly larger homes. With
+alpha>=gamma and positive child-space needs, that paired market ordering
+implies strictly greater young marginal housing utility; feasibility of a
+transfer still requires an uncapped young recipient. The separate aggregate
+static lemma already recorded above gives the full aggregate direction when
+market old housing is weakly larger in total and total housing is below
+everyone's combined cap. The competitive ordering itself is not established
+generally. Neither result implies every young household gains at the full
+optimum under heterogeneity.
+
+The author now requests an integrated Pro follow-up covering utility and
+parameter restrictions, private fertility responses to the reallocation,
+and a static planner also choosing fertility, valuing parents' enjoyment of
+children but assigning no additional welfare weight to unborn persons. The
+future-cohort path remains a later extension, with only a short bridge here.
+The prompt distinguishes fixed-bundle fertility responses from market-policy
+responses and from joint planner optimization of consumption, housing and
+fertility. Today's cohort mass stays fixed, but future entrant mass cannot
+simultaneously be held fixed when fertility changes. Existing adult
+commitments and estate payments remain protected. Child goods and space
+costs are counted once in total consumption and housing.
+
+Source: `docs/prompts/oracle_simplified_olg_housing_fertility.md`.
+Oracle-rendered packet:
+`output/model/simplified_olg_amendments/oracle_housing_fertility_bundle.md`.
+A bounded Astra/max preflight confirmed the local fertility differential,
+resource accounting and comparison scope; its clarification that the displayed
+old budget belongs to owners was incorporated. No new theorem is claimed.
+
+Submission was verified in the existing Pro chat at 7:53 PM Eastern on
+September 8: new attachment `Pasted text(20260908-235319).txt`, followed by
+Stop answering. The visible model was 6 Pro; the effort menu could not be
+opened, so no further effort setting is claimed. Browser mouse clicks timed
+out, but the supported text paste and Return submission succeeded. Do not
+reload or resubmit this active run. The existing `watch-pro-planner-review`
+heartbeat was updated and resumed for the THIRD response only; the first
+two completed answers are not the new result. Save the new result to
+`output/model/simplified_olg_amendments/oracle_housing_fertility_response.md`
+and pause the monitor after completion. The model, note and slides are
+unchanged; this is a review request, not adoption of new findings.

@@ -1,5 +1,26 @@
 # Simplified OLG amendment checks
 
+## September 8: housing restrictions and fertility follow-up running
+
+The [third Pro packet](oracle_housing_fertility_bundle.md), from
+[this prompt](../../../docs/prompts/oracle_simplified_olg_housing_fertility.md),
+was submitted in the existing chat at 7:53 PM Eastern. The browser displayed
+the new attachment `Pasted text(20260908-235319).txt` and Stop answering.
+It asks for three connected results: utility and primitive conditions for
+housing toward the young; privately chosen fertility after a specified
+reallocation; and the same static planner choosing fertility with welfare
+valued through current parents only. A short transition bridge is secondary.
+
+The existing dated planner's financial permissions remain fixed. Competitive
+old households still cannot borrow; the suggested change to the planner's
+old-age restriction was not adopted. The author expects old households to
+occupy larger homes, but that competitive ordering remains a result to prove.
+A bounded Astra/max preflight checked the fertility differential, child-cost
+resource accounting and incumbent-commitment scope. It did not solve the new
+tasks. The existing monitor was updated and resumed for this latest response;
+it will save `oracle_housing_fertility_response.md` and pause on completion.
+No model, note or slide revision was made.
+
 ## September 8: dated allocation is now the active question
 
 The author rejects the stationary-cohort/permanent-transfer result as an answer
@@ -22,7 +43,8 @@ lead's assessment and independent checks are recorded in
 In particular, its claim of unrestricted beta needs qualification: the price
 bound used in its sufficient conditions implies an upper bound when other
 primitives are fixed. These are discussion results; the model, note and slides
-have not been revised. The previous monitor remains paused.
+have not been revised. The monitor was paused after this response; the new
+fertility follow-up described above is now the active run.
 
 ## September 8: full stationary planner under discussion
 

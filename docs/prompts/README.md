@@ -4,6 +4,13 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `oracle_simplified_olg_housing_fertility.md`: third follow-up in the existing
+  Pro chat, submitted September 8 at 7:53 PM Eastern. Keeps the dated planner
+  benchmark fixed and asks for interpretable housing restrictions, private
+  fertility responses, and a static planner choosing fertility through
+  parents' utility only. Corrects the earlier implicit beta restriction.
+  Paste-ready copy:
+  `output/model/simplified_olg_amendments/oracle_housing_fertility_bundle.md`.
 - `oracle_simplified_olg_dated_allocation.md`: follow-up for the existing Pro
   chat, superseding the stationary-cohort objective with a one-date full
   consumption/housing comparison. Records the cap-robust planner result and
