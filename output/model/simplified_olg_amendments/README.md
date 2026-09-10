@@ -1,6 +1,6 @@
 # Simplified OLG amendment checks
 
-## September 9 essential-theory Pro review — first answer checked; focused follow-up running
+## September 9 essential-theory Pro review — financing repair checked; assessment complete
 
 The author rejected treating the verified parameter family below as completion of
 the paper's theoretical argument. The required result remains a simple allocation
@@ -30,19 +30,40 @@ their strict regime. Prices and real quantities are unique within that regime;
 old tenure labels can tie. The initial transition must retain inherited saving
 as well as the housing capital gain.
 
-The decisive limitation is the restriction \(\phi<q\), where \(\phi\) is
-origination LTV and \(q\) discounts one model period. It excludes the earlier
-\(\phi=.8,q=.5\) benchmark. The exact owner FOC is
-\(u_h/u_c=p+(q-\phi)P\mu/\lambda\), so the housing distortion changes sign
+The first answer's decisive limitation was \(\phi<q\), where \(\phi\) is
+origination LTV and \(q\) discounts one model period. The owner FOC was
+\(u_h/u_c=p+(q-\phi)P\mu/\lambda\), so the housing distortion changed sign
 outside this range under the proposed bullet-debt timing. A single
 [focused follow-up](../../../docs/prompts/oracle_essential_theory_finance_followup.md)
-was submitted at 20:20 EDT in the same Pro conversation, asking whether a standard
-repayment structure or owner-size minimum can repair this issue. Submission
-and active generation were verified. This uses the one follow-up authorized
-for this round: do not send another. Capture its eventual answer separately
-as oracle_essential_theory_finance_followup_response.md and update the existing
-assessment. All model changes remain unadopted; the main slides and manuscript
-are unchanged.
+was submitted at 20:20 EDT in the same Pro conversation. Its
+[complete answer](oracle_essential_theory_finance_followup_response.md) was
+captured after completion at the 20:50 EDT check; all 120 mathematical objects
+and the full normalized prose match the browser exactly.
+
+The proposed repair services mortgage interest during the age and repays the
+unchanged principal at sale. The reduced constraint becomes
+\(a\geq-q\phi Ph\), giving a positive housing distortion proportional to
+\(q(1-\phi)\), without an ordering restriction between \(\phi\) and \(q\).
+It supplies a global tenure comparison and explicit primitive price bounds.
+The updated [single assessment](oracle_essential_theory_assessment.md) states
+the theorem, resource requirements, full dated planner and joint parental
+fertility result. The lead checked welfare, fertility and nonvacuity; a
+bounded independent Astra/max review passed mortgage cash flows at every
+payment date, exact feasibility, the cutoffs and all tenure deviations.
+Gross mortgages/saving can tie as well as old tenure. The review is consolidated
+inside the assessment. A separately checked settlement corollary permits
+the final coupon to be paid at sale: replace the wedge by
+\(q(1-\phi R_{\rm last})\), requiring \(\phi R_{\rm last}<1\) for only the
+last payment interval. A single final coupon reproduces the old obstruction.
+
+The model remains an illustration of illiquid later endowments: with income
+only at age boundaries, current resources must fund intervening interest.
+Substantial later resources, the housing menus and external-finance closure
+remain material assumptions. The previous transition proof is not automatically
+a proof for this changed contract. No model changes have been adopted into the
+main slides or manuscript. The one authorized Pro follow-up has been used;
+do not send another. The checked assessment is ready for discussion and the
+existing heartbeat is to be paused after this delivery.
 
 
 ## September 9 two-hour model-design comparison — proposed, not adopted

@@ -1,4 +1,387 @@
-# Assessment of the September 9 Pro response
+# Assessment of the September 9 Pro review
+
+## Interest-serviced mortgage — current assessment
+
+The follow-up repairs the financing problem and supplies an analytical tenure comparison. Under its stated conditions, the dated planner gives young households more housing, and the joint parental planner chooses higher fertility. This is a useful candidate for the illustration. It remains conditional on an income profile with substantial resources arriving later, a particular mortgage payment schedule, and the housing-market and welfare choices below. It is not a completed theory of the policy transition. No specification has been adopted.
+
+The lead checked the planner, fertility and resource restrictions. A separate Astra/max review verified the mortgage cash flows at every payment date, the primitive cutoffs and all tenure deviations. A further narrow check permits the last coupon to be paid from sale proceeds, under the short-interval restriction below.
+
+[Exact follow-up response](oracle_essential_theory_finance_followup_response.md) · [Pro conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359) · [Exact question](../../../docs/prompts/oracle_essential_theory_finance_followup.md)
+
+### The economic change
+
+Mortgage interest is paid during the age; the loan principal is repaid when the house is sold. The same rule applies to young and old. Let \(P\) be the house price, \(q\) the full-age discount factor, \(\phi\) the fraction of the purchase price that can be borrowed, and \(\tau\) the property-tax rate. Rent per unit is \(p=(1+\tau-q)P\).
+
+There is no income between age boundaries. The household must therefore provide for interest payments using current resources. Buying \(h\) at maximum leverage requires, before consumption,
+
+\[
+\underbrace{(1-\phi+\tau)Ph}_{\text{equity and property tax}}
++\underbrace{(1-q)\phi Ph}_{\text{present value of interest}}
+=\underbrace{ph}_{\text{rental user cost}}
++\underbrace{q(1-\phi)Ph}_{\text{equity retained until sale}}.
+\]
+
+The extra liquidity requirement is positive for every \(0<q,\phi<1\). The old condition \(\phi<q\) disappears. This does not make an origination loan limit by itself sufficient: it is the combination of the deposit, interest service and delayed access to later income.
+
+Interest-only mortgages with scheduled interest payments and later principal repayment are an established contract form. That supports the payment schedule, not the model's boundary-only income assumption or its empirical fit. [CFPB explanation](https://www.consumerfinance.gov/ask-cfpb/what-is-an-interest-only-loan-en-101/).
+
+The exact displayed formula assumes every coupon is funded before liquidation. **The result also survives paying the final coupon from the sale proceeds**, provided \(\phi R_{\rm last}<1\), where \(R_{\rm last}\) is the gross interest factor for the final payment interval. In that variant, replace \(\eta=q(1-\phi)\) throughout by \(\eta=q(1-\phi R_{\rm last})\). This is a condition on the last mortgage-payment interval, not on the entire utility age. For equal payment intervals and \(m\) coupons, it is \(\phi q^{-1/m}<1\). A single coupon at the very end reproduces the original problem; regular intervening payments do the work. The supporting review proves feasibility at every earlier payment date as well.
+
+### One complete conditional statement
+
+Households live for two ages. Their lifetime utility is \(u^y+\beta u^o\), with
+
+\[
+u^y=\log(c^y-\chi n)+\alpha\log(h^y-\kappa n)+\vartheta\log n,
+\qquad
+u^o=\log c^o+\alpha\log h^o+\omega_B\log e.
+\]
+
+Here \(e\) is the net estate at death; \(\chi\) and \(\kappa\) are goods and space needs per child. All coefficients are positive. A fraction \(f\in(0,1)\) receives \(W\) when young and known, nonpledgeable \(Y\) when old. Call these the deferred-income families. Everyone else receives \(W+qY\) when young. The types have the same present-value resources. They choose tenure, consumption, housing, saving and fertility. Rentals are limited to \(r\) units; any size can be owned from the common divisible stock.
+
+Define
+
+\[
+d=1+\tau-q,\quad \eta=q(1-\phi),\quad
+K=1+\alpha+\omega_B,\quad J=1+\alpha+\vartheta,
+\]
+\[
+L=\frac{W+qY}{J+\beta K},\qquad
+B=f\frac{Y}{K}+(1-f)\frac{\beta L}{q}.
+\]
+
+The quantity \(L\) is the liquid young type's unrestricted adult consumption; \(B\) is average old consumption at unrestricted choices. Both are explicit functions of primitives.
+
+**Proposition.** Suppose:
+
+\[
+\begin{array}{ll}
+\text{Unrestricted choices are financeable:}&
+\omega_B d\geq\alpha\eta,\quad
+\beta Kd\geq\eta(\alpha+\vartheta);\\[3pt]
+\text{Sufficient later resources:}&
+L\geq W,\quad B\geq fW+(1-f)L;\\[3pt]
+\text{Replacement lies in the rental regime:}&
+F(p_+)<1/\nu<F(p_-).
+\end{array}
+\]
+
+The price bounds and fertility function in the last line are computed from primitives as follows. For any candidate rent \(0<p<W/r\), solve the unique interior quadratic fertility choice
+
+\[
+\frac{\vartheta}{n_C(p)}
+=\frac{\chi}{W-pr-\chi n_C(p)}
++\frac{\alpha\kappa}{r-\kappa n_C(p)}.
+\]
+
+Write \(x_C=W-pr-\chi n_C\), \(s_C=r-\kappa n_C\), and
+\(\mathcal M(p)=\alpha x_C/s_C\). Set
+
+\[
+\sigma=1-\frac{\beta KW}{qY}>0,\qquad
+\mathcal M(p_-)=\left(1+\frac{\sigma\eta}{d}\right)p_-,
+\qquad \mathcal M(p_+)=p_+,
+\]
+\[
+F(p)=fn_C(p)+(1-f)\frac{\vartheta L}{\chi+\kappa p}.
+\]
+
+The two thresholds are unique positive roots of the explicit quadratic in the response. Thus the test contains neither an assumed equilibrium allocation nor an unobserved multiplier.
+
+Then a positive stationary equilibrium exists with rent \(p^*\in(p_-,p_+)\) solving \(F(p^*)=1/\nu\). Deferred-income young families strictly prefer renting \(r\) to every feasible purchase, including purchases with a different fertility choice. Liquid young families own larger homes. Old households choose unrestricted consumption and housing. Housing clearing determines the cohort size. Prices, real quantities and population are unique within this regime; other regimes are not ruled out. Old tenure can tie, and gross mortgage/saving portfolios need not be unique.
+
+For the equally weighted dated planner, fix individual fertility, young continuation wealth, old net estates and future prices, and choose all current consumption and housing. Define young average adult goods and adult space by
+
+\[
+\bar x=fx_C+(1-f)L,\qquad
+\bar s=fs_C+(1-f)\frac{\alpha L}{p^*},
+\qquad \bar h_o=\frac{\alpha B}{p^*}.
+\]
+
+The assumptions imply \(B>\bar x\) and \(\bar h_o>\bar s\). The planner assigns
+
+\[
+X=\frac{\bar x+B}{2},\quad S=\frac{\bar s+\bar h_o}{2},
+\qquad
+c_i^{y,F}=X+\chi n_i,\quad h_i^{y,F}=S+\kappa n_i,
+\quad c_j^{o,F}=X,\quad h_j^{o,F}=S.
+\]
+
+Consequently,
+
+\[
+\boxed{\bar h_y^F-\bar h_y^E
+=\frac{\bar h_o-\bar s}{2}>0.}
+\]
+
+Every deferred-income young family receives more consumption and housing. If it then chooses fertility at that bundle, it chooses more children. If the dated planner also chooses fertility, valuing only the current parents, its mean fertility satisfies
+\(\boxed{n^F>\bar n^E}\).
+
+### Why this is more than redistribution under equal weights
+
+The separate, friction-specific statement is
+
+\[
+\frac{u_h^y}{u_c^y}=\frac{\alpha x_C}{s_C}>p^*
+=\frac{\alpha c^o}{h^o}=\frac{u_h^o}{u_c^o}.
+\]
+
+A small amount of housing transferred from an old household to a deferred-income young family can compensate the old in goods and leave the family better off, preserving estates and continuation wealth. Finance must be relaxed for this allocation. This is a dated efficiency result relative to that authority, not constrained inefficiency for an authority retaining the mortgage limit.
+
+The stronger aggregate direction under equal weights also uses the later-resource restriction. It should not all be attributed to the mortgage. Nor does the compensated transfer by itself sign fertility: that family gives up consumption. Higher fertility follows for the full allocation above, where it receives both more goods and more housing.
+
+### How demanding are the conditions?
+
+There is no restriction on the ordering of \(\beta\) and \(q\), or of \(\phi\) and \(q\). The financing restrictions still require enough desired saving or estate provision to keep liquid young and old choices unconstrained. The old-estate condition is sufficient, not a claim that bequests necessarily cause the misallocation.
+
+The first resource condition is exactly
+
+\[
+\frac{Y}{W}\geq\frac{\alpha+\vartheta+\beta K}{q}.
+\]
+
+It can require substantial deferred income. The second is
+
+\[
+f\left(\frac{Y}{K}-W\right)
+\geq(1-f)\left(1-\frac{\beta}{q}\right)L.
+\]
+
+When \(\beta\geq q\), the first resource condition already implies the second. When \(\beta<q\), the deferred-income households must offset the other type's declining consumption. Writing \(M=J+\beta K\), the exact additional requirement is
+
+\[
+Y\left[\frac{fM}{K}+(1-f)(\beta-q)\right]
+\geq W\left[fM+(1-f)(1-\beta/q)\right].
+\]
+
+For \(\beta<q\), a finite sufficiently large \(Y\) can satisfy it precisely when
+\(f>(q-\beta)K/(J+qK)\). The replacement-price test must also hold; simply increasing \(Y\) at fixed remaining primitives does not guarantee the theorem.
+
+The price condition identifies a region where desired rental housing exceeds the cap, while ownership's equity requirement makes renting preferable. The new supporting-hyperplane proof checks all ownership choices. Unlike the first answer, it does not require every cap-sized home to be literally unaffordable. As \(\phi\) approaches one, the sufficient interval narrows. This is a conditional mechanism, not a claim of large misallocation at every 80% LTV.
+
+These inequalities are jointly possible analytically, without a numerical reference point: the financing and resource restrictions can be met with finite estate and deferred-income parameters; \(p_-<p_+\) then gives a nonempty replacement interval. At fixed demographic conversion \(\nu\), scaling both child costs \(\chi,\kappa\) by the same positive factor leaves the price bounds unchanged and scales both fertility bounds inversely. An open interval of such scales satisfies the replacement test. This establishes nonvacuity, not empirical plausibility.
+
+### What remains a decision, and what remains unproved
+
+The essential choice is whether an illustration of illiquid later wealth is the right first model for the paper. All income already received is usable, but no working-age earnings arrive between housing choices. Mortgage interest must therefore be funded out of the initial resources. A wage-accumulation story needs additional timing and choices.
+
+The analytical result covers two liquidity types with equal lifetime resources, not an arbitrary income–wealth distribution. Household choices and the tenure cutoffs are explicit; the equilibrium rent is characterized by one unique scalar root. The response does not supply a short closed-form expression for that equilibrium rent.
+
+The result also uses equal housing tastes across ages, old secured borrowing, no owner size bound, a common stock able to change tenure, exogenous entrant liquidity types, and estates that do not fund entrants. Property taxes are positive but finance public services rather than household rebates. These remain unadopted changes to the earlier note. Separate physical tenure stocks or an owner cap would need their own feasibility check.
+
+This theorem does not establish that every old household occupies a larger home than every young household. It establishes that the planner gives the young more housing, and each deferred-income family more housing individually. It also does not establish transfers-only constrained inefficiency, a property-tax implementation, or the policy transition for this repaired mortgage. The earlier transition proof belongs to the first mortgage specification; it must not be carried over without checking the dated payment and wealth equations.
+
+### Lead verification of welfare and fertility
+
+For fixed individual continuations, financial settlement is possible with
+\(T_i=\Delta c_i+p\Delta h_i\) and
+\(\Delta a_i=-qP\Delta h_i^{\rm owned}\), with the opposite changes to intermediary positions. Aggregate current consumption and housing are unchanged, so transfers sum to zero. At the preserved targets \(z_C=Y\), \(z_L>0\), and \(e>0\), allowing mortgage balances up to the full house value is sufficient. For example, choose \(\ell=\max\{Ph-(z-Y),0\}\) and \(b=\max\{z-Y-Ph,0\}\). Both ages obey the same interest and sale accounting.
+
+For joint fertility, let \(\mathcal C=\bar x+B+\chi\bar n\) and
+\(\mathcal H=\bar s+\bar h_o+\kappa\bar n\). At a candidate common fertility \(n\),
+\[
+X(n)=\frac{\mathcal C-\chi n}{2},\qquad
+S(n)=\frac{\mathcal H-\kappa n}{2}.
+\]
+Strict concavity makes equal fertility optimal across otherwise identical parents. The derivative of the reduced planner objective is
+\[
+\frac{\vartheta}{n}-\frac{\chi}{X(n)}
+-\frac{\alpha\kappa}{S(n)},
+\]
+which is strictly decreasing. The function
+\((\chi/x+\alpha\kappa/s)^{-1}\) is concave on positive adult goods and space. Applying Jensen to private fertility choices, and then using
+\(X(\bar n)>\bar x\), \(S(\bar n)>\bar s\), makes this derivative positive at competitive mean fertility. Its unique zero is therefore larger. This proves the joint parental result without a negligible child-goods cost assumption.
+
+Capture verification: all 120 displayed/inline math objects retained. Browser and local whitespace-normalized text match exactly: 15,826 characters, FNV-1a 534341554.
+
+<details>
+<summary>Independent verification of the repaired mortgage, all tenure choices, and the final coupon at sale</summary>
+
+Lead clarification: the constructive payment schedules below use nonnegative deterministic interest over each interval, so \(D_j\geq q\). Constant interest over the long age is a sufficient schedule. For the closing-coupon variant, “100% balance” includes both principal and the final accrued interest; allowing that total balance is sufficient for the dated planner's financial settlement.
+
+# Independent review: interest-serviced mortgage follow-up
+
+Reviewed the new `oracle_essential_theory_finance_followup_response.md` as an **unadopted stationary proposal**. Scope: mortgage cash flows at both ages, exact feasibility, the primitive price cutoffs, and every tenure deviation. No model run, transition proof, literature review, planner/fertility adjudication, or maintained-source edit.
+
+**Verdict: the stationary finance and tenure proposition passes in the stated model.** I find no algebraic failure in (1)–(14), (F), or the cutoff polynomial. The interpretation must remain an interest-serviced, boundary-income model: its cash requirement covers the whole age's debt service, not only the origination deposit. Equilibrium uniqueness needs the usual real-allocation qualification, and additionally does not identify gross loan/saving positions.
+
+| Object | Verdict | Necessary qualification |
+|---|---|---|
+| PV interest and within-age solvency | Pass, constructively | Coupons and liquid saving must use the same deterministic discount schedule. All specified coupons are serviced before liquidation; income at the next boundary is unavailable for those coupons. |
+| Projection \(a\ge-q\phi Ph\) | Exact | This is a projection of origination credit **plus prefunded future interest**, not an origination LTV redefinition. |
+| Both ages and owner FOC | Pass | The old also may originate secured credit and must service interest. Purchase and resale prices here are the same stationary \(P\). |
+| (F): old and liquid-young feasibility | Pass; sufficient | The second inequality uses a strict upper bound on the young owner's housing expenditure and need not be necessary. |
+| \(n_C(p)\), \(\mathcal M(p)\), cutoff quadratic | Pass | Positive child-goods and child-space costs and all log-domain restrictions are maintained. |
+| (R), \(\sigma>0\), (P) | Pass for this scope | (R) is substantive endowment heterogeneity; (P) explicitly selects replacement fertility inside the verified regime. |
+| All type-C ownership deviations | Pass, globally | The concavity bound permits different consumption, housing, saving, and fertility. No owner-size minimum is used. |
+| Every type L owns \(h_L>r\) | Pass, strictly | An unrestricted optimum is financeable, and its housing exceeds the rental ceiling. |
+| Old tenure / uniqueness | Qualification required | If unrestricted old housing is at most \(r\), renting and owning can tie. Gross borrowing and saving generally also tie. The scalar price root and real allocations are unique **within this regime**, not all equilibrium objects or all regimes. |
+
+## Exact cash-flow construction
+
+Let coupon dates be \(j=1,\dots,m\), with discount factors \(D_0=1\), \(D_m=q\), and gross one-step returns \(R_j=D_{j-1}/D_j\). A fixed principal \(\ell\) pays coupon \(I_j=(R_j-1)\ell\), with the final specified coupon paid before the house's sale and principal settlement. Therefore
+
+\[
+\sum_{j=1}^m D_j I_j=(1-q)\ell.
+\]
+
+To leave liquid wealth \(b\ge0\) immediately before sale, reserve initially
+
+\[
+S_0=(1-q)\ell+qb.
+\]
+
+After each coupon the saving balance is exactly
+
+\[
+S_j=R_jS_{j-1}-I_j
+ =\left(1-\frac q{D_j}\right)\ell+\frac q{D_j}b\ge0.
+\]
+
+Thus the terminal condition really does imply an implementable, nonnegative saving path at every payment date; there is no unfinanced interest hidden between the two utility ages. At origination,
+
+\[
+w=c+\tau Ph+(Ph-\ell)+S_0.
+\]
+
+For any proposed \(a\ge-q\phi Ph\), the constructive choice
+
+\[
+\ell=\max\{0,-a/q\},\qquad b=\max\{0,a/q\}
+\]
+
+satisfies \(0\le\ell\le\phi Ph\), \(b\ge0\), and \(a=q(b-\ell)\). Conversely these inequalities immediately imply the projected bound. Exactly the same proof applies to an old owner, replacing continuation wealth by the net estate and setting later income to zero.
+
+At a binding borrowing constraint, \(\ell=\phi Ph\), \(b=0\), and the cash needed besides consumption is \((1+\tau-q\phi)Ph\). For example, \(q=.5,\phi=.8\) gives a 20% origination deposit **and** a 40%-of-price PV reserve for interest: 60% of price must be supplied from current resources before tax. The net equity at sale remains 20%. Calling this only a 20% down-payment model would obscure the mechanism.
+
+This schedule is coherent as specified. It explicitly holds the chosen house through the utility age and allows sale/resizing and fresh secured borrowing at the boundary for either age. It does not impose an extra no-upgrade rule between the two modeled ages or silently prohibit old credit. It does, however, exclude intervening wage receipts, consumption/housing revisions, and the use of sale proceeds to pay a coupon that the model orders before sale. Letting an interest payment fall into the liquidation settlement would require rechecking the exact cash bound; the displayed result should not be attributed to every possible interest-only payment calendar.
+
+## FOC and unrestricted feasibility
+
+With budget multiplier \(\lambda\) and multiplier \(\mu\) on \(a+q\phi Ph\ge0\),
+
+\[
+\lambda=\beta V'(z)/q+\mu,
+\qquad
+u_h=(1+\tau)P\lambda-P\beta V'(z)-q\phi P\mu.
+\]
+
+Consequently
+
+\[
+u_h/u_c=p+q(1-\phi)P\mu/\lambda.
+\]
+
+For old wealth \(z\), the unrestricted allocation satisfies \(qe=\omega_Bz/K\), \(ph=\alpha z/K\). Its ownership requirement \(qe\ge\eta Ph\) is precisely \(\omega_Bd\ge\alpha\eta\). Thus its global value is indeed \(K\log z\) plus a price constant, including when rental tenure can tie.
+
+For young L, \(qz_L=\beta KL\), and
+
+\[
+ph_L=\left(\alpha+\vartheta\frac{\kappa p}{\chi+\kappa p}\right)L
+ <(\alpha+\vartheta)L.
+\]
+
+The second part of (F) therefore makes this complete unconstrained lifetime allocation financeable; it accounts for interest funding through the exact projection above.
+
+## Primitive roots and global comparisons
+
+Write \(A=W-pr\), \(x=A-\chi n_C\), \(s=r-\kappa n_C\), and
+
+\[
+D=\frac{\vartheta}{n_C^2}+\frac{\chi^2}{x^2}+\frac{\alpha\kappa^2}{s^2}>0.
+\]
+
+The unique interior fertility choice obeys
+
+\[
+n_C'=-\frac{\chi r}{x^2D}<0,\qquad
+x'=-r\left(1-\frac{\chi^2}{x^2D}\right)<0,\qquad s'>0.
+\]
+
+Hence \(\mathcal M'=\alpha(x's-xs')/s^2<0\). Also \(\mathcal M(0)>0\) and \(\mathcal M(p)\to0\) as \(p\uparrow W/r\). Every equation \(\mathcal M(p)=tp\), \(t>0\), has one root in that interval. Substitution of \(x=tp s/\alpha\) and \(n_C=\vartheta x/(\chi+\kappa tp)\) gives exactly the response's polynomial:
+
+\[
+\kappa tr(t+\alpha+\vartheta)p^2+
+\left[\chi r\{\alpha+t(1+\vartheta)\}-\kappa t(\alpha+\vartheta)W\right]p
+-\alpha\chi W=0.
+\]
+
+Its leading coefficient is positive and constant negative, so it has exactly one positive root. Since \(k>1\), \(p_-<p_+\). From \(L\ge W\),
+
+\[
+qY\ge(\alpha+\vartheta+\beta K)W>\beta KW,
+\]
+
+which verifies \(0<\sigma<1\). Both \(n_C\) and \(n_L\) decrease strictly with rent, so (P) gives one replacement root and a finite positive housing-clearing cohort mass.
+
+For C, rental saving has derivative \(-\zeta<0\), the housing ceiling has multiplier \(\xi>0\), and the fertility derivative is zero. Concavity verifies the global rental optimum. For **any** feasible owner allocation, the common consolidated budget gives exactly
+
+\[
+U_O-U_C\le\xi(h-r)-q\zeta(z-Y).
+\]
+
+Since \(q(z-Y)\ge\eta Ph\), \(p>p_-\), and \(\zeta\ge\sigma/x\), the right side is at most \(-\xi r<0\). No fixed-fertility restriction is smuggled into this comparison.
+
+For L, the C first-order condition together with \(\mathcal M(p)>p\) yields
+
+\[
+n_C<\frac{\vartheta x_C}{\chi+\kappa p}<n_L,
+\qquad \frac{\alpha L}{p}>s_C.
+\]
+
+Therefore \(h_L=\alpha L/p+\kappa n_L>r\). Strict concavity of the unrestricted lifetime problem makes its financeable ownership allocation strictly better than every rental alternative.
+
+Finally, a fixed allocation determines only \(a=q(b-\ell)\). Any
+
+\[
+\ell\in[\max\{0,-a/q\},\phi Ph],\qquad b=a/q+\ell,
+\]
+
+implements it. Unless that interval degenerates, gross mortgages and saving are indeterminate because their rates coincide. This is an additional reason to qualify uniqueness as the regime's price, population, and real allocation.
+
+## Narrow settlement corollary: final coupon paid at closing
+
+**Verified as a limited, distinct corollary.** Permit only the last scheduled coupon, \(I_m=(R_m-1)\ell\), to be paid from the sale proceeds. Earlier coupons must still be funded from nonnegative liquid balances. Here \(b\) denotes the liquid balance **net of the final closing coupon**; a negative \(b\) is a closing-account entry, not unsecured borrowing before sale. Actual liquid cash entering the closing is \(b+I_m\ge0\).
+
+The exact feasible projection becomes
+
+\[
+b\ge-(R_m-1)\ell,
+\qquad
+a=q(b-\ell)\ge-D_{m-1}\ell\ge-D_{m-1}\phi Ph.
+\]
+
+Sufficiency is constructive: choose
+
+\[
+\ell=\max\{0,-a/D_{m-1}\},\qquad b=a/q+\ell.
+\]
+
+If \(a<0\), this gives \(b=-(R_m-1)\ell\), with saving after each earlier coupon exactly
+
+\[
+S_j=\left(1-\frac{D_{m-1}}{D_j}\right)\ell\ge0,
+\qquad j=0,\ldots,m-1.
+\]
+
+If \(a\ge0\), choose no mortgage and nonnegative saving. Hence no earlier payment is secretly financed from later sale proceeds. Sale then pays principal and the final coupon together. The equivalent terminal restriction and owner wedge are
+
+\[
+z-Y\ge(1-R_m\phi)Ph,
+\qquad
+\frac{u_h}{u_c}=p+\eta_{\mathrm{close}}P\frac\mu\lambda,
+\qquad
+\eta_{\mathrm{close}}=q(1-R_m\phi).
+\]
+
+The original stationary proof carries through with this replacement in (F), \(k\), and the tenure bounds **provided \(R_m\phi<1\)**, with the same convention at both ages. Minimum current owner funds besides consumption become \((1+\tau-D_{m-1}\phi)Ph=ph+\eta_{\mathrm{close}}Ph\).
+
+This is a restriction on the final coupon interval, not the full utility age. It permits \(\phi\ge q\) when that final interval is sufficiently short. It is not universal over coupon calendars: with a single coupon only at sale, \(D_{m-1}=1\), \(R_m=1/q\), and the restriction reverts to \(\phi<q\). If \(R_m\phi\ge1\), the renter-to-owner replication obstruction returns. References to a “100% balance” in this corollary must count the final coupon together with principal: total closing debt reaches the house value at \(\phi=1/R_m\), not at \(\phi=1\).
+
+</details>
+
+<details>
+<summary>Earlier answer: checked results and the financing problem that prompted the follow-up</summary>
 
 The first response contains a coherent conditional allocation and fertility argument. It is not yet a satisfactory replacement for the paper's theory: its mortgage restriction excludes the earlier long-period financing benchmark. One focused follow-up is running on that issue. No new model specification has been adopted.
 
@@ -669,5 +1052,7 @@ The cumulative-reproduction identity is exact when baseline and policy share \(N
 \]
 
 Local geometric convergence makes this sum well defined. Its positivity follows from the already-verified stationary rental-access sign. This statement includes the common inherited initial old through the announcement boundary, but supplies no separate impact or all-date fertility sign.
+
+</details>
 
 </details>
