@@ -122,3 +122,8 @@ Monitoring detail: the shared progress dictionary retains completed_dates=100 an
 ## 04:29 EDT — first price step improves market clearing
 
 Trial2passedallmappinggates in3256seconds and reducedmaxmarketgap .1819903→.0698461 (61.62%reduction), stillabove2e-4. Lead recomputed100datedresiduals, verifiedartifactpins/all12weightedlossrows and unchangedtarget/weight/parameter/sourcecontracts for bothcompletedtrials. Bothterminaldistancesremainnot_converged. Trial3isrunning; preserveallgatesandsix-pathbudget. No newparameterestimatesorequilibrium/policyclaim. Evidence:horizon100_root_progress_review.json.
+
+
+## 05:22 EDT — third trial and reusable provisional readout
+
+Trial3passes mapping gates, reducesmaxmarketgap to.0191497, and leaves onlyunitrentoutside terminal-distance tolerances(.0125439vs.01). HouseholddistributionL1.0175702nowpasses.02. Noneofthiscertifieshistoricalhorizonstabilityorfinalmarketclearing. Trial4running. review_horizon100_root_progress.py validatesallcollectedtrials andbuilds HORIZON100_PROGRESS.md withcompletefit/parameter/restrictionandtailtables, selectingbysmallestmarketresidual. Actual3trialverificationpassed; labelscheckedagainstauthoritativestatistic definitions,includingp90/p50wealth/incomeratio. This is a morningreadoutbuildingblock,notnewcalibration.

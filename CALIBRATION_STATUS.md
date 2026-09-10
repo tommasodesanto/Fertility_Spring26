@@ -2,6 +2,21 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**September 10, 09:22 UTC / 05:22 EDT.** Three completed root trials are
+verified; maximum market residuals are 18.199%, 6.985%, and 1.915%. Trial 4
+is running. The 0.02% market gate and final replay remain unmet. At trial 3,
+all recorded terminal-distance checks pass except the unit-rent gap (1.254%
+versus its 1% tolerance); this is not historical horizon certification.
+No parameter, target, weight, source or gate changed.
+
+The complete provisional readout, with all 12 target rows and all 15 free,
+normalized, derived or fixed parameter rows, is
+`output/model/e5f_matched_pf_20260909a/HORIZON100_PROGRESS.md`.
+Its single local rebuild driver verifies available artifact pins, every dated
+market residual, all moment gaps/loss contributions, and target/weight/parameter
+identity. Selection is by market residual, not by calibration loss. Neither
+calibration nor new policy results are claimed.
+
 **September 10, 08:29 UTC / 04:29 EDT.** Two complete 100-date root trials
 are verified. The first reproduces the supplied-price anchor numerically; the
 first price update reduces the maximum market residual from 18.199% to 6.985%,

@@ -458,3 +458,6 @@ September10,06:34UTC: recovered20andcollectorcompleted. Full100-columnmatrix ind
 
 
 04:29 EDT: two complete root trials verified in horizon100_root_progress_review.json. Maximum market gap falls18.199%→6.985%; both mapping gates pass, but market tolerance0.02% and terminal checks still fail. Trial3running. Full12-rowfits andallparameters collected in meeting_receipts/historical_root_h100_01/sequential/evaluation_001 and evaluation_002. No calibration or final reproduction yet.
+
+
+05:22 EDT: three completed trials verified; market gaps18.199%,6.985%,1.915%,trial4running. HORIZON100_PROGRESS.md now provides a complete provisional advisor readout with all12targets/all15parameterandrestrictionrows/terminaldistances. Regenerate by running review_horizon100_root_progress.py in this folder (no model solve). It selects by market residual and labels all prices/fit as provisional. Lead checked every table against source CSV and verified that the old-age dispersion is p90/p50, not a difference. All terminal checks at trial3pass except unitrent1.254%vs1%; historical horizon stability and final replay remain separate.
