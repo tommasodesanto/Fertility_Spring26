@@ -157,11 +157,11 @@
     },
     "smoke_price_job": 17303124,
     "remaining_price_job": 17303125,
-    "collector_job": 17303126,
-    "last_queue_state": "2026-09-10 05:42 UTC: original case20 timed out;35total probe summaries complete,64running; single recovery17309087 submitted; original collector must be superseded with explicit successful-recovery selection before root",
+    "collector_job": 17309766,
+    "last_queue_state": "2026-09-10 06:00 UTC: original panel finished99valid/1timeout;recovery17309087running;collector17309766afterokrecovery;replacementroot17309773afterokcollector;oldneverstartedjobs17303126/17304265cancelled",
     "caffeinate_pid": 17077,
     "morning_delivery": "2026-09-10 08:30 America/New_York",
-    "root_job": 17304265,
+    "root_job": 17309773,
     "root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_root_h100_20260910a",
     "root_source_commit": "96a41873",
     "root_regression_tests": 58,
@@ -176,6 +176,11 @@
     "recovery_case20_output": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_horizon_20260910a/output/horizon100_price_recovery_01/sequential/20",
     "original_failed_cases": [
       20
-    ]
+    ],
+    "obsolete_zero_runtime_jobs": [
+      17303126,
+      17304265
+    ],
+    "original_validated_cases": 99
   }
 }

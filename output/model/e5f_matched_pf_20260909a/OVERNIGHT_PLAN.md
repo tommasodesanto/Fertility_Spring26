@@ -83,3 +83,14 @@ Case20failed after60m16 with exit124, at forward date90/100, error wall-time bud
 Recovery output: E/output/horizon100_price_recovery_01/sequential/20. Do not use the old collector blindly: its original case20directory has a failure. After the full original panel ends, create an explicit reviewed collection list replacing only any individually validated recovery directories, retain all100coordinates and source contracts, queue that collector, then repoint the existing pending root17304265 to its success. Cancel the obsolete pending collector only after the root dependency is updated. No root duplication or weakened validation.
 
 Recovery17309087submitted; remote launch-script SHA256cc11688a40705f784fdb8e0f02c93280fa0765d13d0ddb796343cd8aa130bbed matches local. Failure JSON/contract/last completed row collected under meeting_receipts/horizon100_prices_01/sequential/20. Root and original collector remain pending; dependency rerouting is outstanding.
+
+
+## 02:00 EDT — original panel verified; collection dependency repair
+
+Alloriginalprobesended:99successfulandonlycase20timedout. Unchangedremoteandlocalcollector.load_case validates all99sharedscientificcontracts and numericalgates;297remoteprovenancehashes and396localavailableartifactpins match. Full CSV/JSONreceipts collected; binariesremainremote. Updated horizon100_panel_partial_validation.json records everycase.
+
+Explicit100-coordinatecollector17309766queuedafterokrecovery17309087. Recipe substitutesonly20andpreservesallvalidator/source/outputpins; scriptSHA318c8bf448c8ea9378b74ec8d1a81307f5a1c60da41297df64beddbcbb54d662. It will reject anymissingorinvalidrecovery; noconditioning/rootclaimuntilcomplete.
+
+Two attempts to update pendingroot17304265dependency returned unspecifiederror and independent scontrol/squeue both confirmed the olddependencyremained. Do not clear its dependency and risk an ungated start. Instead cancel the never-started root and obsoletecollector17303126, then queue one replacementroot with the unchanged exactlauncher and afterok17309766. Oldroot/collectorusedzeroruntime;this changes schedulingonly,addsnomodelsolveandcreatesnoduplicate. Rootlauncherlocal/remoteSHA829f629a98ee51e8592b1da71d7dcb51ee2b7409ffdd69388e2d68cb38d4bd41. All21000second/sixevaluation/sourceF96a41873/gaterequirementsunchanged.
+
+Oldcollector17303126androot17304265confirmedCANCELLEDwith00:00:00elapsed. Replacementroot17309773submittedafterokcollector17309766usingunchangedlauncher/source/budget. Recovery17309087stillrunning. Newchain:17309087→17309766→17309773.

@@ -1,6 +1,23 @@
 # Calibration Status
 
-Updated: `2026-09-10` (price panel partly complete; one timeout recovery; full root waiting)
+Updated: `2026-09-10` (99 original price probes verified; one recovery; root dependency repaired)
+
+**September 10, 06:00 UTC / 02:00 EDT.** Original100-price panel finished:
+99successfulprobes independently validated against the anchor, with297remote
+provenancehashes and396availablelocalartifactpins checked. Onlycase20timedout.
+Recovery17309087is running under the unchanged contract oncs693; no new
+numerical failure or second recovery. Full lightweight CSV/JSONevidence is
+collected locally; `horizon100_panel_partial_validation.json` records verification.
+
+Collector17309766now waits for recovery success, substitutes only its explicit
+case20directory and retains all100coordinates and unchanged source/gate checks.
+Root17309773waits for that collector. Scheduler refused dependency edits twice;
+oldcollector17303126androot17304265were confirmed cancelled with zero runtime
+before the identical root launcher was resubmitted once. No duplicate solve,
+source change, gate relaxation, calibration or policy result. Root remains
+bounded at6paths/21000seconds in snapshotF96a41873. Horizon certification and
+re-estimation remain pending. Exact selection, launch hashes and verification:
+`output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`.
 
 **September 10, 05:42 UTC / 01:42 EDT.** Thirty-five of100price probes
 have completion receipts; case20timed out after60m16 at forward date90/100,

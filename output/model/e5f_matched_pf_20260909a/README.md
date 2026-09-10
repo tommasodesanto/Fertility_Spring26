@@ -446,3 +446,6 @@ September10,05:42UTC: original case20hit its60-minute watchdog at date90/100. Si
 
 
 Prepared, not submitted: submit_horizon100_collector_recovery.sh and horizon100_collection_selection.json give all100ordered distinct probe paths, replacing only failed20with recovery17309087. Shell syntax and complete ordered-directory selection checked; unchanged collector will enforce all mapping gates and scientific fingerprints. Wait for original panel completion and check for additional failures before submitting; recovery success is a required dependency. At05:50UTC44original probes completed,55stillrunning at79–99forward dates,only20failed; recovery healthy at8minutes.
+
+
+September10,06:00UTC:99originalprobes independently validated;only20timedout. Recovery17309087continues. Collector17309766uses the explicit selection and waitsafterokrecovery. Replacementroot17309773waitsafterokcollector. Dependencyupdatesfailedtwice;oldcollector17303126androot17304265confirmedcancelledatzeroruntimebeforeunchangedrootresubmission. Allscientific/source/gate/evaluationbudgetsunmodified. Partialvalidationpacket contains297remoteand396localartifactpinchecks. Alloriginallightreceiptscollected;largecheckpointsremainremote.
