@@ -2,21 +2,57 @@
 
 Active documents:
 
-- `september_14_presentation.tex` / `september_14_presentation.pdf`: main
-  September 14 seminar deck. The September 9 theory update has seven main
-  slides (PDF pages 6–12): environment, household choices, equilibrium,
-  the full dated planner, housing allocation, fertility, and demographic
-  transition. Nine supporting theory slides occupy pages 44–52. The planner
-  chooses current consumption and housing; the housing result is stated with
-  its allocation condition, and a sufficient income benchmark is in the
-  appendix. The transition figure displays the proved local equilibrium
-  response to a fertility decline followed by a rebated tax reform, with the
-  required conditions in the appendix. Old-age notation uses lowercase `o`.
-  The full reader copy is `../output/pdf/september_14_presentation.pdf` and
-  matches the adjacent PDF. This main deck is the presentation reference;
-  earlier standalone theory extracts are superseded. Quantitative sections
-  were not changed or refreshed in this pass. Verification is recorded in
-  `../output/model/simplified_olg_amendments/README.md`.
+- `september_14_presentation.tex`: the single working September 14 seminar
+  presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
+  `september_14_presentation.pdf` is an identical build copy. The September 10
+  refocus follows the May deck's appearance and model/empirical/policy structure.
+  It presents the quantitative household environment, sequential choices,
+  population accounting, equilibrium, and a policy comparison introduced along
+  the same inherited transition. The three original August
+  `housing_fertility_stage_{initial,impact,adjustment}.pdf` figures are reused
+  unchanged around the equilibrium exposition. They are explicitly schematic:
+  their fixed-composition housing curves and replacement-one household units
+  are not the quantitative demographic law or a computed transition. Exact
+  attribution to the Raquel meeting remains unverified. The separate
+  `demographic_adjustment.pdf` is redundant, and `figures/example_misallocation.pdf`
+  is excluded because it carries the parked allocation argument.
+
+  The complete pre-refocus source, including all simplified-model main and
+  appendix frames and the earlier numerical readout, is preserved verbatim in
+  `archive/september_14_before_slide_refocus_20260910.tex` (original source
+  SHA256 `90e94b4bd20dbf780a4eacbde49eb2099313a29926e409e8cf068a77faf9e1ea`).
+  It is historical source, not a second working deck. All separate theory
+  notes and the September 10 planner work remain untouched and parked.
+
+  **Scope of the presentation.** The AHS 2023 tenure-by-bedroom figure is
+  reused from May. The PSID rooms profile comes from the corrected
+  household-aligned Sun--Abraham event table, via the saved September 5
+  measurement-review figure; the pre-birth pattern and pointwise intervals
+  remain visible. Only its internal figure title is trimmed in LaTeX. No
+  regression, calibration, model solve, or new mechanism figure was generated.
+  The old calibration tables and computed transition claims are preserved in
+  the archive but omitted from the active deck because they do not establish
+  a calibrated history under the latest intended specification.
+
+  **Unresolved choices (kept outside audience-facing slides).** Sequential
+  choice is retained and explicitly named for exposition; the comparison with
+  simultaneous fertility nests does not itself promote either arm. Initial
+  fertility 2.1 is author-selected. Initial-economy-first versus joint
+  transition estimation, the final measurement/calendar mappings, and the
+  initial/dynamic supply, demographic, and fiscal closures remain governed
+  by `../CALIBRATION_STATUS.md`; this edit does not adopt a new target contract.
+  The rebated-tax frame defines a conditional policy experiment with one common
+  inherited state and supply schedule, not a computed or authorized production
+  policy result. Initial-equilibrium conditioning must still be reconciled
+  with the historical demographic inputs before presenting a numerical fit.
+
+  Build twice from `latex/`, writing auxiliary files outside the active folder:
+  `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
+  Copy the verified PDF to the reader path and the adjacent build copy.
+  The refocused deck has 29 numbered main frames and six appendix frames
+  (42 PDF pages including overlays and dividers). Two final compilation passes
+  have no warnings or overfull boxes; all frames were visually inspected and
+  all figure paths and the remaining appendix link resolve.
 
 - `JMP_DS_draft/`: author-controlled source for the new job-market-paper draft.
   Its main file is `JMP_DS_draft/JMP_DS_draft.tex`, with separate section and
