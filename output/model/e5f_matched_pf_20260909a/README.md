@@ -440,3 +440,6 @@ Delegated draft and independent lead technical/visual review are recorded in sol
 
 
 September10,04:59UTC: both100-date smoke probes passed and were independently collected/validated (horizon100_smoke_verification.json). All98remaining price probes now RUNNING after the same array concurrency limit increased32to98; collector17303126 and root17304265 remain dependent. Read the00:59EDT scheduling update in OVERNIGHT_PLAN.md for measured runtime, resource budget and limits. No new equilibrium or calibration.
+
+
+September10,05:42UTC: original case20hit its60-minute watchdog at date90/100. Single reviewed recovery17309087uses identical source/contract/gates oncs693and a separate output, preserving the failure. Existing collector must be superseded by explicit validated-recovery selection before existing root17304265can proceed; see OVERNIGHT_PLAN.md.35completion receipts and64running original cases at this check.

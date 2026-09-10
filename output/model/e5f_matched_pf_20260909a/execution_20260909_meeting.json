@@ -158,7 +158,7 @@
     "smoke_price_job": 17303124,
     "remaining_price_job": 17303125,
     "collector_job": 17303126,
-    "last_queue_state": "2026-09-10 04:59 UTC: all98remaining probes RUNNING; collector and root dependent",
+    "last_queue_state": "2026-09-10 05:42 UTC: original case20 timed out;35total probe summaries complete,64running; single recovery17309087 submitted; original collector must be superseded with explicit successful-recovery selection before root",
     "caffeinate_pid": 17077,
     "morning_delivery": "2026-09-10 08:30 America/New_York",
     "root_job": 17304265,
@@ -171,6 +171,11 @@
     "smoke_verified": true,
     "smoke_verification": "horizon100_smoke_verification.json",
     "price_array_concurrency": 98,
-    "measured_price_probe_seconds": 3374.394176724367
+    "measured_price_probe_seconds": 3374.394176724367,
+    "recovery_case20_job": 17309087,
+    "recovery_case20_output": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_horizon_20260910a/output/horizon100_price_recovery_01/sequential/20",
+    "original_failed_cases": [
+      20
+    ]
   }
 }

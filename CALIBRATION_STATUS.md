@@ -1,6 +1,21 @@
 # Calibration Status
 
-Updated: `2026-09-10` (100-date smoke passed; 98 price probes running; full root queued)
+Updated: `2026-09-10` (price panel partly complete; one timeout recovery; full root waiting)
+
+**September 10, 05:42 UTC / 01:42 EDT.** Thirty-five of100price probes
+have completion receipts; case20timed out after60m16 at forward date90/100,
+with continued progress and no reported numerical-gate failure. Sixty-four
+others remain running with fresh heartbeats. One reviewed recovery17309087
+uses the same source, exact contract, price perturbation and60-minute watchdog
+oncs693, where another probe completed in48m19. The original failed output is
+preserved. This tests allocation-dependent runtime; it does not establish the
+failure's cause. No blind retry or source/gate change.
+
+Original collector17303126 cannot accept failed case20. After the original panel
+finishes, an explicitly reviewed collector must retain all100coordinates and use
+only validated recovery receipts, then the existing root17304265can be repointed
+to its success. Neither equilibrium nor calibration has advanced yet. Recovery
+launch/budget and exact paths: `output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`.
 
 **September 10, 04:59 UTC / 00:59 EDT.** Both 100-date first/last price
 probes17303124 completed in56m26/56m28. Lead validated all mapping gates,
