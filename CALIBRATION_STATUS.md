@@ -1,6 +1,64 @@
 # Calibration Status
 
-Updated: `2026-09-10` (empirical parameter map added; numerical status below is dated)
+Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
+
+**September 10, afternoon design review — recommendation, not adoption.**
+The current decision report and full evidence index are
+`output/model/e5f_matched_pf_20260909a/design_research/README.md`; the eight-page
+PDF is `output/pdf/calibration_design_decision_20260910.pdf`. The lead recommends
+calibrating an approximate pre-announcement economy first, assessing its fit and
+identification, then freezing common parameters and fitting one announced
+2007–2023 fertility-preference amplitude. The 2023 state is on that transition.
+This supersedes the earlier joint-fit proposal as the lead's preferred design,
+without changing any production target, weight, parameter, source or job.
+
+New empirical work establishes early-data feasibility. The strictly pre-2007
+proposal uses NCHS2003–2006, CPS2004/2006, ACS2005/2006 and PSID2003/2005;
+the 2007 survey waves remain window sensitivities because choices can already
+respond to a start-2007 announcement. New ACS candidates use the same42MET2013
+city codes but a different within-city footprint from the current admitted-PUMA
+contract, with min(rooms,9) applied before aggregation in all compared years.
+Initial ownership30–55 is0.648334, mean capped rooms5.561097, recent-parent
+ownership gap0.162896, family-room gap0.347067 and young ownership0.431158.
+New PSID initial wealth/earnings is6.145861(SE0.362855), old wealth/income
+p90/median3.515935(SE0.306911), and old median7.285793(SE0.522531).
+Both original PSID full-pool points and bootstrap SEs reproduce the authoritative
+builders; original ACS2023 points reproduce when the old geographic filter is
+restored. The ACS errors are metro-resampling errors, not official survey-design
+SEs. Source receipts, alternative windows and covariance/draw files are saved.
+
+The proposed period-oriented initial benchmark has13restrictions for10common
+structural parameters plus the initial preference level; count does not certify
+rank. Early completed fertility1.856608(capped5;1.878384uncapped) remains a visible
+diagnostic against period TFR2.0605, not an equality silently imposed on both.
+Joint estimation with the same stationary initial distribution does not recover
+pre-2007 cohort histories. The reviewed PSID Sun–Abraham response is unchanged;
+its application to the early economy requires an explicit stability assumption.
+Later outcomes would become validation only under the proposed new contract,
+with their replacement identifying rows explicitly documented, not today.
+
+Outstanding before activation: female exposure and maternal-age/parity mapping;
+the four-year birth calendar; completed-cohort and both ACS family-group observers;
+new CPS/timing uncertainty/weights; the old2.1-linked birth-to-household conversion,
+queue and entry gate; initial supply elasticity1.75 versus dated0.63 roles;
+geographic/population/fiscal closure; local identification; and horizon stability.
+The annual bridge assigns date-t births to t+1,...,t+4: a2020–2023rate target maps
+to the2019decision block under that convention, not the2023decision. The current
+historical female-rate observer has not yet implemented/certified that mapping.
+
+**Completed existing numerical continuation, verified during this review.**
+Job17319026 completed its three-path budget at inherited parameters. The
+100-date finite-horizon market residual is3.673153614722308e-5(0.003673%),
+below the unchanged2e-4(0.02%)gate; the root reports exact final reproduction.
+All four collected summary/fit/parameter files match remote SHA256 receipts;
+the lead recomputed every fit gap/contribution, the loss sum, market maximum
+and all11free-parameter entries. Objective94.47557608417729 belongs to this
+unchanged inherited12-row system, not the proposed early calibration. Complete
+fit and parameter tables are in the PDF appendix and
+`design_research/computation/final_replay/evaluation_003/`.
+The terminal unit-rent gap1.088827% still exceeds1%; horizon extension is
+unverified. No new calibrated history or matched policy result is certified.
+No further numerical round was launched in this literature/data investigation.
 
 **September 10 — author objective and concrete empirical proposal.**
 The author wants to condition on a fertility-preference decline and study policy

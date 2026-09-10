@@ -1,5 +1,8 @@
 # Matched perfect-foresight implementation
 
+
+Latest design review (10 September): [decision research](design_research/README.md), with an eight-page PDF, full proposed early target set and newly verified continuation receipts. This is a proposal; no new calibration was adopted.
+
 Concrete parameter-to-moment proposal: [parameter_target_audit/README.md](parameter_target_audit/README.md)
 covers every searched parameter, the initial preference normalization, numerical
 candidate targets, observation windows and actual local data availability.

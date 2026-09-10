@@ -1,0 +1,87 @@
+{
+  "status": "research arithmetic; no newtargets or identificationclaim",
+  "input_hashes": {
+    "output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json": "739392f0c75df883a9b50168e8e545da4e26b192b67ba38557b387d80c1486f1",
+    "output/model/e5f_matched_pf_20260909a/parameter_target_audit/nchs_period_tfr_sources.csv": "1e5ca933c557b3bd280d5d538d8e4ae7df5cf5410b23003c0df42a222b17e6c9",
+    "code/data/nchs_natality_timing/first_birth_counts_year_age.csv": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45"
+  },
+  "initial_period_tfr": 2.0605,
+  "early_capped_CEB": 1.8566081212581498,
+  "early_uncapped_CEB": 1.8783838839209661,
+  "raw_period_minus_capped_stock": 0.20389187874185044,
+  "capping_difference": 0.021775762662816334,
+  "period_minus_uncapped_stock": 0.1821161160790341,
+  "max_remaining_age40_integral_under_frozen_2003_06_schedule": 0.047875,
+  "remaining_rate_source": "NCHS2007finalTable4,p25; this is NOT a bound on actual future fertility under changing schedules",
+  "parity_identity_illustration": {
+    "P0": 0.19827875100684264,
+    "P1": 0.1712920141895355,
+    "P2plus": 0.6304292348036218,
+    "higher_parity_mean_if_completed_mean_is_2_0605": 2.996701106983009,
+    "observed_capped_higher_parity_mean": 2.6732835567081352,
+    "caveat": "illustration deliberately equates fullperiodTFRandcompletedmean to expose assumedSS mapping; actual age40-44 andtopcodingobservers differ"
+  },
+  "annual_first_birth_timing": [
+    {
+      "year": 1999,
+      "n_first_births": 1590111,
+      "mean_midpoint": 25.67137765854082,
+      "share30plus": 0.23149956198026428
+    },
+    {
+      "year": 2000,
+      "n_first_births": 1624343,
+      "mean_midpoint": 25.743917386906585,
+      "share30plus": 0.23898954838971817
+    },
+    {
+      "year": 2001,
+      "n_first_births": 1597144,
+      "mean_midpoint": 25.810742174781986,
+      "share30plus": 0.24627146957318813
+    },
+    {
+      "year": 2002,
+      "n_first_births": 1597213,
+      "mean_midpoint": 25.898992808097606,
+      "share30plus": 0.2507668044274621
+    },
+    {
+      "year": 2003,
+      "n_first_births": 1636534,
+      "mean_midpoint": 26.047395287846143,
+      "share30plus": 0.25780582621564846
+    },
+    {
+      "year": 2004,
+      "n_first_births": 1633723,
+      "mean_midpoint": 26.03269464897048,
+      "share30plus": 0.25415201965082207
+    },
+    {
+      "year": 2005,
+      "n_first_births": 1640920,
+      "mean_midpoint": 25.967932623162618,
+      "share30plus": 0.2470230114813641
+    },
+    {
+      "year": 2006,
+      "n_first_births": 1700092,
+      "mean_midpoint": 25.861605136663194,
+      "share30plus": 0.23856179547930348
+    },
+    {
+      "year": 2007,
+      "n_first_births": 1728694,
+      "mean_midpoint": 25.83978425331493,
+      "share30plus": 0.23592839449896857
+    },
+    {
+      "year": 2008,
+      "n_first_births": 1706879,
+      "mean_midpoint": 25.891543571629857,
+      "share30plus": 0.23801980105209566
+    }
+  ],
+  "current_late_CPS_minus_old_CPS_capped": 0.06181672909185032
+}

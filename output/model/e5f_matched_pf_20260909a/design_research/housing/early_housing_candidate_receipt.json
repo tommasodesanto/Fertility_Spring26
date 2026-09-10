@@ -1,0 +1,14 @@
+{
+  "point_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/early_housing_metro_components.csv",
+  "point_source_sha256": "3a28bdd40630bd69279fd728726fdee5dd47a3202fa01ce52968d2fa7da44ff7",
+  "source_script_sha256": "31c36b2c957100090d5030ac4801574d690b8664c545765528e0086e92d676e8",
+  "bootstrap": {
+    "B": 1000,
+    "seed": 20260910,
+    "clusters": 42,
+    "method": "Resample 42 MET2013 cities with replacement; preserve all household and group totals within each drawn metro; paired same draws across dates",
+    "official_ACS_design_SE": false
+  },
+  "new_calibration_contract_adopted": false,
+  "model_observation_rule_required": "For mean-room and family-room targets use min(occupied rooms,9) BEFORE aggregation. Ownership unchanged. Preserve current room response empirical target separately."
+}

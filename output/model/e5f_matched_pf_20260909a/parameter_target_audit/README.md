@@ -1,5 +1,7 @@
 # Parameter, empirical moment and availability map
 
+> **Later September 10 research:** this earlier joint-estimation proposal is retained as history. The lead now recommends an initial pre-announcement calibration followed by a fitted shock, after constructing early housing and wealth targets. See [the decision research](../design_research/README.md) for exact windows, remaining measurement obligations and the alternative designs. Neither proposal has changed production targets.
+
 September 10, 2026. Concrete proposal for author discussion, checked against the isolated matched-perfect-foresight source at `96a41873`. No production targets, weights, parameters or numerical jobs were changed.
 
 ## Recommended empirical design

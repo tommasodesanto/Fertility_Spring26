@@ -1,0 +1,157 @@
+{
+  "status": "data_pass_complete; receipt rebuilt from saved CSV after numpy-bool JSON serialization error; no second raw pass",
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+  "source_size": 9919999546,
+  "source_mtime_ns": 1751924817336253881,
+  "source_sha256_from_existing_canonical_receipt": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+  "source_rehashed_this_pass": false,
+  "years": [
+    {
+      "year": 2005,
+      "start_record": 0,
+      "end_record": 2878380,
+      "raw_records": 2878380,
+      "sample_codes": [
+        200501
+      ]
+    },
+    {
+      "year": 2006,
+      "start_record": 2878380,
+      "end_record": 5848121,
+      "raw_records": 2969741,
+      "sample_codes": [
+        200601
+      ]
+    },
+    {
+      "year": 2007,
+      "start_record": 5848121,
+      "end_record": 8842783,
+      "raw_records": 2994662,
+      "sample_codes": [
+        200701
+      ]
+    },
+    {
+      "year": 2012,
+      "start_record": 21047877,
+      "end_record": 24160907,
+      "raw_records": 3113030,
+      "sample_codes": [
+        201201
+      ]
+    },
+    {
+      "year": 2023,
+      "start_record": 55640967,
+      "end_record": 59046776,
+      "raw_records": 3405809,
+      "sample_codes": [
+        202301
+      ]
+    }
+  ],
+  "canonical_overlap_replay": [
+    {
+      "year": 2007,
+      "field": "n",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2007,
+      "field": "weight",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2007,
+      "field": "owner_weight",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2007,
+      "field": "rooms_sum",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2023,
+      "field": "n",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2023,
+      "field": "weight",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2023,
+      "field": "owner_weight",
+      "absolute_gap": 0.0,
+      "pass": true
+    },
+    {
+      "year": 2023,
+      "field": "rooms_sum",
+      "absolute_gap": 0.0,
+      "pass": true
+    }
+  ],
+  "raw_passes_completed": 1,
+  "active_metros": [
+    12060,
+    12420,
+    12580,
+    14460,
+    15380,
+    16740,
+    16980,
+    17140,
+    18140,
+    19100,
+    19740,
+    19820,
+    26420,
+    26900,
+    27260,
+    28140,
+    29820,
+    31080,
+    33100,
+    33340,
+    33460,
+    34980,
+    35380,
+    35620,
+    36420,
+    36740,
+    37980,
+    38060,
+    38300,
+    38900,
+    39300,
+    39580,
+    40900,
+    41180,
+    41620,
+    41700,
+    41740,
+    41860,
+    42660,
+    45300,
+    47260,
+    47900
+  ],
+  "source_script_sha256": "4dd1647e96b72c313801989fdd823303bd2dd8b144c568c0076b735402f3f84f",
+  "components_sha256": "3a28bdd40630bd69279fd728726fdee5dd47a3202fa01ce52968d2fa7da44ff7",
+  "primary_sources": [
+    "https://usa.ipums.org/usa-action/variables/MET2013",
+    "https://usa.ipums.org/usa-action/variables/ROOMS"
+  ],
+  "diagnostic_not_adopted_target_contract": true
+}
