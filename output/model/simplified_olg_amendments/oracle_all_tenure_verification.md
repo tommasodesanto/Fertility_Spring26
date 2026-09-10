@@ -5,7 +5,7 @@ This is supporting work, not an additional reader or adopted manuscript. The cur
 
 ---
 
-## Household choices, income interval, and private-fertility counterexample
+## Household choices, income interval, private-fertility counterexample, and final reading review
 
 # All-tenure household characterization and a simpler housing-wedge theorem
 
@@ -13,8 +13,7 @@ Bounded original derivation for the September 10 theory discussion. This is a
 research scratch deliverable, not adopted paper prose. The stipulated two-period
 budgets, positive common retirement income, and all ownership deviations are
 retained. No replacement-fertility condition or numerical reference point is
-used in the main household theorem. The separate stationary witness below
-explicitly includes demographic replacement.
+used.
 
 ## Main result
 
@@ -946,10 +945,55 @@ stationary wealth/housing/replacement accounting, and a separate proof of the
 primitive individual cutoff. No numerical optimization, model simulation,
 reference calibration, manuscript change, or policy/transition extension.
 
+## 10. Final interpretation review of the current decision brief and six slides
+
+September 10, bounded read-only review. Reviewed the current opening decision
+brief, proposed six-slide exposition, and the adjacent voluntary-fertility
+explanation in `oracle_essential_theory_assessment.md`. This review does not
+reopen the checked mathematics or earlier historical wording.
+
+**Verdict: the morning recommendation is honest.** It makes the full dated
+planner's allocation central; displays the substantive income and financing
+restrictions; separates aggregate housing from individual housing; and limits
+the consumption-loss claim to the fixed-fertility comparison. The final joint
+bundles support voluntary parental fertility, so that presentation does not
+change the welfare objective or assign the planner an unannounced preference
+over unborn people. The policy and transition limitations are explicit. The
+private-rechoice counterexample remains correctly separated from the final
+joint-bundle exercise. No consequential mathematical correction is needed.
+
+Two short wording changes would prevent the material remaining ambiguities:
+
+1. **Opening Section 2, after the planner's preserved continuation resources:**
+   add “Because future utility and estates are held fixed, maximizing this
+   current sum is equivalent to maximizing equally weighted remaining lifetime
+   utilities.” This explains why dropping the young continuation term from the
+   display is harmless rather than a hidden change of objective. In the slide
+   version, “Future utility is fixed” is enough alongside the existing
+   preservation statement.
+
+2. **Slide 6, replace its opening sentence with:** “The planner now chooses new
+   fixed consumption and housing totals, anticipating parents' fertility
+   choices.” Keep the existing formula and add “These totals are fixed before
+   parents choose fertility.” This makes it clear that the voluntary-choice
+   result uses the final jointly optimal totals. A listener following Slide 4
+   directly into Slide 6 should not infer that simply releasing fertility at
+   the earlier fixed-fertility bundles raises its mean; that claim is false.
+
+If one additional small wording cleanup is made, Slide 5's final clause can be
+“At fixed fertility, aggregate young consumption may fall.” This avoids
+reading “in return” as a prescribed compensation or policy mechanism and keeps
+the consumption-loss qualification visible immediately before the fertility
+frame. The existing opening brief already gets that qualification right.
+
+No new model, weights, tenure restrictions, policy claim, or extra theorem is
+recommended. The explicit quadratic belongs in supporting material; its
+first-order condition and full bundle formulas are sufficient for the proposed
+classroom exposition.
 
 ---
 
-## Full allocation, joint fertility, and independent household review
+## Full allocation, joint fertility, explicit optimum, and voluntary implementation
 
 # Sharper fertility and full-planner result in the unchanged two-period model
 
@@ -1650,10 +1694,338 @@ but does not itself exhibit the newly admitted case in which young goods
 consumption falls. That distinction is not a defect in the requested
 compatibility result and should remain explicit in any synthesis.
 
+## Explicit joint-planner solution and full allocation
+
+Third bounded assignment: derive and verify the complete joint allocation,
+conditional on fixed current goods and housing, without a new model or
+transition. The quadratic supplied in the assignment is correct.
+
+### 1. Full problem, including every current bundle
+
+Normalize the young cohort's mass to one and let the old cohort have mass
+\(\mu>0\). Write \(\mathcal C>0\) and \(\mathcal H>0\) for total current
+goods and housing **per young household, including both age groups**. Individual
+young continuation resources and individual old estates remain fixed, so their
+utility terms are constants. The planner gives equal weight to each currently
+living household and has the unchanged positive coefficients
+\(\alpha,\vartheta,\chi,\kappa\).
+
+Strict concavity and the separate goods and housing constraints imply common
+adult goods \(X\), common adult space \(S\), and common parental fertility
+\(n\). In particular, the full first-order conditions give
+\(c_i^y-\chi n_i=c_j^o=X\),
+\(h_i^y-\kappa n_i=h_j^o=S\), and
+\(\vartheta/n_i=\chi/X+\alpha\kappa/S\), independently of parental type.
+The unique allocation can therefore be found by choosing only \(n\):
+
+\[
+M:=1+\mu,\qquad
+X(n)=\frac{\mathcal C-\chi n}{M},\qquad
+S(n)=\frac{\mathcal H-\kappa n}{M}.
+\tag{P1}
+\]
+
+The feasible interval is
+\[
+0<n<\min\{\mathcal C/\chi,\mathcal H/\kappa\}.
+\]
+
+The reduced objective is exactly
+\[
+M\log X(n)+M\alpha\log S(n)+\vartheta\log n
++\text{constants}.
+\tag{P2}
+\]
+
+Its second derivative is strictly negative:
+\[
+-\frac{\vartheta}{n^2}
+-\frac{M\chi^2}{(\mathcal C-\chi n)^2}
+-\frac{M\alpha\kappa^2}{(\mathcal H-\kappa n)^2}<0.
+\]
+The objective tends to negative infinity at both feasible endpoints. Thus it
+has exactly one interior maximizer; a feasible root of its first-order condition
+is already the global joint optimum.
+
+### 2. The verified closed form
+
+Define
+\[
+D=\vartheta+M(1+\alpha),
+\qquad
+\mathcal B=\kappa\mathcal C(\vartheta+M\alpha)
++\chi\mathcal H(\vartheta+M).
+\tag{P3}
+\]
+
+Multiplying the fertility first-order condition by the positive denominator
+\(n(\mathcal C-\chi n)(\mathcal H-\kappa n)\) gives
+\[
+\chi\kappa D n^2-\mathcal B n
++\vartheta\mathcal C\mathcal H=0.
+\tag{P4}
+\]
+
+Consequently
+\[
+\boxed{
+n^F=
+\frac{\mathcal B-
+\sqrt{\mathcal B^2-4\chi\kappa D\vartheta\mathcal C\mathcal H}}
+{2\chi\kappa D}
+=
+\frac{2\vartheta\mathcal C\mathcal H}
+{\mathcal B+
+\sqrt{\mathcal B^2-4\chi\kappa D\vartheta\mathcal C\mathcal H}}.
+}
+\tag{P5}
+\]
+
+The second expression is the same root after rationalizing the numerator.
+There is no scalar numerical solve or unspecified equilibrium multiplier left
+in this conditional planner allocation.
+
+The discriminant is strictly positive, with an explicit decomposition:
+\[
+\begin{aligned}
+\mathcal B^2-4\chi\kappa D\vartheta\mathcal C\mathcal H
+={}&[\kappa\mathcal C(\vartheta+M\alpha)
+-\chi\mathcal H(\vartheta+M)]^2\\
+&+4M^2\alpha\chi\kappa\mathcal C\mathcal H>0.
+\end{aligned}
+\tag{P6}
+\]
+It is smaller than \(\mathcal B^2\), so both quadratic roots are positive.
+
+For a direct feasibility check, define the maximum fertility each resource
+could support if adults consumed none of it:
+\[
+N_c=\mathcal C/\chi,\qquad N_h=\mathcal H/\kappa.
+\]
+After division by \(\chi\kappa\), the quadratic becomes
+\[
+Q(n)=Dn^2-
+[(\vartheta+M\alpha)N_c+(\vartheta+M)N_h]n
++\vartheta N_cN_h.
+\]
+Its endpoint values are
+\[
+Q(0)>0,\qquad
+Q(N_c)=MN_c(N_c-N_h),\qquad
+Q(N_h)=M\alpha N_h(N_h-N_c).
+\tag{P7}
+\]
+If \(N_c\ne N_h\), the smaller root lies strictly between zero and
+\(\min\{N_c,N_h\}\). The larger root lies strictly between the two resource
+bounds, where one adult resource is negative. If \(N_c=N_h=N\), the roots
+are \(\vartheta N/D\) and \(N\), with the latter exhausting both adult
+resources. Thus the plus-sign root is infeasible in every case. The smaller
+root in (P5) is exactly the unique full optimum.
+
+### 3. Every good, every home, and every parent
+
+Once (P5) is evaluated, the complete allocation is
+\[
+\boxed{
+\begin{array}{lll}
+\text{each young household:}&
+c_y^F=\displaystyle\frac{\mathcal C+\mu\chi n^F}{1+\mu},&
+h_y^F=\displaystyle\frac{\mathcal H+\mu\kappa n^F}{1+\mu},\\[1.2ex]
+\text{each old household:}&
+c_o^F=\displaystyle\frac{\mathcal C-\chi n^F}{1+\mu},&
+h_o^F=\displaystyle\frac{\mathcal H-\kappa n^F}{1+\mu},\\[1.2ex]
+\text{each parent's fertility:}&n_i^F=n^F.&
+\end{array}}
+\tag{P8}
+\]
+
+Equivalently, each household gets the same adult goods and space, and each
+young household additionally gets \(\chi n^F\) goods and \(\kappa n^F\)
+housing for its children. The totals check directly:
+\[
+c_y^F+\mu c_o^F=\mathcal C,
+\qquad h_y^F+\mu h_o^F=\mathcal H.
+\]
+All displayed quantities are positive. The different individual continuation
+resources and estates are preserved alongside (P8); they need not be equalized.
+
+The young–old differences inside this allocation are
+\(c_y^F-c_o^F=\chi n^F\) and \(h_y^F-h_o^F=\kappa n^F\). These are
+within-planner differences, not claims that young goods necessarily rise
+relative to their competitive allocation. The prior sections establish the
+competitive comparison under their stated restrictions.
+
+Conditional on \(\mathcal C,\mathcal H,\mu\), patience and private mortgage
+parameters do not appear separately in (P5)–(P8). They determine the competitive
+resources and continuation positions to which this dated planner is applied;
+the planner holds those future positions fixed.
+
+### 4. Cases that actually simplify
+
+**Resource supplies proportional to children's needs.** If
+\(\mathcal C/\chi=\mathcal H/\kappa=N\), then
+\[
+Q(n)=(n-N)(Dn-\vartheta N),
+\qquad
+\boxed{n^F=\frac{\vartheta}{\vartheta+(1+\mu)(1+\alpha)}N.}
+\tag{P9}
+\]
+Children use the same fraction \(\vartheta/D\) of each resource. Every
+household receives adult resources
+\[
+X=\frac{(1+\alpha)\mathcal C}{D},\qquad
+S=\frac{(1+\alpha)\mathcal H}{D}.
+\]
+Consequently the full bundles simplify further to
+\[
+(c_y^F,h_y^F)=\frac{1+\alpha+\vartheta}{D}
+(\mathcal C,\mathcal H),\qquad
+(c_o^F,h_o^F)=\frac{1+\alpha}{D}
+(\mathcal C,\mathcal H).
+\tag{P10}
+\]
+This case keeps both child-cost coefficients strictly positive. The equality
+is a restriction on the composition of aggregate resources, not an assumption
+needed for the general solution.
+
+**One resource cost vanishes.** These are useful limiting checks, outside the
+maintained assumption that both costs are positive. If \(\chi=0,\kappa>0\),
+\[
+n^F=\frac{\vartheta\mathcal H}
+{\kappa[\vartheta+(1+\mu)\alpha]},\qquad
+X=\frac{\mathcal C}{1+\mu},\qquad
+S=\frac{\alpha\mathcal H}{\vartheta+(1+\mu)\alpha}.
+\]
+If \(\kappa=0,\chi>0\),
+\[
+n^F=\frac{\vartheta\mathcal C}
+{\chi[\vartheta+1+\mu]},\qquad
+X=\frac{\mathcal C}{\vartheta+1+\mu},\qquad
+S=\frac{\mathcal H}{1+\mu}.
+\]
+If both costs vanish, there is no finite fertility optimum. That case is not
+an admissible special case of the maintained result.
+
+**Homothetic scaling.** For any \(a>0\), replacing both current resource
+totals by \((a\mathcal C,a\mathcal H)\) multiplies \(n^F,X,S\), and every
+total bundle in (P8), by \(a\). This follows directly from (P5) and is also
+implied by the log objective and linear resource needs. It does not mean that
+an arbitrary change in the resource ratio preserves spending shares.
+
+The condition \(\kappa p=\alpha\chi\) by itself does **not** factor this
+planner quadratic: fixed aggregate goods and housing remain two separate
+constraints. It implies the proportional-resource case only if the totals
+also satisfy \(p\mathcal H=\alpha\mathcal C\). Thus the child-intensity
+condition used in the earlier fertility comparison should not be sold as a
+general closed-form simplification beyond (P5).
+
+### Short usable exposition
+
+The planner reserves \(\chi n\) goods and \(\kappa n\) units of housing for
+children, then divides the remaining resources equally among the
+\(1+\mu\) currently living households per young household. Its fertility choice is the
+smaller root in (P5). Every parent receives the resulting adult bundle plus
+the goods and space needed by its children; every old household receives the
+adult bundle alone, as displayed in (P8). This specifies the complete
+consumption, housing, and fertility allocation. When the two resource supplies
+are proportional to children's needs, the fertility choice reduces to the
+simple share formula (P9).
+
+Verification: independently derived the full first-order conditions before
+reducing the problem. Exact symbolic identities check the quadratic obtained
+from the fertility derivative, the positive discriminant decomposition, both
+resource-bound evaluations, and the proportional-resource factorization.
+Direct substitution checks every allocation total and both one-cost limits.
+No simulation, numerical reference point, transition, source edit, or PDF
+build was used.
+
+## Voluntary fertility at the optimal fixed bundles
+
+Fourth narrow assignment: verify whether the full joint dated optimum can be
+implemented by assigning consumption and housing while leaving fertility to
+parents. **Yes, for fixed total bundles in this unchanged dated comparison.**
+Choosing fertility jointly is an equivalent way to calculate the best bundle
+assignment when the planner anticipates each parent's voluntary fertility
+choice. It need not be interpreted as assigning births.
+
+Give each young household the final joint-planner totals
+\[
+\widehat c=X^F+\chi n^F,\qquad
+\widehat h=S^F+\kappa n^F,
+\tag{I1}
+\]
+with its continuation position fixed. These are **fixed quantities**: the
+\(n^F\) in (I1) is the previously computed optimum used to set the bundles,
+not a rule increasing transfers when a household changes its actual fertility.
+The parent then freely chooses
+\[
+\widehat n(\widehat c,\widehat h)
+=\arg\max_{0<n<\min\{\widehat c/\chi,\widehat h/\kappa\}}
+\{\log(\widehat c-\chi n)
++\alpha\log(\widehat h-\kappa n)+\vartheta\log n\}.
+\tag{I2}
+\]
+Continuation utility is constant here. At \(n=n^F\), the derivative is
+\[
+\frac{\vartheta}{n^F}-\frac\chi{X^F}
+-\frac{\alpha\kappa}{S^F}=0,
+\]
+which is exactly the joint planner's fertility condition. The private second
+derivative is
+\[
+-\frac{\vartheta}{n^2}
+-\frac{\chi^2}{(\widehat c-\chi n)^2}
+-\frac{\alpha\kappa^2}{(\widehat h-\kappa n)^2}<0.
+\]
+The objective tends to negative infinity at each feasible endpoint, and
+\(n^F\) is strictly feasible because \(X^F,S^F>0\). Therefore the parent's
+unique voluntary choice is exactly \(\widehat n(\widehat c,\widehat h)=n^F\).
+
+The equivalence of the **two planning problems** follows, not just the
+coincidence of their first-order conditions. Let \(\mathscr F\) contain every
+feasible consumption, housing, and fertility allocation in the unrestricted
+joint dated problem. Let \(\mathscr I\subseteq\mathscr F\) contain those
+allocations for which every young household's fertility is its private optimum
+at its assigned fixed consumption and housing. Planning over direct bundles
+and anticipating private fertility is precisely maximization over
+\(\mathscr I\). Its value cannot exceed the joint maximum over
+\(\mathscr F\). But (I1)–(I2) prove that the joint optimum belongs to
+\(\mathscr I\), so the two maximum values coincide and the same full
+allocation attains both. Strict concavity of the joint problem makes that
+real allocation unique.
+
+The underlying reason is simple: once total goods and housing are fixed for
+a household, a change in its fertility reallocates its own bundle between
+adult resources and children's needs. It does not change aggregate current
+goods or housing. The planner values precisely the fertility utility of that
+existing parent and holds continuation positions fixed, so the parent and
+planner agree on fertility at the optimal bundle.
+
+This result concerns direct, fixed consumption and housing assignments. It
+does not establish implementation by a cash transfer when households can
+freely reoptimize housing, tenure, saving, or trades at market prices. Nor is
+it a rule reimbursing each realized birth, a policy equilibrium, or a
+transition with newly clearing future markets. The fixed-continuation,
+fixed-future-price scope of the dated benchmark remains unchanged.
+
+It also does not turn the earlier **fixed-fertility planner bundles** into the
+joint optimum. Bundles first optimized holding competitive fertility fixed
+generally differ from (I1); parents can respond differently at those bundles,
+including in the existing fixed-fertility-bundle counterexample. The result
+here is that the final optimum of the anticipatory bundle-assignment problem
+induces \(n^F\) voluntarily. Consequently an established inequality
+\(n^F>\bar n^E\) is a rise in voluntary mean parental fertility under that
+optimal assignment, not a mandate governing births.
+
+Verification: compared the private derivative at the exact final bundle with
+the full planner's fertility derivative, verified the strictly negative
+second derivative and positive residual resources, and checked the feasible-set
+inclusion argument. No new instrument, household timing, preference,
+continuation rule, model run, or artifact build was introduced.
 
 ---
 
-## Necessity and independent full-theorem/counterexample reviews
+## Necessity and independent theorem, counterexample, and equilibrium-family reviews
 
 # Housing direction: necessary restrictions and the weakest useful results
 
@@ -2446,3 +2818,190 @@ parent's gain is outweighed by the rich parent's reduction. Jointly choosing
 fertility and redistributing goods and housing again is a different feasible
 optimization and still produces \(n^F>2\). No mean private-rechoice claim
 should replace that joint-planner conclusion.
+
+## 10. Pro's open equilibrium family with a strict income floor
+
+Fourth, distinct bounded scope, September 10, 2026: independently verify the
+section headed “Analytical nonvacuity, including young consumption losses” in
+`output/model/simplified_olg_amendments/oracle_all_tenure_simplification_response.md`.
+**Verdict: PASS.** The construction produces an analytically nonempty open
+family with a strict primitive retirement-income floor, all young renting and
+saving zero, a positive constrained mass, and a decline in mean young goods
+under the full **fixed-fertility** consumption-and-housing allocation. Its
+patience restriction is needed only for this witness, not for the general
+all-tenure planner theorem.
+
+### 10.1 The price interval is strictly nonempty
+
+For two positive-income types with positive shares, let
+\(\ell_i=w_i/J\), \(B_0=\bar\ell\), \(y_0=KB_0\), and
+\(m_0=qy_0/(\beta K)\). The witness restriction
+
+\[
+\frac\beta q<\frac{\bar w}{w_H}
+\]
+
+is exactly \(m_0>\ell_H>\ell_L\). It therefore makes both unconstrained
+renters want zero saving at the baseline retirement payment. This restriction
+has a nonempty positive parameter interval; it is not an additional assumption
+of the main theorem.
+
+Uncapped nonsaving housing demand
+
+\[
+h_i^0(p)=\ell_i\left(\frac\alpha p+
+\frac{\vartheta\kappa}{\chi+\kappa p}\right)
+\]
+
+is positive, continuous, and strictly decreasing from infinity to zero. Thus
+its cap crossing \(p_i^+\) is unique, and
+\(p_L^+<p_H^+\). At \(p_F=\alpha\chi/\kappa\), high-type demand is
+exactly
+
+\[
+h_H^0(p_F)=\frac{\kappa w_H}{(1+\alpha)\chi}.
+\]
+
+The stated strict bound on \(\chi\) therefore gives \(p_F<p_H^+\).
+
+For the capped high candidate, current goods are \(c_H=w_H-pr\). Its unique
+fertility choice is increasing in \(c_H\), with
+\(0<\chi\,\partial n_H/\partial c_H<1\). Consequently, as rent rises,
+\(n_H\) falls, \(x_H=c_H-\chi n_H\) falls, and
+\(s_H=r-\kappa n_H\) rises. Thus
+\(M_H=\alpha x_H/s_H\) and \(M_H/p\) are strictly decreasing. The latter
+ratio goes from infinity to zero over \(0<p<w_H/r\). At \(p_H^+\), its
+value is exactly one. Since
+
+\[
+k=\frac{1+\Gamma}{1+\Gamma\ell_H/m_0}>1,
+\]
+
+there is a unique \(p_H^-<p_H^+\) at which \(M_H/p=k\). Each member of
+\(\{p_L^+,p_H^-,p_F\}\) is strictly below \(p_H^+\), establishing the
+nonempty interval (18) without a numerical or continuity witness.
+
+### 10.2 Every saving and tenure deviation is excluded
+
+Within that interval, the low type's unique unrestricted rental optimum fits
+strictly below the cap and has \(z=y_0\). Every owner plan belongs to the
+uncapped rental feasible set, whereas this unique optimum violates owner
+finance because housing is positive and \(z-y_0=0\). The low type therefore
+strictly prefers its renter allocation to every ownership alternative.
+
+For the high type put \(t=M_H/p\in(1,k)\). Its budget and fertility
+first-order condition give
+
+\[
+tw_H-Jx_H=(t-1)(x_H+\chi n_H)>0,
+\]
+
+so \(x_H<t\ell_H<k\ell_H<m_0\). Also
+\(x_H>\ell_H\), either by the current-expenditure identity or directly from
+\(w_H/x_H=1+\alpha/t+\vartheta(\chi+\kappa p)/(\chi+t\kappa p)<J\).
+
+Let \(\sigma=1-k\ell_H/m_0>0\). Exactly
+\(k-1=\Gamma\sigma\). Therefore
+
+\[
+\zeta=1/x_H-1/m_0>\sigma/x_H>0,
+\qquad
+\xi=(t-1)p/x_H<\Gamma p\sigma/x_H<\Gamma p\zeta.
+\]
+
+Concavity of complete lifetime utility, including fertility and retirement
+wealth, bounds every alternative by
+
+\[
+U-U_H\leq\xi(h-r)-q\zeta(z-y_0).
+\]
+
+This excludes all rental deviations because \(h\leq r\) and \(z\geq y_0\).
+For owners, \(q(z-y_0)\geq\Gamma ph\) makes the bound strictly negative.
+The proposed high renter is therefore a global optimum, including saving,
+fertility, and every owned-home size. The strict old condition
+\(\omega_B>\alpha\Gamma\) makes its continuation value globally attainable
+at every wealth level, so no future-tenure deviation is omitted.
+
+### 10.3 Replacement and the increase in retirement income are valid
+
+The low type's fertility \(\vartheta\ell_L/(\chi+\kappa p)\) strictly
+decreases in rent. The high capped type's fertility also strictly decreases
+by the derivative argument above. Their weighted mean \(F(p)\) is therefore
+continuous and strictly decreasing throughout (18). The strict replacement
+bracket supplies a unique \(p^*\) within this regime. Uniqueness is local to
+the verified regime; other equilibrium regimes are not excluded.
+
+At this price,
+
+\[
+\bar x-B_0=(1-f)(x_H-\ell_H)>0.
+\]
+
+Thus the retirement-income interval \((KB_0,K\bar x)\) is explicitly
+nonempty. Increasing \(y\) into it raises
+\(m(y)=qy/(\beta K)>m_0\) while leaving the candidate current bundles fixed.
+For the low type the zero-saving inequality becomes stricter. For the high
+type the supporting multiplier
+\(1/x_H-1/m(y)\) increases, so the global ownership-exclusion inequality
+also becomes stricter. The same proof, now centered at \(z=y\), excludes all
+new alternative plans. It is not merely a local argument about an unchanged
+candidate.
+
+Consequently young choices and \(F(p)\) remain unchanged, so the same
+replacement factor selects the same \(p^*\). Each prior young household
+actually rents and saves zero, producing inherited old resources exactly
+\(y\). Old mean consumption is \(B=y/K\). The physical housing market
+clears at the strictly positive cohort mass
+
+\[
+N=\frac{\bar H}
+{f h_L+(1-f)r+\alpha y/(Kp^*)}.
+\]
+
+This price invariance uses the construction's **endogenous cohort mass**:
+greater old housing demand is absorbed by a smaller \(N\). It should not be
+reinterpreted as a fixed-population comparative static. The maintained
+external finance, independent entrant endowments, estate closure, and positive
+tax-financed public service are unchanged.
+
+### 10.4 The consumption-loss statement has a precise scope
+
+The constructed final equilibrium satisfies
+
+\[
+\bar w/J<B=y/K<\bar x.
+\]
+
+Hence the full fixed-fertility planner, which freely chooses **both** current
+goods and housing, changes mean young total goods by
+
+\[
+\bar c_y^F-\bar c_y^E=\frac{B-\bar x}{2}<0.
+\]
+
+For example, choosing the midpoint
+\(y=K(B_0+\bar x)/2\) gives the exact negative change
+\(-(1-f)(x_H-\ell_H)/4\). This is an entire analytical family, not a
+single reference-parameter calculation. All defining inequalities and the
+replacement bracket are strict, so the constructed regime has an open
+parameter neighborhood.
+
+The result must not be phrased as a guarantee that total young goods fall
+after the **joint** planner also raises fertility. That separate change is
+
+\[
+\bar c_y^{\mathrm{joint}}-\bar c_y^E
+=\frac{B-\bar x+\chi(n^F-\bar n^E)}2,
+\]
+
+whose sign is not fixed by (19). Near its upper income endpoint, the fertility
+increase can make that joint total-goods change positive. The lead confirmed
+that the exposition will label consumption losses as applying to the full
+fixed-fertility allocation. Joint housing and fertility increases remain
+valid throughout the stated witness interval.
+
+**No unresolved gap remains for the assigned fixed-fertility witness.** No
+simulation, numerical equilibrium calculation, or change to model primitives
+beyond the explicitly stated parameter family was used. The witness-only
+\(\beta/q\) restriction must remain outside the main all-tenure theorem.

@@ -1,28 +1,41 @@
 # Simplified OLG amendment checks
 
-## Current work — simplify the theory for the presentation
+## Current work — full planner allocation for the presentation
 
-The author explicitly authorized overnight theory work after rejecting the
-condition-heavy result below as unsuitable for the presentation in four days.
-Read the top of the [single assessment](oracle_essential_theory_assessment.md)
-for the active checkpoint. The all-tenure income interval and the full planner's
-aggregate housing and joint-fertility results have passed independent analytical
-cross-reviews. The argument allows young consumption to fall. A separate exact
-counterexample shows that private fertility after receiving fixed planner bundles
-can fall on average, even under the new income bound; that experiment must remain
-separate from the joint planner. Its independent check is in progress.
+Read the top of the [single assessment](oracle_essential_theory_assessment.md).
+The author's latest instruction is to go beyond the marginal argument and show
+the full allocation as a simple class exercise. The reader now gives every
+consumption and housing bundle at fixed fertility, the full joint optimum with
+an explicit quadratic fertility formula, and six proposed slides' wording.
+No main deck or manuscript edit has been adopted.
 
-A focused GPT-6 Pro review of the combined argument is running in the existing
-[conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
-The [brief](../../../docs/prompts/oracle_all_tenure_simplification.md) and
-[exact submitted packet](oracle_all_tenure_simplification_packet.md) contain
-only the model, proof and precise open questions. Submission and active generation
-were verified at approximately 00:30 EDT. Normalized packet: 13,182 characters,
-FNV-1a 3102451540; file SHA-256
-01237412c91a7db282d9a01eb6bf16407a8b9cc48966f9df0718de6f058a0ef7.
-No new formulation has been
-adopted. Overnight follow-up is active, with a morning cutoff of
-08:30 EDT September 10.
+The full aggregate housing and joint-fertility theorem, exact all-tenure income
+interval, and private-fertility counterexample passed independent analytical
+cross-reviews and the completed [GPT-6 Pro review](oracle_all_tenure_simplification_response.md).
+The joint optimum also equals the best fixed-bundle assignment anticipating
+voluntary parental fertility; the final fixed totals privately induce the
+planner's fertility choice. That is different from cash transfers and market
+reoptimization. A new analytical stationary family has a strict primitive
+income floor and falling young consumption under the full fixed-fertility
+planner. Its separate global-tenure, saving, replacement and resource check
+passed. The joint allocation's consumption change has no general sign.
+
+The theorem's resource restriction remains substantive; neither an arbitrary
+income distribution nor a housing-policy transition has been settled. Main
+conditions do not order beta and q. A beta/q restriction in the new existence
+construction belongs only to that witness. Complete derivations and independent
+checks are consolidated in the [verification record](oracle_all_tenure_verification.md).
+
+The [focused brief](../../../docs/prompts/oracle_all_tenure_simplification.md)
+and [exact submitted packet](oracle_all_tenure_simplification_packet.md) record
+the Pro request. The completed answer was recovered with all 121 mathematical
+source objects and exact normalized browser/local agreement: 15,058 characters,
+FNV-1a 1433091282; SHA-256
+0a61e39cbf3bf1d367f0c689ab38f2c867444c8e27c379b546ecc1373358b3f1.
+The authorized [conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359)
+is complete; no new generation is pending. Overnight work should focus on a
+clear morning decision about this one proposed model, with cutoff 08:30 EDT
+September 10, rather than starting another design or numerical search.
 
 ## Previous checked result — two periods and common positive retirement income
 

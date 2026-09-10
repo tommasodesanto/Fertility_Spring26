@@ -1,11 +1,201 @@
+# Theory decision brief
+
+**September 10.** We have a conditional result for the proposed two-period
+model: at fixed fertility, the full planner gives the young more housing and
+can take consumption from them. When it also chooses fertility, fertility rises
+if children's needs are sufficiently housing intensive. Its allocation is
+explicit. Pro and independent analytical reviews support the result. The income restriction remains substantive, and
+this does not yet establish a fertility effect of policy along a transition.
+
+## 1. The economy
+
+Young households differ in resources \(w\) and receive common retirement income
+\(y>0\). Their preferences and old households' preferences are
+
+\[
+u^y=\log(c^y-\chi n)+\alpha\log(h^y-\kappa n)+\vartheta\log n,
+\qquad
+u^o=\log c^o+\alpha\log h^o+\omega_B\log e.
+\]
+
+Children require \(\chi\) goods and \(\kappa\) housing; \(e\) is the
+estate. Households discount old-age utility at \(\beta\). Rentals have maximum
+size \(r\); owners face a mortgage limit. The proposed financing rule gives
+rent \(p=(1+\tau-q)P\) and an equity requirement
+\(q(z-y)\geq\Gamma ph\), where
+\(\Gamma=q(1-\phi)/(1+\tau-q)>0\). Here \(P\) is the house price,
+\(q\) prices next-period goods, \(\tau>0\) is property tax, \(\phi<1\)
+is the financed share, and \(z\) is resources upon retirement. The budgets
+and mortgage payments are specified below.
+
+## 2. What the planner does
+
+Start with a stationary competitive allocation, with equal young and old cohort
+masses. Let \(\mathcal C\) and \(\mathcal H\) denote its total consumption
+goods and housing per young household, including both ages. The planner gives
+equal weight to each living household's current utility and chooses all current
+consumption and housing. It holds individual fertility, continuation resources
+and estates fixed and can relax private finance. It preserves the rental-size
+limit by assigning ownership to larger homes. Because continuation utility and
+estates are fixed, maximizing current utility also maximizes the equally
+weighted sum of remaining lifetime utilities in this comparison.
+
+Its problem and complete solution, with \(\bar n\) denoting competitive mean
+fertility, are
+
+\[
+\max_{\{c^y,h^y,c^o,h^o\}}
+\{\overline{u^y}+\overline{u^o}\}
+\quad\text{subject to}\quad
+\bar c^y+\bar c^o=\mathcal C,\qquad
+\bar h^y+\bar h^o=\mathcal H;
+\]
+\[
+\boxed{
+\begin{gathered}
+X=\frac{\mathcal C-\chi\bar n}{2},\qquad
+S=\frac{\mathcal H-\kappa\bar n}{2},\\
+(c_i^{y,F},h_i^{y,F})=(X+\chi n_i,S+\kappa n_i),\\
+(c_j^{o,F},h_j^{o,F})=(X,S).
+\end{gathered}}
+\]
+
+The planner divides adult goods and space equally, then adds each family's
+children's needs. Each parent therefore receives \(\kappa n_i\) more
+housing than each old household in the planner allocation. To establish a
+reallocation **relative to equilibrium**, we must also establish that the young
+initially receive too little adult space as a group.
+
+## 3. When housing moves toward the young
+
+Put \(K=1+\alpha+\omega_B\), \(J=1+\alpha+\vartheta\). The following
+conditions are sufficient:
+
+- Old households can finance their unrestricted housing and estate choices:
+  \(\omega_B\geq\alpha\Gamma\).
+- A positive share of young households wants to borrow against retirement
+  income and wants a freely sized rental larger than \(r\):
+
+\[
+\boxed{
+w<\frac{Jqy}{\beta K},\qquad
+\frac wJ\left(\frac\alpha p+
+\frac{\vartheta\kappa}{\chi+\kappa p}\right)>r.
+}
+\]
+
+- The retirement-income floor satisfies
+
+\[
+\boxed{\frac yK\geq\frac{\bar w}{J}.}
+\]
+
+**Proposition. Under these conditions, the full planner allocates more aggregate
+housing to the young.** Young consumption need not rise. The comparison covers
+optimal young renters and owners; it does not assume their tenure choices or
+the desired young–old housing ranking. The second condition has a wider exact
+income interval in the supporting proof.
+
+The argument is short. The housing restrictions imply that affected young
+households value extra space more than the old, in consumption units:
+
+\[
+\frac{\alpha(c_i^y-\chi n_i)}{h_i^y-\kappa n_i}
+>p=\frac{\alpha c_j^o}{h_j^o}.
+\]
+
+This is the June argument's core: the young could compensate the old for a
+small housing transfer and still gain. The extra income restriction makes the
+**full maximizing allocation** move housing toward the young overall. It
+compares a floor on old consumption with young current resources divided by
+their utility weights. It is conservative because it omits accumulated old
+wealth and young saving. We have not shown that it is empirically mild.
+
+The exact mean changes under the full planner are
+
+\[
+\bar h^{y,F}-\bar h^{y,E}
+=\frac{\bar h^o-\overline{(h^y-\kappa n)}}2>0,
+\qquad
+\bar c^{y,F}-\bar c^{y,E}
+=\frac{\bar c^o-\overline{(c^y-\chi n)}}2.
+\]
+
+An individual parent gains housing precisely when its initial adult space is
+below \(S\). The aggregate theorem does not say that every financially
+constrained parent receives more under equal-weight redistribution.
+
+## 4. What follows for fertility
+
+Now let the same planner choose parental fertility as well, valuing existing
+parents' utility. Its complete allocation has common fertility \(n^F\) and
+
+\[
+(c^{y,F},h^{y,F})=
+\left(\frac{\mathcal C+\chi n^F}{2},
+      \frac{\mathcal H+\kappa n^F}{2}\right),\qquad
+(c^{o,F},h^{o,F})=
+\left(\frac{\mathcal C-\chi n^F}{2},
+      \frac{\mathcal H-\kappa n^F}{2}\right).
+\]
+
+It chooses \(n^F\) to maximize
+\(2\log(\mathcal C-\chi n)+2\alpha\log(\mathcal H-\kappa n)
++\vartheta\log n\). The solution is the feasible root of a quadratic,
+written explicitly in the supporting proof. Under the allocation conditions,
+
+\[
+\boxed{\kappa p\geq\alpha\chi\quad\Longrightarrow\quad n^F>\bar n.}
+\]
+
+The condition says that children require housing at least as intensively as
+unrestricted adults, in expenditure terms. **Each parent voluntarily chooses
+\(n^F\) at the final joint-planner bundle.** Its private fertility condition
+is exactly the planner's condition there. The planner can therefore be described
+as assigning fixed consumption and housing while anticipating parents' choices.
+The assigned bundles are fixed before those choices and are not conditional on
+realized births.
+
+A compensated local housing transfer also raises an affected parent's private
+fertility under this condition. Mean private fertility can fall if households
+instead receive bundles calculated by first holding fertility at its competitive
+level. We have an exact counterexample for that different
+experiment. None of these direct allocations establishes implementation through
+a cash-transfer policy with freely reoptimizing housing markets.
+
+## 5. The morning decision
+
+**My recommendation is to present this as a conditional static allocation
+exercise, with the full planner solution at its center.** The economics and
+proof are complete for that claim in the proposed model. The income restriction
+and planner's ability to relax finance should be visible. Neither children nor
+a binding mortgage limit alone guarantees the desired aggregate reallocation.
+
+The remaining decision is whether to adopt this proposed financing and closure:
+two periods, a common divisible housing stock, mortgage interest paid during the
+age, common positive retirement income, external finance, and entrant endowments
+independent of estates. Property taxes fund fixed public services here. These
+are changes from parts of the earlier model; the calculation does not validate
+those older versions.
+
+**We do not yet have a theorem that a specified housing policy raises fertility
+along an equilibrium transition.** The static result can introduce that question;
+it cannot stand in for its answer. No empirical mildness or global equilibrium
+uniqueness is established. The proof, complete planner formula, proposed six
+slides and verification are below; the main deck and manuscript are unchanged.
+
+<details>
+<summary>Detailed model, verified results, and work record</summary>
+
 # Housing allocation and fertility: the shorter argument
 
 **September 10, overnight review.** The main result now covers young renters and
 owners without prescribing which type chooses each tenure. It allows the planner
 to give the young more housing while taking some consumption from them. The
 household, allocation and joint-fertility arguments have passed separate
-analytical cross-checks. A focused Pro review is running in the existing
-[conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
+analytical cross-checks. The completed [Pro review](oracle_all_tenure_simplification_response.md)
+confirms the all-tenure theorem and the private-fertility counterexample. The
+full joint planner allocation is also explicit, as shown below.
 This is a proposed theory statement; the main deck and manuscript are unchanged.
 
 The result remains conditional. The borrowing and rental restrictions explain
@@ -62,9 +252,9 @@ Children require space, so limited housing access increases its private
 marginal cost. A signed fertility response still requires the specified
 resource change; the compensated-transfer result below supplies one explicit
 condition. Lead the next Pro follow-up and the final exposition with this local
-argument, then present the full-allocation and joint-fertility statements as
-additional results. Do not interrupt the active Pro generation to change its
-prompt.
+argument, then make the full-allocation and joint-fertility statements central,
+as the author requested in his subsequent clarification. Pro has completed its
+review; no further broad prompt is pending.
 
 ## Model
 
@@ -91,11 +281,24 @@ c+(1+\tau)Ph+a=w,\qquad
 z=y+a/q+Ph,\qquad a\geq-q\phi Ph.
 \]
 
-The net financial position \(a\) accounts for mortgage interest service, and
-\(z\) is resources upon retirement. Thus owners must retain equity
-\(z-y\geq(1-\phi)Ph\). Renters satisfy \(c+ph+a=w\), \(a\geq0\) and
-\(h\leq r\). The same financing rule applies in old age, with the estate
-as the subsequent payoff and no subsequent income.
+If saving is \(s\geq0\) and mortgage principal is \(L\leq\phi Ph\), then
+\(a=s-qL\). The present cost of mortgage interest payments is \((1-q)L\),
+paid from young resources; principal \(L\) is repaid at sale. This gives the
+budget above. Retirement resources are \(z\), and owners must retain equity
+\(z-y\geq(1-\phi)Ph\). Renters satisfy \(c+ph+a=w\),
+\(z=y+a/q\), \(a\geq0\), and \(h\leq r\).
+
+An old owner has the same financial budget, with its net estate as the payoff:
+
+\[
+c^o+(1+\tau)Ph^o+a^o=z^o,\qquad
+\boxed{e=a^o/q+Ph^o},\qquad a^o\geq-q\phi Ph^o.
+\]
+
+The estate consists of net financial assets and the house sale proceeds at
+death. An old renter instead has \(c^o+ph^o+a^o=z^o\),
+\(e=a^o/q\), \(a^o\geq0\), and \(h^o\leq r\). The bequest weight
+\(\omega_B\) determines how much the old value the estate they leave.
 
 Competitive finance determines stationary rent and the equity requirement:
 
@@ -234,6 +437,53 @@ young household need not gain, and why young consumption need not rise.
 In fact, the weaker condition \(B\geq\overline{\widehat x}\) suffices.
 At equality, \(\bar x>\overline{\widehat x}=B\), so young consumption falls.
 
+This makes the economic roles of redistribution and housing constraints
+explicit. The mean housing change decomposes as
+
+\[
+\bar h^{y,F}-\bar h^{y,E}
+=\frac{\alpha}{2p}
+\left[\underbrace{B-\overline{\widehat x}}_{\text{resource difference}}
++\underbrace{\overline{\widehat x}-\bar v}_{\text{housing distortion}}\right].
+\]
+
+The second term is strictly positive when some young households are distorted.
+The resource assumption makes the first term nonnegative. At
+\(B=\overline{\widehat x}\), the planner gives the young more housing and
+takes consumption from them. If old resources are sufficiently low, the first
+term can overturn the second. That is why the full allocation's direction needs
+more than the local valuation gap.
+
+An individual parent gains housing exactly when \(s_i<S\), and gains
+consumption exactly when \(x_i<X\). The constrained group and the group
+receiving housing under equal-weight redistribution need not coincide.
+
+The primitive resource floor has a direct interpretation in income ratios:
+
+\[
+\frac{y}{\bar w}\geq
+\frac{1+\alpha+\omega_B}{1+\alpha+\vartheta}
+=1+\frac{\omega_B-\vartheta}{J}.
+\]
+
+If the bequest weight does not exceed the fertility weight, retirement income
+at least as large as mean young resources is sufficient. If bequests receive
+more weight, the required floor is higher because the old devote more resources
+to estates. The two old-resource restrictions can hold together precisely when
+
+\[
+\alpha\Gamma\leq\omega_B
+\leq\frac{Jy}{\bar w}-1-\alpha.
+\]
+
+These are statements about the endowments and utility weights of this two-age
+exercise; no direct mapping to annual retirement income has been established.
+High patience does not automatically rule out affected young households. Their
+simple borrowing test is \(\beta<qJy/(Kw_i)\). Under the resource floor,
+this upper bound is at least \(q\bar w/w_i\), which exceeds \(q\) for a
+below-average-resource household. The rental-size test must still hold: the
+very poorest may want a home small enough to rent without restriction.
+
 For fertility, put \(C=\chi+\kappa p\). The fertility first-order condition
 and the child-cost restriction give the stronger comparison
 
@@ -259,6 +509,137 @@ marginal value of increasing fertility is positive at the competitive mean.
 Strict concavity of the joint planner's objective gives \(n^F>\bar n\).
 The formulas generalize directly to any predetermined positive ratio of old
 to young households.
+
+## The complete joint allocation
+
+Let \(\mu>0\) be the predetermined ratio of old to young households, and let
+\(\mathcal C,\mathcal H\) include both age groups' current resources per
+young household. At the full joint optimum every parent chooses the same
+fertility. All households receive common adult goods \(X\) and space \(S\):
+
+\[
+X(n)=\frac{\mathcal C-\chi n}{1+\mu},\qquad
+S(n)=\frac{\mathcal H-\kappa n}{1+\mu},\qquad
+\frac{\vartheta}{n}=\frac{\chi}{X(n)}+\frac{\alpha\kappa}{S(n)}.
+\]
+
+The last equation equates the marginal utility of children to the goods and
+space they require, evaluated at the planner's marginal resource values.
+The objective is strictly concave and tends to minus infinity at each end of
+\(0<n<\min\{\mathcal C/\chi,\mathcal H/\kappa\}\). It therefore has
+one interior solution. The resulting complete bundles are
+
+\[
+\boxed{
+\begin{aligned}
+c^{y,F}&=\frac{\mathcal C+\mu\chi n^F}{1+\mu},&
+h^{y,F}&=\frac{\mathcal H+\mu\kappa n^F}{1+\mu},\\
+c^{o,F}&=\frac{\mathcal C-\chi n^F}{1+\mu},&
+h^{o,F}&=\frac{\mathcal H-\kappa n^F}{1+\mu}.
+\end{aligned}}
+\]
+
+Young continuation resources and old estates remain individually fixed. The
+planner equalizes current adult resources; it does not equalize future wealth.
+The comparison with competitive consumption is
+
+\[
+\bar c^{y,F}-\bar c^{y,E}
+=\frac{\mu}{1+\mu}
+\left[B-\bar x+\chi(n^F-\bar n)\right].
+\]
+
+Consequently the consumption loss established for a fixed-fertility allocation
+does not by itself establish a loss after the joint fertility choice. For
+housing the corresponding expression adds
+\(\mu\kappa(n^F-\bar n)/(1+\mu)>0\) to the fixed-fertility gain.
+
+<details>
+<summary>Explicit fertility formula and feasibility proof</summary>
+
+Write \(M=1+\mu\), \(D=\vartheta+M(1+\alpha)\), and define the positive
+coefficient
+
+\[
+\mathcal B=\kappa\mathcal C(\vartheta+M\alpha)
++\chi\mathcal H(\vartheta+M).
+\]
+
+Multiplying the first-order condition by its positive denominator gives
+\(\chi\kappa Dn^2-\mathcal Bn+\vartheta\mathcal C\mathcal H=0\).
+The unique feasible root is
+
+\[
+\boxed{
+n^F=\frac{2\vartheta\mathcal C\mathcal H}
+{\mathcal B+\sqrt{\mathcal B^2-
+4\chi\kappa D\vartheta\mathcal C\mathcal H}}.
+}
+\]
+
+To verify the root, put \(N_c=\mathcal C/\chi\) and
+\(N_h=\mathcal H/\kappa\). The normalized polynomial is
+
+\[
+Q(n)=Dn^2-[(\vartheta+M\alpha)N_c+(\vartheta+M)N_h]n
++\vartheta N_cN_h.
+\]
+
+It satisfies \(Q(0)>0\), \(Q(N_c)=MN_c(N_c-N_h)\), and
+\(Q(N_h)=M\alpha N_h(N_h-N_c)\). When the resource bounds differ,
+the smaller root is below both; the larger root lies between them and gives a
+negative adult resource. When both bounds equal \(N\), the roots are
+\(\vartheta N/D\) and \(N\), and the second leaves nothing for adults.
+The discriminant is positive because it equals
+
+\[
+[\kappa\mathcal C(\vartheta+M\alpha)
+-\chi\mathcal H(\vartheta+M)]^2
++4M^2\alpha\chi\kappa\mathcal C\mathcal H.
+\]
+
+In the proportional-resource case \(\mathcal C/\chi=\mathcal H/\kappa=N\),
+the complete allocation simplifies to
+
+\[
+n^F=\frac{\vartheta N}{D},\qquad
+(c^{y,F},h^{y,F})=\frac{J}{D}(\mathcal C,\mathcal H),\qquad
+(c^{o,F},h^{o,F})=\frac{1+\alpha}{D}(\mathcal C,\mathcal H).
+\]
+
+This special case retains positive goods and housing costs of children. The
+condition \(\kappa p=\alpha\chi\) alone does not imply proportional
+aggregate resources. The closed form solves the full conditional planner;
+it does not imply a closed form for every heterogeneous competitive equilibrium.
+
+</details>
+
+## Voluntary fertility at the optimal allocation
+
+The joint optimum can be implemented by giving each parent its final fixed
+consumption and housing totals and then letting it choose fertility. At the
+assigned bundle \((X^F+\chi n^F,S^F+\kappa n^F)\), its private condition is
+
+\[
+\frac{\vartheta}{n^F}-\frac{\chi}{X^F}
+-\frac{\alpha\kappa}{S^F}=0.
+\]
+
+This is the planner's condition. The private objective is strictly concave in
+fertility, so the parent's unique choice is \(n^F\). The transfers do not
+respond to actual births: \(n^F\) is computed before assigning fixed totals.
+Continuation resources are unchanged.
+
+This also establishes equivalence of the two planning problems. Allocations
+induced by fixed bundles and voluntary fertility form a subset of the joint
+planner's feasible allocations. The joint optimum itself belongs to that subset.
+Consequently choosing bundles while anticipating parental fertility attains
+exactly the joint maximum. The planner and parent agree because a fertility
+change at a fixed bundle reallocates that parent's resources between adults and
+children, and the welfare criterion values the existing parent's utility.
+
+The result concerns direct allocations of goods and housing. A cash transfer
+followed by free housing, tenure and saving choices is a different experiment.
 
 ## Which fertility comparison is established?
 
@@ -328,8 +709,8 @@ Housing can be rented up to size \(r\), or owned with financed share
 \]
 
 Here \(q\) prices next-period goods, \(\tau\) is the property tax, and
-\(a\) accounts for mortgage interest service. Ownership requires net housing
-equity \(z-y\geq(1-\phi)Ph\); retirement income is unavailable for that equity.
+\(a=s-qL\) is saving less discounted mortgage principal. Interest is paid
+from current resources. Ownership requires net housing equity \(z-y\geq(1-\phi)Ph\); retirement income is unavailable for that equity.
 
 ### 3. Competitive equilibrium
 
@@ -348,62 +729,71 @@ Here \(\nu n\) is the number of entering households per parent. Put
 \(\omega_B\geq\alpha\Gamma\), old choices satisfy
 \(c^o=z^o/K\), \(h^o=\alpha z^o/(Kp)\), and \(qe=\omega_Bz^o/K\).
 
-### 4. Planner
+### 4. Planner allocation
 
-The planner allocates consumption and housing across all living households,
-initially holding fertility fixed:
+The planner gives equal weight to living households and reallocates all current
+consumption and housing, holding fertility and individual future resources fixed:
 
 \[
-\begin{aligned}
-\max_{\{c^y,h^y,c^o,h^o\}}\quad&
-\overline{u^y(c^y,h^y,n)}+\overline{u^o(c^o,h^o,e)}\\
-\text{subject to}\quad&\bar c^y+\bar c^o=\mathcal C,
-\qquad \bar h^y+\bar h^o=\mathcal H.
-\end{aligned}
+\begin{gathered}
+\max_{\{c^y,h^y,c^o,h^o\}}
+\left\{\overline{u^y(c^y,h^y,n)}+\overline{u^o(c^o,h^o,e)}\right\},
+\qquad
+\bar c^y+\bar c^o=\mathcal C,\quad
+\bar h^y+\bar h^o=\mathcal H;\\[1ex]
+X=\frac{\mathcal C-\chi\bar n}{2},\qquad
+S=\frac{\mathcal H-\kappa\bar n}{2},\qquad
+(c_i^{y,F},h_i^{y,F})=(X+\chi n_i,S+\kappa n_i),\quad
+(c_j^{o,F},h_j^{o,F})=(X,S).
+\end{gathered}
 \]
 
-The totals \(\mathcal C,\mathcal H\) are measured per young household at
-the competitive allocation. Private finance can be relaxed; individual young
-continuation resources and old estates are preserved. The solution equalizes
-consumption and housing after accounting for children's needs.
+Private finance can be relaxed. The planner divides adult resources equally,
+then adds each family's children's needs; \(\mathcal C,\mathcal H\) include
+both cohorts' resources per young household.
 
-### 5. Housing allocation
+### 5. Housing reallocation
 
-Suppose some young households want to borrow against retirement income and
-their desired freely sized rental exceeds \(r\):
+Suppose old households attain the unrestricted choice on frame 3 and a positive
+share of young households satisfies the borrowing and rental-size tests below:
 
 \[
+\begin{gathered}
 w<\frac{Jqy}{\beta K},\qquad
 \frac wJ\left[\frac\alpha p+
-\frac{\vartheta\kappa}{\chi+\kappa p}\right]>r.
-\]
-
-These households value additional space above its rental cost, whether they
-choose to rent or own. If \(y/K\geq\bar w/J\), the full planner allocates
-more housing to the young:
-
-\[
+\frac{\vartheta\kappa}{\chi+\kappa p}\right]>r,\qquad
+\frac yK\geq\frac{\bar w}{J}\\[1ex]
+\Longrightarrow\qquad
 \bar h^{y,F}-\bar h^{y,E}
 =\frac{\bar h^o-\overline{(h^y-\kappa n)}}2>0.
+\end{gathered}
 \]
 
-The resource condition supports the direction of the full redistribution;
-the housing constraints generate the difference in marginal valuations.
+The constraints raise young households' valuation of space. The income condition
+ensures the full planner gives the young more housing overall; it can take
+consumption from them in return.
 
 ### 6. Parental fertility
 
-Allow the planner to choose fertility as well. If children's needs are
-sufficiently housing intensive,
+The planner chooses new fixed consumption and housing totals, anticipating
+parents' fertility choices. With \(\mathcal C,\mathcal H\) unchanged, its
+joint solution satisfies
 
 \[
-\kappa p\geq\alpha\chi
-\qquad\Longrightarrow\qquad
-n^F>\bar n^E.
+\begin{gathered}
+\frac{\vartheta}{n^F}
+=\frac{2\chi}{\mathcal C-\chi n^F}
++\frac{2\alpha\kappa}{\mathcal H-\kappa n^F},\\[1ex]
+(c^{y,F},h^{y,F})=
+\left(\frac{\mathcal C+\chi n^F}{2},
+      \frac{\mathcal H+\kappa n^F}{2}\right),\\[1ex]
+\kappa p\geq\alpha\chi\quad\Longrightarrow\quad n^F>\bar n^E.
+\end{gathered}
 \]
 
-This conclusion uses the allocation conditions on the previous frame. The
-planner values existing parents' utility. It can raise mean fertility even
-when the fixed-fertility reallocation reduces young consumption.
+The conclusion uses the preceding allocation conditions. Children require
+housing at least as intensively as unrestricted adults. The new totals are fixed
+before parents choose fertility; parents voluntarily choose \(n^F\) there.
 
 </details>
 
@@ -492,14 +882,25 @@ Young continuation resources, old estates and total public spending are fixed.
 Since \(z_i\geq y\) and estates are positive, a 100%-balance mortgage can
 implement the required portfolio positions.
 
-Analytical nonvacuity was checked against the previous stationary construction,
-including old wealth generated by prior young decisions and the replacement
-condition. The construction's extra sufficient inequalities are an existence
-witness, not the assumptions of the general allocation theorem. It imposes the
-old stronger resource bound; a separate exact counterfamily establishes that
-the broader theorem also permits young consumption losses. Neither calculation
-uses a numerical equilibrium as an unproved reference point. Generic global
-uniqueness across tenure regimes is not established.
+Analytical nonvacuity was checked against the earlier mixed-tenure stationary
+construction, including old wealth generated by prior young decisions and the
+replacement condition. Pro adds a separate open all-renter family satisfying
+the strict primitive resource floor and a loss of young consumption under the
+fixed-fertility full planner. Its global tenure and saving comparisons,
+replacement, and housing clearing passed an independent review. The simple
+construction chooses \(B_0=\bar w/J\), obtains \(\bar x>B_0\) from a capped
+richer renter, and then sets \(KB_0<y<K\bar x\). Consequently
+\(\bar w/J<B=y/K<\bar x\): the housing theorem applies and young consumption
+falls at fixed fertility. Increasing \(y\) leaves young choices unchanged in
+this regime because they save zero; endogenous cohort mass absorbs the change
+in old housing demand. This is a comparison across stationary equilibria,
+not a fixed-population price-invariance result.
+
+The construction's extra conditions, including its \(\beta/q\) restriction,
+are existence-witness restrictions and are not assumptions of the general
+allocation theorem. The construction does not sign consumption at the joint
+fertility optimum. No numerical reference point supports these existence
+claims. Generic global uniqueness across tenure regimes is not established.
 
 **Private-fertility counterexample.** The complete symbolic calculation is in
 the all-tenure proof note, Section 9. It fixes \(\nu=1/2\) and competitive
@@ -535,13 +936,25 @@ GPT-6 Pro in the existing conversation. Generation was verified at approximately
 00:30EDT. Packet SHA-256:
 `01237412c91a7db282d9a01eb6bf16407a8b9cc48966f9df0718de6f058a0ef7`.
 
-Next: review Pro's completed answer, resolve only consequential objections,
-and finish the short statement and 5–6 slides' wording in this reader.
-Keep the frozen two-period model. Do not edit the main deck or protected author
-draft, add another timing convention, launch simulations, or import an old
-transition proof under the revised financing rule. The quantitative overnight
-work and its sleep-prevention process are separate. Existing heartbeat remains
-active until a checked useful deliverable is ready or08:30EDT September10.
+The [completed Pro answer](oracle_all_tenure_simplification_response.md) was
+captured with all 121 mathematical source objects. Its normalized browser and
+local text agree: 15,058 characters, FNV-1a 1433091282; file SHA-256
+`0a61e39cbf3bf1d367f0c689ab38f2c867444c8e27c379b546ecc1373358b3f1`.
+
+The lead and an independent reviewer checked Pro's new strict-floor equilibrium
+construction. The full joint allocation, its quadratic formula, and its implementation with
+voluntary fertility at fixed final bundles were derived and checked separately.
+All new conclusions are consolidated above; original
+working derivations remain in the verification record. No main deck, protected
+author draft, model code, transition proof or numerical run was changed. The
+quantitative overnight work and sleep-prevention process remain separate.
+A final independent reading pass found the recommendation honest and required
+no mathematical correction. Its two clarifications were incorporated: fixing
+future utility makes the dated objective equivalent to remaining lifetime
+utility in this comparison, and the voluntary-fertility result uses newly
+optimized fixed bundles. It does not simply release fertility at the earlier
+fixed-fertility allocation. The morning decision is whether to adopt this
+conditional static exercise; no further mathematical review is pending.
 
 </details>
 
@@ -2028,6 +2441,8 @@ The cumulative-reproduction identity is exact when baseline and policy share \(N
 \]
 
 Local geometric convergence makes this sum well defined. Its positivity follows from the already-verified stationary rental-access sign. This statement includes the common inherited initial old through the announcement boundary, but supplies no separate impact or all-date fertility sign.
+
+</details>
 
 </details>
 
