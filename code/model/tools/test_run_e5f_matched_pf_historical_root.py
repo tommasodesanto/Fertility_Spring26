@@ -19,6 +19,23 @@ import collect_e5f_matched_pf_price_jacobian as collector
 import run_e5f_matched_pf_historical_root as driver
 
 
+class RootRuntimeContractTest(unittest.TestCase):
+    def test_long_root_budget_reaches_input_verification_but_excess_budget_fails(self):
+        class InputVerificationReached(Exception):
+            pass
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'contract.json'
+            for seconds in (18000, driver.MAXIMUM_ROOT_SECONDS, driver.MAXIMUM_ROOT_SECONDS + 1):
+                path.write_text(json.dumps(dict(schema=driver.joined.HISTORY_SMOKE_SCHEMA,
+                    seconds=seconds, checkpoint='/frozen/checkpoint', checkpoint_sha256='a' * 64)))
+                with mock.patch.object(driver.primitive, 'verify',
+                        side_effect=[None, InputVerificationReached()]):
+                    expected = InputVerificationReached if seconds <= driver.MAXIMUM_ROOT_SECONDS else ValueError
+                    with self.subTest(seconds=seconds), self.assertRaises(expected):
+                        driver.joined.load_smoke_contract(path, 'b' * 64, 'sequential',
+                            maximum_seconds=driver.MAXIMUM_ROOT_SECONDS)
+
+
 class JacobianPacketValidationTest(unittest.TestCase):
     def setUp(self):
         self.evaluator = 'code/model/tools/run_e5f_matched_pf_baseline.py'
@@ -105,6 +122,39 @@ class JacobianPacketValidationTest(unittest.TestCase):
             'explicit supplied-price hook only; unchanged economic evaluator')
         with self.assertRaisesRegex(ValueError, 'reviewed'):
             self.validate()
+
+    def runtime_change(self):
+        name = 'code/model/tools/run_e5f_matched_pf_historical_root.py'
+        self.packet['shared_contract']['source_sha256'][name] = '1' * 64
+        self.contract['reviewed_root_runtime_changes'] = dict(
+            scope='root runtime ceiling and explicit provenance checks only; unchanged economic evaluator and numerical root',
+            files={name: dict(from_sha256='1' * 64, to_sha256='f' * 64)})
+        return name
+
+    def test_explicit_runtime_change_preserves_scientific_source_guards(self):
+        self.runtime_change()
+        self.validate()
+        self.contract['source_sha256'][self.model_source] = '0' * 64
+        with self.assertRaisesRegex(ValueError, 'economic source changed'):
+            self.validate()
+
+    def test_runtime_change_requires_exact_pins_scope_and_existing_file(self):
+        name = self.runtime_change()
+        for mutation in ('missing', 'from', 'to', 'scope', 'extra', 'deleted_source'):
+            c = copy.deepcopy(self.contract)
+            review = c['reviewed_root_runtime_changes']
+            if mutation == 'missing':
+                del c['reviewed_root_runtime_changes']
+            elif mutation in ('from', 'to'):
+                review['files'][name][mutation + '_sha256'] = '0' * 64
+            elif mutation == 'scope':
+                review['scope'] = 'arbitrary numerical change'
+            elif mutation == 'extra':
+                review['files'][self.model_source] = dict(from_sha256='c'*64, to_sha256='0'*64)
+            else:
+                del c['source_sha256'][name]
+            with self.subTest(mutation=mutation), self.assertRaisesRegex(ValueError, 'reviewed root runtime'):
+                self.validate(contract=c)
 
     def test_changed_checkpoint_summary_or_demography_is_rejected(self):
         for name in ('checkpoint_sha256', 'selected_summary_sha256',

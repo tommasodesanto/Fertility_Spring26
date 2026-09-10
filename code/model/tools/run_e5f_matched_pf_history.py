@@ -127,7 +127,7 @@ def load_smoke_contract(path, expected_sha256, arm, *, maximum_seconds=840):
     import run_e5f_matched_pf_smoke as primitive
     primitive.verify(path, expected_sha256)
     c = json.loads(Path(path).read_text())
-    if (type(maximum_seconds) is not int or not 1 <= maximum_seconds <= 7200
+    if (type(maximum_seconds) is not int or not 1 <= maximum_seconds <= 21600
             or c['schema'] != HISTORY_SMOKE_SCHEMA
             or not 1 <= int(c['seconds']) <= maximum_seconds):
         raise ValueError(f'Expected joined smoke schema and at most {maximum_seconds} seconds')

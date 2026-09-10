@@ -19,6 +19,7 @@ import e5f_matched_pf_path_root as root
 import run_e5f_perfect_foresight_rebated_property_tax as rent_domain
 
 primitive, joined, pf = baseline.primitive, baseline.joined, baseline.pf
+MAXIMUM_ROOT_SECONDS = 21600
 
 
 def main():
@@ -29,7 +30,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
     c, originating = joined.load_smoke_contract(args.contract, args.contract_sha256,
-                                               args.arm, maximum_seconds=7200)
+                                               args.arm, maximum_seconds=MAXIMUM_ROOT_SECONDS)
     if (c['experiment'] != 'normalized_historical_path_root' or c['probe_coordinate'] != -1
             or type(c['maximum_path_evaluations']) is not int
             or not 2 <= c['maximum_path_evaluations'] <= 6):
@@ -198,8 +199,27 @@ def validate_jacobian_packet(packet, c, arm):
                         to_sha256=c['source_sha256'][driver],
                         scope='explicit supplied-price hook and optional dated-state checkpoint; unchanged economic evaluator'):
         raise ValueError('Explicit reviewed probe-to-root driver change required')
+    runtime_paths = {
+        'code/model/tools/run_e5f_matched_pf_historical_root.py',
+        'code/model/tools/test_run_e5f_matched_pf_historical_root.py',
+        'code/model/tools/run_e5f_matched_pf_history.py',
+    }
+    changed_runtime = {name for name in runtime_paths
+        if name in shared['source_sha256']
+        and c['source_sha256'].get(name) != shared['source_sha256'][name]}
+    if changed_runtime or 'reviewed_root_runtime_changes' in c:
+        expected_review = dict(
+            scope='root runtime ceiling and explicit provenance checks only; unchanged economic evaluator and numerical root',
+            files={name: dict(from_sha256=shared['source_sha256'][name],
+                             to_sha256=c['source_sha256'].get(name))
+                   for name in sorted(changed_runtime)})
+        if (not changed_runtime or any(c['source_sha256'].get(name) is None for name in changed_runtime)
+                or c.get('reviewed_root_runtime_changes') != expected_review):
+            raise ValueError('Jacobian economic source changed: explicit reviewed root runtime source changes required')
+        for name in changed_runtime:
+            collector.require_hash(c['source_sha256'][name], name)
     for name, expected in shared['source_sha256'].items():
-        if name != driver and c['source_sha256'].get(name) != expected:
+        if name != driver and name not in changed_runtime and c['source_sha256'].get(name) != expected:
             raise ValueError(f'Jacobian economic source changed before root: {name}')
     n = c['path_date_count']
     if (packet['years'] != list(2007 + 4*np.arange(n))
