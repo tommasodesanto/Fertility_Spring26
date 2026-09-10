@@ -1,5 +1,7 @@
 # Matched perfect-foresight implementation
 
+Latest overnight plan: [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md). The100-date anchor has completed; the new price panel is queued. Read this before the older dated checkpoints below.
+
 Author instruction, September 9: approximate initial steady state; households
 learn the entire transition immediately at its onset; calibrate observations
 along the transition; pursue sequential and simultaneous fertility nests in

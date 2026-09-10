@@ -2,6 +2,27 @@
 
 Updated: `2026-09-09` (28-date PF market root verified; 100-date diagnostic submitted)
 
+**Overnight September10,03:43UTC (September9,23:43EDT).** Author requests
+continued quantitative work and a rigorous morning readout.100date sequential
+anchor17300115 completed47m02;55startup tests and all mapping gates pass.
+Maximum market gap18.199% remains off equilibrium. Terminal person/head gaps
+0.822%/0.807% meet1%; household-distribution L1.05012 exceeds.02. No new
+calibration, horizon certification or policy result. Full unchanged fit/parameter
+tables: `output/model/e5f_matched_pf_20260909a/meeting_receipts/horizon100_anchor_01/sequential/`.
+
+Price smoke17303124 probes dates0and99. Remaining98-case panel17303125 depends
+on smoke success, with32one-core jobs maximum; collector17303126 depends on both.
+All are currently pending. About78CPU hours/roughly4hours batch time excluding
+queue delays. Root runtime/provenance adaptation is still required before the
+subsequent full equilibrium solve. Bounded overnight follow-up is active through
+08:30EDT; work plan and review map: `output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`.
+Current objective measures the2023 cross-section/cohort histories and2019–2023
+birth branch; it does not fit an annual historical time series. Four pooledACS
+date mappings and two family-group mappings remain outstanding. Changing a model
+measurement operator changes the objective even with identical numeric target
+fingerprint; keep alternative operators in explicitly separate diagnostics.
+
+
 **Latest result, September 10, 02:25 UTC (September 9 evening in New York).**
 Long28-date sequential continuation17289375 converged at gap6.73677e-5 with
 zero replay difference. Full12-target, parameter, market and measurement files
