@@ -195,7 +195,28 @@ def load_terminal(c, arm, old):
     return packet
 
 
-def run_history_probe(seed, c, args, out, progress, save, started, *, prices_override=None):
+def validated_preference_path(old_path, count, override=None):
+    """Keep the old endpoints and flat tail; permit only a monotone dated shape."""
+    old = np.asarray(old_path, dtype=float)
+    if old.shape != (5,) or not np.isfinite(old).all() or type(count) is not int or count < 5:
+        raise ValueError('Expected five finite historical preferences and a complete dated horizon')
+    default = np.r_[old, np.full(count - 5, old[-1])]
+    if override is None:
+        return default
+    path = np.asarray(override, dtype=float)
+    if path.shape != (count,) or not np.isfinite(path).all():
+        raise ValueError('Preference override must be finite and match the entire dated horizon')
+    if path[0] != old[0] or not np.all(path[4:] == old[-1]):
+        raise ValueError('Preference override must preserve exact endpoints and the constant post-2023 tail')
+    direction = np.sign(old[-1] - old[0])
+    if (np.any(path < min(old[0], old[-1])) or np.any(path > max(old[0], old[-1]))
+            or (direction != 0 and np.any(direction * np.diff(path) < 0))):
+        raise ValueError('Preference override must remain monotone and within its fixed endpoints')
+    return path.copy()
+
+
+def run_history_probe(seed, c, args, out, progress, save, started, *, prices_override=None,
+                      psi_path_override=None):
     """One complete conditional path, also used for independent price probes."""
     import e5f_matched_pf_moments as moments
     import run_e5f_perfect_foresight_person_demography_policy as terminal_checks
@@ -211,7 +232,7 @@ def run_history_probe(seed, c, args, out, progress, save, started, *, prices_ove
             or c['initial_price_rule'] != 'log_old_to_selected_2023_then_terminal'):
         raise ValueError('Explicit bounded historical price-probe contract required')
     years = 2007 + 4 * np.arange(count)
-    psi = np.r_[old.psi_path, np.full(count - 5, old.psi_path[-1])]
+    psi = validated_preference_path(old.psi_path, count, psi_path_override)
     terminal_price = float(terminal['policy'].price[0])
     reference = SimpleNamespace(parameters=terminal['parameters'], asset_price=terminal_price,
         renter_price=float(terminal['parameters'].user_cost_rate)*terminal_price,
@@ -256,7 +277,9 @@ def run_history_probe(seed, c, args, out, progress, save, started, *, prices_ove
         expected_bellman_solves=2*count,
         scope='conditional finite-horizon PF price evaluation; not market equilibrium or recalibration',
         price_origin='numerical_anchor' if prices_override is None else 'explicit_root_trial',
-        outstanding='post-2023 preference continuation diagnostic; horizon convergence and dated markets required'))
+        preference_path_origin='inherited_linear_path' if psi_path_override is None else 'explicit_fixed_endpoint_shape_diagnostic',
+        preference_announcement='Full dated path known in 2007; constant preference from 2023 onward',
+        outstanding='horizon convergence and dated markets required'))
     observations = []
     def observe(index, evaluation, parameters, grid, shared):
         budget = primitive.dated_budget(evaluation, parameters, shared, grid, float(rents[index]))

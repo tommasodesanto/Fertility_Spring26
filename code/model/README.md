@@ -906,3 +906,16 @@ under `../../output/model/e5f_simple_fertility_rebated_tax_20260908a/`. It compa
 rebated 1% and rebated 2% taxes on the same inherited population, solves price
 and rebate jointly, restores the selected transfer, and independently replays
 and audits each endpoint without figures or a future transition.
+
+## Fixed-endpoint historical preference pilot
+
+`tools/run_e5f_matched_pf_preference_pilot.py` compares three monotone historical
+preference timings at fixed inherited endpoints. The baseline evaluator accepts
+a strictly validated optional path; its default calculation is unchanged.
+`tools/prepare_e5f_matched_pf_preference_case.py` pins the completed parent,
+requires all three short-loop smokes before main cases and enforces the review
+deadline. `tools/e5f_matched_pf_birth_path.py` compares calendar-aligned aggregate
+birth-count indices, explicitly not female TFR or a production SMM objective.
+Launch through `../cluster/run_e5f_matched_pf_preference_pilot.sh` in an isolated
+snapshot. Evidence and author decisions are indexed in the main project at
+`output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
