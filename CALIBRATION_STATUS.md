@@ -2,6 +2,22 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**September 10, 10:18 UTC / 06:18 EDT.** Four root trials are verified.
+The maximum market gap is now 0.2235%, down from 1.915% in trial 3, but still
+above the unchanged 0.02% gate. Trial 5 is running; trial 6 is reserved for
+fresh reproduction under the current six-evaluation budget. Every completed
+trial passes mapping checks, with identical parameters, targets, weights and
+source. All target-fit and restriction tables are refreshed in
+`output/model/e5f_matched_pf_20260909a/HORIZON100_PROGRESS.md`.
+
+Only the unit-rent terminal-distance check remains outside tolerance at trial 4
+(1.086% versus 1%). Do not lower that tolerance. A longer-horizon assessment
+remains necessary even if the price root passes. The current conditional-path
+driver permits at most 100 dates and 3600 seconds; a 128-date diagnostic would
+require an isolated, tested operational-bound change and an explicitly pinned
+inherited price path. That follow-up has not been implemented or submitted.
+No new calibration or policy result is available.
+
 **September 10, 09:22 UTC / 05:22 EDT.** Three completed root trials are
 verified; maximum market residuals are 18.199%, 6.985%, and 1.915%. Trial 4
 is running. The 0.02% market gate and final replay remain unmet. At trial 3,

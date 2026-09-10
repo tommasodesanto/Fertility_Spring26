@@ -461,3 +461,6 @@ September10,06:34UTC: recovered20andcollectorcompleted. Full100-columnmatrix ind
 
 
 05:22 EDT: three completed trials verified; market gaps18.199%,6.985%,1.915%,trial4running. HORIZON100_PROGRESS.md now provides a complete provisional advisor readout with all12targets/all15parameterandrestrictionrows/terminaldistances. Regenerate by running review_horizon100_root_progress.py in this folder (no model solve). It selects by market residual and labels all prices/fit as provisional. Lead checked every table against source CSV and verified that the old-age dispersion is p90/p50, not a difference. All terminal checks at trial3pass except unitrent1.254%vs1%; historical horizon stability and final replay remain separate.
+
+
+06:18 EDT: four completed trials verified and full provisional tables refreshed. Best market gap0.2235%vs0.02%gate;trial5running,trial6reservedforreplay. Terminalunitrentgap1.086%vs1%stillfails. H128follow-up would require isolated/tested operationalbounds and explicit inherited-price-path support; not implemented/submitted. No calibration/policy result.

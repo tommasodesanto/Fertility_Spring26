@@ -127,3 +127,8 @@ Trial2passedallmappinggates in3256seconds and reducedmaxmarketgap .1819903→.06
 ## 05:22 EDT — third trial and reusable provisional readout
 
 Trial3passes mapping gates, reducesmaxmarketgap to.0191497, and leaves onlyunitrentoutside terminal-distance tolerances(.0125439vs.01). HouseholddistributionL1.0175702nowpasses.02. Noneofthiscertifieshistoricalhorizonstabilityorfinalmarketclearing. Trial4running. review_horizon100_root_progress.py validatesallcollectedtrials andbuilds HORIZON100_PROGRESS.md withcompletefit/parameter/restrictionandtailtables, selectingbysmallestmarketresidual. Actual3trialverificationpassed; labelscheckedagainstauthoritativestatistic definitions,includingp90/p50wealth/incomeratio. This is a morningreadoutbuildingblock,notnewcalibration.
+
+
+## 06:18 EDT — fourth trial and remaining horizon work
+
+Trial4passed mapping checks and lowered marketgap to.0022353236;trial5running,sixthcallreservedforfreshreplay. Fulltrialreview/tablebuilderpassesfourcases. Unit-rentterminaldistance.0108614stillfails.01whileallotherrecordedtailchecks pass. Keepthatgate. Longer-horizoncheckcannotbesilentlycalledcertifiedfromnearstationarypersonsorhouseholdL1alone. Currentrun_history_probe caps100dates and itsCLI3600seconds; tostudy128dates, prepareanisolatedsourcechangeextendingonlyoperationalbounds and a hash-pinned explicit pricepath through the existingprices_override hook. KeepF/runningrootimmutable. Aconstant-terminalprice extensionis initiallya prescribed-price diagnostic; itestablisheshorizonmarketvalidityonlyifalldatedresidualspass,andotherwise needsitsownpriceroot. No H128codechangeorjobwasmadeinthisturn.
