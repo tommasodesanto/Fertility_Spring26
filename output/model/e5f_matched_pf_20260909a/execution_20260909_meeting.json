@@ -73,7 +73,7 @@
   "next_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909b",
   "restart_regression_job": 17280998,
   "restart_tests_passed": 95,
-  "updated_utc": "2026-09-10 11:15 UTC",
+  "updated_utc": "2026-09-10 12:06 UTC",
   "historical_root_progress": {
     "sequential": {
       "completed_job": 17282612,
@@ -158,7 +158,7 @@
     "smoke_price_job": 17303124,
     "remaining_price_job": 17303125,
     "collector_job": 17309766,
-    "last_queue_state": "2026-09-10 11:15 UTC: trial6 reserved replay running; five verified trials; continuation17319026 queued after parent success; no market or horizon certificate",
+    "last_queue_state": "2026-09-10 12:06 UTC:parent completed and exact replay verified; continuation17319026 running first path,58tests passed",
     "caffeinate_pid": 17077,
     "morning_delivery": "2026-09-10 08:30 America/New_York",
     "root_job": 17309773,
@@ -187,7 +187,7 @@
     "jacobian_validated": true,
     "jacobian_condition_number": 3.1395190440449414,
     "root_started": true,
-    "completed_root_evaluations": 5,
+    "completed_root_evaluations": 6,
     "initial_root_anchor_reproduction_verified": true,
     "best_root_market_residual": 0.0004527188458867619,
     "continuation": {
@@ -204,7 +204,14 @@
       "launcher": "submit_horizon100_continuation.sh",
       "launcher_sha256": "a0c04fee368c33e2900af773e1f5a6ed0f200e77ad8d96679ded4c8108591a4e",
       "output": "output/historical_root_h100_continue_01/sequential",
-      "automatic_further_continuation": false
-    }
+      "automatic_further_continuation": false,
+      "status_at_latest_check": "RUNNING",
+      "startup_tests_passed": 58,
+      "contract_sha256": "00b08089bab8d1d61dc385726a5f009ae1c7f688d90c07fc2dcfbd29ca1500e1"
+    },
+    "root_completed": true,
+    "root_final_reproduction_max_abs": 0.0,
+    "root_final_reproduction_verified": true,
+    "root_status": "evaluation_budget"
   }
 }

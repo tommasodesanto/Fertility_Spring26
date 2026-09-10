@@ -1,6 +1,6 @@
 # 100-date perfect-foresight solution: provisional readout
 
-This is a price-solver diagnostic at inherited parameters, not a new calibration. The tables below use the collected trial with the smallest market residual. Final reproduction and horizon stability are not certified by this document.
+This is a price-solver diagnostic at inherited parameters, not a new calibration. The tables below use the collected trial with the smallest market residual. The final replay reproduces prices, residuals and all target tables exactly; the market and horizon gates remain unmet.
 
 | Trial | Maximum market gap | Mapping checks | Seconds |
 |---|---:|---|---:|
@@ -9,6 +9,7 @@ This is a price-solver diagnostic at inherited parameters, not a new calibration
 | 3 | 1.914974% | Pass | 3233.6 |
 | 4 | 0.223532% | Pass | 3220.0 |
 | 5 | 0.045272% | Pass | 3217.3 |
+| 6 | 0.045272% | Pass | 3181.6 |
 
 The market tolerance is **0.02%**. Parameters, empirical targets and weights are identical across these trials.
 

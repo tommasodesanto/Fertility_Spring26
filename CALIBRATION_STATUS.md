@@ -2,6 +2,20 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**September 10, 12:06 UTC / 08:06 EDT.** Parent root17309773 finished
+normally in5h24m28 after its six-path budget. Its final replay is independently
+verified: identical prices/residuals, byte-identical fit, parameter, measurement
+and transition tables; observed-date records differ only in runtime fields.
+The maximum gap remains0.04527%, above0.02%; this is a reproduced unfinished
+root, not an equilibrium. Full review: `horizon100_final_reproduction_review.json`
+in `output/model/e5f_matched_pf_20260909a/`. All six trial tables are verified.
+
+Continuation17319026 is RUNNING oncs693, first full path underway with fresh
+heartbeats. All58startup tests and pinned-parent restart checks passed. The
+three-path/10800-second round, unchanged source/inputs/gates and separate output
+remain as described below. It will extend beyond the morning readout. The
+unit-rent horizon check and matched re-estimation/policies remain outstanding.
+
 **September 10, 11:15 UTC / 07:15 EDT.** Five complete root trials pass
 independent receipt and mapping checks. The maximum market gap has fallen to
 0.04527%, still above the unchanged 0.02% gate. Evaluation 6 is the reserved

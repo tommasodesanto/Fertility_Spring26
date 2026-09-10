@@ -1,12 +1,13 @@
 # Matched perfect-foresight implementation
 
 Latest overnight plan: [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md). The complete
-100-column price panel is verified. Five price-root trials reduce the market
-gap to 0.04527%, above the 0.02% gate; fresh replay is running. One bounded
-continuation (17319026) is queued after that replay and may extend beyond the
-08:30 readout. [HORIZON100_PROGRESS.md](HORIZON100_PROGRESS.md) contains every
-provisional target, parameter restriction and terminal check. No re-estimation
-or matched policy result is claimed. Read this before older checkpoints below.
+100-column price panel and the six-evaluation root's exact final replay are
+verified. The market gap remains0.04527%, above0.02%; this is an unfinished
+price root. Continuation17319026 is running after58startup checks and verified
+parent receipts. [HORIZON100_PROGRESS.md](HORIZON100_PROGRESS.md) contains all
+fit/parameter/terminal tables; [replay verification](horizon100_final_reproduction_review.json)
+records the exact reproduction. Horizon stability, re-estimation and matched
+policies remain outstanding. Read this before older checkpoints below.
 
 Author instruction, September 9: approximate initial steady state; households
 learn the entire transition immediately at its onset; calibrate observations

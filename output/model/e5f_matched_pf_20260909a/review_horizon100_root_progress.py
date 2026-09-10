@@ -41,6 +41,47 @@ def fmt(value):
     return "—" if value == "" else f"{float(value):.8g}"
 
 
+def verify_completed_replay():
+    if not (ROOT / "summary.json").exists():
+        return None
+    summary = json.loads((ROOT / "summary.json").read_text())
+    history = json.loads((ROOT / "root_history.json").read_text())
+    assert summary["evaluations"] == history["evaluations"] == 6
+    assert summary["best"] == history["best"]
+    assert summary["status"] == "evaluation_budget"
+    assert summary["finite_horizon_market_converged"] is False
+    assert summary["final_reproduction_max_abs"] == history["final_reproduction_max_abs"] == 0.0
+    best, final = history["best"], history["final"]
+    assert best["mapping_valid"] and final["mapping_valid"]
+    for key in ("prices", "residual", "x"):
+        assert np.array_equal(best[key], final[key])
+    assert best["score"] == final["score"] == np.max(np.abs(best["residual"]))
+    folders = [ROOT / Path(row["payload"]["directory"]).name for row in (best, final)]
+    for folder, row in zip(folders, (best, final)):
+        assert hashlib.sha256((folder / "summary.json").read_bytes()).hexdigest() == row["payload"]["summary_sha256"]
+    identical = ("target_fit.csv", "parameters.csv", "measurement.json", "transition_path.csv")
+    for name in identical:
+        assert (folders[0] / name).read_bytes() == (folders[1] / name).read_bytes()
+    observations = [json.loads((folder / "observed_dates.json").read_text()) for folder in folders]
+    assert len(observations[0]) == len(observations[1]) == 100
+    for left, right in zip(*observations):
+        assert {k: v for k, v in left.items() if k != "elapsed_seconds"} == {k: v for k, v in right.items() if k != "elapsed_seconds"}
+    pins = {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
+            for name in ("contract.json", "summary.json", "root_history.json")}
+    continuation = json.loads((BASE / "horizon100_continuation_contract.json").read_text())
+    for key, name in (("restart_contract", "contract.json"), ("restart_history", "root_history.json"), ("restart_summary", "summary.json")):
+        assert continuation[key + "_sha256"] == pins[name]
+    result = dict(status="exact_replay_verified_market_root_unfinished", parent_job=17309773,
+                  root_receipt_sha256=pins, final_reproduction_max_abs=0.0,
+                  byte_identical_best_and_replay=list(identical),
+                  observed_dates_equal_except_elapsed_seconds=True,
+                  maximum_market_residual=best["score"], market_tolerance=2e-4,
+                  continuation_job=17319026, continuation_restart_hashes_match=True,
+                  historical_equilibrium_certified=False)
+    (BASE / "horizon100_final_reproduction_review.json").write_text(json.dumps(result, indent=2) + "\n")
+    return result
+
+
 def main():
     trials = []
     reference = None
@@ -98,10 +139,12 @@ def main():
                   best_collected_evaluation=best["evaluation"],
                   qualification="This collector verifies individual trials. Final root replay, horizon stability, calibration and policy certification require separate evidence.")
     (BASE / "horizon100_root_progress_review.json").write_text(json.dumps(review, indent=2) + "\n")
+    replay = verify_completed_replay()
     lines = ["# 100-date perfect-foresight solution: provisional readout", "",
              "This is a price-solver diagnostic at inherited parameters, not a new calibration. "
              "The tables below use the collected trial with the smallest market residual. "
-             "Final reproduction and horizon stability are not certified by this document.", "",
+             + ("The final replay reproduces prices, residuals and all target tables exactly; the market and horizon gates remain unmet."
+              if replay else "Final reproduction and horizon stability are not certified by this document."), "",
              "| Trial | Maximum market gap | Mapping checks | Seconds |",
              "|---|---:|---|---:|"]
     lines += [f"| {r['evaluation']} | {100*r['maximum_market_residual']:.6f}% | Pass | {r['elapsed_seconds']:.1f} |" for r in trials]
