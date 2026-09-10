@@ -1,0 +1,113 @@
+{
+  "status": "two_complete_valid_root_trials_not_equilibrium",
+  "verified_trials": [
+    {
+      "evaluation": 1,
+      "elapsed_seconds": 3310.3426632191986,
+      "maximum_market_residual": 0.18199031890421163,
+      "mapping_gates_pass": true,
+      "market_gate_pass": false,
+      "full_fit_and_parameter_directory": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/meeting_receipts/historical_root_h100_01/sequential/evaluation_001",
+      "available_artifacts_verified": true,
+      "terminal_distance": {
+        "all_checks_pass": false,
+        "candidate_household_heads_model_units": 0.6737773805564974,
+        "candidate_resident_persons_model_units": 1.6352424992003125,
+        "candidate_terminal_year": 2407,
+        "checks": {
+          "asset_price_relative_gap": true,
+          "equal_transfer_relative_gap": true,
+          "household_heads_relative_gap": true,
+          "normalized_head_age_sex_l1": true,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": true,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": true,
+          "resident_persons_relative_gap": true
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.0,
+          "equal_transfer_relative_gap": 0.0,
+          "household_heads_relative_gap": 0.008067240937330846,
+          "normalized_head_age_sex_l1": 0.00038032981210355996,
+          "normalized_household_distribution_l1": 0.050116884420742865,
+          "normalized_person_age_sex_l1": 0.00045998189513731403,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.0,
+          "resident_persons_relative_gap": 0.008222142950378474
+        },
+        "reference_household_heads_model_units": 0.6792571113320081,
+        "reference_resident_persons_model_units": 1.6487991616034805,
+        "reference_terminal_year_label": 2100,
+        "status": "not_converged",
+        "tolerances": {
+          "asset_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_head_age_sex_l1": 0.02,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "psi_absolute_gap": 0.001,
+          "renter_price_relative_gap": 0.01,
+          "resident_persons_relative_gap": 0.01
+        }
+      }
+    },
+    {
+      "evaluation": 2,
+      "elapsed_seconds": 3255.651007148437,
+      "maximum_market_residual": 0.06984612324070848,
+      "mapping_gates_pass": true,
+      "market_gate_pass": false,
+      "full_fit_and_parameter_directory": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/meeting_receipts/historical_root_h100_01/sequential/evaluation_002",
+      "available_artifacts_verified": true,
+      "terminal_distance": {
+        "all_checks_pass": false,
+        "candidate_household_heads_model_units": 0.6804796220592214,
+        "candidate_resident_persons_model_units": 1.651683941805921,
+        "candidate_terminal_year": 2407,
+        "checks": {
+          "asset_price_relative_gap": true,
+          "equal_transfer_relative_gap": true,
+          "household_heads_relative_gap": true,
+          "normalized_head_age_sex_l1": true,
+          "normalized_household_distribution_l1": true,
+          "normalized_person_age_sex_l1": true,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": false,
+          "resident_persons_relative_gap": true
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.0016426165947203094,
+          "equal_transfer_relative_gap": 0.0,
+          "household_heads_relative_gap": 0.0017997761183773827,
+          "normalized_head_age_sex_l1": 0.00044526642559184545,
+          "normalized_household_distribution_l1": 0.01526003616104633,
+          "normalized_person_age_sex_l1": 0.0005522560439960353,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.011555126580144048,
+          "resident_persons_relative_gap": 0.001749624981392549
+        },
+        "reference_household_heads_model_units": 0.6792571113320081,
+        "reference_resident_persons_model_units": 1.6487991616034805,
+        "reference_terminal_year_label": 2100,
+        "status": "not_converged",
+        "tolerances": {
+          "asset_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_head_age_sex_l1": 0.02,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "psi_absolute_gap": 0.001,
+          "renter_price_relative_gap": 0.01,
+          "resident_persons_relative_gap": 0.01
+        }
+      }
+    }
+  ],
+  "unchanged_parameters_targets_weights_and_sources": true,
+  "maximum_market_residual_reduction_fraction": 0.6162096771890865,
+  "current_evaluation": 3,
+  "qualification": "Price-root progress only. No recalibration or horizon certification; full-market gate remains2e-4 and final replay is pending."
+}

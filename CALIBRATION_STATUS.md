@@ -2,6 +2,18 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**September 10, 08:29 UTC / 04:29 EDT.** Two complete 100-date root trials
+are verified. The first reproduces the supplied-price anchor numerically; the
+first price update reduces the maximum market residual from 18.199% to 6.985%,
+with all mapping/accounting gates passing. The required market tolerance is
+0.02%, so this is progress toward equilibrium, not an equilibrium result.
+Evaluation 3 is running. Parameters, targets, weights, source and numerical
+gates are unchanged; no re-estimation or final replay has occurred. Both
+completed trials still fail the terminal-distance diagnostic. Full fit and
+parameter tables: `output/model/e5f_matched_pf_20260909a/meeting_receipts/historical_root_h100_01/sequential/`.
+Independent verification: `horizon100_root_progress_review.json` in the same
+task output folder. The six-path/21000-second budget remains unchanged.
+
 **September 10, 06:34 UTC / 02:34 EDT.** Recovery17309087completed in45m54
 and collector17309766completed successfully. The full100by100price-response
 matrix was independently reconstructed exactly from local receipts, including

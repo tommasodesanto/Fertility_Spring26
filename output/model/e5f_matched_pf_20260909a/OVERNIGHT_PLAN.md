@@ -117,3 +117,8 @@ All1212anchor/probefitrowsandweightedlossesrecomputed; target/weightidentityveri
 Evaluation 1 completed in 3310 seconds. All numerical mapping gates pass; the residual vector and loss match the original supplied-price anchor exactly. Target-fit, parameter and measurement files are byte-identical. The transition CSV differs only in the ACS audit source path in four historical rows, from immutable snapshot E to F, with identical data hashes and all remaining nested audit fields equal. See horizon100_initial_root_reproduction.json. This verifies the runtime/source-wrapper adaptation on an actual full evaluation; it does not establish equilibrium. Evaluation 2, the first changed-price trial, is now running.
 
 Monitoring detail: the shared progress dictionary retains completed_dates=100 and current_year=2403 from the prior trial during the next trial's backward phase. Interpret those fields only when phase is historical_forward and associate them with the current evaluation. A fresh heartbeat in historical_backward_and_forward does not mean the new trial already completed 100 dates. No running source is changed for this reporting convention.
+
+
+## 04:29 EDT — first price step improves market clearing
+
+Trial2passedallmappinggates in3256seconds and reducedmaxmarketgap .1819903→.0698461 (61.62%reduction), stillabove2e-4. Lead recomputed100datedresiduals, verifiedartifactpins/all12weightedlossrows and unchangedtarget/weight/parameter/sourcecontracts for bothcompletedtrials. Bothterminaldistancesremainnot_converged. Trial3isrunning; preserveallgatesandsix-pathbudget. No newparameterestimatesorequilibrium/policyclaim. Evidence:horizon100_root_progress_review.json.

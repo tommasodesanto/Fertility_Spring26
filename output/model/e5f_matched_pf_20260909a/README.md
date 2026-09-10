@@ -455,3 +455,6 @@ September10,06:34UTC: recovered20andcollectorcompleted. Full100-columnmatrix ind
 
 
 03:40 EDT: first root evaluation numerically reproduces the supplied-price anchor exactly, with only four documented E-to-F ACS source-path differences in the transition CSV. Review: horizon100_initial_root_reproduction.json. First changed-price trial (evaluation 2) is running; no new equilibrium yet.
+
+
+04:29 EDT: two complete root trials verified in horizon100_root_progress_review.json. Maximum market gap falls18.199%→6.985%; both mapping gates pass, but market tolerance0.02% and terminal checks still fail. Trial3running. Full12-rowfits andallparameters collected in meeting_receipts/historical_root_h100_01/sequential/evaluation_001 and evaluation_002. No calibration or final reproduction yet.
