@@ -449,3 +449,6 @@ Prepared, not submitted: submit_horizon100_collector_recovery.sh and horizon100_
 
 
 September10,06:00UTC:99originalprobes independently validated;only20timedout. Recovery17309087continues. Collector17309766uses the explicit selection and waitsafterokrecovery. Replacementroot17309773waitsafterokcollector. Dependencyupdatesfailedtwice;oldcollector17303126androot17304265confirmedcancelledatzeroruntimebeforeunchangedrootresubmission. Allscientific/source/gate/evaluationbudgetsunmodified. Partialvalidationpacket contains297remoteand396localartifactpinchecks. Alloriginallightreceiptscollected;largecheckpointsremainremote.
+
+
+September10,06:34UTC: recovered20andcollectorcompleted. Full100-columnmatrix independentlyreconstructedexactly; condition3.140/all100ownderivativesnegative. Root17309773RUNNINGcs616,58testsPASS,firstpathunderway. See horizon100_jacobian_review.json, jacobian_horizon100_sequential.json and finalized horizon100_root_contract.json. Diagnostic horizon100_moment_price_derivatives.json contains12by100forwarddifferences (step.01), all1212fitrows/gaps/lossesverified; it is at a supplied-price anchor, not an equilibrium-adjusted parameter Jacobian. Formula is each probe model moment minus anchor, divided by.01; inputCSVhashes and moment/year ordering are stored. No extra model solves.

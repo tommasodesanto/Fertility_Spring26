@@ -1,0 +1,24 @@
+{
+  "status": "complete_100_column_price_jacobian_independently_reproduced",
+  "remote_packet_sha256": "750f83b982bec4a4d401cc1187f4e2b7ed434b4209647a206565d6f9f6f86657",
+  "matrix_reconstruction_exact": true,
+  "all100cases_shared_contract_and_mapping_gates_pass": true,
+  "matrix_shape": [
+    100,
+    100
+  ],
+  "condition_number": 3.1395190440449414,
+  "minimum_singular_value": 0.9023276343022614,
+  "maximum_singular_value": 2.832874791859969,
+  "rank": 100,
+  "own_price_derivative_range": [
+    -2.0333046963186456,
+    -1.183746144634859
+  ],
+  "negative_own_price_derivatives": 100,
+  "maximum_absolute_unconstrained_newton_log_step": 0.19966553026841094,
+  "linear_newton_prediction_residual": 8.326672684688674e-17,
+  "recovery_seconds": 2745.2584624430165,
+  "recovery_probe": 20,
+  "interpretation": "Price-path numerical Jacobian, not parameter identification or equilibrium certification. The safeguarded root and horizon/replay checks remain necessary."
+}

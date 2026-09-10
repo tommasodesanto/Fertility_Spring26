@@ -1,6 +1,23 @@
 # Calibration Status
 
-Updated: `2026-09-10` (99 original price probes verified; one recovery; root dependency repaired)
+Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
+
+**September 10, 06:34 UTC / 02:34 EDT.** Recovery17309087completed in45m54
+and collector17309766completed successfully. The full100by100price-response
+matrix was independently reconstructed exactly from local receipts, including
+allsource/contract/mappinggates. Its conditionnumber is3.140, rank100, and all
+100own-price excess-demand derivatives are negative. These are numerical price
+responses, not parameter identification or evidence of a calibrated equilibrium.
+Review: `output/model/e5f_matched_pf_20260909a/horizon100_jacobian_review.json`.
+
+Full100-date root17309773is RUNNING oncs616; all58startup tests passed and the
+first complete backward/forward evaluation is underway with fresh heartbeats.
+SourceF96a41873, maximum6paths,21000seconds, allmarket/feasibility/replay gates
+unchanged. No completed root evaluation or new equilibrium yet. The full1212
+fit rows across the anchor and100probes reproduce their gaps and weighted losses.
+A12by100moment-price sensitivity packet is saved as a diagnostic at the supplied
+price anchor; it is not the11-parameter identification matrix. Horizon stability,
+matched re-estimation and new policies remain pending.
 
 **September 10, 06:00 UTC / 02:00 EDT.** Original100-price panel finished:
 99successfulprobes independently validated against the anchor, with297remote
