@@ -2,12 +2,22 @@
 
 ## Current work — full planner allocation for the presentation
 
-Read the top of the [single assessment](oracle_essential_theory_assessment.md).
-The author's latest instruction is to go beyond the marginal argument and show
-the full allocation as a simple class exercise. The reader now gives every
-consumption and housing bundle at fixed fertility, the full joint optimum with
-an explicit quadratic fertility formula, and six proposed slides' wording.
-No main deck or manuscript edit has been adopted.
+Read the rewritten [theory note](../../pdf/simplified_olg_consolidated_theory.pdf)
+([LaTeX source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_theory.tex)).
+At the author's September 10 request, this replaces the earlier consolidated
+note with the proposed serviced-interest model and the verified full allocation
+argument. It states the budgets, stationary equilibrium, fixed-fertility
+planner, sufficient housing conditions, joint fertility result, and voluntary
+fertility at the final assigned bundles. Derivations are in its appendix.
+The [working assessment](oracle_essential_theory_assessment.md) retains the
+discussion and earlier rounds. The main deck and author-controlled manuscript
+have not been changed by this rewrite.
+
+The rewritten PDF has eight pages of model and results and four pages of
+derivations. The exact source compiled twice with no errors, undefined
+references, duplicate destinations, or overfull boxes. All pages were rendered
+and inspected. A separate Astra/max review found no consequential mathematical
+errors; finance must be relaxed and continuation objects held fixed as stated.
 
 The full aggregate housing and joint-fertility theorem, exact all-tenure income
 interval, and private-fertility counterexample passed independent analytical
@@ -33,9 +43,9 @@ source objects and exact normalized browser/local agreement: 15,058 characters,
 FNV-1a 1433091282; SHA-256
 0a61e39cbf3bf1d367f0c689ab38f2c867444c8e27c379b546ecc1373358b3f1.
 The authorized [conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359)
-is complete; no new generation is pending. Overnight work should focus on a
-clear morning decision about this one proposed model, with cutoff 08:30 EDT
-September 10, rather than starting another design or numerical search.
+is complete; no new generation is pending. The overnight monitor is paused.
+The next step is the author's assessment of the rewritten note, rather than
+another model design or numerical search.
 
 ## Previous checked result — two periods and common positive retirement income
 
@@ -363,10 +373,12 @@ primitive equilibrium question. No model, planner, manuscript or slide
 specification was changed. Prompts, final responses and a sanitized completion
 receipt are linked in the assessment; raw execution logs are not deliverables.
 
-## September 9 consolidated deliverables
+## September 9 consolidated deliverables (historical)
 
 - [Theory note](../../pdf/simplified_olg_consolidated_theory.pdf), with
   [source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_theory.tex).
+  This stable path now contains the September 10 rewrite described above;
+  the September 9 text is retained in Git history.
 - [Seven-slide proposal](../../pdf/simplified_olg_consolidated_slides.pdf), with
   [source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_slides.tex).
 - [Morning assessment](overnight_review.md) and [PDF verification](consolidated_pdf_qa.md).

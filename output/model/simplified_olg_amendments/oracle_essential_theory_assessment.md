@@ -1,5 +1,11 @@
 # Theory decision brief
 
+**Reading copy:** the September 10 argument is now written as a self-contained
+[theory note](../../pdf/simplified_olg_consolidated_theory.pdf), with the full
+model and propositions followed by their derivations. Its
+[LaTeX source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_theory.tex)
+replaces the previous consolidated note. This page retains the working record.
+
 **September 10.** We have a conditional result for the proposed two-period
 model: at fixed fertility, the full planner gives the young more housing and
 can take consumption from them. When it also chooses fertility, fertility rises
