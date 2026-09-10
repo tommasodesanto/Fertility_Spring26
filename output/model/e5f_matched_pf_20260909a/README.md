@@ -431,3 +431,9 @@ Current decisions remain empirical family-group/calendar alignment and the
 future preference continuation; no target or weight has changed.
 
 September10,04:09UTC: source96a41873 passes58cluster tests. Full100-date market root17304265 is queued after the price collector. See OVERNIGHT_PLAN.md for its bounded budget and source reconciliation.
+
+## Two-page algorithm and calibration primer
+
+The author requested a short teaching note on the implemented solution and calibration architecture. Read [the two-page PDF](../../pdf/model_solution_and_calibration_sketch.pdf). Editable LaTeX: [model_solution_and_calibration_sketch.tex](../../../docs/model/model_solution_and_calibration_sketch.tex). Page1 explains household backward solution, analytic discrete-choice probabilities, forward distributions and market-price iteration. Page2 explains historical initialization, observation dates, the12moment groups and the intended11parameter outer search. It explicitly distinguishes completed equilibrium work from pending horizon certification and re-estimation. No new numerical result is reported.
+
+Delegated draft and independent lead technical/visual review are recorded in solution_primer_qa.json. Exactly two pages, compiled twice, no overfull boxes; both pages inspected. Rebuild with pdflatex from the source, directing all output to tmp/pdfs/model_solution_and_calibration_sketch, then copy the checked PDF to output/pdf. No slide or manuscript file changed.

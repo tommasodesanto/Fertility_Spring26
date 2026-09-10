@@ -1,0 +1,101 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.68in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,booktabs,array,enumitem,xcolor,fancyhdr}
+\usepackage[hidelinks]{hyperref}
+\definecolor{ink}{HTML}{20354B}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\color{ink}Model solution and calibration}\fancyhead[R]{\small September 2026}
+\fancyfoot[C]{\small\thepage\ / 2}\renewcommand{\headrulewidth}{0.3pt}
+\setlength{\headheight}{14pt}\setlength{\parindent}{0pt}\setlength{\parskip}{4.5pt}
+\setlist[enumerate]{leftmargin=*,itemsep=5pt,topsep=3pt,parsep=2pt}
+\newcommand{\lead}[1]{\textbf{\color{ink}#1}}
+\begin{document}
+\begin{center}
+{\Large\bfseries How the quantitative model is solved}\\[3pt]
+{\small An advisor's guide to the current perfect-foresight implementation}
+\end{center}
+
+\lead{The object we want.} A path of housing prices, household choices and population distributions that is mutually consistent: households optimize using the anticipated prices, their decisions generate housing demand, and demand equals supply at every date. \textbf{Solving this equilibrium holds the preference parameters fixed. Calibrating them is a separate, outer calculation.}
+
+\lead{The environment in the computer.} A model period is four years, with 17 household age cells. The household state records wealth (120 grid nodes), inherited tenure/housing product, income, lifetime births and children still at home. The current comparison has one housing market. Households value consumption, housing services, children and bequests. They choose saving, rental housing or an owned product, and whether to attempt another birth. Biological success remains uncertain even in perfect foresight: households know aggregate future paths, not future individual outcomes.
+
+\begin{enumerate}
+\item \lead{Supply a candidate price path and a distant continuation.}
+The inputs include preferences, income and demographic processes, the initial household distribution, housing supply and fiscal rules. A separately solved stationary economy supplies the terminal value function and terminal price. A guess for all dated asset prices also determines rents through the owner--renter no-arbitrage equation:
+\[
+ r_t=(R+\delta+\tau_H)p_t-p_{t+1}.
+\]
+Here $R$ is the gross financial return, $\delta$ depreciation and $\tau_H$ the property-tax rate, all in four-year units. Expected capital gains lower the current rent consistent with a given purchase price. Rents are therefore not independent unknowns in this baseline.
+
+\item \lead{Work backward to solve household decisions.}
+At each calendar date and age, use the next date's value function to value every feasible housing and fertility outcome. Schematically, for a particular housing/birth branch $b$:
+\[
+ Q_{t,b}(s)=\max_{\text{feasible saving and housing}}
+ \bigl\{u_b(c,h;s)+\beta\,\mathbb E[V_{t+1}(s')]\bigr\}.
+\]
+The implementation includes survival, bequests and income/child transitions in this continuation calculation. It searches feasible saving intervals with gridded, interpolated continuation values; owner products are discrete and rental housing is optimized. Budgets and down-payment constraints restrict the menu. This is a numerical approximation to the household problem.
+
+\item \lead{Integrate the discrete-choice shocks analytically.}
+In the \emph{sequential arm}, the attempt decision anticipates biological success and subsequent housing-choice shocks. In the \emph{simultaneous fertility-nest arm}, wait and attempt are two groups of complete housing plans. An attempt plan specifies housing for failure and success; selection precedes the biological outcome. For plan $k$ in fertility group $a$, with deterministic expected value $q_{ak}$:
+\[
+ I_a=\kappa\log\!\sum_k e^{q_{ak}/\kappa},\qquad
+ \Pr(a)=\frac{e^{I_a/\sigma}}{\sum_b e^{I_b/\sigma}},\qquad
+ \Pr(k\mid a)=\frac{e^{q_{ak}/\kappa}}{\sum_\ell e^{q_{a\ell}/\kappa}}.
+\]
+Housing scale $\kappa$ and fertility scale $\sigma$ satisfy $0<\kappa\leq\sigma$; $\sigma$ can differ for first and later attempts. These closed-form probabilities require no numerical integration over taste shocks. Nesting describes their correlation, not a later revelation of one shock.
+
+\item \lead{Work forward, then update all prices.}
+Starting from the inherited distribution, propagate household mass using choice probabilities, income transitions, births, child departures, aging and mortality. The forward pass recomputes policies using stored continuation values: there are two household-solution passes per date, not one stationary solve. Aggregate housing demand $D_t$ and compare it with supply $S_t$:
+\[
+ F_t(p;\theta)=\frac{D_t(p;\theta)-S_t(p_t)}{S_t(p_t)}=0
+ \quad\text{at every date }t.
+\]
+A safeguarded Broyden method updates the whole log-price vector jointly and repeats the backward/forward calculation. It starts from finite-difference price responses. Market convergence requires a maximum relative gap below $2\times10^{-4}$ (0.02\%), with a fresh repeated evaluation. A steady state instead combines age-backward household solution, distribution fixed-point iteration and a scalar price root. A transition must also be checked against a longer horizon: clearing markets alone does not validate its distant boundary.
+\end{enumerate}
+
+\newpage
+\begin{center}
+{\Large\bfseries How the calibration wraps around the solution}\\[3pt]
+{\small The dates, the targets and the distinction between two numerical loops}
+\end{center}
+
+\lead{What year are we fitting?} The main model measurement date is \textbf{2023, on a transition}. At 2007 households learn the entire aggregate path immediately; the fertility-preference intercept changes along its specified path. Future dates value anticipated choices rather than add calibration observations. The diagnostic holds this intercept constant after 2023; that continuation remains provisional.
+
+\lead{How the historical starting point is constructed.} For each parameter candidate, solve an old stationary economy and normalize its fertility-preference intercept to completed fertility of 2.1. Reweight age margins to observed 2007 composition and anchor housing supply. Historical age/head margins follow data through 2023; afterward, the demographic law advances population without a stationary reset. Old-regime policies provide pre-2007 cohort history; 2007 decisions already anticipate the transition.
+
+\lead{What enters the objective.} There are 12 retained moments. The data have different dates and measurement units; ``fit 2023'' does not mean all targets were observed in 2023.
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.15\linewidth}p{0.43\linewidth}p{0.36\linewidth}@{}}
+\toprule
+\textbf{Block} & \textbf{Moments} & \textbf{Empirical reference}\\
+\midrule
+Fertility (4) & Completed fertility; childlessness; mean first-birth age; share of first births at 30+ & 2024 CPS, women 40--44; NCHS maternal cohorts 1979--84.\\[4pt]
+Housing (5) & First-birth rooms response; rooms gap for 3+ versus 1--2 children; parent ownership gap; overall ownership; mean rooms & Reviewed PSID Sun--Abraham contrast; four pooled 2012--2023 ACS moments.\\[4pt]
+Wealth (3) & Wealth/earnings; annual bequests/wealth; old-age wealth/income dispersion & Approved PSID vintages and an external bequest normalization.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The first-birth housing moment follows the same selected 2019 risk set along birth and no-birth branches into 2023. Aggregate age reweighting is excluded from this comparison. First-birth timing combines historical hazards with old-regime prehistory and the 2023 childlessness stock. 
+
+\lead{The outer parameter loop.} The intended joint estimation chooses an 11-dimensional vector $\theta$ to minimize weighted moment discrepancies:
+\[
+ \widehat\theta=\arg\min_{\theta\in\Theta}
+ L(\theta),\qquad
+ L(\theta)=\sum_{m=1}^{12}w_m
+ \bigl[M_m(p^*(\theta),\theta)-\widehat M_m\bigr]^2.
+\]
+Here $p^*(\theta)$ is the market-clearing path for that candidate, $M_m$ the model measurement, $\widehat M_m$ the empirical target, and $\Theta$ the search bounds and restrictions. The fixed weights mix empirical uncertainty estimates and declared synthetic scales; they are not all inverse sampling variances.
+
+\begin{enumerate}
+\item \textbf{Propose all 11 parameters jointly.} These govern discounting; first- and later-attempt taste dispersion; the owner-service premium and initial housing-supply scale; two bequest parameters; child housing needs; the first-birth cost and housing jump; and the 2007--2023 fertility-preference change. Tenure taste dispersion and housing-supply elasticity remain externally fixed.
+\item \textbf{Rebuild and solve that candidate's economy.} Renormalize the old intercept, rebuild the initial state and stationary endpoint, then solve the full price path described on page 1. A price update inside this step does not change $\theta$.
+\item \textbf{Measure, compare and refine.} Compute all 12 moments, inspect the weighted discrepancies, and use parameter sensitivities to choose further proposals. Accept an improved candidate only after equilibrium, feasibility, accounting and reproduction checks. This is the intended outer search; the current matched-PF work has not yet re-estimated $\theta$.
+\end{enumerate}
+
+\lead{Two Jacobians, two different jobs.} The price Jacobian asks how excess demand at each date responds to every dated price (100 by 100 on a 100-date path). The calibration Jacobian asks how 12 moments respond to 11 parameters \emph{after prices adjust}. Having 12 targets for 11 parameters is necessary, but does not establish informative local rank or strong identification.
+
+\lead{Where we stand.} Both short choice-arm paths and the longer sequential path clear markets. Long-horizon equilibrium work is in progress; horizon stability and new joint calibration remain pending. Four pooled ACS date mappings and two family-group mappings also require resolution before production interpretation. The current objective fits cross-sectional/cohort moments, not the full annual historical time series.
+
+\end{document}
