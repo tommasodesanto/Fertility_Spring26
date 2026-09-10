@@ -4,6 +4,7 @@ import copy
 import csv
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -55,14 +56,16 @@ def main():
         c.pop(field,None)
     shape=pilot.SHAPES[args.case]
     smoke=args.phase=='smoke'
-    mode='conditional' if smoke else ('replay' if shape==0 else 'root')
+    conditional_only=os.environ.get('E5F_PILOT_CONDITIONAL_ONLY','0')
+    if conditional_only not in ('0','1'):raise ValueError('Explicit conditional-only flag must be0or1')
+    mode='conditional' if smoke else ('replay' if shape==0 else ('conditional' if conditional_only=='1' else 'root'))
     c.update(experiment='fixed_endpoint_preference_shape_pilot',arm='sequential',
         shape_coefficient=shape,pilot_mode=mode,probe_coordinate=-1,path_date_count=6 if smoke else 100,
         preconditioner='diagonal' if smoke else 'verified_parent_broyden',
         maximum_path_evaluations=3 if mode=='root' else 1,
         seconds=min(1200 if smoke else 10800,remaining),absolute_deadline_unix=DEADLINE,
         scope='six_date_plumbing_smoke_only' if smoke else 'fixed_endpoint_historical_preference_timing_pilot',
-        save_initial_2023_state=False)
+        save_initial_2023_state=False,conditional_only=conditional_only=='1')
     for field,name in [('parent_contract','contract.json'),('parent_history','root_history.json'),('parent_summary','summary.json')]:
         c[field]=str(PARENT/name);c[field+'_sha256']=PINS[name]
     driver=pilot.DRIVER

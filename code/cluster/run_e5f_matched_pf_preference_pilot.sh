@@ -20,4 +20,7 @@ export MPLCONFIGDIR="$PWD/output/cache/mpl_${E5F_PILOT_PHASE}_${SLURM_ARRAY_TASK
 export NUMBA_CACHE_DIR="$PWD/output/cache/numba_${E5F_PILOT_PHASE}_${SLURM_ARRAY_TASK_ID}"
 mkdir -p "$MPLCONFIGDIR" "$NUMBA_CACHE_DIR"
 NUMBA_DISABLE_JIT=1 python -m unittest test_run_e5f_matched_pf_preference_pilot test_e5f_matched_pf_birth_path test_e5f_matched_pf_path_root test_run_e5f_matched_pf_historical_root
+# sbatch inherits the submitter environment; test-only JIT settings must not leak.
+export NUMBA_DISABLE_JIT=0
+python -c 'import numba; assert not numba.config.DISABLE_JIT; print("NUMBA_DISABLE_JIT=0: compiled model execution enabled", flush=True)'
 exec python code/model/tools/prepare_e5f_matched_pf_preference_case.py --phase "$E5F_PILOT_PHASE" --case "$SLURM_ARRAY_TASK_ID"
