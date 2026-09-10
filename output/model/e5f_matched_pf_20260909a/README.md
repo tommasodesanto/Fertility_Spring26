@@ -1,5 +1,12 @@
 # Matched perfect-foresight implementation
 
+Morning discussion PDF: [matched_pf_morning_readout_20260910.pdf](../../pdf/matched_pf_morning_readout_20260910.pdf).
+Three pages cover the verified numerical progress, all twelve target fits,
+all fifteen parameter/restriction rows and remaining checks. The report is
+explicitly partial; continuation17319026 is still running. Rebuild with
+`build_morning_readout.py` using the bundled Python runtime. Render/numeric QA:
+`morning_readout_pdf_qa.json`.
+
 Latest overnight plan: [OVERNIGHT_PLAN.md](OVERNIGHT_PLAN.md). The complete
 100-column price panel and the six-evaluation root's exact final replay are
 verified. The market gap remains0.04527%, above0.02%; this is an unfinished

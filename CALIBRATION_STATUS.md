@@ -2,6 +2,17 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**Morning discussion packet, September 10, 12:27 UTC / 08:27 EDT.**
+The three-page partial readout is
+`output/pdf/matched_pf_morning_readout_20260910.pdf`. All pages were visually
+inspected; all60target numeric cells and37parameter/bound numeric cells match
+verified receipts. It includes every target and parameter restriction, dated
+measurement issues, actual policy status and the ordered remaining work.
+PDFSHA256: `2b7db84d1ea7cdd58ae9f873cfa4638fca72d71dcd28b516160b1232563b4b49`.
+This is report verification, not a new calibration or horizon certificate.
+Continuation17319026 remains active; scheduled overnight monitoring pauses at
+the morning handoff. The submitted bounded cluster job continues independently.
+
 **September 10, 12:06 UTC / 08:06 EDT.** Parent root17309773 finished
 normally in5h24m28 after its six-path budget. Its final replay is independently
 verified: identical prices/residuals, byte-identical fit, parameter, measurement
