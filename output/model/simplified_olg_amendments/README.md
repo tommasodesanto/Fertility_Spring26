@@ -2,6 +2,8 @@
 
 ## Current work — full planner allocation for the presentation
 
+Author's [questions and reading notes](../../../docs/model/theory_reading_notes.txt).
+
 Read the rewritten [theory note](../../pdf/simplified_olg_consolidated_theory.pdf)
 ([LaTeX source](../../../latex/JMP_DS_suggestions/simplified_olg_consolidated_theory.tex)).
 At the author's September 10 request, this replaces the earlier consolidated
