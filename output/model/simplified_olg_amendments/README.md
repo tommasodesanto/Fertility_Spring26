@@ -5,9 +5,22 @@
 The author explicitly authorized overnight theory work after rejecting the
 condition-heavy result below as unsuitable for the presentation in four days.
 Read the top of the [single assessment](oracle_essential_theory_assessment.md)
-for the active checkpoint. Three bounded Astra/max investigations have returned their first proofs;
-the lead is checking and combining an all-tenure argument with sharper planner/fertility
-conditions that allow young consumption to fall. No new formulation has been
+for the active checkpoint. The all-tenure income interval and the full planner's
+aggregate housing and joint-fertility results have passed independent analytical
+cross-reviews. The argument allows young consumption to fall. A separate exact
+counterexample shows that private fertility after receiving fixed planner bundles
+can fall on average, even under the new income bound; that experiment must remain
+separate from the joint planner. Its independent check is in progress.
+
+A focused GPT-6 Pro review of the combined argument is running in the existing
+[conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
+The [brief](../../../docs/prompts/oracle_all_tenure_simplification.md) and
+[exact submitted packet](oracle_all_tenure_simplification_packet.md) contain
+only the model, proof and precise open questions. Submission and active generation
+were verified at approximately 00:30 EDT. Normalized packet: 13,182 characters,
+FNV-1a 3102451540; file SHA-256
+01237412c91a7db282d9a01eb6bf16407a8b9cc48966f9df0718de6f058a0ef7.
+No new formulation has been
 adopted. Overnight follow-up is active, with a morning cutoff of
 08:30 EDT September 10.
 
@@ -55,7 +68,8 @@ retains a common movable stock, no owner size bound, old secured borrowing,
 external finance/entrant-endowment closure, and positive property taxes funding
 public services. Transfers-only constrained efficiency, a property-tax
 implementation and the repaired model's transition are outside this round.
-The review is complete and its heartbeat is paused.
+That review was complete before the subsequent overnight authorization. The
+existing heartbeat is active for the new work described at the top of this file.
 
 ## September 9 essential-theory Pro review — financing repair checked; assessment complete
 
