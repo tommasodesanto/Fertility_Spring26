@@ -1,5 +1,10 @@
 # Matched perfect-foresight implementation
 
+Initial-economy/shock decision: [CALIBRATION_DESIGN_DECISION.md](CALIBRATION_DESIGN_DECISION.md)
+records the primary-literature check, two-stage estimation algorithm, historical
+implementation and feasibility of a genuine 2007 refit. It is a recommendation
+for discussion, not a changed calibration contract.
+
 Morning discussion PDF: [matched_pf_morning_readout_20260910.pdf](../../pdf/matched_pf_morning_readout_20260910.pdf).
 Three pages cover the verified numerical progress, all twelve target fits,
 all fifteen parameter/restriction rows and remaining checks. The report is
