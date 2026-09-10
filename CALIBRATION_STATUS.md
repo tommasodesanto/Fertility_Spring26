@@ -2,19 +2,28 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
-**September 10 — bounded historical preference-timing pilot submitted.**
-The author authorized a three-hour pilot and asked for submission before closing
-his laptop. Source47435e59 on codex/matched-perfect-foresight adds a strict
-fixed-endpoint preference-path hook and three timing cases (earlier, linear,
-later), holding all inherited structural parameters and the post-2023 preference
-level fixed. Sixty focused tests passed; no new SMM specification was adopted.
-Smoke array17340342 was confirmed running. Main array17340491 was created, but
-its dependency on the surviving smoke array requires verification after a
-concurrent-submission cleanup and SSH interruption. Do not report it as running.
-At22:58UTC SSH authentication was again rejected. The exact handoff, source,
-case budgets and mandatory repair checks are in
+**September 10, 23:27 UTC — corrected pilot running independently on Torch.**
+All three six-date smokes in array 17347123 completed successfully in 3m12–3m25.
+Their afterok dependency released main array 17347124; all three cases are
+verified RUNNING, with fresh backward/forward-solution heartbeats. Source
+e399c90e on codex/matched-perfect-foresight explicitly enables compiled model
+execution. The original smoke 17340342 timed out because our launch inherited
+NUMBA_DISABLE_JIT=1 from local tests. Old main 17340491 is cancelled; neither
+old job should be repaired or relaunched. Corrected outputs use separate
+snapshot Fertility_Spring26_preference_shape_20260910b.
+
+To respect the remaining time, the main scope is one 100-date baseline replay
+and two conditional mappings at inherited prices for earlier/later preference
+declines. These are preliminary comparisons, not new equilibrium roots or
+calibration estimates. Structural parameters, targets, weights, numerical gates,
+initial normalization 2.1 and the constant post-2023 preference endpoint remain
+unchanged. Sixty focused tests passed. Main launchers verify all three smoke
+receipts before computing; independent local receipt collection is still pending.
+The recoverable plan is in
 `output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
-Review deadline:2026-09-11 00:30UTC. No completed new model result is yet collected.
+The jobs continue if the laptop closes. Review deadline: 2026-09-11 00:30 UTC;
+the existing 15-minute follow-up is updated, with no automatic extra round.
+No completed main result is yet collected.
 
 **September 10 — author fixes the post-2023 preference baseline.**
 Hold the aggregate fertility-preference intercept at its 2023 value for every

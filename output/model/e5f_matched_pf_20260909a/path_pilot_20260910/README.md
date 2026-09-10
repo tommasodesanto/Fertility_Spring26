@@ -70,34 +70,50 @@ to its model observer and prepares a readout from the existing normalized-old
 checkpoint, without another equilibrium solve or invented weights.
 
 
-## Submission handoff: connection interruption
+## Current handoff: cluster execution verified at 23:27 UTC
 
-Source47435e59 is committed and pushed on the isolated matched-PF branch.
-The lead reviewed the optional preference hook and runner against the formula;
-60focused tests passed locally, including independent birth-observer checks.
-Source snapshot: `/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910a`.
+Corrected source **e399c90e** is committed and pushed on
+`codex/matched-perfect-foresight`. The immutable remote snapshot is
+`/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910b`.
+The source and numerical formula retain the original 60-test verification.
 
-Smoke array **17340342**, three cases, was confirmed RUNNING oncs618. A detached
-submission coordinator was created so laptop closure would not interrupt setup.
-The original foreground submission completed concurrently, creating a duplicate
-submission risk. The coordinator's duplicate smoke was cancelled by reading its
-saved job ID and preserving17340342. A main array **17340491** was already saved
-by that coordinator. **Its dependency may still refer to the cancelled duplicate.**
-An attempted repair/requeue was interrupted by loss of the SSH connection; its
-completion is NOT verified. Do not say the main comparison is running or has
-passed. At22:58UTC a fresh SSH attempt reached the host but authentication was
-again rejected. No current smoke-completion receipt was collected.
+All three six-date smoke cases, array **17347123**, completed with exit code zero
+in 3m12–3m25. Their `afterok` dependency released main array **17347124** at
+23:25:35 UTC. All three main cases are independently confirmed RUNNING, with
+fresh `historical_backward_and_forward` heartbeats. Each main case verifies all
+three smoke summaries, gates and artifact hashes before computing. Independent
+local collection of those smoke receipts remains to be done.
 
-On restored access, first inspect `smoke_job_id.txt`, `main_job_id.txt`,
-`replaced_main_job_id.txt` if present, `logs/submission.log`, squeue/sacct and the
-three output/smoke/case_N summary/contract files. Verify all three exact-loop
-smokes and their artifact hashes. If17340491 is pending, repair its dependency
-toafterok:17340342; if cancelled, submit exactly one replacement only after
-checking that no replacement already exists. Record the actual ID. Preserve
-source and all gates. Main jobs themselves verify all three smoke receipts
-before computing, and the case builder refuses duplicate outputs/contracts.
-The absolute review-window deadline is2026-09-11 00:30UTC; if it is already past,
-collect the completed smoke and prepare the next decision rather than launch
-another unapproved round. Even before the deadline, disclose incomplete roots.
+The remaining main budget is now **one 100-date mapping per case**: the linear
+case exactly replays the baseline, while the earlier/later cases hold the
+inherited parent price path fixed. `E5F_PILOT_CONDITIONAL_ONLY=1` makes that
+restriction explicit. This supersedes the optional three-mapping root budget
+above. At the previously observed 42–56 minutes per mapping, the three concurrent
+cases require about 2.1–2.8 core-hours and 42–56 minutes of running wall time,
+plus setup. This is a conditional diagnostic, not a newly solved equilibrium or
+calibration. Do not inherit the parent's market certificate for changed paths.
 
-The existing thread follow-up was reactivated at23:02UTC to inspect this handoff every15minutes, notify only meaningful changes, and stop at the00:30UTC review deadline. The first scheduling attempt timed out; the retry returned an explicit ACTIVE confirmation.
+The fixed review deadline remains **2026-09-11 00:30 UTC**. The case builder
+sets its internal budget from that absolute deadline, and the cluster allocation
+has a separate 70-minute limit. Preserve unfinished checkpoints at the review
+cutoff; do not automatically start another round. The jobs continue independently
+of laptop sleep. The app's 15-minute follow-up now names the corrected jobs and
+may resume when the app is available; remote progress does not rely on it.
+
+## Earlier launch failure and correction
+
+Original source 47435e59 was staged under the separate `...20260910a` snapshot.
+Original smoke array 17340342 timed out after roughly 20 minutes per case.
+The submission inherited `NUMBA_DISABLE_JIT=1` from the local-test environment,
+so the model ran without compilation. This was a launch mistake, not evidence
+that the model's numerical method needs to change. The corrected shell explicitly
+exports `NUMBA_DISABLE_JIT=0`, checks Numba's runtime setting and prints the result
+before the model starts; that check passed in the new cluster logs. A compiled
+Numba probe, Python compilation and shell syntax checks also passed.
+
+During the original connection interruption, a detached submission raced with
+the foreground submission, creating duplicate smoke 17340490 and main 17340491.
+Those jobs are cancelled. **Do not repair or relaunch them.** The corrected
+snapshot has one smoke array and one main array, submitted once and verified.
+Old outputs remain intact for diagnosis. No targets, weights, scientific gates,
+model equations or production benchmark were changed by the launch repair.

@@ -1,15 +1,24 @@
 {
-  "source_commit": "47435e59",
+  "source_commit": "e399c90e",
   "source_branch": "codex/matched-perfect-foresight",
   "local_tests_passed": 60,
   "empirical_annual_rows_verified": 17,
   "empirical_four_year_blocks_verified": 4,
   "source_hashes_verified": 3,
-  "smoke_job_id": "17340342",
-  "smoke_status_last_observed": "RUNNING",
-  "main_job_id_last_recorded": "17340491",
-  "main_dependency_verified": false,
-  "cluster_status_last_check": "SSH authentication rejected at22:58UTC",
-  "monitor_status": "ACTIVE confirmed by app tool",
-  "production_promoted": false
+  "smoke_job_id": "17347123",
+  "smoke_status_last_observed": "COMPLETED, all three cases, exit code 0:0",
+  "main_job_id_last_recorded": "17347124",
+  "main_dependency_verified": true,
+  "cluster_status_last_check": "2026-09-10 23:27 UTC: all three main cases RUNNING; fresh historical_backward_and_forward heartbeats",
+  "monitor_status": "ACTIVE update confirmed; corrected jobs and deadline saved",
+  "production_promoted": false,
+  "remote_snapshot": "/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910b",
+  "main_scope": "one 100-date mapping per case: baseline exact replay, two conditional profiles at inherited prices",
+  "independent_smoke_receipt_collection": "pending",
+  "deadline_utc": "2026-09-11 00:30 UTC",
+  "previous_smoke_failure": "17340342 timed out with inherited NUMBA_DISABLE_JIT=1; corrected launcher explicitly enables and asserts compiled model execution",
+  "cancelled_old_jobs": [
+    "17340490",
+    "17340491"
+  ]
 }
