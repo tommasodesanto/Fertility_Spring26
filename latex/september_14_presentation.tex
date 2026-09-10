@@ -63,6 +63,7 @@ Access to that space depends on tenure and wealth:
   \item Rental housing can limit the size of the home a family can occupy.
   \item Ownership expands the housing menu but requires liquid wealth for a down payment.
   \item Older owners may retain family-sized homes after their children leave.
+  \item Young families and older households compete for housing: its allocation across generations matters for fertility.
 \end{itemize}
 
 \vfill
@@ -74,15 +75,15 @@ Which housing constraints matter, and for whom?
 Need a framework where fertility, tenure, housing size, saving, and population are jointly determined.
 
 \vfill
-\alert{Model:} a lifecycle model of fertility, tenure, and saving
+\alert{Model:} overlapping generations with fertility, tenure, and saving
 \begin{itemize}
-  \item Childbirth creates a jump in housing need.
-  \item Rental size limits and down payments restrict access to family space.
-  \item Births change future population and housing demand.
+  \item Income heterogeneity, earnings risk, and bequests.
+  \item Rental size limits, down payments, and housing transaction costs.
+  \item Childbirth raises housing needs and changes future housing demand.
 \end{itemize}
 
 \vfill
-\alert{Empirics:} housing size and tenure, birth timing, and lifecycle wealth
+\alert{Empirics:} housing around births, birth timing, and wealth by age
 
 \vfill
 \alert{Policy:} compare housing reforms along a demographic transition
@@ -100,22 +101,13 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 \end{frame}
 
 \begin{frame}{Environment}
-Households live for a finite number of periods in one housing market.
-\begin{itemize}\setlength\itemsep{0.5em}
-  \item A period is four years; households differ in age, earnings, and wealth.
-  \item They choose birth attempts, tenure, housing size, consumption, and saving.
-  \item Earnings, conception, child maturation, and survival are stochastic.
-\end{itemize}
-
-\medskip
-The beginning-of-period household state is
-\[
- x=(b,z,a,h,n,m).
-\]
-\begin{itemize}\setlength\itemsep{0.2em}
- \item $b$: liquid net wealth; $z$: earnings state; $a$: age.
- \item $h$: inherited owner size, with $h=0$ for renters.
- \item $n$: lifetime births; $m$: dependent children at home.
+\begin{itemize}\setlength\itemsep{0.65em}
+  \item Overlapping generations of households in one housing market.
+  \item Households live for a finite number of periods, work, and then retire.
+  \item Earnings differ permanently across households and are subject to persistent idiosyncratic risk.
+  \item Households choose whether to have a child during their fertile years.
+  \item Children depend on their parents until they mature.
+  \item Households choose tenure, housing size, consumption, and saving throughout life.
 \end{itemize}
 \end{frame}
 
@@ -135,7 +127,7 @@ Family size raises household needs through the equivalence scale $e(m)$ and the 
 \begin{itemize}\setlength\itemsep{0.5em}
  \item $\alpha_0$ is the consumption share; $\sigma$ governs curvature.
  \item $\psi_t$ is the preference for children at date $t$.
- \item The equivalence scale is $e(m)=\bigl[(2+0.7m)/2\bigr]^{0.7}$.
+ \item The equivalence scale $e(m)$ captures how household needs rise with children.
 \end{itemize}
 \end{frame}
 
@@ -218,7 +210,7 @@ c+(\delta_H+\tau_t^p)P_t h'+b'
 $R_b$ is the gross financial return, $r_t$ rent per room, $\delta_H$ depreciation, $\tau_t^p$ the property-tax rate, and $T_t$ a transfer per household head.
 
 \vfill
-All flows and rates are expressed over the four-year model period.
+Households carry liquid wealth $b$ into the period and choose saving $b'$.
 \end{frame}
 
 \begin{frame}{Sequential Fertility and Child Aging}
@@ -299,34 +291,28 @@ The Household's Problem%
 
 \only<1>{%
 \small
-\textbf{State.}
-\[
-x=(b,z,a,h,n,m),
-\qquad
-h\in\{0\}\cup\mathcal H^O.
-\]
-
-\begin{itemize}\setlength\itemsep{3pt}
-  \item $b$: liquid wealth; $z$: earnings; $a$: age; $h$: inherited owner stock.
-  \item $n$: parity; $m$: number of children currently at home.
-  \item The model has one housing market, so location is suppressed.
-\end{itemize}
+Households choose fertility before learning whether conception succeeds.
 
 \medskip
-\textbf{Within the period:} observe the fertility shock, choose whether to attempt, realize conception success, then choose tenure, rooms, consumption, and saving.
+\begin{enumerate}\setlength\itemsep{0.65em}
+  \item Observe fertility tastes and choose whether to attempt a birth.
+  \item Learn whether the attempt succeeds.
+  \item Choose tenure and housing size, given the realized family size.
+  \item Choose consumption and saving, anticipating future income and family needs.
+\end{enumerate}
 }
 
 \only<2>{%
 \footnotesize
-Given the birth outcome, with discount factor $\beta$ and survival $s_a$, the value is
+For a household of age $a$, given its wealth, earnings, housing, and realized family size:
 \[
-\mathcal V_t(x)
+\mathcal V_t
 =
 \E_{\varepsilon_t^H}
 \max_{h',h^R,b'}
 \left\{
 u_t(c,s;m)+\varepsilon_t^H(h')
-+\beta s_a\E_t[V_{t+1}(x')]
++\beta s_a\E_t[V_{t+1}]
 +\beta(1-s_a)\E_t[\mathcal B(w^e_{t+1})]
 \right\}.
 \]
@@ -335,29 +321,30 @@ u_t(c,s;m)+\varepsilon_t^H(h')
   \item $h'h^R=0$: a renter sets $h'=0$; an owner sets $h^R=0$.
   \item Current purchases occur at $P_t$ and future sales at future prices.
   \item The budget, down-payment condition, and age-tapered debt floor restrict $(h',h^R,b')$.
+  \item $\beta$ discounts the future; $s_a$ is survival; $V_{t+1}$ is the next-period value.
   \item Housing-product taste shocks $\varepsilon_t^H$ have scale $\kappa_H$.
 \end{itemize}
 }
 
 \only<3>{%
 \footnotesize
-Let $x^+$ add one birth, and let $\pi_a$ be conception success. Before the attempt taste shock:
+Let $\mathcal V_t^+$ denote the value with an additional child and $\pi_a$ conception success. The values of waiting and attempting are:
 \[
-W_t^0(x)=\mathcal V_t(x),
+W_t^0=\mathcal V_t,
 \qquad
-W_t^A(x)
+W_t^A
 =
 \pi_a\!\left[
-\mathcal V_t(x^+)-F_1\1\{n=0\}
+\mathcal V_t^+-F_1\1\{n=0\}
 \right]
-+(1-\pi_a)\mathcal V_t(x).
++(1-\pi_a)\mathcal V_t.
 \]
 The attempt probability is
 \[
-\pi_t^F(x)
+\pi_t^F
 =
-\frac{\exp\{W_t^A(x)/\kappa(n)\}}
-{\exp\{W_t^A(x)/\kappa(n)\}+\exp\{W_t^0(x)/\kappa(n)\}},
+\frac{\exp\{W_t^A/\kappa(n)\}}
+{\exp\{W_t^A/\kappa(n)\}+\exp\{W_t^0/\kappa(n)\}},
 \qquad
 \kappa(n)=
 \begin{cases}
@@ -495,7 +482,7 @@ The arrow links the illustrated equilibria. Changing age composition can produce
 \begin{frame}{Data}
 \begin{itemize}\setlength\itemsep{0.75em}
  \item \textbf{AHS and ACS:} housing sizes, tenure, household composition, and age profiles.
- \item \textbf{PSID:} housing around childbirth, earnings, and lifecycle wealth.
+ \item \textbf{PSID:} housing around childbirth, earnings, and wealth by age.
  \item \textbf{CPS and natality records:} completed fertility, childlessness, and birth timing.
  \item \textbf{Census population estimates:} age--sex population and demographic flows.
 \end{itemize}

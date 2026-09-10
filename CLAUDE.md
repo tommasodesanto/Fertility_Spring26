@@ -414,6 +414,9 @@ When referencing files in chat, give absolute paths.
 - Do not narrate computational conventions such as branch screening,
   infeasible-value sentinels, tie-breaking, or deterministic-limit implementation
   in paper prose unless economically substantive or explicitly requested.
+- In slides, introduce household heterogeneity and choices in economic prose,
+  not a standalone state-vector inventory. Keep numerical period lengths and
+  calibration constants in quantification, not the model exposition.
 - For LaTeX, keep notation consistent with the model and avoid claims that are
   stronger than the evidence.
 - For paper-facing document edits, make the minimal required change. Do not
