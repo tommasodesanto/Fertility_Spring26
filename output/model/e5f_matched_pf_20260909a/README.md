@@ -443,3 +443,6 @@ September10,04:59UTC: both100-date smoke probes passed and were independently co
 
 
 September10,05:42UTC: original case20hit its60-minute watchdog at date90/100. Single reviewed recovery17309087uses identical source/contract/gates oncs693and a separate output, preserving the failure. Existing collector must be superseded by explicit validated-recovery selection before existing root17304265can proceed; see OVERNIGHT_PLAN.md.35completion receipts and64running original cases at this check.
+
+
+Prepared, not submitted: submit_horizon100_collector_recovery.sh and horizon100_collection_selection.json give all100ordered distinct probe paths, replacing only failed20with recovery17309087. Shell syntax and complete ordered-directory selection checked; unchanged collector will enforce all mapping gates and scientific fingerprints. Wait for original panel completion and check for additional failures before submitting; recovery success is a required dependency. At05:50UTC44original probes completed,55stillrunning at79–99forward dates,only20failed; recovery healthy at8minutes.
