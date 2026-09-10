@@ -1,6 +1,17 @@
 # Simplified OLG amendment checks
 
-## Current result — two periods and common positive retirement income
+## Current work — simplify the theory for the presentation
+
+The author explicitly authorized overnight theory work after rejecting the
+condition-heavy result below as unsuitable for the presentation in four days.
+Read the top of the [single assessment](oracle_essential_theory_assessment.md)
+for the active checkpoint. Three bounded Astra/max investigations have returned their first proofs;
+the lead is checking and combining an all-tenure argument with sharper planner/fertility
+conditions that allow young consumption to fall. No new formulation has been
+adopted. Overnight follow-up is active, with a morning cutoff of
+08:30 EDT September 10.
+
+## Previous checked result — two periods and common positive retirement income
 
 The [single current assessment](oracle_essential_theory_assessment.md) now covers
 Tommaso's preferred initially poorer/richer young types, \(w_L<w_H\), both with

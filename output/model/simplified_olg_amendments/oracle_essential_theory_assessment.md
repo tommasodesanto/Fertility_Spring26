@@ -1,5 +1,103 @@
 # Assessment of the September 9 Pro review
 
+## Overnight simplification — September 10, in progress
+
+The author rejected the preceding conditional theorem as too elaborate for the
+presentation in four days. He explicitly authorized theory work tonight. Its
+algebra remains checked, but it is not a satisfactory presentation result yet.
+The task is to improve the argument within the two-period setup, not redirect
+work toward the quantitative deck or add another lifecycle stage.
+
+Three distinct Astra/max investigations began at approximately 03:50 UTC, each
+with a 45-minute limit. Household tenure and credit thresholds are owned by
+`overnight_all_tenures`; sharper fertility and resource conditions by
+`overnight_fertility_sharp`; necessity, counterexamples and allocation direction
+by `overnight_necessity`. Their only write targets are the corresponding files
+under `tmp/theory_designs/`. The lead owns synthesis and final economics.
+
+The first three bounded investigations have returned substantive results. The
+main candidate removes the requirement that poorer parents gain consumption
+as well as housing. Household optimality across tenure choices, the full
+planner housing direction and the sharper joint-fertility argument have separate
+derivations in the three owned notes. The lead must finish the combined review
+and exposition before calling the result suitable for the presentation. Exact
+income thresholds identify distorted young households without deciding whether
+they rent or own; analytical compatibility with an actual stationary equilibrium
+has also been supplied. A broad new model-design round is not the next step.
+
+<details>
+<summary>Overnight work checkpoint and completion criteria</summary>
+
+Retain two ages; heterogeneous young resources w; common positive retirement
+income y; existing log utilities; serviced-interest mortgage; positive tax;
+rental ceiling/common stock. The full equally weighted dated planner chooses
+all current consumption and housing with young continuation wealth, old estates
+and continuation prices preserved. Then allow parental fertility, without a
+separate unborn welfare weight. No timing, estate, tax or housing-menu change
+may be silently adopted.
+
+Candidate simplification for verification: K=1+alpha+omegaB,
+J=1+alpha+vartheta. For each young household let x=c-chi*n,
+v=p(h-kappa*n)/alpha, and e=[w-q(z-y)]/J (use a different symbol for this
+spending statistic in final prose to avoid collision with the estate e).
+Optimality gives v<=e<=w/J. Old unrestricted housing is alpha*z/(K*p), so
+mean old consumption B>=y/K when old net assets are nonnegative. Thus the
+primitive condition y/K>=mean(w)/J implies B>=mean(e), allowing mean young
+adult consumption to FALL. Under kappa*p>=alpha*chi, the fertility argument
+uses g(x,v)=1/(chi/x+kappa*p/v), not a presumption of gains in both inputs.
+Positive young housing distortion should yield aggregate housing and joint
+mean-fertility gains. Poor individual fertility needs its own ranking argument;
+do not import it from the old forced-tenure proof.
+
+All-tenure thresholds: delta=beta*K,Y=q*y,A(p)=alpha+vartheta*kappa*p/(chi+kappa*p),
+xr=p*r/A(p). An uncapped rental first hits r at
+wr=J*xr+max(delta*xr-Y,0). The unrestricted plan is ownership-financeable above
+wO=Y[J+Gamma*A(p)]/[delta-Gamma*A(p)] if its denominator is positive, otherwise
+wO=infinity. For w strictly between wr and wO, any optimal tenure has MRS>p.
+The interval is nonempty iff delta*p*r<A(p)[Y+Gamma*p*r]. This requires final
+independent verification; no equilibrium multiplier should enter the statement.
+
+Do not replace the inherited old balance sheet by fixed purchasing power merely
+to simplify equilibrium existence. That is a different closure. The safest
+main result can quantify over an actual stationary competitive equilibrium;
+check analytical nonvacuity by reusing the prior proven equilibrium construction
+and proving compatibility with the new bounds. Nonempty parameter regions must
+be analytic, not numerical reference examples. A generic all-regime existence
+claim must account for tenure ties/mixing and old housing capital gains.
+
+First reports returned by about04:10UTC. The fertility identity now established
+in its assigned note is v_i<=C*n_i/vartheta<=e_i<=x_i, C=chi+kappa*p,
+where the second inequality follows from kappa*p>=alpha*chi. Consequently
+B>=mean(e) supports the full planner and joint mean fertility using concavity.
+At equality, mean young adult consumption can strictly fall. An actual
+stationary nonvacuity argument uses the old Pro construction with f sufficiently
+near1 to ensure y/K>mean(w)/J and the finite positive bound
+chi<kappa*wL/[r(1+alpha+k)] to ensure kappa*p>alpha*chi throughout its price
+interval. This is a witness for the broader theorem, not its assumption list.
+Two30-minute cross-reviews are now active: overnight_necessity independently
+checks the full fertility theorem; overnight_fertility_sharp independently
+checks the all-tenure interval and stationary nonvacuity. They append to their
+existing owned notes. Lead reads and consolidates all three reports here,
+then judges whether a focused Pro review still resolves a material question.
+
+By the first 45-minute checkpoint: combine the three bounded reports, verify
+claims directly and decide which result can be stated simply. A further worker
+or Pro request requires a precise new theorem or gap, with its own limit; never
+restart the broad search because a partial theorem feels disappointing. Useful
+remaining work is a focused independent proof review, meaningful primitive
+simplification and 5-6 slides' worth of conventional mathematical exposition
+in this SAME assessment. The old long proof remains history.
+
+Keep working while there is a concrete route to improve the two essential
+claims. Stop on a checked short result with explicit limitations, or at 08:30 EDT
+September 10 with the strongest actual result and a precise unresolved issue.
+Do not describe a valid but unwieldy parameter construction as presentation-ready.
+No simulations, calibration, cluster jobs, auto PDF preview, protected manuscript
+edits or broad deck rewrite. The quantitative overnight task is separate; its
+existing sleep-prevention process should not be duplicated or interrupted.
+
+</details>
+
 ## Two periods with positive retirement income — current result
 
 **The revised endowments work.** Both types can receive the same positive retirement income. Under explicit income and financing conditions, poorer young households rent at the size ceiling, richer young households own, and a planner choosing consumption and housing allocates more housing to the young. Every poorer young household receives more goods and housing, and chooses higher fertility at that bundle. A planner choosing fertility too raises mean fertility.
