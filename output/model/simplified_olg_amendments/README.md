@@ -1,33 +1,50 @@
 # Simplified OLG amendment checks
 
-## Current author clarification — two periods and positive retirement income
+## Current result — two periods and common positive retirement income
 
-After reviewing the financing result, Tommaso clarified that the exercise should
-remain a two-period illustration of housing misallocation and parental fertility.
-Do not judge it against the requirements of a detailed lifecycle model or reopen
-the morning/afternoon and third-age branches merely to model every paycheck.
-He prefers two initially unequal resource types, \(w_L<w_H\), both receiving
-positive retirement income \(y^o\). Equal lifetime endowments are not required.
-This version has not yet inherited the previous theorem.
+The [single current assessment](oracle_essential_theory_assessment.md) now covers
+Tommaso's preferred initially poorer/richer young types, \(w_L<w_H\), both with
+positive retirement income \(y>0\). Equal lifetime endowments are not required.
+The exercise remains a two-period illustration of borrowing/rental constraints,
+housing allocation and parental fertility. Do not reopen the third-age or
+morning/afternoon branches merely to represent every paycheck.
 
-A newly authorized Pro round is running in the same
-[conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
+The [new Pro response](oracle_two_period_positive_retirement_response.md) is
+complete in the existing [conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
 The [focused brief](../../../docs/prompts/oracle_two_period_positive_retirement.md)
 and [exact submitted packet](oracle_two_period_positive_retirement_packet.md)
-record the scope and the changed richer-type financing condition:
-\(q(z_H-y^o)\geq q(1-\phi)Ph_H\). Submission and active GPT-6 Pro generation
-were verified. Normalized composer/local text matches exactly:
-8,892 characters, FNV-1a 3329956275.
+record the authorized scope. The answer retains all 139 math objects; normalized
+browser/local text matches exactly (18,582 characters, FNV-1a 1053618808).
 
-This new authorization supersedes the prior round's stop on additional Pro
-messages. Monitor the current response, capture it separately as
-oracle_two_period_positive_retirement_response.md, and update the existing
-single assessment. If checking reveals a specific consequential gap, one focused
-correction is authorized within this round; avoid an indefinite exchange or a
-new model-design menu. The current targets are the full dated consumption/housing
-planner and parental fertility, not a new transition or tax-policy appendix.
-The existing heartbeat will be resumed for this task and paused after checked
-delivery. Main deck, manuscript and model code remain unchanged.
+The revised argument supplies primitive conditions for a mixed-tenure equilibrium:
+poorer young households rent at the size ceiling, richer young households own,
+and old housing/estate choices are unrestricted. The financial/rental constraints
+create a dated efficiency gap. An additional distributional restriction makes
+the full equal-weight consumption/housing planner give the young more aggregate
+housing and every poorer young household more goods and housing. Both the
+conditional private fertility gain and higher mean fertility under a joint
+parents-only planner follow. There is no ordering restriction between beta and q.
+
+The key changed finance condition uses wealth accumulated above common retirement
+income: \(q(z_H-y)\geq q(1-\phi)Ph_H\). The new bound on poorer consumption is
+sharper than the previous bound using its entire endowment. The sufficient
+parameter region is nonempty by explicit analytical inequalities. This does not
+establish empirical mildness, global equilibrium uniqueness or an arbitrary
+income/wealth distribution. Prices and real allocations are unique within the
+verified regime; old tenure and gross portfolios can tie.
+
+The lead checked the planner, settlement, fertility and parameter ranges. A
+separate Astra/max review passed all revised household/tenure deviations,
+cutoffs, existence and analytical nonvacuity. No consequential gap was found;
+no correction was needed or sent to Pro in this round.
+The main assessment retains all earlier rounds in collapsed history.
+
+No proposal has been adopted into the main deck or manuscript. The calculation
+retains a common movable stock, no owner size bound, old secured borrowing,
+external finance/entrant-endowment closure, and positive property taxes funding
+public services. Transfers-only constrained efficiency, a property-tax
+implementation and the repaired model's transition are outside this round.
+The review is complete and its heartbeat is paused.
 
 ## September 9 essential-theory Pro review — financing repair checked; assessment complete
 

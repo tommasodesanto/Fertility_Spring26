@@ -1,15 +1,432 @@
 # Assessment of the September 9 Pro review
 
-**New author clarification and active Pro round.** The exercise is to remain a
-two-period illustration of housing misallocation and parental fertility.
-Tommaso prefers \(w_L<w_H\) when young and positive common retirement income
-\(y^o\) for both types; equal lifetime resources are not required. The proof
-below concerns Pro's previous endowments and must be rechecked for this change.
-The [new request](../../../docs/prompts/oracle_two_period_positive_retirement.md)
-has been submitted in the existing Pro conversation. It asks for the two core
-results under transparent primitive conditions, without redesigning the model
-to represent every working-age payment. No further lifecycle realism requirement
-has been adopted. The previous checked argument remains available below.
+## Two periods with positive retirement income — current result
+
+**The revised endowments work.** Both types can receive the same positive retirement income. Under explicit income and financing conditions, poorer young households rent at the size ceiling, richer young households own, and a planner choosing consumption and housing allocates more housing to the young. Every poorer young household receives more goods and housing, and chooses higher fertility at that bundle. A planner choosing fertility too raises mean fertility.
+
+The essential distinction is between the housing inefficiency and the direction of the full allocation. The constraints generate a gap in households' willingness to give up consumption for housing. An additional restriction on the distribution of resources makes the equal-weight planner move both goods and space toward the young. That restriction remains economically substantive; it is not evidence that the result is universal or empirically mild.
+
+The lead checked the planner, financial settlement, fertility and analytical parameter ranges. A separate Astra/max review passed the revised household choices, all tenure and fertility deviations, price cutoffs and existence proof. No consequential gap was found, so no further correction was sent to Pro. The proposal remains outside the main deck and manuscript.
+
+[Exact new Pro response](oracle_two_period_positive_retirement_response.md) · [Question](../../../docs/prompts/oracle_two_period_positive_retirement.md) · [Conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359)
+
+### Model and statement
+
+There are two periods and two types. A fraction \(f\) receives \(w_L\) when young and the remainder receives \(w_H>w_L>0\); both receive \(y>0\) when old. Preferences are
+
+\[
+u^y=\log(c^y-\chi n)+\alpha\log(h^y-\kappa n)+\vartheta\log n,
+\qquad
+u^o=\log c^o+\alpha\log h^o+\omega_B\log e,
+\]
+
+with lifetime utility \(u^y+\beta u^o\). Here \(n\) is children per parent household, \(\chi\) and \(\kappa\) are their goods and space needs, and \(e\) is the net estate. All coefficients are positive. Rentals cannot exceed \(r\); the common divisible housing stock can be owned in any quantity.
+
+Let \(P\) be the house price, \(q\) the price of a unit of goods next period, \(\phi\) the financed share, and \(\tau>0\) the property-tax rate. Take \(0<q,\phi,f<1\) and a positive rental ceiling and housing stock. Write \(p=(1+\tau-q)P\) for rent. Let \(z\) be total resources upon retirement and \(a\) the present-value net financial position after interest service. A young owner chooses
+
+\[
+c+(1+\tau)Ph+a=w_i,\qquad
+z=y+a/q+Ph,\qquad a\geq-q\phi Ph.
+\]
+
+Thus housing equity must satisfy \(z-y\geq(1-\phi)Ph\). Known retirement income is not available to finance that equity. Renters satisfy \(c+ph+a=w_i\), \(a\geq0\), and \(h\leq r\). Old households use the same financial rule, with their current wealth replacing \(w_i\), their estate replacing \(z\), and no subsequent income. They can sell and resize.
+
+The following quantities are functions of primitives. Define
+
+\[
+K=1+\alpha+\omega_B,\quad A=\alpha+\vartheta,\quad J=1+A,\quad
+\Gamma=\frac{q(1-\phi)}{1+\tau-q},
+\]
+\[
+x=\frac{w_H+qy}{J+\beta K},\qquad
+\ell=\frac{w_L}{J},\qquad m=\frac{qy}{\beta K},\qquad
+b=\frac{(1+\Gamma)\ell}{1+\Gamma\ell/m},\qquad
+B=f\frac yK+(1-f)\frac{\beta x}{q}.
+\]
+
+Here \(x\) is richer young consumption after children's goods needs, \(\ell\) is the corresponding unrestricted zero-saving rental demand of the poorer type, and \(m\) is its marginal-saving threshold. The quantity \(b\) bounds poorer young adult consumption in the regime below; \(B\) is average old consumption.
+
+**Proposition.** Suppose
+
+\[
+\underbrace{\omega_B\geq\alpha\Gamma,\qquad
+(\beta K-\Gamma A)x\geq qy}_{\text{old and richer young choices can be financed}},
+\qquad
+\underbrace{\ell<m}_{\text{poorer young want to bring retirement resources forward}}.
+\]
+
+Suppose also that replacement fertility occurs in the price interval derived below, where the rental ceiling binds and poorer households strictly prefer renting to every feasible purchase. Then the constructed competitive equilibrium is inefficient relative to an authority that can relax finance: a small housing transfer from an old household to a poorer young household can compensate the old in goods and leave the young better off.
+
+If, in addition,
+
+\[
+\boxed{\quad B\geq fb+(1-f)x,\quad}
+\]
+
+the equally weighted planner choosing all current consumption and housing gives the young more housing in aggregate and every poorer young household more consumption and housing. At that bundle each poorer parent chooses higher fertility. The joint planner, valuing existing parents and choosing fertility too, chooses mean fertility above the competitive mean.
+
+This theorem constructs and characterizes one equilibrium regime. The price and real allocations are unique in that regime; it does not exclude equilibria in other regimes. Old tenure and gross mortgage/saving positions can tie.
+
+### What the conditions mean
+
+The two young types lie on opposite sides of the saving decision. The poorer type would like to use future income now. The richer type wants to carry additional wealth into retirement and can finance a larger owned home. The income restrictions can be written directly as
+
+\[
+\frac{w_L}{y}<\frac{qJ}{\beta K},
+\qquad
+\frac{w_H}{y}\geq
+\frac{q(J+\Gamma A)}{\beta K-\Gamma A},\qquad
+\beta K>\Gamma A.
+\]
+
+The old estate condition ensures their desired housing–estate combination is feasible. These are sufficient restrictions supporting the stated tenure pattern, not necessary restrictions for every housing inefficiency.
+
+The additional boxed condition ensures that the old have enough consumption resources for the full planner to increase young adult consumption as well as space. It is automatically satisfied under the preceding bounds when \(\beta\geq q\). When \(\beta<q\), it is
+
+\[
+f\left(\frac yK-b\right)
+\geq(1-f)\left(1-\frac\beta q\right)x.
+\]
+
+The poorer type's rise in consumption resources at retirement must offset the richer type's consumption decline. A very large rich-young endowment or a small poorer share can make this fail. There is no imposed ordering between \(\beta\) and \(q\); the financing restrictions still depend on patience.
+
+The price restriction is also a primitive test, not an assumed equilibrium housing ordering. At a candidate rent \(p\), solve the poorer renter's strictly concave fertility choice
+
+\[
+\frac{\vartheta}{n_L(p)}
+=\frac{\chi}{w_L-pr-\chi n_L(p)}
++\frac{\alpha\kappa}{r-\kappa n_L(p)}.
+\]
+
+Set \(x_L=w_L-pr-\chi n_L\), \(s_L=r-\kappa n_L\), and \(M(p)=\alpha x_L/s_L\). Let \(p_-\) and \(p_+\) solve \(M(p_-)=kp_-\) and \(M(p_+)=p_+\), where \(k=b/\ell>1\). Define
+
+\[
+F(p)=fn_L(p)+(1-f)\frac{\vartheta x}{\chi+\kappa p}.
+\]
+
+If one parent generates \(\nu n\) entering households, the required test is
+\(F(p_+)<1/\nu<F(p_-)\). Both cutoffs are quadratic roots, and \(F\) is strictly decreasing. Hence exactly one rent in this interval satisfies replacement; housing clearing determines the common cohort mass. Household choices and the cutoffs are elementary functions; the equilibrium rent is a unique scalar root.
+
+### The planner and the fertility argument
+
+The planner gives equal weight to each currently living household. It chooses current consumption and housing, preserves each young household's continuation wealth and each old household's estate, and holds continuation prices fixed. Initially it also fixes individual fertility. Let \(\bar x\) and \(\bar s\) be young average consumption and housing after subtracting children's needs, and let \(\bar h_o\) be average old housing. At the competitive allocation,
+
+\[
+\bar x=fx_L+(1-f)x,\qquad
+\bar s=fs_L+(1-f)\alpha x/p,\qquad
+\bar h_o=\alpha B/p.
+\]
+
+The resource bound and the binding rental ceiling imply
+\(B>\bar x\) and \(\bar h_o>\bar s\). The planner equalizes adult goods and space across all households:
+
+\[
+X=\frac{\bar x+B}{2},\qquad S=\frac{\bar s+\bar h_o}{2},
+\qquad
+(c_i^{y,F},h_i^{y,F})=(X+\chi n_i,S+\kappa n_i),\qquad
+(c_i^{o,F},h_i^{o,F})=(X,S).
+\]
+
+Therefore
+
+\[
+\boxed{\quad \bar h_y^F-\bar h_y^E
+=\frac{\bar h_o-\bar s}{2}>0.\quad}
+\]
+
+Also \(X>x_L\) and \(S>s_L\), so each poorer young household receives more total goods and housing. Its fertility derivative at the old choice becomes
+
+\[
+\frac{\vartheta}{n_L}-\frac{\chi}{X}-\frac{\alpha\kappa}{S}>0,
+\]
+
+which implies higher chosen fertility at the assigned bundle. If the planner chooses fertility too, it chooses a common \(n^F\). Concavity of
+\((\chi/x+\alpha\kappa/s)^{-1}\), together with \(X>\bar x\) and \(S>\bar s\), makes its fertility derivative positive at competitive mean fertility. Thus \(n^F>\bar n^E\). No independent welfare weight is assigned to unborn people, and no small goods-cost assumption is needed for these two conclusions.
+
+The compensated efficiency improvement is a separate comparison: there the young give up goods to obtain housing, so fertility need not increase. Outside the stronger resource condition, the exact fertility test for the full assigned bundle is
+
+\[
+\chi\left(\frac1{x_L}-\frac1X\right)
++\alpha\kappa\left(\frac1{s_L}-\frac1S\right)>0.
+\]
+
+### Scope and decisions still belonging to the author
+
+This is an analytical conditional result for two periods with unequal young endowments and common positive retirement income. Its parameter region is established through explicit inequalities, without a numerical reference point. It does not require every old household to occupy a larger home than every young household. The individual housing gain concerns poorer young households; the age-wide gain is aggregate.
+
+The calculation retains equal housing tastes across ages, old secured borrowing, a common stock that can change tenure, no owner size bound, external finance, and estates that do not determine entrant endowments. Positive property taxes finance an additively valued public service, held fixed in the comparison. That fiscal closure and these other proposed simplifications have not been adopted into the paper. The dated fertility results do not establish a policy implementation, transfers-only constrained inefficiency, or a transition to a new population level.
+
+<details>
+<summary>Lead verification: planner resources, fertility, and nonempty primitive ranges</summary>
+
+Normalize by the common cohort mass. Available current goods and housing are
+\(\mathcal C=\bar x+B+\chi\bar n\) and
+\(\mathcal H=\bar s+\bar h_o+\kappa\bar n\). With fixed fertility and continuation values, strict concavity and the two resource constraints give the displayed unique planner allocation. Young continuation utility and old estate utility are constant in this dated problem.
+
+For financial settlement use \(T_i=\Delta c_i+p\Delta h_i\) and
+\(\Delta a_i=-qP\Delta h_i^{\mathrm{owned}}\), with intermediary counterpart positions. Transfers sum to zero because aggregate consumption and housing are unchanged. Every young continuation target satisfies \(z_i\geq y\), and every old estate is positive. At a new owned home of value \(Ph\), set outstanding principal to \(\max\{Ph-(z-y),0\}\) and terminal liquid assets to \(\max\{z-y-Ph,0\}\); for the old replace \(z-y\) with \(e\). Principal is at most \(Ph\), so allowing a fully financed balance suffices. The consolidated and dated budgets both hold. Public expenditure is fixed because \(P\) and the physical stock are fixed.
+
+For the separate compensated transfer, preserve the old household's utility and estate by giving it
+\(\Delta c_o=c_o[(h_o/(h_o-\epsilon))^\alpha-1]\).
+Its leading term is \(p\epsilon\), since the unrestricted old MRS is \(p\). Taking these goods from a poorer young household and giving it \(\epsilon\) housing yields a first-order gain
+\((\alpha/s_L-p/x_L)\epsilon>0\). Positivity and strict preference hold for sufficiently small transfers. It is specifically the additional bound on \(B\), not the condition \(\ell<m\), that is unnecessary for this efficiency comparison.
+
+For joint fertility, symmetry and strict concavity imply common fertility. The reduced objective, apart from constants, is
+\(2\log X(n)+2\alpha\log S(n)+\vartheta\log n\), where
+\(X(n)=(\mathcal C-\chi n)/2\) and
+\(S(n)=(\mathcal H-\kappa n)/2\). Its derivative is
+\(\vartheta/n-\chi/X(n)-\alpha\kappa/S(n)\), strictly decreasing from positive infinity to negative infinity over the feasible interval. The second differential of
+\(g(x,s)=xs/(\chi s+\alpha\kappa x)\) is
+\(-2\chi\alpha\kappa(s\,dx-x\,ds)^2/(\chi s+\alpha\kappa x)^3\leq0\).
+Since private fertility equals \(\vartheta g(x_i,s_i)\), Jensen gives
+\(\vartheta/\bar n\geq\chi/\bar x+\alpha\kappa/\bar s\).
+The strict resource inequalities make this exceed the planner's marginal child cost at \(\bar n\), proving the claimed sign.
+
+For analytical nonvacuity, fix \(\omega_B>\alpha\Gamma\) and
+\(\beta K>\Gamma A\). If \(\beta\geq q\), any
+\(0<w_L<Jm\), any
+\(w_H>qy(J+\Gamma A)/(\beta K-\Gamma A)\), and any \(0<f<1\)
+satisfy the strict financial and resource bounds. If \(\beta<q\), write
+\(\rho=\beta/q\) and instead choose
+
+\[
+0<w_L<\frac{J\rho m}{1+\Gamma(1-\rho)},\qquad
+w_H>\frac{qy(J+\Gamma A)}{\beta K-\Gamma A},\qquad
+\frac{(1-\rho)x}{y/K-b+(1-\rho)x}<f<1.
+\]
+
+The first bound implies \(b<\rho m=y/K\), so the interval for \(f\) is nonempty. Both cases imply \(w_H>w_L\). Strictly decreasing \(F\) and distinct price cutoffs provide a nonempty open interval for \(1/\nu\). This proves an open primitive region, not that an externally fixed replacement conversion necessarily passes the test. For a specified \(\nu\), the displayed market inequalities must be checked.
+
+Capture verification: all 139 math objects retained. Browser and local whitespace-normalized text match exactly: 18,582 characters, FNV-1a 1053618808. No numerical model run or PDF build was used.
+
+</details>
+
+<details>
+<summary>Independent verification of the revised household and equilibrium argument</summary>
+
+# Independent audit: common positive retirement income
+
+**Verdict: PASS within the stated regime. No consequential algebraic error found.**
+
+Reviewed the new household, tenure, cutoff, and analytical nonvacuity arguments in `output/model/simplified_olg_amendments/oracle_two_period_positive_retirement_response.md`, especially equations (3)–(16), (24)–(27), and the two concluding quadratics. This review takes the stipulated two-period serviced-interest contract as given. The lead owns the dated planner and parental-fertility review; those claims are not independently certified here. No simulations, parameter search, source edits, or lifecycle redesign were used.
+
+## 1. The finance conditions and consumption ordering are correct
+
+Write \(d=1+\tau-q>0\), \(p=dP\), \(\eta=q(1-\phi)>0\), and \(\Gamma=\eta/d\). An owner satisfies
+
+\[
+c+ph+qz=w_i+qy,
+\qquad q(z-y)\geq\eta Ph=\Gamma ph.
+\]
+
+For an old household, the unrestricted logarithmic optimum is
+
+\[
+c^o=z/K,\qquad ph^o=\alpha z/K,\qquad qe=\omega_Bz/K.
+\]
+
+Its finance condition is exactly \(\omega_B\geq\alpha\Gamma\), independently of \(z>0\). This makes \(V^o(z)=K\log z+C(p)\) an attainable upper bound against every old-tenure choice.
+
+For the richer young, the unrestricted allocation has adult consumption \(x=(w_H+qy)/(J+\beta K)\), adult housing \(\alpha x/p\), fertility \(\vartheta x/(\chi+\kappa p)\), and \(qz_H=\beta Kx\). Its **exact** finance condition is
+
+\[
+\beta Kx-qy\geq
+\Gamma x\left(\alpha+
+\vartheta\frac{\kappa p}{\chi+\kappa p}\right).
+\]
+
+Thus equation (11) correctly subtracts \(qy\). The proposed sufficient condition
+
+\[
+(\beta K-\Gamma A)x\geq qy
+\]
+
+implies \(\beta K>\Gamma A\), \(x>m=qy/(\beta K)\), and feasibility at every relevant price. Indeed, because \(\chi>0\), the exact housing-finance restriction is strictly slack under that sufficient condition even if its displayed weak bound holds at equality. No ordering between \(\beta\) and \(q\) is used.
+
+## 2. The sharper \(b\) bound and the global tenure argument hold
+
+Let \(u=\ell/m\in(0,1)\). The construction gives
+
+\[
+k=\frac{1+\Gamma}{1+\Gamma u}>1,
+\qquad
+\frac bm=ku=\frac{(1+\Gamma)u}{1+\Gamma u}<1,
+\]
+
+and, for \(\sigma=1-b/m>0\), exactly \(k-1=\Gamma\sigma\).
+
+For a candidate capped renter at \(p\in(p_-,p_+)\), put \(t=M(p)/p\in(1,k)\). The fertility first-order condition and \(r=s_L+\kappa n_L\) imply
+
+\[
+\vartheta x_L=(\chi+t\kappa p)n_L,
+\qquad
+tpr=Ax_L-\chi n_L.
+\]
+
+Combining these with \(w_L=x_L+pr+\chi n_L\) yields the response's identity
+
+\[
+tw_L-Jx_L=(t-1)(x_L+\chi n_L)>0,
+\]
+
+so \(x_L<t\ell<b<m\). In particular, the no-saving conclusion is derived, not imposed.
+
+Define \(\xi=\alpha/s_L-p/x_L=(t-1)p/x_L>0\) and \(\zeta=1/x_L-1/m>0\). Then
+
+\[
+\zeta>\frac{\sigma}{x_L},
+\qquad
+\xi<\frac{\Gamma\sigma p}{x_L}<\eta P\zeta.
+\]
+
+The response uses a weak inequality for the first relation; that weaker statement is valid. At the candidate, the gradient of optimized lifetime utility in \((c,h,n,z)\) is
+
+\[
+\left(\frac1{x_L},\frac p{x_L}+\xi,0,\frac qm\right).
+\]
+
+Concavity and the common consolidated budget therefore imply, for every feasible alternative including different fertility,
+
+\[
+U-U_L\leq\xi(h-r)-q\zeta(z-y).
+\]
+
+Every rental alternative has \(h\leq r\), \(z\geq y\), so it cannot improve. Every ownership alternative has \(q(z-y)\geq\eta Ph\), giving
+
+\[
+U_O-U_L\leq(\xi-\eta P\zeta)h-\xi r<0.
+\]
+
+All feasible plans have \(h>\kappa n>0\). This proves strict preference against **all** owned-home sizes and fertility choices, not merely a comparison at the original \(n_L\). Strict concavity also gives uniqueness of the real renter allocation.
+
+Finally,
+
+\[
+n_L=\frac{\vartheta x_L}{\chi+t\kappa p}
+<\frac{\vartheta x}{\chi+\kappa p}=n_H,
+\qquad
+s_L=\frac{\alpha x_L}{tp}<\frac{\alpha x}{p}.
+\]
+
+Consequently \(h_H^y>r\). The richer type's feasible unrestricted optimum is unattainable by renting, so ownership is strict for this young type as well.
+
+## 3. The monotonicity and both explicit quadratics are correct
+
+For each \(p\in(0,w_L/r)\), the poorer fertility first-order condition is strictly decreasing in \(n\), tending to opposite infinities at the endpoints of
+
+\[
+0<n<\min\{(w_L-pr)/\chi,r/\kappa\}.
+\]
+
+There is exactly one feasible solution. Set
+
+\[
+Q=\frac{\vartheta}{n_L^2}+
+\frac{\chi^2}{x_L^2}+
+\frac{\alpha\kappa^2}{s_L^2}>0.
+\]
+
+Implicit differentiation gives
+
+\[
+n_L'=-\frac{\chi r}{x_L^2Q}<0,
+\quad
+x_L'=-r\frac{\vartheta/n_L^2+\alpha\kappa^2/s_L^2}{Q}<0,
+\quad
+s_L'=-\kappa n_L'>0.
+\]
+
+Thus \(M=\alpha x_L/s_L\) strictly decreases, has a positive finite limit at \(p=0\), and tends to zero at \(p=w_L/r\). This proves the two cutoff roots and their strict ordering. Both components of \(F\) strictly decrease, which proves the unique interior replacement root under Market.
+
+At \(M=tp\), eliminating \(x_L,n_L\) gives exactly
+
+\[
+\kappa tr(t+A)p^2+
+\left[\chi r\{\alpha+t(1+\vartheta)\}
+-\kappa tAw_L\right]p-\alpha\chi w_L=0.
+\]
+
+The leading coefficient is positive and the constant negative, so precisely one root is positive. The polynomial at \(p=w_L/r\) equals
+
+\[
+\frac{\kappa t^2w_L^2}{r}+\chi tw_L(1+\vartheta)>0,
+\]
+
+which places that root inside the valid price domain. It corresponds to the unique feasible candidate and introduces no extraneous positive cutoff.
+
+Multiplying the fertility first-order condition by its positive denominators gives exactly
+
+\[
+\chi\kappa Jn^2-
+\big[(\vartheta+\alpha)\kappa v+(\vartheta+1)\chi r\big]n
++\vartheta rv=0,\qquad v=w_L-pr.
+\]
+
+The smaller root is the unique feasible one. If the two subsistence boundaries coincide, the larger root lies exactly at the excluded boundary; otherwise it lies beyond the smaller boundary.
+
+## 4. Equations (24)–(26) genuinely prove analytical nonvacuity
+
+Put \(\rho=\beta/q\), so \(y/K=\rho m\).
+
+- If \(\rho\geq1\), (24) is \(0<\ell/m<1\), which gives \(b<m\leq y/K\).
+- If \(0<\rho<1\), solving \(b/m<\rho\) gives exactly
+  \[
+  \frac{\ell}{m}<\frac{\rho}{1+\Gamma(1-\rho)}.
+  \]
+  This is (24), and also implies \(\ell<m\).
+
+Hence \(\delta=y/K-b>0\) in both cases. Equation (25) is algebraically equivalent to the strict richer-finance condition:
+
+\[
+(\beta K-\Gamma A)\frac{w_H+qy}{J+\beta K}>qy.
+\]
+
+Its lower threshold exceeds \(Jm\), since
+
+\[
+\frac{qy(J+\Gamma A)}{\beta K-\Gamma A}-Jm
+=\frac{qy\Gamma A(\beta K+J)}{\beta K(\beta K-\Gamma A)}>0.
+\]
+
+Meanwhile (24) puts \(w_L<Jm\), so the required \(w_H>w_L\) follows.
+
+The resource gap is exactly
+
+\[
+B-[fb+(1-f)x]
+=f\delta+(1-f)(\rho-1)x.
+\]
+
+For \(\rho\geq1\), any \(0<f<1\) makes it positive. For \(\rho<1\), positivity is equivalent to
+
+\[
+f>\frac{(1-\rho)x}{\delta+(1-\rho)x},
+\]
+
+which is (26). The lower bound is strictly below one for every finite admissible \(w_H\). This verifies the economic interpretation in (27): at \(\beta<q\), enough poorer households with rising old-age resources are needed to offset the richer group's declining adult consumption profile.
+
+The preliminary strict preference/finance restrictions themselves are feasible analytically: for any fixed positive \(\alpha,\vartheta,\beta\) and admissible \(q,\phi,\tau\), one may choose
+
+\[
+\omega_B>
+\max\left\{0,\alpha\Gamma,
+\frac{\Gamma A}{\beta}-1-\alpha\right\}.
+\]
+
+Then choose \(y>0\), the open endowment intervals, \(f\), arbitrary positive \(\chi,\kappa,r\), and any replacement level in the nonempty interval \(F(p_+)<1/\nu<F(p_-)\). Strict inequalities and continuously varying simple roots give an open set of primitives; this is not an equilibrium obtained only at an equality-tuned parameter point. Any \(\bar H>0\) yields the positive cohort mass \(N=\bar H/D(p^*)\).
+
+## 5. Scope and qualifications to preserve
+
+The proved uniqueness is **price, real household allocations, and cohort mass within the verified interval/regime**. Other regimes are not excluded. Old tenure can tie whenever the optimal home fits the rental cap, and gross mortgage/bond decompositions can tie. The response already appropriately limits its headline uniqueness claim.
+
+The substantive assumptions are the stipulated positive retained-equity requirement with nonpledgeable future \(y\), constrained rentals, the common stock, financeability of the old unrestricted allocation, sufficient rich accumulated wealth **above** \(y\), externally fixed entrant type assignment/endowments, and the public-service tax closure. The additional distributional inequality \(B\geq fb+(1-f)x\) is separately sufficient for the directional equal-weight redistribution claim; that inequality is not needed for the household/tenure construction. The other inequality grouped under Resources, \(\ell<m\), is still used to construct the verified regime and cannot be dropped by invoking the efficiency-gap statement. This audit neither adds assumptions about intermediate paychecks nor questions the approved two-period simplification.
+
+**Required corrections: none in the assigned scope. Unresolved within scope: none.** The planner, its settlement, parental-fertility welfare claims, and the literature comparison remain outside this review's certification.
+
+</details>
+
+<details>
+<summary>Earlier rounds and their verification — historical; superseded where the current result differs</summary>
 
 ## Interest-serviced mortgage — current assessment
 
@@ -1063,6 +1480,8 @@ The cumulative-reproduction identity is exact when baseline and policy share \(N
 \]
 
 Local geometric convergence makes this sum well defined. Its positivity follows from the already-verified stationary rental-access sign. This statement includes the common inherited initial old through the announcement boundary, but supplies no separate impact or all-date fertility sign.
+
+</details>
 
 </details>
 
