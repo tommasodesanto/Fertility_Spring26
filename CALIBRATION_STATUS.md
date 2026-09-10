@@ -2,6 +2,20 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 10 — bounded historical preference-timing pilot submitted.**
+The author authorized a three-hour pilot and asked for submission before closing
+his laptop. Source47435e59 on codex/matched-perfect-foresight adds a strict
+fixed-endpoint preference-path hook and three timing cases (earlier, linear,
+later), holding all inherited structural parameters and the post-2023 preference
+level fixed. Sixty focused tests passed; no new SMM specification was adopted.
+Smoke array17340342 was confirmed running. Main array17340491 was created, but
+its dependency on the surviving smoke array requires verification after a
+concurrent-submission cleanup and SSH interruption. Do not report it as running.
+At22:58UTC SSH authentication was again rejected. The exact handoff, source,
+case budgets and mandatory repair checks are in
+`output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
+Review deadline:2026-09-11 00:30UTC. No completed new model result is yet collected.
+
 **September 10 — author fixes the post-2023 preference baseline.**
 Hold the aggregate fertility-preference intercept at its 2023 value for every
 later date: \(\psi_t=\psi_{2023}\) for \(t\geq2023\). Retain the agreed
