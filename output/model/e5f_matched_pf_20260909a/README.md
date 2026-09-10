@@ -18,11 +18,13 @@ age composition is imposed from the observed age profiles through 2023; the
 person-demographic model advances the population afterward. Thus this is a
 conditional historical fit, not yet a fit to the historical population path.
 
-Both short paths now clear markets and reproduce exactly. The complete result,
-including all twelve targets and every parameter restriction, is in
-[SHORT_EQUILIBRIA.md](SHORT_EQUILIBRIA.md). The longer sequential root is close
-but still above tolerance; continuation17289375 is running. None is a newly
-estimated calibration, and terminal/horizon checks remain outstanding.
+The 12-date paths in both arms and the 28-date sequential path now clear
+markets and reproduce exactly. The longer sequential objective is94.5223,
+versus129.2431 on the short path, at identical parameters. The change is
+material; horizon stability remains unverified. See
+[HORIZON_COMPARISON.md](HORIZON_COMPARISON.md) for all targets and restrictions.
+A single100-date prescribed-price diagnostic17300115 is submitted; this does
+not yet clear its markets or re-estimate parameters.
 
 The main remaining empirical decision concerns two ACS family-group definitions
 and the comparison of four pooled ACS rows with a 2023 model cross-section.

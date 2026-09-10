@@ -1,6 +1,25 @@
 # Calibration Status
 
-Updated: `2026-09-09` (both short PF market roots verified; longer root continuing)
+Updated: `2026-09-09` (28-date PF market root verified; 100-date diagnostic submitted)
+
+**Latest result, September 10, 02:25 UTC (September 9 evening in New York).**
+Long28-date sequential continuation17289375 converged at gap6.73677e-5 with
+zero replay difference. Full12-target, parameter, market and measurement files
+reproduce exactly; target/weight/parameter identity with the short path is
+verified. Objective94.52228097 versus129.24310527 on12dates:26.86%lower,
+mostly through the parent ownership gap. First-birth rooms worsen0.4553→0.4116
+against0.7202; average rooms rise6.2103→6.3257 against5.7800. No re-estimation.
+All fits and restrictions: `output/model/e5f_matched_pf_20260909a/HORIZON_COMPARISON.md`.
+
+The2119terminal state remains38.16% from stationary population, and its asset
+price12.27% away. Historical horizon stability is NOT established. One100-date
+prescribed-price diagnostic17300115 is submitted (200Bellman calls, estimated
+47–50minutes,60-minute internal limit,65-minute allocation). The old28-date
+loop passed; the new job requires55cluster regression tests before model work.
+Only date/runtime ceilings change in isolated source. All economic parameters,
+weights, gates and diagnostic preference continuation remain unchanged.
+The100-date supplied-price fit is not a market equilibrium or an estimation.
+No100-date price panel, new parameter search or policy was submitted.
 
 **Latest verified update, September 9, 22:00 UTC.** Both short matched PF
 market roots converge and reproduce exactly: sequential17282612 maximum gap

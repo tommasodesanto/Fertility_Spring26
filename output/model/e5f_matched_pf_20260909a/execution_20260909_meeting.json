@@ -54,13 +54,13 @@
     "initialization_passed_both": true,
     "terminal_roots_passed_both": true,
     "historical_conditional_mapping_passed_both": true,
-    "dated_markets_converged": false,
+    "dated_markets_converged": true,
     "horizon_extension_verified": false,
     "new_calibration": false,
     "production_promoted": false,
     "long_conditional_mapping_passed_both": true,
     "short_finite_horizon_markets_converged_both": true,
-    "dated_markets_converged_scope": "short12datearms yes; longer28datebaseline notyet"
+    "dated_markets_converged_scope": "12-date both arms and28-date sequential; excludes100-date prescribed-price diagnostic"
   },
   "historical_roots": {
     "sequential": 17279004,
@@ -73,7 +73,7 @@
   "next_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909b",
   "restart_regression_job": 17280998,
   "restart_tests_passed": 95,
-  "updated_utc": "2026-09-09 22:00 UTC",
+  "updated_utc": "2026-09-10 02:25 UTC",
   "historical_root_progress": {
     "sequential": {
       "completed_job": 17282612,
@@ -86,9 +86,11 @@
       "maximum_market_gap": 9.617397452256101e-05
     },
     "sequential_long": {
-      "completed_job": 17281784,
-      "maximum_market_gap": 0.0007102254859271457,
-      "continuation_job": 17289375
+      "completed_job": 17289375,
+      "maximum_market_gap": 6.736767187042821e-05,
+      "continuation_job": 17289375,
+      "converged": true,
+      "loss": 94.52228096924108
     }
   },
   "long_price_jacobian_condition_number": 2.255686009553156,
@@ -100,5 +102,7 @@
   "tail_sizing_corrected_job": 17282572,
   "tail_sizing_first_threshold_year": 2387,
   "tail_sizing_equilibrium_certified": false,
-  "historical_root_long_restart_sequential": 17289375
+  "historical_root_long_restart_sequential": 17289375,
+  "horizon100_anchor_sequential": 17300115,
+  "horizon100_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_horizon_20260910a"
 }
