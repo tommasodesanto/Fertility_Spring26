@@ -1,5 +1,16 @@
 # Assessment of the September 9 Pro review
 
+**New author clarification and active Pro round.** The exercise is to remain a
+two-period illustration of housing misallocation and parental fertility.
+Tommaso prefers \(w_L<w_H\) when young and positive common retirement income
+\(y^o\) for both types; equal lifetime resources are not required. The proof
+below concerns Pro's previous endowments and must be rechecked for this change.
+The [new request](../../../docs/prompts/oracle_two_period_positive_retirement.md)
+has been submitted in the existing Pro conversation. It asks for the two core
+results under transparent primitive conditions, without redesigning the model
+to represent every working-age payment. No further lifecycle realism requirement
+has been adopted. The previous checked argument remains available below.
+
 ## Interest-serviced mortgage — current assessment
 
 The follow-up repairs the financing problem and supplies an analytical tenure comparison. Under its stated conditions, the dated planner gives young households more housing, and the joint parental planner chooses higher fertility. This is a useful candidate for the illustration. It remains conditional on an income profile with substantial resources arriving later, a particular mortgage payment schedule, and the housing-market and welfare choices below. It is not a completed theory of the policy transition. No specification has been adopted.

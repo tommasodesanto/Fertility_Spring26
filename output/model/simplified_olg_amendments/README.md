@@ -1,5 +1,34 @@
 # Simplified OLG amendment checks
 
+## Current author clarification — two periods and positive retirement income
+
+After reviewing the financing result, Tommaso clarified that the exercise should
+remain a two-period illustration of housing misallocation and parental fertility.
+Do not judge it against the requirements of a detailed lifecycle model or reopen
+the morning/afternoon and third-age branches merely to model every paycheck.
+He prefers two initially unequal resource types, \(w_L<w_H\), both receiving
+positive retirement income \(y^o\). Equal lifetime endowments are not required.
+This version has not yet inherited the previous theorem.
+
+A newly authorized Pro round is running in the same
+[conversation](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
+The [focused brief](../../../docs/prompts/oracle_two_period_positive_retirement.md)
+and [exact submitted packet](oracle_two_period_positive_retirement_packet.md)
+record the scope and the changed richer-type financing condition:
+\(q(z_H-y^o)\geq q(1-\phi)Ph_H\). Submission and active GPT-6 Pro generation
+were verified. Normalized composer/local text matches exactly:
+8,892 characters, FNV-1a 3329956275.
+
+This new authorization supersedes the prior round's stop on additional Pro
+messages. Monitor the current response, capture it separately as
+oracle_two_period_positive_retirement_response.md, and update the existing
+single assessment. If checking reveals a specific consequential gap, one focused
+correction is authorized within this round; avoid an indefinite exchange or a
+new model-design menu. The current targets are the full dated consumption/housing
+planner and parental fertility, not a new transition or tax-policy appendix.
+The existing heartbeat will be resumed for this task and paused after checked
+delivery. Main deck, manuscript and model code remain unchanged.
+
 ## September 9 essential-theory Pro review — financing repair checked; assessment complete
 
 The author rejected treating the verified parameter family below as completion of
