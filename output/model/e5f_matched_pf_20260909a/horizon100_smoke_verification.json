@@ -1,0 +1,33 @@
+{
+  "status": "two_exact_loop_probes_validated",
+  "cases": [
+    {
+      "coordinate": 0,
+      "status": "passed_conditional_historical_price_probe",
+      "elapsed_seconds": 3373.891581661999,
+      "own_price_derivative": -2.0333046963186456,
+      "maximum_cross_date_response": 2.0333046963186456,
+      "remote_hashes": {
+        "contract.json": "a1aedf5c52c598fa98372a05a722fc6638c8fd68a62931baed4707def36f5264",
+        "summary.json": "f6a3873fac72b76050b278d3a7aa2a18d2d2424c7849913ace3d7094706569ba",
+        "transition_path.csv": "56f16aedd0dbcb3e40d6e5c5d10fca5df744db126fee0e018f8936585961ab8c",
+        "target_fit.csv": "2b1a3fc5145d4d1547e4690811fd2925d22df79fb67d57e78be85abcf003bf26"
+      }
+    },
+    {
+      "coordinate": 99,
+      "status": "passed_conditional_historical_price_probe",
+      "elapsed_seconds": 3374.394176724367,
+      "own_price_derivative": -1.2656959724655314,
+      "maximum_cross_date_response": 1.2656959724655314,
+      "remote_hashes": {
+        "contract.json": "16a3db248f8a71691504d2b23b915d82101fb8a2522f5fa332c257cb9aa59833",
+        "summary.json": "01c9e2550bdc8712677e66e177f3eee6ed54cfd249ef612777635a20a380c04c",
+        "transition_path.csv": "b16da724e16af926d149eee6114d89a181e7abe4f6e7c44e39de4cbccc394e8b",
+        "target_fit.csv": "96132a47c8d199157ad936764eb6bd57c22c87119c26115060a64ba701394362"
+      }
+    }
+  ],
+  "verification": "Collector load_case checks all mapping gates and recomputes signed market residuals; complete shared contract equals anchor; eight remote hashes match local files.",
+  "qualification": "Supplied-price derivatives, not market equilibria or calibrated estimates."
+}

@@ -1,6 +1,23 @@
 # Calibration Status
 
-Updated: `2026-09-10` (100-date probes running; full root queued)
+Updated: `2026-09-10` (100-date smoke passed; 98 price probes running; full root queued)
+
+**September 10, 04:59 UTC / 00:59 EDT.** Both 100-date first/last price
+probes17303124 completed in56m26/56m28. Lead validated all mapping gates,
+shared scientific contract and eight remote artifact hashes. Full tables and
+receipts are under `output/model/e5f_matched_pf_20260909a/meeting_receipts/horizon100_prices_01/sequential/`;
+`horizon100_smoke_verification.json` records checks. These are supplied-price
+sensitivities, not new equilibrium or calibration results.
+
+All98remaining probes17303125 are now RUNNING. To improve the morning completion
+prospect, the existing array concurrency cap was increased32→98 after successful
+smoke validation and a cluster-capacity check. Same cases, sources, contracts,
+single-core16GB requests and60/65-minute limits; no extra solves or retries.
+Collector17303126 and root17304265 remain dependent on successful completion.
+Observed path time3374seconds implies about5.6hours for six root evaluations;
+08:30completion remains conditional on queue, runtime and convergence. The root
+has21000seconds and unchanged numerical/replay gates. Updated execution plan and
+monitor are active; no new policy or parameter calibration is claimed.
 
 **September 10, 04:09 UTC / 00:09 EDT.** Both100-date smoke probes are
 running with current heartbeats. Full panel17303125 and collector17303126
