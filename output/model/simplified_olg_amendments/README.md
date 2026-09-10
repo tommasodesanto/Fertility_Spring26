@@ -15,8 +15,14 @@ The [working assessment](oracle_essential_theory_assessment.md) retains the
 discussion and earlier rounds. The main deck and author-controlled manuscript
 have not been changed by this rewrite.
 
-The rewritten PDF has eight pages of model and results and four pages of
-derivations. The exact source compiled twice with no errors, undefined
+The rewritten PDF has eight pages of model and results, four pages of
+derivations, and a two-page Appendix E with the full household policies.
+At the author's request, Appendix E gives both ages' rental and ownership
+corners, including constrained old households, without the composite
+preference-weight abbreviations. Young retirement choices are solved for each
+fixed tenure pair, then compared in utility levels; the maximum old value
+need not be concave. The main theorem's maintained assumptions are unchanged.
+The exact source compiled twice with no errors, undefined
 references, duplicate destinations, or overfull boxes. All pages were rendered
 and inspected. A separate Astra/max review found no consequential mathematical
 errors; finance must be relaxed and continuation objects held fixed as stated.

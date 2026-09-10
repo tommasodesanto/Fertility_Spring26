@@ -808,4 +808,102 @@ private condition. Since $\dd c=-p\,\dd h$ to first order:
 The denominator is positive. Substituting $s_i=\alpha v_i/p$ gives
 \eqref{eq:local_fertility}, completing the local comparison.
 
+\clearpage
+\section{Household policies in all tenure and financing cases}\label{app:all_policies}
+
+This appendix records the household policies when a tenure or financing
+constraint binds. These cases include corners excluded by maintained
+Assumption~A1 in the main text; the main theorem is unchanged. All expressions
+are conditional on prices and on the relevant tenure pair.
+
+\subsection{Old households}
+
+For an old renter entering with resources $z$,
+\begin{equation}
+h_R^o=\min\left\{r,\frac{\alpha z}{p(1+\alpha+\omega_B)}\right\},\quad
+c_R^o=\frac{z-ph_R^o}{1+\omega_B},\quad
+e_R=\frac{\omega_B c_R^o}{q}.
+\end{equation}
+For an owner, the unconstrained bundle is feasible iff
+\begin{equation}
+\omega_B\geq \frac{\alpha q(1-\phi)P}{p}.
+\end{equation}
+Then
+\begin{equation}
+c_O^o=\frac{z}{1+\alpha+\omega_B},\quad
+h_O^o=\frac{\alpha z}{p(1+\alpha+\omega_B)},\quad
+e_O=\frac{\omega_B z}{q(1+\alpha+\omega_B)}.
+\end{equation}
+If the inequality fails, financing binds and
+\begin{equation}
+c_O^o=\frac{z}{1+\alpha+\omega_B},\quad
+h_O^o=\frac{(\alpha+\omega_B)z}
+{(1+\alpha+\omega_B)\bigl[p+q(1-\phi)P\bigr]},\quad
+e_O=(1-\phi)Ph_O^o.
+\end{equation}
+Evaluate the original old-age utility at the renter bundle and each feasible
+owner bundle, retaining the larger value. Denote the conditional values by
+$V_R^o(z)$ and $V_O^o(z)$. The derivatives for retirement choice are
+\begin{equation}
+{V_R^o}'(z)=\begin{cases}
+\dfrac{1+\alpha+\omega_B}{z},&z\leq(1+\alpha+\omega_B)pr/\alpha,\\[4pt]
+\dfrac{1+\omega_B}{z-pr},&z>(1+\alpha+\omega_B)pr/\alpha,
+\end{cases}\qquad
+{V_O^o}'(z)=\frac{1+\alpha+\omega_B}{z}.
+\end{equation}
+The owner derivative has this form even when financing binds; the constraint
+changes the utility level. No blanket unconstrained-old assumption is needed.
+
+\subsection{Young households at fixed retirement resources}
+
+Fix $z$ and write the current budget as
+\begin{equation}
+c+ph=w-q(z-y).
+\end{equation}
+A renter has $h\leq r$ and $y\leq z<y+w/q$; an owner has
+$h\leq(z-y)/[(1-\phi)P]$ and $y<z<y+w/q$. If the unconstrained current home
+fits the relevant limit, define $x=c-\chi n$ as adult consumption and
+then
+\begin{equation}
+x=\frac{w-q(z-y)}{1+\alpha+\vartheta},\quad
+n=\frac{\vartheta x}{\chi+\kappa p},\quad
+h=\frac{\alpha x}{p}+\kappa n,\quad c=x+\chi n.
+\end{equation}
+Otherwise set $h$ equal to the relevant limit and
+$c=w-q(z-y)-ph$. Fertility is the unique feasible root of
+\begin{equation}
+\frac{\vartheta}{n}=\frac{\chi}{c-\chi n}
+ +\frac{\alpha\kappa}{h-\kappa n},
+\end{equation}
+equivalently
+\begin{equation}
+\chi\kappa(1+\alpha+\vartheta)n^2
+ -\bigl[\kappa c(\alpha+\vartheta)+\chi h(1+\vartheta)\bigr]n
+ +\vartheta ch=0.
+\end{equation}
+It is the smaller root in $0<n<\min\{c/\chi,h/\kappa\}$. Some policies
+therefore require scalar roots; not every case has an elementary closed form.
+
+For each fixed young/old tenure pair, solve the conditional retirement choice
+separately. With positive saving for a young renter, or slack financing for a
+young owner, the interior condition is
+\begin{equation}
+\beta {V_d^o}'(z)=\frac{q}{c-\chi n},\qquad d\in\{R,O\}.
+\end{equation}
+A young renter has zero saving, $z=y$, when the following inequality, evaluated
+at its current optimum with $z=y$, holds:
+\begin{equation}
+\beta {V_d^o}'(y)\leq\frac{q}{c-\chi n}.
+\end{equation}
+For a young owner with binding finance, the condition is
+\begin{equation}
+\beta {V_d^o}'(z)=
+\frac{q+p/[(1-\phi)P]}{c-\chi n}
+ -\frac{\alpha}{(1-\phi)P(h-\kappa n)}.
+\end{equation}
+Each conditional problem has a unique optimum; for a renter it may be the
+endpoint $z=y$. Compare the original lifetime utilities of the four
+tenure-pair candidates. Comparing values is necessary because
+$\max\{V_R^o,V_O^o\}$ need not be concave.
+
 \end{document}
