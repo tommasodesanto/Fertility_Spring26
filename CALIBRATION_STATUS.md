@@ -2,6 +2,19 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 10 — author fixes the post-2023 preference baseline.**
+Hold the aggregate fertility-preference intercept at its 2023 value for every
+later date: \(\psi_t=\psi_{2023}\) for \(t\geq2023\). Retain the agreed
+immediate announcement/perfect-foresight assumption. Fertility, population,
+housing choices and prices remain endogenous and can continue changing.
+Alternative post-2023 preference paths may be studied as separately labeled
+scenarios; they are not the baseline. The author also clarified that the
+historical estimation should assess the fertility path, not only one late
+fertility number. The historical shape and its free parameters remain to be
+settled after observation mapping and fit checks; no stochastic aggregate
+process was adopted. This records the author's specification decision, not a
+new estimate, target/weight contract or certified model/policy run.
+
 **September 10 — author selects initial fertility benchmark 2.1.**
 After discussing the distinction between completed cohort fertility and period
 fertility, the author explicitly chose **2.1** for the approximate initial

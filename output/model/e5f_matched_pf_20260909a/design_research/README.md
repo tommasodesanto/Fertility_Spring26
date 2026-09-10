@@ -11,6 +11,16 @@ The initial-level choice is settled; remaining observer, weighting,
 identification and initial-accounting checks still apply. Other candidate target
 assignments are not automatically adopted by this decision.
 
+**Subsequent author decision:** the baseline holds fertility preferences at
+their 2023 value thereafter, with the existing immediate-announcement/perfect-
+foresight assumption. Fertility itself remains endogenous. Alternative future
+preference paths can be separate scenarios. The historical fitting exercise
+should assess the fertility path rather than only one late observation;
+its shape and number of free parameters remain to be settled. This supersedes
+the report's endpoint-only fitting recommendation and the earlier provisional
+status of the constant post-2023 preference continuation. No model, target or
+weight change, new estimate or scenario launch follows from this note alone.
+
 Read [DECISION_REPORT.md](DECISION_REPORT.md) or the eight-page PDF at
 `output/pdf/calibration_design_decision_20260910.pdf`. The first two pages give the
 recommendation and main economic issue; the remaining pages document targets,
