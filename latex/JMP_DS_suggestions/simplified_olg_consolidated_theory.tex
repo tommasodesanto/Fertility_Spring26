@@ -39,7 +39,8 @@ paid during each age, a common positive retirement income, and the same adult
 housing weight at both ages. Housing comes from a common stock, with larger
 units available through ownership. Property taxes finance public services;
 entering households' endowments are independent of estates. These assumptions
-should be assessed together with the results.}
+should be assessed together with the results. Robustness beyond logarithms, additive
+separability, and fixed per-child requirements remains to be assessed.}
 
 \section{Environment}
 
@@ -177,22 +178,22 @@ The alternatives are renting and owning. Estate utility does not describe
 consumption after death: it is the household's valuation, while alive, of
 what it leaves.
 
-Write $K=1+\alpha+\omega_B$. Throughout the results, assume:
+Throughout the results, assume:
 \begin{equation}
-\omega_B\ge\alpha\Gamma.
+\omega_B\ge\alpha\frac{q(1-\phi)}{1+\tau-q}.
 \tag{A1}\label{ass:old}
 \end{equation}
 Under this condition the old household's desired estate is large enough to
 satisfy the equity requirement on its desired home. Its solution is:
 \begin{equation}
-c^o=\frac{z^o}{K},\qquad
-h^o=\frac{\alpha z^o}{Kp},\qquad
-qe=\frac{\omega_B z^o}{K}.
+c^o=\frac{z^o}{1+\alpha+\omega_B},\qquad
+h^o=\frac{\alpha z^o}{(1+\alpha+\omega_B)p},\qquad
+qe=\frac{\omega_B z^o}{1+\alpha+\omega_B}.
 \label{eq:old_solution}
 \end{equation}
 If the home exceeds $r$, ownership implements this allocation. Otherwise
 renting does as well. The housing choice is therefore unrestricted in real
-terms, and $V^o(z)=K\log z$ plus a term depending only on prices. Equality
+terms, and $V^o(z)=(1+\alpha+\omega_B)\log z$ plus a term depending only on prices. Equality
 in \eqref{ass:old} is allowed.
 
 \subsection{The young household's problem}
@@ -257,18 +258,22 @@ remain those of the competitive allocation.
 
 Let $\mathcal C=\bar c^{y,E}+\bar c^{o,E}$ and
 $\mathcal H=\bar h^{y,E}+\bar h^{o,E}=\bar H/N$ be these totals per young
-household, including both ages. Give every living household weight one on its
-remaining utility. Because future resources, continuation prices, and estates
-are fixed, the terms involving future utility and estates are constant.
-The planner's problem is therefore:
+household, including both ages. Here $E$ denotes the fixed competitive choices,
+including $n^E(w)$, $z^E(w)$, and $e^E(w)$. The planner's objective counts the
+full remaining utility of the $N$ young and $N$ old households, while the resource
+constraints are written per young household. Because future resources,
+continuation prices, and estates are fixed, the terms involving them do not
+affect the current allocation, but they remain in the objective to make clear
+whose welfare is counted. The planner's problem is:
 \begin{equation}
 \begin{split}
-\max_{\{c_i^y,h_i^y,c_j^o,h_j^o\}}\quad
- &\avg{\log(c_i^y-\chi n_i)+\alpha\log(h_i^y-\kappa n_i)}
-   +\avg{\log c_j^o+\alpha\log h_j^o},\\
+\max_{\{c^y(w),h^y(w),c^o(w),h^o(w)\}}\quad
+ &N\int\Bigl[u^y(c^y(w),h^y(w),n^E(w))
+       +\beta V^o(z^E(w))\\[-2pt]
+ &\hspace{35mm}{}+u^o(c^o(w),h^o(w),e^E(w))\Bigr]\dd F(w),\\
 \text{subject to}\quad
- &\bar c^y+\bar c^o=\mathcal C,\qquad
-   \bar h^y+\bar h^o=\mathcal H.
+ &\int[c^y(w)+c^o(w)]\dd F(w)=\mathcal C,\\
+ &\int[h^y(w)+h^o(w)]\dd F(w)=\mathcal H.
 \end{split}
 \label{eq:dated_planner}
 \end{equation}
@@ -296,12 +301,11 @@ age initially has more space available to adults.
 
 \subsection{When housing moves toward the young}
 
-Let $J=1+\alpha+\vartheta$, the sum of current utility weights for a young
-household. Consider young types satisfying these two inequalities:
+Consider young types satisfying these two inequalities:
 \begin{equation}
 \boxed{\quad
-w<\frac{Jqy}{\beta K},\qquad
-\frac{w}{J}\left(\frac{\alpha}{p}
+w<\frac{(1+\alpha+\vartheta)qy}{\beta(1+\alpha+\omega_B)},\qquad
+\frac{w}{1+\alpha+\vartheta}\left(\frac{\alpha}{p}
        +\frac{\vartheta\kappa}{\chi+\kappa p}\right)>r.
 \quad}
 \tag{A2}\label{ass:affected}
@@ -316,7 +320,7 @@ simple sufficient test; the appendix gives the wider exact income interval.
 
 The last condition compares the resources of the two ages:
 \begin{equation}
-\boxed{\frac{y}{K}\ge\frac{\bar w}{J}.}
+\boxed{\frac{y}{1+\alpha+\omega_B}\ge\frac{\bar w}{1+\alpha+\vartheta}.}
 \tag{A3}\label{ass:resources}
 \end{equation}
 The left side is a floor on old consumption, since every old household has
@@ -347,14 +351,14 @@ across rich and poor households within each age.
 Here is the argument. Let $x_i=c_i^{y,E}-\chi n_i$ be young adult goods,
 $s_i=h_i^{y,E}-\kappa n_i$ adult space, and $B=\bar c^{o,E}$ mean old
 consumption. Define $v_i=ps_i/\alpha$ and the expenditure index
-$\widehat x_i=(c_i^{y,E}+ph_i^{y,E})/J$. Household optimality gives:
+$\widehat x_i=(c_i^{y,E}+ph_i^{y,E})/(1+\alpha+\vartheta)$. Household optimality gives:
 \begin{equation}
 v_i\le\widehat x_i\le x_i,\qquad
-\widehat x_i=\frac{w_i-q(z_i-y)}{J}\le\frac{w_i}{J}.
+\widehat x_i=\frac{w_i-q(z_i-y)}{1+\alpha+\vartheta}\le\frac{w_i}{1+\alpha+\vartheta}.
 \label{eq:comparison_chain}
 \end{equation}
 The first two inequalities are strict for the affected households. Old
-optimality gives $ph_j^{o,E}/\alpha=c_j^{o,E}$ and $B\ge y/K$.
+optimality gives $ph_j^{o,E}/\alpha=c_j^{o,E}$ and $B\ge y/(1+\alpha+\omega_B)$.
 Consequently, \eqref{ass:resources} implies $B>\bar v$, which is exactly
 the housing comparison in \eqref{eq:housing_change}.
 
@@ -386,6 +390,16 @@ Condition~\eqref{ass:old} ensures that old housing demand has the usual ratio
 $h^o/c^o=\alpha/p$. It is a restriction on estate preferences relative to
 the required equity. If it fails, the old may also face a housing distortion
 and the comparison must be rederived.
+
+At the unconstrained optimum, $\omega_B/\alpha$ is the ratio
+$qe/(ph^o)$. As an illustration only, suppose an age lasts 20 years, the
+annual interest rate is $4\%$, the annual end-of-year property tax is $1\%$,
+and $\phi=.8$. Then $q=(1.04)^{-20}\approx .456$ and
+$\tau=.01\sum_{j=1}^{20}(1.04)^{-j}\approx .136$, so the lower bound on
+$\omega_B/\alpha$ is about $.134$. If $\alpha=.3$, the lower bound on
+$\omega_B$ is about $.040$, and at that bound the share of resources left as an
+estate, $qe/z^o$, is about $3\%$. These are illustrative inputs,
+not a calibration or empirical evidence about the mildness of the condition.
 
 Condition~\eqref{ass:affected} identifies affected households from income,
 retirement resources, and access to rental space. It does not assume that
@@ -550,10 +564,11 @@ one allocation does not by itself rank those stationary population levels.
 
 Ignoring tenure temporarily, the old household allocates expenditure across
 three log arguments. The first-order conditions imply expenditure shares
-$1/K$, $\alpha/K$, and $\omega_B/K$, giving \eqref{eq:old_solution}. For
+$1/(1+\alpha+\omega_B)$, $\alpha/(1+\alpha+\omega_B)$, and
+$\omega_B/(1+\alpha+\omega_B)$, giving \eqref{eq:old_solution}. For
 that allocation, the owner restriction is:
 \begin{equation}
-qe-\Gamma ph^o=\frac{(\omega_B-\alpha\Gamma)z^o}{K}\ge0.
+qe-\Gamma ph^o=\frac{(\omega_B-\alpha\Gamma)z^o}{1+\alpha+\omega_B}\ge0.
 \end{equation}
 Thus it is feasible under \eqref{ass:old}, at any desired home size. It
 maximizes utility over the unrestricted budget set and hence over the union
@@ -562,7 +577,7 @@ of the two tenure sets.
 \subsection{Young households}
 
 Write $x=c-\chi n$, $s=h-\kappa n$, $t=qz$, $Y=qy$,
-$\delta=\beta K$, and $C(p)=\chi+\kappa p$. Dropping terms constant in the
+$\delta=\beta(1+\alpha+\omega_B)$, and $C(p)=\chi+\kappa p$. Dropping terms constant in the
 choice variables, the young household's problem is:
 \begin{equation}
 \max\{\log x+\alpha\log s+\vartheta\log n+\delta\log t\},
@@ -588,17 +603,17 @@ Every optimal plan therefore has $\alpha x/s\ge p$. This remains true at
 a tie between tenure values.
 
 Under the first inequality in \eqref{ass:affected}, the uncapped rental
-solution has $t=Y$, $x=w/J$, and:
+solution has $t=Y$, $x=w/(1+\alpha+\vartheta)$, and:
 \begin{equation}
-s=\frac{\alpha w}{Jp},\qquad
-n=\frac{\vartheta w}{JC(p)},\qquad
-h=\frac{w}{J}\left(\frac{\alpha}{p}
+s=\frac{\alpha w}{(1+\alpha+\vartheta)p},\qquad
+n=\frac{\vartheta w}{(1+\alpha+\vartheta)C(p)},\qquad
+h=\frac{w}{1+\alpha+\vartheta}\left(\frac{\alpha}{p}
                     +\frac{\vartheta\kappa}{C(p)}\right).
 \end{equation}
 The second inequality in \eqref{ass:affected} makes this home too large to
 rent, so the actual rental optimum has $\eta>0$. For ownership, a zero
 multiplier would give the unrestricted lifetime solution
-$t=\delta(w+Y)/(J+\delta)<Y$, contradicting owner finance. Hence
+$t=\delta(w+Y)/(1+\alpha+\vartheta+\delta)<Y$, contradicting owner finance. Hence
 $\mu>0$ at the owner optimum too. Either optimal tenure has a strict
 housing distortion.
 
@@ -607,14 +622,14 @@ without solving for the tenure cutoff. Define:
 \begin{equation}
 A(p)=\alpha+\frac{\vartheta\kappa p}{C(p)},\qquad
 x_r(p)=\frac{pr}{A(p)},\qquad
-w_r(p)=Jx_r(p)+\max\{\delta x_r(p)-Y,0\}.
+w_r(p)=(1+\alpha+\vartheta)x_r(p)+\max\{\delta x_r(p)-Y,0\}.
 \end{equation}
 Here $w_r$ is the income where the uncapped rental optimum first reaches
 $r$; $\max$ denotes the larger of its two arguments. The unrestricted
 lifetime allocation can be financed through ownership once income reaches:
 \begin{equation}
 w_O(p)=\begin{cases}
-\displaystyle\frac{Y[J+\Gamma A(p)]}{\delta-\Gamma A(p)},
+\displaystyle\frac{Y[1+\alpha+\vartheta+\Gamma A(p)]}{\delta-\Gamma A(p)},
  &\delta>\Gamma A(p),\\[5pt]
 +\infty,&\delta\le\Gamma A(p).
 \end{cases}
@@ -640,16 +655,16 @@ Retain $x_i,s_i$ and $v_i=ps_i/\alpha$. Write $t_i=x_i/v_i\ge1$ and
 $\lambda_c=\chi/(\kappa p)>0$. The private fertility condition gives:
 \begin{equation}
 n_i=\frac{\vartheta v_i t_i}{\kappa p(\lambda_c+t_i)},\qquad
-\widehat x_i=\frac{x_i+\alpha v_i+C(p)n_i}{J}.
+\widehat x_i=\frac{x_i+\alpha v_i+C(p)n_i}{1+\alpha+\vartheta}.
 \label{eq:index_identity}
 \end{equation}
 Subtracting $v_i$ and subtracting this index from $x_i$ gives:
 \begin{align}
 \widehat x_i-v_i
- &=\frac{v_i(t_i-1)}{J}
+ &=\frac{v_i(t_i-1)}{1+\alpha+\vartheta}
    \left(1+\frac{\vartheta\lambda_c}{\lambda_c+t_i}\right),\\
 x_i-\widehat x_i
- &=\frac{v_i(t_i-1)}{J}
+ &=\frac{v_i(t_i-1)}{1+\alpha+\vartheta}
    \left(\alpha+\frac{\vartheta t_i}{\lambda_c+t_i}\right).
 \end{align}
 Both expressions are nonnegative, and strictly positive when $t_i>1$.
@@ -671,7 +686,7 @@ X=\frac{\bar x+B}{2},\qquad
 S=\frac{\alpha}{p}\frac{\bar v+B}{2}.
 \end{equation}
 Condition~\eqref{ass:resources}, \eqref{eq:comparison_chain}, and a positive
-share with $t_i>1$ imply $B\ge y/K\ge\bar w/J\ge
+share with $t_i>1$ imply $B\ge y/(1+\alpha+\omega_B)\ge\bar w/(1+\alpha+\vartheta)\ge
 \avg{\widehat x}>\bar v$. Substitution proves the aggregate housing result
 and its individual and consumption comparisons.
 
@@ -704,7 +719,7 @@ $n_i=\vartheta g(x_i,v_i)$. Direct substitution in
 \begin{equation}
 \frac{\widehat x_i}{C(p)}-g(x_i,v_i)
  =\frac{v_i(t_i-1)(t_i-\alpha\lambda_c)}
- {JC(p)(\lambda_c+t_i)}.
+ {(1+\alpha+\vartheta)C(p)(\lambda_c+t_i)}.
 \label{eq:fertility_index}
 \end{equation}
 Under \eqref{ass:child_cost}, $\alpha\lambda_c\le1$, so this expression

@@ -22,6 +22,11 @@ corners, including constrained old households, without the composite
 preference-weight abbreviations. Young retirement choices are solved for each
 fixed tenure pair, then compared in utility levels; the maximum old value
 need not be concave. The main theorem's maintained assumptions are unchanged.
+The September 10 sharing update removes the preference-weight abbreviations
+from the main text as well, writes the planner objective as the full integral
+of remaining utilities, and adds a numerical illustration of the old-finance
+condition. Robustness beyond logarithms, additive separability, and fixed child
+requirements remains an explicit open question.
 The exact source compiled twice with no errors, undefined
 references, duplicate destinations, or overfull boxes. All pages were rendered
 and inspected. A separate Astra/max review found no consequential mathematical
