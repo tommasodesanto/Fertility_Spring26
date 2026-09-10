@@ -204,7 +204,7 @@ def run_history_probe(seed, c, args, out, progress, save, started, *, prices_ove
     terminal = load_terminal(c, args.arm, old)
     count = c['path_date_count']
     coordinate = c['probe_coordinate']
-    if (type(count) is not int or not 6 <= count <= 40
+    if (type(count) is not int or not 6 <= count <= 100
             or type(coordinate) is not int or not -1 <= coordinate < count
             or c['probe_log_step'] != .01
             or c['terminal_preference_rule'] != 'hold_normalized_2023_intercept'
@@ -347,7 +347,7 @@ def main():
     caps = {'fixed_policy_person_endpoint_current_psi_no_rebate': 840,
             'normalized_old_initialization': 1680,
             'normalized_terminal_price_root': 1680,
-            'normalized_historical_path_probe': 1800}
+            'normalized_historical_path_probe': 3600}
     if mode not in caps:
         raise ValueError('Explicit supported baseline diagnostic experiment required')
     c, originating = joined.load_smoke_contract(args.contract, args.contract_sha256,
