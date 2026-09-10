@@ -13,6 +13,59 @@ why a housing transfer can improve the allocation. A separate restriction on
 resources determines whether the **full equally weighted planner** gives more
 housing to the young as a group. Children alone do not establish that direction.
 
+## The local argument to lead with
+
+**Author clarification, September 10.** Recover the simple June–July argument
+about marginal housing values and build the exposition from it. This is a
+change in emphasis, not an instruction to abandon the full planner or fertility
+work. The June 9 source is
+[the local allocation note](../../../latex/archive/theory_note_cleanup_20260622/local_allocation_result_note_20260609.tex),
+especially its local reallocation experiment and fertility condition. The later
+[short note](../../../latex/archive/theory_note_cleanup_20260622/intergen_housing_fertility_short_note_corina_plus_planner.tex)
+contains the same argument with richer tenure and tax accounting. These sources
+are historical evidence, not certifications of all their equations.
+
+The useful core measures housing values in units of consumption. In the
+corrected model, the income-and-access conditions below imply that a young
+household's valuation exceeds the old household's unrestricted valuation:
+
+\[
+M_i^y=\frac{\alpha(c_i^y-\chi n_i)}{h_i^y-\kappa n_i}
+>p=
+\frac{\alpha c_j^o}{h_j^o}=M_j^o.
+\]
+
+Move a little housing from old to young and transfer enough goods back to
+compensate the old. The young value the extra space more than the compensation
+costs. This is a feasible improvement when the authority can relax finance,
+with individual continuation resources and estates preserved. It therefore
+proves that the competitive allocation does not maximize the full equally
+weighted dated objective. The planner is still allowed to choose consumption
+and housing; exhibiting one improving direction suffices to show the original
+allocation is not its optimum.
+
+The average-income bound in the proposition is needed only for the additional
+claim that the **maximizing allocation gives the young more housing in
+aggregate**. It is not needed for this compensated local gain. The old
+unrestricted-finance condition and the income/access conditions establishing a
+strict young distortion remain essential and must be shown rather than assumed.
+Historical tax/retention terms must not be imported into the repaired budgets
+without rederiving their fiscal and estate counterparts.
+
+The same marginal valuation enters the parental fertility condition:
+
+\[
+\frac{\vartheta(c_i^y-\chi n_i)}{n_i}=\chi+\kappa M_i^y.
+\]
+
+Children require space, so limited housing access increases its private
+marginal cost. A signed fertility response still requires the specified
+resource change; the compensated-transfer result below supplies one explicit
+condition. Lead the next Pro follow-up and the final exposition with this local
+argument, then present the full-allocation and joint-fertility statements as
+additional results. Do not interrupt the active Pro generation to change its
+prompt.
+
 ## Model
 
 Young households differ in resources \(w>0\), and all receive income \(y>0\)
