@@ -1,6 +1,6 @@
 # Simplified OLG amendment checks
 
-## September 9 essential-theory Pro review — running
+## September 9 essential-theory Pro review — first answer checked; focused follow-up running
 
 The author rejected treating the verified parameter family below as completion of
 the paper's theoretical argument. The required result remains a simple allocation
@@ -8,7 +8,7 @@ proposition under economically interpretable primitive conditions, followed by
 fertility and a consistent demographic transition. The model-design comparison
 remains an unadopted proposal; its algebraic checks do not settle that requirement.
 
-A fresh GPT-6 Pro review is running in
+A fresh GPT-6 Pro review is in
 [this chat](https://chatgpt.com/c/6aa1e33d-d328-83ea-971e-0541c9e3e359).
 The [research brief](../../../docs/prompts/oracle_essential_theory_reconsideration.md)
 and [exact submitted packet](oracle_essential_theory_packet.md) record today's
@@ -19,7 +19,30 @@ profiles, preferences and housing markets. The requested first comparison is a
 dated utilitarian planner choosing consumption and housing, initially with fixed
 fertility. Joint fertility and policy transitions must be distinguished from that
 comparison and derived consistently. Submission and active generation were
-verified in the signed-in browser. No response has yet been assessed or adopted.
+verified in the signed-in browser.
+
+The [first response](oracle_essential_theory_response.md) completed after 68m47s
+and was captured with all mathematical source on September 9. The
+[assessment](oracle_essential_theory_assessment.md) distinguishes the checked
+stationary allocation, joint fertility, and local transition arguments from their
+economic limitations. Separate Astra/max checks support these arguments inside
+their strict regime. Prices and real quantities are unique within that regime;
+old tenure labels can tie. The initial transition must retain inherited saving
+as well as the housing capital gain.
+
+The decisive limitation is the restriction \(\phi<q\), where \(\phi\) is
+origination LTV and \(q\) discounts one model period. It excludes the earlier
+\(\phi=.8,q=.5\) benchmark. The exact owner FOC is
+\(u_h/u_c=p+(q-\phi)P\mu/\lambda\), so the housing distortion changes sign
+outside this range under the proposed bullet-debt timing. A single
+[focused follow-up](../../../docs/prompts/oracle_essential_theory_finance_followup.md)
+was submitted at 20:20 EDT in the same Pro conversation, asking whether a standard
+repayment structure or owner-size minimum can repair this issue. Submission
+and active generation were verified. This uses the one follow-up authorized
+for this round: do not send another. Capture its eventual answer separately
+as oracle_essential_theory_finance_followup_response.md and update the existing
+assessment. All model changes remain unadopted; the main slides and manuscript
+are unchanged.
 
 
 ## September 9 two-hour model-design comparison — proposed, not adopted
