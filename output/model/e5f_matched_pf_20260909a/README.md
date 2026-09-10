@@ -429,3 +429,5 @@ exactly two completed updates; bounded timeout exit alone is insufficient.
 No calibrated PF benchmark or matched production policy result is claimed.
 Current decisions remain empirical family-group/calendar alignment and the
 future preference continuation; no target or weight has changed.
+
+September10,04:09UTC: source96a41873 passes58cluster tests. Full100-date market root17304265 is queued after the price collector. See OVERNIGHT_PLAN.md for its bounded budget and source reconciliation.

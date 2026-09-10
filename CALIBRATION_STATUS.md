@@ -1,6 +1,19 @@
 # Calibration Status
 
-Updated: `2026-09-09` (28-date PF market root verified; 100-date diagnostic submitted)
+Updated: `2026-09-10` (100-date probes running; full root queued)
+
+**September 10, 04:09 UTC / 00:09 EDT.** Both100-date smoke probes are
+running with current heartbeats. Full panel17303125 and collector17303126
+remain dependent. Full equilibrium root17304265 is now queued after the
+collector: six complete paths maximum,21000-second watchdog,21600-second
+allocation, expected about4h41m excluding queue delays. No new equilibrium
+result or calibration is claimed. Isolated source96a41873 is pushed;49local
+and58cluster regression tests pass. The change extends runtime ceilings and
+requires explicit old/new source pins for those wrapper changes. Economic
+evaluators and numerical gates are unchanged; running source E was preserved.
+Snapshot F, launch script, verification and concrete policy-adapter findings
+are recorded in `output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`.
+
 
 **Overnight September10,03:43UTC (September9,23:43EDT).** Author requests
 continued quantitative work and a rigorous morning readout.100date sequential
