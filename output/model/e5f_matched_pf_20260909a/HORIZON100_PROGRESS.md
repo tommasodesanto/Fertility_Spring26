@@ -8,27 +8,28 @@ This is a price-solver diagnostic at inherited parameters, not a new calibration
 | 2 | 6.984612% | Pass | 3255.7 |
 | 3 | 1.914974% | Pass | 3233.6 |
 | 4 | 0.223532% | Pass | 3220.0 |
+| 5 | 0.045272% | Pass | 3217.3 |
 
 The market tolerance is **0.02%**. Parameters, empirical targets and weights are identical across these trials.
 
-## Full target fit — trial 4
+## Full target fit — trial 5
 
-Objective at these provisional prices: **94.47080157**. Shares remain in fraction units. This objective is not a calibrated-equilibrium loss.
+Objective at these provisional prices: **94.47633971**. Shares remain in fraction units. This objective is not a calibrated-equilibrium loss.
 
 | Moment | Target | Model | Gap | Weight | Loss contribution |
 |---|---:|---:|---:|---:|---:|
-| Completed fertility | 1.918 | 1.7771058 | -0.1408942 | 1425.739 | 28.302597 |
-| Childless share | 0.188 | 0.23359583 | 0.045595827 | 17180.744 | 35.718413 |
-| Mean age at first birth | 26.044627 | 26.233257 | 0.18862968 | 44.444444 | 1.5813847 |
-| First births at age 30+ (share) | 0.2603274 | 0.24409341 | -0.016233994 | 10000 | 2.6354257 |
-| First-birth housing response (rooms) | 0.72024626 | 0.41140863 | -0.30883763 | 137.56527 | 13.12107 |
-| Rooms gap: 3+ versus 1–2 children, ages 30–55 | 0.36769956 | 0.34743186 | -0.020267694 | 2958.515 | 1.2152971 |
-| Parent ownership gap (share units) | 0.16766167 | 0.14658712 | -0.021074552 | 14229.591 | 6.3198843 |
-| Ownership share | 0.575472 | 0.58752032 | 0.012048321 | 1207.8461 | 0.1753334 |
-| Mean occupied rooms, ages 18–85 | 5.7799705 | 6.3262153 | 0.54624483 | 11.973159 | 3.5725921 |
-| Wealth / annual gross labor earnings | 6.8731 | 7.0573652 | 0.1842652 | 6.2876694 | 0.21348942 |
-| Annual bequests / wealth | 0.0088 | 0.0083543586 | -0.00044564144 | 5165289.3 | 1.0258073 |
-| Wealth / income dispersion, ages 76–84 (p90/p50) | 3.4481108 | 3.3463781 | -0.10173265 | 56.959772 | 0.58950699 |
+| Completed fertility | 1.918 | 1.7771031 | -0.14089694 | 1425.739 | 28.303697 |
+| Childless share | 0.188 | 0.23359661 | 0.045596607 | 17180.744 | 35.719636 |
+| Mean age at first birth | 26.044627 | 26.233254 | 0.18862636 | 44.444444 | 1.581329 |
+| First births at age 30+ (share) | 0.2603274 | 0.24409314 | -0.016234266 | 10000 | 2.635514 |
+| First-birth housing response (rooms) | 0.72024626 | 0.41139588 | -0.30885038 | 137.56527 | 13.122153 |
+| Rooms gap: 3+ versus 1–2 children, ages 30–55 | 0.36769956 | 0.34740826 | -0.020291302 | 2958.515 | 1.2181299 |
+| Parent ownership gap (share units) | 0.16766167 | 0.14658777 | -0.0210739 | 14229.591 | 6.3194932 |
+| Ownership share | 0.575472 | 0.58750768 | 0.01203568 | 1207.8461 | 0.17496566 |
+| Mean occupied rooms, ages 18–85 | 5.7799705 | 6.3262199 | 0.54624946 | 11.973159 | 3.5726526 |
+| Wealth / annual gross labor earnings | 6.8731 | 7.0572884 | 0.18418842 | 6.2876694 | 0.21331155 |
+| Annual bequests / wealth | 0.0088 | 0.0083543839 | -0.00044561608 | 5165289.3 | 1.0256905 |
+| Wealth / income dispersion, ages 76–84 (p90/p50) | 3.4481108 | 3.3463556 | -0.1017551 | 56.959772 | 0.58976725 |
 
 Four ACS targets pool 2012–2023 while the current model observer uses 2023; two parent/child group definitions remain unresolved. The approved childbirth event-study target is unchanged. See overnight_target_mapping_review.md for authoritative sources and dates.
 
@@ -60,16 +61,16 @@ These endpoint distances do not replace a comparison of historical prices and mo
 
 | Distance | Value | Tolerance | Pass |
 |---|---:|---:|---|
-| asset price relative gap | 0.0015439994 | 0.01 | True |
+| asset price relative gap | 0.0015447711 | 0.01 | True |
 | equal transfer relative gap | 0 | 0.01 | True |
-| household heads relative gap | 0.0032301731 | 0.01 | True |
-| normalized head age sex l1 | 0.00072601358 | 0.02 | True |
-| normalized household distribution l1 | 0.015282407 | 0.02 | True |
-| normalized person age sex l1 | 0.0008922914 | 0.02 | True |
+| household heads relative gap | 0.0032175258 | 0.01 | True |
+| normalized head age sex l1 | 0.00072254501 | 0.02 | True |
+| normalized household distribution l1 | 0.015263719 | 0.02 | True |
+| normalized person age sex l1 | 0.0008886332 | 0.02 | True |
 | psi absolute gap | 0 | 0.001 | True |
-| renter price relative gap | 0.010861396 | 0.01 | False |
-| resident persons relative gap | 0.0031805294 | 0.01 | True |
+| renter price relative gap | 0.010866824 | 0.01 | False |
+| resident persons relative gap | 0.0031683947 | 0.01 | True |
 
 No new matched policy path is available. The main intended property-tax comparison keeps equal household rebates in both tax regimes. Market convergence, replay, horizon stability, empirical alignment and matched re-estimation remain separate requirements.
 
-Source receipts: `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/meeting_receipts/historical_root_h100_01/sequential/evaluation_004`. Regenerate with `python3 review_horizon100_root_progress.py` after collecting complete trials. No model solve is performed.
+Source receipts: `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/meeting_receipts/historical_root_h100_01/sequential/evaluation_005`. Regenerate with `python3 review_horizon100_root_progress.py` after collecting complete trials. No model solve is performed.

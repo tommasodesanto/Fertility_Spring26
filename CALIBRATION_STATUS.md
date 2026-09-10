@@ -2,6 +2,29 @@
 
 Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
 
+**September 10, 11:15 UTC / 07:15 EDT.** Five complete root trials pass
+independent receipt and mapping checks. The maximum market gap has fallen to
+0.04527%, still above the unchanged 0.02% gate. Evaluation 6 is the reserved
+fresh reproduction. Parameters, targets, weights and economic source remain
+unchanged. Full provisional target, parameter and terminal-distance tables:
+`output/model/e5f_matched_pf_20260909a/HORIZON100_PROGRESS.md`.
+
+One bounded continuation, job 17319026, is queued after successful completion
+of parent 17309773. It verifies the parent's complete exact-replay receipts,
+then allows at most three paths: a fresh initial evaluation, one updated
+Broyden step and a final replay. It uses the saved updated price Jacobian,
+the same immutable source and all existing gates. Internal budget 10800 seconds;
+one core and 16GB, with a 3h05 allocation on previously faster cs693. It refuses
+duplicate outputs and skips solves if the parent already converged. This round
+will probably extend beyond the 08:30 morning readout; report that readout as
+partial if necessary. No automatic further continuation.
+
+The unit-rent terminal distance remains 1.0867% against a 1% tolerance; all
+other recorded tail metrics pass. Historical horizon stability, parameter
+re-estimation and matched policies remain outstanding. No new equilibrium or
+calibration is claimed. Launcher and explicit round budget are in the task's
+`OVERNIGHT_PLAN.md` and `submit_horizon100_continuation.sh`.
+
 **September 10, 10:18 UTC / 06:18 EDT.** Four root trials are verified.
 The maximum market gap is now 0.2235%, down from 1.915% in trial 3, but still
 above the unchanged 0.02% gate. Trial 5 is running; trial 6 is reserved for

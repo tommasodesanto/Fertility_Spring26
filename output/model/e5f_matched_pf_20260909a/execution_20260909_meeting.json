@@ -73,7 +73,7 @@
   "next_root_snapshot": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_path_roots_20260909b",
   "restart_regression_job": 17280998,
   "restart_tests_passed": 95,
-  "updated_utc": "2026-09-10 04:09 UTC",
+  "updated_utc": "2026-09-10 11:15 UTC",
   "historical_root_progress": {
     "sequential": {
       "completed_job": 17282612,
@@ -158,7 +158,7 @@
     "smoke_price_job": 17303124,
     "remaining_price_job": 17303125,
     "collector_job": 17309766,
-    "last_queue_state": "2026-09-10 10:18 UTC:4trialsverified;trial5running;maxgap.0022353;unitrentterminalcheckfails;noequilibrium",
+    "last_queue_state": "2026-09-10 11:15 UTC: trial6 reserved replay running; five verified trials; continuation17319026 queued after parent success; no market or horizon certificate",
     "caffeinate_pid": 17077,
     "morning_delivery": "2026-09-10 08:30 America/New_York",
     "root_job": 17309773,
@@ -187,8 +187,24 @@
     "jacobian_validated": true,
     "jacobian_condition_number": 3.1395190440449414,
     "root_started": true,
-    "completed_root_evaluations": 4,
+    "completed_root_evaluations": 5,
     "initial_root_anchor_reproduction_verified": true,
-    "best_root_market_residual": 0.002235323603059941
+    "best_root_market_residual": 0.0004527188458867619,
+    "continuation": {
+      "job": 17319026,
+      "parent_job": 17309773,
+      "status_at_submission": "PENDING_DEPENDENCY",
+      "maximum_path_evaluations": 3,
+      "seconds": 10800,
+      "slurm_seconds": 11100,
+      "cpus": 1,
+      "memory_gb": 16,
+      "node": "cs693",
+      "source_unchanged": true,
+      "launcher": "submit_horizon100_continuation.sh",
+      "launcher_sha256": "a0c04fee368c33e2900af773e1f5a6ed0f200e77ad8d96679ded4c8108591a4e",
+      "output": "output/historical_root_h100_continue_01/sequential",
+      "automatic_further_continuation": false
+    }
   }
 }
