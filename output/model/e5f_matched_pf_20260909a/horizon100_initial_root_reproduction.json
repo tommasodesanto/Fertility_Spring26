@@ -1,0 +1,42 @@
+{
+  "status": "initial_root_trial_reproduces_verified_anchor_numerically",
+  "evaluation": 1,
+  "elapsed_seconds": 3310.3426632191986,
+  "maximum_market_residual": 0.18199031890421163,
+  "mapping_gates_pass": true,
+  "byte_identical_anchor_artifacts": {
+    "target_fit.csv": true,
+    "parameters.csv": true,
+    "transition_path.csv": false,
+    "measurement.json": true
+  },
+  "transition_rows_match_except_documented_source_path": [
+    {
+      "row": 0,
+      "calendar_year": "2007",
+      "field": "acs_age_source",
+      "identical_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e"
+    },
+    {
+      "row": 1,
+      "calendar_year": "2011",
+      "field": "acs_age_source",
+      "identical_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e"
+    },
+    {
+      "row": 2,
+      "calendar_year": "2015",
+      "field": "acs_age_source",
+      "identical_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e"
+    },
+    {
+      "row": 3,
+      "calendar_year": "2019",
+      "field": "acs_age_source",
+      "identical_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e"
+    }
+  ],
+  "residual_vector_exact": true,
+  "loss_exact": true,
+  "qualification": "Full runtime/source adaptation check. Transition CSV differs only in four ACS audit source paths from immutable E to F, with identical data SHA256. The supplied-price anchor does not clear markets. Trial2is the first price update, still running."
+}

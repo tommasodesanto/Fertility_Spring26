@@ -452,3 +452,6 @@ September10,06:00UTC:99originalprobes independently validated;only20timedout. Re
 
 
 September10,06:34UTC: recovered20andcollectorcompleted. Full100-columnmatrix independentlyreconstructedexactly; condition3.140/all100ownderivativesnegative. Root17309773RUNNINGcs616,58testsPASS,firstpathunderway. See horizon100_jacobian_review.json, jacobian_horizon100_sequential.json and finalized horizon100_root_contract.json. Diagnostic horizon100_moment_price_derivatives.json contains12by100forwarddifferences (step.01), all1212fitrows/gaps/lossesverified; it is at a supplied-price anchor, not an equilibrium-adjusted parameter Jacobian. Formula is each probe model moment minus anchor, divided by.01; inputCSVhashes and moment/year ordering are stored. No extra model solves.
+
+
+03:40 EDT: first root evaluation numerically reproduces the supplied-price anchor exactly, with only four documented E-to-F ACS source-path differences in the transition CSV. Review: horizon100_initial_root_reproduction.json. First changed-price trial (evaluation 2) is running; no new equilibrium yet.
