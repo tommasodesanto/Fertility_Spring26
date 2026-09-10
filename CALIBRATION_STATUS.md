@@ -2,6 +2,21 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 10 — author selects initial fertility benchmark 2.1.**
+After discussing the distinction between completed cohort fertility and period
+fertility, the author explicitly chose **2.1** for the approximate initial
+stationary benchmark. This replaces the research proposal's2.0605 scalar; it
+does not change the published2003–2006 average or make2.1 an empirical estimate
+of completed fertility among women40–44 in2007. The initial level choice is
+settled; old CPS completed fertility remains a disclosed approximation check.
+Do not keep reopening that choice. The current implementation already has an
+initial2.1 normalization, but its observation units and demographic-accounting
+consistency still need verification before a new target contract is activated.
+The remaining early target set, source/sample/observer mappings, uncertainty,
+identification and numerical certification are described in the research report
+below. The author's selection of2.1 does not certify their fit or adopt every
+other proposed target. No model code, production weights or numerical job changed.
+
 **September 10, afternoon design review — recommendation, not adoption.**
 The current decision report and full evidence index are
 `output/model/e5f_matched_pf_20260909a/design_research/README.md`; the eight-page

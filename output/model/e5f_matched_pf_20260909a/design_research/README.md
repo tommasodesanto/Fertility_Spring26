@@ -3,6 +3,14 @@
 Completed 10 September 2026. Research and empirical diagnostics only: no model,
 target/weight contract, parameter estimate, numerical gate or cluster job changed.
 
+**Author decision after the report:** use **2.1** as the approximate initial
+stationary fertility benchmark. This supersedes the report's proposed2.0605
+anchor; the empirical2003–2006 average remains2.0605. The PDF is the dated
+research packet, not a claim that this later scalar decision was already in it.
+The initial-level choice is settled; remaining observer, weighting,
+identification and initial-accounting checks still apply. Other candidate target
+assignments are not automatically adopted by this decision.
+
 Read [DECISION_REPORT.md](DECISION_REPORT.md) or the eight-page PDF at
 `output/pdf/calibration_design_decision_20260910.pdf`. The first two pages give the
 recommendation and main economic issue; the remaining pages document targets,
