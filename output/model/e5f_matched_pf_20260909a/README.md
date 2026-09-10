@@ -1,5 +1,13 @@
 # Matched perfect-foresight implementation
 
+Concrete parameter-to-moment proposal: [parameter_target_audit/README.md](parameter_target_audit/README.md)
+covers every searched parameter, the initial preference normalization, numerical
+candidate targets, observation windows and actual local data availability.
+It corrects the earlier limited source inventory: old CPS and natality raw data
+are local. Initial period fertility, cohort fertility and later transition housing
+are explicitly distinguished. This is empirical design work; no production
+target, weight, parameter, model code or job changed.
+
 Initial-economy/shock decision: [CALIBRATION_DESIGN_DECISION.md](CALIBRATION_DESIGN_DECISION.md)
 records the primary-literature check, two-stage estimation algorithm, historical
 implementation and feasibility of a genuine 2007 refit. It is a recommendation

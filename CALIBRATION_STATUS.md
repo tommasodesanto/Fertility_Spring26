@@ -1,6 +1,34 @@
 # Calibration Status
 
-Updated: `2026-09-10` (100-column price panel verified; full 100-date root running)
+Updated: `2026-09-10` (empirical parameter map added; numerical status below is dated)
+
+**September 10 — author objective and concrete empirical proposal.**
+The author wants to condition on a fertility-preference decline and study policy
+scenarios along the resulting anticipated transition, not identify the cause of
+the US fertility decline. The parameter-by-parameter target and availability map
+is `output/model/e5f_matched_pf_20260909a/parameter_target_audit/README.md`.
+It covers all eleven searched coordinates, the initial preference normalization,
+fixed restrictions, source definitions, proposed observation windows and work
+needed before activation. This is a proposal, not a new target contract.
+
+Corrected data inventory: local CPS June 2004/2006/2008 and older natality raw
+files exist. Preliminary 2004/2006 CPS observations and period first-birth timing
+were extracted and independently checked. Early PSID wealth/earnings is 6.92658
+from pooled 2005/2007 weighted totals. Published initial and late period fertility
+averages are 2.0605 (2003–2006) and 1.64575 (2020–2023). These are proposed
+period-rate anchors, not the existing completed-fertility target. Initial CPS
+completed fertility is only 1.85661 capped at five, so the stationary approximation
+cannot silently equate both empirical clocks. New uncertainty and model observers
+remain required. The existing matched-metro ACS cache still starts in 2012;
+2007 housing targets are not ready in that same sample/geography.
+
+The proposal retains the reviewed Sun–Abraham restriction and current later
+fertility/family-ownership restrictions; adds initial fertility shape and period
+anchors; and replaces the wealth ratio's long pool with an explicit initial-era
+pool. No active target/weight, model code, calibration or running job changed.
+Period female exposure, date pooling and both ACS family-group definitions remain
+outstanding before a new calibration launch. Current numerical jobs were not
+polled during this empirical audit; do not read the morning entries as live status.
 
 **Morning discussion packet, September 10, 12:27 UTC / 08:27 EDT.**
 The three-page partial readout is

@@ -2,6 +2,16 @@
 
 September 10, 2026. Bounded primary-literature check and read-only reconstruction of prior implementation. Recommendation for author discussion; no target, parameter, model or running-job contract changed.
 
+**Subsequent same-day empirical check:** the [concrete parameter map](parameter_target_audit/README.md)
+supersedes the limited availability assessment below. The active CPS builder is
+2024-only, but raw June 2004/2006/2008 CPS is already local and preliminary early
+moments have now been computed. Older natality raw files also exist beyond the
+1987-start cache. Initial PSID wealth is directly recoverable from saved annual
+components. A fully matched 2007 metro housing target remains unavailable as a
+ready input. The new proposal anchors the initial fertility level with a period
+rate and fits an announced preference decline for conditional policy scenarios;
+it does not claim to identify the decline's cause or activate a new objective.
+
 ## Recommendation and tomorrow's claim
 
 Retain the initial-economy-plus-anticipated-transition design. An accurately fitted initial economy followed by an estimated low-dimensional shock is a defensible eventual specification. However, a complete 2007 empirical recalibration is not available as a ready switch. For tomorrow, retain the existing approximate initial economy and describe the current exercise as a conditional historical transition at inherited parameters. Do not describe it as an accurately calibrated 2007 economy, an estimated annual fertility history, a completed PF recalibration, or a new policy result.

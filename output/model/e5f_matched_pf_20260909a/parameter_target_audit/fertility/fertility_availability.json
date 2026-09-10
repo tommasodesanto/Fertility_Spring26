@@ -1,0 +1,220 @@
+{
+  "status": "availability and preliminary extraction; NOT adopted targets",
+  "created_utc": "2026-09-10T15:47:59.814471+00:00",
+  "cps_source": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/cps_00003.dat",
+  "raw_size_bytes": 5965777224,
+  "raw_mtime_ns": 1738708781490322351,
+  "raw_hash_scope": "exact selected June partitions hashed; whole6GB source not hashed in bounded audit",
+  "schema_source": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/loader.do",
+  "schema_sha256": "eb40824c7a3f11d5ca12400e9935ed6ae8cb5439cbe30009c047be90280bfab3",
+  "schema_1based_inclusive": {
+    "year": [
+      1,
+      4
+    ],
+    "month": [
+      10,
+      11
+    ],
+    "age": [
+      147,
+      148
+    ],
+    "sex": [
+      149,
+      149
+    ],
+    "frever": [
+      239,
+      241
+    ],
+    "frsuppwt": [
+      251,
+      260
+    ]
+  },
+  "sample": "June, femaleSEX2,age40-44,FREVER0-20,FRSUPPWT>0;excludeFREVER999NIU",
+  "weights": "IPUMS fertility supplement FRSUPPWT divided10000 as supplied loader; official Census supplement weight crosswalk not independently certified",
+  "topcode": "cap FREVER at5 to match2024 public-file target convention; uncapped values retained separately",
+  "partitions": {
+    "2004": {
+      "byte_start": 3662372880,
+      "byte_end_exclusive": 3698198784,
+      "all_sample_rows": 137264,
+      "partition_sha256": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+      "female40_44_frever_codes": {
+        "2": 1936,
+        "0": 1060,
+        "1": 950,
+        "3": 1034,
+        "5": 131,
+        "4": 418,
+        "6": 40,
+        "10": 3,
+        "8": 9,
+        "999": 7,
+        "7": 12,
+        "9": 6,
+        "11": 1
+      }
+    },
+    "2006": {
+      "byte_start": 3914321400,
+      "byte_end_exclusive": 3949805133,
+      "all_sample_rows": 135953,
+      "partition_sha256": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+      "female40_44_frever_codes": {
+        "1": 888,
+        "0": 1057,
+        "2": 1799,
+        "3": 986,
+        "4": 350,
+        "5": 125,
+        "8": 9,
+        "6": 38,
+        "999": 8,
+        "7": 13,
+        "10": 3,
+        "9": 2,
+        "12": 2
+      }
+    },
+    "2008": {
+      "byte_start": 4162758165,
+      "byte_end_exclusive": 4197969153,
+      "all_sample_rows": 134908,
+      "partition_sha256": "900aae5a22e0f6ee4eded20e904794769f0e69ce9b9782fea42e55d9064c26d2",
+      "female40_44_frever_codes": {
+        "1": 888,
+        "0": 890,
+        "4": 301,
+        "3": 898,
+        "2": 1770,
+        "5": 114,
+        "6": 42,
+        "7": 12,
+        "8": 8,
+        "11": 2,
+        "18": 2,
+        "999": 6,
+        "12": 2,
+        "13": 2,
+        "15": 1
+      }
+    }
+  },
+  "cps_moments": [
+    {
+      "window": "2004",
+      "n": 5600,
+      "sum_supplement_weights": 11534656.993600009,
+      "mean_children_ever_born_uncapped": 1.8946580625003218,
+      "mean_children_ever_born_capped5": 1.8712915395903162,
+      "childless_share": 0.19283861219576473,
+      "exactly_one_given_mother": 0.21511000477596962,
+      "weighted_mothers_denominator": 9310329.746799989,
+      "weighted_exactly_one_numerator": 2002745.0762999975,
+      "standard_errors": "NOT COMPUTED; not production target or weight"
+    },
+    {
+      "window": "2006",
+      "n": 5272,
+      "sum_supplement_weights": 11234864.996399973,
+      "mean_children_ever_born_uncapped": 1.8616754439151708,
+      "mean_children_ever_born_capped5": 1.8415328894676959,
+      "childless_share": 0.20386405489820464,
+      "exactly_one_given_mother": 0.2121411459107166,
+      "weighted_mothers_denominator": 8944479.861999962,
+      "weighted_exactly_one_numerator": 1897492.2075000003,
+      "standard_errors": "NOT COMPUTED; not production target or weight"
+    },
+    {
+      "window": "2008",
+      "n": 4932,
+      "sum_supplement_weights": 10747903.994999925,
+      "mean_children_ever_born_uncapped": 1.901114295513395,
+      "mean_children_ever_born_capped5": 1.8713986183498683,
+      "childless_share": 0.1777329161284541,
+      "exactly_one_given_mother": 0.22372007001777308,
+      "weighted_mothers_denominator": 8837647.675699947,
+      "weighted_exactly_one_numerator": 1977159.1568000019,
+      "standard_errors": "NOT COMPUTED; not production target or weight"
+    },
+    {
+      "window": "2004+2006 pooled weighted records",
+      "n": 10872,
+      "sum_supplement_weights": 22769521.989999805,
+      "mean_children_ever_born_uncapped": 1.8783838839209661,
+      "mean_children_ever_born_capped5": 1.8566081212581498,
+      "childless_share": 0.19827875100684264,
+      "exactly_one_given_mother": 0.21365532522014702,
+      "weighted_mothers_denominator": 18254809.608799897,
+      "weighted_exactly_one_numerator": 3900237.283800007,
+      "standard_errors": "NOT COMPUTED; not production target or weight"
+    }
+  ],
+  "nchs_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+  "nchs_sha256": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+  "nchs_period_timing": [
+    {
+      "start_year": 2003,
+      "end_year": 2006,
+      "first_birth_count": 6611269,
+      "mean_age_boundary_collapsed_midpoint": 25.976263860992496,
+      "share_first_births_age30plus": 0.2492780130410667,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    },
+    {
+      "start_year": 2011,
+      "end_year": 2014,
+      "first_birth_count": 6260293,
+      "mean_age_boundary_collapsed_midpoint": 26.624835610729402,
+      "share_first_births_age30plus": 0.2824770342218807,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    },
+    {
+      "start_year": 2020,
+      "end_year": 2023,
+      "first_birth_count": 5593947,
+      "mean_age_boundary_collapsed_midpoint": 27.94806314754144,
+      "share_first_births_age30plus": 0.368519937711244,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    },
+    {
+      "start_year": 2003,
+      "end_year": 2007,
+      "first_birth_count": 8339963,
+      "mean_age_boundary_collapsed_midpoint": 25.947974589335708,
+      "share_first_births_age30plus": 0.2465109257678961,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    },
+    {
+      "start_year": 2011,
+      "end_year": 2015,
+      "first_birth_count": 7790260,
+      "mean_age_boundary_collapsed_midpoint": 26.71468628774906,
+      "share_first_births_age30plus": 0.2879057951852698,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    },
+    {
+      "start_year": 2019,
+      "end_year": 2023,
+      "first_birth_count": 7009212,
+      "mean_age_boundary_collapsed_midpoint": 27.880462454267327,
+      "share_first_births_age30plus": 0.36377256102397815,
+      "operator": "pooled period first-birth counts, ages12-49, no female exposure denominator",
+      "uncertainty": "not computed; existing cohort-window SE cannot be reused automatically"
+    }
+  ],
+  "cautions": [
+    "Pre2007 completed-cohort fertility differs from periodTFR/replacement2.1; no automatic simultaneous equality in steady-state mapping",
+    "Exactly-one conditional on motherhood is new parity shape variation, not a continuation-birth hazard",
+    "2020-23 includes COVID period",
+    "No bootstrap or target/weight revision in this audit"
+  ]
+}
