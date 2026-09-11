@@ -1,8 +1,17 @@
+import json
 import unittest
-from run_observed_bracket import collect_observer
+from run_observed_bracket import collect_observer, jsonable
 
 
 class ObserverTests(unittest.TestCase):
+    def test_actual_numpy_diagnostics_are_json_serializable(self):
+        import numpy as np
+        value = {'mappings': [[{'rate': np.float64(1.5),
+            'ages': np.array([18., 22.]), 'flows': np.array([[.1, .2]])}]]}
+        saved = json.loads(json.dumps(jsonable(value)))
+        self.assertEqual(saved['mappings'][0][0]['flows'], [[.1, .2]])
+        self.assertEqual(saved['mappings'][0][0]['rate'], 1.5)
+
     def test_preserves_existing_observer_and_dated_mapping_sequence(self):
         original_calls, measured, saved = [], [], []
         e, p, g, s = object(), object(), object(), object()

@@ -2,19 +2,22 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September11, commute launch — preference-rate observer17409646_2 RUNNING;
-two alternative histories17409647_0/1 queued after its successful smoke.**
+**September11, commute launch — preference-rate observer17409919_2 submitted;
+two alternative histories17409920_0/1 queued after its successful smoke.**
 The resumed six-date history now passed its unchanged housing/fiscal/replay
 gates; original17402074 has advanced to28dates. The new baseline short replay
 saves the existing age-specific parity-flow and model-household-rate diagnostics.
 Its reporting-only wrapper preserves all641original scientific pins and the
-three existing candidate wrappers.44unit tests and the direct period-rate flow
+three existing candidate wrappers.45unit tests and the direct period-rate flow
 accounting test pass, as do source/input preflights for allthree cases. Numerical
 observer smoke is not yet certified. Two independent-0.025/-0.10 histories
 follow automatically, reusing their already accepted terminal endpoints and the
 accepted-0.05 short price/pension path as guesses. Each gets at most two short
 root rounds then one28-date root:640Bellmans,3h15mSlurm. Baseline reporter gets
 96Bellmans/40minutes; its existing long path is not duplicated.
+Original observer17409646 failed on the first dated JSON write (a helper was
+local to the original driver), and dependency17409647 did not run. Replacement
+v2 uses its own NumPy-tested serializer; original failed sources/output retained.
 Full recipe and submissionreceipt: `output/model/e5f_matched_pf_20260909a/current_candidate_transition/README.md`.
 
 **Priority remains unfinished historical preference estimation.** Current jobs

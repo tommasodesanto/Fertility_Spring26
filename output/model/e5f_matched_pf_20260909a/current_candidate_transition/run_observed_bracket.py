@@ -18,6 +18,16 @@ CASES = (('delta_m0025', -.025), ('delta_m010', -.10), ('delta_m005', -.05))
 ACCEPTED = pipeline.HERE / 'recovery/delta_m005/accepted_history_6.json'
 
 
+def jsonable(value):
+    if isinstance(value, dict):
+        return {key: jsonable(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [jsonable(item) for item in value]
+    if hasattr(value, 'tolist'):
+        return value.tolist()
+    return value
+
+
 def collect_observer(original, measure, save):
     mappings = []
 
@@ -43,7 +53,7 @@ def observed_solve(contract, output):
 
     def solve(**kwargs):
         def save(mappings):
-            pipeline.save(output/'dated_household_fertility.json', driver.jsonable(dict(
+            pipeline.save(output/'dated_household_fertility.json', jsonable(dict(
                 mappings=mappings,
                 denominator='model adult households in each age cell, not female exposure',
                 observer_source=pipeline.pin(fertility.__file__),
@@ -127,7 +137,7 @@ def main():
     if args.preflight:
         print(f'{label}: complete source/input preflight passed', flush=True)
         return 0
-    folder = pipeline.HERE/'observed_bracket'/label
+    folder = pipeline.HERE/'observed_bracket_v2'/label
     folder.mkdir(parents=True, exist_ok=False)
     pipeline.save(folder/'plan.json', dict(delta=CASES[args.case][1],
         accepted_smoke=pipeline.pin(ACCEPTED), controller=pipeline.pin(__file__),

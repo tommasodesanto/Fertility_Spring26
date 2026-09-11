@@ -3,9 +3,9 @@
 ## Commute launch: dated fertility reporting and preference alternatives
 
 The continued six-date root passed its unchanged market/fiscal and exact replay
-gates. Its existing 28-date continuation remains job17402074. New job17409646_2
+gates. Its existing 28-date continuation remains job17402074. New job17409919_2
 runs the same accepted short path with the existing age-specific birth-flow
-observer attached without changing any model source. Array17409647_0/1 starts
+observer attached without changing any model source. Array17409920_0/1 starts
 automatically only after that numerical observer smoke passes; its two independent
 branches reuse the verified -0.025/-0.10 terminal endpoints and the accepted
 -0.05 short price/pension path as an initial guess. No terminal is unnecessarily
@@ -29,13 +29,20 @@ mapping is provisionally about13–17minutes, so the2h stage limit can bind.
 The baseline long path already running is not duplicated. Three new jobs need
 at most30GiB across three one-CPU allocations; alternatives wait for the smoke.
 
-All44 startup unit tests plus the parity-flow/period-rate accounting test pass;
+All45 startup unit tests plus the parity-flow/period-rate accounting test pass;
 all three real source/input preflights pass. The numerical observer smoke is
 pending/running, not declared passed by these pure tests. Every case retains
 the17standard graphs, root replay and checkpoint gates. Submission IDs, source
-hashes and dependency are in `observed_bracket_submission.json`. Cluster-side
+hashes and dependency are in `observed_bracket_v2_submission.json`. Cluster-side
 controllers and Slurm dependency run without the laptop; no AI heartbeat was
-reactivated. Outputs are under the remote batch's `observed_bracket/` directory.
+reactivated. Outputs are under the remote batch's `observed_bracket_v2/` directory.
+
+The first observer smoke17409646 failed at the first dated JSON write because
+it referred to a helper local to the original driver; dependent17409647 never
+ran. The standalone serializer now passes a regression test on actual NumPy
+arrays/scalars. Remote v1 sources and failed outputs are retained unchanged;
+replacement v2 filenames and output directory preserve this evidence. The
+local canonical controller maps to remote `run_observed_bracket_v2.py`.
 
 Earlier run records below describe the original attempts.
 
