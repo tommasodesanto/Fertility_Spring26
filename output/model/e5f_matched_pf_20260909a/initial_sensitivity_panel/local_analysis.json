@@ -1,0 +1,3623 @@
+{
+  "schema": "e5f_initial_local_diagnostic_v1",
+  "calibrated_smm": false,
+  "actual_SMM_weights": null,
+  "observed_restrictions": 11,
+  "proposed_scored_restrictions": 12,
+  "structural_coordinates": 9,
+  "missing_restrictions": [
+    "recent_parent_ownership"
+  ],
+  "parameters": [
+    "beta_annual",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "chi",
+    "H0",
+    "theta0",
+    "theta1",
+    "first_birth_fixed_cost",
+    "h_P"
+  ],
+  "spectra": [
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "singular_values": [
+        112.22502806896354,
+        18.594919849425644,
+        17.232261140672545,
+        15.31113585099619,
+        9.228615644888121,
+        8.291981329800851,
+        4.3155160023975725,
+        2.9980529101916336,
+        0.09033085820379937
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1242.3775252502062,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "singular_values": [
+        112.22501529791522,
+        18.494627857275038,
+        16.590776007793057,
+        15.195575737448893,
+        9.229384930865699,
+        8.290782617088457,
+        4.3188253968167745,
+        2.998555512509725,
+        0.09036852230700351
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1241.8595815549575,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "singular_values": [
+        112.2250216711332,
+        18.529940372693897,
+        16.871177075254778,
+        15.319399610434662,
+        9.22901831664317,
+        8.291446801314851,
+        4.317276118091632,
+        2.998315248027246,
+        0.09035523609617202
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1242.0422603033596,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "singular_values": [
+        162.48333290248215,
+        47.11843468988579,
+        35.30142271333187,
+        28.548356468951873,
+        8.466762736485638,
+        4.070709739129963,
+        3.5527317784843713,
+        1.0803656755810964,
+        0.08584833742044419
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1892.6788541834692,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "singular_values": [
+        162.48331671409267,
+        46.69324103647121,
+        35.2994785311188,
+        27.60668158178625,
+        8.466758254286999,
+        4.06733658356414,
+        3.554997671189905,
+        1.0821815703371969,
+        0.0857759475598294
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1894.2759752174031,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "singular_values": [
+        162.4833247880904,
+        46.893890308485766,
+        35.30062542092165,
+        28.10197517876761,
+        8.466762143953835,
+        4.069066483796208,
+        3.5539705363770113,
+        1.0813500605092463,
+        0.085823648535707
+      ],
+      "numerical_rank": 9,
+      "condition_number": 1893.2232264687407,
+      "caveat": "Local numerical rank is not an identification or empirical-validity certificate"
+    }
+  ],
+  "asymmetry": {
+    "uniform_birth_time": [
+      1.7524477439498267,
+      0.011429775252446372,
+      0.006862033057205365,
+      0.6169145031195149,
+      0.8259573964736522,
+      2.924361200543527,
+      0.01776827614647767,
+      0.03739458849894213,
+      0.03320333251803198
+    ],
+    "constant_post_cell": [
+      1.7524510996277538,
+      0.011429476147679809,
+      0.006864186810591409,
+      0.6169145010425621,
+      0.8259576543933209,
+      2.924361201204103,
+      0.017768276336917337,
+      0.03743751929053997,
+      0.033199434688108806
+    ]
+  },
+  "diagnostic_scales": {
+    "equal_relative_5pct": [
+      0.009913937550342132,
+      0.010682766261007351,
+      1.298813193049625,
+      0.012463900652053335,
+      0.3072930697228715,
+      0.00044000000000000007,
+      0.175796754325936,
+      0.2780548688059326,
+      0.032416701715957466,
+      0.03601231311907639,
+      0.017353346589812534
+    ],
+    "reference_precision_diagnostic": [
+      0.005305035738317728,
+      0.0060911302714076404,
+      0.0845673694617251,
+      0.00849226186213262,
+      0.36285515343369,
+      0.00044000000000000007,
+      0.306910785103348,
+      0.08838120078007809,
+      0.020675272863460718,
+      0.0852600513385958,
+      0.059705154633000496
+    ]
+  },
+  "scale_disclosure": "Equal-relative profile uses synthetic 5% target scales. Reference profile uses unadopted CPS correlation-one approximations, NCHS annual temporal SD (not SE), other recorded SEs and synthetic bequest scale. Neither activates a target contract.",
+  "proposals": [
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952488271909795,
+        "kappa_fert": 1.9134059914037334,
+        "kappa_fert_continuation": 1.562699557510582,
+        "chi": 1.0607818896755887,
+        "H0": 7.7164651694613955,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.10917615063368791,
+        "first_birth_fixed_cost": 4.122160940838689,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        0.005872122630741134,
+        -0.12499999999999999,
+        -0.12499999999999852,
+        0.006672847759302413,
+        -0.08901485111701353,
+        -0.12499999999999999,
+        0.051229589728697414,
+        -0.11395903533703133,
+        0.12499999999999999
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 191.98270451405966,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18416225430423064,
+          "cps_exactly_one": 0.23046464818376516,
+          "nchs_mean_age": 26.606445191957892,
+          "nchs_share30": 0.2661519176933941,
+          "wealth_earnings": 6.020058043851099,
+          "bequest_wealth": 0.01185226250918978,
+          "old_dispersion": 3.782149513687307,
+          "mean_rooms": 5.987645153033497,
+          "ownership_30_55": 0.5737524568932465,
+          "first_birth_rooms": 0.47572651536651944,
+          "family_rooms": 0.19081007403606293
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17090916702240283,
+          "cps_exactly_one": 0.20742149827010697,
+          "nchs_mean_age": 26.606445191957892,
+          "nchs_share30": 0.2661519176933941,
+          "wealth_earnings": 6.020058043851099,
+          "bequest_wealth": 0.01185226250918978,
+          "old_dispersion": 3.782149513687307,
+          "mean_rooms": 5.987645153033497,
+          "ownership_30_55": 0.5737524568932465,
+          "first_birth_rooms": 0.47572651536651944,
+          "family_rooms": 0.19081007403606293
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952209126160599,
+        "kappa_fert": 1.6885748608006017,
+        "kappa_fert_continuation": 1.3790775191734086,
+        "chi": 1.0678839950121868,
+        "H0": 7.059269165112304,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.11491494297451163,
+        "first_birth_fixed_cost": 3.6781815672731324,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        0.011744245261482269,
+        -0.24999999999999997,
+        -0.24999999999999703,
+        0.013345695518604825,
+        -0.17802970223402706,
+        -0.24999999999999997,
+        0.10245917945739483,
+        -0.22791807067406267,
+        0.24999999999999997
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 138.7249727881878,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18773949009021995,
+          "cps_exactly_one": 0.22769322950469836,
+          "nchs_mean_age": 26.627749588733405,
+          "nchs_share30": 0.2671362688893556,
+          "wealth_earnings": 5.943239124954342,
+          "bequest_wealth": 0.011336490025018258,
+          "old_dispersion": 3.834543302699771,
+          "mean_rooms": 5.728907969122948,
+          "ownership_30_55": 0.572736554670663,
+          "first_birth_rooms": 0.5126063673082129,
+          "family_rooms": 0.21540480680102894
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1744456063414847,
+          "cps_exactly_one": 0.20500129501908732,
+          "nchs_mean_age": 26.627749588733405,
+          "nchs_share30": 0.2671362688893556,
+          "wealth_earnings": 5.943239124954342,
+          "bequest_wealth": 0.011336490025018258,
+          "old_dispersion": 3.834543302699771,
+          "mean_rooms": 5.728907969122948,
+          "ownership_30_55": 0.572736554670663,
+          "first_birth_rooms": 0.5126063673082129,
+          "family_rooms": 0.21540480680102894
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9951645916815152,
+        "kappa_fert": 1.3150634238661971,
+        "kappa_fert_continuation": 1.074026651848424,
+        "chi": 1.0822311732504923,
+        "H0": 5.908026358920951,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.1273133547620036,
+        "first_birth_fixed_cost": 2.928529500405204,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        0.023488490522964537,
+        -0.49999999999999994,
+        -0.49999999999999406,
+        0.02669139103720965,
+        -0.3560594044680541,
+        -0.49999999999999994,
+        0.20491835891478966,
+        -0.45583614134812533,
+        0.49999999999999994
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 66.1319207219624,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19489396166219858,
+          "cps_exactly_one": 0.22215039214656473,
+          "nchs_mean_age": 26.670358382284427,
+          "nchs_share30": 0.2691049712812787,
+          "wealth_earnings": 5.789601287160829,
+          "bequest_wealth": 0.010304945056675214,
+          "old_dispersion": 3.939330880724699,
+          "mean_rooms": 5.21143360130185,
+          "ownership_30_55": 0.570704750225496,
+          "first_birth_rooms": 0.5863660711915997,
+          "family_rooms": 0.26459427233096094
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18151848497964848,
+          "cps_exactly_one": 0.20016088851704802,
+          "nchs_mean_age": 26.670358382284427,
+          "nchs_share30": 0.2691049712812787,
+          "wealth_earnings": 5.789601287160829,
+          "bequest_wealth": 0.010304945056675214,
+          "old_dispersion": 3.939330880724699,
+          "mean_rooms": 5.21143360130185,
+          "ownership_30_55": 0.570704750225496,
+          "first_birth_rooms": 0.5863660711915997,
+          "family_rooms": 0.26459427233096094
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952992647934699,
+        "kappa_fert": 2.064211108698204,
+        "kappa_fert_continuation": 1.684185969575874,
+        "chi": 1.0586035181179125,
+        "H0": 7.799450811505644,
+        "theta0": 0.5105780811864872,
+        "theta1": 0.10434938976243914,
+        "first_birth_fixed_cost": 4.472858452776011,
+        "h_P": 0.7978692156090005
+      },
+      "log_coordinate_step": [
+        -0.004825767242190177,
+        -0.049136771808637715,
+        -0.050132468317429624,
+        0.004617183587254081,
+        -0.07831790825597289,
+        -0.11070643867069109,
+        0.006011736579207387,
+        -0.032308882257383514,
+        0.10707806779138551
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 206.49180509003597,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1836849413578619,
+          "cps_exactly_one": 0.2305195809643441,
+          "nchs_mean_age": 26.59424726768773,
+          "nchs_share30": 0.2654894405048014,
+          "wealth_earnings": 6.036369571980256,
+          "bequest_wealth": 0.011918257927437864,
+          "old_dispersion": 3.7843458050983023,
+          "mean_rooms": 6.019098510400603,
+          "ownership_30_55": 0.5699451964303838,
+          "first_birth_rooms": 0.47260975480497897,
+          "family_rooms": 0.1811762439464117
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17046586754876958,
+          "cps_exactly_one": 0.20742864845979264,
+          "nchs_mean_age": 26.59424726768773,
+          "nchs_share30": 0.2654894405048014,
+          "wealth_earnings": 6.036369571980256,
+          "bequest_wealth": 0.011918257927437864,
+          "old_dispersion": 3.7843458050983023,
+          "mean_rooms": 6.019098510400603,
+          "ownership_30_55": 0.5699451964303838,
+          "first_birth_rooms": 0.47260975480497897,
+          "family_rooms": 0.1811762439464117
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9953218417836417,
+        "kappa_fert": 1.9652340584177022,
+        "kappa_fert_continuation": 1.601835044143733,
+        "chi": 1.063502586152088,
+        "H0": 7.211921453369986,
+        "theta0": 0.45707026767015313,
+        "theta1": 0.10497860023467566,
+        "first_birth_fixed_cost": 4.33065498312363,
+        "h_P": 0.8880453056754104
+      },
+      "log_coordinate_step": [
+        -0.009651534484380353,
+        -0.09827354361727543,
+        -0.10026493663485925,
+        0.009234367174508162,
+        -0.15663581651194577,
+        -0.22141287734138218,
+        0.012023473158414774,
+        -0.06461776451476703,
+        0.21415613558277102
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 163.74737411122237,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18678486419748244,
+          "cps_exactly_one": 0.22780309506585625,
+          "nchs_mean_age": 26.60335374019308,
+          "nchs_share30": 0.2658113145121702,
+          "wealth_earnings": 5.975862181212657,
+          "bequest_wealth": 0.011468480861514425,
+          "old_dispersion": 3.8389358855217623,
+          "mean_rooms": 5.791814683857161,
+          "ownership_30_55": 0.5651220337449377,
+          "first_birth_rooms": 0.5063728461851319,
+          "family_rooms": 0.19613714662172652
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17355900739421823,
+          "cps_exactly_one": 0.20501559539845868,
+          "nchs_mean_age": 26.60335374019308,
+          "nchs_share30": 0.2658113145121702,
+          "wealth_earnings": 5.975862181212657,
+          "bequest_wealth": 0.011468480861514425,
+          "old_dispersion": 3.8389358855217623,
+          "mean_rooms": 5.791814683857161,
+          "ownership_30_55": 0.5651220337449377,
+          "first_birth_rooms": 0.5063728461851319,
+          "family_rooms": 0.19613714662172652
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953666717387103,
+        "kappa_fert": 1.781289977530831,
+        "kappa_fert_continuation": 1.4490163370915787,
+        "chi": 1.0733688437354463,
+        "H0": 6.1663037952266055,
+        "theta0": 0.36628959375765024,
+        "theta1": 0.10624842617833354,
+        "first_birth_fixed_cost": 4.0596673321820065,
+        "h_P": 1.10012478930874
+      },
+      "log_coordinate_step": [
+        -0.019303068968760707,
+        -0.19654708723455086,
+        -0.2005298732697185,
+        0.018468734349016323,
+        -0.31327163302389155,
+        -0.44282575468276436,
+        0.02404694631682955,
+        -0.12923552902953406,
+        0.42831227116554205
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 100.19352405235908,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19298470987672356,
+          "cps_exactly_one": 0.22237012326888056,
+          "nchs_mean_age": 26.62156668520377,
+          "nchs_share30": 0.2664550625269078,
+          "wealth_earnings": 5.854847399677457,
+          "bequest_wealth": 0.01056892672966755,
+          "old_dispersion": 3.948116046368682,
+          "mean_rooms": 5.337247030770275,
+          "ownership_30_55": 0.5554757083740455,
+          "first_birth_rooms": 0.5738990289454378,
+          "family_rooms": 0.2260589519723561
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17974528708511553,
+          "cps_exactly_one": 0.20018948927579075,
+          "nchs_mean_age": 26.62156668520377,
+          "nchs_share30": 0.2664550625269078,
+          "wealth_earnings": 5.854847399677457,
+          "bequest_wealth": 0.01056892672966755,
+          "old_dispersion": 3.948116046368682,
+          "mean_rooms": 5.337247030770275,
+          "ownership_30_55": 0.5554757083740455,
+          "first_birth_rooms": 0.5738990289454378,
+          "family_rooms": 0.2260589519723561
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952915479312949,
+        "kappa_fert": 2.1563075328293344,
+        "kappa_fert_continuation": 1.7524509269499484,
+        "chi": 1.0509742588465878,
+        "H0": 8.233211116823485,
+        "theta0": 0.5603148538027966,
+        "theta1": 0.10384359044963583,
+        "first_birth_fixed_cost": 4.610799710475413,
+        "h_P": 0.7292708002922345
+      },
+      "log_coordinate_step": [
+        -0.0031816108452413223,
+        -0.0054876122101600545,
+        -0.010399473485941887,
+        -0.00261582068104457,
+        -0.024195119946237412,
+        -0.01775115032829415,
+        0.0011527801684295903,
+        -0.0019352464478605929,
+        0.01717850518370198
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 243.6105446346483,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18161338398653765,
+          "cps_exactly_one": 0.2324056290141307,
+          "nchs_mean_age": 26.596327598936274,
+          "nchs_share30": 0.26577913299974476,
+          "wealth_earnings": 6.085614135251549,
+          "bequest_wealth": 0.012283357810407248,
+          "old_dispersion": 3.7567648701086007,
+          "mean_rooms": 6.176355411233916,
+          "ownership_30_55": 0.560290829544874,
+          "first_birth_rooms": 0.45023146042951384,
+          "family_rooms": 0.17125487120208716
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.16835856386059025,
+          "cps_exactly_one": 0.20912203108373686,
+          "nchs_mean_age": 26.596327598936274,
+          "nchs_share30": 0.26577913299974476,
+          "wealth_earnings": 6.085614135251549,
+          "bequest_wealth": 0.012283357810407248,
+          "old_dispersion": 3.7567648701086007,
+          "mean_rooms": 6.176355411233916,
+          "ownership_30_55": 0.560290829544874,
+          "first_birth_rooms": 0.45023146042951384,
+          "family_rooms": 0.17125487120208716
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9953064694328212,
+        "kappa_fert": 2.1445069613767243,
+        "kappa_fert_continuation": 1.7343207953074542,
+        "chi": 1.0482286911669596,
+        "H0": 8.036398144210892,
+        "theta0": 0.5504563791034623,
+        "theta1": 0.10396336830682948,
+        "first_birth_fixed_cost": 4.6018853052815825,
+        "h_P": 0.7419068056168642
+      },
+      "log_coordinate_step": [
+        -0.006363221690482645,
+        -0.010975224420320109,
+        -0.020798946971883774,
+        -0.00523164136208914,
+        -0.048390239892474825,
+        -0.0355023006565883,
+        0.0023055603368591806,
+        -0.0038704928957211857,
+        0.03435701036740396
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 231.73004509312076,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.182641749454834,
+          "cps_exactly_one": 0.23157519116542943,
+          "nchs_mean_age": 26.607514402690164,
+          "nchs_share30": 0.2663906995020569,
+          "wealth_earnings": 6.074351307755243,
+          "bequest_wealth": 0.012198680627453195,
+          "old_dispersion": 3.7837740155423587,
+          "mean_rooms": 6.106328485523788,
+          "ownership_30_55": 0.545813299973918,
+          "first_birth_rooms": 0.46161625743420165,
+          "family_rooms": 0.17629440113307737
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.16934440001785958,
+          "cps_exactly_one": 0.20840236064634715,
+          "nchs_mean_age": 26.607514402690164,
+          "nchs_share30": 0.2663906995020569,
+          "wealth_earnings": 6.074351307755243,
+          "bequest_wealth": 0.012198680627453195,
+          "old_dispersion": 3.7837740155423587,
+          "mean_rooms": 6.106328485523788,
+          "ownership_30_55": 0.545813299973918,
+          "first_birth_rooms": 0.46161625743420165,
+          "family_rooms": 0.17629440113307737
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953361710553366,
+        "kappa_fert": 2.121099203866325,
+        "kappa_fert_continuation": 1.6986212920378276,
+        "chi": 1.0427590546529892,
+        "H0": 7.6567740358878025,
+        "theta0": 0.5312567434339464,
+        "theta1": 0.1042033386520399,
+        "first_birth_fixed_cost": 4.584108166238601,
+        "h_P": 0.7678394384308556
+      },
+      "log_coordinate_step": [
+        -0.01272644338096529,
+        -0.021950448840640218,
+        -0.04159789394376755,
+        -0.01046328272417828,
+        -0.09678047978494965,
+        -0.0710046013131766,
+        0.004611120673718361,
+        -0.007740985791442371,
+        0.06871402073480792
+      ],
+      "local_base_score": 256.54790670177096,
+      "linear_predicted_score": 211.13963358685118,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18469848039142664,
+          "cps_exactly_one": 0.2299143154680269,
+          "nchs_mean_age": 26.62988801019794,
+          "nchs_share30": 0.2676138325066813,
+          "wealth_earnings": 6.05182565276263,
+          "bequest_wealth": 0.012029326261545091,
+          "old_dispersion": 3.837792306409875,
+          "mean_rooms": 5.966274634103529,
+          "ownership_30_55": 0.5168582408320062,
+          "first_birth_rooms": 0.4843858514435772,
+          "family_rooms": 0.18637346099505783
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17131607233239826,
+          "cps_exactly_one": 0.2069630197715677,
+          "nchs_mean_age": 26.62988801019794,
+          "nchs_share30": 0.2676138325066813,
+          "wealth_earnings": 6.05182565276263,
+          "bequest_wealth": 0.012029326261545091,
+          "old_dispersion": 3.837792306409875,
+          "mean_rooms": 5.966274634103529,
+          "ownership_30_55": 0.5168582408320062,
+          "first_birth_rooms": 0.4843858514435772,
+          "family_rooms": 0.18637346099505783
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9951942438689168,
+        "kappa_fert": 1.9134059914037334,
+        "kappa_fert_continuation": 1.5626995575105798,
+        "chi": 1.0610257776085719,
+        "H0": 7.700252991996099,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.1091522883989279,
+        "first_birth_fixed_cost": 4.0949627055816835,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        0.01732242213663097,
+        -0.12499999999999999,
+        -0.12499999999999999,
+        0.0069027346975179295,
+        -0.091118046268099,
+        -0.12499999999999999,
+        0.05101099947118676,
+        -0.12057895144237706,
+        0.12499999999999999
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 195.22615913214824,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18371125434890007,
+          "cps_exactly_one": 0.23106974810579115,
+          "nchs_mean_age": 26.611463965186257,
+          "nchs_share30": 0.26647850271116674,
+          "wealth_earnings": 6.013620637670004,
+          "bequest_wealth": 0.011853470615207935,
+          "old_dispersion": 3.7740790635610946,
+          "mean_rooms": 5.981166705099261,
+          "ownership_30_55": 0.5737948849663294,
+          "first_birth_rooms": 0.47513003748594596,
+          "family_rooms": 0.1913549069589354
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17043637076454682,
+          "cps_exactly_one": 0.2079850602580563,
+          "nchs_mean_age": 26.611463965186257,
+          "nchs_share30": 0.26647850271116674,
+          "wealth_earnings": 6.013620637670004,
+          "bequest_wealth": 0.011853470615207935,
+          "old_dispersion": 3.7740790635610946,
+          "mean_rooms": 5.981166705099261,
+          "ownership_30_55": 0.5737948849663294,
+          "first_birth_rooms": 0.47513003748594596,
+          "family_rooms": 0.1913549069589354
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9951104769537692,
+        "kappa_fert": 1.6885748608006017,
+        "kappa_fert_continuation": 1.3790775191734044,
+        "chi": 1.0683750930645286,
+        "H0": 7.0296374886452275,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.11486471538062105,
+        "first_birth_fixed_cost": 3.6298040224557004,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        0.03464484427326194,
+        -0.24999999999999997,
+        -0.24999999999999997,
+        0.013805469395035859,
+        -0.182236092536198,
+        -0.24999999999999997,
+        0.10202199894237352,
+        -0.2411579028847541,
+        0.24999999999999997
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 141.93605549467836,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18683749017955883,
+          "cps_exactly_one": 0.22890342934875033,
+          "nchs_mean_age": 26.637787135190134,
+          "nchs_share30": 0.2677894389249009,
+          "wealth_earnings": 5.930364312592154,
+          "bequest_wealth": 0.011338906237054566,
+          "old_dispersion": 3.8184024024473464,
+          "mean_rooms": 5.715951073254476,
+          "ownership_30_55": 0.5728214108168289,
+          "first_birth_rooms": 0.5114134115470659,
+          "family_rooms": 0.21649447264677385
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1735000138257727,
+          "cps_exactly_one": 0.206128418994986,
+          "nchs_mean_age": 26.637787135190134,
+          "nchs_share30": 0.2677894389249009,
+          "wealth_earnings": 5.930364312592154,
+          "bequest_wealth": 0.011338906237054566,
+          "old_dispersion": 3.8184024024473464,
+          "mean_rooms": 5.715951073254476,
+          "ownership_30_55": 0.5728214108168289,
+          "first_birth_rooms": 0.5114134115470659,
+          "family_rooms": 0.21649447264677385
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9949385485791873,
+        "kappa_fert": 1.3150634238661971,
+        "kappa_fert_continuation": 1.0740266518484178,
+        "chi": 1.0832267941842728,
+        "H0": 5.858531914224125,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.12720208557780383,
+        "first_birth_fixed_cost": 2.85200072177946,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        0.06928968854652388,
+        -0.49999999999999994,
+        -0.49999999999999994,
+        0.027610938790071718,
+        -0.364472185072396,
+        -0.49999999999999994,
+        0.20404399788474703,
+        -0.4823158057695082,
+        0.49999999999999994
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 69.35355148913682,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19308996184087635,
+          "cps_exactly_one": 0.22457079183466871,
+          "nchs_mean_age": 26.69043347519788,
+          "nchs_share30": 0.2704113113523693,
+          "wealth_earnings": 5.763851662436451,
+          "bequest_wealth": 0.010309777480747833,
+          "old_dispersion": 3.9070490802198496,
+          "mean_rooms": 5.185519809564906,
+          "ownership_30_55": 0.5708744625178279,
+          "first_birth_rooms": 0.5839801596693057,
+          "family_rooms": 0.26677360402245076
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17962729994822446,
+          "cps_exactly_one": 0.20241513646884535,
+          "nchs_mean_age": 26.69043347519788,
+          "nchs_share30": 0.2704113113523693,
+          "wealth_earnings": 5.763851662436451,
+          "bequest_wealth": 0.010309777480747833,
+          "old_dispersion": 3.9070490802198496,
+          "mean_rooms": 5.185519809564906,
+          "ownership_30_55": 0.5708744625178279,
+          "first_birth_rooms": 0.5839801596693057,
+          "family_rooms": 0.26677360402245076
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952830667793812,
+        "kappa_fert": 2.0714080407772126,
+        "kappa_fert_continuation": 1.6845281860507049,
+        "chi": 1.0586756783471785,
+        "H0": 7.796416037803066,
+        "theta0": 0.5108449013621056,
+        "theta1": 0.10435097909449122,
+        "first_birth_fixed_cost": 4.457269718550862,
+        "h_P": 0.7981517784267825
+      },
+      "log_coordinate_step": [
+        -0.0013777126933007412,
+        -0.04565630657043702,
+        -0.04992929496391941,
+        0.004685346755733911,
+        -0.07870708492312514,
+        -0.11018399070105213,
+        0.006026967333813501,
+        -0.03580015354941784,
+        0.10743215188149483
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 210.1034290384703,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1833869911741469,
+          "cps_exactly_one": 0.23097650536326272,
+          "nchs_mean_age": 26.60506974229639,
+          "nchs_share30": 0.26615714978581273,
+          "wealth_earnings": 6.0349243235002366,
+          "bequest_wealth": 0.011920207069728874,
+          "old_dispersion": 3.7818486401609523,
+          "mean_rooms": 6.017914596090494,
+          "ownership_30_55": 0.5700246265638035,
+          "first_birth_rooms": 0.47257901369573085,
+          "family_rooms": 0.181402437987829
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1701205926768765,
+          "cps_exactly_one": 0.20786780072323788,
+          "nchs_mean_age": 26.60506974229639,
+          "nchs_share30": 0.26615714978581273,
+          "wealth_earnings": 6.0349243235002366,
+          "bequest_wealth": 0.011920207069728874,
+          "old_dispersion": 3.7818486401609523,
+          "mean_rooms": 6.017914596090494,
+          "ownership_30_55": 0.5700246265638035,
+          "first_birth_rooms": 0.47257901369573085,
+          "family_rooms": 0.181402437987829
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952895455644405,
+        "kappa_fert": 1.9789616390049722,
+        "kappa_fert_continuation": 1.6024860768026412,
+        "chi": 1.063647579446983,
+        "H0": 7.20631021430662,
+        "theta0": 0.4575481081401139,
+        "theta1": 0.10498179808997932,
+        "first_birth_fixed_cost": 4.300521327486604,
+        "h_P": 0.8886744138343807
+      },
+      "log_coordinate_step": [
+        -0.0027554253866014823,
+        -0.09131261314087404,
+        -0.09985858992783882,
+        0.009370693511467822,
+        -0.15741416984625028,
+        -0.22036798140210426,
+        0.012053934667627003,
+        -0.07160030709883568,
+        0.21486430376298965
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 167.60144665653888,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18618896383005243,
+          "cps_exactly_one": 0.22871694386369348,
+          "nchs_mean_age": 26.624998689410393,
+          "nchs_share30": 0.2671467330741929,
+          "wealth_earnings": 5.9729716842526175,
+          "bequest_wealth": 0.011472379146096445,
+          "old_dispersion": 3.8339415556470615,
+          "mean_rooms": 5.7894468552369425,
+          "ownership_30_55": 0.5652808940117771,
+          "first_birth_rooms": 0.5063113639666357,
+          "family_rooms": 0.1965895347045611
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17286845765043204,
+          "cps_exactly_one": 0.20589389992534918,
+          "nchs_mean_age": 26.624998689410393,
+          "nchs_share30": 0.2671467330741929,
+          "wealth_earnings": 5.9729716842526175,
+          "bequest_wealth": 0.011472379146096445,
+          "old_dispersion": 3.8339415556470615,
+          "mean_rooms": 5.7894468552369425,
+          "ownership_30_55": 0.5652808940117771,
+          "first_birth_rooms": 0.5063113639666357,
+          "family_rooms": 0.1965895347045611
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953024765136501,
+        "kappa_fert": 1.8062622760089606,
+        "kappa_fert_continuation": 1.45019442177156,
+        "chi": 1.07366154052126,
+        "H0": 6.156712136624345,
+        "theta0": 0.36705586316880773,
+        "theta1": 0.10625489935033974,
+        "first_birth_fixed_cost": 4.003367761260994,
+        "h_P": 1.1016840399999248
+      },
+      "log_coordinate_step": [
+        -0.005510850773202965,
+        -0.18262522628174807,
+        -0.19971717985567763,
+        0.018741387022935645,
+        -0.31482833969250057,
+        -0.4407359628042085,
+        0.024107869335254006,
+        -0.14320061419767136,
+        0.4297286075259793
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 104.32773920972373,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19179290914186356,
+          "cps_exactly_one": 0.224197820864555,
+          "nchs_mean_age": 26.664856583638407,
+          "nchs_share30": 0.26912589965095324,
+          "wealth_earnings": 5.8490664057573785,
+          "bequest_wealth": 0.01057672329883159,
+          "old_dispersion": 3.9381273866192803,
+          "mean_rooms": 5.332511373529838,
+          "ownership_30_55": 0.5557934289077241,
+          "first_birth_rooms": 0.5737760645084453,
+          "family_rooms": 0.2269637281380252
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17836418759754316,
+          "cps_exactly_one": 0.20194609832957175,
+          "nchs_mean_age": 26.664856583638407,
+          "nchs_share30": 0.26912589965095324,
+          "wealth_earnings": 5.8490664057573785,
+          "bequest_wealth": 0.01057672329883159,
+          "old_dispersion": 3.9381273866192803,
+          "mean_rooms": 5.332511373529838,
+          "ownership_30_55": 0.5557934289077241,
+          "first_birth_rooms": 0.5737760645084453,
+          "family_rooms": 0.2269637281380252
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.995289517423756,
+        "kappa_fert": 2.158215325665807,
+        "kappa_fert_continuation": 1.7530115446369299,
+        "chi": 1.0509816976345754,
+        "H0": 8.233229580646682,
+        "theta0": 0.5603299081100998,
+        "theta1": 0.10384348983576087,
+        "first_birth_fixed_cost": 4.605254101729634,
+        "h_P": 0.7292695469079087
+      },
+      "log_coordinate_step": [
+        -0.0027494371874191366,
+        -0.004603253488057209,
+        -0.010079619716971208,
+        -0.00260874271353088,
+        -0.024192877345843952,
+        -0.017724283103611068,
+        0.0011518112696920079,
+        -0.003138713686248203,
+        0.01717678650059771
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 247.03407030580414,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1814819164924989,
+          "cps_exactly_one": 0.23256498101251635,
+          "nchs_mean_age": 26.598625439009215,
+          "nchs_share30": 0.26592373200183844,
+          "wealth_earnings": 6.085432589822596,
+          "bequest_wealth": 0.012283477224243935,
+          "old_dispersion": 3.7563265975351383,
+          "mean_rooms": 6.176366999546596,
+          "ownership_30_55": 0.5603066860487265,
+          "first_birth_rooms": 0.4502180542087503,
+          "family_rooms": 0.17131176010979055
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1682170539047262,
+          "cps_exactly_one": 0.2092712899604327,
+          "nchs_mean_age": 26.598625439009215,
+          "nchs_share30": 0.26592373200183844,
+          "wealth_earnings": 6.085432589822596,
+          "bequest_wealth": 0.012283477224243935,
+          "old_dispersion": 3.7563265975351383,
+          "mean_rooms": 6.176366999546596,
+          "ownership_30_55": 0.5603066860487265,
+          "first_birth_rooms": 0.4502180542087503,
+          "family_rooms": 0.17131176010979055
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9953024203862503,
+        "kappa_fert": 2.1483033446234634,
+        "kappa_fert_continuation": 1.735430608333453,
+        "chi": 1.0482435299292336,
+        "H0": 8.036434189151006,
+        "theta0": 0.5504859583685993,
+        "theta1": 0.10396316684707203,
+        "first_birth_fixed_cost": 4.590822188321977,
+        "h_P": 0.7419042554158637
+      },
+      "log_coordinate_step": [
+        -0.005498874374838273,
+        -0.009206506976114418,
+        -0.020159239433942416,
+        -0.00521748542706176,
+        -0.048385754691687904,
+        -0.035448566207222136,
+        0.0023036225393840157,
+        -0.006277427372496406,
+        0.03435357300119542
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 235.26619181615055,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1823788144667565,
+          "cps_exactly_one": 0.23189389516220077,
+          "nchs_mean_age": 26.612110082836047,
+          "nchs_share30": 0.2666798975062443,
+          "wealth_earnings": 6.073988216897336,
+          "bequest_wealth": 0.012198919455126571,
+          "old_dispersion": 3.7828974703954343,
+          "mean_rooms": 6.106351662149146,
+          "ownership_30_55": 0.5458450129816231,
+          "first_birth_rooms": 0.46158944499267446,
+          "family_rooms": 0.17640817894848412
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.16906138010613145,
+          "cps_exactly_one": 0.2087008783997388,
+          "nchs_mean_age": 26.612110082836047,
+          "nchs_share30": 0.2666798975062443,
+          "wealth_earnings": 6.073988216897336,
+          "bequest_wealth": 0.012198919455126571,
+          "old_dispersion": 3.7828974703954343,
+          "mean_rooms": 6.106351662149146,
+          "ownership_30_55": 0.5458450129816231,
+          "first_birth_rooms": 0.46158944499267446,
+          "family_rooms": 0.17640817894848412
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953281206254188,
+        "kappa_fert": 2.1286157409840367,
+        "kappa_fert_continuation": 1.7007959245592539,
+        "chi": 1.042788577529765,
+        "H0": 7.65684272053373,
+        "theta0": 0.5313138400791092,
+        "theta1": 0.1042029348028894,
+        "first_birth_fixed_cost": 4.562093899666602,
+        "h_P": 0.7678341597583218
+      },
+      "log_coordinate_step": [
+        -0.010997748749676546,
+        -0.018413013952228836,
+        -0.04031847886788483,
+        -0.01043497085412352,
+        -0.09677150938337581,
+        -0.07089713241444427,
+        0.004607245078768031,
+        -0.012554854744992811,
+        0.06870714600239083
+      ],
+      "local_base_score": 259.8488305260843,
+      "linear_predicted_score": 214.8710800287228,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18417261041527166,
+          "cps_exactly_one": 0.23055172346156955,
+          "nchs_mean_age": 26.63907937048971,
+          "nchs_share30": 0.2681922285150561,
+          "wealth_earnings": 6.051099471046816,
+          "bequest_wealth": 0.01202980391689184,
+          "old_dispersion": 3.8360392161160255,
+          "mean_rooms": 5.966320987354248,
+          "ownership_30_55": 0.5169216668474164,
+          "first_birth_rooms": 0.48433222656052294,
+          "family_rooms": 0.1866010166258713
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17075003250894194,
+          "cps_exactly_one": 0.20756005527835097,
+          "nchs_mean_age": 26.63907937048971,
+          "nchs_share30": 0.2681922285150561,
+          "wealth_earnings": 6.051099471046816,
+          "bequest_wealth": 0.01202980391689184,
+          "old_dispersion": 3.8360392161160255,
+          "mean_rooms": 5.966320987354248,
+          "ownership_30_55": 0.5169216668474164,
+          "first_birth_rooms": 0.48433222656052294,
+          "family_rooms": 0.1866010166258713
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952215148666854,
+        "kappa_fert": 1.9134059914037334,
+        "kappa_fert_continuation": 1.5626995575106286,
+        "chi": 1.0609044769725877,
+        "H0": 7.70826134395756,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.10916407129204171,
+        "first_birth_fixed_cost": 4.1087787283782085,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        0.011617917076353929,
+        -0.12499999999999999,
+        -0.12499999999996868,
+        0.006788404232739954,
+        -0.09007857516687032,
+        -0.12499999999999999,
+        0.05111894276175791,
+        -0.11721072342846552,
+        0.12499999999999999
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 193.6276657058189,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.183941930907446,
+          "cps_exactly_one": 0.23076203686946978,
+          "nchs_mean_age": 26.608925382073494,
+          "nchs_share30": 0.2663132435483242,
+          "wealth_earnings": 6.016827367712996,
+          "bequest_wealth": 0.011852863475873717,
+          "old_dispersion": 3.7781150409377506,
+          "mean_rooms": 5.984368510946645,
+          "ownership_30_55": 0.5737725774175201,
+          "first_birth_rooms": 0.4754271795237616,
+          "family_rooms": 0.19108023289476733
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17067806879134292,
+          "cps_exactly_one": 0.20769856879919418,
+          "nchs_mean_age": 26.608925382073494,
+          "nchs_share30": 0.2663132435483242,
+          "wealth_earnings": 6.016827367712996,
+          "bequest_wealth": 0.011852863475873717,
+          "old_dispersion": 3.7781150409377506,
+          "mean_rooms": 5.984368510946645,
+          "ownership_30_55": 0.5737725774175201,
+          "first_birth_rooms": 0.4754271795237616,
+          "family_rooms": 0.19108023289476733
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9951658102665542,
+        "kappa_fert": 1.6885748608006017,
+        "kappa_fert_continuation": 1.3790775191734908,
+        "chi": 1.0681308253509394,
+        "H0": 7.044266900269933,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.11488951580826193,
+        "first_birth_fixed_cost": 3.6543385828551034,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        0.023235834152707857,
+        -0.24999999999999997,
+        -0.24999999999993736,
+        0.013576808465479907,
+        -0.18015715033374063,
+        -0.24999999999999997,
+        0.10223788552351581,
+        -0.23442144685693103,
+        0.24999999999999997
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 140.3706023814796,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1872988432966507,
+          "cps_exactly_one": 0.2282880068761076,
+          "nchs_mean_age": 26.6327099689646,
+          "nchs_share30": 0.26745892059921583,
+          "wealth_earnings": 5.936777772678136,
+          "bequest_wealth": 0.011337691958386131,
+          "old_dispersion": 3.826474357200658,
+          "mean_rooms": 5.722354684949243,
+          "ownership_30_55": 0.5727767957192103,
+          "first_birth_rooms": 0.5120076956226972,
+          "family_rooms": 0.21594512451843773
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17398340987936495,
+          "cps_exactly_one": 0.2055554360772618,
+          "nchs_mean_age": 26.6327099689646,
+          "nchs_share30": 0.26745892059921583,
+          "wealth_earnings": 5.936777772678136,
+          "bequest_wealth": 0.011337691958386131,
+          "old_dispersion": 3.826474357200658,
+          "mean_rooms": 5.722354684949243,
+          "ownership_30_55": 0.5727767957192103,
+          "first_birth_rooms": 0.5120076956226972,
+          "family_rooms": 0.21594512451843773
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9950524502530792,
+        "kappa_fert": 1.3150634238661971,
+        "kappa_fert_continuation": 1.0740266518485524,
+        "chi": 1.0827315241504547,
+        "H0": 5.882941724123531,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.12725701988326887,
+        "first_birth_fixed_cost": 2.8906854897573093,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        0.046471668305415714,
+        -0.49999999999999994,
+        -0.4999999999998747,
+        0.027153616930959815,
+        -0.36031430066748127,
+        -0.49999999999999994,
+        0.20447577104703163,
+        -0.46884289371386206,
+        0.49999999999999994
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 67.79739448410916,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19401266807506004,
+          "cps_exactly_one": 0.22333994688938325,
+          "nchs_mean_age": 26.68027914274682,
+          "nchs_share30": 0.2697502747009991,
+          "wealth_earnings": 5.776678582608417,
+          "bequest_wealth": 0.010307348923410963,
+          "old_dispersion": 3.9231929897264735,
+          "mean_rooms": 5.198327032954442,
+          "ownership_30_55": 0.5707852323225906,
+          "first_birth_rooms": 0.5851687278205684,
+          "family_rooms": 0.2656749077657785
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18059409205540897,
+          "cps_exactly_one": 0.20126917063339694,
+          "nchs_mean_age": 26.68027914274682,
+          "nchs_share30": 0.2697502747009991,
+          "wealth_earnings": 5.776678582608417,
+          "bequest_wealth": 0.010307348923410963,
+          "old_dispersion": 3.9231929897264735,
+          "mean_rooms": 5.198327032954442,
+          "ownership_30_55": 0.5707852323225906,
+          "first_birth_rooms": 0.5851687278205684,
+          "family_rooms": 0.2656749077657785
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.995291198243899,
+        "kappa_fert": 2.0678764122202034,
+        "kappa_fert_continuation": 1.6843182297357155,
+        "chi": 1.0586393757053663,
+        "H0": 7.797957587679914,
+        "theta0": 0.510711628473373,
+        "theta1": 0.1043501815371467,
+        "first_birth_fixed_cost": 4.465043249775381,
+        "h_P": 0.7980091715156961
+      },
+      "log_coordinate_step": [
+        -0.00310717005380201,
+        -0.047362702665732066,
+        -0.05005394078587041,
+        0.004651055551176206,
+        -0.07850937901727818,
+        -0.1104449119239043,
+        0.006019324277664407,
+        -0.03405766071846673,
+        0.1072534644985325
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 208.3149256359259,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18353752753928612,
+          "cps_exactly_one": 0.23074826314134286,
+          "nchs_mean_age": 26.599794720861198,
+          "nchs_share30": 0.26583144798209407,
+          "wealth_earnings": 6.035653542376477,
+          "bequest_wealth": 0.011919228897428533,
+          "old_dispersion": 3.783097429194431,
+          "mean_rooms": 6.0185159618059005,
+          "ownership_30_55": 0.5699852737284427,
+          "first_birth_rooms": 0.47259470117878005,
+          "family_rooms": 0.18129047789060004
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17029419600492227,
+          "cps_exactly_one": 0.2076487395424764,
+          "nchs_mean_age": 26.599794720861198,
+          "nchs_share30": 0.26583144798209407,
+          "wealth_earnings": 6.035653542376477,
+          "bequest_wealth": 0.011919228897428533,
+          "old_dispersion": 3.783097429194431,
+          "mean_rooms": 6.0185159618059005,
+          "ownership_30_55": 0.5699852737284427,
+          "first_birth_rooms": 0.47259470117878005,
+          "family_rooms": 0.18129047789060004
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.995305772243352,
+        "kappa_fert": 1.9722193657107427,
+        "kappa_fert_continuation": 1.6020866402043967,
+        "chi": 1.0635746344349357,
+        "H0": 7.209160237913453,
+        "theta0": 0.45730940240514395,
+        "theta1": 0.10498019333868969,
+        "first_birth_fixed_cost": 4.3155347281997445,
+        "h_P": 0.8883568807662859
+      },
+      "log_coordinate_step": [
+        -0.00621434010760402,
+        -0.09472540533146413,
+        -0.10010788157174082,
+        0.009302111102352411,
+        -0.15701875803455637,
+        -0.2208898238478086,
+        0.012038648555328813,
+        -0.06811532143693345,
+        0.214506928997065
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 165.7061487184083,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1864900365603309,
+          "cps_exactly_one": 0.22826045941985373,
+          "nchs_mean_age": 26.614448646540012,
+          "nchs_share30": 0.2664953294667555,
+          "wealth_earnings": 5.974430122005098,
+          "bequest_wealth": 0.011470422801495767,
+          "old_dispersion": 3.836439133714019,
+          "mean_rooms": 5.790649586667755,
+          "ownership_30_55": 0.5652021883410555,
+          "first_birth_rooms": 0.5063427389327341,
+          "family_rooms": 0.19636561451010312
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1732156643065236,
+          "cps_exactly_one": 0.20545577756382621,
+          "nchs_mean_age": 26.614448646540012,
+          "nchs_share30": 0.2664953294667555,
+          "wealth_earnings": 5.974430122005098,
+          "bequest_wealth": 0.011470422801495767,
+          "old_dispersion": 3.836439133714019,
+          "mean_rooms": 5.790649586667755,
+          "ownership_30_55": 0.5652021883410555,
+          "first_birth_rooms": 0.5063427389327341,
+          "family_rooms": 0.19636561451010312
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953347853769523,
+        "kappa_fert": 1.7939754604796974,
+        "kappa_fert_continuation": 1.4494715592873497,
+        "chi": 1.073514282030786,
+        "H0": 6.16158293574204,
+        "theta0": 0.3666729723535511,
+        "theta1": 0.10625165095134799,
+        "first_birth_fixed_cost": 4.0313685888806425,
+        "h_P": 1.1008968931880074
+      },
+      "log_coordinate_step": [
+        -0.01242868021520804,
+        -0.18945081066292827,
+        -0.20021576314348163,
+        0.018604222204704823,
+        -0.31403751606911273,
+        -0.4417796476956172,
+        0.024077297110657626,
+        -0.1362306428738669,
+        0.42901385799413
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 102.31259306482525,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19239505460242048,
+          "cps_exactly_one": 0.2232848519768755,
+          "nchs_mean_age": 26.64375649789764,
+          "nchs_share30": 0.2678230924360785,
+          "wealth_earnings": 5.851983281262341,
+          "bequest_wealth": 0.01057281060963023,
+          "old_dispersion": 3.943122542753195,
+          "mean_rooms": 5.334916836391466,
+          "ownership_30_55": 0.555636017566281,
+          "first_birth_rooms": 0.573838814440642,
+          "family_rooms": 0.2265158877491093
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17905860090972625,
+          "cps_exactly_one": 0.20106985360652582,
+          "nchs_mean_age": 26.64375649789764,
+          "nchs_share30": 0.2678230924360785,
+          "wealth_earnings": 5.851983281262341,
+          "bequest_wealth": 0.01057281060963023,
+          "old_dispersion": 3.943122542753195,
+          "mean_rooms": 5.334916836391466,
+          "ownership_30_55": 0.555636017566281,
+          "first_birth_rooms": 0.573838814440642,
+          "family_rooms": 0.2265158877491093
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952905325105937,
+        "kappa_fert": 2.1572690800657734,
+        "kappa_fert_continuation": 1.7527224790859013,
+        "chi": 1.050977983981514,
+        "H0": 8.233220499787613,
+        "theta0": 0.560322419711567,
+        "theta1": 0.10384353967635883,
+        "first_birth_fixed_cost": 4.608031800689407,
+        "h_P": 0.7292702293924593
+      },
+      "log_coordinate_step": [
+        -0.002965465249995759,
+        -0.005041788552135393,
+        -0.010244529861167834,
+        -0.0026122762285585082,
+        -0.024193980298699586,
+        -0.017737647459971962,
+        0.0011522912283884533,
+        -0.0025357368388232047,
+        0.01717772234693076
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 245.32754731773002,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1815481858569863,
+          "cps_exactly_one": 0.23248504303092998,
+          "nchs_mean_age": 26.597495706888765,
+          "nchs_share30": 0.2658525672402264,
+          "wealth_earnings": 6.085523835219425,
+          "bequest_wealth": 0.012283416970657405,
+          "old_dispersion": 3.7565457013578114,
+          "mean_rooms": 6.176361238252565,
+          "ownership_30_55": 0.5602988168384863,
+          "first_birth_rooms": 0.45022483954617226,
+          "family_rooms": 0.1712834959985271
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1682882607329092,
+          "cps_exactly_one": 0.2091964695132757,
+          "nchs_mean_age": 26.597495706888765,
+          "nchs_share30": 0.2658525672402264,
+          "wealth_earnings": 6.085523835219425,
+          "bequest_wealth": 0.012283416970657405,
+          "old_dispersion": 3.7565457013578114,
+          "mean_rooms": 6.176361238252565,
+          "ownership_30_55": 0.5602988168384863,
+          "first_birth_rooms": 0.45022483954617226,
+          "family_rooms": 0.1712834959985271
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9953044447943662,
+        "kappa_fert": 2.146419957985489,
+        "kappa_fert_continuation": 1.7348583224906549,
+        "chi": 1.0482361219868785,
+        "H0": 8.03641646155448,
+        "theta0": 0.5504712447841991,
+        "theta1": 0.10396326664317204,
+        "first_birth_fixed_cost": 4.596361846916886,
+        "h_P": 0.741905644033917
+      },
+      "log_coordinate_step": [
+        -0.005930930499991518,
+        -0.010083577104270786,
+        -0.020489059722335667,
+        -0.0052245524571170165,
+        -0.04838796059739917,
+        -0.035475294919943924,
+        0.0023045824567769066,
+        -0.005071473677646409,
+        0.03435544469386152
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 233.50820364961106,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18251135319573125,
+          "cps_exactly_one": 0.231734019199028,
+          "nchs_mean_age": 26.609850618595146,
+          "nchs_share30": 0.2665375679830202,
+          "wealth_earnings": 6.074170707690996,
+          "bequest_wealth": 0.01219879894795351,
+          "old_dispersion": 3.78333567804078,
+          "mean_rooms": 6.106340139561085,
+          "ownership_30_55": 0.5458292745611425,
+          "first_birth_rooms": 0.46160301566751855,
+          "family_rooms": 0.17635165072595727
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.16920379376249745,
+          "cps_exactly_one": 0.20855123750542479,
+          "nchs_mean_age": 26.609850618595146,
+          "nchs_share30": 0.2665375679830202,
+          "wealth_earnings": 6.074170707690996,
+          "bequest_wealth": 0.01219879894795351,
+          "old_dispersion": 3.78333567804078,
+          "mean_rooms": 6.106340139561085,
+          "ownership_30_55": 0.5458292745611425,
+          "first_birth_rooms": 0.46160301566751855,
+          "family_rooms": 0.17635165072595727
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "equal_relative_5pct",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9953321464771447,
+        "kappa_fert": 2.1248851233923998,
+        "kappa_fert_continuation": 1.6996743805032333,
+        "chi": 1.042773838797487,
+        "H0": 7.6568089400620725,
+        "theta0": 0.5312854381682693,
+        "theta1": 0.10420313485550045,
+        "first_birth_fixed_cost": 4.573110527858603,
+        "h_P": 0.7678370340628329
+      },
+      "log_coordinate_step": [
+        -0.011861860999983036,
+        -0.020167154208541573,
+        -0.040978119444671335,
+        -0.010449104914234033,
+        -0.09677592119479834,
+        -0.07095058983988785,
+        0.004609164913553813,
+        -0.010142947355292819,
+        0.06871088938772305
+      ],
+      "local_base_score": 258.19836861392764,
+      "linear_predicted_score": 213.0239491976088,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18443768787322118,
+          "cps_exactly_one": 0.23023197153522404,
+          "nchs_mean_age": 26.63456044200791,
+          "nchs_share30": 0.26790756946860783,
+          "wealth_earnings": 6.051464452634137,
+          "bequest_wealth": 0.01202956290254572,
+          "old_dispersion": 3.836915631406717,
+          "mean_rooms": 5.966297942178124,
+          "ownership_30_55": 0.5168901900064551,
+          "first_birth_rooms": 0.484359367910211,
+          "family_rooms": 0.18648796018081762
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.171034859821674,
+          "cps_exactly_one": 0.20726077348972297,
+          "nchs_mean_age": 26.63456044200791,
+          "nchs_share30": 0.26790756946860783,
+          "wealth_earnings": 6.051464452634137,
+          "bequest_wealth": 0.01202956290254572,
+          "old_dispersion": 3.836915631406717,
+          "mean_rooms": 5.966297942178124,
+          "ownership_30_55": 0.5168901900064551,
+          "first_birth_rooms": 0.484359367910211,
+          "family_rooms": 0.18648796018081762
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9953663932049347,
+        "kappa_fert": 1.9786773833556446,
+        "kappa_fert_continuation": 1.6965401529616888,
+        "chi": 1.0642950664400406,
+        "H0": 7.941941938275437,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.11135675593917246,
+        "first_birth_fixed_cost": 4.546539784806789,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        -0.019242815699550088,
+        -0.09145626224490314,
+        -0.04282383820032487,
+        0.009979250339154392,
+        -0.06021340872731836,
+        -0.12499999999999999,
+        0.07100601592965683,
+        -0.015970104609488726,
+        0.12499999999999999
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 153.3884112278303,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18448698962813206,
+          "cps_exactly_one": 0.22788012346317937,
+          "nchs_mean_age": 26.459993167084473,
+          "nchs_share30": 0.25734044549426366,
+          "wealth_earnings": 6.036077015929079,
+          "bequest_wealth": 0.011870678576790425,
+          "old_dispersion": 3.7626268014396524,
+          "mean_rooms": 6.073413944720804,
+          "ownership_30_55": 0.5914565945324046,
+          "first_birth_rooms": 0.4690583437345538,
+          "family_rooms": 0.17541939620118321
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17185643517241384,
+          "cps_exactly_one": 0.20472538830606363,
+          "nchs_mean_age": 26.459993167084473,
+          "nchs_share30": 0.25734044549426366,
+          "wealth_earnings": 6.036077015929079,
+          "bequest_wealth": 0.011870678576790425,
+          "old_dispersion": 3.7626268014396524,
+          "mean_rooms": 6.073413944720804,
+          "ownership_30_55": 0.5914565945324046,
+          "first_birth_rooms": 0.4690583437345538,
+          "family_rooms": 0.17541939620118321
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9954545034260822,
+        "kappa_fert": 1.8057434146313212,
+        "kappa_fert_continuation": 1.625421448176251,
+        "chi": 1.074969104208872,
+        "H0": 7.477843237949768,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.1195512417595977,
+        "first_birth_fixed_cost": 4.474507779104549,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        -0.038485631399100176,
+        -0.18291252448980627,
+        -0.08564767640064974,
+        0.019958500678308785,
+        -0.12042681745463672,
+        -0.24999999999999997,
+        0.14201203185931366,
+        -0.03194020921897745,
+        0.24999999999999997
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 91.47144761317564,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1883889607380228,
+          "cps_exactly_one": 0.22252418006352676,
+          "nchs_mean_age": 26.334845538986567,
+          "nchs_share30": 0.24951332449109473,
+          "wealth_earnings": 5.975277069110303,
+          "bequest_wealth": 0.01137332216021955,
+          "old_dispersion": 3.795497878204462,
+          "mean_rooms": 5.900445552497562,
+          "ownership_30_55": 0.6081448299489793,
+          "first_birth_rooms": 0.4992700240442815,
+          "family_rooms": 0.18462345113126952
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17634014264150671,
+          "cps_exactly_one": 0.19960907509100068,
+          "nchs_mean_age": 26.334845538986567,
+          "nchs_share30": 0.24951332449109473,
+          "wealth_earnings": 5.975277069110303,
+          "bequest_wealth": 0.01137332216021955,
+          "old_dispersion": 3.795497878204462,
+          "mean_rooms": 5.900445552497562,
+          "ownership_30_55": 0.6081448299489793,
+          "first_birth_rooms": 0.4992700240442815,
+          "family_rooms": 0.18462345113126952
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9956257403379165,
+        "kappa_fert": 1.5038971615546919,
+        "kappa_fert_continuation": 1.4920029193951159,
+        "chi": 1.0966394098652776,
+        "H0": 6.629421833414985,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.13779362745928042,
+        "first_birth_fixed_cost": 4.33384935211846,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        -0.07697126279820035,
+        -0.36582504897961254,
+        -0.17129535280129948,
+        0.03991700135661757,
+        -0.24085363490927345,
+        -0.49999999999999994,
+        0.2840240637186273,
+        -0.0638804184379549,
+        0.49999999999999994
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 29.448594432014676,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19619290295780425,
+          "cps_exactly_one": 0.21181229326422157,
+          "nchs_mean_age": 26.084550282790747,
+          "nchs_share30": 0.2338590824847569,
+          "wealth_earnings": 5.853677175472751,
+          "bequest_wealth": 0.010378609327077798,
+          "old_dispersion": 3.861240031734082,
+          "mean_rooms": 5.554508768051079,
+          "ownership_30_55": 0.6415213007821288,
+          "first_birth_rooms": 0.559693384663737,
+          "family_rooms": 0.20303156099144207
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1853075575796925,
+          "cps_exactly_one": 0.18937644866087475,
+          "nchs_mean_age": 26.084550282790747,
+          "nchs_share30": 0.2338590824847569,
+          "wealth_earnings": 5.853677175472751,
+          "bequest_wealth": 0.010378609327077798,
+          "old_dispersion": 3.861240031734082,
+          "mean_rooms": 5.554508768051079,
+          "ownership_30_55": 0.6415213007821288,
+          "first_birth_rooms": 0.559693384663737,
+          "family_rooms": 0.20303156099144207
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9953100116193212,
+        "kappa_fert": 2.071772077898333,
+        "kappa_fert_continuation": 1.7653010952960475,
+        "chi": 1.0634847385327069,
+        "H0": 7.979725968774755,
+        "theta0": 0.5080728678596835,
+        "theta1": 0.1045650131919222,
+        "first_birth_fixed_cost": 4.75998565887271,
+        "h_P": 0.7481204773423827
+      },
+      "log_coordinate_step": [
+        -0.007119980185457581,
+        -0.045480578211239665,
+        -0.003093543208313222,
+        0.009217585109872046,
+        -0.05546715957181901,
+        -0.11562513703344256,
+        0.008075964827703168,
+        0.029908093997044378,
+        0.04269740495783006
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 160.1295670163893,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18415353628923534,
+          "cps_exactly_one": 0.2282408227118813,
+          "nchs_mean_age": 26.464301123679718,
+          "nchs_share30": 0.25767622799608236,
+          "wealth_earnings": 6.039666743569265,
+          "bequest_wealth": 0.011928879292110048,
+          "old_dispersion": 3.754040205264082,
+          "mean_rooms": 6.0810973326981435,
+          "ownership_30_55": 0.5906862119630121,
+          "first_birth_rooms": 0.44250380317895316,
+          "family_rooms": 0.1702972169033825
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17148355045198527,
+          "cps_exactly_one": 0.20505704592422966,
+          "nchs_mean_age": 26.464301123679718,
+          "nchs_share30": 0.25767622799608236,
+          "wealth_earnings": 6.039666743569265,
+          "bequest_wealth": 0.011928879292110048,
+          "old_dispersion": 3.754040205264082,
+          "mean_rooms": 6.0810973326981435,
+          "ownership_30_55": 0.5906862119630121,
+          "first_birth_rooms": 0.44250380317895316,
+          "family_rooms": 0.1702972169033825
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9953432080517959,
+        "kappa_fert": 1.9796572806052422,
+        "kappa_fert_continuation": 1.7598484983526372,
+        "chi": 1.073332817649414,
+        "H0": 7.549164625784027,
+        "theta0": 0.4525959301158294,
+        "theta1": 0.10541289568695068,
+        "first_birth_fixed_cost": 4.904498030214562,
+        "h_P": 0.7807550278628234
+      },
+      "log_coordinate_step": [
+        -0.014239960370915163,
+        -0.09096115642247933,
+        -0.006187086416626444,
+        0.01843517021974409,
+        -0.11093431914363802,
+        -0.23125027406688511,
+        0.016151929655406336,
+        0.059816187994088756,
+        0.08539480991566012
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 102.48795378946149,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18772205406022935,
+          "cps_exactly_one": 0.2232455785609307,
+          "nchs_mean_age": 26.343461452177053,
+          "nchs_share30": 0.25018488949473217,
+          "wealth_earnings": 5.982456524390675,
+          "bequest_wealth": 0.011489723590858794,
+          "old_dispersion": 3.7783246858533213,
+          "mean_rooms": 5.91581232845224,
+          "ownership_30_55": 0.6066040648101942,
+          "first_birth_rooms": 0.4461609429330803,
+          "family_rooms": 0.17437909253566805
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1755943732006496,
+          "cps_exactly_one": 0.20027239032733268,
+          "nchs_mean_age": 26.343461452177053,
+          "nchs_share30": 0.25018488949473217,
+          "wealth_earnings": 5.982456524390675,
+          "bequest_wealth": 0.011489723590858794,
+          "old_dispersion": 3.7783246858533213,
+          "mean_rooms": 5.91581232845224,
+          "ownership_30_55": 0.6066040648101942,
+          "first_birth_rooms": 0.4461609429330803,
+          "family_rooms": 0.17437909253566805
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9954088992952658,
+        "kappa_fert": 1.8075323683633295,
+        "kappa_fert_continuation": 1.748993777786815,
+        "chi": 1.0933034058520188,
+        "H0": 6.756483702720712,
+        "theta0": 0.35915335388024916,
+        "theta1": 0.10712934200689567,
+        "first_birth_fixed_cost": 5.206818087298117,
+        "h_P": 0.8503569868491775
+      },
+      "log_coordinate_step": [
+        -0.028479920741830325,
+        -0.18192231284495866,
+        -0.012374172833252888,
+        0.03687034043948818,
+        -0.22186863828727604,
+        -0.46250054813377023,
+        0.03230385931081267,
+        0.11963237598817751,
+        0.17078961983132024
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 41.618385181257715,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19485908960221734,
+          "cps_exactly_one": 0.2132550902590294,
+          "nchs_mean_age": 26.10178210917172,
+          "nchs_share30": 0.2352022124920318,
+          "wealth_earnings": 5.868036086033493,
+          "bequest_wealth": 0.01061141218835629,
+          "old_dispersion": 3.8268936470318,
+          "mean_rooms": 5.585242319960436,
+          "ownership_30_55": 0.6384397705045587,
+          "first_birth_rooms": 0.4534752224413346,
+          "family_rooms": 0.18254284380023916
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18381601869797826,
+          "cps_exactly_one": 0.1907030791335388,
+          "nchs_mean_age": 26.10178210917172,
+          "nchs_share30": 0.2352022124920318,
+          "wealth_earnings": 5.868036086033493,
+          "bequest_wealth": 0.01061141218835629,
+          "old_dispersion": 3.8268936470318,
+          "mean_rooms": 5.585242319960436,
+          "ownership_30_55": 0.6384397705045587,
+          "first_birth_rooms": 0.4534752224413346,
+          "family_rooms": 0.18254284380023916
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952811444981452,
+        "kappa_fert": 2.10751369555322,
+        "kappa_fert_continuation": 1.7781560236219243,
+        "chi": 1.0612692177303718,
+        "H0": 8.1371695742838,
+        "theta0": 0.5587700152777926,
+        "theta1": 0.10387240427192336,
+        "first_birth_fixed_cost": 4.7208265644013885,
+        "h_P": 0.7202113978776127
+      },
+      "log_coordinate_step": [
+        -0.0009693030132942184,
+        -0.028375986187703272,
+        0.00416207427990248,
+        0.007132146841826044,
+        -0.035928829291853766,
+        -0.020512048181509975,
+        0.0014302149659855229,
+        0.021647342442508426,
+        0.004678151066340767
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 189.14779690140577,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1824321606574834,
+          "cps_exactly_one": 0.23030970555498417,
+          "nchs_mean_age": 26.49433091115557,
+          "nchs_share30": 0.25959008618262425,
+          "wealth_earnings": 6.087614899874703,
+          "bequest_wealth": 0.012276756840680818,
+          "old_dispersion": 3.7879258904625197,
+          "mean_rooms": 6.13484914172473,
+          "ownership_30_55": 0.5899838076312482,
+          "first_birth_rooms": 0.431955002568872,
+          "family_rooms": 0.16839019528913265
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1696220100031382,
+          "cps_exactly_one": 0.20699238727458863,
+          "nchs_mean_age": 26.49433091115557,
+          "nchs_share30": 0.25959008618262425,
+          "wealth_earnings": 6.087614899874703,
+          "bequest_wealth": 0.012276756840680818,
+          "old_dispersion": 3.7879258904625197,
+          "mean_rooms": 6.13484914172473,
+          "ownership_30_55": 0.5899838076312482,
+          "first_birth_rooms": 0.431955002568872,
+          "family_rooms": 0.16839019528913265
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952857054895696,
+        "kappa_fert": 2.0485514285727993,
+        "kappa_fert_continuation": 1.7855722638389526,
+        "chi": 1.0688654019807973,
+        "H0": 7.85000031645982,
+        "theta0": 0.5474252477783723,
+        "theta1": 0.10402107042600364,
+        "first_birth_fixed_cost": 4.824134045675035,
+        "h_P": 0.7235885488486886
+      },
+      "log_coordinate_step": [
+        -0.0019386060265884368,
+        -0.056751972375406544,
+        0.00832414855980496,
+        0.014264293683652087,
+        -0.07185765858370753,
+        -0.04102409636301995,
+        0.0028604299319710457,
+        0.04329468488501685,
+        0.009356302132681535
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 150.70266592330512,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18427930279672547,
+          "cps_exactly_one": 0.22738334424713638,
+          "nchs_mean_age": 26.403521027128754,
+          "nchs_share30": 0.25401260586781593,
+          "wealth_earnings": 6.0783528370015505,
+          "bequest_wealth": 0.012185478688000335,
+          "old_dispersion": 3.8460960562501967,
+          "mean_rooms": 6.023315946505414,
+          "ownership_30_55": 0.6051992561466666,
+          "first_birth_rooms": 0.4250633417129179,
+          "family_rooms": 0.17056504930716837
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17187129230295545,
+          "cps_exactly_one": 0.20414307302805065,
+          "nchs_mean_age": 26.403521027128754,
+          "nchs_share30": 0.25401260586781593,
+          "wealth_earnings": 6.0783528370015505,
+          "bequest_wealth": 0.012185478688000335,
+          "old_dispersion": 3.8460960562501967,
+          "mean_rooms": 6.023315946505414,
+          "ownership_30_55": 0.6051992561466666,
+          "first_birth_rooms": 0.4250633417129179,
+          "family_rooms": 0.17056504930716837
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9952948142827294,
+        "kappa_fert": 1.9355295354854587,
+        "kappa_fert_continuation": 1.8004976670808968,
+        "chi": 1.0842212719315352,
+        "H0": 7.305707657361325,
+        "theta0": 0.5254220383738577,
+        "theta1": 0.10431904136873961,
+        "first_birth_fixed_cost": 5.0375806202768105,
+        "h_P": 0.730390432551071
+      },
+      "log_coordinate_step": [
+        -0.0038772120531768736,
+        -0.11350394475081309,
+        0.01664829711960992,
+        0.028528587367304174,
+        -0.14371531716741506,
+        -0.0820481927260399,
+        0.0057208598639420915,
+        0.0865893697700337,
+        0.01871260426536307
+      ],
+      "local_base_score": 235.90906619186768,
+      "linear_predicted_score": 98.76081890418745,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18797358707520964,
+          "cps_exactly_one": 0.22153062163144077,
+          "nchs_mean_age": 26.22190125907513,
+          "nchs_share30": 0.24285764523819928,
+          "wealth_earnings": 6.059828711255245,
+          "bequest_wealth": 0.012002922382639369,
+          "old_dispersion": 3.9624363878255506,
+          "mean_rooms": 5.800249556066782,
+          "ownership_30_55": 0.6356301531775033,
+          "first_birth_rooms": 0.41128002000100977,
+          "family_rooms": 0.17491475734323983
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17636985690258997,
+          "cps_exactly_one": 0.19844444453497467,
+          "nchs_mean_age": 26.22190125907513,
+          "nchs_share30": 0.24285764523819928,
+          "wealth_earnings": 6.059828711255245,
+          "bequest_wealth": 0.012002922382639369,
+          "old_dispersion": 3.9624363878255506,
+          "mean_rooms": 5.800249556066782,
+          "ownership_30_55": 0.6356301531775033,
+          "first_birth_rooms": 0.41128002000100977,
+          "family_rooms": 0.17491475734323983
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9951231680600994,
+        "kappa_fert": 1.9633154946184521,
+        "kappa_fert_continuation": 1.6866927203358077,
+        "chi": 1.0647250544955538,
+        "H0": 7.934973187685821,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.11142946823140629,
+        "first_birth_fixed_cost": 4.476416429189879,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        0.03203952701732645,
+        -0.0992502725223712,
+        -0.04864516992871849,
+        0.010383180820723373,
+        -0.06109125571230852,
+        -0.12499999999999999,
+        0.07165876988772873,
+        -0.031513739265743135,
+        0.12499999999999999
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 169.30627338640963,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18416796188328474,
+          "cps_exactly_one": 0.22875072707082736,
+          "nchs_mean_age": 26.46649881420115,
+          "nchs_share30": 0.2577689791738925,
+          "wealth_earnings": 6.00697430390959,
+          "bequest_wealth": 0.011882395046624031,
+          "old_dispersion": 3.71064504567235,
+          "mean_rooms": 6.070490223569937,
+          "ownership_30_55": 0.5914835320236415,
+          "first_birth_rooms": 0.46655610501137385,
+          "family_rooms": 0.17600136323568258
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1715082104827195,
+          "cps_exactly_one": 0.20555315144867292,
+          "nchs_mean_age": 26.46649881420115,
+          "nchs_share30": 0.2577689791738925,
+          "wealth_earnings": 6.00697430390959,
+          "bequest_wealth": 0.011882395046624031,
+          "old_dispersion": 3.71064504567235,
+          "mean_rooms": 6.070490223569937,
+          "ownership_30_55": 0.5914835320236415,
+          "first_birth_rooms": 0.46655610501137385,
+          "family_rooms": 0.17600136323568258
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.99496478702401,
+        "kappa_fert": 1.7778136991989921,
+        "kappa_fert_continuation": 1.6066069512351577,
+        "chi": 1.0758378806627833,
+        "H0": 7.464725952007817,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.119707418775083,
+        "first_birth_fixed_cost": 4.337547442079559,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        0.0640790540346529,
+        -0.1985005450447424,
+        -0.09729033985743699,
+        0.020766361641446747,
+        -0.12218251142461704,
+        -0.24999999999999997,
+        0.14331753977545747,
+        -0.06302747853148627,
+        0.24999999999999997
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 109.5513515566516,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18775090524832816,
+          "cps_exactly_one": 0.22426538727882275,
+          "nchs_mean_age": 26.347856833219918,
+          "nchs_share30": 0.2503703918503525,
+          "wealth_earnings": 5.917071645071325,
+          "bequest_wealth": 0.01139675509988676,
+          "old_dispersion": 3.6915343666698575,
+          "mean_rooms": 5.89459811019583,
+          "ownership_30_55": 0.608198704931453,
+          "first_birth_rooms": 0.49426554659792166,
+          "family_rooms": 0.18578738520026825
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17564369326211804,
+          "cps_exactly_one": 0.20126460137621924,
+          "nchs_mean_age": 26.347856833219918,
+          "nchs_share30": 0.2503703918503525,
+          "wealth_earnings": 5.917071645071325,
+          "bequest_wealth": 0.01139675509988676,
+          "old_dispersion": 3.6915343666698575,
+          "mean_rooms": 5.89459811019583,
+          "ownership_30_55": 0.608198704931453,
+          "first_birth_rooms": 0.49426554659792166,
+          "family_rooms": 0.18578738520026825
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9946324691630198,
+        "kappa_fert": 1.4577349186833868,
+        "kappa_fert_continuation": 1.45766250911944,
+        "chi": 1.0984127063962843,
+        "H0": 6.6061841836182245,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.1381538789086189,
+        "first_birth_fixed_cost": 4.072599951954023,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        0.1281581080693058,
+        -0.3970010900894848,
+        -0.19458067971487397,
+        0.041532723282893494,
+        -0.2443650228492341,
+        -0.49999999999999994,
+        0.28663507955091494,
+        -0.12605495706297254,
+        0.49999999999999994
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 49.20691091437494,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19491679197841497,
+          "cps_exactly_one": 0.21529470769481354,
+          "nchs_mean_age": 26.11057287125745,
+          "nchs_share30": 0.2355732172032724,
+          "wealth_earnings": 5.737266327394794,
+          "bequest_wealth": 0.010425475206412219,
+          "old_dispersion": 3.6533130086648717,
+          "mean_rooms": 5.542813883447613,
+          "ownership_30_55": 0.6416290507470761,
+          "first_birth_rooms": 0.5496844297710173,
+          "family_rooms": 0.20535942912943952
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18391465882091518,
+          "cps_exactly_one": 0.1926875012313119,
+          "nchs_mean_age": 26.11057287125745,
+          "nchs_share30": 0.2355732172032724,
+          "wealth_earnings": 5.737266327394794,
+          "bequest_wealth": 0.010425475206412219,
+          "old_dispersion": 3.6533130086648717,
+          "mean_rooms": 5.542813883447613,
+          "ownership_30_55": 0.6416290507470761,
+          "first_birth_rooms": 0.5496844297710173,
+          "family_rooms": 0.20535942912943952
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952462391452317,
+        "kappa_fert": 2.0747306211203234,
+        "kappa_fert_continuation": 1.7668349206609673,
+        "chi": 1.0636044914344687,
+        "H0": 7.977221079422376,
+        "theta0": 0.5085133403006187,
+        "theta1": 0.10456986919960792,
+        "first_birth_fixed_cost": 4.734402491366153,
+        "h_P": 0.7491305263354285
+      },
+      "log_coordinate_step": [
+        0.006417990737679566,
+        -0.04405357143526778,
+        -0.002225045815006462,
+        0.009330183020858765,
+        -0.055781115539133716,
+        -0.11475856523665125,
+        0.008122403830427817,
+        0.024518967490167513,
+        0.04404660979227038
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 176.39239331099301,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18373489836637555,
+          "cps_exactly_one": 0.2288487435988683,
+          "nchs_mean_age": 26.470647006188898,
+          "nchs_share30": 0.25808368754046784,
+          "wealth_earnings": 6.0325209869847365,
+          "bequest_wealth": 0.011934702346159898,
+          "old_dispersion": 3.741030814063833,
+          "mean_rooms": 6.080173987835721,
+          "ownership_30_55": 0.5906973556167131,
+          "first_birth_rooms": 0.442318275588185,
+          "family_rooms": 0.17043632836535155
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17103688640423914,
+          "cps_exactly_one": 0.2056272370127319,
+          "nchs_mean_age": 26.470647006188898,
+          "nchs_share30": 0.25808368754046784,
+          "wealth_earnings": 6.0325209869847365,
+          "bequest_wealth": 0.011934702346159898,
+          "old_dispersion": 3.741030814063833,
+          "mean_rooms": 6.080173987835721,
+          "ownership_30_55": 0.5906973556167131,
+          "first_birth_rooms": 0.442318275588185,
+          "family_rooms": 0.17043632836535155
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.995215704771993,
+        "kappa_fert": 1.9853153195316016,
+        "kappa_fert_continuation": 1.7629080024215653,
+        "chi": 1.073574554933627,
+        "H0": 7.544425903124967,
+        "theta0": 0.45338102399628466,
+        "theta1": 0.10542268668112768,
+        "first_birth_fixed_cost": 4.851919968367931,
+        "h_P": 0.7828646698380896
+      },
+      "log_coordinate_step": [
+        0.012835981475359132,
+        -0.08810714287053556,
+        -0.004450091630012924,
+        0.01866036604171753,
+        -0.11156223107826743,
+        -0.2295171304733025,
+        0.016244807660855634,
+        0.04903793498033503,
+        0.08809321958454076
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 121.25008092949598,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18688477821450974,
+          "cps_exactly_one": 0.22446142033490465,
+          "nchs_mean_age": 26.356153217195413,
+          "nchs_share30": 0.2509998085835032,
+          "wealth_earnings": 5.968165011221617,
+          "bequest_wealth": 0.011501369698958494,
+          "old_dispersion": 3.752305903452824,
+          "mean_rooms": 5.913965638727396,
+          "ownership_30_55": 0.6066263521175963,
+          "first_birth_rooms": 0.44578988775154393,
+          "family_rooms": 0.17465731545960617
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17470104510515733,
+          "cps_exactly_one": 0.2014127725043372,
+          "nchs_mean_age": 26.356153217195413,
+          "nchs_share30": 0.2509998085835032,
+          "wealth_earnings": 5.968165011221617,
+          "bequest_wealth": 0.011501369698958494,
+          "old_dispersion": 3.752305903452824,
+          "mean_rooms": 5.913965638727396,
+          "ownership_30_55": 0.6066263521175963,
+          "first_birth_rooms": 0.44578988775154393,
+          "family_rooms": 0.17465731545960617
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9951540478169578,
+        "kappa_fert": 1.8178793143438512,
+        "kappa_fert_continuation": 1.7550803301228137,
+        "chi": 1.0937959314767003,
+        "H0": 6.748004074788588,
+        "theta0": 0.3604004426843405,
+        "theta1": 0.10714924377449635,
+        "first_birth_fixed_cost": 5.095778395528616,
+        "h_P": 0.8549586157910507
+      },
+      "log_coordinate_step": [
+        0.025671962950718264,
+        -0.17621428574107112,
+        -0.008900183260025849,
+        0.03732073208343506,
+        -0.22312446215653486,
+        -0.459034260946605,
+        0.03248961532171127,
+        0.09807586996067005,
+        0.17618643916908153
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 62.710327754773985,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1931845379107782,
+          "cps_exactly_one": 0.21568677380697734,
+          "nchs_mean_age": 26.12716563920844,
+          "nchs_share30": 0.23683205066957377,
+          "wealth_earnings": 5.839453059695378,
+          "bequest_wealth": 0.010634704404555688,
+          "old_dispersion": 3.774856082230805,
+          "mean_rooms": 5.5815489405107455,
+          "ownership_30_55": 0.6384843451193626,
+          "first_birth_rooms": 0.45273311207826183,
+          "family_rooms": 0.18309928964811542
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18202936250699375,
+          "cps_exactly_one": 0.1929838434875478,
+          "nchs_mean_age": 26.12716563920844,
+          "nchs_share30": 0.23683205066957377,
+          "wealth_earnings": 5.839453059695378,
+          "bequest_wealth": 0.010634704404555688,
+          "old_dispersion": 3.774856082230805,
+          "mean_rooms": 5.5815489405107455,
+          "ownership_30_55": 0.6384843451193626,
+          "first_birth_rooms": 0.45273311207826183,
+          "family_rooms": 0.18309928964811542
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952735247423369,
+        "kappa_fert": 2.110664324740411,
+        "kappa_fert_continuation": 1.7796868436333775,
+        "chi": 1.0612837407290814,
+        "H0": 8.136784583656022,
+        "theta0": 0.558803588522723,
+        "theta1": 0.10387209049395162,
+        "first_birth_fixed_cost": 4.7087946718399225,
+        "h_P": 0.7202514998223807
+      },
+      "log_coordinate_step": [
+        0.0006479662064106131,
+        -0.026882151760645102,
+        0.005022607003260469,
+        0.007145831304823343,
+        -0.03597614300849726,
+        -0.020451965794405797,
+        0.0014271941593731684,
+        0.01909540556408674,
+        0.004733830313397311
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 204.204595145142,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18214543948213482,
+          "cps_exactly_one": 0.23064512161293485,
+          "nchs_mean_age": 26.497923699267755,
+          "nchs_share30": 0.2598201356116146,
+          "wealth_earnings": 6.086794837870326,
+          "bequest_wealth": 0.012277199815747862,
+          "old_dispersion": 3.7863465067532807,
+          "mean_rooms": 6.134719802633223,
+          "ownership_30_55": 0.58998350775736,
+          "first_birth_rooms": 0.4319189905457419,
+          "family_rooms": 0.16849867576408484
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1693195657504098,
+          "cps_exactly_one": 0.20730402225381797,
+          "nchs_mean_age": 26.497923699267755,
+          "nchs_share30": 0.2598201356116146,
+          "wealth_earnings": 6.086794837870326,
+          "bequest_wealth": 0.012277199815747862,
+          "old_dispersion": 3.7863465067532807,
+          "mean_rooms": 6.134719802633223,
+          "ownership_30_55": 0.58998350775736,
+          "first_birth_rooms": 0.4319189905457419,
+          "family_rooms": 0.16849867576408484
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952704684097652,
+        "kappa_fert": 2.0546809738382974,
+        "kappa_fert_continuation": 1.788647996574317,
+        "chi": 1.0688946560792072,
+        "H0": 7.849257526223292,
+        "theta0": 0.5474910329621193,
+        "theta1": 0.10402044197282732,
+        "first_birth_fixed_cost": 4.799575000964318,
+        "h_P": 0.7236691310665199
+      },
+      "log_coordinate_step": [
+        0.0012959324128212263,
+        -0.053764303521290205,
+        0.010045214006520939,
+        0.014291662609646686,
+        -0.07195228601699452,
+        -0.040903931588811594,
+        0.002854388318746337,
+        0.03819081112817348,
+        0.009467660626794622
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 167.60947473222106,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18370586044602832,
+          "cps_exactly_one": 0.22805417636303776,
+          "nchs_mean_age": 26.410706603353123,
+          "nchs_share30": 0.2544727047257966,
+          "wealth_earnings": 6.076712712992797,
+          "bequest_wealth": 0.012186364638134425,
+          "old_dispersion": 3.842937288831719,
+          "mean_rooms": 6.0230572683223995,
+          "ownership_30_55": 0.6051986563988901,
+          "first_birth_rooms": 0.42499131766665776,
+          "family_rooms": 0.17078201025707276
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17126640379749866,
+          "cps_exactly_one": 0.20476634298650934,
+          "nchs_mean_age": 26.410706603353123,
+          "nchs_share30": 0.2544727047257966,
+          "wealth_earnings": 6.076712712992797,
+          "bequest_wealth": 0.012186364638134425,
+          "old_dispersion": 3.842937288831719,
+          "mean_rooms": 6.0230572683223995,
+          "ownership_30_55": 0.6051986563988901,
+          "first_birth_rooms": 0.42499131766665776,
+          "family_rooms": 0.17078201025707276
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9952643498284138,
+        "kappa_fert": 1.9471296007432404,
+        "kappa_fert_continuation": 1.806705894360038,
+        "chi": 1.084280621499361,
+        "H0": 7.304325147460892,
+        "theta0": 0.5255483279900236,
+        "theta1": 0.10431778086575527,
+        "first_birth_fixed_cost": 4.986419831668887,
+        "h_P": 0.7305531210245089
+      },
+      "log_coordinate_step": [
+        0.0025918648256424526,
+        -0.10752860704258041,
+        0.020090428013041877,
+        0.02858332521929337,
+        -0.14390457203398904,
+        -0.08180786317762319,
+        0.005708776637492674,
+        0.07638162225634695,
+        0.018935321253589245
+      ],
+      "local_base_score": 248.78299622191412,
+      "linear_predicted_score": 118.36907589793233,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18682670237381532,
+          "cps_exactly_one": 0.22287228586324354,
+          "nchs_mean_age": 26.236272411523867,
+          "nchs_share30": 0.24377784295416063,
+          "wealth_earnings": 6.056548463237737,
+          "bequest_wealth": 0.01200469428290755,
+          "old_dispersion": 3.956118852988595,
+          "mean_rooms": 5.799732199700753,
+          "ownership_30_55": 0.6356289536819503,
+          "first_birth_rooms": 0.41113597190848955,
+          "family_rooms": 0.17534867924304856
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17516007989167642,
+          "cps_exactly_one": 0.1996909844518921,
+          "nchs_mean_age": 26.236272411523867,
+          "nchs_share30": 0.24377784295416063,
+          "wealth_earnings": 6.056548463237737,
+          "bequest_wealth": 0.01200469428290755,
+          "old_dispersion": 3.956118852988595,
+          "mean_rooms": 5.799732199700753,
+          "ownership_30_55": 0.6356289536819503,
+          "first_birth_rooms": 0.41113597190848955,
+          "family_rooms": 0.17534867924304856
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952468747725933,
+        "kappa_fert": 1.9710857704121507,
+        "kappa_fert_continuation": 1.691576634064425,
+        "chi": 1.064508916444482,
+        "H0": 7.938473426779,
+        "theta0": 0.5033320115077977,
+        "theta1": 0.1113927179981521,
+        "first_birth_fixed_cost": 4.51182843041298,
+        "h_P": 0.8122974785887782
+      },
+      "log_coordinate_step": [
+        0.006283952299372078,
+        -0.09530035212897918,
+        -0.04575379767935724,
+        0.010180161279645238,
+        -0.06065023754720238,
+        -0.12499999999999999,
+        0.0713289083581456,
+        -0.023634073101523538,
+        0.12499999999999999
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 161.51214338784567,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18433709594085562,
+          "cps_exactly_one": 0.22830647044868638,
+          "nchs_mean_age": 26.463350246028043,
+          "nchs_share30": 0.2575605542250329,
+          "wealth_earnings": 6.021594307200722,
+          "bequest_wealth": 0.01187650539892365,
+          "old_dispersion": 3.736751730399479,
+          "mean_rooms": 6.071958624269711,
+          "ownership_30_55": 0.5914698405829558,
+          "first_birth_rooms": 0.4678132914633735,
+          "family_rooms": 0.1757061513961926
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17169148382277724,
+          "cps_exactly_one": 0.20513137941924275,
+          "nchs_mean_age": 26.463350246028043,
+          "nchs_share30": 0.2575605542250329,
+          "wealth_earnings": 6.021594307200722,
+          "bequest_wealth": 0.01187650539892365,
+          "old_dispersion": 3.736751730399479,
+          "mean_rooms": 6.071958624269711,
+          "ownership_30_55": 0.5914698405829558,
+          "first_birth_rooms": 0.4678132914633735,
+          "family_rooms": 0.1757061513961926
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952169840872769,
+        "kappa_fert": 1.7919137651803343,
+        "kappa_fert_continuation": 1.6159244631745873,
+        "chi": 1.075401137110646,
+        "H0": 7.471313016080421,
+        "theta0": 0.44418894112730545,
+        "theta1": 0.11962847107523625,
+        "first_birth_fixed_cost": 4.406445763542148,
+        "h_P": 0.9204536312929574
+      },
+      "log_coordinate_step": [
+        0.012567904598744156,
+        -0.19060070425795836,
+        -0.09150759535871449,
+        0.020360322559290475,
+        -0.12130047509440477,
+        -0.24999999999999997,
+        0.1426578167162912,
+        -0.047268146203047076,
+        0.24999999999999997
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 100.80628137239295,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1880891733634699,
+          "cps_exactly_one": 0.22337687403454076,
+          "nchs_mean_age": 26.341559696873702,
+          "nchs_share30": 0.24995354195263317,
+          "wealth_earnings": 5.9463116516535885,
+          "bequest_wealth": 0.011384975804485997,
+          "old_dispersion": 3.7437477361241154,
+          "mean_rooms": 5.8975349115953755,
+          "ownership_30_55": 0.6081713220500817,
+          "first_birth_rooms": 0.4967799195019211,
+          "family_rooms": 0.1851969615212883
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17601023994223358,
+          "cps_exactly_one": 0.20042105731735893,
+          "nchs_mean_age": 26.341559696873702,
+          "nchs_share30": 0.24995354195263317,
+          "wealth_earnings": 5.9463116516535885,
+          "bequest_wealth": 0.011384975804485997,
+          "old_dispersion": 3.7437477361241154,
+          "mean_rooms": 5.8975349115953755,
+          "ownership_30_55": 0.6081713220500817,
+          "first_birth_rooms": 0.4967799195019211,
+          "family_rooms": 0.1851969615212883
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 0.1,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9951566389955754,
+        "kappa_fert": 1.4809495753883781,
+        "kappa_fert_continuation": 1.474618954614371,
+        "chi": 1.097521071509628,
+        "H0": 6.617848257638482,
+        "theta0": 0.34593469518160364,
+        "theta1": 0.1379717125151591,
+        "first_birth_fixed_cost": 4.203007199622456,
+        "h_P": 1.1818858574626845
+      },
+      "log_coordinate_step": [
+        0.025135809197488312,
+        -0.3812014085159167,
+        -0.18301519071742897,
+        0.04072064511858095,
+        -0.24260095018880953,
+        -0.49999999999999994,
+        0.2853156334325824,
+        -0.09453629240609415,
+        0.49999999999999994
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 39.778634752264715,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19559332820869846,
+          "cps_exactly_one": 0.21351768120624956,
+          "nchs_mean_age": 26.097978598565017,
+          "nchs_share30": 0.23473951740783378,
+          "wealth_earnings": 5.7957463405593215,
+          "bequest_wealth": 0.010401916615610695,
+          "old_dispersion": 3.7577397475733876,
+          "mean_rooms": 5.548687486246706,
+          "ownership_30_55": 0.6415742849843334,
+          "first_birth_rooms": 0.5547131755790161,
+          "family_rooms": 0.20417858177147966
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.18464775218114624,
+          "cps_exactly_one": 0.19100041311359123,
+          "nchs_mean_age": 26.097978598565017,
+          "nchs_share30": 0.23473951740783378,
+          "wealth_earnings": 5.7957463405593215,
+          "bequest_wealth": 0.010401916615610695,
+          "old_dispersion": 3.7577397475733876,
+          "mean_rooms": 5.548687486246706,
+          "ownership_30_55": 0.6415742849843334,
+          "first_birth_rooms": 0.5547131755790161,
+          "family_rooms": 0.20417858177147966
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952783506181403,
+        "kappa_fert": 2.0732867545639464,
+        "kappa_fert_continuation": 1.7659971258191816,
+        "chi": 1.063544239179217,
+        "H0": 7.978480226007286,
+        "theta0": 0.5082926093548951,
+        "theta1": 0.10456741927185499,
+        "first_birth_fixed_cost": 4.74735138982576,
+        "h_P": 0.7486220445712236
+      },
+      "log_coordinate_step": [
+        -0.00037600846421834947,
+        -0.044749743357379655,
+        -0.002699336608606845,
+        0.00927353229926054,
+        -0.055623285235918626,
+        -0.11519273057422746,
+        0.008098974935743991,
+        0.0272502989868384,
+        0.04336761675481217
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 168.33840723964434,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1839506008978488,
+          "cps_exactly_one": 0.2285398189409144,
+          "nchs_mean_age": 26.467579783897648,
+          "nchs_share30": 0.2578860519272309,
+          "wealth_earnings": 6.036110467199606,
+          "bequest_wealth": 0.011931777599233443,
+          "old_dispersion": 3.7475597222384947,
+          "mean_rooms": 6.080637796378257,
+          "ownership_30_55": 0.5906916449964987,
+          "first_birth_rooms": 0.44241130367831377,
+          "family_rooms": 0.17036680673124693
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.17126613995492887,
+          "cps_exactly_one": 0.20533790149202846,
+          "nchs_mean_age": 26.467579783897648,
+          "nchs_share30": 0.2578860519272309,
+          "wealth_earnings": 6.036110467199606,
+          "bequest_wealth": 0.011931777599233443,
+          "old_dispersion": 3.7475597222384947,
+          "mean_rooms": 6.080637796378257,
+          "ownership_30_55": 0.5906916449964987,
+          "first_birth_rooms": 0.44241130367831377,
+          "family_rooms": 0.17036680673124693
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.9952801214689267,
+        "kappa_fert": 1.982553001462146,
+        "kappa_fert_continuation": 1.7612365332383182,
+        "chi": 1.0734529242777688,
+        "H0": 7.54680775708967,
+        "theta0": 0.45298751022038375,
+        "theta1": 0.10541774692281462,
+        "first_birth_fixed_cost": 4.878496896336788,
+        "h_P": 0.7818022720418784
+      },
+      "log_coordinate_step": [
+        -0.0007520169284366989,
+        -0.08949948671475931,
+        -0.00539867321721369,
+        0.01854706459852108,
+        -0.11124657047183725,
+        -0.23038546114845493,
+        0.016197949871487982,
+        0.0545005979736768,
+        0.08673523350962434
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 112.01060409775134,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18731618327745628,
+          "cps_exactly_one": 0.22384357101899685,
+          "nchs_mean_age": 26.350018772612913,
+          "nchs_share30": 0.25060453735702926,
+          "wealth_earnings": 5.975343971651356,
+          "bequest_wealth": 0.011495520205105587,
+          "old_dispersion": 3.7653637198021466,
+          "mean_rooms": 5.914893255812469,
+          "ownership_30_55": 0.6066149308771677,
+          "first_birth_rooms": 0.44597594393180146,
+          "family_rooms": 0.17451827219139696
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1751595522065368,
+          "cps_exactly_one": 0.20083410146293032,
+          "nchs_mean_age": 26.350018772612913,
+          "nchs_share30": 0.25060453735702926,
+          "wealth_earnings": 5.975343971651356,
+          "bequest_wealth": 0.011495520205105587,
+          "old_dispersion": 3.7653637198021466,
+          "mean_rooms": 5.914893255812469,
+          "ownership_30_55": 0.6066149308771677,
+          "first_birth_rooms": 0.44597594393180146,
+          "family_rooms": 0.17451827219139696
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 1.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9952836611830043,
+        "kappa_fert": 1.8128241300195855,
+        "kappa_fert_continuation": 1.7517538128231893,
+        "chi": 1.0935481022419733,
+        "H0": 6.752265577952602,
+        "theta0": 0.3597750923329617,
+        "theta1": 0.10713920269161524,
+        "first_birth_fixed_cost": 5.151756669291239,
+        "h_P": 0.8526397224516106
+      },
+      "log_coordinate_step": [
+        -0.0015040338568733979,
+        -0.17899897342951862,
+        -0.01079734643442738,
+        0.03709412919704216,
+        -0.2224931409436745,
+        -0.46077092229690986,
+        0.032395899742975964,
+        0.1090011959473536,
+        0.17347046701924868
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 52.39446029002622,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.19404734803667123,
+          "cps_exactly_one": 0.2144510751751617,
+          "nchs_mean_age": 26.114896750043442,
+          "nchs_share30": 0.23604150821662595,
+          "wealth_earnings": 5.853810980554857,
+          "bequest_wealth": 0.010623005416849874,
+          "old_dispersion": 3.80097171492945,
+          "mean_rooms": 5.583404174680892,
+          "ownership_30_55": 0.6384615026385054,
+          "first_birth_rooms": 0.45310522443877693,
+          "family_rooms": 0.18282120311169697
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1829463767097527,
+          "cps_exactly_one": 0.19182650140473403,
+          "nchs_mean_age": 26.114896750043442,
+          "nchs_share30": 0.23604150821662595,
+          "wealth_earnings": 5.853810980554857,
+          "bequest_wealth": 0.010623005416849874,
+          "old_dispersion": 3.80097171492945,
+          "mean_rooms": 5.583404174680892,
+          "ownership_30_55": 0.6384615026385054,
+          "first_birth_rooms": 0.45310522443877693,
+          "family_rooms": 0.18282120311169697
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.25,
+      "structural_candidate": {
+        "beta_annual": 0.9952773405450986,
+        "kappa_fert": 2.109105642655607,
+        "kappa_fert_continuation": 1.7788885730996185,
+        "chi": 1.0612764273586752,
+        "H0": 8.136975971239014,
+        "theta0": 0.5587868066957934,
+        "theta1": 0.10387224692211675,
+        "first_birth_fixed_cost": 4.714852890355756,
+        "h_P": 0.7202317685667271
+      },
+      "log_coordinate_step": [
+        -0.00016160053912548335,
+        -0.02762090395222671,
+        0.004573960871780469,
+        0.00713894022063533,
+        -0.03595262200579397,
+        -0.020481997954672423,
+        0.0014287001274015214,
+        0.020381153850075714,
+        0.004706434985609885
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 196.70855628936286,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18229123439041026,
+          "cps_exactly_one": 0.23047578494474152,
+          "nchs_mean_age": 26.496181601862006,
+          "nchs_share30": 0.2597082813712557,
+          "wealth_earnings": 6.087206717418151,
+          "bequest_wealth": 0.01227697560351755,
+          "old_dispersion": 3.787137389332172,
+          "mean_rooms": 6.134783994690957,
+          "ownership_30_55": 0.5899836046941648,
+          "first_birth_rooms": 0.4319374256280235,
+          "family_rooms": 0.16844480897691005
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.16947298520733003,
+          "cps_exactly_one": 0.20714686395814938,
+          "nchs_mean_age": 26.496181601862006,
+          "nchs_share30": 0.2597082813712557,
+          "wealth_earnings": 6.087206717418151,
+          "bequest_wealth": 0.01227697560351755,
+          "old_dispersion": 3.787137389332172,
+          "mean_rooms": 6.134783994690957,
+          "ownership_30_55": 0.5899836046941648,
+          "first_birth_rooms": 0.4319374256280235,
+          "family_rooms": 0.16844480897691005
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 0.5,
+      "structural_candidate": {
+        "beta_annual": 0.995278101863214,
+        "kappa_fert": 2.0516474152933326,
+        "kappa_fert_continuation": 1.7870437764006413,
+        "chi": 1.0688799244945977,
+        "H0": 7.849626779723423,
+        "theta0": 0.5474581492728045,
+        "theta1": 0.104020755276219,
+        "first_birth_fixed_cost": 4.811932974059119,
+        "h_P": 0.7236294818466227
+      },
+      "log_coordinate_step": [
+        -0.0003232010782509667,
+        -0.05524180790445342,
+        0.009147921743560938,
+        0.01427788044127066,
+        -0.07190524401158795,
+        -0.040963995909344846,
+        0.0028574002548030428,
+        0.04076230770015143,
+        0.00941286997121977
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 159.21684416278276,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.1839974502625792,
+          "cps_exactly_one": 0.22771550302665106,
+          "nchs_mean_age": 26.407222408541628,
+          "nchs_share30": 0.2542489962450788,
+          "wealth_earnings": 6.077536472088446,
+          "bequest_wealth": 0.012185916213673795,
+          "old_dispersion": 3.844519053989501,
+          "mean_rooms": 6.023185652437868,
+          "ownership_30_55": 0.6051988502724996,
+          "first_birth_rooms": 0.425028187831221,
+          "family_rooms": 0.17067427668272317
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1715732427113391,
+          "cps_exactly_one": 0.20445202639517218,
+          "nchs_mean_age": 26.407222408541628,
+          "nchs_share30": 0.2542489962450788,
+          "wealth_earnings": 6.077536472088446,
+          "bequest_wealth": 0.012185916213673795,
+          "old_dispersion": 3.844519053989501,
+          "mean_rooms": 6.023185652437868,
+          "ownership_30_55": 0.6051988502724996,
+          "first_birth_rooms": 0.425028187831221,
+          "family_rooms": 0.17067427668272317
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    },
+    {
+      "profile": "reference_precision_diagnostic",
+      "projections": [
+        "uniform_birth_time",
+        "constant_post_cell"
+      ],
+      "ridge_strength": 10.0,
+      "fraction": 1.0,
+      "structural_candidate": {
+        "beta_annual": 0.9952796241321525,
+        "kappa_fert": 1.9413843085789195,
+        "kappa_fert_continuation": 1.803466515458134,
+        "chi": 1.0842507344350867,
+        "H0": 7.305012399996279,
+        "theta0": 0.5254851983754807,
+        "theta1": 0.10431840926461902,
+        "first_birth_fixed_cost": 5.012131014221324,
+        "h_P": 0.7304730704417465
+      },
+      "log_coordinate_step": [
+        -0.0006464021565019334,
+        -0.11048361580890684,
+        0.018295843487121877,
+        0.02855576088254132,
+        -0.1438104880231759,
+        -0.08192799181868969,
+        0.0057148005096060855,
+        0.08152461540030286,
+        0.01882573994243954
+      ],
+      "local_base_score": 242.3460312068909,
+      "linear_predicted_score": 108.67070828246622,
+      "predicted_moments": {
+        "uniform_birth_time": {
+          "cps_childlessness": 0.18740988200691708,
+          "cps_exactly_one": 0.22219493919047018,
+          "nchs_mean_age": 26.229304021900873,
+          "nchs_share30": 0.24333042599272509,
+          "wealth_earnings": 6.058195981429036,
+          "bequest_wealth": 0.012003797433986291,
+          "old_dispersion": 3.9592823833041586,
+          "mean_rooms": 5.799988967931691,
+          "ownership_30_55": 0.6356293414291694,
+          "first_birth_rooms": 0.41120971223761593,
+          "family_rooms": 0.17513321209434943
+        },
+        "constant_post_cell": {
+          "cps_childlessness": 0.1757737577193573,
+          "cps_exactly_one": 0.19906235126921776,
+          "nchs_mean_age": 26.229304021900873,
+          "nchs_share30": 0.24333042599272509,
+          "wealth_earnings": 6.058195981429036,
+          "bequest_wealth": 0.012003797433986291,
+          "old_dispersion": 3.9592823833041586,
+          "mean_rooms": 5.799988967931691,
+          "ownership_30_55": 0.6356293414291694,
+          "first_birth_rooms": 0.41120971223761593,
+          "family_rooms": 0.17513321209434943
+        }
+      },
+      "missing_recent_parent_model": null,
+      "status": "linear diagnostic proposal; requires nonlinear verification",
+      "calibrated_smm": false
+    }
+  ],
+  "raw_panel_sha256": "83616b8ea99b9bf914c062c8bec3588afcd77d79ce850b3619844a9b62cc33a4",
+  "source_script_sha256": "35d0e75b0609ab30025f96eee5f8f35f8475a0a7bd52820abe4434aa1e90f3b9"
+}

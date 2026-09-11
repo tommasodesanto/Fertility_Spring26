@@ -1,0 +1,36 @@
+{
+  "observed_at_utc": "2026-09-11T05:15:47.814397+00:00",
+  "observed_tasks": [
+    "17358647_10",
+    "17358647_18"
+  ],
+  "observed_fields": {
+    "JobState": "PENDING",
+    "Reason": "None",
+    "Priority": 13137,
+    "QOS": "cpu48",
+    "Partition": "all",
+    "LastSchedEval_cluster_local": "2026-09-11T01:09:21",
+    "MinMemoryNode": "16G",
+    "NumCPUs": 1,
+    "TimeLimit": "00:32:00",
+    "ArrayTaskThrottle": 19
+  },
+  "original_submission_partition": "cpu_short",
+  "memory_attempts_before_and_after_partition": "cpu_short",
+  "collector_partition_changes": false,
+  "comment": "Lead notified of later partition=all state; no additional mutation by collector.",
+  "actor": "unknown",
+  "lead_partition_or_QOS_changes": false,
+  "collector_partition_or_QOS_changes": false,
+  "original_submission_fields": {
+    "partition": "cpu_short",
+    "account": "torch_pr_570_general",
+    "cpus_per_task": 1,
+    "memory_gb": 16,
+    "time_limit": "00:32:00",
+    "array": "0-18%19",
+    "QOS": "not explicitly set in script; earlier task state cpu48"
+  },
+  "causal_attribution": "Unresolved. No evidence links the rejected memory updates to the later partition field; site hooks or other activity are not ruled in or out. Pending jobs remain untouched."
+}

@@ -1,0 +1,792 @@
+{
+  "status": "completed_csv_interpretation",
+  "model_solves": 0,
+  "checkpoint_loads": 0,
+  "ages": [
+    30,
+    42
+  ],
+  "timing": "post_fertility_pre_tenure",
+  "occupancy_threshold": 1e-12,
+  "probability_drop_threshold": 1e-07,
+  "units": "Mass is model household mass. Probability drops are fractions, not percentage points.",
+  "scope_warning": "Selected slices are age30/42, renter/location0/parity0/child_state0; not all household states. Lower-node screen is not a counterfactual or welfare effect.",
+  "case_summaries": {
+    "old_old": {
+      "global_current_household_mass": 0.999999999999775,
+      "slice_summaries": [
+        {
+          "age": 30,
+          "selected_slice_mass": 0.013857270202861816,
+          "all_valid_drop_count": 361,
+          "occupied_lower_node_drop_count": 252,
+          "occupied_lower_node_drop_mass": 0.0025374970315422806,
+          "drop_mass_share_selected_slice": 0.1831166596591466,
+          "drop_mass_share_global": 0.0025374970315428518,
+          "at_least_one_pp_drop_count": 37,
+          "at_least_one_pp_drop_mass": 0.00027357971173054286,
+          "maximum_occupied_drop": {
+            "age": 30,
+            "z_index": 5,
+            "wealth_index": 96,
+            "wealth_lower": 7.0,
+            "wealth_upper": 7.571428571428571,
+            "z": 0.32846680176271387,
+            "probability_drop": 0.07164689898490906,
+            "lower_node_mass": 1.3636740860450925e-08,
+            "upper_node_mass": 2.0516104186736913e-08,
+            "probability_lower": 0.4603452980518341,
+            "probability_upper": 0.38869839906692505
+          },
+          "maximum_all_valid_drop": {
+            "age": 30,
+            "z_index": 0,
+            "wealth_index": 97,
+            "wealth_lower": 7.571428571428571,
+            "wealth_upper": 8.142857142857142,
+            "z": 0.11089068477824145,
+            "probability_drop": 0.2774357795715332,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.4868411421775818,
+            "probability_upper": 0.20940536260604858
+          },
+          "mass_times_probability_drop_score": 6.907269739008024e-06
+        },
+        {
+          "age": 42,
+          "selected_slice_mass": 0.0053589133899508605,
+          "all_valid_drop_count": 355,
+          "occupied_lower_node_drop_count": 302,
+          "occupied_lower_node_drop_mass": 0.0014278261912579868,
+          "drop_mass_share_selected_slice": 0.2664394975920817,
+          "drop_mass_share_global": 0.0014278261912583081,
+          "at_least_one_pp_drop_count": 88,
+          "at_least_one_pp_drop_mass": 0.0003458851206854519,
+          "maximum_occupied_drop": {
+            "age": 42,
+            "z_index": 2,
+            "wealth_index": 85,
+            "wealth_lower": 5.4651162790697665,
+            "wealth_upper": 5.604651162790697,
+            "z": 0.25467675127520867,
+            "probability_drop": 0.07672429084777832,
+            "lower_node_mass": 1.924020950850548e-09,
+            "upper_node_mass": 2.2760585300804713e-10,
+            "probability_lower": 0.42195892333984375,
+            "probability_upper": 0.34523463249206543
+          },
+          "maximum_all_valid_drop": {
+            "age": 42,
+            "z_index": 0,
+            "wealth_index": 96,
+            "wealth_lower": 7.0,
+            "wealth_upper": 7.571428571428571,
+            "z": 0.11089068477824145,
+            "probability_drop": 0.14169852435588837,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.38386282324790955,
+            "probability_upper": 0.24216429889202118
+          },
+          "mass_times_probability_drop_score": 9.27648119774116e-06
+        },
+        {
+          "age": "pooled_displayed_ages",
+          "selected_slice_mass": 0.019216183592812686,
+          "all_valid_drop_count": 716,
+          "occupied_lower_node_drop_count": 554,
+          "occupied_lower_node_drop_mass": 0.003965323222800265,
+          "drop_mass_share_selected_slice": 0.20635331691373884,
+          "drop_mass_share_global": 0.0039653232228011575,
+          "at_least_one_pp_drop_count": 125,
+          "at_least_one_pp_drop_mass": 0.0006194648324159944,
+          "maximum_occupied_drop": {
+            "age": 42,
+            "z_index": 2,
+            "wealth_index": 85,
+            "wealth_lower": 5.4651162790697665,
+            "wealth_upper": 5.604651162790697,
+            "z": 0.25467675127520867,
+            "probability_drop": 0.07672429084777832,
+            "lower_node_mass": 1.924020950850548e-09,
+            "upper_node_mass": 2.2760585300804713e-10,
+            "probability_lower": 0.42195892333984375,
+            "probability_upper": 0.34523463249206543
+          },
+          "maximum_all_valid_drop": {
+            "age": 30,
+            "z_index": 0,
+            "wealth_index": 97,
+            "wealth_lower": 7.571428571428571,
+            "wealth_upper": 8.142857142857142,
+            "z": 0.11089068477824145,
+            "probability_drop": 0.2774357795715332,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.4868411421775818,
+            "probability_upper": 0.20940536260604858
+          },
+          "mass_times_probability_drop_score": 1.61837509367492e-05
+        }
+      ],
+      "permanent_type_ownership_by_age": [
+        {
+          "age": 18.0,
+          "owner_rates_low_middle_high": [
+            1.5446969306035693e-06,
+            0.04203096058670986,
+            0.2184945477990265
+          ],
+          "middle_minus_high": -0.17646358721231664,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 22.0,
+          "owner_rates_low_middle_high": [
+            0.0006654775115797373,
+            0.1279128259798308,
+            0.5967444955045661
+          ],
+          "middle_minus_high": -0.4688316695247353,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 26.0,
+          "owner_rates_low_middle_high": [
+            0.00398500671944633,
+            0.2199327537603763,
+            0.7113539904212245
+          ],
+          "middle_minus_high": -0.4914212366608482,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 30.0,
+          "owner_rates_low_middle_high": [
+            0.014075259548079644,
+            0.34957917892962065,
+            0.8735153328530103
+          ],
+          "middle_minus_high": -0.5239361539233897,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 34.0,
+          "owner_rates_low_middle_high": [
+            0.03237213871937229,
+            0.4756971280456716,
+            0.9190433299464277
+          ],
+          "middle_minus_high": -0.4433462019007561,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 38.0,
+          "owner_rates_low_middle_high": [
+            0.05655741394559045,
+            0.601218700641152,
+            0.9594763868653553
+          ],
+          "middle_minus_high": -0.3582576862242033,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 42.0,
+          "owner_rates_low_middle_high": [
+            0.08636399494099133,
+            0.6980934801515111,
+            0.9778841362852321
+          ],
+          "middle_minus_high": -0.279790656133721,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 46.0,
+          "owner_rates_low_middle_high": [
+            0.12183324149640716,
+            0.766624835907268,
+            0.9853143072294718
+          ],
+          "middle_minus_high": -0.21868947132220373,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 50.0,
+          "owner_rates_low_middle_high": [
+            0.16544546553759487,
+            0.8206154858167949,
+            0.9890873786971575
+          ],
+          "middle_minus_high": -0.16847189288036257,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 54.0,
+          "owner_rates_low_middle_high": [
+            0.22017908953706672,
+            0.8680556473417912,
+            0.9917896685436118
+          ],
+          "middle_minus_high": -0.12373402120182064,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 58.0,
+          "owner_rates_low_middle_high": [
+            0.28473169739916515,
+            0.9120543489101344,
+            0.9934605979055643
+          ],
+          "middle_minus_high": -0.08140624899542992,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 62.0,
+          "owner_rates_low_middle_high": [
+            0.34737439564751577,
+            0.9465286902302885,
+            0.9948408665381656
+          ],
+          "middle_minus_high": -0.0483121763078771,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 66.0,
+          "owner_rates_low_middle_high": [
+            0.36615481362291674,
+            0.969569594400075,
+            0.994431152368484
+          ],
+          "middle_minus_high": -0.024861557968409054,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 70.0,
+          "owner_rates_low_middle_high": [
+            0.482648647047503,
+            0.9845688390337685,
+            0.9884242699888185
+          ],
+          "middle_minus_high": -0.003855430955050032,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 74.0,
+          "owner_rates_low_middle_high": [
+            0.898010329776893,
+            0.9946672874447803,
+            0.9838087117154649
+          ],
+          "middle_minus_high": 0.010858575729315367,
+          "strict_low_middle_high_order": false
+        },
+        {
+          "age": 78.0,
+          "owner_rates_low_middle_high": [
+            0.9760504858638123,
+            0.9976313479700053,
+            0.9833804347409111
+          ],
+          "middle_minus_high": 0.01425091322909422,
+          "strict_low_middle_high_order": false
+        },
+        {
+          "age": 82.0,
+          "owner_rates_low_middle_high": [
+            0.9955896903289776,
+            0.9992752743287673,
+            0.9881045582376132
+          ],
+          "middle_minus_high": 0.011170716091154054,
+          "strict_low_middle_high_order": false
+        }
+      ],
+      "income_gradient_exception_ages": [
+        74.0,
+        78.0,
+        82.0
+      ]
+    },
+    "new_balanced": {
+      "global_current_household_mass": 0.9999999999997817,
+      "slice_summaries": [
+        {
+          "age": 30,
+          "selected_slice_mass": 0.013734739738453747,
+          "all_valid_drop_count": 361,
+          "occupied_lower_node_drop_count": 253,
+          "occupied_lower_node_drop_mass": 0.002198857280685476,
+          "drop_mass_share_selected_slice": 0.1600945720528828,
+          "drop_mass_share_global": 0.002198857280685956,
+          "at_least_one_pp_drop_count": 36,
+          "at_least_one_pp_drop_mass": 0.0002790294464477268,
+          "maximum_occupied_drop": {
+            "age": 30,
+            "z_index": 5,
+            "wealth_index": 96,
+            "wealth_lower": 7.0,
+            "wealth_upper": 7.571428571428571,
+            "z": 0.32846680176271387,
+            "probability_drop": 0.06183627247810364,
+            "lower_node_mass": 7.71679947398301e-09,
+            "upper_node_mass": 1.9963271362339216e-08,
+            "probability_lower": 0.4248821437358856,
+            "probability_upper": 0.363045871257782
+          },
+          "maximum_all_valid_drop": {
+            "age": 30,
+            "z_index": 0,
+            "wealth_index": 97,
+            "wealth_lower": 7.571428571428571,
+            "wealth_upper": 8.142857142857142,
+            "z": 0.11089068477824145,
+            "probability_drop": 0.25927822291851044,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.3675632178783417,
+            "probability_upper": 0.10828499495983124
+          },
+          "mass_times_probability_drop_score": 5.734116007169209e-06
+        },
+        {
+          "age": 42,
+          "selected_slice_mass": 0.005407913087661833,
+          "all_valid_drop_count": 331,
+          "occupied_lower_node_drop_count": 278,
+          "occupied_lower_node_drop_mass": 0.001249655758237722,
+          "drop_mass_share_selected_slice": 0.23107911277065726,
+          "drop_mass_share_global": 0.0012496557582379949,
+          "at_least_one_pp_drop_count": 73,
+          "at_least_one_pp_drop_mass": 0.00018543501040170442,
+          "maximum_occupied_drop": {
+            "age": 42,
+            "z_index": 2,
+            "wealth_index": 81,
+            "wealth_lower": 4.906976744186046,
+            "wealth_upper": 5.046511627906977,
+            "z": 0.25467675127520867,
+            "probability_drop": 0.07835426926612854,
+            "lower_node_mass": 5.512202631742811e-09,
+            "upper_node_mass": 7.900148528358842e-09,
+            "probability_lower": 0.43403512239456177,
+            "probability_upper": 0.3556808531284332
+          },
+          "maximum_all_valid_drop": {
+            "age": 42,
+            "z_index": 1,
+            "wealth_index": 102,
+            "wealth_lower": 10.428571428571429,
+            "wealth_upper": 11.0,
+            "z": 0.1680514187563014,
+            "probability_drop": 0.11124861240386963,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.6764587163925171,
+            "probability_upper": 0.5652101039886475
+          },
+          "mass_times_probability_drop_score": 4.578222874135981e-06
+        },
+        {
+          "age": "pooled_displayed_ages",
+          "selected_slice_mass": 0.019142652826115658,
+          "all_valid_drop_count": 692,
+          "occupied_lower_node_drop_count": 531,
+          "occupied_lower_node_drop_mass": 0.0034485130389231952,
+          "drop_mass_share_selected_slice": 0.18014812629410007,
+          "drop_mass_share_global": 0.003448513038923948,
+          "at_least_one_pp_drop_count": 109,
+          "at_least_one_pp_drop_mass": 0.00046446445684943127,
+          "maximum_occupied_drop": {
+            "age": 42,
+            "z_index": 2,
+            "wealth_index": 81,
+            "wealth_lower": 4.906976744186046,
+            "wealth_upper": 5.046511627906977,
+            "z": 0.25467675127520867,
+            "probability_drop": 0.07835426926612854,
+            "lower_node_mass": 5.512202631742811e-09,
+            "upper_node_mass": 7.900148528358842e-09,
+            "probability_lower": 0.43403512239456177,
+            "probability_upper": 0.3556808531284332
+          },
+          "maximum_all_valid_drop": {
+            "age": 30,
+            "z_index": 0,
+            "wealth_index": 97,
+            "wealth_lower": 7.571428571428571,
+            "wealth_upper": 8.142857142857142,
+            "z": 0.11089068477824145,
+            "probability_drop": 0.25927822291851044,
+            "lower_node_mass": 0.0,
+            "upper_node_mass": 0.0,
+            "probability_lower": 0.3675632178783417,
+            "probability_upper": 0.10828499495983124
+          },
+          "mass_times_probability_drop_score": 1.0312338881305195e-05
+        }
+      ],
+      "permanent_type_ownership_by_age": [
+        {
+          "age": 18.0,
+          "owner_rates_low_middle_high": [
+            1.7385597709425926e-06,
+            0.04014206539744734,
+            0.21754265056098648
+          ],
+          "middle_minus_high": -0.17740058516353915,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 22.0,
+          "owner_rates_low_middle_high": [
+            0.00021686071189149314,
+            0.12005602946555335,
+            0.5954048915106958
+          ],
+          "middle_minus_high": -0.4753488620451424,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 26.0,
+          "owner_rates_low_middle_high": [
+            0.0023887228204208786,
+            0.20791760977594909,
+            0.7080691985054798
+          ],
+          "middle_minus_high": -0.5001515887295307,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 30.0,
+          "owner_rates_low_middle_high": [
+            0.008141787739740778,
+            0.33206976895056617,
+            0.8700379522146721
+          ],
+          "middle_minus_high": -0.5379681832641059,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 34.0,
+          "owner_rates_low_middle_high": [
+            0.017844702603443563,
+            0.45351854279491316,
+            0.9162217008744876
+          ],
+          "middle_minus_high": -0.46270315807957446,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 38.0,
+          "owner_rates_low_middle_high": [
+            0.02939903899581844,
+            0.5748857083884366,
+            0.9570516036441972
+          ],
+          "middle_minus_high": -0.3821658952557606,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 42.0,
+          "owner_rates_low_middle_high": [
+            0.0441889660549234,
+            0.6705353092510583,
+            0.9758519876938256
+          ],
+          "middle_minus_high": -0.30531667844276733,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 46.0,
+          "owner_rates_low_middle_high": [
+            0.062289897330924056,
+            0.7387648988310557,
+            0.9842896036201327
+          ],
+          "middle_minus_high": -0.24552470478907706,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 50.0,
+          "owner_rates_low_middle_high": [
+            0.08537640402209891,
+            0.7915740674113794,
+            0.9880801255229977
+          ],
+          "middle_minus_high": -0.19650605811161836,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 54.0,
+          "owner_rates_low_middle_high": [
+            0.11650702697967366,
+            0.8382687677739877,
+            0.9908656782993649
+          ],
+          "middle_minus_high": -0.15259691052537716,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 58.0,
+          "owner_rates_low_middle_high": [
+            0.15827405089426644,
+            0.8810239652502417,
+            0.9926752835917784
+          ],
+          "middle_minus_high": -0.11165131834153663,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 62.0,
+          "owner_rates_low_middle_high": [
+            0.2042816576558521,
+            0.9153952509424408,
+            0.9940639308718081
+          ],
+          "middle_minus_high": -0.07866867992936732,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 66.0,
+          "owner_rates_low_middle_high": [
+            0.22284109286143786,
+            0.9401753671129648,
+            0.9935092433081922
+          ],
+          "middle_minus_high": -0.05333387619522745,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 70.0,
+          "owner_rates_low_middle_high": [
+            0.5287110551555992,
+            0.9661882307147052,
+            0.9874520426201918
+          ],
+          "middle_minus_high": -0.02126381190548665,
+          "strict_low_middle_high_order": true
+        },
+        {
+          "age": 74.0,
+          "owner_rates_low_middle_high": [
+            0.7806729601907166,
+            0.9848976968380113,
+            0.9829125222748093
+          ],
+          "middle_minus_high": 0.001985174563202019,
+          "strict_low_middle_high_order": false
+        },
+        {
+          "age": 78.0,
+          "owner_rates_low_middle_high": [
+            0.9281231758054109,
+            0.9942645537490272,
+            0.982548186906217
+          ],
+          "middle_minus_high": 0.011716366842810189,
+          "strict_low_middle_high_order": false
+        },
+        {
+          "age": 82.0,
+          "owner_rates_low_middle_high": [
+            0.985091546957561,
+            0.9985227733125753,
+            0.987406042932201
+          ],
+          "middle_minus_high": 0.011116730380374307,
+          "strict_low_middle_high_order": false
+        }
+      ],
+      "income_gradient_exception_ages": [
+        74.0,
+        78.0,
+        82.0
+      ]
+    }
+  },
+  "selected_states": [
+    {
+      "age": 30,
+      "z_index": 8,
+      "wealth_index": 52,
+      "wealth_lower": 0.8604651162790695,
+      "wealth_upper": 1.0,
+      "z": 1.1432279552449633,
+      "probability_drop": 0.013232320547103882,
+      "lower_node_mass": 0.00010059047977895123,
+      "upper_node_mass": 7.448516322088039e-05,
+      "probability_lower": 0.27966025471687317,
+      "probability_upper": 0.2664279341697693,
+      "case": "new_balanced",
+      "reason": "Primary: largest lower-mass times probability-drop score in new_balanced",
+      "condition": {
+        "tenure": 0,
+        "location": 0,
+        "parity": 0,
+        "child_state": 0,
+        "permanent_index": 1,
+        "changing_income_state": 3
+      },
+      "global_lower_node_mass_share": 0.00010059047977897318,
+      "selected_age_slice_lower_node_mass_share": 0.007323799481785861,
+      "value_change": 0.02661771530132162,
+      "selected_tenure_lower_upper": [
+        0,
+        0
+      ],
+      "rental_housing_lower_upper": [
+        6.0,
+        6.0
+      ],
+      "tenure_probabilities_lower": [
+        0.7203397750854492,
+        1.4658768350273021e-06,
+        0.00264646764844656,
+        0.27701231837272644,
+        0.0,
+        0.0
+      ],
+      "tenure_probabilities_upper": [
+        0.7335720658302307,
+        1.4700008250656538e-06,
+        0.002666517859324813,
+        0.26375994086265564,
+        0.0,
+        0.0
+      ],
+      "owner_product_downpayment_thresholds": {
+        "2.0": 0.2533314408094604,
+        "4.0": 0.5066628816189208,
+        "6.0": 0.7599943224283812,
+        "8.0": 1.0133257632378416,
+        "10.0": 1.266657204047302
+      },
+      "crossed_downpayment_products": []
+    },
+    {
+      "age": 42,
+      "z_index": 4,
+      "wealth_index": 62,
+      "wealth_lower": 2.2558139534883717,
+      "wealth_upper": 2.395348837209302,
+      "z": 0.5849025801382837,
+      "probability_drop": 0.05197995901107788,
+      "lower_node_mass": 4.505969874665387e-06,
+      "upper_node_mass": 3.6842915845827625e-06,
+      "probability_lower": 0.3956180810928345,
+      "probability_upper": 0.3436381220817566,
+      "case": "new_balanced",
+      "reason": "Secondary: a larger occupied drop with no nearby down-payment threshold",
+      "condition": {
+        "tenure": 0,
+        "location": 0,
+        "parity": 0,
+        "child_state": 0,
+        "permanent_index": 0,
+        "changing_income_state": 4
+      },
+      "global_lower_node_mass_share": 4.5059698746663705e-06,
+      "selected_age_slice_lower_node_mass_share": 0.0008332178793601119,
+      "value_change": 0.05513643406343122,
+      "selected_tenure_lower_upper": [
+        0,
+        0
+      ],
+      "rental_housing_lower_upper": [
+        4.155082314603237,
+        4.2113390913756685
+      ],
+      "tenure_probabilities_lower": [
+        0.6043819189071655,
+        3.925132205040427e-06,
+        0.3955848217010498,
+        2.9339356842683628e-05,
+        4.9591030439825445e-15,
+        1.784728883173859e-22
+      ],
+      "tenure_probabilities_upper": [
+        0.6563618183135986,
+        4.154323505645152e-06,
+        0.3435324430465698,
+        0.00010154249321203679,
+        1.8048179934609422e-14,
+        1.2129328378996334e-21
+      ],
+      "owner_product_downpayment_thresholds": {
+        "2.0": 0.2533314408094604,
+        "4.0": 0.5066628816189208,
+        "6.0": 0.7599943224283812,
+        "8.0": 1.0133257632378416,
+        "10.0": 1.266657204047302
+      },
+      "crossed_downpayment_products": []
+    },
+    {
+      "age": 42,
+      "z_index": 2,
+      "wealth_index": 81,
+      "wealth_lower": 4.906976744186046,
+      "wealth_upper": 5.046511627906977,
+      "z": 0.25467675127520867,
+      "probability_drop": 0.07835426926612854,
+      "lower_node_mass": 5.512202631742811e-09,
+      "upper_node_mass": 7.900148528358842e-09,
+      "probability_lower": 0.43403512239456177,
+      "probability_upper": 0.3556808531284332,
+      "case": "new_balanced",
+      "reason": "Maximum occupied probability drop; tiny mass, low priority",
+      "condition": {
+        "tenure": 0,
+        "location": 0,
+        "parity": 0,
+        "child_state": 0,
+        "permanent_index": 0,
+        "changing_income_state": 2
+      },
+      "global_lower_node_mass_share": 5.512202631744015e-09,
+      "selected_age_slice_lower_node_mass_share": 1.019284619111005e-06,
+      "value_change": 0.05241955537018289,
+      "selected_tenure_lower_upper": [
+        0,
+        0
+      ],
+      "rental_housing_lower_upper": [
+        4.282883721670736,
+        4.327946442124229
+      ],
+      "tenure_probabilities_lower": [
+        0.5659648776054382,
+        3.5523539736459497e-06,
+        0.4335707128047943,
+        0.0004608644812833518,
+        6.172714656039677e-14,
+        7.594419520857506e-21
+      ],
+      "tenure_probabilities_upper": [
+        0.6443191170692444,
+        3.9320993892033584e-06,
+        0.3538077175617218,
+        0.0018692102748900652,
+        1.9221148110648567e-13,
+        4.1520941539035836e-20
+      ],
+      "owner_product_downpayment_thresholds": {
+        "2.0": 0.2533314408094604,
+        "4.0": 0.5066628816189208,
+        "6.0": 0.7599943224283812,
+        "8.0": 1.0133257632378416,
+        "10.0": 1.266657204047302
+      },
+      "crossed_downpayment_products": []
+    }
+  ],
+  "source_csv_sha256": {
+    "new_balanced_conditional_policy.csv": "f241a65fd25ba851d5f4c4aad17f1e85d87b4c4581037b3110808f45e8758324",
+    "new_balanced_owner_probability_steps.csv": "9718acdf69a464d8730e5b38b5796fd7a2d364f5d330ef91bb9bad5ca25dc1ad",
+    "new_balanced_ownership_age_type.csv": "5aea7dbd2e2116a989e5255eea1f496e6f2b607bc13c75fd428ec1c842dc15fc",
+    "old_old_conditional_policy.csv": "62bcea0d3118f61a9c82d38867978332fa526f91178ba085c4361371bb56530b",
+    "old_old_owner_probability_steps.csv": "c24bf8ad26ef3716d7156cfee8b8cc5f47b2d7c19b5521ad6e8c2d15c45caf9f",
+    "old_old_ownership_age_type.csv": "ed3159ea7235351e8b584bdc3001aef7ad29267bf7db4d964424d586f8f71778"
+  }
+}

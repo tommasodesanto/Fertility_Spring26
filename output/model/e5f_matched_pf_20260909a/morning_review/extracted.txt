@@ -1,0 +1,322 @@
+Initial equilibrium: working review
+Evidence as of 2026-09-11 01:21 EDT • Generated 2026-09-11 05:49 UTC
+New parenthood-only housing requirement and balanced initial pensions
+The new initial economy is numerically verified. It is not yet calibrated. The nine structural coordinates
+are inherited or mapped starting values. Only the initial fertility-preference level has been adjusted to its
+separate normalization. No active weight profile or total objective exists for the proposed early target
+system.
+What changed economically
+Housing needs now depend on whether any dependent child is at home: a common parenthood
+requirement applies while dependents are present, with no per-child slope. The external equivalence scale,
+consumption share, curvature and linear child reward remain. The approved choice structure is sequential.
+Initial pensions now balance against actual payroll earnings and retiree exposure. The payroll-tax rate is
+externally fixed; the pension benefit is derived from the budget. This verifies the initial stationary fiscal
+calculation. A transition requires a separately balanced benefit at every date, entering both household
+expectations and realized budgets.
+What is established
+Check
+Verified evidence
+Initial calculation
+2 fresh repeated normalizations; 8 stationary solves; same checkpoint read by the observer.
+Markets and pensions
+Market error 4.39e-06; absolute scaled pension imbalance 2.77e-10 (gate 1e-6).
+Household and operator
+checks
+Zero recorded household budget-violating mass and occupied negative value steps; probability,
+population and checkpoint checks pass.
+Numerical tests
+23 compiled utility/pension/anticipation tests pass; 61 combined pure historical-adapter tests
+pass.
+Sensitivity work
+10 of 19 initial cases verified at the stated checkpoint; no completed case failed. Full parameter
+Jacobian remains pending.
+The economic fit that deserves attention
+At this starting point, mean occupied rooms are 6.246 versus 5.561, while ownership at ages 30–55 is
+57.48% versus 64.83%. The first-birth room response is 0.439 versus 0.720. Excess average space
+coexists with insufficient ownership and a weak family-space response. This is a diagnosis of the mapped
+point, not a claim that these gaps are unavoidable.
+The 2.1 restriction is model completed fertility. It is not a measured female period total fertility rate, and its successful
+normalization does not establish the other fertility fits. No new perfect-foresight history or matched policy is certified by this
+packet.
+Working review • Initial diagnostic, not calibrated SMM
+1 / 4
+
+Complete initial fit
+13 restrictions: one separate normalization and twelve proposed scored rows
+Gap = model − target. Shares are fractions, ages are years and housing is rooms. A dash denotes unavailable, not zero. Every
+actual weight and loss contribution is null; reference precisions in the source are not adopted weights.
+Restriction
+Target
+Model
+Gap
+Weight
+Loss
+Initial model completed fertility
+ 2.100000
+ 2.100033
+ 3.286e-05
+ —
+ —
+Childless women, 40–44
+ 0.198279
+ 0.180585
+ -0.017694
+ —
+ —
+One child among mothers, 40–44
+ 0.213655
+ 0.233236
+ 0.019581
+ —
+ —
+Period mean first-birth age
+ 25.976264
+ 26.585141
+ 0.608877
+ —
+ —
+First births at age 30+
+ 0.249278
+ 0.265168
+ 0.015890
+ —
+ —
+Wealth / annual gross labor earnings
+ 6.145861
+ 6.096877
+ -0.048984
+ —
+ —
+Annual bequests / wealth
+ 0.008800
+ 0.012368
+ 0.003568
+ —
+ —
+Old wealth/income p90 / median, 76–84
+ 3.515935
+ 3.729756
+ 0.213821
+ —
+ —
+Mean rooms, capped at 9
+ 5.561097
+ 6.246382
+ 0.685285
+ —
+ —
+Ownership, heads 30–55
+ 0.648334
+ 0.574768
+ -0.073566
+ —
+ —
+First-birth rooms response, −1 to +3
+ 0.720246
+ 0.438847
+ -0.281400
+ —
+ —
+Rooms: 3+ versus 1–2 resident children¹
+ 0.347067
+ 0.166215
+ -0.180852
+ —
+ —
+Recent-parent ownership gap²
+ 0.162896
+ —
+ —
+ —
+ —
+¹ Model value uses dependent counts as an explicit proxy for resident-child groups. ² Exact ACS recent-parent groups cannot
+be recovered by a static mask of current counts. A passive realized-birth/empty-home observer is under development; this is
+not an intrinsic impossibility result.
+Validation only
+Observation
+Target
+Model
+Gap
+Weight /
+loss
+Ownership, heads 25–34
+ 0.431158
+ 0.313603
+ -0.117555
+ — / —
+Old wealth/income median, ages 76–84
+ 7.285793
+ 6.402310
+ -0.883483
+ — / —
+CPS age-projection sensitivity
+Observation
+Target
+Uniform birth
+Gap
+Post-cell fixed
+Gap
+Childlessness
+ 0.198279
+ 0.180585
+ -0.017694
+ 0.167373
+ -0.030906
+One child among mothers
+ 0.213655
+ 0.233236
+ 0.019581
+ 0.209842
+ -0.003814
+Both approximate ages 40–44 within four-year cells. The one-child gap changes sign; first-birth flow timing is unchanged.
+Neither stock projection is promoted to an empirical weight or a certified exact age mapping.
+Working review • Initial diagnostic, not calibrated SMM
+2 / 4
+
+Every coordinate and restriction
+Nine structural starting coordinates; eight fixed, normalized or derived rows
+The values below are copied from the same checkpoint receipt. They are not new structural estimates. The
+near-bound flags are the supplied flags, not a new criterion and not evidence by themselves of
+identification. Full machine precision remains in parameters.csv.
+Structural coordinate
+Value
+Lower
+Upper
+Transform
+Near bound
+Annual discount factor (beta)
+ 0.995277
+ 0.940000
+ 0.999500
+discount
+No
+First-attempt taste scale
+ 2.168173
+ 0.020000
+ 50.000000
+log
+No
+Later-attempt taste scale
+ 1.770771
+ 0.020000
+ 50.000000
+log
+No
+Owner-service premium (chi)
+ 1.053727
+ 0.100000
+ 5.000000
+log
+No
+Initial supply scale (H0)
+ 8.434844
+ 0.200000
+ 80.000000
+log
+No
+Bequest parameter (theta0)
+ 0.570350
+ 0.000000
+ 8.000000
+softzero
+No
+Bequest wealth shift (theta1)
+ 0.103724
+ 0.020000
+ 16.000000
+log
+Yes
+First-birth utility cost
+ 4.619731
+ 0.000000
+ 8.000000
+softzero
+No
+Parenthood housing requirement
+ 0.716850
+ 0.100000
+ 2.300000
+log
+No
+Fixed, normalized and budget-derived quantities
+Restriction
+Value
+Status
+Per-dependent-child housing slope
+ 0.000000
+zero restriction
+Initial child-preference intercept
+ 0.282704
+normalized to 2.1
+Payroll-tax rate
+ 0.179000
+externally fixed
+Pension benefit, four-year units
+ 2.046361
+budget derived
+Housing-supply elasticity
+ 0.630000
+externally fixed
+Tenure-choice taste scale
+ 0.005000
+externally fixed
+Consumption share
+ 0.733000
+externally fixed
+Utility curvature
+ 2.000000
+externally fixed
+How to interpret the starting values
+The parenthood requirement combines the old first-child jump and per-child floor; the slope is then fixed to
+zero. Initial supply was mapped under the common 0.63 elasticity. These are starting-value mappings, not
+estimates of the revised specification.
+The preference intercept is normalized to 2.1 model completed fertility. Pension equals revenue divided by
+retiree benefit exposure. A changing population requires renewed fiscal balance checks.
+The bequest wealth shift retains its near-bound flag. The complete sensitivity panel is needed to assess rank and weak
+parameter combinations. Counting restrictions does not establish identification.
+Working review • Initial diagnostic, not calibrated SMM
+3 / 4
+
+What must be resolved next
+Measurement, identification and transition certification are distinct tasks
+Measurement qualifications that affect interpretation
+Recent parenthood. ACS requires every resident own child to be younger than four, with no-resident-child
+controls that include former parents. The static count distribution lacks those exact age/residence labels. A
+passive observer can instead tag actual births into empty-dependent homes, transport that mass through
+realized housing choices, and compare with currently empty homes. Its timing and residence mapping must
+be declared and tested; it must not silently replace the empirical target.
+Age, residence and geography. Four-year age overlap and CPS parity timing affect measured stocks.
+Dependent counts are a proxy for ACS resident own children, including adult children. Model households
+are compared with 42 housing cities; structure filters and the revised city footprint are not exact model
+states. Rooms are capped at nine for ACS comparisons, whereas the reviewed PSID birth response
+remains uncapped.
+Income and uncertainty. Modeled retirement income is a proxy for PSID family income; the empirical
+income cutoff and selection are not fully reproduced. ACS errors are metro-resampling errors, not official
+survey-design errors. Pooled CPS covariance, NCHS discrepancy scales, cross-block covariance and the
+synthetic bequest scale require explicit treatment before weighting.
+Birth-housing response. Preserve the reviewed Sun–Abraham estimate and its stated sample/contrast.
+Applying it to an initial stationary economy assumes stability; model risk-set weighting and four-year timing
+are approximations. The existing prepath and normalization qualifications remain disclosed. This packet
+does not rerun or replace that regression.
+Next gates, in order
+• Finish the nine-coordinate sensitivity panel and verify every direction. Diagnose which parameter combinations move
+ownership, average rooms and family responses together; do not infer the full Jacobian from an incomplete panel.
+• Complete and test the missing observation mapping; settle the early target/uncertainty contract. Only then score a joint
+structural candidate with an explicit objective and identification assessment.
+• Verify the actual-population terminal price/pension loop and the joined historical perfect-foresight loop. Every dated benefit
+must enter backward decisions, forward accounting and a pension-balance gate.
+• Establish horizon stability, then compare jointly recalibrated histories. Run matched property-tax policies only from a certified
+shared historical state and fiscal contract. Initial test success alone does not establish policy readiness.
+Sources and refresh boundary
+Numerical tables: initial_fit_readout/target_fit.csv, validation_fit.csv, cps_projection_sensitivity.csv and
+parameters.csv. Their summary.json and the two preserved initial observation/smoke summaries identify the checkpoint and
+verified source snapshots. The early empirical contracts and recent_parent_flow_design.md supply definitions and the
+passive-observer qualification.
+Operational checkpoint: CALIBRATION_STATUS.md, opening checkpoint dated September 11, 01:21 EDT. Source
+f1bb3fe4; receipt backup f8fe0464. Tables refer to the mapped initial checkpoint, not to partial sensitivity candidates or the
+newest source commit. This report reads local receipts; it does not query the cluster or presume queued jobs have finished.
+Refresh with the supplied builder after updating the receipt tables and report_status.json. The builder checks row counts, null
+weights/losses, arithmetic, common checkpoint identity and source-snapshot hashes. Source fingerprints and output QA are
+written beside the PDF.
+Working review • Initial diagnostic, not calibrated SMM
+4 / 4

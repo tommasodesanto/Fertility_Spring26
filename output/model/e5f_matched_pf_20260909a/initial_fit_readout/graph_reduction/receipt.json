@@ -1,0 +1,75 @@
+{
+  "status": "completed_read_only_checkpoint_reduction",
+  "model_solves": 0,
+  "contract_sha256": "65c7b48a7d26a8c0ca67632acf499aeb53705d2b7436469833e61b6df8ece6a9",
+  "source_files_verified": 625,
+  "cases": [
+    {
+      "case": "old_old",
+      "input": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output/utility_fiscal_decomposition_20260911a/old_old/repetition_01/initial_state.pkl.gz",
+      "checkpoint_sha256": "60ccfff3d2a16a007f093c997c4a9de0f1ef81b4ae16d286ec6003edb5539cf1",
+      "wealth_points": 120,
+      "income_states": 15,
+      "readiness_state": 0,
+      "price": [
+        0.6255243707133863
+      ],
+      "parameter_phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "owner_products": [
+        2.0,
+        4.0,
+        6.0,
+        8.0,
+        10.0
+      ],
+      "rows": 3600,
+      "distribution_timing": "g_pre: before birth; g_post_fertility: before tenure; g_current: after tenure/location",
+      "policy_condition": "renter, location 0, parity 0, readiness-settled; tenure choice is conditional on the post-fertility state",
+      "housing_graph_definition": "selected tenure product or conditional rental housing; not probability-weighted housing",
+      "elapsed_seconds": 9.639181507751346
+    },
+    {
+      "case": "new_balanced",
+      "input": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output/utility_fiscal_decomposition_20260911a/new_balanced/repetition_01/initial_state.pkl.gz",
+      "checkpoint_sha256": "abe1d627e3df9b5af422514b36b9d4c4dbb932bb834f31d68c7d201c90050152",
+      "wealth_points": 120,
+      "income_states": 15,
+      "readiness_state": 0,
+      "price": [
+        0.6333286020236512
+      ],
+      "parameter_phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "owner_products": [
+        2.0,
+        4.0,
+        6.0,
+        8.0,
+        10.0
+      ],
+      "rows": 3600,
+      "distribution_timing": "g_pre: before birth; g_post_fertility: before tenure; g_current: after tenure/location",
+      "policy_condition": "renter, location 0, parity 0, readiness-settled; tenure choice is conditional on the post-fertility state",
+      "housing_graph_definition": "selected tenure product or conditional rental housing; not probability-weighted housing",
+      "elapsed_seconds": 10.792217251844704
+    }
+  ],
+  "elapsed_seconds": 10.82360124681145,
+  "output_sha256": {
+    "new_balanced_conditional_policy.csv": "f241a65fd25ba851d5f4c4aad17f1e85d87b4c4581037b3110808f45e8758324",
+    "new_balanced_owner_probability_steps.csv": "9718acdf69a464d8730e5b38b5796fd7a2d364f5d330ef91bb9bad5ca25dc1ad",
+    "new_balanced_ownership_age_type.csv": "5aea7dbd2e2116a989e5255eea1f496e6f2b607bc13c75fd428ec1c842dc15fc",
+    "old_old_conditional_policy.csv": "62bcea0d3118f61a9c82d38867978332fa526f91178ba085c4361371bb56530b",
+    "old_old_owner_probability_steps.csv": "c24bf8ad26ef3716d7156cfee8b8cc5f47b2d7c19b5521ad6e8c2d15c45caf9f",
+    "old_old_ownership_age_type.csv": "ed3159ea7235351e8b584bdc3001aef7ad29267bf7db4d964424d586f8f71778"
+  }
+}

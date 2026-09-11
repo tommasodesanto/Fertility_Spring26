@@ -1,0 +1,18 @@
+#!/bin/bash
+#SBATCH --job-name=e5f_initial_panel
+#SBATCH --array=10-18%9
+#SBATCH --account=torch_pr_570_general
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=8G
+#SBATCH --time=00:32:00
+#SBATCH --output=/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/panel_%A_%a.out
+#SBATCH --error=/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/panel_%A_%a.err
+set -euo pipefail
+module load anaconda3/2025.06
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1
+export NUMBA_DISABLE_JIT=0 PYTHONUNBUFFERED=1
+cd /scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053
+export PYTHONPATH=code/model/tools:code/model
+export MPLCONFIGDIR="$PWD/output/cache/mpl" NUMBA_CACHE_DIR="$PWD/output/cache/numba"
+mkdir -p "$MPLCONFIGDIR" "$NUMBA_CACHE_DIR"
+python contracts/run_array_case.py

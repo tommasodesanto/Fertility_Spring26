@@ -1,0 +1,78 @@
+{
+  "calibrated_smm": false,
+  "demographic_seed": {
+    "annual_array_sha256": {
+      "birth_sex_shares": "35396da083f8b6055ac6e27c569c4908de4414ac9b534ce40fba03a11dd7eefb",
+      "net_migration": "f60ab7b1e1a97e2cfa8cfdeaa6c84ab31e2b72f3461ae5520d9d236a36fd7e66",
+      "survival": "ee53514375edd905443b951a59cb21a933e039c94ed4507ce7287f59ba86fd2d"
+    },
+    "class_name": "run_e5f_perfect_foresight_person_demography.AnnualDemographicPrimitives",
+    "initial_stationary_age_realignment_performed": false,
+    "internal_identity_gaps": {
+      "headship_alignment": 0.0,
+      "initial_household_age": 1.3877787807814457e-17,
+      "initial_person_head_age": 0.0,
+      "person_head": 0.0
+    },
+    "scale_model_units_per_person": 8.756331612630393e-09,
+    "serialized_source_paths": {
+      "acs_headship": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/headship/acs_headship_profiles.csv",
+      "births_mid": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/births_mid.csv",
+      "population_mid": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/population_mid.csv",
+      "survival": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/survival.csv",
+      "vintage_2025": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/vintage_2025_age_sex.csv"
+    },
+    "source_pinning": "serialized arrays are covered by the approved initial checkpoint SHA256",
+    "start_year": 2023,
+    "status": "serialized_frozen_2023_primitives_without_realignment",
+    "terminal_year": 2100
+  },
+  "initial_fiscal": {
+    "actual_accounts": {
+      "implied_balanced_payroll_tax": 0.1790000000496276,
+      "implied_balanced_pension_period": 2.04636138904477,
+      "payroll_tax_base_period": 2.9632058955361202,
+      "payroll_tax_rate": 0.179,
+      "payroll_tax_revenue": 0.5304138553009655,
+      "pension_budget_residual": -1.4705681117277436e-10,
+      "pension_outlays": 0.5304138554480223,
+      "pension_period_units": 2.0463613896121218,
+      "retiree_benefit_exposure": 0.2591985258031866,
+      "retiree_household_mass": 0.2591985258031866,
+      "scaled_pension_budget_residual": -2.772491888405904e-10,
+      "worker_household_mass": 0.740801474196598
+    },
+    "fiscal_gate": true,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "marginal_tolerance": 2e-09,
+    "normalized_age_income_max_gap": 4.957937879690455e-11
+  },
+  "initial_normalization": {
+    "absolute_gap": 3.286289097070849e-05,
+    "completed_fertility": 2.100032862890971,
+    "psi_child": 0.2827035668649932,
+    "stationary_solve_seconds": 269.7562059070915,
+    "stationary_solves": 4,
+    "status": "derived_intercept",
+    "target": 2.1
+  },
+  "initial_psi": 0.2827035668649932,
+  "preference_rule": "diagnostic_constant_terminal_intercept_not_fitted",
+  "production_eligible": false,
+  "psi_change_from_initial": -0.25,
+  "root_starting_guesses": {
+    "asset_price": 0.6332572250742834,
+    "pension_period": 2.0463613896121218,
+    "status": "verified initial equilibrium values; not a solved terminal state"
+  },
+  "source_files_verified": 531,
+  "status": "passed",
+  "supply_rule": {
+    "elasticity": 0.63,
+    "initial_price": 0.6332572250742834,
+    "initial_stock": 6.466497060275431,
+    "mode": "static-elastic"
+  },
+  "terminal_psi": 0.032703566864993205
+}

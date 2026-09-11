@@ -1,0 +1,13 @@
+# Six-date historical fiscal replay diagnostic
+
+Isolated source `54c52386`; 71 combined pure tests passed before submission. The initial checkpoint is the two-repetition normalized new-utility/balanced-PAYGO result from17358109. The terminal input is17358773, which passed seven root mappings including fresh replay in366.0seconds. Every input and all639 current source files are pinned; all635 inherited terminal manifest entries must agree exactly.
+
+This is a prescribed-path numerical test over2007,2011,2015,2019,2023,2027. It uses two identical complete mappings, hence24 backward/forward Bellman calls, to verify anticipation, dated fiscal income, actual ledgers, population accounting and exact reproduction. It does not optimize the six price/pension guesses or fit a preference shock. Prices and pensions interpolate between the verified initial and terminal values through2023 and remain fixed in2027. These are explicit starting guesses, not empirical targets or balanced dated benefits.
+
+The entire diagnostic preference decline of0.25 is known in2007 and is constant after2023. The initial supply curve remains unchanged after ACS2007 age reweighting, with elasticity0.63. The outside-origin entry share0.169 is explicitly diagnostic/outstanding, not an estimated or approved production default. Payroll tax0.179, annual property tax1% and zero rebates are fixed. All terminal demographic primitives and the common2023 person anchor are inherited without realignment; annual Census projections continue through2100, followed by fixed coefficients.
+
+Budget: two mappings,28minutes for mapping/replay and2minutes reporting reserve,30minute process watchdog,32minute Slurm limit, one CPU/16GB, one numerical thread. The exact mapping runtime is measured here; a70second stationary GE is not a dated Bellman timing. No extra model solve for reporting. Expected outputs are per-date progress, latest/best mapping, full fiscal/market rows, all policy/distribution reproduction hashes, a reload-verified2023checkpoint and the stable17graphs. No heartbeat for30minutes is unhealthy. No automatic retry.
+
+A reproduced conditional mapping may still have market and pension imbalances. Those gates remain separately reported. Six dates do not establish horizon adequacy or a calibrated historical perfect-foresight equilibrium. Production and policy claims remain disabled.
+
+Submission uses Torch's current documented automatic partition selection. The older pending model jobs started before a proposed replacement; its precondition aborted before any cancellation. Only the unrelated queued graph reader was replaced.

@@ -1,0 +1,25 @@
+{
+  "plan_sha256": "28608a9cfb705cdcb4064babffc48bdd2355b33b4e6261c140acd00f35eaadae",
+  "lead_reviewed": false,
+  "requested_at_utc": "2026-09-11T06:08:03.727337+00:00",
+  "original_submission_request": {
+    "cpus": 1,
+    "memory_MB": 8192,
+    "time": "00:32:00",
+    "partition": "automatic",
+    "qos": "automatic",
+    "account": "torch_pr_570_general",
+    "array": null
+  },
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--export=ALL,ROUND_PLAN_SHA256=28608a9cfb705cdcb4064babffc48bdd2355b33b4e6261c140acd00f35eaadae",
+    "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/contracts/joint_round_01/smoke.sh"
+  ],
+  "stdout": "17360699\n",
+  "stderr": "",
+  "returncode": 0,
+  "status": "submitted",
+  "job_id": "17360699"
+}

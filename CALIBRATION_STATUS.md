@@ -1,6 +1,100 @@
 # Calibration Status
 
-Updated: `2026-09-11` (reviewed utility/PAYGO plan approved; implementation starting)
+Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
+
+**September 11, 02:00 EDT — full sensitivity panel and balanced terminal pass.**
+All **19 cases of17358647** are independently verified with unchanged source/input
+pins, complete parameters and early measurements, normalized fertility, fiscal,
+market, household/accounting gates, checkpoint hashes and17graph hashes per case.
+No completed case failed. Full raw panel and local derivatives/proposals are in
+`initial_sensitivity_panel/`. The nine-column scaled Jacobian has numerical rank9
+but condition numbers about1242-1894; this is not an identification certificate.
+Beta, housing scale, tenure taste and bequest-level responses are asymmetric.
+Two explicitly diagnostic scale profiles and both CPS timing projections give54
+linear proposals. No actual SMM weights or objective are active; linear predicted
+improvements are not numerical calibration results. Lead selected24 joint
+nonlinear trials (two profiles, three projection treatments, two ridge strengths,
+two step sizes), gated by a two-repetition large-step candidate smoke. Preparation
+is in `initial_joint_round_01/`. Exact two-repetition joint smoke **17360699**
+was submitted at02:08 from unchanged source7e872053. Its pinned plan covers24
+proposals:23 fresh array cases and reuse of its identical verified smoke point.
+The array remains gated; no joint array is submitted yet.
+
+Balanced terminal **17358773 passed**: seven mappings including fresh reproduction,
+366.0seconds; asset price0.5195037691, period pension1.5558604502, housing residual
+-2.2372e-6 and relative pension residual-2.0517e-7. Actual fiscal accounting,
+checkpoint reload and17graphs pass. This uses a diagnostic preference change
+-0.25 and unchanged serialized demographic projections through2100, not an
+estimated shock or a calibrated historical/policy equilibrium. Its terminal
+checkpoint receipt was written before graphs, so its graph flag is interim;
+final summary and separate17graph receipt certify report completion.
+
+Historical replay **17360444** is submitted from isolated source `54c52386`:
+six dates2007-2027, two identical complete mappings,24Bellman calls, max30minutes
+plus32minute Slurm limit, one CPU/16GB. It pins the verified initial and terminal
+packets and all639 source files; every635 inherited terminal entry must agree.
+Seventy-one pure tests passed. Prices/pensions are prescribed starting guesses,
+not yet balanced historical paths. Every date receives the entire announced
+pension path before backward decisions; actual ledgers, replay, checkpoint and
+standard2023graphs are required. Outside-entry share0.169 remains diagnostic and
+outstanding. Fiscal residuals and horizon status cannot be relabelled passed by
+successful replay. Details: `social_security_repair/history_probe/`.
+
+Isolated observer source `70abd4a8` adds a separate default-off recent-parent
+ownership diagnostic;13 actual-kernel synthetic tests pass. It selects actual
+births into previously empty-dependent homes and compares current empty homes,
+including former parents and readiness states. It requires explicit synchronized
+snapshot, age-overlap and residence-proxy conventions. Exact annual ACS alignment
+is still unresolved; no target or weight is changed and no numerical value has
+yet been measured from a full checkpoint. Static count masks alone are insufficient,
+but passive birth-flow or history bookkeeping is feasible.
+
+Scheduling resumed around01:45. All original model jobs ran unchanged: a proposed
+pending-only replacement aborted on its first precondition when it found a running
+case, before any cancellation. Only the queued read-only graph job17358783 was
+replaced by17359665 using documented automatic partition selection; it completed
+in10.8seconds with no model solve. Do not attribute the broader restart to this
+replacement. Future submissions omit manual partitions per current Torch guidance.
+
+Graph reduction verifies occupied ownership-probability reversals already present
+in both four-cell comparison cases. In new_balanced, lower nodes at reversals
+represent0.3449% of total household mass across the displayed age30/42 slices;
+reversals of at least1percentage point represent0.04645%. This is not an optimizer
+error diagnosis. One two-node branch audit is indicated. Permanent-income ownership
+rises through age70, with middle exceeding high at74/78/82 in both cases. Full
+receipts: `initial_fit_readout/graph_reduction/`. A four-page working PDF with all13
+restrictions,2validation observations and17parameters is in `morning_review/`;
+its current operational as-of is01:21 and requires refresh before final delivery.
+
+
+**September 11, 01:21 EDT — ten sensitivity cases verified; remaining jobs pending.**
+Source `f1bb3fe4` is pushed; main research receipts are backed up at `f8fe0464`.
+The exact candidate loop **17358574 passed** (two fresh GE solves, 155.1 seconds),
+including identical early-observer outputs. Panel **17358647** has ten verified
+cases and nine pending; no completed case failed. All inputs, normalizations,
+parameters, budgets, policy arrays, checkpoint hashes and 17-graph counts are
+checked. Partial raw results and full fit are in `initial_sensitivity_panel/`
+and `initial_fit_readout/`. Do not calculate a full nine-column Jacobian until
+all planned directions are available; no SMM loss/weights are active.
+
+Terminal test **17358773** is queued from source `b373b142`, with a diagnostic
+preference change -0.25, at most eight price/pension mappings including replay,
+28-minute root allocation and 30-minute watchdog. Its demographics retain the
+serialized 2023 anchor, annual Census projections through 2100 and frozen
+coefficients thereafter. It is not a fitted historical shock. Read-only graph
+checkpoint reduction **17358783** is queued, with no model solves.
+The historical fiscal adapter passes 61 combined pure tests; every dated
+pension enters backward and forward calculations and every date is audited.
+Compiled terminal and joined-path loops remain unverified until actual jobs run.
+
+Scheduling discrepancy: submitted scripts specify `cpu_short`, but pending
+job records now show partition `all`, reason `None`, with last scheduler
+evaluation around 01:09:21. Neither lead nor delegated collector changed the
+partition; actor/cause is unverified. No jobs were cancelled or restarted.
+Two attempts to reduce only pending RAM requests were refused by Slurm and
+left them at 16GB; receipts retained. Completed full initial tests used at most
+about 3GB, informing an explicit 8GB request for later stationary rounds.
+Continue read-only scheduler checks and useful local work; preserve all gates.
 
 **September 11, 01:04 EDT — new initial equilibrium and active fiscal tests pass; early sensitivity and terminal work underway.**
 Source `7e872053` is pushed on the isolated `codex/balanced-social-security` branch.
