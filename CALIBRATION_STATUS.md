@@ -2,7 +2,56 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, extended run collected —17378993 COMPLETED; no active job from this task.**
+**September 11, urgent current-candidate transition —17393936 RUNNING.**
+Author prioritizes the historical transition and questions high annual beta.
+The current r5_joint_09 exact repetition02 now feeds an isolated terminal/PAYGO
+and announced-history diagnostic, rather than another initial-only search.
+Remote: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a`.
+Original 641 model-source pins are unchanged; three candidate-compatible
+launch/test wrappers replace historical hardcoded checkpoint assumptions.
+78 targeted tests and initial source/fiscal/demographic preflight passed.
+Initial checkpoint SHA256:
+`738b9112f58d96f5bbbaf41ff31d7bf034927ddde71b430ebb020f53ff2b1c9c`.
+Explicit trial preference change is -0.05 (not estimated): initial psi
+0.16525977525321506, terminal psi0.11525977525321505. Households learn the full
+linear2007–2023 path in2007; psi stays constant afterward. Structural parameters,
+weights, numerical gates, supply and demographic contracts are unchanged.
+
+The bounded job solves the terminal (8 mappings/30min), then six-date exact-loop
+smoke (8 mappings/30min), then28dates (8 mappings/2h) only after preceding gates
+pass. Full replay/checkpoint/17-graph diagnostics are retained. At most552
+Bellman calls,3h10m Slurm cap; prior6-date mapping~215seconds implies roughly
+17min per28-date mapping, so the2h root budget may bind. Each completed mapping
+writes heartbeat/latest/best receipts. No convergence, fitted shock, horizon
+certificate or new policy result is claimed. Outside-origin entry0.169 remains
+explicitly diagnostic/outstanding, not an estimated production default.
+Birth-data comparison uses four aligned birth-count blocks2008–2011 through
+2020–2023, indexed to the first block; the2023 model decision predicts2024–2027
+and is not compared with observed2023 births. National versus model-geography
+coverage remains an explicit approximation. Plans and controller:
+`output/model/e5f_matched_pf_20260909a/current_candidate_transition/`.
+
+Beta diagnosis verifies annual-to-period conversion0.995796^4=0.983290 and
+shows beta declined from the preceding selected candidate. Saved derivatives
+suggest sensitivity to the discrete old-wealth quantile, not a proven conversion
+bug; follow-up saved-score decomposition is in
+`output/model/e5f_matched_pf_20260909a/beta_diagnosis.md`.
+No beta bound, target or model equation was changed.
+
+Parallel shock array17394807 (two independent jobs) is now submitted with trial
+changes-0.025 and-0.10. These are numerical shock candidates, not fitted estimates.
+Each waits for17393936's terminal smoke before its terminal stage, and for its
+six-date smoke before historical solving. Both retain separate checkpoints and
+failure handling. Each has a4h15m total cap including up to3800seconds of gate
+waiting; each solves at most552Bellman calls. The first job and both branches
+can proceed without a laptop connection. AI heartbeat remains paused.
+Saved beta-neighbor scores now establish the local attribution: increasingbeta
+0.9950820→0.9952744 lowers loss2.976449, of which old-wealth-dispersion contributes
+3.016451; allother11rows together worsen0.040002. This does not yet prove a
+percentile-grid crossing; separate percentile and mass data are still needed.
+
+
+**Previous collection —17378993 COMPLETED; superseded no-active-job label.**
 Job17378993 completed normally in1h36m44s, exit0, allsix refinement rounds.
 178case evaluations:176verified,2housing-gate rejections; search continued past
 both rejections. Selected candidate r5_joint_09 repeated twice exactly:

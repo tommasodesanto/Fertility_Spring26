@@ -1,0 +1,62 @@
+{
+  "audit_controls": {
+    "feasibility_projection_tolerance": 1e-06,
+    "occupied_mass_tolerance": 1e-12,
+    "probability_tolerance": 1e-12,
+    "reconstruction_tolerance": 5e-09,
+    "value_drop_tolerance": 1e-07
+  },
+  "demographic_seed_mode": "serialized_frozen_2023_primitives_without_realignment",
+  "endpoint_controls": {
+    "accounting_absolute_tolerance": 2e-09,
+    "birth_rate_tolerance": 1e-10,
+    "distribution_tolerance": 1e-09,
+    "fiscal_absolute_tolerance": 2.5e-05,
+    "inner_damping": 0.5,
+    "market_tolerance": 0.0002,
+    "maximum_inner_iterations": 250,
+    "one_step_tolerance": 1e-08
+  },
+  "identity_tolerance": 2e-09,
+  "initial_checkpoint": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output/new_balanced_smoke/repetition_02/initial_state.pkl.gz",
+    "sha256": "4afc7fc6f4db32a1bb220bb3b2b30c6e2c0b96822a152c294f6c73c228320852"
+  },
+  "initial_contract": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/initial_contract.json",
+    "sha256": "ba25eab4449fd8fba4b4d4bbd0e5ea3b5fffc70b29649572feb54d80a34706d4"
+  },
+  "initial_fertility_tolerance": 0.0005,
+  "initial_summary": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output/new_balanced_smoke/repetition_02/summary.json",
+    "sha256": "d6ea62f3fd341d557a0fb87e4c868d8d59498122564bbf793325b8d43c963ad1"
+  },
+  "originating_source_commit": "c6dd3508",
+  "preference_rule": "diagnostic_constant_terminal_intercept_not_fitted",
+  "psi_change_from_initial": -0.25,
+  "root_controls": {
+    "damping": 1.0,
+    "final_reproduction_tolerance": 2e-10,
+    "fiscal_slope": 1.0,
+    "fiscal_tolerance": 1e-06,
+    "initial_jacobian": null,
+    "market_slope": 1.63,
+    "max_condition_number": 10000000000.0,
+    "max_evaluations": 8,
+    "max_log_step": 0.2,
+    "pension_bounds": [
+      0.05,
+      10.0
+    ],
+    "price_bounds": [
+      0.05,
+      5.0
+    ],
+    "worsening_factor": 1.5
+  },
+  "root_seconds": 1680,
+  "schema": "e5f_balanced_terminal_probe_v1",
+  "seconds": 1800,
+  "standard_graph_count": 17,
+  "terminal_demographic_year": 2100
+}
