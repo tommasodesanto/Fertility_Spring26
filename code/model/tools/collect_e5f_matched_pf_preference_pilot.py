@@ -3,6 +3,7 @@
 Read-only with respect to numerical outputs; never launches or reruns a model.
 """
 import argparse
+import ast
 import csv
 import hashlib
 import json
@@ -14,6 +15,10 @@ from e5f_matched_pf_birth_path import compare_birth_path, read_rows
 FINGERPRINT = '3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497'
 PARENT_SUMMARY = '6025e0c3734bd90e2f210172e109d2413fc79a192daf03a32f55d669f2b1144c'
 SHAPES = (-0.5, 0., 0.5)
+PARENT_ROOT = '/scratch/td2248/projects/Fertility_Spring26_matched_pf_root_h100_20260910a'
+PILOT_ROOT = '/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910b'
+ACS_SUFFIX = '/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta'
+ACS_HASH = 'edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e'
 
 
 def require(condition, message):
@@ -41,14 +46,43 @@ def write_csv(path, rows):
             writer.writerows(rows)
 
 
-def verify_case(directory, shape, phase, source, parent, parent_fit):
-    s, c = load(directory/'summary.json'), load(directory/'contract.json')
+def verify_relocated_transition(parent_rows, replay_rows):
+    """Only the four independently diagnosed source-location labels may differ."""
+    require(len(parent_rows) == len(replay_rows) == 100, 'Replay horizon')
+    changed_years = []
+    for a, b in zip(parent_rows, replay_rows):
+        require(a.keys() == b.keys(), 'Replay columns')
+        for key in a:
+            if a[key] == b[key]:
+                continue
+            require(key == 'historical_bridge_audit', 'Changed economic replay field: '+key)
+            old, new = ast.literal_eval(a[key]), ast.literal_eval(b[key])
+            require(old['acs_age_source'] == PARENT_ROOT+ACS_SUFFIX
+                    and new['acs_age_source'] == PILOT_ROOT+ACS_SUFFIX, 'Unreviewed source relocation')
+            require(old['acs_age_source_sha256'] == new['acs_age_source_sha256'] == ACS_HASH,
+                    'Empirical content fingerprint changed')
+            old.pop('acs_age_source'); new.pop('acs_age_source')
+            require(old == new, 'Other bridge-audit contents changed')
+            changed_years.append(int(a['calendar_year']))
+    require(changed_years == [2007,2011,2015,2019], 'Unexpected metadata differences')
+
+
+def verify_case(directory, shape, phase, source, parent, parent_fit, parent_rows=None):
+    c = load(directory/'contract.json')
+    failed_replay = (phase == 'main' and shape == 0 and not (directory/'summary.json').exists()
+                     and (directory/'failure.json').exists())
+    s = load(directory/('failure.json' if failed_replay else 'summary.json'))
     trial = directory/'evaluation_001'
     e = load(trial/'summary.json')
-    require(not (directory/'failure.json').exists(), 'Case also has a failure receipt')
-    require(s['status'] == 'passed_conditional_preference_pilot'
-            and s['shape'] == shape and s['evaluations'] == 1, 'Case identity/status')
-    require(not s['production_promoted'] and not s['calibrated_history'], 'Diagnostic scope')
+    if failed_replay:
+        expected = "RuntimeError('Hash mismatch: "+PILOT_ROOT+"/output/main/case_1/evaluation_001/transition_path.csv')"
+        require(s['error'] == expected and s['shape'] == 0 and s['evaluation'] == 1
+                and s['completed_dates'] == 100 and c['pilot_mode'] == 'replay', 'Unreviewed failure')
+    else:
+        require(not (directory/'failure.json').exists(), 'Case also has a failure receipt')
+        require(s['status'] == 'passed_conditional_preference_pilot'
+                and s['shape'] == shape and s['evaluations'] == 1, 'Case identity/status')
+        require(not s['production_promoted'] and not s['calibrated_history'], 'Diagnostic scope')
     require(c['shape_coefficient'] == shape and c['conditional_only'] is True, 'Case contract')
     years = [2007 + 4*i for i in range(6 if phase == 'smoke' else 100)]
     require(c['path_date_count'] == len(years), 'Contract horizon')
@@ -93,16 +127,24 @@ def verify_case(directory, shape, phase, source, parent, parent_fit):
     require(math.isclose(sum(float(r['loss_contribution']) for r in fits),e['loss'],rel_tol=1e-12), 'Loss sum')
     require(e['artifact_sha256']['parameters.csv'] == parent['artifact_sha256']['parameters.csv'], 'Parameter drift')
     if phase == 'main' and shape == 0:
-        require(s['mode'] == 'replay' and s['residual_replay_gap'] <= 2e-10, 'Baseline replay')
-        for name in ('target_fit.csv','parameters.csv','measurement.json','transition_path.csv'):
+        require(e['residual'] == parent['residual'] and e['prices'] == parent['prices'], 'Baseline numerical replay')
+        for name in ('target_fit.csv','parameters.csv','measurement.json'):
             require(e['artifact_sha256'][name] == parent['artifact_sha256'][name], 'Exact baseline artifact replay')
+        if failed_replay:
+            verify_relocated_transition(parent_rows, path)
+        else:
+            require(s['mode'] == 'replay' and s['residual_replay_gap'] <= 2e-10, 'Baseline replay')
+            require(e['artifact_sha256']['transition_path.csv'] == parent['artifact_sha256']['transition_path.csv'], 'Exact transition replay')
     return dict(shape=shape, phase=phase, source_files_verified=len(c['source_sha256']),
         artifact_files_verified=len(e['artifact_sha256']), gates_verified=len(e['gates']),
         dates_verified=len(years), household_budget_excess_mass=0,
         maximum_market_residual=e['maximum_market_residual'], market_tolerance=2e-4,
         market_residual_passes=e['maximum_market_residual'] <= 2e-4,
-        inherited_objective=e['loss'], mode=s['mode'], seconds=s['elapsed_seconds'],
-        residual_replay_gap=s['residual_replay_gap'], terminal_distance=e['terminal_distance'],
+        inherited_objective=e['loss'], mode=c['pilot_mode'], seconds=s['elapsed_seconds'],
+        residual_replay_gap=0.0 if failed_replay else s['residual_replay_gap'],
+        original_job_status='FAILED' if failed_replay else 'COMPLETED',
+        replay_metadata_differences=4 if failed_replay else 0,
+        terminal_distance=e['terminal_distance'],
         historical_equilibrium_certified=False, production_promoted=False), path, fits
 
 
@@ -119,17 +161,18 @@ def main():
         require(digest(parent_dir/name) == parent['artifact_sha256'][name], 'Parent artifact: '+name)
     parent_fit = read_rows(parent_dir/'target_fit.csv')
     empirical = read_rows(root/'fertility_data/empirical_blocks.csv')
-    baseline = compare_birth_path(read_rows(parent_dir/'transition_path.csv'), empirical)
+    parent_rows = read_rows(parent_dir/'transition_path.csv')
+    baseline = compare_birth_path(parent_rows, empirical)
     output = root/'computation'
     output.mkdir(exist_ok=True)
     verified, pending, births, all_fits = [], [], [], []
     for phase in ('smoke','main'):
         for i, shape in enumerate(SHAPES):
             case = output/phase/f'case_{i}'
-            if not (case/'summary.json').exists():
+            if not (case/'summary.json').exists() and not (case/'failure.json').exists():
                 pending.append(dict(phase=phase,case=i,reason='No locally collected completed summary'))
                 continue
-            receipt, path, fits = verify_case(case,shape,phase,args.source_root,parent,parent_fit)
+            receipt, path, fits = verify_case(case,shape,phase,args.source_root,parent,parent_fit,parent_rows)
             verified.append(receipt)
             if phase == 'main':
                 comparison = compare_birth_path(path,empirical,
