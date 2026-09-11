@@ -2,31 +2,34 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
-**September 10, 23:27 UTC — corrected pilot running independently on Torch.**
-All three six-date smokes in array 17347123 completed successfully in 3m12–3m25.
-Their afterok dependency released main array 17347124; all three cases are
-verified RUNNING, with fresh backward/forward-solution heartbeats. Source
-e399c90e on codex/matched-perfect-foresight explicitly enables compiled model
-execution. The original smoke 17340342 timed out because our launch inherited
-NUMBA_DISABLE_JIT=1 from local tests. Old main 17340491 is cancelled; neither
-old job should be repaired or relaunched. Corrected outputs use separate
-snapshot Fertility_Spring26_preference_shape_20260910b.
+**September 11, 00:20 UTC — bounded preference-timing pilot completed.**
+All three 100-date calculations finished in 41–45 minutes. Later, linear and
+earlier timing give inherited twelve-target objectives 81.423452, 94.475576 and
+109.029620. The later case improves that conditional objective by 13.82%, but
+its market discrepancy is 0.045556% (earlier 0.047158%), above the unchanged
+0.02% gate. Prices were held at the parent path: neither alternative is a new
+equilibrium or calibration. The four-block birth-count profile improves only
+slightly; the approximately 21% decline remains far above the data's 11%.
+Full 36-row target fit, all 15 parameter/restriction rows, birth indices and
+verification receipts are linked from
+`output/model/e5f_matched_pf_20260909a/path_pilot_20260910/RESULTS.md`.
 
-To respect the remaining time, the main scope is one 100-date baseline replay
-and two conditional mappings at inherited prices for earlier/later preference
-declines. These are preliminary comparisons, not new equilibrium roots or
-calibration estimates. Structural parameters, targets, weights, numerical gates,
-initial normalization 2.1 and the constant post-2023 preference endpoint remain
-unchanged. Sixty focused tests passed. Main launchers verify all three smoke
-receipts before computing. At 23:58 UTC independent local checks verified all
-508 source pins per case, 15 artifact hashes, 36 gates, 18 dated household budgets
-and every fit/parameter row. The six-date tests do not certify market clearing.
-At 00:00 UTC all main cases were progressing, with 57/57/68 forward dates done.
-The recoverable plan is in
-`output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
-The jobs continue if the laptop closes. Review deadline: 2026-09-11 00:30 UTC;
-the existing 15-minute follow-up is updated, with no automatic extra round.
-No completed main result is yet collected.
+Main array 17347124 has two COMPLETED jobs and one FAILED baseline job. The
+baseline completed all dates, then failed its exact transition-file hash.
+Independent verification found only four recorded ACS source-location labels
+differing: every economic cell, prices/residuals and source-content hash match;
+fit/parameter/measurement files are byte-identical. Original failure preserved;
+read-only collector diagnoses this exact metadata difference without changing
+model code, outputs or numerical gates. All six smoke/main receipts are verified;
+300 main dates pass household budgets and all 318 recorded accounting/numerical
+gates. The inherited terminal-rent gap 1.088827% still exceeds 1%; horizon
+extension remains uncertified. All parameters, target weights and preference
+endpoints are unchanged. No new policy or early calibration was run.
+
+No pilot computation remains active; the monitor is PAUSED, with no further
+round launched. Corrected numerical source remains e399c90e in immutable
+snapshot Fertility_Spring26_preference_shape_20260910b. Initial failed jobs,
+launch repair and full reproduction diagnosis remain in the pilot README.
 
 **September 10 — author fixes the post-2023 preference baseline.**
 Hold the aggregate fertility-preference intercept at its 2023 value for every

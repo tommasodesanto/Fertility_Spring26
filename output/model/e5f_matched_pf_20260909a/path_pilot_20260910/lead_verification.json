@@ -9,8 +9,8 @@
   "smoke_status_last_observed": "COMPLETED, all three cases, exit code 0:0",
   "main_job_id_last_recorded": "17347124",
   "main_dependency_verified": true,
-  "cluster_status_last_check": "2026-09-11 00:00 UTC: all three main cases RUNNING; forward dates 57, 57, 68 of 100",
-  "monitor_status": "ACTIVE update confirmed; corrected jobs and deadline saved",
+  "cluster_status_last_check": "2026-09-11 00:15 UTC: all main calculations finished, two COMPLETED; baseline FAILED final byte check only",
+  "monitor_status": "PAUSED: bounded pilot completed, no further round",
   "production_promoted": false,
   "remote_snapshot": "/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910b",
   "main_scope": "one 100-date mapping per case: baseline exact replay, two conditional profiles at inherited prices",
@@ -21,5 +21,13 @@
     "17340490",
     "17340491"
   ],
-  "verification_driver": "tmp/e5f_matched_pf/code/model/tools/collect_e5f_matched_pf_preference_pilot.py"
+  "verification_driver": "tmp/e5f_matched_pf/code/model/tools/collect_e5f_matched_pf_preference_pilot.py",
+  "main_receipt_collection": "All 3 main paths collected and independently verified; baseline numerical replay exact, 4 provenance path labels differ",
+  "main_job_original_statuses": [
+    "COMPLETED",
+    "FAILED",
+    "COMPLETED"
+  ],
+  "baseline_failure_diagnosis": "economic replay exact; only four ACS source-location labels differ; original failure preserved",
+  "results": "RESULTS.md"
 }

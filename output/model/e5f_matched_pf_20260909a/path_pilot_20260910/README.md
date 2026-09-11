@@ -1,5 +1,9 @@
 # Three-hour preference-path pilot
 
+**Completed:** see [final results and full tables](RESULTS.md). All numerical paths
+finished; the original baseline file-check failure is diagnosed and preserved.
+The monitor is paused. The dated progress notes below are historical.
+
 Authorized by Tommaso on 10 September 2026; review window ends at
 **2026-09-11 00:30 UTC (20:30 EDT on September 10)**.
 
@@ -163,4 +167,7 @@ The collector performs no model solve. It verifies each completed case before
 writing `computation/verified_receipts.json`, full main fit and birth-comparison
 CSVs, the common inherited-parameter table, and each candidate's detailed birth
 comparison. Missing completed summaries remain explicitly pending. The unchanged
-main case must reproduce all four baseline tables byte for byte.
+main case reproduces fit, parameter and measurement tables byte for byte. The
+collector separately diagnoses exactly four relocated ACS path labels in the
+transition table and requires every other field to remain identical; the original
+failed file check remains in the record.
