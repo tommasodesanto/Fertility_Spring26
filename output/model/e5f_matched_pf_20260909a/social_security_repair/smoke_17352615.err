@@ -1,0 +1,31 @@
+test_both_instruments_balance_the_actual_first_date (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_both_instruments_balance_the_actual_first_date) ... ok
+test_entry_queue_preserves_due_vintages_and_appends_each_new_birth_flow (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_entry_queue_preserves_due_vintages_and_appends_each_new_birth_flow) ... ok
+test_every_date_passes_actual_budget_mass_and_replay_checks (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_every_date_passes_actual_budget_mass_and_replay_checks) ... ok
+test_explicit_constant_baseline_reproduces_the_unmodified_path (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_explicit_constant_baseline_reproduces_the_unmodified_path) ... ok
+test_future_fiscal_income_changes_current_values_and_choices (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_future_fiscal_income_changes_current_values_and_choices) ... 
+  test_future_fiscal_income_changes_current_values_and_choices (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_future_fiscal_income_changes_current_values_and_choices) (case='future_pension') ... FAIL
+  test_future_fiscal_income_changes_current_values_and_choices (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_future_fiscal_income_changes_current_values_and_choices) (case='future_tax') ... FAIL
+test_real_compiled_kernels_were_used (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_real_compiled_kernels_were_used) ... ok
+
+======================================================================
+FAIL: test_future_fiscal_income_changes_current_values_and_choices (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_future_fiscal_income_changes_current_values_and_choices) (case='future_pension')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_paygo_smoke_a654219c/code/model/tools/test_e5f_social_security_compiled.py", line 161, in test_future_fiscal_income_changes_current_values_and_choices
+    self.assertGreater(choice_change, 1e-9)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0.0 not greater than 1e-09
+
+======================================================================
+FAIL: test_future_fiscal_income_changes_current_values_and_choices (test_e5f_social_security_compiled.CompiledSocialSecurityTests.test_future_fiscal_income_changes_current_values_and_choices) (case='future_tax')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_paygo_smoke_a654219c/code/model/tools/test_e5f_social_security_compiled.py", line 161, in test_future_fiscal_income_changes_current_values_and_choices
+    self.assertGreater(choice_change, 1e-9)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2.220446049250313e-16 not greater than 1e-09
+
+----------------------------------------------------------------------
+Ran 6 tests in 12.244s
+
+FAILED (failures=2)

@@ -2,6 +2,41 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 11 — urgent Social Security correction; earlier fiscal claims qualified.**
+The author requires Social Security to balance. The maintained pension setup
+uses a reference stationary age ratio, with fixed payroll tax and fixed pension
+income along the matched perfect-foresight path. Neither its dated budgets nor
+its actual-population stationary endpoints have a Social Security balance gate.
+Earlier reported household-budget, demographic-accounting and property-tax
+checks do not establish that gate. Treat existing quantitative transitions and
+policies as provisional until their fiscal closure is corrected and recomputed.
+
+The choice of adjustment instrument is outstanding: the lead recommends fixed
+payroll tax with pension benefits adjusting; fixed benefits with an adjusting
+payroll tax is the alternative presented to the author. No answer has yet been
+received and neither rule has been adopted by a production launcher. Repair
+work is isolated in `tmp/e5f_matched_pf`, branch
+`codex/balanced-social-security`, preserving earlier commits and numerical
+outputs. Actual household-head payroll/pension accounting, period-unit income
+binding, dated pension/tax anticipation through both PF passes, and a bounded
+joint housing/Social Security root are implemented. Commit a654219c is pushed
+on the isolated branch. The 70 combined pure tests pass; this is not a repaired
+equilibrium or a new calibration. Read-only audit 17352552 completed: the saved
+2007 state spends 48.9210% of payroll revenue on pensions, while the terminal
+budget falls short by 9.8122% of pension outlays. These are frozen-distribution
+accounts, not equilibrium adjustments. Compiled household smoke 17352615
+passed balance, household budgets, replay, queues and baseline reproduction,
+but failed two assertions requiring occupied saving choices to respond to
+future income. Occupied values responded. Source inspection verifies dated
+continuation enters optimization; binding constraints could explain unchanged
+controls, but diagnostic 17353361 is queued to test that explanation.
+Receipts and the remaining sequence are in
+`output/model/e5f_matched_pf_20260909a/social_security_repair/README.md`.
+A quiet 15-minute monitor collects that diagnostic, then pauses; it cannot
+launch new model runs, calibration or production roots. The compiled suite is
+not certified. New initial/terminal stationary solutions and a jointly cleared
+dated path remain outstanding.
+
 **September 11 — author-requested timing figures.**
 The seven-page review PDF is `output/pdf/preference_timing_review.pdf`: three
 supplemental figures, then all 36 target-fit rows and 15 parameter/restriction
