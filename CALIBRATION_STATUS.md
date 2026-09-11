@@ -2,7 +2,48 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, urgent current-candidate transition —17393936 RUNNING.**
+**September11 — fixed-beta profiles17403262_0/1 RUNNING; transition17402074 RUNNING.**
+Author approved fixedannualbeta0.98 and0.99 profiles, reoptimizing every other
+eightstructuralcoordinates, with unchanged12scoredtargets plus2.1normalization.
+The original641scientificsourcepins and objectivec0e266d3... remain unchanged.
+Both jobs passed source/target/checkpoint preflight and are solving fixed-beta
+seeds. Each has8CPUs/64GiB, twoadaptive rounds up to56proposals, up to3seed
+attempts if needed, and a final two-repetition check; maximum60case evaluations,
+61repetitions/488GE each.3hSlurmcap,7800secondsearch/3000secondreserve. Each
+stage allows its true two-wave worstcase4200seconds; early stop is possible.
+Expected70–120minutes excludingqueue based on prior300–490secondcases.
+All11newcontroller tests pass, including both complete8-coordinate/two-round
+loops, fixed-beta enforcement, failed-seed recovery and exact economic replay.
+Original frozen-wrapper tests also run before eachjob. Search controllers and
+plans: `output/model/e5f_matched_pf_20260909a/initial_calibration_contract/fixed_beta_profiles/`.
+Remote:70abd4a8snapshot, batches/fixed_beta_profiles_20260911/results/beta_098
+and beta_099. Originalrawscorer retains nine-free metadata; explicit profile
+reports mark eightfree and beta fixed. No permanentglobalbeta ceiling has been
+promoted. Existing currentcalibration is a reference, never an eligible profile
+result. Full fit/parameter tables and17standardgraphs are selected outputs.
+
+Primary transition17393936 exhausted8mappings after29m10s includingterminal.
+It retained exactmappingreplay, checkpointreload and17graphs but remained
+unconverged: housing0.0068260761, fiscal0.0000477796, against2e-4/1e-6gates.
+The two17394807 branches completed theirterminals but stopped at the missing
+acceptedhistory gate; theirterminals are reusable. StatusFAILED is thus a
+preserved gate stop, not missing computation or an unreported crashed solver.
+Continuation17402074 reuses exactly the saved point/Jacobian/damping and original
+inputs. All actualcontinuation-contract/replay checks passed, and its first
+freshmapping reproduced the priorstate. It allows8additional6-date mappings
+(30min), then28dates(2h) only ifconverged;2h40mSlurmcap, maximum544additional
+Bellmans. Recipe under current_candidate_transition/resume_history.py and
+submit_resume.sh; remote recovery/delta_m005. Othertrial histories still need
+resumption after thisacceptedshortpath; the saved terminal solves need notrepeat.
+No fittedhistoricalshock, horizoncertificate or policyresult is claimed.
+
+The checked literature example is DeNardi,French,Jones2010,JPE,sectionVIII.C,p69:
+beta0.99 in the endogenous-medical-spending extension versus0.97benchmark.
+This supports considering0.99, not a universalceiling or identification claim.
+https://users.nber.org/~denardim/research/De_Nardi_French_Jones_JPE_2010.pdf
+
+**Earlier launch/progress record — superseded by the current jobs above.**
+**Initial transition launch —17393936 subsequently hit its iteration cap.**
 Latest check: terminal passed all endpoint/replay/diagnostic checks in363.2seconds
 (8mappings), marketresidual-1.71e-7,fiscal6.83e-8. Six-date historical root is
 running; first valid full mapping took170.0seconds. Parallel17394807 branches

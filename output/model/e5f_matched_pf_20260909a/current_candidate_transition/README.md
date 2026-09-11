@@ -37,3 +37,15 @@ other cases when one fails. Each downstream stage requires an accepted parent.
 These are three trial amplitudes of an announced linear preference path;
 no fitted shock or exact historical match is claimed. A deterministic check of
 the CSV birth-block comparison reproduces zero error for a scaled empirical path.
+
+## Continued six-date solve
+
+Initial17393936 hit its8-mappingcap; full replay/checkpoint/17graph checks passed,
+but housing residual0.0068261 and fiscal0.00004778 did not meet2e-4/1e-6gates.
+The two17394807 terminal solves passed; theirhistories stopped at the unmetgate.
+Job17402074 uses `resume_history.py`/`submit_resume.sh` to resume the exact saved
+point, Jacobian and damping; actualparentreceipts and future28-datecontract were
+validated before submission. Firstfreshmapping exactlyreproducedtheparent.
+One additional8-mappinground is capped30minutes;28datesreceive2h only ifthe
+shortrootconverges.2h40mSlurmcap;max544additionalBellmans. Othertrialhistories
+still need resumption from their savedterminals after thisgate passes.
