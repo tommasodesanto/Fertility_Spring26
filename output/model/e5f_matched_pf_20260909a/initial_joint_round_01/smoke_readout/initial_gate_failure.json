@@ -1,0 +1,10 @@
+{
+  "status": "gate_failed_missing_report_file",
+  "command": "launch_gate.py check-smoke --plan-sha256 28608a9cfb705cdcb4064babffc48bdd2355b33b4e6261c140acd00f35eaadae",
+  "exception": "FileNotFoundError",
+  "path": "smoke/repetition_01/market_quantity_units.json",
+  "diagnosis": "Driver emits market_quantity_units.json with the final repetition graph packet only; both repetitions retain per-GE market checks",
+  "reported_to_lead": true,
+  "model_failure_claimed": false,
+  "array_submitted": false
+}

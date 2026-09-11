@@ -2,6 +2,51 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, 02:46 EDT — verified joint improvement; actual historical root submitted.**
+The two-fresh-loop joint smoke17360699 passes:8GE,1150.19 seconds,
+634 source pins, exact numerical normalization/prices/early/legacy moments,
+2 checkpoint hashes and17 original graph hashes. Reporting-gate fixes preserve
+all numerical checks: the graph quantity receipt exists only after repetition02,
+and measured walltime is excluded from exact numerical-result equality alone.
+Both original failures and gate revisions are retained. Revised run-plan SHA
+c466736866e19f4b6115272b5e1ebc1d490c985e5fc11b900b68de8ea62a6edd.
+
+Complete13-target/2-validation/17-parameter tables and both CPS projections are
+in `initial_joint_round_01/smoke_readout/`. This joint candidate has first-birth
+rooms0.691588 versus target0.720246 (baseline0.438847), mean capped rooms5.609327
+versus5.561097 (baseline6.246382), ownership30–55 .631009 versus.648334,
+and young ownership.350573 versus.431158 (baseline.313603). First-birth mean
+age25.97870 versus25.97626. Offsetting misses: first births30+ .227356 versus
+.249278, family-room gap.173255 versus.347067, old dispersion4.079637 versus
+3.515935, and wealth/earnings5.813496 versus6.145861. Actual SMM weights/loss
+remain null; the empirical approximations and missing recent-parent observation
+are explicit. Array17362324 is submitted:23 fresh joint cases plus verified
+smoke proposal21 reuse, same634 source/seed/input pins and two-hour stage budget.
+
+Historical replay17360444 is independently verified:24 Bellmans in360.08seconds,
+all639 sources/seven inputs/checkpoint/17graphs, exact full-path signatures and
+actual ledgers. This is conditional replay, not equilibrium: maximum housing
+residual.426409 and pension residual.417423. Actual 2007 reweighted accounts
+imply period pension3.512601 rather than stationary2.046361. Complete six-date
+ledger and all85 observed-age/date masses: `social_security_repair/history_probe/
+completed_17360444/`. Sourcea16dbaab adds an explicit actual-root mode;83 combined
+pure tests pass. Actual root17362744 is submitted with6 dates,8 mappings including
+fresh replay, max96Bellmans/~22.8minutes measured-rate estimate,27minute root,
+30minute driver, oneCPU8GB. All six pensions are root variables initialized from
+actual trial ledgers; no fiscal shortcut is imposed. All635 terminal-era source
+files are unchanged. Initial/terminal inputs, original supply and diagnostic
+preference/entry assumptions are preserved. Horizon remains uncertified.
+
+Read-only recent-parent test17362130 (source70abd4a8) measures actual current
+births from previously empty-dependent homes with explicit proxy conventions.
+Pension-prefix comparison17362746 (source527ab397) checks the five2007–2023
+analytic predictions against actual ledgers, without reducing the root. Two-node
+scalar branch audit17362437 tests the observed ownership-probability reversal
+against an independent fixed-continuation optimizer and the actual interpolation
+rule. Both perform no Bellman or GE solves. Source review and bounded contracts
+are saved beside each output. At02:42 the new jobs were queued; no running or
+completed result is inferred from submission. Keep-awake process63896 is active.
+
 **September 11, 02:00 EDT — full sensitivity panel and balanced terminal pass.**
 All **19 cases of17358647** are independently verified with unchanged source/input
 pins, complete parameters and early measurements, normalized fertility, fiscal,

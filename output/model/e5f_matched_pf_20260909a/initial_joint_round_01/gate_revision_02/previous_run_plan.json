@@ -2,7 +2,7 @@
   "actual_SMM_weights": null,
   "array_indices": "0-20,22-23%24",
   "artifact_sha256": {
-    "README.md": "8fdeb0ba5846489a8f9dc501e810b32f97f987be10290bf7bf128012ba5e8075",
+    "README.md": "a777267d441e51801d1d65838f70d153ad07124df4ed06b302091480793d81a0",
     "array.sh": "9961faf29de9bd65c1385542301cc43f1a4944c951af766d509d4b113e8649be",
     "cases.json": "e36a75f16938b2b446c0a271374d8b685a124bbf2523828722bfb39c293d5881",
     "contract_00.json": "7d7a5a1fe482a2e529954b8de189e36ede89dddc52d4dfeca8f46e17b7d6fb57",
@@ -38,7 +38,7 @@
     "inputs/raw_case_summary.json": "83616b8ea99b9bf914c062c8bec3588afcd77d79ce850b3619844a9b62cc33a4",
     "inputs/reference_precision_options.csv": "e76331fa7fb164e6d6f62a0b173c4af885186ce8acdb94390e7c800d4af9886d",
     "inputs/target_fit.csv": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
-    "launch_gate.py": "10c18f58d3fa21cc53b32a11c2e59d4c7ad772987c1f91aa5c74d668e7d34e08",
+    "launch_gate.py": "ed66faf9810354292d65fd8c89f711c01526966b76600fc1796f88bccec96772",
     "preparation_metadata.json": "0f001e9e26f2c1207f277672df805efe0f89e272de19c2b556d23cc32d8fb8be",
     "selection_table.csv": "43d150a95a78907ccff4512cae58b6291347be4c7d0f6bfc219b1caf3eeea48d",
     "smoke.sh": "8481b1d8b5207e6498efa8272a51bd898914468630205b347e16c05b7bc900db",
@@ -48,9 +48,9 @@
   "cases": 24,
   "fresh_array_cases": 23,
   "gate_revision": {
-    "number": 2,
-    "predecessor_plan_sha256": "c05a8229cb8c081797987dbd9b06648963104d6053168304eb819919e0d9e7ce",
-    "reason": "Exclude measured walltime alone from exact-result equality; independently bound both runtimes"
+    "number": 1,
+    "predecessor_plan_sha256": "28608a9cfb705cdcb4064babffc48bdd2355b33b4e6261c140acd00f35eaadae",
+    "reason": "Validate graph-only quantity receipt at final repetition; retain every-GE market gates in both fresh loops"
   },
   "input_fingerprint": "4bd012a79ce13e50a0bf71a227464a2cfeb4be15d390d8f01f5bcb59c6eb4b11",
   "maximum_GE_solves": 200,

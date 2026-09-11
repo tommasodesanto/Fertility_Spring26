@@ -81,12 +81,8 @@ def smoke_gate(meta,pin):
   for name in ('summary.json','early_measurement.json','stationary_solves.json','parameters.csv','initial_state.pkl.gz'):
    artifacts[str((p/name).relative_to(dest))]=sha(p/name)
  require(early[0]==early[1],'fresh smoke early measurements are not exactly equal')
- for name in ('price','legacy_stationary_moments'):
+ for name in ('price','normalization','legacy_stationary_moments'):
   require(reps[0][name]==reps[1][name],'fresh smoke repetitions differ: '+name)
- require(set(reps[0]['normalization'])==set(reps[1]['normalization']),'normalization receipt fields differ')
- require({k:v for k,v in reps[0]['normalization'].items() if k!='stationary_solve_seconds'}=={k:v for k,v in reps[1]['normalization'].items() if k!='stationary_solve_seconds'},'fresh normalization results differ')
- for rep in reps:
-  require(0 < rep['normalization']['stationary_solve_seconds'] <= 1800,'invalid normalization runtime')
  require(top['final']==reps[1] and solves==top['stationary_solves'],'smoke aggregate mismatch')
  graphs=sorted((dest/'repetition_02/standard_diagnostics').glob('*.png'));require(len(graphs)==17,'stable 17-graph packet missing')
  require([p.name for p in graphs]==sorted(meta['expected_graph_filenames']),'standard graph names changed')

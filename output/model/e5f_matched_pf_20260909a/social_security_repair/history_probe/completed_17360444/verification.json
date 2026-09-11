@@ -1,0 +1,70 @@
+{
+  "checkpoint_validation_scope": "independent remote SHA matches summary; checkpoint reload was performed by source-pinned driver, no pickle locally downloaded or reloaded",
+  "checks": {
+    "all_dated_household_checks": true,
+    "both_mapping_household_checks": true,
+    "checkpoint_remote_hash": true,
+    "collected_file_hashes": true,
+    "fresh_replay": true,
+    "independent_ledgers_and_residuals": true,
+    "input_hashes": true,
+    "mapping_checks": true,
+    "no_equilibrium_claim": true,
+    "seventeen_graph_remote_hashes": true,
+    "six_dates": true,
+    "source_hashes": true,
+    "two_whole_path_signatures": true,
+    "whole_price_pension_residual_replay": true
+  },
+  "collected_remote_file_count": 19,
+  "driver_seconds": 360.0796961616725,
+  "files_sha256": {
+    "best_so_far.json": "91c75469d4380d4e6f1b22e074f304b95f4e0f8577cf7177f55c32c529882fcc",
+    "contract.json": "9ca0fde1ba8898ff862c0c653e8d15b6cc9ac144b79cd97e07a17253ded87469",
+    "dated_household_audits.json": "d768ec8406b901d6649b22e26da173b232a8e4c753f8e8921ddf73fcfd6dbf1e",
+    "dated_reproduction.json": "95d55a34ef0f8d4a015e23c1f66009b390c929cefea8794a1707e05027edf3e1",
+    "diagnostics_receipt.json": "9e7ee66df37fe3c047173c3b5b9b2206f477f55431b4a05358f075dae53cb849",
+    "heartbeat.json": "ce9b0af911e319a8ef4ff49bf2ff7b78d5ddb26121f9e9ba7f49b078a669f471",
+    "latest_completed.json": "6896c8afc02bb721469a89041791b035987d7dc8304858a417cb90cc4dd1de52",
+    "latest_date.json": "d637e5e64f73b506d6d8a67ee498d3ce7274872e17b5ce47b45aede5e69b7fd0",
+    "lifecycle_2023.csv": "d195c9e747be4d0f6b04fa51e9c30adb8f17dbb568308fc030e4326c9c43541b",
+    "market_quantity_units.json": "6419d66e2f01af30fed5b914e6a5efabb82fe124635dcadc509399bb2197a588",
+    "preflight.json": "3a0e24680c4591c01dfeee8508518c5e1c6f7d159550285a82b4b9445d6ae943",
+    "root_completion.json": "023fbd67bafdbf6b2bc626a602030d6b89f6d5adc076df9d5f318c29115ca679",
+    "root_evaluations.json": "520f43821c03e05983c6adb5605e7043efe3e370a11bc4759d385d3c347abe40",
+    "root_receipt.json": "d2a853846eeaa82625b0f919795f007be843bb15737d011045df3da9df8b0563",
+    "sizing.json": "037ca0aad8cefb6de06ed2b96cafc1adee3a3fd372372e14976dbb40aa774e4e",
+    "standard_diagnostics/summary.json": "e955d744268584c5bacf4bc708bbdb55ba30847da11cc96e602cb6f9d3363400",
+    "summary.json": "6ce401aa1263c69b70793424255c797c5df29957a576365b7487c62f64f09412",
+    "transition_path.csv": "67a97874d02db863e67a3d94b762d8919c12d7ec7e1efad6fe1d2abd141f5b55",
+    "young_ownership_age_measurement.csv": "6780ff7f8813194cb98920ffbca103e53cf4b51579e13cdc90b7290d768a07a1"
+  },
+  "graph_validation_scope": "remote hashes independently match saved graph receipt; no graph render inspection in this task",
+  "mapping_seconds": [
+    173.85463173221797,
+    168.4721170924604
+  ],
+  "max_rss_bytes": 2228260864,
+  "maximum_independent_numeric_gap": 0,
+  "maximum_mass_identity": 1.429412144204889e-15,
+  "maximum_occupied_budget_excess": 7.105427357601002e-15,
+  "mean_mapping_seconds": 171.16337441233918,
+  "remote_input_count": 7,
+  "remote_source_count": 639,
+  "six_date_eight_mappings": {
+    "bellman_calls": 96,
+    "estimated_seconds": 1369.3069952987134
+  },
+  "status": "verified_conditional_mapping_not_equilibrium",
+  "timing_caveat": "28-date costs are linear extrapolations from the exact 6-date mappings, not measured long-path costs",
+  "twenty_eight_date_eight_mappings": {
+    "bellman_calls": 448,
+    "estimated_seconds": 6390.099311393996
+  },
+  "twenty_eight_date_six_mappings": {
+    "bellman_calls": 336,
+    "estimated_seconds": 4792.574483545497
+  },
+  "whole_path_distribution_signature_count": 18,
+  "whole_path_policy_array_signature_count": 60
+}

@@ -71,28 +71,20 @@ def smoke_gate(meta,pin):
   p=dest/f'repetition_{number:02d}'; final=read(p/'summary.json'); observation=read(p/'early_measurement.json');ges=read(p/'stationary_solves.json')
   wrapper=dict(top,repetitions=1,stationary_solves=len(ges),final=final)
   params=validator.validate_summary(wrapper,contract,observation,list(csv.DictReader((p/'parameters.csv').open())),ges)
-  # The frozen driver writes graph/quantity reports after the final repetition only.
-  # validate_summary above still checks the strict market gate on EVERY GE in both loops.
-  if number == 2:
-   validator.validate_market(read(p/'market_quantity_units.json'))
-   artifacts[str((p/'market_quantity_units.json').relative_to(dest))]=sha(p/'market_quantity_units.json')
+  validator.validate_market(read(p/'market_quantity_units.json'))
   require(sha(p/'initial_state.pkl.gz')==final['checkpoint_sha256'],'smoke checkpoint fingerprint mismatch')
   early.append(observation);reps.append(final);solves+=len(ges)
-  for name in ('summary.json','early_measurement.json','stationary_solves.json','parameters.csv','initial_state.pkl.gz'):
+  for name in ('summary.json','early_measurement.json','stationary_solves.json','parameters.csv','market_quantity_units.json','initial_state.pkl.gz'):
    artifacts[str((p/name).relative_to(dest))]=sha(p/name)
  require(early[0]==early[1],'fresh smoke early measurements are not exactly equal')
- for name in ('price','legacy_stationary_moments'):
+ for name in ('price','normalization','legacy_stationary_moments'):
   require(reps[0][name]==reps[1][name],'fresh smoke repetitions differ: '+name)
- require(set(reps[0]['normalization'])==set(reps[1]['normalization']),'normalization receipt fields differ')
- require({k:v for k,v in reps[0]['normalization'].items() if k!='stationary_solve_seconds'}=={k:v for k,v in reps[1]['normalization'].items() if k!='stationary_solve_seconds'},'fresh normalization results differ')
- for rep in reps:
-  require(0 < rep['normalization']['stationary_solve_seconds'] <= 1800,'invalid normalization runtime')
  require(top['final']==reps[1] and solves==top['stationary_solves'],'smoke aggregate mismatch')
  graphs=sorted((dest/'repetition_02/standard_diagnostics').glob('*.png'));require(len(graphs)==17,'stable 17-graph packet missing')
  require([p.name for p in graphs]==sorted(meta['expected_graph_filenames']),'standard graph names changed')
  for p in graphs: artifacts[str(p.relative_to(dest))]=sha(p)
  for name in ('summary.json','contract.json','seed_mapping.json'):artifacts[name]=sha(dest/name)
- receipt={'status':'verified','checked_at_utc':now(),'plan_sha256':pin,'input_fingerprint':meta['run_input_fingerprint'],'contract_sha256':meta['smoke_contract_sha256'],'source_pins_verified':634,'seed_sha256':meta['seed']['sha256'],'exact_early_equality':True,'repetitions':2,'stationary_solves':solves,'graph_count':17,'quantity_report_repetition':2,'every_GE_market_verified_both_repetitions':True,'artifact_sha256':artifacts}
+ receipt={'status':'verified','checked_at_utc':now(),'plan_sha256':pin,'input_fingerprint':meta['run_input_fingerprint'],'contract_sha256':meta['smoke_contract_sha256'],'source_pins_verified':634,'seed_sha256':meta['seed']['sha256'],'exact_early_equality':True,'repetitions':2,'stationary_solves':solves,'graph_count':17,'artifact_sha256':artifacts}
  reused=read(ROOT/'contract_21.json')
  for key in ('structural_candidate','source_sha256','normalized_checkpoint','normalized_checkpoint_sha256','initial_psi','normalize','observe_early','fertility_normalization','payroll_tax','housing_supply_elasticity','run_input_fingerprint'):
   require(reused[key]==contract[key],'smoke reuse binding differs: '+key)

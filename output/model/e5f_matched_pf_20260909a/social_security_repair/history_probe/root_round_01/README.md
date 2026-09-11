@@ -1,0 +1,11 @@
+# Historical price-and-pension root, round 01
+
+Job 17362744 uses frozen isolated source a16dbaab and contract b59089f80d0d8e29cfc1264cd58e79cae4c76156f8db5accd0fe6603966e1d99. All 643 source files are pinned; all 635 terminal-era files remain identical. The model README was restored to its terminal-era content to retain this exact source contract. The new pension-prefix helper is indexed here and in the main canonical status instead.
+
+The 2007–2027 path has six dates. The initial prices remain the explicit prescribed replay guesses. All six initial pensions are the implied balanced values from the actual ledgers of verified replay17360444; these are starting guesses only, not fixed objects or a solved historical path. Every price and pension remains in the joint root. The initial state, terminal endpoint, fixed payroll rate .179, original supply curve, announced preference change -.25 and demographic arrays remain unchanged. Outside-entry share .169 is diagnostic and outstanding; the shock is not fitted.
+
+The full short loop allows eight complete mappings including the reserved fresh replay: at most96 Bellman calls. The measured mapping mean171.16 seconds implies about22.8 minutes, with27 minutes for the root,30 minutes for the driver and32 minutes Slurm. One CPU/8GB. Eighty-three combined pure tests passed locally and are repeated at startup. A separate schema/mode explicitly enables root updates while retaining the old replay mode. No tolerance is relaxed.
+
+Each mapping saves latest/best records and all dated policy/distribution/fiscal signatures. The selected mapping is compared with its own fresh final replay, rather than the first iterate. The final checkpoint, full dated accounts and stable17 graphs must pass. Finite-path convergence and horizon accuracy remain separate; neither a fitted history nor a production policy is claimed. The six-date endpoint is deliberately too early to certify a long-run horizon. A longer run requires an explicit new bounded contract after inspection of this actual loop.
+
+Related read-only test17362746 compares e5f_historical_paygo_prefix.py with the existing actual ledgers. It does not reduce the current root or create post-2023 pension defaults.
