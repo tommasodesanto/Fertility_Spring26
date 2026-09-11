@@ -11,6 +11,13 @@ or fitted shock is established yet. Selected checkpoint runtime confirms2%annual
 asset return (four-yeargross1.08243216), correcting the provisional4%source-default
 illustration in beta_diagnosis.md. Annualbeta.995796 is correctly converted.
 
+Subsequent progress: allthree terminals passed (about5.7–6.8minutes each).
+Firsthistory has4valid complete mappings; maxhousingresidual18.72%→5.85%,
+maxfiscalresidual25.95%→0.109%. Neither reaches its gate (.02%housing,
+.0001%fiscal). Otherhistories await this first finite-path check. Rawbeta
+percentiles recovered: median moves4.0981→4.2693 whilep90isnearlyunchanged;
+components match scoredmoments. Numericalartifact stillnotproven.
+
 Author prioritizes the historical transition and questions high annual beta.
 The current r5_joint_09 exact repetition02 now feeds an isolated terminal/PAYGO
 and announced-history diagnostic, rather than another initial-only search.

@@ -49,6 +49,18 @@ The files contain the p90/p50 ratio, not separate p50/p90 values or cumulative w
 | family_rooms | 0.1871203269 | 0.1878387282 | -0.064323851 |
 | recent_parent_ownership | 0.1490077914 | 0.1491814656 | -0.129697864 |
 
+## Saved percentile components now recovered
+
+The three raw early_measurement.json outputs provide separate percentiles, now
+verified against their scored ratios and saved with source hashes in
+current_candidate_transition/beta_percentile_components.json. From lower to
+higher beta, p50 rises4.098095536→4.269338274 (about4.18%), while p90 rises only
+18.073408858→18.076244443 (about0.016%). The ratio change is therefore driven
+by the median. The median at the derivative center is4.164790385. This narrows
+the next diagnostic to the weighted CDF and support near its50%crossing; it
+still does not prove that the movement is a discretization artifact. No moment,
+weight, parameter or grid has been changed.
+
 ## Specific follow-up, without changing the target contract
 
 The saved center/pair scores have now been checked above. Next retrieve their raw early wealth-observer details and separate p50/p90 values; the exact contribution changes are already established. Read runtime beta, q, R_gross, period_years, flow-scaling flag, survival schedule, pension and bequest specification from the selected checkpoint, and verify their frozen-source provenance.
