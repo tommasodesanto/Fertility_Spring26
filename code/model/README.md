@@ -22,6 +22,12 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/collect_e5f_matched_pf_preference_pilot.py` independently verifies locally
+collected six-date tests and 100-date preference-timing cases, including pinned
+source/artifact hashes, every fit row, unchanged parameters, dated budgets and
+the baseline's exact replay. It writes aggregate birth-count comparisons using
+the existing calendar observer; it never launches a model or promotes a result.
+
 The isolated matched-PF work adds `tools/run_e5f_matched_pf_smoke.py` for
 hash-pinned sequential/nested household primitive checks. Its cluster launcher
 is `../cluster/submit_e5f_matched_pf_smoke.sh`. The optional
