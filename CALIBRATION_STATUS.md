@@ -3,6 +3,14 @@
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
 **September 11, urgent current-candidate transition —17393936 RUNNING.**
+Latest check: terminal passed all endpoint/replay/diagnostic checks in363.2seconds
+(8mappings), marketresidual-1.71e-7,fiscal6.83e-8. Six-date historical root is
+running; first valid full mapping took170.0seconds. Parallel17394807 branches
+have passed their wait gate and are solving terminals. No historical convergence
+or fitted shock is established yet. Selected checkpoint runtime confirms2%annual
+asset return (four-yeargross1.08243216), correcting the provisional4%source-default
+illustration in beta_diagnosis.md. Annualbeta.995796 is correctly converted.
+
 Author prioritizes the historical transition and questions high annual beta.
 The current r5_joint_09 exact repetition02 now feeds an isolated terminal/PAYGO
 and announced-history diagnostic, rather than another initial-only search.
