@@ -5,27 +5,31 @@ tiny-grid fixture is constructed, then six two-date paths are evaluated: twelve
 forward dates and twenty-four backward/forward Bellman calls. No price root,
 historical data, calibration, person-law endpoint or figure is involved.
 
-Historical evidence retained, not an acceptance criterion: compiled smoke
-``17352615`` failed its universal assertion that a future fiscal-income shock
-must change an *occupied* current saving or consumption choice.  It did change
-occupied current values, and all budget, mass, queue, and replay checks passed.
-The follow-up diagnostic ``17353361`` found nonzero conditional control
-responses, but only at zero-mass grid states in this small fixture.  Positive
-saving among the affected occupied cohort means that borrowing corners alone do
-not explain the result.  The obsolete universal occupied-control assertion is
-therefore deliberately not silently relabelled as passed.
+Historical evidence retained, not relabelled as passed: ``17352615`` failed
+its universal occupied-control-response assertion. Diagnostic ``17353361``
+then found off-support control responses. But both inherited the tiny fixture's
+LEGACY nonexhaustive saving method. Stronger check ``17357939`` found wrong-signed
+values and a pension action inferior to the old action under its own new
+objective (gain -0.0700371545). Thus those legacy responses do not establish
+correct anticipation optimization; unchanged occupied controls alone were
+neither proof of failure nor a diagnosis of borrowing corners.
 
-The acceptance tests below fix two states from that diagnostic BEFORE the new
-run. The pension probe has interior saving under both paths; the tax probe
-releases a zero-saving corner into the interior. These were selected using
-earlier diagnostic evidence, not from a maximum in the new run. Actual kernel
+Diagnostic ``17358206`` set exhaustive_saving_control=True BEFORE fixture
+initialization, matching the active model without changing economic primitives.
+Wrong-signed values and negative crossed-policy gains disappeared. The old
+pension state instead keeps saving exactly 0.9375 at a continuation knot while
+its value increases. A separate knot test preserves that evidence. The new
+pension probe (19,0,0,4,0,3,0) was identified in that saved active diagnostic;
+it has interior saving and strict crossed-policy gains on both paths. The tax
+probe is unchanged and releases a zero-saving corner into the interior. These
+states are fixed BEFORE the next run, not selected from its output. Actual kernel
 inputs are checked against next-date/next-age Markov expectations; conditional
 Bellman values and crossed-policy incentive gains are reconstructed in NumPy.
 This remains a conditional fixed-price test, not an equilibrium, occupied
 response, or general optimizer-optimality certificate. Original source is
-retained at a654219c; original failure logs and anticipation_diagnostic.json
-remain under output/model/e5f_matched_pf_20260909a/social_security_repair/ in
-the main checkout. No original failed run is relabelled as passed.
+retained at a654219c and 1a5e88b7; original failure logs,
+anticipation_diagnostic.json and active_optimizer_diagnostic.json remain under
+output/model/e5f_matched_pf_20260909a/social_security_repair/ in the main checkout.
 """
 from __future__ import annotations
 
@@ -47,10 +51,13 @@ from e5f_social_security import fiscal_accounts
 # Axes: wealth index, conditional tenure, location, age index, income state,
 # lifetime parity, dependent-child count. Both have zero dependent children.
 ANTICIPATION_PROBES = {
-    "future_pension": (1, 0, 0, 4, 0, 1, 0),
+    "future_pension": (19, 0, 0, 4, 0, 3, 0),
     "future_tax": (10, 1, 0, 0, 1, 0, 0),
 }
-KERNEL_PROBES = dict(ANTICIPATION_PROBES, pension_recipient=(1, 0, 0, 5, 0, 1, 0))
+PENSION_KNOT_PROBE = (1, 0, 0, 4, 0, 1, 0)
+KERNEL_PROBES = dict(ANTICIPATION_PROBES,
+                    pension_knot=PENSION_KNOT_PROBE,
+                    pension_recipient=(1, 0, 0, 5, 0, 1, 0))
 
 
 def conditional_probe_objective(inputs, state, saving):
@@ -106,8 +113,19 @@ class CompiledSocialSecurityTests(unittest.TestCase):
     def setUpClass(cls):
         if numba_config.DISABLE_JIT or not fixture.model.NUMBA_AVAILABLE:
             raise RuntimeError("This numerical smoke requires enabled Numba compilation")
-        fixture.TinyPerfectForesightTests.setUpClass()
+        # Match active saving from the initial solve onward, including the
+        # terminal policy. Only this numerical flag differs from the legacy
+        # fixture; its failed runs remain preserved in the main output folder.
+        original_overrides = fixture._tiny_overrides
+
+        def active_overrides():
+            return dict(original_overrides(), exhaustive_saving_control=True)
+
+        with patch.object(fixture, "_tiny_overrides", side_effect=active_overrides):
+            fixture.TinyPerfectForesightTests.setUpClass()
         source = fixture.TinyPerfectForesightTests
+        if not bool(getattr(source.parameters, "exhaustive_saving_control", False)):
+            raise RuntimeError("Compiled fiscal fixture requires the active exhaustive-saving method")
         cls.parameters = source.parameters
         cls.b_grid = source.b_grid
         cls.initial_g = source.stationary_g_pre.copy()
@@ -376,9 +394,12 @@ class CompiledSocialSecurityTests(unittest.TestCase):
     def test_predeclared_controls_satisfy_exact_continuation_and_crossed_policy_incentives(self):
         """Verify the optimization channel at two declared, feasible states.
 
-        Earlier diagnostic pension saving: 0.9382044371 -> 0.5013730264,
-        interior on both paths. Tax saving: 0 -> 0.8407770257, a release from
-        its lower bound. No universal interior or occupied response is assumed.
+        Active diagnostic 17358206 pension saving: 7.6287956948 -> 7.5109834889,
+        interior on both paths, with crossed gains 4.62546e-5 and 4.53927e-5.
+        Tax saving: 0 -> 0.8376618080, a release from its lower bound, with
+        crossed gains 0.00113803 and 0.00169014. The pension renter's housing
+        cap binds; its saving control remains interior. No universal interior
+        or occupied response is assumed.
         """
         P = self.parameters
         for changed_name, control_name in (("future_pension", "fixed_tax"),
@@ -469,6 +490,64 @@ class CompiledSocialSecurityTests(unittest.TestCase):
                     after_value["utility"] - before_value["utility"]
                     + P.beta * (after_value["expected"] - before_value["expected"]), delta=2e-12)
 
+    def test_preserved_pension_knot_has_exact_continuation_value_channel(self):
+        """A control can stay at a continuation knot while its value responds.
+
+        In active diagnostic 17358206 both choices equal 0.9375. The unchanged
+        choice is admissible here; there is no strict saving-response assertion.
+        The strict interior response remains required at the separate declared
+        pension state above. This probe keeps exact continuation/value checks
+        and weak optimality against the crossed control, even if it later moves.
+        """
+        P = self.parameters
+        state = PENSION_KNOT_PROBE
+        wealth, tenure, location, age, income_state, parity, children = state
+        for call_index in (1, 2):
+            with self.subTest(bellman_call=call_index):
+                records = []
+                for name in ("fixed_tax", "future_pension"):
+                    result = self.results[name]
+                    call = result["bellman_calls"][call_index]
+                    probe = call["probes"]["pension_knot"]
+                    inputs, output = probe["inputs"], probe["output"]
+                    expected = np.zeros(len(self.b_grid))
+                    probabilities = np.asarray(P.Pi_z[income_state], dtype=float)
+                    probabilities = probabilities / probabilities.sum()
+                    for znext, probability_z in enumerate(probabilities):
+                        for child_next, probability_child in enumerate(P.Pi_child[children, :, parity]):
+                            expected += probability_z * probability_child * call["continuation"][
+                                :, tenure, location, age + 1, znext, parity, child_next]
+                    np.testing.assert_allclose(inputs["Vc_flat"][:, parity], expected,
+                                               rtol=0, atol=2e-12)
+                    saving = float(output[1][wealth, parity])
+                    objective = conditional_probe_objective(inputs, state, saving)
+                    self.assertAlmostEqual(float(output[0][wealth, parity]), objective["value"], delta=2e-12)
+                    self.assertAlmostEqual(saving, result["dated"][0]["evaluation"].policy.bp_pol[state],
+                                           delta=2e-12)
+                    self.assertGreaterEqual(saving, objective["lower"] - 1e-12)
+                    self.assertLess(saving, min(objective["upper"], self.b_grid[-1]) - 1e-6)
+                    records.append((inputs, saving, objective))
+                before_inputs, before, before_value = records[0]
+                after_inputs, after, after_value = records[1]
+                for key in before_inputs:
+                    if key != "Vc_flat":
+                        np.testing.assert_array_equal(before_inputs[key], after_inputs[key])
+                self.assertLessEqual(float(np.min(np.abs(self.b_grid - before))), 1e-12)
+                fixed_control = conditional_probe_objective(after_inputs, state, before)
+                self.assertAlmostEqual(fixed_control["utility"], before_value["utility"], delta=2e-12)
+                self.assertGreater(fixed_control["expected"] - before_value["expected"], 1e-8)
+                self.assertAlmostEqual(fixed_control["value"] - before_value["value"],
+                    P.beta * (fixed_control["expected"] - before_value["expected"]), delta=2e-12)
+                crossed_control = conditional_probe_objective(before_inputs, state, after)
+                self.assertGreaterEqual(after_value["value"] - fixed_control["value"], -2e-12)
+                self.assertGreaterEqual(before_value["value"] - crossed_control["value"], -2e-12)
+                self.assertAlmostEqual(after_value["value"] - before_value["value"],
+                    after_value["utility"] - before_value["utility"]
+                    + P.beta * (after_value["expected"] - before_value["expected"]), delta=2e-12)
+                if before == after:
+                    self.assertAlmostEqual(after_value["value"] - before_value["value"],
+                        P.beta * (after_value["expected"] - before_value["expected"]), delta=2e-12)
+
     def test_every_date_passes_actual_budget_mass_and_replay_checks(self):
         for name, result in self.results.items():
             with self.subTest(case=name):
@@ -508,8 +587,13 @@ class CompiledSocialSecurityTests(unittest.TestCase):
     def test_real_compiled_kernels_were_used(self):
         self.assertFalse(numba_config.DISABLE_JIT)
         self.assertTrue(fixture.model.NUMBA_AVAILABLE)
+        self.assertTrue(self.parameters.exhaustive_saving_control)
         self.assertTrue(fixture.model.full_renter_block_kernel.signatures)
         self.assertTrue(fixture.model.full_owner_block_kernel.signatures)
+        for result in self.results.values():
+            for call in result["bellman_calls"]:
+                for probe in call["probes"].values():
+                    self.assertEqual(probe["inputs"]["exhaustive_saving"], 1)
 
 
 if __name__ == "__main__":
