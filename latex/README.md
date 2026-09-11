@@ -4,7 +4,7 @@ Active documents:
 
 - Slides-only collaboration handoff: `../docs/prompts/HANDOFF_september14_slides.md`.
   It identifies the single working deck, technical task contacts, and the
-  September 11 utility/pension updates that still need presentation edits.
+  September 11 utility/pension updates and their presentation status below.
 
 - `september_14_presentation.tex`: the single working September 14 seminar
   presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
@@ -53,10 +53,44 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The refocused deck has 29 numbered main frames and six appendix frames
-  (42 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 30 numbered main frames and six appendix frames
+  (43 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and the remaining appendix link resolve.
+
+  **September 11 slides-only pass.** `Family Space` and `Empirical Discipline`
+  now use the parenthood-only requirement `h_P 1{m>0}`, while dependents are
+  present. The equivalence scale and surrounding preferences are unchanged.
+  Sources: the handoff's immediate corrections and the September 11 approved
+  utility entry in `../memory/daily/2026-09-11.md`, confirmed by the named
+  quantitative task against `../tmp/e5f_matched_pf/code/model/tools/e5f_parenthood_utility.py:67`
+  and `../tmp/e5f_matched_pf/code/model/intergen_eqscale_seq_optimized/solver.py:2262`.
+
+  `Pensions` explains the fixed payroll tax and benefits that balance the actual
+  dated household budget, with the same benefits anticipated by households.
+  Pension notation is `varpi_t`, to avoid conflict with choice probabilities
+  `pi_t` and liquid wealth `b`. Disposable income excludes property-tax rebates.
+  `Budget Constraints` now applies the financial return to liquid wealth after
+  the housing transaction. Equilibrium notation and the appendix solution steps
+  include pensions consistently. The named quantitative task supplied these
+  equations, and the slide editor checked the cited source excerpts:
+  `../tmp/e5f_matched_pf/code/model/tools/e5f_social_security.py:29,70,99`,
+  `../tmp/e5f_matched_pf/code/model/tools/e5f_balanced_history.py:198`,
+  `../tmp/e5f_matched_pf/code/model/intergen_eqscale_seq_optimized/solver.py:228,2522`,
+  and `../tmp/e5f_matched_pf/code/model/intergen_eqscale_seq_optimized/kernels.py:709,722,737`.
+  These are implementation-consistent equations, not a historical-fit or policy
+  certificate. All changed frames were visually checked after two clean builds.
+
+  The named theory task confirmed a conditional equal-weight lifetime-welfare
+  improvement from a small rental-space transfer to a parent: both renters must
+  be interior, with positive consumption and `c_y < sqrt(e(m_y)) c_o`.
+  The direct allocator preserves aggregate resources and future states, but
+  need not preserve individual rental expenditure entitlements. This is not an
+  owner-housing or mortgage-constraint theorem and has not been added to the deck.
+  Proof source: the September 11 completed reply in
+  `https://chatgpt.com/c/6aa4182b-2214-83ea-8184-efef74d558bb`, assistant message
+  `92769ac8-590a-48df-a646-98f6941c04b8`, equations (4)--(6), (10), and the
+  full-path feasibility argument, independently checked by the theory task.
 
 - `JMP_DS_draft/`: author-controlled source for the new job-market-paper draft.
   Its main file is `JMP_DS_draft/JMP_DS_draft.tex`, with separate section and

@@ -135,9 +135,9 @@ Family size raises household needs through the equivalence scale $e(m)$ and the 
 \begin{frame}{Family Space}
 The first child creates a discrete increase in required housing services:
 \[
-\bar h(m)=h_1\1\{m>0\}+h_m m.
+\bar h(m)=h_P\1\{m>0\}.
 \]
-$h_1$ is the first-child requirement; $h_m$ is the additional requirement per child.
+$h_P$ is the housing requirement while dependent children are present.
 
 \medskip
 Housing services depend on tenure:
@@ -156,7 +156,7 @@ Child needs disappear as children mature; lifetime births remain in the state.
 
 \begin{frame}{Earnings and Bequests}
 \small
-Earnings $y(a,z)$ combine an age profile and persistent income risk \cit{(De Nardi, 2004)}, with permanent differences across households. Households receive retirement income after working life.
+Gross earnings $y_t^g(a,z)$ combine an age profile and persistent income risk \cit{(De Nardi, 2004)}, with permanent differences across households. Households receive retirement income after working life.
 
 \medskip
 At death, households value estate wealth $w^e$:
@@ -171,6 +171,30 @@ $\theta_0$ governs the bequest motive; $\theta_1$ governs its sensitivity to wea
   \item Bequests affect saving and old-age housing retention.
   \item Entrant wealth is externally distributed; the model is not fully dynastic.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Pensions}
+\small
+A fixed payroll tax $\tau^{SS}$ finances pensions $\varpi_t d(z)$, with retirement at age $a_R$:
+\[
+\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
+=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
+\]
+The pension $\varpi_t$ balances the budget using the actual household distribution $G_t$. The benefit multiplier $d(z)$ equals one for common benefits.
+
+\medskip
+Disposable earnings and pension income are:
+\[
+y_t^d(a,z)=
+\begin{cases}
+(1-\tau^{SS})y_t^g(a,z),&a<a_R,\\
+\varpi_t d(z),&a\geq a_R.
+\end{cases}
+\]
+Households anticipate the pension path. Earnings and pensions are measured over the model period.
+
+\vfill
+Property-tax rebates $T_t$ have a separate budget.
 \end{frame}
 
 \begin{frame}{Housing and Tenure}
@@ -197,21 +221,21 @@ Changing inherited owner size $h$ to $h'$ changes liquid resources by
 \mathcal T_t(h,h')=\1\{h'\neq h\}
 \left[(1-\psi^s)P_t h-P_t h'\right].
 \]
-The household pays for its new home and receives net proceeds from the old one.
+Housing transactions change liquid wealth before financial returns accrue.
 
 \medskip
 For renters and owners, respectively,
 \[
 \begin{aligned}
-c+r_t h^R+b'&=R_b b+y(a,z)+\mathcal T_t(h,0)+T_t,\\[0.5em]
+c+r_t h^R+b'&=R_b\bigl[b+\mathcal T_t(h,0)\bigr]+y_t^d(a,z)+T_t,\\[0.5em]
 c+(\delta_H+\tau_t^p)P_t h'+b'
-&=R_b b+y(a,z)+\mathcal T_t(h,h')+T_t.
+&=R_b\bigl[b+\mathcal T_t(h,h')\bigr]+y_t^d(a,z)+T_t.
 \end{aligned}
 \]
-$R_b$ is the gross financial return, $r_t$ rent per room, $\delta_H$ depreciation, $\tau_t^p$ the property-tax rate, and $T_t$ a transfer per household head.
+$R_b$ is the gross financial return per period, $r_t$ rent per room, $\delta_H$ depreciation, $\tau_t^p$ the property-tax rate, and $T_t$ a transfer per household head.
 
 \vfill
-Households carry liquid wealth $b$ into the period and choose saving $b'$.
+Households carry net liquid wealth $b$ into the period and choose saving $b'$.
 \end{frame}
 
 \begin{frame}{Sequential Fertility and Child Aging}
@@ -380,14 +404,14 @@ Births enter the population immediately. Survival, migration, and household form
 \small
 Given the inherited household and population state and the announced preference and policy paths, a perfect-foresight equilibrium is a sequence
 \[
-\{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t\}_{t\geq0},
+\{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t,\varpi_t\}_{t\geq0},
 \]
 where $V_t$ are household values and $\pi_t$ are choice probabilities, satisfying:
 \begin{enumerate}\setlength\itemsep{0.5em}
-  \item Household optimality given the anticipated price and transfer paths.
+  \item Household optimality given the anticipated price, transfer, and pension paths.
   \item Population and household evolution under births, survival, and migration.
   \item Housing-market clearing: occupied physical rooms equal $H_t^s$.
-  \item Asset pricing and the specified government budget rule.
+  \item Asset pricing and separate balanced budgets for pensions and property-tax rebates.
 \end{enumerate}
 
 \vfill
@@ -398,7 +422,7 @@ Aggregate paths are anticipated; individual outcomes remain uncertain.
 \small
 A steady state is a constant allocation, population structure, and price:
 \[
-(N^*,H^*,G^*,\pi^*,P^*,r^*,T^*).
+(N^*,H^*,G^*,\pi^*,P^*,r^*,T^*,\varpi^*).
 \]
 Households optimize, persons and household distributions reproduce themselves, housing clears, and the fiscal rule holds.
 
@@ -519,7 +543,7 @@ Different moments inform the fertility, housing, and saving decisions jointly.
 Margin & Observations & Parameters informed \\
 \midrule
 Fertility & Childlessness, completed fertility, first-birth timing & $\psi$, $F_1$, $\kappa_1$, $\kappa_C$ \\
-Housing & Rooms around births, family-size room gaps, ownership & $h_1$, $h_m$, $\chi$ \\
+Housing & Rooms around births, family-size room gaps, ownership & $h_P$, $\chi$ \\
 Saving and bequests & Wealth/earnings, bequest flows, old-age wealth dispersion & $\beta$, $\theta_0$, $\theta_1$ \\
 Housing supply & Housing quantities and price responses & $H_0$, $\eta$ \\
 \bottomrule
@@ -736,10 +760,10 @@ For renters, $q_t=h_t^R$; for owners, $q_t=h_t'$. Choice probabilities are inclu
 
 \begin{frame}{Perfect-Foresight Solution}
 \begin{enumerate}\setlength\itemsep{0.7em}
- \item Guess the entire price path and compute rents from asset pricing.
+ \item Guess the price and pension paths and compute rents from asset pricing.
  \item Solve households backward using date-specific continuation values.
  \item Advance household and population distributions from the inherited state.
- \item Update prices until housing clears at every date.
+ \item Update prices and pensions until housing clears and the payroll budget balances at every date.
  \item Extend the horizon and check that the measured outcomes are stable.
 \end{enumerate}
 
