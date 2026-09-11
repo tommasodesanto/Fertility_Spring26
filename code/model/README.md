@@ -22,6 +22,12 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/build_e5f_preference_timing_figures.py` creates three supplemental figures
+and a PDF with complete inherited fit/parameter tables from the verified timing
+pilot. Its inputs, reproduction command and scope are indexed in
+`../../output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
+No model solve or calibration change is involved.
+
 `tools/run_e5f_joint_nested_experiment.py` is an isolated one-date simultaneous
 nested-logit diagnostic, with tenure nests and a matched fertility-first
 sequential control. It requires a hash-pinned retained scientific snapshot;

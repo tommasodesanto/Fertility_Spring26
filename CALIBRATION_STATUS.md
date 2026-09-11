@@ -2,6 +2,15 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 11 — author-requested timing figures.**
+The seven-page review PDF is `output/pdf/preference_timing_review.pdf`: three
+supplemental figures, then all 36 target-fit rows and 15 parameter/restriction
+rows. Standalone PNG/SVG figures are in the pilot's `figures/` directory.
+The 20.93% is the last-four-year-block birth-count decline relative to the first
+(2020-2023 versus 2008-2011), not a cumulative shortfall or a single-year/female
+fertility-rate change. Later timing retains a 21.22% own-anchor decline. No new
+model, calibration, policy, production figure set or author draft was changed.
+
 **September 11, 00:20 UTC — bounded preference-timing pilot completed.**
 All three 100-date calculations finished in 41–45 minutes. Later, linear and
 earlier timing give inherited twelve-target objectives 81.423452, 94.475576 and

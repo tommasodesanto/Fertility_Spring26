@@ -1,0 +1,141 @@
+{
+  "status": "numeric_text_and_visual_checks_passed",
+  "pages": 7,
+  "input_sha256": {
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/all_main_birth_comparisons.csv": "140944a6e9ab7da71623e9a0a0ba7670f99a330c40851c345d6ec381ff96540c",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/all_main_target_fits.csv": "a5e3454b85db4368cee9f143050c919fde613a0e406708b05a5ce33081c255bd",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/all_inherited_parameters.csv": "df75419d2769edfaa657c319bdd35d4b7292390e7a61d3ec8839b375b4d66994",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/verified_receipts.json": "0a8be45a0cc0803341401b1a1062d740fae41a9068a2799eff2ef7f7a3ff712b",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/main/case_0/contract.json": "c026e3c191b3807a495b9b34ef25dc16f9aefb6b6001f6e7228f9b658a9b1a30",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/main/case_1/contract.json": "13ac77b34c5b71094bf98461cb641260b7b32d130d1b88c599003132598d54a3",
+    "output/model/e5f_matched_pf_20260909a/path_pilot_20260910/computation/main/case_2/contract.json": "9820d1ba5e0eeef2fe6574d72a21c6d98b07562bf0e039ef76274ccbe4b0127c"
+  },
+  "pdf_sha256": "ef5454301607c3f6cf5aa4eb7a0ea3577edf0c487803d1d84dc7cb9304efe8a1",
+  "artist_data_checks": [
+    {
+      "figure": 1,
+      "series": "Observed US births",
+      "y": [
+        100.0,
+        97.06245692712812,
+        93.93369862292336,
+        89.0417960319839
+      ]
+    },
+    {
+      "figure": 1,
+      "series": "Model adjusted births",
+      "y": [
+        100.0,
+        88.78679879316445,
+        82.74548363986555,
+        79.0678839557777
+      ]
+    },
+    {
+      "figure": 2,
+      "series": "Linear baseline preference decline",
+      "y": [
+        0.0,
+        24.999999999999996,
+        50.0,
+        75.0,
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    {
+      "figure": 2,
+      "series": "Later decline preference decline",
+      "y": [
+        0.0,
+        15.624999999999996,
+        37.5,
+        65.625,
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    {
+      "figure": 2,
+      "series": "Earlier decline preference decline",
+      "y": [
+        0.0,
+        34.37499999999999,
+        62.5,
+        84.375,
+        100.0,
+        100.0,
+        100.0
+      ]
+    },
+    {
+      "figure": 2,
+      "series": "Later decline birth effect",
+      "y": [
+        1.4395381530742268,
+        2.1775240160879283,
+        1.9266908233143365,
+        1.0726187120075226
+      ]
+    },
+    {
+      "figure": 2,
+      "series": "Earlier decline birth effect",
+      "y": [
+        -1.4299792366076036,
+        -2.147201409659394,
+        -1.898460027742943,
+        -1.0648959264031643
+      ]
+    },
+    {
+      "figure": 3,
+      "loss": [
+        94.47557608417729,
+        81.42345187199955,
+        109.02962019569613
+      ],
+      "market_discrepancy_percent": [
+        0.003673153614722308,
+        0.0455558357893783,
+        0.04715809066427102
+      ],
+      "market_tolerance_percent": 0.02
+    }
+  ],
+  "target_numeric_cells_verified": 180,
+  "parameter_numeric_cells_verified": 37,
+  "endpoint_decline_percent": {
+    "0.0": 20.932116044222298,
+    "-0.5": 21.218114426269366,
+    "0.5": 20.639264682501206
+  },
+  "observed_endpoint_decline_percent": 10.958203968016093,
+  "meaning": "2020-2023 total versus 2008-2011 total; not cumulative and not single-year 2023",
+  "no_model_solve": true,
+  "standard_diagnostic_set_unchanged": true,
+  "visually_inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "render_log_errors": 0,
+  "independent_numeric_review": "pilot_figure_audit: all percentages, 36 fit rows and 15 parameter roles independently verified",
+  "builder_sha256": "72d43645d2f0b24707e9f97082a6aa4e33e5a3c12373f4e9f283a4908cf3eacd",
+  "output_sha256": {
+    "birth_counts_by_period.png": "fd6e489312d4176d1b1ea0085d1a5d3e81f48a1efd28385de71a8e9da7603678",
+    "preference_timing_plots.zip": "2178430de73b8be7a7c02911e9284384889c47fa5b8856a6a5a9ba57aaf6da03",
+    "preference_timing_and_births.svg": "d54868b176b9d08ba30b15f79557d829c7c83a82d04c0fb2b8422712814d7fcb",
+    "conditional_fit_and_market_clearing.svg": "8698006774e5af9b3c27087bd41e6ee4432fd5a105ace9baed259ccc49a7c961",
+    "conditional_fit_and_market_clearing.png": "6801901d4791edaff4ae946fb23e151700e3f88119ebfd73874476546700969d",
+    "preference_timing_and_births.png": "b0837c44958bf98a0f98066b0543af138cc5c2d3a3afe05f4eb1afbe96c39281",
+    "birth_counts_by_period.svg": "e2d3086328f9244f7ab67feef4e00c440db2507daf16c8b9765501be21832817"
+  }
+}

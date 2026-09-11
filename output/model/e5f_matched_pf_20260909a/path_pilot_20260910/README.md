@@ -171,3 +171,40 @@ main case reproduces fit, parameter and measurement tables byte for byte. The
 collector separately diagnoses exactly four relocated ACS path labels in the
 transition table and requires every other field to remain identical; the original
 failed file check remains in the record.
+
+## Supplemental figures for presentation review
+
+The author requested plots on September 11. `output/pdf/preference_timing_review.pdf`
+contains three landscape figure pages followed by every target-fit and parameter
+row. The figures show (1) birth counts by four-year block, (2) preference timing
+and birth effects relative to the linear baseline, and (3) conditional target
+fit alongside market discrepancies. They supplement the established diagnostic
+graph set; no model, target, policy run, manuscript or presentation source changed.
+
+The 20.9321% is the decrease in births in 2020-2023 relative to 2008-2011. It is
+not a cumulative shortfall, a single-2023 decline or a female fertility-rate
+estimate. Later timing changes the corresponding own-anchor decline to 21.2181%;
+it helps the middle blocks slightly but does not repair the final decline.
+
+Individual high-resolution PNG and editable vector SVG figures are in `figures/`,
+bundled as `figures/preference_timing_plots.zip`. The read-only numeric audit
+independently confirmed every percentage, all 36 fit rows and all 15 parameter
+roles. The builder verifies plotted arrays and all 180 displayed target numeric
+cells plus 37 parameter/bound cells against the supplied tables.
+
+Regenerate from the project root (using the installed local model environment
+and the app's pure-Python PDF dependencies):
+
+```sh
+E5F_PDF_SITE_PACKAGES=/Users/tommasodesanto/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages \
+MPLCONFIGDIR=/tmp/e5f_pilot_mpl code/model/.venv/bin/python \
+  code/model/tools/build_e5f_preference_timing_figures.py \
+  --pilot-root output/model/e5f_matched_pf_20260909a/path_pilot_20260910 \
+  --output-pdf output/pdf/preference_timing_review.pdf \
+  --scratch tmp/pdfs/preference_timing_review
+```
+
+This regeneration performs no model solve. Render the PDF with a working
+Fontconfig configuration and visually inspect all seven pages after changes.
+`figures/verification.json` records source hashes, plotted data and the final PDF
+hash; its visual-review flag is updated only after inspecting the rendered output.
