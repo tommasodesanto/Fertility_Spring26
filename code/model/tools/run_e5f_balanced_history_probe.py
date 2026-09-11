@@ -1,8 +1,9 @@
-"""Pinned six-date announced-history mapping and fresh replay; no objective.
+"""Pinned announced-history replay or explicit joint price/pension root; no objective.
 
 With exactly two root evaluations, the existing root samples the supplied path
 then repeats it. It does not take a price/pension optimization step. Conditional
 mapping/replay success is reported separately from market/fiscal convergence.
+The separate actual-root schema permits six or 28 dates and bounded updates.
 """
 from __future__ import annotations
 import argparse
@@ -28,6 +29,7 @@ import run_e5f_balanced_terminal_probe as terminal_driver
 
 ROOT=Path(__file__).resolve().parents[3]
 SCHEMA='e5f_balanced_history_probe_v1'
+ROOT_SCHEMA='e5f_balanced_history_root_v1'
 PIN_NAMES=('initial_checkpoint','initial_summary','initial_contract','terminal_checkpoint',
            'terminal_summary','terminal_contract','terminal_root_receipt')
 ROOT_KEYS={'price_bounds','pension_bounds','market_tolerance','fiscal_tolerance',
@@ -42,18 +44,23 @@ def validate_contract(c):
         'demographic_seed_mode','terminal_demographic_year','seconds','root_seconds',
         'identity_tolerance','initial_fertility_tolerance','audit_controls','root_controls',
         'initial_prices','initial_pensions','standard_graph_count'}
-    if set(c)!=required or c['schema']!=SCHEMA:
-        raise ValueError('Exact explicit six-date history-probe schema and fields required')
-    if (c['originating_source_commit']!='c6dd3508' or type(c['count']) is not int or c['count']!=6
+    actual=c.get('schema')==ROOT_SCHEMA
+    if actual:required.add('mode')
+    if (set(c)!=required or c['schema'] not in (SCHEMA,ROOT_SCHEMA)
+            or (actual and c['mode']!='actual_root')):
+        raise ValueError('Exact explicit history replay or actual-root schema and fields required')
+    if (c['originating_source_commit']!='c6dd3508' or type(c['count']) is not int or c['count'] not in ((6,28) if actual else (6,))
             or c['outside_origin_entry_share']!=.169 or c['outside_entry_status']!='diagnostic_outstanding_not_estimated'
             or c['psi_change_from_initial']!=-.25
             or c['preference_rule']!='announced_linear_2007_2023_then_constant_diagnostic'
             or c['demographic_seed_mode']!='serialized_frozen_2023_primitives_without_realignment'
             or c['terminal_demographic_year']!=2100 or c['standard_graph_count']!=17):
-        raise ValueError('Require approved diagnostic six-date timing, explicit entry/preference and demographic declarations')
+        raise ValueError('Require approved diagnostic timing, explicit entry/preference and demographic declarations')
+    ceiling=7200 if actual and c['count']==28 else 1800
     if (type(c['seconds']) is not int or type(c['root_seconds']) is not int
-            or not 1<=c['seconds']<=1800 or not 1<=c['root_seconds']<=c['seconds']-120):
-        raise ValueError('Smoke requires at most1800 seconds and120 seconds reporting reserve')
+            or not 1<=c['seconds']<=ceiling or not 1<=c['root_seconds']<=c['seconds']-120
+            or (actual and c['count']==6 and c['root_seconds']>1620)):
+        raise ValueError('Explicit bounded root/watchdog and120 seconds reporting reserve required')
     for name,ceiling in [('identity_tolerance',2e-9),('initial_fertility_tolerance',5e-4)]:
         if not math.isfinite(c[name]) or not 0<c[name]<=ceiling:
             raise ValueError(f'Invalid {name}')
@@ -74,15 +81,15 @@ def validate_contract(c):
             or Path(c['terminal_root_receipt']['path'])!=terminal_parent/'root_receipt.json'):
         raise ValueError('Each result packet must use its own canonical checkpoint/summary/receipt directory')
     r=c['root_controls']
-    if set(r)!=ROOT_KEYS or type(r['max_evaluations']) is not int or r['max_evaluations']!=2 or r['initial_jacobian'] is not None:
-        raise ValueError('Exact two-mapping initial-plus-replay loop, no Jacobian or optimization, required')
+    if set(r)!=ROOT_KEYS or type(r['max_evaluations']) is not int or r['max_evaluations'] not in (range(3,9) if actual else (2,)) or r['initial_jacobian'] is not None:
+        raise ValueError('Explicit bounded evaluation count and no supplied Jacobian required')
     for name,bound in [('initial_prices','price_bounds'),('initial_pensions','pension_bounds')]:
         values=c[name]
         lo,hi=r[bound]
-        if (not isinstance(values,list) or len(values)!=6 or not all(math.isfinite(v) and v>0 for v in values)
+        if (not isinstance(values,list) or len(values)!=c['count'] or not all(math.isfinite(v) and v>0 for v in values)
                 or not all(math.isfinite(v) for v in (lo,hi)) or not 0<lo<hi
                 or not all(lo<=v<=hi for v in values)):
-            raise ValueError(f'All six {name} must be explicit and within declared bounds')
+            raise ValueError(f'All dated {name} must be explicit and within declared bounds')
 
 
 def validate_parents(c, initial, initial_summary, initial_contract, terminal, terminal_summary, terminal_contract, root):
@@ -120,9 +127,61 @@ def validate_parents(c, initial, initial_summary, initial_contract, terminal, te
     return [dict(path=name,sha256=pin) for name,pin in sorted(prior_sources.items())]
 
 
+def validate_replay(c, receipt, signatures, records):
+    """Associate the root-selected point with its own fresh final path."""
+    def values(v):return v.tolist() if hasattr(v,'tolist') else v
+    count=c['count'];actual=c['schema']==ROOT_SCHEMA
+    evaluations=receipt['evaluations']
+    if (type(evaluations) is not int or not 2<=evaluations<=c['root_controls']['max_evaluations']
+            or (not actual and evaluations!=2) or len(signatures)!=evaluations
+            or len(records)!=evaluations or len(receipt['history'])!=evaluations
+            or not receipt['fresh_path_matches_final']):
+        raise RuntimeError('Missing complete mappings or fresh final association')
+    years=list(range(2007,2007+4*count,4))
+    if any(len(rows)!=count or [row['year'] for row in rows]!=years for rows in signatures):
+        raise RuntimeError('Incomplete dated policy/distribution signatures')
+    if [row['evaluation'] for row in records]!=list(range(1,evaluations+1)):
+        raise RuntimeError('Mapping records must count each evaluation exactly once')
+    best,final=receipt['best'],receipt['final']
+    if best is None or final is None:
+        raise RuntimeError('No selected mapping and reserved fresh final replay')
+    chosen=best['payload']['trial'];repeated=final['payload']['trial']
+    if (type(chosen) is not int or type(repeated) is not int
+            or not 1<=chosen<repeated or repeated!=evaluations
+            or records[-1]['phase']!='final'):
+        raise RuntimeError('Selected/fresh trial identifiers are inconsistent')
+    for point,trial in ((best,chosen),(final,repeated)):
+        recorded=records[trial-1];historical=receipt['history'][trial-1]
+        if (not point['mapping_valid'] or point['payload']['bellman_solves']!=2*count
+                or not all(a['passed'] for a in point['payload']['mapping_gates'].values())
+                or len(point['payload']['dated_household_audits'])!=count
+                or not all(all(a['gates'].values()) for a in point['payload']['dated_household_audits'])):
+            raise RuntimeError('Selected/final mapping audits or Bellman count failed')
+        for name in ('prices','fiscal_values','market_residual','fiscal_residual'):
+            if values(point[name])!=values(recorded[name]) or values(point[name])!=values(historical[name]):
+                raise RuntimeError('Saved mapping coordinates differ from selected trial')
+    if (any(values(best[k])!=values(final[k]) for k in ('prices','fiscal_values'))
+            or signatures[chosen-1]!=signatures[repeated-1]
+            or not all(receipt['gates'][k] for k in ('mapping','market_replay','fiscal_replay'))):
+        raise RuntimeError('Selected whole-path policy/distribution/fiscal replay failed')
+    tolerance=c['root_controls']['final_reproduction_tolerance']
+    for name in ('market_residual','fiscal_residual'):
+        left,right=values(best[name]),values(final[name])
+        if (len(left)!=count or len(right)!=count
+                or any(not math.isfinite(a) or not math.isfinite(b) or abs(a-b)>tolerance
+                       for a,b in zip(left,right))):
+            raise RuntimeError('Selected/final numerical residual reproduction failed')
+    for row in records:
+        if row['bellman_solves']!=2*count:
+            raise RuntimeError('Completed mapping Bellman count differs from announced loop')
+    return dict(verified=True,selected_trial=chosen,fresh_final_trial=repeated,
+        completed_mappings=evaluations,bellman_solves=sum(row['bellman_solves'] for row in records))
+
+
 def run(args):
     verify(args.contract,args.contract_sha256)
     c=json.loads(args.contract.read_text());validate_contract(c)
+    actual=c['schema']==ROOT_SCHEMA;count=c['count']
     out=args.output.resolve();out.mkdir(parents=True,exist_ok=False)
     started=time.monotonic();finished=threading.Event();lock=threading.Lock()
     state=dict(phase='preflight',completed_mappings=0)
@@ -181,8 +240,9 @@ def run(args):
             initial_bridge=old.diagnostics,demographics=demography_receipt,
             initial_supply=vars(old.supply_rule),outside_entry_status=c['outside_entry_status'],
             targets_loaded=False,objective_computed=False,production_eligible=False))
-        save('sizing.json',dict(dates=6,backward_and_forward_calls_per_mapping=12,maximum_mappings=2,
-            maximum_bellman_calls=24,extra_reporting_bellman_calls=0,prior_initial_ge_seconds_approximate=70.,
+        save('sizing.json',dict(dates=count,backward_and_forward_calls_per_mapping=2*count,
+            maximum_mappings=c['root_controls']['max_evaluations'],
+            maximum_bellman_calls=2*count*c['root_controls']['max_evaluations'],extra_reporting_bellman_calls=0,prior_initial_ge_seconds_approximate=70.,
             six_date_mapping_seconds='unknown: this exact smoke measures it; GE time is not a dated Bellman timing',
             root_budget_seconds=c['root_seconds'],total_budget_seconds=c['seconds'],
             reporting_reserve_seconds=c['seconds']-c['root_seconds']))
@@ -207,24 +267,23 @@ def run(args):
                     state_timing='pre-choice g_pre and corresponding current2023 choices retained separately')
         def callback(record):
             if record.get('event')=='complete':save('root_completion.json',record);return
+            record=dict(record,bellman_solves=2*len(dated_signatures[record['evaluation']-1]))
+            if record.get('event')=='safeguard':
+                records[-1]=record;save('root_evaluations.json',records);return
             records.append(record);state.update(phase='between_mappings',completed_mappings=record['evaluation'])
             save('latest_completed.json',record);save('root_evaluations.json',records)
+            save('dated_reproduction.json',dict(signatures=dated_signatures))
             if record.get('new_best'):save('best_so_far.json',record)
         result=adapter.solve_balanced_history(old_state=old,terminal=terminal,terminal_root_receipt=root,
             demographic_primitives=demographics,terminal_demographic_primitives=terminal_demographics,
-            count=6,initial_prices=c['initial_prices'],initial_pensions=c['initial_pensions'],
+            count=count,initial_prices=c['initial_prices'],initial_pensions=c['initial_pensions'],
             audit_controls=audit_controls,deadline_monotonic=started+c['root_seconds'],
             callback=callback,observer=observe,**c['root_controls'])
         receipt=result.root_receipt;save('root_receipt.json',receipt)
         save('dated_reproduction.json',dict(signatures=dated_signatures))
-        replay=(receipt['evaluations']==2 and receipt['fresh_path_matches_final']
-            and len(dated_signatures)==2 and all(len(rows)==6 for rows in dated_signatures)
-            and dated_signatures[0]==dated_signatures[1]
-            and receipt['gates']['mapping'] and receipt['gates']['market_replay'] and receipt['gates']['fiscal_replay'])
-        if not replay or result.path is None:
-            raise RuntimeError('Complete two-mapping policy/distribution/fiscal replay failed; no pass is claimed')
-        if sum(r['payload']['bellman_solves'] for r in (receipt['best'],receipt['final']))!=24:
-            raise RuntimeError('Expected exactly24 backward/forward Bellman calls')
+        replay=validate_replay(c,receipt,dated_signatures,records)
+        save('replay_verification.json',replay)
+        if result.path is None:raise RuntimeError('No fresh final path to serialize')
         primitive.pf.write_csv(out/'transition_path.csv',result.path.rows)
         save('dated_household_audits.json',receipt['final']['payload']['dated_household_audits'])
         rents=primitive.pf.rents_from_asset_prices(np.asarray(receipt['final']['prices']),
@@ -268,17 +327,20 @@ def run(args):
             price_panel='existing user-cost field displays actual PF date rent; no parameter modification',
             supplemental_tables='legacy diagnostic statistics only; not a loaded target system or objective'))
         maxrss=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        summary=dict(status='reproduced_conditional_history_mapping',mapping_replay_verified=True,
+        summary=dict(status=('converged_finite_history_root_diagnostic' if receipt['finite_horizon_market_fiscal_converged']
+                else 'incomplete_finite_history_root_diagnostic') if actual else 'reproduced_conditional_history_mapping',
+            mapping_replay_verified=True,
             finite_horizon_market_fiscal_converged=receipt['finite_horizon_market_fiscal_converged'],
             market_gate=receipt['gates']['housing'],social_security_gate=receipt['gates']['social_security'],
             root_status=receipt['status'],maximum_market_residual=float(np.max(np.abs(receipt['final']['market_residual']))),
             maximum_fiscal_residual=float(np.max(np.abs(receipt['final']['fiscal_residual']))),
-            root_evaluations=2,bellman_solves=24,standard_graph_count=17,checkpoint_reload_verified=True,
+            root_evaluations=receipt['evaluations'],bellman_solves=replay['bellman_solves'],standard_graph_count=17,checkpoint_reload_verified=True,
             checkpoint_sha256=digest(checkpoint),elapsed_seconds=time.monotonic()-started,
             maximum_rss_bytes=int(maxrss if sys.platform=='darwin' else maxrss*1024),
             historical_path_fitted=False,horizon_verified=False,production_eligible=False,calibrated_smm=False,
             terminal_distance=receipt['terminal_distance'],
-            interpretation='announced six-date prescribed path with exact replay; fiscal/market imbalance remains explicit')
+            interpretation=('bounded announced joint price/pension root; finite-path gates distinct from uncertified horizon'
+                if actual else 'announced six-date prescribed path with exact replay; fiscal/market imbalance remains explicit'))
         save('summary.json',summary)
         return 0
     except Exception as exc:

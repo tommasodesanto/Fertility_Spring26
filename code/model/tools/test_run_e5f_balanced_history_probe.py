@@ -127,4 +127,105 @@ class HistoryProbeContractTest(unittest.TestCase):
             driver.validate_parents(self.c,*parents)
 
 
+class ActualRootContractTest(unittest.TestCase):
+    setUp=HistoryProbeContractTest.setUp
+    def root_contract(self,count=6):
+        c=copy.deepcopy(self.c);c.update(schema=driver.ROOT_SCHEMA,mode='actual_root',count=count,
+            initial_prices=[.6]*count,initial_pensions=[2.]*count)
+        c['root_controls']['max_evaluations']=8
+        c['root_seconds']=1620 if count==6 else 6600
+        c['seconds']=1800 if count==6 else 7200
+        return c
+
+    def test_explicit_actual_root_six_and_long_contracts(self):
+        for count in (6,28):
+            c=self.root_contract(count);before=copy.deepcopy(c)
+            driver.validate_contract(c);self.assertEqual(c,before)
+
+    def test_root_mode_count_budget_and_incomplete_vectors_rejected(self):
+        for key,value in [('mode','replay'),('count',5),('count',100),('seconds',1801),
+                          ('root_seconds',1621),('initial_pensions',[2.]*5)]:
+            c=self.root_contract();c[key]=value
+            with self.subTest(key=key),self.assertRaises(ValueError):driver.validate_contract(c)
+        c=self.root_contract();del c['mode']
+        with self.assertRaises(ValueError):driver.validate_contract(c)
+        c=self.root_contract(28);c['seconds']=7201
+        with self.assertRaises(ValueError):driver.validate_contract(c)
+        for budget in (2,9):
+            c=self.root_contract();c['root_controls']['max_evaluations']=budget
+            with self.assertRaises(ValueError):driver.validate_contract(c)
+
+    def replay_fixture(self):
+        c=self.root_contract();count=c['count']
+        # Trial2 is chosen; trial3 worsens; trial4 freshly repeats2.
+        prices=[.6,.7,.8,.7];pensions=[2.,2.2,2.4,2.2]
+        signatures=[];records=[]
+        for i,(p,b) in enumerate(zip(prices,pensions),1):
+            signatures.append([dict(year=y,policy={'V':str(p)},distributions={'g_pre':str(b)},
+                fiscal={'pension':b}) for y in range(2007,2031,4)])
+            records.append(dict(evaluation=i,phase='final' if i==4 else ('initial' if i==1 else 'iterate'),
+                prices=[p]*count,fiscal_values=[b]*count,market_residual=[p-.72]*count,
+                fiscal_residual=[b-2.22]*count,bellman_solves=2*count))
+        def point(i):
+            x=copy.deepcopy(records[i-1]);x.update(mapping_valid=True,payload=dict(trial=i,bellman_solves=2*count,
+                mapping_gates={'mass':{'passed':True}},
+                dated_household_audits=[{'gates':{'household':True}} for _ in range(count)]))
+            return x
+        receipt=dict(evaluations=4,best=point(2),final=point(4),history=copy.deepcopy(records),
+            fresh_path_matches_final=True,gates=dict(mapping=True,market_replay=True,fiscal_replay=True,
+                housing=False,social_security=False))
+        return c,receipt,signatures,records
+
+    def test_final_replay_uses_selected_trial_not_initial_or_last_iterate(self):
+        c,r,s,records=self.replay_fixture()
+        got=driver.validate_replay(c,r,s,records)
+        self.assertEqual(got,dict(verified=True,selected_trial=2,fresh_final_trial=4,
+            completed_mappings=4,bellman_solves=48))
+        # Residual gates remain false: a valid replay must not claim equilibrium.
+        self.assertFalse(r['gates']['housing']);self.assertFalse(r['gates']['social_security'])
+
+    def test_initial_instead_of_selected_signature_rejected(self):
+        c,r,s,records=self.replay_fixture();s[-1]=copy.deepcopy(s[0])
+        with self.assertRaisesRegex(RuntimeError,'whole-path'):driver.validate_replay(c,r,s,records)
+
+    def test_wrong_selected_trial_and_missing_final_rejected(self):
+        for change in ('trial','final','association','phase'):
+            c,r,s,records=self.replay_fixture()
+            if change=='trial':r['best']['payload']['trial']=1
+            elif change=='final':r['final']=None
+            elif change=='association':r['fresh_path_matches_final']=False
+            else:records[-1]['phase']='iterate'
+            with self.subTest(change=change),self.assertRaises(RuntimeError):driver.validate_replay(c,r,s,records)
+
+    def test_missing_or_duplicate_mapping_and_dates_rejected(self):
+        for change in ('missing','duplicate','date','bellman'):
+            c,r,s,records=self.replay_fixture()
+            if change=='missing':records.pop()
+            elif change=='duplicate':records[-1]['evaluation']=3
+            elif change=='date':s[1].pop()
+            else:records[1]['bellman_solves']=10
+            with self.subTest(change=change),self.assertRaises(RuntimeError):driver.validate_replay(c,r,s,records)
+
+    def test_coordinate_residual_household_or_fiscal_drift_rejected(self):
+        for change in ('coordinates','residual','audit','fiscal','nonfinite'):
+            c,r,s,records=self.replay_fixture()
+            if change=='coordinates':r['final']['fiscal_values'][0]=3.
+            elif change=='residual':r['final']['fiscal_residual'][0]=.1
+            elif change=='audit':r['best']['payload']['dated_household_audits'][0]['gates']['household']=False
+            elif change=='fiscal':s[-1][0]['fiscal']['pension']=3.
+            else:
+                for point in (r['best'],r['final'],records[1],records[-1],r['history'][1],r['history'][-1]):
+                    point['market_residual'][0]=float('inf')
+            with self.subTest(change=change),self.assertRaises(RuntimeError):driver.validate_replay(c,r,s,records)
+
+    def test_original_two_mapping_receipt_still_passes(self):
+        c,r,s,records=self.replay_fixture();c=copy.deepcopy(self.c)
+        records=[records[1],records[-1]]
+        for i,row in enumerate(records,1):row['evaluation']=i;row['phase']='initial' if i==1 else 'final'
+        r['evaluations']=2;r['history']=copy.deepcopy(records)
+        r['best']['payload']['trial']=1;r['final']['payload']['trial']=2
+        got=driver.validate_replay(c,r,[s[1],s[-1]],records)
+        self.assertEqual(got['bellman_solves'],24)
+
+
 if __name__=='__main__':unittest.main()
