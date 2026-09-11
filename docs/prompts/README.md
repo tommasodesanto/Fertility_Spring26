@@ -4,6 +4,7 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `HANDOFF_jump_only_housing_balanced_pensions.md`: author-selected parenthood-only housing requirement with the unchanged concave equivalence scale, coordinated with balanced Social Security for the overnight calibration. Includes exact utility, rationale, pension error and repair status, parameter/target discipline, validation gates, and morning deliverables. Prepared for the author to give to the responsible agent; no run or message was dispatched.
 - `oracle_simplified_olg_consolidated_theory.md`: consolidated new-chat Pro
   packet for the dated full planner, housing and fertility results, a funded
   demographic transition, and the separate general-preferences branch.
