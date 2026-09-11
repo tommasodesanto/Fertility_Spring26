@@ -29,13 +29,22 @@ passed balance, household budgets, replay, queues and baseline reproduction,
 but failed two assertions requiring occupied saving choices to respond to
 future income. Occupied values responded. Source inspection verifies dated
 continuation enters optimization; binding constraints could explain unchanged
-controls, but diagnostic 17353361 is queued to test that explanation.
+controls. Diagnostic 17353361 has now completed: future pensions and payroll
+taxes change conditional saving/consumption at some unoccupied grid states,
+confirming that fiscal anticipation reaches actual policy optimization. Occupied
+controls remain unchanged. Borrowing corners alone are not an established
+explanation: the affected pre-retirement cohort has positive saving. The smoke's
+universal occupied-response assertion is too strong, but the original failed
+suite remains preserved and has not been rerun with a revised test.
 Receipts and the remaining sequence are in
 `output/model/e5f_matched_pf_20260909a/social_security_repair/README.md`.
-A quiet 15-minute monitor collects that diagnostic, then pauses; it cannot
-launch new model runs, calibration or production roots. The compiled suite is
-not certified. New initial/terminal stationary solutions and a jointly cleared
-dated path remain outstanding.
+All three checks are collected and the monitor is paused. The compiled suite
+is not certified. New initial/terminal stationary solutions and a jointly
+cleared dated path remain outstanding. The audited terminal is the hypothetical
+long-run stationary boundary of the sequential 2007-announced PF experiment,
+with preference fixed at its 2023 level and terminal demographic inputs frozen;
+it is not the 2023 state. Even the actual pre-announcement stationary distribution
+fails budget balance: its pension outlays are 83.9734% of payroll revenue.
 
 **September 11 — author-requested timing figures.**
 The seven-page review PDF is `output/pdf/preference_timing_review.pdf`: three

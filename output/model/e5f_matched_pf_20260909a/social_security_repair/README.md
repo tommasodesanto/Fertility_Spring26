@@ -55,7 +55,7 @@ path and validate the endpoint and source contracts.
 |---|---|---|---|
 | 17352552 | Read-only old initial and terminal budget audit; zero model solves | 1 CPU, 6 GB, 10 minutes | Completed in 13 seconds; collected |
 | 17352615 | Real compiled household smoke: six two-date cases, 24 dated Bellman calls plus one tiny-grid fixture setup | 1 CPU, 8 GB, 20 minutes | Failed overall: two occupied-policy-response assertions; other checks pass |
-| 17353361 | Same six conditional paths; inspect saving corners, age-specific response and all versus occupied state support | 1 CPU, 8 GB, 20 minutes | Queued |
+| 17353361 | Same six conditional paths; inspect saving corners, age-specific response and all versus occupied state support | 1 CPU, 8 GB, 20 minutes | Completed in 11 seconds; collected |
 
 The read-only audit verifies all 508 inherited source files and both endpoint
 checkpoint hashes. All amounts below are in model period units; every original
@@ -84,10 +84,16 @@ and `.out` files are retained. No model gate was weakened.
 An independent source check confirms that next-date, next-age values enter the
 actual compiled optimization. However, a policy response is not universal:
 the fixture forbids borrowing, has only one retirement age, and the two-date
-pension change affects only its last working cohort. Diagnostic 17353361 checks
-whether binding constraints explain the observed result and whether richer
-conditional policy states respond. That explanation remains unverified until
-the diagnostic is collected; do not mark the full compiled suite as passed.
+pension change affects only its last working cohort. Diagnostic 17353361 is
+collected in `anticipation_diagnostic.json`: conditional saving changes by up to
+0.436831 under future pensions and 0.840777 under future payroll tax. Those
+states have zero mass in this tiny fixture; occupied values respond while
+occupied controls remain unchanged. This establishes that anticipated fiscal
+income reaches actual policy optimization. It does not establish borrowing
+corners as the sole explanation: the affected pre-retirement cohort has positive
+saving. The original assertion requiring an occupied-control response is not
+universal. The original failed suite remains preserved and has not been rerun
+with a revised test; do not mark it as passed.
 
 Both checks are short validations, not calibration searches. The compiled test
 examines actual household budgets, first-date balance under each instrument,
@@ -108,10 +114,9 @@ SHA-256 both equal
 The audit checks all 508 inherited source fingerprints, both checkpoint hashes,
 and helper hash `f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455`.
 
-The existing monitor now checks the remaining diagnostic every 15 minutes,
-stays quiet on unchanged state, collects results and pauses after reporting.
-It may not launch new model runs, production roots or calibration. Original
-failures must be preserved.
+All three checks are collected and the monitor is paused. No model run,
+production root or calibration is active in this repair. Original failures
+remain preserved.
 
 ## Required before claiming the model is repaired
 
