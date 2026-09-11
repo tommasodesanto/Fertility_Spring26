@@ -945,3 +945,7 @@ birth-count indices, explicitly not female TFR or a production SMM objective.
 Launch through `../cluster/run_e5f_matched_pf_preference_pilot.sh` in an isolated
 snapshot. Evidence and author decisions are indexed in the main project at
 `output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
+
+## Diagnostic historical pension prefix
+
+`tools/e5f_historical_paygo_prefix.py` predicts pensions for the five observed-age stocks in 2007–2023 from explicit age totals and the exogenous earnings transition. It reuses actual payroll and retiree-benefit definitions; it neither solves households nor changes the historical root. Compare predictions with actual dated fiscal ledgers before use. Ledger agreement alone does not certify full age/earnings marginals or historical equilibrium. Four small tests include actual cohort transport, retirement/period units, population scaling and failure checks.
