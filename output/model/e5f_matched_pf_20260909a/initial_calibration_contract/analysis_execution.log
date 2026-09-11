@@ -1,0 +1,49 @@
+{
+  "status": "complete_19_case_12_moment_numerical_diagnostic",
+  "baseline": {
+    "case_id": "baseline",
+    "complete_12_moment_loss": 1499.85182523238,
+    "normalization": 2.100032862890971,
+    "normalization_gap": 3.286289097070849e-05,
+    "scored_moments": 12,
+    "target_restrictions": 13,
+    "parameter_rows": 17,
+    "recent_parent_model": -0.05324358594536549,
+    "recent_parent_contribution": 1263.9427590405123,
+    "numerical_gates_verified": true,
+    "checkpoint_sha256": "11d668691a3f80ec4c5b97d352c3fce64cf2b354149e6e31e1d395994e5635ee",
+    "dominant_restriction": "recent_parent_ownership",
+    "dominant_contribution": 1263.9427590405123,
+    "dominant_loss_share": 0.8427117517723346,
+    "second_restriction": "bequest_wealth",
+    "second_contribution": 65.75864521617135,
+    "third_restriction": "mean_rooms",
+    "third_contribution": 60.12050312847617,
+    "calibrated_estimate": false,
+    "inference_claim": false
+  },
+  "weighted_svd": {
+    "singular_values": [
+      162.6579265626174,
+      47.20643625356454,
+      38.40618516233706,
+      29.401753892678382,
+      8.46911842158611,
+      6.546925154064801,
+      3.7479528168246046,
+      2.5452900079116945,
+      0.08762079039537936
+    ],
+    "numerical_rank": 9,
+    "condition_number": 1856.385063734772,
+    "rank_absolute_tolerance": 4.3340778049825367e-13,
+    "rank_rule": "max(matrix_shape) * float64 machine epsilon * largest singular value",
+    "coordinate_definition": "log(-log(beta)) for beta; log actual parameter otherwise",
+    "interpretation": "Local numerical conditioning only; no strong/global identification or inference claim"
+  },
+  "rows": {
+    "fit": 247,
+    "parameters": 323,
+    "derivatives": 108
+  }
+}

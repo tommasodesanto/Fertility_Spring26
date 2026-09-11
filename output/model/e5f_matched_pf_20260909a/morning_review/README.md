@@ -1,5 +1,13 @@
 # Initial equilibrium: refreshable working review
 
+The current morning readout is **`morning_update.pdf`**, produced by
+`build_morning_update.py` after the September11 credit interruption. It includes
+both complete13-row fits under the new12-moment working objective, all17
+parameter/restriction rows, the recent-parent trade-off and the uncollected
+transition status. `morning_update_qa.json` records numerical and visual checks.
+The older `review.pdf` and builder below are retained historical diagnostics;
+their null-weight and missing-recent-parent statements are superseded.
+
 `review.pdf` is a four-page advisor review of the revised parenthood-only housing utility and balanced initial pensions. It reports the mapped initial point, not a re-estimated calibration or a certified perfect-foresight/policy result.
 
 - Page 1: verified initial loop and fiscal checks; economic interpretation and pending scope.

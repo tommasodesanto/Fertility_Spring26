@@ -1,0 +1,321 @@
+Fertility project | verified saved results; transition completion outstanding
+1
+Morning quantitative update
+September 11, 2026 | saved results checked after the 09:36 EDT restart
+Useful repairs and some large fit improvements, but no finished calibration or certified policy package.
+What is established
+The approved parenthood-only housing floor and equivalence scale are implemented in the isolated sequential model.
+The initial steady state reproduces exactly and balances Social Security at the fixed 17.9% payroll tax. A separate
+terminal steady-state test also balances; its preference change remains diagnostic.
+The 19-case sensitivity panel finished successfully. The 24-proposal joint round produced 23 valid candidates, including
+the twice-reproduced smoke point; one candidate failed the unchanged strict housing-equilibrium check. No failed
+candidate was admitted.
+The economic result that matters
+The tested joint candidate raises the first-birth room response from 0.439 to 0.692, against 0.720 in the data. Mean
+rooms improve from 6.246 to 5.609, against 5.561; ownership at ages 30-55 rises from 57.48% to 63.10%, against
+64.83%.
+However, its recent-parent ownership gap worsens from -5.32 to -6.34 percentage points, against +16.29 in the data.
+This row is retained. Once all 12 moments are counted, loss falls only 4.8%: 1499.85 to 1428.17. Recent-parent
+ownership accounts for 84.3% of baseline loss and 97.0% of the joint candidate loss. This candidate is not a selected
+final estimate.
+Transition and interruption
+The last collected six-date transition iterate reduced maximum housing imbalance from 45.3% to 1.76%, still above the
+0.02% gate. Pension residuals were below 4.4e-10. The final result has not been collected: cluster authentication was
+unavailable at 09:36. This does not establish a completed perfect-foresight path, an estimated historical shock, or policy
+effects.
+Agent work stopped when credits ran out around 03:27. Previously submitted cluster jobs could finish independently; repeated automatic wake-ups
+are not evidence of further research. Work has resumed with one lead and hourly monitoring. Next: collect the transition, finish recent-parent
+measurement for all joint candidates, then continue the full-objective search after its exact-loop check.
+
+Fertility project | verified saved results; transition completion outstanding
+2
+Starting point: complete fit
+All 13 restrictions: 12 scored moments and a separate normalization. Proportions and ownership gaps are in fraction units; 0.01 equals one
+percentage point.
+Moment
+ Target
+ Model
+ Gap
+ Weight
+ Loss
+Initial fertility normalization
+ 2.1
+ 2.10003
+ 3.28629e-05
+ -
+ -
+Childlessness, women 40-44
+ 0.198279
+ 0.180585
+ -0.0176937
+ 35532.3
+ 11.124
+Exactly one, among mothers 40-44
+ 0.213655
+ 0.233236
+ 0.0195807
+ 26952.8
+ 10.3339
+Mean age at first birth
+ 25.9763
+ 26.5851
+ 0.608877
+ 139.828
+ 51.8386
+First births at ages 30+
+ 0.249278
+ 0.265168
+ 0.0158896
+ 13866.1
+ 3.50088
+Wealth / annual gross earnings
+ 6.14586
+ 6.09688
+ -0.0489844
+ 7.5951
+ 0.0182242
+Annual bequests / wealth
+ 0.0088
+ 0.012368
+ 0.00356803
+ 5.16529e+06
+ 65.7586
+Old wealth-income ratio: p90 / median
+ 3.51594
+ 3.72976
+ 0.213821
+ 10.6164
+ 0.485372
+Mean occupied rooms, capped at 9
+ 5.5611
+ 6.24638
+ 0.685285
+ 128.021
+ 60.1205
+Ownership, household heads 30-55
+ 0.648334
+ 0.574768
+ -0.0735657
+ 2339.36
+ 12.6604
+First-birth room response
+ 0.720246
+ 0.438847
+ -0.2814
+ 137.565
+ 10.8932
+Rooms: 3+ versus 1-2 dependents
+ 0.347067
+ 0.166215
+ -0.180852
+ 280.528
+ 9.17532
+Recent-parent ownership gap
+ 0.162896
+ -0.0532436
+ -0.216139
+ 27055.8
+ 1263.94
+Total working minimum-distance loss: 1499.85. The fertility normalization has no weight or loss contribution.
+Weights are fixed working choices, not an efficient GMM covariance matrix. CPS uses approximate pooled scales; NCHS uses annual 2003-2006
+variation as a typical-year discrepancy scale. Housing and wealth use retained bootstrap scales; bequests retain a synthetic 5% scale.
+Recent-parent ownership uses actual current births into previously empty-dependent homes, compared with current empty homes including former
+parents. The synchronized snapshot and dependent-residence approximation are maintained explicitly; this is not an exact annual ACS interview
+reconstruction.
+
+Fertility project | verified saved results; transition completion outstanding
+3
+Tested joint candidate: complete fit
+All 13 restrictions: 12 scored moments and a separate normalization. Proportions and ownership gaps are in fraction units; 0.01 equals one
+percentage point.
+Moment
+ Target
+ Model
+ Gap
+ Weight
+ Loss
+Initial fertility normalization
+ 2.1
+ 2.10028
+ 0.000276518
+ -
+ -
+Childlessness, women 40-44
+ 0.198279
+ 0.205085
+ 0.00680612
+ 35532.3
+ 1.64597
+Exactly one, among mothers 40-44
+ 0.213655
+ 0.202669
+ -0.0109862
+ 26952.8
+ 3.25312
+Mean age at first birth
+ 25.9763
+ 25.9787
+ 0.0024364
+ 139.828
+ 0.000830027
+First births at ages 30+
+ 0.249278
+ 0.227356
+ -0.0219225
+ 13866.1
+ 6.66396
+Wealth / annual gross earnings
+ 6.14586
+ 5.8135
+ -0.332365
+ 7.5951
+ 0.839005
+Annual bequests / wealth
+ 0.0088
+ 0.0106133
+ 0.00181335
+ 5.16529e+06
+ 16.9847
+Old wealth-income ratio: p90 / median
+ 3.51594
+ 4.07964
+ 0.563702
+ 10.6164
+ 3.37345
+Mean occupied rooms, capped at 9
+ 5.5611
+ 5.60933
+ 0.0482294
+ 128.021
+ 0.297786
+Ownership, household heads 30-55
+ 0.648334
+ 0.631009
+ -0.0173249
+ 2339.36
+ 0.702167
+First-birth room response
+ 0.720246
+ 0.691588
+ -0.0286583
+ 137.565
+ 0.112982
+Rooms: 3+ versus 1-2 dependents
+ 0.347067
+ 0.173255
+ -0.173812
+ 280.528
+ 8.47488
+Recent-parent ownership gap
+ 0.162896
+ -0.0634248
+ -0.22632
+ 27055.8
+ 1385.82
+Total working minimum-distance loss: 1428.17. The fertility normalization has no weight or loss contribution.
+Weights are fixed working choices, not an efficient GMM covariance matrix. CPS uses approximate pooled scales; NCHS uses annual 2003-2006
+variation as a typical-year discrepancy scale. Housing and wealth use retained bootstrap scales; bequests retain a synthetic 5% scale.
+Recent-parent ownership uses actual current births into previously empty-dependent homes, compared with current empty homes including former
+parents. The synchronized snapshot and dependent-residence approximation are maintained explicitly; this is not an exact annual ACS interview
+reconstruction.
+
+Fertility project | verified saved results; transition completion outstanding
+4
+Parameters and remaining claims
+All 17 parameter/restriction rows. Nine structural coordinates vary jointly. The initial child-utility intercept is separately normalized to 2.1; fixed and
+budget-derived objects are not additional searched coordinates.
+Parameter
+ Starting
+ Joint
+ Bounds / restriction
+ Near bound?
+Annual discount factor
+ 0.995277
+ 0.995157
+ [0.94, 0.9995]
+ No
+First-birth taste scale
+ 2.16817
+ 1.48095
+ [0.02, 50]
+ No
+Later-birth taste scale
+ 1.77077
+ 1.47462
+ [0.02, 50]
+ No
+Tenure taste parameter
+ 1.05373
+ 1.09752
+ [0.1, 5]
+ No
+Housing-supply scale
+ 8.43484
+ 6.61785
+ [0.2, 80]
+ No
+Bequest level
+ 0.57035
+ 0.345935
+ [0, 8]
+ No
+Bequest curvature
+ 0.103724
+ 0.137972
+ [0.02, 16]
+ Yes
+First-birth fixed cost
+ 4.61973
+ 4.20301
+ [0, 8]
+ No
+Parenthood housing floor
+ 0.71685
+ 1.18189
+ [0.1, 2.3]
+ No
+Additional per-child floor
+ 0
+ 0
+ Fixed
+ -
+Child-utility intercept
+ 0.282704
+ 0.309861
+ Normalized
+ -
+Payroll tax
+ 0.179
+ 0.179
+ Fixed
+ -
+Period pension
+ 2.04636
+ 2.04636
+ Budget derived
+ -
+Supply elasticity
+ 0.63
+ 0.63
+ Fixed
+ -
+Tenure shock scale
+ 0.005
+ 0.005
+ Fixed
+ -
+Consumption share
+ 0.733
+ 0.733
+ Fixed
+ -
+CRRA curvature
+ 2
+ 2
+ Fixed
+ -
+Annual beta enters a four-year period as beta to the fourth power. Near-bound flags use the inherited rule: within 1% of the stated bound span. The
+local 12-by-9 Jacobian has numerical rank 9 but condition number about 1856; this is not evidence of strong identification.
+Source boundary: initial_sensitivity_panel and initial_joint_round_01/smoke_readout preserve the original solved packets.
+initial_calibration_contract/saved_case_scores contains complete machine-readable fits, parameters, source hashes and scoring receipts. Original
+model/observer diagnostic flags remain unchanged; these working scores do not certify a production benchmark.

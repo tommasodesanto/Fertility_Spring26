@@ -1,0 +1,183 @@
+diff --git a/code/model/tools/run_e5f_balanced_history_probe.py b/code/model/tools/run_e5f_balanced_history_probe.py
+index fabf6fdf..5a1764d6 100644
+--- a/code/model/tools/run_e5f_balanced_history_probe.py
++++ b/code/model/tools/run_e5f_balanced_history_probe.py
+@@ -30,6 +30,12 @@ import run_e5f_balanced_terminal_probe as terminal_driver
+ ROOT=Path(__file__).resolve().parents[3]
+ SCHEMA='e5f_balanced_history_probe_v1'
+ ROOT_SCHEMA='e5f_balanced_history_root_v1'
++CONTINUATION_SCHEMA='e5f_balanced_history_continuation_v1'
++CONTINUATION_FILES=dict(contract='contract.json',root_receipt='root_receipt.json',
++    summary='summary.json',checkpoint='dated_2023.pkl.gz',
++    dated_reproduction='dated_reproduction.json',root_evaluations='root_evaluations.json')
++CONTINUATION_SOURCE_WRAPPERS={'code/model/tools/run_e5f_balanced_history_probe.py',
++    'code/model/tools/test_run_e5f_balanced_history_probe.py'}
+ PIN_NAMES=('initial_checkpoint','initial_summary','initial_contract','terminal_checkpoint',
+            'terminal_summary','terminal_contract','terminal_root_receipt')
+ ROOT_KEYS={'price_bounds','pension_bounds','market_tolerance','fiscal_tolerance',
+@@ -44,9 +50,11 @@ def validate_contract(c):
+         'demographic_seed_mode','terminal_demographic_year','seconds','root_seconds',
+         'identity_tolerance','initial_fertility_tolerance','audit_controls','root_controls',
+         'initial_prices','initial_pensions','standard_graph_count'}
+-    actual=c.get('schema')==ROOT_SCHEMA
++    actual=c.get('schema') in (ROOT_SCHEMA,CONTINUATION_SCHEMA)
++    continuation=c.get('schema')==CONTINUATION_SCHEMA
+     if actual:required.add('mode')
+-    if (set(c)!=required or c['schema'] not in (SCHEMA,ROOT_SCHEMA)
++    if continuation:required.add('continuation')
++    if (set(c)!=required or c['schema'] not in (SCHEMA,ROOT_SCHEMA,CONTINUATION_SCHEMA)
+             or (actual and c['mode']!='actual_root')):
+         raise ValueError('Exact explicit history replay or actual-root schema and fields required')
+     if (c['originating_source_commit']!='c6dd3508' or type(c['count']) is not int or c['count'] not in ((6,28) if actual else (6,))
+@@ -56,6 +64,17 @@ def validate_contract(c):
+             or c['demographic_seed_mode']!='serialized_frozen_2023_primitives_without_realignment'
+             or c['terminal_demographic_year']!=2100 or c['standard_graph_count']!=17):
+         raise ValueError('Require approved diagnostic timing, explicit entry/preference and demographic declarations')
++    if continuation:
++        if c['count']!=6 or set(c['continuation'])!=set(CONTINUATION_FILES):
++            raise ValueError('Continuation requires six dates and every pinned prior receipt')
++        parent=Path(c['continuation']['contract']['path']).parent
++        for name,filename in CONTINUATION_FILES.items():
++            spec=c['continuation'][name]
++            if (set(spec)!={'path','sha256'} or not Path(spec['path']).is_absolute()
++                    or Path(spec['path'])!=parent/filename
++                    or not isinstance(spec['sha256'],str) or len(spec['sha256'])!=64
++                    or any(ch not in '0123456789abcdef' for ch in spec['sha256'])):
++                raise ValueError('Continuation receipts require completed hashes and one canonical directory')
+     ceiling=7200 if actual and c['count']==28 else 1800
+     if (type(c['seconds']) is not int or type(c['root_seconds']) is not int
+             or not 1<=c['seconds']<=ceiling or not 1<=c['root_seconds']<=c['seconds']-120
+@@ -81,8 +100,14 @@ def validate_contract(c):
+             or Path(c['terminal_root_receipt']['path'])!=terminal_parent/'root_receipt.json'):
+         raise ValueError('Each result packet must use its own canonical checkpoint/summary/receipt directory')
+     r=c['root_controls']
+-    if set(r)!=ROOT_KEYS or type(r['max_evaluations']) is not int or r['max_evaluations'] not in (range(3,9) if actual else (2,)) or r['initial_jacobian'] is not None:
+-        raise ValueError('Explicit bounded evaluation count and no supplied Jacobian required')
++    if set(r)!=ROOT_KEYS or type(r['max_evaluations']) is not int or r['max_evaluations'] not in (range(3,9) if actual else (2,)) or (not continuation and r['initial_jacobian'] is not None):
++        raise ValueError('Explicit bounded evaluation count; Jacobian only with verified continuation')
++    if continuation:
++        matrix=r['initial_jacobian'];n=2*c['count']
++        if (not isinstance(matrix,list) or len(matrix)!=n
++                or any(not isinstance(row,list) or len(row)!=n
++                       or any(not math.isfinite(v) for v in row) for row in matrix)):
++            raise ValueError('Continuation Jacobian must be a finite12x12 physical matrix')
+     for name,bound in [('initial_prices','price_bounds'),('initial_pensions','pension_bounds')]:
+         values=c[name]
+         lo,hi=r[bound]
+@@ -130,7 +155,7 @@ def validate_parents(c, initial, initial_summary, initial_contract, terminal, te
+ def validate_replay(c, receipt, signatures, records):
+     """Associate the root-selected point with its own fresh final path."""
+     def values(v):return v.tolist() if hasattr(v,'tolist') else v
+-    count=c['count'];actual=c['schema']==ROOT_SCHEMA
++    count=c['count'];actual=c['schema'] in (ROOT_SCHEMA,CONTINUATION_SCHEMA)
+     evaluations=receipt['evaluations']
+     if (type(evaluations) is not int or not 2<=evaluations<=c['root_controls']['max_evaluations']
+             or (not actual and evaluations!=2) or len(signatures)!=evaluations
+@@ -178,10 +203,85 @@ def validate_replay(c, receipt, signatures, records):
+         completed_mappings=evaluations,bellman_solves=sum(row['bellman_solves'] for row in records))
+ 
+ 
++def load_continuation(c):
++    """Verify a finished, reproduced but unconverged run; no population restart."""
++    if c['schema']!=CONTINUATION_SCHEMA:return None
++    pins=c['continuation']
++    for spec in pins.values():verify(spec['path'],spec['sha256'])
++    read=lambda name:json.loads(Path(pins[name]['path']).read_text())
++    previous=read('contract');original_hash=previous.pop('contract_sha256',None)
++    if (not isinstance(original_hash,str) or len(original_hash)!=64
++            or previous.get('schema') not in (ROOT_SCHEMA,CONTINUATION_SCHEMA)):
++        raise ValueError('Continuation requires the saved actual-root contract and original input hash')
++    validate_contract(previous)
++    mutable={'schema','source_sha256','initial_prices','initial_pensions','root_controls',
++        'root_seconds','seconds','continuation'}
++    if any(previous.get(k)!=v for k,v in c.items() if k not in mutable):
++        raise ValueError('Continuation scientific inputs or dates changed')
++    for name,pin in previous['source_sha256'].items():
++        if name not in CONTINUATION_SOURCE_WRAPPERS and c['source_sha256'].get(name)!=pin:
++            raise ValueError(f'Continuation economic source changed: {name}')
++    mutable_controls={'max_evaluations','initial_jacobian','damping'}
++    if any(previous['root_controls'][k]!=v for k,v in c['root_controls'].items() if k not in mutable_controls):
++        raise ValueError('Continuation numerical bounds or gates changed')
++    root=read('root_receipt');summary=read('summary')
++    signatures=read('dated_reproduction')['signatures'];records=read('root_evaluations')
++    if (root.get('schema')!='e5f_balanced_history_v1' or root.get('converged') is not False
++            or root.get('finite_horizon_market_fiscal_converged') is not False
++            or root.get('years')!=list(range(2007,2028,4))
++            or root.get('closure')!='fixed_tax' or root.get('payroll_tax')!=.179
++            or root.get('property_tax_period')!=.04 or root.get('property_tax_rebate')!=0.
++            or root.get('horizon_verified') is not False
++            or summary.get('status')!='incomplete_finite_history_root_diagnostic'
++            or summary.get('finite_horizon_market_fiscal_converged') is not False
++            or summary.get('mapping_replay_verified') is not True
++            or summary.get('checkpoint_reload_verified') is not True
++            or summary.get('standard_graph_count')!=17
++            or summary.get('checkpoint_sha256')!=pins['checkpoint']['sha256']
++            or summary.get('root_evaluations')!=root.get('evaluations')):
++        raise ValueError('Continuation requires a completely saved and repeated unfinished finite root')
++    replay=validate_replay(previous,root,signatures,records)
++    best,final=root['best'],root['final']
++    if (c['initial_prices']!=best['prices'] or c['initial_pensions']!=best['fiscal_values']
++            or c['root_controls']['initial_jacobian']!=root.get('final_jacobian')):
++        raise ValueError('Continuation must use the exact selected point and saved physical Jacobian')
++    damping=root.get('final_damping')
++    if (not isinstance(damping,(int,float)) or not math.isfinite(damping) or not 0<damping<=1
++            or c['root_controls']['damping']!=damping):
++        raise ValueError('Continuation must preserve the saved final damping')
++    return dict(prior_final=final,prior_signatures=signatures[replay['fresh_final_trial']-1],
++        original_contract_sha256=original_hash,prior_replay=replay,
++        source_wrapper_exceptions=sorted(CONTINUATION_SOURCE_WRAPPERS),
++        checkpoint_role='hashed prior2023 output evidence; original2007 initial input remains unchanged')
++
++
++def verify_continuation_initial(continuation, record, signatures, tolerance):
++    """Called inside the first normal callback, before the next root update."""
++    def values(v):return v.tolist() if hasattr(v,'tolist') else v
++    old=continuation['prior_final']
++    if record['evaluation']!=1 or record['phase']!='initial' or not record['mapping_valid']:
++        raise RuntimeError('Continuation first callback is not a valid fresh initial mapping')
++    for name in ('prices','fiscal_values'):
++        if values(record[name])!=values(old[name]):
++            raise RuntimeError('Continuation initial coordinates changed before fresh evaluation')
++    gaps={}
++    for name in ('market_residual','fiscal_residual'):
++        left,right=values(record[name]),values(old[name])
++        if len(left)!=len(right) or not left:
++            raise RuntimeError('Continuation initial residual dimensions changed')
++        differences=[abs(a-b) for a,b in zip(left,right)]
++        if any(not math.isfinite(a) or not math.isfinite(b) for a,b in zip(left,right)) or max(differences)>tolerance:
++            raise RuntimeError('Continuation initial mapping failed prior residual reproduction')
++        gaps[name]=max(differences)
++    if signatures!=continuation['prior_signatures']:
++        raise RuntimeError('Continuation initial policy/distribution/fiscal signatures changed')
++    return dict(verified=True,initial_mapping_counts_in_budget=True,residual_max_abs=gaps)
++
++
+ def run(args):
+     verify(args.contract,args.contract_sha256)
+     c=json.loads(args.contract.read_text());validate_contract(c)
+-    actual=c['schema']==ROOT_SCHEMA;count=c['count']
++    actual=c['schema'] in (ROOT_SCHEMA,CONTINUATION_SCHEMA);count=c['count']
+     out=args.output.resolve();out.mkdir(parents=True,exist_ok=False)
+     started=time.monotonic();finished=threading.Event();lock=threading.Lock()
+     state=dict(phase='preflight',completed_mappings=0)
+@@ -204,6 +304,9 @@ def run(args):
+     save('contract.json',dict(c,contract_sha256=args.contract_sha256));save('heartbeat.json',state)
+     try:
+         verified_sources=terminal_driver.verify_sources(c)
++        continuation=load_continuation(c)
++        if continuation is not None:
++            save('continuation_preflight.json',continuation)
+         initial_summary=pinned_json(c['initial_summary']);initial_contract=pinned_json(c['initial_contract'])
+         terminal_summary=pinned_json(c['terminal_summary']);terminal_contract=pinned_json(c['terminal_contract'])
+         root=pinned_json(c['terminal_root_receipt'])
+@@ -274,6 +377,10 @@ def run(args):
+             save('latest_completed.json',record);save('root_evaluations.json',records)
+             save('dated_reproduction.json',dict(signatures=dated_signatures))
+             if record.get('new_best'):save('best_so_far.json',record)
++            if continuation is not None and record['evaluation']==1:
++                checked=verify_continuation_initial(continuation,record,dated_signatures[0],
++                    c['root_controls']['final_reproduction_tolerance'])
++                save('continuation_initial_replay.json',checked)
+         result=adapter.solve_balanced_history(old_state=old,terminal=terminal,terminal_root_receipt=root,
+             demographic_primitives=demographics,terminal_demographic_primitives=terminal_demographics,
+             count=count,initial_prices=c['initial_prices'],initial_pensions=c['initial_pensions'],

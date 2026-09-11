@@ -1,0 +1,168 @@
+--- reviewed_joint_smoke/run.py
++++ joint_cases/run.py
+@@ -49,49 +49,97 @@
+     return path
+ 
+ 
+-def parent_gates(case, bundle, top, gate):
+-    """Validate the native two-repetition joint smoke; never impersonate a panel row."""
++def parent_gates(case, bundle, raw, collection, *, verify_remote_files):
++    """Validate a native successful fresh joint case and its original receipts."""
+     import csv
+     import importlib.util
++    require(raw['case_count'] == 23 and collection['case_count_verified'] == 23,
++            'Require final 23-success collection, including the reused smoke')
++    require(raw['status'] == collection['status'] == 'partial',
++            'Preserve the original failed-case status; do not relabel the 24-case round')
++    require(collection['array_job_id'] == '17362324' and collection['source_pins_verified'] == 634,
++            'Wrong original joint collection')
++    failed = [s for s in collection['states'] if s['status'] != 'verified']
++    require(len(failed) == 1 and failed[0]['index'] == 1 and failed[0]['status'] == 'failed',
++            'Expected exactly the original failed index 1')
++    verify(bounded_path(bundle, 'inputs/raw_case_summary.json'), collection['raw_case_summary_sha256'])
++    verify(bounded_path(bundle, 'inputs/original_collector.py'), collection['collector_sha256'])
++    verify(bounded_path(bundle, 'inputs/original_cases.json'), collection['cases_file_sha256'])
++    plan_path = bounded_path(bundle, 'inputs/original_run_plan.json')
++    verify(plan_path, collection['plan_sha256'])
++    plan = json.loads(plan_path.read_text())
++    meta = json.loads(bounded_path(bundle, 'inputs/original_preparation_metadata.json').read_text())
++    verify(bounded_path(bundle, 'inputs/panel_validator.py'), plan['artifact_sha256']['inputs/panel_validator.py'])
++    require(collection['smoke_gate_receipt']['exact_early_equality'] is True,
++            'Original prerequisite smoke replay did not pass')
++    entries = [r for r in raw['cases'] if r['case_id'] == case['case_id']]
++    require(len(entries) == 1, 'Missing or duplicate native joint record')
++    record = entries[0]
++    require(record['status'] == 'verified' and record['numeric_gates_verified'] is True,
++            'Original numerical gates did not pass')
++    require(record['smoke_reuse'] is False and record['index'] not in (1, 21),
++            'Only successful fresh cases are observed in this batch')
++    require(case['original_index'] == record['index'] and record['source_commit'] == '7e872053',
++            'Original joint source or index changed')
++    states = [s for s in collection['states'] if s['case_id'] == case['case_id']]
++    require(len(states) == 1 and states[0]['status'] == 'verified', 'Case absent from final verified states')
++    original_cases = json.loads(bounded_path(bundle, 'inputs/original_cases.json').read_text())
++    proposal = next(x for x in original_cases if x['case_id'] == case['case_id'])
+     parent_path = bounded_path(bundle, case['parent_contract'])
+     parent = json.loads(parent_path.read_text())
+-    require(gate['status'] == 'verified' and gate['repetitions'] == 2, 'Original joint gate missing')
+-    require(gate['exact_early_equality'] is True and gate['every_GE_market_verified_both_repetitions'] is True, 'Original joint replay/market gate failed')
+-    require(gate['source_pins_verified'] == 634 and gate['graph_count'] == 17, 'Original joint source/graph gate failed')
+-    require(gate['quantity_report_repetition'] == 2, 'Wrong final report repetition')
+-    require(case['case_id'] == parent['case_id'] == 'joint_smoke_analysis_47', 'Original joint case identity changed')
+-    verify(parent_path, gate['contract_sha256'])
+-    require(parent['repetitions'] == 2 and parent['maximum_GE_solves'] == 16, 'Original two-loop contract changed')
+-    require(parent['run_input_fingerprint'] == gate['input_fingerprint'], 'Joint input fingerprint mismatch')
+-    actual = json.loads(bounded_path(bundle, case['actual_output_contract']).read_text())
+-    require(actual == dict(parent, contract_sha256=gate['contract_sha256'], case='new_balanced'), 'Original joint output contract mismatch')
+-    require(top['status'] == 'passed_initial_candidate_loop' and top['normalized'] is True and top['repetitions'] == 2, 'Original joint smoke failed')
+-    require(top['stationary_solves'] == gate['stationary_solves'] <= 16 and top['elapsed_seconds'] <= 1800, 'Original joint budget failed')
+-    smoke = bounded_path(bundle, 'inputs/smoke')
+-    for name, pin in gate['artifact_sha256'].items():
+-        if name.endswith(('.json', '.csv')):
+-            verify(bounded_path(smoke, name), pin)
++    verify(parent_path, proposal['contract_sha256'])
++    require(record['actual_executed_contract_sha256'] == record['proposal_contract_sha256']
++            == proposal['contract_sha256'], 'Fresh case must retain its own executed contract')
++    require(record['input_fingerprint'] == parent['run_input_fingerprint']
++            == meta['run_input_fingerprint'] == plan['input_fingerprint'], 'Joint input fingerprints differ')
++    require(record['run_plan_sha256'] == collection['plan_sha256'], 'Run-plan fingerprint differs')
++    require(parent['case_id'] == case['case_id'] and parent['repetitions'] == 1
++            and parent['maximum_GE_solves'] == 8, 'Original fresh-case contract changed')
++    require(parent['source_sha256'] == meta['source_pins'] and len(parent['source_sha256']) == 634,
++            'Original economic source manifest differs')
++    dest = bounded_path(bundle, case['collected_directory'])
++    require(json.loads((dest/'collection_receipt.json').read_text()) == record,
++            'Case receipt differs from original raw collection')
++    for name, pin in record['file_sha256'].items():
++        verify(bounded_path(dest, name), pin)
++    actual = json.loads((dest/'contract.json').read_text())
++    require(actual == dict(parent, contract_sha256=proposal['contract_sha256'], case='new_balanced'),
++            'Original output contract mismatch')
++    seed = json.loads((dest/'seed_mapping.json').read_text())
++    require(seed['source_files_verified'] == 634 and seed['initial_psi'] == parent['initial_psi'],
++            'Original seed/source mapping changed')
++    top = json.loads((dest/'summary.json').read_text())
++    rep = dest/'repetition_01'
++    final = json.loads((rep/'summary.json').read_text())
++    early = json.loads((rep/'early_measurement.json').read_text())
++    ges = json.loads((rep/'stationary_solves.json').read_text())
++    require(top == record['summary'] and final == record['repetition_summary'] and top['final'] == final,
++            'Original summary objects differ')
+     spec = importlib.util.spec_from_file_location('original_panel_validator', bounded_path(bundle, 'inputs/panel_validator.py'))
+     validator = importlib.util.module_from_spec(spec); spec.loader.exec_module(validator)
+-    reps = []; early = []; solve_count = 0
+-    for number in (1, 2):
+-        p = smoke / f'repetition_{number:02d}'
+-        final = json.loads((p/'summary.json').read_text())
+-        observation = json.loads((p/'early_measurement.json').read_text())
+-        ges = json.loads((p/'stationary_solves.json').read_text())
+-        wrapper = dict(top, repetitions=1, stationary_solves=len(ges), final=final)
+-        with (p/'parameters.csv').open() as stream:
+-            validator.validate_summary(wrapper, parent, observation, list(csv.DictReader(stream)), ges)
+-        require(final['checkpoint_sha256'] == gate['artifact_sha256'][f'repetition_{number:02d}/initial_state.pkl.gz'], 'Original joint checkpoint claim mismatch')
+-        reps.append(final); early.append(observation); solve_count += len(ges)
+-    validator.validate_market(json.loads((smoke/'repetition_02/market_quantity_units.json').read_text()))
+-    require(early[0] == early[1], 'Original joint early measurements differ')
+-    for key in ('price', 'legacy_stationary_moments'):
+-        require(reps[0][key] == reps[1][key], 'Original joint numerical replay differs: '+key)
+-    require({k:v for k,v in reps[0]['normalization'].items() if k != 'stationary_solve_seconds'} == {k:v for k,v in reps[1]['normalization'].items() if k != 'stationary_solve_seconds'}, 'Original normalization differs')
+-    require(top['final'] == reps[1] and solve_count == top['stationary_solves'], 'Original aggregate joint summary differs')
+-    require(case['checkpoint'] == gate['proposal_reuse']['output_path'] + '/initial_state.pkl.gz', 'Joint checkpoint path changed')
+-    require(case['checkpoint_sha256'] == reps[1]['checkpoint_sha256'], 'Selected joint checkpoint pin differs')
++    with (rep/'parameters.csv').open() as stream:
++        parameters = validator.validate_summary(top, parent, early, list(csv.DictReader(stream)), ges)
++    require(parameters == record['parameters'] and len(ges) == record['stationary_solves'],
++            'Original parameter or solve accounting differs')
++    market = validator.validate_market(json.loads((rep/'market_quantity_units.json').read_text()))
++    require(market == record['market_residual'], 'Original market receipt differs')
++    checkpoint = record['checkpoint']
++    require(case['checkpoint'] == checkpoint['path'] == record['remote_output'] + '/repetition_01/initial_state.pkl.gz',
++            'Original checkpoint path changed')
++    require(case['checkpoint_sha256'] == checkpoint['sha256'] == final['checkpoint_sha256']
++            and case['checkpoint_bytes'] == checkpoint['bytes'], 'Original checkpoint fingerprint changed')
++    graphs = record['original_graphs']
++    require(len(graphs) == 17 and sorted(x['filename'] for x in graphs)
++            == sorted(meta['expected_graph_filenames']), 'Original 17-graph receipt incomplete')
++    require(len({x['path'] for x in graphs}) == 17, 'Duplicate original graph paths')
++    if verify_remote_files:
++        require(Path(case['checkpoint']).stat().st_size == case['checkpoint_bytes'], 'Checkpoint byte count differs')
++        for graph in graphs:
++            expected = record['remote_output'] + '/repetition_01/standard_diagnostics/' + graph['filename']
++            require(graph['path'] == expected, 'Original graph path changed')
++            path = Path(graph['path'])
++            require(path.stat().st_size == graph['bytes'], 'Original graph byte count differs')
++            verify(path, graph['sha256'])
+     return parent
+ 
+ 
+@@ -126,7 +174,7 @@
+     contract = json.loads(args.contract.read_text())
+     bundle = args.contract.resolve().parent
+     root = args.source_root.resolve()
+-    require(contract['schema'] == 'e5f_recent_parent_joint_smoke_probe_v1', 'Wrong schema')
++    require(contract['schema'] == 'e5f_recent_parent_joint_cases_probe_v1', 'Wrong schema')
+     require(contract['calibrated_smm'] is False and contract['maximum_model_solves'] == 0, 'Read-only contract required')
+     require(0 < contract['work_seconds'] <= 220 and contract['hard_seconds'] == 240, 'Wall limit changed')
+     verify(Path(__file__), contract['driver_sha256'])
+@@ -139,16 +187,18 @@
+     for name, pin in sources.items():
+         verify(bounded_path(root, name), pin)
+     require(hashlib.sha256(canonical(sources)).hexdigest() == contract['source_fingerprint'], 'Source fingerprint mismatch')
+-    raw = json.loads(bounded_path(bundle, contract['joint_parent_summary']).read_text())
+-    panel = json.loads(bounded_path(bundle, contract['joint_smoke_gate_receipt']).read_text())
++    raw = json.loads(bounded_path(bundle, contract['raw_case_summary']).read_text())
++    panel = json.loads(bounded_path(bundle, contract['joint_collection_receipt']).read_text())
+     empirical = json.loads(bounded_path(bundle, contract['empirical_target_file']).read_text())
+     target = next(x for x in empirical['records'] if x['id'] == contract['empirical_target_id'])
+     require(target['estimate'] == contract['empirical_target_value'] == 0.16289550916123285, 'Empirical target changed')
+     ids = [c['case_id'] for c in contract['cases']]
+     require(len(ids) == len(set(ids)) and len(ids) > 0, 'Duplicate or empty cases')
++    require(len(ids) == 22 and {c['original_index'] for c in contract['cases']} == set(range(24)) - {1, 21},
++            'Require exactly 22 successful fresh cases; failed and reused indices excluded')
+     for case in contract['cases']:
+         require(type(case['passes']) is int and case['passes'] in (1, 2), 'Invalid pass count')
+-        parent = parent_gates(case, bundle, raw, panel)
++        parent = parent_gates(case, bundle, raw, panel, verify_remote_files=not args.verify_only)
+         require(parent['source_commit'] == '7e872053', 'Wrong inherited source')
+         require(all(sources.get(k) == v for k, v in parent['source_sha256'].items()), 'Inherited source changed')
+         require(len(parent['source_sha256']) == contract['inherited_source_count'], 'Incomplete inherited manifest')

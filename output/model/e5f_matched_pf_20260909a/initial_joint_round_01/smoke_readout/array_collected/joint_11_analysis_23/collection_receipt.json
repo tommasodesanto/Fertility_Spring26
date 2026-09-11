@@ -1,0 +1,4472 @@
+{
+  "index": 11,
+  "case_id": "joint_11_analysis_23",
+  "proposal_contract_sha256": "d818813a282429154486652c99c0d4703cb58edfb24ca8f0241479f23495952b",
+  "smoke_reuse": false,
+  "remote_output": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23",
+  "run_plan_sha256": "c466736866e19f4b6115272b5e1ebc1d490c985e5fc11b900b68de8ea62a6edd",
+  "input_fingerprint": "4bd012a79ce13e50a0bf71a227464a2cfeb4be15d390d8f01f5bcb59c6eb4b11",
+  "status": "verified",
+  "actual_executed_contract_sha256": "d818813a282429154486652c99c0d4703cb58edfb24ca8f0241479f23495952b",
+  "source_commit": "7e872053",
+  "proposal": {
+    "profile": "equal_relative_5pct",
+    "projections": [
+      "uniform_birth_time",
+      "constant_post_cell"
+    ],
+    "ridge_strength": 1.0,
+    "fraction": 1.0,
+    "structural_candidate": {
+      "beta_annual": 0.9953347853769523,
+      "kappa_fert": 1.7939754604796974,
+      "kappa_fert_continuation": 1.4494715592873497,
+      "chi": 1.073514282030786,
+      "H0": 6.16158293574204,
+      "theta0": 0.3666729723535511,
+      "theta1": 0.10625165095134799,
+      "first_birth_fixed_cost": 4.0313685888806425,
+      "h_P": 1.1008968931880074
+    },
+    "log_coordinate_step": [
+      -0.01242868021520804,
+      -0.18945081066292827,
+      -0.20021576314348163,
+      0.018604222204704823,
+      -0.31403751606911273,
+      -0.4417796476956172,
+      0.024077297110657626,
+      -0.1362306428738669,
+      0.42901385799413
+    ],
+    "local_base_score": 258.19836861392764,
+    "linear_predicted_score": 102.31259306482525,
+    "predicted_moments": {
+      "uniform_birth_time": {
+        "cps_childlessness": 0.19239505460242048,
+        "cps_exactly_one": 0.2232848519768755,
+        "nchs_mean_age": 26.64375649789764,
+        "nchs_share30": 0.2678230924360785,
+        "wealth_earnings": 5.851983281262341,
+        "bequest_wealth": 0.01057281060963023,
+        "old_dispersion": 3.943122542753195,
+        "mean_rooms": 5.334916836391466,
+        "ownership_30_55": 0.555636017566281,
+        "first_birth_rooms": 0.573838814440642,
+        "family_rooms": 0.2265158877491093
+      },
+      "constant_post_cell": {
+        "cps_childlessness": 0.17905860090972625,
+        "cps_exactly_one": 0.20106985360652582,
+        "nchs_mean_age": 26.64375649789764,
+        "nchs_share30": 0.2678230924360785,
+        "wealth_earnings": 5.851983281262341,
+        "bequest_wealth": 0.01057281060963023,
+        "old_dispersion": 3.943122542753195,
+        "mean_rooms": 5.334916836391466,
+        "ownership_30_55": 0.555636017566281,
+        "first_birth_rooms": 0.573838814440642,
+        "family_rooms": 0.2265158877491093
+      }
+    },
+    "missing_recent_parent_model": null,
+    "status": "linear diagnostic proposal; requires nonlinear verification",
+    "calibrated_smm": false
+  },
+  "parameters": {
+    "beta_annual": 0.9953347853769523,
+    "kappa_fert": 1.7939754604796974,
+    "kappa_fert_continuation": 1.4494715592873497,
+    "chi": 1.073514282030786,
+    "H0": 6.16158293574204,
+    "theta0": 0.3666729723535511,
+    "theta1": 0.10625165095134799,
+    "first_birth_fixed_cost": 4.0313685888806425,
+    "h_P": 1.1008968931880074,
+    "hbar_child_rooms": 0.0,
+    "psi_child": 0.32734012535938695,
+    "payroll_tax": 0.179,
+    "pension_period": 2.0463613896121218,
+    "housing_supply_elasticity": 0.63,
+    "tenure_choice_kappa": 0.005,
+    "alpha_cons": 0.733,
+    "sigma": 2.0
+  },
+  "summary": {
+    "calibrated_smm": false,
+    "case": "new_balanced",
+    "elapsed_seconds": 550.310978544876,
+    "final": {
+      "calibrated_smm": false,
+      "checkpoint_sha256": "c4ee06c63aa39468f9a5116c34bc83c3cdeef996cf7a7257f6647453e534484a",
+      "early_measurement": {
+        "calibrated_smm": false,
+        "empirical_target_contract_activated": false,
+        "fertility": {
+          "constant_post_cell": {
+            "accounting": {
+              "age_cell_midpoint": [
+                20.0,
+                24.0,
+                28.0,
+                32.0,
+                36.0,
+                40.0,
+                44.0,
+                48.0,
+                52.0,
+                56.0,
+                60.0,
+                64.0,
+                68.0,
+                72.0,
+                76.0,
+                80.0,
+                84.0
+              ],
+              "age_cell_start": [
+                18.0,
+                22.0,
+                26.0,
+                30.0,
+                34.0,
+                38.0,
+                42.0,
+                46.0,
+                50.0,
+                54.0,
+                58.0,
+                62.0,
+                66.0,
+                70.0,
+                74.0,
+                78.0,
+                82.0
+              ],
+              "explicit_birth_flow": 0.1157246752962415,
+              "first_birth_flow": 0.05095611104503019,
+              "maximum_age_mass_error": 3.0531133177191805e-16,
+              "maximum_parity_flow_error": 1.1796119636642288e-16,
+              "overlap_weights": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.75,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "parity_birth_flows_by_age": [
+                [
+                  0.01580063871271099,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.012448305578940031,
+                  0.0050411420381247145,
+                  0.0
+                ],
+                [
+                  0.009147069272458784,
+                  0.008551791396746009,
+                  0.0009697524645040081
+                ],
+                [
+                  0.006051042032440651,
+                  0.01001993731258961,
+                  0.002899837132032036
+                ],
+                [
+                  0.0036772513823717244,
+                  0.009010676922092353,
+                  0.005516399570711467
+                ],
+                [
+                  0.0022588496645006926,
+                  0.006020758111582732,
+                  0.007524495030425174
+                ],
+                [
+                  0.0015729544016073141,
+                  0.0029908933289924484,
+                  0.006222880943410772
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "post_parity_interpolation_share": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                1.0,
+                1.0,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "post_parity_mass_by_age": [
+                [
+                  0.045932817387030096,
+                  0.015800638712710993,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.03348451179806162,
+                  0.023207802257978905,
+                  0.005041142038124714,
+                  0.0
+                ],
+                [
+                  0.02433744257600912,
+                  0.023803080142248103,
+                  0.01262318097397639,
+                  0.0009697524645040067
+                ],
+                [
+                  0.01828640057218609,
+                  0.01983418485191931,
+                  0.019743281163767196,
+                  0.003869589596361242
+                ],
+                [
+                  0.014609149178379306,
+                  0.01450075930860639,
+                  0.02323755850964343,
+                  0.009385989165462105
+                ],
+                [
+                  0.012350299508028701,
+                  0.010738850852595239,
+                  0.02173382159296285,
+                  0.016910484192398614
+                ],
+                [
+                  0.010777345101801379,
+                  0.009320911930120369,
+                  0.018501833987521057,
+                  0.023133365148254387
+                ],
+                [
+                  0.010777345095361301,
+                  0.009320911930196088,
+                  0.018501833986522696,
+                  0.023133365149329507
+                ],
+                [
+                  0.010777345103710619,
+                  0.00932091192982999,
+                  0.018501833981319868,
+                  0.023133365142757052
+                ],
+                [
+                  0.010777345097549972,
+                  0.009320911927555546,
+                  0.018501833978526224,
+                  0.023133365141589392
+                ],
+                [
+                  0.01077734510745084,
+                  0.009320911931877717,
+                  0.01850183398524772,
+                  0.023133365150182043
+                ],
+                [
+                  0.01077734509831714,
+                  0.009320911927566537,
+                  0.01850183398036196,
+                  0.023133365146200156
+                ],
+                [
+                  0.010777345103297574,
+                  0.00932091192859033,
+                  0.018501833978587224,
+                  0.023133365142559006
+                ],
+                [
+                  0.01012128831065323,
+                  0.008753513598786369,
+                  0.01737555901801526,
+                  0.021725151774231347
+                ],
+                [
+                  0.00929637944169647,
+                  0.00804008156396593,
+                  0.015959409885752517,
+                  0.01995450053765822
+                ],
+                [
+                  0.008226851371683592,
+                  0.007115087804376788,
+                  0.014123314756448327,
+                  0.017658778985047398
+                ],
+                [
+                  0.006828671716483722,
+                  0.00590585590687895,
+                  0.011723012293407534,
+                  0.014657613079784967
+                ]
+              ],
+              "pre_age_mass": [
+                0.061733456099741096,
+                0.061733456094165196,
+                0.06173345615673767,
+                0.06173345618423385,
+                0.06173345616209114,
+                0.06173345614598541,
+                0.06173345616769689,
+                0.0617334561614096,
+                0.06173345615761753,
+                0.06173345614522113,
+                0.06173345617475832,
+                0.0617334561524458,
+                0.06173345615303413,
+                0.0579755127016862,
+                0.05325037142907314,
+                0.047124032917556104,
+                0.03911515299655517
+              ],
+              "pre_parity_mass_by_age": [
+                [
+                  0.061733456099741096,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.045932817377001625,
+                  0.015800638717163567,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.033484511848467916,
+                  0.02320780226653538,
+                  0.005041142041734379,
+                  0.0
+                ],
+                [
+                  0.024337442604626818,
+                  0.023803080132068312,
+                  0.012623180983209515,
+                  0.0009697524643292104
+                ],
+                [
+                  0.018286400560751065,
+                  0.01983418484832696,
+                  0.01974328115826253,
+                  0.0038695895947505913
+                ],
+                [
+                  0.014609149172529347,
+                  0.014500759299677295,
+                  0.023237558511805277,
+                  0.009385989161973484
+                ],
+                [
+                  0.01235029950340872,
+                  0.010738850857505432,
+                  0.021733821601939318,
+                  0.016910484204843427
+                ],
+                [
+                  0.010777345095361301,
+                  0.009320911930196088,
+                  0.018501833986522696,
+                  0.023133365149329507
+                ],
+                [
+                  0.010777345103710619,
+                  0.00932091192982999,
+                  0.018501833981319868,
+                  0.023133365142757052
+                ],
+                [
+                  0.010777345097549972,
+                  0.009320911927555546,
+                  0.018501833978526224,
+                  0.023133365141589392
+                ],
+                [
+                  0.01077734510745084,
+                  0.009320911931877717,
+                  0.01850183398524772,
+                  0.023133365150182043
+                ],
+                [
+                  0.01077734509831714,
+                  0.009320911927566537,
+                  0.01850183398036196,
+                  0.023133365146200156
+                ],
+                [
+                  0.010777345103297574,
+                  0.00932091192859033,
+                  0.018501833978587224,
+                  0.023133365142559006
+                ],
+                [
+                  0.01012128831065323,
+                  0.008753513598786369,
+                  0.01737555901801526,
+                  0.021725151774231347
+                ],
+                [
+                  0.00929637944169647,
+                  0.00804008156396593,
+                  0.015959409885752517,
+                  0.01995450053765822
+                ],
+                [
+                  0.008226851371683592,
+                  0.007115087804376788,
+                  0.014123314756448327,
+                  0.017658778985047398
+                ],
+                [
+                  0.006828671716483722,
+                  0.00590585590687895,
+                  0.011723012293407534,
+                  0.014657613079784967
+                ]
+              ],
+              "window_mother_mass": 0.06290866161840021,
+              "window_parity_mass": [
+                0.014258158580365384,
+                0.012360109373887896,
+                0.024743286287122218,
+                0.0258052659573901
+              ],
+              "window_population_mass": 0.0771668201987656
+            },
+            "metadata": {
+              "age_projection": "constant_post_cell",
+              "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+              "birth_time_assumption": "post-fertility parity stock held constant throughout each age cell",
+              "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+              "diagnostic_only": true,
+              "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+              "flow_atol": 2e-10,
+              "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+              "mass_atol": 2e-10,
+              "moment_atol": 2e-12,
+              "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+              "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+              "production_smm_eligible": false,
+              "stationarity_certified_by_observer": false,
+              "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+              "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+              "weights_or_standard_errors_adopted": false
+            },
+            "moments": {
+              "childless_rate_40_44": 0.18477058590258544,
+              "exactly_one_among_mothers_40_44": 0.19647706779812776,
+              "period_mean_age_first_birth": 26.620328651712462,
+              "period_share_first_births_age30plus": 0.2661132728307553
+            },
+            "parity_shares_40_44": {
+              "0": 0.18477058590258544,
+              "1": 0.16017388486464568,
+              "2": 0.32064670052995164,
+              "3plus": 0.3344088287028172
+            }
+          },
+          "uniform_birth_time": {
+            "accounting": {
+              "age_cell_midpoint": [
+                20.0,
+                24.0,
+                28.0,
+                32.0,
+                36.0,
+                40.0,
+                44.0,
+                48.0,
+                52.0,
+                56.0,
+                60.0,
+                64.0,
+                68.0,
+                72.0,
+                76.0,
+                80.0,
+                84.0
+              ],
+              "age_cell_start": [
+                18.0,
+                22.0,
+                26.0,
+                30.0,
+                34.0,
+                38.0,
+                42.0,
+                46.0,
+                50.0,
+                54.0,
+                58.0,
+                62.0,
+                66.0,
+                70.0,
+                74.0,
+                78.0,
+                82.0
+              ],
+              "explicit_birth_flow": 0.1157246752962415,
+              "first_birth_flow": 0.05095611104503019,
+              "maximum_age_mass_error": 3.0531133177191805e-16,
+              "maximum_parity_flow_error": 1.1796119636642288e-16,
+              "overlap_weights": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.75,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "parity_birth_flows_by_age": [
+                [
+                  0.01580063871271099,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.012448305578940031,
+                  0.0050411420381247145,
+                  0.0
+                ],
+                [
+                  0.009147069272458784,
+                  0.008551791396746009,
+                  0.0009697524645040081
+                ],
+                [
+                  0.006051042032440651,
+                  0.01001993731258961,
+                  0.002899837132032036
+                ],
+                [
+                  0.0036772513823717244,
+                  0.009010676922092353,
+                  0.005516399570711467
+                ],
+                [
+                  0.0022588496645006926,
+                  0.006020758111582732,
+                  0.007524495030425174
+                ],
+                [
+                  0.0015729544016073141,
+                  0.0029908933289924484,
+                  0.006222880943410772
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              ],
+              "post_parity_interpolation_share": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                0.75,
+                0.375,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "post_parity_mass_by_age": [
+                [
+                  0.045932817387030096,
+                  0.015800638712710993,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.03348451179806162,
+                  0.023207802257978905,
+                  0.005041142038124714,
+                  0.0
+                ],
+                [
+                  0.02433744257600912,
+                  0.023803080142248103,
+                  0.01262318097397639,
+                  0.0009697524645040067
+                ],
+                [
+                  0.01828640057218609,
+                  0.01983418485191931,
+                  0.019743281163767196,
+                  0.003869589596361242
+                ],
+                [
+                  0.014609149178379306,
+                  0.01450075930860639,
+                  0.02323755850964343,
+                  0.009385989165462105
+                ],
+                [
+                  0.012350299508028701,
+                  0.010738850852595239,
+                  0.02173382159296285,
+                  0.016910484192398614
+                ],
+                [
+                  0.010777345101801379,
+                  0.009320911930120369,
+                  0.018501833987521057,
+                  0.023133365148254387
+                ],
+                [
+                  0.010777345095361301,
+                  0.009320911930196088,
+                  0.018501833986522696,
+                  0.023133365149329507
+                ],
+                [
+                  0.010777345103710619,
+                  0.00932091192982999,
+                  0.018501833981319868,
+                  0.023133365142757052
+                ],
+                [
+                  0.010777345097549972,
+                  0.009320911927555546,
+                  0.018501833978526224,
+                  0.023133365141589392
+                ],
+                [
+                  0.01077734510745084,
+                  0.009320911931877717,
+                  0.01850183398524772,
+                  0.023133365150182043
+                ],
+                [
+                  0.01077734509831714,
+                  0.009320911927566537,
+                  0.01850183398036196,
+                  0.023133365146200156
+                ],
+                [
+                  0.010777345103297574,
+                  0.00932091192859033,
+                  0.018501833978587224,
+                  0.023133365142559006
+                ],
+                [
+                  0.01012128831065323,
+                  0.008753513598786369,
+                  0.01737555901801526,
+                  0.021725151774231347
+                ],
+                [
+                  0.00929637944169647,
+                  0.00804008156396593,
+                  0.015959409885752517,
+                  0.01995450053765822
+                ],
+                [
+                  0.008226851371683592,
+                  0.007115087804376788,
+                  0.014123314756448327,
+                  0.017658778985047398
+                ],
+                [
+                  0.006828671716483722,
+                  0.00590585590687895,
+                  0.011723012293407534,
+                  0.014657613079784967
+                ]
+              ],
+              "pre_age_mass": [
+                0.061733456099741096,
+                0.061733456094165196,
+                0.06173345615673767,
+                0.06173345618423385,
+                0.06173345616209114,
+                0.06173345614598541,
+                0.06173345616769689,
+                0.0617334561614096,
+                0.06173345615761753,
+                0.06173345614522113,
+                0.06173345617475832,
+                0.0617334561524458,
+                0.06173345615303413,
+                0.0579755127016862,
+                0.05325037142907314,
+                0.047124032917556104,
+                0.03911515299655517
+              ],
+              "pre_parity_mass_by_age": [
+                [
+                  0.061733456099741096,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.045932817377001625,
+                  0.015800638717163567,
+                  0.0,
+                  0.0
+                ],
+                [
+                  0.033484511848467916,
+                  0.02320780226653538,
+                  0.005041142041734379,
+                  0.0
+                ],
+                [
+                  0.024337442604626818,
+                  0.023803080132068312,
+                  0.012623180983209515,
+                  0.0009697524643292104
+                ],
+                [
+                  0.018286400560751065,
+                  0.01983418484832696,
+                  0.01974328115826253,
+                  0.0038695895947505913
+                ],
+                [
+                  0.014609149172529347,
+                  0.014500759299677295,
+                  0.023237558511805277,
+                  0.009385989161973484
+                ],
+                [
+                  0.01235029950340872,
+                  0.010738850857505432,
+                  0.021733821601939318,
+                  0.016910484204843427
+                ],
+                [
+                  0.010777345095361301,
+                  0.009320911930196088,
+                  0.018501833986522696,
+                  0.023133365149329507
+                ],
+                [
+                  0.010777345103710619,
+                  0.00932091192982999,
+                  0.018501833981319868,
+                  0.023133365142757052
+                ],
+                [
+                  0.010777345097549972,
+                  0.009320911927555546,
+                  0.018501833978526224,
+                  0.023133365141589392
+                ],
+                [
+                  0.01077734510745084,
+                  0.009320911931877717,
+                  0.01850183398524772,
+                  0.023133365150182043
+                ],
+                [
+                  0.01077734509831714,
+                  0.009320911927566537,
+                  0.01850183398036196,
+                  0.023133365146200156
+                ],
+                [
+                  0.010777345103297574,
+                  0.00932091192859033,
+                  0.018501833978587224,
+                  0.023133365142559006
+                ],
+                [
+                  0.01012128831065323,
+                  0.008753513598786369,
+                  0.01737555901801526,
+                  0.021725151774231347
+                ],
+                [
+                  0.00929637944169647,
+                  0.00804008156396593,
+                  0.015959409885752517,
+                  0.01995450053765822
+                ],
+                [
+                  0.008226851371683592,
+                  0.007115087804376788,
+                  0.014123314756448327,
+                  0.017658778985047398
+                ],
+                [
+                  0.006828671716483722,
+                  0.00590585590687895,
+                  0.011723012293407534,
+                  0.014657613079784967
+                ]
+              ],
+              "window_mother_mass": 0.061888983034584046,
+              "window_parity_mass": [
+                0.015277837164181407,
+                0.013495006801984902,
+                0.02644624759623608,
+                0.021947728636363066
+              ],
+              "window_population_mass": 0.07716682019876545
+            },
+            "metadata": {
+              "age_projection": "uniform_birth_time",
+              "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+              "birth_time_assumption": "one parity transition per cell, uniformly distributed within the four-year age interval",
+              "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+              "diagnostic_only": true,
+              "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+              "flow_atol": 2e-10,
+              "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+              "mass_atol": 2e-10,
+              "moment_atol": 2e-12,
+              "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+              "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+              "production_smm_eligible": false,
+              "stationarity_certified_by_observer": false,
+              "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+              "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+              "weights_or_standard_errors_adopted": false
+            },
+            "moments": {
+              "childless_rate_40_44": 0.19798453693995582,
+              "exactly_one_among_mothers_40_44": 0.21805184283677415,
+              "period_mean_age_first_birth": 26.620328651712462,
+              "period_share_first_births_age30plus": 0.2661132728307553
+            },
+            "parity_shares_40_44": {
+              "0": 0.19798453693995582,
+              "1": 0.17488094970383142,
+              "2": 0.34271526969902516,
+              "3plus": 0.28441924365718774
+            }
+          }
+        },
+        "housing_wealth": {
+          "age_cell_labels": [
+            18.0,
+            22.0,
+            26.0,
+            30.0,
+            34.0,
+            38.0,
+            42.0,
+            46.0,
+            50.0,
+            54.0,
+            58.0,
+            62.0,
+            66.0,
+            70.0,
+            74.0,
+            78.0,
+            82.0
+          ],
+          "age_overlap_weights": {
+            "18_85": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "25_34": [
+              0.0,
+              0.25,
+              1.0,
+              1.0,
+              0.25,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "30_55": [
+              0.0,
+              0.0,
+              0.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "76_84": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5,
+              1.0,
+              0.75
+            ]
+          },
+          "age_projection": "uniform_within_age_cell",
+          "diagnostic_allow_family_proxies": true,
+          "moments": {
+            "aggregate_mean_occupied_rooms_capped9_18_85": 5.413606033102339,
+            "aggregate_wealth_to_annual_gross_labor_earnings": 5.861028086682878,
+            "annual_bequest_flow_to_aggregate_wealth": 0.01078115405155592,
+            "housing_increment_0to1": 0.6910914037401197,
+            "old_total_wealth_to_annual_income_median_7684": 5.371006466360168,
+            "old_total_wealth_to_annual_income_p90_p50_7684": 4.1123098510983525,
+            "own_rate_25_34": 0.2788104714030141,
+            "own_rate_30_55": 0.5462609042887048,
+            "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9": 0.20344592708386866,
+            "recent_parent_minus_no_resident_child_ownership_30_55": null
+          },
+          "observer_id": "e5f_initial_housing_wealth_diagnostic_v1",
+          "production_eligible": false,
+          "rows": [
+            {
+              "approximations": [
+                "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+                "National model versus 42-MET2013 housing sample"
+              ],
+              "available": true,
+              "cap_before_income_aggregation": true,
+              "denominator": 0.9999999999997878,
+              "model_value": 5.413606033102339,
+              "moment": "aggregate_mean_occupied_rooms_capped9_18_85",
+              "numerator": 5.413606033101191,
+              "production_eligible": false,
+              "reason": null,
+              "rooms_capped_at": 9.0,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+                "National model versus 42-MET2013 housing sample",
+                "ACS DUE structure restriction is not represented by a model state"
+              ],
+              "available": true,
+              "denominator": 0.40126746505159877,
+              "model_value": 0.5462609042887048,
+              "moment": "own_rate_30_55",
+              "numerator": 0.2191967283207226,
+              "production_eligible": false,
+              "reason": null,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+                "National model versus 42-MET2013 housing sample",
+                "ACS DUE structure restriction is not represented by a model state"
+              ],
+              "available": true,
+              "denominator": 0.15433364040500133,
+              "model_value": 0.2788104714030141,
+              "moment": "own_rate_25_34",
+              "numerator": 0.04302983503466169,
+              "production_eligible": false,
+              "reason": null,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+                "National model versus 42-MET2013 housing sample",
+                "Model dependent counts replace ACS resident own children with YNGCH<18"
+              ],
+              "available": true,
+              "cap_before_income_aggregation": true,
+              "high_mass": 0.011327105703962585,
+              "low_mass": 0.21836736510704655,
+              "model_dependent_proxy": true,
+              "model_value": 0.20344592708386866,
+              "moment": "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9",
+              "production_eligible": false,
+              "reason": null,
+              "rooms_capped_at": 9.0,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [],
+              "available": false,
+              "model_value": null,
+              "moment": "recent_parent_minus_no_resident_child_ownership_30_55",
+              "production_eligible": false,
+              "reason": "Unavailable: ACS oldest resident child under four and no-resident-child controls cannot be reconstructed from dependent counts and lifetime parity",
+              "status": "unavailable"
+            },
+            {
+              "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+              "approximations": [
+                "National PSID household-income normalization; survey-wave stock/flow dates inherited"
+              ],
+              "available": true,
+              "denominator": 0.7408014737067534,
+              "model_value": 5.861028086682878,
+              "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+              "numerator": 4.341858244051349,
+              "production_eligible": false,
+              "reason": null,
+              "status": "diagnostic_only"
+            },
+            {
+              "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+              "approximations": [
+                "External historical restriction; synthetic uncertainty; forced terminal deaths"
+              ],
+              "available": true,
+              "denominator": 4.341858244051349,
+              "model_value": 0.01078115405155592,
+              "moment": "annual_bequest_flow_to_aggregate_wealth",
+              "numerator": 0.046810242599135674,
+              "production_eligible": false,
+              "reason": null,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Uniform within-age-cell overlap for ages 76--84",
+                "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+                "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+              ],
+              "available": true,
+              "denominator": 5.371006466360168,
+              "excluded_nonpositive_income_mass": 0.0,
+              "model_value": 4.1123098510983525,
+              "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+              "numerator": 22.087242801925868,
+              "pension_income_proxy": true,
+              "production_eligible": false,
+              "property_tax_lump_sum_transfer": 0.0,
+              "reason": null,
+              "selected_mass": 0.1030855833795092,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Uniform within-age-cell overlap for ages 76--84",
+                "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+                "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+              ],
+              "available": true,
+              "excluded_nonpositive_income_mass": 0.0,
+              "model_value": 5.371006466360168,
+              "moment": "old_total_wealth_to_annual_income_median_7684",
+              "pension_income_proxy": true,
+              "production_eligible": false,
+              "property_tax_lump_sum_transfer": 0.0,
+              "reason": null,
+              "selected_mass": 0.1030855833795092,
+              "status": "diagnostic_only"
+            },
+            {
+              "approximations": [
+                "Pooled PSID response applied to initial stationary economy under stability assumption",
+                "Matched model risk-set weights differ from Sun-Abraham cohort/event weights; non-flat prepath caveat retained"
+              ],
+              "available": true,
+              "branch": {
+                "branch_mass_roundoff_gates": [
+                  {
+                    "actual_mass_before_normalization": 0.050956111048412134,
+                    "expected_mass": 0.050956111045030214,
+                    "relative_gap": 6.636926709852536e-11,
+                    "relative_tolerance": 5e-09,
+                    "stage": "treated_branch_advancement"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.05095611106935401,
+                    "expected_mass": 0.050956111045030214,
+                    "relative_gap": 4.773479074627699e-10,
+                    "relative_tolerance": 5e-09,
+                    "stage": "control_branch_advancement"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.05095611104503015,
+                    "expected_mass": 0.05095611104503015,
+                    "relative_gap": 0.0,
+                    "relative_tolerance": 5e-09,
+                    "stage": "treated_destination_feasibility_gate"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.05095611104503022,
+                    "expected_mass": 0.05095611104503015,
+                    "relative_gap": 1.3617393010575898e-15,
+                    "relative_tolerance": 5e-09,
+                    "stage": "control_destination_feasibility_gate"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.050956111045030145,
+                    "expected_mass": 0.05095611104503015,
+                    "relative_gap": 1.3617393010575897e-16,
+                    "relative_tolerance": 5e-09,
+                    "stage": "treated_destination_fertility"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.050956111044960915,
+                    "expected_mass": 0.05095611104503015,
+                    "relative_gap": 1.358743474595263e-12,
+                    "relative_tolerance": 5e-09,
+                    "stage": "treated_destination_current_choice"
+                  },
+                  {
+                    "actual_mass_before_normalization": 0.05095611104501246,
+                    "expected_mass": 0.05095611104503015,
+                    "relative_gap": 3.472435217696854e-13,
+                    "relative_tolerance": 5e-09,
+                    "stage": "control_destination_current_choice"
+                  }
+                ],
+                "census_age_bridge_applied": false,
+                "control_feasibility_projection_mass": 0.0,
+                "control_mean_housing": 4.637808463051328,
+                "destination_mass": 0.05095611104503009,
+                "destination_period": 1,
+                "destination_price": 0.8206596962398385,
+                "housing_response": 0.6910914037401197,
+                "origin_mass": 0.050956111045030214,
+                "origin_period": 0,
+                "origin_price": 0.8206596962398385,
+                "status": "complete_one_period_dated_matched_branch_did",
+                "survival_loss": 0.0,
+                "treated_continuation_births": 0.018392224201551483,
+                "treated_feasibility_projection_mass": 0.0,
+                "treated_mean_housing": 5.328899866791447
+              },
+              "destination_continuation_births_allowed": true,
+              "model_value": 0.6910914037401197,
+              "moment": "housing_increment_0to1",
+              "production_eligible": false,
+              "reason": null,
+              "stationary_policy_used_at_both_dates": true,
+              "status": "diagnostic_only",
+              "uncapped_rooms": true
+            }
+          ],
+          "stationary_input_certified": false,
+          "status": "diagnostic_only_measurement_approximations_unresolved",
+          "target_contract_activated": false
+        },
+        "weights_assigned": false
+      },
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.17900000036499408,
+          "implied_balanced_pension_period": 2.0463613854394413,
+          "payroll_tax_base_period": 2.963205894826717,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138551739823,
+          "pension_budget_residual": -1.0815526252372365e-09,
+          "pension_outlays": 0.5304138562555349,
+          "pension_period_units": 2.0463613896121218,
+          "retiree_benefit_exposure": 0.2591985261977956,
+          "retiree_household_mass": 0.2591985261977956,
+          "scaled_pension_budget_residual": -2.0390730982642014e-09,
+          "worker_household_mass": 0.7408014738019923
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "normalized_age_income_max_gap": 6.656513317979118e-11
+      },
+      "household_budget": {
+        "actual_rent": 0.13599272410761426,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 7.105427357601002e-15
+      },
+      "legacy_stationary_moments": {
+        "aggregate_mean_occupied_rooms_18_85": 5.561613448484002,
+        "aggregate_own_rate": 0.6017972904480332,
+        "aggregate_wealth_to_annual_gross_labor_earnings": 5.861028086682857,
+        "aggregate_wealth_to_annual_gross_labor_earnings_26_35": 1.5476524418196183,
+        "aggregate_wealth_to_annual_gross_labor_earnings_36_45": 3.134672478238483,
+        "aggregate_wealth_to_annual_gross_labor_earnings_46_55": 5.163326280658827,
+        "aggregate_wealth_to_annual_gross_labor_earnings_56_65": 6.851826601349693,
+        "annual_bequest_flow_to_aggregate_wealth": 0.010781154051555667,
+        "attempt_hazard_by_age": [
+          0.2506245138922057,
+          0.2670791751253769,
+          0.27485240535149597,
+          0.2623298434098506,
+          0.23402618203546818,
+          0.21436895136910547,
+          0.25225913698115454,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "childless_chosen_45": 0.1321992061321246,
+        "childless_clock_45": 0.057043569920498194,
+        "childless_rate": 0.17457867726141832,
+        "first_birth_age_distribution": [
+          0.3081635083922406,
+          0.23593223732217455,
+          0.17204347874296214,
+          0.11794954538751119,
+          0.07745067599566811,
+          0.05122287764236667,
+          0.03723767651707685,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "first_birth_hazard_by_age": [
+          0.24561202361436157,
+          0.25794957272404495,
+          0.25879433995380896,
+          0.23613455269667036,
+          0.19408491732639888,
+          0.15183712825993476,
+          0.12649177397086303,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "housing_increment_0to1": 0.6069418448286009,
+        "housing_increment_1to2": 0.0,
+        "housing_user_cost_share": 0.2552434727323894,
+        "liquid_wealth_to_income": 0.6444683102175146,
+        "market_residual": 2.4828585357030937e-05,
+        "mean_age_first_birth": 26.892843929070395,
+        "mean_completed_fertility": 1.874586042659971,
+        "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": 2.1172797006324835,
+        "old_age_own_rate": 0.8724166847941836,
+        "old_age_parent_childless_gap": 0.16888697530520813,
+        "old_age_parent_childless_gap_6575": 0.16888697530520813,
+        "old_minus_young_owner_rate_6575_2534": 0.5479453107555934,
+        "old_nonhousing_ge_1x_income_share_6575": 0.434576081868901,
+        "old_nonhousing_wealth_to_income_6575": 4.535686136915551,
+        "old_nonhousing_wealth_to_income_median_6575": 0.5909524738495049,
+        "old_owner_rate": 0.8724166847941836,
+        "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 2.202479237597356,
+        "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575": -0.2727472956228493,
+        "old_parent_childless_total_wealth_to_income_gap_6575": 5.408509094637255,
+        "old_parent_childless_total_wealth_to_income_median_gap_6575": 5.197751115119234,
+        "old_total_estate_wealth_to_annual_income_median_7684": 5.033560506387013,
+        "old_total_estate_wealth_to_annual_income_p90_p50_7684": 3.8461382993473596,
+        "old_total_wealth_to_annual_income_median_7684": 5.033560506387013,
+        "old_total_wealth_to_annual_income_p90_7684": 19.35976984569738,
+        "old_total_wealth_to_annual_income_p90_p50_7684": 3.8461382993473596,
+        "old_total_wealth_to_income_6575": 12.990796435062057,
+        "old_total_wealth_to_income_median_6575": 7.45629235927605,
+        "own_family_gap": 0.18963589796579722,
+        "own_gap_newparent_nonparent_3055": 0.18963589796579722,
+        "own_rate": 0.5594775544579348,
+        "own_rate_2534": 0.3244713740385901,
+        "own_rate_3055": 0.5594775544579348,
+        "own_rate_3544": 0.5073336864992453,
+        "own_rate_newparents_3055": 0.5759150738862524,
+        "own_rate_nonparents_3055": 0.3862791759204552,
+        "owner_neg_liquid_share_2534": 0.740731844324201,
+        "parity_progression_1to2_flow": 0.817079605492943,
+        "parity_progression_2to3_flow": 0.5556203797631465,
+        "parity_share_0": 0.17457867726141832,
+        "parity_share_1": 0.15098639395841154,
+        "parity_share_2plus": 0.6744349287801701,
+        "parity_share_3plus": 0.3747297911412191,
+        "permanent_income_childless_by_level": [
+          0.4636873837791175,
+          0.12498521749821975,
+          0.08384380826018625
+        ],
+        "permanent_income_childless_high_minus_low": -0.3798435755189312,
+        "permanent_income_completed_fertility_by_level": [
+          1.064127904301811,
+          2.2638919096544723,
+          2.48215284102616
+        ],
+        "permanent_income_completed_fertility_high_minus_low": 1.418024936724349,
+        "permanent_income_level_values": [
+          0.2774924094113725,
+          0.8219540208905596,
+          2.43469150702639
+        ],
+        "permanent_income_own_rate_3055_by_level": [
+          0.059118748979110715,
+          0.5930304975619402,
+          0.9256245875554752
+        ],
+        "permanent_income_own_rate_3055_high_minus_low": 0.8665058385763644,
+        "prime30_55_childless_owner_mean_rooms": 6.582107192716303,
+        "prime30_55_childless_owner_minus_renter_mean_rooms": 3.7522325956556077,
+        "prime30_55_childless_owner_share_rooms_ge6": 0.7606113626213206,
+        "prime30_55_childless_renter_mean_rooms": 2.8298745970606953,
+        "prime30_55_childless_renter_share_rooms_ge6": 0.03776616941665785,
+        "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.2039886402050124,
+        "prime30_55_parent_owner_minus_renter_mean_rooms": 2.9122353320014893,
+        "prime_childless_owner_median_rooms": 6.0,
+        "prime_childless_owner_minus_renter_rooms": 3.0960507629840928,
+        "prime_childless_renter_median_rooms": 2.9039492370159072,
+        "renter25_45_all_cap_share": 0.09340856584198723,
+        "second_birth_hazard_by_age": [
+          0.0,
+          0.31904672515856775,
+          0.3684877740050957,
+          0.42095129105121265,
+          0.45430034009451015,
+          0.4152029550422733,
+          0.27851148774471274,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "share_first_births_age30plus": 0.2838607755426228,
+        "tfr": 2.100308063061349,
+        "third_birth_hazard_by_age": [
+          0.0,
+          0.0,
+          0.19236761362319543,
+          0.22972316850160007,
+          0.2794064232025019,
+          0.3238074699888347,
+          0.28632244514492067,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "wealth_to_income": 1.6933410327594942,
+        "young_all_liquid_wealth_to_annual_gross_income_2530": 0.24460851688327281,
+        "young_all_liquid_wealth_to_annual_gross_income_2530_median": 0.21760437048695117,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535": 0.48471897421839855,
+        "young_childless_liquid_wealth_to_annual_gross_income_2535_median": 0.3470713123154523,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.8023625764128596,
+        "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": 0.5397174386863891,
+        "young_liquid_wealth_to_income": 0.27144604154865154,
+        "young_owner_rate": 0.3244713740385901
+      },
+      "measurement_warning": "Legacy stationary observers are diagnostics, not the certified early target system",
+      "normalization": {
+        "absolute_gap": 0.0003080630613490065,
+        "completed_fertility": 2.100308063061349,
+        "psi_child": 0.32734012535938695,
+        "stationary_solve_seconds": 530.4455616921186,
+        "stationary_solves": 4,
+        "status": "derived_intercept",
+        "target": 2.1
+      },
+      "operator_gates": {
+        "birth_flow": 0.11572467529624163,
+        "birth_flow_abs_error": 2.220446049250313e-16,
+        "effective_mature_flow_B": 0.054806433080863796,
+        "entry_flow_E": 0.061733456099741076,
+        "mature_flow_abs_error": 2.2829335644125592e-11,
+        "one_step_constant_path_nesting_l1": 5.017944523875997e-10,
+        "reconstructed_baseline_births": 0.11572467529624163,
+        "reconstructed_effective_mature_flow_B": 0.05480643305803446,
+        "stationary_birth_flow": 0.1157246752962414,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 8.3566793555926e-15,
+        "stationary_post_fertility_nesting_max_abs": 5.646547118737791e-16,
+        "stationary_topcode_adjusted_birth_flow": 0.1296592757517476,
+        "top_bin_entry_birth_flow": 0.023133365141083384,
+        "topcode_adjusted_birth_flow": 0.12965927575174777,
+        "topcode_adjusted_birth_flow_abs_error": 1.6653345369377348e-16,
+        "zero_entry_mass_accounting_residual": -2.220446049250313e-16
+      },
+      "policy_array_gates": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "price": 0.8206596962398385,
+      "seconds": 543.9405317809433,
+      "status": "passed_initial_diagnostic"
+    },
+    "normalized": true,
+    "perfect_foresight_solved": false,
+    "repetitions": 1,
+    "stationary_solves": 4,
+    "status": "passed_initial_candidate_loop"
+  },
+  "repetition_summary": {
+    "calibrated_smm": false,
+    "checkpoint_sha256": "c4ee06c63aa39468f9a5116c34bc83c3cdeef996cf7a7257f6647453e534484a",
+    "early_measurement": {
+      "calibrated_smm": false,
+      "empirical_target_contract_activated": false,
+      "fertility": {
+        "constant_post_cell": {
+          "accounting": {
+            "age_cell_midpoint": [
+              20.0,
+              24.0,
+              28.0,
+              32.0,
+              36.0,
+              40.0,
+              44.0,
+              48.0,
+              52.0,
+              56.0,
+              60.0,
+              64.0,
+              68.0,
+              72.0,
+              76.0,
+              80.0,
+              84.0
+            ],
+            "age_cell_start": [
+              18.0,
+              22.0,
+              26.0,
+              30.0,
+              34.0,
+              38.0,
+              42.0,
+              46.0,
+              50.0,
+              54.0,
+              58.0,
+              62.0,
+              66.0,
+              70.0,
+              74.0,
+              78.0,
+              82.0
+            ],
+            "explicit_birth_flow": 0.1157246752962415,
+            "first_birth_flow": 0.05095611104503019,
+            "maximum_age_mass_error": 3.0531133177191805e-16,
+            "maximum_parity_flow_error": 1.1796119636642288e-16,
+            "overlap_weights": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "parity_birth_flows_by_age": [
+              [
+                0.01580063871271099,
+                0.0,
+                0.0
+              ],
+              [
+                0.012448305578940031,
+                0.0050411420381247145,
+                0.0
+              ],
+              [
+                0.009147069272458784,
+                0.008551791396746009,
+                0.0009697524645040081
+              ],
+              [
+                0.006051042032440651,
+                0.01001993731258961,
+                0.002899837132032036
+              ],
+              [
+                0.0036772513823717244,
+                0.009010676922092353,
+                0.005516399570711467
+              ],
+              [
+                0.0022588496645006926,
+                0.006020758111582732,
+                0.007524495030425174
+              ],
+              [
+                0.0015729544016073141,
+                0.0029908933289924484,
+                0.006222880943410772
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "post_parity_interpolation_share": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              1.0,
+              1.0,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "post_parity_mass_by_age": [
+              [
+                0.045932817387030096,
+                0.015800638712710993,
+                0.0,
+                0.0
+              ],
+              [
+                0.03348451179806162,
+                0.023207802257978905,
+                0.005041142038124714,
+                0.0
+              ],
+              [
+                0.02433744257600912,
+                0.023803080142248103,
+                0.01262318097397639,
+                0.0009697524645040067
+              ],
+              [
+                0.01828640057218609,
+                0.01983418485191931,
+                0.019743281163767196,
+                0.003869589596361242
+              ],
+              [
+                0.014609149178379306,
+                0.01450075930860639,
+                0.02323755850964343,
+                0.009385989165462105
+              ],
+              [
+                0.012350299508028701,
+                0.010738850852595239,
+                0.02173382159296285,
+                0.016910484192398614
+              ],
+              [
+                0.010777345101801379,
+                0.009320911930120369,
+                0.018501833987521057,
+                0.023133365148254387
+              ],
+              [
+                0.010777345095361301,
+                0.009320911930196088,
+                0.018501833986522696,
+                0.023133365149329507
+              ],
+              [
+                0.010777345103710619,
+                0.00932091192982999,
+                0.018501833981319868,
+                0.023133365142757052
+              ],
+              [
+                0.010777345097549972,
+                0.009320911927555546,
+                0.018501833978526224,
+                0.023133365141589392
+              ],
+              [
+                0.01077734510745084,
+                0.009320911931877717,
+                0.01850183398524772,
+                0.023133365150182043
+              ],
+              [
+                0.01077734509831714,
+                0.009320911927566537,
+                0.01850183398036196,
+                0.023133365146200156
+              ],
+              [
+                0.010777345103297574,
+                0.00932091192859033,
+                0.018501833978587224,
+                0.023133365142559006
+              ],
+              [
+                0.01012128831065323,
+                0.008753513598786369,
+                0.01737555901801526,
+                0.021725151774231347
+              ],
+              [
+                0.00929637944169647,
+                0.00804008156396593,
+                0.015959409885752517,
+                0.01995450053765822
+              ],
+              [
+                0.008226851371683592,
+                0.007115087804376788,
+                0.014123314756448327,
+                0.017658778985047398
+              ],
+              [
+                0.006828671716483722,
+                0.00590585590687895,
+                0.011723012293407534,
+                0.014657613079784967
+              ]
+            ],
+            "pre_age_mass": [
+              0.061733456099741096,
+              0.061733456094165196,
+              0.06173345615673767,
+              0.06173345618423385,
+              0.06173345616209114,
+              0.06173345614598541,
+              0.06173345616769689,
+              0.0617334561614096,
+              0.06173345615761753,
+              0.06173345614522113,
+              0.06173345617475832,
+              0.0617334561524458,
+              0.06173345615303413,
+              0.0579755127016862,
+              0.05325037142907314,
+              0.047124032917556104,
+              0.03911515299655517
+            ],
+            "pre_parity_mass_by_age": [
+              [
+                0.061733456099741096,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.045932817377001625,
+                0.015800638717163567,
+                0.0,
+                0.0
+              ],
+              [
+                0.033484511848467916,
+                0.02320780226653538,
+                0.005041142041734379,
+                0.0
+              ],
+              [
+                0.024337442604626818,
+                0.023803080132068312,
+                0.012623180983209515,
+                0.0009697524643292104
+              ],
+              [
+                0.018286400560751065,
+                0.01983418484832696,
+                0.01974328115826253,
+                0.0038695895947505913
+              ],
+              [
+                0.014609149172529347,
+                0.014500759299677295,
+                0.023237558511805277,
+                0.009385989161973484
+              ],
+              [
+                0.01235029950340872,
+                0.010738850857505432,
+                0.021733821601939318,
+                0.016910484204843427
+              ],
+              [
+                0.010777345095361301,
+                0.009320911930196088,
+                0.018501833986522696,
+                0.023133365149329507
+              ],
+              [
+                0.010777345103710619,
+                0.00932091192982999,
+                0.018501833981319868,
+                0.023133365142757052
+              ],
+              [
+                0.010777345097549972,
+                0.009320911927555546,
+                0.018501833978526224,
+                0.023133365141589392
+              ],
+              [
+                0.01077734510745084,
+                0.009320911931877717,
+                0.01850183398524772,
+                0.023133365150182043
+              ],
+              [
+                0.01077734509831714,
+                0.009320911927566537,
+                0.01850183398036196,
+                0.023133365146200156
+              ],
+              [
+                0.010777345103297574,
+                0.00932091192859033,
+                0.018501833978587224,
+                0.023133365142559006
+              ],
+              [
+                0.01012128831065323,
+                0.008753513598786369,
+                0.01737555901801526,
+                0.021725151774231347
+              ],
+              [
+                0.00929637944169647,
+                0.00804008156396593,
+                0.015959409885752517,
+                0.01995450053765822
+              ],
+              [
+                0.008226851371683592,
+                0.007115087804376788,
+                0.014123314756448327,
+                0.017658778985047398
+              ],
+              [
+                0.006828671716483722,
+                0.00590585590687895,
+                0.011723012293407534,
+                0.014657613079784967
+              ]
+            ],
+            "window_mother_mass": 0.06290866161840021,
+            "window_parity_mass": [
+              0.014258158580365384,
+              0.012360109373887896,
+              0.024743286287122218,
+              0.0258052659573901
+            ],
+            "window_population_mass": 0.0771668201987656
+          },
+          "metadata": {
+            "age_projection": "constant_post_cell",
+            "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+            "birth_time_assumption": "post-fertility parity stock held constant throughout each age cell",
+            "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+            "diagnostic_only": true,
+            "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+            "flow_atol": 2e-10,
+            "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+            "mass_atol": 2e-10,
+            "moment_atol": 2e-12,
+            "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+            "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+            "production_smm_eligible": false,
+            "stationarity_certified_by_observer": false,
+            "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+            "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+            "weights_or_standard_errors_adopted": false
+          },
+          "moments": {
+            "childless_rate_40_44": 0.18477058590258544,
+            "exactly_one_among_mothers_40_44": 0.19647706779812776,
+            "period_mean_age_first_birth": 26.620328651712462,
+            "period_share_first_births_age30plus": 0.2661132728307553
+          },
+          "parity_shares_40_44": {
+            "0": 0.18477058590258544,
+            "1": 0.16017388486464568,
+            "2": 0.32064670052995164,
+            "3plus": 0.3344088287028172
+          }
+        },
+        "uniform_birth_time": {
+          "accounting": {
+            "age_cell_midpoint": [
+              20.0,
+              24.0,
+              28.0,
+              32.0,
+              36.0,
+              40.0,
+              44.0,
+              48.0,
+              52.0,
+              56.0,
+              60.0,
+              64.0,
+              68.0,
+              72.0,
+              76.0,
+              80.0,
+              84.0
+            ],
+            "age_cell_start": [
+              18.0,
+              22.0,
+              26.0,
+              30.0,
+              34.0,
+              38.0,
+              42.0,
+              46.0,
+              50.0,
+              54.0,
+              58.0,
+              62.0,
+              66.0,
+              70.0,
+              74.0,
+              78.0,
+              82.0
+            ],
+            "explicit_birth_flow": 0.1157246752962415,
+            "first_birth_flow": 0.05095611104503019,
+            "maximum_age_mass_error": 3.0531133177191805e-16,
+            "maximum_parity_flow_error": 1.1796119636642288e-16,
+            "overlap_weights": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "parity_birth_flows_by_age": [
+              [
+                0.01580063871271099,
+                0.0,
+                0.0
+              ],
+              [
+                0.012448305578940031,
+                0.0050411420381247145,
+                0.0
+              ],
+              [
+                0.009147069272458784,
+                0.008551791396746009,
+                0.0009697524645040081
+              ],
+              [
+                0.006051042032440651,
+                0.01001993731258961,
+                0.002899837132032036
+              ],
+              [
+                0.0036772513823717244,
+                0.009010676922092353,
+                0.005516399570711467
+              ],
+              [
+                0.0022588496645006926,
+                0.006020758111582732,
+                0.007524495030425174
+              ],
+              [
+                0.0015729544016073141,
+                0.0029908933289924484,
+                0.006222880943410772
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            "post_parity_interpolation_share": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              0.75,
+              0.375,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "post_parity_mass_by_age": [
+              [
+                0.045932817387030096,
+                0.015800638712710993,
+                0.0,
+                0.0
+              ],
+              [
+                0.03348451179806162,
+                0.023207802257978905,
+                0.005041142038124714,
+                0.0
+              ],
+              [
+                0.02433744257600912,
+                0.023803080142248103,
+                0.01262318097397639,
+                0.0009697524645040067
+              ],
+              [
+                0.01828640057218609,
+                0.01983418485191931,
+                0.019743281163767196,
+                0.003869589596361242
+              ],
+              [
+                0.014609149178379306,
+                0.01450075930860639,
+                0.02323755850964343,
+                0.009385989165462105
+              ],
+              [
+                0.012350299508028701,
+                0.010738850852595239,
+                0.02173382159296285,
+                0.016910484192398614
+              ],
+              [
+                0.010777345101801379,
+                0.009320911930120369,
+                0.018501833987521057,
+                0.023133365148254387
+              ],
+              [
+                0.010777345095361301,
+                0.009320911930196088,
+                0.018501833986522696,
+                0.023133365149329507
+              ],
+              [
+                0.010777345103710619,
+                0.00932091192982999,
+                0.018501833981319868,
+                0.023133365142757052
+              ],
+              [
+                0.010777345097549972,
+                0.009320911927555546,
+                0.018501833978526224,
+                0.023133365141589392
+              ],
+              [
+                0.01077734510745084,
+                0.009320911931877717,
+                0.01850183398524772,
+                0.023133365150182043
+              ],
+              [
+                0.01077734509831714,
+                0.009320911927566537,
+                0.01850183398036196,
+                0.023133365146200156
+              ],
+              [
+                0.010777345103297574,
+                0.00932091192859033,
+                0.018501833978587224,
+                0.023133365142559006
+              ],
+              [
+                0.01012128831065323,
+                0.008753513598786369,
+                0.01737555901801526,
+                0.021725151774231347
+              ],
+              [
+                0.00929637944169647,
+                0.00804008156396593,
+                0.015959409885752517,
+                0.01995450053765822
+              ],
+              [
+                0.008226851371683592,
+                0.007115087804376788,
+                0.014123314756448327,
+                0.017658778985047398
+              ],
+              [
+                0.006828671716483722,
+                0.00590585590687895,
+                0.011723012293407534,
+                0.014657613079784967
+              ]
+            ],
+            "pre_age_mass": [
+              0.061733456099741096,
+              0.061733456094165196,
+              0.06173345615673767,
+              0.06173345618423385,
+              0.06173345616209114,
+              0.06173345614598541,
+              0.06173345616769689,
+              0.0617334561614096,
+              0.06173345615761753,
+              0.06173345614522113,
+              0.06173345617475832,
+              0.0617334561524458,
+              0.06173345615303413,
+              0.0579755127016862,
+              0.05325037142907314,
+              0.047124032917556104,
+              0.03911515299655517
+            ],
+            "pre_parity_mass_by_age": [
+              [
+                0.061733456099741096,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.045932817377001625,
+                0.015800638717163567,
+                0.0,
+                0.0
+              ],
+              [
+                0.033484511848467916,
+                0.02320780226653538,
+                0.005041142041734379,
+                0.0
+              ],
+              [
+                0.024337442604626818,
+                0.023803080132068312,
+                0.012623180983209515,
+                0.0009697524643292104
+              ],
+              [
+                0.018286400560751065,
+                0.01983418484832696,
+                0.01974328115826253,
+                0.0038695895947505913
+              ],
+              [
+                0.014609149172529347,
+                0.014500759299677295,
+                0.023237558511805277,
+                0.009385989161973484
+              ],
+              [
+                0.01235029950340872,
+                0.010738850857505432,
+                0.021733821601939318,
+                0.016910484204843427
+              ],
+              [
+                0.010777345095361301,
+                0.009320911930196088,
+                0.018501833986522696,
+                0.023133365149329507
+              ],
+              [
+                0.010777345103710619,
+                0.00932091192982999,
+                0.018501833981319868,
+                0.023133365142757052
+              ],
+              [
+                0.010777345097549972,
+                0.009320911927555546,
+                0.018501833978526224,
+                0.023133365141589392
+              ],
+              [
+                0.01077734510745084,
+                0.009320911931877717,
+                0.01850183398524772,
+                0.023133365150182043
+              ],
+              [
+                0.01077734509831714,
+                0.009320911927566537,
+                0.01850183398036196,
+                0.023133365146200156
+              ],
+              [
+                0.010777345103297574,
+                0.00932091192859033,
+                0.018501833978587224,
+                0.023133365142559006
+              ],
+              [
+                0.01012128831065323,
+                0.008753513598786369,
+                0.01737555901801526,
+                0.021725151774231347
+              ],
+              [
+                0.00929637944169647,
+                0.00804008156396593,
+                0.015959409885752517,
+                0.01995450053765822
+              ],
+              [
+                0.008226851371683592,
+                0.007115087804376788,
+                0.014123314756448327,
+                0.017658778985047398
+              ],
+              [
+                0.006828671716483722,
+                0.00590585590687895,
+                0.011723012293407534,
+                0.014657613079784967
+              ]
+            ],
+            "window_mother_mass": 0.061888983034584046,
+            "window_parity_mass": [
+              0.015277837164181407,
+              0.013495006801984902,
+              0.02644624759623608,
+              0.021947728636363066
+            ],
+            "window_population_mass": 0.07716682019876545
+          },
+          "metadata": {
+            "age_projection": "uniform_birth_time",
+            "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+            "birth_time_assumption": "one parity transition per cell, uniformly distributed within the four-year age interval",
+            "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+            "diagnostic_only": true,
+            "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+            "flow_atol": 2e-10,
+            "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+            "mass_atol": 2e-10,
+            "moment_atol": 2e-12,
+            "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+            "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+            "production_smm_eligible": false,
+            "stationarity_certified_by_observer": false,
+            "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+            "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+            "weights_or_standard_errors_adopted": false
+          },
+          "moments": {
+            "childless_rate_40_44": 0.19798453693995582,
+            "exactly_one_among_mothers_40_44": 0.21805184283677415,
+            "period_mean_age_first_birth": 26.620328651712462,
+            "period_share_first_births_age30plus": 0.2661132728307553
+          },
+          "parity_shares_40_44": {
+            "0": 0.19798453693995582,
+            "1": 0.17488094970383142,
+            "2": 0.34271526969902516,
+            "3plus": 0.28441924365718774
+          }
+        }
+      },
+      "housing_wealth": {
+        "age_cell_labels": [
+          18.0,
+          22.0,
+          26.0,
+          30.0,
+          34.0,
+          38.0,
+          42.0,
+          46.0,
+          50.0,
+          54.0,
+          58.0,
+          62.0,
+          66.0,
+          70.0,
+          74.0,
+          78.0,
+          82.0
+        ],
+        "age_overlap_weights": {
+          "18_85": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "25_34": [
+            0.0,
+            0.25,
+            1.0,
+            1.0,
+            0.25,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "30_55": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "76_84": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5,
+            1.0,
+            0.75
+          ]
+        },
+        "age_projection": "uniform_within_age_cell",
+        "diagnostic_allow_family_proxies": true,
+        "moments": {
+          "aggregate_mean_occupied_rooms_capped9_18_85": 5.413606033102339,
+          "aggregate_wealth_to_annual_gross_labor_earnings": 5.861028086682878,
+          "annual_bequest_flow_to_aggregate_wealth": 0.01078115405155592,
+          "housing_increment_0to1": 0.6910914037401197,
+          "old_total_wealth_to_annual_income_median_7684": 5.371006466360168,
+          "old_total_wealth_to_annual_income_p90_p50_7684": 4.1123098510983525,
+          "own_rate_25_34": 0.2788104714030141,
+          "own_rate_30_55": 0.5462609042887048,
+          "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9": 0.20344592708386866,
+          "recent_parent_minus_no_resident_child_ownership_30_55": null
+        },
+        "observer_id": "e5f_initial_housing_wealth_diagnostic_v1",
+        "production_eligible": false,
+        "rows": [
+          {
+            "approximations": [
+              "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+              "National model versus 42-MET2013 housing sample"
+            ],
+            "available": true,
+            "cap_before_income_aggregation": true,
+            "denominator": 0.9999999999997878,
+            "model_value": 5.413606033102339,
+            "moment": "aggregate_mean_occupied_rooms_capped9_18_85",
+            "numerator": 5.413606033101191,
+            "production_eligible": false,
+            "reason": null,
+            "rooms_capped_at": 9.0,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+              "National model versus 42-MET2013 housing sample",
+              "ACS DUE structure restriction is not represented by a model state"
+            ],
+            "available": true,
+            "denominator": 0.40126746505159877,
+            "model_value": 0.5462609042887048,
+            "moment": "own_rate_30_55",
+            "numerator": 0.2191967283207226,
+            "production_eligible": false,
+            "reason": null,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+              "National model versus 42-MET2013 housing sample",
+              "ACS DUE structure restriction is not represented by a model state"
+            ],
+            "available": true,
+            "denominator": 0.15433364040500133,
+            "model_value": 0.2788104714030141,
+            "moment": "own_rate_25_34",
+            "numerator": 0.04302983503466169,
+            "production_eligible": false,
+            "reason": null,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+              "National model versus 42-MET2013 housing sample",
+              "Model dependent counts replace ACS resident own children with YNGCH<18"
+            ],
+            "available": true,
+            "cap_before_income_aggregation": true,
+            "high_mass": 0.011327105703962585,
+            "low_mass": 0.21836736510704655,
+            "model_dependent_proxy": true,
+            "model_value": 0.20344592708386866,
+            "moment": "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9",
+            "production_eligible": false,
+            "reason": null,
+            "rooms_capped_at": 9.0,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [],
+            "available": false,
+            "model_value": null,
+            "moment": "recent_parent_minus_no_resident_child_ownership_30_55",
+            "production_eligible": false,
+            "reason": "Unavailable: ACS oldest resident child under four and no-resident-child controls cannot be reconstructed from dependent counts and lifetime parity",
+            "status": "unavailable"
+          },
+          {
+            "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+            "approximations": [
+              "National PSID household-income normalization; survey-wave stock/flow dates inherited"
+            ],
+            "available": true,
+            "denominator": 0.7408014737067534,
+            "model_value": 5.861028086682878,
+            "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+            "numerator": 4.341858244051349,
+            "production_eligible": false,
+            "reason": null,
+            "status": "diagnostic_only"
+          },
+          {
+            "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+            "approximations": [
+              "External historical restriction; synthetic uncertainty; forced terminal deaths"
+            ],
+            "available": true,
+            "denominator": 4.341858244051349,
+            "model_value": 0.01078115405155592,
+            "moment": "annual_bequest_flow_to_aggregate_wealth",
+            "numerator": 0.046810242599135674,
+            "production_eligible": false,
+            "reason": null,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Uniform within-age-cell overlap for ages 76--84",
+              "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+              "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+            ],
+            "available": true,
+            "denominator": 5.371006466360168,
+            "excluded_nonpositive_income_mass": 0.0,
+            "model_value": 4.1123098510983525,
+            "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+            "numerator": 22.087242801925868,
+            "pension_income_proxy": true,
+            "production_eligible": false,
+            "property_tax_lump_sum_transfer": 0.0,
+            "reason": null,
+            "selected_mass": 0.1030855833795092,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Uniform within-age-cell overlap for ages 76--84",
+              "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+              "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+            ],
+            "available": true,
+            "excluded_nonpositive_income_mass": 0.0,
+            "model_value": 5.371006466360168,
+            "moment": "old_total_wealth_to_annual_income_median_7684",
+            "pension_income_proxy": true,
+            "production_eligible": false,
+            "property_tax_lump_sum_transfer": 0.0,
+            "reason": null,
+            "selected_mass": 0.1030855833795092,
+            "status": "diagnostic_only"
+          },
+          {
+            "approximations": [
+              "Pooled PSID response applied to initial stationary economy under stability assumption",
+              "Matched model risk-set weights differ from Sun-Abraham cohort/event weights; non-flat prepath caveat retained"
+            ],
+            "available": true,
+            "branch": {
+              "branch_mass_roundoff_gates": [
+                {
+                  "actual_mass_before_normalization": 0.050956111048412134,
+                  "expected_mass": 0.050956111045030214,
+                  "relative_gap": 6.636926709852536e-11,
+                  "relative_tolerance": 5e-09,
+                  "stage": "treated_branch_advancement"
+                },
+                {
+                  "actual_mass_before_normalization": 0.05095611106935401,
+                  "expected_mass": 0.050956111045030214,
+                  "relative_gap": 4.773479074627699e-10,
+                  "relative_tolerance": 5e-09,
+                  "stage": "control_branch_advancement"
+                },
+                {
+                  "actual_mass_before_normalization": 0.05095611104503015,
+                  "expected_mass": 0.05095611104503015,
+                  "relative_gap": 0.0,
+                  "relative_tolerance": 5e-09,
+                  "stage": "treated_destination_feasibility_gate"
+                },
+                {
+                  "actual_mass_before_normalization": 0.05095611104503022,
+                  "expected_mass": 0.05095611104503015,
+                  "relative_gap": 1.3617393010575898e-15,
+                  "relative_tolerance": 5e-09,
+                  "stage": "control_destination_feasibility_gate"
+                },
+                {
+                  "actual_mass_before_normalization": 0.050956111045030145,
+                  "expected_mass": 0.05095611104503015,
+                  "relative_gap": 1.3617393010575897e-16,
+                  "relative_tolerance": 5e-09,
+                  "stage": "treated_destination_fertility"
+                },
+                {
+                  "actual_mass_before_normalization": 0.050956111044960915,
+                  "expected_mass": 0.05095611104503015,
+                  "relative_gap": 1.358743474595263e-12,
+                  "relative_tolerance": 5e-09,
+                  "stage": "treated_destination_current_choice"
+                },
+                {
+                  "actual_mass_before_normalization": 0.05095611104501246,
+                  "expected_mass": 0.05095611104503015,
+                  "relative_gap": 3.472435217696854e-13,
+                  "relative_tolerance": 5e-09,
+                  "stage": "control_destination_current_choice"
+                }
+              ],
+              "census_age_bridge_applied": false,
+              "control_feasibility_projection_mass": 0.0,
+              "control_mean_housing": 4.637808463051328,
+              "destination_mass": 0.05095611104503009,
+              "destination_period": 1,
+              "destination_price": 0.8206596962398385,
+              "housing_response": 0.6910914037401197,
+              "origin_mass": 0.050956111045030214,
+              "origin_period": 0,
+              "origin_price": 0.8206596962398385,
+              "status": "complete_one_period_dated_matched_branch_did",
+              "survival_loss": 0.0,
+              "treated_continuation_births": 0.018392224201551483,
+              "treated_feasibility_projection_mass": 0.0,
+              "treated_mean_housing": 5.328899866791447
+            },
+            "destination_continuation_births_allowed": true,
+            "model_value": 0.6910914037401197,
+            "moment": "housing_increment_0to1",
+            "production_eligible": false,
+            "reason": null,
+            "stationary_policy_used_at_both_dates": true,
+            "status": "diagnostic_only",
+            "uncapped_rooms": true
+          }
+        ],
+        "stationary_input_certified": false,
+        "status": "diagnostic_only_measurement_approximations_unresolved",
+        "target_contract_activated": false
+      },
+      "weights_assigned": false
+    },
+    "fiscal": {
+      "actual_accounts": {
+        "implied_balanced_payroll_tax": 0.17900000036499408,
+        "implied_balanced_pension_period": 2.0463613854394413,
+        "payroll_tax_base_period": 2.963205894826717,
+        "payroll_tax_rate": 0.179,
+        "payroll_tax_revenue": 0.5304138551739823,
+        "pension_budget_residual": -1.0815526252372365e-09,
+        "pension_outlays": 0.5304138562555349,
+        "pension_period_units": 2.0463613896121218,
+        "retiree_benefit_exposure": 0.2591985261977956,
+        "retiree_household_mass": 0.2591985261977956,
+        "scaled_pension_budget_residual": -2.0390730982642014e-09,
+        "worker_household_mass": 0.7408014738019923
+      },
+      "fiscal_gate": true,
+      "fiscal_tolerance": 1e-06,
+      "marginal_gate": true,
+      "marginal_tolerance": 1e-09,
+      "normalized_age_income_max_gap": 6.656513317979118e-11
+    },
+    "household_budget": {
+      "actual_rent": 0.13599272410761426,
+      "budget_excess_mass": 0.0,
+      "budget_tolerance": 1e-09,
+      "maximum_occupied_excess": 7.105427357601002e-15
+    },
+    "legacy_stationary_moments": {
+      "aggregate_mean_occupied_rooms_18_85": 5.561613448484002,
+      "aggregate_own_rate": 0.6017972904480332,
+      "aggregate_wealth_to_annual_gross_labor_earnings": 5.861028086682857,
+      "aggregate_wealth_to_annual_gross_labor_earnings_26_35": 1.5476524418196183,
+      "aggregate_wealth_to_annual_gross_labor_earnings_36_45": 3.134672478238483,
+      "aggregate_wealth_to_annual_gross_labor_earnings_46_55": 5.163326280658827,
+      "aggregate_wealth_to_annual_gross_labor_earnings_56_65": 6.851826601349693,
+      "annual_bequest_flow_to_aggregate_wealth": 0.010781154051555667,
+      "attempt_hazard_by_age": [
+        0.2506245138922057,
+        0.2670791751253769,
+        0.27485240535149597,
+        0.2623298434098506,
+        0.23402618203546818,
+        0.21436895136910547,
+        0.25225913698115454,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "childless_chosen_45": 0.1321992061321246,
+      "childless_clock_45": 0.057043569920498194,
+      "childless_rate": 0.17457867726141832,
+      "first_birth_age_distribution": [
+        0.3081635083922406,
+        0.23593223732217455,
+        0.17204347874296214,
+        0.11794954538751119,
+        0.07745067599566811,
+        0.05122287764236667,
+        0.03723767651707685,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "first_birth_hazard_by_age": [
+        0.24561202361436157,
+        0.25794957272404495,
+        0.25879433995380896,
+        0.23613455269667036,
+        0.19408491732639888,
+        0.15183712825993476,
+        0.12649177397086303,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "housing_increment_0to1": 0.6069418448286009,
+      "housing_increment_1to2": 0.0,
+      "housing_user_cost_share": 0.2552434727323894,
+      "liquid_wealth_to_income": 0.6444683102175146,
+      "market_residual": 2.4828585357030937e-05,
+      "mean_age_first_birth": 26.892843929070395,
+      "mean_completed_fertility": 1.874586042659971,
+      "old_2plus_minus_1_total_estate_wealth_to_annual_income_median_gap_6575": 2.1172797006324835,
+      "old_age_own_rate": 0.8724166847941836,
+      "old_age_parent_childless_gap": 0.16888697530520813,
+      "old_age_parent_childless_gap_6575": 0.16888697530520813,
+      "old_minus_young_owner_rate_6575_2534": 0.5479453107555934,
+      "old_nonhousing_ge_1x_income_share_6575": 0.434576081868901,
+      "old_nonhousing_wealth_to_income_6575": 4.535686136915551,
+      "old_nonhousing_wealth_to_income_median_6575": 0.5909524738495049,
+      "old_owner_rate": 0.8724166847941836,
+      "old_parent_childless_nonhousing_wealth_to_income_gap_6575": 2.202479237597356,
+      "old_parent_childless_nonhousing_wealth_to_income_median_gap_6575": -0.2727472956228493,
+      "old_parent_childless_total_wealth_to_income_gap_6575": 5.408509094637255,
+      "old_parent_childless_total_wealth_to_income_median_gap_6575": 5.197751115119234,
+      "old_total_estate_wealth_to_annual_income_median_7684": 5.033560506387013,
+      "old_total_estate_wealth_to_annual_income_p90_p50_7684": 3.8461382993473596,
+      "old_total_wealth_to_annual_income_median_7684": 5.033560506387013,
+      "old_total_wealth_to_annual_income_p90_7684": 19.35976984569738,
+      "old_total_wealth_to_annual_income_p90_p50_7684": 3.8461382993473596,
+      "old_total_wealth_to_income_6575": 12.990796435062057,
+      "old_total_wealth_to_income_median_6575": 7.45629235927605,
+      "own_family_gap": 0.18963589796579722,
+      "own_gap_newparent_nonparent_3055": 0.18963589796579722,
+      "own_rate": 0.5594775544579348,
+      "own_rate_2534": 0.3244713740385901,
+      "own_rate_3055": 0.5594775544579348,
+      "own_rate_3544": 0.5073336864992453,
+      "own_rate_newparents_3055": 0.5759150738862524,
+      "own_rate_nonparents_3055": 0.3862791759204552,
+      "owner_neg_liquid_share_2534": 0.740731844324201,
+      "parity_progression_1to2_flow": 0.817079605492943,
+      "parity_progression_2to3_flow": 0.5556203797631465,
+      "parity_share_0": 0.17457867726141832,
+      "parity_share_1": 0.15098639395841154,
+      "parity_share_2plus": 0.6744349287801701,
+      "parity_share_3plus": 0.3747297911412191,
+      "permanent_income_childless_by_level": [
+        0.4636873837791175,
+        0.12498521749821975,
+        0.08384380826018625
+      ],
+      "permanent_income_childless_high_minus_low": -0.3798435755189312,
+      "permanent_income_completed_fertility_by_level": [
+        1.064127904301811,
+        2.2638919096544723,
+        2.48215284102616
+      ],
+      "permanent_income_completed_fertility_high_minus_low": 1.418024936724349,
+      "permanent_income_level_values": [
+        0.2774924094113725,
+        0.8219540208905596,
+        2.43469150702639
+      ],
+      "permanent_income_own_rate_3055_by_level": [
+        0.059118748979110715,
+        0.5930304975619402,
+        0.9256245875554752
+      ],
+      "permanent_income_own_rate_3055_high_minus_low": 0.8665058385763644,
+      "prime30_55_childless_owner_mean_rooms": 6.582107192716303,
+      "prime30_55_childless_owner_minus_renter_mean_rooms": 3.7522325956556077,
+      "prime30_55_childless_owner_share_rooms_ge6": 0.7606113626213206,
+      "prime30_55_childless_renter_mean_rooms": 2.8298745970606953,
+      "prime30_55_childless_renter_share_rooms_ge6": 0.03776616941665785,
+      "prime30_55_parent_3plus_minus_1to2_mean_rooms": 0.2039886402050124,
+      "prime30_55_parent_owner_minus_renter_mean_rooms": 2.9122353320014893,
+      "prime_childless_owner_median_rooms": 6.0,
+      "prime_childless_owner_minus_renter_rooms": 3.0960507629840928,
+      "prime_childless_renter_median_rooms": 2.9039492370159072,
+      "renter25_45_all_cap_share": 0.09340856584198723,
+      "second_birth_hazard_by_age": [
+        0.0,
+        0.31904672515856775,
+        0.3684877740050957,
+        0.42095129105121265,
+        0.45430034009451015,
+        0.4152029550422733,
+        0.27851148774471274,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "share_first_births_age30plus": 0.2838607755426228,
+      "tfr": 2.100308063061349,
+      "third_birth_hazard_by_age": [
+        0.0,
+        0.0,
+        0.19236761362319543,
+        0.22972316850160007,
+        0.2794064232025019,
+        0.3238074699888347,
+        0.28632244514492067,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "wealth_to_income": 1.6933410327594942,
+      "young_all_liquid_wealth_to_annual_gross_income_2530": 0.24460851688327281,
+      "young_all_liquid_wealth_to_annual_gross_income_2530_median": 0.21760437048695117,
+      "young_childless_liquid_wealth_to_annual_gross_income_2535": 0.48471897421839855,
+      "young_childless_liquid_wealth_to_annual_gross_income_2535_median": 0.3470713123154523,
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535": 0.8023625764128596,
+      "young_childless_renter_liquid_wealth_to_annual_gross_income_2535_median": 0.5397174386863891,
+      "young_liquid_wealth_to_income": 0.27144604154865154,
+      "young_owner_rate": 0.3244713740385901
+    },
+    "measurement_warning": "Legacy stationary observers are diagnostics, not the certified early target system",
+    "normalization": {
+      "absolute_gap": 0.0003080630613490065,
+      "completed_fertility": 2.100308063061349,
+      "psi_child": 0.32734012535938695,
+      "stationary_solve_seconds": 530.4455616921186,
+      "stationary_solves": 4,
+      "status": "derived_intercept",
+      "target": 2.1
+    },
+    "operator_gates": {
+      "birth_flow": 0.11572467529624163,
+      "birth_flow_abs_error": 2.220446049250313e-16,
+      "effective_mature_flow_B": 0.054806433080863796,
+      "entry_flow_E": 0.061733456099741076,
+      "mature_flow_abs_error": 2.2829335644125592e-11,
+      "one_step_constant_path_nesting_l1": 5.017944523875997e-10,
+      "reconstructed_baseline_births": 0.11572467529624163,
+      "reconstructed_effective_mature_flow_B": 0.05480643305803446,
+      "stationary_birth_flow": 0.1157246752962414,
+      "stationary_feasibility_projection_mass": 0.0,
+      "stationary_post_fertility_nesting_l1": 8.3566793555926e-15,
+      "stationary_post_fertility_nesting_max_abs": 5.646547118737791e-16,
+      "stationary_topcode_adjusted_birth_flow": 0.1296592757517476,
+      "top_bin_entry_birth_flow": 0.023133365141083384,
+      "topcode_adjusted_birth_flow": 0.12965927575174777,
+      "topcode_adjusted_birth_flow_abs_error": 1.6653345369377348e-16,
+      "zero_entry_mass_accounting_residual": -2.220446049250313e-16
+    },
+    "policy_array_gates": {
+      "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+      "lower_node_mass_at_negative_steps": 0.0,
+      "maximum_occupied_value_drop": 0.0,
+      "occupied_negative_steps": 0,
+      "probabilities": {
+        "continuation_birth": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "first_birth": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "location": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        },
+        "tenure": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "nonfinite": 0
+        }
+      },
+      "share_pre_choice_mass_at_negative_steps": 0.0,
+      "value_drop_tolerance": 1e-07
+    },
+    "price": 0.8206596962398385,
+    "seconds": 543.9405317809433,
+    "status": "passed_initial_diagnostic"
+  },
+  "early_measurement": {
+    "calibrated_smm": false,
+    "empirical_target_contract_activated": false,
+    "fertility": {
+      "constant_post_cell": {
+        "accounting": {
+          "age_cell_midpoint": [
+            20.0,
+            24.0,
+            28.0,
+            32.0,
+            36.0,
+            40.0,
+            44.0,
+            48.0,
+            52.0,
+            56.0,
+            60.0,
+            64.0,
+            68.0,
+            72.0,
+            76.0,
+            80.0,
+            84.0
+          ],
+          "age_cell_start": [
+            18.0,
+            22.0,
+            26.0,
+            30.0,
+            34.0,
+            38.0,
+            42.0,
+            46.0,
+            50.0,
+            54.0,
+            58.0,
+            62.0,
+            66.0,
+            70.0,
+            74.0,
+            78.0,
+            82.0
+          ],
+          "explicit_birth_flow": 0.1157246752962415,
+          "first_birth_flow": 0.05095611104503019,
+          "maximum_age_mass_error": 3.0531133177191805e-16,
+          "maximum_parity_flow_error": 1.1796119636642288e-16,
+          "overlap_weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "parity_birth_flows_by_age": [
+            [
+              0.01580063871271099,
+              0.0,
+              0.0
+            ],
+            [
+              0.012448305578940031,
+              0.0050411420381247145,
+              0.0
+            ],
+            [
+              0.009147069272458784,
+              0.008551791396746009,
+              0.0009697524645040081
+            ],
+            [
+              0.006051042032440651,
+              0.01001993731258961,
+              0.002899837132032036
+            ],
+            [
+              0.0036772513823717244,
+              0.009010676922092353,
+              0.005516399570711467
+            ],
+            [
+              0.0022588496645006926,
+              0.006020758111582732,
+              0.007524495030425174
+            ],
+            [
+              0.0015729544016073141,
+              0.0029908933289924484,
+              0.006222880943410772
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "post_parity_interpolation_share": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            1.0,
+            1.0,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "post_parity_mass_by_age": [
+            [
+              0.045932817387030096,
+              0.015800638712710993,
+              0.0,
+              0.0
+            ],
+            [
+              0.03348451179806162,
+              0.023207802257978905,
+              0.005041142038124714,
+              0.0
+            ],
+            [
+              0.02433744257600912,
+              0.023803080142248103,
+              0.01262318097397639,
+              0.0009697524645040067
+            ],
+            [
+              0.01828640057218609,
+              0.01983418485191931,
+              0.019743281163767196,
+              0.003869589596361242
+            ],
+            [
+              0.014609149178379306,
+              0.01450075930860639,
+              0.02323755850964343,
+              0.009385989165462105
+            ],
+            [
+              0.012350299508028701,
+              0.010738850852595239,
+              0.02173382159296285,
+              0.016910484192398614
+            ],
+            [
+              0.010777345101801379,
+              0.009320911930120369,
+              0.018501833987521057,
+              0.023133365148254387
+            ],
+            [
+              0.010777345095361301,
+              0.009320911930196088,
+              0.018501833986522696,
+              0.023133365149329507
+            ],
+            [
+              0.010777345103710619,
+              0.00932091192982999,
+              0.018501833981319868,
+              0.023133365142757052
+            ],
+            [
+              0.010777345097549972,
+              0.009320911927555546,
+              0.018501833978526224,
+              0.023133365141589392
+            ],
+            [
+              0.01077734510745084,
+              0.009320911931877717,
+              0.01850183398524772,
+              0.023133365150182043
+            ],
+            [
+              0.01077734509831714,
+              0.009320911927566537,
+              0.01850183398036196,
+              0.023133365146200156
+            ],
+            [
+              0.010777345103297574,
+              0.00932091192859033,
+              0.018501833978587224,
+              0.023133365142559006
+            ],
+            [
+              0.01012128831065323,
+              0.008753513598786369,
+              0.01737555901801526,
+              0.021725151774231347
+            ],
+            [
+              0.00929637944169647,
+              0.00804008156396593,
+              0.015959409885752517,
+              0.01995450053765822
+            ],
+            [
+              0.008226851371683592,
+              0.007115087804376788,
+              0.014123314756448327,
+              0.017658778985047398
+            ],
+            [
+              0.006828671716483722,
+              0.00590585590687895,
+              0.011723012293407534,
+              0.014657613079784967
+            ]
+          ],
+          "pre_age_mass": [
+            0.061733456099741096,
+            0.061733456094165196,
+            0.06173345615673767,
+            0.06173345618423385,
+            0.06173345616209114,
+            0.06173345614598541,
+            0.06173345616769689,
+            0.0617334561614096,
+            0.06173345615761753,
+            0.06173345614522113,
+            0.06173345617475832,
+            0.0617334561524458,
+            0.06173345615303413,
+            0.0579755127016862,
+            0.05325037142907314,
+            0.047124032917556104,
+            0.03911515299655517
+          ],
+          "pre_parity_mass_by_age": [
+            [
+              0.061733456099741096,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.045932817377001625,
+              0.015800638717163567,
+              0.0,
+              0.0
+            ],
+            [
+              0.033484511848467916,
+              0.02320780226653538,
+              0.005041142041734379,
+              0.0
+            ],
+            [
+              0.024337442604626818,
+              0.023803080132068312,
+              0.012623180983209515,
+              0.0009697524643292104
+            ],
+            [
+              0.018286400560751065,
+              0.01983418484832696,
+              0.01974328115826253,
+              0.0038695895947505913
+            ],
+            [
+              0.014609149172529347,
+              0.014500759299677295,
+              0.023237558511805277,
+              0.009385989161973484
+            ],
+            [
+              0.01235029950340872,
+              0.010738850857505432,
+              0.021733821601939318,
+              0.016910484204843427
+            ],
+            [
+              0.010777345095361301,
+              0.009320911930196088,
+              0.018501833986522696,
+              0.023133365149329507
+            ],
+            [
+              0.010777345103710619,
+              0.00932091192982999,
+              0.018501833981319868,
+              0.023133365142757052
+            ],
+            [
+              0.010777345097549972,
+              0.009320911927555546,
+              0.018501833978526224,
+              0.023133365141589392
+            ],
+            [
+              0.01077734510745084,
+              0.009320911931877717,
+              0.01850183398524772,
+              0.023133365150182043
+            ],
+            [
+              0.01077734509831714,
+              0.009320911927566537,
+              0.01850183398036196,
+              0.023133365146200156
+            ],
+            [
+              0.010777345103297574,
+              0.00932091192859033,
+              0.018501833978587224,
+              0.023133365142559006
+            ],
+            [
+              0.01012128831065323,
+              0.008753513598786369,
+              0.01737555901801526,
+              0.021725151774231347
+            ],
+            [
+              0.00929637944169647,
+              0.00804008156396593,
+              0.015959409885752517,
+              0.01995450053765822
+            ],
+            [
+              0.008226851371683592,
+              0.007115087804376788,
+              0.014123314756448327,
+              0.017658778985047398
+            ],
+            [
+              0.006828671716483722,
+              0.00590585590687895,
+              0.011723012293407534,
+              0.014657613079784967
+            ]
+          ],
+          "window_mother_mass": 0.06290866161840021,
+          "window_parity_mass": [
+            0.014258158580365384,
+            0.012360109373887896,
+            0.024743286287122218,
+            0.0258052659573901
+          ],
+          "window_population_mass": 0.0771668201987656
+        },
+        "metadata": {
+          "age_projection": "constant_post_cell",
+          "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+          "birth_time_assumption": "post-fertility parity stock held constant throughout each age cell",
+          "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+          "diagnostic_only": true,
+          "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+          "flow_atol": 2e-10,
+          "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+          "mass_atol": 2e-10,
+          "moment_atol": 2e-12,
+          "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+          "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+          "production_smm_eligible": false,
+          "stationarity_certified_by_observer": false,
+          "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+          "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+          "weights_or_standard_errors_adopted": false
+        },
+        "moments": {
+          "childless_rate_40_44": 0.18477058590258544,
+          "exactly_one_among_mothers_40_44": 0.19647706779812776,
+          "period_mean_age_first_birth": 26.620328651712462,
+          "period_share_first_births_age30plus": 0.2661132728307553
+        },
+        "parity_shares_40_44": {
+          "0": 0.18477058590258544,
+          "1": 0.16017388486464568,
+          "2": 0.32064670052995164,
+          "3plus": 0.3344088287028172
+        }
+      },
+      "uniform_birth_time": {
+        "accounting": {
+          "age_cell_midpoint": [
+            20.0,
+            24.0,
+            28.0,
+            32.0,
+            36.0,
+            40.0,
+            44.0,
+            48.0,
+            52.0,
+            56.0,
+            60.0,
+            64.0,
+            68.0,
+            72.0,
+            76.0,
+            80.0,
+            84.0
+          ],
+          "age_cell_start": [
+            18.0,
+            22.0,
+            26.0,
+            30.0,
+            34.0,
+            38.0,
+            42.0,
+            46.0,
+            50.0,
+            54.0,
+            58.0,
+            62.0,
+            66.0,
+            70.0,
+            74.0,
+            78.0,
+            82.0
+          ],
+          "explicit_birth_flow": 0.1157246752962415,
+          "first_birth_flow": 0.05095611104503019,
+          "maximum_age_mass_error": 3.0531133177191805e-16,
+          "maximum_parity_flow_error": 1.1796119636642288e-16,
+          "overlap_weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.5,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "parity_birth_flows_by_age": [
+            [
+              0.01580063871271099,
+              0.0,
+              0.0
+            ],
+            [
+              0.012448305578940031,
+              0.0050411420381247145,
+              0.0
+            ],
+            [
+              0.009147069272458784,
+              0.008551791396746009,
+              0.0009697524645040081
+            ],
+            [
+              0.006051042032440651,
+              0.01001993731258961,
+              0.002899837132032036
+            ],
+            [
+              0.0036772513823717244,
+              0.009010676922092353,
+              0.005516399570711467
+            ],
+            [
+              0.0022588496645006926,
+              0.006020758111582732,
+              0.007524495030425174
+            ],
+            [
+              0.0015729544016073141,
+              0.0029908933289924484,
+              0.006222880943410772
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "post_parity_interpolation_share": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.75,
+            0.375,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "post_parity_mass_by_age": [
+            [
+              0.045932817387030096,
+              0.015800638712710993,
+              0.0,
+              0.0
+            ],
+            [
+              0.03348451179806162,
+              0.023207802257978905,
+              0.005041142038124714,
+              0.0
+            ],
+            [
+              0.02433744257600912,
+              0.023803080142248103,
+              0.01262318097397639,
+              0.0009697524645040067
+            ],
+            [
+              0.01828640057218609,
+              0.01983418485191931,
+              0.019743281163767196,
+              0.003869589596361242
+            ],
+            [
+              0.014609149178379306,
+              0.01450075930860639,
+              0.02323755850964343,
+              0.009385989165462105
+            ],
+            [
+              0.012350299508028701,
+              0.010738850852595239,
+              0.02173382159296285,
+              0.016910484192398614
+            ],
+            [
+              0.010777345101801379,
+              0.009320911930120369,
+              0.018501833987521057,
+              0.023133365148254387
+            ],
+            [
+              0.010777345095361301,
+              0.009320911930196088,
+              0.018501833986522696,
+              0.023133365149329507
+            ],
+            [
+              0.010777345103710619,
+              0.00932091192982999,
+              0.018501833981319868,
+              0.023133365142757052
+            ],
+            [
+              0.010777345097549972,
+              0.009320911927555546,
+              0.018501833978526224,
+              0.023133365141589392
+            ],
+            [
+              0.01077734510745084,
+              0.009320911931877717,
+              0.01850183398524772,
+              0.023133365150182043
+            ],
+            [
+              0.01077734509831714,
+              0.009320911927566537,
+              0.01850183398036196,
+              0.023133365146200156
+            ],
+            [
+              0.010777345103297574,
+              0.00932091192859033,
+              0.018501833978587224,
+              0.023133365142559006
+            ],
+            [
+              0.01012128831065323,
+              0.008753513598786369,
+              0.01737555901801526,
+              0.021725151774231347
+            ],
+            [
+              0.00929637944169647,
+              0.00804008156396593,
+              0.015959409885752517,
+              0.01995450053765822
+            ],
+            [
+              0.008226851371683592,
+              0.007115087804376788,
+              0.014123314756448327,
+              0.017658778985047398
+            ],
+            [
+              0.006828671716483722,
+              0.00590585590687895,
+              0.011723012293407534,
+              0.014657613079784967
+            ]
+          ],
+          "pre_age_mass": [
+            0.061733456099741096,
+            0.061733456094165196,
+            0.06173345615673767,
+            0.06173345618423385,
+            0.06173345616209114,
+            0.06173345614598541,
+            0.06173345616769689,
+            0.0617334561614096,
+            0.06173345615761753,
+            0.06173345614522113,
+            0.06173345617475832,
+            0.0617334561524458,
+            0.06173345615303413,
+            0.0579755127016862,
+            0.05325037142907314,
+            0.047124032917556104,
+            0.03911515299655517
+          ],
+          "pre_parity_mass_by_age": [
+            [
+              0.061733456099741096,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.045932817377001625,
+              0.015800638717163567,
+              0.0,
+              0.0
+            ],
+            [
+              0.033484511848467916,
+              0.02320780226653538,
+              0.005041142041734379,
+              0.0
+            ],
+            [
+              0.024337442604626818,
+              0.023803080132068312,
+              0.012623180983209515,
+              0.0009697524643292104
+            ],
+            [
+              0.018286400560751065,
+              0.01983418484832696,
+              0.01974328115826253,
+              0.0038695895947505913
+            ],
+            [
+              0.014609149172529347,
+              0.014500759299677295,
+              0.023237558511805277,
+              0.009385989161973484
+            ],
+            [
+              0.01235029950340872,
+              0.010738850857505432,
+              0.021733821601939318,
+              0.016910484204843427
+            ],
+            [
+              0.010777345095361301,
+              0.009320911930196088,
+              0.018501833986522696,
+              0.023133365149329507
+            ],
+            [
+              0.010777345103710619,
+              0.00932091192982999,
+              0.018501833981319868,
+              0.023133365142757052
+            ],
+            [
+              0.010777345097549972,
+              0.009320911927555546,
+              0.018501833978526224,
+              0.023133365141589392
+            ],
+            [
+              0.01077734510745084,
+              0.009320911931877717,
+              0.01850183398524772,
+              0.023133365150182043
+            ],
+            [
+              0.01077734509831714,
+              0.009320911927566537,
+              0.01850183398036196,
+              0.023133365146200156
+            ],
+            [
+              0.010777345103297574,
+              0.00932091192859033,
+              0.018501833978587224,
+              0.023133365142559006
+            ],
+            [
+              0.01012128831065323,
+              0.008753513598786369,
+              0.01737555901801526,
+              0.021725151774231347
+            ],
+            [
+              0.00929637944169647,
+              0.00804008156396593,
+              0.015959409885752517,
+              0.01995450053765822
+            ],
+            [
+              0.008226851371683592,
+              0.007115087804376788,
+              0.014123314756448327,
+              0.017658778985047398
+            ],
+            [
+              0.006828671716483722,
+              0.00590585590687895,
+              0.011723012293407534,
+              0.014657613079784967
+            ]
+          ],
+          "window_mother_mass": 0.061888983034584046,
+          "window_parity_mass": [
+            0.015277837164181407,
+            0.013495006801984902,
+            0.02644624759623608,
+            0.021947728636363066
+          ],
+          "window_population_mass": 0.07716682019876545
+        },
+        "metadata": {
+          "age_projection": "uniform_birth_time",
+          "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+          "birth_time_assumption": "one parity transition per cell, uniformly distributed within the four-year age interval",
+          "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+          "diagnostic_only": true,
+          "empirical_boundary_rule": "NCHS ages below18 and above45 are collapsed into the first/last fertile cell; no new maternal-age states",
+          "flow_atol": 2e-10,
+          "initial_normalization": "2.1 remains separate; no fertility normalization is performed or replaced",
+          "mass_atol": 2e-10,
+          "moment_atol": 2e-12,
+          "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
+          "population_approximation": "model household reproductive member proxies for the maternal population; not certified female exposure",
+          "production_smm_eligible": false,
+          "stationarity_certified_by_observer": false,
+          "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+          "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+          "weights_or_standard_errors_adopted": false
+        },
+        "moments": {
+          "childless_rate_40_44": 0.19798453693995582,
+          "exactly_one_among_mothers_40_44": 0.21805184283677415,
+          "period_mean_age_first_birth": 26.620328651712462,
+          "period_share_first_births_age30plus": 0.2661132728307553
+        },
+        "parity_shares_40_44": {
+          "0": 0.19798453693995582,
+          "1": 0.17488094970383142,
+          "2": 0.34271526969902516,
+          "3plus": 0.28441924365718774
+        }
+      }
+    },
+    "housing_wealth": {
+      "age_cell_labels": [
+        18.0,
+        22.0,
+        26.0,
+        30.0,
+        34.0,
+        38.0,
+        42.0,
+        46.0,
+        50.0,
+        54.0,
+        58.0,
+        62.0,
+        66.0,
+        70.0,
+        74.0,
+        78.0,
+        82.0
+      ],
+      "age_overlap_weights": {
+        "18_85": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "25_34": [
+          0.0,
+          0.25,
+          1.0,
+          1.0,
+          0.25,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "30_55": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "76_84": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.5,
+          1.0,
+          0.75
+        ]
+      },
+      "age_projection": "uniform_within_age_cell",
+      "diagnostic_allow_family_proxies": true,
+      "moments": {
+        "aggregate_mean_occupied_rooms_capped9_18_85": 5.413606033102339,
+        "aggregate_wealth_to_annual_gross_labor_earnings": 5.861028086682878,
+        "annual_bequest_flow_to_aggregate_wealth": 0.01078115405155592,
+        "housing_increment_0to1": 0.6910914037401197,
+        "old_total_wealth_to_annual_income_median_7684": 5.371006466360168,
+        "old_total_wealth_to_annual_income_p90_p50_7684": 4.1123098510983525,
+        "own_rate_25_34": 0.2788104714030141,
+        "own_rate_30_55": 0.5462609042887048,
+        "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9": 0.20344592708386866,
+        "recent_parent_minus_no_resident_child_ownership_30_55": null
+      },
+      "observer_id": "e5f_initial_housing_wealth_diagnostic_v1",
+      "production_eligible": false,
+      "rows": [
+        {
+          "approximations": [
+            "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+            "National model versus 42-MET2013 housing sample"
+          ],
+          "available": true,
+          "cap_before_income_aggregation": true,
+          "denominator": 0.9999999999997878,
+          "model_value": 5.413606033102339,
+          "moment": "aggregate_mean_occupied_rooms_capped9_18_85",
+          "numerator": 5.413606033101191,
+          "production_eligible": false,
+          "reason": null,
+          "rooms_capped_at": 9.0,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+            "National model versus 42-MET2013 housing sample",
+            "ACS DUE structure restriction is not represented by a model state"
+          ],
+          "available": true,
+          "denominator": 0.40126746505159877,
+          "model_value": 0.5462609042887048,
+          "moment": "own_rate_30_55",
+          "numerator": 0.2191967283207226,
+          "production_eligible": false,
+          "reason": null,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+            "National model versus 42-MET2013 housing sample",
+            "ACS DUE structure restriction is not represented by a model state"
+          ],
+          "available": true,
+          "denominator": 0.15433364040500133,
+          "model_value": 0.2788104714030141,
+          "moment": "own_rate_25_34",
+          "numerator": 0.04302983503466169,
+          "production_eligible": false,
+          "reason": null,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+            "National model versus 42-MET2013 housing sample",
+            "Model dependent counts replace ACS resident own children with YNGCH<18"
+          ],
+          "available": true,
+          "cap_before_income_aggregation": true,
+          "high_mass": 0.011327105703962585,
+          "low_mass": 0.21836736510704655,
+          "model_dependent_proxy": true,
+          "model_value": 0.20344592708386866,
+          "moment": "prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9",
+          "production_eligible": false,
+          "reason": null,
+          "rooms_capped_at": 9.0,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [],
+          "available": false,
+          "model_value": null,
+          "moment": "recent_parent_minus_no_resident_child_ownership_30_55",
+          "production_eligible": false,
+          "reason": "Unavailable: ACS oldest resident child under four and no-resident-child controls cannot be reconstructed from dependent counts and lifetime parity",
+          "status": "unavailable"
+        },
+        {
+          "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+          "approximations": [
+            "National PSID household-income normalization; survey-wave stock/flow dates inherited"
+          ],
+          "available": true,
+          "denominator": 0.7408014737067534,
+          "model_value": 5.861028086682878,
+          "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+          "numerator": 4.341858244051349,
+          "production_eligible": false,
+          "reason": null,
+          "status": "diagnostic_only"
+        },
+        {
+          "accounting": "Beginning-period net worth uses g_post_fertility before housing transactions; death flow uses g_current and post-saving policies. Annualizes exactly once.",
+          "approximations": [
+            "External historical restriction; synthetic uncertainty; forced terminal deaths"
+          ],
+          "available": true,
+          "denominator": 4.341858244051349,
+          "model_value": 0.01078115405155592,
+          "moment": "annual_bequest_flow_to_aggregate_wealth",
+          "numerator": 0.046810242599135674,
+          "production_eligible": false,
+          "reason": null,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Uniform within-age-cell overlap for ages 76--84",
+            "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+            "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+          ],
+          "available": true,
+          "denominator": 5.371006466360168,
+          "excluded_nonpositive_income_mass": 0.0,
+          "model_value": 4.1123098510983525,
+          "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+          "numerator": 22.087242801925868,
+          "pension_income_proxy": true,
+          "production_eligible": false,
+          "property_tax_lump_sum_transfer": 0.0,
+          "reason": null,
+          "selected_mass": 0.1030855833795092,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Uniform within-age-cell overlap for ages 76--84",
+            "Modeled pension plus configured lump-sum income proxy; not PSID total family income",
+            "Empirical $1000 real-income and observed-child-history filters are not reproduced"
+          ],
+          "available": true,
+          "excluded_nonpositive_income_mass": 0.0,
+          "model_value": 5.371006466360168,
+          "moment": "old_total_wealth_to_annual_income_median_7684",
+          "pension_income_proxy": true,
+          "production_eligible": false,
+          "property_tax_lump_sum_transfer": 0.0,
+          "reason": null,
+          "selected_mass": 0.1030855833795092,
+          "status": "diagnostic_only"
+        },
+        {
+          "approximations": [
+            "Pooled PSID response applied to initial stationary economy under stability assumption",
+            "Matched model risk-set weights differ from Sun-Abraham cohort/event weights; non-flat prepath caveat retained"
+          ],
+          "available": true,
+          "branch": {
+            "branch_mass_roundoff_gates": [
+              {
+                "actual_mass_before_normalization": 0.050956111048412134,
+                "expected_mass": 0.050956111045030214,
+                "relative_gap": 6.636926709852536e-11,
+                "relative_tolerance": 5e-09,
+                "stage": "treated_branch_advancement"
+              },
+              {
+                "actual_mass_before_normalization": 0.05095611106935401,
+                "expected_mass": 0.050956111045030214,
+                "relative_gap": 4.773479074627699e-10,
+                "relative_tolerance": 5e-09,
+                "stage": "control_branch_advancement"
+              },
+              {
+                "actual_mass_before_normalization": 0.05095611104503015,
+                "expected_mass": 0.05095611104503015,
+                "relative_gap": 0.0,
+                "relative_tolerance": 5e-09,
+                "stage": "treated_destination_feasibility_gate"
+              },
+              {
+                "actual_mass_before_normalization": 0.05095611104503022,
+                "expected_mass": 0.05095611104503015,
+                "relative_gap": 1.3617393010575898e-15,
+                "relative_tolerance": 5e-09,
+                "stage": "control_destination_feasibility_gate"
+              },
+              {
+                "actual_mass_before_normalization": 0.050956111045030145,
+                "expected_mass": 0.05095611104503015,
+                "relative_gap": 1.3617393010575897e-16,
+                "relative_tolerance": 5e-09,
+                "stage": "treated_destination_fertility"
+              },
+              {
+                "actual_mass_before_normalization": 0.050956111044960915,
+                "expected_mass": 0.05095611104503015,
+                "relative_gap": 1.358743474595263e-12,
+                "relative_tolerance": 5e-09,
+                "stage": "treated_destination_current_choice"
+              },
+              {
+                "actual_mass_before_normalization": 0.05095611104501246,
+                "expected_mass": 0.05095611104503015,
+                "relative_gap": 3.472435217696854e-13,
+                "relative_tolerance": 5e-09,
+                "stage": "control_destination_current_choice"
+              }
+            ],
+            "census_age_bridge_applied": false,
+            "control_feasibility_projection_mass": 0.0,
+            "control_mean_housing": 4.637808463051328,
+            "destination_mass": 0.05095611104503009,
+            "destination_period": 1,
+            "destination_price": 0.8206596962398385,
+            "housing_response": 0.6910914037401197,
+            "origin_mass": 0.050956111045030214,
+            "origin_period": 0,
+            "origin_price": 0.8206596962398385,
+            "status": "complete_one_period_dated_matched_branch_did",
+            "survival_loss": 0.0,
+            "treated_continuation_births": 0.018392224201551483,
+            "treated_feasibility_projection_mass": 0.0,
+            "treated_mean_housing": 5.328899866791447
+          },
+          "destination_continuation_births_allowed": true,
+          "model_value": 0.6910914037401197,
+          "moment": "housing_increment_0to1",
+          "production_eligible": false,
+          "reason": null,
+          "stationary_policy_used_at_both_dates": true,
+          "status": "diagnostic_only",
+          "uncapped_rooms": true
+        }
+      ],
+      "stationary_input_certified": false,
+      "status": "diagnostic_only_measurement_approximations_unresolved",
+      "target_contract_activated": false
+    },
+    "weights_assigned": false
+  },
+  "stationary_solves": 4,
+  "elapsed_seconds": 550.310978544876,
+  "runtime_scope": "one fresh case",
+  "market_residual": 2.482858534633144e-05,
+  "checkpoint": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/initial_state.pkl.gz",
+    "sha256": "c4ee06c63aa39468f9a5116c34bc83c3cdeef996cf7a7257f6647453e534484a",
+    "bytes": 114960083
+  },
+  "original_graphs": [
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/fertility_by_age.png",
+      "filename": "fertility_by_age.png",
+      "sha256": "3e1cd1f2593251f6e3fdc8184a62ab965e05da82fd2aca247bde95acbc07f1d6",
+      "bytes": 41354
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "filename": "fertility_policy_by_age_income_state.png",
+      "sha256": "3e9b22cc3f32d25290d073641c06f48c9e946879ac3bcdb052bcf45126b66e9c",
+      "bytes": 209236
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/housing_by_age_income_state.png",
+      "filename": "housing_by_age_income_state.png",
+      "sha256": "d4d47e1f73ac4bfcfc00503237b6595b94c280d7ebc8f440742d379ec3e38d92",
+      "bytes": 163304
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/housing_market.png",
+      "filename": "housing_market.png",
+      "sha256": "8ee127ff2027e7d1564d8aaad47e3b102a9117dd8c17f4a475f164d303ec54f0",
+      "bytes": 32966
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/housing_prices.png",
+      "filename": "housing_prices.png",
+      "sha256": "a9d28f14336bf0d48d026e92f59cb512a9cb7075077da9c1b29911e87f27294f",
+      "bytes": 47687
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/income_state_outcomes.png",
+      "filename": "income_state_outcomes.png",
+      "sha256": "3d7c2874c0fca70bc436304106c37dcd8575929b7c8b068053ae57c92e771617",
+      "bytes": 62409
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "filename": "liquid_wealth_by_age_income_state.png",
+      "sha256": "e68acc81a9c321546e82e7dec33eb0563381cfeff1d6a7b744cb4dc510dee86e",
+      "bytes": 185116
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/market_clearing_by_market.png",
+      "filename": "market_clearing_by_market.png",
+      "sha256": "777d619e9bb8edaef99d06af6de08e35b13ccf89a0d55cf3a090c306f5e069f8",
+      "bytes": 33260
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/market_clearing_residuals.png",
+      "filename": "market_clearing_residuals.png",
+      "sha256": "25be4d84ea4e2b5208ff3a3b393a62b34ed800e03508918f3e81407e42e3b48a",
+      "bytes": 35329
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/owner_rungs.png",
+      "filename": "owner_rungs.png",
+      "sha256": "894b22f40dc508e65f572bee1d6cf098d0a445802695324a52c89274eb7f90c8",
+      "bytes": 37189
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/ownership_by_age.png",
+      "filename": "ownership_by_age.png",
+      "sha256": "38f632f5b09f9fa707af9b6ff4aa665e2f1dfe6e2bb312b7a3c243208d7b8ca4",
+      "bytes": 48370
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/ownership_by_age_income_state.png",
+      "filename": "ownership_by_age_income_state.png",
+      "sha256": "ce50abffdcffb087fa9bddbedc11e975a6c3614e3d3a753c283eb6f75256281e",
+      "bytes": 225437
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/policy_childless_renter_age30.png",
+      "filename": "policy_childless_renter_age30.png",
+      "sha256": "1edf8059e0bc7652867e608241e30566c0d4c10d205561bf99966cef7f3e31b7",
+      "bytes": 471796
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/policy_childless_renter_age42.png",
+      "filename": "policy_childless_renter_age42.png",
+      "sha256": "cf89bb298e6d088303bdec79ee773d2f234a96257609b97e2da4c0356f6d8825",
+      "bytes": 423203
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/tenure_services.png",
+      "filename": "tenure_services.png",
+      "sha256": "89f60735124a904d0430e7f4bd253e9a1da113a83422c141ad6276ff6fffe05f",
+      "bytes": 33606
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "filename": "wealth_dist_childless_renter_age30.png",
+      "sha256": "495c7ea694af29ab3859e3ba31cae0f630bdc1349861016ed1b5d7d1d96595f6",
+      "bytes": 115010
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/cases/joint_11_analysis_23/repetition_01/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "filename": "wealth_dist_childless_renter_age42.png",
+      "sha256": "49a9b5ef2306307000a27166930ff76004dbdfe2e292a492eb8471c492e501ee",
+      "bytes": 121255
+    }
+  ],
+  "numeric_gates_verified": true,
+  "file_sha256": {
+    "repetition_01/early_measurement.json": "5b098204da39ded548db4d73926cf45aa915f7d2c58704b976dfc189d3c66d4f",
+    "repetition_01/lifecycle_2023.csv": "b8d3964134f43c5ad51c4ac5ae62c2a653a5bdafcf0627411642fec35fddb79a",
+    "repetition_01/market_quantity_units.json": "8da022c70c008ac2df3403c6c0c729737c262236072780adf0d860c63e59df6f",
+    "repetition_01/parameters.csv": "d908e69409c201027ee3d85620b498da203af47dabc12987947905fd33a4c447",
+    "repetition_01/policy_array_summary.json": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9",
+    "repetition_01/standard_diagnostics/summary.json": "f7cf57b748b1c6736e4e6dd7acbdef6cf36022cc156dfa339436e1f7b4153f1d",
+    "repetition_01/stationary_solves.json": "2a7c80359e7a7b56b6a4fae651cdc708175d123906f9084cf78011b0d23141cc",
+    "repetition_01/summary.json": "0b238b778f42a498cc14f1eda7f21b58c149cb5feae5a43f12e4efe0788deaad",
+    "repetition_01/young_ownership_age_measurement.csv": "761222c21b89533f6db4184833a64c03578318c5cf6693b24e838d401d3c559d",
+    "summary.json": "20c4916a8745495a8c243d50751fe3f4ac7a619b6ac35b379d10541f5e7f6680",
+    "contract.json": "fb4a27a35543ad114175f82e7f8af416debda662f4dcda39733e308bdf61d337",
+    "seed_mapping.json": "4fd54232f66676c43961e0413689bdbf2c42707aedb1fb9a4a2bf63b993ac99f"
+  }
+}

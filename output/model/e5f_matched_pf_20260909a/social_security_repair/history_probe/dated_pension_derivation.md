@@ -85,3 +85,55 @@ All paths below are relative to `tmp/e5f_matched_pf/code/model/`.
 - `tools/run_e5f_perfect_foresight_transition.py:508–549`: backward fiscal binding; `:618–697` forward fiscal binding, current observation, queue pop, survival advance, entry and observed reweight, in that order.
 - `tools/run_e5f_matched_pf_history.py:80–122`: four historical decisions, observed 2023 inheritance, and the first person-tail decision; `tools/run_e5f_perfect_foresight_person_demography.py:727–799` checks the inherited 2023 head-age identity and evaluates its choices before population advancement.
 - `tools/e5f_social_security.py:29–52,78–123`: period-income binding and exact fiscal ledger; `tools/e5f_balanced_history.py:190–238` actual dated accounting and common anticipated pension path; `tools/e5f_social_security_root.py:68–75,103–135,168` current full-vector root dimensions.
+
+## Correction: the person-law delay extends economic predetermination through 2039
+
+**The preceding warning that pensions after the inherited 2023 stock remain endogenous was too broad. Under the maintained frozen person/headship/migration contract, the 2027, 2031, 2035 and 2039 household age totals, income marginals and PAYGO benefits are also predetermined before household optimization. The first model-date pension that can respond to births chosen from 2023 onward is 2043.** This corrects the scope of the earlier derivation; it does not extend the implemented five-date helper, certify a longer numerical prefix, or authorize a reduced root.
+
+This conclusion follows from source timing, independently of the reported near-invariance across three trial price paths. The inspected demographic and coupling files are clean at isolated commit `a16dbaab338f57b43b1f3998bea8eea798e4974e`. No household solve or source edit was performed for this correction.
+
+### Annual timing and the first affected model date
+
+The person branch starts from the **same frozen 2023 person stocks**, including all persons younger than eighteen. Historical model births do not reconstruct these minors. `run_e5f_matched_pf_history.py:68–76` checks equality to the supplied frozen person state; `:93–115` combines it with the observed-reweighted 2023 household stock. Thus, even children born before 2023 who become adults after 2023 are predetermined in this exercise.
+
+A four-year birth flow chosen at model date 2023 is divided equally among annual updates ending in **2024, 2025, 2026 and 2027** (`four_year_bridge.py:51–90`). Each annual update inserts that year's surviving newborns at age zero and ages existing people by exactly one (`person_cohort_law.py:130–164`). The earliest changed newborn cohort therefore reaches age eighteen in **2042**, not 2041. The model observes stocks only every four years:
+
+| Model stock | Ages of the changed 2024–2027 newborn cohorts | Effect on model household heads |
+|---|---|---|
+| 2027 | 0–3 | None |
+| 2031 | 4–7 | None |
+| 2035 | 8–11 | None |
+| 2039 | 12–15 | None |
+| 2043 | 16–19 | Possible, through ages 18 and 19 |
+
+Model households cover ages 18–85, in closed four-year bins; head aggregation reads only those age slices (`household_head_bridge.py:39–63`). In 2043 the affected 2024 and 2025 birth cohorts enter the first household age cell. The current young earnings profile is strictly positive (`completed_17362746/prediction.json`, first age efficiency 0.720554272517321; retirement starts at index 12). The headship builder assigns each 18–21 ACS headship rate to every single age in that bin (`build_e5f_coherent_person_cohort_path.py:153–170`), followed by fixed positive model-age alignment. The local source CSV has positive 2023 male/female young rates, 0.0847301 and 0.1030899; the serialized primitive pins remain the authority for any extended numerical audit. Thus the 2043 payroll base can change with the earlier birth flow; no cancellation with the then-retired cohorts forces its pension to remain fixed.
+
+### Why migration, head formation and population scaling do not shorten the delay
+
+For sex s, annual date y and adult destination age a, the law is
+
+\[
+N_{y,s,a}=S_{y,s,a}N_{y-1,s,a-1}+X_{y,s,a},
+\qquad H_{y,s,a}=h_{s,a}N_{y,s,a}.
+\]
+
+Here N is resident-person mass, H is household-head mass, S is the fixed survival array, X is the fixed **absolute** net-migration array in model units, and h is the fixed headship rate. Birth forcing enters only destination age zero. Consequently, any adult cohort whose ancestry reaches the fixed 2023 stock before reaching age zero is independent of later births. The highest age of a newborn created after 2023 is y−2024, proving independence for all adult stocks through 2041 and hence at model dates through 2039.
+
+The migration arrays are multiplied by the original model-units-per-person scale once, when demographic primitives are constructed (`run_e5f_perfect_foresight_person_demography.py:237–255,285–303`). `AnnualDemographicPrimitives.block_inputs`, `:79–103`, retrieves these arrays by date; it does not multiply them by current persons, current households or model births. The source uses constant last-year arrays only beyond its empirical horizon. `person_cohort_law.py:447–460` adds migration after survival and multiplies migrant persons by fixed headship. Formation/dissolution are the positive and negative parts needed to attain this same pointwise headship stock; they do not depend on aggregate population or prices. The uses of total population as a `scale` at `:483–492` are numerical identity tolerances, not a rescaling rule. Tiny-negative clipping in `CohortState.validated`, `:57–78`, is local to each age/sex cell and cannot move a child's mass into an adult age.
+
+The household side advances incumbents with age-only survival and the exogenous income matrix, initially supplies zero entrants, and then imposes the person-law head total **separately within each model age** (`run_e5f_perfect_foresight_person_demography.py:802–839`; `household_person_coupling.py:60–89`). The age-zero empty cell receives the fixed entrant template; other positive age cells are multiplied by a scalar (`household_head_bridge.py:111–140`). Head formation and migration therefore inherit the same within-age economic distribution; they do not select a new income composition. Their predetermined totals preserve the earlier recursion
+
+\[
+q_{t+4}(0,\cdot)=\pi,\qquad
+q_{t+4}(j+1,\cdot)=q_t(j,\cdot)\Pi_z.
+\]
+
+In the person branch, replace the historical observed age totals by the predetermined age totals generated by the frozen annual adult-cohort law. The same fiscal formula then determines the four additional benefits. Changes in resident children, fertility, wealth, tenure or housing prices can already occur before 2043; they do not by themselves change this fixed-wage payroll/retiree ledger. This conclusion is conditional on the current single market, exogenous earnings, fixed tax and survival, zero transfer, frozen headship and absolute migration specification.
+
+### What remains to be checked before numerical use
+
+A pure test of the actual `advance_person_state_block` and head aggregation used fixed survival, fixed positive absolute migration, adult headship 0.5, and a four-person increase in the 2023 birth flow. The maximum adult age-cell differences were exactly zero in 2027, 2031, 2035 and 2039, then one model household in the age-18–21 cell in 2043. This verifies the implemented cohort clock; it is not an audit of the saved full-grid distribution or actual demographic magnitudes.
+
+An extended predictor must use the pinned annual primitives, not extrapolate ACS ages, repeat the stationary age distribution, or normalize by current total persons. A zero-birth auxiliary simulation is not automatically admissible: fixed negative migration can make some child stocks negative, so such a convenience path can fail the person-state gate even while adult ancestry is predetermined. Use a valid reference birth path or an explicitly derived cohort calculation, and retain all existing person/head accounting gates on the actual economic path.
+
+The prior floating-point caveats still apply: stored tenure probabilities, pruning and scalar mass corrections can leave small choice-dependent income-composition errors. The five-date verified fiscal comparison does not certify 2027–2039, and fiscal aggregates alone do not certify full marginals. A later implementation needs unchanged full-marginal/fiscal gates on genuine mappings, including a 2043 birth perturbation that demonstrates the endpoint of predetermination. No full-path root dimension, anticipation schedule, launch contract or source code was changed here.

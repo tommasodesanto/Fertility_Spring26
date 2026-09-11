@@ -1,0 +1,87 @@
+{
+  "actual_trial_budgets_pass": false,
+  "bellman_solves": 0,
+  "contract_sha256": "698b77087e08964c04d4331dad5c99f9fdec063d04624b5d9ee3ea37a380ddc1",
+  "elapsed_seconds": 8.550776788033545,
+  "full_2007_prechoice_distribution_reconstructed": true,
+  "future_full_age_income_marginals_verified": false,
+  "ge_solves": 0,
+  "historical_equilibrium_certified": false,
+  "initial_full_distribution_shape": [
+    120,
+    6,
+    1,
+    17,
+    15,
+    4,
+    4
+  ],
+  "initial_full_fiscal_accounts": {
+    "implied_balanced_payroll_tax": 0.10428133990974114,
+    "implied_balanced_pension_period": 3.512600519494792,
+    "payroll_tax_base_period": 3.4237665554395074,
+    "payroll_tax_rate": 0.179,
+    "payroll_tax_revenue": 0.6128542134236717,
+    "pension_budget_residual": 0.25581924948428086,
+    "pension_outlays": 0.3570349639393909,
+    "pension_period_units": 2.0463613896121218,
+    "retiree_benefit_exposure": 0.17447307486927574,
+    "retiree_household_mass": 0.17447307486927574,
+    "scaled_pension_budget_residual": 0.41742268206848515,
+    "worker_household_mass": 0.825526925130732
+  },
+  "initial_preflight_relative_factor_gaps": {
+    "implied_balanced_pension_period": 0.0,
+    "payroll_tax_base_period": 0.0,
+    "payroll_tax_revenue": 0.0,
+    "pension_outlays": 0.0,
+    "pension_period_units": 0.0,
+    "retiree_benefit_exposure": 0.0
+  },
+  "input_pins": {
+    "actual_root": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_paygo_prefix_527ab397/prefix_comparison/inputs/root_receipt.json",
+      "sha256": "d2a853846eeaa82625b0f919795f007be843bb15737d011045df3da9df8b0563"
+    },
+    "history_contract": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_paygo_prefix_527ab397/prefix_comparison/inputs/contract.json",
+      "sha256": "9ca0fde1ba8898ff862c0c653e8d15b6cc9ac144b79cd97e07a17253ded87469"
+    },
+    "initial_checkpoint": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508/output/new_balanced_smoke/repetition_02/initial_state.pkl.gz",
+      "sha256": "4afc7fc6f4db32a1bb220bb3b2b30c6e2c0b96822a152c294f6c73c228320852"
+    },
+    "observed_ages": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_paygo_prefix_527ab397/prefix_comparison/inputs/observed_age_masses.csv",
+      "sha256": "05b87d3486969c3a4e8e5cffccaeaa715e232502dbf4ee036520bcdb58894193"
+    },
+    "preflight": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_paygo_prefix_527ab397/prefix_comparison/inputs/preflight.json",
+      "sha256": "3a0e24680c4591c01dfeee8508518c5e1c6f7d159550285a82b4b9445d6ae943"
+    }
+  },
+  "limitation": "2011--2023 full marginals were not saved; ledger agreement verifies only their fiscal aggregates. No 2027 prediction or reduced root.",
+  "maximum_predicted_pension_scaled_budget_residual": 3.0006607995559197e-10,
+  "maximum_relative_ledger_factor_gap": 3.003640151335566e-10,
+  "predicted_pensions_period": [
+    3.512600519494792,
+    3.2502295500226595,
+    2.846692091368215,
+    2.495646477871395,
+    2.329995129588396
+  ],
+  "production_eligible": false,
+  "root_coordinates_reduced": false,
+  "runner_sha256": "56cf269aae8736a645734361359f8afb42af236acc00d87bee43aeaade5975f2",
+  "source_commit": "527ab397218e18611ba6930e62283eefc4225688",
+  "source_files_verified": 643,
+  "source_python_files_verified": 539,
+  "status": "passed_diagnostic_comparison",
+  "years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023
+  ]
+}

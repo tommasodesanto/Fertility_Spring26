@@ -1,0 +1,108 @@
+{
+  "batch": "joint_smoke",
+  "job_id": 17363531,
+  "source_files": 641,
+  "source_match": true,
+  "contract_sha256": "a710834c8f9a74d5aed5689540c9569cdb12bf6d5efa002b17591c2bf93cf829",
+  "driver_sha256": "67a09b46c4f5803eec69b8f175cf541bb359cbda53c36a51f8f72225db368599",
+  "bundle_input_checks": {
+    "inputs/baseline_probe_receipt.json": true,
+    "inputs/baseline_probe_summary.json": true,
+    "inputs/empirical_observer_contract.json": true,
+    "inputs/joint_run_plan.json": true,
+    "inputs/joint_smoke_contract.json": true,
+    "inputs/joint_smoke_gate_receipt.json": true,
+    "inputs/panel_validator.py": true,
+    "inputs/smoke/best_so_far.json": true,
+    "inputs/smoke/contract.json": true,
+    "inputs/smoke/heartbeat.json": true,
+    "inputs/smoke/latest_completed.json": true,
+    "inputs/smoke/repetition_01/early_measurement.json": true,
+    "inputs/smoke/repetition_01/parameters.csv": true,
+    "inputs/smoke/repetition_01/policy_array_summary.json": true,
+    "inputs/smoke/repetition_01/stationary_solves.json": true,
+    "inputs/smoke/repetition_01/summary.json": true,
+    "inputs/smoke/repetition_02/early_measurement.json": true,
+    "inputs/smoke/repetition_02/lifecycle_2023.csv": true,
+    "inputs/smoke/repetition_02/market_quantity_units.json": true,
+    "inputs/smoke/repetition_02/parameters.csv": true,
+    "inputs/smoke/repetition_02/policy_array_summary.json": true,
+    "inputs/smoke/repetition_02/standard_diagnostics/summary.json": true,
+    "inputs/smoke/repetition_02/stationary_solves.json": true,
+    "inputs/smoke/repetition_02/summary.json": true,
+    "inputs/smoke/repetition_02/young_ownership_age_measurement.csv": true,
+    "inputs/smoke/seed_mapping.json": true,
+    "inputs/smoke/summary.json": true
+  },
+  "checkpoints": [
+    {
+      "case_id": "joint_smoke_analysis_47",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053/output/joint_round_01/smoke/repetition_02/initial_state.pkl.gz",
+      "sha256": "2b99ac5195f3c22de96350397c196b4d32d4f09fe7058292a3dfebf076064116",
+      "expected_sha256": "2b99ac5195f3c22de96350397c196b4d32d4f09fe7058292a3dfebf076064116"
+    }
+  ],
+  "files": [
+    {
+      "name": "best_so_far.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/best_so_far.json",
+      "sha256": "06b7582c7c5bf3f0f444f0ea2952970d581920f620c4dc92a1b5e21e1569230e",
+      "bytes": 98
+    },
+    {
+      "name": "compiled_startup_tests.log",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/compiled_startup_tests.log",
+      "sha256": "a041afacce79dcd7aa565e99a3924e4c809e7e87b61b67d072f22b0dee281030",
+      "bytes": 2415
+    },
+    {
+      "name": "contract.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/contract.json",
+      "sha256": "a710834c8f9a74d5aed5689540c9569cdb12bf6d5efa002b17591c2bf93cf829",
+      "bytes": 90714
+    },
+    {
+      "name": "heartbeat.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/heartbeat.json",
+      "sha256": "1500fed948cba9a09b6e436e3f42b5375a5792ca50c3ff9a08ffa72caa9c97fc",
+      "bytes": 148
+    },
+    {
+      "name": "joint_smoke_analysis_47_pass_01.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/joint_smoke_analysis_47_pass_01.json",
+      "sha256": "730adefaddd2c7e5a4394bf3089bc9ec46d58fd118f2e060f84ba270b97eea07",
+      "bytes": 11922
+    },
+    {
+      "name": "latest_completed.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/latest_completed.json",
+      "sha256": "b07b9b893bfc31a0954bd6b00bb883e5f81677e5b19d1c1d166c4338e82190bb",
+      "bytes": 440
+    },
+    {
+      "name": "receipt.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/receipt.json",
+      "sha256": "9cfdb4ab58637ee085a749eeed0aa7508cbbeb3343e950218e1dac6daf35c974",
+      "bytes": 294
+    },
+    {
+      "name": "summary.json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/output/batch_joint_smoke_17363531/summary.json",
+      "sha256": "24d6a81c3cfe1c40fce4c3f131cab60012083be0071cf428a47b0515a650cb6f",
+      "bytes": 1188
+    },
+    {
+      "name": "batch_joint_smoke_17363531.out",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batch_joint_smoke_17363531.out",
+      "sha256": "d5ad620e8bb139590322cd4fab9e7d1fbe77df37023a7e39b973881be290de2e",
+      "bytes": 370
+    },
+    {
+      "name": "batch_joint_smoke_17363531.err",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batch_joint_smoke_17363531.err",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "sacct": "17363531|COMPLETED|0:0|00:00:27|\n17363531.batch|COMPLETED|0:0|00:00:27|870044K\n17363531.extern|COMPLETED|0:0|00:00:27|\n"
+}

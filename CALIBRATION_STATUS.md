@@ -2,6 +2,86 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, morning restart after09:36 EDT — credit interruption and complete saved scores.**
+Several agent tasks stopped with usage-limit errors around03:27. No further
+agent-led work is established by the subsequent repeated heartbeat messages.
+SSH authentication is unavailable at the morning check; the final result of
+root17362744 is still uncollected. The last verified iterate below remains the
+only supported convergence statement. No new cluster job was launched on restart.
+User requests token discipline: one lead by default, narrow reads and bounded
+work; automatic heartbeat is now hourly with a shorter prompt. No reset credit
+was redeemed. Unfinished wrapper/continuation edits remain unverified and unused.
+
+Local complete scoring now passes18 scorer tests and independent arithmetic.
+All19 sensitivity cases have13 fitted rows,12 contributions and17 parameter rows.
+The12-by9 weighted Jacobian has numerical rank9 and condition number1856.4;
+this is not a strong-identification certificate. Under the frozen working rule,
+baseline loss1499.851825 falls to1428.171606 at the reproduced joint smoke,
+a4.779% reduction. Recent-parent ownership contributes1263.942759 (84.27%)
+at baseline and1385.822793 (97.03%) at the joint candidate. The joint candidate
+is not selected as a final estimate. These losses are not comparable to old
+target-system losses. Complete source-linked fits and parameters are in
+`initial_calibration_contract/saved_case_scores/`; all19case tables and108raw
+derivatives are in `initial_calibration_contract/complete_panel_*`.
+
+The finalized saved working-contract canonical hash is
+c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2
+(file hash e0bd8316a19bb197ab0fe9adaf25cb3173ff3b4072c14515cdd4e34b516ff43c).
+The interrupted builder had updated its unreviewed draft after the earlier
+agent-reported hash; morning deterministic rebuild matches the final bytes.
+All13targets,12weights and nine bounds were checked. No raw observation flags
+are rewritten. A scored solve-observe-objective loop still needs its full smoke.
+The read-only22joint-case observation bundle passed local preflight but was not
+launched; its remote checkpoint checks remain pending. Morning PDF with both
+full fits and all parameter restrictions: `morning_review/morning_update.pdf`.
+Four pages rendered and visually checked, with all printed numeric cells checked.
+
+**September 11, 03:14 EDT — joint round complete; recent-parent trade-off measured.**
+Array17362324 finished:22 fresh cases passed, one failed the unchanged strict
+initial housing-equilibrium gate (index1), and the verified two-repetition smoke
+supplies the24th proposal. Thus23 valid candidates, one retained failure. Final
+collector verifies all634 source pins, checkpoints, numerical gates and17graph
+hashes per valid case. Its original `partial` flag means23/24 valid, not a running
+array. Full unchanged results: `initial_joint_round_01/smoke_readout/`.
+
+Recent-parent observation batches17363528–31 passed all641 source pins, every
+checkpoint/result hash and13 compiled startup tests each, without GE or Bellman
+solves. The baseline ownership contrast is -0.053243586, against ACS +0.162895509;
+the joint smoke yields -0.063424773 (selected-birth ownership0.552037059 versus
+current-empty-home ownership0.615461832). This worsens the gap despite other
+improvements; do not omit it or infer a definition error from its sign. Complete
+19-case sensitivity observations and nine raw derivatives are in
+`initial_fit_readout/recent_parent_probe/completed_17362130/`. The remaining22
+joint cases are being measured separately, with no copied baseline values.
+
+The lead has selected a named working minimum-distance rule,
+`early_2007_parenthood_md_working_v1`, within the conditional approved plan.
+All12 scored restrictions remain, with2.1 separately normalized. CPS uses the
+uniform-birth-time projection and documented correlation-one approximate pooled
+scales; NCHS uses observed2003–06 annual SDs as typical-year discrepancy scales,
+not sampling SEs. Housing/wealth bootstrap scales and the inherited synthetic
+bequest scale are retained. Recent-parent ownership uses an explicit synchronized
+post-fertility/dependent-residence approximation, not an exact annual ACS mapper.
+Decision and fixed weights: `initial_calibration_contract/`. Machine-contract
+verification, complete scoring and exact full-loop smoke are still required
+before a scored search. No efficient-GMM or strong-identification claim follows.
+
+Actual historical root17362744 has reduced maximum housing imbalance from0.4533
+to0.01761 at mapping6; pension residuals are below4.4e-10. It is still running
+and has not passed the2e-4 market gate. Prefix comparison17362746 passed:
+five2007–2023 predicted pensions agree with actual ledgers within3.1e-10 relative,
+8.55seconds and zero solves. Source/cohort-timing review establishes that2043 is
+the first model-date pension affected by births chosen after2023 (earliest annual
+adult stock2042). Pensions through2039 are economically predetermined under the
+current fixed population/headship/migration/earnings conventions; numerical
+prefix verification beyond2023 is not yet complete. No root dimension was reduced.
+
+The two-node scalar audit17362437 reproduces the inspected ownership reversal.
+Independent fixed-continuation control optima agree to8.9e-16; interpolation
+slightly dampens the1.323pp reversal rather than causing it. This resolves that
+local optimizer/interpolation question, not global policy regularity. Exact
+evidence: `initial_fit_readout/graph_reduction/branch_audit/completed_17362437/`.
+
 **September 11, 02:46 EDT — verified joint improvement; actual historical root submitted.**
 The two-fresh-loop joint smoke17360699 passes:8GE,1150.19 seconds,
 634 source pins, exact numerical normalization/prices/early/legacy moments,
